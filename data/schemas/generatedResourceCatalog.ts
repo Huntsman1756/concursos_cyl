@@ -18,6 +18,38 @@ export const GENERATED_RESOURCE_KEY_PATTERN = /^[a-z][a-zA-Z\d]*$/u;
 export const GENERATED_RESOURCE_FILE_NAME_PATTERN =
   /^[a-z\d]+(?:-[a-z\d]+)*\.json$/u;
 export const GENERATED_SNAPSHOT_ID_PATTERN = /^[a-z\d]+(?:-[a-z\d]+)*$/u;
+const GENERATED_SNAPSHOT_RESOURCE_PREFIX = `${GENERATED_DATA_VERSION_PATH}/snapshots/`;
+
+interface ImmutableGeneratedResourcePathParts {
+  snapshotId: string;
+  fileName: string;
+}
+
+function parseImmutableGeneratedResourcePath(
+  path: string,
+): ImmutableGeneratedResourcePathParts | null {
+  if (!path.startsWith(GENERATED_SNAPSHOT_RESOURCE_PREFIX)) {
+    return null;
+  }
+
+  const parts = path
+    .slice(GENERATED_SNAPSHOT_RESOURCE_PREFIX.length)
+    .split("/");
+  if (parts.length !== 2) {
+    return null;
+  }
+
+  const [snapshotId, fileName] = parts;
+  if (
+    !GENERATED_SNAPSHOT_ID_PATTERN.test(snapshotId) ||
+    !GENERATED_RESOURCE_FILE_NAME_PATTERN.test(fileName) ||
+    fileName === "manifest.json"
+  ) {
+    return null;
+  }
+
+  return { snapshotId, fileName };
+}
 
 export function generatedResourceFileNameForKey(key: string): string | null {
   if (!GENERATED_RESOURCE_KEY_PATTERN.test(key)) {
@@ -53,7 +85,7 @@ export function immutableGeneratedResourceFilePath(
     throw new Error("Invalid generated resource descriptor.");
   }
 
-  return `${GENERATED_DATA_VERSION_PATH}/snapshots/${snapshotId}/${fileName}`;
+  return `${GENERATED_SNAPSHOT_RESOURCE_PREFIX}${snapshotId}/${fileName}`;
 }
 
 export function isImmutableGeneratedResourceFilePath(
@@ -67,14 +99,7 @@ export function isImmutableGeneratedResourceFilePath(
     return false;
   }
 
-  const prefix = `${GENERATED_DATA_VERSION_PATH}/snapshots/`;
-  const suffix = `/${fileName}`;
-  if (!path.startsWith(prefix) || !path.endsWith(suffix)) {
-    return false;
-  }
-
-  const snapshotId = path.slice(prefix.length, -suffix.length);
-  return GENERATED_SNAPSHOT_ID_PATTERN.test(snapshotId);
+  return parseImmutableGeneratedResourcePath(path)?.fileName === fileName;
 }
 
 export function isImmutableGeneratedResourcePath(
@@ -88,16 +113,7 @@ export function isImmutableGeneratedResourcePath(
 }
 
 export function isGenericImmutableGeneratedResourcePath(path: string): boolean {
-  const match =
-    /^\/data\/v1\/snapshots\/([a-z\d]+(?:-[a-z\d]+)*)\/([a-z\d]+(?:-[a-z\d]+)*\.json)$/u.exec(
-      path,
-    );
-  return (
-    match !== null &&
-    match[2] !== "manifest.json" &&
-    GENERATED_SNAPSHOT_ID_PATTERN.test(match[1]) &&
-    GENERATED_RESOURCE_FILE_NAME_PATTERN.test(match[2])
-  );
+  return parseImmutableGeneratedResourcePath(path) !== null;
 }
 
 export function isPermittedGeneratedAssetPath(path: string): boolean {

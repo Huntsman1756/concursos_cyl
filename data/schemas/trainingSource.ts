@@ -1,11 +1,5 @@
 import { z } from "zod";
-
-const GeoPointSchema = z
-  .object({
-    lon: z.number(),
-    lat: z.number(),
-  })
-  .strict();
+import { SourceGeoPointSchema } from "./sourceCoordinate";
 
 /** Exact 2026-08-04 Junta vocational-training record signature. */
 export const TrainingSourceRecordSchema = z
@@ -30,7 +24,7 @@ export const TrainingSourceRecordSchema = z
     telefono: z.string(),
     e_mail: z.string(),
     web: z.string(),
-    localizacion: GeoPointSchema,
+    localizacion: SourceGeoPointSchema,
   })
   .strict();
 

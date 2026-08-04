@@ -128,12 +128,29 @@ function nullRate<T>(
   return records.filter(isNull).length / records.length;
 }
 
-function validateCandidate(candidate: SnapshotCandidate): QualityNullRates {
+type LegacyCenter = LegacySnapshotCandidate["centers"][number];
+type LegacyTrainingOffering =
+  LegacySnapshotCandidate["trainingOfferings"][number];
+type LegacyJobOffer = LegacySnapshotCandidate["jobOffers"][number];
+
+function validateSharedCandidate<
+  Center extends LegacyCenter,
+  Offering extends LegacyTrainingOffering,
+  Offer extends LegacyJobOffer,
+>(
+  candidate: {
+    programs: readonly TrainingProgram[];
+    centers: readonly Center[];
+    trainingOfferings: readonly Offering[];
+    jobOffers: readonly Offer[];
+  },
+  offeringIdentifier: (item: Offering) => string,
+): QualityNullRates {
   assertUnique(candidate.programs, (item) => item.programKey, "program");
   assertUnique(candidate.centers, (item) => item.centerCode, "center");
   assertUnique(
     candidate.trainingOfferings,
-    (item) => item.offeringId,
+    offeringIdentifier,
     "training offering",
   );
   assertUnique(candidate.jobOffers, (item) => item.id, "job offer");
@@ -142,12 +159,6 @@ function validateCandidate(candidate: SnapshotCandidate): QualityNullRates {
     candidate.programs.map((item) => item.programKey),
   );
   const centerCodes = new Set(candidate.centers.map((item) => item.centerCode));
-  const programsByKey = new Map(
-    candidate.programs.map((item) => [item.programKey, item]),
-  );
-  const centersByCode = new Map(
-    candidate.centers.map((item) => [item.centerCode, item]),
-  );
 
   for (const item of candidate.programs) {
     assertLabel(item.programKey, "program.programKey");
@@ -161,7 +172,6 @@ function validateCandidate(candidate: SnapshotCandidate): QualityNullRates {
     assertLabel(item.centerName, "center.centerName");
     assertLabel(item.province, "center.province");
     assertLabel(item.locality, "center.locality");
-    assertLabel(item.centerOwnership, "center.centerOwnership");
     if (item.website !== null) {
       assertUrl(item.website, "center.website");
     }
@@ -179,42 +189,9 @@ function validateCandidate(candidate: SnapshotCandidate): QualityNullRates {
       );
     }
     assertLabel(item.programTitle, "trainingOffering.programTitle");
-    assertLabel(item.familyCode, "trainingOffering.familyCode");
     assertLabel(item.familyName, "trainingOffering.familyName");
-    assertLabel(item.centerName, "trainingOffering.centerName");
     assertLabel(item.province, "trainingOffering.province");
     assertLabel(item.locality, "trainingOffering.locality");
-    const program = programsByKey.get(item.programKey)!;
-    const center = centersByCode.get(item.centerCode)!;
-    for (const field of [
-      "programTitle",
-      "level",
-      "familyCode",
-      "familyName",
-    ] as const) {
-      if (item[field] !== program[field]) {
-        throw new Error(
-          `Canonical program mismatch in training offering ${item.offeringId}: ${field}.`,
-        );
-      }
-    }
-    for (const field of [
-      "centerName",
-      "province",
-      "locality",
-      "centerOwnership",
-    ] as const) {
-      if (item[field] !== center[field]) {
-        throw new Error(
-          `Canonical center mismatch in training offering ${item.offeringId}: ${field}.`,
-        );
-      }
-    }
-    if (item.offeringId !== trainingOfferingIdentity(item)) {
-      throw new Error(
-        `Training offering identity does not encode every differentiator: ${item.offeringId}.`,
-      );
-    }
   }
 
   for (const item of candidate.jobOffers) {
@@ -248,82 +225,66 @@ function validateCandidate(candidate: SnapshotCandidate): QualityNullRates {
   };
 }
 
+function validateCandidate(candidate: SnapshotCandidate): QualityNullRates {
+  const rates = validateSharedCandidate(candidate, (item) => item.offeringId);
+
+  const programsByKey = new Map(
+    candidate.programs.map((item) => [item.programKey, item]),
+  );
+  const centersByCode = new Map(
+    candidate.centers.map((item) => [item.centerCode, item]),
+  );
+
+  for (const item of candidate.centers) {
+    assertLabel(item.centerOwnership, "center.centerOwnership");
+  }
+
+  for (const item of candidate.trainingOfferings) {
+    assertLabel(item.familyCode, "trainingOffering.familyCode");
+    assertLabel(item.centerName, "trainingOffering.centerName");
+    const program = programsByKey.get(item.programKey)!;
+    const center = centersByCode.get(item.centerCode)!;
+    for (const field of [
+      "programTitle",
+      "level",
+      "familyCode",
+      "familyName",
+    ] as const) {
+      if (item[field] !== program[field]) {
+        throw new Error(
+          `Canonical program mismatch in training offering ${item.offeringId}: ${field}.`,
+        );
+      }
+    }
+    for (const field of [
+      "centerName",
+      "province",
+      "locality",
+      "centerOwnership",
+    ] as const) {
+      if (item[field] !== center[field]) {
+        throw new Error(
+          `Canonical center mismatch in training offering ${item.offeringId}: ${field}.`,
+        );
+      }
+    }
+    if (item.offeringId !== trainingOfferingIdentity(item)) {
+      throw new Error(
+        `Training offering identity does not encode every differentiator: ${item.offeringId}.`,
+      );
+    }
+  }
+
+  return rates;
+}
+
 function validateLegacyCandidate(
   candidate: LegacySnapshotCandidate,
 ): QualityNullRates {
-  assertUnique(candidate.programs, (item) => item.programKey, "program");
-  assertUnique(candidate.centers, (item) => item.centerCode, "center");
-  assertUnique(
-    candidate.trainingOfferings,
+  return validateSharedCandidate(
+    candidate,
     (item) => `${item.programKey}:${item.centerCode}:${item.modality}`,
-    "training offering",
   );
-  assertUnique(candidate.jobOffers, (item) => item.id, "job offer");
-
-  const programKeys = new Set(
-    candidate.programs.map((item) => item.programKey),
-  );
-  const centerCodes = new Set(candidate.centers.map((item) => item.centerCode));
-  for (const item of candidate.programs) {
-    assertLabel(item.programKey, "program.programKey");
-    assertLabel(item.programTitle, "program.programTitle");
-    assertLabel(item.familyCode, "program.familyCode");
-    assertLabel(item.familyName, "program.familyName");
-  }
-  for (const item of candidate.centers) {
-    assertLabel(item.centerCode, "center.centerCode");
-    assertLabel(item.centerName, "center.centerName");
-    assertLabel(item.province, "center.province");
-    assertLabel(item.locality, "center.locality");
-    if (item.website !== null) {
-      assertUrl(item.website, "center.website");
-    }
-  }
-  for (const item of candidate.trainingOfferings) {
-    if (!programKeys.has(item.programKey)) {
-      throw new Error(
-        `Broken reference from training offering to program ${item.programKey}.`,
-      );
-    }
-    if (!centerCodes.has(item.centerCode)) {
-      throw new Error(
-        `Broken reference from training offering to center ${item.centerCode}.`,
-      );
-    }
-    assertLabel(item.programTitle, "trainingOffering.programTitle");
-    assertLabel(item.familyName, "trainingOffering.familyName");
-    assertLabel(item.province, "trainingOffering.province");
-    assertLabel(item.locality, "trainingOffering.locality");
-  }
-  for (const item of candidate.jobOffers) {
-    assertLabel(item.id, "jobOffer.id");
-    assertLabel(item.title, "jobOffer.title");
-    assertLabel(item.sourceName, "jobOffer.sourceName");
-    assertUrl(item.originalUrl, "jobOffer.originalUrl");
-    assertUrl(
-      item.sourceSnapshot.sourceUrl,
-      "jobOffer.sourceSnapshot.sourceUrl",
-    );
-  }
-
-  return {
-    centerAddress: nullRate(candidate.centers, (item) => item.address === null),
-    centerPhone: nullRate(candidate.centers, (item) => item.phone === null),
-    centerEmail: nullRate(candidate.centers, (item) => item.email === null),
-    centerWebsite: nullRate(candidate.centers, (item) => item.website === null),
-    offerProvince: nullRate(
-      candidate.jobOffers,
-      (item) => item.province === null,
-    ),
-    offerLocality: nullRate(
-      candidate.jobOffers,
-      (item) => item.locality === null,
-    ),
-    offerDescription: nullRate(
-      candidate.jobOffers,
-      (item) => item.descriptionText.trim().length === 0,
-    ),
-  };
 }
 
 const emptyNullRates: QualityNullRates = {

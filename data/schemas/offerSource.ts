@@ -1,12 +1,7 @@
 import { z } from "zod";
+import { SourceGeoPointSchema } from "./sourceCoordinate";
 
 const nullableText = z.string().nullable();
-const GeoPointSchema = z
-  .object({
-    lon: z.number(),
-    lat: z.number(),
-  })
-  .strict();
 
 /** Exact 2026-08-04 Junta employment-offer record signature. */
 export const OfferSourceRecordSchema = z
@@ -25,7 +20,7 @@ export const OfferSourceRecordSchema = z
     identificador: z.string(),
     actualizacionmetadatos: z.string(),
     enlace_al_contenido: z.string(),
-    posicion: GeoPointSchema.nullable(),
+    posicion: SourceGeoPointSchema.nullable(),
   })
   .strict();
 
