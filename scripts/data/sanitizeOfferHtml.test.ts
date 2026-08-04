@@ -16,6 +16,16 @@ describe("sanitizeOfferHtml", () => {
     expect(result.sections.requirements).toEqual(["Carné B"]);
   });
 
+  it("routes text trailing an inline section label to that named section", () => {
+    const result = sanitizeOfferHtml(
+      "<p><strong>Requisitos:</strong> Carné B</p>",
+    );
+
+    expect(result.plainText).toBe("Requisitos: Carné B");
+    expect(result.sections.requirements).toEqual(["Carné B"]);
+    expect(result.sections.summary).toEqual([]);
+  });
+
   it("assigns normalized source-order blocks to the fixed section contract", () => {
     const html = readFileSync(
       resolve(process.cwd(), "tests/fixtures/offer-description.html"),

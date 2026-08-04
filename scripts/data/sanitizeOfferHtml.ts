@@ -9,6 +9,11 @@ export interface SanitizedOfferDescription {
 
 type DescriptionSection = keyof DescriptionSections;
 
+interface InlineSectionMatch {
+  section: DescriptionSection;
+  trailingText: string;
+}
+
 const STRUCTURAL_TAG = /<\/?(?:h[1-6]|p|div|li|ul|ol|br)\b[^>]*>/gi;
 
 function emptySections(): DescriptionSections {
@@ -70,6 +75,20 @@ function sectionForHeading(value: string): DescriptionSection | undefined {
   return undefined;
 }
 
+function inlineSectionMatch(value: string): InlineSectionMatch | undefined {
+  const separatorIndex = value.search(/[:：]/u);
+  if (separatorIndex < 0) {
+    return undefined;
+  }
+
+  const section = sectionForHeading(value.slice(0, separatorIndex));
+  const trailingText = value.slice(separatorIndex + 1).trim();
+
+  return section === undefined || trailingText.length === 0
+    ? undefined
+    : { section, trailingText };
+}
+
 function looksLikeHeading(value: string): boolean {
   return value.length <= 80 && /[:：]$/u.test(value);
 }
@@ -110,6 +129,13 @@ export function sanitizeOfferHtml(html: string): SanitizedOfferDescription {
   let currentSection: DescriptionSection = "summary";
 
   for (const block of blocks) {
+    const inlineMatch = inlineSectionMatch(block);
+    if (inlineMatch !== undefined) {
+      currentSection = inlineMatch.section;
+      sections[currentSection].push(inlineMatch.trailingText);
+      continue;
+    }
+
     const section = sectionForHeading(block);
     if (section !== undefined) {
       currentSection = section;

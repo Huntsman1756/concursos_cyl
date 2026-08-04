@@ -38,6 +38,23 @@ describe("fetchAllRecords", () => {
     ).rejects.toThrow("repeated page");
   });
 
+  it("rejects a repeated page even when the upstream record order changes", async () => {
+    const fetchPage = vi
+      .fn()
+      .mockResolvedValueOnce({
+        total_count: 4,
+        results: [{ id: 1 }, { id: 2 }],
+      })
+      .mockResolvedValueOnce({
+        total_count: 4,
+        results: [{ id: 2 }, { id: 1 }],
+      });
+
+    await expect(
+      fetchAllRecords("https://example.test/records", ItemSchema, fetchPage, 2),
+    ).rejects.toThrow("repeated page");
+  });
+
   it("rejects records that do not match the supplied schema", async () => {
     const fetchPage = vi.fn().mockResolvedValue({
       total_count: 1,
