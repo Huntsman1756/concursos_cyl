@@ -17,7 +17,7 @@
     "familyCode": "AFD",
     "familyName": "Actividades Físicas y Deportivas",
     "level": "higher",
-    "programKey": "AFD02Sd",
+    "programKey": "AFD02SD",
     "programTitle": "Acondicionamiento Físico (distancia)"
   },
   {
@@ -52,7 +52,7 @@
     "familyCode": "IFC",
     "familyName": "Informática y Comunicaciones",
     "level": "higher",
-    "programKey": "IFC01Sd",
+    "programKey": "IFC01SD",
     "programTitle": "Administración de Sistemas Informáticos en Red (distancia)"
   },
   {
@@ -66,7 +66,7 @@
     "familyCode": "ADG",
     "familyName": "Administración y Gestión",
     "level": "higher",
-    "programKey": "ADG02Sd",
+    "programKey": "ADG02SD",
     "programTitle": "Administración y Finanzas (distancia)"
   },
   {
@@ -87,7 +87,7 @@
     "familyCode": "HOT",
     "familyName": "Hostelería y Turismo",
     "level": "higher",
-    "programKey": "HOT02Sd",
+    "programKey": "HOT02SD",
     "programTitle": "Agencias de Viajes y Gestión de Eventos (distancia)"
   },
   {
@@ -164,7 +164,7 @@
     "familyCode": "SSC",
     "familyName": "Servicios Socioculturales y a la Comunidad",
     "level": "intermediate",
-    "programKey": "SSC01Md",
+    "programKey": "SSC01MD",
     "programTitle": "Atención a Personas en Situación de Dependencia (distancia)"
   },
   {
@@ -185,7 +185,7 @@
     "familyCode": "SAN",
     "familyName": "Sanidad",
     "level": "higher",
-    "programKey": "SAN01Sd",
+    "programKey": "SAN01SD",
     "programTitle": "Audiología Protésica (distancia)"
   },
   {
@@ -283,7 +283,7 @@
     "familyCode": "COM",
     "familyName": "Comercio y Marketing",
     "level": "higher",
-    "programKey": "COM04Sd",
+    "programKey": "COM04SD",
     "programTitle": "Comercio Internacional (distancia)"
   },
   {
@@ -325,7 +325,7 @@
     "familyCode": "SAN",
     "familyName": "Sanidad",
     "level": "intermediate",
-    "programKey": "SAN21d",
+    "programKey": "SAN21D",
     "programTitle": "Cuidados Auxiliares de Enfermería (distancia)"
   },
   {
@@ -346,7 +346,7 @@
     "familyCode": "IFC",
     "familyName": "Informática y Comunicaciones",
     "level": "higher",
-    "programKey": "IFC02Sd",
+    "programKey": "IFC02SD",
     "programTitle": "Desarrollo de Aplicaciones Multiplataforma (distancia)"
   },
   {
@@ -360,7 +360,7 @@
     "familyCode": "IFC",
     "familyName": "Informática y Comunicaciones",
     "level": "higher",
-    "programKey": "IFC03Sd",
+    "programKey": "IFC03SD",
     "programTitle": "Desarrollo de Aplicaciones WEB (distancia)"
   },
   {
@@ -395,7 +395,7 @@
     "familyCode": "HOT",
     "familyName": "Hostelería y Turismo",
     "level": "higher",
-    "programKey": "HOT04Sd",
+    "programKey": "HOT04SD",
     "programTitle": "Dirección de cocina (distancia)"
   },
   {
@@ -451,7 +451,7 @@
     "familyCode": "SSC",
     "familyName": "Servicios Socioculturales y a la Comunidad",
     "level": "higher",
-    "programKey": "SSC01Sd",
+    "programKey": "SSC01SD",
     "programTitle": "Educación Infantil (distancia)"
   },
   {
@@ -480,7 +480,7 @@
     "familyName": "Transporte y Mantenimiento de Vehículos",
     "level": "intermediate",
     "programKey": "TMV03M",
-    "programTitle": "Electromecánica de Maquinaria"
+    "programTitle": "Electromecánica de maquinaria"
   },
   {
     "familyCode": "TMV",
@@ -507,7 +507,7 @@
     "familyCode": "SAN",
     "familyName": "Sanidad",
     "level": "intermediate",
-    "programKey": "SAN01Md",
+    "programKey": "SAN01MD",
     "programTitle": "Emergencias Sanitarias (distancia)"
   },
   {
@@ -521,7 +521,7 @@
     "familyCode": "SEA",
     "familyName": "Seguridad y Medio Ambiente",
     "level": "intermediate",
-    "programKey": "SEA01Md",
+    "programKey": "SEA01MD",
     "programTitle": "Emergencias y Protección Civil (distancia)"
   },
   {
@@ -542,7 +542,7 @@
     "familyCode": "AFD",
     "familyName": "Actividades Físicas y Deportivas",
     "level": "higher",
-    "programKey": "AFD01Sd",
+    "programKey": "AFD01SD",
     "programTitle": "Enseñanza y Animación Sociodeportiva (distancia)"
   },
   {
@@ -570,7 +570,7 @@
     "familyCode": "IMP",
     "familyName": "Imagen Personal",
     "level": "higher",
-    "programKey": "IMP02Sd",
+    "programKey": "IMP02SD",
     "programTitle": "Estilismo y Dirección de Peluquería (distancia)"
   },
   {
@@ -619,7 +619,7 @@
     "familyCode": "SAN",
     "familyName": "Sanidad",
     "level": "intermediate",
-    "programKey": "SAN02Md",
+    "programKey": "SAN02MD",
     "programTitle": "Farmacia y Parafarmacia (distancia)"
   },
   {
@@ -633,7 +633,7 @@
     "familyCode": "SSC",
     "familyName": "Servicios Socioculturales y a la Comunidad",
     "level": "higher",
-    "programKey": "SSC06Sd",
+    "programKey": "SSC06SD",
     "programTitle": "Formación para la movilidad segura y sostenible (distancia)"
   },
   {
@@ -654,7 +654,7 @@
     "familyCode": "ADG",
     "familyName": "Administración y Gestión",
     "level": "intermediate",
-    "programKey": "ADG01Md",
+    "programKey": "ADG01MD",
     "programTitle": "Gestión Administrativa (distancia)"
   },
   {
@@ -675,7 +675,7 @@
     "familyCode": "COM",
     "familyName": "Comercio y Marketing",
     "level": "higher",
-    "programKey": "COM03Sd",
+    "programKey": "COM03SD",
     "programTitle": "Gestión de Ventas y Espacios Comerciales (distancia)"
   },
   {
@@ -696,7 +696,7 @@
     "familyCode": "AGA",
     "familyName": "Agraria",
     "level": "higher",
-    "programKey": "AGA01Sd",
+    "programKey": "AGA01SD",
     "programTitle": "Gestión Forestal y del Medio Natural (distancia)"
   },
   {
@@ -710,7 +710,7 @@
     "familyCode": "HOT",
     "familyName": "Hostelería y Turismo",
     "level": "higher",
-    "programKey": "HOT03Sd",
+    "programKey": "HOT03SD",
     "programTitle": "Guía, Información y Asistencia Turística (distancia)"
   },
   {
@@ -731,7 +731,7 @@
     "familyCode": "SAN",
     "familyName": "Sanidad",
     "level": "higher",
-    "programKey": "SAN06Sd",
+    "programKey": "SAN06SD",
     "programTitle": "Higiene Bucodental (distancia)"
   },
   {
@@ -752,7 +752,7 @@
     "familyCode": "SAN",
     "familyName": "Sanidad",
     "level": "higher",
-    "programKey": "SAN07Sd",
+    "programKey": "SAN07SD",
     "programTitle": "Imagen para el Diagnóstico y Medicina Nuclear (distancia)"
   },
   {
@@ -815,7 +815,7 @@
     "familyCode": "ELE",
     "familyName": "Electricidad y Electrónica",
     "level": "intermediate",
-    "programKey": "ELE01Md",
+    "programKey": "ELE01MD",
     "programTitle": "Instalaciones Eléctricas y Automáticas (distancia)"
   },
   {
@@ -843,7 +843,7 @@
     "familyCode": "SSC",
     "familyName": "Servicios Socioculturales y a la Comunidad",
     "level": "higher",
-    "programKey": "SSC03Sd",
+    "programKey": "SSC03SD",
     "programTitle": "Integración Social (distancia)"
   },
   {
@@ -871,7 +871,7 @@
     "familyCode": "SAN",
     "familyName": "Sanidad",
     "level": "higher",
-    "programKey": "SAN08Sd",
+    "programKey": "SAN08SD",
     "programTitle": "Laboratorio Clínico y Biomédico (distancia)"
   },
   {
@@ -942,7 +942,7 @@
     "familyName": "Transporte y Mantenimiento de Vehículos",
     "level": "specialization",
     "programKey": "TMV03E",
-    "programTitle": "Mantenimiento y seguridad en sistemas  de vehículos hibridos y eléctricos"
+    "programTitle": "Mantenimiento y seguridad en sistemas de vehículos hibridos y eléctricos"
   },
   {
     "familyCode": "COM",
@@ -1008,7 +1008,7 @@
     "programTitle": "Panadería y bollería artesanales"
   },
   {
-    "familyCode": "HOT",
+    "familyCode": "INA",
     "familyName": "Industrias Alimentarias",
     "level": "intermediate",
     "programKey": "INA01M",
@@ -1032,7 +1032,7 @@
     "familyCode": "IMP",
     "familyName": "Imagen Personal",
     "level": "intermediate",
-    "programKey": "IMP02Md",
+    "programKey": "IMP02MD",
     "programTitle": "Peluquería y Cosmética Capilar (distancia)"
   },
   {
@@ -1116,7 +1116,7 @@
     "familyCode": "SSC",
     "familyName": "Servicios Socioculturales y a la Comunidad",
     "level": "higher",
-    "programKey": "SSC04Sd",
+    "programKey": "SSC04SD",
     "programTitle": "Promoción de Igualdad de Género (distancia)"
   },
   {
@@ -1137,7 +1137,7 @@
     "familyCode": "EOC",
     "familyName": "Edificación y Obra Civil",
     "level": "higher",
-    "programKey": "EOC01Sd",
+    "programKey": "EOC01SD",
     "programTitle": "Proyectos de Edificación (distancia)"
   },
   {
@@ -1151,7 +1151,7 @@
     "familyCode": "EOC",
     "familyName": "Edificación y Obra Civil",
     "level": "higher",
-    "programKey": "EOC02Sd",
+    "programKey": "EOC02SD",
     "programTitle": "Proyectos de Obra Civil (distancia)"
   },
   {
@@ -1172,7 +1172,7 @@
     "familyCode": "SAN",
     "familyName": "Sanidad",
     "level": "higher",
-    "programKey": "SAN09Sd",
+    "programKey": "SAN09SD",
     "programTitle": "Radioterapia y Dosimetría (distancia)"
   },
   {
@@ -1249,7 +1249,7 @@
     "familyCode": "IFC",
     "familyName": "Informática y Comunicaciones",
     "level": "intermediate",
-    "programKey": "IFC01Md",
+    "programKey": "IFC01MD",
     "programTitle": "Sistemas Microinformáticos y Redes (distancia)"
   },
   {
@@ -1284,7 +1284,7 @@
     "familyCode": "COM",
     "familyName": "Comercio y Marketing",
     "level": "higher",
-    "programKey": "COM02Sd",
+    "programKey": "COM02SD",
     "programTitle": "Transporte y Logística (distancia)"
   },
   {
@@ -1305,7 +1305,7 @@
     "familyCode": "INA",
     "familyName": "Industrias Alimentarias",
     "level": "higher",
-    "programKey": "INA01Sd",
+    "programKey": "INA01SD",
     "programTitle": "Vitivinicultura (distancia)"
   }
 ]
