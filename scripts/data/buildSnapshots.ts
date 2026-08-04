@@ -33,8 +33,15 @@ import {
   TrainingOfferingSchema,
   TrainingProgramSchema,
   type GeneratedManifest,
+  type LoadableGeneratedManifest,
   type SourceSnapshot,
 } from "../../data/schemas/generated";
+import {
+  GENERATED_RESOURCE_CATALOG,
+  GENERATED_RESOURCE_KEYS,
+  immutableGeneratedResourcePath,
+  type GeneratedResourceKey,
+} from "../../data/schemas/generatedResourceCatalog";
 import {
   OfferSourceRecordSchema,
   type OfferSourceRecord,
@@ -56,28 +63,29 @@ import { SOURCE_CONFIG } from "./sourceConfig";
 
 const RESOURCE_DEFINITIONS = {
   programs: {
-    fileName: "programs.json",
+    ...GENERATED_RESOURCE_CATALOG.programs,
     schema: z.array(TrainingProgramSchema),
   },
   centers: {
-    fileName: "centers.json",
+    ...GENERATED_RESOURCE_CATALOG.centers,
     schema: z.array(EducationCenterSchema),
   },
   trainingOfferings: {
-    fileName: "training-offerings.json",
+    ...GENERATED_RESOURCE_CATALOG.trainingOfferings,
     schema: z.array(TrainingOfferingSchema),
   },
   jobOffers: {
-    fileName: "job-offers.json",
+    ...GENERATED_RESOURCE_CATALOG.jobOffers,
     schema: z.array(JobOfferSchema),
   },
 } as const;
 
-type ResourceKey = keyof typeof RESOURCE_DEFINITIONS;
+type ResourceKey = GeneratedResourceKey;
 
 interface PreviousSnapshot {
-  manifest: GeneratedManifest;
+  manifest: LoadableGeneratedManifest;
   counts: SnapshotCounts;
+  format: "current" | "legacy";
 }
 
 export interface SnapshotFailureInjection {
@@ -318,7 +326,9 @@ async function safeRemoveTemporaryDirectory(
   await rm(path, { recursive: true, force: true });
 }
 
-function countsFromManifest(manifest: GeneratedManifest): SnapshotCounts {
+function countsFromManifest(
+  manifest: LoadableGeneratedManifest,
+): SnapshotCounts {
   return {
     programs: manifest.resourceSnapshots.programs.recordCount,
     centers: manifest.resourceSnapshots.centers.recordCount,
@@ -327,12 +337,22 @@ function countsFromManifest(manifest: GeneratedManifest): SnapshotCounts {
   };
 }
 
-function resourcePathFor(key: ResourceKey, snapshotId: string): string {
-  return `/data/v1/snapshots/${snapshotId}/${RESOURCE_DEFINITIONS[key].fileName}`;
+function parseManifest(json: unknown): LoadableGeneratedManifest {
+  return LoadableGeneratedManifestSchema.parse(json);
 }
 
-function parseManifest(json: unknown): GeneratedManifest {
-  return LoadableGeneratedManifestSchema.parse(json);
+function parseManifestWithFormat(json: unknown): {
+  manifest: LoadableGeneratedManifest;
+  format: PreviousSnapshot["format"];
+} {
+  const current = GeneratedManifestSchema.safeParse(json);
+  if (current.success) {
+    return { manifest: current.data, format: "current" };
+  }
+  return {
+    manifest: LoadableGeneratedManifestSchema.parse(json),
+    format: "legacy",
+  };
 }
 
 function resourceFileInSnapshot(
@@ -350,12 +370,13 @@ async function validateSnapshotDirectory(
   await assertPhysicalPath(root, directory);
   const manifestPath = resolve(directory, "manifest.json");
   await assertPhysicalPath(root, manifestPath);
-  const manifest = parseManifest(
+  const parsedManifest = parseManifestWithFormat(
     JSON.parse(await readFile(manifestPath, "utf8")),
   );
+  const { manifest } = parsedManifest;
 
   const loaded = {} as Record<ResourceKey, unknown[]>;
-  for (const key of Object.keys(RESOURCE_DEFINITIONS) as ResourceKey[]) {
+  for (const key of GENERATED_RESOURCE_KEYS) {
     const definition = RESOURCE_DEFINITIONS[key];
     const filePath = resourceFileInSnapshot(
       directory,
@@ -400,7 +421,7 @@ async function validateSnapshotDirectory(
     );
   }
 
-  return { manifest, counts };
+  return { manifest, counts, format: parsedManifest.format };
 }
 
 async function validateFlatCandidateDirectory(
@@ -408,7 +429,7 @@ async function validateFlatCandidateDirectory(
   staging: string,
   manifest: GeneratedManifest,
 ): Promise<void> {
-  for (const key of Object.keys(RESOURCE_DEFINITIONS) as ResourceKey[]) {
+  for (const key of GENERATED_RESOURCE_KEYS) {
     const definition = RESOURCE_DEFINITIONS[key];
     const filePath = resolve(staging, definition.fileName);
     await assertPhysicalPath(root, filePath);
@@ -559,7 +580,7 @@ async function writeCandidate(
 
   await safeMkdir(root, staging);
   const resourceHashes = {} as Record<ResourceKey, string>;
-  for (const key of Object.keys(RESOURCE_DEFINITIONS) as ResourceKey[]) {
+  for (const key of GENERATED_RESOURCE_KEYS) {
     const definition = RESOURCE_DEFINITIONS[key];
     const filePath = resolve(staging, definition.fileName);
     await safeWriteFile(
@@ -584,7 +605,7 @@ async function writeCandidate(
       count,
       resourceHashes[key],
     ),
-    resourcePath: resourcePathFor(key, snapshotId),
+    resourcePath: immutableGeneratedResourcePath(key, snapshotId),
   });
   const manifest = GeneratedManifestSchema.parse({
     schemaVersion: "1.0.0",
@@ -649,8 +670,9 @@ async function commitManifest(
   root: string,
   target: string,
   buildId: string,
-  manifest: GeneratedManifest,
+  manifest: unknown,
   beforeCommit?: () => void | Promise<void>,
+  validator: z.ZodType = GeneratedManifestSchema,
 ): Promise<void> {
   const manifestPath = resolve(target, "manifest.json");
   const candidatePath = resolve(target, `manifest.next-${buildId}.json`);
@@ -659,9 +681,7 @@ async function commitManifest(
     candidatePath,
     serializeDeterministically(manifest),
   );
-  GeneratedManifestSchema.parse(
-    JSON.parse(await readFile(candidatePath, "utf8")),
-  );
+  validator.parse(JSON.parse(await readFile(candidatePath, "utf8")));
   await beforeCommit?.();
   await safeRename(root, candidatePath, manifestPath);
 }
@@ -672,6 +692,52 @@ async function markPreviousSnapshotStale(
   buildId: string,
 ): Promise<void> {
   const previous = await validateSnapshotDirectory(root, target);
+  if (previous.format === "legacy") {
+    const staleLegacySnapshot = (snapshot: SourceSnapshot) => ({
+      sourceId: snapshot.sourceId,
+      sourceUrl: snapshot.sourceUrl,
+      sourceUpdatedAt: snapshot.sourceUpdatedAt,
+      snapshotFetchedAt: snapshot.snapshotFetchedAt,
+      schemaVersion: snapshot.schemaVersion,
+      recordCount: snapshot.recordCount,
+      sha256: snapshot.sha256,
+      qualityStatus: "stale" as const,
+    });
+    const staleLegacyManifest = {
+      schemaVersion: previous.manifest.schemaVersion,
+      generatedAt: previous.manifest.generatedAt,
+      qualityStatus: "stale" as const,
+      resourceSnapshots: {
+        programs: staleLegacySnapshot(
+          previous.manifest.resourceSnapshots.programs,
+        ),
+        centers: staleLegacySnapshot(
+          previous.manifest.resourceSnapshots.centers,
+        ),
+        trainingOfferings: staleLegacySnapshot(
+          previous.manifest.resourceSnapshots.trainingOfferings,
+        ),
+        jobOffers: staleLegacySnapshot(
+          previous.manifest.resourceSnapshots.jobOffers,
+        ),
+      },
+      ...(previous.manifest.qualityReport === undefined
+        ? {}
+        : { qualityReport: previous.manifest.qualityReport }),
+    };
+    LoadableGeneratedManifestSchema.parse(staleLegacyManifest);
+    await commitManifest(
+      root,
+      target,
+      `${buildId}-stale`,
+      staleLegacyManifest,
+      undefined,
+      LoadableGeneratedManifestSchema,
+    );
+    await validateSnapshotDirectory(root, target);
+    return;
+  }
+
   const staleManifest = GeneratedManifestSchema.parse({
     ...previous.manifest,
     qualityStatus: "stale",
@@ -755,13 +821,28 @@ async function cleanupAfterCommit(
   beforeCleanup: (() => void | Promise<void>) | undefined,
   log: (message: string) => void,
 ): Promise<void> {
-  try {
+  const runCleanupStage = async (
+    label: string,
+    cleanup: () => Promise<void>,
+  ): Promise<void> => {
+    try {
+      await cleanup();
+    } catch (error) {
+      log(
+        `Non-fatal ${label} cleanup failure: ${error instanceof Error ? error.message : String(error)}`,
+      );
+    }
+  };
+
+  await runCleanupStage("temporary snapshot", async () => {
     await beforeCleanup?.();
     for (const cleanupPath of cleanupPaths) {
       if (await pathExists(cleanupPath)) {
         await safeRemoveTemporaryDirectory(root, temporaryRoot, cleanupPath);
       }
     }
+  });
+  await runCleanupStage("manifest candidate", async () => {
     for (const entry of await readdir(target, { withFileTypes: true })) {
       if (entry.isFile() && entry.name.startsWith("manifest.next-")) {
         const candidate = resolve(target, entry.name);
@@ -769,12 +850,10 @@ async function cleanupAfterCommit(
         await rm(candidate, { force: true });
       }
     }
+  });
+  await runCleanupStage("snapshot retention", async () => {
     await enforceSnapshotRetention(root, target);
-  } catch (error) {
-    log(
-      `Non-fatal snapshot cleanup failure: ${error instanceof Error ? error.message : String(error)}`,
-    );
-  }
+  });
 }
 
 /** Builds and publishes immutable resource sets with a manifest-last commit. */

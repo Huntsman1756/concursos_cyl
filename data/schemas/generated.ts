@@ -1,5 +1,10 @@
 import { z } from "zod";
 
+import {
+  isImmutableGeneratedResourcePath,
+  legacyGeneratedResourcePath,
+} from "./generatedResourceCatalog";
+
 export const TrainingLevelSchema = z.enum([
   "basic",
   "intermediate",
@@ -84,24 +89,24 @@ export const GeneratedResourceSnapshotsSchema = z
     programs: SourceSnapshotSchema.extend({
       resourcePath: z
         .string()
-        .regex(/^\/data\/v1\/snapshots\/[a-z0-9-]+\/programs\.json$/u),
+        .refine((path) => isImmutableGeneratedResourcePath("programs", path)),
     }),
     centers: SourceSnapshotSchema.extend({
       resourcePath: z
         .string()
-        .regex(/^\/data\/v1\/snapshots\/[a-z0-9-]+\/centers\.json$/u),
+        .refine((path) => isImmutableGeneratedResourcePath("centers", path)),
     }),
     trainingOfferings: SourceSnapshotSchema.extend({
       resourcePath: z
         .string()
-        .regex(
-          /^\/data\/v1\/snapshots\/[a-z0-9-]+\/training-offerings\.json$/u,
+        .refine((path) =>
+          isImmutableGeneratedResourcePath("trainingOfferings", path),
         ),
     }),
     jobOffers: SourceSnapshotSchema.extend({
       resourcePath: z
         .string()
-        .regex(/^\/data\/v1\/snapshots\/[a-z0-9-]+\/job-offers\.json$/u),
+        .refine((path) => isImmutableGeneratedResourcePath("jobOffers", path)),
     }),
   })
   .strict();
@@ -130,37 +135,32 @@ export const GeneratedManifestSchema = z
     generatedAt: z.string().datetime(),
     qualityStatus: z.enum(["passed", "stale"]),
     resourceSnapshots: GeneratedResourceSnapshotsSchema,
-    qualityReport: GeneratedQualityReportSchema.optional(),
+    qualityReport: GeneratedQualityReportSchema,
   })
   .strict();
 
-export const LegacyGeneratedManifestSchema = z
+const StrictLegacySourceSnapshotSchema = SourceSnapshotSchema.strict();
+
+const LegacyGeneratedManifestSchema = z
   .object({
     schemaVersion: z.literal("1.0.0"),
     generatedAt: z.string().datetime(),
     qualityStatus: z.enum(["passed", "stale"]),
     resourceSnapshots: z
       .object({
-        programs: SourceSnapshotSchema,
-        centers: SourceSnapshotSchema,
-        trainingOfferings: SourceSnapshotSchema,
-        jobOffers: SourceSnapshotSchema,
+        programs: StrictLegacySourceSnapshotSchema,
+        centers: StrictLegacySourceSnapshotSchema,
+        trainingOfferings: StrictLegacySourceSnapshotSchema,
+        jobOffers: StrictLegacySourceSnapshotSchema,
       })
       .strict(),
     qualityReport: GeneratedQualityReportSchema.optional(),
   })
   .strict();
 
-const LEGACY_RESOURCE_PATHS = {
-  programs: "/data/v1/programs.json",
-  centers: "/data/v1/centers.json",
-  trainingOfferings: "/data/v1/training-offerings.json",
-  jobOffers: "/data/v1/job-offers.json",
-} as const;
-
 export const LoadableGeneratedManifestSchema = z
   .union([GeneratedManifestSchema, LegacyGeneratedManifestSchema])
-  .transform((manifest): z.infer<typeof GeneratedManifestSchema> => {
+  .transform((manifest) => {
     if ("resourcePath" in manifest.resourceSnapshots.programs) {
       return GeneratedManifestSchema.parse(manifest);
     }
@@ -170,19 +170,19 @@ export const LoadableGeneratedManifestSchema = z
       resourceSnapshots: {
         programs: {
           ...manifest.resourceSnapshots.programs,
-          resourcePath: LEGACY_RESOURCE_PATHS.programs,
+          resourcePath: legacyGeneratedResourcePath("programs"),
         },
         centers: {
           ...manifest.resourceSnapshots.centers,
-          resourcePath: LEGACY_RESOURCE_PATHS.centers,
+          resourcePath: legacyGeneratedResourcePath("centers"),
         },
         trainingOfferings: {
           ...manifest.resourceSnapshots.trainingOfferings,
-          resourcePath: LEGACY_RESOURCE_PATHS.trainingOfferings,
+          resourcePath: legacyGeneratedResourcePath("trainingOfferings"),
         },
         jobOffers: {
           ...manifest.resourceSnapshots.jobOffers,
-          resourcePath: LEGACY_RESOURCE_PATHS.jobOffers,
+          resourcePath: legacyGeneratedResourcePath("jobOffers"),
         },
       },
     };
@@ -203,3 +203,6 @@ export type GeneratedQualityReport = z.infer<
 >;
 export type JobOffer = z.infer<typeof JobOfferSchema>;
 export type GeneratedManifest = z.infer<typeof GeneratedManifestSchema>;
+export type LoadableGeneratedManifest = z.infer<
+  typeof LoadableGeneratedManifestSchema
+>;

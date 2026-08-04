@@ -15,7 +15,10 @@ import { join, resolve } from "node:path";
 
 import { afterEach, describe, expect, it, vi } from "vitest";
 
-import { GeneratedManifestSchema } from "../../data/schemas/generated";
+import {
+  GeneratedManifestSchema,
+  LoadableGeneratedManifestSchema,
+} from "../../data/schemas/generated";
 import {
   liveOfferSourceRecord,
   liveTrainingSourceRecord,
@@ -341,6 +344,96 @@ describe("buildSnapshots", () => {
     expect(fetchTrainingRecords).not.toHaveBeenCalled();
   });
 
+  it("rejects a current prior manifest missing its quality report", async () => {
+    const root = await temporaryRoot();
+    await buildSnapshots({ rootDirectory: root, ...fixedOptions });
+    const manifestPath = join(root, "public", "data", "v1", "manifest.json");
+    const manifest = JSON.parse(await readFile(manifestPath, "utf8"));
+    delete manifest.qualityReport;
+    await writeFile(
+      manifestPath,
+      `${JSON.stringify(manifest, null, 2)}\n`,
+      "utf8",
+    );
+    const before = await readFile(manifestPath);
+    const fetchTrainingRecords = vi.fn(fixedOptions.fetchTrainingRecords);
+
+    await expect(
+      buildSnapshots({
+        rootDirectory: root,
+        ...fixedOptions,
+        fetchTrainingRecords,
+      }),
+    ).rejects.toThrow(/qualityReport|invalid|union/i);
+    expect(fetchTrainingRecords).not.toHaveBeenCalled();
+    await expect(readFile(manifestPath)).resolves.toEqual(before);
+  });
+
+  it("marks a valid legacy flat snapshot stale without changing resource bytes", async () => {
+    const root = await temporaryRoot();
+    await buildSnapshots({ rootDirectory: root, ...fixedOptions });
+    const manifest = await readManifest(root);
+    const output = join(root, "public", "data", "v1");
+    const fileNames = {
+      programs: "programs.json",
+      centers: "centers.json",
+      trainingOfferings: "training-offerings.json",
+      jobOffers: "job-offers.json",
+    } as const;
+    const before = {} as Record<keyof typeof fileNames, Buffer>;
+
+    for (const key of Object.keys(fileNames) as Array<keyof typeof fileNames>) {
+      const bytes = await readFile(
+        assetPath(root, manifest.resourceSnapshots[key].resourcePath),
+      );
+      before[key] = bytes;
+      await writeFile(join(output, fileNames[key]), bytes);
+    }
+    const legacyManifest = {
+      ...manifest,
+      resourceSnapshots: Object.fromEntries(
+        Object.entries(manifest.resourceSnapshots).map(
+          ([key, snapshotValue]) => [
+            key,
+            Object.fromEntries(
+              Object.entries(snapshotValue).filter(
+                ([field]) => field !== "resourcePath",
+              ),
+            ),
+          ],
+        ),
+      ),
+    };
+    await writeFile(
+      join(output, "manifest.json"),
+      `${JSON.stringify(legacyManifest, null, 2)}\n`,
+      "utf8",
+    );
+
+    await expect(
+      buildSnapshots({
+        rootDirectory: root,
+        ...fixedOptions,
+        fetchTrainingRecords: async () => {
+          throw new Error("official source unavailable");
+        },
+      }),
+    ).rejects.toThrow(/previous snapshot marked stale/i);
+
+    const staleJson = JSON.parse(
+      await readFile(join(output, "manifest.json"), "utf8"),
+    );
+    expect(staleJson.qualityStatus).toBe("stale");
+    expect(LoadableGeneratedManifestSchema.safeParse(staleJson).success).toBe(
+      true,
+    );
+    for (const key of Object.keys(fileNames) as Array<keyof typeof fileNames>) {
+      await expect(readFile(join(output, fileNames[key]))).resolves.toEqual(
+        before[key],
+      );
+    }
+  });
+
   it("recovers a legacy interrupted backup before attempting refresh", async () => {
     const root = await temporaryRoot();
     await buildSnapshots({ rootDirectory: root, ...fixedOptions });
@@ -418,6 +511,37 @@ describe("buildSnapshots", () => {
     for (const path of snapshotPaths.slice(-3)) {
       await expect(access(assetPath(root, path))).resolves.toBeUndefined();
     }
+  });
+
+  it("still enforces retention when earlier post-commit cleanup fails", async () => {
+    const root = await temporaryRoot();
+    for (let day = 1; day <= 4; day += 1) {
+      await buildSnapshots({
+        rootDirectory: root,
+        ...fixedOptions,
+        now: () => new Date(`2026-09-0${day}T10:00:00.000Z`),
+        failureInjection:
+          day === 4
+            ? {
+                beforeCleanup: () => {
+                  throw new Error("locked temporary cleanup");
+                },
+              }
+            : undefined,
+      });
+    }
+
+    const manifest = await readManifest(root);
+    const snapshotsRoot = join(root, "public", "data", "v1", "snapshots");
+    const retained = (await readdir(snapshotsRoot, { withFileTypes: true }))
+      .filter((entry) => entry.isDirectory())
+      .map((entry) => entry.name);
+    const currentId = manifest.resourceSnapshots.programs.resourcePath
+      .split("/")
+      .at(-2);
+
+    expect(retained).toHaveLength(3);
+    expect(retained).toContain(currentId);
   });
 
   it.each(["public/data", ".codex-tmp"])(

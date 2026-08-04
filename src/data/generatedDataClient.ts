@@ -2,8 +2,9 @@ import type { z } from "zod";
 
 import {
   LoadableGeneratedManifestSchema,
-  type GeneratedManifest,
+  type LoadableGeneratedManifest,
 } from "../../data/schemas/generated";
+import { isPermittedGeneratedAssetPath } from "../../data/schemas/generatedResourceCatalog";
 
 export type GeneratedDataErrorCode = "network" | "schema" | "missing";
 
@@ -18,10 +19,6 @@ export class GeneratedDataError extends Error {
 }
 
 function validatedGeneratedAssetPath(path: string): string {
-  const permittedMutableAsset =
-    /^\/data\/v1\/(?:manifest|programs|centers|training-offerings|job-offers)\.json$/u;
-  const permittedImmutableAsset =
-    /^\/data\/v1\/snapshots\/[a-z0-9-]+\/(?:programs|centers|training-offerings|job-offers)\.json$/u;
   if (
     path.trim().length === 0 ||
     path !== path.trim() ||
@@ -33,7 +30,7 @@ function validatedGeneratedAssetPath(path: string): string {
     path.includes("#") ||
     /%[0-9a-f]{2}/iu.test(path) ||
     path.split("/").some((segment) => segment === "." || segment === "..") ||
-    (!permittedMutableAsset.test(path) && !permittedImmutableAsset.test(path))
+    !isPermittedGeneratedAssetPath(path)
   ) {
     throw new GeneratedDataError(
       "missing",
@@ -97,7 +94,7 @@ export async function loadGeneratedResource<T>(
   return result.data;
 }
 
-export function loadManifest(): Promise<GeneratedManifest> {
+export function loadManifest(): Promise<LoadableGeneratedManifest> {
   return loadGeneratedResource(
     "/data/v1/manifest.json",
     LoadableGeneratedManifestSchema,

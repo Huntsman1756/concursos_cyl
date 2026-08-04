@@ -36,6 +36,18 @@ describe("generated data client", () => {
       schemaVersion: "1.0.0",
       generatedAt: "2026-08-04T10:00:00.000Z",
       qualityStatus: "stale",
+      qualityReport: {
+        counts: { programs: 1, centers: 1, offerings: 1, offers: 1 },
+        nullRates: {
+          centerAddress: 0,
+          centerPhone: 0,
+          centerEmail: 0,
+          centerWebsite: 0,
+          offerProvince: 0,
+          offerLocality: 0,
+          offerDescription: 0,
+        },
+      },
       resourceSnapshots: {
         programs: {
           ...snapshot,

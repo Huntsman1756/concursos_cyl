@@ -19,6 +19,19 @@ const snapshot = {
   qualityStatus: "passed",
 };
 
+const qualityReport = {
+  counts: { programs: 1, centers: 1, offerings: 1, offers: 1 },
+  nullRates: {
+    centerAddress: 0,
+    centerPhone: 0,
+    centerEmail: 0,
+    centerWebsite: 0,
+    offerProvince: 0,
+    offerLocality: 0,
+    offerDescription: 0,
+  },
+};
+
 describe("generated data contracts", () => {
   it("accepts a normalized training offering and rejects an empty program key", () => {
     const valid = {
@@ -94,6 +107,7 @@ describe("generated data contracts", () => {
       schemaVersion: "1.0.0",
       generatedAt: "2026-08-04T10:00:00.000Z",
       qualityStatus: "passed",
+      qualityReport,
       resourceSnapshots: {
         programs: {
           ...snapshot,
@@ -115,6 +129,11 @@ describe("generated data contracts", () => {
     };
 
     expect(GeneratedManifestSchema.safeParse(valid).success).toBe(true);
+    const { qualityReport: _missing, ...missingQualityReport } = valid;
+    void _missing;
+    expect(
+      GeneratedManifestSchema.safeParse(missingQualityReport).success,
+    ).toBe(false);
     expect(
       GeneratedManifestSchema.safeParse({ ...valid, schemaVersion: "2.0.0" })
         .success,
@@ -171,4 +190,29 @@ describe("generated data contracts", () => {
       },
     });
   });
+
+  it.each([
+    "/data/v1/snapshots/build-1/programs.json",
+    "/data/v1/snapshots/%2e%2e/programs.json",
+    "/data/v1/programs.json",
+  ])(
+    "rejects a hybrid legacy manifest with nested resourcePath %s",
+    (resourcePath) => {
+      const hybrid = {
+        schemaVersion: "1.0.0",
+        generatedAt: "2026-08-04T10:00:00.000Z",
+        qualityStatus: "stale",
+        resourceSnapshots: {
+          programs: { ...snapshot, resourcePath },
+          centers: snapshot,
+          trainingOfferings: snapshot,
+          jobOffers: snapshot,
+        },
+      };
+
+      expect(LoadableGeneratedManifestSchema.safeParse(hybrid).success).toBe(
+        false,
+      );
+    },
+  );
 });
