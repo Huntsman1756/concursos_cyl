@@ -1374,10 +1374,16 @@ export async function buildSnapshots(
     let staging: string | undefined;
     let immutableDestination: string | undefined;
     try {
-      const [trainingRecords, offerRecords] = await Promise.all([
+      const [fetchedTrainingRecords, fetchedOfferRecords] = await Promise.all([
         fetchTrainingRecords(),
         fetchOfferRecords(),
       ]);
+      const trainingRecords = z
+        .array(TrainingSourceRecordSchema)
+        .parse(fetchedTrainingRecords);
+      const offerRecords = z
+        .array(OfferSourceRecordSchema)
+        .parse(fetchedOfferRecords);
       const sourceHash = hashCanonicalSource({
         offers: offerRecords,
         training: trainingRecords,

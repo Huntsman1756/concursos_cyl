@@ -20,7 +20,6 @@ import {
   GeneratedManifestSchema,
   LoadableGeneratedManifestSchema,
 } from "../../data/schemas/generated";
-import { TrainingSourceRecordSchema } from "../../data/schemas/trainingSource";
 import {
   liveOfferSourceRecord,
   liveTrainingSourceRecord,
@@ -545,10 +544,10 @@ describe("buildSnapshots", () => {
         ...fixedOptions,
         now: () => new Date("2026-08-05T10:00:00.000Z"),
         fetchTrainingRecords: async () => [
-          TrainingSourceRecordSchema.parse({
+          {
             ...liveTrainingSourceRecord,
             upstream_renamed_field: "drift",
-          }),
+          },
         ],
       }),
     ).rejects.toThrow(/previous snapshot marked stale/i);
