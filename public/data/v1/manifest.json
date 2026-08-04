@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-04T14:28:03.880Z",
+  "generatedAt": "2026-08-04T14:41:16.083Z",
   "qualityReport": {
     "counts": {
       "centers": 229,
@@ -22,10 +22,10 @@
     "centers": {
       "qualityStatus": "passed",
       "recordCount": 229,
-      "resourcePath": "/data/v1/snapshots/20260804142803880-6e07eafedc96/centers.json",
+      "resourcePath": "/data/v1/snapshots/20260804144116083-6e07eafedc96/centers.json",
       "schemaVersion": "1.0.0",
       "sha256": "995839b947e15ec86922633b46c6f521ffcdfbdd75495e0980dfb2cca9f92efc",
-      "snapshotFetchedAt": "2026-08-04T14:28:03.880Z",
+      "snapshotFetchedAt": "2026-08-04T14:41:16.083Z",
       "sourceId": "jcyl-vocational-training-offer",
       "sourceUpdatedAt": null,
       "sourceUrl": "https://analisis.datosabiertos.jcyl.es/api/explore/v2.1/catalog/datasets/oferta-de-formacion-profesional/records"
@@ -33,10 +33,10 @@
     "jobOffers": {
       "qualityStatus": "passed",
       "recordCount": 1033,
-      "resourcePath": "/data/v1/snapshots/20260804142803880-6e07eafedc96/job-offers.json",
+      "resourcePath": "/data/v1/snapshots/20260804144116083-6e07eafedc96/job-offers.json",
       "schemaVersion": "1.0.0",
-      "sha256": "8e567efaf7f8249ab10c9699ee9751ce92db4bd56d2024eb2ad09612d279f02b",
-      "snapshotFetchedAt": "2026-08-04T14:28:03.880Z",
+      "sha256": "16f3b3b60e3ed0067effec6acaaba9e1a3c3e544cb2d508c7c0ebc793eaa3a9b",
+      "snapshotFetchedAt": "2026-08-04T14:41:16.083Z",
       "sourceId": "jcyl-employment-offers",
       "sourceUpdatedAt": "2026-07-31T00:00:00.000Z",
       "sourceUrl": "https://analisis.datosabiertos.jcyl.es/api/explore/v2.1/catalog/datasets/ofertas-de-empleo/records"
@@ -44,10 +44,10 @@
     "programs": {
       "qualityStatus": "passed",
       "recordCount": 187,
-      "resourcePath": "/data/v1/snapshots/20260804142803880-6e07eafedc96/programs.json",
+      "resourcePath": "/data/v1/snapshots/20260804144116083-6e07eafedc96/programs.json",
       "schemaVersion": "1.0.0",
       "sha256": "7c3538b583c2feb48207b90d5a69874325fedcf20bda0e781044282db76c0d22",
-      "snapshotFetchedAt": "2026-08-04T14:28:03.880Z",
+      "snapshotFetchedAt": "2026-08-04T14:41:16.083Z",
       "sourceId": "jcyl-vocational-training-offer",
       "sourceUpdatedAt": null,
       "sourceUrl": "https://analisis.datosabiertos.jcyl.es/api/explore/v2.1/catalog/datasets/oferta-de-formacion-profesional/records"
@@ -55,10 +55,10 @@
     "trainingOfferings": {
       "qualityStatus": "passed",
       "recordCount": 1293,
-      "resourcePath": "/data/v1/snapshots/20260804142803880-6e07eafedc96/training-offerings.json",
+      "resourcePath": "/data/v1/snapshots/20260804144116083-6e07eafedc96/training-offerings.json",
       "schemaVersion": "1.0.0",
       "sha256": "0d091ea5889e2939b3806bcf223a2652e89434dfa480e58ee49687ea4e89dade",
-      "snapshotFetchedAt": "2026-08-04T14:28:03.880Z",
+      "snapshotFetchedAt": "2026-08-04T14:41:16.083Z",
       "sourceId": "jcyl-vocational-training-offer",
       "sourceUpdatedAt": null,
       "sourceUrl": "https://analisis.datosabiertos.jcyl.es/api/explore/v2.1/catalog/datasets/oferta-de-formacion-profesional/records"

@@ -1,8 +1,9 @@
-import { createHash } from "node:crypto";
+import { createHash, randomUUID } from "node:crypto";
 import {
   access,
   lstat,
   mkdir,
+  open,
   readFile,
   readdir,
   realpath,
@@ -324,6 +325,155 @@ async function safeRemoveTemporaryDirectory(
   assertTemporaryName(path);
   await assertPhysicalPath(root, path);
   await rm(path, { recursive: true, force: true });
+}
+
+const SnapshotBuildLockMetadataSchema = z
+  .object({
+    schemaVersion: z.literal("1.0.0"),
+    token: z.string().uuid(),
+    pid: z.number().int().positive(),
+    startedAt: z.string().datetime(),
+    root: z.string().min(1),
+    buildId: z.string().min(1),
+  })
+  .strict();
+
+type SnapshotBuildLockMetadata = z.infer<
+  typeof SnapshotBuildLockMetadataSchema
+>;
+
+interface HeldSnapshotBuildLock {
+  path: string;
+  metadata: SnapshotBuildLockMetadata;
+}
+
+function errorCode(error: unknown): string | undefined {
+  return error !== null && typeof error === "object" && "code" in error
+    ? String(error.code)
+    : undefined;
+}
+
+async function readSnapshotBuildLock(
+  root: string,
+  lockPath: string,
+): Promise<SnapshotBuildLockMetadata> {
+  await assertPhysicalPath(root, lockPath);
+  try {
+    return SnapshotBuildLockMetadataSchema.parse(
+      JSON.parse(await readFile(lockPath, "utf8")),
+    );
+  } catch (error) {
+    throw new Error("Snapshot build lock metadata is invalid.", {
+      cause: error,
+    });
+  }
+}
+
+function isLockOwnerLive(pid: number): boolean | undefined {
+  if (pid === process.pid) {
+    return true;
+  }
+  try {
+    process.kill(pid, 0);
+    return true;
+  } catch (error) {
+    return errorCode(error) === "ESRCH" ? false : undefined;
+  }
+}
+
+async function reclaimStaleSnapshotBuildLock(
+  root: string,
+  lockPath: string,
+  observedToken: string,
+): Promise<void> {
+  const current = await readSnapshotBuildLock(root, lockPath);
+  if (current.token !== observedToken) {
+    throw new Error("Snapshot build already in progress; lock owner changed.");
+  }
+  await assertPhysicalPath(root, lockPath);
+  await rm(lockPath, { force: true });
+}
+
+async function acquireSnapshotBuildLock(
+  root: string,
+  temporaryRoot: string,
+): Promise<HeldSnapshotBuildLock> {
+  const lockPath = resolve(temporaryRoot, "snapshot-build.lock");
+  const token = randomUUID();
+  const metadata = SnapshotBuildLockMetadataSchema.parse({
+    schemaVersion: "1.0.0",
+    token,
+    pid: process.pid,
+    startedAt: new Date().toISOString(),
+    root,
+    buildId: `${process.pid}-${token}`,
+  });
+
+  for (let attempt = 0; attempt < 2; attempt += 1) {
+    await assertPhysicalPath(root, temporaryRoot);
+    await assertPhysicalPath(root, lockPath);
+    let handle;
+    try {
+      handle = await open(lockPath, "wx");
+    } catch (error) {
+      if (errorCode(error) !== "EEXIST") {
+        throw error;
+      }
+      const existing = await readSnapshotBuildLock(root, lockPath);
+      if (existing.root !== root) {
+        throw new Error("Snapshot build lock metadata has a different root.", {
+          cause: error,
+        });
+      }
+      if (isLockOwnerLive(existing.pid) !== false) {
+        throw new Error(
+          `Snapshot build already in progress (pid ${existing.pid}, build ${existing.buildId}).`,
+          { cause: error },
+        );
+      }
+      await reclaimStaleSnapshotBuildLock(root, lockPath, existing.token);
+      continue;
+    }
+
+    try {
+      await handle.writeFile(serializeDeterministically(metadata), "utf8");
+      await handle.sync();
+    } catch (error) {
+      await handle.close();
+      await reclaimStaleSnapshotBuildLock(root, lockPath, token).catch(
+        () => undefined,
+      );
+      throw error;
+    }
+    await handle.close();
+    await assertPhysicalPath(root, lockPath);
+    return { path: lockPath, metadata };
+  }
+
+  throw new Error("Snapshot build lock could not be acquired safely.");
+}
+
+async function releaseSnapshotBuildLock(
+  root: string,
+  heldLock: HeldSnapshotBuildLock,
+  log: (message: string) => void,
+): Promise<void> {
+  try {
+    if (!(await pathExists(heldLock.path))) {
+      return;
+    }
+    const current = await readSnapshotBuildLock(root, heldLock.path);
+    if (current.token !== heldLock.metadata.token) {
+      log("Non-fatal snapshot build lock release skipped: owner changed.");
+      return;
+    }
+    await assertPhysicalPath(root, heldLock.path);
+    await rm(heldLock.path, { force: true });
+  } catch (error) {
+    log(
+      `Non-fatal snapshot build lock release failure: ${error instanceof Error ? error.message : String(error)}`,
+    );
+  }
 }
 
 function countsFromManifest(
@@ -889,101 +1039,90 @@ export async function buildSnapshots(
   await safeMkdir(root, temporaryRoot);
   await safeMkdir(root, resolve(root, "public", "data"));
 
-  const legacyBackupPaths = await recoverInterruptedLegacyBackup(
-    root,
-    temporaryRoot,
-    target,
-  );
-  const abandonedBuildPaths = await abandonedBuildDirectories(temporaryRoot);
-  const cleanupPaths = [...legacyBackupPaths, ...abandonedBuildPaths];
-  const previous = await loadPreviousSnapshot(root, target);
-  if (previous !== undefined) {
-    try {
-      await enforceSnapshotRetention(root, target);
-    } catch (error) {
-      log(
-        `Non-fatal startup snapshot cleanup failure: ${error instanceof Error ? error.message : String(error)}`,
-      );
-    }
-  }
-  const fetchTrainingRecords =
-    options.fetchTrainingRecords ??
-    (() =>
-      fetchAllRecords(
-        SOURCE_CONFIG.training.recordsUrl,
-        TrainingSourceRecordSchema,
-      ));
-  const fetchOfferRecords =
-    options.fetchOfferRecords ??
-    (() =>
-      fetchAllRecords(
-        SOURCE_CONFIG.offers.recordsUrl,
-        OfferSourceRecordSchema,
-      ));
-
-  let committed = false;
-  let staging: string | undefined;
-  let immutableDestination: string | undefined;
+  const heldLock = await acquireSnapshotBuildLock(root, temporaryRoot);
   try {
-    const [trainingRecords, offerRecords] = await Promise.all([
-      fetchTrainingRecords(),
-      fetchOfferRecords(),
-    ]);
-    const sourceHash = hashCanonicalSource({
-      offers: offerRecords,
-      training: trainingRecords,
-    });
-    const snapshotId = `${fetchedAt.replace(/\D/gu, "").toLowerCase()}-${sourceHash.slice(0, 12)}`;
-    const buildId = `${snapshotId}-${process.pid}`;
-    staging = resolve(temporaryRoot, `data-build-${buildId}`);
-    const result = await writeCandidate(
-      root,
-      staging,
-      snapshotId,
-      fetchedAt,
-      trainingRecords,
-      offerRecords,
-      previous?.counts,
-    );
-    await safeMkdir(root, target);
-    const publication = await publishImmutableResources(
-      root,
-      temporaryRoot,
-      staging,
-      target,
-      snapshotId,
-    );
-    staging = undefined;
-    immutableDestination = publication.created
-      ? publication.destination
-      : undefined;
-    await validateFlatCandidateDirectory(
-      root,
-      publication.destination,
-      result.manifest,
-    );
-    await commitManifest(
-      root,
-      target,
-      buildId,
-      result.manifest,
-      options.failureInjection?.beforeManifestCommit,
-    );
-    committed = true;
-    await options.failureInjection?.afterManifestCommit?.();
-    await cleanupAfterCommit(
+    const legacyBackupPaths = await recoverInterruptedLegacyBackup(
       root,
       temporaryRoot,
       target,
-      cleanupPaths,
-      options.failureInjection?.beforeCleanup,
-      log,
     );
-    log(
-      `Generated official snapshots at ${fetchedAt}: ${JSON.stringify(result.counts)}`,
-    );
-  } catch (error) {
-    if (committed) {
+    const abandonedBuildPaths = await abandonedBuildDirectories(temporaryRoot);
+    const cleanupPaths = [...legacyBackupPaths, ...abandonedBuildPaths];
+    const previous = await loadPreviousSnapshot(root, target);
+    if (previous !== undefined) {
+      try {
+        await enforceSnapshotRetention(root, target);
+      } catch (error) {
+        log(
+          `Non-fatal startup snapshot cleanup failure: ${error instanceof Error ? error.message : String(error)}`,
+        );
+      }
+    }
+    const fetchTrainingRecords =
+      options.fetchTrainingRecords ??
+      (() =>
+        fetchAllRecords(
+          SOURCE_CONFIG.training.recordsUrl,
+          TrainingSourceRecordSchema,
+        ));
+    const fetchOfferRecords =
+      options.fetchOfferRecords ??
+      (() =>
+        fetchAllRecords(
+          SOURCE_CONFIG.offers.recordsUrl,
+          OfferSourceRecordSchema,
+        ));
+
+    let committed = false;
+    let staging: string | undefined;
+    let immutableDestination: string | undefined;
+    try {
+      const [trainingRecords, offerRecords] = await Promise.all([
+        fetchTrainingRecords(),
+        fetchOfferRecords(),
+      ]);
+      const sourceHash = hashCanonicalSource({
+        offers: offerRecords,
+        training: trainingRecords,
+      });
+      const snapshotId = `${fetchedAt.replace(/\D/gu, "").toLowerCase()}-${sourceHash.slice(0, 12)}`;
+      const buildId = `${snapshotId}-${process.pid}`;
+      staging = resolve(temporaryRoot, `data-build-${buildId}`);
+      const result = await writeCandidate(
+        root,
+        staging,
+        snapshotId,
+        fetchedAt,
+        trainingRecords,
+        offerRecords,
+        previous?.counts,
+      );
+      await safeMkdir(root, target);
+      const publication = await publishImmutableResources(
+        root,
+        temporaryRoot,
+        staging,
+        target,
+        snapshotId,
+      );
+      staging = undefined;
+      immutableDestination = publication.created
+        ? publication.destination
+        : undefined;
+      await validateFlatCandidateDirectory(
+        root,
+        publication.destination,
+        result.manifest,
+      );
+      await commitManifest(
+        root,
+        target,
+        buildId,
+        result.manifest,
+        options.failureInjection?.beforeManifestCommit,
+      );
+      committed = true;
+      await options.failureInjection?.afterManifestCommit?.();
       await cleanupAfterCommit(
         root,
         temporaryRoot,
@@ -992,48 +1131,64 @@ export async function buildSnapshots(
         options.failureInjection?.beforeCleanup,
         log,
       );
-      throw error;
-    }
-
-    if (staging !== undefined && (await pathExists(staging))) {
-      try {
-        await safeRemoveTemporaryDirectory(root, temporaryRoot, staging);
-      } catch (cleanupError) {
-        log(
-          `Non-fatal staging cleanup failure: ${cleanupError instanceof Error ? cleanupError.message : String(cleanupError)}`,
+      log(
+        `Generated official snapshots at ${fetchedAt}: ${JSON.stringify(result.counts)}`,
+      );
+    } catch (error) {
+      if (committed) {
+        await cleanupAfterCommit(
+          root,
+          temporaryRoot,
+          target,
+          cleanupPaths,
+          options.failureInjection?.beforeCleanup,
+          log,
         );
+        throw error;
       }
-    }
 
-    if (
-      immutableDestination !== undefined &&
-      (await pathExists(immutableDestination))
-    ) {
-      try {
-        await safeRemoveImmutableSnapshotDirectory(
+      if (staging !== undefined && (await pathExists(staging))) {
+        try {
+          await safeRemoveTemporaryDirectory(root, temporaryRoot, staging);
+        } catch (cleanupError) {
+          log(
+            `Non-fatal staging cleanup failure: ${cleanupError instanceof Error ? cleanupError.message : String(cleanupError)}`,
+          );
+        }
+      }
+
+      if (
+        immutableDestination !== undefined &&
+        (await pathExists(immutableDestination))
+      ) {
+        try {
+          await safeRemoveImmutableSnapshotDirectory(
+            root,
+            target,
+            immutableDestination,
+          );
+        } catch (cleanupError) {
+          log(
+            `Non-fatal unpublished snapshot cleanup failure: ${cleanupError instanceof Error ? cleanupError.message : String(cleanupError)}`,
+          );
+        }
+      }
+
+      if (previous !== undefined) {
+        await markPreviousSnapshotStale(
           root,
           target,
-          immutableDestination,
+          `${fetchedAt.replace(/\D/gu, "")}-${process.pid}`,
         );
-      } catch (cleanupError) {
-        log(
-          `Non-fatal unpublished snapshot cleanup failure: ${cleanupError instanceof Error ? cleanupError.message : String(cleanupError)}`,
+        throw new Error(
+          `Snapshot refresh failed; previous snapshot marked stale. ${error instanceof Error ? error.message : String(error)}`,
+          { cause: error },
         );
       }
+      throw error;
     }
-
-    if (previous !== undefined) {
-      await markPreviousSnapshotStale(
-        root,
-        target,
-        `${fetchedAt.replace(/\D/gu, "")}-${process.pid}`,
-      );
-      throw new Error(
-        `Snapshot refresh failed; previous snapshot marked stale. ${error instanceof Error ? error.message : String(error)}`,
-        { cause: error },
-      );
-    }
-    throw error;
+  } finally {
+    await releaseSnapshotBuildLock(root, heldLock, log);
   }
 }
 
