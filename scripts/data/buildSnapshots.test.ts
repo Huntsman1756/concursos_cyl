@@ -24,7 +24,10 @@ import {
   liveOfferSourceRecord,
   liveTrainingSourceRecord,
 } from "../../tests/fixtures/sourceRecords";
-import { buildSnapshots } from "./buildSnapshots";
+import {
+  buildSnapshots,
+  type SnapshotFailureInjection,
+} from "./buildSnapshots";
 import { hashFile } from "./hashFile";
 
 const temporaryRoots: string[] = [];
@@ -56,6 +59,29 @@ const fixedOptions = {
   fetchOfferRecords: async () => [{ ...liveOfferSourceRecord }],
   log: () => undefined,
 };
+
+function lockFailureInjection(
+  hooks: Record<string, unknown>,
+): SnapshotFailureInjection {
+  return hooks as SnapshotFailureInjection;
+}
+
+async function waitForSignal(signal: Promise<void>): Promise<void> {
+  let timeout: ReturnType<typeof setTimeout> | undefined;
+  try {
+    await Promise.race([
+      signal,
+      new Promise<never>((_resolve, reject) => {
+        timeout = setTimeout(
+          () => reject(new Error("Timed out waiting for lock interleaving.")),
+          2_000,
+        );
+      }),
+    ]);
+  } finally {
+    clearTimeout(timeout);
+  }
+}
 
 afterEach(async () => {
   await Promise.all(
@@ -141,7 +167,7 @@ describe("buildSnapshots", () => {
         pid: 2_147_483_647,
         startedAt: "2026-01-01T00:00:00.000Z",
         root,
-        buildId: "crashed-build",
+        buildId: "2147483647-00000000-0000-4000-8000-000000000001",
       })}\n`,
       "utf8",
     );
@@ -182,6 +208,191 @@ describe("buildSnapshots", () => {
     ).rejects.toThrow(/lock metadata/i);
     await expect(readManifest(root)).resolves.toEqual(before);
     await expect(access(lockPath)).resolves.toBeUndefined();
+  });
+
+  it("rejects lock metadata whose build identity does not match pid and token", async () => {
+    const root = await temporaryRoot();
+    const temporaryRootPath = join(root, ".codex-tmp");
+    const lockPath = join(temporaryRootPath, "snapshot-build.lock");
+    await mkdir(temporaryRootPath, { recursive: true });
+    await writeFile(
+      lockPath,
+      `${JSON.stringify({
+        schemaVersion: "1.0.0",
+        token: "00000000-0000-4000-8000-000000000001",
+        pid: 2_147_483_647,
+        startedAt: "2026-01-01T00:00:00.000Z",
+        root,
+        buildId: "crashed-build",
+      })}\n`,
+      "utf8",
+    );
+
+    await expect(
+      buildSnapshots({ rootDirectory: root, ...fixedOptions }),
+    ).rejects.toThrow(/lock metadata/i);
+    await expect(access(lockPath)).resolves.toBeUndefined();
+  });
+
+  it("cannot remove a replacement lock after a stale-reclaimer interleaving", async () => {
+    const root = await temporaryRoot();
+    const temporaryRootPath = join(root, ".codex-tmp");
+    const lockPath = join(temporaryRootPath, "snapshot-build.lock");
+    await mkdir(temporaryRootPath, { recursive: true });
+    await writeFile(
+      lockPath,
+      `${JSON.stringify({
+        schemaVersion: "1.0.0",
+        token: "00000000-0000-4000-8000-000000000001",
+        pid: 2_147_483_647,
+        startedAt: "2026-01-01T00:00:00.000Z",
+        root,
+        buildId: "2147483647-00000000-0000-4000-8000-000000000001",
+      })}\n`,
+      "utf8",
+    );
+    let signalXInspected!: () => void;
+    let resumeX!: () => void;
+    const xInspected = new Promise<void>((resolveInspected) => {
+      signalXInspected = resolveInspected;
+    });
+    const xResume = new Promise<void>((resolveResume) => {
+      resumeX = resolveResume;
+    });
+    const buildXOutcome = buildSnapshots({
+      rootDirectory: root,
+      ...fixedOptions,
+      now: () => new Date("2027-02-01T10:00:00.000Z"),
+      failureInjection: lockFailureInjection({
+        afterStaleLockInspection: async () => {
+          signalXInspected();
+          await xResume;
+        },
+      }),
+    }).then(
+      () => undefined,
+      (error: unknown) => error,
+    );
+    await waitForSignal(xInspected);
+
+    let signalYPaused!: () => void;
+    let resumeY!: () => void;
+    const yPaused = new Promise<void>((resolvePaused) => {
+      signalYPaused = resolvePaused;
+    });
+    const yResume = new Promise<void>((resolveResume) => {
+      resumeY = resolveResume;
+    });
+    const buildY = buildSnapshots({
+      rootDirectory: root,
+      ...fixedOptions,
+      now: () => new Date("2027-02-02T10:00:00.000Z"),
+      failureInjection: {
+        beforeManifestCommit: async () => {
+          signalYPaused();
+          await yResume;
+        },
+      },
+    });
+    await waitForSignal(yPaused);
+
+    resumeX();
+    const buildXError = await buildXOutcome;
+    await expect(access(lockPath)).resolves.toBeUndefined();
+    resumeY();
+    await buildY;
+
+    expect(buildXError).toBeInstanceOf(Error);
+    expect((buildXError as Error).message).toMatch(/owner changed/i);
+    await expect(readManifest(root)).resolves.toMatchObject({
+      generatedAt: "2027-02-02T10:00:00.000Z",
+      qualityStatus: "passed",
+    });
+    await expect(access(lockPath)).rejects.toMatchObject({ code: "ENOENT" });
+  });
+
+  it.each([
+    {
+      name: "handle close rejection",
+      message: "injected lock close rejection",
+      hooks: lockFailureInjection({
+        closeLockHandle: async (close: () => Promise<void>) => {
+          await close();
+          throw new Error("injected lock close rejection");
+        },
+      }),
+    },
+    {
+      name: "post-close physical assertion failure",
+      message: "injected lock physical assertion failure",
+      hooks: lockFailureInjection({
+        assertLockPhysicalAfterClose: async (
+          assertPhysical: () => Promise<void>,
+        ) => {
+          await assertPhysical();
+          throw new Error("injected lock physical assertion failure");
+        },
+      }),
+    },
+  ])(
+    "cleans its atomically created lock after $name",
+    async ({ hooks, message }) => {
+      const root = await temporaryRoot();
+      const lockPath = join(root, ".codex-tmp", "snapshot-build.lock");
+
+      await expect(
+        buildSnapshots({
+          rootDirectory: root,
+          ...fixedOptions,
+          failureInjection: hooks,
+        }),
+      ).rejects.toThrow(message);
+      await expect(access(lockPath)).rejects.toMatchObject({ code: "ENOENT" });
+
+      await expect(
+        buildSnapshots({ rootDirectory: root, ...fixedOptions }),
+      ).resolves.toBeUndefined();
+    },
+  );
+
+  it("releases only its quarantined lock when a replacement appears", async () => {
+    const root = await temporaryRoot();
+    const lockPath = join(root, ".codex-tmp", "snapshot-build.lock");
+    let signalReleaseInspected!: () => void;
+    let resumeRelease!: () => void;
+    const releaseInspected = new Promise<void>((resolveInspected) => {
+      signalReleaseInspected = resolveInspected;
+    });
+    const releaseResume = new Promise<void>((resolveResume) => {
+      resumeRelease = resolveResume;
+    });
+    const build = buildSnapshots({
+      rootDirectory: root,
+      ...fixedOptions,
+      failureInjection: lockFailureInjection({
+        afterLockReleaseQuarantineInspection: async () => {
+          signalReleaseInspected();
+          await releaseResume;
+        },
+      }),
+    });
+    await waitForSignal(releaseInspected);
+
+    const replacement = {
+      schemaVersion: "1.0.0",
+      token: "00000000-0000-4000-8000-000000000002",
+      pid: process.pid,
+      startedAt: "2027-03-01T00:00:00.000Z",
+      root,
+      buildId: `${process.pid}-00000000-0000-4000-8000-000000000002`,
+    };
+    await writeFile(lockPath, `${JSON.stringify(replacement)}\n`, "utf8");
+    resumeRelease();
+    await build;
+
+    await expect(
+      readFile(lockPath, "utf8").then((value) => JSON.parse(value)),
+    ).resolves.toEqual(replacement);
   });
 
   it("writes validated immutable resources with exact counts and hashes", async () => {

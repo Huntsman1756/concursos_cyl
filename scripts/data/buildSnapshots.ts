@@ -1,6 +1,7 @@
 import { createHash, randomUUID } from "node:crypto";
 import {
   access,
+  link,
   lstat,
   mkdir,
   open,
@@ -93,6 +94,12 @@ export interface SnapshotFailureInjection {
   beforeManifestCommit?: () => void | Promise<void>;
   afterManifestCommit?: () => void | Promise<void>;
   beforeCleanup?: () => void | Promise<void>;
+  afterStaleLockInspection?: () => void | Promise<void>;
+  closeLockHandle?: (close: () => Promise<void>) => void | Promise<void>;
+  assertLockPhysicalAfterClose?: (
+    assertPhysical: () => Promise<void>,
+  ) => void | Promise<void>;
+  afterLockReleaseQuarantineInspection?: () => void | Promise<void>;
 }
 
 export interface BuildSnapshotsOptions {
@@ -150,13 +157,14 @@ function hashCanonicalSource(value: unknown): string {
     .digest("hex");
 }
 
+function errorCode(error: unknown): string | undefined {
+  return error !== null && typeof error === "object" && "code" in error
+    ? String(error.code)
+    : undefined;
+}
+
 function isMissing(error: unknown): boolean {
-  return (
-    error !== null &&
-    typeof error === "object" &&
-    "code" in error &&
-    error.code === "ENOENT"
-  );
+  return errorCode(error) === "ENOENT";
 }
 
 async function pathExists(path: string): Promise<boolean> {
@@ -327,6 +335,13 @@ async function safeRemoveTemporaryDirectory(
   await rm(path, { recursive: true, force: true });
 }
 
+const SNAPSHOT_BUILD_LOCK_NAME = "snapshot-build.lock";
+const SNAPSHOT_BUILD_LOCK_QUARANTINE_PREFIX = "snapshot-build.lock-quarantine-";
+
+function snapshotBuildId(pid: number, token: string): string {
+  return `${pid}-${token}`;
+}
+
 const SnapshotBuildLockMetadataSchema = z
   .object({
     schemaVersion: z.literal("1.0.0"),
@@ -336,7 +351,16 @@ const SnapshotBuildLockMetadataSchema = z
     root: z.string().min(1),
     buildId: z.string().min(1),
   })
-  .strict();
+  .strict()
+  .superRefine((metadata, context) => {
+    if (metadata.buildId !== snapshotBuildId(metadata.pid, metadata.token)) {
+      context.addIssue({
+        code: "custom",
+        path: ["buildId"],
+        message: "Build ID must match the lock PID and token.",
+      });
+    }
+  });
 
 type SnapshotBuildLockMetadata = z.infer<
   typeof SnapshotBuildLockMetadataSchema
@@ -347,10 +371,9 @@ interface HeldSnapshotBuildLock {
   metadata: SnapshotBuildLockMetadata;
 }
 
-function errorCode(error: unknown): string | undefined {
-  return error !== null && typeof error === "object" && "code" in error
-    ? String(error.code)
-    : undefined;
+interface LockFileIdentity {
+  dev: number;
+  ino: number;
 }
 
 async function readSnapshotBuildLock(
@@ -381,24 +404,186 @@ function isLockOwnerLive(pid: number): boolean | undefined {
   }
 }
 
+function sameLockIdentity(
+  left: SnapshotBuildLockMetadata,
+  right: SnapshotBuildLockMetadata,
+): boolean {
+  return (
+    left.schemaVersion === right.schemaVersion &&
+    left.token === right.token &&
+    left.pid === right.pid &&
+    left.startedAt === right.startedAt &&
+    normalizedPhysicalPath(left.root) === normalizedPhysicalPath(right.root) &&
+    left.buildId === right.buildId
+  );
+}
+
+function assertExactLockPath(temporaryRoot: string, lockPath: string): void {
+  if (resolve(lockPath) !== resolve(temporaryRoot, SNAPSHOT_BUILD_LOCK_NAME)) {
+    throw new Error("Snapshot build lock path is not the exact lock file.");
+  }
+}
+
+function assertExactQuarantinePath(
+  temporaryRoot: string,
+  quarantinePath: string,
+): void {
+  const resolved = resolve(quarantinePath);
+  if (
+    dirname(resolved) !== temporaryRoot ||
+    !basename(resolved).startsWith(SNAPSHOT_BUILD_LOCK_QUARANTINE_PREFIX)
+  ) {
+    throw new Error("Snapshot build lock quarantine path is not contained.");
+  }
+}
+
+async function quarantineSnapshotBuildLock(
+  root: string,
+  temporaryRoot: string,
+  lockPath: string,
+): Promise<string> {
+  assertExactLockPath(temporaryRoot, lockPath);
+  await assertPhysicalPath(root, temporaryRoot);
+  const quarantinePath = resolve(
+    temporaryRoot,
+    `${SNAPSHOT_BUILD_LOCK_QUARANTINE_PREFIX}${randomUUID()}`,
+  );
+  assertExactQuarantinePath(temporaryRoot, quarantinePath);
+  await assertPhysicalPath(root, quarantinePath);
+  await rename(lockPath, quarantinePath);
+  return quarantinePath;
+}
+
+async function restoreQuarantinedSnapshotBuildLock(
+  root: string,
+  temporaryRoot: string,
+  lockPath: string,
+  quarantinePath: string,
+): Promise<void> {
+  assertExactLockPath(temporaryRoot, lockPath);
+  assertExactQuarantinePath(temporaryRoot, quarantinePath);
+  await assertPhysicalPath(root, temporaryRoot);
+  await assertPhysicalPath(root, quarantinePath);
+  await link(quarantinePath, lockPath);
+  await rm(quarantinePath, { force: true });
+}
+
+async function removeLockQuarantine(
+  root: string,
+  temporaryRoot: string,
+  quarantinePath: string,
+): Promise<void> {
+  assertExactQuarantinePath(temporaryRoot, quarantinePath);
+  await assertPhysicalPath(root, quarantinePath);
+  await rm(quarantinePath, { force: true });
+}
+
+async function quarantineExpectedSnapshotBuildLock(
+  root: string,
+  temporaryRoot: string,
+  lockPath: string,
+  expected: SnapshotBuildLockMetadata,
+): Promise<string> {
+  const quarantinePath = await quarantineSnapshotBuildLock(
+    root,
+    temporaryRoot,
+    lockPath,
+  );
+  try {
+    const quarantined = await readSnapshotBuildLock(root, quarantinePath);
+    if (!sameLockIdentity(quarantined, expected)) {
+      throw new Error(
+        "Snapshot build already in progress; lock owner changed.",
+      );
+    }
+    return quarantinePath;
+  } catch (error) {
+    try {
+      await restoreQuarantinedSnapshotBuildLock(
+        root,
+        temporaryRoot,
+        lockPath,
+        quarantinePath,
+      );
+    } catch (restoreError) {
+      throw new Error(
+        `Snapshot build lock validation failed (${error instanceof Error ? error.message : String(error)}) and safe restoration was not possible.`,
+        { cause: restoreError },
+      );
+    }
+    throw error;
+  }
+}
+
 async function reclaimStaleSnapshotBuildLock(
   root: string,
+  temporaryRoot: string,
   lockPath: string,
-  observedToken: string,
+  observed: SnapshotBuildLockMetadata,
 ): Promise<void> {
-  const current = await readSnapshotBuildLock(root, lockPath);
-  if (current.token !== observedToken) {
-    throw new Error("Snapshot build already in progress; lock owner changed.");
+  const quarantinePath = await quarantineExpectedSnapshotBuildLock(
+    root,
+    temporaryRoot,
+    lockPath,
+    observed,
+  );
+  await removeLockQuarantine(root, temporaryRoot, quarantinePath);
+}
+
+async function assertNoLockQuarantine(temporaryRoot: string): Promise<void> {
+  const quarantine = (
+    await readdir(temporaryRoot, { withFileTypes: true })
+  ).find((entry) =>
+    entry.name.startsWith(SNAPSHOT_BUILD_LOCK_QUARANTINE_PREFIX),
+  );
+  if (quarantine !== undefined) {
+    throw new Error(
+      `Snapshot build lock quarantine requires recovery: ${quarantine.name}.`,
+    );
   }
-  await assertPhysicalPath(root, lockPath);
-  await rm(lockPath, { force: true });
+}
+
+async function cleanupFailedLockAcquisition(
+  root: string,
+  temporaryRoot: string,
+  lockPath: string,
+  identity: LockFileIdentity,
+): Promise<void> {
+  let quarantinePath: string;
+  try {
+    quarantinePath = await quarantineSnapshotBuildLock(
+      root,
+      temporaryRoot,
+      lockPath,
+    );
+  } catch (error) {
+    if (errorCode(error) === "ENOENT") {
+      return;
+    }
+    throw error;
+  }
+  const quarantinedIdentity = await lstat(quarantinePath);
+  if (
+    quarantinedIdentity.dev !== identity.dev ||
+    quarantinedIdentity.ino !== identity.ino
+  ) {
+    await restoreQuarantinedSnapshotBuildLock(
+      root,
+      temporaryRoot,
+      lockPath,
+      quarantinePath,
+    );
+    return;
+  }
+  await removeLockQuarantine(root, temporaryRoot, quarantinePath);
 }
 
 async function acquireSnapshotBuildLock(
   root: string,
   temporaryRoot: string,
+  failureInjection: SnapshotFailureInjection | undefined,
 ): Promise<HeldSnapshotBuildLock> {
-  const lockPath = resolve(temporaryRoot, "snapshot-build.lock");
+  const lockPath = resolve(temporaryRoot, SNAPSHOT_BUILD_LOCK_NAME);
   const token = randomUUID();
   const metadata = SnapshotBuildLockMetadataSchema.parse({
     schemaVersion: "1.0.0",
@@ -406,12 +591,13 @@ async function acquireSnapshotBuildLock(
     pid: process.pid,
     startedAt: new Date().toISOString(),
     root,
-    buildId: `${process.pid}-${token}`,
+    buildId: snapshotBuildId(process.pid, token),
   });
 
   for (let attempt = 0; attempt < 2; attempt += 1) {
     await assertPhysicalPath(root, temporaryRoot);
     await assertPhysicalPath(root, lockPath);
+    await assertNoLockQuarantine(temporaryRoot);
     let handle;
     try {
       handle = await open(lockPath, "wx");
@@ -420,7 +606,9 @@ async function acquireSnapshotBuildLock(
         throw error;
       }
       const existing = await readSnapshotBuildLock(root, lockPath);
-      if (existing.root !== root) {
+      if (
+        normalizedPhysicalPath(existing.root) !== normalizedPhysicalPath(root)
+      ) {
         throw new Error("Snapshot build lock metadata has a different root.", {
           cause: error,
         });
@@ -431,22 +619,42 @@ async function acquireSnapshotBuildLock(
           { cause: error },
         );
       }
-      await reclaimStaleSnapshotBuildLock(root, lockPath, existing.token);
+      await failureInjection?.afterStaleLockInspection?.();
+      await reclaimStaleSnapshotBuildLock(
+        root,
+        temporaryRoot,
+        lockPath,
+        existing,
+      );
       continue;
     }
 
+    const identity = await handle.stat();
     try {
       await handle.writeFile(serializeDeterministically(metadata), "utf8");
       await handle.sync();
+      const close = () => handle.close();
+      if (failureInjection?.closeLockHandle === undefined) {
+        await close();
+      } else {
+        await failureInjection.closeLockHandle(close);
+      }
+      const assertAfterClose = () => assertPhysicalPath(root, lockPath);
+      if (failureInjection?.assertLockPhysicalAfterClose === undefined) {
+        await assertAfterClose();
+      } else {
+        await failureInjection.assertLockPhysicalAfterClose(assertAfterClose);
+      }
     } catch (error) {
-      await handle.close();
-      await reclaimStaleSnapshotBuildLock(root, lockPath, token).catch(
-        () => undefined,
-      );
+      await handle.close().catch(() => undefined);
+      await cleanupFailedLockAcquisition(
+        root,
+        temporaryRoot,
+        lockPath,
+        identity,
+      ).catch(() => undefined);
       throw error;
     }
-    await handle.close();
-    await assertPhysicalPath(root, lockPath);
     return { path: lockPath, metadata };
   }
 
@@ -455,20 +663,23 @@ async function acquireSnapshotBuildLock(
 
 async function releaseSnapshotBuildLock(
   root: string,
+  temporaryRoot: string,
   heldLock: HeldSnapshotBuildLock,
   log: (message: string) => void,
+  failureInjection: SnapshotFailureInjection | undefined,
 ): Promise<void> {
   try {
     if (!(await pathExists(heldLock.path))) {
       return;
     }
-    const current = await readSnapshotBuildLock(root, heldLock.path);
-    if (current.token !== heldLock.metadata.token) {
-      log("Non-fatal snapshot build lock release skipped: owner changed.");
-      return;
-    }
-    await assertPhysicalPath(root, heldLock.path);
-    await rm(heldLock.path, { force: true });
+    const quarantinePath = await quarantineExpectedSnapshotBuildLock(
+      root,
+      temporaryRoot,
+      heldLock.path,
+      heldLock.metadata,
+    );
+    await failureInjection?.afterLockReleaseQuarantineInspection?.();
+    await removeLockQuarantine(root, temporaryRoot, quarantinePath);
   } catch (error) {
     log(
       `Non-fatal snapshot build lock release failure: ${error instanceof Error ? error.message : String(error)}`,
@@ -1039,7 +1250,11 @@ export async function buildSnapshots(
   await safeMkdir(root, temporaryRoot);
   await safeMkdir(root, resolve(root, "public", "data"));
 
-  const heldLock = await acquireSnapshotBuildLock(root, temporaryRoot);
+  const heldLock = await acquireSnapshotBuildLock(
+    root,
+    temporaryRoot,
+    options.failureInjection,
+  );
   try {
     const legacyBackupPaths = await recoverInterruptedLegacyBackup(
       root,
@@ -1188,7 +1403,13 @@ export async function buildSnapshots(
       throw error;
     }
   } finally {
-    await releaseSnapshotBuildLock(root, heldLock, log);
+    await releaseSnapshotBuildLock(
+      root,
+      temporaryRoot,
+      heldLock,
+      log,
+      options.failureInjection,
+    );
   }
 }
 
