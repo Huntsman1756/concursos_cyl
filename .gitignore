@@ -1,0 +1,26 @@
+# Dependencies and builds
+node_modules/
+dist/
+coverage/
+playwright-report/
+test-results/
+
+# Local environment
+.env
+.env.*
+!.env.example
+
+# Agent and temporary workspaces
+.codex-tmp/
+.superpowers/
+.worktrees/
+tmp/
+
+# Local accidental placeholder retained outside version control
+/=
+
+# Editors and operating systems
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
