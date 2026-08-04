@@ -1,6 +1,8 @@
 import type {
   EducationCenter,
   JobOffer,
+  LegacyEducationCenter,
+  LegacyTrainingOffering,
   ReconciliationAnomaly,
   TrainingOffering,
   TrainingProgram,
@@ -24,12 +26,9 @@ export interface SnapshotCandidate {
 
 export interface LegacySnapshotCandidate {
   programs: readonly TrainingProgram[];
-  centers: readonly Omit<EducationCenter, "centerOwnership">[];
-  trainingOfferings: readonly Omit<
-    TrainingOffering,
-    "offeringId" | "centerName" | "teachingType" | "centerOwnership"
-  >[];
-  jobOffers: readonly Omit<JobOffer, "sourceRecordUpdatedAt">[];
+  centers: readonly LegacyEducationCenter[];
+  trainingOfferings: readonly LegacyTrainingOffering[];
+  jobOffers: readonly JobOffer[];
 }
 
 export interface QualityNullRates {
@@ -128,15 +127,15 @@ function nullRate<T>(
   return records.filter(isNull).length / records.length;
 }
 
-type LegacyCenter = LegacySnapshotCandidate["centers"][number];
-type LegacyTrainingOffering =
+type SharedCenter = LegacySnapshotCandidate["centers"][number];
+type SharedTrainingOffering =
   LegacySnapshotCandidate["trainingOfferings"][number];
-type LegacyJobOffer = LegacySnapshotCandidate["jobOffers"][number];
+type SharedJobOffer = LegacySnapshotCandidate["jobOffers"][number];
 
 function validateSharedCandidate<
-  Center extends LegacyCenter,
-  Offering extends LegacyTrainingOffering,
-  Offer extends LegacyJobOffer,
+  Center extends SharedCenter,
+  Offering extends SharedTrainingOffering,
+  Offer extends SharedJobOffer,
 >(
   candidate: {
     programs: readonly TrainingProgram[];

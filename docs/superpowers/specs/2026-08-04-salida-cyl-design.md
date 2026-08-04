@@ -375,4 +375,3 @@ The release is acceptable when both principal journeys work end to end, every vi
 - [Official salary and income source review](../../../research/salida-cyl-salary-sources-2026.md)
 - [Design-system and skills source review](../../../research/salida-cyl-design-sources-2026.md)
 - [2026 contest call](../../../tmp/convocatoria.pdf)
-[rtk] /!\ No hook installed — run `rtk init -g` for automatic token savings

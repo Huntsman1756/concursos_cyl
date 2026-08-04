@@ -1,5 +1,7 @@
 import { describe, expect, it } from "vitest";
+import { z } from "zod";
 import {
+  DescriptionSectionsSchema,
   EducationCenterSchema,
   GeneratedManifestSchema,
   LoadableGeneratedManifestSchema,
@@ -114,7 +116,6 @@ describe("generated data contracts", () => {
       province: "Valladolid",
       locality: "Valladolid",
       publishedAt: "2026-08-03T00:00:00.000Z",
-      sourceRecordUpdatedAt: "2026-08-03T14:30:00.000Z",
       sourceName: "ECYL",
       descriptionText: "Se requiere carné B.",
       descriptionSections: {
@@ -126,13 +127,35 @@ describe("generated data contracts", () => {
         other: [],
       },
       originalUrl: "https://empleo.jcyl.es/oferta/08-2026-12345",
-      sourceSnapshot: snapshot,
+      sourceSnapshot: {
+        ...snapshot,
+        sourceUpdatedAt: "2026-08-03T14:30:00.000Z",
+      },
     };
 
     expect(JobOfferSchema.safeParse(valid).success).toBe(true);
-    const { sourceRecordUpdatedAt: _missing, ...withoutRecordUpdate } = valid;
-    void _missing;
-    expect(JobOfferSchema.safeParse(withoutRecordUpdate).success).toBe(false);
+    expect(
+      JobOfferSchema.safeParse({
+        ...valid,
+        sourceSnapshot: { ...valid.sourceSnapshot, sourceUpdatedAt: null },
+      }).success,
+    ).toBe(false);
+
+    const fixedPointJobOfferSchema = z
+      .object({
+        id: z.string().min(1),
+        title: z.string().min(1),
+        province: z.string().min(1).nullable(),
+        locality: z.string().min(1).nullable(),
+        publishedAt: z.string().datetime(),
+        sourceName: z.string().min(1),
+        descriptionText: z.string(),
+        descriptionSections: DescriptionSectionsSchema,
+        originalUrl: z.string().url(),
+        sourceSnapshot: SourceSnapshotSchema.passthrough(),
+      })
+      .strict();
+    expect(fixedPointJobOfferSchema.safeParse(valid).success).toBe(true);
     expect(
       JobOfferSchema.safeParse({
         ...valid,

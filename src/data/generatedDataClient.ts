@@ -1,10 +1,26 @@
-import type { z } from "zod";
+import { z } from "zod";
 
 import {
+  EducationCenterSchema,
+  JobOfferSchema,
+  LegacyEducationCenterSchema,
+  LegacyTrainingOfferingSchema,
   LoadableGeneratedManifestSchema,
+  TrainingOfferingSchema,
+  TrainingProgramSchema,
+  type EducationCenter,
+  type JobOffer,
+  type LegacyEducationCenter,
+  type LegacyTrainingOffering,
   type LoadableGeneratedManifest,
+  type TrainingOffering,
+  type TrainingProgram,
 } from "../../data/schemas/generated";
-import { isPermittedGeneratedAssetPath } from "../../data/schemas/generatedResourceCatalog";
+import {
+  isPermittedGeneratedAssetPath,
+  legacyGeneratedResourcePath,
+  type GeneratedResourceKey,
+} from "../../data/schemas/generatedResourceCatalog";
 
 export type GeneratedDataErrorCode = "network" | "schema" | "missing";
 
@@ -100,4 +116,59 @@ export function loadManifest(): Promise<LoadableGeneratedManifest> {
     LoadableGeneratedManifestSchema,
     { cache: "no-store" },
   );
+}
+
+export interface LoadedFoundationResources {
+  programs: TrainingProgram[];
+  centers: (EducationCenter | LegacyEducationCenter)[];
+  trainingOfferings: (TrainingOffering | LegacyTrainingOffering)[];
+  jobOffers: JobOffer[];
+}
+
+function usesLegacyResourceContract(
+  key: GeneratedResourceKey,
+  path: string,
+): boolean {
+  return path === legacyGeneratedResourcePath(key);
+}
+
+/** Loads all required v1 resources with path-sensitive current/legacy contracts. */
+export async function loadFoundationResources(
+  manifest: LoadableGeneratedManifest,
+): Promise<LoadedFoundationResources> {
+  const { resourceSnapshots } = manifest;
+  const [programs, centers, trainingOfferings, jobOffers] = await Promise.all([
+    loadGeneratedResource(
+      resourceSnapshots.programs.resourcePath,
+      z.array(TrainingProgramSchema),
+    ),
+    loadGeneratedResource(
+      resourceSnapshots.centers.resourcePath,
+      z.array(
+        usesLegacyResourceContract(
+          "centers",
+          resourceSnapshots.centers.resourcePath,
+        )
+          ? LegacyEducationCenterSchema
+          : EducationCenterSchema,
+      ),
+    ),
+    loadGeneratedResource(
+      resourceSnapshots.trainingOfferings.resourcePath,
+      z.array(
+        usesLegacyResourceContract(
+          "trainingOfferings",
+          resourceSnapshots.trainingOfferings.resourcePath,
+        )
+          ? LegacyTrainingOfferingSchema
+          : TrainingOfferingSchema,
+      ),
+    ),
+    loadGeneratedResource(
+      resourceSnapshots.jobOffers.resourcePath,
+      z.array(JobOfferSchema),
+    ),
+  ]);
+
+  return { programs, centers, trainingOfferings, jobOffers };
 }

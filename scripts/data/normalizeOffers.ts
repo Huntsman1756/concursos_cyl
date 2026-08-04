@@ -121,7 +121,10 @@ function normalizeRecord(
   const sourceSnapshot =
     options.sourceSnapshot === undefined
       ? sourceSnapshotForRecord(record, sourceRecordUpdatedAt)
-      : SourceSnapshotSchema.parse(options.sourceSnapshot);
+      : SourceSnapshotSchema.parse({
+          ...options.sourceSnapshot,
+          sourceUpdatedAt: sourceRecordUpdatedAt,
+        });
 
   return JobOfferSchema.parse({
     id: requiredText(record.identificador, "identificador"),
@@ -129,7 +132,6 @@ function normalizeRecord(
     province: nullableText(record.provincia),
     locality: nullableText(record.localidad),
     publishedAt,
-    sourceRecordUpdatedAt,
     sourceName: nullableText(record.fuentecontenido) ?? "ECYL",
     descriptionText: description.plainText,
     descriptionSections: description.sections,

@@ -71,6 +71,20 @@ export const EducationCenterSchema = z
   })
   .strict();
 
+export const LegacyEducationCenterSchema = EducationCenterSchema.omit({
+  centerOwnership: true,
+}).strict();
+
+export const LegacyTrainingOfferingSchema = z
+  .object({
+    ...TrainingProgramSchema.shape,
+    centerCode: z.string().min(1),
+    province: z.string().min(1),
+    locality: z.string().min(1),
+    modality: ModalitySchema,
+  })
+  .strict();
+
 export const TrainingOfferingSchema = z
   .object({
     offeringId: z.string().min(1),
@@ -118,12 +132,13 @@ export const JobOfferSchema = z
     province: z.string().min(1).nullable(),
     locality: z.string().min(1).nullable(),
     publishedAt: z.string().datetime(),
-    sourceRecordUpdatedAt: z.string().datetime(),
     sourceName: z.string().min(1),
     descriptionText: z.string(),
     descriptionSections: DescriptionSectionsSchema,
     originalUrl: z.string().url(),
-    sourceSnapshot: SourceSnapshotSchema,
+    sourceSnapshot: SourceSnapshotSchema.extend({
+      sourceUpdatedAt: z.string().datetime(),
+    }).strict(),
   })
   .strict();
 
@@ -284,6 +299,10 @@ export type SourceSnapshot = z.infer<typeof SourceSnapshotSchema>;
 export type TrainingProgram = z.infer<typeof TrainingProgramSchema>;
 export type TrainingOffering = z.infer<typeof TrainingOfferingSchema>;
 export type EducationCenter = z.infer<typeof EducationCenterSchema>;
+export type LegacyEducationCenter = z.infer<typeof LegacyEducationCenterSchema>;
+export type LegacyTrainingOffering = z.infer<
+  typeof LegacyTrainingOfferingSchema
+>;
 export type DescriptionSections = z.infer<typeof DescriptionSectionsSchema>;
 export type GeneratedResourceSnapshots = z.infer<
   typeof GeneratedResourceSnapshotsSchema

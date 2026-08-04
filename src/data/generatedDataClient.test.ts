@@ -1,7 +1,11 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { z } from "zod";
 
-import { loadGeneratedResource, loadManifest } from "./generatedDataClient";
+import {
+  loadFoundationResources,
+  loadGeneratedResource,
+  loadManifest,
+} from "./generatedDataClient";
 
 const snapshot = {
   sourceId: "jcyl-employment-offers",
@@ -98,6 +102,93 @@ describe("generated data client", () => {
         },
         jobOffers: { resourcePath: "/data/v1/job-offers.json" },
       },
+    });
+  });
+
+  it("loads retained flat resources after migrating a legacy manifest", async () => {
+    const program = {
+      programKey: "IFC03S",
+      programTitle: "Desarrollo de Aplicaciones Web",
+      level: "higher",
+      familyCode: "IFC",
+      familyName: "Informática y Comunicaciones",
+    };
+    const center = {
+      centerCode: "47000000",
+      centerName: "IES Río Duero",
+      province: "Valladolid",
+      locality: "Valladolid",
+      address: null,
+      phone: null,
+      email: null,
+      website: null,
+    };
+    const trainingOffering = {
+      ...program,
+      centerCode: center.centerCode,
+      province: center.province,
+      locality: center.locality,
+      modality: "on_site",
+    };
+    const jobOffer = {
+      id: "08-2026-12345",
+      title: "Desarrollador/a web",
+      province: null,
+      locality: null,
+      publishedAt: "2026-08-03T00:00:00.000Z",
+      sourceName: "ECYL",
+      descriptionText: "Oferta oficial.",
+      descriptionSections: {
+        summary: ["Oferta oficial."],
+        functions: [],
+        requirements: [],
+        conditions: [],
+        application: [],
+        other: [],
+      },
+      originalUrl: "https://empleo.jcyl.es/oferta/08-2026-12345",
+      sourceSnapshot: snapshot,
+    };
+    const assets: Record<string, unknown> = {
+      "/data/v1/manifest.json": {
+        schemaVersion: "1.0.0",
+        generatedAt: "2026-08-04T10:00:00.000Z",
+        qualityStatus: "stale",
+        resourceSnapshots: {
+          programs: snapshot,
+          centers: snapshot,
+          trainingOfferings: snapshot,
+          jobOffers: snapshot,
+        },
+      },
+      "/data/v1/programs.json": [program],
+      "/data/v1/centers.json": [center],
+      "/data/v1/training-offerings.json": [trainingOffering],
+      "/data/v1/job-offers.json": [jobOffer],
+    };
+    vi.stubGlobal(
+      "fetch",
+      vi.fn(async (input: string | URL | Request) => {
+        const path =
+          typeof input === "string"
+            ? input
+            : input instanceof URL
+              ? input.pathname
+              : new URL(input.url).pathname;
+        const value = assets[path];
+        return new Response(JSON.stringify(value ?? { message: "not found" }), {
+          status: value === undefined ? 404 : 200,
+          headers: { "Content-Type": "application/json" },
+        });
+      }),
+    );
+
+    const manifest = await loadManifest();
+    await expect(loadFoundationResources(manifest)).resolves.toEqual({
+      programs: [program],
+      centers: [center],
+      trainingOfferings: [trainingOffering],
+      jobOffers: [jobOffer],
     });
   });
 

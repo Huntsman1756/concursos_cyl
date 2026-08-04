@@ -32,11 +32,12 @@ describe("normalizeOffers", () => {
     expect(offer).toMatchObject({
       id: "08-2026-12345",
       publishedAt: "2026-08-03T00:00:00.000Z",
-      sourceRecordUpdatedAt: "2026-08-04T10:00:00.000Z",
       originalUrl: "https://empleo.jcyl.es/oferta/08-2026-12345",
       descriptionText: "Requisitos: Carné B",
       descriptionSections: { requirements: ["Carné B"] },
-      sourceSnapshot: { sourceUpdatedAt: "2026-08-04T10:00:00.000Z" },
+      sourceSnapshot: {
+        sourceUpdatedAt: "2026-08-04T10:00:00.000Z",
+      },
     });
     expect(JSON.stringify(offer)).not.toContain("<li>");
     expect(JSON.stringify(offer)).not.toContain("alert(1)");
@@ -66,9 +67,11 @@ describe("normalizeOffers", () => {
       { sourceSnapshot: datasetSnapshot },
     );
 
-    expect(offer.sourceRecordUpdatedAt).toBe("2026-08-04T00:00:00.000Z");
+    expect(offer.sourceSnapshot.sourceUpdatedAt).not.toBe(
+      datasetSnapshot.sourceUpdatedAt,
+    );
     expect(offer.sourceSnapshot.sourceUpdatedAt).toBe(
-      "2026-08-05T00:00:00.000Z",
+      "2026-08-04T00:00:00.000Z",
     );
     expect(offer.sourceSnapshot.snapshotFetchedAt).toBe(
       "2026-08-06T09:00:00.000Z",

@@ -30,8 +30,9 @@ import {
   EducationCenterSchema,
   GeneratedManifestSchema,
   JobOfferSchema,
+  LegacyEducationCenterSchema,
+  LegacyTrainingOfferingSchema,
   LoadableGeneratedManifestSchema,
-  ModalitySchema,
   SourceSnapshotSchema,
   TrainingOfferingSchema,
   TrainingProgramSchema,
@@ -75,31 +76,17 @@ const RESOURCE_DEFINITIONS = {
   centers: {
     ...GENERATED_RESOURCE_CATALOG.centers,
     schema: z.array(EducationCenterSchema),
-    legacySchema: z.array(
-      EducationCenterSchema.omit({ centerOwnership: true }).strict(),
-    ),
+    legacySchema: z.array(LegacyEducationCenterSchema),
   },
   trainingOfferings: {
     ...GENERATED_RESOURCE_CATALOG.trainingOfferings,
     schema: z.array(TrainingOfferingSchema),
-    legacySchema: z.array(
-      z
-        .object({
-          ...TrainingProgramSchema.shape,
-          centerCode: z.string().min(1),
-          province: z.string().min(1),
-          locality: z.string().min(1),
-          modality: ModalitySchema,
-        })
-        .strict(),
-    ),
+    legacySchema: z.array(LegacyTrainingOfferingSchema),
   },
   jobOffers: {
     ...GENERATED_RESOURCE_CATALOG.jobOffers,
     schema: z.array(JobOfferSchema),
-    legacySchema: z.array(
-      JobOfferSchema.omit({ sourceRecordUpdatedAt: true }).strict(),
-    ),
+    legacySchema: z.array(JobOfferSchema),
   },
 } as const;
 
@@ -962,7 +949,9 @@ async function recoverInterruptedLegacyBackup(
 function latestSourceUpdatedAt(
   offers: readonly ReturnType<typeof normalizeOffers>[number][],
 ): string | null {
-  const values = offers.map((offer) => offer.sourceRecordUpdatedAt).sort();
+  const values = offers
+    .map((offer) => offer.sourceSnapshot.sourceUpdatedAt)
+    .sort();
   return values.at(-1) ?? null;
 }
 

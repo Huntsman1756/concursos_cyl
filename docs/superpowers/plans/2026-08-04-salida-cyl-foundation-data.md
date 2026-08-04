@@ -618,4 +618,3 @@ Expected: all exit 0.
 rtk git add playwright.config.ts tests/e2e src/features/home src/app
 rtk git commit -m "test: verify home accessibility and data freshness"
 ```
-[rtk] /!\ No hook installed — run `rtk init -g` for automatic token savings
