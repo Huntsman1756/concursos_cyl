@@ -46,7 +46,18 @@ export const EducationCenterSchema = z.object({
   website: z.string().url().nullable(),
 });
 
-export const DescriptionSectionSchema = z.string().min(1);
+const DescriptionSectionContentSchema = z.array(z.string().min(1));
+
+export const DescriptionSectionsSchema = z
+  .object({
+    summary: DescriptionSectionContentSchema,
+    functions: DescriptionSectionContentSchema,
+    requirements: DescriptionSectionContentSchema,
+    conditions: DescriptionSectionContentSchema,
+    application: DescriptionSectionContentSchema,
+    other: DescriptionSectionContentSchema,
+  })
+  .strict();
 
 export const JobOfferSchema = z
   .object({
@@ -57,18 +68,27 @@ export const JobOfferSchema = z
     publishedAt: z.string().datetime(),
     sourceName: z.string().min(1),
     descriptionText: z.string(),
-    descriptionSections: z.array(DescriptionSectionSchema),
+    descriptionSections: DescriptionSectionsSchema,
     originalUrl: z.string().url(),
     sourceSnapshot: SourceSnapshotSchema,
   })
   .strict();
 
-export const GeneratedManifestSchema = z.object({
-  schemaVersion: z.literal("1.0.0"),
-  generatedAt: z.string().datetime(),
-  qualityStatus: z.enum(["passed", "stale"]),
-  snapshots: z.array(SourceSnapshotSchema),
+export const GeneratedResourceSnapshotsSchema = z.object({
+  programs: SourceSnapshotSchema,
+  centers: SourceSnapshotSchema,
+  trainingOfferings: SourceSnapshotSchema,
+  jobOffers: SourceSnapshotSchema,
 });
+
+export const GeneratedManifestSchema = z
+  .object({
+    schemaVersion: z.literal("1.0.0"),
+    generatedAt: z.string().datetime(),
+    qualityStatus: z.enum(["passed", "stale"]),
+    resourceSnapshots: GeneratedResourceSnapshotsSchema,
+  })
+  .strict();
 
 export type TrainingLevel = z.infer<typeof TrainingLevelSchema>;
 export type Modality = z.infer<typeof ModalitySchema>;
@@ -76,6 +96,9 @@ export type SourceSnapshot = z.infer<typeof SourceSnapshotSchema>;
 export type TrainingProgram = z.infer<typeof TrainingProgramSchema>;
 export type TrainingOffering = z.infer<typeof TrainingOfferingSchema>;
 export type EducationCenter = z.infer<typeof EducationCenterSchema>;
-export type DescriptionSection = z.infer<typeof DescriptionSectionSchema>;
+export type DescriptionSections = z.infer<typeof DescriptionSectionsSchema>;
+export type GeneratedResourceSnapshots = z.infer<
+  typeof GeneratedResourceSnapshotsSchema
+>;
 export type JobOffer = z.infer<typeof JobOfferSchema>;
 export type GeneratedManifest = z.infer<typeof GeneratedManifestSchema>;

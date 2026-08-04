@@ -63,23 +63,41 @@ describe("generated data contracts", () => {
       publishedAt: "2026-08-03T00:00:00.000Z",
       sourceName: "ECYL",
       descriptionText: "Se requiere carné B.",
-      descriptionSections: ["Requisitos"],
+      descriptionSections: {
+        summary: [],
+        functions: [],
+        requirements: ["Se requiere carné B."],
+        conditions: [],
+        application: [],
+        other: [],
+      },
       originalUrl: "https://empleo.jcyl.es/oferta/08-2026-12345",
       sourceSnapshot: snapshot,
     };
 
     expect(JobOfferSchema.safeParse(valid).success).toBe(true);
     expect(
+      JobOfferSchema.safeParse({
+        ...valid,
+        descriptionSections: ["Se requiere carné B."],
+      }).success,
+    ).toBe(false);
+    expect(
       JobOfferSchema.safeParse({ ...valid, rawHtml: "<p>Carné B</p>" }).success,
     ).toBe(false);
   });
 
-  it("accepts a manifest only when every generated artifact is versioned", () => {
+  it("associates a source snapshot with every generated resource family", () => {
     const valid = {
       schemaVersion: "1.0.0",
       generatedAt: "2026-08-04T10:00:00.000Z",
       qualityStatus: "passed",
-      snapshots: [snapshot],
+      resourceSnapshots: {
+        programs: snapshot,
+        centers: snapshot,
+        trainingOfferings: snapshot,
+        jobOffers: snapshot,
+      },
     };
 
     expect(GeneratedManifestSchema.safeParse(valid).success).toBe(true);
@@ -90,6 +108,16 @@ describe("generated data contracts", () => {
       GeneratedManifestSchema.safeParse({
         ...valid,
         qualityStatus: "unknown",
+      }).success,
+    ).toBe(false);
+    expect(
+      GeneratedManifestSchema.safeParse({
+        ...valid,
+        resourceSnapshots: {
+          programs: snapshot,
+          centers: snapshot,
+          trainingOfferings: snapshot,
+        },
       }).success,
     ).toBe(false);
   });
