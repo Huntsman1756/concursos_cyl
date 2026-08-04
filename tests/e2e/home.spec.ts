@@ -1,5 +1,6 @@
 import AxeBuilder from "@axe-core/playwright";
 import { expect, test } from "@playwright/test";
+import { currentManifestFixture } from "../fixtures/generatedManifest";
 
 const legacySnapshot = {
   sourceId: "jcyl-employment-offers",
@@ -27,7 +28,14 @@ const staleLegacyManifest = {
 test("home exposes equal journeys, navigation, freshness, and no automated accessibility violations", async ({
   page,
 }) => {
+  const manifestResponsePromise = page.waitForResponse((response) =>
+    response.url().endsWith("/data/v1/manifest.json"),
+  );
   await page.goto("/");
+  const manifestResponse = await manifestResponsePromise;
+  const manifest = (await manifestResponse.json()) as ReturnType<
+    typeof currentManifestFixture
+  >;
 
   await expect(
     page.getByRole("navigation", { name: "Principal" }).getByRole("link"),
@@ -40,18 +48,25 @@ test("home exposes equal journeys, navigation, freshness, and no automated acces
     "Explorar: He terminado FP",
     "Explorar: Quiero trabajar de…",
   ]);
-  await expect(
-    page.getByRole("region", { name: "Actualización de datos" }),
-  ).toContainText(/Datos actualizados: \d{1,2} de \p{L}+ de \d{4}/u);
+  const sourceUpdatedAt = manifest.resourceSnapshots.jobOffers.sourceUpdatedAt;
+  expect(sourceUpdatedAt).not.toBeNull();
+  const freshness = page.getByRole("region", {
+    name: "Actualización de datos",
+  });
+  await expect(freshness.locator("time")).toHaveAttribute(
+    "datetime",
+    sourceUpdatedAt!,
+  );
+  await expect(freshness).toContainText(
+    new Intl.DateTimeFormat("es-ES", {
+      day: "numeric",
+      month: "long",
+      year: "numeric",
+      timeZone: "UTC",
+    }).format(new Date(sourceUpdatedAt!)),
+  );
 
   const results = await new AxeBuilder({ page }).analyze();
-  const criticalViolations = results.violations.filter(
-    ({ impact }) => impact === "critical",
-  );
-  expect(
-    criticalViolations,
-    JSON.stringify(criticalViolations, null, 2),
-  ).toEqual([]);
   expect(
     results.violations,
     JSON.stringify(results.violations, null, 2),
@@ -65,12 +80,116 @@ test("both entry routes remain reachable in their approved order", async ({
 
   await page.getByRole("link", { name: "Explorar: He terminado FP" }).click();
   await expect(page).toHaveURL(/\/desde-fp$/u);
+  await expect(
+    page.getByRole("heading", { name: "Empezar desde mi título de FP" }),
+  ).toBeVisible();
+  await expect(
+    page.getByText("Relaciona tu ciclo con ofertas y requisitos publicados."),
+  ).toBeVisible();
 
-  await page.getByRole("link", { name: "Inicio" }).click();
+  await page.getByRole("link", { name: "Volver al inicio" }).click();
   await page
     .getByRole("link", { name: "Explorar: Quiero trabajar de…" })
     .click();
   await expect(page).toHaveURL(/\/desde-ocupacion$/u);
+  await expect(
+    page.getByRole("heading", { name: "Empezar desde una ocupación" }),
+  ).toBeVisible();
+  await expect(
+    page.getByText(
+      "Consulta ciclos y centros relacionados en Castilla y León.",
+    ),
+  ).toBeVisible();
+});
+
+test("each remaining public route has distinct destination content", async ({
+  page,
+}) => {
+  const destinations = [
+    {
+      path: "/comparar",
+      heading: "Comparar estudios",
+      outcome:
+        "Compara indicadores de empleo e ingresos con su alcance visible.",
+    },
+    {
+      path: "/metodologia",
+      heading: "Metodología",
+      outcome:
+        "Consulta cómo se seleccionan, actualizan y explican las fuentes.",
+    },
+    {
+      path: "/ruta-inexistente",
+      heading: "Página no encontrada",
+      outcome: "La dirección no corresponde a una página disponible.",
+    },
+  ];
+
+  for (const destination of destinations) {
+    await page.goto(destination.path);
+    await expect(
+      page.getByRole("heading", { name: destination.heading }),
+    ).toBeVisible();
+    await expect(page.getByText(destination.outcome)).toBeVisible();
+    await expect(
+      page.getByRole("link", { name: "Volver al inicio" }),
+    ).toBeVisible();
+  }
+});
+
+test("loading freshness is visible and marked busy before a delayed current manifest resolves", async ({
+  page,
+}) => {
+  let releaseManifest!: () => void;
+  const manifestDelay = new Promise<void>((resolve) => {
+    releaseManifest = resolve;
+  });
+  await page.route("**/data/v1/manifest.json", async (route) => {
+    await manifestDelay;
+    await route.fulfill({ json: currentManifestFixture() });
+  });
+
+  await page.goto("/");
+  const freshness = page.getByRole("region", {
+    name: "Actualización de datos",
+  });
+  await expect(freshness).toHaveAttribute("aria-busy", "true");
+  await expect(
+    freshness.getByText("Comprobando la fecha de los datos…"),
+  ).toBeVisible();
+
+  releaseManifest();
+  await expect(freshness).toHaveAttribute("aria-busy", "false");
+  await expect(freshness.locator("time")).toHaveAttribute(
+    "datetime",
+    "2026-07-31T00:00:00.000Z",
+  );
+});
+
+test("a current manifest falls back to the fetched timestamp and formats its UTC date", async ({
+  page,
+}) => {
+  const fetchedAt = "2026-08-01T23:30:00.000Z";
+  await page.route("**/data/v1/manifest.json", (route) =>
+    route.fulfill({
+      json: currentManifestFixture({
+        sourceUpdatedAt: null,
+        snapshotFetchedAt: fetchedAt,
+      }),
+    }),
+  );
+  await page.goto("/");
+
+  const freshness = page.getByRole("region", {
+    name: "Actualización de datos",
+  });
+  await expect(freshness.locator("time")).toHaveAttribute(
+    "datetime",
+    fetchedAt,
+  );
+  await expect(freshness).toContainText(
+    "Datos actualizados: 1 de agosto de 2026",
+  );
 });
 
 test("the skip link moves keyboard focus to the main content", async ({
@@ -114,6 +233,9 @@ test("a validated stale legacy manifest keeps navigation and names the last upda
 
   await page.getByRole("link", { name: "Comparar estudios" }).click();
   await expect(page).toHaveURL(/\/comparar$/u);
+  await expect(
+    page.getByRole("heading", { name: "Comparar estudios" }),
+  ).toBeVisible();
 });
 
 test("the complete Spanish home copy fits without horizontal overflow", async ({

@@ -101,8 +101,12 @@ export function HomePage() {
       <section
         className="data-freshness"
         aria-label="Actualización de datos"
+        aria-busy={freshness.status === "loading"}
         aria-live="polite"
       >
+        {freshness.status === "loading" && (
+          <p>Comprobando la fecha de los datos…</p>
+        )}
         {freshness.status === "ready" && (
           <>
             <p>

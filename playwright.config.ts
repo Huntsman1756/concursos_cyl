@@ -29,7 +29,7 @@ export default defineConfig({
   ],
   webServer: {
     command: `rtk npm run dev -- --host 127.0.0.1 --port ${port}`,
-    reuseExistingServer: !process.env.CI,
+    reuseExistingServer: false,
     url: `http://127.0.0.1:${port}`,
   },
 });
