@@ -1,6 +1,7 @@
 import { createHash } from "node:crypto";
 import {
   access,
+  cp,
   mkdir,
   mkdtemp,
   readFile,
@@ -542,6 +543,127 @@ describe("buildSnapshots", () => {
 
     expect(retained).toHaveLength(3);
     expect(retained).toContain(currentId);
+  });
+
+  it("removes each immutable candidate when manifest commit fails", async () => {
+    const root = await temporaryRoot();
+    await buildSnapshots({ rootDirectory: root, ...fixedOptions });
+    const publishedId = (
+      await readManifest(root)
+    ).resourceSnapshots.programs.resourcePath
+      .split("/")
+      .at(-2);
+
+    for (let day = 2; day <= 5; day += 1) {
+      await expect(
+        buildSnapshots({
+          rootDirectory: root,
+          ...fixedOptions,
+          now: () => new Date(`2026-10-0${day}T10:00:00.000Z`),
+          failureInjection: {
+            beforeManifestCommit: () => {
+              throw new Error("manifest commit blocked");
+            },
+          },
+        }),
+      ).rejects.toThrow(/previous snapshot marked stale/i);
+    }
+
+    const snapshotsRoot = join(root, "public", "data", "v1", "snapshots");
+    const retained = (await readdir(snapshotsRoot, { withFileTypes: true }))
+      .filter((entry) => entry.isDirectory())
+      .map((entry) => entry.name);
+    expect(retained).toEqual([publishedId]);
+  });
+
+  it("does not retain a failed future candidate as published history", async () => {
+    const root = await temporaryRoot();
+    const publishedIds: string[] = [];
+    for (let day = 1; day <= 3; day += 1) {
+      await buildSnapshots({
+        rootDirectory: root,
+        ...fixedOptions,
+        now: () => new Date(`2026-11-0${day}T10:00:00.000Z`),
+      });
+      publishedIds.push(
+        (await readManifest(root)).resourceSnapshots.programs.resourcePath
+          .split("/")
+          .at(-2)!,
+      );
+    }
+
+    await expect(
+      buildSnapshots({
+        rootDirectory: root,
+        ...fixedOptions,
+        now: () => new Date("2026-11-04T10:00:00.000Z"),
+        failureInjection: {
+          beforeManifestCommit: () => {
+            throw new Error("manifest commit blocked");
+          },
+        },
+      }),
+    ).rejects.toThrow(/previous snapshot marked stale/i);
+    await buildSnapshots({
+      rootDirectory: root,
+      ...fixedOptions,
+      now: () => new Date("2026-11-05T10:00:00.000Z"),
+    });
+    publishedIds.push(
+      (await readManifest(root)).resourceSnapshots.programs.resourcePath
+        .split("/")
+        .at(-2)!,
+    );
+
+    const snapshotsRoot = join(root, "public", "data", "v1", "snapshots");
+    const retained = (await readdir(snapshotsRoot, { withFileTypes: true }))
+      .filter((entry) => entry.isDirectory())
+      .map((entry) => entry.name)
+      .sort();
+    expect(retained).toEqual(publishedIds.slice(1).sort());
+  });
+
+  it("removes a crash orphan newer than the committed manifest on startup", async () => {
+    const root = await temporaryRoot();
+    const publishedIds: string[] = [];
+    for (let day = 1; day <= 3; day += 1) {
+      await buildSnapshots({
+        rootDirectory: root,
+        ...fixedOptions,
+        now: () => new Date(`2026-12-0${day}T10:00:00.000Z`),
+      });
+      publishedIds.push(
+        (await readManifest(root)).resourceSnapshots.programs.resourcePath
+          .split("/")
+          .at(-2)!,
+      );
+    }
+    const snapshotsRoot = join(root, "public", "data", "v1", "snapshots");
+    const suffix = publishedIds[2]!.split("-").at(-1);
+    const orphanId = `20261204100000000-${suffix}`;
+    await cp(
+      join(snapshotsRoot, publishedIds[2]!),
+      join(snapshotsRoot, orphanId),
+      { recursive: true },
+    );
+
+    await buildSnapshots({
+      rootDirectory: root,
+      ...fixedOptions,
+      now: () => new Date("2026-12-05T10:00:00.000Z"),
+    });
+    publishedIds.push(
+      (await readManifest(root)).resourceSnapshots.programs.resourcePath
+        .split("/")
+        .at(-2)!,
+    );
+
+    const retained = (await readdir(snapshotsRoot, { withFileTypes: true }))
+      .filter((entry) => entry.isDirectory())
+      .map((entry) => entry.name)
+      .sort();
+    expect(retained).toEqual(publishedIds.slice(1).sort());
+    expect(retained).not.toContain(orphanId);
   });
 
   it.each(["public/data", ".codex-tmp"])(

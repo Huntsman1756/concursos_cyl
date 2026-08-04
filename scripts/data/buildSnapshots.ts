@@ -650,20 +650,18 @@ async function publishImmutableResources(
   staging: string,
   target: string,
   snapshotId: string,
-  manifest: GeneratedManifest,
-): Promise<void> {
+): Promise<{ destination: string; created: boolean }> {
   const snapshotsRoot = resolve(target, "snapshots");
   const destination = resolve(snapshotsRoot, snapshotId);
   await safeMkdir(root, snapshotsRoot);
 
   if (await pathExists(destination)) {
-    await validateFlatCandidateDirectory(root, destination, manifest);
     await safeRemoveTemporaryDirectory(root, temporaryRoot, staging);
-    return;
+    return { destination, created: false };
   }
 
   await safeRename(root, staging, destination);
-  await validateFlatCandidateDirectory(root, destination, manifest);
+  return { destination, created: true };
 }
 
 async function commitManifest(
@@ -752,6 +750,25 @@ async function markPreviousSnapshotStale(
 }
 
 const RETAINED_HISTORY_SNAPSHOTS = 2;
+const IMMUTABLE_SNAPSHOT_ID_PATTERN = /^\d{17}-[a-f0-9]{12}$/u;
+
+async function safeRemoveImmutableSnapshotDirectory(
+  root: string,
+  target: string,
+  candidate: string,
+): Promise<void> {
+  const snapshotsRoot = resolve(target, "snapshots");
+  if (
+    dirname(resolve(candidate)) !== snapshotsRoot ||
+    !IMMUTABLE_SNAPSHOT_ID_PATTERN.test(basename(candidate))
+  ) {
+    throw new Error(
+      "Refusing snapshot retention cleanup outside version root.",
+    );
+  }
+  await assertPhysicalPath(root, candidate);
+  await rm(candidate, { recursive: true, force: true });
+}
 
 async function enforceSnapshotRetention(
   root: string,
@@ -784,14 +801,18 @@ async function enforceSnapshotRetention(
   )
     .filter(
       (entry) =>
-        entry.isDirectory() && /^\d{17}-[a-f0-9]{12}$/u.test(entry.name),
+        entry.isDirectory() && IMMUTABLE_SNAPSHOT_ID_PATTERN.test(entry.name),
     )
     .map((entry) => entry.name)
     .sort((left, right) => compareCanonicalText(right, left));
   const retained = new Set([
     currentSnapshotId,
     ...immutableSnapshotNames
-      .filter((snapshotId) => snapshotId !== currentSnapshotId)
+      .filter(
+        (snapshotId) =>
+          snapshotId !== currentSnapshotId &&
+          snapshotId.slice(0, 17) < currentSnapshotId.slice(0, 17),
+      )
       .slice(0, RETAINED_HISTORY_SNAPSHOTS),
   ]);
 
@@ -799,17 +820,11 @@ async function enforceSnapshotRetention(
     if (retained.has(snapshotId)) {
       continue;
     }
-    const candidate = resolve(snapshotsRoot, snapshotId);
-    if (
-      dirname(candidate) !== snapshotsRoot ||
-      !/^\d{17}-[a-f0-9]{12}$/u.test(basename(candidate))
-    ) {
-      throw new Error(
-        "Refusing snapshot retention cleanup outside version root.",
-      );
-    }
-    await assertPhysicalPath(root, candidate);
-    await rm(candidate, { recursive: true, force: true });
+    await safeRemoveImmutableSnapshotDirectory(
+      root,
+      target,
+      resolve(snapshotsRoot, snapshotId),
+    );
   }
 }
 
@@ -882,6 +897,15 @@ export async function buildSnapshots(
   const abandonedBuildPaths = await abandonedBuildDirectories(temporaryRoot);
   const cleanupPaths = [...legacyBackupPaths, ...abandonedBuildPaths];
   const previous = await loadPreviousSnapshot(root, target);
+  if (previous !== undefined) {
+    try {
+      await enforceSnapshotRetention(root, target);
+    } catch (error) {
+      log(
+        `Non-fatal startup snapshot cleanup failure: ${error instanceof Error ? error.message : String(error)}`,
+      );
+    }
+  }
   const fetchTrainingRecords =
     options.fetchTrainingRecords ??
     (() =>
@@ -899,6 +923,7 @@ export async function buildSnapshots(
 
   let committed = false;
   let staging: string | undefined;
+  let immutableDestination: string | undefined;
   try {
     const [trainingRecords, offerRecords] = await Promise.all([
       fetchTrainingRecords(),
@@ -921,15 +946,22 @@ export async function buildSnapshots(
       previous?.counts,
     );
     await safeMkdir(root, target);
-    await publishImmutableResources(
+    const publication = await publishImmutableResources(
       root,
       temporaryRoot,
       staging,
       target,
       snapshotId,
-      result.manifest,
     );
     staging = undefined;
+    immutableDestination = publication.created
+      ? publication.destination
+      : undefined;
+    await validateFlatCandidateDirectory(
+      root,
+      publication.destination,
+      result.manifest,
+    );
     await commitManifest(
       root,
       target,
@@ -969,6 +1001,23 @@ export async function buildSnapshots(
       } catch (cleanupError) {
         log(
           `Non-fatal staging cleanup failure: ${cleanupError instanceof Error ? cleanupError.message : String(cleanupError)}`,
+        );
+      }
+    }
+
+    if (
+      immutableDestination !== undefined &&
+      (await pathExists(immutableDestination))
+    ) {
+      try {
+        await safeRemoveImmutableSnapshotDirectory(
+          root,
+          target,
+          immutableDestination,
+        );
+      } catch (cleanupError) {
+        log(
+          `Non-fatal unpublished snapshot cleanup failure: ${cleanupError instanceof Error ? cleanupError.message : String(cleanupError)}`,
         );
       }
     }
