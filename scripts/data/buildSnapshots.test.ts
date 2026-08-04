@@ -485,6 +485,56 @@ describe("buildSnapshots", () => {
     }
   });
 
+  it("migrates the transitional top-level offer timestamp before refresh", async () => {
+    const root = await temporaryRoot();
+    await buildSnapshots({ rootDirectory: root, ...fixedOptions });
+    const manifestPath = join(root, "public", "data", "v1", "manifest.json");
+    const manifest = await readManifest(root);
+    const jobOffersPath = assetPath(
+      root,
+      manifest.resourceSnapshots.jobOffers.resourcePath,
+    );
+    const jobOffers = JSON.parse(
+      await readFile(jobOffersPath, "utf8"),
+    ) as Array<Record<string, unknown>>;
+    const firstOffer = jobOffers[0];
+    const sourceSnapshot = firstOffer.sourceSnapshot as Record<string, unknown>;
+    firstOffer.sourceRecordUpdatedAt = sourceSnapshot.sourceUpdatedAt;
+    await writeFile(
+      jobOffersPath,
+      `${JSON.stringify(jobOffers, null, 2)}\n`,
+      "utf8",
+    );
+    manifest.resourceSnapshots.jobOffers.sha256 = await hashFile(jobOffersPath);
+    await writeFile(
+      manifestPath,
+      `${JSON.stringify(manifest, null, 2)}\n`,
+      "utf8",
+    );
+
+    await expect(
+      buildSnapshots({
+        rootDirectory: root,
+        ...fixedOptions,
+        now: () => new Date("2026-08-05T10:00:00.000Z"),
+      }),
+    ).resolves.toBeUndefined();
+
+    const refreshed = await readManifest(root);
+    const refreshedOffers = JSON.parse(
+      await readFile(
+        assetPath(root, refreshed.resourceSnapshots.jobOffers.resourcePath),
+        "utf8",
+      ),
+    ) as Array<Record<string, unknown>>;
+    expect(refreshedOffers[0]).not.toHaveProperty("sourceRecordUpdatedAt");
+    expect(refreshedOffers[0]?.sourceSnapshot).toMatchObject({
+      sourceUpdatedAt: new Date(
+        liveOfferSourceRecord.actualizacionmetadatos,
+      ).toISOString(),
+    });
+  });
+
   it("preserves prior resource bytes and records staleness after refresh failure", async () => {
     const root = await temporaryRoot();
     const options = { rootDirectory: root, ...fixedOptions };

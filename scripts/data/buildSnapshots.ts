@@ -90,6 +90,26 @@ const RESOURCE_DEFINITIONS = {
   },
 } as const;
 
+/** Read-only migration for snapshots published before the v1 compatibility fix. */
+const TransitionalJobOfferSchema = z
+  .object({
+    ...JobOfferSchema.shape,
+    sourceRecordUpdatedAt: z.string().datetime(),
+  })
+  .strict()
+  .transform(({ sourceRecordUpdatedAt, ...offer }) =>
+    JobOfferSchema.parse({
+      ...offer,
+      sourceSnapshot: {
+        ...offer.sourceSnapshot,
+        sourceUpdatedAt: sourceRecordUpdatedAt,
+      },
+    }),
+  );
+const PreviousJobOffersSchema = z.array(
+  z.union([JobOfferSchema, TransitionalJobOfferSchema]),
+);
+
 type ResourceKey = GeneratedResourceKey;
 
 interface PreviousSnapshot {
@@ -769,7 +789,10 @@ async function validateSnapshotDirectory(
     );
     await assertPhysicalPath(root, filePath);
     const json = JSON.parse(await readFile(filePath, "utf8"));
-    const current = definition.schema.safeParse(json);
+    const current =
+      key === "jobOffers"
+        ? PreviousJobOffersSchema.safeParse(json)
+        : definition.schema.safeParse(json);
     const legacy = definition.legacySchema.safeParse(json);
     if (!current.success && !legacy.success) {
       throw new Error(`Snapshot schema mismatch for ${definition.fileName}.`, {
