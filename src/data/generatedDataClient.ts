@@ -216,37 +216,29 @@ function validatedFoundationResourceSet(
     CurrentFoundationVariableResourcesSchema.safeParse(variableResources);
   const legacy =
     LegacyFoundationVariableResourcesSchema.safeParse(variableResources);
-
-  if (!current.success && !legacy.success) {
-    throw new GeneratedDataError(
-      "schema",
-      "Generated foundation resources do not share one supported contract.",
-      current.error,
-    );
-  }
-
-  const contract =
-    current.success === legacy.success
-      ? manifestAddressedFoundationContract(manifest)
-      : current.success
-        ? "current"
-        : "legacy";
-
-  if (contract === "current") {
-    return {
-      contract,
-      programs: resources.programs,
-      jobOffers: resources.jobOffers,
-      ...CurrentFoundationVariableResourcesSchema.parse(variableResources),
-    };
-  }
-
-  return {
-    contract,
+  const sharedResources = {
     programs: resources.programs,
     jobOffers: resources.jobOffers,
-    ...LegacyFoundationVariableResourcesSchema.parse(variableResources),
   };
+
+  if (current.success && legacy.success) {
+    const contract = manifestAddressedFoundationContract(manifest);
+    return contract === "current"
+      ? { contract, ...sharedResources, ...current.data }
+      : { contract, ...sharedResources, ...legacy.data };
+  }
+  if (current.success) {
+    return { contract: "current", ...sharedResources, ...current.data };
+  }
+  if (legacy.success) {
+    return { contract: "legacy", ...sharedResources, ...legacy.data };
+  }
+
+  throw new GeneratedDataError(
+    "schema",
+    "Generated foundation resources do not share one supported contract.",
+    current.error,
+  );
 }
 
 /** Loads all required v1 resources as one tagged current or legacy set. */
