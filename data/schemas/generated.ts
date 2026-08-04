@@ -79,30 +79,32 @@ export const JobOfferSchema = z
   })
   .strict();
 
-export const GeneratedResourceSnapshotsSchema = z.object({
-  programs: SourceSnapshotSchema.extend({
-    resourcePath: z
-      .string()
-      .regex(/^\/data\/v1\/(?:snapshots\/[a-z0-9-]+\/)?programs\.json$/u),
-  }),
-  centers: SourceSnapshotSchema.extend({
-    resourcePath: z
-      .string()
-      .regex(/^\/data\/v1\/(?:snapshots\/[a-z0-9-]+\/)?centers\.json$/u),
-  }),
-  trainingOfferings: SourceSnapshotSchema.extend({
-    resourcePath: z
-      .string()
-      .regex(
-        /^\/data\/v1\/(?:snapshots\/[a-z0-9-]+\/)?training-offerings\.json$/u,
-      ),
-  }),
-  jobOffers: SourceSnapshotSchema.extend({
-    resourcePath: z
-      .string()
-      .regex(/^\/data\/v1\/(?:snapshots\/[a-z0-9-]+\/)?job-offers\.json$/u),
-  }),
-});
+export const GeneratedResourceSnapshotsSchema = z
+  .object({
+    programs: SourceSnapshotSchema.extend({
+      resourcePath: z
+        .string()
+        .regex(/^\/data\/v1\/snapshots\/[a-z0-9-]+\/programs\.json$/u),
+    }),
+    centers: SourceSnapshotSchema.extend({
+      resourcePath: z
+        .string()
+        .regex(/^\/data\/v1\/snapshots\/[a-z0-9-]+\/centers\.json$/u),
+    }),
+    trainingOfferings: SourceSnapshotSchema.extend({
+      resourcePath: z
+        .string()
+        .regex(
+          /^\/data\/v1\/snapshots\/[a-z0-9-]+\/training-offerings\.json$/u,
+        ),
+    }),
+    jobOffers: SourceSnapshotSchema.extend({
+      resourcePath: z
+        .string()
+        .regex(/^\/data\/v1\/snapshots\/[a-z0-9-]+\/job-offers\.json$/u),
+    }),
+  })
+  .strict();
 
 export const GeneratedQualityReportSchema = z.object({
   counts: z.object({
@@ -131,6 +133,60 @@ export const GeneratedManifestSchema = z
     qualityReport: GeneratedQualityReportSchema.optional(),
   })
   .strict();
+
+export const LegacyGeneratedManifestSchema = z
+  .object({
+    schemaVersion: z.literal("1.0.0"),
+    generatedAt: z.string().datetime(),
+    qualityStatus: z.enum(["passed", "stale"]),
+    resourceSnapshots: z
+      .object({
+        programs: SourceSnapshotSchema,
+        centers: SourceSnapshotSchema,
+        trainingOfferings: SourceSnapshotSchema,
+        jobOffers: SourceSnapshotSchema,
+      })
+      .strict(),
+    qualityReport: GeneratedQualityReportSchema.optional(),
+  })
+  .strict();
+
+const LEGACY_RESOURCE_PATHS = {
+  programs: "/data/v1/programs.json",
+  centers: "/data/v1/centers.json",
+  trainingOfferings: "/data/v1/training-offerings.json",
+  jobOffers: "/data/v1/job-offers.json",
+} as const;
+
+export const LoadableGeneratedManifestSchema = z
+  .union([GeneratedManifestSchema, LegacyGeneratedManifestSchema])
+  .transform((manifest): z.infer<typeof GeneratedManifestSchema> => {
+    if ("resourcePath" in manifest.resourceSnapshots.programs) {
+      return GeneratedManifestSchema.parse(manifest);
+    }
+
+    return {
+      ...manifest,
+      resourceSnapshots: {
+        programs: {
+          ...manifest.resourceSnapshots.programs,
+          resourcePath: LEGACY_RESOURCE_PATHS.programs,
+        },
+        centers: {
+          ...manifest.resourceSnapshots.centers,
+          resourcePath: LEGACY_RESOURCE_PATHS.centers,
+        },
+        trainingOfferings: {
+          ...manifest.resourceSnapshots.trainingOfferings,
+          resourcePath: LEGACY_RESOURCE_PATHS.trainingOfferings,
+        },
+        jobOffers: {
+          ...manifest.resourceSnapshots.jobOffers,
+          resourcePath: LEGACY_RESOURCE_PATHS.jobOffers,
+        },
+      },
+    };
+  });
 
 export type TrainingLevel = z.infer<typeof TrainingLevelSchema>;
 export type Modality = z.infer<typeof ModalitySchema>;

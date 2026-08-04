@@ -4,6 +4,7 @@ import {
   mkdir,
   mkdtemp,
   readFile,
+  readdir,
   rename,
   rm,
   symlink,
@@ -315,6 +316,31 @@ describe("buildSnapshots", () => {
     ).rejects.toThrow(/duplicate program/i);
   });
 
+  it("rejects a prior manifest with contradictory null-rate metadata", async () => {
+    const root = await temporaryRoot();
+    await buildSnapshots({ rootDirectory: root, ...fixedOptions });
+    const manifest = await readManifest(root);
+    if (manifest.qualityReport === undefined) {
+      throw new Error("Expected generated quality report");
+    }
+    manifest.qualityReport.nullRates.offerLocality = 0.5;
+    await writeFile(
+      join(root, "public", "data", "v1", "manifest.json"),
+      `${JSON.stringify(manifest, null, 2)}\n`,
+      "utf8",
+    );
+    const fetchTrainingRecords = vi.fn(fixedOptions.fetchTrainingRecords);
+
+    await expect(
+      buildSnapshots({
+        rootDirectory: root,
+        ...fixedOptions,
+        fetchTrainingRecords,
+      }),
+    ).rejects.toThrow(/quality report/i);
+    expect(fetchTrainingRecords).not.toHaveBeenCalled();
+  });
+
   it("recovers a legacy interrupted backup before attempting refresh", async () => {
     const root = await temporaryRoot();
     await buildSnapshots({ rootDirectory: root, ...fixedOptions });
@@ -350,6 +376,48 @@ describe("buildSnapshots", () => {
     await expect(readManifest(root)).resolves.toMatchObject({
       qualityStatus: "passed",
     });
+  });
+
+  it("retains the current snapshot and only two prior immutable snapshots", async () => {
+    const root = await temporaryRoot();
+    const snapshotPaths: string[] = [];
+    const snapshotsRoot = join(root, "public", "data", "v1", "snapshots");
+    const orphan = join(snapshotsRoot, "20000101000000000-aaaaaaaaaaaa");
+
+    for (let day = 1; day <= 4; day += 1) {
+      await buildSnapshots({
+        rootDirectory: root,
+        ...fixedOptions,
+        now: () => new Date(`2026-08-0${day}T10:00:00.000Z`),
+      });
+      snapshotPaths.push(
+        (await readManifest(root)).resourceSnapshots.programs.resourcePath,
+      );
+      if (day === 1) {
+        await mkdir(orphan, { recursive: true });
+        await writeFile(join(orphan, "partial.json"), "{", "utf8");
+      }
+    }
+
+    const currentManifest = await readManifest(root);
+    const retained = (await readdir(snapshotsRoot, { withFileTypes: true }))
+      .filter((entry) => entry.isDirectory())
+      .map((entry) => entry.name);
+    const currentId = currentManifest.resourceSnapshots.programs.resourcePath
+      .split("/")
+      .at(-2);
+
+    expect(retained).toHaveLength(3);
+    expect(retained).toContain(currentId);
+    await expect(
+      access(assetPath(root, snapshotPaths[0])),
+    ).rejects.toMatchObject({
+      code: "ENOENT",
+    });
+    await expect(access(orphan)).rejects.toMatchObject({ code: "ENOENT" });
+    for (const path of snapshotPaths.slice(-3)) {
+      await expect(access(assetPath(root, path))).resolves.toBeUndefined();
+    }
   });
 
   it.each(["public/data", ".codex-tmp"])(

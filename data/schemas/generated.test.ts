@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 import {
   GeneratedManifestSchema,
+  LoadableGeneratedManifestSchema,
   JobOfferSchema,
   SourceSnapshotSchema,
   TrainingOfferingSchema,
@@ -143,5 +144,31 @@ describe("generated data contracts", () => {
         },
       }).success,
     ).toBe(false);
+  });
+
+  it("keeps the current schema immutable while explicitly migrating legacy manifests", () => {
+    const legacy = {
+      schemaVersion: "1.0.0",
+      generatedAt: "2026-08-04T10:00:00.000Z",
+      qualityStatus: "passed",
+      resourceSnapshots: {
+        programs: snapshot,
+        centers: snapshot,
+        trainingOfferings: snapshot,
+        jobOffers: snapshot,
+      },
+    };
+
+    expect(GeneratedManifestSchema.safeParse(legacy).success).toBe(false);
+    expect(LoadableGeneratedManifestSchema.parse(legacy)).toMatchObject({
+      resourceSnapshots: {
+        programs: { resourcePath: "/data/v1/programs.json" },
+        centers: { resourcePath: "/data/v1/centers.json" },
+        trainingOfferings: {
+          resourcePath: "/data/v1/training-offerings.json",
+        },
+        jobOffers: { resourcePath: "/data/v1/job-offers.json" },
+      },
+    });
   });
 });

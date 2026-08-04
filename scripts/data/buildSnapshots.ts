@@ -27,8 +27,8 @@ import { z } from "zod";
 import {
   EducationCenterSchema,
   GeneratedManifestSchema,
-  GeneratedQualityReportSchema,
   JobOfferSchema,
+  LoadableGeneratedManifestSchema,
   SourceSnapshotSchema,
   TrainingOfferingSchema,
   TrainingProgramSchema,
@@ -72,23 +72,6 @@ const RESOURCE_DEFINITIONS = {
     schema: z.array(JobOfferSchema),
   },
 } as const;
-
-const LegacyResourceSnapshotsSchema = z.object({
-  programs: SourceSnapshotSchema,
-  centers: SourceSnapshotSchema,
-  trainingOfferings: SourceSnapshotSchema,
-  jobOffers: SourceSnapshotSchema,
-});
-
-const LegacyManifestSchema = z
-  .object({
-    schemaVersion: z.literal("1.0.0"),
-    generatedAt: z.string().datetime(),
-    qualityStatus: z.enum(["passed", "stale"]),
-    resourceSnapshots: LegacyResourceSnapshotsSchema,
-    qualityReport: GeneratedQualityReportSchema.optional(),
-  })
-  .strict();
 
 type ResourceKey = keyof typeof RESOURCE_DEFINITIONS;
 
@@ -179,9 +162,15 @@ async function pathExists(path: string): Promise<boolean> {
   }
 }
 
+function withoutWindowsDevicePrefix(path: string): string {
+  return path
+    .replace(/^\\\\\?\\UNC\\/iu, "\\\\")
+    .replace(/^\\\\\?\\/u, "")
+    .replace(/^\\\?\?\\/u, "");
+}
+
 function normalizedPhysicalPath(path: string): string {
-  const withoutExtendedPrefix = path.replace(/^\\\\\?\\/u, "");
-  const normalized = resolve(withoutExtendedPrefix);
+  const normalized = resolve(withoutWindowsDevicePrefix(path));
   return process.platform === "win32" ? normalized.toLowerCase() : normalized;
 }
 
@@ -195,13 +184,21 @@ function isWithin(parent: string, child: string): boolean {
   );
 }
 
-async function assertSafeRoot(rootDirectory: string): Promise<string> {
-  if (!isAbsolute(rootDirectory)) {
+export async function assertSafeSnapshotRoot(
+  rootDirectory: string,
+): Promise<string> {
+  const normalizedInput = withoutWindowsDevicePrefix(rootDirectory);
+  if (!isAbsolute(normalizedInput)) {
     throw new Error("Snapshot root directory must be absolute.");
   }
 
-  const root = resolve(rootDirectory);
-  if (root === parse(root).root || root === resolve(homedir())) {
+  const root = resolve(normalizedInput);
+  const broadRoots = new Set([
+    normalizedPhysicalPath(parse(root).root),
+    normalizedPhysicalPath(homedir()),
+    normalizedPhysicalPath(await realpath(homedir())),
+  ]);
+  if (broadRoots.has(normalizedPhysicalPath(root))) {
     throw new Error(
       "Snapshot root directory is too broad for safe publication.",
     );
@@ -214,6 +211,9 @@ async function assertSafeRoot(rootDirectory: string): Promise<string> {
     );
   }
   const physicalRoot = await realpath(root);
+  if (broadRoots.has(normalizedPhysicalPath(physicalRoot))) {
+    throw new Error("Snapshot physical root resolves to home or a drive root.");
+  }
   if (normalizedPhysicalPath(physicalRoot) !== normalizedPhysicalPath(root)) {
     throw new Error(
       "Snapshot root physical path does not match its lexical path.",
@@ -331,29 +331,8 @@ function resourcePathFor(key: ResourceKey, snapshotId: string): string {
   return `/data/v1/snapshots/${snapshotId}/${RESOURCE_DEFINITIONS[key].fileName}`;
 }
 
-function legacyResourcePath(key: ResourceKey): string {
-  return `/data/v1/${RESOURCE_DEFINITIONS[key].fileName}`;
-}
-
 function parseManifest(json: unknown): GeneratedManifest {
-  const current = GeneratedManifestSchema.safeParse(json);
-  if (current.success) {
-    return current.data;
-  }
-
-  const legacy = LegacyManifestSchema.parse(json);
-  return GeneratedManifestSchema.parse({
-    ...legacy,
-    resourceSnapshots: Object.fromEntries(
-      (Object.keys(RESOURCE_DEFINITIONS) as ResourceKey[]).map((key) => [
-        key,
-        {
-          ...legacy.resourceSnapshots[key],
-          resourcePath: legacyResourcePath(key),
-        },
-      ]),
-    ),
-  });
+  return LoadableGeneratedManifestSchema.parse(json);
 }
 
 function resourceFileInSnapshot(
@@ -409,6 +388,15 @@ async function validateSnapshotDirectory(
   if (JSON.stringify(report.counts) !== JSON.stringify(counts)) {
     throw new Error(
       "Snapshot manifest counts do not match quality-gate counts.",
+    );
+  }
+  if (
+    manifest.qualityReport !== undefined &&
+    JSON.stringify(stableValue(manifest.qualityReport)) !==
+      JSON.stringify(stableValue(report))
+  ) {
+    throw new Error(
+      "Snapshot manifest quality report contradicts recomputed quality gates.",
     );
   }
 
@@ -697,6 +685,68 @@ async function markPreviousSnapshotStale(
   await validateSnapshotDirectory(root, target);
 }
 
+const RETAINED_HISTORY_SNAPSHOTS = 2;
+
+async function enforceSnapshotRetention(
+  root: string,
+  target: string,
+): Promise<void> {
+  const manifest = parseManifest(
+    JSON.parse(await readFile(resolve(target, "manifest.json"), "utf8")),
+  );
+  const snapshotIds = Object.values(manifest.resourceSnapshots).map(
+    (snapshot) =>
+      /^\/data\/v1\/snapshots\/([a-z0-9-]+)\//u.exec(
+        snapshot.resourcePath,
+      )?.[1],
+  );
+  const currentSnapshotId = snapshotIds[0];
+  if (
+    currentSnapshotId === undefined ||
+    snapshotIds.some((snapshotId) => snapshotId !== currentSnapshotId)
+  ) {
+    return;
+  }
+
+  const snapshotsRoot = resolve(target, "snapshots");
+  if (!(await pathExists(snapshotsRoot))) {
+    return;
+  }
+  await assertPhysicalPath(root, snapshotsRoot);
+  const immutableSnapshotNames = (
+    await readdir(snapshotsRoot, { withFileTypes: true })
+  )
+    .filter(
+      (entry) =>
+        entry.isDirectory() && /^\d{17}-[a-f0-9]{12}$/u.test(entry.name),
+    )
+    .map((entry) => entry.name)
+    .sort((left, right) => compareCanonicalText(right, left));
+  const retained = new Set([
+    currentSnapshotId,
+    ...immutableSnapshotNames
+      .filter((snapshotId) => snapshotId !== currentSnapshotId)
+      .slice(0, RETAINED_HISTORY_SNAPSHOTS),
+  ]);
+
+  for (const snapshotId of immutableSnapshotNames) {
+    if (retained.has(snapshotId)) {
+      continue;
+    }
+    const candidate = resolve(snapshotsRoot, snapshotId);
+    if (
+      dirname(candidate) !== snapshotsRoot ||
+      !/^\d{17}-[a-f0-9]{12}$/u.test(basename(candidate))
+    ) {
+      throw new Error(
+        "Refusing snapshot retention cleanup outside version root.",
+      );
+    }
+    await assertPhysicalPath(root, candidate);
+    await rm(candidate, { recursive: true, force: true });
+  }
+}
+
 async function cleanupAfterCommit(
   root: string,
   temporaryRoot: string,
@@ -719,6 +769,7 @@ async function cleanupAfterCommit(
         await rm(candidate, { force: true });
       }
     }
+    await enforceSnapshotRetention(root, target);
   } catch (error) {
     log(
       `Non-fatal snapshot cleanup failure: ${error instanceof Error ? error.message : String(error)}`,
@@ -730,7 +781,9 @@ async function cleanupAfterCommit(
 export async function buildSnapshots(
   options: BuildSnapshotsOptions = {},
 ): Promise<void> {
-  const root = await assertSafeRoot(options.rootDirectory ?? process.cwd());
+  const root = await assertSafeSnapshotRoot(
+    options.rootDirectory ?? process.cwd(),
+  );
   const now = options.now ?? (() => new Date());
   const fetchedAt = now().toISOString();
   const log = options.log ?? console.info;

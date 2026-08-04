@@ -59,6 +59,34 @@ describe("generated data client", () => {
     await expect(loadManifest()).resolves.toMatchObject({
       qualityStatus: "stale",
     });
+    expect(fetch).toHaveBeenCalledWith("/data/v1/manifest.json", {
+      cache: "no-store",
+    });
+  });
+
+  it("migrates a valid pre-versioned manifest to known direct resource paths", async () => {
+    mockFetchJson({
+      schemaVersion: "1.0.0",
+      generatedAt: "2026-08-04T10:00:00.000Z",
+      qualityStatus: "stale",
+      resourceSnapshots: {
+        programs: snapshot,
+        centers: snapshot,
+        trainingOfferings: snapshot,
+        jobOffers: snapshot,
+      },
+    });
+
+    await expect(loadManifest()).resolves.toMatchObject({
+      resourceSnapshots: {
+        programs: { resourcePath: "/data/v1/programs.json" },
+        centers: { resourcePath: "/data/v1/centers.json" },
+        trainingOfferings: {
+          resourcePath: "/data/v1/training-offerings.json",
+        },
+        jobOffers: { resourcePath: "/data/v1/job-offers.json" },
+      },
+    });
   });
 
   it("throws the missing code for an absent generated asset", async () => {
@@ -74,6 +102,15 @@ describe("generated data client", () => {
     "//example.test/data/v1/programs.json",
     "data:text/plain,not-json",
     "/outside/generated.json",
+    "data/v1/programs.json",
+    "/data/v1/../programs.json",
+    "/data/v1/%2e%2e/programs.json",
+    "/data/v1/snapshots/build-1/%2E%2E/programs.json",
+    "/data/v1/snapshots/build-1%2f..%2fprograms.json",
+    "/data/v1/snapshots/build-1%5c..%5cprograms.json",
+    "/data/v1/programs.json?cache=1",
+    "/data/v1/programs.json#fragment",
+    "/data/v1/unknown.json",
   ])(
     "rejects non-relative or non-generated asset path %s before fetch",
     async (path) => {
@@ -86,6 +123,16 @@ describe("generated data client", () => {
       expect(request).not.toHaveBeenCalled();
     },
   );
+
+  it("accepts a manifest-addressed immutable resource path", async () => {
+    const path = "/data/v1/snapshots/build-1/programs.json";
+    mockFetchJson(["IFC03S"]);
+
+    await expect(
+      loadGeneratedResource(path, z.array(z.string())),
+    ).resolves.toEqual(["IFC03S"]);
+    expect(fetch).toHaveBeenCalledWith(path);
+  });
 
   it("throws the network code for failed requests and HTTP errors", async () => {
     vi.stubGlobal("fetch", vi.fn().mockRejectedValue(new TypeError("offline")));

@@ -1,7 +1,7 @@
 import type { z } from "zod";
 
 import {
-  GeneratedManifestSchema,
+  LoadableGeneratedManifestSchema,
   type GeneratedManifest,
 } from "../../data/schemas/generated";
 
@@ -18,11 +18,22 @@ export class GeneratedDataError extends Error {
 }
 
 function validatedGeneratedAssetPath(path: string): string {
+  const permittedMutableAsset =
+    /^\/data\/v1\/(?:manifest|programs|centers|training-offerings|job-offers)\.json$/u;
+  const permittedImmutableAsset =
+    /^\/data\/v1\/snapshots\/[a-z0-9-]+\/(?:programs|centers|training-offerings|job-offers)\.json$/u;
   if (
     path.trim().length === 0 ||
+    path !== path.trim() ||
+    !path.startsWith("/") ||
     /^[a-z][a-z\d+.-]*:/iu.test(path) ||
     path.startsWith("//") ||
-    path.includes("\\")
+    path.includes("\\") ||
+    path.includes("?") ||
+    path.includes("#") ||
+    /%[0-9a-f]{2}/iu.test(path) ||
+    path.split("/").some((segment) => segment === "." || segment === "..") ||
+    (!permittedMutableAsset.test(path) && !permittedImmutableAsset.test(path))
   ) {
     throw new GeneratedDataError(
       "missing",
@@ -30,33 +41,23 @@ function validatedGeneratedAssetPath(path: string): string {
     );
   }
 
-  const origin = globalThis.location?.origin ?? "http://localhost";
-  const url = new URL(path, `${origin}/`);
-  if (
-    url.origin !== origin ||
-    !url.pathname.startsWith("/data/v1/") ||
-    url.search.length > 0 ||
-    url.hash.length > 0
-  ) {
-    throw new GeneratedDataError(
-      "missing",
-      `Generated resource path is outside /data/v1: ${path}.`,
-    );
-  }
-
-  return url.pathname;
+  return path;
 }
 
 /** Fetches a generated static asset and enforces its runtime contract. */
 export async function loadGeneratedResource<T>(
   path: string,
   schema: z.ZodType<T>,
+  requestInit?: RequestInit,
 ): Promise<T> {
   const assetPath = validatedGeneratedAssetPath(path);
   let response: Response;
 
   try {
-    response = await fetch(assetPath);
+    response =
+      requestInit === undefined
+        ? await fetch(assetPath)
+        : await fetch(assetPath, requestInit);
   } catch (error) {
     throw new GeneratedDataError(
       "network",
@@ -99,6 +100,7 @@ export async function loadGeneratedResource<T>(
 export function loadManifest(): Promise<GeneratedManifest> {
   return loadGeneratedResource(
     "/data/v1/manifest.json",
-    GeneratedManifestSchema,
+    LoadableGeneratedManifestSchema,
+    { cache: "no-store" },
   );
 }
