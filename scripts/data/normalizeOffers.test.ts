@@ -64,7 +64,7 @@ describe("normalizeOffers", () => {
           actualizacionmetadatos: "2026-08-04",
         },
       ],
-      { sourceSnapshot: datasetSnapshot },
+      { datasetSnapshot },
     );
 
     expect(offer.sourceSnapshot.sourceUpdatedAt).not.toBe(

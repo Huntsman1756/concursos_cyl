@@ -67,29 +67,6 @@ import {
 } from "./qualityGates";
 import { SOURCE_CONFIG } from "./sourceConfig";
 
-const RESOURCE_DEFINITIONS = {
-  programs: {
-    ...GENERATED_RESOURCE_CATALOG.programs,
-    schema: z.array(TrainingProgramSchema),
-    legacySchema: z.array(TrainingProgramSchema),
-  },
-  centers: {
-    ...GENERATED_RESOURCE_CATALOG.centers,
-    schema: z.array(EducationCenterSchema),
-    legacySchema: z.array(LegacyEducationCenterSchema),
-  },
-  trainingOfferings: {
-    ...GENERATED_RESOURCE_CATALOG.trainingOfferings,
-    schema: z.array(TrainingOfferingSchema),
-    legacySchema: z.array(LegacyTrainingOfferingSchema),
-  },
-  jobOffers: {
-    ...GENERATED_RESOURCE_CATALOG.jobOffers,
-    schema: z.array(JobOfferSchema),
-    legacySchema: z.array(JobOfferSchema),
-  },
-} as const;
-
 /** Read-only migration for snapshots published before the v1 compatibility fix. */
 const TransitionalJobOfferSchema = z
   .object({
@@ -109,6 +86,42 @@ const TransitionalJobOfferSchema = z
 const PreviousJobOffersSchema = z.array(
   z.union([JobOfferSchema, TransitionalJobOfferSchema]),
 );
+
+const ProgramsResourceSchema = z.array(TrainingProgramSchema);
+const CentersResourceSchema = z.array(EducationCenterSchema);
+const LegacyCentersResourceSchema = z.array(LegacyEducationCenterSchema);
+const TrainingOfferingsResourceSchema = z.array(TrainingOfferingSchema);
+const LegacyTrainingOfferingsResourceSchema = z.array(
+  LegacyTrainingOfferingSchema,
+);
+const JobOffersResourceSchema = z.array(JobOfferSchema);
+
+const RESOURCE_DEFINITIONS = {
+  programs: {
+    ...GENERATED_RESOURCE_CATALOG.programs,
+    schema: ProgramsResourceSchema,
+    previousSchema: ProgramsResourceSchema,
+    legacySchema: ProgramsResourceSchema,
+  },
+  centers: {
+    ...GENERATED_RESOURCE_CATALOG.centers,
+    schema: CentersResourceSchema,
+    previousSchema: CentersResourceSchema,
+    legacySchema: LegacyCentersResourceSchema,
+  },
+  trainingOfferings: {
+    ...GENERATED_RESOURCE_CATALOG.trainingOfferings,
+    schema: TrainingOfferingsResourceSchema,
+    previousSchema: TrainingOfferingsResourceSchema,
+    legacySchema: LegacyTrainingOfferingsResourceSchema,
+  },
+  jobOffers: {
+    ...GENERATED_RESOURCE_CATALOG.jobOffers,
+    schema: JobOffersResourceSchema,
+    previousSchema: PreviousJobOffersSchema,
+    legacySchema: JobOffersResourceSchema,
+  },
+} as const;
 
 type ResourceKey = GeneratedResourceKey;
 
@@ -780,7 +793,6 @@ async function validateSnapshotDirectory(
   const { manifest } = parsedManifest;
 
   const loaded = {} as Record<ResourceKey, unknown[]>;
-  const resourceContracts = new Set<"current" | "legacy">();
   for (const key of GENERATED_RESOURCE_KEYS) {
     const definition = RESOURCE_DEFINITIONS[key];
     const filePath = resourceFileInSnapshot(
@@ -789,20 +801,17 @@ async function validateSnapshotDirectory(
     );
     await assertPhysicalPath(root, filePath);
     const json = JSON.parse(await readFile(filePath, "utf8"));
-    const current =
-      key === "jobOffers"
-        ? PreviousJobOffersSchema.safeParse(json)
-        : definition.schema.safeParse(json);
-    const legacy = definition.legacySchema.safeParse(json);
-    if (!current.success && !legacy.success) {
+    const previousSchema =
+      parsedManifest.format === "current"
+        ? definition.previousSchema
+        : definition.legacySchema;
+    const parsedResource = previousSchema.safeParse(json);
+    if (!parsedResource.success) {
       throw new Error(`Snapshot schema mismatch for ${definition.fileName}.`, {
-        cause: current.error,
+        cause: parsedResource.error,
       });
     }
-    const records = (current.success ? current.data : legacy.data) as unknown[];
-    if (key !== "programs") {
-      resourceContracts.add(current.success ? "current" : "legacy");
-    }
+    const records = parsedResource.data as unknown[];
     const snapshot = manifest.resourceSnapshots[key];
 
     if (records.length !== snapshot.recordCount) {
@@ -832,10 +841,7 @@ async function validateSnapshotDirectory(
     }
   }
 
-  if (resourceContracts.size !== 1) {
-    throw new Error("Snapshot mixes current and legacy resource contracts.");
-  }
-  const resourceContract = [...resourceContracts][0];
+  const resourceContract = parsedManifest.format;
   const report =
     resourceContract === "current"
       ? runQualityGates(
@@ -1016,7 +1022,7 @@ async function writeCandidate(
     hashCanonicalSource(offerRecords),
   );
   const offers = normalizeOffers(offerRecords, {
-    sourceSnapshot: offerSourceSnapshot,
+    datasetSnapshot: offerSourceSnapshot,
   });
   const candidate = {
     programs: z.array(TrainingProgramSchema).parse(training.programs),

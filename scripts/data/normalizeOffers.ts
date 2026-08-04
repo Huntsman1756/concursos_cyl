@@ -6,6 +6,7 @@ import {
   type JobOffer,
   type SourceSnapshot,
 } from "../../data/schemas/generated";
+import { serializeJobOfferProvenanceForV1 } from "../../data/schemas/jobOfferProvenance";
 import type { OfferSourceRecord } from "../../data/schemas/offerSource";
 import { SOURCE_CONFIG } from "./sourceConfig";
 import { sanitizeOfferHtml } from "./sanitizeOfferHtml";
@@ -13,7 +14,7 @@ import { sanitizeOfferHtml } from "./sanitizeOfferHtml";
 const spanishCollator = new Intl.Collator("es");
 
 export interface NormalizeOffersOptions {
-  sourceSnapshot?: SourceSnapshot;
+  datasetSnapshot?: SourceSnapshot;
 }
 
 function requiredText(
@@ -118,13 +119,13 @@ function normalizeRecord(
     "actualizacionmetadatos",
   );
   const description = sanitizeOfferHtml(record.descripcion ?? "");
-  const sourceSnapshot =
-    options.sourceSnapshot === undefined
-      ? sourceSnapshotForRecord(record, sourceRecordUpdatedAt)
-      : SourceSnapshotSchema.parse({
-          ...options.sourceSnapshot,
-          sourceUpdatedAt: sourceRecordUpdatedAt,
-        });
+  const datasetSnapshot =
+    options.datasetSnapshot ??
+    sourceSnapshotForRecord(record, sourceRecordUpdatedAt);
+  const sourceSnapshot = serializeJobOfferProvenanceForV1({
+    datasetSnapshot,
+    recordUpdatedAt: sourceRecordUpdatedAt,
+  });
 
   return JobOfferSchema.parse({
     id: requiredText(record.identificador, "identificador"),

@@ -1,6 +1,8 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { z } from "zod";
 
+import { LoadableGeneratedManifestSchema } from "../../data/schemas/generated";
+
 import {
   loadFoundationResources,
   loadGeneratedResource,
@@ -185,10 +187,63 @@ describe("generated data client", () => {
 
     const manifest = await loadManifest();
     await expect(loadFoundationResources(manifest)).resolves.toEqual({
+      contract: "legacy",
       programs: [program],
       centers: [center],
       trainingOfferings: [trainingOffering],
       jobOffers: [jobOffer],
+    });
+  });
+
+  it("tags immutable resources with the current contract discriminator", async () => {
+    const immutableSnapshot = (resourcePath: string) => ({
+      ...snapshot,
+      resourcePath,
+    });
+    const manifest = LoadableGeneratedManifestSchema.parse({
+      schemaVersion: "1.0.0",
+      generatedAt: "2026-08-04T10:00:00.000Z",
+      qualityStatus: "passed",
+      qualityReport: {
+        counts: { programs: 0, centers: 0, offerings: 0, offers: 0 },
+        nullRates: {
+          centerAddress: 0,
+          centerPhone: 0,
+          centerEmail: 0,
+          centerWebsite: 0,
+          offerProvince: 0,
+          offerLocality: 0,
+          offerDescription: 0,
+        },
+      },
+      resourceSnapshots: {
+        programs: immutableSnapshot("/data/v1/snapshots/build-1/programs.json"),
+        centers: immutableSnapshot("/data/v1/snapshots/build-1/centers.json"),
+        trainingOfferings: immutableSnapshot(
+          "/data/v1/snapshots/build-1/training-offerings.json",
+        ),
+        jobOffers: immutableSnapshot(
+          "/data/v1/snapshots/build-1/job-offers.json",
+        ),
+      },
+    });
+    vi.stubGlobal(
+      "fetch",
+      vi.fn(
+        () =>
+          new Response(JSON.stringify([]), {
+            status: 200,
+            headers: { "Content-Type": "application/json" },
+          }),
+      ),
+    );
+
+    await expect(loadFoundationResources(manifest)).resolves.toEqual({
+      contract: "current",
+      programs: [],
+      centers: [],
+      trainingOfferings: [],
+      jobOffers: [],
     });
   });
 

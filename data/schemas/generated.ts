@@ -57,7 +57,7 @@ export const TrainingProgramSchema = z
   })
   .strict();
 
-export const EducationCenterSchema = z
+const LegacyEducationCenterBaseSchema = z
   .object({
     centerCode: z.string().min(1),
     centerName: z.string().min(1),
@@ -67,40 +67,30 @@ export const EducationCenterSchema = z
     phone: z.string().min(1).nullable(),
     email: z.string().email().nullable(),
     website: z.string().url().nullable(),
-    centerOwnership: CenterOwnershipSchema,
   })
   .strict();
 
-export const LegacyEducationCenterSchema = EducationCenterSchema.omit({
-  centerOwnership: true,
+export const LegacyEducationCenterSchema = LegacyEducationCenterBaseSchema;
+
+export const EducationCenterSchema = LegacyEducationCenterBaseSchema.extend({
+  centerOwnership: CenterOwnershipSchema,
 }).strict();
 
-export const LegacyTrainingOfferingSchema = z
-  .object({
-    ...TrainingProgramSchema.shape,
-    centerCode: z.string().min(1),
-    province: z.string().min(1),
-    locality: z.string().min(1),
-    modality: ModalitySchema,
-  })
-  .strict();
+const LegacyTrainingOfferingBaseSchema = TrainingProgramSchema.extend({
+  centerCode: z.string().min(1),
+  province: z.string().min(1),
+  locality: z.string().min(1),
+  modality: ModalitySchema,
+}).strict();
 
-export const TrainingOfferingSchema = z
-  .object({
-    offeringId: z.string().min(1),
-    programKey: z.string().min(1),
-    programTitle: z.string().min(1),
-    level: TrainingLevelSchema,
-    familyCode: z.string().min(1),
-    familyName: z.string().min(1),
-    centerCode: z.string().min(1),
-    centerName: z.string().min(1),
-    province: z.string().min(1),
-    locality: z.string().min(1),
-    modality: ModalitySchema,
-    teachingType: TeachingTypeSchema,
-    centerOwnership: CenterOwnershipSchema,
-  })
+export const LegacyTrainingOfferingSchema = LegacyTrainingOfferingBaseSchema;
+
+export const TrainingOfferingSchema = LegacyTrainingOfferingBaseSchema.extend({
+  offeringId: z.string().min(1),
+  centerName: z.string().min(1),
+  teachingType: TeachingTypeSchema,
+  centerOwnership: CenterOwnershipSchema,
+})
   .strict()
   .superRefine((offering, context) => {
     if (offering.offeringId !== trainingOfferingIdentity(offering)) {

@@ -845,25 +845,37 @@ describe("buildSnapshots", () => {
       jobOffers: "job-offers.json",
     } as const;
     const before = {} as Record<keyof typeof fileNames, Buffer>;
+    const recordCounts = {} as Record<keyof typeof fileNames, number>;
 
     for (const key of Object.keys(fileNames) as Array<keyof typeof fileNames>) {
-      const bytes = await readFile(
-        assetPath(root, manifest.resourceSnapshots[key].resourcePath),
+      const legacyBytes = await readFile(
+        join(process.cwd(), "public", "data", "v1", fileNames[key]),
       );
-      before[key] = bytes;
-      await writeFile(join(output, fileNames[key]), bytes);
+      before[key] = legacyBytes;
+      recordCounts[key] = (
+        JSON.parse(legacyBytes.toString("utf8")) as unknown[]
+      ).length;
+      await writeFile(join(output, fileNames[key]), legacyBytes);
     }
     const legacyManifest = {
-      ...manifest,
+      schemaVersion: manifest.schemaVersion,
+      generatedAt: manifest.generatedAt,
+      qualityStatus: manifest.qualityStatus,
       resourceSnapshots: Object.fromEntries(
         Object.entries(manifest.resourceSnapshots).map(
           ([key, snapshotValue]) => [
             key,
-            Object.fromEntries(
-              Object.entries(snapshotValue).filter(
-                ([field]) => field !== "resourcePath",
+            {
+              ...Object.fromEntries(
+                Object.entries(snapshotValue).filter(
+                  ([field]) => field !== "resourcePath",
+                ),
               ),
-            ),
+              sha256: createHash("sha256")
+                .update(before[key as keyof typeof fileNames])
+                .digest("hex"),
+              recordCount: recordCounts[key as keyof typeof fileNames],
+            },
           ],
         ),
       ),

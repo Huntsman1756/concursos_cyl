@@ -17,9 +17,9 @@ import {
   type TrainingProgram,
 } from "../../data/schemas/generated";
 import {
+  GENERATED_RESOURCE_KEYS,
   isPermittedGeneratedAssetPath,
   legacyGeneratedResourcePath,
-  type GeneratedResourceKey,
 } from "../../data/schemas/generatedResourceCatalog";
 
 export type GeneratedDataErrorCode = "network" | "schema" | "missing";
@@ -118,25 +118,80 @@ export function loadManifest(): Promise<LoadableGeneratedManifest> {
   );
 }
 
-export interface LoadedFoundationResources {
+interface LoadedFoundationResourceBase {
   programs: TrainingProgram[];
-  centers: (EducationCenter | LegacyEducationCenter)[];
-  trainingOfferings: (TrainingOffering | LegacyTrainingOffering)[];
   jobOffers: JobOffer[];
 }
 
-function usesLegacyResourceContract(
-  key: GeneratedResourceKey,
-  path: string,
-): boolean {
-  return path === legacyGeneratedResourcePath(key);
+export interface LoadedLegacyFoundationResources extends LoadedFoundationResourceBase {
+  contract: "legacy";
+  centers: LegacyEducationCenter[];
+  trainingOfferings: LegacyTrainingOffering[];
 }
 
-/** Loads all required v1 resources with path-sensitive current/legacy contracts. */
+export interface LoadedCurrentFoundationResources extends LoadedFoundationResourceBase {
+  contract: "current";
+  centers: EducationCenter[];
+  trainingOfferings: TrainingOffering[];
+}
+
+export type LoadedFoundationResources =
+  LoadedLegacyFoundationResources | LoadedCurrentFoundationResources;
+
+function foundationResourceContract(
+  manifest: LoadableGeneratedManifest,
+): LoadedFoundationResources["contract"] {
+  const legacyResourceCount = GENERATED_RESOURCE_KEYS.filter(
+    (key) =>
+      manifest.resourceSnapshots[key].resourcePath ===
+      legacyGeneratedResourcePath(key),
+  ).length;
+
+  if (legacyResourceCount === 0) {
+    return "current";
+  }
+  if (legacyResourceCount === GENERATED_RESOURCE_KEYS.length) {
+    return "legacy";
+  }
+
+  throw new GeneratedDataError(
+    "schema",
+    "Generated manifest mixes current and legacy foundation resources.",
+  );
+}
+
+/** Loads all required v1 resources as one tagged current or legacy set. */
 export async function loadFoundationResources(
   manifest: LoadableGeneratedManifest,
 ): Promise<LoadedFoundationResources> {
   const { resourceSnapshots } = manifest;
+  const contract = foundationResourceContract(manifest);
+
+  if (contract === "legacy") {
+    const [programs, centers, trainingOfferings, jobOffers] = await Promise.all(
+      [
+        loadGeneratedResource(
+          resourceSnapshots.programs.resourcePath,
+          z.array(TrainingProgramSchema),
+        ),
+        loadGeneratedResource(
+          resourceSnapshots.centers.resourcePath,
+          z.array(LegacyEducationCenterSchema),
+        ),
+        loadGeneratedResource(
+          resourceSnapshots.trainingOfferings.resourcePath,
+          z.array(LegacyTrainingOfferingSchema),
+        ),
+        loadGeneratedResource(
+          resourceSnapshots.jobOffers.resourcePath,
+          z.array(JobOfferSchema),
+        ),
+      ],
+    );
+
+    return { contract, programs, centers, trainingOfferings, jobOffers };
+  }
+
   const [programs, centers, trainingOfferings, jobOffers] = await Promise.all([
     loadGeneratedResource(
       resourceSnapshots.programs.resourcePath,
@@ -144,25 +199,11 @@ export async function loadFoundationResources(
     ),
     loadGeneratedResource(
       resourceSnapshots.centers.resourcePath,
-      z.array(
-        usesLegacyResourceContract(
-          "centers",
-          resourceSnapshots.centers.resourcePath,
-        )
-          ? LegacyEducationCenterSchema
-          : EducationCenterSchema,
-      ),
+      z.array(EducationCenterSchema),
     ),
     loadGeneratedResource(
       resourceSnapshots.trainingOfferings.resourcePath,
-      z.array(
-        usesLegacyResourceContract(
-          "trainingOfferings",
-          resourceSnapshots.trainingOfferings.resourcePath,
-        )
-          ? LegacyTrainingOfferingSchema
-          : TrainingOfferingSchema,
-      ),
+      z.array(TrainingOfferingSchema),
     ),
     loadGeneratedResource(
       resourceSnapshots.jobOffers.resourcePath,
@@ -170,5 +211,5 @@ export async function loadFoundationResources(
     ),
   ]);
 
-  return { programs, centers, trainingOfferings, jobOffers };
+  return { contract, programs, centers, trainingOfferings, jobOffers };
 }
