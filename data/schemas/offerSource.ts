@@ -8,12 +8,13 @@ const nullableText = z.string().nullable();
  */
 export const OfferSourceRecordSchema = z
   .object({
-    identificador: z.union([z.string(), z.number()]),
+    identificador: z.string(),
     titulo: nullableText,
     provincia: nullableText,
     localidad: nullableText,
     fecha_publicacion: nullableText,
-    fuente: nullableText,
+    fuentecontenido: nullableText,
+    actualizacionmetadatos: nullableText,
     descripcion: nullableText,
     enlace_al_contenido: nullableText,
   })

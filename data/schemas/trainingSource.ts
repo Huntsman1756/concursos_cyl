@@ -9,18 +9,19 @@ const nullableText = z.string().nullable();
 export const TrainingSourceRecordSchema = z
   .object({
     clave_ciclo: nullableText,
-    denominacion_ciclo: nullableText,
-    nivel: nullableText,
+    ciclo_formativo_curso_de_especializacion: nullableText,
+    nivel_educativo: nullableText,
     familia_profesional: nullableText,
+    codigo_familia: nullableText,
     codigo_centro: nullableText,
-    nombre_centro: nullableText,
+    centro_educativo: nullableText,
     provincia: nullableText,
     localidad: nullableText,
     modalidad: nullableText,
-    titularidad: nullableText.optional(),
-    direccion: nullableText.optional(),
+    titularidad_centro: nullableText.optional(),
+    direccion_centro: nullableText.optional(),
     telefono: nullableText.optional(),
-    email: nullableText.optional(),
+    e_mail: nullableText.optional(),
     web: nullableText.optional(),
   })
   .passthrough();

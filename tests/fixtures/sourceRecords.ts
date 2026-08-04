@@ -1,0 +1,43 @@
+export const liveTrainingSourceRecord = {
+  provincia: "Ávila",
+  localidad: "Arenas de San Pedro",
+  codigo_centro: "05009923",
+  centro_educativo: "CIFP LAS FERRERÍAS",
+  titularidad_centro: "Educación",
+  familia_profesional: "Electricidad y Electrónica",
+  codigo_familia: "ELE",
+  nivel_educativo: "Grado Básico",
+  clave_ciclo: "ELE01B",
+  ciclo_formativo_curso_de_especializacion: "Electricidad y Electrónica",
+  modalidad: "Presencial",
+  tipo_ensenanza: "Pública",
+  grupos_1o: 1,
+  grupos_2o: 1,
+  grupos_3o: null,
+  direccion_centro: "Avda. de Lourdes, 2",
+  codigo_postal: "05400",
+  telefono: "920 370 056",
+  e_mail: "05009923@educa.jcyl.es",
+  web: "http://cifparenasdesanpedro.centros.educa.jcyl.es/",
+  localizacion: { lon: -5.08499, lat: 40.21005 },
+} as const;
+
+export const liveOfferSourceRecord = {
+  titulo: "TERAPEUTAS OCUPACIONALES",
+  provincia: "León",
+  fecha_publicacion: "2026-07-31",
+  descripcion:
+    "<p>Para más información acuda a <a href='http://empleocastillayleon.jcyl.es/oficinavirtual/buscoEmpleoPub.do?srvc=ver&scope=reg&cod=387818'>Oficina Virtual</a></p>",
+  provinciaalternativa: null,
+  fuentecontenido: "ECYL",
+  idlocalidad: "1179297860755",
+  localidad: "León",
+  latitud: "42.59873",
+  longitud: "-5.5670958",
+  codigo_localidad: "24",
+  identificador: "1285668029568",
+  actualizacionmetadatos: "2026-07-31",
+  enlace_al_contenido:
+    "https://empleo.jcyl.es/web/jcyl/Empleo/es/Plantilla100Detalle/1284216458054/OfertasEmpleo/1285668029568/Empleo",
+  posicion: { lon: -5.5670958, lat: 42.59873 },
+} as const;

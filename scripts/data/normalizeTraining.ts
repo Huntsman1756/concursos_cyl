@@ -111,25 +111,19 @@ function normalizeRecord(record: TrainingSourceRecord): {
   const programKey = requiredText(record.clave_ciclo, "clave_ciclo");
   const centerCode = requiredText(record.codigo_centro, "codigo_centro");
   const programTitle = requiredText(
-    record.denominacion_ciclo,
-    "denominacion_ciclo",
+    record.ciclo_formativo_curso_de_especializacion,
+    "ciclo_formativo_curso_de_especializacion",
   );
   const familyName = requiredText(
     record.familia_profesional,
     "familia_profesional",
   );
-  const centerName = requiredText(record.nombre_centro, "nombre_centro");
+  const familyCode = requiredText(record.codigo_familia, "codigo_familia");
+  const centerName = requiredText(record.centro_educativo, "centro_educativo");
   const province = requiredText(record.provincia, "provincia");
   const locality = requiredText(record.localidad, "localidad");
-  const level = normalizeLevel(record.nivel);
+  const level = normalizeLevel(record.nivel_educativo);
   const modality = normalizeModality(record.modalidad);
-  const familyCode = programKey.slice(0, 3).toLocaleUpperCase("es-ES");
-
-  if (familyCode.length !== 3) {
-    throw new Error(
-      `Official clave_ciclo must include a family code: ${programKey}.`,
-    );
-  }
 
   const program = TrainingProgramSchema.parse({
     programKey,
@@ -143,9 +137,9 @@ function normalizeRecord(record: TrainingSourceRecord): {
     centerName,
     province,
     locality,
-    address: optionalText(record.direccion),
+    address: optionalText(record.direccion_centro),
     phone: optionalText(record.telefono),
-    email: optionalText(record.email),
+    email: optionalText(record.e_mail),
     website: optionalText(record.web),
   });
   const offering = TrainingOfferingSchema.parse({

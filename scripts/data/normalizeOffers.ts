@@ -39,6 +39,29 @@ function normalizeDate(value: unknown, field: string): string {
     typeof value === "string" || typeof value === "number" ? value : null,
     field,
   );
+  const dateMatch = /^(\d{4})-(\d{2})-(\d{2})(?:$|T)/u.exec(dateText);
+
+  if (dateMatch === null) {
+    throw new Error(`Official ${field} must be a valid date: ${dateText}.`);
+  }
+
+  const [, yearText, monthText, dayText] = dateMatch;
+  const year = Number(yearText);
+  const month = Number(monthText);
+  const day = Number(dayText);
+  const calendarDate = new Date(
+    `${yearText}-${monthText}-${dayText}T00:00:00.000Z`,
+  );
+
+  if (
+    Number.isNaN(calendarDate.valueOf()) ||
+    calendarDate.getUTCFullYear() !== year ||
+    calendarDate.getUTCMonth() + 1 !== month ||
+    calendarDate.getUTCDate() !== day
+  ) {
+    throw new Error(`Official ${field} must be a valid date: ${dateText}.`);
+  }
+
   const normalizedDateText = /^\d{4}-\d{2}-\d{2}$/u.test(dateText)
     ? `${dateText}T00:00:00.000Z`
     : dateText;
@@ -83,8 +106,8 @@ function sourceSnapshotForRecord(
   publishedAt: string,
 ): SourceSnapshot {
   const sourceUpdatedAt = nullableDate(
-    record.fecha_actualizacion,
-    "fecha_actualizacion",
+    record.actualizacionmetadatos,
+    "actualizacionmetadatos",
   );
 
   return SourceSnapshotSchema.parse({
@@ -119,7 +142,7 @@ function normalizeRecord(
     province: nullableText(record.provincia),
     locality: nullableText(record.localidad),
     publishedAt,
-    sourceName: nullableText(record.fuente) ?? "ECYL",
+    sourceName: nullableText(record.fuentecontenido) ?? "ECYL",
     descriptionText: description.plainText,
     descriptionSections: description.sections,
     originalUrl: requiredText(
@@ -138,22 +161,22 @@ export function normalizeOffers(
   records: readonly OfferSourceRecord[],
   options: NormalizeOffersOptions = {},
 ): JobOffer[] {
-  const offersById = new Map<string, JobOffer>();
-  const normalized = records
+  const seenIds = new Set<string>();
+
+  for (const record of records) {
+    const id = requiredText(record.identificador, "identificador");
+    if (seenIds.has(id)) {
+      throw new Error(`Duplicate official offer identifier: ${id}.`);
+    }
+    seenIds.add(id);
+  }
+
+  return records
     .map((record) => normalizeRecord(record, options))
     .sort((left, right) => {
       return (
         spanishCollator.compare(left.title, right.title) ||
-        left.id.localeCompare(right.id) ||
-        stableJson(left).localeCompare(stableJson(right))
+        left.id.localeCompare(right.id)
       );
     });
-
-  for (const offer of normalized) {
-    if (!offersById.has(offer.id)) {
-      offersById.set(offer.id, offer);
-    }
-  }
-
-  return [...offersById.values()];
 }

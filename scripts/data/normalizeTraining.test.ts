@@ -5,35 +5,43 @@ import {
   TrainingOfferingSchema,
   TrainingProgramSchema,
 } from "../../data/schemas/generated";
-import type { TrainingSourceRecord } from "../../data/schemas/trainingSource";
+import { TrainingSourceRecordSchema } from "../../data/schemas/trainingSource";
+import { liveTrainingSourceRecord } from "../../tests/fixtures/sourceRecords";
 import { normalizeTraining } from "./normalizeTraining";
 
-const valladolidCenter: TrainingSourceRecord = {
+const valladolidCenter = TrainingSourceRecordSchema.parse({
+  ...liveTrainingSourceRecord,
   clave_ciclo: "IFC03S",
-  denominacion_ciclo: "Desarrollo de Aplicaciones Web",
-  nivel: "Grado Superior",
+  ciclo_formativo_curso_de_especializacion: "Desarrollo de Aplicaciones Web",
+  nivel_educativo: "Grado Superior",
   familia_profesional: "Informática y Comunicaciones",
+  codigo_familia: "IFC",
   codigo_centro: "47000000",
-  nombre_centro: "IES Río Duero",
+  centro_educativo: "IES Río Duero",
   provincia: "Valladolid",
   localidad: "Valladolid",
-  modalidad: "Presencial",
-  titularidad: "Público",
-  direccion: "Calle Mayor, 1",
+  direccion_centro: "Calle Mayor, 1",
   telefono: "983000000",
-  email: "info@example.test",
+  e_mail: "info@example.test",
   web: "https://example.test/ies-rio-duero",
-};
+});
 
-const secondProgramAtSameCenter: TrainingSourceRecord = {
+const secondProgramAtSameCenter = {
   ...valladolidCenter,
   clave_ciclo: "ADG01M",
-  denominacion_ciclo: "Gestión Administrativa",
-  nivel: "Grado Medio",
+  ciclo_formativo_curso_de_especializacion: "Gestión Administrativa",
+  nivel_educativo: "Grado Medio",
   familia_profesional: "Administración y Gestión",
+  codigo_familia: "ADG",
 };
 
 describe("normalizeTraining", () => {
+  it("accepts the configured FP endpoint record shape", () => {
+    expect(
+      TrainingSourceRecordSchema.safeParse(liveTrainingSourceRecord).success,
+    ).toBe(true);
+  });
+
   it("deduplicates programs and centers while retaining each offering", () => {
     const result = normalizeTraining([
       valladolidCenter,
@@ -110,12 +118,13 @@ describe("normalizeTraining", () => {
   it("resolves duplicate stable offering identities independently of input order", () => {
     const updatedCenter = {
       ...valladolidCenter,
-      nombre_centro: "IES Álamos",
+      centro_educativo: "IES Álamos",
     };
 
     const first = normalizeTraining([valladolidCenter, updatedCenter]);
     const second = normalizeTraining([updatedCenter, valladolidCenter]);
 
     expect(second).toEqual(first);
+    expect(first.centers[0]?.centerName).toBe("IES Álamos");
   });
 });

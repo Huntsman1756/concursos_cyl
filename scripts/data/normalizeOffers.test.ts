@@ -1,23 +1,31 @@
 import { describe, expect, it } from "vitest";
 
 import { JobOfferSchema } from "../../data/schemas/generated";
-import type { OfferSourceRecord } from "../../data/schemas/offerSource";
+import { OfferSourceRecordSchema } from "../../data/schemas/offerSource";
+import { liveOfferSourceRecord } from "../../tests/fixtures/sourceRecords";
 import { normalizeOffers } from "./normalizeOffers";
 
-const offerSourceWithRequirements: OfferSourceRecord = {
+const offerSourceWithRequirements = OfferSourceRecordSchema.parse({
+  ...liveOfferSourceRecord,
   identificador: "08-2026-12345",
   titulo: "Desarrollador/a web",
   provincia: "Valladolid",
   localidad: "Valladolid",
   fecha_publicacion: "2026-08-03",
-  fuente: "ECYL",
+  fuentecontenido: "ECYL",
   descripcion:
     "<p><strong>Requisitos:</strong></p><ul><li>Carné B</li></ul><script>alert(1)</script>",
   enlace_al_contenido: "https://empleo.jcyl.es/oferta/08-2026-12345",
-  fecha_actualizacion: "2026-08-04T10:00:00.000Z",
-};
+  actualizacionmetadatos: "2026-08-04T10:00:00.000Z",
+});
 
 describe("normalizeOffers", () => {
+  it("accepts the configured employment-offers endpoint record shape", () => {
+    expect(
+      OfferSourceRecordSchema.safeParse(liveOfferSourceRecord).success,
+    ).toBe(true);
+  });
+
   it("sanitizes descriptions into the public offer contract without raw HTML", () => {
     const [offer] = normalizeOffers([offerSourceWithRequirements]);
 
@@ -57,6 +65,37 @@ describe("normalizeOffers", () => {
     expect(result.map((offer) => offer.id)).toEqual(["1", "2", "3"]);
   });
 
+  it("rejects a blank official identifier", () => {
+    expect(() =>
+      normalizeOffers([{ ...offerSourceWithRequirements, identificador: " " }]),
+    ).toThrow(/identificador.*blank/i);
+  });
+
+  it.each(["2026-02-31", "2026-02-31T10:00:00.000Z"])(
+    "rejects impossible publication date %s",
+    (fechaPublicacion) => {
+      expect(() =>
+        normalizeOffers([
+          {
+            ...offerSourceWithRequirements,
+            fecha_publicacion: fechaPublicacion,
+          },
+        ]),
+      ).toThrow(/fecha_publicacion.*valid date/i);
+    },
+  );
+
+  it("rejects an impossible metadata update date", () => {
+    expect(() =>
+      normalizeOffers([
+        {
+          ...offerSourceWithRequirements,
+          actualizacionmetadatos: "2026-02-31",
+        },
+      ]),
+    ).toThrow(/actualizacionmetadatos.*valid date/i);
+  });
+
   it("returns deterministic normalized data for equivalent input order", () => {
     const first = normalizeOffers([
       offerSourceWithRequirements,
@@ -78,21 +117,14 @@ describe("normalizeOffers", () => {
     expect(second).toEqual(first);
   });
 
-  it("resolves duplicate official identifiers independently of input order", () => {
+  it("rejects duplicate official identifiers instead of hiding collisions", () => {
     const correctedDescription = {
       ...offerSourceWithRequirements,
       descripcion: "<p>Oferta corregida.</p>",
     };
 
-    const first = normalizeOffers([
-      offerSourceWithRequirements,
-      correctedDescription,
-    ]);
-    const second = normalizeOffers([
-      correctedDescription,
-      offerSourceWithRequirements,
-    ]);
-
-    expect(second).toEqual(first);
+    expect(() =>
+      normalizeOffers([offerSourceWithRequirements, correctedDescription]),
+    ).toThrow(/duplicate.*08-2026-12345/i);
   });
 });
