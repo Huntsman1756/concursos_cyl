@@ -98,6 +98,10 @@ export interface SnapshotFailureInjection {
   assertLockPhysicalAfterClose?: (
     assertPhysical: () => Promise<void>,
   ) => void | Promise<void>;
+  beforeLockReleaseValidation?: () => void | Promise<void>;
+  afterLockReleaseOwnedRename?: () => void | Promise<void>;
+  beforeFailedLockCleanupValidation?: () => void | Promise<void>;
+  afterFailedLockCleanupOwnedRename?: () => void | Promise<void>;
 }
 
 export interface BuildSnapshotsOptions {
@@ -487,19 +491,59 @@ function sameLockFileIdentity(
   return left.dev === right.dev && left.ino === right.ino;
 }
 
+function snapshotBuildLockOperatorGuidance(lockPath: string): string {
+  return `Operator recovery: verify no snapshot build is running, then deliberately remove only the exact lock file ${lockPath} and rerun.`;
+}
+
+async function validateExpectedSnapshotBuildLock(
+  root: string,
+  lockPath: string,
+  heldLock: HeldSnapshotBuildLock,
+): Promise<void> {
+  try {
+    const identity = await lstat(lockPath);
+    if (identity.isSymbolicLink() || !identity.isFile()) {
+      throw new Error("Snapshot build lock is not a regular owned file.");
+    }
+    const metadata = await readSnapshotBuildLock(root, lockPath);
+    if (
+      heldLock.metadata.root !== canonicalLockRoot(root) ||
+      metadata.root !== canonicalLockRoot(root) ||
+      !sameLockFileIdentity(identity, heldLock.identity) ||
+      !sameLockIdentity(metadata, heldLock.metadata)
+    ) {
+      throw new Error("Snapshot build lock owner changed before mutation.");
+    }
+  } catch (error) {
+    throw new Error(
+      `Snapshot build lock ownership validation failed; the canonical lock was not mutated. ${snapshotBuildLockOperatorGuidance(lockPath)}`,
+      { cause: error },
+    );
+  }
+}
+
 async function moveAndValidateOwnedSnapshotBuildLock(
   root: string,
   temporaryRoot: string,
   lockPath: string,
   heldLock: HeldSnapshotBuildLock,
+  purpose: "cleanup" | "release",
+  afterOwnedRename: (() => void | Promise<void>) | undefined,
 ): Promise<string> {
+  // This is a cooperative lock protocol: callers validate the canonical object
+  // immediately before this rename, and we validate the owned object again
+  // before deletion. No build auto-removes an existing lock. Arbitrary external
+  // filesystem mutation in the narrow precheck-to-rename interval is outside
+  // the threat model; postvalidation still prevents deletion of an unexpected
+  // owned object or of a contender that acquires the canonical pathname.
   const ownedPath = await moveCanonicalLockToOwnedPath(
     root,
     temporaryRoot,
     lockPath,
-    "release",
+    purpose,
   );
   try {
+    await afterOwnedRename?.();
     const movedIdentity = await lstat(ownedPath);
     const movedMetadata = await readSnapshotBuildLock(root, ownedPath);
     if (
@@ -531,32 +575,19 @@ async function cleanupFailedLockAcquisition(
   root: string,
   temporaryRoot: string,
   lockPath: string,
-  identity: LockFileIdentity,
+  heldLock: HeldSnapshotBuildLock,
+  failureInjection: SnapshotFailureInjection | undefined,
 ): Promise<void> {
-  let ownedPath: string;
-  try {
-    ownedPath = await moveCanonicalLockToOwnedPath(
-      root,
-      temporaryRoot,
-      lockPath,
-      "cleanup",
-    );
-  } catch (error) {
-    if (errorCode(error) === "ENOENT") {
-      return;
-    }
-    throw error;
-  }
-  const movedIdentity = await lstat(ownedPath);
-  if (!sameLockFileIdentity(movedIdentity, identity)) {
-    await restoreOwnedSnapshotBuildLock(
-      root,
-      temporaryRoot,
-      lockPath,
-      ownedPath,
-    );
-    return;
-  }
+  await failureInjection?.beforeFailedLockCleanupValidation?.();
+  await validateExpectedSnapshotBuildLock(root, lockPath, heldLock);
+  const ownedPath = await moveAndValidateOwnedSnapshotBuildLock(
+    root,
+    temporaryRoot,
+    lockPath,
+    heldLock,
+    "cleanup",
+    failureInjection?.afterFailedLockCleanupOwnedRename,
+  );
   await removeOwnedLockPath(root, temporaryRoot, ownedPath);
 }
 
@@ -565,6 +596,10 @@ async function describeExistingSnapshotBuildLock(
   lockPath: string,
 ): Promise<string> {
   try {
+    const identity = await lstat(lockPath);
+    if (identity.isSymbolicLink() || !identity.isFile()) {
+      return "metadata is unavailable or invalid";
+    }
     const metadata = await readSnapshotBuildLock(root, lockPath);
     return `metadata pid=${metadata.pid}, startedAt=${metadata.startedAt}, buildId=${metadata.buildId}, token=${metadata.token}, root=${metadata.root}`;
   } catch {
@@ -576,6 +611,7 @@ async function acquireSnapshotBuildLock(
   root: string,
   temporaryRoot: string,
   failureInjection: SnapshotFailureInjection | undefined,
+  log: (message: string) => void,
 ): Promise<HeldSnapshotBuildLock> {
   const lockPath = resolve(temporaryRoot, SNAPSHOT_BUILD_LOCK_NAME);
   const token = randomUUID();
@@ -589,7 +625,6 @@ async function acquireSnapshotBuildLock(
   });
 
   await assertPhysicalPath(root, temporaryRoot);
-  await assertPhysicalPath(root, lockPath);
   let handle;
   try {
     handle = await open(lockPath, "wx");
@@ -599,7 +634,7 @@ async function acquireSnapshotBuildLock(
     }
     const diagnostic = await describeExistingSnapshotBuildLock(root, lockPath);
     throw new Error(
-      `Snapshot build lock already exists; build stopped before fetch or startup cleanup (${diagnostic}). Operator recovery: verify no snapshot build is running, then deliberately remove only the exact lock file ${lockPath} and rerun.`,
+      `Snapshot build lock already exists; build stopped before fetch or startup cleanup (${diagnostic}). ${snapshotBuildLockOperatorGuidance(lockPath)}`,
       { cause: error },
     );
   }
@@ -622,12 +657,20 @@ async function acquireSnapshotBuildLock(
     }
   } catch (error) {
     await handle.close().catch(() => undefined);
-    await cleanupFailedLockAcquisition(
-      root,
-      temporaryRoot,
-      lockPath,
-      identity,
-    ).catch(() => undefined);
+    const heldLock = { path: lockPath, metadata, identity };
+    try {
+      await cleanupFailedLockAcquisition(
+        root,
+        temporaryRoot,
+        lockPath,
+        heldLock,
+        failureInjection,
+      );
+    } catch (cleanupError) {
+      log(
+        `Non-fatal snapshot build lock acquisition cleanup failure: ${cleanupError instanceof Error ? cleanupError.message : String(cleanupError)}`,
+      );
+    }
     throw error;
   }
   return { path: lockPath, metadata, identity };
@@ -638,16 +681,18 @@ async function releaseSnapshotBuildLock(
   temporaryRoot: string,
   heldLock: HeldSnapshotBuildLock,
   log: (message: string) => void,
+  failureInjection: SnapshotFailureInjection | undefined,
 ): Promise<void> {
   try {
-    if (!(await pathExists(heldLock.path))) {
-      return;
-    }
+    await failureInjection?.beforeLockReleaseValidation?.();
+    await validateExpectedSnapshotBuildLock(root, heldLock.path, heldLock);
     const ownedPath = await moveAndValidateOwnedSnapshotBuildLock(
       root,
       temporaryRoot,
       heldLock.path,
       heldLock,
+      "release",
+      failureInjection?.afterLockReleaseOwnedRename,
     );
     await removeOwnedLockPath(root, temporaryRoot, ownedPath);
   } catch (error) {
@@ -1224,6 +1269,7 @@ export async function buildSnapshots(
     root,
     temporaryRoot,
     options.failureInjection,
+    log,
   );
   try {
     const legacyBackupPaths = await recoverInterruptedLegacyBackup(
@@ -1373,7 +1419,13 @@ export async function buildSnapshots(
       throw error;
     }
   } finally {
-    await releaseSnapshotBuildLock(root, temporaryRoot, heldLock, log);
+    await releaseSnapshotBuildLock(
+      root,
+      temporaryRoot,
+      heldLock,
+      log,
+      options.failureInjection,
+    );
   }
 }
 

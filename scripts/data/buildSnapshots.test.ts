@@ -61,9 +61,29 @@ const fixedOptions = {
 };
 
 function lockFailureInjection(
-  hooks: Record<string, unknown>,
+  hooks: SnapshotFailureInjection,
 ): SnapshotFailureInjection {
-  return hooks as SnapshotFailureInjection;
+  return hooks;
+}
+
+function canonicalTestRoot(root: string): string {
+  const absolute = resolve(root);
+  return process.platform === "win32" ? absolute.toLowerCase() : absolute;
+}
+
+function snapshotLockBytes(
+  root: string,
+  token: string,
+  pid = process.pid,
+): string {
+  return `${JSON.stringify({
+    schemaVersion: "1.0.0",
+    token,
+    pid,
+    startedAt: "2027-04-01T10:00:00.000Z",
+    root: canonicalTestRoot(root),
+    buildId: `${pid}-${token}`,
+  })}\n`;
 }
 
 afterEach(async () => {
@@ -299,6 +319,140 @@ describe("buildSnapshots", () => {
       ).resolves.toBeUndefined();
     },
   );
+
+  it("preserves a cooperative replacement installed before normal release validation", async () => {
+    const root = await temporaryRoot();
+    const lockPath = join(root, ".codex-tmp", "snapshot-build.lock");
+    const replacementBytes = snapshotLockBytes(
+      root,
+      "00000000-0000-4000-8000-000000000011",
+    );
+    const log = vi.fn();
+    const beforeLockReleaseValidation = vi.fn(async () => {
+      await rm(lockPath);
+      await writeFile(lockPath, replacementBytes, "utf8");
+    });
+
+    await expect(
+      buildSnapshots({
+        rootDirectory: root,
+        ...fixedOptions,
+        log,
+        failureInjection: lockFailureInjection({
+          beforeLockReleaseValidation,
+        }),
+      }),
+    ).resolves.toBeUndefined();
+
+    expect(beforeLockReleaseValidation).toHaveBeenCalledOnce();
+    await expect(readFile(lockPath, "utf8")).resolves.toBe(replacementBytes);
+    expect(log).toHaveBeenCalledWith(expect.stringMatching(/release failure/i));
+    expect(log).toHaveBeenCalledWith(expect.stringMatching(/operator|manual/i));
+  });
+
+  it("preserves a cooperative replacement installed before failed-acquisition cleanup validation", async () => {
+    const root = await temporaryRoot();
+    const lockPath = join(root, ".codex-tmp", "snapshot-build.lock");
+    const replacementBytes = snapshotLockBytes(
+      root,
+      "00000000-0000-4000-8000-000000000012",
+    );
+    const log = vi.fn();
+    const beforeFailedLockCleanupValidation = vi.fn(async () => {
+      await rm(lockPath);
+      await writeFile(lockPath, replacementBytes, "utf8");
+    });
+
+    await expect(
+      buildSnapshots({
+        rootDirectory: root,
+        ...fixedOptions,
+        log,
+        failureInjection: lockFailureInjection({
+          closeLockHandle: async (close) => {
+            await close();
+            throw new Error("primary close failure");
+          },
+          beforeFailedLockCleanupValidation,
+        }),
+      }),
+    ).rejects.toThrow("primary close failure");
+
+    expect(beforeFailedLockCleanupValidation).toHaveBeenCalledOnce();
+    await expect(readFile(lockPath, "utf8")).resolves.toBe(replacementBytes);
+    expect(log).toHaveBeenCalledWith(expect.stringMatching(/cleanup failure/i));
+    expect(log).toHaveBeenCalledWith(expect.stringMatching(/operator|manual/i));
+  });
+
+  it("preserves a contender that acquires the canonical path after normal release renames its owned lock", async () => {
+    const root = await temporaryRoot();
+    const lockPath = join(root, ".codex-tmp", "snapshot-build.lock");
+    const contenderBytes = snapshotLockBytes(
+      root,
+      "00000000-0000-4000-8000-000000000013",
+    );
+    const afterLockReleaseOwnedRename = vi.fn(() =>
+      writeFile(lockPath, contenderBytes, { encoding: "utf8", flag: "wx" }),
+    );
+
+    await buildSnapshots({
+      rootDirectory: root,
+      ...fixedOptions,
+      failureInjection: lockFailureInjection({
+        afterLockReleaseOwnedRename,
+      }),
+    });
+
+    expect(afterLockReleaseOwnedRename).toHaveBeenCalledOnce();
+    await expect(readFile(lockPath, "utf8")).resolves.toBe(contenderBytes);
+  });
+
+  it("preserves a contender that acquires the canonical path after failed-acquisition cleanup renames its owned lock", async () => {
+    const root = await temporaryRoot();
+    const lockPath = join(root, ".codex-tmp", "snapshot-build.lock");
+    const contenderBytes = snapshotLockBytes(
+      root,
+      "00000000-0000-4000-8000-000000000014",
+    );
+    const afterFailedLockCleanupOwnedRename = vi.fn(() =>
+      writeFile(lockPath, contenderBytes, { encoding: "utf8", flag: "wx" }),
+    );
+
+    await expect(
+      buildSnapshots({
+        rootDirectory: root,
+        ...fixedOptions,
+        failureInjection: lockFailureInjection({
+          closeLockHandle: async (close) => {
+            await close();
+            throw new Error("primary close failure");
+          },
+          afterFailedLockCleanupOwnedRename,
+        }),
+      }),
+    ).rejects.toThrow("primary close failure");
+
+    expect(afterFailedLockCleanupOwnedRename).toHaveBeenCalledOnce();
+    await expect(readFile(lockPath, "utf8")).resolves.toBe(contenderBytes);
+  });
+
+  it("refuses an existing symbolic lock with safe operator guidance without following it", async () => {
+    const root = await temporaryRoot();
+    await buildSnapshots({ rootDirectory: root, ...fixedOptions });
+    const temporaryRootPath = join(root, ".codex-tmp");
+    const lockPath = join(temporaryRootPath, "snapshot-build.lock");
+    const targetPath = join(temporaryRootPath, "untrusted-lock-target");
+    const targetBytes = "untrusted lock target\n";
+    await writeFile(targetPath, targetBytes, "utf8");
+    await symlink(targetPath, lockPath, "file");
+
+    await expect(
+      buildSnapshots({ rootDirectory: root, ...fixedOptions }),
+    ).rejects.toThrow(/operator|manual/i);
+
+    await expect(readFile(targetPath, "utf8")).resolves.toBe(targetBytes);
+    await expect(readFile(lockPath, "utf8")).resolves.toBe(targetBytes);
+  });
 
   it("writes validated immutable resources with exact counts and hashes", async () => {
     const root = await temporaryRoot();
