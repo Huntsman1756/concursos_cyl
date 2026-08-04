@@ -182,6 +182,7 @@ export interface SnapshotFailureInjection {
   afterRevokedSnapshotPrune?: () => void | Promise<void>;
   beforeActiveRevokedSnapshotQuarantine?: () => void | Promise<void>;
   afterActiveRevokedSnapshotQuarantine?: () => void | Promise<void>;
+  beforeRollbackManifestCommit?: () => void | Promise<void>;
 }
 
 export interface BuildSnapshotsOptions {
@@ -994,11 +995,75 @@ async function legacyBackups(temporaryRoot: string): Promise<string[]> {
   }
   return (await readdir(temporaryRoot, { withFileTypes: true }))
     .filter(
-      (entry) => entry.isDirectory() && entry.name.startsWith("data-backup-"),
+      (entry) =>
+        entry.isDirectory() &&
+        entry.name.startsWith("data-backup-") &&
+        !entry.name.startsWith("data-backup-revoked-snapshots-"),
     )
     .map((entry) => resolve(temporaryRoot, entry.name))
     .sort()
     .reverse();
+}
+
+async function interruptedSnapshotQuarantines(
+  temporaryRoot: string,
+): Promise<string[]> {
+  if (!(await pathExists(temporaryRoot))) return [];
+  return (await readdir(temporaryRoot, { withFileTypes: true }))
+    .filter(
+      (entry) =>
+        entry.isDirectory() &&
+        entry.name.startsWith("data-backup-revoked-snapshots-"),
+    )
+    .map((entry) => resolve(temporaryRoot, entry.name))
+    .sort();
+}
+
+const SnapshotQuarantineJournalSchema = z.object({
+  committed: z.boolean().default(false),
+  entries: z.array(
+    z.object({
+      source: z.string().min(1),
+      destination: z.string().min(1),
+    }),
+  ),
+});
+
+async function recoverInterruptedSnapshotQuarantines(
+  root: string,
+  temporaryRoot: string,
+  target: string,
+): Promise<void> {
+  for (const directory of await interruptedSnapshotQuarantines(temporaryRoot)) {
+    const journalPath = resolve(directory, "snapshot-quarantine-journal.json");
+    await assertPhysicalPath(root, journalPath);
+    const journal = SnapshotQuarantineJournalSchema.parse(
+      JSON.parse(await readFile(journalPath, "utf8")),
+    );
+    const snapshotsRoot = resolve(target, "snapshots");
+    for (const entry of journal.entries) {
+      if (
+        dirname(resolve(entry.source)) !== snapshotsRoot ||
+        !IMMUTABLE_SNAPSHOT_ID_PATTERN.test(basename(entry.source)) ||
+        dirname(resolve(entry.destination)) !== directory ||
+        basename(entry.destination) !== basename(entry.source)
+      ) {
+        throw new Error("Invalid snapshot quarantine journal path.");
+      }
+    }
+    const quarantine: SnapshotQuarantine = {
+      directory,
+      journalPath,
+      entries: journal.entries,
+      committed: journal.committed,
+    };
+    if (quarantine.committed) {
+      await safeRemoveTemporaryDirectory(root, temporaryRoot, directory);
+      continue;
+    }
+    await restoreSnapshotQuarantine(root, quarantine);
+    await safeRemoveTemporaryDirectory(root, temporaryRoot, directory);
+  }
 }
 
 async function abandonedBuildDirectories(
@@ -1212,20 +1277,157 @@ function manifestAddressedSnapshotDirectories(
   );
 }
 
-async function pruneRevokedPublicSnapshotsBeforeManifestCommit(
+async function activeManifestMayAddressSnapshotDirectory(
   root: string,
   target: string,
+  directory: string,
+): Promise<boolean> {
+  try {
+    const active = await loadPreviousSnapshot(root, target);
+    return (
+      active !== undefined &&
+      manifestAddressedSnapshotDirectories(target, active.manifest).has(
+        resolve(directory),
+      )
+    );
+  } catch {
+    // If the active manifest cannot be re-read safely, preserve the immutable
+    // candidate rather than risk deleting bytes it may address.
+    return true;
+  }
+}
+
+interface QuarantinedSnapshot {
+  source: string;
+  destination: string;
+}
+
+interface SnapshotQuarantine {
+  directory: string;
+  journalPath: string;
+  entries: QuarantinedSnapshot[];
+  committed: boolean;
+}
+
+async function writeSnapshotQuarantineJournal(
+  root: string,
+  quarantine: SnapshotQuarantine,
+): Promise<void> {
+  await safeWriteFile(
+    root,
+    quarantine.journalPath,
+    serializeDeterministically({
+      committed: quarantine.committed,
+      entries: quarantine.entries,
+    }),
+  );
+}
+
+async function createSnapshotQuarantine(
+  root: string,
+  temporaryRoot: string,
+  buildId: string,
+): Promise<SnapshotQuarantine> {
+  const directory = resolve(
+    temporaryRoot,
+    `data-backup-revoked-snapshots-${buildId}`,
+  );
+  await safeMkdir(root, directory);
+  const quarantine = {
+    directory,
+    journalPath: resolve(directory, "snapshot-quarantine-journal.json"),
+    entries: [],
+    committed: false,
+  };
+  await writeSnapshotQuarantineJournal(root, quarantine);
+  return quarantine;
+}
+
+async function moveSnapshotsToQuarantine(
+  root: string,
+  quarantine: SnapshotQuarantine,
+  directories: readonly string[],
+): Promise<void> {
+  for (const source of directories) {
+    const entry = {
+      source,
+      destination: resolve(quarantine.directory, basename(source)),
+    };
+    quarantine.entries.push(entry);
+    await writeSnapshotQuarantineJournal(root, quarantine);
+    await safeRename(root, entry.source, entry.destination);
+  }
+}
+
+async function restoreSnapshotQuarantine(
+  root: string,
+  quarantine: SnapshotQuarantine,
+): Promise<void> {
+  for (const entry of [...quarantine.entries].reverse()) {
+    const sourceExists = await pathExists(entry.source);
+    const destinationExists = await pathExists(entry.destination);
+    if (sourceExists && destinationExists) {
+      throw new Error(
+        `Cannot restore quarantined snapshot because both paths exist: ${entry.source}.`,
+      );
+    }
+    if (!sourceExists && destinationExists) {
+      await safeRename(root, entry.destination, entry.source);
+    } else if (!sourceExists) {
+      throw new Error(
+        `Cannot restore quarantined snapshot because both paths are absent: ${entry.source}.`,
+      );
+    }
+  }
+}
+
+async function returnSnapshotsToQuarantine(
+  root: string,
+  quarantine: SnapshotQuarantine,
+): Promise<void> {
+  for (const entry of quarantine.entries) {
+    const sourceExists = await pathExists(entry.source);
+    const destinationExists = await pathExists(entry.destination);
+    if (sourceExists && destinationExists) {
+      throw new Error(
+        `Cannot re-quarantine snapshot because both paths exist: ${entry.source}.`,
+      );
+    }
+    if (sourceExists && !destinationExists) {
+      await safeRename(root, entry.source, entry.destination);
+    } else if (!destinationExists) {
+      throw new Error(
+        `Cannot re-quarantine snapshot because both paths are absent: ${entry.source}.`,
+      );
+    }
+  }
+  await writeSnapshotQuarantineJournal(root, quarantine);
+}
+
+function manifestsMatch(
+  left: LoadableGeneratedManifest,
+  right: LoadableGeneratedManifest,
+): boolean {
+  return serializeDeterministically(left) === serializeDeterministically(right);
+}
+
+async function commitManifestWithSnapshotQuarantine(
+  root: string,
+  temporaryRoot: string,
+  target: string,
+  buildId: string,
+  manifest: GeneratedManifest,
   previous: PreviousSnapshot | undefined,
   curatedMappings: ValidatedCuratedMappings,
   failureInjection: SnapshotFailureInjection | undefined,
-): Promise<string[]> {
+): Promise<void> {
+  let quarantine: SnapshotQuarantine | undefined;
+  let manifestCommitted = false;
   try {
     const invalidDirectories = await findRevokedPublicSnapshotDirectories(
       root,
       curatedMappings,
     );
-    if (invalidDirectories.length === 0) return [];
-
     const addressedDirectories =
       previous === undefined
         ? new Set<string>()
@@ -1237,91 +1439,105 @@ async function pruneRevokedPublicSnapshotsBeforeManifestCommit(
       (directory) => !addressedDirectories.has(directory),
     );
 
+    if (invalidDirectories.length > 0) {
+      quarantine = await createSnapshotQuarantine(root, temporaryRoot, buildId);
+    }
     await failureInjection?.beforeRevokedSnapshotPrune?.();
-    for (const directory of inactiveInvalid) {
-      await safeRemoveImmutableSnapshotDirectory(root, target, directory);
+    if (quarantine !== undefined) {
+      await moveSnapshotsToQuarantine(root, quarantine, inactiveInvalid);
     }
     await failureInjection?.afterRevokedSnapshotPrune?.();
     await assertPublicSnapshotDistribution(root, curatedMappings, {
       ignoredDirectories: activeInvalid,
     });
-    return activeInvalid;
-  } catch (error) {
-    throw new PublicSnapshotDistributionError(
-      `Revoked public snapshot pruning failed before manifest commit: ${error instanceof Error ? error.message : String(error)}`,
-      { cause: error },
-    );
-  }
-}
 
-async function quarantineActiveRevokedSnapshotsAfterManifestCommit(
-  root: string,
-  temporaryRoot: string,
-  target: string,
-  buildId: string,
-  previous: PreviousSnapshot | undefined,
-  activeInvalid: readonly string[],
-  curatedMappings: ValidatedCuratedMappings,
-  failureInjection: SnapshotFailureInjection | undefined,
-): Promise<void> {
-  if (activeInvalid.length === 0) {
-    await assertPublicSnapshotDistribution(root, curatedMappings);
-    return;
-  }
-  if (previous === undefined) {
-    throw new PublicSnapshotDistributionError(
-      "Cannot quarantine an active revoked snapshot without a previous manifest.",
+    await commitManifest(
+      root,
+      target,
+      buildId,
+      manifest,
+      failureInjection?.beforeManifestCommit,
     );
-  }
+    manifestCommitted = true;
 
-  const quarantine = resolve(
-    temporaryRoot,
-    `data-backup-revoked-snapshots-${buildId}`,
-  );
-  const moved: Array<{ source: string; destination: string }> = [];
-  try {
-    await safeMkdir(root, quarantine);
     await failureInjection?.beforeActiveRevokedSnapshotQuarantine?.();
-    for (const source of activeInvalid) {
-      const destination = resolve(quarantine, basename(source));
-      await safeRename(root, source, destination);
-      moved.push({ source, destination });
+    if (quarantine !== undefined) {
+      await moveSnapshotsToQuarantine(root, quarantine, activeInvalid);
     }
     await failureInjection?.afterActiveRevokedSnapshotQuarantine?.();
     await assertPublicSnapshotDistribution(root, curatedMappings);
+
+    if (quarantine !== undefined) {
+      quarantine.committed = true;
+      await writeSnapshotQuarantineJournal(root, quarantine);
+      try {
+        await safeRemoveTemporaryDirectory(
+          root,
+          temporaryRoot,
+          quarantine.directory,
+        );
+      } catch {
+        // The committed journal lets the next build retry cleanup without
+        // restoring revoked snapshots into the deployable public tree.
+      }
+    }
   } catch (error) {
     try {
-      for (const { source, destination } of moved.reverse()) {
-        await safeRename(root, destination, source);
+      if (quarantine !== undefined) {
+        await restoreSnapshotQuarantine(root, quarantine);
       }
-      await commitManifest(
-        root,
-        target,
-        `${buildId}-revoked-rollback`,
-        previous.manifest,
-        undefined,
-        LoadableGeneratedManifestSchema,
-      );
-      if (await pathExists(quarantine)) {
-        await safeRemoveTemporaryDirectory(root, temporaryRoot, quarantine);
+      if (manifestCommitted && previous !== undefined) {
+        await commitManifest(
+          root,
+          target,
+          `${buildId}-revoked-rollback`,
+          previous.manifest,
+          failureInjection?.beforeRollbackManifestCommit,
+          LoadableGeneratedManifestSchema,
+        );
+      }
+      if (
+        quarantine !== undefined &&
+        (await pathExists(quarantine.directory))
+      ) {
+        await safeRemoveTemporaryDirectory(
+          root,
+          temporaryRoot,
+          quarantine.directory,
+        );
       }
     } catch (rollbackError) {
+      if (manifestCommitted && quarantine !== undefined) {
+        try {
+          const active = await loadPreviousSnapshot(root, target);
+          if (
+            active !== undefined &&
+            manifestsMatch(active.manifest, manifest)
+          ) {
+            await returnSnapshotsToQuarantine(root, quarantine);
+            await assertPublicSnapshotDistribution(root, curatedMappings);
+            quarantine.committed = true;
+            await writeSnapshotQuarantineJournal(root, quarantine);
+          }
+        } catch (recoveryError) {
+          throw new PublicSnapshotDistributionError(
+            `Snapshot publication and rollback failed; preserving a loadable state also failed: ${error instanceof Error ? error.message : String(error)}; rollback: ${rollbackError instanceof Error ? rollbackError.message : String(rollbackError)}; recovery: ${recoveryError instanceof Error ? recoveryError.message : String(recoveryError)}`,
+            { cause: recoveryError },
+          );
+        }
+      }
       throw new PublicSnapshotDistributionError(
-        `Active revoked snapshot quarantine failed and rollback also failed: ${error instanceof Error ? error.message : String(error)}; rollback: ${rollbackError instanceof Error ? rollbackError.message : String(rollbackError)}`,
+        `Snapshot publication failed and rollback also failed: ${error instanceof Error ? error.message : String(error)}; rollback: ${rollbackError instanceof Error ? rollbackError.message : String(rollbackError)}`,
         { cause: rollbackError },
       );
     }
+    if (quarantine === undefined && !manifestCommitted) {
+      throw error;
+    }
     throw new PublicSnapshotDistributionError(
-      `Active revoked snapshot quarantine failed after manifest commit; previous manifest restored: ${error instanceof Error ? error.message : String(error)}`,
+      `Snapshot publication transaction failed; prior state restored: ${error instanceof Error ? error.message : String(error)}`,
       { cause: error },
     );
-  }
-
-  try {
-    await safeRemoveTemporaryDirectory(root, temporaryRoot, quarantine);
-  } catch {
-    // The revoked snapshots are already outside the deployable public tree.
-    // Startup cleanup will retry removal without risking the new manifest.
   }
 }
 
@@ -1557,6 +1773,7 @@ export async function buildSnapshots(
     log,
   );
   try {
+    await recoverInterruptedSnapshotQuarantines(root, temporaryRoot, target);
     const legacyBackupPaths = await recoverInterruptedLegacyBackup(
       root,
       temporaryRoot,
@@ -1643,28 +1860,13 @@ export async function buildSnapshots(
         publication.destination,
         result.manifest,
       );
-      const activeRevokedSnapshots =
-        await pruneRevokedPublicSnapshotsBeforeManifestCommit(
-          root,
-          target,
-          previous,
-          curatedMappings,
-          options.failureInjection,
-        );
-      await commitManifest(
-        root,
-        target,
-        buildId,
-        result.manifest,
-        options.failureInjection?.beforeManifestCommit,
-      );
-      await quarantineActiveRevokedSnapshotsAfterManifestCommit(
+      await commitManifestWithSnapshotQuarantine(
         root,
         temporaryRoot,
         target,
         buildId,
+        result.manifest,
         previous,
-        activeRevokedSnapshots,
         curatedMappings,
         options.failureInjection,
       );
@@ -1706,7 +1908,12 @@ export async function buildSnapshots(
 
       if (
         immutableDestination !== undefined &&
-        (await pathExists(immutableDestination))
+        (await pathExists(immutableDestination)) &&
+        !(await activeManifestMayAddressSnapshotDirectory(
+          root,
+          target,
+          immutableDestination,
+        ))
       ) {
         try {
           await safeRemoveImmutableSnapshotDirectory(

@@ -1,4 +1,11 @@
-import { mkdir, mkdtemp, readFile, rm, writeFile } from "node:fs/promises";
+import {
+  access,
+  mkdir,
+  mkdtemp,
+  readFile,
+  rm,
+  writeFile,
+} from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
 
@@ -62,6 +69,21 @@ const curatedMappings: ValidatedCuratedMappings = {
   ],
 };
 
+const approvedMappings: ValidatedCuratedMappings = {
+  occupations: curatedMappings.occupations.map((occupation) => ({
+    ...occupation,
+    reviewStatus: "approved",
+  })),
+  aliases: curatedMappings.aliases.map((alias) => ({
+    ...alias,
+    reviewStatus: "approved",
+  })),
+  links: curatedMappings.links.map((link) => ({
+    ...link,
+    reviewStatus: "approved",
+  })),
+};
+
 async function writeJson(path: string, value: unknown): Promise<void> {
   await writeFile(path, `${JSON.stringify(value, null, 2)}\n`, "utf8");
 }
@@ -121,6 +143,99 @@ describe("public snapshot distribution", () => {
       resolve(revokedAlias),
       resolve(revokedLink),
     ]);
+  });
+
+  it("revokes a historical approved record deleted from the curated catalog", async () => {
+    const root = await mkdtemp(join(tmpdir(), "salida-cyl-distribution-"));
+    temporaryRoots.push(root);
+    const deletedOccupation = await snapshot(
+      root,
+      "20260801000000000-aaaaaaaaaaaa",
+    );
+    await writeJson(
+      join(deletedOccupation, "occupations.json"),
+      approvedMappings.occupations,
+    );
+
+    await expect(
+      findRevokedPublicSnapshotDirectories(root, {
+        occupations: [],
+        aliases: [],
+        links: [],
+      }),
+    ).resolves.toEqual([resolve(deletedOccupation)]);
+  });
+
+  it("rejects historical alias and link rows omitted from a partial curated set", async () => {
+    const root = await mkdtemp(join(tmpdir(), "salida-cyl-distribution-"));
+    temporaryRoots.push(root);
+    const partial = await snapshot(root, "20260801000000000-aaaaaaaaaaaa");
+    await writeJson(
+      join(partial, "occupation-aliases.json"),
+      approvedMappings.aliases,
+    );
+    await writeJson(
+      join(partial, "training-occupation-links.json"),
+      approvedMappings.links,
+    );
+
+    await expect(
+      findRevokedPublicSnapshotDirectories(root, {
+        occupations: approvedMappings.occupations,
+        aliases: [],
+        links: [],
+      }),
+    ).resolves.toEqual([resolve(partial)]);
+  });
+
+  it("rejects an approved identity whose public payload was mutated", async () => {
+    const root = await mkdtemp(join(tmpdir(), "salida-cyl-distribution-"));
+    temporaryRoots.push(root);
+    const mutated = await snapshot(root, "20260801000000000-aaaaaaaaaaaa");
+    await writeJson(join(mutated, "occupations.json"), [
+      {
+        ...approvedMappings.occupations[0],
+        preferredLabel: "Payload alterado",
+      },
+    ]);
+
+    await expect(
+      findRevokedPublicSnapshotDirectories(root, approvedMappings),
+    ).resolves.toEqual([resolve(mutated)]);
+  });
+
+  it("rejects an unknown approved identity", async () => {
+    const root = await mkdtemp(join(tmpdir(), "salida-cyl-distribution-"));
+    temporaryRoots.push(root);
+    const mutated = await snapshot(root, "20260801000000000-aaaaaaaaaaaa");
+    await writeJson(join(mutated, "occupations.json"), [
+      {
+        ...approvedMappings.occupations[0],
+        occupationId: "occupation:cno11:9999",
+        classificationCode: "9999",
+      },
+    ]);
+
+    await expect(
+      findRevokedPublicSnapshotDirectories(root, approvedMappings),
+    ).resolves.toEqual([resolve(mutated)]);
+  });
+
+  it("fails closed when checking the snapshot tree returns an access error", async () => {
+    const root = await mkdtemp(join(tmpdir(), "salida-cyl-distribution-"));
+    temporaryRoots.push(root);
+    const denied = Object.assign(new Error("access denied"), {
+      code: "EACCES",
+    });
+
+    await expect(
+      findRevokedPublicSnapshotDirectories(root, approvedMappings, {
+        accessPath: async (path: string) => {
+          if (path.endsWith("snapshots")) throw denied;
+          await access(path);
+        },
+      } as never),
+    ).rejects.toMatchObject({ code: "EACCES" });
   });
 
   it("keeps every checked-in deployable snapshot free of revoked curated mappings", async () => {
