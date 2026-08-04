@@ -1,5 +1,7 @@
+import { useEffect, useState } from "react";
 import { EntryCard } from "../../components/EntryCard";
 import { Icon, type IconName } from "../../components/Icon";
+import { loadManifest } from "../../data/generatedDataClient";
 
 const proofPoints: Array<{ label: string; iconName: IconName }> = [
   { label: "Fuentes visibles", iconName: "eye" },
@@ -7,7 +9,58 @@ const proofPoints: Array<{ label: string; iconName: IconName }> = [
   { label: "Datos con fecha", iconName: "calendar" },
 ];
 
+type FreshnessState =
+  | { status: "loading" }
+  | { status: "unavailable" }
+  | {
+      status: "ready";
+      date: string;
+      dateTime: string;
+      stale: boolean;
+    };
+
 export function HomePage() {
+  const [freshness, setFreshness] = useState<FreshnessState>({
+    status: "loading",
+  });
+
+  useEffect(() => {
+    let isActive = true;
+
+    void loadManifest()
+      .then((manifest) => {
+        if (!isActive) {
+          return;
+        }
+
+        const offersSnapshot = manifest.resourceSnapshots.jobOffers;
+        const dateTime =
+          offersSnapshot.sourceUpdatedAt ?? offersSnapshot.snapshotFetchedAt;
+        setFreshness({
+          status: "ready",
+          date: new Intl.DateTimeFormat("es-ES", {
+            day: "numeric",
+            month: "long",
+            year: "numeric",
+            timeZone: "UTC",
+          }).format(new Date(dateTime)),
+          dateTime,
+          stale:
+            manifest.qualityStatus === "stale" ||
+            offersSnapshot.qualityStatus === "stale",
+        });
+      })
+      .catch(() => {
+        if (isActive) {
+          setFreshness({ status: "unavailable" });
+        }
+      });
+
+    return () => {
+      isActive = false;
+    };
+  }, []);
+
   return (
     <>
       <section className="home-hero" aria-labelledby="home-heading">
@@ -44,6 +97,30 @@ export function HomePage() {
           </li>
         ))}
       </ul>
+
+      <section
+        className="data-freshness"
+        aria-label="Actualización de datos"
+        aria-live="polite"
+      >
+        {freshness.status === "ready" && (
+          <>
+            <p>
+              Datos actualizados:{" "}
+              <time dateTime={freshness.dateTime}>{freshness.date}</time>
+            </p>
+            {freshness.stale && (
+              <p className="data-freshness__warning">
+                No se han podido actualizar los datos. Mostramos la última copia
+                disponible.
+              </p>
+            )}
+          </>
+        )}
+        {freshness.status === "unavailable" && (
+          <p>No se pudo comprobar la fecha de los datos.</p>
+        )}
+      </section>
     </>
   );
 }

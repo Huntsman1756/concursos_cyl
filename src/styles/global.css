@@ -191,6 +191,25 @@ a:focus-visible {
   font-weight: 650;
 }
 
+.data-freshness {
+  margin-top: var(--space-4);
+  color: var(--color-text-muted);
+}
+
+.data-freshness p {
+  margin: 0;
+}
+
+.data-freshness .data-freshness__warning {
+  margin-top: var(--space-2);
+  padding: var(--space-3) var(--space-4);
+  border-left: 0.25rem solid var(--color-action);
+  border-radius: var(--radius-sm);
+  color: var(--color-text);
+  background: var(--color-warning-surface);
+  font-weight: 650;
+}
+
 @media (max-width: 47.999rem) {
   .site-header__inner {
     align-items: flex-start;
