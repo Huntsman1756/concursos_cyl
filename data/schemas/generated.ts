@@ -80,10 +80,28 @@ export const JobOfferSchema = z
   .strict();
 
 export const GeneratedResourceSnapshotsSchema = z.object({
-  programs: SourceSnapshotSchema,
-  centers: SourceSnapshotSchema,
-  trainingOfferings: SourceSnapshotSchema,
-  jobOffers: SourceSnapshotSchema,
+  programs: SourceSnapshotSchema.extend({
+    resourcePath: z
+      .string()
+      .regex(/^\/data\/v1\/(?:snapshots\/[a-z0-9-]+\/)?programs\.json$/u),
+  }),
+  centers: SourceSnapshotSchema.extend({
+    resourcePath: z
+      .string()
+      .regex(/^\/data\/v1\/(?:snapshots\/[a-z0-9-]+\/)?centers\.json$/u),
+  }),
+  trainingOfferings: SourceSnapshotSchema.extend({
+    resourcePath: z
+      .string()
+      .regex(
+        /^\/data\/v1\/(?:snapshots\/[a-z0-9-]+\/)?training-offerings\.json$/u,
+      ),
+  }),
+  jobOffers: SourceSnapshotSchema.extend({
+    resourcePath: z
+      .string()
+      .regex(/^\/data\/v1\/(?:snapshots\/[a-z0-9-]+\/)?job-offers\.json$/u),
+  }),
 });
 
 export const GeneratedQualityReportSchema = z.object({

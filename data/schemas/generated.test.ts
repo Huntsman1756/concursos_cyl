@@ -44,7 +44,8 @@ describe("generated data contracts", () => {
       SourceSnapshotSchema.safeParse({ ...snapshot, sourceId: "" }).success,
     ).toBe(false);
     expect(
-      SourceSnapshotSchema.safeParse({ ...snapshot, sourceUrl: "not-a-url" }).success,
+      SourceSnapshotSchema.safeParse({ ...snapshot, sourceUrl: "not-a-url" })
+        .success,
     ).toBe(false);
     expect(
       SourceSnapshotSchema.safeParse({
@@ -93,16 +94,29 @@ describe("generated data contracts", () => {
       generatedAt: "2026-08-04T10:00:00.000Z",
       qualityStatus: "passed",
       resourceSnapshots: {
-        programs: snapshot,
-        centers: snapshot,
-        trainingOfferings: snapshot,
-        jobOffers: snapshot,
+        programs: {
+          ...snapshot,
+          resourcePath: "/data/v1/snapshots/build-1/programs.json",
+        },
+        centers: {
+          ...snapshot,
+          resourcePath: "/data/v1/snapshots/build-1/centers.json",
+        },
+        trainingOfferings: {
+          ...snapshot,
+          resourcePath: "/data/v1/snapshots/build-1/training-offerings.json",
+        },
+        jobOffers: {
+          ...snapshot,
+          resourcePath: "/data/v1/snapshots/build-1/job-offers.json",
+        },
       },
     };
 
     expect(GeneratedManifestSchema.safeParse(valid).success).toBe(true);
     expect(
-      GeneratedManifestSchema.safeParse({ ...valid, schemaVersion: "2.0.0" }).success,
+      GeneratedManifestSchema.safeParse({ ...valid, schemaVersion: "2.0.0" })
+        .success,
     ).toBe(false);
     expect(
       GeneratedManifestSchema.safeParse({
@@ -114,9 +128,18 @@ describe("generated data contracts", () => {
       GeneratedManifestSchema.safeParse({
         ...valid,
         resourceSnapshots: {
-          programs: snapshot,
-          centers: snapshot,
-          trainingOfferings: snapshot,
+          programs: {
+            ...snapshot,
+            resourcePath: "/data/v1/snapshots/build-1/programs.json",
+          },
+          centers: {
+            ...snapshot,
+            resourcePath: "/data/v1/snapshots/build-1/centers.json",
+          },
+          trainingOfferings: {
+            ...snapshot,
+            resourcePath: "/data/v1/snapshots/build-1/training-offerings.json",
+          },
         },
       }).success,
     ).toBe(false);

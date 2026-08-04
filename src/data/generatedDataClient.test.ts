@@ -37,10 +37,22 @@ describe("generated data client", () => {
       generatedAt: "2026-08-04T10:00:00.000Z",
       qualityStatus: "stale",
       resourceSnapshots: {
-        programs: snapshot,
-        centers: snapshot,
-        trainingOfferings: snapshot,
-        jobOffers: snapshot,
+        programs: {
+          ...snapshot,
+          resourcePath: "/data/v1/snapshots/build-1/programs.json",
+        },
+        centers: {
+          ...snapshot,
+          resourcePath: "/data/v1/snapshots/build-1/centers.json",
+        },
+        trainingOfferings: {
+          ...snapshot,
+          resourcePath: "/data/v1/snapshots/build-1/training-offerings.json",
+        },
+        jobOffers: {
+          ...snapshot,
+          resourcePath: "/data/v1/snapshots/build-1/job-offers.json",
+        },
       },
     });
 
@@ -56,6 +68,24 @@ describe("generated data client", () => {
       loadGeneratedResource("/data/v1/programs.json", z.array(z.string())),
     ).rejects.toMatchObject({ code: "missing" });
   });
+
+  it.each([
+    "https://example.test/data/v1/programs.json",
+    "//example.test/data/v1/programs.json",
+    "data:text/plain,not-json",
+    "/outside/generated.json",
+  ])(
+    "rejects non-relative or non-generated asset path %s before fetch",
+    async (path) => {
+      const request = vi.fn();
+      vi.stubGlobal("fetch", request);
+
+      await expect(
+        loadGeneratedResource(path, z.array(z.string())),
+      ).rejects.toMatchObject({ code: "missing" });
+      expect(request).not.toHaveBeenCalled();
+    },
+  );
 
   it("throws the network code for failed requests and HTTP errors", async () => {
     vi.stubGlobal("fetch", vi.fn().mockRejectedValue(new TypeError("offline")));

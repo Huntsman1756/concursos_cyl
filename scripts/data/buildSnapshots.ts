@@ -1,8 +1,11 @@
 import { createHash } from "node:crypto";
 import {
   access,
+  lstat,
   mkdir,
   readFile,
+  readdir,
+  realpath,
   rename,
   rm,
   writeFile,
@@ -24,6 +27,7 @@ import { z } from "zod";
 import {
   EducationCenterSchema,
   GeneratedManifestSchema,
+  GeneratedQualityReportSchema,
   JobOfferSchema,
   SourceSnapshotSchema,
   TrainingOfferingSchema,
@@ -43,7 +47,11 @@ import { fetchAllRecords } from "./fetchAllRecords";
 import { hashFile } from "./hashFile";
 import { normalizeOffers } from "./normalizeOffers";
 import { normalizeTraining } from "./normalizeTraining";
-import { runQualityGates, type SnapshotCounts } from "./qualityGates";
+import {
+  runQualityGates,
+  type SnapshotCandidate,
+  type SnapshotCounts,
+} from "./qualityGates";
 import { SOURCE_CONFIG } from "./sourceConfig";
 
 const RESOURCE_DEFINITIONS = {
@@ -65,11 +73,34 @@ const RESOURCE_DEFINITIONS = {
   },
 } as const;
 
+const LegacyResourceSnapshotsSchema = z.object({
+  programs: SourceSnapshotSchema,
+  centers: SourceSnapshotSchema,
+  trainingOfferings: SourceSnapshotSchema,
+  jobOffers: SourceSnapshotSchema,
+});
+
+const LegacyManifestSchema = z
+  .object({
+    schemaVersion: z.literal("1.0.0"),
+    generatedAt: z.string().datetime(),
+    qualityStatus: z.enum(["passed", "stale"]),
+    resourceSnapshots: LegacyResourceSnapshotsSchema,
+    qualityReport: GeneratedQualityReportSchema.optional(),
+  })
+  .strict();
+
 type ResourceKey = keyof typeof RESOURCE_DEFINITIONS;
 
 interface PreviousSnapshot {
   manifest: GeneratedManifest;
   counts: SnapshotCounts;
+}
+
+export interface SnapshotFailureInjection {
+  beforeManifestCommit?: () => void | Promise<void>;
+  afterManifestCommit?: () => void | Promise<void>;
+  beforeCleanup?: () => void | Promise<void>;
 }
 
 export interface BuildSnapshotsOptions {
@@ -78,6 +109,11 @@ export interface BuildSnapshotsOptions {
   fetchTrainingRecords?: () => Promise<TrainingSourceRecord[]>;
   fetchOfferRecords?: () => Promise<OfferSourceRecord[]>;
   log?: (message: string) => void;
+  failureInjection?: SnapshotFailureInjection;
+}
+
+function compareCanonicalText(left: string, right: string): number {
+  return left < right ? -1 : left > right ? 1 : 0;
 }
 
 function stableValue(value: unknown): unknown {
@@ -87,8 +123,26 @@ function stableValue(value: unknown): unknown {
   if (value !== null && typeof value === "object") {
     return Object.fromEntries(
       Object.entries(value)
-        .sort(([left], [right]) => left.localeCompare(right))
+        .sort(([left], [right]) => compareCanonicalText(left, right))
         .map(([key, entry]) => [key, stableValue(entry)]),
+    );
+  }
+  return value;
+}
+
+function canonicalValue(value: unknown): unknown {
+  if (Array.isArray(value)) {
+    return value
+      .map(canonicalValue)
+      .sort((left, right) =>
+        compareCanonicalText(JSON.stringify(left), JSON.stringify(right)),
+      );
+  }
+  if (value !== null && typeof value === "object") {
+    return Object.fromEntries(
+      Object.entries(value)
+        .sort(([left], [right]) => compareCanonicalText(left, right))
+        .map(([key, entry]) => [key, canonicalValue(entry)]),
     );
   }
   return value;
@@ -98,9 +152,9 @@ function serializeDeterministically(value: unknown): string {
   return `${JSON.stringify(stableValue(value), null, 2)}\n`;
 }
 
-function hashValue(value: unknown): string {
+function hashCanonicalSource(value: unknown): string {
   return createHash("sha256")
-    .update(serializeDeterministically(value))
+    .update(JSON.stringify(canonicalValue(value)))
     .digest("hex");
 }
 
@@ -113,18 +167,22 @@ function isMissing(error: unknown): boolean {
   );
 }
 
-function assertSafeRoot(rootDirectory: string): string {
-  if (!isAbsolute(rootDirectory)) {
-    throw new Error("Snapshot root directory must be absolute.");
+async function pathExists(path: string): Promise<boolean> {
+  try {
+    await access(path);
+    return true;
+  } catch (error) {
+    if (isMissing(error)) {
+      return false;
+    }
+    throw error;
   }
+}
 
-  const root = resolve(rootDirectory);
-  if (root === parse(root).root || root === resolve(homedir())) {
-    throw new Error(
-      "Snapshot root directory is too broad for safe replacement.",
-    );
-  }
-  return root;
+function normalizedPhysicalPath(path: string): string {
+  const withoutExtendedPrefix = path.replace(/^\\\\\?\\/u, "");
+  const normalized = resolve(withoutExtendedPrefix);
+  return process.platform === "win32" ? normalized.toLowerCase() : normalized;
 }
 
 function isWithin(parent: string, child: string): boolean {
@@ -137,45 +195,126 @@ function isWithin(parent: string, child: string): boolean {
   );
 }
 
-function assertSnapshotPaths(
+async function assertSafeRoot(rootDirectory: string): Promise<string> {
+  if (!isAbsolute(rootDirectory)) {
+    throw new Error("Snapshot root directory must be absolute.");
+  }
+
+  const root = resolve(rootDirectory);
+  if (root === parse(root).root || root === resolve(homedir())) {
+    throw new Error(
+      "Snapshot root directory is too broad for safe publication.",
+    );
+  }
+
+  const rootStat = await lstat(root);
+  if (rootStat.isSymbolicLink() || !rootStat.isDirectory()) {
+    throw new Error(
+      "Snapshot root cannot be a symbolic link or reparse point.",
+    );
+  }
+  const physicalRoot = await realpath(root);
+  if (normalizedPhysicalPath(physicalRoot) !== normalizedPhysicalPath(root)) {
+    throw new Error(
+      "Snapshot root physical path does not match its lexical path.",
+    );
+  }
+  return root;
+}
+
+/**
+ * Checks every existing component so a junction, symlink, or other realpath
+ * escape cannot redirect a later write, rename, or recursive cleanup.
+ */
+async function assertPhysicalPath(
   root: string,
-  staging: string,
-  target: string,
-): void {
-  const expectedTarget = resolve(root, "public", "data", "v1");
-  const temporaryRoot = resolve(root, ".codex-tmp");
-
-  if (resolve(target) !== expectedTarget || !isWithin(root, expectedTarget)) {
-    throw new Error(
-      "Snapshot target path is outside the exact public data path.",
-    );
+  candidate: string,
+): Promise<void> {
+  const absolute = resolve(candidate);
+  if (absolute !== root && !isWithin(root, absolute)) {
+    throw new Error("Physical path is outside the snapshot root.");
   }
-  if (
-    dirname(resolve(staging)) !== temporaryRoot ||
-    !basename(staging).startsWith("data-build-")
-  ) {
-    throw new Error("Snapshot staging path is outside the guarded build area.");
+
+  const physicalRoot = await realpath(root);
+  const segments = relative(root, absolute)
+    .split(sep)
+    .filter((segment) => segment.length > 0);
+  let lexical = root;
+
+  for (let index = 0; index < segments.length; index += 1) {
+    lexical = resolve(lexical, segments[index]);
+    let entry;
+    try {
+      entry = await lstat(lexical);
+    } catch (error) {
+      if (isMissing(error)) {
+        return;
+      }
+      throw error;
+    }
+
+    if (entry.isSymbolicLink()) {
+      throw new Error(
+        `Refusing symbolic link, junction, or reparse point in physical path: ${lexical}.`,
+      );
+    }
+
+    const actual = await realpath(lexical);
+    const expected = resolve(physicalRoot, ...segments.slice(0, index + 1));
+    if (normalizedPhysicalPath(actual) !== normalizedPhysicalPath(expected)) {
+      throw new Error(
+        `Physical path escapes through a reparse point: ${lexical}.`,
+      );
+    }
   }
 }
 
-function assertTemporaryPath(root: string, path: string): void {
-  const temporaryRoot = resolve(root, ".codex-tmp");
-  const name = basename(path);
-  if (
-    dirname(resolve(path)) !== temporaryRoot ||
-    (!name.startsWith("data-build-") && !name.startsWith("data-backup-"))
-  ) {
-    throw new Error(
-      "Refusing recursive cleanup outside the guarded build area.",
-    );
-  }
+async function safeMkdir(root: string, path: string): Promise<void> {
+  await assertPhysicalPath(root, path);
+  await mkdir(path, { recursive: true });
+  await assertPhysicalPath(root, path);
 }
 
-async function removeTemporaryDirectory(
+async function safeWriteFile(
   root: string,
   path: string,
+  contents: string,
 ): Promise<void> {
-  assertTemporaryPath(root, path);
+  await assertPhysicalPath(root, dirname(path));
+  await assertPhysicalPath(root, path);
+  await writeFile(path, contents, "utf8");
+}
+
+async function safeRename(
+  root: string,
+  source: string,
+  destination: string,
+): Promise<void> {
+  await assertPhysicalPath(root, source);
+  await assertPhysicalPath(root, dirname(destination));
+  await assertPhysicalPath(root, destination);
+  await rename(source, destination);
+}
+
+function assertTemporaryName(path: string): void {
+  const name = basename(path);
+  if (!name.startsWith("data-build-") && !name.startsWith("data-backup-")) {
+    throw new Error(
+      "Refusing cleanup outside a named data build or backup path.",
+    );
+  }
+}
+
+async function safeRemoveTemporaryDirectory(
+  root: string,
+  temporaryRoot: string,
+  path: string,
+): Promise<void> {
+  if (dirname(resolve(path)) !== temporaryRoot) {
+    throw new Error("Refusing recursive cleanup outside .codex-tmp.");
+  }
+  assertTemporaryName(path);
+  await assertPhysicalPath(root, path);
   await rm(path, { recursive: true, force: true });
 }
 
@@ -188,16 +327,62 @@ function countsFromManifest(manifest: GeneratedManifest): SnapshotCounts {
   };
 }
 
+function resourcePathFor(key: ResourceKey, snapshotId: string): string {
+  return `/data/v1/snapshots/${snapshotId}/${RESOURCE_DEFINITIONS[key].fileName}`;
+}
+
+function legacyResourcePath(key: ResourceKey): string {
+  return `/data/v1/${RESOURCE_DEFINITIONS[key].fileName}`;
+}
+
+function parseManifest(json: unknown): GeneratedManifest {
+  const current = GeneratedManifestSchema.safeParse(json);
+  if (current.success) {
+    return current.data;
+  }
+
+  const legacy = LegacyManifestSchema.parse(json);
+  return GeneratedManifestSchema.parse({
+    ...legacy,
+    resourceSnapshots: Object.fromEntries(
+      (Object.keys(RESOURCE_DEFINITIONS) as ResourceKey[]).map((key) => [
+        key,
+        {
+          ...legacy.resourceSnapshots[key],
+          resourcePath: legacyResourcePath(key),
+        },
+      ]),
+    ),
+  });
+}
+
+function resourceFileInSnapshot(
+  snapshotDirectory: string,
+  resourcePath: string,
+): string {
+  const relativeAsset = resourcePath.replace(/^\/data\/v1\//u, "");
+  return resolve(snapshotDirectory, ...relativeAsset.split("/"));
+}
+
 async function validateSnapshotDirectory(
+  root: string,
   directory: string,
 ): Promise<PreviousSnapshot> {
-  const manifest = GeneratedManifestSchema.parse(
-    JSON.parse(await readFile(resolve(directory, "manifest.json"), "utf8")),
+  await assertPhysicalPath(root, directory);
+  const manifestPath = resolve(directory, "manifest.json");
+  await assertPhysicalPath(root, manifestPath);
+  const manifest = parseManifest(
+    JSON.parse(await readFile(manifestPath, "utf8")),
   );
 
+  const loaded = {} as Record<ResourceKey, unknown[]>;
   for (const key of Object.keys(RESOURCE_DEFINITIONS) as ResourceKey[]) {
     const definition = RESOURCE_DEFINITIONS[key];
-    const filePath = resolve(directory, definition.fileName);
+    const filePath = resourceFileInSnapshot(
+      directory,
+      manifest.resourceSnapshots[key].resourcePath,
+    );
+    await assertPhysicalPath(root, filePath);
     const records = definition.schema.parse(
       JSON.parse(await readFile(filePath, "utf8")),
     );
@@ -209,24 +394,119 @@ async function validateSnapshotDirectory(
     if ((await hashFile(filePath)) !== snapshot.sha256) {
       throw new Error(`Snapshot hash mismatch for ${definition.fileName}.`);
     }
+    loaded[key] = records;
   }
 
-  return { manifest, counts: countsFromManifest(manifest) };
+  const candidate: SnapshotCandidate = {
+    programs: loaded.programs as SnapshotCandidate["programs"],
+    centers: loaded.centers as SnapshotCandidate["centers"],
+    trainingOfferings:
+      loaded.trainingOfferings as SnapshotCandidate["trainingOfferings"],
+    jobOffers: loaded.jobOffers as SnapshotCandidate["jobOffers"],
+  };
+  const report = runQualityGates(candidate);
+  const counts = countsFromManifest(manifest);
+  if (JSON.stringify(report.counts) !== JSON.stringify(counts)) {
+    throw new Error(
+      "Snapshot manifest counts do not match quality-gate counts.",
+    );
+  }
+
+  return { manifest, counts };
+}
+
+async function validateFlatCandidateDirectory(
+  root: string,
+  staging: string,
+  manifest: GeneratedManifest,
+): Promise<void> {
+  for (const key of Object.keys(RESOURCE_DEFINITIONS) as ResourceKey[]) {
+    const definition = RESOURCE_DEFINITIONS[key];
+    const filePath = resolve(staging, definition.fileName);
+    await assertPhysicalPath(root, filePath);
+    const records = definition.schema.parse(
+      JSON.parse(await readFile(filePath, "utf8")),
+    );
+    const snapshot = manifest.resourceSnapshots[key];
+    if (
+      records.length !== snapshot.recordCount ||
+      (await hashFile(filePath)) !== snapshot.sha256
+    ) {
+      throw new Error(
+        `Staged resource validation failed for ${definition.fileName}.`,
+      );
+    }
+  }
 }
 
 async function loadPreviousSnapshot(
+  root: string,
   target: string,
 ): Promise<PreviousSnapshot | undefined> {
-  try {
-    await access(target);
-  } catch (error) {
-    if (isMissing(error)) {
-      return undefined;
-    }
-    throw error;
+  const manifestPath = resolve(target, "manifest.json");
+  if (!(await pathExists(manifestPath))) {
+    return undefined;
+  }
+  return validateSnapshotDirectory(root, target);
+}
+
+async function legacyBackups(temporaryRoot: string): Promise<string[]> {
+  if (!(await pathExists(temporaryRoot))) {
+    return [];
+  }
+  return (await readdir(temporaryRoot, { withFileTypes: true }))
+    .filter(
+      (entry) => entry.isDirectory() && entry.name.startsWith("data-backup-"),
+    )
+    .map((entry) => resolve(temporaryRoot, entry.name))
+    .sort()
+    .reverse();
+}
+
+async function abandonedBuildDirectories(
+  temporaryRoot: string,
+): Promise<string[]> {
+  if (!(await pathExists(temporaryRoot))) {
+    return [];
+  }
+  return (await readdir(temporaryRoot, { withFileTypes: true }))
+    .filter(
+      (entry) => entry.isDirectory() && entry.name.startsWith("data-build-"),
+    )
+    .map((entry) => resolve(temporaryRoot, entry.name));
+}
+
+async function recoverInterruptedLegacyBackup(
+  root: string,
+  temporaryRoot: string,
+  target: string,
+): Promise<string[]> {
+  const backups = await legacyBackups(temporaryRoot);
+  if (await pathExists(resolve(target, "manifest.json"))) {
+    return backups;
   }
 
-  return validateSnapshotDirectory(target);
+  for (const backup of backups) {
+    try {
+      await validateSnapshotDirectory(root, backup);
+    } catch {
+      continue;
+    }
+
+    if (await pathExists(target)) {
+      const orphan = resolve(
+        temporaryRoot,
+        `data-build-recovery-orphan-${Date.now()}`,
+      );
+      await safeRename(root, target, orphan);
+    }
+    await safeMkdir(root, dirname(target));
+    await safeRename(root, backup, target);
+    await validateSnapshotDirectory(root, target);
+    return backups.filter((candidate) => candidate !== backup);
+  }
+
+  return backups;
 }
 
 function latestSourceUpdatedAt(
@@ -259,7 +539,9 @@ function sourceSnapshot(
 }
 
 async function writeCandidate(
+  root: string,
   staging: string,
+  snapshotId: string,
   fetchedAt: string,
   trainingRecords: readonly TrainingSourceRecord[],
   offerRecords: readonly OfferSourceRecord[],
@@ -272,7 +554,7 @@ async function writeCandidate(
     fetchedAt,
     latestSourceUpdatedAt(firstPassOffers),
     offerRecords.length,
-    hashValue(offerRecords),
+    hashCanonicalSource(offerRecords),
   );
   const offers = normalizeOffers(offerRecords, {
     sourceSnapshot: offerSourceSnapshot,
@@ -287,99 +569,113 @@ async function writeCandidate(
   };
   const qualityReport = runQualityGates(candidate, previousCounts);
 
-  await mkdir(staging, { recursive: false });
+  await safeMkdir(root, staging);
   const resourceHashes = {} as Record<ResourceKey, string>;
   for (const key of Object.keys(RESOURCE_DEFINITIONS) as ResourceKey[]) {
     const definition = RESOURCE_DEFINITIONS[key];
     const filePath = resolve(staging, definition.fileName);
-    await writeFile(
+    await safeWriteFile(
+      root,
       filePath,
       serializeDeterministically(candidate[key]),
-      "utf8",
     );
     resourceHashes[key] = await hashFile(filePath);
   }
 
-  const trainingUpdatedAt = null;
+  const resourceSnapshot = (
+    key: ResourceKey,
+    source:
+      (typeof SOURCE_CONFIG)["training"] | (typeof SOURCE_CONFIG)["offers"],
+    sourceUpdatedAt: string | null,
+    count: number,
+  ) => ({
+    ...sourceSnapshot(
+      source,
+      fetchedAt,
+      sourceUpdatedAt,
+      count,
+      resourceHashes[key],
+    ),
+    resourcePath: resourcePathFor(key, snapshotId),
+  });
   const manifest = GeneratedManifestSchema.parse({
     schemaVersion: "1.0.0",
     generatedAt: fetchedAt,
     qualityStatus: "passed",
     resourceSnapshots: {
-      programs: sourceSnapshot(
+      programs: resourceSnapshot(
+        "programs",
         SOURCE_CONFIG.training,
-        fetchedAt,
-        trainingUpdatedAt,
+        null,
         candidate.programs.length,
-        resourceHashes.programs,
       ),
-      centers: sourceSnapshot(
+      centers: resourceSnapshot(
+        "centers",
         SOURCE_CONFIG.training,
-        fetchedAt,
-        trainingUpdatedAt,
+        null,
         candidate.centers.length,
-        resourceHashes.centers,
       ),
-      trainingOfferings: sourceSnapshot(
+      trainingOfferings: resourceSnapshot(
+        "trainingOfferings",
         SOURCE_CONFIG.training,
-        fetchedAt,
-        trainingUpdatedAt,
+        null,
         candidate.trainingOfferings.length,
-        resourceHashes.trainingOfferings,
       ),
-      jobOffers: sourceSnapshot(
+      jobOffers: resourceSnapshot(
+        "jobOffers",
         SOURCE_CONFIG.offers,
-        fetchedAt,
         offerSourceSnapshot.sourceUpdatedAt,
         candidate.jobOffers.length,
-        resourceHashes.jobOffers,
       ),
     },
     qualityReport,
   });
 
-  await writeFile(
-    resolve(staging, "manifest.json"),
-    serializeDeterministically(manifest),
-    "utf8",
-  );
-  await validateSnapshotDirectory(staging);
+  await validateFlatCandidateDirectory(root, staging, manifest);
   return { manifest, counts: qualityReport.counts };
 }
 
-async function promoteCandidate(
+async function publishImmutableResources(
   root: string,
+  temporaryRoot: string,
   staging: string,
   target: string,
-  buildId: string,
+  snapshotId: string,
+  manifest: GeneratedManifest,
 ): Promise<void> {
-  assertSnapshotPaths(root, staging, target);
-  const backup = resolve(root, ".codex-tmp", `data-backup-${buildId}`);
-  assertTemporaryPath(root, backup);
-  await mkdir(dirname(target), { recursive: true });
-  let hasBackup = false;
+  const snapshotsRoot = resolve(target, "snapshots");
+  const destination = resolve(snapshotsRoot, snapshotId);
+  await safeMkdir(root, snapshotsRoot);
 
-  try {
-    await rename(target, backup);
-    hasBackup = true;
-  } catch (error) {
-    if (!isMissing(error)) {
-      throw error;
-    }
+  if (await pathExists(destination)) {
+    await validateFlatCandidateDirectory(root, destination, manifest);
+    await safeRemoveTemporaryDirectory(root, temporaryRoot, staging);
+    return;
   }
 
-  try {
-    await rename(staging, target);
-  } catch (error) {
-    if (hasBackup) {
-      await rename(backup, target);
-    }
-    throw error;
-  }
+  await safeRename(root, staging, destination);
+  await validateFlatCandidateDirectory(root, destination, manifest);
+}
 
-  if (hasBackup) {
-    await removeTemporaryDirectory(root, backup);
-  }
+async function commitManifest(
+  root: string,
+  target: string,
+  buildId: string,
+  manifest: GeneratedManifest,
+  beforeCommit?: () => void | Promise<void>,
+): Promise<void> {
+  const manifestPath = resolve(target, "manifest.json");
+  const candidatePath = resolve(target, `manifest.next-${buildId}.json`);
+  await safeWriteFile(
+    root,
+    candidatePath,
+    serializeDeterministically(manifest),
+  );
+  GeneratedManifestSchema.parse(
+    JSON.parse(await readFile(candidatePath, "utf8")),
+  );
+  await beforeCommit?.();
+  await safeRename(root, candidatePath, manifestPath);
 }
 
 async function markPreviousSnapshotStale(
@@ -387,7 +683,7 @@ async function markPreviousSnapshotStale(
   target: string,
   buildId: string,
 ): Promise<void> {
-  const previous = await validateSnapshotDirectory(target);
+  const previous = await validateSnapshotDirectory(root, target);
   const staleManifest = GeneratedManifestSchema.parse({
     ...previous.manifest,
     qualityStatus: "stale",
@@ -397,53 +693,63 @@ async function markPreviousSnapshotStale(
       ),
     ),
   });
-  const temporaryRoot = resolve(root, ".codex-tmp");
-  const recovery = resolve(temporaryRoot, `data-build-${buildId}-stale`);
-  const backup = resolve(temporaryRoot, `data-backup-${buildId}-manifest`);
-  assertTemporaryPath(root, recovery);
-  assertTemporaryPath(root, backup);
-  await mkdir(recovery, { recursive: false });
-  const recoveryManifest = resolve(recovery, "manifest.json");
-  await writeFile(
-    recoveryManifest,
-    serializeDeterministically(staleManifest),
-    "utf8",
-  );
-  GeneratedManifestSchema.parse(
-    JSON.parse(await readFile(recoveryManifest, "utf8")),
-  );
-
-  const manifestPath = resolve(target, "manifest.json");
-  const backupManifest = resolve(backup, "manifest.json");
-  await mkdir(backup, { recursive: false });
-  await rename(manifestPath, backupManifest);
-  try {
-    await rename(recoveryManifest, manifestPath);
-  } catch (error) {
-    await rename(backupManifest, manifestPath);
-    throw error;
-  }
-
-  await validateSnapshotDirectory(target);
-  await removeTemporaryDirectory(root, recovery);
-  await removeTemporaryDirectory(root, backup);
+  await commitManifest(root, target, `${buildId}-stale`, staleManifest);
+  await validateSnapshotDirectory(root, target);
 }
 
-/** Builds, validates, and atomically publishes the official static snapshots. */
+async function cleanupAfterCommit(
+  root: string,
+  temporaryRoot: string,
+  target: string,
+  cleanupPaths: readonly string[],
+  beforeCleanup: (() => void | Promise<void>) | undefined,
+  log: (message: string) => void,
+): Promise<void> {
+  try {
+    await beforeCleanup?.();
+    for (const cleanupPath of cleanupPaths) {
+      if (await pathExists(cleanupPath)) {
+        await safeRemoveTemporaryDirectory(root, temporaryRoot, cleanupPath);
+      }
+    }
+    for (const entry of await readdir(target, { withFileTypes: true })) {
+      if (entry.isFile() && entry.name.startsWith("manifest.next-")) {
+        const candidate = resolve(target, entry.name);
+        await assertPhysicalPath(root, candidate);
+        await rm(candidate, { force: true });
+      }
+    }
+  } catch (error) {
+    log(
+      `Non-fatal snapshot cleanup failure: ${error instanceof Error ? error.message : String(error)}`,
+    );
+  }
+}
+
+/** Builds and publishes immutable resource sets with a manifest-last commit. */
 export async function buildSnapshots(
   options: BuildSnapshotsOptions = {},
 ): Promise<void> {
-  const root = assertSafeRoot(options.rootDirectory ?? process.cwd());
+  const root = await assertSafeRoot(options.rootDirectory ?? process.cwd());
   const now = options.now ?? (() => new Date());
   const fetchedAt = now().toISOString();
-  const buildId = `${Date.parse(fetchedAt)}-${process.pid}`;
-  const staging = resolve(root, ".codex-tmp", `data-build-${buildId}`);
-  const target = resolve(root, "public", "data", "v1");
+  const log = options.log ?? console.info;
   const temporaryRoot = resolve(root, ".codex-tmp");
-  assertSnapshotPaths(root, staging, target);
-  await mkdir(temporaryRoot, { recursive: true });
+  const target = resolve(root, "public", "data", "v1");
 
-  const previous = await loadPreviousSnapshot(target);
+  await assertPhysicalPath(root, resolve(root, "public", "data"));
+  await assertPhysicalPath(root, temporaryRoot);
+  await safeMkdir(root, temporaryRoot);
+  await safeMkdir(root, resolve(root, "public", "data"));
+
+  const legacyBackupPaths = await recoverInterruptedLegacyBackup(
+    root,
+    temporaryRoot,
+    target,
+  );
+  const abandonedBuildPaths = await abandonedBuildDirectories(temporaryRoot);
+  const cleanupPaths = [...legacyBackupPaths, ...abandonedBuildPaths];
+  const previous = await loadPreviousSnapshot(root, target);
   const fetchTrainingRecords =
     options.fetchTrainingRecords ??
     (() =>
@@ -459,33 +765,88 @@ export async function buildSnapshots(
         OfferSourceRecordSchema,
       ));
 
+  let committed = false;
+  let staging: string | undefined;
   try {
     const [trainingRecords, offerRecords] = await Promise.all([
       fetchTrainingRecords(),
       fetchOfferRecords(),
     ]);
+    const sourceHash = hashCanonicalSource({
+      offers: offerRecords,
+      training: trainingRecords,
+    });
+    const snapshotId = `${fetchedAt.replace(/\D/gu, "").toLowerCase()}-${sourceHash.slice(0, 12)}`;
+    const buildId = `${snapshotId}-${process.pid}`;
+    staging = resolve(temporaryRoot, `data-build-${buildId}`);
     const result = await writeCandidate(
+      root,
       staging,
+      snapshotId,
       fetchedAt,
       trainingRecords,
       offerRecords,
       previous?.counts,
     );
-    await promoteCandidate(root, staging, target, buildId);
-    (options.log ?? console.info)(
+    await safeMkdir(root, target);
+    await publishImmutableResources(
+      root,
+      temporaryRoot,
+      staging,
+      target,
+      snapshotId,
+      result.manifest,
+    );
+    staging = undefined;
+    await commitManifest(
+      root,
+      target,
+      buildId,
+      result.manifest,
+      options.failureInjection?.beforeManifestCommit,
+    );
+    committed = true;
+    await options.failureInjection?.afterManifestCommit?.();
+    await cleanupAfterCommit(
+      root,
+      temporaryRoot,
+      target,
+      cleanupPaths,
+      options.failureInjection?.beforeCleanup,
+      log,
+    );
+    log(
       `Generated official snapshots at ${fetchedAt}: ${JSON.stringify(result.counts)}`,
     );
   } catch (error) {
-    try {
-      await removeTemporaryDirectory(root, staging);
-    } catch (cleanupError) {
-      if (!isMissing(cleanupError)) {
-        throw cleanupError;
+    if (committed) {
+      await cleanupAfterCommit(
+        root,
+        temporaryRoot,
+        target,
+        cleanupPaths,
+        options.failureInjection?.beforeCleanup,
+        log,
+      );
+      throw error;
+    }
+
+    if (staging !== undefined && (await pathExists(staging))) {
+      try {
+        await safeRemoveTemporaryDirectory(root, temporaryRoot, staging);
+      } catch (cleanupError) {
+        log(
+          `Non-fatal staging cleanup failure: ${cleanupError instanceof Error ? cleanupError.message : String(cleanupError)}`,
+        );
       }
     }
 
     if (previous !== undefined) {
-      await markPreviousSnapshotStale(root, target, buildId);
+      await markPreviousSnapshotStale(
+        root,
+        target,
+        `${fetchedAt.replace(/\D/gu, "")}-${process.pid}`,
+      );
       throw new Error(
         `Snapshot refresh failed; previous snapshot marked stale. ${error instanceof Error ? error.message : String(error)}`,
         { cause: error },
