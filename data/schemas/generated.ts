@@ -7,7 +7,12 @@ export const TrainingLevelSchema = z.enum([
   "specialization",
 ]);
 
-export const ModalitySchema = z.enum(["on_site", "distance", "mixed", "unknown"]);
+export const ModalitySchema = z.enum([
+  "on_site",
+  "distance",
+  "mixed",
+  "unknown",
+]);
 
 export const SourceSnapshotSchema = z.object({
   sourceId: z.string().min(1),
@@ -81,12 +86,31 @@ export const GeneratedResourceSnapshotsSchema = z.object({
   jobOffers: SourceSnapshotSchema,
 });
 
+export const GeneratedQualityReportSchema = z.object({
+  counts: z.object({
+    programs: z.number().int().nonnegative(),
+    centers: z.number().int().nonnegative(),
+    offerings: z.number().int().nonnegative(),
+    offers: z.number().int().nonnegative(),
+  }),
+  nullRates: z.object({
+    centerAddress: z.number().min(0).max(1),
+    centerPhone: z.number().min(0).max(1),
+    centerEmail: z.number().min(0).max(1),
+    centerWebsite: z.number().min(0).max(1),
+    offerProvince: z.number().min(0).max(1),
+    offerLocality: z.number().min(0).max(1),
+    offerDescription: z.number().min(0).max(1),
+  }),
+});
+
 export const GeneratedManifestSchema = z
   .object({
     schemaVersion: z.literal("1.0.0"),
     generatedAt: z.string().datetime(),
     qualityStatus: z.enum(["passed", "stale"]),
     resourceSnapshots: GeneratedResourceSnapshotsSchema,
+    qualityReport: GeneratedQualityReportSchema.optional(),
   })
   .strict();
 
@@ -99,6 +123,9 @@ export type EducationCenter = z.infer<typeof EducationCenterSchema>;
 export type DescriptionSections = z.infer<typeof DescriptionSectionsSchema>;
 export type GeneratedResourceSnapshots = z.infer<
   typeof GeneratedResourceSnapshotsSchema
+>;
+export type GeneratedQualityReport = z.infer<
+  typeof GeneratedQualityReportSchema
 >;
 export type JobOffer = z.infer<typeof JobOfferSchema>;
 export type GeneratedManifest = z.infer<typeof GeneratedManifestSchema>;

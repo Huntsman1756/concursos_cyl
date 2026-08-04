@@ -18,6 +18,7 @@ const TRAINING_LEVEL_BY_OFFICIAL_LABEL: Record<string, TrainingLevel> = {
   "grado medio": "intermediate",
   "grado superior": "higher",
   "curso de especializacion": "specialization",
+  "curso especializacion": "specialization",
   especializacion: "specialization",
 };
 
@@ -57,6 +58,23 @@ function requiredText(value: string | null | undefined, field: string): string {
 function optionalText(value: string | null | undefined): string | null {
   const normalized = value?.trim() ?? "";
   return normalized.length === 0 ? null : normalized;
+}
+
+function optionalUrl(value: string | null | undefined): string | null {
+  const text = optionalText(value);
+  if (text === null) {
+    return null;
+  }
+
+  const candidate = /^www\./iu.test(text) ? `https://${text}` : text;
+  try {
+    const url = new URL(candidate);
+    return url.protocol === "https:" || url.protocol === "http:"
+      ? url.toString()
+      : null;
+  } catch {
+    return null;
+  }
 }
 
 function normalizeLevel(value: string | null): TrainingLevel {
@@ -140,7 +158,7 @@ function normalizeRecord(record: TrainingSourceRecord): {
     address: optionalText(record.direccion_centro),
     phone: optionalText(record.telefono),
     email: optionalText(record.e_mail),
-    website: optionalText(record.web),
+    website: optionalUrl(record.web),
   });
   const offering = TrainingOfferingSchema.parse({
     ...program,

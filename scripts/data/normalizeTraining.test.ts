@@ -93,6 +93,32 @@ describe("normalizeTraining", () => {
     ]);
   });
 
+  it("accepts the live Curso Especialización level label", () => {
+    const result = normalizeTraining([
+      {
+        ...valladolidCenter,
+        nivel_educativo: "Curso Especialización",
+      },
+    ]);
+
+    expect(result.programs[0]?.level).toBe("specialization");
+  });
+
+  it("normalizes recoverable websites and drops malformed optional URLs", () => {
+    const bareHost = normalizeTraining([
+      { ...valladolidCenter, web: "www.centrodonbosco.es" },
+    ]);
+    const malformed = normalizeTraining([
+      {
+        ...valladolidCenter,
+        web: "http://:iesfuentesnuevas.centros.educa.jcyl.es",
+      },
+    ]);
+
+    expect(bareHost.centers[0]?.website).toBe("https://www.centrodonbosco.es/");
+    expect(malformed.centers[0]?.website).toBeNull();
+  });
+
   it("rejects blank official training and center identifiers", () => {
     expect(() =>
       normalizeTraining([{ ...valladolidCenter, clave_ciclo: "   " }]),
