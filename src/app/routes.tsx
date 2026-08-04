@@ -32,8 +32,8 @@ export function AppRoutes() {
         path="/desde-fp"
         element={inShell(
           <DestinationPage
-            heading="Empezar desde mi título de FP"
-            outcome="Relaciona tu ciclo con ofertas y requisitos publicados."
+            heading="Ruta desde FP — en preparación"
+            outcome="Esta función todavía no está disponible. La próxima fase añadirá la selección de ciclos y ofertas relacionadas."
           />,
         )}
       />
@@ -41,8 +41,8 @@ export function AppRoutes() {
         path="/desde-ocupacion"
         element={inShell(
           <DestinationPage
-            heading="Empezar desde una ocupación"
-            outcome="Consulta ciclos y centros relacionados en Castilla y León."
+            heading="Ruta por ocupación — en preparación"
+            outcome="Esta función todavía no está disponible. La próxima fase añadirá la búsqueda de ciclos y centros por ocupación."
           />,
         )}
       />
@@ -50,8 +50,8 @@ export function AppRoutes() {
         path="/comparar"
         element={inShell(
           <DestinationPage
-            heading="Comparar estudios"
-            outcome="Compara indicadores de empleo e ingresos con su alcance visible."
+            heading="Comparar estudios — en preparación"
+            outcome="Esta función todavía no está disponible. La próxima fase añadirá indicadores de empleo e ingresos con su alcance."
           />,
         )}
       />
@@ -59,8 +59,8 @@ export function AppRoutes() {
         path="/metodologia"
         element={inShell(
           <DestinationPage
-            heading="Metodología"
-            outcome="Consulta cómo se seleccionan, actualizan y explican las fuentes."
+            heading="Metodología — en preparación"
+            outcome="Esta función todavía no está disponible. La próxima fase añadirá las fuentes, criterios y fechas de actualización."
           />,
         )}
       />

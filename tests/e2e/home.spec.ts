@@ -48,14 +48,15 @@ test("home exposes equal journeys, navigation, freshness, and no automated acces
     "Explorar: He terminado FP",
     "Explorar: Quiero trabajar de…",
   ]);
-  const sourceUpdatedAt = manifest.resourceSnapshots.jobOffers.sourceUpdatedAt;
-  expect(sourceUpdatedAt).not.toBeNull();
+  const jobOffersSnapshot = manifest.resourceSnapshots.jobOffers;
+  const expectedDateTime =
+    jobOffersSnapshot.sourceUpdatedAt ?? jobOffersSnapshot.snapshotFetchedAt;
   const freshness = page.getByRole("region", {
     name: "Actualización de datos",
   });
   await expect(freshness.locator("time")).toHaveAttribute(
     "datetime",
-    sourceUpdatedAt!,
+    expectedDateTime,
   );
   await expect(freshness).toContainText(
     new Intl.DateTimeFormat("es-ES", {
@@ -63,7 +64,7 @@ test("home exposes equal journeys, navigation, freshness, and no automated acces
       month: "long",
       year: "numeric",
       timeZone: "UTC",
-    }).format(new Date(sourceUpdatedAt!)),
+    }).format(new Date(expectedDateTime)),
   );
 
   const results = await new AxeBuilder({ page }).analyze();
@@ -81,10 +82,12 @@ test("both entry routes remain reachable in their approved order", async ({
   await page.getByRole("link", { name: "Explorar: He terminado FP" }).click();
   await expect(page).toHaveURL(/\/desde-fp$/u);
   await expect(
-    page.getByRole("heading", { name: "Empezar desde mi título de FP" }),
+    page.getByRole("heading", { name: "Ruta desde FP — en preparación" }),
   ).toBeVisible();
   await expect(
-    page.getByText("Relaciona tu ciclo con ofertas y requisitos publicados."),
+    page.getByText(
+      "Esta función todavía no está disponible. La próxima fase añadirá la selección de ciclos y ofertas relacionadas.",
+    ),
   ).toBeVisible();
 
   await page.getByRole("link", { name: "Volver al inicio" }).click();
@@ -93,11 +96,13 @@ test("both entry routes remain reachable in their approved order", async ({
     .click();
   await expect(page).toHaveURL(/\/desde-ocupacion$/u);
   await expect(
-    page.getByRole("heading", { name: "Empezar desde una ocupación" }),
+    page.getByRole("heading", {
+      name: "Ruta por ocupación — en preparación",
+    }),
   ).toBeVisible();
   await expect(
     page.getByText(
-      "Consulta ciclos y centros relacionados en Castilla y León.",
+      "Esta función todavía no está disponible. La próxima fase añadirá la búsqueda de ciclos y centros por ocupación.",
     ),
   ).toBeVisible();
 });
@@ -108,15 +113,15 @@ test("each remaining public route has distinct destination content", async ({
   const destinations = [
     {
       path: "/comparar",
-      heading: "Comparar estudios",
+      heading: "Comparar estudios — en preparación",
       outcome:
-        "Compara indicadores de empleo e ingresos con su alcance visible.",
+        "Esta función todavía no está disponible. La próxima fase añadirá indicadores de empleo e ingresos con su alcance.",
     },
     {
       path: "/metodologia",
-      heading: "Metodología",
+      heading: "Metodología — en preparación",
       outcome:
-        "Consulta cómo se seleccionan, actualizan y explican las fuentes.",
+        "Esta función todavía no está disponible. La próxima fase añadirá las fuentes, criterios y fechas de actualización.",
     },
     {
       path: "/ruta-inexistente",
@@ -137,7 +142,7 @@ test("each remaining public route has distinct destination content", async ({
   }
 });
 
-test("loading freshness is visible and marked busy before a delayed current manifest resolves", async ({
+test("loading freshness is visible before a delayed current manifest prioritizes its source date", async ({
   page,
 }) => {
   let releaseManifest!: () => void;
@@ -163,6 +168,9 @@ test("loading freshness is visible and marked busy before a delayed current mani
   await expect(freshness.locator("time")).toHaveAttribute(
     "datetime",
     "2026-07-31T00:00:00.000Z",
+  );
+  await expect(freshness).toContainText(
+    "Datos actualizados: 31 de julio de 2026",
   );
 });
 
@@ -234,7 +242,7 @@ test("a validated stale legacy manifest keeps navigation and names the last upda
   await page.getByRole("link", { name: "Comparar estudios" }).click();
   await expect(page).toHaveURL(/\/comparar$/u);
   await expect(
-    page.getByRole("heading", { name: "Comparar estudios" }),
+    page.getByRole("heading", { name: "Comparar estudios — en preparación" }),
   ).toBeVisible();
 });
 
