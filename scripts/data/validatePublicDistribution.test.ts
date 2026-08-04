@@ -14,6 +14,7 @@ import { z } from "zod";
 
 import { TrainingProgramSchema } from "../../data/schemas/generated";
 import {
+  buildMappingCoverage,
   loadCuratedMappingsFromDisk,
   type ValidatedCuratedMappings,
 } from "./validateCuratedMappings";
@@ -84,6 +85,14 @@ const approvedMappings: ValidatedCuratedMappings = {
   })),
 };
 
+const administrativeProgram = TrainingProgramSchema.parse({
+  programKey: "ADG01M",
+  programTitle: "Gestión Administrativa",
+  level: "intermediate",
+  familyCode: "ADG",
+  familyName: "Administración y Gestión",
+});
+
 async function writeJson(path: string, value: unknown): Promise<void> {
   await writeFile(path, `${JSON.stringify(value, null, 2)}\n`, "utf8");
 }
@@ -135,6 +144,13 @@ describe("public snapshot distribution", () => {
     await writeJson(join(validCurrent, "occupations.json"), []);
     await writeJson(join(validCurrent, "occupation-aliases.json"), []);
     await writeJson(join(validCurrent, "training-occupation-links.json"), []);
+    await writeJson(join(validCurrent, "programs.json"), [
+      administrativeProgram,
+    ]);
+    await writeJson(
+      join(validCurrent, "mapping-coverage.json"),
+      buildMappingCoverage([administrativeProgram], curatedMappings.links),
+    );
 
     await expect(
       findRevokedPublicSnapshotDirectories(root, curatedMappings),
@@ -236,6 +252,100 @@ describe("public snapshot distribution", () => {
         },
       } as never),
     ).rejects.toMatchObject({ code: "EACCES" });
+  });
+
+  it("rejects every partial decision-resource set", async () => {
+    const root = await mkdtemp(join(tmpdir(), "salida-cyl-distribution-"));
+    temporaryRoots.push(root);
+    const resources = [
+      ["occupations.json", approvedMappings.occupations],
+      ["occupation-aliases.json", approvedMappings.aliases],
+      ["training-occupation-links.json", approvedMappings.links],
+      [
+        "mapping-coverage.json",
+        buildMappingCoverage([administrativeProgram], approvedMappings.links),
+      ],
+    ] as const;
+    const expected: string[] = [];
+    for (const [index, [fileName, contents]] of resources.entries()) {
+      const directory = await snapshot(
+        root,
+        `2026080${index + 1}000000000-${String(index + 1).repeat(12)}`,
+      );
+      await writeJson(join(directory, fileName), contents);
+      expected.push(resolve(directory));
+    }
+
+    await expect(
+      findRevokedPublicSnapshotDirectories(root, approvedMappings),
+    ).resolves.toEqual(expected);
+  });
+
+  it("rejects missing programs, malformed coverage, and forged coverage fields", async () => {
+    const root = await mkdtemp(join(tmpdir(), "salida-cyl-distribution-"));
+    temporaryRoots.push(root);
+    const correctCoverage = buildMappingCoverage(
+      [administrativeProgram],
+      approvedMappings.links,
+    );
+    const variants: Array<{ programs?: unknown; coverage: unknown }> = [
+      { coverage: correctCoverage },
+      { programs: [administrativeProgram], coverage: [{ scope: "program" }] },
+      {
+        programs: [administrativeProgram],
+        coverage: correctCoverage.map((row) =>
+          row.scope === "program"
+            ? { ...row, approvedMappings: row.approvedMappings + 1 }
+            : row,
+        ),
+      },
+      {
+        programs: [administrativeProgram],
+        coverage: correctCoverage.map((row) =>
+          row.scope === "program"
+            ? { ...row, coverageStatus: "uncovered" }
+            : row,
+        ),
+      },
+      {
+        programs: [
+          { ...administrativeProgram, programTitle: "Título manipulado" },
+        ],
+        coverage: correctCoverage,
+      },
+      { programs: [], coverage: [] },
+    ];
+    const expected: string[] = [];
+    for (const [index, variant] of variants.entries()) {
+      const directory = await snapshot(
+        root,
+        `2026081${index}000000000-${String(index + 5).repeat(12)}`,
+      );
+      await writeJson(
+        join(directory, "occupations.json"),
+        approvedMappings.occupations,
+      );
+      await writeJson(
+        join(directory, "occupation-aliases.json"),
+        approvedMappings.aliases,
+      );
+      await writeJson(
+        join(directory, "training-occupation-links.json"),
+        approvedMappings.links,
+      );
+      if (variant.programs !== undefined) {
+        await writeJson(join(directory, "programs.json"), variant.programs);
+      }
+      await writeJson(
+        join(directory, "mapping-coverage.json"),
+        variant.coverage,
+      );
+      expected.push(resolve(directory));
+    }
+
+    await expect(
+      findRevokedPublicSnapshotDirectories(root, approvedMappings),
+    ).resolves.toEqual(expected);
   });
 
   it("keeps every checked-in deployable snapshot free of revoked curated mappings", async () => {

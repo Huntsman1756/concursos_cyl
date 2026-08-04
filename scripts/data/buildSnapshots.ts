@@ -165,6 +165,7 @@ interface PreviousSnapshot {
 }
 
 class PublicSnapshotDistributionError extends Error {}
+class SnapshotCrashSimulationError extends PublicSnapshotDistributionError {}
 
 export interface SnapshotFailureInjection {
   beforeManifestCommit?: () => void | Promise<void>;
@@ -183,6 +184,7 @@ export interface SnapshotFailureInjection {
   beforeActiveRevokedSnapshotQuarantine?: () => void | Promise<void>;
   afterActiveRevokedSnapshotQuarantine?: () => void | Promise<void>;
   beforeRollbackManifestCommit?: () => void | Promise<void>;
+  crashAfterActiveSnapshotQuarantine?: () => void | Promise<void>;
 }
 
 export interface BuildSnapshotsOptions {
@@ -1019,7 +1021,15 @@ async function interruptedSnapshotQuarantines(
     .sort();
 }
 
+const ManifestIdentitySchema = z.object({
+  canonicalSha256: z.string().regex(/^[a-f0-9]{64}$/u),
+  snapshotIds: z.array(z.string()).readonly(),
+});
+
 const SnapshotQuarantineJournalSchema = z.object({
+  buildId: z.string().min(1),
+  previousManifestIdentity: ManifestIdentitySchema.nullable(),
+  candidateManifestIdentity: ManifestIdentitySchema,
   committed: z.boolean().default(false),
   entries: z.array(
     z.object({
@@ -1036,10 +1046,31 @@ async function recoverInterruptedSnapshotQuarantines(
 ): Promise<void> {
   for (const directory of await interruptedSnapshotQuarantines(temporaryRoot)) {
     const journalPath = resolve(directory, "snapshot-quarantine-journal.json");
-    await assertPhysicalPath(root, journalPath);
-    const journal = SnapshotQuarantineJournalSchema.parse(
-      JSON.parse(await readFile(journalPath, "utf8")),
+    const temporaryJournalPath = resolve(
+      directory,
+      "snapshot-quarantine-journal.next.json",
     );
+    if (await pathExists(temporaryJournalPath)) {
+      await assertPhysicalPath(root, temporaryJournalPath);
+      await rm(temporaryJournalPath, { force: true });
+    }
+    await assertPhysicalPath(root, journalPath);
+    let journal: z.infer<typeof SnapshotQuarantineJournalSchema>;
+    try {
+      journal = SnapshotQuarantineJournalSchema.parse(
+        JSON.parse(await readFile(journalPath, "utf8")),
+      );
+    } catch (error) {
+      const isolated = resolve(
+        temporaryRoot,
+        `data-quarantine-corrupt-${basename(directory)}-${randomUUID()}`,
+      );
+      await safeRename(root, directory, isolated);
+      throw new Error(
+        `Corrupt snapshot quarantine journal isolated at ${isolated}; revoked bytes remain outside public.`,
+        { cause: error },
+      );
+    }
     const snapshotsRoot = resolve(target, "snapshots");
     for (const entry of journal.entries) {
       if (
@@ -1056,13 +1087,39 @@ async function recoverInterruptedSnapshotQuarantines(
       journalPath,
       entries: journal.entries,
       committed: journal.committed,
+      buildId: journal.buildId,
+      previousManifestIdentity: journal.previousManifestIdentity,
+      candidateManifestIdentity: journal.candidateManifestIdentity,
     };
-    if (quarantine.committed) {
+    const active = await loadPreviousSnapshot(root, target);
+    const activeIdentity =
+      active === undefined
+        ? undefined
+        : manifestIdentity(target, active.manifest);
+    const candidateIsActive =
+      activeIdentity !== undefined &&
+      manifestsMatch(activeIdentity, quarantine.candidateManifestIdentity);
+    const previousIsActive =
+      activeIdentity !== undefined &&
+      quarantine.previousManifestIdentity !== null &&
+      manifestsMatch(activeIdentity, quarantine.previousManifestIdentity);
+    if (quarantine.committed || candidateIsActive) {
       await safeRemoveTemporaryDirectory(root, temporaryRoot, directory);
       continue;
     }
-    await restoreSnapshotQuarantine(root, quarantine);
-    await safeRemoveTemporaryDirectory(root, temporaryRoot, directory);
+    if (previousIsActive) {
+      await restoreSnapshotQuarantine(root, quarantine);
+      await safeRemoveTemporaryDirectory(root, temporaryRoot, directory);
+      continue;
+    }
+    const isolated = resolve(
+      temporaryRoot,
+      `data-quarantine-ambiguous-${basename(directory)}-${randomUUID()}`,
+    );
+    await safeRename(root, directory, isolated);
+    throw new Error(
+      `Snapshot quarantine identity is ambiguous; revoked bytes remain isolated at ${isolated}.`,
+    );
   }
 }
 
@@ -1307,26 +1364,60 @@ interface SnapshotQuarantine {
   journalPath: string;
   entries: QuarantinedSnapshot[];
   committed: boolean;
+  buildId: string;
+  previousManifestIdentity: z.infer<typeof ManifestIdentitySchema> | null;
+  candidateManifestIdentity: z.infer<typeof ManifestIdentitySchema>;
+}
+
+function manifestIdentity(
+  target: string,
+  manifest: LoadableGeneratedManifest,
+): z.infer<typeof ManifestIdentitySchema> {
+  const canonical = serializeDeterministically(manifest);
+  return ManifestIdentitySchema.parse({
+    canonicalSha256: createHash("sha256").update(canonical).digest("hex"),
+    snapshotIds: [...manifestAddressedSnapshotDirectories(target, manifest)]
+      .map((directory) => basename(directory))
+      .sort(),
+  });
 }
 
 async function writeSnapshotQuarantineJournal(
   root: string,
   quarantine: SnapshotQuarantine,
 ): Promise<void> {
-  await safeWriteFile(
-    root,
-    quarantine.journalPath,
-    serializeDeterministically({
-      committed: quarantine.committed,
-      entries: quarantine.entries,
-    }),
+  const temporaryPath = resolve(
+    quarantine.directory,
+    "snapshot-quarantine-journal.next.json",
   );
+  const contents = serializeDeterministically({
+    buildId: quarantine.buildId,
+    previousManifestIdentity: quarantine.previousManifestIdentity,
+    candidateManifestIdentity: quarantine.candidateManifestIdentity,
+    committed: quarantine.committed,
+    entries: quarantine.entries,
+  });
+  await assertPhysicalPath(root, temporaryPath);
+  const handle = await open(temporaryPath, "w");
+  try {
+    await handle.writeFile(contents, "utf8");
+    await handle.sync();
+  } finally {
+    await handle.close();
+  }
+  SnapshotQuarantineJournalSchema.parse(
+    JSON.parse(await readFile(temporaryPath, "utf8")),
+  );
+  await safeRename(root, temporaryPath, quarantine.journalPath);
 }
 
 async function createSnapshotQuarantine(
   root: string,
   temporaryRoot: string,
   buildId: string,
+  target: string,
+  previous: PreviousSnapshot | undefined,
+  candidateManifest: GeneratedManifest,
 ): Promise<SnapshotQuarantine> {
   const directory = resolve(
     temporaryRoot,
@@ -1338,6 +1429,12 @@ async function createSnapshotQuarantine(
     journalPath: resolve(directory, "snapshot-quarantine-journal.json"),
     entries: [],
     committed: false,
+    buildId,
+    previousManifestIdentity:
+      previous === undefined
+        ? null
+        : manifestIdentity(target, previous.manifest),
+    candidateManifestIdentity: manifestIdentity(target, candidateManifest),
   };
   await writeSnapshotQuarantineJournal(root, quarantine);
   return quarantine;
@@ -1404,10 +1501,7 @@ async function returnSnapshotsToQuarantine(
   await writeSnapshotQuarantineJournal(root, quarantine);
 }
 
-function manifestsMatch(
-  left: LoadableGeneratedManifest,
-  right: LoadableGeneratedManifest,
-): boolean {
+function manifestsMatch(left: unknown, right: unknown): boolean {
   return serializeDeterministically(left) === serializeDeterministically(right);
 }
 
@@ -1440,7 +1534,14 @@ async function commitManifestWithSnapshotQuarantine(
     );
 
     if (invalidDirectories.length > 0) {
-      quarantine = await createSnapshotQuarantine(root, temporaryRoot, buildId);
+      quarantine = await createSnapshotQuarantine(
+        root,
+        temporaryRoot,
+        buildId,
+        target,
+        previous,
+        manifest,
+      );
     }
     await failureInjection?.beforeRevokedSnapshotPrune?.();
     if (quarantine !== undefined) {
@@ -1466,6 +1567,16 @@ async function commitManifestWithSnapshotQuarantine(
     }
     await failureInjection?.afterActiveRevokedSnapshotQuarantine?.();
     await assertPublicSnapshotDistribution(root, curatedMappings);
+    if (failureInjection?.crashAfterActiveSnapshotQuarantine !== undefined) {
+      try {
+        await failureInjection.crashAfterActiveSnapshotQuarantine();
+      } catch (error) {
+        throw new SnapshotCrashSimulationError(
+          error instanceof Error ? error.message : String(error),
+          { cause: error },
+        );
+      }
+    }
 
     if (quarantine !== undefined) {
       quarantine.committed = true;
@@ -1482,6 +1593,7 @@ async function commitManifestWithSnapshotQuarantine(
       }
     }
   } catch (error) {
+    if (error instanceof SnapshotCrashSimulationError) throw error;
     try {
       if (quarantine !== undefined) {
         await restoreSnapshotQuarantine(root, quarantine);

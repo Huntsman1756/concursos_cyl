@@ -2,13 +2,19 @@ import { access, readFile, readdir } from "node:fs/promises";
 import { resolve } from "node:path";
 
 import {
+  MappingCoverageResourceSchema,
   OccupationAliasesSchema,
   OccupationsSchema,
   TrainingOccupationLinksSchema,
   type OccupationAlias,
   type TrainingOccupationLink,
 } from "../../data/schemas/curatedMappings";
-import type { ValidatedCuratedMappings } from "./validateCuratedMappings";
+import { TrainingProgramSchema } from "../../data/schemas/generated";
+import { z } from "zod";
+import {
+  buildMappingCoverage,
+  type ValidatedCuratedMappings,
+} from "./validateCuratedMappings";
 
 function normalizeAlias(value: string): string {
   return value
@@ -136,9 +142,28 @@ export async function findRevokedPublicSnapshotDirectories(
     const occupationsPath = resolve(directory, "occupations.json");
     const aliasesPath = resolve(directory, "occupation-aliases.json");
     const linksPath = resolve(directory, "training-occupation-links.json");
-    let invalid = false;
+    const coveragePath = resolve(directory, "mapping-coverage.json");
+    const programsPath = resolve(directory, "programs.json");
+    const decisionPaths = [
+      occupationsPath,
+      aliasesPath,
+      linksPath,
+      coveragePath,
+    ];
+    const decisionPresence = await Promise.all(
+      decisionPaths.map((path) => pathExists(path, accessPath)),
+    );
+    if (decisionPresence.every((present) => !present)) continue;
+    if (
+      decisionPresence.some((present) => !present) ||
+      !(await pathExists(programsPath, accessPath))
+    ) {
+      invalidDirectories.push(directory);
+      continue;
+    }
 
-    if (await pathExists(occupationsPath, accessPath)) {
+    let invalid = false;
+    try {
       const occupations = OccupationsSchema.parse(
         await readJson(occupationsPath),
       );
@@ -148,8 +173,6 @@ export async function findRevokedPublicSnapshotDirectories(
           approvedOccupations.get(occupation.occupationId) !==
             canonicalPayload(occupation),
       );
-    }
-    if (await pathExists(aliasesPath, accessPath)) {
       const aliases = OccupationAliasesSchema.parse(
         await readJson(aliasesPath),
       );
@@ -158,8 +181,6 @@ export async function findRevokedPublicSnapshotDirectories(
           alias.reviewStatus !== "approved" ||
           approvedAliases.get(aliasIdentity(alias)) !== canonicalPayload(alias),
       );
-    }
-    if (await pathExists(linksPath, accessPath)) {
       const links = TrainingOccupationLinksSchema.parse(
         await readJson(linksPath),
       );
@@ -168,6 +189,31 @@ export async function findRevokedPublicSnapshotDirectories(
           link.reviewStatus !== "approved" ||
           approvedLinks.get(linkIdentity(link)) !== canonicalPayload(link),
       );
+      const programs = z
+        .array(TrainingProgramSchema)
+        .parse(await readJson(programsPath));
+      const programKeys = new Set(
+        programs.map((program) => program.programKey),
+      );
+      invalid ||= links.some(
+        (link) => !programKeys.has(link.trainingProgramKey),
+      );
+      const coverage = MappingCoverageResourceSchema.parse(
+        await readJson(coveragePath),
+      );
+      invalid ||=
+        canonicalPayload(coverage) !==
+        canonicalPayload(buildMappingCoverage(programs, curatedMappings.links));
+    } catch (error) {
+      if (
+        typeof error === "object" &&
+        error !== null &&
+        "code" in error &&
+        typeof error.code === "string"
+      ) {
+        throw error;
+      }
+      invalid = true;
     }
 
     if (invalid) invalidDirectories.push(directory);

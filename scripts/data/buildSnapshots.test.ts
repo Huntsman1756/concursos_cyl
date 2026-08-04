@@ -117,6 +117,13 @@ function ambiguousAdministrativeMappings(
   };
 }
 
+function ambiguousOccupationMappings(
+  reviewStatus: "approved" | "draft",
+): ValidatedCuratedMappings {
+  const mappings = ambiguousAdministrativeMappings(reviewStatus);
+  return { ...mappings, links: [] };
+}
+
 const FIXED_POINT_FETCHED_AT = "2026-08-04T15:52:38.619Z";
 const FIXED_POINT_SNAPSHOT_ID = "20260804155238619-6e07eafedc96";
 const FIXED_POINT_TRAINING_URL =
@@ -504,6 +511,16 @@ describe("buildSnapshots", () => {
     });
     const manifestPath = join(root, "public", "data", "v1", "manifest.json");
     const manifestBefore = await readFile(manifestPath);
+    const previousManifest = await readManifest(root);
+    const previousSnapshotIds = [
+      ...new Set(
+        Object.values(previousManifest.resourceSnapshots).map((resource) =>
+          resource.resourcePath.split("/").at(-2),
+        ),
+      ),
+    ]
+      .filter((value): value is string => value !== undefined)
+      .sort();
     const revokedDirectory = join(
       root,
       "public",
@@ -533,6 +550,18 @@ describe("buildSnapshots", () => {
     await writeFile(
       join(quarantine, "snapshot-quarantine-journal.json"),
       serializeDeterministically({
+        buildId: "interrupted-test-build",
+        previousManifestIdentity: {
+          canonicalSha256: createHash("sha256")
+            .update(serializeDeterministically(previousManifest))
+            .digest("hex"),
+          snapshotIds: previousSnapshotIds,
+        },
+        candidateManifestIdentity: {
+          canonicalSha256: "0".repeat(64),
+          snapshotIds: [],
+        },
+        committed: false,
         entries: [
           {
             source: revokedDirectory,
@@ -565,8 +594,8 @@ describe("buildSnapshots", () => {
 
   it("keeps an active revoked snapshot available until the replacement manifest is committed", async () => {
     const root = await temporaryRoot();
-    const approvedMappings = ambiguousAdministrativeMappings("approved");
-    const draftMappings = ambiguousAdministrativeMappings("draft");
+    const approvedMappings = ambiguousOccupationMappings("approved");
+    const draftMappings = ambiguousOccupationMappings("draft");
     await buildSnapshots({
       rootDirectory: root,
       ...fixedOptions,
@@ -603,8 +632,8 @@ describe("buildSnapshots", () => {
 
   it("restores the active revoked snapshot and manifest when post-swap quarantine fails", async () => {
     const root = await temporaryRoot();
-    const approvedMappings = ambiguousAdministrativeMappings("approved");
-    const draftMappings = ambiguousAdministrativeMappings("draft");
+    const approvedMappings = ambiguousOccupationMappings("approved");
+    const draftMappings = ambiguousOccupationMappings("draft");
     await buildSnapshots({
       rootDirectory: root,
       ...fixedOptions,
@@ -640,8 +669,8 @@ describe("buildSnapshots", () => {
 
   it("preserves a manifest-addressed candidate when post-swap rollback also fails", async () => {
     const root = await temporaryRoot();
-    const approvedMappings = ambiguousAdministrativeMappings("approved");
-    const draftMappings = ambiguousAdministrativeMappings("draft");
+    const approvedMappings = ambiguousOccupationMappings("approved");
+    const draftMappings = ambiguousOccupationMappings("draft");
     await buildSnapshots({
       rootDirectory: root,
       ...fixedOptions,
@@ -697,6 +726,116 @@ describe("buildSnapshots", () => {
     await expect(
       assertPublicSnapshotDistribution(root, draftMappings),
     ).resolves.toBeUndefined();
+  });
+
+  it("finalizes a crash-pending quarantine when the candidate manifest is active", async () => {
+    const root = await temporaryRoot();
+    const approvedMappings = ambiguousOccupationMappings("approved");
+    const draftMappings = ambiguousOccupationMappings("draft");
+    await buildSnapshots({
+      rootDirectory: root,
+      ...fixedOptions,
+      loadCuratedMappings: async () => approvedMappings,
+    });
+    const previous = await readManifest(root);
+    const revokedActiveDirectory = dirname(
+      assetPath(root, previous.resourceSnapshots.occupations.resourcePath),
+    );
+
+    await expect(
+      buildSnapshots({
+        rootDirectory: root,
+        ...fixedOptions,
+        now: () => new Date("2026-08-05T10:00:00.000Z"),
+        loadCuratedMappings: async () => draftMappings,
+        failureInjection: {
+          crashAfterActiveSnapshotQuarantine: () => {
+            throw new Error("simulated process crash after manifest swap");
+          },
+        } as SnapshotFailureInjection & {
+          crashAfterActiveSnapshotQuarantine: () => void;
+        },
+      }),
+    ).rejects.toThrow(/simulated process crash/i);
+
+    await expect(access(revokedActiveDirectory)).rejects.toMatchObject({
+      code: "ENOENT",
+    });
+    const temporaryPath = join(root, ".codex-tmp");
+    const pending = (await readdir(temporaryPath)).find((name) =>
+      name.startsWith("data-backup-revoked-snapshots-"),
+    );
+    expect(pending).toBeDefined();
+    await writeFile(
+      join(temporaryPath, pending!, "snapshot-quarantine-journal.next.json"),
+      "{truncated",
+    );
+
+    await expect(
+      buildSnapshots({
+        rootDirectory: root,
+        ...fixedOptions,
+        now: () => new Date("2026-08-06T10:00:00.000Z"),
+        loadCuratedMappings: async () => draftMappings,
+        fetchTrainingRecords: async () => {
+          throw new Error("injected fetch failure after recovery");
+        },
+      }),
+    ).rejects.toThrow(/injected fetch failure after recovery/i);
+    await expect(
+      assertPublicSnapshotDistribution(root, draftMappings),
+    ).resolves.toBeUndefined();
+
+    await buildSnapshots({
+      rootDirectory: root,
+      ...fixedOptions,
+      now: () => new Date("2026-08-07T10:00:00.000Z"),
+      loadCuratedMappings: async () => draftMappings,
+    });
+    await expect(
+      assertPublicSnapshotDistribution(root, draftMappings),
+    ).resolves.toBeUndefined();
+  });
+
+  it("isolates a corrupt quarantine journal without restoring or looping forever", async () => {
+    const root = await temporaryRoot();
+    await buildSnapshots({ rootDirectory: root, ...fixedOptions });
+    const quarantine = join(
+      root,
+      ".codex-tmp",
+      "data-backup-revoked-snapshots-corrupt",
+    );
+    await mkdir(quarantine, { recursive: true });
+    await writeFile(
+      join(quarantine, "snapshot-quarantine-journal.json"),
+      "{truncated",
+    );
+    await writeFile(join(quarantine, "revoked-backup.json"), "preserve me");
+
+    await expect(
+      buildSnapshots({ rootDirectory: root, ...fixedOptions }),
+    ).rejects.toThrow(/quarantine journal/i);
+    await expect(access(quarantine)).rejects.toMatchObject({ code: "ENOENT" });
+    const isolated = (await readdir(join(root, ".codex-tmp"))).find((name) =>
+      name.startsWith("data-quarantine-corrupt-"),
+    );
+    expect(isolated).toBeDefined();
+    await expect(
+      readFile(
+        join(root, ".codex-tmp", isolated!, "revoked-backup.json"),
+        "utf8",
+      ),
+    ).resolves.toBe("preserve me");
+
+    await expect(
+      buildSnapshots({
+        rootDirectory: root,
+        ...fixedOptions,
+        fetchTrainingRecords: async () => {
+          throw new Error("retry reached fetch");
+        },
+      }),
+    ).rejects.toThrow(/retry reached fetch/i);
   });
 
   it("lets one builder hold the lock while two competitors fail before fetch", async () => {
