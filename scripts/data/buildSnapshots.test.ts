@@ -550,6 +550,7 @@ describe("buildSnapshots", () => {
     await writeFile(
       join(quarantine, "snapshot-quarantine-journal.json"),
       serializeDeterministically({
+        schemaVersion: "2.0.0",
         buildId: "interrupted-test-build",
         previousManifestIdentity: {
           canonicalSha256: createHash("sha256")
@@ -795,6 +796,121 @@ describe("buildSnapshots", () => {
     await expect(
       assertPublicSnapshotDistribution(root, draftMappings),
     ).resolves.toBeUndefined();
+  });
+
+  it("finishes an entry journaled before its first rename when the candidate is active", async () => {
+    const root = await temporaryRoot();
+    const approvedMappings = ambiguousOccupationMappings("approved");
+    const draftMappings = ambiguousOccupationMappings("draft");
+    await buildSnapshots({
+      rootDirectory: root,
+      ...fixedOptions,
+      loadCuratedMappings: async () => approvedMappings,
+    });
+    const previous = await readManifest(root);
+    const revokedDirectory = dirname(
+      assetPath(root, previous.resourceSnapshots.occupations.resourcePath),
+    );
+
+    await expect(
+      buildSnapshots({
+        rootDirectory: root,
+        ...fixedOptions,
+        now: () => new Date("2026-08-05T10:00:00.000Z"),
+        loadCuratedMappings: async () => draftMappings,
+        failureInjection: {
+          crashAfterActiveJournalBeforeFirstSnapshotRename: () => {
+            throw new Error("crash after durable journal before rename");
+          },
+        } as SnapshotFailureInjection & {
+          crashAfterActiveJournalBeforeFirstSnapshotRename: () => void;
+        },
+      }),
+    ).rejects.toThrow(/crash after durable journal before rename/i);
+    await expect(access(revokedDirectory)).resolves.toBeUndefined();
+
+    await expect(
+      buildSnapshots({
+        rootDirectory: root,
+        ...fixedOptions,
+        loadCuratedMappings: async () => draftMappings,
+        fetchTrainingRecords: async () => {
+          throw new Error("fetch failed after entry recovery");
+        },
+      }),
+    ).rejects.toThrow(/fetch failed after entry recovery/i);
+    await expect(access(revokedDirectory)).rejects.toMatchObject({
+      code: "ENOENT",
+    });
+    await expect(
+      assertPublicSnapshotDistribution(root, draftMappings),
+    ).resolves.toBeUndefined();
+    const active = await readManifest(root);
+    await expect(
+      access(
+        assetPath(root, active.resourceSnapshots.occupations.resourcePath),
+      ),
+    ).resolves.toBeUndefined();
+  });
+
+  it("restores moved entries when a committed journal still has the previous manifest active", async () => {
+    const root = await temporaryRoot();
+    const approvedMappings = ambiguousOccupationMappings("approved");
+    const draftMappings = ambiguousOccupationMappings("draft");
+    await buildSnapshots({
+      rootDirectory: root,
+      ...fixedOptions,
+      loadCuratedMappings: async () => approvedMappings,
+    });
+    const manifestPath = join(root, "public", "data", "v1", "manifest.json");
+    const previousManifestBytes = await readFile(manifestPath);
+    const previous = await readManifest(root);
+    const revokedDirectory = dirname(
+      assetPath(root, previous.resourceSnapshots.occupations.resourcePath),
+    );
+    await expect(
+      buildSnapshots({
+        rootDirectory: root,
+        ...fixedOptions,
+        now: () => new Date("2026-08-05T10:00:00.000Z"),
+        loadCuratedMappings: async () => draftMappings,
+        failureInjection: {
+          crashAfterActiveSnapshotQuarantine: () => {
+            throw new Error("leave committed-marker fixture");
+          },
+        },
+      }),
+    ).rejects.toThrow(/leave committed-marker fixture/i);
+    const temporaryPath = join(root, ".codex-tmp");
+    const pending = (await readdir(temporaryPath)).find((name) =>
+      name.startsWith("data-backup-revoked-snapshots-"),
+    )!;
+    const journalPath = join(
+      temporaryPath,
+      pending,
+      "snapshot-quarantine-journal.json",
+    );
+    const journal = JSON.parse(await readFile(journalPath, "utf8")) as Record<
+      string,
+      unknown
+    >;
+    await writeFile(
+      journalPath,
+      serializeDeterministically({ ...journal, committed: true }),
+    );
+    await writeFile(manifestPath, previousManifestBytes);
+
+    await expect(
+      buildSnapshots({
+        rootDirectory: root,
+        ...fixedOptions,
+        loadCuratedMappings: async () => approvedMappings,
+        fetchTrainingRecords: async () => {
+          throw new Error("fetch failed after previous recovery");
+        },
+      }),
+    ).rejects.toThrow(/fetch failed after previous recovery/i);
+    await expect(access(revokedDirectory)).resolves.toBeUndefined();
   });
 
   it("isolates a corrupt quarantine journal without restoring or looping forever", async () => {

@@ -93,6 +93,33 @@ const administrativeProgram = TrainingProgramSchema.parse({
   familyName: "Administración y Gestión",
 });
 
+const secondAdministrativeProgram = TrainingProgramSchema.parse({
+  ...administrativeProgram,
+  programKey: "ADG02M",
+  programTitle: "Servicios Administrativos",
+});
+
+const completeApprovedMappings: ValidatedCuratedMappings = {
+  occupations: [
+    ...approvedMappings.occupations,
+    {
+      ...approvedMappings.occupations[0],
+      occupationId: "occupation:cno11:4310",
+      classificationCode: "4310",
+      preferredLabel: "Segundo grupo administrativo",
+    },
+  ],
+  aliases: [
+    ...approvedMappings.aliases,
+    {
+      ...approvedMappings.aliases[0],
+      alias: "segundo auxiliar",
+      occupationId: "occupation:cno11:4310",
+    },
+  ],
+  links: approvedMappings.links,
+};
+
 async function writeJson(path: string, value: unknown): Promise<void> {
   await writeFile(path, `${JSON.stringify(value, null, 2)}\n`, "utf8");
 }
@@ -339,6 +366,90 @@ describe("public snapshot distribution", () => {
       await writeJson(
         join(directory, "mapping-coverage.json"),
         variant.coverage,
+      );
+      expected.push(resolve(directory));
+    }
+
+    await expect(
+      findRevokedPublicSnapshotDirectories(root, approvedMappings),
+    ).resolves.toEqual(expected);
+  });
+
+  it("requires the complete canonical approved arrays without subsets, duplicates, or reordering", async () => {
+    const root = await mkdtemp(join(tmpdir(), "salida-cyl-distribution-"));
+    temporaryRoots.push(root);
+    const programs = [administrativeProgram, secondAdministrativeProgram];
+    const variants = [
+      { occupations: [] },
+      { links: [] },
+      {
+        aliases: [
+          ...completeApprovedMappings.aliases,
+          completeApprovedMappings.aliases[0],
+        ],
+      },
+      { occupations: [...completeApprovedMappings.occupations].reverse() },
+    ];
+    const expected: string[] = [];
+    for (const [index, variant] of variants.entries()) {
+      const directory = await snapshot(
+        root,
+        `2026090${index + 1}000000000-${String(index + 1).repeat(12)}`,
+      );
+      await writeJson(join(directory, "programs.json"), programs);
+      await writeJson(
+        join(directory, "occupations.json"),
+        variant.occupations ?? completeApprovedMappings.occupations,
+      );
+      await writeJson(
+        join(directory, "occupation-aliases.json"),
+        variant.aliases ?? completeApprovedMappings.aliases,
+      );
+      await writeJson(
+        join(directory, "training-occupation-links.json"),
+        variant.links ?? completeApprovedMappings.links,
+      );
+      await writeJson(
+        join(directory, "mapping-coverage.json"),
+        buildMappingCoverage(programs, completeApprovedMappings.links),
+      );
+      expected.push(resolve(directory));
+    }
+
+    await expect(
+      findRevokedPublicSnapshotDirectories(root, completeApprovedMappings),
+    ).resolves.toEqual(expected);
+  });
+
+  it("rejects duplicate or non-canonically ordered programs", async () => {
+    const root = await mkdtemp(join(tmpdir(), "salida-cyl-distribution-"));
+    temporaryRoots.push(root);
+    const variants = [
+      [administrativeProgram, administrativeProgram],
+      [secondAdministrativeProgram, administrativeProgram],
+    ];
+    const expected: string[] = [];
+    for (const [index, programs] of variants.entries()) {
+      const directory = await snapshot(
+        root,
+        `2026091${index}000000000-${String(index + 5).repeat(12)}`,
+      );
+      await writeJson(join(directory, "programs.json"), programs);
+      await writeJson(
+        join(directory, "occupations.json"),
+        approvedMappings.occupations,
+      );
+      await writeJson(
+        join(directory, "occupation-aliases.json"),
+        approvedMappings.aliases,
+      );
+      await writeJson(
+        join(directory, "training-occupation-links.json"),
+        approvedMappings.links,
+      );
+      await writeJson(
+        join(directory, "mapping-coverage.json"),
+        buildMappingCoverage(programs, approvedMappings.links),
       );
       expected.push(resolve(directory));
     }

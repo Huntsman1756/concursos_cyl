@@ -127,6 +127,21 @@ export async function findRevokedPublicSnapshotDirectories(
       .filter((link) => link.reviewStatus === "approved")
       .map((link) => [linkIdentity(link), canonicalPayload(link)]),
   );
+  const canonicalApprovedOccupations = curatedMappings.occupations
+    .filter((occupation) => occupation.reviewStatus === "approved")
+    .toSorted((left, right) =>
+      left.occupationId.localeCompare(right.occupationId),
+    );
+  const canonicalApprovedAliases = curatedMappings.aliases
+    .filter((alias) => alias.reviewStatus === "approved")
+    .toSorted((left, right) =>
+      aliasIdentity(left).localeCompare(aliasIdentity(right)),
+    );
+  const canonicalApprovedLinks = curatedMappings.links
+    .filter((link) => link.reviewStatus === "approved")
+    .toSorted((left, right) =>
+      linkIdentity(left).localeCompare(linkIdentity(right)),
+    );
   const invalidDirectories: string[] = [];
   const ignoredDirectories = new Set(
     (options.ignoredDirectories ?? []).map((directory) => resolve(directory)),
@@ -173,6 +188,9 @@ export async function findRevokedPublicSnapshotDirectories(
           approvedOccupations.get(occupation.occupationId) !==
             canonicalPayload(occupation),
       );
+      invalid ||=
+        canonicalPayload(occupations) !==
+        canonicalPayload(canonicalApprovedOccupations);
       const aliases = OccupationAliasesSchema.parse(
         await readJson(aliasesPath),
       );
@@ -181,6 +199,9 @@ export async function findRevokedPublicSnapshotDirectories(
           alias.reviewStatus !== "approved" ||
           approvedAliases.get(aliasIdentity(alias)) !== canonicalPayload(alias),
       );
+      invalid ||=
+        canonicalPayload(aliases) !==
+        canonicalPayload(canonicalApprovedAliases);
       const links = TrainingOccupationLinksSchema.parse(
         await readJson(linksPath),
       );
@@ -189,12 +210,22 @@ export async function findRevokedPublicSnapshotDirectories(
           link.reviewStatus !== "approved" ||
           approvedLinks.get(linkIdentity(link)) !== canonicalPayload(link),
       );
+      invalid ||=
+        canonicalPayload(links) !== canonicalPayload(canonicalApprovedLinks);
       const programs = z
         .array(TrainingProgramSchema)
         .parse(await readJson(programsPath));
       const programKeys = new Set(
         programs.map((program) => program.programKey),
       );
+      invalid ||= programKeys.size !== programs.length;
+      invalid ||=
+        canonicalPayload(programs) !==
+        canonicalPayload(
+          programs.toSorted((left, right) =>
+            left.programKey.localeCompare(right.programKey),
+          ),
+        );
       invalid ||= links.some(
         (link) => !programKeys.has(link.trainingProgramKey),
       );

@@ -185,6 +185,7 @@ export interface SnapshotFailureInjection {
   afterActiveRevokedSnapshotQuarantine?: () => void | Promise<void>;
   beforeRollbackManifestCommit?: () => void | Promise<void>;
   crashAfterActiveSnapshotQuarantine?: () => void | Promise<void>;
+  crashAfterActiveJournalBeforeFirstSnapshotRename?: () => void | Promise<void>;
 }
 
 export interface BuildSnapshotsOptions {
@@ -1021,28 +1022,36 @@ async function interruptedSnapshotQuarantines(
     .sort();
 }
 
-const ManifestIdentitySchema = z.object({
-  canonicalSha256: z.string().regex(/^[a-f0-9]{64}$/u),
-  snapshotIds: z.array(z.string()).readonly(),
-});
+const ManifestIdentitySchema = z
+  .object({
+    canonicalSha256: z.string().regex(/^[a-f0-9]{64}$/u),
+    snapshotIds: z.array(z.string()).readonly(),
+  })
+  .strict();
 
-const SnapshotQuarantineJournalSchema = z.object({
-  buildId: z.string().min(1),
-  previousManifestIdentity: ManifestIdentitySchema.nullable(),
-  candidateManifestIdentity: ManifestIdentitySchema,
-  committed: z.boolean().default(false),
-  entries: z.array(
-    z.object({
-      source: z.string().min(1),
-      destination: z.string().min(1),
-    }),
-  ),
-});
+const SnapshotQuarantineJournalSchema = z
+  .object({
+    schemaVersion: z.literal("2.0.0"),
+    buildId: z.string().min(1),
+    previousManifestIdentity: ManifestIdentitySchema.nullable(),
+    candidateManifestIdentity: ManifestIdentitySchema,
+    committed: z.boolean().default(false),
+    entries: z.array(
+      z
+        .object({
+          source: z.string().min(1),
+          destination: z.string().min(1),
+        })
+        .strict(),
+    ),
+  })
+  .strict();
 
 async function recoverInterruptedSnapshotQuarantines(
   root: string,
   temporaryRoot: string,
   target: string,
+  loadCuratedMappings?: BuildSnapshotsOptions["loadCuratedMappings"],
 ): Promise<void> {
   for (const directory of await interruptedSnapshotQuarantines(temporaryRoot)) {
     const journalPath = resolve(directory, "snapshot-quarantine-journal.json");
@@ -1091,11 +1100,16 @@ async function recoverInterruptedSnapshotQuarantines(
       previousManifestIdentity: journal.previousManifestIdentity,
       candidateManifestIdentity: journal.candidateManifestIdentity,
     };
-    const active = await loadPreviousSnapshot(root, target);
+    const activeManifestPath = resolve(target, "manifest.json");
+    const activeManifest = (await pathExists(activeManifestPath))
+      ? LoadableGeneratedManifestSchema.parse(
+          JSON.parse(await readFile(activeManifestPath, "utf8")),
+        )
+      : undefined;
     const activeIdentity =
-      active === undefined
+      activeManifest === undefined
         ? undefined
-        : manifestIdentity(target, active.manifest);
+        : manifestIdentity(target, activeManifest);
     const candidateIsActive =
       activeIdentity !== undefined &&
       manifestsMatch(activeIdentity, quarantine.candidateManifestIdentity);
@@ -1103,12 +1117,31 @@ async function recoverInterruptedSnapshotQuarantines(
       activeIdentity !== undefined &&
       quarantine.previousManifestIdentity !== null &&
       manifestsMatch(activeIdentity, quarantine.previousManifestIdentity);
-    if (quarantine.committed || candidateIsActive) {
+    if (candidateIsActive) {
+      await returnSnapshotsToQuarantine(root, quarantine);
+      const programsSnapshot = activeManifest!.resourceSnapshots.programs;
+      const programs = z
+        .array(TrainingProgramSchema)
+        .parse(
+          JSON.parse(
+            await readFile(
+              resourceFileInSnapshot(target, programsSnapshot.resourcePath),
+              "utf8",
+            ),
+          ),
+        );
+      const curatedMappings = await (
+        loadCuratedMappings ??
+        ((currentPrograms) =>
+          loadCuratedMappingsFromDisk(root, currentPrograms))
+      )(programs);
+      await assertPublicSnapshotDistribution(root, curatedMappings);
       await safeRemoveTemporaryDirectory(root, temporaryRoot, directory);
       continue;
     }
     if (previousIsActive) {
       await restoreSnapshotQuarantine(root, quarantine);
+      await validateSnapshotDirectory(root, target);
       await safeRemoveTemporaryDirectory(root, temporaryRoot, directory);
       continue;
     }
@@ -1220,17 +1253,41 @@ async function writeCandidate(
     datasetSnapshot: offerSourceSnapshot,
   });
   const approvedMappings = loadApprovedMappings(curatedMappings);
+  const canonicalAliasIdentity = (alias: {
+    alias: string;
+    occupationId: string;
+  }): string =>
+    `${alias.alias
+      .normalize("NFD")
+      .replace(/\p{Diacritic}/gu, "")
+      .toLocaleLowerCase("es-ES")
+      .replace(/[^\p{Letter}\p{Number}]+/gu, " ")
+      .replace(/\s+/gu, " ")
+      .trim()}:${alias.occupationId}`;
   const candidate = {
-    programs: z.array(TrainingProgramSchema).parse(training.programs),
+    programs: z
+      .array(TrainingProgramSchema)
+      .parse(training.programs)
+      .sort((left, right) => left.programKey.localeCompare(right.programKey)),
     centers: z.array(EducationCenterSchema).parse(training.centers),
     trainingOfferings: z
       .array(TrainingOfferingSchema)
       .parse(training.offerings),
     jobOffers: z.array(JobOfferSchema).parse(offers),
-    occupations: OccupationsSchema.parse(approvedMappings.occupations),
-    occupationAliases: OccupationAliasesSchema.parse(approvedMappings.aliases),
+    occupations: OccupationsSchema.parse(approvedMappings.occupations).sort(
+      (left, right) => left.occupationId.localeCompare(right.occupationId),
+    ),
+    occupationAliases: OccupationAliasesSchema.parse(
+      approvedMappings.aliases,
+    ).sort((left, right) =>
+      canonicalAliasIdentity(left).localeCompare(canonicalAliasIdentity(right)),
+    ),
     trainingOccupationLinks: TrainingOccupationLinksSchema.parse(
       approvedMappings.links,
+    ).sort((left, right) =>
+      `${left.trainingProgramKey}:${left.occupationId}:${left.relationshipType}`.localeCompare(
+        `${right.trainingProgramKey}:${right.occupationId}:${right.relationshipType}`,
+      ),
     ),
     mappingCoverage: buildMappingCoverage(
       training.programs,
@@ -1391,6 +1448,7 @@ async function writeSnapshotQuarantineJournal(
     "snapshot-quarantine-journal.next.json",
   );
   const contents = serializeDeterministically({
+    schemaVersion: "2.0.0",
     buildId: quarantine.buildId,
     previousManifestIdentity: quarantine.previousManifestIdentity,
     candidateManifestIdentity: quarantine.candidateManifestIdentity,
@@ -1444,14 +1502,16 @@ async function moveSnapshotsToQuarantine(
   root: string,
   quarantine: SnapshotQuarantine,
   directories: readonly string[],
+  afterFirstJournalWrite?: () => void | Promise<void>,
 ): Promise<void> {
-  for (const source of directories) {
+  for (const [index, source] of directories.entries()) {
     const entry = {
       source,
       destination: resolve(quarantine.directory, basename(source)),
     };
     quarantine.entries.push(entry);
     await writeSnapshotQuarantineJournal(root, quarantine);
+    if (index === 0) await afterFirstJournalWrite?.();
     await safeRename(root, entry.source, entry.destination);
   }
 }
@@ -1463,11 +1523,7 @@ async function restoreSnapshotQuarantine(
   for (const entry of [...quarantine.entries].reverse()) {
     const sourceExists = await pathExists(entry.source);
     const destinationExists = await pathExists(entry.destination);
-    if (sourceExists && destinationExists) {
-      throw new Error(
-        `Cannot restore quarantined snapshot because both paths exist: ${entry.source}.`,
-      );
-    }
+    if (sourceExists && destinationExists) continue;
     if (!sourceExists && destinationExists) {
       await safeRename(root, entry.destination, entry.source);
     } else if (!sourceExists) {
@@ -1486,13 +1542,19 @@ async function returnSnapshotsToQuarantine(
     const sourceExists = await pathExists(entry.source);
     const destinationExists = await pathExists(entry.destination);
     if (sourceExists && destinationExists) {
-      throw new Error(
-        `Cannot re-quarantine snapshot because both paths exist: ${entry.source}.`,
+      await safeRename(
+        root,
+        entry.source,
+        resolve(
+          quarantine.directory,
+          `${basename(entry.source)}-public-source-${randomUUID()}`,
+        ),
       );
+      continue;
     }
     if (sourceExists && !destinationExists) {
       await safeRename(root, entry.source, entry.destination);
-    } else if (!destinationExists) {
+    } else if (!destinationExists && !quarantine.committed) {
       throw new Error(
         `Cannot re-quarantine snapshot because both paths are absent: ${entry.source}.`,
       );
@@ -1563,7 +1625,27 @@ async function commitManifestWithSnapshotQuarantine(
 
     await failureInjection?.beforeActiveRevokedSnapshotQuarantine?.();
     if (quarantine !== undefined) {
-      await moveSnapshotsToQuarantine(root, quarantine, activeInvalid);
+      await moveSnapshotsToQuarantine(
+        root,
+        quarantine,
+        activeInvalid,
+        async () => {
+          if (
+            failureInjection?.crashAfterActiveJournalBeforeFirstSnapshotRename ===
+            undefined
+          ) {
+            return;
+          }
+          try {
+            await failureInjection.crashAfterActiveJournalBeforeFirstSnapshotRename();
+          } catch (error) {
+            throw new SnapshotCrashSimulationError(
+              error instanceof Error ? error.message : String(error),
+              { cause: error },
+            );
+          }
+        },
+      );
     }
     await failureInjection?.afterActiveRevokedSnapshotQuarantine?.();
     await assertPublicSnapshotDistribution(root, curatedMappings);
@@ -1885,7 +1967,12 @@ export async function buildSnapshots(
     log,
   );
   try {
-    await recoverInterruptedSnapshotQuarantines(root, temporaryRoot, target);
+    await recoverInterruptedSnapshotQuarantines(
+      root,
+      temporaryRoot,
+      target,
+      options.loadCuratedMappings,
+    );
     const legacyBackupPaths = await recoverInterruptedLegacyBackup(
       root,
       temporaryRoot,
