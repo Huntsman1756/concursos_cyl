@@ -72,6 +72,10 @@ import {
   type ValidatedCuratedMappings,
 } from "./validateCuratedMappings";
 import {
+  assertPublicSnapshotDistribution,
+  findRevokedPublicSnapshotDirectories,
+} from "./validatePublicDistribution";
+import {
   runQualityGates,
   runLegacyQualityGates,
   type LegacySnapshotCandidate,
@@ -160,6 +164,8 @@ interface PreviousSnapshot {
   manifestFormat: "current" | "legacy";
 }
 
+class PublicSnapshotDistributionError extends Error {}
+
 export interface SnapshotFailureInjection {
   beforeManifestCommit?: () => void | Promise<void>;
   afterManifestCommit?: () => void | Promise<void>;
@@ -172,6 +178,10 @@ export interface SnapshotFailureInjection {
   afterLockReleaseOwnedRename?: () => void | Promise<void>;
   beforeFailedLockCleanupValidation?: () => void | Promise<void>;
   afterFailedLockCleanupOwnedRename?: () => void | Promise<void>;
+  beforeRevokedSnapshotPrune?: () => void | Promise<void>;
+  afterRevokedSnapshotPrune?: () => void | Promise<void>;
+  beforeActiveRevokedSnapshotQuarantine?: () => void | Promise<void>;
+  afterActiveRevokedSnapshotQuarantine?: () => void | Promise<void>;
 }
 
 export interface BuildSnapshotsOptions {
@@ -1189,6 +1199,132 @@ async function publishImmutableResources(
   return { destination, created: true };
 }
 
+function manifestAddressedSnapshotDirectories(
+  target: string,
+  manifest: LoadableGeneratedManifest,
+): Set<string> {
+  return new Set(
+    Object.values(manifest.resourceSnapshots)
+      .filter((snapshot) => snapshot.resourcePath.includes("/snapshots/"))
+      .map((snapshot) =>
+        dirname(resourceFileInSnapshot(target, snapshot.resourcePath)),
+      ),
+  );
+}
+
+async function pruneRevokedPublicSnapshotsBeforeManifestCommit(
+  root: string,
+  target: string,
+  previous: PreviousSnapshot | undefined,
+  curatedMappings: ValidatedCuratedMappings,
+  failureInjection: SnapshotFailureInjection | undefined,
+): Promise<string[]> {
+  try {
+    const invalidDirectories = await findRevokedPublicSnapshotDirectories(
+      root,
+      curatedMappings,
+    );
+    if (invalidDirectories.length === 0) return [];
+
+    const addressedDirectories =
+      previous === undefined
+        ? new Set<string>()
+        : manifestAddressedSnapshotDirectories(target, previous.manifest);
+    const activeInvalid = invalidDirectories.filter((directory) =>
+      addressedDirectories.has(directory),
+    );
+    const inactiveInvalid = invalidDirectories.filter(
+      (directory) => !addressedDirectories.has(directory),
+    );
+
+    await failureInjection?.beforeRevokedSnapshotPrune?.();
+    for (const directory of inactiveInvalid) {
+      await safeRemoveImmutableSnapshotDirectory(root, target, directory);
+    }
+    await failureInjection?.afterRevokedSnapshotPrune?.();
+    await assertPublicSnapshotDistribution(root, curatedMappings, {
+      ignoredDirectories: activeInvalid,
+    });
+    return activeInvalid;
+  } catch (error) {
+    throw new PublicSnapshotDistributionError(
+      `Revoked public snapshot pruning failed before manifest commit: ${error instanceof Error ? error.message : String(error)}`,
+      { cause: error },
+    );
+  }
+}
+
+async function quarantineActiveRevokedSnapshotsAfterManifestCommit(
+  root: string,
+  temporaryRoot: string,
+  target: string,
+  buildId: string,
+  previous: PreviousSnapshot | undefined,
+  activeInvalid: readonly string[],
+  curatedMappings: ValidatedCuratedMappings,
+  failureInjection: SnapshotFailureInjection | undefined,
+): Promise<void> {
+  if (activeInvalid.length === 0) {
+    await assertPublicSnapshotDistribution(root, curatedMappings);
+    return;
+  }
+  if (previous === undefined) {
+    throw new PublicSnapshotDistributionError(
+      "Cannot quarantine an active revoked snapshot without a previous manifest.",
+    );
+  }
+
+  const quarantine = resolve(
+    temporaryRoot,
+    `data-backup-revoked-snapshots-${buildId}`,
+  );
+  const moved: Array<{ source: string; destination: string }> = [];
+  try {
+    await safeMkdir(root, quarantine);
+    await failureInjection?.beforeActiveRevokedSnapshotQuarantine?.();
+    for (const source of activeInvalid) {
+      const destination = resolve(quarantine, basename(source));
+      await safeRename(root, source, destination);
+      moved.push({ source, destination });
+    }
+    await failureInjection?.afterActiveRevokedSnapshotQuarantine?.();
+    await assertPublicSnapshotDistribution(root, curatedMappings);
+  } catch (error) {
+    try {
+      for (const { source, destination } of moved.reverse()) {
+        await safeRename(root, destination, source);
+      }
+      await commitManifest(
+        root,
+        target,
+        `${buildId}-revoked-rollback`,
+        previous.manifest,
+        undefined,
+        LoadableGeneratedManifestSchema,
+      );
+      if (await pathExists(quarantine)) {
+        await safeRemoveTemporaryDirectory(root, temporaryRoot, quarantine);
+      }
+    } catch (rollbackError) {
+      throw new PublicSnapshotDistributionError(
+        `Active revoked snapshot quarantine failed and rollback also failed: ${error instanceof Error ? error.message : String(error)}; rollback: ${rollbackError instanceof Error ? rollbackError.message : String(rollbackError)}`,
+        { cause: rollbackError },
+      );
+    }
+    throw new PublicSnapshotDistributionError(
+      `Active revoked snapshot quarantine failed after manifest commit; previous manifest restored: ${error instanceof Error ? error.message : String(error)}`,
+      { cause: error },
+    );
+  }
+
+  try {
+    await safeRemoveTemporaryDirectory(root, temporaryRoot, quarantine);
+  } catch {
+    // The revoked snapshots are already outside the deployable public tree.
+    // Startup cleanup will retry removal without risking the new manifest.
+  }
+}
+
 async function commitManifest(
   root: string,
   target: string,
@@ -1507,12 +1643,30 @@ export async function buildSnapshots(
         publication.destination,
         result.manifest,
       );
+      const activeRevokedSnapshots =
+        await pruneRevokedPublicSnapshotsBeforeManifestCommit(
+          root,
+          target,
+          previous,
+          curatedMappings,
+          options.failureInjection,
+        );
       await commitManifest(
         root,
         target,
         buildId,
         result.manifest,
         options.failureInjection?.beforeManifestCommit,
+      );
+      await quarantineActiveRevokedSnapshotsAfterManifestCommit(
+        root,
+        temporaryRoot,
+        target,
+        buildId,
+        previous,
+        activeRevokedSnapshots,
+        curatedMappings,
+        options.failureInjection,
       );
       committed = true;
       await options.failureInjection?.afterManifestCommit?.();
@@ -1568,6 +1722,9 @@ export async function buildSnapshots(
       }
 
       if (previous !== undefined) {
+        if (error instanceof PublicSnapshotDistributionError) {
+          throw error;
+        }
         await markPreviousSnapshotStale(
           root,
           target,

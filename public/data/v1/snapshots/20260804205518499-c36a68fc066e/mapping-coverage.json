@@ -13,10 +13,10 @@
     "uncoveredPrograms": 1
   },
   {
-    "approvedMappings": 1,
-    "coverageNote": "Incluye relaciones ocupacionales revisadas y citadas.",
-    "coverageStatus": "reviewed",
-    "draftMappings": 0,
+    "approvedMappings": 0,
+    "coverageNote": "Aún no hay una relación ocupacional aprobada; esto no significa que el ciclo no tenga salidas profesionales.",
+    "coverageStatus": "draft",
+    "draftMappings": 1,
     "familyCode": "ADG",
     "familyName": "Administración y Gestión",
     "programKey": "ADG01M",
@@ -26,10 +26,10 @@
     "uncoveredPrograms": 0
   },
   {
-    "approvedMappings": 1,
-    "coverageNote": "Incluye relaciones ocupacionales revisadas y citadas.",
-    "coverageStatus": "reviewed",
-    "draftMappings": 0,
+    "approvedMappings": 0,
+    "coverageNote": "Aún no hay una relación ocupacional aprobada; esto no significa que el ciclo no tenga salidas profesionales.",
+    "coverageStatus": "draft",
+    "draftMappings": 1,
     "familyCode": "ADG",
     "familyName": "Administración y Gestión",
     "programKey": "ADG01MD",
@@ -2431,9 +2431,9 @@
     "uncoveredPrograms": 1
   },
   {
-    "approvedMappings": 2,
+    "approvedMappings": 0,
     "coverageNote": "La cobertura mide relaciones revisadas del catálogo, no la existencia de salidas profesionales.",
-    "draftMappings": 0,
+    "draftMappings": 2,
     "familyCode": "ADG",
     "familyName": "Administración y Gestión",
     "programCount": 6,

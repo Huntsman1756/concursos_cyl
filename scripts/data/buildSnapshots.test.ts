@@ -12,7 +12,7 @@ import {
   writeFile,
 } from "node:fs/promises";
 import { tmpdir } from "node:os";
-import { join, resolve, sep } from "node:path";
+import { dirname, join, resolve, sep } from "node:path";
 
 import { afterEach, describe, expect, it, vi } from "vitest";
 
@@ -29,6 +29,8 @@ import {
   type SnapshotFailureInjection,
 } from "./buildSnapshots";
 import { hashFile } from "./hashFile";
+import type { ValidatedCuratedMappings } from "./validateCuratedMappings";
+import { assertPublicSnapshotDistribution } from "./validatePublicDistribution";
 
 const temporaryRoots: string[] = [];
 
@@ -64,6 +66,56 @@ const fixedOptions = {
   }),
   log: () => undefined,
 };
+
+const unresolvedAdministrativeReviewNote =
+  "CNO-11 classification between 4309 and 4500 remains unresolved; excluded from public resources pending exact official evidence.";
+
+function ambiguousAdministrativeMappings(
+  reviewStatus: "approved" | "draft",
+): ValidatedCuratedMappings {
+  return {
+    occupations: [
+      {
+        occupationId: "occupation:cno11:4309",
+        preferredLabel:
+          "Empleados administrativos sin tareas de atención al público no clasificados bajo otros epígrafes",
+        confirmationLabel: "Administración y apoyo de oficina",
+        classificationSystem: "CNO-11",
+        classificationCode: "4309",
+        reviewStatus,
+        sourceUrl:
+          "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+        reviewedAt: "2026-08-04",
+        catalogVersion: "1.0.0",
+        reviewNote: unresolvedAdministrativeReviewNote,
+      },
+    ],
+    aliases: [
+      {
+        alias: "auxiliar administrativo",
+        occupationId: "occupation:cno11:4309",
+        reviewStatus,
+        reviewedAt: "2026-08-04",
+        mappingVersion: "1.0.0",
+        reviewNote: unresolvedAdministrativeReviewNote,
+      },
+    ],
+    links: [
+      {
+        trainingProgramKey: "ADG01M",
+        occupationId: "occupation:cno11:4309",
+        relationshipType: "official_output",
+        reviewStatus,
+        sourceUrl:
+          "https://www.todofp.es/que-estudiar/familias-profesionales/administracion-gestion/gestion-administrativa.html",
+        sourceQuote: "Auxiliar administrativo.",
+        reviewedAt: "2026-08-04",
+        mappingVersion: "1.0.0",
+        reviewNote: unresolvedAdministrativeReviewNote,
+      },
+    ],
+  };
+}
 
 const FIXED_POINT_FETCHED_AT = "2026-08-04T15:52:38.619Z";
 const FIXED_POINT_SNAPSHOT_ID = "20260804155238619-6e07eafedc96";
@@ -343,6 +395,135 @@ describe("buildSnapshots", () => {
         coverageStatus: "draft",
       }),
     );
+  });
+
+  it("keeps the previous manifest unchanged when revoked-snapshot pruning fails", async () => {
+    const root = await temporaryRoot();
+    const draftMappings = ambiguousAdministrativeMappings("draft");
+    await buildSnapshots({
+      rootDirectory: root,
+      ...fixedOptions,
+      loadCuratedMappings: async () => draftMappings,
+    });
+    const manifestPath = join(root, "public", "data", "v1", "manifest.json");
+    const manifestBefore = await readFile(manifestPath);
+    const revokedDirectory = join(
+      root,
+      "public",
+      "data",
+      "v1",
+      "snapshots",
+      "20260801000000000-ffffffffffff",
+    );
+    await mkdir(revokedDirectory, { recursive: true });
+    await writeFile(
+      join(revokedDirectory, "occupations.json"),
+      serializeDeterministically(
+        ambiguousAdministrativeMappings("approved").occupations,
+      ),
+    );
+
+    await expect(
+      buildSnapshots({
+        rootDirectory: root,
+        ...fixedOptions,
+        now: () => new Date("2026-08-05T10:00:00.000Z"),
+        loadCuratedMappings: async () => draftMappings,
+        failureInjection: {
+          beforeRevokedSnapshotPrune: () => {
+            throw new Error("injected revoked-snapshot prune failure");
+          },
+        },
+      }),
+    ).rejects.toThrow(/injected revoked-snapshot prune failure/i);
+
+    await expect(readFile(manifestPath)).resolves.toEqual(manifestBefore);
+    await expect(access(revokedDirectory)).resolves.toBeUndefined();
+
+    await buildSnapshots({
+      rootDirectory: root,
+      ...fixedOptions,
+      now: () => new Date("2026-08-06T10:00:00.000Z"),
+      loadCuratedMappings: async () => draftMappings,
+    });
+    await expect(access(revokedDirectory)).rejects.toMatchObject({
+      code: "ENOENT",
+    });
+  });
+
+  it("keeps an active revoked snapshot available until the replacement manifest is committed", async () => {
+    const root = await temporaryRoot();
+    const approvedMappings = ambiguousAdministrativeMappings("approved");
+    const draftMappings = ambiguousAdministrativeMappings("draft");
+    await buildSnapshots({
+      rootDirectory: root,
+      ...fixedOptions,
+      loadCuratedMappings: async () => approvedMappings,
+    });
+    const manifestPath = join(root, "public", "data", "v1", "manifest.json");
+    const manifestBefore = await readFile(manifestPath);
+    const previous = await readManifest(root);
+    const revokedActiveDirectory = dirname(
+      assetPath(root, previous.resourceSnapshots.occupations.resourcePath),
+    );
+
+    await buildSnapshots({
+      rootDirectory: root,
+      ...fixedOptions,
+      now: () => new Date("2026-08-05T10:00:00.000Z"),
+      loadCuratedMappings: async () => draftMappings,
+      failureInjection: {
+        beforeManifestCommit: async () => {
+          await expect(access(revokedActiveDirectory)).resolves.toBeUndefined();
+          await expect(readFile(manifestPath)).resolves.toEqual(manifestBefore);
+        },
+      },
+    });
+
+    await expect(readFile(manifestPath)).resolves.not.toEqual(manifestBefore);
+    await expect(access(revokedActiveDirectory)).rejects.toMatchObject({
+      code: "ENOENT",
+    });
+    await expect(
+      assertPublicSnapshotDistribution(root, draftMappings),
+    ).resolves.toBeUndefined();
+  });
+
+  it("restores the active revoked snapshot and manifest when post-swap quarantine fails", async () => {
+    const root = await temporaryRoot();
+    const approvedMappings = ambiguousAdministrativeMappings("approved");
+    const draftMappings = ambiguousAdministrativeMappings("draft");
+    await buildSnapshots({
+      rootDirectory: root,
+      ...fixedOptions,
+      loadCuratedMappings: async () => approvedMappings,
+    });
+    const manifestPath = join(root, "public", "data", "v1", "manifest.json");
+    const manifestBefore = await readFile(manifestPath);
+    const previous = await readManifest(root);
+    const revokedActiveDirectory = dirname(
+      assetPath(root, previous.resourceSnapshots.occupations.resourcePath),
+    );
+
+    await expect(
+      buildSnapshots({
+        rootDirectory: root,
+        ...fixedOptions,
+        now: () => new Date("2026-08-05T10:00:00.000Z"),
+        loadCuratedMappings: async () => draftMappings,
+        failureInjection: {
+          afterActiveRevokedSnapshotQuarantine: () => {
+            throw new Error("injected active quarantine failure");
+          },
+        },
+      }),
+    ).rejects.toThrow(/injected active quarantine failure/i);
+
+    await expect(readFile(manifestPath)).resolves.toEqual(manifestBefore);
+    await expect(access(revokedActiveDirectory)).resolves.toBeUndefined();
+    await expect(
+      readFile(join(revokedActiveDirectory, "occupations.json"), "utf8"),
+    ).resolves.toContain("occupation:cno11:4309");
   });
 
   it("lets one builder hold the lock while two competitors fail before fetch", async () => {
