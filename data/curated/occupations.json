@@ -1,0 +1,24 @@
+[
+  {
+    "occupationId": "occupation:cno11:2713",
+    "preferredLabel": "Analistas, programadores y diseñadores web y multimedia",
+    "confirmationLabel": "Programación y desarrollo web",
+    "classificationSystem": "CNO-11",
+    "classificationCode": "2713",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+    "reviewedAt": "2026-08-04",
+    "catalogVersion": "1.0.0"
+  },
+  {
+    "occupationId": "occupation:cno11:4309",
+    "preferredLabel": "Empleados administrativos sin tareas de atención al público no clasificados bajo otros epígrafes",
+    "confirmationLabel": "Administración y apoyo de oficina",
+    "classificationSystem": "CNO-11",
+    "classificationCode": "4309",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+    "reviewedAt": "2026-08-04",
+    "catalogVersion": "1.0.0"
+  }
+]

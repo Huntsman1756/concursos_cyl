@@ -1,0 +1,42 @@
+[
+  {
+    "trainingProgramKey": "ADG01M",
+    "occupationId": "occupation:cno11:4309",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/administracion-gestion/gestion-administrativa.html",
+    "sourceQuote": "Auxiliar administrativo.",
+    "reviewedAt": "2026-08-04",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "ADG01MD",
+    "occupationId": "occupation:cno11:4309",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/administracion-gestion/gestion-administrativa.html",
+    "sourceQuote": "Auxiliar administrativo.",
+    "reviewedAt": "2026-08-04",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "IFC03S",
+    "occupationId": "occupation:cno11:2713",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.boe.es/buscar/doc.php?id=BOE-A-2010-9269&lang=es",
+    "sourceQuote": "Desarrollador de aplicaciones en entornos Web.",
+    "reviewedAt": "2026-08-04",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "IFC03SD",
+    "occupationId": "occupation:cno11:2713",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.boe.es/buscar/doc.php?id=BOE-A-2010-9269&lang=es",
+    "sourceQuote": "Desarrollador de aplicaciones en entornos Web.",
+    "reviewedAt": "2026-08-04",
+    "mappingVersion": "1.0.0"
+  }
+]

@@ -1,0 +1,44 @@
+[
+  {
+    "alias": "desarrollador web",
+    "occupationId": "occupation:cno11:2713",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-04",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "alias": "programación web",
+    "occupationId": "occupation:cno11:2713",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-04",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "alias": "programador web",
+    "occupationId": "occupation:cno11:2713",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-04",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "alias": "administrativo de oficina",
+    "occupationId": "occupation:cno11:4309",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-04",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "alias": "auxiliar administrativo",
+    "occupationId": "occupation:cno11:4309",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-04",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "alias": "ayudante de oficina",
+    "occupationId": "occupation:cno11:4309",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-04",
+    "mappingVersion": "1.0.0"
+  }
+]

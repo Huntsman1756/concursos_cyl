@@ -17,7 +17,7 @@ import {
   type TrainingProgram,
 } from "../../data/schemas/generated";
 import {
-  GENERATED_RESOURCE_KEYS,
+  GENERATED_FOUNDATION_RESOURCE_KEYS,
   isPermittedGeneratedAssetPath,
   legacyGeneratedResourcePath,
 } from "../../data/schemas/generatedResourceCatalog";
@@ -141,7 +141,7 @@ export type LoadedFoundationResources =
 function manifestAddressedFoundationContract(
   manifest: LoadableGeneratedManifest,
 ): LoadedFoundationResources["contract"] {
-  const legacyResourceCount = GENERATED_RESOURCE_KEYS.filter(
+  const legacyResourceCount = GENERATED_FOUNDATION_RESOURCE_KEYS.filter(
     (key) =>
       manifest.resourceSnapshots[key].resourcePath ===
       legacyGeneratedResourcePath(key),
@@ -150,7 +150,7 @@ function manifestAddressedFoundationContract(
   if (legacyResourceCount === 0) {
     return "current";
   }
-  if (legacyResourceCount === GENERATED_RESOURCE_KEYS.length) {
+  if (legacyResourceCount === GENERATED_FOUNDATION_RESOURCE_KEYS.length) {
     return "legacy";
   }
 

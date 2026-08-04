@@ -1,14 +1,43 @@
 export const GENERATED_DATA_VERSION_PATH = "/data/v1";
 export const GENERATED_MANIFEST_PATH = `${GENERATED_DATA_VERSION_PATH}/manifest.json`;
 
+export const GENERATED_FOUNDATION_RESOURCE_CATALOG = {
+  programs: { fileName: "programs.json", sourceKind: "training" },
+  centers: { fileName: "centers.json", sourceKind: "training" },
+  trainingOfferings: {
+    fileName: "training-offerings.json",
+    sourceKind: "training",
+  },
+  jobOffers: { fileName: "job-offers.json", sourceKind: "offers" },
+} as const;
+
 export const GENERATED_RESOURCE_CATALOG = {
-  programs: { fileName: "programs.json" },
-  centers: { fileName: "centers.json" },
-  trainingOfferings: { fileName: "training-offerings.json" },
-  jobOffers: { fileName: "job-offers.json" },
+  ...GENERATED_FOUNDATION_RESOURCE_CATALOG,
+  occupations: {
+    fileName: "occupations.json",
+    sourceKind: "curatedOccupations",
+  },
+  occupationAliases: {
+    fileName: "occupation-aliases.json",
+    sourceKind: "curatedOccupations",
+  },
+  trainingOccupationLinks: {
+    fileName: "training-occupation-links.json",
+    sourceKind: "curatedRelationships",
+  },
+  mappingCoverage: {
+    fileName: "mapping-coverage.json",
+    sourceKind: "curatedRelationships",
+  },
 } as const;
 
 export type GeneratedResourceKey = keyof typeof GENERATED_RESOURCE_CATALOG;
+export type GeneratedFoundationResourceKey =
+  keyof typeof GENERATED_FOUNDATION_RESOURCE_CATALOG;
+
+export const GENERATED_FOUNDATION_RESOURCE_KEYS = Object.keys(
+  GENERATED_FOUNDATION_RESOURCE_CATALOG,
+) as GeneratedFoundationResourceKey[];
 
 export const GENERATED_RESOURCE_KEYS = Object.keys(
   GENERATED_RESOURCE_CATALOG,
@@ -59,8 +88,10 @@ export function generatedResourceFileNameForKey(key: string): string | null {
   return `${key.replace(/[A-Z]/gu, (letter) => `-${letter.toLowerCase()}`)}.json`;
 }
 
-export function legacyGeneratedResourcePath(key: GeneratedResourceKey): string {
-  return `${GENERATED_DATA_VERSION_PATH}/${GENERATED_RESOURCE_CATALOG[key].fileName}`;
+export function legacyGeneratedResourcePath(
+  key: GeneratedFoundationResourceKey,
+): string {
+  return `${GENERATED_DATA_VERSION_PATH}/${GENERATED_FOUNDATION_RESOURCE_CATALOG[key].fileName}`;
 }
 
 export function immutableGeneratedResourcePath(
@@ -119,7 +150,7 @@ export function isGenericImmutableGeneratedResourcePath(path: string): boolean {
 export function isPermittedGeneratedAssetPath(path: string): boolean {
   return (
     path === GENERATED_MANIFEST_PATH ||
-    GENERATED_RESOURCE_KEYS.some(
+    GENERATED_FOUNDATION_RESOURCE_KEYS.some(
       (key) => path === legacyGeneratedResourcePath(key),
     ) ||
     isGenericImmutableGeneratedResourcePath(path)

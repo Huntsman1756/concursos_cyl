@@ -27,6 +27,12 @@ import { pathToFileURL } from "node:url";
 import { z } from "zod";
 
 import {
+  MappingCoverageResourceSchema,
+  OccupationAliasesSchema,
+  OccupationsSchema,
+  TrainingOccupationLinksSchema,
+} from "../../data/schemas/curatedMappings";
+import {
   EducationCenterSchema,
   GeneratedManifestSchema,
   JobOfferSchema,
@@ -42,6 +48,7 @@ import {
 } from "../../data/schemas/generated";
 import {
   GENERATED_RESOURCE_CATALOG,
+  GENERATED_FOUNDATION_RESOURCE_KEYS,
   GENERATED_RESOURCE_KEYS,
   immutableGeneratedResourcePath,
   type GeneratedResourceKey,
@@ -54,10 +61,16 @@ import {
   TrainingSourceRecordSchema,
   type TrainingSourceRecord,
 } from "../../data/schemas/trainingSource";
+import { loadApprovedMappings } from "../../src/domain/occupation";
 import { fetchAllRecords } from "./fetchAllRecords";
 import { hashFile } from "./hashFile";
 import { normalizeOffers } from "./normalizeOffers";
 import { normalizeTraining } from "./normalizeTraining";
+import {
+  buildMappingCoverage,
+  loadCuratedMappingsFromDisk,
+  type ValidatedCuratedMappings,
+} from "./validateCuratedMappings";
 import {
   runQualityGates,
   runLegacyQualityGates,
@@ -121,6 +134,22 @@ const RESOURCE_DEFINITIONS = {
     previousSchema: PreviousJobOffersSchema,
     legacySchema: JobOffersResourceSchema,
   },
+  occupations: {
+    ...GENERATED_RESOURCE_CATALOG.occupations,
+    schema: OccupationsSchema,
+  },
+  occupationAliases: {
+    ...GENERATED_RESOURCE_CATALOG.occupationAliases,
+    schema: OccupationAliasesSchema,
+  },
+  trainingOccupationLinks: {
+    ...GENERATED_RESOURCE_CATALOG.trainingOccupationLinks,
+    schema: TrainingOccupationLinksSchema,
+  },
+  mappingCoverage: {
+    ...GENERATED_RESOURCE_CATALOG.mappingCoverage,
+    schema: MappingCoverageResourceSchema,
+  },
 } as const;
 
 type ResourceKey = GeneratedResourceKey;
@@ -150,6 +179,9 @@ export interface BuildSnapshotsOptions {
   now?: () => Date;
   fetchTrainingRecords?: () => Promise<TrainingSourceRecord[]>;
   fetchOfferRecords?: () => Promise<OfferSourceRecord[]>;
+  loadCuratedMappings?: (
+    programs: readonly z.infer<typeof TrainingProgramSchema>[],
+  ) => Promise<ValidatedCuratedMappings>;
   log?: (message: string) => void;
   failureInjection?: SnapshotFailureInjection;
 }
@@ -797,7 +829,7 @@ async function validateSnapshotDirectory(
     { current?: unknown[]; legacy?: unknown[] }
   >;
   const unambiguousContracts = new Set<"current" | "legacy">();
-  for (const key of GENERATED_RESOURCE_KEYS) {
+  for (const key of GENERATED_FOUNDATION_RESOURCE_KEYS) {
     const definition = RESOURCE_DEFINITIONS[key];
     const filePath = resourceFileInSnapshot(
       directory,
@@ -836,7 +868,7 @@ async function validateSnapshotDirectory(
   const resourceContract =
     [...unambiguousContracts][0] ?? parsedManifest.manifestFormat;
   const loaded = {} as Record<ResourceKey, unknown[]>;
-  for (const key of GENERATED_RESOURCE_KEYS) {
+  for (const key of GENERATED_FOUNDATION_RESOURCE_KEYS) {
     const records = candidates[key][resourceContract];
     if (records === undefined) {
       throw new Error(
@@ -847,15 +879,19 @@ async function validateSnapshotDirectory(
   }
 
   for (const [key, snapshot] of Object.entries(manifest.resourceSnapshots)) {
-    if ((GENERATED_RESOURCE_KEYS as readonly string[]).includes(key)) {
+    if (
+      (GENERATED_FOUNDATION_RESOURCE_KEYS as readonly string[]).includes(key)
+    ) {
       continue;
     }
     const filePath = resourceFileInSnapshot(directory, snapshot.resourcePath);
     await assertPhysicalPath(root, filePath);
-    const records = JSON.parse(await readFile(filePath, "utf8"));
-    if (!Array.isArray(records)) {
-      throw new Error(`Additive snapshot resource ${key} must be an array.`);
-    }
+    const json = JSON.parse(await readFile(filePath, "utf8"));
+    const definition = RESOURCE_DEFINITIONS[key as ResourceKey];
+    const records =
+      definition === undefined
+        ? z.array(z.unknown()).parse(json)
+        : (definition.schema.parse(json) as unknown[]);
     if (records.length !== snapshot.recordCount) {
       throw new Error(`Snapshot count mismatch for additive resource ${key}.`);
     }
@@ -1011,7 +1047,7 @@ function latestSourceUpdatedAt(
 }
 
 function sourceSnapshot(
-  source: (typeof SOURCE_CONFIG)["training"] | (typeof SOURCE_CONFIG)["offers"],
+  source: { id: string; recordsUrl: string },
   fetchedAt: string,
   sourceUpdatedAt: string | null,
   recordCount: number,
@@ -1036,6 +1072,7 @@ async function writeCandidate(
   fetchedAt: string,
   trainingRecords: readonly TrainingSourceRecord[],
   offerRecords: readonly OfferSourceRecord[],
+  curatedMappings: ValidatedCuratedMappings,
   previousCounts: SnapshotCounts | undefined,
 ): Promise<{ manifest: GeneratedManifest; counts: SnapshotCounts }> {
   const training = normalizeTraining(trainingRecords);
@@ -1050,6 +1087,7 @@ async function writeCandidate(
   const offers = normalizeOffers(offerRecords, {
     datasetSnapshot: offerSourceSnapshot,
   });
+  const approvedMappings = loadApprovedMappings(curatedMappings);
   const candidate = {
     programs: z.array(TrainingProgramSchema).parse(training.programs),
     centers: z.array(EducationCenterSchema).parse(training.centers),
@@ -1057,6 +1095,15 @@ async function writeCandidate(
       .array(TrainingOfferingSchema)
       .parse(training.offerings),
     jobOffers: z.array(JobOfferSchema).parse(offers),
+    occupations: OccupationsSchema.parse(approvedMappings.occupations),
+    occupationAliases: OccupationAliasesSchema.parse(approvedMappings.aliases),
+    trainingOccupationLinks: TrainingOccupationLinksSchema.parse(
+      approvedMappings.links,
+    ),
+    mappingCoverage: buildMappingCoverage(
+      training.programs,
+      curatedMappings.links,
+    ),
   };
   const qualityReport = runQualityGates(
     candidate,
@@ -1077,17 +1124,29 @@ async function writeCandidate(
     resourceHashes[key] = await hashFile(filePath);
   }
 
-  const resourceSnapshot = (
-    key: ResourceKey,
-    source:
-      (typeof SOURCE_CONFIG)["training"] | (typeof SOURCE_CONFIG)["offers"],
-    sourceUpdatedAt: string | null,
-    count: number,
-  ) => ({
+  const curatedOccupationSource = {
+    id: "ine-cno11-reviewed-occupation-catalog",
+    recordsUrl:
+      "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+  };
+  const curatedRelationshipSource = {
+    id: "todofp-boe-reviewed-training-occupation-links",
+    recordsUrl:
+      "https://www.todofp.es/que-estudiar/familias-profesionales.html",
+  };
+  const resourceSnapshot = (key: ResourceKey, count: number) => ({
     ...sourceSnapshot(
-      source,
+      RESOURCE_DEFINITIONS[key].sourceKind === "training"
+        ? SOURCE_CONFIG.training
+        : RESOURCE_DEFINITIONS[key].sourceKind === "offers"
+          ? SOURCE_CONFIG.offers
+          : RESOURCE_DEFINITIONS[key].sourceKind === "curatedOccupations"
+            ? curatedOccupationSource
+            : curatedRelationshipSource,
       fetchedAt,
-      sourceUpdatedAt,
+      RESOURCE_DEFINITIONS[key].sourceKind === "offers"
+        ? offerSourceSnapshot.sourceUpdatedAt
+        : null,
       count,
       resourceHashes[key],
     ),
@@ -1097,32 +1156,12 @@ async function writeCandidate(
     schemaVersion: "1.0.0",
     generatedAt: fetchedAt,
     qualityStatus: "passed",
-    resourceSnapshots: {
-      programs: resourceSnapshot(
-        "programs",
-        SOURCE_CONFIG.training,
-        null,
-        candidate.programs.length,
-      ),
-      centers: resourceSnapshot(
-        "centers",
-        SOURCE_CONFIG.training,
-        null,
-        candidate.centers.length,
-      ),
-      trainingOfferings: resourceSnapshot(
-        "trainingOfferings",
-        SOURCE_CONFIG.training,
-        null,
-        candidate.trainingOfferings.length,
-      ),
-      jobOffers: resourceSnapshot(
-        "jobOffers",
-        SOURCE_CONFIG.offers,
-        offerSourceSnapshot.sourceUpdatedAt,
-        candidate.jobOffers.length,
-      ),
-    },
+    resourceSnapshots: Object.fromEntries(
+      GENERATED_RESOURCE_KEYS.map((key) => [
+        key,
+        resourceSnapshot(key, candidate[key].length),
+      ]),
+    ),
     qualityReport,
   });
 
@@ -1428,7 +1467,13 @@ export async function buildSnapshots(
       const offerRecords = z
         .array(OfferSourceRecordSchema)
         .parse(fetchedOfferRecords);
+      const normalizedPrograms = normalizeTraining(trainingRecords).programs;
+      const curatedMappings = await (
+        options.loadCuratedMappings ??
+        ((programs) => loadCuratedMappingsFromDisk(root, programs))
+      )(normalizedPrograms);
       const sourceHash = hashCanonicalSource({
+        curatedMappings,
         offers: offerRecords,
         training: trainingRecords,
       });
@@ -1442,6 +1487,7 @@ export async function buildSnapshots(
         fetchedAt,
         trainingRecords,
         offerRecords,
+        curatedMappings,
         previous?.counts,
       );
       await safeMkdir(root, target);

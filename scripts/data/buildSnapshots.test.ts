@@ -57,6 +57,11 @@ const fixedOptions = {
   now: () => new Date("2026-08-04T10:00:00.000Z"),
   fetchTrainingRecords: async () => [{ ...liveTrainingSourceRecord }],
   fetchOfferRecords: async () => [{ ...liveOfferSourceRecord }],
+  loadCuratedMappings: async () => ({
+    occupations: [],
+    aliases: [],
+    links: [],
+  }),
   log: () => undefined,
 };
 
@@ -210,6 +215,53 @@ describe("hashFile", () => {
 });
 
 describe("buildSnapshots", () => {
+  it("publishes the four curated mapping resources through the manifest", async () => {
+    const root = await temporaryRoot();
+
+    await buildSnapshots({ rootDirectory: root, ...fixedOptions });
+
+    const manifest = await readManifest(root);
+    for (const key of [
+      "occupations",
+      "occupationAliases",
+      "trainingOccupationLinks",
+      "mappingCoverage",
+    ] as const) {
+      const snapshot = manifest.resourceSnapshots[key];
+      expect(snapshot).toBeDefined();
+      const bytes = await readFile(assetPath(root, snapshot.resourcePath));
+      const records = JSON.parse(bytes.toString("utf8")) as unknown[];
+      expect(records).toHaveLength(snapshot.recordCount);
+      expect(createHash("sha256").update(bytes).digest("hex")).toBe(
+        snapshot.sha256,
+      );
+    }
+
+    const publicLinks = JSON.parse(
+      await readFile(
+        assetPath(
+          root,
+          manifest.resourceSnapshots.trainingOccupationLinks.resourcePath,
+        ),
+        "utf8",
+      ),
+    ) as Array<{
+      reviewStatus: string;
+      sourceUrl: string;
+      sourceQuote: string;
+    }>;
+    expect(publicLinks.every((link) => link.reviewStatus === "approved")).toBe(
+      true,
+    );
+    expect(
+      publicLinks.every(
+        (link) =>
+          link.sourceUrl.startsWith("https://") &&
+          link.sourceQuote.trim().length >= 12,
+      ),
+    ).toBe(true);
+  });
+
   it("lets one builder hold the lock while two competitors fail before fetch", async () => {
     const root = await temporaryRoot();
     await buildSnapshots({ rootDirectory: root, ...fixedOptions });
@@ -1046,22 +1098,20 @@ describe("buildSnapshots", () => {
       generatedAt: manifest.generatedAt,
       qualityStatus: manifest.qualityStatus,
       resourceSnapshots: Object.fromEntries(
-        Object.entries(manifest.resourceSnapshots).map(
-          ([key, snapshotValue]) => [
-            key,
-            {
-              ...Object.fromEntries(
-                Object.entries(snapshotValue).filter(
-                  ([field]) => field !== "resourcePath",
-                ),
-              ),
-              sha256: createHash("sha256")
-                .update(before[key as keyof typeof fileNames])
-                .digest("hex"),
-              recordCount: recordCounts[key as keyof typeof fileNames],
-            },
-          ],
-        ),
+        Object.entries(fileNames).map(([key]) => [
+          key,
+          {
+            ...Object.fromEntries(
+              Object.entries(
+                manifest.resourceSnapshots[key as keyof typeof fileNames],
+              ).filter(([field]) => field !== "resourcePath"),
+            ),
+            sha256: createHash("sha256")
+              .update(before[key as keyof typeof fileNames])
+              .digest("hex"),
+            recordCount: recordCounts[key as keyof typeof fileNames],
+          },
+        ]),
       ),
     };
     await writeFile(

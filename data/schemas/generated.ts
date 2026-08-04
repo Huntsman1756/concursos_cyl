@@ -2,11 +2,12 @@ import { z } from "zod";
 
 import {
   GENERATED_RESOURCE_CATALOG,
-  GENERATED_RESOURCE_KEYS,
+  GENERATED_FOUNDATION_RESOURCE_KEYS,
   generatedResourceFileNameForKey,
   isImmutableGeneratedResourceFilePath,
   isGenericImmutableGeneratedResourcePath,
   legacyGeneratedResourcePath,
+  type GeneratedFoundationResourceKey,
   type GeneratedResourceKey,
 } from "./generatedResourceCatalog";
 import { trainingOfferingIdentity } from "./trainingOfferingIdentity";
@@ -139,8 +140,14 @@ const GeneratedResourceSnapshotSchema = SourceSnapshotSchema.extend({
 }).strict();
 
 const requiredResourceSnapshotShape = Object.fromEntries(
-  GENERATED_RESOURCE_KEYS.map((key) => [key, GeneratedResourceSnapshotSchema]),
-) as Record<GeneratedResourceKey, typeof GeneratedResourceSnapshotSchema>;
+  GENERATED_FOUNDATION_RESOURCE_KEYS.map((key) => [
+    key,
+    GeneratedResourceSnapshotSchema,
+  ]),
+) as Record<
+  GeneratedFoundationResourceKey,
+  typeof GeneratedResourceSnapshotSchema
+>;
 
 export const GeneratedResourceSnapshotsSchema = z
   .object(requiredResourceSnapshotShape)
