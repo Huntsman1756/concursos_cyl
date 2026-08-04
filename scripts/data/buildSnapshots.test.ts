@@ -262,6 +262,89 @@ describe("buildSnapshots", () => {
     ).toBe(true);
   });
 
+  it("publishes Gestión Administrativa as draft coverage without exposing the unresolved CNO mapping", async () => {
+    const root = await temporaryRoot();
+    const reviewNote =
+      "CNO-11 classification between 4309 and 4500 remains unresolved; excluded from public resources pending exact official evidence.";
+
+    await buildSnapshots({
+      rootDirectory: root,
+      ...fixedOptions,
+      fetchTrainingRecords: async () => [
+        {
+          ...liveTrainingSourceRecord,
+          clave_ciclo: "ADG01M",
+          ciclo_formativo_curso_de_especializacion: "Gestión Administrativa",
+          codigo_familia: "ADG",
+          familia_profesional: "Administración y Gestión",
+          nivel_educativo: "Grado Medio",
+        },
+      ],
+      loadCuratedMappings: async () => ({
+        occupations: [
+          {
+            occupationId: "occupation:cno11:4309",
+            preferredLabel:
+              "Empleados administrativos sin tareas de atención al público no clasificados bajo otros epígrafes",
+            confirmationLabel: "Administración y apoyo de oficina",
+            classificationSystem: "CNO-11",
+            classificationCode: "4309",
+            reviewStatus: "draft",
+            sourceUrl:
+              "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+            reviewedAt: "2026-08-04",
+            catalogVersion: "1.0.0",
+            reviewNote,
+          },
+        ],
+        aliases: [
+          {
+            alias: "auxiliar administrativo",
+            occupationId: "occupation:cno11:4309",
+            reviewStatus: "draft",
+            reviewedAt: "2026-08-04",
+            mappingVersion: "1.0.0",
+            reviewNote,
+          },
+        ],
+        links: [
+          {
+            trainingProgramKey: "ADG01M",
+            occupationId: "occupation:cno11:4309",
+            relationshipType: "official_output",
+            reviewStatus: "draft",
+            sourceUrl:
+              "https://www.todofp.es/que-estudiar/familias-profesionales/administracion-gestion/gestion-administrativa.html",
+            sourceQuote: "Auxiliar administrativo.",
+            reviewedAt: "2026-08-04",
+            mappingVersion: "1.0.0",
+            reviewNote,
+          },
+        ],
+      }),
+    });
+
+    const manifest = await readManifest(root);
+    const readResource = async (key: string): Promise<unknown[]> => {
+      const snapshot = manifest.resourceSnapshots[key];
+      return JSON.parse(
+        await readFile(assetPath(root, snapshot.resourcePath), "utf8"),
+      ) as unknown[];
+    };
+    await expect(readResource("occupations")).resolves.toEqual([]);
+    await expect(readResource("occupationAliases")).resolves.toEqual([]);
+    await expect(readResource("trainingOccupationLinks")).resolves.toEqual([]);
+    await expect(readResource("mappingCoverage")).resolves.toContainEqual(
+      expect.objectContaining({
+        scope: "program",
+        programKey: "ADG01M",
+        approvedMappings: 0,
+        draftMappings: 1,
+        coverageStatus: "draft",
+      }),
+    );
+  });
+
   it("lets one builder hold the lock while two competitors fail before fetch", async () => {
     const root = await temporaryRoot();
     await buildSnapshots({ rootDirectory: root, ...fixedOptions });

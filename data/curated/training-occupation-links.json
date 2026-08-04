@@ -3,21 +3,23 @@
     "trainingProgramKey": "ADG01M",
     "occupationId": "occupation:cno11:4309",
     "relationshipType": "official_output",
-    "reviewStatus": "approved",
+    "reviewStatus": "draft",
     "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/administracion-gestion/gestion-administrativa.html",
     "sourceQuote": "Auxiliar administrativo.",
     "reviewedAt": "2026-08-04",
-    "mappingVersion": "1.0.0"
+    "mappingVersion": "1.0.0",
+    "reviewNote": "CNO-11 classification between 4309 and 4500 remains unresolved; excluded from public resources pending exact official evidence."
   },
   {
     "trainingProgramKey": "ADG01MD",
     "occupationId": "occupation:cno11:4309",
     "relationshipType": "official_output",
-    "reviewStatus": "approved",
+    "reviewStatus": "draft",
     "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/administracion-gestion/gestion-administrativa.html",
     "sourceQuote": "Auxiliar administrativo.",
     "reviewedAt": "2026-08-04",
-    "mappingVersion": "1.0.0"
+    "mappingVersion": "1.0.0",
+    "reviewNote": "CNO-11 classification between 4309 and 4500 remains unresolved; excluded from public resources pending exact official evidence."
   },
   {
     "trainingProgramKey": "IFC03S",

@@ -2,12 +2,29 @@ import { z } from "zod";
 
 const SemanticVersionSchema = z.string().regex(/^\d+\.\d+\.\d+$/u);
 const ReviewDateSchema = z.string().date();
+const ReviewNoteSchema = z.string().trim().min(20).max(500).optional();
 
 export const ReviewStatusSchema = z.enum(["draft", "approved", "rejected"]);
 export const RelationshipTypeSchema = z.enum([
   "official_output",
   "reviewed_relationship",
 ]);
+
+function requireDraftReviewNote(
+  record: {
+    reviewStatus: z.infer<typeof ReviewStatusSchema>;
+    reviewNote?: string;
+  },
+  context: z.RefinementCtx,
+): void {
+  if (record.reviewStatus === "draft" && record.reviewNote === undefined) {
+    context.addIssue({
+      code: "custom",
+      path: ["reviewNote"],
+      message: "Draft curated records require an explicit review note.",
+    });
+  }
+}
 
 export const OccupationSchema = z
   .object({
@@ -20,9 +37,11 @@ export const OccupationSchema = z
     sourceUrl: z.string().url(),
     reviewedAt: ReviewDateSchema,
     catalogVersion: SemanticVersionSchema,
+    reviewNote: ReviewNoteSchema,
   })
   .strict()
   .superRefine((occupation, context) => {
+    requireDraftReviewNote(occupation, context);
     if (
       !occupation.occupationId.endsWith(`:${occupation.classificationCode}`)
     ) {
@@ -41,8 +60,10 @@ export const OccupationAliasSchema = z
     reviewStatus: ReviewStatusSchema,
     reviewedAt: ReviewDateSchema,
     mappingVersion: SemanticVersionSchema,
+    reviewNote: ReviewNoteSchema,
   })
-  .strict();
+  .strict()
+  .superRefine(requireDraftReviewNote);
 
 export const TrainingOccupationLinkSchema = z
   .object({
@@ -54,8 +75,10 @@ export const TrainingOccupationLinkSchema = z
     sourceQuote: z.string().trim().min(12).max(280),
     reviewedAt: ReviewDateSchema,
     mappingVersion: SemanticVersionSchema,
+    reviewNote: ReviewNoteSchema,
   })
-  .strict();
+  .strict()
+  .superRefine(requireDraftReviewNote);
 
 const CoverageCountsShape = {
   approvedMappings: z.number().int().nonnegative(),

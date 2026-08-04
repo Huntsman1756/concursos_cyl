@@ -23,22 +23,25 @@
   {
     "alias": "administrativo de oficina",
     "occupationId": "occupation:cno11:4309",
-    "reviewStatus": "approved",
+    "reviewStatus": "draft",
     "reviewedAt": "2026-08-04",
-    "mappingVersion": "1.0.0"
+    "mappingVersion": "1.0.0",
+    "reviewNote": "CNO-11 classification between 4309 and 4500 remains unresolved; excluded from public resources pending exact official evidence."
   },
   {
     "alias": "auxiliar administrativo",
     "occupationId": "occupation:cno11:4309",
-    "reviewStatus": "approved",
+    "reviewStatus": "draft",
     "reviewedAt": "2026-08-04",
-    "mappingVersion": "1.0.0"
+    "mappingVersion": "1.0.0",
+    "reviewNote": "CNO-11 classification between 4309 and 4500 remains unresolved; excluded from public resources pending exact official evidence."
   },
   {
     "alias": "ayudante de oficina",
     "occupationId": "occupation:cno11:4309",
-    "reviewStatus": "approved",
+    "reviewStatus": "draft",
     "reviewedAt": "2026-08-04",
-    "mappingVersion": "1.0.0"
+    "mappingVersion": "1.0.0",
+    "reviewNote": "CNO-11 classification between 4309 and 4500 remains unresolved; excluded from public resources pending exact official evidence."
   }
 ]

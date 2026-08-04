@@ -16,9 +16,10 @@
     "confirmationLabel": "Administración y apoyo de oficina",
     "classificationSystem": "CNO-11",
     "classificationCode": "4309",
-    "reviewStatus": "approved",
+    "reviewStatus": "draft",
     "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
     "reviewedAt": "2026-08-04",
-    "catalogVersion": "1.0.0"
+    "catalogVersion": "1.0.0",
+    "reviewNote": "CNO-11 classification between 4309 and 4500 remains unresolved; excluded from public resources pending exact official evidence."
   }
 ]

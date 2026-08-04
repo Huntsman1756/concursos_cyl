@@ -7,6 +7,7 @@ import {
 } from "../../src/domain/occupation";
 import {
   buildMappingCoverage,
+  loadCuratedMappingsFromDisk,
   validateCuratedMappings,
 } from "./validateCuratedMappings";
 
@@ -29,6 +30,20 @@ const programs: TrainingProgram[] = [
     programKey: "ADG02S",
     programTitle: "Administración y Finanzas",
     level: "higher",
+    familyCode: "ADG",
+    familyName: "Administración y Gestión",
+  },
+  {
+    programKey: "IFC03SD",
+    programTitle: "Desarrollo de Aplicaciones WEB (distancia)",
+    level: "higher",
+    familyCode: "IFC",
+    familyName: "Informática y Comunicaciones",
+  },
+  {
+    programKey: "ADG01MD",
+    programTitle: "Gestión Administrativa (distancia)",
+    level: "intermediate",
     familyCode: "ADG",
     familyName: "Administración y Gestión",
   },
@@ -113,15 +128,37 @@ describe("curated occupation mappings", () => {
     ).toThrow(/approved mapping requires.*official source.*quote/i);
   });
 
-  it("rejects generic aliases, missing confirmation labels, and dangling IDs", () => {
+  it("rejects an empty occupation confirmation label", () => {
     expect(() =>
       validateCuratedMappings({
         programs,
         occupations: [{ ...occupations[0], confirmationLabel: "" }],
+        aliases,
+        links,
+      }),
+    ).toThrow(/confirmation/i);
+  });
+
+  it("rejects a generic one-word alias", () => {
+    expect(() =>
+      validateCuratedMappings({
+        programs,
+        occupations,
         aliases: [{ ...aliases[0], alias: "técnico" }],
+        links,
+      }),
+    ).toThrow(/generic/i);
+  });
+
+  it("rejects a dangling occupation relationship", () => {
+    expect(() =>
+      validateCuratedMappings({
+        programs,
+        occupations,
+        aliases,
         links: [{ ...links[0], occupationId: "occupation:cno11:9999" }],
       }),
-    ).toThrow(/confirmation|generic|unknown occupation/i);
+    ).toThrow(/unknown occupation/i);
   });
 
   it("rejects a normalized alias assigned to different occupations", () => {
@@ -215,7 +252,66 @@ describe("curated occupation mappings", () => {
         approvedMappings: 0,
         draftMappings: 1,
         rejectedMappings: 1,
-        uncoveredPrograms: 1,
+        uncoveredPrograms: 2,
+      }),
+    );
+  });
+
+  it("keeps the unresolved Gestión Administrativa 4309/4500 choice in draft data only", async () => {
+    const curated = await loadCuratedMappingsFromDisk(process.cwd(), programs);
+    const approved = loadApprovedMappings(curated);
+    const administrativeOccupation = curated.occupations.find(
+      (occupation) => occupation.classificationCode === "4309",
+    );
+    const administrativeAliases = curated.aliases.filter(
+      (alias) => alias.occupationId === administrativeOccupation?.occupationId,
+    );
+    const administrativeLinks = curated.links.filter((link) =>
+      ["ADG01M", "ADG01MD"].includes(link.trainingProgramKey),
+    );
+
+    expect(administrativeOccupation).toMatchObject({
+      reviewStatus: "draft",
+      reviewNote: expect.stringMatching(/4309.*4500.*unresolved/i),
+    });
+    expect(
+      administrativeAliases.every(
+        (alias) =>
+          alias.reviewStatus === "draft" &&
+          /4309.*4500.*unresolved/i.test(alias.reviewNote ?? ""),
+      ),
+    ).toBe(true);
+    expect(
+      administrativeLinks.every(
+        (link) =>
+          link.reviewStatus === "draft" &&
+          /4309.*4500.*unresolved/i.test(link.reviewNote ?? ""),
+      ),
+    ).toBe(true);
+    expect(approved.occupations.map((item) => item.classificationCode)).toEqual(
+      ["2713"],
+    );
+    expect(
+      approved.links.map((item) => item.trainingProgramKey).sort(),
+    ).toEqual(["IFC03S", "IFC03SD"]);
+
+    const coverage = buildMappingCoverage(programs, curated.links);
+    expect(coverage).toContainEqual(
+      expect.objectContaining({
+        scope: "program",
+        programKey: "ADG01M",
+        approvedMappings: 0,
+        draftMappings: 1,
+        coverageStatus: "draft",
+      }),
+    );
+    expect(coverage).toContainEqual(
+      expect.objectContaining({
+        scope: "program",
+        programKey: "ADG01MD",
+        approvedMappings: 0,
+        draftMappings: 1,
+        coverageStatus: "draft",
       }),
     );
   });
