@@ -128,7 +128,8 @@ type ResourceKey = GeneratedResourceKey;
 interface PreviousSnapshot {
   manifest: LoadableGeneratedManifest;
   counts: SnapshotCounts;
-  format: "current" | "legacy";
+  manifestFormat: "current" | "legacy";
+  resourceContract: "current" | "legacy";
 }
 
 export interface SnapshotFailureInjection {
@@ -760,15 +761,15 @@ function parseManifest(json: unknown): LoadableGeneratedManifest {
 
 function parseManifestWithFormat(json: unknown): {
   manifest: LoadableGeneratedManifest;
-  format: PreviousSnapshot["format"];
+  manifestFormat: PreviousSnapshot["manifestFormat"];
 } {
   const current = GeneratedManifestSchema.safeParse(json);
   if (current.success) {
-    return { manifest: current.data, format: "current" };
+    return { manifest: current.data, manifestFormat: "current" };
   }
   return {
     manifest: LoadableGeneratedManifestSchema.parse(json),
-    format: "legacy",
+    manifestFormat: "legacy",
   };
 }
 
@@ -792,7 +793,11 @@ async function validateSnapshotDirectory(
   );
   const { manifest } = parsedManifest;
 
-  const loaded = {} as Record<ResourceKey, unknown[]>;
+  const candidates = {} as Record<
+    ResourceKey,
+    { current?: unknown[]; legacy?: unknown[] }
+  >;
+  const unambiguousContracts = new Set<"current" | "legacy">();
   for (const key of GENERATED_RESOURCE_KEYS) {
     const definition = RESOURCE_DEFINITIONS[key];
     const filePath = resourceFileInSnapshot(
@@ -801,17 +806,21 @@ async function validateSnapshotDirectory(
     );
     await assertPhysicalPath(root, filePath);
     const json = JSON.parse(await readFile(filePath, "utf8"));
-    const previousSchema =
-      parsedManifest.format === "current"
-        ? definition.previousSchema
-        : definition.legacySchema;
-    const parsedResource = previousSchema.safeParse(json);
-    if (!parsedResource.success) {
+    const current = definition.previousSchema.safeParse(json);
+    const legacy = definition.legacySchema.safeParse(json);
+    if (!current.success && !legacy.success) {
       throw new Error(`Snapshot schema mismatch for ${definition.fileName}.`, {
-        cause: parsedResource.error,
+        cause: current.error,
       });
     }
-    const records = parsedResource.data as unknown[];
+    if (current.success !== legacy.success) {
+      unambiguousContracts.add(current.success ? "current" : "legacy");
+    }
+    candidates[key] = {
+      ...(current.success ? { current: current.data as unknown[] } : {}),
+      ...(legacy.success ? { legacy: legacy.data as unknown[] } : {}),
+    };
+    const records = (current.success ? current.data : legacy.data) as unknown[];
     const snapshot = manifest.resourceSnapshots[key];
 
     if (records.length !== snapshot.recordCount) {
@@ -819,6 +828,21 @@ async function validateSnapshotDirectory(
     }
     if ((await hashFile(filePath)) !== snapshot.sha256) {
       throw new Error(`Snapshot hash mismatch for ${definition.fileName}.`);
+    }
+  }
+
+  if (unambiguousContracts.size > 1) {
+    throw new Error("Snapshot mixes current and legacy resource contracts.");
+  }
+  const resourceContract =
+    [...unambiguousContracts][0] ?? parsedManifest.manifestFormat;
+  const loaded = {} as Record<ResourceKey, unknown[]>;
+  for (const key of GENERATED_RESOURCE_KEYS) {
+    const records = candidates[key][resourceContract];
+    if (records === undefined) {
+      throw new Error(
+        `Snapshot schema mismatch for ${RESOURCE_DEFINITIONS[key].fileName}.`,
+      );
     }
     loaded[key] = records;
   }
@@ -841,7 +865,6 @@ async function validateSnapshotDirectory(
     }
   }
 
-  const resourceContract = parsedManifest.format;
   const report =
     resourceContract === "current"
       ? runQualityGates(
@@ -878,7 +901,12 @@ async function validateSnapshotDirectory(
     );
   }
 
-  return { manifest, counts, format: parsedManifest.format };
+  return {
+    manifest,
+    counts,
+    manifestFormat: parsedManifest.manifestFormat,
+    resourceContract,
+  };
 }
 
 async function validateFlatCandidateDirectory(
@@ -1150,7 +1178,7 @@ async function markPreviousSnapshotStale(
   buildId: string,
 ): Promise<void> {
   const previous = await validateSnapshotDirectory(root, target);
-  if (previous.format === "legacy") {
+  if (previous.manifestFormat === "legacy") {
     const staleLegacySnapshot = (snapshot: SourceSnapshot) => ({
       sourceId: snapshot.sourceId,
       sourceUrl: snapshot.sourceUrl,

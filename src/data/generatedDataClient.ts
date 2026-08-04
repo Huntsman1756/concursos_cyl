@@ -160,6 +160,42 @@ function foundationResourceContract(
   );
 }
 
+interface FoundationResourceSchemas<TCenter, TTrainingOffering> {
+  center: z.ZodType<TCenter>;
+  trainingOffering: z.ZodType<TTrainingOffering>;
+}
+
+async function loadFoundationResourceSet<TCenter, TTrainingOffering>(
+  resourceSnapshots: LoadableGeneratedManifest["resourceSnapshots"],
+  schemas: FoundationResourceSchemas<TCenter, TTrainingOffering>,
+): Promise<
+  LoadedFoundationResourceBase & {
+    centers: TCenter[];
+    trainingOfferings: TTrainingOffering[];
+  }
+> {
+  const [programs, centers, trainingOfferings, jobOffers] = await Promise.all([
+    loadGeneratedResource(
+      resourceSnapshots.programs.resourcePath,
+      z.array(TrainingProgramSchema),
+    ),
+    loadGeneratedResource(
+      resourceSnapshots.centers.resourcePath,
+      z.array(schemas.center),
+    ),
+    loadGeneratedResource(
+      resourceSnapshots.trainingOfferings.resourcePath,
+      z.array(schemas.trainingOffering),
+    ),
+    loadGeneratedResource(
+      resourceSnapshots.jobOffers.resourcePath,
+      z.array(JobOfferSchema),
+    ),
+  ]);
+
+  return { programs, centers, trainingOfferings, jobOffers };
+}
+
 /** Loads all required v1 resources as one tagged current or legacy set. */
 export async function loadFoundationResources(
   manifest: LoadableGeneratedManifest,
@@ -168,48 +204,16 @@ export async function loadFoundationResources(
   const contract = foundationResourceContract(manifest);
 
   if (contract === "legacy") {
-    const [programs, centers, trainingOfferings, jobOffers] = await Promise.all(
-      [
-        loadGeneratedResource(
-          resourceSnapshots.programs.resourcePath,
-          z.array(TrainingProgramSchema),
-        ),
-        loadGeneratedResource(
-          resourceSnapshots.centers.resourcePath,
-          z.array(LegacyEducationCenterSchema),
-        ),
-        loadGeneratedResource(
-          resourceSnapshots.trainingOfferings.resourcePath,
-          z.array(LegacyTrainingOfferingSchema),
-        ),
-        loadGeneratedResource(
-          resourceSnapshots.jobOffers.resourcePath,
-          z.array(JobOfferSchema),
-        ),
-      ],
-    );
-
-    return { contract, programs, centers, trainingOfferings, jobOffers };
+    const resources = await loadFoundationResourceSet(resourceSnapshots, {
+      center: LegacyEducationCenterSchema,
+      trainingOffering: LegacyTrainingOfferingSchema,
+    });
+    return { contract, ...resources };
   }
 
-  const [programs, centers, trainingOfferings, jobOffers] = await Promise.all([
-    loadGeneratedResource(
-      resourceSnapshots.programs.resourcePath,
-      z.array(TrainingProgramSchema),
-    ),
-    loadGeneratedResource(
-      resourceSnapshots.centers.resourcePath,
-      z.array(EducationCenterSchema),
-    ),
-    loadGeneratedResource(
-      resourceSnapshots.trainingOfferings.resourcePath,
-      z.array(TrainingOfferingSchema),
-    ),
-    loadGeneratedResource(
-      resourceSnapshots.jobOffers.resourcePath,
-      z.array(JobOfferSchema),
-    ),
-  ]);
-
-  return { contract, programs, centers, trainingOfferings, jobOffers };
+  const resources = await loadFoundationResourceSet(resourceSnapshots, {
+    center: EducationCenterSchema,
+    trainingOffering: TrainingOfferingSchema,
+  });
+  return { contract, ...resources };
 }

@@ -60,6 +60,109 @@ const fixedOptions = {
   log: () => undefined,
 };
 
+const FIXED_POINT_FETCHED_AT = "2026-08-04T15:52:38.619Z";
+const FIXED_POINT_SNAPSHOT_ID = "20260804155238619-6e07eafedc96";
+const FIXED_POINT_TRAINING_URL =
+  "https://analisis.datosabiertos.jcyl.es/api/explore/v2.1/catalog/datasets/oferta-de-formacion-profesional/records";
+const FIXED_POINT_OFFERS_URL =
+  "https://analisis.datosabiertos.jcyl.es/api/explore/v2.1/catalog/datasets/ofertas-de-empleo/records";
+
+function fixedPointResourceSnapshot(
+  source: "training" | "offers",
+  recordCount: number,
+  fileName: string,
+  sha256: string,
+) {
+  return {
+    qualityStatus: "passed" as const,
+    recordCount,
+    resourcePath: `/data/v1/snapshots/${FIXED_POINT_SNAPSHOT_ID}/${fileName}`,
+    schemaVersion: "1.0.0" as const,
+    sha256,
+    snapshotFetchedAt: FIXED_POINT_FETCHED_AT,
+    sourceId:
+      source === "training"
+        ? "jcyl-vocational-training-offer"
+        : "jcyl-employment-offers",
+    sourceUpdatedAt: source === "training" ? null : "2026-07-31T00:00:00.000Z",
+    sourceUrl:
+      source === "training" ? FIXED_POINT_TRAINING_URL : FIXED_POINT_OFFERS_URL,
+  };
+}
+
+const fixedPointManifest = {
+  generatedAt: FIXED_POINT_FETCHED_AT,
+  qualityReport: {
+    counts: { centers: 229, offerings: 1293, offers: 1033, programs: 187 },
+    nullRates: {
+      centerAddress: 0,
+      centerEmail: 0,
+      centerPhone: 0,
+      centerWebsite: 0.004366812227074236,
+      offerDescription: 0,
+      offerLocality: 0.08906098741529525,
+      offerProvince: 0,
+    },
+  },
+  qualityStatus: "passed" as const,
+  resourceSnapshots: {
+    centers: fixedPointResourceSnapshot(
+      "training",
+      229,
+      "centers.json",
+      "995839b947e15ec86922633b46c6f521ffcdfbdd75495e0980dfb2cca9f92efc",
+    ),
+    jobOffers: fixedPointResourceSnapshot(
+      "offers",
+      1033,
+      "job-offers.json",
+      "65e3a987b302e2ebba345351ab0c409a1a83393e0bba83466c55b6822c818147",
+    ),
+    programs: fixedPointResourceSnapshot(
+      "training",
+      187,
+      "programs.json",
+      "7c3538b583c2feb48207b90d5a69874325fedcf20bda0e781044282db76c0d22",
+    ),
+    trainingOfferings: fixedPointResourceSnapshot(
+      "training",
+      1293,
+      "training-offerings.json",
+      "0d091ea5889e2939b3806bcf223a2652e89434dfa480e58ee49687ea4e89dade",
+    ),
+  },
+  schemaVersion: "1.0.0" as const,
+};
+
+const fixedPointOfferSourceSnapshot = {
+  qualityStatus: "passed",
+  recordCount: 1033,
+  schemaVersion: "1.0.0",
+  sha256: "8fcf7ec2a1a8a356ad63d61229f3e00a9362fada70e68ca6944121aa041e2035",
+  snapshotFetchedAt: FIXED_POINT_FETCHED_AT,
+  sourceId: "jcyl-employment-offers",
+  sourceUpdatedAt: "2026-07-31T00:00:00.000Z",
+  sourceUrl: FIXED_POINT_OFFERS_URL,
+};
+
+function stableValue(value: unknown): unknown {
+  if (Array.isArray(value)) {
+    return value.map(stableValue);
+  }
+  if (value !== null && typeof value === "object") {
+    return Object.fromEntries(
+      Object.entries(value)
+        .sort(([left], [right]) => left.localeCompare(right))
+        .map(([key, child]) => [key, stableValue(child)]),
+    );
+  }
+  return value;
+}
+
+function serializeDeterministically(value: unknown): Buffer {
+  return Buffer.from(`${JSON.stringify(stableValue(value), null, 2)}\n`);
+}
+
 function lockFailureInjection(
   hooks: SnapshotFailureInjection,
 ): SnapshotFailureInjection {
@@ -831,6 +934,87 @@ describe("buildSnapshots", () => {
     ).rejects.toThrow(/qualityReport|invalid|union/i);
     expect(fetchTrainingRecords).not.toHaveBeenCalled();
     await expect(readFile(manifestPath)).resolves.toEqual(before);
+  });
+
+  it("accepts the exact fixed-point immutable manifest with pre-hardening payloads", async () => {
+    const root = await temporaryRoot();
+    const output = join(root, "public", "data", "v1");
+    const fixedPointDirectory = join(
+      output,
+      "snapshots",
+      FIXED_POINT_SNAPSHOT_ID,
+    );
+    await mkdir(fixedPointDirectory, { recursive: true });
+
+    const resourceBytes = {} as Record<
+      keyof typeof fixedPointManifest.resourceSnapshots,
+      Buffer
+    >;
+    for (const key of ["programs", "centers", "trainingOfferings"] as const) {
+      const fileName =
+        key === "trainingOfferings" ? "training-offerings.json" : `${key}.json`;
+      resourceBytes[key] = await readFile(
+        join(process.cwd(), "public", "data", "v1", fileName),
+      );
+      await writeFile(join(fixedPointDirectory, fileName), resourceBytes[key]);
+    }
+
+    const fixedPointOffers = JSON.parse(
+      await readFile(
+        join(process.cwd(), "public", "data", "v1", "job-offers.json"),
+        "utf8",
+      ),
+    ) as Array<Record<string, unknown>>;
+    for (const offer of fixedPointOffers) {
+      offer.sourceSnapshot = fixedPointOfferSourceSnapshot;
+    }
+    resourceBytes.jobOffers = serializeDeterministically(fixedPointOffers);
+    await writeFile(
+      join(fixedPointDirectory, "job-offers.json"),
+      resourceBytes.jobOffers,
+    );
+
+    for (const key of Object.keys(
+      fixedPointManifest.resourceSnapshots,
+    ) as Array<keyof typeof fixedPointManifest.resourceSnapshots>) {
+      expect(
+        createHash("sha256").update(resourceBytes[key]).digest("hex"),
+      ).toBe(fixedPointManifest.resourceSnapshots[key].sha256);
+    }
+    const manifestPath = join(output, "manifest.json");
+    await writeFile(
+      manifestPath,
+      `${JSON.stringify(fixedPointManifest, null, 2)}\n`,
+      "utf8",
+    );
+
+    await expect(
+      buildSnapshots({
+        rootDirectory: root,
+        ...fixedOptions,
+        fetchTrainingRecords: async () => {
+          throw new Error("official source unavailable");
+        },
+      }),
+    ).rejects.toThrow(/official source unavailable/i);
+
+    const staleManifest = GeneratedManifestSchema.parse(
+      JSON.parse(await readFile(manifestPath, "utf8")),
+    );
+    expect(staleManifest.qualityStatus).toBe("stale");
+    for (const key of Object.keys(
+      fixedPointManifest.resourceSnapshots,
+    ) as Array<keyof typeof fixedPointManifest.resourceSnapshots>) {
+      expect(staleManifest.resourceSnapshots[key].qualityStatus).toBe("stale");
+      await expect(
+        readFile(
+          assetPath(
+            root,
+            fixedPointManifest.resourceSnapshots[key].resourcePath,
+          ),
+        ),
+      ).resolves.toEqual(resourceBytes[key]);
+    }
   });
 
   it("marks a valid legacy flat snapshot stale without changing resource bytes", async () => {
