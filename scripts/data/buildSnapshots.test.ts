@@ -12,7 +12,7 @@ import {
   writeFile,
 } from "node:fs/promises";
 import { tmpdir } from "node:os";
-import { join, resolve } from "node:path";
+import { join, resolve, sep } from "node:path";
 
 import { afterEach, describe, expect, it, vi } from "vitest";
 
@@ -66,23 +66,6 @@ function lockFailureInjection(
   return hooks as SnapshotFailureInjection;
 }
 
-async function waitForSignal(signal: Promise<void>): Promise<void> {
-  let timeout: ReturnType<typeof setTimeout> | undefined;
-  try {
-    await Promise.race([
-      signal,
-      new Promise<never>((_resolve, reject) => {
-        timeout = setTimeout(
-          () => reject(new Error("Timed out waiting for lock interleaving.")),
-          2_000,
-        );
-      }),
-    ]);
-  } finally {
-    clearTimeout(timeout);
-  }
-}
-
 afterEach(async () => {
   await Promise.all(
     temporaryRoots
@@ -104,7 +87,7 @@ describe("hashFile", () => {
 });
 
 describe("buildSnapshots", () => {
-  it("rejects an overlapping live build without touching its candidate or manifest", async () => {
+  it("lets one builder hold the lock while two competitors fail before fetch", async () => {
     const root = await temporaryRoot();
     await buildSnapshots({ rootDirectory: root, ...fixedOptions });
     const before = await readManifest(root);
@@ -117,7 +100,7 @@ describe("buildSnapshots", () => {
       resumeBuild = resolveResume;
     });
 
-    const buildA = buildSnapshots({
+    const buildY = buildSnapshots({
       rootDirectory: root,
       ...fixedOptions,
       now: () => new Date("2027-01-02T10:00:00.000Z"),
@@ -130,20 +113,34 @@ describe("buildSnapshots", () => {
     });
     await paused;
 
-    const buildBError = await buildSnapshots({
-      rootDirectory: root,
-      ...fixedOptions,
-      now: () => new Date("2027-01-03T10:00:00.000Z"),
-    }).then(
-      () => undefined,
-      (error: unknown) => error,
+    const competitorFetches = [
+      vi.fn(fixedOptions.fetchTrainingRecords),
+      vi.fn(fixedOptions.fetchTrainingRecords),
+    ];
+    const [buildXError, buildZError] = await Promise.all(
+      competitorFetches.map((fetchTrainingRecords, index) =>
+        buildSnapshots({
+          rootDirectory: root,
+          ...fixedOptions,
+          fetchTrainingRecords,
+          now: () => new Date(`2027-01-0${index + 3}T10:00:00.000Z`),
+        }).then(
+          () => undefined,
+          (error: unknown) => error,
+        ),
+      ),
     );
     const during = await readManifest(root);
     resumeBuild();
-    await buildA;
+    await buildY;
 
-    expect(buildBError).toBeInstanceOf(Error);
-    expect((buildBError as Error).message).toMatch(/already in progress/i);
+    for (const error of [buildXError, buildZError]) {
+      expect(error).toBeInstanceOf(Error);
+      expect((error as Error).message).toMatch(/operator|manual/i);
+    }
+    for (const fetchTrainingRecords of competitorFetches) {
+      expect(fetchTrainingRecords).not.toHaveBeenCalled();
+    }
     expect(during).toEqual(before);
     const committed = await readManifest(root);
     expect(committed.generatedAt).toBe("2027-01-02T10:00:00.000Z");
@@ -154,30 +151,34 @@ describe("buildSnapshots", () => {
     ).resolves.toBeUndefined();
   });
 
-  it("reclaims a strictly valid lock whose process owner is no longer live", async () => {
+  it("fails closed on a dead-owner lock and preserves the last known good snapshot", async () => {
     const root = await temporaryRoot();
+    await buildSnapshots({ rootDirectory: root, ...fixedOptions });
+    const before = await readManifest(root);
     const temporaryRootPath = join(root, ".codex-tmp");
     const lockPath = join(temporaryRootPath, "snapshot-build.lock");
-    await mkdir(temporaryRootPath, { recursive: true });
-    await writeFile(
-      lockPath,
-      `${JSON.stringify({
-        schemaVersion: "1.0.0",
-        token: "00000000-0000-4000-8000-000000000001",
-        pid: 2_147_483_647,
-        startedAt: "2026-01-01T00:00:00.000Z",
-        root,
-        buildId: "2147483647-00000000-0000-4000-8000-000000000001",
-      })}\n`,
-      "utf8",
-    );
+    const lockBytes = `${JSON.stringify({
+      schemaVersion: "1.0.0",
+      token: "00000000-0000-4000-8000-000000000001",
+      pid: 2_147_483_647,
+      startedAt: "2026-01-01T00:00:00.000Z",
+      root,
+      buildId: "2147483647-00000000-0000-4000-8000-000000000001",
+    })}\n`;
+    await writeFile(lockPath, lockBytes, "utf8");
+    const fetchTrainingRecords = vi.fn(fixedOptions.fetchTrainingRecords);
 
-    await buildSnapshots({ rootDirectory: root, ...fixedOptions });
+    await expect(
+      buildSnapshots({
+        rootDirectory: root,
+        ...fixedOptions,
+        fetchTrainingRecords,
+      }),
+    ).rejects.toThrow(/operator|manual/i);
 
-    await expect(access(lockPath)).rejects.toMatchObject({ code: "ENOENT" });
-    await expect(readManifest(root)).resolves.toMatchObject({
-      qualityStatus: "passed",
-    });
+    expect(fetchTrainingRecords).not.toHaveBeenCalled();
+    await expect(readFile(lockPath, "utf8")).resolves.toBe(lockBytes);
+    await expect(readManifest(root)).resolves.toEqual(before);
   });
 
   it("fails closed on malformed lock metadata without marking data stale", async () => {
@@ -185,19 +186,16 @@ describe("buildSnapshots", () => {
     await buildSnapshots({ rootDirectory: root, ...fixedOptions });
     const before = await readManifest(root);
     const lockPath = join(root, ".codex-tmp", "snapshot-build.lock");
-    await writeFile(
-      lockPath,
-      `${JSON.stringify({
-        schemaVersion: "1.0.0",
-        token: "00000000-0000-4000-8000-000000000001",
-        pid: 2_147_483_647,
-        startedAt: "2026-01-01T00:00:00.000Z",
-        root,
-        buildId: "crashed-build",
-        unexpected: true,
-      })}\n`,
-      "utf8",
-    );
+    const lockBytes = `${JSON.stringify({
+      schemaVersion: "1.0.0",
+      token: "00000000-0000-4000-8000-000000000001",
+      pid: 2_147_483_647,
+      startedAt: "2026-01-01T00:00:00.000Z",
+      root,
+      buildId: "crashed-build",
+      unexpected: true,
+    })}\n`;
+    await writeFile(lockPath, lockBytes, "utf8");
 
     await expect(
       buildSnapshots({
@@ -205,9 +203,9 @@ describe("buildSnapshots", () => {
         ...fixedOptions,
         now: () => new Date("2027-01-02T10:00:00.000Z"),
       }),
-    ).rejects.toThrow(/lock metadata/i);
+    ).rejects.toThrow(/operator|manual/i);
     await expect(readManifest(root)).resolves.toEqual(before);
-    await expect(access(lockPath)).resolves.toBeUndefined();
+    await expect(readFile(lockPath, "utf8")).resolves.toBe(lockBytes);
   });
 
   it("rejects lock metadata whose build identity does not match pid and token", async () => {
@@ -215,100 +213,47 @@ describe("buildSnapshots", () => {
     const temporaryRootPath = join(root, ".codex-tmp");
     const lockPath = join(temporaryRootPath, "snapshot-build.lock");
     await mkdir(temporaryRootPath, { recursive: true });
-    await writeFile(
-      lockPath,
-      `${JSON.stringify({
-        schemaVersion: "1.0.0",
-        token: "00000000-0000-4000-8000-000000000001",
-        pid: 2_147_483_647,
-        startedAt: "2026-01-01T00:00:00.000Z",
-        root,
-        buildId: "crashed-build",
-      })}\n`,
-      "utf8",
-    );
+    const lockBytes = `${JSON.stringify({
+      schemaVersion: "1.0.0",
+      token: "00000000-0000-4000-8000-000000000001",
+      pid: 2_147_483_647,
+      startedAt: "2026-01-01T00:00:00.000Z",
+      root,
+      buildId: "crashed-build",
+    })}\n`;
+    await writeFile(lockPath, lockBytes, "utf8");
 
     await expect(
       buildSnapshots({ rootDirectory: root, ...fixedOptions }),
-    ).rejects.toThrow(/lock metadata/i);
-    await expect(access(lockPath)).resolves.toBeUndefined();
+    ).rejects.toThrow(/operator|manual/i);
+    await expect(readFile(lockPath, "utf8")).resolves.toBe(lockBytes);
   });
 
-  it("cannot remove a replacement lock after a stale-reclaimer interleaving", async () => {
+  it("rejects a non-canonical stored root before any build work", async () => {
     const root = await temporaryRoot();
     const temporaryRootPath = join(root, ".codex-tmp");
     const lockPath = join(temporaryRootPath, "snapshot-build.lock");
     await mkdir(temporaryRootPath, { recursive: true });
-    await writeFile(
-      lockPath,
-      `${JSON.stringify({
-        schemaVersion: "1.0.0",
-        token: "00000000-0000-4000-8000-000000000001",
-        pid: 2_147_483_647,
-        startedAt: "2026-01-01T00:00:00.000Z",
-        root,
-        buildId: "2147483647-00000000-0000-4000-8000-000000000001",
-      })}\n`,
-      "utf8",
-    );
-    let signalXInspected!: () => void;
-    let resumeX!: () => void;
-    const xInspected = new Promise<void>((resolveInspected) => {
-      signalXInspected = resolveInspected;
-    });
-    const xResume = new Promise<void>((resolveResume) => {
-      resumeX = resolveResume;
-    });
-    const buildXOutcome = buildSnapshots({
-      rootDirectory: root,
-      ...fixedOptions,
-      now: () => new Date("2027-02-01T10:00:00.000Z"),
-      failureInjection: lockFailureInjection({
-        afterStaleLockInspection: async () => {
-          signalXInspected();
-          await xResume;
-        },
+    const lockBytes = `${JSON.stringify({
+      schemaVersion: "1.0.0",
+      token: "00000000-0000-4000-8000-000000000001",
+      pid: 2_147_483_647,
+      startedAt: "2026-01-01T00:00:00.000Z",
+      root: `${root}${sep}nested${sep}..`,
+      buildId: "2147483647-00000000-0000-4000-8000-000000000001",
+    })}\n`;
+    await writeFile(lockPath, lockBytes, "utf8");
+    const fetchTrainingRecords = vi.fn(fixedOptions.fetchTrainingRecords);
+
+    await expect(
+      buildSnapshots({
+        rootDirectory: root,
+        ...fixedOptions,
+        fetchTrainingRecords,
       }),
-    }).then(
-      () => undefined,
-      (error: unknown) => error,
-    );
-    await waitForSignal(xInspected);
-
-    let signalYPaused!: () => void;
-    let resumeY!: () => void;
-    const yPaused = new Promise<void>((resolvePaused) => {
-      signalYPaused = resolvePaused;
-    });
-    const yResume = new Promise<void>((resolveResume) => {
-      resumeY = resolveResume;
-    });
-    const buildY = buildSnapshots({
-      rootDirectory: root,
-      ...fixedOptions,
-      now: () => new Date("2027-02-02T10:00:00.000Z"),
-      failureInjection: {
-        beforeManifestCommit: async () => {
-          signalYPaused();
-          await yResume;
-        },
-      },
-    });
-    await waitForSignal(yPaused);
-
-    resumeX();
-    const buildXError = await buildXOutcome;
-    await expect(access(lockPath)).resolves.toBeUndefined();
-    resumeY();
-    await buildY;
-
-    expect(buildXError).toBeInstanceOf(Error);
-    expect((buildXError as Error).message).toMatch(/owner changed/i);
-    await expect(readManifest(root)).resolves.toMatchObject({
-      generatedAt: "2027-02-02T10:00:00.000Z",
-      qualityStatus: "passed",
-    });
-    await expect(access(lockPath)).rejects.toMatchObject({ code: "ENOENT" });
+    ).rejects.toThrow(/operator|manual/i);
+    expect(fetchTrainingRecords).not.toHaveBeenCalled();
+    await expect(readFile(lockPath, "utf8")).resolves.toBe(lockBytes);
   });
 
   it.each([
@@ -354,46 +299,6 @@ describe("buildSnapshots", () => {
       ).resolves.toBeUndefined();
     },
   );
-
-  it("releases only its quarantined lock when a replacement appears", async () => {
-    const root = await temporaryRoot();
-    const lockPath = join(root, ".codex-tmp", "snapshot-build.lock");
-    let signalReleaseInspected!: () => void;
-    let resumeRelease!: () => void;
-    const releaseInspected = new Promise<void>((resolveInspected) => {
-      signalReleaseInspected = resolveInspected;
-    });
-    const releaseResume = new Promise<void>((resolveResume) => {
-      resumeRelease = resolveResume;
-    });
-    const build = buildSnapshots({
-      rootDirectory: root,
-      ...fixedOptions,
-      failureInjection: lockFailureInjection({
-        afterLockReleaseQuarantineInspection: async () => {
-          signalReleaseInspected();
-          await releaseResume;
-        },
-      }),
-    });
-    await waitForSignal(releaseInspected);
-
-    const replacement = {
-      schemaVersion: "1.0.0",
-      token: "00000000-0000-4000-8000-000000000002",
-      pid: process.pid,
-      startedAt: "2027-03-01T00:00:00.000Z",
-      root,
-      buildId: `${process.pid}-00000000-0000-4000-8000-000000000002`,
-    };
-    await writeFile(lockPath, `${JSON.stringify(replacement)}\n`, "utf8");
-    resumeRelease();
-    await build;
-
-    await expect(
-      readFile(lockPath, "utf8").then((value) => JSON.parse(value)),
-    ).resolves.toEqual(replacement);
-  });
 
   it("writes validated immutable resources with exact counts and hashes", async () => {
     const root = await temporaryRoot();
