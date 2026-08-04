@@ -1,0 +1,81 @@
+import { z } from "zod";
+
+export const TrainingLevelSchema = z.enum([
+  "basic",
+  "intermediate",
+  "higher",
+  "specialization",
+]);
+
+export const ModalitySchema = z.enum(["on_site", "distance", "mixed", "unknown"]);
+
+export const SourceSnapshotSchema = z.object({
+  sourceId: z.string().min(1),
+  sourceUrl: z.string().url(),
+  sourceUpdatedAt: z.string().datetime().nullable(),
+  snapshotFetchedAt: z.string().datetime(),
+  schemaVersion: z.literal("1.0.0"),
+  recordCount: z.number().int().nonnegative(),
+  sha256: z.string().regex(/^[a-f0-9]{64}$/),
+  qualityStatus: z.enum(["passed", "stale"]),
+});
+
+export const TrainingProgramSchema = z.object({
+  programKey: z.string().min(1),
+  programTitle: z.string().min(1),
+  level: TrainingLevelSchema,
+  familyCode: z.string().min(1),
+  familyName: z.string().min(1),
+});
+
+export const TrainingOfferingSchema = TrainingProgramSchema.extend({
+  centerCode: z.string().min(1),
+  province: z.string().min(1),
+  locality: z.string().min(1),
+  modality: ModalitySchema,
+});
+
+export const EducationCenterSchema = z.object({
+  centerCode: z.string().min(1),
+  centerName: z.string().min(1),
+  province: z.string().min(1),
+  locality: z.string().min(1),
+  address: z.string().min(1).nullable(),
+  phone: z.string().min(1).nullable(),
+  email: z.string().email().nullable(),
+  website: z.string().url().nullable(),
+});
+
+export const DescriptionSectionSchema = z.string().min(1);
+
+export const JobOfferSchema = z
+  .object({
+    id: z.string().min(1),
+    title: z.string().min(1),
+    province: z.string().min(1).nullable(),
+    locality: z.string().min(1).nullable(),
+    publishedAt: z.string().datetime(),
+    sourceName: z.string().min(1),
+    descriptionText: z.string(),
+    descriptionSections: z.array(DescriptionSectionSchema),
+    originalUrl: z.string().url(),
+    sourceSnapshot: SourceSnapshotSchema,
+  })
+  .strict();
+
+export const GeneratedManifestSchema = z.object({
+  schemaVersion: z.literal("1.0.0"),
+  generatedAt: z.string().datetime(),
+  qualityStatus: z.enum(["passed", "stale"]),
+  snapshots: z.array(SourceSnapshotSchema),
+});
+
+export type TrainingLevel = z.infer<typeof TrainingLevelSchema>;
+export type Modality = z.infer<typeof ModalitySchema>;
+export type SourceSnapshot = z.infer<typeof SourceSnapshotSchema>;
+export type TrainingProgram = z.infer<typeof TrainingProgramSchema>;
+export type TrainingOffering = z.infer<typeof TrainingOfferingSchema>;
+export type EducationCenter = z.infer<typeof EducationCenterSchema>;
+export type DescriptionSection = z.infer<typeof DescriptionSectionSchema>;
+export type JobOffer = z.infer<typeof JobOfferSchema>;
+export type GeneratedManifest = z.infer<typeof GeneratedManifestSchema>;
