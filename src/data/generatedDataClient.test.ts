@@ -247,6 +247,111 @@ describe("generated data client", () => {
     });
   });
 
+  it("loads retained pre-hardening payloads behind a stale immutable manifest", async () => {
+    const program = {
+      programKey: "IFC03S",
+      programTitle: "Desarrollo de Aplicaciones Web",
+      level: "higher",
+      familyCode: "IFC",
+      familyName: "InformÃ¡tica y Comunicaciones",
+    };
+    const center = {
+      centerCode: "47000000",
+      centerName: "IES RÃ­o Duero",
+      province: "Valladolid",
+      locality: "Valladolid",
+      address: null,
+      phone: null,
+      email: null,
+      website: null,
+    };
+    const trainingOffering = {
+      ...program,
+      centerCode: center.centerCode,
+      province: center.province,
+      locality: center.locality,
+      modality: "on_site",
+    };
+    const jobOffer = {
+      id: "08-2026-12345",
+      title: "Desarrollador/a web",
+      province: null,
+      locality: null,
+      publishedAt: "2026-08-03T00:00:00.000Z",
+      sourceName: "ECYL",
+      descriptionText: "Oferta oficial.",
+      descriptionSections: {
+        summary: ["Oferta oficial."],
+        functions: [],
+        requirements: [],
+        conditions: [],
+        application: [],
+        other: [],
+      },
+      originalUrl: "https://empleo.jcyl.es/oferta/08-2026-12345",
+      sourceSnapshot: snapshot,
+    };
+    const paths = {
+      programs: "/data/v1/snapshots/fixed-point/programs.json",
+      centers: "/data/v1/snapshots/fixed-point/centers.json",
+      trainingOfferings:
+        "/data/v1/snapshots/fixed-point/training-offerings.json",
+      jobOffers: "/data/v1/snapshots/fixed-point/job-offers.json",
+    } as const;
+    const manifest = LoadableGeneratedManifestSchema.parse({
+      schemaVersion: "1.0.0",
+      generatedAt: "2026-08-04T10:00:00.000Z",
+      qualityStatus: "stale",
+      qualityReport: {
+        counts: { programs: 1, centers: 1, offerings: 1, offers: 1 },
+        nullRates: {
+          centerAddress: 1,
+          centerPhone: 1,
+          centerEmail: 1,
+          centerWebsite: 1,
+          offerProvince: 1,
+          offerLocality: 1,
+          offerDescription: 0,
+        },
+      },
+      resourceSnapshots: Object.fromEntries(
+        Object.entries(paths).map(([key, resourcePath]) => [
+          key,
+          { ...snapshot, resourcePath },
+        ]),
+      ),
+    });
+    const assets: Record<string, unknown> = {
+      [paths.programs]: [program],
+      [paths.centers]: [center],
+      [paths.trainingOfferings]: [trainingOffering],
+      [paths.jobOffers]: [jobOffer],
+    };
+    vi.stubGlobal(
+      "fetch",
+      vi.fn((input: string | URL | Request) => {
+        const path =
+          typeof input === "string"
+            ? input
+            : input instanceof URL
+              ? input.pathname
+              : new URL(input.url).pathname;
+        return new Response(JSON.stringify(assets[path]), {
+          status: 200,
+          headers: { "Content-Type": "application/json" },
+        });
+      }),
+    );
+
+    await expect(loadFoundationResources(manifest)).resolves.toEqual({
+      contract: "legacy",
+      programs: [program],
+      centers: [center],
+      trainingOfferings: [trainingOffering],
+      jobOffers: [jobOffer],
+    });
+  });
+
   it("throws the missing code for an absent generated asset", async () => {
     mockFetchJson({ message: "not found" }, 404);
 

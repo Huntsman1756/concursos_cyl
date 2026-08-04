@@ -129,7 +129,6 @@ interface PreviousSnapshot {
   manifest: LoadableGeneratedManifest;
   counts: SnapshotCounts;
   manifestFormat: "current" | "legacy";
-  resourceContract: "current" | "legacy";
 }
 
 export interface SnapshotFailureInjection {
@@ -905,7 +904,6 @@ async function validateSnapshotDirectory(
     manifest,
     counts,
     manifestFormat: parsedManifest.manifestFormat,
-    resourceContract,
   };
 }
 

@@ -138,7 +138,7 @@ export interface LoadedCurrentFoundationResources extends LoadedFoundationResour
 export type LoadedFoundationResources =
   LoadedLegacyFoundationResources | LoadedCurrentFoundationResources;
 
-function foundationResourceContract(
+function manifestAddressedFoundationContract(
   manifest: LoadableGeneratedManifest,
 ): LoadedFoundationResources["contract"] {
   const legacyResourceCount = GENERATED_RESOURCE_KEYS.filter(
@@ -160,18 +160,26 @@ function foundationResourceContract(
   );
 }
 
-interface FoundationResourceSchemas<TCenter, TTrainingOffering> {
-  center: z.ZodType<TCenter>;
-  trainingOffering: z.ZodType<TTrainingOffering>;
-}
+const CurrentFoundationVariableResourcesSchema = z
+  .object({
+    centers: z.array(EducationCenterSchema),
+    trainingOfferings: z.array(TrainingOfferingSchema),
+  })
+  .strict();
 
-async function loadFoundationResourceSet<TCenter, TTrainingOffering>(
+const LegacyFoundationVariableResourcesSchema = z
+  .object({
+    centers: z.array(LegacyEducationCenterSchema),
+    trainingOfferings: z.array(LegacyTrainingOfferingSchema),
+  })
+  .strict();
+
+async function loadFoundationResourceSet(
   resourceSnapshots: LoadableGeneratedManifest["resourceSnapshots"],
-  schemas: FoundationResourceSchemas<TCenter, TTrainingOffering>,
 ): Promise<
   LoadedFoundationResourceBase & {
-    centers: TCenter[];
-    trainingOfferings: TTrainingOffering[];
+    centers: unknown[];
+    trainingOfferings: unknown[];
   }
 > {
   const [programs, centers, trainingOfferings, jobOffers] = await Promise.all([
@@ -181,11 +189,11 @@ async function loadFoundationResourceSet<TCenter, TTrainingOffering>(
     ),
     loadGeneratedResource(
       resourceSnapshots.centers.resourcePath,
-      z.array(schemas.center),
+      z.array(z.unknown()),
     ),
     loadGeneratedResource(
       resourceSnapshots.trainingOfferings.resourcePath,
-      z.array(schemas.trainingOffering),
+      z.array(z.unknown()),
     ),
     loadGeneratedResource(
       resourceSnapshots.jobOffers.resourcePath,
@@ -196,24 +204,56 @@ async function loadFoundationResourceSet<TCenter, TTrainingOffering>(
   return { programs, centers, trainingOfferings, jobOffers };
 }
 
+function validatedFoundationResourceSet(
+  manifest: LoadableGeneratedManifest,
+  resources: Awaited<ReturnType<typeof loadFoundationResourceSet>>,
+): LoadedFoundationResources {
+  const variableResources = {
+    centers: resources.centers,
+    trainingOfferings: resources.trainingOfferings,
+  };
+  const current =
+    CurrentFoundationVariableResourcesSchema.safeParse(variableResources);
+  const legacy =
+    LegacyFoundationVariableResourcesSchema.safeParse(variableResources);
+
+  if (!current.success && !legacy.success) {
+    throw new GeneratedDataError(
+      "schema",
+      "Generated foundation resources do not share one supported contract.",
+      current.error,
+    );
+  }
+
+  const contract =
+    current.success === legacy.success
+      ? manifestAddressedFoundationContract(manifest)
+      : current.success
+        ? "current"
+        : "legacy";
+
+  if (contract === "current") {
+    return {
+      contract,
+      programs: resources.programs,
+      jobOffers: resources.jobOffers,
+      ...CurrentFoundationVariableResourcesSchema.parse(variableResources),
+    };
+  }
+
+  return {
+    contract,
+    programs: resources.programs,
+    jobOffers: resources.jobOffers,
+    ...LegacyFoundationVariableResourcesSchema.parse(variableResources),
+  };
+}
+
 /** Loads all required v1 resources as one tagged current or legacy set. */
 export async function loadFoundationResources(
   manifest: LoadableGeneratedManifest,
 ): Promise<LoadedFoundationResources> {
   const { resourceSnapshots } = manifest;
-  const contract = foundationResourceContract(manifest);
-
-  if (contract === "legacy") {
-    const resources = await loadFoundationResourceSet(resourceSnapshots, {
-      center: LegacyEducationCenterSchema,
-      trainingOffering: LegacyTrainingOfferingSchema,
-    });
-    return { contract, ...resources };
-  }
-
-  const resources = await loadFoundationResourceSet(resourceSnapshots, {
-    center: EducationCenterSchema,
-    trainingOffering: TrainingOfferingSchema,
-  });
-  return { contract, ...resources };
+  const resources = await loadFoundationResourceSet(resourceSnapshots);
+  return validatedFoundationResourceSet(manifest, resources);
 }
