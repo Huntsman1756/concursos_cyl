@@ -1,0 +1,20 @@
+:root {
+  --color-surface: #ffffff;
+  --color-surface-subtle: #f3f7f5;
+  --color-text: #163c32;
+  --color-text-muted: #5d716a;
+  --color-border: #cad7d1;
+  --color-primary: #1d5f4b;
+  --color-action: #b94f36;
+  --color-warning-surface: #fff6e5;
+  --focus-ring: 0 0 0 3px #9ad1be;
+  --radius-sm: 0.5rem;
+  --radius-md: 0.875rem;
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --motion-fast: 160ms;
+}
