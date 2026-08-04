@@ -6,7 +6,7 @@
 
 **Architecture:** A Vite React application consumes generated JSON contracts under `/public/data/v1`. TypeScript ingestion scripts fetch, validate, normalize and sanitize official sources, then atomically replace the last known good snapshots only when quality gates pass.
 
-**Tech Stack:** React, TypeScript, Vite, React Router, Zod, Radix UI, Lucide, MiniSearch, Vitest, Testing Library, Playwright, axe-core, ESLint and Prettier. All dependencies must have OSI-approved licenses.
+**Tech Stack:** React, TypeScript, Vite, React Router, Zod, Radix UI, Lucide, MiniSearch, Vitest, Testing Library, Playwright, axe-core, ESLint and Prettier. Software dependencies must use approved open-source or permissive licenses; reviewed open-content data and BlueOak exceptions are documented and enforced by the repository license policy.
 
 ## Global Constraints
 
@@ -618,3 +618,4 @@ Expected: all exit 0.
 rtk git add playwright.config.ts tests/e2e src/features/home src/app
 rtk git commit -m "test: verify home accessibility and data freshness"
 ```
+[rtk] /!\ No hook installed — run `rtk init -g` for automatic token savings

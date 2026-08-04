@@ -1,23 +1,32 @@
 import { z } from "zod";
 
 const nullableText = z.string().nullable();
+const GeoPointSchema = z
+  .object({
+    lon: z.number(),
+    lat: z.number(),
+  })
+  .strict();
 
-/**
- * Shape received from the Junta de Castilla y León employment-offers dataset.
- * Description HTML remains an upstream concern and is never part of the output contract.
- */
+/** Exact 2026-08-04 Junta employment-offer record signature. */
 export const OfferSourceRecordSchema = z
   .object({
-    identificador: z.string(),
-    titulo: nullableText,
-    provincia: nullableText,
+    titulo: z.string(),
+    provincia: z.string(),
+    fecha_publicacion: z.string(),
+    descripcion: z.string(),
+    provinciaalternativa: nullableText,
+    fuentecontenido: z.string(),
+    idlocalidad: nullableText,
     localidad: nullableText,
-    fecha_publicacion: nullableText,
-    fuentecontenido: nullableText,
-    actualizacionmetadatos: nullableText,
-    descripcion: nullableText,
-    enlace_al_contenido: nullableText,
+    latitud: nullableText,
+    longitud: nullableText,
+    codigo_localidad: nullableText,
+    identificador: z.string(),
+    actualizacionmetadatos: z.string(),
+    enlace_al_contenido: z.string(),
+    posicion: GeoPointSchema.nullable(),
   })
-  .passthrough();
+  .strict();
 
 export type OfferSourceRecord = z.infer<typeof OfferSourceRecordSchema>;

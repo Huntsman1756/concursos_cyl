@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 import {
+  EducationCenterSchema,
   GeneratedManifestSchema,
   LoadableGeneratedManifestSchema,
   JobOfferSchema,
@@ -35,21 +36,58 @@ const qualityReport = {
 describe("generated data contracts", () => {
   it("accepts a normalized training offering and rejects an empty program key", () => {
     const valid = {
+      offeringId: "IFC03S:47000000:on_site:public:education",
       programKey: "IFC03S",
       programTitle: "Desarrollo de Aplicaciones Web",
       level: "higher",
       familyCode: "IFC",
       familyName: "Informática y Comunicaciones",
       centerCode: "47000000",
+      centerName: "IES Río Duero",
       province: "Valladolid",
       locality: "Valladolid",
       modality: "on_site",
+      teachingType: "public",
+      centerOwnership: "education",
     };
 
     expect(TrainingOfferingSchema.safeParse(valid).success).toBe(true);
     expect(
       TrainingOfferingSchema.safeParse({ ...valid, programKey: "" }).success,
     ).toBe(false);
+    const {
+      offeringId: _offeringId,
+      teachingType: _teachingType,
+      centerOwnership: _centerOwnership,
+      ...missingIdentityEvidence
+    } = valid;
+    void _offeringId;
+    void _teachingType;
+    void _centerOwnership;
+    expect(
+      TrainingOfferingSchema.safeParse(missingIdentityEvidence).success,
+    ).toBe(false);
+  });
+
+  it("requires normalized center ownership in canonical center resources", () => {
+    const center = {
+      centerCode: "47000000",
+      centerName: "IES Río Duero",
+      province: "Valladolid",
+      locality: "Valladolid",
+      address: null,
+      phone: null,
+      email: null,
+      website: null,
+      centerOwnership: "education",
+    };
+
+    expect(EducationCenterSchema.safeParse(center).success).toBe(true);
+    const { centerOwnership: _missing, ...withoutOwnership } = center;
+    void _missing;
+    expect(EducationCenterSchema.safeParse(withoutOwnership).success).toBe(
+      false,
+    );
   });
 
   it("accepts snapshot provenance and rejects invalid IDs, URLs, and dates", () => {
@@ -76,6 +114,7 @@ describe("generated data contracts", () => {
       province: "Valladolid",
       locality: "Valladolid",
       publishedAt: "2026-08-03T00:00:00.000Z",
+      sourceRecordUpdatedAt: "2026-08-03T14:30:00.000Z",
       sourceName: "ECYL",
       descriptionText: "Se requiere carné B.",
       descriptionSections: {
@@ -91,6 +130,9 @@ describe("generated data contracts", () => {
     };
 
     expect(JobOfferSchema.safeParse(valid).success).toBe(true);
+    const { sourceRecordUpdatedAt: _missing, ...withoutRecordUpdate } = valid;
+    void _missing;
+    expect(JobOfferSchema.safeParse(withoutRecordUpdate).success).toBe(false);
     expect(
       JobOfferSchema.safeParse({
         ...valid,
@@ -189,6 +231,60 @@ describe("generated data contracts", () => {
         jobOffers: { resourcePath: "/data/v1/job-offers.json" },
       },
     });
+  });
+
+  it("accepts additive future resource snapshots while retaining all foundation resources", () => {
+    const manifest = {
+      schemaVersion: "1.0.0",
+      generatedAt: "2026-08-04T10:00:00.000Z",
+      qualityStatus: "passed",
+      qualityReport,
+      resourceSnapshots: {
+        programs: {
+          ...snapshot,
+          resourcePath: "/data/v1/snapshots/build-1/programs.json",
+        },
+        centers: {
+          ...snapshot,
+          resourcePath: "/data/v1/snapshots/build-1/centers.json",
+        },
+        trainingOfferings: {
+          ...snapshot,
+          resourcePath: "/data/v1/snapshots/build-1/training-offerings.json",
+        },
+        jobOffers: {
+          ...snapshot,
+          resourcePath: "/data/v1/snapshots/build-1/job-offers.json",
+        },
+        occupationAliases: {
+          ...snapshot,
+          resourcePath: "/data/v1/snapshots/build-1/occupation-aliases.json",
+        },
+      },
+    };
+
+    expect(GeneratedManifestSchema.safeParse(manifest).success).toBe(true);
+    expect(
+      GeneratedManifestSchema.safeParse({
+        ...manifest,
+        resourceSnapshots: {
+          ...manifest.resourceSnapshots,
+          occupationAliases: {
+            ...manifest.resourceSnapshots.occupationAliases,
+            resourcePath: "/data/v1/snapshots/build-1/occupation_aliases.json",
+          },
+        },
+      }).success,
+    ).toBe(false);
+    const { jobOffers: _required, ...missingRequired } =
+      manifest.resourceSnapshots;
+    void _required;
+    expect(
+      GeneratedManifestSchema.safeParse({
+        ...manifest,
+        resourceSnapshots: missingRequired,
+      }).success,
+    ).toBe(false);
   });
 
   it.each([

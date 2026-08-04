@@ -146,6 +146,16 @@ describe("generated data client", () => {
     expect(fetch).toHaveBeenCalledWith(path);
   });
 
+  it("accepts a future manifest-addressed kebab-case resource path", async () => {
+    const path = "/data/v1/snapshots/build-1/occupation-aliases.json";
+    mockFetchJson(["desarrollador web"]);
+
+    await expect(
+      loadGeneratedResource(path, z.array(z.string())),
+    ).resolves.toEqual(["desarrollador web"]);
+    expect(fetch).toHaveBeenCalledWith(path);
+  });
+
   it("throws the network code for failed requests and HTTP errors", async () => {
     vi.stubGlobal("fetch", vi.fn().mockRejectedValue(new TypeError("offline")));
     await expect(

@@ -153,4 +153,124 @@ describe("normalizeTraining", () => {
     expect(second).toEqual(first);
     expect(first.centers[0]?.centerName).toBe("IES Álamos");
   });
+
+  it("retains official rows that differ by teaching type in the stable identity", () => {
+    const common = {
+      ...valladolidCenter,
+      clave_ciclo: "AFD02M",
+      ciclo_formativo_curso_de_especializacion:
+        "Guía en el Medio Natural y de Tiempo Libre",
+      familia_profesional: "Actividades Físicas y Deportivas",
+      codigo_familia: "AFD",
+      codigo_centro: "47011115",
+      centro_educativo: "RÍO DUERO",
+      titularidad_centro: "Privada",
+      modalidad: "Presencial",
+    };
+
+    const result = normalizeTraining([
+      { ...common, tipo_ensenanza: "Concertada" },
+      { ...common, tipo_ensenanza: "Privada" },
+    ]);
+
+    expect(result.offerings).toHaveLength(2);
+    expect(result.offerings).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          offeringId: "AFD02M:47011115:on_site:concerted:private",
+          teachingType: "concerted",
+          centerOwnership: "private",
+        }),
+        expect.objectContaining({
+          offeringId: "AFD02M:47011115:on_site:private:private",
+          teachingType: "private",
+          centerOwnership: "private",
+        }),
+      ]),
+    );
+  });
+
+  it("reconciles canonical program metadata by normalized majority and reports material conflicts", () => {
+    const common = {
+      ...valladolidCenter,
+      clave_ciclo: "INA01M",
+      ciclo_formativo_curso_de_especializacion:
+        "Panadería, Repostería y Confitería",
+      familia_profesional: "Industrias Alimentarias",
+      codigo_familia: "INA",
+    };
+    const records = [
+      {
+        ...common,
+        codigo_centro: "09012163",
+        codigo_familia: "HOT",
+      },
+      {
+        ...common,
+        codigo_centro: "34003831",
+        ciclo_formativo_curso_de_especializacion:
+          "  Panadería,   Repostería y Confitería  ",
+      },
+      {
+        ...common,
+        codigo_centro: "24018775",
+        ciclo_formativo_curso_de_especializacion:
+          "panadería, repostería y confitería",
+      },
+    ];
+
+    const result = normalizeTraining(records);
+    const reversed = normalizeTraining([...records].reverse());
+    const canonicalProgram = result.programs[0];
+
+    expect(reversed).toEqual(result);
+    expect(canonicalProgram).toMatchObject({
+      programKey: "INA01M",
+      programTitle: "Panadería, Repostería y Confitería",
+      familyCode: "INA",
+      familyName: "Industrias Alimentarias",
+    });
+    expect(result.reconciliationAnomalies).toEqual([
+      {
+        entityType: "program",
+        entityId: "INA01M",
+        field: "familyCode",
+        selectedValue: "INA",
+        candidates: [
+          { value: "INA", count: 2 },
+          { value: "HOT", count: 1 },
+        ],
+      },
+    ]);
+
+    const centers = new Map(
+      result.centers.map((item) => [item.centerCode, item]),
+    );
+    for (const item of result.offerings) {
+      expect(item).toMatchObject(canonicalProgram!);
+      const referencedCenter = centers.get(item.centerCode)!;
+      expect(item).toMatchObject({
+        centerCode: referencedCenter.centerCode,
+        centerName: referencedCenter.centerName,
+        province: referencedCenter.province,
+        locality: referencedCenter.locality,
+        centerOwnership: referencedCenter.centerOwnership,
+      });
+    }
+  });
+
+  it("treats phone-number spacing as equivalent canonical evidence", () => {
+    const records = [
+      { ...valladolidCenter, telefono: "983 47 1600" },
+      { ...valladolidCenter, telefono: "983 471 600" },
+    ];
+
+    const result = normalizeTraining(records);
+    expect(normalizeTraining([...records].reverse())).toEqual(result);
+    expect(
+      result.reconciliationAnomalies.filter(
+        (anomaly) => anomaly.field === "phone",
+      ),
+    ).toEqual([]);
+  });
 });

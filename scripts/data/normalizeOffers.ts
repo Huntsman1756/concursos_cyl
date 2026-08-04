@@ -74,18 +74,6 @@ function normalizeDate(value: unknown, field: string): string {
   return date.toISOString();
 }
 
-function nullableDate(value: unknown, field: string): string | null {
-  if (
-    value === null ||
-    value === undefined ||
-    String(value).trim().length === 0
-  ) {
-    return null;
-  }
-
-  return normalizeDate(value, field);
-}
-
 function stableJson(value: unknown): string {
   if (Array.isArray(value)) {
     return `[${value.map(stableJson).join(",")}]`;
@@ -103,18 +91,13 @@ function stableJson(value: unknown): string {
 
 function sourceSnapshotForRecord(
   record: OfferSourceRecord,
-  publishedAt: string,
+  sourceRecordUpdatedAt: string,
 ): SourceSnapshot {
-  const sourceUpdatedAt = nullableDate(
-    record.actualizacionmetadatos,
-    "actualizacionmetadatos",
-  );
-
   return SourceSnapshotSchema.parse({
     sourceId: SOURCE_CONFIG.offers.id,
     sourceUrl: SOURCE_CONFIG.offers.recordsUrl,
-    sourceUpdatedAt,
-    snapshotFetchedAt: sourceUpdatedAt ?? publishedAt,
+    sourceUpdatedAt: sourceRecordUpdatedAt,
+    snapshotFetchedAt: sourceRecordUpdatedAt,
     schemaVersion: "1.0.0",
     recordCount: 1,
     sha256: createHash("sha256").update(stableJson(record)).digest("hex"),
@@ -130,10 +113,14 @@ function normalizeRecord(
     record.fecha_publicacion,
     "fecha_publicacion",
   );
+  const sourceRecordUpdatedAt = normalizeDate(
+    record.actualizacionmetadatos,
+    "actualizacionmetadatos",
+  );
   const description = sanitizeOfferHtml(record.descripcion ?? "");
   const sourceSnapshot =
     options.sourceSnapshot === undefined
-      ? sourceSnapshotForRecord(record, publishedAt)
+      ? sourceSnapshotForRecord(record, sourceRecordUpdatedAt)
       : SourceSnapshotSchema.parse(options.sourceSnapshot);
 
   return JobOfferSchema.parse({
@@ -142,6 +129,7 @@ function normalizeRecord(
     province: nullableText(record.provincia),
     locality: nullableText(record.localidad),
     publishedAt,
+    sourceRecordUpdatedAt,
     sourceName: nullableText(record.fuentecontenido) ?? "ECYL",
     descriptionText: description.plainText,
     descriptionSections: description.sections,

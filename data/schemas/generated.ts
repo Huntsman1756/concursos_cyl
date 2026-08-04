@@ -1,9 +1,15 @@
 import { z } from "zod";
 
 import {
-  isImmutableGeneratedResourcePath,
+  GENERATED_RESOURCE_CATALOG,
+  GENERATED_RESOURCE_KEYS,
+  generatedResourceFileNameForKey,
+  isImmutableGeneratedResourceFilePath,
+  isGenericImmutableGeneratedResourcePath,
   legacyGeneratedResourcePath,
+  type GeneratedResourceKey,
 } from "./generatedResourceCatalog";
+import { trainingOfferingIdentity } from "./trainingOfferingIdentity";
 
 export const TrainingLevelSchema = z.enum([
   "basic",
@@ -19,42 +25,78 @@ export const ModalitySchema = z.enum([
   "unknown",
 ]);
 
-export const SourceSnapshotSchema = z.object({
-  sourceId: z.string().min(1),
-  sourceUrl: z.string().url(),
-  sourceUpdatedAt: z.string().datetime().nullable(),
-  snapshotFetchedAt: z.string().datetime(),
-  schemaVersion: z.literal("1.0.0"),
-  recordCount: z.number().int().nonnegative(),
-  sha256: z.string().regex(/^[a-f0-9]{64}$/),
-  qualityStatus: z.enum(["passed", "stale"]),
-});
+export const TeachingTypeSchema = z.enum(["public", "concerted", "private"]);
 
-export const TrainingProgramSchema = z.object({
-  programKey: z.string().min(1),
-  programTitle: z.string().min(1),
-  level: TrainingLevelSchema,
-  familyCode: z.string().min(1),
-  familyName: z.string().min(1),
-});
+export const CenterOwnershipSchema = z.enum([
+  "agriculture",
+  "municipality",
+  "education",
+  "private",
+]);
 
-export const TrainingOfferingSchema = TrainingProgramSchema.extend({
-  centerCode: z.string().min(1),
-  province: z.string().min(1),
-  locality: z.string().min(1),
-  modality: ModalitySchema,
-});
+export const SourceSnapshotSchema = z
+  .object({
+    sourceId: z.string().min(1),
+    sourceUrl: z.string().url(),
+    sourceUpdatedAt: z.string().datetime().nullable(),
+    snapshotFetchedAt: z.string().datetime(),
+    schemaVersion: z.literal("1.0.0"),
+    recordCount: z.number().int().nonnegative(),
+    sha256: z.string().regex(/^[a-f0-9]{64}$/u),
+    qualityStatus: z.enum(["passed", "stale"]),
+  })
+  .strict();
 
-export const EducationCenterSchema = z.object({
-  centerCode: z.string().min(1),
-  centerName: z.string().min(1),
-  province: z.string().min(1),
-  locality: z.string().min(1),
-  address: z.string().min(1).nullable(),
-  phone: z.string().min(1).nullable(),
-  email: z.string().email().nullable(),
-  website: z.string().url().nullable(),
-});
+export const TrainingProgramSchema = z
+  .object({
+    programKey: z.string().min(1),
+    programTitle: z.string().min(1),
+    level: TrainingLevelSchema,
+    familyCode: z.string().min(1),
+    familyName: z.string().min(1),
+  })
+  .strict();
+
+export const EducationCenterSchema = z
+  .object({
+    centerCode: z.string().min(1),
+    centerName: z.string().min(1),
+    province: z.string().min(1),
+    locality: z.string().min(1),
+    address: z.string().min(1).nullable(),
+    phone: z.string().min(1).nullable(),
+    email: z.string().email().nullable(),
+    website: z.string().url().nullable(),
+    centerOwnership: CenterOwnershipSchema,
+  })
+  .strict();
+
+export const TrainingOfferingSchema = z
+  .object({
+    offeringId: z.string().min(1),
+    programKey: z.string().min(1),
+    programTitle: z.string().min(1),
+    level: TrainingLevelSchema,
+    familyCode: z.string().min(1),
+    familyName: z.string().min(1),
+    centerCode: z.string().min(1),
+    centerName: z.string().min(1),
+    province: z.string().min(1),
+    locality: z.string().min(1),
+    modality: ModalitySchema,
+    teachingType: TeachingTypeSchema,
+    centerOwnership: CenterOwnershipSchema,
+  })
+  .strict()
+  .superRefine((offering, context) => {
+    if (offering.offeringId !== trainingOfferingIdentity(offering)) {
+      context.addIssue({
+        code: "custom",
+        path: ["offeringId"],
+        message: "Offering ID must encode every official differentiator.",
+      });
+    }
+  });
 
 const DescriptionSectionContentSchema = z.array(z.string().min(1));
 
@@ -76,6 +118,7 @@ export const JobOfferSchema = z
     province: z.string().min(1).nullable(),
     locality: z.string().min(1).nullable(),
     publishedAt: z.string().datetime(),
+    sourceRecordUpdatedAt: z.string().datetime(),
     sourceName: z.string().min(1),
     descriptionText: z.string(),
     descriptionSections: DescriptionSectionsSchema,
@@ -84,50 +127,97 @@ export const JobOfferSchema = z
   })
   .strict();
 
+const GeneratedResourceSnapshotSchema = SourceSnapshotSchema.extend({
+  resourcePath: z.string().refine(isGenericImmutableGeneratedResourcePath, {
+    message: "Resource path must be an immutable kebab-case JSON asset.",
+  }),
+}).strict();
+
+const requiredResourceSnapshotShape = Object.fromEntries(
+  GENERATED_RESOURCE_KEYS.map((key) => [key, GeneratedResourceSnapshotSchema]),
+) as Record<GeneratedResourceKey, typeof GeneratedResourceSnapshotSchema>;
+
 export const GeneratedResourceSnapshotsSchema = z
+  .object(requiredResourceSnapshotShape)
+  .catchall(GeneratedResourceSnapshotSchema)
+  .superRefine((snapshots, context) => {
+    const seenPaths = new Set<string>();
+    for (const [key, snapshot] of Object.entries(snapshots)) {
+      const fileName =
+        key in GENERATED_RESOURCE_CATALOG
+          ? GENERATED_RESOURCE_CATALOG[key as GeneratedResourceKey].fileName
+          : generatedResourceFileNameForKey(key);
+      if (
+        fileName === null ||
+        !isImmutableGeneratedResourceFilePath(fileName, snapshot.resourcePath)
+      ) {
+        context.addIssue({
+          code: "custom",
+          path: [key, "resourcePath"],
+          message: `Resource path does not match manifest key ${key}.`,
+        });
+      }
+      if (seenPaths.has(snapshot.resourcePath)) {
+        context.addIssue({
+          code: "custom",
+          path: [key, "resourcePath"],
+          message: "Resource paths must be unique.",
+        });
+      }
+      seenPaths.add(snapshot.resourcePath);
+    }
+  });
+
+export const ReconciliationCandidateSchema = z
   .object({
-    programs: SourceSnapshotSchema.extend({
-      resourcePath: z
-        .string()
-        .refine((path) => isImmutableGeneratedResourcePath("programs", path)),
-    }),
-    centers: SourceSnapshotSchema.extend({
-      resourcePath: z
-        .string()
-        .refine((path) => isImmutableGeneratedResourcePath("centers", path)),
-    }),
-    trainingOfferings: SourceSnapshotSchema.extend({
-      resourcePath: z
-        .string()
-        .refine((path) =>
-          isImmutableGeneratedResourcePath("trainingOfferings", path),
-        ),
-    }),
-    jobOffers: SourceSnapshotSchema.extend({
-      resourcePath: z
-        .string()
-        .refine((path) => isImmutableGeneratedResourcePath("jobOffers", path)),
-    }),
+    value: z.string().nullable(),
+    count: z.number().int().positive(),
   })
   .strict();
 
-export const GeneratedQualityReportSchema = z.object({
-  counts: z.object({
-    programs: z.number().int().nonnegative(),
-    centers: z.number().int().nonnegative(),
-    offerings: z.number().int().nonnegative(),
-    offers: z.number().int().nonnegative(),
-  }),
-  nullRates: z.object({
-    centerAddress: z.number().min(0).max(1),
-    centerPhone: z.number().min(0).max(1),
-    centerEmail: z.number().min(0).max(1),
-    centerWebsite: z.number().min(0).max(1),
-    offerProvince: z.number().min(0).max(1),
-    offerLocality: z.number().min(0).max(1),
-    offerDescription: z.number().min(0).max(1),
-  }),
-});
+export const ReconciliationAnomalySchema = z
+  .object({
+    entityType: z.enum(["program", "center"]),
+    entityId: z.string().min(1),
+    field: z.enum([
+      "programTitle",
+      "level",
+      "familyCode",
+      "familyName",
+      "centerName",
+      "province",
+      "locality",
+      "address",
+      "phone",
+      "email",
+      "website",
+      "centerOwnership",
+    ]),
+    selectedValue: z.string().nullable(),
+    candidates: z.array(ReconciliationCandidateSchema).min(2),
+  })
+  .strict();
+
+export const GeneratedQualityReportSchema = z
+  .object({
+    counts: z.object({
+      programs: z.number().int().nonnegative(),
+      centers: z.number().int().nonnegative(),
+      offerings: z.number().int().nonnegative(),
+      offers: z.number().int().nonnegative(),
+    }),
+    nullRates: z.object({
+      centerAddress: z.number().min(0).max(1),
+      centerPhone: z.number().min(0).max(1),
+      centerEmail: z.number().min(0).max(1),
+      centerWebsite: z.number().min(0).max(1),
+      offerProvince: z.number().min(0).max(1),
+      offerLocality: z.number().min(0).max(1),
+      offerDescription: z.number().min(0).max(1),
+    }),
+    reconciliationAnomalies: z.array(ReconciliationAnomalySchema).default([]),
+  })
+  .strict();
 
 export const GeneratedManifestSchema = z
   .object({
@@ -139,8 +229,6 @@ export const GeneratedManifestSchema = z
   })
   .strict();
 
-const StrictLegacySourceSnapshotSchema = SourceSnapshotSchema.strict();
-
 const LegacyGeneratedManifestSchema = z
   .object({
     schemaVersion: z.literal("1.0.0"),
@@ -148,10 +236,10 @@ const LegacyGeneratedManifestSchema = z
     qualityStatus: z.enum(["passed", "stale"]),
     resourceSnapshots: z
       .object({
-        programs: StrictLegacySourceSnapshotSchema,
-        centers: StrictLegacySourceSnapshotSchema,
-        trainingOfferings: StrictLegacySourceSnapshotSchema,
-        jobOffers: StrictLegacySourceSnapshotSchema,
+        programs: SourceSnapshotSchema,
+        centers: SourceSnapshotSchema,
+        trainingOfferings: SourceSnapshotSchema,
+        jobOffers: SourceSnapshotSchema,
       })
       .strict(),
     qualityReport: GeneratedQualityReportSchema.optional(),
@@ -190,6 +278,8 @@ export const LoadableGeneratedManifestSchema = z
 
 export type TrainingLevel = z.infer<typeof TrainingLevelSchema>;
 export type Modality = z.infer<typeof ModalitySchema>;
+export type TeachingType = z.infer<typeof TeachingTypeSchema>;
+export type CenterOwnership = z.infer<typeof CenterOwnershipSchema>;
 export type SourceSnapshot = z.infer<typeof SourceSnapshotSchema>;
 export type TrainingProgram = z.infer<typeof TrainingProgramSchema>;
 export type TrainingOffering = z.infer<typeof TrainingOfferingSchema>;
@@ -198,6 +288,7 @@ export type DescriptionSections = z.infer<typeof DescriptionSectionsSchema>;
 export type GeneratedResourceSnapshots = z.infer<
   typeof GeneratedResourceSnapshotsSchema
 >;
+export type ReconciliationAnomaly = z.infer<typeof ReconciliationAnomalySchema>;
 export type GeneratedQualityReport = z.infer<
   typeof GeneratedQualityReportSchema
 >;

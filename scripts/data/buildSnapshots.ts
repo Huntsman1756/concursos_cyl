@@ -31,6 +31,7 @@ import {
   GeneratedManifestSchema,
   JobOfferSchema,
   LoadableGeneratedManifestSchema,
+  ModalitySchema,
   SourceSnapshotSchema,
   TrainingOfferingSchema,
   TrainingProgramSchema,
@@ -58,6 +59,8 @@ import { normalizeOffers } from "./normalizeOffers";
 import { normalizeTraining } from "./normalizeTraining";
 import {
   runQualityGates,
+  runLegacyQualityGates,
+  type LegacySnapshotCandidate,
   type SnapshotCandidate,
   type SnapshotCounts,
 } from "./qualityGates";
@@ -67,18 +70,36 @@ const RESOURCE_DEFINITIONS = {
   programs: {
     ...GENERATED_RESOURCE_CATALOG.programs,
     schema: z.array(TrainingProgramSchema),
+    legacySchema: z.array(TrainingProgramSchema),
   },
   centers: {
     ...GENERATED_RESOURCE_CATALOG.centers,
     schema: z.array(EducationCenterSchema),
+    legacySchema: z.array(
+      EducationCenterSchema.omit({ centerOwnership: true }).strict(),
+    ),
   },
   trainingOfferings: {
     ...GENERATED_RESOURCE_CATALOG.trainingOfferings,
     schema: z.array(TrainingOfferingSchema),
+    legacySchema: z.array(
+      z
+        .object({
+          ...TrainingProgramSchema.shape,
+          centerCode: z.string().min(1),
+          province: z.string().min(1),
+          locality: z.string().min(1),
+          modality: ModalitySchema,
+        })
+        .strict(),
+    ),
   },
   jobOffers: {
     ...GENERATED_RESOURCE_CATALOG.jobOffers,
     schema: z.array(JobOfferSchema),
+    legacySchema: z.array(
+      JobOfferSchema.omit({ sourceRecordUpdatedAt: true }).strict(),
+    ),
   },
 } as const;
 
@@ -752,6 +773,7 @@ async function validateSnapshotDirectory(
   const { manifest } = parsedManifest;
 
   const loaded = {} as Record<ResourceKey, unknown[]>;
+  const resourceContracts = new Set<"current" | "legacy">();
   for (const key of GENERATED_RESOURCE_KEYS) {
     const definition = RESOURCE_DEFINITIONS[key];
     const filePath = resourceFileInSnapshot(
@@ -759,9 +781,18 @@ async function validateSnapshotDirectory(
       manifest.resourceSnapshots[key].resourcePath,
     );
     await assertPhysicalPath(root, filePath);
-    const records = definition.schema.parse(
-      JSON.parse(await readFile(filePath, "utf8")),
-    );
+    const json = JSON.parse(await readFile(filePath, "utf8"));
+    const current = definition.schema.safeParse(json);
+    const legacy = definition.legacySchema.safeParse(json);
+    if (!current.success && !legacy.success) {
+      throw new Error(`Snapshot schema mismatch for ${definition.fileName}.`, {
+        cause: current.error,
+      });
+    }
+    const records = (current.success ? current.data : legacy.data) as unknown[];
+    if (key !== "programs") {
+      resourceContracts.add(current.success ? "current" : "legacy");
+    }
     const snapshot = manifest.resourceSnapshots[key];
 
     if (records.length !== snapshot.recordCount) {
@@ -773,14 +804,48 @@ async function validateSnapshotDirectory(
     loaded[key] = records;
   }
 
-  const candidate: SnapshotCandidate = {
-    programs: loaded.programs as SnapshotCandidate["programs"],
-    centers: loaded.centers as SnapshotCandidate["centers"],
-    trainingOfferings:
-      loaded.trainingOfferings as SnapshotCandidate["trainingOfferings"],
-    jobOffers: loaded.jobOffers as SnapshotCandidate["jobOffers"],
-  };
-  const report = runQualityGates(candidate);
+  for (const [key, snapshot] of Object.entries(manifest.resourceSnapshots)) {
+    if ((GENERATED_RESOURCE_KEYS as readonly string[]).includes(key)) {
+      continue;
+    }
+    const filePath = resourceFileInSnapshot(directory, snapshot.resourcePath);
+    await assertPhysicalPath(root, filePath);
+    const records = JSON.parse(await readFile(filePath, "utf8"));
+    if (!Array.isArray(records)) {
+      throw new Error(`Additive snapshot resource ${key} must be an array.`);
+    }
+    if (records.length !== snapshot.recordCount) {
+      throw new Error(`Snapshot count mismatch for additive resource ${key}.`);
+    }
+    if ((await hashFile(filePath)) !== snapshot.sha256) {
+      throw new Error(`Snapshot hash mismatch for additive resource ${key}.`);
+    }
+  }
+
+  if (resourceContracts.size !== 1) {
+    throw new Error("Snapshot mixes current and legacy resource contracts.");
+  }
+  const resourceContract = [...resourceContracts][0];
+  const report =
+    resourceContract === "current"
+      ? runQualityGates(
+          {
+            programs: loaded.programs as SnapshotCandidate["programs"],
+            centers: loaded.centers as SnapshotCandidate["centers"],
+            trainingOfferings:
+              loaded.trainingOfferings as SnapshotCandidate["trainingOfferings"],
+            jobOffers: loaded.jobOffers as SnapshotCandidate["jobOffers"],
+          },
+          undefined,
+          manifest.qualityReport?.reconciliationAnomalies ?? [],
+        )
+      : runLegacyQualityGates({
+          programs: loaded.programs as LegacySnapshotCandidate["programs"],
+          centers: loaded.centers as LegacySnapshotCandidate["centers"],
+          trainingOfferings:
+            loaded.trainingOfferings as LegacySnapshotCandidate["trainingOfferings"],
+          jobOffers: loaded.jobOffers as LegacySnapshotCandidate["jobOffers"],
+        });
   const counts = countsFromManifest(manifest);
   if (JSON.stringify(report.counts) !== JSON.stringify(counts)) {
     throw new Error(
@@ -897,10 +962,7 @@ async function recoverInterruptedLegacyBackup(
 function latestSourceUpdatedAt(
   offers: readonly ReturnType<typeof normalizeOffers>[number][],
 ): string | null {
-  const values = offers
-    .map((offer) => offer.sourceSnapshot.sourceUpdatedAt)
-    .filter((value): value is string => value !== null)
-    .sort();
+  const values = offers.map((offer) => offer.sourceRecordUpdatedAt).sort();
   return values.at(-1) ?? null;
 }
 
@@ -952,7 +1014,11 @@ async function writeCandidate(
       .parse(training.offerings),
     jobOffers: z.array(JobOfferSchema).parse(offers),
   };
-  const qualityReport = runQualityGates(candidate, previousCounts);
+  const qualityReport = runQualityGates(
+    candidate,
+    previousCounts,
+    training.reconciliationAnomalies,
+  );
 
   await safeMkdir(root, staging);
   const resourceHashes = {} as Record<ResourceKey, string>;

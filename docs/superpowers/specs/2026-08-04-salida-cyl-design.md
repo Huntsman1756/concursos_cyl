@@ -345,8 +345,9 @@ Vitest, Testing Library, Playwright and axe-core are the default open-source tes
 
 ## 14. Open-source and licensing policy
 
-- All runtime and development dependencies must use an OSI-approved software license.
-- Versions are locked; the dependency tree and licenses are checked in CI against an allowlist.
+- Runtime and development software packages must use an approved open-source or permissive license.
+- Reviewed data-only exceptions are `CC-BY-4.0` for `caniuse-lite` and `CC0-1.0` for `mdn-data`; reviewed `lru-cache` and `minimatch` packages use the permissive `BlueOak-1.0.0` license.
+- Versions are locked; the complete dependency tree and licenses are checked against the automated repository allowlist.
 - Project code is published under MIT unless a later legal review requires a compatible alternative.
 - Curated mappings and generated exports preserve source attribution and are published under a compatible open-data license documented in `DATA_LICENSE.md`.
 - `THIRD_PARTY_NOTICES.md` records reused packages, agent skills and source terms.
@@ -374,3 +375,4 @@ The release is acceptable when both principal journeys work end to end, every vi
 - [Official salary and income source review](../../../research/salida-cyl-salary-sources-2026.md)
 - [Design-system and skills source review](../../../research/salida-cyl-design-sources-2026.md)
 - [2026 contest call](../../../tmp/convocatoria.pdf)
+[rtk] /!\ No hook installed — run `rtk init -g` for automatic token savings

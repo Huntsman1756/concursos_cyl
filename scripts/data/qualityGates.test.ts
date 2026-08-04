@@ -25,14 +25,19 @@ const center: EducationCenter = {
   phone: null,
   email: null,
   website: null,
+  centerOwnership: "education",
 };
 
 const offering: TrainingOffering = {
   ...program,
+  offeringId: "IFC03S:47000000:on_site:public:education",
   centerCode: center.centerCode,
+  centerName: center.centerName,
   province: center.province,
   locality: center.locality,
   modality: "on_site",
+  teachingType: "public",
+  centerOwnership: center.centerOwnership,
 };
 
 const offer: JobOffer = {
@@ -41,6 +46,7 @@ const offer: JobOffer = {
   province: null,
   locality: null,
   publishedAt: "2026-08-03T00:00:00.000Z",
+  sourceRecordUpdatedAt: "2026-08-03T12:00:00.000Z",
   sourceName: "ECYL",
   descriptionText: "",
   descriptionSections: {
@@ -111,6 +117,61 @@ describe("runQualityGates", () => {
         trainingOfferings: [{ ...offering, centerCode: "MISSING" }],
       }),
     ).toThrow(/broken reference/i);
+  });
+
+  it("rejects every duplicated offering attribute that differs from its canonical resource", () => {
+    const valid = candidate();
+    const mismatches: TrainingOffering[] = [
+      { ...offering, programTitle: "Wrong program" },
+      { ...offering, level: "intermediate" },
+      { ...offering, familyCode: "WRONG" },
+      { ...offering, familyName: "Wrong family" },
+      { ...offering, centerName: "Wrong center" },
+      { ...offering, province: "León" },
+      { ...offering, locality: "Medina del Campo" },
+      { ...offering, centerOwnership: "private" },
+    ];
+
+    for (const mismatched of mismatches) {
+      expect(() =>
+        runQualityGates({ ...valid, trainingOfferings: [mismatched] }),
+      ).toThrow(/canonical|mismatch/i);
+    }
+  });
+
+  it("rejects an offering ID that does not encode all official differentiators", () => {
+    const valid = candidate();
+
+    expect(() =>
+      runQualityGates({
+        ...valid,
+        trainingOfferings: [
+          {
+            ...offering,
+            offeringId: "IFC03S:47000000:on_site",
+          },
+        ],
+      }),
+    ).toThrow(/offering.*identity|offering.*id/i);
+  });
+
+  it("publishes deterministic reconciliation anomalies in the quality report", () => {
+    const anomalies = [
+      {
+        entityType: "program" as const,
+        entityId: "INA01M",
+        field: "familyCode" as const,
+        selectedValue: "INA",
+        candidates: [
+          { value: "INA", count: 6 },
+          { value: "HOT", count: 1 },
+        ],
+      },
+    ];
+
+    expect(runQualityGates(candidate(), undefined, anomalies)).toMatchObject({
+      reconciliationAnomalies: anomalies,
+    });
   });
 
   it("rejects blank required labels and invalid URLs", () => {

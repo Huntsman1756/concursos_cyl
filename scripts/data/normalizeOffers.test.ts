@@ -32,6 +32,7 @@ describe("normalizeOffers", () => {
     expect(offer).toMatchObject({
       id: "08-2026-12345",
       publishedAt: "2026-08-03T00:00:00.000Z",
+      sourceRecordUpdatedAt: "2026-08-04T10:00:00.000Z",
       originalUrl: "https://empleo.jcyl.es/oferta/08-2026-12345",
       descriptionText: "Requisitos: Carné B",
       descriptionSections: { requirements: ["Carné B"] },
@@ -40,6 +41,38 @@ describe("normalizeOffers", () => {
     expect(JSON.stringify(offer)).not.toContain("<li>");
     expect(JSON.stringify(offer)).not.toContain("alert(1)");
     expect(JobOfferSchema.safeParse(offer).success).toBe(true);
+  });
+
+  it("keeps the record update timestamp separate from dataset snapshot provenance", () => {
+    const datasetSnapshot = {
+      sourceId: "jcyl-employment-offers",
+      sourceUrl:
+        "https://analisis.datosabiertos.jcyl.es/api/explore/v2.1/catalog/datasets/ofertas-de-empleo/records",
+      sourceUpdatedAt: "2026-08-05T00:00:00.000Z",
+      snapshotFetchedAt: "2026-08-06T09:00:00.000Z",
+      schemaVersion: "1.0.0" as const,
+      recordCount: 2,
+      sha256: "b".repeat(64),
+      qualityStatus: "passed" as const,
+    };
+
+    const [offer] = normalizeOffers(
+      [
+        {
+          ...offerSourceWithRequirements,
+          actualizacionmetadatos: "2026-08-04",
+        },
+      ],
+      { sourceSnapshot: datasetSnapshot },
+    );
+
+    expect(offer.sourceRecordUpdatedAt).toBe("2026-08-04T00:00:00.000Z");
+    expect(offer.sourceSnapshot.sourceUpdatedAt).toBe(
+      "2026-08-05T00:00:00.000Z",
+    );
+    expect(offer.sourceSnapshot.snapshotFetchedAt).toBe(
+      "2026-08-06T09:00:00.000Z",
+    );
   });
 
   it("normalizes missing locations to null instead of empty strings", () => {

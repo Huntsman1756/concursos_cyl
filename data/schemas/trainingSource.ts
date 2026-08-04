@@ -1,29 +1,37 @@
 import { z } from "zod";
 
-const nullableText = z.string().nullable();
+const GeoPointSchema = z
+  .object({
+    lon: z.number(),
+    lat: z.number(),
+  })
+  .strict();
 
-/**
- * Shape received from the Junta de Castilla y León vocational-training dataset.
- * Extra fields are retained so the fetch layer can preserve upstream responses.
- */
+/** Exact 2026-08-04 Junta vocational-training record signature. */
 export const TrainingSourceRecordSchema = z
   .object({
-    clave_ciclo: nullableText,
-    ciclo_formativo_curso_de_especializacion: nullableText,
-    nivel_educativo: nullableText,
-    familia_profesional: nullableText,
-    codigo_familia: nullableText,
-    codigo_centro: nullableText,
-    centro_educativo: nullableText,
-    provincia: nullableText,
-    localidad: nullableText,
-    modalidad: nullableText,
-    titularidad_centro: nullableText.optional(),
-    direccion_centro: nullableText.optional(),
-    telefono: nullableText.optional(),
-    e_mail: nullableText.optional(),
-    web: nullableText.optional(),
+    provincia: z.string(),
+    localidad: z.string(),
+    codigo_centro: z.string(),
+    centro_educativo: z.string(),
+    titularidad_centro: z.string(),
+    familia_profesional: z.string(),
+    codigo_familia: z.string(),
+    nivel_educativo: z.string(),
+    clave_ciclo: z.string(),
+    ciclo_formativo_curso_de_especializacion: z.string(),
+    modalidad: z.string(),
+    tipo_ensenanza: z.string(),
+    grupos_1o: z.number(),
+    grupos_2o: z.number(),
+    grupos_3o: z.string().nullable(),
+    direccion_centro: z.string(),
+    codigo_postal: z.string(),
+    telefono: z.string(),
+    e_mail: z.string(),
+    web: z.string(),
+    localizacion: GeoPointSchema,
   })
-  .passthrough();
+  .strict();
 
 export type TrainingSourceRecord = z.infer<typeof TrainingSourceRecordSchema>;

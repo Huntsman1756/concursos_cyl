@@ -1,9 +1,9 @@
 {
-  "generatedAt": "2026-08-04T15:52:38.619Z",
+  "generatedAt": "2026-08-04T17:38:30.661Z",
   "qualityReport": {
     "counts": {
       "centers": 229,
-      "offerings": 1293,
+      "offerings": 1294,
       "offers": 1033,
       "programs": 187
     },
@@ -15,17 +15,67 @@
       "offerDescription": 0,
       "offerLocality": 0.08906098741529525,
       "offerProvince": 0
-    }
+    },
+    "reconciliationAnomalies": [
+      {
+        "candidates": [
+          {
+            "count": 10,
+            "value": "920 222185"
+          },
+          {
+            "count": 1,
+            "value": "920 221 875"
+          }
+        ],
+        "entityId": "05000701",
+        "entityType": "center",
+        "field": "phone",
+        "selectedValue": "920 222185"
+      },
+      {
+        "candidates": [
+          {
+            "count": 12,
+            "value": "http://gregoriofer.com/"
+          },
+          {
+            "count": 4,
+            "value": "https://gregoriofer.com/"
+          }
+        ],
+        "entityId": "47004937",
+        "entityType": "center",
+        "field": "website",
+        "selectedValue": "http://gregoriofer.com/"
+      },
+      {
+        "candidates": [
+          {
+            "count": 6,
+            "value": "INA"
+          },
+          {
+            "count": 1,
+            "value": "HOT"
+          }
+        ],
+        "entityId": "INA01M",
+        "entityType": "program",
+        "field": "familyCode",
+        "selectedValue": "INA"
+      }
+    ]
   },
   "qualityStatus": "passed",
   "resourceSnapshots": {
     "centers": {
       "qualityStatus": "passed",
       "recordCount": 229,
-      "resourcePath": "/data/v1/snapshots/20260804155238619-6e07eafedc96/centers.json",
+      "resourcePath": "/data/v1/snapshots/20260804173830661-6e07eafedc96/centers.json",
       "schemaVersion": "1.0.0",
-      "sha256": "995839b947e15ec86922633b46c6f521ffcdfbdd75495e0980dfb2cca9f92efc",
-      "snapshotFetchedAt": "2026-08-04T15:52:38.619Z",
+      "sha256": "593b7780f6cb9511c02edb26a769e5e1f951624f6e4b923a8e34caacb230c87a",
+      "snapshotFetchedAt": "2026-08-04T17:38:30.661Z",
       "sourceId": "jcyl-vocational-training-offer",
       "sourceUpdatedAt": null,
       "sourceUrl": "https://analisis.datosabiertos.jcyl.es/api/explore/v2.1/catalog/datasets/oferta-de-formacion-profesional/records"
@@ -33,10 +83,10 @@
     "jobOffers": {
       "qualityStatus": "passed",
       "recordCount": 1033,
-      "resourcePath": "/data/v1/snapshots/20260804155238619-6e07eafedc96/job-offers.json",
+      "resourcePath": "/data/v1/snapshots/20260804173830661-6e07eafedc96/job-offers.json",
       "schemaVersion": "1.0.0",
-      "sha256": "65e3a987b302e2ebba345351ab0c409a1a83393e0bba83466c55b6822c818147",
-      "snapshotFetchedAt": "2026-08-04T15:52:38.619Z",
+      "sha256": "1f91c2a1cc74e87e8b162e939ee6913f01297ea0d15d45c230e96497a46bdb42",
+      "snapshotFetchedAt": "2026-08-04T17:38:30.661Z",
       "sourceId": "jcyl-employment-offers",
       "sourceUpdatedAt": "2026-07-31T00:00:00.000Z",
       "sourceUrl": "https://analisis.datosabiertos.jcyl.es/api/explore/v2.1/catalog/datasets/ofertas-de-empleo/records"
@@ -44,21 +94,21 @@
     "programs": {
       "qualityStatus": "passed",
       "recordCount": 187,
-      "resourcePath": "/data/v1/snapshots/20260804155238619-6e07eafedc96/programs.json",
+      "resourcePath": "/data/v1/snapshots/20260804173830661-6e07eafedc96/programs.json",
       "schemaVersion": "1.0.0",
-      "sha256": "7c3538b583c2feb48207b90d5a69874325fedcf20bda0e781044282db76c0d22",
-      "snapshotFetchedAt": "2026-08-04T15:52:38.619Z",
+      "sha256": "b3757d75ad7f42cab5db515dd889bd9fb169c9a73aa4a440d41e823b8dbe1242",
+      "snapshotFetchedAt": "2026-08-04T17:38:30.661Z",
       "sourceId": "jcyl-vocational-training-offer",
       "sourceUpdatedAt": null,
       "sourceUrl": "https://analisis.datosabiertos.jcyl.es/api/explore/v2.1/catalog/datasets/oferta-de-formacion-profesional/records"
     },
     "trainingOfferings": {
       "qualityStatus": "passed",
-      "recordCount": 1293,
-      "resourcePath": "/data/v1/snapshots/20260804155238619-6e07eafedc96/training-offerings.json",
+      "recordCount": 1294,
+      "resourcePath": "/data/v1/snapshots/20260804173830661-6e07eafedc96/training-offerings.json",
       "schemaVersion": "1.0.0",
-      "sha256": "0d091ea5889e2939b3806bcf223a2652e89434dfa480e58ee49687ea4e89dade",
-      "snapshotFetchedAt": "2026-08-04T15:52:38.619Z",
+      "sha256": "0948871f993a4f0a03ed42ccef060c4a395e0898dc230086f234345fee7e880a",
+      "snapshotFetchedAt": "2026-08-04T17:38:30.661Z",
       "sourceId": "jcyl-vocational-training-offer",
       "sourceUpdatedAt": null,
       "sourceUrl": "https://analisis.datosabiertos.jcyl.es/api/explore/v2.1/catalog/datasets/oferta-de-formacion-profesional/records"

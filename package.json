@@ -15,11 +15,12 @@
     "test:e2e": "playwright test",
     "lint": "eslint .",
     "format:check": "prettier --check .",
-    "data:build": "tsx scripts/data/buildSnapshots.ts"
+    "data:build": "tsx scripts/data/buildSnapshots.ts",
+    "license:check": "tsx scripts/checkLicenses.ts"
   },
   "keywords": [],
   "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "type": "module",
   "dependencies": {
     "@radix-ui/react-dialog": "^1.1.23",
@@ -39,6 +40,7 @@
     "@testing-library/jest-dom": "^7.0.0",
     "@testing-library/react": "^16.3.2",
     "@testing-library/user-event": "^14.6.3",
+    "@types/node": "^26.1.2",
     "@types/react": "^19.2.18",
     "@types/react-dom": "^19.2.4",
     "@types/sanitize-html": "^2.16.1",

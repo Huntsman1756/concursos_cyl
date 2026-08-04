@@ -2,12 +2,16 @@ import {
   EducationCenterSchema,
   TrainingOfferingSchema,
   TrainingProgramSchema,
+  type CenterOwnership,
   type EducationCenter,
   type Modality,
+  type ReconciliationAnomaly,
+  type TeachingType,
   type TrainingLevel,
   type TrainingOffering,
   type TrainingProgram,
 } from "../../data/schemas/generated";
+import { trainingOfferingIdentity } from "../../data/schemas/trainingOfferingIdentity";
 import type { TrainingSourceRecord } from "../../data/schemas/trainingSource";
 
 const spanishCollator = new Intl.Collator("es");
@@ -30,10 +34,33 @@ const MODALITY_BY_OFFICIAL_LABEL: Record<string, Modality> = {
   mixta: "mixed",
 };
 
-interface TrainingNormalizationResult {
+const TEACHING_TYPE_BY_OFFICIAL_LABEL: Record<string, TeachingType> = {
+  publica: "public",
+  concertada: "concerted",
+  privada: "private",
+};
+
+const CENTER_OWNERSHIP_BY_OFFICIAL_LABEL: Record<string, CenterOwnership> = {
+  agricultura: "agriculture",
+  ayuntamiento: "municipality",
+  educacion: "education",
+  privada: "private",
+};
+
+export interface TrainingNormalizationResult {
   programs: TrainingProgram[];
   centers: EducationCenter[];
   offerings: TrainingOffering[];
+  reconciliationAnomalies: ReconciliationAnomaly[];
+}
+
+interface NormalizedSourceRow {
+  programKey: string;
+  program: TrainingProgram;
+  centerCode: string;
+  center: EducationCenter;
+  modality: Modality;
+  teachingType: TeachingType;
 }
 
 function normalizeLookupKey(value: string): string {
@@ -45,18 +72,27 @@ function normalizeLookupKey(value: string): string {
     .trim();
 }
 
-function requiredText(value: string | null | undefined, field: string): string {
-  const normalized = value?.trim() ?? "";
+function normalizeDisplayText(value: string): string {
+  return value.normalize("NFC").replace(/\s+/gu, " ").trim();
+}
 
+function requiredText(value: string | null | undefined, field: string): string {
+  const normalized = normalizeDisplayText(value ?? "");
   if (normalized.length === 0) {
     throw new Error(`Official ${field} must not be blank.`);
   }
-
   return normalized;
 }
 
+function requiredIdentifier(
+  value: string | null | undefined,
+  field: string,
+): string {
+  return requiredText(value, field).toLocaleUpperCase("es-ES");
+}
+
 function optionalText(value: string | null | undefined): string | null {
-  const normalized = value?.trim() ?? "";
+  const normalized = normalizeDisplayText(value ?? "");
   return normalized.length === 0 ? null : normalized;
 }
 
@@ -77,23 +113,218 @@ function optionalUrl(value: string | null | undefined): string | null {
   }
 }
 
-function normalizeLevel(value: string | null): TrainingLevel {
-  const level =
-    TRAINING_LEVEL_BY_OFFICIAL_LABEL[normalizeLookupKey(value ?? "")];
-
+function normalizeLevel(value: string): TrainingLevel {
+  const level = TRAINING_LEVEL_BY_OFFICIAL_LABEL[normalizeLookupKey(value)];
   if (level === undefined) {
-    throw new Error(
-      `Unsupported official training level: ${value ?? "(blank)"}.`,
-    );
+    throw new Error(`Unsupported official training level: ${value}.`);
   }
-
   return level;
 }
 
-function normalizeModality(value: string | null): Modality {
+function normalizeModality(value: string): Modality {
+  return MODALITY_BY_OFFICIAL_LABEL[normalizeLookupKey(value)] ?? "unknown";
+}
+
+function normalizeTeachingType(value: string): TeachingType {
+  const teachingType =
+    TEACHING_TYPE_BY_OFFICIAL_LABEL[normalizeLookupKey(value)];
+  if (teachingType === undefined) {
+    throw new Error(`Unsupported official teaching type: ${value}.`);
+  }
+  return teachingType;
+}
+
+function normalizeCenterOwnership(value: string): CenterOwnership {
+  const ownership =
+    CENTER_OWNERSHIP_BY_OFFICIAL_LABEL[normalizeLookupKey(value)];
+  if (ownership === undefined) {
+    throw new Error(`Unsupported official center ownership: ${value}.`);
+  }
+  return ownership;
+}
+
+function compareStableValues(
+  left: string | null,
+  right: string | null,
+): number {
+  if (left === null) return 1;
+  if (right === null) return -1;
   return (
-    MODALITY_BY_OFFICIAL_LABEL[normalizeLookupKey(value ?? "")] ?? "unknown"
+    spanishCollator.compare(left, right) || left.localeCompare(right, "es")
   );
+}
+
+function materialValueKey(
+  value: string | null,
+  field: ReconciliationAnomaly["field"],
+): string {
+  if (value === null) return "\u0000";
+  const normalized = normalizeDisplayText(value).toLocaleLowerCase("es-ES");
+  return field === "phone" ? normalized.replace(/\s/gu, "") : normalized;
+}
+
+function reconcileValue(
+  values: readonly (string | null)[],
+  entityType: ReconciliationAnomaly["entityType"],
+  entityId: string,
+  field: ReconciliationAnomaly["field"],
+  anomalies: ReconciliationAnomaly[],
+): string | null {
+  const materialGroups = new Map<
+    string,
+    { count: number; representatives: Map<string | null, number> }
+  >();
+
+  for (const rawValue of values) {
+    const value = rawValue === null ? null : normalizeDisplayText(rawValue);
+    const key = materialValueKey(value, field);
+    const group = materialGroups.get(key) ?? {
+      count: 0,
+      representatives: new Map<string | null, number>(),
+    };
+    group.count += 1;
+    group.representatives.set(
+      value,
+      (group.representatives.get(value) ?? 0) + 1,
+    );
+    materialGroups.set(key, group);
+  }
+
+  const rankedGroups = [...materialGroups.values()]
+    .map((group) => {
+      const representative = [...group.representatives.entries()].sort(
+        ([leftValue, leftCount], [rightValue, rightCount]) =>
+          rightCount - leftCount || compareStableValues(leftValue, rightValue),
+      )[0]?.[0];
+      if (representative === undefined) {
+        throw new Error(
+          `No canonical value candidates for ${entityId}.${field}.`,
+        );
+      }
+      return { value: representative, count: group.count };
+    })
+    .sort(
+      (left, right) =>
+        right.count - left.count ||
+        compareStableValues(left.value, right.value),
+    );
+
+  const selected = rankedGroups[0];
+  if (selected === undefined) {
+    throw new Error(`No canonical value candidates for ${entityId}.${field}.`);
+  }
+  if (rankedGroups.length > 1) {
+    anomalies.push({
+      entityType,
+      entityId,
+      field,
+      selectedValue: selected.value,
+      candidates: rankedGroups,
+    });
+  }
+  return selected.value;
+}
+
+function normalizeRecord(record: TrainingSourceRecord): NormalizedSourceRow {
+  const programKey = requiredIdentifier(record.clave_ciclo, "clave_ciclo");
+  const centerCode = requiredIdentifier(record.codigo_centro, "codigo_centro");
+  const program = TrainingProgramSchema.parse({
+    programKey,
+    programTitle: requiredText(
+      record.ciclo_formativo_curso_de_especializacion,
+      "ciclo_formativo_curso_de_especializacion",
+    ),
+    level: normalizeLevel(record.nivel_educativo),
+    familyCode: requiredIdentifier(record.codigo_familia, "codigo_familia"),
+    familyName: requiredText(record.familia_profesional, "familia_profesional"),
+  });
+  const center = EducationCenterSchema.parse({
+    centerCode,
+    centerName: requiredText(record.centro_educativo, "centro_educativo"),
+    province: requiredText(record.provincia, "provincia"),
+    locality: requiredText(record.localidad, "localidad"),
+    address: optionalText(record.direccion_centro),
+    phone: optionalText(record.telefono),
+    email: optionalText(record.e_mail),
+    website: optionalUrl(record.web),
+    centerOwnership: normalizeCenterOwnership(record.titularidad_centro),
+  });
+
+  return {
+    programKey,
+    program,
+    centerCode,
+    center,
+    modality: normalizeModality(record.modalidad),
+    teachingType: normalizeTeachingType(record.tipo_ensenanza),
+  };
+}
+
+function canonicalProgram(
+  programKey: string,
+  rows: readonly NormalizedSourceRow[],
+  anomalies: ReconciliationAnomaly[],
+): TrainingProgram {
+  const required = (field: ReconciliationAnomaly["field"]): string => {
+    const value = reconcileValue(
+      rows.map((row) => String(row.program[field as keyof TrainingProgram])),
+      "program",
+      programKey,
+      field,
+      anomalies,
+    );
+    if (value === null) throw new Error(`Canonical ${field} must not be null.`);
+    return value;
+  };
+
+  return TrainingProgramSchema.parse({
+    programKey,
+    programTitle: required("programTitle"),
+    level: required("level"),
+    familyCode: required("familyCode"),
+    familyName: required("familyName"),
+  });
+}
+
+function canonicalCenter(
+  centerCode: string,
+  rows: readonly NormalizedSourceRow[],
+  anomalies: ReconciliationAnomaly[],
+): EducationCenter {
+  const value = (
+    field: Exclude<
+      ReconciliationAnomaly["field"],
+      "programTitle" | "level" | "familyCode" | "familyName"
+    >,
+  ): string | null =>
+    reconcileValue(
+      rows.map((row) => row.center[field]),
+      "center",
+      centerCode,
+      field,
+      anomalies,
+    );
+  const required = (
+    field: "centerName" | "province" | "locality" | "centerOwnership",
+  ): string => {
+    const selected = value(field);
+    if (selected === null) {
+      throw new Error(`Canonical ${field} must not be null.`);
+    }
+    return selected;
+  };
+
+  return EducationCenterSchema.parse({
+    centerCode,
+    centerName: required("centerName"),
+    province: required("province"),
+    locality: required("locality"),
+    address: value("address"),
+    phone: value("phone"),
+    email: value("email"),
+    website: value("website"),
+    centerOwnership: required("centerOwnership"),
+  });
 }
 
 function compareByLabelAndIdentifier(
@@ -106,129 +337,98 @@ function compareByLabelAndIdentifier(
   );
 }
 
-function stableJson(value: unknown): string {
-  if (Array.isArray(value)) {
-    return `[${value.map(stableJson).join(",")}]`;
-  }
-  if (value !== null && typeof value === "object") {
-    const record = value as Record<string, unknown>;
-    return `{${Object.keys(record)
-      .sort()
-      .map((key) => `${JSON.stringify(key)}:${stableJson(record[key])}`)
-      .join(",")}}`;
-  }
-
-  return JSON.stringify(value);
-}
-
-function normalizeRecord(record: TrainingSourceRecord): {
-  program: TrainingProgram;
-  center: EducationCenter;
-  offering: TrainingOffering;
-} {
-  const programKey = requiredText(record.clave_ciclo, "clave_ciclo");
-  const centerCode = requiredText(record.codigo_centro, "codigo_centro");
-  const programTitle = requiredText(
-    record.ciclo_formativo_curso_de_especializacion,
-    "ciclo_formativo_curso_de_especializacion",
-  );
-  const familyName = requiredText(
-    record.familia_profesional,
-    "familia_profesional",
-  );
-  const familyCode = requiredText(record.codigo_familia, "codigo_familia");
-  const centerName = requiredText(record.centro_educativo, "centro_educativo");
-  const province = requiredText(record.provincia, "provincia");
-  const locality = requiredText(record.localidad, "localidad");
-  const level = normalizeLevel(record.nivel_educativo);
-  const modality = normalizeModality(record.modalidad);
-
-  const program = TrainingProgramSchema.parse({
-    programKey,
-    programTitle,
-    level,
-    familyCode,
-    familyName,
-  });
-  const center = EducationCenterSchema.parse({
-    centerCode,
-    centerName,
-    province,
-    locality,
-    address: optionalText(record.direccion_centro),
-    phone: optionalText(record.telefono),
-    email: optionalText(record.e_mail),
-    website: optionalUrl(record.web),
-  });
-  const offering = TrainingOfferingSchema.parse({
-    ...program,
-    centerCode,
-    province,
-    locality,
-    modality,
-  });
-
-  return { program, center, offering };
-}
-
 /**
- * Converts validated official vocational-training records into the public,
- * deterministic catalog contracts.
+ * Reconciles official vocational-training metadata and emits one stable public
+ * offering for every distinct evidence-backed source identity.
  */
 export function normalizeTraining(
   records: readonly TrainingSourceRecord[],
 ): TrainingNormalizationResult {
-  const normalized = records.map(normalizeRecord).sort((left, right) => {
-    const leftIdentity = `${left.offering.programKey}:${left.offering.centerCode}:${left.offering.modality}`;
-    const rightIdentity = `${right.offering.programKey}:${right.offering.centerCode}:${right.offering.modality}`;
+  const rows = records.map(normalizeRecord);
+  const anomalies: ReconciliationAnomaly[] = [];
+  const rowsByProgram = new Map<string, NormalizedSourceRow[]>();
+  const rowsByCenter = new Map<string, NormalizedSourceRow[]>();
 
-    return (
-      leftIdentity.localeCompare(rightIdentity) ||
-      stableJson(left).localeCompare(stableJson(right))
-    );
-  });
-  const programs = new Map<string, TrainingProgram>();
-  const centers = new Map<string, EducationCenter>();
-  const offerings = new Map<string, TrainingOffering>();
+  for (const row of rows) {
+    rowsByProgram.set(row.programKey, [
+      ...(rowsByProgram.get(row.programKey) ?? []),
+      row,
+    ]);
+    rowsByCenter.set(row.centerCode, [
+      ...(rowsByCenter.get(row.centerCode) ?? []),
+      row,
+    ]);
+  }
 
-  for (const entry of normalized) {
-    if (!programs.has(entry.program.programKey)) {
-      programs.set(entry.program.programKey, entry.program);
-    }
-    if (!centers.has(entry.center.centerCode)) {
-      centers.set(entry.center.centerCode, entry.center);
-    }
+  const programByKey = new Map(
+    [...rowsByProgram.entries()]
+      .sort(([left], [right]) => left.localeCompare(right))
+      .map(([key, groupedRows]) => [
+        key,
+        canonicalProgram(key, groupedRows, anomalies),
+      ]),
+  );
+  const centerByCode = new Map(
+    [...rowsByCenter.entries()]
+      .sort(([left], [right]) => left.localeCompare(right))
+      .map(([code, groupedRows]) => [
+        code,
+        canonicalCenter(code, groupedRows, anomalies),
+      ]),
+  );
+  const offeringById = new Map<string, TrainingOffering>();
 
-    const offeringIdentity = `${entry.offering.programKey}:${entry.offering.centerCode}:${entry.offering.modality}`;
-    if (!offerings.has(offeringIdentity)) {
-      offerings.set(offeringIdentity, entry.offering);
+  for (const row of rows) {
+    const program = programByKey.get(row.programKey);
+    const center = centerByCode.get(row.centerCode);
+    if (program === undefined || center === undefined) {
+      throw new Error("Canonical training reference is missing.");
     }
+    const identityParts = {
+      programKey: program.programKey,
+      centerCode: center.centerCode,
+      modality: row.modality,
+      teachingType: row.teachingType,
+      centerOwnership: center.centerOwnership,
+    };
+    const offering = TrainingOfferingSchema.parse({
+      offeringId: trainingOfferingIdentity(identityParts),
+      ...program,
+      centerCode: center.centerCode,
+      centerName: center.centerName,
+      province: center.province,
+      locality: center.locality,
+      modality: row.modality,
+      teachingType: row.teachingType,
+      centerOwnership: center.centerOwnership,
+    });
+    offeringById.set(offering.offeringId, offering);
   }
 
   return {
-    programs: [...programs.values()].sort((left, right) =>
+    programs: [...programByKey.values()].sort((left, right) =>
       compareByLabelAndIdentifier(
         { label: left.programTitle, identifier: left.programKey },
         { label: right.programTitle, identifier: right.programKey },
       ),
     ),
-    centers: [...centers.values()].sort((left, right) =>
+    centers: [...centerByCode.values()].sort((left, right) =>
       compareByLabelAndIdentifier(
         { label: left.centerName, identifier: left.centerCode },
         { label: right.centerName, identifier: right.centerCode },
       ),
     ),
-    offerings: [...offerings.values()].sort((left, right) =>
+    offerings: [...offeringById.values()].sort((left, right) =>
       compareByLabelAndIdentifier(
-        {
-          label: left.programTitle,
-          identifier: `${left.programKey}:${left.centerCode}:${left.modality}`,
-        },
-        {
-          label: right.programTitle,
-          identifier: `${right.programKey}:${right.centerCode}:${right.modality}`,
-        },
+        { label: left.programTitle, identifier: left.offeringId },
+        { label: right.programTitle, identifier: right.offeringId },
       ),
+    ),
+    reconciliationAnomalies: anomalies.sort(
+      (left, right) =>
+        left.entityType.localeCompare(right.entityType) ||
+        left.entityId.localeCompare(right.entityId) ||
+        left.field.localeCompare(right.field),
     ),
   };
 }

@@ -20,6 +20,7 @@ import {
   GeneratedManifestSchema,
   LoadableGeneratedManifestSchema,
 } from "../../data/schemas/generated";
+import { TrainingSourceRecordSchema } from "../../data/schemas/trainingSource";
 import {
   liveOfferSourceRecord,
   liveTrainingSourceRecord,
@@ -525,6 +526,43 @@ describe("buildSnapshots", () => {
         (snapshot) => snapshot.qualityStatus === "stale",
       ),
     ).toBe(true);
+  });
+
+  it("blocks upstream field drift and preserves the previous published resources", async () => {
+    const root = await temporaryRoot();
+    await buildSnapshots({ rootDirectory: root, ...fixedOptions });
+    const beforeManifest = await readManifest(root);
+    const resourcePaths = Object.values(beforeManifest.resourceSnapshots).map(
+      (snapshot) => snapshot.resourcePath,
+    );
+    const beforeBytes = await Promise.all(
+      resourcePaths.map((path) => readFile(assetPath(root, path))),
+    );
+
+    await expect(
+      buildSnapshots({
+        rootDirectory: root,
+        ...fixedOptions,
+        now: () => new Date("2026-08-05T10:00:00.000Z"),
+        fetchTrainingRecords: async () => [
+          TrainingSourceRecordSchema.parse({
+            ...liveTrainingSourceRecord,
+            upstream_renamed_field: "drift",
+          }),
+        ],
+      }),
+    ).rejects.toThrow(/previous snapshot marked stale/i);
+
+    const afterManifest = await readManifest(root);
+    expect(afterManifest.qualityStatus).toBe("stale");
+    expect(
+      Object.values(afterManifest.resourceSnapshots).map(
+        (snapshot) => snapshot.resourcePath,
+      ),
+    ).toEqual(resourcePaths);
+    await expect(
+      Promise.all(resourcePaths.map((path) => readFile(assetPath(root, path)))),
+    ).resolves.toEqual(beforeBytes);
   });
 
   it("publishes identical bytes for equivalent source arrays in reverse order", async () => {
@@ -1042,9 +1080,9 @@ describe("buildSnapshots", () => {
     expect(retained).not.toContain(orphanId);
   });
 
-  it.each(["public/data", ".codex-tmp"])(
-    "rejects a physical junction escape through %s",
-    async (linkedPath, context) => {
+  it.each([{ linkedPath: "public/data" }, { linkedPath: ".codex-tmp" }])(
+    "rejects a physical junction escape through $linkedPath",
+    async ({ linkedPath }) => {
       const root = await temporaryRoot();
       const outside = await temporaryRoot();
       const marker = join(outside, "outside-marker.txt");
@@ -1065,7 +1103,6 @@ describe("buildSnapshots", () => {
           "code" in error &&
           error.code === "EPERM"
         ) {
-          context.skip();
           return;
         }
         throw error;
