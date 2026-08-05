@@ -853,6 +853,109 @@ describe("buildSnapshots", () => {
     ).resolves.toBeUndefined();
   });
 
+  it("recovers a crash immediately after manifest commit from predeclared active entries", async () => {
+    const root = await temporaryRoot();
+    const approvedMappings = ambiguousOccupationMappings("approved");
+    const draftMappings = ambiguousOccupationMappings("draft");
+    await buildSnapshots({
+      rootDirectory: root,
+      ...fixedOptions,
+      loadCuratedMappings: async () => approvedMappings,
+    });
+    const previous = await readManifest(root);
+    const revokedDirectory = dirname(
+      assetPath(root, previous.resourceSnapshots.occupations.resourcePath),
+    );
+
+    await expect(
+      buildSnapshots({
+        rootDirectory: root,
+        ...fixedOptions,
+        now: () => new Date("2026-08-05T10:00:00.000Z"),
+        loadCuratedMappings: async () => draftMappings,
+        failureInjection: {
+          crashAfterManifestCommitBeforeActiveSnapshotRename: () => {
+            throw new Error("crash immediately after manifest commit");
+          },
+        } as SnapshotFailureInjection & {
+          crashAfterManifestCommitBeforeActiveSnapshotRename: () => void;
+        },
+      }),
+    ).rejects.toThrow(/crash immediately after manifest commit/i);
+    await expect(access(revokedDirectory)).resolves.toBeUndefined();
+
+    await expect(
+      buildSnapshots({
+        rootDirectory: root,
+        ...fixedOptions,
+        loadCuratedMappings: async () => draftMappings,
+        fetchTrainingRecords: async () => {
+          throw new Error("fetch failed after postcommit recovery");
+        },
+      }),
+    ).rejects.toThrow(/fetch failed after postcommit recovery/i);
+    await expect(access(revokedDirectory)).rejects.toMatchObject({
+      code: "ENOENT",
+    });
+    const active = await readManifest(root);
+    const candidatePath = assetPath(
+      root,
+      active.resourceSnapshots.occupations.resourcePath,
+    );
+    await expect(access(candidatePath)).resolves.toBeUndefined();
+    await expect(hashFile(candidatePath)).resolves.toBe(
+      active.resourceSnapshots.occupations.sha256,
+    );
+    await expect(
+      assertPublicSnapshotDistribution(root, draftMappings),
+    ).resolves.toBeUndefined();
+
+    await buildSnapshots({
+      rootDirectory: root,
+      ...fixedOptions,
+      now: () => new Date("2026-08-06T10:00:00.000Z"),
+      loadCuratedMappings: async () => draftMappings,
+    });
+    await expect(
+      assertPublicSnapshotDistribution(root, draftMappings),
+    ).resolves.toBeUndefined();
+  });
+
+  it("leaves predeclared unmoved active entries intact when commit never happens", async () => {
+    const root = await temporaryRoot();
+    const approvedMappings = ambiguousOccupationMappings("approved");
+    const draftMappings = ambiguousOccupationMappings("draft");
+    await buildSnapshots({
+      rootDirectory: root,
+      ...fixedOptions,
+      loadCuratedMappings: async () => approvedMappings,
+    });
+    const manifestPath = join(root, "public", "data", "v1", "manifest.json");
+    const manifestBefore = await readFile(manifestPath);
+    const previous = await readManifest(root);
+    const activeDirectory = dirname(
+      assetPath(root, previous.resourceSnapshots.occupations.resourcePath),
+    );
+
+    await expect(
+      buildSnapshots({
+        rootDirectory: root,
+        ...fixedOptions,
+        now: () => new Date("2026-08-05T10:00:00.000Z"),
+        loadCuratedMappings: async () => draftMappings,
+        failureInjection: {
+          beforeManifestCommit: () => {
+            throw new Error("commit never happened");
+          },
+        },
+      }),
+    ).rejects.toThrow(/commit never happened/i);
+
+    await expect(readFile(manifestPath)).resolves.toEqual(manifestBefore);
+    await expect(access(activeDirectory)).resolves.toBeUndefined();
+    await expect(readManifest(root)).resolves.toEqual(previous);
+  });
+
   it("restores moved entries when a committed journal still has the previous manifest active", async () => {
     const root = await temporaryRoot();
     const approvedMappings = ambiguousOccupationMappings("approved");

@@ -186,6 +186,7 @@ export interface SnapshotFailureInjection {
   beforeRollbackManifestCommit?: () => void | Promise<void>;
   crashAfterActiveSnapshotQuarantine?: () => void | Promise<void>;
   crashAfterActiveJournalBeforeFirstSnapshotRename?: () => void | Promise<void>;
+  crashAfterManifestCommitBeforeActiveSnapshotRename?: () => void | Promise<void>;
 }
 
 export interface BuildSnapshotsOptions {
@@ -1476,6 +1477,7 @@ async function createSnapshotQuarantine(
   target: string,
   previous: PreviousSnapshot | undefined,
   candidateManifest: GeneratedManifest,
+  invalidDirectories: readonly string[],
 ): Promise<SnapshotQuarantine> {
   const directory = resolve(
     temporaryRoot,
@@ -1485,7 +1487,10 @@ async function createSnapshotQuarantine(
   const quarantine = {
     directory,
     journalPath: resolve(directory, "snapshot-quarantine-journal.json"),
-    entries: [],
+    entries: invalidDirectories.map((source) => ({
+      source,
+      destination: resolve(directory, basename(source)),
+    })),
     committed: false,
     buildId,
     previousManifestIdentity:
@@ -1505,12 +1510,14 @@ async function moveSnapshotsToQuarantine(
   afterFirstJournalWrite?: () => void | Promise<void>,
 ): Promise<void> {
   for (const [index, source] of directories.entries()) {
-    const entry = {
-      source,
-      destination: resolve(quarantine.directory, basename(source)),
-    };
-    quarantine.entries.push(entry);
-    await writeSnapshotQuarantineJournal(root, quarantine);
+    const entry = quarantine.entries.find(
+      (candidate) => resolve(candidate.source) === resolve(source),
+    );
+    if (entry === undefined) {
+      throw new Error(
+        `Snapshot quarantine intent was not declared: ${source}.`,
+      );
+    }
     if (index === 0) await afterFirstJournalWrite?.();
     await safeRename(root, entry.source, entry.destination);
   }
@@ -1603,6 +1610,7 @@ async function commitManifestWithSnapshotQuarantine(
         target,
         previous,
         manifest,
+        invalidDirectories,
       );
     }
     await failureInjection?.beforeRevokedSnapshotPrune?.();
@@ -1622,6 +1630,20 @@ async function commitManifestWithSnapshotQuarantine(
       failureInjection?.beforeManifestCommit,
     );
     manifestCommitted = true;
+
+    if (
+      failureInjection?.crashAfterManifestCommitBeforeActiveSnapshotRename !==
+      undefined
+    ) {
+      try {
+        await failureInjection.crashAfterManifestCommitBeforeActiveSnapshotRename();
+      } catch (error) {
+        throw new SnapshotCrashSimulationError(
+          error instanceof Error ? error.message : String(error),
+          { cause: error },
+        );
+      }
+    }
 
     await failureInjection?.beforeActiveRevokedSnapshotQuarantine?.();
     if (quarantine !== undefined) {
