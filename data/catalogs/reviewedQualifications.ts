@@ -16,6 +16,8 @@ export const ReviewedQualificationSchema = z
   })
   .strict();
 
+export type ReviewedQualification = z.infer<typeof ReviewedQualificationSchema>;
+
 export function qualificationCatalogKey(value: string): string {
   return value
     .trim()

@@ -1,5 +1,7 @@
 import { describe, expect, it } from "vitest";
 
+import { REVIEWED_PROGRAM_QUALIFICATION_LINKS } from "../../data/catalogs/reviewedProgramQualifications";
+import { REVIEWED_QUALIFICATIONS } from "../../data/catalogs/reviewedQualifications";
 import type { JobOffer, TrainingProgram } from "../../data/schemas/generated";
 import type {
   Occupation,
@@ -17,7 +19,7 @@ import { publishedRequirementId } from "./requirements";
 const occupationId = "occupation:cno11:2713";
 const program: TrainingProgram = {
   programKey: "IFC03S",
-  programTitle: "Técnico/a Superior en Desarrollo de Aplicaciones Web",
+  programTitle: "Desarrollo de Aplicaciones WEB",
   level: "higher",
   familyCode: "IFC",
   familyName: "Informática y Comunicaciones",
@@ -113,6 +115,10 @@ function fixture() {
   );
   const data: OfferMatchingData = {
     programs: [program],
+    qualifications: REVIEWED_QUALIFICATIONS,
+    programQualificationLinks: REVIEWED_PROGRAM_QUALIFICATION_LINKS.filter(
+      ({ programKey }) => programKey === program.programKey,
+    ),
     occupations: [occupation],
     aliases: [alias],
     links: [link],
@@ -147,13 +153,17 @@ describe("deriveEvidenceState", () => {
   it("ignores stale answer IDs and never turns absence into a gap", () => {
     const { matches } = fixture();
     const phrase = matches.find(({ offerId }) => offerId === "offer:phrase");
+    const unknownRequirementId = `requirement:${"f".repeat(64)}`;
 
-    expect(deriveEvidenceState(phrase!, { "requirement:stale": "lacks" })).toBe(
-      "occupational_relationship_incomplete",
-    );
+    expect(
+      deriveEvidenceState(phrase!, { [unknownRequirementId]: "lacks" }),
+    ).toBe("occupational_relationship_incomplete");
     expect(deriveEvidenceState(phrase!, {})).toBe(
       "occupational_relationship_incomplete",
     );
+    expect(() =>
+      deriveEvidenceState(phrase!, { "requirement:stale": "lacks" }),
+    ).toThrow();
   });
 
   it("keeps has and unsure neutral while exact approved evidence remains explicit", () => {
@@ -171,9 +181,13 @@ describe("deriveEvidenceState", () => {
   });
 
   it("exposes a closed answer contract", () => {
+    const validId = `requirement:${"1".repeat(64)}`;
+    expect(SessionAnswersSchema.safeParse({ [validId]: "has" }).success).toBe(
+      true,
+    );
     expect(
       SessionAnswersSchema.safeParse({ "requirement:1": "has" }).success,
-    ).toBe(true);
+    ).toBe(false);
     expect(
       SessionAnswersSchema.safeParse({ "requirement:1": "maybe" }).success,
     ).toBe(false);
@@ -185,6 +199,10 @@ describe("orderOfferMatches", () => {
     const { matches, requirement } = fixture();
     const sameDateData: OfferMatchingData = {
       programs: [program],
+      qualifications: REVIEWED_QUALIFICATIONS,
+      programQualificationLinks: REVIEWED_PROGRAM_QUALIFICATION_LINKS.filter(
+        ({ programKey }) => programKey === program.programKey,
+      ),
       occupations: [occupation],
       aliases: [alias],
       links: [link],

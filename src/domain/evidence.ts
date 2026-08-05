@@ -8,7 +8,7 @@ import {
 
 export const SessionAnswerValueSchema = z.enum(["has", "lacks", "unsure"]);
 export const SessionAnswersSchema = z.record(
-  z.string().min(1),
+  z.string().regex(/^requirement:[a-f0-9]{64}$/u),
   SessionAnswerValueSchema,
 );
 
@@ -28,9 +28,10 @@ export function deriveEvidenceState(
   answers: Readonly<Record<string, SessionAnswerValue>>,
 ): EvidenceState {
   const match = OfferMatchSchema.parse(input);
+  const validatedAnswers = SessionAnswersSchema.parse(answers);
   if (
     match.requirements.some(
-      (requirement) => answers[requirement.id] === "lacks",
+      (requirement) => validatedAnswers[requirement.id] === "lacks",
     )
   ) {
     return "declared_explicit_gap";
