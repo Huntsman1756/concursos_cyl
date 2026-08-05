@@ -133,6 +133,10 @@ export const JobOfferSchema = z
   })
   .strict();
 
+// Published requirement evidence intentionally remains a separate additive
+// resource. Keeping this fixed-point schema strict preserves retained v1
+// JobOffer payloads and clients that validate them.
+
 const GeneratedResourceSnapshotSchema = SourceSnapshotSchema.extend({
   resourcePath: z.string().refine(isGenericImmutableGeneratedResourcePath, {
     message: "Resource path must be an immutable kebab-case JSON asset.",

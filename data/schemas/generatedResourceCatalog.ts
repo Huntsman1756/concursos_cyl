@@ -29,6 +29,10 @@ export const GENERATED_RESOURCE_CATALOG = {
     fileName: "mapping-coverage.json",
     sourceKind: "curatedRelationships",
   },
+  publishedRequirements: {
+    fileName: "published-requirements.json",
+    sourceKind: "offers",
+  },
 } as const;
 
 export type GeneratedResourceKey = keyof typeof GENERATED_RESOURCE_CATALOG;

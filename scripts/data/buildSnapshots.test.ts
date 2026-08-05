@@ -321,6 +321,52 @@ describe("buildSnapshots", () => {
     ).toBe(true);
   });
 
+  it("publishes quote-backed requirements as an additive hashed resource", async () => {
+    const root = await temporaryRoot();
+    const requirementQuote = "Permiso de conducir B y vehículo propio.";
+
+    await buildSnapshots({
+      rootDirectory: root,
+      ...fixedOptions,
+      fetchOfferRecords: async () => [
+        {
+          ...liveOfferSourceRecord,
+          descripcion: `<h2>Requisitos</h2><ul><li>${requirementQuote}</li></ul><h2>Condiciones</h2><p>Teletrabajo.</p>`,
+        },
+      ],
+    });
+
+    const manifest = await readManifest(root);
+    const snapshot = manifest.resourceSnapshots.publishedRequirements;
+    expect(snapshot).toBeDefined();
+    const bytes = await readFile(assetPath(root, snapshot.resourcePath));
+    const resource = JSON.parse(bytes.toString("utf8")) as Array<{
+      offerId: string;
+      requirements: Array<{
+        sourceQuote: string;
+        category: string;
+        normalizedValue: string;
+      }>;
+    }>;
+
+    expect(resource).toEqual([
+      {
+        offerId: liveOfferSourceRecord.identificador,
+        requirements: [
+          expect.objectContaining({
+            category: "driving_license_or_vehicle",
+            normalizedValue: "B",
+            sourceQuote: requirementQuote,
+          }),
+        ],
+      },
+    ]);
+    expect(snapshot.recordCount).toBe(1);
+    expect(createHash("sha256").update(bytes).digest("hex")).toBe(
+      snapshot.sha256,
+    );
+  });
+
   it("publishes Gestión Administrativa as draft coverage without exposing the unresolved CNO mapping", async () => {
     const root = await temporaryRoot();
     const reviewNote =

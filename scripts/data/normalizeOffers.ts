@@ -8,6 +8,11 @@ import {
 } from "../../data/schemas/generated";
 import { serializeJobOfferProvenanceForV1 } from "../../data/schemas/jobOfferProvenance";
 import type { OfferSourceRecord } from "../../data/schemas/offerSource";
+import {
+  PublishedRequirementsResourceSchema,
+  type OfferPublishedRequirements,
+} from "../../src/domain/requirements";
+import { extractPublishedRequirements } from "./extractRequirements";
 import { SOURCE_CONFIG } from "./sourceConfig";
 import { sanitizeOfferHtml } from "./sanitizeOfferHtml";
 
@@ -15,6 +20,11 @@ const spanishCollator = new Intl.Collator("es");
 
 export interface NormalizeOffersOptions {
   datasetSnapshot?: SourceSnapshot;
+}
+
+export interface NormalizedOfferArtifacts {
+  jobOffers: JobOffer[];
+  publishedRequirements: OfferPublishedRequirements[];
 }
 
 function requiredText(
@@ -170,4 +180,27 @@ export function normalizeOffers(
         left.id.localeCompare(right.id)
       );
     });
+}
+
+/**
+ * Produces the fixed v1 offers and their additive quote-backed evidence without
+ * adding fields to the strict JobOffer payload.
+ */
+export function normalizeOffersWithPublishedRequirements(
+  records: readonly OfferSourceRecord[],
+  options: NormalizeOffersOptions = {},
+): NormalizedOfferArtifacts {
+  const jobOffers = normalizeOffers(records, options);
+  const publishedRequirements = PublishedRequirementsResourceSchema.parse(
+    jobOffers.flatMap((offer) => {
+      const requirements = extractPublishedRequirements(offer.id, {
+        sections: offer.descriptionSections,
+      });
+      return requirements.length === 0
+        ? []
+        : [{ offerId: offer.id, requirements }];
+    }),
+  );
+
+  return { jobOffers, publishedRequirements };
 }

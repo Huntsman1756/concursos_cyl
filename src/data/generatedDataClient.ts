@@ -21,6 +21,10 @@ import {
   isPermittedGeneratedAssetPath,
   legacyGeneratedResourcePath,
 } from "../../data/schemas/generatedResourceCatalog";
+import {
+  PublishedRequirementsResourceSchema,
+  type OfferPublishedRequirements,
+} from "../domain/requirements";
 
 export type GeneratedDataErrorCode = "network" | "schema" | "missing";
 
@@ -115,6 +119,25 @@ export function loadManifest(): Promise<LoadableGeneratedManifest> {
     "/data/v1/manifest.json",
     LoadableGeneratedManifestSchema,
     { cache: "no-store" },
+  );
+}
+
+/**
+ * Loads quote-backed requirement evidence when the manifest advertises it.
+ * Retained pre-sidecar manifests remain valid and intentionally resolve empty.
+ */
+export function loadPublishedRequirements(
+  manifest: LoadableGeneratedManifest,
+): Promise<OfferPublishedRequirements[]> {
+  const resourceSnapshots =
+    manifest.resourceSnapshots as typeof manifest.resourceSnapshots &
+      Record<string, { resourcePath: string } | undefined>;
+  const snapshot = resourceSnapshots.publishedRequirements;
+  if (snapshot === undefined) return Promise.resolve([]);
+
+  return loadGeneratedResource(
+    snapshot.resourcePath,
+    PublishedRequirementsResourceSchema,
   );
 }
 

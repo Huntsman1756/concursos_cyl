@@ -62,9 +62,13 @@ import {
   type TrainingSourceRecord,
 } from "../../data/schemas/trainingSource";
 import { loadApprovedMappings } from "../../src/domain/occupation";
+import { PublishedRequirementsResourceSchema } from "../../src/domain/requirements";
 import { fetchAllRecords } from "./fetchAllRecords";
 import { hashFile } from "./hashFile";
-import { normalizeOffers } from "./normalizeOffers";
+import {
+  normalizeOffers,
+  normalizeOffersWithPublishedRequirements,
+} from "./normalizeOffers";
 import { normalizeTraining } from "./normalizeTraining";
 import {
   buildMappingCoverage,
@@ -153,6 +157,10 @@ const RESOURCE_DEFINITIONS = {
   mappingCoverage: {
     ...GENERATED_RESOURCE_CATALOG.mappingCoverage,
     schema: MappingCoverageResourceSchema,
+  },
+  publishedRequirements: {
+    ...GENERATED_RESOURCE_CATALOG.publishedRequirements,
+    schema: PublishedRequirementsResourceSchema,
   },
 } as const;
 
@@ -1250,9 +1258,13 @@ async function writeCandidate(
     offerRecords.length,
     hashCanonicalSource(offerRecords),
   );
-  const offers = normalizeOffers(offerRecords, {
-    datasetSnapshot: offerSourceSnapshot,
-  });
+  const normalizedOfferArtifacts = normalizeOffersWithPublishedRequirements(
+    offerRecords,
+    {
+      datasetSnapshot: offerSourceSnapshot,
+    },
+  );
+  const offers = normalizedOfferArtifacts.jobOffers;
   const approvedMappings = loadApprovedMappings(curatedMappings);
   const canonicalAliasIdentity = (alias: {
     alias: string;
@@ -1294,6 +1306,7 @@ async function writeCandidate(
       training.programs,
       curatedMappings.links,
     ),
+    publishedRequirements: normalizedOfferArtifacts.publishedRequirements,
   };
   const qualityReport = runQualityGates(
     candidate,

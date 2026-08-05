@@ -3,7 +3,10 @@ import { describe, expect, it } from "vitest";
 import { JobOfferSchema } from "../../data/schemas/generated";
 import { OfferSourceRecordSchema } from "../../data/schemas/offerSource";
 import { liveOfferSourceRecord } from "../../tests/fixtures/sourceRecords";
-import { normalizeOffers } from "./normalizeOffers";
+import {
+  normalizeOffers,
+  normalizeOffersWithPublishedRequirements,
+} from "./normalizeOffers";
 
 const offerSourceWithRequirements = OfferSourceRecordSchema.parse({
   ...liveOfferSourceRecord,
@@ -42,6 +45,38 @@ describe("normalizeOffers", () => {
     expect(JSON.stringify(offer)).not.toContain("<li>");
     expect(JSON.stringify(offer)).not.toContain("alert(1)");
     expect(JobOfferSchema.safeParse(offer).success).toBe(true);
+  });
+
+  it("keeps the strict JobOffer contract unchanged and returns requirements as a sidecar", () => {
+    const source = {
+      ...offerSourceWithRequirements,
+      descripcion:
+        "<h2>Requisitos</h2><ul><li>Permiso de conducir B.</li></ul><h2>Condiciones</h2><p>Teletrabajo.</p>",
+    };
+
+    const result = normalizeOffersWithPublishedRequirements([source]);
+
+    expect(result.jobOffers).toHaveLength(1);
+    expect(result.jobOffers[0]).not.toHaveProperty("publishedRequirements");
+    expect(JobOfferSchema.safeParse(result.jobOffers[0]).success).toBe(true);
+    expect(
+      JobOfferSchema.safeParse({
+        ...result.jobOffers[0],
+        publishedRequirements: result.publishedRequirements,
+      }).success,
+    ).toBe(false);
+    expect(result.publishedRequirements).toEqual([
+      {
+        offerId: "08-2026-12345",
+        requirements: [
+          expect.objectContaining({
+            category: "driving_license_or_vehicle",
+            normalizedValue: "B",
+            sourceQuote: "Permiso de conducir B.",
+          }),
+        ],
+      },
+    ]);
   });
 
   it("keeps the record update timestamp separate from dataset snapshot provenance", () => {
