@@ -27,8 +27,14 @@ const EXPLICIT_NEGATION =
   /\b(?:no\s+requerid[oa]s?|no\s+se\s+requiere|no\s+es\s+necesari[oa]|no\s+hace\s+falta|sin\s+necesidad\s+de|no\s+imprescindible|no\s+obligatori[oa])\b/u;
 const SCOPED_SIN_NEGATION =
   /\bsin\s+(?:experiencia|disponibilidad|permiso(?:\s+de\s+conducir)?|carnet|carne|vehiculo|titulacion|titulo|certificado|colegiacion|habilitacion)\b/u;
-const CLAUSE_BOUND_CONDITIONAL =
-  /(?:^(?:[•·▪◦*-]\s*)?si\b|[,;:.!?]\s*si\b|\ben\s+caso\s+de\b|\bde\s+ser\s+posible\b)/u;
+const CONDITIONAL_OR_TENTATIVE =
+  /(?:\bsi\b|\bsiempre\s+que\b|\ben\s+(?:caso\s+de|su\s+caso)\b|\bcuando\s+(?:proceda|corresponda|aplique)\b|\bde\s+(?:ser\s+posible|poder\s+ser)\b|\b(?:(?:se\s+)?podri(?:a|an)\s+valorar(?:se)?|podri(?:a|an)\s+valorarse)\b)/u;
+
+const AFFIRMATIVE_SI_TOKEN = "affirmativesi";
+const EXPLICIT_PREFIX =
+  "(?:(?:observaciones|requisitos?)\\s+)?(?:affirmativesi\\s+)?(?:(?:(?:se\\s+)?(?:requiere|exige)|es\\s+(?:necesario|imprescindible)|requisito|disponer\\s+de)\\s+)?";
+const NEUTRAL_SUFFIX =
+  "(?:\\s+sin\\s+(?:restricciones|incidencias|interrupciones|limitaciones))?";
 
 const NUMBER_WORDS: Readonly<Record<string, number>> = {
   un: 1,
@@ -56,11 +62,19 @@ const LANGUAGE_NAMES: Readonly<Record<string, string>> = {
   valenciano: "valenciano",
 };
 
-function searchableText(value: string): string {
+function protectAffirmativeSi(value: string): string {
   return value
+    .toLocaleLowerCase("es-ES")
+    .replace(
+      /(^|[^\p{Letter}])sí(?=$|[^\p{Letter}])/gu,
+      `$1${AFFIRMATIVE_SI_TOKEN}`,
+    );
+}
+
+function searchableText(value: string): string {
+  return protectAffirmativeSi(value)
     .normalize("NFD")
     .replace(/\p{Diacritic}/gu, "")
-    .toLocaleLowerCase("es-ES")
     .replace(/^[\s•·▪◦*-]+/u, "")
     .replace(/[^\p{Letter}\p{Number}+/]+/gu, " ")
     .replace(/\s+/gu, " ")
@@ -68,10 +82,9 @@ function searchableText(value: string): string {
 }
 
 function ambiguityText(value: string): string {
-  return value
+  return protectAffirmativeSi(value)
     .normalize("NFD")
     .replace(/\p{Diacritic}/gu, "")
-    .toLocaleLowerCase("es-ES")
     .replace(/\s+/gu, " ")
     .trim();
 }
@@ -106,7 +119,7 @@ function isAmbiguousOrNegated(sourceQuote: string): boolean {
     OPTIONAL.test(text) ||
     EXPLICIT_NEGATION.test(text) ||
     SCOPED_SIN_NEGATION.test(text) ||
-    CLAUSE_BOUND_CONDITIONAL.test(clauseText) ||
+    CONDITIONAL_OR_TENTATIVE.test(clauseText) ||
     hasAmbiguousExperienceDuration(sourceQuote)
   );
 }
@@ -167,7 +180,7 @@ function experienceRule(text: string): ClassifiedRequirement | undefined {
 
 function drivingRule(text: string): ClassifiedRequirement | undefined {
   const licenceB =
-    /\b(?:permiso|carnet|carne)\s+(?:de\s+)?conducir\b.{0,24}?\b(?:tipo\s+)?b\b/u.test(
+    /\b(?:permiso|carnet|carne)\s+(?:de\s+)?(?:conducir|conduccion)\b.{0,24}?\b(?:tipo\s+)?b\b/u.test(
       text,
     );
   if (licenceB) {
@@ -177,7 +190,11 @@ function drivingRule(text: string): ClassifiedRequirement | undefined {
       parserRule: "license.driving_b",
     };
   }
-  if (/\b(?:permiso|carnet|carne)\s+(?:de\s+)?conducir\b/u.test(text)) {
+  if (
+    /\b(?:permiso|carnet|carne)\s+(?:de\s+)?(?:conducir|conduccion)\b/u.test(
+      text,
+    )
+  ) {
     return {
       category: "driving_license_or_vehicle",
       normalizedValue: "driving_license",
@@ -345,6 +362,101 @@ function classify(sourceQuote: string): ClassifiedRequirement | undefined {
   return matches[0];
 }
 
+/**
+ * A recognized token is not enough to claim a requirement. The complete item
+ * must match one of these deliberately small grammars; otherwise its remaining
+ * prose may change the meaning and the extractor fails closed.
+ */
+function hasExplicitRequirementGrammar(
+  sourceQuote: string,
+  classified: ClassifiedRequirement,
+): boolean {
+  const text = searchableText(sourceQuote);
+  const anchored = (body: string): boolean =>
+    new RegExp(`^${EXPLICIT_PREFIX}(?:${body})${NEUTRAL_SUFFIX}$`, "u").test(
+      text,
+    );
+
+  switch (classified.parserRule) {
+    case "license.driving_b":
+      return anchored(
+        "(?:permiso|carnet|carne)\\s+(?:de\\s+)?(?:conducir|conduccion)(?:\\s+(?:tipo|clase))?\\s+b(?:\\s+y\\s+vehiculo\\s+propio)?(?:\\s+obligatori[oa])?(?:\\s+en\\s+vigor)?(?:\\s+para\\s+centro\\s+preferente)?",
+      );
+    case "license.driving_generic":
+      return anchored(
+        "(?:permiso|carnet|carne)\\s+(?:de\\s+)?(?:conducir|conduccion)(?:\\s+obligatori[oa])?(?:\\s+en\\s+vigor)?",
+      );
+    case "mobility.own_vehicle":
+      return anchored(
+        "vehiculo\\s+propio(?:\\s+obligatorio)?(?:\\s+para\\s+acudir\\s+al\\s+centro\\s+de\\s+trabajo)?",
+      );
+    case "experience.years":
+    case "experience.months":
+      return anchored(
+        "experiencia(?:\\s+(?:laboral|profesional))?(?:\\s+minima)?(?:\\s+de)?(?:\\s+al\\s+menos)?\\s+(?:\\d+|un|una|uno|dos|tres|cuatro|cinco|seis|doce)\\s+(?:anos?|mes(?:es)?)",
+      );
+    case "qualification.official_title":
+      return anchored(
+        "(?:bachiller(?:\\s+o\\s+equivalente)?|graduad[oa]\\s+en\\s+eso(?:\\s+o\\s+equivalente)?|fp\\s+basica|tecnic[oa](?:/a)?(?:\\s+superior)?\\s+en\\s+[\\p{Letter}\\p{Number}+/]+(?:\\s+[\\p{Letter}\\p{Number}+/]+)*|(?:grado|licenciad[oa]|diplomad[oa]|ingenieria|master|doctorado|titulacion)\\s+(?:en|de)\\s+[\\p{Letter}\\p{Number}+/]+(?:\\s+[\\p{Letter}\\p{Number}+/]+)*)",
+      );
+    case "certificate.professional_registration":
+      return anchored("colegiacion(?:\\s+profesional)?\\s+vigente");
+    case "certificate.food_handler":
+      return anchored(
+        "(?:carnet|carne)\\s+de\\s+manipulador(?:a)?\\s+de\\s+alimentos",
+      );
+    case "certificate.professional_certificate":
+      return anchored(
+        "certificado\\s+de\\s+profesionalidad(?:\\s+[\\p{Letter}\\p{Number}+/]+)*",
+      );
+    case "license.professional_authorization":
+      return anchored("habilitacion\\s+profesional");
+    case "language.cefr":
+      return (
+        anchored(
+          "(?:(?:idiomas?|nivel|conocimiento\\s+del\\s+idioma|dominio\\s+del\\s+idioma)\\s+)?(?:aleman|catalan|castellano|euskera|espanol|frances|gallego|ingles|italiano|portugues|valenciano)(?:\\s+nivel)?\\s+[abc][12]",
+        ) ||
+        anchored(
+          "nivel\\s+[abc][12](?:\\s+o\\s+superior)?\\s+de\\s+(?:aleman|catalan|castellano|euskera|espanol|frances|gallego|ingles|italiano|portugues|valenciano)",
+        )
+      );
+    case "language.named":
+      return anchored(
+        "(?:(?:idioma|conocimiento\\s+del\\s+idioma|dominio\\s+del\\s+idioma)\\s+)?(?:aleman|catalan|castellano|euskera|espanol|frances|gallego|ingles|italiano|portugues|valenciano)",
+      );
+    case "schedule.night_shifts":
+      return anchored(
+        "(?:disponibilidad\\s+para\\s+trabajar\\s+en\\s+)?(?:turnos?\\s+de\\s+noche|turnos?\\s+nocturnos?|noches?|turnos?\\s+rotativos?\\s+de\\s+manana\\s+tarde\\s+y\\s+noche)",
+      );
+    case "schedule.weekends":
+      return anchored(
+        "(?:disponibilidad\\s+para\\s+trabajar\\s+en\\s+)?(?:fines?\\s+de\\s+semana|sabados?|domingos?)|horarios\\s+en\\s+turnos?\\s+rotativos?\\s+de\\s+lunes\\s+a\\s+sabados",
+      );
+    case "schedule.variable":
+      return anchored(
+        "(?:(?:horarios\\s+en|disponibilidad\\s+para\\s+trabajar\\s+en|flexibilidad\\s+y\\s+disponibilidad\\s+para\\s+trabajar\\s+en)\\s+)?turnos?\\s+rotativos?(?:\\s+de\\s+(?:lunes\\s+a\\s+sabados|manana\\s+tarde\\s+y\\s+noche))?|disponibilidad\\s+horaria",
+      );
+    case "work_mode.remote":
+      return anchored("(?:teletrabajo|trabajo\\s+remoto|modalidad\\s+remota)");
+    case "work_mode.hybrid":
+      return anchored(
+        "(?:(?:modalidad\\s+de\\s+trabajo|trabajo)\\s+)?(?:hibrid[oa]|modalidad\\s+mixta)",
+      );
+    case "work_mode.on_site":
+      return anchored("(?:trabajo\\s+)?(?:presencial|trabajo\\s+en\\s+centro)");
+    case "mobility.travel":
+      return anchored(
+        "(?:disponibilidad\\s+para\\s+viajar|viajes?\\s+frecuentes?)",
+      );
+    case "mobility.geographic":
+      return anchored(
+        "(?:disponibilidad\\s+para\\s+desplazarse|movilidad\\s+geografica)",
+      );
+    default:
+      return false;
+  }
+}
+
 /** Extracts deterministic evidence only from the sanitized requirements section. */
 export function extractPublishedRequirements(
   offerId: string,
@@ -363,8 +475,16 @@ export function extractPublishedRequirements(
       continue;
     seenQuotes.add(sourceQuote);
 
-    const ambiguousOrNegated = isAmbiguousOrNegated(sourceQuote);
-    const classified = ambiguousOrNegated ? undefined : classify(sourceQuote);
+    const markerAmbiguousOrNegated = isAmbiguousOrNegated(sourceQuote);
+    const candidate = markerAmbiguousOrNegated
+      ? undefined
+      : classify(sourceQuote);
+    const grammarAccepted =
+      candidate !== undefined &&
+      hasExplicitRequirementGrammar(sourceQuote, candidate);
+    const ambiguousOrNegated =
+      markerAmbiguousOrNegated || (candidate !== undefined && !grammarAccepted);
+    const classified = grammarAccepted ? candidate : undefined;
     const category = classified?.category ?? "unclassified";
     results.push(
       PublishedRequirementSchema.parse({

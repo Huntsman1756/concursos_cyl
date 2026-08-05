@@ -41,6 +41,117 @@ function description(requirements: readonly string[]) {
 }
 
 describe("extractPublishedRequirements", () => {
+  it.each([
+    "Permiso de conducir B si el puesto lo requiere.",
+    "Permiso de conducir B si procede.",
+    "Permiso de conducir B si aplica.",
+    "Permiso de conducir B si cabe.",
+    "Permiso de conducir B en su caso.",
+    "Permiso de conducir B cuando proceda.",
+    "Permiso de conducir B cuando corresponda.",
+    "Permiso de conducir B cuando aplique.",
+    "Experiencia mínima de 2 años siempre que sea posible.",
+    "Experiencia mínima de 2 años de poder ser.",
+    "Experiencia mínima de 2 años; se podría valorar.",
+    "Experiencia mínima de 2 años; se podrían valorar.",
+    "Experiencia mínima de 2 años: podría valorarse.",
+    "Experiencia mínima de 2 años: podrían valorarse.",
+    "• PERMISO DE CONDUCIR B, SI PROCEDE.",
+    "SI TIENE permiso de conducir B.",
+  ])("fails closed for extended conditional prose: %s", (sourceQuote) => {
+    expect(
+      extractPublishedRequirements(
+        "offer:extended-conditional",
+        description([sourceQuote]),
+      ),
+    ).toEqual([
+      expect.objectContaining({
+        category: "unclassified",
+        normalizedValue: null,
+        parserRule: "unclassified.ambiguous_or_negated",
+        sourceQuote,
+      }),
+    ]);
+  });
+
+  it.each([
+    "Sí, se requiere permiso de conducir B.",
+    "SÍ: SE REQUIERE PERMISO DE CONDUCIR B.",
+    "• Sí; se requiere permiso de conducir B.",
+    "- SÍ, permiso de conducir B obligatorio.",
+  ])("keeps accented affirmative driving requirements: %s", (sourceQuote) => {
+    expect(
+      extractPublishedRequirements(
+        "offer:affirmative",
+        description([sourceQuote]),
+      ),
+    ).toEqual([
+      expect.objectContaining({
+        category: "driving_license_or_vehicle",
+        normalizedValue: "B",
+        parserRule: "license.driving_b",
+        sourceQuote,
+      }),
+    ]);
+  });
+
+  it.each([
+    [
+      "Observaciones: Se requiere carné de conducir clase B",
+      "license.driving_b",
+    ],
+    ["Carnet de conducir B en vigor.", "license.driving_b"],
+    ["Permiso de conducción B y vehículo propio.", "license.driving_b"],
+    [
+      "Vehículo propio para acudir al centro de trabajo.",
+      "mobility.own_vehicle",
+    ],
+    ["Graduado en ESO o equivalente.", "qualification.official_title"],
+    ["Nivel C1 o superior de Español", "language.cefr"],
+    ["Idiomas: Castellano (nivel C1).", "language.cefr"],
+    ["Horarios en turnos rotativos de lunes a sábados.", "schedule.weekends"],
+    [
+      "Disponibilidad para trabajar en turnos rotativos de mañana, tarde y noche.",
+      "schedule.night_shifts",
+    ],
+  ])(
+    "keeps explicit live requirement grammar: %s",
+    (sourceQuote, parserRule) => {
+      expect(
+        extractPublishedRequirements(
+          "offer:live-grammar",
+          description([sourceQuote]),
+        ),
+      ).toEqual([
+        expect.objectContaining({
+          parserRule,
+          sourceQuote,
+        }),
+      ]);
+    },
+  );
+
+  it.each([
+    "Permiso de conducir B bajo criterio empresarial.",
+    "Experiencia mínima de 2 años según circunstancias futuras.",
+  ])(
+    "fails closed when recognized evidence has unknown residue: %s",
+    (sourceQuote) => {
+      expect(
+        extractPublishedRequirements(
+          "offer:unknown-residue",
+          description([sourceQuote]),
+        ),
+      ).toEqual([
+        expect.objectContaining({
+          category: "unclassified",
+          normalizedValue: null,
+          parserRule: "unclassified.ambiguous_or_negated",
+        }),
+      ]);
+    },
+  );
+
   it("preserves exact quote bytes and exports the canonical SHA-256 ID", () => {
     const offerId = "offer:exact-bytes";
     const sourceQuote = "  Permiso de conducir B.  ";
