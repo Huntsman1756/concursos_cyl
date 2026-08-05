@@ -1,47 +1,54 @@
 import { describe, expect, it } from "vitest";
 
+import { REVIEWED_QUALIFICATIONS } from "../../data/catalogs/reviewedQualifications";
 import curatedProcedureCatalog from "../../data/curated/official-procedures.json";
 import type { JobOffer } from "../../data/schemas/generated";
-import {
-  publishedRequirementId,
-  type PublishedRequirement,
-} from "./requirements";
 import {
   OfficialProcedureCatalogSchema,
   ReliableActionSchema,
   deriveActions,
+  officialProcedureIdentity,
+  type ActionContext,
+  type ReliableAction,
 } from "./actionEngine";
+import {
+  publishedRequirementId,
+  type PublishedRequirement,
+} from "./requirements";
 
-const offer: JobOffer = {
-  id: "offer:1",
-  title: "Administrativo",
-  province: "León",
-  locality: "León",
-  publishedAt: "2026-08-01T00:00:00.000Z",
-  sourceName: "ECYL",
-  descriptionText: "Oferta oficial",
-  descriptionSections: {
-    summary: [],
-    functions: [],
-    requirements: [],
-    conditions: [],
-    application: [],
-    other: [],
-  },
-  originalUrl: "https://empleo.jcyl.es/oferta/1",
-  sourceSnapshot: {
-    sourceId: "ofertas-de-empleo",
-    sourceUrl: "https://datosabiertos.jcyl.es/ofertas-de-empleo",
-    sourceUpdatedAt: "2026-08-01T00:00:00.000Z",
-    snapshotFetchedAt: "2026-08-02T00:00:00.000Z",
-    schemaVersion: "1.0.0",
-    recordCount: 1,
-    sha256: "a".repeat(64),
-    qualityStatus: "passed",
-  },
-};
+function jobOffer(id = "offer:1"): JobOffer {
+  return {
+    id,
+    title: "Oferta revisada",
+    province: "León",
+    locality: "León",
+    publishedAt: "2026-08-01T00:00:00.000Z",
+    sourceName: "ECYL",
+    descriptionText: "Oferta oficial",
+    descriptionSections: {
+      summary: [],
+      functions: [],
+      requirements: [],
+      conditions: [],
+      application: [],
+      other: [],
+    },
+    originalUrl: `https://empleo.jcyl.es/oferta/${id.replace("offer:", "")}`,
+    sourceSnapshot: {
+      sourceId: "ofertas-de-empleo",
+      sourceUrl: "https://datosabiertos.jcyl.es/ofertas-de-empleo",
+      sourceUpdatedAt: "2026-08-01T00:00:00.000Z",
+      snapshotFetchedAt: "2026-08-02T00:00:00.000Z",
+      schemaVersion: "1.0.0",
+      recordCount: 1,
+      sha256: "a".repeat(64),
+      qualityStatus: "passed",
+    },
+  };
+}
 
 function requirement(
+  offerId: string,
   category:
     | "qualification_or_specialization"
     | "experience"
@@ -65,7 +72,7 @@ function requirement(
 ): PublishedRequirement {
   const sourceQuote = `Requisito ${String(normalizedValue)}`;
   return {
-    id: publishedRequirementId(offer.id, category, sourceQuote),
+    id: publishedRequirementId(offerId, category, sourceQuote),
     category,
     normalizedValue,
     sourceQuote,
@@ -74,93 +81,89 @@ function requirement(
   } as PublishedRequirement;
 }
 
-const baseContext = {
+const offer = jobOffer();
+const publishedExperience = requirement(
+  offer.id,
+  "experience",
+  12,
+  "experience.months",
+);
+const baseContext: ActionContext = {
   offer,
-  evidenceState: "explicit_fit" as const,
-  requirements: [] as PublishedRequirement[],
+  evidenceState: "explicit_fit",
+  requirements: [publishedExperience],
   answers: {},
   selectedProvince: null,
   isSelectedProvinceSuitable: null,
-  programKey: "ADG01M",
-  officialProcedures: [],
 };
 
-describe("ReliableActionSchema", () => {
-  it("validates all seven members produced from their exact triggers", () => {
-    const experience = requirement("experience", 12, "experience.months");
-    const qualification = requirement(
-      "qualification_or_specialization",
-      "Técnico en Gestión Administrativa",
-      "qualification.official_title",
-    );
-    const credential = requirement(
-      "certificate_or_regulated_license",
-      "food_handler",
-      "certificate.food_handler",
-    );
+function declaredGap(gap: PublishedRequirement): ActionContext {
+  return {
+    ...baseContext,
+    evidenceState: "declared_explicit_gap",
+    requirements: [gap],
+    answers: { [gap.id]: "lacks" },
+  };
+}
+
+function findAction<T extends ReliableAction["actionType"]>(
+  actions: ReliableAction[],
+  actionType: T,
+): Extract<ReliableAction, { actionType: T }> {
+  const action = actions.find(
+    (candidate) => candidate.actionType === actionType,
+  );
+  if (!action) throw new Error(`Missing ${actionType}`);
+  return action as Extract<ReliableAction, { actionType: T }>;
+}
+
+describe("closed trusted action contract", () => {
+  it("produces and validates all seven action members from exact triggers", () => {
     const onSite = requirement(
+      offer.id,
       "mobility_or_work_mode",
       "on_site",
       "work_mode.on_site",
     );
-    const procedureCatalog = OfficialProcedureCatalogSchema.parse([
-      {
-        id: "procedure:food-handler-cyl",
-        requirementCategory: "certificate_or_regulated_license",
-        normalizedValue: "food_handler",
-        title: "Información oficial sobre manipulación de alimentos",
-        href: "https://www.saludcastillayleon.es/seguridadalimentaria/es/higiene-alimentaria",
-        reviewedAt: "2026-08-05",
-        sourceNote: "Página oficial revisada manualmente para esta prueba.",
-        catalogVersion: "1.0.0",
-      },
-    ]);
-    const contexts = [
-      baseContext,
-      {
+    const daw = requirement(
+      offer.id,
+      "qualification_or_specialization",
+      "Técnico/a Superior en Desarrollo de Aplicaciones Web",
+      "qualification.official_title",
+    );
+    const drivingB = requirement(
+      offer.id,
+      "driving_license_or_vehicle",
+      "B",
+      "license.driving_b",
+    );
+    const foodHandler = requirement(
+      offer.id,
+      "certificate_or_regulated_license",
+      "food_handler",
+      "certificate.food_handler",
+    );
+    const actions = [
+      ...deriveActions(baseContext),
+      ...deriveActions({
         ...baseContext,
-        evidenceState: "occupational_relationship_incomplete" as const,
-      },
-      {
+        evidenceState: "occupational_relationship_incomplete",
+      }),
+      ...deriveActions({
         ...baseContext,
         requirements: [onSite],
         selectedProvince: "Valladolid",
         isSelectedProvinceSuitable: false,
-      },
-      {
-        ...baseContext,
-        evidenceState: "declared_explicit_gap" as const,
-        requirements: [experience],
-        answers: { [experience.id]: "lacks" as const },
-      },
-      {
-        ...baseContext,
-        evidenceState: "declared_explicit_gap" as const,
-        requirements: [qualification],
-        answers: { [qualification.id]: "lacks" as const },
-      },
-      {
-        ...baseContext,
-        evidenceState: "declared_explicit_gap" as const,
-        requirements: [credential],
-        answers: { [credential.id]: "lacks" as const },
-        officialProcedures: procedureCatalog,
-      },
-      {
-        ...baseContext,
-        evidenceState: "declared_explicit_gap" as const,
-        requirements: [credential],
-        answers: { [credential.id]: "lacks" as const },
-      },
+      }),
+      ...deriveActions(declaredGap(publishedExperience)),
+      ...deriveActions(declaredGap(daw)),
+      ...deriveActions(declaredGap(drivingB)),
+      ...deriveActions(declaredGap(foodHandler)),
     ];
-    const actions = contexts.flatMap((context) => deriveActions(context));
-    const produced = new Map(
-      actions.map((action) => [
-        action.actionType,
-        ReliableActionSchema.parse(action),
-      ]),
+    const produced = new Set(
+      actions.map((action) => ReliableActionSchema.parse(action).actionType),
     );
-    expect([...produced.keys()].sort()).toEqual(
+    expect([...produced].sort()).toEqual(
       [
         "open_original_offer",
         "verify_offer_requirements",
@@ -173,22 +176,71 @@ describe("ReliableActionSchema", () => {
     );
   });
 
-  it("validates the deliberately empty curated catalog", () => {
-    expect(
-      OfficialProcedureCatalogSchema.parse(curatedProcedureCatalog),
-    ).toEqual([]);
+  it("parses the one static DGT procedure with its deterministic full-payload ID", () => {
+    const catalog = OfficialProcedureCatalogSchema.parse(
+      curatedProcedureCatalog,
+    );
+    expect(catalog).toHaveLength(1);
+    expect(catalog[0]).toMatchObject({
+      requirementCategory: "driving_license_or_vehicle",
+      normalizedValue: "B",
+      title: "Solicitud examen teórico por libre",
+      href: "https://sede.dgt.gob.es/es/permisos-de-conducir/obtencion-y-gestion-de-permisos/solicitud-de-prueba-de-aptitud-de-examen/",
+    });
+    expect(catalog[0].id).toBe(officialProcedureIdentity(catalog[0]));
   });
 
-  it("rejects an invalid action/target pairing and extra target fields", () => {
-    const open = deriveActions(baseContext).find(
-      (action) => action.actionType === "open_original_offer",
+  it.each([
+    "id",
+    "requirementCategory",
+    "normalizedValue",
+    "href",
+    "sourceNote",
+  ])("rejects a procedure action with forged %s", (field) => {
+    const drivingB = requirement(
+      offer.id,
+      "driving_license_or_vehicle",
+      "B",
+      "license.driving_b",
     );
+    const action = findAction(
+      deriveActions(declaredGap(drivingB)),
+      "open_official_procedure",
+    );
+    const forged = structuredClone(action);
+    Object.assign(forged.procedureAudit, {
+      [field]: field === "normalizedValue" ? "C" : "forged",
+    });
+    expect(ReliableActionSchema.safeParse(forged).success).toBe(false);
+  });
+
+  it("rejects invalid target pairings and extra target fields", () => {
+    const open = findAction(deriveActions(baseContext), "open_original_offer");
     expect(
       ReliableActionSchema.safeParse({
         ...open,
         targetKind: "regulated_training",
         datasetKey: "oferta-de-formacion-profesional",
-        programKey: "ADG01M",
+        programKeys: ["IFC03S"],
+      }).success,
+    ).toBe(false);
+  });
+
+  it("rejects a forged program key on an otherwise valid training action", () => {
+    const daw = requirement(
+      offer.id,
+      "qualification_or_specialization",
+      "Técnico/a Superior en Desarrollo de Aplicaciones Web",
+      "qualification.official_title",
+    );
+    const action = findAction(
+      deriveActions(declaredGap(daw)),
+      "view_regulated_training_route",
+    );
+    expect(
+      ReliableActionSchema.safeParse({
+        ...action,
+        programKeys: ["ADG01M"],
       }).success,
     ).toBe(false);
   });
@@ -205,21 +257,17 @@ describe("deriveActions", () => {
     );
   });
 
-  it("sends incomplete requirement verification to the original offer first", () => {
+  it("verifies an empty publication even when the occupational fit is exact", () => {
     expect(
-      deriveActions({
-        ...baseContext,
-        evidenceState: "occupational_relationship_incomplete",
-      })[0],
+      deriveActions({ ...baseContext, requirements: [] })[0],
     ).toMatchObject({
       actionType: "verify_offer_requirements",
-      targetKind: "external_offer",
-      datasetKey: "ofertas-de-empleo",
+      reason: "requirements_not_published",
       href: offer.originalUrl,
     });
   });
 
-  it("routes an unclassified published statement to exact offer verification", () => {
+  it("verifies incomplete and all-unclassified publication evidence", () => {
     const sourceQuote = "Se valorarán capacidades adecuadas.";
     const unclassified: PublishedRequirement = {
       id: publishedRequirementId(offer.id, "unclassified", sourceQuote),
@@ -234,57 +282,119 @@ describe("deriveActions", () => {
     ).toMatchObject({
       actionType: "verify_offer_requirements",
       reason: "unclassified_requirement",
-      href: offer.originalUrl,
       requirementAudit: { requirementId: unclassified.id, sourceQuote },
     });
   });
 
-  it("sends a missing qualification to the official regulated FP route", () => {
-    const missing = requirement(
+  it("resolves a DAW qualification only through approved reviewed links", () => {
+    const daw = requirement(
+      offer.id,
       "qualification_or_specialization",
-      "Técnico en Gestión Administrativa",
+      "Técnico/a Superior en Desarrollo de Aplicaciones Web",
       "qualification.official_title",
     );
     expect(
-      deriveActions({
-        ...baseContext,
-        evidenceState: "declared_explicit_gap",
-        requirements: [missing],
-        answers: { [missing.id]: "lacks" },
-      }),
-    ).toContainEqual(
-      expect.objectContaining({
-        actionType: "view_regulated_training_route",
-        targetKind: "regulated_training",
-        datasetKey: "oferta-de-formacion-profesional",
-        programKey: "ADG01M",
-        requirementAudit: expect.objectContaining({
-          requirementId: missing.id,
-          sourceQuote: missing.sourceQuote,
-          parserRule: missing.parserRule,
-        }),
-      }),
-    );
+      findAction(
+        deriveActions(declaredGap(daw)),
+        "view_regulated_training_route",
+      ),
+    ).toMatchObject({
+      datasetKey: "oferta-de-formacion-profesional",
+      programKeys: ["IFC03S", "IFC03SD"],
+    });
   });
 
-  it("uses the mandatory not-published wording and filter semantics", () => {
-    const experience = requirement("experience", 12, "experience.months");
-    const action = deriveActions({
-      ...baseContext,
-      evidenceState: "declared_explicit_gap",
-      requirements: [experience],
-      answers: { [experience.id]: "lacks" },
-    }).find(
-      (candidate) => candidate.actionType === "explore_unpublished_requirement",
+  it.each([
+    ["Grado en Derecho", "IFC03S"],
+    ["Grado en Enfermería", "ADG01M"],
+    ["Técnico en Cuidados Auxiliares de Enfermería", "IFC03SD"],
+  ])(
+    "does not copy a wrong input program for unlinked qualification %s",
+    (label, wrongProgram) => {
+      expect(
+        REVIEWED_QUALIFICATIONS.some(
+          ({ canonicalLabel }) => canonicalLabel === label,
+        ),
+      ).toBe(true);
+      const gap = requirement(
+        offer.id,
+        "qualification_or_specialization",
+        label,
+        "qualification.official_title",
+      );
+      const forgedLegacyContext = {
+        ...declaredGap(gap),
+        programKey: wrongProgram,
+      } as unknown as ActionContext;
+      expect(
+        deriveActions(forgedLegacyContext).map(({ actionType }) => actionType),
+      ).toEqual(["add_session_check", "open_original_offer"]);
+    },
+  );
+
+  it("uses the static exact DGT route for an explicit missing driving B requirement", () => {
+    const drivingB = requirement(
+      offer.id,
+      "driving_license_or_vehicle",
+      "B",
+      "license.driving_b",
     );
-    expect(action).toMatchObject({
-      label: "Ver ofertas relacionadas donde no se publica este requisito",
-      filter: {
-        publicationState: "not_published",
-        category: "experience",
-        normalizedValue: 12,
-      },
+    const action = findAction(
+      deriveActions(declaredGap(drivingB)),
+      "open_official_procedure",
+    );
+    expect(action.procedureAudit).toMatchObject({
+      requirementCategory: "driving_license_or_vehicle",
+      normalizedValue: "B",
+      title: "Solicitud examen teórico por libre",
+      reviewedAt: "2026-08-05",
+      catalogVersion: "1.0.0",
     });
+    expect(action.href).toBe(action.procedureAudit.href);
+  });
+
+  it("falls back when no exact static procedure exists", () => {
+    const credential = requirement(
+      offer.id,
+      "certificate_or_regulated_license",
+      "food_handler",
+      "certificate.food_handler",
+    );
+    expect(
+      deriveActions(declaredGap(credential)).map(
+        ({ actionType }) => actionType,
+      ),
+    ).toEqual(["add_session_check", "open_original_offer"]);
+  });
+
+  it("ignores a caller-injected procedure catalog", () => {
+    const credential = requirement(
+      offer.id,
+      "certificate_or_regulated_license",
+      "food_handler",
+      "certificate.food_handler",
+    );
+    const payload = {
+      requirementCategory: "certificate_or_regulated_license" as const,
+      normalizedValue: "food_handler",
+      title: "Ruta inyectada",
+      href: "https://example.com/forged",
+      reviewedAt: "2026-08-05",
+      sourceNote:
+        "Contenido externo que no pertenece al catálogo estático revisado.",
+      catalogVersion: "1.0.0",
+    };
+    const injected = {
+      ...payload,
+      id: officialProcedureIdentity(payload),
+    };
+    const legacyInjectedContext = {
+      ...declaredGap(credential),
+      officialProcedures: [injected],
+    } as unknown as ActionContext;
+    expect(
+      deriveActions(legacyInjectedContext).map(({ actionType }) => actionType),
+    ).toEqual(["add_session_check", "open_original_offer"]);
   });
 
   it.each([
@@ -293,124 +403,40 @@ describe("deriveActions", () => {
     ["schedule_availability", "weekends", "schedule.weekends"],
     ["mobility_or_work_mode", "travel", "mobility.travel"],
   ] as const)(
-    "routes a declared %s gap to offers where that requirement is not published",
+    "routes a declared %s gap only to offers where it is not published",
     (category, normalizedValue, parserRule) => {
-      const gap = requirement(category, normalizedValue, parserRule);
+      const gap = requirement(offer.id, category, normalizedValue, parserRule);
       expect(
-        deriveActions({
-          ...baseContext,
-          evidenceState: "declared_explicit_gap",
-          requirements: [gap],
-          answers: { [gap.id]: "lacks" },
-        }),
-      ).toContainEqual(
-        expect.objectContaining({
-          actionType: "explore_unpublished_requirement",
-          filter: {
-            publicationState: "not_published",
-            category,
-            normalizedValue,
-          },
-        }),
-      );
-    },
-  );
-
-  it.each([
-    ["driving_license_or_vehicle", "B", "license.driving_b"],
-    [
-      "certificate_or_regulated_license",
-      "food_handler",
-      "certificate.food_handler",
-    ],
-  ] as const)(
-    "falls back safely for an unmapped exact %s requirement",
-    (category, normalizedValue, parserRule) => {
-      const gap = requirement(category, normalizedValue, parserRule);
-      expect(
-        deriveActions({
-          ...baseContext,
-          evidenceState: "declared_explicit_gap",
-          requirements: [gap],
-          answers: { [gap.id]: "lacks" },
-        }).map((action) => action.actionType),
-      ).toEqual(["add_session_check", "open_original_offer"]);
-    },
-  );
-
-  it("requires an exact curated procedure match and preserves its review evidence", () => {
-    const credential = requirement(
-      "certificate_or_regulated_license",
-      "food_handler",
-      "certificate.food_handler",
-    );
-    const procedures = OfficialProcedureCatalogSchema.parse([
-      {
-        id: "procedure:food-handler-cyl",
-        requirementCategory: "certificate_or_regulated_license",
-        normalizedValue: "food_handler",
-        title: "Información oficial sobre manipulación de alimentos",
-        href: "https://www.saludcastillayleon.es/seguridadalimentaria/es/higiene-alimentaria",
-        reviewedAt: "2026-08-05",
-        sourceNote:
-          "Página oficial de la Junta de Castilla y León revisada manualmente.",
-        catalogVersion: "1.0.0",
-      },
-    ]);
-    const action = deriveActions({
-      ...baseContext,
-      evidenceState: "declared_explicit_gap",
-      requirements: [credential],
-      answers: { [credential.id]: "lacks" },
-      officialProcedures: procedures,
-    }).find((candidate) => candidate.actionType === "open_official_procedure");
-    expect(action).toMatchObject({
-      procedureAudit: {
-        procedureId: "procedure:food-handler-cyl",
-        reviewedAt: "2026-08-05",
-        catalogVersion: "1.0.0",
-        sourceNote: expect.any(String),
-      },
-    });
-  });
-
-  it("falls back to a session check when no exact procedure is reviewed", () => {
-    const credential = requirement(
-      "certificate_or_regulated_license",
-      "food_handler",
-      "certificate.food_handler",
-    );
-    expect(
-      deriveActions({
-        ...baseContext,
-        evidenceState: "declared_explicit_gap",
-        requirements: [credential],
-        answers: { [credential.id]: "lacks" },
-      }),
-    ).toContainEqual(
-      expect.objectContaining({
-        actionType: "add_session_check",
-        explanation: "No hay una acción automática fiable disponible.",
-      }),
-    );
-  });
-
-  it("ignores stale answer IDs when deriving targeted actions", () => {
-    expect(
-      deriveActions({
-        ...baseContext,
-        evidenceState: "declared_explicit_gap",
-        answers: {
-          [`requirement:${"a".repeat(64)}`]: "lacks",
+        findAction(
+          deriveActions(declaredGap(gap)),
+          "explore_unpublished_requirement",
+        ),
+      ).toMatchObject({
+        label: "Ver ofertas relacionadas donde no se publica este requisito",
+        filter: {
+          publicationState: "not_published",
+          category,
+          normalizedValue,
         },
-      }).map((action) => action.actionType),
+      });
+    },
+  );
+
+  it("ignores stale answer IDs", () => {
+    expect(
+      deriveActions({
+        ...baseContext,
+        evidenceState: "declared_explicit_gap",
+        answers: { [`requirement:${"a".repeat(64)}`]: "lacks" },
+      }).map(({ actionType }) => actionType),
     ).toEqual(["add_session_check", "open_original_offer"]);
   });
 
   it.each(["remote", "hybrid"] as const)(
-    "suppresses a location action for explicit %s evidence",
+    "suppresses location adjustment for explicit %s evidence",
     (mode) => {
       const mobility = requirement(
+        offer.id,
         "mobility_or_work_mode",
         mode,
         mode === "remote" ? "work_mode.remote" : "work_mode.hybrid",
@@ -421,60 +447,41 @@ describe("deriveActions", () => {
           requirements: [mobility],
           selectedProvince: "Valladolid",
           isSelectedProvinceSuitable: false,
-        }).map((action) => action.actionType),
+        }).map(({ actionType }) => actionType),
       ).not.toContain("adjust_search_area");
     },
   );
 
-  it("creates a location action only from exact on-site evidence", () => {
+  it("adjusts location only from exact on-site evidence", () => {
     const onSite = requirement(
+      offer.id,
       "mobility_or_work_mode",
       "on_site",
       "work_mode.on_site",
     );
     expect(
-      deriveActions({
-        ...baseContext,
-        requirements: [onSite],
-        selectedProvince: "Valladolid",
-        isSelectedProvinceSuitable: false,
-      }),
-    ).toContainEqual(
-      expect.objectContaining({
-        actionType: "adjust_search_area",
-        selectedProvince: "Valladolid",
-        mobilityRequirementAudit: expect.objectContaining({
-          requirementId: onSite.id,
+      findAction(
+        deriveActions({
+          ...baseContext,
+          requirements: [onSite],
+          selectedProvince: "Valladolid",
+          isSelectedProvinceSuitable: false,
         }),
-      }),
-    );
-  });
-
-  it("does not infer location suitability when modality is unknown", () => {
-    const actions = deriveActions({
-      ...baseContext,
+        "adjust_search_area",
+      ),
+    ).toMatchObject({
       selectedProvince: "Valladolid",
-      isSelectedProvinceSuitable: false,
+      mobilityRequirementAudit: { requirementId: onSite.id },
     });
-    expect(actions.map((action) => action.actionType)).not.toContain(
-      "adjust_search_area",
-    );
-    expect(actions.map((action) => action.actionType)).toContain(
-      "verify_offer_requirements",
-    );
   });
 
-  it("deduplicates actions and applies the closed priority deterministically", () => {
-    const first = requirement("experience", 12, "experience.months");
-    const second = requirement("experience", 12, "experience.months");
+  it("deduplicates and orders actions deterministically", () => {
     const context = {
-      ...baseContext,
-      evidenceState: "declared_explicit_gap" as const,
-      requirements: [first, second],
-      answers: { [first.id]: "lacks" as const },
+      ...declaredGap(publishedExperience),
+      requirements: [publishedExperience, publishedExperience],
     };
     expect(deriveActions(context)).toEqual(deriveActions(context));
-    expect(deriveActions(context).map((action) => action.actionType)).toEqual([
+    expect(deriveActions(context).map(({ actionType }) => actionType)).toEqual([
       "explore_unpublished_requirement",
       "open_original_offer",
     ]);

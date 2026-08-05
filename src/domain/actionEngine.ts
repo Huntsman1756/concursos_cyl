@@ -2,6 +2,9 @@ import { sha256 } from "@noble/hashes/sha2.js";
 import { bytesToHex, utf8ToBytes } from "@noble/hashes/utils.js";
 import { z } from "zod";
 
+import { REVIEWED_PROGRAM_QUALIFICATION_LINKS } from "../../data/catalogs/reviewedProgramQualifications";
+import { REVIEWED_QUALIFICATIONS } from "../../data/catalogs/reviewedQualifications";
+import curatedProcedureCatalog from "../../data/curated/official-procedures.json";
 import { JobOfferSchema } from "../../data/schemas/generated";
 import { EvidenceStateSchema, SessionAnswersSchema } from "./evidence";
 import {
@@ -19,12 +22,36 @@ const NonBlankStringSchema = z
 const RequirementAuditSchema = z
   .object({
     requirementId: z.string().regex(/^requirement:[a-f0-9]{64}$/u),
+    category: RequirementCategorySchema,
+    normalizedValue: z.union([
+      NonBlankStringSchema,
+      z.number().positive(),
+      z.null(),
+    ]),
     sourceQuote: NonBlankStringSchema,
     parserRule: NonBlankStringSchema,
+    parserVersion: z.literal("1.0.0"),
   })
-  .strict();
+  .strict()
+  .superRefine((audit, context) => {
+    const requirement = PublishedRequirementSchema.safeParse({
+      id: audit.requirementId,
+      category: audit.category,
+      normalizedValue: audit.normalizedValue,
+      sourceQuote: audit.sourceQuote,
+      parserRule: audit.parserRule,
+      parserVersion: audit.parserVersion,
+    });
+    if (!requirement.success) {
+      context.addIssue({
+        code: "custom",
+        message:
+          "Requirement audit must preserve a valid published requirement.",
+      });
+    }
+  });
 
-const procedureIdSchema = z.string().regex(/^procedure:[a-z0-9-]+$/u);
+const procedureIdSchema = z.string().regex(/^procedure:[a-f0-9]{64}$/u);
 const dateOnlySchema = z
   .string()
   .regex(/^\d{4}-\d{2}-\d{2}$/u)
@@ -35,9 +62,8 @@ const dateOnlySchema = z
     );
   }, "Review date must be a real calendar date.");
 
-export const OfficialProcedureSchema = z
+const OfficialProcedureIdentityInputSchema = z
   .object({
-    id: procedureIdSchema,
     requirementCategory: z.enum([
       "driving_license_or_vehicle",
       "certificate_or_regulated_license",
@@ -47,12 +73,67 @@ export const OfficialProcedureSchema = z
     href: z
       .string()
       .url()
-      .refine((value) => new URL(value).protocol === "https:"),
+      .refine(
+        (value) => value.startsWith("https://"),
+        "Procedure URL must use HTTPS.",
+      ),
     reviewedAt: dateOnlySchema,
     sourceNote: NonBlankStringSchema,
     catalogVersion: z.string().regex(/^\d+\.\d+\.\d+$/u),
   })
   .strict();
+
+type OfficialProcedureIdentityInput = z.infer<
+  typeof OfficialProcedureIdentityInputSchema
+>;
+
+export function officialProcedureIdentity(
+  input: OfficialProcedureIdentityInput,
+): string {
+  const procedure = OfficialProcedureIdentityInputSchema.parse({
+    requirementCategory: input.requirementCategory,
+    normalizedValue: input.normalizedValue,
+    title: input.title,
+    href: input.href,
+    reviewedAt: input.reviewedAt,
+    sourceNote: input.sourceNote,
+    catalogVersion: input.catalogVersion,
+  });
+  return shaIdentity("procedure", [
+    procedure.requirementCategory,
+    String(procedure.normalizedValue),
+    procedure.title,
+    procedure.href,
+    procedure.reviewedAt,
+    procedure.sourceNote,
+    procedure.catalogVersion,
+  ]);
+}
+
+export const OfficialProcedureSchema =
+  OfficialProcedureIdentityInputSchema.safeExtend({
+    id: procedureIdSchema,
+  }).superRefine((procedure, context) => {
+    const identityInput = OfficialProcedureIdentityInputSchema.safeParse({
+      requirementCategory: procedure.requirementCategory,
+      normalizedValue: procedure.normalizedValue,
+      title: procedure.title,
+      href: procedure.href,
+      reviewedAt: procedure.reviewedAt,
+      sourceNote: procedure.sourceNote,
+      catalogVersion: procedure.catalogVersion,
+    });
+    if (
+      identityInput.success &&
+      procedure.id !== officialProcedureIdentity(identityInput.data)
+    ) {
+      context.addIssue({
+        code: "custom",
+        path: ["id"],
+        message: "Procedure identity must match its complete payload.",
+      });
+    }
+  });
 
 export const OfficialProcedureCatalogSchema = z
   .array(OfficialProcedureSchema)
@@ -80,6 +161,22 @@ export const OfficialProcedureCatalogSchema = z
     });
   });
 
+const OFFICIAL_PROCEDURES: readonly OfficialProcedure[] = Object.freeze(
+  OfficialProcedureCatalogSchema.parse(curatedProcedureCatalog).map(
+    (procedure) => Object.freeze(procedure),
+  ),
+);
+
+function procedurePayload(procedure: OfficialProcedure): string {
+  return JSON.stringify(procedure);
+}
+
+function isExactStaticProcedure(procedure: OfficialProcedure): boolean {
+  return OFFICIAL_PROCEDURES.some(
+    (candidate) => procedurePayload(candidate) === procedurePayload(procedure),
+  );
+}
+
 const actionBase = {
   offerId: NonBlankStringSchema,
 } as const;
@@ -104,6 +201,7 @@ const VerifyOfferRequirementsActionSchema = z
     label: z.literal("Comprobar requisitos en la oferta"),
     href: z.string().url(),
     reason: z.enum([
+      "requirements_not_published",
       "requirements_incomplete",
       "unclassified_requirement",
       "work_mode_unknown",
@@ -157,10 +255,48 @@ const ViewRegulatedTrainingRouteActionSchema = z
     targetKind: z.literal("regulated_training"),
     datasetKey: z.literal("oferta-de-formacion-profesional"),
     label: z.literal("Ver ruta formativa y centros"),
-    programKey: NonBlankStringSchema,
+    programKeys: z
+      .array(NonBlankStringSchema)
+      .min(1)
+      .superRefine((keys, context) => {
+        if (
+          new Set(keys).size !== keys.length ||
+          [...keys]
+            .sort((left, right) => left.localeCompare(right, "es"))
+            .join("\u0000") !== keys.join("\u0000")
+        ) {
+          context.addIssue({
+            code: "custom",
+            message: "Training program keys must be unique and sorted.",
+          });
+        }
+      }),
     requirementAudit: RequirementAuditSchema,
   })
-  .strict();
+  .strict()
+  .superRefine((action, context) => {
+    const requirement = publishedRequirementFromAudit(action.requirementAudit);
+    const expectedProgramKeys = requirement
+      ? exactReviewedProgramKeys(requirement)
+      : [];
+    if (
+      requirement === undefined ||
+      requirement.id !==
+        publishedRequirementId(
+          action.offerId,
+          requirement.category,
+          requirement.sourceQuote,
+        ) ||
+      expectedProgramKeys.join("\u0000") !== action.programKeys.join("\u0000")
+    ) {
+      context.addIssue({
+        code: "custom",
+        path: ["programKeys"],
+        message:
+          "Training route must match the exact approved qualification links.",
+      });
+    }
+  });
 
 const OpenOfficialProcedureActionSchema = z
   .object({
@@ -172,16 +308,40 @@ const OpenOfficialProcedureActionSchema = z
     title: NonBlankStringSchema,
     href: z.string().url(),
     requirementAudit: RequirementAuditSchema,
-    procedureAudit: z
-      .object({
-        procedureId: procedureIdSchema,
-        reviewedAt: dateOnlySchema,
-        catalogVersion: z.string().regex(/^\d+\.\d+\.\d+$/u),
-        sourceNote: NonBlankStringSchema,
-      })
-      .strict(),
+    procedureAudit: OfficialProcedureSchema,
   })
-  .strict();
+  .strict()
+  .superRefine((action, context) => {
+    if (
+      !isExactStaticProcedure(action.procedureAudit) ||
+      action.href !== action.procedureAudit.href ||
+      action.title !== action.procedureAudit.title
+    ) {
+      context.addIssue({
+        code: "custom",
+        path: ["procedureAudit"],
+        message: "Procedure action must be an exact static catalog member.",
+      });
+    }
+    if (
+      action.requirementAudit.requirementId !==
+        publishedRequirementId(
+          action.offerId,
+          action.requirementAudit.category,
+          action.requirementAudit.sourceQuote,
+        ) ||
+      action.requirementAudit.category !==
+        action.procedureAudit.requirementCategory ||
+      action.requirementAudit.normalizedValue !==
+        action.procedureAudit.normalizedValue
+    ) {
+      context.addIssue({
+        code: "custom",
+        path: ["requirementAudit"],
+        message: "Procedure action must match its exact offer requirement.",
+      });
+    }
+  });
 
 const SessionChecklistItemSchema = z
   .object({
@@ -263,8 +423,6 @@ export interface ActionContext {
   >;
   selectedProvince?: string | null;
   isSelectedProvinceSuitable?: boolean | null;
-  programKey?: string;
-  officialProcedures: readonly OfficialProcedure[];
 }
 
 function shaIdentity(namespace: string, values: readonly string[]): string {
@@ -286,9 +444,26 @@ export function sessionChecklistId(
 function auditRequirement(requirement: PublishedRequirement) {
   return {
     requirementId: requirement.id,
+    category: requirement.category,
+    normalizedValue: requirement.normalizedValue,
     sourceQuote: requirement.sourceQuote,
     parserRule: requirement.parserRule,
+    parserVersion: requirement.parserVersion,
   };
+}
+
+function publishedRequirementFromAudit(
+  audit: z.infer<typeof RequirementAuditSchema>,
+): PublishedRequirement | undefined {
+  const result = PublishedRequirementSchema.safeParse({
+    id: audit.requirementId,
+    category: audit.category,
+    normalizedValue: audit.normalizedValue,
+    sourceQuote: audit.sourceQuote,
+    parserRule: audit.parserRule,
+    parserVersion: audit.parserVersion,
+  });
+  return result.success ? result.data : undefined;
 }
 
 function isCanonicalRequirement(
@@ -306,13 +481,39 @@ function isCanonicalRequirement(
 }
 
 function exactProcedure(
-  catalog: readonly OfficialProcedure[],
   requirement: PublishedRequirement,
 ): OfficialProcedure | undefined {
-  return catalog.find(
+  return OFFICIAL_PROCEDURES.find(
     (procedure) =>
       procedure.requirementCategory === requirement.category &&
       procedure.normalizedValue === requirement.normalizedValue,
+  );
+}
+
+function exactReviewedProgramKeys(requirement: PublishedRequirement): string[] {
+  if (requirement.category !== "qualification_or_specialization") return [];
+  const qualification = REVIEWED_QUALIFICATIONS.find(
+    ({ canonicalLabel }) => canonicalLabel === requirement.normalizedValue,
+  );
+  if (!qualification) return [];
+  return REVIEWED_PROGRAM_QUALIFICATION_LINKS.filter(
+    (link) =>
+      link.reviewStatus === "approved" &&
+      link.qualificationCatalogId === qualification.catalogId,
+  )
+    .map(({ programKey }) => programKey)
+    .sort((left, right) => left.localeCompare(right, "es"));
+}
+
+const issuedSessionChecks = new WeakSet<object>();
+
+export function isEngineIssuedSessionCheck(
+  value: unknown,
+): value is AddSessionCheckAction {
+  return (
+    typeof value === "object" &&
+    value !== null &&
+    issuedSessionChecks.has(value)
   );
 }
 
@@ -375,9 +576,6 @@ export function deriveActions(input: ActionContext): ReliableAction[] {
   const offer = JobOfferSchema.parse(input.offer);
   const evidenceState = EvidenceStateSchema.parse(input.evidenceState);
   const answers = SessionAnswersSchema.parse(input.answers);
-  const procedures = OfficialProcedureCatalogSchema.parse(
-    input.officialProcedures,
-  );
   const requirements = Array.from(
     new Map(
       input.requirements
@@ -392,6 +590,7 @@ export function deriveActions(input: ActionContext): ReliableAction[] {
     (requirement) => requirement.category === "unclassified",
   );
   if (
+    requirements.length === 0 ||
     evidenceState === "occupational_relationship_incomplete" ||
     unclassified
   ) {
@@ -404,7 +603,9 @@ export function deriveActions(input: ActionContext): ReliableAction[] {
       href: offer.originalUrl,
       reason: unclassified
         ? "unclassified_requirement"
-        : "requirements_incomplete",
+        : requirements.length === 0
+          ? "requirements_not_published"
+          : "requirements_incomplete",
       ...(unclassified
         ? { requirementAudit: auditRequirement(unclassified) }
         : {}),
@@ -467,15 +668,16 @@ export function deriveActions(input: ActionContext): ReliableAction[] {
     for (const requirement of gaps) {
       const audit = auditRequirement(requirement);
       if (requirement.category === "qualification_or_specialization") {
+        const programKeys = exactReviewedProgramKeys(requirement);
         actions.push(
-          input.programKey
+          programKeys.length > 0
             ? {
                 actionType: "view_regulated_training_route",
                 targetKind: "regulated_training",
                 datasetKey: "oferta-de-formacion-profesional",
                 label: "Ver ruta formativa y centros",
                 offerId: offer.id,
-                programKey: input.programKey,
+                programKeys,
                 requirementAudit: audit,
               }
             : addSessionCheck(offer.id, requirement),
@@ -486,7 +688,7 @@ export function deriveActions(input: ActionContext): ReliableAction[] {
         requirement.category === "certificate_or_regulated_license" ||
         requirement.category === "driving_license_or_vehicle"
       ) {
-        const procedure = exactProcedure(procedures, requirement);
+        const procedure = exactProcedure(requirement);
         actions.push(
           procedure
             ? {
@@ -498,12 +700,7 @@ export function deriveActions(input: ActionContext): ReliableAction[] {
                 title: procedure.title,
                 href: procedure.href,
                 requirementAudit: audit,
-                procedureAudit: {
-                  procedureId: procedure.id,
-                  reviewedAt: procedure.reviewedAt,
-                  catalogVersion: procedure.catalogVersion,
-                  sourceNote: procedure.sourceNote,
-                },
+                procedureAudit: procedure,
               }
             : addSessionCheck(offer.id, requirement),
         );
@@ -552,5 +749,11 @@ export function deriveActions(input: ActionContext): ReliableAction[] {
       ? priority
       : actionIdentity(left).localeCompare(actionIdentity(right), "en");
   });
-  return ReliableActionsSchema.parse(deduplicated);
+  const parsed = ReliableActionsSchema.parse(deduplicated);
+  for (const action of parsed) {
+    if (action.actionType === "add_session_check") {
+      issuedSessionChecks.add(action);
+    }
+  }
+  return parsed;
 }

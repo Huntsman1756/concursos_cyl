@@ -1,1 +1,12 @@
-[]
+[
+  {
+    "id": "procedure:065a642e9fe5e4b799cc2b366665c6acb12fb168b17849f0902a6650b08ca821",
+    "requirementCategory": "driving_license_or_vehicle",
+    "normalizedValue": "B",
+    "title": "Solicitud examen teórico por libre",
+    "href": "https://sede.dgt.gob.es/es/permisos-de-conducir/obtencion-y-gestion-de-permisos/solicitud-de-prueba-de-aptitud-de-examen/",
+    "reviewedAt": "2026-08-05",
+    "sourceNote": "Sede oficial de la DGT: el trámite permite solicitar las pruebas para obtener un nuevo permiso de conducir y trata expresamente el permiso B.",
+    "catalogVersion": "1.0.0"
+  }
+]

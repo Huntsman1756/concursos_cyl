@@ -1,84 +1,123 @@
 import { act, renderHook } from "@testing-library/react";
 import { afterEach, describe, expect, it, vi } from "vitest";
 
+import type { JobOffer } from "../../data/schemas/generated";
+import {
+  deriveActions,
+  type AddSessionCheckAction,
+  type ActionContext,
+} from "./actionEngine";
 import {
   publishedRequirementId,
   type PublishedRequirement,
 } from "./requirements";
-import { sessionChecklistId } from "./actionEngine";
 import { useDecisionSession } from "./session";
 
-const requirement: PublishedRequirement = {
-  id: publishedRequirementId(
-    "offer:1",
-    "experience",
-    "Experiencia de 12 meses.",
-  ),
-  category: "experience",
-  normalizedValue: 12,
-  sourceQuote: "Experiencia de 12 meses.",
-  parserRule: "experience.months",
-  parserVersion: "1.0.0",
-};
+function fixture(offerId: string, quote: string) {
+  const offer: JobOffer = {
+    id: offerId,
+    title: "Oferta",
+    province: "León",
+    locality: "León",
+    publishedAt: "2026-08-01T00:00:00.000Z",
+    sourceName: "ECYL",
+    descriptionText: quote,
+    descriptionSections: {
+      summary: [],
+      functions: [],
+      requirements: [quote],
+      conditions: [],
+      application: [],
+      other: [],
+    },
+    originalUrl: `https://empleo.jcyl.es/${offerId.replace(":", "-")}`,
+    sourceSnapshot: {
+      sourceId: "ofertas-de-empleo",
+      sourceUrl: "https://datosabiertos.jcyl.es/ofertas-de-empleo",
+      sourceUpdatedAt: "2026-08-01T00:00:00.000Z",
+      snapshotFetchedAt: "2026-08-02T00:00:00.000Z",
+      schemaVersion: "1.0.0",
+      recordCount: 1,
+      sha256: "a".repeat(64),
+      qualityStatus: "passed",
+    },
+  };
+  const requirement: PublishedRequirement = {
+    id: publishedRequirementId(
+      offerId,
+      "certificate_or_regulated_license",
+      quote,
+    ),
+    category: "certificate_or_regulated_license",
+    normalizedValue: "food_handler",
+    sourceQuote: quote,
+    parserRule: "certificate.food_handler",
+    parserVersion: "1.0.0",
+  };
+  const context: ActionContext = {
+    offer,
+    evidenceState: "declared_explicit_gap",
+    requirements: [requirement],
+    answers: { [requirement.id]: "lacks" },
+  };
+  const action = deriveActions(context).find(
+    (candidate): candidate is AddSessionCheckAction =>
+      candidate.actionType === "add_session_check",
+  );
+  if (!action) throw new Error("Missing engine-issued checklist action.");
+  return { requirement, action };
+}
 
-const checklistAction = {
-  actionType: "add_session_check" as const,
-  targetKind: "in_memory_checklist" as const,
-  datasetKey: "browser-memory" as const,
-  label: "Añadir a comprobaciones de esta sesión" as const,
-  explanation: "No hay una acción automática fiable disponible." as const,
-  offerId: "offer:1",
-  checklistItem: {
-    id: sessionChecklistId("offer:1", requirement.id),
-    offerId: "offer:1",
-    requirementId: requirement.id,
-    sourceActionType: "add_session_check" as const,
-    label: "Comprobar «Experiencia de 12 meses.» en la oferta oficial",
-  },
-  requirementAudit: {
-    requirementId: requirement.id,
-    sourceQuote: requirement.sourceQuote,
-    parserRule: requirement.parserRule,
-  },
-};
+const first = fixture("offer:1", "Carné de manipulador de alimentos.");
+const second = fixture("offer:2", "Certificado de manipulador de alimentos.");
 
 afterEach(() => vi.restoreAllMocks());
 
 describe("useDecisionSession", () => {
-  it("stores only exact answers for schema-valid requirements and clears them", () => {
+  it("stores exact answers and clears them", () => {
     const { result } = renderHook(() => useDecisionSession());
-    act(() => result.current.answerRequirement(requirement, "lacks"));
-    expect(result.current.answers).toEqual({ [requirement.id]: "lacks" });
+    act(() => result.current.answerRequirement(first.requirement, "lacks"));
+    expect(result.current.answers).toEqual({ [first.requirement.id]: "lacks" });
     act(() => result.current.clearSession());
     expect(result.current.answers).toEqual({});
   });
 
-  it("stores source-backed checklist actions, deduplicates and removes them", () => {
+  it("accepts only the actual engine-issued action, deduplicates it and removes it", () => {
     const { result } = renderHook(() => useDecisionSession());
-    act(() => result.current.addChecklistItem(checklistAction));
-    act(() => result.current.addChecklistItem(checklistAction));
-    expect(result.current.checklist).toHaveLength(1);
-
+    act(() => {
+      result.current.addChecklistItem(first.action);
+      result.current.addChecklistItem(first.action);
+    });
+    expect(result.current.checklist).toEqual([first.action.checklistItem]);
     act(() =>
-      result.current.removeChecklistItem(checklistAction.checklistItem.id),
+      result.current.removeChecklistItem(first.action.checklistItem.id),
     );
     expect(result.current.checklist).toEqual([]);
   });
 
-  it("rejects conflicting or arbitrary checklist copy for a stable identity", () => {
+  it("rejects clones and reconstructed self-consistent public payloads", () => {
     const { result } = renderHook(() => useDecisionSession());
-    act(() => result.current.addChecklistItem(checklistAction));
+    const clone = structuredClone(first.action);
+    expect(() => act(() => result.current.addChecklistItem(clone))).toThrow(
+      /engine-issued/iu,
+    );
     expect(() =>
-      act(() =>
-        result.current.addChecklistItem({
-          ...checklistAction,
-          checklistItem: {
-            ...checklistAction.checklistItem,
-            label: "Conflicto",
-          },
-        }),
-      ),
-    ).toThrow(/source-backed action copy/iu);
+      act(() => result.current.addChecklistItem({ ...first.action })),
+    ).toThrow(/engine-issued/iu);
+    expect(result.current.checklist).toEqual([]);
+  });
+
+  it("preserves concurrent distinct engine-issued checks and rejects duplicates", () => {
+    const { result } = renderHook(() => useDecisionSession());
+    act(() => {
+      result.current.addChecklistItem(first.action);
+      result.current.addChecklistItem(second.action);
+      result.current.addChecklistItem(first.action);
+    });
+    expect(result.current.checklist).toEqual([
+      first.action.checklistItem,
+      second.action.checklistItem,
+    ]);
   });
 
   it("never writes storage, network, beacon or history state", () => {
@@ -93,8 +132,8 @@ describe("useDecisionSession", () => {
     const replaceState = vi.spyOn(history, "replaceState");
     const { result } = renderHook(() => useDecisionSession());
     act(() => {
-      result.current.answerRequirement(requirement, "has");
-      result.current.addChecklistItem(checklistAction);
+      result.current.answerRequirement(first.requirement, "has");
+      result.current.addChecklistItem(first.action);
     });
     expect(storage).not.toHaveBeenCalled();
     expect(fetchSpy).not.toHaveBeenCalled();
@@ -104,16 +143,16 @@ describe("useDecisionSession", () => {
   });
 
   it("starts empty after remount and clearSession resets the checklist", () => {
-    const first = renderHook(() => useDecisionSession());
-    act(() => first.result.current.addChecklistItem(checklistAction));
-    first.unmount();
-    const second = renderHook(() => useDecisionSession());
-    expect(second.result.current.answers).toEqual({});
-    expect(second.result.current.checklist).toEqual([]);
+    const firstMount = renderHook(() => useDecisionSession());
+    act(() => firstMount.result.current.addChecklistItem(first.action));
+    firstMount.unmount();
+    const secondMount = renderHook(() => useDecisionSession());
+    expect(secondMount.result.current.answers).toEqual({});
+    expect(secondMount.result.current.checklist).toEqual([]);
     act(() => {
-      second.result.current.addChecklistItem(checklistAction);
-      second.result.current.clearSession();
+      secondMount.result.current.addChecklistItem(first.action);
+      secondMount.result.current.clearSession();
     });
-    expect(second.result.current.checklist).toEqual([]);
+    expect(secondMount.result.current.checklist).toEqual([]);
   });
 });
