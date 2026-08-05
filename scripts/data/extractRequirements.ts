@@ -22,8 +22,12 @@ interface ClassifiedRequirement {
 }
 
 const PARSER_VERSION = "1.0.0" as const;
-const OPTIONAL_OR_NEGATED =
-  /\b(?:opcional(?:mente)?|preferente(?:mente)?|preferible|deseable|recomendable|conveniente|valorable|valorad[oa]s?|se\s+valorara|se\s+valoraran|se\s+valora|se\s+valoran|valoramos|a\s+valorar|seria\s+un\s+plus|un\s+plus|no\s+requerid[oa]s?|no\s+se\s+requiere|no\s+es\s+necesari[oa]|sin\s+necesidad\s+de|no\s+imprescindible|no\s+obligatori[oa]|sin)\b/u;
+const OPTIONAL =
+  /\b(?:opcional(?:es|mente)?|preferentemente|preferibles?|deseables?|recomendables?|convenientes?|valorables?|valorad[oa]s?|se\s+valorara|se\s+valoraran|se\s+valoraria|se\s+valorarian|se\s+valora|se\s+valoran|valoramos|a\s+valorar|seria\s+un\s+plus|un\s+plus)\b/u;
+const EXPLICIT_NEGATION =
+  /\b(?:no\s+requerid[oa]s?|no\s+se\s+requiere|no\s+es\s+necesari[oa]|no\s+hace\s+falta|sin\s+necesidad\s+de|no\s+imprescindible|no\s+obligatori[oa])\b/u;
+const SCOPED_SIN_NEGATION =
+  /\bsin\s+(?:experiencia|disponibilidad|permiso(?:\s+de\s+conducir)?|carnet|carne|vehiculo|titulacion|titulo|certificado|colegiacion|habilitacion)\b/u;
 
 const NUMBER_WORDS: Readonly<Record<string, number>> = {
   un: 1,
@@ -95,8 +99,11 @@ function hasAmbiguousExperienceDuration(sourceQuote: string): boolean {
 }
 
 function isAmbiguousOrNegated(sourceQuote: string): boolean {
+  const text = searchableText(sourceQuote);
   return (
-    OPTIONAL_OR_NEGATED.test(searchableText(sourceQuote)) ||
+    OPTIONAL.test(text) ||
+    EXPLICIT_NEGATION.test(text) ||
+    SCOPED_SIN_NEGATION.test(text) ||
     hasAmbiguousExperienceDuration(sourceQuote)
   );
 }

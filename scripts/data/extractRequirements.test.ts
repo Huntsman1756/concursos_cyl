@@ -37,6 +37,76 @@ function description(requirements: readonly string[]) {
 }
 
 describe("extractPublishedRequirements", () => {
+  it.each([
+    "Experiencias valorables: experiencia mínima de 2 años.",
+    "• EXPERIENCIAS VALORABLES: experiencia mínima de 2 años.",
+    "Titulaciones valorables: Grado en Derecho.",
+    "Se valoraría permiso de conducir B.",
+    "Se valorarían inglés B2 y modalidad híbrida.",
+    "No hace falta carné de manipulador de alimentos.",
+    "No hace falta vehículo propio.",
+    "Certificados opcionales: carné de manipulador de alimentos.",
+    "Idiomas preferibles: inglés B2.",
+    "Turnos deseables: disponibilidad horaria.",
+    "Vehículos valorados: vehículo propio.",
+  ])("fails closed for review-round optional prose: %s", (sourceQuote) => {
+    expect(
+      extractPublishedRequirements(
+        "offer:review-optional",
+        description([sourceQuote]),
+      ),
+    ).toEqual([
+      expect.objectContaining({
+        category: "unclassified",
+        normalizedValue: null,
+        parserRule: "unclassified.ambiguous_or_negated",
+        sourceQuote,
+      }),
+    ]);
+  });
+
+  it.each([
+    ["Permiso de conducir B sin restricciones.", "B", "license.driving_b"],
+    ["Permiso de conducir B sin incidencias.", "B", "license.driving_b"],
+    [
+      "Experiencia mínima de 2 años sin interrupciones.",
+      24,
+      "experience.years",
+    ],
+    ["Experiencia mínima de 2 años sin limitaciones.", 24, "experience.years"],
+  ])(
+    "keeps mandatory prose structured when sin does not negate the requirement: %s",
+    (sourceQuote, normalizedValue, parserRule) => {
+      expect(
+        extractPublishedRequirements(
+          "offer:mandatory-sin",
+          description([sourceQuote as string]),
+        ),
+      ).toEqual([
+        expect.objectContaining({
+          normalizedValue,
+          parserRule,
+          sourceQuote,
+        }),
+      ]);
+    },
+  );
+
+  it("does not treat the standalone adjective preferente as optional", () => {
+    expect(
+      extractPublishedRequirements(
+        "offer:preferente",
+        description(["Permiso de conducir B para centro preferente."]),
+      ),
+    ).toEqual([
+      expect.objectContaining({
+        category: "driving_license_or_vehicle",
+        normalizedValue: "B",
+        parserRule: "license.driving_b",
+      }),
+    ]);
+  });
+
   it.each(fixture("ambiguous").requirements.slice(0, 20))(
     "fails closed for guarded requirement prose: %s",
     (sourceQuote) => {
@@ -321,4 +391,36 @@ describe("extractPublishedRequirements", () => {
       false,
     );
   });
+
+  it.each([12, 24])(
+    "accepts %i months for an experience.years normalized value",
+    (normalizedValue) => {
+      expect(
+        PublishedRequirementSchema.safeParse({
+          id: `requirement:${"2".repeat(64)}`,
+          category: "experience",
+          normalizedValue,
+          sourceQuote: "Experiencia mínima de 2 años.",
+          parserRule: "experience.years",
+          parserVersion: "1.0.0",
+        }).success,
+      ).toBe(true);
+    },
+  );
+
+  it.each([13, 18])(
+    "rejects %i months for an experience.years normalized value",
+    (normalizedValue) => {
+      expect(
+        PublishedRequirementSchema.safeParse({
+          id: `requirement:${"3".repeat(64)}`,
+          category: "experience",
+          normalizedValue,
+          sourceQuote: "Experiencia ambigua.",
+          parserRule: "experience.years",
+          parserVersion: "1.0.0",
+        }).success,
+      ).toBe(false);
+    },
+  );
 });

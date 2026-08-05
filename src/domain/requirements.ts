@@ -33,7 +33,19 @@ const ExperienceRequirementSchema = z
     normalizedValue: z.number().int().positive(),
     parserRule: z.enum(["experience.months", "experience.years"]),
   })
-  .strict();
+  .strict()
+  .superRefine((requirement, context) => {
+    if (
+      requirement.parserRule === "experience.years" &&
+      requirement.normalizedValue % 12 !== 0
+    ) {
+      context.addIssue({
+        code: "custom",
+        path: ["normalizedValue"],
+        message: "Year-based experience must normalize to whole years.",
+      });
+    }
+  });
 
 const drivingValues = {
   "license.driving_b": "B",
