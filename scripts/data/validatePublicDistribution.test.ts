@@ -12,7 +12,13 @@ import { join, resolve } from "node:path";
 import { afterEach, describe, expect, it } from "vitest";
 import { z } from "zod";
 
-import { TrainingProgramSchema } from "../../data/schemas/generated";
+import {
+  JobOfferSchema,
+  TrainingProgramSchema,
+  type JobOffer,
+} from "../../data/schemas/generated";
+import { publishedRequirementId } from "../../src/domain/requirements";
+import { extractPublishedRequirements } from "./extractRequirements";
 import {
   buildMappingCoverage,
   loadCuratedMappingsFromDisk,
@@ -130,6 +136,50 @@ async function snapshot(root: string, name: string): Promise<string> {
   return directory;
 }
 
+const requirementSnapshot = {
+  sourceId: "jcyl-employment-offers",
+  sourceUrl: "https://datosabiertos.jcyl.es/",
+  sourceUpdatedAt: "2026-08-03T00:00:00.000Z",
+  snapshotFetchedAt: "2026-08-05T07:00:00.000Z",
+  schemaVersion: "1.0.0" as const,
+  recordCount: 1,
+  sha256: "a".repeat(64),
+  qualityStatus: "passed" as const,
+};
+
+function jobOffer(id: string, title: string, requirement: string): JobOffer {
+  return JobOfferSchema.parse({
+    id,
+    title,
+    province: "Valladolid",
+    locality: "Valladolid",
+    publishedAt: "2026-08-01T00:00:00.000Z",
+    sourceName: "ECYL",
+    descriptionText: requirement,
+    descriptionSections: {
+      summary: [],
+      functions: [],
+      requirements: [requirement],
+      conditions: [],
+      application: [],
+      other: [],
+    },
+    originalUrl: `https://example.com/offers/${id}`,
+    sourceSnapshot: requirementSnapshot,
+  });
+}
+
+function currentRequirements(offers: readonly JobOffer[]) {
+  return offers.flatMap((offer) => {
+    const requirements = extractPublishedRequirements(offer.id, {
+      sections: offer.descriptionSections,
+    });
+    return requirements.length === 0
+      ? []
+      : [{ offerId: offer.id, requirements }];
+  });
+}
+
 afterEach(async () => {
   await Promise.all(
     temporaryRoots
@@ -139,6 +189,134 @@ afterEach(async () => {
 });
 
 describe("public snapshot distribution", () => {
+  it("rejects every retained sidecar that differs from current recomputation", async () => {
+    const root = await mkdtemp(join(tmpdir(), "salida-cyl-distribution-"));
+    temporaryRoots.push(root);
+    const quote = "Grado en Derecho bajo revisión posterior.";
+    const offer = jobOffer("offer:stale", "Abogado/a", quote);
+    const expected = currentRequirements([offer]);
+    const expectedRequirement = expected[0]!.requirements[0]!;
+    const staleStructured = {
+      offerId: offer.id,
+      requirements: [
+        {
+          ...expectedRequirement,
+          id: publishedRequirementId(
+            offer.id,
+            "qualification_or_specialization",
+            quote,
+          ),
+          category: "qualification_or_specialization",
+          normalizedValue: "Grado en Derecho bajo revisión posterior",
+          parserRule: "qualification.official_title",
+        },
+      ],
+    };
+    const staleRule = {
+      offerId: offer.id,
+      requirements: [
+        {
+          ...expectedRequirement,
+          parserRule: "unclassified.ambiguous_or_negated",
+        },
+      ],
+    };
+    const staleCategoryAndValue = {
+      offerId: offer.id,
+      requirements: [
+        {
+          ...expectedRequirement,
+          id: publishedRequirementId(
+            offer.id,
+            "driving_license_or_vehicle",
+            quote,
+          ),
+          category: "driving_license_or_vehicle",
+          normalizedValue: "B",
+          parserRule: "license.driving_b",
+        },
+      ],
+    };
+    const variants: unknown[] = [
+      [staleStructured],
+      [staleRule],
+      [
+        {
+          ...expected[0],
+          requirements: [
+            { ...expectedRequirement, id: `requirement:${"f".repeat(64)}` },
+          ],
+        },
+      ],
+      [staleCategoryAndValue],
+      [],
+      [
+        ...expected,
+        {
+          offerId: "offer:extra",
+          requirements: [
+            {
+              ...expectedRequirement,
+              id: publishedRequirementId(
+                "offer:extra",
+                expectedRequirement.category,
+                quote,
+              ),
+            },
+          ],
+        },
+      ],
+    ];
+    const invalidDirectories: string[] = [];
+    for (const [index, sidecar] of variants.entries()) {
+      const directory = await snapshot(
+        root,
+        `2026100${index + 1}000000000-${String(index + 1).repeat(12)}`,
+      );
+      await writeJson(join(directory, "job-offers.json"), [offer]);
+      await writeJson(join(directory, "published-requirements.json"), sidecar);
+      invalidDirectories.push(resolve(directory));
+    }
+
+    await expect(
+      findRevokedPublicSnapshotDirectories(root, approvedMappings),
+    ).resolves.toEqual(invalidDirectories);
+  });
+
+  it("allows pre-sidecar history but requires jobs and canonical order for a sidecar", async () => {
+    const root = await mkdtemp(join(tmpdir(), "salida-cyl-distribution-"));
+    temporaryRoots.push(root);
+    const preSidecar = await snapshot(root, "20261101000000000-aaaaaaaaaaaa");
+    await writeJson(join(preSidecar, "job-offers.json"), [
+      jobOffer("offer:legacy", "Oferta antigua", "Texto libre."),
+    ]);
+
+    const missingJobs = await snapshot(root, "20261102000000000-bbbbbbbbbbbb");
+    await writeJson(join(missingJobs, "published-requirements.json"), []);
+
+    const canonical = [
+      jobOffer("offer:a", "A oferta", "Grado en Derecho."),
+      jobOffer("offer:z", "Z oferta", "Bachiller o equivalente."),
+    ];
+    const valid = await snapshot(root, "20261103000000000-cccccccccccc");
+    await writeJson(join(valid, "job-offers.json"), canonical);
+    await writeJson(
+      join(valid, "published-requirements.json"),
+      currentRequirements(canonical),
+    );
+
+    const reordered = await snapshot(root, "20261104000000000-dddddddddddd");
+    const reverse = [...canonical].reverse();
+    await writeJson(join(reordered, "job-offers.json"), reverse);
+    await writeJson(
+      join(reordered, "published-requirements.json"),
+      currentRequirements(reverse),
+    );
+
+    await expect(
+      findRevokedPublicSnapshotDirectories(root, approvedMappings),
+    ).resolves.toEqual([resolve(missingJobs), resolve(reordered)]);
+  });
   it("finds every retained snapshot that exposes a currently draft curated record", async () => {
     const root = await mkdtemp(join(tmpdir(), "salida-cyl-distribution-"));
     temporaryRoots.push(root);

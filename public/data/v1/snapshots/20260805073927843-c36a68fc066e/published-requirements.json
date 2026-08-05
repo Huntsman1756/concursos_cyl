@@ -24,10 +24,10 @@
     "offerId": "1285666486875",
     "requirements": [
       {
-        "category": "qualification_or_specialization",
-        "id": "requirement:2bce5b4abcd9ed8be06fb9d4c1b3d14eb4d2bf53c8959f524c33c86136f6e2d0",
-        "normalizedValue": "Diplomado/a o Grado en Enfermería o Ayudante Técnico Sanitario",
-        "parserRule": "qualification.official_title",
+        "category": "unclassified",
+        "id": "requirement:aa5abb50d1e5941a5e8b3e4165e69ce2ff1b7b4fe0189a468a2efd36dd3318e6",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
         "parserVersion": "1.0.0",
         "sourceQuote": "Diplomado/a o Grado en Enfermería o Ayudante Técnico Sanitario"
       },
@@ -82,10 +82,10 @@
     "offerId": "1285666473419",
     "requirements": [
       {
-        "category": "qualification_or_specialization",
-        "id": "requirement:e1bd4abfe5ef335666c39311a2930bbd9a3fe129a11406806270c8c32d0e6140",
-        "normalizedValue": "Graduado en ESO, FP básica o equivalente",
-        "parserRule": "qualification.official_title",
+        "category": "unclassified",
+        "id": "requirement:9b6bd29340651d5afad6ff2f4d0aa69c3188c4e355d1925ca72cdf1b8161af47",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
         "parserVersion": "1.0.0",
         "sourceQuote": "Graduado en ESO, FP básica o equivalente"
       },
@@ -111,10 +111,10 @@
     "offerId": "1285667275160",
     "requirements": [
       {
-        "category": "qualification_or_specialization",
-        "id": "requirement:6e635a68da5393e421f09fc6d7d8c87f1030606ec05e7348ad09df4f6e9cad81",
-        "normalizedValue": "Grado de Fisioterapeuta",
-        "parserRule": "qualification.official_title",
+        "category": "unclassified",
+        "id": "requirement:4a1210b66964e002977305dba18c9e19572092389c49e815bb700b58f349cd44",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
         "parserVersion": "1.0.0",
         "sourceQuote": "Grado de Fisioterapeuta."
       },
@@ -222,10 +222,10 @@
     "offerId": "1285660804009",
     "requirements": [
       {
-        "category": "qualification_or_specialization",
-        "id": "requirement:e75c0cfc498f23fa8c536a6a69ef29439453dc095e233bebe7033fa86d0baafd",
-        "normalizedValue": "Técnico/a Superior en Educación Infantil, Técnico/a Especialista en Jardines de Infancia, o en Educación Infantil, rama Servicios a la Comunidad o equivalente",
-        "parserRule": "qualification.official_title",
+        "category": "unclassified",
+        "id": "requirement:9461c4986a035ed25da2ab7aa83be7238ae61b6219908181a923024afce0ef4f",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
         "parserVersion": "1.0.0",
         "sourceQuote": "Técnico/a Superior en Educación Infantil, Técnico/a Especialista en Jardines de Infancia, o en Educación Infantil, rama Servicios a la Comunidad o equivalente"
       },
@@ -259,10 +259,10 @@
     "offerId": "1285661603111",
     "requirements": [
       {
-        "category": "qualification_or_specialization",
-        "id": "requirement:3e1a445cbe3a5921df2936953c1bad3b4fcddceeea2ce0e821f0a59ac20b1cf3",
-        "normalizedValue": "Grado o Licenciado en Medicina",
-        "parserRule": "qualification.official_title",
+        "category": "unclassified",
+        "id": "requirement:d475ebd7ee242921e6b7c5644c9218b8e04a6925646c61947f083cd3e9e573c5",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
         "parserVersion": "1.0.0",
         "sourceQuote": "Grado o Licenciado en Medicina"
       },
@@ -288,10 +288,10 @@
     "offerId": "1285664862477",
     "requirements": [
       {
-        "category": "qualification_or_specialization",
-        "id": "requirement:b869139c161ba4148ab223ce28f9ea6cf0ccc3644b8c8a04ad704b502bbcd54f",
-        "normalizedValue": "Bachiller, Técnico o equivalente",
-        "parserRule": "qualification.official_title",
+        "category": "unclassified",
+        "id": "requirement:e8cc0566ca8f42f76877294418e3f6ad5e70e25ba4da7bc139ceb7bd5c8a9d9e",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
         "parserVersion": "1.0.0",
         "sourceQuote": "Bachiller, Técnico o equivalente"
       },
@@ -317,10 +317,10 @@
     "offerId": "1285661824674",
     "requirements": [
       {
-        "category": "qualification_or_specialization",
-        "id": "requirement:21f96bf8f83c8d5ada9cbb20209662c5d57ad714c0db65551c097b2916c0e8b9",
-        "normalizedValue": "Graduado en ESO, FP Grado Medio o equivalente",
-        "parserRule": "qualification.official_title",
+        "category": "unclassified",
+        "id": "requirement:d92e728f944ef0c7ead185d8b288ce6faaaebe369592e452ef6c34083e596705",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
         "parserVersion": "1.0.0",
         "sourceQuote": "Graduado en ESO, FP Grado Medio o equivalente"
       },
@@ -412,10 +412,10 @@
     "offerId": "1285668466840",
     "requirements": [
       {
-        "category": "qualification_or_specialization",
-        "id": "requirement:51ee7b2761e76d7f73966a3439855dafd4821c33d1cbd12588db9875c0957f0e",
-        "normalizedValue": "Monitor/a deportivo/a de la modalidad y especialidad deportiva correspondiente, monitor/a deportivo/a superior de la modalidad y especialidad deportiva correspondiente, técnico/a superior en AFD, graduado/a o licenciado/a en CAFD",
-        "parserRule": "qualification.official_title",
+        "category": "unclassified",
+        "id": "requirement:92b84b38003f9f09c286b3d5595a4d83cdaf54dfdd3afc37f97d5602641c9807",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
         "parserVersion": "1.0.0",
         "sourceQuote": "Monitor/a deportivo/a de la modalidad y especialidad deportiva correspondiente, monitor/a deportivo/a superior de la modalidad y especialidad deportiva correspondiente, técnico/a superior en AFD, graduado/a o licenciado/a en CAFD"
       },
@@ -465,10 +465,10 @@
         "sourceQuote": "Plazo: 18 de agosto 2026"
       },
       {
-        "category": "driving_license_or_vehicle",
-        "id": "requirement:02f2db8bc7d341f576715122e9277d46f778539596e3319db18c5a8343d81649",
-        "normalizedValue": "driving_license",
-        "parserRule": "license.driving_generic",
+        "category": "unclassified",
+        "id": "requirement:163877107d0c386f2ba324ddea0fa32b91aaa7b2b0d5bf431cdbf113fa576a03",
+        "normalizedValue": null,
+        "parserRule": "unclassified.ambiguous_or_negated",
         "parserVersion": "1.0.0",
         "sourceQuote": "Observaciones: Permiso de conducir C"
       },
@@ -515,18 +515,18 @@
     "offerId": "1285625266945",
     "requirements": [
       {
-        "category": "qualification_or_specialization",
-        "id": "requirement:f45e78979737f0717c15efe2eba2285889d252972c97591640747973c36f1ba4",
-        "normalizedValue": "Formación: Título de Técnico/a en Electricidad o similar",
-        "parserRule": "qualification.official_title",
+        "category": "unclassified",
+        "id": "requirement:8fdd3e9a09dcc53b4df3a7d4a3cfdd382be8bc00b8bed5aed61025e3d1d6344e",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
         "parserVersion": "1.0.0",
         "sourceQuote": "Formación: Título de Técnico/a en Electricidad o similar."
       },
       {
-        "category": "experience",
-        "id": "requirement:40b34fbd7393cb80636a415750eef3081ad41f184c6ace1ecde2dc446208cb9a",
-        "normalizedValue": 24,
-        "parserRule": "experience.years",
+        "category": "unclassified",
+        "id": "requirement:5e3f01c55902362c68d9a55a0425f2bd2fa46c0231e6f15dd7bbf3e94e640420",
+        "normalizedValue": null,
+        "parserRule": "unclassified.ambiguous_or_negated",
         "parserVersion": "1.0.0",
         "sourceQuote": "Experiencia: Al menos 2 años de experiencia previa como Electricista en el sector."
       },
@@ -629,10 +629,10 @@
         "sourceQuote": "Imprescindible carné en vigor de caretilla y apilador."
       },
       {
-        "category": "experience",
-        "id": "requirement:0592901fd2b07403ea4794f83a83464e8754a4c881ae49b50cceb4c3e0dfaaff",
-        "normalizedValue": 12,
-        "parserRule": "experience.years",
+        "category": "unclassified",
+        "id": "requirement:25a1d55fe2b5beda837966afd1d9da3ecfe9a41064ef8da318b785fd4d38cf3e",
+        "normalizedValue": null,
+        "parserRule": "unclassified.ambiguous_or_negated",
         "parserVersion": "1.0.0",
         "sourceQuote": "Experiencia mínima de 1 año como carretillero/a."
       },
@@ -687,10 +687,10 @@
     "offerId": "1285666480228",
     "requirements": [
       {
-        "category": "qualification_or_specialization",
-        "id": "requirement:a0a03209718fa8d3b6e309c1423f8b3bc106ea37062422be9fabf6aa0f43536a",
-        "normalizedValue": "Grado en Farmacia o Licenciatura en Farmacia",
-        "parserRule": "qualification.official_title",
+        "category": "unclassified",
+        "id": "requirement:86c63bf4b28b24a489d94153d66382fe760f62bd60829142087fbd575996e16a",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
         "parserVersion": "1.0.0",
         "sourceQuote": "Grado en Farmacia o Licenciatura en Farmacia"
       },
@@ -716,10 +716,10 @@
     "offerId": "1285666492933",
     "requirements": [
       {
-        "category": "qualification_or_specialization",
-        "id": "requirement:23d24dd5a31e93323e49acdf0e2bf03c968063b153d636de169f2beec3006ee4",
-        "normalizedValue": "Técnico/a Superior en Laboratorio Clínico y Biomédico o de Técnico/a Superior en Laboratorio de Análisis y Control de Calidad o equivalentes",
-        "parserRule": "qualification.official_title",
+        "category": "unclassified",
+        "id": "requirement:161ab872d10bdcf0412b8102928684c8140e740c9496901b502c76e0d07fb688",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
         "parserVersion": "1.0.0",
         "sourceQuote": "Técnico/a Superior en Laboratorio Clínico y Biomédico o de Técnico/a Superior en Laboratorio de Análisis y Control de Calidad o equivalentes"
       },
@@ -869,10 +869,10 @@
         "sourceQuote": "Educación Secundaria Obligatoria."
       },
       {
-        "category": "experience",
-        "id": "requirement:970dd5b11aac370728ab5241b3ba41051c69c558cd2e1d0a58802298790c9155",
-        "normalizedValue": 12,
-        "parserRule": "experience.years",
+        "category": "unclassified",
+        "id": "requirement:47a704088a13fefa488023f2870d85b8241e2e7948c420190012173b73122edb",
+        "normalizedValue": null,
+        "parserRule": "unclassified.ambiguous_or_negated",
         "parserVersion": "1.0.0",
         "sourceQuote": "Experiencia mínima de 1 año en ventas de seguros."
       },
@@ -914,10 +914,10 @@
         "sourceQuote": "Grado Medio/Superior en Administración, Secretariado o similar."
       },
       {
-        "category": "experience",
-        "id": "requirement:250d8046fc956b272f96ac91fb05659ac8ffd8240cfa9c977e2a57a25f7bdf0e",
-        "normalizedValue": 24,
-        "parserRule": "experience.years",
+        "category": "unclassified",
+        "id": "requirement:e8c602dd83444eda2eba01fceda792c8bc0224e526e00c0b1b85afde287a09e1",
+        "normalizedValue": null,
+        "parserRule": "unclassified.ambiguous_or_negated",
         "parserVersion": "1.0.0",
         "sourceQuote": "Experiencia laboral de 2 años en entornos comerciales y gestión de CRM; Bitrix 24, Salesforce."
       },
@@ -977,8 +977,8 @@
       {
         "category": "driving_license_or_vehicle",
         "id": "requirement:6b1ed2c94f7aa3f13d6b183a5f801d26a24e448598cc4913ce5cfe99f8e8474a",
-        "normalizedValue": "vehicle_owned",
-        "parserRule": "mobility.own_vehicle",
+        "normalizedValue": "B",
+        "parserRule": "license.driving_b",
         "parserVersion": "1.0.0",
         "sourceQuote": "Permiso de conducción B y vehículo propio."
       }
@@ -1070,10 +1070,10 @@
     "offerId": "1285613685343",
     "requirements": [
       {
-        "category": "driving_license_or_vehicle",
-        "id": "requirement:52c2cf3769346549f1e2c6f577628380c4cf7fa02535052012bc51e88c91075d",
-        "normalizedValue": "driving_license",
-        "parserRule": "license.driving_generic",
+        "category": "unclassified",
+        "id": "requirement:cc3b676d5e9f49f0ee9de0fca7270991fc6ca9a3879aea452db4ab849f92d58d",
+        "normalizedValue": null,
+        "parserRule": "unclassified.ambiguous_or_negated",
         "parserVersion": "1.0.0",
         "sourceQuote": "Permiso de conducir y vehículo propio."
       },
@@ -1212,10 +1212,10 @@
     "offerId": "1285666188399",
     "requirements": [
       {
-        "category": "experience",
-        "id": "requirement:96703ad414044c46005641483935aaf7898e59b390c4e7e40c082448f2f5c11f",
-        "normalizedValue": 6,
-        "parserRule": "experience.months",
+        "category": "unclassified",
+        "id": "requirement:a6baddbb874d8f0f2a384334cbaf0cfebb74f19dd2f6bee56a519d03c6275e8c",
+        "normalizedValue": null,
+        "parserRule": "unclassified.ambiguous_or_negated",
         "parserVersion": "1.0.0",
         "sourceQuote": "experiencia demostrable mínimo seis meses."
       },
@@ -1262,10 +1262,10 @@
     "offerId": "1285668412750",
     "requirements": [
       {
-        "category": "driving_license_or_vehicle",
-        "id": "requirement:e11d8237b5078d24ca945950a3e3acb0dfd5d9f316e17a4a11647fb49d874864",
-        "normalizedValue": "driving_license",
-        "parserRule": "license.driving_generic",
+        "category": "unclassified",
+        "id": "requirement:e6eb2eac77c8f61fbe38c85dc51b2dd5f0b2df1af977f289d5bca05c5a6dc57a",
+        "normalizedValue": null,
+        "parserRule": "unclassified.ambiguous_or_negated",
         "parserVersion": "1.0.0",
         "sourceQuote": "EXPERIENCIA DEMOSTRABLE, CARNET DE CONDUCIR Y PRL ESPECÍFICO DE ALBAÑILERÍA"
       },
@@ -1490,10 +1490,10 @@
         "sourceQuote": "Manejo básico de herramientas informáticas."
       },
       {
-        "category": "driving_license_or_vehicle",
-        "id": "requirement:f984e3e5239865dfaeed304d2287612034eb636452d6a60cdc87ab4686517a79",
-        "normalizedValue": "driving_license",
-        "parserRule": "license.driving_generic",
+        "category": "unclassified",
+        "id": "requirement:90f47fdf2733ba7106d9e49b067de9014b44ab857281ddf0da1faabb9f301689",
+        "normalizedValue": null,
+        "parserRule": "unclassified.ambiguous_or_negated",
         "parserVersion": "1.0.0",
         "sourceQuote": "Carnet de conducir y vehículo propio."
       }
@@ -1503,10 +1503,10 @@
     "offerId": "1285665076449",
     "requirements": [
       {
-        "category": "driving_license_or_vehicle",
-        "id": "requirement:c90ded4efc43beb12eda50400e196a20586542b5f4433db372e30070f92aea45",
-        "normalizedValue": "driving_license",
-        "parserRule": "license.driving_generic",
+        "category": "unclassified",
+        "id": "requirement:c47e0d3abcd96ffddfb6c30fc5ebe3edb622c88f142d23b92814cfdccbb1de51",
+        "normalizedValue": null,
+        "parserRule": "unclassified.ambiguous_or_negated",
         "parserVersion": "1.0.0",
         "sourceQuote": "Permiso de conducir. Ingeniero Técnico Agrícola, Ingeniero Agrónomo o similar."
       },
@@ -1692,10 +1692,10 @@
     "offerId": "1285658284579",
     "requirements": [
       {
-        "category": "driving_license_or_vehicle",
-        "id": "requirement:1340861802481eefe02b58cee1a2f44979ea63123b053ad66bf2d827b4425749",
-        "normalizedValue": "driving_license",
-        "parserRule": "license.driving_generic",
+        "category": "unclassified",
+        "id": "requirement:9817fa1bfa48ace3aaca941b4b8e246f4ebb35d077a1d427882cd6bc0e0b6374",
+        "normalizedValue": null,
+        "parserRule": "unclassified.ambiguous_or_negated",
         "parserVersion": "1.0.0",
         "sourceQuote": "Permiso conducir y vehículo."
       },
@@ -2023,10 +2023,10 @@
         "sourceQuote": "Formación Grado Superior en Administración."
       },
       {
-        "category": "experience",
-        "id": "requirement:e550c75c9e3f6468acb699e0ebed41aa88412398afe2ebf6ddce9d7e5bfe0f3d",
-        "normalizedValue": 24,
-        "parserRule": "experience.years",
+        "category": "unclassified",
+        "id": "requirement:85d8e798a07c090d926319f8293e9a189a2cee6c94af559f63acf0c7430ae058",
+        "normalizedValue": null,
+        "parserRule": "unclassified.ambiguous_or_negated",
         "parserVersion": "1.0.0",
         "sourceQuote": "Experiencia de al menos 2 años en puesto administrativo."
       },
@@ -2118,18 +2118,18 @@
     "offerId": "1285625266971",
     "requirements": [
       {
-        "category": "qualification_or_specialization",
-        "id": "requirement:4de5f1fe0ea2010f1de60b6de76157c02865f3a3253220c412f6e0af65ed2af9",
-        "normalizedValue": "FPGS Técnico en Cuidados Auxiliares de Enfermería",
-        "parserRule": "qualification.official_title",
+        "category": "unclassified",
+        "id": "requirement:2d6e0d8d5831da6d325a8dac1b3321f5f91de491a1e07808969e87027570ad61",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
         "parserVersion": "1.0.0",
         "sourceQuote": "FPGS Técnico en Cuidados Auxiliares de Enfermería."
       },
       {
-        "category": "qualification_or_specialization",
-        "id": "requirement:0009f2f7bdaf1f4020765c04515821d46b0e3830e59fc2dfb077e690f57e0481",
-        "normalizedValue": "FPGS Técnico en Atención a Personas en Situación de Dependencia (Técnico de Atención Sociosanitaria)",
-        "parserRule": "qualification.official_title",
+        "category": "unclassified",
+        "id": "requirement:d5761af9143026c70def405cb25c564914c0dcef176ca772f7f656b06ff2a2c9",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
         "parserVersion": "1.0.0",
         "sourceQuote": "FPGS Técnico en Atención a Personas en Situación de Dependencia (Técnico de Atención Sociosanitaria)."
       },
@@ -2187,7 +2187,7 @@
         "category": "unclassified",
         "id": "requirement:470a78e3e0ffba9138a015fa616bc43d6efdd6b44fb4002634a2018371e8c406",
         "normalizedValue": null,
-        "parserRule": "unclassified.conservative_fallback",
+        "parserRule": "unclassified.ambiguous_or_negated",
         "parserVersion": "1.0.0",
         "sourceQuote": "Estar en posesión de alguno de los siguientes títulos: Técnico en Cuidados Auxiliares de Enfermería, Técnico en Atención Sociosanitaria, Técnico en Atención a Personas en Situación de Dependencia, Certificado de Profesionalidad de Atención Sociosanitaria a Personas en el Domicilio (SSC089_2), Certificado de Profesionalidad Atención Sociosanitaria a Personas dependientes en instituciones sociales (SSCS0208), Habilitación Excepcional Provisional o Definitiva."
       },
@@ -2205,10 +2205,10 @@
     "offerId": "1285628708474",
     "requirements": [
       {
-        "category": "qualification_or_specialization",
-        "id": "requirement:d168f0ba9e972a1992e9a0c2ee31eaa1ffc0a12a3372778656f1459ecb972ed0",
-        "normalizedValue": "Alguna de las siguientes titulaciones: Técnico en Cuidados Auxiliares de Enfermería (TCAE), Atención Sociosanitaria a personas dependientes en Instituciones Sociales. Auxiliar de Clínica en Geriatría. Auxiliar de Enfermería. Certificado Profesionalidad Instituciones. Habilitación excepcional/provisional",
-        "parserRule": "qualification.official_title",
+        "category": "unclassified",
+        "id": "requirement:2cc76a725ce7811dbdb8e4af78115c419599f8f7814a5e988a9d6b9b3db943d4",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
         "parserVersion": "1.0.0",
         "sourceQuote": "Alguna de las siguientes titulaciones: Técnico en Cuidados Auxiliares de Enfermería (TCAE), Atención Sociosanitaria a personas dependientes en Instituciones Sociales. Auxiliar de Clínica en Geriatría. Auxiliar de Enfermería. Certificado Profesionalidad Instituciones. Habilitación excepcional/provisional."
       },
@@ -2255,10 +2255,10 @@
     "offerId": "1285635288990",
     "requirements": [
       {
-        "category": "certificate_or_regulated_license",
-        "id": "requirement:747cf175413bc2edae74736cc9070ff2cfb96dd2b2e2bf3d731897d82df7b604",
-        "normalizedValue": "imprescindible titulo de tecnico cuidados auxiliares de enfermeria/certificado de profesionalidad de atencion sociosanitaria en instituciones",
-        "parserRule": "certificate.professional_certificate",
+        "category": "unclassified",
+        "id": "requirement:bab6c185993a6f6ab209767bb644f54a910c2a607865027c8454ad5e58190dcd",
+        "normalizedValue": null,
+        "parserRule": "unclassified.ambiguous_or_negated",
         "parserVersion": "1.0.0",
         "sourceQuote": "IMPRESCINDIBLE TÍTULO DE TÉCNICO CUIDADOS AUXILIARES DE ENFERMERÍA/CERTIFICADO DE PROFESIONALIDAD DE ATENCIÓN SOCIOSANITARIA EN INSTITUCIONES."
       },
@@ -2321,10 +2321,10 @@
     "offerId": "1285641969963",
     "requirements": [
       {
-        "category": "qualification_or_specialization",
-        "id": "requirement:b680687def54669ea61b197f3047f1202ce04517c517e0be05389b06d4d0a98d",
-        "normalizedValue": "Técnico en Cuidados Auxiliares de Enfermería o Certificación Profesional Sociosanitaria",
-        "parserRule": "qualification.official_title",
+        "category": "unclassified",
+        "id": "requirement:35d1582e95bd246024468a157156b8bd1c71cd8257f5ad2c12c0b04d3146a291",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
         "parserVersion": "1.0.0",
         "sourceQuote": "Técnico en Cuidados Auxiliares de Enfermería o Certificación Profesional Sociosanitaria."
       },
@@ -2345,7 +2345,7 @@
         "category": "unclassified",
         "id": "requirement:1d39a4cb9298cc06180f6ebca099c619e81cbe3699788771bfb84e5c14e9524c",
         "normalizedValue": null,
-        "parserRule": "unclassified.conservative_fallback",
+        "parserRule": "unclassified.ambiguous_or_negated",
         "parserVersion": "1.0.0",
         "sourceQuote": "Técnico en Cuidados Auxiliares de Enfermería o Certificación Profesional Sociosanitaria. Permiso de conducir y disponibilidad de vehículo."
       },
@@ -2366,7 +2366,7 @@
         "category": "unclassified",
         "id": "requirement:7624f56027e9699a9eeda71bafcd7c59ad92cad4371644a8395d6192abd1a715",
         "normalizedValue": null,
-        "parserRule": "unclassified.conservative_fallback",
+        "parserRule": "unclassified.ambiguous_or_negated",
         "parserVersion": "1.0.0",
         "sourceQuote": "Técnico en Cuidados Auxiliares de Enfermería o Certificado de profesionalidad."
       },
@@ -2384,10 +2384,10 @@
     "offerId": "1285647322439",
     "requirements": [
       {
-        "category": "qualification_or_specialization",
-        "id": "requirement:8844c35f45350104301bcb66a297106ce5c3b97bb8dfcfa298ce02748dc834f9",
-        "normalizedValue": "Título de Técnico en cuidados auxiliares de enfermería",
-        "parserRule": "qualification.official_title",
+        "category": "unclassified",
+        "id": "requirement:9b276eaf81ae7d7d0f1a22e10e9e9145c44502c96cd33d5a86555d7e7012e311",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
         "parserVersion": "1.0.0",
         "sourceQuote": "Título de Técnico en cuidados auxiliares de enfermería"
       },
@@ -2416,7 +2416,7 @@
         "category": "unclassified",
         "id": "requirement:89a78c137e94a2c03fe415d55255af24e5f6f97b4e5a6774ed8d3a1f1bbbdef6",
         "normalizedValue": null,
-        "parserRule": "unclassified.conservative_fallback",
+        "parserRule": "unclassified.ambiguous_or_negated",
         "parserVersion": "1.0.0",
         "sourceQuote": "Técnico en Cuidados Auxiliares de Enfermería o Certificado de profesionalidad."
       },
@@ -2437,7 +2437,7 @@
         "category": "unclassified",
         "id": "requirement:78a8f17c11bcc39f797999a553fd581e8ed6ce863ddb56bcb769423fc496c8eb",
         "normalizedValue": null,
-        "parserRule": "unclassified.conservative_fallback",
+        "parserRule": "unclassified.ambiguous_or_negated",
         "parserVersion": "1.0.0",
         "sourceQuote": "Técnico en Cuidados Auxiliares de Enfermería o Certificado de profesionalidad."
       },
@@ -2534,7 +2534,7 @@
         "category": "unclassified",
         "id": "requirement:788987ed36ce78b4bf30d2ed7ef004f198cb148346702bbbe46404517ac0e4bd",
         "normalizedValue": null,
-        "parserRule": "unclassified.conservative_fallback",
+        "parserRule": "unclassified.ambiguous_or_negated",
         "parserVersion": "1.0.0",
         "sourceQuote": "Titulación Técnico en Atención a personas en situación de dependencia o certificado de profesionalidad."
       },
@@ -2555,7 +2555,7 @@
         "category": "unclassified",
         "id": "requirement:2353f155d2f703522d9c6f534dec5b9e2da1c70cbea45b0422595b9ddbfc292f",
         "normalizedValue": null,
-        "parserRule": "unclassified.conservative_fallback",
+        "parserRule": "unclassified.ambiguous_or_negated",
         "parserVersion": "1.0.0",
         "sourceQuote": "Titulación de Auxiliar de Enfermería o Certificado de Profesionalidad."
       },
@@ -2697,10 +2697,10 @@
         "sourceQuote": "Se valorará la formación y los conocimientos en carga segura."
       },
       {
-        "category": "schedule_availability",
-        "id": "requirement:d87218d4165b5ef181fbf484bc4f3d4a2037a51dbfe78a38ad0dbaea099fdb14",
-        "normalizedValue": "night_shifts",
-        "parserRule": "schedule.night_shifts",
+        "category": "unclassified",
+        "id": "requirement:1dd4dfc40931f54abacbe9ecf748e9ede17981db6175960c466897aa65495800",
+        "normalizedValue": null,
+        "parserRule": "unclassified.ambiguous_or_negated",
         "parserVersion": "1.0.0",
         "sourceQuote": "Flexibilidad para trabajar en turnos (incluidos turnos nocturnos, domingos y festivos)."
       }
@@ -2784,7 +2784,7 @@
         "category": "unclassified",
         "id": "requirement:d625e73ee6aeed513e25a9587a4a004d6a667983232c1dab94f56c7c294b8795",
         "normalizedValue": null,
-        "parserRule": "unclassified.conservative_fallback",
+        "parserRule": "unclassified.ambiguous_or_negated",
         "parserVersion": "1.0.0",
         "sourceQuote": "ESO, Graduado Escolar, Bachiller/BUP-COU o Certificado de Profesionalidad nivel 2 o superior habilitante para trabajos forestales, preventivos y extinción de incendios."
       },
@@ -2797,10 +2797,10 @@
         "sourceQuote": "Carnet de conducir B en vigor."
       },
       {
-        "category": "language",
-        "id": "requirement:0beaa42d14fc917a5fa850f7166bbca9683a43622699f61486f7d63fcec23f4f",
-        "normalizedValue": "español",
-        "parserRule": "language.named",
+        "category": "unclassified",
+        "id": "requirement:c76f5c9c8de40c3025873a87525e5be5da6e851776882a882b246bd4a42609fd",
+        "normalizedValue": null,
+        "parserRule": "unclassified.ambiguous_or_negated",
         "parserVersion": "1.0.0",
         "sourceQuote": "Conocimiento del idioma español necesario para desempeñar el trabajo así como la documentación oficial requerida para trabajar en España."
       },
@@ -2879,10 +2879,10 @@
         "sourceQuote": "Educación Secundaria Obligatoria."
       },
       {
-        "category": "schedule_availability",
-        "id": "requirement:97d13458a8bd36697393071727b2b60527578e5b1ec304666b448098ecf55e64",
-        "normalizedValue": "weekends",
-        "parserRule": "schedule.weekends",
+        "category": "unclassified",
+        "id": "requirement:3f067158e4e74204100552cf76a8b2f914627ce7ed1336a7c79c2a6ad139c901",
+        "normalizedValue": null,
+        "parserRule": "unclassified.ambiguous_or_negated",
         "parserVersion": "1.0.0",
         "sourceQuote": "Disponibilidad horaria para trabajar por turnos rotativos los fines de semana (viernes, sábado y/o domingo y festivos de apertura)."
       },
@@ -2971,10 +2971,10 @@
     "offerId": "1285667273746",
     "requirements": [
       {
-        "category": "experience",
-        "id": "requirement:bcac52925bdd27aa72215ce8a27a2611dd9984119b533133c1247183eefd6c53",
-        "normalizedValue": 12,
-        "parserRule": "experience.years",
+        "category": "unclassified",
+        "id": "requirement:098aa8bec2da1c817127e19cd62d2bf01106a582de6d66803321393dd80f0f8c",
+        "normalizedValue": null,
+        "parserRule": "unclassified.ambiguous_or_negated",
         "parserVersion": "1.0.0",
         "sourceQuote": "Experiencia mínima de 1 año como carnicero/a."
       },
@@ -3042,10 +3042,10 @@
     "offerId": "1285667274383",
     "requirements": [
       {
-        "category": "experience",
-        "id": "requirement:5b7535407a02a0c2f3c49ff11843554105eea749ea6c18d0a685566516dcd802",
-        "normalizedValue": 12,
-        "parserRule": "experience.years",
+        "category": "unclassified",
+        "id": "requirement:534e3e10fbb8ba124cd02bc976e334aa42ce3366e8e17ca705c8faa453936134",
+        "normalizedValue": null,
+        "parserRule": "unclassified.ambiguous_or_negated",
         "parserVersion": "1.0.0",
         "sourceQuote": "Experiencia de 1 año como mozo/a y/o carretillero/a de almacén."
       },
@@ -3079,10 +3079,10 @@
     "offerId": "1285667273552",
     "requirements": [
       {
-        "category": "experience",
-        "id": "requirement:24d8c6dbb2edca2c6bdcd9650ff9696322202479d309501266e05cf2e27b82f2",
-        "normalizedValue": 12,
-        "parserRule": "experience.years",
+        "category": "unclassified",
+        "id": "requirement:2375d5b67997d9a69ef35470099255d7d30a25e10988c0ab053ef6c7e6549724",
+        "normalizedValue": null,
+        "parserRule": "unclassified.ambiguous_or_negated",
         "parserVersion": "1.0.0",
         "sourceQuote": "Experiencia previa de al menos un año en un puesto similar."
       },
@@ -3090,7 +3090,7 @@
         "category": "unclassified",
         "id": "requirement:8fc92cd7f6bfd89577e886af03cd67af0f9e3392750ffb69668d9b872823e4f0",
         "normalizedValue": null,
-        "parserRule": "unclassified.conservative_fallback",
+        "parserRule": "unclassified.ambiguous_or_negated",
         "parserVersion": "1.0.0",
         "sourceQuote": "Posesión de carnet de carretillero (no importa si está vencido, se realizará un curso antes de la incorporación)."
       },
@@ -3111,10 +3111,10 @@
         "sourceQuote": "Conocimientos sobre el manejo de escáneres manuales y responsabilidad en el manejo de dispositivos."
       },
       {
-        "category": "schedule_availability",
-        "id": "requirement:46021cc4592ad293accec91881112f726cd192d5e3228beb5b0296fcbfa09493",
-        "normalizedValue": "night_shifts",
-        "parserRule": "schedule.night_shifts",
+        "category": "unclassified",
+        "id": "requirement:c3d39cd3d17e7b8b2a31eea2fc63f188141a1c9ce50a679ed6a7d08781fbbb71",
+        "normalizedValue": null,
+        "parserRule": "unclassified.ambiguous_or_negated",
         "parserVersion": "1.0.0",
         "sourceQuote": "Flexibilidad para trabajar en turnos (incluidos turnos nocturnos, domingos y festivos)."
       }
@@ -3203,7 +3203,7 @@
         "category": "unclassified",
         "id": "requirement:e3a7ef07fde89353bc06670c205390256e1895eb85aa39c700831cfc4e563bb6",
         "normalizedValue": null,
-        "parserRule": "unclassified.conservative_fallback",
+        "parserRule": "unclassified.ambiguous_or_negated",
         "parserVersion": "1.0.0",
         "sourceQuote": "Titulación de Cocina. Experiencia acreditada. Carnet de manipulador de alimentos."
       },
@@ -3284,10 +3284,10 @@
     "offerId": "1285659376390",
     "requirements": [
       {
-        "category": "qualification_or_specialization",
-        "id": "requirement:16ebff6498976dfa3b5a49341913e469512909fb14d0c61f0b3f781e66b18acf",
-        "normalizedValue": ". Título de Técnico en Cocina y Gastronomía",
-        "parserRule": "qualification.official_title",
+        "category": "unclassified",
+        "id": "requirement:d044b0e326587533e30a3535f20b46a09a8b3b873396e6cce3c3e05be6466068",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
         "parserVersion": "1.0.0",
         "sourceQuote": ". Título de Técnico en Cocina y Gastronomía."
       }
@@ -3405,10 +3405,10 @@
     "offerId": "1285667506609",
     "requirements": [
       {
-        "category": "qualification_or_specialization",
-        "id": "requirement:8783f1cec1fef659467e08ec3e9fe280421fedfd9774aa7feb449a5fce52a193",
-        "normalizedValue": "TItulo de técnico en Cocina y gastronomia o categoria reconocida en Convenio colectivo",
-        "parserRule": "qualification.official_title",
+        "category": "unclassified",
+        "id": "requirement:76b25161a9e0ae80c0b3d59891afb5be42b1f8dcfc2a457197a84d7bae944ae5",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
         "parserVersion": "1.0.0",
         "sourceQuote": "TItulo de técnico en Cocina y gastronomia o categoria reconocida en Convenio colectivo."
       },
@@ -3463,18 +3463,18 @@
         "sourceQuote": "Idiomas: Castellano (nivel C1)."
       },
       {
-        "category": "driving_license_or_vehicle",
-        "id": "requirement:01161ccee8128ab47acd4c452fef29547421b33a9593c75c79ee6bfd2b0ca00a",
-        "normalizedValue": "driving_license",
-        "parserRule": "license.driving_generic",
+        "category": "unclassified",
+        "id": "requirement:173f0cfcaf7e8752f10193b0c38fa269d0292ae53d137c5f56ded18755c05c7f",
+        "normalizedValue": null,
+        "parserRule": "unclassified.ambiguous_or_negated",
         "parserVersion": "1.0.0",
         "sourceQuote": "Carnet de conducir C + CAP."
       },
       {
-        "category": "experience",
-        "id": "requirement:d71089be3e2dbb55816379f213424b9606062da4f0ce82c4a0d79e055db9a74b",
-        "normalizedValue": 24,
-        "parserRule": "experience.years",
+        "category": "unclassified",
+        "id": "requirement:61a4430d21e0f5698f0cb17fb2a608156b865461fa6900157d06c7ec12283cf1",
+        "normalizedValue": null,
+        "parserRule": "unclassified.ambiguous_or_negated",
         "parserVersion": "1.0.0",
         "sourceQuote": "Experiencia mínima de al menos 2 años como conductor de camión realizando rutas."
       }
@@ -3495,7 +3495,7 @@
         "category": "unclassified",
         "id": "requirement:e6e80262130f72a0632f4c85fa333a1f098f6f8b56e2372ac58b963a9aa887d2",
         "normalizedValue": null,
-        "parserRule": "unclassified.conservative_fallback",
+        "parserRule": "unclassified.ambiguous_or_negated",
         "parserVersion": "1.0.0",
         "sourceQuote": "Permiso de conducción C."
       },
@@ -3545,10 +3545,10 @@
         "sourceQuote": "Experiencia mínima de 12 meses."
       },
       {
-        "category": "unclassified",
-        "id": "requirement:332874110483d93166a0266e20eeca4dfbec1e0234fca5d1a01c4ea1b83d9f71",
-        "normalizedValue": null,
-        "parserRule": "unclassified.conservative_fallback",
+        "category": "driving_license_or_vehicle",
+        "id": "requirement:8b08c2688d7e7e17b85755aa740aca6e2abb8a3ca17c3f09bc15805001703ad3",
+        "normalizedValue": "B",
+        "parserRule": "license.driving_b",
         "parserVersion": "1.0.0",
         "sourceQuote": "Permiso de conducción B."
       }
@@ -3558,10 +3558,10 @@
     "offerId": "1285667273802",
     "requirements": [
       {
-        "category": "driving_license_or_vehicle",
-        "id": "requirement:17f66307c09d8d4caa7a9632bc91696d637e7d38937318602d4696fd9943ee16",
-        "normalizedValue": "driving_license",
-        "parserRule": "license.driving_generic",
+        "category": "unclassified",
+        "id": "requirement:1e9cd426a191f7c892fc1bb011be2a2f191247f000cf839e739faa4aca58c3c8",
+        "normalizedValue": null,
+        "parserRule": "unclassified.ambiguous_or_negated",
         "parserVersion": "1.0.0",
         "sourceQuote": "Permiso de conducir C+E en vigor."
       },
@@ -3587,10 +3587,10 @@
     "offerId": "1285664451982",
     "requirements": [
       {
-        "category": "driving_license_or_vehicle",
-        "id": "requirement:9faa568fb998a6ffb5a210d214a13da79e30cf8cdcf8840b0f15ae734aa901f8",
-        "normalizedValue": "driving_license",
-        "parserRule": "license.driving_generic",
+        "category": "unclassified",
+        "id": "requirement:8581c1d6c03d5efc131fe1809758f848601be10b9f50f38ec5c9920bb891e255",
+        "normalizedValue": null,
+        "parserRule": "unclassified.ambiguous_or_negated",
         "parserVersion": "1.0.0",
         "sourceQuote": "Permiso de conducir de la categoría."
       }
@@ -3600,10 +3600,10 @@
     "offerId": "1285636984058",
     "requirements": [
       {
-        "category": "driving_license_or_vehicle",
-        "id": "requirement:1e328943b3393662436bc03d287e0a0b13f6e6b79bc20c34c271006390be95a7",
-        "normalizedValue": "driving_license",
-        "parserRule": "license.driving_generic",
+        "category": "unclassified",
+        "id": "requirement:5acff784f12c9913f8d7cf36f5967b23294ccec412eac189235646f819eca729",
+        "normalizedValue": null,
+        "parserRule": "unclassified.ambiguous_or_negated",
         "parserVersion": "1.0.0",
         "sourceQuote": "Permiso de conducir trailer C+E."
       },
@@ -3726,10 +3726,10 @@
     "offerId": "1285666962303",
     "requirements": [
       {
-        "category": "driving_license_or_vehicle",
-        "id": "requirement:269ba03dec6085acdb872c808889afc789bfb3ff7bd8060c451cecc4bf90533f",
-        "normalizedValue": "driving_license",
-        "parserRule": "license.driving_generic",
+        "category": "unclassified",
+        "id": "requirement:3ed0b9ae96ebea3a242545fb48c0bbab40fa60bd441b1db42735e798491dca55",
+        "normalizedValue": null,
+        "parserRule": "unclassified.ambiguous_or_negated",
         "parserVersion": "1.0.0",
         "sourceQuote": "Permiso conducir C+E."
       },
@@ -3789,10 +3789,10 @@
     "offerId": "1285667664564",
     "requirements": [
       {
-        "category": "experience",
-        "id": "requirement:10f00b84861071d5bedaabebb364e2473de314e3b7d29c456428be9a62f3acbd",
-        "normalizedValue": 12,
-        "parserRule": "experience.months",
+        "category": "unclassified",
+        "id": "requirement:8c263d0ceaa83b5890846cce25ef5a66118a89fc31c0b69360522fe5c9febc8c",
+        "normalizedValue": null,
+        "parserRule": "unclassified.ambiguous_or_negated",
         "parserVersion": "1.0.0",
         "sourceQuote": "Experiencia 12 meses. Permiso necesario para conducir bulldocer."
       },
@@ -3810,10 +3810,10 @@
     "offerId": "1285666526605",
     "requirements": [
       {
-        "category": "driving_license_or_vehicle",
-        "id": "requirement:eea3224c2c6adc726e78c9e663e5965e1cf6a1d340e21ee521a92883327ce6f7",
-        "normalizedValue": "driving_license",
-        "parserRule": "license.driving_generic",
+        "category": "unclassified",
+        "id": "requirement:6f44d8789672342db89e6d8c845a348834391d5b8f28a47a22feca609e777ce7",
+        "normalizedValue": null,
+        "parserRule": "unclassified.ambiguous_or_negated",
         "parserVersion": "1.0.0",
         "sourceQuote": "PRL 20 horas construcción. Permiso de conducir."
       },
@@ -3847,7 +3847,7 @@
         "category": "unclassified",
         "id": "requirement:bfb12c146fcbeca4b862c264be0008e074e308cfe8f7941239fbdab4606f692e",
         "normalizedValue": null,
-        "parserRule": "unclassified.conservative_fallback",
+        "parserRule": "unclassified.ambiguous_or_negated",
         "parserVersion": "1.0.0",
         "sourceQuote": "Titulación de Cuidados Auxiliares de enfermería o Atención Sociosanitaria a personas dependientes ó Certificado de profesionalidad. Permiso de circulación."
       },
@@ -3894,10 +3894,10 @@
     "offerId": "1285627556968",
     "requirements": [
       {
-        "category": "certificate_or_regulated_license",
-        "id": "requirement:d0354a372915f07647c4fdb1274b7854a4283511144292a632d61e959aced517",
-        "normalizedValue": "tecnico de cuidados auxiliares en enfermeria/atencion a personas dependientes en instituciones/dependientes en el domicilio/certificado de profesionalidad atencion sociosanitaria en instituciones",
-        "parserRule": "certificate.professional_certificate",
+        "category": "unclassified",
+        "id": "requirement:424a972a0bcd385c7ef1ecc10e2100013a1c28f416e7fa507944d33d6890400e",
+        "normalizedValue": null,
+        "parserRule": "unclassified.ambiguous_or_negated",
         "parserVersion": "1.0.0",
         "sourceQuote": "TÉCNICO DE CUIDADOS AUXILIARES EN ENFERMERÍA/ATENCIÓN A PERSONAS DEPENDIENTES EN INSTITUCIONES/DEPENDIENTES EN EL DOMICILIO/CERTIFICADO DE PROFESIONALIDAD ATENCIÓN SOCIOSANITARIA EN INSTITUCIONES."
       },
@@ -3923,10 +3923,10 @@
     "offerId": "1285639171849",
     "requirements": [
       {
-        "category": "certificate_or_regulated_license",
-        "id": "requirement:f4ed7c351170924a8e144cae6447ec13fb7fd49a7e01d76d39208b95bb0dcb89",
-        "normalizedValue": "formacion profesional o certificado de profesionalidad relacionado con la ocupacion permiso de circulacion",
-        "parserRule": "certificate.professional_certificate",
+        "category": "unclassified",
+        "id": "requirement:b3b8f18280f256c1862e258ff4dea2c599e76bf809d8e74d9f0d00c350095a05",
+        "normalizedValue": null,
+        "parserRule": "unclassified.ambiguous_or_negated",
         "parserVersion": "1.0.0",
         "sourceQuote": "Formación Profesional ó Certificado de Profesionalidad relacionado con la ocupación. Permiso de circulación."
       },
@@ -3947,7 +3947,7 @@
         "category": "unclassified",
         "id": "requirement:719bc1a82525177cb9493e27d55f6d193775d298ed849528a93df2eff80a5f1e",
         "normalizedValue": null,
-        "parserRule": "unclassified.conservative_fallback",
+        "parserRule": "unclassified.ambiguous_or_negated",
         "parserVersion": "1.0.0",
         "sourceQuote": "Titulación de Auxiliar de Clinica, Atención sociosanitaria en Instituciones, Auxiliar de Geriatría o Certificado de Profesionalidad. Permiso de circulación."
       },
@@ -4010,7 +4010,7 @@
         "category": "unclassified",
         "id": "requirement:041b5d57cfcc32fdd79a9b7ce9ad3660b0c1e8241ab90621221d8f4e609c3ddf",
         "normalizedValue": null,
-        "parserRule": "unclassified.conservative_fallback",
+        "parserRule": "unclassified.ambiguous_or_negated",
         "parserVersion": "1.0.0",
         "sourceQuote": "Técnico en Cuidados Auxiliares de Enfermería o Certificado de profesionalidad."
       },
@@ -4028,10 +4028,10 @@
     "offerId": "1285660586999",
     "requirements": [
       {
-        "category": "qualification_or_specialization",
-        "id": "requirement:6d985d3fcb946b5cfd1d54bc85905e068a932455e8c5a4ff0d7988c7c029f689",
-        "normalizedValue": "Técnico en Cuidados Auxiliares de Enfermería o Certificación Profesional Sociosanitaria",
-        "parserRule": "qualification.official_title",
+        "category": "unclassified",
+        "id": "requirement:737c59be9e644dc601c2c8f16a2e68aca94f91c8cb84be4d05897a6a38f58275",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
         "parserVersion": "1.0.0",
         "sourceQuote": "Técnico en Cuidados Auxiliares de Enfermería o Certificación Profesional Sociosanitaria."
       },
@@ -4049,10 +4049,10 @@
     "offerId": "1285662605845",
     "requirements": [
       {
-        "category": "qualification_or_specialization",
-        "id": "requirement:3bbbb94c0ac8caf6244f0cb769bef680170017cab5d8d04d23bfe818a4a10208",
-        "normalizedValue": "Técnico en Cuidados Auxiliares de Enfermería o Certificación Profesional Sociosanitaria",
-        "parserRule": "qualification.official_title",
+        "category": "unclassified",
+        "id": "requirement:4165f9683fe0293e7c28b54e85b9aa4971a3206fcd63d0169d91968606eae9b0",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
         "parserVersion": "1.0.0",
         "sourceQuote": "Técnico en Cuidados Auxiliares de Enfermería o Certificación Profesional Sociosanitaria."
       },
@@ -4073,7 +4073,7 @@
         "category": "unclassified",
         "id": "requirement:7435adeb7c1be5376478779bc57e1ba7945df61f8e2c9619e827614aa78ed1c1",
         "normalizedValue": null,
-        "parserRule": "unclassified.conservative_fallback",
+        "parserRule": "unclassified.ambiguous_or_negated",
         "parserVersion": "1.0.0",
         "sourceQuote": "Técnico en Cuidados Auxiliares de Enfermería o Certificado de profesionalidad cuidador a personas dependientes en instituciones."
       },
@@ -4091,10 +4091,10 @@
     "offerId": "1285666004716",
     "requirements": [
       {
-        "category": "certificate_or_regulated_license",
-        "id": "requirement:5e78bc2444776090491430ec4ff2dbd2048b27c70d6964dcd2785ec7014de464",
-        "normalizedValue": "ciclo medio en cuidados auxiliares de enfermeria o certificado de profesionalidad en atencion sociosantaria en instituciones sociales",
-        "parserRule": "certificate.professional_certificate",
+        "category": "unclassified",
+        "id": "requirement:20ae8624f01f090ab838f9a0d0e0e05a21f9d4a2613dc98019c5a21388cd7c5d",
+        "normalizedValue": null,
+        "parserRule": "unclassified.ambiguous_or_negated",
         "parserVersion": "1.0.0",
         "sourceQuote": "ciclo medio en cuidados auxiliares de enfermería o certificado de profesionalidad en atención sociosantaria en instituciones sociales."
       },
@@ -4141,10 +4141,10 @@
     "offerId": "1285666575613",
     "requirements": [
       {
-        "category": "certificate_or_regulated_license",
-        "id": "requirement:2d5afb0f9fcd43cb38c495140fabe41ad5b196a5fd06b018736ebd80802ac0db",
-        "normalizedValue": "titulo de aux de enfermeria o certificado de profesionalidad de atencion a personas dependientes o habilitacion excepcional jcyl",
-        "parserRule": "certificate.professional_certificate",
+        "category": "unclassified",
+        "id": "requirement:018b456257f720851f57cb081799bdbb531d87a10b34bc5c0b97f237e08b7353",
+        "normalizedValue": null,
+        "parserRule": "unclassified.ambiguous_or_negated",
         "parserVersion": "1.0.0",
         "sourceQuote": "Título de Aux. de Enfermería o Certificado de Profesionalidad de Atención a Personas Dependientes o Habilitación Excepcional JCyL."
       }
@@ -4154,10 +4154,10 @@
     "offerId": "1285668323132",
     "requirements": [
       {
-        "category": "certificate_or_regulated_license",
-        "id": "requirement:21718a6c33849feeb6170046675dff9934229914a97427447a23a43c469e416f",
-        "normalizedValue": "titulacion o certificado de profesionalidad",
-        "parserRule": "certificate.professional_certificate",
+        "category": "unclassified",
+        "id": "requirement:0b7af7b6ec9041e6c0fecf592747c60d96ebec22f0efdad2a66731873264960d",
+        "normalizedValue": null,
+        "parserRule": "unclassified.ambiguous_or_negated",
         "parserVersion": "1.0.0",
         "sourceQuote": "Titulación o Certificado de Profesionalidad."
       },
@@ -4204,10 +4204,10 @@
         "sourceQuote": "Formación superior en Administración, Finanzas, Contabilidad, Economía, ADE o similar (mínimo Ciclo Formativo Grado Superior)."
       },
       {
-        "category": "experience",
-        "id": "requirement:c79533ebacc96c3c567ff9ceb5664ba0327ac5d728b351d336de1788a8ebd36d",
-        "normalizedValue": 24,
-        "parserRule": "experience.years",
+        "category": "unclassified",
+        "id": "requirement:7793f6cb30284fc810966b4c74a98f33917d9d2ef341196a0936b893d1cd0459",
+        "normalizedValue": null,
+        "parserRule": "unclassified.ambiguous_or_negated",
         "parserVersion": "1.0.0",
         "sourceQuote": "Experiencia mínima demostrable de 2 años en puestos de responsabilidad financiera y administrativa."
       },
@@ -4376,10 +4376,10 @@
     "offerId": "1285662776082",
     "requirements": [
       {
-        "category": "driving_license_or_vehicle",
-        "id": "requirement:034378d3c597729891e0876887b06890adff379341bcb19fa02cf765370fc4cc",
-        "normalizedValue": "B",
-        "parserRule": "license.driving_b",
+        "category": "unclassified",
+        "id": "requirement:26c5600c68a60ef410415d8f68f6a086144ed00c1664c0ad77ede9ae5546ca7c",
+        "normalizedValue": null,
+        "parserRule": "unclassified.ambiguous_or_negated",
         "parserVersion": "1.0.0",
         "sourceQuote": "Grado universitario en educación social y carné de conducir B."
       },
@@ -4413,10 +4413,10 @@
         "sourceQuote": "Estudios mínimos: Ciclo Formativo Grado Superior."
       },
       {
-        "category": "experience",
-        "id": "requirement:01e58d6865216540b1e9c30372e447c37aec1ae0d760495f4c76260e17aca357",
-        "normalizedValue": 12,
-        "parserRule": "experience.years",
+        "category": "unclassified",
+        "id": "requirement:865f56387c3f1d13201cbdb62ec9da5968e014efd4911f3d468ebf514d72350f",
+        "normalizedValue": null,
+        "parserRule": "unclassified.ambiguous_or_negated",
         "parserVersion": "1.0.0",
         "sourceQuote": "Experiencia mínima: Experiencia de al menos 1 año como Electromecánico."
       },
@@ -4474,10 +4474,10 @@
     "offerId": "1285667274893",
     "requirements": [
       {
-        "category": "experience",
-        "id": "requirement:b8443f268ed1d62454571dc8471c45c1fc829d8aad12be2d03e46b5018f15e9b",
-        "normalizedValue": 72,
-        "parserRule": "experience.years",
+        "category": "unclassified",
+        "id": "requirement:b5915fc9ae87dff6b2f91f1acba64ede1681f077bb41f41f0642379b50efed81",
+        "normalizedValue": null,
+        "parserRule": "unclassified.ambiguous_or_negated",
         "parserVersion": "1.0.0",
         "sourceQuote": "Experiencia mínima de 6 años como electromecánico/a de vehículos."
       },
@@ -4543,10 +4543,10 @@
     "offerId": "1285667169339",
     "requirements": [
       {
-        "category": "experience",
-        "id": "requirement:1876d0a174cf79141540b9c9473f9855cd232e4a987fde721ac55224dffccec1",
-        "normalizedValue": 12,
-        "parserRule": "experience.months",
+        "category": "unclassified",
+        "id": "requirement:70ca453b834ad90deffb307f87c2f904c1cbe33bc142fd5baff17033eb610260",
+        "normalizedValue": null,
+        "parserRule": "unclassified.ambiguous_or_negated",
         "parserVersion": "1.0.0",
         "sourceQuote": "Formación Profesional en el área y experiencia de 12 meses."
       },
@@ -4696,10 +4696,10 @@
     "offerId": "1285648119721",
     "requirements": [
       {
-        "category": "qualification_or_specialization",
-        "id": "requirement:eec8048ad195620470ae8df7d77f98a846ac7d4070e76c904cfe9fa10e51df62",
-        "normalizedValue": "Titulación de Administración de Empresas. Relaciones laborales. Administración y Finanzas",
-        "parserRule": "qualification.official_title",
+        "category": "unclassified",
+        "id": "requirement:7bd5587a03a18c9e108a7f9b07c383ebb05d300fb527899545a19cb8b8a6d4e6",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
         "parserVersion": "1.0.0",
         "sourceQuote": "Titulación de Administración de Empresas. Relaciones laborales. Administración y Finanzas."
       },
@@ -4780,10 +4780,10 @@
     "offerId": "1285650938999",
     "requirements": [
       {
-        "category": "driving_license_or_vehicle",
-        "id": "requirement:37a3501a0fe35cfc739083e5e4015c461fed514c33c7d5e029024698a372c6c8",
-        "normalizedValue": "B",
-        "parserRule": "license.driving_b",
+        "category": "unclassified",
+        "id": "requirement:1c1000064528888f85f3a7ecad3d1feadf107fd00dbdd5756a9afc903f7f1db8",
+        "normalizedValue": null,
+        "parserRule": "unclassified.ambiguous_or_negated",
         "parserVersion": "1.0.0",
         "sourceQuote": "Título de formación profesional de Grado Superior Proyectos de Obra Civil. Permiso de conducir clase B."
       },
@@ -4801,10 +4801,10 @@
     "offerId": "1285660488718",
     "requirements": [
       {
-        "category": "qualification_or_specialization",
-        "id": "requirement:5b3f67cce2dd7d833b0a5ac3176ea69646d04f7956dd6493e88dcd970d396c3b",
-        "normalizedValue": "Ingeniería ó Grado en Obras Públicas",
-        "parserRule": "qualification.official_title",
+        "category": "unclassified",
+        "id": "requirement:fb1df9e58b9742b00eb0a043be6af5a9b055f02e2540fe674e6847c1c5d3c7bc",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
         "parserVersion": "1.0.0",
         "sourceQuote": "Ingeniería ó Grado en Obras Públicas"
       },
@@ -4825,7 +4825,7 @@
         "category": "unclassified",
         "id": "requirement:d2870f518cce594aa481e44b06419878306944cae3a65e39b7c883a16e08a0ec",
         "normalizedValue": null,
-        "parserRule": "unclassified.conservative_fallback",
+        "parserRule": "unclassified.ambiguous_or_negated",
         "parserVersion": "1.0.0",
         "sourceQuote": "Grado o Ingeniería Técnica en Obras Públicas. Permiso de conducir tipo B."
       },
@@ -4906,10 +4906,10 @@
     "offerId": "1285667539377",
     "requirements": [
       {
-        "category": "driving_license_or_vehicle",
-        "id": "requirement:99b59ab4a587ed38733bea2c07ffcae2efe882b0461fd1dc3cd140c209b8c525",
-        "normalizedValue": "driving_license",
-        "parserRule": "license.driving_generic",
+        "category": "unclassified",
+        "id": "requirement:d6163ffc5fdd651999ccd15d85357b35363689a1ef07e0af37a3791056b8933d",
+        "normalizedValue": null,
+        "parserRule": "unclassified.ambiguous_or_negated",
         "parserVersion": "1.0.0",
         "sourceQuote": "Curso PRL de 20 horas construcción. Permiso de conducir."
       },
@@ -4929,7 +4929,7 @@
       {
         "category": "qualification_or_specialization",
         "id": "requirement:1781c53470eba043170aa78c27740ae83ebb2385e4704d3557511a88c4eb158a",
-        "normalizedValue": "Grado en enfermería",
+        "normalizedValue": "Grado en Enfermería",
         "parserRule": "qualification.official_title",
         "parserVersion": "1.0.0",
         "sourceQuote": "Grado en enfermería."
@@ -5064,10 +5064,10 @@
     "offerId": "1285651573559",
     "requirements": [
       {
-        "category": "qualification_or_specialization",
-        "id": "requirement:8882940f3a49f020a231b766f814729ddbaf91b2bde809e2860ad307f744a0c1",
-        "normalizedValue": "Diplomatura o Grado en Enfermería",
-        "parserRule": "qualification.official_title",
+        "category": "unclassified",
+        "id": "requirement:bd1329278d3bd876b80d1bfd9bf91752a67edc0aac601fd2edac158f062f7b69",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
         "parserVersion": "1.0.0",
         "sourceQuote": "Diplomatura o Grado en Enfermería."
       },
@@ -5220,10 +5220,10 @@
     "offerId": "1285659912954",
     "requirements": [
       {
-        "category": "qualification_or_specialization",
-        "id": "requirement:3cea441e38b5042811c5a388693d5e93ad63db33bdbd81071e83526259fb1dca",
-        "normalizedValue": "Diplomatura/Grado en Enfermería",
-        "parserRule": "qualification.official_title",
+        "category": "unclassified",
+        "id": "requirement:7c85f05240b1f5cd5ba2ce65b8867a062f489f727d3a1e6d0b268ddd9cbb54dd",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
         "parserVersion": "1.0.0",
         "sourceQuote": "Diplomatura/Grado en Enfermería."
       },
@@ -5241,10 +5241,10 @@
     "offerId": "1285659957755",
     "requirements": [
       {
-        "category": "qualification_or_specialization",
-        "id": "requirement:8d397db2f40b7060a63aced0e213f7e7bc13a782bada6aa15cfeca4e87b6042e",
-        "normalizedValue": "Licenciado/Grado en Enfermería",
-        "parserRule": "qualification.official_title",
+        "category": "unclassified",
+        "id": "requirement:8016e8a05d73c781cbc19221cf6b63a23d599fba97d38933b3ead7dfb13ba323",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
         "parserVersion": "1.0.0",
         "sourceQuote": "Licenciado/Grado en Enfermería."
       },
@@ -5262,10 +5262,10 @@
     "offerId": "1285662408358",
     "requirements": [
       {
-        "category": "qualification_or_specialization",
-        "id": "requirement:aacc7d430b909891f17d0c29759388fb64188bd32713036fda0a5baf368692ba",
-        "normalizedValue": "Titulación de Diplomatura o Grado en Enfermería",
-        "parserRule": "qualification.official_title",
+        "category": "unclassified",
+        "id": "requirement:01cf8963c291157d7a1a20b906de5bf22f7fbc3e2b2e5afb716f391004768ad7",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
         "parserVersion": "1.0.0",
         "sourceQuote": "Titulación de Diplomatura o Grado en Enfermería."
       },
@@ -5283,10 +5283,10 @@
     "offerId": "1285664452043",
     "requirements": [
       {
-        "category": "qualification_or_specialization",
-        "id": "requirement:f24cbff5d1bf5f31d57ec63f1ebf7615d00a3d4e21635090184e8501e94f2d72",
-        "normalizedValue": "Diplomatura o Grado en Enfermería",
-        "parserRule": "qualification.official_title",
+        "category": "unclassified",
+        "id": "requirement:42a1d929d4fe07a1dda093d9975d08f52f2ef4e58b38a79ea1b75f2dadbc3bdf",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
         "parserVersion": "1.0.0",
         "sourceQuote": "Diplomatura o Grado en Enfermería."
       },
@@ -5304,10 +5304,10 @@
     "offerId": "1285664452075",
     "requirements": [
       {
-        "category": "qualification_or_specialization",
-        "id": "requirement:1691a1471751cb168862b425ee7f025fe6dd1ec2aa29c43fdeb37aae7cbf8099",
-        "normalizedValue": "Diplomatura o Grado en Enfermería",
-        "parserRule": "qualification.official_title",
+        "category": "unclassified",
+        "id": "requirement:f7fd080793c84c7d9f935a936345b8eff9d08100d7f68c1318936dfe39a2cd3d",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
         "parserVersion": "1.0.0",
         "sourceQuote": "Diplomatura o Grado en Enfermería."
       },
@@ -5338,10 +5338,10 @@
     "offerId": "1285666005100",
     "requirements": [
       {
-        "category": "qualification_or_specialization",
-        "id": "requirement:2d24f76f50408308d288227b98406f66f0150f16025e3059333fb79ef2b508bd",
-        "normalizedValue": "Diplomatura/Grado en Enfermería",
-        "parserRule": "qualification.official_title",
+        "category": "unclassified",
+        "id": "requirement:0d4880bd294855dc422841ef9b0b2c7bdbf9f7bb7351c66dc0495784de706a28",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
         "parserVersion": "1.0.0",
         "sourceQuote": "Diplomatura/Grado en Enfermería."
       },
@@ -5359,10 +5359,10 @@
     "offerId": "1285668323502",
     "requirements": [
       {
-        "category": "qualification_or_specialization",
-        "id": "requirement:fd3a5eaf660e92544282dfb9ee2d90ef026828637223c9252928c959ae69e9af",
-        "normalizedValue": "Diplomatuar o Grado en Enfermería",
-        "parserRule": "qualification.official_title",
+        "category": "unclassified",
+        "id": "requirement:163413cc86692494f3737a224de2ffd2ecdde5c9c5832be250b63d68cce37b69",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
         "parserVersion": "1.0.0",
         "sourceQuote": "Diplomatuar o Grado en Enfermería."
       },
@@ -5380,10 +5380,10 @@
     "offerId": "1285638355357",
     "requirements": [
       {
-        "category": "qualification_or_specialization",
-        "id": "requirement:664184563c3b1f6d1078e75805e7e2471462dcef4a87336f942e03cde264d055",
-        "normalizedValue": "Diplomatura o Grado en Enfermería",
-        "parserRule": "qualification.official_title",
+        "category": "unclassified",
+        "id": "requirement:758db9b06e0f6bc664279b7e881805afea5aa3161ad4ded4ad6258ae8dec5745",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
         "parserVersion": "1.0.0",
         "sourceQuote": "Diplomatura o Grado en Enfermería."
       },
@@ -5401,10 +5401,10 @@
     "offerId": "1285638710151",
     "requirements": [
       {
-        "category": "qualification_or_specialization",
-        "id": "requirement:fee800929f44823d717a4ceb9e40eea7b14c3fc54f3add53c3a0227a582b1497",
-        "normalizedValue": "Diplomado o Grado en Enfermería",
-        "parserRule": "qualification.official_title",
+        "category": "unclassified",
+        "id": "requirement:60c878bb361942ed73e05b34ed1d544ef2928f12bc3d7fb405228289939a0c5e",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
         "parserVersion": "1.0.0",
         "sourceQuote": "Diplomado o Grado en Enfermería."
       },
@@ -5422,10 +5422,10 @@
     "offerId": "1285647355591",
     "requirements": [
       {
-        "category": "qualification_or_specialization",
-        "id": "requirement:6e647284809342b7dca521b71a02a39fe37ea1a60fd55b13abe634944e7266ca",
-        "normalizedValue": "Diplomatura o Grado en Enfermería",
-        "parserRule": "qualification.official_title",
+        "category": "unclassified",
+        "id": "requirement:ca3936ac92fbc10f3b9b616459e40cefefe7c819916b5376ec38d5bda070a361",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
         "parserVersion": "1.0.0",
         "sourceQuote": "Diplomatura o Grado en Enfermería."
       },
@@ -5443,10 +5443,10 @@
     "offerId": "1285653965121",
     "requirements": [
       {
-        "category": "qualification_or_specialization",
-        "id": "requirement:29c0ccb799214200f0fdaed664a935c7fd7a258b8aeaa72b5e0699dc12d9c177",
-        "normalizedValue": "DIPLOMATURA O GRADO EN ENFERMERÍA",
-        "parserRule": "qualification.official_title",
+        "category": "unclassified",
+        "id": "requirement:3c8dd1cd9d578b4f82ef934f0d500d6e480a68021bf91b9e21869d926979534d",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
         "parserVersion": "1.0.0",
         "sourceQuote": "DIPLOMATURA O GRADO EN ENFERMERÍA"
       },
@@ -5488,10 +5488,10 @@
     "offerId": "1285663784466",
     "requirements": [
       {
-        "category": "qualification_or_specialization",
-        "id": "requirement:efc5506f511da3390d72b2f73d6d88bb26092a5e3152a463183ff64eb22ce15f",
-        "normalizedValue": "Titulación de Diplomatura o Grado en Enfermería",
-        "parserRule": "qualification.official_title",
+        "category": "unclassified",
+        "id": "requirement:3867b2c0d30058fa375721874100287c6a1aafa8ef734eaefdd496355f91fc22",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
         "parserVersion": "1.0.0",
         "sourceQuote": "Titulación de Diplomatura o Grado en Enfermería."
       },
@@ -5512,7 +5512,7 @@
         "category": "unclassified",
         "id": "requirement:c4793ac268adfc39929a41cabbfc5530319ce5877f8b3c2e7e0c74dd504fd377",
         "normalizedValue": null,
-        "parserRule": "unclassified.conservative_fallback",
+        "parserRule": "unclassified.ambiguous_or_negated",
         "parserVersion": "1.0.0",
         "sourceQuote": "Diplomatura o Grado en Enfermería. Permiso de conducir."
       },
@@ -5570,10 +5570,10 @@
         "sourceQuote": "Con iniciativa, dinámico y pro activo."
       },
       {
-        "category": "driving_license_or_vehicle",
-        "id": "requirement:55eddf477d707241eb51a5221850e84f038aa11bb1221c28130eb910e9c6650d",
-        "normalizedValue": "driving_license",
-        "parserRule": "license.driving_generic",
+        "category": "unclassified",
+        "id": "requirement:11a3999ed5e7323267b6835d9a3ae18206932c89eac2c31752ad7a2c1a0d7b21",
+        "normalizedValue": null,
+        "parserRule": "unclassified.ambiguous_or_negated",
         "parserVersion": "1.0.0",
         "sourceQuote": "Carnet de conducir B1 y vehículo propio."
       },
@@ -5620,10 +5620,10 @@
         "sourceQuote": "DISCAPACIDAD MINIMA DEL 33%"
       },
       {
-        "category": "experience",
-        "id": "requirement:e24689014572a85fcd296e7857b4e136356a2c268729c22855f081098e180362",
-        "normalizedValue": 12,
-        "parserRule": "experience.months",
+        "category": "unclassified",
+        "id": "requirement:64ea19ea2eb57e194a0bf4eed8df95361af7f916c9e68da81c8369046ecdf511",
+        "normalizedValue": null,
+        "parserRule": "unclassified.ambiguous_or_negated",
         "parserVersion": "1.0.0",
         "sourceQuote": "EXPERIENCIA DE 12 MESES EN LA OCUPACION"
       },
@@ -5736,10 +5736,10 @@
     "offerId": "1285654730137",
     "requirements": [
       {
-        "category": "qualification_or_specialization",
-        "id": "requirement:62840b10e81be720d2d1b5c4f75112a5d8b88df7f458eb48bbdd289167b7226d",
-        "normalizedValue": "DIPLOMATURA O GRADO EN FISIOTERAPIA",
-        "parserRule": "qualification.official_title",
+        "category": "unclassified",
+        "id": "requirement:61d59811ea0f43d07cfce6316d443109cc0a1fc6063b3419424d74136f8ec37a",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
         "parserVersion": "1.0.0",
         "sourceQuote": "DIPLOMATURA O GRADO EN FISIOTERAPIA."
       },
@@ -5781,10 +5781,10 @@
     "offerId": "1285659912898",
     "requirements": [
       {
-        "category": "qualification_or_specialization",
-        "id": "requirement:79916e94589337217cd69fb2f96aba859975cf0e0ce07429f98a21c24bacd508",
-        "normalizedValue": "Diplomatura/Grado en Fisioterapia",
-        "parserRule": "qualification.official_title",
+        "category": "unclassified",
+        "id": "requirement:5a6e52a0323a64b987aec809447be7950fdfaa7020d9933d13fc1e953bacef06",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
         "parserVersion": "1.0.0",
         "sourceQuote": "Diplomatura/Grado en Fisioterapia."
       },
@@ -5823,10 +5823,10 @@
     "offerId": "1285661108005",
     "requirements": [
       {
-        "category": "qualification_or_specialization",
-        "id": "requirement:c8699f730906bff62a98b4489b66acab6597600b487dbe6e018349415e7a1d6e",
-        "normalizedValue": "Diplomatura o Grado en Fisioterapia",
-        "parserRule": "qualification.official_title",
+        "category": "unclassified",
+        "id": "requirement:c2036d8ae314e4de45eda116a4913d3450476aedc404676959aa6226ff9c81ea",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
         "parserVersion": "1.0.0",
         "sourceQuote": "Diplomatura o Grado en Fisioterapia."
       },
@@ -5844,10 +5844,10 @@
     "offerId": "1285662408386",
     "requirements": [
       {
-        "category": "qualification_or_specialization",
-        "id": "requirement:81e14c4ef8414709d843c88fa2b6a68a8a1a9c0d0d503454cbb7f230beb4f01b",
-        "normalizedValue": "Titulación de Diplomatura o Grado en Fisioterapia",
-        "parserRule": "qualification.official_title",
+        "category": "unclassified",
+        "id": "requirement:422d3e1b58bea45496f5473c9b9653d962e09f03743bc884756725b7d755cbb7",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
         "parserVersion": "1.0.0",
         "sourceQuote": "Titulación de Diplomatura o Grado en Fisioterapia."
       },
@@ -5865,10 +5865,10 @@
     "offerId": "1285665269273",
     "requirements": [
       {
-        "category": "qualification_or_specialization",
-        "id": "requirement:221f40112a21f97c1e266274b004610a5acc751324a41862f09c978462928f13",
-        "normalizedValue": "Diplomatura o Grado en Fisioterapia",
-        "parserRule": "qualification.official_title",
+        "category": "unclassified",
+        "id": "requirement:e7051624a1c8bf0cb1c2c064d9824dbd4614db6525ec5075aaf792ed2b232125",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
         "parserVersion": "1.0.0",
         "sourceQuote": "Diplomatura o Grado en Fisioterapia."
       },
@@ -5886,10 +5886,10 @@
     "offerId": "1285665287006",
     "requirements": [
       {
-        "category": "qualification_or_specialization",
-        "id": "requirement:50e0def70cf5b455dc8c5e25de55687f47b576c085d1a68b466c2e60eb7abb9f",
-        "normalizedValue": "Diplomatura o Grado en Fisioterapia",
-        "parserRule": "qualification.official_title",
+        "category": "unclassified",
+        "id": "requirement:58afd0e4cc47d4762c9caf3aec4190f71dcd47c7f5d4d10abb3e25c3cc93309d",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
         "parserVersion": "1.0.0",
         "sourceQuote": "Diplomatura o Grado en Fisioterapia."
       },
@@ -5907,10 +5907,10 @@
     "offerId": "1285666005128",
     "requirements": [
       {
-        "category": "qualification_or_specialization",
-        "id": "requirement:d8bcdb14006eda21ece982448f52c8e9990dd5979ee53c3023f4e053bbc59669",
-        "normalizedValue": "Diplomatura/Grado en Fisioterapia",
-        "parserRule": "qualification.official_title",
+        "category": "unclassified",
+        "id": "requirement:e438bef8193419dbd933b02489a9a26f0cd4190542c609659e9983560e92316d",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
         "parserVersion": "1.0.0",
         "sourceQuote": "Diplomatura/Grado en Fisioterapia."
       },
@@ -5928,10 +5928,10 @@
     "offerId": "1285666619118",
     "requirements": [
       {
-        "category": "qualification_or_specialization",
-        "id": "requirement:5e6db767be7c62977549ab7a2d21de1971b9fa5053d08b082b67490d4fb7b7c1",
-        "normalizedValue": "Titulación en Fisioterapia",
-        "parserRule": "qualification.official_title",
+        "category": "unclassified",
+        "id": "requirement:cab27763957432cf887381375087077d4dccc0683f72246eb66254379e503748",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
         "parserVersion": "1.0.0",
         "sourceQuote": "Titulación en Fisioterapia."
       },
@@ -5994,10 +5994,10 @@
         "sourceQuote": "Titulación universitaria o formación superior en hostelería o turismo. Se valorarán certificados profesionales en housekeeping management."
       },
       {
-        "category": "language",
-        "id": "requirement:e0f2481dc2f4ffd26cf709a900b12e4a9fb989624379f205e05f9e292b28933f",
-        "normalizedValue": "inglés",
-        "parserRule": "language.named",
+        "category": "unclassified",
+        "id": "requirement:f0452bafb01a0f5bb57de996296cd7aff70a2dd46b1a22d48254cc0de3093189",
+        "normalizedValue": null,
+        "parserRule": "unclassified.ambiguous_or_negated",
         "parserVersion": "1.0.0",
         "sourceQuote": "Inglés Avanzado."
       },
@@ -6140,10 +6140,10 @@
     "offerId": "1285667273774",
     "requirements": [
       {
-        "category": "experience",
-        "id": "requirement:4adc3f894dc2bf237b85acf8b24e243d39ebba83688bd99465f077a0c58d243c",
-        "normalizedValue": 24,
-        "parserRule": "experience.years",
+        "category": "unclassified",
+        "id": "requirement:c8beba91f3162e7a34f33d4c1e8e77de31ad7479eecb8a0a789bde6f7fa98a6c",
+        "normalizedValue": null,
+        "parserRule": "unclassified.ambiguous_or_negated",
         "parserVersion": "1.0.0",
         "sourceQuote": "Experiencia mínima de al menos 2 años en puesto similar."
       },
@@ -6222,10 +6222,10 @@
     "offerId": "1285667273884",
     "requirements": [
       {
-        "category": "qualification_or_specialization",
-        "id": "requirement:9d323e083e9550d2bcaa642b8da08ea358b9d3ad9a9529ac275d41f7c4538db3",
-        "normalizedValue": "Grado en Ingeniería Química o similar",
-        "parserRule": "qualification.official_title",
+        "category": "unclassified",
+        "id": "requirement:287ff0b0e966935751bd809eab894bad6142226eee06cc31c38363a350686a0b",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
         "parserVersion": "1.0.0",
         "sourceQuote": "Grado en Ingeniería Química o similar."
       },
@@ -6280,10 +6280,10 @@
     "offerId": "1285663193462",
     "requirements": [
       {
-        "category": "qualification_or_specialization",
-        "id": "requirement:d6e5bc977309abd33c284639cc75924de78f2055f97fa59327d5839616abf166",
-        "normalizedValue": "Titulación Grado en Mecánica o similar",
-        "parserRule": "qualification.official_title",
+        "category": "unclassified",
+        "id": "requirement:9ee20c1cc5db022d3dfb74c6cd77782582d7816d34d88b2b1d6bf94c21515902",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
         "parserVersion": "1.0.0",
         "sourceQuote": "Titulación Grado en Mecánica o similar."
       },
@@ -6330,26 +6330,26 @@
         "sourceQuote": "Educación Secundaria Obligatoria."
       },
       {
-        "category": "experience",
-        "id": "requirement:8014b021dcd4ab6e6fb3a696d66968ccfe7c713d9938136fca86e7c56a8e13bb",
-        "normalizedValue": 12,
-        "parserRule": "experience.years",
+        "category": "unclassified",
+        "id": "requirement:87550df8a5da9df63419c1367da8c4279f95513d06a1b1b062b4b2de6bf9b736",
+        "normalizedValue": null,
+        "parserRule": "unclassified.ambiguous_or_negated",
         "parserVersion": "1.0.0",
         "sourceQuote": "Experiencia mínima de al menos 1 año de experiencia, haciendo instalaciones de fibra óptica."
       },
       {
-        "category": "unclassified",
-        "id": "requirement:6ef9bf9425106c8a8a0c0dc8d61fe9008895148c272abfad59bbee92a0814b2f",
-        "normalizedValue": null,
-        "parserRule": "unclassified.conservative_fallback",
+        "category": "driving_license_or_vehicle",
+        "id": "requirement:7c38f60a62edde372d51b0b6126d8646e28dfc55cea352e9a00d3c936bebac39",
+        "normalizedValue": "B",
+        "parserRule": "license.driving_b",
         "parserVersion": "1.0.0",
         "sourceQuote": "Permiso de conducción B."
       },
       {
-        "category": "schedule_availability",
-        "id": "requirement:4aa6d59068995c0b73c812912bc96acc8a273fc59e844b13045be57d62cee162",
-        "normalizedValue": "variable_schedule",
-        "parserRule": "schedule.variable",
+        "category": "unclassified",
+        "id": "requirement:d7774dc39fcf9bee6ec177036e7c2777135c3ca2876c875d7c024839b348b1fe",
+        "normalizedValue": null,
+        "parserRule": "unclassified.ambiguous_or_negated",
         "parserVersion": "1.0.0",
         "sourceQuote": "Disponibilidad para trabajar en turnos rotativos (9:00 a 18:00 / 13:00 a 21:00)."
       }
@@ -6454,10 +6454,10 @@
     "offerId": "1285667275104",
     "requirements": [
       {
-        "category": "qualification_or_specialization",
-        "id": "requirement:174800cafb74daf8edd12acc06ac326a7d4601221b6d9cd754ecd96c71e88728",
-        "normalizedValue": "Titulación universitaria o formación técnica superior en Ingeniería Mecánica, Ingeniería Industrial, Ingeniería Electromecánica u otras especialidades afines",
-        "parserRule": "qualification.official_title",
+        "category": "unclassified",
+        "id": "requirement:fe57a668e50d8a55e9b6d53e6a29e4d1c445d202733b36f4c319960a965c8e60",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
         "parserVersion": "1.0.0",
         "sourceQuote": "Titulación universitaria o formación técnica superior en Ingeniería Mecánica, Ingeniería Industrial, Ingeniería Electromecánica u otras especialidades afines."
       },
@@ -6470,10 +6470,10 @@
         "sourceQuote": "Conocimientos de SAP y herramientas del entorno Microsoft Office."
       },
       {
-        "category": "experience",
-        "id": "requirement:cca94511ba2c93dd94055bcb73c76f939cbec44c2e988581c6ece5ccf85614a0",
-        "normalizedValue": 36,
-        "parserRule": "experience.years",
+        "category": "unclassified",
+        "id": "requirement:0c08e3fb8f45a2fed6e36b909fcf5d45af464f31d8708fa3b4a1e9d30f80f5ad",
+        "normalizedValue": null,
+        "parserRule": "unclassified.ambiguous_or_negated",
         "parserVersion": "1.0.0",
         "sourceQuote": "Experiencia mínima de 3 años en posiciones de responsabilidad dentro de áreas de mantenimiento industrial."
       },
@@ -6507,18 +6507,18 @@
     "offerId": "1285667274414",
     "requirements": [
       {
-        "category": "qualification_or_specialization",
-        "id": "requirement:3561fb43686df954cc26c9ba3830c419b18c4916945ea3c35c1c70d01ec9b840",
-        "normalizedValue": "Titulación universitaria en Ingeniería Industrial, Ingeniería de Caminos, Ingeniería Química, Ingeniería Agrónoma, Biología, Ciencias Ambientales o similar",
-        "parserRule": "qualification.official_title",
+        "category": "unclassified",
+        "id": "requirement:94264f92d51f2a5781f3ae6032e14c314c5b2e114993f52a409fb5410944a2d3",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
         "parserVersion": "1.0.0",
         "sourceQuote": "Titulación universitaria en Ingeniería Industrial, Ingeniería de Caminos, Ingeniería Química, Ingeniería Agrónoma, Biología, Ciencias Ambientales o similar."
       },
       {
-        "category": "experience",
-        "id": "requirement:64c7431a08c93124185b30e334306db18369dc2abbb5fe03a0d8e81fb59abbae",
-        "normalizedValue": 24,
-        "parserRule": "experience.years",
+        "category": "unclassified",
+        "id": "requirement:ef86c70ffcf74101f669ef329ba1a369520c79679280f23496f3c32d308bf979",
+        "normalizedValue": null,
+        "parserRule": "unclassified.ambiguous_or_negated",
         "parserVersion": "1.0.0",
         "sourceQuote": "Experiencia mínima de 2 años como Jefe/a de Planta, Jefe/a de Servicio o en posiciones similares."
       },
@@ -6587,7 +6587,7 @@
         "category": "unclassified",
         "id": "requirement:800776b9956ac95bf79d0e9fe4861f0c235dc04da03db4f76467225c2b4e0a8e",
         "normalizedValue": null,
-        "parserRule": "unclassified.conservative_fallback",
+        "parserRule": "unclassified.ambiguous_or_negated",
         "parserVersion": "1.0.0",
         "sourceQuote": "Grado de discapacidad igual o superior al 33%. Permiso de conducir."
       },
@@ -6608,7 +6608,7 @@
         "category": "unclassified",
         "id": "requirement:18263467b7e0228c0aad3abcafda81032d1a0bab36b9684a73e4430289444d4e",
         "normalizedValue": null,
-        "parserRule": "unclassified.conservative_fallback",
+        "parserRule": "unclassified.ambiguous_or_negated",
         "parserVersion": "1.0.0",
         "sourceQuote": "Titulación en Pedagogía. Permiso de conducir B. Formación relacionada con personas con discapacidad. Manejo herramienta digitales."
       },
@@ -6655,10 +6655,10 @@
         "sourceQuote": "Formación profesional Grado Medio o Grado Superior de Mecanizado."
       },
       {
-        "category": "experience",
-        "id": "requirement:b1c7f28f7565a324c07fdb825d52cb3f2ca940fb06393b3089a43cf8512a020c",
-        "normalizedValue": 36,
-        "parserRule": "experience.years",
+        "category": "unclassified",
+        "id": "requirement:4428e6be6aa640ef47274de81e5b7706ec1f4c667802445fb848afedf9af76cb",
+        "normalizedValue": null,
+        "parserRule": "unclassified.ambiguous_or_negated",
         "parserVersion": "1.0.0",
         "sourceQuote": "Experiencia previa de 3 años como mecánico / ajustador."
       },
@@ -6848,10 +6848,10 @@
     "offerId": "1285653965093",
     "requirements": [
       {
-        "category": "qualification_or_specialization",
-        "id": "requirement:b4455be54de0cf64ceb876c4373501957701b7f60523f8f6f979da0eaa40640d",
-        "normalizedValue": "LICENCIATURA O GRADO EN MEDICINA",
-        "parserRule": "qualification.official_title",
+        "category": "unclassified",
+        "id": "requirement:f1da959106ae65ac8ab87c18d18099cb7b971e087ee97ff564ff43c540de28cd",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
         "parserVersion": "1.0.0",
         "sourceQuote": "LICENCIATURA O GRADO EN MEDICINA."
       },
@@ -6893,10 +6893,10 @@
     "offerId": "1285664452012",
     "requirements": [
       {
-        "category": "qualification_or_specialization",
-        "id": "requirement:e0d4cb4a6b1403eebfe380f2e5339836e83dd2b2cd27ed33c57f00ce645e3974",
-        "normalizedValue": "Licenciatura o Grado en Derecho",
-        "parserRule": "qualification.official_title",
+        "category": "unclassified",
+        "id": "requirement:2d365f73705b2085a3b3ad193c728a5e1ac7f49057bd678336733a4f7353d72e",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
         "parserVersion": "1.0.0",
         "sourceQuote": "Licenciatura o Grado en Derecho."
       },
@@ -6914,10 +6914,10 @@
     "offerId": "1285651573457",
     "requirements": [
       {
-        "category": "qualification_or_specialization",
-        "id": "requirement:67c1f6496e9954b1e27b40aa3c51128b32fc946bb377d604860866758a6a136f",
-        "normalizedValue": "Licenciatura o Grado en Medicina, especialidad Medicina Legal y Forense",
-        "parserRule": "qualification.official_title",
+        "category": "unclassified",
+        "id": "requirement:f79d1b06c170c837f1493f6369668a2dc86b31552bfa26b3cf77c4a11809e774",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
         "parserVersion": "1.0.0",
         "sourceQuote": "Licenciatura o Grado en Medicina, especialidad Medicina Legal y Forense."
       },
@@ -6972,10 +6972,10 @@
     "offerId": "1285659912814",
     "requirements": [
       {
-        "category": "qualification_or_specialization",
-        "id": "requirement:d602fa01196ca3d377e17dc3d0a90c6b276bc4a01ed09d1379e2a8ee2f700cda",
-        "normalizedValue": "Licenciatura o Grado en Medicina",
-        "parserRule": "qualification.official_title",
+        "category": "unclassified",
+        "id": "requirement:838c160aa134fdfc75da4e979a5de38a2264f2e681db81cc9af4502718186d39",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
         "parserVersion": "1.0.0",
         "sourceQuote": "Licenciatura o Grado en Medicina."
       },
@@ -6993,10 +6993,10 @@
     "offerId": "1285659957812",
     "requirements": [
       {
-        "category": "qualification_or_specialization",
-        "id": "requirement:d23826d5007fafbe042ad524ed5ae1e0b85d0c59478f872d59d071fdafeb71ce",
-        "normalizedValue": "Licenciado/Grado en Medicina",
-        "parserRule": "qualification.official_title",
+        "category": "unclassified",
+        "id": "requirement:5663eb72e212ed93cb2e40c8410801c0d5690da60eebe90c62414f97b744b575",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
         "parserVersion": "1.0.0",
         "sourceQuote": "Licenciado/Grado en Medicina."
       },
@@ -7014,10 +7014,10 @@
     "offerId": "1285660449962",
     "requirements": [
       {
-        "category": "qualification_or_specialization",
-        "id": "requirement:a6da0e7a5ffce4dcdf3433c65be8e5a46af92d3bb1b3571402d281c32ac2d8c2",
-        "normalizedValue": "Licenciatura o Grado en Medicina",
-        "parserRule": "qualification.official_title",
+        "category": "unclassified",
+        "id": "requirement:e120e310e35169fa01d3daf25a3bd739cdaf97faf761c53c3da5217d67b259ea",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
         "parserVersion": "1.0.0",
         "sourceQuote": "Licenciatura o Grado en Medicina."
       },
@@ -7072,10 +7072,10 @@
     "offerId": "1285662408330",
     "requirements": [
       {
-        "category": "qualification_or_specialization",
-        "id": "requirement:6a063c6d3c04f4bd193e09d9ec2a0ac06f2ba11ed6597c8989ebafb568a5b617",
-        "normalizedValue": "Titulación de Licenciatura o Grado en Medicina",
-        "parserRule": "qualification.official_title",
+        "category": "unclassified",
+        "id": "requirement:a763ab6b0b980c9c4c8d7bf806ed09e62888478cbd92534cf6d22c10f206ba2f",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
         "parserVersion": "1.0.0",
         "sourceQuote": "Titulación de Licenciatura o Grado en Medicina."
       },
@@ -7093,10 +7093,10 @@
     "offerId": "1285666005072",
     "requirements": [
       {
-        "category": "qualification_or_specialization",
-        "id": "requirement:a5cf39e391f2183a61b0ab8bbbc25305915d17eead8eaedc2ddf3722bf7540f3",
-        "normalizedValue": "Licenciatura/Grado en Medicina",
-        "parserRule": "qualification.official_title",
+        "category": "unclassified",
+        "id": "requirement:be79a0bdba53019ccf8de034caf01df61858fc680c59ef721a83894d3e4a0b2f",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
         "parserVersion": "1.0.0",
         "sourceQuote": "Licenciatura/Grado en Medicina."
       },
@@ -7114,10 +7114,10 @@
     "offerId": "1285666618942",
     "requirements": [
       {
-        "category": "qualification_or_specialization",
-        "id": "requirement:d25deb8f1ff4361b50670351eef7ef7373d0ac2d06f83d300d5e6965653f7d8f",
-        "normalizedValue": "Titulación en Medicina",
-        "parserRule": "qualification.official_title",
+        "category": "unclassified",
+        "id": "requirement:9fc043e0d01a5abd0dd8d813bc03cc671a6677b7e685a67cfd5ad085a27b036a",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
         "parserVersion": "1.0.0",
         "sourceQuote": "Titulación en Medicina."
       },
@@ -7135,10 +7135,10 @@
     "offerId": "1285668323437",
     "requirements": [
       {
-        "category": "qualification_or_specialization",
-        "id": "requirement:071f88e2d2d012f0667b4b440e298ef4c2881d8b7536c902e42bd2a768ae5994",
-        "normalizedValue": "Licenciatura o Grado en Medicina",
-        "parserRule": "qualification.official_title",
+        "category": "unclassified",
+        "id": "requirement:fff09d02d5de6beda84dbac24d81a5a997db2f0b30d869216e68c5c076ae2dc0",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
         "parserVersion": "1.0.0",
         "sourceQuote": "Licenciatura o Grado en Medicina."
       },
@@ -7238,10 +7238,10 @@
         "sourceQuote": "Manejo de carretilla elevadora ( frontal y retráctil) apiladora, recoge pedidos y transpaleta eléctrica."
       },
       {
-        "category": "experience",
-        "id": "requirement:d4790468f2e2af9745082be286a618e9d2a92d6e12e702d5d328d37bf9e8ded7",
-        "normalizedValue": 12,
-        "parserRule": "experience.years",
+        "category": "unclassified",
+        "id": "requirement:7614f88de23351e04db29a24bcfbda9eca58a58de298f9d360528ad096119beb",
+        "normalizedValue": null,
+        "parserRule": "unclassified.ambiguous_or_negated",
         "parserVersion": "1.0.0",
         "sourceQuote": "Experiencia demostrable de al menos un año en tareas de almacén y manejo de carretilla elevadora."
       },
@@ -7283,10 +7283,10 @@
         "sourceQuote": "Ciclo formativo Grado Medio."
       },
       {
-        "category": "experience",
-        "id": "requirement:bbaa94d411c9e39aa40cf4ee95f67ef86ef5000f6437ee3461f3f6ca3c1c4209",
-        "normalizedValue": 12,
-        "parserRule": "experience.years",
+        "category": "unclassified",
+        "id": "requirement:fd6fd1c1240138fbf90ab8d021029769b3664bd3d107d2658b188dc0ffb12f96",
+        "normalizedValue": null,
+        "parserRule": "unclassified.ambiguous_or_negated",
         "parserVersion": "1.0.0",
         "sourceQuote": "Experiencia mínima de 1 año en supermercado y/o como mozo/a de almacén."
       },
@@ -7333,10 +7333,10 @@
         "sourceQuote": "Educación Secundaria Obligatoria."
       },
       {
-        "category": "experience",
-        "id": "requirement:c81b1b3501376e0f56404791ea44564714cc19a8d6eeb2633928c30401f51e71",
-        "normalizedValue": 12,
-        "parserRule": "experience.years",
+        "category": "unclassified",
+        "id": "requirement:047bd95b374309c82bb3c843052ef4c36d4627471c7f7f5f9c274d4e7d1554ae",
+        "normalizedValue": null,
+        "parserRule": "unclassified.ambiguous_or_negated",
         "parserVersion": "1.0.0",
         "sourceQuote": "Experiencia de al menos 1 año en obra civil."
       },
@@ -7407,10 +7407,10 @@
     "offerId": "1285665977913",
     "requirements": [
       {
-        "category": "qualification_or_specialization",
-        "id": "requirement:87e3796058a6d3fb415430490c03bb46d375b6b98691fe46cdf6dc0933232411",
-        "normalizedValue": "Ciclo formativo de Grado Medio o Formación Profesional de primer grado de: Energía y Agua/ Edificación y Obra Civil/ Electricidad y Electrónica/ Fabricación Mecánica/ Industrias Extractivas/Instalación y Mantenimiento o equivalente",
-        "parserRule": "qualification.official_title",
+        "category": "unclassified",
+        "id": "requirement:62c5c8c8b8762535759363cbf80298f1c2a7cd867a880d56ac300b037792a4cb",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
         "parserVersion": "1.0.0",
         "sourceQuote": "Ciclo formativo de Grado Medio o Formación Profesional de primer grado de: Energía y Agua/ Edificación y Obra Civil/ Electricidad y Electrónica/ Fabricación Mecánica/ Industrias Extractivas/Instalación y Mantenimiento o equivalente."
       },
@@ -7489,10 +7489,10 @@
         "sourceQuote": "Capacidad para el trabajo físico (manipulación de cargas, trabajo de pie, entornos con temperaturas variables)."
       },
       {
-        "category": "certificate_or_regulated_license",
-        "id": "requirement:569e9ce3fb2380fa5fb6cea4c7f2e214a9c1e6700eb1c3fc0d08ea96ccdcb058",
-        "normalizedValue": "food_handler",
-        "parserRule": "certificate.food_handler",
+        "category": "unclassified",
+        "id": "requirement:6562ec8e52ac31b9aa8360cc64fe125c03e73735522597cd7961c1eed3f287d9",
+        "normalizedValue": null,
+        "parserRule": "unclassified.ambiguous_or_negated",
         "parserVersion": "1.0.0",
         "sourceQuote": "Carnet de manipulador de alimentos (o disposición de obtenerlo)."
       },
@@ -7739,10 +7739,10 @@
     "offerId": "1285627064677",
     "requirements": [
       {
-        "category": "driving_license_or_vehicle",
-        "id": "requirement:173663297595496f243ebd92c53efe79978c8fd3244fd3358319b71696dd769b",
-        "normalizedValue": "driving_license",
-        "parserRule": "license.driving_generic",
+        "category": "unclassified",
+        "id": "requirement:bd60dcd7f13eb8531dda69f681cec56eb3752f6836a5231c237e926cd3b654d1",
+        "normalizedValue": null,
+        "parserRule": "unclassified.ambiguous_or_negated",
         "parserVersion": "1.0.0",
         "sourceQuote": "Permiso de conducir y vehículo."
       },
@@ -7781,10 +7781,10 @@
     "offerId": "1285654838426",
     "requirements": [
       {
-        "category": "driving_license_or_vehicle",
-        "id": "requirement:e5edf471a824dffbca40570a244ee2972fdb9aef1eeef8cfc0a4d6477d45d1e6",
-        "normalizedValue": "driving_license",
-        "parserRule": "license.driving_generic",
+        "category": "unclassified",
+        "id": "requirement:27ec9c0bf686690874d44686d2facea1b66dfd6442ae2a470ae40cc4aa37f59e",
+        "normalizedValue": null,
+        "parserRule": "unclassified.ambiguous_or_negated",
         "parserVersion": "1.0.0",
         "sourceQuote": "Permiso de conducir y disponibilidad vehículo."
       },
@@ -7802,10 +7802,10 @@
     "offerId": "1285668280976",
     "requirements": [
       {
-        "category": "certificate_or_regulated_license",
-        "id": "requirement:c9f73923eecacb88355c6457390a7d4d26da57f063983942f32a1401fc2ca4f3",
-        "normalizedValue": "eso certificado de profesionalidad de limpieza de superficies y mobiliario en edificios y locales permiso de circulacion",
-        "parserRule": "certificate.professional_certificate",
+        "category": "unclassified",
+        "id": "requirement:fd04e3ba2f9fa29b2e6501e68caa042897cb1a1546be7082f53b4298446c1134",
+        "normalizedValue": null,
+        "parserRule": "unclassified.ambiguous_or_negated",
         "parserVersion": "1.0.0",
         "sourceQuote": "ESO. Certificado de Profesionalidad de limpieza de superficies y mobiliario en edificios y locales. Permiso de circulación."
       },
@@ -7902,10 +7902,10 @@
     "offerId": "1285667275048",
     "requirements": [
       {
-        "category": "schedule_availability",
-        "id": "requirement:e0147d845fc552e5e466945c4cdee3faf03c266d3b62ce9fc76088d4fa399045",
-        "normalizedValue": "weekends",
-        "parserRule": "schedule.weekends",
+        "category": "unclassified",
+        "id": "requirement:ff41138b07c8f38ecf5a44aaa92c2c0362d2408141e2b49db387a707ee3edfa7",
+        "normalizedValue": null,
+        "parserRule": "unclassified.ambiguous_or_negated",
         "parserVersion": "1.0.0",
         "sourceQuote": "Disponibilidad para trabajar a turnos y fines de semana."
       }
@@ -7957,10 +7957,10 @@
     "offerId": "1285667274024",
     "requirements": [
       {
-        "category": "qualification_or_specialization",
-        "id": "requirement:07f6af47f62957caaccdf5de57ea51b0274224da75302f6a28520cbab006ccb6",
-        "normalizedValue": "Grado en Ingeniería",
-        "parserRule": "qualification.official_title",
+        "category": "unclassified",
+        "id": "requirement:7b9fc83854818567145f019ed6e991ebe2b5e7b84819e918bce61dcf4b7c7a87",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
         "parserVersion": "1.0.0",
         "sourceQuote": "Grado en Ingeniería."
       },
@@ -8118,10 +8118,10 @@
     "offerId": "1285667275020",
     "requirements": [
       {
-        "category": "driving_license_or_vehicle",
-        "id": "requirement:bf8f9fae92b7ba30f148bf48ef815d18d65f401717d5b32c3e4aedf029c8078e",
-        "normalizedValue": "driving_license",
-        "parserRule": "license.driving_generic",
+        "category": "unclassified",
+        "id": "requirement:7badf9251819b8cbd118d04fa0c93eff73fd227d784a5bf1434e3b32068a69b6",
+        "normalizedValue": null,
+        "parserRule": "unclassified.ambiguous_or_negated",
         "parserVersion": "1.0.0",
         "sourceQuote": "Carnet de conducir tipo C en vigor."
       },
@@ -8300,10 +8300,10 @@
         "sourceQuote": "Formación en calidad."
       },
       {
-        "category": "experience",
-        "id": "requirement:a6d7ffab268974c7afd65ec3c6ced7a80c364614c3c21aee1e63315a137418c8",
-        "normalizedValue": 12,
-        "parserRule": "experience.months",
+        "category": "unclassified",
+        "id": "requirement:4c54ec62c2ba7ea93fdb6a7465f3b8969a90f7053d2438d0c1aebf8cbfd2a4bb",
+        "normalizedValue": null,
+        "parserRule": "unclassified.ambiguous_or_negated",
         "parserVersion": "1.0.0",
         "sourceQuote": "Experiencia mínima de 12 meses en control de calidad, y a ser posible dentro del sector de fabricación industrial."
       }
@@ -8374,10 +8374,10 @@
         "sourceQuote": "Experiencia en mantenimiento de hoteles o grandes edificios."
       },
       {
-        "category": "schedule_availability",
-        "id": "requirement:7e7c54ddd2a76a0df3503d0d17136cdfa9e8b4cba1761350d907b6bcb7140838",
-        "normalizedValue": "weekends",
-        "parserRule": "schedule.weekends",
+        "category": "unclassified",
+        "id": "requirement:811cda24420a90dd1d2011e78d4c068d58df5e8fb118753577884e6a276f8f60",
+        "normalizedValue": null,
+        "parserRule": "unclassified.ambiguous_or_negated",
         "parserVersion": "1.0.0",
         "sourceQuote": "Disponibilidad para trabajar de lunes a domingo."
       },
@@ -8403,18 +8403,18 @@
         "sourceQuote": "FP Superior en Electromecánica o rama técnica (formación mínima exigible)."
       },
       {
-        "category": "qualification_or_specialization",
-        "id": "requirement:659f0deaa96cc33ac7ea49701f5d30ca58a3fe1caa0eada8f8431b5f8114a165",
-        "normalizedValue": "Grado en Ingeniería Mecánica, Ingeniería Electromecánica o ingenierías afines",
-        "parserRule": "qualification.official_title",
+        "category": "unclassified",
+        "id": "requirement:0942957bbf29c0f5537751b83e006886bf2ed0f41e1403821d49bfb86379bdbc",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
         "parserVersion": "1.0.0",
         "sourceQuote": "Grado en Ingeniería Mecánica, Ingeniería Electromecánica o ingenierías afines."
       },
       {
-        "category": "experience",
-        "id": "requirement:d300bf1c43138fadd0d4df72fde50bdbf5eeb2bc4c197c1a159299660e19cb51",
-        "normalizedValue": 24,
-        "parserRule": "experience.years",
+        "category": "unclassified",
+        "id": "requirement:074affb65e25ca25a4179e6d31e98cb72f4ee2596f7e8d05e43a01f2d5f2828f",
+        "normalizedValue": null,
+        "parserRule": "unclassified.ambiguous_or_negated",
         "parserVersion": "1.0.0",
         "sourceQuote": "Experiencia previa de al menos dos años en posiciones similares."
       }
@@ -8498,10 +8498,10 @@
     "offerId": "1285667526782",
     "requirements": [
       {
-        "category": "qualification_or_specialization",
-        "id": "requirement:cd5d771a6053cd4776b727081eb5d94d4e2c13cb5f6a7105348293c045c06885",
-        "normalizedValue": "Bachiller, Técnico Superior o titulación oficial equivalente",
-        "parserRule": "qualification.official_title",
+        "category": "unclassified",
+        "id": "requirement:1e95c6771a440ec4a245f2eb7433c0114c8bfd5f6103e931b901dae16844cc2c",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
         "parserVersion": "1.0.0",
         "sourceQuote": "Bachiller, Técnico Superior o titulación oficial equivalente"
       },
@@ -8527,10 +8527,10 @@
         "sourceQuote": "Ciclo Formativo Grado Superior/ Ingeniería Agrícola/ Administración y Fianzas."
       },
       {
-        "category": "experience",
-        "id": "requirement:c68d12084687468cebee77437dd88ab03aaf26221f122f49b949dda00091a01c",
-        "normalizedValue": 12,
-        "parserRule": "experience.months",
+        "category": "unclassified",
+        "id": "requirement:034512d0d2a51b7c64d1090ecdbd9abc8797dc8574931b4ab0ed147264dbda07",
+        "normalizedValue": null,
+        "parserRule": "unclassified.ambiguous_or_negated",
         "parserVersion": "1.0.0",
         "sourceQuote": "Experiencia mínima de 12 meses en el sector agrícola."
       }
@@ -8698,10 +8698,10 @@
     "offerId": "1285667364537",
     "requirements": [
       {
-        "category": "driving_license_or_vehicle",
-        "id": "requirement:9259a54d90afbce99dee5b8daa31d5c8907dc5acb7f717a71d1babcd534778b9",
-        "normalizedValue": "B",
-        "parserRule": "license.driving_b",
+        "category": "unclassified",
+        "id": "requirement:d6b48653cfe5c6f396669105b68f62ca4f1c1826f9f526938b871f0b0f08a1d8",
+        "normalizedValue": null,
+        "parserRule": "unclassified.ambiguous_or_negated",
         "parserVersion": "1.0.0",
         "sourceQuote": "Formación en Electromecánica, Mantenimiento Industrial, Automoción o similar. Permiso de conducir B. Experiencia."
       },
@@ -8772,10 +8772,10 @@
     "offerId": "1285665334667",
     "requirements": [
       {
-        "category": "experience",
-        "id": "requirement:aebf3c616aee2eee2e3ad18e449221a3332bf21c05d1dafe408c11578392709e",
-        "normalizedValue": 12,
-        "parserRule": "experience.months",
+        "category": "unclassified",
+        "id": "requirement:e46d40e5fa03b70f6f9b16d1b7b76703c93696312bd3648080fe64304b90536c",
+        "normalizedValue": null,
+        "parserRule": "unclassified.ambiguous_or_negated",
         "parserVersion": "1.0.0",
         "sourceQuote": "Experiencia de 12 meses y E.S.O. o equivalente."
       },
@@ -8862,10 +8862,10 @@
         "sourceQuote": "MANEJO DE APLICACIONES INFORMATICAS AVANZADO A NIVEL USUARIO"
       },
       {
-        "category": "driving_license_or_vehicle",
-        "id": "requirement:346c50caa0abfe1a8916972f6f78277a4630a9066169a19d02639d0dbbc4a377",
-        "normalizedValue": "driving_license",
-        "parserRule": "license.driving_generic",
+        "category": "unclassified",
+        "id": "requirement:568194ddd6628d82ca1d62ae2a2e075cb3251ca908c6425d5fe53de82f1f94c5",
+        "normalizedValue": null,
+        "parserRule": "unclassified.ambiguous_or_negated",
         "parserVersion": "1.0.0",
         "sourceQuote": "INDISPENSABLE CARNET DE CONDUCIR Y TITULACION MINIMA ESO"
       },
@@ -8907,10 +8907,10 @@
     "offerId": "1285614233477",
     "requirements": [
       {
-        "category": "qualification_or_specialization",
-        "id": "requirement:1e651a6267e706a2e5ae2d21853789077a09e47b2d7604a5484fd747bf53699e",
-        "normalizedValue": "Diplomatura o Grado en Terapia Ocupacional",
-        "parserRule": "qualification.official_title",
+        "category": "unclassified",
+        "id": "requirement:8e622fe7ac953093d72f7b372dfc1109ceae6f88cb176c221098a90557e387e0",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
         "parserVersion": "1.0.0",
         "sourceQuote": "Diplomatura o Grado en Terapia Ocupacional."
       },
@@ -8928,10 +8928,10 @@
     "offerId": "1285626623696",
     "requirements": [
       {
-        "category": "qualification_or_specialization",
-        "id": "requirement:efe783b502e248469d32639cc39c5038d08bcf93282fd4ab7a492335753c963f",
-        "normalizedValue": "Diplomatura o Grado en Terapia Ocupaciona",
-        "parserRule": "qualification.official_title",
+        "category": "unclassified",
+        "id": "requirement:ab56e52e88bf18c20e97ef1dc2d261a6a6f92ad94b304342d1600a2e272ddceb",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
         "parserVersion": "1.0.0",
         "sourceQuote": "Diplomatura o Grado en Terapia Ocupaciona."
       },
@@ -8949,10 +8949,10 @@
     "offerId": "1285626623731",
     "requirements": [
       {
-        "category": "qualification_or_specialization",
-        "id": "requirement:2e09bdbf146794870c3d7e9e99fa47e1174ba2cefc5ad8a525e5feb056f61b82",
-        "normalizedValue": "Diplomatura o Grado en Terapia Ocupacional",
-        "parserRule": "qualification.official_title",
+        "category": "unclassified",
+        "id": "requirement:ecdf7d6f768c595d6d35915e1eb1a3f78b51231f0a223f50504a3a4de75e68a8",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
         "parserVersion": "1.0.0",
         "sourceQuote": "Diplomatura o Grado en Terapia Ocupacional."
       },
@@ -8970,10 +8970,10 @@
     "offerId": "1285636821315",
     "requirements": [
       {
-        "category": "qualification_or_specialization",
-        "id": "requirement:922d3894b1413e371b71242805f1f19f5bcc5c663b62992c2dd096dd3615a269",
-        "normalizedValue": "Diplomatura o Grado en Terapia Ocupacional",
-        "parserRule": "qualification.official_title",
+        "category": "unclassified",
+        "id": "requirement:d6eb3b7d667444308e39ad1b85eb9abbc187a7c30505c58efd6d1931d1458cf3",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
         "parserVersion": "1.0.0",
         "sourceQuote": "Diplomatura o Grado en Terapia Ocupacional."
       },
@@ -8991,10 +8991,10 @@
     "offerId": "1285654730165",
     "requirements": [
       {
-        "category": "qualification_or_specialization",
-        "id": "requirement:56c4b3dc20d3f69aba95f49b85405a886f1c297ff126ce2abbe406f4daa716b8",
-        "normalizedValue": "DIPLOMATURA O GRADO EN TERAPIA OCUPACIONAL",
-        "parserRule": "qualification.official_title",
+        "category": "unclassified",
+        "id": "requirement:d5e28ea22604b9c16236e25dcdcd362200840130531717744de95544e7db1c65",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
         "parserVersion": "1.0.0",
         "sourceQuote": "DIPLOMATURA O GRADO EN TERAPIA OCUPACIONAL."
       },
@@ -9036,10 +9036,10 @@
     "offerId": "1285658958809",
     "requirements": [
       {
-        "category": "qualification_or_specialization",
-        "id": "requirement:3296b18f7157c43c4f467c6e6140292a706ab95b4ca5064de6e9a4d763c3a3ce",
-        "normalizedValue": "Titulación en Terapia Ocupacional",
-        "parserRule": "qualification.official_title",
+        "category": "unclassified",
+        "id": "requirement:00cafc103757635826f36ca3d03cebd13e7d87130139c334ce909a270c5ce41e",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
         "parserVersion": "1.0.0",
         "sourceQuote": "Titulación en Terapia Ocupacional."
       },
@@ -9078,10 +9078,10 @@
     "offerId": "1285662408414",
     "requirements": [
       {
-        "category": "qualification_or_specialization",
-        "id": "requirement:ca8de08e7bb5bc8a61f7133628cd001a9c4ca57c2362055203688304fa8923fc",
-        "normalizedValue": "Titulación de Diplomatura o Grado en Terapia Ocupacional",
-        "parserRule": "qualification.official_title",
+        "category": "unclassified",
+        "id": "requirement:e52a944ea7ab28e8bc17e85c0ff1642f25e4a4770973b012070ef7ce53722a2a",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
         "parserVersion": "1.0.0",
         "sourceQuote": "Titulación de Diplomatura o Grado en Terapia Ocupacional."
       },
@@ -9099,10 +9099,10 @@
     "offerId": "1285664452104",
     "requirements": [
       {
-        "category": "qualification_or_specialization",
-        "id": "requirement:daddf66b14dae1dec09d25512b18f7b41e5ba3181c1a8482c9929ef914efc4ad",
-        "normalizedValue": "Diplomatura o Grado en Terapia Ocupacional",
-        "parserRule": "qualification.official_title",
+        "category": "unclassified",
+        "id": "requirement:7c48107c67ef32cb526b06613eaa8ac922bdddf42e489ee61a24b22409511741",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
         "parserVersion": "1.0.0",
         "sourceQuote": "Diplomatura o Grado en Terapia Ocupacional."
       },
@@ -9120,10 +9120,10 @@
     "offerId": "1285664861691",
     "requirements": [
       {
-        "category": "qualification_or_specialization",
-        "id": "requirement:ebc6566c6dc67cc645d47b39c30da5bcffa9fd22cf7ce940e475265c9dc9ce64",
-        "normalizedValue": "Titulación en Terapia Ocupacional",
-        "parserRule": "qualification.official_title",
+        "category": "unclassified",
+        "id": "requirement:e1b69b8d4bb388ac7f23bb8b6d0530d26afad34abb094552bd05d02bf4b6b693",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
         "parserVersion": "1.0.0",
         "sourceQuote": "Titulación en Terapia Ocupacional."
       },
@@ -9141,10 +9141,10 @@
     "offerId": "1285665269338",
     "requirements": [
       {
-        "category": "qualification_or_specialization",
-        "id": "requirement:1d5a697566fa2cd5c83860ce44a85d6a5afd47d9ff05ae0d67eb54f5170a9a1d",
-        "normalizedValue": "Diplomatura o Grado en Terapia Ocupacional",
-        "parserRule": "qualification.official_title",
+        "category": "unclassified",
+        "id": "requirement:a6c910ba00210f241b43787731359de07341271aa66b87481163b70bb2447384",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
         "parserVersion": "1.0.0",
         "sourceQuote": "Diplomatura o Grado en Terapia Ocupacional."
       },
@@ -9162,10 +9162,10 @@
     "offerId": "1285666576828",
     "requirements": [
       {
-        "category": "qualification_or_specialization",
-        "id": "requirement:33776dc6ce534de571f5c651248a181a8ab7eae7dfbc500148fb7105d866f665",
-        "normalizedValue": "Titulación en Terapia Ocupacional",
-        "parserRule": "qualification.official_title",
+        "category": "unclassified",
+        "id": "requirement:6fd2b0d4e7a67877d97209fd925d662a27650940232abdf6f1010cfa28ef992f",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
         "parserVersion": "1.0.0",
         "sourceQuote": "Titulación en Terapia Ocupacional."
       },
@@ -9186,7 +9186,7 @@
         "category": "unclassified",
         "id": "requirement:930e32a943bf56ef74fdfdc35b5620da44bd8a5b8e765c33439961d4269aa84d",
         "normalizedValue": null,
-        "parserRule": "unclassified.conservative_fallback",
+        "parserRule": "unclassified.ambiguous_or_negated",
         "parserVersion": "1.0.0",
         "sourceQuote": "Titulación en Terapia Ocupacional. Permiso de conducir B. Formación relacionada con TEA. Manejo herramienta digitales."
       },
@@ -9204,10 +9204,10 @@
     "offerId": "1285668280744",
     "requirements": [
       {
-        "category": "qualification_or_specialization",
-        "id": "requirement:b38a0bf3be7ad9183cf487eecfb2b1522e9288a51247a3462e2adbabf5fc9fe3",
-        "normalizedValue": "Diplomatura/Grado en Terapia Ocupacional",
-        "parserRule": "qualification.official_title",
+        "category": "unclassified",
+        "id": "requirement:c2e8644535dc59b7cef65fc2990af23649fbc80a9aa83e9c45096091a848adba",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
         "parserVersion": "1.0.0",
         "sourceQuote": "Diplomatura/Grado en Terapia Ocupacional."
       },
@@ -9225,10 +9225,10 @@
     "offerId": "1285668323558",
     "requirements": [
       {
-        "category": "qualification_or_specialization",
-        "id": "requirement:a59a8b5ddcf587bf6590535c26e14218715b6bcc3bd36b84bd2f574108c2bb7f",
-        "normalizedValue": "Diplomatura o Grado en Terapia Ocupacional",
-        "parserRule": "qualification.official_title",
+        "category": "unclassified",
+        "id": "requirement:7c9f54b2f96372f12ff6ac97b7b6df9b0b7f650c26ee8db071e38a8cf9904beb",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
         "parserVersion": "1.0.0",
         "sourceQuote": "Diplomatura o Grado en Terapia Ocupacional."
       },
@@ -9267,10 +9267,10 @@
     "offerId": "1285662904419",
     "requirements": [
       {
-        "category": "experience",
-        "id": "requirement:07cce76d6f971d4ea2d027cad7fab556fb6fdab14e7576c3847db1a704e9ad9f",
-        "normalizedValue": 12,
-        "parserRule": "experience.years",
+        "category": "unclassified",
+        "id": "requirement:b1c8b8dc3225766028abd97e769d5f29f98a1c4755e3e5f6ee1c8bff7938cd51",
+        "normalizedValue": null,
+        "parserRule": "unclassified.ambiguous_or_negated",
         "parserVersion": "1.0.0",
         "sourceQuote": "Experiencia de 1 año. Permiso para conducir y vehículo."
       },
@@ -9346,10 +9346,10 @@
     "offerId": "1285666065907",
     "requirements": [
       {
-        "category": "qualification_or_specialization",
-        "id": "requirement:4458dc99870e2236058dbcb8d5f3cf1da164dc87aaa153edc1fa876d72f6ddc3",
-        "normalizedValue": "Título de Graduado/Licenciado en Veterinaria",
-        "parserRule": "qualification.official_title",
+        "category": "unclassified",
+        "id": "requirement:85a9a332ec792d91e0478a5e559e2e38b26779beb392d6f9de503fa1aa7f1fa3",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
         "parserVersion": "1.0.0",
         "sourceQuote": "Título de Graduado/Licenciado en Veterinaria"
       },
@@ -9375,10 +9375,10 @@
     "offerId": "1285668323530",
     "requirements": [
       {
-        "category": "qualification_or_specialization",
-        "id": "requirement:e7b36a1498ffecfcc2b207760e1acb1cc571f8f1f11051c47666368c88ca1338",
-        "normalizedValue": "Licenciatura/Grado en Veterinaria",
-        "parserRule": "qualification.official_title",
+        "category": "unclassified",
+        "id": "requirement:fb4257af69b868a562b3ecbf137b66d031c47b38feccbc46e58630ab7fdb610c",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
         "parserVersion": "1.0.0",
         "sourceQuote": "Licenciatura/Grado en Veterinaria."
       },

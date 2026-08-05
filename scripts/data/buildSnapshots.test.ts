@@ -24,6 +24,7 @@ import {
   liveOfferSourceRecord,
   liveTrainingSourceRecord,
 } from "../../tests/fixtures/sourceRecords";
+import { publishedRequirementId } from "../../src/domain/requirements";
 import {
   buildSnapshots,
   type SnapshotFailureInjection,
@@ -2062,6 +2063,75 @@ describe("buildSnapshots", () => {
     for (const path of snapshotPaths.slice(-3)) {
       await expect(access(assetPath(root, path))).resolves.toBeUndefined();
     }
+  });
+
+  it("transactionally quarantines a self-consistent snapshot with stale requirement semantics", async () => {
+    const root = await temporaryRoot();
+    const options = {
+      ...fixedOptions,
+      fetchOfferRecords: async () => [
+        {
+          ...liveOfferSourceRecord,
+          descripcion: "<p>Requisitos:</p><ul><li>Grado en Derecho.</li></ul>",
+        },
+      ],
+    };
+    await buildSnapshots({ rootDirectory: root, ...options });
+    const staleManifest = await readManifest(root);
+    const staleSnapshotId =
+      staleManifest.resourceSnapshots.jobOffers.resourcePath.split("/").at(-2)!;
+    const sidecarPath = assetPath(
+      root,
+      staleManifest.resourceSnapshots.publishedRequirements!.resourcePath,
+    );
+    const sidecar = JSON.parse(await readFile(sidecarPath, "utf8")) as Array<{
+      offerId: string;
+      requirements: Array<Record<string, unknown> & { sourceQuote: string }>;
+    }>;
+    const requirement = sidecar[0]!.requirements[0]!;
+    sidecar[0]!.requirements[0] = {
+      ...requirement,
+      id: publishedRequirementId(
+        sidecar[0]!.offerId,
+        "unclassified",
+        requirement.sourceQuote,
+      ),
+      category: "unclassified",
+      normalizedValue: null,
+      parserRule: "unclassified.conservative_fallback",
+    };
+    await writeFile(
+      sidecarPath,
+      `${JSON.stringify(sidecar, null, 2)}\n`,
+      "utf8",
+    );
+    const manifestPath = join(root, "public", "data", "v1", "manifest.json");
+    const staleManifestBytes = JSON.parse(
+      await readFile(manifestPath, "utf8"),
+    ) as typeof staleManifest;
+    staleManifestBytes.resourceSnapshots.publishedRequirements!.sha256 =
+      await hashFile(sidecarPath);
+    await writeFile(
+      manifestPath,
+      `${JSON.stringify(staleManifestBytes, null, 2)}\n`,
+      "utf8",
+    );
+
+    await buildSnapshots({
+      rootDirectory: root,
+      ...options,
+      now: () => new Date("2026-08-05T10:00:00.000Z"),
+    });
+
+    const snapshotsRoot = join(root, "public", "data", "v1", "snapshots");
+    const retained = (await readdir(snapshotsRoot, { withFileTypes: true }))
+      .filter((entry) => entry.isDirectory())
+      .map((entry) => entry.name);
+    expect(retained).toHaveLength(1);
+    expect(retained).not.toContain(staleSnapshotId);
+    await expect(
+      access(join(snapshotsRoot, staleSnapshotId)),
+    ).rejects.toMatchObject({ code: "ENOENT" });
   });
 
   it("still enforces retention when earlier post-commit cleanup fails", async () => {

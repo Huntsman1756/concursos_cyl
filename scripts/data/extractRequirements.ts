@@ -5,6 +5,7 @@ import {
   type PublishedRequirement,
   type RequirementCategory,
 } from "../../src/domain/requirements";
+import { reviewedQualificationLabel } from "../../data/catalogs/reviewedQualifications";
 
 export { PublishedRequirementsResourceSchema };
 
@@ -134,19 +135,13 @@ function quoteValue(value: string): string {
 
 function qualificationRule(
   sourceQuote: string,
-  text: string,
 ): ClassifiedRequirement | undefined {
-  if (
-    !/\b(?:bachiller|graduad[oa]\s+en\s+eso|fp\s+b[aá]sica|t[eé]cnic[oa](?:\/a)?(?:\s+superior)?\s+en|grado\s+(?:en|de)|licenciad[oa]\s+en|diplomad[oa]\s+en|ingenier[íi]a\s+(?:en|de)|m[aá]ster\s+en|doctorado\s+en|titulaci[oó]n\s+(?:en|de))\b/iu.test(
-      text,
-    )
-  ) {
-    return undefined;
-  }
+  const normalizedValue = reviewedQualificationLabel(sourceQuote);
+  if (normalizedValue === undefined) return undefined;
 
   return {
     category: "qualification_or_specialization",
-    normalizedValue: quoteValue(sourceQuote),
+    normalizedValue,
     parserRule: "qualification.official_title",
   };
 }
@@ -349,7 +344,7 @@ function classify(sourceQuote: string): ClassifiedRequirement | undefined {
   if (text.length === 0) return undefined;
 
   const matches = [
-    qualificationRule(sourceQuote, text),
+    qualificationRule(sourceQuote),
     experienceRule(text),
     drivingRule(text),
     regulatedCredentialRule(text),
@@ -396,8 +391,8 @@ function hasExplicitRequirementGrammar(
         "experiencia(?:\\s+(?:laboral|profesional))?(?:\\s+minima)?(?:\\s+de)?(?:\\s+al\\s+menos)?\\s+(?:\\d+|un|una|uno|dos|tres|cuatro|cinco|seis|doce)\\s+(?:anos?|mes(?:es)?)",
       );
     case "qualification.official_title":
-      return anchored(
-        "(?:bachiller(?:\\s+o\\s+equivalente)?|graduad[oa]\\s+en\\s+eso(?:\\s+o\\s+equivalente)?|fp\\s+basica|tecnic[oa](?:/a)?(?:\\s+superior)?\\s+en\\s+[\\p{Letter}\\p{Number}+/]+(?:\\s+[\\p{Letter}\\p{Number}+/]+)*|(?:grado|licenciad[oa]|diplomad[oa]|ingenieria|master|doctorado|titulacion)\\s+(?:en|de)\\s+[\\p{Letter}\\p{Number}+/]+(?:\\s+[\\p{Letter}\\p{Number}+/]+)*)",
+      return (
+        reviewedQualificationLabel(sourceQuote) === classified.normalizedValue
       );
     case "certificate.professional_registration":
       return anchored("colegiacion(?:\\s+profesional)?\\s+vigente");

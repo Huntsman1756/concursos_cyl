@@ -152,6 +152,77 @@ describe("extractPublishedRequirements", () => {
     },
   );
 
+  it.each([
+    "Grado en Derecho bajo revisión posterior.",
+    "Grado en Derecho según criterio de la empresa.",
+    "Grado en Derecho salvo decisión del centro.",
+    "Grado en Derecho cuando cambie la normativa.",
+    "Grado en Derecho con condiciones por definir.",
+    "Grado en Derecho o equivalente a determinar.",
+    "Grado en Derecho podría ser necesario.",
+    "Grado en Derecho en función del proyecto.",
+    "Grado en Derecho a confirmar en entrevista.",
+    "Técnico en Cuidados Auxiliares de Enfermería o Certificación Profesional Sociosanitaria.",
+    "Titulación de Administración de Empresas. Relaciones laborales. Administración y Finanzas.",
+    "Grado en Ingeniería Química o similar.",
+    "Grado en Ingeniería Mecánica, Ingeniería Electromecánica o ingenierías afines.",
+    "Técnico/a Superior en Laboratorio Clínico y Biomédico o de Técnico/a Superior en Laboratorio de Análisis y Control de Calidad o equivalentes",
+  ])(
+    "rejects unreviewed or alternative qualification prose: %s",
+    (sourceQuote) => {
+      expect(
+        extractPublishedRequirements(
+          "offer:qualification-closed-catalog",
+          description([sourceQuote]),
+        ),
+      ).toEqual([
+        expect.objectContaining({
+          category: "unclassified",
+          normalizedValue: null,
+          sourceQuote,
+        }),
+      ]);
+    },
+  );
+
+  it("fails closed for fuzzed suffixes after a reviewed qualification", () => {
+    let state = 73_129;
+    const fragments = [
+      "bajo",
+      "criterio",
+      "pendiente",
+      "proyecto",
+      "entrevista",
+      "normativa",
+      "empresa",
+      "confirmar",
+      "revisión",
+      "posterior",
+    ];
+    const sourceQuotes = Array.from({ length: 500 }, () => {
+      state = (state * 48_271) % 2_147_483_647;
+      const first = fragments[state % fragments.length];
+      state = (state * 48_271) % 2_147_483_647;
+      const second = fragments[state % fragments.length];
+      return `Grado en Derecho ${first} ${second}.`;
+    });
+
+    for (const [index, sourceQuote] of sourceQuotes.entries()) {
+      expect(
+        extractPublishedRequirements(
+          `offer:qualification-fuzz:${index}`,
+          description([sourceQuote]),
+        )[0],
+      ).toEqual(
+        expect.objectContaining({
+          category: "unclassified",
+          normalizedValue: null,
+          sourceQuote,
+        }),
+      );
+    }
+  });
+
   it("preserves exact quote bytes and exports the canonical SHA-256 ID", () => {
     const offerId = "offer:exact-bytes";
     const sourceQuote = "  Permiso de conducir B.  ";

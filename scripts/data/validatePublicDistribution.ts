@@ -9,8 +9,14 @@ import {
   type OccupationAlias,
   type TrainingOccupationLink,
 } from "../../data/schemas/curatedMappings";
-import { TrainingProgramSchema } from "../../data/schemas/generated";
+import {
+  JobOfferSchema,
+  TrainingProgramSchema,
+  type JobOffer,
+} from "../../data/schemas/generated";
+import { PublishedRequirementsResourceSchema } from "../../src/domain/requirements";
 import { z } from "zod";
+import { extractPublishedRequirements } from "./extractRequirements";
 import {
   buildMappingCoverage,
   type ValidatedCuratedMappings,
@@ -89,10 +95,71 @@ async function readJson(path: string): Promise<unknown> {
   return JSON.parse(await readFile(path, "utf8"));
 }
 
+const spanishOfferCollator = new Intl.Collator("es", {
+  sensitivity: "base",
+  usage: "sort",
+});
+
+function compareJobOffers(left: JobOffer, right: JobOffer): number {
+  return (
+    spanishOfferCollator.compare(left.title, right.title) ||
+    left.id.localeCompare(right.id)
+  );
+}
+
+function isOperationalPathError(error: unknown): boolean {
+  return (
+    typeof error === "object" &&
+    error !== null &&
+    "code" in error &&
+    typeof error.code === "string"
+  );
+}
+
+async function hasCurrentRequirementSemantics(
+  directory: string,
+  accessPath: AccessPath,
+): Promise<boolean> {
+  const requirementsPath = resolve(directory, "published-requirements.json");
+  if (!(await pathExists(requirementsPath, accessPath))) return true;
+
+  const offersPath = resolve(directory, "job-offers.json");
+  if (!(await pathExists(offersPath, accessPath))) return false;
+
+  try {
+    const offers = z.array(JobOfferSchema).parse(await readJson(offersPath));
+    if (
+      canonicalPayload(offers) !==
+      canonicalPayload([...offers].sort(compareJobOffers))
+    ) {
+      return false;
+    }
+
+    const published = PublishedRequirementsResourceSchema.parse(
+      await readJson(requirementsPath),
+    );
+    const recomputed = PublishedRequirementsResourceSchema.parse(
+      offers.flatMap((offer) => {
+        const requirements = extractPublishedRequirements(offer.id, {
+          sections: offer.descriptionSections,
+        });
+        return requirements.length === 0
+          ? []
+          : [{ offerId: offer.id, requirements }];
+      }),
+    );
+    return canonicalPayload(published) === canonicalPayload(recomputed);
+  } catch (error) {
+    if (isOperationalPathError(error)) throw error;
+    return false;
+  }
+}
+
 /**
  * Finds deployable immutable snapshots that expose records whose current
- * curated review state is no longer approved. Foundation-only history is
- * intentionally accepted because it contains no curated decision records.
+ * curated review state is no longer approved or whose derived requirement
+ * evidence differs from current deterministic recomputation. Foundation-only
+ * history is intentionally accepted because it contains no derived sidecar.
  */
 export async function findRevokedPublicSnapshotDirectories(
   rootDirectory: string,
@@ -154,6 +221,10 @@ export async function findRevokedPublicSnapshotDirectories(
     if (!entry.isDirectory()) continue;
     const directory = resolve(snapshotsRoot, entry.name);
     if (ignoredDirectories.has(directory)) continue;
+    if (!(await hasCurrentRequirementSemantics(directory, accessPath))) {
+      invalidDirectories.push(directory);
+      continue;
+    }
     const occupationsPath = resolve(directory, "occupations.json");
     const aliasesPath = resolve(directory, "occupation-aliases.json");
     const linksPath = resolve(directory, "training-occupation-links.json");
@@ -236,14 +307,7 @@ export async function findRevokedPublicSnapshotDirectories(
         canonicalPayload(coverage) !==
         canonicalPayload(buildMappingCoverage(programs, curatedMappings.links));
     } catch (error) {
-      if (
-        typeof error === "object" &&
-        error !== null &&
-        "code" in error &&
-        typeof error.code === "string"
-      ) {
-        throw error;
-      }
+      if (isOperationalPathError(error)) throw error;
       invalid = true;
     }
 
@@ -265,7 +329,7 @@ export async function assertPublicSnapshotDistribution(
   );
   if (invalid.length > 0) {
     throw new Error(
-      `Deployable snapshots expose revoked curated mappings: ${invalid.join(", ")}.`,
+      `Deployable snapshots expose revoked mappings or stale derived semantics: ${invalid.join(", ")}.`,
     );
   }
 }
