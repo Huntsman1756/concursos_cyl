@@ -23,6 +23,7 @@
   "license": "MIT",
   "type": "module",
   "dependencies": {
+    "@noble/hashes": "^2.2.0",
     "@radix-ui/react-dialog": "^1.1.23",
     "@radix-ui/react-tabs": "^1.1.21",
     "@radix-ui/react-tooltip": "^1.2.16",

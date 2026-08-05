@@ -1,9 +1,13 @@
+import { createHash } from "node:crypto";
 import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
 
 import { describe, expect, it } from "vitest";
 
-import { PublishedRequirementSchema } from "../../src/domain/requirements";
+import {
+  PublishedRequirementSchema,
+  publishedRequirementId,
+} from "../../src/domain/requirements";
 import {
   PublishedRequirementsResourceSchema,
   extractPublishedRequirements,
@@ -37,6 +41,64 @@ function description(requirements: readonly string[]) {
 }
 
 describe("extractPublishedRequirements", () => {
+  it("preserves exact quote bytes and exports the canonical SHA-256 ID", () => {
+    const offerId = "offer:exact-bytes";
+    const sourceQuote = "  Permiso de conducir B.  ";
+    const separator = String.fromCharCode(0);
+    const expectedId = `requirement:${createHash("sha256")
+      .update(
+        `${offerId}${separator}driving_license_or_vehicle${separator}${sourceQuote}`,
+      )
+      .digest("hex")}`;
+
+    expect(
+      publishedRequirementId(
+        offerId,
+        "driving_license_or_vehicle",
+        sourceQuote,
+      ),
+    ).toBe(expectedId);
+    expect(
+      extractPublishedRequirements(offerId, description([sourceQuote])),
+    ).toEqual([
+      expect.objectContaining({
+        id: expectedId,
+        sourceQuote,
+      }),
+    ]);
+  });
+
+  it.each([
+    "Experiencia mínima de 2 años, si fuera posible.",
+    "Experiencia mínima de 2 años, si fuese posible.",
+    "Experiencia mínima de 2 años; se valorase.",
+    "La valoraríamos: experiencia mínima de 2 años.",
+    "Experiencia mínima de 2 años, de ser posible.",
+    "Permiso de conducir B en caso de disponer de él.",
+    "Permiso de conducir B en caso de tenerlo.",
+    "Si dispone de permiso de conducir B.",
+    "Si dispusiera de permiso de conducir B.",
+    "Si tiene permiso de conducir B.",
+    "Si tuviera permiso de conducir B.",
+    "Permiso de conducir B en caso de contar con él.",
+    "• SI DISPUSIERA de permiso de conducir B.",
+    "Experiencia mínima de 2 años; SE VALORASEN.",
+  ])("fails closed for clause-bound conditional prose: %s", (sourceQuote) => {
+    expect(
+      extractPublishedRequirements(
+        "offer:conditional",
+        description([sourceQuote]),
+      ),
+    ).toEqual([
+      expect.objectContaining({
+        category: "unclassified",
+        normalizedValue: null,
+        parserRule: "unclassified.ambiguous_or_negated",
+        sourceQuote,
+      }),
+    ]);
+  });
+
   it.each([
     "Experiencias valorables: experiencia mínima de 2 años.",
     "• EXPERIENCIAS VALORABLES: experiencia mínima de 2 años.",
@@ -423,4 +485,57 @@ describe("extractPublishedRequirements", () => {
       ).toBe(false);
     },
   );
+
+  it.each([
+    {
+      id: `requirement:${"4".repeat(64)}`,
+      category: "qualification_or_specialization",
+      normalizedValue: "Grado en Derecho",
+      sourceQuote: " ",
+      parserRule: "qualification.official_title",
+      parserVersion: "1.0.0",
+    },
+    {
+      id: `requirement:${"5".repeat(64)}`,
+      category: "qualification_or_specialization",
+      normalizedValue: " ",
+      sourceQuote: "Grado en Derecho.",
+      parserRule: "qualification.official_title",
+      parserVersion: "1.0.0",
+    },
+    {
+      id: `requirement:${"6".repeat(64)}`,
+      category: "certificate_or_regulated_license",
+      normalizedValue: " ",
+      sourceQuote: "Certificado de profesionalidad.",
+      parserRule: "certificate.professional_certificate",
+      parserVersion: "1.0.0",
+    },
+  ])("rejects whitespace-only requirement strings %#", (requirement) => {
+    expect(PublishedRequirementSchema.safeParse(requirement).success).toBe(
+      false,
+    );
+  });
+
+  it("rejects blank offer IDs and format-valid forged requirement IDs", () => {
+    const requirement = {
+      id: `requirement:${"7".repeat(64)}`,
+      category: "driving_license_or_vehicle",
+      normalizedValue: "B",
+      sourceQuote: "Permiso de conducir B.",
+      parserRule: "license.driving_b",
+      parserVersion: "1.0.0",
+    };
+
+    expect(
+      PublishedRequirementsResourceSchema.safeParse([
+        { offerId: " ", requirements: [requirement] },
+      ]).success,
+    ).toBe(false);
+    expect(
+      PublishedRequirementsResourceSchema.safeParse([
+        { offerId: "offer:forged", requirements: [requirement] },
+      ]).success,
+    ).toBe(false);
+  });
 });

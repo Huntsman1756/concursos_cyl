@@ -1,3 +1,5 @@
+import { sha256 } from "@noble/hashes/sha2.js";
+import { bytesToHex, utf8ToBytes } from "@noble/hashes/utils.js";
 import { z } from "zod";
 
 export const RequirementCategorySchema = z.enum([
@@ -11,9 +13,29 @@ export const RequirementCategorySchema = z.enum([
   "unclassified",
 ]);
 
+export type RequirementCategory = z.infer<typeof RequirementCategorySchema>;
+
+const NonBlankStringSchema = z
+  .string()
+  .min(1)
+  .refine(
+    (value) => value.trim().length > 0,
+    "Value must contain non-whitespace characters.",
+  );
+
+/** Computes the canonical ID without normalizing any evidence bytes. */
+export function publishedRequirementId(
+  offerId: string,
+  category: RequirementCategory,
+  sourceQuote: string,
+): string {
+  const payload = `${offerId}\u0000${category}\u0000${sourceQuote}`;
+  return `requirement:${bytesToHex(sha256(utf8ToBytes(payload)))}`;
+}
+
 const requirementBaseShape = {
   id: z.string().regex(/^requirement:[a-f0-9]{64}$/u),
-  sourceQuote: z.string().min(1),
+  sourceQuote: NonBlankStringSchema,
   parserVersion: z.literal("1.0.0"),
 } as const;
 
@@ -21,7 +43,7 @@ const QualificationRequirementSchema = z
   .object({
     ...requirementBaseShape,
     category: z.literal("qualification_or_specialization"),
-    normalizedValue: z.string().min(1),
+    normalizedValue: NonBlankStringSchema,
     parserRule: z.literal("qualification.official_title"),
   })
   .strict();
@@ -85,7 +107,7 @@ const CredentialRequirementSchema = z
   .object({
     ...requirementBaseShape,
     category: z.literal("certificate_or_regulated_license"),
-    normalizedValue: z.string().min(1),
+    normalizedValue: NonBlankStringSchema,
     parserRule: z.enum([
       "certificate.professional_registration",
       "certificate.food_handler",
@@ -115,7 +137,7 @@ const LanguageRequirementSchema = z
   .object({
     ...requirementBaseShape,
     category: z.literal("language"),
-    normalizedValue: z.string().min(1),
+    normalizedValue: NonBlankStringSchema,
     parserRule: z.enum(["language.cefr", "language.named"]),
   })
   .strict()
@@ -232,7 +254,7 @@ export const PublishedRequirementSchema = z.discriminatedUnion("category", [
 
 export const OfferPublishedRequirementsSchema = z
   .object({
-    offerId: z.string().min(1),
+    offerId: NonBlankStringSchema,
     requirements: z.array(PublishedRequirementSchema),
   })
   .strict();
@@ -255,6 +277,21 @@ export const PublishedRequirementsResourceSchema = z
       offerIds.add(entry.offerId);
 
       entry.requirements.forEach((requirement, requirementIndex) => {
+        if (
+          requirement.id !==
+          publishedRequirementId(
+            entry.offerId,
+            requirement.category,
+            requirement.sourceQuote,
+          )
+        ) {
+          context.addIssue({
+            code: "custom",
+            path: [entryIndex, "requirements", requirementIndex, "id"],
+            message:
+              "Requirement ID must match its offer, category and exact source quote.",
+          });
+        }
         if (requirementIds.has(requirement.id)) {
           context.addIssue({
             code: "custom",
@@ -268,7 +305,6 @@ export const PublishedRequirementsResourceSchema = z
     });
   });
 
-export type RequirementCategory = z.infer<typeof RequirementCategorySchema>;
 export type PublishedRequirement = z.infer<typeof PublishedRequirementSchema>;
 export type OfferPublishedRequirements = z.infer<
   typeof OfferPublishedRequirementsSchema

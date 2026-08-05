@@ -2,6 +2,7 @@ import { afterEach, describe, expect, it, vi } from "vitest";
 import { z } from "zod";
 
 import { LoadableGeneratedManifestSchema } from "../../data/schemas/generated";
+import { PublishedRequirementsResourceSchema } from "../domain/requirements";
 
 import {
   loadFoundationResources,
@@ -153,7 +154,7 @@ describe("generated data client", () => {
         offerId: foundationJobOffer.id,
         requirements: [
           {
-            id: `requirement:${"b".repeat(64)}`,
+            id: "requirement:9e7244dd63125bda17f28f86e17b4099a6fe1a14a4973c2e454059cc8a065705",
             category: "driving_license_or_vehicle",
             normalizedValue: "B",
             sourceQuote: "Permiso de conducir B.",
@@ -187,6 +188,32 @@ describe("generated data client", () => {
 
     await expect(loadPublishedRequirements(manifest)).resolves.toEqual([]);
     expect(fetchSpy).not.toHaveBeenCalled();
+  });
+
+  it("rejects a format-valid forged requirement ID through the generated data client", async () => {
+    const resourcePath =
+      "/data/v1/snapshots/build-1/published-requirements.json";
+    mockGeneratedAssets({
+      [resourcePath]: [
+        {
+          offerId: foundationJobOffer.id,
+          requirements: [
+            {
+              id: `requirement:${"f".repeat(64)}`,
+              category: "driving_license_or_vehicle",
+              normalizedValue: "B",
+              sourceQuote: "Permiso de conducir B.",
+              parserRule: "license.driving_b",
+              parserVersion: "1.0.0",
+            },
+          ],
+        },
+      ],
+    });
+
+    await expect(
+      loadGeneratedResource(resourcePath, PublishedRequirementsResourceSchema),
+    ).rejects.toMatchObject({ code: "schema" });
   });
 
   it("does not fetch a sidecar for a current immutable manifest that predates it", async () => {

@@ -1,8 +1,7 @@
-import { createHash } from "node:crypto";
-
 import {
   PublishedRequirementSchema,
   PublishedRequirementsResourceSchema,
+  publishedRequirementId,
   type PublishedRequirement,
   type RequirementCategory,
 } from "../../src/domain/requirements";
@@ -23,11 +22,13 @@ interface ClassifiedRequirement {
 
 const PARSER_VERSION = "1.0.0" as const;
 const OPTIONAL =
-  /\b(?:opcional(?:es|mente)?|preferentemente|preferibles?|deseables?|recomendables?|convenientes?|valorables?|valorad[oa]s?|se\s+valorara|se\s+valoraran|se\s+valoraria|se\s+valorarian|se\s+valora|se\s+valoran|valoramos|a\s+valorar|seria\s+un\s+plus|un\s+plus)\b/u;
+  /\b(?:opcional(?:es|mente)?|preferentemente|preferibles?|deseables?|recomendables?|convenientes?|valorables?|valorad[oa]s?|se\s+valorara|se\s+valoraran|se\s+valoraria|se\s+valorarian|se\s+valorase|se\s+valorasen|se\s+valora|se\s+valoran|valoramos|(?:la|lo|las|los)\s+valorariamos|a\s+valorar|seria\s+un\s+plus|un\s+plus)\b/u;
 const EXPLICIT_NEGATION =
   /\b(?:no\s+requerid[oa]s?|no\s+se\s+requiere|no\s+es\s+necesari[oa]|no\s+hace\s+falta|sin\s+necesidad\s+de|no\s+imprescindible|no\s+obligatori[oa])\b/u;
 const SCOPED_SIN_NEGATION =
   /\bsin\s+(?:experiencia|disponibilidad|permiso(?:\s+de\s+conducir)?|carnet|carne|vehiculo|titulacion|titulo|certificado|colegiacion|habilitacion)\b/u;
+const CLAUSE_BOUND_CONDITIONAL =
+  /(?:^(?:[•·▪◦*-]\s*)?si\b|[,;:.!?]\s*si\b|\ben\s+caso\s+de\b|\bde\s+ser\s+posible\b)/u;
 
 const NUMBER_WORDS: Readonly<Record<string, number>> = {
   un: 1,
@@ -100,10 +101,12 @@ function hasAmbiguousExperienceDuration(sourceQuote: string): boolean {
 
 function isAmbiguousOrNegated(sourceQuote: string): boolean {
   const text = searchableText(sourceQuote);
+  const clauseText = ambiguityText(sourceQuote);
   return (
     OPTIONAL.test(text) ||
     EXPLICIT_NEGATION.test(text) ||
     SCOPED_SIN_NEGATION.test(text) ||
+    CLAUSE_BOUND_CONDITIONAL.test(clauseText) ||
     hasAmbiguousExperienceDuration(sourceQuote)
   );
 }
@@ -114,17 +117,6 @@ function quoteValue(value: string): string {
     .replace(/^[\s•·▪◦*-]+/u, "")
     .replace(/[.;:,]+$/u, "")
     .trim();
-}
-
-function requirementId(
-  offerId: string,
-  category: RequirementCategory,
-  sourceQuote: string,
-): string {
-  const digest = createHash("sha256")
-    .update(`${offerId}\u0000${category}\u0000${sourceQuote}`, "utf8")
-    .digest("hex");
-  return `requirement:${digest}`;
 }
 
 function qualificationRule(
@@ -358,8 +350,7 @@ export function extractPublishedRequirements(
   offerId: string,
   description: RequirementDescription,
 ): PublishedRequirement[] {
-  const normalizedOfferId = offerId.trim();
-  if (normalizedOfferId.length === 0) {
+  if (offerId.trim().length === 0) {
     throw new Error("Offer ID must not be blank.");
   }
 
@@ -367,8 +358,9 @@ export function extractPublishedRequirements(
   const results: PublishedRequirement[] = [];
 
   for (const rawQuote of description.sections.requirements) {
-    const sourceQuote = rawQuote.trim();
-    if (sourceQuote.length === 0 || seenQuotes.has(sourceQuote)) continue;
+    const sourceQuote = rawQuote;
+    if (sourceQuote.trim().length === 0 || seenQuotes.has(sourceQuote))
+      continue;
     seenQuotes.add(sourceQuote);
 
     const ambiguousOrNegated = isAmbiguousOrNegated(sourceQuote);
@@ -376,7 +368,7 @@ export function extractPublishedRequirements(
     const category = classified?.category ?? "unclassified";
     results.push(
       PublishedRequirementSchema.parse({
-        id: requirementId(normalizedOfferId, category, sourceQuote),
+        id: publishedRequirementId(offerId, category, sourceQuote),
         category,
         normalizedValue: classified?.normalizedValue ?? null,
         sourceQuote,
