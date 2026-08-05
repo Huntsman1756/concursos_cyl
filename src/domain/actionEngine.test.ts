@@ -5,6 +5,7 @@ import curatedProcedureCatalog from "../../data/curated/official-procedures.json
 import type { JobOffer } from "../../data/schemas/generated";
 import {
   OfficialProcedureCatalogSchema,
+  ReliableActionPayloadSchema,
   ReliableActionSchema,
   deriveActions,
   officialProcedureIdentity,
@@ -211,13 +212,13 @@ describe("closed trusted action contract", () => {
     Object.assign(forged.procedureAudit, {
       [field]: field === "normalizedValue" ? "C" : "forged",
     });
-    expect(ReliableActionSchema.safeParse(forged).success).toBe(false);
+    expect(ReliableActionPayloadSchema.safeParse(forged).success).toBe(false);
   });
 
   it("rejects invalid target pairings and extra target fields", () => {
     const open = findAction(deriveActions(baseContext), "open_original_offer");
     expect(
-      ReliableActionSchema.safeParse({
+      ReliableActionPayloadSchema.safeParse({
         ...open,
         targetKind: "regulated_training",
         datasetKey: "oferta-de-formacion-profesional",
@@ -238,11 +239,104 @@ describe("closed trusted action contract", () => {
       "view_regulated_training_route",
     );
     expect(
-      ReliableActionSchema.safeParse({
+      ReliableActionPayloadSchema.safeParse({
         ...action,
         programKeys: ["ADG01M"],
       }).success,
     ).toBe(false);
+  });
+
+  it("separates a valid payload from an engine-issued action", () => {
+    const drivingB = requirement(
+      offer.id,
+      "driving_license_or_vehicle",
+      "B",
+      "license.driving_b",
+    );
+    const issued = findAction(
+      deriveActions(declaredGap(drivingB)),
+      "open_official_procedure",
+    );
+    const clone = structuredClone(issued);
+    expect(ReliableActionPayloadSchema.safeParse(clone).success).toBe(true);
+    expect(ReliableActionSchema.safeParse(clone).success).toBe(false);
+    expect(ReliableActionSchema.parse(issued)).toBe(issued);
+  });
+
+  it("rejects exact DGT reconstructions and cross-offer requoting as unissued", () => {
+    const drivingB = requirement(
+      offer.id,
+      "driving_license_or_vehicle",
+      "B",
+      "license.driving_b",
+    );
+    const issued = findAction(
+      deriveActions(declaredGap(drivingB)),
+      "open_official_procedure",
+    );
+    const exactReconstruction = JSON.parse(JSON.stringify(issued));
+    expect(
+      ReliableActionPayloadSchema.safeParse(exactReconstruction).success,
+    ).toBe(true);
+    expect(ReliableActionSchema.safeParse(exactReconstruction).success).toBe(
+      false,
+    );
+
+    const fabricatedOfferId = "offer:fabricated";
+    const fabricatedQuote = "Requisito B inventado";
+    const crossOffer = {
+      ...exactReconstruction,
+      offerId: fabricatedOfferId,
+      requirementAudit: {
+        ...exactReconstruction.requirementAudit,
+        requirementId: publishedRequirementId(
+          fabricatedOfferId,
+          "driving_license_or_vehicle",
+          fabricatedQuote,
+        ),
+        sourceQuote: fabricatedQuote,
+      },
+    };
+    expect(ReliableActionPayloadSchema.safeParse(crossOffer).success).toBe(
+      true,
+    );
+    expect(ReliableActionSchema.safeParse(crossOffer).success).toBe(false);
+  });
+
+  it("deep-freezes issued actions and all nested evidence", () => {
+    const food = requirement(
+      offer.id,
+      "certificate_or_regulated_license",
+      "food_handler",
+      "certificate.food_handler",
+    );
+    const action = findAction(
+      deriveActions(declaredGap(food)),
+      "add_session_check",
+    );
+    expect(Object.isFrozen(action)).toBe(true);
+    expect(Object.isFrozen(action.requirementAudit)).toBe(true);
+    expect(Object.isFrozen(action.checklistItem)).toBe(true);
+    expect(() => {
+      (action.requirementAudit as { sourceQuote: string }).sourceQuote =
+        "Mutación";
+    }).toThrow(TypeError);
+    expect(() => {
+      (action.checklistItem as { label: string }).label = "Mutación";
+    }).toThrow(TypeError);
+    expect(ReliableActionSchema.parse(action)).toBe(action);
+
+    const daw = requirement(
+      offer.id,
+      "qualification_or_specialization",
+      "Técnico/a Superior en Desarrollo de Aplicaciones Web",
+      "qualification.official_title",
+    );
+    const training = findAction(
+      deriveActions(declaredGap(daw)),
+      "view_regulated_training_route",
+    );
+    expect(Object.isFrozen(training.programKeys)).toBe(true);
   });
 });
 

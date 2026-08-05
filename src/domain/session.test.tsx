@@ -104,7 +104,28 @@ describe("useDecisionSession", () => {
     expect(() =>
       act(() => result.current.addChecklistItem({ ...first.action })),
     ).toThrow(/engine-issued/iu);
+    expect(() =>
+      act(() =>
+        result.current.addChecklistItem(
+          JSON.parse(JSON.stringify(first.action)) as AddSessionCheckAction,
+        ),
+      ),
+    ).toThrow(/engine-issued/iu);
     expect(result.current.checklist).toEqual([]);
+  });
+
+  it("rejects mutation before first insert and safely reuses the intact issued action", () => {
+    const { result } = renderHook(() => useDecisionSession());
+    expect(() => {
+      (first.action.requirementAudit as { sourceQuote: string }).sourceQuote =
+        "Mutación previa";
+    }).toThrow(TypeError);
+    expect(() => {
+      (first.action.checklistItem as { label: string }).label =
+        "Mutación previa";
+    }).toThrow(TypeError);
+    act(() => result.current.addChecklistItem(first.action));
+    expect(result.current.checklist).toEqual([first.action.checklistItem]);
   });
 
   it("preserves concurrent distinct engine-issued checks and rejects duplicates", () => {

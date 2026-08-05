@@ -356,7 +356,7 @@ const SessionChecklistItemSchema = z
   })
   .strict();
 
-export const AddSessionCheckActionSchema = z
+const AddSessionCheckActionSchema = z
   .object({
     ...actionBase,
     actionType: z.literal("add_session_check"),
@@ -397,7 +397,7 @@ export const AddSessionCheckActionSchema = z
     }
   });
 
-export const ReliableActionSchema = z.discriminatedUnion("actionType", [
+export const ReliableActionPayloadSchema = z.discriminatedUnion("actionType", [
   OpenOriginalOfferActionSchema,
   VerifyOfferRequirementsActionSchema,
   AdjustSearchAreaActionSchema,
@@ -407,12 +407,58 @@ export const ReliableActionSchema = z.discriminatedUnion("actionType", [
   AddSessionCheckActionSchema,
 ]);
 
-export const ReliableActionsSchema = z.array(ReliableActionSchema);
+const ReliableActionPayloadsSchema = z.array(ReliableActionPayloadSchema);
 
 export type OfficialProcedure = z.infer<typeof OfficialProcedureSchema>;
-export type ReliableAction = z.infer<typeof ReliableActionSchema>;
-export type AddSessionCheckAction = z.infer<typeof AddSessionCheckActionSchema>;
+export type ReliableActionPayload = z.infer<typeof ReliableActionPayloadSchema>;
+declare const engineIssuedActionBrand: unique symbol;
+type EngineIssuedActionBrand = {
+  readonly [engineIssuedActionBrand]: "engine-issued-reliable-action";
+};
+export type ReliableAction = ReliableActionPayload & EngineIssuedActionBrand;
+type AddSessionCheckActionPayload = z.infer<typeof AddSessionCheckActionSchema>;
+export type AddSessionCheckAction = AddSessionCheckActionPayload &
+  EngineIssuedActionBrand;
 export type SessionChecklistItem = z.infer<typeof SessionChecklistItemSchema>;
+
+const issuedActionFingerprints = new WeakMap<object, string>();
+
+function canonicalPayload(value: unknown): string {
+  if (value === null || typeof value !== "object") {
+    return JSON.stringify(value);
+  }
+  if (Array.isArray(value)) {
+    return `[${value.map((item) => canonicalPayload(item)).join(",")}]`;
+  }
+  const record = value as Record<string, unknown>;
+  return `{${Object.keys(record)
+    .sort()
+    .map((key) => `${JSON.stringify(key)}:${canonicalPayload(record[key])}`)
+    .join(",")}}`;
+}
+
+function actionFingerprint(action: ReliableActionPayload): string {
+  return shaIdentity("issued-action", [canonicalPayload(action)]);
+}
+
+function isIssuedReliableAction(value: unknown): value is ReliableAction {
+  if (typeof value !== "object" || value === null) return false;
+  const expectedFingerprint = issuedActionFingerprints.get(value);
+  if (expectedFingerprint === undefined) return false;
+  const payload = ReliableActionPayloadSchema.safeParse(value);
+  return (
+    payload.success &&
+    Object.isFrozen(value) &&
+    actionFingerprint(payload.data) === expectedFingerprint
+  );
+}
+
+export const ReliableActionSchema = z.custom<ReliableAction>(
+  isIssuedReliableAction,
+  "Action must be an intact engine-issued object.",
+);
+
+export const ReliableActionsSchema = z.array(ReliableActionSchema);
 
 export interface ActionContext {
   offer: z.infer<typeof JobOfferSchema>;
@@ -505,22 +551,36 @@ function exactReviewedProgramKeys(requirement: PublishedRequirement): string[] {
     .sort((left, right) => left.localeCompare(right, "es"));
 }
 
-const issuedSessionChecks = new WeakSet<object>();
+function deepFreeze<T>(value: T, seen = new WeakSet<object>()): T {
+  if (typeof value !== "object" || value === null) return value;
+  if (seen.has(value)) return value;
+  const prototype = Object.getPrototypeOf(value);
+  if (
+    !Array.isArray(value) &&
+    prototype !== Object.prototype &&
+    prototype !== null
+  ) {
+    throw new TypeError("Issued action payloads must contain only plain data.");
+  }
+  seen.add(value);
+  for (const key of Object.keys(value)) {
+    deepFreeze((value as Record<string, unknown>)[key], seen);
+  }
+  return Object.freeze(value);
+}
 
 export function isEngineIssuedSessionCheck(
   value: unknown,
 ): value is AddSessionCheckAction {
   return (
-    typeof value === "object" &&
-    value !== null &&
-    issuedSessionChecks.has(value)
+    isIssuedReliableAction(value) && value.actionType === "add_session_check"
   );
 }
 
 function addSessionCheck(
   offerId: string,
   requirement?: PublishedRequirement,
-): AddSessionCheckAction {
+): AddSessionCheckActionPayload {
   const requirementAudit = requirement
     ? auditRequirement(requirement)
     : undefined;
@@ -544,7 +604,7 @@ function addSessionCheck(
   });
 }
 
-const actionPriority: Record<ReliableAction["actionType"], number> = {
+const actionPriority: Record<ReliableActionPayload["actionType"], number> = {
   verify_offer_requirements: 0,
   open_official_procedure: 1,
   view_regulated_training_route: 2,
@@ -554,7 +614,7 @@ const actionPriority: Record<ReliableAction["actionType"], number> = {
   open_original_offer: 6,
 };
 
-function actionIdentity(action: ReliableAction): string {
+function actionIdentity(action: ReliableActionPayload): string {
   switch (action.actionType) {
     case "open_original_offer":
       return `${action.actionType}\u0000${action.offerId}`;
@@ -584,7 +644,7 @@ export function deriveActions(input: ActionContext): ReliableAction[] {
         .map((requirement) => [requirement.id, requirement]),
     ).values(),
   );
-  const actions: ReliableAction[] = [];
+  const actions: ReliableActionPayload[] = [];
 
   const unclassified = requirements.find(
     (requirement) => requirement.category === "unclassified",
@@ -749,11 +809,10 @@ export function deriveActions(input: ActionContext): ReliableAction[] {
       ? priority
       : actionIdentity(left).localeCompare(actionIdentity(right), "en");
   });
-  const parsed = ReliableActionsSchema.parse(deduplicated);
-  for (const action of parsed) {
-    if (action.actionType === "add_session_check") {
-      issuedSessionChecks.add(action);
-    }
+  const parsed = ReliableActionPayloadsSchema.parse(deduplicated);
+  const frozen = deepFreeze(parsed);
+  for (const action of frozen) {
+    issuedActionFingerprints.set(action, actionFingerprint(action));
   }
-  return parsed;
+  return frozen as unknown as ReliableAction[];
 }

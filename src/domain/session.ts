@@ -1,7 +1,7 @@
 import { useCallback, useState } from "react";
 
 import {
-  AddSessionCheckActionSchema,
+  ReliableActionSchema,
   isEngineIssuedSessionCheck,
   type AddSessionCheckAction,
   type SessionChecklistItem,
@@ -54,7 +54,11 @@ export function useDecisionSession(): DecisionSession {
         "Checklist action must be the actual engine-issued object.",
       );
     }
-    const action = AddSessionCheckActionSchema.parse(actionInput);
+    const issuedAction = ReliableActionSchema.parse(actionInput);
+    if (issuedAction.actionType !== "add_session_check") {
+      throw new Error("Issued action is not a session checklist action.");
+    }
+    const action = issuedAction;
     setChecklist((current) => {
       const existing = current.find(
         (item) => item.id === action.checklistItem.id,
