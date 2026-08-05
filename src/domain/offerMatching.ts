@@ -84,6 +84,20 @@ export function aliasEvidenceIdentity(alias: OccupationAlias): string {
   ]);
 }
 
+export function titleMatchEvidenceIdentity(input: {
+  matchRule: "title_alias_exact" | "title_alias_phrase";
+  offerId: string;
+  offerTitle: string;
+  aliasIdentity: string;
+}): string {
+  return auditIdentity("title-match", [
+    input.matchRule,
+    input.offerId,
+    input.offerTitle,
+    input.aliasIdentity,
+  ]);
+}
+
 const HumanConfirmationCoreSchema = z
   .object({
     offerId: z.string().min(1),
@@ -216,6 +230,28 @@ const ProgramQualificationEvidenceSchema = z
           "Program qualification evidence identity must match its full payload.",
       });
     }
+    const closedLink = REVIEWED_PROGRAM_QUALIFICATION_LINKS.find(
+      ({ identity }) => identity === evidence.identity,
+    );
+    if (
+      closedLink === undefined ||
+      closedLink.programKey !== evidence.payload.programKey ||
+      closedLink.qualificationCatalogId !==
+        evidence.payload.qualificationCatalogId ||
+      closedLink.reviewStatus !== evidence.payload.reviewStatus ||
+      closedLink.sourceUrl !== evidence.payload.sourceUrl ||
+      closedLink.sourceQuote !== evidence.payload.sourceQuote ||
+      closedLink.reviewedAt !== evidence.payload.reviewedAt ||
+      closedLink.mappingVersion !== evidence.payload.mappingVersion ||
+      closedLink.reviewNote !== evidence.payload.reviewNote
+    ) {
+      context.addIssue({
+        code: "custom",
+        path: ["payload"],
+        message:
+          "Program qualification evidence must be an exact member of the closed reviewed catalog.",
+      });
+    }
   });
 
 const QualificationEvidenceSchema = z
@@ -240,11 +276,30 @@ const offerMatchBase = {
   requirements: z.array(PublishedRequirementSchema),
 } as const;
 
-const AliasMatchSchema = z
+const TitleEvidenceSchema = z
+  .object({
+    matchEvidenceId: z.string().regex(/^title-match:[a-f0-9]{64}$/u),
+    offerTitle: z.string().min(1),
+    normalizedTitle: z.string().min(1),
+    normalizedAlias: z.string().min(1),
+  })
+  .strict();
+
+const ExactAliasMatchSchema = z
   .object({
     ...offerMatchBase,
-    matchRule: z.enum(["title_alias_exact", "title_alias_phrase"]),
+    matchRule: z.literal("title_alias_exact"),
     aliasEvidence: AliasEvidenceSchema,
+    titleEvidence: TitleEvidenceSchema,
+  })
+  .strict();
+
+const PhraseAliasMatchSchema = z
+  .object({
+    ...offerMatchBase,
+    matchRule: z.literal("title_alias_phrase"),
+    aliasEvidence: AliasEvidenceSchema,
+    titleEvidence: TitleEvidenceSchema,
   })
   .strict();
 
@@ -266,7 +321,8 @@ const HumanOverrideMatchSchema = z
 
 export const OfferMatchSchema = z
   .discriminatedUnion("matchRule", [
-    AliasMatchSchema,
+    ExactAliasMatchSchema,
+    PhraseAliasMatchSchema,
     QualificationMatchSchema,
     HumanOverrideMatchSchema,
   ])
@@ -311,6 +367,46 @@ export const OfferMatchSchema = z
         path: ["aliasEvidence", "payload", "occupationId"],
         message: "Alias evidence must identify the matched occupation.",
       });
+    }
+
+    if (
+      match.matchRule === "title_alias_exact" ||
+      match.matchRule === "title_alias_phrase"
+    ) {
+      const expectedTitle = normalizedText(match.titleEvidence.offerTitle);
+      const expectedAlias = normalizedText(match.aliasEvidence.payload.alias);
+      const expectedIdentity = titleMatchEvidenceIdentity({
+        matchRule: match.matchRule,
+        offerId: match.offerId,
+        offerTitle: match.titleEvidence.offerTitle,
+        aliasIdentity: match.aliasEvidence.identity,
+      });
+      if (
+        match.titleEvidence.normalizedTitle !== expectedTitle ||
+        match.titleEvidence.normalizedAlias !== expectedAlias ||
+        match.titleEvidence.matchEvidenceId !== expectedIdentity
+      ) {
+        context.addIssue({
+          code: "custom",
+          path: ["titleEvidence"],
+          message:
+            "Title evidence must be recomputed from the offer title and reviewed alias.",
+        });
+      }
+      const isExact = expectedTitle === expectedAlias;
+      const isStrictPhrase =
+        !isExact && isBoundedPhrase(expectedTitle, expectedAlias);
+      if (
+        (match.matchRule === "title_alias_exact" && !isExact) ||
+        (match.matchRule === "title_alias_phrase" && !isStrictPhrase)
+      ) {
+        context.addIssue({
+          code: "custom",
+          path: ["matchRule"],
+          message:
+            "Alias match rule must agree with exact or strict whole-word title semantics.",
+        });
+      }
     }
 
     if (match.matchRule === "published_qualification_exact") {
@@ -805,6 +901,17 @@ function offerMatch(
     aliasEvidence: {
       identity: aliasEvidenceIdentity(candidate.alias),
       payload: candidate.alias,
+    },
+    titleEvidence: {
+      matchEvidenceId: titleMatchEvidenceIdentity({
+        matchRule: candidate.matchRule,
+        offerId: offer.id,
+        offerTitle: offer.title,
+        aliasIdentity: aliasEvidenceIdentity(candidate.alias),
+      }),
+      offerTitle: offer.title,
+      normalizedTitle: normalizedText(offer.title),
+      normalizedAlias: normalizedText(candidate.alias.alias),
     },
   });
 }

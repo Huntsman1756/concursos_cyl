@@ -21,9 +21,12 @@ import {
   createHumanConfirmation,
   humanConfirmationIdentity,
   matchOffersForProgram,
+  titleMatchEvidenceIdentity,
   trainingLinkEvidenceIdentity,
+  type OfferMatch,
   type OfferMatchingData,
 } from "./offerMatching";
+import { deriveEvidenceState } from "./evidence";
 import {
   publishedRequirementId,
   type OfferPublishedRequirements,
@@ -217,6 +220,11 @@ describe("matchOffersForProgram", () => {
       relationshipType: "official_output",
       linkEvidence: { payload: links[0] },
       aliasEvidence: { payload: aliases[0] },
+      titleEvidence: {
+        offerTitle: "  DESARROLLADOR—WÉB!!! ",
+        normalizedTitle: "desarrollador web",
+        normalizedAlias: "desarrollador web",
+      },
     });
     if (match.matchRule !== "title_alias_exact") throw new Error("Wrong rule.");
     expect(match.linkEvidence.identity).toBe(
@@ -224,6 +232,14 @@ describe("matchOffersForProgram", () => {
     );
     expect(match.aliasEvidence.identity).toBe(
       aliasEvidenceIdentity(match.aliasEvidence.payload),
+    );
+    expect(match.titleEvidence.matchEvidenceId).toBe(
+      titleMatchEvidenceIdentity({
+        matchRule: match.matchRule,
+        offerId: match.offerId,
+        offerTitle: match.titleEvidence.offerTitle,
+        aliasIdentity: match.aliasEvidence.identity,
+      }),
     );
   });
 
@@ -316,7 +332,59 @@ describe("matchOffersForProgram", () => {
       offerId: "offer:phrase",
       matchRule: "title_alias_phrase",
       aliasEvidence: { payload: aliases[0] },
+      titleEvidence: {
+        normalizedTitle:
+          "buscamos desarrollador web para programacion web avanzada",
+        normalizedAlias: "desarrollador web",
+      },
     });
+  });
+
+  it("rejects exact and phrase rule masquerading and title evidence tampering", () => {
+    const phrase = matchOffersForProgram(
+      "IFC03S",
+      data([
+        offer("offer:phrase-forgery", "Buscamos desarrollador web junior"),
+      ]),
+    )[0];
+    const exact = matchOffersForProgram(
+      "IFC03S",
+      data([offer("offer:exact-forgery", "DESARROLLADOR WÉB!!!")]),
+    )[0];
+    expect(phrase.matchRule).toBe("title_alias_phrase");
+    expect(exact.matchRule).toBe("title_alias_exact");
+
+    const phraseAsExact = { ...phrase, matchRule: "title_alias_exact" };
+    const exactAsPhrase = { ...exact, matchRule: "title_alias_phrase" };
+    expect(OfferMatchesSchema.safeParse([phraseAsExact]).success).toBe(false);
+    expect(OfferMatchesSchema.safeParse([exactAsPhrase]).success).toBe(false);
+    expect(() =>
+      deriveEvidenceState(phraseAsExact as OfferMatch, {}),
+    ).toThrow();
+
+    if (!("titleEvidence" in exact)) throw new Error("Missing title evidence.");
+    expect(
+      OfferMatchesSchema.safeParse([
+        {
+          ...exact,
+          titleEvidence: {
+            ...exact.titleEvidence,
+            offerTitle: "Desarrollador web alterado",
+          },
+        },
+      ]).success,
+    ).toBe(false);
+    expect(
+      OfferMatchesSchema.safeParse([
+        {
+          ...exact,
+          titleEvidence: {
+            ...exact.titleEvidence,
+            normalizedAlias: "alias manipulado",
+          },
+        },
+      ]).success,
+    ).toBe(false);
   });
 
   it("requires and preserves an explicit strict in-memory human confirmation", () => {
@@ -533,6 +601,82 @@ describe("matchOffersForProgram", () => {
     if (qualification.matchRule !== "published_qualification_exact") {
       throw new Error("Wrong qualification fixture.");
     }
+    const legitimateProgramEvidence =
+      qualification.qualificationEvidence.programQualificationLink;
+    const reidentifiedProgramEvidence = (
+      changes: Partial<typeof legitimateProgramEvidence.payload>,
+    ) => {
+      const changed = {
+        ...legitimateProgramEvidence.payload,
+        ...changes,
+      };
+      const core = {
+        programKey: changed.programKey,
+        qualificationCatalogId: changed.qualificationCatalogId,
+        reviewStatus: changed.reviewStatus,
+        sourceUrl: changed.sourceUrl,
+        sourceQuote: changed.sourceQuote,
+        reviewedAt: changed.reviewedAt,
+        mappingVersion: changed.mappingVersion,
+        reviewNote: changed.reviewNote,
+      };
+      const identity = programQualificationLinkIdentity(core);
+      return { identity, payload: { ...core, identity } };
+    };
+
+    const lawQualification = REVIEWED_QUALIFICATIONS.find(
+      ({ catalogId }) => catalogId === "qualification:law-degree",
+    );
+    if (lawQualification === undefined) throw new Error("Missing law fixture.");
+    const lawRequirement = qualificationRequirement(
+      qualificationOffer.id,
+      lawQualification.canonicalLabel,
+    );
+    const forgedLawProgramEvidence = reidentifiedProgramEvidence({
+      qualificationCatalogId: lawQualification.catalogId,
+    });
+    const forgedLawMatch = {
+      ...qualification,
+      requirements: [lawRequirement],
+      qualificationEvidence: {
+        ...qualification.qualificationEvidence,
+        requirementId: lawRequirement.id,
+        sourceQuote: lawRequirement.sourceQuote,
+        normalizedValue: lawRequirement.normalizedValue,
+        qualificationIdentity: lawQualification.catalogId,
+        qualification: lawQualification,
+        programQualificationLink: forgedLawProgramEvidence,
+      },
+    };
+    expect(OfferMatchesSchema.safeParse([forgedLawMatch]).success).toBe(false);
+    expect(() =>
+      deriveEvidenceState(forgedLawMatch as OfferMatch, {}),
+    ).toThrow();
+
+    for (const forgedProgramEvidence of [
+      reidentifiedProgramEvidence({ reviewedAt: "2026-08-04" }),
+      reidentifiedProgramEvidence({
+        sourceQuote:
+          "Texto oficial distinto que no pertenece al catálogo cerrado.",
+      }),
+      reidentifiedProgramEvidence({
+        reviewStatus: "draft",
+        reviewNote: "Pendiente de una nueva revisión documental independiente.",
+      }),
+    ]) {
+      expect(
+        OfferMatchesSchema.safeParse([
+          {
+            ...qualification,
+            qualificationEvidence: {
+              ...qualification.qualificationEvidence,
+              programQualificationLink: forgedProgramEvidence,
+            },
+          },
+        ]).success,
+      ).toBe(false);
+    }
+
     const wrongProgramPayload = {
       ...qualification.qualificationEvidence.programQualificationLink.payload,
       programKey: "IFC03SD",
