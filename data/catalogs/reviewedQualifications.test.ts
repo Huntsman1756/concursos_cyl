@@ -37,4 +37,46 @@ describe("reviewed qualification catalog", () => {
       ]).success,
     ).toBe(false);
   });
+
+  it("requires each canonical label to be an accepted label", () => {
+    const first = REVIEWED_QUALIFICATIONS[0];
+    expect(
+      ReviewedQualificationsCatalogSchema.safeParse([
+        { ...first, canonicalLabel: "Una salida distinta" },
+      ]).success,
+    ).toBe(false);
+  });
+
+  it("rejects duplicate normalized canonical labels across entries", () => {
+    const [first, second] = REVIEWED_QUALIFICATIONS;
+    const result = ReviewedQualificationsCatalogSchema.safeParse([
+      first,
+      {
+        ...second,
+        canonicalLabel: first.canonicalLabel.toLocaleUpperCase("es-ES"),
+        acceptedLabels: [
+          ...second.acceptedLabels,
+          first.canonicalLabel.toLocaleUpperCase("es-ES"),
+        ],
+      },
+    ]);
+    expect(result.success).toBe(false);
+    if (!result.success) {
+      expect(result.error.issues).toEqual(
+        expect.arrayContaining([
+          expect.objectContaining({
+            path: [1, "canonicalLabel"],
+            message: expect.stringMatching(/canonical labels must be unique/i),
+          }),
+        ]),
+      );
+    }
+  });
+
+  it("accepts the reviewed catalog as its valid control", () => {
+    expect(
+      ReviewedQualificationsCatalogSchema.safeParse(REVIEWED_QUALIFICATIONS)
+        .success,
+    ).toBe(true);
+  });
 });

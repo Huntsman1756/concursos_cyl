@@ -35,6 +35,7 @@ export const ReviewedQualificationsCatalogSchema = z
   .superRefine((entries, context) => {
     const ids = new Set<string>();
     const labels = new Set<string>();
+    const canonicalLabels = new Set<string>();
     for (const [entryIndex, entry] of entries.entries()) {
       if (ids.has(entry.catalogId)) {
         context.addIssue({
@@ -45,8 +46,20 @@ export const ReviewedQualificationsCatalogSchema = z
       }
       ids.add(entry.catalogId);
 
+      const canonicalKey = qualificationCatalogKey(entry.canonicalLabel);
+      if (canonicalLabels.has(canonicalKey)) {
+        context.addIssue({
+          code: "custom",
+          path: [entryIndex, "canonicalLabel"],
+          message: "Normalized canonical labels must be unique.",
+        });
+      }
+      canonicalLabels.add(canonicalKey);
+
+      const entryLabels = new Set<string>();
       for (const [labelIndex, label] of entry.acceptedLabels.entries()) {
         const key = qualificationCatalogKey(label);
+        entryLabels.add(key);
         if (labels.has(key)) {
           context.addIssue({
             code: "custom",
@@ -55,6 +68,14 @@ export const ReviewedQualificationsCatalogSchema = z
           });
         }
         labels.add(key);
+      }
+      if (!entryLabels.has(canonicalKey)) {
+        context.addIssue({
+          code: "custom",
+          path: [entryIndex, "canonicalLabel"],
+          message:
+            "Canonical label must be included in accepted labels after normalization.",
+        });
       }
     }
   });
