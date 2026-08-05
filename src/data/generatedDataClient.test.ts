@@ -189,6 +189,50 @@ describe("generated data client", () => {
     expect(fetchSpy).not.toHaveBeenCalled();
   });
 
+  it("does not fetch a sidecar for a current immutable manifest that predates it", async () => {
+    const manifest = LoadableGeneratedManifestSchema.parse({
+      schemaVersion: "1.0.0",
+      generatedAt: "2026-08-04T10:00:00.000Z",
+      qualityStatus: "passed",
+      qualityReport: {
+        counts: { programs: 1, centers: 1, offerings: 1, offers: 1 },
+        nullRates: {
+          centerAddress: 0,
+          centerPhone: 0,
+          centerEmail: 0,
+          centerWebsite: 0,
+          offerProvince: 0,
+          offerLocality: 0,
+          offerDescription: 0,
+        },
+        reconciliationAnomalies: [],
+      },
+      resourceSnapshots: {
+        programs: {
+          ...snapshot,
+          resourcePath: "/data/v1/snapshots/build-1/programs.json",
+        },
+        centers: {
+          ...snapshot,
+          resourcePath: "/data/v1/snapshots/build-1/centers.json",
+        },
+        trainingOfferings: {
+          ...snapshot,
+          resourcePath: "/data/v1/snapshots/build-1/training-offerings.json",
+        },
+        jobOffers: {
+          ...snapshot,
+          resourcePath: "/data/v1/snapshots/build-1/job-offers.json",
+        },
+      },
+    });
+    const fetchSpy = vi.fn();
+    vi.stubGlobal("fetch", fetchSpy);
+
+    await expect(loadPublishedRequirements(manifest)).resolves.toEqual([]);
+    expect(fetchSpy).not.toHaveBeenCalled();
+  });
+
   it("accepts an explicit stale manifest", async () => {
     mockFetchJson({
       schemaVersion: "1.0.0",

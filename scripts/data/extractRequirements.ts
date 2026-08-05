@@ -22,10 +22,8 @@ interface ClassifiedRequirement {
 }
 
 const PARSER_VERSION = "1.0.0" as const;
-const OPTIONAL_OR_AMBIGUOUS =
-  /\b(?:se\s+valorar[aá]|valorable|preferible|deseable|ser[ií]a\s+un\s+plus|a\s+valorar)\b/iu;
-const NEGATED =
-  /\b(?:no\s+se\s+requiere|no\s+es\s+necesari[oa]|sin\s+necesidad\s+de|no\s+obligatori[oa])\b/iu;
+const OPTIONAL_OR_NEGATED =
+  /\b(?:opcional(?:mente)?|preferente(?:mente)?|preferible|deseable|recomendable|conveniente|valorable|valorad[oa]s?|se\s+valorara|se\s+valoraran|se\s+valora|se\s+valoran|valoramos|a\s+valorar|seria\s+un\s+plus|un\s+plus|no\s+requerid[oa]s?|no\s+se\s+requiere|no\s+es\s+necesari[oa]|sin\s+necesidad\s+de|no\s+imprescindible|no\s+obligatori[oa]|sin)\b/u;
 
 const NUMBER_WORDS: Readonly<Record<string, number>> = {
   un: 1,
@@ -62,6 +60,45 @@ function searchableText(value: string): string {
     .replace(/[^\p{Letter}\p{Number}+/]+/gu, " ")
     .replace(/\s+/gu, " ")
     .trim();
+}
+
+function ambiguityText(value: string): string {
+  return value
+    .normalize("NFD")
+    .replace(/\p{Diacritic}/gu, "")
+    .toLocaleLowerCase("es-ES")
+    .replace(/\s+/gu, " ")
+    .trim();
+}
+
+function hasAmbiguousExperienceDuration(sourceQuote: string): boolean {
+  const text = ambiguityText(sourceQuote);
+  if (!/\bexperiencia\b/u.test(text)) return false;
+
+  const number = "(?:\\d+|un|una|uno|dos|tres|cuatro|cinco|seis|doce)";
+  const unit = "(?:anos?|mes(?:es)?)";
+  const rangePatterns = [
+    new RegExp(`\\bentre\\s+${number}\\s+(?:y|a)\\s+${number}\\b`, "u"),
+    new RegExp(`\\b${number}\\s+(?:a|o)\\s+${number}\\s+${unit}\\b`, "u"),
+    new RegExp(`\\b${number}\\s*[-–]\\s*${number}\\s+${unit}\\b`, "u"),
+    new RegExp(`\\b${number}\\s*\\/\\s*${number}\\s+${unit}\\b`, "u"),
+    new RegExp(`\\b${number}\\s+anos?\\s+y\\s+medio\\b`, "u"),
+    /\b\d+[,.]\d+\s+(?:anos?|mes(?:es)?)\b/u,
+    /\b(?:mas\s+de|superior\s+a)\s+\d+\s+(?:anos?|mes(?:es)?)\b/u,
+  ];
+  if (rangePatterns.some((pattern) => pattern.test(text))) return true;
+
+  const durations = [
+    ...text.matchAll(new RegExp(`\\b${number}\\s+${unit}\\b`, "gu")),
+  ];
+  return durations.length > 1;
+}
+
+function isAmbiguousOrNegated(sourceQuote: string): boolean {
+  return (
+    OPTIONAL_OR_NEGATED.test(searchableText(sourceQuote)) ||
+    hasAmbiguousExperienceDuration(sourceQuote)
+  );
 }
 
 function quoteValue(value: string): string {
@@ -293,13 +330,7 @@ function mobilityRule(text: string): ClassifiedRequirement | undefined {
 
 function classify(sourceQuote: string): ClassifiedRequirement | undefined {
   const text = searchableText(sourceQuote);
-  if (
-    text.length === 0 ||
-    OPTIONAL_OR_AMBIGUOUS.test(text) ||
-    NEGATED.test(text)
-  ) {
-    return undefined;
-  }
+  if (text.length === 0) return undefined;
 
   const matches = [
     qualificationRule(sourceQuote, text),
@@ -333,7 +364,8 @@ export function extractPublishedRequirements(
     if (sourceQuote.length === 0 || seenQuotes.has(sourceQuote)) continue;
     seenQuotes.add(sourceQuote);
 
-    const classified = classify(sourceQuote);
+    const ambiguousOrNegated = isAmbiguousOrNegated(sourceQuote);
+    const classified = ambiguousOrNegated ? undefined : classify(sourceQuote);
     const category = classified?.category ?? "unclassified";
     results.push(
       PublishedRequirementSchema.parse({
@@ -342,7 +374,10 @@ export function extractPublishedRequirements(
         normalizedValue: classified?.normalizedValue ?? null,
         sourceQuote,
         parserRule:
-          classified?.parserRule ?? "unclassified.conservative_fallback",
+          classified?.parserRule ??
+          (ambiguousOrNegated
+            ? "unclassified.ambiguous_or_negated"
+            : "unclassified.conservative_fallback"),
         parserVersion: PARSER_VERSION,
       }),
     );

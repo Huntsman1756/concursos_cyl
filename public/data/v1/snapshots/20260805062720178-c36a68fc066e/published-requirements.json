@@ -579,7 +579,7 @@
         "category": "unclassified",
         "id": "requirement:4236bdbb272d3a482bc376556b173ce0b450803beffb9c8f9ca4fe7e0fa766e8",
         "normalizedValue": null,
-        "parserRule": "unclassified.conservative_fallback",
+        "parserRule": "unclassified.ambiguous_or_negated",
         "parserVersion": "1.0.0",
         "sourceQuote": "Valorable experiencia en puesto similar."
       },
@@ -677,7 +677,7 @@
         "category": "unclassified",
         "id": "requirement:dc2826fe75158cd794268ceef1e99dc538066215ca7de18bd1cfa8b378d0e6f0",
         "normalizedValue": null,
-        "parserRule": "unclassified.conservative_fallback",
+        "parserRule": "unclassified.ambiguous_or_negated",
         "parserVersion": "1.0.0",
         "sourceQuote": "Valorable experiencia como mozo u operario en cualquier sector; reponedor de supermercado, manipulado de alimentos (charcutero, pescadero) o peones agrícolas."
       }
@@ -941,7 +941,7 @@
         "category": "unclassified",
         "id": "requirement:ed187e28a22eaceae2cc137480d27a8ff5c4c87ab09f36e1185ac9ed085f855b",
         "normalizedValue": null,
-        "parserRule": "unclassified.conservative_fallback",
+        "parserRule": "unclassified.ambiguous_or_negated",
         "parserVersion": "1.0.0",
         "sourceQuote": "Se valorará experiencia en softwares de facturación y gestión comercial."
       },
@@ -1031,7 +1031,7 @@
         "category": "unclassified",
         "id": "requirement:8cd6ff7a917d2b5fe5a0baf60991005131d3a5d29d0cf612d0bfa95cf4a75462",
         "normalizedValue": null,
-        "parserRule": "unclassified.conservative_fallback",
+        "parserRule": "unclassified.ambiguous_or_negated",
         "parserVersion": "1.0.0",
         "sourceQuote": "Experiencia previa en atención al cliente será valorada, aunque no es imprescindible"
       }
@@ -1339,7 +1339,7 @@
         "category": "unclassified",
         "id": "requirement:86a3a6e8def8fa824aeea93344b9a126ec6526f0f7ffae634069010581e09917",
         "normalizedValue": null,
-        "parserRule": "unclassified.conservative_fallback",
+        "parserRule": "unclassified.ambiguous_or_negated",
         "parserVersion": "1.0.0",
         "sourceQuote": "Se valoran conocimientos técnicos para la redacción de informes, certificados, inspecciones técnicas de edificios (ITE), certificaciones de eficiencia energéticas (CEE), así como habilidades para gestiones en Ayuntamientos y organismos oficiales para obtención de consultas, licencias y permisos."
       },
@@ -1397,10 +1397,10 @@
         "sourceQuote": "Permiso de conducir B."
       },
       {
-        "category": "experience",
-        "id": "requirement:da1a6507797d4054411945f4cebb108b6aba4d066077213c4b6dbb309d1c55bb",
-        "normalizedValue": 24,
-        "parserRule": "experience.years",
+        "category": "unclassified",
+        "id": "requirement:b9b77930df81d309d03f7d3fab7f3495d1b43492a60ad02adee2e5570971f27f",
+        "normalizedValue": null,
+        "parserRule": "unclassified.ambiguous_or_negated",
         "parserVersion": "1.0.0",
         "sourceQuote": "Experiencia mínima de 1 a 2 años."
       }
@@ -1429,7 +1429,7 @@
         "category": "unclassified",
         "id": "requirement:7912e2ea9fbb7513bf1427570c714e4141a2a99227b3163cd4dafb58fc62026f",
         "normalizedValue": null,
-        "parserRule": "unclassified.conservative_fallback",
+        "parserRule": "unclassified.ambiguous_or_negated",
         "parserVersion": "1.0.0",
         "sourceQuote": "Experiencia en ventas; se valorará especialmente la experiencia inmobiliaria."
       },
@@ -1527,7 +1527,7 @@
         "category": "unclassified",
         "id": "requirement:692c27e0be10a9a942e8b1d1edab29d59702a9a96c02548c5b7993c05824beb5",
         "normalizedValue": null,
-        "parserRule": "unclassified.conservative_fallback",
+        "parserRule": "unclassified.ambiguous_or_negated",
         "parserVersion": "1.0.0",
         "sourceQuote": "Valorable titulación o certificado de profesionalidad de Atención a personas dependientes en domicilio y permiso de circulación."
       },
@@ -1548,7 +1548,7 @@
         "category": "unclassified",
         "id": "requirement:7ad7c7b71dcc2de56b4b185950364f70a1b858ef6dbc4157f0625abe856b75f4",
         "normalizedValue": null,
-        "parserRule": "unclassified.conservative_fallback",
+        "parserRule": "unclassified.ambiguous_or_negated",
         "parserVersion": "1.0.0",
         "sourceQuote": "Permiso conducir. No es necesario tener formación, pero si valorable."
       },
@@ -1569,7 +1569,7 @@
         "category": "unclassified",
         "id": "requirement:19a23b384bda27485f14a17a171b75aab16f0ff4887ac887183fda24ffc7e94a",
         "normalizedValue": null,
-        "parserRule": "unclassified.conservative_fallback",
+        "parserRule": "unclassified.ambiguous_or_negated",
         "parserVersion": "1.0.0",
         "sourceQuote": "Permiso conducir y vehículo. No es necesario tener formación, pero si valorable."
       },
@@ -1590,7 +1590,7 @@
         "category": "unclassified",
         "id": "requirement:49381c14d39c4b2b815b1c88b187dc936c485de561587eb21d0929d0c64c447c",
         "normalizedValue": null,
-        "parserRule": "unclassified.conservative_fallback",
+        "parserRule": "unclassified.ambiguous_or_negated",
         "parserVersion": "1.0.0",
         "sourceQuote": "Permiso conducir y vehículo. No es necesario tener formación, pero si valorable."
       },
@@ -1632,7 +1632,7 @@
         "category": "unclassified",
         "id": "requirement:817b5a375eff0cea8bfe504248b97983d579d942cca3f463a76776db5bae243c",
         "normalizedValue": null,
-        "parserRule": "unclassified.conservative_fallback",
+        "parserRule": "unclassified.ambiguous_or_negated",
         "parserVersion": "1.0.0",
         "sourceQuote": "Permiso de conducir y vehículo. Valorable titulación o Certificado Profesionalidad."
       },
@@ -1653,7 +1653,7 @@
         "category": "unclassified",
         "id": "requirement:64d76de52395fda227e799623ddba93238209e98374120292c63faf92b26e564",
         "normalizedValue": null,
-        "parserRule": "unclassified.conservative_fallback",
+        "parserRule": "unclassified.ambiguous_or_negated",
         "parserVersion": "1.0.0",
         "sourceQuote": "Carnet de conducir y vehículo. Valorable titulación relacionada o certificado de profesionalidad de atención sociosanitaria a personas dependientes en domicilios."
       },
@@ -1674,7 +1674,7 @@
         "category": "unclassified",
         "id": "requirement:b069ce7a906aa475664f570a4ea119940d5221b76c2672bb9e0b7d4a2b5d28e9",
         "normalizedValue": null,
-        "parserRule": "unclassified.conservative_fallback",
+        "parserRule": "unclassified.ambiguous_or_negated",
         "parserVersion": "1.0.0",
         "sourceQuote": "Permiso conducir y vehículo. No es necesario tener formación, pero si valorable."
       },
@@ -1716,7 +1716,7 @@
         "category": "unclassified",
         "id": "requirement:bb6556a72dadb15535d7ab851ddf1f334dfa8e05055bddd44f2741663d662cd2",
         "normalizedValue": null,
-        "parserRule": "unclassified.conservative_fallback",
+        "parserRule": "unclassified.ambiguous_or_negated",
         "parserVersion": "1.0.0",
         "sourceQuote": "Permiso de conducir y vehículo. Valorable titulación o Certificado Profesionalidad."
       },
@@ -1737,7 +1737,7 @@
         "category": "unclassified",
         "id": "requirement:1c58ca99772f26afb6eb60bd1471b863e25376a51762b52f05cb4ed331f36c60",
         "normalizedValue": null,
-        "parserRule": "unclassified.conservative_fallback",
+        "parserRule": "unclassified.ambiguous_or_negated",
         "parserVersion": "1.0.0",
         "sourceQuote": "Permiso de conducir y vehículo. Valorable titulación o Certificado Profesionalidad."
       },
@@ -1758,7 +1758,7 @@
         "category": "unclassified",
         "id": "requirement:42f4db172fe9905e513d039de5f378eec83ee1a7d3eaa1743aa60769639d04d0",
         "normalizedValue": null,
-        "parserRule": "unclassified.conservative_fallback",
+        "parserRule": "unclassified.ambiguous_or_negated",
         "parserVersion": "1.0.0",
         "sourceQuote": "Valorable titulación relacionada o Certificado de profesionalidad de atención sociosanitaria a personas dependientes en su domicilio."
       },
@@ -1779,7 +1779,7 @@
         "category": "unclassified",
         "id": "requirement:b017c458ba0d115c550c8cdff0aa444712f8277e340d1c9e1480ee4451ad343c",
         "normalizedValue": null,
-        "parserRule": "unclassified.conservative_fallback",
+        "parserRule": "unclassified.ambiguous_or_negated",
         "parserVersion": "1.0.0",
         "sourceQuote": "Vehículo. Valorable Titulación relacionada con el puesto de trabajo."
       },
@@ -1808,7 +1808,7 @@
         "category": "unclassified",
         "id": "requirement:2c8080306bcd4a4faf7e8062e975b5ad833103828e9f40c7dcabba36546d9948",
         "normalizedValue": null,
-        "parserRule": "unclassified.conservative_fallback",
+        "parserRule": "unclassified.ambiguous_or_negated",
         "parserVersion": "1.0.0",
         "sourceQuote": "Se valorará formación relacionada con el puesto."
       },
@@ -1829,7 +1829,7 @@
         "category": "unclassified",
         "id": "requirement:1bffcaa06d3a620b39c95c92c5c5dd1126dda0f0f6f3d768b4f94d271269d2dc",
         "normalizedValue": null,
-        "parserRule": "unclassified.conservative_fallback",
+        "parserRule": "unclassified.ambiguous_or_negated",
         "parserVersion": "1.0.0",
         "sourceQuote": "Valorable titulación relacionada con el puesto. Vehículo y permiso de circulación."
       },
@@ -1850,7 +1850,7 @@
         "category": "unclassified",
         "id": "requirement:0eb5aa923c4f926c2d25b0d69be66e85c7fce1588781001f8d15e09e0c7ba39d",
         "normalizedValue": null,
-        "parserRule": "unclassified.conservative_fallback",
+        "parserRule": "unclassified.ambiguous_or_negated",
         "parserVersion": "1.0.0",
         "sourceQuote": "Valorable Certificado de profesionalidad de atención sociosanitaria a personas dependientes en domicilio."
       },
@@ -1871,7 +1871,7 @@
         "category": "unclassified",
         "id": "requirement:8095f44330845b7657ed08d69be03fefca702873e6e8f021f287f51523c79681",
         "normalizedValue": null,
-        "parserRule": "unclassified.conservative_fallback",
+        "parserRule": "unclassified.ambiguous_or_negated",
         "parserVersion": "1.0.0",
         "sourceQuote": "Valorable Certificado de profesionalidad de atención sociosanitaria a personas dependientes en domicilio."
       },
@@ -1892,7 +1892,7 @@
         "category": "unclassified",
         "id": "requirement:ef1b61d47d0699113913b9a06fe49c6fb61beb1e1aba6858d811b4fe4ca85980",
         "normalizedValue": null,
-        "parserRule": "unclassified.conservative_fallback",
+        "parserRule": "unclassified.ambiguous_or_negated",
         "parserVersion": "1.0.0",
         "sourceQuote": "Preferentemente formación en ayuda a domicilio o similares."
       },
@@ -1913,7 +1913,7 @@
         "category": "unclassified",
         "id": "requirement:e71e9ecd142ad67011b4adc9b4210ded70f9c0414e794ca01406f6adda50bc16",
         "normalizedValue": null,
-        "parserRule": "unclassified.conservative_fallback",
+        "parserRule": "unclassified.ambiguous_or_negated",
         "parserVersion": "1.0.0",
         "sourceQuote": "Preferible formación en servicio de ayuda a domicilio o similar."
       },
@@ -1934,7 +1934,7 @@
         "category": "unclassified",
         "id": "requirement:7135d58a79fb8516046f428e187133e328e7d5ec0b9b68605acb1bfd6cf5b46a",
         "normalizedValue": null,
-        "parserRule": "unclassified.conservative_fallback",
+        "parserRule": "unclassified.ambiguous_or_negated",
         "parserVersion": "1.0.0",
         "sourceQuote": "Vehículo. Se valorará titulación relacionada con el puesto."
       },
@@ -1955,7 +1955,7 @@
         "category": "unclassified",
         "id": "requirement:27dc178117feab9ecb5299c7ab861b3dc1858fbe53dd031f984adf90cdc851e1",
         "normalizedValue": null,
-        "parserRule": "unclassified.conservative_fallback",
+        "parserRule": "unclassified.ambiguous_or_negated",
         "parserVersion": "1.0.0",
         "sourceQuote": "Permiso de conducir y vehículo. Valorable titulación o Certificado Profesionalidad."
       },
@@ -1976,7 +1976,7 @@
         "category": "unclassified",
         "id": "requirement:d7cb462cc677dbf53a98e9cc6643aae30be03b9dab6f66dcdead2044ab9afd8b",
         "normalizedValue": null,
-        "parserRule": "unclassified.conservative_fallback",
+        "parserRule": "unclassified.ambiguous_or_negated",
         "parserVersion": "1.0.0",
         "sourceQuote": "Permiso de conducir y vehículo. Valorable titulación o Certificado Profesionalidad."
       },
@@ -2005,7 +2005,7 @@
         "category": "unclassified",
         "id": "requirement:fa49aa1d5541e2465bc07c292f2de8a0d5e9c86701ce76f141a2514628a57bb1",
         "normalizedValue": null,
-        "parserRule": "unclassified.conservative_fallback",
+        "parserRule": "unclassified.ambiguous_or_negated",
         "parserVersion": "1.0.0",
         "sourceQuote": "Experiencia mínima no requerida."
       }
@@ -2042,7 +2042,7 @@
         "category": "unclassified",
         "id": "requirement:b0e51e8de21e779de38cc9d8f317f295c9a932a9a8683a4ff0de74481fcedf97",
         "normalizedValue": null,
-        "parserRule": "unclassified.conservative_fallback",
+        "parserRule": "unclassified.ambiguous_or_negated",
         "parserVersion": "1.0.0",
         "sourceQuote": "Valorable manejo de SAP."
       }
@@ -2153,7 +2153,7 @@
         "category": "unclassified",
         "id": "requirement:8eca727ff97e8b23bd62b21652fa4d6b1f61da4809ab6a60d840dfc25bf152cd",
         "normalizedValue": null,
-        "parserRule": "unclassified.conservative_fallback",
+        "parserRule": "unclassified.ambiguous_or_negated",
         "parserVersion": "1.0.0",
         "sourceQuote": "Valorable: Formación específica en geriatría. Experiencia previa en una posición similar."
       }
@@ -2195,7 +2195,7 @@
         "category": "unclassified",
         "id": "requirement:49ce9fbf0787be4828807aa678006e7a751c93ca672af97965a11f43ecc084cf",
         "normalizedValue": null,
-        "parserRule": "unclassified.conservative_fallback",
+        "parserRule": "unclassified.ambiguous_or_negated",
         "parserVersion": "1.0.0",
         "sourceQuote": "Valorable estar en posesión del carnet de conducir y vehículo propio."
       }
@@ -2676,7 +2676,7 @@
         "category": "unclassified",
         "id": "requirement:0ccbb0f7e8e5f0c45efc942d0da2dc6fee410b372714f25c575717eb4d6bfd1c",
         "normalizedValue": null,
-        "parserRule": "unclassified.conservative_fallback",
+        "parserRule": "unclassified.ambiguous_or_negated",
         "parserVersion": "1.0.0",
         "sourceQuote": "Se valora/prefiere experiencia previa en almacén."
       },
@@ -2692,7 +2692,7 @@
         "category": "unclassified",
         "id": "requirement:5bd55b216f4c10af04f384049c49933970da0780c863b394c1076578662c7e7a",
         "normalizedValue": null,
-        "parserRule": "unclassified.conservative_fallback",
+        "parserRule": "unclassified.ambiguous_or_negated",
         "parserVersion": "1.0.0",
         "sourceQuote": "Se valorará la formación y los conocimientos en carga segura."
       },
@@ -2734,7 +2734,7 @@
         "category": "unclassified",
         "id": "requirement:4c76b3aac9621cfa804d84f141d1a813436578f9b3f05ede5263aa932be1c5aa",
         "normalizedValue": null,
-        "parserRule": "unclassified.conservative_fallback",
+        "parserRule": "unclassified.ambiguous_or_negated",
         "parserVersion": "1.0.0",
         "sourceQuote": "Permiso de circulación. Se valorará titulación de Técnico Superior en Vitivinicultura."
       },
@@ -2898,7 +2898,7 @@
         "category": "unclassified",
         "id": "requirement:c36db94e2b843daca3c93afb37f10b523446c9ff3cd877f6a26ea8685d8e99c4",
         "normalizedValue": null,
-        "parserRule": "unclassified.conservative_fallback",
+        "parserRule": "unclassified.ambiguous_or_negated",
         "parserVersion": "1.0.0",
         "sourceQuote": "Se valorará experiencia previa en el sector de la distribución."
       }
@@ -2911,7 +2911,7 @@
         "category": "unclassified",
         "id": "requirement:3966b1455786aeaa1acb0420348274c4bc227e222caed5eb171ccd092fc21321",
         "normalizedValue": null,
-        "parserRule": "unclassified.conservative_fallback",
+        "parserRule": "unclassified.ambiguous_or_negated",
         "parserVersion": "1.0.0",
         "sourceQuote": "Estudios mínimos: Sin estudios."
       },
@@ -2919,7 +2919,7 @@
         "category": "unclassified",
         "id": "requirement:28cdcc51cef09a25e5116bac6ff2a22242d8e26ec2dc5550c77791199ae625df",
         "normalizedValue": null,
-        "parserRule": "unclassified.conservative_fallback",
+        "parserRule": "unclassified.ambiguous_or_negated",
         "parserVersion": "1.0.0",
         "sourceQuote": "Experiencia mínima: No requerida."
       }
@@ -2953,7 +2953,7 @@
         "category": "unclassified",
         "id": "requirement:fc30684c3f055b0f5e8cf65809ae4c044321ef85b9dfd78fa2081b315e0d311a",
         "normalizedValue": null,
-        "parserRule": "unclassified.conservative_fallback",
+        "parserRule": "unclassified.ambiguous_or_negated",
         "parserVersion": "1.0.0",
         "sourceQuote": "Valorable formación en el sector de servicio hostelero."
       },
@@ -3003,7 +3003,7 @@
         "category": "unclassified",
         "id": "requirement:da76eac907a4e151380dd563432c5f0ee5fe26d8fa8692fdcd79774b5b950272",
         "normalizedValue": null,
-        "parserRule": "unclassified.conservative_fallback",
+        "parserRule": "unclassified.ambiguous_or_negated",
         "parserVersion": "1.0.0",
         "sourceQuote": "Se valorará experiencia."
       },
@@ -3061,7 +3061,7 @@
         "category": "unclassified",
         "id": "requirement:c7681528891f9c658a25289b242376523c94de2649753ac95d379c3510a87d58",
         "normalizedValue": null,
-        "parserRule": "unclassified.conservative_fallback",
+        "parserRule": "unclassified.ambiguous_or_negated",
         "parserVersion": "1.0.0",
         "sourceQuote": "Valorable carnet de carretilla y experiencia con la misma."
       },
@@ -3182,7 +3182,7 @@
         "category": "unclassified",
         "id": "requirement:4893a495449489b738392b7fdb1df828587bcf6608719bb44cb6846687fb7500",
         "normalizedValue": null,
-        "parserRule": "unclassified.conservative_fallback",
+        "parserRule": "unclassified.ambiguous_or_negated",
         "parserVersion": "1.0.0",
         "sourceQuote": "Se valorará experiencia."
       },
@@ -3224,7 +3224,7 @@
         "category": "unclassified",
         "id": "requirement:e0d8b7d7a38273f17d2128de3b32f1a4d5151064b18d70361dce0f8cb685acba",
         "normalizedValue": null,
-        "parserRule": "unclassified.conservative_fallback",
+        "parserRule": "unclassified.ambiguous_or_negated",
         "parserVersion": "1.0.0",
         "sourceQuote": "Se valorará experiencia y formación. Necesario permiso de conducir si no reside en Carbajales de Alba."
       },
@@ -3245,7 +3245,7 @@
         "category": "unclassified",
         "id": "requirement:9ab2c83d3d25fab35d494edc13584d7afc6a6aa262d037edfc2d61b0dc10f6cd",
         "normalizedValue": null,
-        "parserRule": "unclassified.conservative_fallback",
+        "parserRule": "unclassified.ambiguous_or_negated",
         "parserVersion": "1.0.0",
         "sourceQuote": "Valorable titulación y experiencia en el puesto."
       },
@@ -3316,7 +3316,7 @@
         "category": "unclassified",
         "id": "requirement:420d9d5c8aa43aef4a81d30c22b969b05397b70f6812fe6bee8419b0e5130e74",
         "normalizedValue": null,
-        "parserRule": "unclassified.conservative_fallback",
+        "parserRule": "unclassified.ambiguous_or_negated",
         "parserVersion": "1.0.0",
         "sourceQuote": "No se contestarán candidaturas sin los requisitos pedidos."
       },
@@ -3387,7 +3387,7 @@
         "category": "unclassified",
         "id": "requirement:4cdcea5b3e29480a645ca039c950cda4054cf960f89e5010e93bcdc33400028b",
         "normalizedValue": null,
-        "parserRule": "unclassified.conservative_fallback",
+        "parserRule": "unclassified.ambiguous_or_negated",
         "parserVersion": "1.0.0",
         "sourceQuote": "Carné manipulador de alimentos. Valorable titulación en cocina o similar."
       },
@@ -3429,7 +3429,7 @@
         "category": "unclassified",
         "id": "requirement:d5db911c4acdb7e843cd2896f940e1ffda84c68b46b7e04bccb828b545683477",
         "normalizedValue": null,
-        "parserRule": "unclassified.conservative_fallback",
+        "parserRule": "unclassified.ambiguous_or_negated",
         "parserVersion": "1.0.0",
         "sourceQuote": "Se valorará experiencia."
       },
@@ -3519,7 +3519,7 @@
         "category": "unclassified",
         "id": "requirement:2b62be6eaa5b978b43a0ea6e0255d8a0584a00b1d19f8820ac29229066f95223",
         "normalizedValue": null,
-        "parserRule": "unclassified.conservative_fallback",
+        "parserRule": "unclassified.ambiguous_or_negated",
         "parserVersion": "1.0.0",
         "sourceQuote": "Se valorará experiencia en el sector y conocimientos de mecánica."
       }
@@ -3624,7 +3624,7 @@
         "category": "unclassified",
         "id": "requirement:26e2ef2ee1f14ba3886285e95046b8fcdd136e121d8759a8ee3dc274e4e6965f",
         "normalizedValue": null,
-        "parserRule": "unclassified.conservative_fallback",
+        "parserRule": "unclassified.ambiguous_or_negated",
         "parserVersion": "1.0.0",
         "sourceQuote": "Carnte C. Se valorará carnet de mercancias peligrosas."
       },
@@ -3666,7 +3666,7 @@
         "category": "unclassified",
         "id": "requirement:926d458515bfb66568495c2ae83ac9df92cb59c0f8b26e624bb3fc56ce992ba7",
         "normalizedValue": null,
-        "parserRule": "unclassified.conservative_fallback",
+        "parserRule": "unclassified.ambiguous_or_negated",
         "parserVersion": "1.0.0",
         "sourceQuote": "Permiso de circulación C, C1,C1E,CE. Imprescindible CAP en vigor. Recomendable disponer de curso de formación de PRL de 20 horas de movimiento de tierras."
       },
@@ -3687,7 +3687,7 @@
         "category": "unclassified",
         "id": "requirement:3997462e022f62d02e3a3fd05b85169a4a566e7905a269975935cdb0ccbffde2",
         "normalizedValue": null,
-        "parserRule": "unclassified.conservative_fallback",
+        "parserRule": "unclassified.ambiguous_or_negated",
         "parserVersion": "1.0.0",
         "sourceQuote": "Permiso de conducir C y el CAP en vigor. Se valorará experiencia previa en trabajos de asfaltado y formación en PRL en estabilización de firmes."
       },
@@ -3708,7 +3708,7 @@
         "category": "unclassified",
         "id": "requirement:6ec7d0c651df36b4b775a1f721ea61397261b2d27f333119e16c7c4872bd328b",
         "normalizedValue": null,
-        "parserRule": "unclassified.conservative_fallback",
+        "parserRule": "unclassified.ambiguous_or_negated",
         "parserVersion": "1.0.0",
         "sourceQuote": "Permiso conducir C y CAP. Valorable manejo de grúa pluma."
       },
@@ -3771,7 +3771,7 @@
         "category": "unclassified",
         "id": "requirement:57939dd0d79a7abfd74ad905d5aa230101a2e77f2331fd55a2fd812e7c35ebf8",
         "normalizedValue": null,
-        "parserRule": "unclassified.conservative_fallback",
+        "parserRule": "unclassified.ambiguous_or_negated",
         "parserVersion": "1.0.0",
         "sourceQuote": "Permiso de conducir B. Valorable experiencia."
       },
@@ -4178,7 +4178,7 @@
         "category": "unclassified",
         "id": "requirement:a7636e9d7d9c67234426a9ed6ae1620be9bf8d5d3702373c38badf96d89d25ed",
         "normalizedValue": null,
-        "parserRule": "unclassified.conservative_fallback",
+        "parserRule": "unclassified.ambiguous_or_negated",
         "parserVersion": "1.0.0",
         "sourceQuote": "Formación de Bachillerato o similar. Conocimientos informáticos y contables. Valorable Inglés y permiso de conducir. Se valorará experiencia en el sector."
       },
@@ -4292,7 +4292,7 @@
         "category": "unclassified",
         "id": "requirement:0de32f6edbb68b7da0788aa5ff7c30c767aaa833cb8e33d301a72413dba233e4",
         "normalizedValue": null,
-        "parserRule": "unclassified.conservative_fallback",
+        "parserRule": "unclassified.ambiguous_or_negated",
         "parserVersion": "1.0.0",
         "sourceQuote": "Valorable experiencia como Adjunto/a de Tienda con potencial para asumir una dirección."
       }
@@ -4533,7 +4533,7 @@
         "category": "unclassified",
         "id": "requirement:f63eaa7d545359cc4bc9f00d8a985faa4fb84e41ed3f4d14c77075d09fd3751a",
         "normalizedValue": null,
-        "parserRule": "unclassified.conservative_fallback",
+        "parserRule": "unclassified.ambiguous_or_negated",
         "parserVersion": "1.0.0",
         "sourceQuote": "Se valorará especialmente: Formación técnica impartida por fabricantes de automoción; experiencia en vehículos híbridos y eléctricos; conocimientos de programación y actualización de unidades de control; experiencia en el uso de osciloscopio."
       }
@@ -4867,7 +4867,7 @@
         "category": "unclassified",
         "id": "requirement:c8c65ef95b0641977b33fce344ed05b4364bc82265ac3ece4412123dd071256b",
         "normalizedValue": null,
-        "parserRule": "unclassified.conservative_fallback",
+        "parserRule": "unclassified.ambiguous_or_negated",
         "parserVersion": "1.0.0",
         "sourceQuote": "Será necesario contar con experiencia de al menos 2-3 años en puestos similares. Se valorará la titulación de Técnico Superior en Sistemas Electrotécnicos y Automatizados, así como experiencia en entornos de maquinaria eléctrica. Necesario permiso B de conducir y disponer de vehículo propio."
       },
@@ -4888,7 +4888,7 @@
         "category": "unclassified",
         "id": "requirement:db25604e578ed56299241f9eaa370fddb982a45d360f29be42cfb1f6be10603f",
         "normalizedValue": null,
-        "parserRule": "unclassified.conservative_fallback",
+        "parserRule": "unclassified.ambiguous_or_negated",
         "parserVersion": "1.0.0",
         "sourceQuote": "Valorable Ingeniería Foresta, Montes, Agrónomos o similar, Técnico Superior en Gestión Forestal y del Medio Natural. Permiso de circulación B."
       },
@@ -5660,7 +5660,7 @@
         "category": "unclassified",
         "id": "requirement:1008fe36f636433ef1856da4cd567596213343f76b63a6acb6822887e3abbd89",
         "normalizedValue": null,
-        "parserRule": "unclassified.conservative_fallback",
+        "parserRule": "unclassified.ambiguous_or_negated",
         "parserVersion": "1.0.0",
         "sourceQuote": "Experiencia mínima: no requerida."
       }
@@ -5681,7 +5681,7 @@
         "category": "unclassified",
         "id": "requirement:2e001e5b1ac465d7d2fc86a43a558777cb1d403df38c705373f3397a387b40e0",
         "normalizedValue": null,
-        "parserRule": "unclassified.conservative_fallback",
+        "parserRule": "unclassified.ambiguous_or_negated",
         "parserVersion": "1.0.0",
         "sourceQuote": "No es necesaria experiencia."
       },
@@ -5689,7 +5689,7 @@
         "category": "unclassified",
         "id": "requirement:106ef8c34c4f6e0a9488a269df7d6960af58ec95ae35a3d9f2601cde3754fd04",
         "normalizedValue": null,
-        "parserRule": "unclassified.conservative_fallback",
+        "parserRule": "unclassified.ambiguous_or_negated",
         "parserVersion": "1.0.0",
         "sourceQuote": "Se valorará formación en Osteopatía."
       },
@@ -5989,7 +5989,7 @@
         "category": "unclassified",
         "id": "requirement:e6184f112c2bd22825c7a7c824031f6a55dfce396ea6ae6f4a92d42c7804c0df",
         "normalizedValue": null,
-        "parserRule": "unclassified.conservative_fallback",
+        "parserRule": "unclassified.ambiguous_or_negated",
         "parserVersion": "1.0.0",
         "sourceQuote": "Titulación universitaria o formación superior en hostelería o turismo. Se valorarán certificados profesionales en housekeeping management."
       },
@@ -6362,7 +6362,7 @@
         "category": "unclassified",
         "id": "requirement:b342c15fc8692a7fd00f3bac0da6dd1d74e2b6257d0ece3dd2e820391ca359b2",
         "normalizedValue": null,
-        "parserRule": "unclassified.conservative_fallback",
+        "parserRule": "unclassified.ambiguous_or_negated",
         "parserVersion": "1.0.0",
         "sourceQuote": "Permiso de conducir y disponibilidad de vehículo. Curso PRL 20 horas especialidad electricidad (imprescindible). Valorable disponer de formación PRL de 60 horas."
       },
@@ -6497,7 +6497,7 @@
         "category": "unclassified",
         "id": "requirement:8f6f096452876ebb8fc51996091e19e214f9c8c46f6a630a63aafbce0e26c3f0",
         "normalizedValue": null,
-        "parserRule": "unclassified.conservative_fallback",
+        "parserRule": "unclassified.ambiguous_or_negated",
         "parserVersion": "1.0.0",
         "sourceQuote": "Valorable formación específica en Mantenimiento Industrial, Prevención de Riesgos Laborales y metodologías de mejora continua."
       }
@@ -6566,7 +6566,7 @@
         "category": "unclassified",
         "id": "requirement:96eeeaf224eb2d9b186a7bc19610c9f1d3d56f3bd47f66f8ff5d4beedea419ce",
         "normalizedValue": null,
-        "parserRule": "unclassified.conservative_fallback",
+        "parserRule": "unclassified.ambiguous_or_negated",
         "parserVersion": "1.0.0",
         "sourceQuote": "Se valorará formación específica en el sector del tratamiento del agua."
       },
@@ -6574,7 +6574,7 @@
         "category": "unclassified",
         "id": "requirement:38e6d45182abb8a1414edadca2960a4ff8ed2b6a1e865dd0b52095c6b754b5f2",
         "normalizedValue": null,
-        "parserRule": "unclassified.conservative_fallback",
+        "parserRule": "unclassified.ambiguous_or_negated",
         "parserVersion": "1.0.0",
         "sourceQuote": "Se valorará nivel de inglés B2."
       }
@@ -6748,7 +6748,7 @@
         "category": "unclassified",
         "id": "requirement:5c5c20c3bc8397e8a438509ffd7e385b098bb31533b4e35cfff7bdfdbc42d115",
         "normalizedValue": null,
-        "parserRule": "unclassified.conservative_fallback",
+        "parserRule": "unclassified.ambiguous_or_negated",
         "parserVersion": "1.0.0",
         "sourceQuote": "Valorable experiencia en vehículo ligero con actitud de aprender camión."
       },
@@ -7167,7 +7167,7 @@
         "category": "unclassified",
         "id": "requirement:12e33c74d9cf728bdc1e380ffb9105f68067f18fe1e03e3af58d6b6591bc1c89",
         "normalizedValue": null,
-        "parserRule": "unclassified.conservative_fallback",
+        "parserRule": "unclassified.ambiguous_or_negated",
         "parserVersion": "1.0.0",
         "sourceQuote": "Formación técnica valorable (FP o similar)."
       },
@@ -7344,7 +7344,7 @@
         "category": "unclassified",
         "id": "requirement:02f8487c76bd51d6b8d7e57c7a1bca830dd62a72353ed10da7fa1c67bcaeff56",
         "normalizedValue": null,
-        "parserRule": "unclassified.conservative_fallback",
+        "parserRule": "unclassified.ambiguous_or_negated",
         "parserVersion": "1.0.0",
         "sourceQuote": "Se valorará curso PRL construcción y TPC (Tarjeta Profesional de la Construcción)."
       },
@@ -7352,7 +7352,7 @@
         "category": "unclassified",
         "id": "requirement:c6901e7566fdd7431a2221dd87380a1e302d5801edb5297fb4a7dcd1c9592a2d",
         "normalizedValue": null,
-        "parserRule": "unclassified.conservative_fallback",
+        "parserRule": "unclassified.ambiguous_or_negated",
         "parserVersion": "1.0.0",
         "sourceQuote": "Se valorará el manejo de maquinaria de obra civil."
       },
@@ -7600,7 +7600,7 @@
         "category": "unclassified",
         "id": "requirement:1f5f0a9ef75df815f1f6dcc8f4585186bd7943ade2a71e0fe53ae7cb9db5e17e",
         "normalizedValue": null,
-        "parserRule": "unclassified.conservative_fallback",
+        "parserRule": "unclassified.ambiguous_or_negated",
         "parserVersion": "1.0.0",
         "sourceQuote": "No se requiere titulación específica"
       },
@@ -7700,7 +7700,7 @@
         "category": "unclassified",
         "id": "requirement:a2e7939931bf8eb385b415e6e646b75e620fb7c3afee8e80c44f5e354ad908f9",
         "normalizedValue": null,
-        "parserRule": "unclassified.conservative_fallback",
+        "parserRule": "unclassified.ambiguous_or_negated",
         "parserVersion": "1.0.0",
         "sourceQuote": "Valorable el permiso de circulación."
       },
@@ -7855,7 +7855,7 @@
         "category": "unclassified",
         "id": "requirement:fede52d4f46b70c760fce1248d40e117518b66f01d13391d3081be0376dbbd0b",
         "normalizedValue": null,
-        "parserRule": "unclassified.conservative_fallback",
+        "parserRule": "unclassified.ambiguous_or_negated",
         "parserVersion": "1.0.0",
         "sourceQuote": "No se requiere ninguna titulación."
       },
@@ -8063,7 +8063,7 @@
         "category": "unclassified",
         "id": "requirement:624ea044bcc75a03c3b500b1317414166f350cda35ac9065c7a63a1089c3f463",
         "normalizedValue": null,
-        "parserRule": "unclassified.conservative_fallback",
+        "parserRule": "unclassified.ambiguous_or_negated",
         "parserVersion": "1.0.0",
         "sourceQuote": "Se valorará que haya trabajado con seguros dentales."
       }
@@ -8129,7 +8129,7 @@
         "category": "unclassified",
         "id": "requirement:4a78494b094140fb2fc6bcc146d6d32932b4c4b0f2ee1b664b780daac8430fdc",
         "normalizedValue": null,
-        "parserRule": "unclassified.conservative_fallback",
+        "parserRule": "unclassified.ambiguous_or_negated",
         "parserVersion": "1.0.0",
         "sourceQuote": "Valorable experiencia previa en reparto, transporte o distribución."
       },
@@ -8451,7 +8451,7 @@
         "category": "unclassified",
         "id": "requirement:0fd0680fa2f7fd1614a01fba4f21540f3331d37b044c87163ae682b4fe1becf4",
         "normalizedValue": null,
-        "parserRule": "unclassified.conservative_fallback",
+        "parserRule": "unclassified.ambiguous_or_negated",
         "parserVersion": "1.0.0",
         "sourceQuote": "Valorable formación en fitosanitarios, baja tensión, soldadura o cualquier otra relacionada con el puesto."
       },
@@ -8638,7 +8638,7 @@
         "category": "unclassified",
         "id": "requirement:86c415307c69259b82f337be191b498cf066a1a6863577975b609f11abd2a72b",
         "normalizedValue": null,
-        "parserRule": "unclassified.conservative_fallback",
+        "parserRule": "unclassified.ambiguous_or_negated",
         "parserVersion": "1.0.0",
         "sourceQuote": "Formación FP mantenimiento de vehículos. Permiso de conducir B. Permiso C y CAP recomendable. Experiencia 12 meses."
       },
@@ -8659,7 +8659,7 @@
         "category": "unclassified",
         "id": "requirement:0506936d722702dfa26af19a1849c0d357fe2196307cd5e19369029052266b60",
         "normalizedValue": null,
-        "parserRule": "unclassified.conservative_fallback",
+        "parserRule": "unclassified.ambiguous_or_negated",
         "parserVersion": "1.0.0",
         "sourceQuote": "Formación FP mantenimiento de vehículos. Permiso de conducir B. Permiso C y CAP recomendable. Experiencia 12 meses."
       },
@@ -8730,7 +8730,7 @@
         "category": "unclassified",
         "id": "requirement:36d8dccc10be69e954dfb95fea7ba7ef545214e4d6e2ef5b18213661b5c284a2",
         "normalizedValue": null,
-        "parserRule": "unclassified.conservative_fallback",
+        "parserRule": "unclassified.ambiguous_or_negated",
         "parserVersion": "1.0.0",
         "sourceQuote": "SE VALORARÁ: - CERTIFICADO DE LA FUNDACIÓN LABORAL DE LA CONSTRUCCION O DEL METAL DE 60 HORAS - FORMACIÓN EN PREVENCIÓN DE RIESGOS LABORALES"
       },
@@ -8783,7 +8783,7 @@
         "category": "unclassified",
         "id": "requirement:0ee6d13b9680afd50a9f2d2fe1ff50fc50668c754a5e1dfadf353afd937081b2",
         "normalizedValue": null,
-        "parserRule": "unclassified.conservative_fallback",
+        "parserRule": "unclassified.ambiguous_or_negated",
         "parserVersion": "1.0.0",
         "sourceQuote": "Valorable F.P. medio/superior en mantenimiento industrial, fontanería, electricidad, climatización o similares."
       },
@@ -8820,7 +8820,7 @@
         "category": "unclassified",
         "id": "requirement:f5cb2e2588ceb4aca4515d1ed03e0380a4a6a6c58b0cca81576bdb79ae5d6323",
         "normalizedValue": null,
-        "parserRule": "unclassified.conservative_fallback",
+        "parserRule": "unclassified.ambiguous_or_negated",
         "parserVersion": "1.0.0",
         "sourceQuote": "Valorable F.P. medio/superior de mantenimiento industrial, fontanería, electricidad, climatización y/o similares."
       },
@@ -9307,7 +9307,7 @@
         "category": "unclassified",
         "id": "requirement:800ef9461083168f029fa772c0a815232ff19303813c69232ecd9061a8040f18",
         "normalizedValue": null,
-        "parserRule": "unclassified.conservative_fallback",
+        "parserRule": "unclassified.ambiguous_or_negated",
         "parserVersion": "1.0.0",
         "sourceQuote": "Valorable experiencia en charcutería."
       }
@@ -9328,7 +9328,7 @@
         "category": "unclassified",
         "id": "requirement:0b649e9358801ea67c84afc31803d66563769fedc6ba0fd759a593df62550988",
         "normalizedValue": null,
-        "parserRule": "unclassified.conservative_fallback",
+        "parserRule": "unclassified.ambiguous_or_negated",
         "parserVersion": "1.0.0",
         "sourceQuote": "Se valorarán conocimientos de bricolaje o reformas."
       },
@@ -9336,7 +9336,7 @@
         "category": "unclassified",
         "id": "requirement:b6daae23d92ed861e67a8dceab77656674b4070d7ed4e61803cad32d24ee7b14",
         "normalizedValue": null,
-        "parserRule": "unclassified.conservative_fallback",
+        "parserRule": "unclassified.ambiguous_or_negated",
         "parserVersion": "1.0.0",
         "sourceQuote": "Valorable el manejo Word, Excel y PowerPoint."
       }

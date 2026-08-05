@@ -3,6 +3,7 @@ import { resolve } from "node:path";
 
 import { describe, expect, it } from "vitest";
 
+import { PublishedRequirementSchema } from "../../src/domain/requirements";
 import {
   PublishedRequirementsResourceSchema,
   extractPublishedRequirements,
@@ -36,6 +37,25 @@ function description(requirements: readonly string[]) {
 }
 
 describe("extractPublishedRequirements", () => {
+  it.each(fixture("ambiguous").requirements.slice(0, 20))(
+    "fails closed for guarded requirement prose: %s",
+    (sourceQuote) => {
+      expect(
+        extractPublishedRequirements(
+          "offer:guarded",
+          description([sourceQuote]),
+        ),
+      ).toEqual([
+        expect.objectContaining({
+          category: "unclassified",
+          normalizedValue: null,
+          parserRule: "unclassified.ambiguous_or_negated",
+          sourceQuote,
+        }),
+      ]);
+    },
+  );
+
   it("extracts qualifications and regulated credentials from exact quotes", () => {
     const input = fixture("qualification");
 
@@ -138,17 +158,20 @@ describe("extractPublishedRequirements", () => {
     expect(
       result.every((requirement) => requirement.category === "unclassified"),
     ).toBe(true);
+    expect(
+      result
+        .slice(0, 20)
+        .every(
+          (requirement) =>
+            requirement.parserRule === "unclassified.ambiguous_or_negated",
+        ),
+    ).toBe(true);
     expect(result.map((requirement) => requirement.sourceQuote)).toEqual(
       input.requirements,
     );
-    expect(result.map((requirement) => requirement.normalizedValue)).toEqual([
-      null,
-      null,
-      null,
-      null,
-      null,
-      null,
-    ]);
+    expect(
+      result.every((requirement) => requirement.normalizedValue === null),
+    ).toBe(true);
   });
 
   it("does not infer requirements from non-requirement sections or absence", () => {
@@ -226,5 +249,76 @@ describe("extractPublishedRequirements", () => {
         { offerId: "offer:1", requirements: [] },
       ]),
     ).toThrow(/offer id.*unique/i);
+  });
+
+  it.each([
+    {
+      id: `requirement:${"a".repeat(64)}`,
+      category: "experience",
+      normalizedValue: "12",
+      sourceQuote: "Experiencia mínima de 1 año.",
+      parserRule: "experience.years",
+      parserVersion: "1.0.0",
+    },
+    {
+      id: `requirement:${"b".repeat(64)}`,
+      category: "driving_license_or_vehicle",
+      normalizedValue: "vehicle_owned",
+      sourceQuote: "Permiso de conducir B.",
+      parserRule: "license.driving_b",
+      parserVersion: "1.0.0",
+    },
+    {
+      id: `requirement:${"c".repeat(64)}`,
+      category: "language",
+      normalizedValue: "inglés:B9",
+      sourceQuote: "Inglés B9.",
+      parserRule: "language.cefr",
+      parserVersion: "1.0.0",
+    },
+    {
+      id: `requirement:${"d".repeat(64)}`,
+      category: "unclassified",
+      normalizedValue: "B",
+      sourceQuote: "Texto ambiguo.",
+      parserRule: "unclassified.conservative_fallback",
+      parserVersion: "1.0.0",
+    },
+    {
+      id: `requirement:${"e".repeat(64)}`,
+      category: "qualification_or_specialization",
+      normalizedValue: "Grado en Derecho",
+      sourceQuote: "Grado en Derecho.",
+      parserRule: "license.driving_b",
+      parserVersion: "1.0.0",
+    },
+    {
+      id: `requirement:${"f".repeat(64)}`,
+      category: "certificate_or_regulated_license",
+      normalizedValue: "food_handler",
+      sourceQuote: "Colegiación vigente.",
+      parserRule: "certificate.professional_registration",
+      parserVersion: "1.0.0",
+    },
+    {
+      id: `requirement:${"0".repeat(64)}`,
+      category: "schedule_availability",
+      normalizedValue: "weekends",
+      sourceQuote: "Turnos de noche.",
+      parserRule: "schedule.night_shifts",
+      parserVersion: "1.0.0",
+    },
+    {
+      id: `requirement:${"1".repeat(64)}`,
+      category: "mobility_or_work_mode",
+      normalizedValue: "hybrid",
+      sourceQuote: "Trabajo remoto.",
+      parserRule: "work_mode.remote",
+      parserVersion: "1.0.0",
+    },
+  ])("rejects contradictory published requirement %#", (requirement) => {
+    expect(PublishedRequirementSchema.safeParse(requirement).success).toBe(
+      false,
+    );
   });
 });
