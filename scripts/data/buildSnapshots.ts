@@ -1144,7 +1144,11 @@ async function recoverInterruptedSnapshotQuarantines(
         ((currentPrograms) =>
           loadCuratedMappingsFromDisk(root, currentPrograms))
       )(programs);
-      await assertPublicSnapshotDistribution(root, curatedMappings);
+      await assertPublicSnapshotDistribution(
+        root,
+        curatedMappings,
+        await completedPilotSnapshotDistributionOptions(root, target),
+      );
       await safeRemoveTemporaryDirectory(root, temporaryRoot, directory);
       continue;
     }
@@ -1599,15 +1603,13 @@ async function commitManifestWithSnapshotQuarantine(
 ): Promise<void> {
   let quarantine: SnapshotQuarantine | undefined;
   let manifestCommitted = false;
+  const pilotSnapshotDistributionOptions =
+    await completedPilotSnapshotDistributionOptions(root, target);
   try {
-    const pilotSnapshotIds = await completedPilotSnapshotIds(root);
-    const historicalPilotDirectories = [...pilotSnapshotIds].map((snapshotId) =>
-      resolve(target, "snapshots", snapshotId),
-    );
     const invalidDirectories = await findRevokedPublicSnapshotDirectories(
       root,
       curatedMappings,
-      { historicalSnapshotDirectories: historicalPilotDirectories },
+      pilotSnapshotDistributionOptions,
     );
     const addressedDirectories =
       previous === undefined
@@ -1638,7 +1640,7 @@ async function commitManifestWithSnapshotQuarantine(
     await failureInjection?.afterRevokedSnapshotPrune?.();
     await assertPublicSnapshotDistribution(root, curatedMappings, {
       ignoredDirectories: activeInvalid,
-      historicalSnapshotDirectories: historicalPilotDirectories,
+      ...pilotSnapshotDistributionOptions,
     });
 
     await commitManifest(
@@ -1689,9 +1691,11 @@ async function commitManifestWithSnapshotQuarantine(
       );
     }
     await failureInjection?.afterActiveRevokedSnapshotQuarantine?.();
-    await assertPublicSnapshotDistribution(root, curatedMappings, {
-      historicalSnapshotDirectories: historicalPilotDirectories,
-    });
+    await assertPublicSnapshotDistribution(
+      root,
+      curatedMappings,
+      pilotSnapshotDistributionOptions,
+    );
     if (failureInjection?.crashAfterActiveSnapshotQuarantine !== undefined) {
       try {
         await failureInjection.crashAfterActiveSnapshotQuarantine();
@@ -1752,7 +1756,11 @@ async function commitManifestWithSnapshotQuarantine(
             manifestsMatch(active.manifest, manifest)
           ) {
             await returnSnapshotsToQuarantine(root, quarantine);
-            await assertPublicSnapshotDistribution(root, curatedMappings);
+            await assertPublicSnapshotDistribution(
+              root,
+              curatedMappings,
+              pilotSnapshotDistributionOptions,
+            );
             quarantine.committed = true;
             await writeSnapshotQuarantineJournal(root, quarantine);
           }
@@ -1904,6 +1912,17 @@ async function completedPilotSnapshotIds(root: string): Promise<Set<string>> {
         : [],
     ),
   );
+}
+
+async function completedPilotSnapshotDistributionOptions(
+  root: string,
+  target: string,
+): Promise<{ historicalSnapshotDirectories: string[] }> {
+  return {
+    historicalSnapshotDirectories: [...(await completedPilotSnapshotIds(root))]
+      .sort(compareCanonicalText)
+      .map((snapshotId) => resolve(target, "snapshots", snapshotId)),
+  };
 }
 
 async function safeRemoveImmutableSnapshotDirectory(

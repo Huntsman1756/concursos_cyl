@@ -56,6 +56,43 @@ async function readManifest(root: string) {
   );
 }
 
+async function pinCompletedPilotSnapshot(
+  root: string,
+  snapshotResourcePath: string,
+): Promise<void> {
+  await mkdir(join(root, "analysis"), { recursive: true });
+  await writeFile(
+    join(root, "analysis", "fp_coverage_pilot_results.json"),
+    JSON.stringify({
+      attempts: [
+        {
+          state: "completed",
+          snapshotCoverage: {
+            status: "verified",
+            snapshotId: snapshotResourcePath.split("/").at(-2),
+          },
+        },
+      ],
+    }),
+    "utf8",
+  );
+}
+
+async function addInactiveDraftSnapshot(
+  root: string,
+  sourceSnapshotDirectory: string,
+  snapshotId: string,
+): Promise<string> {
+  const directory = join(root, "public", "data", "v1", "snapshots", snapshotId);
+  await cp(sourceSnapshotDirectory, directory, { recursive: true });
+  await writeFile(
+    join(directory, "occupations.json"),
+    JSON.stringify(ambiguousOccupationMappings("draft").occupations),
+    "utf8",
+  );
+  return directory;
+}
+
 const fixedOptions = {
   now: () => new Date("2026-08-04T10:00:00.000Z"),
   fetchTrainingRecords: async () => [{ ...liveTrainingSourceRecord }],
@@ -2112,6 +2149,113 @@ describe("buildSnapshots", () => {
     await expect(
       access(assetPath(root, snapshotPath)),
     ).resolves.toBeUndefined();
+  });
+
+  it("recovers a candidate quarantine with a pinned approved subset after a later mapping addition", async () => {
+    const root = await temporaryRoot();
+    await buildSnapshots({ rootDirectory: root, ...fixedOptions });
+    const pinnedResourcePath = (await readManifest(root)).resourceSnapshots
+      .programs.resourcePath;
+    await pinCompletedPilotSnapshot(root, pinnedResourcePath);
+    const pinnedDirectory = dirname(assetPath(root, pinnedResourcePath));
+    await expect(
+      assertPublicSnapshotDistribution(
+        root,
+        ambiguousOccupationMappings("approved"),
+      ),
+    ).rejects.toThrow(/revoked mappings/i);
+    await expect(
+      assertPublicSnapshotDistribution(
+        root,
+        ambiguousOccupationMappings("approved"),
+        { historicalSnapshotDirectories: [pinnedDirectory] },
+      ),
+    ).resolves.toBeUndefined();
+    await addInactiveDraftSnapshot(
+      root,
+      pinnedDirectory,
+      "20260804090000000-aaaaaaaaaaaa",
+    );
+
+    await expect(
+      buildSnapshots({
+        rootDirectory: root,
+        ...fixedOptions,
+        now: () => new Date("2026-08-05T10:00:00.000Z"),
+        loadCuratedMappings: async () =>
+          ambiguousOccupationMappings("approved"),
+        failureInjection: {
+          crashAfterActiveSnapshotQuarantine: () => {
+            throw new Error("leave candidate quarantine for recovery");
+          },
+        } as SnapshotFailureInjection & {
+          crashAfterActiveSnapshotQuarantine: () => void;
+        },
+      }),
+    ).rejects.toThrow(/leave candidate quarantine for recovery/i);
+
+    await expect(
+      buildSnapshots({
+        rootDirectory: root,
+        ...fixedOptions,
+        loadCuratedMappings: async () =>
+          ambiguousOccupationMappings("approved"),
+        fetchTrainingRecords: async () => {
+          throw new Error("fetch fails after pinned recovery");
+        },
+      }),
+    ).rejects.toThrow(/fetch fails after pinned recovery/i);
+  });
+
+  it("preserves a candidate when rollback fallback validates a pinned approved subset", async () => {
+    const root = await temporaryRoot();
+    await buildSnapshots({ rootDirectory: root, ...fixedOptions });
+    const pinnedResourcePath = (await readManifest(root)).resourceSnapshots
+      .programs.resourcePath;
+    await pinCompletedPilotSnapshot(root, pinnedResourcePath);
+    const pinnedDirectory = dirname(assetPath(root, pinnedResourcePath));
+    await expect(
+      assertPublicSnapshotDistribution(
+        root,
+        ambiguousOccupationMappings("approved"),
+      ),
+    ).rejects.toThrow(/revoked mappings/i);
+    await expect(
+      assertPublicSnapshotDistribution(
+        root,
+        ambiguousOccupationMappings("approved"),
+        { historicalSnapshotDirectories: [pinnedDirectory] },
+      ),
+    ).resolves.toBeUndefined();
+    const invalidDirectory = await addInactiveDraftSnapshot(
+      root,
+      pinnedDirectory,
+      "20260804090000000-bbbbbbbbbbbb",
+    );
+
+    await expect(
+      buildSnapshots({
+        rootDirectory: root,
+        ...fixedOptions,
+        now: () => new Date("2026-08-05T10:00:00.000Z"),
+        loadCuratedMappings: async () =>
+          ambiguousOccupationMappings("approved"),
+        failureInjection: {
+          afterActiveRevokedSnapshotQuarantine: () => {
+            throw new Error("injected post-swap failure");
+          },
+          beforeRollbackManifestCommit: () => {
+            throw new Error("injected rollback commit failure");
+          },
+        } as SnapshotFailureInjection & {
+          beforeRollbackManifestCommit: () => void;
+        },
+      }),
+    ).rejects.toThrow(/rollback also failed/i);
+
+    await expect(access(invalidDirectory)).rejects.toMatchObject({
+      code: "ENOENT",
+    });
   });
 
   it("transactionally quarantines a self-consistent snapshot with stale requirement semantics", async () => {

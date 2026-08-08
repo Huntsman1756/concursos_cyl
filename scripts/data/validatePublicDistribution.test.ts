@@ -416,6 +416,157 @@ describe("public snapshot distribution", () => {
     ).resolves.toEqual([]);
   });
 
+  it("quarantines pinned snapshots that contain removed, non-approved, or changed approved identities", async () => {
+    const root = await mkdtemp(join(tmpdir(), "salida-cyl-distribution-"));
+    temporaryRoots.push(root);
+    const variants: Array<{
+      name: string;
+      current: ValidatedCuratedMappings;
+    }> = [
+      {
+        name: "removed occupation",
+        current: { ...approvedMappings, occupations: [] },
+      },
+      { name: "removed alias", current: { ...approvedMappings, aliases: [] } },
+      {
+        name: "removed training link",
+        current: { ...approvedMappings, links: [] },
+      },
+      {
+        name: "draft occupation",
+        current: {
+          ...approvedMappings,
+          occupations: approvedMappings.occupations.map((occupation) => ({
+            ...occupation,
+            reviewStatus: "draft" as const,
+            reviewNote,
+          })),
+        },
+      },
+      {
+        name: "draft alias",
+        current: {
+          ...approvedMappings,
+          aliases: approvedMappings.aliases.map((alias) => ({
+            ...alias,
+            reviewStatus: "draft" as const,
+            reviewNote,
+          })),
+        },
+      },
+      {
+        name: "draft training link",
+        current: {
+          ...approvedMappings,
+          links: approvedMappings.links.map((link) => ({
+            ...link,
+            reviewStatus: "draft" as const,
+            reviewNote,
+          })),
+        },
+      },
+      {
+        name: "rejected occupation",
+        current: {
+          ...approvedMappings,
+          occupations: approvedMappings.occupations.map((occupation) => ({
+            ...occupation,
+            reviewStatus: "rejected" as const,
+          })),
+        },
+      },
+      {
+        name: "rejected alias",
+        current: {
+          ...approvedMappings,
+          aliases: approvedMappings.aliases.map((alias) => ({
+            ...alias,
+            reviewStatus: "rejected" as const,
+          })),
+        },
+      },
+      {
+        name: "rejected training link",
+        current: {
+          ...approvedMappings,
+          links: approvedMappings.links.map((link) => ({
+            ...link,
+            reviewStatus: "rejected" as const,
+          })),
+        },
+      },
+      {
+        name: "mutated occupation payload",
+        current: {
+          ...approvedMappings,
+          occupations: approvedMappings.occupations.map((occupation) => ({
+            ...occupation,
+            preferredLabel: "Etiqueta actualizada",
+          })),
+        },
+      },
+      {
+        name: "mutated alias payload",
+        current: {
+          ...approvedMappings,
+          aliases: approvedMappings.aliases.map((alias) => ({
+            ...alias,
+            alias: "auxiliar de oficina",
+          })),
+        },
+      },
+      {
+        name: "mutated training link payload",
+        current: {
+          ...approvedMappings,
+          links: approvedMappings.links.map((link) => ({
+            ...link,
+            sourceQuote: "Auxiliar administrativo con evidencia actualizada.",
+          })),
+        },
+      },
+    ];
+
+    for (const [index, variant] of variants.entries()) {
+      const historical = await snapshot(
+        root,
+        `202608${String(index + 1).padStart(2, "0")}000000000-${String(index + 1).repeat(12)}`,
+      );
+      await writeJson(
+        join(historical, "occupations.json"),
+        approvedMappings.occupations,
+      );
+      await writeJson(
+        join(historical, "occupation-aliases.json"),
+        approvedMappings.aliases,
+      );
+      await writeJson(
+        join(historical, "training-occupation-links.json"),
+        approvedMappings.links,
+      );
+      await writeJson(join(historical, "programs.json"), [
+        administrativeProgram,
+      ]);
+      await writeJson(
+        join(historical, "mapping-coverage.json"),
+        buildMappingCoverage([administrativeProgram], approvedMappings.links),
+      );
+
+      await expect(
+        findRevokedPublicSnapshotDirectories(root, variant.current, {
+          historicalSnapshotDirectories: [historical],
+        }),
+        variant.name,
+      ).resolves.toContain(resolve(historical));
+      await expect(
+        assertPublicSnapshotDistribution(root, variant.current, {
+          historicalSnapshotDirectories: [historical],
+        }),
+        variant.name,
+      ).rejects.toThrow(/revoked mappings/i);
+    }
+  });
+
   it("rejects historical alias and link rows omitted from a partial curated set", async () => {
     const root = await mkdtemp(join(tmpdir(), "salida-cyl-distribution-"));
     temporaryRoots.push(root);
