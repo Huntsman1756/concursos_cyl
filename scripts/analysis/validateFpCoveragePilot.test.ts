@@ -131,6 +131,15 @@ function clone<T>(value: T): T {
   return JSON.parse(JSON.stringify(value)) as T;
 }
 
+async function checkedInResults(): Promise<FpCoveragePilotResults> {
+  return JSON.parse(
+    await readFile(
+      resolve(process.cwd(), "analysis", "fp_coverage_pilot_results.json"),
+      "utf8",
+    ),
+  ) as FpCoveragePilotResults;
+}
+
 function results(): FpCoveragePilotResults {
   return {
     schemaVersion: "1.0.0",
@@ -584,6 +593,51 @@ describe("validateFpCoveragePilotResults", () => {
         (review) => review.officialOutputLabel,
       ),
     ).toEqual(EOC_OFFICIAL_OUTPUT_LABELS);
+  });
+
+  it("rejects an accepted EOC output without independent CNO boundary evidence", async () => {
+    const candidate = await checkedInResults();
+    const eocReview = candidate.attempts
+      .find((attempt) => attempt.programKey === "EOC01M")!
+      .professionalOutputReviews!.find(
+        (review) => review.disposition === "accepted",
+      )! as unknown as Record<string, unknown>;
+    delete eocReview.classificationEvidence;
+
+    expect(() => validate(candidate)).toThrow(/classification evidence/i);
+  });
+
+  it("rejects EOC top-level dispositions that contradict output-review acceptance", async () => {
+    const candidate = await checkedInResults();
+    const eocAttempt = candidate.attempts.find(
+      (attempt) => attempt.programKey === "EOC01M",
+    )!;
+    const rejectedReview = eocAttempt.professionalOutputReviews!.find(
+      (review) =>
+        review.candidateOccupationIds.includes("occupation:cno11:3202"),
+    )!;
+    rejectedReview.disposition = "accepted";
+    rejectedReview.acceptedOccupationIds = ["occupation:cno11:3202"];
+    rejectedReview.reasonCode = "official_programme_output";
+    rejectedReview.classificationEvidence =
+      eocAttempt.professionalOutputReviews!.find(
+        (review) => review.classificationEvidence !== undefined,
+      )!.classificationEvidence;
+
+    expect(() => validate(candidate)).toThrow(/rejected EOC01M relationship/i);
+  });
+
+  it("rejects synthetic EOC BOE output quotes", async () => {
+    const candidate = await checkedInResults();
+    const eocReview = candidate.attempts
+      .find((attempt) => attempt.programKey === "EOC01M")!
+      .professionalOutputReviews!.find(
+        (review) => review.officialOutputLabel === "Albañil.",
+      )!;
+    eocReview.sourceQuote =
+      "Las ocupaciones y puestos de trabajo más relevantes son los siguientes: Albañil.";
+
+    expect(() => validate(candidate)).toThrow(/verbatim BOE output/i);
   });
 
   it("counts EOC01M marginal offers from the accepted relationship union below the family signal", () => {

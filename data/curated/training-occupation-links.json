@@ -147,7 +147,7 @@
     "relationshipType": "official_output",
     "reviewStatus": "approved",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2011/11/04/1575",
-    "sourceQuote": "Las ocupaciones y puestos de trabajo más relevantes son los siguientes: Encofrador.",
+    "sourceQuote": "– Encofrador.\n\n– Encofrador de edificación.",
     "reviewedAt": "2026-08-08",
     "mappingVersion": "1.0.0"
   },
@@ -157,7 +157,7 @@
     "relationshipType": "official_output",
     "reviewStatus": "approved",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2011/11/04/1575",
-    "sourceQuote": "Las ocupaciones y puestos de trabajo más relevantes son los siguientes: Albañil.",
+    "sourceQuote": "– Albañil.\n\n– Colocador de ladrillo caravista.",
     "reviewedAt": "2026-08-08",
     "mappingVersion": "1.0.0"
   },
@@ -167,7 +167,7 @@
     "relationshipType": "official_output",
     "reviewStatus": "approved",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2011/11/04/1575",
-    "sourceQuote": "Las ocupaciones y puestos de trabajo más relevantes son los siguientes: Instalador de sistemas de impermeabilización en edificios y obra civil.",
+    "sourceQuote": "– Instalador de sistemas de impermeabilización en edificios y obra civil.",
     "reviewedAt": "2026-08-08",
     "mappingVersion": "1.0.0"
   },
@@ -177,7 +177,7 @@
     "relationshipType": "official_output",
     "reviewStatus": "approved",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2011/11/04/1575",
-    "sourceQuote": "Las ocupaciones y puestos de trabajo más relevantes son los siguientes: Alicatador– solador.",
+    "sourceQuote": "– Alicatador– solador.",
     "reviewedAt": "2026-08-08",
     "mappingVersion": "1.0.0"
   },
@@ -187,7 +187,7 @@
     "relationshipType": "official_output",
     "reviewStatus": "approved",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2011/11/04/1575",
-    "sourceQuote": "Las ocupaciones y puestos de trabajo más relevantes son los siguientes: Tejador.",
+    "sourceQuote": "– Tejador.\n\n– Montador de teja.",
     "reviewedAt": "2026-08-08",
     "mappingVersion": "1.0.0"
   }

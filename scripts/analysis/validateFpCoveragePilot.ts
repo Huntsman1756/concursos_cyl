@@ -115,6 +115,8 @@ const ProfessionalOutputReviewSchema = z
     ]),
     groupingExplanation: z.string().trim().min(20).max(500),
     ...EvidenceSchema,
+    sourceQuote: z.string().trim().min(3).max(280),
+    classificationEvidence: z.object(EvidenceSchema).strict().optional(),
   })
   .strict()
   .superRefine((review, context) => {
@@ -547,18 +549,53 @@ function assertEoc01mProfessionalOutputReviews(attempt: PilotAttempt): void {
       new URL(review.sourceUrl).hostname.endsWith("boe.es"),
       "EOC01M professional-output reviews must cite the BOE output source.",
     );
+    assert(
+      review.sourceQuote === `– ${review.officialOutputLabel}`,
+      "EOC01M professional-output reviews must preserve the verbatim BOE output bullet rather than a synthetic or concatenated quote.",
+    );
+    if (review.disposition === "accepted") {
+      const classificationEvidence = review.classificationEvidence;
+      assert(
+        classificationEvidence !== undefined,
+        "Accepted EOC01M output reviews require independent official classification evidence.",
+      );
+      assertAuditableEvidence(classificationEvidence, attempt.programKey);
+      assert(
+        ["ine.es", "sepe.es"].some(
+          (domain) =>
+            new URL(classificationEvidence.sourceUrl).hostname === domain ||
+            new URL(classificationEvidence.sourceUrl).hostname.endsWith(
+              `.${domain}`,
+            ),
+        ),
+        "Accepted EOC01M output reviews require INE or SEPE classification evidence.",
+      );
+    }
   }
 
-  const reviewedCandidates = new Set(
-    reviews.flatMap((review) => review.candidateOccupationIds),
+  const acceptedReviewOccupationIds = new Set(
+    reviews.flatMap((review) =>
+      review.disposition === "accepted"
+        ? (review.acceptedOccupationIds ?? [])
+        : [],
+    ),
   );
-  for (const relationship of [
-    ...attempt.acceptedRelationships,
-    ...attempt.rejectedRelationships,
-  ]) {
+  const rejectedReviewOccupationIds = new Set(
+    reviews.flatMap((review) =>
+      review.disposition === "rejected" ? review.candidateOccupationIds : [],
+    ),
+  );
+  for (const relationship of attempt.acceptedRelationships) {
     assert(
-      reviewedCandidates.has(relationship.occupationId),
-      `EOC01M disposition ${relationship.occupationId} must be tied to an individual professional-output review.`,
+      acceptedReviewOccupationIds.has(relationship.occupationId),
+      `Accepted EOC01M relationship ${relationship.occupationId} must be accepted by an individual professional-output review.`,
+    );
+  }
+  for (const relationship of attempt.rejectedRelationships) {
+    assert(
+      rejectedReviewOccupationIds.has(relationship.occupationId) &&
+        !acceptedReviewOccupationIds.has(relationship.occupationId),
+      `Rejected EOC01M relationship ${relationship.occupationId} must be rejected by an individual professional-output review and must not be accepted elsewhere.`,
     );
   }
 }
