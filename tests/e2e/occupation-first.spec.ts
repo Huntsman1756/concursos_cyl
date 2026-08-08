@@ -15,7 +15,7 @@ test("the live occupation journey confirms a reviewed everyday alias and reaches
   await expect(option).toBeVisible();
 
   if (testInfo.project.name === "chromium-mobile") {
-    await option.click();
+    await option.tap();
   } else {
     await combobox.press("ArrowDown");
     await expect(combobox).toHaveAttribute("aria-activedescendant", /.+/u);
@@ -43,20 +43,6 @@ test("the live occupation journey confirms a reviewed everyday alias and reaches
   ).toBeVisible();
   await expect(page.getByText("Modalidades", { exact: true })).toHaveCount(2);
 
-  await page
-    .getByRole("link", { name: "Ver dónde estudiarlo" })
-    .first()
-    .click();
-  await expect(page).toHaveURL(/\/formacion\/IFC03S$/u);
-  const centers = page.getByRole("list", {
-    name: "Centros que imparten el ciclo",
-  });
-  const firstCenter = centers.getByRole("listitem").first();
-  await expect(firstCenter).toBeVisible();
-  await expect(
-    firstCenter.getByText(/Presencial|A distancia|Mixta/iu),
-  ).toBeVisible();
-
   const overflow = await page.evaluate(
     () =>
       document.documentElement.scrollWidth -
@@ -65,6 +51,21 @@ test("the live occupation journey confirms a reviewed everyday alias and reaches
   expect(overflow).toBeLessThanOrEqual(1);
   const axe = await new AxeBuilder({ page }).analyze();
   expect(axe.violations, JSON.stringify(axe.violations, null, 2)).toEqual([]);
+
+  const resultsUrl = page.url();
+  for (const programKey of ["IFC03S", "IFC03SD"]) {
+    await page.goto(resultsUrl);
+    await page.locator(`a[href="/formacion/${programKey}"]`).click();
+    await expect(page).toHaveURL(new RegExp(`/formacion/${programKey}$`, "u"));
+    const centers = page.getByRole("list", {
+      name: "Centros que imparten el ciclo",
+    });
+    const firstCenter = centers.getByRole("listitem").first();
+    await expect(firstCenter).toBeVisible();
+    await expect(
+      firstCenter.getByText(/Presencial|A distancia|Mixta/iu),
+    ).toBeVisible();
+  }
 });
 
 test("occupation search and an unknown route make absence explicit", async ({

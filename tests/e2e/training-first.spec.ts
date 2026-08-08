@@ -1,9 +1,18 @@
 import AxeBuilder from "@axe-core/playwright";
-import { expect, test } from "@playwright/test";
+import { expect, test, type Locator, type Page } from "@playwright/test";
 import {
   installDecisionFlowFixture,
   syntheticQuotes,
 } from "../fixtures/decisionFlowFixture";
+
+async function tabTo(page: Page, target: Locator): Promise<void> {
+  for (let steps = 0; steps < 80; steps += 1) {
+    await page.keyboard.press("Tab");
+    if (await target.evaluate((node) => document.activeElement === node))
+      return;
+  }
+  throw new Error("Expected the control to be reachable in page tab order.");
+}
 
 test("live DAW results name the dated zero-match snapshot without claiming there are no jobs", async ({
   page,
@@ -72,25 +81,30 @@ test("the intercepted full DAW card makes a declared gap, action, filter, and ev
   ).toBeVisible();
 
   const mappingDisclosure = card.getByText("Ver cita exacta").first();
-  await mappingDisclosure.focus();
+  await tabTo(page, mappingDisclosure);
   await expect(mappingDisclosure).toBeFocused();
   await page.keyboard.press("Enter");
   await expect(
     card.getByText("Desarrollador de aplicaciones en entornos Web."),
   ).toBeVisible();
 
+  const firstExperienceAnswer = card.getByRole("radio", {
+    name: `Lo tengo: ${syntheticQuotes.experienceQuote}`,
+    exact: true,
+  });
+  await tabTo(page, firstExperienceAnswer);
+  await expect(firstExperienceAnswer).toBeFocused();
+  await page.keyboard.press("ArrowRight");
   const missingExperience = card.getByRole("radio", {
     name: `No lo tengo: ${syntheticQuotes.experienceQuote}`,
   });
-  await missingExperience.focus();
   await expect(missingExperience).toBeFocused();
-  await page.keyboard.press("Space");
   await expect(card.getByText(/^Brecha declarada:/u)).toBeVisible();
 
   const exactAbsenceAction = card.getByRole("button", {
     name: "Ver ofertas relacionadas donde no se publica este requisito",
   });
-  await exactAbsenceAction.focus();
+  await tabTo(page, exactAbsenceAction);
   await expect(exactAbsenceAction).toBeFocused();
   await page.keyboard.press("Enter");
   await expect(

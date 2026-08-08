@@ -16,6 +16,10 @@ const snapshot = {
   qualityStatus: "passed",
 } as const;
 
+function resourceSnapshot(recordCount: number) {
+  return { ...snapshot, recordCount };
+}
+
 const program = {
   programKey: "IFC03S",
   programTitle: "Desarrollo de Aplicaciones Web",
@@ -181,27 +185,36 @@ const manifest = {
   generatedAt: snapshot.snapshotFetchedAt,
   qualityStatus: "passed",
   resourceSnapshots: {
-    programs: { ...snapshot, resourcePath: snapshotPath("programs.json") },
-    centers: { ...snapshot, resourcePath: snapshotPath("centers.json") },
+    programs: {
+      ...resourceSnapshot(2),
+      resourcePath: snapshotPath("programs.json"),
+    },
+    centers: {
+      ...resourceSnapshot(1),
+      resourcePath: snapshotPath("centers.json"),
+    },
     trainingOfferings: {
-      ...snapshot,
+      ...resourceSnapshot(2),
       resourcePath: snapshotPath("training-offerings.json"),
     },
-    jobOffers: { ...snapshot, resourcePath: snapshotPath("job-offers.json") },
+    jobOffers: {
+      ...resourceSnapshot(2),
+      resourcePath: snapshotPath("job-offers.json"),
+    },
     occupations: {
-      ...snapshot,
+      ...resourceSnapshot(1),
       resourcePath: snapshotPath("occupations.json"),
     },
     occupationAliases: {
-      ...snapshot,
+      ...resourceSnapshot(1),
       resourcePath: snapshotPath("occupation-aliases.json"),
     },
     trainingOccupationLinks: {
-      ...snapshot,
+      ...resourceSnapshot(2),
       resourcePath: snapshotPath("training-occupation-links.json"),
     },
     publishedRequirements: {
-      ...snapshot,
+      ...resourceSnapshot(1),
       resourcePath: snapshotPath("published-requirements.json"),
     },
   },

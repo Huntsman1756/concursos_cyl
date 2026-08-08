@@ -1,4 +1,4 @@
-import { expect, test } from "@playwright/test";
+import { expect, test, type Page } from "@playwright/test";
 import {
   installDecisionFlowFixture,
   syntheticQuotes,
@@ -8,17 +8,101 @@ import {
 
 declare global {
   interface Window {
-    __decisionPrivacyEvents?: string[];
+    recordDecisionPrivacyEvent?: (event: string) => Promise<void>;
+  }
+}
+
+async function expectPrivateLocation(page: Page): Promise<void> {
+  const rawUrl = page.url();
+  const decodedRawUrl = decodeURIComponent(rawUrl);
+  const location = new URL(rawUrl);
+  const decodedLocation = decodeURIComponent(
+    `${location.pathname}${location.search}${location.hash}`,
+  );
+
+  expect(location.pathname).toBe("/desde-fp/IFC03S");
+  expect(location.search).toBe("");
+  expect(location.hash).toBe("");
+  expect(decodedRawUrl).not.toContain(syntheticRequirementId);
+  for (const answerValue of ["has", "lacks", "unsure"]) {
+    expect(decodedRawUrl).not.toContain(answerValue);
+  }
+  for (const normalizedValue of syntheticRequirementValues) {
+    expect(decodedLocation).not.toContain(normalizedValue);
+  }
+}
+
+async function expectEmptyBrowserPersistence(page: Page): Promise<void> {
+  const persistence = await page.evaluate(async () => {
+    const cookieStore = (
+      window as Window & {
+        cookieStore?: { getAll?: () => Promise<unknown[]> };
+      }
+    ).cookieStore;
+    return {
+      localStorageKeys: Object.keys(localStorage),
+      sessionStorageKeys: Object.keys(sessionStorage),
+      cookie: document.cookie,
+      cookieStoreCount:
+        typeof cookieStore?.getAll === "function"
+          ? (await cookieStore.getAll()).length
+          : null,
+    };
+  });
+
+  expect(persistence.localStorageKeys).toEqual([]);
+  expect(persistence.sessionStorageKeys).toEqual([]);
+  expect(persistence.cookie).toBe("");
+  if (persistence.cookieStoreCount !== null) {
+    expect(persistence.cookieStoreCount).toBe(0);
+  }
+}
+
+async function expectNoPrivacyEvents(
+  page: Page,
+  privacyEvents: string[],
+): Promise<void> {
+  const barrier = "privacy-event-barrier";
+  await page.evaluate(async (event) => {
+    await window.recordDecisionPrivacyEvent?.(event);
+  }, barrier);
+  expect(privacyEvents).toEqual([barrier]);
+  privacyEvents.splice(0);
+}
+
+function expectNoSerializedRequestState(url: string): void {
+  const location = new URL(url);
+  const decodedPath = decodeURIComponent(location.pathname);
+  const decodedQueryAndHash = decodeURIComponent(
+    `${location.search}${location.hash}`,
+  );
+
+  expect(decodedPath).not.toContain(syntheticRequirementId);
+  expect(decodedQueryAndHash).not.toContain(syntheticRequirementId);
+  for (const answerValue of ["has", "lacks", "unsure"]) {
+    expect(decodedQueryAndHash).not.toContain(answerValue);
+    expect(decodedPath.split("/")).not.toContain(answerValue);
+  }
+  for (const normalizedValue of syntheticRequirementValues) {
+    expect(decodedPath).not.toContain(normalizedValue);
+    expect(decodedQueryAndHash).not.toContain(normalizedValue);
   }
 }
 
 test("answer, exact-absence filter, and checklist remain ephemeral and never leave the browser", async ({
   page,
 }) => {
+  const privacyEvents: string[] = [];
+  await page.exposeBinding(
+    "recordDecisionPrivacyEvent",
+    (_source, event: string) => {
+      privacyEvents.push(event);
+    },
+  );
   await page.addInitScript(() => {
-    window.__decisionPrivacyEvents = [];
-    const record = (event: string) =>
-      window.__decisionPrivacyEvents?.push(event);
+    const record = (event: string) => {
+      void window.recordDecisionPrivacyEvent?.(event);
+    };
     for (const method of ["setItem", "removeItem", "clear"] as const) {
       const original = Storage.prototype[method];
       Object.defineProperty(Storage.prototype, method, {
@@ -38,8 +122,24 @@ test("answer, exact-absence filter, and checklist remain ephemeral and never lea
         configurable: true,
         get: cookie.get,
         set(value: string) {
-          record("cookie");
+          record("cookie:document");
           cookie.set?.call(this, value);
+        },
+      });
+    }
+    const cookieStore = (
+      window as Window & {
+        cookieStore?: Record<string, unknown>;
+      }
+    ).cookieStore;
+    for (const method of ["set", "delete"] as const) {
+      const original = cookieStore?.[method];
+      if (typeof original !== "function" || cookieStore === undefined) continue;
+      Object.defineProperty(cookieStore, method, {
+        configurable: true,
+        value: function (...args: unknown[]) {
+          record(`cookie-store:${method}`);
+          return original.apply(this, args as never);
         },
       });
     }
@@ -51,6 +151,17 @@ test("answer, exact-absence filter, and checklist remain ephemeral and never lea
         return beacon(url, data);
       },
     });
+    for (const method of ["pushState", "replaceState"] as const) {
+      const original = history[method];
+      Object.defineProperty(history, method, {
+        configurable: true,
+        value: function (...args: unknown[]) {
+          record(`history:${method}`);
+          return original.apply(this, args as never);
+        },
+      });
+    }
+    window.addEventListener("hashchange", () => record("history:hashchange"));
   });
   await installDecisionFlowFixture(page);
   await page.goto("/desde-fp/IFC03S");
@@ -59,31 +170,34 @@ test("answer, exact-absence filter, and checklist remain ephemeral and never lea
   });
   await expect(card).toBeVisible();
 
-  await page.evaluate(() => {
-    window.__decisionPrivacyEvents = [];
-  });
+  privacyEvents.splice(0);
   const interactionRequests: { method: string; url: string }[] = [];
-  page.on("request", (request) => {
+  const recordRequest = (request: { method(): string; url(): string }) => {
     interactionRequests.push({ method: request.method(), url: request.url() });
-  });
+  };
+  page.on("request", recordRequest);
 
   await card
     .getByRole("radio", {
       name: `No lo tengo: ${syntheticQuotes.experienceQuote}`,
     })
     .click();
+  await expectPrivateLocation(page);
   await card
     .getByRole("button", {
       name: "Ver ofertas relacionadas donde no se publica este requisito",
     })
     .click();
+  await expectPrivateLocation(page);
   await page.getByRole("button", { name: "Quitar filtro" }).click();
+  await expectPrivateLocation(page);
 
   await card
     .getByRole("radio", {
       name: `No lo tengo: ${syntheticQuotes.certificateQuote}`,
     })
     .click();
+  await expectPrivateLocation(page);
   const checklistButton = card.getByRole("button", {
     name: "Añadir a comprobaciones de esta sesión",
   });
@@ -91,19 +205,19 @@ test("answer, exact-absence filter, and checklist remain ephemeral and never lea
   await expect(
     card.getByRole("complementary", { name: "Comprobaciones de esta sesión" }),
   ).toBeVisible();
+  await expectPrivateLocation(page);
   await card.getByRole("button", { name: "Quitar de comprobaciones" }).click();
   await expect(
     card.getByRole("complementary", { name: "Comprobaciones de esta sesión" }),
   ).toHaveCount(0);
+  await expectPrivateLocation(page);
   await checklistButton.click();
   await expect(
     card.getByRole("complementary", { name: "Comprobaciones de esta sesión" }),
   ).toBeVisible();
+  await expectPrivateLocation(page);
 
-  const events = await page.evaluate(
-    () => window.__decisionPrivacyEvents ?? [],
-  );
-  expect(events).toEqual([]);
+  await expectNoPrivacyEvents(page, privacyEvents);
   expect(interactionRequests).toEqual([]);
 
   await page.reload();
@@ -117,31 +231,12 @@ test("answer, exact-absence filter, and checklist remain ephemeral and never lea
   await expect(
     card.getByRole("complementary", { name: "Comprobaciones de esta sesión" }),
   ).toHaveCount(0);
-
-  expect(interactionRequests.every(({ method }) => method === "GET")).toBe(
-    true,
-  );
+  await expectPrivateLocation(page);
+  await expectEmptyBrowserPersistence(page);
+  await expectNoPrivacyEvents(page, privacyEvents);
   expect(interactionRequests.length).toBeGreaterThan(0);
-  for (const { url } of interactionRequests) {
-    const requestLocation = new URL(url);
-    const serializedRequestState = [
-      ...requestLocation.pathname
-        .split("/")
-        .filter(Boolean)
-        .map(decodeURIComponent),
-      ...requestLocation.searchParams.values(),
-      decodeURIComponent(requestLocation.hash.slice(1)),
-    ];
-    expect(serializedRequestState).not.toContain(syntheticRequirementId);
-    for (const answerValue of ["has", "lacks", "unsure"]) {
-      expect(serializedRequestState).not.toContain(answerValue);
-    }
-    for (const normalizedValue of syntheticRequirementValues) {
-      expect(serializedRequestState).not.toContain(normalizedValue);
-    }
+  for (const { method, url } of interactionRequests) {
+    expect(method).toBe("GET");
+    expectNoSerializedRequestState(url);
   }
-  const location = await page.evaluate(
-    () => `${location.pathname}${location.search}${location.hash}`,
-  );
-  expect(location).toBe("/desde-fp/IFC03S");
 });
