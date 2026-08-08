@@ -1,4 +1,5 @@
 import { readFile } from "node:fs/promises";
+import AxeBuilder from "@axe-core/playwright";
 import { expect, test } from "@playwright/test";
 
 const results = JSON.parse(
@@ -29,5 +30,14 @@ for (const program of results.programs) {
         ),
       ).toBeVisible();
     }
+
+    const overflow = await page.evaluate(
+      () =>
+        document.documentElement.scrollWidth -
+        document.documentElement.clientWidth,
+    );
+    expect(overflow).toBeLessThanOrEqual(1);
+    const axe = await new AxeBuilder({ page }).analyze();
+    expect(axe.violations, JSON.stringify(axe.violations, null, 2)).toEqual([]);
   });
 }
