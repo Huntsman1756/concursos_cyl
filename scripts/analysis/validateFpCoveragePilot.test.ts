@@ -372,10 +372,10 @@ describe("validateFpCoveragePilotResults", () => {
     );
 
     const nonLatestCommit = clone(candidate);
-    nonLatestCommit.aggregation!.timingProvenance[4]!.reviewedCommit =
-      "ec08a6d772eed3d883aa72379f29c1061163d87f";
-    nonLatestCommit.aggregation!.timingProvenance[4]!.reviewedCommitAt =
-      "2026-08-08T19:58:31.000Z";
+    nonLatestCommit.aggregation!.timingProvenance[0]!.reviewedCommit =
+      "2b6557cbe8e7e050dab2e12c3efbc153d4d4f1ad";
+    nonLatestCommit.aggregation!.timingProvenance[0]!.reviewedCommitAt =
+      "2026-08-08T17:26:15.000Z";
     expect(() => validate(nonLatestCommit)).toThrow(/latest first-parent/i);
   });
 

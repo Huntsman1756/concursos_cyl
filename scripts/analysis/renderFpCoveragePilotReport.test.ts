@@ -18,11 +18,19 @@ describe("renderFpCoveragePilotReport", () => {
   it("rejects terminal pilot states that disagree with public coverage", async () => {
     const results = await validateFpCoveragePilotResultsFile();
     const completedUnreviewed = structuredClone(coverage) as MappingCoverage[];
-    completedUnreviewed.find((row) => row.scope === "program" && row.programKey === "SAN21")!.coverageStatus = "uncovered";
-    expect(() => renderFpCoveragePilotReport(results, completedUnreviewed)).toThrow(/terminal pilot states/i);
+    completedUnreviewed.find(
+      (row) => row.scope === "program" && row.programKey === "SAN21",
+    )!.coverageStatus = "uncovered";
+    expect(() =>
+      renderFpCoveragePilotReport(results, completedUnreviewed),
+    ).toThrow(/terminal pilot states/i);
     const deferredReviewed = structuredClone(coverage) as MappingCoverage[];
-    deferredReviewed.find((row) => row.scope === "program" && row.programKey === "COM01M")!.coverageStatus = "reviewed";
-    expect(() => renderFpCoveragePilotReport(results, deferredReviewed)).toThrow(/terminal pilot states|Public coverage/i);
+    deferredReviewed.find(
+      (row) => row.scope === "program" && row.programKey === "COM01M",
+    )!.coverageStatus = "reviewed";
+    expect(() =>
+      renderFpCoveragePilotReport(results, deferredReviewed),
+    ).toThrow(/terminal pilot states|Public coverage/i);
   });
   it("renders validated terminal counts, separate time measures, and the zero-match bottleneck", async () => {
     const results = await validateFpCoveragePilotResultsFile();

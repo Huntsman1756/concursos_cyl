@@ -15,9 +15,14 @@ import {
 
 type ProgramCoverage = Extract<MappingCoverage, { scope: "program" }>;
 
-export function assertRenderedPilotReport(actual: string, expected: string): void {
+export function assertRenderedPilotReport(
+  actual: string,
+  expected: string,
+): void {
   if (actual.trim() !== expected.trim()) {
-    throw new Error("FP coverage pilot report is not the validated rendered output.");
+    throw new Error(
+      "FP coverage pilot report is not the validated rendered output.",
+    );
   }
 }
 
