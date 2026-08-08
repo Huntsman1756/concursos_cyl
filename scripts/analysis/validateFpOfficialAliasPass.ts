@@ -36,7 +36,10 @@ import {
   PublishedRequirementsResourceSchema,
   type OfferPublishedRequirements,
 } from "../../src/domain/requirements";
-import type { FpCoveragePilotResults } from "./validateFpCoveragePilot";
+import {
+  validateFpCoveragePilotResultsFile,
+  type FpCoveragePilotResults,
+} from "./validateFpCoveragePilot";
 
 const BASELINE_SNAPSHOT_ID = "20260808215403108-add4c517860c";
 const AUDIT_DIRECTORY = ["analysis", "fp_official_alias_pass"] as const;
@@ -51,6 +54,29 @@ export interface AliasPassValidationContext {
   links: readonly TrainingOccupationLink[];
   offers: readonly JobOffer[];
   publishedRequirements: readonly OfferPublishedRequirements[];
+}
+
+type AcceptedAliasReview = {
+  alias: string;
+  occupationId: string;
+  disposition: "accepted";
+  reasonCode: "literal_ine_classification" | "literal_sepe_classification";
+  sourceUrl: string;
+  sourceQuote: string;
+  acceptedProgramOutputLabel: string;
+  acceptedProgramOutputSourceUrl: string;
+  acceptedProgramOutputSourceQuote: string;
+  acceptedProgramOutputRelevance: {
+    relationship: "exact_term" | "singular_plural_variant";
+    outputTerm: string;
+    aliasTerm: string;
+  };
+  reviewedAt: string;
+};
+
+export interface AcceptedAliasSupport {
+  programKey: (typeof TARGET_ALIAS_PROGRAMS)[number];
+  review: AcceptedAliasReview;
 }
 
 function assert(condition: unknown, message: string): asserts condition {
@@ -120,6 +146,18 @@ function hasLiteralOfficialPhrase(alias: string, quote: string): boolean {
   return ` ${normalizedQuote} `.includes(` ${normalizedAlias} `);
 }
 
+function isSingularPluralVariant(left: string, right: string): boolean {
+  const normalizedLeft = normalizeEvidencePhrase(left);
+  const normalizedRight = normalizeEvidencePhrase(right);
+  if (normalizedLeft === normalizedRight) return false;
+  return (
+    normalizedLeft === `${normalizedRight}s` ||
+    normalizedLeft === `${normalizedRight}es` ||
+    normalizedRight === `${normalizedLeft}s` ||
+    normalizedRight === `${normalizedLeft}es`
+  );
+}
+
 function acceptedProgramOutputReviews(
   pilotResults: FpCoveragePilotResults,
   programKey: string,
@@ -152,13 +190,31 @@ function hasAcceptedProgramOutputBoundary(
 }
 
 function assertAliasBoundary(
-  review: ProgramOfficialAliasReview["reviews"][number],
+  review: AcceptedAliasReview,
   pilotResults: FpCoveragePilotResults,
   programKey: string,
 ): void {
   assert(
     hasAcceptedProgramOutputBoundary(review, pilotResults, programKey),
     `Alias ${review.alias} is outside the accepted program-output boundary for ${programKey}; semantic broadening is not allowed.`,
+  );
+  const relevance = review.acceptedProgramOutputRelevance;
+  assert(
+    hasLiteralOfficialPhrase(relevance.aliasTerm, review.alias) &&
+      hasLiteralOfficialPhrase(
+        relevance.outputTerm,
+        review.acceptedProgramOutputLabel,
+      ),
+    `Alias ${review.alias} lacks auditable terms inside its accepted program-output boundary.`,
+  );
+  const relevanceMatches =
+    relevance.relationship === "exact_term"
+      ? normalizeEvidencePhrase(relevance.aliasTerm) ===
+        normalizeEvidencePhrase(relevance.outputTerm)
+      : isSingularPluralVariant(relevance.aliasTerm, relevance.outputTerm);
+  assert(
+    relevanceMatches,
+    `Alias ${review.alias} is outside the accepted program-output boundary and would cause semantic broadening.`,
   );
   const explicitlyRejectedElsewhere = pilotResults.attempts.some((attempt) =>
     (attempt.rejectedRelationships ?? []).some(
@@ -179,6 +235,47 @@ export function canonicalAliasIdentity(alias: {
   occupationId: string;
 }): string {
   return `${normalizeMatcherAlias(alias.alias)}\u0000${alias.occupationId}`;
+}
+
+function literalAliasEvidenceIdentity(review: AcceptedAliasReview): string {
+  return [review.sourceUrl, review.sourceQuote, review.reasonCode].join(
+    "\u0000",
+  );
+}
+
+/** Coalesces identical multi-program support into one global curated alias. */
+export function coalesceAcceptedAliasSupports(
+  supports: readonly AcceptedAliasSupport[],
+): AcceptedAliasReview[] {
+  const grouped = new Map<string, AcceptedAliasSupport[]>();
+  for (const support of supports) {
+    const normalizedAlias = normalizeMatcherAlias(support.review.alias);
+    const group = grouped.get(normalizedAlias) ?? [];
+    group.push(support);
+    grouped.set(normalizedAlias, group);
+  }
+  return [...grouped.entries()]
+    .sort(([left], [right]) => stableCompare(left, right))
+    .map(([normalizedAlias, group]) => {
+      const ordered = [...group].sort(
+        (left, right) =>
+          stableCompare(left.programKey, right.programKey) ||
+          stableCompare(left.review.alias, right.review.alias),
+      );
+      const first = ordered[0]!;
+      for (const support of ordered.slice(1)) {
+        assert(
+          support.review.occupationId === first.review.occupationId,
+          `Accepted alias ${normalizedAlias} has a normalized collision across occupations.`,
+        );
+        assert(
+          literalAliasEvidenceIdentity(support.review) ===
+            literalAliasEvidenceIdentity(first.review),
+          `Accepted alias ${normalizedAlias} has conflicting literal evidence across program audits.`,
+        );
+      }
+      return first.review;
+    });
 }
 
 export function validateProgramOfficialAliasReview(
@@ -216,13 +313,42 @@ export function validateProgramOfficialAliasReview(
     );
     seenReviewIdentities.add(identity);
 
-    if (review.disposition === "rejected") continue;
-
     const source = isIneOrSepeClassification(review.sourceUrl);
     assert(
       source !== undefined,
-      `Accepted alias ${review.alias} requires an HTTPS INE or SEPE classification URL.`,
+      `Alias review ${review.alias} requires an HTTPS INE or SEPE classification URL.`,
     );
+    if (review.disposition === "rejected") {
+      const isLiteral = hasLiteralOfficialPhrase(
+        review.alias,
+        review.sourceQuote,
+      );
+      if (review.reasonCode === "official_evidence_absent") {
+        assert(
+          !isLiteral,
+          `Rejected alias ${review.alias} cannot use official_evidence_absent when the source quote contains it.`,
+        );
+      }
+      if (
+        review.reasonCode === "normalized_collision" ||
+        review.reasonCode === "cross_occupation_conflict" ||
+        review.reasonCode === "matcher_policy_one_word" ||
+        review.reasonCode === "semantic_broadening"
+      ) {
+        assert(
+          isLiteral,
+          `Rejected alias ${review.alias} requires a literal official phrase for reason ${review.reasonCode}.`,
+        );
+      }
+      if (review.reasonCode === "matcher_policy_one_word") {
+        assert(
+          normalizeMatcherAlias(review.alias).split(" ").length < 2,
+          `Rejected alias ${review.alias} must be one word for matcher_policy_one_word.`,
+        );
+      }
+      continue;
+    }
+
     assert(
       (review.reasonCode === "literal_ine_classification" &&
         source === "ine") ||
@@ -234,7 +360,11 @@ export function validateProgramOfficialAliasReview(
       hasLiteralOfficialPhrase(review.alias, review.sourceQuote),
       `Accepted alias ${review.alias} must be a literal contiguous phrase in its official source quote.`,
     );
-    assertAliasBoundary(review, context.pilotResults, programReview.programKey);
+    assertAliasBoundary(
+      review as AcceptedAliasReview,
+      context.pilotResults,
+      programReview.programKey,
+    );
   }
 
   return programReview;
@@ -318,17 +448,14 @@ function assertGlobalAliasSafety(
 }
 
 function assertUniqueNormalizedAliases(
-  acceptedReviews: readonly {
-    programKey: string;
-    review: ProgramOfficialAliasReview["reviews"][number];
-  }[],
+  acceptedReviews: readonly AcceptedAliasReview[],
   context: AliasPassValidationContext,
 ): void {
   const seen = new Map<string, string>();
   for (const alias of context.aliases) {
     seen.set(normalizeMatcherAlias(alias.alias), alias.occupationId);
   }
-  for (const { review } of acceptedReviews) {
+  for (const review of acceptedReviews) {
     const normalized = normalizeMatcherAlias(review.alias);
     assert(
       normalized.split(" ").length >= 2,
@@ -348,29 +475,29 @@ function assertUniqueAuditAliasIdentities(
     programKey: string;
     review: ProgramOfficialAliasReview["reviews"][number];
   }[],
-  context: AliasPassValidationContext,
 ): void {
-  const seen = new Set(
-    context.aliases.map((alias) => normalizeMatcherAlias(alias.alias)),
-  );
-  for (const { review } of allReviews) {
-    const normalized = normalizeMatcherAlias(review.alias);
+  const grouped = new Map<string, Array<(typeof allReviews)[number]>>();
+  for (const item of allReviews) {
+    const normalized = normalizeMatcherAlias(item.review.alias);
+    const group = grouped.get(normalized) ?? [];
+    group.push(item);
+    grouped.set(normalized, group);
+  }
+  for (const group of grouped.values()) {
+    if (group.length === 1) continue;
     assert(
-      !seen.has(normalized),
-      `Duplicate normalized alias review: ${review.alias}.`,
+      group.every(({ review }) => review.disposition === "accepted"),
+      `Duplicate normalized alias review: ${group[0]!.review.alias}.`,
     );
-    seen.add(normalized);
+    coalesceAcceptedAliasSupports(group as readonly AcceptedAliasSupport[]);
   }
 }
 
 function overlayAcceptedAliases(
   context: AliasPassValidationContext,
-  acceptedReviews: readonly {
-    programKey: string;
-    review: ProgramOfficialAliasReview["reviews"][number];
-  }[],
+  acceptedReviews: readonly AcceptedAliasReview[],
 ): OccupationAlias[] {
-  const additions = acceptedReviews.map(({ review }) => ({
+  const additions = acceptedReviews.map((review) => ({
     alias: review.alias,
     occupationId: review.occupationId,
     reviewStatus: "approved" as const,
@@ -409,15 +536,17 @@ export function computeFpOfficialAliasPass(
       review,
     })),
   );
-  const acceptedReviews = allReviews.filter(
-    ({ review }) => review.disposition === "accepted",
+  const acceptedSupports = allReviews.filter(
+    (item): item is AcceptedAliasSupport =>
+      item.review.disposition === "accepted",
   );
   const rejectedReviews = allReviews.filter(
     ({ review }) => review.disposition === "rejected",
   );
-  assertUniqueAuditAliasIdentities(allReviews, context);
+  assertUniqueAuditAliasIdentities(allReviews);
+  const acceptedReviews = coalesceAcceptedAliasSupports(acceptedSupports);
   assertUniqueNormalizedAliases(acceptedReviews, context);
-  assertGlobalAliasSafety(acceptedReviews, reviewsByProgram, context);
+  assertGlobalAliasSafety(acceptedSupports, reviewsByProgram, context);
 
   const afterAliases = overlayAcceptedAliases(context, acceptedReviews);
   const programMatches = new Map(
@@ -493,9 +622,7 @@ export async function loadAliasPassValidationContext(
     publishedRequirements,
     ...reviews
   ] = await Promise.all([
-    readJson(
-      resolve(rootDirectory, "analysis", "fp_coverage_pilot_results.json"),
-    ),
+    validateFpCoveragePilotResultsFile(rootDirectory),
     readJson(publicSnapshotResourcePath(rootDirectory, "programs.json")),
     readJson(publicSnapshotResourcePath(rootDirectory, "occupations.json")),
     readJson(
@@ -522,7 +649,7 @@ export async function loadAliasPassValidationContext(
     reviews: reviews.map((review) =>
       ProgramOfficialAliasReviewSchema.parse(review),
     ),
-    pilotResults: pilotResults as FpCoveragePilotResults,
+    pilotResults,
     programs: z.array(TrainingProgramSchema).parse(programs),
     occupations: OccupationsSchema.parse(occupations),
     aliases: OccupationAliasesSchema.parse(aliases),
@@ -534,8 +661,32 @@ export async function loadAliasPassValidationContext(
   };
 }
 
-function serializeDeterministically(value: FpOfficialAliasPassResults): string {
+export function serializeFpOfficialAliasPassResults(
+  value: FpOfficialAliasPassResults,
+): string {
   return `${JSON.stringify(value, null, 2)}\n`;
+}
+
+export function parseAliasPassCliArguments(arguments_: readonly string[]): {
+  writeResults: boolean;
+} {
+  assert(
+    arguments_.length === 0 ||
+      (arguments_.length === 1 && arguments_[0] === "--write-results"),
+    "Usage: tsx scripts/analysis/validateFpOfficialAliasPass.ts [--write-results]",
+  );
+  return { writeResults: arguments_[0] === "--write-results" };
+}
+
+export async function writeFpOfficialAliasPassResults(
+  outputPath: string,
+  results: FpOfficialAliasPassResults,
+): Promise<void> {
+  await writeFile(
+    outputPath,
+    serializeFpOfficialAliasPassResults(results),
+    "utf8",
+  );
 }
 
 export async function validateFpOfficialAliasPassFromDisk(
@@ -548,17 +699,12 @@ export async function validateFpOfficialAliasPassFromDisk(
 
 async function runCli(): Promise<void> {
   const arguments_ = process.argv.slice(2);
-  assert(
-    arguments_.length === 0 ||
-      (arguments_.length === 1 && arguments_[0] === "--write-results"),
-    "Usage: tsx scripts/analysis/validateFpOfficialAliasPass.ts [--write-results]",
-  );
+  const { writeResults } = parseAliasPassCliArguments(arguments_);
   const results = await validateFpOfficialAliasPassFromDisk();
-  if (arguments_[0] === "--write-results") {
-    await writeFile(
+  if (writeResults) {
+    await writeFpOfficialAliasPassResults(
       resolve(process.cwd(), "analysis", "fp_official_alias_pass_results.json"),
-      serializeDeterministically(results),
-      "utf8",
+      results,
     );
   }
   console.info("FP official alias pass satisfies the validation contract.");

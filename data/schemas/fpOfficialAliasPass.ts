@@ -36,6 +36,21 @@ const OfficialAliasReviewBaseSchema = z.object({
   reviewedAt: z.string().date(),
 });
 
+const BoundaryTermSchema = z
+  .string()
+  .trim()
+  .min(2)
+  .max(100)
+  .regex(/^\p{Letter}+$/u);
+
+const AcceptedProgramOutputRelevanceSchema = z
+  .object({
+    relationship: z.enum(["exact_term", "singular_plural_variant"]),
+    outputTerm: BoundaryTermSchema,
+    aliasTerm: BoundaryTermSchema,
+  })
+  .strict();
+
 export const OfficialAliasReviewSchema = z.discriminatedUnion("disposition", [
   OfficialAliasReviewBaseSchema.extend({
     disposition: z.literal("accepted"),
@@ -43,6 +58,7 @@ export const OfficialAliasReviewSchema = z.discriminatedUnion("disposition", [
       "literal_ine_classification",
       "literal_sepe_classification",
     ]),
+    acceptedProgramOutputRelevance: AcceptedProgramOutputRelevanceSchema,
   }).strict(),
   OfficialAliasReviewBaseSchema.extend({
     disposition: z.literal("rejected"),

@@ -1,5 +1,6 @@
-import { readFile } from "node:fs/promises";
-import { resolve } from "node:path";
+import { mkdtemp, readFile, rm } from "node:fs/promises";
+import { tmpdir } from "node:os";
+import { join, resolve } from "node:path";
 
 import { describe, expect, it } from "vitest";
 
@@ -8,8 +9,12 @@ import {
   type ProgramOfficialAliasReview,
 } from "../../data/schemas/fpOfficialAliasPass";
 import {
+  coalesceAcceptedAliasSupports,
   computeFpOfficialAliasPass,
+  parseAliasPassCliArguments,
+  serializeFpOfficialAliasPassResults,
   validateProgramOfficialAliasReview,
+  writeFpOfficialAliasPassResults,
   type AliasPassValidationContext,
 } from "./validateFpOfficialAliasPass";
 
@@ -33,6 +38,11 @@ const hotReview = {
       acceptedProgramOutputSourceUrl:
         "https://todofp.es/dam/jcr%3A63392ee9-4d38-449b-a196-d0efb714b364/n-tcocinagastronomiaes-pdf.pdf",
       acceptedProgramOutputSourceQuote: "Cocinero.",
+      acceptedProgramOutputRelevance: {
+        relationship: "singular_plural_variant",
+        outputTerm: "Cocinero",
+        aliasTerm: "Cocineros",
+      },
       reviewedAt: "2026-08-09",
     },
   ],
@@ -209,6 +219,28 @@ describe("FP official alias pass validation", () => {
       }),
     ).toThrow(/program-output boundary/i);
 
+    const acceptedSscOutput = (
+      context.pilotResults as {
+        attempts: {
+          programKey: string;
+          professionalOutputReviews?: {
+            disposition: string;
+            candidateOccupationIds: string[];
+            acceptedOccupationIds?: string[];
+            officialOutputLabel: string;
+            sourceUrl: string;
+            sourceQuote: string;
+          }[];
+        }[];
+      }
+    ).attempts
+      .find((attempt) => attempt.programKey === "SSC01M")!
+      .professionalOutputReviews!.find(
+        (output) =>
+          output.disposition === "accepted" &&
+          output.candidateOccupationIds.includes("occupation:cno11:5629") &&
+          output.acceptedOccupationIds?.includes("occupation:cno11:5629"),
+      )!;
     const dentalCandidate = {
       schemaVersion: "1.0.0",
       programKey: "SSC01M",
@@ -222,12 +254,14 @@ describe("FP official alias pass validation", () => {
           sourceUrl:
             "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
           sourceQuote: "5629 Ayudantes de dentista",
-          acceptedProgramOutputLabel:
-            "Cuidador o cuidadora de personas en situaci\u00f3n de dependencia en diferentes instituciones y/o domicilios.",
-          acceptedProgramOutputSourceUrl:
-            "https://www.boe.es/eli/es/rd/2011/11/04/1593",
-          acceptedProgramOutputSourceQuote:
-            "Cuidador o cuidadora de personas en situaci\u00f3n de dependencia en diferentes instituciones y/o domicilios.",
+          acceptedProgramOutputLabel: acceptedSscOutput.officialOutputLabel,
+          acceptedProgramOutputSourceUrl: acceptedSscOutput.sourceUrl,
+          acceptedProgramOutputSourceQuote: acceptedSscOutput.sourceQuote,
+          acceptedProgramOutputRelevance: {
+            relationship: "singular_plural_variant",
+            outputTerm: "Cuidador",
+            aliasTerm: "Ayudantes",
+          },
           reviewedAt: "2026-08-09",
         },
       ],
@@ -236,6 +270,64 @@ describe("FP official alias pass validation", () => {
     expect(() =>
       validateProgramOfficialAliasReview(dentalCandidate, context),
     ).toThrow(/program-output boundary|semantic broadening/i);
+    expect({
+      label: dentalCandidate.reviews[0].acceptedProgramOutputLabel,
+      sourceUrl: dentalCandidate.reviews[0].acceptedProgramOutputSourceUrl,
+      sourceQuote: dentalCandidate.reviews[0].acceptedProgramOutputSourceQuote,
+    }).toEqual({
+      label: acceptedSscOutput.officialOutputLabel,
+      sourceUrl: acceptedSscOutput.sourceUrl,
+      sourceQuote: acceptedSscOutput.sourceQuote,
+    });
+  });
+
+  it("requires official rejected-record sources and reason-consistent literal evidence", async () => {
+    const context = await fixtureContext();
+    const rejected = rejectedReview("SSC01M", "occupation:cno11:5629");
+    const review = rejected.reviews[0];
+
+    expect(() =>
+      validateProgramOfficialAliasReview(
+        {
+          ...rejected,
+          reviews: [{ ...review, sourceUrl: "https://example.com/cno" }],
+        },
+        context,
+      ),
+    ).toThrow(/INE or SEPE/i);
+    expect(() =>
+      validateProgramOfficialAliasReview(
+        {
+          ...rejected,
+          reviews: [
+            {
+              ...review,
+              alias: "Encofradores",
+              reasonCode: "matcher_policy_one_word",
+              sourceQuote: "7111 Encofrador",
+              reviewNote:
+                "La frase literal es de una sola palabra y la pol\u00edtica del matcher permanece estrictamente multivocabulario.",
+            },
+          ],
+        },
+        context,
+      ),
+    ).toThrow(/literal/i);
+    expect(() =>
+      validateProgramOfficialAliasReview(
+        {
+          ...rejected,
+          reviews: [
+            {
+              ...review,
+              alias: "Alias presente",
+              sourceQuote: "La clasificaci\u00f3n contiene Alias presente.",
+            },
+          ],
+        },
+        context,
+      ),
+    ).toThrow(/absent/i);
   });
 
   it("rejects globally unsafe aliases and gives input-order-independent zero-delta results", async () => {
@@ -298,5 +390,63 @@ describe("FP official alias pass validation", () => {
         ],
       }),
     ).toThrow(/duplicate normalized alias review/i);
+  });
+
+  it("coalesces matching two-program CNO support but rejects conflicting literal evidence", () => {
+    const accepted =
+      ProgramOfficialAliasReviewSchema.parse(hotReview).reviews[0]!;
+    if (accepted.disposition !== "accepted") {
+      throw new Error("Test fixture must be accepted.");
+    }
+    const matchingSupport = {
+      ...accepted,
+      acceptedProgramOutputRelevance: {
+        ...accepted.acceptedProgramOutputRelevance,
+      },
+    };
+
+    expect(
+      coalesceAcceptedAliasSupports([
+        { programKey: "HOT01M", review: accepted },
+        { programKey: "SSC01M", review: matchingSupport },
+      ]),
+    ).toEqual([accepted]);
+    expect(() =>
+      coalesceAcceptedAliasSupports([
+        { programKey: "HOT01M", review: accepted },
+        {
+          programKey: "SSC01M",
+          review: {
+            ...matchingSupport,
+            sourceQuote: "5110 Cocineros de prueba",
+          },
+        },
+      ]),
+    ).toThrow(/conflicting literal evidence/i);
+  });
+
+  it("rejects unsupported CLI arguments and writes deterministic result bytes", async () => {
+    const context = await fixtureContext();
+    const results = computeFpOfficialAliasPass(context);
+    const directory = await mkdtemp(join(tmpdir(), "fp-alias-pass-"));
+    const outputPath = resolve(directory, "results.json");
+
+    try {
+      expect(() => parseAliasPassCliArguments(["--unexpected"])).toThrow(
+        /Usage/i,
+      );
+      expect(parseAliasPassCliArguments([])).toEqual({ writeResults: false });
+      expect(parseAliasPassCliArguments(["--write-results"])).toEqual({
+        writeResults: true,
+      });
+      await writeFpOfficialAliasPassResults(outputPath, results);
+      const first = await readFile(outputPath, "utf8");
+      await writeFpOfficialAliasPassResults(outputPath, results);
+
+      expect(await readFile(outputPath, "utf8")).toBe(first);
+      expect(first).toBe(serializeFpOfficialAliasPassResults(results));
+    } finally {
+      await rm(directory, { recursive: true, force: true });
+    }
   });
 });
