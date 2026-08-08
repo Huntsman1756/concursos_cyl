@@ -127,14 +127,14 @@
       "alias": "Chefs",
       "occupationId": "occupation:cno11:5110",
       "disposition": "rejected",
-      "reasonCode": "matcher_policy_one_word",
+      "reasonCode": "semantic_broadening",
       "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
       "sourceQuote": "Chefs, 3734",
       "acceptedProgramOutputLabel": "Cocinero.",
       "acceptedProgramOutputSourceUrl": "https://todofp.es/dam/jcr%3A63392ee9-4d38-449b-a196-d0efb714b364/n-tcocinagastronomiaes-pdf.pdf",
       "acceptedProgramOutputSourceQuote": "Cocinero.",
       "reviewedAt": "2026-08-09",
-      "reviewNote": "Es un t\u00e9rmino literal de una sola palabra y el matcher conserva la regla estricta de varias palabras."
+      "reviewNote": "El propio CNO excluye Chefs hacia 3734; su jefatura culinaria ampliar\u00eda la frontera aprobada de Cocinero."
     },
     {
       "alias": "Cocineros propietarios",

@@ -120,7 +120,7 @@ describe("HOT01M official alias audit", () => {
       {
         alias: "Chefs",
         disposition: "rejected",
-        reasonCode: "matcher_policy_one_word",
+        reasonCode: "semantic_broadening",
       },
       {
         alias: "Cocineros propietarios",
@@ -149,5 +149,30 @@ describe("HOT01M official alias audit", () => {
     expect(
       hotReview.reviews.filter(({ disposition }) => disposition === "rejected"),
     ).toHaveLength(9);
+    expect(
+      hotReview.reviews
+        .filter(({ sourceQuote }) => /(?:^|\s|,)\d{4}$/u.test(sourceQuote))
+        .filter(({ sourceQuote }) => !/5110$/u.test(sourceQuote))
+        .map(({ alias, reasonCode }) => ({ alias, reasonCode })),
+    ).toEqual([
+      { alias: "Jefes de cocina", reasonCode: "semantic_broadening" },
+      { alias: "Chefs", reasonCode: "semantic_broadening" },
+      {
+        alias: "Cocineros propietarios",
+        reasonCode: "semantic_broadening",
+      },
+      {
+        alias: "Cocineros de comida rápida",
+        reasonCode: "semantic_broadening",
+      },
+      {
+        alias: "Pizzeros, comida rápida",
+        reasonCode: "semantic_broadening",
+      },
+      {
+        alias: "Preparadores de hamburguesas",
+        reasonCode: "semantic_broadening",
+      },
+    ]);
   });
 });
