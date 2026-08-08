@@ -38,6 +38,7 @@ Aggregate results report the observed fractions `x/5`, total effort across all a
 ### Task 0: Remove the rejected external-project association
 
 **Files:**
+
 - Modify: `docs/superpowers/specs/2026-08-04-salida-cyl-design.md`
 - Modify: `research/salida-cyl-salary-sources-2026.md`
 - Test: repository text scan
@@ -50,6 +51,7 @@ Aggregate results report the observed fractions `x/5`, total effort across all a
 ### Task 1: Add the pilot measurement and validation contract
 
 **Files:**
+
 - Create: `analysis/fp_coverage_pilot_results.json`
 - Create: `scripts/analysis/validateFpCoveragePilot.ts`
 - Create: `scripts/analysis/validateFpCoveragePilot.test.ts`
@@ -90,6 +92,7 @@ Follow Task 2's procedure for `COM01M`. Treat sales, commerce, warehouse and log
 ### Task 7: Aggregate the pilot and expose truthful coverage
 
 **Files:**
+
 - Create: `analysis/fp_coverage_pilot_results.md`
 - Modify: pilot JSON and validator tests
 - Modify: home/search coverage components and tests only if generated approved coverage changed

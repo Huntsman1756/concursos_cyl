@@ -23,14 +23,14 @@ No debe calcularse una cifra sintética de «salario de este ciclo en Castilla y
 
 ## Matriz de disponibilidad
 
-| Fuente | Ciclo/título FP | Familia FP | Ocupación | Castilla y León | Provincia | Descarga/API | Uso recomendado |
-|---|---:|---:|---:|---:|---:|---|---|
-| Ministerio / EDUCAbase, inserción FP | Sí, ciclo-grupo nacional en GM y GS | Sí, nacional | No | Sí, solo grado FP | No | CSV, PC-Axis, XLS | Fuente principal del MVP |
-| JCyL, Estructura Salarial | No | No | Solo tres niveles agregados | Sí | No | PDF/tablas | Contexto regional, no asignación individual |
-| INE, Encuesta Anual de Estructura Salarial | No | No | Grandes grupos CNO-11 | CCAA en tablas separadas | No en el producto estándar relevante | API JSON y descargas | Contexto/metodología; fuera del motor MVP |
-| AEAT, Mercado de trabajo y pensiones | No | No | No; utiliza sector de actividad | Sí | Sí | Publicación y tablas oficiales | Posible contexto provincial futuro |
-| SEPE, Perfiles de la oferta | No sistemático | No | Ocupaciones seleccionadas | Variable según estudio | Variable | Informes/páginas | Referencia editorial puntual, no motor |
-| JCyL/ECYL, ofertas de empleo | No | No | Título y descripción libre | Sí | Sí | API Explore 2.1, exportaciones | Mostrar salario solo si la vacante lo publica literalmente |
+| Fuente                                     |                     Ciclo/título FP |   Familia FP |                       Ocupación |          Castilla y León |                            Provincia | Descarga/API                   | Uso recomendado                                            |
+| ------------------------------------------ | ----------------------------------: | -----------: | ------------------------------: | -----------------------: | -----------------------------------: | ------------------------------ | ---------------------------------------------------------- |
+| Ministerio / EDUCAbase, inserción FP       | Sí, ciclo-grupo nacional en GM y GS | Sí, nacional |                              No |        Sí, solo grado FP |                                   No | CSV, PC-Axis, XLS              | Fuente principal del MVP                                   |
+| JCyL, Estructura Salarial                  |                                  No |           No |     Solo tres niveles agregados |                       Sí |                                   No | PDF/tablas                     | Contexto regional, no asignación individual                |
+| INE, Encuesta Anual de Estructura Salarial |                                  No |           No |           Grandes grupos CNO-11 | CCAA en tablas separadas | No en el producto estándar relevante | API JSON y descargas           | Contexto/metodología; fuera del motor MVP                  |
+| AEAT, Mercado de trabajo y pensiones       |                                  No |           No | No; utiliza sector de actividad |                       Sí |                                   Sí | Publicación y tablas oficiales | Posible contexto provincial futuro                         |
+| SEPE, Perfiles de la oferta                |                      No sistemático |           No |       Ocupaciones seleccionadas |   Variable según estudio |                             Variable | Informes/páginas               | Referencia editorial puntual, no motor                     |
+| JCyL/ECYL, ofertas de empleo               |                                  No |           No |      Título y descripción libre |                       Sí |                                   Sí | API Explore 2.1, exportaciones | Mostrar salario solo si la vacante lo publica literalmente |
 
 ## 1. Ministerio de Educación / EDUCAbase
 

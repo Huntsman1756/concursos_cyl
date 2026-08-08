@@ -61,6 +61,205 @@
           "reviewedAt": "2026-08-08"
         }
       ],
+      "programmeProfileEvidence": {
+        "todoFp": {
+          "sourceUrl": "https://todofp.es/dam/jcr%3Aaf5b68fd-e75c-493b-94ff-0565d3886473/san21cuidauxilenfermeria-pdf.pdf",
+          "sourceQuote": "TÉCNICO EN CUIDADOS AUXILIARES DE ENFERMERÍA",
+          "reviewedAt": "2026-08-08"
+        },
+        "authoritativeOutputSource": {
+          "sourceUrl": "https://todofp.es/dam/jcr%3Aaf5b68fd-e75c-493b-94ff-0565d3886473/san21cuidauxilenfermeria-pdf.pdf",
+          "sourceQuote": "EMPLEOS QUE PUEDE DESEMPEÑAR LA PERSONA PORTADORA DE ESTE TÍTULO",
+          "reviewedAt": "2026-08-08"
+        },
+        "reconciliationNote": "The official TodoFP Europass supplement identifies the programme and enumerates all ten professional outputs in source order."
+      },
+      "professionalOutputReviews": [
+        {
+          "officialOutputLabel": "Auxiliar de Enfermería/Clínica..",
+          "disposition": "accepted",
+          "candidateOccupationIds": ["occupation:cno11:5611"],
+          "acceptedOccupationIds": ["occupation:cno11:5611"],
+          "reasonCode": "official_programme_output",
+          "groupingExplanation": "The clinical auxiliary output directly aligns with the INE hospital nursing-assistant heading.",
+          "sourceUrl": "https://todofp.es/dam/jcr%3Aaf5b68fd-e75c-493b-94ff-0565d3886473/san21cuidauxilenfermeria-pdf.pdf",
+          "sourceQuote": "Auxiliar de Enfermería/Clínica..",
+          "classificationEvidence": [
+            {
+              "occupationId": "occupation:cno11:5611",
+              "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+              "sourceQuote": "5611 Auxiliares de enfermería hospitalaria",
+              "reviewedAt": "2026-08-08"
+            }
+          ],
+          "reviewedAt": "2026-08-08"
+        },
+        {
+          "officialOutputLabel": "Auxiliar de Balnearios.",
+          "disposition": "rejected",
+          "candidateOccupationIds": ["occupation:cno11:5710"],
+          "reasonCode": "official_evidence_indirect",
+          "groupingExplanation": "The home personal-care CNO heading is not an exact classification of the balneary auxiliary output.",
+          "sourceUrl": "https://todofp.es/dam/jcr%3Aaf5b68fd-e75c-493b-94ff-0565d3886473/san21cuidauxilenfermeria-pdf.pdf",
+          "sourceQuote": "Auxiliar de Balnearios.",
+          "classificationEvidence": [
+            {
+              "occupationId": "occupation:cno11:5710",
+              "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+              "sourceQuote": "5710 Trabajadores de los cuidados personales a domicilio",
+              "reviewedAt": "2026-08-08"
+            }
+          ],
+          "reviewedAt": "2026-08-08"
+        },
+        {
+          "officialOutputLabel": "Auxiliar de Atención primaria.",
+          "disposition": "accepted",
+          "candidateOccupationIds": ["occupation:cno11:5612"],
+          "acceptedOccupationIds": ["occupation:cno11:5612"],
+          "reasonCode": "official_programme_output",
+          "groupingExplanation": "The TodoFP output and INE primary-care nursing-assistant heading describe the same professional setting.",
+          "sourceUrl": "https://todofp.es/dam/jcr%3Aaf5b68fd-e75c-493b-94ff-0565d3886473/san21cuidauxilenfermeria-pdf.pdf",
+          "sourceQuote": "Auxiliar de Atención primaria.",
+          "classificationEvidence": [
+            {
+              "occupationId": "occupation:cno11:5612",
+              "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+              "sourceQuote": "5612 Auxiliares de enfermería de atención primaria",
+              "reviewedAt": "2026-08-08"
+            }
+          ],
+          "reviewedAt": "2026-08-08"
+        },
+        {
+          "officialOutputLabel": "Cuidados de enfermería a domicilio.",
+          "disposition": "rejected",
+          "candidateOccupationIds": ["occupation:cno11:5710"],
+          "reasonCode": "official_evidence_indirect",
+          "groupingExplanation": "The home personal-care heading does not establish an exact qualification-to-CNO nursing-care relationship.",
+          "sourceUrl": "https://todofp.es/dam/jcr%3Aaf5b68fd-e75c-493b-94ff-0565d3886473/san21cuidauxilenfermeria-pdf.pdf",
+          "sourceQuote": "Cuidados de enfermería a domicilio.",
+          "classificationEvidence": [
+            {
+              "occupationId": "occupation:cno11:5710",
+              "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+              "sourceQuote": "5710 Trabajadores de los cuidados personales a domicilio",
+              "reviewedAt": "2026-08-08"
+            }
+          ],
+          "reviewedAt": "2026-08-08"
+        },
+        {
+          "officialOutputLabel": "Auxiliar Bucodental.",
+          "disposition": "rejected",
+          "candidateOccupationIds": ["occupation:cno11:5629"],
+          "reasonCode": "official_evidence_indirect",
+          "groupingExplanation": "The residual health-care CNO category does not provide an exact programme relationship for this output.",
+          "sourceUrl": "https://todofp.es/dam/jcr%3Aaf5b68fd-e75c-493b-94ff-0565d3886473/san21cuidauxilenfermeria-pdf.pdf",
+          "sourceQuote": "Auxiliar Bucodental.",
+          "classificationEvidence": [
+            {
+              "occupationId": "occupation:cno11:5629",
+              "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+              "sourceQuote": "5629 Trabajadores de los cuidados a las personas en servicios de salud no clasificados bajo otros epígrafes",
+              "reviewedAt": "2026-08-08"
+            }
+          ],
+          "reviewedAt": "2026-08-08"
+        },
+        {
+          "officialOutputLabel": "Auxiliar Geriátrico.",
+          "disposition": "accepted",
+          "candidateOccupationIds": ["occupation:cno11:5611"],
+          "acceptedOccupationIds": ["occupation:cno11:5611"],
+          "reasonCode": "official_programme_output",
+          "groupingExplanation": "The completed review retains the existing hospital nursing-assistant CNO relationship without adding an alias.",
+          "sourceUrl": "https://todofp.es/dam/jcr%3Aaf5b68fd-e75c-493b-94ff-0565d3886473/san21cuidauxilenfermeria-pdf.pdf",
+          "sourceQuote": "Auxiliar Geriátrico.",
+          "classificationEvidence": [
+            {
+              "occupationId": "occupation:cno11:5611",
+              "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+              "sourceQuote": "5611 Auxiliares de enfermería hospitalaria",
+              "reviewedAt": "2026-08-08"
+            }
+          ],
+          "reviewedAt": "2026-08-08"
+        },
+        {
+          "officialOutputLabel": "Auxiliar Pediátrico.",
+          "disposition": "rejected",
+          "candidateOccupationIds": ["occupation:cno11:5611"],
+          "reasonCode": "official_evidence_indirect",
+          "groupingExplanation": "The broader hospital auxiliary heading does not state this paediatric specialisation as an exact output mapping.",
+          "sourceUrl": "https://todofp.es/dam/jcr%3Aaf5b68fd-e75c-493b-94ff-0565d3886473/san21cuidauxilenfermeria-pdf.pdf",
+          "sourceQuote": "Auxiliar Pediátrico.",
+          "classificationEvidence": [
+            {
+              "occupationId": "occupation:cno11:5611",
+              "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+              "sourceQuote": "5611 Auxiliares de enfermería hospitalaria",
+              "reviewedAt": "2026-08-08"
+            }
+          ],
+          "reviewedAt": "2026-08-08"
+        },
+        {
+          "officialOutputLabel": "Auxiliar de Esterilización.",
+          "disposition": "rejected",
+          "candidateOccupationIds": ["occupation:cno11:5629"],
+          "reasonCode": "official_evidence_indirect",
+          "groupingExplanation": "The residual health-care category is insufficient to establish this sterilisation auxiliary output as publishable.",
+          "sourceUrl": "https://todofp.es/dam/jcr%3Aaf5b68fd-e75c-493b-94ff-0565d3886473/san21cuidauxilenfermeria-pdf.pdf",
+          "sourceQuote": "Auxiliar de Esterilización.",
+          "classificationEvidence": [
+            {
+              "occupationId": "occupation:cno11:5629",
+              "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+              "sourceQuote": "5629 Trabajadores de los cuidados a las personas en servicios de salud no clasificados bajo otros epígrafes",
+              "reviewedAt": "2026-08-08"
+            }
+          ],
+          "reviewedAt": "2026-08-08"
+        },
+        {
+          "officialOutputLabel": "Auxiliar de Unidades Especiales.",
+          "disposition": "rejected",
+          "candidateOccupationIds": ["occupation:cno11:5629"],
+          "reasonCode": "official_evidence_indirect",
+          "groupingExplanation": "No reviewed four-digit CNO heading establishes this special-unit auxiliary output as a direct official mapping.",
+          "sourceUrl": "https://todofp.es/dam/jcr%3Aaf5b68fd-e75c-493b-94ff-0565d3886473/san21cuidauxilenfermeria-pdf.pdf",
+          "sourceQuote": "Auxiliar de Unidades Especiales.",
+          "classificationEvidence": [
+            {
+              "occupationId": "occupation:cno11:5629",
+              "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+              "sourceQuote": "5629 Trabajadores de los cuidados a las personas en servicios de salud no clasificados bajo otros epígrafes",
+              "reviewedAt": "2026-08-08"
+            }
+          ],
+          "reviewedAt": "2026-08-08"
+        },
+        {
+          "officialOutputLabel": "Auxiliar de Salud Mental.",
+          "disposition": "accepted",
+          "candidateOccupationIds": ["occupation:cno11:5611"],
+          "acceptedOccupationIds": ["occupation:cno11:5611"],
+          "reasonCode": "official_programme_output",
+          "groupingExplanation": "The completed review retains the hospital nursing-assistant CNO relationship and does not infer a new occupation.",
+          "sourceUrl": "https://todofp.es/dam/jcr%3Aaf5b68fd-e75c-493b-94ff-0565d3886473/san21cuidauxilenfermeria-pdf.pdf",
+          "sourceQuote": "Auxiliar de Salud Mental.",
+          "classificationEvidence": [
+            {
+              "occupationId": "occupation:cno11:5611",
+              "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+              "sourceQuote": "5611 Auxiliares de enfermería hospitalaria",
+              "reviewedAt": "2026-08-08"
+            }
+          ],
+          "reviewedAt": "2026-08-08"
+        }
+      ],
       "snapshotCoverage": {
         "status": "verified",
         "snapshotId": "20260808172031375-7c88ca187340",
@@ -131,6 +330,94 @@
           "reasonCode": "official_evidence_indirect",
           "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
           "sourceQuote": "9310 Ayudantes de cocina",
+          "reviewedAt": "2026-08-08"
+        }
+      ],
+      "programmeProfileEvidence": {
+        "todoFp": {
+          "sourceUrl": "https://todofp.es/dam/jcr%3A63392ee9-4d38-449b-a196-d0efb714b364/n-tcocinagastronomiaes-pdf.pdf",
+          "sourceQuote": "Técnico en Cocina y Gastronomía",
+          "reviewedAt": "2026-08-08"
+        },
+        "authoritativeOutputSource": {
+          "sourceUrl": "https://todofp.es/dam/jcr%3A63392ee9-4d38-449b-a196-d0efb714b364/n-tcocinagastronomiaes-pdf.pdf",
+          "sourceQuote": "Las ocupaciones y puestos de trabajo más relevantes son los siguientes:",
+          "reviewedAt": "2026-08-08"
+        },
+        "reconciliationNote": "The official TodoFP Europass supplement identifies the programme and enumerates its three professional outputs in source order."
+      },
+      "professionalOutputReviews": [
+        {
+          "officialOutputLabel": "Cocinero.",
+          "disposition": "accepted",
+          "candidateOccupationIds": ["occupation:cno11:5110"],
+          "acceptedOccupationIds": ["occupation:cno11:5110"],
+          "reasonCode": "official_programme_output",
+          "groupingExplanation": "The TodoFP cook output directly aligns with the INE heading for salaried cooks.",
+          "sourceUrl": "https://todofp.es/dam/jcr%3A63392ee9-4d38-449b-a196-d0efb714b364/n-tcocinagastronomiaes-pdf.pdf",
+          "sourceQuote": "Cocinero.",
+          "classificationEvidence": [
+            {
+              "occupationId": "occupation:cno11:5110",
+              "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+              "sourceQuote": "5110 Cocineros asalariados",
+              "reviewedAt": "2026-08-08"
+            }
+          ],
+          "reviewedAt": "2026-08-08"
+        },
+        {
+          "officialOutputLabel": "Jefe de partida.",
+          "disposition": "rejected",
+          "candidateOccupationIds": [
+            "occupation:cno11:3734",
+            "occupation:cno11:5120"
+          ],
+          "reasonCode": "official_evidence_indirect",
+          "groupingExplanation": "Chef and waiter CNO headings are respectively supervisory and service work, neither an exact classification of this kitchen-station output.",
+          "sourceUrl": "https://todofp.es/dam/jcr%3A63392ee9-4d38-449b-a196-d0efb714b364/n-tcocinagastronomiaes-pdf.pdf",
+          "sourceQuote": "Jefe de partida.",
+          "classificationEvidence": [
+            {
+              "occupationId": "occupation:cno11:3734",
+              "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+              "sourceQuote": "3734 Chefs",
+              "reviewedAt": "2026-08-08"
+            },
+            {
+              "occupationId": "occupation:cno11:5120",
+              "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+              "sourceQuote": "5120 Camareros asalariados",
+              "reviewedAt": "2026-08-08"
+            }
+          ],
+          "reviewedAt": "2026-08-08"
+        },
+        {
+          "officialOutputLabel": "Empleado de economato de unidades de producción y servicio de alimentos y bebidas.",
+          "disposition": "rejected",
+          "candidateOccupationIds": [
+            "occupation:cno11:4121",
+            "occupation:cno11:9310"
+          ],
+          "reasonCode": "official_evidence_indirect",
+          "groupingExplanation": "Inventory-control and kitchen-helper headings are adjacent tasks but do not establish an exact relationship for the official economato output.",
+          "sourceUrl": "https://todofp.es/dam/jcr%3A63392ee9-4d38-449b-a196-d0efb714b364/n-tcocinagastronomiaes-pdf.pdf",
+          "sourceQuote": "Empleado de economato de unidades de producción y servicio de alimentos y bebidas.",
+          "classificationEvidence": [
+            {
+              "occupationId": "occupation:cno11:4121",
+              "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+              "sourceQuote": "4121 Empleados de control de abastecimientos e inventario",
+              "reviewedAt": "2026-08-08"
+            },
+            {
+              "occupationId": "occupation:cno11:9310",
+              "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+              "sourceQuote": "9310 Ayudantes de cocina",
+              "reviewedAt": "2026-08-08"
+            }
+          ],
           "reviewedAt": "2026-08-08"
         }
       ],
@@ -388,7 +675,7 @@
           "relationshipType": "official_output",
           "reasonCode": "official_programme_output",
           "sourceUrl": "https://www.boe.es/eli/es/rd/2011/11/04/1575",
-          "sourceQuote": "– Encofrador.\n\n– Encofrador de edificación.",
+          "sourceQuote": "– Encofrador.",
           "reviewedAt": "2026-08-08"
         },
         {
@@ -396,7 +683,7 @@
           "relationshipType": "official_output",
           "reasonCode": "official_programme_output",
           "sourceUrl": "https://www.boe.es/eli/es/rd/2011/11/04/1575",
-          "sourceQuote": "– Albañil.\n\n– Colocador de ladrillo caravista.",
+          "sourceQuote": "– Albañil.",
           "reviewedAt": "2026-08-08"
         },
         {
@@ -420,7 +707,7 @@
           "relationshipType": "official_output",
           "reasonCode": "official_programme_output",
           "sourceUrl": "https://www.boe.es/eli/es/rd/2011/11/04/1575",
-          "sourceQuote": "– Tejador.\n\n– Montador de teja.",
+          "sourceQuote": "– Tejador.",
           "reviewedAt": "2026-08-08"
         }
       ],
@@ -854,7 +1141,7 @@
       ],
       "snapshotCoverage": {
         "status": "verified",
-        "snapshotId": "20260808191640155-bdbc9a4458a4",
+        "snapshotId": "20260808213621985-add4c517860c",
         "countingMethod": "accepted_relationship_union",
         "newlyReachedOfferCount": 0
       }

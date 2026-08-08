@@ -5,6 +5,7 @@
 - 4/5 programas completados; 1/5 diferido; 0/5 descartado.
 - 68 minutos de trabajo activo modelado en los cinco intentos. Es una suma declarada de investigación, implementación, pruebas y revisión; no representa minutos literales de revisión independiente ni todo el tiempo de los bucles de corrección.
 - El intervalo de reloj de extremo a extremo es 157.9–176.8 minutos (2.6–2.9 horas). Para cada intento empieza en `startedAt`, su límite inferior de terminación es la marca Git del commit final revisado y su límite superior es el inicio del siguiente intento (o la agregación para COM01M). Las cinco marcas Git están validadas contra los SHA guardados.
+- El rango 157.9–176.8 minutos mide solo las cinco ventanas de intento hasta la agregación de la Tarea 7; excluye este endurecimiento integral posterior a la agregación, iniciado el 2026-08-08T21:17:46.2354891Z. No se inventa una duración exacta para ese trabajo ni se presenta el intervalo como coste total de lanzamiento.
 - Coste por programa completado: 17.0 minutos activos modelados; 39.5–44.2 minutos de reloj. Las magnitudes de reloj son rangos, no minutos de revisión inventados.
 - 43 ofertas marginales alcanzadas. La tasa es 37.9 ofertas/hora activa modelada y 14.6–16.3 ofertas/hora de reloj.
 

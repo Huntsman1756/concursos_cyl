@@ -64,7 +64,7 @@ function assertApprovedCitations(links: readonly unknown[]): void {
       (typeof link.sourceUrl !== "string" ||
         !isPrimaryOfficialSource(link.sourceUrl) ||
         typeof link.sourceQuote !== "string" ||
-        link.sourceQuote.trim().length < 12)
+        link.sourceQuote.trim().length < 3)
     ) {
       throw new Error(
         "Approved mapping requires a primary official source URL and exact quote.",

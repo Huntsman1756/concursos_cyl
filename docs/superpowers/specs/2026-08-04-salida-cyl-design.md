@@ -98,15 +98,15 @@ Green/red traffic-light scoring and compatibility percentages are forbidden. Col
 
 Every action has an internal `actionType`, `targetKind`, `datasetKey` and validated target. Similar visible labels cannot point to interchangeable sources.
 
-| `actionType` | Trigger | Visible action | `targetKind` | `datasetKey` / target |
-| --- | --- | --- | --- | --- |
-| `open_original_offer` | Any visible offer | Abrir oferta original | `external_offer` | `ofertas-de-empleo.enlace_al_contenido` |
-| `verify_offer_requirements` | Requirements missing or ambiguous | Comprobar requisitos en la oferta | `external_offer` | Same original ECYL offer; never a training dataset |
-| `adjust_search_area` | Location is unsuitable and remote work is not explicitly published | Cambiar zona de búsqueda | `internal_filter` | Client-side offer snapshot |
-| `explore_unpublished_requirement` | The user lacks an explicitly published requirement | Ver ofertas relacionadas donde no se publica este requisito | `internal_offer_search` | `ofertas-de-empleo` snapshot |
-| `view_regulated_training_route` | An official qualification or specialization is missing | Ver ruta formativa y centros | `regulated_training` | `oferta-de-formacion-profesional` |
-| `open_official_procedure` | A permit, license or regulated accreditation is explicitly required | Consultar trámite oficial | `official_procedure` | Human-curated official procedure URL |
-| `add_session_check` | No reliable action exists | Añadir a comprobaciones de esta sesión | `in_memory_checklist` | Browser memory only |
+| `actionType`                      | Trigger                                                             | Visible action                                              | `targetKind`            | `datasetKey` / target                              |
+| --------------------------------- | ------------------------------------------------------------------- | ----------------------------------------------------------- | ----------------------- | -------------------------------------------------- |
+| `open_original_offer`             | Any visible offer                                                   | Abrir oferta original                                       | `external_offer`        | `ofertas-de-empleo.enlace_al_contenido`            |
+| `verify_offer_requirements`       | Requirements missing or ambiguous                                   | Comprobar requisitos en la oferta                           | `external_offer`        | Same original ECYL offer; never a training dataset |
+| `adjust_search_area`              | Location is unsuitable and remote work is not explicitly published  | Cambiar zona de búsqueda                                    | `internal_filter`       | Client-side offer snapshot                         |
+| `explore_unpublished_requirement` | The user lacks an explicitly published requirement                  | Ver ofertas relacionadas donde no se publica este requisito | `internal_offer_search` | `ofertas-de-empleo` snapshot                       |
+| `view_regulated_training_route`   | An official qualification or specialization is missing              | Ver ruta formativa y centros                                | `regulated_training`    | `oferta-de-formacion-profesional`                  |
+| `open_official_procedure`         | A permit, license or regulated accreditation is explicitly required | Consultar trámite oficial                                   | `official_procedure`    | Human-curated official procedure URL               |
+| `add_session_check`               | No reliable action exists                                           | Añadir a comprobaciones de esta sesión                      | `in_memory_checklist`   | Browser memory only                                |
 
 The wording for `explore_unpublished_requirement` is mandatory: the destination contains related offers where the requirement **is not published**. The application never says “offers without this requirement”.
 

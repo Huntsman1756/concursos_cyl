@@ -147,7 +147,7 @@
     "relationshipType": "official_output",
     "reviewStatus": "approved",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2011/11/04/1575",
-    "sourceQuote": "– Encofrador.\n\n– Encofrador de edificación.",
+    "sourceQuote": "– Encofrador.",
     "reviewedAt": "2026-08-08",
     "mappingVersion": "1.0.0"
   },
@@ -157,7 +157,7 @@
     "relationshipType": "official_output",
     "reviewStatus": "approved",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2011/11/04/1575",
-    "sourceQuote": "– Albañil.\n\n– Colocador de ladrillo caravista.",
+    "sourceQuote": "– Albañil.",
     "reviewedAt": "2026-08-08",
     "mappingVersion": "1.0.0"
   },
@@ -187,7 +187,7 @@
     "relationshipType": "official_output",
     "reviewStatus": "approved",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2011/11/04/1575",
-    "sourceQuote": "– Tejador.\n\n– Montador de teja.",
+    "sourceQuote": "– Tejador.",
     "reviewedAt": "2026-08-08",
     "mappingVersion": "1.0.0"
   }

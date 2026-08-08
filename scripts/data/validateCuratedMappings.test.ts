@@ -156,6 +156,17 @@ describe("curated occupation mappings", () => {
     ).toThrow(/approved mapping requires.*official source.*quote/i);
   });
 
+  it("accepts a short contiguous official BOE bullet as mapping evidence", () => {
+    expect(() =>
+      validateCuratedMappings({
+        programs,
+        occupations,
+        aliases,
+        links: [{ ...links[0], sourceQuote: "– Albañil." }],
+      }),
+    ).not.toThrow();
+  });
+
   it("rejects an empty occupation confirmation label", () => {
     expect(() =>
       validateCuratedMappings({

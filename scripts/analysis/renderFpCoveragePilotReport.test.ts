@@ -5,7 +5,7 @@ import {
   renderFpCoveragePilotReport,
 } from "./renderFpCoveragePilotReport";
 import { validateFpCoveragePilotResultsFile } from "./validateFpCoveragePilot";
-import coverage from "../../public/data/v1/snapshots/20260808191640155-bdbc9a4458a4/mapping-coverage.json";
+import coverage from "../../public/data/v1/snapshots/20260808213621985-add4c517860c/mapping-coverage.json";
 import type { MappingCoverage } from "../../data/schemas/curatedMappings";
 
 describe("renderFpCoveragePilotReport", () => {
@@ -55,5 +55,8 @@ describe("renderFpCoveragePilotReport", () => {
     expect(report).toContain("HOT01M, SSC01M y EOC01M");
     expect(report).toContain("0 ofertas marginales");
     expect(report).toContain("COM01M permanece diferido");
+    expect(report).toContain(
+      "excluye este endurecimiento integral posterior a la agregación, iniciado el 2026-08-08T21:17:46.2354891Z",
+    );
   });
 });

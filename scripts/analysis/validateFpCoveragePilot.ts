@@ -51,7 +51,7 @@ const PhaseMinutesSchema = z
 
 const EvidenceSchema = {
   sourceUrl: z.string().url(),
-  sourceQuote: z.string().trim().min(12).max(280),
+  sourceQuote: z.string().trim().min(3).max(280),
   reviewedAt: z.string().date(),
 } as const;
 
@@ -140,16 +140,18 @@ const ProfessionalOutputReviewSchema = z
     if (review.disposition === "accepted") {
       if (
         review.acceptedOccupationIds === undefined ||
+        review.acceptedOccupationIds.length !==
+          review.candidateOccupationIds.length ||
         review.acceptedOccupationIds.some(
-          (occupationId) =>
-            !review.candidateOccupationIds.includes(occupationId),
+          (occupationId, index) =>
+            occupationId !== review.candidateOccupationIds[index],
         ) ||
         !acceptedReasonCodes.has(review.reasonCode)
       ) {
         context.addIssue({
           code: "custom",
           message:
-            "Accepted professional-output reviews require accepted candidate IDs and an accepted reason code.",
+            "Accepted professional-output reviews require every candidate to be accepted in order and an accepted reason code.",
         });
       }
       return;
@@ -303,6 +305,63 @@ const SSC01M_OFFICIAL_OUTPUT_LABELS = [
   "Asistente personal.",
   "Teleoperador/a de teleasistencia.",
 ] as const;
+
+const SAN21_TODOFP_SOURCE_URL =
+  "https://todofp.es/dam/jcr%3Aaf5b68fd-e75c-493b-94ff-0565d3886473/san21cuidauxilenfermeria-pdf.pdf";
+const SAN21_OFFICIAL_OUTPUT_LABELS = [
+  "Auxiliar de Enfermería/Clínica..",
+  "Auxiliar de Balnearios.",
+  "Auxiliar de Atención primaria.",
+  "Cuidados de enfermería a domicilio.",
+  "Auxiliar Bucodental.",
+  "Auxiliar Geriátrico.",
+  "Auxiliar Pediátrico.",
+  "Auxiliar de Esterilización.",
+  "Auxiliar de Unidades Especiales.",
+  "Auxiliar de Salud Mental.",
+] as const;
+const HOT01M_TODOFP_SOURCE_URL =
+  "https://todofp.es/dam/jcr%3A63392ee9-4d38-449b-a196-d0efb714b364/n-tcocinagastronomiaes-pdf.pdf";
+const HOT01M_OFFICIAL_OUTPUT_LABELS = [
+  "Cocinero.",
+  "Jefe de partida.",
+  "Empleado de economato de unidades de producción y servicio de alimentos y bebidas.",
+] as const;
+const INE_CNO_URL =
+  "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf";
+const TODOFP_OUTPUT_AUDITS = {
+  SAN21: {
+    sourceUrl: SAN21_TODOFP_SOURCE_URL,
+    programmeQuote: "TÉCNICO EN CUIDADOS AUXILIARES DE ENFERMERÍA",
+    outputHeadingQuote:
+      "EMPLEOS QUE PUEDE DESEMPEÑAR LA PERSONA PORTADORA DE ESTE TÍTULO",
+    outputLabels: SAN21_OFFICIAL_OUTPUT_LABELS,
+    classificationQuotes: {
+      "occupation:cno11:5611": "5611 Auxiliares de enfermería hospitalaria",
+      "occupation:cno11:5612":
+        "5612 Auxiliares de enfermería de atención primaria",
+      "occupation:cno11:5629":
+        "5629 Trabajadores de los cuidados a las personas en servicios de salud no clasificados bajo otros epígrafes",
+      "occupation:cno11:5710":
+        "5710 Trabajadores de los cuidados personales a domicilio",
+    },
+  },
+  HOT01M: {
+    sourceUrl: HOT01M_TODOFP_SOURCE_URL,
+    programmeQuote: "Técnico en Cocina y Gastronomía",
+    outputHeadingQuote:
+      "Las ocupaciones y puestos de trabajo más relevantes son los siguientes:",
+    outputLabels: HOT01M_OFFICIAL_OUTPUT_LABELS,
+    classificationQuotes: {
+      "occupation:cno11:3734": "3734 Chefs",
+      "occupation:cno11:4121":
+        "4121 Empleados de control de abastecimientos e inventario",
+      "occupation:cno11:5110": "5110 Cocineros asalariados",
+      "occupation:cno11:5120": "5120 Camareros asalariados",
+      "occupation:cno11:9310": "9310 Ayudantes de cocina",
+    },
+  },
+} as const;
 
 const EOC01M_OFFICIAL_OUTPUT_LABELS = [
   "Jefe de equipo de fábricas de albañilería.",
@@ -670,6 +729,124 @@ function assertRelationshipCatalogIntegrity(
     );
     dispositions.add(relationship.occupationId);
     assertAuditableEvidence(relationship, attempt.programKey);
+  }
+}
+
+function assertTodoFpProfessionalOutputReviews(attempt: PilotAttempt): void {
+  if (
+    (attempt.programKey !== "SAN21" && attempt.programKey !== "HOT01M") ||
+    attempt.state !== "completed"
+  ) {
+    return;
+  }
+
+  const audit = TODOFP_OUTPUT_AUDITS[attempt.programKey];
+  const profileEvidence = attempt.programmeProfileEvidence;
+  const reviews = attempt.professionalOutputReviews;
+  assert(
+    profileEvidence !== undefined && reviews !== undefined,
+    `Completed ${attempt.programKey} requires TodoFP programme evidence and an independent review of every official output.`,
+  );
+  assertAuditableEvidence(profileEvidence.todoFp, attempt.programKey);
+  assertAuditableEvidence(
+    profileEvidence.authoritativeOutputSource,
+    attempt.programKey,
+  );
+  assert(
+    profileEvidence.todoFp.sourceUrl === audit.sourceUrl &&
+      profileEvidence.todoFp.sourceQuote === audit.programmeQuote &&
+      profileEvidence.authoritativeOutputSource.sourceUrl === audit.sourceUrl &&
+      profileEvidence.authoritativeOutputSource.sourceQuote ===
+        audit.outputHeadingQuote,
+    `${attempt.programKey} programme evidence must preserve the exact TodoFP profile and output heading.`,
+  );
+  assert(
+    reviews.length === audit.outputLabels.length &&
+      reviews.every(
+        (review, index) =>
+          review.officialOutputLabel === audit.outputLabels[index],
+      ),
+    `${attempt.programKey} must review every official TodoFP output in source order.`,
+  );
+
+  const acceptedReviewOccupationIds = new Set<string>();
+  const rejectedReviewOccupationIds = new Set<string>();
+  for (const review of reviews) {
+    assertAuditableEvidence(review, attempt.programKey);
+    assert(
+      review.sourceUrl === audit.sourceUrl &&
+        review.sourceQuote === review.officialOutputLabel,
+      `${attempt.programKey} professional-output reviews must preserve one exact contiguous TodoFP output quote.`,
+    );
+    const classificationEvidence = review.classificationEvidence;
+    assert(
+      Array.isArray(classificationEvidence) &&
+        classificationEvidence.length ===
+          review.candidateOccupationIds.length &&
+        classificationEvidence.every(
+          (evidence, index) =>
+            evidence.occupationId === review.candidateOccupationIds[index],
+        ),
+      `${attempt.programKey} requires aligned classification evidence for every reviewed CNO candidate.`,
+    );
+    for (const evidence of classificationEvidence) {
+      assertAuditableEvidence(evidence, attempt.programKey);
+      assert(
+        evidence.sourceUrl === INE_CNO_URL &&
+          evidence.sourceQuote ===
+            audit.classificationQuotes[
+              evidence.occupationId as keyof typeof audit.classificationQuotes
+            ],
+        `${attempt.programKey} classification evidence must cite the exact INE four-digit CNO heading.`,
+      );
+    }
+    if (review.disposition === "accepted") {
+      for (const occupationId of review.acceptedOccupationIds ?? []) {
+        acceptedReviewOccupationIds.add(occupationId);
+      }
+    } else {
+      for (const occupationId of review.candidateOccupationIds) {
+        rejectedReviewOccupationIds.add(occupationId);
+      }
+    }
+  }
+
+  for (const relationship of attempt.acceptedRelationships) {
+    assert(
+      acceptedReviewOccupationIds.has(relationship.occupationId),
+      `Accepted ${attempt.programKey} relationship ${relationship.occupationId} must be accepted by an individual professional-output review.`,
+    );
+  }
+  for (const relationship of attempt.rejectedRelationships) {
+    assert(
+      rejectedReviewOccupationIds.has(relationship.occupationId),
+      `Rejected ${attempt.programKey} relationship ${relationship.occupationId} must be rejected by an individual professional-output review.`,
+    );
+  }
+}
+
+function normalizedWholeLabel(value: string): string {
+  return ` ${value
+    .normalize("NFKC")
+    .toLocaleLowerCase("es-ES")
+    .replace(/[^\p{L}\p{N}]+/gu, " ")
+    .trim()} `;
+}
+
+function assertAcceptedEvidenceExcludesRejectedOutputLabels(
+  attempt: PilotAttempt,
+): void {
+  const rejectedOutputLabels = (attempt.professionalOutputReviews ?? [])
+    .filter((review) => review.disposition === "rejected")
+    .map((review) => normalizedWholeLabel(review.officialOutputLabel));
+  if (rejectedOutputLabels.length === 0) return;
+
+  for (const relationship of attempt.acceptedRelationships) {
+    const quote = normalizedWholeLabel(relationship.sourceQuote);
+    assert(
+      !rejectedOutputLabels.some((label) => quote.includes(label)),
+      `Accepted ${attempt.programKey} public evidence must not contain an exact rejected professional output label.`,
+    );
   }
 }
 
@@ -1089,9 +1266,11 @@ function assertAttemptState(
   now: Date,
 ): void {
   assertRelationshipCatalogIntegrity(attempt, context);
+  assertTodoFpProfessionalOutputReviews(attempt);
   assertSsc01mProfessionalOutputReviews(attempt);
   assertEoc01mProfessionalOutputReviews(attempt);
   assertCom01mProfessionalOutputReviews(attempt);
+  assertAcceptedEvidenceExcludesRejectedOutputLabels(attempt);
 
   if (attempt.state === "not_started") {
     assertExactTransitions(attempt, []);

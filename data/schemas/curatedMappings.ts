@@ -72,7 +72,7 @@ export const TrainingOccupationLinkSchema = z
     relationshipType: RelationshipTypeSchema,
     reviewStatus: ReviewStatusSchema,
     sourceUrl: z.string().url(),
-    sourceQuote: z.string().trim().min(12).max(280),
+    sourceQuote: z.string().trim().min(3).max(280),
     reviewedAt: ReviewDateSchema,
     mappingVersion: SemanticVersionSchema,
     reviewNote: ReviewNoteSchema,

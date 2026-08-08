@@ -39,6 +39,23 @@ const SSC_OFFICIAL_OUTPUT_LABELS = [
   "Asistente personal.",
   "Teleoperador/a de teleasistencia.",
 ] as const;
+const SAN_OFFICIAL_OUTPUT_LABELS = [
+  "Auxiliar de Enfermería/Clínica..",
+  "Auxiliar de Balnearios.",
+  "Auxiliar de Atención primaria.",
+  "Cuidados de enfermería a domicilio.",
+  "Auxiliar Bucodental.",
+  "Auxiliar Geriátrico.",
+  "Auxiliar Pediátrico.",
+  "Auxiliar de Esterilización.",
+  "Auxiliar de Unidades Especiales.",
+  "Auxiliar de Salud Mental.",
+] as const;
+const HOT_OFFICIAL_OUTPUT_LABELS = [
+  "Cocinero.",
+  "Jefe de partida.",
+  "Empleado de economato de unidades de producción y servicio de alimentos y bebidas.",
+] as const;
 const EOC_OFFICIAL_OUTPUT_LABELS = [
   "Jefe de equipo de fábricas de albañilería.",
   "Jefe de equipo de albañiles de urbanización.",
@@ -236,23 +253,48 @@ function results(): FpCoveragePilotResults {
   };
 }
 
+function completedSan21Audit() {
+  return SAN_OFFICIAL_OUTPUT_LABELS.map((officialOutputLabel) => ({
+    officialOutputLabel,
+    disposition: "accepted" as const,
+    candidateOccupationIds: ["occupation:cno11:5611"],
+    acceptedOccupationIds: ["occupation:cno11:5611"],
+    reasonCode: "official_programme_output" as const,
+    groupingExplanation:
+      "This isolated validator fixture uses the approved hospital nursing-assistant CNO evidence.",
+    sourceUrl:
+      "https://todofp.es/dam/jcr%3Aaf5b68fd-e75c-493b-94ff-0565d3886473/san21cuidauxilenfermeria-pdf.pdf",
+    sourceQuote: officialOutputLabel,
+    classificationEvidence: [
+      {
+        occupationId: "occupation:cno11:5611",
+        sourceUrl:
+          "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+        sourceQuote: "5611 Auxiliares de enfermería hospitalaria",
+        reviewedAt: "2026-08-08",
+      },
+    ],
+    reviewedAt: "2026-08-08",
+  }));
+}
+
 function completedResults() {
   const candidate = results();
   candidate.attempts[0] = {
     ...candidate.attempts[0],
     state: "completed",
-    startedAt: "2026-08-04T09:00:00.000Z",
-    completedAt: "2026-08-04T10:00:00.000Z",
+    startedAt: "2026-08-08T15:00:00.000Z",
+    completedAt: "2026-08-08T16:00:00.000Z",
     stateTransitions: [
       {
         from: "not_started",
         to: "in_progress",
-        at: "2026-08-04T09:00:00.000Z",
+        at: "2026-08-08T15:00:00.000Z",
       },
       {
         from: "in_progress",
         to: "completed",
-        at: "2026-08-04T10:00:00.000Z",
+        at: "2026-08-08T16:00:00.000Z",
       },
     ],
     phaseMinutes: {
@@ -263,19 +305,38 @@ function completedResults() {
     },
     acceptedRelationships: [
       {
-        occupationId: "occupation:cno11:2713",
+        occupationId: "occupation:cno11:5611",
         relationshipType: "official_output",
         reasonCode: "official_programme_output",
         sourceUrl:
-          "https://www.boe.es/buscar/doc.php?id=BOE-A-2010-9269&lang=es",
-        sourceQuote: "Desarrollador de aplicaciones en entornos Web.",
-        reviewedAt: "2026-08-04",
+          "https://todofp.es/dam/jcr%3Aaf5b68fd-e75c-493b-94ff-0565d3886473/san21cuidauxilenfermeria-pdf.pdf",
+        sourceQuote: "Auxiliar de Enfermería/Clínica..",
+        reviewedAt: "2026-08-08",
       },
     ],
+    programmeProfileEvidence: {
+      todoFp: {
+        sourceUrl:
+          "https://todofp.es/dam/jcr%3Aaf5b68fd-e75c-493b-94ff-0565d3886473/san21cuidauxilenfermeria-pdf.pdf",
+        sourceQuote: "TÉCNICO EN CUIDADOS AUXILIARES DE ENFERMERÍA",
+        reviewedAt: "2026-08-08",
+      },
+      authoritativeOutputSource: {
+        sourceUrl:
+          "https://todofp.es/dam/jcr%3Aaf5b68fd-e75c-493b-94ff-0565d3886473/san21cuidauxilenfermeria-pdf.pdf",
+        sourceQuote:
+          "EMPLEOS QUE PUEDE DESEMPEÑAR LA PERSONA PORTADORA DE ESTE TÍTULO",
+        reviewedAt: "2026-08-08",
+      },
+      reconciliationNote:
+        "The fixture preserves the TodoFP programme and its complete ordered output audit.",
+    },
+    professionalOutputReviews: completedSan21Audit(),
     snapshotCoverage: {
-      status: "unavailable",
+      status: "verified",
       snapshotId: context.snapshotId,
-      limitationCode: "accepted_relationships_not_in_snapshot",
+      countingMethod: "accepted_relationship_union",
+      newlyReachedOfferCount: 43,
     },
   };
   return candidate;
@@ -981,6 +1042,120 @@ describe("validateFpCoveragePilotResults", () => {
         (review) => review.officialOutputLabel,
       ),
     ).toEqual(SSC_OFFICIAL_OUTPUT_LABELS);
+  });
+
+  it.each([
+    ["SAN21", SAN_OFFICIAL_OUTPUT_LABELS],
+    ["HOT01M", HOT_OFFICIAL_OUTPUT_LABELS],
+  ] as const)(
+    "records each official TodoFP output for %s in exact source order",
+    async (programKey, officialOutputLabels) => {
+      const seed = JSON.parse(
+        await readFile(
+          resolve(process.cwd(), "analysis", "fp_coverage_pilot_results.json"),
+          "utf8",
+        ),
+      ) as {
+        attempts: {
+          programKey: string;
+          programmeProfileEvidence?: unknown;
+          professionalOutputReviews?: {
+            officialOutputLabel: string;
+            sourceQuote: string;
+          }[];
+        }[];
+      };
+      const attempt = seed.attempts.find(
+        (candidate) => candidate.programKey === programKey,
+      );
+
+      expect(attempt?.programmeProfileEvidence).toBeDefined();
+      expect(
+        attempt?.professionalOutputReviews?.map(
+          (review) => review.officialOutputLabel,
+        ),
+      ).toEqual(officialOutputLabels);
+      expect(
+        attempt?.professionalOutputReviews?.map((review) => review.sourceQuote),
+      ).toEqual(officialOutputLabels);
+    },
+  );
+
+  it("rejects EOC public evidence that combines an accepted output with a rejected output", async () => {
+    const candidate = await checkedInResults();
+    const eocAttempt = candidate.attempts.find(
+      (attempt) => attempt.programKey === "EOC01M",
+    )!;
+    eocAttempt.acceptedRelationships[0]!.sourceQuote =
+      "– Encofrador.\n\n– Encofrador de edificación.";
+
+    expect(() => validate(candidate)).toThrow(/accepted.*rejected.*output/i);
+  });
+
+  it("rejects a SAN21 audit that omits an official TodoFP output", async () => {
+    const candidate = await checkedInResults();
+    const sanAttempt = candidate.attempts.find(
+      (attempt) => attempt.programKey === "SAN21",
+    )!;
+    sanAttempt.professionalOutputReviews!.pop();
+
+    expect(() => validate(candidate)).toThrow(/every official TodoFP output/i);
+  });
+
+  it("rejects a HOT01M audit with TodoFP outputs reordered", async () => {
+    const candidate = await checkedInResults();
+    const hotAttempt = candidate.attempts.find(
+      (attempt) => attempt.programKey === "HOT01M",
+    )!;
+    [
+      hotAttempt.professionalOutputReviews![0],
+      hotAttempt.professionalOutputReviews![1],
+    ] = [
+      hotAttempt.professionalOutputReviews![1]!,
+      hotAttempt.professionalOutputReviews![0]!,
+    ];
+
+    expect(() => validate(candidate)).toThrow(/source order/i);
+  });
+
+  it("rejects a SAN21 accepted output without independent CNO classification evidence", async () => {
+    const candidate = await checkedInResults();
+    const review = candidate.attempts
+      .find((attempt) => attempt.programKey === "SAN21")!
+      .professionalOutputReviews!.find(
+        (candidateReview) => candidateReview.disposition === "accepted",
+      )! as unknown as Record<string, unknown>;
+    delete review.classificationEvidence;
+
+    expect(() => validate(candidate)).toThrow(/classification evidence/i);
+  });
+
+  it("rejects a HOT01M output whose accepted candidates contradict its disposition", async () => {
+    const candidate = await checkedInResults();
+    const review = candidate.attempts
+      .find((attempt) => attempt.programKey === "HOT01M")!
+      .professionalOutputReviews!.find(
+        (candidateReview) => candidateReview.disposition === "accepted",
+      )!;
+    review.candidateOccupationIds = [
+      "occupation:cno11:5110",
+      "occupation:cno11:3734",
+    ];
+
+    expect(() => validate(candidate)).toThrow(/every candidate.*accepted/i);
+  });
+
+  it("rejects a SAN21 output review with a synthetic rather than contiguous TodoFP quote", async () => {
+    const candidate = await checkedInResults();
+    const review = candidate.attempts.find(
+      (attempt) => attempt.programKey === "SAN21",
+    )!.professionalOutputReviews![0]!;
+    review.sourceQuote =
+      "EMPLEOS QUE PUEDE DESEMPEÑAR LA PERSONA PORTADORA DE ESTE TÍTULO: Auxiliar de Enfermería/Clínica..";
+
+    expect(() => validate(candidate)).toThrow(
+      /exact contiguous TodoFP output quote/i,
+    );
   });
 
   it("records all thirty-three EOC01M official outputs independently", async () => {
