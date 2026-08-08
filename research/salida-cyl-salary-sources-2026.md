@@ -1,12 +1,16 @@
 # SALIDA CyL — Fuentes oficiales de salarios e ingresos para FP
 
-**Fecha de verificación:** 4 de agosto de 2026  
+**Fecha de verificación:** 8 de agosto de 2026  
 **Ámbito:** fuentes primarias u oficiales españolas reutilizables para una posible pestaña de comparación de estudios e ingresos.  
 **Conclusión:** **viable para el MVP con alcance limitado y rotulación estricta**.
 
 ## Resumen ejecutivo
 
 Existe una fuente oficial suficientemente sólida para incorporar a SALIDA CyL una pestaña similar, en intención, a la comparación salarial de *que-estudio*: la **Estadística de Inserción Laboral de las personas graduadas en Formación Profesional** del Ministerio de Educación, Formación Profesional y Deportes.
+
+La incorporación **no requiere esperar una autorización individual previa**. Los conjuntos de EDUCAbase figuran en datos.gob.es como datos públicos descargables en CSV, PC-Axis y XLS, con el aviso legal del Ministerio como condición de uso. Además, el [régimen general estatal de reutilización](https://www.boe.es/buscar/act.php?id=BOE-A-2011-17560) permite copia, difusión, extracción, reordenación, combinación y transformación para fines comerciales y no comerciales. El producto debe atribuir la fuente, conservar la fecha de actualización, no desnaturalizar el dato y no sugerir patrocinio o apoyo institucional. Esta conclusión es de producto y cumplimiento documental, no asesoramiento jurídico.
+
+[`que-estudio.es`](https://que-estudio.es/#/metodologia) confirma la viabilidad práctica, pero no es la base jurídica del producto: declara usar los datos públicos SIIU, muestra base de cotización, afiliación y otros indicadores, ofrece descargas CSV y se identifica como proyecto independiente. SALIDA CyL debe aplicar directamente las condiciones oficiales y utilizar las tablas específicas de FP de EDUCAbase.
 
 La estadística permite comparar la **base de cotización anualizada** de graduados de FP de Grado Medio y Grado Superior por **ciclo o grupo oficial de ciclos**, cohorte y años transcurridos desde la graduación. Sin embargo, ese detalle existe únicamente a escala **nacional**. Para Castilla y León se publican datos salariales por **grado de FP**, no por ciclo ni familia; tampoco existe un cruce oficial equivalente por provincia.
 
@@ -81,6 +85,7 @@ La estadística ofrece tasas de afiliación por `familia profesional × comunida
 - Cohortes disponibles: 2011-2012 a 2022-2023; las cohortes más recientes contienen resultados provisionales y menos años posteriores observables.
 - Formatos: CSV, PC-Axis y XLS mediante EDUCAbase y datos.gob.es.
 - El catálogo de datos.gob.es identifica al Ministerio como publicador y enlaza su aviso legal como licencia. La aplicación debe conservar fuente, URL, fecha de actualización y no sugerir respaldo institucional.
+- No se condiciona el uso de estas distribuciones a obtener una respuesta individual del Ministerio. La autorización general de reutilización y las condiciones publicadas sustituyen esa espera; si una distribución concreta incorporase en el futuro condiciones adicionales, el build deberá bloquearla hasta revisarlas.
 
 ### Limitaciones metodológicas que deben mostrarse
 

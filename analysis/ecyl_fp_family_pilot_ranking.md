@@ -2,14 +2,14 @@
 
 ## Resumen ejecutivo
 
-- La exportación ingerida contiene **1.045 ofertas únicas**, publicadas entre el 4 de febrero y el 3 de agosto de 2026. El 94,5 % (988) se publicó en los últimos tres meses del periodo observado.
+- La exportación ingerida contiene **1.045 ofertas únicas**, publicadas entre el 4 de febrero y el 3 de agosto de 2026. El 94,5 % (988) se publicó en los últimos tres meses de la captura; por tanto, el documento no interpreta el conjunto como una tendencia semestral.
 - La fuente no publica CNO ni familia profesional. Por ello, este análisis clasifica de forma conservadora los títulos como **señales de investigación**, nunca como relaciones ciclo–ocupación aprobadas.
 - Las mayores señales candidatas de FP son Servicios Socioculturales y a la Comunidad (134), Sanidad (83), Hostelería y Turismo (72), Edificación y Obra Civil (42) y Comercio y Marketing (37).
 - El piloto recomendado mantiene dos casos fáciles, dos medios de familias distintas y uno ambiguo: SAN21, HOT01M, SSC01M, EOC01M y COM01M.
 
 ## Ranking conservador por familia candidata
 
-| Posición | Familia candidata | Ofertas, 6 meses | Ofertas, 3 meses | Lectura |
+| Posición | Familia candidata | Ventana capturada | Tramo reciente de 3 meses | Lectura |
 |---:|---|---:|---:|---|
 | 1 | Servicios Socioculturales y a la Comunidad | 134 | 122 | Concentración clara en asistencia domiciliaria y cuidados de dependencia. |
 | 2 | Sanidad | 83 | 80 | Dominada por auxiliares de enfermería; se excluyen profesiones universitarias y sanitarias no atribuibles a FP. |
@@ -29,10 +29,14 @@ Quedan fuera del ranking **369 ofertas** por ser no FP o no permitir una relaci�
 | Fácil | SAN21 | Cuidados Auxiliares de Enfermería | Sanidad | 82 |
 | Fácil | HOT01M | Cocina y Gastronomía | Hostelería y Turismo | 47 |
 | Medio | SSC01M | Atención a Personas en Situación de Dependencia | Servicios Socioculturales y a la Comunidad | 126 |
-| Medio | EOC01M | Construcción | Edificación y Obra Civil | 46 |
-| Ambiguo | COM01M | Actividades Comerciales | Comercio y Marketing | 28 |
+| Medio | EOC01M | Construcción | Edificación y Obra Civil | 39 |
+| Ambiguo | COM01M | Actividades Comerciales | Comercio y Marketing | 27 |
 
 Las cifras de la última columna son señales de títulos para priorizar investigación. No equivalen a ofertas ya cubiertas por el ciclo y pueden solaparse con otros ciclos. Cada relación deberá superar la curación oficial antes de entrar en producción.
+
+Cada señal del piloto se calcula ahora dentro de las ofertas ya clasificadas en su familia candidata. Una aserción ejecutable exige que `señal del ciclo <= total de la familia`, evitando que reglas de clasificación distintas vuelvan a producir una contradicción.
+
+SSC01M se mantiene provisionalmente como **medio** pese a concentrar 126 de las 134 señales de su familia. El motivo no es el volumen: TodoFP publica nueve perfiles profesionales distintos para este título —atención domiciliaria, institucional, educación especial, asistencia personal y teleasistencia, entre otros—, por lo que la curación debe resolver varias ocupaciones oficiales y no una única equivalencia directa. El piloto determinará si esa complejidad real lo acerca finalmente al estrato fácil.
 
 ## Qué debe medir cada intento
 
@@ -58,7 +62,7 @@ Con cinco intentos, la tasa seguirá teniendo mucha incertidumbre. Debe informar
 
 El notebook reproducible carga la ruta de snapshot indicada por `public/data/v1/manifest.json`, normaliza los títulos y aplica reglas ordenadas y revisables. Las reglas separan una clasificación sectorial amplia de un filtro candidato de FP que excluye profesiones universitarias, licencias profesionales y títulos demasiado ambiguos.
 
-La exportación no contiene CNO, familia profesional ni una marca fiable de vigencia. El recuento representa registros publicados en la ventana disponible, no vacantes únicas activas ni puestos cubiertos. La concentración de julio también impide interpretar los seis meses como una serie homogénea.
+La exportación no contiene CNO, familia profesional ni una marca fiable de vigencia. El recuento representa registros publicados en la ventana de captura disponible, no vacantes únicas activas ni puestos cubiertos. Dado que el 94,5 % de los registros se concentra en sus últimos tres meses y 703 aparecen solo en julio, los cortes se usan para describir composición y cobertura del pipeline, no para afirmar estabilidad o tendencia de mercado.
 
 ## Fuentes
 
