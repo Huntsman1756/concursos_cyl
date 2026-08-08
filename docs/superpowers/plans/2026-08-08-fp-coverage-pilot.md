@@ -10,7 +10,7 @@
 
 ## Global Constraints
 
-- Never mention or link the external project/domain `que-estudio`; SALIDA CyL is independently designed from official sources.
+- Never mention or link the rejected external project/domain; SALIDA CyL is independently designed from official sources.
 - Use authoritative primary sources only: TodoFP for program identity/profile, official CNO/SEPE material for occupations and Junta de Castilla y León datasets for centers/offers.
 - A title similarity, keyword rule, model suggestion or market convention is never enough to approve a program–occupation relationship.
 - If official evidence is absent, indirect or contradictory, record `deferred` or `discarded`; do not publish a guessed relationship.
@@ -44,7 +44,7 @@ Aggregate results report the observed fractions `x/5`, total effort across all a
 
 - [ ] Replace the two explicit comparison/attribution passages with source-first wording about SALIDA CyL and official EDUCAbase evidence.
 - [ ] Preserve the ordinary Spanish phrase `qué estudios` in unrelated research; the gate targets the brand/domain, not normal language.
-- [ ] Run `rtk rg -ni "que-estudio|que-estudio\.es" . --glob "!node_modules/**" --glob "!.git/**"` and require zero matches.
+- [ ] Run `rtk rg -ni "que[-]estudio([.]es)?" . --glob "!node_modules/**" --glob "!.git/**"` and require zero matches.
 - [ ] Run changed-file formatting/diff checks and commit `docs: remove unrelated project references`.
 
 ### Task 1: Add the pilot measurement and validation contract

@@ -116,7 +116,7 @@ Before location affects filtering or creates a gap, the offer parser checks expl
 
 ## 5. “Comparar estudios” and income indicators
 
-The product includes a top-level tab named **Comparar estudios**, with a section titled **Empleo e ingresos**. It is inspired by the decision value of que-estudio but uses vocational-training sources and preserves their different scopes.
+SALIDA CyL includes a top-level tab named **Comparar estudios**, with a section titled **Empleo e ingresos**. Its indicators use official EDUCAbase vocational-training data and retain the scope of each published dataset.
 
 ### Employment indicators
 
