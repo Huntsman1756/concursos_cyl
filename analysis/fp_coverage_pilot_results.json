@@ -866,7 +866,7 @@
       "plannedStratum": "ambiguous",
       "state": "deferred",
       "startedAt": "2026-08-08T19:23:34.822Z",
-      "completedAt": "2026-08-08T19:57:46.265Z",
+      "completedAt": "2026-08-08T20:07:19.216Z",
       "stateTransitions": [
         {
           "from": "not_started",
@@ -876,14 +876,14 @@
         {
           "from": "in_progress",
           "to": "deferred",
-          "at": "2026-08-08T19:57:46.265Z"
+          "at": "2026-08-08T20:07:19.216Z"
         }
       ],
       "phaseMinutes": {
         "research": 3,
-        "implementation": 12,
-        "test": 11,
-        "review": 7
+        "implementation": 14,
+        "test": 15,
+        "review": 9
       },
       "acceptedRelationships": [],
       "rejectedRelationships": [
@@ -964,6 +964,14 @@
           "groupingExplanation": "The sales output is close to CNO 5220, but no primary source crosswalks this programme to that exact CNO code.",
           "sourceUrl": "https://todofp.es/que-estudiar/familias-profesionales/comercio-marketing/actividades-comerciales.html",
           "sourceQuote": "Vendedor / vendedora.",
+          "classificationEvidence": [
+            {
+              "occupationId": "occupation:cno11:5220",
+              "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+              "sourceQuote": "5220 Vendedores en tiendas y almacenes",
+              "reviewedAt": "2026-08-08"
+            }
+          ],
           "reviewedAt": "2026-08-08"
         },
         {
@@ -974,6 +982,14 @@
           "groupingExplanation": "The output and CNO title are related, but the primary material does not state an exact programme-to-CNO assignment.",
           "sourceUrl": "https://todofp.es/que-estudiar/familias-profesionales/comercio-marketing/actividades-comerciales.html",
           "sourceQuote": "Representante comercial.",
+          "classificationEvidence": [
+            {
+              "occupationId": "occupation:cno11:3510",
+              "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+              "sourceQuote": "3510 Agentes y representantes comerciales",
+              "reviewedAt": "2026-08-08"
+            }
+          ],
           "reviewedAt": "2026-08-08"
         },
         {
@@ -984,6 +1000,14 @@
           "groupingExplanation": "Promotion work is adjacent to commercial representation but has no exact primary CNO crosswalk for COM01M.",
           "sourceUrl": "https://todofp.es/que-estudiar/familias-profesionales/comercio-marketing/actividades-comerciales.html",
           "sourceQuote": "Promotor / promotora.",
+          "classificationEvidence": [
+            {
+              "occupationId": "occupation:cno11:3510",
+              "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+              "sourceQuote": "3510 Agentes y representantes comerciales",
+              "reviewedAt": "2026-08-08"
+            }
+          ],
           "reviewedAt": "2026-08-08"
         },
         {
@@ -994,6 +1018,14 @@
           "groupingExplanation": "The telemarketing boundary is plausible but not established as an exact programme-to-CNO relationship.",
           "sourceUrl": "https://todofp.es/que-estudiar/familias-profesionales/comercio-marketing/actividades-comerciales.html",
           "sourceQuote": "Televendedor / televendedora.",
+          "classificationEvidence": [
+            {
+              "occupationId": "occupation:cno11:5420",
+              "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+              "sourceQuote": "5420 Operadores de telemarketing",
+              "reviewedAt": "2026-08-08"
+            }
+          ],
           "reviewedAt": "2026-08-08"
         },
         {
@@ -1004,6 +1036,14 @@
           "groupingExplanation": "Distance sales may use telemarketing but the official programme output is not an exact CNO assignment.",
           "sourceUrl": "https://todofp.es/que-estudiar/familias-profesionales/comercio-marketing/actividades-comerciales.html",
           "sourceQuote": "Venta a Distancia.",
+          "classificationEvidence": [
+            {
+              "occupationId": "occupation:cno11:5420",
+              "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+              "sourceQuote": "5420 Operadores de telemarketing",
+              "reviewedAt": "2026-08-08"
+            }
+          ],
           "reviewedAt": "2026-08-08"
         },
         {
@@ -1017,6 +1057,20 @@
           "groupingExplanation": "CNO separates non-specialised teleoperators from telemarketing, so the call-centre output has conflicting candidate boundaries.",
           "sourceUrl": "https://todofp.es/que-estudiar/familias-profesionales/comercio-marketing/actividades-comerciales.html",
           "sourceQuote": "Teleoperador / teleoperadora (Call - Center).",
+          "classificationEvidence": [
+            {
+              "occupationId": "occupation:cno11:4424",
+              "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+              "sourceQuote": "4424 Teleoperadores",
+              "reviewedAt": "2026-08-08"
+            },
+            {
+              "occupationId": "occupation:cno11:5420",
+              "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+              "sourceQuote": "5420 Operadores de telemarketing",
+              "reviewedAt": "2026-08-08"
+            }
+          ],
           "reviewedAt": "2026-08-08"
         },
         {
@@ -1027,6 +1081,14 @@
           "groupingExplanation": "The broad customer-information output does not identify a precise CNO-11 four-digit class.",
           "sourceUrl": "https://todofp.es/que-estudiar/familias-profesionales/comercio-marketing/actividades-comerciales.html",
           "sourceQuote": "Información/atención al cliente.",
+          "classificationEvidence": [
+            {
+              "occupationId": "occupation:cno11:4424",
+              "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+              "sourceQuote": "4424 Teleoperadores",
+              "reviewedAt": "2026-08-08"
+            }
+          ],
           "reviewedAt": "2026-08-08"
         },
         {
@@ -1040,6 +1102,20 @@
           "groupingExplanation": "Cashier and replenishment duties span separate CNO boundaries, so the combined output cannot be published as one inferred mapping.",
           "sourceUrl": "https://todofp.es/que-estudiar/familias-profesionales/comercio-marketing/actividades-comerciales.html",
           "sourceQuote": "Cajera / cajero; reponedor / reponedora.",
+          "classificationEvidence": [
+            {
+              "occupationId": "occupation:cno11:5500",
+              "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+              "sourceQuote": "5500 Cajeros y taquilleros (excepto bancos)",
+              "reviewedAt": "2026-08-08"
+            },
+            {
+              "occupationId": "occupation:cno11:5220",
+              "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+              "sourceQuote": "5220 Vendedores en tiendas y almacenes",
+              "reviewedAt": "2026-08-08"
+            }
+          ],
           "reviewedAt": "2026-08-08"
         },
         {
@@ -1050,6 +1126,14 @@
           "groupingExplanation": "The contact-centre title does not establish an exact CNO assignment for this qualification.",
           "sourceUrl": "https://todofp.es/que-estudiar/familias-profesionales/comercio-marketing/actividades-comerciales.html",
           "sourceQuote": "Operador / operadora de contact-center.",
+          "classificationEvidence": [
+            {
+              "occupationId": "occupation:cno11:4424",
+              "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+              "sourceQuote": "4424 Teleoperadores",
+              "reviewedAt": "2026-08-08"
+            }
+          ],
           "reviewedAt": "2026-08-08"
         },
         {
@@ -1060,6 +1144,14 @@
           "groupingExplanation": "No reviewed candidate CNO directly classifies online-content administration for this programme output.",
           "sourceUrl": "https://todofp.es/que-estudiar/familias-profesionales/comercio-marketing/actividades-comerciales.html",
           "sourceQuote": "Administrador / administradora de contenidos on-line.",
+          "classificationEvidence": [
+            {
+              "occupationId": "occupation:cno11:4424",
+              "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+              "sourceQuote": "4424 Teleoperadores",
+              "reviewedAt": "2026-08-08"
+            }
+          ],
           "reviewedAt": "2026-08-08"
         },
         {
@@ -1070,6 +1162,14 @@
           "groupingExplanation": "CNO separates shop proprietors, managers and employees, so no single inferred candidate is publishable.",
           "sourceUrl": "https://todofp.es/que-estudiar/familias-profesionales/comercio-marketing/actividades-comerciales.html",
           "sourceQuote": "Comerciante de tienda.",
+          "classificationEvidence": [
+            {
+              "occupationId": "occupation:cno11:5220",
+              "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+              "sourceQuote": "5220 Vendedores en tiendas y almacenes",
+              "reviewedAt": "2026-08-08"
+            }
+          ],
           "reviewedAt": "2026-08-08"
         },
         {
@@ -1080,6 +1180,14 @@
           "groupingExplanation": "Management is outside the reviewed sales candidate and lacks a direct COM01M-to-CNO crosswalk.",
           "sourceUrl": "https://todofp.es/que-estudiar/familias-profesionales/comercio-marketing/actividades-comerciales.html",
           "sourceQuote": "Gerente de pequeño comercio.",
+          "classificationEvidence": [
+            {
+              "occupationId": "occupation:cno11:5220",
+              "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+              "sourceQuote": "5220 Vendedores en tiendas y almacenes",
+              "reviewedAt": "2026-08-08"
+            }
+          ],
           "reviewedAt": "2026-08-08"
         },
         {
@@ -1093,6 +1201,20 @@
           "groupingExplanation": "CNO distinguishes purchases-stock technicians from inventory and receiving administration, creating a material boundary conflict.",
           "sourceUrl": "https://todofp.es/que-estudiar/familias-profesionales/comercio-marketing/actividades-comerciales.html",
           "sourceQuote": "Técnica / técnico en gestión de stocks y almacén.",
+          "classificationEvidence": [
+            {
+              "occupationId": "occupation:cno11:3522",
+              "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+              "sourceQuote": "3522 Agentes de compras",
+              "reviewedAt": "2026-08-08"
+            },
+            {
+              "occupationId": "occupation:cno11:4121",
+              "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+              "sourceQuote": "4121 Empleados de control de abastecimientos e inventario",
+              "reviewedAt": "2026-08-08"
+            }
+          ],
           "reviewedAt": "2026-08-08"
         },
         {
@@ -1103,6 +1225,14 @@
           "groupingExplanation": "Warehouse leadership is not the same as the reviewed stock-technician candidate and has no exact supported mapping.",
           "sourceUrl": "https://todofp.es/que-estudiar/familias-profesionales/comercio-marketing/actividades-comerciales.html",
           "sourceQuote": "Jefa / jefe de almacén.",
+          "classificationEvidence": [
+            {
+              "occupationId": "occupation:cno11:3522",
+              "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+              "sourceQuote": "3522 Agentes de compras",
+              "reviewedAt": "2026-08-08"
+            }
+          ],
           "reviewedAt": "2026-08-08"
         },
         {
@@ -1113,6 +1243,14 @@
           "groupingExplanation": "Receiving responsibilities are classified separately from stock technicians, preventing a supported single mapping.",
           "sourceUrl": "https://todofp.es/que-estudiar/familias-profesionales/comercio-marketing/actividades-comerciales.html",
           "sourceQuote": "Responsable de recepción de mercancías.",
+          "classificationEvidence": [
+            {
+              "occupationId": "occupation:cno11:4121",
+              "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+              "sourceQuote": "4121 Empleados de control de abastecimientos e inventario",
+              "reviewedAt": "2026-08-08"
+            }
+          ],
           "reviewedAt": "2026-08-08"
         },
         {
@@ -1123,6 +1261,14 @@
           "groupingExplanation": "Dispatch responsibilities are classified separately from stock technicians, preventing a supported single mapping.",
           "sourceUrl": "https://todofp.es/que-estudiar/familias-profesionales/comercio-marketing/actividades-comerciales.html",
           "sourceQuote": "Responsable de expedición de mercancías.",
+          "classificationEvidence": [
+            {
+              "occupationId": "occupation:cno11:4121",
+              "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+              "sourceQuote": "4121 Empleados de control de abastecimientos e inventario",
+              "reviewedAt": "2026-08-08"
+            }
+          ],
           "reviewedAt": "2026-08-08"
         },
         {
@@ -1133,6 +1279,14 @@
           "groupingExplanation": "Warehouse logistics is adjacent to stock management but lacks a direct primary four-digit CNO crosswalk.",
           "sourceUrl": "https://todofp.es/que-estudiar/familias-profesionales/comercio-marketing/actividades-comerciales.html",
           "sourceQuote": "Técnica / técnico en logística de almacenes.",
+          "classificationEvidence": [
+            {
+              "occupationId": "occupation:cno11:3522",
+              "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+              "sourceQuote": "3522 Agentes de compras",
+              "reviewedAt": "2026-08-08"
+            }
+          ],
           "reviewedAt": "2026-08-08"
         },
         {
@@ -1143,6 +1297,14 @@
           "groupingExplanation": "The customer-information output does not establish a precise CNO-11 four-digit class for COM01M.",
           "sourceUrl": "https://todofp.es/que-estudiar/familias-profesionales/comercio-marketing/actividades-comerciales.html",
           "sourceQuote": "Técnica / técnico de información/atención al cliente en empresas.",
+          "classificationEvidence": [
+            {
+              "occupationId": "occupation:cno11:4424",
+              "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+              "sourceQuote": "4424 Teleoperadores",
+              "reviewedAt": "2026-08-08"
+            }
+          ],
           "reviewedAt": "2026-08-08"
         }
       ]

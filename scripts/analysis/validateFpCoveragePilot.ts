@@ -93,6 +93,13 @@ const RejectedRelationshipSchema = z
   })
   .strict();
 
+const CandidateClassificationEvidenceSchema = z
+  .object({
+    occupationId: z.string().regex(/^occupation:cno11:\d{4}$/u),
+    ...EvidenceSchema,
+  })
+  .strict();
+
 const ProfessionalOutputReviewSchema = z
   .object({
     officialOutputLabel: z.string().trim().min(3).max(220),
@@ -116,7 +123,12 @@ const ProfessionalOutputReviewSchema = z
     groupingExplanation: z.string().trim().min(20).max(500),
     ...EvidenceSchema,
     sourceQuote: z.string().trim().min(3).max(280),
-    classificationEvidence: z.object(EvidenceSchema).strict().optional(),
+    classificationEvidence: z
+      .union([
+        z.object(EvidenceSchema).strict(),
+        z.array(CandidateClassificationEvidenceSchema).min(1),
+      ])
+      .optional(),
   })
   .strict()
   .superRefine((review, context) => {
@@ -339,6 +351,18 @@ const COM01M_REJECTED_OCCUPATION_IDS = [
   "occupation:cno11:5420",
   "occupation:cno11:5500",
 ] as const;
+const COM01M_INE_CNO_URL =
+  "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf";
+const COM01M_CLASSIFICATION_QUOTES = {
+  "occupation:cno11:3510": "3510 Agentes y representantes comerciales",
+  "occupation:cno11:3522": "3522 Agentes de compras",
+  "occupation:cno11:4121":
+    "4121 Empleados de control de abastecimientos e inventario",
+  "occupation:cno11:4424": "4424 Teleoperadores",
+  "occupation:cno11:5220": "5220 Vendedores en tiendas y almacenes",
+  "occupation:cno11:5420": "5420 Operadores de telemarketing",
+  "occupation:cno11:5500": "5500 Cajeros y taquilleros (excepto bancos)",
+} as const;
 
 const EOC01M_FAMILY_PILOT_SIGNAL = 42;
 const EOC01M_EARLIER_TITLE_SIGNAL = 39;
@@ -586,7 +610,8 @@ function assertEoc01mProfessionalOutputReviews(attempt: PilotAttempt): void {
     if (review.disposition === "accepted") {
       const classificationEvidence = review.classificationEvidence;
       assert(
-        classificationEvidence !== undefined,
+        classificationEvidence !== undefined &&
+          !Array.isArray(classificationEvidence),
         "Accepted EOC01M output reviews require independent official classification evidence.",
       );
       assertAuditableEvidence(classificationEvidence, attempt.programKey);
@@ -679,6 +704,40 @@ function assertCom01mProfessionalOutputReviews(attempt: PilotAttempt): void {
         review.acceptedOccupationIds === undefined,
       "Deferred COM01M output reviews cannot accept a CNO occupation.",
     );
+    assert(
+      [
+        "official_evidence_absent",
+        "official_evidence_indirect",
+        "official_evidence_conflicts",
+      ].includes(review.reasonCode),
+      "Deferred COM01M output reviews must use a rejected-evidence reason code.",
+    );
+    assert(
+      review.sourceQuote === review.officialOutputLabel,
+      "COM01M professional-output reviews must quote the exact TodoFP output label.",
+    );
+    const classificationEvidence = review.classificationEvidence;
+    assert(
+      Array.isArray(classificationEvidence) &&
+        classificationEvidence.length ===
+          review.candidateOccupationIds.length &&
+        classificationEvidence.every(
+          (evidence, index) =>
+            evidence.occupationId === review.candidateOccupationIds[index],
+        ),
+      "COM01M requires exact classification evidence for every output candidate.",
+    );
+    for (const evidence of classificationEvidence) {
+      assertAuditableEvidence(evidence, attempt.programKey);
+      assert(
+        evidence.sourceUrl === COM01M_INE_CNO_URL &&
+          evidence.sourceQuote ===
+            COM01M_CLASSIFICATION_QUOTES[
+              evidence.occupationId as keyof typeof COM01M_CLASSIFICATION_QUOTES
+            ],
+        "COM01M classification evidence must cite the exact INE four-digit CNO heading.",
+      );
+    }
   }
   assert(
     attempt.acceptedRelationships.length === 0,
@@ -696,10 +755,28 @@ function assertCom01mProfessionalOutputReviews(attempt: PilotAttempt): void {
   const reviewedCandidates = new Set(
     reviews.flatMap((review) => review.candidateOccupationIds),
   );
+  assert(
+    reviewedCandidates.size === COM01M_REJECTED_OCCUPATION_IDS.length &&
+      COM01M_REJECTED_OCCUPATION_IDS.every((occupationId) =>
+        reviewedCandidates.has(occupationId),
+      ),
+    "COM01M output-review candidates must be exactly the seven rejected CNO candidates.",
+  );
   for (const relationship of attempt.rejectedRelationships) {
     assert(
       reviewedCandidates.has(relationship.occupationId),
       `COM01M disposition ${relationship.occupationId} must be tied to an individual professional-output review.`,
+    );
+    assert(
+      reviews.some(
+        (review) =>
+          review.disposition === "rejected" &&
+          Array.isArray(review.classificationEvidence) &&
+          review.classificationEvidence.some(
+            (evidence) => evidence.occupationId === relationship.occupationId,
+          ),
+      ),
+      `COM01M disposition ${relationship.occupationId} must be backed by rejected output-review classification evidence.`,
     );
   }
 }

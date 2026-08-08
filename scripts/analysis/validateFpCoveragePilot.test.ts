@@ -129,6 +129,18 @@ const COM_REJECTED_RELATIONSHIPS = [
     sourceQuote: "5 - Cajeros y taquilleros (excepto bancos) 31 2,12% 10,71%",
   },
 ] as const;
+const COM_CLASSIFICATION_EVIDENCE_BY_OCCUPATION_ID = {
+  "occupation:cno11:3510": "3510 Agentes y representantes comerciales",
+  "occupation:cno11:3522": "3522 Agentes de compras",
+  "occupation:cno11:4121":
+    "4121 Empleados de control de abastecimientos e inventario",
+  "occupation:cno11:4424": "4424 Teleoperadores",
+  "occupation:cno11:5220": "5220 Vendedores en tiendas y almacenes",
+  "occupation:cno11:5420": "5420 Operadores de telemarketing",
+  "occupation:cno11:5500": "5500 Cajeros y taquilleros (excepto bancos)",
+} as const;
+const INE_CNO_URL =
+  "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf";
 const COM_OFFICIAL_OUTPUT_LABELS = [
   "Vendedor / vendedora.",
   "Representante comercial.",
@@ -696,6 +708,30 @@ describe("validateFpCoveragePilotResults", () => {
         (review) => review.officialOutputLabel,
       ),
     ).toEqual(COM_OFFICIAL_OUTPUT_LABELS);
+    const comReviews = comAttempt!.professionalOutputReviews!;
+    expect(
+      [
+        ...new Set(
+          comReviews.flatMap((review) => review.candidateOccupationIds),
+        ),
+      ].sort(),
+    ).toEqual([...COM_REJECTED_OCCUPATION_IDS].sort());
+    for (const review of comReviews) {
+      expect(review.disposition).toBe("rejected");
+      expect(review.reasonCode).toMatch(/^official_evidence_/u);
+      expect(review.sourceQuote).toBe(review.officialOutputLabel);
+      expect(review.classificationEvidence).toEqual(
+        review.candidateOccupationIds.map((occupationId) => ({
+          occupationId,
+          sourceUrl: INE_CNO_URL,
+          sourceQuote:
+            COM_CLASSIFICATION_EVIDENCE_BY_OCCUPATION_ID[
+              occupationId as keyof typeof COM_CLASSIFICATION_EVIDENCE_BY_OCCUPATION_ID
+            ],
+          reviewedAt: "2026-08-08",
+        })),
+      );
+    }
     expect(
       curatedLinks.some(
         (link) =>
@@ -721,6 +757,7 @@ describe("validateFpCoveragePilotResults", () => {
         mappingCoverage: { resourcePath: string };
         trainingOccupationLinks: { resourcePath: string };
         occupationAliases: { resourcePath: string };
+        occupations: { resourcePath: string };
       };
     };
     const readPublicResource = async (resourcePath: string) =>
@@ -730,17 +767,19 @@ describe("validateFpCoveragePilotResults", () => {
           "utf8",
         ),
       ) as unknown[];
-    const [publicLinks, publicAliases, publicCoverage] = await Promise.all([
-      readPublicResource(
-        manifest.resourceSnapshots.trainingOccupationLinks.resourcePath,
-      ),
-      readPublicResource(
-        manifest.resourceSnapshots.occupationAliases.resourcePath,
-      ),
-      readPublicResource(
-        manifest.resourceSnapshots.mappingCoverage.resourcePath,
-      ),
-    ]);
+    const [publicLinks, publicAliases, publicCoverage, publicOccupations] =
+      await Promise.all([
+        readPublicResource(
+          manifest.resourceSnapshots.trainingOccupationLinks.resourcePath,
+        ),
+        readPublicResource(
+          manifest.resourceSnapshots.occupationAliases.resourcePath,
+        ),
+        readPublicResource(
+          manifest.resourceSnapshots.mappingCoverage.resourcePath,
+        ),
+        readPublicResource(manifest.resourceSnapshots.occupations.resourcePath),
+      ]);
     expect(publicLinks).not.toContainEqual(
       expect.objectContaining({
         trainingProgramKey: "COM01M",
@@ -765,6 +804,11 @@ describe("validateFpCoveragePilotResults", () => {
         rejectedMappings: 0,
       }),
     );
+    for (const occupationId of COM_REJECTED_OCCUPATION_IDS) {
+      expect(publicOccupations).not.toContainEqual(
+        expect.objectContaining({ occupationId }),
+      );
+    }
   });
 
   it("requires COM01M's complete deferred output audit", async () => {
@@ -776,6 +820,58 @@ describe("validateFpCoveragePilotResults", () => {
     delete comAttempt.professionalOutputReviews;
 
     expect(() => validate(candidate)).toThrow(/COM01M.*every official output/i);
+  });
+
+  it("requires exact INE classification evidence for every COM01M candidate", async () => {
+    const candidate = await checkedInResults();
+    const comAttempt = candidate.attempts.find(
+      (attempt) => attempt.programKey === "COM01M",
+    )!;
+    delete comAttempt.professionalOutputReviews![0]!.classificationEvidence;
+
+    expect(() => validate(candidate)).toThrow(
+      /COM01M.*classification evidence/i,
+    );
+  });
+
+  it("rejects a COM01M classification quote that is not the exact INE heading", async () => {
+    const candidate = await checkedInResults();
+    const comAttempt = candidate.attempts.find(
+      (attempt) => attempt.programKey === "COM01M",
+    )!;
+    (
+      comAttempt.professionalOutputReviews![0]!.classificationEvidence as {
+        sourceQuote: string;
+      }[]
+    )[0]!.sourceQuote = "Vendedores en comercio";
+
+    expect(() => validate(candidate)).toThrow(
+      /exact INE four-digit CNO heading/i,
+    );
+  });
+
+  it("requires the COM01M review-candidate union to match all seven rejections", async () => {
+    const candidate = await checkedInResults();
+    const cashierReview = candidate.attempts
+      .find((attempt) => attempt.programKey === "COM01M")!
+      .professionalOutputReviews!.find(
+        (review) =>
+          review.officialOutputLabel ===
+          "Cajera / cajero; reponedor / reponedora.",
+      )!;
+    cashierReview.candidateOccupationIds = ["occupation:cno11:5220"];
+    cashierReview.classificationEvidence = (
+      cashierReview.classificationEvidence as {
+        occupationId: string;
+        sourceUrl: string;
+        sourceQuote: string;
+        reviewedAt: string;
+      }[]
+    ).filter((evidence) => evidence.occupationId === "occupation:cno11:5220");
+
+    expect(() => validate(candidate)).toThrow(
+      /exactly the seven rejected CNO candidates/i,
+    );
   });
 
   it("records all eleven SSC01M official outputs independently", async () => {
