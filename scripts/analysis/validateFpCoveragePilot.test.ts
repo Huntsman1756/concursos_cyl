@@ -1046,6 +1046,17 @@ describe("validateFpCoveragePilotResults", () => {
     ).toEqual(SSC_OFFICIAL_OUTPUT_LABELS);
   });
 
+  it("rejects an SSC01M professional-output quote that is not its exact canonical BOE label", async () => {
+    const candidate = await checkedInResults();
+    candidate.attempts.find(
+      (attempt) => attempt.programKey === "SSC01M",
+    )!.professionalOutputReviews![0]!.sourceQuote = "abc";
+
+    expect(() => validate(candidate)).toThrow(
+      /SSC01M professional-output reviews must preserve the exact canonical BOE quote/i,
+    );
+  });
+
   it.each([
     ["SAN21", SAN_OFFICIAL_OUTPUT_LABELS],
     ["HOT01M", HOT_OFFICIAL_OUTPUT_LABELS],

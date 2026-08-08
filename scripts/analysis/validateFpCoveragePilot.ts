@@ -924,6 +924,10 @@ function assertSsc01mProfessionalOutputReviews(attempt: PilotAttempt): void {
       new URL(review.sourceUrl).hostname.endsWith("boe.es"),
       "SSC01M professional-output reviews must cite the BOE output source.",
     );
+    assert(
+      review.sourceQuote === review.officialOutputLabel,
+      "SSC01M professional-output reviews must preserve the exact canonical BOE quote.",
+    );
   }
 
   const reviewedCandidates = new Set(
