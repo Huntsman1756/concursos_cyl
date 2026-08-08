@@ -15,6 +15,12 @@ import {
 
 type ProgramCoverage = Extract<MappingCoverage, { scope: "program" }>;
 
+export function assertRenderedPilotReport(actual: string, expected: string): void {
+  if (actual.trim() !== expected.trim()) {
+    throw new Error("FP coverage pilot report is not the validated rendered output.");
+  }
+}
+
 function oneDecimal(value: number): string {
   return value.toFixed(1);
 }
@@ -139,11 +145,7 @@ async function checkRenderedReport(): Promise<void> {
       "utf8",
     )
   ).replace(/\r\n/gu, "\n");
-  if (actual.trim() !== expected.trim()) {
-    throw new Error(
-      "FP coverage pilot report is not the validated rendered output.",
-    );
-  }
+  assertRenderedPilotReport(actual, expected);
 }
 
 const invokedPath = process.argv[1];

@@ -1,11 +1,29 @@
 import { describe, expect, it } from "vitest";
 
-import { renderFpCoveragePilotReport } from "./renderFpCoveragePilotReport";
+import {
+  assertRenderedPilotReport,
+  renderFpCoveragePilotReport,
+} from "./renderFpCoveragePilotReport";
 import { validateFpCoveragePilotResultsFile } from "./validateFpCoveragePilot";
 import coverage from "../../public/data/v1/snapshots/20260808191640155-bdbc9a4458a4/mapping-coverage.json";
 import type { MappingCoverage } from "../../data/schemas/curatedMappings";
 
 describe("renderFpCoveragePilotReport", () => {
+  it("rejects a stale checked-in report", () => {
+    expect(() => assertRenderedPilotReport("stale", "rendered")).toThrow(
+      /not the validated rendered/i,
+    );
+  });
+
+  it("rejects terminal pilot states that disagree with public coverage", async () => {
+    const results = await validateFpCoveragePilotResultsFile();
+    const completedUnreviewed = structuredClone(coverage) as MappingCoverage[];
+    completedUnreviewed.find((row) => row.scope === "program" && row.programKey === "SAN21")!.coverageStatus = "uncovered";
+    expect(() => renderFpCoveragePilotReport(results, completedUnreviewed)).toThrow(/terminal pilot states/i);
+    const deferredReviewed = structuredClone(coverage) as MappingCoverage[];
+    deferredReviewed.find((row) => row.scope === "program" && row.programKey === "COM01M")!.coverageStatus = "reviewed";
+    expect(() => renderFpCoveragePilotReport(results, deferredReviewed)).toThrow(/terminal pilot states|Public coverage/i);
+  });
   it("renders validated terminal counts, separate time measures, and the zero-match bottleneck", async () => {
     const results = await validateFpCoveragePilotResultsFile();
     const report = renderFpCoveragePilotReport(
