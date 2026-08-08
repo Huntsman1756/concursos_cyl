@@ -72,7 +72,11 @@ export const TrainingOccupationLinkSchema = z
     relationshipType: RelationshipTypeSchema,
     reviewStatus: ReviewStatusSchema,
     sourceUrl: z.string().url(),
-    sourceQuote: z.string().trim().min(3).max(280),
+    sourceQuote: z
+      .string()
+      .trim()
+      .min(10, "Source quote must contain at least 10 characters.")
+      .max(280),
     reviewedAt: ReviewDateSchema,
     mappingVersion: SemanticVersionSchema,
     reviewNote: ReviewNoteSchema,

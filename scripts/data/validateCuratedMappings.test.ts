@@ -167,6 +167,17 @@ describe("curated occupation mappings", () => {
     ).not.toThrow();
   });
 
+  it("rejects a meaningless three-character official citation quote", () => {
+    expect(() =>
+      validateCuratedMappings({
+        programs,
+        occupations,
+        aliases,
+        links: [{ ...links[0], sourceQuote: "abc" }],
+      }),
+    ).toThrow(/at least 10 characters/i);
+  });
+
   it("rejects an empty occupation confirmation label", () => {
     expect(() =>
       validateCuratedMappings({

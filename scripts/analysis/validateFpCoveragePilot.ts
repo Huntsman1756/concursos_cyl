@@ -51,7 +51,11 @@ const PhaseMinutesSchema = z
 
 const EvidenceSchema = {
   sourceUrl: z.string().url(),
-  sourceQuote: z.string().trim().min(3).max(280),
+  sourceQuote: z
+    .string()
+    .trim()
+    .min(10, "Source quote must contain at least 10 characters.")
+    .max(280),
   reviewedAt: z.string().date(),
 } as const;
 
@@ -123,6 +127,9 @@ const ProfessionalOutputReviewSchema = z
     ]),
     groupingExplanation: z.string().trim().min(20).max(500),
     ...EvidenceSchema,
+    // TodoFP's exact one-output quote can be the nine-character `Cocinero.`.
+    // It is validated against the canonical output label below, rather than the
+    // generic evidence threshold used for citations and relationships.
     sourceQuote: z.string().trim().min(3).max(280),
     classificationEvidence: z
       .union([
@@ -810,6 +817,35 @@ function assertTodoFpProfessionalOutputReviews(attempt: PilotAttempt): void {
       }
     }
   }
+  const topLevelAcceptedOccupationIds = new Set(
+    attempt.acceptedRelationships.map(
+      (relationship) => relationship.occupationId,
+    ),
+  );
+  const expectedRejectedOccupationIds = new Set(
+    [...rejectedReviewOccupationIds].filter(
+      (occupationId) => !acceptedReviewOccupationIds.has(occupationId),
+    ),
+  );
+  const topLevelRejectedOccupationIds = new Set(
+    attempt.rejectedRelationships.map(
+      (relationship) => relationship.occupationId,
+    ),
+  );
+  assert(
+    topLevelAcceptedOccupationIds.size === acceptedReviewOccupationIds.size &&
+      [...topLevelAcceptedOccupationIds].every((occupationId) =>
+        acceptedReviewOccupationIds.has(occupationId),
+      ),
+    `Top-level accepted occupations must exactly equal accepted professional-output review candidates for ${attempt.programKey}.`,
+  );
+  assert(
+    topLevelRejectedOccupationIds.size === expectedRejectedOccupationIds.size &&
+      [...topLevelRejectedOccupationIds].every((occupationId) =>
+        expectedRejectedOccupationIds.has(occupationId),
+      ),
+    `Top-level rejected occupations must exactly equal rejected professional-output review candidates excluding accepted candidates for ${attempt.programKey}.`,
+  );
 
   for (const relationship of attempt.acceptedRelationships) {
     assert(
@@ -1265,8 +1301,8 @@ function assertAttemptState(
   context: FpCoveragePilotValidationContext,
   now: Date,
 ): void {
-  assertRelationshipCatalogIntegrity(attempt, context);
   assertTodoFpProfessionalOutputReviews(attempt);
+  assertRelationshipCatalogIntegrity(attempt, context);
   assertSsc01mProfessionalOutputReviews(attempt);
   assertEoc01mProfessionalOutputReviews(attempt);
   assertCom01mProfessionalOutputReviews(attempt);

@@ -64,10 +64,10 @@ function assertApprovedCitations(links: readonly unknown[]): void {
       (typeof link.sourceUrl !== "string" ||
         !isPrimaryOfficialSource(link.sourceUrl) ||
         typeof link.sourceQuote !== "string" ||
-        link.sourceQuote.trim().length < 3)
+        link.sourceQuote.trim().length < 10)
     ) {
       throw new Error(
-        "Approved mapping requires a primary official source URL and exact quote.",
+        "Approved mapping requires a primary official source URL and exact quote of at least 10 characters.",
       );
     }
   }

@@ -622,7 +622,9 @@ describe("validateFpCoveragePilotResults", () => {
       missingCoverage,
       nonOfficialSource,
     ]) {
-      expect(() => validate(candidate)).toThrow(/completed|official|snapshot/i);
+      expect(() => validate(candidate)).toThrow(
+        /completed|official|snapshot|top-level accepted/i,
+      );
     }
   });
 
@@ -1128,6 +1130,44 @@ describe("validateFpCoveragePilotResults", () => {
     delete review.classificationEvidence;
 
     expect(() => validate(candidate)).toThrow(/classification evidence/i);
+  });
+
+  it("rejects a SAN21 accepted review candidate that is not promoted to a top-level acceptance", async () => {
+    const candidate = await checkedInResults();
+    const sanAttempt = candidate.attempts.find(
+      (attempt) => attempt.programKey === "SAN21",
+    )!;
+    sanAttempt.acceptedRelationships = sanAttempt.acceptedRelationships.filter(
+      (relationship) => relationship.occupationId !== "occupation:cno11:5611",
+    );
+
+    expect(() => validate(candidate)).toThrow(
+      /top-level accepted occupations must exactly equal accepted professional-output review candidates/i,
+    );
+  });
+
+  it("rejects a SAN21 candidate accepted in a review but also listed as top-level rejected", async () => {
+    const candidate = await checkedInResults();
+    const sanAttempt = candidate.attempts.find(
+      (attempt) => attempt.programKey === "SAN21",
+    )!;
+    sanAttempt.rejectedRelationships.push({
+      ...sanAttempt.rejectedRelationships[0]!,
+      occupationId: "occupation:cno11:5611",
+    });
+
+    expect(() => validate(candidate)).toThrow(
+      /top-level rejected occupations must exactly equal rejected professional-output review candidates excluding accepted candidates/i,
+    );
+  });
+
+  it("rejects a three-character pilot evidence quote", async () => {
+    const candidate = await checkedInResults();
+    candidate.attempts.find(
+      (attempt) => attempt.programKey === "SAN21",
+    )!.acceptedRelationships[0]!.sourceQuote = "abc";
+
+    expect(() => validate(candidate)).toThrow(/at least 10 characters/i);
   });
 
   it("rejects a HOT01M output whose accepted candidates contradict its disposition", async () => {
