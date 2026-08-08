@@ -82,6 +82,73 @@ const COM_REJECTED_OCCUPATION_IDS: readonly string[] = [
   "occupation:cno11:5420",
   "occupation:cno11:5500",
 ] as const;
+const COM_REJECTED_RELATIONSHIPS = [
+  {
+    occupationId: "occupation:cno11:3510",
+    reasonCode: "official_evidence_indirect",
+    sourceUrl:
+      "https://www.sepe.es/dctm/titulaciones%3A09019af4802655fa/RElTRVdFQg%3D%3D/ESTUDIO_FP_FI_23.pdf",
+    sourceQuote: "3 - Agentes y representantes comerciales 28 1,92% 55,56%",
+  },
+  {
+    occupationId: "occupation:cno11:3522",
+    reasonCode: "official_evidence_conflicts",
+    sourceUrl: "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+    sourceQuote: "Técnicos en gestión de existencias y/o almacén",
+  },
+  {
+    occupationId: "occupation:cno11:4121",
+    reasonCode: "official_evidence_conflicts",
+    sourceUrl: "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+    sourceQuote: "Empleados administrativos de almacenamiento y recepción",
+  },
+  {
+    occupationId: "occupation:cno11:4424",
+    reasonCode: "official_evidence_conflicts",
+    sourceUrl: "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+    sourceQuote: "4424 Teleoperadores",
+  },
+  {
+    occupationId: "occupation:cno11:5220",
+    reasonCode: "official_evidence_indirect",
+    sourceUrl:
+      "https://www.sepe.es/dctm/titulaciones%3A09019af4802655fa/RElTRVdFQg%3D%3D/ESTUDIO_FP_FI_23.pdf",
+    sourceQuote: "5 - Vendedores en tiendas y almacenes 177 12,11% -5,85%",
+  },
+  {
+    occupationId: "occupation:cno11:5420",
+    reasonCode: "official_evidence_indirect",
+    sourceUrl: "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+    sourceQuote: "5420 Operadores de telemarketing",
+  },
+  {
+    occupationId: "occupation:cno11:5500",
+    reasonCode: "official_evidence_indirect",
+    sourceUrl:
+      "https://www.sepe.es/dctm/titulaciones%3A09019af4802655fa/RElTRVdFQg%3D%3D/ESTUDIO_FP_FI_23.pdf",
+    sourceQuote: "5 - Cajeros y taquilleros (excepto bancos) 31 2,12% 10,71%",
+  },
+] as const;
+const COM_OFFICIAL_OUTPUT_LABELS = [
+  "Vendedor / vendedora.",
+  "Representante comercial.",
+  "Promotor / promotora.",
+  "Televendedor / televendedora.",
+  "Venta a Distancia.",
+  "Teleoperador / teleoperadora (Call - Center).",
+  "Información/atención al cliente.",
+  "Cajera / cajero; reponedor / reponedora.",
+  "Operador / operadora de contact-center.",
+  "Administrador / administradora de contenidos on-line.",
+  "Comerciante de tienda.",
+  "Gerente de pequeño comercio.",
+  "Técnica / técnico en gestión de stocks y almacén.",
+  "Jefa / jefe de almacén.",
+  "Responsable de recepción de mercancías.",
+  "Responsable de expedición de mercancías.",
+  "Técnica / técnico en logística de almacenes.",
+  "Técnica / técnico de información/atención al cliente en empresas.",
+] as const;
 
 const notStartedAttempts: FpCoveragePilotResults["attempts"] = [
   {
@@ -517,6 +584,20 @@ describe("validateFpCoveragePilotResults", () => {
     }
   });
 
+  it("rejects a completion timestamp before a task-owned terminal transition", async () => {
+    const candidate = await checkedInResults();
+    const comAttempt = candidate.attempts.find(
+      (attempt) => attempt.programKey === "COM01M",
+    )!;
+    comAttempt.stateTransitions[1]!.at = new Date(
+      Date.parse(comAttempt.completedAt!) + 60_000,
+    ).toISOString();
+
+    expect(() => validate(candidate)).toThrow(
+      /completedAt cannot predate a task-owned state transition/i,
+    );
+  });
+
   it.each(["deferred", "discarded"] as const)(
     "requires a coded ambiguity reason for %s attempts",
     (state) => {
@@ -590,23 +671,31 @@ describe("validateFpCoveragePilotResults", () => {
     expect(
       comAttempt?.rejectedRelationships.map(({ occupationId }) => occupationId),
     ).toEqual(COM_REJECTED_OCCUPATION_IDS);
-    expect(comAttempt?.rejectedRelationships).toEqual(
-      expect.arrayContaining([
-        expect.objectContaining({
-          occupationId: "occupation:cno11:5220",
-          reasonCode: "official_evidence_indirect",
-          sourceUrl:
-            "https://www.sepe.es/dctm/titulaciones%3A09019af4802655fa/RElTRVdFQg%3D%3D/ESTUDIO_FP_FI_23.pdf",
+    expect(
+      comAttempt?.rejectedRelationships.map(
+        ({ occupationId, reasonCode, sourceUrl, sourceQuote }) => ({
+          occupationId,
+          reasonCode,
+          sourceUrl,
+          sourceQuote,
         }),
-        expect.objectContaining({
-          occupationId: "occupation:cno11:3522",
-          reasonCode: "official_evidence_conflicts",
-          sourceUrl:
-            "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
-        }),
-      ]),
-    );
+      ),
+    ).toEqual(COM_REJECTED_RELATIONSHIPS);
     expect(comAttempt?.snapshotCoverage).toBeUndefined();
+    expect(comAttempt?.programmeProfileEvidence).toMatchObject({
+      todoFp: {
+        sourceUrl:
+          "https://todofp.es/que-estudiar/familias-profesionales/comercio-marketing/actividades-comerciales.html",
+      },
+      authoritativeOutputSource: {
+        sourceUrl: "https://www.boe.es/eli/es/rd/2011/11/18/1688",
+      },
+    });
+    expect(
+      comAttempt?.professionalOutputReviews?.map(
+        (review) => review.officialOutputLabel,
+      ),
+    ).toEqual(COM_OFFICIAL_OUTPUT_LABELS);
     expect(
       curatedLinks.some(
         (link) =>
@@ -621,6 +710,72 @@ describe("validateFpCoveragePilotResults", () => {
           alias.reviewStatus === "approved",
       ),
     ).toBe(false);
+
+    const manifest = JSON.parse(
+      await readFile(
+        resolve(process.cwd(), "public", "data", "v1", "manifest.json"),
+        "utf8",
+      ),
+    ) as {
+      resourceSnapshots: {
+        mappingCoverage: { resourcePath: string };
+        trainingOccupationLinks: { resourcePath: string };
+        occupationAliases: { resourcePath: string };
+      };
+    };
+    const readPublicResource = async (resourcePath: string) =>
+      JSON.parse(
+        await readFile(
+          resolve(process.cwd(), "public", resourcePath.slice(1)),
+          "utf8",
+        ),
+      ) as unknown[];
+    const [publicLinks, publicAliases, publicCoverage] = await Promise.all([
+      readPublicResource(
+        manifest.resourceSnapshots.trainingOccupationLinks.resourcePath,
+      ),
+      readPublicResource(
+        manifest.resourceSnapshots.occupationAliases.resourcePath,
+      ),
+      readPublicResource(
+        manifest.resourceSnapshots.mappingCoverage.resourcePath,
+      ),
+    ]);
+    expect(publicLinks).not.toContainEqual(
+      expect.objectContaining({
+        trainingProgramKey: "COM01M",
+        reviewStatus: "approved",
+      }),
+    );
+    expect(publicAliases).not.toContainEqual(
+      expect.objectContaining({
+        reviewStatus: "approved",
+        occupationId: expect.stringMatching(
+          /^occupation:cno11:(3510|3522|4121|4424|5220|5420|5500)$/u,
+        ),
+      }),
+    );
+    expect(publicCoverage).toContainEqual(
+      expect.objectContaining({
+        scope: "program",
+        programKey: "COM01M",
+        coverageStatus: "uncovered",
+        approvedMappings: 0,
+        draftMappings: 0,
+        rejectedMappings: 0,
+      }),
+    );
+  });
+
+  it("requires COM01M's complete deferred output audit", async () => {
+    const candidate = await checkedInResults();
+    const comAttempt = candidate.attempts.find(
+      (attempt) => attempt.programKey === "COM01M",
+    )!;
+    delete comAttempt.programmeProfileEvidence;
+    delete comAttempt.professionalOutputReviews;
+
+    expect(() => validate(candidate)).toThrow(/COM01M.*every official output/i);
   });
 
   it("records all eleven SSC01M official outputs independently", async () => {

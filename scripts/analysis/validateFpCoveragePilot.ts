@@ -310,6 +310,36 @@ const EOC01M_OFFICIAL_OUTPUT_LABELS = [
   "Impermeabilizador de terrazas.",
 ] as const;
 
+const COM01M_OFFICIAL_OUTPUT_LABELS = [
+  "Vendedor / vendedora.",
+  "Representante comercial.",
+  "Promotor / promotora.",
+  "Televendedor / televendedora.",
+  "Venta a Distancia.",
+  "Teleoperador / teleoperadora (Call - Center).",
+  "Información/atención al cliente.",
+  "Cajera / cajero; reponedor / reponedora.",
+  "Operador / operadora de contact-center.",
+  "Administrador / administradora de contenidos on-line.",
+  "Comerciante de tienda.",
+  "Gerente de pequeño comercio.",
+  "Técnica / técnico en gestión de stocks y almacén.",
+  "Jefa / jefe de almacén.",
+  "Responsable de recepción de mercancías.",
+  "Responsable de expedición de mercancías.",
+  "Técnica / técnico en logística de almacenes.",
+  "Técnica / técnico de información/atención al cliente en empresas.",
+] as const;
+const COM01M_REJECTED_OCCUPATION_IDS = [
+  "occupation:cno11:3510",
+  "occupation:cno11:3522",
+  "occupation:cno11:4121",
+  "occupation:cno11:4424",
+  "occupation:cno11:5220",
+  "occupation:cno11:5420",
+  "occupation:cno11:5500",
+] as const;
+
 const EOC01M_FAMILY_PILOT_SIGNAL = 42;
 const EOC01M_EARLIER_TITLE_SIGNAL = 39;
 
@@ -600,6 +630,80 @@ function assertEoc01mProfessionalOutputReviews(attempt: PilotAttempt): void {
   }
 }
 
+function assertCom01mProfessionalOutputReviews(attempt: PilotAttempt): void {
+  if (
+    attempt.programKey !== "COM01M" ||
+    attempt.state === "not_started" ||
+    attempt.state === "in_progress"
+  ) {
+    return;
+  }
+
+  const profileEvidence = attempt.programmeProfileEvidence;
+  const reviews = attempt.professionalOutputReviews;
+  assert(
+    profileEvidence !== undefined && reviews !== undefined,
+    "COM01M requires TodoFP programme evidence and an independent review of every official output.",
+  );
+  assertAuditableEvidence(profileEvidence.todoFp, attempt.programKey);
+  assertAuditableEvidence(
+    profileEvidence.authoritativeOutputSource,
+    attempt.programKey,
+  );
+  assert(
+    new URL(profileEvidence.todoFp.sourceUrl).hostname.endsWith("todofp.es"),
+    "COM01M programme profile evidence must cite TodoFP.",
+  );
+  assert(
+    new URL(
+      profileEvidence.authoritativeOutputSource.sourceUrl,
+    ).hostname.endsWith("boe.es"),
+    "COM01M authoritative output evidence must cite BOE.",
+  );
+  assert(
+    reviews.length === COM01M_OFFICIAL_OUTPUT_LABELS.length &&
+      reviews.every(
+        (review, index) =>
+          review.officialOutputLabel === COM01M_OFFICIAL_OUTPUT_LABELS[index],
+      ),
+    "COM01M must review each of the eighteen TodoFP professional outputs in order.",
+  );
+  for (const review of reviews) {
+    assertAuditableEvidence(review, attempt.programKey);
+    assert(
+      new URL(review.sourceUrl).hostname.endsWith("todofp.es"),
+      "COM01M professional-output reviews must cite TodoFP.",
+    );
+    assert(
+      review.disposition === "rejected" &&
+        review.acceptedOccupationIds === undefined,
+      "Deferred COM01M output reviews cannot accept a CNO occupation.",
+    );
+  }
+  assert(
+    attempt.acceptedRelationships.length === 0,
+    "Deferred COM01M cannot retain an accepted relationship.",
+  );
+  assert(
+    attempt.rejectedRelationships.length ===
+      COM01M_REJECTED_OCCUPATION_IDS.length &&
+      attempt.rejectedRelationships.every(
+        (relationship, index) =>
+          relationship.occupationId === COM01M_REJECTED_OCCUPATION_IDS[index],
+      ),
+    "COM01M must retain the exact seven rejected CNO candidates in order.",
+  );
+  const reviewedCandidates = new Set(
+    reviews.flatMap((review) => review.candidateOccupationIds),
+  );
+  for (const relationship of attempt.rejectedRelationships) {
+    assert(
+      reviewedCandidates.has(relationship.occupationId),
+      `COM01M disposition ${relationship.occupationId} must be tied to an individual professional-output review.`,
+    );
+  }
+}
+
 function phaseTotalMinutes(
   phaseMinutes: NonNullable<PilotAttempt["phaseMinutes"]>,
 ): number {
@@ -629,6 +733,13 @@ function assertTiming(attempt: PilotAttempt, now: Date): void {
   if (attempt.state === "not_started") return;
   const startedAt = attempt.startedAt!;
   const endAt = attempt.completedAt ?? now.toISOString();
+  if (attempt.completedAt !== undefined) {
+    const latestTaskOwnedTransition = Math.max(...transitionTimes);
+    assert(
+      Date.parse(attempt.completedAt) >= latestTaskOwnedTransition,
+      `Attempt ${attempt.programKey} completedAt cannot predate a task-owned state transition.`,
+    );
+  }
   const reviewedAtValues = [
     ...attempt.acceptedRelationships,
     ...attempt.rejectedRelationships,
@@ -741,6 +852,7 @@ function assertAttemptState(
   assertRelationshipCatalogIntegrity(attempt, context);
   assertSsc01mProfessionalOutputReviews(attempt);
   assertEoc01mProfessionalOutputReviews(attempt);
+  assertCom01mProfessionalOutputReviews(attempt);
 
   if (attempt.state === "not_started") {
     assertExactTransitions(attempt, []);

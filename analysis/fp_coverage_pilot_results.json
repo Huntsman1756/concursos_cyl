@@ -866,7 +866,7 @@
       "plannedStratum": "ambiguous",
       "state": "deferred",
       "startedAt": "2026-08-08T19:23:34.822Z",
-      "completedAt": "2026-08-08T19:28:39.137Z",
+      "completedAt": "2026-08-08T19:57:46.265Z",
       "stateTransitions": [
         {
           "from": "not_started",
@@ -876,14 +876,14 @@
         {
           "from": "in_progress",
           "to": "deferred",
-          "at": "2026-08-08T19:28:39.137Z"
+          "at": "2026-08-08T19:57:46.265Z"
         }
       ],
       "phaseMinutes": {
-        "research": 2,
-        "implementation": 1,
-        "test": 1,
-        "review": 0
+        "research": 3,
+        "implementation": 12,
+        "test": 11,
+        "review": 7
       },
       "acceptedRelationships": [],
       "rejectedRelationships": [
@@ -891,7 +891,7 @@
           "occupationId": "occupation:cno11:3510",
           "reasonCode": "official_evidence_indirect",
           "sourceUrl": "https://www.sepe.es/dctm/titulaciones%3A09019af4802655fa/RElTRVdFQg%3D%3D/ESTUDIO_FP_FI_23.pdf",
-          "sourceQuote": "Agentes y representantes comerciales 28 1,92% 55,56%",
+          "sourceQuote": "3 - Agentes y representantes comerciales 28 1,92% 55,56%",
           "reviewedAt": "2026-08-08"
         },
         {
@@ -912,28 +912,28 @@
           "occupationId": "occupation:cno11:4424",
           "reasonCode": "official_evidence_conflicts",
           "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
-          "sourceQuote": "Teleoperadores (no especializados).",
+          "sourceQuote": "4424 Teleoperadores",
           "reviewedAt": "2026-08-08"
         },
         {
           "occupationId": "occupation:cno11:5220",
           "reasonCode": "official_evidence_indirect",
           "sourceUrl": "https://www.sepe.es/dctm/titulaciones%3A09019af4802655fa/RElTRVdFQg%3D%3D/ESTUDIO_FP_FI_23.pdf",
-          "sourceQuote": "Vendedores en tiendas y almacenes 177 12,11% -5,85%",
+          "sourceQuote": "5 - Vendedores en tiendas y almacenes 177 12,11% -5,85%",
           "reviewedAt": "2026-08-08"
         },
         {
           "occupationId": "occupation:cno11:5420",
           "reasonCode": "official_evidence_indirect",
           "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
-          "sourceQuote": "Los operadores de telemarketing mantienen contactos con clientes o posibles clientes, usando el teléfono.",
+          "sourceQuote": "5420 Operadores de telemarketing",
           "reviewedAt": "2026-08-08"
         },
         {
           "occupationId": "occupation:cno11:5500",
           "reasonCode": "official_evidence_indirect",
           "sourceUrl": "https://www.sepe.es/dctm/titulaciones%3A09019af4802655fa/RElTRVdFQg%3D%3D/ESTUDIO_FP_FI_23.pdf",
-          "sourceQuote": "Cajeros y taquilleros (excepto bancos) 31 2,12% 10,71%",
+          "sourceQuote": "5 - Cajeros y taquilleros (excepto bancos) 31 2,12% 10,71%",
           "reviewedAt": "2026-08-08"
         }
       ],
@@ -941,7 +941,211 @@
         "official_evidence_indirect",
         "multiple_official_interpretations"
       ],
-      "ambiguityNotes": "TodoFP enumerates sales, commercial representation, telemarketing, cashier and stock or warehouse outputs. CNO distinguishes their four-digit classes, while the SEPE qualification report only reports contracted occupations in broad one-digit groups. No primary source directly crosswalks COM01M to a CNO-11 four-digit code, and warehouse or contact-centre outputs admit conflicting CNO boundaries; no approved link, alias or coverage claim is published."
+      "ambiguityNotes": "TodoFP enumerates sales, commercial representation, telemarketing, cashier and stock or warehouse outputs. CNO distinguishes their four-digit classes, while the SEPE qualification report only reports contracted occupations in broad one-digit groups. No primary source directly crosswalks COM01M to a CNO-11 four-digit code, and warehouse or contact-centre outputs admit conflicting CNO boundaries; no approved link, alias or coverage claim is published. Independent Sol review time remains Task 7 reconciliation and is not included in this attempt.",
+      "programmeProfileEvidence": {
+        "todoFp": {
+          "sourceUrl": "https://todofp.es/que-estudiar/familias-profesionales/comercio-marketing/actividades-comerciales.html",
+          "sourceQuote": "Técnico en Actividades Comerciales",
+          "reviewedAt": "2026-08-08"
+        },
+        "authoritativeOutputSource": {
+          "sourceUrl": "https://www.boe.es/eli/es/rd/2011/11/18/1688",
+          "sourceQuote": "Las ocupaciones y puestos de trabajo más relevantes son los siguientes:",
+          "reviewedAt": "2026-08-08"
+        },
+        "reconciliationNote": "TodoFP supplies the current eighteen-output list; the BOE title regulation confirms the official title and a related historic output list, but neither provides an exact CNO-11 crosswalk."
+      },
+      "professionalOutputReviews": [
+        {
+          "officialOutputLabel": "Vendedor / vendedora.",
+          "disposition": "rejected",
+          "candidateOccupationIds": ["occupation:cno11:5220"],
+          "reasonCode": "official_evidence_indirect",
+          "groupingExplanation": "The sales output is close to CNO 5220, but no primary source crosswalks this programme to that exact CNO code.",
+          "sourceUrl": "https://todofp.es/que-estudiar/familias-profesionales/comercio-marketing/actividades-comerciales.html",
+          "sourceQuote": "Vendedor / vendedora.",
+          "reviewedAt": "2026-08-08"
+        },
+        {
+          "officialOutputLabel": "Representante comercial.",
+          "disposition": "rejected",
+          "candidateOccupationIds": ["occupation:cno11:3510"],
+          "reasonCode": "official_evidence_indirect",
+          "groupingExplanation": "The output and CNO title are related, but the primary material does not state an exact programme-to-CNO assignment.",
+          "sourceUrl": "https://todofp.es/que-estudiar/familias-profesionales/comercio-marketing/actividades-comerciales.html",
+          "sourceQuote": "Representante comercial.",
+          "reviewedAt": "2026-08-08"
+        },
+        {
+          "officialOutputLabel": "Promotor / promotora.",
+          "disposition": "rejected",
+          "candidateOccupationIds": ["occupation:cno11:3510"],
+          "reasonCode": "official_evidence_indirect",
+          "groupingExplanation": "Promotion work is adjacent to commercial representation but has no exact primary CNO crosswalk for COM01M.",
+          "sourceUrl": "https://todofp.es/que-estudiar/familias-profesionales/comercio-marketing/actividades-comerciales.html",
+          "sourceQuote": "Promotor / promotora.",
+          "reviewedAt": "2026-08-08"
+        },
+        {
+          "officialOutputLabel": "Televendedor / televendedora.",
+          "disposition": "rejected",
+          "candidateOccupationIds": ["occupation:cno11:5420"],
+          "reasonCode": "official_evidence_indirect",
+          "groupingExplanation": "The telemarketing boundary is plausible but not established as an exact programme-to-CNO relationship.",
+          "sourceUrl": "https://todofp.es/que-estudiar/familias-profesionales/comercio-marketing/actividades-comerciales.html",
+          "sourceQuote": "Televendedor / televendedora.",
+          "reviewedAt": "2026-08-08"
+        },
+        {
+          "officialOutputLabel": "Venta a Distancia.",
+          "disposition": "rejected",
+          "candidateOccupationIds": ["occupation:cno11:5420"],
+          "reasonCode": "official_evidence_indirect",
+          "groupingExplanation": "Distance sales may use telemarketing but the official programme output is not an exact CNO assignment.",
+          "sourceUrl": "https://todofp.es/que-estudiar/familias-profesionales/comercio-marketing/actividades-comerciales.html",
+          "sourceQuote": "Venta a Distancia.",
+          "reviewedAt": "2026-08-08"
+        },
+        {
+          "officialOutputLabel": "Teleoperador / teleoperadora (Call - Center).",
+          "disposition": "rejected",
+          "candidateOccupationIds": [
+            "occupation:cno11:4424",
+            "occupation:cno11:5420"
+          ],
+          "reasonCode": "official_evidence_conflicts",
+          "groupingExplanation": "CNO separates non-specialised teleoperators from telemarketing, so the call-centre output has conflicting candidate boundaries.",
+          "sourceUrl": "https://todofp.es/que-estudiar/familias-profesionales/comercio-marketing/actividades-comerciales.html",
+          "sourceQuote": "Teleoperador / teleoperadora (Call - Center).",
+          "reviewedAt": "2026-08-08"
+        },
+        {
+          "officialOutputLabel": "Información/atención al cliente.",
+          "disposition": "rejected",
+          "candidateOccupationIds": ["occupation:cno11:4424"],
+          "reasonCode": "official_evidence_indirect",
+          "groupingExplanation": "The broad customer-information output does not identify a precise CNO-11 four-digit class.",
+          "sourceUrl": "https://todofp.es/que-estudiar/familias-profesionales/comercio-marketing/actividades-comerciales.html",
+          "sourceQuote": "Información/atención al cliente.",
+          "reviewedAt": "2026-08-08"
+        },
+        {
+          "officialOutputLabel": "Cajera / cajero; reponedor / reponedora.",
+          "disposition": "rejected",
+          "candidateOccupationIds": [
+            "occupation:cno11:5500",
+            "occupation:cno11:5220"
+          ],
+          "reasonCode": "official_evidence_conflicts",
+          "groupingExplanation": "Cashier and replenishment duties span separate CNO boundaries, so the combined output cannot be published as one inferred mapping.",
+          "sourceUrl": "https://todofp.es/que-estudiar/familias-profesionales/comercio-marketing/actividades-comerciales.html",
+          "sourceQuote": "Cajera / cajero; reponedor / reponedora.",
+          "reviewedAt": "2026-08-08"
+        },
+        {
+          "officialOutputLabel": "Operador / operadora de contact-center.",
+          "disposition": "rejected",
+          "candidateOccupationIds": ["occupation:cno11:4424"],
+          "reasonCode": "official_evidence_indirect",
+          "groupingExplanation": "The contact-centre title does not establish an exact CNO assignment for this qualification.",
+          "sourceUrl": "https://todofp.es/que-estudiar/familias-profesionales/comercio-marketing/actividades-comerciales.html",
+          "sourceQuote": "Operador / operadora de contact-center.",
+          "reviewedAt": "2026-08-08"
+        },
+        {
+          "officialOutputLabel": "Administrador / administradora de contenidos on-line.",
+          "disposition": "rejected",
+          "candidateOccupationIds": ["occupation:cno11:4424"],
+          "reasonCode": "official_evidence_absent",
+          "groupingExplanation": "No reviewed candidate CNO directly classifies online-content administration for this programme output.",
+          "sourceUrl": "https://todofp.es/que-estudiar/familias-profesionales/comercio-marketing/actividades-comerciales.html",
+          "sourceQuote": "Administrador / administradora de contenidos on-line.",
+          "reviewedAt": "2026-08-08"
+        },
+        {
+          "officialOutputLabel": "Comerciante de tienda.",
+          "disposition": "rejected",
+          "candidateOccupationIds": ["occupation:cno11:5220"],
+          "reasonCode": "official_evidence_conflicts",
+          "groupingExplanation": "CNO separates shop proprietors, managers and employees, so no single inferred candidate is publishable.",
+          "sourceUrl": "https://todofp.es/que-estudiar/familias-profesionales/comercio-marketing/actividades-comerciales.html",
+          "sourceQuote": "Comerciante de tienda.",
+          "reviewedAt": "2026-08-08"
+        },
+        {
+          "officialOutputLabel": "Gerente de pequeño comercio.",
+          "disposition": "rejected",
+          "candidateOccupationIds": ["occupation:cno11:5220"],
+          "reasonCode": "official_evidence_conflicts",
+          "groupingExplanation": "Management is outside the reviewed sales candidate and lacks a direct COM01M-to-CNO crosswalk.",
+          "sourceUrl": "https://todofp.es/que-estudiar/familias-profesionales/comercio-marketing/actividades-comerciales.html",
+          "sourceQuote": "Gerente de pequeño comercio.",
+          "reviewedAt": "2026-08-08"
+        },
+        {
+          "officialOutputLabel": "Técnica / técnico en gestión de stocks y almacén.",
+          "disposition": "rejected",
+          "candidateOccupationIds": [
+            "occupation:cno11:3522",
+            "occupation:cno11:4121"
+          ],
+          "reasonCode": "official_evidence_conflicts",
+          "groupingExplanation": "CNO distinguishes purchases-stock technicians from inventory and receiving administration, creating a material boundary conflict.",
+          "sourceUrl": "https://todofp.es/que-estudiar/familias-profesionales/comercio-marketing/actividades-comerciales.html",
+          "sourceQuote": "Técnica / técnico en gestión de stocks y almacén.",
+          "reviewedAt": "2026-08-08"
+        },
+        {
+          "officialOutputLabel": "Jefa / jefe de almacén.",
+          "disposition": "rejected",
+          "candidateOccupationIds": ["occupation:cno11:3522"],
+          "reasonCode": "official_evidence_conflicts",
+          "groupingExplanation": "Warehouse leadership is not the same as the reviewed stock-technician candidate and has no exact supported mapping.",
+          "sourceUrl": "https://todofp.es/que-estudiar/familias-profesionales/comercio-marketing/actividades-comerciales.html",
+          "sourceQuote": "Jefa / jefe de almacén.",
+          "reviewedAt": "2026-08-08"
+        },
+        {
+          "officialOutputLabel": "Responsable de recepción de mercancías.",
+          "disposition": "rejected",
+          "candidateOccupationIds": ["occupation:cno11:4121"],
+          "reasonCode": "official_evidence_conflicts",
+          "groupingExplanation": "Receiving responsibilities are classified separately from stock technicians, preventing a supported single mapping.",
+          "sourceUrl": "https://todofp.es/que-estudiar/familias-profesionales/comercio-marketing/actividades-comerciales.html",
+          "sourceQuote": "Responsable de recepción de mercancías.",
+          "reviewedAt": "2026-08-08"
+        },
+        {
+          "officialOutputLabel": "Responsable de expedición de mercancías.",
+          "disposition": "rejected",
+          "candidateOccupationIds": ["occupation:cno11:4121"],
+          "reasonCode": "official_evidence_conflicts",
+          "groupingExplanation": "Dispatch responsibilities are classified separately from stock technicians, preventing a supported single mapping.",
+          "sourceUrl": "https://todofp.es/que-estudiar/familias-profesionales/comercio-marketing/actividades-comerciales.html",
+          "sourceQuote": "Responsable de expedición de mercancías.",
+          "reviewedAt": "2026-08-08"
+        },
+        {
+          "officialOutputLabel": "Técnica / técnico en logística de almacenes.",
+          "disposition": "rejected",
+          "candidateOccupationIds": ["occupation:cno11:3522"],
+          "reasonCode": "official_evidence_indirect",
+          "groupingExplanation": "Warehouse logistics is adjacent to stock management but lacks a direct primary four-digit CNO crosswalk.",
+          "sourceUrl": "https://todofp.es/que-estudiar/familias-profesionales/comercio-marketing/actividades-comerciales.html",
+          "sourceQuote": "Técnica / técnico en logística de almacenes.",
+          "reviewedAt": "2026-08-08"
+        },
+        {
+          "officialOutputLabel": "Técnica / técnico de información/atención al cliente en empresas.",
+          "disposition": "rejected",
+          "candidateOccupationIds": ["occupation:cno11:4424"],
+          "reasonCode": "official_evidence_indirect",
+          "groupingExplanation": "The customer-information output does not establish a precise CNO-11 four-digit class for COM01M.",
+          "sourceUrl": "https://todofp.es/que-estudiar/familias-profesionales/comercio-marketing/actividades-comerciales.html",
+          "sourceQuote": "Técnica / técnico de información/atención al cliente en empresas.",
+          "reviewedAt": "2026-08-08"
+        }
+      ]
     }
   ]
 }
