@@ -181,7 +181,7 @@
           "relationshipType": "reviewed_relationship",
           "reasonCode": "officially_reviewed_relationship",
           "sourceUrl": "https://www.sepe.es/fr/SiteSepe/contenidos/COVID-19/documentos/documentacion-melilla/2021/201221-Resolucion-provisional--20-12-2021-firmada.pdf",
-          "sourceQuote": "Categoría: CUIDADORES DE PERSONAS CON DISCAPACIDAD (CNO 56291025)",
+          "sourceQuote": "Categoría: CUIDADORES DE PERSONAS CON DISCAPACIDAD (CNO 56291025) Titulación: FP grado medio en atención a personas en situación de dependencia",
           "reviewedAt": "2026-08-08"
         }
       ],
@@ -222,9 +222,136 @@
           "reviewedAt": "2026-08-08"
         }
       ],
+      "programmeProfileEvidence": {
+        "todoFp": {
+          "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/servicios-socioculturales-comunidad/atencion-personas-situacion-dependencia.html",
+          "sourceQuote": "Técnico en Atención a Personas en Situación de Dependencia",
+          "reviewedAt": "2026-08-08"
+        },
+        "authoritativeOutputSource": {
+          "sourceUrl": "https://www.boe.es/eli/es/rd/2011/11/04/1593",
+          "sourceQuote": "Las ocupaciones y puestos de trabajo más relevantes son los siguientes:",
+          "reviewedAt": "2026-08-08"
+        },
+        "reconciliationNote": "TodoFP identifies the current programme and lists nine current outputs; Article 7 of the BOE regulation is the authoritative enumeration of all eleven outputs, including psychiatric care and geroculture."
+      },
+      "professionalOutputReviews": [
+        {
+          "officialOutputLabel": "Cuidador o cuidadora de personas en situación de dependencia en diferentes instituciones y/o domicilios.",
+          "disposition": "accepted",
+          "candidateOccupationIds": ["occupation:cno11:5629"],
+          "acceptedOccupationIds": ["occupation:cno11:5629"],
+          "reasonCode": "officially_reviewed_relationship",
+          "groupingExplanation": "The SEPE evidence independently ties the exact qualification to CNO 56291025, which belongs to canonical occupation 5629; this output is the direct caregiver grouping for that reviewed relationship.",
+          "sourceUrl": "https://www.boe.es/eli/es/rd/2011/11/04/1593",
+          "sourceQuote": "Cuidador o cuidadora de personas en situación de dependencia en diferentes instituciones y/o domicilios.",
+          "reviewedAt": "2026-08-08"
+        },
+        {
+          "officialOutputLabel": "Cuidador o cuidadora en centros de atención psiquiátrica.",
+          "disposition": "rejected",
+          "candidateOccupationIds": ["occupation:cno11:5611"],
+          "reasonCode": "official_evidence_indirect",
+          "groupingExplanation": "INE lists mental-health nursing assistants under 5611, but that adjacent occupational example does not establish an exact qualification-to-CNO relationship for psychiatric-centre caregivers.",
+          "sourceUrl": "https://www.boe.es/eli/es/rd/2011/11/04/1593",
+          "sourceQuote": "Cuidador o cuidadora en centros de atención psiquiátrica.",
+          "reviewedAt": "2026-08-08"
+        },
+        {
+          "officialOutputLabel": "Gerocultor o gerocultora.",
+          "disposition": "rejected",
+          "candidateOccupationIds": ["occupation:cno11:5611"],
+          "reasonCode": "official_evidence_indirect",
+          "groupingExplanation": "INE includes geriatric nursing assistants in 5611, but the professional output uses gerocultor and the available official evidence does not provide an exact CNO mapping.",
+          "sourceUrl": "https://www.boe.es/eli/es/rd/2011/11/04/1593",
+          "sourceQuote": "Gerocultor o gerocultora.",
+          "reviewedAt": "2026-08-08"
+        },
+        {
+          "officialOutputLabel": "Gobernante y subgobernante de personas en situación de dependencia en instituciones.",
+          "disposition": "rejected",
+          "candidateOccupationIds": ["occupation:cno11:5831"],
+          "reasonCode": "official_evidence_indirect",
+          "groupingExplanation": "INE's hospital-governor example in 5831 is adjacent management work, not an exact CNO assignment for governors of dependency-care institutions.",
+          "sourceUrl": "https://www.boe.es/eli/es/rd/2011/11/04/1593",
+          "sourceQuote": "Gobernante y subgobernante de personas en situación de dependencia en instituciones.",
+          "reviewedAt": "2026-08-08"
+        },
+        {
+          "officialOutputLabel": "Auxiliar responsable de planta de residencias de mayores y personas con discapacidad.",
+          "disposition": "rejected",
+          "candidateOccupationIds": ["occupation:cno11:5629"],
+          "reasonCode": "official_evidence_indirect",
+          "groupingExplanation": "The reviewed SEPE caregiver relationship supports 5629 for dependent-person care, not the supervisory floor-responsibility component of this residential-services output.",
+          "sourceUrl": "https://www.boe.es/eli/es/rd/2011/11/04/1593",
+          "sourceQuote": "Auxiliar responsable de planta de residencias de mayores y personas con discapacidad.",
+          "reviewedAt": "2026-08-08"
+        },
+        {
+          "officialOutputLabel": "Auxiliar de ayuda a domicilio.",
+          "disposition": "accepted",
+          "candidateOccupationIds": ["occupation:cno11:5710"],
+          "acceptedOccupationIds": ["occupation:cno11:5710"],
+          "reasonCode": "official_programme_output",
+          "groupingExplanation": "This exact BOE output is independently represented by INE's home dependent-person assistance example in canonical occupation 5710, so the approved link is limited to the matching output.",
+          "sourceUrl": "https://www.boe.es/eli/es/rd/2011/11/04/1593",
+          "sourceQuote": "Auxiliar de ayuda a domicilio.",
+          "reviewedAt": "2026-08-08"
+        },
+        {
+          "officialOutputLabel": "Asistente de atención domiciliaria.",
+          "disposition": "rejected",
+          "candidateOccupationIds": ["occupation:cno11:5710"],
+          "reasonCode": "official_evidence_indirect",
+          "groupingExplanation": "The home-assistance CNO example supports the exact auxiliary output already accepted, but it does not supply a separate exact mapping for this assistant title.",
+          "sourceUrl": "https://www.boe.es/eli/es/rd/2011/11/04/1593",
+          "sourceQuote": "Asistente de atención domiciliaria.",
+          "reviewedAt": "2026-08-08"
+        },
+        {
+          "officialOutputLabel": "Trabajador o trabajadora familiar.",
+          "disposition": "rejected",
+          "candidateOccupationIds": ["occupation:cno11:5710"],
+          "reasonCode": "official_evidence_indirect",
+          "groupingExplanation": "The available home-assistance evidence is close to family support but does not identify this family-worker title as an exact CNO 5710 relationship.",
+          "sourceUrl": "https://www.boe.es/eli/es/rd/2011/11/04/1593",
+          "sourceQuote": "Trabajador o trabajadora familiar.",
+          "reviewedAt": "2026-08-08"
+        },
+        {
+          "officialOutputLabel": "Auxiliar de educación especial.",
+          "disposition": "rejected",
+          "candidateOccupationIds": ["occupation:cno11:2312"],
+          "reasonCode": "official_evidence_indirect",
+          "groupingExplanation": "INE's technical educator example for people with disabilities is adjacent to special education but does not establish an exact mapping for the auxiliary title.",
+          "sourceUrl": "https://www.boe.es/eli/es/rd/2011/11/04/1593",
+          "sourceQuote": "Auxiliar de educación especial.",
+          "reviewedAt": "2026-08-08"
+        },
+        {
+          "officialOutputLabel": "Asistente personal.",
+          "disposition": "rejected",
+          "candidateOccupationIds": ["occupation:cno11:5891"],
+          "reasonCode": "official_evidence_conflicts",
+          "groupingExplanation": "INE explicitly excludes care of sick or dependent people from the personal-companion example in 5891, conflicting with this dependency-care output.",
+          "sourceUrl": "https://www.boe.es/eli/es/rd/2011/11/04/1593",
+          "sourceQuote": "Asistente personal.",
+          "reviewedAt": "2026-08-08"
+        },
+        {
+          "officialOutputLabel": "Teleoperador/a de teleasistencia.",
+          "disposition": "rejected",
+          "candidateOccupationIds": ["occupation:cno11:4424"],
+          "reasonCode": "official_evidence_indirect",
+          "groupingExplanation": "INE's non-specialized teleoperator group is adjacent but does not establish that teleassistance work maps exactly to CNO 4424.",
+          "sourceUrl": "https://www.boe.es/eli/es/rd/2011/11/04/1593",
+          "sourceQuote": "Teleoperador/a de teleasistencia.",
+          "reviewedAt": "2026-08-08"
+        }
+      ],
       "snapshotCoverage": {
         "status": "verified",
-        "snapshotId": "20260808182426119-29259da154c6",
+        "snapshotId": "20260808184316256-47f987062bc2",
         "countingMethod": "accepted_relationship_union",
         "newlyReachedOfferCount": 0
       }

@@ -10,6 +10,34 @@ import {
   type FpCoveragePilotValidationContext,
   type FpCoveragePilotResults,
 } from "./validateFpCoveragePilot";
+import { REVIEWED_PROGRAM_QUALIFICATION_LINKS } from "../../data/catalogs/reviewedProgramQualifications";
+import { REVIEWED_QUALIFICATIONS } from "../../data/catalogs/reviewedQualifications";
+import { matchOffersForProgram } from "../../src/domain/offerMatching";
+
+const SSC_APPROVED_OCCUPATION_IDS: readonly string[] = [
+  "occupation:cno11:5629",
+  "occupation:cno11:5710",
+] as const;
+const SSC_REJECTED_OCCUPATION_IDS: readonly string[] = [
+  "occupation:cno11:2312",
+  "occupation:cno11:4424",
+  "occupation:cno11:5611",
+  "occupation:cno11:5831",
+  "occupation:cno11:5891",
+] as const;
+const SSC_OFFICIAL_OUTPUT_LABELS = [
+  "Cuidador o cuidadora de personas en situación de dependencia en diferentes instituciones y/o domicilios.",
+  "Cuidador o cuidadora en centros de atención psiquiátrica.",
+  "Gerocultor o gerocultora.",
+  "Gobernante y subgobernante de personas en situación de dependencia en instituciones.",
+  "Auxiliar responsable de planta de residencias de mayores y personas con discapacidad.",
+  "Auxiliar de ayuda a domicilio.",
+  "Asistente de atención domiciliaria.",
+  "Trabajador o trabajadora familiar.",
+  "Auxiliar de educación especial.",
+  "Asistente personal.",
+  "Teleoperador/a de teleasistencia.",
+] as const;
 
 const notStartedAttempts: FpCoveragePilotResults["attempts"] = [
   {
@@ -185,33 +213,55 @@ describe("validateFpCoveragePilotResults", () => {
     );
   });
 
-  it("publishes the independently evidenced SSC01M home and institutional care relationships", () => {
-    expect(
-      context.links.filter(
-        (link) =>
-          link.trainingProgramKey === "SSC01M" &&
-          link.reviewStatus === "approved",
-      ),
-    ).toEqual(
-      expect.arrayContaining([
-        expect.objectContaining({
-          occupationId: "occupation:cno11:5710",
-          relationshipType: "official_output",
-          sourceUrl: "https://www.boe.es/eli/es/rd/2011/11/04/1593",
-          sourceQuote: "Auxiliar de ayuda a domicilio.",
-          reviewedAt: "2026-08-08",
-        }),
-        expect.objectContaining({
-          occupationId: "occupation:cno11:5629",
-          relationshipType: "reviewed_relationship",
-          sourceUrl:
-            "https://www.sepe.es/fr/SiteSepe/contenidos/COVID-19/documentos/documentacion-melilla/2021/201221-Resolucion-provisional--20-12-2021-firmada.pdf",
-          sourceQuote:
-            "Categoría: CUIDADORES DE PERSONAS CON DISCAPACIDAD (CNO 56291025)",
-          reviewedAt: "2026-08-08",
-        }),
-      ]),
+  it("publishes only the independently evidenced SSC01M relationships without aliases or offer matches", () => {
+    const sscLinks = context.links.filter(
+      (link) => link.trainingProgramKey === "SSC01M",
     );
+
+    expect(sscLinks).toEqual([
+      expect.objectContaining({
+        occupationId: "occupation:cno11:5629",
+        relationshipType: "reviewed_relationship",
+        sourceUrl:
+          "https://www.sepe.es/fr/SiteSepe/contenidos/COVID-19/documentos/documentacion-melilla/2021/201221-Resolucion-provisional--20-12-2021-firmada.pdf",
+        sourceQuote:
+          "Categoría: CUIDADORES DE PERSONAS CON DISCAPACIDAD (CNO 56291025) Titulación: FP grado medio en atención a personas en situación de dependencia",
+        reviewedAt: "2026-08-08",
+      }),
+      expect.objectContaining({
+        occupationId: "occupation:cno11:5710",
+        relationshipType: "official_output",
+        sourceUrl: "https://www.boe.es/eli/es/rd/2011/11/04/1593",
+        sourceQuote: "Auxiliar de ayuda a domicilio.",
+        reviewedAt: "2026-08-08",
+      }),
+    ]);
+    expect(sscLinks.map((link) => link.occupationId).sort()).toEqual(
+      [...SSC_APPROVED_OCCUPATION_IDS].sort(),
+    );
+    expect(
+      context.aliases.filter((alias) =>
+        SSC_APPROVED_OCCUPATION_IDS.includes(alias.occupationId),
+      ),
+    ).toEqual([]);
+    expect(
+      sscLinks.some((link) =>
+        SSC_REJECTED_OCCUPATION_IDS.includes(link.occupationId),
+      ),
+    ).toBe(false);
+    expect(
+      matchOffersForProgram("SSC01M", {
+        programs: context.programs,
+        qualifications: REVIEWED_QUALIFICATIONS,
+        programQualificationLinks: REVIEWED_PROGRAM_QUALIFICATION_LINKS,
+        occupations: context.occupations,
+        aliases: context.aliases,
+        links: context.links,
+        offers: context.offers,
+        publishedRequirements: context.publishedRequirements,
+        humanOverrides: [],
+      }),
+    ).toEqual([]);
   });
 
   it("accepts real canonical evidence only when its audit fields are complete", () => {
@@ -451,6 +501,30 @@ describe("validateFpCoveragePilotResults", () => {
     ) as unknown;
 
     expect(validate(seed).attempts).toHaveLength(5);
+  });
+
+  it("records all eleven SSC01M official outputs independently", async () => {
+    const seed = JSON.parse(
+      await readFile(
+        resolve(process.cwd(), "analysis", "fp_coverage_pilot_results.json"),
+        "utf8",
+      ),
+    ) as {
+      attempts: {
+        programKey: string;
+        professionalOutputReviews?: { officialOutputLabel: string }[];
+      }[];
+    };
+    const sscAttempt = seed.attempts.find(
+      (attempt) => attempt.programKey === "SSC01M",
+    );
+
+    expect(sscAttempt?.professionalOutputReviews).toHaveLength(11);
+    expect(
+      sscAttempt?.professionalOutputReviews?.map(
+        (review) => review.officialOutputLabel,
+      ),
+    ).toEqual(SSC_OFFICIAL_OUTPUT_LABELS);
   });
 
   it("validates a completed prior attempt against its retained immutable snapshot", async () => {

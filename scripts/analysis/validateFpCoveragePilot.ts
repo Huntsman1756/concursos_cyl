@@ -93,6 +93,72 @@ const RejectedRelationshipSchema = z
   })
   .strict();
 
+const ProfessionalOutputReviewSchema = z
+  .object({
+    officialOutputLabel: z.string().trim().min(12).max(220),
+    disposition: z.enum(["accepted", "rejected"]),
+    candidateOccupationIds: z
+      .array(z.string().regex(/^occupation:cno11:\d{4}$/u))
+      .min(1),
+    acceptedOccupationIds: z
+      .array(z.string().regex(/^occupation:cno11:\d{4}$/u))
+      .min(1)
+      .optional(),
+    reasonCode: z.enum([
+      "official_programme_output",
+      "officially_reviewed_relationship",
+      "official_evidence_absent",
+      "official_evidence_indirect",
+      "official_evidence_conflicts",
+      "out_of_scope_regulated_role",
+      "duplicate_relationship",
+    ]),
+    groupingExplanation: z.string().trim().min(20).max(500),
+    ...EvidenceSchema,
+  })
+  .strict()
+  .superRefine((review, context) => {
+    const acceptedReasonCodes = new Set([
+      "official_programme_output",
+      "officially_reviewed_relationship",
+    ]);
+    if (review.disposition === "accepted") {
+      if (
+        review.acceptedOccupationIds === undefined ||
+        review.acceptedOccupationIds.some(
+          (occupationId) =>
+            !review.candidateOccupationIds.includes(occupationId),
+        ) ||
+        !acceptedReasonCodes.has(review.reasonCode)
+      ) {
+        context.addIssue({
+          code: "custom",
+          message:
+            "Accepted professional-output reviews require accepted candidate IDs and an accepted reason code.",
+        });
+      }
+      return;
+    }
+    if (
+      review.acceptedOccupationIds !== undefined ||
+      acceptedReasonCodes.has(review.reasonCode)
+    ) {
+      context.addIssue({
+        code: "custom",
+        message:
+          "Rejected professional-output reviews cannot accept occupations or use accepted reason codes.",
+      });
+    }
+  });
+
+const ProgrammeProfileEvidenceSchema = z
+  .object({
+    todoFp: z.object(EvidenceSchema).strict(),
+    authoritativeOutputSource: z.object(EvidenceSchema).strict(),
+    reconciliationNote: z.string().trim().min(20).max(500),
+  })
+  .strict();
+
 const StateTransitionSchema = z
   .object({
     from: PilotStateSchema,
@@ -132,6 +198,10 @@ const PilotAttemptSchema = z
     phaseMinutes: PhaseMinutesSchema.optional(),
     acceptedRelationships: z.array(OfficialRelationshipSchema),
     rejectedRelationships: z.array(RejectedRelationshipSchema),
+    programmeProfileEvidence: ProgrammeProfileEvidenceSchema.optional(),
+    professionalOutputReviews: z
+      .array(ProfessionalOutputReviewSchema)
+      .optional(),
     ambiguityReasonCodes: z
       .array(
         z.enum([
@@ -186,6 +256,20 @@ const expectedPrograms = [
     familyName: "Comercio y Marketing",
     plannedStratum: "ambiguous",
   },
+] as const;
+
+const SSC01M_OFFICIAL_OUTPUT_LABELS = [
+  "Cuidador o cuidadora de personas en situación de dependencia en diferentes instituciones y/o domicilios.",
+  "Cuidador o cuidadora en centros de atención psiquiátrica.",
+  "Gerocultor o gerocultora.",
+  "Gobernante y subgobernante de personas en situación de dependencia en instituciones.",
+  "Auxiliar responsable de planta de residencias de mayores y personas con discapacidad.",
+  "Auxiliar de ayuda a domicilio.",
+  "Asistente de atención domiciliaria.",
+  "Trabajador o trabajadora familiar.",
+  "Auxiliar de educación especial.",
+  "Asistente personal.",
+  "Teleoperador/a de teleasistencia.",
 ] as const;
 
 type PilotAttempt = z.infer<typeof PilotAttemptSchema>;
@@ -332,6 +416,60 @@ function assertRelationshipCatalogIntegrity(
   }
 }
 
+function assertSsc01mProfessionalOutputReviews(attempt: PilotAttempt): void {
+  if (attempt.programKey !== "SSC01M" || attempt.state !== "completed") return;
+
+  const profileEvidence = attempt.programmeProfileEvidence;
+  const reviews = attempt.professionalOutputReviews;
+  assert(
+    profileEvidence !== undefined && reviews !== undefined,
+    "Completed SSC01M requires TodoFP programme evidence and an independent review of every official output.",
+  );
+  assertAuditableEvidence(profileEvidence.todoFp, attempt.programKey);
+  assertAuditableEvidence(
+    profileEvidence.authoritativeOutputSource,
+    attempt.programKey,
+  );
+  assert(
+    new URL(profileEvidence.todoFp.sourceUrl).hostname.endsWith("todofp.es"),
+    "SSC01M programme profile evidence must cite TodoFP.",
+  );
+  assert(
+    new URL(
+      profileEvidence.authoritativeOutputSource.sourceUrl,
+    ).hostname.endsWith("boe.es"),
+    "SSC01M complete output evidence must cite BOE.",
+  );
+  assert(
+    reviews.length === SSC01M_OFFICIAL_OUTPUT_LABELS.length &&
+      reviews.every(
+        (review, index) =>
+          review.officialOutputLabel === SSC01M_OFFICIAL_OUTPUT_LABELS[index],
+      ),
+    "SSC01M must review each of the eleven BOE professional outputs in order.",
+  );
+  for (const review of reviews) {
+    assertAuditableEvidence(review, attempt.programKey);
+    assert(
+      new URL(review.sourceUrl).hostname.endsWith("boe.es"),
+      "SSC01M professional-output reviews must cite the BOE output source.",
+    );
+  }
+
+  const reviewedCandidates = new Set(
+    reviews.flatMap((review) => review.candidateOccupationIds),
+  );
+  for (const relationship of [
+    ...attempt.acceptedRelationships,
+    ...attempt.rejectedRelationships,
+  ]) {
+    assert(
+      reviewedCandidates.has(relationship.occupationId),
+      `SSC01M disposition ${relationship.occupationId} must be tied to an individual professional-output review.`,
+    );
+  }
+}
+
 function phaseTotalMinutes(
   phaseMinutes: NonNullable<PilotAttempt["phaseMinutes"]>,
 ): number {
@@ -364,6 +502,13 @@ function assertTiming(attempt: PilotAttempt, now: Date): void {
   const reviewedAtValues = [
     ...attempt.acceptedRelationships,
     ...attempt.rejectedRelationships,
+    ...(attempt.professionalOutputReviews ?? []),
+    ...(attempt.programmeProfileEvidence === undefined
+      ? []
+      : [
+          attempt.programmeProfileEvidence.todoFp,
+          attempt.programmeProfileEvidence.authoritativeOutputSource,
+        ]),
   ].map((relationship) => relationship.reviewedAt);
   assert(
     reviewedAtValues.every(
@@ -458,6 +603,7 @@ function assertAttemptState(
   now: Date,
 ): void {
   assertRelationshipCatalogIntegrity(attempt, context);
+  assertSsc01mProfessionalOutputReviews(attempt);
 
   if (attempt.state === "not_started") {
     assertExactTransitions(attempt, []);
@@ -467,6 +613,8 @@ function assertAttemptState(
         attempt.phaseMinutes === undefined &&
         attempt.acceptedRelationships.length === 0 &&
         attempt.rejectedRelationships.length === 0 &&
+        attempt.programmeProfileEvidence === undefined &&
+        attempt.professionalOutputReviews === undefined &&
         attempt.ambiguityReasonCodes === undefined &&
         attempt.ambiguityNotes === undefined &&
         attempt.snapshotCoverage === undefined,
