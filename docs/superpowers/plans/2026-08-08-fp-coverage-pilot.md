@@ -56,7 +56,7 @@ Aggregate results report the observed fractions `x/5`, total effort across all a
 - Modify: `package.json`
 
 - [ ] Write RED tests for the exact five keys, unique attempts, legal state transitions, non-negative phase minutes, completed-attempt evidence, rejected-link reasons and snapshot coverage provenance.
-- [ ] Implement a fail-closed validator and `analysis:pilot:validate` command. Seed five `in_progress` attempts with start timestamps only; never pre-fill outcomes or invented effort.
+- [ ] Implement a fail-closed validator and `analysis:pilot:validate` command. Seed five `not_started` attempts without timestamps; each cycle task changes only its own attempt to `in_progress` and records `startedAt` immediately before research. Never pre-fill outcomes or invented effort.
 - [ ] Test that `completed` requires at least one accepted official relationship and that `deferred`/`discarded` requires a coded ambiguity reason.
 - [ ] Run focused tests, lint, build, license check and commit `test: add FP coverage pilot contract`.
 
