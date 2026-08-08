@@ -52,6 +52,26 @@ export function renderFpCoveragePilotReport(
   const comCoverage = programCoverage.find(
     (row) => row.programKey === "COM01M",
   );
+  for (const attempt of results.attempts) {
+    if (
+      attempt.state !== "completed" &&
+      attempt.state !== "deferred" &&
+      attempt.state !== "discarded"
+    )
+      continue;
+    const row = programCoverage.find(
+      (candidate) => candidate.programKey === attempt.programKey,
+    );
+    if (
+      row === undefined ||
+      (attempt.state === "completed" && row.coverageStatus !== "reviewed") ||
+      (attempt.state !== "completed" && row.coverageStatus === "reviewed")
+    ) {
+      throw new Error(
+        "Public coverage does not agree with terminal pilot states.",
+      );
+    }
+  }
   if (
     !reviewedKeys.includes("SAN21") ||
     com.state !== "deferred" ||
@@ -112,7 +132,18 @@ async function checkRenderedReport(): Promise<void> {
       ),
     ),
   );
-  renderFpCoveragePilotReport(results, coverage);
+  const expected = renderFpCoveragePilotReport(results, coverage);
+  const actual = (
+    await readFile(
+      resolve(process.cwd(), "analysis", "fp_coverage_pilot_results.md"),
+      "utf8",
+    )
+  ).replace(/\r\n/gu, "\n");
+  if (actual.trim() !== expected.trim()) {
+    throw new Error(
+      "FP coverage pilot report is not the validated rendered output.",
+    );
+  }
 }
 
 const invokedPath = process.argv[1];
