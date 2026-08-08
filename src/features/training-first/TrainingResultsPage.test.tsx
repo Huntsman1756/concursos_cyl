@@ -50,19 +50,20 @@ async function installActiveAliasPassFetch(): Promise<void> {
     ["/data/v1/manifest.json", manifest],
     ...(await Promise.all(
       Object.values(manifest.resourceSnapshots).map(
-        async ({ resourcePath }) => [
-          resourcePath,
-          JSON.parse(
-            await readFile(
-              resolve(
-                process.cwd(),
-                "public",
-                ...resourcePath.slice(1).split("/"),
+        async ({ resourcePath }) =>
+          [
+            resourcePath,
+            JSON.parse(
+              await readFile(
+                resolve(
+                  process.cwd(),
+                  "public",
+                  ...resourcePath.slice(1).split("/"),
+                ),
+                "utf8",
               ),
-              "utf8",
             ),
-          ),
-        ],
+          ] as const,
       ),
     )),
   ]);
