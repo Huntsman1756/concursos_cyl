@@ -70,7 +70,7 @@ async function run(): Promise<void> {
     return;
   }
   assertRenderedFpOfficialAliasPassReport(
-    (await readFile(output, "utf8")).replace(/\r\n/gu, "\n"),
+    await readFile(output, "utf8"),
     expected,
   );
 }

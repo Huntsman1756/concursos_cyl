@@ -41,5 +41,14 @@ describe("renderFpOfficialAliasPassReport", () => {
     expect(() =>
       assertRenderedFpOfficialAliasPassReport("stale", report),
     ).toThrow(/validated rendered/i);
+    expect(() =>
+      assertRenderedFpOfficialAliasPassReport(
+        report.replace(/\n/gu, "\r\n"),
+        report,
+      ),
+    ).toThrow(/validated rendered/i);
+    expect(() =>
+      assertRenderedFpOfficialAliasPassReport(`${report}\n`, report),
+    ).toThrow(/validated rendered/i);
   });
 });
