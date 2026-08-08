@@ -54,6 +54,7 @@ describe("renderFpCoveragePilotReport", () => {
     expect(report).toContain("43 ofertas marginales");
     expect(report).toContain("HOT01M, SSC01M y EOC01M");
     expect(report).toContain("0 ofertas marginales");
+    expect(report).toContain("En la instantánea histórica del piloto");
     expect(report).toContain("COM01M permanece diferido");
     expect(report).toContain(
       "excluye este endurecimiento integral posterior a la agregación, iniciado el 2026-08-08T21:17:46.2354891Z",

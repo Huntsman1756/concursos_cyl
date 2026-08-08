@@ -110,7 +110,7 @@ No se infiere una tasa estable para todo el catálogo a partir de cinco intentos
 
 La cobertura revisada pública incluye ${reviewedKeys.join(", ")}. La interfaz la deriva de \`mapping-coverage.json\` direccionado por el manifiesto; no mantiene una lista paralela. COM01M permanece diferido y se muestra como cobertura no disponible, sin relación, alias, ocupación ni afirmación pública revisada.
 
-SAN21 es el único ciclo del piloto con alcance marginal en la instantánea: ${summary.marginalOffersReached} ofertas mediante la unión de relaciones aceptadas. ${zeroPrograms.join(", ")} tienen relaciones oficiales aprobadas, pero 0 ofertas marginales cada uno porque no se admitieron alias sin evidencia oficial suficiente. Cero no equivale a ausencia de empleo fuera de la instantánea.
+SAN21 es el único ciclo del piloto con alcance marginal en la instantánea: ${summary.marginalOffersReached} ofertas mediante la unión de relaciones aceptadas. En la instantánea histórica del piloto, ${zeroPrograms.join(", ")} tuvieron 0 ofertas marginales porque todavía no se habían admitido alias. Cero no equivale a ausencia de empleo fuera de la instantánea.
 
 ## No finalización y siguiente tramo
 

@@ -10,7 +10,9 @@ export function assertRenderedFpOfficialAliasPassReport(
   expected: string,
 ): void {
   if (actual !== expected) {
-    throw new Error("FP official alias pass report is not the validated rendered output.");
+    throw new Error(
+      "FP official alias pass report is not the validated rendered output.",
+    );
   }
 }
 
@@ -20,10 +22,12 @@ export function renderFpOfficialAliasPassReport(
 ): string {
   const validated = FpOfficialAliasPassResultsSchema.parse(results);
   const published = GeneratedManifestSchema.parse(manifest);
-  const lines = validated.programs.map(
-    (program) =>
-      `- ${program.programKey}: ${program.beforeOfferCount} → ${program.afterOfferCount}.`,
-  );
+  const lines = validated.programs
+    .toSorted((left, right) => left.programKey.localeCompare(right.programKey))
+    .map(
+      (program) =>
+        `- ${program.programKey}: ${program.beforeOfferCount} → ${program.afterOfferCount}.`,
+    );
   return `# Pasada oficial de alias FP
 
 ## Resultado controlado
@@ -50,17 +54,30 @@ La pasada oficial acotada no aumenta las ofertas alcanzadas; no se amplían fuen
 
 async function run(): Promise<void> {
   const root = process.cwd();
-  const results = JSON.parse(await readFile(resolve(root, "analysis/fp_official_alias_pass_results.json"), "utf8"));
-  const manifest = JSON.parse(await readFile(resolve(root, "public/data/v1/manifest.json"), "utf8"));
+  const results = JSON.parse(
+    await readFile(
+      resolve(root, "analysis/fp_official_alias_pass_results.json"),
+      "utf8",
+    ),
+  );
+  const manifest = JSON.parse(
+    await readFile(resolve(root, "public/data/v1/manifest.json"), "utf8"),
+  );
   const expected = renderFpOfficialAliasPassReport(results, manifest);
   const output = resolve(root, "analysis/fp_official_alias_pass_results.md");
   if (process.argv[2] === "--write") {
     await writeFile(output, expected, "utf8");
     return;
   }
-  assertRenderedFpOfficialAliasPassReport((await readFile(output, "utf8")).replace(/\r\n/gu, "\n"), expected);
+  assertRenderedFpOfficialAliasPassReport(
+    (await readFile(output, "utf8")).replace(/\r\n/gu, "\n"),
+    expected,
+  );
 }
 
-if (process.argv[1] !== undefined && pathToFileURL(resolve(process.argv[1])).href === import.meta.url) {
+if (
+  process.argv[1] !== undefined &&
+  pathToFileURL(resolve(process.argv[1])).href === import.meta.url
+) {
   await run();
 }

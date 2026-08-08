@@ -4,9 +4,9 @@
 
 - Instantánea base: `20260808215403108-add4c517860c`.
 - Alias aceptados: 10; rechazados: 44.
+- EOC01M: 0 → 0.
 - HOT01M: 0 → 0.
 - SSC01M: 0 → 0.
-- EOC01M: 0 → 0.
 - Unión de ofertas nuevas: 0.
 
 ## Publicación
