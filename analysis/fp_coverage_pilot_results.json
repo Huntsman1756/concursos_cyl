@@ -864,10 +864,84 @@
       "programTitle": "Actividades Comerciales",
       "familyName": "Comercio y Marketing",
       "plannedStratum": "ambiguous",
-      "state": "not_started",
-      "stateTransitions": [],
+      "state": "deferred",
+      "startedAt": "2026-08-08T19:23:34.822Z",
+      "completedAt": "2026-08-08T19:28:39.137Z",
+      "stateTransitions": [
+        {
+          "from": "not_started",
+          "to": "in_progress",
+          "at": "2026-08-08T19:23:34.822Z"
+        },
+        {
+          "from": "in_progress",
+          "to": "deferred",
+          "at": "2026-08-08T19:28:39.137Z"
+        }
+      ],
+      "phaseMinutes": {
+        "research": 2,
+        "implementation": 1,
+        "test": 1,
+        "review": 0
+      },
       "acceptedRelationships": [],
-      "rejectedRelationships": []
+      "rejectedRelationships": [
+        {
+          "occupationId": "occupation:cno11:3510",
+          "reasonCode": "official_evidence_indirect",
+          "sourceUrl": "https://www.sepe.es/dctm/titulaciones%3A09019af4802655fa/RElTRVdFQg%3D%3D/ESTUDIO_FP_FI_23.pdf",
+          "sourceQuote": "Agentes y representantes comerciales 28 1,92% 55,56%",
+          "reviewedAt": "2026-08-08"
+        },
+        {
+          "occupationId": "occupation:cno11:3522",
+          "reasonCode": "official_evidence_conflicts",
+          "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+          "sourceQuote": "Técnicos en gestión de existencias y/o almacén",
+          "reviewedAt": "2026-08-08"
+        },
+        {
+          "occupationId": "occupation:cno11:4121",
+          "reasonCode": "official_evidence_conflicts",
+          "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+          "sourceQuote": "Empleados administrativos de almacenamiento y recepción",
+          "reviewedAt": "2026-08-08"
+        },
+        {
+          "occupationId": "occupation:cno11:4424",
+          "reasonCode": "official_evidence_conflicts",
+          "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+          "sourceQuote": "Teleoperadores (no especializados).",
+          "reviewedAt": "2026-08-08"
+        },
+        {
+          "occupationId": "occupation:cno11:5220",
+          "reasonCode": "official_evidence_indirect",
+          "sourceUrl": "https://www.sepe.es/dctm/titulaciones%3A09019af4802655fa/RElTRVdFQg%3D%3D/ESTUDIO_FP_FI_23.pdf",
+          "sourceQuote": "Vendedores en tiendas y almacenes 177 12,11% -5,85%",
+          "reviewedAt": "2026-08-08"
+        },
+        {
+          "occupationId": "occupation:cno11:5420",
+          "reasonCode": "official_evidence_indirect",
+          "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+          "sourceQuote": "Los operadores de telemarketing mantienen contactos con clientes o posibles clientes, usando el teléfono.",
+          "reviewedAt": "2026-08-08"
+        },
+        {
+          "occupationId": "occupation:cno11:5500",
+          "reasonCode": "official_evidence_indirect",
+          "sourceUrl": "https://www.sepe.es/dctm/titulaciones%3A09019af4802655fa/RElTRVdFQg%3D%3D/ESTUDIO_FP_FI_23.pdf",
+          "sourceQuote": "Cajeros y taquilleros (excepto bancos) 31 2,12% 10,71%",
+          "reviewedAt": "2026-08-08"
+        }
+      ],
+      "ambiguityReasonCodes": [
+        "official_evidence_indirect",
+        "multiple_official_interpretations"
+      ],
+      "ambiguityNotes": "TodoFP enumerates sales, commercial representation, telemarketing, cashier and stock or warehouse outputs. CNO distinguishes their four-digit classes, while the SEPE qualification report only reports contracted occupations in broad one-digit groups. No primary source directly crosswalks COM01M to a CNO-11 four-digit code, and warehouse or contact-centre outputs admit conflicting CNO boundaries; no approved link, alias or coverage claim is published."
     }
   ]
 }

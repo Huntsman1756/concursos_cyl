@@ -73,6 +73,15 @@ const EOC_OFFICIAL_OUTPUT_LABELS = [
   "Instalador de sistemas de impermeabilización en edificios y obra civil.",
   "Impermeabilizador de terrazas.",
 ] as const;
+const COM_REJECTED_OCCUPATION_IDS: readonly string[] = [
+  "occupation:cno11:3510",
+  "occupation:cno11:3522",
+  "occupation:cno11:4121",
+  "occupation:cno11:4424",
+  "occupation:cno11:5220",
+  "occupation:cno11:5420",
+  "occupation:cno11:5500",
+] as const;
 
 const notStartedAttempts: FpCoveragePilotResults["attempts"] = [
   {
@@ -545,6 +554,73 @@ describe("validateFpCoveragePilotResults", () => {
     ) as unknown;
 
     expect(validate(seed).attempts).toHaveLength(5);
+  });
+
+  it("defers COM01M without publishing an inferred CNO mapping", async () => {
+    const seed = await checkedInResults();
+    const comAttempt = seed.attempts.find(
+      (attempt) => attempt.programKey === "COM01M",
+    );
+    const curatedLinks = JSON.parse(
+      await readFile(
+        resolve(
+          process.cwd(),
+          "data",
+          "curated",
+          "training-occupation-links.json",
+        ),
+        "utf8",
+      ),
+    ) as { trainingProgramKey: string; reviewStatus: string }[];
+    const curatedAliases = JSON.parse(
+      await readFile(
+        resolve(process.cwd(), "data", "curated", "occupation-aliases.json"),
+        "utf8",
+      ),
+    ) as { occupationId: string; reviewStatus: string }[];
+
+    expect(comAttempt).toMatchObject({
+      state: "deferred",
+      acceptedRelationships: [],
+      ambiguityReasonCodes: [
+        "official_evidence_indirect",
+        "multiple_official_interpretations",
+      ],
+    });
+    expect(
+      comAttempt?.rejectedRelationships.map(({ occupationId }) => occupationId),
+    ).toEqual(COM_REJECTED_OCCUPATION_IDS);
+    expect(comAttempt?.rejectedRelationships).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          occupationId: "occupation:cno11:5220",
+          reasonCode: "official_evidence_indirect",
+          sourceUrl:
+            "https://www.sepe.es/dctm/titulaciones%3A09019af4802655fa/RElTRVdFQg%3D%3D/ESTUDIO_FP_FI_23.pdf",
+        }),
+        expect.objectContaining({
+          occupationId: "occupation:cno11:3522",
+          reasonCode: "official_evidence_conflicts",
+          sourceUrl:
+            "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+        }),
+      ]),
+    );
+    expect(comAttempt?.snapshotCoverage).toBeUndefined();
+    expect(
+      curatedLinks.some(
+        (link) =>
+          link.trainingProgramKey === "COM01M" &&
+          link.reviewStatus === "approved",
+      ),
+    ).toBe(false);
+    expect(
+      curatedAliases.some(
+        (alias) =>
+          COM_REJECTED_OCCUPATION_IDS.includes(alias.occupationId) &&
+          alias.reviewStatus === "approved",
+      ),
+    ).toBe(false);
   });
 
   it("records all eleven SSC01M official outputs independently", async () => {

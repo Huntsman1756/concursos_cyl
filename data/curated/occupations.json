@@ -252,5 +252,60 @@
     "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
     "reviewedAt": "2026-08-08",
     "catalogVersion": "1.0.0"
+  },
+  {
+    "occupationId": "occupation:cno11:3510",
+    "preferredLabel": "Agentes y representantes comerciales",
+    "confirmationLabel": "Representación comercial",
+    "classificationSystem": "CNO-11",
+    "classificationCode": "3510",
+    "reviewStatus": "rejected",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+    "reviewedAt": "2026-08-08",
+    "catalogVersion": "1.0.0"
+  },
+  {
+    "occupationId": "occupation:cno11:3522",
+    "preferredLabel": "Agentes de compras",
+    "confirmationLabel": "Gestión de existencias y almacén",
+    "classificationSystem": "CNO-11",
+    "classificationCode": "3522",
+    "reviewStatus": "rejected",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+    "reviewedAt": "2026-08-08",
+    "catalogVersion": "1.0.0"
+  },
+  {
+    "occupationId": "occupation:cno11:5220",
+    "preferredLabel": "Vendedores en tiendas y almacenes",
+    "confirmationLabel": "Venta en tienda y almacén",
+    "classificationSystem": "CNO-11",
+    "classificationCode": "5220",
+    "reviewStatus": "rejected",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+    "reviewedAt": "2026-08-08",
+    "catalogVersion": "1.0.0"
+  },
+  {
+    "occupationId": "occupation:cno11:5420",
+    "preferredLabel": "Operadores de telemarketing",
+    "confirmationLabel": "Venta comercial a distancia",
+    "classificationSystem": "CNO-11",
+    "classificationCode": "5420",
+    "reviewStatus": "rejected",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+    "reviewedAt": "2026-08-08",
+    "catalogVersion": "1.0.0"
+  },
+  {
+    "occupationId": "occupation:cno11:5500",
+    "preferredLabel": "Cajeros y taquilleros (excepto bancos)",
+    "confirmationLabel": "Cobro en comercio",
+    "classificationSystem": "CNO-11",
+    "classificationCode": "5500",
+    "reviewStatus": "rejected",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+    "reviewedAt": "2026-08-08",
+    "catalogVersion": "1.0.0"
   }
 ]
