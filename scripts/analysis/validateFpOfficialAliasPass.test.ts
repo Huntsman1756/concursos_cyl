@@ -1,4 +1,4 @@
-import { mkdtemp, readFile, rm } from "node:fs/promises";
+import { mkdtemp, readFile, rm, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
 
@@ -11,6 +11,7 @@ import {
 import {
   coalesceAcceptedAliasSupports,
   computeFpOfficialAliasPass,
+  validatePinnedBaselineResourceFile,
   parseAliasPassCliArguments,
   serializeFpOfficialAliasPassResults,
   validateProgramOfficialAliasReview,
@@ -390,6 +391,53 @@ describe("FP official alias pass validation", () => {
         ],
       }),
     ).toThrow(/duplicate normalized alias review/i);
+  });
+
+  it("rejects a rejected audit alias that collides with a baseline alias", async () => {
+    const context = await fixtureContext();
+    const baselineAlias = context.aliases[0]!;
+    const baselineCollision = ProgramOfficialAliasReviewSchema.parse({
+      ...rejectedReview("SSC01M", "occupation:cno11:5629"),
+      reviews: [
+        {
+          ...rejectedReview("SSC01M", "occupation:cno11:5629").reviews[0],
+          alias: baselineAlias.alias,
+        },
+      ],
+    });
+
+    expect(() =>
+      computeFpOfficialAliasPass({
+        ...context,
+        reviews: [context.reviews[0]!, baselineCollision, context.reviews[2]!],
+      }),
+    ).toThrow(/duplicate normalized alias review/i);
+  });
+
+  it("rejects a one-byte change to a pinned baseline resource before matching", async () => {
+    const directory = await mkdtemp(join(tmpdir(), "fp-baseline-tamper-"));
+    const tamperedPath = resolve(directory, "programs.json");
+    const source = await readFile(
+      resolve(
+        ROOT_DIRECTORY,
+        "public",
+        "data",
+        "v1",
+        "snapshots",
+        BASELINE_SNAPSHOT_ID,
+        "programs.json",
+      ),
+      "utf8",
+    );
+
+    try {
+      await writeFile(tamperedPath, `${source} `, "utf8");
+      await expect(
+        validatePinnedBaselineResourceFile("programs", tamperedPath),
+      ).rejects.toThrow(/SHA-256/i);
+    } finally {
+      await rm(directory, { recursive: true, force: true });
+    }
   });
 
   it("coalesces matching two-program CNO support but rejects conflicting literal evidence", () => {

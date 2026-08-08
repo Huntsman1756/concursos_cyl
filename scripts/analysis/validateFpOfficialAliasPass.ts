@@ -40,9 +40,45 @@ import {
   validateFpCoveragePilotResultsFile,
   type FpCoveragePilotResults,
 } from "./validateFpCoveragePilot";
+import { hashFile } from "../data/hashFile";
 
 const BASELINE_SNAPSHOT_ID = "20260808215403108-add4c517860c";
 const AUDIT_DIRECTORY = ["analysis", "fp_official_alias_pass"] as const;
+
+export const PINNED_BASELINE_RESOURCE_CONTRACT = {
+  programs: {
+    fileName: "programs.json",
+    recordCount: 187,
+    sha256: "90df87b283b5ff003dda20c9c4f7eac52b903e611753d107d4b927bbc4e19b72",
+  },
+  occupations: {
+    fileName: "occupations.json",
+    recordCount: 11,
+    sha256: "3e92e4fdd4b72c37afbf7d18cd2eb4ea037bd8b0eeb7d37e63f69754acc66d81",
+  },
+  aliases: {
+    fileName: "occupation-aliases.json",
+    recordCount: 10,
+    sha256: "bd55ce9979ce84d032c39bffa6dc00eac8f10d1afdedc21897d261c23ed2f479",
+  },
+  links: {
+    fileName: "training-occupation-links.json",
+    recordCount: 12,
+    sha256: "257792082483cbb97143f3cd9561d921d6fccc466c62cb7d65beaf0436e50adc",
+  },
+  offers: {
+    fileName: "job-offers.json",
+    recordCount: 1077,
+    sha256: "ce7cb800dbf50dbb87da820898afbca43efbb40da32f3e1f1cafa11bb0396767",
+  },
+  publishedRequirements: {
+    fileName: "published-requirements.json",
+    recordCount: 337,
+    sha256: "0a9061ecea0e25ef0038ec93839941c8584246e280e0453b4be816ce2d9e3a65",
+  },
+} as const;
+
+type PinnedBaselineResourceKey = keyof typeof PINNED_BASELINE_RESOURCE_CONTRACT;
 
 export interface AliasPassValidationContext {
   baselineSnapshotId: string;
@@ -85,6 +121,34 @@ function assert(condition: unknown, message: string): asserts condition {
 
 async function readJson(path: string): Promise<unknown> {
   return JSON.parse(await readFile(path, "utf8"));
+}
+
+export async function validatePinnedBaselineResourceFile(
+  resourceKey: PinnedBaselineResourceKey,
+  path: string,
+): Promise<void> {
+  const contract = PINNED_BASELINE_RESOURCE_CONTRACT[resourceKey];
+  const [sha256, value] = await Promise.all([hashFile(path), readJson(path)]);
+  assert(
+    sha256 === contract.sha256,
+    `Pinned baseline ${resourceKey} SHA-256 does not match ${BASELINE_SNAPSHOT_ID}.`,
+  );
+  assert(
+    Array.isArray(value) && value.length === contract.recordCount,
+    `Pinned baseline ${resourceKey} record count does not match ${BASELINE_SNAPSHOT_ID}.`,
+  );
+}
+
+async function readPinnedBaselineResource(
+  rootDirectory: string,
+  resourceKey: PinnedBaselineResourceKey,
+): Promise<unknown> {
+  const path = publicSnapshotResourcePath(
+    rootDirectory,
+    PINNED_BASELINE_RESOURCE_CONTRACT[resourceKey].fileName,
+  );
+  await validatePinnedBaselineResourceFile(resourceKey, path);
+  return readJson(path);
 }
 
 function publicSnapshotResourcePath(
@@ -475,6 +539,7 @@ function assertUniqueAuditAliasIdentities(
     programKey: string;
     review: ProgramOfficialAliasReview["reviews"][number];
   }[],
+  context: AliasPassValidationContext,
 ): void {
   const grouped = new Map<string, Array<(typeof allReviews)[number]>>();
   for (const item of allReviews) {
@@ -484,6 +549,13 @@ function assertUniqueAuditAliasIdentities(
     grouped.set(normalized, group);
   }
   for (const group of grouped.values()) {
+    const normalizedAlias = normalizeMatcherAlias(group[0]!.review.alias);
+    assert(
+      !context.aliases.some(
+        (alias) => normalizeMatcherAlias(alias.alias) === normalizedAlias,
+      ),
+      `Duplicate normalized alias review: ${group[0]!.review.alias}.`,
+    );
     if (group.length === 1) continue;
     assert(
       group.every(({ review }) => review.disposition === "accepted"),
@@ -543,7 +615,7 @@ export function computeFpOfficialAliasPass(
   const rejectedReviews = allReviews.filter(
     ({ review }) => review.disposition === "rejected",
   );
-  assertUniqueAuditAliasIdentities(allReviews);
+  assertUniqueAuditAliasIdentities(allReviews, context);
   const acceptedReviews = coalesceAcceptedAliasSupports(acceptedSupports);
   assertUniqueNormalizedAliases(acceptedReviews, context);
   assertGlobalAliasSafety(acceptedSupports, reviewsByProgram, context);
@@ -623,21 +695,12 @@ export async function loadAliasPassValidationContext(
     ...reviews
   ] = await Promise.all([
     validateFpCoveragePilotResultsFile(rootDirectory),
-    readJson(publicSnapshotResourcePath(rootDirectory, "programs.json")),
-    readJson(publicSnapshotResourcePath(rootDirectory, "occupations.json")),
-    readJson(
-      publicSnapshotResourcePath(rootDirectory, "occupation-aliases.json"),
-    ),
-    readJson(
-      publicSnapshotResourcePath(
-        rootDirectory,
-        "training-occupation-links.json",
-      ),
-    ),
-    readJson(publicSnapshotResourcePath(rootDirectory, "job-offers.json")),
-    readJson(
-      publicSnapshotResourcePath(rootDirectory, "published-requirements.json"),
-    ),
+    readPinnedBaselineResource(rootDirectory, "programs"),
+    readPinnedBaselineResource(rootDirectory, "occupations"),
+    readPinnedBaselineResource(rootDirectory, "aliases"),
+    readPinnedBaselineResource(rootDirectory, "links"),
+    readPinnedBaselineResource(rootDirectory, "offers"),
+    readPinnedBaselineResource(rootDirectory, "publishedRequirements"),
     ...TARGET_ALIAS_PROGRAMS.map((programKey) =>
       readJson(
         resolve(rootDirectory, ...AUDIT_DIRECTORY, `${programKey}.json`),
