@@ -361,10 +361,453 @@
       "programTitle": "Construcción",
       "familyName": "Edificación y Obra Civil",
       "plannedStratum": "medium",
-      "state": "not_started",
-      "stateTransitions": [],
-      "acceptedRelationships": [],
-      "rejectedRelationships": []
+      "state": "completed",
+      "startedAt": "2026-08-08T18:52:54.405Z",
+      "stateTransitions": [
+        {
+          "from": "not_started",
+          "to": "in_progress",
+          "at": "2026-08-08T18:52:54.405Z"
+        },
+        {
+          "from": "in_progress",
+          "to": "completed",
+          "at": "2026-08-08T19:00:39.689Z"
+        }
+      ],
+      "completedAt": "2026-08-08T19:00:39.689Z",
+      "phaseMinutes": {
+        "research": 3,
+        "implementation": 1,
+        "test": 2,
+        "review": 1
+      },
+      "acceptedRelationships": [
+        {
+          "occupationId": "occupation:cno11:7111",
+          "relationshipType": "official_output",
+          "reasonCode": "official_programme_output",
+          "sourceUrl": "https://www.boe.es/eli/es/rd/2011/11/04/1575",
+          "sourceQuote": "Las ocupaciones y puestos de trabajo más relevantes son los siguientes: Encofrador.",
+          "reviewedAt": "2026-08-08"
+        },
+        {
+          "occupationId": "occupation:cno11:7121",
+          "relationshipType": "official_output",
+          "reasonCode": "official_programme_output",
+          "sourceUrl": "https://www.boe.es/eli/es/rd/2011/11/04/1575",
+          "sourceQuote": "Las ocupaciones y puestos de trabajo más relevantes son los siguientes: Albañil.",
+          "reviewedAt": "2026-08-08"
+        },
+        {
+          "occupationId": "occupation:cno11:7193",
+          "relationshipType": "official_output",
+          "reasonCode": "official_programme_output",
+          "sourceUrl": "https://www.boe.es/eli/es/rd/2011/11/04/1575",
+          "sourceQuote": "Las ocupaciones y puestos de trabajo más relevantes son los siguientes: Instalador de sistemas de impermeabilización en edificios y obra civil.",
+          "reviewedAt": "2026-08-08"
+        },
+        {
+          "occupationId": "occupation:cno11:7240",
+          "relationshipType": "official_output",
+          "reasonCode": "official_programme_output",
+          "sourceUrl": "https://www.boe.es/eli/es/rd/2011/11/04/1575",
+          "sourceQuote": "Las ocupaciones y puestos de trabajo más relevantes son los siguientes: Alicatador– solador.",
+          "reviewedAt": "2026-08-08"
+        },
+        {
+          "occupationId": "occupation:cno11:7291",
+          "relationshipType": "official_output",
+          "reasonCode": "official_programme_output",
+          "sourceUrl": "https://www.boe.es/eli/es/rd/2011/11/04/1575",
+          "sourceQuote": "Las ocupaciones y puestos de trabajo más relevantes son los siguientes: Tejador.",
+          "reviewedAt": "2026-08-08"
+        }
+      ],
+      "rejectedRelationships": [
+        {
+          "occupationId": "occupation:cno11:3202",
+          "reasonCode": "official_evidence_indirect",
+          "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+          "sourceQuote": "Supervisores de la construcción de edificios, 3202",
+          "reviewedAt": "2026-08-08"
+        },
+        {
+          "occupationId": "occupation:cno11:7212",
+          "reasonCode": "official_evidence_indirect",
+          "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+          "sourceQuote": "Aplicadores de revestimientos de pasta y mortero, 7212",
+          "reviewedAt": "2026-08-08"
+        },
+        {
+          "occupationId": "occupation:cno11:7223",
+          "reasonCode": "official_evidence_indirect",
+          "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+          "sourceQuote": "Instaladores de conductos en obra pública, 7223",
+          "reviewedAt": "2026-08-08"
+        }
+      ],
+      "programmeProfileEvidence": {
+        "todoFp": {
+          "sourceUrl": "https://todofp.es/que-estudiar/familias-profesionales/edificacion-obra-civil/construccion.html",
+          "sourceQuote": "Técnico en Construcción",
+          "reviewedAt": "2026-08-08"
+        },
+        "authoritativeOutputSource": {
+          "sourceUrl": "https://www.boe.es/eli/es/rd/2011/11/04/1575",
+          "sourceQuote": "Las ocupaciones y puestos de trabajo más relevantes son los siguientes:",
+          "reviewedAt": "2026-08-08"
+        },
+        "reconciliationNote": "TodoFP identifies the current Técnico en Construcción programme and presents a condensed output list; Article 7 of the BOE regulation is the authoritative enumeration of all thirty-three professional outputs."
+      },
+      "professionalOutputReviews": [
+        {
+          "officialOutputLabel": "Jefe de equipo de fábricas de albañilería.",
+          "disposition": "rejected",
+          "candidateOccupationIds": ["occupation:cno11:3202"],
+          "reasonCode": "official_evidence_indirect",
+          "groupingExplanation": "CNO 3202 covers building-construction supervisors, but it does not establish an exact qualification-to-CNO relationship for this team-lead output.",
+          "sourceUrl": "https://www.boe.es/eli/es/rd/2011/11/04/1575",
+          "sourceQuote": "Las ocupaciones y puestos de trabajo más relevantes son los siguientes: Jefe de equipo de fábricas de albañilería.",
+          "reviewedAt": "2026-08-08"
+        },
+        {
+          "officialOutputLabel": "Jefe de equipo de albañiles de urbanización.",
+          "disposition": "rejected",
+          "candidateOccupationIds": ["occupation:cno11:3202"],
+          "reasonCode": "official_evidence_indirect",
+          "groupingExplanation": "The official CNO supervisor group is adjacent management work and does not identify this specific urbanisation team-lead output.",
+          "sourceUrl": "https://www.boe.es/eli/es/rd/2011/11/04/1575",
+          "sourceQuote": "Las ocupaciones y puestos de trabajo más relevantes son los siguientes: Jefe de equipo de albañiles de urbanización.",
+          "reviewedAt": "2026-08-08"
+        },
+        {
+          "officialOutputLabel": "Jefe de equipo de encofradores.",
+          "disposition": "rejected",
+          "candidateOccupationIds": ["occupation:cno11:3202"],
+          "reasonCode": "official_evidence_indirect",
+          "groupingExplanation": "CNO 3202 does not supply an exact mapping for a team lead of formwork workers, so the supervisory output is not inferred from the trade group.",
+          "sourceUrl": "https://www.boe.es/eli/es/rd/2011/11/04/1575",
+          "sourceQuote": "Las ocupaciones y puestos de trabajo más relevantes son los siguientes: Jefe de equipo de encofradores.",
+          "reviewedAt": "2026-08-08"
+        },
+        {
+          "officialOutputLabel": "Jefe de equipo de ferralla.",
+          "disposition": "rejected",
+          "candidateOccupationIds": ["occupation:cno11:3202"],
+          "reasonCode": "official_evidence_indirect",
+          "groupingExplanation": "The CNO supervisor category is not an exact qualification mapping for a rebar-work team lead, so this supervisory output is excluded.",
+          "sourceUrl": "https://www.boe.es/eli/es/rd/2011/11/04/1575",
+          "sourceQuote": "Las ocupaciones y puestos de trabajo más relevantes son los siguientes: Jefe de equipo de ferralla.",
+          "reviewedAt": "2026-08-08"
+        },
+        {
+          "officialOutputLabel": "Jefe de taller de ferralla.",
+          "disposition": "rejected",
+          "candidateOccupationIds": ["occupation:cno11:3202"],
+          "reasonCode": "official_evidence_indirect",
+          "groupingExplanation": "No official CNO evidence ties the qualification to this workshop-supervisory role, distinct from the direct ferrallista trade output.",
+          "sourceUrl": "https://www.boe.es/eli/es/rd/2011/11/04/1575",
+          "sourceQuote": "Las ocupaciones y puestos de trabajo más relevantes son los siguientes: Jefe de taller de ferralla.",
+          "reviewedAt": "2026-08-08"
+        },
+        {
+          "officialOutputLabel": "Jefe de equipo de albañiles de cubiertas.",
+          "disposition": "rejected",
+          "candidateOccupationIds": ["occupation:cno11:3202"],
+          "reasonCode": "official_evidence_indirect",
+          "groupingExplanation": "The CNO evidence does not establish an exact qualification-to-CNO mapping for a roofing-masonry team leader.",
+          "sourceUrl": "https://www.boe.es/eli/es/rd/2011/11/04/1575",
+          "sourceQuote": "Las ocupaciones y puestos de trabajo más relevantes son los siguientes: Jefe de equipo de albañiles de cubiertas.",
+          "reviewedAt": "2026-08-08"
+        },
+        {
+          "officialOutputLabel": "Jefe de equipo y/o encargado de alicatadores y soladores.",
+          "disposition": "rejected",
+          "candidateOccupationIds": ["occupation:cno11:3202"],
+          "reasonCode": "official_evidence_indirect",
+          "groupingExplanation": "The direct solador trade evidence does not establish the separate supervisory or encargado component of this output.",
+          "sourceUrl": "https://www.boe.es/eli/es/rd/2011/11/04/1575",
+          "sourceQuote": "Las ocupaciones y puestos de trabajo más relevantes son los siguientes: Jefe de equipo y/o encargado de alicatadores y soladores.",
+          "reviewedAt": "2026-08-08"
+        },
+        {
+          "officialOutputLabel": "Albañil.",
+          "disposition": "accepted",
+          "candidateOccupationIds": ["occupation:cno11:7121"],
+          "acceptedOccupationIds": ["occupation:cno11:7121"],
+          "reasonCode": "official_programme_output",
+          "groupingExplanation": "The BOE output is an exact albañil trade label and INE lists albañiles in CNO 7121, supporting this direct relationship.",
+          "sourceUrl": "https://www.boe.es/eli/es/rd/2011/11/04/1575",
+          "sourceQuote": "Las ocupaciones y puestos de trabajo más relevantes son los siguientes: Albañil.",
+          "reviewedAt": "2026-08-08"
+        },
+        {
+          "officialOutputLabel": "Colocador de ladrillo caravista.",
+          "disposition": "rejected",
+          "candidateOccupationIds": ["occupation:cno11:7121"],
+          "reasonCode": "official_evidence_indirect",
+          "groupingExplanation": "CNO 7121 is a related masonry group but the official evidence does not name this specific brick-facing output as an exact CNO relationship.",
+          "sourceUrl": "https://www.boe.es/eli/es/rd/2011/11/04/1575",
+          "sourceQuote": "Las ocupaciones y puestos de trabajo más relevantes son los siguientes: Colocador de ladrillo caravista.",
+          "reviewedAt": "2026-08-08"
+        },
+        {
+          "officialOutputLabel": "Colocador de bloque prefabricado.",
+          "disposition": "rejected",
+          "candidateOccupationIds": ["occupation:cno11:7121"],
+          "reasonCode": "official_evidence_indirect",
+          "groupingExplanation": "The official CNO masonry grouping is adjacent but does not give an exact mapping for the prefabricated-block output.",
+          "sourceUrl": "https://www.boe.es/eli/es/rd/2011/11/04/1575",
+          "sourceQuote": "Las ocupaciones y puestos de trabajo más relevantes son los siguientes: Colocador de bloque prefabricado.",
+          "reviewedAt": "2026-08-08"
+        },
+        {
+          "officialOutputLabel": "Albañil tabiquero.",
+          "disposition": "rejected",
+          "candidateOccupationIds": ["occupation:cno11:7121"],
+          "reasonCode": "official_evidence_indirect",
+          "groupingExplanation": "CNO 7121 does not explicitly identify the partition-wall specialisation, so it is not inferred from the broader albañil output.",
+          "sourceUrl": "https://www.boe.es/eli/es/rd/2011/11/04/1575",
+          "sourceQuote": "Las ocupaciones y puestos de trabajo más relevantes son los siguientes: Albañil tabiquero.",
+          "reviewedAt": "2026-08-08"
+        },
+        {
+          "officialOutputLabel": "Albañil piedra construcción.",
+          "disposition": "rejected",
+          "candidateOccupationIds": ["occupation:cno11:7121"],
+          "reasonCode": "official_evidence_indirect",
+          "groupingExplanation": "The available CNO evidence identifies albañiles and mamposteros, not this stone-construction specialisation as a separate exact mapping.",
+          "sourceUrl": "https://www.boe.es/eli/es/rd/2011/11/04/1575",
+          "sourceQuote": "Las ocupaciones y puestos de trabajo más relevantes son los siguientes: Albañil piedra construcción.",
+          "reviewedAt": "2026-08-08"
+        },
+        {
+          "officialOutputLabel": "Mampostero.",
+          "disposition": "accepted",
+          "candidateOccupationIds": ["occupation:cno11:7121"],
+          "acceptedOccupationIds": ["occupation:cno11:7121"],
+          "reasonCode": "official_programme_output",
+          "groupingExplanation": "INE explicitly includes mamposteros in CNO 7121, and the BOE lists mampostero as an official output of the programme.",
+          "sourceUrl": "https://www.boe.es/eli/es/rd/2011/11/04/1575",
+          "sourceQuote": "Las ocupaciones y puestos de trabajo más relevantes son los siguientes: Mampostero.",
+          "reviewedAt": "2026-08-08"
+        },
+        {
+          "officialOutputLabel": "Oficial de miras.",
+          "disposition": "rejected",
+          "candidateOccupationIds": ["occupation:cno11:7121"],
+          "reasonCode": "official_evidence_absent",
+          "groupingExplanation": "No reviewed official CNO source identifies oficial de miras as an exact CNO 7121 relationship.",
+          "sourceUrl": "https://www.boe.es/eli/es/rd/2011/11/04/1575",
+          "sourceQuote": "Las ocupaciones y puestos de trabajo más relevantes son los siguientes: Oficial de miras.",
+          "reviewedAt": "2026-08-08"
+        },
+        {
+          "officialOutputLabel": "Albañil de urbanización.",
+          "disposition": "rejected",
+          "candidateOccupationIds": ["occupation:cno11:7121"],
+          "reasonCode": "official_evidence_indirect",
+          "groupingExplanation": "The broader albañil CNO group does not establish an exact mapping for this urbanisation specialisation.",
+          "sourceUrl": "https://www.boe.es/eli/es/rd/2011/11/04/1575",
+          "sourceQuote": "Las ocupaciones y puestos de trabajo más relevantes son los siguientes: Albañil de urbanización.",
+          "reviewedAt": "2026-08-08"
+        },
+        {
+          "officialOutputLabel": "Pavimentador con adoquines.",
+          "disposition": "accepted",
+          "candidateOccupationIds": ["occupation:cno11:7240"],
+          "acceptedOccupationIds": ["occupation:cno11:7240"],
+          "reasonCode": "official_programme_output",
+          "groupingExplanation": "INE explicitly includes pavimentadores con adoquines in CNO 7240, matching this BOE output without expanding it by title similarity.",
+          "sourceUrl": "https://www.boe.es/eli/es/rd/2011/11/04/1575",
+          "sourceQuote": "Las ocupaciones y puestos de trabajo más relevantes son los siguientes: Pavimentador con adoquines.",
+          "reviewedAt": "2026-08-08"
+        },
+        {
+          "officialOutputLabel": "Pavimentador con baldosas y losas.",
+          "disposition": "rejected",
+          "candidateOccupationIds": ["occupation:cno11:7240"],
+          "reasonCode": "official_evidence_indirect",
+          "groupingExplanation": "CNO 7240 contains related flooring tasks, but the reviewed official source does not name this precise paving output as an example.",
+          "sourceUrl": "https://www.boe.es/eli/es/rd/2011/11/04/1575",
+          "sourceQuote": "Las ocupaciones y puestos de trabajo más relevantes son los siguientes: Pavimentador con baldosas y losas.",
+          "reviewedAt": "2026-08-08"
+        },
+        {
+          "officialOutputLabel": "Pavimentador a base de hormigón.",
+          "disposition": "accepted",
+          "candidateOccupationIds": ["occupation:cno11:7111"],
+          "acceptedOccupationIds": ["occupation:cno11:7111"],
+          "reasonCode": "official_programme_output",
+          "groupingExplanation": "INE explicitly lists pavimentadores a base de hormigón in CNO 7111, directly supporting the BOE output.",
+          "sourceUrl": "https://www.boe.es/eli/es/rd/2011/11/04/1575",
+          "sourceQuote": "Las ocupaciones y puestos de trabajo más relevantes son los siguientes: Pavimentador a base de hormigón.",
+          "reviewedAt": "2026-08-08"
+        },
+        {
+          "officialOutputLabel": "Pocero en redes de saneamiento.",
+          "disposition": "rejected",
+          "candidateOccupationIds": ["occupation:cno11:7223"],
+          "reasonCode": "official_evidence_indirect",
+          "groupingExplanation": "CNO 7223 covers public-conduit installers, but its official examples do not identify poceros as an exact qualification-to-CNO relationship.",
+          "sourceUrl": "https://www.boe.es/eli/es/rd/2011/11/04/1575",
+          "sourceQuote": "Las ocupaciones y puestos de trabajo más relevantes son los siguientes: Pocero en redes de saneamiento.",
+          "reviewedAt": "2026-08-08"
+        },
+        {
+          "officialOutputLabel": "Encofrador.",
+          "disposition": "accepted",
+          "candidateOccupationIds": ["occupation:cno11:7111"],
+          "acceptedOccupationIds": ["occupation:cno11:7111"],
+          "reasonCode": "official_programme_output",
+          "groupingExplanation": "INE explicitly lists encofradores in CNO 7111, matching the exact BOE output.",
+          "sourceUrl": "https://www.boe.es/eli/es/rd/2011/11/04/1575",
+          "sourceQuote": "Las ocupaciones y puestos de trabajo más relevantes son los siguientes: Encofrador.",
+          "reviewedAt": "2026-08-08"
+        },
+        {
+          "officialOutputLabel": "Encofrador de edificación.",
+          "disposition": "rejected",
+          "candidateOccupationIds": ["occupation:cno11:7111"],
+          "reasonCode": "official_evidence_indirect",
+          "groupingExplanation": "The CNO example establishes encofrador generally but does not separately map the building specialisation.",
+          "sourceUrl": "https://www.boe.es/eli/es/rd/2011/11/04/1575",
+          "sourceQuote": "Las ocupaciones y puestos de trabajo más relevantes son los siguientes: Encofrador de edificación.",
+          "reviewedAt": "2026-08-08"
+        },
+        {
+          "officialOutputLabel": "Encofrador de obra civil.",
+          "disposition": "rejected",
+          "candidateOccupationIds": ["occupation:cno11:7111"],
+          "reasonCode": "official_evidence_indirect",
+          "groupingExplanation": "The CNO example does not separately establish the civil-works specialisation, so it remains outside the direct mapping.",
+          "sourceUrl": "https://www.boe.es/eli/es/rd/2011/11/04/1575",
+          "sourceQuote": "Las ocupaciones y puestos de trabajo más relevantes son los siguientes: Encofrador de obra civil.",
+          "reviewedAt": "2026-08-08"
+        },
+        {
+          "officialOutputLabel": "Ferrallista.",
+          "disposition": "accepted",
+          "candidateOccupationIds": ["occupation:cno11:7111"],
+          "acceptedOccupationIds": ["occupation:cno11:7111"],
+          "reasonCode": "official_programme_output",
+          "groupingExplanation": "INE explicitly lists ferrallistas in CNO 7111, supporting this exact BOE trade output.",
+          "sourceUrl": "https://www.boe.es/eli/es/rd/2011/11/04/1575",
+          "sourceQuote": "Las ocupaciones y puestos de trabajo más relevantes son los siguientes: Ferrallista.",
+          "reviewedAt": "2026-08-08"
+        },
+        {
+          "officialOutputLabel": "Albañil de cubiertas.",
+          "disposition": "rejected",
+          "candidateOccupationIds": ["occupation:cno11:7291"],
+          "reasonCode": "official_evidence_indirect",
+          "groupingExplanation": "CNO 7291 is a related roof-mounting group but does not identify this masonry-on-roofs title as an exact mapping.",
+          "sourceUrl": "https://www.boe.es/eli/es/rd/2011/11/04/1575",
+          "sourceQuote": "Las ocupaciones y puestos de trabajo más relevantes son los siguientes: Albañil de cubiertas.",
+          "reviewedAt": "2026-08-08"
+        },
+        {
+          "officialOutputLabel": "Tejador.",
+          "disposition": "accepted",
+          "candidateOccupationIds": ["occupation:cno11:7291"],
+          "acceptedOccupationIds": ["occupation:cno11:7291"],
+          "reasonCode": "official_programme_output",
+          "groupingExplanation": "INE explicitly lists tejadores in CNO 7291, which directly supports the BOE output.",
+          "sourceUrl": "https://www.boe.es/eli/es/rd/2011/11/04/1575",
+          "sourceQuote": "Las ocupaciones y puestos de trabajo más relevantes son los siguientes: Tejador.",
+          "reviewedAt": "2026-08-08"
+        },
+        {
+          "officialOutputLabel": "Montador de teja.",
+          "disposition": "rejected",
+          "candidateOccupationIds": ["occupation:cno11:7291"],
+          "reasonCode": "official_evidence_indirect",
+          "groupingExplanation": "CNO 7291 has related roof-mounting tasks but does not name montador de teja as an exact official example.",
+          "sourceUrl": "https://www.boe.es/eli/es/rd/2011/11/04/1575",
+          "sourceQuote": "Las ocupaciones y puestos de trabajo más relevantes son los siguientes: Montador de teja.",
+          "reviewedAt": "2026-08-08"
+        },
+        {
+          "officialOutputLabel": "Pizarrista.",
+          "disposition": "rejected",
+          "candidateOccupationIds": ["occupation:cno11:7291"],
+          "reasonCode": "official_evidence_indirect",
+          "groupingExplanation": "The CNO notes name techadores con pizarra, not the exact pizarrista output, so a title-based inference is excluded.",
+          "sourceUrl": "https://www.boe.es/eli/es/rd/2011/11/04/1575",
+          "sourceQuote": "Las ocupaciones y puestos de trabajo más relevantes son los siguientes: Pizarrista.",
+          "reviewedAt": "2026-08-08"
+        },
+        {
+          "officialOutputLabel": "Colocador de pizarra.",
+          "disposition": "rejected",
+          "candidateOccupationIds": ["occupation:cno11:7291"],
+          "reasonCode": "official_evidence_indirect",
+          "groupingExplanation": "The reviewed CNO evidence is related roofing work but does not provide an exact mapping for colocador de pizarra.",
+          "sourceUrl": "https://www.boe.es/eli/es/rd/2011/11/04/1575",
+          "sourceQuote": "Las ocupaciones y puestos de trabajo más relevantes son los siguientes: Colocador de pizarra.",
+          "reviewedAt": "2026-08-08"
+        },
+        {
+          "officialOutputLabel": "Montador de cubiertas de paneles y chapas.",
+          "disposition": "rejected",
+          "candidateOccupationIds": ["occupation:cno11:7291"],
+          "reasonCode": "official_evidence_indirect",
+          "groupingExplanation": "CNO 7291 is a related roof-mounting group but does not explicitly establish this panel-and-sheet specialisation.",
+          "sourceUrl": "https://www.boe.es/eli/es/rd/2011/11/04/1575",
+          "sourceQuote": "Las ocupaciones y puestos de trabajo más relevantes son los siguientes: Montador de cubiertas de paneles y chapas.",
+          "reviewedAt": "2026-08-08"
+        },
+        {
+          "officialOutputLabel": "Aplicador de revestimientos continuos de fachadas.",
+          "disposition": "rejected",
+          "candidateOccupationIds": ["occupation:cno11:7212"],
+          "reasonCode": "official_evidence_indirect",
+          "groupingExplanation": "CNO 7212 is related to paste and mortar coatings, but it does not establish the precise continuous-facade output as an exact relationship.",
+          "sourceUrl": "https://www.boe.es/eli/es/rd/2011/11/04/1575",
+          "sourceQuote": "Las ocupaciones y puestos de trabajo más relevantes son los siguientes: Aplicador de revestimientos continuos de fachadas.",
+          "reviewedAt": "2026-08-08"
+        },
+        {
+          "officialOutputLabel": "Alicatador– solador.",
+          "disposition": "accepted",
+          "candidateOccupationIds": ["occupation:cno11:7240"],
+          "acceptedOccupationIds": ["occupation:cno11:7240"],
+          "reasonCode": "official_programme_output",
+          "groupingExplanation": "The BOE output includes solador and INE explicitly includes soladores in CNO 7240, supporting the direct trade relationship.",
+          "sourceUrl": "https://www.boe.es/eli/es/rd/2011/11/04/1575",
+          "sourceQuote": "Las ocupaciones y puestos de trabajo más relevantes son los siguientes: Alicatador– solador.",
+          "reviewedAt": "2026-08-08"
+        },
+        {
+          "officialOutputLabel": "Instalador de sistemas de impermeabilización en edificios y obra civil.",
+          "disposition": "accepted",
+          "candidateOccupationIds": ["occupation:cno11:7193"],
+          "acceptedOccupationIds": ["occupation:cno11:7193"],
+          "reasonCode": "official_programme_output",
+          "groupingExplanation": "CNO 7193 explicitly identifies installers of waterproofing systems in buildings, directly supporting this BOE output.",
+          "sourceUrl": "https://www.boe.es/eli/es/rd/2011/11/04/1575",
+          "sourceQuote": "Las ocupaciones y puestos de trabajo más relevantes son los siguientes: Instalador de sistemas de impermeabilización en edificios y obra civil.",
+          "reviewedAt": "2026-08-08"
+        },
+        {
+          "officialOutputLabel": "Impermeabilizador de terrazas.",
+          "disposition": "accepted",
+          "candidateOccupationIds": ["occupation:cno11:7193"],
+          "acceptedOccupationIds": ["occupation:cno11:7193"],
+          "reasonCode": "official_programme_output",
+          "groupingExplanation": "INE explicitly lists impermeabilizadores de terrazas in CNO 7193, supporting the exact BOE output.",
+          "sourceUrl": "https://www.boe.es/eli/es/rd/2011/11/04/1575",
+          "sourceQuote": "Las ocupaciones y puestos de trabajo más relevantes son los siguientes: Impermeabilizador de terrazas.",
+          "reviewedAt": "2026-08-08"
+        }
+      ],
+      "snapshotCoverage": {
+        "status": "verified",
+        "snapshotId": "20260808185911372-5bd3446f5b91",
+        "countingMethod": "accepted_relationship_union",
+        "newlyReachedOfferCount": 0
+      }
     },
     {
       "programKey": "COM01M",

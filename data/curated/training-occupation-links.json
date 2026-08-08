@@ -140,5 +140,55 @@
     "sourceQuote": "Auxiliar de Atención primaria.",
     "reviewedAt": "2026-08-08",
     "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "EOC01M",
+    "occupationId": "occupation:cno11:7111",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.boe.es/eli/es/rd/2011/11/04/1575",
+    "sourceQuote": "Las ocupaciones y puestos de trabajo más relevantes son los siguientes: Encofrador.",
+    "reviewedAt": "2026-08-08",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "EOC01M",
+    "occupationId": "occupation:cno11:7121",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.boe.es/eli/es/rd/2011/11/04/1575",
+    "sourceQuote": "Las ocupaciones y puestos de trabajo más relevantes son los siguientes: Albañil.",
+    "reviewedAt": "2026-08-08",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "EOC01M",
+    "occupationId": "occupation:cno11:7193",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.boe.es/eli/es/rd/2011/11/04/1575",
+    "sourceQuote": "Las ocupaciones y puestos de trabajo más relevantes son los siguientes: Instalador de sistemas de impermeabilización en edificios y obra civil.",
+    "reviewedAt": "2026-08-08",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "EOC01M",
+    "occupationId": "occupation:cno11:7240",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.boe.es/eli/es/rd/2011/11/04/1575",
+    "sourceQuote": "Las ocupaciones y puestos de trabajo más relevantes son los siguientes: Alicatador– solador.",
+    "reviewedAt": "2026-08-08",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "EOC01M",
+    "occupationId": "occupation:cno11:7291",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.boe.es/eli/es/rd/2011/11/04/1575",
+    "sourceQuote": "Las ocupaciones y puestos de trabajo más relevantes son los siguientes: Tejador.",
+    "reviewedAt": "2026-08-08",
+    "mappingVersion": "1.0.0"
   }
 ]

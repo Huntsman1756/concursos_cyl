@@ -164,5 +164,93 @@
     "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
     "reviewedAt": "2026-08-08",
     "catalogVersion": "1.0.0"
+  },
+  {
+    "occupationId": "occupation:cno11:3202",
+    "preferredLabel": "Supervisores de la construcción de edificios",
+    "confirmationLabel": "Supervisión de obra",
+    "classificationSystem": "CNO-11",
+    "classificationCode": "3202",
+    "reviewStatus": "rejected",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+    "reviewedAt": "2026-08-08",
+    "catalogVersion": "1.0.0"
+  },
+  {
+    "occupationId": "occupation:cno11:7111",
+    "preferredLabel": "Encofradores y operarios de puesta en obra de hormigón",
+    "confirmationLabel": "Encofrados, ferralla y hormigón",
+    "classificationSystem": "CNO-11",
+    "classificationCode": "7111",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+    "reviewedAt": "2026-08-08",
+    "catalogVersion": "1.0.0"
+  },
+  {
+    "occupationId": "occupation:cno11:7121",
+    "preferredLabel": "Albañiles",
+    "confirmationLabel": "Albañilería y mampostería",
+    "classificationSystem": "CNO-11",
+    "classificationCode": "7121",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+    "reviewedAt": "2026-08-08",
+    "catalogVersion": "1.0.0"
+  },
+  {
+    "occupationId": "occupation:cno11:7193",
+    "preferredLabel": "Instaladores de sistemas de impermeabilización en edificios",
+    "confirmationLabel": "Impermeabilización de edificios",
+    "classificationSystem": "CNO-11",
+    "classificationCode": "7193",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+    "reviewedAt": "2026-08-08",
+    "catalogVersion": "1.0.0"
+  },
+  {
+    "occupationId": "occupation:cno11:7212",
+    "preferredLabel": "Aplicadores de revestimientos de pasta y mortero",
+    "confirmationLabel": "Revestimientos de pasta y mortero",
+    "classificationSystem": "CNO-11",
+    "classificationCode": "7212",
+    "reviewStatus": "rejected",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+    "reviewedAt": "2026-08-08",
+    "catalogVersion": "1.0.0"
+  },
+  {
+    "occupationId": "occupation:cno11:7223",
+    "preferredLabel": "Instaladores de conductos en obra pública",
+    "confirmationLabel": "Conducciones en obra pública",
+    "classificationSystem": "CNO-11",
+    "classificationCode": "7223",
+    "reviewStatus": "rejected",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+    "reviewedAt": "2026-08-08",
+    "catalogVersion": "1.0.0"
+  },
+  {
+    "occupationId": "occupation:cno11:7240",
+    "preferredLabel": "Soladores, colocadores de parquet y afines",
+    "confirmationLabel": "Solados y alicatados",
+    "classificationSystem": "CNO-11",
+    "classificationCode": "7240",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+    "reviewedAt": "2026-08-08",
+    "catalogVersion": "1.0.0"
+  },
+  {
+    "occupationId": "occupation:cno11:7291",
+    "preferredLabel": "Montadores de cubiertas",
+    "confirmationLabel": "Montaje de cubiertas",
+    "classificationSystem": "CNO-11",
+    "classificationCode": "7291",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+    "reviewedAt": "2026-08-08",
+    "catalogVersion": "1.0.0"
   }
 ]

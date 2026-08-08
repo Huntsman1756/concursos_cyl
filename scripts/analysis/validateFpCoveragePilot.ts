@@ -95,7 +95,7 @@ const RejectedRelationshipSchema = z
 
 const ProfessionalOutputReviewSchema = z
   .object({
-    officialOutputLabel: z.string().trim().min(12).max(220),
+    officialOutputLabel: z.string().trim().min(3).max(220),
     disposition: z.enum(["accepted", "rejected"]),
     candidateOccupationIds: z
       .array(z.string().regex(/^occupation:cno11:\d{4}$/u))
@@ -271,6 +271,45 @@ const SSC01M_OFFICIAL_OUTPUT_LABELS = [
   "Asistente personal.",
   "Teleoperador/a de teleasistencia.",
 ] as const;
+
+const EOC01M_OFFICIAL_OUTPUT_LABELS = [
+  "Jefe de equipo de fábricas de albañilería.",
+  "Jefe de equipo de albañiles de urbanización.",
+  "Jefe de equipo de encofradores.",
+  "Jefe de equipo de ferralla.",
+  "Jefe de taller de ferralla.",
+  "Jefe de equipo de albañiles de cubiertas.",
+  "Jefe de equipo y/o encargado de alicatadores y soladores.",
+  "Albañil.",
+  "Colocador de ladrillo caravista.",
+  "Colocador de bloque prefabricado.",
+  "Albañil tabiquero.",
+  "Albañil piedra construcción.",
+  "Mampostero.",
+  "Oficial de miras.",
+  "Albañil de urbanización.",
+  "Pavimentador con adoquines.",
+  "Pavimentador con baldosas y losas.",
+  "Pavimentador a base de hormigón.",
+  "Pocero en redes de saneamiento.",
+  "Encofrador.",
+  "Encofrador de edificación.",
+  "Encofrador de obra civil.",
+  "Ferrallista.",
+  "Albañil de cubiertas.",
+  "Tejador.",
+  "Montador de teja.",
+  "Pizarrista.",
+  "Colocador de pizarra.",
+  "Montador de cubiertas de paneles y chapas.",
+  "Aplicador de revestimientos continuos de fachadas.",
+  "Alicatador– solador.",
+  "Instalador de sistemas de impermeabilización en edificios y obra civil.",
+  "Impermeabilizador de terrazas.",
+] as const;
+
+const EOC01M_FAMILY_PILOT_SIGNAL = 42;
+const EOC01M_EARLIER_TITLE_SIGNAL = 39;
 
 type PilotAttempt = z.infer<typeof PilotAttemptSchema>;
 type SnapshotCoverage = z.infer<typeof SnapshotCoverageSchema>;
@@ -470,6 +509,60 @@ function assertSsc01mProfessionalOutputReviews(attempt: PilotAttempt): void {
   }
 }
 
+function assertEoc01mProfessionalOutputReviews(attempt: PilotAttempt): void {
+  if (attempt.programKey !== "EOC01M" || attempt.state !== "completed") return;
+
+  const profileEvidence = attempt.programmeProfileEvidence;
+  const reviews = attempt.professionalOutputReviews;
+  assert(
+    profileEvidence !== undefined && reviews !== undefined,
+    "Completed EOC01M requires TodoFP programme evidence and an independent review of every BOE professional output.",
+  );
+  assertAuditableEvidence(profileEvidence.todoFp, attempt.programKey);
+  assertAuditableEvidence(
+    profileEvidence.authoritativeOutputSource,
+    attempt.programKey,
+  );
+  assert(
+    new URL(profileEvidence.todoFp.sourceUrl).hostname.endsWith("todofp.es"),
+    "EOC01M programme profile evidence must cite TodoFP.",
+  );
+  assert(
+    new URL(
+      profileEvidence.authoritativeOutputSource.sourceUrl,
+    ).hostname.endsWith("boe.es"),
+    "EOC01M complete output evidence must cite BOE.",
+  );
+  assert(
+    reviews.length === EOC01M_OFFICIAL_OUTPUT_LABELS.length &&
+      reviews.every(
+        (review, index) =>
+          review.officialOutputLabel === EOC01M_OFFICIAL_OUTPUT_LABELS[index],
+      ),
+    "EOC01M must review each of the thirty-three BOE professional outputs in order.",
+  );
+  for (const review of reviews) {
+    assertAuditableEvidence(review, attempt.programKey);
+    assert(
+      new URL(review.sourceUrl).hostname.endsWith("boe.es"),
+      "EOC01M professional-output reviews must cite the BOE output source.",
+    );
+  }
+
+  const reviewedCandidates = new Set(
+    reviews.flatMap((review) => review.candidateOccupationIds),
+  );
+  for (const relationship of [
+    ...attempt.acceptedRelationships,
+    ...attempt.rejectedRelationships,
+  ]) {
+    assert(
+      reviewedCandidates.has(relationship.occupationId),
+      `EOC01M disposition ${relationship.occupationId} must be tied to an individual professional-output review.`,
+    );
+  }
+}
+
 function phaseTotalMinutes(
   phaseMinutes: NonNullable<PilotAttempt["phaseMinutes"]>,
 ): number {
@@ -595,6 +688,12 @@ function assertSnapshotCoverage(
     coverage.newlyReachedOfferCount === matches.length,
     `Claimed snapshot coverage for ${attempt.programKey} does not match the accepted-relationship union.`,
   );
+  if (attempt.programKey === "EOC01M") {
+    assert(
+      coverage.newlyReachedOfferCount <= EOC01M_FAMILY_PILOT_SIGNAL,
+      `EOC01M accepted-relationship coverage cannot exceed the ${EOC01M_FAMILY_PILOT_SIGNAL}-offer family pilot signal; the earlier ${EOC01M_EARLIER_TITLE_SIGNAL}-offer title signal is not the coverage cap.`,
+    );
+  }
 }
 
 function assertAttemptState(
@@ -604,6 +703,7 @@ function assertAttemptState(
 ): void {
   assertRelationshipCatalogIntegrity(attempt, context);
   assertSsc01mProfessionalOutputReviews(attempt);
+  assertEoc01mProfessionalOutputReviews(attempt);
 
   if (attempt.state === "not_started") {
     assertExactTransitions(attempt, []);

@@ -38,6 +38,41 @@ const SSC_OFFICIAL_OUTPUT_LABELS = [
   "Asistente personal.",
   "Teleoperador/a de teleasistencia.",
 ] as const;
+const EOC_OFFICIAL_OUTPUT_LABELS = [
+  "Jefe de equipo de fábricas de albañilería.",
+  "Jefe de equipo de albañiles de urbanización.",
+  "Jefe de equipo de encofradores.",
+  "Jefe de equipo de ferralla.",
+  "Jefe de taller de ferralla.",
+  "Jefe de equipo de albañiles de cubiertas.",
+  "Jefe de equipo y/o encargado de alicatadores y soladores.",
+  "Albañil.",
+  "Colocador de ladrillo caravista.",
+  "Colocador de bloque prefabricado.",
+  "Albañil tabiquero.",
+  "Albañil piedra construcción.",
+  "Mampostero.",
+  "Oficial de miras.",
+  "Albañil de urbanización.",
+  "Pavimentador con adoquines.",
+  "Pavimentador con baldosas y losas.",
+  "Pavimentador a base de hormigón.",
+  "Pocero en redes de saneamiento.",
+  "Encofrador.",
+  "Encofrador de edificación.",
+  "Encofrador de obra civil.",
+  "Ferrallista.",
+  "Albañil de cubiertas.",
+  "Tejador.",
+  "Montador de teja.",
+  "Pizarrista.",
+  "Colocador de pizarra.",
+  "Montador de cubiertas de paneles y chapas.",
+  "Aplicador de revestimientos continuos de fachadas.",
+  "Alicatador– solador.",
+  "Instalador de sistemas de impermeabilización en edificios y obra civil.",
+  "Impermeabilizador de terrazas.",
+] as const;
 
 const notStartedAttempts: FpCoveragePilotResults["attempts"] = [
   {
@@ -525,6 +560,46 @@ describe("validateFpCoveragePilotResults", () => {
         (review) => review.officialOutputLabel,
       ),
     ).toEqual(SSC_OFFICIAL_OUTPUT_LABELS);
+  });
+
+  it("records all thirty-three EOC01M official outputs independently", async () => {
+    const seed = JSON.parse(
+      await readFile(
+        resolve(process.cwd(), "analysis", "fp_coverage_pilot_results.json"),
+        "utf8",
+      ),
+    ) as {
+      attempts: {
+        programKey: string;
+        professionalOutputReviews?: { officialOutputLabel: string }[];
+      }[];
+    };
+    const eocAttempt = seed.attempts.find(
+      (attempt) => attempt.programKey === "EOC01M",
+    );
+
+    expect(eocAttempt?.professionalOutputReviews).toHaveLength(33);
+    expect(
+      eocAttempt?.professionalOutputReviews?.map(
+        (review) => review.officialOutputLabel,
+      ),
+    ).toEqual(EOC_OFFICIAL_OUTPUT_LABELS);
+  });
+
+  it("counts EOC01M marginal offers from the accepted relationship union below the family signal", () => {
+    const matches = matchOffersForProgram("EOC01M", {
+      programs: context.programs,
+      qualifications: REVIEWED_QUALIFICATIONS,
+      programQualificationLinks: REVIEWED_PROGRAM_QUALIFICATION_LINKS,
+      occupations: context.occupations,
+      aliases: context.aliases,
+      links: context.links,
+      offers: context.offers,
+      publishedRequirements: context.publishedRequirements,
+      humanOverrides: [],
+    });
+
+    expect(matches).toHaveLength(0);
   });
 
   it("validates a completed prior attempt against its retained immutable snapshot", async () => {

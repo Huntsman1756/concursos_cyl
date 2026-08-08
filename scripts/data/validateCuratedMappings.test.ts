@@ -68,6 +68,13 @@ const programs: TrainingProgram[] = [
     familyCode: "SSC",
     familyName: "Servicios Socioculturales y a la Comunidad",
   },
+  {
+    programKey: "EOC01M",
+    programTitle: "Construcción",
+    level: "intermediate",
+    familyCode: "EOC",
+    familyName: "Edificación y Obra Civil",
+  },
 ];
 
 const occupations = [
@@ -310,11 +317,28 @@ describe("curated occupation mappings", () => {
       ),
     ).toBe(true);
     expect(approved.occupations.map((item) => item.classificationCode)).toEqual(
-      ["2713", "5110", "5611", "5612", "5629", "5710"],
+      [
+        "2713",
+        "5110",
+        "5611",
+        "5612",
+        "5629",
+        "5710",
+        "7111",
+        "7121",
+        "7193",
+        "7240",
+        "7291",
+      ],
     );
     expect(
       approved.links.map((item) => item.trainingProgramKey).sort(),
     ).toEqual([
+      "EOC01M",
+      "EOC01M",
+      "EOC01M",
+      "EOC01M",
+      "EOC01M",
       "HOT01M",
       "IFC03S",
       "IFC03SD",
@@ -351,5 +375,27 @@ describe("curated occupation mappings", () => {
         coverageStatus: "reviewed",
       }),
     );
+  });
+
+  it("publishes only direct EOC01M trade outputs without title-derived aliases", async () => {
+    const curated = await loadCuratedMappingsFromDisk(process.cwd(), programs);
+    const approved = loadApprovedMappings(curated);
+    const eocLinks = approved.links.filter(
+      (link) => link.trainingProgramKey === "EOC01M",
+    );
+    const eocOccupationIds = eocLinks.map((link) => link.occupationId).sort();
+
+    expect(eocOccupationIds).toEqual([
+      "occupation:cno11:7111",
+      "occupation:cno11:7121",
+      "occupation:cno11:7193",
+      "occupation:cno11:7240",
+      "occupation:cno11:7291",
+    ]);
+    expect(
+      approved.aliases.filter((alias) =>
+        eocOccupationIds.includes(alias.occupationId),
+      ),
+    ).toEqual([]);
   });
 });
