@@ -15,6 +15,7 @@
     "test:e2e": "playwright test",
     "lint": "eslint .",
     "format:check": "prettier --check .",
+    "analysis:pilot:validate": "tsx scripts/analysis/validateFpCoveragePilot.ts",
     "data:build": "tsx scripts/data/buildSnapshots.ts",
     "license:check": "tsx scripts/checkLicenses.ts"
   },

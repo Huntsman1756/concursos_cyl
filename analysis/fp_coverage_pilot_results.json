@@ -1,0 +1,55 @@
+{
+  "schemaVersion": "1.0.0",
+  "attempts": [
+    {
+      "programKey": "SAN21",
+      "programTitle": "Cuidados Auxiliares de Enfermería",
+      "familyName": "Sanidad",
+      "plannedStratum": "easy",
+      "state": "not_started",
+      "stateTransitions": [],
+      "acceptedRelationships": [],
+      "rejectedRelationships": []
+    },
+    {
+      "programKey": "HOT01M",
+      "programTitle": "Cocina y Gastronomía",
+      "familyName": "Hostelería y Turismo",
+      "plannedStratum": "easy",
+      "state": "not_started",
+      "stateTransitions": [],
+      "acceptedRelationships": [],
+      "rejectedRelationships": []
+    },
+    {
+      "programKey": "SSC01M",
+      "programTitle": "Atención a Personas en Situación de Dependencia",
+      "familyName": "Servicios Socioculturales y a la Comunidad",
+      "plannedStratum": "medium",
+      "state": "not_started",
+      "stateTransitions": [],
+      "acceptedRelationships": [],
+      "rejectedRelationships": []
+    },
+    {
+      "programKey": "EOC01M",
+      "programTitle": "Construcción",
+      "familyName": "Edificación y Obra Civil",
+      "plannedStratum": "medium",
+      "state": "not_started",
+      "stateTransitions": [],
+      "acceptedRelationships": [],
+      "rejectedRelationships": []
+    },
+    {
+      "programKey": "COM01M",
+      "programTitle": "Actividades Comerciales",
+      "familyName": "Comercio y Marketing",
+      "plannedStratum": "ambiguous",
+      "state": "not_started",
+      "stateTransitions": [],
+      "acceptedRelationships": [],
+      "rejectedRelationships": []
+    }
+  ]
+}
