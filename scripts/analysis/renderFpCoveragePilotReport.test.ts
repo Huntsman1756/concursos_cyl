@@ -18,16 +18,18 @@ describe("renderFpCoveragePilotReport", () => {
   it("rejects terminal pilot states that disagree with public coverage", async () => {
     const results = await validateFpCoveragePilotResultsFile();
     const completedUnreviewed = structuredClone(coverage) as MappingCoverage[];
-    completedUnreviewed.find(
+    const sanCoverage = completedUnreviewed.find(
       (row) => row.scope === "program" && row.programKey === "SAN21",
-    )!.coverageStatus = "uncovered";
+    ) as Extract<MappingCoverage, { scope: "program" }>;
+    sanCoverage.coverageStatus = "uncovered";
     expect(() =>
       renderFpCoveragePilotReport(results, completedUnreviewed),
     ).toThrow(/terminal pilot states/i);
     const deferredReviewed = structuredClone(coverage) as MappingCoverage[];
-    deferredReviewed.find(
+    const comCoverage = deferredReviewed.find(
       (row) => row.scope === "program" && row.programKey === "COM01M",
-    )!.coverageStatus = "reviewed";
+    ) as Extract<MappingCoverage, { scope: "program" }>;
+    comCoverage.coverageStatus = "reviewed";
     expect(() =>
       renderFpCoveragePilotReport(results, deferredReviewed),
     ).toThrow(/terminal pilot states|Public coverage/i);
