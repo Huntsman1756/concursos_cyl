@@ -408,3 +408,24 @@ test("the selected workspace uses equal desktop panels and a stacked mobile flow
   );
   expect(overflow).toBeLessThanOrEqual(1);
 });
+
+test("the home coverage panel exposes only manifest-reviewed program keys", async ({
+  page,
+}) => {
+  await page.goto("/");
+
+  const coverage = page.getByRole("region", { name: "Disponible ahora" });
+  for (const programKey of [
+    "IFC03S",
+    "IFC03SD",
+    "SAN21",
+    "HOT01M",
+    "SSC01M",
+    "EOC01M",
+  ]) {
+    await expect(
+      coverage.getByText(new RegExp(`^${programKey} ·`, "u")),
+    ).toBeVisible();
+  }
+  await expect(coverage.getByText("COM01M", { exact: false })).toHaveCount(0);
+});

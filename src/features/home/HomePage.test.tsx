@@ -16,7 +16,89 @@ afterEach(() => {
 });
 
 describe("HomePage", () => {
-  it("presents two truthful entry journeys and reviewed partial coverage", () => {
+  it("presents manifest-addressed reviewed coverage and excludes unsupported programs", async () => {
+    const baseManifest = currentManifestFixture();
+    const manifest = {
+      ...baseManifest,
+      resourceSnapshots: {
+        ...baseManifest.resourceSnapshots,
+        mappingCoverage: {
+          ...baseManifest.resourceSnapshots.programs,
+          resourcePath: "/data/v1/snapshots/build-1/mapping-coverage.json",
+        },
+      },
+    };
+    const coverage = [
+      {
+        scope: "program",
+        programKey: "IFC03S",
+        programTitle: "Desarrollo de Aplicaciones WEB",
+        familyCode: "IFC",
+        familyName: "Informática y Comunicaciones",
+        approvedMappings: 1,
+        draftMappings: 0,
+        rejectedMappings: 0,
+        uncoveredPrograms: 0,
+        coverageStatus: "reviewed",
+        coverageNote: "Incluye relaciones ocupacionales revisadas y citadas.",
+      },
+      {
+        scope: "program",
+        programKey: "IFC03SD",
+        programTitle: "Desarrollo de Aplicaciones WEB (distancia)",
+        familyCode: "IFC",
+        familyName: "Informática y Comunicaciones",
+        approvedMappings: 1,
+        draftMappings: 0,
+        rejectedMappings: 0,
+        uncoveredPrograms: 0,
+        coverageStatus: "reviewed",
+        coverageNote: "Incluye relaciones ocupacionales revisadas y citadas.",
+      },
+      ...["SAN21", "HOT01M", "SSC01M", "EOC01M"].map((programKey) => ({
+        scope: "program" as const,
+        programKey,
+        programTitle: programKey,
+        familyCode: "PILOT",
+        familyName: "Pilot",
+        approvedMappings: 1,
+        draftMappings: 0,
+        rejectedMappings: 0,
+        uncoveredPrograms: 0,
+        coverageStatus: "reviewed" as const,
+        coverageNote: "Incluye relaciones ocupacionales revisadas y citadas.",
+      })),
+      {
+        scope: "program",
+        programKey: "COM01M",
+        programTitle: "Actividades Comerciales",
+        familyCode: "COM",
+        familyName: "Comercio y Marketing",
+        approvedMappings: 0,
+        draftMappings: 0,
+        rejectedMappings: 0,
+        uncoveredPrograms: 1,
+        coverageStatus: "uncovered",
+        coverageNote: "Aún no hay una relación ocupacional aprobada.",
+      },
+    ];
+    vi.stubGlobal(
+      "fetch",
+      vi.fn((input: RequestInfo | URL) => {
+        const path = typeof input === "string" ? input : input.toString();
+        const payload =
+          path === "/data/v1/manifest.json"
+            ? manifest
+            : path === manifest.resourceSnapshots.mappingCoverage.resourcePath
+              ? coverage
+              : undefined;
+        return Promise.resolve(
+          payload === undefined
+            ? new Response(null, { status: 404 })
+            : new Response(JSON.stringify(payload), { status: 200 }),
+        );
+      }),
+    );
     render(
       <MemoryRouter>
         <HomePage />
@@ -29,11 +111,21 @@ describe("HomePage", () => {
         name: "Elige tu camino y actúa con información oficial",
       }),
     ).toBeVisible();
-    const coverage = screen.getByRole("region", { name: "Disponible ahora" });
-    expect(coverage).toHaveTextContent("Desarrollo de Aplicaciones Web");
-    expect(coverage).toHaveTextContent("presencial y distancia");
-    expect(coverage).toHaveTextContent("1 ocupación CNO revisada");
-    expect(screen.queryByText(/Cuidados Auxiliares/i)).not.toBeInTheDocument();
+    const coveragePanel = screen.getByRole("region", {
+      name: "Disponible ahora",
+    });
+    await waitFor(() => expect(coveragePanel).toHaveTextContent("IFC03S"));
+    for (const programKey of [
+      "IFC03S",
+      "IFC03SD",
+      "SAN21",
+      "HOT01M",
+      "SSC01M",
+      "EOC01M",
+    ]) {
+      expect(coveragePanel).toHaveTextContent(programKey);
+    }
+    expect(coveragePanel).not.toHaveTextContent("COM01M");
     expect(screen.queryByText(/Administración/i)).not.toBeInTheDocument();
     expect(screen.queryByText(/educación infantil/i)).not.toBeInTheDocument();
     expect(screen.queryByText(/soldadura/i)).not.toBeInTheDocument();

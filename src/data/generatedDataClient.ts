@@ -27,10 +27,12 @@ import {
 } from "../domain/requirements";
 import {
   OccupationAliasesSchema,
+  MappingCoverageResourceSchema,
   OccupationsSchema,
   TrainingOccupationLinksSchema,
   type Occupation,
   type OccupationAlias,
+  type MappingCoverage,
   type TrainingOccupationLink,
 } from "../../data/schemas/curatedMappings";
 
@@ -146,6 +148,27 @@ export function loadPublishedRequirements(
   return loadGeneratedResource(
     snapshot.resourcePath,
     PublishedRequirementsResourceSchema,
+  );
+}
+
+/** Loads the manifest-addressed public coverage rows used for coverage copy. */
+export async function loadMappingCoverage(
+  manifest: LoadableGeneratedManifest,
+): Promise<MappingCoverage[]> {
+  const resourceSnapshots =
+    manifest.resourceSnapshots as typeof manifest.resourceSnapshots &
+      Record<string, { resourcePath: string } | undefined>;
+  const snapshot = resourceSnapshots.mappingCoverage;
+  if (snapshot === undefined) {
+    throw new GeneratedDataError(
+      "missing",
+      "Generated manifest does not advertise mapping coverage.",
+    );
+  }
+
+  return loadGeneratedResource(
+    snapshot.resourcePath,
+    MappingCoverageResourceSchema,
   );
 }
 

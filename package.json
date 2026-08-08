@@ -16,6 +16,7 @@
     "lint": "eslint .",
     "format:check": "prettier --check .",
     "analysis:pilot:validate": "tsx scripts/analysis/validateFpCoveragePilot.ts",
+    "analysis:pilot:report:check": "tsx scripts/analysis/renderFpCoveragePilotReport.ts",
     "data:build": "tsx scripts/data/buildSnapshots.ts",
     "license:check": "tsx scripts/checkLicenses.ts"
   },

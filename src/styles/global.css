@@ -284,13 +284,21 @@ a:focus-visible {
 .coverage-panel__program {
   display: grid;
   gap: var(--space-1);
-  margin: var(--space-8) 0 var(--space-2);
-  font-size: 1.05rem;
+  margin: 0;
+  font-size: 0.95rem;
 }
 
 .coverage-panel__program strong {
   color: var(--color-text);
-  font-size: 1.25rem;
+  font-size: 1rem;
+}
+
+.coverage-panel__programs {
+  display: grid;
+  gap: var(--space-3);
+  margin: var(--space-6) 0 0;
+  padding: 0;
+  list-style: none;
 }
 
 .coverage-panel__occupation {

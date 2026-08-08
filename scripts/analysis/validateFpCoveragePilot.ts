@@ -1,6 +1,7 @@
 import { readFile } from "node:fs/promises";
 import { resolve } from "node:path";
 import { pathToFileURL } from "node:url";
+import { execFileSync } from "node:child_process";
 
 import { z } from "zod";
 
@@ -199,6 +200,22 @@ const SnapshotCoverageSchema = z.discriminatedUnion("status", [
     .strict(),
 ]);
 
+const ReviewedCommitTimingSchema = z
+  .object({
+    programKey: z.string().min(1),
+    reviewedCommit: z.string().regex(/^[a-f0-9]{40}$/u),
+    reviewedCommitAt: z.string().datetime(),
+    upperCompletionBoundAt: z.string().datetime(),
+  })
+  .strict();
+
+const PilotAggregationSchema = z
+  .object({
+    aggregatedAt: z.string().datetime(),
+    timingProvenance: z.array(ReviewedCommitTimingSchema),
+  })
+  .strict();
+
 const PilotAttemptSchema = z
   .object({
     programKey: z.string().min(1),
@@ -236,6 +253,7 @@ const PilotResultsSchema = z
   .object({
     schemaVersion: z.literal("1.0.0"),
     attempts: z.array(PilotAttemptSchema),
+    aggregation: PilotAggregationSchema.optional(),
   })
   .strict();
 
@@ -371,6 +389,13 @@ type PilotAttempt = z.infer<typeof PilotAttemptSchema>;
 type SnapshotCoverage = z.infer<typeof SnapshotCoverageSchema>;
 export type FpCoveragePilotResults = z.infer<typeof PilotResultsSchema>;
 
+export interface FpCoveragePilotSummary {
+  terminalCounts: { completed: number; deferred: number; discarded: number };
+  modeledActiveWorkMinutes: number;
+  marginalOffersReached: number;
+  wallClockMinutes: { lower: number; upper: number };
+}
+
 export interface FpCoveragePilotValidationContext {
   snapshotId: string;
   programs: readonly TrainingProgram[];
@@ -400,6 +425,119 @@ export interface FpCoveragePilotValidationOptions {
 
 function assert(condition: unknown, message: string): asserts condition {
   if (!condition) throw new Error(message);
+}
+
+function gitCommitTimestamp(commit: string): string {
+  const output = execFileSync("git", ["show", "-s", "--format=%cI", commit], {
+    cwd: process.cwd(),
+    encoding: "utf8",
+  }).trim();
+  const instant = new Date(output);
+  assert(
+    !Number.isNaN(instant.getTime()),
+    `Git timestamp for ${commit} is invalid.`,
+  );
+  return instant.toISOString();
+}
+
+function assertAggregation(results: FpCoveragePilotResults): void {
+  const aggregation = results.aggregation;
+  assert(
+    aggregation !== undefined,
+    "Terminal pilot results require aggregation timing provenance.",
+  );
+  const timingByProgram = new Map(
+    aggregation.timingProvenance.map((timing) => [timing.programKey, timing]),
+  );
+  assert(
+    timingByProgram.size === results.attempts.length &&
+      results.attempts.every((attempt) =>
+        timingByProgram.has(attempt.programKey),
+      ),
+    "Aggregation timing provenance must contain exactly one row for every pilot attempt.",
+  );
+
+  results.attempts.forEach((attempt, index) => {
+    const timing = timingByProgram.get(attempt.programKey)!;
+    assert(
+      attempt.state === "completed" ||
+        attempt.state === "deferred" ||
+        attempt.state === "discarded",
+      `Aggregation requires terminal state for ${attempt.programKey}.`,
+    );
+    assert(
+      attempt.startedAt !== undefined && attempt.phaseMinutes !== undefined,
+      `Aggregation requires timing and modeled phase minutes for ${attempt.programKey}.`,
+    );
+    assert(
+      gitCommitTimestamp(timing.reviewedCommit) === timing.reviewedCommitAt,
+      `Git timestamp for ${attempt.programKey} does not match reviewed commit provenance.`,
+    );
+    const startedAt = new Date(attempt.startedAt).getTime();
+    const reviewedAt = new Date(timing.reviewedCommitAt).getTime();
+    const upperBound = new Date(timing.upperCompletionBoundAt).getTime();
+    assert(
+      startedAt <= reviewedAt && reviewedAt <= upperBound,
+      `Reviewed commit timing bounds are invalid for ${attempt.programKey}.`,
+    );
+    const nextAttempt = results.attempts[index + 1];
+    const expectedUpperBound =
+      nextAttempt?.startedAt ?? aggregation.aggregatedAt;
+    assert(
+      timing.upperCompletionBoundAt === expectedUpperBound,
+      `Upper completion bound for ${attempt.programKey} must be the next attempt start or aggregation start.`,
+    );
+  });
+}
+
+export function summarizeFpCoveragePilotResults(
+  results: FpCoveragePilotResults,
+): FpCoveragePilotSummary {
+  const aggregation = results.aggregation;
+  assert(
+    aggregation !== undefined,
+    "Pilot summary requires aggregation timing provenance.",
+  );
+  const timingByProgram = new Map(
+    aggregation.timingProvenance.map((timing) => [timing.programKey, timing]),
+  );
+  const terminalCounts = { completed: 0, deferred: 0, discarded: 0 };
+  let modeledActiveWorkMinutes = 0;
+  let marginalOffersReached = 0;
+  let lowerMilliseconds = 0;
+  let upperMilliseconds = 0;
+
+  for (const attempt of results.attempts) {
+    if (
+      attempt.state === "completed" ||
+      attempt.state === "deferred" ||
+      attempt.state === "discarded"
+    ) {
+      terminalCounts[attempt.state] += 1;
+    }
+    modeledActiveWorkMinutes += Object.values(
+      attempt.phaseMinutes ?? {},
+    ).reduce((total, minutes) => total + minutes, 0);
+    if (attempt.snapshotCoverage?.status === "verified") {
+      marginalOffersReached += attempt.snapshotCoverage.newlyReachedOfferCount;
+    }
+    const timing = timingByProgram.get(attempt.programKey)!;
+    const startedAt = new Date(attempt.startedAt!).getTime();
+    lowerMilliseconds +=
+      new Date(timing.reviewedCommitAt).getTime() - startedAt;
+    upperMilliseconds +=
+      new Date(timing.upperCompletionBoundAt).getTime() - startedAt;
+  }
+
+  return {
+    terminalCounts,
+    modeledActiveWorkMinutes,
+    marginalOffersReached,
+    wallClockMinutes: {
+      lower: lowerMilliseconds / 60_000,
+      upper: upperMilliseconds / 60_000,
+    },
+  };
 }
 
 function isPrimaryOfficialSource(value: string): boolean {
@@ -1189,6 +1327,16 @@ export function validateFpCoveragePilotResults(
   results.attempts.forEach((attempt) =>
     assertAttemptState(attempt, context, now),
   );
+  if (
+    results.attempts.every(
+      (attempt) =>
+        attempt.state === "completed" ||
+        attempt.state === "deferred" ||
+        attempt.state === "discarded",
+    )
+  ) {
+    assertAggregation(results);
+  }
   return results;
 }
 

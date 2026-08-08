@@ -5,6 +5,7 @@ import { beforeAll, describe, expect, it } from "vitest";
 
 import {
   loadFpCoveragePilotValidationContext,
+  summarizeFpCoveragePilotResults,
   validateFpCoveragePilotResults,
   validateFpCoveragePilotResultsFile,
   type FpCoveragePilotValidationContext,
@@ -293,7 +294,62 @@ function validate(
   return validateFpCoveragePilotResults(candidate, context, { now: () => now });
 }
 
+function aggregationProvenance() {
+  return {
+    aggregatedAt: "2026-08-08T20:12:45.473Z",
+    timingProvenance: [
+      {
+        programKey: "SAN21",
+        reviewedCommit: "f13f8e8388a7808f3a8739e751ba7682ddba0e77",
+        reviewedCommitAt: "2026-08-08T17:32:42.000Z",
+        upperCompletionBoundAt: "2026-08-08T17:34:51.888Z",
+      },
+      {
+        programKey: "HOT01M",
+        reviewedCommit: "c3930e82f96953257f16e43418b362b24a1a8482",
+        reviewedCommitAt: "2026-08-08T18:17:53.000Z",
+        upperCompletionBoundAt: "2026-08-08T18:20:34.952Z",
+      },
+      {
+        programKey: "SSC01M",
+        reviewedCommit: "dc9758088b83c5d83df76c26a6d722254788f797",
+        reviewedCommitAt: "2026-08-08T18:47:58.000Z",
+        upperCompletionBoundAt: "2026-08-08T18:52:54.405Z",
+      },
+      {
+        programKey: "EOC01M",
+        reviewedCommit: "513bb5e14324e77c6042997d1adbeda0b77c58a1",
+        reviewedCommitAt: "2026-08-08T19:19:33.000Z",
+        upperCompletionBoundAt: "2026-08-08T19:23:34.822Z",
+      },
+      {
+        programKey: "COM01M",
+        reviewedCommit: "51af0ce7f623bbb07fdf66998624503d4da2a407",
+        reviewedCommitAt: "2026-08-08T20:07:42.000Z",
+        upperCompletionBoundAt: "2026-08-08T20:12:45.473Z",
+      },
+    ],
+  };
+}
+
 describe("validateFpCoveragePilotResults", () => {
+  it("requires verified reviewed-commit timing bounds and reports active work separately", async () => {
+    const candidate = await checkedInResults();
+    Object.assign(candidate, { aggregation: aggregationProvenance() });
+
+    const results = validate(candidate);
+    expect(summarizeFpCoveragePilotResults(results)).toMatchObject({
+      terminalCounts: { completed: 4, deferred: 1, discarded: 0 },
+      modeledActiveWorkMinutes: 68,
+      marginalOffersReached: 43,
+    });
+
+    const malformed = clone(candidate);
+    malformed.aggregation!.timingProvenance[0]!.reviewedCommitAt =
+      "2026-08-08T17:32:41.000Z";
+    expect(() => validate(malformed)).toThrow(/Git timestamp/i);
+  });
+
   it("publishes the reviewed SAN21 CNO outputs in the manifest-addressed snapshot", () => {
     expect(
       context.links.filter(
