@@ -81,7 +81,9 @@ function expectNoSerializedRequestState(url: string): void {
   expect(decodedQueryAndHash).not.toContain(syntheticRequirementId);
   for (const answerValue of ["has", "lacks", "unsure"]) {
     expect(decodedQueryAndHash).not.toContain(answerValue);
-    expect(decodedPath.split("/")).not.toContain(answerValue);
+    if (!decodedPath.startsWith("/node_modules/")) {
+      expect(decodedPath).not.toContain(answerValue);
+    }
   }
   for (const normalizedValue of syntheticRequirementValues) {
     expect(decodedPath).not.toContain(normalizedValue);
@@ -93,6 +95,7 @@ test("answer, exact-absence filter, and checklist remain ephemeral and never lea
   page,
 }) => {
   const privacyEvents: string[] = [];
+  const domStorageMutations: string[] = [];
   await page.exposeBinding(
     "recordDecisionPrivacyEvent",
     (_source, event: string) => {
@@ -164,13 +167,36 @@ test("answer, exact-absence filter, and checklist remain ephemeral and never lea
     window.addEventListener("hashchange", () => record("history:hashchange"));
   });
   await installDecisionFlowFixture(page);
+  const cdp = await page.context().newCDPSession(page);
+  await cdp.send("DOMStorage.enable");
+  for (const event of [
+    "DOMStorage.domStorageItemAdded",
+    "DOMStorage.domStorageItemUpdated",
+    "DOMStorage.domStorageItemRemoved",
+    "DOMStorage.domStorageItemsCleared",
+  ]) {
+    cdp.on(event, () => domStorageMutations.push(event));
+  }
   await page.goto("/desde-fp/IFC03S");
   const card = page.getByRole("article", {
     name: "Desarrollador web para servicios públicos",
   });
   await expect(card).toBeVisible();
 
+  await page.evaluate((probeKey) => {
+    localStorage[probeKey] = "probe";
+    delete localStorage[probeKey];
+    sessionStorage[probeKey] = "probe";
+    delete sessionStorage[probeKey];
+  }, "__e2e_direct_storage_probe__");
+  await expect.poll(() => domStorageMutations.length).toBeGreaterThanOrEqual(4);
+  await expectEmptyBrowserPersistence(page);
+  await page.evaluate(async () => {
+    await window.recordDecisionPrivacyEvent?.("privacy-calibration-barrier");
+  });
+
   privacyEvents.splice(0);
+  domStorageMutations.splice(0);
   const interactionRequests: { method: string; url: string }[] = [];
   const recordRequest = (request: { method(): string; url(): string }) => {
     interactionRequests.push({ method: request.method(), url: request.url() });
@@ -234,6 +260,7 @@ test("answer, exact-absence filter, and checklist remain ephemeral and never lea
   await expectPrivateLocation(page);
   await expectEmptyBrowserPersistence(page);
   await expectNoPrivacyEvents(page, privacyEvents);
+  expect(domStorageMutations).toEqual([]);
   expect(interactionRequests.length).toBeGreaterThan(0);
   for (const { method, url } of interactionRequests) {
     expect(method).toBe("GET");
