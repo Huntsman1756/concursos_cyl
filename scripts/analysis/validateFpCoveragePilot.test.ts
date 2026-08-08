@@ -375,7 +375,7 @@ describe("validateFpCoveragePilotResults", () => {
     nonLatestCommit.aggregation!.timingProvenance[4]!.reviewedCommit =
       "ec08a6d772eed3d883aa72379f29c1061163d87f";
     nonLatestCommit.aggregation!.timingProvenance[4]!.reviewedCommitAt =
-      "2026-08-08T20:05:00.000Z";
+      "2026-08-08T19:58:31.000Z";
     expect(() => validate(nonLatestCommit)).toThrow(/latest first-parent/i);
   });
 
