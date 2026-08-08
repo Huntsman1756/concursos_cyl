@@ -360,6 +360,23 @@ describe("validateFpCoveragePilotResults", () => {
       (attempt) => attempt.programKey === "COM01M",
     )!.completedAt = "2026-08-08T20:07:43.000Z";
     expect(() => validate(beforeCompletion)).toThrow(/Terminal attempt/i);
+
+    const synchronizedAfterReview = clone(candidate);
+    const comAttempt = synchronizedAfterReview.attempts.find(
+      (attempt) => attempt.programKey === "COM01M",
+    )!;
+    comAttempt.completedAt = "2026-08-08T20:07:43.000Z";
+    comAttempt.stateTransitions[1]!.at = "2026-08-08T20:07:43.000Z";
+    expect(() => validate(synchronizedAfterReview)).toThrow(
+      /Reviewed commit timing bounds/i,
+    );
+
+    const nonLatestCommit = clone(candidate);
+    nonLatestCommit.aggregation!.timingProvenance[4]!.reviewedCommit =
+      "ec08a6d772eed3d883aa72379f29c1061163d87f";
+    nonLatestCommit.aggregation!.timingProvenance[4]!.reviewedCommitAt =
+      "2026-08-08T20:05:00.000Z";
+    expect(() => validate(nonLatestCommit)).toThrow(/latest first-parent/i);
   });
 
   it("publishes the reviewed SAN21 CNO outputs in the manifest-addressed snapshot", () => {
