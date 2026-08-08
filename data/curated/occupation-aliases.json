@@ -43,5 +43,54 @@
     "reviewedAt": "2026-08-04",
     "mappingVersion": "1.0.0",
     "reviewNote": "CNO-11 classification between 4309 and 4500 remains unresolved; excluded from public resources pending exact official evidence."
+  },
+  {
+    "alias": "auxiliares de enfermería hospitalaria",
+    "occupationId": "occupation:cno11:5611",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-08",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "alias": "técnicos auxiliares de clínica",
+    "occupationId": "occupation:cno11:5611",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-08",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "alias": "auxiliares de enfermería de geriatría",
+    "occupationId": "occupation:cno11:5611",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-08",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "alias": "auxiliares de enfermería de salud mental y toxicomanías",
+    "occupationId": "occupation:cno11:5611",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-08",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "alias": "auxiliares de enfermería de atención primaria",
+    "occupationId": "occupation:cno11:5612",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-08",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "alias": "auxiliares de enfermería de centros de atención primaria",
+    "occupationId": "occupation:cno11:5612",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-08",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "alias": "auxiliares de enfermería de consultorios médicos",
+    "occupationId": "occupation:cno11:5612",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-08",
+    "mappingVersion": "1.0.0"
   }
 ]

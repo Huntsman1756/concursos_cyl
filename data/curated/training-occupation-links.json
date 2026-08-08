@@ -40,5 +40,25 @@
     "sourceQuote": "Desarrollador de aplicaciones en entornos Web.",
     "reviewedAt": "2026-08-04",
     "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "SAN21",
+    "occupationId": "occupation:cno11:5611",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://todofp.es/dam/jcr%3Aaf5b68fd-e75c-493b-94ff-0565d3886473/san21cuidauxilenfermeria-pdf.pdf",
+    "sourceQuote": "Auxiliar de Enfermería/Clínica..",
+    "reviewedAt": "2026-08-08",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "SAN21",
+    "occupationId": "occupation:cno11:5612",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://todofp.es/dam/jcr%3Aaf5b68fd-e75c-493b-94ff-0565d3886473/san21cuidauxilenfermeria-pdf.pdf",
+    "sourceQuote": "Auxiliar de Atención primaria.",
+    "reviewedAt": "2026-08-08",
+    "mappingVersion": "1.0.0"
   }
 ]

@@ -1,0 +1,35 @@
+[
+  {
+    "catalogVersion": "1.0.0",
+    "classificationCode": "2713",
+    "classificationSystem": "CNO-11",
+    "confirmationLabel": "Programación y desarrollo web",
+    "occupationId": "occupation:cno11:2713",
+    "preferredLabel": "Analistas, programadores y diseñadores web y multimedia",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-04",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf"
+  },
+  {
+    "catalogVersion": "1.0.0",
+    "classificationCode": "5611",
+    "classificationSystem": "CNO-11",
+    "confirmationLabel": "Atención auxiliar de enfermería hospitalaria",
+    "occupationId": "occupation:cno11:5611",
+    "preferredLabel": "Auxiliares de enfermería hospitalaria",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-08",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf"
+  },
+  {
+    "catalogVersion": "1.0.0",
+    "classificationCode": "5612",
+    "classificationSystem": "CNO-11",
+    "confirmationLabel": "Atención auxiliar de enfermería primaria",
+    "occupationId": "occupation:cno11:5612",
+    "preferredLabel": "Auxiliares de enfermería de atención primaria",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-08",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf"
+  }
+]

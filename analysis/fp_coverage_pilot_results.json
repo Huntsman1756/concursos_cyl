@@ -6,10 +6,67 @@
       "programTitle": "Cuidados Auxiliares de Enfermería",
       "familyName": "Sanidad",
       "plannedStratum": "easy",
-      "state": "not_started",
-      "stateTransitions": [],
-      "acceptedRelationships": [],
-      "rejectedRelationships": []
+      "state": "completed",
+      "startedAt": "2026-08-08T17:15:59.200Z",
+      "completedAt": "2026-08-08T17:24:54.903Z",
+      "stateTransitions": [
+        {
+          "from": "not_started",
+          "to": "in_progress",
+          "at": "2026-08-08T17:15:59.200Z"
+        },
+        {
+          "from": "in_progress",
+          "to": "completed",
+          "at": "2026-08-08T17:24:54.903Z"
+        }
+      ],
+      "phaseMinutes": {
+        "research": 2,
+        "implementation": 1,
+        "test": 3,
+        "review": 1
+      },
+      "acceptedRelationships": [
+        {
+          "occupationId": "occupation:cno11:5611",
+          "relationshipType": "official_output",
+          "reasonCode": "official_programme_output",
+          "sourceUrl": "https://todofp.es/dam/jcr%3Aaf5b68fd-e75c-493b-94ff-0565d3886473/san21cuidauxilenfermeria-pdf.pdf",
+          "sourceQuote": "Auxiliar de Enfermería/Clínica..",
+          "reviewedAt": "2026-08-08"
+        },
+        {
+          "occupationId": "occupation:cno11:5612",
+          "relationshipType": "official_output",
+          "reasonCode": "official_programme_output",
+          "sourceUrl": "https://todofp.es/dam/jcr%3Aaf5b68fd-e75c-493b-94ff-0565d3886473/san21cuidauxilenfermeria-pdf.pdf",
+          "sourceQuote": "Auxiliar de Atención primaria.",
+          "reviewedAt": "2026-08-08"
+        }
+      ],
+      "rejectedRelationships": [
+        {
+          "occupationId": "occupation:cno11:5629",
+          "reasonCode": "official_evidence_indirect",
+          "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+          "sourceQuote": "Ayudantes de dentista",
+          "reviewedAt": "2026-08-08"
+        },
+        {
+          "occupationId": "occupation:cno11:5710",
+          "reasonCode": "official_evidence_indirect",
+          "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+          "sourceQuote": "Auxiliares de enfermería en el hogar (con labores de cuidador)",
+          "reviewedAt": "2026-08-08"
+        }
+      ],
+      "snapshotCoverage": {
+        "status": "verified",
+        "snapshotId": "20260808172031375-7c88ca187340",
+        "countingMethod": "accepted_relationship_union",
+        "newlyReachedOfferCount": 43
+      }
     },
     {
       "programKey": "HOT01M",

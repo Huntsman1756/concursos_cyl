@@ -47,6 +47,13 @@ const programs: TrainingProgram[] = [
     familyCode: "ADG",
     familyName: "Administración y Gestión",
   },
+  {
+    programKey: "SAN21",
+    programTitle: "Cuidados Auxiliares de Enfermería",
+    level: "intermediate",
+    familyCode: "SAN",
+    familyName: "Sanidad",
+  },
 ];
 
 const occupations = [
@@ -289,11 +296,11 @@ describe("curated occupation mappings", () => {
       ),
     ).toBe(true);
     expect(approved.occupations.map((item) => item.classificationCode)).toEqual(
-      ["2713"],
+      ["2713", "5611", "5612"],
     );
     expect(
       approved.links.map((item) => item.trainingProgramKey).sort(),
-    ).toEqual(["IFC03S", "IFC03SD"]);
+    ).toEqual(["IFC03S", "IFC03SD", "SAN21", "SAN21"]);
 
     const coverage = buildMappingCoverage(programs, curated.links);
     expect(coverage).toContainEqual(

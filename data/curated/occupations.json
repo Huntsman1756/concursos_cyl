@@ -21,5 +21,49 @@
     "reviewedAt": "2026-08-04",
     "catalogVersion": "1.0.0",
     "reviewNote": "CNO-11 classification between 4309 and 4500 remains unresolved; excluded from public resources pending exact official evidence."
+  },
+  {
+    "occupationId": "occupation:cno11:5611",
+    "preferredLabel": "Auxiliares de enfermería hospitalaria",
+    "confirmationLabel": "Atención auxiliar de enfermería hospitalaria",
+    "classificationSystem": "CNO-11",
+    "classificationCode": "5611",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+    "reviewedAt": "2026-08-08",
+    "catalogVersion": "1.0.0"
+  },
+  {
+    "occupationId": "occupation:cno11:5612",
+    "preferredLabel": "Auxiliares de enfermería de atención primaria",
+    "confirmationLabel": "Atención auxiliar de enfermería primaria",
+    "classificationSystem": "CNO-11",
+    "classificationCode": "5612",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+    "reviewedAt": "2026-08-08",
+    "catalogVersion": "1.0.0"
+  },
+  {
+    "occupationId": "occupation:cno11:5629",
+    "preferredLabel": "Trabajadores de los cuidados a las personas en servicios de salud no clasificados bajo otros epígrafes",
+    "confirmationLabel": "Apoyo sanitario no clasificado",
+    "classificationSystem": "CNO-11",
+    "classificationCode": "5629",
+    "reviewStatus": "rejected",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+    "reviewedAt": "2026-08-08",
+    "catalogVersion": "1.0.0"
+  },
+  {
+    "occupationId": "occupation:cno11:5710",
+    "preferredLabel": "Trabajadores de los cuidados personales a domicilio",
+    "confirmationLabel": "Cuidados personales a domicilio",
+    "classificationSystem": "CNO-11",
+    "classificationCode": "5710",
+    "reviewStatus": "rejected",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+    "reviewedAt": "2026-08-08",
+    "catalogVersion": "1.0.0"
   }
 ]

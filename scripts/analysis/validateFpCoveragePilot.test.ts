@@ -112,7 +112,7 @@ function completedResults() {
     ],
     snapshotCoverage: {
       status: "unavailable",
-      snapshotId: "20260805075250485-c36a68fc066e",
+      snapshotId: context.snapshotId,
       limitationCode: "accepted_relationships_not_in_snapshot",
     },
   };
@@ -127,12 +127,41 @@ beforeAll(async () => {
 
 function validate(
   candidate: unknown,
-  now = new Date("2026-08-08T12:00:00.000Z"),
+  now = new Date("2026-08-09T00:00:00.000Z"),
 ) {
   return validateFpCoveragePilotResults(candidate, context, { now: () => now });
 }
 
 describe("validateFpCoveragePilotResults", () => {
+  it("publishes the reviewed SAN21 CNO outputs in the manifest-addressed snapshot", () => {
+    expect(
+      context.links.filter(
+        (link) =>
+          link.trainingProgramKey === "SAN21" &&
+          link.reviewStatus === "approved",
+      ),
+    ).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          occupationId: "occupation:cno11:5611",
+          relationshipType: "official_output",
+          sourceUrl:
+            "https://todofp.es/dam/jcr%3Aaf5b68fd-e75c-493b-94ff-0565d3886473/san21cuidauxilenfermeria-pdf.pdf",
+          sourceQuote: "Auxiliar de Enfermería/Clínica..",
+          reviewedAt: "2026-08-08",
+        }),
+        expect.objectContaining({
+          occupationId: "occupation:cno11:5612",
+          relationshipType: "official_output",
+          sourceUrl:
+            "https://todofp.es/dam/jcr%3Aaf5b68fd-e75c-493b-94ff-0565d3886473/san21cuidauxilenfermeria-pdf.pdf",
+          sourceQuote: "Auxiliar de Atención primaria.",
+          reviewedAt: "2026-08-08",
+        }),
+      ]),
+    );
+  });
+
   it("accepts real canonical evidence only when its audit fields are complete", () => {
     expect(() => validate(completedResults())).not.toThrow();
   });
@@ -312,7 +341,7 @@ describe("validateFpCoveragePilotResults", () => {
     const unverifiableCount = completedResults();
     unverifiableCount.attempts[0].snapshotCoverage = {
       status: "verified",
-      snapshotId: "20260805075250485-c36a68fc066e",
+      snapshotId: context.snapshotId,
       countingMethod: "accepted_relationship_union",
       newlyReachedOfferCount: 0,
     };
