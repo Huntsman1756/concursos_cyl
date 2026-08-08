@@ -4,6 +4,30 @@ import { pathToFileURL } from "node:url";
 
 import { z } from "zod";
 
+import {
+  OccupationAliasesSchema,
+  OccupationsSchema,
+  TrainingOccupationLinksSchema,
+  type Occupation,
+  type OccupationAlias,
+  type TrainingOccupationLink,
+} from "../../data/schemas/curatedMappings";
+import {
+  GeneratedManifestSchema,
+  JobOfferSchema,
+  TrainingProgramSchema,
+  type GeneratedManifest,
+  type JobOffer,
+  type TrainingProgram,
+} from "../../data/schemas/generated";
+import { REVIEWED_PROGRAM_QUALIFICATION_LINKS } from "../../data/catalogs/reviewedProgramQualifications";
+import { REVIEWED_QUALIFICATIONS } from "../../data/catalogs/reviewedQualifications";
+import { matchOffersForProgram } from "../../src/domain/offerMatching";
+import {
+  PublishedRequirementsResourceSchema,
+  type OfferPublishedRequirements,
+} from "../../src/domain/requirements";
+
 const PilotStateSchema = z.enum([
   "not_started",
   "in_progress",
@@ -24,6 +48,12 @@ const PhaseMinutesSchema = z
   })
   .strict();
 
+const EvidenceSchema = {
+  sourceUrl: z.string().url(),
+  sourceQuote: z.string().trim().min(12).max(280),
+  reviewedAt: z.string().date(),
+} as const;
+
 const OfficialRelationshipSchema = z
   .object({
     occupationId: z.string().regex(/^occupation:cno11:\d{4}$/u),
@@ -32,8 +62,7 @@ const OfficialRelationshipSchema = z
       "official_programme_output",
       "officially_reviewed_relationship",
     ]),
-    sourceUrl: z.string().url(),
-    reviewedAt: z.string().date(),
+    ...EvidenceSchema,
   })
   .strict();
 
@@ -47,8 +76,7 @@ const RejectedRelationshipSchema = z
       "out_of_scope_regulated_role",
       "duplicate_relationship",
     ]),
-    sourceUrl: z.string().url(),
-    reviewedAt: z.string().date(),
+    ...EvidenceSchema,
   })
   .strict();
 
@@ -59,6 +87,24 @@ const StateTransitionSchema = z
     at: z.string().datetime(),
   })
   .strict();
+
+const SnapshotCoverageSchema = z.discriminatedUnion("status", [
+  z
+    .object({
+      status: z.literal("verified"),
+      snapshotId: z.string().trim().min(1),
+      countingMethod: z.literal("accepted_relationship_union"),
+      newlyReachedOfferCount: z.number().int().min(0),
+    })
+    .strict(),
+  z
+    .object({
+      status: z.literal("unavailable"),
+      snapshotId: z.string().trim().min(1),
+      limitationCode: z.literal("accepted_relationships_not_in_snapshot"),
+    })
+    .strict(),
+]);
 
 const PilotAttemptSchema = z
   .object({
@@ -85,14 +131,7 @@ const PilotAttemptSchema = z
       )
       .optional(),
     ambiguityNotes: z.string().trim().min(1).optional(),
-    snapshotCoverage: z
-      .object({
-        snapshotId: z.string().trim().min(1),
-        countingMethod: z.literal("accepted_relationship_union"),
-        newlyReachedOfferCount: z.number().int().min(0),
-      })
-      .strict()
-      .optional(),
+    snapshotCoverage: SnapshotCoverageSchema.optional(),
   })
   .strict();
 
@@ -137,17 +176,56 @@ const expectedPrograms = [
 ] as const;
 
 type PilotAttempt = z.infer<typeof PilotAttemptSchema>;
+type SnapshotCoverage = z.infer<typeof SnapshotCoverageSchema>;
 export type FpCoveragePilotResults = z.infer<typeof PilotResultsSchema>;
 
+export interface FpCoveragePilotValidationContext {
+  snapshotId: string;
+  programs: readonly TrainingProgram[];
+  canonicalOccupations: readonly Occupation[];
+  occupations: readonly Occupation[];
+  aliases: readonly OccupationAlias[];
+  links: readonly TrainingOccupationLink[];
+  offers: readonly JobOffer[];
+  publishedRequirements: readonly OfferPublishedRequirements[];
+}
+
+export interface FpCoveragePilotValidationOptions {
+  now?: () => Date;
+}
+
+function assert(condition: unknown, message: string): asserts condition {
+  if (!condition) throw new Error(message);
+}
+
 function isPrimaryOfficialSource(value: string): boolean {
-  const hostname = new URL(value).hostname.toLocaleLowerCase("en-US");
+  const url = new URL(value);
+  if (
+    url.protocol !== "https:" ||
+    url.username.length > 0 ||
+    url.password.length > 0 ||
+    /(?:^|[/._-])(example|placeholder|todo)(?:$|[/._-])/iu.test(url.pathname)
+  ) {
+    return false;
+  }
+  const hostname = url.hostname.toLocaleLowerCase("en-US");
   return ["boe.es", "todofp.es", "ine.es", "sepe.es", "jcyl.es"].some(
     (domain) => hostname === domain || hostname.endsWith(`.${domain}`),
   );
 }
 
-function assert(condition: unknown, message: string): asserts condition {
-  if (!condition) throw new Error(message);
+function assertAuditableEvidence(
+  evidence: Pick<
+    PilotAttempt["acceptedRelationships"][number],
+    "sourceUrl" | "sourceQuote"
+  >,
+  programKey: string,
+): void {
+  assert(
+    isPrimaryOfficialSource(evidence.sourceUrl) &&
+      !/\b(example|placeholder|todo)\b/iu.test(evidence.sourceQuote),
+    `Relationship evidence for ${programKey} must be an HTTPS official document with an exact auditable quote.`,
+  );
 }
 
 function assertExactProgramSet(attempts: readonly PilotAttempt[]): void {
@@ -189,34 +267,171 @@ function assertExactTransitions(
   );
 }
 
-function assertOfficialRelationships(attempt: PilotAttempt): void {
-  for (const relationship of [
-    ...attempt.acceptedRelationships,
-    ...attempt.rejectedRelationships,
-  ]) {
+function assertRelationshipCatalogIntegrity(
+  attempt: PilotAttempt,
+  context: FpCoveragePilotValidationContext,
+): void {
+  const occupationsById = new Map(
+    context.canonicalOccupations.map((occupation) => [
+      occupation.occupationId,
+      occupation,
+    ]),
+  );
+  const dispositions = new Set<string>();
+
+  for (const relationship of attempt.acceptedRelationships) {
+    const occupation = occupationsById.get(relationship.occupationId);
     assert(
-      isPrimaryOfficialSource(relationship.sourceUrl),
-      `Relationship evidence for ${attempt.programKey} must use an official source.`,
+      occupation?.reviewStatus === "approved",
+      `Accepted relationship for ${attempt.programKey} must reference an approved canonical occupation.`,
     );
+    assert(
+      !dispositions.has(relationship.occupationId),
+      `Each occupation may have only one disposition for ${attempt.programKey}.`,
+    );
+    dispositions.add(relationship.occupationId);
+    assertAuditableEvidence(relationship, attempt.programKey);
   }
 
-  const identities = [
-    ...attempt.acceptedRelationships.map(
-      (relationship) =>
-        `${relationship.occupationId}:${relationship.relationshipType}`,
-    ),
-    ...attempt.rejectedRelationships.map(
-      (relationship) => `${relationship.occupationId}:rejected`,
-    ),
-  ];
-  assert(
-    new Set(identities).size === identities.length,
-    `Duplicate relationship evidence for ${attempt.programKey}.`,
+  for (const relationship of attempt.rejectedRelationships) {
+    assert(
+      occupationsById.has(relationship.occupationId),
+      `Rejected relationship for ${attempt.programKey} must reference a canonical occupation.`,
+    );
+    assert(
+      !dispositions.has(relationship.occupationId),
+      `Each occupation may have only one disposition for ${attempt.programKey}.`,
+    );
+    dispositions.add(relationship.occupationId);
+    assertAuditableEvidence(relationship, attempt.programKey);
+  }
+}
+
+function phaseTotalMinutes(
+  phaseMinutes: NonNullable<PilotAttempt["phaseMinutes"]>,
+): number {
+  return (
+    phaseMinutes.research +
+    phaseMinutes.implementation +
+    phaseMinutes.test +
+    phaseMinutes.review
   );
 }
 
-function assertAttemptState(attempt: PilotAttempt): void {
-  assertOfficialRelationships(attempt);
+function assertTiming(attempt: PilotAttempt, now: Date): void {
+  const transitionTimes = attempt.stateTransitions.map(({ at }) =>
+    Date.parse(at),
+  );
+  assert(
+    transitionTimes.every((at) => at <= now.getTime()),
+    `Attempt ${attempt.programKey} contains a future transition.`,
+  );
+  assert(
+    transitionTimes.every(
+      (at, index) => index === 0 || at >= transitionTimes[index - 1]!,
+    ),
+    `Attempt ${attempt.programKey} has non-chronological state transitions.`,
+  );
+
+  if (attempt.state === "not_started") return;
+  const startedAt = attempt.startedAt!;
+  const endAt = attempt.completedAt ?? now.toISOString();
+  const reviewedAtValues = [
+    ...attempt.acceptedRelationships,
+    ...attempt.rejectedRelationships,
+  ].map((relationship) => relationship.reviewedAt);
+  assert(
+    reviewedAtValues.every(
+      (reviewedAt) =>
+        reviewedAt >= startedAt.slice(0, 10) &&
+        reviewedAt <= endAt.slice(0, 10),
+    ),
+    `Relationship review dates for ${attempt.programKey} must fall within the attempt window.`,
+  );
+
+  if (attempt.phaseMinutes !== undefined) {
+    const elapsedMinutes = (Date.parse(endAt) - Date.parse(startedAt)) / 60_000;
+    assert(
+      phaseTotalMinutes(attempt.phaseMinutes) <= elapsedMinutes,
+      `Phase minutes for ${attempt.programKey} exceed the elapsed attempt interval.`,
+    );
+  }
+}
+
+function sameSnapshotRelationship(
+  attempt: PilotAttempt,
+  relationship: PilotAttempt["acceptedRelationships"][number],
+  link: TrainingOccupationLink,
+): boolean {
+  return (
+    link.reviewStatus === "approved" &&
+    link.trainingProgramKey === attempt.programKey &&
+    link.occupationId === relationship.occupationId &&
+    link.relationshipType === relationship.relationshipType &&
+    link.sourceUrl === relationship.sourceUrl &&
+    link.sourceQuote === relationship.sourceQuote &&
+    link.reviewedAt === relationship.reviewedAt
+  );
+}
+
+function assertSnapshotCoverage(
+  attempt: PilotAttempt,
+  coverage: SnapshotCoverage,
+  context: FpCoveragePilotValidationContext,
+): void {
+  assert(
+    coverage.snapshotId === context.snapshotId,
+    `Snapshot provenance for ${attempt.programKey} must resolve to the current manifest snapshot.`,
+  );
+  const acceptedLinks = attempt.acceptedRelationships.map((relationship) =>
+    context.links.find((link) =>
+      sameSnapshotRelationship(attempt, relationship, link),
+    ),
+  );
+  const hasEveryAcceptedLink = acceptedLinks.every(
+    (link) => link !== undefined,
+  );
+
+  if (coverage.status === "unavailable") {
+    assert(
+      !hasEveryAcceptedLink,
+      `Snapshot coverage for ${attempt.programKey} is available and must be deterministically counted.`,
+    );
+    return;
+  }
+
+  assert(
+    hasEveryAcceptedLink,
+    `Claimed snapshot coverage for ${attempt.programKey} has relationships absent from the named snapshot.`,
+  );
+  const acceptedSnapshotLinks = new Set(acceptedLinks);
+  const matches = matchOffersForProgram(attempt.programKey, {
+    programs: context.programs,
+    qualifications: REVIEWED_QUALIFICATIONS,
+    programQualificationLinks: REVIEWED_PROGRAM_QUALIFICATION_LINKS,
+    occupations: context.occupations,
+    aliases: context.aliases,
+    links: context.links.filter(
+      (link) =>
+        link.trainingProgramKey !== attempt.programKey ||
+        acceptedSnapshotLinks.has(link),
+    ),
+    offers: context.offers,
+    publishedRequirements: context.publishedRequirements,
+    humanOverrides: [],
+  });
+  assert(
+    coverage.newlyReachedOfferCount === matches.length,
+    `Claimed snapshot coverage for ${attempt.programKey} does not match the accepted-relationship union.`,
+  );
+}
+
+function assertAttemptState(
+  attempt: PilotAttempt,
+  context: FpCoveragePilotValidationContext,
+  now: Date,
+): void {
+  assertRelationshipCatalogIntegrity(attempt, context);
 
   if (attempt.state === "not_started") {
     assertExactTransitions(attempt, []);
@@ -239,6 +454,7 @@ function assertAttemptState(attempt: PilotAttempt): void {
       attempt.stateTransitions[0]?.at === attempt.startedAt,
     `Attempt ${attempt.programKey} must record startedAt with its in-progress transition.`,
   );
+  assertTiming(attempt, now);
 
   if (attempt.state === "in_progress") {
     assertExactTransitions(attempt, [["not_started", "in_progress"]]);
@@ -268,6 +484,7 @@ function assertAttemptState(attempt: PilotAttempt): void {
         attempt.snapshotCoverage !== undefined,
       `Completed attempt ${attempt.programKey} requires accepted official evidence and snapshot coverage provenance.`,
     );
+    assertSnapshotCoverage(attempt, attempt.snapshotCoverage, context);
     return;
   }
 
@@ -279,26 +496,131 @@ function assertAttemptState(attempt: PilotAttempt): void {
   );
 }
 
+function snapshotIdFromManifest(manifest: GeneratedManifest): string {
+  const snapshotIds = Object.values(manifest.resourceSnapshots).map(
+    ({ resourcePath }) => {
+      const match = /^\/data\/v1\/snapshots\/([a-z\d]+(?:-[a-z\d]+)*)\//u.exec(
+        resourcePath,
+      );
+      assert(
+        match !== null,
+        "Manifest resource path must identify a snapshot.",
+      );
+      return match[1]!;
+    },
+  );
+  assert(
+    new Set(snapshotIds).size === 1,
+    "Current manifest must address one consistent immutable snapshot.",
+  );
+  return snapshotIds[0]!;
+}
+
+async function readJson(path: string): Promise<unknown> {
+  return JSON.parse(await readFile(path, "utf8"));
+}
+
+function publicResourcePath(
+  rootDirectory: string,
+  resourcePath: string,
+): string {
+  return resolve(
+    rootDirectory,
+    "public",
+    ...resourcePath.split("/").filter(Boolean),
+  );
+}
+
+export async function loadFpCoveragePilotValidationContext(
+  rootDirectory = process.cwd(),
+): Promise<FpCoveragePilotValidationContext> {
+  const manifest = GeneratedManifestSchema.parse(
+    await readJson(
+      resolve(rootDirectory, "public", "data", "v1", "manifest.json"),
+    ),
+  );
+  const snapshots = manifest.resourceSnapshots;
+  const [
+    canonicalOccupations,
+    programs,
+    occupations,
+    aliases,
+    links,
+    offers,
+    publishedRequirements,
+  ] = await Promise.all([
+    readJson(resolve(rootDirectory, "data", "curated", "occupations.json")),
+    readJson(
+      publicResourcePath(rootDirectory, snapshots.programs.resourcePath),
+    ),
+    readJson(
+      publicResourcePath(rootDirectory, snapshots.occupations.resourcePath),
+    ),
+    readJson(
+      publicResourcePath(
+        rootDirectory,
+        snapshots.occupationAliases.resourcePath,
+      ),
+    ),
+    readJson(
+      publicResourcePath(
+        rootDirectory,
+        snapshots.trainingOccupationLinks.resourcePath,
+      ),
+    ),
+    readJson(
+      publicResourcePath(rootDirectory, snapshots.jobOffers.resourcePath),
+    ),
+    readJson(
+      publicResourcePath(
+        rootDirectory,
+        snapshots.publishedRequirements.resourcePath,
+      ),
+    ),
+  ]);
+  return {
+    snapshotId: snapshotIdFromManifest(manifest),
+    canonicalOccupations: OccupationsSchema.parse(canonicalOccupations),
+    programs: z.array(TrainingProgramSchema).parse(programs),
+    occupations: OccupationsSchema.parse(occupations),
+    aliases: OccupationAliasesSchema.parse(aliases),
+    links: TrainingOccupationLinksSchema.parse(links),
+    offers: z.array(JobOfferSchema).parse(offers),
+    publishedRequirements: PublishedRequirementsResourceSchema.parse(
+      publishedRequirements,
+    ),
+  };
+}
+
 export function validateFpCoveragePilotResults(
   candidate: unknown,
+  context: FpCoveragePilotValidationContext,
+  options: FpCoveragePilotValidationOptions = {},
 ): FpCoveragePilotResults {
   const results = PilotResultsSchema.parse(candidate);
+  const now = options.now?.() ?? new Date();
+  assert(
+    !Number.isNaN(now.getTime()),
+    "Validation clock must return a valid date.",
+  );
   assertExactProgramSet(results.attempts);
-  results.attempts.forEach(assertAttemptState);
+  results.attempts.forEach((attempt) =>
+    assertAttemptState(attempt, context, now),
+  );
   return results;
 }
 
 export async function validateFpCoveragePilotResultsFile(
   rootDirectory = process.cwd(),
+  options: FpCoveragePilotValidationOptions = {},
 ): Promise<FpCoveragePilotResults> {
-  const path = resolve(
-    rootDirectory,
-    "analysis",
-    "fp_coverage_pilot_results.json",
-  );
-  return validateFpCoveragePilotResults(
-    JSON.parse(await readFile(path, "utf8")),
-  );
+  const [candidate, context] = await Promise.all([
+    readJson(
+      resolve(rootDirectory, "analysis", "fp_coverage_pilot_results.json"),
+    ),
+    loadFpCoveragePilotValidationContext(rootDirectory),
+  ]);
+  return validateFpCoveragePilotResults(candidate, context, options);
 }
 
 const invokedPath = process.argv[1];
