@@ -1,7 +1,11 @@
+import { readFile } from "node:fs/promises";
+import { resolve } from "node:path";
+
 import { cleanup, render, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { MemoryRouter, useLocation } from "react-router-dom";
 import { afterEach, describe, expect, it, vi } from "vitest";
+import aliasPassResults from "../../../analysis/fp_official_alias_pass_results.json";
 import occupationAliases from "../../../data/curated/occupation-aliases.json";
 import occupations from "../../../data/curated/occupations.json";
 import trainingOccupationLinks from "../../../data/curated/training-occupation-links.json";
@@ -29,6 +33,50 @@ function responseFor(data: unknown): Response {
     status: 200,
     headers: { "Content-Type": "application/json" },
   });
+}
+
+interface ActiveManifestFixture {
+  resourceSnapshots: Record<string, { resourcePath: string }>;
+}
+
+async function installActiveAliasPassFetch(): Promise<void> {
+  const manifest = JSON.parse(
+    await readFile(
+      resolve(process.cwd(), "public", "data", "v1", "manifest.json"),
+      "utf8",
+    ),
+  ) as ActiveManifestFixture;
+  const resources = new Map<string, unknown>([
+    ["/data/v1/manifest.json", manifest],
+    ...(await Promise.all(
+      Object.values(manifest.resourceSnapshots).map(
+        async ({ resourcePath }) => [
+          resourcePath,
+          JSON.parse(
+            await readFile(
+              resolve(
+                process.cwd(),
+                "public",
+                ...resourcePath.slice(1).split("/"),
+              ),
+              "utf8",
+            ),
+          ),
+        ],
+      ),
+    )),
+  ]);
+  vi.stubGlobal(
+    "fetch",
+    vi.fn((input: RequestInfo | URL) => {
+      const path = typeof input === "string" ? input : input.toString();
+      const payload = resources.get(path);
+      if (payload === undefined) {
+        throw new Error(`Missing active generated-data fixture for ${path}.`);
+      }
+      return Promise.resolve(responseFor(payload));
+    }),
+  );
 }
 
 function installResultsFetch(
@@ -121,6 +169,27 @@ afterEach(() => {
 });
 
 describe("TrainingResultsPage", () => {
+  it.each(aliasPassResults.programs)(
+    "keeps $programKey aligned with its validated official-alias result",
+    async ({ programKey, afterOfferCount }) => {
+      await installActiveAliasPassFetch();
+      render(
+        <MemoryRouter initialEntries={[`/desde-fp/${programKey}`]}>
+          <AppRoutes />
+        </MemoryRouter>,
+      );
+
+      if (afterOfferCount === 0) {
+        expect(
+          await screen.findByText(
+            /No hay ofertas relacionadas en la instant\u00e1nea del/u,
+          ),
+        ).toBeVisible();
+      }
+      expect(screen.queryAllByRole("article")).toHaveLength(afterOfferCount);
+    },
+  );
+
   it("does not activate an unpublished-requirement filter from arbitrary URL parameters", async () => {
     installResultsFetch();
     render(
