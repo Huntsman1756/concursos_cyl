@@ -95,14 +95,17 @@ test("both entry routes remain reachable in their approved order", async ({
   await expect(page).toHaveURL(/\/desde-ocupacion$/u);
   await expect(
     page.getByRole("heading", {
-      name: "Ruta por ocupación — en preparación",
+      name: "Descubre qué FP conduce a un trabajo concreto",
     }),
   ).toBeVisible();
   await expect(
-    page.getByText(
-      "Esta función todavía no está disponible. La próxima fase añadirá la búsqueda de ciclos y centros por ocupación.",
-    ),
+    page.getByRole("combobox", {
+      name: "¿En qué ocupación quieres trabajar?",
+    }),
   ).toBeVisible();
+  await expect(
+    page.getByRole("button", { name: "Ver rutas formativas" }),
+  ).toBeDisabled();
 });
 
 test("the training-first journey keeps the live zero-match snapshot honest and accessible", async ({

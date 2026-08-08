@@ -4,6 +4,8 @@ import { HomePage } from "../features/home/HomePage";
 import { TrainingSearchPage } from "../features/training-first/TrainingSearchPage";
 import { TrainingResultsPage } from "../features/training-first/TrainingResultsPage";
 import { TrainingRoutePage } from "../features/training-first/TrainingRoutePage";
+import { OccupationSearchPage } from "../features/occupation-first/OccupationSearchPage";
+import { OccupationResultsPage } from "../features/occupation-first/OccupationResultsPage";
 import { AppShell } from "./AppShell";
 
 interface DestinationPageProps {
@@ -42,12 +44,11 @@ export function AppRoutes() {
       />
       <Route
         path="/desde-ocupacion"
-        element={inShell(
-          <DestinationPage
-            heading="Ruta por ocupación — en preparación"
-            outcome="Esta función todavía no está disponible. La próxima fase añadirá la búsqueda de ciclos y centros por ocupación."
-          />,
-        )}
+        element={inShell(<OccupationSearchPage />)}
+      />
+      <Route
+        path="/desde-ocupacion/:occupationId"
+        element={inShell(<OccupationResultsPage />)}
       />
       <Route
         path="/comparar"
