@@ -15,6 +15,7 @@
     "test:e2e": "playwright test",
     "lint": "eslint .",
     "format:check": "prettier --check .",
+    "analysis:aliases:validate": "tsx scripts/analysis/validateFpOfficialAliasPass.ts",
     "analysis:pilot:validate": "tsx scripts/analysis/validateFpCoveragePilot.ts",
     "analysis:pilot:report:check": "tsx scripts/analysis/renderFpCoveragePilotReport.ts",
     "data:build": "tsx scripts/data/buildSnapshots.ts",
