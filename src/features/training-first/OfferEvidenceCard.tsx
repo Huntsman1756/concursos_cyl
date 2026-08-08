@@ -53,7 +53,7 @@ function relationshipCopy(match: OfferMatch): string {
 
 function evidenceCopy(state: EvidenceState): string {
   if (state === "declared_explicit_gap")
-    return "Has indicado una brecha concreta.";
+    return "Brecha declarada: has indicado una brecha concreta.";
   if (state === "explicit_fit")
     return "Hay un encaje explícito en la evidencia publicada.";
   return "La relación ocupacional existe, pero debes comprobar los requisitos.";
