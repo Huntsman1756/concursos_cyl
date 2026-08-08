@@ -64,7 +64,8 @@ export function TrainingSearchPage() {
     (program) => program.programKey === programKey,
   );
   const selectedCoverage = coverage.find(
-    (row) => row.scope === "program" && row.programKey === programKey,
+    (row): row is Extract<MappingCoverage, { scope: "program" }> =>
+      row.scope === "program" && row.programKey === programKey,
   );
 
   function submit(event: FormEvent<HTMLFormElement>) {
