@@ -319,7 +319,8 @@ summary:focus-visible {
 }
 
 .status-panel,
-.stale-warning {
+.stale-warning,
+.filter-notice {
   padding: var(--space-6);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-md);
@@ -337,6 +338,15 @@ summary:focus-visible {
   border-left: 0.3rem solid var(--color-action);
   background: var(--color-warning-surface);
   font-weight: 650;
+}
+
+.filter-notice {
+  margin-bottom: var(--space-6);
+  border-left: 0.3rem solid var(--color-primary);
+}
+
+.filter-notice p {
+  margin: 0 0 var(--space-2);
 }
 
 .offer-list {
@@ -400,6 +410,49 @@ summary:focus-visible {
   padding-left: var(--space-4);
   border-left: 0.2rem solid var(--color-border);
   color: var(--color-text-muted);
+}
+
+.evidence-metadata {
+  margin-block: var(--space-3);
+  color: var(--color-text-muted);
+  font-size: 0.9375rem;
+}
+
+.evidence-metadata p {
+  margin: var(--space-1) 0;
+}
+
+.center-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-4);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.center-card {
+  padding: var(--space-6);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-surface-subtle);
+}
+
+.center-card h2 {
+  margin: 0 0 var(--space-2);
+  color: var(--color-primary);
+  font-size: 1.25rem;
+}
+
+.center-card p {
+  margin: var(--space-2) 0;
+}
+
+.center-card a {
+  display: inline-block;
+  margin-top: var(--space-3);
+  color: var(--color-action);
+  font-weight: 750;
 }
 
 .requirement-list,
@@ -490,7 +543,8 @@ summary:focus-visible {
   }
 
   .entry-grid,
-  .proof-points {
+  .proof-points,
+  .center-list {
     grid-template-columns: 1fr;
   }
 

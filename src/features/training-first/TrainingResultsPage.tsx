@@ -21,7 +21,9 @@ import {
   type OfferMatch,
 } from "../../domain/offerMatching";
 import type { OfferPublishedRequirements } from "../../domain/requirements";
+import { RequirementCategorySchema } from "../../domain/requirements";
 import { useDecisionSession } from "../../domain/session";
+import { trainingLevelLabel } from "../../domain/trainingPresentation";
 import { OfferEvidenceCard } from "./OfferEvidenceCard";
 
 interface ReadyResults {
@@ -62,6 +64,17 @@ export function TrainingResultsPage() {
   const { programKey = "" } = useParams();
   const [searchParams] = useSearchParams();
   const selectedProvince = searchParams.get("province");
+  const publicationFilter = useMemo(() => {
+    const filterCategory = RequirementCategorySchema.safeParse(
+      searchParams.get("category"),
+    );
+    const filterValue = searchParams.get("value");
+    return searchParams.get("publication") === "not-published" &&
+      filterCategory.success &&
+      filterValue !== null
+      ? { category: filterCategory.data, value: filterValue }
+      : null;
+  }, [searchParams]);
   const session = useDecisionSession();
   const [state, setState] = useState<ResultsState>({ status: "loading" });
 
@@ -110,13 +123,18 @@ export function TrainingResultsPage() {
     };
   }, [programKey]);
 
-  const orderedMatches = useMemo(
-    () =>
-      state.status === "ready"
-        ? orderOfferMatches(state.matches, session.answers)
-        : [],
-    [session.answers, state],
-  );
+  const orderedMatches = useMemo(() => {
+    if (state.status !== "ready") return [];
+    const ordered = orderOfferMatches(state.matches, session.answers);
+    if (publicationFilter === null) return ordered;
+    return ordered.filter((match) =>
+      match.requirements.every(
+        (requirement) =>
+          requirement.category !== publicationFilter.category ||
+          String(requirement.normalizedValue) !== publicationFilter.value,
+      ),
+    );
+  }, [publicationFilter, session.answers, state]);
 
   if (state.status === "loading") return <p>Buscando ofertas relacionadas…</p>;
   if (state.status === "failed") {
@@ -153,6 +171,10 @@ export function TrainingResultsPage() {
         <Link to="/desde-fp">Cambiar ciclo</Link>
         <p className="training-page__eyebrow">Ofertas relacionadas con</p>
         <h1>{state.program.programTitle}</h1>
+        <p>
+          {trainingLevelLabel(state.program.level)} · Código oficial{" "}
+          {state.program.programKey}
+        </p>
         {selectedProvince !== null && <p>Zona elegida: {selectedProvince}</p>}
       </header>
       {stale && (
@@ -161,6 +183,21 @@ export function TrainingResultsPage() {
           disponible.
         </p>
       )}
+      {publicationFilter !== null && (
+        <div className="filter-notice" role="status">
+          <p>
+            Filtro activo: ofertas relacionadas que no publican este requisito
+            exacto.
+          </p>
+          <p>
+            La ausencia en el texto publicado no demuestra que el requisito no
+            exista.
+          </p>
+          <Link to={`/desde-fp/${encodeURIComponent(programKey)}`}>
+            Quitar filtro
+          </Link>
+        </div>
+      )}
       {!hasApprovedRelationship ? (
         <div className="status-panel">
           <p>Aún no hay una relación revisada para este ciclo.</p>
@@ -168,8 +205,9 @@ export function TrainingResultsPage() {
       ) : orderedMatches.length === 0 ? (
         <div className="status-panel">
           <p>
-            No hay ofertas relacionadas en la instantánea del{" "}
-            {snapshotDate(state.manifest)}.
+            {publicationFilter === null
+              ? `No hay ofertas relacionadas en la instantánea del ${snapshotDate(state.manifest)}.`
+              : "No hay ofertas relacionadas en esta instantánea que omitan publicar este requisito exacto."}
           </p>
           <p>
             Esto no significa que no existan ofertas fuera de esta copia de
@@ -205,6 +243,7 @@ export function TrainingResultsPage() {
             return (
               <OfferEvidenceCard
                 key={match.offerId}
+                programKey={programKey}
                 offer={offer}
                 match={match}
                 evidenceState={evidenceState}

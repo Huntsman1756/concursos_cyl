@@ -6,6 +6,7 @@ import type {
 } from "../domain/actionEngine";
 
 interface ActionPanelProps {
+  programKey: string;
   actions: readonly ReliableAction[];
   checklist: readonly SessionChecklistItem[];
   onAddChecklist: (action: AddSessionCheckAction) => void;
@@ -13,6 +14,7 @@ interface ActionPanelProps {
 }
 
 export function ActionPanel({
+  programKey,
   actions,
   checklist,
   onAddChecklist,
@@ -49,7 +51,7 @@ export function ActionPanel({
               <li key={key}>
                 <Link
                   className="action-link"
-                  to={`/desde-fp/${action.programKeys[0]}`}
+                  to={`/formacion/${action.programKeys[0]}`}
                 >
                   {action.label}
                 </Link>
@@ -85,14 +87,28 @@ export function ActionPanel({
               </li>
             );
           }
-          return (
-            <li key={key}>
-              <p>{action.label}</p>
-              <p className="action-note">
-                Esta comparación se limita a lo que la vacante publica.
-              </p>
-            </li>
-          );
+          if (action.actionType === "explore_unpublished_requirement") {
+            const query = new URLSearchParams({
+              publication: "not-published",
+              category: action.filter.category,
+              value: String(action.filter.normalizedValue),
+            });
+            return (
+              <li key={key}>
+                <Link
+                  className="action-link"
+                  to={`/desde-fp/${encodeURIComponent(programKey)}?${query.toString()}`}
+                >
+                  {action.label}
+                </Link>
+                <p className="action-note">
+                  Compara solo la ausencia de ese dato publicado; no presupone
+                  que el requisito no exista.
+                </p>
+              </li>
+            );
+          }
+          return null;
         })}
       </ul>
       {checklist.length > 0 && (

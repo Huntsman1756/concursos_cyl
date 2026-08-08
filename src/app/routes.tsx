@@ -3,6 +3,7 @@ import { Link, Route, Routes } from "react-router-dom";
 import { HomePage } from "../features/home/HomePage";
 import { TrainingSearchPage } from "../features/training-first/TrainingSearchPage";
 import { TrainingResultsPage } from "../features/training-first/TrainingResultsPage";
+import { TrainingRoutePage } from "../features/training-first/TrainingRoutePage";
 import { AppShell } from "./AppShell";
 
 interface DestinationPageProps {
@@ -34,6 +35,10 @@ export function AppRoutes() {
       <Route
         path="/desde-fp/:programKey"
         element={inShell(<TrainingResultsPage />)}
+      />
+      <Route
+        path="/formacion/:programKey"
+        element={inShell(<TrainingRoutePage />)}
       />
       <Route
         path="/desde-ocupacion"

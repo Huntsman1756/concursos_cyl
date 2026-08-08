@@ -1,4 +1,4 @@
-import { cleanup, render, screen } from "@testing-library/react";
+import { cleanup, render, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { MemoryRouter } from "react-router-dom";
 import { afterEach, describe, expect, it, vi } from "vitest";
@@ -136,6 +136,9 @@ describe("TrainingResultsPage", () => {
         "No hay ofertas relacionadas en la instantánea del 31 de julio de 2026.",
       ),
     ).toBeVisible();
+    expect(
+      screen.getByText("Grado superior · Código oficial IFC03S"),
+    ).toBeVisible();
     expect(screen.queryByText(/no hay trabajo/iu)).not.toBeInTheDocument();
   });
 
@@ -227,9 +230,41 @@ describe("TrainingResultsPage", () => {
       "Tu comprobación",
       "Siguiente acción",
     ]);
+    const disclosures = screen.getAllByText("Ver cita exacta");
+    const mappingDisclosure = disclosures[0].closest("details");
+    const requirementDisclosure = disclosures[1].closest("details");
+    expect(mappingDisclosure).not.toBeNull();
+    expect(requirementDisclosure).not.toBeNull();
     expect(screen.getByText(sourceQuote)).not.toBeVisible();
-    await user.click(screen.getAllByText("Ver cita exacta")[1]);
+    await user.click(disclosures[0]);
+    expect(
+      within(mappingDisclosure!).getByText(
+        "Revisión del mapeo: 4 de agosto de 2026",
+      ),
+    ).toBeVisible();
+    expect(
+      within(mappingDisclosure!).getByText("Versión del mapeo: 1.0.0"),
+    ).toBeVisible();
+    await user.click(disclosures[1]);
     expect(screen.getByText(sourceQuote)).toBeVisible();
+    expect(
+      within(requirementDisclosure!).getByRole("link", {
+        name: /Abrir fuente de la vacante/,
+      }),
+    ).toHaveAttribute("href", offer.sourceSnapshot.sourceUrl);
+    expect(
+      within(requirementDisclosure!).getByText(
+        "Fecha de la fuente: 31 de julio de 2026",
+      ),
+    ).toBeVisible();
+    expect(
+      within(requirementDisclosure!).getByText(
+        "Regla de extracción: license.driving_b",
+      ),
+    ).toBeVisible();
+    expect(
+      within(requirementDisclosure!).getByText("Versión del parser: 1.0.0"),
+    ).toBeVisible();
 
     await user.click(
       screen.getByRole("radio", {
@@ -242,5 +277,103 @@ describe("TrainingResultsPage", () => {
     expect(
       screen.queryByText(/compatibilidad|porcentaje|%/iu),
     ).not.toBeInTheDocument();
+  });
+
+  it("executes an exact unpublished-requirement filter through the URL", async () => {
+    const sourceQuote = "Se requiere experiencia mínima de un año.";
+    const firstOfferId = "offer:with-experience";
+    const sourceSnapshot = {
+      sourceId: "ofertas-de-empleo",
+      sourceUrl: "https://datosabiertos.jcyl.es/ofertas-de-empleo",
+      sourceUpdatedAt: "2026-07-31T00:00:00.000Z",
+      snapshotFetchedAt: "2026-08-04T10:00:00.000Z",
+      schemaVersion: "1.0.0",
+      recordCount: 2,
+      sha256: "a".repeat(64),
+      qualityStatus: "passed",
+    } as const;
+    const descriptionSections = {
+      summary: [],
+      functions: [],
+      requirements: [],
+      conditions: [],
+      application: [],
+      other: [],
+    };
+    const offers = [
+      {
+        id: firstOfferId,
+        title: "Programador web con experiencia",
+        province: "León",
+        locality: "León",
+        publishedAt: "2026-07-30T00:00:00.000Z",
+        sourceName: "ECYL",
+        descriptionText: sourceQuote,
+        descriptionSections: {
+          ...descriptionSections,
+          requirements: [sourceQuote],
+        },
+        originalUrl: "https://empleo.jcyl.es/oferta/with-experience",
+        sourceSnapshot,
+      },
+      {
+        id: "offer:without-experience",
+        title: "Programador web junior",
+        province: "Burgos",
+        locality: "Burgos",
+        publishedAt: "2026-07-29T00:00:00.000Z",
+        sourceName: "ECYL",
+        descriptionText: "Oferta sin experiencia publicada.",
+        descriptionSections,
+        originalUrl: "https://empleo.jcyl.es/oferta/without-experience",
+        sourceSnapshot,
+      },
+    ];
+    const requirement = {
+      id: publishedRequirementId(firstOfferId, "experience", sourceQuote),
+      category: "experience",
+      normalizedValue: 12,
+      sourceQuote,
+      parserRule: "experience.years",
+      parserVersion: "1.0.0",
+    } as const;
+    installResultsFetch({
+      offers,
+      requirements: [{ offerId: firstOfferId, requirements: [requirement] }],
+    });
+    const user = userEvent.setup();
+    render(
+      <MemoryRouter initialEntries={["/desde-fp/IFC03S"]}>
+        <AppRoutes />
+      </MemoryRouter>,
+    );
+
+    await user.click(
+      await screen.findByRole("radio", {
+        name: `No lo tengo: ${sourceQuote}`,
+      }),
+    );
+    const filterLink = await screen.findByRole("link", {
+      name: "Ver ofertas relacionadas donde no se publica este requisito",
+    });
+    expect(filterLink).toHaveAttribute(
+      "href",
+      "/desde-fp/IFC03S?publication=not-published&category=experience&value=12",
+    );
+    await user.click(filterLink);
+
+    expect(
+      await screen.findByText(
+        "Filtro activo: ofertas relacionadas que no publican este requisito exacto.",
+      ),
+    ).toBeVisible();
+    expect(
+      screen.queryByRole("article", {
+        name: "Programador web con experiencia",
+      }),
+    ).not.toBeInTheDocument();
+    expect(
+      screen.getByRole("article", { name: "Programador web junior" }),
+    ).toBeVisible();
   });
 });

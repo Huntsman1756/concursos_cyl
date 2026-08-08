@@ -158,6 +158,40 @@ test("the training-first journey keeps the live zero-match snapshot honest and a
   ).toEqual([]);
 });
 
+test("the regulated training route uses official offerings and centers", async ({
+  page,
+}) => {
+  await page.goto("/formacion/IFC03S");
+
+  await expect(
+    page.getByRole("heading", {
+      name: /Dónde estudiar Desarrollo de Aplicaciones WEB/iu,
+    }),
+  ).toBeVisible();
+  await expect(
+    page.getByText(/Grado superior · Código oficial IFC03S/),
+  ).toBeVisible();
+  const centers = page.getByRole("list", {
+    name: "Centros que imparten el ciclo",
+  });
+  await expect(centers.getByRole("listitem").first()).toBeVisible();
+  await expect(
+    centers.getByRole("link", { name: /Web del centro/ }).first(),
+  ).toHaveAttribute("target", "_blank");
+
+  const overflow = await page.evaluate(
+    () =>
+      document.documentElement.scrollWidth -
+      document.documentElement.clientWidth,
+  );
+  expect(overflow).toBeLessThanOrEqual(1);
+  const results = await new AxeBuilder({ page }).analyze();
+  expect(
+    results.violations,
+    JSON.stringify(results.violations, null, 2),
+  ).toEqual([]);
+});
+
 test("each remaining public route has distinct destination content", async ({
   page,
 }) => {

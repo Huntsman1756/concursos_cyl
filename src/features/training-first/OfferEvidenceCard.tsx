@@ -14,6 +14,7 @@ import type { PublishedRequirement } from "../../domain/requirements";
 import type { DecisionSession } from "../../domain/session";
 
 export interface OfferEvidenceCardProps {
+  programKey: string;
   offer: JobOffer;
   match: OfferMatch;
   evidenceState: EvidenceState;
@@ -69,6 +70,8 @@ export function OfferEvidenceCard(props: OfferEvidenceCardProps) {
         <EvidenceDisclosure
           quote={link.sourceQuote}
           sourceUrl={link.sourceUrl}
+          reviewedAt={link.reviewedAt}
+          mappingVersion={link.mappingVersion}
         />
       </div>
       <div className="evidence-step">
@@ -82,7 +85,14 @@ export function OfferEvidenceCard(props: OfferEvidenceCardProps) {
                 <p className="requirement-row__label">
                   {publishedRequirementLabel(requirement)}
                 </p>
-                <EvidenceDisclosure quote={requirement.sourceQuote} />
+                <EvidenceDisclosure
+                  quote={requirement.sourceQuote}
+                  sourceUrl={props.offer.sourceSnapshot.sourceUrl}
+                  sourceLabel="Abrir fuente de la vacante"
+                  sourceDate={props.offer.sourceSnapshot.sourceUpdatedAt}
+                  parserRule={requirement.parserRule}
+                  parserVersion={requirement.parserVersion}
+                />
               </li>
             ))}
           </ul>
@@ -107,6 +117,7 @@ export function OfferEvidenceCard(props: OfferEvidenceCardProps) {
       <div className="evidence-step">
         <h3>Siguiente acción</h3>
         <ActionPanel
+          programKey={props.programKey}
           actions={props.actions}
           checklist={props.checklist}
           onAddChecklist={props.onAddChecklist}

@@ -20,11 +20,11 @@ function responseFor(data: unknown): Response {
   });
 }
 
-function installFoundationFetch(): void {
+function installFoundationFetch(programs: unknown[] = [program]): void {
   const manifest = currentManifestFixture();
   const resources = new Map<string, unknown>([
     ["/data/v1/manifest.json", manifest],
-    [manifest.resourceSnapshots.programs.resourcePath, [program]],
+    [manifest.resourceSnapshots.programs.resourcePath, programs],
     [manifest.resourceSnapshots.centers.resourcePath, []],
     [manifest.resourceSnapshots.trainingOfferings.resourcePath, []],
     [manifest.resourceSnapshots.jobOffers.resourcePath, []],
@@ -89,6 +89,32 @@ describe("training-first search", () => {
 
     await user.selectOptions(programSelect, "IFC03S");
     expect(submit).toBeEnabled();
+  });
+
+  it("distinguishes homonymous official programs by level and key", async () => {
+    installFoundationFetch([
+      program,
+      {
+        ...program,
+        programKey: "IFC03M",
+        level: "intermediate",
+      },
+    ]);
+    render(
+      <MemoryRouter initialEntries={["/desde-fp"]}>
+        <AppRoutes />
+      </MemoryRouter>,
+    );
+
+    const select = await screen.findByRole("combobox", {
+      name: "Ciclo de Formación Profesional",
+    });
+    expect(select).toHaveTextContent(
+      "Desarrollo de Aplicaciones Web — Grado superior · IFC03S",
+    );
+    expect(select).toHaveTextContent(
+      "Desarrollo de Aplicaciones Web — Grado medio · IFC03M",
+    );
   });
 
   it("rejects an unknown program key with a useful path back", async () => {

@@ -6,6 +6,7 @@ import {
   loadFoundationResources,
   loadManifest,
 } from "../../data/generatedDataClient";
+import { trainingLevelLabel } from "../../domain/trainingPresentation";
 
 const PROVINCES = [
   "Ávila",
@@ -96,7 +97,8 @@ export function TrainingSearchPage() {
               <option value="">Selecciona un ciclo</option>
               {sortedPrograms.map((program) => (
                 <option key={program.programKey} value={program.programKey}>
-                  {program.programTitle}
+                  {program.programTitle} — {trainingLevelLabel(program.level)} ·{" "}
+                  {program.programKey}
                 </option>
               ))}
             </select>
