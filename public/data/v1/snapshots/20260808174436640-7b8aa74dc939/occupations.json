@@ -12,6 +12,17 @@
   },
   {
     "catalogVersion": "1.0.0",
+    "classificationCode": "5110",
+    "classificationSystem": "CNO-11",
+    "confirmationLabel": "Cocina profesional",
+    "occupationId": "occupation:cno11:5110",
+    "preferredLabel": "Cocineros asalariados",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-08",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf"
+  },
+  {
+    "catalogVersion": "1.0.0",
     "classificationCode": "5611",
     "classificationSystem": "CNO-11",
     "confirmationLabel": "Atención auxiliar de enfermería hospitalaria",

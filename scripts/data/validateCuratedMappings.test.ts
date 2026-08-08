@@ -54,6 +54,13 @@ const programs: TrainingProgram[] = [
     familyCode: "SAN",
     familyName: "Sanidad",
   },
+  {
+    programKey: "HOT01M",
+    programTitle: "Cocina y GastronomÃ­a",
+    level: "intermediate",
+    familyCode: "HOT",
+    familyName: "HostelerÃ­a y Turismo",
+  },
 ];
 
 const occupations = [
@@ -296,11 +303,11 @@ describe("curated occupation mappings", () => {
       ),
     ).toBe(true);
     expect(approved.occupations.map((item) => item.classificationCode)).toEqual(
-      ["2713", "5611", "5612"],
+      ["2713", "5110", "5611", "5612"],
     );
     expect(
       approved.links.map((item) => item.trainingProgramKey).sort(),
-    ).toEqual(["IFC03S", "IFC03SD", "SAN21", "SAN21"]);
+    ).toEqual(["HOT01M", "IFC03S", "IFC03SD", "SAN21", "SAN21"]);
 
     const coverage = buildMappingCoverage(programs, curated.links);
     expect(coverage).toContainEqual(
@@ -319,6 +326,14 @@ describe("curated occupation mappings", () => {
         approvedMappings: 0,
         draftMappings: 1,
         coverageStatus: "draft",
+      }),
+    );
+    expect(coverage).toContainEqual(
+      expect.objectContaining({
+        scope: "program",
+        programKey: "HOT01M",
+        approvedMappings: 1,
+        coverageStatus: "reviewed",
       }),
     );
   });

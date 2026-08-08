@@ -1,6 +1,16 @@
 [
   {
     "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:5110",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-08",
+    "sourceQuote": "Las ocupaciones y puestos de trabajo más relevantes son los siguientes: Cocinero.",
+    "sourceUrl": "https://todofp.es/dam/jcr%3A63392ee9-4d38-449b-a196-d0efb714b364/n-tcocinagastronomiaes-pdf.pdf",
+    "trainingProgramKey": "HOT01M"
+  },
+  {
+    "mappingVersion": "1.0.0",
     "occupationId": "occupation:cno11:2713",
     "relationshipType": "official_output",
     "reviewStatus": "approved",

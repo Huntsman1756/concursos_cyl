@@ -6,6 +6,7 @@ import occupationAliases from "../../../data/curated/occupation-aliases.json";
 import occupations from "../../../data/curated/occupations.json";
 import trainingOccupationLinks from "../../../data/curated/training-occupation-links.json";
 import { currentManifestFixture } from "../../../tests/fixtures/generatedManifest";
+import type { TrainingOccupationLink } from "../../../data/schemas/curatedMappings";
 import { AppRoutes } from "../../app/routes";
 import { publishedRequirementId } from "../../domain/requirements";
 
@@ -32,7 +33,7 @@ function responseFor(data: unknown): Response {
 
 function installResultsFetch(
   options: {
-    links?: unknown[];
+    links?: TrainingOccupationLink[];
     offers?: unknown[];
     requirements?: unknown[];
     stale?: boolean;
@@ -68,6 +69,22 @@ function installResultsFetch(
       ...extraSnapshots,
     },
   };
+  const fixtureProgramKeys = new Set<string>([
+    program.programKey,
+    distanceProgram.programKey,
+  ]);
+  const fixtureLinks = (options.links ?? trainingOccupationLinks).filter(
+    (link) => fixtureProgramKeys.has(link.trainingProgramKey),
+  );
+  const fixtureOccupationIds = new Set(
+    fixtureLinks.map((link) => link.occupationId),
+  );
+  const fixtureOccupations = occupations.filter((occupation) =>
+    fixtureOccupationIds.has(occupation.occupationId),
+  );
+  const fixtureAliases = occupationAliases.filter((alias) =>
+    fixtureOccupationIds.has(alias.occupationId),
+  );
   const resources = new Map<string, unknown>([
     ["/data/v1/manifest.json", manifest],
     [
@@ -77,12 +94,9 @@ function installResultsFetch(
     [manifest.resourceSnapshots.centers.resourcePath, []],
     [manifest.resourceSnapshots.trainingOfferings.resourcePath, []],
     [manifest.resourceSnapshots.jobOffers.resourcePath, options.offers ?? []],
-    [extraSnapshots.occupations.resourcePath, occupations],
-    [extraSnapshots.occupationAliases.resourcePath, occupationAliases],
-    [
-      extraSnapshots.trainingOccupationLinks.resourcePath,
-      options.links ?? trainingOccupationLinks,
-    ],
+    [extraSnapshots.occupations.resourcePath, fixtureOccupations],
+    [extraSnapshots.occupationAliases.resourcePath, fixtureAliases],
+    [extraSnapshots.trainingOccupationLinks.resourcePath, fixtureLinks],
     [
       extraSnapshots.publishedRequirements.resourcePath,
       options.requirements ?? [],
@@ -93,11 +107,10 @@ function installResultsFetch(
     vi.fn((input: RequestInfo | URL) => {
       const path = typeof input === "string" ? input : input.toString();
       const payload = resources.get(path);
-      return Promise.resolve(
-        payload === undefined
-          ? new Response(null, { status: 404 })
-          : responseFor(payload),
-      );
+      if (payload === undefined) {
+        throw new Error(`Missing generated-data test fixture for ${path}.`);
+      }
+      return Promise.resolve(responseFor(payload));
     }),
   );
 }

@@ -387,6 +387,35 @@ describe("public snapshot distribution", () => {
     ).resolves.toEqual([resolve(deletedOccupation)]);
   });
 
+  it("allows a pinned historical snapshot to omit later approved catalog additions", async () => {
+    const root = await mkdtemp(join(tmpdir(), "salida-cyl-distribution-"));
+    temporaryRoots.push(root);
+    const historical = await snapshot(root, "20260801000000000-aaaaaaaaaaaa");
+    await writeJson(
+      join(historical, "occupations.json"),
+      approvedMappings.occupations,
+    );
+    await writeJson(
+      join(historical, "occupation-aliases.json"),
+      approvedMappings.aliases,
+    );
+    await writeJson(
+      join(historical, "training-occupation-links.json"),
+      approvedMappings.links,
+    );
+    await writeJson(join(historical, "programs.json"), [administrativeProgram]);
+    await writeJson(
+      join(historical, "mapping-coverage.json"),
+      buildMappingCoverage([administrativeProgram], approvedMappings.links),
+    );
+
+    await expect(
+      findRevokedPublicSnapshotDirectories(root, completeApprovedMappings, {
+        historicalSnapshotDirectories: [historical],
+      }),
+    ).resolves.toEqual([]);
+  });
+
   it("rejects historical alias and link rows omitted from a partial curated set", async () => {
     const root = await mkdtemp(join(tmpdir(), "salida-cyl-distribution-"));
     temporaryRoots.push(root);
@@ -664,7 +693,18 @@ describe("public snapshot distribution", () => {
     const mappings = await loadCuratedMappingsFromDisk(root, programs);
 
     await expect(
-      assertPublicSnapshotDistribution(root, mappings),
+      assertPublicSnapshotDistribution(root, mappings, {
+        historicalSnapshotDirectories: [
+          join(
+            root,
+            "public",
+            "data",
+            "v1",
+            "snapshots",
+            "20260808172031375-7c88ca187340",
+          ),
+        ],
+      }),
     ).resolves.toBeUndefined();
   });
 });

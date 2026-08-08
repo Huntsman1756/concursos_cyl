@@ -11,6 +11,17 @@
     "catalogVersion": "1.0.0"
   },
   {
+    "occupationId": "occupation:cno11:3734",
+    "preferredLabel": "Chefs",
+    "confirmationLabel": "Dirección de cocina",
+    "classificationSystem": "CNO-11",
+    "classificationCode": "3734",
+    "reviewStatus": "rejected",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+    "reviewedAt": "2026-08-08",
+    "catalogVersion": "1.0.0"
+  },
+  {
     "occupationId": "occupation:cno11:4309",
     "preferredLabel": "Empleados administrativos sin tareas de atención al público no clasificados bajo otros epígrafes",
     "confirmationLabel": "Administración y apoyo de oficina",
@@ -21,6 +32,39 @@
     "reviewedAt": "2026-08-04",
     "catalogVersion": "1.0.0",
     "reviewNote": "CNO-11 classification between 4309 and 4500 remains unresolved; excluded from public resources pending exact official evidence."
+  },
+  {
+    "occupationId": "occupation:cno11:4121",
+    "preferredLabel": "Empleados de control de abastecimientos e inventario",
+    "confirmationLabel": "Control de abastecimientos e inventario",
+    "classificationSystem": "CNO-11",
+    "classificationCode": "4121",
+    "reviewStatus": "rejected",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+    "reviewedAt": "2026-08-08",
+    "catalogVersion": "1.0.0"
+  },
+  {
+    "occupationId": "occupation:cno11:5110",
+    "preferredLabel": "Cocineros asalariados",
+    "confirmationLabel": "Cocina profesional",
+    "classificationSystem": "CNO-11",
+    "classificationCode": "5110",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+    "reviewedAt": "2026-08-08",
+    "catalogVersion": "1.0.0"
+  },
+  {
+    "occupationId": "occupation:cno11:5120",
+    "preferredLabel": "Camareros asalariados",
+    "confirmationLabel": "Servicio de sala y barra",
+    "classificationSystem": "CNO-11",
+    "classificationCode": "5120",
+    "reviewStatus": "rejected",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+    "reviewedAt": "2026-08-08",
+    "catalogVersion": "1.0.0"
   },
   {
     "occupationId": "occupation:cno11:5611",
@@ -61,6 +105,17 @@
     "confirmationLabel": "Cuidados personales a domicilio",
     "classificationSystem": "CNO-11",
     "classificationCode": "5710",
+    "reviewStatus": "rejected",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+    "reviewedAt": "2026-08-08",
+    "catalogVersion": "1.0.0"
+  },
+  {
+    "occupationId": "occupation:cno11:9310",
+    "preferredLabel": "Ayudantes de cocina",
+    "confirmationLabel": "Ayuda de cocina",
+    "classificationSystem": "CNO-11",
+    "classificationCode": "9310",
     "reviewStatus": "rejected",
     "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
     "reviewedAt": "2026-08-08",

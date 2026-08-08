@@ -2023,7 +2023,7 @@ describe("buildSnapshots", () => {
     });
   });
 
-  it("retains the current snapshot and only two prior immutable snapshots", async () => {
+  it("retains a completed pilot's referenced snapshot beyond ordinary history", async () => {
     const root = await temporaryRoot();
     const snapshotPaths: string[] = [];
     const snapshotsRoot = join(root, "public", "data", "v1", "snapshots");
@@ -2039,6 +2039,22 @@ describe("buildSnapshots", () => {
         (await readManifest(root)).resourceSnapshots.programs.resourcePath,
       );
       if (day === 1) {
+        await mkdir(join(root, "analysis"), { recursive: true });
+        await writeFile(
+          join(root, "analysis", "fp_coverage_pilot_results.json"),
+          JSON.stringify({
+            attempts: [
+              {
+                state: "completed",
+                snapshotCoverage: {
+                  status: "verified",
+                  snapshotId: snapshotPaths[0]!.split("/").at(-2),
+                },
+              },
+            ],
+          }),
+          "utf8",
+        );
         await mkdir(orphan, { recursive: true });
         await writeFile(join(orphan, "partial.json"), "{", "utf8");
       }
@@ -2052,17 +2068,50 @@ describe("buildSnapshots", () => {
       .split("/")
       .at(-2);
 
-    expect(retained).toHaveLength(3);
+    expect(retained).toHaveLength(4);
     expect(retained).toContain(currentId);
     await expect(
       access(assetPath(root, snapshotPaths[0])),
-    ).rejects.toMatchObject({
-      code: "ENOENT",
-    });
+    ).resolves.toBeUndefined();
     await expect(access(orphan)).rejects.toMatchObject({ code: "ENOENT" });
     for (const path of snapshotPaths.slice(-3)) {
       await expect(access(assetPath(root, path))).resolves.toBeUndefined();
     }
+  });
+
+  it("retains a pinned pilot snapshot as an approved subset after a later mapping addition", async () => {
+    const root = await temporaryRoot();
+    await buildSnapshots({ rootDirectory: root, ...fixedOptions });
+    const snapshotPath = (await readManifest(root)).resourceSnapshots.programs
+      .resourcePath;
+    await mkdir(join(root, "analysis"), { recursive: true });
+    await writeFile(
+      join(root, "analysis", "fp_coverage_pilot_results.json"),
+      JSON.stringify({
+        attempts: [
+          {
+            state: "completed",
+            snapshotCoverage: {
+              status: "verified",
+              snapshotId: snapshotPath.split("/").at(-2),
+            },
+          },
+        ],
+      }),
+      "utf8",
+    );
+
+    await buildSnapshots({
+      rootDirectory: root,
+      ...fixedOptions,
+      now: () => new Date("2026-08-05T10:00:00.000Z"),
+      loadCuratedMappings: async () =>
+        ambiguousAdministrativeMappings("approved"),
+    });
+
+    await expect(
+      access(assetPath(root, snapshotPath)),
+    ).resolves.toBeUndefined();
   });
 
   it("transactionally quarantines a self-consistent snapshot with stale requirement semantics", async () => {

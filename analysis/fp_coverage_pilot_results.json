@@ -73,10 +73,73 @@
       "programTitle": "Cocina y Gastronomía",
       "familyName": "Hostelería y Turismo",
       "plannedStratum": "easy",
-      "state": "not_started",
-      "stateTransitions": [],
-      "acceptedRelationships": [],
-      "rejectedRelationships": []
+      "state": "completed",
+      "startedAt": "2026-08-08T17:34:51.888Z",
+      "completedAt": "2026-08-08T17:44:39.413Z",
+      "stateTransitions": [
+        {
+          "from": "not_started",
+          "to": "in_progress",
+          "at": "2026-08-08T17:34:51.888Z"
+        },
+        {
+          "from": "in_progress",
+          "to": "completed",
+          "at": "2026-08-08T17:44:39.413Z"
+        }
+      ],
+      "phaseMinutes": {
+        "research": 3,
+        "implementation": 3,
+        "test": 2,
+        "review": 1
+      },
+      "acceptedRelationships": [
+        {
+          "occupationId": "occupation:cno11:5110",
+          "relationshipType": "official_output",
+          "reasonCode": "official_programme_output",
+          "sourceUrl": "https://todofp.es/dam/jcr%3A63392ee9-4d38-449b-a196-d0efb714b364/n-tcocinagastronomiaes-pdf.pdf",
+          "sourceQuote": "Las ocupaciones y puestos de trabajo más relevantes son los siguientes: Cocinero.",
+          "reviewedAt": "2026-08-08"
+        }
+      ],
+      "rejectedRelationships": [
+        {
+          "occupationId": "occupation:cno11:3734",
+          "reasonCode": "official_evidence_indirect",
+          "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+          "sourceQuote": "Jefes de cocina, 3734",
+          "reviewedAt": "2026-08-08"
+        },
+        {
+          "occupationId": "occupation:cno11:4121",
+          "reasonCode": "official_evidence_indirect",
+          "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+          "sourceQuote": "4121 Empleados de control de abastecimientos e inventario",
+          "reviewedAt": "2026-08-08"
+        },
+        {
+          "occupationId": "occupation:cno11:5120",
+          "reasonCode": "official_evidence_absent",
+          "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+          "sourceQuote": "5120 Camareros asalariados",
+          "reviewedAt": "2026-08-08"
+        },
+        {
+          "occupationId": "occupation:cno11:9310",
+          "reasonCode": "official_evidence_indirect",
+          "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+          "sourceQuote": "9310 Ayudantes de cocina",
+          "reviewedAt": "2026-08-08"
+        }
+      ],
+      "snapshotCoverage": {
+        "status": "verified",
+        "snapshotId": "20260808174436640-7b8aa74dc939",
+        "countingMethod": "accepted_relationship_union",
+        "newlyReachedOfferCount": 0
+      }
     },
     {
       "programKey": "SSC01M",

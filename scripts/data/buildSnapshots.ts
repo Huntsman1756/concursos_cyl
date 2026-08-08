@@ -1600,9 +1600,14 @@ async function commitManifestWithSnapshotQuarantine(
   let quarantine: SnapshotQuarantine | undefined;
   let manifestCommitted = false;
   try {
+    const pilotSnapshotIds = await completedPilotSnapshotIds(root);
+    const historicalPilotDirectories = [...pilotSnapshotIds].map((snapshotId) =>
+      resolve(target, "snapshots", snapshotId),
+    );
     const invalidDirectories = await findRevokedPublicSnapshotDirectories(
       root,
       curatedMappings,
+      { historicalSnapshotDirectories: historicalPilotDirectories },
     );
     const addressedDirectories =
       previous === undefined
@@ -1633,6 +1638,7 @@ async function commitManifestWithSnapshotQuarantine(
     await failureInjection?.afterRevokedSnapshotPrune?.();
     await assertPublicSnapshotDistribution(root, curatedMappings, {
       ignoredDirectories: activeInvalid,
+      historicalSnapshotDirectories: historicalPilotDirectories,
     });
 
     await commitManifest(
@@ -1683,7 +1689,9 @@ async function commitManifestWithSnapshotQuarantine(
       );
     }
     await failureInjection?.afterActiveRevokedSnapshotQuarantine?.();
-    await assertPublicSnapshotDistribution(root, curatedMappings);
+    await assertPublicSnapshotDistribution(root, curatedMappings, {
+      historicalSnapshotDirectories: historicalPilotDirectories,
+    });
     if (failureInjection?.crashAfterActiveSnapshotQuarantine !== undefined) {
       try {
         await failureInjection.crashAfterActiveSnapshotQuarantine();
@@ -1857,6 +1865,46 @@ async function markPreviousSnapshotStale(
 
 const RETAINED_HISTORY_SNAPSHOTS = 2;
 const IMMUTABLE_SNAPSHOT_ID_PATTERN = /^\d{17}-[a-f0-9]{12}$/u;
+const FP_COVERAGE_PILOT_RESULTS_PATH = [
+  "analysis",
+  "fp_coverage_pilot_results.json",
+] as const;
+
+const PilotSnapshotReferenceSchema = z
+  .object({
+    state: z.string(),
+    snapshotCoverage: z
+      .object({
+        status: z.literal("verified"),
+        snapshotId: z.string().regex(IMMUTABLE_SNAPSHOT_ID_PATTERN),
+      })
+      .passthrough()
+      .optional(),
+  })
+  .passthrough();
+
+const PilotSnapshotReferencesSchema = z
+  .object({
+    attempts: z.array(PilotSnapshotReferenceSchema),
+  })
+  .passthrough();
+
+async function completedPilotSnapshotIds(root: string): Promise<Set<string>> {
+  const path = resolve(root, ...FP_COVERAGE_PILOT_RESULTS_PATH);
+  if (!(await pathExists(path))) return new Set();
+
+  const results = PilotSnapshotReferencesSchema.parse(
+    JSON.parse(await readFile(path, "utf8")),
+  );
+  return new Set(
+    results.attempts.flatMap((attempt) =>
+      attempt.state === "completed" &&
+      attempt.snapshotCoverage?.status === "verified"
+        ? [attempt.snapshotCoverage.snapshotId]
+        : [],
+    ),
+  );
+}
 
 async function safeRemoveImmutableSnapshotDirectory(
   root: string,
@@ -1913,6 +1961,7 @@ async function enforceSnapshotRetention(
     .sort((left, right) => compareCanonicalText(right, left));
   const retained = new Set([
     currentSnapshotId,
+    ...(await completedPilotSnapshotIds(root)),
     ...immutableSnapshotNames
       .filter(
         (snapshotId) =>

@@ -936,9 +936,9 @@
     "uncoveredPrograms": 1
   },
   {
-    "approvedMappings": 0,
-    "coverageNote": "Aún no hay una relación ocupacional aprobada; esto no significa que el ciclo no tenga salidas profesionales.",
-    "coverageStatus": "uncovered",
+    "approvedMappings": 1,
+    "coverageNote": "Incluye relaciones ocupacionales revisadas y citadas.",
+    "coverageStatus": "reviewed",
     "draftMappings": 0,
     "familyCode": "HOT",
     "familyName": "Hostelería y Turismo",
@@ -946,7 +946,7 @@
     "programTitle": "Cocina y Gastronomía",
     "rejectedMappings": 0,
     "scope": "program",
-    "uncoveredPrograms": 1
+    "uncoveredPrograms": 0
   },
   {
     "approvedMappings": 0,
@@ -2530,7 +2530,7 @@
     "uncoveredPrograms": 9
   },
   {
-    "approvedMappings": 0,
+    "approvedMappings": 1,
     "coverageNote": "La cobertura mide relaciones revisadas del catálogo, no la existencia de salidas profesionales.",
     "draftMappings": 0,
     "familyCode": "HOT",
@@ -2538,7 +2538,7 @@
     "programCount": 13,
     "rejectedMappings": 0,
     "scope": "family",
-    "uncoveredPrograms": 13
+    "uncoveredPrograms": 12
   },
   {
     "approvedMappings": 2,

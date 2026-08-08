@@ -201,6 +201,18 @@ export interface FpCoveragePilotValidationContext {
   links: readonly TrainingOccupationLink[];
   offers: readonly JobOffer[];
   publishedRequirements: readonly OfferPublishedRequirements[];
+  snapshotsById: ReadonlyMap<string, SnapshotValidationContext>;
+}
+
+interface SnapshotValidationContext {
+  snapshotId: string;
+  programs: readonly TrainingProgram[];
+  canonicalOccupations: readonly Occupation[];
+  occupations: readonly Occupation[];
+  aliases: readonly OccupationAlias[];
+  links: readonly TrainingOccupationLink[];
+  offers: readonly JobOffer[];
+  publishedRequirements: readonly OfferPublishedRequirements[];
 }
 
 export interface FpCoveragePilotValidationOptions {
@@ -392,12 +404,13 @@ function assertSnapshotCoverage(
   coverage: SnapshotCoverage,
   context: FpCoveragePilotValidationContext,
 ): void {
+  const snapshotContext = context.snapshotsById.get(coverage.snapshotId);
   assert(
-    coverage.snapshotId === context.snapshotId,
-    `Snapshot provenance for ${attempt.programKey} must resolve to the current manifest snapshot.`,
+    snapshotContext !== undefined,
+    `Snapshot provenance for ${attempt.programKey} must resolve to a retained immutable snapshot.`,
   );
   const acceptedLinks = attempt.acceptedRelationships.map((relationship) =>
-    context.links.find((link) =>
+    snapshotContext.links.find((link) =>
       sameSnapshotRelationship(attempt, relationship, link),
     ),
   );
@@ -419,18 +432,18 @@ function assertSnapshotCoverage(
   );
   const acceptedSnapshotLinks = new Set(acceptedLinks);
   const matches = matchOffersForProgram(attempt.programKey, {
-    programs: context.programs,
+    programs: snapshotContext.programs,
     qualifications: REVIEWED_QUALIFICATIONS,
     programQualificationLinks: REVIEWED_PROGRAM_QUALIFICATION_LINKS,
-    occupations: context.occupations,
-    aliases: context.aliases,
-    links: context.links.filter(
+    occupations: snapshotContext.occupations,
+    aliases: snapshotContext.aliases,
+    links: snapshotContext.links.filter(
       (link) =>
         link.trainingProgramKey !== attempt.programKey ||
         acceptedSnapshotLinks.has(link),
     ),
-    offers: context.offers,
-    publishedRequirements: context.publishedRequirements,
+    offers: snapshotContext.offers,
+    publishedRequirements: snapshotContext.publishedRequirements,
     humanOverrides: [],
   });
   assert(
@@ -533,6 +546,20 @@ async function readJson(path: string): Promise<unknown> {
   return JSON.parse(await readFile(path, "utf8"));
 }
 
+function pilotReferencedCompletedSnapshotIds(candidate: unknown): string[] {
+  const results = PilotResultsSchema.parse(candidate);
+  return [
+    ...new Set(
+      results.attempts.flatMap((attempt) =>
+        attempt.state === "completed" &&
+        attempt.snapshotCoverage?.status === "verified"
+          ? [attempt.snapshotCoverage.snapshotId]
+          : [],
+      ),
+    ),
+  ];
+}
+
 function publicResourcePath(
   rootDirectory: string,
   resourcePath: string,
@@ -544,15 +571,29 @@ function publicResourcePath(
   );
 }
 
-export async function loadFpCoveragePilotValidationContext(
-  rootDirectory = process.cwd(),
-): Promise<FpCoveragePilotValidationContext> {
-  const manifest = GeneratedManifestSchema.parse(
-    await readJson(
-      resolve(rootDirectory, "public", "data", "v1", "manifest.json"),
-    ),
+function historicalSnapshotResourcePath(
+  snapshotId: string,
+  fileName: string,
+): string {
+  assert(
+    /^\d{17}-[a-f0-9]{12}$/u.test(snapshotId),
+    "Historical snapshot ID is malformed.",
   );
-  const snapshots = manifest.resourceSnapshots;
+  return `/data/v1/snapshots/${snapshotId}/${fileName}`;
+}
+
+async function loadSnapshotValidationContext(
+  rootDirectory: string,
+  snapshotId: string,
+  resourcePaths: {
+    programs: string;
+    occupations: string;
+    occupationAliases: string;
+    trainingOccupationLinks: string;
+    jobOffers: string;
+    publishedRequirements: string;
+  },
+): Promise<SnapshotValidationContext> {
   const [
     canonicalOccupations,
     programs,
@@ -563,36 +604,21 @@ export async function loadFpCoveragePilotValidationContext(
     publishedRequirements,
   ] = await Promise.all([
     readJson(resolve(rootDirectory, "data", "curated", "occupations.json")),
+    readJson(publicResourcePath(rootDirectory, resourcePaths.programs)),
+    readJson(publicResourcePath(rootDirectory, resourcePaths.occupations)),
     readJson(
-      publicResourcePath(rootDirectory, snapshots.programs.resourcePath),
+      publicResourcePath(rootDirectory, resourcePaths.occupationAliases),
     ),
     readJson(
-      publicResourcePath(rootDirectory, snapshots.occupations.resourcePath),
+      publicResourcePath(rootDirectory, resourcePaths.trainingOccupationLinks),
     ),
+    readJson(publicResourcePath(rootDirectory, resourcePaths.jobOffers)),
     readJson(
-      publicResourcePath(
-        rootDirectory,
-        snapshots.occupationAliases.resourcePath,
-      ),
-    ),
-    readJson(
-      publicResourcePath(
-        rootDirectory,
-        snapshots.trainingOccupationLinks.resourcePath,
-      ),
-    ),
-    readJson(
-      publicResourcePath(rootDirectory, snapshots.jobOffers.resourcePath),
-    ),
-    readJson(
-      publicResourcePath(
-        rootDirectory,
-        snapshots.publishedRequirements.resourcePath,
-      ),
+      publicResourcePath(rootDirectory, resourcePaths.publishedRequirements),
     ),
   ]);
   return {
-    snapshotId: snapshotIdFromManifest(manifest),
+    snapshotId,
     canonicalOccupations: OccupationsSchema.parse(canonicalOccupations),
     programs: z.array(TrainingProgramSchema).parse(programs),
     occupations: OccupationsSchema.parse(occupations),
@@ -601,6 +627,75 @@ export async function loadFpCoveragePilotValidationContext(
     offers: z.array(JobOfferSchema).parse(offers),
     publishedRequirements: PublishedRequirementsResourceSchema.parse(
       publishedRequirements,
+    ),
+  };
+}
+
+export async function loadFpCoveragePilotValidationContext(
+  rootDirectory = process.cwd(),
+): Promise<FpCoveragePilotValidationContext> {
+  const manifest = GeneratedManifestSchema.parse(
+    await readJson(
+      resolve(rootDirectory, "public", "data", "v1", "manifest.json"),
+    ),
+  );
+  const snapshots = manifest.resourceSnapshots;
+  const snapshotId = snapshotIdFromManifest(manifest);
+  const candidate = await readJson(
+    resolve(rootDirectory, "analysis", "fp_coverage_pilot_results.json"),
+  );
+  const historicalSnapshotIds = pilotReferencedCompletedSnapshotIds(candidate);
+  const current = await loadSnapshotValidationContext(
+    rootDirectory,
+    snapshotId,
+    {
+      programs: snapshots.programs.resourcePath,
+      occupations: snapshots.occupations.resourcePath,
+      occupationAliases: snapshots.occupationAliases.resourcePath,
+      trainingOccupationLinks: snapshots.trainingOccupationLinks.resourcePath,
+      jobOffers: snapshots.jobOffers.resourcePath,
+      publishedRequirements: snapshots.publishedRequirements.resourcePath,
+    },
+  );
+  const historical = await Promise.all(
+    historicalSnapshotIds
+      .filter((historicalSnapshotId) => historicalSnapshotId !== snapshotId)
+      .map((historicalSnapshotId) =>
+        loadSnapshotValidationContext(rootDirectory, historicalSnapshotId, {
+          programs: historicalSnapshotResourcePath(
+            historicalSnapshotId,
+            "programs.json",
+          ),
+          occupations: historicalSnapshotResourcePath(
+            historicalSnapshotId,
+            "occupations.json",
+          ),
+          occupationAliases: historicalSnapshotResourcePath(
+            historicalSnapshotId,
+            "occupation-aliases.json",
+          ),
+          trainingOccupationLinks: historicalSnapshotResourcePath(
+            historicalSnapshotId,
+            "training-occupation-links.json",
+          ),
+          jobOffers: historicalSnapshotResourcePath(
+            historicalSnapshotId,
+            "job-offers.json",
+          ),
+          publishedRequirements: historicalSnapshotResourcePath(
+            historicalSnapshotId,
+            "published-requirements.json",
+          ),
+        }),
+      ),
+  );
+  return {
+    ...current,
+    snapshotsById: new Map(
+      [current, ...historical].map((snapshot) => [
+        snapshot.snapshotId,
+        snapshot,
+      ]),
     ),
   };
 }

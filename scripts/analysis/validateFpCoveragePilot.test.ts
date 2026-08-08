@@ -6,6 +6,7 @@ import { beforeAll, describe, expect, it } from "vitest";
 import {
   loadFpCoveragePilotValidationContext,
   validateFpCoveragePilotResults,
+  validateFpCoveragePilotResultsFile,
   type FpCoveragePilotValidationContext,
   type FpCoveragePilotResults,
 } from "./validateFpCoveragePilot";
@@ -156,6 +157,28 @@ describe("validateFpCoveragePilotResults", () => {
           sourceUrl:
             "https://todofp.es/dam/jcr%3Aaf5b68fd-e75c-493b-94ff-0565d3886473/san21cuidauxilenfermeria-pdf.pdf",
           sourceQuote: "Auxiliar de Atención primaria.",
+          reviewedAt: "2026-08-08",
+        }),
+      ]),
+    );
+  });
+
+  it("publishes the reviewed HOT01M cook output in the manifest-addressed snapshot", () => {
+    expect(
+      context.links.filter(
+        (link) =>
+          link.trainingProgramKey === "HOT01M" &&
+          link.reviewStatus === "approved",
+      ),
+    ).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          occupationId: "occupation:cno11:5110",
+          relationshipType: "official_output",
+          sourceUrl:
+            "https://todofp.es/dam/jcr%3A63392ee9-4d38-449b-a196-d0efb714b364/n-tcocinagastronomiaes-pdf.pdf",
+          sourceQuote:
+            "Las ocupaciones y puestos de trabajo más relevantes son los siguientes: Cocinero.",
           reviewedAt: "2026-08-08",
         }),
       ]),
@@ -399,5 +422,18 @@ describe("validateFpCoveragePilotResults", () => {
     ) as unknown;
 
     expect(validate(seed).attempts).toHaveLength(5);
+  });
+
+  it("validates a completed prior attempt against its retained immutable snapshot", async () => {
+    await expect(validateFpCoveragePilotResultsFile()).resolves.toMatchObject({
+      attempts: expect.arrayContaining([
+        expect.objectContaining({
+          programKey: "SAN21",
+          snapshotCoverage: expect.objectContaining({
+            snapshotId: "20260808172031375-7c88ca187340",
+          }),
+        }),
+      ]),
+    });
   });
 });

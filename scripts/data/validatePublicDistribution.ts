@@ -66,6 +66,7 @@ type AccessPath = (path: string) => Promise<void>;
 
 interface DistributionValidationOptions {
   ignoredDirectories?: readonly string[];
+  historicalSnapshotDirectories?: readonly string[];
   accessPath?: AccessPath;
 }
 
@@ -213,6 +214,11 @@ export async function findRevokedPublicSnapshotDirectories(
   const ignoredDirectories = new Set(
     (options.ignoredDirectories ?? []).map((directory) => resolve(directory)),
   );
+  const historicalSnapshotDirectories = new Set(
+    (options.historicalSnapshotDirectories ?? []).map((directory) =>
+      resolve(directory),
+    ),
+  );
   const entries = await readdir(snapshotsRoot, { withFileTypes: true });
 
   for (const entry of entries.sort((left, right) =>
@@ -221,6 +227,7 @@ export async function findRevokedPublicSnapshotDirectories(
     if (!entry.isDirectory()) continue;
     const directory = resolve(snapshotsRoot, entry.name);
     if (ignoredDirectories.has(directory)) continue;
+    const isHistoricalSubset = historicalSnapshotDirectories.has(directory);
     if (!(await hasCurrentRequirementSemantics(directory, accessPath))) {
       invalidDirectories.push(directory);
       continue;
@@ -260,8 +267,9 @@ export async function findRevokedPublicSnapshotDirectories(
             canonicalPayload(occupation),
       );
       invalid ||=
+        !isHistoricalSubset &&
         canonicalPayload(occupations) !==
-        canonicalPayload(canonicalApprovedOccupations);
+          canonicalPayload(canonicalApprovedOccupations);
       const aliases = OccupationAliasesSchema.parse(
         await readJson(aliasesPath),
       );
@@ -271,8 +279,9 @@ export async function findRevokedPublicSnapshotDirectories(
           approvedAliases.get(aliasIdentity(alias)) !== canonicalPayload(alias),
       );
       invalid ||=
+        !isHistoricalSubset &&
         canonicalPayload(aliases) !==
-        canonicalPayload(canonicalApprovedAliases);
+          canonicalPayload(canonicalApprovedAliases);
       const links = TrainingOccupationLinksSchema.parse(
         await readJson(linksPath),
       );
@@ -282,6 +291,7 @@ export async function findRevokedPublicSnapshotDirectories(
           approvedLinks.get(linkIdentity(link)) !== canonicalPayload(link),
       );
       invalid ||=
+        !isHistoricalSubset &&
         canonicalPayload(links) !== canonicalPayload(canonicalApprovedLinks);
       const programs = z
         .array(TrainingProgramSchema)
@@ -304,8 +314,11 @@ export async function findRevokedPublicSnapshotDirectories(
         await readJson(coveragePath),
       );
       invalid ||=
+        !isHistoricalSubset &&
         canonicalPayload(coverage) !==
-        canonicalPayload(buildMappingCoverage(programs, curatedMappings.links));
+          canonicalPayload(
+            buildMappingCoverage(programs, curatedMappings.links),
+          );
     } catch (error) {
       if (isOperationalPathError(error)) throw error;
       invalid = true;
