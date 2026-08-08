@@ -25,6 +25,22 @@ const alias = {
   mappingVersion: "1.0.0",
 } as const;
 
+const rejectedOccupation = {
+  ...occupation,
+  occupationId: "occupation:cno11:9999",
+  preferredLabel: "Ocupación rechazada de prueba",
+  confirmationLabel: "Equivalencia no aprobada",
+  classificationCode: "9999",
+  reviewStatus: "rejected",
+} as const;
+
+const rejectedAlias = {
+  ...alias,
+  alias: "equivalencia inventada",
+  occupationId: rejectedOccupation.occupationId,
+  reviewStatus: "rejected",
+} as const;
+
 function installFetch(options: { fail?: boolean } = {}): void {
   if (options.fail) {
     vi.stubGlobal(
@@ -59,8 +75,14 @@ function installFetch(options: { fail?: boolean } = {}): void {
     [manifest.resourceSnapshots.centers.resourcePath, []],
     [manifest.resourceSnapshots.trainingOfferings.resourcePath, []],
     [manifest.resourceSnapshots.jobOffers.resourcePath, []],
-    [manifest.resourceSnapshots.occupations.resourcePath, [occupation]],
-    [manifest.resourceSnapshots.occupationAliases.resourcePath, [alias]],
+    [
+      manifest.resourceSnapshots.occupations.resourcePath,
+      [occupation, rejectedOccupation],
+    ],
+    [
+      manifest.resourceSnapshots.occupationAliases.resourcePath,
+      [alias, rejectedAlias],
+    ],
     [manifest.resourceSnapshots.trainingOccupationLinks.resourcePath, []],
   ]);
   vi.stubGlobal(
@@ -82,6 +104,7 @@ function installFetch(options: { fail?: boolean } = {}): void {
 
 afterEach(() => {
   cleanup();
+  vi.restoreAllMocks();
   vi.unstubAllGlobals();
 });
 
@@ -127,6 +150,26 @@ describe("occupation-first search", () => {
     expect(
       screen.getByRole("button", { name: "Ver rutas formativas" }),
     ).toBeEnabled();
+  });
+
+  it("never exposes a rejected occupation or alias", async () => {
+    installFetch();
+    const user = userEvent.setup();
+    render(
+      <MemoryRouter initialEntries={["/desde-ocupacion"]}>
+        <AppRoutes />
+      </MemoryRouter>,
+    );
+
+    const input = await screen.findByRole("combobox", { name: /ocupación/i });
+    await user.type(input, rejectedAlias.alias);
+
+    expect(
+      screen.getByText("No encontramos una ocupación revisada con ese nombre."),
+    ).toBeVisible();
+    expect(
+      screen.queryByText(rejectedOccupation.preferredLabel),
+    ).not.toBeInTheDocument();
   });
 
   it("does not silently replace confirmation when the text is edited", async () => {
@@ -188,5 +231,54 @@ describe("occupation-first search", () => {
         name: "No hemos podido cargar las ocupaciones",
       }),
     ).toBeVisible();
+  });
+
+  it("keeps search interaction to static reads without browser-state writes", async () => {
+    installFetch();
+    const storageWriteSpies = [
+      vi.spyOn(Storage.prototype, "setItem"),
+      vi.spyOn(Storage.prototype, "removeItem"),
+      vi.spyOn(Storage.prototype, "clear"),
+    ];
+    const cookieSpy = vi.spyOn(Document.prototype, "cookie", "set");
+    const sendBeaconSpy = vi.fn();
+    const previousBeacon = Object.getOwnPropertyDescriptor(
+      window.navigator,
+      "sendBeacon",
+    );
+    Object.defineProperty(window.navigator, "sendBeacon", {
+      configurable: true,
+      value: sendBeaconSpy,
+    });
+    const user = userEvent.setup();
+    render(
+      <MemoryRouter initialEntries={["/desde-ocupacion"]}>
+        <AppRoutes />
+      </MemoryRouter>,
+    );
+
+    const input = await screen.findByRole("combobox", { name: /ocupación/i });
+    await user.type(input, alias.alias);
+    await user.click(screen.getByRole("option"));
+
+    for (const storageWriteSpy of storageWriteSpies) {
+      expect(storageWriteSpy).not.toHaveBeenCalled();
+    }
+    expect(cookieSpy).not.toHaveBeenCalled();
+    expect(sendBeaconSpy).not.toHaveBeenCalled();
+    const requests = vi.mocked(fetch).mock.calls;
+    expect(requests.length).toBeGreaterThan(0);
+    for (const [request, init] of requests) {
+      const url = typeof request === "string" ? request : request.toString();
+      const method = request instanceof Request ? request.method : init?.method;
+      expect(url).toMatch(/^\/data\/v1\//u);
+      expect(method ?? "GET").toBe("GET");
+    }
+
+    if (previousBeacon === undefined) {
+      Reflect.deleteProperty(window.navigator, "sendBeacon");
+    } else {
+      Object.defineProperty(window.navigator, "sendBeacon", previousBeacon);
+    }
   });
 });

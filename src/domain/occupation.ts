@@ -44,7 +44,7 @@ function compareCandidates(
   right: OccupationSearchCandidate,
 ): number {
   return (
-    left.confirmationLabel.localeCompare(right.confirmationLabel, "es") ||
+    left.preferredLabel.localeCompare(right.preferredLabel, "es") ||
     left.occupationId.localeCompare(right.occupationId)
   );
 }
@@ -95,7 +95,6 @@ export function buildOccupationIndex(
       confirmationLabel: occupation.confirmationLabel,
       searchText: [
         occupation.preferredLabel,
-        occupation.confirmationLabel,
         ...(aliasesByOccupation.get(occupation.occupationId) ?? []),
       ]
         .map(normalizeSearchText)

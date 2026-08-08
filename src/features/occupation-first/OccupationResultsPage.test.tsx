@@ -67,6 +67,16 @@ const links = [
     reviewNote:
       "Pending exact official evidence before this mapping may be published.",
   },
+  {
+    trainingProgramKey: "IFC03S",
+    occupationId: occupation.occupationId,
+    relationshipType: "official_output",
+    reviewStatus: "rejected",
+    sourceUrl: "https://example.org/rejected",
+    sourceQuote: "Esta relación rechazada no puede mostrarse.",
+    reviewedAt: "2026-08-04",
+    mappingVersion: "1.0.0",
+  },
 ] as const;
 
 function offering(
@@ -167,6 +177,7 @@ function installFetch({
 
 afterEach(() => {
   cleanup();
+  vi.restoreAllMocks();
   vi.unstubAllGlobals();
 });
 
@@ -238,6 +249,12 @@ describe("occupation-first results", () => {
       screen.queryByText(/mejor|puntuación|compatibilidad|%/i),
     ).not.toBeInTheDocument();
     expect(screen.queryByText(/DRAFT/i)).not.toBeInTheDocument();
+    expect(
+      screen.queryByText("Esta relación no puede mostrarse."),
+    ).not.toBeInTheDocument();
+    expect(
+      screen.queryByText("Esta relación rechazada no puede mostrarse."),
+    ).not.toBeInTheDocument();
   });
 
   it("discloses exact provenance and links to the existing centers route", async () => {
@@ -287,9 +304,24 @@ describe("occupation-first results", () => {
     ).toBeVisible();
   });
 
-  it("does not write search or route state outside browser memory", async () => {
+  it("keeps results interaction to static reads without browser-state writes", async () => {
     installFetch();
-    const storageSpy = vi.spyOn(Storage.prototype, "setItem");
+    const storageWriteSpies = [
+      vi.spyOn(Storage.prototype, "setItem"),
+      vi.spyOn(Storage.prototype, "removeItem"),
+      vi.spyOn(Storage.prototype, "clear"),
+    ];
+    const cookieSpy = vi.spyOn(Document.prototype, "cookie", "set");
+    const sendBeaconSpy = vi.fn();
+    const previousBeacon = Object.getOwnPropertyDescriptor(
+      window.navigator,
+      "sendBeacon",
+    );
+    Object.defineProperty(window.navigator, "sendBeacon", {
+      configurable: true,
+      value: sendBeaconSpy,
+    });
+    const user = userEvent.setup();
     render(
       <MemoryRouter
         initialEntries={[`/desde-ocupacion/${occupation.occupationId}`]}
@@ -298,14 +330,25 @@ describe("occupation-first results", () => {
       </MemoryRouter>,
     );
     await screen.findByRole("heading", { name: occupation.preferredLabel });
-    expect(storageSpy).not.toHaveBeenCalled();
-    const requestedUrls = vi
-      .mocked(fetch)
-      .mock.calls.map(([input]) =>
-        typeof input === "string" ? input : input.toString(),
-      );
-    expect(requestedUrls.every((url) => url.startsWith("/data/v1/"))).toBe(
-      true,
-    );
+    await user.click(screen.getAllByText("Ver cita exacta")[0]);
+    for (const storageWriteSpy of storageWriteSpies) {
+      expect(storageWriteSpy).not.toHaveBeenCalled();
+    }
+    expect(cookieSpy).not.toHaveBeenCalled();
+    expect(sendBeaconSpy).not.toHaveBeenCalled();
+    const requests = vi.mocked(fetch).mock.calls;
+    expect(requests.length).toBeGreaterThan(0);
+    for (const [request, init] of requests) {
+      const url = typeof request === "string" ? request : request.toString();
+      const method = request instanceof Request ? request.method : init?.method;
+      expect(url).toMatch(/^\/data\/v1\//u);
+      expect(method ?? "GET").toBe("GET");
+    }
+
+    if (previousBeacon === undefined) {
+      Reflect.deleteProperty(window.navigator, "sendBeacon");
+    } else {
+      Object.defineProperty(window.navigator, "sendBeacon", previousBeacon);
+    }
   });
 });
