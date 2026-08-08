@@ -1,6 +1,8 @@
 import type { ReactNode } from "react";
 import { Link, Route, Routes } from "react-router-dom";
 import { HomePage } from "../features/home/HomePage";
+import { TrainingSearchPage } from "../features/training-first/TrainingSearchPage";
+import { TrainingResultsPage } from "../features/training-first/TrainingResultsPage";
 import { AppShell } from "./AppShell";
 
 interface DestinationPageProps {
@@ -28,14 +30,10 @@ export function AppRoutes() {
   return (
     <Routes>
       <Route path="/" element={inShell(<HomePage />)} />
+      <Route path="/desde-fp" element={inShell(<TrainingSearchPage />)} />
       <Route
-        path="/desde-fp"
-        element={inShell(
-          <DestinationPage
-            heading="Ruta desde FP — en preparación"
-            outcome="Esta función todavía no está disponible. La próxima fase añadirá la selección de ciclos y ofertas relacionadas."
-          />,
-        )}
+        path="/desde-fp/:programKey"
+        element={inShell(<TrainingResultsPage />)}
       />
       <Route
         path="/desde-ocupacion"

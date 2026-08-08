@@ -82,15 +82,13 @@ test("both entry routes remain reachable in their approved order", async ({
   await page.getByRole("link", { name: "Explorar: He terminado FP" }).click();
   await expect(page).toHaveURL(/\/desde-fp$/u);
   await expect(
-    page.getByRole("heading", { name: "Ruta desde FP — en preparación" }),
+    page.getByRole("heading", {
+      name: "Encuentra ofertas relacionadas con tu FP",
+    }),
   ).toBeVisible();
-  await expect(
-    page.getByText(
-      "Esta función todavía no está disponible. La próxima fase añadirá la selección de ciclos y ofertas relacionadas.",
-    ),
-  ).toBeVisible();
+  await expect(page.getByLabel("Ciclo de Formación Profesional")).toBeVisible();
 
-  await page.getByRole("link", { name: "Volver al inicio" }).click();
+  await page.getByRole("link", { name: "SALIDA CyL" }).click();
   await page
     .getByRole("link", { name: "Explorar: Quiero trabajar de…" })
     .click();
@@ -105,6 +103,59 @@ test("both entry routes remain reachable in their approved order", async ({
       "Esta función todavía no está disponible. La próxima fase añadirá la búsqueda de ciclos y centros por ocupación.",
     ),
   ).toBeVisible();
+});
+
+test("the training-first journey keeps the live zero-match snapshot honest and accessible", async ({
+  page,
+}) => {
+  const manifestResponsePromise = page.waitForResponse((response) =>
+    response.url().endsWith("/data/v1/manifest.json"),
+  );
+  await page.goto("/desde-fp");
+  const manifestResponse = await manifestResponsePromise;
+  const manifest = (await manifestResponse.json()) as ReturnType<
+    typeof currentManifestFixture
+  >;
+
+  const programSelect = page.getByLabel("Ciclo de Formación Profesional");
+  await expect(programSelect).toBeVisible();
+  await expect(
+    page.getByRole("button", { name: "Ver ofertas" }),
+  ).toBeDisabled();
+  await programSelect.selectOption("IFC03S");
+  await page.getByRole("button", { name: "Ver ofertas" }).click();
+
+  await expect(page).toHaveURL(/\/desde-fp\/IFC03S$/u);
+  await expect(
+    page.getByRole("heading", { name: "Desarrollo de Aplicaciones Web" }),
+  ).toBeVisible();
+  const jobSnapshot = manifest.resourceSnapshots.jobOffers;
+  const expectedDate = new Intl.DateTimeFormat("es-ES", {
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+    timeZone: "UTC",
+  }).format(
+    new Date(jobSnapshot.sourceUpdatedAt ?? jobSnapshot.snapshotFetchedAt),
+  );
+  await expect(
+    page.getByText(
+      `No hay ofertas relacionadas en la instantánea del ${expectedDate}.`,
+    ),
+  ).toBeVisible();
+  await expect(page.getByText(/compatibilidad|porcentaje|%/iu)).toHaveCount(0);
+
+  const overflow = await page.evaluate(
+    () =>
+      document.documentElement.scrollWidth -
+      document.documentElement.clientWidth,
+  );
+  expect(overflow).toBeLessThanOrEqual(1);
+  const results = await new AxeBuilder({ page }).analyze();
+  expect(
+    results.violations,
+    JSON.stringify(results.violations, null, 2),
+  ).toEqual([]);
 });
 
 test("each remaining public route has distinct destination content", async ({

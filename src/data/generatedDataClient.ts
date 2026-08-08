@@ -25,6 +25,14 @@ import {
   PublishedRequirementsResourceSchema,
   type OfferPublishedRequirements,
 } from "../domain/requirements";
+import {
+  OccupationAliasesSchema,
+  OccupationsSchema,
+  TrainingOccupationLinksSchema,
+  type Occupation,
+  type OccupationAlias,
+  type TrainingOccupationLink,
+} from "../../data/schemas/curatedMappings";
 
 export type GeneratedDataErrorCode = "network" | "schema" | "missing";
 
@@ -139,6 +147,44 @@ export function loadPublishedRequirements(
     snapshot.resourcePath,
     PublishedRequirementsResourceSchema,
   );
+}
+
+export interface LoadedAuditedRelationships {
+  occupations: Occupation[];
+  aliases: OccupationAlias[];
+  links: TrainingOccupationLink[];
+}
+
+/** Loads only manifest-addressed, schema-validated relationship catalogs. */
+export async function loadAuditedRelationships(
+  manifest: LoadableGeneratedManifest,
+): Promise<LoadedAuditedRelationships> {
+  const snapshots =
+    manifest.resourceSnapshots as typeof manifest.resourceSnapshots &
+      Record<string, { resourcePath: string } | undefined>;
+  const occupations = snapshots.occupations;
+  const aliases = snapshots.occupationAliases;
+  const links = snapshots.trainingOccupationLinks;
+  if (
+    occupations === undefined ||
+    aliases === undefined ||
+    links === undefined
+  ) {
+    throw new GeneratedDataError(
+      "missing",
+      "Generated manifest does not advertise audited relationship resources.",
+    );
+  }
+  const [loadedOccupations, loadedAliases, loadedLinks] = await Promise.all([
+    loadGeneratedResource(occupations.resourcePath, OccupationsSchema),
+    loadGeneratedResource(aliases.resourcePath, OccupationAliasesSchema),
+    loadGeneratedResource(links.resourcePath, TrainingOccupationLinksSchema),
+  ]);
+  return {
+    occupations: loadedOccupations,
+    aliases: loadedAliases,
+    links: loadedLinks,
+  };
 }
 
 interface LoadedFoundationResourceBase {
