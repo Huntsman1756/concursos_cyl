@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import "../styles/global.css";
 
 interface AppShellProps {
@@ -14,19 +14,24 @@ export function AppShell({ children }: AppShellProps) {
       </a>
       <header className="site-header">
         <div className="site-header__inner">
-          <Link className="site-name" to="/">
-            SALIDA CyL
-          </Link>
+          <div className="site-identity">
+            <Link className="site-name" to="/">
+              SALIDA CyL
+            </Link>
+            <span className="site-descriptor">Decide tu siguiente paso</span>
+          </div>
           <nav className="site-nav" aria-label="Principal">
             <ul>
               <li>
-                <Link to="/">Inicio</Link>
+                <NavLink to="/" end>
+                  Inicio
+                </NavLink>
               </li>
               <li>
-                <Link to="/comparar">Comparar estudios</Link>
+                <NavLink to="/comparar">Comparar</NavLink>
               </li>
               <li>
-                <Link to="/metodologia">Metodología</Link>
+                <NavLink to="/metodologia">Metodología</NavLink>
               </li>
             </ul>
           </nav>
@@ -35,6 +40,15 @@ export function AppShell({ children }: AppShellProps) {
       <main className="page-content" id="main-content" tabIndex={-1}>
         {children}
       </main>
+      <footer className="site-footer">
+        <div className="site-footer__inner">
+          <p>
+            SALIDA CyL es un proyecto independiente que utiliza fuentes
+            públicas.
+          </p>
+          <Link to="/metodologia">Metodología y fuentes</Link>
+        </div>
+      </footer>
     </>
   );
 }

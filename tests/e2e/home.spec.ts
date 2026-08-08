@@ -39,14 +39,14 @@ test("home exposes equal journeys, navigation, freshness, and no automated acces
 
   await expect(
     page.getByRole("navigation", { name: "Principal" }).getByRole("link"),
-  ).toHaveText(["Inicio", "Comparar estudios", "Metodología"]);
+  ).toHaveText(["Inicio", "Comparar", "Metodología"]);
 
   const journeyLinks = page
     .getByLabel("Elige tu punto de partida")
     .getByRole("link");
   await expect(journeyLinks).toHaveText([
-    "Explorar: He terminado FP",
-    "Explorar: Quiero trabajar de…",
+    "Explorar salidas laborales",
+    "Buscar ciclos que te preparan",
   ]);
   const jobOffersSnapshot = manifest.resourceSnapshots.jobOffers;
   const expectedDateTime =
@@ -79,7 +79,7 @@ test("both entry routes remain reachable in their approved order", async ({
 }) => {
   await page.goto("/");
 
-  await page.getByRole("link", { name: "Explorar: He terminado FP" }).click();
+  await page.getByRole("link", { name: "Explorar salidas laborales" }).click();
   await expect(page).toHaveURL(/\/desde-fp$/u);
   await expect(
     page.getByRole("heading", {
@@ -90,7 +90,7 @@ test("both entry routes remain reachable in their approved order", async ({
 
   await page.getByRole("link", { name: "SALIDA CyL" }).click();
   await page
-    .getByRole("link", { name: "Explorar: Quiero trabajar de…" })
+    .getByRole("link", { name: "Buscar ciclos que te preparan" })
     .click();
   await expect(page).toHaveURL(/\/desde-ocupacion$/u);
   await expect(
@@ -327,7 +327,7 @@ test("a validated stale legacy manifest keeps navigation and names the last upda
     page.getByText(/datos actuales|datos al día|ofertas actuales/iu),
   ).toHaveCount(0);
 
-  await page.getByRole("link", { name: "Comparar estudios" }).click();
+  await page.getByRole("link", { name: "Comparar" }).click();
   await expect(page).toHaveURL(/\/comparar$/u);
   await expect(
     page.getByRole("heading", { name: "Comparar estudios — en preparación" }),
@@ -347,11 +347,11 @@ test("the complete Spanish home copy fits without horizontal overflow", async ({
 
   await expect(
     page.getByRole("heading", {
-      name: "Dos caminos para encontrar tu siguiente paso",
+      name: "Elige tu camino y actúa con información oficial",
     }),
   ).toBeVisible();
   await expect(
-    page.getByText("Ocupación → ciclos y centros de CyL"),
+    page.getByText("Dónde se imparten y cómo acceder"),
   ).toBeVisible();
 
   const overflow = await page.evaluate(() => ({
@@ -362,4 +362,49 @@ test("the complete Spanish home copy fits without horizontal overflow", async ({
   }));
   expect(overflow.body).toBeLessThanOrEqual(1);
   expect(overflow.document).toBeLessThanOrEqual(1);
+});
+
+test("the selected workspace uses equal desktop panels and a stacked mobile flow", async ({
+  page,
+}, testInfo) => {
+  await page.goto("/");
+
+  const panels = page.locator(".entry-card");
+  const coverage = page.getByRole("region", { name: "Disponible ahora" });
+  const firstPanel = await panels.nth(0).boundingBox();
+  const secondPanel = await panels.nth(1).boundingBox();
+  const coveragePanel = await coverage.boundingBox();
+  expect(firstPanel).not.toBeNull();
+  expect(secondPanel).not.toBeNull();
+  expect(coveragePanel).not.toBeNull();
+
+  if (!firstPanel || !secondPanel || !coveragePanel) {
+    return;
+  }
+
+  if (testInfo.project.name === "chromium-desktop") {
+    expect(Math.abs(firstPanel.y - secondPanel.y)).toBeLessThanOrEqual(1);
+    expect(Math.abs(firstPanel.width - secondPanel.width)).toBeLessThanOrEqual(
+      1,
+    );
+    expect(secondPanel.x).toBeGreaterThanOrEqual(
+      firstPanel.x + firstPanel.width,
+    );
+    expect(coveragePanel.x).toBeGreaterThan(secondPanel.x + secondPanel.width);
+  } else {
+    expect(secondPanel.y).toBeGreaterThan(firstPanel.y + firstPanel.height);
+    expect(coveragePanel.y).toBeGreaterThan(secondPanel.y + secondPanel.height);
+    const firstCta = await panels.nth(0).getByRole("link").boundingBox();
+    expect(firstCta).not.toBeNull();
+    if (firstCta) {
+      expect(firstCta.width).toBeGreaterThan(firstPanel.width * 0.8);
+    }
+  }
+
+  const overflow = await page.evaluate(
+    () =>
+      document.documentElement.scrollWidth -
+      document.documentElement.clientWidth,
+  );
+  expect(overflow).toBeLessThanOrEqual(1);
 });

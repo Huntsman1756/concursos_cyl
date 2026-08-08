@@ -16,7 +16,7 @@ afterEach(() => {
 });
 
 describe("HomePage", () => {
-  it("describes two different outcomes without decorative icon text", () => {
+  it("presents two truthful entry journeys and reviewed partial coverage", () => {
     render(
       <MemoryRouter>
         <HomePage />
@@ -24,21 +24,36 @@ describe("HomePage", () => {
     );
 
     expect(
-      screen.getByText("Título → ofertas → requisitos → acciones"),
+      screen.getByRole("heading", {
+        level: 1,
+        name: "Elige tu camino y actúa con información oficial",
+      }),
     ).toBeVisible();
+    const coverage = screen.getByRole("region", { name: "Disponible ahora" });
+    expect(coverage).toHaveTextContent("Desarrollo de Aplicaciones Web");
+    expect(coverage).toHaveTextContent("presencial y distancia");
+    expect(coverage).toHaveTextContent("1 ocupación CNO revisada");
+    expect(screen.queryByText(/Cuidados Auxiliares/i)).not.toBeInTheDocument();
+    expect(screen.queryByText(/Administración/i)).not.toBeInTheDocument();
+    expect(screen.queryByText(/educación infantil/i)).not.toBeInTheDocument();
+    expect(screen.queryByText(/soldadura/i)).not.toBeInTheDocument();
     expect(
-      screen.getByText("Ocupación → ciclos y centros de CyL"),
-    ).toBeVisible();
-    expect(screen.getAllByRole("link")).toEqual(
-      expect.arrayContaining([
-        expect.objectContaining({
-          textContent: expect.stringMatching(/He terminado FP/),
-        }),
-        expect.objectContaining({
-          textContent: expect.stringMatching(/Quiero trabajar de/),
-        }),
-      ]),
+      screen.queryByText(/Junta de Castilla y León/i),
+    ).not.toBeInTheDocument();
+    expect(
+      screen.getByRole("link", { name: "Explorar salidas laborales" }),
+    ).toHaveAttribute("href", "/desde-fp");
+    expect(
+      screen.getByRole("link", { name: "Buscar ciclos que te preparan" }),
+    ).toHaveAttribute("href", "/desde-ocupacion");
+    expect(
+      screen.getByRole("region", { name: "Sobre la cobertura" }),
+    ).toHaveTextContent(
+      /relaciones formativas se incorporan de forma progresiva/i,
     );
+    expect(
+      screen.getByRole("link", { name: "Saber más sobre los datos" }),
+    ).toHaveAttribute("href", "/metodologia");
   });
 
   it("announces a pending manifest before rendering the validated update date", async () => {
