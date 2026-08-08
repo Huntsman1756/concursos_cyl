@@ -64,7 +64,20 @@ const OfficialRelationshipSchema = z
     ]),
     ...EvidenceSchema,
   })
-  .strict();
+  .strict()
+  .superRefine((relationship, context) => {
+    const expectedReasonCode =
+      relationship.relationshipType === "official_output"
+        ? "official_programme_output"
+        : "officially_reviewed_relationship";
+    if (relationship.reasonCode !== expectedReasonCode) {
+      context.addIssue({
+        code: "custom",
+        path: ["reasonCode"],
+        message: "Accepted relationship type and reason code must agree.",
+      });
+    }
+  });
 
 const RejectedRelationshipSchema = z
   .object({

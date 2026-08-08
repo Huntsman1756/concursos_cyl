@@ -262,6 +262,7 @@ describe("validateFpCoveragePilotResults", () => {
     repeatedDisposition.attempts[0].acceptedRelationships.push({
       ...repeatedDisposition.attempts[0].acceptedRelationships[0]!,
       relationshipType: "reviewed_relationship",
+      reasonCode: "officially_reviewed_relationship",
     });
     const contradictoryDisposition = completedResults();
     contradictoryDisposition.attempts[0].rejectedRelationships.push({
@@ -280,6 +281,14 @@ describe("validateFpCoveragePilotResults", () => {
     ]) {
       expect(() => validate(candidate)).toThrow(/occupation|disposition/i);
     }
+  });
+
+  it("rejects an accepted relationship whose type and reason code disagree", () => {
+    const candidate = completedResults();
+    candidate.attempts[0].acceptedRelationships[0]!.relationshipType =
+      "reviewed_relationship";
+
+    expect(() => validate(candidate)).toThrow(/relationship type|reason code/i);
   });
 
   it("rejects deceptive or placeholder-like official evidence", () => {
