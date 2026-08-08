@@ -5,6 +5,7 @@ import { pathToFileURL } from "node:url";
 import { z } from "zod";
 
 import {
+  FP_OFFICIAL_ALIAS_PASS_BASELINE_SNAPSHOT_ID,
   FpOfficialAliasPassResultsSchema,
   ProgramOfficialAliasReviewSchema,
   TARGET_ALIAS_PROGRAMS,
@@ -42,7 +43,7 @@ import {
 } from "./validateFpCoveragePilot";
 import { hashFile } from "../data/hashFile";
 
-const BASELINE_SNAPSHOT_ID = "20260808215403108-add4c517860c";
+const BASELINE_SNAPSHOT_ID = FP_OFFICIAL_ALIAS_PASS_BASELINE_SNAPSHOT_ID;
 const AUDIT_DIRECTORY = ["analysis", "fp_official_alias_pass"] as const;
 
 export const PINNED_BASELINE_RESOURCE_CONTRACT = {

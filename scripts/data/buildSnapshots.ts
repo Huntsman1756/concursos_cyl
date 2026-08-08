@@ -32,6 +32,7 @@ import {
   OccupationsSchema,
   TrainingOccupationLinksSchema,
 } from "../../data/schemas/curatedMappings";
+import { FP_OFFICIAL_ALIAS_PASS_BASELINE_SNAPSHOT_ID } from "../../data/schemas/fpOfficialAliasPass";
 import {
   EducationCenterSchema,
   GeneratedManifestSchema,
@@ -1919,8 +1920,15 @@ async function completedPilotSnapshotDistributionOptions(
   target: string,
 ): Promise<{ historicalSnapshotDirectories: string[] }> {
   return {
-    historicalSnapshotDirectories: [...(await completedPilotSnapshotIds(root))]
-      .sort(compareCanonicalText)
+    historicalSnapshotDirectories: [
+      ...(await completedPilotSnapshotIds(root)),
+      FP_OFFICIAL_ALIAS_PASS_BASELINE_SNAPSHOT_ID,
+    ]
+      .toSorted(compareCanonicalText)
+      .filter(
+        (snapshotId, index, snapshotIds) =>
+          index === 0 || snapshotId !== snapshotIds[index - 1],
+      )
       .map((snapshotId) => resolve(target, "snapshots", snapshotId)),
   };
 }
@@ -1981,6 +1989,7 @@ async function enforceSnapshotRetention(
   const retained = new Set([
     currentSnapshotId,
     ...(await completedPilotSnapshotIds(root)),
+    FP_OFFICIAL_ALIAS_PASS_BASELINE_SNAPSHOT_ID,
     ...immutableSnapshotNames
       .filter(
         (snapshotId) =>

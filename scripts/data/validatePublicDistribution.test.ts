@@ -12,6 +12,7 @@ import { join, resolve } from "node:path";
 import { afterEach, describe, expect, it } from "vitest";
 import { z } from "zod";
 
+import { FP_OFFICIAL_ALIAS_PASS_BASELINE_SNAPSHOT_ID } from "../../data/schemas/fpOfficialAliasPass";
 import {
   JobOfferSchema,
   TrainingProgramSchema,
@@ -853,21 +854,31 @@ describe("public snapshot distribution", () => {
         snapshotCoverage?: { status: string; snapshotId: string };
       }[];
     };
-    const historicalSnapshotDirectories = pilot.attempts.flatMap((attempt) =>
-      attempt.state === "completed" &&
-      attempt.snapshotCoverage?.status === "verified"
-        ? [
-            join(
-              root,
-              "public",
-              "data",
-              "v1",
-              "snapshots",
-              attempt.snapshotCoverage.snapshotId,
-            ),
-          ]
-        : [],
-    );
+    const historicalSnapshotDirectories = [
+      ...pilot.attempts.flatMap((attempt) =>
+        attempt.state === "completed" &&
+        attempt.snapshotCoverage?.status === "verified"
+          ? [
+              join(
+                root,
+                "public",
+                "data",
+                "v1",
+                "snapshots",
+                attempt.snapshotCoverage.snapshotId,
+              ),
+            ]
+          : [],
+      ),
+      join(
+        root,
+        "public",
+        "data",
+        "v1",
+        "snapshots",
+        FP_OFFICIAL_ALIAS_PASS_BASELINE_SNAPSHOT_ID,
+      ),
+    ];
 
     await expect(
       assertPublicSnapshotDistribution(root, mappings, {

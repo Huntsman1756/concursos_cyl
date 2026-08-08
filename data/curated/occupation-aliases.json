@@ -92,5 +92,75 @@
     "reviewStatus": "approved",
     "reviewedAt": "2026-08-08",
     "mappingVersion": "1.0.0"
+  },
+  {
+    "alias": "Auxiliares de ayuda a personas dependientes a domicilio",
+    "occupationId": "occupation:cno11:5710",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-09",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "alias": "Cocineros asalariados",
+    "occupationId": "occupation:cno11:5110",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-09",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "alias": "Cocineros de comedor de empresa",
+    "occupationId": "occupation:cno11:5110",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-09",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "alias": "Cocineros en restaurantes",
+    "occupationId": "occupation:cno11:5110",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-09",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "alias": "Cocineros (no propietarios)",
+    "occupationId": "occupation:cno11:5110",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-09",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "alias": "Impermeabilizadores de terrazas",
+    "occupationId": "occupation:cno11:7193",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-09",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "alias": "Instaladores de materiales de impermeabilización en edificios",
+    "occupationId": "occupation:cno11:7193",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-09",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "alias": "Instaladores de sistemas de impermeabilización en edificios",
+    "occupationId": "occupation:cno11:7193",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-09",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "alias": "Pavimentadores a base de hormigón",
+    "occupationId": "occupation:cno11:7111",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-09",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "alias": "Pavimentadores con adoquines",
+    "occupationId": "occupation:cno11:7240",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-09",
+    "mappingVersion": "1.0.0"
   }
 ]

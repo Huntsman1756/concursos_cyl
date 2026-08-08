@@ -491,7 +491,7 @@ describe("validateFpCoveragePilotResults", () => {
     );
   });
 
-  it("publishes only the independently evidenced SSC01M relationships without aliases or offer matches", () => {
+  it("preserves the independently evidenced SSC01M pilot relationships with the current reviewed alias", () => {
     const sscLinks = context.links.filter(
       (link) => link.trainingProgramKey === "SSC01M",
     );
@@ -521,7 +521,13 @@ describe("validateFpCoveragePilotResults", () => {
       context.aliases.filter((alias) =>
         SSC_APPROVED_OCCUPATION_IDS.includes(alias.occupationId),
       ),
-    ).toEqual([]);
+    ).toEqual([
+      expect.objectContaining({
+        alias: "Auxiliares de ayuda a personas dependientes a domicilio",
+        occupationId: "occupation:cno11:5710",
+        reviewedAt: "2026-08-09",
+      }),
+    ]);
     expect(
       sscLinks.some((link) =>
         SSC_REJECTED_OCCUPATION_IDS.includes(link.occupationId),

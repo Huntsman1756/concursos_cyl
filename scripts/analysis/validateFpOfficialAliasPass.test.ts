@@ -4,12 +4,18 @@ import { join, resolve } from "node:path";
 
 import { describe, expect, it } from "vitest";
 
+import eocReview from "../../analysis/fp_official_alias_pass/EOC01M.json";
+import hotReviewAudit from "../../analysis/fp_official_alias_pass/HOT01M.json";
+import sscReview from "../../analysis/fp_official_alias_pass/SSC01M.json";
+import curatedAliases from "../../data/curated/occupation-aliases.json";
 import {
   ProgramOfficialAliasReviewSchema,
+  TARGET_OCCUPATIONS_BY_PROGRAM,
   type ProgramOfficialAliasReview,
 } from "../../data/schemas/fpOfficialAliasPass";
 import {
   coalesceAcceptedAliasSupports,
+  canonicalAliasIdentity,
   computeFpOfficialAliasPass,
   validatePinnedBaselineResourceFile,
   parseAliasPassCliArguments,
@@ -496,5 +502,35 @@ describe("FP official alias pass validation", () => {
     } finally {
       await rm(directory, { recursive: true, force: true });
     }
+  });
+
+  it("keeps published target aliases in exact audited accepted parity", () => {
+    const targetOccupationIds = new Set<string>(
+      Object.values(TARGET_OCCUPATIONS_BY_PROGRAM).flat(),
+    );
+    const accepted = [hotReviewAudit, sscReview, eocReview]
+      .flatMap(({ reviews }) => reviews)
+      .filter(
+        (
+          review,
+        ): review is (typeof hotReviewAudit.reviews)[number] & {
+          disposition: "accepted";
+        } => review.disposition === "accepted",
+      )
+      .map(({ alias, occupationId }) => ({ alias, occupationId }))
+      .toSorted((left, right) =>
+        canonicalAliasIdentity(left).localeCompare(
+          canonicalAliasIdentity(right),
+        ),
+      );
+    const published = curatedAliases
+      .filter(({ occupationId }) => targetOccupationIds.has(occupationId))
+      .map(({ alias, occupationId }) => ({ alias, occupationId }));
+
+    expect(published).toEqual(accepted);
+    expect(accepted).not.toContainEqual({
+      alias: "Ayudantes de dentista",
+      occupationId: "occupation:cno11:5629",
+    });
   });
 });

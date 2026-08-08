@@ -1,0 +1,29 @@
+{
+  "schemaVersion": "1.0.0",
+  "baselineSnapshotId": "20260808215403108-add4c517860c",
+  "acceptedAliasCount": 10,
+  "rejectedAliasCount": 44,
+  "programs": [
+    {
+      "programKey": "HOT01M",
+      "beforeOfferCount": 0,
+      "afterOfferCount": 0,
+      "newlyReachedOfferIds": []
+    },
+    {
+      "programKey": "SSC01M",
+      "beforeOfferCount": 0,
+      "afterOfferCount": 0,
+      "newlyReachedOfferIds": []
+    },
+    {
+      "programKey": "EOC01M",
+      "beforeOfferCount": 0,
+      "afterOfferCount": 0,
+      "newlyReachedOfferIds": []
+    }
+  ],
+  "newlyReachedOfferUnionCount": 0,
+  "newlyReachedOfferUnionIds": [],
+  "nonTargetProgramDeltas": []
+}

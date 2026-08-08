@@ -1,5 +1,8 @@
 import { z } from "zod";
 
+export const FP_OFFICIAL_ALIAS_PASS_BASELINE_SNAPSHOT_ID =
+  "20260808215403108-add4c517860c";
+
 export const TARGET_ALIAS_PROGRAMS = ["HOT01M", "SSC01M", "EOC01M"] as const;
 
 export const TARGET_OCCUPATIONS_BY_PROGRAM = {
@@ -78,7 +81,7 @@ export const ProgramOfficialAliasReviewSchema = z
   .object({
     schemaVersion: z.literal("1.0.0"),
     programKey: z.enum(TARGET_ALIAS_PROGRAMS),
-    baselineSnapshotId: z.literal("20260808215403108-add4c517860c"),
+    baselineSnapshotId: z.literal(FP_OFFICIAL_ALIAS_PASS_BASELINE_SNAPSHOT_ID),
     reviews: z.array(OfficialAliasReviewSchema).min(1),
   })
   .strict();
@@ -95,7 +98,7 @@ export const ProgramAliasPassResultSchema = z
 export const FpOfficialAliasPassResultsSchema = z
   .object({
     schemaVersion: z.literal("1.0.0"),
-    baselineSnapshotId: z.literal("20260808215403108-add4c517860c"),
+    baselineSnapshotId: z.literal(FP_OFFICIAL_ALIAS_PASS_BASELINE_SNAPSHOT_ID),
     acceptedAliasCount: z.number().int().nonnegative(),
     rejectedAliasCount: z.number().int().nonnegative(),
     programs: z.array(ProgramAliasPassResultSchema).length(3),

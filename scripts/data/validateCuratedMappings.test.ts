@@ -399,7 +399,7 @@ describe("curated occupation mappings", () => {
     );
   });
 
-  it("publishes only direct EOC01M trade outputs without title-derived aliases", async () => {
+  it("publishes only EOC01M aliases accepted by the official audit", async () => {
     const curated = await loadCuratedMappingsFromDisk(process.cwd(), programs);
     const approved = loadApprovedMappings(curated);
     const eocLinks = approved.links.filter(
@@ -415,9 +415,30 @@ describe("curated occupation mappings", () => {
       "occupation:cno11:7291",
     ]);
     expect(
-      approved.aliases.filter((alias) =>
-        eocOccupationIds.includes(alias.occupationId),
-      ),
-    ).toEqual([]);
+      approved.aliases
+        .filter((alias) => eocOccupationIds.includes(alias.occupationId))
+        .map(({ alias, occupationId }) => ({ alias, occupationId })),
+    ).toEqual([
+      {
+        alias: "Impermeabilizadores de terrazas",
+        occupationId: "occupation:cno11:7193",
+      },
+      {
+        alias: "Instaladores de materiales de impermeabilización en edificios",
+        occupationId: "occupation:cno11:7193",
+      },
+      {
+        alias: "Instaladores de sistemas de impermeabilización en edificios",
+        occupationId: "occupation:cno11:7193",
+      },
+      {
+        alias: "Pavimentadores a base de hormigón",
+        occupationId: "occupation:cno11:7111",
+      },
+      {
+        alias: "Pavimentadores con adoquines",
+        occupationId: "occupation:cno11:7240",
+      },
+    ]);
   });
 });
