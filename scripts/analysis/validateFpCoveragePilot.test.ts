@@ -296,7 +296,7 @@ function validate(
 
 function aggregationProvenance() {
   return {
-    aggregatedAt: "2026-08-08T20:12:45.473Z",
+    aggregatedAt: "2026-08-08T20:12:45.4737711Z",
     timingProvenance: [
       {
         programKey: "SAN21",
@@ -326,7 +326,7 @@ function aggregationProvenance() {
         programKey: "COM01M",
         reviewedCommit: "51af0ce7f623bbb07fdf66998624503d4da2a407",
         reviewedCommitAt: "2026-08-08T20:07:42.000Z",
-        upperCompletionBoundAt: "2026-08-08T20:12:45.473Z",
+        upperCompletionBoundAt: "2026-08-08T20:12:45.4737711Z",
       },
     ],
   };
@@ -348,6 +348,18 @@ describe("validateFpCoveragePilotResults", () => {
     malformed.aggregation!.timingProvenance[0]!.reviewedCommitAt =
       "2026-08-08T17:32:41.000Z";
     expect(() => validate(malformed)).toThrow(/Git timestamp/i);
+
+    const inflated = clone(candidate);
+    inflated.aggregation!.aggregatedAt = "2026-08-08T20:13:45.4737711Z";
+    inflated.aggregation!.timingProvenance[4]!.upperCompletionBoundAt =
+      "2026-08-08T20:13:45.4737711Z";
+    expect(() => validate(inflated)).toThrow(/aggregation start/i);
+
+    const beforeCompletion = clone(candidate);
+    beforeCompletion.attempts.find(
+      (attempt) => attempt.programKey === "COM01M",
+    )!.completedAt = "2026-08-08T20:07:43.000Z";
+    expect(() => validate(beforeCompletion)).toThrow(/Terminal attempt/i);
   });
 
   it("publishes the reviewed SAN21 CNO outputs in the manifest-addressed snapshot", () => {

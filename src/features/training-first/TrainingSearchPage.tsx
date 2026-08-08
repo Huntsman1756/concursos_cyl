@@ -2,8 +2,10 @@ import { useEffect, useMemo, useState } from "react";
 import type { FormEvent } from "react";
 import { useNavigate } from "react-router-dom";
 import type { TrainingProgram } from "../../../data/schemas/generated";
+import type { MappingCoverage } from "../../../data/schemas/curatedMappings";
 import {
   loadFoundationResources,
+  loadMappingCoverage,
   loadManifest,
 } from "../../data/generatedDataClient";
 import { trainingLevelLabel } from "../../domain/trainingPresentation";
@@ -24,6 +26,7 @@ export function TrainingSearchPage() {
   const navigate = useNavigate();
   const [programs, setPrograms] = useState<TrainingProgram[]>([]);
   const [programKey, setProgramKey] = useState("");
+  const [coverage, setCoverage] = useState<MappingCoverage[]>([]);
   const [province, setProvince] = useState("");
   const [status, setStatus] = useState<"loading" | "ready" | "failed">(
     "loading",
@@ -32,10 +35,14 @@ export function TrainingSearchPage() {
   useEffect(() => {
     let active = true;
     void loadManifest()
-      .then((manifest) => loadFoundationResources(manifest))
-      .then((resources) => {
+      .then(async (manifest) => ({
+        resources: await loadFoundationResources(manifest),
+        coverage: await loadMappingCoverage(manifest),
+      }))
+      .then(({ resources, coverage }) => {
         if (!active) return;
         setPrograms(resources.programs);
+        setCoverage(coverage);
         setStatus("ready");
       })
       .catch(() => {
@@ -55,6 +62,9 @@ export function TrainingSearchPage() {
   );
   const validSelection = programs.some(
     (program) => program.programKey === programKey,
+  );
+  const selectedCoverage = coverage.find(
+    (row) => row.scope === "program" && row.programKey === programKey,
   );
 
   function submit(event: FormEvent<HTMLFormElement>) {
@@ -103,6 +113,13 @@ export function TrainingSearchPage() {
               ))}
             </select>
           </div>
+          {selectedCoverage !== undefined && (
+            <p role="status" aria-live="polite">
+              {selectedCoverage.coverageStatus === "reviewed"
+                ? `Cobertura revisada: ${selectedCoverage.approvedMappings} ocupaciones CNO.`
+                : "Cobertura revisada no disponible para este ciclo."}
+            </p>
+          )}
           <div className="form-field">
             <label htmlFor="training-province">Provincia (opcional)</label>
             <select

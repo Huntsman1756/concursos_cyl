@@ -1,6 +1,11 @@
 import { readFile } from "node:fs/promises";
 import { resolve } from "node:path";
 import { pathToFileURL } from "node:url";
+import {
+  MappingCoverageResourceSchema,
+  type MappingCoverage,
+} from "../../data/schemas/curatedMappings";
+import { GeneratedManifestSchema } from "../../data/schemas/generated";
 
 import {
   summarizeFpCoveragePilotResults,
@@ -15,6 +20,7 @@ function oneDecimal(value: number): string {
 /** Renders the checked-in report from validated machine-readable pilot inputs. */
 export function renderFpCoveragePilotReport(
   results: FpCoveragePilotResults,
+  coverage: readonly MappingCoverage[],
 ): string {
   const summary = summarizeFpCoveragePilotResults(results);
   const completed = summary.terminalCounts.completed;
@@ -24,6 +30,34 @@ export function renderFpCoveragePilotReport(
     summary.marginalOffersReached / (summary.modeledActiveWorkMinutes / 60);
   const lowerWallOffersPerHour = summary.marginalOffersReached / upperHours;
   const upperWallOffersPerHour = summary.marginalOffersReached / lowerHours;
+  const reviewedKeys = coverage
+    .filter(
+      (row) => row.scope === "program" && row.coverageStatus === "reviewed",
+    )
+    .map((row) => row.programKey);
+  const zeroPrograms = results.attempts
+    .filter(
+      (attempt) =>
+        attempt.state === "completed" &&
+        attempt.snapshotCoverage?.status === "verified" &&
+        attempt.snapshotCoverage.newlyReachedOfferCount === 0,
+    )
+    .map((attempt) => attempt.programKey);
+  const com = results.attempts.find(
+    (attempt) => attempt.programKey === "COM01M",
+  )!;
+  const comCoverage = coverage.find(
+    (row) => row.scope === "program" && row.programKey === "COM01M",
+  );
+  if (
+    !reviewedKeys.includes("SAN21") ||
+    com.state !== "deferred" ||
+    comCoverage?.coverageStatus === "reviewed"
+  ) {
+    throw new Error(
+      "Public coverage does not agree with validated pilot results.",
+    );
+  }
 
   return `# Resultados del piloto de cobertura FP
 
@@ -39,9 +73,9 @@ No se infiere una tasa estable para todo el catálogo a partir de cinco intentos
 
 ## Cobertura publicada y límites
 
-La cobertura revisada pública incluye las dos claves oficiales de entrega de Desarrollo de Aplicaciones Web (IFC03S e IFC03SD) y SAN21, HOT01M, SSC01M y EOC01M. La interfaz la deriva de \`mapping-coverage.json\` direccionado por el manifiesto; no mantiene una lista paralela. COM01M permanece diferido y se muestra como cobertura no disponible, sin relación, alias, ocupación ni afirmación pública revisada.
+La cobertura revisada pública incluye ${reviewedKeys.join(", ")}. La interfaz la deriva de \`mapping-coverage.json\` direccionado por el manifiesto; no mantiene una lista paralela. COM01M permanece diferido y se muestra como cobertura no disponible, sin relación, alias, ocupación ni afirmación pública revisada.
 
-SAN21 es el único ciclo del piloto con alcance marginal en la instantánea: 43 ofertas mediante la unión de relaciones aceptadas. HOT01M, SSC01M y EOC01M tienen relaciones oficiales aprobadas, pero 0 ofertas marginales cada uno porque no se admitieron alias sin evidencia oficial suficiente. Cero no equivale a ausencia de empleo fuera de la instantánea.
+SAN21 es el único ciclo del piloto con alcance marginal en la instantánea: ${summary.marginalOffersReached} ofertas mediante la unión de relaciones aceptadas. ${zeroPrograms.join(", ")} tienen relaciones oficiales aprobadas, pero 0 ofertas marginales cada uno porque no se admitieron alias sin evidencia oficial suficiente. Cero no equivale a ausencia de empleo fuera de la instantánea.
 
 ## No finalización y siguiente tramo
 
@@ -53,14 +87,36 @@ El siguiente trabajo recomendado no es abrir más ciclos de forma ciega. Primero
 
 async function checkRenderedReport(): Promise<void> {
   const results = await validateFpCoveragePilotResultsFile();
-  const expected = renderFpCoveragePilotReport(results);
+  const manifest = GeneratedManifestSchema.parse(
+    JSON.parse(
+      await readFile(
+        resolve(process.cwd(), "public", "data", "v1", "manifest.json"),
+        "utf8",
+      ),
+    ),
+  );
+  const coverage = MappingCoverageResourceSchema.parse(
+    JSON.parse(
+      await readFile(
+        resolve(
+          process.cwd(),
+          "public",
+          ...manifest.resourceSnapshots.mappingCoverage.resourcePath
+            .slice(1)
+            .split("/"),
+        ),
+        "utf8",
+      ),
+    ),
+  );
+  const expected = renderFpCoveragePilotReport(results, coverage);
   const reportPath = resolve(
     process.cwd(),
     "analysis",
     "fp_coverage_pilot_results.md",
   );
   const actual = (await readFile(reportPath, "utf8")).replace(/\r\n/gu, "\n");
-  if (actual !== expected) {
+  if (actual.trim() !== expected.trim()) {
     throw new Error(
       "FP coverage pilot report is not the validated rendered output.",
     );

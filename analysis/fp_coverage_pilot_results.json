@@ -1311,7 +1311,7 @@
     }
   ],
   "aggregation": {
-    "aggregatedAt": "2026-08-08T20:12:45.473Z",
+    "aggregatedAt": "2026-08-08T20:12:45.4737711Z",
     "timingProvenance": [
       {
         "programKey": "SAN21",
@@ -1341,7 +1341,7 @@
         "programKey": "COM01M",
         "reviewedCommit": "51af0ce7f623bbb07fdf66998624503d4da2a407",
         "reviewedCommitAt": "2026-08-08T20:07:42.000Z",
-        "upperCompletionBoundAt": "2026-08-08T20:12:45.473Z"
+        "upperCompletionBoundAt": "2026-08-08T20:12:45.4737711Z"
       }
     ]
   }

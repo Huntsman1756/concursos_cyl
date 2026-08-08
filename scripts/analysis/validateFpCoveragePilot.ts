@@ -384,6 +384,7 @@ const COM01M_CLASSIFICATION_QUOTES = {
 
 const EOC01M_FAMILY_PILOT_SIGNAL = 42;
 const EOC01M_EARLIER_TITLE_SIGNAL = 39;
+const TASK_7_AGGREGATION_START = "2026-08-08T20:12:45.4737711Z";
 
 type PilotAttempt = z.infer<typeof PilotAttemptSchema>;
 type SnapshotCoverage = z.infer<typeof SnapshotCoverageSchema>;
@@ -446,6 +447,10 @@ function assertAggregation(results: FpCoveragePilotResults): void {
     aggregation !== undefined,
     "Terminal pilot results require aggregation timing provenance.",
   );
+  assert(
+    aggregation.aggregatedAt === TASK_7_AGGREGATION_START,
+    "Aggregation start must equal the immutable Task 7 aggregation start.",
+  );
   const timingByProgram = new Map(
     aggregation.timingProvenance.map((timing) => [timing.programKey, timing]),
   );
@@ -474,10 +479,13 @@ function assertAggregation(results: FpCoveragePilotResults): void {
       `Git timestamp for ${attempt.programKey} does not match reviewed commit provenance.`,
     );
     const startedAt = new Date(attempt.startedAt).getTime();
+    const completedAt = new Date(attempt.completedAt!).getTime();
     const reviewedAt = new Date(timing.reviewedCommitAt).getTime();
     const upperBound = new Date(timing.upperCompletionBoundAt).getTime();
     assert(
-      startedAt <= reviewedAt && reviewedAt <= upperBound,
+      startedAt <= completedAt &&
+        completedAt <= reviewedAt &&
+        reviewedAt <= upperBound,
       `Reviewed commit timing bounds are invalid for ${attempt.programKey}.`,
     );
     const nextAttempt = results.attempts[index + 1];
@@ -486,6 +494,22 @@ function assertAggregation(results: FpCoveragePilotResults): void {
     assert(
       timing.upperCompletionBoundAt === expectedUpperBound,
       `Upper completion bound for ${attempt.programKey} must be the next attempt start or aggregation start.`,
+    );
+    const latestFirstParentCommit = execFileSync(
+      "git",
+      [
+        "log",
+        "--first-parent",
+        "-1",
+        "--format=%H",
+        `--after=${attempt.startedAt}`,
+        `--before=${timing.upperCompletionBoundAt}`,
+      ],
+      { cwd: process.cwd(), encoding: "utf8" },
+    ).trim();
+    assert(
+      latestFirstParentCommit === timing.reviewedCommit,
+      `Reviewed commit for ${attempt.programKey} must be the latest first-parent commit in its attempt interval.`,
     );
   });
 }

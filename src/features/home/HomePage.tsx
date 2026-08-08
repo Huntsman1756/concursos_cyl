@@ -133,6 +133,8 @@ export function HomePage() {
           className="coverage-panel"
           aria-label="Disponible ahora"
           role="region"
+          aria-live="polite"
+          aria-busy={coverage.status === "loading"}
         >
           <div className="coverage-panel__heading">
             <h2>Disponible ahora</h2>

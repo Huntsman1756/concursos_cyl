@@ -21,13 +21,54 @@ function responseFor(data: unknown): Response {
 }
 
 function installFoundationFetch(programs: unknown[] = [program]): void {
-  const manifest = currentManifestFixture();
+  const baseManifest = currentManifestFixture();
+  const manifest = {
+    ...baseManifest,
+    resourceSnapshots: {
+      ...baseManifest.resourceSnapshots,
+      mappingCoverage: {
+        ...baseManifest.resourceSnapshots.programs,
+        resourcePath: "/data/v1/snapshots/build-1/mapping-coverage.json",
+      },
+    },
+  };
   const resources = new Map<string, unknown>([
     ["/data/v1/manifest.json", manifest],
     [manifest.resourceSnapshots.programs.resourcePath, programs],
     [manifest.resourceSnapshots.centers.resourcePath, []],
     [manifest.resourceSnapshots.trainingOfferings.resourcePath, []],
     [manifest.resourceSnapshots.jobOffers.resourcePath, []],
+    [
+      manifest.resourceSnapshots.mappingCoverage.resourcePath,
+      [
+        {
+          scope: "program",
+          programKey: "IFC03S",
+          programTitle: "Desarrollo de Aplicaciones Web",
+          familyCode: "IFC",
+          familyName: "Informática y Comunicaciones",
+          approvedMappings: 1,
+          draftMappings: 0,
+          rejectedMappings: 0,
+          uncoveredPrograms: 0,
+          coverageStatus: "reviewed",
+          coverageNote: "Revisada.",
+        },
+        {
+          scope: "program",
+          programKey: "COM01M",
+          programTitle: "Actividades Comerciales",
+          familyCode: "COM",
+          familyName: "Comercio y Marketing",
+          approvedMappings: 0,
+          draftMappings: 0,
+          rejectedMappings: 0,
+          uncoveredPrograms: 1,
+          coverageStatus: "uncovered",
+          coverageNote: "No disponible.",
+        },
+      ],
+    ],
   ]);
   vi.stubGlobal(
     "fetch",
@@ -49,6 +90,30 @@ afterEach(() => {
 });
 
 describe("training-first search", () => {
+  it("shows reviewed and unavailable coverage before submitting an official program", async () => {
+    installFoundationFetch([
+      program,
+      {
+        ...program,
+        programKey: "COM01M",
+        programTitle: "Actividades Comerciales",
+      },
+    ]);
+    const user = userEvent.setup();
+    render(
+      <MemoryRouter initialEntries={["/desde-fp"]}>
+        <AppRoutes />
+      </MemoryRouter>,
+    );
+    const select = await screen.findByRole("combobox", {
+      name: "Ciclo de Formación Profesional",
+    });
+    await user.selectOptions(select, "COM01M");
+    expect(screen.getByRole("status")).toHaveTextContent(
+      /cobertura revisada no disponible/i,
+    );
+    expect(screen.getByRole("button", { name: "Ver ofertas" })).toBeEnabled();
+  });
   it("announces loading while the official programs are pending", () => {
     vi.stubGlobal(
       "fetch",

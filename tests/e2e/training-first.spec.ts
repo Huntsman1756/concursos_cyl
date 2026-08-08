@@ -53,6 +53,14 @@ test("live DAW results name the dated zero-match snapshot without claiming there
   );
 });
 
+test("COM01M is explicitly unavailable before and after submit", async ({ page }) => {
+  await page.goto("/desde-fp");
+  await page.getByRole("combobox", { name: "Ciclo de Formación Profesional" }).selectOption("COM01M");
+  await expect(page.getByRole("status")).toContainText(/cobertura revisada no disponible/i);
+  await page.getByRole("button", { name: "Ver ofertas" }).click();
+  await expect(page.getByText(/Aún no hay una relación revisada/i)).toBeVisible();
+});
+
 test("the intercepted full DAW card makes a declared gap, action, filter, and evidence keyboard-accessible", async ({
   page,
 }) => {
