@@ -1,6 +1,6 @@
 import { cleanup, render, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { MemoryRouter } from "react-router-dom";
+import { MemoryRouter, useLocation } from "react-router-dom";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import occupationAliases from "../../../data/curated/occupation-aliases.json";
 import occupations from "../../../data/curated/occupations.json";
@@ -108,6 +108,24 @@ afterEach(() => {
 });
 
 describe("TrainingResultsPage", () => {
+  it("does not activate an unpublished-requirement filter from arbitrary URL parameters", async () => {
+    installResultsFetch();
+    render(
+      <MemoryRouter
+        initialEntries={[
+          "/desde-fp/IFC03S?publication=not-published&category=experience&value=12",
+        ]}
+      >
+        <AppRoutes />
+      </MemoryRouter>,
+    );
+
+    await screen.findByText(
+      "No hay ofertas relacionadas en la instantánea del 31 de julio de 2026.",
+    );
+    expect(screen.queryByText(/Filtro activo/)).not.toBeInTheDocument();
+  });
+
   it("reports missing audited coverage instead of inventing a relationship", async () => {
     installResultsFetch({ links: [] });
     render(
@@ -279,7 +297,7 @@ describe("TrainingResultsPage", () => {
     ).not.toBeInTheDocument();
   });
 
-  it("executes an exact unpublished-requirement filter through the URL", async () => {
+  it("applies the intact unpublished-requirement action in memory and preserves province", async () => {
     const sourceQuote = "Se requiere experiencia mínima de un año.";
     const firstOfferId = "offer:with-experience";
     const sourceSnapshot = {
@@ -342,9 +360,20 @@ describe("TrainingResultsPage", () => {
       requirements: [{ offerId: firstOfferId, requirements: [requirement] }],
     });
     const user = userEvent.setup();
-    render(
-      <MemoryRouter initialEntries={["/desde-fp/IFC03S"]}>
+    function LocationProbe() {
+      const location = useLocation();
+      return (
+        <output aria-label="Dirección actual">
+          {location.pathname}
+          {location.search}
+        </output>
+      );
+    }
+
+    const view = render(
+      <MemoryRouter initialEntries={["/desde-fp/IFC03S?province=León"]}>
         <AppRoutes />
+        <LocationProbe />
       </MemoryRouter>,
     );
 
@@ -353,14 +382,10 @@ describe("TrainingResultsPage", () => {
         name: `No lo tengo: ${sourceQuote}`,
       }),
     );
-    const filterLink = await screen.findByRole("link", {
+    const filterButton = await screen.findByRole("button", {
       name: "Ver ofertas relacionadas donde no se publica este requisito",
     });
-    expect(filterLink).toHaveAttribute(
-      "href",
-      "/desde-fp/IFC03S?publication=not-published&category=experience&value=12",
-    );
-    await user.click(filterLink);
+    await user.click(filterButton);
 
     expect(
       await screen.findByText(
@@ -375,5 +400,44 @@ describe("TrainingResultsPage", () => {
     expect(
       screen.getByRole("article", { name: "Programador web junior" }),
     ).toBeVisible();
+    expect(screen.getByText("Zona elegida: León")).toBeVisible();
+    expect(screen.getByLabelText("Dirección actual")).toHaveTextContent(
+      "/desde-fp/IFC03S?province=León",
+    );
+
+    await user.click(screen.getByRole("button", { name: "Quitar filtro" }));
+    expect(
+      screen.getByRole("article", {
+        name: "Programador web con experiencia",
+      }),
+    ).toBeVisible();
+    expect(screen.queryByText(/Filtro activo/)).not.toBeInTheDocument();
+    expect(screen.getByLabelText("Dirección actual")).toHaveTextContent(
+      "/desde-fp/IFC03S?province=León",
+    );
+
+    await user.click(
+      screen.getByRole("button", {
+        name: "Ver ofertas relacionadas donde no se publica este requisito",
+      }),
+    );
+    expect(await screen.findByText(/Filtro activo/)).toBeVisible();
+
+    view.unmount();
+    installResultsFetch({
+      offers,
+      requirements: [{ offerId: firstOfferId, requirements: [requirement] }],
+    });
+    render(
+      <MemoryRouter initialEntries={["/desde-fp/IFC03S?province=León"]}>
+        <AppRoutes />
+      </MemoryRouter>,
+    );
+    expect(
+      await screen.findByRole("article", {
+        name: "Programador web con experiencia",
+      }),
+    ).toBeVisible();
+    expect(screen.queryByText(/Filtro activo/)).not.toBeInTheDocument();
   });
 });

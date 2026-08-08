@@ -21,7 +21,8 @@ import {
   type OfferMatch,
 } from "../../domain/offerMatching";
 import type { OfferPublishedRequirements } from "../../domain/requirements";
-import { RequirementCategorySchema } from "../../domain/requirements";
+import type { ReliableAction } from "../../domain/actionEngine";
+import { ReliableActionSchema } from "../../domain/actionEngine";
 import { useDecisionSession } from "../../domain/session";
 import { trainingLevelLabel } from "../../domain/trainingPresentation";
 import { OfferEvidenceCard } from "./OfferEvidenceCard";
@@ -29,6 +30,7 @@ import { OfferEvidenceCard } from "./OfferEvidenceCard";
 interface ReadyResults {
   status: "ready";
   program: TrainingProgram;
+  programs: TrainingProgram[];
   manifest: LoadableGeneratedManifest;
   offers: JobOffer[];
   requirements: OfferPublishedRequirements[];
@@ -64,17 +66,10 @@ export function TrainingResultsPage() {
   const { programKey = "" } = useParams();
   const [searchParams] = useSearchParams();
   const selectedProvince = searchParams.get("province");
-  const publicationFilter = useMemo(() => {
-    const filterCategory = RequirementCategorySchema.safeParse(
-      searchParams.get("category"),
-    );
-    const filterValue = searchParams.get("value");
-    return searchParams.get("publication") === "not-published" &&
-      filterCategory.success &&
-      filterValue !== null
-      ? { category: filterCategory.data, value: filterValue }
-      : null;
-  }, [searchParams]);
+  const [publicationFilter, setPublicationFilter] = useState<Extract<
+    ReliableAction,
+    { actionType: "explore_unpublished_requirement" }
+  > | null>(null);
   const session = useDecisionSession();
   const [state, setState] = useState<ResultsState>({ status: "loading" });
 
@@ -105,6 +100,7 @@ export function TrainingResultsPage() {
         return {
           status: "ready" as const,
           program,
+          programs: foundation.programs,
           manifest,
           offers: foundation.jobOffers,
           requirements,
@@ -130,8 +126,9 @@ export function TrainingResultsPage() {
     return ordered.filter((match) =>
       match.requirements.every(
         (requirement) =>
-          requirement.category !== publicationFilter.category ||
-          String(requirement.normalizedValue) !== publicationFilter.value,
+          requirement.category !== publicationFilter.filter.category ||
+          requirement.normalizedValue !==
+            publicationFilter.filter.normalizedValue,
       ),
     );
   }, [publicationFilter, session.answers, state]);
@@ -165,6 +162,21 @@ export function TrainingResultsPage() {
     state.manifest.qualityStatus === "stale" ||
     state.manifest.resourceSnapshots.jobOffers.qualityStatus === "stale";
 
+  function applyUnpublishedRequirementFilter(
+    action: Extract<
+      ReliableAction,
+      { actionType: "explore_unpublished_requirement" }
+    >,
+  ): void {
+    const issuedAction = ReliableActionSchema.parse(action);
+    if (issuedAction.actionType !== "explore_unpublished_requirement") {
+      throw new Error(
+        "Issued action is not an unpublished-requirement filter.",
+      );
+    }
+    setPublicationFilter(action);
+  }
+
   return (
     <section className="training-page">
       <header className="training-page__header">
@@ -193,9 +205,13 @@ export function TrainingResultsPage() {
             La ausencia en el texto publicado no demuestra que el requisito no
             exista.
           </p>
-          <Link to={`/desde-fp/${encodeURIComponent(programKey)}`}>
+          <button
+            className="secondary-button"
+            type="button"
+            onClick={() => setPublicationFilter(null)}
+          >
             Quitar filtro
-          </Link>
+          </button>
         </div>
       )}
       {!hasApprovedRelationship ? (
@@ -243,7 +259,7 @@ export function TrainingResultsPage() {
             return (
               <OfferEvidenceCard
                 key={match.offerId}
-                programKey={programKey}
+                programs={state.programs}
                 offer={offer}
                 match={match}
                 evidenceState={evidenceState}
@@ -253,6 +269,9 @@ export function TrainingResultsPage() {
                 onAnswer={session.answerRequirement}
                 onAddChecklist={session.addChecklistItem}
                 onRemoveChecklist={session.removeChecklistItem}
+                onExploreUnpublishedRequirement={
+                  applyUnpublishedRequirementFilter
+                }
               />
             );
           })}

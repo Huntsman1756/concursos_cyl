@@ -1,4 +1,7 @@
-import type { JobOffer } from "../../../data/schemas/generated";
+import type {
+  JobOffer,
+  TrainingProgram,
+} from "../../../data/schemas/generated";
 import { ActionPanel } from "../../components/ActionPanel";
 import { EvidenceDisclosure } from "../../components/EvidenceDisclosure";
 import { RequirementRow } from "../../components/RequirementRow";
@@ -14,7 +17,7 @@ import type { PublishedRequirement } from "../../domain/requirements";
 import type { DecisionSession } from "../../domain/session";
 
 export interface OfferEvidenceCardProps {
-  programKey: string;
+  programs: readonly TrainingProgram[];
   offer: JobOffer;
   match: OfferMatch;
   evidenceState: EvidenceState;
@@ -27,6 +30,12 @@ export interface OfferEvidenceCardProps {
   ) => void;
   onAddChecklist: DecisionSession["addChecklistItem"];
   onRemoveChecklist: DecisionSession["removeChecklistItem"];
+  onExploreUnpublishedRequirement: (
+    action: Extract<
+      ReliableAction,
+      { actionType: "explore_unpublished_requirement" }
+    >,
+  ) => void;
 }
 
 function relationshipCopy(match: OfferMatch): string {
@@ -117,11 +126,14 @@ export function OfferEvidenceCard(props: OfferEvidenceCardProps) {
       <div className="evidence-step">
         <h3>Siguiente acción</h3>
         <ActionPanel
-          programKey={props.programKey}
+          programs={props.programs}
           actions={props.actions}
           checklist={props.checklist}
           onAddChecklist={props.onAddChecklist}
           onRemoveChecklist={props.onRemoveChecklist}
+          onExploreUnpublishedRequirement={
+            props.onExploreUnpublishedRequirement
+          }
         />
       </div>
     </article>

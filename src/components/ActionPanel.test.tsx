@@ -11,6 +11,23 @@ import {
 import { useDecisionSession } from "../domain/session";
 import { ActionPanel } from "./ActionPanel";
 
+const programs = [
+  {
+    programKey: "IFC03S",
+    programTitle: "Desarrollo de Aplicaciones Web",
+    level: "higher",
+    familyCode: "IFC",
+    familyName: "Informática y Comunicaciones",
+  },
+  {
+    programKey: "IFC03SD",
+    programTitle: "Desarrollo de Aplicaciones Web (distancia)",
+    level: "higher",
+    familyCode: "IFC",
+    familyName: "Informática y Comunicaciones",
+  },
+] as const;
+
 function offer(id: string): JobOffer {
   return {
     id,
@@ -75,18 +92,56 @@ describe("ActionPanel integration", () => {
     render(
       <MemoryRouter>
         <ActionPanel
-          programKey="IFC03S"
+          programs={programs}
           actions={actions}
           checklist={[]}
           onAddChecklist={() => undefined}
           onRemoveChecklist={() => undefined}
+          onExploreUnpublishedRequirement={() => undefined}
         />
       </MemoryRouter>,
     );
 
     expect(
-      screen.getByRole("link", { name: "Ver ruta formativa y centros" }),
+      screen.getByRole("link", {
+        name: "Desarrollo de Aplicaciones Web — Grado superior · IFC03S",
+      }),
     ).toHaveAttribute("href", "/formacion/IFC03S");
+    expect(
+      screen.getByRole("link", {
+        name: "Desarrollo de Aplicaciones Web (distancia) — Grado superior · IFC03SD",
+      }),
+    ).toHaveAttribute("href", "/formacion/IFC03SD");
+  });
+
+  it("does not silently omit an issued training route without official metadata", () => {
+    const jobOffer = offer("offer:missing-program");
+    const qualification = requirement(jobOffer.id, {
+      category: "qualification_or_specialization",
+      normalizedValue: "Técnico/a Superior en Desarrollo de Aplicaciones Web",
+      parserRule: "qualification.official_title",
+    });
+    const actions = deriveActions({
+      offer: jobOffer,
+      evidenceState: "declared_explicit_gap",
+      requirements: [qualification],
+      answers: { [qualification.id]: "lacks" },
+    });
+
+    expect(() =>
+      render(
+        <MemoryRouter>
+          <ActionPanel
+            programs={[programs[0]]}
+            actions={actions}
+            checklist={[]}
+            onAddChecklist={() => undefined}
+            onRemoveChecklist={() => undefined}
+            onExploreUnpublishedRequirement={() => undefined}
+          />
+        </MemoryRouter>,
+      ),
+    ).toThrow("Missing official training program metadata for IFC03SD.");
   });
 
   it("passes the intact engine-issued checklist action into session memory", async () => {
@@ -107,11 +162,12 @@ describe("ActionPanel integration", () => {
       });
       return (
         <ActionPanel
-          programKey="IFC03S"
+          programs={programs}
           actions={actions}
           checklist={session.checklist}
           onAddChecklist={session.addChecklistItem}
           onRemoveChecklist={session.removeChecklistItem}
+          onExploreUnpublishedRequirement={() => undefined}
         />
       );
     }
@@ -135,6 +191,49 @@ describe("ActionPanel integration", () => {
     ).toHaveTextContent(
       "Comprobar «Requisito certificate.professional_registration» en la oferta oficial",
     );
+  });
+
+  it("passes the intact engine-issued unpublished-requirement action to its handler", async () => {
+    const jobOffer = offer("offer:unpublished");
+    const experience = requirement(jobOffer.id, {
+      category: "experience",
+      normalizedValue: 12,
+      parserRule: "experience.years",
+    });
+    const actions = deriveActions({
+      offer: jobOffer,
+      evidenceState: "declared_explicit_gap",
+      requirements: [experience],
+      answers: { [experience.id]: "lacks" },
+    });
+    const engineAction = actions.find(
+      (action) => action.actionType === "explore_unpublished_requirement",
+    );
+    let receivedAction: typeof engineAction;
+
+    const user = userEvent.setup();
+    render(
+      <MemoryRouter>
+        <ActionPanel
+          programs={programs}
+          actions={actions}
+          checklist={[]}
+          onAddChecklist={() => undefined}
+          onRemoveChecklist={() => undefined}
+          onExploreUnpublishedRequirement={(action) => {
+            receivedAction = action;
+          }}
+        />
+      </MemoryRouter>,
+    );
+    await user.click(
+      screen.getByRole("button", {
+        name: "Ver ofertas relacionadas donde no se publica este requisito",
+      }),
+    );
+
+    expect(engineAction).toBeDefined();
+    expect(receivedAction).toBe(engineAction);
   });
 
   it("suppresses a province-change action for remote evidence but keeps it for on-site evidence", () => {
@@ -172,20 +271,22 @@ describe("ActionPanel integration", () => {
       <MemoryRouter>
         <section aria-label="Remoto">
           <ActionPanel
-            programKey="IFC03S"
+            programs={programs}
             actions={remoteActions}
             checklist={[]}
             onAddChecklist={noOp}
             onRemoveChecklist={noOp}
+            onExploreUnpublishedRequirement={noOp}
           />
         </section>
         <section aria-label="Presencial">
           <ActionPanel
-            programKey="IFC03S"
+            programs={programs}
             actions={onSiteActions}
             checklist={[]}
             onAddChecklist={noOp}
             onRemoveChecklist={noOp}
+            onExploreUnpublishedRequirement={noOp}
           />
         </section>
       </MemoryRouter>,
