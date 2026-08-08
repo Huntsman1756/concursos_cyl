@@ -499,11 +499,16 @@ The Sol reviewer verifies every CNO/output pairing and confirms no matcher-polic
 - Create: `analysis/fp_official_alias_pass_results.json`
 - Modify: `scripts/analysis/validateFpOfficialAliasPass.test.ts`
 - Modify: `scripts/data/validateCuratedMappings.test.ts`
+- Modify: `scripts/data/buildSnapshots.ts`
+- Modify: `scripts/data/buildSnapshots.test.ts`
+- Modify: `scripts/data/validatePublicDistribution.ts`
+- Modify: `scripts/data/validatePublicDistribution.test.ts`
 
 **Interfaces:**
 
 - Consumes: the three independently Sol-approved audits and Task 1’s `computeFpOfficialAliasPass`.
 - Produces: curated rows in one-to-one correspondence with accepted audits and a validated `FpOfficialAliasPassResults` with exact counts and sorted offer IDs.
+- Produces: retention/distribution options that keep baseline `20260808215403108-add4c517860c` as an immutable approved historical subset after aliases are added; current resources must still equal the complete current curated catalog.
 
 - [ ] **Step 1: Write RED audit/curated parity and scope tests**
 
@@ -552,13 +557,38 @@ expect(sha256(await readFile("data/curated/occupations.json"))).toBe(
 
 Add a negative case where one rejected row is copied into curated data and require `/rejected alias published/i`.
 
+Add RED retention/distribution cases before editing curated aliases:
+
+```ts
+const aliasPassBaseline = "20260808215403108-add4c517860c";
+
+expect(await retainedSnapshotDirectoryNames(outputRoot)).toContain(
+  aliasPassBaseline,
+);
+await expect(
+  assertPublicSnapshotDistribution(outputRoot, curatedWithNewAlias, {
+    historicalSnapshotDirectories: new Set([aliasPassBaseline]),
+  }),
+).resolves.toBeUndefined();
+```
+
+Then mutate one baseline alias/occupation/link payload and require rejection. Also prove the baseline survives two ordinary retention builds and that a non-declared older snapshot is still pruned normally.
+
 - [ ] **Step 2: Run focused tests and verify RED**
 
-Run: `rtk npx vitest run scripts/analysis/validateFpOfficialAliasPass.test.ts scripts/data/validateCuratedMappings.test.ts`
+Run: `rtk npx vitest run scripts/analysis/validateFpOfficialAliasPass.test.ts scripts/data/validateCuratedMappings.test.ts scripts/data/buildSnapshots.test.ts scripts/data/validatePublicDistribution.test.ts`
 
 Expected: FAIL when at least one audit is accepted because curated aliases/results do not yet agree; if all reviews are rejected, FAIL because the results artifact is missing.
 
-- [ ] **Step 3: Add only accepted alias rows**
+The retention tests must also fail because the alias-pass baseline is not yet included in the historical approved-subset/retention options.
+
+- [ ] **Step 3: Pin the controlled baseline before changing curated aliases**
+
+Export `FP_OFFICIAL_ALIAS_PASS_BASELINE_SNAPSHOT_ID` from `data/schemas/fpOfficialAliasPass.ts` and use that same constant in the validator. In `buildSnapshots.ts`, centralize one historical-snapshot option that unions completed-pilot snapshot IDs with this alias-pass baseline. Pass it to normal publication validation, quarantine recovery, rollback validation, and retained-directory selection. In `validatePublicDistribution.ts`, keep historical semantics unchanged: a declared historical snapshot may omit later approved aliases, but every occupation, alias, and training link it does contain must still be an identical approved payload. Do not exempt offers, schemas, rejected rows, mutated rows, or arbitrary directories.
+
+Run the focused retention/distribution tests and require PASS before touching `occupation-aliases.json`.
+
+- [ ] **Step 4: Add only accepted alias rows**
 
 Construct the exact curated rows mechanically from validated accepted reviews, sort with the existing canonical alias identity, and copy the resulting JSON objects without editing their alias or occupation fields:
 
@@ -580,15 +610,15 @@ const acceptedCuratedRows = validatedReviews
 
 If `acceptedCuratedRows` is empty, leave `data/curated/occupation-aliases.json` byte-identical.
 
-- [ ] **Step 4: Generate and check the controlled results JSON**
+- [ ] **Step 5: Generate and check the controlled results JSON**
 
 Run: `rtk npm run analysis:aliases:validate -- --write-results`
 
 Expected: writes `analysis/fp_official_alias_pass_results.json` deterministically with baseline ID `20260808215403108-add4c517860c`, before count `0` for each target, exact after counts, sorted newly reached offer IDs, exact union count, and zero non-target deltas. A second run must produce no diff.
 
-- [ ] **Step 5: Run integration, curated, matcher, and pilot gates**
+- [ ] **Step 6: Run integration, curated, matcher, retention, and pilot gates**
 
-Run: `rtk npx vitest run scripts/analysis/validateFpOfficialAliasPass.test.ts scripts/data/validateCuratedMappings.test.ts src/domain/offerMatching.test.ts scripts/analysis/validateFpCoveragePilot.test.ts`
+Run: `rtk npx vitest run scripts/analysis/validateFpOfficialAliasPass.test.ts scripts/data/validateCuratedMappings.test.ts scripts/data/buildSnapshots.test.ts scripts/data/validatePublicDistribution.test.ts src/domain/offerMatching.test.ts scripts/analysis/validateFpCoveragePilot.test.ts`
 
 Run: `rtk npm run analysis:aliases:validate`
 
@@ -596,10 +626,10 @@ Run: `rtk npm run analysis:pilot:validate`
 
 Expected: all PASS. If controlled target counts remain zero, stop alias expansion here and carry the zero result forward; do not open other CNOs, programs, sources, or matching rules.
 
-- [ ] **Step 6: Commit and request two-stage Sol integration review**
+- [ ] **Step 7: Commit and request two-stage Sol integration review**
 
 ```bash
-rtk git add data/curated/occupation-aliases.json analysis/fp_official_alias_pass_results.json scripts/analysis/validateFpOfficialAliasPass.test.ts scripts/data/validateCuratedMappings.test.ts
+rtk git add data/curated/occupation-aliases.json analysis/fp_official_alias_pass_results.json data/schemas/fpOfficialAliasPass.ts scripts/analysis/validateFpOfficialAliasPass.test.ts scripts/data/validateCuratedMappings.test.ts scripts/data/buildSnapshots.ts scripts/data/buildSnapshots.test.ts scripts/data/validatePublicDistribution.ts scripts/data/validatePublicDistribution.test.ts
 rtk git commit -m "feat: integrate reviewed FP official aliases"
 ```
 
