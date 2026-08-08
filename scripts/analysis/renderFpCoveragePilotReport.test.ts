@@ -15,6 +15,14 @@ describe("renderFpCoveragePilotReport", () => {
     );
   });
 
+  it("rejects every leading, trailing, and final-newline difference", () => {
+    for (const actual of [" rendered", "rendered ", "rendered\n\n"]) {
+      expect(() => assertRenderedPilotReport(actual, "rendered\n")).toThrow(
+        /not the validated rendered/i,
+      );
+    }
+  });
+
   it("rejects terminal pilot states that disagree with public coverage", async () => {
     const results = await validateFpCoveragePilotResultsFile();
     const completedUnreviewed = structuredClone(coverage) as MappingCoverage[];

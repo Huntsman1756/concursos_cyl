@@ -19,7 +19,7 @@ export function assertRenderedPilotReport(
   actual: string,
   expected: string,
 ): void {
-  if (actual.trim() !== expected.trim()) {
+  if (actual !== expected) {
     throw new Error(
       "FP coverage pilot report is not the validated rendered output.",
     );
