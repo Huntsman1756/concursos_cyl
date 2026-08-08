@@ -10,7 +10,7 @@ La fuente oficial para incorporar indicadores salariales a SALIDA CyL es la **Es
 
 La incorporación **no requiere esperar una autorización individual previa**. Los conjuntos de EDUCAbase figuran en datos.gob.es como datos públicos descargables en CSV, PC-Axis y XLS, con el aviso legal del Ministerio como condición de uso. Además, el [régimen general estatal de reutilización](https://www.boe.es/buscar/act.php?id=BOE-A-2011-17560) permite copia, difusión, extracción, reordenación, combinación y transformación para fines comerciales y no comerciales. El producto debe atribuir la fuente, conservar la fecha de actualización, no desnaturalizar el dato y no sugerir patrocinio o apoyo institucional. Esta conclusión es de producto y cumplimiento documental, no asesoramiento jurídico.
 
-SALIDA CyL debe aplicar directamente las condiciones oficiales y utilizar las tablas específicas de FP de EDUCAbase como base jurídica y metodológica del producto.
+SALIDA CyL debe aplicar directamente las condiciones oficiales de reutilización y utilizar las tablas específicas de FP de EDUCAbase como evidencia estadística y metodológica del producto.
 
 La estadística permite comparar la **base de cotización anualizada** de graduados de FP de Grado Medio y Grado Superior por **ciclo o grupo oficial de ciclos**, cohorte y años transcurridos desde la graduación. Sin embargo, ese detalle existe únicamente a escala **nacional**. Para Castilla y León se publican datos salariales por **grado de FP**, no por ciclo ni familia; tampoco existe un cruce oficial equivalente por provincia.
 
