@@ -213,6 +213,10 @@ const manifest = {
       ...resourceSnapshot(2),
       resourcePath: snapshotPath("training-occupation-links.json"),
     },
+    mappingCoverage: {
+      ...resourceSnapshot(2),
+      resourcePath: snapshotPath("mapping-coverage.json"),
+    },
     publishedRequirements: {
       ...resourceSnapshot(1),
       resourcePath: snapshotPath("published-requirements.json"),
@@ -256,6 +260,37 @@ const resources = new Map<string, unknown>([
     ],
   ],
   [manifest.resourceSnapshots.trainingOccupationLinks.resourcePath, links],
+  [
+    manifest.resourceSnapshots.mappingCoverage.resourcePath,
+    [
+      {
+        scope: "program",
+        programKey: program.programKey,
+        programTitle: program.programTitle,
+        familyCode: program.familyCode,
+        familyName: program.familyName,
+        approvedMappings: 1,
+        draftMappings: 0,
+        rejectedMappings: 0,
+        uncoveredPrograms: 0,
+        coverageStatus: "reviewed",
+        coverageNote: "Incluye relaciones ocupacionales revisadas y citadas.",
+      },
+      {
+        scope: "program",
+        programKey: distanceProgram.programKey,
+        programTitle: distanceProgram.programTitle,
+        familyCode: distanceProgram.familyCode,
+        familyName: distanceProgram.familyName,
+        approvedMappings: 1,
+        draftMappings: 0,
+        rejectedMappings: 0,
+        uncoveredPrograms: 0,
+        coverageStatus: "reviewed",
+        coverageNote: "Incluye relaciones ocupacionales revisadas y citadas.",
+      },
+    ],
+  ],
   [
     manifest.resourceSnapshots.publishedRequirements.resourcePath,
     [{ offerId, requirements }],
