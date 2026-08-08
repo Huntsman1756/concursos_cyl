@@ -185,6 +185,35 @@ describe("validateFpCoveragePilotResults", () => {
     );
   });
 
+  it("publishes the independently evidenced SSC01M home and institutional care relationships", () => {
+    expect(
+      context.links.filter(
+        (link) =>
+          link.trainingProgramKey === "SSC01M" &&
+          link.reviewStatus === "approved",
+      ),
+    ).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          occupationId: "occupation:cno11:5710",
+          relationshipType: "official_output",
+          sourceUrl: "https://www.boe.es/eli/es/rd/2011/11/04/1593",
+          sourceQuote: "Auxiliar de ayuda a domicilio.",
+          reviewedAt: "2026-08-08",
+        }),
+        expect.objectContaining({
+          occupationId: "occupation:cno11:5629",
+          relationshipType: "reviewed_relationship",
+          sourceUrl:
+            "https://www.sepe.es/fr/SiteSepe/contenidos/COVID-19/documentos/documentacion-melilla/2021/201221-Resolucion-provisional--20-12-2021-firmada.pdf",
+          sourceQuote:
+            "Categoría: CUIDADORES DE PERSONAS CON DISCAPACIDAD (CNO 56291025)",
+          reviewedAt: "2026-08-08",
+        }),
+      ]),
+    );
+  });
+
   it("accepts real canonical evidence only when its audit fields are complete", () => {
     expect(() => validate(completedResults())).not.toThrow();
   });

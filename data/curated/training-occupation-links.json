@@ -42,6 +42,76 @@
     "mappingVersion": "1.0.0"
   },
   {
+    "trainingProgramKey": "SSC01M",
+    "occupationId": "occupation:cno11:5710",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.boe.es/eli/es/rd/2011/11/04/1593",
+    "sourceQuote": "Auxiliar de ayuda a domicilio.",
+    "reviewedAt": "2026-08-08",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "SSC01M",
+    "occupationId": "occupation:cno11:5629",
+    "relationshipType": "reviewed_relationship",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.sepe.es/fr/SiteSepe/contenidos/COVID-19/documentos/documentacion-melilla/2021/201221-Resolucion-provisional--20-12-2021-firmada.pdf",
+    "sourceQuote": "Categoría: CUIDADORES DE PERSONAS CON DISCAPACIDAD (CNO 56291025)",
+    "reviewedAt": "2026-08-08",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "SSC01M",
+    "occupationId": "occupation:cno11:5611",
+    "relationshipType": "reviewed_relationship",
+    "reviewStatus": "rejected",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+    "sourceQuote": "Auxiliares de enfermería de geriatría.",
+    "reviewedAt": "2026-08-08",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "SSC01M",
+    "occupationId": "occupation:cno11:5831",
+    "relationshipType": "reviewed_relationship",
+    "reviewStatus": "rejected",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+    "sourceQuote": "Gobernantes de hospital.",
+    "reviewedAt": "2026-08-08",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "SSC01M",
+    "occupationId": "occupation:cno11:2312",
+    "relationshipType": "reviewed_relationship",
+    "reviewStatus": "rejected",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+    "sourceQuote": "Técnicos educadores de personas discapacitadas.",
+    "reviewedAt": "2026-08-08",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "SSC01M",
+    "occupationId": "occupation:cno11:5891",
+    "relationshipType": "reviewed_relationship",
+    "reviewStatus": "rejected",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+    "sourceQuote": "Personas de compañía (sin cuidados a enfermos o dependientes).",
+    "reviewedAt": "2026-08-08",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "SSC01M",
+    "occupationId": "occupation:cno11:4424",
+    "relationshipType": "reviewed_relationship",
+    "reviewStatus": "rejected",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+    "sourceQuote": "Teleoperadores (no especializados).",
+    "reviewedAt": "2026-08-08",
+    "mappingVersion": "1.0.0"
+  },
+  {
     "trainingProgramKey": "SAN21",
     "occupationId": "occupation:cno11:5611",
     "relationshipType": "official_output",

@@ -61,6 +61,13 @@ const programs: TrainingProgram[] = [
     familyCode: "HOT",
     familyName: "HostelerÃ­a y Turismo",
   },
+  {
+    programKey: "SSC01M",
+    programTitle: "Atención a Personas en Situación de Dependencia",
+    level: "intermediate",
+    familyCode: "SSC",
+    familyName: "Servicios Socioculturales y a la Comunidad",
+  },
 ];
 
 const occupations = [
@@ -303,11 +310,19 @@ describe("curated occupation mappings", () => {
       ),
     ).toBe(true);
     expect(approved.occupations.map((item) => item.classificationCode)).toEqual(
-      ["2713", "5110", "5611", "5612"],
+      ["2713", "5110", "5611", "5612", "5629", "5710"],
     );
     expect(
       approved.links.map((item) => item.trainingProgramKey).sort(),
-    ).toEqual(["HOT01M", "IFC03S", "IFC03SD", "SAN21", "SAN21"]);
+    ).toEqual([
+      "HOT01M",
+      "IFC03S",
+      "IFC03SD",
+      "SAN21",
+      "SAN21",
+      "SSC01M",
+      "SSC01M",
+    ]);
 
     const coverage = buildMappingCoverage(programs, curated.links);
     expect(coverage).toContainEqual(

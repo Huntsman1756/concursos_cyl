@@ -42,5 +42,27 @@
     "reviewStatus": "approved",
     "reviewedAt": "2026-08-08",
     "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf"
+  },
+  {
+    "catalogVersion": "1.0.0",
+    "classificationCode": "5629",
+    "classificationSystem": "CNO-11",
+    "confirmationLabel": "Apoyo sanitario no clasificado",
+    "occupationId": "occupation:cno11:5629",
+    "preferredLabel": "Trabajadores de los cuidados a las personas en servicios de salud no clasificados bajo otros epígrafes",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-08",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf"
+  },
+  {
+    "catalogVersion": "1.0.0",
+    "classificationCode": "5710",
+    "classificationSystem": "CNO-11",
+    "confirmationLabel": "Cuidados personales a domicilio",
+    "occupationId": "occupation:cno11:5710",
+    "preferredLabel": "Trabajadores de los cuidados personales a domicilio",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-08",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf"
   }
 ]

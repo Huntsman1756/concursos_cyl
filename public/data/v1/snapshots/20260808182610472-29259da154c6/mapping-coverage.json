@@ -2093,17 +2093,17 @@
     "uncoveredPrograms": 1
   },
   {
-    "approvedMappings": 0,
-    "coverageNote": "Aún no hay una relación ocupacional aprobada; esto no significa que el ciclo no tenga salidas profesionales.",
-    "coverageStatus": "uncovered",
+    "approvedMappings": 2,
+    "coverageNote": "Incluye relaciones ocupacionales revisadas y citadas.",
+    "coverageStatus": "reviewed",
     "draftMappings": 0,
     "familyCode": "SSC",
     "familyName": "Servicios Socioculturales y a la Comunidad",
     "programKey": "SSC01M",
     "programTitle": "Atención a Personas en Situación de Dependencia",
-    "rejectedMappings": 0,
+    "rejectedMappings": 5,
     "scope": "program",
-    "uncoveredPrograms": 1
+    "uncoveredPrograms": 0
   },
   {
     "approvedMappings": 0,
@@ -2640,15 +2640,15 @@
     "uncoveredPrograms": 3
   },
   {
-    "approvedMappings": 0,
+    "approvedMappings": 2,
     "coverageNote": "La cobertura mide relaciones revisadas del catálogo, no la existencia de salidas profesionales.",
     "draftMappings": 0,
     "familyCode": "SSC",
     "familyName": "Servicios Socioculturales y a la Comunidad",
     "programCount": 12,
-    "rejectedMappings": 0,
+    "rejectedMappings": 5,
     "scope": "family",
-    "uncoveredPrograms": 12
+    "uncoveredPrograms": 11
   },
   {
     "approvedMappings": 0,

@@ -146,10 +146,88 @@
       "programTitle": "Atención a Personas en Situación de Dependencia",
       "familyName": "Servicios Socioculturales y a la Comunidad",
       "plannedStratum": "medium",
-      "state": "not_started",
-      "stateTransitions": [],
-      "acceptedRelationships": [],
-      "rejectedRelationships": []
+      "state": "completed",
+      "startedAt": "2026-08-08T18:20:34.952Z",
+      "stateTransitions": [
+        {
+          "from": "not_started",
+          "to": "in_progress",
+          "at": "2026-08-08T18:20:34.952Z"
+        },
+        {
+          "from": "in_progress",
+          "to": "completed",
+          "at": "2026-08-08T18:25:18.448Z"
+        }
+      ],
+      "completedAt": "2026-08-08T18:25:18.448Z",
+      "phaseMinutes": {
+        "research": 2,
+        "implementation": 1,
+        "test": 1,
+        "review": 0
+      },
+      "acceptedRelationships": [
+        {
+          "occupationId": "occupation:cno11:5710",
+          "relationshipType": "official_output",
+          "reasonCode": "official_programme_output",
+          "sourceUrl": "https://www.boe.es/eli/es/rd/2011/11/04/1593",
+          "sourceQuote": "Auxiliar de ayuda a domicilio.",
+          "reviewedAt": "2026-08-08"
+        },
+        {
+          "occupationId": "occupation:cno11:5629",
+          "relationshipType": "reviewed_relationship",
+          "reasonCode": "officially_reviewed_relationship",
+          "sourceUrl": "https://www.sepe.es/fr/SiteSepe/contenidos/COVID-19/documentos/documentacion-melilla/2021/201221-Resolucion-provisional--20-12-2021-firmada.pdf",
+          "sourceQuote": "Categoría: CUIDADORES DE PERSONAS CON DISCAPACIDAD (CNO 56291025)",
+          "reviewedAt": "2026-08-08"
+        }
+      ],
+      "rejectedRelationships": [
+        {
+          "occupationId": "occupation:cno11:5611",
+          "reasonCode": "official_evidence_indirect",
+          "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+          "sourceQuote": "Auxiliares de enfermería de geriatría.",
+          "reviewedAt": "2026-08-08"
+        },
+        {
+          "occupationId": "occupation:cno11:5831",
+          "reasonCode": "official_evidence_indirect",
+          "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+          "sourceQuote": "Gobernantes de hospital.",
+          "reviewedAt": "2026-08-08"
+        },
+        {
+          "occupationId": "occupation:cno11:2312",
+          "reasonCode": "official_evidence_indirect",
+          "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+          "sourceQuote": "Técnicos educadores de personas discapacitadas.",
+          "reviewedAt": "2026-08-08"
+        },
+        {
+          "occupationId": "occupation:cno11:5891",
+          "reasonCode": "official_evidence_conflicts",
+          "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+          "sourceQuote": "Personas de compañía (sin cuidados a enfermos o dependientes).",
+          "reviewedAt": "2026-08-08"
+        },
+        {
+          "occupationId": "occupation:cno11:4424",
+          "reasonCode": "official_evidence_indirect",
+          "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+          "sourceQuote": "Teleoperadores (no especializados).",
+          "reviewedAt": "2026-08-08"
+        }
+      ],
+      "snapshotCoverage": {
+        "status": "verified",
+        "snapshotId": "20260808182426119-29259da154c6",
+        "countingMethod": "accepted_relationship_union",
+        "newlyReachedOfferCount": 0
+      }
     },
     {
       "programKey": "EOC01M",

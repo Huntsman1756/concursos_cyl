@@ -842,19 +842,36 @@ describe("public snapshot distribution", () => {
         ),
       );
     const mappings = await loadCuratedMappingsFromDisk(root, programs);
+    const pilot = JSON.parse(
+      await readFile(
+        join(root, "analysis", "fp_coverage_pilot_results.json"),
+        "utf8",
+      ),
+    ) as {
+      attempts: {
+        state: string;
+        snapshotCoverage?: { status: string; snapshotId: string };
+      }[];
+    };
+    const historicalSnapshotDirectories = pilot.attempts.flatMap((attempt) =>
+      attempt.state === "completed" &&
+      attempt.snapshotCoverage?.status === "verified"
+        ? [
+            join(
+              root,
+              "public",
+              "data",
+              "v1",
+              "snapshots",
+              attempt.snapshotCoverage.snapshotId,
+            ),
+          ]
+        : [],
+    );
 
     await expect(
       assertPublicSnapshotDistribution(root, mappings, {
-        historicalSnapshotDirectories: [
-          join(
-            root,
-            "public",
-            "data",
-            "v1",
-            "snapshots",
-            "20260808172031375-7c88ca187340",
-          ),
-        ],
+        historicalSnapshotDirectories,
       }),
     ).resolves.toBeUndefined();
   });

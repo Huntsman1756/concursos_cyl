@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-08T17:53:35.789Z",
+  "generatedAt": "2026-08-08T18:26:10.472Z",
   "qualityReport": {
     "counts": {
       "centers": 229,
@@ -72,10 +72,10 @@
     "centers": {
       "qualityStatus": "passed",
       "recordCount": 229,
-      "resourcePath": "/data/v1/snapshots/20260808175335789-7b8aa74dc939/centers.json",
+      "resourcePath": "/data/v1/snapshots/20260808182610472-29259da154c6/centers.json",
       "schemaVersion": "1.0.0",
       "sha256": "593b7780f6cb9511c02edb26a769e5e1f951624f6e4b923a8e34caacb230c87a",
-      "snapshotFetchedAt": "2026-08-08T17:53:35.789Z",
+      "snapshotFetchedAt": "2026-08-08T18:26:10.472Z",
       "sourceId": "jcyl-vocational-training-offer",
       "sourceUpdatedAt": null,
       "sourceUrl": "https://analisis.datosabiertos.jcyl.es/api/explore/v2.1/catalog/datasets/oferta-de-formacion-profesional/records"
@@ -83,10 +83,10 @@
     "jobOffers": {
       "qualityStatus": "passed",
       "recordCount": 1096,
-      "resourcePath": "/data/v1/snapshots/20260808175335789-7b8aa74dc939/job-offers.json",
+      "resourcePath": "/data/v1/snapshots/20260808182610472-29259da154c6/job-offers.json",
       "schemaVersion": "1.0.0",
-      "sha256": "4dd695ecc1c064488478fb9cc91f4cb91089e274a228093f0993f8ec52a1d369",
-      "snapshotFetchedAt": "2026-08-08T17:53:35.789Z",
+      "sha256": "2450f95cd589b558920d601c347973f8c7f6b6f918d923e2dec3608d555a776b",
+      "snapshotFetchedAt": "2026-08-08T18:26:10.472Z",
       "sourceId": "jcyl-employment-offers",
       "sourceUpdatedAt": "2026-08-06T00:00:00.000Z",
       "sourceUrl": "https://analisis.datosabiertos.jcyl.es/api/explore/v2.1/catalog/datasets/ofertas-de-empleo/records"
@@ -94,10 +94,10 @@
     "mappingCoverage": {
       "qualityStatus": "passed",
       "recordCount": 209,
-      "resourcePath": "/data/v1/snapshots/20260808175335789-7b8aa74dc939/mapping-coverage.json",
+      "resourcePath": "/data/v1/snapshots/20260808182610472-29259da154c6/mapping-coverage.json",
       "schemaVersion": "1.0.0",
-      "sha256": "a51ba9d562c0bc9b3fdfcfe56b9e8ca42627be07d58e3fc3474cf9ead5a7f31b",
-      "snapshotFetchedAt": "2026-08-08T17:53:35.789Z",
+      "sha256": "29e276413779441cd8a14aa04903f8abc381829d3bd1a0b555efe8f68c9036b5",
+      "snapshotFetchedAt": "2026-08-08T18:26:10.472Z",
       "sourceId": "todofp-boe-reviewed-training-occupation-links",
       "sourceUpdatedAt": null,
       "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales.html"
@@ -105,21 +105,21 @@
     "occupationAliases": {
       "qualityStatus": "passed",
       "recordCount": 10,
-      "resourcePath": "/data/v1/snapshots/20260808175335789-7b8aa74dc939/occupation-aliases.json",
+      "resourcePath": "/data/v1/snapshots/20260808182610472-29259da154c6/occupation-aliases.json",
       "schemaVersion": "1.0.0",
       "sha256": "bd55ce9979ce84d032c39bffa6dc00eac8f10d1afdedc21897d261c23ed2f479",
-      "snapshotFetchedAt": "2026-08-08T17:53:35.789Z",
+      "snapshotFetchedAt": "2026-08-08T18:26:10.472Z",
       "sourceId": "ine-cno11-reviewed-occupation-catalog",
       "sourceUpdatedAt": null,
       "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf"
     },
     "occupations": {
       "qualityStatus": "passed",
-      "recordCount": 4,
-      "resourcePath": "/data/v1/snapshots/20260808175335789-7b8aa74dc939/occupations.json",
+      "recordCount": 6,
+      "resourcePath": "/data/v1/snapshots/20260808182610472-29259da154c6/occupations.json",
       "schemaVersion": "1.0.0",
-      "sha256": "06cc1a3b97023a887213029b5092c9a24018a7d6a753f414eca0a241aec7b102",
-      "snapshotFetchedAt": "2026-08-08T17:53:35.789Z",
+      "sha256": "924493dd9d9284f33dd2efe40a02bbf6d6d5507b2252395ceb9ca98066f24146",
+      "snapshotFetchedAt": "2026-08-08T18:26:10.472Z",
       "sourceId": "ine-cno11-reviewed-occupation-catalog",
       "sourceUpdatedAt": null,
       "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf"
@@ -127,10 +127,10 @@
     "programs": {
       "qualityStatus": "passed",
       "recordCount": 187,
-      "resourcePath": "/data/v1/snapshots/20260808175335789-7b8aa74dc939/programs.json",
+      "resourcePath": "/data/v1/snapshots/20260808182610472-29259da154c6/programs.json",
       "schemaVersion": "1.0.0",
       "sha256": "90df87b283b5ff003dda20c9c4f7eac52b903e611753d107d4b927bbc4e19b72",
-      "snapshotFetchedAt": "2026-08-08T17:53:35.789Z",
+      "snapshotFetchedAt": "2026-08-08T18:26:10.472Z",
       "sourceId": "jcyl-vocational-training-offer",
       "sourceUpdatedAt": null,
       "sourceUrl": "https://analisis.datosabiertos.jcyl.es/api/explore/v2.1/catalog/datasets/oferta-de-formacion-profesional/records"
@@ -138,21 +138,21 @@
     "publishedRequirements": {
       "qualityStatus": "passed",
       "recordCount": 355,
-      "resourcePath": "/data/v1/snapshots/20260808175335789-7b8aa74dc939/published-requirements.json",
+      "resourcePath": "/data/v1/snapshots/20260808182610472-29259da154c6/published-requirements.json",
       "schemaVersion": "1.0.0",
       "sha256": "c93bca7b819aa926f79f62c384efd5ef7011042ad0637ddd542d813c40bb945c",
-      "snapshotFetchedAt": "2026-08-08T17:53:35.789Z",
+      "snapshotFetchedAt": "2026-08-08T18:26:10.472Z",
       "sourceId": "jcyl-employment-offers",
       "sourceUpdatedAt": "2026-08-06T00:00:00.000Z",
       "sourceUrl": "https://analisis.datosabiertos.jcyl.es/api/explore/v2.1/catalog/datasets/ofertas-de-empleo/records"
     },
     "trainingOccupationLinks": {
       "qualityStatus": "passed",
-      "recordCount": 5,
-      "resourcePath": "/data/v1/snapshots/20260808175335789-7b8aa74dc939/training-occupation-links.json",
+      "recordCount": 7,
+      "resourcePath": "/data/v1/snapshots/20260808182610472-29259da154c6/training-occupation-links.json",
       "schemaVersion": "1.0.0",
-      "sha256": "994f3679e6e07b19918ece6d277c216a202d5bf4eb1e4b34c5f86913e113d546",
-      "snapshotFetchedAt": "2026-08-08T17:53:35.789Z",
+      "sha256": "bf1fa7deccada8fc0e3151400aa92b7e8aba64484ad069e3c32c000643137a0f",
+      "snapshotFetchedAt": "2026-08-08T18:26:10.472Z",
       "sourceId": "todofp-boe-reviewed-training-occupation-links",
       "sourceUpdatedAt": null,
       "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales.html"
@@ -160,10 +160,10 @@
     "trainingOfferings": {
       "qualityStatus": "passed",
       "recordCount": 1294,
-      "resourcePath": "/data/v1/snapshots/20260808175335789-7b8aa74dc939/training-offerings.json",
+      "resourcePath": "/data/v1/snapshots/20260808182610472-29259da154c6/training-offerings.json",
       "schemaVersion": "1.0.0",
       "sha256": "0948871f993a4f0a03ed42ccef060c4a395e0898dc230086f234345fee7e880a",
-      "snapshotFetchedAt": "2026-08-08T17:53:35.789Z",
+      "snapshotFetchedAt": "2026-08-08T18:26:10.472Z",
       "sourceId": "jcyl-vocational-training-offer",
       "sourceUpdatedAt": null,
       "sourceUrl": "https://analisis.datosabiertos.jcyl.es/api/explore/v2.1/catalog/datasets/oferta-de-formacion-profesional/records"

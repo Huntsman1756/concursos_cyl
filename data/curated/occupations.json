@@ -1,5 +1,16 @@
 [
   {
+    "occupationId": "occupation:cno11:2312",
+    "preferredLabel": "Técnicos educadores de educación especial",
+    "confirmationLabel": "Educación especial",
+    "classificationSystem": "CNO-11",
+    "classificationCode": "2312",
+    "reviewStatus": "rejected",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+    "reviewedAt": "2026-08-08",
+    "catalogVersion": "1.0.0"
+  },
+  {
     "occupationId": "occupation:cno11:2713",
     "preferredLabel": "Analistas, programadores y diseñadores web y multimedia",
     "confirmationLabel": "Programación y desarrollo web",
@@ -8,6 +19,17 @@
     "reviewStatus": "approved",
     "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
     "reviewedAt": "2026-08-04",
+    "catalogVersion": "1.0.0"
+  },
+  {
+    "occupationId": "occupation:cno11:4424",
+    "preferredLabel": "Teleoperadores",
+    "confirmationLabel": "Atención telefónica remota",
+    "classificationSystem": "CNO-11",
+    "classificationCode": "4424",
+    "reviewStatus": "rejected",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+    "reviewedAt": "2026-08-08",
     "catalogVersion": "1.0.0"
   },
   {
@@ -94,7 +116,7 @@
     "confirmationLabel": "Apoyo sanitario no clasificado",
     "classificationSystem": "CNO-11",
     "classificationCode": "5629",
-    "reviewStatus": "rejected",
+    "reviewStatus": "approved",
     "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
     "reviewedAt": "2026-08-08",
     "catalogVersion": "1.0.0"
@@ -105,6 +127,28 @@
     "confirmationLabel": "Cuidados personales a domicilio",
     "classificationSystem": "CNO-11",
     "classificationCode": "5710",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+    "reviewedAt": "2026-08-08",
+    "catalogVersion": "1.0.0"
+  },
+  {
+    "occupationId": "occupation:cno11:5831",
+    "preferredLabel": "Supervisores de mantenimiento y limpieza en oficinas, hoteles y otros establecimientos",
+    "confirmationLabel": "Gobierno de instituciones",
+    "classificationSystem": "CNO-11",
+    "classificationCode": "5831",
+    "reviewStatus": "rejected",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+    "reviewedAt": "2026-08-08",
+    "catalogVersion": "1.0.0"
+  },
+  {
+    "occupationId": "occupation:cno11:5891",
+    "preferredLabel": "Asistentes personales o personas de compañía",
+    "confirmationLabel": "Asistencia personal de compañía",
+    "classificationSystem": "CNO-11",
+    "classificationCode": "5891",
     "reviewStatus": "rejected",
     "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
     "reviewedAt": "2026-08-08",
