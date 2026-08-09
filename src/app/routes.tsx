@@ -3,6 +3,7 @@ import { Link, Route, Routes } from "react-router-dom";
 
 import { CompareStudiesPage } from "../features/compare-studies/CompareStudiesPage";
 import { HomePage } from "../features/home/HomePage";
+import { MethodologyPage } from "../features/methodology/MethodologyPage";
 import { OccupationResultsPage } from "../features/occupation-first/OccupationResultsPage";
 import { OccupationSearchPage } from "../features/occupation-first/OccupationSearchPage";
 import { TrainingResultsPage } from "../features/training-first/TrainingResultsPage";
@@ -53,15 +54,7 @@ export function AppRoutes() {
         element={inShell(<OccupationResultsPage />)}
       />
       <Route path="/comparar" element={inShell(<CompareStudiesPage />)} />
-      <Route
-        path="/metodologia"
-        element={inShell(
-          <DestinationPage
-            heading="Metodología — en preparación"
-            outcome="Esta función todavía no está disponible. La próxima fase añadirá las fuentes, criterios y fechas de actualización."
-          />,
-        )}
-      />
+      <Route path="/metodologia" element={inShell(<MethodologyPage />)} />
       <Route
         path="*"
         element={inShell(

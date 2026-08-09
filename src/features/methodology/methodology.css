@@ -1,0 +1,149 @@
+.methodology-page {
+  display: grid;
+  gap: var(--space-8);
+}
+
+.methodology-page__intro {
+  max-width: 52rem;
+}
+
+.methodology-page__eyebrow {
+  margin: 0 0 var(--space-2);
+  color: var(--color-action-text);
+  font-weight: 750;
+}
+
+.methodology-page__intro h1 {
+  margin: 0 0 var(--space-3);
+  color: var(--color-primary);
+  font-size: clamp(2rem, 5vw, 3rem);
+  line-height: 1.1;
+}
+
+.methodology-page__intro p:last-child {
+  margin: 0;
+  color: var(--color-text-muted);
+  font-size: 1.0625rem;
+}
+
+.source-method-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-6);
+  align-items: start;
+}
+
+.source-method-card {
+  min-width: 0;
+  padding: clamp(var(--space-5), 3vw, var(--space-8));
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+}
+
+.source-method-card > h2 {
+  margin: 0;
+  color: var(--color-primary);
+  font-size: 1.5rem;
+  line-height: 1.2;
+}
+
+.source-method-card > section {
+  padding-top: var(--space-5);
+  border-top: 1px solid var(--color-border);
+  margin-top: var(--space-5);
+}
+
+.source-method-card h3 {
+  margin: 0 0 var(--space-2);
+  font-size: 1rem;
+}
+
+.source-method-card p,
+.source-method-card ul {
+  margin-block: 0;
+  color: var(--color-text-muted);
+}
+
+.source-method-card a,
+.methodology-notes a {
+  color: var(--color-action-text);
+  font-weight: 700;
+  text-underline-offset: 0.2em;
+}
+
+.source-method-card code {
+  overflow-wrap: anywhere;
+}
+
+.source-method-card__warning {
+  margin-top: var(--space-3) !important;
+  padding: var(--space-3);
+  border-left: 0.25rem solid var(--color-action);
+  background: var(--color-warning-surface);
+}
+
+.source-table-list {
+  display: grid;
+  gap: var(--space-2);
+}
+
+.source-table-list details {
+  padding: var(--space-3);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background: var(--color-surface-subtle);
+}
+
+.source-table-list summary {
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.source-table-list ul {
+  display: grid;
+  gap: var(--space-2);
+  margin-top: var(--space-3);
+  padding-left: var(--space-5);
+}
+
+.methodology-notes {
+  max-width: 58rem;
+  padding: clamp(var(--space-5), 3vw, var(--space-8));
+  border-left: 0.3rem solid var(--color-primary);
+  border-radius: var(--radius-sm);
+  background: var(--color-surface-subtle);
+}
+
+.methodology-notes h2 {
+  margin-top: 0;
+  color: var(--color-primary);
+}
+
+.methodology-notes p:last-child {
+  margin-bottom: 0;
+}
+
+.methodology-technical {
+  margin-block: var(--space-5);
+  padding: var(--space-4);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background: var(--color-surface);
+}
+
+.methodology-technical summary {
+  color: var(--color-action-text);
+  font-weight: 750;
+  cursor: pointer;
+}
+
+.methodology-technical p {
+  margin-bottom: 0;
+}
+
+@media (max-width: 47.999rem) {
+  .source-method-grid {
+    grid-template-columns: 1fr;
+  }
+}

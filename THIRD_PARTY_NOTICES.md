@@ -24,6 +24,15 @@ technical provenance needed to audit a publication, including source IDs,
 source URLs, freshness timestamps, record counts, and hashes; it does not copy
 the full license terms or attribution into every generated resource.
 
+The FP income evidence comes from four EDUCAbase tables published by the
+Ministerio de Educación, Formación Profesional y Deportes: `famprof_2_08`,
+`famprof_3_08`, `ccaa_2_07`, and `ccaa_3_07`. Their catalog entries, exact
+scope, transformations, provenance fields, and the catalog-declared Ministry
+legal notice are recorded in `DATA_LICENSE.md` and
+`docs/methodology/educabase-income.md`. These source data are not covered by
+the project's MIT software license, and their use does not imply Ministry
+endorsement.
+
 ## Design and agent inputs
 
 SBB principles were considered as design-review guidance under Apache-2.0. No
