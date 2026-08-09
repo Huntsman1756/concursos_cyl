@@ -255,6 +255,27 @@ describe("EDUCABASE_INCOME_SOURCES", () => {
     }
   });
 
+  it("matches strict UTF-8 decoded fixture headers without mojibake", async () => {
+    for (const source of Object.values(EDUCABASE_INCOME_SOURCES)) {
+      const bytes = await readFile(
+        resolve(
+          process.cwd(),
+          "tests/fixtures/educabase-income",
+          `${source.tableId}.csv`,
+        ),
+      );
+      expect(bytes.subarray(0, 3).toString("hex")).toBe("efbbbf");
+
+      const header = new TextDecoder("utf-8", { fatal: true })
+        .decode(bytes.subarray(3))
+        .split(/\r?\n/u, 1)[0]
+        .split(";");
+
+      expect(header).toStrictEqual(source.expectedCsvHeader);
+      expect(header.join(";")).not.toMatch(/\u00c3|\u00c2|\ufffd/u);
+    }
+  });
+
   it("accepts non-BOM PC-Axis content while requiring a CSV UTF-8 BOM", () => {
     expect(() =>
       assertFixtureBom(new Uint8Array([0x50, 0x58, 0x2d]), null),
