@@ -1,3 +1,5 @@
+import { createHash } from "node:crypto";
+
 import type { EducabaseIncomeSource } from "./educabaseIncomeSources";
 import {
   assertExpectedIncomeDimensions,
@@ -33,6 +35,17 @@ const ALLOWED_METADATA = new Set([
   "VALUES",
   "DATA",
 ]);
+const EXPECTED_SOURCE =
+  "\u00a0S.G. de Estadística y Estudios del Ministerio de Educación,  Formación Profesional  y Deportes";
+const EXPECTED_UNITS = "\u00a0Euros";
+const NOTE_HASHES = {
+  famprof_2_08:
+    "aec68e41822b32b81a03ea364ba42f4fc9c99da88b7e07d5a04aabccdd169fcc",
+  famprof_3_08:
+    "1ddba36926ae0918ca5fdf4d3090343fa77e4ed83fdfc86889e14254eb10599e",
+  ccaa_2_07: "878d22bb31b04287852c4ea82868ff9244ae3b7a4c534f1b65e228b7d548390c",
+  ccaa_3_07: "5a17e47ad31a102aa51f7beb1cd2bbe5339c79afd7605ba371644dc25dc90fb8",
+} as const;
 
 function tokenize(text: string): Token[] {
   const tokens: Token[] = [];
@@ -153,6 +166,16 @@ function assertMetadata(
     throw new Error('Educabase PX requires CHARSET="ANSI"');
   if (metadata.get("CODEPAGE")?.[0] !== "iso-8859-15")
     throw new Error('Educabase PX requires CODEPAGE="iso-8859-15"');
+  if (metadata.get("UNITS")?.[0] !== EXPECTED_UNITS)
+    throw new Error(`Educabase PX requires UNITS="${EXPECTED_UNITS}"`);
+  if (metadata.get("SOURCE")?.[0] !== EXPECTED_SOURCE)
+    throw new Error(
+      "Educabase PX SOURCE does not match the approved source contract",
+    );
+  if (metadata.get("DECIMALS")?.[0] !== "2")
+    throw new Error('Educabase PX requires DECIMALS="2"');
+  if (metadata.get("SHOWDECIMALS")?.[0] !== "0")
+    throw new Error('Educabase PX requires SHOWDECIMALS="0"');
 }
 
 export function parseEducabaseIncomePx(
@@ -245,6 +268,15 @@ export function parseEducabaseIncomePx(
   if (!stub || !heading || !rawData)
     throw new Error("Educabase PX lacks STUB, HEADING, or DATA");
   const dimensionNames = [...stub, ...heading];
+  const expectedStubLength = source.scope === "spain_cycle_group" ? 3 : 2;
+  if (
+    stub.length !== expectedStubLength ||
+    heading.length !== dimensionNames.length - expectedStubLength
+  ) {
+    throw new Error(
+      `Educabase PX STUB/HEADING placement does not match ${source.tableId}`,
+    );
+  }
   const expectedNames = source.expectedCsvHeader.slice(0, -1);
   if (
     dimensionNames.length !== expectedNames.length ||
@@ -258,6 +290,11 @@ export function parseEducabaseIncomePx(
       throw new Error(`Educabase PX has no VALUES for ${name}`);
     return { name, values: dimensionValues };
   });
+  if (values.size !== dimensionNames.length) {
+    throw new Error(
+      `Educabase PX VALUES keys do not exactly match ${source.tableId}`,
+    );
+  }
   for (const dimension of dimensions) {
     if (new Set(dimension.values).size !== dimension.values.length) {
       throw new Error(`Educabase PX has duplicate labels in ${dimension.name}`);
@@ -297,9 +334,12 @@ export function parseEducabaseIncomePx(
     };
   });
   const note = metadata.get("NOTE")?.join("") ?? "";
-  if (!note.includes("2021-2022") || !note.includes("2022-2023")) {
+  if (
+    createHash("sha256").update(note).digest("hex") !==
+    NOTE_HASHES[source.tableId]
+  ) {
     throw new Error(
-      "Educabase PX note does not declare the provisional observation windows",
+      `Educabase PX note does not match the approved contract for ${source.tableId}`,
     );
   }
   return { tableId: source.tableId, dimensions, note, cells };

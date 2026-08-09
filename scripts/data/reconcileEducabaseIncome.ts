@@ -10,24 +10,29 @@ function canonicalCoordinate(
   return names.map((name) => cell.dimensions[name]).join("\0");
 }
 
-function canonicalValue(rawValue: string, source: "csv" | "px"): number | null {
+function canonicalCsvValue(rawValue: string): number | null {
   if (rawValue === "..") return null;
-  if (source === "csv") {
-    if (!/^[0-9]+(?:\.[0-9]{3})*$/u.test(rawValue)) {
-      throw new Error(`CSV numeric token is invalid: ${rawValue}`);
-    }
-    return Number.parseInt(rawValue.replaceAll(".", ""), 10);
+  if (!/^[0-9]+(?:\.[0-9]{3})*$/u.test(rawValue)) {
+    throw new Error(`CSV numeric token is invalid: ${rawValue}`);
   }
-  if (!/^[0-9]+(?:\.[0-9]+)?$/u.test(rawValue)) {
+  return Number.parseInt(rawValue.replaceAll(".", ""), 10);
+}
+
+function canonicalPxCents(rawValue: string): number | null {
+  if (rawValue === "..") return null;
+  if (!/^[0-9]+(?:\.[0-9]{1,2})?$/u.test(rawValue)) {
     throw new Error(`PX numeric token is invalid: ${rawValue}`);
   }
-  const value = Number(rawValue);
-  if (!Number.isSafeInteger(Math.round(value)) || value < 0) {
+  const [whole, fraction = ""] = rawValue.split(".") as [string, string?];
+  const cents =
+    Number.parseInt(whole, 10) * 100 +
+    Number.parseInt(fraction.padEnd(2, "0"), 10);
+  if (!Number.isSafeInteger(cents) || cents < 0) {
     throw new Error(
       `PX numeric token is not a non-negative euro amount: ${rawValue}`,
     );
   }
-  return Math.round(value);
+  return cents;
 }
 
 function assertDimensionsEqual(
@@ -87,9 +92,13 @@ export function assertEquivalentIncomeTables(
         `${csv.tableId} CSV/PX coordinate differs at cell ${index}`,
       );
     }
-    const csvValue = canonicalValue(csvCell.rawValue, "csv");
-    const pxValue = canonicalValue(pxCell.rawValue, "px");
-    if (csvValue !== pxValue) {
+    const csvValue = canonicalCsvValue(csvCell.rawValue);
+    const pxValue = canonicalPxCents(pxCell.rawValue);
+    const valuesMatch =
+      csvValue === null
+        ? pxValue === null
+        : pxValue !== null && Math.floor((pxValue + 50) / 100) === csvValue;
+    if (!valuesMatch) {
       throw new Error(
         `${csv.tableId} cell ${index} differs: csv=${csvCell.rawValue}; px=${pxCell.rawValue}`,
       );

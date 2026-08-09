@@ -127,4 +127,37 @@ describe("fetchOfficialBinary", () => {
     ).rejects.toThrow(/404/);
     expect(missing).toHaveBeenCalledOnce();
   });
+
+  it("retries genuine network failures up to the bounded exhaustion limit", async () => {
+    const request = vi
+      .fn()
+      .mockRejectedValueOnce(new TypeError("network unavailable"))
+      .mockResolvedValueOnce(response("ok"));
+    const sleep = vi.fn(async () => undefined);
+    await expect(
+      fetchOfficialBinary(
+        source,
+        "csv",
+        "2026-08-09T00:00:00.000Z",
+        request,
+        sleep,
+      ),
+    ).resolves.toMatchObject({ provenance: { byteLength: 2 } });
+    expect(request).toHaveBeenCalledTimes(2);
+    expect(sleep).toHaveBeenCalledTimes(1);
+
+    const exhausted = vi.fn(async () => {
+      throw new TypeError("network unavailable");
+    });
+    await expect(
+      fetchOfficialBinary(
+        source,
+        "csv",
+        "2026-08-09T00:00:00.000Z",
+        exhausted,
+        sleep,
+      ),
+    ).rejects.toThrow(/network unavailable/i);
+    expect(exhausted).toHaveBeenCalledTimes(4);
+  });
 });

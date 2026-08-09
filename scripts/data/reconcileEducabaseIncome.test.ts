@@ -31,7 +31,7 @@ describe("assertEquivalentIncomeTables", () => {
     const changed = structuredClone(px);
     changed.cells[500]!.rawValue = "19.999";
     expect(() => assertEquivalentIncomeTables(csv, changed)).toThrow(
-      /famprof_2_08.*cell 500.*csv.*px/iu,
+      /numeric/i,
     );
 
     const label = structuredClone(px);
@@ -50,5 +50,37 @@ describe("assertEquivalentIncomeTables", () => {
     const note = structuredClone(px);
     note.note = "other observation window";
     expect(() => assertEquivalentIncomeTables(csv, note)).toThrow(/note/i);
+  });
+
+  it("rejects fractional, negative, blank and non-numeric PX values without rounding", async () => {
+    const { csv, px } = await fixturePair();
+    for (const rawValue of ["14385.49", "-1", "", "NaN"]) {
+      const changed = structuredClone(px);
+      changed.cells[500]!.rawValue = rawValue;
+      expect(() => assertEquivalentIncomeTables(csv, changed)).toThrow(
+        /numeric|cell 500/i,
+      );
+    }
+  });
+
+  it("uses exact integer cents and the official half-up display boundary", async () => {
+    const { csv, px } = await fixturePair();
+    const validCsv = structuredClone(csv);
+    const validPx = structuredClone(px);
+    validCsv.cells[500]!.rawValue = "14.385";
+    validPx.cells[500]!.rawValue = "14384.50";
+    expect(() => assertEquivalentIncomeTables(validCsv, validPx)).not.toThrow();
+
+    const below = structuredClone(validPx);
+    below.cells[500]!.rawValue = "14384.49";
+    expect(() => assertEquivalentIncomeTables(validCsv, below)).toThrow(
+      /cell 500/i,
+    );
+
+    const above = structuredClone(validPx);
+    above.cells[500]!.rawValue = "14385.50";
+    expect(() => assertEquivalentIncomeTables(validCsv, above)).toThrow(
+      /cell 500/i,
+    );
   });
 });

@@ -190,6 +190,7 @@ export async function fetchOfficialBinary(
       lastError = error;
       if (
         error instanceof Error &&
+        error.message.startsWith("Official income") &&
         !/^Official income request failed with HTTP (429|5\d\d)$/u.test(
           error.message,
         )
