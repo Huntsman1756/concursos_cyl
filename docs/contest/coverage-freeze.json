@@ -1,0 +1,238 @@
+{
+  "schemaVersion": "1.0.0",
+  "freezeStatus": "frozen",
+  "sourceCommitSha": "27e7b2ec5996868df6c05edd02d3434a2559c44b",
+  "manifest": {
+    "path": "public/data/v1/manifest.json",
+    "sha256": "27942a492d4f62fb9a3d1e448dfb708663000270564b1e0cb87f15ae86677da1",
+    "generatedAt": "2026-08-09T18:54:38.334Z",
+    "snapshotId": "20260809185438334-65ce4d3c4e14",
+    "qualityStatus": "passed",
+    "qualityCounts": {
+      "centers": 229,
+      "offerings": 1294,
+      "offers": 1077,
+      "programs": 187
+    },
+    "resourceSnapshots": {
+      "centers": {
+        "resourcePath": "/data/v1/snapshots/20260809185438334-65ce4d3c4e14/centers.json",
+        "sha256": "593b7780f6cb9511c02edb26a769e5e1f951624f6e4b923a8e34caacb230c87a",
+        "recordCount": 229
+      },
+      "jobOffers": {
+        "resourcePath": "/data/v1/snapshots/20260809185438334-65ce4d3c4e14/job-offers.json",
+        "sha256": "0631d0880485df26e2f450ee7da70ce7a0b210fe088eca02398a9474a2e6907b",
+        "recordCount": 1077
+      },
+      "mappingCoverage": {
+        "resourcePath": "/data/v1/snapshots/20260809185438334-65ce4d3c4e14/mapping-coverage.json",
+        "sha256": "f880762313875dbb899343f16ec48df75119f8b3e084aca02716f45c02939634",
+        "recordCount": 209
+      },
+      "occupationAliases": {
+        "resourcePath": "/data/v1/snapshots/20260809185438334-65ce4d3c4e14/occupation-aliases.json",
+        "sha256": "4f37bc7c6ff4d76140c79d9e9245c7155ff5f77d5b3bc397796985e13c2fbe7c",
+        "recordCount": 21
+      },
+      "occupations": {
+        "resourcePath": "/data/v1/snapshots/20260809185438334-65ce4d3c4e14/occupations.json",
+        "sha256": "204cb90ac21433d11f6c9ae9289d24d5dacd6b4a53315dcf7a9be87d60c2b6f7",
+        "recordCount": 13
+      },
+      "outcomeIndicators": {
+        "resourcePath": "/data/v1/snapshots/20260809185438334-65ce4d3c4e14/outcome-indicators.json",
+        "sha256": "4f2c6b73fc4171bb9daf21583712ab2ec99bcaa7d27b1f2fd0c070b9079ab3e2",
+        "recordCount": 22170
+      },
+      "programs": {
+        "resourcePath": "/data/v1/snapshots/20260809185438334-65ce4d3c4e14/programs.json",
+        "sha256": "90df87b283b5ff003dda20c9c4f7eac52b903e611753d107d4b927bbc4e19b72",
+        "recordCount": 187
+      },
+      "publishedRequirements": {
+        "resourcePath": "/data/v1/snapshots/20260809185438334-65ce4d3c4e14/published-requirements.json",
+        "sha256": "0a9061ecea0e25ef0038ec93839941c8584246e280e0453b4be816ce2d9e3a65",
+        "recordCount": 337
+      },
+      "trainingOccupationLinks": {
+        "resourcePath": "/data/v1/snapshots/20260809185438334-65ce4d3c4e14/training-occupation-links.json",
+        "sha256": "f53dab591ec336fb9b64cdbf6616a26a500866e08cae1abe466a3f9b1217ede3",
+        "recordCount": 14
+      },
+      "trainingOfferings": {
+        "resourcePath": "/data/v1/snapshots/20260809185438334-65ce4d3c4e14/training-offerings.json",
+        "sha256": "0948871f993a4f0a03ed42ccef060c4a395e0898dc230086f234345fee7e880a",
+        "recordCount": 1294
+      }
+    }
+  },
+  "coverage": {
+    "distinctQualificationKeys": [
+      "qualification:COM02M",
+      "qualification:EOC01M",
+      "qualification:HOT01M",
+      "qualification:IFC03S",
+      "qualification:SAN21",
+      "qualification:SSC01M"
+    ],
+    "distinctQualificationCount": 6,
+    "modalityKeys": [
+      "COM02M",
+      "EOC01M",
+      "HOT01M",
+      "IFC03S",
+      "IFC03SD",
+      "SAN21",
+      "SSC01M"
+    ],
+    "modalityKeyCount": 7,
+    "approvedRelationKeys": [
+      "COM02M|occupation:cno11:5210",
+      "COM02M|occupation:cno11:5220",
+      "EOC01M|occupation:cno11:7111",
+      "EOC01M|occupation:cno11:7121",
+      "EOC01M|occupation:cno11:7193",
+      "EOC01M|occupation:cno11:7240",
+      "EOC01M|occupation:cno11:7291",
+      "HOT01M|occupation:cno11:5110",
+      "IFC03SD|occupation:cno11:2713",
+      "IFC03S|occupation:cno11:2713",
+      "SAN21|occupation:cno11:5611",
+      "SAN21|occupation:cno11:5612",
+      "SSC01M|occupation:cno11:5629",
+      "SSC01M|occupation:cno11:5710"
+    ],
+    "approvedRelationCount": 14,
+    "approvedAliasKeys": [
+      "Auxiliares de ayuda a personas dependientes a domicilio|occupation:cno11:5710",
+      "Cocineros (no propietarios)|occupation:cno11:5110",
+      "Cocineros asalariados|occupation:cno11:5110",
+      "Cocineros de comedor de empresa|occupation:cno11:5110",
+      "Cocineros en restaurantes|occupation:cno11:5110",
+      "Impermeabilizadores de terrazas|occupation:cno11:7193",
+      "Instaladores de materiales de impermeabilización en edificios|occupation:cno11:7193",
+      "Instaladores de sistemas de impermeabilización en edificios|occupation:cno11:7193",
+      "Pavimentadores a base de hormigón|occupation:cno11:7111",
+      "Pavimentadores con adoquines|occupation:cno11:7240",
+      "auxiliares de enfermería de atención primaria|occupation:cno11:5612",
+      "auxiliares de enfermería de centros de atención primaria|occupation:cno11:5612",
+      "auxiliares de enfermería de consultorios médicos|occupation:cno11:5612",
+      "auxiliares de enfermería de geriatría|occupation:cno11:5611",
+      "auxiliares de enfermería de salud mental y toxicomanías|occupation:cno11:5611",
+      "auxiliares de enfermería hospitalaria|occupation:cno11:5611",
+      "desarrollador web|occupation:cno11:2713",
+      "encofradores|occupation:cno11:7111",
+      "programación web|occupation:cno11:2713",
+      "programador web|occupation:cno11:2713",
+      "técnicos auxiliares de clínica|occupation:cno11:5611"
+    ],
+    "approvedAliasCount": 21,
+    "matchedProgramKeys": ["EOC01M", "SAN21"],
+    "matchedProgramCount": 2,
+    "zeroReviewedProgramKeys": [
+      "COM02M",
+      "HOT01M",
+      "IFC03S",
+      "IFC03SD",
+      "SSC01M"
+    ],
+    "zeroReviewedProgramCount": 5,
+    "matchedRelationKeys": [
+      "EOC01M|occupation:cno11:7111",
+      "SAN21|occupation:cno11:5611",
+      "SAN21|occupation:cno11:5612"
+    ],
+    "matchedRelationCount": 3,
+    "zeroReviewedRelationKeys": [
+      "COM02M|occupation:cno11:5210",
+      "COM02M|occupation:cno11:5220",
+      "EOC01M|occupation:cno11:7121",
+      "EOC01M|occupation:cno11:7193",
+      "EOC01M|occupation:cno11:7240",
+      "EOC01M|occupation:cno11:7291",
+      "HOT01M|occupation:cno11:5110",
+      "IFC03SD|occupation:cno11:2713",
+      "IFC03S|occupation:cno11:2713",
+      "SSC01M|occupation:cno11:5629",
+      "SSC01M|occupation:cno11:5710"
+    ],
+    "zeroReviewedRelationCount": 11,
+    "deferredPrograms": [
+      "ADG01M",
+      "AGA03M",
+      "ELE01M",
+      "FME01M",
+      "IMA03M",
+      "MAM01M",
+      "TMV02M"
+    ],
+    "deferredProgramCount": 7
+  },
+  "offers": {
+    "matchedOfferIds": [
+      "1285619684957",
+      "1285634475038",
+      "1285636902492",
+      "1285637348332",
+      "1285637348360",
+      "1285637783304",
+      "1285638302131",
+      "1285639439371",
+      "1285641461864",
+      "1285642318120",
+      "1285643523185",
+      "1285645658066",
+      "1285647198339",
+      "1285648074767",
+      "1285656851320",
+      "1285660488886",
+      "1285661621377",
+      "1285662030438",
+      "1285662467494",
+      "1285662541494",
+      "1285662949567",
+      "1285663160304",
+      "1285663377553",
+      "1285663377586",
+      "1285663973698",
+      "1285664658652",
+      "1285664934590",
+      "1285665380332",
+      "1285665942298",
+      "1285667333543",
+      "1285667539377",
+      "1285667589914",
+      "1285667589943",
+      "1285667632216",
+      "1285667844877",
+      "1285667995414",
+      "1285668050973",
+      "1285668256565",
+      "1285668256621",
+      "1285668730148",
+      "1285669380098",
+      "1285669453017",
+      "1285669509738",
+      "1285669665440",
+      "1285669665506",
+      "1285669719277"
+    ],
+    "matchedOfferCount": 46,
+    "marginalOfferDeltas": {
+      "unionOfferIds": [],
+      "unionOfferCount": 0
+    }
+  },
+  "attempts": {
+    "completed": 1,
+    "deferred": 7,
+    "discarded": 0,
+    "terminal": 8,
+    "reserveUnattempted": 6
+  },
+  "deployment": {
+    "expectedRootUrl": "https://huntsman1756.github.io/concursos_cyl/",
+    "status": "pending"
+  }
+}
