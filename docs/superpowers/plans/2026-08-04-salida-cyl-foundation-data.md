@@ -52,6 +52,7 @@ tests/fixtures/                     deterministic source fragments
 ### Task 1: Repository, toolchain and executable app shell
 
 **Files:**
+
 - Create: `.gitignore`
 - Create: `.editorconfig`
 - Create: `package.json`
@@ -68,6 +69,7 @@ tests/fixtures/                     deterministic source fragments
 - Test: `src/app/App.test.tsx`
 
 **Interfaces:**
+
 - Consumes: none.
 - Produces: `App(): JSX.Element`, a working `npm run dev`, `npm run test`, `npm run lint` and `npm run build` contract.
 
@@ -114,10 +116,14 @@ describe("App", () => {
     render(
       <MemoryRouter>
         <App />
-      </MemoryRouter>
+      </MemoryRouter>,
     );
-    expect(screen.getByRole("link", { name: /he terminado fp/i })).toBeVisible();
-    expect(screen.getByRole("link", { name: /quiero trabajar de/i })).toBeVisible();
+    expect(
+      screen.getByRole("link", { name: /he terminado fp/i }),
+    ).toBeVisible();
+    expect(
+      screen.getByRole("link", { name: /quiero trabajar de/i }),
+    ).toBeVisible();
   });
 });
 ```
@@ -185,6 +191,7 @@ rtk git commit -m "chore: initialize Salida CyL web application"
 ### Task 2: Project-owned accessible visual foundation and approved home
 
 **Files:**
+
 - Create: `src/styles/tokens.css`
 - Create: `src/styles/global.css`
 - Create: `src/app/AppShell.tsx`
@@ -195,6 +202,7 @@ rtk git commit -m "chore: initialize Salida CyL web application"
 - Test: `src/features/home/HomePage.test.tsx`
 
 **Interfaces:**
+
 - Consumes: React Router links from Task 1.
 - Produces: `EntryCardProps`, `IconName`, `AppShell` and the approved equal-entry responsive home.
 
@@ -203,13 +211,19 @@ rtk git commit -m "chore: initialize Salida CyL web application"
 ```tsx
 it("describes two different outcomes without decorative icon text", () => {
   render(<HomePage />);
-  expect(screen.getByText("Título → ofertas → requisitos → acciones")).toBeVisible();
+  expect(
+    screen.getByText("Título → ofertas → requisitos → acciones"),
+  ).toBeVisible();
   expect(screen.getByText("Ocupación → ciclos y centros de CyL")).toBeVisible();
   expect(screen.getAllByRole("link")).toEqual(
     expect.arrayContaining([
-      expect.objectContaining({ textContent: expect.stringMatching(/He terminado FP/) }),
-      expect.objectContaining({ textContent: expect.stringMatching(/Quiero trabajar de/) })
-    ])
+      expect.objectContaining({
+        textContent: expect.stringMatching(/He terminado FP/),
+      }),
+      expect.objectContaining({
+        textContent: expect.stringMatching(/Quiero trabajar de/),
+      }),
+    ]),
   );
 });
 ```
@@ -274,6 +288,7 @@ rtk git commit -m "feat: add accessible equal-entry home"
 ### Task 3: Versioned source and output contracts
 
 **Files:**
+
 - Create: `scripts/data/sourceConfig.ts`
 - Create: `data/schemas/trainingSource.ts`
 - Create: `data/schemas/offerSource.ts`
@@ -282,6 +297,7 @@ rtk git commit -m "feat: add accessible equal-entry home"
 - Test: `data/schemas/generated.test.ts`
 
 **Interfaces:**
+
 - Consumes: Zod.
 - Produces: `TrainingProgram`, `TrainingOffering`, `EducationCenter`, `JobOffer`, `SourceSnapshot`, `GeneratedManifest` and `SOURCE_CONFIG`.
 
@@ -298,10 +314,12 @@ it("accepts a normalized training offering and rejects an empty program key", ()
     centerCode: "47000000",
     province: "Valladolid",
     locality: "Valladolid",
-    modality: "on_site"
+    modality: "on_site",
   };
   expect(TrainingOfferingSchema.safeParse(valid).success).toBe(true);
-  expect(TrainingOfferingSchema.safeParse({ ...valid, programKey: "" }).success).toBe(false);
+  expect(
+    TrainingOfferingSchema.safeParse({ ...valid, programKey: "" }).success,
+  ).toBe(false);
 });
 ```
 
@@ -315,8 +333,18 @@ Expected: FAIL because schemas do not exist.
 Use discriminated unions:
 
 ```ts
-export const TrainingLevelSchema = z.enum(["basic", "intermediate", "higher", "specialization"]);
-export const ModalitySchema = z.enum(["on_site", "distance", "mixed", "unknown"]);
+export const TrainingLevelSchema = z.enum([
+  "basic",
+  "intermediate",
+  "higher",
+  "specialization",
+]);
+export const ModalitySchema = z.enum([
+  "on_site",
+  "distance",
+  "mixed",
+  "unknown",
+]);
 
 export const SourceSnapshotSchema = z.object({
   sourceId: z.string().min(1),
@@ -326,7 +354,7 @@ export const SourceSnapshotSchema = z.object({
   schemaVersion: z.literal("1.0.0"),
   recordCount: z.number().int().nonnegative(),
   sha256: z.string().regex(/^[a-f0-9]{64}$/),
-  qualityStatus: z.enum(["passed", "stale"])
+  qualityStatus: z.enum(["passed", "stale"]),
 });
 ```
 
@@ -340,12 +368,14 @@ export const SourceSnapshotSchema = z.object({
 export const SOURCE_CONFIG = {
   training: {
     id: "jcyl-vocational-training-offer",
-    recordsUrl: "https://analisis.datosabiertos.jcyl.es/api/explore/v2.1/catalog/datasets/oferta-de-formacion-profesional/records"
+    recordsUrl:
+      "https://analisis.datosabiertos.jcyl.es/api/explore/v2.1/catalog/datasets/oferta-de-formacion-profesional/records",
   },
   offers: {
     id: "jcyl-employment-offers",
-    recordsUrl: "https://analisis.datosabiertos.jcyl.es/api/explore/v2.1/catalog/datasets/ofertas-de-empleo/records"
-  }
+    recordsUrl:
+      "https://analisis.datosabiertos.jcyl.es/api/explore/v2.1/catalog/datasets/ofertas-de-empleo/records",
+  },
 } as const;
 ```
 
@@ -364,6 +394,7 @@ rtk git commit -m "feat: define versioned public data contracts"
 ### Task 4: Reliable official-dataset fetching and HTML sanitization
 
 **Files:**
+
 - Create: `scripts/data/fetchJson.ts`
 - Create: `scripts/data/fetchAllRecords.ts`
 - Create: `scripts/data/sanitizeOfferHtml.ts`
@@ -372,6 +403,7 @@ rtk git commit -m "feat: define versioned public data contracts"
 - Test: `scripts/data/sanitizeOfferHtml.test.ts`
 
 **Interfaces:**
+
 - Consumes: `SOURCE_CONFIG`, upstream Opendatasoft `{ total_count, results }` pages.
 - Produces: `fetchAllRecords<T>(url, schema): Promise<T[]>` and `sanitizeOfferHtml(html): SanitizedOfferDescription`.
 
@@ -379,15 +411,19 @@ rtk git commit -m "feat: define versioned public data contracts"
 
 ```ts
 it("fetches pages until total_count is reached", async () => {
-  const fetchPage = vi.fn()
+  const fetchPage = vi
+    .fn()
     .mockResolvedValueOnce({ total_count: 3, results: [{ id: 1 }, { id: 2 }] })
     .mockResolvedValueOnce({ total_count: 3, results: [{ id: 3 }] });
-  await expect(fetchAllRecords("https://example.test/records", ItemSchema, fetchPage, 2))
-    .resolves.toEqual([{ id: 1 }, { id: 2 }, { id: 3 }]);
+  await expect(
+    fetchAllRecords("https://example.test/records", ItemSchema, fetchPage, 2),
+  ).resolves.toEqual([{ id: 1 }, { id: 2 }, { id: 3 }]);
 });
 
 it("removes scripts while preserving requirement list text", () => {
-  const result = sanitizeOfferHtml("<script>alert(1)</script><strong>Requisitos:</strong><ul><li>Carné B</li></ul>");
+  const result = sanitizeOfferHtml(
+    "<script>alert(1)</script><strong>Requisitos:</strong><ul><li>Carné B</li></ul>",
+  );
   expect(result.plainText).toContain("Requisitos: Carné B");
   expect(result.plainText).not.toContain("alert");
   expect(result.sections.requirements).toEqual(["Carné B"]);
@@ -428,12 +464,14 @@ rtk git commit -m "feat: fetch and sanitize official source data"
 ### Task 5: Normalize vocational-training and employment records
 
 **Files:**
+
 - Create: `scripts/data/normalizeTraining.ts`
 - Create: `scripts/data/normalizeOffers.ts`
 - Test: `scripts/data/normalizeTraining.test.ts`
 - Test: `scripts/data/normalizeOffers.test.ts`
 
 **Interfaces:**
+
 - Consumes: validated upstream records and `sanitizeOfferHtml`.
 - Produces: `normalizeTraining(records): { programs, centers, offerings }` and `normalizeOffers(records): JobOffer[]`.
 
@@ -441,7 +479,10 @@ rtk git commit -m "feat: fetch and sanitize official source data"
 
 ```ts
 it("deduplicates programs and centers while retaining each offering", () => {
-  const result = normalizeTraining([trainingSourceA, trainingSourceBAtSameCenter]);
+  const result = normalizeTraining([
+    trainingSourceA,
+    trainingSourceBAtSameCenter,
+  ]);
   expect(result.programs).toHaveLength(2);
   expect(result.centers).toHaveLength(1);
   expect(result.offerings).toHaveLength(2);
@@ -488,6 +529,7 @@ rtk git commit -m "feat: normalize training and employment records"
 ### Task 6: Atomic snapshot generation, quality gates and client
 
 **Files:**
+
 - Create: `scripts/data/hashFile.ts`
 - Create: `scripts/data/qualityGates.ts`
 - Create: `scripts/data/buildSnapshots.ts`
@@ -497,6 +539,7 @@ rtk git commit -m "feat: normalize training and employment records"
 - Test: `src/data/generatedDataClient.test.ts`
 
 **Interfaces:**
+
 - Consumes: fetchers, normalizers and generated schemas.
 - Produces: `runQualityGates(candidate, previous): QualityReport`, `buildSnapshots(): Promise<void>`, `loadGeneratedResource<T>(path, schema): Promise<T>`.
 
@@ -504,15 +547,19 @@ rtk git commit -m "feat: normalize training and employment records"
 
 ```ts
 it("rejects a candidate that unexpectedly loses most records", () => {
-  expect(() => runQualityGates(
-    { programs: 20, centers: 20, offerings: 100, offers: 80 },
-    { programs: 187, centers: 223, offerings: 1294, offers: 1000 }
-  )).toThrow(/unexpected record loss/i);
+  expect(() =>
+    runQualityGates(
+      { programs: 20, centers: 20, offerings: 100, offers: 80 },
+      { programs: 187, centers: 223, offerings: 1294, offers: 1000 },
+    ),
+  ).toThrow(/unexpected record loss/i);
 });
 
 it("accepts an explicit stale manifest in the client", async () => {
   mockFetchJson({ schemaVersion: "1.0.0", qualityStatus: "stale" });
-  await expect(loadManifest()).resolves.toMatchObject({ qualityStatus: "stale" });
+  await expect(loadManifest()).resolves.toMatchObject({
+    qualityStatus: "stale",
+  });
 });
 ```
 
@@ -565,24 +612,34 @@ rtk git commit -m "feat: generate validated official data snapshots"
 ### Task 7: Foundation end-to-end and accessibility checkpoint
 
 **Files:**
+
 - Create: `playwright.config.ts`
 - Create: `tests/e2e/home.spec.ts`
 - Modify: `src/features/home/HomePage.tsx`
 - Modify: `src/app/AppShell.tsx`
 
 **Interfaces:**
+
 - Consumes: built SPA and generated manifest.
 - Produces: browser verification for home, navigation, responsive layout and freshness rendering.
 
 - [ ] **Step 1: Write the failing Playwright test**
 
 ```ts
-test("home exposes both journeys and no critical accessibility violations", async ({ page }) => {
+test("home exposes both journeys and no critical accessibility violations", async ({
+  page,
+}) => {
   await page.goto("/");
-  await expect(page.getByRole("link", { name: /he terminado fp/i })).toBeVisible();
-  await expect(page.getByRole("link", { name: /quiero trabajar de/i })).toBeVisible();
+  await expect(
+    page.getByRole("link", { name: /he terminado fp/i }),
+  ).toBeVisible();
+  await expect(
+    page.getByRole("link", { name: /quiero trabajar de/i }),
+  ).toBeVisible();
   const results = await new AxeBuilder({ page }).analyze();
-  expect(results.violations.filter((item) => item.impact === "critical")).toEqual([]);
+  expect(
+    results.violations.filter((item) => item.impact === "critical"),
+  ).toEqual([]);
 });
 ```
 

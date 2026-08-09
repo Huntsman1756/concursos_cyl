@@ -42,6 +42,7 @@ src/components/ActionPanel.tsx              action rendering by target kind
 ### Task 1: Reviewed occupation catalog and relationship contracts
 
 **Files:**
+
 - Create: `src/domain/occupation.ts`
 - Create: `data/schemas/curatedMappings.ts`
 - Create: `data/curated/occupations.json`
@@ -51,6 +52,7 @@ src/components/ActionPanel.tsx              action rendering by target kind
 - Test: `scripts/data/validateCuratedMappings.test.ts`
 
 **Interfaces:**
+
 - Consumes: `TrainingProgram` IDs from the foundation snapshot.
 - Produces: `Occupation`, `OccupationAlias`, `TrainingOccupationLink`, `loadApprovedMappings()`.
 
@@ -58,19 +60,25 @@ src/components/ActionPanel.tsx              action rendering by target kind
 
 ```ts
 it("rejects a visible relationship without approval and citation", () => {
-  expect(() => validateTrainingOccupationLinks([{ 
-    trainingProgramKey: "IFC03S",
-    occupationId: "occupation:web-development",
-    relationshipType: "official_output",
-    reviewStatus: "draft",
-    sourceUrl: "",
-    sourceQuote: ""
-  }])).toThrow(/approved mapping requires source/i);
+  expect(() =>
+    validateTrainingOccupationLinks([
+      {
+        trainingProgramKey: "IFC03S",
+        occupationId: "occupation:web-development",
+        relationshipType: "official_output",
+        reviewStatus: "draft",
+        sourceUrl: "",
+        sourceQuote: "",
+      },
+    ]),
+  ).toThrow(/approved mapping requires source/i);
 });
 
 it("accepts multiple reviewed aliases only after occupation confirmation", () => {
   const index = buildOccupationIndex(occupations, aliases);
-  expect(index.search("desarrollador web")[0].occupationId).toBe("occupation:web-development");
+  expect(index.search("desarrollador web")[0].occupationId).toBe(
+    "occupation:web-development",
+  );
 });
 ```
 
@@ -82,7 +90,10 @@ Expected: FAIL because schemas and validators are missing.
 - [ ] **Step 3: Implement schemas and review gate**
 
 ```ts
-export const RelationshipTypeSchema = z.enum(["official_output", "reviewed_relationship"]);
+export const RelationshipTypeSchema = z.enum([
+  "official_output",
+  "reviewed_relationship",
+]);
 export const ReviewStatusSchema = z.enum(["draft", "approved", "rejected"]);
 
 export const TrainingOccupationLinkSchema = z.object({
@@ -93,7 +104,7 @@ export const TrainingOccupationLinkSchema = z.object({
   sourceUrl: z.string().url(),
   sourceQuote: z.string().min(12),
   reviewedAt: z.string().date(),
-  mappingVersion: z.string().regex(/^\d+\.\d+\.\d+$/)
+  mappingVersion: z.string().regex(/^\d+\.\d+\.\d+$/),
 });
 ```
 
@@ -131,6 +142,7 @@ rtk git commit -m "feat: add reviewed occupation mapping contracts"
 ### Task 2: Quote-backed requirement extraction
 
 **Files:**
+
 - Create: `src/domain/requirements.ts`
 - Create: `scripts/data/extractRequirements.ts`
 - Modify: `data/schemas/generated.ts`
@@ -142,6 +154,7 @@ rtk git commit -m "feat: add reviewed occupation mapping contracts"
 - Test: `scripts/data/extractRequirements.test.ts`
 
 **Interfaces:**
+
 - Consumes: an official offer ID and `SanitizedOfferDescription.sections.requirements`.
 - Produces: `extractPublishedRequirements(offerId, description): PublishedRequirement[]`.
 
@@ -149,17 +162,33 @@ rtk git commit -m "feat: add reviewed occupation mapping contracts"
 
 ```ts
 it("preserves an exact quote for a published driving-license requirement", () => {
-  expect(extractPublishedRequirements("offer:1", requirements(["Permiso de conducir B y vehículo propio."])))
-    .toContainEqual(expect.objectContaining({
+  expect(
+    extractPublishedRequirements(
+      "offer:1",
+      requirements(["Permiso de conducir B y vehículo propio."]),
+    ),
+  ).toContainEqual(
+    expect.objectContaining({
       category: "driving_license_or_vehicle",
       sourceQuote: "Permiso de conducir B y vehículo propio.",
-      normalizedValue: "B"
-    }));
+      normalizedValue: "B",
+    }),
+  );
 });
 
 it("does not force ambiguous prose into a structured category", () => {
-  expect(extractPublishedRequirements("offer:2", requirements(["Se valorarán capacidades adecuadas."])))
-    .toEqual([{ category: "unclassified", sourceQuote: "Se valorarán capacidades adecuadas.", normalizedValue: null }]);
+  expect(
+    extractPublishedRequirements(
+      "offer:2",
+      requirements(["Se valorarán capacidades adecuadas."]),
+    ),
+  ).toEqual([
+    {
+      category: "unclassified",
+      sourceQuote: "Se valorarán capacidades adecuadas.",
+      normalizedValue: null,
+    },
+  ]);
 });
 ```
 
@@ -216,12 +245,14 @@ rtk git commit -m "feat: extract quote-backed offer requirements"
 ### Task 3: Deterministic offer matching and evidence states
 
 **Files:**
+
 - Create: `src/domain/offerMatching.ts`
 - Create: `src/domain/evidence.ts`
 - Test: `src/domain/offerMatching.test.ts`
 - Test: `src/domain/evidence.test.ts`
 
 **Interfaces:**
+
 - Consumes: approved occupations/aliases, `JobOffer`, `PublishedRequirement`, `SessionAnswer`.
 - Produces: `matchOffersForProgram(programKey, data): OfferMatch[]` and `deriveEvidenceState(match, answers): EvidenceState`.
 
@@ -234,12 +265,14 @@ it("matches an offer through a reviewed occupation alias and records the evidenc
     offerId: "offer:1",
     occupationId: "occupation:administrative-assistant",
     matchRule: "title_alias_exact",
-    relationshipType: "official_output"
+    relationshipType: "official_output",
   });
 });
 
 it("never creates a gap from an unpublished requirement", () => {
-  expect(deriveEvidenceState(matchWithoutLicenseRequirement, {})).toBe("occupational_relationship_incomplete");
+  expect(deriveEvidenceState(matchWithoutLicenseRequirement, {})).toBe(
+    "occupational_relationship_incomplete",
+  );
 });
 ```
 
@@ -281,6 +314,7 @@ rtk git commit -m "feat: derive auditable offer evidence states"
 ### Task 4: Closed action engine and in-memory session state
 
 **Files:**
+
 - Create: `src/domain/actionEngine.ts`
 - Create: `src/domain/session.ts`
 - Create: `data/curated/official-procedures.json`
@@ -288,6 +322,7 @@ rtk git commit -m "feat: derive auditable offer evidence states"
 - Test: `src/domain/session.test.ts`
 
 **Interfaces:**
+
 - Consumes: `EvidenceState`, `PublishedRequirement`, location/work-mode evidence and official procedure mappings.
 - Produces: `deriveActions(context): ReliableAction[]`, `useDecisionSession()`.
 
@@ -299,21 +334,24 @@ it("sends requirement verification to the original offer", () => {
     actionType: "verify_offer_requirements",
     targetKind: "external_offer",
     datasetKey: "ofertas-de-empleo",
-    href: incompleteContext.offer.originalUrl
+    href: incompleteContext.offer.originalUrl,
   });
 });
 
 it("sends regulated education to the official FP offering dataset", () => {
-  expect(deriveActions(missingQualificationContext)).toContainEqual(expect.objectContaining({
-    actionType: "view_regulated_training_route",
-    targetKind: "regulated_training",
-    datasetKey: "oferta-de-formacion-profesional"
-  }));
+  expect(deriveActions(missingQualificationContext)).toContainEqual(
+    expect.objectContaining({
+      actionType: "view_regulated_training_route",
+      targetKind: "regulated_training",
+      datasetKey: "oferta-de-formacion-profesional",
+    }),
+  );
 });
 
 it("checks remote evidence before producing a location action", () => {
-  expect(deriveActions(remoteOfferOutsideProvince).map((item) => item.actionType))
-    .not.toContain("adjust_search_area");
+  expect(
+    deriveActions(remoteOfferOutsideProvince).map((item) => item.actionType),
+  ).not.toContain("adjust_search_area");
 });
 ```
 
@@ -348,6 +386,7 @@ rtk git commit -m "feat: add reliable action engine and private session state"
 ### Task 5: Training-first vertical evidence experience
 
 **Files:**
+
 - Create: `src/features/training-first/TrainingSearchPage.tsx`
 - Create: `src/features/training-first/TrainingResultsPage.tsx`
 - Create: `src/features/training-first/OfferEvidenceCard.tsx`
@@ -358,6 +397,7 @@ rtk git commit -m "feat: add reliable action engine and private session state"
 - Test: `src/features/training-first/TrainingResultsPage.test.tsx`
 
 **Interfaces:**
+
 - Consumes: generated-data client, `matchOffersForProgram`, `deriveEvidenceState`, `deriveActions`, `useDecisionSession`.
 - Produces: `/desde-fp` and `/desde-fp/:programKey` routes.
 
@@ -366,13 +406,17 @@ rtk git commit -m "feat: add reliable action engine and private session state"
 ```tsx
 it("renders evidence in the approved narrative order", async () => {
   render(<TrainingResultsPage programKey="ADG01M" data={fixtureData} />);
-  const headings = screen.getAllByRole("heading").map((node) => node.textContent);
-  expect(headings).toEqual(expect.arrayContaining([
-    "Por qué aparece",
-    "Qué publica la vacante",
-    "Tu comprobación",
-    "Siguiente acción"
-  ]));
+  const headings = screen
+    .getAllByRole("heading")
+    .map((node) => node.textContent);
+  expect(headings).toEqual(
+    expect.arrayContaining([
+      "Por qué aparece",
+      "Qué publica la vacante",
+      "Tu comprobación",
+      "Siguiente acción",
+    ]),
+  );
   expect(screen.queryByText(/% de compatibilidad/i)).not.toBeInTheDocument();
 });
 ```
@@ -412,6 +456,7 @@ rtk git commit -m "feat: add training-first evidence journey"
 ### Task 6: Occupation-first confirmed autocomplete and explained routes
 
 **Files:**
+
 - Create: `src/features/occupation-first/OccupationSearchPage.tsx`
 - Create: `src/features/occupation-first/OccupationResultsPage.tsx`
 - Create: `src/features/occupation-first/OccupationCombobox.tsx`
@@ -421,6 +466,7 @@ rtk git commit -m "feat: add training-first evidence journey"
 - Test: `src/features/occupation-first/OccupationResultsPage.test.tsx`
 
 **Interfaces:**
+
 - Consumes: approved occupations, aliases, training links, programs, offerings and centers.
 - Produces: `/desde-ocupacion` and `/desde-ocupacion/:occupationId` routes.
 
@@ -430,8 +476,13 @@ rtk git commit -m "feat: add training-first evidence journey"
 it("requires confirmation of a controlled occupation", async () => {
   const user = userEvent.setup();
   render(<OccupationSearchPage data={fixtureData} />);
-  await user.type(screen.getByRole("combobox", { name: /ocupación/i }), "desarrollador web");
-  expect(screen.getByRole("option", { name: /programación web/i })).toBeVisible();
+  await user.type(
+    screen.getByRole("combobox", { name: /ocupación/i }),
+    "desarrollador web",
+  );
+  expect(
+    screen.getByRole("option", { name: /programación web/i }),
+  ).toBeVisible();
   expect(screen.getByRole("button", { name: /ver rutas/i })).toBeDisabled();
   await user.click(screen.getByRole("option", { name: /programación web/i }));
   expect(screen.getByRole("button", { name: /ver rutas/i })).toBeEnabled();
@@ -469,11 +520,13 @@ rtk git commit -m "feat: add confirmed occupation training routes"
 ### Task 7: End-to-end privacy and decision-flow checkpoint
 
 **Files:**
+
 - Create: `tests/e2e/training-first.spec.ts`
 - Create: `tests/e2e/occupation-first.spec.ts`
 - Create: `tests/e2e/privacy.spec.ts`
 
 **Interfaces:**
+
 - Consumes: both completed public journeys.
 - Produces: browser-verified decision flows and privacy regression coverage.
 

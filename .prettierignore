@@ -1,0 +1,8 @@
+# Immutable hash-addressed generated payloads; formatting would invalidate their manifests.
+public/data/v1/snapshots/**
+
+# Legacy generated offer payload retained outside the snapshot tree.
+public/data/v1/job-offers.json
+
+# Non-production research corpus preserves its source formatting.
+research/**

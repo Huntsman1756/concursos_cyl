@@ -9,28 +9,28 @@
 
 ## Ranking conservador por familia candidata
 
-| Posición | Familia candidata | Ventana capturada | Tramo reciente de 3 meses | Lectura |
-|---:|---|---:|---:|---|
-| 1 | Servicios Socioculturales y a la Comunidad | 134 | 122 | Concentración clara en asistencia domiciliaria y cuidados de dependencia. |
-| 2 | Sanidad | 83 | 80 | Dominada por auxiliares de enfermería; se excluyen profesiones universitarias y sanitarias no atribuibles a FP. |
-| 3 | Hostelería y Turismo | 72 | 68 | Cocineros, camareros y pinches; requiere separar ciclos de cocina y restauración. |
-| 4 | Edificación y Obra Civil | 42 | 39 | Albañilería y oficios de obra; probable reparto entre varios ciclos. |
-| 5 | Comercio y Marketing | 37 | 35 | Puestos heterogéneos de almacén, comercio y venta; buen caso ambiguo. |
-| 6 | Agraria | 23 | 20 | Señal fragmentada entre agricultura, ganadería, jardinería y forestal. |
-| 7 | Administración y Gestión | 21 | 20 | Volumen menor y ambigüedad ya observada en Gestión Administrativa. |
-| 8 | Transporte y Mantenimiento de Vehículos | 21 | 20 | Se excluyen conductores porque el título no demuestra una ruta FP. |
+| Posición | Familia candidata                          | Ventana capturada | Tramo reciente de 3 meses | Lectura                                                                                                         |
+| -------: | ------------------------------------------ | ----------------: | ------------------------: | --------------------------------------------------------------------------------------------------------------- |
+|        1 | Servicios Socioculturales y a la Comunidad |               134 |                       122 | Concentración clara en asistencia domiciliaria y cuidados de dependencia.                                       |
+|        2 | Sanidad                                    |                83 |                        80 | Dominada por auxiliares de enfermería; se excluyen profesiones universitarias y sanitarias no atribuibles a FP. |
+|        3 | Hostelería y Turismo                       |                72 |                        68 | Cocineros, camareros y pinches; requiere separar ciclos de cocina y restauración.                               |
+|        4 | Edificación y Obra Civil                   |                42 |                        39 | Albañilería y oficios de obra; probable reparto entre varios ciclos.                                            |
+|        5 | Comercio y Marketing                       |                37 |                        35 | Puestos heterogéneos de almacén, comercio y venta; buen caso ambiguo.                                           |
+|        6 | Agraria                                    |                23 |                        20 | Señal fragmentada entre agricultura, ganadería, jardinería y forestal.                                          |
+|        7 | Administración y Gestión                   |                21 |                        20 | Volumen menor y ambigüedad ya observada en Gestión Administrativa.                                              |
+|        8 | Transporte y Mantenimiento de Vehículos    |                21 |                        20 | Se excluyen conductores porque el título no demuestra una ruta FP.                                              |
 
 Quedan fuera del ranking **369 ofertas** por ser no FP o no permitir una relación suficiente desde el título, y **181** sin asignación segura. Solo 495 de 1.045 ofertas (47,4 %) superan este primer filtro conservador.
 
 ## Piloto de cinco ciclos
 
-| Estrato | Clave | Ciclo | Familia | Señal de títulos relacionada |
-|---|---|---|---|---:|
-| Fácil | SAN21 | Cuidados Auxiliares de Enfermería | Sanidad | 82 |
-| Fácil | HOT01M | Cocina y Gastronomía | Hostelería y Turismo | 47 |
-| Medio | SSC01M | Atención a Personas en Situación de Dependencia | Servicios Socioculturales y a la Comunidad | 126 |
-| Medio | EOC01M | Construcción | Edificación y Obra Civil | 39 |
-| Ambiguo | COM01M | Actividades Comerciales | Comercio y Marketing | 27 |
+| Estrato | Clave  | Ciclo                                           | Familia                                    | Señal de títulos relacionada |
+| ------- | ------ | ----------------------------------------------- | ------------------------------------------ | ---------------------------: |
+| Fácil   | SAN21  | Cuidados Auxiliares de Enfermería               | Sanidad                                    |                           82 |
+| Fácil   | HOT01M | Cocina y Gastronomía                            | Hostelería y Turismo                       |                           47 |
+| Medio   | SSC01M | Atención a Personas en Situación de Dependencia | Servicios Socioculturales y a la Comunidad |                          126 |
+| Medio   | EOC01M | Construcción                                    | Edificación y Obra Civil                   |                           39 |
+| Ambiguo | COM01M | Actividades Comerciales                         | Comercio y Marketing                       |                           27 |
 
 Las cifras de la última columna son señales de títulos para priorizar investigación. No equivalen a ofertas ya cubiertas por el ciclo y pueden solaparse con otros ciclos. Cada relación deberá superar la curación oficial antes de entrar en producción.
 

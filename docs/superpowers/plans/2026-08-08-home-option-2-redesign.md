@@ -26,6 +26,7 @@
 ### Task 1: Implement the selected option 2 home and responsive shell
 
 **Files:**
+
 - Modify: `src/features/home/HomePage.tsx`
 - Modify: `src/features/home/HomePage.test.tsx`
 - Modify: `src/components/EntryCard.tsx`
@@ -37,6 +38,7 @@
 - Create: `design-qa.md`
 
 **Interfaces:**
+
 - Consumes: `loadManifest(): Promise<GeneratedManifest>`, existing routes `/desde-fp`, `/desde-fp/IFC03S`, `/desde-fp/IFC03SD`, `/desde-ocupacion`, `/comparar`, and `/metodologia`.
 - Produces: a home with `home-workspace`, two `entry-panel` task regions, `coverage-panel`, `information-strip`, compact `site-header`, and independent `site-footer` presentation classes.
 
@@ -45,26 +47,26 @@
 Add behavior assertions that require:
 
 ```tsx
-expect(screen.getByRole("heading", {
-  level: 1,
-  name: "Elige tu camino y actúa con información oficial",
-})).toBeVisible();
-expect(screen.getByRole("region", { name: "Disponible ahora" })).toHaveTextContent(
-  "Desarrollo de Aplicaciones Web",
-);
-expect(screen.getByRole("region", { name: "Disponible ahora" })).toHaveTextContent(
-  "1 ocupación CNO revisada",
-);
+expect(
+  screen.getByRole("heading", {
+    level: 1,
+    name: "Elige tu camino y actúa con información oficial",
+  }),
+).toBeVisible();
+expect(
+  screen.getByRole("region", { name: "Disponible ahora" }),
+).toHaveTextContent("Desarrollo de Aplicaciones Web");
+expect(
+  screen.getByRole("region", { name: "Disponible ahora" }),
+).toHaveTextContent("1 ocupación CNO revisada");
 expect(screen.queryByText(/Cuidados Auxiliares/i)).not.toBeInTheDocument();
 expect(screen.queryByText(/Junta de Castilla y León/i)).not.toBeInTheDocument();
-expect(screen.getByRole("link", { name: "Explorar salidas laborales" })).toHaveAttribute(
-  "href",
-  "/desde-fp",
-);
-expect(screen.getByRole("link", { name: "Buscar ciclos que te preparan" })).toHaveAttribute(
-  "href",
-  "/desde-ocupacion",
-);
+expect(
+  screen.getByRole("link", { name: "Explorar salidas laborales" }),
+).toHaveAttribute("href", "/desde-fp");
+expect(
+  screen.getByRole("link", { name: "Buscar ciclos que te preparan" }),
+).toHaveAttribute("href", "/desde-ocupacion");
 ```
 
 Add shell assertions for the compact product descriptor, exact nav labels `Inicio`, `Comparar`, `Metodología`, an independent-project footer statement, and a methodology/data link in the information strip. Preserve the existing asynchronous freshness assertions.

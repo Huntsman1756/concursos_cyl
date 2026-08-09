@@ -41,6 +41,7 @@ Caddyfile                                      SPA routing and security headers
 ### Task 1: EDUCAbase PC-Axis source contracts and client
 
 **Files:**
+
 - Create: `scripts/data/educabaseSources.ts`
 - Create: `scripts/data/pcAxisClient.ts`
 - Create: `tests/fixtures/educabase/table-metadata.json`
@@ -48,6 +49,7 @@ Caddyfile                                      SPA routing and security headers
 - Test: `scripts/data/pcAxisClient.test.ts`
 
 **Interfaces:**
+
 - Consumes: official PC-Axis API metadata and JSON-stat2 responses.
 - Produces: `fetchPcAxisTable(source, selection): Promise<PcAxisDataset>`.
 
@@ -55,20 +57,27 @@ Caddyfile                                      SPA routing and security headers
 
 ```ts
 it("builds a bounded PC-Axis query from official dimension codes", () => {
-  expect(buildPcAxisQuery(metadata, {
-    cohort: ["2021-2022"],
-    period: ["Año 4"],
-    measure: ["Media"]
-  })).toEqual({
+  expect(
+    buildPcAxisQuery(metadata, {
+      cohort: ["2021-2022"],
+      period: ["Año 4"],
+      measure: ["Media"],
+    }),
+  ).toEqual({
     query: expect.arrayContaining([
-      expect.objectContaining({ code: "Cohorte", selection: { filter: "item", values: ["2021-2022"] } })
+      expect.objectContaining({
+        code: "Cohorte",
+        selection: { filter: "item", values: ["2021-2022"] },
+      }),
     ]),
-    response: { format: "json-stat2" }
+    response: { format: "json-stat2" },
   });
 });
 
 it("rejects a dimension value absent from official metadata", () => {
-  expect(() => buildPcAxisQuery(metadata, { period: ["Año 8"] })).toThrow(/unknown dimension value/i);
+  expect(() => buildPcAxisQuery(metadata, { period: ["Año 8"] })).toThrow(
+    /unknown dimension value/i,
+  );
 });
 ```
 
@@ -83,44 +92,52 @@ Expected: FAIL because the client is missing.
 export const EDUCABASE_SOURCES = {
   intermediateProgramEmployment: {
     id: "educabase-fp-intermediate-program-employment",
-    apiUrl: "https://estadisticas.educacion.gob.es/EducaJaxiPx/api/v1/es/laborales/insercion/famprof/l0/famprof_2_02.px",
-    scope: "spain_program_group"
+    apiUrl:
+      "https://estadisticas.educacion.gob.es/EducaJaxiPx/api/v1/es/laborales/insercion/famprof/l0/famprof_2_02.px",
+    scope: "spain_program_group",
   },
   higherProgramEmployment: {
     id: "educabase-fp-higher-program-employment",
-    apiUrl: "https://estadisticas.educacion.gob.es/EducaJaxiPx/api/v1/es/laborales/insercion/famprof/l0/famprof_3_02.px",
-    scope: "spain_program_group"
+    apiUrl:
+      "https://estadisticas.educacion.gob.es/EducaJaxiPx/api/v1/es/laborales/insercion/famprof/l0/famprof_3_02.px",
+    scope: "spain_program_group",
   },
   intermediateRegionalFamilyEmployment: {
     id: "educabase-fp-intermediate-regional-family-employment",
-    apiUrl: "https://estadisticas.educacion.gob.es/EducaJaxiPx/api/v1/es/laborales/insercion/ccaa/l0/ccaa_2_12.px",
-    scope: "castilla_leon_professional_family"
+    apiUrl:
+      "https://estadisticas.educacion.gob.es/EducaJaxiPx/api/v1/es/laborales/insercion/ccaa/l0/ccaa_2_12.px",
+    scope: "castilla_leon_professional_family",
   },
   higherRegionalFamilyEmployment: {
     id: "educabase-fp-higher-regional-family-employment",
-    apiUrl: "https://estadisticas.educacion.gob.es/EducaJaxiPx/api/v1/es/laborales/insercion/ccaa/l0/ccaa_3_12.px",
-    scope: "castilla_leon_professional_family"
+    apiUrl:
+      "https://estadisticas.educacion.gob.es/EducaJaxiPx/api/v1/es/laborales/insercion/ccaa/l0/ccaa_3_12.px",
+    scope: "castilla_leon_professional_family",
   },
   intermediateProgramIncome: {
     id: "educabase-fp-intermediate-program-income",
-    apiUrl: "https://estadisticas.educacion.gob.es/EducaJaxiPx/api/v1/es/laborales/insercion/famprof/l0/famprof_2_08.px",
-    scope: "spain_program_group"
+    apiUrl:
+      "https://estadisticas.educacion.gob.es/EducaJaxiPx/api/v1/es/laborales/insercion/famprof/l0/famprof_2_08.px",
+    scope: "spain_program_group",
   },
   higherProgramIncome: {
     id: "educabase-fp-higher-program-income",
-    apiUrl: "https://estadisticas.educacion.gob.es/EducaJaxiPx/api/v1/es/laborales/insercion/famprof/l0/famprof_3_08.px",
-    scope: "spain_program_group"
+    apiUrl:
+      "https://estadisticas.educacion.gob.es/EducaJaxiPx/api/v1/es/laborales/insercion/famprof/l0/famprof_3_08.px",
+    scope: "spain_program_group",
   },
   intermediateRegionalIncome: {
     id: "educabase-fp-intermediate-regional-income",
-    apiUrl: "https://estadisticas.educacion.gob.es/EducaJaxiPx/api/v1/es/laborales/insercion/ccaa/l0/ccaa_2_07.px",
-    scope: "castilla_leon_training_level"
+    apiUrl:
+      "https://estadisticas.educacion.gob.es/EducaJaxiPx/api/v1/es/laborales/insercion/ccaa/l0/ccaa_2_07.px",
+    scope: "castilla_leon_training_level",
   },
   higherRegionalIncome: {
     id: "educabase-fp-higher-regional-income",
-    apiUrl: "https://estadisticas.educacion.gob.es/EducaJaxiPx/api/v1/es/laborales/insercion/ccaa/l0/ccaa_3_07.px",
-    scope: "castilla_leon_training_level"
-  }
+    apiUrl:
+      "https://estadisticas.educacion.gob.es/EducaJaxiPx/api/v1/es/laborales/insercion/ccaa/l0/ccaa_3_07.px",
+    scope: "castilla_leon_training_level",
+  },
 } as const;
 ```
 
@@ -149,6 +166,7 @@ rtk git commit -m "feat: ingest official Educabase outcome tables"
 ### Task 2: Outcome normalization and compatibility rules
 
 **Files:**
+
 - Create: `src/domain/outcomes.ts`
 - Create: `scripts/data/normalizeOutcomeIndicators.ts`
 - Create: `data/curated/program-outcome-groups.json`
@@ -158,6 +176,7 @@ rtk git commit -m "feat: ingest official Educabase outcome tables"
 - Test: `src/domain/outcomes.test.ts`
 
 **Interfaces:**
+
 - Consumes: PC-Axis datasets and official program keys.
 - Produces: `OutcomeIndicator[]`, `getCompatibleComparison(indicators, selection)` and program-group labels.
 
@@ -167,16 +186,18 @@ rtk git commit -m "feat: ingest official Educabase outcome tables"
 it("preserves suppressed official values instead of coercing them to zero", () => {
   expect(normalizeCell("..", context)).toEqual({
     value: null,
-    suppressionState: "not_published"
+    suppressionState: "not_published",
   });
 });
 
 it("rejects comparison across different cohorts", () => {
-  expect(() => getCompatibleComparison(indicators, {
-    programKeys: ["ADG01M", "IFC03S"],
-    cohortByProgram: { ADG01M: "2020-2021", IFC03S: "2021-2022" },
-    postGraduationYear: 4
-  })).toThrow(/same cohort/i);
+  expect(() =>
+    getCompatibleComparison(indicators, {
+      programKeys: ["ADG01M", "IFC03S"],
+      cohortByProgram: { ADG01M: "2020-2021", IFC03S: "2021-2022" },
+      postGraduationYear: 4,
+    }),
+  ).toThrow(/same cohort/i);
 });
 ```
 
@@ -193,13 +214,23 @@ export interface OutcomeIndicator {
   trainingProgramKey: string | null;
   officialProgramGroupLabel: string | null;
   trainingLevel: "basic" | "intermediate" | "higher";
-  scope: "spain_program_group" | "castilla_leon_professional_family" | "castilla_leon_training_level";
+  scope:
+    | "spain_program_group"
+    | "castilla_leon_professional_family"
+    | "castilla_leon_training_level";
   cohort: string;
   postGraduationYear: 1 | 2 | 3 | 4;
-  measure: "affiliation_rate" | "mean" | "quintile_1" | "quintile_2" | "quintile_3" | "quintile_4";
+  measure:
+    | "affiliation_rate"
+    | "mean"
+    | "quintile_1"
+    | "quintile_2"
+    | "quintile_3"
+    | "quintile_4";
   value: number | null;
   unit: "eur_annualized_contribution_base" | "percent";
-  suppressionState: "published" | "not_published" | "not_applicable" | "provisional";
+  suppressionState:
+    "published" | "not_published" | "not_applicable" | "provisional";
   sourceId: string;
 }
 ```
@@ -228,6 +259,7 @@ rtk git commit -m "feat: normalize scoped vocational outcomes"
 ### Task 3: Accessible “Comparar estudios” experience
 
 **Files:**
+
 - Create: `src/features/compare-studies/CompareStudiesPage.tsx`
 - Create: `src/features/compare-studies/StudyComparisonForm.tsx`
 - Create: `src/features/compare-studies/EmploymentIndicators.tsx`
@@ -237,6 +269,7 @@ rtk git commit -m "feat: normalize scoped vocational outcomes"
 - Test: `src/features/compare-studies/CompareStudiesPage.test.tsx`
 
 **Interfaces:**
+
 - Consumes: program catalog, outcome indicators and comparison rules.
 - Produces: `/comparar-estudios` route with compatible selection and separate scope cards.
 
@@ -247,9 +280,17 @@ Run: `rtk npm install @observablehq/plot`
 ```tsx
 it("keeps national and regional income references separate", async () => {
   render(<CompareStudiesPage data={fixtureData} />);
-  expect(screen.getByRole("heading", { name: /ciclo o grupo en españa/i })).toBeVisible();
-  expect(screen.getByRole("heading", { name: /grado superior en castilla y león/i })).toBeVisible();
-  expect(screen.getByText(/no existe una estadística oficial de ingresos por ciclo formativo en castilla y león/i)).toBeVisible();
+  expect(
+    screen.getByRole("heading", { name: /ciclo o grupo en españa/i }),
+  ).toBeVisible();
+  expect(
+    screen.getByRole("heading", { name: /grado superior en castilla y león/i }),
+  ).toBeVisible();
+  expect(
+    screen.getByText(
+      /no existe una estadística oficial de ingresos por ciclo formativo en castilla y león/i,
+    ),
+  ).toBeVisible();
   expect(screen.queryByText(/salario esperado/i)).not.toBeInTheDocument();
 });
 ```
@@ -285,6 +326,7 @@ rtk git commit -m "feat: add scoped study and income comparison"
 ### Task 4: Public methodology, provenance and downloadable manifest
 
 **Files:**
+
 - Create: `src/features/methodology/MethodologyPage.tsx`
 - Create: `src/features/methodology/SourceMethodCard.tsx`
 - Create: `docs/methodology/source-contracts.md`
@@ -293,6 +335,7 @@ rtk git commit -m "feat: add scoped study and income comparison"
 - Test: `src/features/methodology/MethodologyPage.test.tsx`
 
 **Interfaces:**
+
 - Consumes: generated manifest and documented domain rules.
 - Produces: `/metodologia`, source download links and contest-ready explanations.
 
@@ -305,7 +348,9 @@ it("names the source, method and limitation for each public conclusion", () => {
   expect(screen.getByText(/ofertas de empleo/i)).toBeVisible();
   expect(screen.getByText(/base de cotización anualizada/i)).toBeVisible();
   expect(screen.getByText(/cawi\/cati/i)).toBeVisible();
-  expect(screen.getByRole("link", { name: /descargar manifiesto de datos/i })).toHaveAttribute("href", "/data/v1/manifest.json");
+  expect(
+    screen.getByRole("link", { name: /descargar manifiesto de datos/i }),
+  ).toHaveAttribute("href", "/data/v1/manifest.json");
 });
 ```
 
@@ -336,6 +381,7 @@ rtk git commit -m "docs: add public methodology and provenance"
 ### Task 5: License policy and third-party notices
 
 **Files:**
+
 - Create: `LICENSE`
 - Create: `DATA_LICENSE.md`
 - Create: `THIRD_PARTY_NOTICES.md`
@@ -344,6 +390,7 @@ rtk git commit -m "docs: add public methodology and provenance"
 - Modify: `package.json`
 
 **Interfaces:**
+
 - Consumes: installed package metadata and research source terms.
 - Produces: `npm run licenses:check` and publishable attribution documents.
 
@@ -351,8 +398,9 @@ rtk git commit -m "docs: add public methodology and provenance"
 
 ```ts
 it("rejects a dependency license outside the allowlist", () => {
-  expect(() => assertAllowedLicenses([{ name: "bad-package", license: "BUSL-1.1" }]))
-    .toThrow(/bad-package.*BUSL-1.1/i);
+  expect(() =>
+    assertAllowedLicenses([{ name: "bad-package", license: "BUSL-1.1" }]),
+  ).toThrow(/bad-package.*BUSL-1.1/i);
 });
 ```
 
@@ -385,6 +433,7 @@ rtk git commit -m "chore: enforce open-source licensing policy"
 ### Task 6: Accessibility, motion and copy quality gate
 
 **Files:**
+
 - Create: `tests/e2e/accessibility.spec.ts`
 - Create: `tests/e2e/reduced-motion.spec.ts`
 - Create: `tests/e2e/responsive.spec.ts`
@@ -392,6 +441,7 @@ rtk git commit -m "chore: enforce open-source licensing policy"
 - Modify: feature files only where tests expose a failure.
 
 **Interfaces:**
+
 - Consumes: all public routes and approved design rules.
 - Produces: automated WCAG-oriented, reduced-motion, zoom and responsive regression coverage.
 
@@ -424,6 +474,7 @@ rtk git commit -m "test: enforce accessible restrained interface"
 ### Task 7: Reproducible static release and final verification
 
 **Files:**
+
 - Create: `Dockerfile`
 - Create: `Caddyfile`
 - Create: `.dockerignore`
@@ -432,15 +483,20 @@ rtk git commit -m "test: enforce accessible restrained interface"
 - Modify: `README.md`
 
 **Interfaces:**
+
 - Consumes: successful data build and Vite production artifact.
 - Produces: `salida-cyl` static container, documented deployment and contest-ready public artifact.
 
 - [ ] **Step 1: Write the failing production-route test**
 
 ```ts
-test("deep links and static data work in the production server", async ({ page }) => {
+test("deep links and static data work in the production server", async ({
+  page,
+}) => {
   await page.goto("/desde-fp/ADG01M");
-  await expect(page.getByRole("heading", { name: /gestión administrativa/i })).toBeVisible();
+  await expect(
+    page.getByRole("heading", { name: /gestión administrativa/i }),
+  ).toBeVisible();
   const manifest = await page.request.get("/data/v1/manifest.json");
   expect(manifest.ok()).toBe(true);
 });
