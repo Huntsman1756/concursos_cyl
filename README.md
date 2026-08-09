@@ -27,6 +27,6 @@ Generated public data is rebuilt only through `npm run data:build`. See [DATA_LI
 
 ## Publish
 
-GitHub Pages publishes the development branch at `https://huntsman1756.github.io/concursos_cyl/`. A reproducible Node 24 + Caddy 2 container is also provided. Operational details and verification commands are in [docs/deployment.md](docs/deployment.md).
+GitHub Pages publishes the development branch at `https://huntsman1756.github.io/concursos_cyl/`. GitHub controls that host's response headers, so the deployed URL must be checked after every release. A reproducible Node 24 + Caddy 2 container provides the project's verified security-header policy; CI checks it with `npm run release:caddy:verify`. Operational details and verification commands are in [docs/deployment.md](docs/deployment.md).
 
 Project code is MIT licensed. Source data retains the terms declared by each publisher.

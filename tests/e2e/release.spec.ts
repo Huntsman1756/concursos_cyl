@@ -8,22 +8,6 @@ const RELEASE_PATHS = [
   "/metodologia",
 ];
 
-test("production responses apply the release security policy", async ({
-  request,
-}) => {
-  const response = await request.get("/");
-  expect(response.ok()).toBe(true);
-  expect(response.headers()["content-security-policy"]).toContain(
-    "default-src 'self'",
-  );
-  expect(response.headers()["x-content-type-options"]).toBe("nosniff");
-  expect(response.headers()["referrer-policy"]).toBe(
-    "strict-origin-when-cross-origin",
-  );
-  expect(response.headers()["permissions-policy"]).toContain("camera=()");
-  expect(response.headers()["set-cookie"]).toBeUndefined();
-});
-
 test("every public destination and a direct deep-link reload render the SPA", async ({
   page,
 }) => {

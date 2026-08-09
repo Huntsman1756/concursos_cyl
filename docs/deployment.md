@@ -13,7 +13,7 @@ After deployment, verify:
 - `/concursos_cyl/data/v1/manifest.json`
 - the immutable `outcomeIndicators.resourcePath` beneath the same base
 
-The Pages host controls response headers. The application itself uses no cookies, analytics, accounts, or browser storage.
+The Pages host controls response headers; Vite Preview and the container policy are not evidence of the headers GitHub serves. After every deployment, inspect the live Pages response separately (for example, `curl -I https://huntsman1756.github.io/concursos_cyl/`) and record any host-policy change. The application itself uses no cookies, analytics, accounts, or browser storage.
 
 ## Container
 
@@ -21,10 +21,12 @@ Build and run the reproducible static image:
 
 ```sh
 docker build -t salida-cyl:local .
-docker run --rm -p 8080:8080 salida-cyl:local
+docker run -d --rm --name salida-cyl-smoke -p 8080:8080 salida-cyl:local
+CADDY_SMOKE_BASE_URL=http://127.0.0.1:8080 npm run release:caddy:verify
+docker stop salida-cyl-smoke
 ```
 
-Caddy serves SPA fallback, gzip/zstd compression, CSP, `nosniff`, a strict referrer policy, and a restrictive permissions policy. Check a deep link and headers:
+Caddy serves SPA fallback, gzip/zstd compression, CSP, `nosniff`, a strict referrer policy, and a restrictive permissions policy. The verifier checks those Caddy-specific headers, both deep links, the manifest, and its immutable outcome resource. For manual inspection:
 
 ```sh
 curl -I http://127.0.0.1:8080/comparar
