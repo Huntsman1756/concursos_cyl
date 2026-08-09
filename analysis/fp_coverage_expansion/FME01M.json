@@ -1,0 +1,229 @@
+{
+  "schemaVersion": "1.0.0",
+  "programKey": "FME01M",
+  "baseQualificationIdentity": "qualification:FME01M",
+  "state": "deferred",
+  "transitions": [
+    {
+      "from": "not_started",
+      "to": "in_progress",
+      "at": "2026-08-09T17:20:00Z"
+    },
+    { "from": "in_progress", "to": "deferred", "at": "2026-08-09T17:34:00Z" }
+  ],
+  "startedAt": "2026-08-09T17:20:00Z",
+  "completedAt": "2026-08-09T17:34:00Z",
+  "phaseMinutes": {
+    "research": 8,
+    "implementation": 4,
+    "test": 3,
+    "review": 0
+  },
+  "reviewerTimeExcluded": true,
+  "programmeProfileEvidence": {
+    "todoFp": {
+      "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/fabricacion-mecanica/mecanizado.html",
+      "sourceQuote": "TÃ©cnico en Mecanizado",
+      "reviewedAt": "2026-08-09"
+    },
+    "authoritativeOutputSource": {
+      "sourceUrl": "https://www.boe.es/eli/es/rd/1398/2007",
+      "sourceQuote": "Las ocupaciones y puestos de trabajo mÃ¡s relevantes son los siguientes:",
+      "reviewedAt": "2026-08-09"
+    },
+    "reconciliationNote": "TodoFP y BOE identifican el tÃ­tulo de Grado Medio, pero el seed congelado MecÃ¡nico de mecanizado no coincide literalmente con los siete outputs BOE; ademÃ¡s, el BOE correcto es el RD 1398/2007."
+  },
+  "sourceDrift": {
+    "frozenCandidateUrl": "https://www.boe.es/eli/es/rd/1399/2007",
+    "authoritativeUrl": "https://www.boe.es/eli/es/rd/1398/2007",
+    "reason": "La URL BOE congelada apunta al RD 1399/2007, de PanaderÃ­a, mientras que el tÃ­tulo Mecanizado y sus outputs se establecen en el RD 1398/2007; el slot queda diferido y no publica nada."
+  },
+  "officialOutputInventory": {
+    "sourceUrl": "https://www.boe.es/eli/es/rd/1398/2007",
+    "labels": [
+      "Ajustador operario de mÃ¡quinas herramientas.",
+      "Pulidor de metales y afilador de herramientas.",
+      "Operador de mÃ¡quinas para trabajar metales.",
+      "Operador de mÃ¡quinas herramientas.",
+      "Operador de robots industriales.",
+      "Trabajadores de la fabricaciÃ³n de herramientas, mecÃ¡nicos y ajustadores, modelistas matriceros y asimilados.",
+      "Tornero, fresador y mandrinador."
+    ]
+  },
+  "officialOutputReviews": [
+    {
+      "order": 1,
+      "officialOutputLabel": "Ajustador operario de mÃ¡quinas herramientas.",
+      "disposition": "accepted",
+      "candidateOccupationIds": ["occupation:cno11:7323"],
+      "acceptedOccupationIds": ["occupation:cno11:7323"],
+      "sourceUrl": "https://www.boe.es/eli/es/rd/1398/2007",
+      "sourceQuote": "Ajustador operario de mÃ¡quinas herramientas.",
+      "classificationEvidence": [
+        {
+          "occupationId": "occupation:cno11:7323",
+          "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+          "sourceQuote": "7323 Ajustadores y operadores de mÃ¡quinas-herramienta",
+          "reviewedAt": "2026-08-09"
+        }
+      ],
+      "reason": "El CNO 7323 delimita a quienes regulan y manejan mÃ¡quinas-herramienta de precisiÃ³n, coincidiendo directamente con el output."
+    },
+    {
+      "order": 2,
+      "officialOutputLabel": "Pulidor de metales y afilador de herramientas.",
+      "disposition": "accepted",
+      "candidateOccupationIds": ["occupation:cno11:7324"],
+      "acceptedOccupationIds": ["occupation:cno11:7324"],
+      "sourceUrl": "https://www.boe.es/eli/es/rd/1398/2007",
+      "sourceQuote": "Pulidor de metales y afilador de herramientas.",
+      "classificationEvidence": [
+        {
+          "occupationId": "occupation:cno11:7324",
+          "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+          "sourceQuote": "7324 Pulidores de metales y afiladores de herramientas",
+          "reviewedAt": "2026-08-09"
+        }
+      ],
+      "reason": "El output coincide literalmente con el encabezado CNO 7324 y sus tareas de pulido y afilado."
+    },
+    {
+      "order": 3,
+      "officialOutputLabel": "Operador de mÃ¡quinas para trabajar metales.",
+      "disposition": "accepted",
+      "candidateOccupationIds": ["occupation:cno11:7323"],
+      "acceptedOccupationIds": ["occupation:cno11:7323"],
+      "sourceUrl": "https://www.boe.es/eli/es/rd/1398/2007",
+      "sourceQuote": "Operador de mÃ¡quinas para trabajar metales.",
+      "classificationEvidence": [
+        {
+          "occupationId": "occupation:cno11:7323",
+          "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+          "sourceQuote": "7323 Ajustadores y operadores de mÃ¡quinas-herramienta",
+          "reviewedAt": "2026-08-09"
+        }
+      ],
+      "reason": "El lÃ­mite CNO 7323 cubre la regulaciÃ³n y manejo de mÃ¡quinas-herramienta para fabricar piezas de metal."
+    },
+    {
+      "order": 4,
+      "officialOutputLabel": "Operador de mÃ¡quinas herramientas.",
+      "disposition": "accepted",
+      "candidateOccupationIds": ["occupation:cno11:7323"],
+      "acceptedOccupationIds": ["occupation:cno11:7323"],
+      "sourceUrl": "https://www.boe.es/eli/es/rd/1398/2007",
+      "sourceQuote": "Operador de mÃ¡quinas herramientas.",
+      "classificationEvidence": [
+        {
+          "occupationId": "occupation:cno11:7323",
+          "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+          "sourceQuote": "- Operadores de mÃ¡quinas herramientas",
+          "reviewedAt": "2026-08-09"
+        }
+      ],
+      "reason": "El ejemplo CNO 7323 nombra literalmente a los operadores de mÃ¡quinas herramientas."
+    },
+    {
+      "order": 5,
+      "officialOutputLabel": "Operador de robots industriales.",
+      "disposition": "rejected",
+      "candidateOccupationIds": ["occupation:cno11:3139"],
+      "sourceUrl": "https://www.boe.es/eli/es/rd/1398/2007",
+      "sourceQuote": "Operador de robots industriales.",
+      "classificationEvidence": [
+        {
+          "occupationId": "occupation:cno11:3139",
+          "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+          "sourceQuote": "- Controladores de robÃ³tica industrial",
+          "reviewedAt": "2026-08-09"
+        }
+      ],
+      "reason": "El CNO 3139 identifica controladores tÃ©cnicos de robÃ³tica, no un operador de robots como output exacto del tÃ­tulo; no se infiere equivalencia."
+    },
+    {
+      "order": 6,
+      "officialOutputLabel": "Trabajadores de la fabricaciÃ³n de herramientas, mecÃ¡nicos y ajustadores, modelistas matriceros y asimilados.",
+      "disposition": "accepted",
+      "candidateOccupationIds": ["occupation:cno11:7322"],
+      "acceptedOccupationIds": ["occupation:cno11:7322"],
+      "sourceUrl": "https://www.boe.es/eli/es/rd/1398/2007",
+      "sourceQuote": "Trabajadores de la fabricaciÃ³n de herramientas, mecÃ¡nicos y ajustadores, modelistas matriceros y asimilados.",
+      "classificationEvidence": [
+        {
+          "occupationId": "occupation:cno11:7322",
+          "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+          "sourceQuote": "7322 Trabajadores de la fabricaciÃ³n de herramientas, mecÃ¡nico-ajustadores, modelistas, matriceros y afines",
+          "reviewedAt": "2026-08-09"
+        }
+      ],
+      "reason": "El output BOE coincide con el encabezado oficial CNO 7322; se conserva como relaciÃ³n exacta auditada, sin publicarla."
+    },
+    {
+      "order": 7,
+      "officialOutputLabel": "Tornero, fresador y mandrinador.",
+      "disposition": "accepted",
+      "candidateOccupationIds": ["occupation:cno11:7323"],
+      "acceptedOccupationIds": ["occupation:cno11:7323"],
+      "sourceUrl": "https://www.boe.es/eli/es/rd/1398/2007",
+      "sourceQuote": "Tornero, fresador y mandrinador.",
+      "classificationEvidence": [
+        {
+          "occupationId": "occupation:cno11:7323",
+          "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+          "sourceQuote": "- Torneros de piezas de metal",
+          "reviewedAt": "2026-08-09"
+        }
+      ],
+      "reason": "El CNO 7323 incluye torneros de piezas de metal y delimita las mÃ¡quinas-herramienta de precisiÃ³n; no se separan subespecialidades no codificadas."
+    }
+  ],
+  "acceptedRelations": [
+    {
+      "kind": "link",
+      "programKey": "FME01M",
+      "occupationId": "occupation:cno11:7322",
+      "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+      "sourceQuote": "7322 Trabajadores de la fabricaciÃ³n de herramientas, mecÃ¡nico-ajustadores, modelistas, matriceros y afines",
+      "reviewedAt": "2026-08-09"
+    },
+    {
+      "kind": "link",
+      "programKey": "FME01M",
+      "occupationId": "occupation:cno11:7323",
+      "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+      "sourceQuote": "7323 Ajustadores y operadores de mÃ¡quinas-herramienta",
+      "reviewedAt": "2026-08-09"
+    },
+    {
+      "kind": "link",
+      "programKey": "FME01M",
+      "occupationId": "occupation:cno11:7324",
+      "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+      "sourceQuote": "7324 Pulidores de metales y afiladores de herramientas",
+      "reviewedAt": "2026-08-09"
+    }
+  ],
+  "rejectedRelations": [
+    {
+      "kind": "link",
+      "programKey": "FME01M",
+      "occupationId": "occupation:cno11:3139",
+      "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+      "sourceQuote": "- Controladores de robÃ³tica industrial",
+      "reviewedAt": "2026-08-09"
+    }
+  ],
+  "baselineMatchIds": [],
+  "currentMatchIds": [],
+  "newlyReachedOfferIdsByProgram": { "FME01M": [] },
+  "newlyReachedOfferUnionIds": [],
+  "limitation": "Deferred: el seed congelado MecÃ¡nico de mecanizado no es un output BOE literal y el candidato CNO 7322 no es el lÃ­mite general de mÃ¡quinas-herramienta. Se conservan solo relaciones CNO exactas para auditorÃ­a; no se aÃ±aden aliases, data/curated, ofertas, snapshot ni recursos pÃºblicos.",
+  "reviewedCommit": "ffb756449ac004700cbd5aae170f17d676c0a920",
+  "reviewedCommitAt": "2026-08-09T17:35:28.000Z",
+  "snapshotId": "20260809113838031-6730f7cd4230",
+  "snapshotHash": "7536026813780339f5e31fdf3645baf215492b3e9f82946a226a222fe60261ca",
+  "publicParity": {
+    "publishedRelationKeys": [],
+    "rejectedRelationKeys": ["FME01M|occupation:cno11:3139"]
+  }
+}
