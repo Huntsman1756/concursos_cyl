@@ -26,6 +26,17 @@ interface DownloadedFixture {
   path: string;
 }
 
+export type FixtureRequest = (
+  input: string,
+  init: RequestInit,
+) => Promise<Response>;
+
+export interface CaptureEducabaseIncomeFixturesOptions {
+  evidence?: unknown;
+  fixtureDirectory?: string;
+  request?: FixtureRequest;
+}
+
 const FIXTURE_DIRECTORY = resolve(
   process.cwd(),
   "tests/fixtures/educabase-income",
@@ -97,8 +108,11 @@ function assertFixtureEvidence(
   }
 }
 
-function getFixturePath(evidence: FixtureEvidence): string {
-  return resolve(FIXTURE_DIRECTORY, `${evidence.tableId}.${evidence.format}`);
+function getFixturePath(
+  fixtureDirectory: string,
+  evidence: FixtureEvidence,
+): string {
+  return resolve(fixtureDirectory, `${evidence.tableId}.${evidence.format}`);
 }
 
 async function assertNoFixturesExist(paths: readonly string[]): Promise<void> {
@@ -148,11 +162,13 @@ export function assertFixtureBom(
 
 async function downloadFixture(
   fixtureEvidence: FixtureEvidence,
+  fixtureDirectory: string,
+  request: FixtureRequest,
 ): Promise<DownloadedFixture> {
   const source = EDUCABASE_INCOME_SOURCES[fixtureEvidence.tableId];
   const sourceUrl =
     fixtureEvidence.format === "csv" ? source.csvUrl : source.pxUrl;
-  const response = await fetch(sourceUrl, { redirect: "follow" });
+  const response = await request(sourceUrl, { redirect: "follow" });
 
   if (response.status !== 200) {
     throw new Error(
@@ -185,16 +201,28 @@ async function downloadFixture(
   return {
     evidence: fixtureEvidence,
     bytes,
-    path: getFixturePath(fixtureEvidence),
+    path: getFixturePath(fixtureDirectory, fixtureEvidence),
   };
 }
 
-export async function captureEducabaseIncomeFixtures(): Promise<void> {
-  assertFixtureEvidence(evidenceJson);
-  await mkdir(FIXTURE_DIRECTORY, { recursive: true });
-  await assertNoFixturesExist(evidenceJson.map(getFixturePath));
+export async function captureEducabaseIncomeFixtures(
+  options: CaptureEducabaseIncomeFixturesOptions = {},
+): Promise<void> {
+  const fixtureDirectory = options.fixtureDirectory ?? FIXTURE_DIRECTORY;
+  const fixtureEvidence = options.evidence ?? evidenceJson;
+  const request = options.request ?? globalThis.fetch;
 
-  const downloaded = await Promise.all(evidenceJson.map(downloadFixture));
+  assertFixtureEvidence(fixtureEvidence);
+  await mkdir(fixtureDirectory, { recursive: true });
+  await assertNoFixturesExist(
+    fixtureEvidence.map((item) => getFixturePath(fixtureDirectory, item)),
+  );
+
+  const downloaded = await Promise.all(
+    fixtureEvidence.map((item) =>
+      downloadFixture(item, fixtureDirectory, request),
+    ),
+  );
   await Promise.all(
     downloaded.map(async ({ bytes, path }) => {
       try {

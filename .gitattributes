@@ -1,0 +1,2 @@
+tests/fixtures/educabase-income/*.csv -text
+tests/fixtures/educabase-income/*.px -text
