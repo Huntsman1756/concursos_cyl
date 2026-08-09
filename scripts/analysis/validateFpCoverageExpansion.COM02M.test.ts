@@ -84,6 +84,17 @@ async function computeCom02mOverlay() {
     "occupation:cno11:5210",
     "occupation:cno11:5220",
   ]);
+  const baselineLinks = links.filter((link) => {
+    if (typeof link !== "object" || link === null) return true;
+    const candidate = link as {
+      trainingProgramKey?: string;
+      reviewStatus?: string;
+    };
+    return !(
+      candidate.trainingProgramKey === "COM02M" &&
+      candidate.reviewStatus === "approved"
+    );
+  });
   const overlayOccupations = [
     ...occupations.filter(
       (occupation) =>
@@ -107,7 +118,7 @@ async function computeCom02mOverlay() {
     programQualificationLinks: REVIEWED_PROGRAM_QUALIFICATION_LINKS,
     occupations,
     aliases,
-    links,
+    links: baselineLinks,
     offers,
     publishedRequirements,
     humanOverrides: [],
@@ -116,7 +127,7 @@ async function computeCom02mOverlay() {
     ...base,
     occupations: overlayOccupations,
     links: [
-      ...links,
+      ...baselineLinks,
       ...curatedLinks.filter(
         (link) =>
           link.trainingProgramKey === "COM02M" &&
@@ -139,14 +150,18 @@ async function computeCom02mOverlay() {
 }
 
 describe("COM02M expansion slot", () => {
-  it("proves the frozen public baseline has no approved COM02M relation yet", async () => {
+  it("proves the published snapshot contains exactly COM02M's accepted relations", async () => {
     const manifest = await readJson<{
       resourceSnapshots: {
         trainingOccupationLinks: { resourcePath: string };
       };
     }>(resolve(rootDirectory, "public/data/v1/manifest.json"));
     const baselineLinks = await readJson<
-      { trainingProgramKey: string; reviewStatus: string }[]
+      {
+        trainingProgramKey: string;
+        occupationId: string;
+        reviewStatus: string;
+      }[]
     >(
       resolve(
         rootDirectory,
@@ -157,12 +172,15 @@ describe("COM02M expansion slot", () => {
       ),
     );
     expect(
-      baselineLinks.filter(
-        (link) =>
-          link.trainingProgramKey === "COM02M" &&
-          link.reviewStatus === "approved",
-      ),
-    ).toEqual([]);
+      baselineLinks
+        .filter(
+          (link) =>
+            link.trainingProgramKey === "COM02M" &&
+            link.reviewStatus === "approved",
+        )
+        .map((link) => `${link.trainingProgramKey}|${link.occupationId}`)
+        .sort(),
+    ).toEqual(["COM02M|occupation:cno11:5210", "COM02M|occupation:cno11:5220"]);
   });
 
   it("validates the completed attempt against the in-memory curated overlay", async () => {

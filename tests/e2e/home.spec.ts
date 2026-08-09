@@ -386,7 +386,7 @@ test("the selected workspace uses equal desktop panels and a stacked mobile flow
       name: "Ciclos revisados",
     })
     .getByRole("listitem");
-  await expect(reviewedPrograms).toHaveCount(6);
+  await expect(reviewedPrograms).toHaveCount(7);
   const firstPanel = await panels.nth(0).boundingBox();
   const secondPanel = await panels.nth(1).boundingBox();
   const coveragePanel = await coverage.boundingBox();

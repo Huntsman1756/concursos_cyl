@@ -116,7 +116,10 @@ export const FpCoverageExpansionReportSchema = z
         remainingGap: z.number().int().nonnegative(),
         modalityDoubleCount: z.literal(false),
         belowTargetReason: z.string().min(20),
-        publicationStatus: z.enum(["pending_task_a2_12"]),
+        publicationStatus: z.enum([
+          "pending_task_a2_12",
+          "published_task_a2_12",
+        ]),
       })
       .strict(),
     offerDeltas: z
@@ -543,9 +546,12 @@ function computeIndependentAttempt(
     resources.publicRelationKeys.has(key),
   );
   if (attempt.state === "completed") {
-    if (actualProgramRelationKeys.length > 0)
+    if (
+      JSON.stringify(actualProgramRelationKeys) !==
+      JSON.stringify(acceptedRelationKeys)
+    )
       throw new Error(
-        `Completed ${attempt.programKey} coverage is already present in the public snapshot; this pre-publication report must stop.`,
+        `Completed ${attempt.programKey} public relations must equal the accepted output-derived relations exactly.`,
       );
   } else if (actualAccepted.length > 0) {
     throw new Error(
@@ -704,7 +710,9 @@ export async function loadFpCoverageExpansionInputs(rootDirectory: string) {
       candidate,
       computed: recomputed.computed,
       publicRelationSet: recomputed.publicRelationSet,
-      publicationPending: attempt.state === "completed",
+      publicationPending:
+        attempt.state === "completed" &&
+        recomputed.publicRelationSet.relationKeys.length === 0,
       reviewedCommitAt: attempt.reviewedCommitAt,
     });
     independentlyComputed.set(attempt.programKey, recomputed);
@@ -788,8 +796,14 @@ export async function buildFpCoverageExpansionReport(
         new Set(completedBases).size,
       modalityDoubleCount: false as const,
       belowTargetReason:
-        "Only COM02M completed; seven terminal attempts were deferred, six reserves remain unattempted, and completion/publication stopped before evidence supported 12 distinct qualifications.",
-      publicationStatus: "pending_task_a2_12" as const,
+        "Only COM02M completed; seven terminal attempts were deferred, six reserves remain unattempted, and completion stopped before evidence supported 12 distinct qualifications.",
+      publicationStatus: candidates.some(
+        (candidate) =>
+          candidate.state === "completed" &&
+          candidate.publicParity.publishedRelationKeys.length > 0,
+      )
+        ? ("published_task_a2_12" as const)
+        : ("pending_task_a2_12" as const),
     },
     offerDeltas: {
       byProgram,
@@ -866,7 +880,11 @@ Source cutoff: \`${parsed.sourceCutoffAt}\`
 - Terminal attempts: ${parsed.counts.terminal} (${parsed.counts.completed} completed, ${parsed.counts.deferred} deferred, ${parsed.counts.discarded} discarded).
 - Truthful terminal distinct total: ${parsed.coverage.terminalDistinctQualificationTotal} (baseline 5 + ${parsed.coverage.newlyCompletedCanonicalBases.length} newly completed canonical bases).
 - Target: ${parsed.coverage.targetDistinctQualifications}; remaining gap: ${parsed.coverage.remainingGap}.
-- Publication status: terminal evidence is supported for completed attempts; public snapshot publication remains pending Task A2.12.
+- Publication status: ${
+    parsed.coverage.publicationStatus === "published_task_a2_12"
+      ? "COM02M is published in the current immutable snapshot; deferred attempts remain unpublished."
+      : "terminal evidence is supported for completed attempts; public snapshot publication remains pending Task A2.12."
+  }
 - Below-target reason: ${parsed.coverage.belowTargetReason}
 
 ## Attempt lanes
@@ -884,7 +902,7 @@ ${rows}
 - Reviewer time is explicitly excluded from modeled active minutes and remains excluded from all denominators.
 - Attempt denominator: ${parsed.counts.primaryAttempted} primary + ${parsed.counts.reserveAttempted} reserve = ${parsed.counts.totalAttempted} total attempted; ${parsed.counts.reserveUnattempted} reserve candidates remain unattempted.
 
-Deferred accepted audit relations are not counted as completed or public coverage. Checked attempts were validated against their stored terminal evidence, while matches, offer deltas, snapshot identity, output-derived relation keys, and the current manifest-addressed public relation set were independently recomputed; no public snapshot rebuild was performed.
+Deferred accepted audit relations are not counted as completed or public coverage. Checked attempts were validated against their stored terminal evidence, while matches, offer deltas, snapshot identity, output-derived relation keys, and the current manifest-addressed public relation set were independently recomputed; only relations matching the completed evidence are public.
 `;
 }
 

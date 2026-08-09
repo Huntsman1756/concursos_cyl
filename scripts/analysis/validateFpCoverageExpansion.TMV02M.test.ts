@@ -40,7 +40,7 @@ function expansionSnapshotHash() {
   return createHash("sha256")
     .update(
       JSON.stringify({
-        snapshotId: "20260809113838031-6730f7cd4230",
+        snapshotId: "20260809185438334-65ce4d3c4e14",
         programKey: "TMV02M",
         baselineMatchIds: [],
         currentMatchIds: [],
@@ -103,7 +103,7 @@ describe("TMV02M expansion slot", () => {
       currentMatchIds: [],
       newlyReachedOfferIdsByProgram: { TMV02M: [] },
       newlyReachedOfferUnionIds: [],
-      snapshotId: "20260809113838031-6730f7cd4230",
+      snapshotId: "20260809185438334-65ce4d3c4e14",
       snapshotHash: expansionSnapshotHash(),
     };
     const publicRelationSet = {

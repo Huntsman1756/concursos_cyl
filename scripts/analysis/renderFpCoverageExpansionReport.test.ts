@@ -45,6 +45,7 @@ describe("renderFpCoverageExpansionReport", () => {
       terminalDistinctQualificationTotal: 6,
       targetDistinctQualifications: 12,
       remainingGap: 6,
+      publicationStatus: "published_task_a2_12",
     });
     expect(result.offerDeltas).toEqual({
       byProgram: {
@@ -151,7 +152,7 @@ describe("renderFpCoverageExpansionReport", () => {
         candidate,
         computed: recomputed.computed,
         publicRelationSet: recomputed.publicRelationSet,
-        publicationPending: true,
+        publicationPending: false,
         reviewedCommitAt: tampered.reviewedCommitAt,
       }),
     ).toThrow(/snapshot/i);
@@ -184,5 +185,28 @@ describe("renderFpCoverageExpansionReport", () => {
       publishedRelationKeys: recomputed.publicRelationSet.relationKeys,
       rejectedRelationKeys: recomputed.relationKeys.rejected,
     });
+  });
+
+  it("requires exact public parity for a completed attempt", async () => {
+    const inputs = await loadFpCoverageExpansionInputs(root);
+    const attempt = inputs.attempts.get("COM02M")!;
+    const candidate = inputs.ranking.primaryCandidates.find(
+      (entry) => entry.programKey === "COM02M",
+    )!;
+    const recomputed = inputs.independentlyComputed.get("COM02M")!;
+
+    expect(() =>
+      validateExpansionAttemptData({
+        attempt,
+        candidate,
+        computed: recomputed.computed,
+        publicRelationSet: {
+          ...recomputed.publicRelationSet,
+          relationKeys: recomputed.publicRelationSet.relationKeys.slice(0, 1),
+        },
+        publicationPending: false,
+        reviewedCommitAt: attempt.reviewedCommitAt,
+      }),
+    ).toThrow(/public parity|missing|equal/i);
   });
 });

@@ -8,8 +8,8 @@ Source cutoff: `2026-08-09T17:34:00Z`
 - Terminal attempts: 8 (1 completed, 7 deferred, 0 discarded).
 - Truthful terminal distinct total: 6 (baseline 5 + 1 newly completed canonical bases).
 - Target: 12; remaining gap: 6.
-- Publication status: terminal evidence is supported for completed attempts; public snapshot publication remains pending Task A2.12.
-- Below-target reason: Only COM02M completed; seven terminal attempts were deferred, six reserves remain unattempted, and completion/publication stopped before evidence supported 12 distinct qualifications.
+- Publication status: COM02M is published in the current immutable snapshot; deferred attempts remain unpublished.
+- Below-target reason: Only COM02M completed; seven terminal attempts were deferred, six reserves remain unattempted, and completion stopped before evidence supported 12 distinct qualifications.
 
 ## Attempt lanes
 
@@ -40,4 +40,4 @@ Source cutoff: `2026-08-09T17:34:00Z`
 - Reviewer time is explicitly excluded from modeled active minutes and remains excluded from all denominators.
 - Attempt denominator: 7 primary + 1 reserve = 8 total attempted; 6 reserve candidates remain unattempted.
 
-Deferred accepted audit relations are not counted as completed or public coverage. Checked attempts were validated against their stored terminal evidence, while matches, offer deltas, snapshot identity, output-derived relation keys, and the current manifest-addressed public relation set were independently recomputed; no public snapshot rebuild was performed.
+Deferred accepted audit relations are not counted as completed or public coverage. Checked attempts were validated against their stored terminal evidence, while matches, offer deltas, snapshot identity, output-derived relation keys, and the current manifest-addressed public relation set were independently recomputed; only relations matching the completed evidence are public.

@@ -257,8 +257,8 @@
   "limitation": "Deferred: the frozen seed Instalador electricista has no literal BOE output match. The exhaustive inventory spans CNO-11 boundaries 7510, 7521, 7533 and 7294, so no exact approved relation is published; curated data, public resources and snapshots remain unchanged.",
   "reviewedCommit": "07407b1a46a2eb01e89068db84ca2c70e350b27e",
   "reviewedCommitAt": "2026-08-09T17:14:11.000Z",
-  "snapshotId": "20260809113838031-6730f7cd4230",
-  "snapshotHash": "f969cb1bb6b114d7f5abc351b43a7a655a25d05d32438088abdf01fd8fe9c6b2",
+  "snapshotId": "20260809185438334-65ce4d3c4e14",
+  "snapshotHash": "de57161cb5d89d3178474612beba6449bcffd7b0444d37c7fe00e679b90a012c",
   "publicParity": {
     "publishedRelationKeys": [],
     "rejectedRelationKeys": [

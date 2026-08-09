@@ -921,19 +921,17 @@ describe("validateFpCoveragePilotResults", () => {
           "utf8",
         ),
       ) as unknown[];
-    const [publicLinks, publicAliases, publicCoverage, publicOccupations] =
-      await Promise.all([
-        readPublicResource(
-          manifest.resourceSnapshots.trainingOccupationLinks.resourcePath,
-        ),
-        readPublicResource(
-          manifest.resourceSnapshots.occupationAliases.resourcePath,
-        ),
-        readPublicResource(
-          manifest.resourceSnapshots.mappingCoverage.resourcePath,
-        ),
-        readPublicResource(manifest.resourceSnapshots.occupations.resourcePath),
-      ]);
+    const [publicLinks, publicAliases, publicCoverage] = await Promise.all([
+      readPublicResource(
+        manifest.resourceSnapshots.trainingOccupationLinks.resourcePath,
+      ),
+      readPublicResource(
+        manifest.resourceSnapshots.occupationAliases.resourcePath,
+      ),
+      readPublicResource(
+        manifest.resourceSnapshots.mappingCoverage.resourcePath,
+      ),
+    ]);
     expect(publicLinks).not.toContainEqual(
       expect.objectContaining({
         trainingProgramKey: "COM01M",
@@ -958,11 +956,8 @@ describe("validateFpCoveragePilotResults", () => {
         rejectedMappings: 0,
       }),
     );
-    for (const occupationId of COM_REJECTED_OCCUPATION_IDS) {
-      expect(publicOccupations).not.toContainEqual(
-        expect.objectContaining({ occupationId }),
-      );
-    }
+    // Occupations are shared catalog records: a CNO rejected for COM01M may
+    // still be legitimately published by another completed program.
   });
 
   it("requires COM01M's complete deferred output audit", async () => {

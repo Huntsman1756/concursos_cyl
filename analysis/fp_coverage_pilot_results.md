@@ -13,7 +13,7 @@ No se infiere una tasa estable para todo el catálogo a partir de cinco intentos
 
 ## Cobertura publicada y límites
 
-La cobertura revisada pública incluye EOC01M, HOT01M, IFC03S, IFC03SD, SAN21, SSC01M. La interfaz la deriva de `mapping-coverage.json` direccionado por el manifiesto; no mantiene una lista paralela. COM01M permanece diferido y se muestra como cobertura no disponible, sin relación, alias, ocupación ni afirmación pública revisada.
+La cobertura revisada pública incluye COM02M, EOC01M, HOT01M, IFC03S, IFC03SD, SAN21, SSC01M. La interfaz la deriva de `mapping-coverage.json` direccionado por el manifiesto; no mantiene una lista paralela. COM01M permanece diferido y se muestra como cobertura no disponible, sin relación, alias, ocupación ni afirmación pública revisada.
 
 SAN21 es el único ciclo del piloto con alcance marginal en la instantánea: 43 ofertas mediante la unión de relaciones aceptadas. En la instantánea histórica del piloto, HOT01M, SSC01M, EOC01M tuvieron 0 ofertas marginales porque todavía no se habían admitido alias. Cero no equivale a ausencia de empleo fuera de la instantánea.
 

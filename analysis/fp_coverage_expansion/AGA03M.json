@@ -402,8 +402,8 @@
   "limitation": "Deferred: the authoritative inventory contains Jardinero, en general. while the frozen ranking seed is Jardinero. Evidence for CNO 6120 and the explicit CNO 5220 seller boundary is retained, but no occupation, link, alias, offer delta or public snapshot change is published until the frozen seed is reconciled.",
   "reviewedCommit": "1df95b0f8f376a79f7de383927357b5ffb9ebc96",
   "reviewedCommitAt": "2026-08-09T16:18:16.000Z",
-  "snapshotId": "20260809113838031-6730f7cd4230",
-  "snapshotHash": "e3a2c299299c9d1afd8563ba62c12af30431b1b96bcc356df4b1d2fe42d2f6fa",
+  "snapshotId": "20260809185438334-65ce4d3c4e14",
+  "snapshotHash": "4c48003d727a9d01464210e6ec296e2dee54d861c77ffe4f8685f957500bdc71",
   "publicParity": {
     "publishedRelationKeys": [],
     "rejectedRelationKeys": [

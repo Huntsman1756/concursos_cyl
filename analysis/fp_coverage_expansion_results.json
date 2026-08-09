@@ -26,8 +26,8 @@
     "targetDistinctQualifications": 12,
     "remainingGap": 6,
     "modalityDoubleCount": false,
-    "belowTargetReason": "Only COM02M completed; seven terminal attempts were deferred, six reserves remain unattempted, and completion/publication stopped before evidence supported 12 distinct qualifications.",
-    "publicationStatus": "pending_task_a2_12"
+    "belowTargetReason": "Only COM02M completed; seven terminal attempts were deferred, six reserves remain unattempted, and completion stopped before evidence supported 12 distinct qualifications.",
+    "publicationStatus": "published_task_a2_12"
   },
   "offerDeltas": {
     "byProgram": {
@@ -78,7 +78,10 @@
         "COM02M|occupation:cno11:5300"
       ],
       "publicParity": {
-        "publishedRelationKeys": [],
+        "publishedRelationKeys": [
+          "COM02M|occupation:cno11:5210",
+          "COM02M|occupation:cno11:5220"
+        ],
         "rejectedRelationKeys": [
           "COM02M|occupation:cno11:1432",
           "COM02M|occupation:cno11:3510",

@@ -1,4 +1,4 @@
-import { readFile } from "node:fs/promises";
+import { readFile, writeFile } from "node:fs/promises";
 import { resolve } from "node:path";
 import { pathToFileURL } from "node:url";
 import {
@@ -120,7 +120,7 @@ El siguiente trabajo recomendado no es abrir más ciclos de forma ciega. Primero
 `;
 }
 
-async function checkRenderedReport(): Promise<void> {
+async function renderExpectedReport(): Promise<string> {
   const results = await validateFpCoveragePilotResultsFile();
   const manifest = GeneratedManifestSchema.parse(
     JSON.parse(
@@ -144,7 +144,11 @@ async function checkRenderedReport(): Promise<void> {
       ),
     ),
   );
-  const expected = renderFpCoveragePilotReport(results, coverage);
+  return renderFpCoveragePilotReport(results, coverage);
+}
+
+async function checkRenderedReport(): Promise<void> {
+  const expected = await renderExpectedReport();
   const actual = (
     await readFile(
       resolve(process.cwd(), "analysis", "fp_coverage_pilot_results.md"),
@@ -154,14 +158,26 @@ async function checkRenderedReport(): Promise<void> {
   assertRenderedPilotReport(actual, expected);
 }
 
+async function writeRenderedReport(): Promise<void> {
+  await writeFile(
+    resolve(process.cwd(), "analysis", "fp_coverage_pilot_results.md"),
+    await renderExpectedReport(),
+    "utf8",
+  );
+}
+
 const invokedPath = process.argv[1];
 if (
   invokedPath !== undefined &&
   pathToFileURL(resolve(invokedPath)).href === import.meta.url
 ) {
   try {
-    await checkRenderedReport();
-    console.info("FP coverage pilot report matches validated inputs.");
+    if (process.argv[2] === "--write") {
+      await writeRenderedReport();
+    } else {
+      await checkRenderedReport();
+      console.info("FP coverage pilot report matches validated inputs.");
+    }
   } catch (error) {
     console.error(error);
     process.exitCode = 1;
