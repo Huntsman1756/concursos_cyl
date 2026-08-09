@@ -1,6 +1,10 @@
+import { readFileSync } from "node:fs";
+import { resolve } from "node:path";
+
 import { describe, expect, it } from "vitest";
 
 import type { TrainingProgram } from "../../data/schemas/generated";
+import { approvedSingleTokenAuditIdentities } from "../analysis/validateFpOneWordPublicationReview";
 import {
   buildOccupationIndex,
   loadApprovedMappings,
@@ -318,6 +322,89 @@ describe("curated occupation mappings", () => {
         ],
       }),
     ).toThrow(/accepted|audit|publication/i);
+  });
+
+  it("rejects the audited single-token alias when its approved relationship uses a non-target program", () => {
+    const eocOccupation = {
+      ...occupations[0],
+      occupationId: "occupation:cno11:7111",
+      preferredLabel: "Encofradores y operarios de puesta en obra de hormigón",
+      confirmationLabel: "Encofrados y hormigón",
+      classificationCode: "7111",
+    } as const;
+
+    expect(() =>
+      validateCuratedMappings({
+        programs,
+        occupations: [...occupations, eocOccupation],
+        aliases: [
+          {
+            alias: "encofradores",
+            occupationId: eocOccupation.occupationId,
+            reviewStatus: "approved",
+            reviewedAt: "2026-08-09",
+            mappingVersion: "1.0.0",
+            matchPolicy: "approved_single_token",
+          },
+        ],
+        links: [
+          ...links,
+          {
+            ...links[0],
+            trainingProgramKey: "HOT01M",
+            occupationId: eocOccupation.occupationId,
+            sourceQuote: "Encofradores.",
+            reviewedAt: "2026-08-09",
+          },
+        ],
+      }),
+    ).toThrow(/EOC01M|program|audit/i);
+  });
+
+  it("fails closed when terminal single-token audit evidence changes", () => {
+    const artifact = JSON.parse(
+      readFileSync(
+        resolve(process.cwd(), "analysis/fp_one_word_publication_reviews.json"),
+        "utf8",
+      ),
+    );
+    const reviewedRow = artifact.rows.find(
+      (row: { form: string }) => row.form === "encofradores",
+    );
+    if (reviewedRow === undefined) throw new Error("Missing audit row.");
+    reviewedRow.requirementQuotes = ["Altered terminal evidence."];
+
+    expect(() => approvedSingleTokenAuditIdentities(artifact)).toThrow(
+      /row review|evidence drift/i,
+    );
+  });
+
+  it("fails closed when a rejected audit form is changed to accepted", () => {
+    const artifact = JSON.parse(
+      readFileSync(
+        resolve(process.cwd(), "analysis/fp_one_word_publication_reviews.json"),
+        "utf8",
+      ),
+    );
+    const rejectedRow = artifact.rows.find(
+      (row: { form: string }) => row.form === "cocinero",
+    );
+    if (rejectedRow === undefined)
+      throw new Error("Missing rejected audit row.");
+    rejectedRow.disposition = "accepted";
+    rejectedRow.reasonCode = "exact_occupation_title";
+    rejectedRow.rationale =
+      "Altered terminal audit disposition while retaining the pinned identity.";
+    artifact.publicationDecision.cocinero = {
+      status: "accepted",
+      acceptedOfferIds: [rejectedRow.offerId],
+      rejectedOfferIds: [],
+      reason: "Accepted offers are eligible for publication.",
+    };
+
+    expect(() => approvedSingleTokenAuditIdentities(artifact)).toThrow(
+      /row review|evidence drift/i,
+    );
   });
 
   it("rejects unknown alias matchPolicy values", () => {

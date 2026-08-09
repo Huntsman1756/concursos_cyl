@@ -130,16 +130,38 @@ export function validateCuratedMappings(
         );
       }
       if (
-        !approvedSingleTokenIdentities.has(
-          approvedSingleTokenAuditIdentity({
-            alias: alias.alias,
-            occupationId: alias.occupationId,
-            matchPolicy,
-          }),
+        !links
+          .filter(
+            (link) =>
+              link.reviewStatus === "approved" &&
+              link.occupationId === alias.occupationId,
+          )
+          .every((link) =>
+            approvedSingleTokenIdentities.has(
+              approvedSingleTokenAuditIdentity({
+                alias: alias.alias,
+                occupationId: alias.occupationId,
+                programKey: link.trainingProgramKey,
+                matchPolicy,
+              }),
+            ),
+          ) ||
+        !links.some(
+          (link) =>
+            link.reviewStatus === "approved" &&
+            link.occupationId === alias.occupationId &&
+            approvedSingleTokenIdentities.has(
+              approvedSingleTokenAuditIdentity({
+                alias: alias.alias,
+                occupationId: alias.occupationId,
+                programKey: link.trainingProgramKey,
+                matchPolicy,
+              }),
+            ),
         )
       ) {
         throw new Error(
-          `approved_single_token alias lacks an exact accepted publication audit pair: ${alias.alias}.`,
+          `approved_single_token alias lacks an exact accepted publication audit tuple: ${alias.alias}.`,
         );
       }
     } else if (matchPolicy === APPROVED_SINGLE_TOKEN_MATCH_POLICY) {

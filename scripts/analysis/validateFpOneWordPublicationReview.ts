@@ -14,6 +14,14 @@ import {
 
 type Offer = { id: string; title: string };
 export const APPROVED_SINGLE_TOKEN_MATCH_POLICY = "approved_single_token";
+const APPROVED_SINGLE_TOKEN_AUDIT_TUPLE = {
+  alias: "encofradores",
+  occupationId: "occupation:cno11:7111",
+  programKey: "EOC01M",
+  matchPolicy: APPROVED_SINGLE_TOKEN_MATCH_POLICY,
+} as const;
+const PINNED_TERMINAL_REVIEW_EVIDENCE_SHA256 =
+  "fbb08149af0afe55151f03bb4273ed08bd65f9cc742e27a4680435fb38d09b82";
 
 const RAW_PINNED_OFFER_SCHEMA = z
   .object({
@@ -129,9 +137,15 @@ const SPECIAL_FORMS: Record<string, string> = {
 export function approvedSingleTokenAuditIdentity(input: {
   alias: string;
   occupationId: string;
+  programKey: string;
   matchPolicy: typeof APPROVED_SINGLE_TOKEN_MATCH_POLICY;
 }): string {
-  return [input.alias, input.occupationId, input.matchPolicy].join("\u0000");
+  return [
+    input.alias,
+    input.occupationId,
+    input.programKey,
+    input.matchPolicy,
+  ].join("\u0000");
 }
 
 function fail(message: string): never {
@@ -283,19 +297,48 @@ function expectedDecision(rows: readonly ReviewRow[]) {
   );
 }
 
+function terminalReviewEvidenceSha256(rows: readonly ReviewRow[]): string {
+  return createHash("sha256")
+    .update(
+      JSON.stringify(
+        rows.map(
+          ({ disposition, reasonCode, rationale, requirementQuotes }) => ({
+            disposition,
+            reasonCode,
+            rationale,
+            requirementQuotes,
+          }),
+        ),
+      ),
+    )
+    .digest("hex");
+}
+
 export function approvedSingleTokenAuditIdentities(
   artifact: FpOneWordPublicationReview,
 ): Set<string> {
+  const validatedArtifact =
+    validateFpOneWordPublicationReviewArtifact(artifact);
+  if (
+    terminalReviewEvidenceSha256(validatedArtifact.rows) !==
+    PINNED_TERMINAL_REVIEW_EVIDENCE_SHA256
+  ) {
+    fail("FP one-word terminal row review or evidence drift.");
+  }
   const identities = new Set<string>();
-  for (const row of artifact.rows) {
+  for (const row of validatedArtifact.rows) {
     if (
       row.disposition === "accepted" &&
-      artifact.publicationDecision[row.form].status === "accepted"
+      validatedArtifact.publicationDecision[row.form].status === "accepted" &&
+      row.form === APPROVED_SINGLE_TOKEN_AUDIT_TUPLE.alias &&
+      row.occupationId === APPROVED_SINGLE_TOKEN_AUDIT_TUPLE.occupationId &&
+      row.programKey === APPROVED_SINGLE_TOKEN_AUDIT_TUPLE.programKey
     ) {
       identities.add(
         approvedSingleTokenAuditIdentity({
           alias: row.form,
           occupationId: row.occupationId,
+          programKey: row.programKey,
           matchPolicy: APPROVED_SINGLE_TOKEN_MATCH_POLICY,
         }),
       );
@@ -389,6 +432,7 @@ export function isApprovedSingleTokenAlias(
     approvedSingleTokenAuditIdentity({
       alias,
       occupationId,
+      programKey: APPROVED_SINGLE_TOKEN_AUDIT_TUPLE.programKey,
       matchPolicy: APPROVED_SINGLE_TOKEN_MATCH_POLICY,
     }),
   );

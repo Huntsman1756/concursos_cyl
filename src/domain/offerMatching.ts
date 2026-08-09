@@ -49,6 +49,12 @@ export const MatchRuleSchema = z.enum([
 
 export type MatchRule = z.infer<typeof MatchRuleSchema>;
 const STRICT_MULTIWORD_MATCH_POLICY = "strict_multiword";
+const APPROVED_SINGLE_TOKEN_AUDIT_TUPLE = {
+  alias: "encofradores",
+  occupationId: "occupation:cno11:7111",
+  programKey: "EOC01M",
+  matchPolicy: "approved_single_token",
+} as const;
 type ResolvedAliasMatchPolicy =
   typeof STRICT_MULTIWORD_MATCH_POLICY | "approved_single_token";
 
@@ -757,6 +763,7 @@ function compareCandidates(left: Candidate, right: Candidate): number {
 function bestAlias(
   title: string,
   aliases: readonly OccupationAlias[],
+  programKey: string,
 ):
   | { alias: OccupationAlias; rule: "title_alias_exact" | "title_alias_phrase" }
   | undefined {
@@ -765,6 +772,20 @@ function bestAlias(
       alias,
       normalized: normalizedText(alias.alias),
     }))
+    .filter(({ alias, normalized }) => {
+      const matchPolicy = resolvedAliasMatchPolicy(alias);
+      if (matchPolicy === STRICT_MULTIWORD_MATCH_POLICY) {
+        return normalizedTokenCount(alias.alias) >= 2;
+      }
+      return (
+        normalizedTokenCount(alias.alias) === 1 &&
+        alias.alias === APPROVED_SINGLE_TOKEN_AUDIT_TUPLE.alias &&
+        alias.occupationId === APPROVED_SINGLE_TOKEN_AUDIT_TUPLE.occupationId &&
+        programKey === APPROVED_SINGLE_TOKEN_AUDIT_TUPLE.programKey &&
+        matchPolicy === APPROVED_SINGLE_TOKEN_AUDIT_TUPLE.matchPolicy &&
+        normalized === APPROVED_SINGLE_TOKEN_AUDIT_TUPLE.alias
+      );
+    })
     .filter(({ normalized }) => isBoundedPhrase(title, normalized))
     .map(({ alias, normalized }) => ({
       alias,
@@ -841,6 +862,7 @@ function candidatesForOffer(
     const alias = bestAlias(
       normalizedText(offer.title),
       aliases.filter(({ occupationId }) => occupationId === link.occupationId),
+      link.trainingProgramKey,
     );
     if (alias !== undefined) {
       results.push({

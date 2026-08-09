@@ -428,6 +428,58 @@ describe("matchOffersForProgram", () => {
     ]);
   });
 
+  it.each([
+    ["cocinero", "occupation:cno11:5110", "HOT01M"],
+    ["cocineros", "occupation:cno11:5110", "HOT01M"],
+    ["albañil", "occupation:cno11:7121", "EOC01M"],
+    ["albañiles", "occupation:cno11:7121", "EOC01M"],
+    ["encofradores", "occupation:cno11:7121", "EOC01M"],
+    ["encofradores", ENCOFRADORES_OCCUPATION_ID, "HOT01M"],
+    ["técnico", "occupation:cno11:7111", "EOC01M"],
+  ])(
+    "does not match the unapproved single-token tuple %s / %s / %s",
+    (alias, occupationId, programKey) => {
+      const program: TrainingProgram = {
+        programKey,
+        programTitle: "Programa de prueba",
+        level: "intermediate",
+        familyCode: "EOC",
+        familyName: "Edificación y Obra Civil",
+      };
+      const matchedOccupation: Occupation = {
+        ...occupation,
+        occupationId,
+        classificationCode: occupationId.slice(-4),
+        reviewedAt: "2026-08-09",
+      };
+      const singleTokenAlias: OccupationAlias = {
+        alias,
+        occupationId,
+        reviewStatus: "approved",
+        reviewedAt: "2026-08-09",
+        mappingVersion: "1.0.0",
+        matchPolicy: "approved_single_token",
+      };
+      const singleTokenLink: TrainingOccupationLink = {
+        ...links[0],
+        trainingProgramKey: programKey,
+        occupationId,
+        reviewedAt: "2026-08-09",
+      };
+
+      expect(
+        matchOffersForProgram(programKey, {
+          ...data([offer(`offer:${alias}:${programKey}`, alias)]),
+          programs: [program],
+          programQualificationLinks: [],
+          occupations: [matchedOccupation],
+          aliases: [singleTokenAlias],
+          links: [singleTokenLink],
+        }),
+      ).toEqual([]);
+    },
+  );
+
   it("rejects exact and phrase rule masquerading and title evidence tampering", () => {
     const phrase = matchOffersForProgram(
       "IFC03S",
