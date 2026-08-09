@@ -253,6 +253,84 @@ describe("validateFpCoverageExpansion", () => {
     expect(() => validateExpansionAttemptData(deferredInput)).not.toThrow();
   });
 
+  it("allows only deferred attempts to record an explicit authoritative source correction", () => {
+    const frozenCandidateUrl = "https://boe.es/ficha";
+    const authoritativeUrl = "https://boe.es/corrected";
+    const deferredInput = validInput(
+      {
+        state: "deferred",
+        transitions: [
+          baseAttempt.transitions[0],
+          {
+            from: "in_progress",
+            to: "deferred",
+            at: baseAttempt.completedAt,
+          },
+        ],
+        programmeProfileEvidence: {
+          todoFp: evidence,
+          authoritativeOutputSource: {
+            ...evidence,
+            sourceUrl: authoritativeUrl,
+          },
+          reconciliationNote:
+            "The frozen candidate URL was corrected to the authoritative source before publication.",
+        },
+        officialOutputInventory: {
+          sourceUrl: authoritativeUrl,
+          labels: ["Electricista, en general."],
+        },
+        officialOutputReviews: [
+          {
+            ...baseAttempt.officialOutputReviews[0],
+            officialOutputLabel: "Electricista, en general.",
+            disposition: "rejected",
+            acceptedOccupationIds: undefined,
+            classificationEvidence: undefined,
+            sourceUrl: authoritativeUrl,
+            sourceQuote: "Electricista, en general.",
+            reason:
+              "The corrected authoritative source does not match the frozen ranking seed.",
+          },
+        ],
+        acceptedRelations: [],
+        rejectedRelations: [
+          {
+            ...baseAttempt.acceptedRelations[0],
+            sourceUrl: authoritativeUrl,
+            sourceQuote: "Electricista, en general.",
+          },
+        ],
+        baselineMatchIds: [],
+        currentMatchIds: [],
+        newlyReachedOfferIdsByProgram: {},
+        newlyReachedOfferUnionIds: [],
+        publicParity: {
+          publishedRelationKeys: [],
+          rejectedRelationKeys: ["ELE01M|occupation:cno11:7521"],
+        },
+        sourceDrift: {
+          frozenCandidateUrl,
+          authoritativeUrl,
+          reason:
+            "The frozen candidate referenced a different BOE act than the authoritative programme source.",
+        },
+      },
+      {
+        baselineMatchIds: [],
+        currentMatchIds: [],
+        newlyReachedOfferIdsByProgram: {},
+        newlyReachedOfferUnionIds: [],
+      },
+    );
+    deferredInput.publicRelationSet = {
+      manifestAddressed: true,
+      relationKeys: [],
+      resourcePaths: ["/data/v1/manifest.json"],
+    };
+    expect(() => validateExpansionAttemptData(deferredInput)).not.toThrow();
+  });
+
   it("accepts a multi-word alias with exact output and classification evidence", () => {
     const alias = "electricista industrial";
     const relationKey = `ELE01M|occupation:cno11:7521|${alias}`;

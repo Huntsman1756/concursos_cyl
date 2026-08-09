@@ -106,6 +106,14 @@ const OfficialOutputInventorySchema = z
   })
   .strict();
 
+const SourceDriftSchema = z
+  .object({
+    frozenCandidateUrl: z.string().url().startsWith("https://"),
+    authoritativeUrl: z.string().url().startsWith("https://"),
+    reason: z.string().trim().min(20).max(500),
+  })
+  .strict();
+
 const PhaseMinutesSchema = z
   .object({
     research: z.number().int().nonnegative(),
@@ -142,6 +150,7 @@ export const FpExpansionAttemptSchema = z
       })
       .strict()
       .optional(),
+    sourceDrift: SourceDriftSchema.optional(),
     officialOutputReviews: z.array(OutputReviewSchema).optional(),
     officialOutputInventory: OfficialOutputInventorySchema.optional(),
     acceptedRelations: z.array(RelationSchema).optional(),
@@ -203,6 +212,24 @@ export const FpExpansionAttemptSchema = z
             path: [path],
             message: `Terminal attempts require ${path}.`,
           });
+    }
+    if (attempt.sourceDrift !== undefined) {
+      if (attempt.state !== "deferred")
+        context.addIssue({
+          code: "custom",
+          path: ["sourceDrift"],
+          message: "Source drift may only defer an attempt.",
+        });
+      if (
+        attempt.sourceDrift.frozenCandidateUrl ===
+        attempt.sourceDrift.authoritativeUrl
+      )
+        context.addIssue({
+          code: "custom",
+          path: ["sourceDrift"],
+          message:
+            "Source drift requires distinct frozen and authoritative URLs.",
+        });
     }
     const expectedTransitions = ["not_started", "in_progress", attempt.state];
     const expectedLength =
@@ -593,10 +620,31 @@ export function validateExpansionAttemptData(
   ];
   if (evidenceUrls.some((url) => !authoritativeHost(url, authoritativeDomains)))
     fail("Evidence URL is not authoritative.");
-  if (evidenceUrls.some((url) => !candidate.sourceUrls.includes(url)))
-    fail(
-      "Profile and official output evidence URLs must match candidate sourceUrls exactly.",
-    );
+  const mismatchedEvidenceUrls = [
+    ...new Set(
+      evidenceUrls.filter((url) => !candidate.sourceUrls.includes(url)),
+    ),
+  ];
+  if (mismatchedEvidenceUrls.length > 0) {
+    const sourceDrift = attempt.sourceDrift;
+    if (
+      attempt.state !== "deferred" ||
+      sourceDrift === undefined ||
+      !candidate.sourceUrls.includes(sourceDrift.frozenCandidateUrl) ||
+      sourceDrift.authoritativeUrl === sourceDrift.frozenCandidateUrl ||
+      !mismatchedEvidenceUrls.every(
+        (url) => url === sourceDrift.authoritativeUrl,
+      )
+    )
+      fail(
+        "Profile and official output evidence URLs must match candidate sourceUrls exactly unless deferred sourceDrift records one corrected authority.",
+      );
+  }
+  if (
+    attempt.sourceDrift !== undefined &&
+    !evidenceUrls.includes(attempt.sourceDrift.authoritativeUrl)
+  )
+    fail("Deferred sourceDrift must identify an authoritative evidence URL.");
   const labels = officialOutputReviews.map(
     (review) => review.officialOutputLabel,
   );
@@ -764,9 +812,13 @@ export function validateExpansionAttemptData(
           (evidence) => evidence.sourceUrl === relation.sourceUrl,
         ),
     );
+    const isDeferredSourceDriftAuthority =
+      attempt.state === "deferred" &&
+      attempt.sourceDrift?.authoritativeUrl === relation.sourceUrl;
     if (
       !candidate.sourceUrls.includes(relation.sourceUrl) &&
-      !isDiscoveredClassificationSource
+      !isDiscoveredClassificationSource &&
+      !isDeferredSourceDriftAuthority
     )
       fail(
         "Relation evidence URL must be a frozen programme source or a discovered classification source.",
