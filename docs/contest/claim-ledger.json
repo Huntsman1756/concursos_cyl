@@ -1,0 +1,177 @@
+[
+  {
+    "claimId": "problem_audience",
+    "text": "Ayuda a personas de Castilla y León a explorar opciones de formación profesional y sus relaciones ocupacionales revisadas.",
+    "status": "invariant",
+    "evidenceType": "test",
+    "evidenceRef": "tests/e2e/contest-readiness.spec.ts#root",
+    "allowedDocuments": ["application-summary.md", "technical-evidence.md"],
+    "forbiddenParaphrases": ["garantiza empleo", "salario esperado"]
+  },
+  {
+    "claimId": "official_source_boundaries",
+    "text": "La oferta formativa y las ofertas de empleo proceden de fuentes oficiales de la Junta identificadas en el contrato de datos.",
+    "status": "invariant",
+    "evidenceType": "source_url",
+    "evidenceRef": "https://analisis.datosabiertos.jcyl.es/api/explore/v2.1/catalog/datasets/oferta-de-formacion-profesional/records",
+    "allowedDocuments": ["source-ledger.md", "technical-evidence.md"],
+    "forbiddenParaphrases": ["todas las ofertas de Castilla y León"]
+  },
+  {
+    "claimId": "privacy_no_persistence",
+    "text": "La aplicación no usa cuentas, cookies, analítica ni almacenamiento del navegador para las consultas.",
+    "status": "invariant",
+    "evidenceType": "test",
+    "evidenceRef": "tests/e2e/privacy.spec.ts",
+    "allowedDocuments": ["application-summary.md", "technical-evidence.md"],
+    "forbiddenParaphrases": ["guarda tus respuestas", "perfil de usuario"]
+  },
+  {
+    "claimId": "accessibility_intent",
+    "text": "Los recorridos principales comprueban teclado, estructura semántica y ausencia de violaciones graves de accesibilidad.",
+    "status": "invariant",
+    "evidenceType": "test",
+    "evidenceRef": "tests/e2e/home.spec.ts",
+    "allowedDocuments": ["application-summary.md", "technical-evidence.md"],
+    "forbiddenParaphrases": ["accesibilidad perfecta"]
+  },
+  {
+    "claimId": "income_source_scope",
+    "text": "La comparación de ingresos reproduce cuatro tablas oficiales de EDUCAbase sin convertirlas en una predicción salarial.",
+    "status": "invariant",
+    "evidenceType": "source_url",
+    "evidenceRef": "https://estadisticas.educacion.gob.es/EducaJaxiPx/",
+    "allowedDocuments": [
+      "source-ledger.md",
+      "limitations.md",
+      "technical-evidence.md"
+    ],
+    "forbiddenParaphrases": ["sueldo esperado", "probabilidad de empleo"]
+  },
+  {
+    "claimId": "graduation_centre_scope",
+    "text": "La dimensión territorial de ingresos se conserva como comunidad del centro de titulación cuando la tabla oficial la declara.",
+    "status": "invariant",
+    "evidenceType": "test",
+    "evidenceRef": "tests/e2e/compare-studies.spec.ts",
+    "allowedDocuments": ["limitations.md", "technical-evidence.md"],
+    "forbiddenParaphrases": ["salario provincial"]
+  },
+  {
+    "claimId": "national_cycle_group_scope",
+    "text": "Las tablas nacionales de ciclo o grupo y las tablas territoriales no se mezclan en una única métrica.",
+    "status": "invariant",
+    "evidenceType": "test",
+    "evidenceRef": "tests/e2e/compare-studies.spec.ts#scope",
+    "allowedDocuments": ["limitations.md", "technical-evidence.md"],
+    "forbiddenParaphrases": ["media nacional equivalente a Castilla y León"]
+  },
+  {
+    "claimId": "no_salary_prediction",
+    "text": "La interfaz muestra evidencia de bases de cotización y sus límites, no una promesa individual de empleo o ingresos.",
+    "status": "invariant",
+    "evidenceType": "test",
+    "evidenceRef": "src/features/compare-studies/CompareStudiesPage.test.tsx",
+    "allowedDocuments": ["application-summary.md", "limitations.md"],
+    "forbiddenParaphrases": ["predice tu salario", "tasa de empleo"]
+  },
+  {
+    "claimId": "submitted_root_url",
+    "text": "La URL que se presenta al concurso es la raíz pública del proyecto.",
+    "status": "invariant",
+    "evidenceType": "source_url",
+    "evidenceRef": "https://huntsman1756.github.io/concursos_cyl/",
+    "allowedDocuments": ["application-summary.md", "submission-checklist.md"],
+    "forbiddenParaphrases": ["enviar la ruta de una pantalla"]
+  },
+  {
+    "claimId": "published_snapshot",
+    "text": "La publicación usa la instantánea {manifest.snapshotId}.",
+    "status": "freeze_derived",
+    "evidenceType": "manifest_field",
+    "evidenceRef": "manifest.snapshotId",
+    "allowedDocuments": ["technical-evidence.md", "submission-checklist.md"],
+    "forbiddenParaphrases": ["instantánea más reciente sin verificar"]
+  },
+  {
+    "claimId": "distinct_qualifications",
+    "text": "La cobertura pública contiene {coverage.distinctQualifications} cualificaciones distintas.",
+    "status": "freeze_derived",
+    "evidenceType": "manifest_field",
+    "evidenceRef": "coverage.distinctQualifications",
+    "allowedDocuments": ["application-summary.md", "technical-evidence.md"],
+    "forbiddenParaphrases": ["todas las cualificaciones"]
+  },
+  {
+    "claimId": "public_modality_keys",
+    "text": "Las claves de modalidad públicas son {coverage.modalityKeys}.",
+    "status": "freeze_derived",
+    "evidenceType": "manifest_field",
+    "evidenceRef": "coverage.modalityKeys",
+    "allowedDocuments": ["technical-evidence.md", "limitations.md"],
+    "forbiddenParaphrases": ["cada modalidad cuenta como titulación distinta"]
+  },
+  {
+    "claimId": "approved_relations",
+    "text": "Las relaciones ocupacionales aprobadas publicadas son {coverage.approvedRelationKeys}.",
+    "status": "freeze_derived",
+    "evidenceType": "manifest_field",
+    "evidenceRef": "coverage.approvedRelationKeys",
+    "allowedDocuments": ["application-summary.md", "technical-evidence.md"],
+    "forbiddenParaphrases": ["relaciones inferidas por similitud"]
+  },
+  {
+    "claimId": "approved_aliases",
+    "text": "Los alias aprobados publicados son {coverage.approvedAliasKeys}.",
+    "status": "freeze_derived",
+    "evidenceType": "manifest_field",
+    "evidenceRef": "coverage.approvedAliasKeys",
+    "allowedDocuments": ["technical-evidence.md", "limitations.md"],
+    "forbiddenParaphrases": ["alias automático sin revisión"]
+  },
+  {
+    "claimId": "matched_offer_union",
+    "text": "La unión de ofertas alcanzadas por relaciones publicadas es {offers.matchedUnion}.",
+    "status": "freeze_derived",
+    "evidenceType": "manifest_field",
+    "evidenceRef": "offers.matchedUnion",
+    "allowedDocuments": ["application-summary.md", "technical-evidence.md"],
+    "forbiddenParaphrases": ["ofertas totales del mercado"]
+  },
+  {
+    "claimId": "zero_reviewed_relations",
+    "text": "Las relaciones revisadas sin oferta alcanzada son {offers.zeroReviewedRelations}.",
+    "status": "freeze_derived",
+    "evidenceType": "manifest_field",
+    "evidenceRef": "offers.zeroReviewedRelations",
+    "allowedDocuments": ["application-summary.md", "limitations.md"],
+    "forbiddenParaphrases": ["no existe empleo"]
+  },
+  {
+    "claimId": "deferred_programs",
+    "text": "Los programas diferidos por evidencia insuficiente son {coverage.deferredPrograms}.",
+    "status": "freeze_derived",
+    "evidenceType": "manifest_field",
+    "evidenceRef": "coverage.deferredPrograms",
+    "allowedDocuments": ["application-summary.md", "limitations.md"],
+    "forbiddenParaphrases": ["cobertura completa del catálogo"]
+  },
+  {
+    "claimId": "deployment_provenance",
+    "text": "La versión desplegada se identifica con {deployment.commitSha} y {deployment.workflowRunId}.",
+    "status": "freeze_derived",
+    "evidenceType": "workflow_run",
+    "evidenceRef": "deployment.workflowRunId",
+    "allowedDocuments": ["technical-evidence.md", "submission-checklist.md"],
+    "forbiddenParaphrases": ["despliegue verificado sin run"]
+  },
+  {
+    "claimId": "human_submission_approval",
+    "text": "La solicitud externa se envía solo después de {human.finalApproval}.",
+    "status": "freeze_derived",
+    "evidenceType": "human_confirmation",
+    "evidenceRef": "human.finalApproval",
+    "allowedDocuments": ["submission-checklist.md"],
+    "forbiddenParaphrases": ["envío automático al concurso"]
+  }
+]
