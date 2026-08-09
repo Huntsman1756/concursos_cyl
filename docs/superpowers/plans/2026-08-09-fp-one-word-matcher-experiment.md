@@ -43,18 +43,38 @@
 
 Run `rtk git rev-parse HEAD` before editing and record that exact SHA as `experimentBase` in the ignored Task 1 report. This is the later zero-diff baseline.
 
-Create `scripts/analysis/validateEcylFpFamilyPilotNotebook.test.ts`. Read the notebook as JSON and the Markdown as UTF-8. Assert that the executed notebook contains all four exact regression titles, an unconditional `degree_or_license_led` mask, the explicit EOC exclusion patterns, no `& ~...fp_specific_overrides` bypass, no error output, and regenerated Markdown without the four titles classified under SSC/EOC.
+Create `scripts/analysis/validateEcylFpFamilyPilotNotebook.test.ts`. The test copies the notebook to a temporary filename, spawns `jupyter nbconvert --to notebook --execute` with repository root as the child working directory and a 300-second timeout, and asserts a successful exit with no notebook error output. It then renders the executed temporary notebook to Markdown and compares those bytes with the checked-in Markdown. The test exercises notebook behavior; it must not grep implementation source.
 
 The test must name these exact examples:
 
 ```ts
 const DEGREE_LED_FALSE_POSITIVE =
-  "Trabajador/a social - coordinador/a de ayuda a domicilio";
+  "Trabajador/a social - coordinador/a de ayuda a domicilio para León";
 const EOC_FALSE_POSITIVES = [
   "MECÁNICOS REPARADORES DE MAQUINARIA DE CONSTRUCCIÓN, MOVIMIENTO DE TIERRAS Y/O MINERÍA",
   "PINTORES DE ESTRUCTURAS METÁLICAS Y CASCOS DE BUQUES",
   "PINTORES-DECORADORES DE RÓTULOS",
 ] as const;
+```
+
+Before changing classification rules, add a code cell immediately after classification that selects each exact normalized title and asserts:
+
+```python
+import unicodedata
+
+def classified_family(raw_title):
+    normalized = unicodedata.normalize("NFKD", raw_title).encode(
+        "ascii", errors="ignore"
+    ).decode("ascii").lower()
+    matching = df.loc[df["title_normalized"].eq(normalized), "fp_candidate_family"]
+    assert len(matching) == 1, (raw_title, len(matching))
+    return matching.iloc[0]
+
+assert classified_family(
+    "Trabajador/a social - coordinador/a de ayuda a domicilio para León"
+) == "No FP o relación insuficiente desde el título"
+for title in EOC_KNOWN_FALSE_POSITIVES:
+    assert classified_family(title) != "Edificación y Obra Civil"
 ```
 
 Run:
@@ -63,19 +83,11 @@ Run:
 rtk proxy npx vitest run scripts/analysis/validateEcylFpFamilyPilotNotebook.test.ts
 ```
 
-Expected: FAIL because the notebook still contains the override subtraction and lacks the explicit EOC exclusions/assertions.
+Expected: FAIL because the real executed classifier violates all four assertions.
 
-- [ ] **Step 2: Add executable RED assertions inside the notebook**
+- [ ] **Step 2: Preserve the notebook RED evidence**
 
-Before changing classification rules, add a code cell immediately after classification that selects each exact normalized title and asserts:
-
-```python
-assert classified_family("Trabajador/a social - coordinador/a de ayuda a domicilio") == "No FP o relación insuficiente desde el título"
-for title in EOC_KNOWN_FALSE_POSITIVES:
-    assert classified_family(title) != "Edificación y Obra Civil"
-```
-
-Use the notebook's real classifier/dataframe rather than a test-only reimplementation. Execute a temporary copy so the committed notebook is not left half-executed:
+The test must use the notebook's real classifier/dataframe rather than a test-only classifier. Run it once before the rule change so the committed notebook is not left half-executed:
 
 ```powershell
 rtk jupyter nbconvert --to notebook --execute analysis/ecyl_fp_family_pilot_ranking.ipynb --output ecyl_fp_family_pilot_ranking.red.ipynb --ExecutePreprocessor.timeout=300
@@ -224,7 +236,7 @@ Create tests for:
 - deduplication when two approved forms hit one offer;
 - strict rejection of an altered program, occupation, candidate ID, multiword form, empty form, or empty inventory;
 - code-point ordering independent of locale using inputs containing `n`, `ñ`, and `á`;
-- absence of `localeCompare` and `Intl.Collator` in the module source;
+- successful deterministic output while `String.prototype.localeCompare` and `Intl.Collator` are temporarily replaced with throwing sentinels, proving the implementation does not depend on them;
 - exact real-snapshot candidate IDs/titles and union count 67.
 
 Run:

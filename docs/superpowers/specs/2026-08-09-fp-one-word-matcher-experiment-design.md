@@ -121,7 +121,7 @@ Codex inspecciona la salida, la incorpora mediante un parche explícito y ejecut
 
 La exclusión se evalúa antes que las reglas de inclusión y es incondicional. Un título que contiene `trabajador.*social`, `educador.*social` u otra profesión regulada permanece excluido aunque también contenga `ayuda a domicilio`, `dependencia` u otro término FP. Se elimina la resta mediante `fp_specific_overrides` para esta clase de exclusión.
 
-Una aserción ejecutable debe demostrar que `Trabajador/a social - coordinador/a de ayuda a domicilio` termina en `No FP o relación insuficiente desde el título`.
+Una aserción ejecutable debe demostrar que el título real `Trabajador/a social - coordinador/a de ayuda a domicilio para León` termina en `No FP o relación insuficiente desde el título`.
 
 ### Exclusiones explícitas de Edificación y Obra Civil
 
