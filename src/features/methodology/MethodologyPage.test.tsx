@@ -13,6 +13,20 @@ import { currentManifestFixture } from "../../../tests/fixtures/generatedManifes
 import { MethodologyPage } from "./MethodologyPage";
 
 const TERMS_URL = "https://www.educacionyfp.gob.es/comunes/aviso-legal.html";
+const EXPECTED_SOURCE_HREFS = [
+  "https://datos.gob.es/es/catalogo/e05230301-fp-grado-medio-distribucion-de-las-bases-de-cotizacion-de-los-afiliados-por-cuenta-ajena-con-jornada-a-tiempo-completo-por-cohorte-periodo-de-analisis-medida-y-ciclo-grupo-emlin0000090080",
+  "https://estadisticas.educacion.gob.es/EducaJaxiPx/files/_px/es/csv_bdsc/laborales/insercion/famprof/l0/famprof_2_08.csv_bdsc?nocab=1",
+  "https://estadisticas.educacion.gob.es/EducaJaxiPx/files/_px/es/px/laborales/insercion/famprof/l0/famprof_2_08.px?nocab=1",
+  "https://datos.gob.es/es/catalogo/e05230301-fp-grado-superior-distribucion-de-las-bases-de-cotizacion-de-los-afiliados-por-cuenta-ajena-con-jornada-a-tiempo-completo-por-cohorte-periodo-de-analisis-medida-y-ciclo-grupo-emlin0000090094",
+  "https://estadisticas.educacion.gob.es/EducaJaxiPx/files/_px/es/csv_bdsc/laborales/insercion/famprof/l0/famprof_3_08.csv_bdsc?nocab=1",
+  "https://estadisticas.educacion.gob.es/EducaJaxiPx/files/_px/es/px/laborales/insercion/famprof/l0/famprof_3_08.px?nocab=1",
+  "https://datos.gob.es/es/catalogo/e05230301-fp-grado-medio-distribucion-de-las-bases-de-cotizacion-de-los-afiliados-por-cuenta-ajena-con-jornada-a-tiempo-completo-por-cohorte-comunidad-autonoma-sexo-periodo-de-analisis-y-medida-emlin0000090044",
+  "https://estadisticas.educacion.gob.es/EducaJaxiPx/files/_px/es/csv_bdsc/laborales/insercion/ccaa/l0/ccaa_2_07.csv_bdsc?nocab=1",
+  "https://estadisticas.educacion.gob.es/EducaJaxiPx/files/_px/es/px/laborales/insercion/ccaa/l0/ccaa_2_07.px?nocab=1",
+  "https://datos.gob.es/es/catalogo/e05230301-fp-grado-superior-distribucion-de-las-bases-de-cotizacion-de-los-afiliados-por-cuenta-ajena-con-jornada-a-tiempo-completo-por-cohorte-comunidad-autonoma-sexo-periodo-de-analisis-y-medida-emlin0000090057",
+  "https://estadisticas.educacion.gob.es/EducaJaxiPx/files/_px/es/csv_bdsc/laborales/insercion/ccaa/l0/ccaa_3_07.csv_bdsc?nocab=1",
+  "https://estadisticas.educacion.gob.es/EducaJaxiPx/files/_px/es/px/laborales/insercion/ccaa/l0/ccaa_3_07.px?nocab=1",
+] as const;
 
 function manifestWithIncomeEvidence() {
   const manifest = currentManifestFixture();
@@ -69,7 +83,7 @@ describe("MethodologyPage", () => {
       ),
     );
 
-    render(
+    const { container } = render(
       <MemoryRouter>
         <MethodologyPage />
       </MemoryRouter>,
@@ -99,10 +113,32 @@ describe("MethodologyPage", () => {
 
     expect(national).toHaveTextContent(/base de cotización.*anualizada/i);
     expect(national).toHaveTextContent(/cuenta ajena.*jornada completa/i);
-    expect(national).toHaveTextContent(/ciclo o grupo oficial/i);
+    expect(national).toHaveTextContent(/ciclos o grupos oficiales incluidos/i);
     expect(national).toHaveTextContent(/límites inferiores.*quintiles/i);
     expect(regional).toHaveTextContent(/centro donde se obtuvo la titulación/i);
     expect(regional).toHaveTextContent(/no.*residencia.*lugar de trabajo/i);
+
+    const methodology = screen.getByRole("region", {
+      name: "Metodología y fuentes",
+    });
+    expect(methodology).toHaveTextContent(
+      /cruce administrativo.*registros educativos.*Seguridad Social/i,
+    );
+    expect(methodology).toHaveTextContent(
+      /cohorte.*curso académico.*titulación/i,
+    );
+    expect(methodology).toHaveTextContent(
+      /periodo.*años posteriores a la graduación/i,
+    );
+    expect(methodology).toHaveTextContent(
+      /solo.*ciclos o grupos.*información representativa/i,
+    );
+    expect(methodology).toHaveTextContent(
+      /cuenta propia.*jornada parcial.*quedan fuera/i,
+    );
+    expect(methodology).toHaveTextContent(
+      /algunos ciclos.*grupos oficiales.*familia profesional/i,
+    );
 
     for (const tableId of [
       "famprof_2_08",
@@ -115,7 +151,22 @@ describe("MethodologyPage", () => {
     expect(
       screen.getByRole("link", { name: "Aviso legal del Ministerio" }),
     ).toHaveAttribute("href", TERMS_URL);
+    for (const href of EXPECTED_SOURCE_HREFS) {
+      expect(container.querySelector(`a[href="${href}"]`)).not.toBeNull();
+    }
     expect(screen.getByText("Controles técnicos de publicación")).toBeVisible();
+
+    expect(methodology).not.toHaveTextContent(/\bCC BY\b/i);
+    expect(methodology).not.toHaveTextContent(/respaldo del Ministerio/i);
+    expect(methodology).not.toHaveTextContent(
+      /tasa de (?:empleo|afiliación)|indicador de (?:empleo|afiliación)/i,
+    );
+    expect(methodology).not.toHaveTextContent(
+      /salario esperado|predicción salarial|ganarás/i,
+    );
+    expect(methodology).not.toHaveTextContent(
+      /comparador externo|producto de terceros|sitio de referencia/i,
+    );
 
     await waitFor(() =>
       expect(within(national).getByText(/9 de agosto de 2026/i)).toBeVisible(),

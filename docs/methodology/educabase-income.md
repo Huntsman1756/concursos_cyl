@@ -16,6 +16,19 @@ personas afiliadas por cuenta ajena que trabajan a jornada completa. Es una
 aproximación oficial a la remuneración bruta anual observada de esa población,
 no una estimación para casos individuales.
 
+La operación estadística parte de un cruce administrativo entre los registros
+educativos de titulación y los registros de la Seguridad Social. No procede de
+una encuesta ni realiza seguimiento individual desde la aplicación. La
+**cohorte** es el curso académico en el que se obtuvo la titulación. El
+**periodo de análisis** es el primer, segundo, tercer o cuarto año posterior a
+la graduación.
+
+La población cubierta se limita a personas graduadas que figuran afiliadas por
+cuenta ajena con jornada completa. Por tanto, quedan fuera de esta medida el
+trabajo por cuenta propia, la jornada parcial y cualquier situación que no
+forme parte de esa población administrativa. El producto no completa esos
+huecos con estimaciones.
+
 ## Tablas oficiales
 
 Solo se admiten estas cuatro tablas. Cada una se obtiene en CSV y PC-Axis
@@ -28,6 +41,23 @@ desde su URL oficial exacta con `?nocab=1`:
 | `ccaa_2_07`    | Grado Medio, comunidad del centro de titulación    | [EMLIN0000090044](https://datos.gob.es/es/catalogo/e05230301-fp-grado-medio-distribucion-de-las-bases-de-cotizacion-de-los-afiliados-por-cuenta-ajena-con-jornada-a-tiempo-completo-por-cohorte-comunidad-autonoma-sexo-periodo-de-analisis-y-medida-emlin0000090044)    |           13.680 |
 | `ccaa_3_07`    | Grado Superior, comunidad del centro de titulación | [EMLIN0000090057](https://datos.gob.es/es/catalogo/e05230301-fp-grado-superior-distribucion-de-las-bases-de-cotizacion-de-los-afiliados-por-cuenta-ajena-con-jornada-a-tiempo-completo-por-cohorte-comunidad-autonoma-sexo-periodo-de-analisis-y-medida-emlin0000090057) |           13.680 |
 
+Las tablas nacionales no son un censo de todos los ciclos. La nota del
+Ministerio indica que solo muestra ciclos o grupos de ciclos cuya información
+es representativa. Algunos resultados agrupan ciclos dentro de una familia
+profesional y la etiqueta oficial agregada se conserva sin atribuir el valor a
+un ciclo individual.
+
+Las notas oficiales identifican además estas inclusiones agrupadas:
+
+- en Grado Medio, ciclos de **Edificación y Obra Civil**, **Energía y Agua** e
+  **Industrias Extractivas**;
+- en Grado Superior, ciclos de **Madera, Mueble y Corcho** y **Textil,
+  Confección y Piel**.
+
+Esta selección representativa explica por qué la aplicación dice «ciclos o
+grupos incluidos» y no «cada ciclo». Las omisiones no se interpretan como un
+valor cero ni como evidencia desfavorable.
+
 En las tablas territoriales se seleccionan literalmente `Castilla y León` y
 `AMBOS SEXOS`. Comunidad autónoma significa ubicación del centro docente donde
 se obtuvo la titulación; no significa residencia, lugar de trabajo, empleador
@@ -39,7 +69,9 @@ Se publican la media y los límites inferiores de los quintiles segundo,
 tercero, cuarto y quinto. Estos límites corresponden a los percentiles 20, 40,
 60 y 80; no son medias de cada quintil.
 
-Las cohortes hasta `2020-2021` tienen cuatro años observados. `2021-2022 (p)`
+La cohorte identifica el curso académico de titulación y cada periodo cuenta
+los años posteriores a esa graduación. Las cohortes hasta `2020-2021` tienen
+cuatro años observados. `2021-2022 (p)`
 tiene tres y `2022-2023 (p)` tiene dos. `(p)` marca provisionalidad sin cambiar
 la disponibilidad. Los periodos posteriores a la ventana no se emiten: son
 aún no observados, no celdas ausentes.

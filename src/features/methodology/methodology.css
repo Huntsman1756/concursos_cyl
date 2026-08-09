@@ -115,6 +115,30 @@
   background: var(--color-surface-subtle);
 }
 
+.methodology-scope {
+  max-width: 58rem;
+  padding: var(--space-5);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+}
+
+.methodology-scope summary {
+  color: var(--color-primary);
+  font-size: 1.125rem;
+  font-weight: 750;
+  cursor: pointer;
+}
+
+.methodology-scope div {
+  padding-top: var(--space-3);
+  color: var(--color-text-muted);
+}
+
+.methodology-scope p:last-child {
+  margin-bottom: 0;
+}
+
 .methodology-notes h2 {
   margin-top: 0;
   color: var(--color-primary);

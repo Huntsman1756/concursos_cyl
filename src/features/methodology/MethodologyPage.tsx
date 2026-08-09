@@ -146,8 +146,9 @@ export function MethodologyPage() {
             <p>
               Base de cotización por contingencias comunes anualizada de
               personas afiliadas por cuenta ajena con jornada completa,
-              publicada para cada ciclo o grupo oficial en España. Incluye la
-              media y los límites inferiores de los quintiles 2, 3, 4 y 5.
+              publicada para los ciclos o grupos oficiales incluidos en España.
+              Incluye la media y los límites inferiores de los quintiles 2, 3, 4
+              y 5.
             </p>
           }
           limitations={
@@ -179,6 +180,28 @@ export function MethodologyPage() {
           tables={tableLinks(REGIONAL_TABLES)}
         />
       </div>
+
+      <details className="methodology-scope">
+        <summary>Población y alcance de la estadística</summary>
+        <div>
+          <p>
+            El cruce administrativo enlaza registros educativos con datos de la
+            Seguridad Social. Cohorte significa el curso académico en el que se
+            obtuvo la titulación; periodo indica los años posteriores a la
+            graduación.
+          </p>
+          <p>
+            Solo se muestran ciclos o grupos con información representativa. Las
+            personas por cuenta propia y con jornada parcial quedan fuera de la
+            población cubierta por estas tablas.
+          </p>
+          <p>
+            Algunos ciclos se publican juntos como grupos oficiales dentro de
+            una familia profesional. Conservamos esa etiqueta agregada y no la
+            atribuimos a un ciclo individual.
+          </p>
+        </div>
+      </details>
 
       <section className="methodology-notes" aria-labelledby="reading-heading">
         <h2 id="reading-heading">Cómo leer los resultados</h2>
