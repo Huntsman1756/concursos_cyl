@@ -1,0 +1,113 @@
+{
+  "schemaVersion": 1,
+  "status": "pending_external_release",
+  "recordedAt": "2026-08-09T21:13:25.2405834Z",
+  "expectedRootUrl": "https://huntsman1756.github.io/concursos_cyl/",
+  "coverageFreezeCommitSha": "111039ea2678272452169bb30c31cc680a4d436e",
+  "publicationCommitSha": "27e7b2ec5996868df6c05edd02d3434a2559c44b",
+  "localReviewHeadSha": "1e75efcc357e0427a58bfb05e73f2dd6db95e7ab",
+  "captureProductCommitSha": "f423a208a7f8c140a1dfa342e8689d3b6d967e94",
+  "manifest": {
+    "snapshotId": "20260809185438334-65ce4d3c4e14",
+    "sha256": "27942a492d4f62fb9a3d1e448dfb708663000270564b1e0cb87f15ae86677da1",
+    "qualityStatus": "passed",
+    "programs": 187,
+    "centers": 229,
+    "offerings": 1294,
+    "offers": 1077
+  },
+  "localGates": {
+    "coverageFreeze": {
+      "status": "passed",
+      "command": "npm exec -- tsx scripts/release/validateContestFreeze.ts"
+    },
+    "submissionPack": {
+      "status": "passed",
+      "command": "npm exec -- tsx scripts/release/renderContestSubmission.ts"
+    },
+    "evidenceManifest": {
+      "status": "passed",
+      "captureCount": 9,
+      "command": "npm exec -- tsx scripts/release/validateContestEvidenceManifest.ts"
+    },
+    "focusedVitest": {
+      "status": "passed",
+      "testFiles": 7,
+      "tests": 30
+    },
+    "dataAndReleaseVitest": {
+      "status": "passed",
+      "testFiles": 3,
+      "tests": 35
+    },
+    "fullVitestSerial": {
+      "status": "incomplete",
+      "command": "CI=true npm test -- --run --pool=forks --maxWorkers=1",
+      "reason": "The Windows run produced no result for more than five minutes and was terminated; rerun in CI/Linux before final release."
+    },
+    "playwright": {
+      "status": "passed",
+      "tests": 76,
+      "command": "npm run test:e2e -- --workers=2"
+    },
+    "lint": {
+      "status": "passed",
+      "command": "npm run lint"
+    },
+    "build": {
+      "status": "passed",
+      "command": "npm run build"
+    },
+    "pagesBaseBuild": {
+      "status": "passed",
+      "basePath": "/concursos_cyl/",
+      "fallbackByteIdentical": true,
+      "assetsBasePrefixed": true
+    },
+    "license": {
+      "status": "passed",
+      "command": "npm run license:check"
+    },
+    "prettier": {
+      "status": "passed",
+      "command": "npm exec -- prettier --check ."
+    },
+    "gitDiffCheck": {
+      "status": "passed",
+      "command": "git diff --check"
+    },
+    "caddyContainerSmoke": {
+      "status": "passed",
+      "image": "salida-cyl:ci",
+      "checks": [
+        "security headers",
+        "SPA fallback",
+        "manifest content type",
+        "same-origin immutable outcome resource"
+      ],
+      "command": "CADDY_SMOKE_BASE_URL=http://127.0.0.1:18080 npm run release:caddy:verify"
+    },
+    "actionlint": {
+      "status": "not_available_locally",
+      "reason": "The actionlint executable is not installed in the local environment; workflow behavior is covered by repository tests and remains a CI gate."
+    }
+  },
+  "deployment": {
+    "status": "pending",
+    "commitSha": null,
+    "workflowRunId": null,
+    "liveRootVerified": false,
+    "verifiedAt": null
+  },
+  "humanApproval": {
+    "finalApplicationTextApproved": false,
+    "rootUrlApproved": false,
+    "submissionAuthorized": false
+  },
+  "blockers": [
+    "The exact reviewed branch has not been pushed or deployed.",
+    "A successful CI full Vitest serial run and actionlint result must be recorded before release is declared final.",
+    "The live Pages root and public manifest have not been verified.",
+    "Contest submission remains prohibited until explicit human approval and separate submission authorization."
+  ]
+}
