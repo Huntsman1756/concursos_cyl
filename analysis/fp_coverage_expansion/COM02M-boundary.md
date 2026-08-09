@@ -1,0 +1,25 @@
+# COM02M occupation boundary review
+
+Slot: `COM02M` — Técnico en Comercialización de Productos Alimentarios.
+
+Primary programme evidence:
+
+- TodoFP profile: https://www.todofp.es/que-estudiar/familias-profesionales/comercio-marketing/comercializacion-productos-alimentarios.html
+- BOE title/output source: https://www.boe.es/eli/es/rd/189/2018
+- CNO-11 explanatory notes: https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf
+- Qualification-specific SEPE evidence: https://www.sepe.es/HomeSepe/es/que-es-observatorio/informacion-titulaciones/buscador-titulaciones/titulacion-detalle-anual~__titulaciones-fp__2025_333410023103-T-cnico-en-t-cnico-en-comercializaci-n-de-productos-alimentarios~.html
+
+The BOE output inventory was reconciled in source order. The ranking seed `Vendedor de productos alimentarios` is a normalized research seed; the reviewed official label is `Vendedor/a de productos alimentarios.`.
+
+| Official output                                                               | CNO boundary considered                        | Evidence classification                                                                                                                                                                                                                                                                                              | Slot disposition |
+| ----------------------------------------------------------------------------- | ---------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------- |
+| Responsable/encargado de establecimiento alimentario.                         | `1432` retail directors and managers           | Indirect: CNO 1432 includes managers of food retail establishments, but the output does not establish the manager/proprietor boundary.                                                                                                                                                                               | Rejected         |
+| Responsable/encargado de sección/sala/departamento de tienda de alimentación. | `5210` section chiefs in stores and warehouses | Direct boundary: the CNO title and supervisory scope match a store section/sala/departamento responsibility.                                                                                                                                                                                                         | Accepted         |
+| Gestor/a de pequeño comercio alimentario.                                     | `5300` proprietor shopkeepers                  | Indirect/contradictory: CNO 5300 is the proprietor boundary; “gestor/a” does not prove ownership.                                                                                                                                                                                                                    | Rejected         |
+| Responsable/encargado de comercios alimentarios online.                       | `1432` retail directors and managers           | Absent: the online modality has no separate CNO-11 four-digit boundary in the reviewed notes.                                                                                                                                                                                                                        | Rejected         |
+| Asesor/a comercial de productos alimentarios.                                 | `3510` commercial agents and representatives   | Indirect: CNO 3510 represents companies in sales to companies/organisations; it does not establish the retail customer-adviser boundary.                                                                                                                                                                             | Rejected         |
+| Vendedor/a de productos alimentarios.                                         | `5220` sellers in stores and warehouses        | Direct boundary: the CNO definition and tasks cover selling products to the public, advising on product qualities, collecting payment and maintaining displays. The qualification-specific SEPE page independently reports `Vendedores en tiendas y almacenes` among the most contracted occupations for this title. | Accepted         |
+
+No alias is added. The two accepted relations use the exact official output labels as link evidence; no output-only title tail is promoted to an alias. The in-memory overlay reaches no additional offer IDs in the current snapshot, so the slot adds occupation coverage without claiming offer growth.
+
+The prior generated snapshot is intentionally unchanged. Publication parity is injected in the slot test and will be materialized only by the single planned Task 11 build.

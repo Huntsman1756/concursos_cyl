@@ -1,0 +1,22 @@
+{
+  "schemaVersion": "1.0.0",
+  "programKey": "COM02M",
+  "baseQualificationIdentity": "qualification:COM02M",
+  "state": "in_progress",
+  "transitions": [
+    {
+      "from": "not_started",
+      "to": "in_progress",
+      "at": "2026-08-09T15:28:00Z"
+    }
+  ],
+  "startedAt": "2026-08-09T15:28:00Z",
+  "completedAt": null,
+  "phaseMinutes": {
+    "research": 18,
+    "implementation": 0,
+    "test": 0,
+    "review": 0
+  },
+  "reviewerTimeExcluded": true
+}

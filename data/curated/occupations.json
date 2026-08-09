@@ -276,12 +276,23 @@
     "catalogVersion": "1.0.0"
   },
   {
+    "occupationId": "occupation:cno11:5210",
+    "preferredLabel": "Jefes de sección de tiendas y almacenes",
+    "confirmationLabel": "Supervisión de secciones de tienda y almacén",
+    "classificationSystem": "CNO-11",
+    "classificationCode": "5210",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+    "reviewedAt": "2026-08-09",
+    "catalogVersion": "1.0.0"
+  },
+  {
     "occupationId": "occupation:cno11:5220",
     "preferredLabel": "Vendedores en tiendas y almacenes",
     "confirmationLabel": "Venta en tienda y almacén",
     "classificationSystem": "CNO-11",
     "classificationCode": "5220",
-    "reviewStatus": "rejected",
+    "reviewStatus": "approved",
     "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
     "reviewedAt": "2026-08-08",
     "catalogVersion": "1.0.0"
