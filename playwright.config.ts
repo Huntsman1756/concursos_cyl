@@ -28,7 +28,7 @@ export default defineConfig({
     },
   ],
   webServer: {
-    command: `rtk npm run build && rtk npm run preview -- --host 127.0.0.1 --port ${port}`,
+    command: `npm run build && npm run preview -- --host 127.0.0.1 --port ${port}`,
     reuseExistingServer: false,
     url: `http://127.0.0.1:${port}`,
   },
