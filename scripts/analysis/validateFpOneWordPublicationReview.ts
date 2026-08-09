@@ -2,6 +2,8 @@ import { createHash } from "node:crypto";
 import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
 
+import { z } from "zod";
+
 import {
   FP_ONE_WORD_PUBLICATION_REVIEW_ARTIFACT_PATH,
   FP_ONE_WORD_PUBLICATION_REVIEW_SCHEMA,
@@ -11,6 +13,20 @@ import {
 } from "../../data/schemas/fpOneWordPublicationReview";
 
 type Offer = { id: string; title: string };
+
+const RAW_PINNED_OFFER_SCHEMA = z
+  .object({
+    id: z.string().min(1),
+    title: z.string().min(1),
+  })
+  .passthrough();
+
+export const PINNED_OFFER_SCHEMA = z
+  .object({
+    id: z.string().min(1),
+    title: z.string().min(1),
+  })
+  .strict();
 
 const CANDIDATES = [
   {
@@ -122,8 +138,17 @@ function normalize(value: string): string {
     .trim();
 }
 
-function compare(left: string, right: string): number {
-  return left < right ? -1 : left > right ? 1 : 0;
+export function compareNormalizedCodePointStrings(
+  left: string,
+  right: string,
+): number {
+  const normalizedLeft = normalize(left);
+  const normalizedRight = normalize(right);
+  if (normalizedLeft < normalizedRight) return -1;
+  if (normalizedLeft > normalizedRight) return 1;
+  if (left < right) return -1;
+  if (left > right) return 1;
+  return 0;
 }
 
 function readPinnedOffers(rootDirectory: string): Offer[] {
@@ -144,17 +169,17 @@ function readPinnedOffers(rootDirectory: string): Offer[] {
     fail("Pinned one-word publication review snapshot record count mismatch.");
   }
   return value.map((entry) => {
-    if (
-      !entry ||
-      typeof entry !== "object" ||
-      typeof entry.id !== "string" ||
-      typeof entry.title !== "string"
-    ) {
+    try {
+      const rawOffer = RAW_PINNED_OFFER_SCHEMA.parse(entry);
+      return PINNED_OFFER_SCHEMA.parse({
+        id: rawOffer.id,
+        title: rawOffer.title,
+      });
+    } catch {
       fail(
         "Pinned one-word publication review snapshot contains an invalid offer.",
       );
     }
-    return { id: entry.id, title: entry.title };
   });
 }
 
@@ -188,9 +213,9 @@ function reconstruct(rootDirectory: string): ReviewRow[] {
   }
   return rows.sort(
     (left, right) =>
-      compare(left.candidateId, right.candidateId) ||
-      compare(left.form, right.form) ||
-      compare(left.offerId, right.offerId),
+      compareNormalizedCodePointStrings(left.candidateId, right.candidateId) ||
+      compareNormalizedCodePointStrings(left.form, right.form) ||
+      compareNormalizedCodePointStrings(left.offerId, right.offerId),
   );
 }
 
@@ -203,51 +228,101 @@ function expectedDecision(rows: readonly ReviewRow[]) {
     "encofradores",
   ] as const;
   return Object.fromEntries(
-    forms.map((form) => [
-      form,
-      {
-        status: "rejected",
-        acceptedOfferIds: [],
-        rejectedOfferIds: rows
-          .filter((row) => row.form === form)
-          .map((row) => row.offerId)
-          .sort(compare),
-        reason: "Pending human review; not approved for publication.",
-      },
-    ]),
+    forms.map((form) => {
+      const formRows = rows.filter((row) => row.form === form);
+      const acceptedOfferIds = formRows
+        .filter((row) => row.disposition === "accepted")
+        .map((row) => row.offerId)
+        .sort(compareNormalizedCodePointStrings);
+      const rejectedOfferIds = formRows
+        .filter((row) => row.disposition === "rejected")
+        .map((row) => row.offerId)
+        .sort(compareNormalizedCodePointStrings);
+      if (formRows.some((row) => row.disposition === "needs_human_review")) {
+        return [
+          form,
+          {
+            status: "rejected",
+            acceptedOfferIds: [],
+            rejectedOfferIds: formRows
+              .map((row) => row.offerId)
+              .sort(compareNormalizedCodePointStrings),
+            reason: "Pending human review; not approved for publication.",
+          },
+        ];
+      }
+      return [
+        form,
+        {
+          status: acceptedOfferIds.length > 0 ? "accepted" : "rejected",
+          acceptedOfferIds,
+          rejectedOfferIds,
+          reason:
+            acceptedOfferIds.length > 0
+              ? "Accepted offers are eligible for publication."
+              : "No offers are approved for publication.",
+        },
+      ];
+    }),
   );
 }
 
 export function validateFpOneWordPublicationReviewArtifact(
   value: unknown,
-  options: { allowInProgress?: boolean } = {},
+  rootDirectoryOrOptions: string | { allowInProgress?: boolean } = resolve(
+    import.meta.dirname,
+    "../..",
+  ),
+  maybeOptions: { allowInProgress?: boolean } = {},
 ): FpOneWordPublicationReview {
+  const rootDirectory =
+    typeof rootDirectoryOrOptions === "string"
+      ? rootDirectoryOrOptions
+      : resolve(import.meta.dirname, "../..");
+  const options =
+    typeof rootDirectoryOrOptions === "string"
+      ? maybeOptions
+      : rootDirectoryOrOptions;
   const artifact = FP_ONE_WORD_PUBLICATION_REVIEW_SCHEMA.parse(value);
-  const expectedRows = reconstruct(resolve(import.meta.dirname, "../.."));
-  if (artifact.rows.length !== expectedRows.length)
+  const expectedRows = reconstruct(rootDirectory);
+  if (artifact.rows.length !== expectedRows.length) {
     fail("FP one-word publication review row count drift.");
-  const actualIdentities = artifact.rows.map(
-    ({ candidateId, form, programKey, occupationId, offerId, offerTitle }) =>
-      `${candidateId}\0${form}\0${programKey}\0${occupationId}\0${offerId}\0${offerTitle}`,
-  );
-  const expectedIdentities = expectedRows.map(
-    ({ candidateId, form, programKey, occupationId, offerId, offerTitle }) =>
-      `${candidateId}\0${form}\0${programKey}\0${occupationId}\0${offerId}\0${offerTitle}`,
-  );
-  if (JSON.stringify(actualIdentities) !== JSON.stringify(expectedIdentities))
-    fail("FP one-word publication review identities or ordering drift.");
-  if (
-    JSON.stringify(artifact.publicationDecision) !==
-    JSON.stringify(expectedDecision(expectedRows))
-  )
-    fail("FP one-word publication decision drift.");
+  }
   if (
     !options.allowInProgress &&
     artifact.rows.some((row) => row.disposition === "needs_human_review")
-  )
+  ) {
     fail(
       "Terminal artifact contains needs_human_review; use --allow-in-progress.",
     );
+  }
+  if (options.allowInProgress) {
+    const actualRows = artifact.rows.map((row) => JSON.stringify(row));
+    const expectedRowsJson = expectedRows.map((row) => JSON.stringify(row));
+    if (JSON.stringify(actualRows) !== JSON.stringify(expectedRowsJson)) {
+      fail("FP one-word in-progress row review or evidence drift.");
+    }
+  } else {
+    const actualIdentities = artifact.rows.map(
+      ({ candidateId, form, programKey, occupationId, offerId, offerTitle }) =>
+        `${candidateId}\0${form}\0${programKey}\0${occupationId}\0${offerId}\0${offerTitle}`,
+    );
+    const expectedIdentities = expectedRows.map(
+      ({ candidateId, form, programKey, occupationId, offerId, offerTitle }) =>
+        `${candidateId}\0${form}\0${programKey}\0${occupationId}\0${offerId}\0${offerTitle}`,
+    );
+    if (
+      JSON.stringify(actualIdentities) !== JSON.stringify(expectedIdentities)
+    ) {
+      fail("FP one-word publication review identities or ordering drift.");
+    }
+  }
+  if (
+    JSON.stringify(artifact.publicationDecision) !==
+    JSON.stringify(expectedDecision(artifact.rows))
+  ) {
+    fail("FP one-word publication decision drift.");
+  }
   return artifact;
 }
 
@@ -261,6 +336,7 @@ export function validateFpOneWordPublicationReview(
   );
   return validateFpOneWordPublicationReviewArtifact(
     JSON.parse(readFileSync(artifactPath, "utf8")),
+    rootDirectory,
     options,
   );
 }
