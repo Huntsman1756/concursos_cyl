@@ -99,6 +99,13 @@ const OutputReviewSchema = z
   })
   .strict();
 
+const OfficialOutputInventorySchema = z
+  .object({
+    sourceUrl: z.string().url().startsWith("https://"),
+    labels: z.array(z.string().trim().min(3).max(220)).min(1),
+  })
+  .strict();
+
 const PhaseMinutesSchema = z
   .object({
     research: z.number().int().nonnegative(),
@@ -136,6 +143,7 @@ export const FpExpansionAttemptSchema = z
       .strict()
       .optional(),
     officialOutputReviews: z.array(OutputReviewSchema).optional(),
+    officialOutputInventory: OfficialOutputInventorySchema.optional(),
     acceptedRelations: z.array(RelationSchema).optional(),
     rejectedRelations: z.array(RelationSchema).optional(),
     baselineMatchIds: z.array(z.string().min(1)).optional(),
@@ -170,6 +178,7 @@ export const FpExpansionAttemptSchema = z
       const required = [
         [attempt.programmeProfileEvidence, "programmeProfileEvidence"],
         [attempt.officialOutputReviews, "officialOutputReviews"],
+        [attempt.officialOutputInventory, "officialOutputInventory"],
         [attempt.acceptedRelations, "acceptedRelations"],
         [attempt.rejectedRelations, "rejectedRelations"],
         [attempt.baselineMatchIds, "baselineMatchIds"],
@@ -558,6 +567,7 @@ export function validateExpansionAttemptData(
   if (attempt.completedAt === null || attempt.completedAt === undefined)
     fail("Terminal attempts require completedAt timing.");
   const programmeProfileEvidence = attempt.programmeProfileEvidence!;
+  const officialOutputInventory = attempt.officialOutputInventory!;
   const officialOutputReviews = attempt.officialOutputReviews!;
   const acceptedRelations = attempt.acceptedRelations!;
   const rejectedRelations = attempt.rejectedRelations!;
@@ -578,6 +588,7 @@ export function validateExpansionAttemptData(
   const evidenceUrls = [
     programmeProfileEvidence.todoFp.sourceUrl,
     programmeProfileEvidence.authoritativeOutputSource.sourceUrl,
+    officialOutputInventory.sourceUrl,
     ...officialOutputReviews.map((review) => review.sourceUrl),
   ];
   if (evidenceUrls.some((url) => !authoritativeHost(url, authoritativeDomains)))
@@ -591,6 +602,10 @@ export function validateExpansionAttemptData(
   );
   if (labels.length === 0)
     fail("Every candidate requires at least one official output review.");
+  if (JSON.stringify(labels) !== JSON.stringify(officialOutputInventory.labels))
+    fail(
+      "Official output reviews must exactly match the authoritative output inventory in source order.",
+    );
   const normalizedLabels = labels.map(normalizeOutputSeed);
   let lastSeedIndex = -1;
   for (const seed of candidate.officialOutputLabels) {

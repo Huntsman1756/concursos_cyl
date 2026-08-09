@@ -39,6 +39,10 @@ const baseAttempt = {
     authoritativeOutputSource: evidence,
     reconciliationNote: "The official programme output was reconciled exactly.",
   },
+  officialOutputInventory: {
+    sourceUrl: evidence.sourceUrl,
+    labels: ["Electricista."],
+  },
   officialOutputReviews: [
     {
       order: 1,
@@ -134,8 +138,22 @@ function validInput(
   computedOverrides: Record<string, unknown> = {},
   candidateOverrides: Record<string, unknown> = {},
 ) {
+  const attempt = { ...baseAttempt, ...overrides };
+  if (
+    overrides.officialOutputReviews !== undefined &&
+    overrides.officialOutputInventory === undefined
+  ) {
+    attempt.officialOutputInventory = {
+      sourceUrl: evidence.sourceUrl,
+      labels: (
+        overrides.officialOutputReviews as {
+          officialOutputLabel: string;
+        }[]
+      ).map((review) => review.officialOutputLabel),
+    };
+  }
   return {
-    attempt: { ...baseAttempt, ...overrides },
+    attempt,
     candidate: { ...candidate, ...candidateOverrides },
     computed: {
       baselineMatchIds: [],
@@ -161,6 +179,19 @@ describe("validateFpCoverageExpansion", () => {
       programKey: "ELE01M",
       state: "completed",
     });
+  });
+
+  it("rejects an omitted output from the authoritative inventory", () => {
+    expect(() =>
+      validateExpansionAttemptData(
+        validInput({
+          officialOutputInventory: {
+            sourceUrl: evidence.sourceUrl,
+            labels: ["Electricista.", "Otra salida."],
+          },
+        }),
+      ),
+    ).toThrow(/inventory|exhaustive|source order/i);
   });
 
   it("accepts a multi-word alias with exact output and classification evidence", () => {
@@ -415,6 +446,10 @@ describe("validateFpCoverageExpansion", () => {
           ],
         },
       ],
+      officialOutputInventory: {
+        sourceUrl: evidence.sourceUrl,
+        labels: ["Electricista industrial."],
+      },
       publicParity: {
         publishedRelationKeys: [relationKey],
         rejectedRelationKeys: [],
@@ -567,6 +602,10 @@ describe("validateFpCoverageExpansion", () => {
               reason: "Contradictory candidate.",
             },
           ],
+          officialOutputInventory: {
+            sourceUrl: evidence.sourceUrl,
+            labels: ["Electricista.", "Otra salida."],
+          },
         },
         candidate: {
           ...candidate,
@@ -645,7 +684,7 @@ describe("validateFpCoverageExpansion", () => {
     [
       "missing official output",
       { officialOutputReviews: [] },
-      /official output/i,
+      /official output|inventory/i,
     ],
     [
       "fake quote or domain",
