@@ -47,6 +47,7 @@ import {
   type LoadableGeneratedManifest,
   type SourceSnapshot,
 } from "../../data/schemas/generated";
+import { OutcomeIndicatorsResourceSchema } from "../../data/schemas/outcomes";
 import {
   GENERATED_RESOURCE_CATALOG,
   GENERATED_FOUNDATION_RESOURCE_KEYS,
@@ -66,6 +67,11 @@ import { loadApprovedMappings } from "../../src/domain/occupation";
 import { PublishedRequirementsResourceSchema } from "../../src/domain/requirements";
 import { fetchAllRecords } from "./fetchAllRecords";
 import { hashFile } from "./hashFile";
+import {
+  loadEducabaseIncomeBundle,
+  type EducabaseIncomeBundle,
+} from "./loadEducabaseIncome";
+import { normalizeIncomeOutcomes } from "./normalizeIncomeOutcomes";
 import {
   normalizeOffers,
   normalizeOffersWithPublishedRequirements,
@@ -163,6 +169,10 @@ const RESOURCE_DEFINITIONS = {
     ...GENERATED_RESOURCE_CATALOG.publishedRequirements,
     schema: PublishedRequirementsResourceSchema,
   },
+  outcomeIndicators: {
+    ...GENERATED_RESOURCE_CATALOG.outcomeIndicators,
+    schema: OutcomeIndicatorsResourceSchema,
+  },
 } as const;
 
 type ResourceKey = GeneratedResourceKey;
@@ -203,6 +213,7 @@ export interface BuildSnapshotsOptions {
   now?: () => Date;
   fetchTrainingRecords?: () => Promise<TrainingSourceRecord[]>;
   fetchOfferRecords?: () => Promise<OfferSourceRecord[]>;
+  fetchIncomeBundle?: () => Promise<EducabaseIncomeBundle>;
   loadCuratedMappings?: (
     programs: readonly z.infer<typeof TrainingProgramSchema>[],
   ) => Promise<ValidatedCuratedMappings>;
@@ -1251,6 +1262,8 @@ async function writeCandidate(
   fetchedAt: string,
   trainingRecords: readonly TrainingSourceRecord[],
   offerRecords: readonly OfferSourceRecord[],
+  incomeBundle: EducabaseIncomeBundle,
+  outcomeIndicators: z.infer<typeof OutcomeIndicatorsResourceSchema>,
   curatedMappings: ValidatedCuratedMappings,
   previousCounts: SnapshotCounts | undefined,
 ): Promise<{ manifest: GeneratedManifest; counts: SnapshotCounts }> {
@@ -1312,6 +1325,7 @@ async function writeCandidate(
       curatedMappings.links,
     ),
     publishedRequirements: normalizedOfferArtifacts.publishedRequirements,
+    outcomeIndicators: OutcomeIndicatorsResourceSchema.parse(outcomeIndicators),
   };
   const qualityReport = runQualityGates(
     candidate,
@@ -1350,7 +1364,9 @@ async function writeCandidate(
           ? SOURCE_CONFIG.offers
           : RESOURCE_DEFINITIONS[key].sourceKind === "curatedOccupations"
             ? curatedOccupationSource
-            : curatedRelationshipSource,
+            : RESOURCE_DEFINITIONS[key].sourceKind === "educabaseIncome"
+              ? SOURCE_CONFIG.educabaseIncome
+              : curatedRelationshipSource,
       fetchedAt,
       RESOURCE_DEFINITIONS[key].sourceKind === "offers"
         ? offerSourceSnapshot.sourceUpdatedAt
@@ -1359,6 +1375,9 @@ async function writeCandidate(
       resourceHashes[key],
     ),
     resourcePath: immutableGeneratedResourcePath(key, snapshotId),
+    ...(key === "outcomeIndicators"
+      ? { upstreamArtifacts: incomeBundle.artifacts }
+      : {}),
   });
   const manifest = GeneratedManifestSchema.parse({
     schemaVersion: "1.0.0",
@@ -2116,21 +2135,28 @@ export async function buildSnapshots(
           SOURCE_CONFIG.offers.recordsUrl,
           OfferSourceRecordSchema,
         ));
+    const fetchIncomeBundle =
+      options.fetchIncomeBundle ?? (() => loadEducabaseIncomeBundle());
 
     let committed = false;
     let staging: string | undefined;
     let immutableDestination: string | undefined;
     try {
-      const [fetchedTrainingRecords, fetchedOfferRecords] = await Promise.all([
-        fetchTrainingRecords(),
-        fetchOfferRecords(),
-      ]);
+      const [fetchedTrainingRecords, fetchedOfferRecords, incomeBundle] =
+        await Promise.all([
+          fetchTrainingRecords(),
+          fetchOfferRecords(),
+          fetchIncomeBundle(),
+        ]);
       const trainingRecords = z
         .array(TrainingSourceRecordSchema)
         .parse(fetchedTrainingRecords);
       const offerRecords = z
         .array(OfferSourceRecordSchema)
         .parse(fetchedOfferRecords);
+      const outcomeIndicators = OutcomeIndicatorsResourceSchema.parse(
+        normalizeIncomeOutcomes(incomeBundle.tables),
+      );
       const normalizedPrograms = normalizeTraining(trainingRecords).programs;
       const curatedMappings = await (
         options.loadCuratedMappings ??
@@ -2138,6 +2164,11 @@ export async function buildSnapshots(
       )(normalizedPrograms);
       const sourceHash = hashCanonicalSource({
         curatedMappings,
+        income: incomeBundle.artifacts.map((artifact) => ({
+          format: artifact.format,
+          sha256: artifact.sha256,
+          tableId: artifact.tableId,
+        })),
         offers: offerRecords,
         training: trainingRecords,
       });
@@ -2151,6 +2182,8 @@ export async function buildSnapshots(
         fetchedAt,
         trainingRecords,
         offerRecords,
+        incomeBundle,
+        outcomeIndicators,
         curatedMappings,
         previous?.counts,
       );

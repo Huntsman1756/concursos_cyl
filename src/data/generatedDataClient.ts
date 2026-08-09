@@ -17,6 +17,10 @@ import {
   type TrainingProgram,
 } from "../../data/schemas/generated";
 import {
+  OutcomeIndicatorsResourceSchema,
+  type OutcomeIndicatorsResource,
+} from "../../data/schemas/outcomes";
+import {
   GENERATED_FOUNDATION_RESOURCE_KEYS,
   isPermittedGeneratedAssetPath,
   legacyGeneratedResourcePath,
@@ -71,13 +75,36 @@ function validatedGeneratedAssetPath(path: string): string {
   return path;
 }
 
+/** Resolves a logical generated path beneath Vite's same-origin public base. */
+export function resolveGeneratedAssetPath(
+  logicalPath: string,
+  basePath = import.meta.env.BASE_URL,
+): string {
+  const assetPath = validatedGeneratedAssetPath(logicalPath);
+  if (
+    !basePath.startsWith("/") ||
+    basePath.startsWith("//") ||
+    basePath.includes("\\") ||
+    basePath.includes("?") ||
+    basePath.includes("#") ||
+    basePath.split("/").some((segment) => segment === "." || segment === "..")
+  ) {
+    throw new GeneratedDataError(
+      "missing",
+      `Generated asset base must be a same-origin absolute path: ${basePath}.`,
+    );
+  }
+  const normalizedBase = basePath === "/" ? "" : basePath.replace(/\/$/u, "");
+  return `${normalizedBase}${assetPath}`;
+}
+
 /** Fetches a generated static asset and enforces its runtime contract. */
 export async function loadGeneratedResource<T>(
   path: string,
   schema: z.ZodType<T>,
   requestInit?: RequestInit,
 ): Promise<T> {
-  const assetPath = validatedGeneratedAssetPath(path);
+  const assetPath = resolveGeneratedAssetPath(path);
   let response: Response;
 
   try {
@@ -148,6 +175,21 @@ export function loadPublishedRequirements(
   return loadGeneratedResource(
     snapshot.resourcePath,
     PublishedRequirementsResourceSchema,
+  );
+}
+
+/** Loads optional verified income evidence; retained historical snapshots return null. */
+export function loadOutcomeIndicators(
+  manifest: LoadableGeneratedManifest,
+): Promise<OutcomeIndicatorsResource | null> {
+  const resourceSnapshots =
+    manifest.resourceSnapshots as typeof manifest.resourceSnapshots &
+      Record<string, { resourcePath: string } | undefined>;
+  const snapshot = resourceSnapshots.outcomeIndicators;
+  if (snapshot === undefined) return Promise.resolve(null);
+  return loadGeneratedResource(
+    snapshot.resourcePath,
+    OutcomeIndicatorsResourceSchema,
   );
 }
 

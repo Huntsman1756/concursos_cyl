@@ -10,7 +10,9 @@ import {
   type GeneratedFoundationResourceKey,
   type GeneratedResourceKey,
 } from "./generatedResourceCatalog";
+import { OutcomeSourceTableIdSchema } from "./outcomes";
 import { trainingOfferingIdentity } from "./trainingOfferingIdentity";
+import { EDUCABASE_INCOME_SOURCES } from "../../scripts/data/educabaseIncomeSources";
 
 export const TrainingLevelSchema = z.enum([
   "basic",
@@ -137,10 +139,90 @@ export const JobOfferSchema = z
 // resource. Keeping this fixed-point schema strict preserves retained v1
 // JobOffer payloads and clients that validate them.
 
+export const UpstreamArtifactSchema = z
+  .object({
+    tableId: OutcomeSourceTableIdSchema,
+    format: z.enum(["csv", "px"]),
+    sourceUrl: z.string().url(),
+    catalogUrl: z.string().url(),
+    fetchedAt: z.string().datetime(),
+    declaredContentType: z.string().min(1),
+    byteLength: z
+      .number()
+      .int()
+      .positive()
+      .max(5 * 1024 * 1024),
+    sha256: z.string().regex(/^[a-f0-9]{64}$/u),
+    effectiveEncoding: z.enum(["utf-8", "iso-8859-15"]),
+  })
+  .strict()
+  .superRefine((artifact, context) => {
+    const source = EDUCABASE_INCOME_SOURCES[artifact.tableId];
+    const expectedUrl =
+      artifact.format === "csv" ? source.csvUrl : source.pxUrl;
+    if (artifact.sourceUrl !== expectedUrl) {
+      context.addIssue({
+        code: "custom",
+        path: ["sourceUrl"],
+        message: "Upstream artifact URL is outside the EDUCAbase allowlist.",
+      });
+    }
+    if (artifact.catalogUrl !== source.catalogUrl) {
+      context.addIssue({
+        code: "custom",
+        path: ["catalogUrl"],
+        message: "Upstream artifact catalog URL does not match its table.",
+      });
+    }
+    const expectedEncoding =
+      artifact.format === "csv" ? "utf-8" : "iso-8859-15";
+    if (artifact.effectiveEncoding !== expectedEncoding) {
+      context.addIssue({
+        code: "custom",
+        path: ["effectiveEncoding"],
+        message: "Upstream artifact encoding does not match its format.",
+      });
+    }
+  });
+
+const UpstreamArtifactsSchema = z
+  .array(UpstreamArtifactSchema)
+  .length(8)
+  .superRefine((artifacts, context) => {
+    const expected = Object.keys(EDUCABASE_INCOME_SOURCES).flatMap(
+      (tableId) => [`${tableId}:csv`, `${tableId}:px`],
+    );
+    const expectedSet = new Set(expected);
+    const seen = new Set<string>();
+    for (const [index, artifact] of artifacts.entries()) {
+      const key = `${artifact.tableId}:${artifact.format}`;
+      if (key !== expected[index] || !expectedSet.has(key) || seen.has(key)) {
+        context.addIssue({
+          code: "custom",
+          path: [index],
+          message:
+            "Upstream artifacts must contain every approved table-format pair once in source order.",
+        });
+      }
+      seen.add(key);
+    }
+    if (
+      seen.size !== expected.length ||
+      expected.some((key) => !seen.has(key))
+    ) {
+      context.addIssue({
+        code: "custom",
+        message:
+          "Upstream artifacts must contain every approved table-format pair once in source order.",
+      });
+    }
+  });
+
 const GeneratedResourceSnapshotSchema = SourceSnapshotSchema.extend({
   resourcePath: z.string().refine(isGenericImmutableGeneratedResourcePath, {
     message: "Resource path must be an immutable kebab-case JSON asset.",
   }),
+  upstreamArtifacts: UpstreamArtifactsSchema.optional(),
 }).strict();
 
 const requiredResourceSnapshotShape = Object.fromEntries(
@@ -181,6 +263,22 @@ export const GeneratedResourceSnapshotsSchema = z
         });
       }
       seenPaths.add(snapshot.resourcePath);
+      if (key === "outcomeIndicators") {
+        if (snapshot.upstreamArtifacts === undefined) {
+          context.addIssue({
+            code: "custom",
+            path: [key, "upstreamArtifacts"],
+            message:
+              "Outcome indicators require every verified upstream artifact.",
+          });
+        }
+      } else if (snapshot.upstreamArtifacts !== undefined) {
+        context.addIssue({
+          code: "custom",
+          path: [key, "upstreamArtifacts"],
+          message: "Only outcome indicators may record EDUCAbase artifacts.",
+        });
+      }
     }
   });
 

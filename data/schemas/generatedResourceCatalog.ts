@@ -33,6 +33,10 @@ export const GENERATED_RESOURCE_CATALOG = {
     fileName: "published-requirements.json",
     sourceKind: "offers",
   },
+  outcomeIndicators: {
+    fileName: "outcome-indicators.json",
+    sourceKind: "educabaseIncome",
+  },
 } as const;
 
 export type GeneratedResourceKey = keyof typeof GENERATED_RESOURCE_CATALOG;

@@ -9,4 +9,8 @@ export const SOURCE_CONFIG = {
     recordsUrl:
       "https://analisis.datosabiertos.jcyl.es/api/explore/v2.1/catalog/datasets/ofertas-de-empleo/records",
   },
+  educabaseIncome: {
+    id: "educabase-fp-income-four-table-bundle",
+    recordsUrl: "https://estadisticas.educacion.gob.es/EducaJaxiPx/",
+  },
 } as const;

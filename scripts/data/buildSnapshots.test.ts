@@ -26,11 +26,13 @@ import {
   liveTrainingSourceRecord,
 } from "../../tests/fixtures/sourceRecords";
 import { publishedRequirementId } from "../../src/domain/requirements";
+import { EDUCABASE_INCOME_TABLE_IDS } from "./educabaseIncomeSources";
 import {
   buildSnapshots,
   type SnapshotFailureInjection,
 } from "./buildSnapshots";
 import { hashFile } from "./hashFile";
+import { loadEducabaseIncomeBundle } from "./loadEducabaseIncome";
 import type { ValidatedCuratedMappings } from "./validateCuratedMappings";
 import { assertPublicSnapshotDistribution } from "./validatePublicDistribution";
 
@@ -40,6 +42,41 @@ async function temporaryRoot(): Promise<string> {
   const root = await mkdtemp(join(tmpdir(), "salida-cyl-task-6-"));
   temporaryRoots.push(root);
   return root;
+}
+
+let fixtureIncomeBundle:
+  ReturnType<typeof loadEducabaseIncomeBundle> | undefined;
+
+function loadFixtureIncomeBundle() {
+  fixtureIncomeBundle ??= loadEducabaseIncomeBundle({
+    fetchedAt: "2026-08-09T00:00:00.000Z",
+    request: async (url) => {
+      const tableId = EDUCABASE_INCOME_TABLE_IDS.find((id) => url.includes(id));
+      if (!tableId) throw new Error(`Unexpected income fixture URL ${url}`);
+      const format = url.includes("/csv_") ? "csv" : "px";
+      const bytes = await readFile(
+        join(
+          process.cwd(),
+          "tests",
+          "fixtures",
+          "educabase-income",
+          `${tableId}.${format}`,
+        ),
+      );
+      const response = new Response(bytes, {
+        headers: {
+          "content-type":
+            format === "csv"
+              ? "text/plain;charset=ISO-8859-15"
+              : "application/pc-axis;charset=ISO-8859-15",
+        },
+      });
+      Object.defineProperty(response, "url", { value: url });
+      return response;
+    },
+    sleep: async () => undefined,
+  });
+  return fixtureIncomeBundle;
 }
 
 function assetPath(root: string, resourcePath: string): string {
@@ -98,6 +135,7 @@ const fixedOptions = {
   now: () => new Date("2026-08-04T10:00:00.000Z"),
   fetchTrainingRecords: async () => [{ ...liveTrainingSourceRecord }],
   fetchOfferRecords: async () => [{ ...liveOfferSourceRecord }],
+  fetchIncomeBundle: loadFixtureIncomeBundle,
   loadCuratedMappings: async () => ({
     occupations: [],
     aliases: [],
@@ -312,7 +350,89 @@ describe("hashFile", () => {
   });
 });
 
-describe("buildSnapshots", () => {
+describe("buildSnapshots", { timeout: 30_000 }, () => {
+  it("publishes one immutable verified outcome artifact with all upstream hashes", async () => {
+    const root = await temporaryRoot();
+
+    await buildSnapshots({ rootDirectory: root, ...fixedOptions });
+
+    const manifest = await readManifest(root);
+    const outcome = manifest.resourceSnapshots.outcomeIndicators;
+    expect(outcome).toBeDefined();
+    expect(outcome.recordCount).toBe(22_170);
+    expect(outcome.resourcePath).toMatch(
+      /\/snapshots\/[^/]+\/outcome-indicators\.json$/u,
+    );
+    if (outcome.upstreamArtifacts === undefined) {
+      throw new Error("Expected verified upstream outcome artifacts");
+    }
+    expect(outcome.upstreamArtifacts).toHaveLength(8);
+    expect(
+      outcome.upstreamArtifacts.map((artifact) => artifact.sha256),
+    ).toHaveLength(8);
+    await expect(
+      readFile(assetPath(root, outcome.resourcePath), "utf8"),
+    ).resolves.toContain('"kind": "group"');
+    await expect(
+      access(join(root, "public", "data", "v1", "outcome-indicators.json")),
+    ).rejects.toMatchObject({ code: "ENOENT" });
+  });
+
+  it("changes the immutable snapshot identity when an upstream income hash changes", async () => {
+    const firstRoot = await temporaryRoot();
+    const secondRoot = await temporaryRoot();
+    const originalBundle = await loadFixtureIncomeBundle();
+    const changedHashBundle = {
+      ...originalBundle,
+      artifacts: originalBundle.artifacts.map((artifact, index) =>
+        index === 0 ? { ...artifact, sha256: "f".repeat(64) } : artifact,
+      ),
+    };
+
+    await buildSnapshots({ rootDirectory: firstRoot, ...fixedOptions });
+    await buildSnapshots({
+      rootDirectory: secondRoot,
+      ...fixedOptions,
+      fetchIncomeBundle: async () => changedHashBundle,
+    });
+
+    const first = await readManifest(firstRoot);
+    const second = await readManifest(secondRoot);
+    expect(first.resourceSnapshots.outcomeIndicators.resourcePath).not.toBe(
+      second.resourceSnapshots.outcomeIndicators.resourcePath,
+    );
+  });
+
+  it("retains the last-known-good outcome artifact when income ingestion fails", async () => {
+    const root = await temporaryRoot();
+    await buildSnapshots({ rootDirectory: root, ...fixedOptions });
+    const prior = await readManifest(root);
+    const priorPath = prior.resourceSnapshots.outcomeIndicators.resourcePath;
+    const priorBytes = await readFile(assetPath(root, priorPath));
+
+    await expect(
+      buildSnapshots({
+        rootDirectory: root,
+        ...fixedOptions,
+        now: () => new Date("2026-08-10T00:00:00.000Z"),
+        fetchIncomeBundle: async () => {
+          throw new Error("injected income download failure");
+        },
+      }),
+    ).rejects.toThrow(
+      /previous snapshot marked stale.*income download failure/isu,
+    );
+
+    const stale = await readManifest(root);
+    expect(stale.qualityStatus).toBe("stale");
+    expect(stale.resourceSnapshots.outcomeIndicators.resourcePath).toBe(
+      priorPath,
+    );
+    await expect(readFile(assetPath(root, priorPath))).resolves.toEqual(
+      priorBytes,
+    );
+  }, 30_000);
+
   it("publishes the four curated mapping resources through the manifest", async () => {
     const root = await temporaryRoot();
 

@@ -8,7 +8,12 @@ import {
   JobOfferSchema,
   SourceSnapshotSchema,
   TrainingOfferingSchema,
+  UpstreamArtifactSchema,
 } from "./generated";
+import {
+  EDUCABASE_INCOME_TABLE_IDS,
+  EDUCABASE_INCOME_SOURCES,
+} from "../../scripts/data/educabaseIncomeSources";
 
 const snapshot = {
   sourceId: "jcyl-employment-offers",
@@ -36,6 +41,88 @@ const qualityReport = {
 };
 
 describe("generated data contracts", () => {
+  it("accepts only the complete allowlisted EDUCAbase provenance on outcome indicators", () => {
+    const upstreamArtifacts = EDUCABASE_INCOME_TABLE_IDS.flatMap((tableId) => {
+      const source = EDUCABASE_INCOME_SOURCES[tableId];
+      return (["csv", "px"] as const).map((format) => ({
+        tableId,
+        format,
+        sourceUrl: format === "csv" ? source.csvUrl : source.pxUrl,
+        catalogUrl: source.catalogUrl,
+        fetchedAt: "2026-08-09T10:00:00.000Z",
+        declaredContentType: "application/octet-stream",
+        byteLength: 1,
+        sha256: "b".repeat(64),
+        effectiveEncoding: format === "csv" ? "utf-8" : "iso-8859-15",
+      }));
+    });
+    const manifest = {
+      schemaVersion: "1.0.0",
+      generatedAt: "2026-08-09T10:00:00.000Z",
+      qualityStatus: "passed",
+      qualityReport,
+      resourceSnapshots: {
+        programs: {
+          ...snapshot,
+          resourcePath: "/data/v1/snapshots/build-1/programs.json",
+        },
+        centers: {
+          ...snapshot,
+          resourcePath: "/data/v1/snapshots/build-1/centers.json",
+        },
+        trainingOfferings: {
+          ...snapshot,
+          resourcePath: "/data/v1/snapshots/build-1/training-offerings.json",
+        },
+        jobOffers: {
+          ...snapshot,
+          resourcePath: "/data/v1/snapshots/build-1/job-offers.json",
+        },
+        outcomeIndicators: {
+          ...snapshot,
+          sourceId: "educabase-fp-income-four-table-bundle",
+          resourcePath: "/data/v1/snapshots/build-1/outcome-indicators.json",
+          upstreamArtifacts,
+        },
+      },
+    };
+
+    expect(GeneratedManifestSchema.safeParse(manifest).success).toBe(true);
+    expect(UpstreamArtifactSchema.safeParse(upstreamArtifacts[0]).success).toBe(
+      true,
+    );
+    expect(
+      GeneratedManifestSchema.safeParse({
+        ...manifest,
+        resourceSnapshots: {
+          ...manifest.resourceSnapshots,
+          outcomeIndicators: {
+            ...manifest.resourceSnapshots.outcomeIndicators,
+            upstreamArtifacts: upstreamArtifacts.slice(1),
+          },
+        },
+      }).success,
+    ).toBe(false);
+    expect(
+      GeneratedManifestSchema.safeParse({
+        ...manifest,
+        resourceSnapshots: {
+          ...manifest.resourceSnapshots,
+          outcomeIndicators: {
+            ...manifest.resourceSnapshots.outcomeIndicators,
+            upstreamArtifacts: [...upstreamArtifacts].reverse(),
+          },
+        },
+      }).success,
+    ).toBe(false);
+    expect(
+      UpstreamArtifactSchema.safeParse({
+        ...upstreamArtifacts[0],
+        sourceUrl: "https://example.test/not-allowlisted.csv",
+      }).success,
+    ).toBe(false);
+  });
+
   it("accepts a normalized training offering and rejects an empty program key", () => {
     const valid = {
       offeringId: "IFC03S:47000000:on_site:public:education",
