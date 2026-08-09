@@ -58,6 +58,16 @@ describe("fetchOfficialBinary", () => {
       ),
     ).rejects.toThrow(/https/i);
     await expect(
+      fetchOfficialBinary(
+        {
+          ...source,
+          csvUrl: source.csvUrl.replace("famprof_2_08", "famprof_2_99"),
+        },
+        "csv",
+        "2026-08-09T00:00:00.000Z",
+      ),
+    ).rejects.toThrow(/closed allowlist/i);
+    await expect(
       fetchOfficialBinary(source, "csv", "2026-08-09T00:00:00.000Z", async () =>
         response("content", { url: source.pxUrl }),
       ),

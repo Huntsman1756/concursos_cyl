@@ -5,6 +5,7 @@ import type {
   EducabaseIncomeSource,
   EducabaseIncomeTableId,
 } from "./educabaseIncomeSources";
+import { EDUCABASE_INCOME_SOURCES } from "./educabaseIncomeSources";
 
 const MAX_BYTES = 5 * 1024 * 1024;
 const TIMEOUT_MS = 10_000;
@@ -129,6 +130,15 @@ export async function fetchOfficialBinary(
 ): Promise<{ bytes: Uint8Array; provenance: RawArtifactProvenance }> {
   const sourceUrl = selectedUrl(source, format);
   assertAllowlistedUrl(sourceUrl);
+  const approvedSource = EDUCABASE_INCOME_SOURCES[source.tableId];
+  if (
+    sourceUrl !== selectedUrl(approvedSource, format) ||
+    source.catalogUrl !== approvedSource.catalogUrl
+  ) {
+    throw new Error(
+      `Official income source URL does not match the closed allowlist for ${source.tableId}`,
+    );
+  }
   let lastError: unknown;
 
   for (let attempt = 0; attempt <= RETRY_DELAYS_MS.length; attempt += 1) {
