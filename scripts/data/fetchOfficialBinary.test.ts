@@ -160,4 +160,38 @@ describe("fetchOfficialBinary", () => {
     ).rejects.toThrow(/network unavailable/i);
     expect(exhausted).toHaveBeenCalledTimes(4);
   });
+
+  it("aborts each stalled attempt after ten seconds without wall-clock waiting", async () => {
+    vi.useFakeTimers();
+    try {
+      const request = vi.fn(
+        async (_url: string, init: RequestInit): Promise<Response> =>
+          new Promise((_, reject) => {
+            (init.signal as AbortSignal).addEventListener("abort", () => {
+              reject(new DOMException("timed out", "AbortError"));
+            });
+          }),
+      );
+      const pending = fetchOfficialBinary(
+        source,
+        "csv",
+        "2026-08-09T00:00:00.000Z",
+        request,
+        async () => undefined,
+      );
+      const outcome = pending.then(
+        () => null,
+        (error: unknown) => error,
+      );
+      for (let attempt = 0; attempt < 4; attempt += 1) {
+        await vi.advanceTimersByTimeAsync(10_000);
+      }
+      const error = await outcome;
+      expect(error).toBeInstanceOf(Error);
+      expect((error as Error).message).toMatch(/timed out/i);
+      expect(request).toHaveBeenCalledTimes(4);
+    } finally {
+      vi.useRealTimers();
+    }
+  });
 });

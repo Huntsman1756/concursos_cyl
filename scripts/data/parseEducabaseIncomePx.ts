@@ -46,6 +46,21 @@ const NOTE_HASHES = {
   ccaa_2_07: "878d22bb31b04287852c4ea82868ff9244ae3b7a4c534f1b65e228b7d548390c",
   ccaa_3_07: "5a17e47ad31a102aa51f7beb1cd2bbe5339c79afd7605ba371644dc25dc90fb8",
 } as const;
+const SEMANTIC_METADATA_HASHES = {
+  famprof_2_08:
+    "6ee8f704d892315cdb20e24b3d685aac0fe6c366260a7188f671a0ee7a34ec7c",
+  famprof_3_08:
+    "8e0be361ad093848702077c6fc87bef20472d5255dbccd8e8981c10f9d172e51",
+  ccaa_2_07: "72f76d9a2203b35c980a277ab724bada0f479cffd99c885cdc28016bd58fbc39",
+  ccaa_3_07: "5c3d2ee13cee37f14dd09c198ef9880e343749b390142394996a5e5249050b3e",
+} as const;
+const REQUIRED_SEMANTIC_METADATA = [
+  "TITLE",
+  "CONTENTS",
+  "SUBJECT-AREA",
+  "SUBJECT-CODE",
+  "MATRIX",
+] as const;
 
 function tokenize(text: string): Token[] {
   const tokens: Token[] = [];
@@ -178,6 +193,27 @@ function assertMetadata(
     throw new Error('Educabase PX requires SHOWDECIMALS="0"');
 }
 
+function assertSemanticMetadata(
+  source: EducabaseIncomeSource,
+  metadata: ReadonlyMap<string, readonly string[]>,
+): void {
+  const values = REQUIRED_SEMANTIC_METADATA.map((key) => {
+    const value = metadata.get(key)?.[0];
+    if (typeof value !== "string") {
+      throw new Error(`Educabase PX is missing required ${key} metadata`);
+    }
+    return value;
+  });
+  const fingerprint = createHash("sha256")
+    .update(values.join("\0"))
+    .digest("hex");
+  if (fingerprint !== SEMANTIC_METADATA_HASHES[source.tableId]) {
+    throw new Error(
+      `Educabase PX semantic metadata does not match ${source.tableId}`,
+    );
+  }
+}
+
 export function parseEducabaseIncomePx(
   source: EducabaseIncomeSource,
   bytes: Uint8Array,
@@ -265,6 +301,7 @@ export function parseEducabaseIncomePx(
     }
   }
   assertMetadata(metadata);
+  assertSemanticMetadata(source, metadata);
   if (!stub || !heading || !rawData)
     throw new Error("Educabase PX lacks STUB, HEADING, or DATA");
   const dimensionNames = [...stub, ...heading];

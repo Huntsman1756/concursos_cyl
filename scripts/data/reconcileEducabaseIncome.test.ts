@@ -83,4 +83,12 @@ describe("assertEquivalentIncomeTables", () => {
       /cell 500/i,
     );
   });
+
+  it("has no binary-number parsing or floating-point arithmetic in reconciliation", async () => {
+    const source = await readFile(
+      join(process.cwd(), "scripts/data/reconcileEducabaseIncome.ts"),
+      "utf8",
+    );
+    expect(source).not.toMatch(/Number\.parse|Math\.floor|Math\.round/u);
+  });
 });

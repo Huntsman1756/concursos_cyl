@@ -10,29 +10,21 @@ function canonicalCoordinate(
   return names.map((name) => cell.dimensions[name]).join("\0");
 }
 
-function canonicalCsvValue(rawValue: string): number | null {
+function canonicalCsvValue(rawValue: string): bigint | null {
   if (rawValue === "..") return null;
   if (!/^[0-9]+(?:\.[0-9]{3})*$/u.test(rawValue)) {
     throw new Error(`CSV numeric token is invalid: ${rawValue}`);
   }
-  return Number.parseInt(rawValue.replaceAll(".", ""), 10);
+  return BigInt(rawValue.replaceAll(".", ""));
 }
 
-function canonicalPxCents(rawValue: string): number | null {
+function canonicalPxCents(rawValue: string): bigint | null {
   if (rawValue === "..") return null;
   if (!/^[0-9]+(?:\.[0-9]{1,2})?$/u.test(rawValue)) {
     throw new Error(`PX numeric token is invalid: ${rawValue}`);
   }
   const [whole, fraction = ""] = rawValue.split(".") as [string, string?];
-  const cents =
-    Number.parseInt(whole, 10) * 100 +
-    Number.parseInt(fraction.padEnd(2, "0"), 10);
-  if (!Number.isSafeInteger(cents) || cents < 0) {
-    throw new Error(
-      `PX numeric token is not a non-negative euro amount: ${rawValue}`,
-    );
-  }
-  return cents;
+  return BigInt(whole) * 100n + BigInt(fraction.padEnd(2, "0"));
 }
 
 function assertDimensionsEqual(
@@ -97,7 +89,7 @@ export function assertEquivalentIncomeTables(
     const valuesMatch =
       csvValue === null
         ? pxValue === null
-        : pxValue !== null && Math.floor((pxValue + 50) / 100) === csvValue;
+        : pxValue !== null && (pxValue + 50n) / 100n === csvValue;
     if (!valuesMatch) {
       throw new Error(
         `${csv.tableId} cell ${index} differs: csv=${csvCell.rawValue}; px=${pxCell.rawValue}`,

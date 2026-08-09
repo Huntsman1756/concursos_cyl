@@ -50,10 +50,13 @@ describe("parseEducabaseIncomePx", () => {
   it("fails closed on changed notes, required metadata, dimension placement, and unused VALUES", async () => {
     const bytes = await fixture("famprof_2_08.px");
     const source = EDUCABASE_INCOME_SOURCES.famprof_2_08;
-    const replaceAscii = (from: string, to: string): Buffer => {
+    const replaceAscii = (from: string, to: string, occurrence = 0): Buffer => {
       expect(from).toHaveLength(to.length);
       const next = Buffer.from(bytes);
-      const index = next.indexOf(Buffer.from(from, "ascii"));
+      let index = -1;
+      for (let current = 0; current <= occurrence; current += 1) {
+        index = next.indexOf(Buffer.from(from, "ascii"), index + 1);
+      }
       expect(index).toBeGreaterThanOrEqual(0);
       next.write(to, index, "ascii");
       return next;
@@ -73,6 +76,11 @@ describe("parseEducabaseIncomePx", () => {
       ["source", replaceAscii("S.G.", "X.G.")],
       ["decimals", replaceAscii("DECIMALS=2", "DECIMALS=1")],
       ["showdecimals", replaceAscii("SHOWDECIMALS=0", "SHOWDECIMALS=1")],
+      ["title", replaceAscii("Distrib. bases", "Distrib. afili")],
+      ["contents", replaceAscii("Distrib. bases", "Distrib. afili", 1)],
+      ["subjectarea", replaceAscii("FP GRADO MEDIO", "FP GRADO SUPER")],
+      ["subjectcode", replaceAscii("BCCFP", "BADFP")],
+      ["matrix", replaceAscii('MATRIX="3"', 'MATRIX="9"')],
       ["stub", replaceAscii('STUB="Cohorte', 'STUB="Fooorte')],
       ["heading", replaceAscii('HEADING="Ciclo', 'HEADING="Cohor')],
       ["values", insertBeforeData()],
@@ -82,7 +90,7 @@ describe("parseEducabaseIncomePx", () => {
         new RegExp(
           name === "note"
             ? "note"
-            : "(UNITS|SOURCE|DECIMALS|dimensions|VALUES)",
+            : "(UNITS|SOURCE|DECIMALS|metadata|dimensions|VALUES)",
           "i",
         ),
       );

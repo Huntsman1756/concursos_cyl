@@ -187,15 +187,25 @@ export async function fetchOfficialBinary(
         };
       }
     } catch (error) {
-      lastError = error;
+      const normalizedError =
+        error instanceof Error
+          ? error
+          : error instanceof DOMException
+            ? new Error(error.message, { cause: error })
+            : new Error(
+                "Official income request failed with a non-Error rejection",
+                {
+                  cause: error,
+                },
+              );
+      lastError = normalizedError;
       if (
-        error instanceof Error &&
-        error.message.startsWith("Official income") &&
+        normalizedError.message.startsWith("Official income") &&
         !/^Official income request failed with HTTP (429|5\d\d)$/u.test(
-          error.message,
+          normalizedError.message,
         )
       ) {
-        throw error;
+        throw normalizedError;
       }
     } finally {
       clearTimeout(timeout);
