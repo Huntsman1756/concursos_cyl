@@ -84,6 +84,25 @@ describe("assertEquivalentIncomeTables", () => {
     );
   });
 
+  it("rejects values beyond the safe displayed-euro range before serialization", async () => {
+    const { csv, px } = await fixturePair();
+    const boundaryCsv = structuredClone(csv);
+    const boundaryPx = structuredClone(px);
+    boundaryCsv.cells[500]!.rawValue = "9.007.199.254.740.991";
+    boundaryPx.cells[500]!.rawValue = "9007199254740990.50";
+    expect(() =>
+      assertEquivalentIncomeTables(boundaryCsv, boundaryPx),
+    ).not.toThrow();
+
+    const overflowCsv = structuredClone(csv);
+    const overflowPx = structuredClone(px);
+    overflowCsv.cells[500]!.rawValue = "9.007.199.254.740.992";
+    overflowPx.cells[500]!.rawValue = "9007199254740992.00";
+    expect(() => assertEquivalentIncomeTables(overflowCsv, overflowPx)).toThrow(
+      /safe displayed-euro range/i,
+    );
+  });
+
   it("has no binary-number parsing or floating-point arithmetic in reconciliation", async () => {
     const source = await readFile(
       join(process.cwd(), "scripts/data/reconcileEducabaseIncome.ts"),

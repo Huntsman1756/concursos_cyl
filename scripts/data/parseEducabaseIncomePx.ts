@@ -61,6 +61,16 @@ const REQUIRED_SEMANTIC_METADATA = [
   "SUBJECT-CODE",
   "MATRIX",
 ] as const;
+const REQUIRED_SINGLETON_METADATA = [
+  "AXIS-VERSION",
+  "CHARSET",
+  "CODEPAGE",
+  "UNITS",
+  "SOURCE",
+  "DECIMALS",
+  "SHOWDECIMALS",
+  ...REQUIRED_SEMANTIC_METADATA,
+] as const;
 
 function tokenize(text: string): Token[] {
   const tokens: Token[] = [];
@@ -175,6 +185,11 @@ function productLength(
 function assertMetadata(
   metadata: ReadonlyMap<string, readonly string[]>,
 ): void {
+  for (const key of REQUIRED_SINGLETON_METADATA) {
+    if (metadata.get(key)?.length !== 1) {
+      throw new Error(`Educabase PX requires exactly one ${key} value`);
+    }
+  }
   if (metadata.get("AXIS-VERSION")?.[0] !== "2006")
     throw new Error('Educabase PX requires AXIS-VERSION="2006"');
   if (metadata.get("CHARSET")?.[0] !== "ANSI")
@@ -191,6 +206,29 @@ function assertMetadata(
     throw new Error('Educabase PX requires DECIMALS="2"');
   if (metadata.get("SHOWDECIMALS")?.[0] !== "0")
     throw new Error('Educabase PX requires SHOWDECIMALS="0"');
+}
+
+function assertCreationDate(
+  metadata: ReadonlyMap<string, readonly string[]>,
+): void {
+  const values = metadata.get("CREATION-DATE");
+  if (values?.length !== 1 || !/^\d{8}$/u.test(values[0] ?? "")) {
+    throw new Error(
+      "Educabase PX requires one valid CREATION-DATE in YYYYMMDD format",
+    );
+  }
+  const value = values[0] as string;
+  const year = Number(value.slice(0, 4));
+  const month = Number(value.slice(4, 6));
+  const day = Number(value.slice(6, 8));
+  const date = new Date(Date.UTC(year, month - 1, day));
+  if (
+    date.getUTCFullYear() !== year ||
+    date.getUTCMonth() !== month - 1 ||
+    date.getUTCDate() !== day
+  ) {
+    throw new Error("Educabase PX CREATION-DATE is not a calendar date");
+  }
 }
 
 function assertSemanticMetadata(
@@ -301,6 +339,7 @@ export function parseEducabaseIncomePx(
     }
   }
   assertMetadata(metadata);
+  assertCreationDate(metadata);
   assertSemanticMetadata(source, metadata);
   if (!stub || !heading || !rawData)
     throw new Error("Educabase PX lacks STUB, HEADING, or DATA");

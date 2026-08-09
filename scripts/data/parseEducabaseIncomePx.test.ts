@@ -97,6 +97,21 @@ describe("parseEducabaseIncomePx", () => {
     }
   });
 
+  it("requires singleton semantic metadata and a valid mutable creation date", async () => {
+    const bytes = await fixture("famprof_2_08.px");
+    const text = new TextDecoder("iso-8859-15").decode(bytes);
+    const source = EDUCABASE_INCOME_SOURCES.famprof_2_08;
+    for (const [, mutated] of [
+      ["missing", text.replace('CREATION-DATE="20260809";\r\n', "")],
+      ["malformed", text.replace("20260809", "20261340")],
+      ["extra", text.replace('TITLE="', 'TITLE="second","')],
+    ]) {
+      expect(() =>
+        parseEducabaseIncomePx(source, Buffer.from(mutated, "latin1")),
+      ).toThrow(/CREATION-DATE|exactly one|quoted string/i);
+    }
+  });
+
   it("rejects invalid data, invalid concatenation, and cardinality changes", () => {
     const text = [
       'AXIS-VERSION="2006";',

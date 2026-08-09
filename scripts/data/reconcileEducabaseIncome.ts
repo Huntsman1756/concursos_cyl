@@ -3,6 +3,8 @@ import type {
   ParsedIncomeTable,
 } from "./parseEducabaseIncomeCsv";
 
+const MAX_SAFE_DISPLAYED_EUROS = BigInt(Number.MAX_SAFE_INTEGER);
+
 function canonicalCoordinate(
   cell: ParsedIncomeCell,
   names: readonly string[],
@@ -25,6 +27,12 @@ function canonicalPxCents(rawValue: string): bigint | null {
   }
   const [whole, fraction = ""] = rawValue.split(".") as [string, string?];
   return BigInt(whole) * 100n + BigInt(fraction.padEnd(2, "0"));
+}
+
+function assertSafeDisplayedEuroRange(value: bigint): void {
+  if (value < 0n || value > MAX_SAFE_DISPLAYED_EUROS) {
+    throw new Error("Income value exceeds the safe displayed-euro range");
+  }
 }
 
 function assertDimensionsEqual(
@@ -86,6 +94,8 @@ export function assertEquivalentIncomeTables(
     }
     const csvValue = canonicalCsvValue(csvCell.rawValue);
     const pxValue = canonicalPxCents(pxCell.rawValue);
+    if (csvValue !== null) assertSafeDisplayedEuroRange(csvValue);
+    if (pxValue !== null) assertSafeDisplayedEuroRange((pxValue + 50n) / 100n);
     const valuesMatch =
       csvValue === null
         ? pxValue === null
