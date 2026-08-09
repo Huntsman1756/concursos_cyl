@@ -194,6 +194,65 @@ describe("validateFpCoverageExpansion", () => {
     ).toThrow(/inventory|exhaustive|source order/i);
   });
 
+  it("allows deferred evidence to record an authoritative seed mismatch without publishing", () => {
+    const deferredInput = validInput(
+      {
+        state: "deferred",
+        transitions: [
+          baseAttempt.transitions[0],
+          {
+            from: "in_progress",
+            to: "deferred",
+            at: baseAttempt.completedAt,
+          },
+        ],
+        officialOutputInventory: {
+          sourceUrl: evidence.sourceUrl,
+          labels: ["Electricista, en general."],
+        },
+        officialOutputReviews: [
+          {
+            ...baseAttempt.officialOutputReviews[0],
+            officialOutputLabel: "Electricista, en general.",
+            disposition: "rejected",
+            acceptedOccupationIds: undefined,
+            classificationEvidence: undefined,
+            sourceQuote: "Electricista, en general.",
+            reason:
+              "The authoritative output does not exactly match the frozen ranking seed.",
+          },
+        ],
+        acceptedRelations: [],
+        rejectedRelations: [
+          {
+            ...baseAttempt.acceptedRelations[0],
+            sourceQuote: "Electricista, en general.",
+          },
+        ],
+        baselineMatchIds: [],
+        currentMatchIds: [],
+        newlyReachedOfferIdsByProgram: {},
+        newlyReachedOfferUnionIds: [],
+        publicParity: {
+          publishedRelationKeys: [],
+          rejectedRelationKeys: ["ELE01M|occupation:cno11:7521"],
+        },
+      },
+      {
+        baselineMatchIds: [],
+        currentMatchIds: [],
+        newlyReachedOfferIdsByProgram: {},
+        newlyReachedOfferUnionIds: [],
+      },
+    );
+    deferredInput.publicRelationSet = {
+      manifestAddressed: true,
+      relationKeys: [],
+      resourcePaths: ["/data/v1/manifest.json"],
+    };
+    expect(() => validateExpansionAttemptData(deferredInput)).not.toThrow();
+  });
+
   it("accepts a multi-word alias with exact output and classification evidence", () => {
     const alias = "electricista industrial";
     const relationKey = `ELE01M|occupation:cno11:7521|${alias}`;

@@ -607,17 +607,19 @@ export function validateExpansionAttemptData(
       "Official output reviews must exactly match the authoritative output inventory in source order.",
     );
   const normalizedLabels = labels.map(normalizeOutputSeed);
-  let lastSeedIndex = -1;
-  for (const seed of candidate.officialOutputLabels) {
-    const normalizedSeed = normalizeOutputSeed(seed);
-    const seedIndex = normalizedLabels.findIndex(
-      (label, index) => index > lastSeedIndex && label === normalizedSeed,
-    );
-    if (seedIndex === -1)
-      fail(
-        "Official output reviews must contain every frozen ranking output seed in order.",
+  if (attempt.state === "completed") {
+    let lastSeedIndex = -1;
+    for (const seed of candidate.officialOutputLabels) {
+      const normalizedSeed = normalizeOutputSeed(seed);
+      const seedIndex = normalizedLabels.findIndex(
+        (label, index) => index > lastSeedIndex && label === normalizedSeed,
       );
-    lastSeedIndex = seedIndex;
+      if (seedIndex === -1)
+        fail(
+          "Official output reviews must contain every frozen ranking output seed in order.",
+        );
+      lastSeedIndex = seedIndex;
+    }
   }
   if (
     new Set(labels).size !== labels.length ||
@@ -836,7 +838,6 @@ export function validateExpansionAttemptData(
     attempt.state !== "completed" &&
     (publicRelationSet.relationKeys.length > 0 ||
       publicParity.publishedRelationKeys.length > 0 ||
-      publicParity.rejectedRelationKeys.length > 0 ||
       Object.values(newlyReachedOfferIdsByProgram).some(
         (ids) => ids.length > 0,
       ) ||
