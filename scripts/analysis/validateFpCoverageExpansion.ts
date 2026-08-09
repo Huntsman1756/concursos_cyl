@@ -1038,7 +1038,12 @@ export async function validateExpansionAttempt(
   ) ??
     execFileAsync("git", ["show", "-s", "--format=%cI", reviewedCommit], {
       cwd: rootDirectory,
-    }).then(({ stdout }) => stdout.trim()));
+    }).then(({ stdout }) => {
+      const instant = new Date(stdout.trim());
+      if (Number.isNaN(instant.getTime()))
+        fail("Reviewed commit timestamp is not a valid ISO instant.");
+      return instant.toISOString();
+    }));
   return validateExpansionAttemptData({
     attempt,
     candidate,
