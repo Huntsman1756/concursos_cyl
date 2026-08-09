@@ -41,18 +41,29 @@ function cloned<T>(value: T): T {
 
 function createInProgressArtifact(): FpOneWordPublicationReview {
   const artifact = cloned(readArtifact());
-  const row = artifact.rows[0]!;
-  row.disposition = "needs_human_review";
-  row.reasonCode = "insufficient_title_evidence";
-  row.rationale =
-    "The trusted title match remains explicitly pending human publication review.";
-  const rows = artifact.rows.filter((candidate) => candidate.form === row.form);
-  artifact.publicationDecision[row.form] = {
-    status: "rejected",
-    acceptedOfferIds: [],
-    rejectedOfferIds: rows.map((candidate) => candidate.offerId),
-    reason: "Pending human review; not approved for publication.",
-  };
+  for (const row of artifact.rows) {
+    row.disposition = "needs_human_review";
+    row.reasonCode = "insufficient_title_evidence";
+    row.rationale =
+      "The trusted title match is retained for human publication review; no terminal decision is inferred.";
+    row.requirementQuotes = [row.offerTitle];
+  }
+  for (const form of [
+    "cocinero",
+    "cocineros",
+    "albañil",
+    "albañiles",
+    "encofradores",
+  ] as const) {
+    artifact.publicationDecision[form] = {
+      status: "rejected",
+      acceptedOfferIds: [],
+      rejectedOfferIds: artifact.rows
+        .filter((row) => row.form === form)
+        .map((row) => row.offerId),
+      reason: "Pending human review; not approved for publication.",
+    };
+  }
   return artifact;
 }
 
