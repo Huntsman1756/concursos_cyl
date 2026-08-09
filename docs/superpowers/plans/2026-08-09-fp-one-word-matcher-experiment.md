@@ -43,7 +43,7 @@
 
 Run `rtk git rev-parse HEAD` before editing and record that exact SHA as `experimentBase` in the ignored Task 1 report. This is the later zero-diff baseline.
 
-Create `scripts/analysis/validateEcylFpFamilyPilotNotebook.test.ts`. The test copies the notebook to a temporary filename, spawns `jupyter nbconvert --to notebook --execute` with repository root as the child working directory and a 300-second timeout, and asserts a successful exit with no notebook error output. It then renders the executed temporary notebook to Markdown and compares those bytes with the checked-in Markdown. The test exercises notebook behavior; it must not grep implementation source.
+Create `scripts/analysis/validateEcylFpFamilyPilotNotebook.test.ts`. The test copies the notebook to a temporary filename, spawns `jupyter nbconvert --to notebook --execute` with repository root as the child working directory and a 300-second timeout, and asserts a successful exit with no notebook error output. The checked-in Markdown is a curated analytical report rather than raw `nbconvert` output, so update its affected counts and findings explicitly instead of pretending that the two formats are byte-equivalent. The test exercises notebook behavior; it must not grep implementation source.
 
 The test must name these exact examples:
 
@@ -123,16 +123,15 @@ eoc_known_false_positive = re.compile(
 
 Map matches to `No FP o relación insuficiente desde el título`. Do not change the broad family candidate regex in this task.
 
-- [ ] **Step 4: Execute the notebook and regenerate Markdown**
+- [ ] **Step 4: Execute the notebook and reconcile the curated Markdown**
 
 Run:
 
 ```powershell
 rtk jupyter nbconvert --to notebook --execute --inplace analysis/ecyl_fp_family_pilot_ranking.ipynb --ExecutePreprocessor.timeout=300
-rtk jupyter nbconvert --to markdown analysis/ecyl_fp_family_pilot_ranking.ipynb --output ecyl_fp_family_pilot_ranking.md --output-dir analysis
 ```
 
-Expected: both commands exit 0; all four embedded assertions pass.
+Expected: the command exits 0 and all embedded assertions pass. Reconcile the curated Markdown's affected counts, percentages, dates, and conclusions against the executed notebook without replacing the report with raw notebook output.
 
 - [ ] **Step 5: Run notebook and repository gates**
 

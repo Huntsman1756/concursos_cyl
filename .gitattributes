@@ -1,2 +1,3 @@
 tests/fixtures/educabase-income/*.csv -text -diff
 tests/fixtures/educabase-income/*.px -text -diff
+analysis/*.ipynb text eol=lf
