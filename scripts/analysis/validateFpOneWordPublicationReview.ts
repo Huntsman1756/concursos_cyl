@@ -254,13 +254,20 @@ function expectedDecision(rows: readonly ReviewRow[]) {
       return [
         form,
         {
-          status: acceptedOfferIds.length > 0 ? "accepted" : "rejected",
+          status:
+            rejectedOfferIds.length > 0
+              ? "rejected"
+              : acceptedOfferIds.length > 0
+                ? "accepted"
+                : "rejected",
           acceptedOfferIds,
           rejectedOfferIds,
           reason:
-            acceptedOfferIds.length > 0
-              ? "Accepted offers are eligible for publication."
-              : "No offers are approved for publication.",
+            rejectedOfferIds.length > 0 && acceptedOfferIds.length > 0
+              ? "Known rejected offers prevent publication."
+              : acceptedOfferIds.length > 0
+                ? "Accepted offers are eligible for publication."
+                : "No offers are approved for publication.",
         },
       ];
     }),

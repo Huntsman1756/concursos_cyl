@@ -72,10 +72,10 @@ function createTerminalArtifact(): FpOneWordPublicationReview {
       reason: "No offers are approved for publication.",
     },
     albañil: {
-      status: "accepted",
+      status: "rejected",
       acceptedOfferIds: ["1285664848132"],
       rejectedOfferIds: ["1285669061589"],
-      reason: "Accepted offers are eligible for publication.",
+      reason: "Known rejected offers prevent publication.",
     },
     albañiles: {
       status: "rejected",
@@ -285,8 +285,13 @@ describe("FP one-word publication review validator", () => {
     );
   });
 
-  it("accepts terminal accepted and rejected decisions when they match the rows", () => {
+  it("rejects a mixed form even when it retains its exact accepted offer IDs", () => {
     const artifact = createTerminalArtifact();
+    expect(artifact.publicationDecision.albañil).toMatchObject({
+      status: "rejected",
+      acceptedOfferIds: ["1285664848132"],
+      rejectedOfferIds: ["1285669061589"],
+    });
     expect(() =>
       validateFpOneWordPublicationReviewArtifact(artifact),
     ).not.toThrow();
