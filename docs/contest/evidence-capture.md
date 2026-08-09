@@ -1,0 +1,25 @@
+# Contest evidence capture checklist
+
+This checklist is rendered from `docs/contest/evidence-capture.json`. Capture only the listed routes and viewports after the coverage freeze. Do not submit the application from this checklist.
+
+<!-- prettier-ignore -->
+| Evidence | Route | Viewport | Required visible state | Claim IDs | Output | Freeze required | Privacy/redaction rule |
+| --- | --- | ---: | --- | --- | --- | --- | --- |
+| `home-desktop` | `/` | 1440×900 | rol heading «Elige tu camino y actúa con información oficial»; texto «Disponible ahora» | `problem_audience`, `accessibility_intent`, `public_modality_keys`, `published_snapshot` | `docs/contest/evidence/home-desktop.png` | sí | Use a fresh anonymous browser context; omit browser chrome, personal data, cookies, account identifiers, API keys, tokens, and local filesystem paths. |
+| `fp-pre-search-reviewed` | `/desde-fp` | 1440×900 | rol heading «Encuentra ofertas relacionadas con tu FP»; rol combobox «Ciclo de Formación Profesional»; texto «Cobertura revisada» | `public_modality_keys`, `approved_relations`, `approved_aliases` | `docs/contest/evidence/fp-pre-search-reviewed.png` | sí | Use a fresh anonymous browser context; omit browser chrome, personal data, cookies, account identifiers, API keys, tokens, and local filesystem paths. |
+| `fp-pre-search-unavailable` | `/desde-fp` | 1440×900 | rol combobox «Ciclo de Formación Profesional»; texto «Cobertura revisada no disponible para este ciclo.» | `deferred_programs`, `zero_reviewed_relations` | `docs/contest/evidence/fp-pre-search-unavailable.png` | sí | Use a fresh anonymous browser context; omit browser chrome, personal data, cookies, account identifiers, API keys, tokens, and local filesystem paths. |
+| `fp-matched-result` | `/desde-fp/EOC01M` | 1440×900 | rol heading «Construcción»; texto «Código oficial EOC01M»; texto «Ofertas relacionadas con» | `approved_relations`, `approved_aliases`, `matched_offer_union`, `no_salary_prediction` | `docs/contest/evidence/fp-matched-result.png` | sí | Use a fresh anonymous browser context; omit browser chrome, personal data, cookies, account identifiers, API keys, tokens, and local filesystem paths. |
+| `fp-zero-deferred` | `/desde-fp/COM01M` | 1440×900 | rol heading «Actividades Comerciales»; texto «Aún no hay una relación revisada para este ciclo.» | `deferred_programs`, `zero_reviewed_relations` | `docs/contest/evidence/fp-zero-deferred.png` | sí | Use a fresh anonymous browser context; omit browser chrome, personal data, cookies, account identifiers, API keys, tokens, and local filesystem paths. |
+| `comparison-dual-scopes` | `/comparar` | 1440×900 | rol heading «Ingresos observados del ciclo o grupo en España»; rol heading «Referencia de titulados de Grado Superior en Castilla y León»; texto «Mostramos ambas referencias por separado» | `income_source_scope`, `graduation_centre_scope`, `national_cycle_group_scope`, `no_salary_prediction` | `docs/contest/evidence/comparison-dual-scopes.png` | sí | Use a fresh anonymous browser context; omit browser chrome, personal data, cookies, account identifiers, API keys, tokens, and local filesystem paths. |
+| `methodology-sources` | `/metodologia` | 1440×900 | rol heading «Metodología y fuentes»; texto «Ficha oficial del catálogo»; texto «Qué no permite afirmar» | `official_source_boundaries`, `income_source_scope`, `no_salary_prediction`, `accessibility_intent` | `docs/contest/evidence/methodology-sources.png` | sí | Use a fresh anonymous browser context; omit browser chrome, personal data, cookies, account identifiers, API keys, tokens, and local filesystem paths. |
+| `home-mobile` | `/` | 360×800 | rol heading «Elige tu camino y actúa con información oficial»; texto «Disponible ahora» | `problem_audience`, `accessibility_intent`, `published_snapshot` | `docs/contest/evidence/home-mobile.png` | sí | Use a fresh anonymous browser context; omit browser chrome, personal data, cookies, account identifiers, API keys, tokens, and local filesystem paths. |
+| `comparison-mobile` | `/comparar` | 360×800 | rol heading «Ingresos observados»; texto «Consulta la base de cotización anualizada» | `income_source_scope`, `no_salary_prediction`, `privacy_no_persistence` | `docs/contest/evidence/comparison-mobile.png` | sí | Use a fresh anonymous browser context; omit browser chrome, personal data, cookies, account identifiers, API keys, tokens, and local filesystem paths. |
+
+## Operator gates
+
+- [ ] Use a fresh anonymous browser context for every capture.
+- [ ] Confirm the displayed route is the local or deployed root application, not a deep route submitted to the contest.
+- [ ] Wait for loading to settle, then run the matching Axe, overflow, request, and console checks.
+- [ ] Inspect the original PNG for browser chrome, personal data, account state, cookies, tokens, local filesystem paths, clipping, and misleading empty states.
+- [ ] Record the coverage-freeze commit and deployed commit before adding any SHA-256 or captured-at metadata.
+- [ ] Have a reviewer compare each image with the claim ledger and the frozen data before committing evidence.

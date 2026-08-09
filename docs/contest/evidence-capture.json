@@ -1,0 +1,209 @@
+{
+  "schemaVersion": "1.0.0",
+  "freezeRequired": true,
+  "outputDirectory": "docs/contest/evidence",
+  "captures": [
+    {
+      "evidenceId": "home-desktop",
+      "route": "/",
+      "viewport": { "width": 1440, "height": 900 },
+      "requiredVisible": [
+        {
+          "kind": "role",
+          "role": "heading",
+          "name": "Elige tu camino y actúa con información oficial"
+        },
+        { "kind": "text", "value": "Disponible ahora" }
+      ],
+      "claimIds": [
+        "problem_audience",
+        "accessibility_intent",
+        "public_modality_keys",
+        "published_snapshot"
+      ],
+      "outputFile": "docs/contest/evidence/home-desktop.png",
+      "freezeRequired": true,
+      "redactionRule": "Use a fresh anonymous browser context; omit browser chrome, personal data, cookies, account identifiers, API keys, tokens, and local filesystem paths."
+    },
+    {
+      "evidenceId": "fp-pre-search-reviewed",
+      "route": "/desde-fp",
+      "viewport": { "width": 1440, "height": 900 },
+      "requiredVisible": [
+        {
+          "kind": "role",
+          "role": "heading",
+          "name": "Encuentra ofertas relacionadas con tu FP"
+        },
+        {
+          "kind": "role",
+          "role": "combobox",
+          "name": "Ciclo de Formación Profesional"
+        },
+        { "kind": "text", "value": "Cobertura revisada" }
+      ],
+      "claimIds": [
+        "public_modality_keys",
+        "approved_relations",
+        "approved_aliases"
+      ],
+      "outputFile": "docs/contest/evidence/fp-pre-search-reviewed.png",
+      "freezeRequired": true,
+      "redactionRule": "Use a fresh anonymous browser context; omit browser chrome, personal data, cookies, account identifiers, API keys, tokens, and local filesystem paths."
+    },
+    {
+      "evidenceId": "fp-pre-search-unavailable",
+      "route": "/desde-fp",
+      "viewport": { "width": 1440, "height": 900 },
+      "requiredVisible": [
+        {
+          "kind": "role",
+          "role": "combobox",
+          "name": "Ciclo de Formación Profesional"
+        },
+        {
+          "kind": "text",
+          "value": "Cobertura revisada no disponible para este ciclo."
+        }
+      ],
+      "claimIds": ["deferred_programs", "zero_reviewed_relations"],
+      "outputFile": "docs/contest/evidence/fp-pre-search-unavailable.png",
+      "freezeRequired": true,
+      "redactionRule": "Use a fresh anonymous browser context; omit browser chrome, personal data, cookies, account identifiers, API keys, tokens, and local filesystem paths."
+    },
+    {
+      "evidenceId": "fp-matched-result",
+      "route": "/desde-fp/EOC01M",
+      "viewport": { "width": 1440, "height": 900 },
+      "requiredVisible": [
+        { "kind": "role", "role": "heading", "name": "Construcción" },
+        { "kind": "text", "value": "Código oficial EOC01M" },
+        { "kind": "text", "value": "Ofertas relacionadas con" }
+      ],
+      "claimIds": [
+        "approved_relations",
+        "approved_aliases",
+        "matched_offer_union",
+        "no_salary_prediction"
+      ],
+      "outputFile": "docs/contest/evidence/fp-matched-result.png",
+      "freezeRequired": true,
+      "redactionRule": "Use a fresh anonymous browser context; omit browser chrome, personal data, cookies, account identifiers, API keys, tokens, and local filesystem paths."
+    },
+    {
+      "evidenceId": "fp-zero-deferred",
+      "route": "/desde-fp/COM01M",
+      "viewport": { "width": 1440, "height": 900 },
+      "requiredVisible": [
+        {
+          "kind": "role",
+          "role": "heading",
+          "name": "Actividades Comerciales"
+        },
+        {
+          "kind": "text",
+          "value": "Aún no hay una relación revisada para este ciclo."
+        }
+      ],
+      "claimIds": ["deferred_programs", "zero_reviewed_relations"],
+      "outputFile": "docs/contest/evidence/fp-zero-deferred.png",
+      "freezeRequired": true,
+      "redactionRule": "Use a fresh anonymous browser context; omit browser chrome, personal data, cookies, account identifiers, API keys, tokens, and local filesystem paths."
+    },
+    {
+      "evidenceId": "comparison-dual-scopes",
+      "route": "/comparar",
+      "viewport": { "width": 1440, "height": 900 },
+      "requiredVisible": [
+        {
+          "kind": "role",
+          "role": "heading",
+          "name": "Ingresos observados del ciclo o grupo en España"
+        },
+        {
+          "kind": "role",
+          "role": "heading",
+          "name": "Referencia de titulados de Grado Superior en Castilla y León"
+        },
+        {
+          "kind": "text",
+          "value": "Mostramos ambas referencias por separado"
+        }
+      ],
+      "claimIds": [
+        "income_source_scope",
+        "graduation_centre_scope",
+        "national_cycle_group_scope",
+        "no_salary_prediction"
+      ],
+      "outputFile": "docs/contest/evidence/comparison-dual-scopes.png",
+      "freezeRequired": true,
+      "redactionRule": "Use a fresh anonymous browser context; omit browser chrome, personal data, cookies, account identifiers, API keys, tokens, and local filesystem paths."
+    },
+    {
+      "evidenceId": "methodology-sources",
+      "route": "/metodologia",
+      "viewport": { "width": 1440, "height": 900 },
+      "requiredVisible": [
+        {
+          "kind": "role",
+          "role": "heading",
+          "name": "Metodología y fuentes"
+        },
+        { "kind": "text", "value": "Ficha oficial del catálogo" },
+        { "kind": "text", "value": "Qué no permite afirmar" }
+      ],
+      "claimIds": [
+        "official_source_boundaries",
+        "income_source_scope",
+        "no_salary_prediction",
+        "accessibility_intent"
+      ],
+      "outputFile": "docs/contest/evidence/methodology-sources.png",
+      "freezeRequired": true,
+      "redactionRule": "Use a fresh anonymous browser context; omit browser chrome, personal data, cookies, account identifiers, API keys, tokens, and local filesystem paths."
+    },
+    {
+      "evidenceId": "home-mobile",
+      "route": "/",
+      "viewport": { "width": 360, "height": 800 },
+      "requiredVisible": [
+        {
+          "kind": "role",
+          "role": "heading",
+          "name": "Elige tu camino y actúa con información oficial"
+        },
+        { "kind": "text", "value": "Disponible ahora" }
+      ],
+      "claimIds": [
+        "problem_audience",
+        "accessibility_intent",
+        "published_snapshot"
+      ],
+      "outputFile": "docs/contest/evidence/home-mobile.png",
+      "freezeRequired": true,
+      "redactionRule": "Use a fresh anonymous browser context; omit browser chrome, personal data, cookies, account identifiers, API keys, tokens, and local filesystem paths."
+    },
+    {
+      "evidenceId": "comparison-mobile",
+      "route": "/comparar",
+      "viewport": { "width": 360, "height": 800 },
+      "requiredVisible": [
+        {
+          "kind": "role",
+          "role": "heading",
+          "name": "Ingresos observados"
+        },
+        { "kind": "text", "value": "Consulta la base de cotización anualizada" }
+      ],
+      "claimIds": [
+        "income_source_scope",
+        "no_salary_prediction",
+        "privacy_no_persistence"
+      ],
+      "outputFile": "docs/contest/evidence/comparison-mobile.png",
+      "freezeRequired": true,
+      "redactionRule": "Use a fresh anonymous browser context; omit browser chrome, personal data, cookies, account identifiers, API keys, tokens, and local filesystem paths."
+    }
+  ]
+}
