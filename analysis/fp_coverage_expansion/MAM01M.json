@@ -1,0 +1,201 @@
+{
+  "schemaVersion": "1.0.0",
+  "programKey": "MAM01M",
+  "baseQualificationIdentity": "qualification:MAM01M",
+  "state": "deferred",
+  "transitions": [
+    {
+      "from": "not_started",
+      "to": "in_progress",
+      "at": "2026-08-09T16:20:00Z"
+    },
+    {
+      "from": "in_progress",
+      "to": "deferred",
+      "at": "2026-08-09T16:29:26.000Z"
+    }
+  ],
+  "startedAt": "2026-08-09T16:20:00Z",
+  "completedAt": "2026-08-09T16:29:26.000Z",
+  "phaseMinutes": {
+    "research": 5,
+    "implementation": 3,
+    "test": 2,
+    "review": 0
+  },
+  "reviewerTimeExcluded": true,
+  "programmeProfileEvidence": {
+    "todoFp": {
+      "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/madera-mueble-corcho/carpinteria-mueble.html",
+      "sourceQuote": "Técnico en Carpintería y Mueble",
+      "reviewedAt": "2026-08-09"
+    },
+    "authoritativeOutputSource": {
+      "sourceUrl": "https://www.boe.es/eli/es/rd/1128/2010",
+      "sourceQuote": "Las ocupaciones y puestos de trabajo más relevantes son los siguientes:",
+      "reviewedAt": "2026-08-09"
+    },
+    "reconciliationNote": "TodoFP y BOE identifican el mismo título; el inventario BOE exhaustivo conserva seis outputs, pero el seed congelado Carpintero de madera no coincide literalmente con ninguno de ellos."
+  },
+  "officialOutputInventory": {
+    "sourceUrl": "https://www.boe.es/eli/es/rd/1128/2010",
+    "labels": [
+      "Operador de máquinas fijas para fabricar productos de madera.",
+      "Operador de prensas.",
+      "Operador-armador en banco.",
+      "Montador-ensamblador de elementos de carpintería.",
+      "Barnizador-lacador.",
+      "Responsable de sección de acabados."
+    ]
+  },
+  "officialOutputReviews": [
+    {
+      "order": 1,
+      "officialOutputLabel": "Operador de máquinas fijas para fabricar productos de madera.",
+      "disposition": "accepted",
+      "candidateOccupationIds": ["occupation:cno11:7812"],
+      "acceptedOccupationIds": ["occupation:cno11:7812"],
+      "sourceUrl": "https://www.boe.es/eli/es/rd/1128/2010",
+      "sourceQuote": "Operador de máquinas fijas para fabricar productos de madera.",
+      "classificationEvidence": [
+        {
+          "occupationId": "occupation:cno11:7812",
+          "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+          "sourceQuote": "7812 Ajustadores y operadores de máquinas para trabajar la madera",
+          "reviewedAt": "2026-08-09"
+        }
+      ],
+      "reason": "Coincidencia directa entre operación de máquinas para fabricar productos de madera y el límite CNO 7812."
+    },
+    {
+      "order": 2,
+      "officialOutputLabel": "Operador de prensas.",
+      "disposition": "accepted",
+      "candidateOccupationIds": ["occupation:cno11:7812"],
+      "acceptedOccupationIds": ["occupation:cno11:7812"],
+      "sourceUrl": "https://www.boe.es/eli/es/rd/1128/2010",
+      "sourceQuote": "Operador de prensas.",
+      "classificationEvidence": [
+        {
+          "occupationId": "occupation:cno11:7812",
+          "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+          "sourceQuote": "7812 Ajustadores y operadores de máquinas para trabajar la madera",
+          "reviewedAt": "2026-08-09"
+        }
+      ],
+      "reason": "El CNO 7812 incluye operaciones de prensado para elaborar piezas de madera."
+    },
+    {
+      "order": 3,
+      "officialOutputLabel": "Operador-armador en banco.",
+      "disposition": "accepted",
+      "candidateOccupationIds": ["occupation:cno11:8209"],
+      "acceptedOccupationIds": ["occupation:cno11:8209"],
+      "sourceUrl": "https://www.boe.es/eli/es/rd/1128/2010",
+      "sourceQuote": "Operador-armador en banco.",
+      "classificationEvidence": [
+        {
+          "occupationId": "occupation:cno11:8209",
+          "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+          "sourceQuote": "8209 Montadores y ensambladores no clasificados en otros epígrafes",
+          "reviewedAt": "2026-08-09"
+        }
+      ],
+      "reason": "El output describe montaje y ensamblaje de productos de madera, dentro del límite 8209."
+    },
+    {
+      "order": 4,
+      "officialOutputLabel": "Montador-ensamblador de elementos de carpintería.",
+      "disposition": "accepted",
+      "candidateOccupationIds": ["occupation:cno11:8209"],
+      "acceptedOccupationIds": ["occupation:cno11:8209"],
+      "sourceUrl": "https://www.boe.es/eli/es/rd/1128/2010",
+      "sourceQuote": "Montador-ensamblador de elementos de carpintería.",
+      "classificationEvidence": [
+        {
+          "occupationId": "occupation:cno11:8209",
+          "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+          "sourceQuote": "Ensambladores de puertas",
+          "reviewedAt": "2026-08-09"
+        }
+      ],
+      "reason": "El CNO 8209 incluye ensambladores de puertas y productos de madera."
+    },
+    {
+      "order": 5,
+      "officialOutputLabel": "Barnizador-lacador.",
+      "disposition": "accepted",
+      "candidateOccupationIds": ["occupation:cno11:8209"],
+      "acceptedOccupationIds": ["occupation:cno11:8209"],
+      "sourceUrl": "https://www.boe.es/eli/es/rd/1128/2010",
+      "sourceQuote": "Barnizador-lacador.",
+      "classificationEvidence": [
+        {
+          "occupationId": "occupation:cno11:8209",
+          "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+          "sourceQuote": "Técnicos en acabado de muebles de madera",
+          "reviewedAt": "2026-08-09"
+        }
+      ],
+      "reason": "El CNO 8209 incluye técnicos en acabado de muebles de madera."
+    },
+    {
+      "order": 6,
+      "officialOutputLabel": "Responsable de sección de acabados.",
+      "disposition": "rejected",
+      "candidateOccupationIds": ["occupation:cno11:3206"],
+      "sourceUrl": "https://www.boe.es/eli/es/rd/1128/2010",
+      "sourceQuote": "Responsable de sección de acabados.",
+      "classificationEvidence": [
+        {
+          "occupationId": "occupation:cno11:3206",
+          "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+          "sourceQuote": "3206 Supervisores de industrias de la madera y pastero papeleras",
+          "reviewedAt": "2026-08-09"
+        }
+      ],
+      "reason": "La supervisión CNO 3206 no demuestra una equivalencia exacta con una sección de acabados de este título."
+    }
+  ],
+  "acceptedRelations": [
+    {
+      "kind": "link",
+      "programKey": "MAM01M",
+      "occupationId": "occupation:cno11:7812",
+      "sourceUrl": "https://www.boe.es/eli/es/rd/1128/2010",
+      "sourceQuote": "Operador de máquinas fijas para fabricar productos de madera.",
+      "reviewedAt": "2026-08-09"
+    },
+    {
+      "kind": "link",
+      "programKey": "MAM01M",
+      "occupationId": "occupation:cno11:8209",
+      "sourceUrl": "https://www.boe.es/eli/es/rd/1128/2010",
+      "sourceQuote": "Montador-ensamblador de elementos de carpintería.",
+      "reviewedAt": "2026-08-09"
+    }
+  ],
+  "rejectedRelations": [
+    {
+      "kind": "link",
+      "programKey": "MAM01M",
+      "occupationId": "occupation:cno11:3206",
+      "sourceUrl": "https://www.boe.es/eli/es/rd/1128/2010",
+      "sourceQuote": "Responsable de sección de acabados.",
+      "reviewedAt": "2026-08-09"
+    }
+  ],
+  "baselineMatchIds": [],
+  "currentMatchIds": [],
+  "newlyReachedOfferIdsByProgram": { "MAM01M": [] },
+  "newlyReachedOfferUnionIds": [],
+  "limitation": "Deferred because the frozen seed Carpintero de madera is not an exact BOE output. The two accepted relations remain curated but are not published; the rejected supervisory relation is audit-only. No aliases, offer deltas, snapshot regeneration, or public-resource changes are allowed in this slot.",
+  "reviewedCommit": "a3bd273f7492ba1a8ca2f07306780e83e9f8d65c",
+  "reviewedCommitAt": "2026-08-09T16:29:26.000Z",
+  "snapshotId": "20260809113838031-6730f7cd4230",
+  "snapshotHash": "b32c3efe70646749c313616c90a33916a6f74c7c6cdc446fd4dae09b1b78d4a9",
+  "publicParity": {
+    "publishedRelationKeys": [],
+    "rejectedRelationKeys": ["MAM01M|occupation:cno11:3206"]
+  }
+}
