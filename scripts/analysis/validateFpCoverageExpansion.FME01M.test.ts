@@ -17,12 +17,12 @@ import {
 const rootDirectory = resolve(import.meta.dirname, "../..");
 
 const FME01M_OUTPUT_LABELS = [
-  "Ajustador operario de mÃ¡quinas herramientas.",
+  "Ajustador operario de máquinas herramientas.",
   "Pulidor de metales y afilador de herramientas.",
-  "Operador de mÃ¡quinas para trabajar metales.",
-  "Operador de mÃ¡quinas herramientas.",
+  "Operador de máquinas para trabajar metales.",
+  "Operador de máquinas herramientas.",
   "Operador de robots industriales.",
-  "Trabajadores de la fabricaciÃ³n de herramientas, mecÃ¡nicos y ajustadores, modelistas matriceros y asimilados.",
+  "Trabajadores de la fabricación de herramientas, mecánicos y ajustadores, modelistas matriceros y asimilados.",
   "Tornero, fresador y mandrinador.",
 ] as const;
 
