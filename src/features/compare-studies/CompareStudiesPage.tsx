@@ -103,8 +103,16 @@ export function CompareStudiesPage() {
       .filter((window) => window.trainingLevel === trainingLevel)
       .sort((left, right) => left.cohort.localeCompare(right.cohort));
   }, [state, trainingLevel]);
+  const isNotYetObserved =
+    cohortWindow !== null &&
+    postGraduationYear > cohortWindow.maxObservedPostGraduationYear;
   const comparison: IncomeComparison | null = useMemo(() => {
-    if (state.status !== "ready" || !trainingLevel || groupKeys.length === 0) {
+    if (
+      state.status !== "ready" ||
+      !trainingLevel ||
+      groupKeys.length === 0 ||
+      isNotYetObserved
+    ) {
       return null;
     }
     try {
@@ -117,7 +125,14 @@ export function CompareStudiesPage() {
     } catch {
       return null;
     }
-  }, [state, trainingLevel, groupKeys, cohort, postGraduationYear]);
+  }, [
+    state,
+    trainingLevel,
+    groupKeys,
+    cohort,
+    postGraduationYear,
+    isNotYetObserved,
+  ]);
 
   function chooseTrainingLevel(level: OutcomeTrainingLevel) {
     setTrainingLevel(level);
@@ -128,13 +143,6 @@ export function CompareStudiesPage() {
 
   function chooseCohort(nextCohort: string) {
     setCohort(nextCohort);
-    const window =
-      state.status === "ready"
-        ? findWindow(state.index, trainingLevel, nextCohort)
-        : null;
-    if (window && postGraduationYear > window.maxObservedPostGraduationYear) {
-      setPostGraduationYear(window.maxObservedPostGraduationYear);
-    }
   }
 
   if (state.status === "loading") {
@@ -203,6 +211,12 @@ export function CompareStudiesPage() {
         onCohortChange={chooseCohort}
         onPostGraduationYearChange={setPostGraduationYear}
       />
+
+      {isNotYetObserved && groupKeys.length > 0 ? (
+        <p className="income-unobserved-state" role="status">
+          Año todavía no observado para la cohorte seleccionada.
+        </p>
+      ) : null}
 
       {comparison ? (
         <section

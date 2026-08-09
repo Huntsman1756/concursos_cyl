@@ -209,7 +209,17 @@ describe("CompareStudiesPage", () => {
       }),
     ).toBeVisible();
     expect(
+      screen.getByRole("region", {
+        name: "Ingresos observados del ciclo o grupo en España",
+      }),
+    ).toBeVisible();
+    expect(
       screen.getByRole("heading", {
+        name: "Referencia de titulados de Grado Medio en Castilla y León",
+      }),
+    ).toBeVisible();
+    expect(
+      screen.getByRole("region", {
         name: "Referencia de titulados de Grado Medio en Castilla y León",
       }),
     ).toBeVisible();
@@ -290,6 +300,42 @@ describe("CompareStudiesPage", () => {
       screen.getByRole("group", { name: "4. Año tras titularse" }),
     ).getByRole("radio", { name: "4" });
     expect(yearFour).toBeEnabled();
+  });
+
+  it("preserves an explicitly selected unobserved year after changing cohort", async () => {
+    installData();
+    const user = userEvent.setup();
+    renderPage();
+
+    await user.click(await screen.findByRole("radio", { name: "Grado Medio" }));
+    await user.click(screen.getByRole("checkbox", { name: "Grupo medio 1" }));
+    await user.selectOptions(
+      screen.getByRole("combobox", { name: "3. Cohorte de titulación" }),
+      "2020-2021",
+    );
+    await user.click(
+      within(
+        screen.getByRole("group", { name: "4. Año tras titularse" }),
+      ).getByRole("radio", { name: "4" }),
+    );
+    await user.selectOptions(
+      screen.getByRole("combobox", { name: "3. Cohorte de titulación" }),
+      "2022-2023",
+    );
+
+    const yearFour = within(
+      screen.getByRole("group", { name: "4. Año tras titularse" }),
+    ).getByRole("radio", { name: "4" });
+    expect(yearFour).toBeChecked();
+    expect(yearFour).toBeDisabled();
+    expect(
+      screen.getByText(
+        "Año todavía no observado para la cohorte seleccionada.",
+      ),
+    ).toBeVisible();
+    expect(
+      screen.queryByRole("region", { name: "Evidencia seleccionada" }),
+    ).not.toBeInTheDocument();
   });
 
   it("filters official groups without hiding a selected group or ignoring diacritics", async () => {

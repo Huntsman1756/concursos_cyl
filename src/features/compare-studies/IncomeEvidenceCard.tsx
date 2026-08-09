@@ -1,3 +1,5 @@
+import { useId } from "react";
+
 import type {
   OutcomeMeasure,
   OutcomeObservation,
@@ -36,15 +38,13 @@ export function IncomeEvidenceCard({
   observations,
   groupLabels,
 }: IncomeEvidenceCardProps) {
+  const headingId = useId();
   const showGroup = groupLabels !== undefined;
   return (
-    <section
-      className="income-evidence-card"
-      aria-labelledby={`${heading}-heading`}
-    >
+    <section className="income-evidence-card" aria-labelledby={headingId}>
       <header className="income-evidence-card__header">
         <p className="income-evidence-card__scope">{scopeLabel}</p>
-        <h2 id={`${heading}-heading`}>{heading}</h2>
+        <h2 id={headingId}>{heading}</h2>
         {detail ? <p>{detail}</p> : null}
       </header>
       <div className="income-table-scroll">
