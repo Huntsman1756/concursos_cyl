@@ -2,21 +2,188 @@
   "schemaVersion": "1.0.0",
   "programKey": "COM02M",
   "baseQualificationIdentity": "qualification:COM02M",
-  "state": "in_progress",
+  "state": "completed",
   "transitions": [
     {
       "from": "not_started",
       "to": "in_progress",
       "at": "2026-08-09T15:28:00Z"
+    },
+    {
+      "from": "in_progress",
+      "to": "completed",
+      "at": "2026-08-09T15:45:15.000Z"
     }
   ],
   "startedAt": "2026-08-09T15:28:00Z",
-  "completedAt": null,
+  "completedAt": "2026-08-09T15:45:15.000Z",
   "phaseMinutes": {
-    "research": 18,
-    "implementation": 0,
-    "test": 0,
+    "research": 8,
+    "implementation": 4,
+    "test": 3,
     "review": 0
   },
-  "reviewerTimeExcluded": true
+  "reviewerTimeExcluded": true,
+  "programmeProfileEvidence": {
+    "todoFp": {
+      "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/comercio-marketing/comercializacion-productos-alimentarios.html",
+      "sourceQuote": "Técnico en Comercialización de Productos Alimentarios",
+      "reviewedAt": "2026-08-09"
+    },
+    "authoritativeOutputSource": {
+      "sourceUrl": "https://www.boe.es/eli/es/rd/189/2018",
+      "sourceQuote": "Técnico en Comercialización de Productos Alimentarios",
+      "reviewedAt": "2026-08-09"
+    },
+    "reconciliationNote": "TodoFP and BOE identify the same intermediate programme and reconcile the six official outputs in order."
+  },
+  "officialOutputInventory": {
+    "sourceUrl": "https://www.boe.es/eli/es/rd/189/2018",
+    "labels": [
+      "Responsable/encargado de establecimiento alimentario.",
+      "Responsable/encargado de sección/sala/departamento de tienda de alimentación.",
+      "Gestor/a de pequeño comercio alimentario.",
+      "Responsable/encargado de comercios alimentarios online.",
+      "Asesor/a comercial de productos alimentarios.",
+      "Vendedor/a de productos alimentarios."
+    ]
+  },
+  "officialOutputReviews": [
+    {
+      "order": 1,
+      "officialOutputLabel": "Responsable/encargado de establecimiento alimentario.",
+      "disposition": "rejected",
+      "candidateOccupationIds": ["occupation:cno11:1432"],
+      "sourceUrl": "https://www.boe.es/eli/es/rd/189/2018",
+      "sourceQuote": "Responsable/encargado de establecimiento alimentario.",
+      "reason": "The CNO 1432 management boundary is indirect and does not resolve manager versus proprietor responsibility."
+    },
+    {
+      "order": 2,
+      "officialOutputLabel": "Responsable/encargado de sección/sala/departamento de tienda de alimentación.",
+      "disposition": "accepted",
+      "candidateOccupationIds": ["occupation:cno11:5210"],
+      "acceptedOccupationIds": ["occupation:cno11:5210"],
+      "sourceUrl": "https://www.boe.es/eli/es/rd/189/2018",
+      "sourceQuote": "Responsable/encargado de sección/sala/departamento de tienda de alimentación.",
+      "classificationEvidence": [
+        {
+          "occupationId": "occupation:cno11:5210",
+          "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+          "sourceQuote": "5210 Jefes de sección de tiendas y almacenes",
+          "reviewedAt": "2026-08-09"
+        }
+      ],
+      "reason": "The official section responsibility is bounded by CNO 5210 section-chief duties."
+    },
+    {
+      "order": 3,
+      "officialOutputLabel": "Gestor/a de pequeño comercio alimentario.",
+      "disposition": "rejected",
+      "candidateOccupationIds": ["occupation:cno11:5300"],
+      "sourceUrl": "https://www.boe.es/eli/es/rd/189/2018",
+      "sourceQuote": "Gestor/a de pequeño comercio alimentario.",
+      "reason": "CNO 5300 is the proprietor boundary, and the official output does not establish ownership."
+    },
+    {
+      "order": 4,
+      "officialOutputLabel": "Responsable/encargado de comercios alimentarios online.",
+      "disposition": "rejected",
+      "candidateOccupationIds": ["occupation:cno11:1432"],
+      "sourceUrl": "https://www.boe.es/eli/es/rd/189/2018",
+      "sourceQuote": "Responsable/encargado de comercios alimentarios online.",
+      "reason": "The online modality has no distinct CNO 2011 four-digit boundary in the reviewed official notes."
+    },
+    {
+      "order": 5,
+      "officialOutputLabel": "Asesor/a comercial de productos alimentarios.",
+      "disposition": "rejected",
+      "candidateOccupationIds": ["occupation:cno11:3510"],
+      "sourceUrl": "https://www.boe.es/eli/es/rd/189/2018",
+      "sourceQuote": "Asesor/a comercial de productos alimentarios.",
+      "reason": "CNO 3510 describes commercial representation to companies and organisations, not the exact retail adviser boundary."
+    },
+    {
+      "order": 6,
+      "officialOutputLabel": "Vendedor/a de productos alimentarios.",
+      "disposition": "accepted",
+      "candidateOccupationIds": ["occupation:cno11:5220"],
+      "acceptedOccupationIds": ["occupation:cno11:5220"],
+      "sourceUrl": "https://www.boe.es/eli/es/rd/189/2018",
+      "sourceQuote": "Vendedor/a de productos alimentarios.",
+      "classificationEvidence": [
+        {
+          "occupationId": "occupation:cno11:5220",
+          "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+          "sourceQuote": "5220 Vendedores en tiendas y almacenes",
+          "reviewedAt": "2026-08-09"
+        }
+      ],
+      "reason": "The official seller output matches the CNO 5220 public retail seller boundary."
+    }
+  ],
+  "acceptedRelations": [
+    {
+      "kind": "link",
+      "programKey": "COM02M",
+      "occupationId": "occupation:cno11:5210",
+      "sourceUrl": "https://www.boe.es/eli/es/rd/189/2018",
+      "sourceQuote": "Responsable/encargado de sección/sala/departamento de tienda de alimentación.",
+      "reviewedAt": "2026-08-09"
+    },
+    {
+      "kind": "link",
+      "programKey": "COM02M",
+      "occupationId": "occupation:cno11:5220",
+      "sourceUrl": "https://www.boe.es/eli/es/rd/189/2018",
+      "sourceQuote": "Vendedor/a de productos alimentarios.",
+      "reviewedAt": "2026-08-09"
+    }
+  ],
+  "rejectedRelations": [
+    {
+      "kind": "link",
+      "programKey": "COM02M",
+      "occupationId": "occupation:cno11:1432",
+      "sourceUrl": "https://www.boe.es/eli/es/rd/189/2018",
+      "sourceQuote": "Responsable/encargado de establecimiento alimentario.",
+      "reviewedAt": "2026-08-09"
+    },
+    {
+      "kind": "link",
+      "programKey": "COM02M",
+      "occupationId": "occupation:cno11:3510",
+      "sourceUrl": "https://www.boe.es/eli/es/rd/189/2018",
+      "sourceQuote": "Asesor/a comercial de productos alimentarios.",
+      "reviewedAt": "2026-08-09"
+    },
+    {
+      "kind": "link",
+      "programKey": "COM02M",
+      "occupationId": "occupation:cno11:5300",
+      "sourceUrl": "https://www.boe.es/eli/es/rd/189/2018",
+      "sourceQuote": "Gestor/a de pequeño comercio alimentario.",
+      "reviewedAt": "2026-08-09"
+    }
+  ],
+  "baselineMatchIds": [],
+  "currentMatchIds": [],
+  "newlyReachedOfferIdsByProgram": { "COM02M": [] },
+  "newlyReachedOfferUnionIds": [],
+  "limitation": "The slot accepts only the direct section-chief and seller boundaries. Manager, proprietor, online and commercial-adviser outputs remain rejected; the in-memory overlay reaches no new offer IDs and no aliases are added.",
+  "reviewedCommit": "14db13c8a7948100ff4e4238de01b357a8ca582e",
+  "reviewedCommitAt": "2026-08-09T15:45:15.000Z",
+  "snapshotId": "20260809113838031-6730f7cd4230",
+  "snapshotHash": "5446ac9903825f7d42b01b347285f62fe88255de96d6e28ca4ea1a93896dfb1f",
+  "publicParity": {
+    "publishedRelationKeys": [
+      "COM02M|occupation:cno11:5210",
+      "COM02M|occupation:cno11:5220"
+    ],
+    "rejectedRelationKeys": [
+      "COM02M|occupation:cno11:1432",
+      "COM02M|occupation:cno11:3510",
+      "COM02M|occupation:cno11:5300"
+    ]
+  }
 }

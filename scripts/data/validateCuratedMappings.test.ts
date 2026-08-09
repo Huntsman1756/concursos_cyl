@@ -31,6 +31,13 @@ const programs: TrainingProgram[] = [
     familyName: "Administración y Gestión",
   },
   {
+    programKey: "COM02M",
+    programTitle: "Comercialización de Productos Alimentarios",
+    level: "intermediate",
+    familyCode: "COM",
+    familyName: "Comercio y Marketing",
+  },
+  {
     programKey: "ADG02S",
     programTitle: "Administración y Finanzas",
     level: "higher",
@@ -563,11 +570,15 @@ describe("curated occupation mappings", () => {
         "7193",
         "7240",
         "7291",
+        "5210",
+        "5220",
       ],
     );
     expect(
       approved.links.map((item) => item.trainingProgramKey).sort(),
     ).toEqual([
+      "COM02M",
+      "COM02M",
       "EOC01M",
       "EOC01M",
       "EOC01M",
