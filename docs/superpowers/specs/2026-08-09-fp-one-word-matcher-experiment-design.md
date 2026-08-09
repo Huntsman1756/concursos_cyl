@@ -61,7 +61,7 @@ Las formas se normalizan con NFD, eliminación de diacríticos, minúsculas y su
 
 La asimetría inicial de `cocineros` se comprobó contra la instantánea fijada antes de ejecutar el experimento. Existen 40 títulos `COCINEROS, EN GENERAL` y una oferta distinta que contiene `Cocinero/a`; por ello el contrato incluye explícitamente `cocinero` y `cocineros`. No se incorpora ninguna otra flexión.
 
-Sol fija además, antes de invocar ArliAI, la lista exacta esperada de identificadores y títulos para cada candidato. Esas expectativas se extraen de la instantánea fijada y forman parte de pruebas que ArliAI no puede editar. El techo léxico preliminar de 66 ofertas es solo una comprobación orientativa; el resultado aceptable será el conjunto exacto probado, no un número introducido manualmente.
+Sol fija además, antes de invocar ArliAI, la lista exacta esperada de identificadores y títulos para cada candidato. Esas expectativas se extraen de la instantánea fijada y forman parte de pruebas que ArliAI no puede editar. La comprobación literal previa encuentra 41 títulos para `cocinero(s)`, 24 para `albañil(es)` y 2 para `encofradores`: un techo léxico preliminar de 67 ofertas si no hay solapamientos. Entre las 24 coincidencias de albañilería figura `3 Oficial/a Segunda Oficios (Especialidad Albañil-Conductor/a) para Ayto. de Palencia`; se conserva en la salida para revisión, no se convierte silenciosamente en cobertura. El resultado aceptable será el conjunto exacto probado, no un número introducido manualmente.
 
 ## Arquitectura del simulador
 
