@@ -2,7 +2,11 @@ import { readFile } from "node:fs/promises";
 import { resolve } from "node:path";
 
 import { describe, expect, it } from "vitest";
+import eocReview from "../../analysis/fp_official_alias_pass/EOC01M.json";
+import hotReview from "../../analysis/fp_official_alias_pass/HOT01M.json";
+import sscReview from "../../analysis/fp_official_alias_pass/SSC01M.json";
 import results from "../../analysis/fp_official_alias_pass_results.json";
+import { FpOfficialAliasPassResultsSchema } from "../../data/schemas/fpOfficialAliasPass";
 import manifest from "../../public/data/v1/manifest.json";
 import {
   assertRenderedFpOfficialAliasPassReport,
@@ -11,7 +15,8 @@ import {
 
 describe("renderFpOfficialAliasPassReport", () => {
   it("renders the exact controlled result", async () => {
-    const report = renderFpOfficialAliasPassReport(results, manifest);
+    const audits = [eocReview, hotReview, sscReview];
+    const report = renderFpOfficialAliasPassReport(results, manifest, audits);
     const checkedIn = await readFile(
       resolve(process.cwd(), "analysis", "fp_official_alias_pass_results.md"),
       "utf8",
@@ -21,6 +26,10 @@ describe("renderFpOfficialAliasPassReport", () => {
     expect(report.endsWith("\n")).toBe(true);
     expect(report).toContain("20260808215403108-add4c517860c");
     expect(report).toContain("Alias aceptados: 10; rechazados: 44.");
+    expect(report).toContain("## Alias aceptados y rechazados");
+    expect(report).toContain("- EOC01M: 5 aceptados; 21 rechazados.");
+    expect(report).toContain("- HOT01M: 4 aceptados; 9 rechazados.");
+    expect(report).toContain("- SSC01M: 1 aceptado; 14 rechazados.");
     expect(report).toContain("- EOC01M: 0 → 0.");
     expect(report).toContain("- HOT01M: 0 → 0.");
     expect(report).toContain("- SSC01M: 0 → 0.");
@@ -50,5 +59,33 @@ describe("renderFpOfficialAliasPassReport", () => {
     expect(() =>
       assertRenderedFpOfficialAliasPassReport(`${report}\n`, report),
     ).toThrow(/validated rendered/i);
+
+    expect(() =>
+      renderFpOfficialAliasPassReport(
+        { ...results, acceptedAliasCount: 9 },
+        manifest,
+        audits,
+      ),
+    ).toThrow(/aggregate|audit/i);
+  });
+
+  it("does not claim no increase for a positive schema-valid result", () => {
+    const positive = FpOfficialAliasPassResultsSchema.parse(
+      structuredClone(results),
+    );
+    positive.programs[0]!.afterOfferCount = 1;
+    positive.programs[0]!.newlyReachedOfferIds = ["offer:test"];
+    positive.newlyReachedOfferUnionCount = 1;
+    positive.newlyReachedOfferUnionIds = ["offer:test"];
+
+    expect(
+      renderFpOfficialAliasPassReport(positive, manifest, [
+        eocReview,
+        hotReview,
+        sscReview,
+      ]),
+    ).not.toContain(
+      "La pasada oficial acotada no aumenta las ofertas alcanzadas",
+    );
   });
 });

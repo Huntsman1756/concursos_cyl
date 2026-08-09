@@ -9,6 +9,12 @@
 - SSC01M: 0 → 0.
 - Unión de ofertas nuevas: 0.
 
+## Alias aceptados y rechazados
+
+- EOC01M: 5 aceptados; 21 rechazados.
+- HOT01M: 4 aceptados; 9 rechazados.
+- SSC01M: 1 aceptado; 14 rechazados.
+
 ## Publicación
 
 - Instantánea publicada: `20260808234300480-2764dd0a085e`.

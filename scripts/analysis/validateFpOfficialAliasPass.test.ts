@@ -16,6 +16,7 @@ import {
 import {
   coalesceAcceptedAliasSupports,
   canonicalAliasIdentity,
+  assertFpOfficialAliasPassResultsArtifact,
   computeFpOfficialAliasPass,
   validatePinnedBaselineResourceFile,
   parseAliasPassCliArguments,
@@ -58,8 +59,22 @@ const hotReview = {
 const rejectedReview = (
   programKey: "SSC01M" | "EOC01M",
   occupationId: string,
-) =>
-  ({
+) => {
+  const acceptedOutput =
+    programKey === "SSC01M"
+      ? {
+          label:
+            "Cuidador o cuidadora de personas en situación de dependencia en diferentes instituciones y/o domicilios.",
+          sourceUrl: "https://www.boe.es/eli/es/rd/2011/11/04/1593",
+          sourceQuote:
+            "Cuidador o cuidadora de personas en situación de dependencia en diferentes instituciones y/o domicilios.",
+        }
+      : {
+          label: "Pavimentador a base de hormigón.",
+          sourceUrl: "https://www.boe.es/eli/es/rd/2011/11/04/1575",
+          sourceQuote: "– Pavimentador a base de hormigón.",
+        };
+  return {
     schemaVersion: "1.0.0",
     programKey,
     baselineSnapshotId: BASELINE_SNAPSHOT_ID,
@@ -72,15 +87,16 @@ const rejectedReview = (
         sourceUrl:
           "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
         sourceQuote: "Clasificaci\u00f3n revisada sin el alias candidato.",
-        acceptedProgramOutputLabel: "Salida profesional revisada.",
-        acceptedProgramOutputSourceUrl: "https://www.todofp.es/",
-        acceptedProgramOutputSourceQuote: "Salida profesional revisada.",
+        acceptedProgramOutputLabel: acceptedOutput.label,
+        acceptedProgramOutputSourceUrl: acceptedOutput.sourceUrl,
+        acceptedProgramOutputSourceQuote: acceptedOutput.sourceQuote,
         reviewedAt: "2026-08-09",
         reviewNote:
           "La clasificaci\u00f3n oficial revisada no contiene una frase literal que pueda publicarse como alias.",
       },
     ],
-  }) as const;
+  } as const;
+};
 
 async function readJson(path: string): Promise<unknown> {
   return JSON.parse(await readFile(path, "utf8"));
@@ -337,6 +353,27 @@ describe("FP official alias pass validation", () => {
     ).toThrow(/absent/i);
   });
 
+  it.each([
+    ["acceptedProgramOutputLabel", "Salida profesional alterada."],
+    ["acceptedProgramOutputSourceUrl", "https://www.boe.es/alterada"],
+    ["acceptedProgramOutputSourceQuote", "Salida profesional alterada."],
+  ] as const)(
+    "rejects a rejected-row tamper in %s before disposition semantics",
+    async (field, alteredValue) => {
+      const context = await fixtureContext();
+      const audit = cloned(sscReview) as ProgramOfficialAliasReview;
+      const rejected = audit.reviews.find(
+        (review) => review.disposition === "rejected",
+      );
+      expect(rejected).toBeDefined();
+      Object.assign(rejected!, { [field]: alteredValue });
+
+      expect(() => validateProgramOfficialAliasReview(audit, context)).toThrow(
+        /program-output boundary/i,
+      );
+    },
+  );
+
   it("rejects globally unsafe aliases and gives input-order-independent zero-delta results", async () => {
     const context = await fixtureContext();
     const hotLink = context.links.find(
@@ -502,6 +539,42 @@ describe("FP official alias pass validation", () => {
     } finally {
       await rm(directory, { recursive: true, force: true });
     }
+  });
+
+  it("rejects schema-valid stale checked-in results before reporting success", async () => {
+    const context = await fixtureContext();
+    const expected = computeFpOfficialAliasPass(context);
+    const stale = {
+      ...expected,
+      acceptedAliasCount: expected.acceptedAliasCount + 1,
+    };
+    const staleIds = structuredClone(expected);
+    staleIds.programs[0]!.afterOfferCount = 1;
+    staleIds.programs[0]!.newlyReachedOfferIds = ["offer:stale"];
+    staleIds.newlyReachedOfferUnionCount = 1;
+    staleIds.newlyReachedOfferUnionIds = ["offer:stale"];
+
+    expect(() =>
+      assertFpOfficialAliasPassResultsArtifact(
+        serializeFpOfficialAliasPassResults(stale),
+        expected,
+      ),
+    ).toThrow(/stale|recomputed/i);
+    expect(() =>
+      assertFpOfficialAliasPassResultsArtifact(
+        serializeFpOfficialAliasPassResults(staleIds),
+        expected,
+      ),
+    ).toThrow(/stale|recomputed/i);
+    expect(() =>
+      assertFpOfficialAliasPassResultsArtifact("", expected),
+    ).toThrow(/missing|invalid/i);
+    expect(() =>
+      assertFpOfficialAliasPassResultsArtifact(
+        serializeFpOfficialAliasPassResults(expected),
+        expected,
+      ),
+    ).not.toThrow();
   });
 
   it("keeps published target aliases in exact audited accepted parity", () => {

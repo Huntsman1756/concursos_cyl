@@ -257,12 +257,7 @@ function hasAcceptedProgramOutputBoundary(
 function assertAliasBoundary(
   review: AcceptedAliasReview,
   pilotResults: FpCoveragePilotResults,
-  programKey: string,
 ): void {
-  assert(
-    hasAcceptedProgramOutputBoundary(review, pilotResults, programKey),
-    `Alias ${review.alias} is outside the accepted program-output boundary for ${programKey}; semantic broadening is not allowed.`,
-  );
   const relevance = review.acceptedProgramOutputRelevance;
   assert(
     hasLiteralOfficialPhrase(relevance.aliasTerm, review.alias) &&
@@ -383,6 +378,14 @@ export function validateProgramOfficialAliasReview(
       source !== undefined,
       `Alias review ${review.alias} requires an HTTPS INE or SEPE classification URL.`,
     );
+    assert(
+      hasAcceptedProgramOutputBoundary(
+        review,
+        context.pilotResults,
+        programReview.programKey,
+      ),
+      `Alias ${review.alias} is outside the accepted program-output boundary for ${programReview.programKey}; semantic broadening is not allowed.`,
+    );
     if (review.disposition === "rejected") {
       const isLiteral = hasLiteralOfficialPhrase(
         review.alias,
@@ -425,11 +428,7 @@ export function validateProgramOfficialAliasReview(
       hasLiteralOfficialPhrase(review.alias, review.sourceQuote),
       `Accepted alias ${review.alias} must be a literal contiguous phrase in its official source quote.`,
     );
-    assertAliasBoundary(
-      review as AcceptedAliasReview,
-      context.pilotResults,
-      programReview.programKey,
-    );
+    assertAliasBoundary(review as AcceptedAliasReview, context.pilotResults);
   }
 
   return programReview;
@@ -731,6 +730,24 @@ export function serializeFpOfficialAliasPassResults(
   return `${JSON.stringify(value, null, 2)}\n`;
 }
 
+export function assertFpOfficialAliasPassResultsArtifact(
+  actual: string,
+  recomputed: FpOfficialAliasPassResults,
+): void {
+  assert(actual.length > 0, "Missing FP official alias pass results artifact.");
+  try {
+    FpOfficialAliasPassResultsSchema.parse(JSON.parse(actual));
+  } catch (error) {
+    throw new Error("Invalid FP official alias pass results artifact.", {
+      cause: error,
+    });
+  }
+  assert(
+    actual === serializeFpOfficialAliasPassResults(recomputed),
+    "Checked-in FP official alias pass results are stale and do not match recomputed deterministic results.",
+  );
+}
+
 export function parseAliasPassCliArguments(arguments_: readonly string[]): {
   writeResults: boolean;
 } {
@@ -765,11 +782,23 @@ async function runCli(): Promise<void> {
   const arguments_ = process.argv.slice(2);
   const { writeResults } = parseAliasPassCliArguments(arguments_);
   const results = await validateFpOfficialAliasPassFromDisk();
+  const outputPath = resolve(
+    process.cwd(),
+    "analysis",
+    "fp_official_alias_pass_results.json",
+  );
   if (writeResults) {
-    await writeFpOfficialAliasPassResults(
-      resolve(process.cwd(), "analysis", "fp_official_alias_pass_results.json"),
-      results,
-    );
+    await writeFpOfficialAliasPassResults(outputPath, results);
+  } else {
+    let actual: string;
+    try {
+      actual = await readFile(outputPath, "utf8");
+    } catch (error) {
+      throw new Error("Missing FP official alias pass results artifact.", {
+        cause: error,
+      });
+    }
+    assertFpOfficialAliasPassResultsArtifact(actual, results);
   }
   console.info("FP official alias pass satisfies the validation contract.");
 }
