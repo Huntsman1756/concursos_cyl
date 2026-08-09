@@ -1,0 +1,43 @@
+{
+  "schemaVersion": "1.0.0",
+  "programKey": "AGA03M",
+  "baseQualificationIdentity": "qualification:AGA03M",
+  "state": "deferred",
+  "transitions": [
+    { "from": "not_started", "to": "in_progress", "at": "2026-08-09T15:30:00Z" },
+    { "from": "in_progress", "to": "deferred", "at": "2026-08-09T16:20:00.000Z" }
+  ],
+  "startedAt": "2026-08-09T15:30:00Z",
+  "completedAt": "2026-08-09T16:20:00.000Z",
+  "phaseMinutes": { "research": 8, "implementation": 0, "test": 2, "review": 0 },
+  "reviewerTimeExcluded": true,
+  "programmeProfileEvidence": {
+    "todoFp": {
+      "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/agraria/jardineria-floristeria.html",
+      "sourceQuote": "Técnico en Jardinería y Floristería",
+      "reviewedAt": "2026-08-09"
+    },
+    "authoritativeOutputSource": {
+      "sourceUrl": "https://www.boe.es/eli/es/rd/1129/2010",
+      "sourceQuote": "Las ocupaciones y puestos de trabajo más relevantes son los siguientes:",
+      "reviewedAt": "2026-08-09"
+    },
+    "reconciliationNote": "La evidencia oficial fue revisada, pero el seed congelado Jardinero no coincide exactamente con el output exhaustivo Jardinero, en general.; el contrato exige igualdad normalizada exacta."
+  },
+  "officialOutputReviews": [],
+  "acceptedRelations": [],
+  "rejectedRelations": [],
+  "baselineMatchIds": [],
+  "currentMatchIds": [],
+  "newlyReachedOfferIdsByProgram": { "AGA03M": [] },
+  "newlyReachedOfferUnionIds": [],
+  "limitation": "Deferred: the frozen ranking seed Jardinero cannot be reconciled with the authoritative exhaustive output Jardinero, en general. without changing the frozen ranking or relaxing the shared validator contract. No occupation, link, alias, offer delta or public snapshot change is claimed.",
+  "reviewedCommit": "51c4811eaf3222a398e927373bb599b60f661ff0",
+  "reviewedCommitAt": "2026-08-09T15:58:36.000Z",
+  "snapshotId": "20260809113838031-6730f7cd4230",
+  "snapshotHash": "e3a2c299299c9d1afd8563ba62c12af30431b1b96bcc356df4b1d2fe42d2f6fa",
+  "publicParity": {
+    "publishedRelationKeys": [],
+    "rejectedRelationKeys": []
+  }
+}
