@@ -17,6 +17,20 @@ export type ContestSubmissionDocuments = {
   "submission-checklist.md": string;
 };
 
+export type ContestDeploymentEvidence = {
+  status: "pending" | "verified";
+  commitSha: string | null;
+  workflowRunId: string | null;
+  verifiedAt: string | null;
+};
+
+const PENDING_DEPLOYMENT_EVIDENCE: ContestDeploymentEvidence = {
+  status: "pending",
+  commitSha: null,
+  workflowRunId: null,
+  verifiedAt: null,
+};
+
 const DOCUMENT_NAMES = [
   "application-summary.md",
   "technical-evidence.md",
@@ -72,8 +86,23 @@ La procedencia técnica, los límites estadísticos, las pruebas y los campos qu
 `;
 }
 
-function renderTechnicalEvidence(freeze: ContestFreeze): string {
+function renderTechnicalEvidence(
+  freeze: ContestFreeze,
+  deployment: ContestDeploymentEvidence,
+): string {
   const { coverage, offers, attempts } = freeze;
+  const deploymentCommit =
+    deployment.status === "verified" && deployment.commitSha !== null
+      ? `\`${deployment.commitSha}\``
+      : "**PENDIENTE DE DESPLIEGUE Y VERIFICACIÓN**";
+  const workflowRun =
+    deployment.status === "verified" && deployment.workflowRunId !== null
+      ? `\`${deployment.workflowRunId}\``
+      : "**PENDIENTE DE DESPLIEGUE Y VERIFICACIÓN**";
+  const deploymentNote =
+    deployment.status === "verified" && deployment.verifiedAt !== null
+      ? `El release público se verificó con el commit ${deploymentCommit} y el run ${workflowRun} el ${deployment.verifiedAt}.`
+      : "Estos dos campos no se inventan antes de ejecutar y verificar el release.";
   return `# Evidencia técnica
 
 ## Freeze de cobertura
@@ -135,14 +164,21 @@ La revisión independiente confirmó el manifest, los diez recursos, los conjunt
 ## Despliegue
 
 - URL raíz esperada: [${ROOT_URL}](${ROOT_URL})
-- Commit desplegado: **PENDIENTE DE DESPLIEGUE Y VERIFICACIÓN**.
-- Run del workflow: **PENDIENTE DE DESPLIEGUE Y VERIFICACIÓN**.
+- Commit desplegado: ${deploymentCommit}.
+- Run del workflow: ${workflowRun}.
 
-Estos dos campos no se inventan antes de ejecutar y verificar el release.
+${deploymentNote}
 `;
 }
 
-function renderLimitations(freeze: ContestFreeze): string {
+function renderLimitations(
+  freeze: ContestFreeze,
+  deployment: ContestDeploymentEvidence,
+): string {
+  const releaseStatus =
+    deployment.status === "verified" && deployment.commitSha !== null
+      ? `El despliegue público está verificado para el commit \`${deployment.commitSha}\`; la verificación de rutas y recursos queda registrada en \`docs/contest/release-evidence.json\`.`
+      : "El despliegue y la verificación pública aún están pendientes y no forman parte de este documento como hechos consumados.";
   return `# Limitaciones y alcance
 
 ## Datos de FP y empleo
@@ -161,11 +197,30 @@ La representatividad de las tablas nacionales es la declarada por el Ministerio:
 
 Las rutas internas son recorridos de producto; la candidatura usa únicamente la raíz pública. La experiencia no requiere cuentas ni persistencia del navegador. La accesibilidad, el responsive y la semántica se deben confirmar de nuevo en la sesión de capturas finales.
 
-El objetivo de ampliar la cobertura está condicionado a evidencia: el freeze actual registra ${freeze.coverage.distinctQualificationCount} cualificaciones distintas y deja ${freeze.coverage.deferredProgramCount} programas diferidos. El despliegue y la verificación pública aún están pendientes y no forman parte de este documento como hechos consumados.
+El objetivo de ampliar la cobertura está condicionado a evidencia: el freeze actual registra ${freeze.coverage.distinctQualificationCount} cualificaciones distintas y deja ${freeze.coverage.deferredProgramCount} programas diferidos. ${releaseStatus}
 `;
 }
 
-function renderSubmissionChecklist(freeze: ContestFreeze): string {
+function renderSubmissionChecklist(
+  freeze: ContestFreeze,
+  deployment: ContestDeploymentEvidence,
+): string {
+  const deploymentCommit =
+    deployment.status === "verified" && deployment.commitSha !== null
+      ? `\`${deployment.commitSha}\``
+      : "**PENDIENTE DE DESPLIEGUE Y VERIFICACIÓN**";
+  const workflowRun =
+    deployment.status === "verified" && deployment.workflowRunId !== null
+      ? `\`${deployment.workflowRunId}\``
+      : "**PENDIENTE DE DESPLIEGUE Y VERIFICACIÓN**";
+  const releaseGate =
+    deployment.status === "verified"
+      ? "- [x] Ejecutar los gates de release y verificar la aplicación pública."
+      : "- [ ] Ejecutar los gates de release y verificar la aplicación pública.";
+  const deploymentGate =
+    deployment.status === "verified"
+      ? "- [x] Rellenar el commit desplegado y el run del workflow con datos observados."
+      : "- [ ] Rellenar el commit desplegado y el run del workflow con datos observados.";
   return `# Checklist de presentación
 
 ## Campos que debe completar una persona
@@ -181,16 +236,16 @@ function renderSubmissionChecklist(freeze: ContestFreeze): string {
 - URL raíz a presentar: [${ROOT_URL}](${ROOT_URL})
 - Commit fuente del freeze: \`${freeze.sourceCommitSha}\`.
 - Snapshot: \`${freeze.manifest.snapshotId}\`.
-- Commit desplegado: **PENDIENTE DE DESPLIEGUE Y VERIFICACIÓN**.
-- Run del workflow: **PENDIENTE DE DESPLIEGUE Y VERIFICACIÓN**.
-- Evidencia visual: **PENDIENTE — capturar después del freeze y del pack final**.
+- Commit desplegado: ${deploymentCommit}.
+- Run del workflow: ${workflowRun}.
+- Evidencia visual: **capturada y validada en \`docs/contest/evidence-capture.json\`**.
 
 ## Gate final
 
-- [ ] Ejecutar los gates de release y verificar la aplicación pública.
-- [ ] Rellenar el commit desplegado y el run del workflow con datos observados.
-- [ ] Revisar las capturas en contexto anónimo, sin datos personales ni credenciales.
-- [ ] Confirmar que las cifras visibles siguen coincidiendo con \`${freeze.manifest.snapshotId}\`.
+${releaseGate}
+${deploymentGate}
+- [x] Revisar las capturas en contexto anónimo, sin datos personales ni credenciales.
+- [x] Confirmar que las cifras visibles siguen coincidiendo con \`${freeze.manifest.snapshotId}\`.
 - [ ] Obtener aprobación humana explícita para la solicitud externa.
 
 **PENDIENTE DE APROBACIÓN HUMANA:** este repositorio no envía la solicitud al concurso ni decide los campos de identidad, contacto, declaraciones o consentimiento.
@@ -199,13 +254,55 @@ function renderSubmissionChecklist(freeze: ContestFreeze): string {
 
 export function renderContestSubmission(
   freeze: ContestFreeze,
+  deployment: ContestDeploymentEvidence = PENDING_DEPLOYMENT_EVIDENCE,
 ): ContestSubmissionDocuments {
   return {
     "application-summary.md": renderApplicationSummary(freeze),
-    "technical-evidence.md": renderTechnicalEvidence(freeze),
-    "limitations.md": renderLimitations(freeze),
-    "submission-checklist.md": renderSubmissionChecklist(freeze),
+    "technical-evidence.md": renderTechnicalEvidence(freeze, deployment),
+    "limitations.md": renderLimitations(freeze, deployment),
+    "submission-checklist.md": renderSubmissionChecklist(freeze, deployment),
   };
+}
+
+function loadContestDeploymentEvidence(
+  rootDir: string,
+): ContestDeploymentEvidence {
+  const releaseEvidencePath = path.join(
+    rootDir,
+    "docs",
+    "contest",
+    "release-evidence.json",
+  );
+  if (!fs.existsSync(releaseEvidencePath)) {
+    return PENDING_DEPLOYMENT_EVIDENCE;
+  }
+
+  const parsed = JSON.parse(fs.readFileSync(releaseEvidencePath, "utf8")) as {
+    deployment?: Partial<ContestDeploymentEvidence>;
+  };
+  const deployment = parsed.deployment;
+  if (
+    deployment === undefined ||
+    (deployment.status !== "pending" && deployment.status !== "verified")
+  ) {
+    throw new Error("release-evidence.json has an invalid deployment record");
+  }
+  const evidence: ContestDeploymentEvidence = {
+    status: deployment.status,
+    commitSha: deployment.commitSha ?? null,
+    workflowRunId: deployment.workflowRunId ?? null,
+    verifiedAt: deployment.verifiedAt ?? null,
+  };
+  if (
+    evidence.status === "verified" &&
+    (evidence.commitSha === null ||
+      !/^[a-f0-9]{40}$/u.test(evidence.commitSha) ||
+      evidence.workflowRunId === null ||
+      evidence.verifiedAt === null)
+  ) {
+    throw new Error("verified deployment evidence is incomplete");
+  }
+  return evidence;
 }
 
 export function validateRenderedContestSubmission(
@@ -237,7 +334,8 @@ export function loadAndRenderContestSubmission(
   rootDir = process.cwd(),
 ): ContestSubmissionDocuments {
   const freeze = loadAndValidateContestFreeze(rootDir);
-  const documents = renderContestSubmission(freeze);
+  const deployment = loadContestDeploymentEvidence(rootDir);
+  const documents = renderContestSubmission(freeze, deployment);
   validateRenderedContestSubmission(documents, rootDir);
   return documents;
 }

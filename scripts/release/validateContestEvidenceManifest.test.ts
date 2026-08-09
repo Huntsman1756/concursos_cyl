@@ -168,6 +168,9 @@ describe("contest evidence manifest validator", () => {
     expect(checklist).toContain("1440×900");
     expect(checklist).toContain("docs/contest/evidence/home-desktop.png");
     expect(checklist).toContain("Use a fresh anonymous browser context");
+    expect(checklist).toContain(
+      "- [x] Record the coverage-freeze commit and local capture commit; record the deployed commit after live verification.",
+    );
     expect(checklist.endsWith("\n")).toBe(true);
   });
 

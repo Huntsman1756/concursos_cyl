@@ -38,6 +38,26 @@ describe("contest submission renderer", () => {
     );
   });
 
+  it("renders verified deployment provenance when the release evidence is verified", () => {
+    const rendered = renderContestSubmission(freeze, {
+      status: "verified",
+      commitSha: "5e4510ca230daaedf8e2a769d66781a2b319ef1b",
+      workflowRunId: "31338739210",
+      verifiedAt: "2026-08-09T22:21:22.5248634Z",
+    });
+
+    expect(rendered["technical-evidence.md"]).toContain(
+      "5e4510ca230daaedf8e2a769d66781a2b319ef1b",
+    );
+    expect(rendered["technical-evidence.md"]).toContain("31338739210");
+    expect(rendered["technical-evidence.md"]).not.toContain(
+      "PENDIENTE DE DESPLIEGUE Y VERIFICACIÃ“N",
+    );
+    expect(rendered["submission-checklist.md"]).toContain(
+      "- [x] Ejecutar los gates de release y verificar la aplicación pública.",
+    );
+  });
+
   it("is byte-stable and rejects forbidden or stale claims", () => {
     const first = renderContestSubmission(freeze);
     const second = renderContestSubmission(freeze);

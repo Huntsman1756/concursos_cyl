@@ -1,11 +1,11 @@
 {
   "schemaVersion": 1,
-  "status": "pending_external_release",
-  "recordedAt": "2026-08-09T21:13:25.2405834Z",
+  "status": "deployed_verified",
+  "recordedAt": "2026-08-09T22:29:37.9176193Z",
   "expectedRootUrl": "https://huntsman1756.github.io/concursos_cyl/",
   "coverageFreezeCommitSha": "111039ea2678272452169bb30c31cc680a4d436e",
   "publicationCommitSha": "27e7b2ec5996868df6c05edd02d3434a2559c44b",
-  "localReviewHeadSha": "1e75efcc357e0427a58bfb05e73f2dd6db95e7ab",
+  "localReviewHeadSha": "5e4510ca230daaedf8e2a769d66781a2b319ef1b",
   "captureProductCommitSha": "f423a208a7f8c140a1dfa342e8689d3b6d967e94",
   "manifest": {
     "snapshotId": "20260809185438334-65ce4d3c4e14",
@@ -43,7 +43,19 @@
     "fullVitestSerial": {
       "status": "incomplete",
       "command": "CI=true npm test -- --run --pool=forks --maxWorkers=1",
-      "reason": "The Windows run produced no result for more than five minutes and was terminated; rerun in CI/Linux before final release."
+      "reason": "The Windows serial run produced no result for more than five minutes and was terminated; the complete GitHub Actions suite passed below."
+    },
+    "fullVitestCi": {
+      "status": "passed",
+      "testFiles": 71,
+      "passedTestFiles": 70,
+      "skippedTestFiles": 1,
+      "tests": 707,
+      "passed": 705,
+      "skipped": 2,
+      "durationSeconds": 201.49,
+      "command": "npm test -- --testTimeout=60000",
+      "workflowRunId": "31338739210"
     },
     "playwright": {
       "status": "passed",
@@ -88,16 +100,51 @@
       "command": "CADDY_SMOKE_BASE_URL=http://127.0.0.1:18080 npm run release:caddy:verify"
     },
     "actionlint": {
-      "status": "not_available_locally",
-      "reason": "The actionlint executable is not installed in the local environment; workflow behavior is covered by repository tests and remains a CI gate."
+      "status": "passed",
+      "version": "1.7.12",
+      "checksumVerified": true,
+      "command": "actionlint .github/workflows/deploy-pages.yml"
     }
   },
   "deployment": {
-    "status": "pending",
-    "commitSha": null,
-    "workflowRunId": null,
-    "liveRootVerified": false,
-    "verifiedAt": null
+    "status": "verified",
+    "commitSha": "5e4510ca230daaedf8e2a769d66781a2b319ef1b",
+    "workflowRunId": "31338739210",
+    "workflowUrl": "https://github.com/Huntsman1756/concursos_cyl/actions/runs/31338739210",
+    "liveRootVerified": true,
+    "verifiedAt": "2026-08-09T22:21:22.5248634Z"
+  },
+  "publicVerification": {
+    "rootUrl": "https://huntsman1756.github.io/concursos_cyl/",
+    "https": true,
+    "rootHttpStatus": 200,
+    "rootTitle": "SALIDA CyL",
+    "deepLinks": {
+      "httpStatus": 404,
+      "rendersAppThrough404Fallback": true,
+      "paths": [
+        "/comparar",
+        "/metodologia",
+        "/desde-fp/EOC01M",
+        "/desde-fp/COM01M"
+      ]
+    },
+    "manifest": {
+      "httpStatus": 200,
+      "sha256": "27942a492d4f62fb9a3d1e448dfb708663000270564b1e0cb87f15ae86677da1",
+      "qualityStatus": "passed",
+      "snapshotGeneratedAt": "2026-08-09T18:54:38.334Z"
+    },
+    "outcomeIndicators": {
+      "logicalResourcePath": "/data/v1/snapshots/20260809185438334-65ce4d3c4e14/outcome-indicators.json",
+      "resolvedUrl": "https://huntsman1756.github.io/concursos_cyl/data/v1/snapshots/20260809185438334-65ce4d3c4e14/outcome-indicators.json",
+      "httpStatus": 200,
+      "sha256": "4f2c6b73fc4171bb9daf21583712ab2ec99bcaa7d27b1f2fd0c070b9079ab3e2"
+    },
+    "hostHeaders": {
+      "strictTransportSecurity": "max-age=31556952",
+      "contentSecurityPolicy": null
+    }
   },
   "humanApproval": {
     "finalApplicationTextApproved": false,
@@ -105,9 +152,6 @@
     "submissionAuthorized": false
   },
   "blockers": [
-    "The exact reviewed branch has not been pushed or deployed.",
-    "A successful CI full Vitest serial run and actionlint result must be recorded before release is declared final.",
-    "The live Pages root and public manifest have not been verified.",
-    "Contest submission remains prohibited until explicit human approval and separate submission authorization."
+    "Contest portal submission still requires the final application text, human-only fields, and immediate explicit submit authorization."
   ]
 }
