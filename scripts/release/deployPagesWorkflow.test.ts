@@ -29,6 +29,15 @@ describe("GitHub Pages deployment workflow", () => {
     expect(workflow).not.toMatch(/uses: actions\/[\w-]+@v\d/u);
   });
 
+  it("checks out complete history and gives the shared runner a unit-test margin", async () => {
+    const workflow = await readFile(workflowPath, "utf8");
+    expect(workflow).toMatch(
+      /actions\/checkout@[a-f0-9]{40} # v4\.3\.1\s+with:\s+fetch-depth: 0/u,
+    );
+    expect(workflow).toContain("npm test -- --testTimeout=60000");
+    expect(workflow).not.toMatch(/^\s+- run: npm test$/mu);
+  });
+
   it("grants each job only its required permissions", async () => {
     const workflow = await readFile(workflowPath, "utf8");
     expect(workflow).not.toMatch(/^permissions:/mu);
