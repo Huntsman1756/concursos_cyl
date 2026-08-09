@@ -1,0 +1,82 @@
+[
+  {
+    "tableId": "famprof_2_08",
+    "format": "csv",
+    "capturedAt": "2026-08-09",
+    "byteLength": 749058,
+    "sha256": "e6a77a5a6ec822bbfc8791c80e6b2c021cfc7e877a49f9ea5e9b058f9d84a748",
+    "bomHex": "efbbbf",
+    "declaredContentType": "text/plain;charset=ISO-8859-15",
+    "effectiveEncoding": "utf-8"
+  },
+  {
+    "tableId": "famprof_2_08",
+    "format": "px",
+    "capturedAt": "2026-08-09",
+    "byteLength": 67217,
+    "sha256": "884f5c29df30101516b05308117831e4de1497998fe1ce3197421f0d7c456a5b",
+    "bomHex": null,
+    "declaredContentType": "application/pc-axis;charset=ISO-8859-15",
+    "effectiveEncoding": "iso-8859-15"
+  },
+  {
+    "tableId": "famprof_3_08",
+    "format": "csv",
+    "capturedAt": "2026-08-09",
+    "byteLength": 1479780,
+    "sha256": "b23f8c2fe83fbbac47d33c65a99758cebf82b4dc2c238110492f288e66b034b5",
+    "bomHex": "efbbbf",
+    "declaredContentType": "text/plain;charset=ISO-8859-15",
+    "effectiveEncoding": "utf-8"
+  },
+  {
+    "tableId": "famprof_3_08",
+    "format": "px",
+    "capturedAt": "2026-08-09",
+    "byteLength": 123134,
+    "sha256": "f8c3b684724aaae6a06bc5f7e357445692c7a2429edc48779c91dc8dd79552c3",
+    "bomHex": null,
+    "declaredContentType": "application/pc-axis;charset=ISO-8859-15",
+    "effectiveEncoding": "iso-8859-15"
+  },
+  {
+    "tableId": "ccaa_2_07",
+    "format": "csv",
+    "capturedAt": "2026-08-09",
+    "byteLength": 1112038,
+    "sha256": "a1d84634e71726a0a7e6a0ed05a50c63f0b4682c1f0381ece90625a361c12514",
+    "bomHex": "efbbbf",
+    "declaredContentType": "text/plain;charset=ISO-8859-15",
+    "effectiveEncoding": "utf-8"
+  },
+  {
+    "tableId": "ccaa_2_07",
+    "format": "px",
+    "capturedAt": "2026-08-09",
+    "byteLength": 107122,
+    "sha256": "e42874efb8661c8a68a4dc1859b452a16b48e4aa13e3cdb925e8d21f433106cf",
+    "bomHex": null,
+    "declaredContentType": "application/pc-axis;charset=ISO-8859-15",
+    "effectiveEncoding": "iso-8859-15"
+  },
+  {
+    "tableId": "ccaa_3_07",
+    "format": "csv",
+    "capturedAt": "2026-08-09",
+    "byteLength": 1112303,
+    "sha256": "4c21003223ac28b3b70a8268bf3627134c72f542e91cfedb6bbbaced402b88b2",
+    "bomHex": "efbbbf",
+    "declaredContentType": "text/plain;charset=ISO-8859-15",
+    "effectiveEncoding": "utf-8"
+  },
+  {
+    "tableId": "ccaa_3_07",
+    "format": "px",
+    "capturedAt": "2026-08-09",
+    "byteLength": 107330,
+    "sha256": "cc53581069ec6b54656a03e53ec44157da340565823789f1409cd290e45fc5b3",
+    "bomHex": null,
+    "declaredContentType": "application/pc-axis;charset=ISO-8859-15",
+    "effectiveEncoding": "iso-8859-15"
+  }
+]
