@@ -39,6 +39,23 @@ function cloned<T>(value: T): T {
   return structuredClone(value);
 }
 
+function createInProgressArtifact(): FpOneWordPublicationReview {
+  const artifact = cloned(readArtifact());
+  const row = artifact.rows[0]!;
+  row.disposition = "needs_human_review";
+  row.reasonCode = "insufficient_title_evidence";
+  row.rationale =
+    "The trusted title match remains explicitly pending human publication review.";
+  const rows = artifact.rows.filter((candidate) => candidate.form === row.form);
+  artifact.publicationDecision[row.form] = {
+    status: "rejected",
+    acceptedOfferIds: [],
+    rejectedOfferIds: rows.map((candidate) => candidate.offerId),
+    reason: "Pending human review; not approved for publication.",
+  };
+  return artifact;
+}
+
 function createTerminalArtifact(): FpOneWordPublicationReview {
   const artifact = cloned(readArtifact());
   const acceptedOfferIds = new Set(["1285664848132", "1285669506800"]);
@@ -130,15 +147,16 @@ function withTemporaryRoot(
 }
 
 describe("FP one-word publication review validator", () => {
-  it("validates the checked-in strict 67-row artifact only in progress mode", () => {
+  it("validates the checked-in strict 67-row artifact as terminal", () => {
     const artifact = readArtifact();
     expect(artifact.rows).toHaveLength(67);
     expect(artifact.rows.map((row) => row.offerId)).toContain("1285664848132");
-    expect(() => validateFpOneWordPublicationReviewArtifact(artifact)).toThrow(
-      /needs_human_review|allow-in-progress/i,
-    );
     expect(() =>
-      validateFpOneWordPublicationReviewArtifact(artifact, {
+      validateFpOneWordPublicationReviewArtifact(artifact),
+    ).not.toThrow();
+    const inProgress = createInProgressArtifact();
+    expect(() =>
+      validateFpOneWordPublicationReviewArtifact(inProgress, {
         allowInProgress: true,
       }),
     ).not.toThrow();
@@ -280,9 +298,9 @@ describe("FP one-word publication review validator", () => {
   });
 
   it("rejects unresolved rows in terminal validation", () => {
-    expect(() => validateFpOneWordPublicationReview(ROOT)).toThrow(
-      /allow-in-progress|needs_human_review/i,
-    );
+    expect(() =>
+      validateFpOneWordPublicationReviewArtifact(createInProgressArtifact()),
+    ).toThrow(/allow-in-progress|needs_human_review/i);
   });
 
   it("rejects a mixed form even when it retains its exact accepted offer IDs", () => {
