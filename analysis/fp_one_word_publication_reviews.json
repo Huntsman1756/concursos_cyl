@@ -9,9 +9,9 @@
       "occupationId": "occupation:cno11:7121",
       "offerId": "1285664848132",
       "offerTitle": "3 Oficial/a Segunda Oficios (Especialidad Albañil-Conductor/a) para Ayto. de Palencia",
-      "disposition": "needs_human_review",
-      "reasonCode": "insufficient_title_evidence",
-      "rationale": "The trusted title match is retained for human publication review; no terminal decision is inferred.",
+      "disposition": "rejected",
+      "reasonCode": "mixed_role",
+      "rationale": "Pinned payload contains a reviewed conflicting role or mandatory qualification.",
       "requirementQuotes": [
         "3 Oficial/a Segunda Oficios (Especialidad Albañil-Conductor/a) para Ayto. de Palencia"
       ]
@@ -23,9 +23,9 @@
       "occupationId": "occupation:cno11:7121",
       "offerId": "1285669061589",
       "offerTitle": "Albañil para reformas en Valladolid",
-      "disposition": "needs_human_review",
-      "reasonCode": "insufficient_title_evidence",
-      "rationale": "The trusted title match is retained for human publication review; no terminal decision is inferred.",
+      "disposition": "accepted",
+      "reasonCode": "exact_occupation_title",
+      "rationale": "Pinned title and checked payload identify the exact occupation without a conflicting role.",
       "requirementQuotes": ["Albañil para reformas en Valladolid"]
     },
     {
@@ -35,9 +35,9 @@
       "occupationId": "occupation:cno11:7121",
       "offerId": "1285613685343",
       "offerTitle": "ALBAÑILES",
-      "disposition": "needs_human_review",
-      "reasonCode": "insufficient_title_evidence",
-      "rationale": "The trusted title match is retained for human publication review; no terminal decision is inferred.",
+      "disposition": "rejected",
+      "reasonCode": "contradictory_requirement",
+      "rationale": "Pinned payload contains a reviewed conflicting role or mandatory qualification.",
       "requirementQuotes": ["ALBAÑILES"]
     },
     {
@@ -47,9 +47,9 @@
       "occupationId": "occupation:cno11:7121",
       "offerId": "1285614585114",
       "offerTitle": "ALBAÑILES",
-      "disposition": "needs_human_review",
-      "reasonCode": "insufficient_title_evidence",
-      "rationale": "The trusted title match is retained for human publication review; no terminal decision is inferred.",
+      "disposition": "accepted",
+      "reasonCode": "exact_occupation_title",
+      "rationale": "Pinned title and checked payload identify the exact occupation without a conflicting role.",
       "requirementQuotes": ["ALBAÑILES"]
     },
     {
@@ -59,9 +59,9 @@
       "occupationId": "occupation:cno11:7121",
       "offerId": "1285658958752",
       "offerTitle": "ALBAÑILES",
-      "disposition": "needs_human_review",
-      "reasonCode": "insufficient_title_evidence",
-      "rationale": "The trusted title match is retained for human publication review; no terminal decision is inferred.",
+      "disposition": "accepted",
+      "reasonCode": "exact_occupation_title",
+      "rationale": "Pinned title and checked payload identify the exact occupation without a conflicting role.",
       "requirementQuotes": ["ALBAÑILES"]
     },
     {
@@ -71,9 +71,9 @@
       "occupationId": "occupation:cno11:7121",
       "offerId": "1285662949857",
       "offerTitle": "ALBAÑILES",
-      "disposition": "needs_human_review",
-      "reasonCode": "insufficient_title_evidence",
-      "rationale": "The trusted title match is retained for human publication review; no terminal decision is inferred.",
+      "disposition": "accepted",
+      "reasonCode": "exact_occupation_title",
+      "rationale": "Pinned title and checked payload identify the exact occupation without a conflicting role.",
       "requirementQuotes": ["ALBAÑILES"]
     },
     {
@@ -83,9 +83,9 @@
       "occupationId": "occupation:cno11:7121",
       "offerId": "1285663783370",
       "offerTitle": "ALBAÑILES",
-      "disposition": "needs_human_review",
-      "reasonCode": "insufficient_title_evidence",
-      "rationale": "The trusted title match is retained for human publication review; no terminal decision is inferred.",
+      "disposition": "accepted",
+      "reasonCode": "exact_occupation_title",
+      "rationale": "Pinned title and checked payload identify the exact occupation without a conflicting role.",
       "requirementQuotes": ["ALBAÑILES"]
     },
     {
@@ -95,9 +95,9 @@
       "occupationId": "occupation:cno11:7121",
       "offerId": "1285663974168",
       "offerTitle": "ALBAÑILES",
-      "disposition": "needs_human_review",
-      "reasonCode": "insufficient_title_evidence",
-      "rationale": "The trusted title match is retained for human publication review; no terminal decision is inferred.",
+      "disposition": "accepted",
+      "reasonCode": "exact_occupation_title",
+      "rationale": "Pinned title and checked payload identify the exact occupation without a conflicting role.",
       "requirementQuotes": ["ALBAÑILES"]
     },
     {
@@ -107,9 +107,9 @@
       "occupationId": "occupation:cno11:7121",
       "offerId": "1285664082111",
       "offerTitle": "ALBAÑILES",
-      "disposition": "needs_human_review",
-      "reasonCode": "insufficient_title_evidence",
-      "rationale": "The trusted title match is retained for human publication review; no terminal decision is inferred.",
+      "disposition": "accepted",
+      "reasonCode": "exact_occupation_title",
+      "rationale": "Pinned title and checked payload identify the exact occupation without a conflicting role.",
       "requirementQuotes": ["ALBAÑILES"]
     },
     {
@@ -119,9 +119,9 @@
       "occupationId": "occupation:cno11:7121",
       "offerId": "1285664861533",
       "offerTitle": "ALBAÑILES",
-      "disposition": "needs_human_review",
-      "reasonCode": "insufficient_title_evidence",
-      "rationale": "The trusted title match is retained for human publication review; no terminal decision is inferred.",
+      "disposition": "accepted",
+      "reasonCode": "exact_occupation_title",
+      "rationale": "Pinned title and checked payload identify the exact occupation without a conflicting role.",
       "requirementQuotes": ["ALBAÑILES"]
     },
     {
@@ -131,9 +131,9 @@
       "occupationId": "occupation:cno11:7121",
       "offerId": "1285665269105",
       "offerTitle": "ALBAÑILES",
-      "disposition": "needs_human_review",
-      "reasonCode": "insufficient_title_evidence",
-      "rationale": "The trusted title match is retained for human publication review; no terminal decision is inferred.",
+      "disposition": "accepted",
+      "reasonCode": "exact_occupation_title",
+      "rationale": "Pinned title and checked payload identify the exact occupation without a conflicting role.",
       "requirementQuotes": ["ALBAÑILES"]
     },
     {
@@ -143,9 +143,9 @@
       "occupationId": "occupation:cno11:7121",
       "offerId": "1285665380724",
       "offerTitle": "ALBAÑILES",
-      "disposition": "needs_human_review",
-      "reasonCode": "insufficient_title_evidence",
-      "rationale": "The trusted title match is retained for human publication review; no terminal decision is inferred.",
+      "disposition": "accepted",
+      "reasonCode": "exact_occupation_title",
+      "rationale": "Pinned title and checked payload identify the exact occupation without a conflicting role.",
       "requirementQuotes": ["ALBAÑILES"]
     },
     {
@@ -155,9 +155,9 @@
       "occupationId": "occupation:cno11:7121",
       "offerId": "1285665380790",
       "offerTitle": "ALBAÑILES",
-      "disposition": "needs_human_review",
-      "reasonCode": "insufficient_title_evidence",
-      "rationale": "The trusted title match is retained for human publication review; no terminal decision is inferred.",
+      "disposition": "accepted",
+      "reasonCode": "exact_occupation_title",
+      "rationale": "Pinned title and checked payload identify the exact occupation without a conflicting role.",
       "requirementQuotes": ["ALBAÑILES"]
     },
     {
@@ -167,9 +167,9 @@
       "occupationId": "occupation:cno11:7121",
       "offerId": "1285665634810",
       "offerTitle": "ALBAÑILES",
-      "disposition": "needs_human_review",
-      "reasonCode": "insufficient_title_evidence",
-      "rationale": "The trusted title match is retained for human publication review; no terminal decision is inferred.",
+      "disposition": "accepted",
+      "reasonCode": "exact_occupation_title",
+      "rationale": "Pinned title and checked payload identify the exact occupation without a conflicting role.",
       "requirementQuotes": ["ALBAÑILES"]
     },
     {
@@ -179,9 +179,9 @@
       "occupationId": "occupation:cno11:7121",
       "offerId": "1285667539516",
       "offerTitle": "ALBAÑILES",
-      "disposition": "needs_human_review",
-      "reasonCode": "insufficient_title_evidence",
-      "rationale": "The trusted title match is retained for human publication review; no terminal decision is inferred.",
+      "disposition": "accepted",
+      "reasonCode": "exact_occupation_title",
+      "rationale": "Pinned title and checked payload identify the exact occupation without a conflicting role.",
       "requirementQuotes": ["ALBAÑILES"]
     },
     {
@@ -191,9 +191,9 @@
       "occupationId": "occupation:cno11:7121",
       "offerId": "1285667539544",
       "offerTitle": "ALBAÑILES",
-      "disposition": "needs_human_review",
-      "reasonCode": "insufficient_title_evidence",
-      "rationale": "The trusted title match is retained for human publication review; no terminal decision is inferred.",
+      "disposition": "accepted",
+      "reasonCode": "exact_occupation_title",
+      "rationale": "Pinned title and checked payload identify the exact occupation without a conflicting role.",
       "requirementQuotes": ["ALBAÑILES"]
     },
     {
@@ -203,9 +203,9 @@
       "occupationId": "occupation:cno11:7121",
       "offerId": "1285667590834",
       "offerTitle": "ALBAÑILES",
-      "disposition": "needs_human_review",
-      "reasonCode": "insufficient_title_evidence",
-      "rationale": "The trusted title match is retained for human publication review; no terminal decision is inferred.",
+      "disposition": "accepted",
+      "reasonCode": "exact_occupation_title",
+      "rationale": "Pinned title and checked payload identify the exact occupation without a conflicting role.",
       "requirementQuotes": ["ALBAÑILES"]
     },
     {
@@ -215,9 +215,9 @@
       "occupationId": "occupation:cno11:7121",
       "offerId": "1285667964750",
       "offerTitle": "ALBAÑILES",
-      "disposition": "needs_human_review",
-      "reasonCode": "insufficient_title_evidence",
-      "rationale": "The trusted title match is retained for human publication review; no terminal decision is inferred.",
+      "disposition": "accepted",
+      "reasonCode": "exact_occupation_title",
+      "rationale": "Pinned title and checked payload identify the exact occupation without a conflicting role.",
       "requirementQuotes": ["ALBAÑILES"]
     },
     {
@@ -227,9 +227,9 @@
       "occupationId": "occupation:cno11:7121",
       "offerId": "1285668256677",
       "offerTitle": "ALBAÑILES",
-      "disposition": "needs_human_review",
-      "reasonCode": "insufficient_title_evidence",
-      "rationale": "The trusted title match is retained for human publication review; no terminal decision is inferred.",
+      "disposition": "accepted",
+      "reasonCode": "exact_occupation_title",
+      "rationale": "Pinned title and checked payload identify the exact occupation without a conflicting role.",
       "requirementQuotes": ["ALBAÑILES"]
     },
     {
@@ -239,9 +239,9 @@
       "occupationId": "occupation:cno11:7121",
       "offerId": "1285668256705",
       "offerTitle": "ALBAÑILES",
-      "disposition": "needs_human_review",
-      "reasonCode": "insufficient_title_evidence",
-      "rationale": "The trusted title match is retained for human publication review; no terminal decision is inferred.",
+      "disposition": "rejected",
+      "reasonCode": "mixed_role",
+      "rationale": "Pinned payload contains a reviewed conflicting role or mandatory qualification.",
       "requirementQuotes": ["ALBAÑILES"]
     },
     {
@@ -251,9 +251,9 @@
       "occupationId": "occupation:cno11:7121",
       "offerId": "1285668323262",
       "offerTitle": "ALBAÑILES",
-      "disposition": "needs_human_review",
-      "reasonCode": "insufficient_title_evidence",
-      "rationale": "The trusted title match is retained for human publication review; no terminal decision is inferred.",
+      "disposition": "accepted",
+      "reasonCode": "exact_occupation_title",
+      "rationale": "Pinned title and checked payload identify the exact occupation without a conflicting role.",
       "requirementQuotes": ["ALBAÑILES"]
     },
     {
@@ -263,9 +263,9 @@
       "occupationId": "occupation:cno11:7121",
       "offerId": "1285668412750",
       "offerTitle": "ALBAÑILES",
-      "disposition": "needs_human_review",
-      "reasonCode": "insufficient_title_evidence",
-      "rationale": "The trusted title match is retained for human publication review; no terminal decision is inferred.",
+      "disposition": "accepted",
+      "reasonCode": "exact_occupation_title",
+      "rationale": "Pinned title and checked payload identify the exact occupation without a conflicting role.",
       "requirementQuotes": ["ALBAÑILES"]
     },
     {
@@ -275,9 +275,9 @@
       "occupationId": "occupation:cno11:7121",
       "offerId": "1285668877598",
       "offerTitle": "ALBAÑILES",
-      "disposition": "needs_human_review",
-      "reasonCode": "insufficient_title_evidence",
-      "rationale": "The trusted title match is retained for human publication review; no terminal decision is inferred.",
+      "disposition": "accepted",
+      "reasonCode": "exact_occupation_title",
+      "rationale": "Pinned title and checked payload identify the exact occupation without a conflicting role.",
       "requirementQuotes": ["ALBAÑILES"]
     },
     {
@@ -287,9 +287,9 @@
       "occupationId": "occupation:cno11:7121",
       "offerId": "1285669638729",
       "offerTitle": "ALBAÑILES",
-      "disposition": "needs_human_review",
-      "reasonCode": "insufficient_title_evidence",
-      "rationale": "The trusted title match is retained for human publication review; no terminal decision is inferred.",
+      "disposition": "accepted",
+      "reasonCode": "exact_occupation_title",
+      "rationale": "Pinned title and checked payload identify the exact occupation without a conflicting role.",
       "requirementQuotes": ["ALBAÑILES"]
     },
     {
@@ -299,9 +299,9 @@
       "occupationId": "occupation:cno11:5110",
       "offerId": "1285669506800",
       "offerTitle": "Oficial de Oficios/Cocinero/a Pinche de cocina para Residencia Universitaria Duques de Soria (Soria)",
-      "disposition": "needs_human_review",
-      "reasonCode": "insufficient_title_evidence",
-      "rationale": "The trusted title match is retained for human publication review; no terminal decision is inferred.",
+      "disposition": "rejected",
+      "reasonCode": "mixed_role",
+      "rationale": "Pinned payload contains a reviewed conflicting role or mandatory qualification.",
       "requirementQuotes": [
         "Oficial de Oficios/Cocinero/a Pinche de cocina para Residencia Universitaria Duques de Soria (Soria)"
       ]
@@ -313,9 +313,9 @@
       "occupationId": "occupation:cno11:5110",
       "offerId": "1285614233577",
       "offerTitle": "COCINEROS, EN GENERAL",
-      "disposition": "needs_human_review",
-      "reasonCode": "insufficient_title_evidence",
-      "rationale": "The trusted title match is retained for human publication review; no terminal decision is inferred.",
+      "disposition": "accepted",
+      "reasonCode": "exact_occupation_title",
+      "rationale": "Pinned title and checked payload identify the exact occupation without a conflicting role.",
       "requirementQuotes": ["COCINEROS, EN GENERAL"]
     },
     {
@@ -325,9 +325,9 @@
       "occupationId": "occupation:cno11:5110",
       "offerId": "1285626761329",
       "offerTitle": "COCINEROS, EN GENERAL",
-      "disposition": "needs_human_review",
-      "reasonCode": "insufficient_title_evidence",
-      "rationale": "The trusted title match is retained for human publication review; no terminal decision is inferred.",
+      "disposition": "rejected",
+      "reasonCode": "degree_or_license_led",
+      "rationale": "Pinned payload contains a reviewed conflicting role or mandatory qualification.",
       "requirementQuotes": ["COCINEROS, EN GENERAL"]
     },
     {
@@ -337,9 +337,9 @@
       "occupationId": "occupation:cno11:5110",
       "offerId": "1285627823296",
       "offerTitle": "COCINEROS, EN GENERAL",
-      "disposition": "needs_human_review",
-      "reasonCode": "insufficient_title_evidence",
-      "rationale": "The trusted title match is retained for human publication review; no terminal decision is inferred.",
+      "disposition": "accepted",
+      "reasonCode": "exact_occupation_title",
+      "rationale": "Pinned title and checked payload identify the exact occupation without a conflicting role.",
       "requirementQuotes": ["COCINEROS, EN GENERAL"]
     },
     {
@@ -349,9 +349,9 @@
       "occupationId": "occupation:cno11:5110",
       "offerId": "1285637347955",
       "offerTitle": "COCINEROS, EN GENERAL",
-      "disposition": "needs_human_review",
-      "reasonCode": "insufficient_title_evidence",
-      "rationale": "The trusted title match is retained for human publication review; no terminal decision is inferred.",
+      "disposition": "accepted",
+      "reasonCode": "exact_occupation_title",
+      "rationale": "Pinned title and checked payload identify the exact occupation without a conflicting role.",
       "requirementQuotes": ["COCINEROS, EN GENERAL"]
     },
     {
@@ -361,9 +361,9 @@
       "occupationId": "occupation:cno11:5110",
       "offerId": "1285639495437",
       "offerTitle": "COCINEROS, EN GENERAL",
-      "disposition": "needs_human_review",
-      "reasonCode": "insufficient_title_evidence",
-      "rationale": "The trusted title match is retained for human publication review; no terminal decision is inferred.",
+      "disposition": "accepted",
+      "reasonCode": "exact_occupation_title",
+      "rationale": "Pinned title and checked payload identify the exact occupation without a conflicting role.",
       "requirementQuotes": ["COCINEROS, EN GENERAL"]
     },
     {
@@ -373,9 +373,9 @@
       "occupationId": "occupation:cno11:5110",
       "offerId": "1285640091376",
       "offerTitle": "COCINEROS, EN GENERAL",
-      "disposition": "needs_human_review",
-      "reasonCode": "insufficient_title_evidence",
-      "rationale": "The trusted title match is retained for human publication review; no terminal decision is inferred.",
+      "disposition": "accepted",
+      "reasonCode": "exact_occupation_title",
+      "rationale": "Pinned title and checked payload identify the exact occupation without a conflicting role.",
       "requirementQuotes": ["COCINEROS, EN GENERAL"]
     },
     {
@@ -385,9 +385,9 @@
       "occupationId": "occupation:cno11:5110",
       "offerId": "1285640170324",
       "offerTitle": "COCINEROS, EN GENERAL",
-      "disposition": "needs_human_review",
-      "reasonCode": "insufficient_title_evidence",
-      "rationale": "The trusted title match is retained for human publication review; no terminal decision is inferred.",
+      "disposition": "accepted",
+      "reasonCode": "exact_occupation_title",
+      "rationale": "Pinned title and checked payload identify the exact occupation without a conflicting role.",
       "requirementQuotes": ["COCINEROS, EN GENERAL"]
     },
     {
@@ -397,9 +397,9 @@
       "occupationId": "occupation:cno11:5110",
       "offerId": "1285645512831",
       "offerTitle": "COCINEROS, EN GENERAL",
-      "disposition": "needs_human_review",
-      "reasonCode": "insufficient_title_evidence",
-      "rationale": "The trusted title match is retained for human publication review; no terminal decision is inferred.",
+      "disposition": "accepted",
+      "reasonCode": "exact_occupation_title",
+      "rationale": "Pinned title and checked payload identify the exact occupation without a conflicting role.",
       "requirementQuotes": ["COCINEROS, EN GENERAL"]
     },
     {
@@ -409,9 +409,9 @@
       "occupationId": "occupation:cno11:5110",
       "offerId": "1285655155784",
       "offerTitle": "COCINEROS, EN GENERAL",
-      "disposition": "needs_human_review",
-      "reasonCode": "insufficient_title_evidence",
-      "rationale": "The trusted title match is retained for human publication review; no terminal decision is inferred.",
+      "disposition": "accepted",
+      "reasonCode": "exact_occupation_title",
+      "rationale": "Pinned title and checked payload identify the exact occupation without a conflicting role.",
       "requirementQuotes": ["COCINEROS, EN GENERAL"]
     },
     {
@@ -421,9 +421,9 @@
       "occupationId": "occupation:cno11:5110",
       "offerId": "1285659376390",
       "offerTitle": "COCINEROS, EN GENERAL",
-      "disposition": "needs_human_review",
-      "reasonCode": "insufficient_title_evidence",
-      "rationale": "The trusted title match is retained for human publication review; no terminal decision is inferred.",
+      "disposition": "rejected",
+      "reasonCode": "degree_or_license_led",
+      "rationale": "Pinned payload contains a reviewed conflicting role or mandatory qualification.",
       "requirementQuotes": ["COCINEROS, EN GENERAL"]
     },
     {
@@ -433,9 +433,9 @@
       "occupationId": "occupation:cno11:5110",
       "offerId": "1285659956971",
       "offerTitle": "COCINEROS, EN GENERAL",
-      "disposition": "needs_human_review",
-      "reasonCode": "insufficient_title_evidence",
-      "rationale": "The trusted title match is retained for human publication review; no terminal decision is inferred.",
+      "disposition": "rejected",
+      "reasonCode": "degree_or_license_led",
+      "rationale": "Pinned payload contains a reviewed conflicting role or mandatory qualification.",
       "requirementQuotes": ["COCINEROS, EN GENERAL"]
     },
     {
@@ -445,9 +445,9 @@
       "occupationId": "occupation:cno11:5110",
       "offerId": "1285660807038",
       "offerTitle": "COCINEROS, EN GENERAL",
-      "disposition": "needs_human_review",
-      "reasonCode": "insufficient_title_evidence",
-      "rationale": "The trusted title match is retained for human publication review; no terminal decision is inferred.",
+      "disposition": "accepted",
+      "reasonCode": "exact_occupation_title",
+      "rationale": "Pinned title and checked payload identify the exact occupation without a conflicting role.",
       "requirementQuotes": ["COCINEROS, EN GENERAL"]
     },
     {
@@ -457,9 +457,9 @@
       "occupationId": "occupation:cno11:5110",
       "offerId": "1285662378630",
       "offerTitle": "COCINEROS, EN GENERAL",
-      "disposition": "needs_human_review",
-      "reasonCode": "insufficient_title_evidence",
-      "rationale": "The trusted title match is retained for human publication review; no terminal decision is inferred.",
+      "disposition": "accepted",
+      "reasonCode": "exact_occupation_title",
+      "rationale": "Pinned title and checked payload identify the exact occupation without a conflicting role.",
       "requirementQuotes": ["COCINEROS, EN GENERAL"]
     },
     {
@@ -469,9 +469,9 @@
       "occupationId": "occupation:cno11:5110",
       "offerId": "1285663812475",
       "offerTitle": "COCINEROS, EN GENERAL",
-      "disposition": "needs_human_review",
-      "reasonCode": "insufficient_title_evidence",
-      "rationale": "The trusted title match is retained for human publication review; no terminal decision is inferred.",
+      "disposition": "accepted",
+      "reasonCode": "exact_occupation_title",
+      "rationale": "Pinned title and checked payload identify the exact occupation without a conflicting role.",
       "requirementQuotes": ["COCINEROS, EN GENERAL"]
     },
     {
@@ -481,9 +481,9 @@
       "occupationId": "occupation:cno11:5110",
       "offerId": "1285664451544",
       "offerTitle": "COCINEROS, EN GENERAL",
-      "disposition": "needs_human_review",
-      "reasonCode": "insufficient_title_evidence",
-      "rationale": "The trusted title match is retained for human publication review; no terminal decision is inferred.",
+      "disposition": "accepted",
+      "reasonCode": "exact_occupation_title",
+      "rationale": "Pinned title and checked payload identify the exact occupation without a conflicting role.",
       "requirementQuotes": ["COCINEROS, EN GENERAL"]
     },
     {
@@ -493,9 +493,9 @@
       "occupationId": "occupation:cno11:5110",
       "offerId": "1285665562689",
       "offerTitle": "COCINEROS, EN GENERAL",
-      "disposition": "needs_human_review",
-      "reasonCode": "insufficient_title_evidence",
-      "rationale": "The trusted title match is retained for human publication review; no terminal decision is inferred.",
+      "disposition": "accepted",
+      "reasonCode": "exact_occupation_title",
+      "rationale": "Pinned title and checked payload identify the exact occupation without a conflicting role.",
       "requirementQuotes": ["COCINEROS, EN GENERAL"]
     },
     {
@@ -505,9 +505,9 @@
       "occupationId": "occupation:cno11:5110",
       "offerId": "1285665634431",
       "offerTitle": "COCINEROS, EN GENERAL",
-      "disposition": "needs_human_review",
-      "reasonCode": "insufficient_title_evidence",
-      "rationale": "The trusted title match is retained for human publication review; no terminal decision is inferred.",
+      "disposition": "accepted",
+      "reasonCode": "exact_occupation_title",
+      "rationale": "Pinned title and checked payload identify the exact occupation without a conflicting role.",
       "requirementQuotes": ["COCINEROS, EN GENERAL"]
     },
     {
@@ -517,9 +517,9 @@
       "occupationId": "occupation:cno11:5110",
       "offerId": "1285665790208",
       "offerTitle": "COCINEROS, EN GENERAL",
-      "disposition": "needs_human_review",
-      "reasonCode": "insufficient_title_evidence",
-      "rationale": "The trusted title match is retained for human publication review; no terminal decision is inferred.",
+      "disposition": "accepted",
+      "reasonCode": "exact_occupation_title",
+      "rationale": "Pinned title and checked payload identify the exact occupation without a conflicting role.",
       "requirementQuotes": ["COCINEROS, EN GENERAL"]
     },
     {
@@ -529,9 +529,9 @@
       "occupationId": "occupation:cno11:5110",
       "offerId": "1285666442607",
       "offerTitle": "COCINEROS, EN GENERAL",
-      "disposition": "needs_human_review",
-      "reasonCode": "insufficient_title_evidence",
-      "rationale": "The trusted title match is retained for human publication review; no terminal decision is inferred.",
+      "disposition": "accepted",
+      "reasonCode": "exact_occupation_title",
+      "rationale": "Pinned title and checked payload identify the exact occupation without a conflicting role.",
       "requirementQuotes": ["COCINEROS, EN GENERAL"]
     },
     {
@@ -541,9 +541,9 @@
       "occupationId": "occupation:cno11:5110",
       "offerId": "1285666499205",
       "offerTitle": "COCINEROS, EN GENERAL",
-      "disposition": "needs_human_review",
-      "reasonCode": "insufficient_title_evidence",
-      "rationale": "The trusted title match is retained for human publication review; no terminal decision is inferred.",
+      "disposition": "rejected",
+      "reasonCode": "contradictory_requirement",
+      "rationale": "Pinned payload contains a reviewed conflicting role or mandatory qualification.",
       "requirementQuotes": ["COCINEROS, EN GENERAL"]
     },
     {
@@ -553,9 +553,9 @@
       "occupationId": "occupation:cno11:5110",
       "offerId": "1285666617717",
       "offerTitle": "COCINEROS, EN GENERAL",
-      "disposition": "needs_human_review",
-      "reasonCode": "insufficient_title_evidence",
-      "rationale": "The trusted title match is retained for human publication review; no terminal decision is inferred.",
+      "disposition": "rejected",
+      "reasonCode": "degree_or_license_led",
+      "rationale": "Pinned payload contains a reviewed conflicting role or mandatory qualification.",
       "requirementQuotes": ["COCINEROS, EN GENERAL"]
     },
     {
@@ -565,9 +565,9 @@
       "occupationId": "occupation:cno11:5110",
       "offerId": "1285666617827",
       "offerTitle": "COCINEROS, EN GENERAL",
-      "disposition": "needs_human_review",
-      "reasonCode": "insufficient_title_evidence",
-      "rationale": "The trusted title match is retained for human publication review; no terminal decision is inferred.",
+      "disposition": "accepted",
+      "reasonCode": "exact_occupation_title",
+      "rationale": "Pinned title and checked payload identify the exact occupation without a conflicting role.",
       "requirementQuotes": ["COCINEROS, EN GENERAL"]
     },
     {
@@ -577,9 +577,9 @@
       "occupationId": "occupation:cno11:5110",
       "offerId": "1285666878773",
       "offerTitle": "COCINEROS, EN GENERAL",
-      "disposition": "needs_human_review",
-      "reasonCode": "insufficient_title_evidence",
-      "rationale": "The trusted title match is retained for human publication review; no terminal decision is inferred.",
+      "disposition": "rejected",
+      "reasonCode": "mixed_role",
+      "rationale": "Pinned payload contains a reviewed conflicting role or mandatory qualification.",
       "requirementQuotes": ["COCINEROS, EN GENERAL"]
     },
     {
@@ -589,9 +589,9 @@
       "occupationId": "occupation:cno11:5110",
       "offerId": "1285666909272",
       "offerTitle": "COCINEROS, EN GENERAL",
-      "disposition": "needs_human_review",
-      "reasonCode": "insufficient_title_evidence",
-      "rationale": "The trusted title match is retained for human publication review; no terminal decision is inferred.",
+      "disposition": "accepted",
+      "reasonCode": "exact_occupation_title",
+      "rationale": "Pinned title and checked payload identify the exact occupation without a conflicting role.",
       "requirementQuotes": ["COCINEROS, EN GENERAL"]
     },
     {
@@ -601,9 +601,9 @@
       "occupationId": "occupation:cno11:5110",
       "offerId": "1285666909300",
       "offerTitle": "COCINEROS, EN GENERAL",
-      "disposition": "needs_human_review",
-      "reasonCode": "insufficient_title_evidence",
-      "rationale": "The trusted title match is retained for human publication review; no terminal decision is inferred.",
+      "disposition": "rejected",
+      "reasonCode": "contradictory_requirement",
+      "rationale": "Pinned payload contains a reviewed conflicting role or mandatory qualification.",
       "requirementQuotes": ["COCINEROS, EN GENERAL"]
     },
     {
@@ -613,9 +613,9 @@
       "occupationId": "occupation:cno11:5110",
       "offerId": "1285666999271",
       "offerTitle": "COCINEROS, EN GENERAL",
-      "disposition": "needs_human_review",
-      "reasonCode": "insufficient_title_evidence",
-      "rationale": "The trusted title match is retained for human publication review; no terminal decision is inferred.",
+      "disposition": "accepted",
+      "reasonCode": "exact_occupation_title",
+      "rationale": "Pinned title and checked payload identify the exact occupation without a conflicting role.",
       "requirementQuotes": ["COCINEROS, EN GENERAL"]
     },
     {
@@ -625,9 +625,9 @@
       "occupationId": "occupation:cno11:5110",
       "offerId": "1285667211184",
       "offerTitle": "COCINEROS, EN GENERAL",
-      "disposition": "needs_human_review",
-      "reasonCode": "insufficient_title_evidence",
-      "rationale": "The trusted title match is retained for human publication review; no terminal decision is inferred.",
+      "disposition": "rejected",
+      "reasonCode": "degree_or_license_led",
+      "rationale": "Pinned payload contains a reviewed conflicting role or mandatory qualification.",
       "requirementQuotes": ["COCINEROS, EN GENERAL"]
     },
     {
@@ -637,9 +637,9 @@
       "occupationId": "occupation:cno11:5110",
       "offerId": "1285667333359",
       "offerTitle": "COCINEROS, EN GENERAL",
-      "disposition": "needs_human_review",
-      "reasonCode": "insufficient_title_evidence",
-      "rationale": "The trusted title match is retained for human publication review; no terminal decision is inferred.",
+      "disposition": "accepted",
+      "reasonCode": "exact_occupation_title",
+      "rationale": "Pinned title and checked payload identify the exact occupation without a conflicting role.",
       "requirementQuotes": ["COCINEROS, EN GENERAL"]
     },
     {
@@ -649,9 +649,9 @@
       "occupationId": "occupation:cno11:5110",
       "offerId": "1285667333387",
       "offerTitle": "COCINEROS, EN GENERAL",
-      "disposition": "needs_human_review",
-      "reasonCode": "insufficient_title_evidence",
-      "rationale": "The trusted title match is retained for human publication review; no terminal decision is inferred.",
+      "disposition": "accepted",
+      "reasonCode": "exact_occupation_title",
+      "rationale": "Pinned title and checked payload identify the exact occupation without a conflicting role.",
       "requirementQuotes": ["COCINEROS, EN GENERAL"]
     },
     {
@@ -661,9 +661,9 @@
       "occupationId": "occupation:cno11:5110",
       "offerId": "1285667926910",
       "offerTitle": "COCINEROS, EN GENERAL",
-      "disposition": "needs_human_review",
-      "reasonCode": "insufficient_title_evidence",
-      "rationale": "The trusted title match is retained for human publication review; no terminal decision is inferred.",
+      "disposition": "accepted",
+      "reasonCode": "exact_occupation_title",
+      "rationale": "Pinned title and checked payload identify the exact occupation without a conflicting role.",
       "requirementQuotes": ["COCINEROS, EN GENERAL"]
     },
     {
@@ -673,9 +673,9 @@
       "occupationId": "occupation:cno11:5110",
       "offerId": "1285667926938",
       "offerTitle": "COCINEROS, EN GENERAL",
-      "disposition": "needs_human_review",
-      "reasonCode": "insufficient_title_evidence",
-      "rationale": "The trusted title match is retained for human publication review; no terminal decision is inferred.",
+      "disposition": "accepted",
+      "reasonCode": "exact_occupation_title",
+      "rationale": "Pinned title and checked payload identify the exact occupation without a conflicting role.",
       "requirementQuotes": ["COCINEROS, EN GENERAL"]
     },
     {
@@ -685,9 +685,9 @@
       "occupationId": "occupation:cno11:5110",
       "offerId": "1285667926966",
       "offerTitle": "COCINEROS, EN GENERAL",
-      "disposition": "needs_human_review",
-      "reasonCode": "insufficient_title_evidence",
-      "rationale": "The trusted title match is retained for human publication review; no terminal decision is inferred.",
+      "disposition": "rejected",
+      "reasonCode": "degree_or_license_led",
+      "rationale": "Pinned payload contains a reviewed conflicting role or mandatory qualification.",
       "requirementQuotes": ["COCINEROS, EN GENERAL"]
     },
     {
@@ -697,9 +697,9 @@
       "occupationId": "occupation:cno11:5110",
       "offerId": "1285668256453",
       "offerTitle": "COCINEROS, EN GENERAL",
-      "disposition": "needs_human_review",
-      "reasonCode": "insufficient_title_evidence",
-      "rationale": "The trusted title match is retained for human publication review; no terminal decision is inferred.",
+      "disposition": "accepted",
+      "reasonCode": "exact_occupation_title",
+      "rationale": "Pinned title and checked payload identify the exact occupation without a conflicting role.",
       "requirementQuotes": ["COCINEROS, EN GENERAL"]
     },
     {
@@ -709,9 +709,9 @@
       "occupationId": "occupation:cno11:5110",
       "offerId": "1285668323029",
       "offerTitle": "COCINEROS, EN GENERAL",
-      "disposition": "needs_human_review",
-      "reasonCode": "insufficient_title_evidence",
-      "rationale": "The trusted title match is retained for human publication review; no terminal decision is inferred.",
+      "disposition": "accepted",
+      "reasonCode": "exact_occupation_title",
+      "rationale": "Pinned title and checked payload identify the exact occupation without a conflicting role.",
       "requirementQuotes": ["COCINEROS, EN GENERAL"]
     },
     {
@@ -721,9 +721,9 @@
       "occupationId": "occupation:cno11:5110",
       "offerId": "1285668911911",
       "offerTitle": "COCINEROS, EN GENERAL",
-      "disposition": "needs_human_review",
-      "reasonCode": "insufficient_title_evidence",
-      "rationale": "The trusted title match is retained for human publication review; no terminal decision is inferred.",
+      "disposition": "rejected",
+      "reasonCode": "degree_or_license_led",
+      "rationale": "Pinned payload contains a reviewed conflicting role or mandatory qualification.",
       "requirementQuotes": ["COCINEROS, EN GENERAL"]
     },
     {
@@ -733,9 +733,9 @@
       "occupationId": "occupation:cno11:5110",
       "offerId": "1285669059164",
       "offerTitle": "COCINEROS, EN GENERAL",
-      "disposition": "needs_human_review",
-      "reasonCode": "insufficient_title_evidence",
-      "rationale": "The trusted title match is retained for human publication review; no terminal decision is inferred.",
+      "disposition": "accepted",
+      "reasonCode": "exact_occupation_title",
+      "rationale": "Pinned title and checked payload identify the exact occupation without a conflicting role.",
       "requirementQuotes": ["COCINEROS, EN GENERAL"]
     },
     {
@@ -745,9 +745,9 @@
       "occupationId": "occupation:cno11:5110",
       "offerId": "1285669380024",
       "offerTitle": "COCINEROS, EN GENERAL",
-      "disposition": "needs_human_review",
-      "reasonCode": "insufficient_title_evidence",
-      "rationale": "The trusted title match is retained for human publication review; no terminal decision is inferred.",
+      "disposition": "accepted",
+      "reasonCode": "exact_occupation_title",
+      "rationale": "Pinned title and checked payload identify the exact occupation without a conflicting role.",
       "requirementQuotes": ["COCINEROS, EN GENERAL"]
     },
     {
@@ -757,9 +757,9 @@
       "occupationId": "occupation:cno11:5110",
       "offerId": "1285669380068",
       "offerTitle": "COCINEROS, EN GENERAL",
-      "disposition": "needs_human_review",
-      "reasonCode": "insufficient_title_evidence",
-      "rationale": "The trusted title match is retained for human publication review; no terminal decision is inferred.",
+      "disposition": "accepted",
+      "reasonCode": "exact_occupation_title",
+      "rationale": "Pinned title and checked payload identify the exact occupation without a conflicting role.",
       "requirementQuotes": ["COCINEROS, EN GENERAL"]
     },
     {
@@ -769,9 +769,9 @@
       "occupationId": "occupation:cno11:5110",
       "offerId": "1285669482753",
       "offerTitle": "COCINEROS, EN GENERAL",
-      "disposition": "needs_human_review",
-      "reasonCode": "insufficient_title_evidence",
-      "rationale": "The trusted title match is retained for human publication review; no terminal decision is inferred.",
+      "disposition": "accepted",
+      "reasonCode": "exact_occupation_title",
+      "rationale": "Pinned title and checked payload identify the exact occupation without a conflicting role.",
       "requirementQuotes": ["COCINEROS, EN GENERAL"]
     },
     {
@@ -781,9 +781,9 @@
       "occupationId": "occupation:cno11:5110",
       "offerId": "1285669719137",
       "offerTitle": "COCINEROS, EN GENERAL",
-      "disposition": "needs_human_review",
-      "reasonCode": "insufficient_title_evidence",
-      "rationale": "The trusted title match is retained for human publication review; no terminal decision is inferred.",
+      "disposition": "accepted",
+      "reasonCode": "exact_occupation_title",
+      "rationale": "Pinned title and checked payload identify the exact occupation without a conflicting role.",
       "requirementQuotes": ["COCINEROS, EN GENERAL"]
     },
     {
@@ -793,9 +793,9 @@
       "occupationId": "occupation:cno11:7111",
       "offerId": "1285667539377",
       "offerTitle": "ENCOFRADORES",
-      "disposition": "needs_human_review",
-      "reasonCode": "insufficient_title_evidence",
-      "rationale": "The trusted title match is retained for human publication review; no terminal decision is inferred.",
+      "disposition": "accepted",
+      "reasonCode": "exact_occupation_title",
+      "rationale": "Pinned title and checked payload identify the exact occupation without a conflicting role.",
       "requirementQuotes": ["ENCOFRADORES"]
     },
     {
@@ -805,9 +805,9 @@
       "occupationId": "occupation:cno11:7111",
       "offerId": "1285668256621",
       "offerTitle": "ENCOFRADORES",
-      "disposition": "needs_human_review",
-      "reasonCode": "insufficient_title_evidence",
-      "rationale": "The trusted title match is retained for human publication review; no terminal decision is inferred.",
+      "disposition": "accepted",
+      "reasonCode": "exact_occupation_title",
+      "rationale": "Pinned title and checked payload identify the exact occupation without a conflicting role.",
       "requirementQuotes": ["ENCOFRADORES"]
     }
   ],
@@ -816,14 +816,12 @@
       "status": "rejected",
       "acceptedOfferIds": [],
       "rejectedOfferIds": ["1285669506800"],
-      "reason": "Pending human review; not approved for publication."
+      "reason": "No offers are approved for publication."
     },
     "cocineros": {
       "status": "rejected",
-      "acceptedOfferIds": [],
-      "rejectedOfferIds": [
+      "acceptedOfferIds": [
         "1285614233577",
-        "1285626761329",
         "1285627823296",
         "1285637347955",
         "1285639495437",
@@ -831,8 +829,6 @@
         "1285640170324",
         "1285645512831",
         "1285655155784",
-        "1285659376390",
-        "1285659956971",
         "1285660807038",
         "1285662378630",
         "1285663812475",
@@ -841,41 +837,44 @@
         "1285665634431",
         "1285665790208",
         "1285666442607",
-        "1285666499205",
-        "1285666617717",
         "1285666617827",
-        "1285666878773",
         "1285666909272",
-        "1285666909300",
         "1285666999271",
-        "1285667211184",
         "1285667333359",
         "1285667333387",
         "1285667926910",
         "1285667926938",
-        "1285667926966",
         "1285668256453",
         "1285668323029",
-        "1285668911911",
         "1285669059164",
         "1285669380024",
         "1285669380068",
         "1285669482753",
         "1285669719137"
       ],
-      "reason": "Pending human review; not approved for publication."
+      "rejectedOfferIds": [
+        "1285626761329",
+        "1285659376390",
+        "1285659956971",
+        "1285666499205",
+        "1285666617717",
+        "1285666878773",
+        "1285666909300",
+        "1285667211184",
+        "1285667926966",
+        "1285668911911"
+      ],
+      "reason": "Known rejected offers prevent publication."
     },
     "albañil": {
       "status": "rejected",
-      "acceptedOfferIds": [],
-      "rejectedOfferIds": ["1285664848132", "1285669061589"],
-      "reason": "Pending human review; not approved for publication."
+      "acceptedOfferIds": ["1285669061589"],
+      "rejectedOfferIds": ["1285664848132"],
+      "reason": "Known rejected offers prevent publication."
     },
     "albañiles": {
       "status": "rejected",
-      "acceptedOfferIds": [],
-      "rejectedOfferIds": [
-        "1285613685343",
+      "acceptedOfferIds": [
         "1285614585114",
         "1285658958752",
         "1285662949857",
@@ -892,19 +891,19 @@
         "1285667590834",
         "1285667964750",
         "1285668256677",
-        "1285668256705",
         "1285668323262",
         "1285668412750",
         "1285668877598",
         "1285669638729"
       ],
-      "reason": "Pending human review; not approved for publication."
+      "rejectedOfferIds": ["1285613685343", "1285668256705"],
+      "reason": "Known rejected offers prevent publication."
     },
     "encofradores": {
-      "status": "rejected",
-      "acceptedOfferIds": [],
-      "rejectedOfferIds": ["1285667539377", "1285668256621"],
-      "reason": "Pending human review; not approved for publication."
+      "status": "accepted",
+      "acceptedOfferIds": ["1285667539377", "1285668256621"],
+      "rejectedOfferIds": [],
+      "reason": "Accepted offers are eligible for publication."
     }
   }
 }
