@@ -11,7 +11,10 @@ import { tmpdir } from "node:os";
 import { dirname, resolve } from "node:path";
 
 import { describe, expect, it } from "vitest";
+import { z } from "zod";
 
+import { REVIEWED_PROGRAM_QUALIFICATION_LINKS } from "../../data/catalogs/reviewedProgramQualifications";
+import { REVIEWED_QUALIFICATIONS } from "../../data/catalogs/reviewedQualifications";
 import {
   FP_ONE_WORD_PUBLICATION_REVIEW_ARTIFACT_PATH,
   FP_ONE_WORD_PUBLICATION_REVIEW_SNAPSHOT,
@@ -19,6 +22,18 @@ import {
   type FpOneWordPublicationReview,
 } from "../../data/schemas/fpOneWordPublicationReview";
 import {
+  GeneratedManifestSchema,
+  JobOfferSchema,
+  TrainingProgramSchema,
+} from "../../data/schemas/generated";
+import { loadApprovedMappings } from "../../src/domain/occupation";
+import { matchOffersForProgram } from "../../src/domain/offerMatching";
+import { PublishedRequirementsResourceSchema } from "../../src/domain/requirements";
+import { loadCuratedMappingsFromDisk } from "../data/validateCuratedMappings";
+import {
+  APPROVED_SINGLE_TOKEN_MATCH_POLICY,
+  approvedSingleTokenAuditIdentities,
+  approvedSingleTokenAuditIdentity,
   compareNormalizedCodePointStrings,
   PINNED_OFFER_SCHEMA,
   validateFpOneWordPublicationReview,
@@ -33,6 +48,73 @@ const ARTIFACT_PATH = resolve(
 
 function readArtifact(): FpOneWordPublicationReview {
   return JSON.parse(readFileSync(ARTIFACT_PATH, "utf8"));
+}
+
+function readJson<T>(path: string): T {
+  return JSON.parse(readFileSync(path, "utf8")) as T;
+}
+
+function normalize(value: string): string {
+  return value
+    .normalize("NFD")
+    .replace(/\p{Diacritic}/gu, "")
+    .toLowerCase()
+    .replace(/[^\p{L}\p{N}]+/gu, " ")
+    .replace(/\s+/gu, " ")
+    .trim();
+}
+
+function resourcePathInRoot(resourcePath: string): string {
+  return resolve(ROOT, "public", resourcePath.replace(/^\/data\//u, "data/"));
+}
+
+function readCurrentManifest() {
+  return GeneratedManifestSchema.parse(
+    readJson(resolve(ROOT, "public", "data", "v1", "manifest.json")),
+  );
+}
+
+async function loadCurrentApprovedMappings() {
+  const manifest = readCurrentManifest();
+  const programs = z
+    .array(TrainingProgramSchema)
+    .parse(
+      readJson(
+        resourcePathInRoot(manifest.resourceSnapshots.programs.resourcePath),
+      ),
+    );
+  const curated = await loadCuratedMappingsFromDisk(ROOT, programs);
+  return {
+    manifest,
+    programs,
+    approved: loadApprovedMappings(curated),
+  };
+}
+
+function approvedSingleTokenCuratedIdentities(input: {
+  aliases: ReturnType<typeof loadApprovedMappings>["aliases"];
+  links: ReturnType<typeof loadApprovedMappings>["links"];
+}): string[] {
+  return [
+    ...new Set(
+      input.aliases
+        .filter(
+          (alias) => alias.matchPolicy === APPROVED_SINGLE_TOKEN_MATCH_POLICY,
+        )
+        .flatMap((alias) =>
+          input.links
+            .filter((link) => link.occupationId === alias.occupationId)
+            .map((link) =>
+              approvedSingleTokenAuditIdentity({
+                alias: alias.alias,
+                occupationId: alias.occupationId,
+                programKey: link.trainingProgramKey,
+                matchPolicy: APPROVED_SINGLE_TOKEN_MATCH_POLICY,
+              }),
+            ),
+        ),
+    ),
+  ].sort(compareNormalizedCodePointStrings);
 }
 
 function cloned<T>(value: T): T {
@@ -390,5 +472,160 @@ describe("FP one-word publication review validator", () => {
         allowInProgress: true,
       }),
     ).toThrow();
+  });
+
+  it("keeps curated approved_single_token aliases in exact parity with the accepted terminal audit tuple", async () => {
+    const artifact = validateFpOneWordPublicationReview(ROOT);
+    const acceptedForms = [
+      ...new Set(
+        artifact.rows
+          .filter(
+            (row) =>
+              row.disposition === "accepted" &&
+              artifact.publicationDecision[row.form].status === "accepted",
+          )
+          .map((row) => normalize(row.form)),
+      ),
+    ].sort(compareNormalizedCodePointStrings);
+    const acceptedIdentities = [
+      ...approvedSingleTokenAuditIdentities(artifact),
+    ].sort(compareNormalizedCodePointStrings);
+    const { approved } = await loadCurrentApprovedMappings();
+    const curatedSingleTokenAliases = approved.aliases.filter(
+      (alias) => alias.matchPolicy === APPROVED_SINGLE_TOKEN_MATCH_POLICY,
+    );
+    const curatedForms = [
+      ...new Set(
+        curatedSingleTokenAliases.map((alias) => normalize(alias.alias)),
+      ),
+    ].sort(compareNormalizedCodePointStrings);
+
+    expect(curatedForms).toEqual(acceptedForms);
+    expect(
+      approvedSingleTokenCuratedIdentities({
+        aliases: approved.aliases,
+        links: approved.links,
+      }),
+    ).toEqual(acceptedIdentities);
+  });
+
+  it("recomputes only the accepted encofradores offer delta in memory and keeps equal-title ids distinct", async () => {
+    const artifact = validateFpOneWordPublicationReview(ROOT);
+    const acceptedOfferIds = [
+      ...artifact.publicationDecision.encofradores.acceptedOfferIds,
+    ].sort(compareNormalizedCodePointStrings);
+    const acceptedOfferIdSet = new Set(acceptedOfferIds);
+    const { manifest, programs, approved } =
+      await loadCurrentApprovedMappings();
+    const offers = z
+      .array(JobOfferSchema)
+      .parse(
+        readJson(
+          resourcePathInRoot(manifest.resourceSnapshots.jobOffers.resourcePath),
+        ),
+      );
+    const publishedRequirements = PublishedRequirementsResourceSchema.parse(
+      readJson(
+        resourcePathInRoot(
+          manifest.resourceSnapshots.publishedRequirements.resourcePath,
+        ),
+      ),
+    );
+    const approvedPrograms = [
+      ...new Set(approved.links.map((link) => link.trainingProgramKey)),
+    ].sort(compareNormalizedCodePointStrings);
+    const approvedWithoutSingleTokenAliases = {
+      ...approved,
+      aliases: approved.aliases.filter(
+        (alias) => alias.matchPolicy !== APPROVED_SINGLE_TOKEN_MATCH_POLICY,
+      ),
+    };
+
+    const deltaByProgram = approvedPrograms.map((programKey) => {
+      const withSingleToken = matchOffersForProgram(programKey, {
+        programs,
+        qualifications: REVIEWED_QUALIFICATIONS,
+        programQualificationLinks: REVIEWED_PROGRAM_QUALIFICATION_LINKS,
+        occupations: approved.occupations,
+        aliases: approved.aliases,
+        links: approved.links,
+        offers,
+        publishedRequirements,
+        humanOverrides: [],
+      });
+      const withoutSingleToken = matchOffersForProgram(programKey, {
+        programs,
+        qualifications: REVIEWED_QUALIFICATIONS,
+        programQualificationLinks: REVIEWED_PROGRAM_QUALIFICATION_LINKS,
+        occupations: approvedWithoutSingleTokenAliases.occupations,
+        aliases: approvedWithoutSingleTokenAliases.aliases,
+        links: approvedWithoutSingleTokenAliases.links,
+        offers,
+        publishedRequirements,
+        humanOverrides: [],
+      });
+      const withIds = withSingleToken.map((match) => match.offerId);
+      const withoutIdSet = new Set(
+        withoutSingleToken.map((match) => match.offerId),
+      );
+      const withIdSet = new Set(withIds);
+
+      return {
+        programKey,
+        matches: withSingleToken,
+        addedOfferIds: withIds.filter((offerId) => !withoutIdSet.has(offerId)),
+        removedOfferIds: withoutSingleToken
+          .map((match) => match.offerId)
+          .filter((offerId) => !withIdSet.has(offerId)),
+      };
+    });
+
+    const eocDelta = deltaByProgram.find(
+      ({ programKey }) => programKey === "EOC01M",
+    );
+    if (eocDelta === undefined) throw new Error("Missing EOC01M coverage.");
+
+    expect(eocDelta.addedOfferIds).toEqual(acceptedOfferIds);
+    expect(eocDelta.removedOfferIds).toEqual([]);
+    expect(
+      deltaByProgram
+        .filter(({ programKey }) => programKey !== "EOC01M")
+        .every(
+          ({ addedOfferIds, removedOfferIds }) =>
+            addedOfferIds.length === 0 && removedOfferIds.length === 0,
+        ),
+    ).toBe(true);
+    expect(
+      deltaByProgram
+        .flatMap(({ addedOfferIds }) => addedOfferIds)
+        .sort(compareNormalizedCodePointStrings),
+    ).toEqual(acceptedOfferIds);
+    expect(
+      deltaByProgram.flatMap(({ removedOfferIds }) => removedOfferIds),
+    ).toEqual([]);
+
+    const acceptedMatches = eocDelta.matches.filter((match) =>
+      acceptedOfferIdSet.has(match.offerId),
+    );
+    expect(
+      acceptedMatches.map(({ offerId, matchRule }) => ({ offerId, matchRule })),
+    ).toEqual([
+      {
+        offerId: "1285667539377",
+        matchRule: "title_alias_exact",
+      },
+      {
+        offerId: "1285668256621",
+        matchRule: "title_alias_exact",
+      },
+    ]);
+    expect(new Set(acceptedMatches.map((match) => match.offerId)).size).toBe(2);
+    expect(
+      new Set(
+        acceptedMatches.flatMap((match) =>
+          "titleEvidence" in match ? [match.titleEvidence.offerTitle] : [],
+        ),
+      ).size,
+    ).toBe(1);
   });
 });

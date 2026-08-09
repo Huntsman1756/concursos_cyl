@@ -33,6 +33,7 @@ import {
   TrainingOccupationLinksSchema,
 } from "../../data/schemas/curatedMappings";
 import { FP_OFFICIAL_ALIAS_PASS_BASELINE_SNAPSHOT_ID } from "../../data/schemas/fpOfficialAliasPass";
+import { FP_ONE_WORD_PUBLICATION_REVIEW_SNAPSHOT } from "../../data/schemas/fpOneWordPublicationReview";
 import {
   EducationCenterSchema,
   GeneratedManifestSchema,
@@ -1893,6 +1894,10 @@ async function markPreviousSnapshotStale(
 
 const RETAINED_HISTORY_SNAPSHOTS = 2;
 const IMMUTABLE_SNAPSHOT_ID_PATTERN = /^\d{17}-[a-f0-9]{12}$/u;
+const HISTORICAL_PINNED_SNAPSHOT_IDS = [
+  FP_OFFICIAL_ALIAS_PASS_BASELINE_SNAPSHOT_ID,
+  FP_ONE_WORD_PUBLICATION_REVIEW_SNAPSHOT.snapshotId,
+] as const;
 const FP_COVERAGE_PILOT_RESULTS_PATH = [
   "analysis",
   "fp_coverage_pilot_results.json",
@@ -1938,16 +1943,13 @@ async function completedPilotSnapshotDistributionOptions(
   root: string,
   target: string,
 ): Promise<{ historicalSnapshotDirectories: string[] }> {
+  const historicalSnapshotIds = new Set([
+    ...(await completedPilotSnapshotIds(root)),
+    ...HISTORICAL_PINNED_SNAPSHOT_IDS,
+  ]);
   return {
-    historicalSnapshotDirectories: [
-      ...(await completedPilotSnapshotIds(root)),
-      FP_OFFICIAL_ALIAS_PASS_BASELINE_SNAPSHOT_ID,
-    ]
+    historicalSnapshotDirectories: [...historicalSnapshotIds]
       .toSorted(compareCanonicalText)
-      .filter(
-        (snapshotId, index, snapshotIds) =>
-          index === 0 || snapshotId !== snapshotIds[index - 1],
-      )
       .map((snapshotId) => resolve(target, "snapshots", snapshotId)),
   };
 }
@@ -2008,7 +2010,7 @@ async function enforceSnapshotRetention(
   const retained = new Set([
     currentSnapshotId,
     ...(await completedPilotSnapshotIds(root)),
-    FP_OFFICIAL_ALIAS_PASS_BASELINE_SNAPSHOT_ID,
+    ...HISTORICAL_PINNED_SNAPSHOT_IDS,
     ...immutableSnapshotNames
       .filter(
         (snapshotId) =>

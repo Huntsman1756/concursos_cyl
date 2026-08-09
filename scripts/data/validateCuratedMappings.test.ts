@@ -648,6 +648,10 @@ describe("curated occupation mappings", () => {
         occupationId: "occupation:cno11:7111",
       },
       {
+        alias: "encofradores",
+        occupationId: "occupation:cno11:7111",
+      },
+      {
         alias: "Pavimentadores con adoquines",
         occupationId: "occupation:cno11:7240",
       },

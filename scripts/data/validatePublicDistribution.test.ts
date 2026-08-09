@@ -13,6 +13,7 @@ import { afterEach, describe, expect, it } from "vitest";
 import { z } from "zod";
 
 import { FP_OFFICIAL_ALIAS_PASS_BASELINE_SNAPSHOT_ID } from "../../data/schemas/fpOfficialAliasPass";
+import { FP_ONE_WORD_PUBLICATION_REVIEW_SNAPSHOT } from "../../data/schemas/fpOneWordPublicationReview";
 import {
   JobOfferSchema,
   TrainingProgramSchema,
@@ -877,6 +878,14 @@ describe("public snapshot distribution", () => {
         "v1",
         "snapshots",
         FP_OFFICIAL_ALIAS_PASS_BASELINE_SNAPSHOT_ID,
+      ),
+      join(
+        root,
+        "public",
+        "data",
+        "v1",
+        "snapshots",
+        FP_ONE_WORD_PUBLICATION_REVIEW_SNAPSHOT.snapshotId,
       ),
     ];
 

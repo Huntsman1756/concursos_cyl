@@ -21,6 +21,7 @@ import {
   LoadableGeneratedManifestSchema,
 } from "../../data/schemas/generated";
 import { FP_OFFICIAL_ALIAS_PASS_BASELINE_SNAPSHOT_ID } from "../../data/schemas/fpOfficialAliasPass";
+import { FP_ONE_WORD_PUBLICATION_REVIEW_SNAPSHOT } from "../../data/schemas/fpOneWordPublicationReview";
 import {
   liveOfferSourceRecord,
   liveTrainingSourceRecord,
@@ -2272,6 +2273,36 @@ describe("buildSnapshots", { timeout: BUILD_SNAPSHOTS_TEST_TIMEOUT }, () => {
     }
 
     await expect(access(pinnedBaseline)).resolves.toBeUndefined();
+  });
+
+  it("retains the FP one-word publication review snapshot beyond ordinary history", async () => {
+    const root = await temporaryRoot();
+    await buildSnapshots({ rootDirectory: root, ...fixedOptions });
+    const initialSnapshot = dirname(
+      assetPath(
+        root,
+        (await readManifest(root)).resourceSnapshots.programs.resourcePath,
+      ),
+    );
+    const pinnedSnapshot = join(
+      root,
+      "public",
+      "data",
+      "v1",
+      "snapshots",
+      FP_ONE_WORD_PUBLICATION_REVIEW_SNAPSHOT.snapshotId,
+    );
+    await cp(initialSnapshot, pinnedSnapshot, { recursive: true });
+
+    for (let day = 2; day <= 5; day += 1) {
+      await buildSnapshots({
+        rootDirectory: root,
+        ...fixedOptions,
+        now: () => new Date(`2026-08-0${day}T10:00:00.000Z`),
+      });
+    }
+
+    await expect(access(pinnedSnapshot)).resolves.toBeUndefined();
   });
 
   it("retains a pinned pilot snapshot as an approved subset after a later mapping addition", async () => {
