@@ -444,6 +444,28 @@ function normalizeEvidenceText(value: string): string {
     .trim();
 }
 
+function normalizeOutputSeed(value: string): string {
+  const genderVariantBase = (left: string, right: string): string | null => {
+    if (right === "a" || right === "o") return left;
+    if (left.endsWith("o") && right === `${left.slice(0, -1)}a`) return left;
+    if (left.endsWith("or") && right === `${left}a`) return left;
+    if (right.endsWith("o") && left === `${right.slice(0, -1)}a`) return right;
+    if (right.endsWith("o") && left === `${right}a`) return right;
+    if (right.endsWith("or") && left === `${right}a`) return right;
+    return null;
+  };
+  const gendered = value
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/gu, "")
+    .toLocaleLowerCase("es-ES")
+    .replace(
+      /\b([\p{Letter}]+)\s*\/\s*([\p{Letter}]+)\b/gu,
+      (_match, left: string, right: string) =>
+        genderVariantBase(left, right) ?? `${left} ${right}`,
+    );
+  return normalizeEvidenceText(gendered);
+}
+
 function isBoundedPhrase(sourceQuote: string, phrase: string): boolean {
   const normalizedQuote = normalizeEvidenceText(sourceQuote);
   const normalizedPhrase = normalizeEvidenceText(phrase);
@@ -569,10 +591,19 @@ export function validateExpansionAttemptData(
   );
   if (labels.length === 0)
     fail("Every candidate requires at least one official output review.");
-  if (JSON.stringify(labels) !== JSON.stringify(candidate.officialOutputLabels))
-    fail(
-      "Official output reviews do not match the frozen candidate output order.",
+  const normalizedLabels = labels.map(normalizeOutputSeed);
+  let lastSeedIndex = -1;
+  for (const seed of candidate.officialOutputLabels) {
+    const normalizedSeed = normalizeOutputSeed(seed);
+    const seedIndex = normalizedLabels.findIndex(
+      (label, index) => index > lastSeedIndex && label === normalizedSeed,
     );
+    if (seedIndex === -1)
+      fail(
+        "Official output reviews must contain every frozen ranking output seed in order.",
+      );
+    lastSeedIndex = seedIndex;
+  }
   if (
     new Set(labels).size !== labels.length ||
     officialOutputReviews.some((review, index) => review.order !== index + 1)
@@ -710,12 +741,24 @@ export function validateExpansionAttemptData(
   for (const relation of [...acceptedRelations, ...rejectedRelations]) {
     if (relation.programKey !== attempt.programKey)
       fail("Every relation must use the attempt program key.");
-    if (!candidate.sourceUrls.includes(relation.sourceUrl))
+    const isDiscoveredClassificationSource = officialOutputReviews.some(
+      (review) =>
+        (review.classificationEvidence ?? []).some(
+          (evidence) => evidence.sourceUrl === relation.sourceUrl,
+        ),
+    );
+    if (
+      !candidate.sourceUrls.includes(relation.sourceUrl) &&
+      !isDiscoveredClassificationSource
+    )
       fail(
-        "Relation evidence URL must be listed in the frozen candidate sourceUrls.",
+        "Relation evidence URL must be a frozen programme source or a discovered classification source.",
       );
     if (
-      !authoritativeHost(relation.sourceUrl, authoritativeDomains) ||
+      !authoritativeHost(relation.sourceUrl, [
+        ...authoritativeDomains,
+        ...classificationDomains,
+      ]) ||
       relation.sourceUrl.includes("example.invalid") ||
       relation.sourceUrl.includes("placeholder")
     )

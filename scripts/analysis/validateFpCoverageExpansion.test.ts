@@ -213,6 +213,182 @@ describe("validateFpCoverageExpansion", () => {
     });
   });
 
+  it("allows exhaustive official outputs beyond the ranking seed labels", () => {
+    const rejectedOccupationId = "occupation:cno11:7522";
+    const rejectedKey = `ELE01M|${rejectedOccupationId}`;
+    const extraOutput = {
+      order: 2,
+      officialOutputLabel: "Otra salida.",
+      disposition: "rejected" as const,
+      candidateOccupationIds: [rejectedOccupationId],
+      sourceQuote: "Otra salida.",
+      sourceUrl: "https://boe.es/ficha",
+      reason: "The reviewed boundary does not support this relation.",
+    };
+    expect(
+      validateExpansionAttemptData(
+        validInput({
+          officialOutputReviews: [
+            ...baseAttempt.officialOutputReviews,
+            extraOutput,
+          ],
+          rejectedRelations: [
+            {
+              kind: "link" as const,
+              programKey: "ELE01M",
+              occupationId: rejectedOccupationId,
+              sourceUrl: extraOutput.sourceUrl,
+              sourceQuote: extraOutput.sourceQuote,
+              reviewedAt: "2026-08-09",
+            },
+          ],
+          publicParity: {
+            publishedRelationKeys: ["ELE01M|occupation:cno11:7521"],
+            rejectedRelationKeys: [rejectedKey],
+          },
+        }),
+      ),
+    ).toMatchObject({
+      officialOutputReviews: [
+        { officialOutputLabel: "Electricista." },
+        { officialOutputLabel: "Otra salida." },
+      ],
+    });
+  });
+
+  it("matches frozen output seeds across punctuation and official gender variants", () => {
+    expect(
+      validateExpansionAttemptData(
+        validInput(
+          {
+            officialOutputReviews: [
+              {
+                ...baseAttempt.officialOutputReviews[0],
+                officialOutputLabel: "Vendedor/a de productos alimentarios.",
+                sourceQuote: "Vendedor/a de productos alimentarios.",
+              },
+            ],
+            acceptedRelations: [
+              {
+                ...baseAttempt.acceptedRelations[0],
+                sourceQuote: "Vendedor/a de productos alimentarios.",
+              },
+            ],
+          },
+          {},
+          { officialOutputLabels: ["Vendedor de productos alimentarios"] },
+        ),
+      ),
+    ).toMatchObject({
+      officialOutputReviews: [
+        { officialOutputLabel: "Vendedor/a de productos alimentarios." },
+      ],
+    });
+    expect(
+      validateExpansionAttemptData(
+        validInput(
+          {
+            officialOutputReviews: [
+              {
+                ...baseAttempt.officialOutputReviews[0],
+                officialOutputLabel: "Técnico/a de ejemplo.",
+                sourceQuote: "Técnico/a de ejemplo.",
+              },
+            ],
+            acceptedRelations: [
+              {
+                ...baseAttempt.acceptedRelations[0],
+                sourceQuote: "Técnico/a de ejemplo.",
+              },
+            ],
+          },
+          {},
+          { officialOutputLabels: ["Técnico de ejemplo"] },
+        ),
+      ),
+    ).toMatchObject({
+      officialOutputReviews: [{ officialOutputLabel: "Técnico/a de ejemplo." }],
+    });
+    expect(() =>
+      validateExpansionAttemptData(
+        validInput(
+          {
+            officialOutputReviews: [
+              {
+                ...baseAttempt.officialOutputReviews[0],
+                officialOutputLabel: "Teórico/práctico de ejemplo.",
+                sourceQuote: "Teórico/práctico de ejemplo.",
+              },
+            ],
+            acceptedRelations: [
+              {
+                ...baseAttempt.acceptedRelations[0],
+                sourceQuote: "Teórico/práctico de ejemplo.",
+              },
+            ],
+          },
+          {},
+          { officialOutputLabels: ["Teórico de ejemplo"] },
+        ),
+      ),
+    ).toThrow(/seed|output/i);
+    expect(
+      validateExpansionAttemptData(
+        validInput(
+          {
+            officialOutputReviews: [
+              {
+                ...baseAttempt.officialOutputReviews[0],
+                officialOutputLabel:
+                  "Vendedora/vendedor de productos alimentarios.",
+                sourceQuote: "Vendedora/vendedor de productos alimentarios.",
+              },
+            ],
+            acceptedRelations: [
+              {
+                ...baseAttempt.acceptedRelations[0],
+                sourceQuote: "Vendedora/vendedor de productos alimentarios.",
+              },
+            ],
+          },
+          {},
+          { officialOutputLabels: ["Vendedor de productos alimentarios"] },
+        ),
+      ),
+    ).toMatchObject({
+      officialOutputReviews: [
+        {
+          officialOutputLabel: "Vendedora/vendedor de productos alimentarios.",
+        },
+      ],
+    });
+  });
+
+  it("accepts classification evidence as relation provenance", () => {
+    const classificationSourceUrl = classificationEvidence.sourceUrl;
+    const classificationSourceQuote = classificationEvidence.sourceQuote;
+    expect(
+      validateExpansionAttemptData(
+        validInput({
+          acceptedRelations: [
+            {
+              ...baseAttempt.acceptedRelations[0],
+              sourceUrl: classificationSourceUrl,
+              sourceQuote: classificationSourceQuote,
+            },
+          ],
+        }),
+      ),
+    ).toMatchObject({
+      acceptedRelations: [
+        {
+          sourceUrl: classificationSourceUrl,
+          sourceQuote: classificationSourceQuote,
+        },
+      ],
+    });
+  });
+
   it("uses the injected matcher for accepted multi-word aliases", async () => {
     const alias = "electricista industrial";
     const relationKey = `ELE01M|occupation:cno11:7521|${alias}`;
