@@ -108,6 +108,27 @@ describe("outcome indicator schemas", () => {
     }
   });
 
+  it("accepts only the twelve approved consecutive cohort labels", () => {
+    for (const cohort of ["2012-2015", "2020-2022", "2023-2024"]) {
+      expect(() =>
+        OutcomeCohortWindowSchema.parse({
+          ...cohortWindow,
+          cohort,
+          provisional: false,
+          maxObservedPostGraduationYear: 4,
+        }),
+      ).toThrow();
+      expect(() =>
+        OutcomeObservationSchema.parse({
+          ...nationalObservation,
+          cohort,
+          provisional: false,
+          postGraduationYear: 1,
+        }),
+      ).toThrow();
+    }
+  });
+
   it("accepts only a region-level reference without a cycle group", () => {
     const regional = {
       ...nationalObservation,

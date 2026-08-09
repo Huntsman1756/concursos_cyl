@@ -1,4 +1,5 @@
 import {
+  APPROVED_OUTCOME_COHORTS,
   OutcomeIndicatorsResourceSchema,
   type OutcomeCohortWindow,
   type OutcomeGroup,
@@ -127,11 +128,47 @@ function assertCompleteReferenceCoverage(
   }
 }
 
+function assertCompleteOutcomeUniverse(
+  groups: ReadonlyMap<string, OutcomeGroup>,
+  windows: ReadonlyMap<string, OutcomeCohortWindow>,
+): void {
+  const intermediateGroupCount = [...groups.values()].filter(
+    (group) => group.trainingLevel === "intermediate",
+  ).length;
+  const higherGroupCount = [...groups.values()].filter(
+    (group) => group.trainingLevel === "higher",
+  ).length;
+  if (
+    groups.size !== 96 ||
+    intermediateGroupCount !== 34 ||
+    higherGroupCount !== 62
+  ) {
+    throw new Error(
+      "Income outcome universe must contain exactly 34 intermediate and 62 higher groups",
+    );
+  }
+  if (windows.size !== 24) {
+    throw new Error(
+      "Income outcome universe must contain exactly 24 cohort windows",
+    );
+  }
+  for (const trainingLevel of ["intermediate", "higher"] as const) {
+    for (const cohort of APPROVED_OUTCOME_COHORTS) {
+      if (!windows.has(levelCohortKey(trainingLevel, cohort))) {
+        throw new Error(
+          `Income outcome universe is missing ${trainingLevel} cohort ${cohort}`,
+        );
+      }
+    }
+  }
+}
+
 /** Indexes only complete, scope-preserving income observations. */
 export function indexIncomeOutcomes(
   records: OutcomeIndicatorsResource,
 ): IncomeOutcomeIndex {
-  const validated = OutcomeIndicatorsResourceSchema.parse(records);
+  const validated: OutcomeIndicatorsResource =
+    OutcomeIndicatorsResourceSchema.parse(records);
   const groupsByKey = new Map<string, OutcomeGroup>();
   const windowsByLevelAndCohort = new Map<string, OutcomeCohortWindow>();
   const observationsByCoordinate = new Map<
@@ -206,6 +243,7 @@ export function indexIncomeOutcomes(
   for (const [coordinate, measures] of observationsByCoordinate) {
     completeMeasures(measures, coordinate);
   }
+  assertCompleteOutcomeUniverse(groupsByKey, windowsByLevelAndCohort);
   assertCompleteReferenceCoverage(
     groupsByKey,
     windowsByLevelAndCohort,

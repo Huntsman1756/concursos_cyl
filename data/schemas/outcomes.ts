@@ -67,19 +67,53 @@ export type OutcomeIndicatorsResource = readonly OutcomeIndicatorRecord[];
 
 const GROUP_KEY = /^income-group-[a-f0-9]{16}$/u;
 const OBSERVATION_ID = /^income-observation-[a-f0-9]{16}$/u;
-const COHORT = /^20(?:1[1-9]|2[0-2])-20(?:1[2-9]|2[0-3])$/u;
+export const APPROVED_OUTCOME_COHORTS = [
+  "2011-2012",
+  "2012-2013",
+  "2013-2014",
+  "2014-2015",
+  "2015-2016",
+  "2016-2017",
+  "2017-2018",
+  "2018-2019",
+  "2019-2020",
+  "2020-2021",
+  "2021-2022",
+  "2022-2023",
+] as const;
+
+type ApprovedOutcomeCohort = (typeof APPROVED_OUTCOME_COHORTS)[number];
+
+const APPROVED_OUTCOME_COHORT_FACTS: Readonly<
+  Record<
+    ApprovedOutcomeCohort,
+    {
+      readonly provisional: boolean;
+      readonly maxObservedPostGraduationYear: 2 | 3 | 4;
+    }
+  >
+> = {
+  "2011-2012": { provisional: false, maxObservedPostGraduationYear: 4 },
+  "2012-2013": { provisional: false, maxObservedPostGraduationYear: 4 },
+  "2013-2014": { provisional: false, maxObservedPostGraduationYear: 4 },
+  "2014-2015": { provisional: false, maxObservedPostGraduationYear: 4 },
+  "2015-2016": { provisional: false, maxObservedPostGraduationYear: 4 },
+  "2016-2017": { provisional: false, maxObservedPostGraduationYear: 4 },
+  "2017-2018": { provisional: false, maxObservedPostGraduationYear: 4 },
+  "2018-2019": { provisional: false, maxObservedPostGraduationYear: 4 },
+  "2019-2020": { provisional: false, maxObservedPostGraduationYear: 4 },
+  "2020-2021": { provisional: false, maxObservedPostGraduationYear: 4 },
+  "2021-2022": { provisional: true, maxObservedPostGraduationYear: 3 },
+  "2022-2023": { provisional: true, maxObservedPostGraduationYear: 2 },
+};
 
 function expectedCohortFacts(cohort: string): {
   provisional: boolean;
   maxObservedPostGraduationYear: 2 | 3 | 4;
 } {
-  if (cohort === "2021-2022") {
-    return { provisional: true, maxObservedPostGraduationYear: 3 };
-  }
-  if (cohort === "2022-2023") {
-    return { provisional: true, maxObservedPostGraduationYear: 2 };
-  }
-  return { provisional: false, maxObservedPostGraduationYear: 4 };
+  const facts = APPROVED_OUTCOME_COHORT_FACTS[cohort as ApprovedOutcomeCohort];
+  if (!facts) throw new Error(`Unexpected income cohort: ${cohort}`);
+  return facts;
 }
 
 function addIssue(
@@ -155,7 +189,7 @@ export const OutcomeCohortWindowSchema = z
   .object({
     kind: z.literal("cohort_window"),
     trainingLevel: OutcomeTrainingLevelSchema,
-    cohort: z.string().regex(COHORT),
+    cohort: z.enum(APPROVED_OUTCOME_COHORTS),
     provisional: z.boolean(),
     maxObservedPostGraduationYear: z.union([
       z.literal(1),
@@ -176,7 +210,7 @@ export const OutcomeObservationSchema = z
     trainingLevel: OutcomeTrainingLevelSchema,
     groupKey: z.string().regex(GROUP_KEY).nullable(),
     officialGroupLabel: z.string().min(1).nullable(),
-    cohort: z.string().regex(COHORT),
+    cohort: z.enum(APPROVED_OUTCOME_COHORTS),
     postGraduationYear: z.union([
       z.literal(1),
       z.literal(2),

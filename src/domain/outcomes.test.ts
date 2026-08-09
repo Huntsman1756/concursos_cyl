@@ -196,4 +196,48 @@ describe("income comparison domain", () => {
   it("indexes a valid resource independently of record ordering", () => {
     expect(() => indexIncomeOutcomes([...resource].reverse())).not.toThrow();
   });
+
+  it("rejects empty and incomplete outcome universes", () => {
+    const withoutFullGroup = resource.filter(
+      (row) =>
+        !(
+          (isGroup(row) && row.groupKey === higherGroup) ||
+          (isObservation(row) && row.groupKey === higherGroup)
+        ),
+    );
+    const withoutHigherCohort = resource.filter(
+      (row) =>
+        !(
+          (row.kind === "cohort_window" || isObservation(row)) &&
+          row.trainingLevel === "higher" &&
+          row.cohort === "2020-2021"
+        ),
+    );
+    const extraHigherGroup = resource.map((row) =>
+      isGroup(row) && row.groupKey === higherGroup
+        ? {
+            ...row,
+            groupKey: "income-group-ffffffffffffffff",
+            officialLabel: `${row.officialLabel} duplicate`,
+          }
+        : row,
+    );
+    const higherWindow = resource.find(
+      (row) =>
+        row.kind === "cohort_window" &&
+        row.trainingLevel === "higher" &&
+        row.cohort === "2020-2021",
+    );
+    if (!higherWindow)
+      throw new Error("Fixture must contain the higher cohort");
+    for (const candidate of [
+      [],
+      withoutFullGroup,
+      withoutHigherCohort,
+      extraHigherGroup,
+      [...resource, higherWindow],
+    ]) {
+      expect(() => indexIncomeOutcomes(candidate)).toThrow();
+    }
+  });
 });
