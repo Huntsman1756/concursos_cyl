@@ -406,6 +406,32 @@ describe("CompareStudiesPage", () => {
     ).toBeVisible();
   });
 
+  it("counts a selected matching group as visible instead of showing an empty state", async () => {
+    installData();
+    const user = userEvent.setup();
+    renderPage();
+
+    await user.click(
+      await screen.findByRole("radio", { name: "Grado Superior" }),
+    );
+    await user.type(
+      screen.getByRole("searchbox", {
+        name: "Filtrar ciclos o grupos oficiales",
+      }),
+      "desarrollo web",
+    );
+    await user.click(
+      screen.getByRole("checkbox", {
+        name: "Desarrollo de aplicaciones web",
+      }),
+    );
+
+    expect(screen.getByText("1 resultado disponible.")).toBeVisible();
+    expect(
+      screen.queryByText("No hay ciclos o grupos oficiales que coincidan."),
+    ).not.toBeInTheDocument();
+  });
+
   it("removes the mobile table minimum width without removing table semantics", () => {
     expect(comparisonStyles).toMatch(/@media \(max-width: 47\.999rem\)/u);
     expect(comparisonStyles).toMatch(

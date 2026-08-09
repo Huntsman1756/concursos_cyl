@@ -62,18 +62,18 @@ export function IncomeComparisonForm({
     const selected = groups.filter((group) =>
       selectedGroups.has(group.groupKey),
     );
+    const matchesQuery = (group: OutcomeGroup) =>
+      queryTokens.every((token) =>
+        normalizedSearchTerm(group.officialLabel).includes(token),
+      );
     const matches = groups.filter(
-      (group) =>
-        !selectedGroups.has(group.groupKey) &&
-        queryTokens.every((token) =>
-          normalizedSearchTerm(group.officialLabel).includes(token),
-        ),
+      (group) => !selectedGroups.has(group.groupKey) && matchesQuery(group),
     );
-    return [...selected, ...matches];
+    return {
+      groups: [...selected, ...matches],
+      matchingCount: selected.filter(matchesQuery).length + matches.length,
+    };
   }, [groups, queryTokens, selectedGroups]);
-  const matchingUnselectedCount = visibleGroups.filter(
-    (group) => !selectedGroups.has(group.groupKey),
-  ).length;
 
   function toggleGroup(groupKey: string, checked: boolean) {
     if (checked) {
@@ -127,12 +127,12 @@ export function IncomeComparisonForm({
               />
             </label>
             <p className="field-hint" aria-live="polite">
-              {matchingUnselectedCount === 1
+              {visibleGroups.matchingCount === 1
                 ? "1 resultado disponible."
-                : `${matchingUnselectedCount} resultados disponibles.`}
+                : `${visibleGroups.matchingCount} resultados disponibles.`}
             </p>
             <div className="income-group-options">
-              {visibleGroups.map((group) => {
+              {visibleGroups.groups.map((group) => {
                 const checked = selectedGroups.has(group.groupKey);
                 return (
                   <label className="income-check" key={group.groupKey}>
@@ -148,7 +148,7 @@ export function IncomeComparisonForm({
                   </label>
                 );
               })}
-              {matchingUnselectedCount === 0 ? (
+              {visibleGroups.matchingCount === 0 ? (
                 <p className="income-empty-state">
                   No hay ciclos o grupos oficiales que coincidan.
                 </p>
