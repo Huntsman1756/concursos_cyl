@@ -62,7 +62,10 @@ function incomeResource(): OutcomeIndicatorsResource {
     ...Array.from({ length: 62 }, (_, index) => ({
       key: groupKey(index + 35),
       level: "higher" as const,
-      label: `Grupo superior ${index + 1}`,
+      label:
+        index === 0
+          ? "Desarrollo de aplicaciones web"
+          : `Grupo superior ${index + 1}`,
       table: "famprof_3_08" as const,
     })),
   ];
@@ -379,6 +382,28 @@ describe("CompareStudiesPage", () => {
     expect(
       screen.getByRole("checkbox", { name: "Grupo medio 1" }),
     ).toBeChecked();
+  });
+
+  it("matches every normalized search word without requiring a contiguous phrase", async () => {
+    installData();
+    const user = userEvent.setup();
+    renderPage();
+
+    await user.click(
+      await screen.findByRole("radio", { name: "Grado Superior" }),
+    );
+    await user.type(
+      screen.getByRole("searchbox", {
+        name: "Filtrar ciclos o grupos oficiales",
+      }),
+      "desarrollo web",
+    );
+
+    expect(
+      screen.getByRole("checkbox", {
+        name: "Desarrollo de aplicaciones web",
+      }),
+    ).toBeVisible();
   });
 
   it("removes the mobile table minimum width without removing table semantics", () => {

@@ -57,6 +57,7 @@ export function IncomeComparisonForm({
   );
   const groupsAtLimit = selectedGroupKeys.length >= 3;
   const normalizedQuery = normalizedSearchTerm(filterQuery);
+  const queryTokens = normalizedQuery.split(/\s+/u).filter(Boolean);
   const visibleGroups = useMemo(() => {
     const selected = groups.filter((group) =>
       selectedGroups.has(group.groupKey),
@@ -64,10 +65,12 @@ export function IncomeComparisonForm({
     const matches = groups.filter(
       (group) =>
         !selectedGroups.has(group.groupKey) &&
-        normalizedSearchTerm(group.officialLabel).includes(normalizedQuery),
+        queryTokens.every((token) =>
+          normalizedSearchTerm(group.officialLabel).includes(token),
+        ),
     );
     return [...selected, ...matches];
-  }, [groups, normalizedQuery, selectedGroups]);
+  }, [groups, queryTokens, selectedGroups]);
   const matchingUnselectedCount = visibleGroups.filter(
     (group) => !selectedGroups.has(group.groupKey),
   ).length;
