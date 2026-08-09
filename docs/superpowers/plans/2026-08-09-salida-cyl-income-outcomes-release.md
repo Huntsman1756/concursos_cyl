@@ -13,7 +13,7 @@
 - The controlling design is `docs/superpowers/specs/2026-08-09-salida-cyl-income-outcomes-amendment.md`; it supersedes the outcomes scope in the 2026-08-04 design.
 - Exactly four tables are allowed: `famprof_2_08`, `famprof_3_08`, `ccaa_2_07`, and `ccaa_3_07`; every table requires both its exact CSV and PX URL with `?nocab=1`.
 - There is no API POST, metadata endpoint, JSON-stat2 response, employment table, affiliation rate, percentage measure, Basic FP income comparison, or runtime AI in this release.
-- CSV bytes require UTF-8 BOM and strict UTF-8 decoding despite the HTTP charset; PX requires `CODEPAGE="iso-8859-15"` and ISO-8859-15 decoding.
+- CSV bytes require UTF-8 BOM and strict UTF-8 decoding despite the HTTP charset; PX requires `CODEPAGE="iso-8859-15"`, `DECIMALS=2`, `SHOWDECIMALS=0`, and ISO-8859-15 decoding.
 - `..`, provisional status, and a not-yet-observed post-graduation year are three different states.
 - The UI says `base de cotización anualizada`; it never says `salario esperado`, predicts personal income, or creates `cycle × Castilla y León`.
 - The exact limitation sentence is `Mostramos ambas referencias por separado porque no existe una estadística oficial de ingresos por ciclo formativo en Castilla y León.`
@@ -289,7 +289,7 @@ Use a small state machine for semicolon-delimited quoted fields; do not split ro
 
 - [ ] **Step 5: Write red PX parser tests against full fixtures**
 
-Assert `AXIS-VERSION="2006"`, `CHARSET="ANSI"`, `CODEPAGE="iso-8859-15"`, exact `STUB`/`HEADING`, concatenated quoted strings, escaped quotes, exact dimensions/cell counts, `DATA` cardinality, the provisional note/window text, and rejection of UTF-8 BOM, wrong code page, unknown keyword in a structural position, missing terminator, malformed string concatenation, extra/missing cell, or invalid data token.
+Assert `AXIS-VERSION="2006"`, `CHARSET="ANSI"`, `CODEPAGE="iso-8859-15"`, `DECIMALS=2`, `SHOWDECIMALS=0`, exact `STUB`/`HEADING`, concatenated quoted strings, escaped quotes, exact dimensions/cell counts, `DATA` cardinality, the provisional note/window text, and rejection of UTF-8 BOM, wrong code page, changed decimal/display metadata, unknown keyword in a structural position, missing terminator, malformed string concatenation, extra/missing cell, or invalid data token. A valid PX fixture cell such as `14384.61` must remain the exact `rawValue`; do not round while parsing.
 
 Run: `rtk npm test -- scripts/data/parseEducabaseIncomePx.test.ts`  
 Expected: FAIL because the parser is absent.
@@ -310,11 +310,11 @@ it("rejects one changed cell even when dimensions and counts match", () => {
 });
 ```
 
-Also test reordered dimensions, one changed official label, NBSP versus space, changed provisional note, `..` versus zero, and a CSV thousands token equivalent to the PX numeric representation.
+Also test reordered dimensions, one changed official label, NBSP versus space, changed provisional note, `..` versus zero, and official display reconciliation: PX `14384.61` equals CSV `14.385`; `.49` rounds down, `.50` rounds up; PX `14384.49` mismatches CSV `14.385`; negative, exponent, and three-decimal PX tokens fail. Assert raw source text is never parsed with `Number`, `parseFloat`, or `Math.round`.
 
 - [ ] **Step 8: Implement canonical comparison without masking labels**
 
-Convert a published numeric token to integer euros only for cell comparison: CSV `14.369` and PX `14369.00` both become `14369`. Preserve the original official dimension labels and reject fractional cents, negative values, NaN, blank, or silent trimming. Compare dimensions, order, note-derived observation windows, every coordinate, and every semantic value.
+Parse a CSV token such as `14.385` into whole-euro `14385n` by validating and removing Spanish thousands separators before `BigInt` conversion. Parse PX decimal text lexically into integer cents: split the unsigned digit string, right-pad its optional fraction to two digits, and compute `BigInt(whole) * 100n + BigInt(fraction)`. Derive the displayed euro with exact half-up integer division, `(integerCents + 50n) / 100n`, and require it to equal the CSV `BigInt`. Do not pass raw source values through binary floating point or `Math.round`. Preserve both raw values and the original official dimension labels; reject negatives, exponent notation, extra precision, NaN-like text, blank values, a displayed value above `BigInt(Number.MAX_SAFE_INTEGER)`, or silent trimming. Only then convert the reconciled displayed integer to public `valueEur: number`; compare dimensions, order, note-derived observation windows, every coordinate, and every display-equivalent value.
 
 - [ ] **Step 9: Orchestrate four dual downloads with dependency injection**
 

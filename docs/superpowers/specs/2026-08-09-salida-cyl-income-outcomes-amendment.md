@@ -49,11 +49,11 @@ These hashes identify the exact raw responses inspected while approving this ame
 There is no usable JSON-stat2 endpoint, bounded POST query, or metadata API in this release. The build performs eight bounded binary GET requests to the allowlisted URLs.
 
 - CSV responses currently declare `text/plain;charset=ISO-8859-15`, but their raw bytes begin with UTF-8 BOM `EF BB BF`. The parser requires the BOM, strips it, and decodes the remaining bytes as strict UTF-8. The misleading HTTP charset is retained in provenance but not trusted for decoding.
-- PX responses declare `application/pc-axis;charset=ISO-8859-15`, have no UTF-8 BOM, declare `CODEPAGE="iso-8859-15"`, and are decoded as ISO-8859-15.
+- PX responses declare `application/pc-axis;charset=ISO-8859-15`, have no UTF-8 BOM, declare `CODEPAGE="iso-8859-15"`, `DECIMALS=2`, and `SHOWDECIMALS=0`, and are decoded as ISO-8859-15.
 - Redirects are accepted only when the final URL remains HTTPS on `estadisticas.educacion.gob.es` and matches the allowlisted path.
 - Each response has a 5 MiB maximum, a finite timeout, and the existing bounded retry policy for network errors, HTTP 429, and 5xx. Other 4xx responses fail immediately.
 - HTML, empty bodies, unexpected BOMs, invalid byte sequences, duplicate rows, malformed quoting, unexpected headers, dimensions, labels, cell counts, or numeric tokens fail the build.
-- CSV and PX must describe the same dimensions, labels, observation window, measures, and cell values. A mismatch fails closed; neither representation wins silently.
+- CSV and PX must describe the same dimensions, labels, observation window, measures, and displayed cell values. PX preserves up to two decimal places while CSV publishes the whole-euro display selected by `SHOWDECIMALS=0`; reconciliation therefore uses the exact display rule below. A mismatch fails closed; neither representation wins silently.
 
 The source bytes are never fetched by the browser. The public application loads only normalized static JSON addressed by the generated manifest.
 
@@ -98,6 +98,10 @@ The normalized measures are:
 - `quintile_80_lower_boundary`.
 
 The literal source token `..` becomes `valueEur: null` with availability `unavailable_or_unrepresentative`. SALIDA CyL must use that combined wording because the source does not let the product distinguish the two causes.
+
+Published numeric cells have two official representations. PX may retain cents—for example `14384.61`—because it declares `DECIMALS=2`; CSV exposes the corresponding displayed whole euro `14.385` because PX declares `SHOWDECIMALS=0`. The build parses PX decimal text into integer cents using string validation and `BigInt`, accepting only non-negative decimal strings with at most two fractional digits. It then applies decimal half-up display rounding: cents `00` through `49` keep the whole euro and cents `50` through `99` advance it by one. CSV thousands separators are removed into a non-negative whole-euro `BigInt`. The displayed integer must agree exactly (`14384.61` → `14385` ↔ `14.385`). Floating-point parsing of raw source text, `parseFloat`, and `Math.round` are forbidden for this reconciliation; conversion to the public `number` occurs only after the reconciled whole-euro `BigInt` is range-checked. Negative values, exponent notation, more than two decimal places, unsafe output range, or a display mismatch fail closed.
+
+The raw PX token remains in ingestion evidence and its raw artifact remains hash-addressed in manifest provenance. The normalized public `valueEur` is the official displayed whole-euro integer, not the unrounded PX decimal and not a value recomputed with binary floating point.
 
 Provisional status and observation windows are separate facts:
 
@@ -231,7 +235,7 @@ The amendment is complete only when all of the following are true:
 
 - exactly four table IDs and eight download URLs are accepted;
 - all eight fixture hashes match the approved evidence capture;
-- CSV/PX structural and cell equality is tested adversarially;
+- CSV/PX structural and official-display equality is tested adversarially, including half-up boundaries, extra PX precision, and display mismatches;
 - the source cell counts are exactly 8,160, 14,880, 13,680, and 13,680;
 - national output contains exactly 34 intermediate and 62 higher official groups;
 - regional output contains only `Castilla y León` and `AMBOS SEXOS` rows;
