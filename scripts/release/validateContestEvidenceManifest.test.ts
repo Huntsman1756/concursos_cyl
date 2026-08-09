@@ -1,3 +1,4 @@
+import { createHash } from "node:crypto";
 import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
@@ -168,5 +169,52 @@ describe("contest evidence manifest validator", () => {
     expect(checklist).toContain("docs/contest/evidence/home-desktop.png");
     expect(checklist).toContain("Use a fresh anonymous browser context");
     expect(checklist.endsWith("\n")).toBe(true);
+  });
+
+  it("accepts final capture provenance and verifies the PNG hash", () => {
+    const root = fs.mkdtempSync(
+      path.join(os.tmpdir(), "salida-cyl-contest-evidence-final-"),
+    );
+    temporaryRoots.push(root);
+    const capture = validManifest.captures[0];
+    const outputPath = path.join(root, capture.outputFile);
+    fs.mkdirSync(path.dirname(outputPath), { recursive: true });
+    const pngBytes = Buffer.from("captured-png-placeholder", "utf8");
+    fs.writeFileSync(outputPath, pngBytes);
+
+    expect(
+      validateContestEvidenceManifest(
+        {
+          ...validManifest,
+          captures: [
+            {
+              ...capture,
+              sha256: createHash("sha256").update(pngBytes).digest("hex"),
+              capturedAt: "2026-08-09T22:00:00.000Z",
+              localCommitSha: "a".repeat(40),
+              deployedCommitSha: null,
+            },
+          ],
+        },
+        { rootDir: root, knownClaimIds, freezeRecordPresent: true },
+      ),
+    ).toEqual({ valid: true, errors: [] });
+  });
+
+  it("rejects missing provenance fields and stale image hashes", () => {
+    expect(() =>
+      validateContestEvidenceManifest(
+        {
+          ...validManifest,
+          captures: [
+            {
+              ...validManifest.captures[0],
+              sha256: "a".repeat(64),
+            },
+          ],
+        },
+        { knownClaimIds },
+      ),
+    ).toThrow(/provenance|capturedAt|localCommitSha/iu);
   });
 });

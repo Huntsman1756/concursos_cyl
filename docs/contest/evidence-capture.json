@@ -22,6 +22,10 @@
         "published_snapshot"
       ],
       "outputFile": "docs/contest/evidence/home-desktop.png",
+      "sha256": "4a89e70e379121947f7aa7f181004c3200a9271d1e8c6fc4299bd67602b6e44f",
+      "capturedAt": "2026-08-09T20:51:35.418Z",
+      "localCommitSha": "f423a208a7f8c140a1dfa342e8689d3b6d967e94",
+      "deployedCommitSha": null,
       "freezeRequired": true,
       "redactionRule": "Use a fresh anonymous browser context; omit browser chrome, personal data, cookies, account identifiers, API keys, tokens, and local filesystem paths."
     },
@@ -48,6 +52,10 @@
         "approved_aliases"
       ],
       "outputFile": "docs/contest/evidence/fp-pre-search-reviewed.png",
+      "sha256": "ad8ffd0b2f8e13d759777435bc874734dcf820a5b4e10d8a0330ed49c9e187fa",
+      "capturedAt": "2026-08-09T20:51:35.418Z",
+      "localCommitSha": "f423a208a7f8c140a1dfa342e8689d3b6d967e94",
+      "deployedCommitSha": null,
       "freezeRequired": true,
       "redactionRule": "Use a fresh anonymous browser context; omit browser chrome, personal data, cookies, account identifiers, API keys, tokens, and local filesystem paths."
     },
@@ -68,6 +76,10 @@
       ],
       "claimIds": ["deferred_programs", "zero_reviewed_relations"],
       "outputFile": "docs/contest/evidence/fp-pre-search-unavailable.png",
+      "sha256": "68daf4d1d932be28b09b97749a75668d74e70e7a820c0a777b3beeded67534d0",
+      "capturedAt": "2026-08-09T20:51:35.418Z",
+      "localCommitSha": "f423a208a7f8c140a1dfa342e8689d3b6d967e94",
+      "deployedCommitSha": null,
       "freezeRequired": true,
       "redactionRule": "Use a fresh anonymous browser context; omit browser chrome, personal data, cookies, account identifiers, API keys, tokens, and local filesystem paths."
     },
@@ -87,6 +99,10 @@
         "no_salary_prediction"
       ],
       "outputFile": "docs/contest/evidence/fp-matched-result.png",
+      "sha256": "9c321b90a699561d0f1915818e21ebb9105a2dd8c2e0a85514cb6f285f33c3c5",
+      "capturedAt": "2026-08-09T20:51:35.418Z",
+      "localCommitSha": "f423a208a7f8c140a1dfa342e8689d3b6d967e94",
+      "deployedCommitSha": null,
       "freezeRequired": true,
       "redactionRule": "Use a fresh anonymous browser context; omit browser chrome, personal data, cookies, account identifiers, API keys, tokens, and local filesystem paths."
     },
@@ -107,6 +123,10 @@
       ],
       "claimIds": ["deferred_programs", "zero_reviewed_relations"],
       "outputFile": "docs/contest/evidence/fp-zero-deferred.png",
+      "sha256": "fa981b1cdc092e15966aeef23e5298d5143d5ed45a75f7e785b61c7d893c5a92",
+      "capturedAt": "2026-08-09T20:51:35.418Z",
+      "localCommitSha": "f423a208a7f8c140a1dfa342e8689d3b6d967e94",
+      "deployedCommitSha": null,
       "freezeRequired": true,
       "redactionRule": "Use a fresh anonymous browser context; omit browser chrome, personal data, cookies, account identifiers, API keys, tokens, and local filesystem paths."
     },
@@ -137,6 +157,10 @@
         "no_salary_prediction"
       ],
       "outputFile": "docs/contest/evidence/comparison-dual-scopes.png",
+      "sha256": "4fb7d01bed1af9c664e483d11f5cd1d2791ad2d2332c6f90c52b0a3acd6ce61e",
+      "capturedAt": "2026-08-09T20:53:53.927Z",
+      "localCommitSha": "f423a208a7f8c140a1dfa342e8689d3b6d967e94",
+      "deployedCommitSha": null,
       "freezeRequired": true,
       "redactionRule": "Use a fresh anonymous browser context; omit browser chrome, personal data, cookies, account identifiers, API keys, tokens, and local filesystem paths."
     },
@@ -160,6 +184,10 @@
         "accessibility_intent"
       ],
       "outputFile": "docs/contest/evidence/methodology-sources.png",
+      "sha256": "a8998cde00d07614adb9856c1f557ebed26ce05afde6b14636f7496e1641b132",
+      "capturedAt": "2026-08-09T20:51:35.418Z",
+      "localCommitSha": "f423a208a7f8c140a1dfa342e8689d3b6d967e94",
+      "deployedCommitSha": null,
       "freezeRequired": true,
       "redactionRule": "Use a fresh anonymous browser context; omit browser chrome, personal data, cookies, account identifiers, API keys, tokens, and local filesystem paths."
     },
@@ -181,6 +209,10 @@
         "published_snapshot"
       ],
       "outputFile": "docs/contest/evidence/home-mobile.png",
+      "sha256": "398c137cd510bb76adf7300325d9282f0e64204e4eff573eacf810b7f29132d8",
+      "capturedAt": "2026-08-09T20:51:35.418Z",
+      "localCommitSha": "f423a208a7f8c140a1dfa342e8689d3b6d967e94",
+      "deployedCommitSha": null,
       "freezeRequired": true,
       "redactionRule": "Use a fresh anonymous browser context; omit browser chrome, personal data, cookies, account identifiers, API keys, tokens, and local filesystem paths."
     },
@@ -202,6 +234,10 @@
         "privacy_no_persistence"
       ],
       "outputFile": "docs/contest/evidence/comparison-mobile.png",
+      "sha256": "c57bf2a7b1e3c3b9228c9e8fc3a2634d18a064ac3204826c45ce6613e5f1edaa",
+      "capturedAt": "2026-08-09T20:51:35.418Z",
+      "localCommitSha": "f423a208a7f8c140a1dfa342e8689d3b6d967e94",
+      "deployedCommitSha": null,
       "freezeRequired": true,
       "redactionRule": "Use a fresh anonymous browser context; omit browser chrome, personal data, cookies, account identifiers, API keys, tokens, and local filesystem paths."
     }

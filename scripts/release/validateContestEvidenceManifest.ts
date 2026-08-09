@@ -1,3 +1,4 @@
+import { createHash } from "node:crypto";
 import fs from "node:fs";
 import path from "node:path";
 
@@ -19,6 +20,12 @@ const CAPTURE_KEYS = [
   "freezeRequired",
   "redactionRule",
 ] as const;
+const CAPTURE_PROVENANCE_KEYS = [
+  "sha256",
+  "capturedAt",
+  "localCommitSha",
+  "deployedCommitSha",
+] as const;
 const VIEWPORT_KEYS = ["width", "height"] as const;
 const REQUIRED_TEXT_KEYS = ["kind", "value"] as const;
 const REQUIRED_ROLE_KEYS = ["kind", "role", "name"] as const;
@@ -39,6 +46,10 @@ export type ContestEvidenceCapture = {
   outputFile: string;
   freezeRequired: boolean;
   redactionRule: string;
+  sha256?: string;
+  capturedAt?: string;
+  localCommitSha?: string;
+  deployedCommitSha?: string | null;
 };
 
 export type ContestEvidenceManifest = {
@@ -52,6 +63,7 @@ type ValidationOptions = {
   rootDir?: string;
   knownClaimIds?: Iterable<string>;
   freezeRecordPresent?: boolean;
+  requireProvenance?: boolean;
 };
 
 function assertRecord(value: unknown, label: string): Record<string, unknown> {
@@ -65,12 +77,13 @@ function assertExactKeys(
   record: Record<string, unknown>,
   allowed: readonly string[],
   label: string,
+  required: readonly string[] = allowed,
 ): void {
   const unknown = Object.keys(record).filter((key) => !allowed.includes(key));
   if (unknown.length > 0) {
     throw new Error(`${label} has unknown field(s): ${unknown.join(", ")}`);
   }
-  for (const key of allowed) {
+  for (const key of required) {
     if (!(key in record)) throw new Error(`${label} is missing ${key}`);
   }
 }
@@ -154,6 +167,77 @@ function validateOutputFile(value: unknown): string {
   return value;
 }
 
+function validateCaptureProvenance(
+  captureRecord: Record<string, unknown>,
+  index: number,
+  root: string | undefined,
+  outputFile: string,
+  required: boolean,
+): Pick<
+  ContestEvidenceCapture,
+  "sha256" | "capturedAt" | "localCommitSha" | "deployedCommitSha"
+> {
+  const present = CAPTURE_PROVENANCE_KEYS.filter((key) => key in captureRecord);
+  if (required && present.length !== CAPTURE_PROVENANCE_KEYS.length) {
+    throw new Error(
+      `captures[${index}] requires complete capture provenance after the freeze`,
+    );
+  }
+  if (present.length === 0) return {};
+  if (present.length !== CAPTURE_PROVENANCE_KEYS.length) {
+    throw new Error(
+      `captures[${index}] capture provenance must include sha256, capturedAt, localCommitSha, and deployedCommitSha`,
+    );
+  }
+
+  const sha256 = captureRecord.sha256;
+  if (typeof sha256 !== "string" || !/^[a-f0-9]{64}$/u.test(sha256)) {
+    throw new Error(`captures[${index}].sha256 must be a SHA-256 hex digest`);
+  }
+  const capturedAt = captureRecord.capturedAt;
+  if (
+    typeof capturedAt !== "string" ||
+    !capturedAt.endsWith("Z") ||
+    Number.isNaN(Date.parse(capturedAt))
+  ) {
+    throw new Error(
+      `captures[${index}].capturedAt must be an ISO UTC timestamp`,
+    );
+  }
+  const localCommitSha = captureRecord.localCommitSha;
+  if (
+    typeof localCommitSha !== "string" ||
+    !/^[a-f0-9]{40}$/u.test(localCommitSha)
+  ) {
+    throw new Error(`captures[${index}].localCommitSha must be a commit SHA`);
+  }
+  const deployedCommitSha = captureRecord.deployedCommitSha;
+  if (
+    deployedCommitSha !== null &&
+    (typeof deployedCommitSha !== "string" ||
+      !/^[a-f0-9]{40}$/u.test(deployedCommitSha))
+  ) {
+    throw new Error(
+      `captures[${index}].deployedCommitSha must be null or a commit SHA`,
+    );
+  }
+
+  if (root !== undefined) {
+    const absoluteOutput = path.resolve(root, outputFile);
+    if (!fs.existsSync(absoluteOutput)) {
+      throw new Error(`capture output is missing: ${outputFile}`);
+    }
+    const actualHash = createHash("sha256")
+      .update(fs.readFileSync(absoluteOutput))
+      .digest("hex");
+    if (actualHash !== sha256) {
+      throw new Error(`capture output hash does not match: ${outputFile}`);
+    }
+  }
+
+  return { sha256, capturedAt, localCommitSha, deployedCommitSha };
+}
+
 export function validateContestEvidenceManifest(
   manifest: unknown,
   options: ValidationOptions = {},
@@ -184,7 +268,12 @@ export function validateContestEvidenceManifest(
 
   const captures = record.captures.map((value, index) => {
     const captureRecord = assertRecord(value, `captures[${index}]`);
-    assertExactKeys(captureRecord, CAPTURE_KEYS, `captures[${index}]`);
+    assertExactKeys(
+      captureRecord,
+      [...CAPTURE_KEYS, ...CAPTURE_PROVENANCE_KEYS],
+      `captures[${index}]`,
+      CAPTURE_KEYS,
+    );
     assertNonEmptyString(
       captureRecord.evidenceId,
       `captures[${index}].evidenceId`,
@@ -261,6 +350,14 @@ export function validateContestEvidenceManifest(
       );
     }
 
+    const provenance = validateCaptureProvenance(
+      captureRecord,
+      index,
+      root,
+      outputFile,
+      options.requireProvenance === true,
+    );
+
     if (
       root !== undefined &&
       captureRecord.freezeRequired === true &&
@@ -281,6 +378,7 @@ export function validateContestEvidenceManifest(
       outputFile,
       freezeRequired: captureRecord.freezeRequired,
       redactionRule: captureRecord.redactionRule,
+      ...provenance,
     } satisfies ContestEvidenceCapture;
   });
 
@@ -314,6 +412,12 @@ export function validateContestEvidenceManifestFromRoot(
   validateContestEvidenceManifest(manifest, {
     rootDir: resolvedRoot,
     knownClaimIds: claims.map(({ claimId }) => claimId),
+    freezeRecordPresent: fs.existsSync(
+      path.join(resolvedRoot, "docs", "contest", "coverage-freeze.json"),
+    ),
+    requireProvenance: fs.existsSync(
+      path.join(resolvedRoot, "docs", "contest", "coverage-freeze.json"),
+    ),
   });
   return manifest as ContestEvidenceManifest;
 }
@@ -373,7 +477,7 @@ export function renderContestEvidenceChecklist(
     "- [ ] Confirm the displayed route is the local or deployed root application, not a deep route submitted to the contest.",
     "- [ ] Wait for loading to settle, then run the matching Axe, overflow, request, and console checks.",
     "- [ ] Inspect the original PNG for browser chrome, personal data, account state, cookies, tokens, local filesystem paths, clipping, and misleading empty states.",
-    "- [ ] Record the coverage-freeze commit and deployed commit before adding any SHA-256 or captured-at metadata.",
+    "- [ ] Record the coverage-freeze commit and local capture commit; record the deployed commit only when live verification exists.",
     "- [ ] Have a reviewer compare each image with the claim ledger and the frozen data before committing evidence.",
     "",
   ].join("\n");

@@ -21,5 +21,5 @@ This checklist is rendered from `docs/contest/evidence-capture.json`. Capture on
 - [ ] Confirm the displayed route is the local or deployed root application, not a deep route submitted to the contest.
 - [ ] Wait for loading to settle, then run the matching Axe, overflow, request, and console checks.
 - [ ] Inspect the original PNG for browser chrome, personal data, account state, cookies, tokens, local filesystem paths, clipping, and misleading empty states.
-- [ ] Record the coverage-freeze commit and deployed commit before adding any SHA-256 or captured-at metadata.
+- [ ] Record the coverage-freeze commit and local capture commit; record the deployed commit only when live verification exists.
 - [ ] Have a reviewer compare each image with the claim ledger and the frozen data before committing evidence.
