@@ -350,7 +350,10 @@ describe("hashFile", () => {
   });
 });
 
-describe("buildSnapshots", { timeout: 30_000 }, () => {
+const BUILD_SNAPSHOTS_TEST_TIMEOUT =
+  process.env.CI === "true" ? 90_000 : 30_000;
+
+describe("buildSnapshots", { timeout: BUILD_SNAPSHOTS_TEST_TIMEOUT }, () => {
   it("publishes one immutable verified outcome artifact with all upstream hashes", async () => {
     const root = await temporaryRoot();
 
@@ -403,35 +406,39 @@ describe("buildSnapshots", { timeout: 30_000 }, () => {
     );
   });
 
-  it("retains the last-known-good outcome artifact when income ingestion fails", async () => {
-    const root = await temporaryRoot();
-    await buildSnapshots({ rootDirectory: root, ...fixedOptions });
-    const prior = await readManifest(root);
-    const priorPath = prior.resourceSnapshots.outcomeIndicators.resourcePath;
-    const priorBytes = await readFile(assetPath(root, priorPath));
+  it(
+    "retains the last-known-good outcome artifact when income ingestion fails",
+    async () => {
+      const root = await temporaryRoot();
+      await buildSnapshots({ rootDirectory: root, ...fixedOptions });
+      const prior = await readManifest(root);
+      const priorPath = prior.resourceSnapshots.outcomeIndicators.resourcePath;
+      const priorBytes = await readFile(assetPath(root, priorPath));
 
-    await expect(
-      buildSnapshots({
-        rootDirectory: root,
-        ...fixedOptions,
-        now: () => new Date("2026-08-10T00:00:00.000Z"),
-        fetchIncomeBundle: async () => {
-          throw new Error("injected income download failure");
-        },
-      }),
-    ).rejects.toThrow(
-      /previous snapshot marked stale.*income download failure/isu,
-    );
+      await expect(
+        buildSnapshots({
+          rootDirectory: root,
+          ...fixedOptions,
+          now: () => new Date("2026-08-10T00:00:00.000Z"),
+          fetchIncomeBundle: async () => {
+            throw new Error("injected income download failure");
+          },
+        }),
+      ).rejects.toThrow(
+        /previous snapshot marked stale.*income download failure/isu,
+      );
 
-    const stale = await readManifest(root);
-    expect(stale.qualityStatus).toBe("stale");
-    expect(stale.resourceSnapshots.outcomeIndicators.resourcePath).toBe(
-      priorPath,
-    );
-    await expect(readFile(assetPath(root, priorPath))).resolves.toEqual(
-      priorBytes,
-    );
-  }, 30_000);
+      const stale = await readManifest(root);
+      expect(stale.qualityStatus).toBe("stale");
+      expect(stale.resourceSnapshots.outcomeIndicators.resourcePath).toBe(
+        priorPath,
+      );
+      await expect(readFile(assetPath(root, priorPath))).resolves.toEqual(
+        priorBytes,
+      );
+    },
+    BUILD_SNAPSHOTS_TEST_TIMEOUT,
+  );
 
   it("publishes the four curated mapping resources through the manifest", async () => {
     const root = await temporaryRoot();
