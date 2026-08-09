@@ -1,0 +1,300 @@
+{
+  "primaryCandidates": [
+    {
+      "programKey": "COM02M",
+      "baseQualificationIdentity": "qualification:COM02M",
+      "programTitle": "Comercialización de Productos Alimentarios",
+      "familyCode": "COM",
+      "family": "Comercio y Marketing",
+      "level": "intermediate",
+      "familySignalCount": 35,
+      "exactTitleSignalCount": 8,
+      "officialOutputLabels": ["Vendedor de productos alimentarios"],
+      "sourceUrls": [
+        "https://www.todofp.es/que-estudiar/familias-profesionales/comercio-marketing/comercializacion-productos-alimentarios.html",
+        "https://www.boe.es/eli/es/rd/189/2018"
+      ],
+      "classificationCandidates": ["occupation:cno11:5220"],
+      "collisionCount": 0,
+      "sourceReadiness": "output_only",
+      "selectionReason": "Highest unreviewed family signal in the corrected local notebook with a distinct commercial programme.",
+      "rank": 1,
+      "scoreTuple": [1, 0, -8, -35, "COM02M"]
+    },
+    {
+      "programKey": "AGA03M",
+      "baseQualificationIdentity": "qualification:AGA03M",
+      "programTitle": "Jardinería y Floristería",
+      "familyCode": "AGA",
+      "family": "Agraria",
+      "level": "intermediate",
+      "familySignalCount": 27,
+      "exactTitleSignalCount": 4,
+      "officialOutputLabels": ["Jardinero"],
+      "sourceUrls": [
+        "https://www.todofp.es/que-estudiar/familias-profesionales/agraria/jardineria-floristeria.html",
+        "https://www.boe.es/eli/es/rd/1129/2010"
+      ],
+      "classificationCandidates": ["occupation:cno11:6120"],
+      "collisionCount": 0,
+      "sourceReadiness": "output_only",
+      "selectionReason": "Agraria is the largest remaining family signal outside the five reviewed bases.",
+      "rank": 2,
+      "scoreTuple": [1, 0, -4, -27, "AGA03M"]
+    },
+    {
+      "programKey": "TMV02M",
+      "baseQualificationIdentity": "qualification:TMV02M",
+      "programTitle": "Electromecánica de Vehículos Automóviles",
+      "familyCode": "TMV",
+      "family": "Transporte y Mantenimiento de Vehículos",
+      "level": "intermediate",
+      "familySignalCount": 18,
+      "exactTitleSignalCount": 4,
+      "officialOutputLabels": ["Electromecánico de vehículos"],
+      "sourceUrls": [
+        "https://www.todofp.es/que-estudiar/familias-profesionales/transporte-mantenimiento-vehiculos/electromecanica-vehiculos-automoviles.html",
+        "https://www.boe.es/eli/es/rd/453/2010"
+      ],
+      "classificationCandidates": ["occupation:cno11:7401"],
+      "collisionCount": 0,
+      "sourceReadiness": "output_only",
+      "selectionReason": "Third-highest available family signal and an occupation-oriented vehicle-maintenance title.",
+      "rank": 3,
+      "scoreTuple": [1, 0, -4, -18, "TMV02M"]
+    },
+    {
+      "programKey": "ADG01M",
+      "baseQualificationIdentity": "qualification:ADG01M",
+      "programTitle": "Gestión Administrativa",
+      "familyCode": "ADG",
+      "family": "Administración y Gestión",
+      "level": "intermediate",
+      "familySignalCount": 17,
+      "exactTitleSignalCount": 3,
+      "officialOutputLabels": ["Empleado administrativo"],
+      "sourceUrls": [
+        "https://www.todofp.es/que-estudiar/familias-profesionales/administracion-gestion/gestion-administrativa.html",
+        "https://www.boe.es/eli/es/rd/1631/2009"
+      ],
+      "classificationCandidates": ["occupation:cno11:4300"],
+      "collisionCount": 0,
+      "sourceReadiness": "output_only",
+      "selectionReason": "Meaningful administrative family signal with a distinct non-modality programme identity.",
+      "rank": 4,
+      "scoreTuple": [1, 0, -3, -17, "ADG01M"]
+    },
+    {
+      "programKey": "ELE01M",
+      "baseQualificationIdentity": "qualification:ELE01M",
+      "programTitle": "Instalaciones Eléctricas y Automáticas",
+      "familyCode": "ELE",
+      "family": "Electricidad y Electrónica",
+      "level": "intermediate",
+      "familySignalCount": 14,
+      "exactTitleSignalCount": 3,
+      "officialOutputLabels": ["Instalador electricista"],
+      "sourceUrls": [
+        "https://www.todofp.es/que-estudiar/familias-profesionales/electricidad-electronica/instalaciones-electricas-automaticas.html",
+        "https://www.boe.es/eli/es/rd/177/2008"
+      ],
+      "classificationCandidates": ["occupation:cno11:7510"],
+      "collisionCount": 0,
+      "sourceReadiness": "output_only",
+      "selectionReason": "Representation gate candidate for Electricity/Electronics with a concrete installation title.",
+      "rank": 5,
+      "scoreTuple": [1, 0, -3, -14, "ELE01M"]
+    },
+    {
+      "programKey": "IMA03M",
+      "baseQualificationIdentity": "qualification:IMA03M",
+      "programTitle": "Mantenimiento Electromecánico",
+      "familyCode": "IMA",
+      "family": "Instalación y Mantenimiento",
+      "level": "intermediate",
+      "familySignalCount": 14,
+      "exactTitleSignalCount": 3,
+      "officialOutputLabels": ["Mantenedor electromecánico"],
+      "sourceUrls": [
+        "https://www.todofp.es/que-estudiar/familias-profesionales/instalacion-mantenimiento/mantenimiento-electromecanico.html",
+        "https://www.boe.es/eli/es/rd/1589/2011"
+      ],
+      "classificationCandidates": ["occupation:cno11:7403"],
+      "collisionCount": 0,
+      "sourceReadiness": "output_only",
+      "selectionReason": "Representation gate candidate for Installation/Maintenance with the strongest exact title signal in that family.",
+      "rank": 6,
+      "scoreTuple": [1, 0, -3, -14, "IMA03M"]
+    },
+    {
+      "programKey": "FME01M",
+      "baseQualificationIdentity": "qualification:FME01M",
+      "programTitle": "Mecanizado",
+      "familyCode": "FME",
+      "family": "Fabricación Mecánica",
+      "level": "intermediate",
+      "familySignalCount": 11,
+      "exactTitleSignalCount": 2,
+      "officialOutputLabels": ["Mecánico de mecanizado"],
+      "sourceUrls": [
+        "https://www.todofp.es/que-estudiar/familias-profesionales/fabricacion-mecanica/mecanizado.html",
+        "https://www.boe.es/eli/es/rd/1399/2007"
+      ],
+      "classificationCandidates": ["occupation:cno11:7322"],
+      "collisionCount": 0,
+      "sourceReadiness": "output_only",
+      "selectionReason": "Highest remaining manufacturing family signal after representation gates.",
+      "rank": 7,
+      "scoreTuple": [1, 0, -2, -11, "FME01M"]
+    }
+  ],
+  "reserveCandidates": [
+    {
+      "programKey": "MAM01M",
+      "baseQualificationIdentity": "qualification:MAM01M",
+      "programTitle": "Carpintería y Mueble",
+      "familyCode": "MAM",
+      "family": "Madera, Mueble y Corcho",
+      "level": "intermediate",
+      "familySignalCount": 10,
+      "exactTitleSignalCount": 2,
+      "officialOutputLabels": ["Carpintero de madera"],
+      "sourceUrls": [
+        "https://www.todofp.es/que-estudiar/familias-profesionales/madera-mueble-corcho/carpinteria-mueble.html",
+        "https://www.boe.es/eli/es/rd/1128/2010"
+      ],
+      "classificationCandidates": ["occupation:cno11:7811"],
+      "collisionCount": 0,
+      "sourceReadiness": "output_only",
+      "selectionReason": "Reserve for a distinct craft family with a bounded occupational title.",
+      "rank": 8,
+      "scoreTuple": [1, 0, -2, -10, "MAM01M"]
+    },
+    {
+      "programKey": "ELE03S",
+      "baseQualificationIdentity": "qualification:ELE03S",
+      "programTitle": "Mantenimiento Electrónico",
+      "familyCode": "ELE",
+      "family": "Electricidad y Electrónica",
+      "level": "higher",
+      "familySignalCount": 9,
+      "exactTitleSignalCount": 2,
+      "officialOutputLabels": ["Técnico de mantenimiento electrónico"],
+      "sourceUrls": [
+        "https://www.todofp.es/que-estudiar/familias-profesionales/electricidad-electronica/mantenimiento-electronico.html",
+        "https://www.boe.es/eli/es/rd/1578/2011"
+      ],
+      "classificationCandidates": ["occupation:cno11:7531"],
+      "collisionCount": 0,
+      "sourceReadiness": "output_only",
+      "selectionReason": "Electricity/Electronics reserve retained as a distinct base, not a modality of ELE01M.",
+      "rank": 9,
+      "scoreTuple": [1, 0, -2, -9, "ELE03S"]
+    },
+    {
+      "programKey": "IMA02M",
+      "baseQualificationIdentity": "qualification:IMA02M",
+      "programTitle": "Instalaciones Frigoríficas y de Climatización",
+      "familyCode": "IMA",
+      "family": "Instalación y Mantenimiento",
+      "level": "intermediate",
+      "familySignalCount": 8,
+      "exactTitleSignalCount": 2,
+      "officialOutputLabels": ["Instalador frigorista"],
+      "sourceUrls": [
+        "https://www.todofp.es/que-estudiar/familias-profesionales/instalacion-mantenimiento/instalaciones-frigorificas-climatizacion.html",
+        "https://www.boe.es/eli/es/rd/1793/2010"
+      ],
+      "classificationCandidates": ["occupation:cno11:7402"],
+      "collisionCount": 0,
+      "sourceReadiness": "output_only",
+      "selectionReason": "Installation/Maintenance reserve with a separate refrigeration and climate-control output set.",
+      "rank": 10,
+      "scoreTuple": [1, 0, -2, -8, "IMA02M"]
+    },
+    {
+      "programKey": "AGA01M",
+      "baseQualificationIdentity": "qualification:AGA01M",
+      "programTitle": "Producción Agroecológica",
+      "familyCode": "AGA",
+      "family": "Agraria",
+      "level": "intermediate",
+      "familySignalCount": 7,
+      "exactTitleSignalCount": 2,
+      "officialOutputLabels": ["Trabajador agropecuario"],
+      "sourceUrls": [
+        "https://www.todofp.es/que-estudiar/familias-profesionales/agraria/produccion-agroecologica.html",
+        "https://www.boe.es/eli/es/rd/1633/2009"
+      ],
+      "classificationCandidates": ["occupation:cno11:6110"],
+      "collisionCount": 0,
+      "sourceReadiness": "output_only",
+      "selectionReason": "Agraria reserve retained after the higher-signal gardening candidate.",
+      "rank": 11,
+      "scoreTuple": [1, 0, -2, -7, "AGA01M"]
+    },
+    {
+      "programKey": "TMV01M",
+      "baseQualificationIdentity": "qualification:TMV01M",
+      "programTitle": "Carrocería",
+      "familyCode": "TMV",
+      "family": "Transporte y Mantenimiento de Vehículos",
+      "level": "intermediate",
+      "familySignalCount": 6,
+      "exactTitleSignalCount": 1,
+      "officialOutputLabels": ["Reparador de carrocerías"],
+      "sourceUrls": [
+        "https://www.todofp.es/que-estudiar/familias-profesionales/transporte-mantenimiento-vehiculos/carroceria.html",
+        "https://www.boe.es/eli/es/rd/176/2008"
+      ],
+      "classificationCandidates": ["occupation:cno11:7211"],
+      "collisionCount": 0,
+      "sourceReadiness": "output_only",
+      "selectionReason": "Vehicle-maintenance reserve with a separate bodywork identity.",
+      "rank": 12,
+      "scoreTuple": [1, 0, -1, -6, "TMV01M"]
+    },
+    {
+      "programKey": "FME02M",
+      "baseQualificationIdentity": "qualification:FME02M",
+      "programTitle": "Soldadura y Calderería",
+      "familyCode": "FME",
+      "family": "Fabricación Mecánica",
+      "level": "intermediate",
+      "familySignalCount": 5,
+      "exactTitleSignalCount": 1,
+      "officialOutputLabels": ["Soldador"],
+      "sourceUrls": [
+        "https://www.todofp.es/que-estudiar/familias-profesionales/fabricacion-mecanica/soldadura-caldereria.html",
+        "https://www.boe.es/eli/es/rd/1692/2007"
+      ],
+      "classificationCandidates": ["occupation:cno11:7312"],
+      "collisionCount": 0,
+      "sourceReadiness": "output_only",
+      "selectionReason": "Manufacturing reserve with a direct and distinct welding output.",
+      "rank": 13,
+      "scoreTuple": [1, 0, -1, -5, "FME02M"]
+    },
+    {
+      "programKey": "COM01B",
+      "baseQualificationIdentity": "qualification:COM01B",
+      "programTitle": "Servicios Comerciales",
+      "familyCode": "COM",
+      "family": "Comercio y Marketing",
+      "level": "basic",
+      "familySignalCount": 4,
+      "exactTitleSignalCount": 1,
+      "officialOutputLabels": ["Auxiliar de comercio"],
+      "sourceUrls": [
+        "https://www.todofp.es/que-estudiar/familias-profesionales/comercio-marketing/servicios-comerciales.html",
+        "https://www.boe.es/eli/es/rd/127/2014"
+      ],
+      "classificationCandidates": ["occupation:cno11:5220"],
+      "collisionCount": 0,
+      "sourceReadiness": "output_only",
+      "selectionReason": "Commercial reserve; separate basic-level identity and not COM01M evidence.",
+      "rank": 14,
+      "scoreTuple": [1, 0, -1, -4, "COM01B"]
+    }
+  ]
+}
