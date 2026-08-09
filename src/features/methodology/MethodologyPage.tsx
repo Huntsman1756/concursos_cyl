@@ -220,6 +220,14 @@ export function MethodologyPage() {
           válida y la interfaz la identifica como no actualizada. Nunca se
           publica una actualización parcial como correcta.
         </p>
+        <p>
+          Para la revisión pública de títulos de ofertas usamos una lista
+          permitida auditada de coincidencias literales de una sola palabra: sin
+          stemming ni inferencia difusa. Esta decisión depende de la instantánea
+          concreta y se revisa por oferta, incluidas las colisiones y los
+          posibles roles combinados. Es una decisión pública acotada sobre esta
+          copia; no implica que no existan ofertas no listadas.
+        </p>
         <details className="methodology-technical">
           <summary>Controles técnicos de publicación</summary>
           <p>

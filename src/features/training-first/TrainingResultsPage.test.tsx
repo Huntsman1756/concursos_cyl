@@ -5,13 +5,17 @@ import { cleanup, render, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { MemoryRouter, useLocation } from "react-router-dom";
 import { afterEach, describe, expect, it, vi } from "vitest";
-import aliasPassResults from "../../../analysis/fp_official_alias_pass_results.json";
+import publicationReviews from "../../../analysis/fp_one_word_publication_reviews.json";
 import occupationAliases from "../../../data/curated/occupation-aliases.json";
 import occupations from "../../../data/curated/occupations.json";
 import trainingOccupationLinks from "../../../data/curated/training-occupation-links.json";
 import { currentManifestFixture } from "../../../tests/fixtures/generatedManifest";
 import type { TrainingOccupationLink } from "../../../data/schemas/curatedMappings";
 import { AppRoutes } from "../../app/routes";
+import {
+  loadFoundationResources,
+  loadManifest,
+} from "../../data/generatedDataClient";
 import { publishedRequirementId } from "../../domain/requirements";
 
 const program = {
@@ -170,24 +174,62 @@ afterEach(() => {
 });
 
 describe("TrainingResultsPage", () => {
-  it.each(aliasPassResults.programs)(
-    "keeps $programKey aligned with its validated official-alias result",
-    async ({ programKey, afterOfferCount }) => {
+  const expectedPublishedOfferIds: Record<"HOT01M" | "EOC01M", string[]> = {
+    HOT01M: (["cocinero", "cocineros"] as const).flatMap((form) => {
+      const decision = publicationReviews.publicationDecision[form];
+      if (decision === undefined || decision.status !== "rejected") {
+        throw new Error(`Expected ${form} to be rejected.`);
+      }
+      return [];
+    }),
+    EOC01M: (() => {
+      const decision = publicationReviews.publicationDecision.encofradores;
+      if (decision === undefined || decision.status !== "accepted") {
+        throw new Error("Expected encofradores to be accepted.");
+      }
+      return decision.acceptedOfferIds;
+    })(),
+  };
+
+  it.each(["HOT01M", "EOC01M"])(
+    "keeps the current bounded publication result for %s",
+    async (programKey) => {
       await installActiveAliasPassFetch();
+      const manifest = await loadManifest();
+      const foundation = await loadFoundationResources(manifest);
+      const expectedOfferIds =
+        expectedPublishedOfferIds[
+          programKey as keyof typeof expectedPublishedOfferIds
+        ];
+      const missingOfferIds = expectedOfferIds.filter(
+        (offerId) => !foundation.jobOffers.some(({ id }) => id === offerId),
+      );
+      expect(missingOfferIds).toEqual([]);
+      const expectedOffers = foundation.jobOffers.filter(({ id }) =>
+        expectedOfferIds.includes(id),
+      );
       render(
         <MemoryRouter initialEntries={[`/desde-fp/${programKey}`]}>
           <AppRoutes />
         </MemoryRouter>,
       );
 
-      if (afterOfferCount === 0) {
+      if (expectedOffers.length === 0) {
         expect(
           await screen.findByText(
             /No hay ofertas relacionadas en la instant\u00e1nea del/u,
           ),
         ).toBeVisible();
+        expect(screen.queryAllByRole("article")).toHaveLength(0);
+      } else {
+        const articles = await screen.findAllByRole("article");
+        expect(articles).toHaveLength(expectedOffers.length);
+        expect(
+          articles
+            .map((article) => article.getAttribute("aria-labelledby"))
+            .sort(),
+        ).toEqual(expectedOfferIds.map((id) => `offer-${id}`).sort());
       }
-      expect(screen.queryAllByRole("article")).toHaveLength(afterOfferCount);
     },
   );
 

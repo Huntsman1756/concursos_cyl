@@ -155,6 +155,17 @@ describe("MethodologyPage", () => {
       expect(container.querySelector(`a[href="${href}"]`)).not.toBeNull();
     }
     expect(screen.getByText("Controles técnicos de publicación")).toBeVisible();
+    expect(methodology).toHaveTextContent(
+      /lista permitida auditada de coincidencias literales de una sola palabra/i,
+    );
+    expect(methodology).toHaveTextContent(/sin stemming ni inferencia difusa/i);
+    expect(methodology).toHaveTextContent(/depende de la instantánea/i);
+    expect(methodology).toHaveTextContent(
+      /revisa por oferta.*colisiones.*roles combinados/i,
+    );
+    expect(methodology).toHaveTextContent(
+      /decisión pública acotada.*no implica que no existan ofertas no listadas/i,
+    );
 
     expect(methodology).not.toHaveTextContent(/\bCC BY\b/i);
     expect(methodology).not.toHaveTextContent(/respaldo del Ministerio/i);
