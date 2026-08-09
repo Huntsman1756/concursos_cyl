@@ -53,13 +53,15 @@ El inventario es literal y cerrado:
 
 | Programa | CNO-11 | Candidato lógico | Formas completas permitidas |
 | -------- | ------ | ---------------- | --------------------------- |
-| HOT01M   | 5110   | cocineros        | `cocineros`                 |
+| HOT01M   | 5110   | cocinero(s)      | `cocinero`, `cocineros`     |
 | EOC01M   | 7121   | albañil(es)      | `albañil`, `albañiles`      |
 | EOC01M   | 7111   | encofradores     | `encofradores`              |
 
 Las formas se normalizan con NFD, eliminación de diacríticos, minúsculas y sustitución de cualquier secuencia no alfanumérica por un espacio. Una forma coincide solo si aparece como token completo normalizado. `albañil` no puede coincidir con una palabra más larga; singular y plural están enumerados, no derivados por stemming.
 
-Sol fija además, antes de invocar ArliAI, la lista exacta esperada de identificadores y títulos para cada candidato. Esas expectativas se extraen de la instantánea fijada y forman parte de pruebas que ArliAI no puede editar. El techo léxico preliminar de 65 ofertas es solo una comprobación orientativa; el resultado aceptable será el conjunto exacto probado, no un número introducido manualmente.
+La asimetría inicial de `cocineros` se comprobó contra la instantánea fijada antes de ejecutar el experimento. Existen 40 títulos `COCINEROS, EN GENERAL` y una oferta distinta que contiene `Cocinero/a`; por ello el contrato incluye explícitamente `cocinero` y `cocineros`. No se incorpora ninguna otra flexión.
+
+Sol fija además, antes de invocar ArliAI, la lista exacta esperada de identificadores y títulos para cada candidato. Esas expectativas se extraen de la instantánea fijada y forman parte de pruebas que ArliAI no puede editar. El techo léxico preliminar de 66 ofertas es solo una comprobación orientativa; el resultado aceptable será el conjunto exacto probado, no un número introducido manualmente.
 
 ## Arquitectura del simulador
 
@@ -70,7 +72,7 @@ type OneWordCandidate = {
   programKey: "HOT01M" | "EOC01M";
   occupationId:
     "occupation:cno11:5110" | "occupation:cno11:7111" | "occupation:cno11:7121";
-  candidateId: "cocineros" | "albanil-es" | "encofradores";
+  candidateId: "cocinero-s" | "albanil-es" | "encofradores";
   forms: readonly string[];
 };
 
@@ -93,7 +95,7 @@ La implementación debe:
 - rechazar inventarios vacíos, formas vacías o formas con más de un token;
 - rechazar candidatos, programas o CNO fuera del contrato cerrado;
 - deduplicar una oferta alcanzada por dos formas del mismo candidato;
-- ordenar candidatos, identificadores y títulos de forma estable;
+- ordenar candidatos, identificadores y títulos por comparación estricta de cadenas normalizadas con `<` y `>`; `localeCompare`, `Intl.Collator` y cualquier dependencia de ICU o locale están prohibidos;
 - conservar el conjunto de coincidencias por candidato y calcular la unión sin duplicados;
 - no leer el sistema de archivos, red, catálogos ni variables de entorno;
 - no escribir archivos.
@@ -150,6 +152,7 @@ El notebook se ejecuta de principio a fin con la misma fuente fijada, actualiza 
 4. Incorporar solo el módulo propuesto y ejecutar GREEN.
 5. Si falla, devolver únicamente el error de prueba y el contrato original; no mostrar ni permitir editar las pruebas.
 6. Añadir pruebas adversariales de límites de token, acentos, singular/plural explícito, deduplicación, orden y rechazo de inventario alterado.
+   La prueba de orden debe incluir `n`, `ñ` y una forma acentuada, y debe fijar la salida por puntos de código normalizados sin usar el locale del proceso.
 7. Recomputar JSON e informe dos veces y exigir igualdad byte a byte.
 
 Los gates finales incluyen las suites focalizadas, alias pass y piloto históricos, lint, build, licencia, Prettier y `git diff --check`. También se exige un diff cero en `data/curated`, `public/data/v1`, `src/domain/offerMatching.ts` y componentes de interfaz.
