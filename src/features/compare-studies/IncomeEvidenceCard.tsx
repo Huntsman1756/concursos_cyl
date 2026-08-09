@@ -47,7 +47,12 @@ export function IncomeEvidenceCard({
         <h2 id={headingId}>{heading}</h2>
         {detail ? <p>{detail}</p> : null}
       </header>
-      <div className="income-table-scroll">
+      <div
+        className="income-table-scroll"
+        role="region"
+        aria-label={`Tabla desplazable: ${heading}`}
+        tabIndex={0}
+      >
         <table>
           <caption className="visually-hidden">{heading}</caption>
           <thead>

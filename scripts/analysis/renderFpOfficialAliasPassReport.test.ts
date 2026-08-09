@@ -36,7 +36,7 @@ describe("renderFpOfficialAliasPassReport", () => {
     expect(report.indexOf("EOC01M")).toBeLessThan(report.indexOf("HOT01M"));
     expect(report.indexOf("HOT01M")).toBeLessThan(report.indexOf("SSC01M"));
     expect(report).toContain("Unión de ofertas nuevas: 0.");
-    expect(report).toContain("20260808234300480-2764dd0a085e");
+    expect(report).toContain("20260809014318761-5b22c488ce4b");
     expect(manifest.resourceSnapshots.programs.recordCount).toBe(187);
     expect(manifest.resourceSnapshots.occupations.recordCount).toBe(11);
     expect(manifest.resourceSnapshots.occupationAliases.recordCount).toBe(20);

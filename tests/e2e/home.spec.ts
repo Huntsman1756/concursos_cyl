@@ -201,20 +201,23 @@ test("each remaining public route has distinct destination content", async ({
   const destinations = [
     {
       path: "/comparar",
-      heading: "Comparar estudios — en preparación",
+      heading: "Ingresos observados",
       outcome:
-        "Esta función todavía no está disponible. La próxima fase añadirá indicadores de empleo e ingresos con su alcance.",
+        "Consulta la base de cotización anualizada publicada para una cohorte, sin convertirla en una predicción personal.",
+      hasHomeLink: false,
     },
     {
       path: "/metodologia",
-      heading: "Metodología — en preparación",
+      heading: "Metodología y fuentes",
       outcome:
-        "Esta función todavía no está disponible. La próxima fase añadirá las fuentes, criterios y fechas de actualización.",
+        "Separamos las referencias oficiales por su alcance y publicamos la huella de la copia exacta utilizada.",
+      hasHomeLink: false,
     },
     {
       path: "/ruta-inexistente",
       heading: "Página no encontrada",
       outcome: "La dirección no corresponde a una página disponible.",
+      hasHomeLink: true,
     },
   ];
 
@@ -224,9 +227,11 @@ test("each remaining public route has distinct destination content", async ({
       page.getByRole("heading", { name: destination.heading }),
     ).toBeVisible();
     await expect(page.getByText(destination.outcome)).toBeVisible();
-    await expect(
-      page.getByRole("link", { name: "Volver al inicio" }),
-    ).toBeVisible();
+    if (destination.hasHomeLink) {
+      await expect(
+        page.getByRole("link", { name: "Volver al inicio" }),
+      ).toBeVisible();
+    }
   }
 });
 
@@ -330,7 +335,12 @@ test("a validated stale legacy manifest keeps navigation and names the last upda
   await page.getByRole("link", { name: "Comparar" }).click();
   await expect(page).toHaveURL(/\/comparar$/u);
   await expect(
-    page.getByRole("heading", { name: "Comparar estudios — en preparación" }),
+    page.getByRole("heading", { name: "Ingresos observados" }),
+  ).toBeVisible();
+  await expect(
+    page.getByText(
+      "La comparación oficial no está disponible en esta versión de los datos.",
+    ),
   ).toBeVisible();
 });
 
