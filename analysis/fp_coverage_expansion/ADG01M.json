@@ -1,0 +1,375 @@
+{
+  "schemaVersion": "1.0.0",
+  "programKey": "ADG01M",
+  "baseQualificationIdentity": "qualification:ADG01M",
+  "state": "deferred",
+  "transitions": [
+    {
+      "from": "not_started",
+      "to": "in_progress",
+      "at": "2026-08-09T16:40:00Z"
+    },
+    { "from": "in_progress", "to": "deferred", "at": "2026-08-09T17:00:00Z" }
+  ],
+  "startedAt": "2026-08-09T16:40:00Z",
+  "completedAt": "2026-08-09T17:00:00Z",
+  "phaseMinutes": {
+    "research": 14,
+    "implementation": 4,
+    "test": 4,
+    "review": 0
+  },
+  "reviewerTimeExcluded": true,
+  "programmeProfileEvidence": {
+    "todoFp": {
+      "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/administracion-gestion/gestion-administrativa.html",
+      "sourceQuote": "Técnico en Gestión Administrativa",
+      "reviewedAt": "2026-08-09"
+    },
+    "authoritativeOutputSource": {
+      "sourceUrl": "https://www.boe.es/eli/es/rd/1631/2009",
+      "sourceQuote": "Las ocupaciones y puestos de trabajo más relevantes son los siguientes:",
+      "reviewedAt": "2026-08-09"
+    },
+    "reconciliationNote": "TodoFP y BOE identifican el mismo título de grado medio, pero el seed congelado Empleado administrativo no coincide literalmente con ninguna de las diez salidas BOE; además, las salidas cruzan varias fronteras CNO-11 administrativas, financieras, de recepción y de atención al público."
+  },
+  "officialOutputInventory": {
+    "sourceUrl": "https://www.boe.es/eli/es/rd/1631/2009",
+    "labels": [
+      "Auxiliar administrativo.",
+      "Ayudante de oficina.",
+      "Auxiliar administrativo de cobros y pagos",
+      "Administrativo comercial.",
+      "Auxiliar administrativo de gestión de personal",
+      "Auxiliar administrativo de las administraciones públicas.",
+      "Recepcionista.",
+      "Empleado de atención al cliente.",
+      "Empleado de tesorería.",
+      "Empleado de medios de pago."
+    ]
+  },
+  "officialOutputReviews": [
+    {
+      "order": 1,
+      "officialOutputLabel": "Auxiliar administrativo.",
+      "disposition": "rejected",
+      "candidateOccupationIds": ["occupation:cno11:4309"],
+      "sourceUrl": "https://www.boe.es/eli/es/rd/1631/2009",
+      "sourceQuote": "Auxiliar administrativo.",
+      "classificationEvidence": [
+        {
+          "occupationId": "occupation:cno11:4309",
+          "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+          "sourceQuote": "4309 Empleados administrativos sin tareas de atención al público no clasificados bajo otros epígrafes",
+          "reviewedAt": "2026-08-09"
+        }
+      ],
+      "reason": "4309 is a bounded administrative-office class, but the generic output does not reconcile literally to the frozen seed or establish the no-public-attention boundary."
+    },
+    {
+      "order": 2,
+      "officialOutputLabel": "Ayudante de oficina.",
+      "disposition": "rejected",
+      "candidateOccupationIds": ["occupation:cno11:4309"],
+      "sourceUrl": "https://www.boe.es/eli/es/rd/1631/2009",
+      "sourceQuote": "Ayudante de oficina.",
+      "classificationEvidence": [
+        {
+          "occupationId": "occupation:cno11:4309",
+          "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+          "sourceQuote": "4309 Empleados administrativos sin tareas de atención al público no clasificados bajo otros epígrafes",
+          "reviewedAt": "2026-08-09"
+        }
+      ],
+      "reason": "The office-assistant wording is broader than the exact 4309 no-public-attention boundary and does not match the frozen seed literally."
+    },
+    {
+      "order": 3,
+      "officialOutputLabel": "Auxiliar administrativo de cobros y pagos",
+      "disposition": "rejected",
+      "candidateOccupationIds": [
+        "occupation:cno11:4111",
+        "occupation:cno11:4441"
+      ],
+      "sourceUrl": "https://www.boe.es/eli/es/rd/1631/2009",
+      "sourceQuote": "Auxiliar administrativo de cobros y pagos",
+      "classificationEvidence": [
+        {
+          "occupationId": "occupation:cno11:4111",
+          "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+          "sourceQuote": "4111 Empleados de contabilidad",
+          "reviewedAt": "2026-08-09"
+        },
+        {
+          "occupationId": "occupation:cno11:4441",
+          "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+          "sourceQuote": "4441 Cajeros de bancos y afines",
+          "reviewedAt": "2026-08-09"
+        }
+      ],
+      "reason": "The output spans accounting records and bank-counter payment duties; the BOE label alone does not select one exact CNO boundary."
+    },
+    {
+      "order": 4,
+      "officialOutputLabel": "Administrativo comercial.",
+      "disposition": "rejected",
+      "candidateOccupationIds": [
+        "occupation:cno11:4309",
+        "occupation:cno11:4500"
+      ],
+      "sourceUrl": "https://www.boe.es/eli/es/rd/1631/2009",
+      "sourceQuote": "Administrativo comercial.",
+      "classificationEvidence": [
+        {
+          "occupationId": "occupation:cno11:4309",
+          "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+          "sourceQuote": "4309 Empleados administrativos sin tareas de atención al público no clasificados bajo otros epígrafes",
+          "reviewedAt": "2026-08-09"
+        },
+        {
+          "occupationId": "occupation:cno11:4500",
+          "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+          "sourceQuote": "4500 Empleados administrativos con tareas de atención al público no clasificados bajo otros epígrafes",
+          "reviewedAt": "2026-08-09"
+        }
+      ],
+      "reason": "Commercial administration may be back-office or public-facing; the BOE output does not resolve the CNO 4309 versus 4500 boundary."
+    },
+    {
+      "order": 5,
+      "officialOutputLabel": "Auxiliar administrativo de gestión de personal",
+      "disposition": "rejected",
+      "candidateOccupationIds": [
+        "occupation:cno11:4112",
+        "occupation:cno11:4223"
+      ],
+      "sourceUrl": "https://www.boe.es/eli/es/rd/1631/2009",
+      "sourceQuote": "Auxiliar administrativo de gestión de personal",
+      "classificationEvidence": [
+        {
+          "occupationId": "occupation:cno11:4112",
+          "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+          "sourceQuote": "4112 Empleados de control de personal y nóminas",
+          "reviewedAt": "2026-08-09"
+        },
+        {
+          "occupationId": "occupation:cno11:4223",
+          "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+          "sourceQuote": "4223 Empleados de servicio de personal",
+          "reviewedAt": "2026-08-09"
+        }
+      ],
+      "reason": "Personnel administration covers both payroll control and personnel-service records, so no single exact CNO boundary is established."
+    },
+    {
+      "order": 6,
+      "officialOutputLabel": "Auxiliar administrativo de las administraciones públicas.",
+      "disposition": "rejected",
+      "candidateOccupationIds": [
+        "occupation:cno11:4309",
+        "occupation:cno11:4500"
+      ],
+      "sourceUrl": "https://www.boe.es/eli/es/rd/1631/2009",
+      "sourceQuote": "Auxiliar administrativo de las administraciones públicas.",
+      "classificationEvidence": [
+        {
+          "occupationId": "occupation:cno11:4309",
+          "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+          "sourceQuote": "4309 Empleados administrativos sin tareas de atención al público no clasificados bajo otros epígrafes",
+          "reviewedAt": "2026-08-09"
+        },
+        {
+          "occupationId": "occupation:cno11:4500",
+          "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+          "sourceQuote": "4500 Empleados administrativos con tareas de atención al público no clasificados bajo otros epígrafes",
+          "reviewedAt": "2026-08-09"
+        }
+      ],
+      "reason": "The public-administration setting does not itself determine whether the duties are back-office or public-facing under CNO-11."
+    },
+    {
+      "order": 7,
+      "officialOutputLabel": "Recepcionista.",
+      "disposition": "rejected",
+      "candidateOccupationIds": ["occupation:cno11:4412"],
+      "sourceUrl": "https://www.boe.es/eli/es/rd/1631/2009",
+      "sourceQuote": "Recepcionista.",
+      "classificationEvidence": [
+        {
+          "occupationId": "occupation:cno11:4412",
+          "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+          "sourceQuote": "4412 Recepcionistas (excepto de hoteles)",
+          "reviewedAt": "2026-08-09"
+        }
+      ],
+      "reason": "4412 is an exact reception boundary, but this output is distinct from the frozen administrative seed and cannot be promoted as an alias."
+    },
+    {
+      "order": 8,
+      "officialOutputLabel": "Empleado de atención al cliente.",
+      "disposition": "rejected",
+      "candidateOccupationIds": [
+        "occupation:cno11:4411",
+        "occupation:cno11:4500"
+      ],
+      "sourceUrl": "https://www.boe.es/eli/es/rd/1631/2009",
+      "sourceQuote": "Empleado de atención al cliente.",
+      "classificationEvidence": [
+        {
+          "occupationId": "occupation:cno11:4411",
+          "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+          "sourceQuote": "4411 Empleados de información al usuario",
+          "reviewedAt": "2026-08-09"
+        },
+        {
+          "occupationId": "occupation:cno11:4500",
+          "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+          "sourceQuote": "4500 Empleados administrativos con tareas de atención al público no clasificados bajo otros epígrafes",
+          "reviewedAt": "2026-08-09"
+        }
+      ],
+      "reason": "Customer service may be information work or administrative public-facing work; the BOE wording does not choose between 4411 and 4500."
+    },
+    {
+      "order": 9,
+      "officialOutputLabel": "Empleado de tesorería.",
+      "disposition": "rejected",
+      "candidateOccupationIds": ["occupation:cno11:4113"],
+      "sourceUrl": "https://www.boe.es/eli/es/rd/1631/2009",
+      "sourceQuote": "Empleado de tesorería.",
+      "classificationEvidence": [
+        {
+          "occupationId": "occupation:cno11:4113",
+          "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+          "sourceQuote": "4113 Empleados de oficina de servicios estadísticos, financieros y bancarios",
+          "reviewedAt": "2026-08-09"
+        }
+      ],
+      "reason": "4113 is a financial-office boundary, but the short BOE output does not establish its precise task scope or reconcile literally to the seed."
+    },
+    {
+      "order": 10,
+      "officialOutputLabel": "Empleado de medios de pago.",
+      "disposition": "rejected",
+      "candidateOccupationIds": [
+        "occupation:cno11:4113",
+        "occupation:cno11:4441"
+      ],
+      "sourceUrl": "https://www.boe.es/eli/es/rd/1631/2009",
+      "sourceQuote": "Empleado de medios de pago.",
+      "classificationEvidence": [
+        {
+          "occupationId": "occupation:cno11:4113",
+          "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+          "sourceQuote": "4113 Empleados de oficina de servicios estadísticos, financieros y bancarios",
+          "reviewedAt": "2026-08-09"
+        },
+        {
+          "occupationId": "occupation:cno11:4441",
+          "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+          "sourceQuote": "4441 Cajeros de bancos y afines",
+          "reviewedAt": "2026-08-09"
+        }
+      ],
+      "reason": "The output can describe financial-office processing or customer-facing payment transactions; the BOE label does not determine one exact CNO boundary."
+    }
+  ],
+  "acceptedRelations": [],
+  "rejectedRelations": [
+    {
+      "kind": "link",
+      "programKey": "ADG01M",
+      "occupationId": "occupation:cno11:4111",
+      "sourceUrl": "https://www.boe.es/eli/es/rd/1631/2009",
+      "sourceQuote": "Auxiliar administrativo de cobros y pagos",
+      "reviewedAt": "2026-08-09"
+    },
+    {
+      "kind": "link",
+      "programKey": "ADG01M",
+      "occupationId": "occupation:cno11:4112",
+      "sourceUrl": "https://www.boe.es/eli/es/rd/1631/2009",
+      "sourceQuote": "Auxiliar administrativo de gestión de personal",
+      "reviewedAt": "2026-08-09"
+    },
+    {
+      "kind": "link",
+      "programKey": "ADG01M",
+      "occupationId": "occupation:cno11:4113",
+      "sourceUrl": "https://www.boe.es/eli/es/rd/1631/2009",
+      "sourceQuote": "Empleado de tesorería.",
+      "reviewedAt": "2026-08-09"
+    },
+    {
+      "kind": "link",
+      "programKey": "ADG01M",
+      "occupationId": "occupation:cno11:4223",
+      "sourceUrl": "https://www.boe.es/eli/es/rd/1631/2009",
+      "sourceQuote": "Auxiliar administrativo de gestión de personal",
+      "reviewedAt": "2026-08-09"
+    },
+    {
+      "kind": "link",
+      "programKey": "ADG01M",
+      "occupationId": "occupation:cno11:4309",
+      "sourceUrl": "https://www.boe.es/eli/es/rd/1631/2009",
+      "sourceQuote": "Auxiliar administrativo.",
+      "reviewedAt": "2026-08-09"
+    },
+    {
+      "kind": "link",
+      "programKey": "ADG01M",
+      "occupationId": "occupation:cno11:4411",
+      "sourceUrl": "https://www.boe.es/eli/es/rd/1631/2009",
+      "sourceQuote": "Empleado de atención al cliente.",
+      "reviewedAt": "2026-08-09"
+    },
+    {
+      "kind": "link",
+      "programKey": "ADG01M",
+      "occupationId": "occupation:cno11:4412",
+      "sourceUrl": "https://www.boe.es/eli/es/rd/1631/2009",
+      "sourceQuote": "Recepcionista.",
+      "reviewedAt": "2026-08-09"
+    },
+    {
+      "kind": "link",
+      "programKey": "ADG01M",
+      "occupationId": "occupation:cno11:4441",
+      "sourceUrl": "https://www.boe.es/eli/es/rd/1631/2009",
+      "sourceQuote": "Empleado de medios de pago.",
+      "reviewedAt": "2026-08-09"
+    },
+    {
+      "kind": "link",
+      "programKey": "ADG01M",
+      "occupationId": "occupation:cno11:4500",
+      "sourceUrl": "https://www.boe.es/eli/es/rd/1631/2009",
+      "sourceQuote": "Administrativo comercial.",
+      "reviewedAt": "2026-08-09"
+    }
+  ],
+  "baselineMatchIds": [],
+  "currentMatchIds": [],
+  "newlyReachedOfferIdsByProgram": { "ADG01M": [] },
+  "newlyReachedOfferUnionIds": [],
+  "limitation": "Deferred: the frozen seed Empleado administrativo has no literal BOE output match, and the exhaustive output inventory spans multiple exact CNO-11 administrative, financial, reception and public-facing boundaries. No aliases, occupations, links, curated changes, offer deltas, snapshot regeneration or public-resource changes are published.",
+  "reviewedCommit": "187075dd6545329f3bc326315e85c30ee4650516",
+  "reviewedCommitAt": "2026-08-09T17:01:32.000Z",
+  "snapshotId": "20260809113838031-6730f7cd4230",
+  "snapshotHash": "63b915db32256f736e425cdb026d631048072983bbaa3633e3c51ef4ebe24a8f",
+  "publicParity": {
+    "publishedRelationKeys": [],
+    "rejectedRelationKeys": [
+      "ADG01M|occupation:cno11:4111",
+      "ADG01M|occupation:cno11:4112",
+      "ADG01M|occupation:cno11:4113",
+      "ADG01M|occupation:cno11:4223",
+      "ADG01M|occupation:cno11:4309",
+      "ADG01M|occupation:cno11:4411",
+      "ADG01M|occupation:cno11:4412",
+      "ADG01M|occupation:cno11:4441",
+      "ADG01M|occupation:cno11:4500"
+    ]
+  }
+}
