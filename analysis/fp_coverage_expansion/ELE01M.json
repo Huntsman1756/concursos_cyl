@@ -1,0 +1,271 @@
+{
+  "schemaVersion": "1.0.0",
+  "programKey": "ELE01M",
+  "baseQualificationIdentity": "qualification:ELE01M",
+  "state": "deferred",
+  "transitions": [
+    {
+      "from": "not_started",
+      "to": "in_progress",
+      "at": "2026-08-09T16:00:00.000Z"
+    },
+    {
+      "from": "in_progress",
+      "to": "deferred",
+      "at": "2026-08-09T17:00:00.000Z"
+    }
+  ],
+  "startedAt": "2026-08-09T16:00:00.000Z",
+  "completedAt": "2026-08-09T17:00:00.000Z",
+  "phaseMinutes": {
+    "research": 35,
+    "implementation": 10,
+    "test": 10,
+    "review": 0
+  },
+  "reviewerTimeExcluded": true,
+  "programmeProfileEvidence": {
+    "todoFp": {
+      "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/electricidad-electronica/instalaciones-electricas-automaticas.html",
+      "sourceQuote": "Técnico en Instalaciones Eléctricas y Automáticas",
+      "reviewedAt": "2026-08-09"
+    },
+    "authoritativeOutputSource": {
+      "sourceUrl": "https://www.boe.es/eli/es/rd/177/2008",
+      "sourceQuote": "Las ocupaciones y puestos de trabajo más relevantes son los siguientes:",
+      "reviewedAt": "2026-08-09"
+    },
+    "reconciliationNote": "TodoFP y el BOE identifican el mismo título. El artículo 7.2 del BOE enumera nueve salidas en orden, pero ninguna coincide literalmente con el seed Instalador electricista."
+  },
+  "officialOutputInventory": {
+    "sourceUrl": "https://www.boe.es/eli/es/rd/177/2008",
+    "labels": [
+      "Instalador-mantenedor electricista.",
+      "Electricista de construcción.",
+      "Electricista industrial.",
+      "Electricista de mantenimiento.",
+      "Instalador-mantenedor de sistemas domóticos.",
+      "Instalador-mantenedor de antenas.",
+      "Instalador de telecomunicaciones en edificios de viviendas.",
+      "Instalador-mantenedor de equipos e instalaciones telefónicas.",
+      "Montador de instalaciones de energía solar fotovoltaica."
+    ]
+  },
+  "officialOutputReviews": [
+    {
+      "order": 1,
+      "officialOutputLabel": "Instalador-mantenedor electricista.",
+      "disposition": "rejected",
+      "candidateOccupationIds": ["occupation:cno11:7510"],
+      "sourceUrl": "https://www.boe.es/eli/es/rd/177/2008",
+      "sourceQuote": "Instalador-mantenedor electricista.",
+      "classificationEvidence": [
+        {
+          "occupationId": "occupation:cno11:7510",
+          "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+          "sourceQuote": "7510 Electricistas de la construcción y afines",
+          "reviewedAt": "2026-08-09"
+        }
+      ],
+      "reason": "7510 is a construction-and-related-electricians boundary, but the BOE output is not the frozen seed literal."
+    },
+    {
+      "order": 2,
+      "officialOutputLabel": "Electricista de construcción.",
+      "disposition": "rejected",
+      "candidateOccupationIds": ["occupation:cno11:7510"],
+      "sourceUrl": "https://www.boe.es/eli/es/rd/177/2008",
+      "sourceQuote": "Electricista de construcción.",
+      "classificationEvidence": [
+        {
+          "occupationId": "occupation:cno11:7510",
+          "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+          "sourceQuote": "7510 Electricistas de la construcción y afines",
+          "reviewedAt": "2026-08-09"
+        }
+      ],
+      "reason": "The construction qualifier fixes only the 7510 boundary and does not reconcile literally to Instalador electricista."
+    },
+    {
+      "order": 3,
+      "officialOutputLabel": "Electricista industrial.",
+      "disposition": "rejected",
+      "candidateOccupationIds": ["occupation:cno11:7510"],
+      "sourceUrl": "https://www.boe.es/eli/es/rd/177/2008",
+      "sourceQuote": "Electricista industrial.",
+      "classificationEvidence": [
+        {
+          "occupationId": "occupation:cno11:7510",
+          "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+          "sourceQuote": "7510 Electricistas de la construcción y afines",
+          "reviewedAt": "2026-08-09"
+        }
+      ],
+      "reason": "Industrial electrical work does not establish a distinct exact CNO-11 class here and is not the frozen seed literal."
+    },
+    {
+      "order": 4,
+      "officialOutputLabel": "Electricista de mantenimiento.",
+      "disposition": "rejected",
+      "candidateOccupationIds": ["occupation:cno11:7521"],
+      "sourceUrl": "https://www.boe.es/eli/es/rd/177/2008",
+      "sourceQuote": "Electricista de mantenimiento.",
+      "classificationEvidence": [
+        {
+          "occupationId": "occupation:cno11:7521",
+          "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+          "sourceQuote": "7521 Mecánicos y reparadores de equipos eléctricos",
+          "reviewedAt": "2026-08-09"
+        }
+      ],
+      "reason": "Maintenance is bounded toward 7521 equipment repair, but the output is distinct from the frozen seed and does not prove a broader relation."
+    },
+    {
+      "order": 5,
+      "officialOutputLabel": "Instalador-mantenedor de sistemas domóticos.",
+      "disposition": "rejected",
+      "candidateOccupationIds": [
+        "occupation:cno11:7521",
+        "occupation:cno11:7533"
+      ],
+      "sourceUrl": "https://www.boe.es/eli/es/rd/177/2008",
+      "sourceQuote": "Instalador-mantenedor de sistemas domóticos.",
+      "classificationEvidence": [
+        {
+          "occupationId": "occupation:cno11:7521",
+          "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+          "sourceQuote": "7521 Mecánicos y reparadores de equipos eléctricos",
+          "reviewedAt": "2026-08-09"
+        },
+        {
+          "occupationId": "occupation:cno11:7533",
+          "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+          "sourceQuote": "7533 Instaladores y reparadores en tecnologías de la información y las comunicaciones",
+          "reviewedAt": "2026-08-09"
+        }
+      ],
+      "reason": "Domotics crosses electrical equipment and communications boundaries; the short output does not select one exact CNO-11 occupation."
+    },
+    {
+      "order": 6,
+      "officialOutputLabel": "Instalador-mantenedor de antenas.",
+      "disposition": "rejected",
+      "candidateOccupationIds": ["occupation:cno11:7533"],
+      "sourceUrl": "https://www.boe.es/eli/es/rd/177/2008",
+      "sourceQuote": "Instalador-mantenedor de antenas.",
+      "classificationEvidence": [
+        {
+          "occupationId": "occupation:cno11:7533",
+          "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+          "sourceQuote": "7533 Instaladores y reparadores en tecnologías de la información y las comunicaciones",
+          "reviewedAt": "2026-08-09"
+        }
+      ],
+      "reason": "Antenna installation is a communications boundary under 7533, not the frozen seed literal."
+    },
+    {
+      "order": 7,
+      "officialOutputLabel": "Instalador de telecomunicaciones en edificios de viviendas.",
+      "disposition": "rejected",
+      "candidateOccupationIds": ["occupation:cno11:7533"],
+      "sourceUrl": "https://www.boe.es/eli/es/rd/177/2008",
+      "sourceQuote": "Instalador de telecomunicaciones en edificios de viviendas.",
+      "classificationEvidence": [
+        {
+          "occupationId": "occupation:cno11:7533",
+          "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+          "sourceQuote": "7533 Instaladores y reparadores en tecnologías de la información y las comunicaciones",
+          "reviewedAt": "2026-08-09"
+        }
+      ],
+      "reason": "The explicit telecommunications scope is 7533 and remains distinct from the frozen seed."
+    },
+    {
+      "order": 8,
+      "officialOutputLabel": "Instalador-mantenedor de equipos e instalaciones telefónicas.",
+      "disposition": "rejected",
+      "candidateOccupationIds": ["occupation:cno11:7533"],
+      "sourceUrl": "https://www.boe.es/eli/es/rd/177/2008",
+      "sourceQuote": "Instalador-mantenedor de equipos e instalaciones telefónicas.",
+      "classificationEvidence": [
+        {
+          "occupationId": "occupation:cno11:7533",
+          "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+          "sourceQuote": "7533 Instaladores y reparadores en tecnologías de la información y las comunicaciones",
+          "reviewedAt": "2026-08-09"
+        }
+      ],
+      "reason": "Telephone equipment and installations are a 7533 communications boundary and cannot be promoted as the seed."
+    },
+    {
+      "order": 9,
+      "officialOutputLabel": "Montador de instalaciones de energía solar fotovoltaica.",
+      "disposition": "rejected",
+      "candidateOccupationIds": ["occupation:cno11:7294"],
+      "sourceUrl": "https://www.boe.es/eli/es/rd/177/2008",
+      "sourceQuote": "Montador de instalaciones de energía solar fotovoltaica.",
+      "classificationEvidence": [
+        {
+          "occupationId": "occupation:cno11:7294",
+          "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+          "sourceQuote": "7294 Montadores-instaladores de placas de energía solar",
+          "reviewedAt": "2026-08-09"
+        }
+      ],
+      "reason": "Photovoltaic mounting is the distinct 7294 solar-installation boundary and is not the frozen seed."
+    }
+  ],
+  "acceptedRelations": [],
+  "rejectedRelations": [
+    {
+      "kind": "link",
+      "programKey": "ELE01M",
+      "occupationId": "occupation:cno11:7294",
+      "sourceUrl": "https://www.boe.es/eli/es/rd/177/2008",
+      "sourceQuote": "Montador de instalaciones de energía solar fotovoltaica.",
+      "reviewedAt": "2026-08-09"
+    },
+    {
+      "kind": "link",
+      "programKey": "ELE01M",
+      "occupationId": "occupation:cno11:7510",
+      "sourceUrl": "https://www.boe.es/eli/es/rd/177/2008",
+      "sourceQuote": "Instalador-mantenedor electricista.",
+      "reviewedAt": "2026-08-09"
+    },
+    {
+      "kind": "link",
+      "programKey": "ELE01M",
+      "occupationId": "occupation:cno11:7521",
+      "sourceUrl": "https://www.boe.es/eli/es/rd/177/2008",
+      "sourceQuote": "Electricista de mantenimiento.",
+      "reviewedAt": "2026-08-09"
+    },
+    {
+      "kind": "link",
+      "programKey": "ELE01M",
+      "occupationId": "occupation:cno11:7533",
+      "sourceUrl": "https://www.boe.es/eli/es/rd/177/2008",
+      "sourceQuote": "Instalador-mantenedor de antenas.",
+      "reviewedAt": "2026-08-09"
+    }
+  ],
+  "baselineMatchIds": [],
+  "currentMatchIds": [],
+  "newlyReachedOfferIdsByProgram": { "ELE01M": [] },
+  "newlyReachedOfferUnionIds": [],
+  "limitation": "Deferred: the frozen seed Instalador electricista has no literal BOE output match. The exhaustive inventory spans CNO-11 boundaries 7510, 7521, 7533 and 7294, so no exact approved relation is published; curated data, public resources and snapshots remain unchanged.",
+  "reviewedCommit": "07407b1a46a2eb01e89068db84ca2c70e350b27e",
+  "reviewedCommitAt": "2026-08-09T17:14:11.000Z",
+  "snapshotId": "20260809113838031-6730f7cd4230",
+  "snapshotHash": "f969cb1bb6b114d7f5abc351b43a7a655a25d05d32438088abdf01fd8fe9c6b2",
+  "publicParity": {
+    "publishedRelationKeys": [],
+    "rejectedRelationKeys": [
+      "ELE01M|occupation:cno11:7294",
+      "ELE01M|occupation:cno11:7510",
+      "ELE01M|occupation:cno11:7521",
+      "ELE01M|occupation:cno11:7533"
+    ]
+  }
+}
