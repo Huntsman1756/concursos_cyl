@@ -2,6 +2,7 @@ import { readFileSync, writeFileSync } from "node:fs";
 import { resolve } from "node:path";
 
 import { validateFpOneWordPublicationReview } from "./validateFpOneWordPublicationReview";
+import type { FpOneWordPublicationReview } from "../../data/schemas/fpOneWordPublicationReview";
 
 export function assertRenderedFpOneWordPublicationReview(
   actual: string,
@@ -13,8 +14,9 @@ export function assertRenderedFpOneWordPublicationReview(
     );
 }
 
-export function renderFpOneWordPublicationReview(root: string): string {
-  const artifact = validateFpOneWordPublicationReview(root);
+export function renderValidatedFpOneWordPublicationReview(
+  artifact: FpOneWordPublicationReview,
+): string {
   const forms = [
     "cocinero",
     "cocineros",
@@ -36,11 +38,18 @@ export function renderFpOneWordPublicationReview(root: string): string {
     .map(
       (row) => `- \`${row.offerId}\` — ${row.offerTitle} (${row.reasonCode}).`,
     );
+  const publishable = forms.filter(
+    (form) => artifact.publicationDecision[form].status === "accepted",
+  );
+  const blocked = forms.filter(
+    (form) => artifact.publicationDecision[form].status === "rejected",
+  );
   return `# Auditoría de publicación FP de coincidencias de una palabra
 
 ## Resultado
 
-67 ofertas auditadas.
+${artifact.rows.length} ofertas auditadas.
+
 ${counts.join("\n")}
 
 ## Colisiones rechazadas
@@ -51,8 +60,14 @@ ${rejected.join("\n")}
 
 No se aprueba ninguna regla general de coincidencia de una sola palabra. No se propone ninguna lista negra por ID de oferta.
 
-Solo \`encofradores\` puede publicarse condicionalmente tras la política acotada posterior; \`cocinero\`, \`cocineros\`, \`albañil\` y \`albañiles\` no se publican porque contienen colisiones rechazadas conocidas.
+${publishable.length > 0 ? `Solo ${publishable.map((form) => `\`${form}\``).join(", ")} puede publicarse condicionalmente tras la política acotada posterior.` : "Ninguna forma puede publicarse condicionalmente."} ${blocked.map((form) => `\`${form}\``).join(", ")} no se publican porque contienen colisiones rechazadas conocidas.
 `;
+}
+
+export function renderFpOneWordPublicationReview(root: string): string {
+  return renderValidatedFpOneWordPublicationReview(
+    validateFpOneWordPublicationReview(root),
+  );
 }
 
 if (process.argv[1]?.endsWith("renderFpOneWordPublicationReview.ts")) {

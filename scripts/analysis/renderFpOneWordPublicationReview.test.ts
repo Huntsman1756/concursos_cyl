@@ -5,6 +5,7 @@ import { describe, expect, it } from "vitest";
 
 import {
   assertRenderedFpOneWordPublicationReview,
+  renderValidatedFpOneWordPublicationReview,
   renderFpOneWordPublicationReview,
 } from "./renderFpOneWordPublicationReview";
 
@@ -46,5 +47,52 @@ describe("renderFpOneWordPublicationReview", () => {
     expect(() =>
       assertRenderedFpOneWordPublicationReview("rendered\n\n", "rendered\n"),
     ).toThrow(/validated rendered/i);
+  });
+
+  it("derives the total and publication conclusion from a terminal decision fixture", () => {
+    const fixture = structuredClone(
+      JSON.parse(
+        readFileSync(
+          resolve(ROOT, "analysis/fp_one_word_publication_reviews.json"),
+          "utf8",
+        ),
+      ),
+    );
+    fixture.rows = fixture.rows.slice(0, 1);
+    fixture.publicationDecision = {
+      cocinero: {
+        status: "accepted",
+        acceptedOfferIds: [fixture.rows[0].offerId],
+        rejectedOfferIds: [],
+        reason: "Accepted offers are eligible for publication.",
+      },
+      cocineros: {
+        status: "rejected",
+        acceptedOfferIds: [],
+        rejectedOfferIds: [],
+        reason: "No offers are approved for publication.",
+      },
+      albañil: {
+        status: "rejected",
+        acceptedOfferIds: [],
+        rejectedOfferIds: [],
+        reason: "No offers are approved for publication.",
+      },
+      albañiles: {
+        status: "rejected",
+        acceptedOfferIds: [],
+        rejectedOfferIds: [],
+        reason: "No offers are approved for publication.",
+      },
+      encofradores: {
+        status: "rejected",
+        acceptedOfferIds: [],
+        rejectedOfferIds: [],
+        reason: "No offers are approved for publication.",
+      },
+    };
+    expect(renderValidatedFpOneWordPublicationReview(fixture)).toContain(
+      "1 ofertas auditadas.",
+    );
   });
 });

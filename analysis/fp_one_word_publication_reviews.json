@@ -11,9 +11,10 @@
       "offerTitle": "3 Oficial/a Segunda Oficios (Especialidad Albañil-Conductor/a) para Ayto. de Palencia",
       "disposition": "rejected",
       "reasonCode": "mixed_role",
-      "rationale": "Pinned payload contains a reviewed conflicting role or mandatory qualification.",
+      "rationale": "Audited combined-role evidence: OFICIAL/A SEGUNDA OFICIOS (Especialidad Albañil-Conductor/a).",
       "requirementQuotes": [
-        "3 Oficial/a Segunda Oficios (Especialidad Albañil-Conductor/a) para Ayto. de Palencia"
+        "3 Oficial/a Segunda Oficios (Especialidad Albañil-Conductor/a) para Ayto. de Palencia",
+        "No se especifica"
       ]
     },
     {
@@ -25,8 +26,11 @@
       "offerTitle": "Albañil para reformas en Valladolid",
       "disposition": "accepted",
       "reasonCode": "exact_occupation_title",
-      "rationale": "Pinned title and checked payload identify the exact occupation without a conflicting role.",
-      "requirementQuotes": ["Albañil para reformas en Valladolid"]
+      "rationale": "Audited pinned payload: Experiencia previa como albañil y en diferentes técnicas constructivas.",
+      "requirementQuotes": [
+        "Albañil para reformas en Valladolid",
+        "Experiencia previa como albañil y en diferentes técnicas constructivas."
+      ]
     },
     {
       "candidateId": "albanil-es",
@@ -37,8 +41,11 @@
       "offerTitle": "ALBAÑILES",
       "disposition": "rejected",
       "reasonCode": "contradictory_requirement",
-      "rationale": "Pinned payload contains a reviewed conflicting role or mandatory qualification.",
-      "requirementQuotes": ["ALBAÑILES"]
+      "rationale": "Audited pinned payload: Permiso de conducir y vehículo propio.",
+      "requirementQuotes": [
+        "ALBAÑILES",
+        "Permiso de conducir y vehículo propio."
+      ]
     },
     {
       "candidateId": "albanil-es",
@@ -49,8 +56,8 @@
       "offerTitle": "ALBAÑILES",
       "disposition": "accepted",
       "reasonCode": "exact_occupation_title",
-      "rationale": "Pinned title and checked payload identify the exact occupation without a conflicting role.",
-      "requirementQuotes": ["ALBAÑILES"]
+      "rationale": "Audited pinned payload: Permiso de circulación.",
+      "requirementQuotes": ["ALBAÑILES", "Permiso de circulación."]
     },
     {
       "candidateId": "albanil-es",
@@ -61,8 +68,8 @@
       "offerTitle": "ALBAÑILES",
       "disposition": "accepted",
       "reasonCode": "exact_occupation_title",
-      "rationale": "Pinned title and checked payload identify the exact occupation without a conflicting role.",
-      "requirementQuotes": ["ALBAÑILES"]
+      "rationale": "Audited pinned payload: Permiso de conducir.",
+      "requirementQuotes": ["ALBAÑILES", "Permiso de conducir."]
     },
     {
       "candidateId": "albanil-es",
@@ -73,8 +80,11 @@
       "offerTitle": "ALBAÑILES",
       "disposition": "accepted",
       "reasonCode": "exact_occupation_title",
-      "rationale": "Pinned title and checked payload identify the exact occupation without a conflicting role.",
-      "requirementQuotes": ["ALBAÑILES"]
+      "rationale": "Audited pinned payload: Curso de PRL de 20 horas en albañilería o otro oficio similar.",
+      "requirementQuotes": [
+        "ALBAÑILES",
+        "Curso de PRL de 20 horas en albañilería o otro oficio similar."
+      ]
     },
     {
       "candidateId": "albanil-es",
@@ -85,7 +95,7 @@
       "offerTitle": "ALBAÑILES",
       "disposition": "accepted",
       "reasonCode": "exact_occupation_title",
-      "rationale": "Pinned title and checked payload identify the exact occupation without a conflicting role.",
+      "rationale": "Audited pinned title; requirements, functions, conditions, and summary contain no additional occupation detail.",
       "requirementQuotes": ["ALBAÑILES"]
     },
     {
@@ -97,8 +107,8 @@
       "offerTitle": "ALBAÑILES",
       "disposition": "accepted",
       "reasonCode": "exact_occupation_title",
-      "rationale": "Pinned title and checked payload identify the exact occupation without a conflicting role.",
-      "requirementQuotes": ["ALBAÑILES"]
+      "rationale": "Audited pinned payload: Acreditación de la Formación en PRL.",
+      "requirementQuotes": ["ALBAÑILES", "Acreditación de la Formación en PRL."]
     },
     {
       "candidateId": "albanil-es",
@@ -109,8 +119,11 @@
       "offerTitle": "ALBAÑILES",
       "disposition": "accepted",
       "reasonCode": "exact_occupation_title",
-      "rationale": "Pinned title and checked payload identify the exact occupation without a conflicting role.",
-      "requirementQuotes": ["ALBAÑILES"]
+      "rationale": "Audited pinned payload: contrato indefinido, jornada completa, de lunes a viernes.",
+      "requirementQuotes": [
+        "ALBAÑILES",
+        "contrato indefinido, jornada completa, de lunes a viernes."
+      ]
     },
     {
       "candidateId": "albanil-es",
@@ -121,7 +134,7 @@
       "offerTitle": "ALBAÑILES",
       "disposition": "accepted",
       "reasonCode": "exact_occupation_title",
-      "rationale": "Pinned title and checked payload identify the exact occupation without a conflicting role.",
+      "rationale": "Audited pinned title; requirements, functions, conditions, and summary contain no additional occupation detail.",
       "requirementQuotes": ["ALBAÑILES"]
     },
     {
@@ -133,8 +146,11 @@
       "offerTitle": "ALBAÑILES",
       "disposition": "accepted",
       "reasonCode": "exact_occupation_title",
-      "rationale": "Pinned title and checked payload identify the exact occupation without a conflicting role.",
-      "requirementQuotes": ["ALBAÑILES"]
+      "rationale": "Audited pinned payload: La empresa GRANITOS, TURISMO Y PIEDRAS, S.L. necesita cubrir 3 puestos de trabajo para la ocupación de ALBAÑIL. OFICIAL DE 2ª.",
+      "requirementQuotes": [
+        "ALBAÑILES",
+        "La empresa GRANITOS, TURISMO Y PIEDRAS, S.L. necesita cubrir 3 puestos de trabajo para la ocupación de ALBAÑIL. OFICIAL DE 2ª."
+      ]
     },
     {
       "candidateId": "albanil-es",
@@ -145,8 +161,11 @@
       "offerTitle": "ALBAÑILES",
       "disposition": "accepted",
       "reasonCode": "exact_occupation_title",
-      "rationale": "Pinned title and checked payload identify the exact occupation without a conflicting role.",
-      "requirementQuotes": ["ALBAÑILES"]
+      "rationale": "Audited pinned payload: OFICIAL DE TERCERA DE ALBAÑILERÍA, en Villagonzalo Pedernales (Burgos.)",
+      "requirementQuotes": [
+        "ALBAÑILES",
+        "OFICIAL DE TERCERA DE ALBAÑILERÍA, en Villagonzalo Pedernales (Burgos.)"
+      ]
     },
     {
       "candidateId": "albanil-es",
@@ -157,8 +176,11 @@
       "offerTitle": "ALBAÑILES",
       "disposition": "accepted",
       "reasonCode": "exact_occupation_title",
-      "rationale": "Pinned title and checked payload identify the exact occupation without a conflicting role.",
-      "requirementQuotes": ["ALBAÑILES"]
+      "rationale": "Audited pinned payload: La empresa JUAN MANUEL AFONSO ALVES - CONSTRUCCIÓN- necesita cubrir un puesto de trabajo de ALBAÑIL OFICIAL DE 1ª para Valdespino- Zamora.",
+      "requirementQuotes": [
+        "ALBAÑILES",
+        "La empresa JUAN MANUEL AFONSO ALVES - CONSTRUCCIÓN- necesita cubrir un puesto de trabajo de ALBAÑIL OFICIAL DE 1ª para Valdespino- Zamora."
+      ]
     },
     {
       "candidateId": "albanil-es",
@@ -169,8 +191,11 @@
       "offerTitle": "ALBAÑILES",
       "disposition": "accepted",
       "reasonCode": "exact_occupation_title",
-      "rationale": "Pinned title and checked payload identify the exact occupation without a conflicting role.",
-      "requirementQuotes": ["ALBAÑILES"]
+      "rationale": "Audited pinned payload: Oferta 15986 de oficial albañil para empresa en Sariegos",
+      "requirementQuotes": [
+        "ALBAÑILES",
+        "Oferta 15986 de oficial albañil para empresa en Sariegos"
+      ]
     },
     {
       "candidateId": "albanil-es",
@@ -181,8 +206,11 @@
       "offerTitle": "ALBAÑILES",
       "disposition": "accepted",
       "reasonCode": "exact_occupation_title",
-      "rationale": "Pinned title and checked payload identify the exact occupation without a conflicting role.",
-      "requirementQuotes": ["ALBAÑILES"]
+      "rationale": "Audited pinned payload: OFERTA 16417. Oficial 2ª albañilería para León. Contrato INDEFINIDO, J. COMPLETA. Se requiere tarjeta profesional de la construcción y curso de formación en riesgos laborales de 60 horas. Interesados contactar con oficina de empleo León Centro, C/ Ramón y Cajal 14, tfno. 987 24 95 30.",
+      "requirementQuotes": [
+        "ALBAÑILES",
+        "OFERTA 16417. Oficial 2ª albañilería para León. Contrato INDEFINIDO, J. COMPLETA. Se requiere tarjeta profesional de la construcción y curso de formación en riesgos laborales de 60 horas. Interesados contactar con oficina de empleo León Centro, C/ Ramón y Cajal 14, tfno. 987 24 95 30."
+      ]
     },
     {
       "candidateId": "albanil-es",
@@ -193,8 +221,11 @@
       "offerTitle": "ALBAÑILES",
       "disposition": "accepted",
       "reasonCode": "exact_occupation_title",
-      "rationale": "Pinned title and checked payload identify the exact occupation without a conflicting role.",
-      "requirementQuotes": ["ALBAÑILES"]
+      "rationale": "Audited pinned payload: OFERTA 16423. Oficial 1ª albañilería para León. Contrato INDEFINIDO, J. COMPLETA. Se requiere tarjeta profesional de la construcción y curso de formación en riesgos laborales de 60 horas. Interesados contactar con oficina de empleo León Centro, C/ Ramón y Cajal 14, tfno. 987 24 95 30.",
+      "requirementQuotes": [
+        "ALBAÑILES",
+        "OFERTA 16423. Oficial 1ª albañilería para León. Contrato INDEFINIDO, J. COMPLETA. Se requiere tarjeta profesional de la construcción y curso de formación en riesgos laborales de 60 horas. Interesados contactar con oficina de empleo León Centro, C/ Ramón y Cajal 14, tfno. 987 24 95 30."
+      ]
     },
     {
       "candidateId": "albanil-es",
@@ -205,8 +236,11 @@
       "offerTitle": "ALBAÑILES",
       "disposition": "accepted",
       "reasonCode": "exact_occupation_title",
-      "rationale": "Pinned title and checked payload identify the exact occupation without a conflicting role.",
-      "requirementQuotes": ["ALBAÑILES"]
+      "rationale": "Audited pinned payload: Oferta 16445 de albañil para la Robla",
+      "requirementQuotes": [
+        "ALBAÑILES",
+        "Oferta 16445 de albañil para la Robla"
+      ]
     },
     {
       "candidateId": "albanil-es",
@@ -217,8 +251,11 @@
       "offerTitle": "ALBAÑILES",
       "disposition": "accepted",
       "reasonCode": "exact_occupation_title",
-      "rationale": "Pinned title and checked payload identify the exact occupation without a conflicting role.",
-      "requirementQuotes": ["ALBAÑILES"]
+      "rationale": "Audited pinned payload: OFERTA 16512. Albañil oficial de 1ª para León con 5 años de experiencia y curso de 60 horas de prevención de riesgos laborales. Contrato indefinido, jornada completa. Interesados contactar con oficina de empleo León Centro. C/ Ramón y Cajal 14, tfno. 987 24 95 30, sección ofertas.",
+      "requirementQuotes": [
+        "ALBAÑILES",
+        "OFERTA 16512. Albañil oficial de 1ª para León con 5 años de experiencia y curso de 60 horas de prevención de riesgos laborales. Contrato indefinido, jornada completa. Interesados contactar con oficina de empleo León Centro. C/ Ramón y Cajal 14, tfno. 987 24 95 30, sección ofertas."
+      ]
     },
     {
       "candidateId": "albanil-es",
@@ -229,7 +266,7 @@
       "offerTitle": "ALBAÑILES",
       "disposition": "accepted",
       "reasonCode": "exact_occupation_title",
-      "rationale": "Pinned title and checked payload identify the exact occupation without a conflicting role.",
+      "rationale": "Audited pinned title; requirements, functions, conditions, and summary contain no additional occupation detail.",
       "requirementQuotes": ["ALBAÑILES"]
     },
     {
@@ -241,8 +278,11 @@
       "offerTitle": "ALBAÑILES",
       "disposition": "rejected",
       "reasonCode": "mixed_role",
-      "rationale": "Pinned payload contains a reviewed conflicting role or mandatory qualification.",
-      "requirementQuotes": ["ALBAÑILES"]
+      "rationale": "Audited pinned payload: Granja de ganado porcino ubicada en San Pedro Manrique precisa ocupar un puesto de Técnico en Mantenimiento (albañilería y soldadura). Se requiere permiso de conducir B y se valorarán cursos reolacionados con la ocupación. Interesados enviar currículum vitae a la dirección de email: ecylempleosoria@jcyl.es, indicando en el asunto 'Oferta 16453 TÉCNICO MANTENIMIENTO granja San Pedro Manrique'",
+      "requirementQuotes": [
+        "ALBAÑILES",
+        "Granja de ganado porcino ubicada en San Pedro Manrique precisa ocupar un puesto de Técnico en Mantenimiento (albañilería y soldadura). Se requiere permiso de conducir B y se valorarán cursos reolacionados con la ocupación. Interesados enviar currículum vitae a la dirección de email: ecylempleosoria@jcyl.es, indicando en el asunto 'Oferta 16453 TÉCNICO MANTENIMIENTO granja San Pedro Manrique'"
+      ]
     },
     {
       "candidateId": "albanil-es",
@@ -253,8 +293,11 @@
       "offerTitle": "ALBAÑILES",
       "disposition": "accepted",
       "reasonCode": "exact_occupation_title",
-      "rationale": "Pinned title and checked payload identify the exact occupation without a conflicting role.",
-      "requirementQuotes": ["ALBAÑILES"]
+      "rationale": "Audited pinned payload: Tarjeta profesional de la construcción (TPC).",
+      "requirementQuotes": [
+        "ALBAÑILES",
+        "Tarjeta profesional de la construcción (TPC)."
+      ]
     },
     {
       "candidateId": "albanil-es",
@@ -265,8 +308,11 @@
       "offerTitle": "ALBAÑILES",
       "disposition": "accepted",
       "reasonCode": "exact_occupation_title",
-      "rationale": "Pinned title and checked payload identify the exact occupation without a conflicting role.",
-      "requirementQuotes": ["ALBAÑILES"]
+      "rationale": "Audited pinned payload: EXPERIENCIA DEMOSTRABLE, CARNET DE CONDUCIR Y PRL ESPECÍFICO DE ALBAÑILERÍA",
+      "requirementQuotes": [
+        "ALBAÑILES",
+        "EXPERIENCIA DEMOSTRABLE, CARNET DE CONDUCIR Y PRL ESPECÍFICO DE ALBAÑILERÍA"
+      ]
     },
     {
       "candidateId": "albanil-es",
@@ -277,8 +323,11 @@
       "offerTitle": "ALBAÑILES",
       "disposition": "accepted",
       "reasonCode": "exact_occupation_title",
-      "rationale": "Pinned title and checked payload identify the exact occupation without a conflicting role.",
-      "requirementQuotes": ["ALBAÑILES"]
+      "rationale": "Audited pinned payload: ALBAÑIL OFICIAL DE 1ª O 2ª. Imprescindible experiencia mínima de 1 año en el puesto. Para contrato temporal prorrogable.",
+      "requirementQuotes": [
+        "ALBAÑILES",
+        "ALBAÑIL OFICIAL DE 1ª O 2ª. Imprescindible experiencia mínima de 1 año en el puesto. Para contrato temporal prorrogable."
+      ]
     },
     {
       "candidateId": "albanil-es",
@@ -289,8 +338,8 @@
       "offerTitle": "ALBAÑILES",
       "disposition": "accepted",
       "reasonCode": "exact_occupation_title",
-      "rationale": "Pinned title and checked payload identify the exact occupation without a conflicting role.",
-      "requirementQuotes": ["ALBAÑILES"]
+      "rationale": "Audited pinned payload: Las propias del puesto de trabajo.",
+      "requirementQuotes": ["ALBAÑILES", "Las propias del puesto de trabajo."]
     },
     {
       "candidateId": "cocinero-s",
@@ -301,9 +350,10 @@
       "offerTitle": "Oficial de Oficios/Cocinero/a Pinche de cocina para Residencia Universitaria Duques de Soria (Soria)",
       "disposition": "rejected",
       "reasonCode": "mixed_role",
-      "rationale": "Pinned payload contains a reviewed conflicting role or mandatory qualification.",
+      "rationale": "Audited pinned payload: Manipulador de alimentos",
       "requirementQuotes": [
-        "Oficial de Oficios/Cocinero/a Pinche de cocina para Residencia Universitaria Duques de Soria (Soria)"
+        "Oficial de Oficios/Cocinero/a Pinche de cocina para Residencia Universitaria Duques de Soria (Soria)",
+        "Manipulador de alimentos"
       ]
     },
     {
@@ -315,8 +365,8 @@
       "offerTitle": "COCINEROS, EN GENERAL",
       "disposition": "accepted",
       "reasonCode": "exact_occupation_title",
-      "rationale": "Pinned title and checked payload identify the exact occupation without a conflicting role.",
-      "requirementQuotes": ["COCINEROS, EN GENERAL"]
+      "rationale": "Audited pinned payload: Se valorará experiencia.",
+      "requirementQuotes": ["COCINEROS, EN GENERAL", "Se valorará experiencia."]
     },
     {
       "candidateId": "cocinero-s",
@@ -327,8 +377,11 @@
       "offerTitle": "COCINEROS, EN GENERAL",
       "disposition": "rejected",
       "reasonCode": "degree_or_license_led",
-      "rationale": "Pinned payload contains a reviewed conflicting role or mandatory qualification.",
-      "requirementQuotes": ["COCINEROS, EN GENERAL"]
+      "rationale": "Audited pinned payload: Titulación de Cocina. Experiencia acreditada. Carnet de manipulador de alimentos.",
+      "requirementQuotes": [
+        "COCINEROS, EN GENERAL",
+        "Titulación de Cocina. Experiencia acreditada. Carnet de manipulador de alimentos."
+      ]
     },
     {
       "candidateId": "cocinero-s",
@@ -339,8 +392,11 @@
       "offerTitle": "COCINEROS, EN GENERAL",
       "disposition": "accepted",
       "reasonCode": "exact_occupation_title",
-      "rationale": "Pinned title and checked payload identify the exact occupation without a conflicting role.",
-      "requirementQuotes": ["COCINEROS, EN GENERAL"]
+      "rationale": "Audited pinned payload: Se valorará experiencia y formación. Necesario permiso de conducir si no reside en Carbajales de Alba.",
+      "requirementQuotes": [
+        "COCINEROS, EN GENERAL",
+        "Se valorará experiencia y formación. Necesario permiso de conducir si no reside en Carbajales de Alba."
+      ]
     },
     {
       "candidateId": "cocinero-s",
@@ -351,8 +407,11 @@
       "offerTitle": "COCINEROS, EN GENERAL",
       "disposition": "accepted",
       "reasonCode": "exact_occupation_title",
-      "rationale": "Pinned title and checked payload identify the exact occupation without a conflicting role.",
-      "requirementQuotes": ["COCINEROS, EN GENERAL"]
+      "rationale": "Audited pinned payload: Oferta 9250 de cocinera/o para residencia de mayores en Pola de Gordon",
+      "requirementQuotes": [
+        "COCINEROS, EN GENERAL",
+        "Oferta 9250 de cocinera/o para residencia de mayores en Pola de Gordon"
+      ]
     },
     {
       "candidateId": "cocinero-s",
@@ -363,8 +422,11 @@
       "offerTitle": "COCINEROS, EN GENERAL",
       "disposition": "accepted",
       "reasonCode": "exact_occupation_title",
-      "rationale": "Pinned title and checked payload identify the exact occupation without a conflicting role.",
-      "requirementQuotes": ["COCINEROS, EN GENERAL"]
+      "rationale": "Audited pinned payload: Valorable titulación y experiencia en el puesto.",
+      "requirementQuotes": [
+        "COCINEROS, EN GENERAL",
+        "Valorable titulación y experiencia en el puesto."
+      ]
     },
     {
       "candidateId": "cocinero-s",
@@ -375,8 +437,11 @@
       "offerTitle": "COCINEROS, EN GENERAL",
       "disposition": "accepted",
       "reasonCode": "exact_occupation_title",
-      "rationale": "Pinned title and checked payload identify the exact occupation without a conflicting role.",
-      "requirementQuotes": ["COCINEROS, EN GENERAL"]
+      "rationale": "Audited pinned payload: COCINERA/O, en el municipio de Burgos.",
+      "requirementQuotes": [
+        "COCINEROS, EN GENERAL",
+        "COCINERA/O, en el municipio de Burgos."
+      ]
     },
     {
       "candidateId": "cocinero-s",
@@ -387,8 +452,8 @@
       "offerTitle": "COCINEROS, EN GENERAL",
       "disposition": "accepted",
       "reasonCode": "exact_occupation_title",
-      "rationale": "Pinned title and checked payload identify the exact occupation without a conflicting role.",
-      "requirementQuotes": ["COCINEROS, EN GENERAL"]
+      "rationale": "Audited pinned payload: Experiencia 6 meses.",
+      "requirementQuotes": ["COCINEROS, EN GENERAL", "Experiencia 6 meses."]
     },
     {
       "candidateId": "cocinero-s",
@@ -399,8 +464,11 @@
       "offerTitle": "COCINEROS, EN GENERAL",
       "disposition": "accepted",
       "reasonCode": "exact_occupation_title",
-      "rationale": "Pinned title and checked payload identify the exact occupation without a conflicting role.",
-      "requirementQuotes": ["COCINEROS, EN GENERAL"]
+      "rationale": "Audited pinned payload: Oferta 11664: Cocinero/a Residencia de Mayores en La Robla.",
+      "requirementQuotes": [
+        "COCINEROS, EN GENERAL",
+        "Oferta 11664: Cocinero/a Residencia de Mayores en La Robla."
+      ]
     },
     {
       "candidateId": "cocinero-s",
@@ -411,8 +479,11 @@
       "offerTitle": "COCINEROS, EN GENERAL",
       "disposition": "accepted",
       "reasonCode": "exact_occupation_title",
-      "rationale": "Pinned title and checked payload identify the exact occupation without a conflicting role.",
-      "requirementQuotes": ["COCINEROS, EN GENERAL"]
+      "rationale": "Audited pinned payload: Las propias de cocinero-a para colectividades.",
+      "requirementQuotes": [
+        "COCINEROS, EN GENERAL",
+        "Las propias de cocinero-a para colectividades."
+      ]
     },
     {
       "candidateId": "cocinero-s",
@@ -423,8 +494,11 @@
       "offerTitle": "COCINEROS, EN GENERAL",
       "disposition": "rejected",
       "reasonCode": "degree_or_license_led",
-      "rationale": "Pinned payload contains a reviewed conflicting role or mandatory qualification.",
-      "requirementQuotes": ["COCINEROS, EN GENERAL"]
+      "rationale": "Audited pinned payload: . Título de Técnico en Cocina y Gastronomía.",
+      "requirementQuotes": [
+        "COCINEROS, EN GENERAL",
+        ". Título de Técnico en Cocina y Gastronomía."
+      ]
     },
     {
       "candidateId": "cocinero-s",
@@ -435,8 +509,11 @@
       "offerTitle": "COCINEROS, EN GENERAL",
       "disposition": "rejected",
       "reasonCode": "degree_or_license_led",
-      "rationale": "Pinned payload contains a reviewed conflicting role or mandatory qualification.",
-      "requirementQuotes": ["COCINEROS, EN GENERAL"]
+      "rationale": "Audited pinned payload: Técnico en Cocina y Gastronomía.",
+      "requirementQuotes": [
+        "COCINEROS, EN GENERAL",
+        "Técnico en Cocina y Gastronomía."
+      ]
     },
     {
       "candidateId": "cocinero-s",
@@ -447,8 +524,11 @@
       "offerTitle": "COCINEROS, EN GENERAL",
       "disposition": "accepted",
       "reasonCode": "exact_occupation_title",
-      "rationale": "Pinned title and checked payload identify the exact occupation without a conflicting role.",
-      "requirementQuotes": ["COCINEROS, EN GENERAL"]
+      "rationale": "Audited pinned payload: Contrato temporal, de julio al 2 de octubre.",
+      "requirementQuotes": [
+        "COCINEROS, EN GENERAL",
+        "Contrato temporal, de julio al 2 de octubre."
+      ]
     },
     {
       "candidateId": "cocinero-s",
@@ -459,7 +539,7 @@
       "offerTitle": "COCINEROS, EN GENERAL",
       "disposition": "accepted",
       "reasonCode": "exact_occupation_title",
-      "rationale": "Pinned title and checked payload identify the exact occupation without a conflicting role.",
+      "rationale": "Audited pinned title; requirements, functions, conditions, and summary contain no additional occupation detail.",
       "requirementQuotes": ["COCINEROS, EN GENERAL"]
     },
     {
@@ -471,8 +551,8 @@
       "offerTitle": "COCINEROS, EN GENERAL",
       "disposition": "accepted",
       "reasonCode": "exact_occupation_title",
-      "rationale": "Pinned title and checked payload identify the exact occupation without a conflicting role.",
-      "requirementQuotes": ["COCINEROS, EN GENERAL"]
+      "rationale": "Audited pinned payload: Experiencia 12 meses.",
+      "requirementQuotes": ["COCINEROS, EN GENERAL", "Experiencia 12 meses."]
     },
     {
       "candidateId": "cocinero-s",
@@ -483,8 +563,11 @@
       "offerTitle": "COCINEROS, EN GENERAL",
       "disposition": "accepted",
       "reasonCode": "exact_occupation_title",
-      "rationale": "Pinned title and checked payload identify the exact occupation without a conflicting role.",
-      "requirementQuotes": ["COCINEROS, EN GENERAL"]
+      "rationale": "Audited pinned payload: Residencia de ancianos. 2 días a la semana turno partido y 3 días continuado de mañana o tarde. Posibilidad de plus por kilometraje. Incorporación inmediata",
+      "requirementQuotes": [
+        "COCINEROS, EN GENERAL",
+        "Residencia de ancianos. 2 días a la semana turno partido y 3 días continuado de mañana o tarde. Posibilidad de plus por kilometraje. Incorporación inmediata"
+      ]
     },
     {
       "candidateId": "cocinero-s",
@@ -495,8 +578,11 @@
       "offerTitle": "COCINEROS, EN GENERAL",
       "disposition": "accepted",
       "reasonCode": "exact_occupation_title",
-      "rationale": "Pinned title and checked payload identify the exact occupation without a conflicting role.",
-      "requirementQuotes": ["COCINEROS, EN GENERAL"]
+      "rationale": "Audited pinned payload: Se precisa cubrir 1 puesto de COCINERO Oficial de Tercera para Residencia de Ancianos en BURGOS-Villatoro.",
+      "requirementQuotes": [
+        "COCINEROS, EN GENERAL",
+        "Se precisa cubrir 1 puesto de COCINERO Oficial de Tercera para Residencia de Ancianos en BURGOS-Villatoro."
+      ]
     },
     {
       "candidateId": "cocinero-s",
@@ -507,8 +593,11 @@
       "offerTitle": "COCINEROS, EN GENERAL",
       "disposition": "accepted",
       "reasonCode": "exact_occupation_title",
-      "rationale": "Pinned title and checked payload identify the exact occupation without a conflicting role.",
-      "requirementQuotes": ["COCINEROS, EN GENERAL"]
+      "rationale": "Audited pinned payload: Oferta 15983 Cocinera para bar en Benavente. Personas interesadas pasar por Avenida El Ferial 68 en Benavente, de lunes a viernes en horario de 10:00 a 13:00,persona de contacto: Erica",
+      "requirementQuotes": [
+        "COCINEROS, EN GENERAL",
+        "Oferta 15983 Cocinera para bar en Benavente. Personas interesadas pasar por Avenida El Ferial 68 en Benavente, de lunes a viernes en horario de 10:00 a 13:00,persona de contacto: Erica"
+      ]
     },
     {
       "candidateId": "cocinero-s",
@@ -519,8 +608,11 @@
       "offerTitle": "COCINEROS, EN GENERAL",
       "disposition": "accepted",
       "reasonCode": "exact_occupation_title",
-      "rationale": "Pinned title and checked payload identify the exact occupation without a conflicting role.",
-      "requirementQuotes": ["COCINEROS, EN GENERAL"]
+      "rationale": "Audited pinned payload: SE BUSCA COCINERO CON EXPERIENCIA EN RESTAURACION COLECTIVA PARA COLEGIO UYBICADO EN SORIA CAPITAL",
+      "requirementQuotes": [
+        "COCINEROS, EN GENERAL",
+        "SE BUSCA COCINERO CON EXPERIENCIA EN RESTAURACION COLECTIVA PARA COLEGIO UYBICADO EN SORIA CAPITAL"
+      ]
     },
     {
       "candidateId": "cocinero-s",
@@ -531,7 +623,7 @@
       "offerTitle": "COCINEROS, EN GENERAL",
       "disposition": "accepted",
       "reasonCode": "exact_occupation_title",
-      "rationale": "Pinned title and checked payload identify the exact occupation without a conflicting role.",
+      "rationale": "Audited pinned title; requirements, functions, conditions, and summary contain no additional occupation detail.",
       "requirementQuotes": ["COCINEROS, EN GENERAL"]
     },
     {
@@ -543,8 +635,11 @@
       "offerTitle": "COCINEROS, EN GENERAL",
       "disposition": "rejected",
       "reasonCode": "contradictory_requirement",
-      "rationale": "Pinned payload contains a reviewed conflicting role or mandatory qualification.",
-      "requirementQuotes": ["COCINEROS, EN GENERAL"]
+      "rationale": "Audited pinned payload: LA PROPIAS DE AYUDANTE DE COCINA",
+      "requirementQuotes": [
+        "COCINEROS, EN GENERAL",
+        "LA PROPIAS DE AYUDANTE DE COCINA"
+      ]
     },
     {
       "candidateId": "cocinero-s",
@@ -555,8 +650,11 @@
       "offerTitle": "COCINEROS, EN GENERAL",
       "disposition": "rejected",
       "reasonCode": "degree_or_license_led",
-      "rationale": "Pinned payload contains a reviewed conflicting role or mandatory qualification.",
-      "requirementQuotes": ["COCINEROS, EN GENERAL"]
+      "rationale": "Audited pinned payload: PUESTO SOLICITADO: Cocinero en residencia privada.",
+      "requirementQuotes": [
+        "COCINEROS, EN GENERAL",
+        "PUESTO SOLICITADO: Cocinero en residencia privada."
+      ]
     },
     {
       "candidateId": "cocinero-s",
@@ -567,8 +665,11 @@
       "offerTitle": "COCINEROS, EN GENERAL",
       "disposition": "accepted",
       "reasonCode": "exact_occupation_title",
-      "rationale": "Pinned title and checked payload identify the exact occupation without a conflicting role.",
-      "requirementQuotes": ["COCINEROS, EN GENERAL"]
+      "rationale": "Audited pinned payload: Cocinero/a para residencia de personas mayores para cubrir vacaciones.",
+      "requirementQuotes": [
+        "COCINEROS, EN GENERAL",
+        "Cocinero/a para residencia de personas mayores para cubrir vacaciones."
+      ]
     },
     {
       "candidateId": "cocinero-s",
@@ -579,8 +680,11 @@
       "offerTitle": "COCINEROS, EN GENERAL",
       "disposition": "rejected",
       "reasonCode": "mixed_role",
-      "rationale": "Pinned payload contains a reviewed conflicting role or mandatory qualification.",
-      "requirementQuotes": ["COCINEROS, EN GENERAL"]
+      "rationale": "Audited pinned payload: Oferta 16276 para personal de cocina y limpieza del centro residencial y asistencial Los Álamos en Quiruelas de vidriales, para cubrir descansos y vacaciones. Personas interesadas ponerse en contacto al mail: amara@grupomatellanes.com",
+      "requirementQuotes": [
+        "COCINEROS, EN GENERAL",
+        "Oferta 16276 para personal de cocina y limpieza del centro residencial y asistencial Los Álamos en Quiruelas de vidriales, para cubrir descansos y vacaciones. Personas interesadas ponerse en contacto al mail: amara@grupomatellanes.com"
+      ]
     },
     {
       "candidateId": "cocinero-s",
@@ -591,8 +695,11 @@
       "offerTitle": "COCINEROS, EN GENERAL",
       "disposition": "accepted",
       "reasonCode": "exact_occupation_title",
-      "rationale": "Pinned title and checked payload identify the exact occupation without a conflicting role.",
-      "requirementQuotes": ["COCINEROS, EN GENERAL"]
+      "rationale": "Audited pinned payload: Oferta 16293 de cocinera/o para residencia de mayores en Vilecha",
+      "requirementQuotes": [
+        "COCINEROS, EN GENERAL",
+        "Oferta 16293 de cocinera/o para residencia de mayores en Vilecha"
+      ]
     },
     {
       "candidateId": "cocinero-s",
@@ -603,8 +710,11 @@
       "offerTitle": "COCINEROS, EN GENERAL",
       "disposition": "rejected",
       "reasonCode": "contradictory_requirement",
-      "rationale": "Pinned payload contains a reviewed conflicting role or mandatory qualification.",
-      "requirementQuotes": ["COCINEROS, EN GENERAL"]
+      "rationale": "Audited pinned payload: OFERTA 16289. Ayudante de cocina para hotel en León ciudad. Contrato temporal, media jornada. Experiencia demostrable de 4 meses. Interesados contactar con oficina de empleo León Centro. C/ Ramón y Cajal 14, tfno. 987 24 95 30.",
+      "requirementQuotes": [
+        "COCINEROS, EN GENERAL",
+        "OFERTA 16289. Ayudante de cocina para hotel en León ciudad. Contrato temporal, media jornada. Experiencia demostrable de 4 meses. Interesados contactar con oficina de empleo León Centro. C/ Ramón y Cajal 14, tfno. 987 24 95 30."
+      ]
     },
     {
       "candidateId": "cocinero-s",
@@ -615,8 +725,11 @@
       "offerTitle": "COCINEROS, EN GENERAL",
       "disposition": "accepted",
       "reasonCode": "exact_occupation_title",
-      "rationale": "Pinned title and checked payload identify the exact occupation without a conflicting role.",
-      "requirementQuotes": ["COCINEROS, EN GENERAL"]
+      "rationale": "Audited pinned payload: Carné manipulador de alimentos. Valorable titulación en cocina o similar.",
+      "requirementQuotes": [
+        "COCINEROS, EN GENERAL",
+        "Carné manipulador de alimentos. Valorable titulación en cocina o similar."
+      ]
     },
     {
       "candidateId": "cocinero-s",
@@ -627,8 +740,11 @@
       "offerTitle": "COCINEROS, EN GENERAL",
       "disposition": "rejected",
       "reasonCode": "degree_or_license_led",
-      "rationale": "Pinned payload contains a reviewed conflicting role or mandatory qualification.",
-      "requirementQuotes": ["COCINEROS, EN GENERAL"]
+      "rationale": "Audited pinned payload: OFERTA 16345. Cocinero para Hospital de León. Se requiere título de Técnico/a Superior en Dirección de Servicios de Restauración. Contrato temporal para cubrir baja. Interesados contactar con oficina de empleo León Centro. C/ Ramón y Cajal 14, tfno. 987 24 95 30.",
+      "requirementQuotes": [
+        "COCINEROS, EN GENERAL",
+        "OFERTA 16345. Cocinero para Hospital de León. Se requiere título de Técnico/a Superior en Dirección de Servicios de Restauración. Contrato temporal para cubrir baja. Interesados contactar con oficina de empleo León Centro. C/ Ramón y Cajal 14, tfno. 987 24 95 30."
+      ]
     },
     {
       "candidateId": "cocinero-s",
@@ -639,8 +755,11 @@
       "offerTitle": "COCINEROS, EN GENERAL",
       "disposition": "accepted",
       "reasonCode": "exact_occupation_title",
-      "rationale": "Pinned title and checked payload identify the exact occupation without a conflicting role.",
-      "requirementQuotes": ["COCINEROS, EN GENERAL"]
+      "rationale": "Audited pinned payload: contrato indefinido, jornada completa.",
+      "requirementQuotes": [
+        "COCINEROS, EN GENERAL",
+        "contrato indefinido, jornada completa."
+      ]
     },
     {
       "candidateId": "cocinero-s",
@@ -651,7 +770,7 @@
       "offerTitle": "COCINEROS, EN GENERAL",
       "disposition": "accepted",
       "reasonCode": "exact_occupation_title",
-      "rationale": "Pinned title and checked payload identify the exact occupation without a conflicting role.",
+      "rationale": "Audited pinned title; requirements, functions, conditions, and summary contain no additional occupation detail.",
       "requirementQuotes": ["COCINEROS, EN GENERAL"]
     },
     {
@@ -663,8 +782,11 @@
       "offerTitle": "COCINEROS, EN GENERAL",
       "disposition": "accepted",
       "reasonCode": "exact_occupation_title",
-      "rationale": "Pinned title and checked payload identify the exact occupation without a conflicting role.",
-      "requirementQuotes": ["COCINEROS, EN GENERAL"]
+      "rationale": "Audited pinned payload: ELABORACIÓN DE MENÚS Y DIETAS ESPECIALES Y CONTROL Y RECEPCIÓN DE PEDIDOS.",
+      "requirementQuotes": [
+        "COCINEROS, EN GENERAL",
+        "ELABORACIÓN DE MENÚS Y DIETAS ESPECIALES Y CONTROL Y RECEPCIÓN DE PEDIDOS."
+      ]
     },
     {
       "candidateId": "cocinero-s",
@@ -675,7 +797,7 @@
       "offerTitle": "COCINEROS, EN GENERAL",
       "disposition": "accepted",
       "reasonCode": "exact_occupation_title",
-      "rationale": "Pinned title and checked payload identify the exact occupation without a conflicting role.",
+      "rationale": "Audited pinned title; requirements, functions, conditions, and summary contain no additional occupation detail.",
       "requirementQuotes": ["COCINEROS, EN GENERAL"]
     },
     {
@@ -687,8 +809,11 @@
       "offerTitle": "COCINEROS, EN GENERAL",
       "disposition": "rejected",
       "reasonCode": "degree_or_license_led",
-      "rationale": "Pinned payload contains a reviewed conflicting role or mandatory qualification.",
-      "requirementQuotes": ["COCINEROS, EN GENERAL"]
+      "rationale": "Audited pinned payload: OFERTA ECYL 16383- COCINERO PARA EPOCA BURGOS- INDEFINIDO- MEDIA JORNADA MAÑANAS- TITULACION EN COCINA - SI ESTA INTERESADO DEBE ENVIAR CV A EPOCABURGOS@GMAIL.COM CON COPIA A ECYLJUANDEPADILLA.OFERTAS@JCYL.ES CON ASUNTO( PARTICIPO OFERTA 16383- COCINERO) SMS- O.E. JUAN DE PADILLA",
+      "requirementQuotes": [
+        "COCINEROS, EN GENERAL",
+        "OFERTA ECYL 16383- COCINERO PARA EPOCA BURGOS- INDEFINIDO- MEDIA JORNADA MAÑANAS- TITULACION EN COCINA - SI ESTA INTERESADO DEBE ENVIAR CV A EPOCABURGOS@GMAIL.COM CON COPIA A ECYLJUANDEPADILLA.OFERTAS@JCYL.ES CON ASUNTO( PARTICIPO OFERTA 16383- COCINERO) SMS- O.E. JUAN DE PADILLA"
+      ]
     },
     {
       "candidateId": "cocinero-s",
@@ -699,7 +824,7 @@
       "offerTitle": "COCINEROS, EN GENERAL",
       "disposition": "accepted",
       "reasonCode": "exact_occupation_title",
-      "rationale": "Pinned title and checked payload identify the exact occupation without a conflicting role.",
+      "rationale": "Audited pinned title; requirements, functions, conditions, and summary contain no additional occupation detail.",
       "requirementQuotes": ["COCINEROS, EN GENERAL"]
     },
     {
@@ -711,8 +836,8 @@
       "offerTitle": "COCINEROS, EN GENERAL",
       "disposition": "accepted",
       "reasonCode": "exact_occupation_title",
-      "rationale": "Pinned title and checked payload identify the exact occupation without a conflicting role.",
-      "requirementQuotes": ["COCINEROS, EN GENERAL"]
+      "rationale": "Audited pinned payload: Se valorará experiencia.",
+      "requirementQuotes": ["COCINEROS, EN GENERAL", "Se valorará experiencia."]
     },
     {
       "candidateId": "cocinero-s",
@@ -723,8 +848,8 @@
       "offerTitle": "COCINEROS, EN GENERAL",
       "disposition": "rejected",
       "reasonCode": "degree_or_license_led",
-      "rationale": "Pinned payload contains a reviewed conflicting role or mandatory qualification.",
-      "requirementQuotes": ["COCINEROS, EN GENERAL"]
+      "rationale": "Audited pinned payload: Graduado en E.S.O.",
+      "requirementQuotes": ["COCINEROS, EN GENERAL", "Graduado en E.S.O."]
     },
     {
       "candidateId": "cocinero-s",
@@ -735,8 +860,11 @@
       "offerTitle": "COCINEROS, EN GENERAL",
       "disposition": "accepted",
       "reasonCode": "exact_occupation_title",
-      "rationale": "Pinned title and checked payload identify the exact occupation without a conflicting role.",
-      "requirementQuotes": ["COCINEROS, EN GENERAL"]
+      "rationale": "Audited pinned payload: Oferta 16743 Cocinero para Residencia de Mayores en Cistierna. Bases Resolución 2026-0537 Sede electrónica Ayto. Cistierna. Contactar con la Oficina de Empleo de Cistierna Tfno 987701387",
+      "requirementQuotes": [
+        "COCINEROS, EN GENERAL",
+        "Oferta 16743 Cocinero para Residencia de Mayores en Cistierna. Bases Resolución 2026-0537 Sede electrónica Ayto. Cistierna. Contactar con la Oficina de Empleo de Cistierna Tfno 987701387"
+      ]
     },
     {
       "candidateId": "cocinero-s",
@@ -747,8 +875,11 @@
       "offerTitle": "COCINEROS, EN GENERAL",
       "disposition": "accepted",
       "reasonCode": "exact_occupation_title",
-      "rationale": "Pinned title and checked payload identify the exact occupation without a conflicting role.",
-      "requirementQuotes": ["COCINEROS, EN GENERAL"]
+      "rationale": "Audited pinned payload: Se necesita 1 COCINERO/A EN GENERAL para Restaurante en Tordesillas (Valladolid). Se ofrece Contrato indefinido a jornada completa. Interesados ponerse en contacto con la Oficina de Tordesillas",
+      "requirementQuotes": [
+        "COCINEROS, EN GENERAL",
+        "Se necesita 1 COCINERO/A EN GENERAL para Restaurante en Tordesillas (Valladolid). Se ofrece Contrato indefinido a jornada completa. Interesados ponerse en contacto con la Oficina de Tordesillas"
+      ]
     },
     {
       "candidateId": "cocinero-s",
@@ -759,8 +890,11 @@
       "offerTitle": "COCINEROS, EN GENERAL",
       "disposition": "accepted",
       "reasonCode": "exact_occupation_title",
-      "rationale": "Pinned title and checked payload identify the exact occupation without a conflicting role.",
-      "requirementQuotes": ["COCINEROS, EN GENERAL"]
+      "rationale": "Audited pinned payload: carné de manipulador de alimentos. Valorable titulación de restauración, cocina o similar. Conocimiento del proceso de elaboración de línea fría.",
+      "requirementQuotes": [
+        "COCINEROS, EN GENERAL",
+        "carné de manipulador de alimentos. Valorable titulación de restauración, cocina o similar. Conocimiento del proceso de elaboración de línea fría."
+      ]
     },
     {
       "candidateId": "cocinero-s",
@@ -771,7 +905,7 @@
       "offerTitle": "COCINEROS, EN GENERAL",
       "disposition": "accepted",
       "reasonCode": "exact_occupation_title",
-      "rationale": "Pinned title and checked payload identify the exact occupation without a conflicting role.",
+      "rationale": "Audited pinned title; requirements, functions, conditions, and summary contain no additional occupation detail.",
       "requirementQuotes": ["COCINEROS, EN GENERAL"]
     },
     {
@@ -783,7 +917,7 @@
       "offerTitle": "COCINEROS, EN GENERAL",
       "disposition": "accepted",
       "reasonCode": "exact_occupation_title",
-      "rationale": "Pinned title and checked payload identify the exact occupation without a conflicting role.",
+      "rationale": "Audited pinned title; requirements, functions, conditions, and summary contain no additional occupation detail.",
       "requirementQuotes": ["COCINEROS, EN GENERAL"]
     },
     {
@@ -795,8 +929,11 @@
       "offerTitle": "ENCOFRADORES",
       "disposition": "accepted",
       "reasonCode": "exact_occupation_title",
-      "rationale": "Pinned title and checked payload identify the exact occupation without a conflicting role.",
-      "requirementQuotes": ["ENCOFRADORES"]
+      "rationale": "Audited pinned payload: Curso PRL de 20 horas construcción. Permiso de conducir.",
+      "requirementQuotes": [
+        "ENCOFRADORES",
+        "Curso PRL de 20 horas construcción. Permiso de conducir."
+      ]
     },
     {
       "candidateId": "encofradores",
@@ -807,7 +944,7 @@
       "offerTitle": "ENCOFRADORES",
       "disposition": "accepted",
       "reasonCode": "exact_occupation_title",
-      "rationale": "Pinned title and checked payload identify the exact occupation without a conflicting role.",
+      "rationale": "Audited pinned title; requirements, functions, conditions, and summary contain no additional occupation detail.",
       "requirementQuotes": ["ENCOFRADORES"]
     }
   ],
