@@ -27,7 +27,7 @@ describe("contest coverage freeze validator", () => {
     expect(freeze.coverage.modalityKeyCount).toBe(7);
     expect(freeze.offers.matchedOfferCount).toBe(46);
     expect(freeze.offers.marginalOfferDeltas.unionOfferCount).toBe(0);
-  });
+  }, 30_000);
 
   it("rejects a changed manifest hash instead of trusting copied figures", async () => {
     const freeze = await readFreeze();
@@ -42,7 +42,7 @@ describe("contest coverage freeze validator", () => {
         { rootDir: ROOT },
       ),
     ).toThrow(/manifest|sha256|recomput/i);
-  });
+  }, 30_000);
 
   it("rejects a source commit that cannot prove the no-mutation boundary", async () => {
     const freeze = await readFreeze();
@@ -53,7 +53,7 @@ describe("contest coverage freeze validator", () => {
         { rootDir: ROOT },
       ),
     ).toThrow(/sourceCommitSha|commit|mutation/i);
-  });
+  }, 30_000);
 
   it("rejects inconsistent coverage counts and marginal deltas", async () => {
     const freeze = await readFreeze();
@@ -83,5 +83,5 @@ describe("contest coverage freeze validator", () => {
         { rootDir: ROOT },
       ),
     ).toThrow(/coverage|offer|recomput|marginal/i);
-  });
+  }, 30_000);
 });

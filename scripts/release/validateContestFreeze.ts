@@ -479,6 +479,9 @@ function recomputeFreeze(
     qualityReport.counts,
     "manifest.qualityReport.counts",
   );
+  if (manifest.qualityStatus !== "passed") {
+    throw new Error("manifest qualityStatus must be passed");
+  }
   const programs = readResource<TrainingProgram[]>(
     rootDir,
     freeze.manifest,
@@ -639,7 +642,7 @@ function recomputeFreeze(
       sha256: hashText(manifestText),
       generatedAt: stringValue(manifest.generatedAt, "manifest.generatedAt"),
       snapshotId,
-      qualityStatus: manifest.qualityStatus === "passed" ? "passed" : "pending",
+      qualityStatus: "passed",
       qualityCounts: Object.fromEntries(
         Object.entries(manifestQualityCounts).map(([key, value]) => [
           key,

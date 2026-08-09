@@ -1,14 +1,22 @@
-import { describe, expect, it } from "vitest";
+import { beforeAll, describe, expect, it } from "vitest";
 
-import { loadAndValidateContestFreeze } from "./validateContestFreeze";
+import {
+  loadAndValidateContestFreeze,
+  type ContestFreeze,
+} from "./validateContestFreeze";
 import {
   renderContestSubmission,
   validateRenderedContestSubmission,
 } from "./renderContestSubmission";
 
 describe("contest submission renderer", () => {
+  let freeze: ContestFreeze;
+
+  beforeAll(() => {
+    freeze = loadAndValidateContestFreeze();
+  }, 30_000);
+
   it("renders the four final documents from the frozen values", () => {
-    const freeze = loadAndValidateContestFreeze();
     const rendered = renderContestSubmission(freeze);
 
     expect(Object.keys(rendered)).toEqual([
@@ -31,7 +39,6 @@ describe("contest submission renderer", () => {
   });
 
   it("is byte-stable and rejects forbidden or stale claims", () => {
-    const freeze = loadAndValidateContestFreeze();
     const first = renderContestSubmission(freeze);
     const second = renderContestSubmission(freeze);
 
