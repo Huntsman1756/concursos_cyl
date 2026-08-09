@@ -38,6 +38,16 @@ describe("GitHub Pages deployment workflow", () => {
     expect(workflow).not.toMatch(/^\s+- run: npm test$/mu);
   });
 
+  it("installs the pinned notebook runtime before the full unit suite", async () => {
+    const workflow = await readFile(workflowPath, "utf8");
+    expect(workflow).toMatch(
+      /actions\/setup-python@[a-f0-9]{40} # v5\.6\.0\s+with:\s+python-version: "3\.12"/u,
+    );
+    expect(workflow).toContain(
+      'python -m pip install --disable-pip-version-check --no-input "jupyter==1.1.1" "pandas==3.0.2"',
+    );
+  });
+
   it("grants each job only its required permissions", async () => {
     const workflow = await readFile(workflowPath, "utf8");
     expect(workflow).not.toMatch(/^permissions:/mu);
