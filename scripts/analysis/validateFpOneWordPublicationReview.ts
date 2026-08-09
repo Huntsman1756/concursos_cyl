@@ -13,6 +13,7 @@ import {
 } from "../../data/schemas/fpOneWordPublicationReview";
 
 type Offer = { id: string; title: string };
+export const APPROVED_SINGLE_TOKEN_MATCH_POLICY = "approved_single_token";
 
 const RAW_PINNED_OFFER_SCHEMA = z
   .object({
@@ -124,6 +125,14 @@ const SPECIAL_FORMS: Record<string, string> = {
   "1285664848132": "albañil",
   "1285669061589": "albañil",
 };
+
+export function approvedSingleTokenAuditIdentity(input: {
+  alias: string;
+  occupationId: string;
+  matchPolicy: typeof APPROVED_SINGLE_TOKEN_MATCH_POLICY;
+}): string {
+  return [input.alias, input.occupationId, input.matchPolicy].join("\u0000");
+}
 
 function fail(message: string): never {
   throw new Error(message);
@@ -274,6 +283,27 @@ function expectedDecision(rows: readonly ReviewRow[]) {
   );
 }
 
+export function approvedSingleTokenAuditIdentities(
+  artifact: FpOneWordPublicationReview,
+): Set<string> {
+  const identities = new Set<string>();
+  for (const row of artifact.rows) {
+    if (
+      row.disposition === "accepted" &&
+      artifact.publicationDecision[row.form].status === "accepted"
+    ) {
+      identities.add(
+        approvedSingleTokenAuditIdentity({
+          alias: row.form,
+          occupationId: row.occupationId,
+          matchPolicy: APPROVED_SINGLE_TOKEN_MATCH_POLICY,
+        }),
+      );
+    }
+  }
+  return identities;
+}
+
 export function validateFpOneWordPublicationReviewArtifact(
   value: unknown,
   rootDirectoryOrOptions: string | { allowInProgress?: boolean } = resolve(
@@ -345,6 +375,22 @@ export function validateFpOneWordPublicationReview(
     JSON.parse(readFileSync(artifactPath, "utf8")),
     rootDirectory,
     options,
+  );
+}
+
+export function isApprovedSingleTokenAlias(
+  rootDirectory: string,
+  alias: string,
+  occupationId: string,
+): boolean {
+  return approvedSingleTokenAuditIdentities(
+    validateFpOneWordPublicationReview(rootDirectory),
+  ).has(
+    approvedSingleTokenAuditIdentity({
+      alias,
+      occupationId,
+      matchPolicy: APPROVED_SINGLE_TOKEN_MATCH_POLICY,
+    }),
   );
 }
 

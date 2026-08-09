@@ -48,6 +48,9 @@ export const MatchRuleSchema = z.enum([
 ]);
 
 export type MatchRule = z.infer<typeof MatchRuleSchema>;
+const STRICT_MULTIWORD_MATCH_POLICY = "strict_multiword";
+type ResolvedAliasMatchPolicy =
+  typeof STRICT_MULTIWORD_MATCH_POLICY | "approved_single_token";
 
 function auditIdentity(prefix: string, fields: readonly string[]): string {
   return `${prefix}:${bytesToHex(sha256(utf8ToBytes(fields.join("\u0000"))))}`;
@@ -55,6 +58,12 @@ function auditIdentity(prefix: string, fields: readonly string[]): string {
 
 function optionalField(value: string | undefined): string {
   return value ?? "";
+}
+
+function resolvedAliasMatchPolicy(
+  alias: Pick<OccupationAlias, "matchPolicy">,
+): ResolvedAliasMatchPolicy {
+  return alias.matchPolicy ?? STRICT_MULTIWORD_MATCH_POLICY;
 }
 
 export function trainingLinkEvidenceIdentity(
@@ -77,6 +86,7 @@ export function aliasEvidenceIdentity(alias: OccupationAlias): string {
   return auditIdentity("occupation-alias", [
     alias.alias,
     alias.occupationId,
+    resolvedAliasMatchPolicy(alias),
     alias.reviewStatus,
     alias.reviewedAt,
     alias.mappingVersion,
@@ -551,6 +561,11 @@ function normalizedText(value: string): string {
     .trim();
 }
 
+function normalizedTokenCount(value: string): number {
+  const normalized = normalizedText(value);
+  return normalized.length === 0 ? 0 : normalized.split(" ").length;
+}
+
 function isBoundedPhrase(text: string, phrase: string): boolean {
   return ` ${text} `.includes(` ${phrase} `);
 }
@@ -616,9 +631,16 @@ function validateRelationships(data: ReturnType<typeof parseData>): void {
         `Approved alias has a dangling occupation: ${alias.alias}.`,
       );
     }
-    if (normalizedText(alias.alias).split(" ").length < 2) {
+    const matchPolicy = resolvedAliasMatchPolicy(alias);
+    const tokenCount = normalizedTokenCount(alias.alias);
+    if (
+      (matchPolicy === STRICT_MULTIWORD_MATCH_POLICY && tokenCount < 2) ||
+      (matchPolicy === "approved_single_token" && tokenCount !== 1)
+    ) {
       throw new Error(
-        `Approved alias must contain more than one word: ${alias.alias}.`,
+        matchPolicy === STRICT_MULTIWORD_MATCH_POLICY
+          ? `Approved alias must contain more than one word: ${alias.alias}.`
+          : `Approved single-token alias must normalize to exactly one word: ${alias.alias}.`,
       );
     }
   }

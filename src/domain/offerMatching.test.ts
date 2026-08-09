@@ -35,6 +35,7 @@ import {
 const OCCUPATION_ID = "occupation:cno11:2713";
 const QUALIFICATION_ID =
   "qualification:web-application-development-higher-technician";
+const ENCOFRADORES_OCCUPATION_ID = "occupation:cno11:7111";
 
 const programs: TrainingProgram[] = [
   {
@@ -206,6 +207,24 @@ describe("reviewed program qualification links", () => {
 });
 
 describe("matchOffersForProgram", () => {
+  it("binds alias evidence identity to matchPolicy", () => {
+    const strictAlias = {
+      alias: "encofradores",
+      occupationId: ENCOFRADORES_OCCUPATION_ID,
+      reviewStatus: "approved",
+      reviewedAt: "2026-08-09",
+      mappingVersion: "1.0.0",
+    } as OccupationAlias;
+    const approvedSingleTokenAlias = {
+      ...strictAlias,
+      matchPolicy: "approved_single_token",
+    } as OccupationAlias;
+
+    expect(aliasEvidenceIdentity(approvedSingleTokenAlias)).not.toBe(
+      aliasEvidenceIdentity(strictAlias),
+    );
+  });
+
   it("records the full approved link and alias payload with recomputed identities", () => {
     const [match] = matchOffersForProgram(
       "IFC03S",
@@ -338,6 +357,75 @@ describe("matchOffersForProgram", () => {
         normalizedAlias: "desarrollador web",
       },
     });
+  });
+
+  it("matches approved_single_token aliases only on exact whole tokens and keeps equal-title distinct IDs", () => {
+    const eocProgram: TrainingProgram = {
+      programKey: "EOC01M",
+      programTitle: "ConstrucciÃ³n",
+      level: "intermediate",
+      familyCode: "EOC",
+      familyName: "EdificaciÃ³n y Obra Civil",
+    };
+    const eocOccupation: Occupation = {
+      ...occupation,
+      occupationId: ENCOFRADORES_OCCUPATION_ID,
+      preferredLabel: "Encofradores y operarios de puesta en obra de hormigÃ³n",
+      confirmationLabel: "Encofrados y hormigÃ³n",
+      classificationCode: "7111",
+      reviewedAt: "2026-08-09",
+    };
+    const singleTokenAlias = {
+      alias: "encofradores",
+      occupationId: ENCOFRADORES_OCCUPATION_ID,
+      reviewStatus: "approved",
+      reviewedAt: "2026-08-09",
+      mappingVersion: "1.0.0",
+      matchPolicy: "approved_single_token",
+    } as OccupationAlias;
+    const eocLink: TrainingOccupationLink = {
+      ...links[0],
+      trainingProgramKey: "EOC01M",
+      occupationId: ENCOFRADORES_OCCUPATION_ID,
+      sourceQuote: "Encofradores.",
+      reviewedAt: "2026-08-09",
+    };
+
+    const matches = matchOffersForProgram("EOC01M", {
+      ...data([
+        offer("offer:encofradores-1", "ENCOFRADORES"),
+        offer("offer:encofradores-2", "ENCOFRADORES"),
+        offer("offer:encofradores-phrase", "Buscamos encofradores para obra"),
+        offer(
+          "offer:encofradores-substring",
+          "Desencofradores para rehabilitaciÃ³n",
+        ),
+        offer("offer:encofradores-singular", "Encofrador para obra"),
+      ]),
+      programs: [...programs, eocProgram],
+      qualifications: REVIEWED_QUALIFICATIONS,
+      programQualificationLinks: [],
+      occupations: [occupation, eocOccupation],
+      aliases: [singleTokenAlias],
+      links: [eocLink],
+    });
+
+    expect(
+      matches.map(({ offerId, matchRule }) => ({ offerId, matchRule })),
+    ).toEqual([
+      {
+        offerId: "offer:encofradores-1",
+        matchRule: "title_alias_exact",
+      },
+      {
+        offerId: "offer:encofradores-2",
+        matchRule: "title_alias_exact",
+      },
+      {
+        offerId: "offer:encofradores-phrase",
+        matchRule: "title_alias_phrase",
+      },
+    ]);
   });
 
   it("rejects exact and phrase rule masquerading and title evidence tampering", () => {

@@ -12,6 +12,12 @@ import {
   type TrainingOccupationLink,
 } from "../../data/schemas/curatedMappings";
 import type { TrainingProgram } from "../../data/schemas/generated";
+import {
+  APPROVED_SINGLE_TOKEN_MATCH_POLICY,
+  approvedSingleTokenAuditIdentity,
+  approvedSingleTokenAuditIdentities,
+  validateFpOneWordPublicationReview,
+} from "../analysis/validateFpOneWordPublicationReview";
 
 export interface CuratedMappingCandidate {
   programs: readonly TrainingProgram[];
@@ -26,13 +32,8 @@ export interface ValidatedCuratedMappings {
   links: TrainingOccupationLink[];
 }
 
-const GENERIC_ONE_WORD_ALIASES = new Set([
-  "administrativo",
-  "auxiliar",
-  "desarrollador",
-  "programador",
-  "tecnico",
-]);
+const DEFAULT_ROOT_DIRECTORY = resolve(import.meta.dirname, "../..");
+const STRICT_MULTIWORD_MATCH_POLICY = "strict_multiword";
 
 function normalizeAlias(value: string): string {
   return value
@@ -42,6 +43,14 @@ function normalizeAlias(value: string): string {
     .replace(/[^\p{Letter}\p{Number}]+/gu, " ")
     .replace(/\s+/gu, " ")
     .trim();
+}
+
+function resolvedAliasMatchPolicy(
+  alias: OccupationAlias,
+):
+  | typeof APPROVED_SINGLE_TOKEN_MATCH_POLICY
+  | typeof STRICT_MULTIWORD_MATCH_POLICY {
+  return alias.matchPolicy ?? STRICT_MULTIWORD_MATCH_POLICY;
 }
 
 function isPrimaryOfficialSource(value: string): boolean {
@@ -100,14 +109,43 @@ export function validateCuratedMappings(
     candidate.programs.map((program) => program.programKey),
   );
   const normalizedAliases = new Map<string, string>();
+  const approvedSingleTokenIdentities = approvedSingleTokenAuditIdentities(
+    validateFpOneWordPublicationReview(DEFAULT_ROOT_DIRECTORY),
+  );
 
   for (const alias of aliases) {
     const normalized = normalizeAlias(alias.alias);
-    if (
-      normalized.split(" ").length < 2 ||
-      GENERIC_ONE_WORD_ALIASES.has(normalized)
-    ) {
-      throw new Error(`Generic one-word alias is not allowed: ${alias.alias}.`);
+    const normalizedTokenCount =
+      normalized.length === 0 ? 0 : normalized.split(" ").length;
+    const matchPolicy = resolvedAliasMatchPolicy(alias);
+    if (normalizedTokenCount < 2) {
+      if (matchPolicy !== APPROVED_SINGLE_TOKEN_MATCH_POLICY) {
+        throw new Error(
+          `Generic one-word alias is not allowed: ${alias.alias}.`,
+        );
+      }
+      if (normalizedTokenCount !== 1) {
+        throw new Error(
+          `approved_single_token requires exactly one normalized token: ${alias.alias}.`,
+        );
+      }
+      if (
+        !approvedSingleTokenIdentities.has(
+          approvedSingleTokenAuditIdentity({
+            alias: alias.alias,
+            occupationId: alias.occupationId,
+            matchPolicy,
+          }),
+        )
+      ) {
+        throw new Error(
+          `approved_single_token alias lacks an exact accepted publication audit pair: ${alias.alias}.`,
+        );
+      }
+    } else if (matchPolicy === APPROVED_SINGLE_TOKEN_MATCH_POLICY) {
+      throw new Error(
+        `approved_single_token requires exactly one normalized token: ${alias.alias}.`,
+      );
     }
     const existing = normalizedAliases.get(normalized);
     if (existing !== undefined) {

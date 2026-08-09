@@ -211,6 +211,131 @@ describe("curated occupation mappings", () => {
     ).toThrow(/unknown occupation/i);
   });
 
+  it("accepts the audited accepted single-token alias only with approved_single_token", () => {
+    expect(() =>
+      validateCuratedMappings({
+        programs,
+        occupations: [
+          ...occupations,
+          {
+            ...occupations[0],
+            occupationId: "occupation:cno11:7111",
+            preferredLabel:
+              "Encofradores y operarios de puesta en obra de hormigÃ³n",
+            confirmationLabel: "Encofrados y hormigÃ³n",
+            classificationCode: "7111",
+          },
+        ],
+        aliases: [
+          {
+            alias: "encofradores",
+            occupationId: "occupation:cno11:7111",
+            reviewStatus: "approved",
+            reviewedAt: "2026-08-09",
+            mappingVersion: "1.0.0",
+            matchPolicy: "approved_single_token",
+          },
+        ],
+        links: [
+          ...links,
+          {
+            ...links[0],
+            trainingProgramKey: "EOC01M",
+            occupationId: "occupation:cno11:7111",
+            sourceQuote: "Encofradores.",
+            reviewedAt: "2026-08-09",
+          },
+        ],
+      }),
+    ).not.toThrow();
+  });
+
+  it("rejects approved_single_token when the literal form or occupation is not the audited accepted pair", () => {
+    const eocOccupation = {
+      ...occupations[0],
+      occupationId: "occupation:cno11:7111",
+      preferredLabel: "Encofradores y operarios de puesta en obra de hormigÃ³n",
+      confirmationLabel: "Encofrados y hormigÃ³n",
+      classificationCode: "7111",
+    } as const;
+    const eocLink = {
+      ...links[0],
+      trainingProgramKey: "EOC01M",
+      occupationId: eocOccupation.occupationId,
+      sourceQuote: "Encofradores.",
+      reviewedAt: "2026-08-09",
+    } as const;
+
+    expect(() =>
+      validateCuratedMappings({
+        programs,
+        occupations: [...occupations, eocOccupation],
+        aliases: [
+          {
+            alias: "Encofradores",
+            occupationId: eocOccupation.occupationId,
+            reviewStatus: "approved",
+            reviewedAt: "2026-08-09",
+            mappingVersion: "1.0.0",
+            matchPolicy: "approved_single_token",
+          },
+        ],
+        links: [...links, eocLink],
+      }),
+    ).toThrow(/accepted|audit|publication/i);
+
+    expect(() =>
+      validateCuratedMappings({
+        programs,
+        occupations: [
+          ...occupations,
+          eocOccupation,
+          {
+            ...eocOccupation,
+            occupationId: "occupation:cno11:7121",
+            preferredLabel: "AlbaÃ±iles",
+            confirmationLabel: "AlbaÃ±ilerÃ­a",
+            classificationCode: "7121",
+          },
+        ],
+        aliases: [
+          {
+            alias: "encofradores",
+            occupationId: "occupation:cno11:7121",
+            reviewStatus: "approved",
+            reviewedAt: "2026-08-09",
+            mappingVersion: "1.0.0",
+            matchPolicy: "approved_single_token",
+          },
+        ],
+        links: [
+          ...links,
+          eocLink,
+          {
+            ...eocLink,
+            occupationId: "occupation:cno11:7121",
+          },
+        ],
+      }),
+    ).toThrow(/accepted|audit|publication/i);
+  });
+
+  it("rejects unknown alias matchPolicy values", () => {
+    expect(() =>
+      validateCuratedMappings({
+        programs,
+        occupations,
+        aliases: [
+          {
+            ...aliases[0],
+            matchPolicy: "unknown_policy",
+          },
+        ],
+        links,
+      }),
+    ).toThrow(/matchPolicy|invalid|unrecognized/i);
+  });
+
   it("rejects a normalized alias assigned to different occupations", () => {
     const other = {
       ...occupations[0],

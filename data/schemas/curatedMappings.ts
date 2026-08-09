@@ -9,6 +9,9 @@ export const RelationshipTypeSchema = z.enum([
   "official_output",
   "reviewed_relationship",
 ]);
+export const OccupationAliasMatchPolicySchema = z.literal(
+  "approved_single_token",
+);
 
 function requireDraftReviewNote(
   record: {
@@ -57,6 +60,7 @@ export const OccupationAliasSchema = z
   .object({
     alias: z.string().trim().min(2),
     occupationId: z.string().regex(/^occupation:cno11:\d{4}$/u),
+    matchPolicy: OccupationAliasMatchPolicySchema.optional(),
     reviewStatus: ReviewStatusSchema,
     reviewedAt: ReviewDateSchema,
     mappingVersion: SemanticVersionSchema,
@@ -129,6 +133,9 @@ export const MappingCoverageResourceSchema = z.array(MappingCoverageSchema);
 
 export type ReviewStatus = z.infer<typeof ReviewStatusSchema>;
 export type RelationshipType = z.infer<typeof RelationshipTypeSchema>;
+export type OccupationAliasMatchPolicy = z.infer<
+  typeof OccupationAliasMatchPolicySchema
+>;
 export type Occupation = z.infer<typeof OccupationSchema>;
 export type OccupationAlias = z.infer<typeof OccupationAliasSchema>;
 export type TrainingOccupationLink = z.infer<
