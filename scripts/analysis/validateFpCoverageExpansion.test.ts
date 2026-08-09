@@ -181,6 +181,35 @@ describe("validateFpCoverageExpansion", () => {
     });
   });
 
+  it("requires explicit pending-publication mode before a completed snapshot is rebuilt", () => {
+    const pendingInput = validInput();
+    pendingInput.publicRelationSet = {
+      manifestAddressed: true,
+      relationKeys: [],
+      resourcePaths: ["/data/v1/manifest.json"],
+    };
+    expect(() => validateExpansionAttemptData(pendingInput)).toThrow(
+      /public parity/i,
+    );
+    expect(() =>
+      validateExpansionAttemptData({
+        ...pendingInput,
+        publicationPending: true,
+      }),
+    ).not.toThrow();
+    expect(() =>
+      validateExpansionAttemptData({
+        ...pendingInput,
+        publicationPending: true,
+        publicRelationSet: {
+          manifestAddressed: true,
+          relationKeys: ["ELE01M|occupation:cno11:7521"],
+          resourcePaths: ["/data/v1/manifest.json"],
+        },
+      }),
+    ).toThrow(/pending|public/i);
+  });
+
   it("rejects an omitted output from the authoritative inventory", () => {
     expect(() =>
       validateExpansionAttemptData(

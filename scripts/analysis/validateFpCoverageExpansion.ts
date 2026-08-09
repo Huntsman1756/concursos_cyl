@@ -429,6 +429,7 @@ export type ExpansionAttemptInput = {
   candidate: unknown;
   computed: ExpansionComputedDeltas;
   publicRelationSet: unknown;
+  publicationPending?: boolean;
   reviewedBaseQualificationIdentities?: readonly string[];
   approvedSingleTokenAuditKeys?: readonly string[];
   matchedAliasKeys?: readonly string[];
@@ -551,6 +552,10 @@ export function validateExpansionAttemptData(
   input: ExpansionAttemptInput,
 ): FpExpansionAttempt {
   const attempt = FpExpansionAttemptSchema.parse(input.attempt);
+  if (input.publicationPending === true && attempt.state !== "completed")
+    fail(
+      "Publication-pending validation is only valid for completed attempts.",
+    );
   const publicRelationSet = ManifestAddressedRelationSetSchema.parse(
     input.publicRelationSet,
   );
@@ -883,9 +888,18 @@ export function validateExpansionAttemptData(
     fail("Public parity must equal rejected relations exactly.");
   if (
     attempt.state === "completed" &&
+    input.publicationPending !== true &&
     !sameIds(publicRelationSet.relationKeys, acceptedKeys)
   )
     fail("Completed accepted relation is missing from public parity.");
+  if (
+    attempt.state === "completed" &&
+    input.publicationPending === true &&
+    publicRelationSet.relationKeys.length > 0
+  )
+    fail(
+      "Completed attempt marked publication-pending must have no public relation yet.",
+    );
   if (
     attempt.state !== "completed" &&
     (publicRelationSet.relationKeys.length > 0 ||
@@ -996,6 +1010,7 @@ export type ExpansionValidationDependencies = {
     rootDirectory: string,
     programKey: string,
   ) => Promise<ManifestAddressedRelationSet>;
+  publicationPending?: boolean;
   reviewedBaseQualificationIdentities?: readonly string[];
   loadApprovedSingleTokenAuditKeys?: (
     rootDirectory: string,
@@ -1117,6 +1132,7 @@ export async function validateExpansionAttempt(
     candidate,
     computed,
     publicRelationSet,
+    publicationPending: dependencies.publicationPending,
     reviewedBaseQualificationIdentities:
       dependencies.reviewedBaseQualificationIdentities,
     approvedSingleTokenAuditKeys,

@@ -1,0 +1,501 @@
+{
+  "schemaVersion": "1.0.0",
+  "generatedAt": "2026-08-09T17:34:00Z",
+  "sourceCutoffAt": "2026-08-09T17:34:00Z",
+  "counts": {
+    "completed": 1,
+    "deferred": 7,
+    "discarded": 0,
+    "terminal": 8,
+    "primaryAttempted": 7,
+    "reserveAttempted": 1,
+    "totalAttempted": 8,
+    "primaryUnattempted": 0,
+    "reserveUnattempted": 6
+  },
+  "coverage": {
+    "baselineReviewedQualifications": [
+      "qualification:EOC01M",
+      "qualification:HOT01M",
+      "qualification:IFC03S",
+      "qualification:SAN21",
+      "qualification:SSC01M"
+    ],
+    "newlyCompletedCanonicalBases": ["qualification:COM02M"],
+    "terminalDistinctQualificationTotal": 6,
+    "targetDistinctQualifications": 12,
+    "remainingGap": 6,
+    "modalityDoubleCount": false,
+    "belowTargetReason": "Only COM02M completed; seven terminal attempts were deferred, six reserves remain unattempted, and completion/publication stopped before evidence supported 12 distinct qualifications.",
+    "publicationStatus": "pending_task_a2_12"
+  },
+  "offerDeltas": {
+    "byProgram": {
+      "COM02M": [],
+      "AGA03M": [],
+      "TMV02M": [],
+      "ADG01M": [],
+      "ELE01M": [],
+      "IMA03M": [],
+      "FME01M": [],
+      "MAM01M": []
+    },
+    "union": []
+  },
+  "time": {
+    "totalModeledActiveMinutes": 159,
+    "totalWallClockMinutes": 181.95,
+    "totalReviewerMinutes": 0,
+    "reviewerMinutesExcluded": true
+  },
+  "candidates": [
+    {
+      "programKey": "COM02M",
+      "baseQualificationIdentity": "qualification:COM02M",
+      "programTitle": "Comercialización de Productos Alimentarios",
+      "lane": "primary",
+      "rank": 1,
+      "attempted": true,
+      "state": "completed",
+      "phaseMinutes": {
+        "research": 8,
+        "implementation": 4,
+        "test": 3,
+        "review": 0
+      },
+      "modeledActiveMinutes": 15,
+      "wallClockMinutes": 17.25,
+      "reviewerMinutes": 0,
+      "reviewerTimeExcluded": true,
+      "offerDeltaIds": [],
+      "acceptedRelationKeys": [
+        "COM02M|occupation:cno11:5210",
+        "COM02M|occupation:cno11:5220"
+      ],
+      "rejectedRelationKeys": [
+        "COM02M|occupation:cno11:1432",
+        "COM02M|occupation:cno11:3510",
+        "COM02M|occupation:cno11:5300"
+      ],
+      "publicParity": {
+        "publishedRelationKeys": [],
+        "rejectedRelationKeys": [
+          "COM02M|occupation:cno11:1432",
+          "COM02M|occupation:cno11:3510",
+          "COM02M|occupation:cno11:5300"
+        ]
+      },
+      "limitation": "The slot accepts only the direct section-chief and seller boundaries. Manager, proprietor, online and commercial-adviser outputs remain rejected; the in-memory overlay reaches no new offer IDs and no aliases are added."
+    },
+    {
+      "programKey": "AGA03M",
+      "baseQualificationIdentity": "qualification:AGA03M",
+      "programTitle": "Jardinería y Floristería",
+      "lane": "primary",
+      "rank": 2,
+      "attempted": true,
+      "state": "deferred",
+      "phaseMinutes": {
+        "research": 8,
+        "implementation": 0,
+        "test": 2,
+        "review": 0
+      },
+      "modeledActiveMinutes": 10,
+      "wallClockMinutes": 48.27,
+      "reviewerMinutes": 0,
+      "reviewerTimeExcluded": true,
+      "offerDeltaIds": [],
+      "acceptedRelationKeys": [
+        "AGA03M|occupation:cno11:5220",
+        "AGA03M|occupation:cno11:6120"
+      ],
+      "rejectedRelationKeys": [
+        "AGA03M|occupation:cno11:3142",
+        "AGA03M|occupation:cno11:6110"
+      ],
+      "publicParity": {
+        "publishedRelationKeys": [],
+        "rejectedRelationKeys": [
+          "AGA03M|occupation:cno11:3142",
+          "AGA03M|occupation:cno11:6110"
+        ]
+      },
+      "limitation": "Deferred: the authoritative inventory contains Jardinero, en general. while the frozen ranking seed is Jardinero. Evidence for CNO 6120 and the explicit CNO 5220 seller boundary is retained, but no occupation, link, alias, offer delta or public snapshot change is published until the frozen seed is reconciled."
+    },
+    {
+      "programKey": "TMV02M",
+      "baseQualificationIdentity": "qualification:TMV02M",
+      "programTitle": "Electromecánica de Vehículos Automóviles",
+      "lane": "primary",
+      "rank": 3,
+      "attempted": true,
+      "state": "deferred",
+      "phaseMinutes": {
+        "research": 7,
+        "implementation": 3,
+        "test": 3,
+        "review": 0
+      },
+      "modeledActiveMinutes": 13,
+      "wallClockMinutes": 13,
+      "reviewerMinutes": 0,
+      "reviewerTimeExcluded": true,
+      "offerDeltaIds": [],
+      "acceptedRelationKeys": [],
+      "rejectedRelationKeys": ["TMV02M|occupation:cno11:7401"],
+      "publicParity": {
+        "publishedRelationKeys": [],
+        "rejectedRelationKeys": ["TMV02M|occupation:cno11:7401"]
+      },
+      "limitation": "Deferred because the frozen seed does not match the authoritative BOE output literally and the exhaustive output set spans mechanical, electrical/electronic, ITV, accessory, manufacturing, and sales boundaries. No aliases, curated relations, offer deltas, snapshot regeneration, or public-resource changes are allowed in this slot."
+    },
+    {
+      "programKey": "ADG01M",
+      "baseQualificationIdentity": "qualification:ADG01M",
+      "programTitle": "Gestión Administrativa",
+      "lane": "primary",
+      "rank": 4,
+      "attempted": true,
+      "state": "deferred",
+      "phaseMinutes": {
+        "research": 14,
+        "implementation": 4,
+        "test": 4,
+        "review": 0
+      },
+      "modeledActiveMinutes": 22,
+      "wallClockMinutes": 20,
+      "reviewerMinutes": 0,
+      "reviewerTimeExcluded": true,
+      "offerDeltaIds": [],
+      "acceptedRelationKeys": [],
+      "rejectedRelationKeys": [
+        "ADG01M|occupation:cno11:4111",
+        "ADG01M|occupation:cno11:4112",
+        "ADG01M|occupation:cno11:4113",
+        "ADG01M|occupation:cno11:4223",
+        "ADG01M|occupation:cno11:4309",
+        "ADG01M|occupation:cno11:4411",
+        "ADG01M|occupation:cno11:4412",
+        "ADG01M|occupation:cno11:4441",
+        "ADG01M|occupation:cno11:4500"
+      ],
+      "publicParity": {
+        "publishedRelationKeys": [],
+        "rejectedRelationKeys": [
+          "ADG01M|occupation:cno11:4111",
+          "ADG01M|occupation:cno11:4112",
+          "ADG01M|occupation:cno11:4113",
+          "ADG01M|occupation:cno11:4223",
+          "ADG01M|occupation:cno11:4309",
+          "ADG01M|occupation:cno11:4411",
+          "ADG01M|occupation:cno11:4412",
+          "ADG01M|occupation:cno11:4441",
+          "ADG01M|occupation:cno11:4500"
+        ]
+      },
+      "limitation": "Deferred: the frozen seed Empleado administrativo has no literal BOE output match, and the exhaustive output inventory spans multiple exact CNO-11 administrative, financial, reception and public-facing boundaries. No aliases, occupations, links, curated changes, offer deltas, snapshot regeneration or public-resource changes are published."
+    },
+    {
+      "programKey": "ELE01M",
+      "baseQualificationIdentity": "qualification:ELE01M",
+      "programTitle": "Instalaciones Eléctricas y Automáticas",
+      "lane": "primary",
+      "rank": 5,
+      "attempted": true,
+      "state": "deferred",
+      "phaseMinutes": {
+        "research": 35,
+        "implementation": 10,
+        "test": 10,
+        "review": 0
+      },
+      "modeledActiveMinutes": 55,
+      "wallClockMinutes": 60,
+      "reviewerMinutes": 0,
+      "reviewerTimeExcluded": true,
+      "offerDeltaIds": [],
+      "acceptedRelationKeys": [],
+      "rejectedRelationKeys": [
+        "ELE01M|occupation:cno11:7294",
+        "ELE01M|occupation:cno11:7510",
+        "ELE01M|occupation:cno11:7521",
+        "ELE01M|occupation:cno11:7533"
+      ],
+      "publicParity": {
+        "publishedRelationKeys": [],
+        "rejectedRelationKeys": [
+          "ELE01M|occupation:cno11:7294",
+          "ELE01M|occupation:cno11:7510",
+          "ELE01M|occupation:cno11:7521",
+          "ELE01M|occupation:cno11:7533"
+        ]
+      },
+      "limitation": "Deferred: the frozen seed Instalador electricista has no literal BOE output match. The exhaustive inventory spans CNO-11 boundaries 7510, 7521, 7533 and 7294, so no exact approved relation is published; curated data, public resources and snapshots remain unchanged."
+    },
+    {
+      "programKey": "IMA03M",
+      "baseQualificationIdentity": "qualification:IMA03M",
+      "programTitle": "Mantenimiento Electromecánico",
+      "lane": "primary",
+      "rank": 6,
+      "attempted": true,
+      "state": "deferred",
+      "phaseMinutes": {
+        "research": 12,
+        "implementation": 4,
+        "test": 3,
+        "review": 0
+      },
+      "modeledActiveMinutes": 19,
+      "wallClockMinutes": 0,
+      "reviewerMinutes": 0,
+      "reviewerTimeExcluded": true,
+      "offerDeltaIds": [],
+      "acceptedRelationKeys": [],
+      "rejectedRelationKeys": [
+        "IMA03M|occupation:cno11:7403",
+        "IMA03M|occupation:cno11:7510",
+        "IMA03M|occupation:cno11:7521",
+        "IMA03M|occupation:cno11:7531",
+        "IMA03M|occupation:cno11:8201",
+        "IMA03M|occupation:cno11:8202"
+      ],
+      "publicParity": {
+        "publishedRelationKeys": [],
+        "rejectedRelationKeys": [
+          "IMA03M|occupation:cno11:7403",
+          "IMA03M|occupation:cno11:7510",
+          "IMA03M|occupation:cno11:7521",
+          "IMA03M|occupation:cno11:7531",
+          "IMA03M|occupation:cno11:8201",
+          "IMA03M|occupation:cno11:8202"
+        ]
+      },
+      "limitation": "Deferred: el seed congelado Mantenedor electromecánico no aparece literalmente en el inventario BOE exhaustivo. Las fronteras CNO-11 auditadas no se promueven a relaciones publicadas; no se crean aliases, no se modifican data/curated, public ni snapshots, y el delta de ofertas permanece vacío."
+    },
+    {
+      "programKey": "FME01M",
+      "baseQualificationIdentity": "qualification:FME01M",
+      "programTitle": "Mecanizado",
+      "lane": "primary",
+      "rank": 7,
+      "attempted": true,
+      "state": "deferred",
+      "phaseMinutes": {
+        "research": 8,
+        "implementation": 4,
+        "test": 3,
+        "review": 0
+      },
+      "modeledActiveMinutes": 15,
+      "wallClockMinutes": 14,
+      "reviewerMinutes": 0,
+      "reviewerTimeExcluded": true,
+      "offerDeltaIds": [],
+      "acceptedRelationKeys": [
+        "FME01M|occupation:cno11:7322",
+        "FME01M|occupation:cno11:7323",
+        "FME01M|occupation:cno11:7324"
+      ],
+      "rejectedRelationKeys": ["FME01M|occupation:cno11:3139"],
+      "publicParity": {
+        "publishedRelationKeys": [],
+        "rejectedRelationKeys": ["FME01M|occupation:cno11:3139"]
+      },
+      "limitation": "Deferred: el seed congelado Mecánico de mecanizado no es un output BOE literal y el candidato CNO 7322 no es el límite general de máquinas-herramienta. Se conservan solo relaciones CNO exactas para auditoría; no se añaden aliases, data/curated, ofertas, snapshot ni recursos públicos.",
+      "sourceDrift": {
+        "frozenCandidateUrl": "https://www.boe.es/eli/es/rd/1399/2007",
+        "authoritativeUrl": "https://www.boe.es/eli/es/rd/1398/2007",
+        "reason": "La URL BOE congelada apunta al RD 1399/2007, de Panadería, mientras que el título Mecanizado y sus outputs se establecen en el RD 1398/2007; el slot queda diferido y no publica nada."
+      }
+    },
+    {
+      "programKey": "MAM01M",
+      "baseQualificationIdentity": "qualification:MAM01M",
+      "programTitle": "Carpintería y Mueble",
+      "lane": "reserve",
+      "rank": 8,
+      "attempted": true,
+      "state": "deferred",
+      "phaseMinutes": {
+        "research": 5,
+        "implementation": 3,
+        "test": 2,
+        "review": 0
+      },
+      "modeledActiveMinutes": 10,
+      "wallClockMinutes": 9.43,
+      "reviewerMinutes": 0,
+      "reviewerTimeExcluded": true,
+      "offerDeltaIds": [],
+      "acceptedRelationKeys": [
+        "MAM01M|occupation:cno11:7812",
+        "MAM01M|occupation:cno11:8209"
+      ],
+      "rejectedRelationKeys": ["MAM01M|occupation:cno11:3206"],
+      "publicParity": {
+        "publishedRelationKeys": [],
+        "rejectedRelationKeys": ["MAM01M|occupation:cno11:3206"]
+      },
+      "limitation": "Deferred because the frozen seed Carpintero de madera is not an exact BOE output. The two accepted relations remain curated but are not published; the rejected supervisory relation is audit-only. No aliases, offer deltas, snapshot regeneration, or public-resource changes are allowed in this slot."
+    },
+    {
+      "programKey": "ELE03S",
+      "baseQualificationIdentity": "qualification:ELE03S",
+      "programTitle": "Mantenimiento Electrónico",
+      "lane": "reserve",
+      "rank": 9,
+      "attempted": false,
+      "state": "not_attempted",
+      "phaseMinutes": {
+        "research": 0,
+        "implementation": 0,
+        "test": 0,
+        "review": 0
+      },
+      "modeledActiveMinutes": 0,
+      "wallClockMinutes": null,
+      "reviewerMinutes": 0,
+      "reviewerTimeExcluded": true,
+      "offerDeltaIds": [],
+      "acceptedRelationKeys": [],
+      "rejectedRelationKeys": [],
+      "publicParity": {
+        "publishedRelationKeys": [],
+        "rejectedRelationKeys": []
+      }
+    },
+    {
+      "programKey": "IMA02M",
+      "baseQualificationIdentity": "qualification:IMA02M",
+      "programTitle": "Instalaciones Frigoríficas y de Climatización",
+      "lane": "reserve",
+      "rank": 10,
+      "attempted": false,
+      "state": "not_attempted",
+      "phaseMinutes": {
+        "research": 0,
+        "implementation": 0,
+        "test": 0,
+        "review": 0
+      },
+      "modeledActiveMinutes": 0,
+      "wallClockMinutes": null,
+      "reviewerMinutes": 0,
+      "reviewerTimeExcluded": true,
+      "offerDeltaIds": [],
+      "acceptedRelationKeys": [],
+      "rejectedRelationKeys": [],
+      "publicParity": {
+        "publishedRelationKeys": [],
+        "rejectedRelationKeys": []
+      }
+    },
+    {
+      "programKey": "AGA01M",
+      "baseQualificationIdentity": "qualification:AGA01M",
+      "programTitle": "Producción Agroecológica",
+      "lane": "reserve",
+      "rank": 11,
+      "attempted": false,
+      "state": "not_attempted",
+      "phaseMinutes": {
+        "research": 0,
+        "implementation": 0,
+        "test": 0,
+        "review": 0
+      },
+      "modeledActiveMinutes": 0,
+      "wallClockMinutes": null,
+      "reviewerMinutes": 0,
+      "reviewerTimeExcluded": true,
+      "offerDeltaIds": [],
+      "acceptedRelationKeys": [],
+      "rejectedRelationKeys": [],
+      "publicParity": {
+        "publishedRelationKeys": [],
+        "rejectedRelationKeys": []
+      }
+    },
+    {
+      "programKey": "TMV01M",
+      "baseQualificationIdentity": "qualification:TMV01M",
+      "programTitle": "Carrocería",
+      "lane": "reserve",
+      "rank": 12,
+      "attempted": false,
+      "state": "not_attempted",
+      "phaseMinutes": {
+        "research": 0,
+        "implementation": 0,
+        "test": 0,
+        "review": 0
+      },
+      "modeledActiveMinutes": 0,
+      "wallClockMinutes": null,
+      "reviewerMinutes": 0,
+      "reviewerTimeExcluded": true,
+      "offerDeltaIds": [],
+      "acceptedRelationKeys": [],
+      "rejectedRelationKeys": [],
+      "publicParity": {
+        "publishedRelationKeys": [],
+        "rejectedRelationKeys": []
+      }
+    },
+    {
+      "programKey": "FME02M",
+      "baseQualificationIdentity": "qualification:FME02M",
+      "programTitle": "Soldadura y Calderería",
+      "lane": "reserve",
+      "rank": 13,
+      "attempted": false,
+      "state": "not_attempted",
+      "phaseMinutes": {
+        "research": 0,
+        "implementation": 0,
+        "test": 0,
+        "review": 0
+      },
+      "modeledActiveMinutes": 0,
+      "wallClockMinutes": null,
+      "reviewerMinutes": 0,
+      "reviewerTimeExcluded": true,
+      "offerDeltaIds": [],
+      "acceptedRelationKeys": [],
+      "rejectedRelationKeys": [],
+      "publicParity": {
+        "publishedRelationKeys": [],
+        "rejectedRelationKeys": []
+      }
+    },
+    {
+      "programKey": "COM01B",
+      "baseQualificationIdentity": "qualification:COM01B",
+      "programTitle": "Servicios Comerciales",
+      "lane": "reserve",
+      "rank": 14,
+      "attempted": false,
+      "state": "not_attempted",
+      "phaseMinutes": {
+        "research": 0,
+        "implementation": 0,
+        "test": 0,
+        "review": 0
+      },
+      "modeledActiveMinutes": 0,
+      "wallClockMinutes": null,
+      "reviewerMinutes": 0,
+      "reviewerTimeExcluded": true,
+      "offerDeltaIds": [],
+      "acceptedRelationKeys": [],
+      "rejectedRelationKeys": [],
+      "publicParity": {
+        "publishedRelationKeys": [],
+        "rejectedRelationKeys": []
+      }
+    }
+  ]
+}
