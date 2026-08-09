@@ -25,6 +25,10 @@ import {
   writeFpOfficialAliasPassResults,
   type AliasPassValidationContext,
 } from "./validateFpOfficialAliasPass";
+import {
+  approvedSingleTokenAuditIdentities,
+  validateFpOneWordPublicationReview,
+} from "./validateFpOneWordPublicationReview";
 
 const BASELINE_SNAPSHOT_ID = "20260808215403108-add4c517860c";
 const ROOT_DIRECTORY = resolve(process.cwd());
@@ -577,11 +581,11 @@ describe("FP official alias pass validation", () => {
     ).not.toThrow();
   });
 
-  it("keeps published target aliases in exact audited accepted parity", () => {
+  it("keeps published target aliases in exact parity with both audited sources", () => {
     const targetOccupationIds = new Set<string>(
       Object.values(TARGET_OCCUPATIONS_BY_PROGRAM).flat(),
     );
-    const accepted = [hotReviewAudit, sscReview, eocReview]
+    const acceptedOfficialAliases = [hotReviewAudit, sscReview, eocReview]
       .flatMap(({ reviews }) => reviews)
       .filter(
         (
@@ -596,9 +600,31 @@ describe("FP official alias pass validation", () => {
           canonicalAliasIdentity(right),
         ),
       );
+    const oneWordAcceptedAliases = [
+      ...approvedSingleTokenAuditIdentities(
+        validateFpOneWordPublicationReview(ROOT_DIRECTORY),
+      ),
+    ].map((identity) => {
+      const [alias, occupationId] = identity.split("\u0000");
+      if (alias === undefined || occupationId === undefined) {
+        throw new Error("Malformed approved single-token audit identity.");
+      }
+      return { alias, occupationId };
+    });
+    const accepted = [
+      ...acceptedOfficialAliases,
+      ...oneWordAcceptedAliases,
+    ].toSorted((left, right) =>
+      canonicalAliasIdentity(left).localeCompare(canonicalAliasIdentity(right)),
+    );
     const published = curatedAliases
       .filter(({ occupationId }) => targetOccupationIds.has(occupationId))
-      .map(({ alias, occupationId }) => ({ alias, occupationId }));
+      .map(({ alias, occupationId }) => ({ alias, occupationId }))
+      .toSorted((left, right) =>
+        canonicalAliasIdentity(left).localeCompare(
+          canonicalAliasIdentity(right),
+        ),
+      );
 
     expect(published).toEqual(accepted);
     expect(accepted).not.toContainEqual({

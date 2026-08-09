@@ -1284,7 +1284,29 @@ describe("validateFpCoveragePilotResults", () => {
     expect(() => validate(candidate)).toThrow(/verbatim BOE output/i);
   });
 
-  it("counts EOC01M marginal offers from the accepted relationship union below the family signal", () => {
+  it("reports the bounded EOC01M one-word publication delta below the family signal", async () => {
+    const publicationReview = JSON.parse(
+      await readFile(
+        resolve(
+          process.cwd(),
+          "analysis",
+          "fp_one_word_publication_reviews.json",
+        ),
+        "utf8",
+      ),
+    ) as {
+      publicationDecision: {
+        encofradores: {
+          status: "accepted" | "rejected";
+          acceptedOfferIds: string[];
+        };
+      };
+    };
+    expect(publicationReview.publicationDecision.encofradores.status).toBe(
+      "accepted",
+    );
+    const expectedOfferIds =
+      publicationReview.publicationDecision.encofradores.acceptedOfferIds;
     const matches = matchOffersForProgram("EOC01M", {
       programs: context.programs,
       qualifications: REVIEWED_QUALIFICATIONS,
@@ -1297,7 +1319,9 @@ describe("validateFpCoveragePilotResults", () => {
       humanOverrides: [],
     });
 
-    expect(matches).toHaveLength(0);
+    expect(matches.map(({ offerId }) => offerId).toSorted()).toEqual(
+      expectedOfferIds.toSorted(),
+    );
   });
 
   it("validates a completed prior attempt against its retained immutable snapshot", async () => {
