@@ -1,11 +1,13 @@
 import type { ReactNode } from "react";
 import { Link, Route, Routes } from "react-router-dom";
+
+import { CompareStudiesPage } from "../features/compare-studies/CompareStudiesPage";
 import { HomePage } from "../features/home/HomePage";
-import { TrainingSearchPage } from "../features/training-first/TrainingSearchPage";
+import { OccupationResultsPage } from "../features/occupation-first/OccupationResultsPage";
+import { OccupationSearchPage } from "../features/occupation-first/OccupationSearchPage";
 import { TrainingResultsPage } from "../features/training-first/TrainingResultsPage";
 import { TrainingRoutePage } from "../features/training-first/TrainingRoutePage";
-import { OccupationSearchPage } from "../features/occupation-first/OccupationSearchPage";
-import { OccupationResultsPage } from "../features/occupation-first/OccupationResultsPage";
+import { TrainingSearchPage } from "../features/training-first/TrainingSearchPage";
 import { AppShell } from "./AppShell";
 
 interface DestinationPageProps {
@@ -50,15 +52,7 @@ export function AppRoutes() {
         path="/desde-ocupacion/:occupationId"
         element={inShell(<OccupationResultsPage />)}
       />
-      <Route
-        path="/comparar"
-        element={inShell(
-          <DestinationPage
-            heading="Comparar estudios — en preparación"
-            outcome="Esta función todavía no está disponible. La próxima fase añadirá indicadores de empleo e ingresos con su alcance."
-          />,
-        )}
-      />
+      <Route path="/comparar" element={inShell(<CompareStudiesPage />)} />
       <Route
         path="/metodologia"
         element={inShell(

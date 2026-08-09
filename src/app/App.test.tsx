@@ -52,4 +52,18 @@ describe("App", () => {
       /SALIDA CyL es un proyecto independiente que utiliza fuentes públicas/i,
     );
   });
+
+  it("routes the comparison navigation to the income-only page", () => {
+    cleanup();
+    render(
+      <MemoryRouter initialEntries={["/comparar"]}>
+        <App />
+      </MemoryRouter>,
+    );
+
+    expect(
+      screen.getByRole("heading", { level: 1, name: "Ingresos observados" }),
+    ).toBeVisible();
+    expect(screen.queryByText(/Empleo e ingresos/u)).not.toBeInTheDocument();
+  });
 });
