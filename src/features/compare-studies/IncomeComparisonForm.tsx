@@ -1,3 +1,5 @@
+import { useMemo, useState } from "react";
+
 import type {
   OutcomeCohortWindow,
   OutcomeGroup,
@@ -26,6 +28,14 @@ const TRAINING_LEVELS: readonly {
   { value: "higher", label: "Grado Superior" },
 ];
 
+function normalizedSearchTerm(value: string): string {
+  return value
+    .normalize("NFD")
+    .replace(/\p{Diacritic}/gu, "")
+    .toLocaleLowerCase("es-ES")
+    .trim();
+}
+
 /** Collects only the user's in-memory, scope-preserving comparison selection. */
 export function IncomeComparisonForm({
   trainingLevel,
@@ -40,8 +50,27 @@ export function IncomeComparisonForm({
   onCohortChange,
   onPostGraduationYearChange,
 }: IncomeComparisonFormProps) {
-  const selectedGroups = new Set(selectedGroupKeys);
+  const [filterQuery, setFilterQuery] = useState("");
+  const selectedGroups = useMemo(
+    () => new Set(selectedGroupKeys),
+    [selectedGroupKeys],
+  );
   const groupsAtLimit = selectedGroupKeys.length >= 3;
+  const normalizedQuery = normalizedSearchTerm(filterQuery);
+  const visibleGroups = useMemo(() => {
+    const selected = groups.filter((group) =>
+      selectedGroups.has(group.groupKey),
+    );
+    const matches = groups.filter(
+      (group) =>
+        !selectedGroups.has(group.groupKey) &&
+        normalizedSearchTerm(group.officialLabel).includes(normalizedQuery),
+    );
+    return [...selected, ...matches];
+  }, [groups, normalizedQuery, selectedGroups]);
+  const matchingUnselectedCount = visibleGroups.filter(
+    (group) => !selectedGroups.has(group.groupKey),
+  ).length;
 
   function toggleGroup(groupKey: string, checked: boolean) {
     if (checked) {
@@ -85,8 +114,22 @@ export function IncomeComparisonForm({
                 ? "Selecciona entre uno y tres."
                 : `${selectedGroupKeys.length} de 3 seleccionados.`}
             </p>
+            <label className="income-filter-field">
+              <span>Filtrar ciclos o grupos oficiales</span>
+              <input
+                type="search"
+                value={filterQuery}
+                onChange={(event) => setFilterQuery(event.target.value)}
+                placeholder="Escribe parte del nombre"
+              />
+            </label>
+            <p className="field-hint" aria-live="polite">
+              {matchingUnselectedCount === 1
+                ? "1 resultado disponible."
+                : `${matchingUnselectedCount} resultados disponibles.`}
+            </p>
             <div className="income-group-options">
-              {groups.map((group) => {
+              {visibleGroups.map((group) => {
                 const checked = selectedGroups.has(group.groupKey);
                 return (
                   <label className="income-check" key={group.groupKey}>
@@ -102,6 +145,11 @@ export function IncomeComparisonForm({
                   </label>
                 );
               })}
+              {matchingUnselectedCount === 0 ? (
+                <p className="income-empty-state">
+                  No hay ciclos o grupos oficiales que coincidan.
+                </p>
+              ) : null}
             </div>
           </fieldset>
 

@@ -1,9 +1,14 @@
 import { cleanup, render, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import { readFileSync } from "node:fs";
 import { MemoryRouter } from "react-router-dom";
 import { afterEach, describe, expect, it, vi } from "vitest";
 
 import type { OutcomeIndicatorsResource } from "../../../data/schemas/outcomes";
+const comparisonStyles = readFileSync(
+  "src/features/compare-studies/compareStudies.css",
+  "utf8",
+);
 
 const generatedDataClient = vi.hoisted(() => ({
   loadManifest: vi.fn(),
@@ -285,5 +290,59 @@ describe("CompareStudiesPage", () => {
       screen.getByRole("group", { name: "4. Año tras titularse" }),
     ).getByRole("radio", { name: "4" });
     expect(yearFour).toBeEnabled();
+  });
+
+  it("filters official groups without hiding a selected group or ignoring diacritics", async () => {
+    installData();
+    const user = userEvent.setup();
+    renderPage();
+
+    await user.click(await screen.findByRole("radio", { name: "Grado Medio" }));
+    await user.click(screen.getByRole("checkbox", { name: "Grupo medio 1" }));
+    await user.type(
+      screen.getByRole("searchbox", {
+        name: "Filtrar ciclos o grupos oficiales",
+      }),
+      "grúpo médío 2",
+    );
+
+    expect(
+      screen.getByRole("checkbox", { name: "Grupo medio 1" }),
+    ).toBeChecked();
+    expect(
+      screen.getByRole("checkbox", { name: "Grupo medio 2" }),
+    ).toBeVisible();
+    expect(
+      screen.queryByRole("checkbox", { name: "Grupo medio 3" }),
+    ).not.toBeInTheDocument();
+
+    await user.clear(
+      screen.getByRole("searchbox", {
+        name: "Filtrar ciclos o grupos oficiales",
+      }),
+    );
+    await user.type(
+      screen.getByRole("searchbox", {
+        name: "Filtrar ciclos o grupos oficiales",
+      }),
+      "sin coincidencias",
+    );
+    expect(
+      screen.getByText("No hay ciclos o grupos oficiales que coincidan."),
+    ).toBeVisible();
+    expect(
+      screen.getByRole("checkbox", { name: "Grupo medio 1" }),
+    ).toBeChecked();
+  });
+
+  it("removes the mobile table minimum width without removing table semantics", () => {
+    expect(comparisonStyles).toMatch(/@media \(max-width: 47\.999rem\)/u);
+    expect(comparisonStyles).toMatch(
+      /\.income-evidence-card table\s*\{\s*min-width: 0;/u,
+    );
+    expect(comparisonStyles).toMatch(/\.income-evidence-card tbody tr/u);
+    expect(comparisonStyles).toMatch(
+      /\.income-value--unavailable\s*\{\s*white-space: normal;/u,
+    );
   });
 });

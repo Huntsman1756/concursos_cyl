@@ -67,7 +67,15 @@ export function IncomeEvidenceCard({
                   </th>
                 ) : null}
                 <td>{MEASURE_LABELS[observation.measure]}</td>
-                <td>{formatValue(observation.valueEur)}</td>
+                <td
+                  className={
+                    observation.valueEur === null
+                      ? "income-value income-value--unavailable"
+                      : "income-value"
+                  }
+                >
+                  {formatValue(observation.valueEur)}
+                </td>
               </tr>
             ))}
           </tbody>
