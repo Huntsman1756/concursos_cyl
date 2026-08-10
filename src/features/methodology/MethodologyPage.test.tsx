@@ -98,6 +98,25 @@ describe("MethodologyPage", () => {
     const regional = screen.getByRole("article", {
       name: "Nivel formativo en Castilla y León",
     });
+    const trainingCatalog = screen.getByRole("article", {
+      name: "Qué estudiar y dónde se imparte",
+    });
+    await waitFor(() =>
+      expect(trainingCatalog).toHaveTextContent(
+        /catálogo oficial de FP.*1 ciclo oficial/i,
+      ),
+    );
+    expect(trainingCatalog).toHaveTextContent(
+      /catálogo completo.*relaciones ocupacionales revisadas/i,
+    );
+    expect(
+      within(trainingCatalog).getByRole("link", {
+        name: "Dataset oficial de oferta de Formación Profesional",
+      }),
+    ).toHaveAttribute(
+      "href",
+      "https://analisis.datosabiertos.jcyl.es/api/explore/v2.1/catalog/datasets/oferta-de-formacion-profesional/records",
+    );
     for (const card of [national, regional]) {
       for (const heading of [
         "Qué aporta",

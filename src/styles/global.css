@@ -306,6 +306,12 @@ a:focus-visible {
   font-size: 1.05rem;
 }
 
+.coverage-panel__scope {
+  margin: var(--space-5) 0 0;
+  color: var(--color-text-muted);
+  font-size: 0.92rem;
+}
+
 .coverage-panel__includes {
   margin-top: var(--space-8);
 }
@@ -432,6 +438,39 @@ a:focus-visible {
   margin: var(--space-4) 0 0;
   color: var(--color-action-text);
   font-weight: 750;
+}
+
+.training-catalog-note {
+  max-width: 44rem;
+  margin-bottom: var(--space-8);
+  padding: var(--space-5);
+  border: 1px solid var(--color-border);
+  border-left: 0.3rem solid var(--color-primary);
+  border-radius: var(--radius-sm);
+  background: var(--color-surface-subtle);
+}
+
+.training-catalog-note h2 {
+  margin: 0 0 var(--space-3);
+  color: var(--color-primary);
+  font-size: 1.2rem;
+}
+
+.training-catalog-note p {
+  margin-block: var(--space-3) 0;
+  color: var(--color-text-muted);
+}
+
+.training-catalog-note p:first-of-type {
+  margin-top: 0;
+}
+
+.training-catalog-note a {
+  display: inline-block;
+  margin-top: var(--space-4);
+  color: var(--color-action-text);
+  font-weight: 750;
+  text-underline-offset: 0.2em;
 }
 
 .training-search {

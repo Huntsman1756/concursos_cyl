@@ -23,6 +23,7 @@ type CoverageState =
   | {
       status: "ready";
       programs: Extract<MappingCoverage, { scope: "program" }>[];
+      totalPrograms: number;
     };
 
 export function HomePage() {
@@ -67,6 +68,7 @@ export function HomePage() {
                 (row): row is Extract<MappingCoverage, { scope: "program" }> =>
                   row.scope === "program" && row.coverageStatus === "reviewed",
               ),
+              totalPrograms: manifest.resourceSnapshots.programs.recordCount,
             });
           })
           .catch(() => {
@@ -151,25 +153,33 @@ export function HomePage() {
             </p>
           ) : null}
           {coverage.status === "ready" ? (
-            <ul
-              className="coverage-panel__programs"
-              aria-label="Ciclos revisados"
-            >
-              {coverage.programs.map((program) => (
-                <li
-                  className="coverage-panel__program"
-                  key={program.programKey}
-                >
-                  <strong>{program.programTitle}</strong>
-                  <span>
-                    {program.programKey} · {program.approvedMappings}{" "}
-                    {program.approvedMappings === 1
-                      ? "ocupación CNO revisada"
-                      : "ocupaciones CNO revisadas"}
-                  </span>
-                </li>
-              ))}
-            </ul>
+            <>
+              <p className="coverage-panel__scope">
+                El catálogo completo contiene {coverage.totalPrograms} ciclo
+                {coverage.totalPrograms === 1 ? " oficial" : "s oficiales"}.
+                Esta lista destaca solo ciclos con cobertura ocupacional
+                revisada.
+              </p>
+              <ul
+                className="coverage-panel__programs"
+                aria-label="Ciclos revisados"
+              >
+                {coverage.programs.map((program) => (
+                  <li
+                    className="coverage-panel__program"
+                    key={program.programKey}
+                  >
+                    <strong>{program.programTitle}</strong>
+                    <span>
+                      {program.programKey} · {program.approvedMappings}{" "}
+                      {program.approvedMappings === 1
+                        ? "ocupación CNO revisada"
+                        : "ocupaciones CNO revisadas"}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            </>
           ) : null}
           <div className="coverage-panel__includes">
             <h3>Qué incluye</h3>

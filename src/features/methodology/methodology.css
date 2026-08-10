@@ -41,6 +41,11 @@
   background: var(--color-surface);
 }
 
+.methodology-catalog-card {
+  grid-column: 1 / -1;
+  scroll-margin-top: var(--space-6);
+}
+
 .source-method-card > h2 {
   margin: 0;
   color: var(--color-primary);

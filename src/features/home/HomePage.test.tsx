@@ -115,6 +115,12 @@ describe("HomePage", () => {
       name: "Disponible ahora",
     });
     await waitFor(() => expect(coveragePanel).toHaveTextContent("IFC03S"));
+    expect(coveragePanel).toHaveTextContent(
+      "El catálogo completo contiene 1 ciclo oficial",
+    );
+    expect(coveragePanel).toHaveTextContent(
+      /Esta lista destaca solo ciclos con cobertura ocupacional revisada/i,
+    );
     for (const programKey of [
       "IFC03S",
       "IFC03SD",

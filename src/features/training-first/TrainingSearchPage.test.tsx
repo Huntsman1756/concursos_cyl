@@ -1,4 +1,4 @@
-import { cleanup, render, screen } from "@testing-library/react";
+import { cleanup, render, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { MemoryRouter } from "react-router-dom";
 import { afterEach, describe, expect, it, vi } from "vitest";
@@ -112,6 +112,16 @@ describe("training-first search", () => {
     expect(screen.getByRole("status")).toHaveTextContent(
       /cobertura revisada no disponible/i,
     );
+    const catalogScope = screen.getByRole("region", {
+      name: "Alcance del catálogo de FP",
+    });
+    expect(catalogScope).toHaveTextContent("2 ciclos oficiales");
+    expect(catalogScope).toHaveTextContent("1 clave de modalidad");
+    expect(
+      within(catalogScope).getByRole("link", {
+        name: "Cómo funciona la cobertura de FP",
+      }),
+    ).toHaveAttribute("href", "/metodologia#fp-catalogo");
     expect(screen.getByRole("button", { name: "Ver ofertas" })).toBeEnabled();
   });
   it("announces loading while the official programs are pending", () => {

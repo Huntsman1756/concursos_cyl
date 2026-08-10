@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import type { FormEvent } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import type { TrainingProgram } from "../../../data/schemas/generated";
 import type { MappingCoverage } from "../../../data/schemas/curatedMappings";
 import {
@@ -22,11 +22,19 @@ const PROVINCES = [
   "Zamora",
 ] as const;
 
+interface CatalogSummary {
+  programCount: number;
+  reviewedModalityCount: number;
+}
+
 export function TrainingSearchPage() {
   const navigate = useNavigate();
   const [programs, setPrograms] = useState<TrainingProgram[]>([]);
   const [programKey, setProgramKey] = useState("");
   const [coverage, setCoverage] = useState<MappingCoverage[]>([]);
+  const [catalogSummary, setCatalogSummary] = useState<CatalogSummary | null>(
+    null,
+  );
   const [province, setProvince] = useState("");
   const [status, setStatus] = useState<"loading" | "ready" | "failed">(
     "loading",
@@ -43,6 +51,13 @@ export function TrainingSearchPage() {
         if (!active) return;
         setPrograms(resources.programs);
         setCoverage(coverage);
+        setCatalogSummary({
+          programCount: resources.programs.length,
+          reviewedModalityCount: coverage.filter(
+            (row) =>
+              row.scope === "program" && row.coverageStatus === "reviewed",
+          ).length,
+        });
         setStatus("ready");
       })
       .catch(() => {
@@ -86,6 +101,30 @@ export function TrainingSearchPage() {
           requisitos publicados por cada vacante.
         </p>
       </header>
+
+      {catalogSummary !== null && (
+        <section
+          className="training-catalog-note"
+          aria-label="Alcance del catálogo de FP"
+        >
+          <h2>El catálogo completo está disponible</h2>
+          <p>
+            El selector contiene {catalogSummary.programCount} ciclos oficiales.
+            La cobertura ocupacional revisada es una capa separada: ahora
+            incluye {catalogSummary.reviewedModalityCount}{" "}
+            {catalogSummary.reviewedModalityCount === 1 ? "clave" : "claves"} de
+            modalidad.
+          </p>
+          <p>
+            Si un ciclo no tiene una relación revisada, podrás seguir
+            consultando dónde se estudia; la ausencia de una relación no
+            significa que el ciclo no tenga salidas profesionales.
+          </p>
+          <Link to="/metodologia#fp-catalogo">
+            Cómo funciona la cobertura de FP
+          </Link>
+        </section>
+      )}
 
       {status === "loading" && <p>Preparando los ciclos oficiales…</p>}
       {status === "failed" && (

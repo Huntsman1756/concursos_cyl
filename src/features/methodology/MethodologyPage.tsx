@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 
 import type { LoadableGeneratedManifest } from "../../../data/schemas/generated";
+import { SOURCE_CONFIG } from "../../../scripts/data/sourceConfig";
 import {
   EDUCABASE_INCOME_SOURCES,
   type EducabaseIncomeTableId,
@@ -24,11 +25,25 @@ type IncomeSnapshot = {
   qualityStatus: "passed" | "stale";
 };
 
+type TrainingCatalogSnapshot = {
+  snapshotFetchedAt: string;
+  sha256: string;
+  qualityStatus: "passed" | "stale";
+  programs: number;
+  centers: number;
+  offerings: number;
+};
+
 type EvidenceState =
   | { status: "loading" }
   | { status: "unavailable" }
   | { status: "historical" }
   | { status: "ready"; snapshot: IncomeSnapshot; manifestStale: boolean };
+
+type TrainingCatalogState =
+  | { status: "loading" }
+  | { status: "unavailable" }
+  | { status: "ready"; snapshot: TrainingCatalogSnapshot };
 
 function incomeSnapshotFrom(
   manifest: LoadableGeneratedManifest,
@@ -37,6 +52,25 @@ function incomeSnapshotFrom(
     manifest.resourceSnapshots as typeof manifest.resourceSnapshots &
       Record<string, IncomeSnapshot | undefined>;
   return resourceSnapshots.outcomeIndicators ?? null;
+}
+
+function trainingCatalogSnapshotFrom(
+  manifest: LoadableGeneratedManifest,
+): TrainingCatalogSnapshot {
+  const { programs, centers, trainingOfferings } = manifest.resourceSnapshots;
+  return {
+    snapshotFetchedAt: programs.snapshotFetchedAt,
+    sha256: programs.sha256,
+    qualityStatus:
+      programs.qualityStatus === "stale" ||
+      centers.qualityStatus === "stale" ||
+      trainingOfferings.qualityStatus === "stale"
+        ? "stale"
+        : "passed",
+    programs: programs.recordCount,
+    centers: centers.recordCount,
+    offerings: trainingOfferings.recordCount,
+  };
 }
 
 function tableLinks(tableIds: readonly EducabaseIncomeTableId[]) {
@@ -62,6 +96,10 @@ function formattedDate(timestamp: string): string {
     year: "numeric",
     timeZone: "UTC",
   }).format(new Date(timestamp));
+}
+
+function countLabel(count: number, singular: string, plural: string): string {
+  return `${count} ${count === 1 ? singular : plural}`;
 }
 
 function Provenance({ state }: { state: EvidenceState }) {
@@ -97,9 +135,48 @@ function Provenance({ state }: { state: EvidenceState }) {
   );
 }
 
+function TrainingCatalogProvenance({ state }: { state: TrainingCatalogState }) {
+  if (state.status === "loading") {
+    return <p>Comprobando la instantánea del catálogo oficial…</p>;
+  }
+  if (state.status === "unavailable") {
+    return <p>No se ha podido comprobar la instantánea del catálogo.</p>;
+  }
+
+  return (
+    <>
+      <p>
+        Instantánea capturada el{" "}
+        {formattedDate(state.snapshot.snapshotFetchedAt)}. Recursos:{" "}
+        {countLabel(state.snapshot.programs, "programa", "programas")},{" "}
+        {countLabel(state.snapshot.centers, "centro", "centros")} y{" "}
+        {countLabel(
+          state.snapshot.offerings,
+          "oferta formativa",
+          "ofertas formativas",
+        )}
+        .
+      </p>
+      <p>
+        Huella del catálogo de programas:{" "}
+        <code>{state.snapshot.sha256.slice(0, 12)}…</code>
+      </p>
+      {state.snapshot.qualityStatus === "stale" ? (
+        <p className="source-method-card__warning">
+          La instantánea más reciente no pasó la actualización; se conserva la
+          última copia válida.
+        </p>
+      ) : null}
+    </>
+  );
+}
+
 /** Explains the approved data contract without extending its claims. */
 export function MethodologyPage() {
   const [evidence, setEvidence] = useState<EvidenceState>({
+    status: "loading",
+  });
+  const [trainingCatalog, setTrainingCatalog] = useState<TrainingCatalogState>({
     status: "loading",
   });
 
@@ -109,6 +186,10 @@ export function MethodologyPage() {
       .then((manifest) => {
         if (!active) return;
         const snapshot = incomeSnapshotFrom(manifest);
+        setTrainingCatalog({
+          status: "ready",
+          snapshot: trainingCatalogSnapshotFrom(manifest),
+        });
         setEvidence(
           snapshot
             ? {
@@ -120,7 +201,10 @@ export function MethodologyPage() {
         );
       })
       .catch(() => {
-        if (active) setEvidence({ status: "unavailable" });
+        if (active) {
+          setEvidence({ status: "unavailable" });
+          setTrainingCatalog({ status: "unavailable" });
+        }
       });
     return () => {
       active = false;
@@ -179,6 +263,57 @@ export function MethodologyPage() {
           provenance={provenance}
           tables={tableLinks(REGIONAL_TABLES)}
         />
+        <article
+          id="fp-catalogo"
+          className="source-method-card methodology-catalog-card"
+          aria-labelledby="training-catalog-heading"
+        >
+          <h2 id="training-catalog-heading">Qué estudiar y dónde se imparte</h2>
+          <section>
+            <h3>Qué aporta</h3>
+            <p>
+              El catálogo oficial de FP contiene{" "}
+              {trainingCatalog.status === "ready"
+                ? countLabel(
+                    trainingCatalog.snapshot.programs,
+                    "ciclo oficial",
+                    "ciclos oficiales",
+                  )
+                : "todos los ciclos oficiales"}
+              {
+                ", junto con los centros y modalidades publicados por la Junta de"
+              }
+              Castilla y León. El selector permite consultar todo el catálogo y
+              la ruta «Dónde estudiar» muestra los centros y modalidades de cada
+              ciclo.
+            </p>
+          </section>
+          <section>
+            <h3>Qué no permite afirmar</h3>
+            <p>
+              El catálogo completo no se convierte automáticamente en relaciones
+              ocupacionales revisadas. Solo publicamos una salida laboral cuando
+              existe evidencia específica; una relación ausente significa «no
+              revisada», no «sin salidas profesionales».
+            </p>
+          </section>
+          <section>
+            <h3>Actualización y huella</h3>
+            <TrainingCatalogProvenance state={trainingCatalog} />
+          </section>
+          <section>
+            <h3>Fuente original</h3>
+            <p>
+              <a href={SOURCE_CONFIG.training.recordsUrl}>
+                Dataset oficial de oferta de Formación Profesional
+              </a>
+            </p>
+            <p>
+              La oferta formativa, los centros y las modalidades se conservan en
+              una instantánea inmutable antes de generar la interfaz.
+            </p>
+          </section>
+        </article>
       </div>
 
       <details className="methodology-scope">
