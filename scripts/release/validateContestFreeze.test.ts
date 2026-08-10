@@ -21,7 +21,7 @@ describe("contest coverage freeze validator", () => {
 
     expect(freeze.freezeStatus).toBe("frozen");
     expect(freeze.sourceCommitSha).toBe(
-      "f38bc51c828556b11e7679a17be33c6b35ee81b2",
+      "4a8afbca80ecf4397c6f2ef0c6695b29506587c3",
     );
     expect(freeze.coverage.distinctQualificationCount).toBe(6);
     expect(freeze.coverage.modalityKeyCount).toBe(7);
