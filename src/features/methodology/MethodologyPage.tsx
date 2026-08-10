@@ -281,11 +281,10 @@ export function MethodologyPage() {
                   )
                 : "todos los ciclos oficiales"}
               {
-                ", junto con los centros y modalidades publicados por la Junta de"
+                ", junto con los centros y modalidades publicados por la Junta de Castilla y León. "
               }
-              Castilla y León. El selector permite consultar todo el catálogo y
-              la ruta «Dónde estudiar» muestra los centros y modalidades de cada
-              ciclo.
+              El selector permite consultar todo el catálogo y la ruta «Dónde
+              estudiar» muestra los centros y modalidades de cada ciclo.
             </p>
           </section>
           <section>
