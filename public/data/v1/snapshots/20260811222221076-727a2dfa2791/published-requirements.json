@@ -436,35 +436,6 @@
     ]
   },
   {
-    "offerId": "1285664862477",
-    "requirements": [
-      {
-        "category": "unclassified",
-        "id": "requirement:e8cc0566ca8f42f76877294418e3f6ad5e70e25ba4da7bc139ceb7bd5c8a9d9e",
-        "normalizedValue": null,
-        "parserRule": "unclassified.conservative_fallback",
-        "parserVersion": "1.0.0",
-        "sourceQuote": "Bachiller, Técnico o equivalente"
-      },
-      {
-        "category": "unclassified",
-        "id": "requirement:79905b314c0a6b3ed35f5fc9e23ca07681adc3d7790dbb69ed95d9033cba27b8",
-        "normalizedValue": null,
-        "parserRule": "unclassified.conservative_fallback",
-        "parserVersion": "1.0.0",
-        "sourceQuote": "Plazo: 10 de agosto 2026"
-      },
-      {
-        "category": "unclassified",
-        "id": "requirement:b0c2038be35d0a2bdf14589d69a89b56d6e8babea65bda09e3c8e7f6917cb064",
-        "normalizedValue": null,
-        "parserRule": "unclassified.conservative_fallback",
-        "parserVersion": "1.0.0",
-        "sourceQuote": "Información obtenida de: Empleo público. BOCYL 22/05/2006; BOE 21/07/2026"
-      }
-    ]
-  },
-  {
     "offerId": "1285666774753",
     "requirements": [
       {
@@ -1808,35 +1779,6 @@
     ]
   },
   {
-    "offerId": "1285662125501",
-    "requirements": [
-      {
-        "category": "unclassified",
-        "id": "requirement:b017c458ba0d115c550c8cdff0aa444712f8277e340d1c9e1480ee4451ad343c",
-        "normalizedValue": null,
-        "parserRule": "unclassified.ambiguous_or_negated",
-        "parserVersion": "1.0.0",
-        "sourceQuote": "Vehículo. Valorable Titulación relacionada con el puesto de trabajo."
-      },
-      {
-        "category": "unclassified",
-        "id": "requirement:8e8231f8ea824ab6241d8f715382c02adb743b8f25d0db7468fde33ad41034cb",
-        "normalizedValue": null,
-        "parserRule": "unclassified.conservative_fallback",
-        "parserVersion": "1.0.0",
-        "sourceQuote": "."
-      },
-      {
-        "category": "unclassified",
-        "id": "requirement:a323cc91ed9089afc83caa8a539b4c25f274832d2e9d6f7849dc4532105ba395",
-        "normalizedValue": null,
-        "parserRule": "unclassified.conservative_fallback",
-        "parserVersion": "1.0.0",
-        "sourceQuote": "Para más información acuda a Oficina Virtual"
-      }
-    ]
-  },
-  {
     "offerId": "1285662445222",
     "requirements": [
       {
@@ -3135,19 +3077,6 @@
     ]
   },
   {
-    "offerId": "1285664659127",
-    "requirements": [
-      {
-        "category": "unclassified",
-        "id": "requirement:abdd3a1ad7e92544fafca7a7460670a4c630ab7bda42ab0cde1cab509f7ab4c6",
-        "normalizedValue": null,
-        "parserRule": "unclassified.conservative_fallback",
-        "parserVersion": "1.0.0",
-        "sourceQuote": "Cierta experiencia."
-      }
-    ]
-  },
-  {
     "offerId": "1285614233577",
     "requirements": [
       {
@@ -3474,19 +3403,6 @@
     ]
   },
   {
-    "offerId": "1285664451982",
-    "requirements": [
-      {
-        "category": "unclassified",
-        "id": "requirement:8581c1d6c03d5efc131fe1809758f848601be10b9f50f38ec5c9920bb891e255",
-        "normalizedValue": null,
-        "parserRule": "unclassified.ambiguous_or_negated",
-        "parserVersion": "1.0.0",
-        "sourceQuote": "Permiso de conducir de la categoría."
-      }
-    ]
-  },
-  {
     "offerId": "1285668836615",
     "requirements": [
       {
@@ -3655,27 +3571,6 @@
     ]
   },
   {
-    "offerId": "1285667133840",
-    "requirements": [
-      {
-        "category": "unclassified",
-        "id": "requirement:4d1929157f9a06155de673ad8b51d58a411560a573045e9f2f06b4069f0af5f9",
-        "normalizedValue": null,
-        "parserRule": "unclassified.conservative_fallback",
-        "parserVersion": "1.0.0",
-        "sourceQuote": "Permiso conducir C. Experiencia 36 meses. Idiomas inglés y francés nivel medio."
-      },
-      {
-        "category": "unclassified",
-        "id": "requirement:a450b657b775ac6bc4ca14d505906c57ca87657b670592d68c4f683e44c20485",
-        "normalizedValue": null,
-        "parserRule": "unclassified.conservative_fallback",
-        "parserVersion": "1.0.0",
-        "sourceQuote": "Para más información acuda a Oficina Virtual"
-      }
-    ]
-  },
-  {
     "offerId": "1285663318830",
     "requirements": [
       {
@@ -3760,27 +3655,6 @@
       {
         "category": "unclassified",
         "id": "requirement:0ee5b0928fa49f3a8390dd09c43b2a55745ac19d1e80db8d841dab85af64c34d",
-        "normalizedValue": null,
-        "parserRule": "unclassified.conservative_fallback",
-        "parserVersion": "1.0.0",
-        "sourceQuote": "Para más información acuda a Oficina Virtual"
-      }
-    ]
-  },
-  {
-    "offerId": "1285611028896",
-    "requirements": [
-      {
-        "category": "unclassified",
-        "id": "requirement:bfb12c146fcbeca4b862c264be0008e074e308cfe8f7941239fbdab4606f692e",
-        "normalizedValue": null,
-        "parserRule": "unclassified.ambiguous_or_negated",
-        "parserVersion": "1.0.0",
-        "sourceQuote": "Titulación de Cuidados Auxiliares de enfermería o Atención Sociosanitaria a personas dependientes ó Certificado de profesionalidad. Permiso de circulación."
-      },
-      {
-        "category": "unclassified",
-        "id": "requirement:3284af4628bfba3e8d4db10b99ac6f46e16d470a01f0ce4d29bcd337c5537e7e",
         "normalizedValue": null,
         "parserRule": "unclassified.conservative_fallback",
         "parserVersion": "1.0.0",
@@ -6327,6 +6201,80 @@
     ]
   },
   {
+    "offerId": "1285669974728",
+    "requirements": [
+      {
+        "category": "unclassified",
+        "id": "requirement:b55f6632d9c51525dfe204ca764c942faadec3b3e58b33bfb4eb314f223e77d2",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "ESO, GE, FP 1 Grado o equivalente"
+      },
+      {
+        "category": "unclassified",
+        "id": "requirement:36bdca595ef58f34abd3ad3e76b2deb6a984a09567b2a2222da209826bd4b02e",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Plazo: 20 de agosto de 2026"
+      },
+      {
+        "category": "unclassified",
+        "id": "requirement:4f3b3905449f3424218f262bc912a148904aae6e4bfe5a27654d4d9122aebb5b",
+        "normalizedValue": null,
+        "parserRule": "unclassified.ambiguous_or_negated",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Observaciones: Permiso de conducción C + CAP Mercancías"
+      },
+      {
+        "category": "unclassified",
+        "id": "requirement:f9fb84c00dda84dacb2494ba8a3e79c87a010df57f89c5ecb7202ea9c587647f",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Información obtenida de: Empleo público. BOP Salamanca 10/08/2026"
+      }
+    ]
+  },
+  {
+    "offerId": "1285670033786",
+    "requirements": [
+      {
+        "category": "unclassified",
+        "id": "requirement:ea6c4e54708b13b0b7ea8a44303431a4decdc63920fe35d6464be1c7dec6d1cc",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "ESO, GE, FP 1 Grado o equivalente"
+      },
+      {
+        "category": "unclassified",
+        "id": "requirement:aa747a2a45fe6abcfb9d094f37be4e44f8bfe42afa56f79ecf7fc6e7e0be8994",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Plazo: 20 de agosto de 2026"
+      },
+      {
+        "category": "unclassified",
+        "id": "requirement:58e7d153c29149418b11dda85b19f279dbbf714301bcf2969359f4c0ff9a7725",
+        "normalizedValue": null,
+        "parserRule": "unclassified.ambiguous_or_negated",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Observaciones: Permiso de conducción C + CAP Mercancías"
+      },
+      {
+        "category": "unclassified",
+        "id": "requirement:5363f83827aecd0395f1aa7aa2351204c7864935a4d39b20b71abce7ec973854",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Información obtenida de: Empleo público. BOP Salamanca 10/08/2026"
+      }
+    ]
+  },
+  {
     "offerId": "1285667274568",
     "requirements": [
       {
@@ -6430,27 +6378,6 @@
       {
         "category": "unclassified",
         "id": "requirement:52d1f2224a39eac14b3cf7702d733fa91dfe93142d51a1c0faae3eec1605e029",
-        "normalizedValue": null,
-        "parserRule": "unclassified.conservative_fallback",
-        "parserVersion": "1.0.0",
-        "sourceQuote": "Para más información acuda a Oficina Virtual"
-      }
-    ]
-  },
-  {
-    "offerId": "1285651573457",
-    "requirements": [
-      {
-        "category": "unclassified",
-        "id": "requirement:f79d1b06c170c837f1493f6369668a2dc86b31552bfa26b3cf77c4a11809e774",
-        "normalizedValue": null,
-        "parserRule": "unclassified.conservative_fallback",
-        "parserVersion": "1.0.0",
-        "sourceQuote": "Licenciatura o Grado en Medicina, especialidad Medicina Legal y Forense."
-      },
-      {
-        "category": "unclassified",
-        "id": "requirement:adbe6e53210eb97b8d9af607d7e97194e49fcfd92ebc22a3adef13df5f908776",
         "normalizedValue": null,
         "parserRule": "unclassified.conservative_fallback",
         "parserVersion": "1.0.0",
@@ -7097,35 +7024,6 @@
     ]
   },
   {
-    "offerId": "1285667526011",
-    "requirements": [
-      {
-        "category": "unclassified",
-        "id": "requirement:62f82ad7690ce1a98fe6120eb480b8e846d7ca3643850b831d02f820f8a3bb18",
-        "normalizedValue": null,
-        "parserRule": "unclassified.conservative_fallback",
-        "parserVersion": "1.0.0",
-        "sourceQuote": "Título de Educación Secundaria Obligatoria o equivalente"
-      },
-      {
-        "category": "unclassified",
-        "id": "requirement:9f960da41d7f31c70e2e1181c157417965f4761bb5dc604ba8cf58ec1db62b6f",
-        "normalizedValue": null,
-        "parserRule": "unclassified.conservative_fallback",
-        "parserVersion": "1.0.0",
-        "sourceQuote": "Plazo: 10 de agosto de 2026"
-      },
-      {
-        "category": "unclassified",
-        "id": "requirement:f8e8626f2a51811f3b9e8f9e0c40e0c3ef8a952395cde938e17d7aaca9ee6e48",
-        "normalizedValue": null,
-        "parserRule": "unclassified.conservative_fallback",
-        "parserVersion": "1.0.0",
-        "sourceQuote": "Información obtenida de: Empleo público. BOP León 30/07/2026"
-      }
-    ]
-  },
-  {
     "offerId": "1285639002842",
     "requirements": [
       {
@@ -7369,35 +7267,6 @@
         "parserRule": "unclassified.conservative_fallback",
         "parserVersion": "1.0.0",
         "sourceQuote": "Para más información acuda a Oficina Virtual"
-      }
-    ]
-  },
-  {
-    "offerId": "1285666792045",
-    "requirements": [
-      {
-        "category": "unclassified",
-        "id": "requirement:a28a56935caf0f6d90a6b65e8aa6bf4bc8fc08fd7d0872f9f3f8671ac87f4578",
-        "normalizedValue": null,
-        "parserRule": "unclassified.conservative_fallback",
-        "parserVersion": "1.0.0",
-        "sourceQuote": "Graduado escolar o equivalente"
-      },
-      {
-        "category": "unclassified",
-        "id": "requirement:e0c65aab82fe02cace03e7dfbb2434bc34aca78a29fe0f8d1ce4d7ea8fce4384",
-        "normalizedValue": null,
-        "parserRule": "unclassified.conservative_fallback",
-        "parserVersion": "1.0.0",
-        "sourceQuote": "Plazo: 10 de agosto de 2026"
-      },
-      {
-        "category": "unclassified",
-        "id": "requirement:4d5dcdbfb852ab1b31bc7d57e5c36a9737844699da2930bf426e9856a0dff8c2",
-        "normalizedValue": null,
-        "parserRule": "unclassified.conservative_fallback",
-        "parserVersion": "1.0.0",
-        "sourceQuote": "Información obtenida de: Empleo público. BOP Segovia 27/07/2026"
       }
     ]
   },

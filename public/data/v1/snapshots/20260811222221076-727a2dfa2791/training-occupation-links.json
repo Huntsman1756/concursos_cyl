@@ -1,6 +1,56 @@
 [
   {
     "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:6110",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
+    "sourceQuote": "6110 Trabajadores cualificados en actividades agrícolas (excepto en huertas, invernaderos, viveros y jardines)",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+    "trainingProgramKey": "AGA01M"
+  },
+  {
+    "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:6120",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
+    "sourceQuote": "6120 Trabajadores cualificados en huertas, invernaderos, viveros y jardines",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+    "trainingProgramKey": "AGA01M"
+  },
+  {
+    "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:6204",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
+    "sourceQuote": "6204 Trabajadores cualificados en apicultura y sericicultura",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+    "trainingProgramKey": "AGA01M"
+  },
+  {
+    "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:6205",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
+    "sourceQuote": "6205 Trabajadores cualificados en la avicultura y la cunicultura",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+    "trainingProgramKey": "AGA01M"
+  },
+  {
+    "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:8321",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
+    "sourceQuote": "8321 Operadores de maquinaria agrícola móvil",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+    "trainingProgramKey": "AGA01M"
+  },
+  {
+    "mappingVersion": "1.0.0",
     "occupationId": "occupation:cno11:5220",
     "relationshipType": "official_output",
     "reviewStatus": "approved",
@@ -21,6 +71,76 @@
   },
   {
     "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:4121",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
+    "sourceQuote": "4121 Empleados de control de abastecimientos e inventario",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+    "trainingProgramKey": "COM01B"
+  },
+  {
+    "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:4123",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
+    "sourceQuote": "4123 Empleados de logística y transporte de pasajeros y mercancías",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+    "trainingProgramKey": "COM01B"
+  },
+  {
+    "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:5220",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
+    "sourceQuote": "5220 Vendedores en tiendas y almacenes",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+    "trainingProgramKey": "COM01B"
+  },
+  {
+    "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:5492",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
+    "sourceQuote": "5492 Promotores de venta",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+    "trainingProgramKey": "COM01B"
+  },
+  {
+    "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:5500",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
+    "sourceQuote": "5500 Cajeros y taquilleros (excepto bancos)",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+    "trainingProgramKey": "COM01B"
+  },
+  {
+    "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:8333",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
+    "sourceQuote": "8333 Operadores de carretillas elevadoras",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+    "trainingProgramKey": "COM01B"
+  },
+  {
+    "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:9820",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
+    "sourceQuote": "9820 Reponedores",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+    "trainingProgramKey": "COM01B"
+  },
+  {
+    "mappingVersion": "1.0.0",
     "occupationId": "occupation:cno11:5210",
     "relationshipType": "official_output",
     "reviewStatus": "approved",
@@ -38,6 +158,16 @@
     "sourceQuote": "Vendedor/a de productos alimentarios.",
     "sourceUrl": "https://www.boe.es/eli/es/rd/189/2018",
     "trainingProgramKey": "COM02M"
+  },
+  {
+    "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:7531",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
+    "sourceQuote": "7531 Mecánicos y reparadores de equipos electrónicos",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+    "trainingProgramKey": "ELE03S"
   },
   {
     "mappingVersion": "1.0.0",
@@ -208,5 +338,25 @@
     "sourceQuote": "Auxiliar de ayuda a domicilio.",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2011/11/04/1593",
     "trainingProgramKey": "SSC01M"
+  },
+  {
+    "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:7232",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
+    "sourceQuote": "7232 Pintores en las industrias manufactureras",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+    "trainingProgramKey": "TMV01M"
+  },
+  {
+    "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:7313",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
+    "sourceQuote": "7313 Chapistas y caldereros",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+    "trainingProgramKey": "TMV01M"
   }
 ]

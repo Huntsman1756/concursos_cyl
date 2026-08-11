@@ -12,6 +12,28 @@
   },
   {
     "catalogVersion": "1.0.0",
+    "classificationCode": "4121",
+    "classificationSystem": "CNO-11",
+    "confirmationLabel": "Control de abastecimientos e inventario",
+    "occupationId": "occupation:cno11:4121",
+    "preferredLabel": "Empleados de control de abastecimientos e inventario",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf"
+  },
+  {
+    "catalogVersion": "1.0.0",
+    "classificationCode": "4123",
+    "classificationSystem": "CNO-11",
+    "confirmationLabel": "Empleados de logística y transporte de pasajeros y mercancías",
+    "occupationId": "occupation:cno11:4123",
+    "preferredLabel": "Empleados de logística y transporte de pasajeros y mercancías",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf"
+  },
+  {
+    "catalogVersion": "1.0.0",
     "classificationCode": "5110",
     "classificationSystem": "CNO-11",
     "confirmationLabel": "Cocina profesional",
@@ -41,6 +63,28 @@
     "preferredLabel": "Vendedores en tiendas y almacenes",
     "reviewStatus": "approved",
     "reviewedAt": "2026-08-08",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf"
+  },
+  {
+    "catalogVersion": "1.0.0",
+    "classificationCode": "5492",
+    "classificationSystem": "CNO-11",
+    "confirmationLabel": "Promotores de venta",
+    "occupationId": "occupation:cno11:5492",
+    "preferredLabel": "Promotores de venta",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf"
+  },
+  {
+    "catalogVersion": "1.0.0",
+    "classificationCode": "5500",
+    "classificationSystem": "CNO-11",
+    "confirmationLabel": "Cobro en comercio",
+    "occupationId": "occupation:cno11:5500",
+    "preferredLabel": "Cajeros y taquilleros (excepto bancos)",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf"
   },
   {
@@ -89,11 +133,44 @@
   },
   {
     "catalogVersion": "1.0.0",
+    "classificationCode": "6110",
+    "classificationSystem": "CNO-11",
+    "confirmationLabel": "Trabajadores cualificados en actividades agrícolas (excepto en huertas, invernaderos, viveros y jardines)",
+    "occupationId": "occupation:cno11:6110",
+    "preferredLabel": "Trabajadores cualificados en actividades agrícolas (excepto en huertas, invernaderos, viveros y jardines)",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf"
+  },
+  {
+    "catalogVersion": "1.0.0",
     "classificationCode": "6120",
     "classificationSystem": "CNO-11",
     "confirmationLabel": "Trabajos cualificados en huertas, jardines y viveros",
     "occupationId": "occupation:cno11:6120",
     "preferredLabel": "Trabajadores cualificados en huertas, invernaderos, viveros y jardines",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf"
+  },
+  {
+    "catalogVersion": "1.0.0",
+    "classificationCode": "6204",
+    "classificationSystem": "CNO-11",
+    "confirmationLabel": "Trabajadores cualificados en apicultura y sericicultura",
+    "occupationId": "occupation:cno11:6204",
+    "preferredLabel": "Trabajadores cualificados en apicultura y sericicultura",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf"
+  },
+  {
+    "catalogVersion": "1.0.0",
+    "classificationCode": "6205",
+    "classificationSystem": "CNO-11",
+    "confirmationLabel": "Trabajadores cualificados en la avicultura y la cunicultura",
+    "occupationId": "occupation:cno11:6205",
+    "preferredLabel": "Trabajadores cualificados en la avicultura y la cunicultura",
     "reviewStatus": "approved",
     "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf"
@@ -140,6 +217,17 @@
     "preferredLabel": "Instaladores de sistemas de impermeabilización en edificios",
     "reviewStatus": "approved",
     "reviewedAt": "2026-08-08",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf"
+  },
+  {
+    "catalogVersion": "1.0.0",
+    "classificationCode": "7232",
+    "classificationSystem": "CNO-11",
+    "confirmationLabel": "Pintores en las industrias manufactureras",
+    "occupationId": "occupation:cno11:7232",
+    "preferredLabel": "Pintores en las industrias manufactureras",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf"
   },
   {
@@ -204,6 +292,50 @@
     "confirmationLabel": "Montaje de estructuras metálicas",
     "occupationId": "occupation:cno11:7314",
     "preferredLabel": "Montadores de estructuras metálicas",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf"
+  },
+  {
+    "catalogVersion": "1.0.0",
+    "classificationCode": "7531",
+    "classificationSystem": "CNO-11",
+    "confirmationLabel": "Mecánicos y reparadores de equipos electrónicos",
+    "occupationId": "occupation:cno11:7531",
+    "preferredLabel": "Mecánicos y reparadores de equipos electrónicos",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf"
+  },
+  {
+    "catalogVersion": "1.0.0",
+    "classificationCode": "8321",
+    "classificationSystem": "CNO-11",
+    "confirmationLabel": "Operadores de maquinaria agrícola móvil",
+    "occupationId": "occupation:cno11:8321",
+    "preferredLabel": "Operadores de maquinaria agrícola móvil",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf"
+  },
+  {
+    "catalogVersion": "1.0.0",
+    "classificationCode": "8333",
+    "classificationSystem": "CNO-11",
+    "confirmationLabel": "Operadores de carretillas elevadoras",
+    "occupationId": "occupation:cno11:8333",
+    "preferredLabel": "Operadores de carretillas elevadoras",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf"
+  },
+  {
+    "catalogVersion": "1.0.0",
+    "classificationCode": "9820",
+    "classificationSystem": "CNO-11",
+    "confirmationLabel": "Reponedores",
+    "occupationId": "occupation:cno11:9820",
+    "preferredLabel": "Reponedores",
     "reviewStatus": "approved",
     "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf"

@@ -16,7 +16,10 @@ import { extractPublishedRequirements } from "./extractRequirements";
 import { SOURCE_CONFIG } from "./sourceConfig";
 import { sanitizeOfferHtml } from "./sanitizeOfferHtml";
 
-const spanishCollator = new Intl.Collator("es");
+const spanishCollator = new Intl.Collator("es", {
+  sensitivity: "base",
+  usage: "sort",
+});
 
 export interface NormalizeOffersOptions {
   datasetSnapshot?: SourceSnapshot;

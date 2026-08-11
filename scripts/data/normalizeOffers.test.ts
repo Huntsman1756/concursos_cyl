@@ -136,6 +136,26 @@ describe("normalizeOffers", () => {
     expect(result.map((offer) => offer.id)).toEqual(["1", "2", "3"]);
   });
 
+  it("produces canonical order when titles differ only by accents or case, with stable id tie-break", () => {
+    const result = normalizeOffers([
+      { ...offerSourceWithRequirements, identificador: "10", titulo: "Código" },
+      { ...offerSourceWithRequirements, identificador: "01", titulo: "codigo" },
+      { ...offerSourceWithRequirements, identificador: "02", titulo: "CODIGO" },
+      {
+        ...offerSourceWithRequirements,
+        identificador: "03",
+        titulo: "Zapatero",
+      },
+    ]);
+
+    expect(result.map((offer) => offer.id)).toEqual([
+      "01",
+      "02",
+      "10",
+      "03",
+    ]);
+  });
+
   it("rejects a blank official identifier", () => {
     expect(() =>
       normalizeOffers([{ ...offerSourceWithRequirements, identificador: " " }]),

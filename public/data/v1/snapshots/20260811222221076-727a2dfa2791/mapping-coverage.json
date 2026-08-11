@@ -169,9 +169,9 @@
     "uncoveredPrograms": 1
   },
   {
-    "approvedMappings": 0,
-    "coverageNote": "Aún no hay una relación ocupacional aprobada; esto no significa que el ciclo no tenga salidas profesionales.",
-    "coverageStatus": "uncovered",
+    "approvedMappings": 5,
+    "coverageNote": "Incluye relaciones ocupacionales revisadas y citadas.",
+    "coverageStatus": "reviewed",
     "draftMappings": 0,
     "familyCode": "AGA",
     "familyName": "Agraria",
@@ -179,7 +179,7 @@
     "programTitle": "Producción Agroecológica",
     "rejectedMappings": 0,
     "scope": "program",
-    "uncoveredPrograms": 1
+    "uncoveredPrograms": 0
   },
   {
     "approvedMappings": 0,
@@ -325,9 +325,9 @@
     "uncoveredPrograms": 1
   },
   {
-    "approvedMappings": 0,
-    "coverageNote": "Aún no hay una relación ocupacional aprobada; esto no significa que el ciclo no tenga salidas profesionales.",
-    "coverageStatus": "uncovered",
+    "approvedMappings": 7,
+    "coverageNote": "Incluye relaciones ocupacionales revisadas y citadas.",
+    "coverageStatus": "reviewed",
     "draftMappings": 0,
     "familyCode": "COM",
     "familyName": "Comercio y Marketing",
@@ -335,7 +335,7 @@
     "programTitle": "Servicios Comerciales",
     "rejectedMappings": 0,
     "scope": "program",
-    "uncoveredPrograms": 1
+    "uncoveredPrograms": 0
   },
   {
     "approvedMappings": 0,
@@ -585,9 +585,9 @@
     "uncoveredPrograms": 1
   },
   {
-    "approvedMappings": 0,
-    "coverageNote": "Aún no hay una relación ocupacional aprobada; esto no significa que el ciclo no tenga salidas profesionales.",
-    "coverageStatus": "uncovered",
+    "approvedMappings": 1,
+    "coverageNote": "Incluye relaciones ocupacionales revisadas y citadas.",
+    "coverageStatus": "reviewed",
     "draftMappings": 0,
     "familyCode": "ELE",
     "familyName": "Electricidad y Electrónica",
@@ -595,7 +595,7 @@
     "programTitle": "Mantenimiento Electrónico",
     "rejectedMappings": 0,
     "scope": "program",
-    "uncoveredPrograms": 1
+    "uncoveredPrograms": 0
   },
   {
     "approvedMappings": 0,
@@ -2301,9 +2301,9 @@
     "uncoveredPrograms": 1
   },
   {
-    "approvedMappings": 0,
-    "coverageNote": "Aún no hay una relación ocupacional aprobada; esto no significa que el ciclo no tenga salidas profesionales.",
-    "coverageStatus": "uncovered",
+    "approvedMappings": 2,
+    "coverageNote": "Incluye relaciones ocupacionales revisadas y citadas.",
+    "coverageStatus": "reviewed",
     "draftMappings": 0,
     "familyCode": "TMV",
     "familyName": "Transporte y Mantenimiento de Vehículos",
@@ -2311,7 +2311,7 @@
     "programTitle": "Carrocería",
     "rejectedMappings": 0,
     "scope": "program",
-    "uncoveredPrograms": 1
+    "uncoveredPrograms": 0
   },
   {
     "approvedMappings": 0,
@@ -2453,7 +2453,7 @@
     "uncoveredPrograms": 6
   },
   {
-    "approvedMappings": 2,
+    "approvedMappings": 7,
     "coverageNote": "La cobertura mide relaciones revisadas del catálogo, no la existencia de salidas profesionales.",
     "draftMappings": 0,
     "familyCode": "AGA",
@@ -2461,7 +2461,7 @@
     "programCount": 10,
     "rejectedMappings": 0,
     "scope": "family",
-    "uncoveredPrograms": 9
+    "uncoveredPrograms": 8
   },
   {
     "approvedMappings": 0,
@@ -2475,7 +2475,7 @@
     "uncoveredPrograms": 3
   },
   {
-    "approvedMappings": 2,
+    "approvedMappings": 9,
     "coverageNote": "La cobertura mide relaciones revisadas del catálogo, no la existencia de salidas profesionales.",
     "draftMappings": 0,
     "familyCode": "COM",
@@ -2483,10 +2483,10 @@
     "programCount": 12,
     "rejectedMappings": 0,
     "scope": "family",
-    "uncoveredPrograms": 11
+    "uncoveredPrograms": 10
   },
   {
-    "approvedMappings": 0,
+    "approvedMappings": 1,
     "coverageNote": "La cobertura mide relaciones revisadas del catálogo, no la existencia de salidas profesionales.",
     "draftMappings": 0,
     "familyCode": "ELE",
@@ -2494,7 +2494,7 @@
     "programCount": 13,
     "rejectedMappings": 0,
     "scope": "family",
-    "uncoveredPrograms": 13
+    "uncoveredPrograms": 12
   },
   {
     "approvedMappings": 0,
@@ -2662,7 +2662,7 @@
     "uncoveredPrograms": 3
   },
   {
-    "approvedMappings": 0,
+    "approvedMappings": 2,
     "coverageNote": "La cobertura mide relaciones revisadas del catálogo, no la existencia de salidas profesionales.",
     "draftMappings": 0,
     "familyCode": "TMV",
@@ -2670,6 +2670,6 @@
     "programCount": 11,
     "rejectedMappings": 0,
     "scope": "family",
-    "uncoveredPrograms": 11
+    "uncoveredPrograms": 10
   }
 ]
