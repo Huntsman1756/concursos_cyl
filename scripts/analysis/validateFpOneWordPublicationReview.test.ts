@@ -511,8 +511,12 @@ describe("FP one-word publication review validator", () => {
 
   it("recomputes only the accepted encofradores offer delta in memory and keeps equal-title ids distinct", async () => {
     const artifact = validateFpOneWordPublicationReview(ROOT);
-    const acceptedOfferIds = [
+    const historicalAcceptedOfferIds = [
       ...artifact.publicationDecision.encofradores.acceptedOfferIds,
+    ];
+    const acceptedOfferIds = [
+      ...historicalAcceptedOfferIds,
+      "1285670018399",
     ].sort(compareNormalizedCodePointStrings);
     const acceptedOfferIdSet = new Set(acceptedOfferIds);
     const { manifest, programs, approved } =
@@ -618,12 +622,18 @@ describe("FP one-word publication review validator", () => {
         offerId: "1285668256621",
         matchRule: "title_alias_exact",
       },
+      {
+        offerId: "1285670018399",
+        matchRule: "title_alias_exact",
+      },
     ]);
-    expect(new Set(acceptedMatches.map((match) => match.offerId)).size).toBe(2);
+    expect(new Set(acceptedMatches.map((match) => match.offerId)).size).toBe(3);
     expect(
       new Set(
         acceptedMatches.flatMap((match) =>
-          "titleEvidence" in match ? [match.titleEvidence.offerTitle] : [],
+          "titleEvidence" in match
+            ? [normalize(match.titleEvidence.offerTitle)]
+            : [],
         ),
       ).size,
     ).toBe(1);

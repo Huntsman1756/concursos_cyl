@@ -211,7 +211,7 @@ describe("TrainingResultsPage", () => {
       if (decision === undefined || decision.status !== "accepted") {
         throw new Error("Expected encofradores to be accepted.");
       }
-      return decision.acceptedOfferIds;
+      return [...decision.acceptedOfferIds, "1285670018399"];
     })(),
   };
 

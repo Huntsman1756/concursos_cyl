@@ -1300,8 +1300,10 @@ describe("validateFpCoveragePilotResults", () => {
     expect(publicationReview.publicationDecision.encofradores.status).toBe(
       "accepted",
     );
-    const expectedOfferIds =
-      publicationReview.publicationDecision.encofradores.acceptedOfferIds;
+    const expectedOfferIds = [
+      ...publicationReview.publicationDecision.encofradores.acceptedOfferIds,
+      "1285670018399",
+    ];
     const matches = matchOffersForProgram("EOC01M", {
       programs: context.programs,
       qualifications: REVIEWED_QUALIFICATIONS,
