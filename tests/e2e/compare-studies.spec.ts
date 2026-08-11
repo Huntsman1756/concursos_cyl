@@ -73,7 +73,7 @@ test("preserves an unavailable source cell in an intermediate comparison", async
   );
 
   await expect(
-    page.getByText("No disponible o sin representatividad suficiente").first(),
+    page.getByText("No disponible", { exact: true }).first(),
   ).toBeVisible();
   await expect(
     page.getByText(
