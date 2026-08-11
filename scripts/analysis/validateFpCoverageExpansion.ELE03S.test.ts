@@ -66,11 +66,6 @@ async function readJson<T>(path: string): Promise<T> {
 
 describe("ELE03S expansion slot", () => {
   it("publishes exactly the one reviewed ELE03S relation", async () => {
-    const manifest = await readJson<{
-      resourceSnapshots: {
-        trainingOccupationLinks: { resourcePath: string };
-      };
-    }>(resolve(rootDirectory, "public/data/v1/manifest.json"));
     const snapshotId = await loadELE03SSnapshotId();
     const links = await readJson<
       {
