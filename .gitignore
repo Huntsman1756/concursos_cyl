@@ -4,6 +4,9 @@ dist/
 coverage/
 playwright-report/
 test-results/
+_codex_tmp/
+_codex_worktrees/
+.agent-runs/
 
 # Local environment
 .env
