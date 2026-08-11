@@ -5,43 +5,43 @@
 <!-- prettier-ignore -->
 | Campo | Valor |
 | --- | --- |
-| Commit fuente | `76581c246349aee35407a717ecd86918bb6f17f7` |
+| Commit fuente | `2c54ad077310d3e029323368bd7889356b4f86fb` |
 | Manifest | `public/data/v1/manifest.json` |
-| SHA-256 del manifest | `5b04d4055ac7df0c1bfe291f410e4157e77cc1a619c7af88b17f76a68bd42a94` |
-| Generado | 2026-08-09T18:54:38.334Z |
-| Snapshot | `20260809185438334-65ce4d3c4e14` |
+| SHA-256 del manifest | `23f0a865246dacda823860f7d42a0ab080b68a92a6d4163d5a51b5d135aca65f` |
+| Generado | 2026-08-11T12:52:15.934Z |
+| Snapshot | `20260811125215934-d60216a7915d` |
 | Estado de calidad | passed |
 | Centros | 229 |
 | Programas | 187 |
 | Ofertas formativas | 1294 |
-| Ofertas laborales | 1077 |
+| Ofertas laborales | 1045 |
 
 ### Recursos inmutables del snapshot
 
 <!-- prettier-ignore -->
 | Recurso | Ruta | Registros | SHA-256 |
 | --- | --- | ---: | --- |
-| centers | `/data/v1/snapshots/20260809185438334-65ce4d3c4e14/centers.json` | 229 | `593b7780f6cb9511c02edb26a769e5e1f951624f6e4b923a8e34caacb230c87a` |
-| jobOffers | `/data/v1/snapshots/20260809185438334-65ce4d3c4e14/job-offers.json` | 1077 | `0631d0880485df26e2f450ee7da70ce7a0b210fe088eca02398a9474a2e6907b` |
-| mappingCoverage | `/data/v1/snapshots/20260809185438334-65ce4d3c4e14/mapping-coverage.json` | 209 | `f880762313875dbb899343f16ec48df75119f8b3e084aca02716f45c02939634` |
-| officialOccupations | `/data/v1/snapshots/20260809185438334-65ce4d3c4e14/official-occupations.json` | 502 | `24825e024b5a49963be32a9369b9d8c9dc0a7c51810d0d98b8920b949d3b3c59` |
-| occupationAliases | `/data/v1/snapshots/20260809185438334-65ce4d3c4e14/occupation-aliases.json` | 21 | `4f37bc7c6ff4d76140c79d9e9245c7155ff5f77d5b3bc397796985e13c2fbe7c` |
-| occupations | `/data/v1/snapshots/20260809185438334-65ce4d3c4e14/occupations.json` | 13 | `204cb90ac21433d11f6c9ae9289d24d5dacd6b4a53315dcf7a9be87d60c2b6f7` |
-| outcomeIndicators | `/data/v1/snapshots/20260809185438334-65ce4d3c4e14/outcome-indicators.json` | 22170 | `4f2c6b73fc4171bb9daf21583712ab2ec99bcaa7d27b1f2fd0c070b9079ab3e2` |
-| programs | `/data/v1/snapshots/20260809185438334-65ce4d3c4e14/programs.json` | 187 | `90df87b283b5ff003dda20c9c4f7eac52b903e611753d107d4b927bbc4e19b72` |
-| publishedRequirements | `/data/v1/snapshots/20260809185438334-65ce4d3c4e14/published-requirements.json` | 337 | `0a9061ecea0e25ef0038ec93839941c8584246e280e0453b4be816ce2d9e3a65` |
-| trainingOccupationLinks | `/data/v1/snapshots/20260809185438334-65ce4d3c4e14/training-occupation-links.json` | 14 | `f53dab591ec336fb9b64cdbf6616a26a500866e08cae1abe466a3f9b1217ede3` |
-| trainingOfferings | `/data/v1/snapshots/20260809185438334-65ce4d3c4e14/training-offerings.json` | 1294 | `0948871f993a4f0a03ed42ccef060c4a395e0898dc230086f234345fee7e880a` |
+| centers | `/data/v1/snapshots/20260811125215934-d60216a7915d/centers.json` | 229 | `593b7780f6cb9511c02edb26a769e5e1f951624f6e4b923a8e34caacb230c87a` |
+| jobOffers | `/data/v1/snapshots/20260811125215934-d60216a7915d/job-offers.json` | 1045 | `e7104a3cf6ff5781309098401c9956ea21372490759efa8bef45d0d395b5cadc` |
+| mappingCoverage | `/data/v1/snapshots/20260811125215934-d60216a7915d/mapping-coverage.json` | 209 | `348e8770f6ea152cfc2bf4727cbc33150fb165d1691d6cd2c496e989aa2d905b` |
+| officialOccupations | `/data/v1/snapshots/20260811125215934-d60216a7915d/official-occupations.json` | 502 | `76fa213f97c98e5af0f9bf120323ba3abb32df78e797c381e5454cadc858f64b` |
+| occupationAliases | `/data/v1/snapshots/20260811125215934-d60216a7915d/occupation-aliases.json` | 21 | `4f37bc7c6ff4d76140c79d9e9245c7155ff5f77d5b3bc397796985e13c2fbe7c` |
+| occupations | `/data/v1/snapshots/20260811125215934-d60216a7915d/occupations.json` | 14 | `b311f6e17813ccdccea2fa7e2a0e9fd6f03f2a0f627762e12b1e481b8b75874f` |
+| outcomeIndicators | `/data/v1/snapshots/20260811125215934-d60216a7915d/outcome-indicators.json` | 22170 | `4f2c6b73fc4171bb9daf21583712ab2ec99bcaa7d27b1f2fd0c070b9079ab3e2` |
+| programs | `/data/v1/snapshots/20260811125215934-d60216a7915d/programs.json` | 187 | `90df87b283b5ff003dda20c9c4f7eac52b903e611753d107d4b927bbc4e19b72` |
+| publishedRequirements | `/data/v1/snapshots/20260811125215934-d60216a7915d/published-requirements.json` | 329 | `09d9e33424511f6e8a73c6886affd7fb2f84e5adc4bcf70797ebd64371450f50` |
+| trainingOccupationLinks | `/data/v1/snapshots/20260811125215934-d60216a7915d/training-occupation-links.json` | 16 | `33e7727a6b10fd64dffa8e6ec3fc486d2b7fe4245eb22a8f9c4a55ccfce8d625` |
+| trainingOfferings | `/data/v1/snapshots/20260811125215934-d60216a7915d/training-offerings.json` | 1294 | `0948871f993a4f0a03ed42ccef060c4a395e0898dc230086f234345fee7e880a` |
 
 ## Recomputación de cobertura
 
-- 6 cualificaciones distintas: `qualification:COM02M, qualification:EOC01M, qualification:HOT01M, qualification:IFC03S, qualification:SAN21, qualification:SSC01M`.
-- 7 claves de modalidad: `COM02M, EOC01M, HOT01M, IFC03S, IFC03SD, SAN21, SSC01M`.
-- 14 relaciones aprobadas y 21 alias aprobados.
-- 2 programas con coincidencias y 5 programas revisados sin coincidencias.
-- 3 relaciones alcanzadas y 11 relaciones revisadas sin oferta alcanzada.
-- Unión de coincidencias: 46 IDs; delta marginal de la ampliación: 0 IDs.
-- Intentos terminales: 1 completado, 7 diferidos, 0 descartados; 6 reservas no intentadas.
+- 7 cualificaciones distintas: `qualification:AGA03M, qualification:COM02M, qualification:EOC01M, qualification:HOT01M, qualification:IFC03S, qualification:SAN21, qualification:SSC01M`.
+- 8 claves de modalidad: `AGA03M, COM02M, EOC01M, HOT01M, IFC03S, IFC03SD, SAN21, SSC01M`.
+- 16 relaciones aprobadas y 21 alias aprobados.
+- 2 programas con coincidencias y 6 programas revisados sin coincidencias.
+- 2 relaciones alcanzadas y 14 relaciones revisadas sin oferta alcanzada.
+- Unión de coincidencias: 42 IDs; delta marginal de la ampliación: 0 IDs.
+- Intentos terminales: 2 completado, 6 diferidos, 0 descartados; 6 reservas no intentadas.
 
 La cifra de ofertas es una unión de IDs de ofertas que pasan las reglas de matching con los datos publicados. No es un recuento de todo el mercado ni una proyección.
 

@@ -3,6 +3,8 @@ import fs from "node:fs";
 import { execFileSync } from "node:child_process";
 import path from "node:path";
 
+import { format as formatPrettier } from "prettier";
+
 import { REVIEWED_PROGRAM_QUALIFICATION_LINKS } from "../../data/catalogs/reviewedProgramQualifications";
 import { REVIEWED_QUALIFICATIONS } from "../../data/catalogs/reviewedQualifications";
 import type { TrainingProgram } from "../../data/schemas/generated";
@@ -706,6 +708,13 @@ function recomputeFreeze(
   };
 }
 
+export function recomputeContestFreeze(
+  rootDir: string,
+  freeze: ContestFreeze,
+): ContestFreeze {
+  return recomputeFreeze(path.resolve(rootDir), freeze);
+}
+
 function assertSourceCommitBoundary(
   rootDir: string,
   sourceCommitSha: string,
@@ -770,8 +779,63 @@ export function loadAndValidateContestFreeze(
 if (
   path.resolve(process.argv[1] ?? "") === path.resolve(import.meta.filename)
 ) {
-  loadAndValidateContestFreeze();
-  console.info(
-    "Contest coverage freeze matches manifest, reports, and public data.",
-  );
+  const rootDir = process.cwd();
+  if (process.argv.includes("--write")) {
+    const freezePath = path.resolve(
+      rootDir,
+      "docs/contest/coverage-freeze.json",
+    );
+    const existing = parseFreeze(
+      JSON.parse(fs.readFileSync(freezePath, "utf8")),
+    );
+    const sourceCommitSha = execFileSync("git", ["rev-parse", "HEAD"], {
+      cwd: rootDir,
+      encoding: "utf8",
+    }).trim();
+    const currentManifest = record(
+      readJson(rootDir, existing.manifest.path),
+      "manifest",
+    );
+    const currentResourceSnapshots = record(
+      currentManifest.resourceSnapshots,
+      "manifest.resourceSnapshots",
+    );
+    const seededResourceSnapshots = Object.fromEntries(
+      RESOURCE_KEYS.map((key) => {
+        const specification = record(
+          currentResourceSnapshots[key],
+          `manifest.resourceSnapshots.${key}`,
+        );
+        return [
+          key,
+          {
+            ...existing.manifest.resourceSnapshots[key],
+            resourcePath: stringValue(
+              specification.resourcePath,
+              `manifest.resourceSnapshots.${key}.resourcePath`,
+            ),
+          },
+        ];
+      }),
+    ) as ContestFreeze["manifest"]["resourceSnapshots"];
+    const recomputed = recomputeContestFreeze(rootDir, {
+      ...existing,
+      sourceCommitSha,
+      manifest: {
+        ...existing.manifest,
+        resourceSnapshots: seededResourceSnapshots,
+      },
+    });
+    fs.writeFileSync(
+      freezePath,
+      await formatPrettier(JSON.stringify(recomputed), { parser: "json" }),
+    );
+    validateContestFreeze(recomputed, { rootDir });
+    console.info(`Contest coverage freeze written from ${sourceCommitSha}.`);
+  } else {
+    loadAndValidateContestFreeze(rootDir);
+    console.info(
+      "Contest coverage freeze matches manifest, reports, and public data.",
+    );
+  }
 }
