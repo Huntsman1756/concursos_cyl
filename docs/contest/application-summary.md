@@ -15,7 +15,7 @@ La interfaz permite entrar desde el catálogo de FP o desde una ocupación. Expo
 - Claves de modalidad públicas: **7** (COM02M, EOC01M, HOT01M, IFC03S, IFC03SD, SAN21, SSC01M).
 - Relaciones ocupacionales aprobadas: **14**.
 - Alias aprobados: **21**.
-- **46 ofertas alcanzadas** por relaciones publicadas (unión de IDs).
+- **46 de las 1.077 ofertas de la instantánea** quedan alcanzadas por relaciones publicadas (unión de IDs).
 - Relaciones revisadas sin oferta alcanzada: **11**.
 - Programas diferidos por evidencia insuficiente: ADG01M, AGA03M, ELE01M, FME01M, IMA03M, MAM01M, TMV02M.
 

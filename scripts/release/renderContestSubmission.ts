@@ -45,9 +45,7 @@ function list(values: readonly string[]): string {
 }
 
 function spanishInteger(value: number): string {
-  return new Intl.NumberFormat("es-ES", { maximumFractionDigits: 0 }).format(
-    value,
-  );
+  return String(value).replace(/\B(?=(\d{3})+(?!\d))/gu, ".");
 }
 
 function resourceRows(freeze: ContestFreeze): string {
