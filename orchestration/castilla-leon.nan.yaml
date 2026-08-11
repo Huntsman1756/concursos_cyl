@@ -36,15 +36,26 @@ bindings:
     permissions: read-only-review
 routing:
   code:
-    default: codeExecutor
+    plan: orchestrator
+    implement: codeExecutor
+    verifyWith: reviewer
   bulletin:
     default: bulletinReader
     verifyWith: reviewer
-  architecture: codeExecutor
+  architecture: orchestrator
   security_review: orchestrator
-  debugging: codeExecutor
-  cross_file_refactor: codeExecutor
-  multi_file: codeExecutor
+  debugging:
+    diagnose: orchestrator
+    implement: codeExecutor
+    verifyWith: reviewer
+  cross_file_refactor:
+    plan: orchestrator
+    implement: codeExecutor
+    verifyWith: reviewer
+  multi_file:
+    plan: orchestrator
+    implement: codeExecutor
+    verifyWith: reviewer
   manual_review: reviewer
 controls:
   requireAllowedPathsForCode: true

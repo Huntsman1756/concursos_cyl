@@ -5,11 +5,31 @@ OpenAI/Codex planifica y revisa; OpenCode ejecuta contratos acotados con NAN.
 
 ## Roles y rutas
 
-- Orquestador y revisor: OpenAI/Codex Sol, esfuerzo medio.
-- Implementación mecánica y localizada: `nan/qwen3.6` mediante `nan-code` con
-  retry (3 intentos), fallback configurable y telemetría JSON.
-- Lectura y extracción de boletines: `nan/gemma4` mediante `nan-bulletin`.
-- Seguridad y decisiones de producto se quedan en Codex.
+- **Sol/Frontier (Orquestador y Revisor)** — OpenAI/Codex Sol, esfuerzo medio.
+  Analiza, diagnostica, diseña, descompone tareas y revisa cada entrega.
+  Seguridad y decisiones de producto se reservan íntegramente a Codex.
+- **Implementación** — `nan/qwen3.6` (Qwen) pica código bajo contrato.
+  Ejecuta cambios mecánicos en las rutas permitidas, incluso multiarchivo cuando
+  el contrato lo acota expresamente. Soporta retry (3 intentos), fallback
+  configurable y telemetría JSON.
+- **Boletines** — `nan/gemma4` (Gemma) solo lee boletines. Extrae información de
+  boletines convertidos a archivos locales; es estrictamente de solo lectura.
+
+> Delegar la implementación a un worker **no equivale** a delegar la arquitectura
+> ni la revisión. Sol/Frontier conserva el control del diseño, la descomposición
+> y la validación de cada cambio.
+
+## Flujo Frontier → worker → Frontier
+
+1. **Frontier** (Codex/Sol) analiza, diagnostica, diseña y descompone el trabajo
+   en un contrato verificable (objetivo, rutas permitidas, validaciones).
+2. El **worker** (Qwen para código, Gemma para boletines) ejecuta el contrato de
+   forma autónoma dentro de sus límites.
+3. De vuelta al **Frontier** (Codex/Sol): revisa el diff, ejecuta las validaciones
+   de forma independiente, lee la telemetría y aprueba o rechaza el cambio.
+
+Este ciclo se repite para cada contrato. Cada iteración mantiene la separación
+entre **planificar/diagnosticar/revisar** (Frontier) e **implementar** (worker).
 
 ## Contrato de delegación
 

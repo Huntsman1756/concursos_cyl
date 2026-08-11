@@ -1,11 +1,13 @@
-# Orquestación de Agentes (NAN)
+# Orquestación de Agentes (Codex → NAN)
 
 ## Resumen
 
 Este repositorio implementa un flujo local de agentes inspirado en
-`agent-orchestration-starter`. La idea es delegar todo el trabajo mecánico
-al modelo NAN bajo un contrato estricto, mientras OpenAI/Codex Sol planifica,
-revisa y valida cada entrega.
+`agent-orchestration-starter`. OpenAI/Codex Sol es el orquestador Frontier:
+planifica, diagnostica, define la arquitectura y los contratos, y valida
+cada entrega. Los modelos NAN ejecutan cambios de código únicamente bajo
+contratos acotados emitidos por Sol, sin decidir arquitectura ni hacer
+diagnóstico por sí mismos.
 
 Este flujo **no es el runtime V4 completo**. Es una adaptación local para Windows
 que aprovecha el CLI `opencode`, los agentes locales `nan-code` y `nan-bulletin`,
@@ -30,11 +32,46 @@ Codex inicia la escritura de código.
 
 | Rol                     | Modelo / Alias                       | Responsabilidad                                                                              |
 | ----------------------- | ------------------------------------ | -------------------------------------------------------------------------------------------- |
-| **Orquestador**         | OpenAI / Codex Sol (esfuerzo medio)  | Planifica tareas, define objetivos, límites de ruta, revisa diffs y valida.                  |
+| **Orquestador**         | OpenAI / Codex Sol (esfuerzo medio)  | Analiza, diagnostica, diseña, descompone tareas, revisa diffs y valida.                      |
 | **Worker de código**    | `nan/qwen3.6` (agente `nan-code`)    | Aplica cambios mecánicos en rutas permitidas. Soporta retry, fallback y telemetría.          |
 | **Worker de boletines** | `nan/gemma4` (agente `nan-bulletin`) | Lee y extrae información de boletines convertidos a archivos locales legibles. Modo lectura. |
 
 Seguridad y decisiones de producto se reservan al orquestador (Codex).
+
+> Delegar la implementación a un worker **no equivale** a delegar la arquitectura
+> ni la revisión. Sol/Frontier conserva el control del diseño, la descomposición
+> y la validación de cada cambio.
+
+## Flujo Frontier → worker → Frontier
+
+1. **Frontier** (Codex/Sol) analiza, diagnostica, diseña y descompone el trabajo
+   en un contrato verificable (objetivo, rutas permitidas, validaciones).
+2. El **worker** (Qwen para código, Gemma para boletines) ejecuta el contrato de
+   forma autónoma dentro de sus límites.
+3. De vuelta al **Frontier** (Codex/Sol): revisa el diff, ejecuta las validaciones
+   de forma independiente, lee la telemetría y aprueba o rechaza el cambio.
+
+Este ciclo se repite para cada contrato. Cada iteración mantiene la separación
+entre **planificar/diagnosticar/revisar** (Frontier) e **implementar** (worker).
+
+## Routing
+
+Los tipos de tarea se enrutan en `castilla-leon.nan.yaml` con el siguiente comportamiento:
+
+| Ruta                  | `plan` / `diagnose`    | `implement`      | `verifyWith` |
+| --------------------- | ---------------------- | ---------------- | ------------ |
+| `code`                | `orchestrator`         | `codeExecutor`   | `reviewer`   |
+| `debugging`           | `orchestrator`         | `codeExecutor`   | `reviewer`   |
+| `cross_file_refactor` | `orchestrator`         | `codeExecutor`   | `reviewer`   |
+| `multi_file`          | `orchestrator`         | `codeExecutor`   | `reviewer`   |
+| `bulletin`            | —                      | `bulletinReader` | `reviewer`   |
+| `architecture`        | `orchestrator` (único) | —                | —            |
+| `security_review`     | `orchestrator` (único) | —                | —            |
+
+- `architecture` y `security_review` se procesan íntegramente por el orquestador.
+- `bulletin` usa `bulletinReader` como default y `reviewer` para verificación.
+- `code`, `debugging`, `cross_file_refactor` y `multi_file` requieren que el
+  orquestador planifique/diagnostique, el worker implemente y el revisor verifique.
 
 ## Flujo delegación de código
 
