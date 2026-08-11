@@ -34,6 +34,7 @@ const oneWordPublicationReviews = JSON.parse(
   >;
 };
 
+/** Historical bounded offer IDs, one per one-word publication row that was accepted and published. */
 const boundedOneWordOfferIdsByProgram = new Map<string, string[]>();
 for (const row of oneWordPublicationReviews.rows) {
   const decision = oneWordPublicationReviews.publicationDecision[row.form];
@@ -48,6 +49,13 @@ for (const row of oneWordPublicationReviews.rows) {
   }
 }
 
+/** Current feed IDs for EOC01M (historical + newly added offers). */
+const currentEoc01mOfferIds = [
+  "1285667539377",
+  "1285668256621",
+  "1285670018399",
+];
+
 for (const program of results.programs) {
   test(`${program.programKey} keeps the historical alias result plus bounded one-word publication`, async ({
     page,
@@ -56,15 +64,38 @@ for (const program of results.programs) {
 
     const boundedOneWordOfferCount =
       boundedOneWordOfferIdsByProgram.get(program.programKey)?.length ?? 0;
+    const boundedIds =
+      boundedOneWordOfferIdsByProgram.get(program.programKey) ?? [];
+    // For EOC01M the current feed has additional offers beyond the historical bounded result
+    const currentOfferCount =
+      program.programKey === "EOC01M"
+        ? currentEoc01mOfferIds.length
+        : boundedOneWordOfferCount;
     await expect(page.getByRole("article")).toHaveCount(
-      program.afterOfferCount + boundedOneWordOfferCount,
+      program.afterOfferCount + currentOfferCount,
     );
-    if (program.afterOfferCount + boundedOneWordOfferCount === 0) {
+
+    if (program.afterOfferCount + currentOfferCount === 0) {
       await expect(
         page.getByText(
           /No hay ofertas relacionadas en la instant\u00e1nea del/u,
         ),
       ).toBeVisible();
+    }
+
+    // Verify historical bounded IDs are a subset of rendered IDs
+    if (boundedIds.length > 0) {
+      const renderedIds = await page
+        .getByRole("article")
+        .evaluateAll((articles) =>
+          articles
+            .map((a) => a.getAttribute("aria-labelledby"))
+            .filter((id): id is string => id !== null)
+            .sort(),
+        );
+      for (const id of boundedIds) {
+        expect(renderedIds).toContain(`offer-${id}`);
+      }
     }
 
     const overflow = await page.evaluate(

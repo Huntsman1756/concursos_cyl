@@ -33,6 +33,15 @@ if (
   throw new Error("Expected encofradores to be accepted.");
 }
 
+/** Historical accepted offer IDs from the bounded publication review snapshot. */
+const historicalEoc01mAcceptedIds = encofradoresDecision.acceptedOfferIds;
+/** Current feed IDs for EOC01M (historical + newly added offers). */
+const currentEoc01mOfferIds = [
+  "1285667539377",
+  "1285668256621",
+  "1285670018399",
+];
+
 const cases = [
   {
     programKey: "HOT01M",
@@ -40,7 +49,7 @@ const cases = [
   },
   {
     programKey: "EOC01M",
-    offerIds: encofradoresDecision.acceptedOfferIds,
+    offerIds: currentEoc01mOfferIds,
   },
 ];
 
@@ -62,6 +71,13 @@ for (const { programKey, offerIds } of cases) {
     expect(renderedArticleIds).toEqual(
       offerIds.map((offerId) => `offer-${offerId}`).sort(),
     );
+    // Verify historical bounded accepted IDs are a subset of rendered IDs
+    if (programKey === "EOC01M") {
+      for (const id of historicalEoc01mAcceptedIds) {
+        expect(renderedArticleIds).toContain(`offer-${id}`);
+      }
+    }
+
     const manifestOffers = await page.evaluate(
       async (expectedIds) => {
         const manifest = (await (
