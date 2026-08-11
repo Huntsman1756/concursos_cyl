@@ -3445,51 +3445,6 @@
     ]
   },
   {
-    "offerId": "1285667274754",
-    "requirements": [
-      {
-        "category": "unclassified",
-        "id": "requirement:b934bc703ce4f86bb8b28b9c9f2dfcead661ae32f114b10af7850f222fe22533",
-        "normalizedValue": null,
-        "parserRule": "unclassified.conservative_fallback",
-        "parserVersion": "1.0.0",
-        "sourceQuote": "Residencia en esa zona."
-      },
-      {
-        "category": "unclassified",
-        "id": "requirement:e6e80262130f72a0632f4c85fa333a1f098f6f8b56e2372ac58b963a9aa887d2",
-        "normalizedValue": null,
-        "parserRule": "unclassified.ambiguous_or_negated",
-        "parserVersion": "1.0.0",
-        "sourceQuote": "Permiso de conducción C."
-      },
-      {
-        "category": "unclassified",
-        "id": "requirement:b1c0101a7e246db2cc859e49c2f773f05af95ee651f235f609073f65d532ff72",
-        "normalizedValue": null,
-        "parserRule": "unclassified.conservative_fallback",
-        "parserVersion": "1.0.0",
-        "sourceQuote": "CAP."
-      },
-      {
-        "category": "unclassified",
-        "id": "requirement:9b6f12159cfbcaa0d5a7afdfb4ef9a5901f3941be16bb522a976c5c54b0829d0",
-        "normalizedValue": null,
-        "parserRule": "unclassified.conservative_fallback",
-        "parserVersion": "1.0.0",
-        "sourceQuote": "Tarjeta de tacógrafo en vigor."
-      },
-      {
-        "category": "unclassified",
-        "id": "requirement:2b62be6eaa5b978b43a0ea6e0255d8a0584a00b1d19f8820ac29229066f95223",
-        "normalizedValue": null,
-        "parserRule": "unclassified.ambiguous_or_negated",
-        "parserVersion": "1.0.0",
-        "sourceQuote": "Se valorará experiencia en el sector y conocimientos de mecánica."
-      }
-    ]
-  },
-  {
     "offerId": "1285650694131",
     "requirements": [
       {
@@ -5915,43 +5870,6 @@
     ]
   },
   {
-    "offerId": "1285667273774",
-    "requirements": [
-      {
-        "category": "unclassified",
-        "id": "requirement:c8beba91f3162e7a34f33d4c1e8e77de31ad7479eecb8a0a789bde6f7fa98a6c",
-        "normalizedValue": null,
-        "parserRule": "unclassified.ambiguous_or_negated",
-        "parserVersion": "1.0.0",
-        "sourceQuote": "Experiencia mínima de al menos 2 años en puesto similar."
-      },
-      {
-        "category": "unclassified",
-        "id": "requirement:3a8b49216c361ad3dc99f9a64b1cfe19ecaea227b30dce1099260f76deb6f921",
-        "normalizedValue": null,
-        "parserRule": "unclassified.conservative_fallback",
-        "parserVersion": "1.0.0",
-        "sourceQuote": "Estudios mínimos de Grado."
-      },
-      {
-        "category": "unclassified",
-        "id": "requirement:2c5bf744c06cabb84a67cb0ad3f78e4739ece19cd3382d9c55fef9e4919c4517",
-        "normalizedValue": null,
-        "parserRule": "unclassified.conservative_fallback",
-        "parserVersion": "1.0.0",
-        "sourceQuote": "Idiomas: Español (nativo o bilinge), inglés (intermedio)."
-      },
-      {
-        "category": "unclassified",
-        "id": "requirement:f7fa3ab79004310667cd458fc5f53a154e1cf785d1226d1dc1cc76987f808dd0",
-        "normalizedValue": null,
-        "parserRule": "unclassified.conservative_fallback",
-        "parserVersion": "1.0.0",
-        "sourceQuote": "Habilidades clave: Liderazgo, extrema atención al detalle, organización, capacidad para resolver incidencias bajo presión, polivalencia."
-      }
-    ]
-  },
-  {
     "offerId": "1285654999087",
     "requirements": [
       {
@@ -6894,56 +6812,6 @@
     ]
   },
   {
-    "offerId": "1285667274355",
-    "requirements": [
-      {
-        "category": "unclassified",
-        "id": "requirement:ad17697e81897a4cd9fde0adf51d93a31aada4bde0312636cdb3286560903800",
-        "normalizedValue": null,
-        "parserRule": "unclassified.conservative_fallback",
-        "parserVersion": "1.0.0",
-        "sourceQuote": "Título en odontología expedido en la Unión Europea."
-      },
-      {
-        "category": "unclassified",
-        "id": "requirement:0bf88cd5910fd645442b451c8ea0629cac3d4f6e7ef1105c1136c91a484471e6",
-        "normalizedValue": null,
-        "parserRule": "unclassified.conservative_fallback",
-        "parserVersion": "1.0.0",
-        "sourceQuote": "Nivel básico de francés (A2 / B1) y disposición a mejorarlo."
-      }
-    ]
-  },
-  {
-    "offerId": "1285669506800",
-    "requirements": [
-      {
-        "category": "unclassified",
-        "id": "requirement:8035c1343fa8a8c468a49e4a2f00b5531cdc38144cb84a2afa4e3e533755b356",
-        "normalizedValue": null,
-        "parserRule": "unclassified.conservative_fallback",
-        "parserVersion": "1.0.0",
-        "sourceQuote": "Manipulador de alimentos"
-      },
-      {
-        "category": "unclassified",
-        "id": "requirement:935d53bac0f1f066bc5dbb0a84a4dd1f930bfb7b3b76524b65c764e2d1631231",
-        "normalizedValue": null,
-        "parserRule": "unclassified.conservative_fallback",
-        "parserVersion": "1.0.0",
-        "sourceQuote": "Plazo: 8 de agosto de 2026"
-      },
-      {
-        "category": "unclassified",
-        "id": "requirement:7dc23fec878313f47d8910def863a89ab614cf0287fac5c9d7bed9079c96c9a7",
-        "normalizedValue": null,
-        "parserRule": "unclassified.conservative_fallback",
-        "parserVersion": "1.0.0",
-        "sourceQuote": "Información obtenida de: Empleo público. https://fundacion.uva.es/"
-      }
-    ]
-  },
-  {
     "offerId": "1285669061899",
     "requirements": [
       {
@@ -7505,27 +7373,6 @@
     ]
   },
   {
-    "offerId": "1285667274836",
-    "requirements": [
-      {
-        "category": "unclassified",
-        "id": "requirement:fede52d4f46b70c760fce1248d40e117518b66f01d13391d3081be0376dbbd0b",
-        "normalizedValue": null,
-        "parserRule": "unclassified.ambiguous_or_negated",
-        "parserVersion": "1.0.0",
-        "sourceQuote": "No se requiere ninguna titulación."
-      },
-      {
-        "category": "experience",
-        "id": "requirement:34a2ce76525da883aa639796abfdc9d75265da759c7778e35c3d85fc1e2c2cfb",
-        "normalizedValue": 36,
-        "parserRule": "experience.years",
-        "parserVersion": "1.0.0",
-        "sourceQuote": "Experiencia mínima de 3 años."
-      }
-    ]
-  },
-  {
     "offerId": "1285666792045",
     "requirements": [
       {
@@ -7839,43 +7686,6 @@
         "parserRule": "license.driving_generic",
         "parserVersion": "1.0.0",
         "sourceQuote": "Carnet de conducir."
-      }
-    ]
-  },
-  {
-    "offerId": "1285667275256",
-    "requirements": [
-      {
-        "category": "unclassified",
-        "id": "requirement:9a40826f0b627ffaaf6e603f042f6eb5a8c87a70956f978a795d569c0cdf0551",
-        "normalizedValue": null,
-        "parserRule": "unclassified.conservative_fallback",
-        "parserVersion": "1.0.0",
-        "sourceQuote": "2 años de experiencia en clínica dental."
-      },
-      {
-        "category": "unclassified",
-        "id": "requirement:da4d8dd72b9a01ea8ae5d4107d646c1aa699c5c6c2f78ad277b94f8ae707d945",
-        "normalizedValue": null,
-        "parserRule": "unclassified.conservative_fallback",
-        "parserVersion": "1.0.0",
-        "sourceQuote": "Buen trato al paciente, organizada, habilidades de comunicación, habilidades con herramientas informáticas, que sepa hablar y entender los tratamientos odontológicos."
-      },
-      {
-        "category": "unclassified",
-        "id": "requirement:6e6992f5d1da2427be55478b9c1955e7bf8279a8f9ef8aaf4167d892eff360ea",
-        "normalizedValue": null,
-        "parserRule": "unclassified.conservative_fallback",
-        "parserVersion": "1.0.0",
-        "sourceQuote": "Manejo del programa Gesdem."
-      },
-      {
-        "category": "unclassified",
-        "id": "requirement:624ea044bcc75a03c3b500b1317414166f350cda35ac9065c7a63a1089c3f463",
-        "normalizedValue": null,
-        "parserRule": "unclassified.ambiguous_or_negated",
-        "parserVersion": "1.0.0",
-        "sourceQuote": "Se valorará que haya trabajado con seguros dentales."
       }
     ]
   },
@@ -8370,27 +8180,6 @@
     ]
   },
   {
-    "offerId": "1285667274629",
-    "requirements": [
-      {
-        "category": "unclassified",
-        "id": "requirement:c2d30f5db58f89c03f08b5ee27f45f354e3472eb44350c01116d7bd38340c7e6",
-        "normalizedValue": null,
-        "parserRule": "unclassified.conservative_fallback",
-        "parserVersion": "1.0.0",
-        "sourceQuote": "Formación en calidad."
-      },
-      {
-        "category": "unclassified",
-        "id": "requirement:4c54ec62c2ba7ea93fdb6a7465f3b8969a90f7053d2438d0c1aebf8cbfd2a4bb",
-        "normalizedValue": null,
-        "parserRule": "unclassified.ambiguous_or_negated",
-        "parserVersion": "1.0.0",
-        "sourceQuote": "Experiencia mínima de 12 meses en control de calidad, y a ser posible dentro del sector de fabricación industrial."
-      }
-    ]
-  },
-  {
     "offerId": "1285669062286",
     "requirements": [
       {
@@ -8416,43 +8205,6 @@
         "parserRule": "unclassified.ambiguous_or_negated",
         "parserVersion": "1.0.0",
         "sourceQuote": "Carnet de conducir B en vigor y disponibilidad de vehículo para desplazamientos."
-      }
-    ]
-  },
-  {
-    "offerId": "1285665984864",
-    "requirements": [
-      {
-        "category": "unclassified",
-        "id": "requirement:e834ea231a17753509e0c8700eb0bb628704c4df50ae2e0adbddfe7ac6cf0bce",
-        "normalizedValue": null,
-        "parserRule": "unclassified.conservative_fallback",
-        "parserVersion": "1.0.0",
-        "sourceQuote": "Ingeniero/a Agrónomo/a, Ingeniero/a Técnico/a Agrícola, Licenciado/a en Biología o Graduado/a en Ingeniería Agrícola o Biología"
-      },
-      {
-        "category": "unclassified",
-        "id": "requirement:f693b754503a4b2d684f3a41002896c7535d7a33071a404bd04dc3335b5390df",
-        "normalizedValue": null,
-        "parserRule": "unclassified.conservative_fallback",
-        "parserVersion": "1.0.0",
-        "sourceQuote": "Plazo: 01 de septiembre de 2026"
-      },
-      {
-        "category": "driving_license_or_vehicle",
-        "id": "requirement:257bf1e86bf48f06e616d0ac2a0b0e08022425f6065c746a89e5177c9648705d",
-        "normalizedValue": "B",
-        "parserRule": "license.driving_b",
-        "parserVersion": "1.0.0",
-        "sourceQuote": "Observaciones: Se requiere permiso de conducir B"
-      },
-      {
-        "category": "unclassified",
-        "id": "requirement:e556d4523c6e76f2b5e04aa241ecbfafeda78b0b5389a9fd96e2e65696565376",
-        "normalizedValue": null,
-        "parserRule": "unclassified.conservative_fallback",
-        "parserVersion": "1.0.0",
-        "sourceQuote": "Información obtenida de: Empleo público. https://www.itacyl.es"
       }
     ]
   },

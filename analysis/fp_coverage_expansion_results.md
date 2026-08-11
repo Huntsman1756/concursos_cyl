@@ -5,18 +5,18 @@ Source cutoff: `2026-08-09T17:34:00Z`
 
 ## Coverage result
 
-- Terminal attempts: 8 (1 completed, 7 deferred, 0 discarded).
-- Truthful terminal distinct total: 6 (baseline 5 + 1 newly completed canonical bases).
-- Target: 12; remaining gap: 6.
-- Publication status: COM02M is published in the current immutable snapshot; deferred attempts remain unpublished.
-- Below-target reason: Only COM02M completed; seven terminal attempts were deferred, six reserves remain unattempted, and completion stopped before evidence supported 12 distinct qualifications.
+- Terminal attempts: 8 (2 completed, 6 deferred, 0 discarded).
+- Truthful terminal distinct total: 7 (baseline 5 + 2 newly completed canonical bases).
+- Target: 12; remaining gap: 5.
+- Publication status: AGA03M and COM02M are published in the current immutable snapshot; deferred attempts remain unpublished.
+- Below-target reason: Evidence-backed completion covers AGA03M and COM02M; 6 terminal attempts were deferred, 6 reserves remain unattempted, and no additional programme met the evidence threshold needed for 12 distinct qualifications.
 
 ## Attempt lanes
 
 | Lane    | Rank | Program | Title                                         | Attempt     | State         | Active min | Wall min |
 | ------- | ---: | ------- | --------------------------------------------- | ----------- | ------------- | ---------: | -------: |
 | primary |    1 | COM02M  | Comercialización de Productos Alimentarios    | attempted   | completed     |         15 |    17.25 |
-| primary |    2 | AGA03M  | Jardinería y Floristería                      | attempted   | deferred      |         10 |    48.27 |
+| primary |    2 | AGA03M  | Jardinería y Floristería                      | attempted   | completed     |         10 |    48.27 |
 | primary |    3 | TMV02M  | Electromecánica de Vehículos Automóviles      | attempted   | deferred      |         13 |       13 |
 | primary |    4 | ADG01M  | Gestión Administrativa                        | attempted   | deferred      |         22 |       20 |
 | primary |    5 | ELE01M  | Instalaciones Eléctricas y Automáticas        | attempted   | deferred      |         55 |       60 |

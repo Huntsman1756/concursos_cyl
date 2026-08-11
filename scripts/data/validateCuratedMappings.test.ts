@@ -38,6 +38,13 @@ const programs: TrainingProgram[] = [
     familyName: "Comercio y Marketing",
   },
   {
+    programKey: "AGA03M",
+    programTitle: "Jardinería y Floristería",
+    level: "intermediate",
+    familyCode: "AGA",
+    familyName: "Agraria",
+  },
+  {
     programKey: "ADG02S",
     programTitle: "Administración y Finanzas",
     level: "higher",
@@ -572,11 +579,14 @@ describe("curated occupation mappings", () => {
         "7291",
         "5210",
         "5220",
+        "6120",
       ],
     );
     expect(
       approved.links.map((item) => item.trainingProgramKey).sort(),
     ).toEqual([
+      "AGA03M",
+      "AGA03M",
       "COM02M",
       "COM02M",
       "EOC01M",

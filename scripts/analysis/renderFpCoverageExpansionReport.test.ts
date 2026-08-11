@@ -24,8 +24,8 @@ describe("renderFpCoverageExpansionReport", () => {
     const result = await report();
 
     expect(result.counts).toMatchObject({
-      completed: 1,
-      deferred: 7,
+      completed: 2,
+      deferred: 6,
       discarded: 0,
       terminal: 8,
       primaryAttempted: 7,
@@ -42,9 +42,9 @@ describe("renderFpCoverageExpansionReport", () => {
         "qualification:SAN21",
         "qualification:SSC01M",
       ],
-      terminalDistinctQualificationTotal: 6,
+      terminalDistinctQualificationTotal: 7,
       targetDistinctQualifications: 12,
-      remainingGap: 6,
+      remainingGap: 5,
       publicationStatus: "published_task_a2_12",
     });
     expect(result.offerDeltas).toEqual({

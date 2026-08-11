@@ -6,8 +6,8 @@
     "confirmationLabel": "Oficiales de las fuerzas armadas",
     "occupationId": "occupation:cno11:0011",
     "preferredLabel": "Oficiales de las fuerzas armadas",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -17,8 +17,8 @@
     "confirmationLabel": "Suboficiales de las fuerzas armadas",
     "occupationId": "occupation:cno11:0012",
     "preferredLabel": "Suboficiales de las fuerzas armadas",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -28,8 +28,8 @@
     "confirmationLabel": "Tropa y marinería de las fuerzas armadas",
     "occupationId": "occupation:cno11:0020",
     "preferredLabel": "Tropa y marinería de las fuerzas armadas",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -39,8 +39,8 @@
     "confirmationLabel": "Miembros del poder ejecutivo (nacional, autonómico y local) y del poder legislativo",
     "occupationId": "occupation:cno11:1111",
     "preferredLabel": "Miembros del poder ejecutivo (nacional, autonómico y local) y del poder legislativo",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -50,8 +50,8 @@
     "confirmationLabel": "Personal directivo de la Administración Pública",
     "occupationId": "occupation:cno11:1112",
     "preferredLabel": "Personal directivo de la Administración Pública",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -61,8 +61,8 @@
     "confirmationLabel": "Directores de organizaciones de interés social",
     "occupationId": "occupation:cno11:1113",
     "preferredLabel": "Directores de organizaciones de interés social",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -72,8 +72,8 @@
     "confirmationLabel": "Directores generales y presidentes ejecutivos",
     "occupationId": "occupation:cno11:1120",
     "preferredLabel": "Directores generales y presidentes ejecutivos",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -83,8 +83,8 @@
     "confirmationLabel": "Directores financieros",
     "occupationId": "occupation:cno11:1211",
     "preferredLabel": "Directores financieros",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -94,8 +94,8 @@
     "confirmationLabel": "Directores de recursos humanos",
     "occupationId": "occupation:cno11:1212",
     "preferredLabel": "Directores de recursos humanos",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -105,8 +105,8 @@
     "confirmationLabel": "Directores de políticas y planificación y de otros departamentos administrativos no clasificados bajo otros epígrafes",
     "occupationId": "occupation:cno11:1219",
     "preferredLabel": "Directores de políticas y planificación y de otros departamentos administrativos no clasificados bajo otros epígrafes",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -116,8 +116,8 @@
     "confirmationLabel": "Directores comerciales y de ventas",
     "occupationId": "occupation:cno11:1221",
     "preferredLabel": "Directores comerciales y de ventas",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -127,8 +127,8 @@
     "confirmationLabel": "Directores de publicidad y relaciones públicas",
     "occupationId": "occupation:cno11:1222",
     "preferredLabel": "Directores de publicidad y relaciones públicas",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -138,8 +138,8 @@
     "confirmationLabel": "Directores de investigación y desarrollo",
     "occupationId": "occupation:cno11:1223",
     "preferredLabel": "Directores de investigación y desarrollo",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -149,8 +149,8 @@
     "confirmationLabel": "Directores de producción de explotaciones agropecuarias y forestales",
     "occupationId": "occupation:cno11:1311",
     "preferredLabel": "Directores de producción de explotaciones agropecuarias y forestales",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -160,8 +160,8 @@
     "confirmationLabel": "Directores de producción de explotaciones pesqueras y acuícolas",
     "occupationId": "occupation:cno11:1312",
     "preferredLabel": "Directores de producción de explotaciones pesqueras y acuícolas",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -171,8 +171,8 @@
     "confirmationLabel": "Directores de industrias manufactureras",
     "occupationId": "occupation:cno11:1313",
     "preferredLabel": "Directores de industrias manufactureras",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -182,8 +182,8 @@
     "confirmationLabel": "Directores de explotaciones mineras",
     "occupationId": "occupation:cno11:1314",
     "preferredLabel": "Directores de explotaciones mineras",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -193,8 +193,8 @@
     "confirmationLabel": "Directores de empresas de abastecimiento, transporte, distribución y afines",
     "occupationId": "occupation:cno11:1315",
     "preferredLabel": "Directores de empresas de abastecimiento, transporte, distribución y afines",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -204,8 +204,8 @@
     "confirmationLabel": "Directores de empresas de construcción",
     "occupationId": "occupation:cno11:1316",
     "preferredLabel": "Directores de empresas de construcción",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -215,8 +215,8 @@
     "confirmationLabel": "Directores de servicios de tecnologías de la información y las comunicaciones (TIC)",
     "occupationId": "occupation:cno11:1321",
     "preferredLabel": "Directores de servicios de tecnologías de la información y las comunicaciones (TIC)",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -226,8 +226,8 @@
     "confirmationLabel": "Directores de servicios sociales para niños",
     "occupationId": "occupation:cno11:1322",
     "preferredLabel": "Directores de servicios sociales para niños",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -237,8 +237,8 @@
     "confirmationLabel": "Directores-gerentes de centros sanitarios",
     "occupationId": "occupation:cno11:1323",
     "preferredLabel": "Directores-gerentes de centros sanitarios",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -248,8 +248,8 @@
     "confirmationLabel": "Directores de servicios sociales para personas mayores",
     "occupationId": "occupation:cno11:1324",
     "preferredLabel": "Directores de servicios sociales para personas mayores",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -259,8 +259,8 @@
     "confirmationLabel": "Directores de otros servicios sociales",
     "occupationId": "occupation:cno11:1325",
     "preferredLabel": "Directores de otros servicios sociales",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -270,8 +270,8 @@
     "confirmationLabel": "Directores de servicios de educación",
     "occupationId": "occupation:cno11:1326",
     "preferredLabel": "Directores de servicios de educación",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -281,8 +281,8 @@
     "confirmationLabel": "Directores de sucursales de bancos, de servicios financieros y de seguros",
     "occupationId": "occupation:cno11:1327",
     "preferredLabel": "Directores de sucursales de bancos, de servicios financieros y de seguros",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -292,8 +292,8 @@
     "confirmationLabel": "Directores de otras empresas de servicios profesionales no clasificados bajo otros epígrafes",
     "occupationId": "occupation:cno11:1329",
     "preferredLabel": "Directores de otras empresas de servicios profesionales no clasificados bajo otros epígrafes",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -303,8 +303,8 @@
     "confirmationLabel": "Directores y gerentes de hoteles",
     "occupationId": "occupation:cno11:1411",
     "preferredLabel": "Directores y gerentes de hoteles",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -314,8 +314,8 @@
     "confirmationLabel": "Directores y gerentes de otras empresas de servicios de alojamiento",
     "occupationId": "occupation:cno11:1419",
     "preferredLabel": "Directores y gerentes de otras empresas de servicios de alojamiento",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -325,8 +325,8 @@
     "confirmationLabel": "Directores y gerentes de restaurantes",
     "occupationId": "occupation:cno11:1421",
     "preferredLabel": "Directores y gerentes de restaurantes",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -336,8 +336,8 @@
     "confirmationLabel": "Directores y gerentes de bares, cafeterías y similares",
     "occupationId": "occupation:cno11:1422",
     "preferredLabel": "Directores y gerentes de bares, cafeterías y similares",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -347,8 +347,8 @@
     "confirmationLabel": "Directores y gerentes de empresas de catering y otras empresas de restauración",
     "occupationId": "occupation:cno11:1429",
     "preferredLabel": "Directores y gerentes de empresas de catering y otras empresas de restauración",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -358,8 +358,8 @@
     "confirmationLabel": "Directores y gerentes de empresas de comercio al por mayor",
     "occupationId": "occupation:cno11:1431",
     "preferredLabel": "Directores y gerentes de empresas de comercio al por mayor",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -369,8 +369,8 @@
     "confirmationLabel": "Directores y gerentes de empresas de comercio al por menor",
     "occupationId": "occupation:cno11:1432",
     "preferredLabel": "Directores y gerentes de empresas de comercio al por menor",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -380,8 +380,8 @@
     "confirmationLabel": "Directores y gerentes de empresas de actividades recreativas, culturales y deportivas",
     "occupationId": "occupation:cno11:1501",
     "preferredLabel": "Directores y gerentes de empresas de actividades recreativas, culturales y deportivas",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -391,8 +391,8 @@
     "confirmationLabel": "Directores y gerentes de empresas de gestión de residuos y de otras empresas de servicios no clasificados bajo otros epígrafes",
     "occupationId": "occupation:cno11:1509",
     "preferredLabel": "Directores y gerentes de empresas de gestión de residuos y de otras empresas de servicios no clasificados bajo otros epígrafes",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -402,8 +402,8 @@
     "confirmationLabel": "Médicos de familia",
     "occupationId": "occupation:cno11:2111",
     "preferredLabel": "Médicos de familia",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -413,8 +413,8 @@
     "confirmationLabel": "Otros médicos especialistas",
     "occupationId": "occupation:cno11:2112",
     "preferredLabel": "Otros médicos especialistas",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -424,8 +424,8 @@
     "confirmationLabel": "Enfermeros no especializados",
     "occupationId": "occupation:cno11:2121",
     "preferredLabel": "Enfermeros no especializados",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -435,8 +435,8 @@
     "confirmationLabel": "Enfermeros especializados (excepto matronos)",
     "occupationId": "occupation:cno11:2122",
     "preferredLabel": "Enfermeros especializados (excepto matronos)",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -446,8 +446,8 @@
     "confirmationLabel": "Matronos",
     "occupationId": "occupation:cno11:2123",
     "preferredLabel": "Matronos",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -457,8 +457,8 @@
     "confirmationLabel": "Veterinarios",
     "occupationId": "occupation:cno11:2130",
     "preferredLabel": "Veterinarios",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -468,8 +468,8 @@
     "confirmationLabel": "Farmacéuticos",
     "occupationId": "occupation:cno11:2140",
     "preferredLabel": "Farmacéuticos",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -479,8 +479,8 @@
     "confirmationLabel": "Odontólogos y estomatólogos",
     "occupationId": "occupation:cno11:2151",
     "preferredLabel": "Odontólogos y estomatólogos",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -490,8 +490,8 @@
     "confirmationLabel": "Fisioterapeutas",
     "occupationId": "occupation:cno11:2152",
     "preferredLabel": "Fisioterapeutas",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -501,8 +501,8 @@
     "confirmationLabel": "Dietistas y nutricionistas",
     "occupationId": "occupation:cno11:2153",
     "preferredLabel": "Dietistas y nutricionistas",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -512,8 +512,8 @@
     "confirmationLabel": "Logopedas",
     "occupationId": "occupation:cno11:2154",
     "preferredLabel": "Logopedas",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -523,8 +523,8 @@
     "confirmationLabel": "Ópticos-optometristas",
     "occupationId": "occupation:cno11:2155",
     "preferredLabel": "Ópticos-optometristas",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -534,8 +534,8 @@
     "confirmationLabel": "Terapeutas ocupacionales",
     "occupationId": "occupation:cno11:2156",
     "preferredLabel": "Terapeutas ocupacionales",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -545,8 +545,8 @@
     "confirmationLabel": "Podólogos",
     "occupationId": "occupation:cno11:2157",
     "preferredLabel": "Podólogos",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -556,8 +556,8 @@
     "confirmationLabel": "Profesionales de la salud y la higiene laboral y ambiental",
     "occupationId": "occupation:cno11:2158",
     "preferredLabel": "Profesionales de la salud y la higiene laboral y ambiental",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -567,8 +567,8 @@
     "confirmationLabel": "Profesionales de la salud no clasificados bajo otros epígrafes",
     "occupationId": "occupation:cno11:2159",
     "preferredLabel": "Profesionales de la salud no clasificados bajo otros epígrafes",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -578,8 +578,8 @@
     "confirmationLabel": "Profesores de universidades y otra enseñanza superior (excepto formación profesional)",
     "occupationId": "occupation:cno11:2210",
     "preferredLabel": "Profesores de universidades y otra enseñanza superior (excepto formación profesional)",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -589,8 +589,8 @@
     "confirmationLabel": "Profesores de formación profesional (materias específicas)",
     "occupationId": "occupation:cno11:2220",
     "preferredLabel": "Profesores de formación profesional (materias específicas)",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -600,8 +600,8 @@
     "confirmationLabel": "Profesores de enseñanza secundaria (excepto materias específicas de formación profesional)",
     "occupationId": "occupation:cno11:2230",
     "preferredLabel": "Profesores de enseñanza secundaria (excepto materias específicas de formación profesional)",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -611,8 +611,8 @@
     "confirmationLabel": "Profesores de enseñanza primaria",
     "occupationId": "occupation:cno11:2240",
     "preferredLabel": "Profesores de enseñanza primaria",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -622,8 +622,8 @@
     "confirmationLabel": "Maestros de educación infantil",
     "occupationId": "occupation:cno11:2251",
     "preferredLabel": "Maestros de educación infantil",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -633,8 +633,8 @@
     "confirmationLabel": "Técnicos en educación infantil",
     "occupationId": "occupation:cno11:2252",
     "preferredLabel": "Técnicos en educación infantil",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -644,8 +644,8 @@
     "confirmationLabel": "Profesores de educación especial",
     "occupationId": "occupation:cno11:2311",
     "preferredLabel": "Profesores de educación especial",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -655,8 +655,8 @@
     "confirmationLabel": "Educación especial",
     "occupationId": "occupation:cno11:2312",
     "preferredLabel": "Técnicos educadores de educación especial",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -666,8 +666,8 @@
     "confirmationLabel": "Especialistas en métodos didácticos y pedagógicos",
     "occupationId": "occupation:cno11:2321",
     "preferredLabel": "Especialistas en métodos didácticos y pedagógicos",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -677,8 +677,8 @@
     "confirmationLabel": "Profesores de enseñanza no reglada de idiomas",
     "occupationId": "occupation:cno11:2322",
     "preferredLabel": "Profesores de enseñanza no reglada de idiomas",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -688,8 +688,8 @@
     "confirmationLabel": "Profesores de enseñanza no reglada de música y danza",
     "occupationId": "occupation:cno11:2323",
     "preferredLabel": "Profesores de enseñanza no reglada de música y danza",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -699,8 +699,8 @@
     "confirmationLabel": "Profesores de enseñanza no reglada de artes",
     "occupationId": "occupation:cno11:2324",
     "preferredLabel": "Profesores de enseñanza no reglada de artes",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -710,8 +710,8 @@
     "confirmationLabel": "Instructores en tecnologías de la información en enseñanza no reglada",
     "occupationId": "occupation:cno11:2325",
     "preferredLabel": "Instructores en tecnologías de la información en enseñanza no reglada",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -721,8 +721,8 @@
     "confirmationLabel": "Profesionales de la educación ambiental",
     "occupationId": "occupation:cno11:2326",
     "preferredLabel": "Profesionales de la educación ambiental",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -732,8 +732,8 @@
     "confirmationLabel": "Profesores y profesionales de la enseñanza no clasificados bajo otros epígrafes",
     "occupationId": "occupation:cno11:2329",
     "preferredLabel": "Profesores y profesionales de la enseñanza no clasificados bajo otros epígrafes",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -743,8 +743,8 @@
     "confirmationLabel": "Físicos y astrónomos",
     "occupationId": "occupation:cno11:2411",
     "preferredLabel": "Físicos y astrónomos",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -754,8 +754,8 @@
     "confirmationLabel": "Meteorólogos",
     "occupationId": "occupation:cno11:2412",
     "preferredLabel": "Meteorólogos",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -765,8 +765,8 @@
     "confirmationLabel": "Químicos",
     "occupationId": "occupation:cno11:2413",
     "preferredLabel": "Químicos",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -776,8 +776,8 @@
     "confirmationLabel": "Geólogos y geofísicos",
     "occupationId": "occupation:cno11:2414",
     "preferredLabel": "Geólogos y geofísicos",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -787,8 +787,8 @@
     "confirmationLabel": "Matemáticos y actuarios",
     "occupationId": "occupation:cno11:2415",
     "preferredLabel": "Matemáticos y actuarios",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -798,8 +798,8 @@
     "confirmationLabel": "Estadísticos",
     "occupationId": "occupation:cno11:2416",
     "preferredLabel": "Estadísticos",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -809,8 +809,8 @@
     "confirmationLabel": "Biólogos, botánicos, zoólogos y afines",
     "occupationId": "occupation:cno11:2421",
     "preferredLabel": "Biólogos, botánicos, zoólogos y afines",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -820,8 +820,8 @@
     "confirmationLabel": "Ingenieros agrónomos",
     "occupationId": "occupation:cno11:2422",
     "preferredLabel": "Ingenieros agrónomos",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -831,8 +831,8 @@
     "confirmationLabel": "Ingenieros de montes",
     "occupationId": "occupation:cno11:2423",
     "preferredLabel": "Ingenieros de montes",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -842,8 +842,8 @@
     "confirmationLabel": "Ingenieros técnicos agrícolas",
     "occupationId": "occupation:cno11:2424",
     "preferredLabel": "Ingenieros técnicos agrícolas",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -853,8 +853,8 @@
     "confirmationLabel": "Ingenieros técnicos forestales y del medio natural",
     "occupationId": "occupation:cno11:2425",
     "preferredLabel": "Ingenieros técnicos forestales y del medio natural",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -864,8 +864,8 @@
     "confirmationLabel": "Profesionales de la protección ambiental",
     "occupationId": "occupation:cno11:2426",
     "preferredLabel": "Profesionales de la protección ambiental",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -875,8 +875,8 @@
     "confirmationLabel": "Enólogos",
     "occupationId": "occupation:cno11:2427",
     "preferredLabel": "Enólogos",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -886,8 +886,8 @@
     "confirmationLabel": "Ingenieros industriales y de producción",
     "occupationId": "occupation:cno11:2431",
     "preferredLabel": "Ingenieros industriales y de producción",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -897,8 +897,8 @@
     "confirmationLabel": "Ingenieros en construcción y obra civil",
     "occupationId": "occupation:cno11:2432",
     "preferredLabel": "Ingenieros en construcción y obra civil",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -908,8 +908,8 @@
     "confirmationLabel": "Ingenieros mecánicos",
     "occupationId": "occupation:cno11:2433",
     "preferredLabel": "Ingenieros mecánicos",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -919,8 +919,8 @@
     "confirmationLabel": "Ingenieros aeronáuticos",
     "occupationId": "occupation:cno11:2434",
     "preferredLabel": "Ingenieros aeronáuticos",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -930,8 +930,8 @@
     "confirmationLabel": "Ingenieros químicos",
     "occupationId": "occupation:cno11:2435",
     "preferredLabel": "Ingenieros químicos",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -941,8 +941,8 @@
     "confirmationLabel": "Ingenieros de minas, metalúrgicos y afines",
     "occupationId": "occupation:cno11:2436",
     "preferredLabel": "Ingenieros de minas, metalúrgicos y afines",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -952,8 +952,8 @@
     "confirmationLabel": "Ingenieros ambientales",
     "occupationId": "occupation:cno11:2437",
     "preferredLabel": "Ingenieros ambientales",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -963,8 +963,8 @@
     "confirmationLabel": "Ingenieros no clasificados bajo otros epígrafes",
     "occupationId": "occupation:cno11:2439",
     "preferredLabel": "Ingenieros no clasificados bajo otros epígrafes",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -974,8 +974,8 @@
     "confirmationLabel": "Ingenieros en electricidad",
     "occupationId": "occupation:cno11:2441",
     "preferredLabel": "Ingenieros en electricidad",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -985,8 +985,8 @@
     "confirmationLabel": "Ingenieros electrónicos",
     "occupationId": "occupation:cno11:2442",
     "preferredLabel": "Ingenieros electrónicos",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -996,8 +996,8 @@
     "confirmationLabel": "Ingenieros en telecomunicaciones",
     "occupationId": "occupation:cno11:2443",
     "preferredLabel": "Ingenieros en telecomunicaciones",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -1007,8 +1007,8 @@
     "confirmationLabel": "Arquitectos (excepto arquitectos paisajistas y urbanistas)",
     "occupationId": "occupation:cno11:2451",
     "preferredLabel": "Arquitectos (excepto arquitectos paisajistas y urbanistas)",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -1018,8 +1018,8 @@
     "confirmationLabel": "Arquitectos paisajistas",
     "occupationId": "occupation:cno11:2452",
     "preferredLabel": "Arquitectos paisajistas",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -1029,8 +1029,8 @@
     "confirmationLabel": "Urbanistas e ingenieros de tráfico",
     "occupationId": "occupation:cno11:2453",
     "preferredLabel": "Urbanistas e ingenieros de tráfico",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -1040,8 +1040,8 @@
     "confirmationLabel": "Ingenieros geógrafos y cartógrafos",
     "occupationId": "occupation:cno11:2454",
     "preferredLabel": "Ingenieros geógrafos y cartógrafos",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -1051,8 +1051,8 @@
     "confirmationLabel": "Ingenieros técnicos industriales y de producción",
     "occupationId": "occupation:cno11:2461",
     "preferredLabel": "Ingenieros técnicos industriales y de producción",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -1062,8 +1062,8 @@
     "confirmationLabel": "Ingenieros técnicos de obras públicas",
     "occupationId": "occupation:cno11:2462",
     "preferredLabel": "Ingenieros técnicos de obras públicas",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -1073,8 +1073,8 @@
     "confirmationLabel": "Ingenieros técnicos mecánicos",
     "occupationId": "occupation:cno11:2463",
     "preferredLabel": "Ingenieros técnicos mecánicos",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -1084,8 +1084,8 @@
     "confirmationLabel": "Ingenieros técnicos aeronáuticos",
     "occupationId": "occupation:cno11:2464",
     "preferredLabel": "Ingenieros técnicos aeronáuticos",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -1095,8 +1095,8 @@
     "confirmationLabel": "Ingenieros técnicos químicos",
     "occupationId": "occupation:cno11:2465",
     "preferredLabel": "Ingenieros técnicos químicos",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -1106,8 +1106,8 @@
     "confirmationLabel": "Ingenieros técnicos de minas, metalúrgicos y afines",
     "occupationId": "occupation:cno11:2466",
     "preferredLabel": "Ingenieros técnicos de minas, metalúrgicos y afines",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -1117,8 +1117,8 @@
     "confirmationLabel": "Ingenieros técnicos no clasificados bajo otros epígrafes",
     "occupationId": "occupation:cno11:2469",
     "preferredLabel": "Ingenieros técnicos no clasificados bajo otros epígrafes",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -1128,8 +1128,8 @@
     "confirmationLabel": "Ingenieros técnicos en electricidad",
     "occupationId": "occupation:cno11:2471",
     "preferredLabel": "Ingenieros técnicos en electricidad",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -1139,8 +1139,8 @@
     "confirmationLabel": "Ingenieros técnicos en electrónica",
     "occupationId": "occupation:cno11:2472",
     "preferredLabel": "Ingenieros técnicos en electrónica",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -1150,8 +1150,8 @@
     "confirmationLabel": "Ingenieros técnicos en telecomunicaciones",
     "occupationId": "occupation:cno11:2473",
     "preferredLabel": "Ingenieros técnicos en telecomunicaciones",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -1161,8 +1161,8 @@
     "confirmationLabel": "Arquitectos técnicos y técnicos urbanistas",
     "occupationId": "occupation:cno11:2481",
     "preferredLabel": "Arquitectos técnicos y técnicos urbanistas",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -1172,8 +1172,8 @@
     "confirmationLabel": "Diseñadores de productos y de prendas",
     "occupationId": "occupation:cno11:2482",
     "preferredLabel": "Diseñadores de productos y de prendas",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -1183,8 +1183,8 @@
     "confirmationLabel": "Ingenieros técnicos en topografía",
     "occupationId": "occupation:cno11:2483",
     "preferredLabel": "Ingenieros técnicos en topografía",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -1194,8 +1194,8 @@
     "confirmationLabel": "Diseñadores gráficos y multimedia",
     "occupationId": "occupation:cno11:2484",
     "preferredLabel": "Diseñadores gráficos y multimedia",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -1205,8 +1205,8 @@
     "confirmationLabel": "Abogados",
     "occupationId": "occupation:cno11:2511",
     "preferredLabel": "Abogados",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -1216,8 +1216,8 @@
     "confirmationLabel": "Fiscales",
     "occupationId": "occupation:cno11:2512",
     "preferredLabel": "Fiscales",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -1227,8 +1227,8 @@
     "confirmationLabel": "Jueces y magistrados",
     "occupationId": "occupation:cno11:2513",
     "preferredLabel": "Jueces y magistrados",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -1238,8 +1238,8 @@
     "confirmationLabel": "Notarios y registradores",
     "occupationId": "occupation:cno11:2591",
     "preferredLabel": "Notarios y registradores",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -1249,8 +1249,8 @@
     "confirmationLabel": "Procuradores",
     "occupationId": "occupation:cno11:2592",
     "preferredLabel": "Procuradores",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -1260,8 +1260,8 @@
     "confirmationLabel": "Profesionales del derecho no clasificados bajo otros epígrafes",
     "occupationId": "occupation:cno11:2599",
     "preferredLabel": "Profesionales del derecho no clasificados bajo otros epígrafes",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -1271,8 +1271,8 @@
     "confirmationLabel": "Especialistas en contabilidad",
     "occupationId": "occupation:cno11:2611",
     "preferredLabel": "Especialistas en contabilidad",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -1282,8 +1282,8 @@
     "confirmationLabel": "Asesores financieros y en inversiones",
     "occupationId": "occupation:cno11:2612",
     "preferredLabel": "Asesores financieros y en inversiones",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -1293,8 +1293,8 @@
     "confirmationLabel": "Analistas financieros",
     "occupationId": "occupation:cno11:2613",
     "preferredLabel": "Analistas financieros",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -1304,8 +1304,8 @@
     "confirmationLabel": "Analistas de gestión y organización",
     "occupationId": "occupation:cno11:2621",
     "preferredLabel": "Analistas de gestión y organización",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -1315,8 +1315,8 @@
     "confirmationLabel": "Especialistas en administración de política de empresas",
     "occupationId": "occupation:cno11:2622",
     "preferredLabel": "Especialistas en administración de política de empresas",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -1326,8 +1326,8 @@
     "confirmationLabel": "Especialistas de la Administración Pública",
     "occupationId": "occupation:cno11:2623",
     "preferredLabel": "Especialistas de la Administración Pública",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -1337,8 +1337,8 @@
     "confirmationLabel": "Especialistas en políticas y servicios de personal y afines",
     "occupationId": "occupation:cno11:2624",
     "preferredLabel": "Especialistas en políticas y servicios de personal y afines",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -1348,8 +1348,8 @@
     "confirmationLabel": "Especialistas en formación de personal",
     "occupationId": "occupation:cno11:2625",
     "preferredLabel": "Especialistas en formación de personal",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -1359,8 +1359,8 @@
     "confirmationLabel": "Técnicos de empresas y actividades turísticas",
     "occupationId": "occupation:cno11:2630",
     "preferredLabel": "Técnicos de empresas y actividades turísticas",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -1370,8 +1370,8 @@
     "confirmationLabel": "Profesionales de ventas técnicas y médicas (excepto las TIC)",
     "occupationId": "occupation:cno11:2640",
     "preferredLabel": "Profesionales de ventas técnicas y médicas (excepto las TIC)",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -1381,8 +1381,8 @@
     "confirmationLabel": "Profesionales de la publicidad y la comercialización",
     "occupationId": "occupation:cno11:2651",
     "preferredLabel": "Profesionales de la publicidad y la comercialización",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -1392,8 +1392,8 @@
     "confirmationLabel": "Profesionales de relaciones públicas",
     "occupationId": "occupation:cno11:2652",
     "preferredLabel": "Profesionales de relaciones públicas",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -1403,8 +1403,8 @@
     "confirmationLabel": "Profesionales de la venta de tecnologías de la información y las comunicaciones",
     "occupationId": "occupation:cno11:2653",
     "preferredLabel": "Profesionales de la venta de tecnologías de la información y las comunicaciones",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -1414,8 +1414,8 @@
     "confirmationLabel": "Analistas de sistemas",
     "occupationId": "occupation:cno11:2711",
     "preferredLabel": "Analistas de sistemas",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -1425,8 +1425,8 @@
     "confirmationLabel": "Analistas y diseñadores de software",
     "occupationId": "occupation:cno11:2712",
     "preferredLabel": "Analistas y diseñadores de software",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -1436,8 +1436,8 @@
     "confirmationLabel": "Programación y desarrollo web",
     "occupationId": "occupation:cno11:2713",
     "preferredLabel": "Analistas, programadores y diseñadores Web y multimedia",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -1447,8 +1447,8 @@
     "confirmationLabel": "Analistas y diseñadores de software y multimedia no clasificados bajo otros epígrafes",
     "occupationId": "occupation:cno11:2719",
     "preferredLabel": "Analistas y diseñadores de software y multimedia no clasificados bajo otros epígrafes",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -1458,8 +1458,8 @@
     "confirmationLabel": "Diseñadores y administradores de bases de datos",
     "occupationId": "occupation:cno11:2721",
     "preferredLabel": "Diseñadores y administradores de bases de datos",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -1469,8 +1469,8 @@
     "confirmationLabel": "Administradores de sistemas y redes",
     "occupationId": "occupation:cno11:2722",
     "preferredLabel": "Administradores de sistemas y redes",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -1480,8 +1480,8 @@
     "confirmationLabel": "Analistas de redes informáticas",
     "occupationId": "occupation:cno11:2723",
     "preferredLabel": "Analistas de redes informáticas",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -1491,8 +1491,8 @@
     "confirmationLabel": "Especialistas en bases de datos y en redes informáticas no clasificados bajo otros epígrafes",
     "occupationId": "occupation:cno11:2729",
     "preferredLabel": "Especialistas en bases de datos y en redes informáticas no clasificados bajo otros epígrafes",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -1502,8 +1502,8 @@
     "confirmationLabel": "Economistas",
     "occupationId": "occupation:cno11:2810",
     "preferredLabel": "Economistas",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -1513,8 +1513,8 @@
     "confirmationLabel": "Sociólogos, geógrafos, antropólogos, arqueólogos y afines",
     "occupationId": "occupation:cno11:2821",
     "preferredLabel": "Sociólogos, geógrafos, antropólogos, arqueólogos y afines",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -1524,8 +1524,8 @@
     "confirmationLabel": "Filósofos, historiadores y profesionales en ciencias políticas",
     "occupationId": "occupation:cno11:2822",
     "preferredLabel": "Filósofos, historiadores y profesionales en ciencias políticas",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -1535,8 +1535,8 @@
     "confirmationLabel": "Psicólogos",
     "occupationId": "occupation:cno11:2823",
     "preferredLabel": "Psicólogos",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -1546,8 +1546,8 @@
     "confirmationLabel": "Profesionales del trabajo y la educación social",
     "occupationId": "occupation:cno11:2824",
     "preferredLabel": "Profesionales del trabajo y la educación social",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -1557,8 +1557,8 @@
     "confirmationLabel": "Agentes de igualdad de oportunidades entre mujeres y hombres",
     "occupationId": "occupation:cno11:2825",
     "preferredLabel": "Agentes de igualdad de oportunidades entre mujeres y hombres",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -1568,8 +1568,8 @@
     "confirmationLabel": "Sacerdotes de las distintas religiones",
     "occupationId": "occupation:cno11:2830",
     "preferredLabel": "Sacerdotes de las distintas religiones",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -1579,8 +1579,8 @@
     "confirmationLabel": "Archivistas y conservadores de museos",
     "occupationId": "occupation:cno11:2911",
     "preferredLabel": "Archivistas y conservadores de museos",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -1590,8 +1590,8 @@
     "confirmationLabel": "Bibliotecarios, documentalistas y afines",
     "occupationId": "occupation:cno11:2912",
     "preferredLabel": "Bibliotecarios, documentalistas y afines",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -1601,8 +1601,8 @@
     "confirmationLabel": "Escritores",
     "occupationId": "occupation:cno11:2921",
     "preferredLabel": "Escritores",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -1612,8 +1612,8 @@
     "confirmationLabel": "Periodistas",
     "occupationId": "occupation:cno11:2922",
     "preferredLabel": "Periodistas",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -1623,8 +1623,8 @@
     "confirmationLabel": "Filólogos, intérpretes y traductores",
     "occupationId": "occupation:cno11:2923",
     "preferredLabel": "Filólogos, intérpretes y traductores",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -1634,8 +1634,8 @@
     "confirmationLabel": "Artistas de artes plásticas y visuales",
     "occupationId": "occupation:cno11:2931",
     "preferredLabel": "Artistas de artes plásticas y visuales",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -1645,8 +1645,8 @@
     "confirmationLabel": "Compositores, músicos y cantantes",
     "occupationId": "occupation:cno11:2932",
     "preferredLabel": "Compositores, músicos y cantantes",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -1656,8 +1656,8 @@
     "confirmationLabel": "Coreógrafos y bailarines",
     "occupationId": "occupation:cno11:2933",
     "preferredLabel": "Coreógrafos y bailarines",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -1667,8 +1667,8 @@
     "confirmationLabel": "Directores de cine, de teatro y afines",
     "occupationId": "occupation:cno11:2934",
     "preferredLabel": "Directores de cine, de teatro y afines",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -1678,8 +1678,8 @@
     "confirmationLabel": "Actores",
     "occupationId": "occupation:cno11:2935",
     "preferredLabel": "Actores",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -1689,8 +1689,8 @@
     "confirmationLabel": "Locutores de radio, televisión y otros presentadores",
     "occupationId": "occupation:cno11:2936",
     "preferredLabel": "Locutores de radio, televisión y otros presentadores",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -1700,8 +1700,8 @@
     "confirmationLabel": "Profesionales de espectáculos taurinos",
     "occupationId": "occupation:cno11:2937",
     "preferredLabel": "Profesionales de espectáculos taurinos",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -1711,8 +1711,8 @@
     "confirmationLabel": "Artistas creativos e interpretativos no clasificados bajo otros epígrafes",
     "occupationId": "occupation:cno11:2939",
     "preferredLabel": "Artistas creativos e interpretativos no clasificados bajo otros epígrafes",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -1722,8 +1722,8 @@
     "confirmationLabel": "Delineantes y dibujantes técnicos",
     "occupationId": "occupation:cno11:3110",
     "preferredLabel": "Delineantes y dibujantes técnicos",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -1733,8 +1733,8 @@
     "confirmationLabel": "Técnicos en ciencias físicas y químicas",
     "occupationId": "occupation:cno11:3121",
     "preferredLabel": "Técnicos en ciencias físicas y químicas",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -1744,8 +1744,8 @@
     "confirmationLabel": "Técnicos en construcción",
     "occupationId": "occupation:cno11:3122",
     "preferredLabel": "Técnicos en construcción",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -1755,8 +1755,8 @@
     "confirmationLabel": "Técnicos en electricidad",
     "occupationId": "occupation:cno11:3123",
     "preferredLabel": "Técnicos en electricidad",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -1766,8 +1766,8 @@
     "confirmationLabel": "Técnicos en electrónica (excepto electromedicina)",
     "occupationId": "occupation:cno11:3124",
     "preferredLabel": "Técnicos en electrónica (excepto electromedicina)",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -1777,8 +1777,8 @@
     "confirmationLabel": "Técnicos en electrónica, especialidad en electromedicina",
     "occupationId": "occupation:cno11:3125",
     "preferredLabel": "Técnicos en electrónica, especialidad en electromedicina",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -1788,8 +1788,8 @@
     "confirmationLabel": "Técnicos en mecánica",
     "occupationId": "occupation:cno11:3126",
     "preferredLabel": "Técnicos en mecánica",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -1799,8 +1799,8 @@
     "confirmationLabel": "Técnicos y analistas de laboratorio en química industrial",
     "occupationId": "occupation:cno11:3127",
     "preferredLabel": "Técnicos y analistas de laboratorio en química industrial",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -1810,8 +1810,8 @@
     "confirmationLabel": "Técnicos en metalurgia y minas",
     "occupationId": "occupation:cno11:3128",
     "preferredLabel": "Técnicos en metalurgia y minas",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -1821,8 +1821,8 @@
     "confirmationLabel": "Otros técnicos de las ciencias físicas, químicas, medioambientales y de las ingenierías",
     "occupationId": "occupation:cno11:3129",
     "preferredLabel": "Otros técnicos de las ciencias físicas, químicas, medioambientales y de las ingenierías",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -1832,8 +1832,8 @@
     "confirmationLabel": "Técnicos en instalaciones de producción de energía",
     "occupationId": "occupation:cno11:3131",
     "preferredLabel": "Técnicos en instalaciones de producción de energía",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -1843,8 +1843,8 @@
     "confirmationLabel": "Técnicos en instalaciones de tratamiento de residuos, de aguas y otros operadores en plantas similares",
     "occupationId": "occupation:cno11:3132",
     "preferredLabel": "Técnicos en instalaciones de tratamiento de residuos, de aguas y otros operadores en plantas similares",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -1854,8 +1854,8 @@
     "confirmationLabel": "Técnicos en control de instalaciones de procesamiento de productos químicos",
     "occupationId": "occupation:cno11:3133",
     "preferredLabel": "Técnicos en control de instalaciones de procesamiento de productos químicos",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -1865,8 +1865,8 @@
     "confirmationLabel": "Técnicos de refinerías de petróleo y gas natural",
     "occupationId": "occupation:cno11:3134",
     "preferredLabel": "Técnicos de refinerías de petróleo y gas natural",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -1876,8 +1876,8 @@
     "confirmationLabel": "Técnicos en control de procesos de producción de metales",
     "occupationId": "occupation:cno11:3135",
     "preferredLabel": "Técnicos en control de procesos de producción de metales",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -1887,8 +1887,8 @@
     "confirmationLabel": "Técnicos en control de procesos no clasificados bajo otros epígrafes",
     "occupationId": "occupation:cno11:3139",
     "preferredLabel": "Técnicos en control de procesos no clasificados bajo otros epígrafes",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -1898,8 +1898,8 @@
     "confirmationLabel": "Técnicos en ciencias biológicas (excepto en áreas sanitarias)",
     "occupationId": "occupation:cno11:3141",
     "preferredLabel": "Técnicos en ciencias biológicas (excepto en áreas sanitarias)",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -1909,8 +1909,8 @@
     "confirmationLabel": "Técnicos agropecuarios",
     "occupationId": "occupation:cno11:3142",
     "preferredLabel": "Técnicos agropecuarios",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -1920,8 +1920,8 @@
     "confirmationLabel": "Técnicos forestales y del medio natural",
     "occupationId": "occupation:cno11:3143",
     "preferredLabel": "Técnicos forestales y del medio natural",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -1931,8 +1931,8 @@
     "confirmationLabel": "Jefes y oficiales de máquinas",
     "occupationId": "occupation:cno11:3151",
     "preferredLabel": "Jefes y oficiales de máquinas",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -1942,8 +1942,8 @@
     "confirmationLabel": "Capitanes y oficiales de puente",
     "occupationId": "occupation:cno11:3152",
     "preferredLabel": "Capitanes y oficiales de puente",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -1953,8 +1953,8 @@
     "confirmationLabel": "Pilotos de aviación y profesionales afines",
     "occupationId": "occupation:cno11:3153",
     "preferredLabel": "Pilotos de aviación y profesionales afines",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -1964,8 +1964,8 @@
     "confirmationLabel": "Controladores de tráfico aéreo",
     "occupationId": "occupation:cno11:3154",
     "preferredLabel": "Controladores de tráfico aéreo",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -1975,8 +1975,8 @@
     "confirmationLabel": "Técnicos en seguridad aeronáutica",
     "occupationId": "occupation:cno11:3155",
     "preferredLabel": "Técnicos en seguridad aeronáutica",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -1986,8 +1986,8 @@
     "confirmationLabel": "Técnicos de control de calidad de las ciencias físicas, químicas y de las ingenierías",
     "occupationId": "occupation:cno11:3160",
     "preferredLabel": "Técnicos de control de calidad de las ciencias físicas, químicas y de las ingenierías",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -1997,8 +1997,8 @@
     "confirmationLabel": "Supervisores en ingeniería de minas",
     "occupationId": "occupation:cno11:3201",
     "preferredLabel": "Supervisores en ingeniería de minas",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -2008,8 +2008,8 @@
     "confirmationLabel": "Supervisión de obra",
     "occupationId": "occupation:cno11:3202",
     "preferredLabel": "Supervisores de la construcción",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -2019,8 +2019,8 @@
     "confirmationLabel": "Supervisores de industrias alimenticias y del tabaco",
     "occupationId": "occupation:cno11:3203",
     "preferredLabel": "Supervisores de industrias alimenticias y del tabaco",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -2030,8 +2030,8 @@
     "confirmationLabel": "Supervisores de industrias química y farmacéutica",
     "occupationId": "occupation:cno11:3204",
     "preferredLabel": "Supervisores de industrias química y farmacéutica",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -2041,8 +2041,8 @@
     "confirmationLabel": "Supervisores de industrias de transformación de plásticos, caucho y resinas naturales",
     "occupationId": "occupation:cno11:3205",
     "preferredLabel": "Supervisores de industrias de transformación de plásticos, caucho y resinas naturales",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -2052,8 +2052,8 @@
     "confirmationLabel": "Supervisores de industrias de la madera y pastero papeleras",
     "occupationId": "occupation:cno11:3206",
     "preferredLabel": "Supervisores de industrias de la madera y pastero papeleras",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -2063,8 +2063,8 @@
     "confirmationLabel": "Supervisores de la producción en industrias de artes gráficas y en la fabricación de productos de papel",
     "occupationId": "occupation:cno11:3207",
     "preferredLabel": "Supervisores de la producción en industrias de artes gráficas y en la fabricación de productos de papel",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -2074,8 +2074,8 @@
     "confirmationLabel": "Supervisores de otras industrias manufactureras",
     "occupationId": "occupation:cno11:3209",
     "preferredLabel": "Supervisores de otras industrias manufactureras",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -2085,8 +2085,8 @@
     "confirmationLabel": "Técnicos en radioterapia",
     "occupationId": "occupation:cno11:3311",
     "preferredLabel": "Técnicos en radioterapia",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -2096,8 +2096,8 @@
     "confirmationLabel": "Técnicos en imagen para el diagnóstico",
     "occupationId": "occupation:cno11:3312",
     "preferredLabel": "Técnicos en imagen para el diagnóstico",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -2107,8 +2107,8 @@
     "confirmationLabel": "Técnicos en anatomía patológica y citología",
     "occupationId": "occupation:cno11:3313",
     "preferredLabel": "Técnicos en anatomía patológica y citología",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -2118,8 +2118,8 @@
     "confirmationLabel": "Técnicos en laboratorio de diagnóstico clínico",
     "occupationId": "occupation:cno11:3314",
     "preferredLabel": "Técnicos en laboratorio de diagnóstico clínico",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -2129,8 +2129,8 @@
     "confirmationLabel": "Técnicos en ortoprótesis",
     "occupationId": "occupation:cno11:3315",
     "preferredLabel": "Técnicos en ortoprótesis",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -2140,8 +2140,8 @@
     "confirmationLabel": "Técnicos en prótesis dentales",
     "occupationId": "occupation:cno11:3316",
     "preferredLabel": "Técnicos en prótesis dentales",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -2151,8 +2151,8 @@
     "confirmationLabel": "Técnicos en audioprótesis",
     "occupationId": "occupation:cno11:3317",
     "preferredLabel": "Técnicos en audioprótesis",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -2162,8 +2162,8 @@
     "confirmationLabel": "Técnicos superiores en higiene bucodental",
     "occupationId": "occupation:cno11:3321",
     "preferredLabel": "Técnicos superiores en higiene bucodental",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -2173,8 +2173,8 @@
     "confirmationLabel": "Técnicos superiores en documentación sanitaria",
     "occupationId": "occupation:cno11:3322",
     "preferredLabel": "Técnicos superiores en documentación sanitaria",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -2184,8 +2184,8 @@
     "confirmationLabel": "Técnicos superiores en dietética",
     "occupationId": "occupation:cno11:3323",
     "preferredLabel": "Técnicos superiores en dietética",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -2195,8 +2195,8 @@
     "confirmationLabel": "Técnicos en optometría",
     "occupationId": "occupation:cno11:3324",
     "preferredLabel": "Técnicos en optometría",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -2206,8 +2206,8 @@
     "confirmationLabel": "Ayudantes fisioterapeutas",
     "occupationId": "occupation:cno11:3325",
     "preferredLabel": "Ayudantes fisioterapeutas",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -2217,8 +2217,8 @@
     "confirmationLabel": "Técnicos en prevención de riesgos laborales y salud ambiental",
     "occupationId": "occupation:cno11:3326",
     "preferredLabel": "Técnicos en prevención de riesgos laborales y salud ambiental",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -2228,8 +2228,8 @@
     "confirmationLabel": "Ayudantes de veterinaria",
     "occupationId": "occupation:cno11:3327",
     "preferredLabel": "Ayudantes de veterinaria",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -2239,8 +2239,8 @@
     "confirmationLabel": "Técnicos de la sanidad no clasificados bajo otros epígrafes",
     "occupationId": "occupation:cno11:3329",
     "preferredLabel": "Técnicos de la sanidad no clasificados bajo otros epígrafes",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -2250,8 +2250,8 @@
     "confirmationLabel": "Profesionales de la acupuntura, la naturopatía, la homeopatía, la medicina tradicional china y la ayurveda",
     "occupationId": "occupation:cno11:3331",
     "preferredLabel": "Profesionales de la acupuntura, la naturopatía, la homeopatía, la medicina tradicional china y la ayurveda",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -2261,8 +2261,8 @@
     "confirmationLabel": "Otros profesionales de las terapias alternativas",
     "occupationId": "occupation:cno11:3339",
     "preferredLabel": "Otros profesionales de las terapias alternativas",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -2272,8 +2272,8 @@
     "confirmationLabel": "Profesionales de apoyo e intermediarios de cambio, bolsa y finanzas",
     "occupationId": "occupation:cno11:3401",
     "preferredLabel": "Profesionales de apoyo e intermediarios de cambio, bolsa y finanzas",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -2283,8 +2283,8 @@
     "confirmationLabel": "Comerciales de préstamos y créditos",
     "occupationId": "occupation:cno11:3402",
     "preferredLabel": "Comerciales de préstamos y créditos",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -2294,8 +2294,8 @@
     "confirmationLabel": "Tenedores de libros",
     "occupationId": "occupation:cno11:3403",
     "preferredLabel": "Tenedores de libros",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -2305,8 +2305,8 @@
     "confirmationLabel": "Profesionales de apoyo en servicios estadísticos, matemáticos y afines",
     "occupationId": "occupation:cno11:3404",
     "preferredLabel": "Profesionales de apoyo en servicios estadísticos, matemáticos y afines",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -2316,8 +2316,8 @@
     "confirmationLabel": "Tasadores",
     "occupationId": "occupation:cno11:3405",
     "preferredLabel": "Tasadores",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -2327,8 +2327,8 @@
     "confirmationLabel": "Representación comercial",
     "occupationId": "occupation:cno11:3510",
     "preferredLabel": "Agentes y representantes comerciales",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -2338,8 +2338,8 @@
     "confirmationLabel": "Mediadores y agentes de seguros",
     "occupationId": "occupation:cno11:3521",
     "preferredLabel": "Mediadores y agentes de seguros",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -2349,8 +2349,8 @@
     "confirmationLabel": "Gestión de existencias y almacén",
     "occupationId": "occupation:cno11:3522",
     "preferredLabel": "Agentes de compras",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -2360,8 +2360,8 @@
     "confirmationLabel": "Consignatarios",
     "occupationId": "occupation:cno11:3523",
     "preferredLabel": "Consignatarios",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -2371,8 +2371,8 @@
     "confirmationLabel": "Representantes de aduanas",
     "occupationId": "occupation:cno11:3531",
     "preferredLabel": "Representantes de aduanas",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -2382,8 +2382,8 @@
     "confirmationLabel": "Organizadores de conferencias y eventos",
     "occupationId": "occupation:cno11:3532",
     "preferredLabel": "Organizadores de conferencias y eventos",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -2393,8 +2393,8 @@
     "confirmationLabel": "Agentes o intermediarios en la contratación de la mano de obra (excepto representantes de espectáculos)",
     "occupationId": "occupation:cno11:3533",
     "preferredLabel": "Agentes o intermediarios en la contratación de la mano de obra (excepto representantes de espectáculos)",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -2404,8 +2404,8 @@
     "confirmationLabel": "Agentes y administradores de la propiedad inmobiliaria",
     "occupationId": "occupation:cno11:3534",
     "preferredLabel": "Agentes y administradores de la propiedad inmobiliaria",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -2415,8 +2415,8 @@
     "confirmationLabel": "Portavoces y agentes de relaciones públicas",
     "occupationId": "occupation:cno11:3535",
     "preferredLabel": "Portavoces y agentes de relaciones públicas",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -2426,8 +2426,8 @@
     "confirmationLabel": "Representantes artísticos y deportivos y otros agentes de servicios comerciales no clasificados bajo otros epígrafes",
     "occupationId": "occupation:cno11:3539",
     "preferredLabel": "Representantes artísticos y deportivos y otros agentes de servicios comerciales no clasificados bajo otros epígrafes",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -2437,8 +2437,8 @@
     "confirmationLabel": "Supervisores de secretaría",
     "occupationId": "occupation:cno11:3611",
     "preferredLabel": "Supervisores de secretaría",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -2448,8 +2448,8 @@
     "confirmationLabel": "Asistentes jurídico-legales",
     "occupationId": "occupation:cno11:3612",
     "preferredLabel": "Asistentes jurídico-legales",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -2459,8 +2459,8 @@
     "confirmationLabel": "Asistentes de dirección y administrativos",
     "occupationId": "occupation:cno11:3613",
     "preferredLabel": "Asistentes de dirección y administrativos",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -2470,8 +2470,8 @@
     "confirmationLabel": "Secretarios de centros médicos o clínicas",
     "occupationId": "occupation:cno11:3614",
     "preferredLabel": "Secretarios de centros médicos o clínicas",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -2481,8 +2481,8 @@
     "confirmationLabel": "Profesionales de apoyo de la Administración Pública de tributos",
     "occupationId": "occupation:cno11:3621",
     "preferredLabel": "Profesionales de apoyo de la Administración Pública de tributos",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -2492,8 +2492,8 @@
     "confirmationLabel": "Profesionales de apoyo de la Administración Pública de servicios sociales",
     "occupationId": "occupation:cno11:3622",
     "preferredLabel": "Profesionales de apoyo de la Administración Pública de servicios sociales",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -2503,8 +2503,8 @@
     "confirmationLabel": "Profesionales de apoyo de la Administración Pública de servicios de expedición de licencias",
     "occupationId": "occupation:cno11:3623",
     "preferredLabel": "Profesionales de apoyo de la Administración Pública de servicios de expedición de licencias",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -2514,8 +2514,8 @@
     "confirmationLabel": "Otros profesionales de apoyo de la Administración Pública para tareas de inspección y control y tareas similares",
     "occupationId": "occupation:cno11:3629",
     "preferredLabel": "Otros profesionales de apoyo de la Administración Pública para tareas de inspección y control y tareas similares",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -2525,8 +2525,8 @@
     "confirmationLabel": "Técnicos de la policía nacional, autonómica y local",
     "occupationId": "occupation:cno11:3631",
     "preferredLabel": "Técnicos de la policía nacional, autonómica y local",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -2536,8 +2536,8 @@
     "confirmationLabel": "Suboficiales de la guardia civil",
     "occupationId": "occupation:cno11:3632",
     "preferredLabel": "Suboficiales de la guardia civil",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -2547,8 +2547,8 @@
     "confirmationLabel": "Profesionales de apoyo de servicios jurídicos y servicios similares",
     "occupationId": "occupation:cno11:3711",
     "preferredLabel": "Profesionales de apoyo de servicios jurídicos y servicios similares",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -2558,8 +2558,8 @@
     "confirmationLabel": "Detectives privados",
     "occupationId": "occupation:cno11:3712",
     "preferredLabel": "Detectives privados",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -2569,8 +2569,8 @@
     "confirmationLabel": "Profesionales de apoyo al trabajo y a la educación social",
     "occupationId": "occupation:cno11:3713",
     "preferredLabel": "Profesionales de apoyo al trabajo y a la educación social",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -2580,8 +2580,8 @@
     "confirmationLabel": "Promotores de igualdad de oportunidades entre mujeres y hombres",
     "occupationId": "occupation:cno11:3714",
     "preferredLabel": "Promotores de igualdad de oportunidades entre mujeres y hombres",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -2591,8 +2591,8 @@
     "confirmationLabel": "Animadores comunitarios",
     "occupationId": "occupation:cno11:3715",
     "preferredLabel": "Animadores comunitarios",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -2602,8 +2602,8 @@
     "confirmationLabel": "Auxiliares laicos de las religiones",
     "occupationId": "occupation:cno11:3716",
     "preferredLabel": "Auxiliares laicos de las religiones",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -2613,8 +2613,8 @@
     "confirmationLabel": "Atletas y deportistas",
     "occupationId": "occupation:cno11:3721",
     "preferredLabel": "Atletas y deportistas",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -2624,8 +2624,8 @@
     "confirmationLabel": "Entrenadores y árbitros de actividades deportivas",
     "occupationId": "occupation:cno11:3722",
     "preferredLabel": "Entrenadores y árbitros de actividades deportivas",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -2635,8 +2635,8 @@
     "confirmationLabel": "Instructores de actividades deportivas",
     "occupationId": "occupation:cno11:3723",
     "preferredLabel": "Instructores de actividades deportivas",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -2646,8 +2646,8 @@
     "confirmationLabel": "Monitores de actividades recreativas y de entretenimiento",
     "occupationId": "occupation:cno11:3724",
     "preferredLabel": "Monitores de actividades recreativas y de entretenimiento",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -2657,8 +2657,8 @@
     "confirmationLabel": "Fotógrafos",
     "occupationId": "occupation:cno11:3731",
     "preferredLabel": "Fotógrafos",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -2668,8 +2668,8 @@
     "confirmationLabel": "Diseñadores y decoradores de interior",
     "occupationId": "occupation:cno11:3732",
     "preferredLabel": "Diseñadores y decoradores de interior",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -2679,8 +2679,8 @@
     "confirmationLabel": "Técnicos en galerías de arte, museos y bibliotecas",
     "occupationId": "occupation:cno11:3733",
     "preferredLabel": "Técnicos en galerías de arte, museos y bibliotecas",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -2690,8 +2690,8 @@
     "confirmationLabel": "Dirección de cocina",
     "occupationId": "occupation:cno11:3734",
     "preferredLabel": "Chefs",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -2701,8 +2701,8 @@
     "confirmationLabel": "Otros técnicos y profesionales de apoyo de actividades culturales y artísticas",
     "occupationId": "occupation:cno11:3739",
     "preferredLabel": "Otros técnicos y profesionales de apoyo de actividades culturales y artísticas",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -2712,8 +2712,8 @@
     "confirmationLabel": "Técnicos en operaciones de sistemas informáticos",
     "occupationId": "occupation:cno11:3811",
     "preferredLabel": "Técnicos en operaciones de sistemas informáticos",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -2723,8 +2723,8 @@
     "confirmationLabel": "Técnicos en asistencia al usuario de tecnologías de la información",
     "occupationId": "occupation:cno11:3812",
     "preferredLabel": "Técnicos en asistencia al usuario de tecnologías de la información",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -2734,8 +2734,8 @@
     "confirmationLabel": "Técnicos en redes",
     "occupationId": "occupation:cno11:3813",
     "preferredLabel": "Técnicos en redes",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -2745,8 +2745,8 @@
     "confirmationLabel": "Técnicos de la Web",
     "occupationId": "occupation:cno11:3814",
     "preferredLabel": "Técnicos de la Web",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -2756,8 +2756,8 @@
     "confirmationLabel": "Programadores informáticos",
     "occupationId": "occupation:cno11:3820",
     "preferredLabel": "Programadores informáticos",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -2767,8 +2767,8 @@
     "confirmationLabel": "Técnicos de grabación audiovisual",
     "occupationId": "occupation:cno11:3831",
     "preferredLabel": "Técnicos de grabación audiovisual",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -2778,8 +2778,8 @@
     "confirmationLabel": "Técnicos de radiodifusión",
     "occupationId": "occupation:cno11:3832",
     "preferredLabel": "Técnicos de radiodifusión",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -2789,8 +2789,8 @@
     "confirmationLabel": "Técnicos de ingeniería de las telecomunicaciones",
     "occupationId": "occupation:cno11:3833",
     "preferredLabel": "Técnicos de ingeniería de las telecomunicaciones",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -2800,8 +2800,8 @@
     "confirmationLabel": "Empleados de contabilidad",
     "occupationId": "occupation:cno11:4111",
     "preferredLabel": "Empleados de contabilidad",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -2811,8 +2811,8 @@
     "confirmationLabel": "Empleados de control de personal y nóminas",
     "occupationId": "occupation:cno11:4112",
     "preferredLabel": "Empleados de control de personal y nóminas",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -2822,8 +2822,8 @@
     "confirmationLabel": "Empleados de oficina de servicios estadísticos, financieros y bancarios",
     "occupationId": "occupation:cno11:4113",
     "preferredLabel": "Empleados de oficina de servicios estadísticos, financieros y bancarios",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -2833,8 +2833,8 @@
     "confirmationLabel": "Control de abastecimientos e inventario",
     "occupationId": "occupation:cno11:4121",
     "preferredLabel": "Empleados de control de abastecimientos e inventario",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -2844,8 +2844,8 @@
     "confirmationLabel": "Empleados de oficina de servicios de apoyo a la producción",
     "occupationId": "occupation:cno11:4122",
     "preferredLabel": "Empleados de oficina de servicios de apoyo a la producción",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -2855,8 +2855,8 @@
     "confirmationLabel": "Empleados de logística y transporte de pasajeros y mercancías",
     "occupationId": "occupation:cno11:4123",
     "preferredLabel": "Empleados de logística y transporte de pasajeros y mercancías",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -2866,8 +2866,8 @@
     "confirmationLabel": "Empleados de bibliotecas y archivos",
     "occupationId": "occupation:cno11:4210",
     "preferredLabel": "Empleados de bibliotecas y archivos",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -2877,8 +2877,8 @@
     "confirmationLabel": "Empleados de servicios de correos (excepto empleados de mostrador)",
     "occupationId": "occupation:cno11:4221",
     "preferredLabel": "Empleados de servicios de correos (excepto empleados de mostrador)",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -2888,8 +2888,8 @@
     "confirmationLabel": "Codificadores y correctores de imprenta",
     "occupationId": "occupation:cno11:4222",
     "preferredLabel": "Codificadores y correctores de imprenta",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -2899,8 +2899,8 @@
     "confirmationLabel": "Empleados de servicio de personal",
     "occupationId": "occupation:cno11:4223",
     "preferredLabel": "Empleados de servicio de personal",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -2910,8 +2910,8 @@
     "confirmationLabel": "Grabadores de datos",
     "occupationId": "occupation:cno11:4301",
     "preferredLabel": "Grabadores de datos",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -2921,8 +2921,8 @@
     "confirmationLabel": "Administración y apoyo de oficina",
     "occupationId": "occupation:cno11:4309",
     "preferredLabel": "Empleados administrativos sin tareas de atención al público no clasificados bajo otros epígrafes",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -2932,8 +2932,8 @@
     "confirmationLabel": "Empleados de información al usuario",
     "occupationId": "occupation:cno11:4411",
     "preferredLabel": "Empleados de información al usuario",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -2943,8 +2943,8 @@
     "confirmationLabel": "Recepcionistas (excepto de hoteles)",
     "occupationId": "occupation:cno11:4412",
     "preferredLabel": "Recepcionistas (excepto de hoteles)",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -2954,8 +2954,8 @@
     "confirmationLabel": "Empleados de agencias de viajes",
     "occupationId": "occupation:cno11:4421",
     "preferredLabel": "Empleados de agencias de viajes",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -2965,8 +2965,8 @@
     "confirmationLabel": "Recepcionistas de hoteles",
     "occupationId": "occupation:cno11:4422",
     "preferredLabel": "Recepcionistas de hoteles",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -2976,8 +2976,8 @@
     "confirmationLabel": "Telefonistas",
     "occupationId": "occupation:cno11:4423",
     "preferredLabel": "Telefonistas",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -2987,8 +2987,8 @@
     "confirmationLabel": "Atención telefónica remota",
     "occupationId": "occupation:cno11:4424",
     "preferredLabel": "Teleoperadores",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -2998,8 +2998,8 @@
     "confirmationLabel": "Agentes de encuestas",
     "occupationId": "occupation:cno11:4430",
     "preferredLabel": "Agentes de encuestas",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -3009,8 +3009,8 @@
     "confirmationLabel": "Cajeros de bancos y afines",
     "occupationId": "occupation:cno11:4441",
     "preferredLabel": "Cajeros de bancos y afines",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -3020,8 +3020,8 @@
     "confirmationLabel": "Empleados de venta de apuestas",
     "occupationId": "occupation:cno11:4442",
     "preferredLabel": "Empleados de venta de apuestas",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -3031,8 +3031,8 @@
     "confirmationLabel": "Empleados de sala de juegos y afines",
     "occupationId": "occupation:cno11:4443",
     "preferredLabel": "Empleados de sala de juegos y afines",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -3042,8 +3042,8 @@
     "confirmationLabel": "Empleados de casas de empeño y de préstamos",
     "occupationId": "occupation:cno11:4444",
     "preferredLabel": "Empleados de casas de empeño y de préstamos",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -3053,8 +3053,8 @@
     "confirmationLabel": "Cobradores de facturas, deudas y empleados afines",
     "occupationId": "occupation:cno11:4445",
     "preferredLabel": "Cobradores de facturas, deudas y empleados afines",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -3064,8 +3064,8 @@
     "confirmationLabel": "Empleados de mostrador de correos",
     "occupationId": "occupation:cno11:4446",
     "preferredLabel": "Empleados de mostrador de correos",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -3075,8 +3075,8 @@
     "confirmationLabel": "Empleados administrativos con tareas de atención al público no clasificados bajo otros epígrafes",
     "occupationId": "occupation:cno11:4500",
     "preferredLabel": "Empleados administrativos con tareas de atención al público no clasificados bajo otros epígrafes",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -3086,8 +3086,8 @@
     "confirmationLabel": "Camareros y cocineros propietarios",
     "occupationId": "occupation:cno11:5000",
     "preferredLabel": "Camareros y cocineros propietarios",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -3097,8 +3097,8 @@
     "confirmationLabel": "Cocina profesional",
     "occupationId": "occupation:cno11:5110",
     "preferredLabel": "Cocineros asalariados",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -3108,8 +3108,8 @@
     "confirmationLabel": "Servicio de sala y barra",
     "occupationId": "occupation:cno11:5120",
     "preferredLabel": "Camareros asalariados",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -3119,8 +3119,8 @@
     "confirmationLabel": "Supervisión de secciones de tienda y almacén",
     "occupationId": "occupation:cno11:5210",
     "preferredLabel": "Jefes de sección de tiendas y almacenes",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -3130,8 +3130,8 @@
     "confirmationLabel": "Venta en tienda y almacén",
     "occupationId": "occupation:cno11:5220",
     "preferredLabel": "Vendedores en tiendas y almacenes",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -3141,8 +3141,8 @@
     "confirmationLabel": "Comerciantes propietarios de tiendas",
     "occupationId": "occupation:cno11:5300",
     "preferredLabel": "Comerciantes propietarios de tiendas",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -3152,8 +3152,8 @@
     "confirmationLabel": "Vendedores en quioscos",
     "occupationId": "occupation:cno11:5411",
     "preferredLabel": "Vendedores en quioscos",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -3163,8 +3163,8 @@
     "confirmationLabel": "Vendedores en mercados ocasionales y mercadillos",
     "occupationId": "occupation:cno11:5412",
     "preferredLabel": "Vendedores en mercados ocasionales y mercadillos",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -3174,8 +3174,8 @@
     "confirmationLabel": "Venta comercial a distancia",
     "occupationId": "occupation:cno11:5420",
     "preferredLabel": "Operadores de telemarketing",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -3185,8 +3185,8 @@
     "confirmationLabel": "Expendedores de gasolineras",
     "occupationId": "occupation:cno11:5430",
     "preferredLabel": "Expendedores de gasolineras",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -3196,8 +3196,8 @@
     "confirmationLabel": "Vendedores a domicilio",
     "occupationId": "occupation:cno11:5491",
     "preferredLabel": "Vendedores a domicilio",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -3207,8 +3207,8 @@
     "confirmationLabel": "Promotores de venta",
     "occupationId": "occupation:cno11:5492",
     "preferredLabel": "Promotores de venta",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -3218,8 +3218,8 @@
     "confirmationLabel": "Modelos de moda, arte y publicidad",
     "occupationId": "occupation:cno11:5493",
     "preferredLabel": "Modelos de moda, arte y publicidad",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -3229,8 +3229,8 @@
     "confirmationLabel": "Vendedores no clasificados bajo otros epígrafes",
     "occupationId": "occupation:cno11:5499",
     "preferredLabel": "Vendedores no clasificados bajo otros epígrafes",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -3240,8 +3240,8 @@
     "confirmationLabel": "Cobro en comercio",
     "occupationId": "occupation:cno11:5500",
     "preferredLabel": "Cajeros y taquilleros (excepto bancos)",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -3251,8 +3251,8 @@
     "confirmationLabel": "Atención auxiliar de enfermería hospitalaria",
     "occupationId": "occupation:cno11:5611",
     "preferredLabel": "Auxiliares de enfermería hospitalaria",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -3262,8 +3262,8 @@
     "confirmationLabel": "Atención auxiliar de enfermería primaria",
     "occupationId": "occupation:cno11:5612",
     "preferredLabel": "Auxiliares de enfermería de atención primaria",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -3273,8 +3273,8 @@
     "confirmationLabel": "Técnicos auxiliares de farmacia",
     "occupationId": "occupation:cno11:5621",
     "preferredLabel": "Técnicos auxiliares de farmacia",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -3284,8 +3284,8 @@
     "confirmationLabel": "Técnicos de emergencias sanitarias",
     "occupationId": "occupation:cno11:5622",
     "preferredLabel": "Técnicos de emergencias sanitarias",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -3295,8 +3295,8 @@
     "confirmationLabel": "Apoyo sanitario no clasificado",
     "occupationId": "occupation:cno11:5629",
     "preferredLabel": "Trabajadores de los cuidados a las personas en servicios de salud no clasificados bajo otros epígrafes",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -3306,8 +3306,8 @@
     "confirmationLabel": "Cuidados personales a domicilio",
     "occupationId": "occupation:cno11:5710",
     "preferredLabel": "Trabajadores de los cuidados personales a domicilio",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -3317,8 +3317,8 @@
     "confirmationLabel": "Cuidadores de niños en guarderías y centros educativos",
     "occupationId": "occupation:cno11:5721",
     "preferredLabel": "Cuidadores de niños en guarderías y centros educativos",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -3328,8 +3328,8 @@
     "confirmationLabel": "Cuidadores de niños en domicilios",
     "occupationId": "occupation:cno11:5722",
     "preferredLabel": "Cuidadores de niños en domicilios",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -3339,8 +3339,8 @@
     "confirmationLabel": "Peluqueros",
     "occupationId": "occupation:cno11:5811",
     "preferredLabel": "Peluqueros",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -3350,8 +3350,8 @@
     "confirmationLabel": "Especialistas en tratamientos de estética, bienestar y afines",
     "occupationId": "occupation:cno11:5812",
     "preferredLabel": "Especialistas en tratamientos de estética, bienestar y afines",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -3361,8 +3361,8 @@
     "confirmationLabel": "Auxiliares de vuelo y camareros de avión, barco y tren",
     "occupationId": "occupation:cno11:5821",
     "preferredLabel": "Auxiliares de vuelo y camareros de avión, barco y tren",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -3372,8 +3372,8 @@
     "confirmationLabel": "Revisores y cobradores de transporte terrestre",
     "occupationId": "occupation:cno11:5822",
     "preferredLabel": "Revisores y cobradores de transporte terrestre",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -3383,8 +3383,8 @@
     "confirmationLabel": "Acompañantes turísticos",
     "occupationId": "occupation:cno11:5823",
     "preferredLabel": "Acompañantes turísticos",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -3394,8 +3394,8 @@
     "confirmationLabel": "Azafatos de tierra",
     "occupationId": "occupation:cno11:5824",
     "preferredLabel": "Azafatos de tierra",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -3405,8 +3405,8 @@
     "confirmationLabel": "Guías de turismo",
     "occupationId": "occupation:cno11:5825",
     "preferredLabel": "Guías de turismo",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -3416,8 +3416,8 @@
     "confirmationLabel": "Gobierno de instituciones",
     "occupationId": "occupation:cno11:5831",
     "preferredLabel": "Supervisores de mantenimiento y limpieza en oficinas, hoteles y otros establecimientos",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -3427,8 +3427,8 @@
     "confirmationLabel": "Mayordomos del servicio doméstico",
     "occupationId": "occupation:cno11:5832",
     "preferredLabel": "Mayordomos del servicio doméstico",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -3438,8 +3438,8 @@
     "confirmationLabel": "Conserjes de edificios",
     "occupationId": "occupation:cno11:5833",
     "preferredLabel": "Conserjes de edificios",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -3449,8 +3449,8 @@
     "confirmationLabel": "Trabajadores propietarios de pequeños alojamientos",
     "occupationId": "occupation:cno11:5840",
     "preferredLabel": "Trabajadores propietarios de pequeños alojamientos",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -3460,8 +3460,8 @@
     "confirmationLabel": "Asistencia personal de compañía",
     "occupationId": "occupation:cno11:5891",
     "preferredLabel": "Asistentes personales o personas de compañía",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -3471,8 +3471,8 @@
     "confirmationLabel": "Empleados de pompas fúnebres y embalsamadores",
     "occupationId": "occupation:cno11:5892",
     "preferredLabel": "Empleados de pompas fúnebres y embalsamadores",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -3482,8 +3482,8 @@
     "confirmationLabel": "Cuidadores de animales y adiestradores",
     "occupationId": "occupation:cno11:5893",
     "preferredLabel": "Cuidadores de animales y adiestradores",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -3493,8 +3493,8 @@
     "confirmationLabel": "Instructores de autoescuela",
     "occupationId": "occupation:cno11:5894",
     "preferredLabel": "Instructores de autoescuela",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -3504,8 +3504,8 @@
     "confirmationLabel": "Astrólogos, adivinadores y afines",
     "occupationId": "occupation:cno11:5895",
     "preferredLabel": "Astrólogos, adivinadores y afines",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -3515,8 +3515,8 @@
     "confirmationLabel": "Trabajadores de servicios personales no clasificados bajo otros epígrafes",
     "occupationId": "occupation:cno11:5899",
     "preferredLabel": "Trabajadores de servicios personales no clasificados bajo otros epígrafes",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -3526,8 +3526,8 @@
     "confirmationLabel": "Guardias civiles",
     "occupationId": "occupation:cno11:5910",
     "preferredLabel": "Guardias civiles",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -3537,8 +3537,8 @@
     "confirmationLabel": "Policías nacionales",
     "occupationId": "occupation:cno11:5921",
     "preferredLabel": "Policías nacionales",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -3548,8 +3548,8 @@
     "confirmationLabel": "Policías autonómicos",
     "occupationId": "occupation:cno11:5922",
     "preferredLabel": "Policías autonómicos",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -3559,8 +3559,8 @@
     "confirmationLabel": "Policías locales",
     "occupationId": "occupation:cno11:5923",
     "preferredLabel": "Policías locales",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -3570,8 +3570,8 @@
     "confirmationLabel": "Bomberos (excepto forestales)",
     "occupationId": "occupation:cno11:5931",
     "preferredLabel": "Bomberos (excepto forestales)",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -3581,8 +3581,8 @@
     "confirmationLabel": "Bomberos forestales",
     "occupationId": "occupation:cno11:5932",
     "preferredLabel": "Bomberos forestales",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -3592,8 +3592,8 @@
     "confirmationLabel": "Vigilantes de seguridad y similares habilitados para ir armados",
     "occupationId": "occupation:cno11:5941",
     "preferredLabel": "Vigilantes de seguridad y similares habilitados para ir armados",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -3603,8 +3603,8 @@
     "confirmationLabel": "Auxiliares de vigilante de seguridad y similares no habilitados para ir armados",
     "occupationId": "occupation:cno11:5942",
     "preferredLabel": "Auxiliares de vigilante de seguridad y similares no habilitados para ir armados",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -3614,8 +3614,8 @@
     "confirmationLabel": "Vigilantes de prisiones",
     "occupationId": "occupation:cno11:5991",
     "preferredLabel": "Vigilantes de prisiones",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -3625,8 +3625,8 @@
     "confirmationLabel": "Bañistas-socorristas",
     "occupationId": "occupation:cno11:5992",
     "preferredLabel": "Bañistas-socorristas",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -3636,8 +3636,8 @@
     "confirmationLabel": "Agentes forestales y medioambientales",
     "occupationId": "occupation:cno11:5993",
     "preferredLabel": "Agentes forestales y medioambientales",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -3647,8 +3647,8 @@
     "confirmationLabel": "Trabajadores de los servicios de protección y seguridad no clasificados bajo otros epígrafes",
     "occupationId": "occupation:cno11:5999",
     "preferredLabel": "Trabajadores de los servicios de protección y seguridad no clasificados bajo otros epígrafes",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -3658,8 +3658,8 @@
     "confirmationLabel": "Trabajadores cualificados en actividades agrícolas (excepto en huertas, invernaderos, viveros y jardines)",
     "occupationId": "occupation:cno11:6110",
     "preferredLabel": "Trabajadores cualificados en actividades agrícolas (excepto en huertas, invernaderos, viveros y jardines)",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -3669,8 +3669,8 @@
     "confirmationLabel": "Trabajadores cualificados en huertas, invernaderos, viveros y jardines",
     "occupationId": "occupation:cno11:6120",
     "preferredLabel": "Trabajadores cualificados en huertas, invernaderos, viveros y jardines",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -3680,8 +3680,8 @@
     "confirmationLabel": "Trabajadores cualificados en actividades ganaderas de vacuno",
     "occupationId": "occupation:cno11:6201",
     "preferredLabel": "Trabajadores cualificados en actividades ganaderas de vacuno",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -3691,8 +3691,8 @@
     "confirmationLabel": "Trabajadores cualificados en actividades ganaderas de ovino y caprino",
     "occupationId": "occupation:cno11:6202",
     "preferredLabel": "Trabajadores cualificados en actividades ganaderas de ovino y caprino",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -3702,8 +3702,8 @@
     "confirmationLabel": "Trabajadores cualificados en actividades ganaderas de porcino",
     "occupationId": "occupation:cno11:6203",
     "preferredLabel": "Trabajadores cualificados en actividades ganaderas de porcino",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -3713,8 +3713,8 @@
     "confirmationLabel": "Trabajadores cualificados en apicultura y sericicultura",
     "occupationId": "occupation:cno11:6204",
     "preferredLabel": "Trabajadores cualificados en apicultura y sericicultura",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -3724,8 +3724,8 @@
     "confirmationLabel": "Trabajadores cualificados en la avicultura y la cunicultura",
     "occupationId": "occupation:cno11:6205",
     "preferredLabel": "Trabajadores cualificados en la avicultura y la cunicultura",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -3735,8 +3735,8 @@
     "confirmationLabel": "Trabajadores cualificados en actividades ganaderas no clasificados bajo otros epígrafes",
     "occupationId": "occupation:cno11:6209",
     "preferredLabel": "Trabajadores cualificados en actividades ganaderas no clasificados bajo otros epígrafes",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -3746,8 +3746,8 @@
     "confirmationLabel": "Trabajadores cualificados en actividades agropecuarias mixtas",
     "occupationId": "occupation:cno11:6300",
     "preferredLabel": "Trabajadores cualificados en actividades agropecuarias mixtas",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -3757,8 +3757,8 @@
     "confirmationLabel": "Trabajadores cualificados en actividades forestales y del medio natural",
     "occupationId": "occupation:cno11:6410",
     "preferredLabel": "Trabajadores cualificados en actividades forestales y del medio natural",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -3768,8 +3768,8 @@
     "confirmationLabel": "Trabajadores cualificados en la acuicultura",
     "occupationId": "occupation:cno11:6421",
     "preferredLabel": "Trabajadores cualificados en la acuicultura",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -3779,8 +3779,8 @@
     "confirmationLabel": "Pescadores de aguas costeras y aguas dulces",
     "occupationId": "occupation:cno11:6422",
     "preferredLabel": "Pescadores de aguas costeras y aguas dulces",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -3790,8 +3790,8 @@
     "confirmationLabel": "Pescadores de altura",
     "occupationId": "occupation:cno11:6423",
     "preferredLabel": "Pescadores de altura",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -3801,8 +3801,8 @@
     "confirmationLabel": "Trabajadores cualificados en actividades cinegéticas",
     "occupationId": "occupation:cno11:6430",
     "preferredLabel": "Trabajadores cualificados en actividades cinegéticas",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -3812,8 +3812,8 @@
     "confirmationLabel": "Encofrados, ferralla y hormigón",
     "occupationId": "occupation:cno11:7111",
     "preferredLabel": "Encofradores y operarios de puesta en obra de hormigón",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -3823,8 +3823,8 @@
     "confirmationLabel": "Montadores de prefabricados estructurales (sólo hormigón)",
     "occupationId": "occupation:cno11:7112",
     "preferredLabel": "Montadores de prefabricados estructurales (sólo hormigón)",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -3834,8 +3834,8 @@
     "confirmationLabel": "Albañilería y mampostería",
     "occupationId": "occupation:cno11:7121",
     "preferredLabel": "Albañiles",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -3845,8 +3845,8 @@
     "confirmationLabel": "Canteros, tronzadores, labrantes y grabadores de piedras",
     "occupationId": "occupation:cno11:7122",
     "preferredLabel": "Canteros, tronzadores, labrantes y grabadores de piedras",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -3856,8 +3856,8 @@
     "confirmationLabel": "Carpinteros (excepto ebanistas)",
     "occupationId": "occupation:cno11:7131",
     "preferredLabel": "Carpinteros (excepto ebanistas)",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -3867,8 +3867,8 @@
     "confirmationLabel": "Instaladores de cerramientos metálicos y carpinteros metálicos (excepto montadores de estructuras metálicas)",
     "occupationId": "occupation:cno11:7132",
     "preferredLabel": "Instaladores de cerramientos metálicos y carpinteros metálicos (excepto montadores de estructuras metálicas)",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -3878,8 +3878,8 @@
     "confirmationLabel": "Mantenedores de edificios",
     "occupationId": "occupation:cno11:7191",
     "preferredLabel": "Mantenedores de edificios",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -3889,8 +3889,8 @@
     "confirmationLabel": "Instaladores de fachadas técnicas",
     "occupationId": "occupation:cno11:7192",
     "preferredLabel": "Instaladores de fachadas técnicas",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -3900,8 +3900,8 @@
     "confirmationLabel": "Impermeabilización de edificios",
     "occupationId": "occupation:cno11:7193",
     "preferredLabel": "Instaladores de sistemas de impermeabilización en edificios",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -3911,8 +3911,8 @@
     "confirmationLabel": "Otros trabajadores de las obras estructurales de construcción no clasificados bajo otros epígrafes",
     "occupationId": "occupation:cno11:7199",
     "preferredLabel": "Otros trabajadores de las obras estructurales de construcción no clasificados bajo otros epígrafes",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -3922,8 +3922,8 @@
     "confirmationLabel": "Escayolistas",
     "occupationId": "occupation:cno11:7211",
     "preferredLabel": "Escayolistas",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -3933,8 +3933,8 @@
     "confirmationLabel": "Revestimientos de pasta y mortero",
     "occupationId": "occupation:cno11:7212",
     "preferredLabel": "Aplicadores de revestimientos de pasta y mortero",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -3944,8 +3944,8 @@
     "confirmationLabel": "Fontaneros",
     "occupationId": "occupation:cno11:7221",
     "preferredLabel": "Fontaneros",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -3955,8 +3955,8 @@
     "confirmationLabel": "Montadores-instaladores de gas en edificios",
     "occupationId": "occupation:cno11:7222",
     "preferredLabel": "Montadores-instaladores de gas en edificios",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -3966,8 +3966,8 @@
     "confirmationLabel": "Conducciones en obra pública",
     "occupationId": "occupation:cno11:7223",
     "preferredLabel": "Instaladores de conductos en obra pública",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -3977,8 +3977,8 @@
     "confirmationLabel": "Pintores y empapeladores",
     "occupationId": "occupation:cno11:7231",
     "preferredLabel": "Pintores y empapeladores",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -3988,8 +3988,8 @@
     "confirmationLabel": "Pintores en las industrias manufactureras",
     "occupationId": "occupation:cno11:7232",
     "preferredLabel": "Pintores en las industrias manufactureras",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -3999,8 +3999,8 @@
     "confirmationLabel": "Solados y alicatados",
     "occupationId": "occupation:cno11:7240",
     "preferredLabel": "Soladores, colocadores de parquet y afines",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -4010,8 +4010,8 @@
     "confirmationLabel": "Mecánicos-instaladores de refrigeración y climatización",
     "occupationId": "occupation:cno11:7250",
     "preferredLabel": "Mecánicos-instaladores de refrigeración y climatización",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -4021,8 +4021,8 @@
     "confirmationLabel": "Montaje de cubiertas",
     "occupationId": "occupation:cno11:7291",
     "preferredLabel": "Montadores de cubiertas",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -4032,8 +4032,8 @@
     "confirmationLabel": "Instaladores de material aislante térmico y de insonorización",
     "occupationId": "occupation:cno11:7292",
     "preferredLabel": "Instaladores de material aislante térmico y de insonorización",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -4043,8 +4043,8 @@
     "confirmationLabel": "Cristaleros",
     "occupationId": "occupation:cno11:7293",
     "preferredLabel": "Cristaleros",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -4054,8 +4054,8 @@
     "confirmationLabel": "Montadores-instaladores de placas de energía solar",
     "occupationId": "occupation:cno11:7294",
     "preferredLabel": "Montadores-instaladores de placas de energía solar",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -4065,8 +4065,8 @@
     "confirmationLabel": "Personal de limpieza de fachadas de edificios y chimeneas",
     "occupationId": "occupation:cno11:7295",
     "preferredLabel": "Personal de limpieza de fachadas de edificios y chimeneas",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -4076,8 +4076,8 @@
     "confirmationLabel": "Moldeadores y macheros",
     "occupationId": "occupation:cno11:7311",
     "preferredLabel": "Moldeadores y macheros",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -4087,8 +4087,8 @@
     "confirmationLabel": "Soldadores y oxicortadores",
     "occupationId": "occupation:cno11:7312",
     "preferredLabel": "Soldadores y oxicortadores",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -4098,8 +4098,8 @@
     "confirmationLabel": "Chapistas y caldereros",
     "occupationId": "occupation:cno11:7313",
     "preferredLabel": "Chapistas y caldereros",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -4109,8 +4109,8 @@
     "confirmationLabel": "Montadores de estructuras metálicas",
     "occupationId": "occupation:cno11:7314",
     "preferredLabel": "Montadores de estructuras metálicas",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -4120,8 +4120,8 @@
     "confirmationLabel": "Montadores de estructuras cableadas y empalmadores de cables",
     "occupationId": "occupation:cno11:7315",
     "preferredLabel": "Montadores de estructuras cableadas y empalmadores de cables",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -4131,8 +4131,8 @@
     "confirmationLabel": "Herreros y forjadores",
     "occupationId": "occupation:cno11:7321",
     "preferredLabel": "Herreros y forjadores",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -4142,8 +4142,8 @@
     "confirmationLabel": "Trabajadores de la fabricación de herramientas, mecánico-ajustadores, modelistas, matriceros y afines",
     "occupationId": "occupation:cno11:7322",
     "preferredLabel": "Trabajadores de la fabricación de herramientas, mecánico-ajustadores, modelistas, matriceros y afines",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -4153,8 +4153,8 @@
     "confirmationLabel": "Ajustadores y operadores de máquinas-herramienta",
     "occupationId": "occupation:cno11:7323",
     "preferredLabel": "Ajustadores y operadores de máquinas-herramienta",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -4164,8 +4164,8 @@
     "confirmationLabel": "Pulidores de metales y afiladores de herramientas",
     "occupationId": "occupation:cno11:7324",
     "preferredLabel": "Pulidores de metales y afiladores de herramientas",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -4175,8 +4175,8 @@
     "confirmationLabel": "Mecánicos y ajustadores de vehículos de motor",
     "occupationId": "occupation:cno11:7401",
     "preferredLabel": "Mecánicos y ajustadores de vehículos de motor",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -4186,8 +4186,8 @@
     "confirmationLabel": "Mecánicos y ajustadores de motores de avión",
     "occupationId": "occupation:cno11:7402",
     "preferredLabel": "Mecánicos y ajustadores de motores de avión",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -4197,8 +4197,8 @@
     "confirmationLabel": "Mecánicos y ajustadores de maquinaria agrícola e industrial",
     "occupationId": "occupation:cno11:7403",
     "preferredLabel": "Mecánicos y ajustadores de maquinaria agrícola e industrial",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -4208,8 +4208,8 @@
     "confirmationLabel": "Mecánicos y ajustadores de maquinaria naval y ferroviaria",
     "occupationId": "occupation:cno11:7404",
     "preferredLabel": "Mecánicos y ajustadores de maquinaria naval y ferroviaria",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -4219,8 +4219,8 @@
     "confirmationLabel": "Reparadores de bicicletas y afines",
     "occupationId": "occupation:cno11:7405",
     "preferredLabel": "Reparadores de bicicletas y afines",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -4230,8 +4230,8 @@
     "confirmationLabel": "Electricistas de la construcción y afines",
     "occupationId": "occupation:cno11:7510",
     "preferredLabel": "Electricistas de la construcción y afines",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -4241,8 +4241,8 @@
     "confirmationLabel": "Mecánicos y reparadores de equipos eléctricos",
     "occupationId": "occupation:cno11:7521",
     "preferredLabel": "Mecánicos y reparadores de equipos eléctricos",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -4252,8 +4252,8 @@
     "confirmationLabel": "Instaladores y reparadores de líneas eléctricas",
     "occupationId": "occupation:cno11:7522",
     "preferredLabel": "Instaladores y reparadores de líneas eléctricas",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -4263,8 +4263,8 @@
     "confirmationLabel": "Mecánicos y reparadores de equipos electrónicos",
     "occupationId": "occupation:cno11:7531",
     "preferredLabel": "Mecánicos y reparadores de equipos electrónicos",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -4274,8 +4274,8 @@
     "confirmationLabel": "Instaladores y reparadores en electromedicina",
     "occupationId": "occupation:cno11:7532",
     "preferredLabel": "Instaladores y reparadores en electromedicina",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -4285,8 +4285,8 @@
     "confirmationLabel": "Instaladores y reparadores en tecnologías de la información y las comunicaciones",
     "occupationId": "occupation:cno11:7533",
     "preferredLabel": "Instaladores y reparadores en tecnologías de la información y las comunicaciones",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -4296,8 +4296,8 @@
     "confirmationLabel": "Relojeros y mecánicos de instrumentos de precisión",
     "occupationId": "occupation:cno11:7611",
     "preferredLabel": "Relojeros y mecánicos de instrumentos de precisión",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -4307,8 +4307,8 @@
     "confirmationLabel": "Lutieres y similares; afinadores de instrumentos musicales",
     "occupationId": "occupation:cno11:7612",
     "preferredLabel": "Lutieres y similares; afinadores de instrumentos musicales",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -4318,8 +4318,8 @@
     "confirmationLabel": "Joyeros, orfebres y plateros",
     "occupationId": "occupation:cno11:7613",
     "preferredLabel": "Joyeros, orfebres y plateros",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -4329,8 +4329,8 @@
     "confirmationLabel": "Trabajadores de la cerámica, alfareros y afines",
     "occupationId": "occupation:cno11:7614",
     "preferredLabel": "Trabajadores de la cerámica, alfareros y afines",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -4340,8 +4340,8 @@
     "confirmationLabel": "Sopladores, modeladores, laminadores, cortadores y pulidores de vidrio",
     "occupationId": "occupation:cno11:7615",
     "preferredLabel": "Sopladores, modeladores, laminadores, cortadores y pulidores de vidrio",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -4351,8 +4351,8 @@
     "confirmationLabel": "Rotulistas, grabadores de vidrio, pintores decorativos de artículos diversos",
     "occupationId": "occupation:cno11:7616",
     "preferredLabel": "Rotulistas, grabadores de vidrio, pintores decorativos de artículos diversos",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -4362,8 +4362,8 @@
     "confirmationLabel": "Artesanos en madera y materiales similares; cesteros, bruceros y trabajadores afines",
     "occupationId": "occupation:cno11:7617",
     "preferredLabel": "Artesanos en madera y materiales similares; cesteros, bruceros y trabajadores afines",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -4373,8 +4373,8 @@
     "confirmationLabel": "Artesanos en tejidos, cueros y materiales similares, preparadores de fibra y tejedores con telares artesanos o de tejidos de punto y afines",
     "occupationId": "occupation:cno11:7618",
     "preferredLabel": "Artesanos en tejidos, cueros y materiales similares, preparadores de fibra y tejedores con telares artesanos o de tejidos de punto y afines",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -4384,8 +4384,8 @@
     "confirmationLabel": "Artesanos no clasificados bajo otros epígrafes",
     "occupationId": "occupation:cno11:7619",
     "preferredLabel": "Artesanos no clasificados bajo otros epígrafes",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -4395,8 +4395,8 @@
     "confirmationLabel": "Trabajadores de procesos de preimpresión",
     "occupationId": "occupation:cno11:7621",
     "preferredLabel": "Trabajadores de procesos de preimpresión",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -4406,8 +4406,8 @@
     "confirmationLabel": "Trabajadores de procesos de impresión",
     "occupationId": "occupation:cno11:7622",
     "preferredLabel": "Trabajadores de procesos de impresión",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -4417,8 +4417,8 @@
     "confirmationLabel": "Trabajadores de procesos de encuadernación",
     "occupationId": "occupation:cno11:7623",
     "preferredLabel": "Trabajadores de procesos de encuadernación",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -4428,8 +4428,8 @@
     "confirmationLabel": "Matarifes y trabajadores de las industrias cárnicas",
     "occupationId": "occupation:cno11:7701",
     "preferredLabel": "Matarifes y trabajadores de las industrias cárnicas",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -4439,8 +4439,8 @@
     "confirmationLabel": "Trabajadores de las industrias del pescado",
     "occupationId": "occupation:cno11:7702",
     "preferredLabel": "Trabajadores de las industrias del pescado",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -4450,8 +4450,8 @@
     "confirmationLabel": "Panaderos, pasteleros y confiteros",
     "occupationId": "occupation:cno11:7703",
     "preferredLabel": "Panaderos, pasteleros y confiteros",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -4461,8 +4461,8 @@
     "confirmationLabel": "Trabajadores del tratamiento de la leche y elaboración de productos lácteos (incluidos helados)",
     "occupationId": "occupation:cno11:7704",
     "preferredLabel": "Trabajadores del tratamiento de la leche y elaboración de productos lácteos (incluidos helados)",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -4472,8 +4472,8 @@
     "confirmationLabel": "Trabajadores conserveros de frutas y hortalizas y trabajadores de la elaboración de bebidas no alcohólicas",
     "occupationId": "occupation:cno11:7705",
     "preferredLabel": "Trabajadores conserveros de frutas y hortalizas y trabajadores de la elaboración de bebidas no alcohólicas",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -4483,8 +4483,8 @@
     "confirmationLabel": "Trabajadores de la elaboración de bebidas alcohólicas distintas del vino",
     "occupationId": "occupation:cno11:7706",
     "preferredLabel": "Trabajadores de la elaboración de bebidas alcohólicas distintas del vino",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -4494,8 +4494,8 @@
     "confirmationLabel": "Trabajadores de la elaboración del vino",
     "occupationId": "occupation:cno11:7707",
     "preferredLabel": "Trabajadores de la elaboración del vino",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -4505,8 +4505,8 @@
     "confirmationLabel": "Preparadores y elaboradores del tabaco y sus productos",
     "occupationId": "occupation:cno11:7708",
     "preferredLabel": "Preparadores y elaboradores del tabaco y sus productos",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -4516,8 +4516,8 @@
     "confirmationLabel": "Catadores y clasificadores de alimentos y bebidas",
     "occupationId": "occupation:cno11:7709",
     "preferredLabel": "Catadores y clasificadores de alimentos y bebidas",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -4527,8 +4527,8 @@
     "confirmationLabel": "Trabajadores del tratamiento de la madera",
     "occupationId": "occupation:cno11:7811",
     "preferredLabel": "Trabajadores del tratamiento de la madera",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -4538,8 +4538,8 @@
     "confirmationLabel": "Ajustadores y operadores de máquinas para trabajar la madera",
     "occupationId": "occupation:cno11:7812",
     "preferredLabel": "Ajustadores y operadores de máquinas para trabajar la madera",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -4549,8 +4549,8 @@
     "confirmationLabel": "Ebanistas y trabajadores afines",
     "occupationId": "occupation:cno11:7820",
     "preferredLabel": "Ebanistas y trabajadores afines",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -4560,8 +4560,8 @@
     "confirmationLabel": "Sastres, modistos, peleteros y sombrereros",
     "occupationId": "occupation:cno11:7831",
     "preferredLabel": "Sastres, modistos, peleteros y sombrereros",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -4571,8 +4571,8 @@
     "confirmationLabel": "Patronistas para productos en textil y piel",
     "occupationId": "occupation:cno11:7832",
     "preferredLabel": "Patronistas para productos en textil y piel",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -4582,8 +4582,8 @@
     "confirmationLabel": "Cortadores de tejidos, cuero, piel y otros materiales",
     "occupationId": "occupation:cno11:7833",
     "preferredLabel": "Cortadores de tejidos, cuero, piel y otros materiales",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -4593,8 +4593,8 @@
     "confirmationLabel": "Costureros a mano, bordadores y afines",
     "occupationId": "occupation:cno11:7834",
     "preferredLabel": "Costureros a mano, bordadores y afines",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -4604,8 +4604,8 @@
     "confirmationLabel": "Tapiceros, colchoneros y afines",
     "occupationId": "occupation:cno11:7835",
     "preferredLabel": "Tapiceros, colchoneros y afines",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -4615,8 +4615,8 @@
     "confirmationLabel": "Curtidores y preparadores de pieles",
     "occupationId": "occupation:cno11:7836",
     "preferredLabel": "Curtidores y preparadores de pieles",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -4626,8 +4626,8 @@
     "confirmationLabel": "Zapateros y afines",
     "occupationId": "occupation:cno11:7837",
     "preferredLabel": "Zapateros y afines",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -4637,8 +4637,8 @@
     "confirmationLabel": "Buceadores",
     "occupationId": "occupation:cno11:7891",
     "preferredLabel": "Buceadores",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -4648,8 +4648,8 @@
     "confirmationLabel": "Pegadores",
     "occupationId": "occupation:cno11:7892",
     "preferredLabel": "Pegadores",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -4659,8 +4659,8 @@
     "confirmationLabel": "Clasificadores y probadores de productos (excepto alimentos, bebidas y tabaco)",
     "occupationId": "occupation:cno11:7893",
     "preferredLabel": "Clasificadores y probadores de productos (excepto alimentos, bebidas y tabaco)",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -4670,8 +4670,8 @@
     "confirmationLabel": "Fumigadores y otros controladores de plagas y malas hierbas",
     "occupationId": "occupation:cno11:7894",
     "preferredLabel": "Fumigadores y otros controladores de plagas y malas hierbas",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -4681,8 +4681,8 @@
     "confirmationLabel": "Oficiales, operarios y artesanos de otros oficios no clasificados bajo otros epígrafes",
     "occupationId": "occupation:cno11:7899",
     "preferredLabel": "Oficiales, operarios y artesanos de otros oficios no clasificados bajo otros epígrafes",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -4692,8 +4692,8 @@
     "confirmationLabel": "Mineros y otros operadores en instalaciones mineras",
     "occupationId": "occupation:cno11:8111",
     "preferredLabel": "Mineros y otros operadores en instalaciones mineras",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -4703,8 +4703,8 @@
     "confirmationLabel": "Operadores en instalaciones para la preparación de minerales y rocas",
     "occupationId": "occupation:cno11:8112",
     "preferredLabel": "Operadores en instalaciones para la preparación de minerales y rocas",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -4714,8 +4714,8 @@
     "confirmationLabel": "Sondistas y trabajadores afines",
     "occupationId": "occupation:cno11:8113",
     "preferredLabel": "Sondistas y trabajadores afines",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -4725,8 +4725,8 @@
     "confirmationLabel": "Operadores de maquinaria para fabricar productos derivados de minerales no metálicos",
     "occupationId": "occupation:cno11:8114",
     "preferredLabel": "Operadores de maquinaria para fabricar productos derivados de minerales no metálicos",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -4736,8 +4736,8 @@
     "confirmationLabel": "Operadores en instalaciones para la obtención y transformación de metales",
     "occupationId": "occupation:cno11:8121",
     "preferredLabel": "Operadores en instalaciones para la obtención y transformación de metales",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -4747,8 +4747,8 @@
     "confirmationLabel": "Operadores de máquinas pulidoras, galvanizadoras y recubridoras de metales",
     "occupationId": "occupation:cno11:8122",
     "preferredLabel": "Operadores de máquinas pulidoras, galvanizadoras y recubridoras de metales",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -4758,8 +4758,8 @@
     "confirmationLabel": "Operadores en plantas industriales químicas",
     "occupationId": "occupation:cno11:8131",
     "preferredLabel": "Operadores en plantas industriales químicas",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -4769,8 +4769,8 @@
     "confirmationLabel": "Operadores de máquinas para fabricar productos farmacéuticos, cosméticos y afines",
     "occupationId": "occupation:cno11:8132",
     "preferredLabel": "Operadores de máquinas para fabricar productos farmacéuticos, cosméticos y afines",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -4780,8 +4780,8 @@
     "confirmationLabel": "Operadores de laboratorios fotográficos y afines",
     "occupationId": "occupation:cno11:8133",
     "preferredLabel": "Operadores de laboratorios fotográficos y afines",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -4791,8 +4791,8 @@
     "confirmationLabel": "Operadores de máquinas para fabricar productos de caucho y derivados de resinas naturales",
     "occupationId": "occupation:cno11:8141",
     "preferredLabel": "Operadores de máquinas para fabricar productos de caucho y derivados de resinas naturales",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -4802,8 +4802,8 @@
     "confirmationLabel": "Operadores de máquinas para fabricar productos de material plástico",
     "occupationId": "occupation:cno11:8142",
     "preferredLabel": "Operadores de máquinas para fabricar productos de material plástico",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -4813,8 +4813,8 @@
     "confirmationLabel": "Operadores de máquinas para fabricar productos de papel y cartón",
     "occupationId": "occupation:cno11:8143",
     "preferredLabel": "Operadores de máquinas para fabricar productos de papel y cartón",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -4824,8 +4824,8 @@
     "confirmationLabel": "Operadores de serrerías, de máquinas de fabricación de tableros y de instalaciones afines para el tratamiento de la madera y el corcho",
     "occupationId": "occupation:cno11:8144",
     "preferredLabel": "Operadores de serrerías, de máquinas de fabricación de tableros y de instalaciones afines para el tratamiento de la madera y el corcho",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -4835,8 +4835,8 @@
     "confirmationLabel": "Operadores en instalaciones para la preparación de pasta de papel y fabricación de papel",
     "occupationId": "occupation:cno11:8145",
     "preferredLabel": "Operadores en instalaciones para la preparación de pasta de papel y fabricación de papel",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -4846,8 +4846,8 @@
     "confirmationLabel": "Operadores de máquinas para preparar fibras, hilar y devanar",
     "occupationId": "occupation:cno11:8151",
     "preferredLabel": "Operadores de máquinas para preparar fibras, hilar y devanar",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -4857,8 +4857,8 @@
     "confirmationLabel": "Operadores de telares y otras máquinas tejedoras",
     "occupationId": "occupation:cno11:8152",
     "preferredLabel": "Operadores de telares y otras máquinas tejedoras",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -4868,8 +4868,8 @@
     "confirmationLabel": "Operadores de máquinas de coser y bordar",
     "occupationId": "occupation:cno11:8153",
     "preferredLabel": "Operadores de máquinas de coser y bordar",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -4879,8 +4879,8 @@
     "confirmationLabel": "Operadores de máquinas de blanquear, teñir, estampar y acabar textiles",
     "occupationId": "occupation:cno11:8154",
     "preferredLabel": "Operadores de máquinas de blanquear, teñir, estampar y acabar textiles",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -4890,8 +4890,8 @@
     "confirmationLabel": "Operadores de máquinas para tratar pieles y cuero",
     "occupationId": "occupation:cno11:8155",
     "preferredLabel": "Operadores de máquinas para tratar pieles y cuero",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -4901,8 +4901,8 @@
     "confirmationLabel": "Operadores de máquinas para la fabricación del calzado, marroquinería y guantería de piel",
     "occupationId": "occupation:cno11:8156",
     "preferredLabel": "Operadores de máquinas para la fabricación del calzado, marroquinería y guantería de piel",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -4912,8 +4912,8 @@
     "confirmationLabel": "Operadores de máquinas para fabricar productos textiles no clasificados bajo otros epígrafes",
     "occupationId": "occupation:cno11:8159",
     "preferredLabel": "Operadores de máquinas para fabricar productos textiles no clasificados bajo otros epígrafes",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -4923,8 +4923,8 @@
     "confirmationLabel": "Operadores de máquinas para elaborar productos alimenticios, bebidas y tabaco",
     "occupationId": "occupation:cno11:8160",
     "preferredLabel": "Operadores de máquinas para elaborar productos alimenticios, bebidas y tabaco",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -4934,8 +4934,8 @@
     "confirmationLabel": "Operadores de máquinas de lavandería y tintorería",
     "occupationId": "occupation:cno11:8170",
     "preferredLabel": "Operadores de máquinas de lavandería y tintorería",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -4945,8 +4945,8 @@
     "confirmationLabel": "Operadores de hornos e instalaciones de vidriería y cerámica",
     "occupationId": "occupation:cno11:8191",
     "preferredLabel": "Operadores de hornos e instalaciones de vidriería y cerámica",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -4956,8 +4956,8 @@
     "confirmationLabel": "Operadores de calderas y máquinas de vapor",
     "occupationId": "occupation:cno11:8192",
     "preferredLabel": "Operadores de calderas y máquinas de vapor",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -4967,8 +4967,8 @@
     "confirmationLabel": "Operadores de máquinas de embalaje, embotellamiento y etiquetado",
     "occupationId": "occupation:cno11:8193",
     "preferredLabel": "Operadores de máquinas de embalaje, embotellamiento y etiquetado",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -4978,8 +4978,8 @@
     "confirmationLabel": "Operadores de instalaciones y maquinaria fijas no clasificados bajo otros epígrafes",
     "occupationId": "occupation:cno11:8199",
     "preferredLabel": "Operadores de instalaciones y maquinaria fijas no clasificados bajo otros epígrafes",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -4989,8 +4989,8 @@
     "confirmationLabel": "Ensambladores de maquinaria mecánica",
     "occupationId": "occupation:cno11:8201",
     "preferredLabel": "Ensambladores de maquinaria mecánica",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -5000,8 +5000,8 @@
     "confirmationLabel": "Ensambladores de equipos eléctricos y electrónicos",
     "occupationId": "occupation:cno11:8202",
     "preferredLabel": "Ensambladores de equipos eléctricos y electrónicos",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -5011,8 +5011,8 @@
     "confirmationLabel": "Montadores y ensambladores no clasificados en otros epígrafes",
     "occupationId": "occupation:cno11:8209",
     "preferredLabel": "Montadores y ensambladores no clasificados en otros epígrafes",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -5022,8 +5022,8 @@
     "confirmationLabel": "Maquinistas de locomotoras",
     "occupationId": "occupation:cno11:8311",
     "preferredLabel": "Maquinistas de locomotoras",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -5033,8 +5033,8 @@
     "confirmationLabel": "Agentes de maniobras ferroviarias",
     "occupationId": "occupation:cno11:8312",
     "preferredLabel": "Agentes de maniobras ferroviarias",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -5044,8 +5044,8 @@
     "confirmationLabel": "Operadores de maquinaria agrícola móvil",
     "occupationId": "occupation:cno11:8321",
     "preferredLabel": "Operadores de maquinaria agrícola móvil",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -5055,8 +5055,8 @@
     "confirmationLabel": "Operadores de maquinaria forestal móvil",
     "occupationId": "occupation:cno11:8322",
     "preferredLabel": "Operadores de maquinaria forestal móvil",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -5066,8 +5066,8 @@
     "confirmationLabel": "Operadores de maquinaria de movimientos de tierras y equipos similares",
     "occupationId": "occupation:cno11:8331",
     "preferredLabel": "Operadores de maquinaria de movimientos de tierras y equipos similares",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -5077,8 +5077,8 @@
     "confirmationLabel": "Operadores de grúas, montacargas y de maquinaria similar de movimiento de materiales",
     "occupationId": "occupation:cno11:8332",
     "preferredLabel": "Operadores de grúas, montacargas y de maquinaria similar de movimiento de materiales",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -5088,8 +5088,8 @@
     "confirmationLabel": "Operadores de carretillas elevadoras",
     "occupationId": "occupation:cno11:8333",
     "preferredLabel": "Operadores de carretillas elevadoras",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -5099,8 +5099,8 @@
     "confirmationLabel": "Marineros de puente, marineros de máquinas y afines",
     "occupationId": "occupation:cno11:8340",
     "preferredLabel": "Marineros de puente, marineros de máquinas y afines",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -5110,8 +5110,8 @@
     "confirmationLabel": "Conductores propietarios de automóviles, taxis y furgonetas",
     "occupationId": "occupation:cno11:8411",
     "preferredLabel": "Conductores propietarios de automóviles, taxis y furgonetas",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -5121,8 +5121,8 @@
     "confirmationLabel": "Conductores asalariados de automóviles, taxis y furgonetas",
     "occupationId": "occupation:cno11:8412",
     "preferredLabel": "Conductores asalariados de automóviles, taxis y furgonetas",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -5132,8 +5132,8 @@
     "confirmationLabel": "Conductores de autobuses y tranvías",
     "occupationId": "occupation:cno11:8420",
     "preferredLabel": "Conductores de autobuses y tranvías",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -5143,8 +5143,8 @@
     "confirmationLabel": "Conductores propietarios de camiones",
     "occupationId": "occupation:cno11:8431",
     "preferredLabel": "Conductores propietarios de camiones",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -5154,8 +5154,8 @@
     "confirmationLabel": "Conductores asalariados de camiones",
     "occupationId": "occupation:cno11:8432",
     "preferredLabel": "Conductores asalariados de camiones",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -5165,8 +5165,8 @@
     "confirmationLabel": "Conductores de motocicletas y ciclomotores",
     "occupationId": "occupation:cno11:8440",
     "preferredLabel": "Conductores de motocicletas y ciclomotores",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -5176,8 +5176,8 @@
     "confirmationLabel": "Empleados domésticos",
     "occupationId": "occupation:cno11:9100",
     "preferredLabel": "Empleados domésticos",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -5187,8 +5187,8 @@
     "confirmationLabel": "Personal de limpieza de oficinas, hoteles y otros establecimientos similares",
     "occupationId": "occupation:cno11:9210",
     "preferredLabel": "Personal de limpieza de oficinas, hoteles y otros establecimientos similares",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -5198,8 +5198,8 @@
     "confirmationLabel": "Limpiadores en seco a mano y afines",
     "occupationId": "occupation:cno11:9221",
     "preferredLabel": "Limpiadores en seco a mano y afines",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -5209,8 +5209,8 @@
     "confirmationLabel": "Limpiadores de vehículos",
     "occupationId": "occupation:cno11:9222",
     "preferredLabel": "Limpiadores de vehículos",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -5220,8 +5220,8 @@
     "confirmationLabel": "Limpiadores de ventanas",
     "occupationId": "occupation:cno11:9223",
     "preferredLabel": "Limpiadores de ventanas",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -5231,8 +5231,8 @@
     "confirmationLabel": "Otro personal de limpieza",
     "occupationId": "occupation:cno11:9229",
     "preferredLabel": "Otro personal de limpieza",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -5242,8 +5242,8 @@
     "confirmationLabel": "Ayuda de cocina",
     "occupationId": "occupation:cno11:9310",
     "preferredLabel": "Ayudantes de cocina",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -5253,8 +5253,8 @@
     "confirmationLabel": "Preparadores de comidas rápidas",
     "occupationId": "occupation:cno11:9320",
     "preferredLabel": "Preparadores de comidas rápidas",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -5264,8 +5264,8 @@
     "confirmationLabel": "Vendedores callejeros",
     "occupationId": "occupation:cno11:9410",
     "preferredLabel": "Vendedores callejeros",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -5275,8 +5275,8 @@
     "confirmationLabel": "Repartidores de publicidad, limpiabotas y otros trabajadores de oficios callejeros",
     "occupationId": "occupation:cno11:9420",
     "preferredLabel": "Repartidores de publicidad, limpiabotas y otros trabajadores de oficios callejeros",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -5286,8 +5286,8 @@
     "confirmationLabel": "Ordenanzas",
     "occupationId": "occupation:cno11:9431",
     "preferredLabel": "Ordenanzas",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -5297,8 +5297,8 @@
     "confirmationLabel": "Mozos de equipaje y afines",
     "occupationId": "occupation:cno11:9432",
     "preferredLabel": "Mozos de equipaje y afines",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -5308,8 +5308,8 @@
     "confirmationLabel": "Repartidores, recadistas y mensajeros a pie",
     "occupationId": "occupation:cno11:9433",
     "preferredLabel": "Repartidores, recadistas y mensajeros a pie",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -5319,8 +5319,8 @@
     "confirmationLabel": "Lectores de contadores y recaudadores de máquinas recreativas y expendedoras",
     "occupationId": "occupation:cno11:9434",
     "preferredLabel": "Lectores de contadores y recaudadores de máquinas recreativas y expendedoras",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -5330,8 +5330,8 @@
     "confirmationLabel": "Recogedores de residuos",
     "occupationId": "occupation:cno11:9441",
     "preferredLabel": "Recogedores de residuos",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -5341,8 +5341,8 @@
     "confirmationLabel": "Clasificadores de desechos, operarios de punto limpio y recogedores de chatarra",
     "occupationId": "occupation:cno11:9442",
     "preferredLabel": "Clasificadores de desechos, operarios de punto limpio y recogedores de chatarra",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -5352,8 +5352,8 @@
     "confirmationLabel": "Barrenderos y afines",
     "occupationId": "occupation:cno11:9443",
     "preferredLabel": "Barrenderos y afines",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -5363,8 +5363,8 @@
     "confirmationLabel": "Otras ocupaciones elementales",
     "occupationId": "occupation:cno11:9490",
     "preferredLabel": "Otras ocupaciones elementales",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -5374,8 +5374,8 @@
     "confirmationLabel": "Peones agrícolas (excepto en huertas, invernaderos, viveros y jardines)",
     "occupationId": "occupation:cno11:9511",
     "preferredLabel": "Peones agrícolas (excepto en huertas, invernaderos, viveros y jardines)",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -5385,8 +5385,8 @@
     "confirmationLabel": "Peones agrícolas en huertas, invernaderos, viveros y jardines",
     "occupationId": "occupation:cno11:9512",
     "preferredLabel": "Peones agrícolas en huertas, invernaderos, viveros y jardines",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -5396,8 +5396,8 @@
     "confirmationLabel": "Peones ganaderos",
     "occupationId": "occupation:cno11:9520",
     "preferredLabel": "Peones ganaderos",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -5407,8 +5407,8 @@
     "confirmationLabel": "Peones agropecuarios",
     "occupationId": "occupation:cno11:9530",
     "preferredLabel": "Peones agropecuarios",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -5418,8 +5418,8 @@
     "confirmationLabel": "Peones de la pesca",
     "occupationId": "occupation:cno11:9541",
     "preferredLabel": "Peones de la pesca",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -5429,8 +5429,8 @@
     "confirmationLabel": "Peones de la acuicultura",
     "occupationId": "occupation:cno11:9542",
     "preferredLabel": "Peones de la acuicultura",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -5440,8 +5440,8 @@
     "confirmationLabel": "Peones forestales y de la caza",
     "occupationId": "occupation:cno11:9543",
     "preferredLabel": "Peones forestales y de la caza",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -5451,8 +5451,8 @@
     "confirmationLabel": "Peones de obras públicas",
     "occupationId": "occupation:cno11:9601",
     "preferredLabel": "Peones de obras públicas",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -5462,8 +5462,8 @@
     "confirmationLabel": "Peones de la construcción de edificios",
     "occupationId": "occupation:cno11:9602",
     "preferredLabel": "Peones de la construcción de edificios",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -5473,8 +5473,8 @@
     "confirmationLabel": "Peones de la minería, canteras y otras industrias extractivas",
     "occupationId": "occupation:cno11:9603",
     "preferredLabel": "Peones de la minería, canteras y otras industrias extractivas",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -5484,8 +5484,8 @@
     "confirmationLabel": "Peones de las industrias manufactureras",
     "occupationId": "occupation:cno11:9700",
     "preferredLabel": "Peones de las industrias manufactureras",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -5495,8 +5495,8 @@
     "confirmationLabel": "Peones del transporte de mercancías y descargadores",
     "occupationId": "occupation:cno11:9811",
     "preferredLabel": "Peones del transporte de mercancías y descargadores",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -5506,8 +5506,8 @@
     "confirmationLabel": "Conductores de vehículos de tracción animal para el transporte de personas y similares",
     "occupationId": "occupation:cno11:9812",
     "preferredLabel": "Conductores de vehículos de tracción animal para el transporte de personas y similares",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   },
   {
@@ -5517,8 +5517,8 @@
     "confirmationLabel": "Reponedores",
     "occupationId": "occupation:cno11:9820",
     "preferredLabel": "Reponedores",
-    "reviewedAt": "2026-08-11",
     "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
   }
 ]

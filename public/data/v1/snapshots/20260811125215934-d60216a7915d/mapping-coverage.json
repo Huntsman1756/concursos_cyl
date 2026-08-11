@@ -247,9 +247,9 @@
     "uncoveredPrograms": 1
   },
   {
-    "approvedMappings": 0,
-    "coverageNote": "Aún no hay una relación ocupacional aprobada; esto no significa que el ciclo no tenga salidas profesionales.",
-    "coverageStatus": "uncovered",
+    "approvedMappings": 2,
+    "coverageNote": "Incluye relaciones ocupacionales revisadas y citadas.",
+    "coverageStatus": "reviewed",
     "draftMappings": 0,
     "familyCode": "AGA",
     "familyName": "Agraria",
@@ -257,7 +257,7 @@
     "programTitle": "Jardinería y Floristería",
     "rejectedMappings": 0,
     "scope": "program",
-    "uncoveredPrograms": 1
+    "uncoveredPrograms": 0
   },
   {
     "approvedMappings": 0,
@@ -2453,7 +2453,7 @@
     "uncoveredPrograms": 6
   },
   {
-    "approvedMappings": 0,
+    "approvedMappings": 2,
     "coverageNote": "La cobertura mide relaciones revisadas del catálogo, no la existencia de salidas profesionales.",
     "draftMappings": 0,
     "familyCode": "AGA",
@@ -2461,7 +2461,7 @@
     "programCount": 10,
     "rejectedMappings": 0,
     "scope": "family",
-    "uncoveredPrograms": 10
+    "uncoveredPrograms": 9
   },
   {
     "approvedMappings": 0,

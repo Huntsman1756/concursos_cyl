@@ -36,12 +36,12 @@ describe("renderFpOfficialAliasPassReport", () => {
     expect(report.indexOf("EOC01M")).toBeLessThan(report.indexOf("HOT01M"));
     expect(report.indexOf("HOT01M")).toBeLessThan(report.indexOf("SSC01M"));
     expect(report).toContain("Unión de ofertas nuevas: 0.");
-    expect(report).toContain("20260809185438334-65ce4d3c4e14");
+    expect(report).toContain("20260811125215934-d60216a7915d");
     expect(manifest.resourceSnapshots.programs.recordCount).toBe(187);
-    expect(manifest.resourceSnapshots.occupations.recordCount).toBe(13);
+    expect(manifest.resourceSnapshots.occupations.recordCount).toBe(14);
     expect(manifest.resourceSnapshots.occupationAliases.recordCount).toBe(21);
     expect(manifest.resourceSnapshots.trainingOccupationLinks.recordCount).toBe(
-      14,
+      16,
     );
     expect(report).toContain("no estiman el empleo total");
     expect(report).toContain(

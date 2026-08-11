@@ -336,7 +336,7 @@ function completedResults() {
       status: "verified",
       snapshotId: context.snapshotId,
       countingMethod: "accepted_relationship_union",
-      newlyReachedOfferCount: 43,
+      newlyReachedOfferCount: 40,
     },
   };
   return candidate;

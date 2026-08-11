@@ -1,6 +1,26 @@
 [
   {
     "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:5220",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
+    "sourceQuote": "Vendedor de floristería.",
+    "sourceUrl": "https://www.boe.es/eli/es/rd/1129/2010",
+    "trainingProgramKey": "AGA03M"
+  },
+  {
+    "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:6120",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
+    "sourceQuote": "Trabajador de huertas, viveros y jardines.",
+    "sourceUrl": "https://www.boe.es/eli/es/rd/1129/2010",
+    "trainingProgramKey": "AGA03M"
+  },
+  {
+    "mappingVersion": "1.0.0",
     "occupationId": "occupation:cno11:5210",
     "relationshipType": "official_output",
     "reviewStatus": "approved",

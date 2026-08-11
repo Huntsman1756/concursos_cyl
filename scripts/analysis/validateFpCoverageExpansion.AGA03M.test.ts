@@ -67,14 +67,18 @@ async function loadAga03mSnapshotId(): Promise<string> {
 }
 
 describe("AGA03M expansion slot", () => {
-  it("proves the frozen public baseline has no approved AGA03M relation", async () => {
+  it("publishes exactly the two reviewed AGA03M relations", async () => {
     const manifest = await readJson<{
       resourceSnapshots: {
         trainingOccupationLinks: { resourcePath: string };
       };
     }>(resolve(rootDirectory, "public/data/v1/manifest.json"));
     const baselineLinks = await readJson<
-      { trainingProgramKey: string; reviewStatus: string }[]
+      {
+        trainingProgramKey: string;
+        occupationId: string;
+        reviewStatus: string;
+      }[]
     >(
       resolve(
         rootDirectory,
@@ -85,15 +89,17 @@ describe("AGA03M expansion slot", () => {
       ),
     );
     expect(
-      baselineLinks.filter(
-        (link) =>
-          link.trainingProgramKey === "AGA03M" &&
-          link.reviewStatus === "approved",
-      ),
-    ).toEqual([]);
+      baselineLinks
+        .filter(
+          (link) =>
+            link.trainingProgramKey === "AGA03M" &&
+            link.reviewStatus === "approved",
+        )
+        .map((link) => link.occupationId),
+    ).toEqual(["occupation:cno11:5220", "occupation:cno11:6120"]);
   });
 
-  it("validates the deferred attempt without publishing evidence or deltas", async () => {
+  it("validates the completed attempt against the published snapshot", async () => {
     const attempt = await readJson<FpExpansionAttempt>(
       resolve(rootDirectory, "analysis/fp_coverage_expansion/AGA03M.json"),
     );
@@ -104,7 +110,7 @@ describe("AGA03M expansion slot", () => {
       ...ranking.primaryCandidates,
       ...ranking.reserveCandidates,
     ].find((entry) => entry.programKey === "AGA03M") as FpExpansionCandidate;
-    expect(attempt.state).toBe("deferred");
+    expect(attempt.state).toBe("completed");
     expect(attempt.officialOutputInventory?.labels).toEqual(
       AGA03M_OUTPUT_LABELS,
     );
@@ -116,8 +122,16 @@ describe("AGA03M expansion slot", () => {
     expect(attempt.officialOutputReviews).toHaveLength(
       AGA03M_OUTPUT_LABELS.length,
     );
+    expect(attempt.seedReconciliations).toHaveLength(1);
+    expect(attempt.seedReconciliations?.[0]!.seedLabel).toBe("Jardinero");
+    expect(attempt.seedReconciliations?.[0]!.authoritativeOutputLabel).toBe(
+      "Jardinero, en general.",
+    );
     expect(attempt.publicParity).toEqual({
-      publishedRelationKeys: [],
+      publishedRelationKeys: [
+        "AGA03M|occupation:cno11:5220",
+        "AGA03M|occupation:cno11:6120",
+      ],
       rejectedRelationKeys: [
         "AGA03M|occupation:cno11:3142",
         "AGA03M|occupation:cno11:6110",
@@ -144,7 +158,10 @@ describe("AGA03M expansion slot", () => {
     };
     const publicRelationSet = {
       manifestAddressed: true as const,
-      relationKeys: [],
+      relationKeys: [
+        "AGA03M|occupation:cno11:5220",
+        "AGA03M|occupation:cno11:6120",
+      ],
       resourcePaths: ["/data/v1/manifest.json"],
     };
     expect(
@@ -157,7 +174,7 @@ describe("AGA03M expansion slot", () => {
       }),
     ).toMatchObject({
       programKey: "AGA03M",
-      state: "deferred",
+      state: "completed",
       acceptedRelations: [
         { occupationId: "occupation:cno11:5220" },
         { occupationId: "occupation:cno11:6120" },
@@ -173,6 +190,6 @@ describe("AGA03M expansion slot", () => {
         compute: async () => computed,
         publicRelationSet: async () => publicRelationSet,
       }),
-    ).resolves.toMatchObject({ state: "deferred" });
+    ).resolves.toMatchObject({ state: "completed" });
   });
 });

@@ -3,8 +3,8 @@
   "generatedAt": "2026-08-09T17:34:00Z",
   "sourceCutoffAt": "2026-08-09T17:34:00Z",
   "counts": {
-    "completed": 1,
-    "deferred": 7,
+    "completed": 2,
+    "deferred": 6,
     "discarded": 0,
     "terminal": 8,
     "primaryAttempted": 7,
@@ -21,12 +21,15 @@
       "qualification:SAN21",
       "qualification:SSC01M"
     ],
-    "newlyCompletedCanonicalBases": ["qualification:COM02M"],
-    "terminalDistinctQualificationTotal": 6,
+    "newlyCompletedCanonicalBases": [
+      "qualification:AGA03M",
+      "qualification:COM02M"
+    ],
+    "terminalDistinctQualificationTotal": 7,
     "targetDistinctQualifications": 12,
-    "remainingGap": 6,
+    "remainingGap": 5,
     "modalityDoubleCount": false,
-    "belowTargetReason": "Only COM02M completed; seven terminal attempts were deferred, six reserves remain unattempted, and completion stopped before evidence supported 12 distinct qualifications.",
+    "belowTargetReason": "Evidence-backed completion covers AGA03M and COM02M; 6 terminal attempts were deferred, 6 reserves remain unattempted, and no additional programme met the evidence threshold needed for 12 distinct qualifications.",
     "publicationStatus": "published_task_a2_12"
   },
   "offerDeltas": {
@@ -97,7 +100,7 @@
       "lane": "primary",
       "rank": 2,
       "attempted": true,
-      "state": "deferred",
+      "state": "completed",
       "phaseMinutes": {
         "research": 8,
         "implementation": 0,
@@ -118,13 +121,16 @@
         "AGA03M|occupation:cno11:6110"
       ],
       "publicParity": {
-        "publishedRelationKeys": [],
+        "publishedRelationKeys": [
+          "AGA03M|occupation:cno11:5220",
+          "AGA03M|occupation:cno11:6120"
+        ],
         "rejectedRelationKeys": [
           "AGA03M|occupation:cno11:3142",
           "AGA03M|occupation:cno11:6110"
         ]
       },
-      "limitation": "Deferred: the authoritative inventory contains Jardinero, en general. while the frozen ranking seed is Jardinero. Evidence for CNO 6120 and the explicit CNO 5220 seller boundary is retained, but no occupation, link, alias, offer delta or public snapshot change is published until the frozen seed is reconciled."
+      "limitation": "The reviewed boundary accepts CNO 6120 (trabajadores cualificados en huertas, viveros y jardines) and CNO 5220 (vendedores en tiendas y almacenes) as the occupation set for Jardinería y Floristería. Exclusions: CNO 6110 (injertador) and CNO 3142 (florista) are rejected due to unestablished exact boundaries."
     },
     {
       "programKey": "TMV02M",

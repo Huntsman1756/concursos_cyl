@@ -89,6 +89,17 @@
   },
   {
     "catalogVersion": "1.0.0",
+    "classificationCode": "6120",
+    "classificationSystem": "CNO-11",
+    "confirmationLabel": "Trabajos cualificados en huertas, jardines y viveros",
+    "occupationId": "occupation:cno11:6120",
+    "preferredLabel": "Trabajadores cualificados en huertas, invernaderos, viveros y jardines",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf"
+  },
+  {
+    "catalogVersion": "1.0.0",
     "classificationCode": "7111",
     "classificationSystem": "CNO-11",
     "confirmationLabel": "Encofrados, ferralla y hormigón",

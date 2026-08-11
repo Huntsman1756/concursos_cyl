@@ -749,6 +749,16 @@ export async function buildFpCoverageExpansionReport(
     .map((candidate) =>
       canonicalizeFpQualificationIdentity(candidate.baseQualificationIdentity),
     );
+  const completedProgramKeys = attempted
+    .filter((candidate) => candidate.state === "completed")
+    .map((candidate) => candidate.programKey)
+    .toSorted();
+  const deferredCount = attempted.filter(
+    (candidate) => candidate.state === "deferred",
+  ).length;
+  const reserveUnattemptedCount = candidates.filter(
+    (candidate) => candidate.lane === "reserve" && !candidate.attempted,
+  ).length;
   const cutoff = attempted
     .map((candidate) => attempts.get(candidate.programKey)!.completedAt!)
     .toSorted()
@@ -795,8 +805,9 @@ export async function buildFpCoverageExpansionReport(
         baselineReviewedQualifications.length -
         new Set(completedBases).size,
       modalityDoubleCount: false as const,
-      belowTargetReason:
-        "Only COM02M completed; seven terminal attempts were deferred, six reserves remain unattempted, and completion stopped before evidence supported 12 distinct qualifications.",
+      belowTargetReason: `Evidence-backed completion covers ${completedProgramKeys.join(
+        " and ",
+      )}; ${deferredCount} terminal attempts were deferred, ${reserveUnattemptedCount} reserves remain unattempted, and no additional programme met the evidence threshold needed for 12 distinct qualifications.`,
       publicationStatus: candidates.some(
         (candidate) =>
           candidate.state === "completed" &&
@@ -835,6 +846,14 @@ export function renderFpCoverageExpansionReport(
   report: FpCoverageExpansionReport,
 ): string {
   const parsed = FpCoverageExpansionReportSchema.parse(report);
+  const publishedCompletedPrograms = parsed.candidates
+    .filter(
+      (candidate) =>
+        candidate.state === "completed" &&
+        candidate.publicParity.publishedRelationKeys.length > 0,
+    )
+    .map((candidate) => candidate.programKey)
+    .toSorted();
   const tableRows = parsed.candidates.map((candidate) => [
     candidate.lane,
     String(candidate.rank),
@@ -882,7 +901,7 @@ Source cutoff: \`${parsed.sourceCutoffAt}\`
 - Target: ${parsed.coverage.targetDistinctQualifications}; remaining gap: ${parsed.coverage.remainingGap}.
 - Publication status: ${
     parsed.coverage.publicationStatus === "published_task_a2_12"
-      ? "COM02M is published in the current immutable snapshot; deferred attempts remain unpublished."
+      ? `${publishedCompletedPrograms.join(" and ")} are published in the current immutable snapshot; deferred attempts remain unpublished.`
       : "terminal evidence is supported for completed attempts; public snapshot publication remains pending Task A2.12."
   }
 - Below-target reason: ${parsed.coverage.belowTargetReason}

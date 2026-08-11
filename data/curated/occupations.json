@@ -318,5 +318,16 @@
     "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
     "reviewedAt": "2026-08-08",
     "catalogVersion": "1.0.0"
+  },
+  {
+    "occupationId": "occupation:cno11:6120",
+    "preferredLabel": "Trabajadores cualificados en huertas, invernaderos, viveros y jardines",
+    "confirmationLabel": "Trabajos cualificados en huertas, jardines y viveros",
+    "classificationSystem": "CNO-11",
+    "classificationCode": "6120",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+    "reviewedAt": "2026-08-11",
+    "catalogVersion": "1.0.0"
   }
 ]

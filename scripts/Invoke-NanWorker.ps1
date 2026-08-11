@@ -22,6 +22,12 @@ $AllowedPath = @(
         ForEach-Object { $_.Trim() } |
         Where-Object { -not [string]::IsNullOrWhiteSpace($_) }
 )
+$InputPath = @(
+    $InputPath |
+        ForEach-Object { $_ -split ',' } |
+        ForEach-Object { $_.Trim() } |
+        Where-Object { -not [string]::IsNullOrWhiteSpace($_) }
+)
 
 function Resolve-RepositoryPath {
     param([Parameter(Mandatory)][string]$Path)
