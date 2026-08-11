@@ -91,18 +91,35 @@ Ejecución con retry y fallback:
 ```powershell
 .\scripts\Invoke-NanWorker.ps1 -TaskType code `
   -Objective "Implementa x" `
+  -PlannedBy "frontier" `
+  -FrontierPlan "Diagnostico X, implemento Y en rutas acotadas" `
+  -AcceptanceCriteria @("1. Los tests pasan","2. No hay regression") `
   -AllowedPath "src/**" `
   -ValidationCommand "npm test" `
   -MaxRetries 3 `
   -FallbackModels "nan/mimo-v2.5,nan/deepseek-v4-flash"
 ```
 
+Cada campo es obligatorio y se valida en runtime (fail-closed):
+
+| Campo                | Descripción                                                                                                                                                                        | Ejemplo                                   |
+| -------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------- |
+| `PlannedBy`          | Debe ser exactamente `"frontier"` (minúsculas)                                                                                                                                     | `"frontier"`                              |
+| `FrontierPlan`       | Instrucciones del orquestador (cadena libre)                                                                                                                                       | `"Diagnostico X, implemento Y"`           |
+| `AcceptanceCriteria` | Criterios de aceptación como arreglo de strings `string[]`, un elemento por criterio (no un string con saltos de línea)                                                            | `@("1. Tests pasan","2. Sin regression")` |
+| `AllowedPath`        | Glob o lista glob que delimita escrituras                                                                                                                                          | `"src/**"`                                |
+| `ValidationCommand`  | Comando(s) que deben devolver 0. Si alguno falla, el intento se bloquea inmediatamente; se persiste en `validationExitCode` el **primer código no cero** encontrado, no el último. | `"npm test"`                              |
+
 Ejecución DryRun (sin coste, valida contrato sin llamar a opencode):
 
 ```powershell
 .\scripts\Invoke-NanWorker.ps1 -TaskType code `
   -Objective "DryRun verificación" `
+  -PlannedBy "frontier" `
+  -FrontierPlan "Verifico configuración" `
+  -AcceptanceCriteria @("Todo correcto") `
   -AllowedPath "src/**" `
+  -ValidationCommand "npm run lint" `
   -DryRun
 ```
 
@@ -181,12 +198,19 @@ Cada ejecución escribe un archivo JSON en `.agent-runs/<guid>.json` (incluso `D
     "total": 1500
   },
   "success": true,
-  "status": "success"
+  "status": "success",
+  "frontierContract": {
+    "plannedBy": "frontier",
+    "planHash": "abc123...",
+    "acceptanceCriteriaCount": 2,
+    "reviewRequired": true
+  }
 }
 ```
 
 - `.agent-runs/` está ignorado por `.gitignore` y por el watcher de opencode.
 - No existe limpieza automática de retención; el directorio se gestiona manualmente.
+- `validationExitCode` se persiste en cada intento antes de entrar a cualquier rama de fallo; nunca queda `null` tras ejecutar validación (mock o real). Si hay múltiples `ValidationCommand`, el valor registrado es el **primer código no cero** (el primero que falle); si todos pasan, se registra `0`.
 
 ## DryRun
 
@@ -208,23 +232,25 @@ consumir API NAN:
 
 ### Fases de prueba (TestMode)
 
-| Fase                 | Descripción                                                | Costo API |
-| -------------------- | ---------------------------------------------------------- | --------- |
-| **Contracts**        | code sin AllowedPath falla, bulletin con AllowedPath falla | Ninguno   |
-| **DryRun**           | Ejecución dryrun completa (escribe telemetría)             | Ninguno   |
-| **Retry-success**    | Primario falla 2 veces, éxito al 3er intento               | Ninguno   |
-| **Fallback-success** | Primario agotado, fallback tiene éxito                     | Ninguno   |
-| **Blocked**          | Primario + 1 fallback agotados → blocked                   | Ninguno   |
-| **Blocked-all**      | Todos los modelos agotados → blocked                       | Ninguno   |
-| **Tokens**           | Extracción y agregación de tokens desde JSONL              | Ninguno   |
-| **Nochange**         | 0 cambios sin `-AllowNoChanges` → rechazo                  | Ninguno   |
-| **Allowno**          | 0 cambios con `-AllowNoChanges` → aceptado                 | Ninguno   |
-| **Violation**        | Cambio fuera de `AllowedPath` → violación                  | Ninguno   |
-| **Validation**       | Validación falla → error                                   | Ninguno   |
-| **Bulletin**         | Bulletin solo usa gemma4, sin fallback                     | Ninguno   |
-| **Telemetry**        | Telemetría creada incluso en fallo, sin campos prohibidos  | Ninguno   |
-| **Fail-closed**      | Entradas MockPlan insuficientes → blocked                  | Ninguno   |
-| **Fallback-reject**  | Modelo no oficial en fallback se ignora                    | Ninguno   |
+| Fase                 | Descripción                                                                              | Costo API |
+| -------------------- | ---------------------------------------------------------------------------------------- | --------- |
+| **Contracts**        | code sin AllowedPath falla, bulletin con AllowedPath falla                               | Ninguno   |
+| **DryRun**           | Ejecución dryrun completa (escribe telemetría)                                           | Ninguno   |
+| **Retry-success**    | Primario falla 2 veces, éxito al 3er intento                                             | Ninguno   |
+| **Fallback-success** | Primario agotado, fallback tiene éxito                                                   | Ninguno   |
+| **Blocked**          | Primario + 1 fallback agotados → blocked                                                 | Ninguno   |
+| **Blocked-all**      | Todos los modelos agotados → blocked                                                     | Ninguno   |
+| **Tokens**           | Extracción y agregación de tokens desde JSONL                                            | Ninguno   |
+| **Nochange**         | 0 cambios sin `-AllowNoChanges` → rechazo                                                | Ninguno   |
+| **Allowno**          | 0 cambios con `-AllowNoChanges` → aceptado                                               | Ninguno   |
+| **Violation**        | Cambio fuera de `AllowedPath` → violación                                                | Ninguno   |
+| **Validation**       | Validación falla → error                                                                 | Ninguno   |
+| **Bulletin**         | Bulletin solo usa gemma4, sin fallback                                                   | Ninguno   |
+| **Bulletin-allows**  | Bulletin con `-AllowedPath` falla (solo lectura)                                         | Ninguno   |
+| **Telemetry**        | Telemetría creada incluso en fallo, sin campos prohibidos                                | Ninguno   |
+| **Fail-closed**      | Entradas MockPlan insuficientes → blocked                                                | Ninguno   |
+| **Fallback-reject**  | Modelo no oficial en fallback se ignora                                                  | Ninguno   |
+| **Validation-exit**  | validationExitCode en simulación: singular y lista (ej. `[1,0]`→bloquea, `[0,0]`→acepta) | Ninguno   |
 
 No existe fase `Live` implementada. Todas las fases usan `TestMode` con `MockPlan`
 y no consumen API NAN. Cada fase tiene tests individuales con PASS/FAIL reportados

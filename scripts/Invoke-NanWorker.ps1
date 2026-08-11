@@ -11,7 +11,10 @@ param(
     [switch]$DryRun,
     [switch]$AllowNoChanges,
     [switch]$TestMode,
-    [string]$MockPlan = ''
+    [string]$MockPlan = '',
+    [string]$PlannedBy = '',
+    [string]$FrontierPlan = '',
+    [string[]]$AcceptanceCriteria = @()
 )
 
 $ErrorActionPreference = 'Stop'
@@ -23,6 +26,7 @@ if (-not (Test-Path -LiteralPath $tdir)) { New-Item -ItemType Directory -Path $t
 # Normalize
 $AllowedPath = @($AllowedPath | ForEach-Object { $_ -split ',' } | ForEach-Object { $_.Trim() } | Where-Object { $_ })
 $InputPath = @($InputPath | ForEach-Object { $_ -split ',' } | ForEach-Object { $_.Trim() } | Where-Object { $_ })
+$AcceptanceCriteria = @($AcceptanceCriteria | ForEach-Object { $_.Trim() } | Where-Object { $_ })
 
 # ── Contract validation ──
 if ($TaskType -eq 'code' -and $AllowedPath.Count -eq 0) { throw 'Code delegation requires at least one -AllowedPath contract boundary.' }
@@ -34,6 +38,15 @@ if ($TaskType -eq 'bulletin') {
         if (-not $full.StartsWith($repoPrefix, [System.StringComparison]::OrdinalIgnoreCase)) { throw "InputPath must stay inside the repository: $ip" }
         if (-not (Test-Path -LiteralPath $full -PathType Leaf)) { throw "InputPath does not exist: $ip" }
     }
+}
+
+# ── Frontier contract enforcement (code only, fail-closed) ──
+if ($TaskType -eq 'code') {
+    if ($PlannedBy -ne 'frontier') { throw 'PlannedBy must be exactly "frontier" for code delegation.' }
+    if ([string]::IsNullOrWhiteSpace($FrontierPlan)) { throw 'FrontierPlan is required and must not be empty.' }
+    if ($AcceptanceCriteria.Count -eq 0) { throw 'AcceptanceCriteria is required, must contain at least one item.' }
+    # ValidationCommand required even in DryRun for code tasks
+    if ($ValidationCommand.Count -eq 0) { throw 'Code delegation requires at least one -ValidationCommand.' }
 }
 
 # ── JSONL token parser (PS 5.1 compatible) ──
@@ -86,11 +99,26 @@ function Test-AllowedPath {
 $primaryModel = if ($TaskType -eq 'code') { 'nan/qwen3.6' } else { 'nan/gemma4' }
 $primaryAgent = if ($TaskType -eq 'code') { 'nan-code' } else { 'nan-bulletin' }
 
+# ── SHA-256 from string (PS 5.1 compatible) ──
+function Compute-StringSha256 {
+    param([string]$InputString)
+    $sha = [System.Security.Cryptography.SHA256]::Create()
+    $bytes = [System.Text.Encoding]::UTF8.GetBytes($InputString)
+    $hashBytes = $sha.ComputeHash($bytes)
+    $sha.Dispose()
+    return -join ($hashBytes | ForEach-Object { $_.ToString('x2') })
+}
+
 # ── DryRun ──
 if ($DryRun) {
     Write-Host "[DryRun] TaskType=$TaskType Objective=$Objective Model=$primaryModel Agent=$primaryAgent Retries=$MaxRetries Fallbacks=$($FallbackModels -join ',') Allowed=$($AllowedPath -join ',')" -ForegroundColor Yellow
     $tid = [guid]::NewGuid().ToString('N')
-    @{telemetryId=$tid;simulated=[bool]$true;taskType=$TaskType;selectedModel=$primaryModel;attempts=@();changedPaths=@();contractViolation=$false;validationFailed=$false;tokensUsage=@{input=0;output=0;reasoning=0;cacheRead=0;cacheWrite=0;total=0};success=$true;status='dry-run'} |
+    $fc = @{}
+    if ($TaskType -eq 'code') {
+        $planSha = Compute-StringSha256 -InputString $FrontierPlan
+        $fc = @{plannedBy=$PlannedBy;planHash=$planSha;acceptanceCriteriaCount=$AcceptanceCriteria.Count;reviewRequired=$true}
+    }
+    @{telemetryId=$tid;simulated=[bool]$true;taskType=$TaskType;selectedModel=$primaryModel;attempts=@();changedPaths=@();contractViolation=$false;validationFailed=$false;tokensUsage=@{input=0;output=0;reasoning=0;cacheRead=0;cacheWrite=0;total=0};success=$true;status='dry-run';frontierContract=$fc} |
         ConvertTo-Json -Depth 5 | Out-File (Join-Path $tdir "$tid.json") -Encoding utf8
     exit 0
 }
@@ -170,7 +198,19 @@ $totalAttempts = 0
                 $attempt.exitCode = if ($mp.exitCode -ne $null) { [int]$mp.exitCode } else { 0 }
                 if ($mp.jsonl) { $attempt.tokens = Parse-JsonlTokens -Jsonl $mp.jsonl }
                 $attempt.changedPaths = if ($mp.changedPaths) { @($mp.changedPaths) } else { @() }
-                $attempt.validationExitCode = if ($mp.validationExitCode -ne $null) { [int]$mp.validationExitCode } else { 0 }
+                # Support both singular validationExitCode and list [$codes]
+                $rawVe = $mp.validationExitCode
+                if ($rawVe -eq $null) {
+                    $attempt.validationExitCode = 0
+                } elseif ($rawVe -is [System.Collections.Generic.List[int]] -or ($rawVe -is [array] -and $rawVe.Count -gt 1)) {
+                    $computedVe = 0
+                    foreach ($v in $rawVe) {
+                        if ([int]$v -ne 0) { $computedVe = [int]$v; break }
+                    }
+                    $attempt.validationExitCode = $computedVe
+                } else {
+                    $attempt.validationExitCode = [int]$rawVe
+                }
             }
             Write-Host ("Attempt " + $totalAttempts + ": ${candidateAgent} -> ${candidateModel} (Mock) exitCode=" + $attempt.exitCode) -ForegroundColor Cyan
         } else {
@@ -178,6 +218,10 @@ $totalAttempts = 0
             $opts = @('run','--pure','--model',$candidateModel,'--agent',$candidateAgent,'--format','json','--title',"orchestrated-$TaskType")
             foreach ($f in $InputPath) { $opts += @('--file',$f) }
             $contract = @("TASK TYPE: $TaskType","OBJECTIVE: $Objective")
+            if ($TaskType -eq 'code') {
+                $contract += "FRONTIER PLAN: $FrontierPlan"
+                $contract += "ACCEPTANCE CRITERIA: $($AcceptanceCriteria -join "`n")"
+            }
             if ($AllowedPath.Count -gt 0) { $contract += "ALLOWED PATHS: $($AllowedPath -join ', ')" }
             if ($ValidationCommand.Count -gt 0) { $contract += "REQUIRED VALIDATION: $($ValidationCommand -join ' ; ')" }
             $contract += 'Do not commit, push, publish, deploy, or expand this contract.'
@@ -230,22 +274,15 @@ $totalAttempts = 0
                     if ($TestMode) {
                         $ve = if ($attempt.validationExitCode -ne $null) { [int]$attempt.validationExitCode } else { 0 }
                     } else {
-                        $allOk = $true
-                        $lastVe = 0
+                        $ve = 0
                         foreach ($cmd in $ValidationCommand) {
                             $null = Invoke-Expression $cmd 2>&1 | Out-String
-                            if ($LASTEXITCODE -ne 0) { $allOk = $false }
-                            $lastVe = $LASTEXITCODE
-                        }
-                        $ve = $lastVe
-                        if (-not $allOk) {
-                            $validationFailed = $true
-                            $attempt.exitCode = 1
-                            $attempts[-1] = $attempt
-                            break modelLoop
+                            if ($LASTEXITCODE -ne 0 -and $ve -eq 0) { $ve = $LASTEXITCODE }
                         }
                     }
+                    # Persist validationExitCode before any failure branch
                     $attempt.validationExitCode = $ve
+                    $attempts[-1] = $attempt
                     if ($ve -ne 0) {
                         $validationFailed = $true
                         if ($TestMode) { Write-Warning "Mock validation failure (exitCode=$ve)" }
@@ -279,11 +316,16 @@ foreach ($a in $attempts) {
 $tid = [guid]::NewGuid().ToString('N')
 $status = if ($successResult) { 'success' } else { 'blocked-needs-new-contract' }
 $success = ($successResult -ne $null) -and (-not $contractViolation) -and (-not $validationFailed)
+$fcTelemetry = @{}
+if ($TaskType -eq 'code') {
+    $planSha = Compute-StringSha256 -InputString $FrontierPlan
+    $fcTelemetry = @{plannedBy=$PlannedBy;planHash=$planSha;acceptanceCriteriaCount=$AcceptanceCriteria.Count;reviewRequired=$true}
+}
 $telemetry = @{
     telemetryId=$tid;simulated=[bool]$TestMode;taskType=$TaskType;selectedModel=if ($successResult) { $successResult.model } else { $null }
     attempts=@($attempts | ForEach-Object { @{model=$_.model;agent=$_.agent;attempt=$_.attempt;retry=$_.retry;exitCode=$_.exitCode;tokens=$_.tokens;changedPaths=$_.changedPaths;validationExitCode=$_.validationExitCode} })
     changedPaths=@($changedPaths);contractViolation=$contractViolation;validationFailed=$validationFailed
-    tokensUsage=$agg;success=$success;status=$status
+    tokensUsage=$agg;success=$success;status=$status;frontierContract=$fcTelemetry
 }
 $telemetry | ConvertTo-Json -Depth 5 | Out-File (Join-Path $tdir "$tid.json") -Encoding utf8
 Write-Host "Telemetry: $(Join-Path $tdir "$tid.json")" -ForegroundColor DarkGray

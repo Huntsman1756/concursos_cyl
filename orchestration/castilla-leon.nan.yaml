@@ -60,6 +60,9 @@ routing:
 controls:
   requireAllowedPathsForCode: true
   requireIndependentReview: true
+  requireFrontierPlanForCode: true
+  requireAcceptanceCriteriaForCode: true
+  requireValidationForCode: true
   allowWorkerPublication: false
   credentialsInRepository: false
   enforceTelemetryRecording: true
@@ -79,6 +82,7 @@ telemetry:
     - tokensUsage
     - success
     - status
+    - frontierContract
   attemptFields:
     - model
     - agent

@@ -6,8 +6,10 @@ param(
 $ErrorActionPreference = 'Stop'
 $repoRoot = [System.IO.Path]::GetFullPath((Split-Path -Parent $PSScriptRoot))
 $workerPath = Join-Path $repoRoot 'scripts\Invoke-NanWorker.ps1'
+$yamlPath = Join-Path $repoRoot 'orchestration\castilla-leon.nan.yaml'
 $tdir = Join-Path $repoRoot '.agent-runs'
 if (-not (Test-Path -LiteralPath $tdir)) { New-Item -ItemType Directory -Path $tdir -Force | Out-Null }
+
 Push-Location $repoRoot
 
 # ── PSSerializer + Unicode Base64 transport ──
@@ -125,6 +127,41 @@ function New-Jsonl {
     return ($o | ConvertTo-Json -Depth 10 -Compress)
 }
 
+# ── Valid code contract helper ──
+function New-ValidCodeContract {
+    param(
+        [string]$Objective = 'test',
+        [string[]]$AllowedPath = @('scripts/**'),
+        [string[]]$ValidationCommand = @('cmd /c exit 0'),
+        [int]$MaxRetries = 3,
+        [string[]]$FallbackModels = @('nan/mimo-v2.5','nan/deepseek-v4-flash'),
+        [switch]$AllowNoChanges,
+        [switch]$TestMode,
+        [switch]$DryRun,
+        [string]$MockPlan = '',
+        [hashtable]$ExtraParams = @{}
+    )
+    $ht = @{
+        TaskType = 'code'
+        Objective = $Objective
+        AllowedPath = $AllowedPath
+        ValidationCommand = $ValidationCommand
+        MaxRetries = $MaxRetries
+        FallbackModels = $FallbackModels
+        PlannedBy = 'frontier'
+        FrontierPlan = 'Implement the required changes'
+        AcceptanceCriteria = @('1. All tests pass','2. No regression')
+    }
+    if ($AllowNoChanges) { $ht.AllowNoChanges = $true }
+    if ($DryRun) { $ht.DryRun = $true }
+    if ($TestMode) { $ht.TestMode = $true }
+    if (-not [string]::IsNullOrWhiteSpace($MockPlan)) { $ht.MockPlan = $MockPlan }
+    if ($ExtraParams.Count -gt 0) {
+        foreach ($k in $ExtraParams.Keys) { $ht[$k] = $ExtraParams[$k] }
+    }
+    return $ht
+}
+
 # ────── TESTS ──────
 try {
     # 1. Invalid contracts
@@ -133,14 +170,9 @@ try {
         Write-Host ("-" * 40) -ForegroundColor DarkGray
 
         # 1a: code without AllowedPath throws
-        $r = Invoke-WorkerChild -WorkerParameters @{TaskType = 'code'; Objective = 'test'; TestMode = $true}
+        $r = Invoke-WorkerDirect -WorkerParameters @{TaskType = 'code'; Objective = 'test'; PlannedBy = 'frontier'; FrontierPlan = 'p'; AcceptanceCriteria = 'c'; ValidationCommand = @('cmd /c exit 0'); TestMode = $true}
         Assert-True ($r.ExitCode -ne 0) '1a: code without AllowedPath exits non-zero'
         Assert-Contains $r.Output 'AllowedPath' '1a: error mentions AllowedPath'
-
-        # 1b: bulletin with AllowedPath throws
-        $r = Invoke-WorkerChild -WorkerParameters @{TaskType = 'bulletin'; Objective = 'test'; InputPath = @('AGENTS.md'); AllowedPath = @('scripts/**'); TestMode = $true}
-        Assert-True ($r.ExitCode -ne 0) '1b: bulletin with AllowedPath exits non-zero'
-        Assert-Contains $r.Output 'AllowedPath' '1b: error mentions AllowedPath'
     }
 
     # 2. DryRun
@@ -148,7 +180,7 @@ try {
         Write-Host "`n*** 2. DryRun ***" -ForegroundColor Cyan
         Write-Host ("-" * 40) -ForegroundColor DarkGray
 
-        $r = Invoke-WorkerDirect -WorkerParameters @{TaskType = 'code'; Objective = 'dryrun-test'; AllowedPath = @('scripts/**'); DryRun = $true}
+        $r = Invoke-WorkerDirect -WorkerParameters (New-ValidCodeContract -Objective 'dryrun-test' -DryRun -TestMode)
         Assert-True ($r.ExitCode -eq 0) '2a: DryRun exit code 0'
         Assert-Contains $r.Output 'DryRun' '2b: DryRun label in output'
         Assert-Contains $r.Output 'qwen3.6' '2c: DryRun shows primary model'
@@ -170,7 +202,7 @@ try {
             @{exitCode = 0; changedPaths = @('scripts/test.txt'); validationExitCode = 0; jsonl = $jsonlOk}
         ) | ConvertTo-Json -Compress
         $pre = Get-FileSnapshot
-        $r = Invoke-WorkerChild -WorkerParameters @{TaskType = 'code'; Objective = 'retry-success'; AllowedPath = @('scripts/**'); MaxRetries = 3; TestMode = $true; MockPlan = $plan}
+        $r = Invoke-WorkerChild -WorkerParameters (New-ValidCodeContract -Objective 'retry-success' -MaxRetries 3 -TestMode -MockPlan $plan)
         Assert-True ($r.ExitCode -eq 0) '3a: exit 0 after 2 failures + success'
 
         $telFile = Get-NewTelemetry -BeforeFiles $pre
@@ -197,7 +229,7 @@ try {
             @{exitCode = 0; changedPaths = @('scripts/result.txt'); validationExitCode = 0; jsonl = $jsonlOk}
         ) | ConvertTo-Json -Compress
         $pre = Get-FileSnapshot
-        $r = Invoke-WorkerChild -WorkerParameters @{TaskType = 'code'; Objective = 'fallback-success'; AllowedPath = @('scripts/**'); MaxRetries = 3; FallbackModels = @('nan/mimo-v2.5'); TestMode = $true; MockPlan = $plan}
+        $r = Invoke-WorkerChild -WorkerParameters (New-ValidCodeContract -Objective 'fallback-success' -MaxRetries 3 -FallbackModels @('nan/mimo-v2.5') -TestMode -MockPlan $plan)
         Assert-True ($r.ExitCode -eq 0) '4a: exit 0 after fallback success'
 
         $telFile = Get-NewTelemetry -BeforeFiles $pre
@@ -223,7 +255,7 @@ try {
             @{exitCode = 1; changedPaths = @(); validationExitCode = 1; jsonl = ''}
         ) | ConvertTo-Json -Compress
         $pre = Get-FileSnapshot
-        $r = Invoke-WorkerChild -WorkerParameters @{TaskType = 'code'; Objective = 'blocked'; AllowedPath = @('scripts/**'); MaxRetries = 3; FallbackModels = @('nan/mimo-v2.5'); TestMode = $true; MockPlan = $plan}
+        $r = Invoke-WorkerChild -WorkerParameters (New-ValidCodeContract -Objective 'blocked' -MaxRetries 3 -FallbackModels @('nan/mimo-v2.5') -TestMode -MockPlan $plan)
         Assert-True ($r.ExitCode -ne 0) '5a: blocked exits non-zero'
 
         $telFile = Get-NewTelemetry -BeforeFiles $pre
@@ -251,7 +283,7 @@ try {
             @{exitCode = 1; changedPaths = @(); validationExitCode = 1; jsonl = ''}
         ) | ConvertTo-Json -Compress
         $pre = Get-FileSnapshot
-        $r = Invoke-WorkerChild -WorkerParameters @{TaskType = 'code'; Objective = 'blocked-all'; AllowedPath = @('scripts/**'); MaxRetries = 3; TestMode = $true; MockPlan = $plan}
+        $r = Invoke-WorkerChild -WorkerParameters (New-ValidCodeContract -Objective 'blocked-all' -MaxRetries 3 -TestMode -MockPlan $plan)
         Assert-True ($r.ExitCode -ne 0) '6a: blocked-all exits non-zero'
 
         $telFile = Get-NewTelemetry -BeforeFiles $pre
@@ -280,7 +312,7 @@ try {
             @{exitCode = 0; changedPaths = @('scripts/output.txt'); validationExitCode = 0; jsonl = $multiJsonl}
         ) | ConvertTo-Json -Compress
         $pre = Get-FileSnapshot
-        $r = Invoke-WorkerChild -WorkerParameters @{TaskType = 'code'; Objective = 'token-extract'; AllowedPath = @('scripts/**'); MaxRetries = 1; TestMode = $true; MockPlan = $plan}
+        $r = Invoke-WorkerChild -WorkerParameters (New-ValidCodeContract -Objective 'token-extract' -MaxRetries 1 -TestMode -MockPlan $plan)
         Assert-True ($r.ExitCode -eq 0) '7a: token extraction exits 0'
 
         $telFile = Get-NewTelemetry -BeforeFiles $pre
@@ -314,7 +346,7 @@ try {
         $plan = @(
             @{exitCode = 0; changedPaths = @(); validationExitCode = 0; jsonl = $jsonlOk}
         ) | ConvertTo-Json -Compress
-        $r = Invoke-WorkerChild -WorkerParameters @{TaskType = 'code'; Objective = 'nochange'; AllowedPath = @('scripts/**'); MaxRetries = 1; TestMode = $true; MockPlan = $plan}
+        $r = Invoke-WorkerChild -WorkerParameters (New-ValidCodeContract -Objective 'nochange' -MaxRetries 1 -TestMode -MockPlan $plan)
         Assert-True ($r.ExitCode -ne 0) '8a: no-change rejected (exit non-zero)'
     }
 
@@ -327,7 +359,7 @@ try {
         $plan = @(
             @{exitCode = 0; changedPaths = @(); validationExitCode = 0; jsonl = $jsonlOk}
         ) | ConvertTo-Json -Compress
-        $r = Invoke-WorkerChild -WorkerParameters @{TaskType = 'code'; Objective = 'allowno'; AllowedPath = @('scripts/**'); MaxRetries = 1; TestMode = $true; AllowNoChanges = $true; MockPlan = $plan}
+        $r = Invoke-WorkerChild -WorkerParameters (New-ValidCodeContract -Objective 'allowno' -MaxRetries 1 -AllowNoChanges -TestMode -MockPlan $plan)
         Assert-True ($r.ExitCode -eq 0) '9a: AllowNoChanges accepted (exit 0)'
     }
 
@@ -340,7 +372,7 @@ try {
         $plan = @(
             @{exitCode = 0; changedPaths = @('outside/forbidden.txt'); validationExitCode = 0; jsonl = $jsonlOk}
         ) | ConvertTo-Json -Compress
-        $r = Invoke-WorkerChild -WorkerParameters @{TaskType = 'code'; Objective = 'violation'; AllowedPath = @('scripts/**'); MaxRetries = 1; TestMode = $true; MockPlan = $plan}
+        $r = Invoke-WorkerChild -WorkerParameters (New-ValidCodeContract -Objective 'violation' -MaxRetries 1 -TestMode -MockPlan $plan)
         Assert-True ($r.ExitCode -ne 0) '10a: path violation exits non-zero'
     }
 
@@ -353,7 +385,7 @@ try {
         $plan = @(
             @{exitCode = 0; changedPaths = @('scripts/ok.txt'); validationExitCode = 1; jsonl = $jsonlOk}
         ) | ConvertTo-Json -Compress
-        $r = Invoke-WorkerChild -WorkerParameters @{TaskType = 'code'; Objective = 'valfail'; AllowedPath = @('scripts/**'); ValidationCommand = @('cmd /c exit 1'); MaxRetries = 1; TestMode = $true; MockPlan = $plan}
+        $r = Invoke-WorkerChild -WorkerParameters (New-ValidCodeContract -Objective 'valfail' -ValidationCommand @('cmd /c exit 1') -MaxRetries 1 -TestMode -MockPlan $plan)
         Assert-True ($r.ExitCode -ne 0) '11a: validation failure exits non-zero'
     }
 
@@ -381,6 +413,17 @@ try {
         }
     }
 
+    # 12b. Bulletin rejects -AllowedPath (read-only task)
+    if (-not $Only -or $Only -eq 'bulletin') {
+        Write-Host "`n*** 12b. Bulletin rejects -AllowedPath ***" -ForegroundColor Cyan
+        Write-Host ("-" * 40) -ForegroundColor DarkGray
+
+        $pre = Get-FileSnapshot
+        $r = Invoke-WorkerDirect -WorkerParameters @{TaskType = 'bulletin'; Objective = 'bulletin-rejects-allowedpath'; InputPath = @('AGENTS.md'); AllowedPath = @('scripts/**'); TestMode = $true}
+        Assert-True ($r.ExitCode -ne 0) '12b: bulletin with AllowedPath exits non-zero'
+        Assert-Contains $r.Output 'AllowedPath' '12c: error mentions AllowedPath'
+    }
+
     # 13. Telemetry exists on failures
     if (-not $Only -or $Only -eq 'telemetry') {
         Write-Host "`n*** 13. Telemetry on failures ***" -ForegroundColor Cyan
@@ -392,7 +435,7 @@ try {
             @{exitCode = 1; changedPaths = @(); validationExitCode = 1; jsonl = ''}
             @{exitCode = 1; changedPaths = @(); validationExitCode = 1; jsonl = ''}
         ) | ConvertTo-Json -Compress
-        $null = Invoke-WorkerChild -WorkerParameters @{TaskType = 'code'; Objective = 'fail-telemetry'; AllowedPath = @('scripts/**'); MaxRetries = 3; TestMode = $true; MockPlan = $plan}
+        $null = Invoke-WorkerChild -WorkerParameters (New-ValidCodeContract -Objective 'fail-telemetry' -MaxRetries 3 -TestMode -MockPlan $plan)
 
         $after = Get-FileSnapshot
         Assert-True (($after.Count) -gt ($pre.Count)) '13a: telemetry file created on failure'
@@ -403,9 +446,15 @@ try {
             Assert-True ($tel.attempts.Count -ge 1) '13b: telemetry has attempts array'
             Assert-True ($tel.attempts[0].model -ne $null) '13c: attempt has model field'
             Assert-True ($tel.attempts[0].exitCode -ne $null) '13d: attempt has exitCode'
+            Assert-True ($tel.frontierContract -ne $null) '13e: frontierContract present in telemetry'
+            Assert-True ($tel.frontierContract.plannedBy -eq 'frontier') '13f: plannedBy=frontier in telemetry'
+            Assert-True ($tel.frontierContract.planHash.Length -eq 64) '13g: planHash is 64-char hex SHA-256'
+            Assert-True ($tel.frontierContract.acceptanceCriteriaCount -ge 1) '13h: acceptanceCriteriaCount >= 1'
+            Assert-True ($tel.frontierContract.reviewRequired -eq $true) '13i: reviewRequired=true in telemetry'
+            Assert-True ($tel.frontierContract -isnot [string]) '13j: frontierContract is object not raw string'
             $rawJson = Get-Content -LiteralPath $telFile -Raw
-            Assert-True ($rawJson -notmatch '"raw.*output"') '13e: no raw output field in telemetry'
-            Assert-True ($rawJson -notmatch '"prompt"') '13f: no prompt field in telemetry'
+            Assert-True ($rawJson -notmatch '"raw.*output"') '13k: no raw output field in telemetry'
+            Assert-True ($rawJson -notmatch '"prompt"') '13l: no prompt field in telemetry'
         }
     }
 
@@ -417,9 +466,9 @@ try {
         $plan = @(
             @{exitCode = 1; changedPaths = @(); validationExitCode = 1; jsonl = ''}
         ) | ConvertTo-Json -Compress
-        $r = Invoke-WorkerChild -WorkerParameters @{TaskType = 'code'; Objective = 'fail-closed'; AllowedPath = @('scripts/**'); MaxRetries = 3; TestMode = $true; MockPlan = $plan}
+        $r = Invoke-WorkerChild -WorkerParameters (New-ValidCodeContract -Objective 'fail-closed' -MaxRetries 3 -TestMode -MockPlan $plan)
         Assert-True ($r.ExitCode -ne 0) '14a: missing entries fail closed (exit non-zero)'
-        Assert-Contains $r.Output 'blocked-needs-new-contract' '14b: status is blocked-needs-new-contract'
+        Assert-Contains $r.Output 'blocked-needs-new-contract' '14b: output contains blocked-needs-new-contract'
     }
 
     # 15. Non-official fallback ignored in TestMode
@@ -427,8 +476,6 @@ try {
         Write-Host "`n*** 15. Non-official fallback ignored in TestMode ***" -ForegroundColor Cyan
         Write-Host ("-" * 40) -ForegroundColor DarkGray
 
-        # Plan: 3 primary failures + 3 official fallback (mimo) failures = blocked
-        # FallbackModels includes a non-official model 'nan/fake-model' which must be ignored
         $plan = @(
             @{exitCode = 1; changedPaths = @(); validationExitCode = 1; jsonl = ''}
             @{exitCode = 1; changedPaths = @(); validationExitCode = 1; jsonl = ''}
@@ -438,11 +485,7 @@ try {
             @{exitCode = 1; changedPaths = @(); validationExitCode = 1; jsonl = ''}
         ) | ConvertTo-Json -Compress
         $pre = Get-FileSnapshot
-        $r = Invoke-WorkerChild -WorkerParameters @{
-            TaskType = 'code'; Objective = 'fallback-reject'; AllowedPath = @('scripts/**')
-            MaxRetries = 3; TestMode = $true; MockPlan = $plan
-            FallbackModels = @('nan/fake-model','nan/mimo-v2.5')
-        }
+        $r = Invoke-WorkerChild -WorkerParameters (New-ValidCodeContract -Objective 'fallback-reject' -MaxRetries 3 -TestMode -MockPlan $plan -ExtraParams @{FallbackModels = @('nan/fake-model','nan/mimo-v2.5')})
         Assert-True ($r.ExitCode -ne 0) '15a: non-official fallback rejected (blocked exit non-zero)'
 
         $telFile = Get-NewTelemetry -BeforeFiles $pre
@@ -470,7 +513,7 @@ try {
             @{exitCode = 0; changedPaths = @('scripts/x.txt'); validationExitCode = 0; jsonl = $jsonlOk}
         ) | ConvertTo-Json -Compress
         $pre = Get-FileSnapshot
-        $r = Invoke-WorkerChild -WorkerParameters @{TaskType = 'code'; Objective = 'sim-bool'; AllowedPath = @('scripts/**'); MaxRetries = 1; TestMode = $true; MockPlan = $plan}
+        $r = Invoke-WorkerChild -WorkerParameters (New-ValidCodeContract -Objective 'sim-bool' -MaxRetries 1 -TestMode -MockPlan $plan)
         Assert-True ($r.ExitCode -eq 0) '16a: TestMode success exit 0'
 
         $telFile = Get-NewTelemetry -BeforeFiles $pre
@@ -488,7 +531,7 @@ try {
 
         # 16b: DryRun -> simulated=true (boolean)
         $pre2 = Get-FileSnapshot
-        $r2 = Invoke-WorkerDirect -WorkerParameters @{TaskType = 'code'; Objective = 'dry-sim'; AllowedPath = @('scripts/**'); DryRun = $true}
+        $r2 = Invoke-WorkerDirect -WorkerParameters (New-ValidCodeContract -Objective 'dry-sim' -DryRun -TestMode)
         Assert-True ($r2.ExitCode -eq 0) '16f: DryRun exit 0'
 
         $telFile2 = Get-NewTelemetry -BeforeFiles $pre2
@@ -498,9 +541,13 @@ try {
             Assert-True ($tel2.simulated -eq $true) '16g: DryRun simulated equals true'
             Assert-True ($tel2.simulated.GetType().Name -eq 'Boolean') "16h: DryRun simulated type is Boolean (raw=$($tel2.simulated.GetType().Name))"
             Assert-True ($raw2 -match '"simulated":\s*true') '16i: DryRun simulated serializes as JSON true literal'
+            # Also verify frontierContract exists in DryRun
+            Assert-True ($null -ne $tel2.frontierContract.plannedBy) '16j: DryRun has plannedBy in frontierContract'
+            Assert-True ($null -ne $tel2.frontierContract.planHash) '16k: DryRun has planHash in frontierContract'
+            Assert-True ($tel2.frontierContract.reviewRequired -eq $true) '16l: DryRun reviewRequired=true'
         }
 
-        # 16c: Unit test of [bool] -> JSON serialization used by the worker (offline, no network)
+        # 16c/d/e: Unit test of [bool] -> JSON serialization (offline)
         $rawF = @{ sim = [bool]$false } | ConvertTo-Json -Compress
         $rawT = @{ sim = [bool]$true }  | ConvertTo-Json -Compress
         Assert-True ($rawF -match '"sim":\s*false\b') '16c: [bool]$false serializes as JSON false literal'
@@ -519,7 +566,7 @@ try {
             @{exitCode = 0; changedPaths = @('scripts/ok.txt'); validationExitCode = 0; jsonl = $jsonlOk}
         ) | ConvertTo-Json -Compress
         $pre = Get-FileSnapshot
-        $r = Invoke-WorkerChild -WorkerParameters @{TaskType = 'code'; Objective = 've-success'; AllowedPath = @('scripts/**'); ValidationCommand = @('cmd /c exit 0'); MaxRetries = 1; TestMode = $true; MockPlan = $plan}
+        $r = Invoke-WorkerChild -WorkerParameters (New-ValidCodeContract -Objective 've-success' -ValidationCommand @('cmd /c exit 0') -MaxRetries 1 -TestMode -MockPlan $plan)
         Assert-True ($r.ExitCode -eq 0) '17a: success with validationExitCode=0'
 
         $telFile = Get-NewTelemetry -BeforeFiles $pre
@@ -535,7 +582,7 @@ try {
         $plan2 = @(
             @{exitCode = 0; changedPaths = @('scripts/ok2.txt'); validationExitCode = 1; jsonl = $jsonlOk}
         ) | ConvertTo-Json -Compress
-        $r2 = Invoke-WorkerChild -WorkerParameters @{TaskType = 'code'; Objective = 've-fail'; AllowedPath = @('scripts/**'); ValidationCommand = @('cmd /c exit 1'); MaxRetries = 1; TestMode = $true; MockPlan = $plan2}
+        $r2 = Invoke-WorkerChild -WorkerParameters (New-ValidCodeContract -Objective 've-fail' -ValidationCommand @('cmd /c exit 1') -MaxRetries 1 -TestMode -MockPlan $plan2)
         Assert-True ($r2.ExitCode -ne 0) '17e: mock validationExitCode=1 causes failure (exit non-zero)'
 
         $telFile2 = Get-NewTelemetry -BeforeFiles $pre2
@@ -545,6 +592,142 @@ try {
             Assert-True ($tel2.status -eq 'blocked-needs-new-contract') '17g: status=blocked when validation fails'
             Assert-True ($tel2.attempts[0].validationExitCode -eq 1) '17h: attempt validationExitCode=1 captured'
             Assert-True ($tel2.attempts[0].exitCode -eq 1) '17i: attempt exitCode=1 after validation failure'
+        }
+    }
+
+    # 17b. List validationExitCodes: [1,0] blocks with first non-zero=1
+    if (-not $Only -or $Only -eq 'validation-exitcode') {
+        Write-Host "`n*** 17b. List validationExitCodes [1,0] blocks ***" -ForegroundColor Cyan
+        Write-Host ("-" * 40) -ForegroundColor DarkGray
+
+        $jsonlOk = New-Jsonl -Total 500
+        $plan = @(
+            @{exitCode = 0; changedPaths = @('scripts/ok3.txt'); validationExitCode = @(1,0); jsonl = $jsonlOk}
+        ) | ConvertTo-Json -Compress
+        $pre = Get-FileSnapshot
+        $r = Invoke-WorkerChild -WorkerParameters (New-ValidCodeContract -Objective 've-list-block' -ValidationCommand @('cmd /c exit 0') -MaxRetries 1 -TestMode -MockPlan $plan)
+        Assert-True ($r.ExitCode -ne 0) '17j: list [1,0] blocks (first non-zero=1)'
+
+        $telFile = Get-NewTelemetry -BeforeFiles $pre
+        if ($telFile) {
+            $tel = Get-Content -LiteralPath $telFile -Raw | ConvertFrom-Json
+            Assert-True ($tel.validationFailed -eq $true) '17k: validationFailed=true with list [1,0]'
+            Assert-True ($tel.status -eq 'blocked-needs-new-contract') '17l: status blocked with list [1,0]'
+            Assert-True ($tel.attempts[0].validationExitCode -eq 1) '17m: attempt validationExitCode=1 from list [1,0]'
+        }
+    }
+
+    # 17c. List validationExitCodes: [0,0] accepts with 0
+    if (-not $Only -or $Only -eq 'validation-exitcode') {
+        Write-Host "`n*** 17c. List validationExitCodes [0,0] accepts ***" -ForegroundColor Cyan
+        Write-Host ("-" * 40) -ForegroundColor DarkGray
+
+        $jsonlOk = New-Jsonl -Total 500
+        $plan = @(
+            @{exitCode = 0; changedPaths = @('scripts/ok4.txt'); validationExitCode = @(0,0); jsonl = $jsonlOk}
+        ) | ConvertTo-Json -Compress
+        $pre = Get-FileSnapshot
+        $r = Invoke-WorkerChild -WorkerParameters (New-ValidCodeContract -Objective 've-list-accept' -ValidationCommand @('cmd /c exit 0') -MaxRetries 1 -TestMode -MockPlan $plan)
+        Assert-True ($r.ExitCode -eq 0) '17n: list [0,0] accepts (all zero)'
+
+        $telFile = Get-NewTelemetry -BeforeFiles $pre
+        if ($telFile) {
+            $tel = Get-Content -LiteralPath $telFile -Raw | ConvertFrom-Json
+            Assert-True ($tel.validationFailed -eq $false) '17o: validationFailed=false with list [0,0]'
+            Assert-True ($tel.status -eq 'success') '17p: status=success with list [0,0]'
+            Assert-True ($tel.attempts[0].validationExitCode -eq 0) '17q: attempt validationExitCode=0 from list [0,0]'
+        }
+    }
+
+    # 18. Frontier-policy: mandatory parameters enforced (fail-closed)
+    if (-not $Only -or $Only -eq 'frontier-policy') {
+        Write-Host "`n*** 18. Frontier-policy: mandatory parameters ***" -ForegroundColor Cyan
+        Write-Host ("-" * 40) -ForegroundColor DarkGray
+
+        # 18a: PlannedBy missing (empty string from default)
+        $r = Invoke-WorkerDirect -WorkerParameters @{TaskType = 'code'; Objective = 'test'; AllowedPath = @('scripts/**'); ValidationCommand = @('cmd /c exit 0'); FrontierPlan = 'p'; AcceptanceCriteria = 'c'; TestMode = $true}
+        Assert-True ($r.ExitCode -ne 0) '18a: PlannedBy missing exits non-zero'
+        Assert-Contains $r.Output 'PlannedBy' '18b: error mentions PlannedBy'
+        Assert-Contains $r.Output 'frontier' '18c: error mentions required frontier value'
+
+        # 18d: PlannedBy incorrect
+        $r = Invoke-WorkerDirect -WorkerParameters @{TaskType = 'code'; Objective = 'test'; AllowedPath = @('scripts/**'); ValidationCommand = @('cmd /c exit 0'); PlannedBy = 'human'; FrontierPlan = 'p'; AcceptanceCriteria = 'c'; TestMode = $true}
+        Assert-True ($r.ExitCode -ne 0) '18d: PlannedBy=human exits non-zero'
+        Assert-Contains $r.Output 'PlannedBy' '18e: error mentions PlannedBy'
+
+        # 18f: PlannedBy wrong case
+        $r = Invoke-WorkerDirect -WorkerParameters @{TaskType = 'code'; Objective = 'test'; AllowedPath = @('scripts/**'); ValidationCommand = @('cmd /c exit 0'); PlannedBy = 'Frontier'; FrontierPlan = 'p'; AcceptanceCriteria = 'c'; TestMode = $true}
+        Assert-True ($r.ExitCode -ne 0) '18f: PlannedBy=Frontier (wrong case) exits non-zero'
+
+        # 18h: FrontierPlan missing
+        $r = Invoke-WorkerDirect -WorkerParameters @{TaskType = 'code'; Objective = 'test'; AllowedPath = @('scripts/**'); ValidationCommand = @('cmd /c exit 0'); PlannedBy = 'frontier'; AcceptanceCriteria = 'c'; TestMode = $true}
+        Assert-True ($r.ExitCode -ne 0) '18h: FrontierPlan missing exits non-zero'
+        Assert-Contains $r.Output 'FrontierPlan' '18i: error mentions FrontierPlan'
+
+        # 18j: AcceptanceCriteria missing
+        $r = Invoke-WorkerDirect -WorkerParameters @{TaskType = 'code'; Objective = 'test'; AllowedPath = @('scripts/**'); ValidationCommand = @('cmd /c exit 0'); PlannedBy = 'frontier'; FrontierPlan = 'p'; TestMode = $true}
+        Assert-True ($r.ExitCode -ne 0) '18j: AcceptanceCriteria missing exits non-zero'
+        Assert-Contains $r.Output 'AcceptanceCriteria' '18k: error mentions AcceptanceCriteria'
+
+        # 18l: ValidationCommand missing for code (even TestMode)
+        $r = Invoke-WorkerDirect -WorkerParameters (New-ValidCodeContract -Objective 'no-validation' -TestMode -MaxRetries 1 -AllowedPath @('scripts/**') -ValidationCommand @())
+        Assert-True ($r.ExitCode -ne 0) '18l: ValidationCommand empty for code exits non-zero'
+        Assert-Contains $r.Output 'ValidationCommand' '18m: error mentions ValidationCommand'
+
+        # 18n: Complete valid contract passes (DryRun smoke test)
+        $before18n = Get-FileSnapshot
+        $r = Invoke-WorkerDirect -WorkerParameters (New-ValidCodeContract -Objective 'fc-complete' -DryRun -TestMode)
+        Assert-True ($r.ExitCode -eq 0) '18n: complete valid contract DryRun passes'
+
+        # 18o: Telemetry contains frontierContract with DryRun
+        $telFile = Get-NewTelemetry -BeforeFiles $before18n
+        if ($telFile) {
+            $tel = Get-Content -LiteralPath $telFile -Raw | ConvertFrom-Json
+            Assert-True ($tel.frontierContract.plannedBy -eq 'frontier') '18o: dry-run frontierContract plannedBy=frontier'
+            Assert-True ($tel.frontierContract.planHash.Length -eq 64) '18p: dry-run planHash is 64 chars'
+            Assert-True ($tel.frontierContract.acceptanceCriteriaCount -eq 2) '18q: dry-run acceptanceCriteriaCount'
+            Assert-True ($tel.frontierContract.reviewRequired -eq $true) '18r: dry-run reviewRequired=true'
+        }
+
+        # 18s: YAML routing control check
+        if (Test-Path -LiteralPath $yamlPath) {
+            $yamlText = Get-Content -LiteralPath $yamlPath -Raw
+            Assert-True ($yamlText -match 'plan:\s*orchestrator') '18s: YAML has plan:orchestrator'
+            Assert-True ($yamlText -match 'implement:\s*codeExecutor') '18s2: YAML has implement:codeExecutor'
+            Assert-True ($yamlText -match 'verifyWith:\s*reviewer') '18s3: YAML has verifyWith:reviewer'
+            Assert-True ($yamlText -notmatch 'default:\s*codeExecutor') '18t: YAML code has no default:codeExecutor direct route'
+
+            # 18x-18z: Check new controls are present and enforced
+            Assert-True ($yamlText -match 'requireFrontierPlanForCode:\s*true') '18x: YAML requireFrontierPlanForCode=true'
+            Assert-True ($yamlText -match 'requireAcceptanceCriteriaForCode:\s*true') '18y: YAML requireAcceptanceCriteriaForCode=true'
+            Assert-True ($yamlText -match 'requireValidationForCode:\s*true') '18z: YAML requireValidationForCode=true'
+            Assert-True ($yamlText -match 'frontierContract') '18aa: YAML telemetry has frontierContract topLevelField'
+
+            # 18u-18w: Check specific routes use correct trio
+            # Read YAML sections by detecting indented routes
+            $lines = ($yamlText -split "`r?`n")
+            $i = 0
+            while ($i -lt $lines.Count) {
+                if ($lines[$i] -match '^\s{2}(code|debugging|cross_file_refactor|multi_file):\s*$') {
+                    $route = $Matches[1]
+                    # Collect lines of this section (until next top-level key)
+                    $j = $i + 1
+                    $sectionLines = @()
+                    while ($j -lt $lines.Count -and ($lines[$j] -match '^\s{3}$' -or $lines[$j] -match '^\s{4}\S')) {
+                        $sectionLines += $lines[$j]
+                        $j++
+                    }
+                    $sectionText = $sectionLines -join "`n"
+                    Assert-True ($sectionText -match 'implement:\s*codeExecutor') "18u: $route implement=codeExecutor"
+                    Assert-True ($sectionText -match 'plan:\s*orchestrator' -or $sectionText -match 'diagnose:\s*orchestrator') "18v: $route has orchestrator plan/diagnose"
+                    Assert-True ($sectionText -match 'verifyWith:\s*reviewer') "18w: $route has reviewer verifyWith"
+                    $i = $j
+                    continue
+                }
+                $i++
+            }
+        } else {
+            Write-Host "  SKIP: YAML checks (file not at $yamlPath)" -ForegroundColor Yellow
         }
     }
 
