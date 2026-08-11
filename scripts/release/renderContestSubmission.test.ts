@@ -26,9 +26,9 @@ describe("contest submission renderer", () => {
       "submission-checklist.md",
     ]);
     expect(rendered["application-summary.md"]).toContain(
-      "20260811125215934-d60216a7915d",
+      "20260811135933995-c3db7c242202",
     );
-    expect(rendered["application-summary.md"]).toContain("7 cualificaciones");
+    expect(rendered["application-summary.md"]).toContain("9 cualificaciones");
     expect(rendered["application-summary.md"]).toContain(
       "42 de las 1.045 ofertas de la instantánea",
     );

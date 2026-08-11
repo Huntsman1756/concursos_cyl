@@ -192,8 +192,8 @@
   "newlyReachedOfferIdsByProgram": { "IMA02M": [] },
   "newlyReachedOfferUnionIds": [],
   "limitation": "El límite aceptado es solo CNO 7250 (mecánicos-instaladores de refrigeración y climatización) para las seis salidas del BOE. El candidato congelado CNO 7402 corresponde a mecánicos y ajustadores de motores de avión y queda fuera de esta cualificación, por lo que no se publica como relación.",
-  "reviewedCommit": "ffb756449ac004700cbd5aae170f17d676c0a920",
-  "reviewedCommitAt": "2026-08-11T14:02:00.000Z",
+  "reviewedCommit": "e6ae073b1b451c7b9327916b6e4c4aaf5ab52c0d",
+  "reviewedCommitAt": "2026-08-11T14:05:09.000Z",
   "snapshotId": "20260811135933995-c3db7c242202",
   "snapshotHash": "44e1147e3875b753a4e013c12606c2acd0fa965144fc2170fa1edfcd66e439f1",
   "publicParity": {
