@@ -6,11 +6,12 @@ SALIDA CyL ayuda a personas de Castilla y León a explorar opciones de formació
 
 ## Solución
 
-La interfaz permite entrar desde el catálogo de FP o desde una ocupación. Expone estados diferenciados para relaciones revisadas con ofertas, relaciones revisadas sin coincidencias y programas cuya revisión sigue diferida. La metodología explica el origen de cada dato y los límites de interpretación.
+La interfaz permite elegir directamente cualquiera de los 187 ciclos de FP o filtrar los 502 grupos primarios de la CNO-11. Expone por separado el catálogo oficial completo y la cobertura parcial de relaciones FP–ocupación revisadas, incluidas las relaciones con ofertas, las revisadas sin coincidencias y las todavía no validadas. La metodología explica el origen de cada dato y los límites de interpretación.
 
 ## Cobertura congelada
 
 - Instantánea publicada: `20260809185438334-65ce4d3c4e14`.
+- Grupos primarios CNO-11 consultables: **502**.
 - **6 cualificaciones distintas**.
 - Claves de modalidad públicas: **7** (COM02M, EOC01M, HOT01M, IFC03S, IFC03SD, SAN21, SSC01M).
 - Relaciones ocupacionales aprobadas: **14**.

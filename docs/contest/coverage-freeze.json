@@ -1,10 +1,10 @@
 {
   "schemaVersion": "1.0.0",
   "freezeStatus": "frozen",
-  "sourceCommitSha": "5868d32ed74d268c42df5d400ba4805d00e619ec",
+  "sourceCommitSha": "76581c246349aee35407a717ecd86918bb6f17f7",
   "manifest": {
     "path": "public/data/v1/manifest.json",
-    "sha256": "b18793d2907a60dbf7b89ad079935cd5e0c4e9342eff7411408113a5cdea5f86",
+    "sha256": "5b04d4055ac7df0c1bfe291f410e4157e77cc1a619c7af88b17f76a68bd42a94",
     "generatedAt": "2026-08-09T18:54:38.334Z",
     "snapshotId": "20260809185438334-65ce4d3c4e14",
     "qualityStatus": "passed",
@@ -29,6 +29,11 @@
         "resourcePath": "/data/v1/snapshots/20260809185438334-65ce4d3c4e14/mapping-coverage.json",
         "sha256": "f880762313875dbb899343f16ec48df75119f8b3e084aca02716f45c02939634",
         "recordCount": 209
+      },
+      "officialOccupations": {
+        "resourcePath": "/data/v1/snapshots/20260809185438334-65ce4d3c4e14/official-occupations.json",
+        "sha256": "24825e024b5a49963be32a9369b9d8c9dc0a7c51810d0d98b8920b949d3b3c59",
+        "recordCount": 502
       },
       "occupationAliases": {
         "resourcePath": "/data/v1/snapshots/20260809185438334-65ce4d3c4e14/occupation-aliases.json",

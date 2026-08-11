@@ -5,9 +5,9 @@
 <!-- prettier-ignore -->
 | Campo | Valor |
 | --- | --- |
-| Commit fuente | `5868d32ed74d268c42df5d400ba4805d00e619ec` |
+| Commit fuente | `76581c246349aee35407a717ecd86918bb6f17f7` |
 | Manifest | `public/data/v1/manifest.json` |
-| SHA-256 del manifest | `b18793d2907a60dbf7b89ad079935cd5e0c4e9342eff7411408113a5cdea5f86` |
+| SHA-256 del manifest | `5b04d4055ac7df0c1bfe291f410e4157e77cc1a619c7af88b17f76a68bd42a94` |
 | Generado | 2026-08-09T18:54:38.334Z |
 | Snapshot | `20260809185438334-65ce4d3c4e14` |
 | Estado de calidad | passed |
@@ -24,6 +24,7 @@
 | centers | `/data/v1/snapshots/20260809185438334-65ce4d3c4e14/centers.json` | 229 | `593b7780f6cb9511c02edb26a769e5e1f951624f6e4b923a8e34caacb230c87a` |
 | jobOffers | `/data/v1/snapshots/20260809185438334-65ce4d3c4e14/job-offers.json` | 1077 | `0631d0880485df26e2f450ee7da70ce7a0b210fe088eca02398a9474a2e6907b` |
 | mappingCoverage | `/data/v1/snapshots/20260809185438334-65ce4d3c4e14/mapping-coverage.json` | 209 | `f880762313875dbb899343f16ec48df75119f8b3e084aca02716f45c02939634` |
+| officialOccupations | `/data/v1/snapshots/20260809185438334-65ce4d3c4e14/official-occupations.json` | 502 | `24825e024b5a49963be32a9369b9d8c9dc0a7c51810d0d98b8920b949d3b3c59` |
 | occupationAliases | `/data/v1/snapshots/20260809185438334-65ce4d3c4e14/occupation-aliases.json` | 21 | `4f37bc7c6ff4d76140c79d9e9245c7155ff5f77d5b3bc397796985e13c2fbe7c` |
 | occupations | `/data/v1/snapshots/20260809185438334-65ce4d3c4e14/occupations.json` | 13 | `204cb90ac21433d11f6c9ae9289d24d5dacd6b4a53315dcf7a9be87d60c2b6f7` |
 | outcomeIndicators | `/data/v1/snapshots/20260809185438334-65ce4d3c4e14/outcome-indicators.json` | 22170 | `4f2c6b73fc4171bb9daf21583712ab2ec99bcaa7d27b1f2fd0c070b9079ab3e2` |
@@ -63,7 +64,7 @@ npm run analysis:pilot:report:check
 npm exec -- tsx scripts/release/validateContestFreeze.ts
 ```
 
-La revisión independiente confirmó el manifest, los diez recursos, los conjuntos de relaciones y la ausencia de cambios en `data/curated`, `public/data`, `src/domain` y `src/features` desde el commit fuente.
+La revisión independiente confirmó el manifest, sus 11 recursos, los conjuntos de relaciones y la ausencia de cambios en `data/curated`, `public/data`, `src/domain` y `src/features` desde el commit fuente.
 
 ## Despliegue
 
