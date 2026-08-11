@@ -230,5 +230,55 @@
     "sourceQuote": "Vendedor de floristería.",
     "reviewedAt": "2026-08-11",
     "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "FME02M",
+    "occupationId": "occupation:cno11:7132",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+    "sourceQuote": "7132 Instaladores de cerramientos metálicos y carpinteros metálicos",
+    "reviewedAt": "2026-08-11",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "FME02M",
+    "occupationId": "occupation:cno11:7312",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+    "sourceQuote": "7312 Soldadores y oxicortadores",
+    "reviewedAt": "2026-08-11",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "FME02M",
+    "occupationId": "occupation:cno11:7313",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+    "sourceQuote": "7313 Chapistas y caldereros",
+    "reviewedAt": "2026-08-11",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "FME02M",
+    "occupationId": "occupation:cno11:7314",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+    "sourceQuote": "7314 Montadores de estructuras metálicas",
+    "reviewedAt": "2026-08-11",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "IMA02M",
+    "occupationId": "occupation:cno11:7250",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+    "sourceQuote": "7250 Mecánicos-instaladores de refrigeración y climatización",
+    "reviewedAt": "2026-08-11",
+    "mappingVersion": "1.0.0"
   }
 ]

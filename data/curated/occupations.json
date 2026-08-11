@@ -329,5 +329,60 @@
     "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
     "reviewedAt": "2026-08-11",
     "catalogVersion": "1.0.0"
+  },
+  {
+    "occupationId": "occupation:cno11:7132",
+    "preferredLabel": "Instaladores de cerramientos metálicos y carpinteros metálicos",
+    "confirmationLabel": "Carpintería metálica",
+    "classificationSystem": "CNO-11",
+    "classificationCode": "7132",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+    "reviewedAt": "2026-08-11",
+    "catalogVersion": "1.0.0"
+  },
+  {
+    "occupationId": "occupation:cno11:7250",
+    "preferredLabel": "Mecánicos-instaladores de refrigeración y climatización",
+    "confirmationLabel": "Refrigeración y climatización",
+    "classificationSystem": "CNO-11",
+    "classificationCode": "7250",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+    "reviewedAt": "2026-08-11",
+    "catalogVersion": "1.0.0"
+  },
+  {
+    "occupationId": "occupation:cno11:7312",
+    "preferredLabel": "Soldadores y oxicortadores",
+    "confirmationLabel": "Soldadura y oxicorte",
+    "classificationSystem": "CNO-11",
+    "classificationCode": "7312",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+    "reviewedAt": "2026-08-11",
+    "catalogVersion": "1.0.0"
+  },
+  {
+    "occupationId": "occupation:cno11:7313",
+    "preferredLabel": "Chapistas y caldereros",
+    "confirmationLabel": "Chapistería y calderería",
+    "classificationSystem": "CNO-11",
+    "classificationCode": "7313",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+    "reviewedAt": "2026-08-11",
+    "catalogVersion": "1.0.0"
+  },
+  {
+    "occupationId": "occupation:cno11:7314",
+    "preferredLabel": "Montadores de estructuras metálicas",
+    "confirmationLabel": "Montaje de estructuras metálicas",
+    "classificationSystem": "CNO-11",
+    "classificationCode": "7314",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+    "reviewedAt": "2026-08-11",
+    "catalogVersion": "1.0.0"
   }
 ]

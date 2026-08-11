@@ -220,8 +220,8 @@
   "limitation": "Deferred: el seed congelado Mecánico de mecanizado no es un output BOE literal y el candidato CNO 7322 no es el límite general de máquinas-herramienta. Se conservan solo relaciones CNO exactas para auditoría; no se añaden aliases, data/curated, ofertas, snapshot ni recursos públicos.",
   "reviewedCommit": "ffb756449ac004700cbd5aae170f17d676c0a920",
   "reviewedCommitAt": "2026-08-09T17:35:28.000Z",
-  "snapshotId": "20260811125215934-d60216a7915d",
-  "snapshotHash": "5efb2995d4659e021c9284f55ebee9290497dd60a304d998b0b3a5720ae4d293",
+  "snapshotId": "20260811135933995-c3db7c242202",
+  "snapshotHash": "3a3cf24f70952799137773ee5faae4b9a7d0ec6ce60c2cc88c408ced6fa6b120",
   "publicParity": {
     "publishedRelationKeys": [],
     "rejectedRelationKeys": ["FME01M|occupation:cno11:3139"]

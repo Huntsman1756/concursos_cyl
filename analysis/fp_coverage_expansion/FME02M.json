@@ -1,0 +1,250 @@
+{
+  "schemaVersion": "1.0.0",
+  "programKey": "FME02M",
+  "baseQualificationIdentity": "qualification:FME02M",
+  "state": "completed",
+  "transitions": [
+    {
+      "from": "not_started",
+      "to": "in_progress",
+      "at": "2026-08-11T13:34:00Z"
+    },
+    {
+      "from": "in_progress",
+      "to": "completed",
+      "at": "2026-08-11T14:01:30.000Z"
+    }
+  ],
+  "startedAt": "2026-08-11T13:34:00Z",
+  "completedAt": "2026-08-11T14:01:30.000Z",
+  "phaseMinutes": {
+    "research": 8,
+    "implementation": 6,
+    "test": 4,
+    "review": 10
+  },
+  "reviewerTimeExcluded": true,
+  "programmeProfileEvidence": {
+    "todoFp": {
+      "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/fabricacion-mecanica/soldadura-caldereria.html",
+      "sourceQuote": "Técnico en Fabricación Mecánica",
+      "reviewedAt": "2026-08-11"
+    },
+    "authoritativeOutputSource": {
+      "sourceUrl": "https://www.boe.es/eli/es/rd/1692/2007",
+      "sourceQuote": "Las ocupaciones y puestos de trabajo más relevantes son los siguientes:",
+      "reviewedAt": "2026-08-11"
+    },
+    "reconciliationNote": "TodoFP y BOE identifican el mismo título de Grado Medio en fabricación mecánica; el BOE enumera seis salidas cuyos límites CNO-11 se auditan bajo esta expansion."
+  },
+  "seedReconciliations": [
+    {
+      "seedLabel": "Soldador",
+      "sourceOutputLabel": "Soldador / soldadora y oxicortador / oxicortadora.",
+      "authoritativeOutputLabel": "Soldadores y oxicortadores.",
+      "sourceOutputEvidence": {
+        "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/fabricacion-mecanica/soldadura-caldereria.html",
+        "sourceQuote": "Soldador / soldadora y oxicortador / oxicortadora.",
+        "reviewedAt": "2026-08-11"
+      },
+      "authoritativeEvidence": {
+        "sourceUrl": "https://www.boe.es/eli/es/rd/1692/2007",
+        "sourceQuote": "Soldadores y oxicortadores.",
+        "reviewedAt": "2026-08-11"
+      },
+      "reason": "The TodoFP gender-inclusive variant and the BOE output describe the same bounded welding occupation reconciled to CNO 7312."
+    }
+  ],
+  "officialOutputInventory": {
+    "sourceUrl": "https://www.boe.es/eli/es/rd/1692/2007",
+    "labels": [
+      "Soldadores y oxicortadores.",
+      "Operadores de proyección térmica.",
+      "Chapistas y caldereros.",
+      "Montadores de estructuras metálicas.",
+      "Carpintero metálico.",
+      "Tubero industrial de industria pesada."
+    ]
+  },
+  "officialOutputReviews": [
+    {
+      "order": 1,
+      "officialOutputLabel": "Soldadores y oxicortadores.",
+      "disposition": "accepted",
+      "candidateOccupationIds": ["occupation:cno11:7312"],
+      "acceptedOccupationIds": ["occupation:cno11:7312"],
+      "sourceUrl": "https://www.boe.es/eli/es/rd/1692/2007",
+      "sourceQuote": "Soldadores y oxicortadores.",
+      "classificationEvidence": [
+        {
+          "occupationId": "occupation:cno11:7312",
+          "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+          "sourceQuote": "7312 Soldadores y oxicortadores",
+          "reviewedAt": "2026-08-11"
+        }
+      ],
+      "reason": "El output coincide literalmente con el encabezado CNO 7312 que delimita a quienes soldan y oxicortan piezas y estructuras metálicas."
+    },
+    {
+      "order": 2,
+      "officialOutputLabel": "Operadores de proyección térmica.",
+      "disposition": "rejected",
+      "candidateOccupationIds": ["occupation:cno11:8122"],
+      "sourceUrl": "https://www.boe.es/eli/es/rd/1692/2007",
+      "sourceQuote": "Operadores de proyección térmica.",
+      "classificationEvidence": [
+        {
+          "occupationId": "occupation:cno11:7311",
+          "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+          "sourceQuote": "7311 Choppers, pintores por proyección térmica y operarios de recubrimientos",
+          "reviewedAt": "2026-08-11"
+        }
+      ],
+      "reason": "El CNO 7311 identifica choppers y pintores por proyección térmica, pero el output no es una reconciliación literal del seed Soldador; además, el límite exacto de proyección térmica permanece sin establecer en el título."
+    },
+    {
+      "order": 3,
+      "officialOutputLabel": "Chapistas y caldereros.",
+      "disposition": "accepted",
+      "candidateOccupationIds": ["occupation:cno11:7313"],
+      "acceptedOccupationIds": ["occupation:cno11:7313"],
+      "sourceUrl": "https://www.boe.es/eli/es/rd/1692/2007",
+      "sourceQuote": "Chapistas y caldereros.",
+      "classificationEvidence": [
+        {
+          "occupationId": "occupation:cno11:7313",
+          "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+          "sourceQuote": "7313 Chapistas y caldereros",
+          "reviewedAt": "2026-08-11"
+        }
+      ],
+      "reason": "El output coincide literalmente con el encabezado CNO 7313 que delimita a los trabajadoras de chapistería y calderería."
+    },
+    {
+      "order": 4,
+      "officialOutputLabel": "Montadores de estructuras metálicas.",
+      "disposition": "accepted",
+      "candidateOccupationIds": ["occupation:cno11:7314"],
+      "acceptedOccupationIds": ["occupation:cno11:7314"],
+      "sourceUrl": "https://www.boe.es/eli/es/rd/1692/2007",
+      "sourceQuote": "Montadores de estructuras metálicas.",
+      "classificationEvidence": [
+        {
+          "occupationId": "occupation:cno11:7314",
+          "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+          "sourceQuote": "7314 Montadores de estructuras metálicas",
+          "reviewedAt": "2026-08-11"
+        }
+      ],
+      "reason": "El output coincide literalmente con el encabezado CNO 7314 que delimita a los montadores de estructuras metálicas."
+    },
+    {
+      "order": 5,
+      "officialOutputLabel": "Carpintero metálico.",
+      "disposition": "accepted",
+      "candidateOccupationIds": ["occupation:cno11:7132"],
+      "acceptedOccupationIds": ["occupation:cno11:7132"],
+      "sourceUrl": "https://www.boe.es/eli/es/rd/1692/2007",
+      "sourceQuote": "Carpintero metálico.",
+      "classificationEvidence": [
+        {
+          "occupationId": "occupation:cno11:7132",
+          "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+          "sourceQuote": "7132 Instaladores de cerramientos metálicos y carpinteros metálicos",
+          "reviewedAt": "2026-08-11"
+        }
+      ],
+      "reason": "El CNO 7132 nombra expresamente a los carpinteros metálicos, limitando este output de forma exacta."
+    },
+    {
+      "order": 6,
+      "officialOutputLabel": "Tubero industrial de industria pesada.",
+      "disposition": "rejected",
+      "candidateOccupationIds": ["occupation:cno11:7221"],
+      "sourceUrl": "https://www.boe.es/eli/es/rd/1692/2007",
+      "sourceQuote": "Tubero industrial de industria pesada.",
+      "classificationEvidence": [
+        {
+          "occupationId": "occupation:cno11:7402",
+          "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+          "sourceQuote": "7402 Fontaneros",
+          "reviewedAt": "2026-08-11"
+        }
+      ],
+      "reason": "La sección revisada no establece un límite exacto de cuatro dígitos para el operario de tubería industrial pesada; el CNO 7402 (fontaneros) incluye instaladores de tuberías pero no se delimita específicamente la industria pesada."
+    }
+  ],
+  "acceptedRelations": [
+    {
+      "kind": "link",
+      "programKey": "FME02M",
+      "occupationId": "occupation:cno11:7132",
+      "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+      "sourceQuote": "7132 Instaladores de cerramientos metálicos y carpinteros metálicos",
+      "reviewedAt": "2026-08-11"
+    },
+    {
+      "kind": "link",
+      "programKey": "FME02M",
+      "occupationId": "occupation:cno11:7312",
+      "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+      "sourceQuote": "7312 Soldadores y oxicortadores",
+      "reviewedAt": "2026-08-11"
+    },
+    {
+      "kind": "link",
+      "programKey": "FME02M",
+      "occupationId": "occupation:cno11:7313",
+      "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+      "sourceQuote": "7313 Chapistas y caldereros",
+      "reviewedAt": "2026-08-11"
+    },
+    {
+      "kind": "link",
+      "programKey": "FME02M",
+      "occupationId": "occupation:cno11:7314",
+      "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+      "sourceQuote": "7314 Montadores de estructuras metálicas",
+      "reviewedAt": "2026-08-11"
+    }
+  ],
+  "rejectedRelations": [
+    {
+      "kind": "link",
+      "programKey": "FME02M",
+      "occupationId": "occupation:cno11:7221",
+      "sourceUrl": "https://www.boe.es/eli/es/rd/1692/2007",
+      "sourceQuote": "Tubero industrial de industria pesada.",
+      "reviewedAt": "2026-08-11"
+    },
+    {
+      "kind": "link",
+      "programKey": "FME02M",
+      "occupationId": "occupation:cno11:8122",
+      "sourceUrl": "https://www.boe.es/eli/es/rd/1692/2007",
+      "sourceQuote": "Operadores de proyección térmica.",
+      "reviewedAt": "2026-08-11"
+    }
+  ],
+  "baselineMatchIds": [],
+  "currentMatchIds": [],
+  "newlyReachedOfferIdsByProgram": { "FME02M": [] },
+  "newlyReachedOfferUnionIds": [],
+  "limitation": "Se aceptan CNO 7312, 7313, 7314 y 7132 para Soldadura y Calderería. Los candidatos 8122 para proyección térmica y 7221 para tubería industrial se mantienen rechazados porque la evidencia revisada no establece con precisión esos límites de cuatro dígitos para las salidas del título.",
+  "reviewedCommit": "ffb756449ac004700cbd5aae170f17d676c0a920",
+  "reviewedCommitAt": "2026-08-11T14:02:00.000Z",
+  "snapshotId": "20260811135933995-c3db7c242202",
+  "snapshotHash": "0b5168207d787e6acac3157c26cc5ef056638701460caf9f53df234ddafa1faf",
+  "publicParity": {
+    "publishedRelationKeys": [
+      "FME02M|occupation:cno11:7132",
+      "FME02M|occupation:cno11:7312",
+      "FME02M|occupation:cno11:7313",
+      "FME02M|occupation:cno11:7314"
+    ],
+    "rejectedRelationKeys": [
+      "FME02M|occupation:cno11:7221",
+      "FME02M|occupation:cno11:8122"
+    ]
+  }
+}

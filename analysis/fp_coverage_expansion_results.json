@@ -1,17 +1,17 @@
 {
   "schemaVersion": "1.0.0",
-  "generatedAt": "2026-08-09T17:34:00Z",
-  "sourceCutoffAt": "2026-08-09T17:34:00Z",
+  "generatedAt": "2026-08-11T14:01:30.000Z",
+  "sourceCutoffAt": "2026-08-11T14:01:30.000Z",
   "counts": {
-    "completed": 2,
+    "completed": 4,
     "deferred": 6,
     "discarded": 0,
-    "terminal": 8,
+    "terminal": 10,
     "primaryAttempted": 7,
-    "reserveAttempted": 1,
-    "totalAttempted": 8,
+    "reserveAttempted": 3,
+    "totalAttempted": 10,
     "primaryUnattempted": 0,
-    "reserveUnattempted": 6
+    "reserveUnattempted": 4
   },
   "coverage": {
     "baselineReviewedQualifications": [
@@ -23,13 +23,15 @@
     ],
     "newlyCompletedCanonicalBases": [
       "qualification:AGA03M",
-      "qualification:COM02M"
+      "qualification:COM02M",
+      "qualification:FME02M",
+      "qualification:IMA02M"
     ],
-    "terminalDistinctQualificationTotal": 7,
+    "terminalDistinctQualificationTotal": 9,
     "targetDistinctQualifications": 12,
-    "remainingGap": 5,
+    "remainingGap": 3,
     "modalityDoubleCount": false,
-    "belowTargetReason": "Evidence-backed completion covers AGA03M and COM02M; 6 terminal attempts were deferred, 6 reserves remain unattempted, and no additional programme met the evidence threshold needed for 12 distinct qualifications.",
+    "belowTargetReason": "Evidence-backed completion covers AGA03M and COM02M and FME02M and IMA02M; 6 terminal attempts were deferred, 4 reserves remain unattempted, and no additional programme met the evidence threshold needed for 12 distinct qualifications.",
     "publicationStatus": "published_task_a2_12"
   },
   "offerDeltas": {
@@ -41,14 +43,16 @@
       "ELE01M": [],
       "IMA03M": [],
       "FME01M": [],
-      "MAM01M": []
+      "MAM01M": [],
+      "IMA02M": [],
+      "FME02M": []
     },
     "union": []
   },
   "time": {
-    "totalModeledActiveMinutes": 159,
-    "totalWallClockMinutes": 181.95,
-    "totalReviewerMinutes": 0,
+    "totalModeledActiveMinutes": 192,
+    "totalWallClockMinutes": 234.95,
+    "totalReviewerMinutes": 18,
     "reviewerMinutesExcluded": true
   },
   "candidates": [
@@ -382,25 +386,26 @@
       "programTitle": "Instalaciones Frigoríficas y de Climatización",
       "lane": "reserve",
       "rank": 10,
-      "attempted": false,
-      "state": "not_attempted",
+      "attempted": true,
+      "state": "completed",
       "phaseMinutes": {
-        "research": 0,
-        "implementation": 0,
-        "test": 0,
-        "review": 0
+        "research": 6,
+        "implementation": 5,
+        "test": 4,
+        "review": 8
       },
-      "modeledActiveMinutes": 0,
-      "wallClockMinutes": null,
-      "reviewerMinutes": 0,
+      "modeledActiveMinutes": 15,
+      "wallClockMinutes": 25.5,
+      "reviewerMinutes": 8,
       "reviewerTimeExcluded": true,
       "offerDeltaIds": [],
-      "acceptedRelationKeys": [],
+      "acceptedRelationKeys": ["IMA02M|occupation:cno11:7250"],
       "rejectedRelationKeys": [],
       "publicParity": {
-        "publishedRelationKeys": [],
+        "publishedRelationKeys": ["IMA02M|occupation:cno11:7250"],
         "rejectedRelationKeys": []
-      }
+      },
+      "limitation": "El límite aceptado es solo CNO 7250 (mecánicos-instaladores de refrigeración y climatización) para las seis salidas del BOE. El candidato congelado CNO 7402 corresponde a mecánicos y ajustadores de motores de avión y queda fuera de esta cualificación, por lo que no se publica como relación."
     },
     {
       "programKey": "AGA01M",
@@ -460,25 +465,42 @@
       "programTitle": "Soldadura y Calderería",
       "lane": "reserve",
       "rank": 13,
-      "attempted": false,
-      "state": "not_attempted",
+      "attempted": true,
+      "state": "completed",
       "phaseMinutes": {
-        "research": 0,
-        "implementation": 0,
-        "test": 0,
-        "review": 0
+        "research": 8,
+        "implementation": 6,
+        "test": 4,
+        "review": 10
       },
-      "modeledActiveMinutes": 0,
-      "wallClockMinutes": null,
-      "reviewerMinutes": 0,
+      "modeledActiveMinutes": 18,
+      "wallClockMinutes": 27.5,
+      "reviewerMinutes": 10,
       "reviewerTimeExcluded": true,
       "offerDeltaIds": [],
-      "acceptedRelationKeys": [],
-      "rejectedRelationKeys": [],
+      "acceptedRelationKeys": [
+        "FME02M|occupation:cno11:7132",
+        "FME02M|occupation:cno11:7312",
+        "FME02M|occupation:cno11:7313",
+        "FME02M|occupation:cno11:7314"
+      ],
+      "rejectedRelationKeys": [
+        "FME02M|occupation:cno11:7221",
+        "FME02M|occupation:cno11:8122"
+      ],
       "publicParity": {
-        "publishedRelationKeys": [],
-        "rejectedRelationKeys": []
-      }
+        "publishedRelationKeys": [
+          "FME02M|occupation:cno11:7132",
+          "FME02M|occupation:cno11:7312",
+          "FME02M|occupation:cno11:7313",
+          "FME02M|occupation:cno11:7314"
+        ],
+        "rejectedRelationKeys": [
+          "FME02M|occupation:cno11:7221",
+          "FME02M|occupation:cno11:8122"
+        ]
+      },
+      "limitation": "Se aceptan CNO 7312, 7313, 7314 y 7132 para Soldadura y Calderería. Los candidatos 8122 para proyección térmica y 7221 para tubería industrial se mantienen rechazados porque la evidencia revisada no establece con precisión esos límites de cuatro dígitos para las salidas del título."
     },
     {
       "programKey": "COM01B",

@@ -93,6 +93,20 @@ const programs: TrainingProgram[] = [
     familyCode: "EOC",
     familyName: "Edificación y Obra Civil",
   },
+  {
+    programKey: "FME02M",
+    programTitle: "Soldadura y Calderería",
+    level: "intermediate",
+    familyCode: "FME",
+    familyName: "Fabricación Mecánica",
+  },
+  {
+    programKey: "IMA02M",
+    programTitle: "Instalaciones Frigoríficas y de Climatización",
+    level: "intermediate",
+    familyCode: "IMA",
+    familyName: "Instalación y Mantenimiento",
+  },
 ];
 
 const occupations = [
@@ -580,6 +594,11 @@ describe("curated occupation mappings", () => {
         "5210",
         "5220",
         "6120",
+        "7132",
+        "7250",
+        "7312",
+        "7313",
+        "7314",
       ],
     );
     expect(
@@ -594,9 +613,14 @@ describe("curated occupation mappings", () => {
       "EOC01M",
       "EOC01M",
       "EOC01M",
+      "FME02M",
+      "FME02M",
+      "FME02M",
+      "FME02M",
       "HOT01M",
       "IFC03S",
       "IFC03SD",
+      "IMA02M",
       "SAN21",
       "SAN21",
       "SSC01M",

@@ -24,15 +24,15 @@ describe("renderFpCoverageExpansionReport", () => {
     const result = await report();
 
     expect(result.counts).toMatchObject({
-      completed: 2,
+      completed: 4,
       deferred: 6,
       discarded: 0,
-      terminal: 8,
+      terminal: 10,
       primaryAttempted: 7,
-      reserveAttempted: 1,
-      totalAttempted: 8,
+      reserveAttempted: 3,
+      totalAttempted: 10,
       primaryUnattempted: 0,
-      reserveUnattempted: 6,
+      reserveUnattempted: 4,
     });
     expect(result.coverage).toMatchObject({
       baselineReviewedQualifications: [
@@ -42,9 +42,9 @@ describe("renderFpCoverageExpansionReport", () => {
         "qualification:SAN21",
         "qualification:SSC01M",
       ],
-      terminalDistinctQualificationTotal: 7,
+      terminalDistinctQualificationTotal: 9,
       targetDistinctQualifications: 12,
-      remainingGap: 5,
+      remainingGap: 3,
       publicationStatus: "published_task_a2_12",
     });
     expect(result.offerDeltas).toEqual({
@@ -54,6 +54,8 @@ describe("renderFpCoverageExpansionReport", () => {
         COM02M: [],
         ELE01M: [],
         FME01M: [],
+        FME02M: [],
+        IMA02M: [],
         IMA03M: [],
         MAM01M: [],
         TMV02M: [],
@@ -62,9 +64,9 @@ describe("renderFpCoverageExpansionReport", () => {
     });
     expect(result.coverage.modalityDoubleCount).toBe(false);
     expect(result.time).toEqual({
-      totalModeledActiveMinutes: 159,
-      totalWallClockMinutes: 181.95,
-      totalReviewerMinutes: 0,
+      totalModeledActiveMinutes: 192,
+      totalWallClockMinutes: 234.95,
+      totalReviewerMinutes: 18,
       reviewerMinutesExcluded: true,
     });
     expect(
@@ -84,8 +86,8 @@ describe("renderFpCoverageExpansionReport", () => {
       (candidate) => !candidate.attempted,
     );
 
-    expect(attempted).toHaveLength(8);
-    expect(unattempted).toHaveLength(6);
+    expect(attempted).toHaveLength(10);
+    expect(unattempted).toHaveLength(4);
     expect(unattempted.every((candidate) => candidate.lane === "reserve")).toBe(
       true,
     );
@@ -98,10 +100,8 @@ describe("renderFpCoverageExpansionReport", () => {
     });
     expect(unattempted.map((candidate) => candidate.programKey)).toEqual([
       "ELE03S",
-      "IMA02M",
       "AGA01M",
       "TMV01M",
-      "FME02M",
       "COM01B",
     ]);
   });
