@@ -93,11 +93,13 @@ test("COM01M is explicitly unavailable before and after submit", async ({
     .getByRole("combobox", { name: "Ciclo de Formación Profesional" })
     .selectOption("COM01M");
   await expect(page.getByRole("status")).toContainText(
-    /salidas oficiales disponibles.*CNO-11.*aún no validado/i,
+    /salidas oficiales disponibles.*todavía no hay una relación revisada para buscar ofertas/i,
   );
   await page.getByRole("button", { name: "Ver salidas y ofertas" }).click();
   await expect(
-    page.getByText(/Aún no hemos validado una equivalencia CNO-11/i),
+    page.getByText(
+      /Todavía no hay una relación revisada que permita buscar ofertas/i,
+    ),
   ).toBeVisible();
 });
 

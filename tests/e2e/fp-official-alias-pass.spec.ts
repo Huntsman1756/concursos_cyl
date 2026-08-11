@@ -78,7 +78,7 @@ for (const program of results.programs) {
     if (program.afterOfferCount + currentOfferCount === 0) {
       await expect(
         page.getByText(
-          /No hay ofertas relacionadas en la instant\u00e1nea del/u,
+          /No hay ofertas relacionadas en la copia de datos del/u,
         ),
       ).toBeVisible();
     }

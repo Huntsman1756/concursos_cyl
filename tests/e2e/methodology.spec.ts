@@ -9,6 +9,11 @@ test("methodology exposes official source, download, terms, and normalized evide
   await expect(
     page.getByRole("heading", { level: 1, name: "Metodología y fuentes" }),
   ).toHaveCount(1);
+  for (const disclosure of await page
+    .getByText("Ver actualización, identificadores y descargas")
+    .all()) {
+    await disclosure.click();
+  }
   for (const tableId of [
     "famprof_2_08",
     "famprof_3_08",
@@ -33,7 +38,7 @@ test("methodology exposes official source, download, terms, and normalized evide
     "https://www.educacionyfp.gob.es/comunes/aviso-legal.html",
   );
   await expect(
-    page.getByRole("link", { name: "Descargar evidencia normalizada" }).first(),
+    page.getByRole("link", { name: "Descargar los datos utilizados" }).first(),
   ).toHaveAttribute(
     "href",
     /^\/data\/v1\/snapshots\/.+\/outcome-indicators\.json$/u,
