@@ -44,6 +44,12 @@ function list(values: readonly string[]): string {
   return values.join(", ");
 }
 
+function spanishInteger(value: number): string {
+  return new Intl.NumberFormat("es-ES", { maximumFractionDigits: 0 }).format(
+    value,
+  );
+}
+
 function resourceRows(freeze: ContestFreeze): string {
   return Object.entries(freeze.manifest.resourceSnapshots)
     .map(
@@ -72,7 +78,7 @@ La interfaz permite entrar desde el catálogo de FP o desde una ocupación. Expo
 - Claves de modalidad públicas: **${coverage.modalityKeyCount}** (${list(coverage.modalityKeys)}).
 - Relaciones ocupacionales aprobadas: **${coverage.approvedRelationCount}**.
 - Alias aprobados: **${coverage.approvedAliasCount}**.
-- **${offers.matchedOfferCount} ofertas alcanzadas** por relaciones publicadas (unión de IDs).
+- **${offers.matchedOfferCount} de las ${spanishInteger(freeze.manifest.resourceSnapshots.jobOffers.recordCount)} ofertas de la instantánea** quedan alcanzadas por relaciones publicadas (unión de IDs).
 - Relaciones revisadas sin oferta alcanzada: **${coverage.zeroReviewedRelationCount}**.
 - Programas diferidos por evidencia insuficiente: ${list(coverage.deferredPrograms)}.
 

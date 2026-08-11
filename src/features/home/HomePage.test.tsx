@@ -145,6 +145,16 @@ describe("HomePage", () => {
       screen.getByRole("link", { name: "Buscar ciclos que te preparan" }),
     ).toHaveAttribute("href", "/desde-ocupacion");
     expect(
+      screen.getByText(
+        "Consulta relaciones ocupacionales revisadas y, cuando existan, ofertas relacionadas.",
+      ),
+    ).toBeVisible();
+    expect(
+      screen.getByText(
+        "Consulta qué ciclos tienen una relación revisada con esa ocupación.",
+      ),
+    ).toBeVisible();
+    expect(
       screen.getByRole("region", { name: "Sobre la cobertura" }),
     ).toHaveTextContent(
       /relaciones formativas se incorporan de forma progresiva/i,

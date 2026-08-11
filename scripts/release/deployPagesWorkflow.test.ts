@@ -79,7 +79,7 @@ describe("GitHub Pages deployment workflow", () => {
     );
   });
 
-  it("runs contest:submission:check between npm ci and build steps", async () => {
+  it("runs submission and format gates between npm ci and build steps", async () => {
     const workflow = await readFile(workflowPath, "utf8");
     const verifyJob = workflow.slice(
       workflow.indexOf("  verify-and-build:"),
@@ -89,7 +89,9 @@ describe("GitHub Pages deployment workflow", () => {
     expect(npmCiIdx).toBeGreaterThanOrEqual(0);
     const gateIdx = verifyJob.indexOf("npm run contest:submission:check");
     expect(gateIdx).toBeGreaterThan(npmCiIdx);
+    const formatIdx = verifyJob.indexOf("npm run format:check");
+    expect(formatIdx).toBeGreaterThan(gateIdx);
     const buildIdx = verifyJob.indexOf("npm run build");
-    expect(buildIdx).toBeGreaterThan(gateIdx);
+    expect(buildIdx).toBeGreaterThan(formatIdx);
   });
 });

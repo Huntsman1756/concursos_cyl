@@ -14,6 +14,38 @@ async function tabTo(page: Page, target: Locator): Promise<void> {
   throw new Error("Expected the control to be reachable in page tab order.");
 }
 
+test("live DAW results shows formacion link and approved occupation", async ({
+  page,
+}) => {
+  await page.goto("/desde-fp");
+
+  await page
+    .getByLabel("Ciclo de Formación Profesional")
+    .selectOption("IFC03S");
+  await page.getByRole("button", { name: "Ver ofertas" }).click();
+
+  await expect(
+    page.getByRole("link", {
+      name: "Acceder a la información formativa de Desarrollo de Aplicaciones Web",
+    }),
+  ).toBeVisible();
+  await expect(
+    page.getByRole("link", {
+      name: "Acceder a la información formativa de Desarrollo de Aplicaciones Web",
+    }),
+  ).toHaveAttribute("href", "/formacion/IFC03S");
+
+  await expect(
+    page.getByText("Analistas, programadores y diseñadores web y multimedia"),
+  ).toBeVisible();
+
+  await expect(page.getByText("Código CNO-11: 2713")).toBeVisible();
+
+  await expect(
+    page.getByRole("link", { name: "Ver perfil profesional" }),
+  ).toBeVisible();
+});
+
 test("live DAW results name the dated zero-match snapshot without claiming there are no jobs", async ({
   page,
 }) => {

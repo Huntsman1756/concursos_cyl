@@ -26,6 +26,7 @@ import { ReliableActionSchema } from "../../domain/actionEngine";
 import { useDecisionSession } from "../../domain/session";
 import { trainingLevelLabel } from "../../domain/trainingPresentation";
 import { OfferEvidenceCard } from "./OfferEvidenceCard";
+import { resolveApprovedOccupations } from "./resolveApprovedOccupations";
 
 interface ReadyResults {
   status: "ready";
@@ -133,6 +134,32 @@ export function TrainingResultsPage() {
     );
   }, [publicationFilter, session.answers, state]);
 
+  const approvedLinks = useMemo(
+    () =>
+      state.status === "ready"
+        ? state.relationships.links.filter(
+            (link) =>
+              link.trainingProgramKey === programKey &&
+              link.reviewStatus === "approved",
+          )
+        : [],
+    [state, programKey],
+  );
+
+  const hasApprovedRelationship = approvedLinks.length > 0;
+
+  const resolvedOccupations = useMemo(
+    () =>
+      state.status === "ready"
+        ? resolveApprovedOccupations(
+            programKey,
+            state.relationships.links,
+            state.relationships.occupations,
+          )
+        : [],
+    [programKey, state],
+  );
+
   if (state.status === "loading") return <p>Buscando ofertas relacionadas…</p>;
   if (state.status === "failed") {
     return (
@@ -153,11 +180,6 @@ export function TrainingResultsPage() {
     );
   }
 
-  const hasApprovedRelationship = state.relationships.links.some(
-    (link) =>
-      link.trainingProgramKey === programKey &&
-      link.reviewStatus === "approved",
-  );
   const stale =
     state.manifest.qualityStatus === "stale" ||
     state.manifest.resourceSnapshots.jobOffers.qualityStatus === "stale";
@@ -213,6 +235,38 @@ export function TrainingResultsPage() {
             Quitar filtro
           </button>
         </div>
+      )}
+      <section className="study-section">
+        <h2>Dónde estudiar este ciclo</h2>
+        <p>
+          <Link to={`/formacion/${encodeURIComponent(programKey)}`}>
+            Acceder a la información formativa de {state.program.programTitle}
+          </Link>
+        </p>
+      </section>
+      {resolvedOccupations.length > 0 && (
+        <section className="occupations-section">
+          <h2>Ocupaciones revisadas</h2>
+          <ul>
+            {resolvedOccupations.map((occupation) => (
+              <li key={occupation.occupationId}>
+                <p>
+                  <strong>{occupation.preferredLabel}</strong>
+                </p>
+                {occupation.classificationCode !== "" && (
+                  <p>Código CNO-11: {occupation.classificationCode}</p>
+                )}
+                <p>
+                  <Link
+                    to={`/desde-ocupacion/${encodeURIComponent(occupation.occupationId)}`}
+                  >
+                    Ver perfil profesional
+                  </Link>
+                </p>
+              </li>
+            ))}
+          </ul>
+        </section>
       )}
       {!hasApprovedRelationship ? (
         <div className="status-panel">

@@ -10,13 +10,17 @@ import occupationAliases from "../../../data/curated/occupation-aliases.json";
 import occupations from "../../../data/curated/occupations.json";
 import trainingOccupationLinks from "../../../data/curated/training-occupation-links.json";
 import { currentManifestFixture } from "../../../tests/fixtures/generatedManifest";
-import type { TrainingOccupationLink } from "../../../data/schemas/curatedMappings";
+import type {
+  Occupation,
+  TrainingOccupationLink,
+} from "../../../data/schemas/curatedMappings";
 import { AppRoutes } from "../../app/routes";
 import {
   loadFoundationResources,
   loadManifest,
 } from "../../data/generatedDataClient";
 import { publishedRequirementId } from "../../domain/requirements";
+import { resolveApprovedOccupations } from "./resolveApprovedOccupations";
 
 const program = {
   programKey: "IFC03S",
@@ -420,6 +424,109 @@ describe("TrainingResultsPage", () => {
     expect(
       screen.queryByText(/compatibilidad|porcentaje|%/iu),
     ).not.toBeInTheDocument();
+  });
+
+  it("shows Dónde estudiar link even without approved relationship", async () => {
+    installResultsFetch({ links: [] });
+    render(
+      <MemoryRouter initialEntries={["/desde-fp/IFC03S"]}>
+        <AppRoutes />
+      </MemoryRouter>,
+    );
+
+    const estudioLink = await screen.findByRole("link", {
+      name: /Acceder a la información formativa de Desarrollo de Aplicaciones Web/u,
+    });
+    expect(estudioLink).toBeVisible();
+    expect(estudioLink).toHaveAttribute("href", "/formacion/IFC03S");
+    const studyHeading = await screen.findByText("Dónde estudiar este ciclo");
+    expect(studyHeading).toBeVisible();
+  });
+
+  it("shows approved occupation and zero match message when no offers exist", async () => {
+    installResultsFetch();
+    render(
+      <MemoryRouter initialEntries={["/desde-fp/IFC03S"]}>
+        <AppRoutes />
+      </MemoryRouter>,
+    );
+
+    const estudioLink = await screen.findByRole("link", {
+      name: /Acceder a la información formativa de Desarrollo de Aplicaciones Web/u,
+    });
+    expect(estudioLink).toHaveAttribute("href", "/formacion/IFC03S");
+
+    const ocupacion = await screen.findByText(
+      "Analistas, programadores y diseñadores web y multimedia",
+    );
+    expect(ocupacion).toBeVisible();
+
+    const enlaceCno = await screen.findByText("Código CNO-11: 2713");
+    expect(enlaceCno).toBeVisible();
+
+    const perfilLink = await screen.findByRole("link", {
+      name: "Ver perfil profesional",
+    });
+    expect(perfilLink).toBeVisible();
+    expect(perfilLink).toHaveAttribute(
+      "href",
+      "/desde-ocupacion/occupation%3Acno11%3A2713",
+    );
+
+    expect(
+      await screen.findByText(
+        /No hay ofertas relacionadas en la instant\u00e1nea del/u,
+      ),
+    ).toBeVisible();
+  });
+
+  it("filters out draft links, duplicates and unresolvable occupations", () => {
+    const draftLink = {
+      trainingProgramKey: "IFC03S",
+      occupationId: "occupation:cno11:2222",
+      relationshipType: "reviewed_relationship",
+      reviewStatus: "draft" as const,
+      sourceUrl: "https://example.com/draft",
+      sourceQuote:
+        "Este es un enlace borrador que no debe publicarse en la interfaz.",
+      reviewedAt: "2026-06-01",
+      mappingVersion: "0.1.0",
+      reviewNote: "Borrador pendiente de revisión por el equipo.",
+    } as const;
+    const fakeOccupationIdLink = {
+      trainingProgramKey: "IFC03S",
+      occupationId: "occupation:cno11:9999",
+      relationshipType: "reviewed_relationship",
+      reviewStatus: "approved" as const,
+      sourceUrl: "https://example.com/fake",
+      sourceQuote:
+        "Enlace a una ocupación que no existe en el catálogo de pruebas.",
+      reviewedAt: "2026-07-01",
+      mappingVersion: "1.0.0",
+      reviewNote: "La ocupación no está disponible en el catálogo oficial.",
+    } as const;
+
+    const approvedLink = trainingOccupationLinks.find(
+      (link) =>
+        link.trainingProgramKey === "IFC03S" &&
+        link.reviewStatus === "approved",
+    ) as TrainingOccupationLink | undefined;
+    expect(approvedLink).toBeDefined();
+
+    const result = resolveApprovedOccupations(
+      "IFC03S",
+      [draftLink, approvedLink!, approvedLink!, fakeOccupationIdLink],
+      occupations as Occupation[],
+    );
+
+    expect(result).toEqual([
+      {
+        occupationId: "occupation:cno11:2713",
+        preferredLabel:
+          "Analistas, programadores y diseñadores web y multimedia",
+        classificationCode: "2713",
+      },
+    ]);
   });
 
   it("applies the intact unpublished-requirement action in memory and preserves province", async () => {

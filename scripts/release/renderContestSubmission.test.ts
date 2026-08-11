@@ -29,7 +29,9 @@ describe("contest submission renderer", () => {
       "20260809185438334-65ce4d3c4e14",
     );
     expect(rendered["application-summary.md"]).toContain("6 cualificaciones");
-    expect(rendered["application-summary.md"]).toContain("46 ofertas");
+    expect(rendered["application-summary.md"]).toContain(
+      "46 de las 1.077 ofertas de la instantánea",
+    );
     expect(rendered["submission-checklist.md"]).toContain(
       "https://huntsman1756.github.io/concursos_cyl/",
     );

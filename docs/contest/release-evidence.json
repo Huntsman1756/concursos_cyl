@@ -53,7 +53,7 @@
       "tests": 708,
       "passed": 706,
       "skipped": 2,
-      "durationSeconds": 249.70,
+      "durationSeconds": 249.7,
       "command": "npm test -- --testTimeout=60000",
       "workflowRunId": "31362601931"
     },

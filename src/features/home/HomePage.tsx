@@ -105,11 +105,11 @@ export function HomePage() {
         >
           <EntryCard
             title="He terminado FP"
-            outcome="Encuentra salidas laborales de tu ciclo."
+            outcome="Consulta relaciones ocupacionales revisadas y, cuando existan, ofertas relacionadas."
             prompt="¿Qué has estudiado?"
             example="Desarrollo de Aplicaciones Web"
             details={[
-              "Qué ocupaciones encajan",
+              "Ocupaciones con relación revisada",
               "Requisitos y competencias",
               "Ofertas relacionadas, cuando existen",
             ]}
@@ -118,11 +118,11 @@ export function HomePage() {
           />
           <EntryCard
             title="Quiero trabajar de…"
-            outcome="Descubre qué FP te acerca a ese trabajo."
+            outcome="Consulta qué ciclos tienen una relación revisada con esa ocupación."
             prompt="¿Qué ocupación te interesa?"
             example="Programación web"
             details={[
-              "Qué ciclos te preparan",
+              "Ciclos con relación revisada",
               "Dónde se imparten y cómo acceder",
               "Relaciones formativas revisadas",
             ]}

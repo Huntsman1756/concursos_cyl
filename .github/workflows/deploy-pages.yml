@@ -30,6 +30,7 @@ jobs:
       - run: npm ci
       - run: npm run license:check
       - run: npm run contest:submission:check
+      - run: npm run format:check
       - run: npm run lint
       - run: npm test -- --testTimeout=60000
       - run: npx playwright install --with-deps chromium
