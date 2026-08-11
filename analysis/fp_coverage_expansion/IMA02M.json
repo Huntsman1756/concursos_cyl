@@ -71,12 +71,8 @@
       "order": 1,
       "officialOutputLabel": "Instalador frigorista en instalaciones comerciales.",
       "disposition": "accepted",
-      "candidateOccupationIds": [
-        "occupation:cno11:7250"
-      ],
-      "acceptedOccupationIds": [
-        "occupation:cno11:7250"
-      ],
+      "candidateOccupationIds": ["occupation:cno11:7250"],
+      "acceptedOccupationIds": ["occupation:cno11:7250"],
       "sourceUrl": "https://www.boe.es/eli/es/rd/1793/2010",
       "sourceQuote": "Instalador frigorista en instalaciones comerciales.",
       "classificationEvidence": [
@@ -93,12 +89,8 @@
       "order": 2,
       "officialOutputLabel": "Mantenedor frigorista en instalaciones comerciales.",
       "disposition": "accepted",
-      "candidateOccupationIds": [
-        "occupation:cno11:7250"
-      ],
-      "acceptedOccupationIds": [
-        "occupation:cno11:7250"
-      ],
+      "candidateOccupationIds": ["occupation:cno11:7250"],
+      "acceptedOccupationIds": ["occupation:cno11:7250"],
       "sourceUrl": "https://www.boe.es/eli/es/rd/1793/2010",
       "sourceQuote": "Mantenedor frigorista en instalaciones comerciales.",
       "classificationEvidence": [
@@ -115,12 +107,8 @@
       "order": 3,
       "officialOutputLabel": "Instalador frigorista en procesos industriales.",
       "disposition": "accepted",
-      "candidateOccupationIds": [
-        "occupation:cno11:7250"
-      ],
-      "acceptedOccupationIds": [
-        "occupation:cno11:7250"
-      ],
+      "candidateOccupationIds": ["occupation:cno11:7250"],
+      "acceptedOccupationIds": ["occupation:cno11:7250"],
       "sourceUrl": "https://www.boe.es/eli/es/rd/1793/2010",
       "sourceQuote": "Instalador frigorista en procesos industriales.",
       "classificationEvidence": [
@@ -137,12 +125,8 @@
       "order": 4,
       "officialOutputLabel": "Mantenedor frigorista en procesos industriales.",
       "disposition": "accepted",
-      "candidateOccupationIds": [
-        "occupation:cno11:7250"
-      ],
-      "acceptedOccupationIds": [
-        "occupation:cno11:7250"
-      ],
+      "candidateOccupationIds": ["occupation:cno11:7250"],
+      "acceptedOccupationIds": ["occupation:cno11:7250"],
       "sourceUrl": "https://www.boe.es/eli/es/rd/1793/2010",
       "sourceQuote": "Mantenedor frigorista en procesos industriales.",
       "classificationEvidence": [
@@ -159,12 +143,8 @@
       "order": 5,
       "officialOutputLabel": "Instalador/Montador de equipos de climatización, ventilación-extracción, redes de distribución y equipos terminales.",
       "disposition": "accepted",
-      "candidateOccupationIds": [
-        "occupation:cno11:7250"
-      ],
-      "acceptedOccupationIds": [
-        "occupation:cno11:7250"
-      ],
+      "candidateOccupationIds": ["occupation:cno11:7250"],
+      "acceptedOccupationIds": ["occupation:cno11:7250"],
       "sourceUrl": "https://www.boe.es/eli/es/rd/1793/2010",
       "sourceQuote": "Instalador/Montador de equipos de climatización, ventilación-extracción, redes de distribución y equipos terminales.",
       "classificationEvidence": [
@@ -181,12 +161,8 @@
       "order": 6,
       "officialOutputLabel": "Mantenedor/Reparador de equipos de climatización, ventilación-extracción, redes de distribución y equipos terminales.",
       "disposition": "accepted",
-      "candidateOccupationIds": [
-        "occupation:cno11:7250"
-      ],
-      "acceptedOccupationIds": [
-        "occupation:cno11:7250"
-      ],
+      "candidateOccupationIds": ["occupation:cno11:7250"],
+      "acceptedOccupationIds": ["occupation:cno11:7250"],
       "sourceUrl": "https://www.boe.es/eli/es/rd/1793/2010",
       "sourceQuote": "Mantenedor/Reparador de equipos de climatización, ventilación-extracción, redes de distribución y equipos terminales.",
       "classificationEvidence": [
@@ -223,9 +199,7 @@
   "snapshotId": "20260811222221076-727a2dfa2791",
   "snapshotHash": "2304ed24a2f2741658fc6b50b0e4c43a5485529a0990332a9b8efa765b1ca004",
   "publicParity": {
-    "publishedRelationKeys": [
-      "IMA02M|occupation:cno11:7250"
-    ],
+    "publishedRelationKeys": ["IMA02M|occupation:cno11:7250"],
     "rejectedRelationKeys": []
   }
 }

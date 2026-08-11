@@ -83,12 +83,8 @@
       "order": 1,
       "officialOutputLabel": "Trabajador de huertas, viveros y jardines.",
       "disposition": "accepted",
-      "candidateOccupationIds": [
-        "occupation:cno11:6120"
-      ],
-      "acceptedOccupationIds": [
-        "occupation:cno11:6120"
-      ],
+      "candidateOccupationIds": ["occupation:cno11:6120"],
+      "acceptedOccupationIds": ["occupation:cno11:6120"],
       "sourceUrl": "https://www.boe.es/eli/es/rd/1129/2010",
       "sourceQuote": "Trabajador de huertas, viveros y jardines.",
       "classificationEvidence": [
@@ -105,12 +101,8 @@
       "order": 2,
       "officialOutputLabel": "Jardinero, en general.",
       "disposition": "accepted",
-      "candidateOccupationIds": [
-        "occupation:cno11:6120"
-      ],
-      "acceptedOccupationIds": [
-        "occupation:cno11:6120"
-      ],
+      "candidateOccupationIds": ["occupation:cno11:6120"],
+      "acceptedOccupationIds": ["occupation:cno11:6120"],
       "sourceUrl": "https://www.boe.es/eli/es/rd/1129/2010",
       "sourceQuote": "Jardinero, en general.",
       "classificationEvidence": [
@@ -127,12 +119,8 @@
       "order": 3,
       "officialOutputLabel": "Jardinero cuidador de campos de deporte.",
       "disposition": "accepted",
-      "candidateOccupationIds": [
-        "occupation:cno11:6120"
-      ],
-      "acceptedOccupationIds": [
-        "occupation:cno11:6120"
-      ],
+      "candidateOccupationIds": ["occupation:cno11:6120"],
+      "acceptedOccupationIds": ["occupation:cno11:6120"],
       "sourceUrl": "https://www.boe.es/eli/es/rd/1129/2010",
       "sourceQuote": "Jardinero cuidador de campos de deporte.",
       "classificationEvidence": [
@@ -149,12 +137,8 @@
       "order": 4,
       "officialOutputLabel": "Trabajador de parques urbanos, jardines históricos y botánicos.",
       "disposition": "accepted",
-      "candidateOccupationIds": [
-        "occupation:cno11:6120"
-      ],
-      "acceptedOccupationIds": [
-        "occupation:cno11:6120"
-      ],
+      "candidateOccupationIds": ["occupation:cno11:6120"],
+      "acceptedOccupationIds": ["occupation:cno11:6120"],
       "sourceUrl": "https://www.boe.es/eli/es/rd/1129/2010",
       "sourceQuote": "Trabajador de parques urbanos, jardines históricos y botánicos.",
       "classificationEvidence": [
@@ -171,12 +155,8 @@
       "order": 5,
       "officialOutputLabel": "Trabajador cualificado en la instalación de jardines y zonas verdes.",
       "disposition": "accepted",
-      "candidateOccupationIds": [
-        "occupation:cno11:6120"
-      ],
-      "acceptedOccupationIds": [
-        "occupation:cno11:6120"
-      ],
+      "candidateOccupationIds": ["occupation:cno11:6120"],
+      "acceptedOccupationIds": ["occupation:cno11:6120"],
       "sourceUrl": "https://www.boe.es/eli/es/rd/1129/2010",
       "sourceQuote": "Trabajador cualificado en la instalación de jardines y zonas verdes.",
       "classificationEvidence": [
@@ -193,12 +173,8 @@
       "order": 6,
       "officialOutputLabel": "Trabajador cualificado en mantenimiento y mejora de jardines y zonas verdes.",
       "disposition": "accepted",
-      "candidateOccupationIds": [
-        "occupation:cno11:6120"
-      ],
-      "acceptedOccupationIds": [
-        "occupation:cno11:6120"
-      ],
+      "candidateOccupationIds": ["occupation:cno11:6120"],
+      "acceptedOccupationIds": ["occupation:cno11:6120"],
       "sourceUrl": "https://www.boe.es/eli/es/rd/1129/2010",
       "sourceQuote": "Trabajador cualificado en mantenimiento y mejora de jardines y zonas verdes.",
       "classificationEvidence": [
@@ -215,12 +191,8 @@
       "order": 7,
       "officialOutputLabel": "Trabajador cualificado por cuenta propia en empresa de jardinería.",
       "disposition": "accepted",
-      "candidateOccupationIds": [
-        "occupation:cno11:6120"
-      ],
-      "acceptedOccupationIds": [
-        "occupation:cno11:6120"
-      ],
+      "candidateOccupationIds": ["occupation:cno11:6120"],
+      "acceptedOccupationIds": ["occupation:cno11:6120"],
       "sourceUrl": "https://www.boe.es/eli/es/rd/1129/2010",
       "sourceQuote": "Trabajador cualificado por cuenta propia en empresa de jardinería.",
       "classificationEvidence": [
@@ -237,12 +209,8 @@
       "order": 8,
       "officialOutputLabel": "Viverista.",
       "disposition": "accepted",
-      "candidateOccupationIds": [
-        "occupation:cno11:6120"
-      ],
-      "acceptedOccupationIds": [
-        "occupation:cno11:6120"
-      ],
+      "candidateOccupationIds": ["occupation:cno11:6120"],
+      "acceptedOccupationIds": ["occupation:cno11:6120"],
       "sourceUrl": "https://www.boe.es/eli/es/rd/1129/2010",
       "sourceQuote": "Viverista.",
       "classificationEvidence": [
@@ -259,12 +227,8 @@
       "order": 9,
       "officialOutputLabel": "Trabajador en viveros, en general.",
       "disposition": "accepted",
-      "candidateOccupationIds": [
-        "occupation:cno11:6120"
-      ],
-      "acceptedOccupationIds": [
-        "occupation:cno11:6120"
-      ],
+      "candidateOccupationIds": ["occupation:cno11:6120"],
+      "acceptedOccupationIds": ["occupation:cno11:6120"],
       "sourceUrl": "https://www.boe.es/eli/es/rd/1129/2010",
       "sourceQuote": "Trabajador en viveros, en general.",
       "classificationEvidence": [
@@ -281,12 +245,8 @@
       "order": 10,
       "officialOutputLabel": "Trabajador cualificado en propagación de plantas en viveros.",
       "disposition": "accepted",
-      "candidateOccupationIds": [
-        "occupation:cno11:6120"
-      ],
-      "acceptedOccupationIds": [
-        "occupation:cno11:6120"
-      ],
+      "candidateOccupationIds": ["occupation:cno11:6120"],
+      "acceptedOccupationIds": ["occupation:cno11:6120"],
       "sourceUrl": "https://www.boe.es/eli/es/rd/1129/2010",
       "sourceQuote": "Trabajador cualificado en propagación de plantas en viveros.",
       "classificationEvidence": [
@@ -303,12 +263,8 @@
       "order": 11,
       "officialOutputLabel": "Trabajador cualificado en cultivo de plantas en viveros.",
       "disposition": "accepted",
-      "candidateOccupationIds": [
-        "occupation:cno11:6120"
-      ],
-      "acceptedOccupationIds": [
-        "occupation:cno11:6120"
-      ],
+      "candidateOccupationIds": ["occupation:cno11:6120"],
+      "acceptedOccupationIds": ["occupation:cno11:6120"],
       "sourceUrl": "https://www.boe.es/eli/es/rd/1129/2010",
       "sourceQuote": "Trabajador cualificado en cultivo de plantas en viveros.",
       "classificationEvidence": [
@@ -325,12 +281,8 @@
       "order": 12,
       "officialOutputLabel": "Trabajador especialista en recolección de semillas y frutos en altura.",
       "disposition": "accepted",
-      "candidateOccupationIds": [
-        "occupation:cno11:6120"
-      ],
-      "acceptedOccupationIds": [
-        "occupation:cno11:6120"
-      ],
+      "candidateOccupationIds": ["occupation:cno11:6120"],
+      "acceptedOccupationIds": ["occupation:cno11:6120"],
       "sourceUrl": "https://www.boe.es/eli/es/rd/1129/2010",
       "sourceQuote": "Trabajador especialista en recolección de semillas y frutos en altura.",
       "classificationEvidence": [
@@ -347,12 +299,8 @@
       "order": 13,
       "officialOutputLabel": "Trabajador cualificado en producción de semillas.",
       "disposition": "accepted",
-      "candidateOccupationIds": [
-        "occupation:cno11:6120"
-      ],
-      "acceptedOccupationIds": [
-        "occupation:cno11:6120"
-      ],
+      "candidateOccupationIds": ["occupation:cno11:6120"],
+      "acceptedOccupationIds": ["occupation:cno11:6120"],
       "sourceUrl": "https://www.boe.es/eli/es/rd/1129/2010",
       "sourceQuote": "Trabajador cualificado en producción de semillas.",
       "classificationEvidence": [
@@ -369,9 +317,7 @@
       "order": 14,
       "officialOutputLabel": "Injertador.",
       "disposition": "rejected",
-      "candidateOccupationIds": [
-        "occupation:cno11:6110"
-      ],
+      "candidateOccupationIds": ["occupation:cno11:6110"],
       "sourceUrl": "https://www.boe.es/eli/es/rd/1129/2010",
       "sourceQuote": "Injertador.",
       "reason": "The reviewed CNO-11 notes do not establish this title's exact four-digit boundary as CNO 6110."
@@ -380,12 +326,8 @@
       "order": 15,
       "officialOutputLabel": "Trabajador cualificado en viveros.",
       "disposition": "accepted",
-      "candidateOccupationIds": [
-        "occupation:cno11:6120"
-      ],
-      "acceptedOccupationIds": [
-        "occupation:cno11:6120"
-      ],
+      "candidateOccupationIds": ["occupation:cno11:6120"],
+      "acceptedOccupationIds": ["occupation:cno11:6120"],
       "sourceUrl": "https://www.boe.es/eli/es/rd/1129/2010",
       "sourceQuote": "Trabajador cualificado en viveros.",
       "classificationEvidence": [
@@ -402,9 +344,7 @@
       "order": 16,
       "officialOutputLabel": "Florista por cuenta propia o ajena.",
       "disposition": "rejected",
-      "candidateOccupationIds": [
-        "occupation:cno11:3142"
-      ],
+      "candidateOccupationIds": ["occupation:cno11:3142"],
       "sourceUrl": "https://www.boe.es/eli/es/rd/1129/2010",
       "sourceQuote": "Florista por cuenta propia o ajena.",
       "reason": "The reviewed notes do not establish an exact CNO florist boundary for this output, and the work arrangement is not a separate code."
@@ -413,9 +353,7 @@
       "order": 17,
       "officialOutputLabel": "Oficial de floristería.",
       "disposition": "rejected",
-      "candidateOccupationIds": [
-        "occupation:cno11:3142"
-      ],
+      "candidateOccupationIds": ["occupation:cno11:3142"],
       "sourceUrl": "https://www.boe.es/eli/es/rd/1129/2010",
       "sourceQuote": "Oficial de floristería.",
       "reason": "Oficial is a grade or role label; the reviewed CNO-11 notes do not provide an exact four-digit florist boundary."
@@ -424,12 +362,8 @@
       "order": 18,
       "officialOutputLabel": "Vendedor de floristería.",
       "disposition": "accepted",
-      "candidateOccupationIds": [
-        "occupation:cno11:5220"
-      ],
-      "acceptedOccupationIds": [
-        "occupation:cno11:5220"
-      ],
+      "candidateOccupationIds": ["occupation:cno11:5220"],
+      "acceptedOccupationIds": ["occupation:cno11:5220"],
       "sourceUrl": "https://www.boe.es/eli/es/rd/1129/2010",
       "sourceQuote": "Vendedor de floristería.",
       "classificationEvidence": [

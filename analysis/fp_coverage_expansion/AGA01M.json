@@ -74,12 +74,8 @@
       "order": 1,
       "officialOutputLabel": "Agricultor ecológico / agricultora ecológica.",
       "disposition": "accepted",
-      "candidateOccupationIds": [
-        "occupation:cno11:6110"
-      ],
-      "acceptedOccupationIds": [
-        "occupation:cno11:6110"
-      ],
+      "candidateOccupationIds": ["occupation:cno11:6110"],
+      "acceptedOccupationIds": ["occupation:cno11:6110"],
       "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/agraria/produccion-agroecologica.html",
       "sourceQuote": "Agricultor ecológico / agricultora ecológica.",
       "classificationEvidence": [
@@ -96,12 +92,8 @@
       "order": 2,
       "officialOutputLabel": "Apicultor ecológico / apicultora ecológica.",
       "disposition": "accepted",
-      "candidateOccupationIds": [
-        "occupation:cno11:6204"
-      ],
-      "acceptedOccupationIds": [
-        "occupation:cno11:6204"
-      ],
+      "candidateOccupationIds": ["occupation:cno11:6204"],
+      "acceptedOccupationIds": ["occupation:cno11:6204"],
       "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/agraria/produccion-agroecologica.html",
       "sourceQuote": "Apicultor ecológico / apicultora ecológica.",
       "classificationEvidence": [
@@ -118,12 +110,8 @@
       "order": 3,
       "officialOutputLabel": "Avicultor ecológico / avicultora ecológica.",
       "disposition": "accepted",
-      "candidateOccupationIds": [
-        "occupation:cno11:6205"
-      ],
-      "acceptedOccupationIds": [
-        "occupation:cno11:6205"
-      ],
+      "candidateOccupationIds": ["occupation:cno11:6205"],
+      "acceptedOccupationIds": ["occupation:cno11:6205"],
       "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/agraria/produccion-agroecologica.html",
       "sourceQuote": "Avicultor ecológico / avicultora ecológica.",
       "classificationEvidence": [
@@ -180,12 +168,8 @@
       "order": 5,
       "officialOutputLabel": "Operador / operadora de maquinaria agrícola y ganadera.",
       "disposition": "accepted",
-      "candidateOccupationIds": [
-        "occupation:cno11:8321"
-      ],
-      "acceptedOccupationIds": [
-        "occupation:cno11:8321"
-      ],
+      "candidateOccupationIds": ["occupation:cno11:8321"],
+      "acceptedOccupationIds": ["occupation:cno11:8321"],
       "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/agraria/produccion-agroecologica.html",
       "sourceQuote": "Operador / operadora de maquinaria agrícola y ganadera.",
       "classificationEvidence": [
@@ -202,12 +186,8 @@
       "order": 6,
       "officialOutputLabel": "Productor / productora de huevos ecológicos.",
       "disposition": "accepted",
-      "candidateOccupationIds": [
-        "occupation:cno11:6205"
-      ],
-      "acceptedOccupationIds": [
-        "occupation:cno11:6205"
-      ],
+      "candidateOccupationIds": ["occupation:cno11:6205"],
+      "acceptedOccupationIds": ["occupation:cno11:6205"],
       "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/agraria/produccion-agroecologica.html",
       "sourceQuote": "Productor / productora de huevos ecológicos.",
       "classificationEvidence": [
@@ -224,9 +204,7 @@
       "order": 7,
       "officialOutputLabel": "Productor / productora de leche ecológica.",
       "disposition": "rejected",
-      "candidateOccupationIds": [
-        "occupation:cno11:6202"
-      ],
+      "candidateOccupationIds": ["occupation:cno11:6202"],
       "sourceUrl": "https://www.boe.es/eli/es/rd/1633/2009",
       "sourceQuote": "Productor / productora de leche ecológica.",
       "classificationEvidence": [
@@ -243,12 +221,8 @@
       "order": 8,
       "officialOutputLabel": "Trabajador cualificado / trabajadora cualificada por cuenta propia o ajena en cultivos y ganadería ecológica.",
       "disposition": "accepted",
-      "candidateOccupationIds": [
-        "occupation:cno11:6110"
-      ],
-      "acceptedOccupationIds": [
-        "occupation:cno11:6110"
-      ],
+      "candidateOccupationIds": ["occupation:cno11:6110"],
+      "acceptedOccupationIds": ["occupation:cno11:6110"],
       "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/agraria/produccion-agroecologica.html",
       "sourceQuote": "Trabajador cualificado / trabajadora cualificada por cuenta propia o ajena en cultivos y ganadería ecológica.",
       "classificationEvidence": [
@@ -265,12 +239,8 @@
       "order": 9,
       "officialOutputLabel": "Viverista ecológico.",
       "disposition": "accepted",
-      "candidateOccupationIds": [
-        "occupation:cno11:6120"
-      ],
-      "acceptedOccupationIds": [
-        "occupation:cno11:6120"
-      ],
+      "candidateOccupationIds": ["occupation:cno11:6120"],
+      "acceptedOccupationIds": ["occupation:cno11:6120"],
       "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/agraria/produccion-agroecologica.html",
       "sourceQuote": "Viverista ecológico.",
       "classificationEvidence": [

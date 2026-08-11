@@ -30,49 +30,42 @@ const curatedCanonicalLabels = [
 ] as const;
 
 async function readJson<T>(path: string): Promise<T> {
-    return JSON.parse(await readFile(path, "utf8")) as T;
-  }
+  return JSON.parse(await readFile(path, "utf8")) as T;
+}
 
-  async function loadCuratedAgA01MLabels(): Promise<string[]> {
-    const profiles = await readJson<
-      Array<{ programKey: string; outputLabel: string }>
-    >(
-      resolve(
-        rootDirectory,
-        "data",
-        "curated",
-        "professional-profiles.json",
-      ),
-    );
-    return profiles
-      .filter((entry) => entry.programKey === "AGA01M")
-      .map((entry) => entry.outputLabel);
-  }
+async function loadCuratedAgA01MLabels(): Promise<string[]> {
+  const profiles = await readJson<
+    Array<{ programKey: string; outputLabel: string }>
+  >(resolve(rootDirectory, "data", "curated", "professional-profiles.json"));
+  return profiles
+    .filter((entry) => entry.programKey === "AGA01M")
+    .map((entry) => entry.outputLabel);
+}
 
-  function relationKey(relation: {
-    programKey: string;
-    occupationId: string;
-    alias?: string;
-  }): string {
-    return `${relation.programKey}|${relation.occupationId}${relation.alias ? `|${relation.alias}` : ""}`;
-  }
+function relationKey(relation: {
+  programKey: string;
+  occupationId: string;
+  alias?: string;
+}): string {
+  return `${relation.programKey}|${relation.occupationId}${relation.alias ? `|${relation.alias}` : ""}`;
+}
 
-  function expansionSnapshotHash(input: {
-    snapshotId: string;
-    programKey: string;
-    baselineMatchIds: string[];
-    currentMatchIds: string[];
-    acceptedRelationKeys: string[];
-  }): string {
-    return createHash("sha256").update(JSON.stringify(input)).digest("hex");
-  }
+function expansionSnapshotHash(input: {
+  snapshotId: string;
+  programKey: string;
+  baselineMatchIds: string[];
+  currentMatchIds: string[];
+  acceptedRelationKeys: string[];
+}): string {
+  return createHash("sha256").update(JSON.stringify(input)).digest("hex");
+}
 
-  async function loadAGA01MSnapshotId(): Promise<string> {
-    const manifest = await readJson<{
-      resourceSnapshots: { programs: { resourcePath: string } };
-    }>(resolve(rootDirectory, "public/data/v1/manifest.json"));
-    return manifest.resourceSnapshots.programs.resourcePath.split("/")[4]!;
-  }
+async function loadAGA01MSnapshotId(): Promise<string> {
+  const manifest = await readJson<{
+    resourceSnapshots: { programs: { resourcePath: string } };
+  }>(resolve(rootDirectory, "public/data/v1/manifest.json"));
+  return manifest.resourceSnapshots.programs.resourcePath.split("/")[4]!;
+}
 
 describe("AGA01M expansion slot", () => {
   it("publishes exactly the five reviewed AGA01M relations", async () => {
@@ -135,9 +128,9 @@ describe("AGA01M expansion slot", () => {
     expect(curatedLabels).toEqual([...curatedCanonicalLabels]);
 
     // Assert the 9 canonical curated output inventory
-    expect(attempt.officialOutputInventory?.labels).toEqual(
-      [...curatedCanonicalLabels],
-    );
+    expect(attempt.officialOutputInventory?.labels).toEqual([
+      ...curatedCanonicalLabels,
+    ]);
     expect(
       attempt.officialOutputReviews?.map(
         (review) => review.officialOutputLabel,

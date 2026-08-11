@@ -57,9 +57,7 @@
       "order": 1,
       "officialOutputLabel": "Auxiliar administrativo.",
       "disposition": "rejected",
-      "candidateOccupationIds": [
-        "occupation:cno11:4309"
-      ],
+      "candidateOccupationIds": ["occupation:cno11:4309"],
       "sourceUrl": "https://www.boe.es/eli/es/rd/1631/2009",
       "sourceQuote": "Auxiliar administrativo.",
       "classificationEvidence": [
@@ -76,9 +74,7 @@
       "order": 2,
       "officialOutputLabel": "Ayudante de oficina.",
       "disposition": "rejected",
-      "candidateOccupationIds": [
-        "occupation:cno11:4309"
-      ],
+      "candidateOccupationIds": ["occupation:cno11:4309"],
       "sourceUrl": "https://www.boe.es/eli/es/rd/1631/2009",
       "sourceQuote": "Ayudante de oficina.",
       "classificationEvidence": [
@@ -199,9 +195,7 @@
       "order": 7,
       "officialOutputLabel": "Recepcionista.",
       "disposition": "rejected",
-      "candidateOccupationIds": [
-        "occupation:cno11:4412"
-      ],
+      "candidateOccupationIds": ["occupation:cno11:4412"],
       "sourceUrl": "https://www.boe.es/eli/es/rd/1631/2009",
       "sourceQuote": "Recepcionista.",
       "classificationEvidence": [
@@ -244,9 +238,7 @@
       "order": 9,
       "officialOutputLabel": "Empleado de tesorería.",
       "disposition": "rejected",
-      "candidateOccupationIds": [
-        "occupation:cno11:4113"
-      ],
+      "candidateOccupationIds": ["occupation:cno11:4113"],
       "sourceUrl": "https://www.boe.es/eli/es/rd/1631/2009",
       "sourceQuote": "Empleado de tesorería.",
       "classificationEvidence": [

@@ -109,18 +109,16 @@ describe("ELE03S expansion slot", () => {
 
     expect(attempt.state).toBe("completed");
     expect(expectedLabels).toHaveLength(9);
-    expect(
-      attempt.programmeProfileEvidence!.todoFp.sourceUrl,
-    ).toContain("mantenimiento-electronico.html");
+    expect(attempt.programmeProfileEvidence!.todoFp.sourceUrl).toContain(
+      "mantenimiento-electronico.html",
+    );
     expect(attempt.officialOutputInventory?.labels).toEqual(expectedLabels);
     expect(
       attempt.officialOutputReviews?.map(
         (review) => review.officialOutputLabel,
       ),
     ).toEqual(expectedLabels);
-    expect(attempt.officialOutputReviews).toHaveLength(
-      expectedLabels.length,
-    );
+    expect(attempt.officialOutputReviews).toHaveLength(expectedLabels.length);
     expect(attempt.seedReconciliations).toHaveLength(1);
     expect(attempt.seedReconciliations?.[0]!.seedLabel).toBe(
       "Técnico de mantenimiento electrónico",
@@ -129,9 +127,7 @@ describe("ELE03S expansion slot", () => {
       "Técnica / técnico en reparación y mantenimiento de equipos de redes locales y sistemas telemáticos.",
     );
     expect(attempt.publicParity).toEqual({
-      publishedRelationKeys: [
-        "ELE03S|occupation:cno11:7531",
-      ],
+      publishedRelationKeys: ["ELE03S|occupation:cno11:7531"],
       rejectedRelationKeys: [],
     });
     const snapshotId = await loadELE03SSnapshotId();
@@ -169,9 +165,7 @@ describe("ELE03S expansion slot", () => {
     ).toMatchObject({
       programKey: "ELE03S",
       state: "completed",
-      acceptedRelations: [
-        { occupationId: "occupation:cno11:7531" },
-      ],
+      acceptedRelations: [{ occupationId: "occupation:cno11:7531" }],
       rejectedRelations: [],
       newlyReachedOfferUnionIds: [],
     });

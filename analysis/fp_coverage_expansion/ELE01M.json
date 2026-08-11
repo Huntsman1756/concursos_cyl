@@ -56,9 +56,7 @@
       "order": 1,
       "officialOutputLabel": "Instalador-mantenedor electricista.",
       "disposition": "rejected",
-      "candidateOccupationIds": [
-        "occupation:cno11:7510"
-      ],
+      "candidateOccupationIds": ["occupation:cno11:7510"],
       "sourceUrl": "https://www.boe.es/eli/es/rd/177/2008",
       "sourceQuote": "Instalador-mantenedor electricista.",
       "classificationEvidence": [
@@ -75,9 +73,7 @@
       "order": 2,
       "officialOutputLabel": "Electricista de construcción.",
       "disposition": "rejected",
-      "candidateOccupationIds": [
-        "occupation:cno11:7510"
-      ],
+      "candidateOccupationIds": ["occupation:cno11:7510"],
       "sourceUrl": "https://www.boe.es/eli/es/rd/177/2008",
       "sourceQuote": "Electricista de construcción.",
       "classificationEvidence": [
@@ -94,9 +90,7 @@
       "order": 3,
       "officialOutputLabel": "Electricista industrial.",
       "disposition": "rejected",
-      "candidateOccupationIds": [
-        "occupation:cno11:7510"
-      ],
+      "candidateOccupationIds": ["occupation:cno11:7510"],
       "sourceUrl": "https://www.boe.es/eli/es/rd/177/2008",
       "sourceQuote": "Electricista industrial.",
       "classificationEvidence": [
@@ -113,9 +107,7 @@
       "order": 4,
       "officialOutputLabel": "Electricista de mantenimiento.",
       "disposition": "rejected",
-      "candidateOccupationIds": [
-        "occupation:cno11:7521"
-      ],
+      "candidateOccupationIds": ["occupation:cno11:7521"],
       "sourceUrl": "https://www.boe.es/eli/es/rd/177/2008",
       "sourceQuote": "Electricista de mantenimiento.",
       "classificationEvidence": [
@@ -158,9 +150,7 @@
       "order": 6,
       "officialOutputLabel": "Instalador-mantenedor de antenas.",
       "disposition": "rejected",
-      "candidateOccupationIds": [
-        "occupation:cno11:7533"
-      ],
+      "candidateOccupationIds": ["occupation:cno11:7533"],
       "sourceUrl": "https://www.boe.es/eli/es/rd/177/2008",
       "sourceQuote": "Instalador-mantenedor de antenas.",
       "classificationEvidence": [
@@ -177,9 +167,7 @@
       "order": 7,
       "officialOutputLabel": "Instalador de telecomunicaciones en edificios de viviendas.",
       "disposition": "rejected",
-      "candidateOccupationIds": [
-        "occupation:cno11:7533"
-      ],
+      "candidateOccupationIds": ["occupation:cno11:7533"],
       "sourceUrl": "https://www.boe.es/eli/es/rd/177/2008",
       "sourceQuote": "Instalador de telecomunicaciones en edificios de viviendas.",
       "classificationEvidence": [
@@ -196,9 +184,7 @@
       "order": 8,
       "officialOutputLabel": "Instalador-mantenedor de equipos e instalaciones telefónicas.",
       "disposition": "rejected",
-      "candidateOccupationIds": [
-        "occupation:cno11:7533"
-      ],
+      "candidateOccupationIds": ["occupation:cno11:7533"],
       "sourceUrl": "https://www.boe.es/eli/es/rd/177/2008",
       "sourceQuote": "Instalador-mantenedor de equipos e instalaciones telefónicas.",
       "classificationEvidence": [
@@ -215,9 +201,7 @@
       "order": 9,
       "officialOutputLabel": "Montador de instalaciones de energía solar fotovoltaica.",
       "disposition": "rejected",
-      "candidateOccupationIds": [
-        "occupation:cno11:7294"
-      ],
+      "candidateOccupationIds": ["occupation:cno11:7294"],
       "sourceUrl": "https://www.boe.es/eli/es/rd/177/2008",
       "sourceQuote": "Montador de instalaciones de energía solar fotovoltaica.",
       "classificationEvidence": [

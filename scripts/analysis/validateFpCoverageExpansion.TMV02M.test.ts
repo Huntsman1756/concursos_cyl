@@ -104,7 +104,8 @@ describe("TMV02M expansion slot", () => {
       newlyReachedOfferIdsByProgram: { TMV02M: [] },
       newlyReachedOfferUnionIds: [],
       snapshotId: "20260811222221076-727a2dfa2791",
-      snapshotHash: "4b6afb7104a72748e1eb1057b1dda53a8376e337e2498147b93cd82ccf0a6df0",
+      snapshotHash:
+        "4b6afb7104a72748e1eb1057b1dda53a8376e337e2498147b93cd82ccf0a6df0",
     };
     const publicRelationSet = {
       manifestAddressed: true as const,

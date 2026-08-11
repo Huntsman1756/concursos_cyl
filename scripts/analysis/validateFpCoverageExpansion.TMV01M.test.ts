@@ -86,10 +86,7 @@ describe("TMV01M expansion slot", () => {
         )
         .map((link) => link.occupationId)
         .sort(),
-    ).toEqual([
-      "occupation:cno11:7232",
-      "occupation:cno11:7313",
-    ]);
+    ).toEqual(["occupation:cno11:7232", "occupation:cno11:7313"]);
   });
 
   it("validates exhaustive BOE reviews, seed reconciliation, two rejected and completed parity", async () => {

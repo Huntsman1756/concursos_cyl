@@ -40,7 +40,9 @@ describe("renderFpOfficialAliasPassReport", () => {
     expect(manifest.resourceSnapshots.programs.recordCount).toBe(187);
     expect(manifest.resourceSnapshots.occupations.recordCount).toBe(31);
     expect(manifest.resourceSnapshots.occupationAliases.recordCount).toBe(21);
-    expect(manifest.resourceSnapshots.trainingOccupationLinks.recordCount).toBe(36);
+    expect(manifest.resourceSnapshots.trainingOccupationLinks.recordCount).toBe(
+      36,
+    );
     expect(report).toContain("no estiman el empleo total");
     expect(report).toContain(
       "La pasada oficial acotada no aumenta las ofertas alcanzadas; no se amplían fuentes, CNO, ciclos ni reglas de coincidencia.",

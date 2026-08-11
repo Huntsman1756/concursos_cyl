@@ -53,9 +53,7 @@
       "order": 1,
       "officialOutputLabel": "Responsable/encargado de establecimiento alimentario.",
       "disposition": "rejected",
-      "candidateOccupationIds": [
-        "occupation:cno11:1432"
-      ],
+      "candidateOccupationIds": ["occupation:cno11:1432"],
       "sourceUrl": "https://www.boe.es/eli/es/rd/189/2018",
       "sourceQuote": "Responsable/encargado de establecimiento alimentario.",
       "reason": "The CNO 1432 management boundary is indirect and does not resolve manager versus proprietor responsibility."
@@ -64,12 +62,8 @@
       "order": 2,
       "officialOutputLabel": "Responsable/encargado de sección/sala/departamento de tienda de alimentación.",
       "disposition": "accepted",
-      "candidateOccupationIds": [
-        "occupation:cno11:5210"
-      ],
-      "acceptedOccupationIds": [
-        "occupation:cno11:5210"
-      ],
+      "candidateOccupationIds": ["occupation:cno11:5210"],
+      "acceptedOccupationIds": ["occupation:cno11:5210"],
       "sourceUrl": "https://www.boe.es/eli/es/rd/189/2018",
       "sourceQuote": "Responsable/encargado de sección/sala/departamento de tienda de alimentación.",
       "classificationEvidence": [
@@ -86,9 +80,7 @@
       "order": 3,
       "officialOutputLabel": "Gestor/a de pequeño comercio alimentario.",
       "disposition": "rejected",
-      "candidateOccupationIds": [
-        "occupation:cno11:5300"
-      ],
+      "candidateOccupationIds": ["occupation:cno11:5300"],
       "sourceUrl": "https://www.boe.es/eli/es/rd/189/2018",
       "sourceQuote": "Gestor/a de pequeño comercio alimentario.",
       "reason": "CNO 5300 is the proprietor boundary, and the official output does not establish ownership."
@@ -97,9 +89,7 @@
       "order": 4,
       "officialOutputLabel": "Responsable/encargado de comercios alimentarios online.",
       "disposition": "rejected",
-      "candidateOccupationIds": [
-        "occupation:cno11:1432"
-      ],
+      "candidateOccupationIds": ["occupation:cno11:1432"],
       "sourceUrl": "https://www.boe.es/eli/es/rd/189/2018",
       "sourceQuote": "Responsable/encargado de comercios alimentarios online.",
       "reason": "The online modality has no distinct CNO 2011 four-digit boundary in the reviewed official notes."
@@ -108,9 +98,7 @@
       "order": 5,
       "officialOutputLabel": "Asesor/a comercial de productos alimentarios.",
       "disposition": "rejected",
-      "candidateOccupationIds": [
-        "occupation:cno11:3510"
-      ],
+      "candidateOccupationIds": ["occupation:cno11:3510"],
       "sourceUrl": "https://www.boe.es/eli/es/rd/189/2018",
       "sourceQuote": "Asesor/a comercial de productos alimentarios.",
       "reason": "CNO 3510 describes commercial representation to companies and organisations, not the exact retail adviser boundary."
@@ -119,12 +107,8 @@
       "order": 6,
       "officialOutputLabel": "Vendedor/a de productos alimentarios.",
       "disposition": "accepted",
-      "candidateOccupationIds": [
-        "occupation:cno11:5220"
-      ],
-      "acceptedOccupationIds": [
-        "occupation:cno11:5220"
-      ],
+      "candidateOccupationIds": ["occupation:cno11:5220"],
+      "acceptedOccupationIds": ["occupation:cno11:5220"],
       "sourceUrl": "https://www.boe.es/eli/es/rd/189/2018",
       "sourceQuote": "Vendedor/a de productos alimentarios.",
       "classificationEvidence": [

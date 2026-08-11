@@ -68,12 +68,8 @@
       "order": 1,
       "officialOutputLabel": "Chapista reparador / reparadora de carrocería de automóviles, vehículos pesados, tractores, maquinaria agrícola, de industrias extractivas, de construcción y obras públicas y material ferroviario.",
       "disposition": "accepted",
-      "candidateOccupationIds": [
-        "occupation:cno11:7313"
-      ],
-      "acceptedOccupationIds": [
-        "occupation:cno11:7313"
-      ],
+      "candidateOccupationIds": ["occupation:cno11:7313"],
+      "acceptedOccupationIds": ["occupation:cno11:7313"],
       "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/transporte-mantenimiento-vehiculos/carroceria.html",
       "sourceQuote": "Chapista reparador / reparadora de carrocería de automóviles, vehículos pesados, tractores, maquinaria agrícola, de industrias extractivas, de construcción y obras públicas y material ferroviario.",
       "classificationEvidence": [
@@ -116,12 +112,8 @@
       "order": 3,
       "officialOutputLabel": "Pintor / pintora de carrocería de automóviles, vehículos pesados, tractores, maquinaria agrícola, de industrias extractivas, de construcción y obras públicas y material ferroviario.",
       "disposition": "accepted",
-      "candidateOccupationIds": [
-        "occupation:cno11:7232"
-      ],
-      "acceptedOccupationIds": [
-        "occupation:cno11:7232"
-      ],
+      "candidateOccupationIds": ["occupation:cno11:7232"],
+      "acceptedOccupationIds": ["occupation:cno11:7232"],
       "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/transporte-mantenimiento-vehiculos/carroceria.html",
       "sourceQuote": "Pintor / pintora de carrocería de automóviles, vehículos pesados, tractores, maquinaria agrícola, de industrias extractivas, de construcción y obras públicas y material ferroviario.",
       "classificationEvidence": [

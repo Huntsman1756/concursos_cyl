@@ -61,9 +61,7 @@
       "order": 1,
       "officialOutputLabel": "Electronicista de vehículos.",
       "disposition": "rejected",
-      "candidateOccupationIds": [
-        "occupation:cno11:7401"
-      ],
+      "candidateOccupationIds": ["occupation:cno11:7401"],
       "sourceUrl": "https://www.boe.es/eli/es/rd/453/2010",
       "sourceQuote": "Electronicista de vehículos.",
       "reason": "La evidencia CNO revisada no establece una frontera exacta para este output electrónico."
@@ -72,9 +70,7 @@
       "order": 2,
       "officialOutputLabel": "Electricista electrónico de mantenimiento y reparación en automoción.",
       "disposition": "rejected",
-      "candidateOccupationIds": [
-        "occupation:cno11:7401"
-      ],
+      "candidateOccupationIds": ["occupation:cno11:7401"],
       "sourceUrl": "https://www.boe.es/eli/es/rd/453/2010",
       "sourceQuote": "Electricista electrónico de mantenimiento y reparación en automoción.",
       "reason": "7401 no demuestra por sí solo el componente eléctrico-electrónico específico."
@@ -83,9 +79,7 @@
       "order": 3,
       "officialOutputLabel": "Mecánico de automóviles.",
       "disposition": "rejected",
-      "candidateOccupationIds": [
-        "occupation:cno11:7401"
-      ],
+      "candidateOccupationIds": ["occupation:cno11:7401"],
       "sourceUrl": "https://www.boe.es/eli/es/rd/453/2010",
       "sourceQuote": "Mecánico de automóviles.",
       "reason": "Aunque 7401 es materialmente compatible, el seed no se reconcilia literalmente con el inventario exhaustivo."
@@ -94,9 +88,7 @@
       "order": 4,
       "officialOutputLabel": "Electricista de automóviles.",
       "disposition": "rejected",
-      "candidateOccupationIds": [
-        "occupation:cno11:7401"
-      ],
+      "candidateOccupationIds": ["occupation:cno11:7401"],
       "sourceUrl": "https://www.boe.es/eli/es/rd/453/2010",
       "sourceQuote": "Electricista de automóviles.",
       "reason": "No se dispone de una frontera CNO vehicular exacta separada para electricidad."
@@ -105,9 +97,7 @@
       "order": 5,
       "officialOutputLabel": "Electromecánico de automóviles.",
       "disposition": "rejected",
-      "candidateOccupationIds": [
-        "occupation:cno11:7401"
-      ],
+      "candidateOccupationIds": ["occupation:cno11:7401"],
       "sourceUrl": "https://www.boe.es/eli/es/rd/453/2010",
       "sourceQuote": "Electromecánico de automóviles.",
       "reason": "El literal BOE difiere del seed congelado y no permite completar el slot."
@@ -116,9 +106,7 @@
       "order": 6,
       "officialOutputLabel": "Mecánico de motores y sus sistemas auxiliares de automóviles y motocicletas.",
       "disposition": "rejected",
-      "candidateOccupationIds": [
-        "occupation:cno11:7401"
-      ],
+      "candidateOccupationIds": ["occupation:cno11:7401"],
       "sourceUrl": "https://www.boe.es/eli/es/rd/453/2010",
       "sourceQuote": "Mecánico de motores y sus sistemas auxiliares de automóviles y motocicletas.",
       "reason": "La frontera 7401 es compatible, pero no resuelve la reconciliación exhaustiva del programa."
@@ -127,9 +115,7 @@
       "order": 7,
       "officialOutputLabel": "Reparador sistemas neumáticos e hidráulicos.",
       "disposition": "rejected",
-      "candidateOccupationIds": [
-        "occupation:cno11:7401"
-      ],
+      "candidateOccupationIds": ["occupation:cno11:7401"],
       "sourceUrl": "https://www.boe.es/eli/es/rd/453/2010",
       "sourceQuote": "Reparador sistemas neumáticos e hidráulicos.",
       "reason": "No se separa una relación CNO exacta para esta especialidad vehicular."
@@ -138,9 +124,7 @@
       "order": 8,
       "officialOutputLabel": "Reparador sistemas de transmisión y frenos.",
       "disposition": "rejected",
-      "candidateOccupationIds": [
-        "occupation:cno11:7401"
-      ],
+      "candidateOccupationIds": ["occupation:cno11:7401"],
       "sourceUrl": "https://www.boe.es/eli/es/rd/453/2010",
       "sourceQuote": "Reparador sistemas de transmisión y frenos.",
       "reason": "La compatibilidad funcional con 7401 no basta para una relación exhaustiva exacta."
@@ -149,9 +133,7 @@
       "order": 9,
       "officialOutputLabel": "Reparador sistemas de dirección y suspensión.",
       "disposition": "rejected",
-      "candidateOccupationIds": [
-        "occupation:cno11:7401"
-      ],
+      "candidateOccupationIds": ["occupation:cno11:7401"],
       "sourceUrl": "https://www.boe.es/eli/es/rd/453/2010",
       "sourceQuote": "Reparador sistemas de dirección y suspensión.",
       "reason": "La compatibilidad funcional con 7401 no basta para una relación exhaustiva exacta."
@@ -160,9 +142,7 @@
       "order": 10,
       "officialOutputLabel": "Operario de ITV.",
       "disposition": "rejected",
-      "candidateOccupationIds": [
-        "occupation:cno11:7401"
-      ],
+      "candidateOccupationIds": ["occupation:cno11:7401"],
       "sourceUrl": "https://www.boe.es/eli/es/rd/453/2010",
       "sourceQuote": "Operario de ITV.",
       "reason": "La inspección técnica no queda clasificada exactamente por 7401."
@@ -171,9 +151,7 @@
       "order": 11,
       "officialOutputLabel": "Instalador de accesorios en vehículos.",
       "disposition": "rejected",
-      "candidateOccupationIds": [
-        "occupation:cno11:7401"
-      ],
+      "candidateOccupationIds": ["occupation:cno11:7401"],
       "sourceUrl": "https://www.boe.es/eli/es/rd/453/2010",
       "sourceQuote": "Instalador de accesorios en vehículos.",
       "reason": "No hay evidencia CNO exacta vehicular en la revisión."
@@ -182,9 +160,7 @@
       "order": 12,
       "officialOutputLabel": "Operario de empresas dedicadas a la fabricación de recambios.",
       "disposition": "rejected",
-      "candidateOccupationIds": [
-        "occupation:cno11:7401"
-      ],
+      "candidateOccupationIds": ["occupation:cno11:7401"],
       "sourceUrl": "https://www.boe.es/eli/es/rd/453/2010",
       "sourceQuote": "Operario de empresas dedicadas a la fabricación de recambios.",
       "reason": "Fabricación de componentes no equivale literalmente a mantenimiento de vehículos 7401."
@@ -193,9 +169,7 @@
       "order": 13,
       "officialOutputLabel": "Electromecánico de motocicletas.",
       "disposition": "rejected",
-      "candidateOccupationIds": [
-        "occupation:cno11:7401"
-      ],
+      "candidateOccupationIds": ["occupation:cno11:7401"],
       "sourceUrl": "https://www.boe.es/eli/es/rd/453/2010",
       "sourceQuote": "Electromecánico de motocicletas.",
       "reason": "Aunque 7401 incluye mecánicos de motocicletas, no resuelve la frontera exhaustiva del programa."
@@ -204,9 +178,7 @@
       "order": 14,
       "officialOutputLabel": "Vendedor/distribuidor de recambios y equipos de diagnosis.",
       "disposition": "rejected",
-      "candidateOccupationIds": [
-        "occupation:cno11:7401"
-      ],
+      "candidateOccupationIds": ["occupation:cno11:7401"],
       "sourceUrl": "https://www.boe.es/eli/es/rd/453/2010",
       "sourceQuote": "Vendedor/distribuidor de recambios y equipos de diagnosis.",
       "reason": "Venta y distribución quedan fuera de la frontera 7401."
@@ -236,8 +208,6 @@
   "snapshotHash": "4b6afb7104a72748e1eb1057b1dda53a8376e337e2498147b93cd82ccf0a6df0",
   "publicParity": {
     "publishedRelationKeys": [],
-    "rejectedRelationKeys": [
-      "TMV02M|occupation:cno11:7401"
-    ]
+    "rejectedRelationKeys": ["TMV02M|occupation:cno11:7401"]
   }
 }

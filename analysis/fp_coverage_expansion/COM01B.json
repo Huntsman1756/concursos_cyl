@@ -76,12 +76,8 @@
       "order": 1,
       "officialOutputLabel": "Auxiliar de animación del punto de venta.",
       "disposition": "accepted",
-      "candidateOccupationIds": [
-        "occupation:cno11:5492"
-      ],
-      "acceptedOccupationIds": [
-        "occupation:cno11:5492"
-      ],
+      "candidateOccupationIds": ["occupation:cno11:5492"],
+      "acceptedOccupationIds": ["occupation:cno11:5492"],
       "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/comercio-marketing/servicios-comerciales.html",
       "sourceQuote": "Auxiliar de animación del punto de venta.",
       "classificationEvidence": [
@@ -98,12 +94,8 @@
       "order": 2,
       "officialOutputLabel": "Auxiliar de dependiente de comercio.",
       "disposition": "accepted",
-      "candidateOccupationIds": [
-        "occupation:cno11:5220"
-      ],
-      "acceptedOccupationIds": [
-        "occupation:cno11:5220"
-      ],
+      "candidateOccupationIds": ["occupation:cno11:5220"],
+      "acceptedOccupationIds": ["occupation:cno11:5220"],
       "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/comercio-marketing/servicios-comerciales.html",
       "sourceQuote": "Auxiliar de dependiente de comercio.",
       "classificationEvidence": [
@@ -120,12 +112,8 @@
       "order": 3,
       "officialOutputLabel": "Auxiliar de información.",
       "disposition": "accepted",
-      "candidateOccupationIds": [
-        "occupation:cno11:5220"
-      ],
-      "acceptedOccupationIds": [
-        "occupation:cno11:5220"
-      ],
+      "candidateOccupationIds": ["occupation:cno11:5220"],
+      "acceptedOccupationIds": ["occupation:cno11:5220"],
       "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/comercio-marketing/servicios-comerciales.html",
       "sourceQuote": "Auxiliar de información.",
       "classificationEvidence": [
@@ -142,12 +130,8 @@
       "order": 4,
       "officialOutputLabel": "Auxiliar de promoción de ventas.",
       "disposition": "accepted",
-      "candidateOccupationIds": [
-        "occupation:cno11:5492"
-      ],
-      "acceptedOccupationIds": [
-        "occupation:cno11:5492"
-      ],
+      "candidateOccupationIds": ["occupation:cno11:5492"],
+      "acceptedOccupationIds": ["occupation:cno11:5492"],
       "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/comercio-marketing/servicios-comerciales.html",
       "sourceQuote": "Auxiliar de promoción de ventas.",
       "classificationEvidence": [
@@ -164,12 +148,8 @@
       "order": 5,
       "officialOutputLabel": "Auxiliar de venta.",
       "disposition": "accepted",
-      "candidateOccupationIds": [
-        "occupation:cno11:5220"
-      ],
-      "acceptedOccupationIds": [
-        "occupation:cno11:5220"
-      ],
+      "candidateOccupationIds": ["occupation:cno11:5220"],
+      "acceptedOccupationIds": ["occupation:cno11:5220"],
       "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/comercio-marketing/servicios-comerciales.html",
       "sourceQuote": "Auxiliar de venta.",
       "classificationEvidence": [
@@ -186,12 +166,8 @@
       "order": 6,
       "officialOutputLabel": "Carretillera / carretillero de recepción y expedición.",
       "disposition": "accepted",
-      "candidateOccupationIds": [
-        "occupation:cno11:8333"
-      ],
-      "acceptedOccupationIds": [
-        "occupation:cno11:8333"
-      ],
+      "candidateOccupationIds": ["occupation:cno11:8333"],
+      "acceptedOccupationIds": ["occupation:cno11:8333"],
       "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/comercio-marketing/servicios-comerciales.html",
       "sourceQuote": "Carretillera / carretillero de recepción y expedición.",
       "classificationEvidence": [
@@ -208,12 +184,8 @@
       "order": 7,
       "officialOutputLabel": "Contador / contadora de recepción y expedición.",
       "disposition": "accepted",
-      "candidateOccupationIds": [
-        "occupation:cno11:4121"
-      ],
-      "acceptedOccupationIds": [
-        "occupation:cno11:4121"
-      ],
+      "candidateOccupationIds": ["occupation:cno11:4121"],
+      "acceptedOccupationIds": ["occupation:cno11:4121"],
       "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/comercio-marketing/servicios-comerciales.html",
       "sourceQuote": "Contador / contadora de recepción y expedición.",
       "classificationEvidence": [
@@ -230,12 +202,8 @@
       "order": 8,
       "officialOutputLabel": "Empleada / empleado de reposición.",
       "disposition": "accepted",
-      "candidateOccupationIds": [
-        "occupation:cno11:9820"
-      ],
-      "acceptedOccupationIds": [
-        "occupation:cno11:9820"
-      ],
+      "candidateOccupationIds": ["occupation:cno11:9820"],
+      "acceptedOccupationIds": ["occupation:cno11:9820"],
       "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/comercio-marketing/servicios-comerciales.html",
       "sourceQuote": "Empleada / empleado de reposición.",
       "classificationEvidence": [
@@ -252,12 +220,8 @@
       "order": 9,
       "officialOutputLabel": "Operador / operadora de cobro o Cajera / cajero.",
       "disposition": "accepted",
-      "candidateOccupationIds": [
-        "occupation:cno11:5500"
-      ],
-      "acceptedOccupationIds": [
-        "occupation:cno11:5500"
-      ],
+      "candidateOccupationIds": ["occupation:cno11:5500"],
+      "acceptedOccupationIds": ["occupation:cno11:5500"],
       "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/comercio-marketing/servicios-comerciales.html",
       "sourceQuote": "Operador / operadora de cobro o Cajera / cajero.",
       "classificationEvidence": [
@@ -274,12 +238,8 @@
       "order": 10,
       "officialOutputLabel": "Operaria / operario de logística.",
       "disposition": "accepted",
-      "candidateOccupationIds": [
-        "occupation:cno11:4123"
-      ],
-      "acceptedOccupationIds": [
-        "occupation:cno11:4123"
-      ],
+      "candidateOccupationIds": ["occupation:cno11:4123"],
+      "acceptedOccupationIds": ["occupation:cno11:4123"],
       "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/comercio-marketing/servicios-comerciales.html",
       "sourceQuote": "Operaria / operario de logística.",
       "classificationEvidence": [
@@ -296,12 +256,8 @@
       "order": 11,
       "officialOutputLabel": "Operaria / operario de pedidos.",
       "disposition": "accepted",
-      "candidateOccupationIds": [
-        "occupation:cno11:4123"
-      ],
-      "acceptedOccupationIds": [
-        "occupation:cno11:4123"
-      ],
+      "candidateOccupationIds": ["occupation:cno11:4123"],
+      "acceptedOccupationIds": ["occupation:cno11:4123"],
       "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/comercio-marketing/servicios-comerciales.html",
       "sourceQuote": "Operaria / operario de pedidos.",
       "classificationEvidence": [

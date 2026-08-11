@@ -59,12 +59,8 @@
       "order": 1,
       "officialOutputLabel": "Ajustador operario de máquinas herramientas.",
       "disposition": "accepted",
-      "candidateOccupationIds": [
-        "occupation:cno11:7323"
-      ],
-      "acceptedOccupationIds": [
-        "occupation:cno11:7323"
-      ],
+      "candidateOccupationIds": ["occupation:cno11:7323"],
+      "acceptedOccupationIds": ["occupation:cno11:7323"],
       "sourceUrl": "https://www.boe.es/eli/es/rd/1398/2007",
       "sourceQuote": "Ajustador operario de máquinas herramientas.",
       "classificationEvidence": [
@@ -81,12 +77,8 @@
       "order": 2,
       "officialOutputLabel": "Pulidor de metales y afilador de herramientas.",
       "disposition": "accepted",
-      "candidateOccupationIds": [
-        "occupation:cno11:7324"
-      ],
-      "acceptedOccupationIds": [
-        "occupation:cno11:7324"
-      ],
+      "candidateOccupationIds": ["occupation:cno11:7324"],
+      "acceptedOccupationIds": ["occupation:cno11:7324"],
       "sourceUrl": "https://www.boe.es/eli/es/rd/1398/2007",
       "sourceQuote": "Pulidor de metales y afilador de herramientas.",
       "classificationEvidence": [
@@ -103,12 +95,8 @@
       "order": 3,
       "officialOutputLabel": "Operador de máquinas para trabajar metales.",
       "disposition": "accepted",
-      "candidateOccupationIds": [
-        "occupation:cno11:7323"
-      ],
-      "acceptedOccupationIds": [
-        "occupation:cno11:7323"
-      ],
+      "candidateOccupationIds": ["occupation:cno11:7323"],
+      "acceptedOccupationIds": ["occupation:cno11:7323"],
       "sourceUrl": "https://www.boe.es/eli/es/rd/1398/2007",
       "sourceQuote": "Operador de máquinas para trabajar metales.",
       "classificationEvidence": [
@@ -125,12 +113,8 @@
       "order": 4,
       "officialOutputLabel": "Operador de máquinas herramientas.",
       "disposition": "accepted",
-      "candidateOccupationIds": [
-        "occupation:cno11:7323"
-      ],
-      "acceptedOccupationIds": [
-        "occupation:cno11:7323"
-      ],
+      "candidateOccupationIds": ["occupation:cno11:7323"],
+      "acceptedOccupationIds": ["occupation:cno11:7323"],
       "sourceUrl": "https://www.boe.es/eli/es/rd/1398/2007",
       "sourceQuote": "Operador de máquinas herramientas.",
       "classificationEvidence": [
@@ -147,9 +131,7 @@
       "order": 5,
       "officialOutputLabel": "Operador de robots industriales.",
       "disposition": "rejected",
-      "candidateOccupationIds": [
-        "occupation:cno11:3139"
-      ],
+      "candidateOccupationIds": ["occupation:cno11:3139"],
       "sourceUrl": "https://www.boe.es/eli/es/rd/1398/2007",
       "sourceQuote": "Operador de robots industriales.",
       "classificationEvidence": [
@@ -166,12 +148,8 @@
       "order": 6,
       "officialOutputLabel": "Trabajadores de la fabricación de herramientas, mecánicos y ajustadores, modelistas matriceros y asimilados.",
       "disposition": "accepted",
-      "candidateOccupationIds": [
-        "occupation:cno11:7322"
-      ],
-      "acceptedOccupationIds": [
-        "occupation:cno11:7322"
-      ],
+      "candidateOccupationIds": ["occupation:cno11:7322"],
+      "acceptedOccupationIds": ["occupation:cno11:7322"],
       "sourceUrl": "https://www.boe.es/eli/es/rd/1398/2007",
       "sourceQuote": "Trabajadores de la fabricación de herramientas, mecánicos y ajustadores, modelistas matriceros y asimilados.",
       "classificationEvidence": [
@@ -188,12 +166,8 @@
       "order": 7,
       "officialOutputLabel": "Tornero, fresador y mandrinador.",
       "disposition": "accepted",
-      "candidateOccupationIds": [
-        "occupation:cno11:7323"
-      ],
-      "acceptedOccupationIds": [
-        "occupation:cno11:7323"
-      ],
+      "candidateOccupationIds": ["occupation:cno11:7323"],
+      "acceptedOccupationIds": ["occupation:cno11:7323"],
       "sourceUrl": "https://www.boe.es/eli/es/rd/1398/2007",
       "sourceQuote": "Tornero, fresador y mandrinador.",
       "classificationEvidence": [
@@ -256,8 +230,6 @@
   "snapshotHash": "8e3f6095af24097dd4c8011731d9b13032b22d189b5cdcb28b02a0c85e900c16",
   "publicParity": {
     "publishedRelationKeys": [],
-    "rejectedRelationKeys": [
-      "FME01M|occupation:cno11:3139"
-    ]
+    "rejectedRelationKeys": ["FME01M|occupation:cno11:3139"]
   }
 }

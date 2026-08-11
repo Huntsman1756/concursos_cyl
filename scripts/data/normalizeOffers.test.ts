@@ -148,12 +148,7 @@ describe("normalizeOffers", () => {
       },
     ]);
 
-    expect(result.map((offer) => offer.id)).toEqual([
-      "01",
-      "02",
-      "10",
-      "03",
-    ]);
+    expect(result.map((offer) => offer.id)).toEqual(["01", "02", "10", "03"]);
   });
 
   it("rejects a blank official identifier", () => {

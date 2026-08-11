@@ -56,9 +56,7 @@
       "order": 1,
       "officialOutputLabel": "Mecánico de mantenimiento.",
       "disposition": "rejected",
-      "candidateOccupationIds": [
-        "occupation:cno11:7403"
-      ],
+      "candidateOccupationIds": ["occupation:cno11:7403"],
       "sourceUrl": "https://www.boe.es/eli/es/rd/1589/2011",
       "sourceQuote": "Mecánico de mantenimiento.",
       "classificationEvidence": [
@@ -101,9 +99,7 @@
       "order": 3,
       "officialOutputLabel": "Montador de equipos eléctricos.",
       "disposition": "rejected",
-      "candidateOccupationIds": [
-        "occupation:cno11:8202"
-      ],
+      "candidateOccupationIds": ["occupation:cno11:8202"],
       "sourceUrl": "https://www.boe.es/eli/es/rd/1589/2011",
       "sourceQuote": "Montador de equipos eléctricos.",
       "classificationEvidence": [
@@ -120,9 +116,7 @@
       "order": 4,
       "officialOutputLabel": "Montador de equipos electrónicos.",
       "disposition": "rejected",
-      "candidateOccupationIds": [
-        "occupation:cno11:8202"
-      ],
+      "candidateOccupationIds": ["occupation:cno11:8202"],
       "sourceUrl": "https://www.boe.es/eli/es/rd/1589/2011",
       "sourceQuote": "Montador de equipos electrónicos.",
       "classificationEvidence": [
@@ -198,9 +192,7 @@
       "order": 7,
       "officialOutputLabel": "Montador de automatismos neumáticos e hidráulicos.",
       "disposition": "rejected",
-      "candidateOccupationIds": [
-        "occupation:cno11:7403"
-      ],
+      "candidateOccupationIds": ["occupation:cno11:7403"],
       "sourceUrl": "https://www.boe.es/eli/es/rd/1589/2011",
       "sourceQuote": "Montador de automatismos neumáticos e hidráulicos.",
       "classificationEvidence": [

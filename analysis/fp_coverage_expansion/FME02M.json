@@ -71,12 +71,8 @@
       "order": 1,
       "officialOutputLabel": "Soldadores y oxicortadores.",
       "disposition": "accepted",
-      "candidateOccupationIds": [
-        "occupation:cno11:7312"
-      ],
-      "acceptedOccupationIds": [
-        "occupation:cno11:7312"
-      ],
+      "candidateOccupationIds": ["occupation:cno11:7312"],
+      "acceptedOccupationIds": ["occupation:cno11:7312"],
       "sourceUrl": "https://www.boe.es/eli/es/rd/1692/2007",
       "sourceQuote": "Soldadores y oxicortadores.",
       "classificationEvidence": [
@@ -93,9 +89,7 @@
       "order": 2,
       "officialOutputLabel": "Operadores de proyección térmica.",
       "disposition": "rejected",
-      "candidateOccupationIds": [
-        "occupation:cno11:8122"
-      ],
+      "candidateOccupationIds": ["occupation:cno11:8122"],
       "sourceUrl": "https://www.boe.es/eli/es/rd/1692/2007",
       "sourceQuote": "Operadores de proyección térmica.",
       "classificationEvidence": [
@@ -112,12 +106,8 @@
       "order": 3,
       "officialOutputLabel": "Chapistas y caldereros.",
       "disposition": "accepted",
-      "candidateOccupationIds": [
-        "occupation:cno11:7313"
-      ],
-      "acceptedOccupationIds": [
-        "occupation:cno11:7313"
-      ],
+      "candidateOccupationIds": ["occupation:cno11:7313"],
+      "acceptedOccupationIds": ["occupation:cno11:7313"],
       "sourceUrl": "https://www.boe.es/eli/es/rd/1692/2007",
       "sourceQuote": "Chapistas y caldereros.",
       "classificationEvidence": [
@@ -134,12 +124,8 @@
       "order": 4,
       "officialOutputLabel": "Montadores de estructuras metálicas.",
       "disposition": "accepted",
-      "candidateOccupationIds": [
-        "occupation:cno11:7314"
-      ],
-      "acceptedOccupationIds": [
-        "occupation:cno11:7314"
-      ],
+      "candidateOccupationIds": ["occupation:cno11:7314"],
+      "acceptedOccupationIds": ["occupation:cno11:7314"],
       "sourceUrl": "https://www.boe.es/eli/es/rd/1692/2007",
       "sourceQuote": "Montadores de estructuras metálicas.",
       "classificationEvidence": [
@@ -156,12 +142,8 @@
       "order": 5,
       "officialOutputLabel": "Carpintero metálico.",
       "disposition": "accepted",
-      "candidateOccupationIds": [
-        "occupation:cno11:7132"
-      ],
-      "acceptedOccupationIds": [
-        "occupation:cno11:7132"
-      ],
+      "candidateOccupationIds": ["occupation:cno11:7132"],
+      "acceptedOccupationIds": ["occupation:cno11:7132"],
       "sourceUrl": "https://www.boe.es/eli/es/rd/1692/2007",
       "sourceQuote": "Carpintero metálico.",
       "classificationEvidence": [
@@ -178,9 +160,7 @@
       "order": 6,
       "officialOutputLabel": "Tubero industrial de industria pesada.",
       "disposition": "rejected",
-      "candidateOccupationIds": [
-        "occupation:cno11:7221"
-      ],
+      "candidateOccupationIds": ["occupation:cno11:7221"],
       "sourceUrl": "https://www.boe.es/eli/es/rd/1692/2007",
       "sourceQuote": "Tubero industrial de industria pesada.",
       "classificationEvidence": [

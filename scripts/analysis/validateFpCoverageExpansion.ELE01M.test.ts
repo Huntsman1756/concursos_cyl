@@ -105,7 +105,8 @@ describe("ELE01M expansion slot", () => {
       newlyReachedOfferIdsByProgram: { ELE01M: [] },
       newlyReachedOfferUnionIds: [],
       snapshotId: "20260811222221076-727a2dfa2791",
-      snapshotHash: "79063cf1b348b52fabe6ed8e4368ecceeea5e0aaef3897eadf261a6e17806f14",
+      snapshotHash:
+        "79063cf1b348b52fabe6ed8e4368ecceeea5e0aaef3897eadf261a6e17806f14",
     };
     const publicRelationSet = {
       manifestAddressed: true as const,

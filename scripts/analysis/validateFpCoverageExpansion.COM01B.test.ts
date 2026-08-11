@@ -119,9 +119,7 @@ describe("COM01B expansion slot", () => {
         (review) => review.officialOutputLabel,
       ),
     ).toEqual(outputLabels);
-    expect(attempt.officialOutputReviews).toHaveLength(
-      outputLabels.length,
-    );
+    expect(attempt.officialOutputReviews).toHaveLength(outputLabels.length);
     expect(attempt.seedReconciliations).toHaveLength(1);
     expect(attempt.seedReconciliations?.[0]!.seedLabel).toBe(
       "Auxiliar de comercio",
