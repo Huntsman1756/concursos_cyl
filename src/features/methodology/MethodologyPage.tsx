@@ -290,10 +290,12 @@ export function MethodologyPage() {
           <section>
             <h3>Qué no permite afirmar</h3>
             <p>
-              El catálogo completo no se convierte automáticamente en relaciones
-              ocupacionales revisadas. Solo publicamos una salida laboral cuando
-              existe evidencia específica; una relación ausente significa «no
-              revisada», no «sin salidas profesionales».
+              TodoFP aporta salidas profesionales literales para los 187 ciclos
+              del catálogo. Las mostramos como perfiles formativos oficiales,
+              separadas de las equivalencias CNO-11 y de las ofertas actuales.
+              Solo cruzamos una salida con ofertas cuando esa equivalencia está
+              revisada; así una relación CNO ausente significa «cruce no
+              validado», no «sin salidas profesionales».
             </p>
           </section>
           <section>

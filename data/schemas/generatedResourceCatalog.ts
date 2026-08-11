@@ -25,6 +25,10 @@ export const GENERATED_RESOURCE_CATALOG = {
     fileName: "training-occupation-links.json",
     sourceKind: "curatedRelationships",
   },
+  professionalProfiles: {
+    fileName: "professional-profiles.json",
+    sourceKind: "professionalProfiles",
+  },
   mappingCoverage: {
     fileName: "mapping-coverage.json",
     sourceKind: "curatedRelationships",

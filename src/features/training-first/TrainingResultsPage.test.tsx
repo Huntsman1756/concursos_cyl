@@ -93,6 +93,7 @@ function installResultsFetch(
     links?: TrainingOccupationLink[];
     offers?: unknown[];
     requirements?: unknown[];
+    professionalProfiles?: unknown[];
     stale?: boolean;
   } = {},
 ): void {
@@ -114,6 +115,10 @@ function installResultsFetch(
     publishedRequirements: {
       ...baseSnapshot,
       resourcePath: "/data/v1/snapshots/build-1/published-requirements.json",
+    },
+    professionalProfiles: {
+      ...baseSnapshot,
+      resourcePath: "/data/v1/snapshots/build-1/professional-profiles.json",
     },
   } as const;
   const manifest = {
@@ -157,6 +162,21 @@ function installResultsFetch(
     [
       extraSnapshots.publishedRequirements.resourcePath,
       options.requirements ?? [],
+    ],
+    [
+      extraSnapshots.professionalProfiles.resourcePath,
+      options.professionalProfiles ?? [
+        {
+          profileId: `professional-profile:${"b".repeat(64)}`,
+          ...program,
+          officialTitle: "Técnico Superior en Desarrollo de Aplicaciones Web",
+          outputLabel: "Programador web.",
+          sourceSystem: "TodoFP",
+          sourceUrl:
+            "https://www.todofp.es/que-estudiar/familias-profesionales/informatica-comunicaciones/daw.html",
+          sourceQuote: "Programador web.",
+        },
+      ],
     ],
   ]);
   vi.stubGlobal(
@@ -255,7 +275,7 @@ describe("TrainingResultsPage", () => {
     expect(screen.queryByText(/Filtro activo/)).not.toBeInTheDocument();
   });
 
-  it("reports missing audited coverage instead of inventing a relationship", async () => {
+  it("separates missing CNO coverage from official professional outputs", async () => {
     installResultsFetch({ links: [] });
     render(
       <MemoryRouter initialEntries={["/desde-fp/IFC03S"]}>
@@ -264,10 +284,38 @@ describe("TrainingResultsPage", () => {
     );
 
     expect(
-      await screen.findByText(
-        "Aún no hay una relación revisada para este ciclo.",
-      ),
+      await screen.findByText(/Aún no hemos validado una equivalencia CNO-11/u),
     ).toBeVisible();
+  });
+
+  it("shows literal TodoFP outputs with their official source", async () => {
+    installResultsFetch({
+      links: [],
+      professionalProfiles: [
+        {
+          profileId: `professional-profile:${"a".repeat(64)}`,
+          ...program,
+          officialTitle: "Técnico Superior en Desarrollo de Aplicaciones Web",
+          outputLabel: "Programador web.",
+          sourceSystem: "TodoFP",
+          sourceUrl:
+            "https://www.todofp.es/que-estudiar/familias-profesionales/informatica-comunicaciones/daw.html",
+          sourceQuote: "Programador web.",
+        },
+      ],
+    });
+    render(
+      <MemoryRouter initialEntries={["/desde-fp/IFC03S"]}>
+        <AppRoutes />
+      </MemoryRouter>,
+    );
+
+    expect(await screen.findByText("Programador web.")).toBeVisible();
+    expect(
+      screen.getByRole("link", {
+        name: "Comprobar estas salidas en la ficha oficial de TodoFP",
+      }),
+    ).toHaveAttribute("href", expect.stringContaining("todofp.es"));
   });
 
   it("describes a truthful zero-match snapshot without claiming there are no jobs", async () => {

@@ -142,6 +142,25 @@ const fixedOptions = {
     aliases: [],
     links: [],
   }),
+  loadProfessionalProfiles: async (
+    programs: ReadonlyArray<{
+      familyCode: string;
+      familyName: string;
+      level: "basic" | "intermediate" | "higher" | "specialization";
+      programKey: string;
+      programTitle: string;
+    }>,
+  ) =>
+    programs.map((program, index) => ({
+      profileId: `professional-profile:${index.toString(16).padStart(64, "0")}`,
+      ...program,
+      officialTitle: program.programTitle,
+      outputLabel: "Perfil profesional oficial.",
+      sourceSystem: "TodoFP" as const,
+      sourceUrl:
+        "https://www.todofp.es/que-estudiar/familias-profesionales.html",
+      sourceQuote: "Perfil profesional oficial.",
+    })),
   log: () => undefined,
 };
 

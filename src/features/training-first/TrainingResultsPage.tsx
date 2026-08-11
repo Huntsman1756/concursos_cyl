@@ -7,10 +7,12 @@ import type {
   LoadableGeneratedManifest,
   TrainingProgram,
 } from "../../../data/schemas/generated";
+import type { ProfessionalProfile } from "../../../data/schemas/professionalProfiles";
 import {
   loadAuditedRelationships,
   loadFoundationResources,
   loadManifest,
+  loadProfessionalProfiles,
   loadPublishedRequirements,
   type LoadedAuditedRelationships,
 } from "../../data/generatedDataClient";
@@ -36,6 +38,7 @@ interface ReadyResults {
   offers: JobOffer[];
   requirements: OfferPublishedRequirements[];
   relationships: LoadedAuditedRelationships;
+  professionalProfiles: ProfessionalProfile[];
   matches: OfferMatch[];
 }
 
@@ -83,10 +86,12 @@ export function TrainingResultsPage() {
           (candidate) => candidate.programKey === programKey,
         );
         if (program === undefined) return { status: "unknown" as const };
-        const [requirements, relationships] = await Promise.all([
-          loadPublishedRequirements(manifest),
-          loadAuditedRelationships(manifest),
-        ]);
+        const [requirements, relationships, professionalProfiles] =
+          await Promise.all([
+            loadPublishedRequirements(manifest),
+            loadAuditedRelationships(manifest),
+            loadProfessionalProfiles(manifest),
+          ]);
         const matches = matchOffersForProgram(programKey, {
           programs: foundation.programs,
           qualifications: REVIEWED_QUALIFICATIONS,
@@ -106,6 +111,7 @@ export function TrainingResultsPage() {
           offers: foundation.jobOffers,
           requirements,
           relationships,
+          professionalProfiles,
           matches,
         };
       })
@@ -155,6 +161,16 @@ export function TrainingResultsPage() {
             programKey,
             state.relationships.links,
             state.relationships.occupations,
+          )
+        : [],
+    [programKey, state],
+  );
+
+  const officialProfiles = useMemo(
+    () =>
+      state.status === "ready"
+        ? state.professionalProfiles.filter(
+            (profile) => profile.programKey === programKey,
           )
         : [],
     [programKey, state],
@@ -244,9 +260,37 @@ export function TrainingResultsPage() {
           </Link>
         </p>
       </section>
+      <section className="occupations-section">
+        <h2>Salidas profesionales oficiales</h2>
+        <p>
+          TodoFP identifica estos perfiles para el título. Describen trabajos a
+          los que prepara el ciclo; no significan que exista ahora una oferta
+          concreta en nuestra instantánea.
+        </p>
+        {officialProfiles.length > 0 ? (
+          <>
+            <ul>
+              {officialProfiles.map((profile) => (
+                <li key={profile.profileId}>{profile.outputLabel}</li>
+              ))}
+            </ul>
+            <p>
+              <a
+                href={officialProfiles[0]!.sourceUrl}
+                rel="noreferrer"
+                target="_blank"
+              >
+                Comprobar estas salidas en la ficha oficial de TodoFP
+              </a>
+            </p>
+          </>
+        ) : (
+          <p>No se han podido cargar las salidas oficiales de este ciclo.</p>
+        )}
+      </section>
       {resolvedOccupations.length > 0 && (
         <section className="occupations-section">
-          <h2>Ocupaciones revisadas</h2>
+          <h2>Ocupaciones CNO-11 revisadas para buscar ofertas</h2>
           <ul>
             {resolvedOccupations.map((occupation) => (
               <li key={occupation.occupationId}>
@@ -270,7 +314,16 @@ export function TrainingResultsPage() {
       )}
       {!hasApprovedRelationship ? (
         <div className="status-panel">
-          <p>Aún no hay una relación revisada para este ciclo.</p>
+          <h2>Cómo buscar oportunidades ahora</h2>
+          <p>
+            Las salidas oficiales están disponibles arriba. Aún no hemos
+            validado una equivalencia CNO-11 para cruzar este ciclo con las
+            ofertas de la instantánea sin riesgo de falsos positivos.
+          </p>
+          <p>
+            Usa los nombres oficiales como términos de búsqueda en los portales
+            de empleo y comprueba siempre los requisitos de cada oferta.
+          </p>
         </div>
       ) : orderedMatches.length === 0 ? (
         <div className="status-panel">

@@ -110,7 +110,7 @@ describe("training-first search", () => {
     });
     await user.selectOptions(select, "COM01M");
     expect(screen.getByRole("status")).toHaveTextContent(
-      /cobertura revisada no disponible/i,
+      /salidas oficiales disponibles.*CNO-11.*aún no validado/i,
     );
     const catalogScope = screen.getByRole("region", {
       name: "Alcance del catálogo de FP",

@@ -39,6 +39,10 @@ import {
   type MappingCoverage,
   type TrainingOccupationLink,
 } from "../../data/schemas/curatedMappings";
+import {
+  ProfessionalProfilesResourceSchema,
+  type ProfessionalProfile,
+} from "../../data/schemas/professionalProfiles";
 
 export type GeneratedDataErrorCode = "network" | "schema" | "missing";
 
@@ -175,6 +179,22 @@ export function loadPublishedRequirements(
   return loadGeneratedResource(
     snapshot.resourcePath,
     PublishedRequirementsResourceSchema,
+  );
+}
+
+/** Loads literal TodoFP professional outputs; retained historical snapshots resolve empty. */
+export function loadProfessionalProfiles(
+  manifest: LoadableGeneratedManifest,
+): Promise<ProfessionalProfile[]> {
+  const resourceSnapshots =
+    manifest.resourceSnapshots as typeof manifest.resourceSnapshots &
+      Record<string, { resourcePath: string } | undefined>;
+  const snapshot = resourceSnapshots.professionalProfiles;
+  if (snapshot === undefined) return Promise.resolve([]);
+
+  return loadGeneratedResource(
+    snapshot.resourcePath,
+    ProfessionalProfilesResourceSchema,
   );
 }
 

@@ -34,3 +34,31 @@ curl http://127.0.0.1:8080/data/v1/manifest.json
 ```
 
 For a reverse proxy mounted below a path, build with `--build-arg VITE_PUBLIC_BASE_PATH=/desired-path/`; the proxy must strip that prefix before forwarding to Caddy. The base must be a same-origin absolute pathname; external and traversal-like values fail the build.
+
+## VPS production
+
+The canonical VPS deployment serves the root-based build from
+`https://salida-cyl.157-90-22-40.sslip.io`. The DNS name resolves directly to
+the dedicated host and can be replaced with a project-owned domain by changing
+the site address in `deploy/vps/Caddyfile`.
+
+The host uses the official Caddy package and serves immutable release
+directories below `/srv/salida-cyl/releases`. The `current` symlink is replaced
+atomically only after the archive has been extracted and checked. Five releases
+are retained for rollback. Install the tracked Caddy configuration with:
+
+```sh
+scp deploy/vps/Caddyfile mcpspain-official-sources-vps:/etc/caddy/Caddyfile
+ssh mcpspain-official-sources-vps "caddy validate --config /etc/caddy/Caddyfile && systemctl reload caddy"
+```
+
+From PowerShell, publish and verify a root build with:
+
+```powershell
+./scripts/release/deployVps.ps1
+```
+
+The deployment script does a clean dependency install, builds locally, uploads
+one release archive, switches the symlink atomically, retains the five newest
+releases, reloads Caddy and runs the same live SPA/header verifier used for the
+container. It never copies repository metadata or credentials to the server.

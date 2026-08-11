@@ -38,7 +38,7 @@ const DOCUMENT_NAMES = [
   "submission-checklist.md",
 ] as const;
 const OUTPUT_DIRECTORY = path.join("docs", "contest");
-const ROOT_URL = "https://huntsman1756.github.io/concursos_cyl/";
+const ROOT_URL = "https://salida-cyl.157-90-22-40.sslip.io/";
 
 function list(values: readonly string[]): string {
   return values.join(", ");

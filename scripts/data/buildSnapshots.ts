@@ -50,6 +50,11 @@ import {
 } from "../../data/schemas/generated";
 import { OutcomeIndicatorsResourceSchema } from "../../data/schemas/outcomes";
 import {
+  ProfessionalProfilesResourceSchema,
+  assertCompleteProfessionalProfileCoverage,
+  type ProfessionalProfile,
+} from "../../data/schemas/professionalProfiles";
+import {
   GENERATED_RESOURCE_CATALOG,
   GENERATED_FOUNDATION_RESOURCE_KEYS,
   GENERATED_RESOURCE_KEYS,
@@ -162,6 +167,10 @@ const RESOURCE_DEFINITIONS = {
     ...GENERATED_RESOURCE_CATALOG.trainingOccupationLinks,
     schema: TrainingOccupationLinksSchema,
   },
+  professionalProfiles: {
+    ...GENERATED_RESOURCE_CATALOG.professionalProfiles,
+    schema: ProfessionalProfilesResourceSchema,
+  },
   mappingCoverage: {
     ...GENERATED_RESOURCE_CATALOG.mappingCoverage,
     schema: MappingCoverageResourceSchema,
@@ -218,6 +227,9 @@ export interface BuildSnapshotsOptions {
   loadCuratedMappings?: (
     programs: readonly z.infer<typeof TrainingProgramSchema>[],
   ) => Promise<ValidatedCuratedMappings>;
+  loadProfessionalProfiles?: (
+    programs: readonly z.infer<typeof TrainingProgramSchema>[],
+  ) => Promise<ProfessionalProfile[]>;
   log?: (message: string) => void;
   failureInjection?: SnapshotFailureInjection;
 }
@@ -1266,6 +1278,7 @@ async function writeCandidate(
   incomeBundle: EducabaseIncomeBundle,
   outcomeIndicators: z.infer<typeof OutcomeIndicatorsResourceSchema>,
   curatedMappings: ValidatedCuratedMappings,
+  professionalProfiles: readonly ProfessionalProfile[],
   previousCounts: SnapshotCounts | undefined,
 ): Promise<{ manifest: GeneratedManifest; counts: SnapshotCounts }> {
   const training = normalizeTraining(trainingRecords);
@@ -1321,6 +1334,9 @@ async function writeCandidate(
         `${right.trainingProgramKey}:${right.occupationId}:${right.relationshipType}`,
       ),
     ),
+    professionalProfiles: ProfessionalProfilesResourceSchema.parse(
+      professionalProfiles,
+    ).sort((left, right) => left.profileId.localeCompare(right.profileId)),
     mappingCoverage: buildMappingCoverage(
       training.programs,
       curatedMappings.links,
@@ -1357,6 +1373,11 @@ async function writeCandidate(
     recordsUrl:
       "https://www.todofp.es/que-estudiar/familias-profesionales.html",
   };
+  const professionalProfileSource = {
+    id: "todofp-official-professional-outputs",
+    recordsUrl:
+      "https://www.todofp.es/que-estudiar/familias-profesionales.html",
+  };
   const resourceSnapshot = (key: ResourceKey, count: number) => ({
     ...sourceSnapshot(
       RESOURCE_DEFINITIONS[key].sourceKind === "training"
@@ -1367,7 +1388,9 @@ async function writeCandidate(
             ? curatedOccupationSource
             : RESOURCE_DEFINITIONS[key].sourceKind === "educabaseIncome"
               ? SOURCE_CONFIG.educabaseIncome
-              : curatedRelationshipSource,
+              : RESOURCE_DEFINITIONS[key].sourceKind === "professionalProfiles"
+                ? professionalProfileSource
+                : curatedRelationshipSource,
       fetchedAt,
       RESOURCE_DEFINITIONS[key].sourceKind === "offers"
         ? offerSourceSnapshot.sourceUpdatedAt
@@ -2160,12 +2183,29 @@ export async function buildSnapshots(
         normalizeIncomeOutcomes(incomeBundle.tables),
       );
       const normalizedPrograms = normalizeTraining(trainingRecords).programs;
+      const professionalProfiles = ProfessionalProfilesResourceSchema.parse(
+        await (
+          options.loadProfessionalProfiles ??
+          (async () =>
+            JSON.parse(
+              await readFile(
+                resolve(root, "data", "curated", "professional-profiles.json"),
+                "utf8",
+              ),
+            ) as unknown)
+        )(normalizedPrograms),
+      );
+      assertCompleteProfessionalProfileCoverage(
+        normalizedPrograms,
+        professionalProfiles,
+      );
       const curatedMappings = await (
         options.loadCuratedMappings ??
         ((programs) => loadCuratedMappingsFromDisk(root, programs))
       )(normalizedPrograms);
       const sourceHash = hashCanonicalSource({
         curatedMappings,
+        professionalProfiles,
         income: incomeBundle.artifacts.map((artifact) => ({
           format: artifact.format,
           sha256: artifact.sha256,
@@ -2187,6 +2227,7 @@ export async function buildSnapshots(
         incomeBundle,
         outcomeIndicators,
         curatedMappings,
+        professionalProfiles,
         previous?.counts,
       );
       await safeMkdir(root, target);

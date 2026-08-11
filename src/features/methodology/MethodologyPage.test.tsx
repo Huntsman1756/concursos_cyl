@@ -107,7 +107,7 @@ describe("MethodologyPage", () => {
       ),
     );
     expect(trainingCatalog).toHaveTextContent(
-      /catálogo completo.*relaciones ocupacionales revisadas/i,
+      /TodoFP aporta salidas profesionales literales.*equivalencias CNO-11/i,
     );
     expect(
       within(trainingCatalog).getByRole("link", {

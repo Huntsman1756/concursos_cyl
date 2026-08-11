@@ -97,8 +97,9 @@ export function TrainingSearchPage() {
         <p className="training-page__eyebrow">Desde tu formación</p>
         <h1>Encuentra ofertas relacionadas con tu FP</h1>
         <p>
-          Elige tu ciclo oficial. Mostraremos únicamente relaciones revisadas y
-          requisitos publicados por cada vacante.
+          Elige tu ciclo oficial. Verás sus salidas publicadas por TodoFP y, por
+          separado, las ocupaciones y ofertas que ya hemos podido relacionar con
+          evidencia revisada.
         </p>
       </header>
 
@@ -110,15 +111,16 @@ export function TrainingSearchPage() {
           <h2>El catálogo completo está disponible</h2>
           <p>
             El selector contiene {catalogSummary.programCount} ciclos oficiales.
-            La cobertura ocupacional revisada es una capa separada: ahora
-            incluye {catalogSummary.reviewedModalityCount}{" "}
+            Todos muestran sus salidas profesionales oficiales de TodoFP. La
+            equivalencia CNO-11 para cruzarlas con ofertas es una capa separada:
+            ahora incluye {catalogSummary.reviewedModalityCount}{" "}
             {catalogSummary.reviewedModalityCount === 1 ? "clave" : "claves"} de
             modalidad.
           </p>
           <p>
-            Si un ciclo no tiene una relación revisada, podrás seguir
-            consultando dónde se estudia; la ausencia de una relación no
-            significa que el ciclo no tenga salidas profesionales.
+            Puedes elegir cualquier ciclo, consultar sus salidas y ver dónde se
+            estudia. Cuando falta una equivalencia CNO-11, evitamos mostrar
+            ofertas dudosas.
           </p>
           <Link to="/metodologia#fp-catalogo">
             Cómo funciona la cobertura de FP
@@ -157,7 +159,7 @@ export function TrainingSearchPage() {
             <p role="status" aria-live="polite">
               {selectedCoverage.coverageStatus === "reviewed"
                 ? `Cobertura revisada: ${selectedCoverage.approvedMappings} ocupaciones CNO.`
-                : "Cobertura revisada no disponible para este ciclo."}
+                : "Salidas oficiales disponibles; cruce CNO-11 con ofertas aún no validado."}
             </p>
           )}
           <div className="form-field">
