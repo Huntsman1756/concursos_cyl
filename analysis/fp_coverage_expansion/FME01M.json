@@ -9,7 +9,11 @@
       "to": "in_progress",
       "at": "2026-08-09T17:20:00Z"
     },
-    { "from": "in_progress", "to": "deferred", "at": "2026-08-09T17:34:00Z" }
+    {
+      "from": "in_progress",
+      "to": "deferred",
+      "at": "2026-08-09T17:34:00Z"
+    }
   ],
   "startedAt": "2026-08-09T17:20:00Z",
   "completedAt": "2026-08-09T17:34:00Z",
@@ -55,8 +59,12 @@
       "order": 1,
       "officialOutputLabel": "Ajustador operario de máquinas herramientas.",
       "disposition": "accepted",
-      "candidateOccupationIds": ["occupation:cno11:7323"],
-      "acceptedOccupationIds": ["occupation:cno11:7323"],
+      "candidateOccupationIds": [
+        "occupation:cno11:7323"
+      ],
+      "acceptedOccupationIds": [
+        "occupation:cno11:7323"
+      ],
       "sourceUrl": "https://www.boe.es/eli/es/rd/1398/2007",
       "sourceQuote": "Ajustador operario de máquinas herramientas.",
       "classificationEvidence": [
@@ -73,8 +81,12 @@
       "order": 2,
       "officialOutputLabel": "Pulidor de metales y afilador de herramientas.",
       "disposition": "accepted",
-      "candidateOccupationIds": ["occupation:cno11:7324"],
-      "acceptedOccupationIds": ["occupation:cno11:7324"],
+      "candidateOccupationIds": [
+        "occupation:cno11:7324"
+      ],
+      "acceptedOccupationIds": [
+        "occupation:cno11:7324"
+      ],
       "sourceUrl": "https://www.boe.es/eli/es/rd/1398/2007",
       "sourceQuote": "Pulidor de metales y afilador de herramientas.",
       "classificationEvidence": [
@@ -91,8 +103,12 @@
       "order": 3,
       "officialOutputLabel": "Operador de máquinas para trabajar metales.",
       "disposition": "accepted",
-      "candidateOccupationIds": ["occupation:cno11:7323"],
-      "acceptedOccupationIds": ["occupation:cno11:7323"],
+      "candidateOccupationIds": [
+        "occupation:cno11:7323"
+      ],
+      "acceptedOccupationIds": [
+        "occupation:cno11:7323"
+      ],
       "sourceUrl": "https://www.boe.es/eli/es/rd/1398/2007",
       "sourceQuote": "Operador de máquinas para trabajar metales.",
       "classificationEvidence": [
@@ -109,8 +125,12 @@
       "order": 4,
       "officialOutputLabel": "Operador de máquinas herramientas.",
       "disposition": "accepted",
-      "candidateOccupationIds": ["occupation:cno11:7323"],
-      "acceptedOccupationIds": ["occupation:cno11:7323"],
+      "candidateOccupationIds": [
+        "occupation:cno11:7323"
+      ],
+      "acceptedOccupationIds": [
+        "occupation:cno11:7323"
+      ],
       "sourceUrl": "https://www.boe.es/eli/es/rd/1398/2007",
       "sourceQuote": "Operador de máquinas herramientas.",
       "classificationEvidence": [
@@ -127,7 +147,9 @@
       "order": 5,
       "officialOutputLabel": "Operador de robots industriales.",
       "disposition": "rejected",
-      "candidateOccupationIds": ["occupation:cno11:3139"],
+      "candidateOccupationIds": [
+        "occupation:cno11:3139"
+      ],
       "sourceUrl": "https://www.boe.es/eli/es/rd/1398/2007",
       "sourceQuote": "Operador de robots industriales.",
       "classificationEvidence": [
@@ -144,8 +166,12 @@
       "order": 6,
       "officialOutputLabel": "Trabajadores de la fabricación de herramientas, mecánicos y ajustadores, modelistas matriceros y asimilados.",
       "disposition": "accepted",
-      "candidateOccupationIds": ["occupation:cno11:7322"],
-      "acceptedOccupationIds": ["occupation:cno11:7322"],
+      "candidateOccupationIds": [
+        "occupation:cno11:7322"
+      ],
+      "acceptedOccupationIds": [
+        "occupation:cno11:7322"
+      ],
       "sourceUrl": "https://www.boe.es/eli/es/rd/1398/2007",
       "sourceQuote": "Trabajadores de la fabricación de herramientas, mecánicos y ajustadores, modelistas matriceros y asimilados.",
       "classificationEvidence": [
@@ -162,8 +188,12 @@
       "order": 7,
       "officialOutputLabel": "Tornero, fresador y mandrinador.",
       "disposition": "accepted",
-      "candidateOccupationIds": ["occupation:cno11:7323"],
-      "acceptedOccupationIds": ["occupation:cno11:7323"],
+      "candidateOccupationIds": [
+        "occupation:cno11:7323"
+      ],
+      "acceptedOccupationIds": [
+        "occupation:cno11:7323"
+      ],
       "sourceUrl": "https://www.boe.es/eli/es/rd/1398/2007",
       "sourceQuote": "Tornero, fresador y mandrinador.",
       "classificationEvidence": [
@@ -215,15 +245,19 @@
   ],
   "baselineMatchIds": [],
   "currentMatchIds": [],
-  "newlyReachedOfferIdsByProgram": { "FME01M": [] },
+  "newlyReachedOfferIdsByProgram": {
+    "FME01M": []
+  },
   "newlyReachedOfferUnionIds": [],
   "limitation": "Deferred: el seed congelado Mecánico de mecanizado no es un output BOE literal y el candidato CNO 7322 no es el límite general de máquinas-herramienta. Se conservan solo relaciones CNO exactas para auditoría; no se añaden aliases, data/curated, ofertas, snapshot ni recursos públicos.",
   "reviewedCommit": "ffb756449ac004700cbd5aae170f17d676c0a920",
   "reviewedCommitAt": "2026-08-09T17:35:28.000Z",
-  "snapshotId": "20260811135933995-c3db7c242202",
-  "snapshotHash": "3a3cf24f70952799137773ee5faae4b9a7d0ec6ce60c2cc88c408ced6fa6b120",
+  "snapshotId": "20260811222221076-727a2dfa2791",
+  "snapshotHash": "8e3f6095af24097dd4c8011731d9b13032b22d189b5cdcb28b02a0c85e900c16",
   "publicParity": {
     "publishedRelationKeys": [],
-    "rejectedRelationKeys": ["FME01M|occupation:cno11:3139"]
+    "rejectedRelationKeys": [
+      "FME01M|occupation:cno11:3139"
+    ]
   }
 }

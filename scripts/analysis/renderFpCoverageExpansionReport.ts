@@ -218,7 +218,7 @@ export const FpCoverageExpansionReportSchema = z
         path: ["coverage", "terminalDistinctQualificationTotal"],
         message: "Terminal distinct qualification count is not recomputed.",
       });
-    if (report.coverage.remainingGap !== 12 - distinctTotal)
+    if (report.coverage.remainingGap !== Math.max(0, 12 - distinctTotal))
       context.addIssue({
         code: "custom",
         path: ["coverage", "remainingGap"],
@@ -800,10 +800,12 @@ export async function buildFpCoverageExpansionReport(
       terminalDistinctQualificationTotal:
         baselineReviewedQualifications.length + new Set(completedBases).size,
       targetDistinctQualifications: 12 as const,
-      remainingGap:
+      remainingGap: Math.max(
+        0,
         12 -
-        baselineReviewedQualifications.length -
-        new Set(completedBases).size,
+          baselineReviewedQualifications.length -
+          new Set(completedBases).size,
+      ),
       modalityDoubleCount: false as const,
       belowTargetReason: `Evidence-backed completion covers ${completedProgramKeys.join(
         " and ",

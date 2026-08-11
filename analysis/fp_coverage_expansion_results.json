@@ -1,17 +1,17 @@
 {
   "schemaVersion": "1.0.0",
-  "generatedAt": "2026-08-11T14:01:30.000Z",
-  "sourceCutoffAt": "2026-08-11T14:01:30.000Z",
+  "generatedAt": "2026-08-11T17:27:42.000Z",
+  "sourceCutoffAt": "2026-08-11T17:27:42.000Z",
   "counts": {
-    "completed": 4,
+    "completed": 8,
     "deferred": 6,
     "discarded": 0,
-    "terminal": 10,
+    "terminal": 14,
     "primaryAttempted": 7,
-    "reserveAttempted": 3,
-    "totalAttempted": 10,
+    "reserveAttempted": 7,
+    "totalAttempted": 14,
     "primaryUnattempted": 0,
-    "reserveUnattempted": 4
+    "reserveUnattempted": 0
   },
   "coverage": {
     "baselineReviewedQualifications": [
@@ -22,16 +22,20 @@
       "qualification:SSC01M"
     ],
     "newlyCompletedCanonicalBases": [
+      "qualification:AGA01M",
       "qualification:AGA03M",
+      "qualification:COM01B",
       "qualification:COM02M",
+      "qualification:ELE03S",
       "qualification:FME02M",
-      "qualification:IMA02M"
+      "qualification:IMA02M",
+      "qualification:TMV01M"
     ],
-    "terminalDistinctQualificationTotal": 9,
+    "terminalDistinctQualificationTotal": 13,
     "targetDistinctQualifications": 12,
-    "remainingGap": 3,
+    "remainingGap": 0,
     "modalityDoubleCount": false,
-    "belowTargetReason": "Evidence-backed completion covers AGA03M and COM02M and FME02M and IMA02M; 6 terminal attempts were deferred, 4 reserves remain unattempted, and no additional programme met the evidence threshold needed for 12 distinct qualifications.",
+    "belowTargetReason": "Evidence-backed completion covers AGA01M and AGA03M and COM01B and COM02M and ELE03S and FME02M and IMA02M and TMV01M; 6 terminal attempts were deferred, 0 reserves remain unattempted, and no additional programme met the evidence threshold needed for 12 distinct qualifications.",
     "publicationStatus": "published_task_a2_12"
   },
   "offerDeltas": {
@@ -44,14 +48,18 @@
       "IMA03M": [],
       "FME01M": [],
       "MAM01M": [],
+      "ELE03S": [],
       "IMA02M": [],
-      "FME02M": []
+      "AGA01M": [],
+      "TMV01M": [],
+      "FME02M": [],
+      "COM01B": []
     },
     "union": []
   },
   "time": {
-    "totalModeledActiveMinutes": 192,
-    "totalWallClockMinutes": 234.95,
+    "totalModeledActiveMinutes": 255,
+    "totalWallClockMinutes": 422.65,
     "totalReviewerMinutes": 18,
     "reviewerMinutesExcluded": true
   },
@@ -360,25 +368,26 @@
       "programTitle": "Mantenimiento Electrónico",
       "lane": "reserve",
       "rank": 9,
-      "attempted": false,
-      "state": "not_attempted",
+      "attempted": true,
+      "state": "completed",
       "phaseMinutes": {
-        "research": 0,
+        "research": 8,
         "implementation": 0,
-        "test": 0,
+        "test": 3,
         "review": 0
       },
-      "modeledActiveMinutes": 0,
-      "wallClockMinutes": null,
+      "modeledActiveMinutes": 11,
+      "wallClockMinutes": 30,
       "reviewerMinutes": 0,
       "reviewerTimeExcluded": true,
       "offerDeltaIds": [],
-      "acceptedRelationKeys": [],
+      "acceptedRelationKeys": ["ELE03S|occupation:cno11:7531"],
       "rejectedRelationKeys": [],
       "publicParity": {
-        "publishedRelationKeys": [],
+        "publishedRelationKeys": ["ELE03S|occupation:cno11:7531"],
         "rejectedRelationKeys": []
-      }
+      },
+      "limitation": "El límite aceptado es solo CNO 7531 (técnicos de reparación de equipos electrónicos y de comunicaciones) para las nueve salidas de TodoFP del grado superior Mantenimiento Electrónico. La denominación genérica se subsume bajo la misma clasificación."
     },
     {
       "programKey": "IMA02M",
@@ -413,25 +422,48 @@
       "programTitle": "Producción Agroecológica",
       "lane": "reserve",
       "rank": 11,
-      "attempted": false,
-      "state": "not_attempted",
+      "attempted": true,
+      "state": "completed",
       "phaseMinutes": {
-        "research": 0,
+        "research": 12,
         "implementation": 0,
-        "test": 0,
+        "test": 5,
         "review": 0
       },
-      "modeledActiveMinutes": 0,
-      "wallClockMinutes": null,
+      "modeledActiveMinutes": 17,
+      "wallClockMinutes": 30,
       "reviewerMinutes": 0,
       "reviewerTimeExcluded": true,
       "offerDeltaIds": [],
-      "acceptedRelationKeys": [],
-      "rejectedRelationKeys": [],
+      "acceptedRelationKeys": [
+        "AGA01M|occupation:cno11:6110",
+        "AGA01M|occupation:cno11:6120",
+        "AGA01M|occupation:cno11:6204",
+        "AGA01M|occupation:cno11:6205",
+        "AGA01M|occupation:cno11:8321"
+      ],
+      "rejectedRelationKeys": [
+        "AGA01M|occupation:cno11:6201",
+        "AGA01M|occupation:cno11:6202",
+        "AGA01M|occupation:cno11:6203",
+        "AGA01M|occupation:cno11:6209"
+      ],
       "publicParity": {
-        "publishedRelationKeys": [],
-        "rejectedRelationKeys": []
-      }
+        "publishedRelationKeys": [
+          "AGA01M|occupation:cno11:6110",
+          "AGA01M|occupation:cno11:6120",
+          "AGA01M|occupation:cno11:6204",
+          "AGA01M|occupation:cno11:6205",
+          "AGA01M|occupation:cno11:8321"
+        ],
+        "rejectedRelationKeys": [
+          "AGA01M|occupation:cno11:6201",
+          "AGA01M|occupation:cno11:6202",
+          "AGA01M|occupation:cno11:6203",
+          "AGA01M|occupation:cno11:6209"
+        ]
+      },
+      "limitation": "Se aceptan CNO 6110, 6120, 6204, 6205 y 8321 para Producción Agroecológica. Los candidatos 6201 (vacuno), 6202 (ovino y caprino), 6203 (porcino) y 6209 (ganaderas no clasificadas) se mantienen rechazados porque la evidencia revisada no establece esos límites de cuatro dígitos para las salidas del título."
     },
     {
       "programKey": "TMV01M",
@@ -439,25 +471,38 @@
       "programTitle": "Carrocería",
       "lane": "reserve",
       "rank": 12,
-      "attempted": false,
-      "state": "not_attempted",
+      "attempted": true,
+      "state": "completed",
       "phaseMinutes": {
-        "research": 0,
+        "research": 10,
         "implementation": 0,
-        "test": 0,
+        "test": 4,
         "review": 0
       },
-      "modeledActiveMinutes": 0,
-      "wallClockMinutes": null,
+      "modeledActiveMinutes": 14,
+      "wallClockMinutes": 97.7,
       "reviewerMinutes": 0,
       "reviewerTimeExcluded": true,
       "offerDeltaIds": [],
-      "acceptedRelationKeys": [],
-      "rejectedRelationKeys": [],
+      "acceptedRelationKeys": [
+        "TMV01M|occupation:cno11:7232",
+        "TMV01M|occupation:cno11:7313"
+      ],
+      "rejectedRelationKeys": [
+        "TMV01M|occupation:cno11:7211",
+        "TMV01M|occupation:cno11:7401"
+      ],
       "publicParity": {
-        "publishedRelationKeys": [],
-        "rejectedRelationKeys": []
-      }
+        "publishedRelationKeys": [
+          "TMV01M|occupation:cno11:7232",
+          "TMV01M|occupation:cno11:7313"
+        ],
+        "rejectedRelationKeys": [
+          "TMV01M|occupation:cno11:7211",
+          "TMV01M|occupation:cno11:7401"
+        ]
+      },
+      "limitation": "Se aceptan CNO 7232 (pintores en las industrias manufactureras) y 7313 (chapistas y caldereros) para Carrocería. El candidato 7211 se rechaza porque corresponde a escayolistas, no a trabajos de carrocería. El candidato 7401 se rechaza porque corresponde a mecánicos y ajustadores de vehículos de motor, fuera del ámbito de este título."
     },
     {
       "programKey": "FME02M",
@@ -508,25 +553,42 @@
       "programTitle": "Servicios Comerciales",
       "lane": "reserve",
       "rank": 14,
-      "attempted": false,
-      "state": "not_attempted",
+      "attempted": true,
+      "state": "completed",
       "phaseMinutes": {
-        "research": 0,
+        "research": 15,
         "implementation": 0,
-        "test": 0,
+        "test": 6,
         "review": 0
       },
-      "modeledActiveMinutes": 0,
-      "wallClockMinutes": null,
+      "modeledActiveMinutes": 21,
+      "wallClockMinutes": 30,
       "reviewerMinutes": 0,
       "reviewerTimeExcluded": true,
       "offerDeltaIds": [],
-      "acceptedRelationKeys": [],
+      "acceptedRelationKeys": [
+        "COM01B|occupation:cno11:4121",
+        "COM01B|occupation:cno11:4123",
+        "COM01B|occupation:cno11:5220",
+        "COM01B|occupation:cno11:5492",
+        "COM01B|occupation:cno11:5500",
+        "COM01B|occupation:cno11:8333",
+        "COM01B|occupation:cno11:9820"
+      ],
       "rejectedRelationKeys": [],
       "publicParity": {
-        "publishedRelationKeys": [],
+        "publishedRelationKeys": [
+          "COM01B|occupation:cno11:4121",
+          "COM01B|occupation:cno11:4123",
+          "COM01B|occupation:cno11:5220",
+          "COM01B|occupation:cno11:5492",
+          "COM01B|occupation:cno11:5500",
+          "COM01B|occupation:cno11:8333",
+          "COM01B|occupation:cno11:9820"
+        ],
         "rejectedRelationKeys": []
-      }
+      },
+      "limitation": "Se aceptan CNO 4121, 4123, 5220, 5492, 5500, 8333 y 9820 para Servicios Comerciales. Las relaciones representan las competencias del título básico."
     }
   ]
 }

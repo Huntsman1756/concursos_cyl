@@ -25,6 +25,7 @@ describe("renderFpOfficialAliasPassReport", () => {
     expect(checkedIn).toBe(report);
     expect(report.endsWith("\n")).toBe(true);
     expect(report).toContain("20260808215403108-add4c517860c");
+    expect(report).toContain("20260811222221076-727a2dfa2791");
     expect(report).toContain("Alias aceptados: 10; rechazados: 44.");
     expect(report).toContain("## Alias aceptados y rechazados");
     expect(report).toContain("- EOC01M: 5 aceptados; 21 rechazados.");
@@ -36,13 +37,10 @@ describe("renderFpOfficialAliasPassReport", () => {
     expect(report.indexOf("EOC01M")).toBeLessThan(report.indexOf("HOT01M"));
     expect(report.indexOf("HOT01M")).toBeLessThan(report.indexOf("SSC01M"));
     expect(report).toContain("Unión de ofertas nuevas: 0.");
-    expect(report).toContain("20260811135933995-c3db7c242202");
     expect(manifest.resourceSnapshots.programs.recordCount).toBe(187);
-    expect(manifest.resourceSnapshots.occupations.recordCount).toBe(19);
+    expect(manifest.resourceSnapshots.occupations.recordCount).toBe(31);
     expect(manifest.resourceSnapshots.occupationAliases.recordCount).toBe(21);
-    expect(manifest.resourceSnapshots.trainingOccupationLinks.recordCount).toBe(
-      21,
-    );
+    expect(manifest.resourceSnapshots.trainingOccupationLinks.recordCount).toBe(36);
     expect(report).toContain("no estiman el empleo total");
     expect(report).toContain(
       "La pasada oficial acotada no aumenta las ofertas alcanzadas; no se amplían fuentes, CNO, ciclos ni reglas de coincidencia.",

@@ -56,7 +56,9 @@
       "order": 1,
       "officialOutputLabel": "Instalador-mantenedor electricista.",
       "disposition": "rejected",
-      "candidateOccupationIds": ["occupation:cno11:7510"],
+      "candidateOccupationIds": [
+        "occupation:cno11:7510"
+      ],
       "sourceUrl": "https://www.boe.es/eli/es/rd/177/2008",
       "sourceQuote": "Instalador-mantenedor electricista.",
       "classificationEvidence": [
@@ -73,7 +75,9 @@
       "order": 2,
       "officialOutputLabel": "Electricista de construcción.",
       "disposition": "rejected",
-      "candidateOccupationIds": ["occupation:cno11:7510"],
+      "candidateOccupationIds": [
+        "occupation:cno11:7510"
+      ],
       "sourceUrl": "https://www.boe.es/eli/es/rd/177/2008",
       "sourceQuote": "Electricista de construcción.",
       "classificationEvidence": [
@@ -90,7 +94,9 @@
       "order": 3,
       "officialOutputLabel": "Electricista industrial.",
       "disposition": "rejected",
-      "candidateOccupationIds": ["occupation:cno11:7510"],
+      "candidateOccupationIds": [
+        "occupation:cno11:7510"
+      ],
       "sourceUrl": "https://www.boe.es/eli/es/rd/177/2008",
       "sourceQuote": "Electricista industrial.",
       "classificationEvidence": [
@@ -107,7 +113,9 @@
       "order": 4,
       "officialOutputLabel": "Electricista de mantenimiento.",
       "disposition": "rejected",
-      "candidateOccupationIds": ["occupation:cno11:7521"],
+      "candidateOccupationIds": [
+        "occupation:cno11:7521"
+      ],
       "sourceUrl": "https://www.boe.es/eli/es/rd/177/2008",
       "sourceQuote": "Electricista de mantenimiento.",
       "classificationEvidence": [
@@ -150,7 +158,9 @@
       "order": 6,
       "officialOutputLabel": "Instalador-mantenedor de antenas.",
       "disposition": "rejected",
-      "candidateOccupationIds": ["occupation:cno11:7533"],
+      "candidateOccupationIds": [
+        "occupation:cno11:7533"
+      ],
       "sourceUrl": "https://www.boe.es/eli/es/rd/177/2008",
       "sourceQuote": "Instalador-mantenedor de antenas.",
       "classificationEvidence": [
@@ -167,7 +177,9 @@
       "order": 7,
       "officialOutputLabel": "Instalador de telecomunicaciones en edificios de viviendas.",
       "disposition": "rejected",
-      "candidateOccupationIds": ["occupation:cno11:7533"],
+      "candidateOccupationIds": [
+        "occupation:cno11:7533"
+      ],
       "sourceUrl": "https://www.boe.es/eli/es/rd/177/2008",
       "sourceQuote": "Instalador de telecomunicaciones en edificios de viviendas.",
       "classificationEvidence": [
@@ -184,7 +196,9 @@
       "order": 8,
       "officialOutputLabel": "Instalador-mantenedor de equipos e instalaciones telefónicas.",
       "disposition": "rejected",
-      "candidateOccupationIds": ["occupation:cno11:7533"],
+      "candidateOccupationIds": [
+        "occupation:cno11:7533"
+      ],
       "sourceUrl": "https://www.boe.es/eli/es/rd/177/2008",
       "sourceQuote": "Instalador-mantenedor de equipos e instalaciones telefónicas.",
       "classificationEvidence": [
@@ -201,7 +215,9 @@
       "order": 9,
       "officialOutputLabel": "Montador de instalaciones de energía solar fotovoltaica.",
       "disposition": "rejected",
-      "candidateOccupationIds": ["occupation:cno11:7294"],
+      "candidateOccupationIds": [
+        "occupation:cno11:7294"
+      ],
       "sourceUrl": "https://www.boe.es/eli/es/rd/177/2008",
       "sourceQuote": "Montador de instalaciones de energía solar fotovoltaica.",
       "classificationEvidence": [
@@ -252,13 +268,15 @@
   ],
   "baselineMatchIds": [],
   "currentMatchIds": [],
-  "newlyReachedOfferIdsByProgram": { "ELE01M": [] },
+  "newlyReachedOfferIdsByProgram": {
+    "ELE01M": []
+  },
   "newlyReachedOfferUnionIds": [],
   "limitation": "Deferred: the frozen seed Instalador electricista has no literal BOE output match. The exhaustive inventory spans CNO-11 boundaries 7510, 7521, 7533 and 7294, so no exact approved relation is published; curated data, public resources and snapshots remain unchanged.",
   "reviewedCommit": "07407b1a46a2eb01e89068db84ca2c70e350b27e",
   "reviewedCommitAt": "2026-08-09T17:14:11.000Z",
-  "snapshotId": "20260811135933995-c3db7c242202",
-  "snapshotHash": "94f0c96515f4650addc464a75760b879bb8df1f9625ae0b99b27c54930a24317",
+  "snapshotId": "20260811222221076-727a2dfa2791",
+  "snapshotHash": "79063cf1b348b52fabe6ed8e4368ecceeea5e0aaef3897eadf261a6e17806f14",
   "publicParity": {
     "publishedRelationKeys": [],
     "rejectedRelationKeys": [

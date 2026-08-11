@@ -53,8 +53,12 @@
       "order": 1,
       "officialOutputLabel": "Operador de máquinas fijas para fabricar productos de madera.",
       "disposition": "accepted",
-      "candidateOccupationIds": ["occupation:cno11:7812"],
-      "acceptedOccupationIds": ["occupation:cno11:7812"],
+      "candidateOccupationIds": [
+        "occupation:cno11:7812"
+      ],
+      "acceptedOccupationIds": [
+        "occupation:cno11:7812"
+      ],
       "sourceUrl": "https://www.boe.es/eli/es/rd/1128/2010",
       "sourceQuote": "Operador de máquinas fijas para fabricar productos de madera.",
       "classificationEvidence": [
@@ -71,8 +75,12 @@
       "order": 2,
       "officialOutputLabel": "Operador de prensas.",
       "disposition": "accepted",
-      "candidateOccupationIds": ["occupation:cno11:7812"],
-      "acceptedOccupationIds": ["occupation:cno11:7812"],
+      "candidateOccupationIds": [
+        "occupation:cno11:7812"
+      ],
+      "acceptedOccupationIds": [
+        "occupation:cno11:7812"
+      ],
       "sourceUrl": "https://www.boe.es/eli/es/rd/1128/2010",
       "sourceQuote": "Operador de prensas.",
       "classificationEvidence": [
@@ -89,8 +97,12 @@
       "order": 3,
       "officialOutputLabel": "Operador-armador en banco.",
       "disposition": "accepted",
-      "candidateOccupationIds": ["occupation:cno11:8209"],
-      "acceptedOccupationIds": ["occupation:cno11:8209"],
+      "candidateOccupationIds": [
+        "occupation:cno11:8209"
+      ],
+      "acceptedOccupationIds": [
+        "occupation:cno11:8209"
+      ],
       "sourceUrl": "https://www.boe.es/eli/es/rd/1128/2010",
       "sourceQuote": "Operador-armador en banco.",
       "classificationEvidence": [
@@ -107,8 +119,12 @@
       "order": 4,
       "officialOutputLabel": "Montador-ensamblador de elementos de carpintería.",
       "disposition": "accepted",
-      "candidateOccupationIds": ["occupation:cno11:8209"],
-      "acceptedOccupationIds": ["occupation:cno11:8209"],
+      "candidateOccupationIds": [
+        "occupation:cno11:8209"
+      ],
+      "acceptedOccupationIds": [
+        "occupation:cno11:8209"
+      ],
       "sourceUrl": "https://www.boe.es/eli/es/rd/1128/2010",
       "sourceQuote": "Montador-ensamblador de elementos de carpintería.",
       "classificationEvidence": [
@@ -125,8 +141,12 @@
       "order": 5,
       "officialOutputLabel": "Barnizador-lacador.",
       "disposition": "accepted",
-      "candidateOccupationIds": ["occupation:cno11:8209"],
-      "acceptedOccupationIds": ["occupation:cno11:8209"],
+      "candidateOccupationIds": [
+        "occupation:cno11:8209"
+      ],
+      "acceptedOccupationIds": [
+        "occupation:cno11:8209"
+      ],
       "sourceUrl": "https://www.boe.es/eli/es/rd/1128/2010",
       "sourceQuote": "Barnizador-lacador.",
       "classificationEvidence": [
@@ -143,7 +163,9 @@
       "order": 6,
       "officialOutputLabel": "Responsable de sección de acabados.",
       "disposition": "rejected",
-      "candidateOccupationIds": ["occupation:cno11:3206"],
+      "candidateOccupationIds": [
+        "occupation:cno11:3206"
+      ],
       "sourceUrl": "https://www.boe.es/eli/es/rd/1128/2010",
       "sourceQuote": "Responsable de sección de acabados.",
       "classificationEvidence": [
@@ -187,15 +209,19 @@
   ],
   "baselineMatchIds": [],
   "currentMatchIds": [],
-  "newlyReachedOfferIdsByProgram": { "MAM01M": [] },
+  "newlyReachedOfferIdsByProgram": {
+    "MAM01M": []
+  },
   "newlyReachedOfferUnionIds": [],
   "limitation": "Deferred because the frozen seed Carpintero de madera is not an exact BOE output. The two accepted relations remain curated but are not published; the rejected supervisory relation is audit-only. No aliases, offer deltas, snapshot regeneration, or public-resource changes are allowed in this slot.",
   "reviewedCommit": "a3bd273f7492ba1a8ca2f07306780e83e9f8d65c",
   "reviewedCommitAt": "2026-08-09T16:29:26.000Z",
-  "snapshotId": "20260811135933995-c3db7c242202",
-  "snapshotHash": "6ac1368e4da37d696d858ab618f35241554a1f9d728a64eb50a738c24af3596b",
+  "snapshotId": "20260811222221076-727a2dfa2791",
+  "snapshotHash": "2d740f887d1202b165794a93ee671ba024f5a72ef9c078a9f1515522cd5ff189",
   "publicParity": {
     "publishedRelationKeys": [],
-    "rejectedRelationKeys": ["MAM01M|occupation:cno11:3206"]
+    "rejectedRelationKeys": [
+      "MAM01M|occupation:cno11:3206"
+    ]
   }
 }

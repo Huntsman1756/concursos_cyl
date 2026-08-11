@@ -20,19 +20,19 @@ async function report() {
 }
 
 describe("renderFpCoverageExpansionReport", () => {
-  it("reconciles exact terminal counts, target gap, and zero offer union", async () => {
+  it("reconciles exact terminal counts, zero gap, and zero offer union", async () => {
     const result = await report();
 
     expect(result.counts).toMatchObject({
-      completed: 4,
+      completed: 8,
       deferred: 6,
       discarded: 0,
-      terminal: 10,
+      terminal: 14,
       primaryAttempted: 7,
-      reserveAttempted: 3,
-      totalAttempted: 10,
+      reserveAttempted: 7,
+      totalAttempted: 14,
       primaryUnattempted: 0,
-      reserveUnattempted: 4,
+      reserveUnattempted: 0,
     });
     expect(result.coverage).toMatchObject({
       baselineReviewedQualifications: [
@@ -42,9 +42,9 @@ describe("renderFpCoverageExpansionReport", () => {
         "qualification:SAN21",
         "qualification:SSC01M",
       ],
-      terminalDistinctQualificationTotal: 9,
+      terminalDistinctQualificationTotal: 13,
       targetDistinctQualifications: 12,
-      remainingGap: 3,
+      remainingGap: 0,
       publicationStatus: "published_task_a2_12",
     });
     expect(result.offerDeltas).toEqual({
@@ -59,13 +59,17 @@ describe("renderFpCoverageExpansionReport", () => {
         IMA03M: [],
         MAM01M: [],
         TMV02M: [],
+        ELE03S: [],
+        AGA01M: [],
+        TMV01M: [],
+        COM01B: [],
       },
       union: [],
     });
     expect(result.coverage.modalityDoubleCount).toBe(false);
     expect(result.time).toEqual({
-      totalModeledActiveMinutes: 192,
-      totalWallClockMinutes: 234.95,
+      totalModeledActiveMinutes: 255,
+      totalWallClockMinutes: 422.65,
       totalReviewerMinutes: 18,
       reviewerMinutesExcluded: true,
     });
@@ -86,11 +90,8 @@ describe("renderFpCoverageExpansionReport", () => {
       (candidate) => !candidate.attempted,
     );
 
-    expect(attempted).toHaveLength(10);
-    expect(unattempted).toHaveLength(4);
-    expect(unattempted.every((candidate) => candidate.lane === "reserve")).toBe(
-      true,
-    );
+    expect(attempted).toHaveLength(14);
+    expect(unattempted).toHaveLength(0);
     expect(
       attempted.find((candidate) => candidate.programKey === "MAM01M"),
     ).toMatchObject({
@@ -98,12 +99,7 @@ describe("renderFpCoverageExpansionReport", () => {
       rank: 8,
       state: "deferred",
     });
-    expect(unattempted.map((candidate) => candidate.programKey)).toEqual([
-      "ELE03S",
-      "AGA01M",
-      "TMV01M",
-      "COM01B",
-    ]);
+    expect(unattempted.map((candidate) => candidate.programKey)).toEqual([]);
   });
 
   it("renders the checked markdown byte-for-byte", async () => {

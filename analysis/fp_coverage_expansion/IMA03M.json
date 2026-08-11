@@ -9,7 +9,11 @@
       "to": "in_progress",
       "at": "2026-08-09T17:26:04Z"
     },
-    { "from": "in_progress", "to": "deferred", "at": "2026-08-09T17:26:04Z" }
+    {
+      "from": "in_progress",
+      "to": "deferred",
+      "at": "2026-08-09T17:26:04Z"
+    }
   ],
   "startedAt": "2026-08-09T17:26:04Z",
   "completedAt": "2026-08-09T17:26:04Z",
@@ -52,7 +56,9 @@
       "order": 1,
       "officialOutputLabel": "Mecánico de mantenimiento.",
       "disposition": "rejected",
-      "candidateOccupationIds": ["occupation:cno11:7403"],
+      "candidateOccupationIds": [
+        "occupation:cno11:7403"
+      ],
       "sourceUrl": "https://www.boe.es/eli/es/rd/1589/2011",
       "sourceQuote": "Mecánico de mantenimiento.",
       "classificationEvidence": [
@@ -95,7 +101,9 @@
       "order": 3,
       "officialOutputLabel": "Montador de equipos eléctricos.",
       "disposition": "rejected",
-      "candidateOccupationIds": ["occupation:cno11:8202"],
+      "candidateOccupationIds": [
+        "occupation:cno11:8202"
+      ],
       "sourceUrl": "https://www.boe.es/eli/es/rd/1589/2011",
       "sourceQuote": "Montador de equipos eléctricos.",
       "classificationEvidence": [
@@ -112,7 +120,9 @@
       "order": 4,
       "officialOutputLabel": "Montador de equipos electrónicos.",
       "disposition": "rejected",
-      "candidateOccupationIds": ["occupation:cno11:8202"],
+      "candidateOccupationIds": [
+        "occupation:cno11:8202"
+      ],
       "sourceUrl": "https://www.boe.es/eli/es/rd/1589/2011",
       "sourceQuote": "Montador de equipos electrónicos.",
       "classificationEvidence": [
@@ -188,7 +198,9 @@
       "order": 7,
       "officialOutputLabel": "Montador de automatismos neumáticos e hidráulicos.",
       "disposition": "rejected",
-      "candidateOccupationIds": ["occupation:cno11:7403"],
+      "candidateOccupationIds": [
+        "occupation:cno11:7403"
+      ],
       "sourceUrl": "https://www.boe.es/eli/es/rd/1589/2011",
       "sourceQuote": "Montador de automatismos neumáticos e hidráulicos.",
       "classificationEvidence": [
@@ -307,13 +319,15 @@
   ],
   "baselineMatchIds": [],
   "currentMatchIds": [],
-  "newlyReachedOfferIdsByProgram": { "IMA03M": [] },
+  "newlyReachedOfferIdsByProgram": {
+    "IMA03M": []
+  },
   "newlyReachedOfferUnionIds": [],
   "limitation": "Deferred: el seed congelado Mantenedor electromecánico no aparece literalmente en el inventario BOE exhaustivo. Las fronteras CNO-11 auditadas no se promueven a relaciones publicadas; no se crean aliases, no se modifican data/curated, public ni snapshots, y el delta de ofertas permanece vacío.",
   "reviewedCommit": "9b0c329a98ad311ffd0bfdf2903ffd97fb375ea3",
   "reviewedCommitAt": "2026-08-09T17:26:04.000Z",
-  "snapshotId": "20260811135933995-c3db7c242202",
-  "snapshotHash": "f7485acb198737404443a5f0f0528f6e507d0409da46e6af72cfa5c051d5d5a6",
+  "snapshotId": "20260811222221076-727a2dfa2791",
+  "snapshotHash": "7e480c89ae6f1675c28e61924c4272620c118d3483876b9233349016f835ebef",
   "publicParity": {
     "publishedRelationKeys": [],
     "rejectedRelationKeys": [

@@ -9,7 +9,11 @@
       "to": "in_progress",
       "at": "2026-08-09T16:40:00Z"
     },
-    { "from": "in_progress", "to": "deferred", "at": "2026-08-09T17:00:00Z" }
+    {
+      "from": "in_progress",
+      "to": "deferred",
+      "at": "2026-08-09T17:00:00Z"
+    }
   ],
   "startedAt": "2026-08-09T16:40:00Z",
   "completedAt": "2026-08-09T17:00:00Z",
@@ -53,7 +57,9 @@
       "order": 1,
       "officialOutputLabel": "Auxiliar administrativo.",
       "disposition": "rejected",
-      "candidateOccupationIds": ["occupation:cno11:4309"],
+      "candidateOccupationIds": [
+        "occupation:cno11:4309"
+      ],
       "sourceUrl": "https://www.boe.es/eli/es/rd/1631/2009",
       "sourceQuote": "Auxiliar administrativo.",
       "classificationEvidence": [
@@ -70,7 +76,9 @@
       "order": 2,
       "officialOutputLabel": "Ayudante de oficina.",
       "disposition": "rejected",
-      "candidateOccupationIds": ["occupation:cno11:4309"],
+      "candidateOccupationIds": [
+        "occupation:cno11:4309"
+      ],
       "sourceUrl": "https://www.boe.es/eli/es/rd/1631/2009",
       "sourceQuote": "Ayudante de oficina.",
       "classificationEvidence": [
@@ -191,7 +199,9 @@
       "order": 7,
       "officialOutputLabel": "Recepcionista.",
       "disposition": "rejected",
-      "candidateOccupationIds": ["occupation:cno11:4412"],
+      "candidateOccupationIds": [
+        "occupation:cno11:4412"
+      ],
       "sourceUrl": "https://www.boe.es/eli/es/rd/1631/2009",
       "sourceQuote": "Recepcionista.",
       "classificationEvidence": [
@@ -234,7 +244,9 @@
       "order": 9,
       "officialOutputLabel": "Empleado de tesorería.",
       "disposition": "rejected",
-      "candidateOccupationIds": ["occupation:cno11:4113"],
+      "candidateOccupationIds": [
+        "occupation:cno11:4113"
+      ],
       "sourceUrl": "https://www.boe.es/eli/es/rd/1631/2009",
       "sourceQuote": "Empleado de tesorería.",
       "classificationEvidence": [
@@ -351,13 +363,15 @@
   ],
   "baselineMatchIds": [],
   "currentMatchIds": [],
-  "newlyReachedOfferIdsByProgram": { "ADG01M": [] },
+  "newlyReachedOfferIdsByProgram": {
+    "ADG01M": []
+  },
   "newlyReachedOfferUnionIds": [],
   "limitation": "Deferred: the frozen seed Empleado administrativo has no literal BOE output match, and the exhaustive output inventory spans multiple exact CNO-11 administrative, financial, reception and public-facing boundaries. No aliases, occupations, links, curated changes, offer deltas, snapshot regeneration or public-resource changes are published.",
   "reviewedCommit": "187075dd6545329f3bc326315e85c30ee4650516",
   "reviewedCommitAt": "2026-08-09T17:01:32.000Z",
-  "snapshotId": "20260811135933995-c3db7c242202",
-  "snapshotHash": "de970c57bc5cd1c264b86ea649637b29cd050cfbbea33a5126fe5f5529fc00fc",
+  "snapshotId": "20260811222221076-727a2dfa2791",
+  "snapshotHash": "b62eb8fbdec768415710fea2cf7c03e774629ee786af9f97788930a403d7ead4",
   "publicParity": {
     "publishedRelationKeys": [],
     "rejectedRelationKeys": [
