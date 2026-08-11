@@ -6,6 +6,7 @@ import {
   loadAuditedRelationships,
   loadFoundationResources,
   loadManifest,
+  loadOfficialOccupations,
   type LoadedAuditedRelationships,
 } from "../../data/generatedDataClient";
 import { loadApprovedMappings } from "../../domain/occupation";
@@ -26,11 +27,27 @@ export function OccupationSearchPage() {
     let active = true;
     void loadManifest()
       .then(async (manifest) => {
-        const [, relationships] = await Promise.all([
+        const [, relationships, officialOccupations] = await Promise.all([
           loadFoundationResources(manifest),
           loadAuditedRelationships(manifest),
+          loadOfficialOccupations(manifest),
         ]);
-        return loadApprovedMappings(relationships);
+        const approved = loadApprovedMappings(relationships);
+        const reviewedById = new Map(
+          approved.occupations.map((occupation) => [
+            occupation.occupationId,
+            occupation,
+          ]),
+        );
+        return {
+          ...approved,
+          occupations: officialOccupations.map((occupation) => ({
+            ...occupation,
+            confirmationLabel:
+              reviewedById.get(occupation.occupationId)?.confirmationLabel ??
+              occupation.confirmationLabel,
+          })),
+        };
       })
       .then((relationships) => {
         if (active) setState({ status: "ready", ...relationships });
@@ -57,8 +74,8 @@ export function OccupationSearchPage() {
         <p className="training-page__eyebrow">Desde una ocupación</p>
         <h1>Descubre qué FP conduce a un trabajo concreto</h1>
         <p>
-          Escribe como lo dirías normalmente. Te pediremos confirmar una
-          ocupación oficial antes de mostrar relaciones formativas revisadas.
+          Escribe como lo dirías normalmente y filtra el catálogo completo
+          CNO-11. Después mostraremos las relaciones FP que ya están revisadas.
         </p>
       </header>
       {state.status === "loading" && (
@@ -87,8 +104,9 @@ export function OccupationSearchPage() {
             Ver rutas formativas
           </button>
           <p className="coverage-note">
-            Cobertura inicial: mostramos solo ocupaciones y relaciones que ya
-            cuentan con revisión humana y fuente oficial.
+            El catálogo incluye {state.occupations.length} grupos oficiales de
+            ocupación. Que una ocupación aparezca no implica que su relación con
+            un ciclo FP esté validada todavía.
           </p>
         </form>
       )}

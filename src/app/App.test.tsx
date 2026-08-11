@@ -12,10 +12,10 @@ describe("App", () => {
       </MemoryRouter>,
     );
     expect(
-      screen.getByRole("link", { name: "Explorar salidas laborales" }),
+      screen.getByRole("heading", { name: "He terminado FP" }),
     ).toBeVisible();
     expect(
-      screen.getByRole("link", { name: "Buscar ciclos que te preparan" }),
+      screen.getByRole("heading", { name: "Quiero trabajar de…" }),
     ).toBeVisible();
   });
 

@@ -12,6 +12,9 @@ interface OccupationComboboxProps {
   confirmedOccupation: Occupation | null;
   onConfirm: (occupation: Occupation) => void;
   onClear: () => void;
+  label?: string;
+  hint?: string;
+  showConfirmation?: boolean;
 }
 
 function normalized(value: string): string {
@@ -24,8 +27,8 @@ function normalized(value: string): string {
 
 function resultCountMessage(count: number): string {
   return count === 1
-    ? "1 ocupación revisada encontrada"
-    : `${count} ocupaciones revisadas encontradas`;
+    ? "1 ocupación oficial encontrada"
+    : `${count} ocupaciones oficiales encontradas`;
 }
 
 export function OccupationCombobox({
@@ -34,6 +37,9 @@ export function OccupationCombobox({
   confirmedOccupation,
   onConfirm,
   onClear,
+  label = "¿En qué ocupación quieres trabajar?",
+  hint = "Escribe un término habitual y confirma una ocupación oficial.",
+  showConfirmation = true,
 }: OccupationComboboxProps) {
   const inputId = useId();
   const listboxId = useId();
@@ -111,9 +117,9 @@ export function OccupationCombobox({
   const showResults = open && query.trim() !== "";
   return (
     <div className="occupation-combobox">
-      <label htmlFor={inputId}>¿En qué ocupación quieres trabajar?</label>
+      <label htmlFor={inputId}>{label}</label>
       <p className="form-hint" id={`${inputId}-hint`}>
-        Escribe un término habitual y confirma una ocupación oficial.
+        {hint}
       </p>
       <input
         id={inputId}
@@ -124,6 +130,7 @@ export function OccupationCombobox({
         aria-expanded={showResults}
         aria-controls={listboxId}
         aria-describedby={`${inputId}-hint`}
+        placeholder="Ej.: programación web"
         aria-activedescendant={
           showResults && activeIndex >= 0 && results[activeIndex] !== undefined
             ? optionId(results[activeIndex].occupationId)
@@ -131,6 +138,12 @@ export function OccupationCombobox({
         }
         value={query}
         onChange={(event) => {
+          if (
+            confirmedOccupation !== null &&
+            event.target.value !== confirmedOccupation.preferredLabel
+          ) {
+            onClear();
+          }
           setQuery(event.target.value);
           setOpen(true);
           setActiveIndex(-1);
@@ -171,18 +184,18 @@ export function OccupationCombobox({
       )}
       {showResults && results.length === 0 && (
         <p className="form-message">
-          No encontramos una ocupación revisada con ese nombre.
+          No encontramos una ocupación oficial con ese nombre.
         </p>
       )}
-      {confirmedOccupation !== null && (
+      {showConfirmation && confirmedOccupation !== null && (
         <div className="confirmed-occupation" role="status">
           <p>
             <strong>Ocupación confirmada:</strong>{" "}
             {confirmedOccupation.preferredLabel}
           </p>
           <p>
-            CNO-11 {confirmedOccupation.classificationCode}. La búsqueda solo
-            usa equivalencias revisadas.
+            CNO-11 {confirmedOccupation.classificationCode}. Las rutas FP solo
+            se muestran cuando su relación está revisada.
           </p>
           <button className="secondary-button" type="button" onClick={clear}>
             Nueva búsqueda

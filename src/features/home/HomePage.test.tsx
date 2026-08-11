@@ -26,6 +26,19 @@ describe("HomePage", () => {
           ...baseManifest.resourceSnapshots.programs,
           resourcePath: "/data/v1/snapshots/build-1/mapping-coverage.json",
         },
+        occupations: {
+          ...baseManifest.resourceSnapshots.programs,
+          resourcePath: "/data/v1/snapshots/build-1/occupations.json",
+        },
+        occupationAliases: {
+          ...baseManifest.resourceSnapshots.programs,
+          resourcePath: "/data/v1/snapshots/build-1/occupation-aliases.json",
+        },
+        trainingOccupationLinks: {
+          ...baseManifest.resourceSnapshots.programs,
+          resourcePath:
+            "/data/v1/snapshots/build-1/training-occupation-links.json",
+        },
       },
     };
     const coverage = [
@@ -82,6 +95,24 @@ describe("HomePage", () => {
         coverageNote: "Aún no hay una relación ocupacional aprobada.",
       },
     ];
+    const program = {
+      programKey: "IFC03S",
+      programTitle: "Desarrollo de Aplicaciones Web",
+      level: "higher",
+      familyCode: "IFC",
+      familyName: "Informática y Comunicaciones",
+    };
+    const occupation = {
+      occupationId: "occupation:cno11:2713",
+      preferredLabel: "Analistas, programadores y diseñadores web y multimedia",
+      confirmationLabel: "Programación y desarrollo web",
+      classificationSystem: "CNO-11",
+      classificationCode: "2713",
+      reviewStatus: "approved",
+      sourceUrl: "https://www.boe.es/eli/es/rd/2010/11/26/1591",
+      reviewedAt: "2026-08-11",
+      catalogVersion: "2.0.0",
+    };
     vi.stubGlobal(
       "fetch",
       vi.fn((input: RequestInfo | URL) => {
@@ -91,7 +122,24 @@ describe("HomePage", () => {
             ? manifest
             : path === manifest.resourceSnapshots.mappingCoverage.resourcePath
               ? coverage
-              : undefined;
+              : path === manifest.resourceSnapshots.programs.resourcePath
+                ? [program]
+                : path === manifest.resourceSnapshots.centers.resourcePath ||
+                    path ===
+                      manifest.resourceSnapshots.trainingOfferings
+                        .resourcePath ||
+                    path ===
+                      manifest.resourceSnapshots.jobOffers.resourcePath ||
+                    path ===
+                      manifest.resourceSnapshots.occupationAliases
+                        .resourcePath ||
+                    path ===
+                      manifest.resourceSnapshots.trainingOccupationLinks
+                        .resourcePath
+                  ? []
+                  : path === manifest.resourceSnapshots.occupations.resourcePath
+                    ? [occupation]
+                    : undefined;
         return Promise.resolve(
           payload === undefined
             ? new Response(null, { status: 404 })
@@ -138,26 +186,30 @@ describe("HomePage", () => {
     expect(
       screen.queryByText(/Junta de Castilla y León/i),
     ).not.toBeInTheDocument();
+    expect(await screen.findByLabelText("¿Qué has estudiado?")).toBeVisible();
     expect(
-      screen.getByRole("link", { name: "Explorar salidas laborales" }),
-    ).toHaveAttribute("href", "/desde-fp");
+      screen.getByRole("combobox", { name: "¿Qué ocupación te interesa?" }),
+    ).toBeVisible();
     expect(
-      screen.getByRole("link", { name: "Buscar ciclos que te preparan" }),
-    ).toHaveAttribute("href", "/desde-ocupacion");
+      screen.getByRole("button", { name: "Explorar salidas laborales" }),
+    ).toBeDisabled();
+    expect(
+      screen.getByRole("button", { name: "Buscar ciclos que te preparan" }),
+    ).toBeDisabled();
     expect(
       screen.getByText(
-        "Consulta relaciones ocupacionales revisadas y, cuando existan, ofertas relacionadas.",
+        "Selecciona cualquiera de los ciclos oficiales y consulta sus salidas profesionales.",
       ),
     ).toBeVisible();
     expect(
       screen.getByText(
-        "Consulta qué ciclos tienen una relación revisada con esa ocupación.",
+        "Filtra 1 grupos de ocupación oficiales y consulta qué FP tienen una relación revisada.",
       ),
     ).toBeVisible();
     expect(
       screen.getByRole("region", { name: "Sobre la cobertura" }),
     ).toHaveTextContent(
-      /relaciones formativas se incorporan de forma progresiva/i,
+      /Las relaciones entre ambos se incorporan de forma progresiva/i,
     );
     expect(
       screen.getByRole("link", { name: "Saber más sobre los datos" }),

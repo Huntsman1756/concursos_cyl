@@ -1,10 +1,12 @@
 import { useEffect, useMemo, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import type { LoadableGeneratedManifest } from "../../../data/schemas/generated";
+import type { Occupation } from "../../../data/schemas/curatedMappings";
 import {
   loadAuditedRelationships,
   loadFoundationResources,
   loadManifest,
+  loadOfficialOccupations,
   type LoadedAuditedRelationships,
   type LoadedFoundationResources,
 } from "../../data/generatedDataClient";
@@ -16,6 +18,7 @@ interface ReadyState {
   manifest: LoadableGeneratedManifest;
   foundation: LoadedFoundationResources;
   relationships: LoadedAuditedRelationships;
+  officialOccupations: Occupation[];
 }
 
 type ResultsState = { status: "loading" } | { status: "failed" } | ReadyState;
@@ -37,15 +40,18 @@ export function OccupationResultsPage() {
     let active = true;
     void loadManifest()
       .then(async (manifest) => {
-        const [foundation, loadedRelationships] = await Promise.all([
-          loadFoundationResources(manifest),
-          loadAuditedRelationships(manifest),
-        ]);
+        const [foundation, loadedRelationships, officialOccupations] =
+          await Promise.all([
+            loadFoundationResources(manifest),
+            loadAuditedRelationships(manifest),
+            loadOfficialOccupations(manifest),
+          ]);
         return {
           status: "ready" as const,
           manifest,
           foundation,
           relationships: loadApprovedMappings(loadedRelationships),
+          officialOccupations,
         };
       })
       .then((nextState) => {
@@ -94,14 +100,14 @@ export function OccupationResultsPage() {
     );
   }
 
-  const occupation = state.relationships.occupations.find(
+  const occupation = state.officialOccupations.find(
     (candidate) => candidate.occupationId === occupationId,
   );
   if (occupation === undefined) {
     return (
       <section className="status-panel">
         <h1>Ocupación no encontrada</h1>
-        <p>La dirección no corresponde a una ocupación oficial revisada.</p>
+        <p>La dirección no corresponde a una ocupación oficial CNO-11.</p>
         <Link to="/desde-ocupacion">Buscar otra ocupación</Link>
       </section>
     );

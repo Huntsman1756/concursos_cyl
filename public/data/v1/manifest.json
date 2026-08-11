@@ -124,6 +124,17 @@
       "sourceUpdatedAt": null,
       "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf"
     },
+    "officialOccupations": {
+      "qualityStatus": "passed",
+      "recordCount": 502,
+      "resourcePath": "/data/v1/snapshots/20260809185438334-65ce4d3c4e14/official-occupations.json",
+      "schemaVersion": "1.0.0",
+      "sha256": "24825e024b5a49963be32a9369b9d8c9dc0a7c51810d0d98b8920b949d3b3c59",
+      "snapshotFetchedAt": "2026-08-11T11:35:02.063Z",
+      "sourceId": "boe-cno11-complete-occupation-catalog",
+      "sourceUpdatedAt": "2010-12-17T00:00:00.000Z",
+      "sourceUrl": "https://www.boe.es/eli/es/rd/2010/11/26/1591"
+    },
     "outcomeIndicators": {
       "qualityStatus": "passed",
       "recordCount": 22170,

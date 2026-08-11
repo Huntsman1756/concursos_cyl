@@ -25,6 +25,7 @@ const RESOURCE_KEYS = [
   "centers",
   "jobOffers",
   "mappingCoverage",
+  "officialOccupations",
   "occupationAliases",
   "occupations",
   "outcomeIndicators",

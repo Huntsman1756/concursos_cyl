@@ -240,6 +240,19 @@ export interface LoadedAuditedRelationships {
   links: TrainingOccupationLink[];
 }
 
+export async function loadOfficialOccupations(
+  manifest: LoadableGeneratedManifest,
+): Promise<Occupation[]> {
+  const snapshots =
+    manifest.resourceSnapshots as typeof manifest.resourceSnapshots &
+      Partial<Record<"officialOccupations", { resourcePath: string }>>;
+  const official = snapshots.officialOccupations;
+  if (official === undefined) {
+    return (await loadAuditedRelationships(manifest)).occupations;
+  }
+  return loadGeneratedResource(official.resourcePath, OccupationsSchema);
+}
+
 /** Loads only manifest-addressed, schema-validated relationship catalogs. */
 export async function loadAuditedRelationships(
   manifest: LoadableGeneratedManifest,

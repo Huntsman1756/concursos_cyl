@@ -1,11 +1,21 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { EntryCard } from "../../components/EntryCard";
 import {
+  loadAuditedRelationships,
+  loadFoundationResources,
   loadManifest,
   loadMappingCoverage,
+  loadOfficialOccupations,
 } from "../../data/generatedDataClient";
-import type { MappingCoverage } from "../../../data/schemas/curatedMappings";
+import type {
+  MappingCoverage,
+  Occupation,
+  OccupationAlias,
+} from "../../../data/schemas/curatedMappings";
+import type { TrainingProgram } from "../../../data/schemas/generated";
+import { loadApprovedMappings } from "../../domain/occupation";
+import { OccupationCombobox } from "../occupation-first/OccupationCombobox";
 
 type FreshnessState =
   | { status: "loading" }
@@ -26,13 +36,30 @@ type CoverageState =
       totalPrograms: number;
     };
 
+type SearchDataState =
+  | { status: "loading" }
+  | { status: "unavailable" }
+  | {
+      status: "ready";
+      aliases: OccupationAlias[];
+      occupations: Occupation[];
+      programs: TrainingProgram[];
+    };
+
 export function HomePage() {
+  const navigate = useNavigate();
   const [freshness, setFreshness] = useState<FreshnessState>({
     status: "loading",
   });
   const [coverage, setCoverage] = useState<CoverageState>({
     status: "loading",
   });
+  const [searchData, setSearchData] = useState<SearchDataState>({
+    status: "loading",
+  });
+  const [selectedProgram, setSelectedProgram] = useState("");
+  const [confirmedOccupation, setConfirmedOccupation] =
+    useState<Occupation | null>(null);
 
   useEffect(() => {
     let isActive = true;
@@ -87,6 +114,49 @@ export function HomePage() {
     };
   }, []);
 
+  useEffect(() => {
+    let isActive = true;
+    void loadManifest()
+      .then(async (manifest) => {
+        const [foundation, relationships, officialOccupations] =
+          await Promise.all([
+            loadFoundationResources(manifest),
+            loadAuditedRelationships(manifest),
+            loadOfficialOccupations(manifest),
+          ]);
+        const approved = loadApprovedMappings(relationships);
+        const reviewedById = new Map(
+          approved.occupations.map((occupation) => [
+            occupation.occupationId,
+            occupation,
+          ]),
+        );
+        return {
+          aliases: approved.aliases,
+          occupations: officialOccupations.map((occupation) => ({
+            ...occupation,
+            confirmationLabel:
+              reviewedById.get(occupation.occupationId)?.confirmationLabel ??
+              occupation.confirmationLabel,
+          })),
+          programs: [...foundation.programs].sort(
+            (left, right) =>
+              left.programTitle.localeCompare(right.programTitle, "es") ||
+              left.programKey.localeCompare(right.programKey),
+          ),
+        };
+      })
+      .then((resources) => {
+        if (isActive) setSearchData({ status: "ready", ...resources });
+      })
+      .catch(() => {
+        if (isActive) setSearchData({ status: "unavailable" });
+      });
+    return () => {
+      isActive = false;
+    };
+  }, []);
+
   return (
     <>
       <section className="home-intro" aria-labelledby="home-heading">
@@ -105,29 +175,113 @@ export function HomePage() {
         >
           <EntryCard
             title="He terminado FP"
-            outcome="Consulta relaciones ocupacionales revisadas y, cuando existan, ofertas relacionadas."
+            outcome="Selecciona cualquiera de los ciclos oficiales y consulta sus salidas profesionales."
             prompt="¿Qué has estudiado?"
-            example="Desarrollo de Aplicaciones Web"
             details={[
-              "Ocupaciones con relación revisada",
-              "Requisitos y competencias",
+              "Salidas oficiales para los 187 ciclos",
+              "Ocupaciones CNO cuando la relación está revisada",
               "Ofertas relacionadas, cuando existen",
             ]}
-            to="/desde-fp"
-            cta="Explorar salidas laborales"
+            control={
+              searchData.status === "ready" ? (
+                <div className="entry-card__field">
+                  <label htmlFor="home-program">¿Qué has estudiado?</label>
+                  <select
+                    id="home-program"
+                    value={selectedProgram}
+                    onChange={(event) => setSelectedProgram(event.target.value)}
+                  >
+                    <option value="">Selecciona un ciclo FP</option>
+                    {searchData.programs.map((program) => (
+                      <option
+                        key={program.programKey}
+                        value={program.programKey}
+                      >
+                        {program.programTitle} ({program.programKey})
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              ) : (
+                <p className="form-message">
+                  {searchData.status === "loading"
+                    ? "Cargando el catálogo oficial de FP…"
+                    : "El selector no está disponible ahora mismo."}
+                </p>
+              )
+            }
+            action={
+              searchData.status === "ready" ? (
+                <button
+                  className="entry-card__cta"
+                  type="button"
+                  disabled={selectedProgram === ""}
+                  onClick={() => navigate(`/desde-fp/${selectedProgram}`)}
+                >
+                  Explorar salidas laborales
+                </button>
+              ) : (
+                <Link className="entry-card__cta" to="/desde-fp">
+                  Abrir buscador de FP
+                </Link>
+              )
+            }
           />
           <EntryCard
             title="Quiero trabajar de…"
-            outcome="Consulta qué ciclos tienen una relación revisada con esa ocupación."
+            outcome={
+              searchData.status === "ready"
+                ? `Filtra ${searchData.occupations.length} grupos de ocupación oficiales y consulta qué FP tienen una relación revisada.`
+                : "Filtra el catálogo oficial CNO-11 y consulta qué FP tienen una relación revisada."
+            }
             prompt="¿Qué ocupación te interesa?"
-            example="Programación web"
             details={[
+              "Catálogo completo de ocupaciones CNO-11",
               "Ciclos con relación revisada",
               "Dónde se imparten y cómo acceder",
-              "Relaciones formativas revisadas",
             ]}
-            to="/desde-ocupacion"
-            cta="Buscar ciclos que te preparan"
+            control={
+              searchData.status === "ready" ? (
+                <OccupationCombobox
+                  occupations={searchData.occupations}
+                  aliases={searchData.aliases}
+                  confirmedOccupation={confirmedOccupation}
+                  onConfirm={setConfirmedOccupation}
+                  onClear={() => setConfirmedOccupation(null)}
+                  label="¿Qué ocupación te interesa?"
+                  hint="Escribe, por ejemplo, programación web, cocina o enfermería."
+                  showConfirmation={false}
+                />
+              ) : (
+                <p className="form-message">
+                  {searchData.status === "loading"
+                    ? "Cargando el catálogo oficial CNO-11…"
+                    : "El buscador no está disponible ahora mismo."}
+                </p>
+              )
+            }
+            action={
+              searchData.status === "ready" ? (
+                <button
+                  className="entry-card__cta"
+                  type="button"
+                  disabled={confirmedOccupation === null}
+                  onClick={() =>
+                    confirmedOccupation === null
+                      ? undefined
+                      : navigate(
+                          `/desde-ocupacion/${encodeURIComponent(confirmedOccupation.occupationId)}`,
+                        )
+                  }
+                >
+                  Buscar ciclos que te preparan
+                </button>
+              ) : (
+                <Link className="entry-card__cta" to="/desde-ocupacion">
+                  Abrir buscador de ocupaciones
+                </Link>
+              )
+            }
           />
         </section>
 
@@ -226,8 +380,8 @@ export function HomePage() {
         <div>
           <h2>Información pública y con revisión humana</h2>
           <p>
-            Las relaciones formativas se incorporan de forma progresiva. No
-            todos los ciclos ni ocupaciones están cubiertos.
+            El catálogo de FP y ocupaciones es completo. Las relaciones entre
+            ambos se incorporan de forma progresiva y siempre con evidencia.
           </p>
         </div>
         <Link to="/metodologia">Saber más sobre los datos</Link>

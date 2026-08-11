@@ -27,7 +27,9 @@ export interface OccupationSearchCandidate {
 }
 
 interface OccupationSearchDocument extends OccupationSearchCandidate {
-  searchText: string;
+  aliases: string;
+  normalizedConfirmationLabel: string;
+  normalizedPreferredLabel: string;
 }
 
 function normalizeSearchText(value: string): string {
@@ -37,16 +39,6 @@ function normalizeSearchText(value: string): string {
     .toLocaleLowerCase("es-ES")
     .replace(/[^\p{Letter}\p{Number}]+/gu, " ")
     .trim();
-}
-
-function compareCandidates(
-  left: OccupationSearchCandidate,
-  right: OccupationSearchCandidate,
-): number {
-  return (
-    left.preferredLabel.localeCompare(right.preferredLabel, "es") ||
-    left.occupationId.localeCompare(right.occupationId)
-  );
 }
 
 export function loadApprovedMappings(
@@ -93,17 +85,22 @@ export function buildOccupationIndex(
       occupationId: occupation.occupationId,
       preferredLabel: occupation.preferredLabel,
       confirmationLabel: occupation.confirmationLabel,
-      searchText: [
-        occupation.preferredLabel,
-        ...(aliasesByOccupation.get(occupation.occupationId) ?? []),
-      ]
+      aliases: (aliasesByOccupation.get(occupation.occupationId) ?? [])
         .map(normalizeSearchText)
         .join(" "),
+      normalizedConfirmationLabel: normalizeSearchText(
+        occupation.confirmationLabel,
+      ),
+      normalizedPreferredLabel: normalizeSearchText(occupation.preferredLabel),
     }),
   );
   const index = new MiniSearch<OccupationSearchDocument>({
     idField: "occupationId",
-    fields: ["searchText"],
+    fields: [
+      "normalizedPreferredLabel",
+      "normalizedConfirmationLabel",
+      "aliases",
+    ],
     storeFields: ["occupationId", "preferredLabel", "confirmationLabel"],
     processTerm: normalizeSearchText,
   });
@@ -114,13 +111,21 @@ export function buildOccupationIndex(
       const normalized = normalizeSearchText(query);
       if (normalized.length === 0) return [];
       return index
-        .search(normalized, { combineWith: "AND", prefix: true })
+        .search(normalized, {
+          boost: {
+            aliases: 4,
+            normalizedConfirmationLabel: 3,
+            normalizedPreferredLabel: 2,
+          },
+          combineWith: "AND",
+          prefix: true,
+        })
+        .slice(0, 30)
         .map((result) => ({
           occupationId: String(result.occupationId),
           preferredLabel: String(result.preferredLabel),
           confirmationLabel: String(result.confirmationLabel),
-        }))
-        .sort(compareCandidates);
+        }));
     },
   };
 }

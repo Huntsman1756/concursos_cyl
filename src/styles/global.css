@@ -216,6 +216,26 @@ a:focus-visible {
   background: var(--color-surface);
 }
 
+.entry-card__field {
+  display: grid;
+  gap: var(--space-2);
+}
+
+.entry-card__field label {
+  font-weight: 750;
+}
+
+.entry-card__field select {
+  width: 100%;
+  min-height: 3.25rem;
+  padding: var(--space-3);
+  border: 1px solid #84928d;
+  border-radius: var(--radius-sm);
+  color: var(--color-text);
+  background: var(--color-surface);
+  font: inherit;
+}
+
 .entry-card__details {
   display: grid;
   gap: var(--space-3);
@@ -238,14 +258,24 @@ a:focus-visible {
   gap: var(--space-2);
   margin: auto var(--space-8) var(--space-8);
   padding: var(--space-3) var(--space-4);
+  border: 1px solid var(--color-action);
   border-radius: var(--radius-sm);
   color: var(--color-surface);
   background: var(--color-action);
   font-weight: 750;
+  font: inherit;
   line-height: 1.2;
   text-align: center;
   text-decoration: none;
   white-space: nowrap;
+  cursor: pointer;
+}
+
+.entry-card__cta:disabled {
+  border-color: var(--color-border);
+  color: var(--color-text-muted);
+  background: var(--color-surface-subtle);
+  cursor: not-allowed;
 }
 
 .coverage-panel {
@@ -568,6 +598,8 @@ a:focus-visible {
 }
 
 .form-field select:focus-visible,
+.entry-card__field select:focus-visible,
+.occupation-combobox input:focus-visible,
 button:focus-visible,
 summary:focus-visible {
   outline: none;

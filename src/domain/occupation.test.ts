@@ -35,10 +35,16 @@ const aliases: OccupationAlias[] = [
 ];
 
 describe("controlled occupation search corpus", () => {
-  it("does not search the display-only confirmation label", () => {
+  it("searches official labels, reviewed aliases, and everyday confirmation labels", () => {
     const index = buildOccupationIndex([occupation], aliases);
 
-    expect(index.search("desarrollo")).toEqual([]);
+    expect(index.search("desarrollo")).toEqual([
+      {
+        occupationId: occupation.occupationId,
+        preferredLabel: occupation.preferredLabel,
+        confirmationLabel: occupation.confirmationLabel,
+      },
+    ]);
     expect(index.search("programación web")).toEqual([
       {
         occupationId: occupation.occupationId,

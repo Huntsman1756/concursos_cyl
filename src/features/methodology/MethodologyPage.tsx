@@ -32,6 +32,7 @@ type TrainingCatalogSnapshot = {
   programs: number;
   centers: number;
   offerings: number;
+  officialOccupations: number | null;
 };
 
 type EvidenceState =
@@ -58,6 +59,9 @@ function trainingCatalogSnapshotFrom(
   manifest: LoadableGeneratedManifest,
 ): TrainingCatalogSnapshot {
   const { programs, centers, trainingOfferings } = manifest.resourceSnapshots;
+  const snapshots =
+    manifest.resourceSnapshots as typeof manifest.resourceSnapshots &
+      Partial<Record<"officialOccupations", { recordCount: number }>>;
   return {
     snapshotFetchedAt: programs.snapshotFetchedAt,
     sha256: programs.sha256,
@@ -70,6 +74,7 @@ function trainingCatalogSnapshotFrom(
     programs: programs.recordCount,
     centers: centers.recordCount,
     offerings: trainingOfferings.recordCount,
+    officialOccupations: snapshots.officialOccupations?.recordCount ?? null,
   };
 }
 
@@ -285,6 +290,19 @@ export function MethodologyPage() {
               }
               El selector permite consultar todo el catálogo y la ruta «Dónde
               estudiar» muestra los centros y modalidades de cada ciclo.
+            </p>
+            <p>
+              El buscador de ocupaciones filtra los{" "}
+              {trainingCatalog.status === "ready" &&
+              trainingCatalog.snapshot.officialOccupations !== null
+                ? countLabel(
+                    trainingCatalog.snapshot.officialOccupations,
+                    "grupo primario oficial CNO-11",
+                    "grupos primarios oficiales CNO-11",
+                  )
+                : "grupos primarios oficiales de la CNO-11"}
+              . Que una ocupación aparezca en este catálogo no significa que ya
+              tenga una equivalencia FP revisada.
             </p>
           </section>
           <section>

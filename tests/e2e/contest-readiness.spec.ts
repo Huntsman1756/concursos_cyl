@@ -241,14 +241,10 @@ test.describe("contest readiness journeys", () => {
   }) => {
     const diagnostics = installRouteDiagnostics(page);
     await page.goto("/");
+    await page.getByLabel("¿Qué has estudiado?").selectOption("COM01M");
     await page
-      .getByRole("link", { name: "Explorar salidas laborales" })
+      .getByRole("button", { name: "Explorar salidas laborales" })
       .click();
-    await expect(page).toHaveURL(/\/desde-fp$/u);
-    await page
-      .getByRole("combobox", { name: "Ciclo de Formación Profesional" })
-      .selectOption("COM01M");
-    await page.getByRole("button", { name: "Ver ofertas" }).click();
     await expect(page).toHaveURL(/\/desde-fp\/COM01M$/u);
     await page.getByRole("link", { name: "Comparar" }).click();
     await expect(page).toHaveURL(/\/comparar$/u);

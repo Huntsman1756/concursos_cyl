@@ -145,7 +145,7 @@ describe("occupation-first search", () => {
 
     const input = await screen.findByRole("combobox", { name: /ocupación/i });
     await user.type(input, "analistas programadores");
-    expect(screen.getByText("1 ocupación revisada encontrada")).toBeVisible();
+    expect(screen.getByText("1 ocupación oficial encontrada")).toBeVisible();
     await user.keyboard("{ArrowDown}{Enter}");
     expect(
       screen.getByRole("button", { name: "Ver rutas formativas" }),
@@ -165,14 +165,14 @@ describe("occupation-first search", () => {
     await user.type(input, rejectedAlias.alias);
 
     expect(
-      screen.getByText("No encontramos una ocupación revisada con ese nombre."),
+      screen.getByText("No encontramos una ocupación oficial con ese nombre."),
     ).toBeVisible();
     expect(
       screen.queryByText(rejectedOccupation.preferredLabel),
     ).not.toBeInTheDocument();
   });
 
-  it("does not silently replace confirmation when the text is edited", async () => {
+  it("clears a stale confirmation when the text is edited", async () => {
     installFetch();
     const user = userEvent.setup();
     render(
@@ -187,14 +187,12 @@ describe("occupation-first search", () => {
     await user.clear(input);
     await user.type(input, "otra cosa");
 
-    expect(
-      screen.getByText(/Ocupación confirmada/i).closest("div"),
-    ).toHaveTextContent(occupation.preferredLabel);
+    expect(screen.queryByText(/Ocupación confirmada/i)).not.toBeInTheDocument();
     expect(
       screen.getByRole("button", { name: "Ver rutas formativas" }),
-    ).toBeEnabled();
+    ).toBeDisabled();
     expect(
-      screen.getByText("No encontramos una ocupación revisada con ese nombre."),
+      screen.getByText("No encontramos una ocupación oficial con ese nombre."),
     ).toBeVisible();
   });
 

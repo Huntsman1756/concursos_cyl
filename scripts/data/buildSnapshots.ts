@@ -159,6 +159,10 @@ const RESOURCE_DEFINITIONS = {
     ...GENERATED_RESOURCE_CATALOG.occupations,
     schema: OccupationsSchema,
   },
+  officialOccupations: {
+    ...GENERATED_RESOURCE_CATALOG.officialOccupations,
+    schema: OccupationsSchema,
+  },
   occupationAliases: {
     ...GENERATED_RESOURCE_CATALOG.occupationAliases,
     schema: OccupationAliasesSchema,
@@ -230,6 +234,7 @@ export interface BuildSnapshotsOptions {
   loadProfessionalProfiles?: (
     programs: readonly z.infer<typeof TrainingProgramSchema>[],
   ) => Promise<ProfessionalProfile[]>;
+  loadOfficialOccupations?: () => Promise<z.infer<typeof OccupationsSchema>>;
   log?: (message: string) => void;
   failureInjection?: SnapshotFailureInjection;
 }
@@ -1278,6 +1283,7 @@ async function writeCandidate(
   incomeBundle: EducabaseIncomeBundle,
   outcomeIndicators: z.infer<typeof OutcomeIndicatorsResourceSchema>,
   curatedMappings: ValidatedCuratedMappings,
+  officialOccupations: z.infer<typeof OccupationsSchema>,
   professionalProfiles: readonly ProfessionalProfile[],
   previousCounts: SnapshotCounts | undefined,
 ): Promise<{ manifest: GeneratedManifest; counts: SnapshotCounts }> {
@@ -1320,6 +1326,9 @@ async function writeCandidate(
       .parse(training.offerings),
     jobOffers: z.array(JobOfferSchema).parse(offers),
     occupations: OccupationsSchema.parse(approvedMappings.occupations).sort(
+      (left, right) => left.occupationId.localeCompare(right.occupationId),
+    ),
+    officialOccupations: OccupationsSchema.parse(officialOccupations).sort(
       (left, right) => left.occupationId.localeCompare(right.occupationId),
     ),
     occupationAliases: OccupationAliasesSchema.parse(
@@ -1368,6 +1377,10 @@ async function writeCandidate(
     recordsUrl:
       "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
   };
+  const officialOccupationSource = {
+    id: "boe-cno11-complete-occupation-catalog",
+    recordsUrl: "https://www.boe.es/eli/es/rd/2010/11/26/1591",
+  };
   const curatedRelationshipSource = {
     id: "todofp-boe-reviewed-training-occupation-links",
     recordsUrl:
@@ -1386,11 +1399,15 @@ async function writeCandidate(
           ? SOURCE_CONFIG.offers
           : RESOURCE_DEFINITIONS[key].sourceKind === "curatedOccupations"
             ? curatedOccupationSource
-            : RESOURCE_DEFINITIONS[key].sourceKind === "educabaseIncome"
-              ? SOURCE_CONFIG.educabaseIncome
-              : RESOURCE_DEFINITIONS[key].sourceKind === "professionalProfiles"
-                ? professionalProfileSource
-                : curatedRelationshipSource,
+            : RESOURCE_DEFINITIONS[key].sourceKind ===
+                "officialOccupationCatalog"
+              ? officialOccupationSource
+              : RESOURCE_DEFINITIONS[key].sourceKind === "educabaseIncome"
+                ? SOURCE_CONFIG.educabaseIncome
+                : RESOURCE_DEFINITIONS[key].sourceKind ===
+                    "professionalProfiles"
+                  ? professionalProfileSource
+                  : curatedRelationshipSource,
       fetchedAt,
       RESOURCE_DEFINITIONS[key].sourceKind === "offers"
         ? offerSourceSnapshot.sourceUpdatedAt
@@ -2203,8 +2220,25 @@ export async function buildSnapshots(
         options.loadCuratedMappings ??
         ((programs) => loadCuratedMappingsFromDisk(root, programs))
       )(normalizedPrograms);
+      const officialOccupations = OccupationsSchema.parse(
+        await (
+          options.loadOfficialOccupations ??
+          (async () => {
+            const path = resolve(
+              root,
+              "data",
+              "curated",
+              "official-occupations.json",
+            );
+            return (await pathExists(path))
+              ? (JSON.parse(await readFile(path, "utf8")) as unknown)
+              : loadApprovedMappings(curatedMappings).occupations;
+          })
+        )(),
+      );
       const sourceHash = hashCanonicalSource({
         curatedMappings,
+        officialOccupations,
         professionalProfiles,
         income: incomeBundle.artifacts.map((artifact) => ({
           format: artifact.format,
@@ -2227,6 +2261,7 @@ export async function buildSnapshots(
         incomeBundle,
         outcomeIndicators,
         curatedMappings,
+        officialOccupations,
         professionalProfiles,
         previous?.counts,
       );

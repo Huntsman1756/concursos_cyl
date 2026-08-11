@@ -23,7 +23,7 @@ test("the live occupation journey confirms a reviewed everyday alias and reaches
   }
 
   await expect(page.locator(".confirmed-occupation")).toContainText(
-    "Analistas, programadores y diseñadores web y multimedia",
+    /Analistas, programadores y diseñadores web y multimedia/iu,
   );
   await page.getByRole("button", { name: "Ver rutas formativas" }).click();
   await expect(page).toHaveURL(
@@ -76,11 +76,35 @@ test("occupation search and an unknown route make absence explicit", async ({
     .getByRole("combobox", { name: "¿En qué ocupación quieres trabajar?" })
     .fill("ocupación inexistente");
   await expect(
-    page.getByText("No encontramos una ocupación revisada con ese nombre."),
+    page.getByText("No encontramos una ocupación oficial con ese nombre."),
   ).toBeVisible();
 
   await page.goto("/desde-ocupacion/occupation%3Acno11%3A9999");
   await expect(
     page.getByRole("heading", { name: "Ocupación no encontrada" }),
+  ).toBeVisible();
+});
+
+test("an official occupation without a reviewed FP relation remains searchable", async ({
+  page,
+}) => {
+  await page.goto("/desde-ocupacion");
+  const combobox = page.getByRole("combobox", {
+    name: "¿En qué ocupación quieres trabajar?",
+  });
+  await combobox.fill("astrónomos");
+  await page.getByRole("option", { name: /^Físicos y astrónomos/iu }).click();
+  await page.getByRole("button", { name: "Ver rutas formativas" }).click();
+
+  await expect(page).toHaveURL(
+    /\/desde-ocupacion\/occupation%3Acno11%3A2411$/u,
+  );
+  await expect(
+    page.getByRole("heading", { name: "Físicos y astrónomos" }),
+  ).toBeVisible();
+  await expect(
+    page.getByText(
+      "Aún no hay una ruta formativa revisada para esta ocupación.",
+    ),
   ).toBeVisible();
 });

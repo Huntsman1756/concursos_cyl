@@ -41,10 +41,10 @@ test("home exposes equal journeys, navigation, freshness, and no automated acces
     page.getByRole("navigation", { name: "Principal" }).getByRole("link"),
   ).toHaveText(["Inicio", "Comparar", "Metodología"]);
 
-  const journeyLinks = page
+  const journeyButtons = page
     .getByLabel("Elige tu punto de partida")
-    .getByRole("link");
-  await expect(journeyLinks).toHaveText([
+    .getByRole("button");
+  await expect(journeyButtons).toHaveText([
     "Explorar salidas laborales",
     "Buscar ciclos que te preparan",
   ]);
@@ -79,33 +79,38 @@ test("both entry routes remain reachable in their approved order", async ({
 }) => {
   await page.goto("/");
 
-  await page.getByRole("link", { name: "Explorar salidas laborales" }).click();
-  await expect(page).toHaveURL(/\/desde-fp$/u);
+  await page.getByLabel("¿Qué has estudiado?").selectOption("IFC03S");
+  await page
+    .getByRole("button", { name: "Explorar salidas laborales" })
+    .click();
+  await expect(page).toHaveURL(/\/desde-fp\/IFC03S$/u);
   await expect(
     page.getByRole("heading", {
-      name: "Encuentra ofertas relacionadas con tu FP",
+      name: "Desarrollo de Aplicaciones Web",
     }),
   ).toBeVisible();
-  await expect(page.getByLabel("Ciclo de Formación Profesional")).toBeVisible();
 
   await page.getByRole("link", { name: "SALIDA CyL" }).click();
+  const occupationSearch = page.getByRole("combobox", {
+    name: "¿Qué ocupación te interesa?",
+  });
+  await occupationSearch.fill("Programación web");
   await page
-    .getByRole("link", { name: "Buscar ciclos que te preparan" })
+    .getByRole("option", {
+      name: /Analistas, programadores y diseñadores web y multimedia/iu,
+    })
     .click();
-  await expect(page).toHaveURL(/\/desde-ocupacion$/u);
+  await page
+    .getByRole("button", { name: "Buscar ciclos que te preparan" })
+    .click();
+  await expect(page).toHaveURL(
+    /\/desde-ocupacion\/occupation%3Acno11%3A2713$/u,
+  );
   await expect(
     page.getByRole("heading", {
-      name: "Descubre qué FP conduce a un trabajo concreto",
+      name: /Analistas, programadores y diseñadores web y multimedia/iu,
     }),
   ).toBeVisible();
-  await expect(
-    page.getByRole("combobox", {
-      name: "¿En qué ocupación quieres trabajar?",
-    }),
-  ).toBeVisible();
-  await expect(
-    page.getByRole("button", { name: "Ver rutas formativas" }),
-  ).toBeDisabled();
 });
 
 test("the training-first journey keeps the live zero-match snapshot honest and accessible", async ({
@@ -410,7 +415,7 @@ test("the selected workspace uses equal desktop panels and a stacked mobile flow
   } else {
     expect(secondPanel.y).toBeGreaterThan(firstPanel.y + firstPanel.height);
     expect(coveragePanel.y).toBeGreaterThan(secondPanel.y + secondPanel.height);
-    const firstCta = await panels.nth(0).getByRole("link").boundingBox();
+    const firstCta = await panels.nth(0).getByRole("button").boundingBox();
     expect(firstCta).not.toBeNull();
     if (firstCta) {
       expect(firstCta.width).toBeGreaterThan(firstPanel.width * 0.8);

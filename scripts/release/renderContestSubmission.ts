@@ -67,11 +67,12 @@ SALIDA CyL ayuda a personas de Castilla y León a explorar opciones de formació
 
 ## Solución
 
-La interfaz permite entrar desde el catálogo de FP o desde una ocupación. Expone estados diferenciados para relaciones revisadas con ofertas, relaciones revisadas sin coincidencias y programas cuya revisión sigue diferida. La metodología explica el origen de cada dato y los límites de interpretación.
+La interfaz permite elegir directamente cualquiera de los ${freeze.manifest.resourceSnapshots.programs.recordCount} ciclos de FP o filtrar los ${freeze.manifest.resourceSnapshots.officialOccupations.recordCount} grupos primarios de la CNO-11. Expone por separado el catálogo oficial completo y la cobertura parcial de relaciones FP–ocupación revisadas, incluidas las relaciones con ofertas, las revisadas sin coincidencias y las todavía no validadas. La metodología explica el origen de cada dato y los límites de interpretación.
 
 ## Cobertura congelada
 
 - Instantánea publicada: \`${freeze.manifest.snapshotId}\`.
+- Grupos primarios CNO-11 consultables: **${freeze.manifest.resourceSnapshots.officialOccupations.recordCount}**.
 - **${coverage.distinctQualificationCount} cualificaciones distintas**.
 - Claves de modalidad públicas: **${coverage.modalityKeyCount}** (${list(coverage.modalityKeys)}).
 - Relaciones ocupacionales aprobadas: **${coverage.approvedRelationCount}**.
@@ -163,7 +164,7 @@ npm run analysis:pilot:report:check
 npm exec -- tsx scripts/release/validateContestFreeze.ts
 \`\`\`
 
-La revisión independiente confirmó el manifest, los diez recursos, los conjuntos de relaciones y la ausencia de cambios en \`data/curated\`, \`public/data\`, \`src/domain\` y \`src/features\` desde el commit fuente.
+La revisión independiente confirmó el manifest, sus ${Object.keys(freeze.manifest.resourceSnapshots).length} recursos, los conjuntos de relaciones y la ausencia de cambios en \`data/curated\`, \`public/data\`, \`src/domain\` y \`src/features\` desde el commit fuente.
 
 ## Despliegue
 

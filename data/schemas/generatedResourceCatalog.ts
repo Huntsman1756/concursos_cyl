@@ -17,6 +17,10 @@ export const GENERATED_RESOURCE_CATALOG = {
     fileName: "occupations.json",
     sourceKind: "curatedOccupations",
   },
+  officialOccupations: {
+    fileName: "official-occupations.json",
+    sourceKind: "officialOccupationCatalog",
+  },
   occupationAliases: {
     fileName: "occupation-aliases.json",
     sourceKind: "curatedOccupations",
