@@ -1,11 +1,11 @@
 {
   "schemaVersion": 1,
   "status": "deployed_verified",
-  "recordedAt": "2026-08-10T06:43:25Z",
+  "recordedAt": "2026-08-11T08:28:36Z",
   "expectedRootUrl": "https://huntsman1756.github.io/concursos_cyl/",
-  "coverageFreezeCommitSha": "111039ea2678272452169bb30c31cc680a4d436e",
-  "publicationCommitSha": "27e7b2ec5996868df6c05edd02d3434a2559c44b",
-  "localReviewHeadSha": "0373b833665f5eb47fb492ef078ebe7df35e3ded",
+  "coverageFreezeCommitSha": "b71b3a8655d00672fd976dba0f04a81840e44de5",
+  "publicationCommitSha": "6e64af43066159d92881e9435318511757dad841",
+  "localReviewHeadSha": "b71b3a8655d00672fd976dba0f04a81840e44de5",
   "captureProductCommitSha": "f423a208a7f8c140a1dfa342e8689d3b6d967e94",
   "manifest": {
     "snapshotId": "20260809185438334-65ce4d3c4e14",
@@ -48,19 +48,19 @@
     "fullVitestCi": {
       "status": "passed",
       "testFiles": 71,
-      "passedTestFiles": 70,
-      "skippedTestFiles": 1,
-      "tests": 708,
-      "passed": 706,
-      "skipped": 2,
-      "durationSeconds": 249.7,
+      "passedTestFiles": 71,
+      "skippedTestFiles": 0,
+      "tests": 713,
+      "passed": 713,
+      "skipped": 0,
+      "durationSeconds": 258,
       "command": "npm test -- --testTimeout=60000",
-      "workflowRunId": "31362601931"
+      "workflowRunId": "31470763926"
     },
     "playwright": {
       "status": "passed",
-      "tests": 76,
-      "command": "npm run test:e2e -- --workers=2"
+      "tests": 78,
+      "command": "npm run test:e2e"
     },
     "lint": {
       "status": "passed",
@@ -108,11 +108,11 @@
   },
   "deployment": {
     "status": "verified",
-    "commitSha": "0373b833665f5eb47fb492ef078ebe7df35e3ded",
-    "workflowRunId": "31362601931",
-    "workflowUrl": "https://github.com/Huntsman1756/concursos_cyl/actions/runs/31362601931",
+    "commitSha": "b71b3a8655d00672fd976dba0f04a81840e44de5",
+    "workflowRunId": "31470763926",
+    "workflowUrl": "https://github.com/Huntsman1756/concursos_cyl/actions/runs/31470763926",
     "liveRootVerified": true,
-    "verifiedAt": "2026-08-10T06:43:25Z"
+    "verifiedAt": "2026-08-11T08:28:36Z"
   },
   "publicVerification": {
     "rootUrl": "https://huntsman1756.github.io/concursos_cyl/",

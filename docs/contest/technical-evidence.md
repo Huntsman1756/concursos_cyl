@@ -68,7 +68,7 @@ La revisión independiente confirmó el manifest, los diez recursos, los conjunt
 ## Despliegue
 
 - URL raíz esperada: [https://huntsman1756.github.io/concursos_cyl/](https://huntsman1756.github.io/concursos_cyl/)
-- Commit desplegado: `0373b833665f5eb47fb492ef078ebe7df35e3ded`.
-- Run del workflow: `31362601931`.
+- Commit desplegado: `b71b3a8655d00672fd976dba0f04a81840e44de5`.
+- Run del workflow: `31470763926`.
 
-El release público se verificó con el commit `0373b833665f5eb47fb492ef078ebe7df35e3ded` y el run `31362601931` el 2026-08-10T06:43:25Z.
+El release público se verificó con el commit `b71b3a8655d00672fd976dba0f04a81840e44de5` y el run `31470763926` el 2026-08-11T08:28:36Z.
