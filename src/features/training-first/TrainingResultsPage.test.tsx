@@ -241,7 +241,7 @@ describe("TrainingResultsPage", () => {
       if (expectedOffers.length === 0) {
         expect(
           await screen.findByText(
-            /No hay ofertas relacionadas en la instant\u00e1nea del/u,
+            /No hay ofertas relacionadas en la copia de datos del/u,
           ),
         ).toBeVisible();
         expect(screen.queryAllByRole("article")).toHaveLength(0);
@@ -270,7 +270,7 @@ describe("TrainingResultsPage", () => {
     );
 
     await screen.findByText(
-      "No hay ofertas relacionadas en la instantánea del 31 de julio de 2026.",
+      "No hay ofertas relacionadas en la copia de datos del 31 de julio de 2026.",
     );
     expect(screen.queryByText(/Filtro activo/)).not.toBeInTheDocument();
   });
@@ -284,7 +284,9 @@ describe("TrainingResultsPage", () => {
     );
 
     expect(
-      await screen.findByText(/Aún no hemos validado una equivalencia CNO-11/u),
+      await screen.findByText(
+        /Todavía no hay una relación revisada que permita buscar ofertas/u,
+      ),
     ).toBeVisible();
   });
 
@@ -328,7 +330,7 @@ describe("TrainingResultsPage", () => {
 
     expect(
       await screen.findByText(
-        "No hay ofertas relacionadas en la instantánea del 31 de julio de 2026.",
+        "No hay ofertas relacionadas en la copia de datos del 31 de julio de 2026.",
       ),
     ).toBeVisible();
     expect(
@@ -350,7 +352,7 @@ describe("TrainingResultsPage", () => {
       "No se han podido actualizar los datos. Mostramos la última copia disponible.",
     );
     const emptyState = screen.getByText(
-      /No hay ofertas relacionadas en la instantánea/,
+      /No hay ofertas relacionadas en la copia de datos/,
     );
     expect(
       warning.compareDocumentPosition(emptyState) &
@@ -434,11 +436,11 @@ describe("TrainingResultsPage", () => {
     await user.click(disclosures[0]);
     expect(
       within(mappingDisclosure!).getByText(
-        "Revisión del mapeo: 4 de agosto de 2026",
+        "Revisión de la relación: 4 de agosto de 2026",
       ),
     ).toBeVisible();
     expect(
-      within(mappingDisclosure!).getByText("Versión del mapeo: 1.0.0"),
+      within(mappingDisclosure!).getByText("Versión de la relación: 1.0.0"),
     ).toBeVisible();
     await user.click(disclosures[1]);
     expect(screen.getByText(sourceQuote)).toBeVisible();
@@ -454,11 +456,13 @@ describe("TrainingResultsPage", () => {
     ).toBeVisible();
     expect(
       within(requirementDisclosure!).getByText(
-        "Regla de extracción: license.driving_b",
+        "Regla técnica de extracción: license.driving_b",
       ),
     ).toBeVisible();
     expect(
-      within(requirementDisclosure!).getByText("Versión del parser: 1.0.0"),
+      within(requirementDisclosure!).getByText(
+        "Versión de la extracción: 1.0.0",
+      ),
     ).toBeVisible();
 
     await user.click(
@@ -523,7 +527,7 @@ describe("TrainingResultsPage", () => {
 
     expect(
       await screen.findByText(
-        /No hay ofertas relacionadas en la instant\u00e1nea del/u,
+        /No hay ofertas relacionadas en la copia de datos del/u,
       ),
     ).toBeVisible();
   });

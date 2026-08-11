@@ -129,7 +129,7 @@ describe("occupation-first search", () => {
     expect(submit).toBeDisabled();
     await user.click(option);
     expect(
-      screen.getByText(/Ocupación confirmada/i).closest("div"),
+      screen.getByText(/Ocupación seleccionada/i).closest("div"),
     ).toHaveTextContent(occupation.preferredLabel);
     expect(submit).toBeEnabled();
   });
@@ -187,7 +187,9 @@ describe("occupation-first search", () => {
     await user.clear(input);
     await user.type(input, "otra cosa");
 
-    expect(screen.queryByText(/Ocupación confirmada/i)).not.toBeInTheDocument();
+    expect(
+      screen.queryByText(/Ocupación seleccionada/i),
+    ).not.toBeInTheDocument();
     expect(
       screen.getByRole("button", { name: "Ver rutas formativas" }),
     ).toBeDisabled();
@@ -210,7 +212,9 @@ describe("occupation-first search", () => {
     await user.click(screen.getByRole("option"));
     await user.click(screen.getByRole("button", { name: "Nueva búsqueda" }));
 
-    expect(screen.queryByText(/Ocupación confirmada/i)).not.toBeInTheDocument();
+    expect(
+      screen.queryByText(/Ocupación seleccionada/i),
+    ).not.toBeInTheDocument();
     expect(
       screen.getByRole("button", { name: "Ver rutas formativas" }),
     ).toBeDisabled();

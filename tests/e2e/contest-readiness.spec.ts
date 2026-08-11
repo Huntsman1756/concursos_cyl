@@ -117,7 +117,7 @@ test.describe("contest readiness journeys", () => {
     await expect(
       page.getByRole("heading", {
         level: 1,
-        name: "Encuentra ofertas relacionadas con tu FP",
+        name: "Consulta salidas y ofertas relacionadas con tu FP",
       }),
     ).toBeVisible();
     await expect(
@@ -175,7 +175,7 @@ test.describe("contest readiness journeys", () => {
     await expect(page.getByRole("status")).toContainText(
       /salidas oficiales disponibles.*CNO-11.*aún no validado/i,
     );
-    await page.getByRole("button", { name: "Ver ofertas" }).click();
+    await page.getByRole("button", { name: "Ver salidas y ofertas" }).click();
     await expect(page).toHaveURL(/\/desde-fp\/COM01M$/u);
     await expect(
       page.getByText(/Aún no hemos validado una equivalencia CNO-11/i),

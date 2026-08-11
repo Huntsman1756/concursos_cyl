@@ -219,7 +219,9 @@ export function TrainingResultsPage() {
     <section className="training-page">
       <header className="training-page__header">
         <Link to="/desde-fp">Cambiar ciclo</Link>
-        <p className="training-page__eyebrow">Ofertas relacionadas con</p>
+        <p className="training-page__eyebrow">
+          Salidas y ofertas relacionadas con
+        </p>
         <h1>{state.program.programTitle}</h1>
         <p>
           {trainingLevelLabel(state.program.level)} · Código oficial{" "}
@@ -265,7 +267,7 @@ export function TrainingResultsPage() {
         <p>
           TodoFP identifica estos perfiles para el título. Describen trabajos a
           los que prepara el ciclo; no significan que exista ahora una oferta
-          concreta en nuestra instantánea.
+          concreta en esta copia de datos.
         </p>
         {officialProfiles.length > 0 ? (
           <>
@@ -290,7 +292,7 @@ export function TrainingResultsPage() {
       </section>
       {resolvedOccupations.length > 0 && (
         <section className="occupations-section">
-          <h2>Ocupaciones CNO-11 revisadas para buscar ofertas</h2>
+          <h2>Grupos de ocupación revisados para buscar ofertas</h2>
           <ul>
             {resolvedOccupations.map((occupation) => (
               <li key={occupation.occupationId}>
@@ -316,9 +318,9 @@ export function TrainingResultsPage() {
         <div className="status-panel">
           <h2>Cómo buscar oportunidades ahora</h2>
           <p>
-            Las salidas oficiales están disponibles arriba. Aún no hemos
-            validado una equivalencia CNO-11 para cruzar este ciclo con las
-            ofertas de la instantánea sin riesgo de falsos positivos.
+            Las salidas oficiales están disponibles arriba. Todavía no hay una
+            relación revisada que permita buscar ofertas para este ciclo sin
+            mostrar coincidencias dudosas.
           </p>
           <p>
             Usa los nombres oficiales como términos de búsqueda en los portales
@@ -329,8 +331,8 @@ export function TrainingResultsPage() {
         <div className="status-panel">
           <p>
             {publicationFilter === null
-              ? `No hay ofertas relacionadas en la instantánea del ${snapshotDate(state.manifest)}.`
-              : "No hay ofertas relacionadas en esta instantánea que omitan publicar este requisito exacto."}
+              ? `No hay ofertas relacionadas en la copia de datos del ${snapshotDate(state.manifest)}.`
+              : "No hay ofertas relacionadas en esta copia de datos que omitan publicar este requisito exacto."}
           </p>
           <p>
             Esto no significa que no existan ofertas fuera de esta copia de

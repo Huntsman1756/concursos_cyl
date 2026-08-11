@@ -130,11 +130,13 @@ export function OccupationResultsPage() {
     <section className="training-page">
       <header className="training-page__header">
         <Link to="/desde-ocupacion">Buscar otra ocupación</Link>
-        <p className="training-page__eyebrow">Ocupación oficial confirmada</p>
+        <p className="training-page__eyebrow">
+          Ocupación seleccionada del catálogo oficial
+        </p>
         <h1>{occupation.preferredLabel}</h1>
         <p>
-          CNO-11 {occupation.classificationCode}. Mostramos todas las relaciones
-          aprobadas del catálogo actual; cada una indica su tipo y fuente.
+          CNO-11 {occupation.classificationCode}. Mostramos las relaciones
+          revisadas por SALIDA CyL y la fuente que respalda cada una.
         </p>
       </header>
       <p className="coverage-note">
@@ -151,8 +153,10 @@ export function OccupationResultsPage() {
         <div className="status-panel" role="alert">
           <h2>Hay relaciones que no se pueden mostrar</h2>
           <p>
-            Falta el ciclo oficial de {missingPrograms.length} relación revisada
-            en la instantánea formativa.
+            {missingPrograms.length === 1
+              ? "Falta el ciclo oficial de una relación revisada"
+              : `Faltan los ciclos oficiales de ${missingPrograms.length} relaciones revisadas`}{" "}
+            en la copia de datos formativos.
           </p>
         </div>
       )}

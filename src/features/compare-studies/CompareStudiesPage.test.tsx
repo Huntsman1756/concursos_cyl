@@ -196,7 +196,9 @@ describe("CompareStudiesPage", () => {
     const user = userEvent.setup();
     renderPage();
 
-    expect(screen.getByText("Cargando la comparación oficial…")).toBeVisible();
+    expect(
+      screen.getByText("Cargando los datos de comparación…"),
+    ).toBeVisible();
     await user.click(await screen.findByRole("radio", { name: "Grado medio" }));
     await user.click(screen.getByRole("checkbox", { name: "Grupo medio 1" }));
     await user.click(screen.getByRole("checkbox", { name: "Grupo medio 2" }));
@@ -228,7 +230,7 @@ describe("CompareStudiesPage", () => {
     ).toBeVisible();
     expect(
       screen.getByText(
-        "Mostramos ambas referencias por separado porque no existe una estadística oficial de ingresos por ciclo formativo en Castilla y León.",
+        "Mostramos ambas referencias por separado porque la fuente consultada no publica ingresos por ciclo concreto en Castilla y León; solo ofrece una referencia conjunta para Grado Medio o Grado Superior.",
       ),
     ).toBeVisible();
     expect(screen.getAllByText(/Base de cotización anualizada/u)).toHaveLength(
@@ -256,7 +258,7 @@ describe("CompareStudiesPage", () => {
     const { unmount } = renderPage();
     expect(
       await screen.findByText(
-        "La comparación oficial no está disponible en esta versión de los datos.",
+        "Los datos de comparación no están disponibles en esta versión.",
       ),
     ).toBeVisible();
 
@@ -265,7 +267,7 @@ describe("CompareStudiesPage", () => {
     renderPage();
     expect(
       await screen.findByText(
-        "No se ha podido comprobar la comparación oficial.",
+        "No se han podido cargar o validar los datos de comparación.",
       ),
     ).toBeVisible();
 

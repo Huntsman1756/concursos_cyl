@@ -154,7 +154,7 @@ export function CompareStudiesPage() {
     return (
       <section className="compare-page compare-page--status" aria-live="polite">
         <h1>Ingresos observados</h1>
-        <p role="status">Cargando la comparación oficial…</p>
+        <p role="status">Cargando los datos de comparación…</p>
       </section>
     );
   }
@@ -162,10 +162,7 @@ export function CompareStudiesPage() {
     return (
       <section className="compare-page compare-page--status" aria-live="polite">
         <h1>Ingresos observados</h1>
-        <p>
-          La comparación oficial no está disponible en esta versión de los
-          datos.
-        </p>
+        <p>Los datos de comparación no están disponibles en esta versión.</p>
         <p>
           <Link to="/metodologia">Consultar la metodología y las fuentes</Link>
         </p>
@@ -176,7 +173,7 @@ export function CompareStudiesPage() {
     return (
       <section className="compare-page compare-page--status" aria-live="polite">
         <h1>Ingresos observados</h1>
-        <p>No se ha podido comprobar la comparación oficial.</p>
+        <p>No se han podido cargar o validar los datos de comparación.</p>
         <p>Prueba de nuevo más tarde o consulta la metodología.</p>
       </section>
     );
@@ -260,9 +257,9 @@ export function CompareStudiesPage() {
             />
           </div>
           <p className="income-limitation">
-            Mostramos ambas referencias por separado porque no existe una
-            estadística oficial de ingresos por ciclo formativo en Castilla y
-            León.
+            Mostramos ambas referencias por separado porque la fuente consultada
+            no publica ingresos por ciclo concreto en Castilla y León; solo
+            ofrece una referencia conjunta para Grado Medio o Grado Superior.
           </p>
         </section>
       ) : null}

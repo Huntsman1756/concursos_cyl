@@ -39,34 +39,37 @@ export function SourceMethodCard({
         {limitations}
       </section>
 
-      <section>
-        <h3>Actualización y huella</h3>
-        {provenance}
-      </section>
+      <details className="methodology-technical">
+        <summary>Ver actualización, identificadores y descargas</summary>
+        <section>
+          <h3>Actualización de la copia</h3>
+          {provenance}
+        </section>
 
-      <section>
-        <h3>Fuente original</h3>
-        <div className="source-table-list">
-          {tables.map((table) => (
-            <details key={table.tableId}>
-              <summary>
-                <code>{table.tableId}</code> · {table.label}
-              </summary>
-              <ul>
-                <li>
-                  <a href={table.catalogUrl}>Ficha oficial del catálogo</a>
-                </li>
-                <li>
-                  <a href={table.csvUrl}>Descarga CSV oficial</a>
-                </li>
-                <li>
-                  <a href={table.pxUrl}>Descarga PC-Axis oficial</a>
-                </li>
-              </ul>
-            </details>
-          ))}
-        </div>
-      </section>
+        <section>
+          <h3>Fuente original y archivos</h3>
+          <div className="source-table-list">
+            {tables.map((table) => (
+              <details key={table.tableId}>
+                <summary>
+                  <code>{table.tableId}</code> · {table.label}
+                </summary>
+                <ul>
+                  <li>
+                    <a href={table.catalogUrl}>Ficha oficial del catálogo</a>
+                  </li>
+                  <li>
+                    <a href={table.csvUrl}>Descarga CSV oficial</a>
+                  </li>
+                  <li>
+                    <a href={table.pxUrl}>Descarga PC-Axis oficial</a>
+                  </li>
+                </ul>
+              </details>
+            ))}
+          </div>
+        </section>
+      </details>
     </article>
   );
 }

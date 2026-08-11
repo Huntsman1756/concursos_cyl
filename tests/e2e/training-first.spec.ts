@@ -22,7 +22,7 @@ test("live DAW results shows formacion link and approved occupation", async ({
   await page
     .getByLabel("Ciclo de Formación Profesional")
     .selectOption("IFC03S");
-  await page.getByRole("button", { name: "Ver ofertas" }).click();
+  await page.getByRole("button", { name: "Ver salidas y ofertas" }).click();
 
   await expect(
     page.getByRole("link", {
@@ -62,7 +62,7 @@ test("live DAW results name the dated zero-match snapshot without claiming there
   await page
     .getByLabel("Ciclo de Formación Profesional")
     .selectOption("IFC03S");
-  await page.getByRole("button", { name: "Ver ofertas" }).click();
+  await page.getByRole("button", { name: "Ver salidas y ofertas" }).click();
   const snapshotDate = new Intl.DateTimeFormat("es-ES", {
     day: "numeric",
     month: "long",
@@ -77,7 +77,7 @@ test("live DAW results name the dated zero-match snapshot without claiming there
 
   await expect(
     page.getByText(
-      `No hay ofertas relacionadas en la instantánea del ${snapshotDate}.`,
+      `No hay ofertas relacionadas en la copia de datos del ${snapshotDate}.`,
     ),
   ).toBeVisible();
   await expect(page.getByText(/no hay (empleo|trabajo|puestos)/iu)).toHaveCount(
@@ -95,7 +95,7 @@ test("COM01M is explicitly unavailable before and after submit", async ({
   await expect(page.getByRole("status")).toContainText(
     /salidas oficiales disponibles.*CNO-11.*aún no validado/i,
   );
-  await page.getByRole("button", { name: "Ver ofertas" }).click();
+  await page.getByRole("button", { name: "Ver salidas y ofertas" }).click();
   await expect(
     page.getByText(/Aún no hemos validado una equivalencia CNO-11/i),
   ).toBeVisible();
@@ -109,7 +109,7 @@ test("the intercepted full DAW card makes a declared gap, action, filter, and ev
   await page
     .getByLabel("Ciclo de Formación Profesional")
     .selectOption("IFC03S");
-  await page.getByRole("button", { name: "Ver ofertas" }).click();
+  await page.getByRole("button", { name: "Ver salidas y ofertas" }).click();
 
   const card = page.getByRole("article", {
     name: "Desarrollador web para servicios públicos",
@@ -147,7 +147,9 @@ test("the intercepted full DAW card makes a declared gap, action, filter, and ev
     name: `No lo tengo: ${syntheticQuotes.experienceQuote}`,
   });
   await expect(missingExperience).toBeFocused();
-  await expect(card.getByText(/^Brecha declarada:/u)).toBeVisible();
+  await expect(
+    card.getByText("Has indicado que no cumples este requisito."),
+  ).toBeVisible();
 
   const exactAbsenceAction = card.getByRole("button", {
     name: "Ver ofertas relacionadas donde no se publica este requisito",

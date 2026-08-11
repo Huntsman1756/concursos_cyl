@@ -65,7 +65,7 @@ export function AppShell({ children }: AppShellProps) {
             <Link to="/metodologia">Limitaciones</Link>
             <Link to="/metodologia">Accesibilidad</Link>
           </nav>
-          <p>Datos públicos de Castilla y León</p>
+          <p>Datos públicos estatales y de Castilla y León</p>
         </div>
       </footer>
     </>

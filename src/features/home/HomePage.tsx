@@ -282,7 +282,7 @@ export function HomePage() {
                 ) : (
                   <p className="form-message">
                     {searchData.status === "loading"
-                      ? "Cargando el catálogo oficial CNO-11…"
+                      ? "Cargando el catálogo oficial de ocupaciones…"
                       : "El buscador no está disponible ahora mismo."}
                   </p>
                 )
@@ -446,8 +446,8 @@ export function HomePage() {
         <p>
           <span aria-hidden="true">i</span>
           <strong>Metodología y límites:</strong> SALIDA CyL utiliza datos
-          públicos y relaciones revisadas. No inventa equivalencias ni garantiza
-          empleo.
+          públicos. Solo publica relaciones respaldadas por una fuente o una
+          revisión documentada. Ningún resultado garantiza empleo.
         </p>
         <Link to="/metodologia">
           Saber más sobre cómo trabajamos <Icon name="arrow-right" size={16} />

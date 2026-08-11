@@ -95,7 +95,7 @@ export function TrainingSearchPage() {
     <section className="training-page" aria-busy={status === "loading"}>
       <header className="training-page__header">
         <p className="training-page__eyebrow">Desde tu formación</p>
-        <h1>Encuentra ofertas relacionadas con tu FP</h1>
+        <h1>Consulta salidas y ofertas relacionadas con tu FP</h1>
         <p>
           Elige tu ciclo oficial. Verás sus salidas publicadas por TodoFP y, por
           separado, las ocupaciones y ofertas que ya hemos podido relacionar con
@@ -108,19 +108,19 @@ export function TrainingSearchPage() {
           className="training-catalog-note"
           aria-label="Alcance del catálogo de FP"
         >
-          <h2>El catálogo completo está disponible</h2>
+          <h2>Consulta los ciclos de la copia publicada</h2>
           <p>
             El selector contiene {catalogSummary.programCount} ciclos oficiales.
-            Todos muestran sus salidas profesionales oficiales de TodoFP. La
-            equivalencia CNO-11 para cruzarlas con ofertas es una capa separada:
-            ahora incluye {catalogSummary.reviewedModalityCount}{" "}
-            {catalogSummary.reviewedModalityCount === 1 ? "clave" : "claves"} de
-            modalidad.
+            Todos muestran las salidas profesionales publicadas por TodoFP.
           </p>
           <p>
-            Puedes elegir cualquier ciclo, consultar sus salidas y ver dónde se
-            estudia. Cuando falta una equivalencia CNO-11, evitamos mostrar
-            ofertas dudosas.
+            Para buscar ofertas usamos relaciones revisadas entre ciclos y
+            grupos de la Clasificación Nacional de Ocupaciones (CNO-11). Ahora
+            hay {catalogSummary.reviewedModalityCount}{" "}
+            {catalogSummary.reviewedModalityCount === 1
+              ? "ciclo o modalidad"
+              : "ciclos o modalidades"}{" "}
+            con esa relación revisada. Si falta, no mostramos ofertas dudosas.
           </p>
           <Link to="/metodologia#fp-catalogo">
             Cómo funciona la cobertura de FP
@@ -158,8 +158,8 @@ export function TrainingSearchPage() {
           {selectedCoverage !== undefined && (
             <p role="status" aria-live="polite">
               {selectedCoverage.coverageStatus === "reviewed"
-                ? `Cobertura revisada: ${selectedCoverage.approvedMappings} ocupaciones CNO.`
-                : "Salidas oficiales disponibles; cruce CNO-11 con ofertas aún no validado."}
+                ? `Relaciones revisadas con ${selectedCoverage.approvedMappings} grupos de ocupación.`
+                : "Salidas oficiales disponibles; todavía no hay una relación revisada para buscar ofertas."}
             </p>
           )}
           <div className="form-field">
@@ -182,7 +182,7 @@ export function TrainingSearchPage() {
             type="submit"
             disabled={!validSelection}
           >
-            Ver ofertas
+            Ver salidas y ofertas
           </button>
         </form>
       )}

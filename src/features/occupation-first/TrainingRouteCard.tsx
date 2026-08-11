@@ -84,8 +84,8 @@ export function TrainingRouteCard({
               <p>
                 {offerings.length}{" "}
                 {offerings.length === 1
-                  ? "oferta formativa"
-                  : "ofertas formativas"}
+                  ? "opción de centro y modalidad publicada"
+                  : "opciones de centro y modalidad publicadas"}
               </p>
               <dl>
                 <div>
@@ -100,7 +100,7 @@ export function TrainingRouteCard({
             </>
           )}
           <p className="data-freshness">
-            Instantánea consultada: {snapshotDate}
+            Datos formativos consultados el {snapshotDate}
           </p>
         </div>
         <Link

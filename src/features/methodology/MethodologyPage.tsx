@@ -112,7 +112,7 @@ function Provenance({ state }: { state: EvidenceState }) {
     return <p>Comprobando la publicación utilizada…</p>;
   }
   if (state.status === "unavailable") {
-    return <p>No se ha podido comprobar el manifiesto de datos.</p>;
+    return <p>No se ha podido comprobar la copia de datos publicada.</p>;
   }
   if (state.status === "historical") {
     return (
@@ -123,12 +123,13 @@ function Provenance({ state }: { state: EvidenceState }) {
   return (
     <>
       <p>
-        Captura verificada el {formattedDate(state.snapshot.snapshotFetchedAt)}.
-        Huella SHA-256: <code>{state.snapshot.sha256.slice(0, 12)}…</code>
+        Copia descargada el {formattedDate(state.snapshot.snapshotFetchedAt)}.
+        Identificador técnico (SHA-256):{" "}
+        <code>{state.snapshot.sha256.slice(0, 12)}…</code>
       </p>
       <p>
         <a href={resolveGeneratedAssetPath(state.snapshot.resourcePath)}>
-          Descargar evidencia normalizada
+          Descargar los datos utilizados
         </a>
       </p>
       {state.manifestStale || state.snapshot.qualityStatus === "stale" ? (
@@ -142,34 +143,33 @@ function Provenance({ state }: { state: EvidenceState }) {
 
 function TrainingCatalogProvenance({ state }: { state: TrainingCatalogState }) {
   if (state.status === "loading") {
-    return <p>Comprobando la instantánea del catálogo oficial…</p>;
+    return <p>Comprobando la copia del catálogo oficial…</p>;
   }
   if (state.status === "unavailable") {
-    return <p>No se ha podido comprobar la instantánea del catálogo.</p>;
+    return <p>No se ha podido comprobar la copia del catálogo.</p>;
   }
 
   return (
     <>
       <p>
-        Instantánea capturada el{" "}
-        {formattedDate(state.snapshot.snapshotFetchedAt)}. Recursos:{" "}
-        {countLabel(state.snapshot.programs, "programa", "programas")},{" "}
+        Copia descargada el {formattedDate(state.snapshot.snapshotFetchedAt)}.
+        Incluye: {countLabel(state.snapshot.programs, "ciclo", "ciclos")},{" "}
         {countLabel(state.snapshot.centers, "centro", "centros")} y{" "}
         {countLabel(
           state.snapshot.offerings,
-          "oferta formativa",
-          "ofertas formativas",
+          "opción de centro y modalidad",
+          "opciones de centro y modalidad",
         )}
         .
       </p>
       <p>
-        Huella del catálogo de programas:{" "}
+        Identificador técnico del catálogo (SHA-256):{" "}
         <code>{state.snapshot.sha256.slice(0, 12)}…</code>
       </p>
       {state.snapshot.qualityStatus === "stale" ? (
         <p className="source-method-card__warning">
-          La instantánea más reciente no pasó la actualización; se conserva la
-          última copia válida.
+          La copia más reciente no pasó la actualización; se conserva la última
+          copia válida.
         </p>
       ) : null}
     </>
@@ -223,21 +223,19 @@ export function MethodologyPage() {
         <p className="methodology-page__eyebrow">Transparencia de los datos</p>
         <h1 id="methodology-heading">Metodología y fuentes</h1>
         <p>
-          Separamos las referencias oficiales por su alcance y publicamos la
-          huella de la copia exacta utilizada.
+          Explicamos qué aporta cada fuente, cuándo la consultamos y qué no
+          permite concluir.
         </p>
       </header>
 
       <div className="source-method-grid">
         <SourceMethodCard
-          title="Ciclos y grupos en España"
+          title="Referencia por ciclo o grupo en España"
           contributes={
             <p>
-              Base de cotización por contingencias comunes anualizada de
-              personas afiliadas por cuenta ajena con jornada completa,
-              publicada para los ciclos o grupos oficiales incluidos en España.
-              Incluye la media y los límites inferiores de los quintiles 2, 3, 4
-              y 5.
+              Base de cotización anualizada de personas asalariadas con jornada
+              completa, publicada para ciclos o grupos de FP en España. Incluye
+              la media y los cortes del 20 %, 40 %, 60 % y 80 %.
             </p>
           }
           limitations={
@@ -251,12 +249,12 @@ export function MethodologyPage() {
           tables={tableLinks(NATIONAL_TABLES)}
         />
         <SourceMethodCard
-          title="Nivel formativo en Castilla y León"
+          title="Referencia por nivel en Castilla y León"
           contributes={
             <p>
-              La misma medida para Grado Medio o Grado Superior en Castilla y
-              León. La comunidad identifica el centro donde se obtuvo la
-              titulación.
+              La misma base de cotización, agrupada para todo Grado Medio o todo
+              Grado Superior en Castilla y León. La comunidad corresponde al
+              centro donde se obtuvo la titulación.
             </p>
           }
           limitations={
@@ -277,7 +275,7 @@ export function MethodologyPage() {
           <section>
             <h3>Qué aporta</h3>
             <p>
-              El catálogo oficial de FP contiene{" "}
+              La copia publicada contiene{" "}
               {trainingCatalog.status === "ready"
                 ? countLabel(
                     trainingCatalog.snapshot.programs,
@@ -292,7 +290,7 @@ export function MethodologyPage() {
               estudiar» muestra los centros y modalidades de cada ciclo.
             </p>
             <p>
-              El buscador de ocupaciones filtra los{" "}
+              El buscador de ocupaciones consulta los{" "}
               {trainingCatalog.status === "ready" &&
               trainingCatalog.snapshot.officialOccupations !== null
                 ? countLabel(
@@ -301,8 +299,8 @@ export function MethodologyPage() {
                     "grupos primarios oficiales CNO-11",
                   )
                 : "grupos primarios oficiales de la CNO-11"}
-              . Que una ocupación aparezca en este catálogo no significa que ya
-              tenga una equivalencia FP revisada.
+              . Que una ocupación aparezca no significa que ya tenga una
+              relación revisada con un ciclo de FP.
             </p>
           </section>
           <section>
@@ -310,14 +308,14 @@ export function MethodologyPage() {
             <p>
               TodoFP aporta salidas profesionales literales para los 187 ciclos
               del catálogo. Las mostramos como perfiles formativos oficiales,
-              separadas de las equivalencias CNO-11 y de las ofertas actuales.
-              Solo cruzamos una salida con ofertas cuando esa equivalencia está
-              revisada; así una relación CNO ausente significa «cruce no
-              validado», no «sin salidas profesionales».
+              separadas de las relaciones revisadas con ocupaciones y de las
+              ofertas actuales. Solo buscamos ofertas cuando esa relación está
+              revisada. Si falta, significa «relación no revisada», no «sin
+              salidas profesionales».
             </p>
           </section>
           <section>
-            <h3>Actualización y huella</h3>
+            <h3>Actualización de la copia</h3>
             <TrainingCatalogProvenance state={trainingCatalog} />
           </section>
           <section>
@@ -328,8 +326,8 @@ export function MethodologyPage() {
               </a>
             </p>
             <p>
-              La oferta formativa, los centros y las modalidades se conservan en
-              una instantánea inmutable antes de generar la interfaz.
+              Conservamos una copia fechada de los ciclos, centros y modalidades
+              antes de generar la interfaz.
             </p>
           </section>
         </article>
@@ -370,25 +368,26 @@ export function MethodologyPage() {
           provisionales; los años futuros no son datos ausentes.
         </p>
         <p>
-          Si una actualización falla, el manifiesto conserva la última copia
-          válida y la interfaz la identifica como no actualizada. Nunca se
-          publica una actualización parcial como correcta.
+          Si una actualización falla, el sistema conserva la última copia válida
+          y la interfaz la identifica como no actualizada. Nunca se publica una
+          actualización parcial como correcta.
         </p>
         <p>
-          Para la revisión pública de títulos de ofertas usamos una lista
-          permitida auditada de coincidencias literales de una sola palabra: sin
-          stemming ni inferencia difusa. Esta decisión depende de la instantánea
-          concreta y se revisa por oferta, incluidas las colisiones y los
-          posibles roles combinados. Es una decisión pública acotada sobre esta
-          copia; no implica que no existan ofertas no listadas.
+          Solo relacionamos una oferta cuando su título contiene una
+          coincidencia literal revisada para esta copia de datos.
         </p>
         <details className="methodology-technical">
           <summary>Controles técnicos de publicación</summary>
           <p>
+            La revisión de títulos usa una lista controlada de coincidencias
+            literales de una sola palabra, sin stemming ni inferencia difusa. Se
+            revisa cada posible colisión y cada título que combina varios roles.
+          </p>
+          <p>
             La compilación compara las descargas CSV y PC-Axis, valida sus
             dimensiones y redondeo oficial, y rechaza formatos, etiquetas o
             celdas inesperadas. El navegador recibe solo el JSON normalizado que
-            identifica el manifiesto.
+            identifica la copia publicada.
           </p>
         </details>
         <p>

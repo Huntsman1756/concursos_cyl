@@ -110,19 +110,23 @@ describe("training-first search", () => {
     });
     await user.selectOptions(select, "COM01M");
     expect(screen.getByRole("status")).toHaveTextContent(
-      /salidas oficiales disponibles.*CNO-11.*aún no validado/i,
+      /salidas oficiales disponibles.*todavía no hay una relación revisada para buscar ofertas/i,
     );
     const catalogScope = screen.getByRole("region", {
       name: "Alcance del catálogo de FP",
     });
     expect(catalogScope).toHaveTextContent("2 ciclos oficiales");
-    expect(catalogScope).toHaveTextContent("1 clave de modalidad");
+    expect(catalogScope).toHaveTextContent(
+      "1 ciclo o modalidad con esa relación revisada",
+    );
     expect(
       within(catalogScope).getByRole("link", {
         name: "Cómo funciona la cobertura de FP",
       }),
     ).toHaveAttribute("href", "/metodologia#fp-catalogo");
-    expect(screen.getByRole("button", { name: "Ver ofertas" })).toBeEnabled();
+    expect(
+      screen.getByRole("button", { name: "Ver salidas y ofertas" }),
+    ).toBeEnabled();
   });
   it("announces loading while the official programs are pending", () => {
     vi.stubGlobal(
@@ -153,13 +157,15 @@ describe("training-first search", () => {
 
     expect(
       await screen.findByRole("heading", {
-        name: "Encuentra ofertas relacionadas con tu FP",
+        name: "Consulta salidas y ofertas relacionadas con tu FP",
       }),
     ).toBeVisible();
     const programSelect = screen.getByRole("combobox", {
       name: "Ciclo de Formación Profesional",
     });
-    const submit = screen.getByRole("button", { name: "Ver ofertas" });
+    const submit = screen.getByRole("button", {
+      name: "Ver salidas y ofertas",
+    });
     expect(submit).toBeDisabled();
 
     await user.selectOptions(programSelect, "IFC03S");

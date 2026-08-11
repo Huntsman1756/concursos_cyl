@@ -72,10 +72,11 @@ export function OccupationSearchPage() {
     <section className="training-page" aria-busy={state.status === "loading"}>
       <header className="training-page__header">
         <p className="training-page__eyebrow">Desde una ocupación</p>
-        <h1>Descubre qué FP conduce a un trabajo concreto</h1>
+        <h1>Consulta qué ciclos de FP están relacionados con una ocupación</h1>
         <p>
-          Escribe como lo dirías normalmente y filtra el catálogo completo
-          CNO-11. Después mostraremos las relaciones FP que ya están revisadas.
+          Escribe la ocupación como lo harías normalmente. Buscaremos en la
+          Clasificación Nacional de Ocupaciones (CNO-11) y mostraremos solo las
+          relaciones con FP que ya están revisadas.
         </p>
       </header>
       {state.status === "loading" && (

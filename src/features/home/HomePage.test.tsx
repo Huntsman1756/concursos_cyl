@@ -200,7 +200,9 @@ describe("HomePage", () => {
     ).toBeVisible();
     expect(
       screen.getByRole("region", { name: "Metodología y límites" }),
-    ).toHaveTextContent(/No inventa equivalencias ni garantiza empleo/i);
+    ).toHaveTextContent(
+      /Solo publica relaciones respaldadas por una fuente o una revisión documentada/i,
+    );
     expect(
       screen.getByRole("link", { name: "Saber más sobre cómo trabajamos" }),
     ).toHaveAttribute("href", "/metodologia");

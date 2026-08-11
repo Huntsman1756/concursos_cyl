@@ -5,6 +5,7 @@ import {
   waitFor,
   within,
 } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import { MemoryRouter } from "react-router-dom";
 import { afterEach, describe, expect, it, vi } from "vitest";
 
@@ -71,6 +72,7 @@ afterEach(() => {
 
 describe("MethodologyPage", () => {
   it("explains each income scope and its statistical limits without merging them", async () => {
+    const user = userEvent.setup();
     vi.stubGlobal(
       "fetch",
       vi.fn(() =>
@@ -89,25 +91,31 @@ describe("MethodologyPage", () => {
       </MemoryRouter>,
     );
 
+    for (const disclosure of screen.getAllByText(
+      "Ver actualización, identificadores y descargas",
+    )) {
+      await user.click(disclosure);
+    }
+
     expect(
       screen.getByRole("heading", { level: 1, name: "Metodología y fuentes" }),
     ).toBeVisible();
     const national = screen.getByRole("article", {
-      name: "Ciclos y grupos en España",
+      name: "Referencia por ciclo o grupo en España",
     });
     const regional = screen.getByRole("article", {
-      name: "Nivel formativo en Castilla y León",
+      name: "Referencia por nivel en Castilla y León",
     });
     const trainingCatalog = screen.getByRole("article", {
       name: "Qué estudiar y dónde se imparte",
     });
     await waitFor(() =>
       expect(trainingCatalog).toHaveTextContent(
-        /catálogo oficial de FP.*1 ciclo oficial/i,
+        /copia publicada contiene 1 ciclo oficial/i,
       ),
     );
     expect(trainingCatalog).toHaveTextContent(
-      /TodoFP aporta salidas profesionales literales.*equivalencias CNO-11/i,
+      /TodoFP aporta salidas profesionales literales.*relaciones revisadas con ocupaciones/i,
     );
     expect(
       within(trainingCatalog).getByRole("link", {
@@ -121,8 +129,8 @@ describe("MethodologyPage", () => {
       for (const heading of [
         "Qué aporta",
         "Qué no permite afirmar",
-        "Actualización y huella",
-        "Fuente original",
+        "Actualización de la copia",
+        "Fuente original y archivos",
       ]) {
         expect(
           within(card).getByRole("heading", { level: 3, name: heading }),
@@ -131,9 +139,11 @@ describe("MethodologyPage", () => {
     }
 
     expect(national).toHaveTextContent(/base de cotización.*anualizada/i);
-    expect(national).toHaveTextContent(/cuenta ajena.*jornada completa/i);
-    expect(national).toHaveTextContent(/ciclos o grupos oficiales incluidos/i);
-    expect(national).toHaveTextContent(/límites inferiores.*quintiles/i);
+    expect(national).toHaveTextContent(
+      /personas asalariadas.*jornada completa/i,
+    );
+    expect(national).toHaveTextContent(/ciclos o grupos de FP en España/i);
+    expect(national).toHaveTextContent(/cortes del 20 %, 40 %, 60 % y 80 %/i);
     expect(regional).toHaveTextContent(/centro donde se obtuvo la titulación/i);
     expect(regional).toHaveTextContent(/no.*residencia.*lugar de trabajo/i);
 
@@ -175,15 +185,12 @@ describe("MethodologyPage", () => {
     }
     expect(screen.getByText("Controles técnicos de publicación")).toBeVisible();
     expect(methodology).toHaveTextContent(
-      /lista permitida auditada de coincidencias literales de una sola palabra/i,
+      /lista controlada de coincidencias literales de una sola palabra/i,
     );
     expect(methodology).toHaveTextContent(/sin stemming ni inferencia difusa/i);
-    expect(methodology).toHaveTextContent(/depende de la instantánea/i);
+    expect(methodology).toHaveTextContent(/para esta copia de datos/i);
     expect(methodology).toHaveTextContent(
-      /revisa por oferta.*colisiones.*roles combinados/i,
-    );
-    expect(methodology).toHaveTextContent(
-      /decisión pública acotada.*no implica que no existan ofertas no listadas/i,
+      /revisa cada posible colisión.*título que combina varios roles/i,
     );
 
     expect(methodology).not.toHaveTextContent(/\bCC BY\b/i);
@@ -204,7 +211,7 @@ describe("MethodologyPage", () => {
     expect(within(national).getByText(/d{12}/i)).toBeVisible();
     expect(
       within(national).getByRole("link", {
-        name: "Descargar evidencia normalizada",
+        name: "Descargar los datos utilizados",
       }),
     ).toHaveAttribute(
       "href",

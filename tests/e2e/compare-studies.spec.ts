@@ -77,7 +77,7 @@ test("preserves an unavailable source cell in an intermediate comparison", async
   ).toBeVisible();
   await expect(
     page.getByText(
-      "Mostramos ambas referencias por separado porque no existe una estadística oficial de ingresos por ciclo formativo en Castilla y León.",
+      "Mostramos ambas referencias por separado porque la fuente consultada no publica ingresos por ciclo concreto en Castilla y León; solo ofrece una referencia conjunta para Grado Medio o Grado Superior.",
     ),
   ).toBeVisible();
   await expectReleaseAccessibility(page);
@@ -99,7 +99,7 @@ test("reports an historical manifest without income evidence", async ({
   await page.goto("/comparar");
   await expect(
     page.getByText(
-      "La comparación oficial no está disponible en esta versión de los datos.",
+      "Los datos de comparación no están disponibles en esta versión.",
     ),
   ).toBeVisible();
   await expectReleaseAccessibility(page);

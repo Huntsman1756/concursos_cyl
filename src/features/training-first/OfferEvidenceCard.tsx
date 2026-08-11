@@ -53,10 +53,10 @@ function relationshipCopy(match: OfferMatch): string {
 
 function evidenceCopy(state: EvidenceState): string {
   if (state === "declared_explicit_gap")
-    return "Brecha declarada: has indicado una brecha concreta.";
+    return "Has indicado que no cumples este requisito.";
   if (state === "explicit_fit")
-    return "Hay un encaje explícito en la evidencia publicada.";
-  return "La relación ocupacional existe, pero debes comprobar los requisitos.";
+    return "Lo que has indicado coincide con los requisitos publicados.";
+  return "Hay una relación revisada entre el ciclo y la ocupación, pero debes comprobar los requisitos.";
 }
 
 export function OfferEvidenceCard(props: OfferEvidenceCardProps) {
@@ -86,7 +86,10 @@ export function OfferEvidenceCard(props: OfferEvidenceCardProps) {
       <div className="evidence-step">
         <h3>Qué publica la vacante</h3>
         {props.match.requirements.length === 0 ? (
-          <p>La vacante no publica requisitos estructurados.</p>
+          <p>
+            No hemos podido extraer requisitos concretos del texto publicado.
+            Compruébalos en la oferta original.
+          </p>
         ) : (
           <ul className="requirement-list">
             {props.match.requirements.map((requirement) => (

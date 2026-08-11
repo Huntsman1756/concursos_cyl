@@ -236,7 +236,9 @@ describe("occupation-first results", () => {
       within(cards[0]).getByText("Salida profesional oficial"),
     ).toBeVisible();
     expect(within(cards[1]).getByText("Relación revisada")).toBeVisible();
-    expect(within(cards[0]).getByText("2 ofertas formativas")).toBeVisible();
+    expect(
+      within(cards[0]).getByText("2 opciones de centro y modalidad publicadas"),
+    ).toBeVisible();
     expect(within(cards[0]).getByText("Ávila y Valladolid")).toBeVisible();
     expect(
       within(cards[0]).getByText("A distancia y Presencial"),
@@ -275,10 +277,12 @@ describe("occupation-first results", () => {
       ),
     ).toBeVisible();
     expect(
-      within(cards[0]).getByText("Revisión del mapeo: 4 de agosto de 2026"),
+      within(cards[0]).getByText(
+        "Revisión de la relación: 4 de agosto de 2026",
+      ),
     ).toBeVisible();
     expect(
-      within(cards[0]).getByText("Versión del mapeo: 1.0.0"),
+      within(cards[0]).getByText("Versión de la relación: 1.0.0"),
     ).toBeVisible();
     expect(
       within(cards[0]).getByRole("link", { name: /Abrir fuente oficial/ }),

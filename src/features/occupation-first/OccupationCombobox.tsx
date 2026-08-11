@@ -38,7 +38,7 @@ export function OccupationCombobox({
   onConfirm,
   onClear,
   label = "¿En qué ocupación quieres trabajar?",
-  hint = "Escribe un término habitual y confirma una ocupación oficial.",
+  hint = "Escribe un término habitual y selecciona una ocupación oficial.",
   showConfirmation = true,
 }: OccupationComboboxProps) {
   const inputId = useId();
@@ -190,7 +190,7 @@ export function OccupationCombobox({
       {showConfirmation && confirmedOccupation !== null && (
         <div className="confirmed-occupation" role="status">
           <p>
-            <strong>Ocupación confirmada:</strong>{" "}
+            <strong>Ocupación seleccionada:</strong>{" "}
             {confirmedOccupation.preferredLabel}
           </p>
           <p>

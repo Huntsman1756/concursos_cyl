@@ -93,7 +93,7 @@ export function TrainingRoutePage() {
     <section className="training-page">
       <header className="training-page__header">
         <Link to={`/desde-fp/${encodeURIComponent(state.program.programKey)}`}>
-          Volver a ofertas relacionadas
+          Volver a salidas y ofertas
         </Link>
         <p className="training-page__eyebrow">
           Oferta oficial de FP en Castilla y León
@@ -107,7 +107,7 @@ export function TrainingRoutePage() {
       {state.offerings.length === 0 ? (
         <div className="status-panel">
           <p>
-            No hay centros publicados para este ciclo en la instantánea
+            No hay centros publicados para este ciclo en la copia de datos
             disponible.
           </p>
         </div>

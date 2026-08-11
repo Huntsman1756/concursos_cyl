@@ -132,10 +132,10 @@ test("the training-first journey keeps the live zero-match snapshot honest and a
   const programSelect = page.getByLabel("Ciclo de Formación Profesional");
   await expect(programSelect).toBeVisible();
   await expect(
-    page.getByRole("button", { name: "Ver ofertas" }),
+    page.getByRole("button", { name: "Ver salidas y ofertas" }),
   ).toBeDisabled();
   await programSelect.selectOption("IFC03S");
-  await page.getByRole("button", { name: "Ver ofertas" }).click();
+  await page.getByRole("button", { name: "Ver salidas y ofertas" }).click();
 
   await expect(page).toHaveURL(/\/desde-fp\/IFC03S$/u);
   await expect(
@@ -152,7 +152,7 @@ test("the training-first journey keeps the live zero-match snapshot honest and a
   );
   await expect(
     page.getByText(
-      `No hay ofertas relacionadas en la instantánea del ${expectedDate}.`,
+      `No hay ofertas relacionadas en la copia de datos del ${expectedDate}.`,
     ),
   ).toBeVisible();
   await expect(page.getByText(/compatibilidad|porcentaje|%/iu)).toHaveCount(0);
@@ -219,7 +219,7 @@ test("each remaining public route has distinct destination content", async ({
       path: "/metodologia",
       heading: "Metodología y fuentes",
       outcome:
-        "Separamos las referencias oficiales por su alcance y publicamos la huella de la copia exacta utilizada.",
+        "Explicamos qué aporta cada fuente, cuándo la consultamos y qué no permite concluir.",
       hasHomeLink: false,
     },
     {
@@ -338,7 +338,7 @@ test("a validated stale legacy manifest keeps navigation and names the last upda
   ).toBeVisible();
   await expect(
     page.getByText(
-      "La comparación oficial no está disponible en esta versión de los datos.",
+      "Los datos de comparación no están disponibles en esta versión.",
     ),
   ).toBeVisible();
 });

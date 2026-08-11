@@ -37,14 +37,16 @@ export function EvidenceDisclosure({
           <p>Fecha de la fuente: {spanishDate(sourceDate)}</p>
         )}
         {reviewedAt !== undefined && (
-          <p>Revisión del mapeo: {spanishDate(reviewedAt)}</p>
+          <p>Revisión de la relación: {spanishDate(reviewedAt)}</p>
         )}
         {mappingVersion !== undefined && (
-          <p>Versión del mapeo: {mappingVersion}</p>
+          <p>Versión de la relación: {mappingVersion}</p>
         )}
-        {parserRule !== undefined && <p>Regla de extracción: {parserRule}</p>}
+        {parserRule !== undefined && (
+          <p>Regla técnica de extracción: {parserRule}</p>
+        )}
         {parserVersion !== undefined && (
-          <p>Versión del parser: {parserVersion}</p>
+          <p>Versión de la extracción: {parserVersion}</p>
         )}
       </div>
       {sourceUrl !== undefined && (
