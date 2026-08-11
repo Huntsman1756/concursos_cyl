@@ -82,7 +82,7 @@ const FREEZE_KEYS = [
   "attempts",
   "deployment",
 ] as const;
-const EXPECTED_ROOT_URL = "https://huntsman1756.github.io/concursos_cyl/";
+const EXPECTED_ROOT_URL = "https://salida-cyl.157-90-22-40.sslip.io/";
 
 type ResourceKey = (typeof RESOURCE_KEYS)[number];
 

@@ -23,6 +23,6 @@ Las claves de modalidad se informan aparte de las identidades de cualificación.
 
 ## Acceso
 
-URL raíz para la candidatura: [https://huntsman1756.github.io/concursos_cyl/](https://huntsman1756.github.io/concursos_cyl/)
+URL raíz para la candidatura: [https://salida-cyl.157-90-22-40.sslip.io/](https://salida-cyl.157-90-22-40.sslip.io/)
 
 La procedencia técnica, los límites estadísticos, las pruebas y los campos que requieren confirmación humana están en [technical-evidence.md](technical-evidence.md), [limitations.md](limitations.md) y [submission-checklist.md](submission-checklist.md).

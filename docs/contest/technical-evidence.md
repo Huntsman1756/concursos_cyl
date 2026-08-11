@@ -5,9 +5,9 @@
 <!-- prettier-ignore -->
 | Campo | Valor |
 | --- | --- |
-| Commit fuente | `6e64af43066159d92881e9435318511757dad841` |
+| Commit fuente | `5868d32ed74d268c42df5d400ba4805d00e619ec` |
 | Manifest | `public/data/v1/manifest.json` |
-| SHA-256 del manifest | `27942a492d4f62fb9a3d1e448dfb708663000270564b1e0cb87f15ae86677da1` |
+| SHA-256 del manifest | `b18793d2907a60dbf7b89ad079935cd5e0c4e9342eff7411408113a5cdea5f86` |
 | Generado | 2026-08-09T18:54:38.334Z |
 | Snapshot | `20260809185438334-65ce4d3c4e14` |
 | Estado de calidad | passed |
@@ -67,7 +67,7 @@ La revisión independiente confirmó el manifest, los diez recursos, los conjunt
 
 ## Despliegue
 
-- URL raíz esperada: [https://huntsman1756.github.io/concursos_cyl/](https://huntsman1756.github.io/concursos_cyl/)
+- URL raíz esperada: [https://salida-cyl.157-90-22-40.sslip.io/](https://salida-cyl.157-90-22-40.sslip.io/)
 - Commit desplegado: `b71b3a8655d00672fd976dba0f04a81840e44de5`.
 - Run del workflow: `31470763926`.
 

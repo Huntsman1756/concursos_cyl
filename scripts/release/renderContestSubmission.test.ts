@@ -33,7 +33,7 @@ describe("contest submission renderer", () => {
       "46 de las 1.077 ofertas de la instantánea",
     );
     expect(rendered["submission-checklist.md"]).toContain(
-      "https://huntsman1756.github.io/concursos_cyl/",
+      "https://salida-cyl.157-90-22-40.sslip.io/",
     );
     expect(rendered["submission-checklist.md"]).toContain(
       "PENDIENTE DE APROBACIÓN HUMANA",
