@@ -2,7 +2,7 @@ schemaVersion: 1
 id: castilla-leon-openai-nan-pilot
 reference:
   repository: https://github.com/Huntsman1756/agent-orchestration-starter
-  adaptation: project-local-windows-pilot
+  adaptation: api-first-retry-telemetry
 bindings:
   orchestrator:
     harness: codex
@@ -17,6 +17,10 @@ bindings:
     agent: nan-code
     permissions: bounded-repository-write
     maxSteps: 32
+    retryMax: 3
+    fallbackModels:
+      - nan/mimo-v2.5
+      - nan/deepseek-v4-flash
   bulletinReader:
     harness: opencode
     provider: nan
@@ -33,17 +37,43 @@ bindings:
 routing:
   code:
     default: codeExecutor
-    escalateTo: orchestrator
   bulletin:
     default: bulletinReader
     verifyWith: reviewer
-  architecture: orchestrator
+  architecture: codeExecutor
   security_review: orchestrator
-  debugging: orchestrator
-  cross_file_refactor: orchestrator
+  debugging: codeExecutor
+  cross_file_refactor: codeExecutor
+  multi_file: codeExecutor
+  manual_review: reviewer
 controls:
-  maxConcurrentNanRequests: 2
   requireAllowedPathsForCode: true
   requireIndependentReview: true
   allowWorkerPublication: false
   credentialsInRepository: false
+  enforceTelemetryRecording: true
+  autoEscalationToSol: false
+telemetry:
+  directory: .agent-runs
+  format: json
+  topLevelFields:
+    - telemetryId
+    - simulated
+    - taskType
+    - selectedModel
+    - attempts
+    - changedPaths
+    - contractViolation
+    - validationFailed
+    - tokensUsage
+    - success
+    - status
+  attemptFields:
+    - model
+    - agent
+    - attempt
+    - retry
+    - exitCode
+    - tokens
+    - changedPaths
+    - validationExitCode
