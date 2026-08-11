@@ -156,29 +156,23 @@ describe("HomePage", () => {
     expect(
       screen.getByRole("heading", {
         level: 1,
-        name: "Elige tu camino y actúa con información oficial",
+        name: /De tu FP a tu\s*siguiente paso/i,
       }),
     ).toBeVisible();
     const coveragePanel = screen.getByRole("region", {
-      name: "Disponible ahora",
+      name: "Cobertura revisada",
     });
-    await waitFor(() => expect(coveragePanel).toHaveTextContent("IFC03S"));
-    expect(coveragePanel).toHaveTextContent(
-      "El catálogo completo contiene 1 ciclo oficial",
+    await waitFor(() =>
+      expect(
+        within(coveragePanel).getByRole("list", {
+          name: "Ciclos revisados destacados",
+        }),
+      ).toBeVisible(),
     );
-    expect(coveragePanel).toHaveTextContent(
-      /Esta lista destaca solo ciclos con cobertura ocupacional revisada/i,
-    );
-    for (const programKey of [
-      "IFC03S",
-      "IFC03SD",
-      "SAN21",
-      "HOT01M",
-      "SSC01M",
-      "EOC01M",
-    ]) {
-      expect(coveragePanel).toHaveTextContent(programKey);
-    }
+    expect(within(coveragePanel).getAllByRole("listitem")).toHaveLength(2);
+    expect(coveragePanel).toHaveTextContent("Desarrollo de Aplicaciones WEB");
+    expect(coveragePanel).toHaveTextContent(/EOC01M|HOT01M|SAN21|SSC01M/);
+    expect(coveragePanel).not.toHaveTextContent("IFC03SD");
     expect(coveragePanel).not.toHaveTextContent("COM01M");
     expect(screen.queryByText(/Administración/i)).not.toBeInTheDocument();
     expect(screen.queryByText(/educación infantil/i)).not.toBeInTheDocument();
@@ -186,33 +180,29 @@ describe("HomePage", () => {
     expect(
       screen.queryByText(/Junta de Castilla y León/i),
     ).not.toBeInTheDocument();
-    expect(await screen.findByLabelText("¿Qué has estudiado?")).toBeVisible();
     expect(
-      screen.getByRole("combobox", { name: "¿Qué ocupación te interesa?" }),
+      await screen.findByLabelText("Título de Formación Profesional"),
     ).toBeVisible();
     expect(
-      screen.getByRole("button", { name: "Explorar salidas laborales" }),
+      screen.getByRole("combobox", { name: "Ocupación que te interesa" }),
+    ).toBeVisible();
+    expect(
+      screen.getByRole("button", { name: "Ver mis opciones" }),
     ).toBeDisabled();
     expect(
-      screen.getByRole("button", { name: "Buscar ciclos que te preparan" }),
+      screen.getByRole("button", { name: "Buscar ocupación" }),
     ).toBeDisabled();
     expect(
-      screen.getByText(
-        "Selecciona cualquiera de los ciclos oficiales y consulta sus salidas profesionales.",
-      ),
+      screen.getByText("Indica tu título y descubre tus siguientes pasos."),
     ).toBeVisible();
     expect(
-      screen.getByText(
-        "Filtra 1 grupos de ocupación oficiales y consulta qué FP tienen una relación revisada.",
-      ),
+      screen.getByText("Busca una ocupación y conoce cómo llegar."),
     ).toBeVisible();
     expect(
-      screen.getByRole("region", { name: "Sobre la cobertura" }),
-    ).toHaveTextContent(
-      /Las relaciones entre ambos se incorporan de forma progresiva/i,
-    );
+      screen.getByRole("region", { name: "Metodología y límites" }),
+    ).toHaveTextContent(/No inventa equivalencias ni garantiza empleo/i);
     expect(
-      screen.getByRole("link", { name: "Saber más sobre los datos" }),
+      screen.getByRole("link", { name: "Saber más sobre cómo trabajamos" }),
     ).toHaveAttribute("href", "/metodologia");
   });
 
@@ -236,9 +226,7 @@ describe("HomePage", () => {
       name: "Actualización de datos",
     });
     expect(freshness).toHaveAttribute("aria-busy", "true");
-    expect(
-      within(freshness).getByText("Comprobando la fecha de los datos…"),
-    ).toBeVisible();
+    expect(within(freshness).getByText("Comprobando fecha…")).toBeVisible();
 
     resolveManifest(
       new Response(JSON.stringify(currentManifestFixture()), {
@@ -251,8 +239,8 @@ describe("HomePage", () => {
       expect(freshness).toHaveAttribute("aria-busy", "false"),
     );
     expect(
-      within(freshness).queryByText("Comprobando la fecha de los datos…"),
+      within(freshness).queryByText("Comprobando fecha…"),
     ).not.toBeInTheDocument();
-    expect(within(freshness).getByText("31 de julio de 2026")).toBeVisible();
+    expect(within(freshness).getByText("31/07/2026")).toBeVisible();
   });
 });

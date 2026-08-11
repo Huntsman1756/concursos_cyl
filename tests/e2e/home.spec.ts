@@ -39,14 +39,20 @@ test("home exposes equal journeys, navigation, freshness, and no automated acces
 
   await expect(
     page.getByRole("navigation", { name: "Principal" }).getByRole("link"),
-  ).toHaveText(["Inicio", "Comparar", "Metodología"]);
+  ).toHaveText([
+    "Inicio",
+    "Desde FP",
+    "Desde ocupación",
+    "Comparar estudios",
+    "Metodología",
+  ]);
 
   const journeyButtons = page
     .getByLabel("Elige tu punto de partida")
     .getByRole("button");
   await expect(journeyButtons).toHaveText([
-    "Explorar salidas laborales",
-    "Buscar ciclos que te preparan",
+    "Ver mis opciones",
+    "Buscar ocupación",
   ]);
   const jobOffersSnapshot = manifest.resourceSnapshots.jobOffers;
   const expectedDateTime =
@@ -60,8 +66,8 @@ test("home exposes equal journeys, navigation, freshness, and no automated acces
   );
   await expect(freshness).toContainText(
     new Intl.DateTimeFormat("es-ES", {
-      day: "numeric",
-      month: "long",
+      day: "2-digit",
+      month: "2-digit",
       year: "numeric",
       timeZone: "UTC",
     }).format(new Date(expectedDateTime)),
@@ -79,10 +85,10 @@ test("both entry routes remain reachable in their approved order", async ({
 }) => {
   await page.goto("/");
 
-  await page.getByLabel("¿Qué has estudiado?").selectOption("IFC03S");
   await page
-    .getByRole("button", { name: "Explorar salidas laborales" })
-    .click();
+    .getByLabel("Título de Formación Profesional")
+    .selectOption("IFC03S");
+  await page.getByRole("button", { name: "Ver mis opciones" }).click();
   await expect(page).toHaveURL(/\/desde-fp\/IFC03S$/u);
   await expect(
     page.getByRole("heading", {
@@ -92,7 +98,7 @@ test("both entry routes remain reachable in their approved order", async ({
 
   await page.getByRole("link", { name: "SALIDA CyL" }).click();
   const occupationSearch = page.getByRole("combobox", {
-    name: "¿Qué ocupación te interesa?",
+    name: "Ocupación que te interesa",
   });
   await occupationSearch.fill("Programación web");
   await page
@@ -100,9 +106,7 @@ test("both entry routes remain reachable in their approved order", async ({
       name: /Analistas, programadores y diseñadores web y multimedia/iu,
     })
     .click();
-  await page
-    .getByRole("button", { name: "Buscar ciclos que te preparan" })
-    .click();
+  await page.getByRole("button", { name: "Buscar ocupación" }).click();
   await expect(page).toHaveURL(
     /\/desde-ocupacion\/occupation%3Acno11%3A2713$/u,
   );
@@ -257,9 +261,7 @@ test("loading freshness is visible before a delayed current manifest prioritizes
     name: "Actualización de datos",
   });
   await expect(freshness).toHaveAttribute("aria-busy", "true");
-  await expect(
-    freshness.getByText("Comprobando la fecha de los datos…"),
-  ).toBeVisible();
+  await expect(freshness.getByText("Comprobando fecha…")).toBeVisible();
 
   releaseManifest();
   await expect(freshness).toHaveAttribute("aria-busy", "false");
@@ -267,9 +269,7 @@ test("loading freshness is visible before a delayed current manifest prioritizes
     "datetime",
     "2026-07-31T00:00:00.000Z",
   );
-  await expect(freshness).toContainText(
-    "Datos actualizados: 31 de julio de 2026",
-  );
+  await expect(freshness).toContainText("Actualizado: 31/07/2026");
 });
 
 test("a current manifest falls back to the fetched timestamp and formats its UTC date", async ({
@@ -293,9 +293,7 @@ test("a current manifest falls back to the fetched timestamp and formats its UTC
     "datetime",
     fetchedAt,
   );
-  await expect(freshness).toContainText(
-    "Datos actualizados: 1 de agosto de 2026",
-  );
+  await expect(freshness).toContainText("Actualizado: 01/08/2026");
 });
 
 test("the skip link moves keyboard focus to the main content", async ({
@@ -321,23 +319,19 @@ test("a validated stale legacy manifest keeps navigation and names the last upda
   const freshness = page.getByRole("region", {
     name: "Actualización de datos",
   });
-  await expect(freshness).toContainText(
-    "Datos actualizados: 31 de julio de 2026",
-  );
+  await expect(freshness).toContainText("Actualizado: 31/07/2026");
   await expect(freshness.locator("time")).toHaveAttribute(
     "datetime",
     "2026-07-31T00:00:00.000Z",
   );
   await expect(
-    page.getByText(
-      "No se han podido actualizar los datos. Mostramos la última copia disponible.",
-    ),
+    page.getByText("Mostramos la última copia disponible."),
   ).toBeVisible();
   await expect(
     page.getByText(/datos actuales|datos al día|ofertas actuales/iu),
   ).toHaveCount(0);
 
-  await page.getByRole("link", { name: "Comparar" }).click();
+  await page.getByRole("link", { name: "Comparar estudios" }).click();
   await expect(page).toHaveURL(/\/comparar$/u);
   await expect(
     page.getByRole("heading", { name: "Ingresos observados" }),
@@ -362,11 +356,11 @@ test("the complete Spanish home copy fits without horizontal overflow", async ({
 
   await expect(
     page.getByRole("heading", {
-      name: "Elige tu camino y actúa con información oficial",
+      name: /De tu FP a tu\s*siguiente paso/i,
     }),
   ).toBeVisible();
   await expect(
-    page.getByText("Dónde se imparten y cómo acceder"),
+    page.getByText("Vínculos publicados solo con evidencia."),
   ).toBeVisible();
 
   const overflow = await page.evaluate(() => ({
@@ -385,13 +379,13 @@ test("the selected workspace uses equal desktop panels and a stacked mobile flow
   await page.goto("/");
 
   const panels = page.locator(".entry-card");
-  const coverage = page.getByRole("region", { name: "Disponible ahora" });
+  const coverage = page.getByRole("region", { name: "Cobertura revisada" });
   const reviewedPrograms = coverage
     .getByRole("list", {
-      name: "Ciclos revisados",
+      name: "Ciclos revisados destacados",
     })
     .getByRole("listitem");
-  await expect(reviewedPrograms).toHaveCount(10);
+  await expect(reviewedPrograms).toHaveCount(3);
   const firstPanel = await panels.nth(0).boundingBox();
   const secondPanel = await panels.nth(1).boundingBox();
   const coveragePanel = await coverage.boundingBox();
@@ -435,18 +429,16 @@ test("the home coverage panel exposes only manifest-reviewed program keys", asyn
 }) => {
   await page.goto("/");
 
-  const coverage = page.getByRole("region", { name: "Disponible ahora" });
-  for (const programKey of [
-    "IFC03S",
-    "IFC03SD",
-    "SAN21",
-    "HOT01M",
-    "SSC01M",
-    "EOC01M",
-  ]) {
-    await expect(
-      coverage.getByText(new RegExp(`^${programKey} ·`, "u")),
-    ).toBeVisible();
-  }
+  const coverage = page.getByRole("region", { name: "Cobertura revisada" });
+  const links = coverage
+    .getByRole("list", { name: "Ciclos revisados destacados" })
+    .getByRole("link");
+  await expect(links).toHaveCount(3);
+  const hrefs = await links.evaluateAll((items) =>
+    items.map((item) => item.getAttribute("href")),
+  );
+  expect(
+    hrefs.every((href) => /^\/desde-fp\/[A-Z0-9]+$/u.test(href ?? "")),
+  ).toBe(true);
   await expect(coverage.getByText("COM01M", { exact: false })).toHaveCount(0);
 });

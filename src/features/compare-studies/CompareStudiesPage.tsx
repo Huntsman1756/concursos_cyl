@@ -17,6 +17,7 @@ import {
 } from "../../domain/outcomes";
 import { IncomeComparisonForm } from "./IncomeComparisonForm";
 import { IncomeEvidenceCard } from "./IncomeEvidenceCard";
+import { formatOutcomeLabel } from "./outcomePresentation";
 import "./compareStudies.css";
 
 type PageState =
@@ -40,7 +41,7 @@ function findWindow(
 
 function scopeHeading(trainingLevel: OutcomeTrainingLevel): string {
   return `Referencia de titulados de ${
-    trainingLevel === "intermediate" ? "Grado Medio" : "Grado Superior"
+    trainingLevel === "intermediate" ? "grado medio" : "grado superior"
   } en Castilla y León`;
 }
 
@@ -90,7 +91,11 @@ export function CompareStudiesPage() {
     return [...state.index.groupsByKey.values()]
       .filter((group) => group.trainingLevel === trainingLevel)
       .sort((left, right) =>
-        left.officialLabel.localeCompare(right.officialLabel, "es"),
+        formatOutcomeLabel(left.officialLabel).localeCompare(
+          formatOutcomeLabel(right.officialLabel),
+          "es",
+          { sensitivity: "base" },
+        ),
       );
   }, [state, trainingLevel]);
   const cohortWindow =
@@ -231,16 +236,25 @@ export function CompareStudiesPage() {
               {` · año ${comparison.selection.postGraduationYear} tras titularse`}
             </p>
           </header>
+          <div className="income-results__guide" role="note">
+            <strong>Cómo leer los cortes</strong>
+            <p>
+              “Corte del 20 %” significa que el 20 % de los titulados queda por
+              debajo de ese importe. Los cortes del 40 %, 60 % y 80 % se leen
+              del mismo modo. No son salarios mínimos ni una predicción
+              personal.
+            </p>
+          </div>
           <div className="income-evidence-grid">
             <IncomeEvidenceCard
               heading="Ingresos observados del ciclo o grupo en España"
-              scopeLabel="Base de cotización anualizada · jornada completa · España"
+              scopeLabel="España · Jornada completa · Base de cotización anualizada"
               observations={comparison.national}
               groupLabels={groupLabels}
             />
             <IncomeEvidenceCard
               heading={scopeHeading(comparison.selection.trainingLevel)}
-              scopeLabel="Base de cotización anualizada · jornada completa · Castilla y León · comunidad del centro de titulación"
+              scopeLabel="Castilla y León · Jornada completa · Base de cotización anualizada"
               detail="La comunidad se refiere al centro donde se obtuvo la titulación, no al lugar de residencia o de trabajo."
               observations={comparison.regional}
             />

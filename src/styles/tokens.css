@@ -1,16 +1,21 @@
 :root {
   --color-surface: #ffffff;
-  --color-surface-warm: #fbfaf6;
-  --color-surface-subtle: #f2f6f4;
-  --color-text: #17211e;
-  --color-text-muted: #52615c;
-  --color-border: #bdcdc7;
-  --color-primary: #07583f;
-  --color-primary-strong: #064632;
-  --color-action: #c94b2d;
-  --color-action-text: #a83a23;
-  --color-warning-surface: #fff3ec;
-  --focus-ring: 0 0 0 3px #8ecdb7;
+  --color-surface-warm: #fcfbfa;
+  --color-surface-subtle: #faf7f2;
+  --color-text: #171717;
+  --color-text-muted: #626262;
+  --color-border: #e3dfdb;
+  --color-primary: #951126;
+  --color-primary-strong: #761020;
+  --color-primary-muted: #c56675;
+  --color-primary-soft: #fff1f3;
+  --color-action: #951126;
+  --color-action-text: #861024;
+  --color-gold: #bf7700;
+  --color-gold-strong: #995f00;
+  --color-warning-surface: #fff8ed;
+  --focus-ring: 0 0 0 3px rgb(149 17 38 / 28%);
+  --shadow-subtle: 0 1px 3px rgb(23 23 23 / 7%);
   --radius-sm: 0.375rem;
   --radius-md: 0.625rem;
   --space-1: 0.25rem;
@@ -20,6 +25,6 @@
   --space-5: 1.25rem;
   --space-6: 1.5rem;
   --space-8: 2rem;
-  --content-max: 92rem;
+  --content-max: 94rem;
   --motion-fast: 160ms;
 }

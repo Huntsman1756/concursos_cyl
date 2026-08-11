@@ -4,6 +4,11 @@ import type {
   OutcomeMeasure,
   OutcomeObservation,
 } from "../../../data/schemas/outcomes";
+import {
+  formatOutcomeLabel,
+  OUTCOME_MEASURE_ORDER,
+  OUTCOME_MEASURE_PRESENTATION,
+} from "./outcomePresentation";
 
 export interface IncomeEvidenceCardProps {
   heading: string;
@@ -13,16 +18,14 @@ export interface IncomeEvidenceCardProps {
   groupLabels?: ReadonlyMap<string, string>;
 }
 
-const MEASURE_LABELS: Readonly<Record<OutcomeMeasure, string>> = {
-  mean: "Media",
-  quintile_20_lower_boundary: "Límite inferior del segundo quintil",
-  quintile_40_lower_boundary: "Límite inferior del tercer quintil",
-  quintile_60_lower_boundary: "Límite inferior del cuarto quintil",
-  quintile_80_lower_boundary: "Límite inferior del quinto quintil",
-};
+interface IncomeSeries {
+  key: string;
+  label: string;
+  observations: readonly OutcomeObservation[];
+}
 
 function formatValue(value: number | null): string {
-  if (value === null) return "No disponible o sin representatividad suficiente";
+  if (value === null) return "No disponible";
   return new Intl.NumberFormat("es-ES", {
     style: "currency",
     currency: "EUR",
@@ -30,7 +33,51 @@ function formatValue(value: number | null): string {
   }).format(value);
 }
 
-/** Presents one source scope as a semantic table without deriving a new indicator. */
+function observationsByMeasure(
+  observations: readonly OutcomeObservation[],
+): ReadonlyMap<OutcomeMeasure, OutcomeObservation> {
+  return new Map(
+    observations.map((observation) => [observation.measure, observation]),
+  );
+}
+
+function hasNonProgressiveCuts(
+  observations: ReadonlyMap<OutcomeMeasure, OutcomeObservation>,
+): boolean {
+  const values = OUTCOME_MEASURE_ORDER.slice(1)
+    .map((measure) => observations.get(measure)?.valueEur ?? null)
+    .filter((value): value is number => value !== null);
+  return values.some((value, index) => index > 0 && value < values[index - 1]);
+}
+
+function buildSeries(
+  observations: readonly OutcomeObservation[],
+  groupLabels?: ReadonlyMap<string, string>,
+): readonly IncomeSeries[] {
+  if (groupLabels === undefined) {
+    return [
+      {
+        key: "regional-reference",
+        label: "Distribución de la referencia",
+        observations,
+      },
+    ];
+  }
+
+  return [...groupLabels.entries()]
+    .map(([groupKey, label]) => ({
+      key: groupKey,
+      label: formatOutcomeLabel(label),
+      observations: observations.filter(
+        (observation) => observation.groupKey === groupKey,
+      ),
+    }))
+    .sort((left, right) =>
+      left.label.localeCompare(right.label, "es", { sensitivity: "base" }),
+    );
+}
+
+/** Presents one source scope as plain-language charts with exact technical tables. */
 export function IncomeEvidenceCard({
   heading,
   scopeLabel,
@@ -39,7 +86,12 @@ export function IncomeEvidenceCard({
   groupLabels,
 }: IncomeEvidenceCardProps) {
   const headingId = useId();
-  const showGroup = groupLabels !== undefined;
+  const series = buildSeries(observations, groupLabels);
+  const maximumValue = Math.max(
+    1,
+    ...observations.map((observation) => observation.valueEur ?? 0),
+  );
+
   return (
     <section className="income-evidence-card" aria-labelledby={headingId}>
       <header className="income-evidence-card__header">
@@ -47,44 +99,110 @@ export function IncomeEvidenceCard({
         <h2 id={headingId}>{heading}</h2>
         {detail ? <p>{detail}</p> : null}
       </header>
-      <div
-        className="income-table-scroll"
-        role="region"
-        aria-label={`Tabla desplazable: ${heading}`}
-        tabIndex={0}
-      >
-        <table>
-          <caption className="visually-hidden">{heading}</caption>
-          <thead>
-            <tr>
-              {showGroup ? <th scope="col">Ciclo o grupo oficial</th> : null}
-              <th scope="col">Medida</th>
-              <th scope="col">Base anualizada</th>
-            </tr>
-          </thead>
-          <tbody>
-            {observations.map((observation) => (
-              <tr key={observation.observationId}>
-                {showGroup ? (
-                  <th scope="row">
-                    {groupLabels.get(observation.groupKey ?? "") ??
-                      observation.officialGroupLabel}
-                  </th>
-                ) : null}
-                <td>{MEASURE_LABELS[observation.measure]}</td>
-                <td
-                  className={
-                    observation.valueEur === null
-                      ? "income-value income-value--unavailable"
-                      : "income-value"
-                  }
-                >
-                  {formatValue(observation.valueEur)}
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+
+      <div className="income-series-list">
+        {series.map((item) => {
+          const indexed = observationsByMeasure(item.observations);
+          return (
+            <article className="income-series" key={item.key}>
+              <header className="income-series__header">
+                <h3>{item.label}</h3>
+                <p>
+                  Media anual
+                  <strong>
+                    {formatValue(indexed.get("mean")?.valueEur ?? null)}
+                  </strong>
+                </p>
+              </header>
+
+              <ul
+                className="income-bars"
+                aria-label={`Distribución: ${item.label}`}
+              >
+                {OUTCOME_MEASURE_ORDER.map((measure) => {
+                  const observation = indexed.get(measure);
+                  const value = observation?.valueEur ?? null;
+                  const presentation = OUTCOME_MEASURE_PRESENTATION[measure];
+                  const width =
+                    value === null
+                      ? 0
+                      : Math.max(1.5, (value / maximumValue) * 100);
+                  return (
+                    <li key={measure}>
+                      <div className="income-bar__label">
+                        <span>{presentation.plainLabel}</span>
+                        <strong>{formatValue(value)}</strong>
+                      </div>
+                      <div className="income-bar__track" aria-hidden="true">
+                        <span
+                          className={
+                            measure === "mean"
+                              ? "income-bar income-bar--mean"
+                              : "income-bar"
+                          }
+                          style={{ width: `${width}%` }}
+                        />
+                      </div>
+                      <small>{presentation.explanation}</small>
+                    </li>
+                  );
+                })}
+              </ul>
+
+              {hasNonProgressiveCuts(indexed) ? (
+                <p className="income-data-warning" role="note">
+                  La fuente publica cortes que no aumentan de forma progresiva
+                  para este grupo. Los mostramos tal como fueron publicados.
+                </p>
+              ) : null}
+
+              <details className="income-technical-detail">
+                <summary>Ver términos técnicos y tabla de datos</summary>
+                <div className="income-table-scroll" role="region" tabIndex={0}>
+                  <table>
+                    <caption className="visually-hidden">
+                      Datos técnicos: {item.label}
+                    </caption>
+                    <thead>
+                      <tr>
+                        <th scope="col">Medida publicada</th>
+                        <th scope="col">Base anualizada</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {OUTCOME_MEASURE_ORDER.map((measure) => {
+                        const observation = indexed.get(measure);
+                        return (
+                          <tr key={measure}>
+                            <th scope="row">
+                              {
+                                OUTCOME_MEASURE_PRESENTATION[measure]
+                                  .technicalLabel
+                              }
+                            </th>
+                            <td
+                              className={
+                                observation?.valueEur === null ||
+                                observation === undefined
+                                  ? "income-value income-value--unavailable"
+                                  : "income-value"
+                              }
+                            >
+                              {observation?.valueEur === null ||
+                              observation === undefined
+                                ? "No disponible o sin representatividad suficiente"
+                                : formatValue(observation.valueEur)}
+                            </td>
+                          </tr>
+                        );
+                      })}
+                    </tbody>
+                  </table>
+                </div>
+              </details>
+            </article>
+          );
+        })}
       </div>
     </section>
   );

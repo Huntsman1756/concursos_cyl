@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 import { Link, NavLink } from "react-router-dom";
+import { Icon } from "../components/Icon";
 import "../styles/global.css";
 
 interface AppShellProps {
@@ -16,9 +17,11 @@ export function AppShell({ children }: AppShellProps) {
         <div className="site-header__inner">
           <div className="site-identity">
             <Link className="site-name" to="/">
-              SALIDA CyL
+              <span>SALIDA</span> CyL
             </Link>
-            <span className="site-descriptor">Decide tu siguiente paso</span>
+            <span className="site-descriptor">
+              FP y empleo con datos públicos
+            </span>
           </div>
           <nav className="site-nav" aria-label="Principal">
             <ul>
@@ -28,13 +31,23 @@ export function AppShell({ children }: AppShellProps) {
                 </NavLink>
               </li>
               <li>
-                <NavLink to="/comparar">Comparar</NavLink>
+                <NavLink to="/desde-fp">Desde FP</NavLink>
+              </li>
+              <li>
+                <NavLink to="/desde-ocupacion">Desde ocupación</NavLink>
+              </li>
+              <li>
+                <NavLink to="/comparar">Comparar estudios</NavLink>
               </li>
               <li>
                 <NavLink to="/metodologia">Metodología</NavLink>
               </li>
             </ul>
           </nav>
+          <Link className="official-data-link" to="/metodologia">
+            <Icon name="shield-check" size={18} />
+            Datos verificables
+          </Link>
         </div>
       </header>
       <main className="page-content" id="main-content" tabIndex={-1}>
@@ -42,11 +55,17 @@ export function AppShell({ children }: AppShellProps) {
       </main>
       <footer className="site-footer">
         <div className="site-footer__inner">
-          <p>
-            SALIDA CyL es un proyecto independiente que utiliza fuentes
-            públicas.
-          </p>
-          <Link to="/metodologia">Metodología y fuentes</Link>
+          <div className="site-footer__identity">
+            <strong>SALIDA CyL</strong>
+            <span>Proyecto independiente basado en datos públicos.</span>
+          </div>
+          <nav aria-label="Pie de página">
+            <Link to="/metodologia">Fuentes</Link>
+            <Link to="/metodologia">Metodología</Link>
+            <Link to="/metodologia">Limitaciones</Link>
+            <Link to="/metodologia">Accesibilidad</Link>
+          </nav>
+          <p>Datos públicos de Castilla y León</p>
         </div>
       </footer>
     </>

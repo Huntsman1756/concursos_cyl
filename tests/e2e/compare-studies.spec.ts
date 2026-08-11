@@ -20,7 +20,7 @@ async function expectReleaseAccessibility(page: Page): Promise<void> {
 
 async function chooseComparison(
   page: Page,
-  level: "Grado Medio" | "Grado Superior",
+  level: "Grado medio" | "Grado superior",
   group: string,
   cohort: string,
   year: string,
@@ -38,7 +38,7 @@ test("completes a higher comparison with one shared provisional period", async (
   await page.goto("/comparar");
   await chooseComparison(
     page,
-    "Grado Superior",
+    "Grado superior",
     "Administración y finanzas",
     "2022-2023",
     "2",
@@ -54,7 +54,7 @@ test("completes a higher comparison with one shared provisional period", async (
   ).toBeVisible();
   await expect(
     page.getByRole("heading", {
-      name: "Referencia de titulados de Grado Superior en Castilla y León",
+      name: "Referencia de titulados de grado superior en Castilla y León",
     }),
   ).toBeVisible();
   await expectReleaseAccessibility(page);
@@ -66,7 +66,7 @@ test("preserves an unavailable source cell in an intermediate comparison", async
   await page.goto("/comparar");
   await chooseComparison(
     page,
-    "Grado Medio",
+    "Grado medio",
     "Actividades comerciales",
     "2011-2012",
     "1",

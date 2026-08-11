@@ -1,6 +1,7 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { EntryCard } from "../../components/EntryCard";
+import { Icon } from "../../components/Icon";
 import {
   loadAuditedRelationships,
   loadFoundationResources,
@@ -15,6 +16,7 @@ import type {
 } from "../../../data/schemas/curatedMappings";
 import type { TrainingProgram } from "../../../data/schemas/generated";
 import { loadApprovedMappings } from "../../domain/occupation";
+import { trainingLevelLabel } from "../../domain/trainingPresentation";
 import { OccupationCombobox } from "../occupation-first/OccupationCombobox";
 
 type FreshnessState =
@@ -33,7 +35,6 @@ type CoverageState =
   | {
       status: "ready";
       programs: Extract<MappingCoverage, { scope: "program" }>[];
-      totalPrograms: number;
     };
 
 type SearchDataState =
@@ -45,6 +46,24 @@ type SearchDataState =
       occupations: Occupation[];
       programs: TrainingProgram[];
     };
+
+function featuredCoverage(
+  programs: Extract<MappingCoverage, { scope: "program" }>[],
+) {
+  const families = new Set<string>();
+  return [...programs]
+    .sort(
+      (left, right) =>
+        left.programTitle.localeCompare(right.programTitle, "es") ||
+        left.programKey.localeCompare(right.programKey),
+    )
+    .filter((program) => {
+      if (families.has(program.familyCode)) return false;
+      families.add(program.familyCode);
+      return true;
+    })
+    .slice(0, 3);
+}
 
 export function HomePage() {
   const navigate = useNavigate();
@@ -66,9 +85,7 @@ export function HomePage() {
 
     void loadManifest()
       .then((manifest) => {
-        if (!isActive) {
-          return;
-        }
+        if (!isActive) return;
 
         const offersSnapshot = manifest.resourceSnapshots.jobOffers;
         const dateTime =
@@ -76,8 +93,8 @@ export function HomePage() {
         setFreshness({
           status: "ready",
           date: new Intl.DateTimeFormat("es-ES", {
-            day: "numeric",
-            month: "long",
+            day: "2-digit",
+            month: "2-digit",
             year: "numeric",
             timeZone: "UTC",
           }).format(new Date(dateTime)),
@@ -86,6 +103,7 @@ export function HomePage() {
             manifest.qualityStatus === "stale" ||
             offersSnapshot.qualityStatus === "stale",
         });
+
         void loadMappingCoverage(manifest)
           .then((rows) => {
             if (!isActive) return;
@@ -95,7 +113,6 @@ export function HomePage() {
                 (row): row is Extract<MappingCoverage, { scope: "program" }> =>
                   row.scope === "program" && row.coverageStatus === "reviewed",
               ),
-              totalPrograms: manifest.resourceSnapshots.programs.recordCount,
             });
           })
           .catch(() => {
@@ -103,10 +120,9 @@ export function HomePage() {
           });
       })
       .catch(() => {
-        if (isActive) {
-          setFreshness({ status: "unavailable" });
-          setCoverage({ status: "unavailable" });
-        }
+        if (!isActive) return;
+        setFreshness({ status: "unavailable" });
+        setCoverage({ status: "unavailable" });
       });
 
     return () => {
@@ -157,235 +173,286 @@ export function HomePage() {
     };
   }, []);
 
+  const featuredPrograms = useMemo(
+    () =>
+      coverage.status === "ready" ? featuredCoverage(coverage.programs) : [],
+    [coverage],
+  );
+  const programsByKey = useMemo(
+    () =>
+      new Map(
+        searchData.status === "ready"
+          ? searchData.programs.map((program) => [program.programKey, program])
+          : [],
+      ),
+    [searchData],
+  );
+
   return (
-    <>
-      <section className="home-intro" aria-labelledby="home-heading">
-        <p className="home-intro__eyebrow">
-          Formación Profesional y empleo en Castilla y León
-        </p>
-        <h1 id="home-heading">
-          Elige tu camino y actúa con información oficial
-        </h1>
-      </section>
-
-      <div className="home-workspace">
-        <section
-          className="entry-panels"
-          aria-label="Elige tu punto de partida"
-        >
-          <EntryCard
-            title="He terminado FP"
-            outcome="Selecciona cualquiera de los ciclos oficiales y consulta sus salidas profesionales."
-            prompt="¿Qué has estudiado?"
-            details={[
-              "Salidas oficiales para los 187 ciclos",
-              "Ocupaciones CNO cuando la relación está revisada",
-              "Ofertas relacionadas, cuando existen",
-            ]}
-            control={
-              searchData.status === "ready" ? (
-                <div className="entry-card__field">
-                  <label htmlFor="home-program">¿Qué has estudiado?</label>
-                  <select
-                    id="home-program"
-                    value={selectedProgram}
-                    onChange={(event) => setSelectedProgram(event.target.value)}
-                  >
-                    <option value="">Selecciona un ciclo FP</option>
-                    {searchData.programs.map((program) => (
-                      <option
-                        key={program.programKey}
-                        value={program.programKey}
-                      >
-                        {program.programTitle} ({program.programKey})
-                      </option>
-                    ))}
-                  </select>
-                </div>
-              ) : (
-                <p className="form-message">
-                  {searchData.status === "loading"
-                    ? "Cargando el catálogo oficial de FP…"
-                    : "El selector no está disponible ahora mismo."}
-                </p>
-              )
-            }
-            action={
-              searchData.status === "ready" ? (
-                <button
-                  className="entry-card__cta"
-                  type="button"
-                  disabled={selectedProgram === ""}
-                  onClick={() => navigate(`/desde-fp/${selectedProgram}`)}
-                >
-                  Explorar salidas laborales
-                </button>
-              ) : (
-                <Link className="entry-card__cta" to="/desde-fp">
-                  Abrir buscador de FP
-                </Link>
-              )
-            }
-          />
-          <EntryCard
-            title="Quiero trabajar de…"
-            outcome={
-              searchData.status === "ready"
-                ? `Filtra ${searchData.occupations.length} grupos de ocupación oficiales y consulta qué FP tienen una relación revisada.`
-                : "Filtra el catálogo oficial CNO-11 y consulta qué FP tienen una relación revisada."
-            }
-            prompt="¿Qué ocupación te interesa?"
-            details={[
-              "Catálogo completo de ocupaciones CNO-11",
-              "Ciclos con relación revisada",
-              "Dónde se imparten y cómo acceder",
-            ]}
-            control={
-              searchData.status === "ready" ? (
-                <OccupationCombobox
-                  occupations={searchData.occupations}
-                  aliases={searchData.aliases}
-                  confirmedOccupation={confirmedOccupation}
-                  onConfirm={setConfirmedOccupation}
-                  onClear={() => setConfirmedOccupation(null)}
-                  label="¿Qué ocupación te interesa?"
-                  hint="Escribe, por ejemplo, programación web, cocina o enfermería."
-                  showConfirmation={false}
-                />
-              ) : (
-                <p className="form-message">
-                  {searchData.status === "loading"
-                    ? "Cargando el catálogo oficial CNO-11…"
-                    : "El buscador no está disponible ahora mismo."}
-                </p>
-              )
-            }
-            action={
-              searchData.status === "ready" ? (
-                <button
-                  className="entry-card__cta"
-                  type="button"
-                  disabled={confirmedOccupation === null}
-                  onClick={() =>
-                    confirmedOccupation === null
-                      ? undefined
-                      : navigate(
-                          `/desde-ocupacion/${encodeURIComponent(confirmedOccupation.occupationId)}`,
-                        )
-                  }
-                >
-                  Buscar ciclos que te preparan
-                </button>
-              ) : (
-                <Link className="entry-card__cta" to="/desde-ocupacion">
-                  Abrir buscador de ocupaciones
-                </Link>
-              )
-            }
-          />
-        </section>
-
-        <aside
-          className="coverage-panel"
-          aria-label="Disponible ahora"
-          role="region"
-          aria-live="polite"
-          aria-busy={coverage.status === "loading"}
-        >
-          <div className="coverage-panel__heading">
-            <h2>Disponible ahora</h2>
-            <span>Cobertura parcial</span>
-          </div>
-          {coverage.status === "loading" ? (
-            <p className="coverage-panel__occupation">
-              Comprobando la cobertura revisada…
-            </p>
-          ) : null}
-          {coverage.status === "unavailable" ? (
-            <p className="coverage-panel__occupation">
-              No se ha podido comprobar la cobertura revisada.
-            </p>
-          ) : null}
-          {coverage.status === "ready" ? (
-            <>
-              <p className="coverage-panel__scope">
-                El catálogo completo contiene {coverage.totalPrograms} ciclo
-                {coverage.totalPrograms === 1 ? " oficial" : "s oficiales"}.
-                Esta lista destaca solo ciclos con cobertura ocupacional
-                revisada.
-              </p>
-              <ul
-                className="coverage-panel__programs"
-                aria-label="Ciclos revisados"
-              >
-                {coverage.programs.map((program) => (
-                  <li
-                    className="coverage-panel__program"
-                    key={program.programKey}
-                  >
-                    <strong>{program.programTitle}</strong>
-                    <span>
-                      {program.programKey} · {program.approvedMappings}{" "}
-                      {program.approvedMappings === 1
-                        ? "ocupación CNO revisada"
-                        : "ocupaciones CNO revisadas"}
-                    </span>
-                  </li>
-                ))}
-              </ul>
-            </>
-          ) : null}
-          <div className="coverage-panel__includes">
-            <h3>Qué incluye</h3>
-            <ul>
-              <li>Relaciones formativas con revisión humana</li>
-              <li>Ofertas vinculadas cuando existen</li>
-              <li>Datos públicos de Castilla y León</li>
-            </ul>
-          </div>
-          <Link className="coverage-panel__link" to="/metodologia">
-            Ver cobertura
-          </Link>
-          <section
-            className="data-freshness"
-            aria-label="Actualización de datos"
-            aria-busy={freshness.status === "loading"}
-            aria-live="polite"
-          >
-            {freshness.status === "loading" ? (
-              <p>Comprobando la fecha de los datos…</p>
-            ) : null}
-            {freshness.status === "ready" ? (
-              <>
-                <p>
-                  Datos actualizados:{" "}
-                  <time dateTime={freshness.dateTime}>{freshness.date}</time>
-                </p>
-                {freshness.stale ? (
-                  <p className="data-freshness__warning">
-                    No se han podido actualizar los datos. Mostramos la última
-                    copia disponible.
-                  </p>
-                ) : null}
-              </>
-            ) : null}
-            {freshness.status === "unavailable" ? (
-              <p>No se pudo comprobar la fecha de los datos.</p>
-            ) : null}
-          </section>
-        </aside>
-      </div>
-
-      <section className="information-strip" aria-label="Sobre la cobertura">
-        <div>
-          <h2>Información pública y con revisión humana</h2>
+    <div className="home-page">
+      <section className="home-hero" aria-labelledby="home-heading">
+        <div className="home-hero__art" aria-hidden="true" />
+        <div className="home-hero__copy">
+          <h1 id="home-heading">
+            De tu <span>FP</span> a tu
+            <br />
+            <span>siguiente paso</span>
+          </h1>
           <p>
-            El catálogo de FP y ocupaciones es completo. Las relaciones entre
-            ambos se incorporan de forma progresiva y siempre con evidencia.
+            Explora ciclos de FP, salidas revisadas
+            <br className="desktop-break" /> y oportunidades en Castilla y León.
           </p>
         </div>
-        <Link to="/metodologia">Saber más sobre los datos</Link>
+
+        <div className="home-workspace">
+          <section
+            className="entry-panels"
+            aria-label="Elige tu punto de partida"
+          >
+            <EntryCard
+              title="He terminado FP"
+              outcome="Indica tu título y descubre tus siguientes pasos."
+              accent="burgundy"
+              control={
+                searchData.status === "ready" ? (
+                  <div className="entry-card__field">
+                    <label className="sr-only" htmlFor="home-program">
+                      Título de Formación Profesional
+                    </label>
+                    <select
+                      id="home-program"
+                      value={selectedProgram}
+                      onChange={(event) =>
+                        setSelectedProgram(event.target.value)
+                      }
+                    >
+                      <option value="">Selecciona tu título de FP</option>
+                      {searchData.programs.map((program) => (
+                        <option
+                          key={program.programKey}
+                          value={program.programKey}
+                        >
+                          {program.programTitle} ({program.programKey})
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                ) : (
+                  <p className="form-message">
+                    {searchData.status === "loading"
+                      ? "Cargando el catálogo oficial de FP…"
+                      : "El selector no está disponible ahora mismo."}
+                  </p>
+                )
+              }
+              action={
+                searchData.status === "ready" ? (
+                  <button
+                    className="entry-card__cta"
+                    type="button"
+                    disabled={selectedProgram === ""}
+                    onClick={() => navigate(`/desde-fp/${selectedProgram}`)}
+                  >
+                    Ver mis opciones
+                  </button>
+                ) : (
+                  <Link className="entry-card__cta" to="/desde-fp">
+                    Abrir buscador de FP
+                  </Link>
+                )
+              }
+            />
+
+            <EntryCard
+              title="Quiero trabajar de…"
+              outcome="Busca una ocupación y conoce cómo llegar."
+              accent="gold"
+              control={
+                searchData.status === "ready" ? (
+                  <OccupationCombobox
+                    occupations={searchData.occupations}
+                    aliases={searchData.aliases}
+                    confirmedOccupation={confirmedOccupation}
+                    onConfirm={setConfirmedOccupation}
+                    onClear={() => setConfirmedOccupation(null)}
+                    label="Ocupación que te interesa"
+                    hint="Escribe una ocupación y selecciónala en la lista."
+                    showConfirmation={false}
+                  />
+                ) : (
+                  <p className="form-message">
+                    {searchData.status === "loading"
+                      ? "Cargando el catálogo oficial CNO-11…"
+                      : "El buscador no está disponible ahora mismo."}
+                  </p>
+                )
+              }
+              action={
+                searchData.status === "ready" ? (
+                  <button
+                    className="entry-card__cta"
+                    type="button"
+                    disabled={confirmedOccupation === null}
+                    onClick={() =>
+                      confirmedOccupation === null
+                        ? undefined
+                        : navigate(
+                            `/desde-ocupacion/${encodeURIComponent(confirmedOccupation.occupationId)}`,
+                          )
+                    }
+                  >
+                    Buscar ocupación
+                  </button>
+                ) : (
+                  <Link className="entry-card__cta" to="/desde-ocupacion">
+                    Abrir buscador de ocupaciones
+                  </Link>
+                )
+              }
+            />
+          </section>
+
+          <aside
+            className="coverage-panel"
+            aria-label="Cobertura revisada"
+            role="region"
+            aria-live="polite"
+            aria-busy={coverage.status === "loading"}
+          >
+            <div className="coverage-panel__heading">
+              <h2>
+                <Icon name="clock" size={19} />
+                Cobertura revisada
+              </h2>
+              <span
+                className="data-freshness"
+                role="region"
+                aria-label="Actualización de datos"
+                aria-busy={freshness.status === "loading"}
+              >
+                {freshness.status === "loading" ? "Comprobando fecha…" : null}
+                {freshness.status === "ready" ? (
+                  <>
+                    Actualizado:{" "}
+                    <time dateTime={freshness.dateTime}>{freshness.date}</time>
+                  </>
+                ) : null}
+                {freshness.status === "unavailable"
+                  ? "Fecha no disponible"
+                  : null}
+              </span>
+            </div>
+
+            {coverage.status === "loading" ? (
+              <p className="coverage-panel__message">
+                Comprobando la cobertura revisada…
+              </p>
+            ) : null}
+            {coverage.status === "unavailable" ? (
+              <p className="coverage-panel__message">
+                No se ha podido comprobar la cobertura revisada.
+              </p>
+            ) : null}
+            {coverage.status === "ready" ? (
+              <ul
+                className="coverage-panel__programs"
+                aria-label="Ciclos revisados destacados"
+              >
+                {featuredPrograms.map((program) => {
+                  const catalogProgram = programsByKey.get(program.programKey);
+                  return (
+                    <li key={program.programKey}>
+                      <Link to={`/desde-fp/${program.programKey}`}>
+                        <span>
+                          <strong>{program.programTitle}</strong>
+                          <small>
+                            {catalogProgram === undefined
+                              ? program.programKey
+                              : trainingLevelLabel(catalogProgram.level)}
+                          </small>
+                        </span>
+                        <Icon name="arrow-right" size={17} />
+                      </Link>
+                    </li>
+                  );
+                })}
+              </ul>
+            ) : null}
+
+            {freshness.status === "ready" && freshness.stale ? (
+              <p className="data-freshness__warning">
+                Mostramos la última copia disponible.
+              </p>
+            ) : null}
+            <Link className="coverage-panel__link" to="/metodologia">
+              Ver toda la cobertura <Icon name="arrow-right" size={16} />
+            </Link>
+          </aside>
+        </div>
       </section>
-    </>
+
+      <section className="trust-strip" aria-label="Compromisos del proyecto">
+        <div>
+          <strong>Fuentes públicas</strong>
+          <span>Datos de administraciones públicas.</span>
+        </div>
+        <div>
+          <strong>Relaciones revisadas</strong>
+          <span>Vínculos publicados solo con evidencia.</span>
+        </div>
+        <div>
+          <strong>Sin cuentas ni cookies</strong>
+          <span>Sin registro. Sin rastreo. Sin perfiles.</span>
+        </div>
+      </section>
+
+      <nav className="secondary-access" aria-label="Explora SALIDA CyL">
+        <Link to="/desde-fp">
+          <Icon name="search" size={34} />
+          <span>
+            <strong>Buscar por tu título</strong>
+            <small>
+              Consulta salidas profesionales, formación relacionada y
+              oportunidades vinculadas.
+            </small>
+          </span>
+          <Icon name="arrow-right" size={21} />
+        </Link>
+        <Link to="/desde-ocupacion">
+          <Icon name="briefcase" size={34} />
+          <span>
+            <strong>Explorar por ocupación</strong>
+            <small>
+              Consulta qué ciclos guardan una relación revisada con la ocupación
+              que te interesa.
+            </small>
+          </span>
+          <Icon name="arrow-right" size={21} />
+        </Link>
+        <Link to="/comparar">
+          <Icon name="bar-chart" size={34} />
+          <span>
+            <strong>Comparar referencias de ingresos</strong>
+            <small>
+              Consulta referencias publicadas conservando su ámbito y sus
+              limitaciones.
+            </small>
+          </span>
+          <Icon name="arrow-right" size={21} />
+        </Link>
+      </nav>
+
+      <section className="methodology-strip" aria-label="Metodología y límites">
+        <p>
+          <span aria-hidden="true">i</span>
+          <strong>Metodología y límites:</strong> SALIDA CyL utiliza datos
+          públicos y relaciones revisadas. No inventa equivalencias ni garantiza
+          empleo.
+        </p>
+        <Link to="/metodologia">
+          Saber más sobre cómo trabajamos <Icon name="arrow-right" size={16} />
+        </Link>
+      </section>
+    </div>
   );
 }

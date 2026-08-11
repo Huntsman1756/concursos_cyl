@@ -30,26 +30,27 @@ describe("App", () => {
     );
 
     expect(screen.getByRole("link", { name: "SALIDA CyL" })).toBeVisible();
-    expect(screen.getByText("Decide tu siguiente paso")).toBeVisible();
+    expect(screen.getByText("FP y empleo con datos públicos")).toBeVisible();
     expect(
       within(
         screen.getByRole("navigation", { name: "Principal" }),
       ).getAllByRole("link"),
-    ).toHaveLength(3);
+    ).toHaveLength(5);
     expect(screen.getByRole("link", { name: "Inicio" })).toHaveAttribute(
       "aria-current",
       "page",
     );
-    expect(screen.getByRole("link", { name: "Comparar" })).toHaveAttribute(
-      "href",
-      "/comparar",
-    );
-    expect(screen.getByRole("link", { name: "Metodología" })).toHaveAttribute(
-      "href",
-      "/metodologia",
-    );
+    expect(
+      screen.getByRole("link", { name: "Comparar estudios" }),
+    ).toHaveAttribute("href", "/comparar");
+    expect(
+      within(screen.getByRole("navigation", { name: "Principal" })).getByRole(
+        "link",
+        { name: "Metodología" },
+      ),
+    ).toHaveAttribute("href", "/metodologia");
     expect(screen.getByRole("contentinfo")).toHaveTextContent(
-      /SALIDA CyL es un proyecto independiente que utiliza fuentes públicas/i,
+      /Proyecto independiente basado en datos públicos/i,
     );
   });
 

@@ -74,7 +74,7 @@ async function expectStableRoute(
 }
 
 async function chooseHigherComparison(page: Page): Promise<void> {
-  await page.getByText("Grado Superior", { exact: true }).click();
+  await page.getByText("Grado superior", { exact: true }).click();
   await page
     .getByLabel("Filtrar ciclos o grupos")
     .fill("Administración y finanzas");
@@ -93,14 +93,14 @@ test.describe("contest readiness journeys", () => {
     await expect(
       page.getByRole("heading", {
         level: 1,
-        name: "Elige tu camino y actúa con información oficial",
+        name: /De tu FP a tu\s*siguiente paso/i,
       }),
     ).toBeVisible();
     await expect(
       page.getByRole("navigation", { name: "Principal" }),
     ).toBeVisible();
     await expect(
-      page.getByRole("region", { name: "Disponible ahora" }),
+      page.getByRole("region", { name: "Cobertura revisada" }),
     ).toHaveAttribute("aria-busy", "false");
     await expect(
       page.getByRole("region", { name: "Actualización de datos" }),
@@ -202,7 +202,7 @@ test.describe("contest readiness journeys", () => {
     ).toBeVisible();
     await expect(
       page.getByRole("heading", {
-        name: "Referencia de titulados de Grado Superior en Castilla y León",
+        name: "Referencia de titulados de grado superior en Castilla y León",
       }),
     ).toBeVisible();
     await expectStableRoute(page, diagnostics);
@@ -241,12 +241,12 @@ test.describe("contest readiness journeys", () => {
   }) => {
     const diagnostics = installRouteDiagnostics(page);
     await page.goto("/");
-    await page.getByLabel("¿Qué has estudiado?").selectOption("COM01M");
     await page
-      .getByRole("button", { name: "Explorar salidas laborales" })
-      .click();
+      .getByLabel("Título de Formación Profesional")
+      .selectOption("COM01M");
+    await page.getByRole("button", { name: "Ver mis opciones" }).click();
     await expect(page).toHaveURL(/\/desde-fp\/COM01M$/u);
-    await page.getByRole("link", { name: "Comparar" }).click();
+    await page.getByRole("link", { name: "Comparar estudios" }).click();
     await expect(page).toHaveURL(/\/comparar$/u);
     await expect(
       page.getByRole("heading", { name: "Ingresos observados" }),

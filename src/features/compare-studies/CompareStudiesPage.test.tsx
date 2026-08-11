@@ -197,7 +197,7 @@ describe("CompareStudiesPage", () => {
     renderPage();
 
     expect(screen.getByText("Cargando la comparación oficial…")).toBeVisible();
-    await user.click(await screen.findByRole("radio", { name: "Grado Medio" }));
+    await user.click(await screen.findByRole("radio", { name: "Grado medio" }));
     await user.click(screen.getByRole("checkbox", { name: "Grupo medio 1" }));
     await user.click(screen.getByRole("checkbox", { name: "Grupo medio 2" }));
     await user.click(screen.getByRole("checkbox", { name: "Grupo medio 3" }));
@@ -218,12 +218,12 @@ describe("CompareStudiesPage", () => {
     ).toBeVisible();
     expect(
       screen.getByRole("heading", {
-        name: "Referencia de titulados de Grado Medio en Castilla y León",
+        name: "Referencia de titulados de grado medio en Castilla y León",
       }),
     ).toBeVisible();
     expect(
       screen.getByRole("region", {
-        name: "Referencia de titulados de Grado Medio en Castilla y León",
+        name: "Referencia de titulados de grado medio en Castilla y León",
       }),
     ).toBeVisible();
     expect(
@@ -237,6 +237,8 @@ describe("CompareStudiesPage", () => {
     for (const label of measureLabels) {
       expect(screen.getAllByText(label).length).toBeGreaterThan(0);
     }
+    expect(screen.getAllByText("Corte del 20 %").length).toBeGreaterThan(0);
+    expect(screen.getAllByText("Cómo leer los cortes").length).toBe(1);
     expect(
       screen.getAllByText("No disponible o sin representatividad suficiente")
         .length,
@@ -281,7 +283,7 @@ describe("CompareStudiesPage", () => {
     renderPage();
 
     await user.click(
-      await screen.findByRole("radio", { name: "Grado Superior" }),
+      await screen.findByRole("radio", { name: "Grado superior" }),
     );
     const yearFour = within(
       screen.getByRole("group", { name: "4. Año tras titularse" }),
@@ -294,7 +296,7 @@ describe("CompareStudiesPage", () => {
     const user = userEvent.setup();
     renderPage();
 
-    await user.click(await screen.findByRole("radio", { name: "Grado Medio" }));
+    await user.click(await screen.findByRole("radio", { name: "Grado medio" }));
     await user.selectOptions(
       screen.getByRole("combobox", { name: "3. Cohorte de titulación" }),
       "2020-2021",
@@ -310,7 +312,7 @@ describe("CompareStudiesPage", () => {
     const user = userEvent.setup();
     renderPage();
 
-    await user.click(await screen.findByRole("radio", { name: "Grado Medio" }));
+    await user.click(await screen.findByRole("radio", { name: "Grado medio" }));
     await user.click(screen.getByRole("checkbox", { name: "Grupo medio 1" }));
     await user.selectOptions(
       screen.getByRole("combobox", { name: "3. Cohorte de titulación" }),
@@ -346,7 +348,7 @@ describe("CompareStudiesPage", () => {
     const user = userEvent.setup();
     renderPage();
 
-    await user.click(await screen.findByRole("radio", { name: "Grado Medio" }));
+    await user.click(await screen.findByRole("radio", { name: "Grado medio" }));
     await user.click(screen.getByRole("checkbox", { name: "Grupo medio 1" }));
     await user.type(
       screen.getByRole("searchbox", {
@@ -390,7 +392,7 @@ describe("CompareStudiesPage", () => {
     renderPage();
 
     await user.click(
-      await screen.findByRole("radio", { name: "Grado Superior" }),
+      await screen.findByRole("radio", { name: "Grado superior" }),
     );
     await user.type(
       screen.getByRole("searchbox", {
@@ -412,7 +414,7 @@ describe("CompareStudiesPage", () => {
     renderPage();
 
     await user.click(
-      await screen.findByRole("radio", { name: "Grado Superior" }),
+      await screen.findByRole("radio", { name: "Grado superior" }),
     );
     await user.type(
       screen.getByRole("searchbox", {
@@ -432,14 +434,11 @@ describe("CompareStudiesPage", () => {
     ).not.toBeInTheDocument();
   });
 
-  it("removes the mobile table minimum width without removing table semantics", () => {
+  it("stacks the visual comparison on mobile without removing table semantics", () => {
     expect(comparisonStyles).toMatch(/@media \(max-width: 47\.999rem\)/u);
-    expect(comparisonStyles).toMatch(
-      /\.income-evidence-card table\s*\{\s*min-width: 0;/u,
-    );
-    expect(comparisonStyles).toMatch(/\.income-evidence-card tbody tr/u);
-    expect(comparisonStyles).toMatch(
-      /\.income-value--unavailable\s*\{\s*white-space: normal;/u,
-    );
+    expect(comparisonStyles).toMatch(/\.income-level-options,/u);
+    expect(comparisonStyles).toMatch(/\.income-bar__track/u);
+    expect(comparisonStyles).toMatch(/\.income-evidence-card table/u);
+    expect(comparisonStyles).toMatch(/\.income-evidence-grid/u);
   });
 });

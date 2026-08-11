@@ -5,6 +5,7 @@ import type {
   OutcomeGroup,
   OutcomeTrainingLevel,
 } from "../../../data/schemas/outcomes";
+import { formatOutcomeLabel } from "./outcomePresentation";
 
 export interface IncomeComparisonFormProps {
   trainingLevel: OutcomeTrainingLevel | null;
@@ -23,9 +24,18 @@ export interface IncomeComparisonFormProps {
 const TRAINING_LEVELS: readonly {
   value: OutcomeTrainingLevel;
   label: string;
+  description: string;
 }[] = [
-  { value: "intermediate", label: "Grado Medio" },
-  { value: "higher", label: "Grado Superior" },
+  {
+    value: "intermediate",
+    label: "Grado medio",
+    description: "Títulos de técnico",
+  },
+  {
+    value: "higher",
+    label: "Grado superior",
+    description: "Títulos de técnico superior",
+  },
 ];
 
 function normalizedSearchTerm(value: string): string {
@@ -92,17 +102,21 @@ export function IncomeComparisonForm({
       </p>
       <fieldset className="income-form-fieldset">
         <legend>1. Nivel de formación</legend>
-        <div className="income-choice-row">
+        <div className="income-level-options">
           {TRAINING_LEVELS.map((level) => (
-            <label className="income-choice" key={level.value}>
+            <label className="income-level-choice" key={level.value}>
               <input
                 type="radio"
                 name="training-level"
                 value={level.value}
+                aria-label={level.label}
                 checked={trainingLevel === level.value}
                 onChange={() => onTrainingLevelChange(level.value)}
               />
-              <span>{level.label}</span>
+              <span>
+                <strong>{level.label}</strong>
+                <small>{level.description}</small>
+              </span>
             </label>
           ))}
         </div>
@@ -144,7 +158,7 @@ export function IncomeComparisonForm({
                         toggleGroup(group.groupKey, event.target.checked)
                       }
                     />
-                    <span>{group.officialLabel}</span>
+                    <span>{formatOutcomeLabel(group.officialLabel)}</span>
                   </label>
                 );
               })}

@@ -1,65 +1,115 @@
-# Design QA — Home option 2
+# Design QA — home SALIDA CyL
 
-**Artifacts**
+- Source visual truth: `G:\_Descargas\ChatGPT Image 11 ago 2026, 22_13_40.png`
+- Implementation screenshot: `F:\castilla_leon_rev2\.worktrees\salida-cyl-development\home-redesign-desktop.png`
+- Mobile screenshot: `F:\castilla_leon_rev2\.worktrees\salida-cyl-development\home-redesign-mobile.png`
+- Viewports: desktop 1440 × 900 CSS px; mobile 390 × 844 CSS px.
+- Pixel dimensions: source 1672 × 941 px (includes browser chrome); the implementation captures exclude the in-app browser scrollbar gutter.
+- Density normalization: screenshots were compared at 1× CSS density by proportional page geometry. The source browser chrome was excluded from layout judgments; the in-app browser screenshot excludes its scrollbar gutter.
+- State: home loaded with the current manifest; selectors empty; no stale-data warning; three deterministically selected reviewed programs visible.
 
-- Source visual truth: `C:\Users\rome_\.codex\generated_images\019fc784-a718-76d2-a3ef-729b698367e2\exec-2636e55d-f1e0-4421-b5bc-ab305630e50a.png`
-- Desktop implementation: `C:\Users\rome_\.codex\visualizations\2026\08\03\019fc784-a718-76d2-a3ef-729b698367e2\home-option2-qa\home-option2-desktop-1488x1026.png`
-- Mobile implementation: `C:\Users\rome_\.codex\visualizations\2026\08\03\019fc784-a718-76d2-a3ef-729b698367e2\home-option2-qa\home-option2-mobile-360x800.png`
-- Side-by-side comparison: `C:\Users\rome_\.codex\visualizations\2026\08\03\019fc784-a718-76d2-a3ef-729b698367e2\home-option2-qa\home-option2-reference-vs-implementation.png`
-- Local route: `http://127.0.0.1:54564/`
+## Full-view comparison evidence
 
-**Capture normalization**
+The reference and final desktop screenshot were opened together. Both use the same visual order and near-equivalent proportions: compact white header, two-line left-aligned hero, two primary entry cards plus one coverage panel, one trust strip, one divided secondary-access surface, one methodology strip and a compact burgundy footer. The implementation preserves the reference's low density, neutral border treatment, restrained shadows, 34/34/32 workspace balance and burgundy/gold emphasis.
 
-- State: home route, current validated manifest loaded, light theme, no open overlays.
-- Source pixels: 1488 × 1026.
-- Implementation pixels: 1488 × 1026 at a 1488 × 1026 CSS viewport and device scale factor 1.
-- Mobile pixels: 360 × 800 at a 360 × 800 CSS viewport and device scale factor 1.
-- Comparison pixels: 2976 × 1026, with the source at left and implementation at right, appended without resampling.
+Intentional differences are required by product truth: the implementation omits the Junta shield and copyright, identifies SALIDA CyL as independent, uses the current manifest date, shows only real reviewed programs, and omits invented itinerary counts. The regional background uses the original project asset `src/assets/hero-castilla-leon-line.webp`: a low-contrast cathedral, old-city skyline and bridge illustration created specifically for this home.
 
-**Findings**
+## Focused region comparison evidence
 
-- No actionable P0, P1, or P2 differences remain.
-- Fonts and typography: the implementation uses the existing Inter/system stack and matches the source's compact sans-serif hierarchy, weight contrast, wrapping, and readable line height. The desktop heading remains one line; the 360 px heading wraps without clipping.
-- Spacing and layout rhythm: the five-rem header, intro offset, two equal entry columns, coverage aside, slim information strip, and footer follow the source composition. The final desktop cards measure 476.70 px and 476.72 px wide at the same y position. Mobile cards and the coverage panel stack in document order with no overlap.
-- Colors and visual tokens: deep green `#07583f`, stronger green `#064632`, warm surface `#fbfaf6`, border `#bdcdc7`, and filled terracotta `#c94b2d` match the selected direction. Text terracotta uses the darker accessible companion `#a83a23`; Axe found no remaining contrast violations.
-- Image quality and asset fidelity: the target contains no raster imagery, illustration, logo asset, or non-standard icon that needs reproduction. No placeholder or generated image was introduced. The existing audited arrow icon is used only inside primary CTAs.
-- Copy and content: unsafe uncovered chips were intentionally removed. Only Desarrollo de Aplicaciones Web, presencial/distancia delivery, and one reviewed CNO relationship are named. The footer intentionally replaces the mock's government attribution with the required independent-project statement.
-- Accessibility and responsiveness: semantic headings/regions, skip link, `aria-current`, live manifest freshness, visible focus, full-width mobile CTAs, and zero horizontal overflow are present. Automated Axe checks pass on desktop and mobile.
+- Hero: display weight, compact line height, two-line wrap and burgundy emphasis match the source hierarchy. The supporting sentence remains two lines on desktop and wraps naturally on mobile.
+- Primary workspace: all three panels share their top edge and visual height on desktop. Inputs and full-width actions occupy equivalent positions. Mobile order is FP, occupation, coverage, with no horizontal page overflow.
+- Lower bands: trust content is a single divided strip; secondary actions are a single divided surface; methodology remains subordinate; the footer closes the page in dark burgundy.
+- Typography: system sans stack is intentionally used because the source typeface is not bundled. Weight, size, line height and wrapping were matched without adding a font dependency.
+- Colors: near-black text, warm white background, burgundy `#951126`, dark burgundy `#761020`, restrained gold and warm neutral borders reproduce the source balance while retaining accessible focus states.
+- Assets: no institutional logo or third-party architectural illustration was reused. The cathedral scene was generated specifically for the project, compressed to a 93 KB WebP and kept decorative. Existing Lucide icons provide the few functional line icons.
+- Copy: all app-specific claims remain prudent; no promise of employment, fabricated salary, invented count or false official affiliation appears.
 
-**Interaction evidence**
+## Comparison history
 
-- `Explorar salidas laborales` navigated to `/desde-fp` and rendered `Encuentra ofertas relacionadas con tu FP`.
-- `Buscar ciclos que te preparan` navigated to `/desde-ocupacion` and rendered `Descubre qué FP conduce a un trabajo concreto`.
-- Active navigation on the home was `Inicio`.
-- Keyboard order begins with the skip link, product link, navigation, primary CTAs, coverage links, and footer link. The focused skip link exposed a visible 3 px focus ring; the end-to-end skip-link test confirmed focus moves to `main#main-content`.
-- In-app console warning/error log: empty.
-- Horizontal overflow: 0 px at both 1488 × 1026 and 360 × 800.
-- Platform note: the in-app browser ran all background inspection and captures, but subagent threads cannot make that surface visible. The controller owns the visible preview handoff.
+1. First desktop comparison
+   - [P2] Empty-form buttons were neutral grey and weakened the reference's burgundy/gold balance.
+   - Fix: retained disabled semantics but restored burgundy and gold surfaces with reduced opacity.
+   - Post-fix evidence: final desktop screenshot keeps both actions visibly color-coded while their disabled state remains apparent.
 
-**Focused-region comparison evidence**
+2. First mobile comparison
+   - [P2] The header and methodology copy consumed excess vertical space and the methodology sentence wrapped as competing columns.
+   - Fix: removed the nonessential descriptor at the mobile breakpoint, kept the trust action compact, and changed methodology copy to normal block flow.
+   - Post-fix evidence: final mobile screenshot has no page overflow, preserves the requested content order and reads as one continuous sentence.
 
-- A separate crop was not needed: the native side-by-side artifact preserves both complete 1488 × 1026 captures without resampling, and the source and implementation were also opened individually at original resolution. The header, cards, coverage panel, information strip, and footer remained readable for direct comparison.
+3. Regional identity review
+   - [P2] The original contour texture was functionally invisible and did not provide the architectural counterweight present in the reference.
+   - Fix: replaced it with an original cathedral, skyline and bridge line illustration, positioned behind the right half of the hero and hidden on mobile.
+   - Post-fix evidence: the final desktop capture shows a clearly readable but subordinate architectural scene without reducing headline or panel contrast.
 
-**Comparison history**
+4. Final density and copy review
+   - [P3] The coverage heading could be read as live availability, and the lower action icons and primary panels retained slightly more visual weight than necessary.
+   - Fix: renamed the panel to `Cobertura revisada`, tightened both primary panels, reduced the secondary icons, and made the hero and occupation copy more precise.
+   - Post-fix evidence: the final captures preserve the reference hierarchy while communicating reviewed coverage rather than current job or course availability.
 
-1. Pre-style layout RED: desktop panels were vertically offset by 382.8 px and the mobile cards had no separation/full-width CTA treatment. The responsive workspace grid, equal entry columns, mobile stack, and CTA sizing fixed both failures; the focused Playwright layout gate then passed in both projects.
-2. Automated accessibility RED before the final capture: terracotta foreground text measured 4.25–4.46:1 on warm/subtle surfaces. Filled actions retained `#c94b2d`; text links and eyebrow copy moved to `#a83a23`. The complete 32-test browser suite then passed on desktop and mobile.
-3. Final native side-by-side comparison: no actionable P0/P1/P2 mismatch. The absent unsafe chips, expanded DAW name, omitted decorative information icon, and independent-project footer are required product-safety deviations rather than design drift.
+## Findings
 
-**Open Questions**
+No actionable P0, P1 or P2 differences remain. Residual differences are expected and deliberate: no official crest, no Junta copyright, no fabricated coverage metrics, current data/date, and an original regional illustration rather than the mockup's exact architecture.
 
-- None.
+## Primary interactions and technical evidence
 
-**Implementation Checklist**
+- FP selector: selected `IFC03S`; `Ver mis opciones` enabled and navigated to `/desde-fp/IFC03S`.
+- Occupation search: searched `Programación web`, selected the official CNO-11 result, and navigated to `/desde-ocupacion/occupation%3Acno11%3A2713`.
+- Keyboard skip link, responsive overflow and both viewport layouts are covered by the home E2E suite.
+- Axe: no automated violations in desktop or mobile home runs.
+- Browser console: no warnings or errors after load and both primary interactions.
 
-- [x] Match option 2 hierarchy, palette, density, and equal task panels.
-- [x] Preserve truthful partial coverage and manifest-derived freshness.
-- [x] Preserve approved route behavior and independent-project identity.
-- [x] Pass desktop/mobile layout, accessibility, console, focus, navigation, and overflow checks.
-- [x] Preserve privacy and generated-data contracts.
+## Follow-up polish
 
-**Follow-up Polish**
+- No remaining P3 visual issue is necessary for this pass. The repeated `oficial` wording was removed from the visible settled home; source provenance remains concentrated in the trust and methodology areas.
 
-- None required for handoff.
+## Closure QA
+
+- Interaction: disabled FP and occupation actions expose native disabled semantics; selecting a valid item enables the action. The burgundy FP action changes from `0.68` opacity to solid `#951126`, hover applies the intended brightness treatment, and keyboard focus exposes the shared focus ring.
+- Keyboard: the occupation combobox supports typing, Arrow Down, Enter and CTA activation by Enter; the skip link moves focus to the main content.
+- Responsive: 360 × 800, 768 × 1024 and 1024 × 768 pass without document or body overflow. A 23 px tablet overflow from the decorative hero art was found and fixed by clipping that art to the hero boundary.
+- Data and claims: the displayed update timestamp comes from the manifest-addressed job-offer snapshot; every featured coverage link is backed by a `program` row whose `coverageStatus` is `reviewed` in the manifest-addressed mapping coverage resource.
+- Automated evidence: 24 existing desktop/mobile home tests and 3 focused closure checks passed.
+
+## Compare studies redesign QA
+
+- Source visual truth: `F:\castilla_leon_rev2\.worktrees\salida-cyl-development\audit-compare-tables-before.png` (the user-supplied issue was also inspected at `C:\Users\rome_\AppData\Local\Temp\codex-clipboard-f7c62c48-4b03-48b9-8eff-48de9f808d67.png`).
+- Implementation screenshots: `F:\castilla_leon_rev2\.worktrees\salida-cyl-development\compare-results-after.png` and `F:\castilla_leon_rev2\.worktrees\salida-cyl-development\compare-results-mobile.png`.
+- Viewports: desktop 1440 × 900 CSS px; mobile 360 × 800 CSS px; tablet layout checked at 768 × 1024 CSS px.
+- Density normalization: source and implementation browser captures use the same 1× CSS density and exclude the browser chrome. The screenshot pixel area excludes the in-app scrollbar gutter.
+- State: grado medio, latest provisional cohort, first post-graduation year, and the same two selected groups (`Actividades comerciales` and `Actividades físicas y deportivas`).
+
+### Full-view comparison evidence
+
+The before/after captures were inspected together at the same desktop viewport and state. The implementation retains the two truthful source scopes, cohort context, published values, burgundy/warm-neutral palette and compact evidence hierarchy. It intentionally replaces the repeated raw table rows with one grouped card per selected series, a single reading guide and proportional bars on a shared scale within each source card.
+
+### Focused region comparison evidence
+
+- Selector: the old compact pills and two-column scrolling checkbox wall became two large level cards plus a single-column alphabetical result list with visible native checkboxes. Source labels are displayed in sentence case while their stored official values remain unchanged.
+- Results: each group name appears once; the mean is prominent; the four published boundaries are labelled `Corte del 20 %`, `40 %`, `60 %` and `80 %`; technical quintile terminology remains available in an expandable semantic table.
+- Data integrity: a non-progressive source sequence is not reordered or corrected. The affected group receives an explicit source-data warning.
+- Responsive: the source cards stack at tablet and mobile widths. Browser measurements returned zero body and document overflow at 360 px and 768 px.
+
+### Required fidelity surfaces
+
+- Typography: the existing system stack, weights and scale are preserved; sentence case removes the previous mixed uppercase/lowercase noise.
+- Spacing and layout: selection targets are larger, result rows read top-to-bottom, and evidence cards use the established radii, borders and spacing tokens.
+- Colors and tokens: burgundy remains the selected/brand color, gold identifies the mean, muted burgundy represents distribution cuts, and all additions are centralized in `tokens.css`.
+- Image quality and assets: no image asset is required in this data screen; no placeholder, generated image, custom SVG or icon substitute was introduced.
+- Copy and content: quintiles are explained in plain language without removing the exact published term, scope, value or limitation.
+- Interaction and accessibility: level controls remain radios, group choices remain checkboxes, technical data remains a semantic table, and all visual charts retain adjacent text values and explanations.
+
+### Comparison history
+
+1. [P1] Raw tables repeated every selected group five times and exposed statistical jargon as the primary reading path.
+   - Fix: grouped observations by series, added plain-language distribution bars and moved the exact terminology into expandable technical tables.
+   - Post-fix evidence: the final desktop capture communicates group, mean and distribution without requiring the user to decode `quintil`.
+2. [P2] Level and group selection had weak click affordance, mixed source casing and a visually unordered two-column list.
+   - Fix: enlarged level cards, visible native checkboxes, single-column alphabetical results and display-only sentence-case normalization.
+   - Post-fix evidence: the browser accessibility tree exposes normalized labels in stable reading order and the selected state remains native.
+3. [P2] The first result iteration repeated the quintile guide inside both source cards.
+   - Fix: moved the guide once above the evidence grid.
+   - Post-fix evidence: the final screenshot has one concise explanation serving both scopes.
+
+No actionable P0, P1 or P2 visual issue remains. The exact technical table is intentionally secondary but fully available.
 
 final result: passed
