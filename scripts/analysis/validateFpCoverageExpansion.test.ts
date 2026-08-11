@@ -1515,4 +1515,589 @@ describe("validateFpCoverageExpansion", () => {
       }),
     ).toThrow(/reviewedCommitAt|terminal|completedAt/i);
   });
+
+  describe("seedReconciliations", () => {
+    const recoEvidence = {
+      sourceUrl: "https://boe.es/ficha",
+      sourceQuote: "Program output.",
+      reviewedAt: "2026-08-09",
+    };
+
+    const validReconciliation = {
+      seedLabel: "Electricista.",
+      sourceOutputLabel: "Electricista, en general.",
+      authoritativeOutputLabel: "Electricista, en general.",
+      sourceOutputEvidence: {
+        ...recoEvidence,
+        sourceQuote: "Electricista, en general.",
+      },
+      authoritativeEvidence: {
+        ...recoEvidence,
+        sourceUrl: evidence.sourceUrl,
+        sourceQuote: "Electricista, en general.",
+      },
+      reason:
+        "The programme output drift was reconciled against the authoritative source before publication.",
+    };
+
+    it("accepts a completed attempt with a valid seed reconciliation", () => {
+      expect(
+        validateExpansionAttemptData(
+          validInput(
+            {
+              officialOutputInventory: {
+                sourceUrl: evidence.sourceUrl,
+                labels: ["Electricista, en general."],
+              },
+              officialOutputReviews: [
+                {
+                  ...baseAttempt.officialOutputReviews[0],
+                  officialOutputLabel: "Electricista, en general.",
+                  sourceQuote: "Electricista, en general.",
+                },
+              ],
+              acceptedRelations: [
+                {
+                  kind: "link",
+                  programKey: "ELE01M",
+                  occupationId: "occupation:cno11:7521",
+                  sourceUrl: evidence.sourceUrl,
+                  sourceQuote: "Electricista, en general.",
+                  reviewedAt: "2026-08-09",
+                },
+              ],
+              seedReconciliations: [
+                {
+                  ...validReconciliation,
+                  authoritativeEvidence: {
+                    sourceUrl: evidence.sourceUrl,
+                    sourceQuote: "Electricista, en general.",
+                    reviewedAt: "2026-08-09",
+                  },
+                },
+              ],
+            },
+            {},
+            {
+              officialOutputLabels: ["Electricista."],
+            },
+          ),
+        ),
+      ).toMatchObject({
+        seedReconciliations: [{ seedLabel: "Electricista." }],
+      });
+    });
+
+    it("rejects reconciliations on non-completed attempts", () => {
+      const inProgressAttempt = {
+        ...baseAttempt,
+        state: "in_progress",
+        transitions: [baseAttempt.transitions[0]],
+        completedAt: null,
+        seedReconciliations: [validReconciliation],
+        publicParity: undefined,
+        newlyReachedOfferIdsByProgram: undefined,
+        newlyReachedOfferUnionIds: undefined,
+      };
+      expect(() =>
+        validateExpansionAttemptData({
+          attempt: inProgressAttempt,
+          candidate,
+          computed: {
+            baselineMatchIds: [],
+            currentMatchIds: [],
+            newlyReachedOfferIdsByProgram: {},
+            newlyReachedOfferUnionIds: [],
+          },
+          publicRelationSet: {
+            manifestAddressed: true,
+            relationKeys: [],
+            resourcePaths: ["/data/v1/manifest.json"],
+          },
+        }),
+      ).toThrow(/reconciliations may only exist on completed/i);
+    });
+
+    it("rejects duplicate reconciliations for the same seed", () => {
+      expect(() =>
+        validateExpansionAttemptData(
+          validInput(
+            {
+              officialOutputInventory: {
+                sourceUrl: evidence.sourceUrl,
+                labels: ["Electricista, en general."],
+              },
+              officialOutputReviews: [
+                {
+                  ...baseAttempt.officialOutputReviews[0],
+                  officialOutputLabel: "Electricista, en general.",
+                  sourceQuote: "Electricista, en general.",
+                },
+              ],
+              seedReconciliations: [
+                validReconciliation,
+                {
+                  ...validReconciliation,
+                  reason: "Another reason for the drift.",
+                },
+              ],
+            },
+            {},
+            {
+              officialOutputLabels: ["Electricista."],
+            },
+          ),
+        ),
+      ).toThrow(/Duplicate reconciliations/i);
+    });
+
+    it("rejects unused reconciliations for non-candidate seeds", () => {
+      expect(() =>
+        validateExpansionAttemptData(
+          validInput(
+            {
+              officialOutputInventory: {
+                sourceUrl: evidence.sourceUrl,
+                labels: ["Electricista.", "Otra salida."],
+              },
+              officialOutputReviews: [
+                {
+                  ...baseAttempt.officialOutputReviews[0],
+                  officialOutputLabel: "Electricista.",
+                  sourceQuote: "Electricista.",
+                },
+                {
+                  order: 2,
+                  officialOutputLabel: "Otra salida.",
+                  disposition: "rejected" as const,
+                  candidateOccupationIds: ["occupation:cno11:7522"],
+                  sourceQuote: "Otra salida.",
+                  sourceUrl: "https://boe.es/ficha",
+                  reason: "Not relevant.",
+                },
+              ],
+              acceptedRelations: [
+                {
+                  kind: "link",
+                  programKey: "ELE01M",
+                  occupationId: "occupation:cno11:7521",
+                  ...recoEvidence,
+                },
+              ],
+              rejectedRelations: [
+                {
+                  kind: "link",
+                  programKey: "ELE01M",
+                  occupationId: "occupation:cno11:7522",
+                  ...recoEvidence,
+                },
+              ],
+              publicParity: {
+                publishedRelationKeys: ["ELE01M|occupation:cno11:7521"],
+                rejectedRelationKeys: ["ELE01M|occupation:cno11:7522"],
+              },
+              seedReconciliations: [
+                {
+                  ...validReconciliation,
+                  seedLabel: "Seed que no pertenece al candidato.",
+                  sourceOutputLabel: "Otro output.",
+                  authoritativeOutputLabel: "Otra salida.",
+                  sourceOutputEvidence: {
+                    ...recoEvidence,
+                    sourceUrl: "https://boe.es/ficha",
+                    sourceQuote: "Otro output.",
+                  },
+                  authoritativeEvidence: {
+                    ...recoEvidence,
+                    sourceUrl: evidence.sourceUrl,
+                    sourceQuote: "Otra salida.",
+                  },
+                  reason:
+                    "The programme output drift was reconciled against the authoritative source before publication.",
+                },
+              ],
+            },
+            {},
+            {
+              officialOutputLabels: ["Electricista."],
+            },
+          ),
+        ),
+      ).toThrow(/Unused reconciliations/i);
+    });
+
+    it("rejects reconciliations missing from candidate seeds when no exact match exists", () => {
+      expect(() =>
+        validateExpansionAttemptData(
+          validInput(
+            {
+              officialOutputInventory: {
+                sourceUrl: evidence.sourceUrl,
+                labels: ["Electricista, en general."],
+              },
+              officialOutputReviews: [
+                {
+                  ...baseAttempt.officialOutputReviews[0],
+                  officialOutputLabel: "Electricista, en general.",
+                  sourceQuote: "Electricista, en general.",
+                },
+              ],
+              seedReconciliations: [],
+            },
+            {},
+            {
+              officialOutputLabels: ["Electricista."],
+            },
+          ),
+        ),
+      ).toThrow(/requires exactly one reconciliation/i);
+    });
+
+    it("does not require reconciliation when there is an exact inventory match", () => {
+      expect(
+        validateExpansionAttemptData(
+          validInput(
+            {
+              officialOutputInventory: {
+                sourceUrl: evidence.sourceUrl,
+                labels: ["Electricista."],
+              },
+              officialOutputReviews: [
+                {
+                  ...baseAttempt.officialOutputReviews[0],
+                  officialOutputLabel: "Electricista.",
+                  sourceQuote: "Electricista.",
+                },
+              ],
+              seedReconciliations: [],
+            },
+            {},
+            {
+              officialOutputLabels: ["Electricista."],
+            },
+          ),
+        ),
+      ).toMatchObject({
+        programKey: "ELE01M",
+      });
+    });
+
+    it("rejects authoritative output labels not present in the inventory", () => {
+      expect(() =>
+        validateExpansionAttemptData(
+          validInput(
+            {
+              officialOutputInventory: {
+                sourceUrl: evidence.sourceUrl,
+                labels: ["Electricista, en general."],
+              },
+              officialOutputReviews: [
+                {
+                  ...baseAttempt.officialOutputReviews[0],
+                  officialOutputLabel: "Electricista, en general.",
+                  sourceQuote: "Electricista, en general.",
+                },
+              ],
+              seedReconciliations: [
+                {
+                  ...validReconciliation,
+                  authoritativeOutputLabel:
+                    "Label que no existe en el inventario.",
+                  authoritativeEvidence: {
+                    ...recoEvidence,
+                    sourceUrl: evidence.sourceUrl,
+                    sourceQuote: "Label que no existe en el inventario.",
+                  },
+                  reason:
+                    "The programme output drift was reconciled against the authoritative source before publication.",
+                },
+              ],
+            },
+            {},
+            {
+              officialOutputLabels: ["Electricista."],
+            },
+          ),
+        ),
+      ).toThrow(/inventory/i);
+    });
+
+    it("rejects source output evidence URLs outside candidate source URLs", () => {
+      expect(() =>
+        validateExpansionAttemptData(
+          validInput(
+            {
+              officialOutputInventory: {
+                sourceUrl: evidence.sourceUrl,
+                labels: ["Electricista, en general."],
+              },
+              officialOutputReviews: [
+                {
+                  ...baseAttempt.officialOutputReviews[0],
+                  officialOutputLabel: "Electricista, en general.",
+                  sourceQuote: "Electricista, en general.",
+                },
+              ],
+              seedReconciliations: [
+                {
+                  ...validReconciliation,
+                  sourceOutputEvidence: {
+                    ...recoEvidence,
+                    sourceUrl: "https://other.invalid/source",
+                    sourceQuote: "Electricista, en general.",
+                  },
+                  reason:
+                    "The programme output drift was reconciled against the authoritative source before publication.",
+                },
+              ],
+            },
+            {},
+            {
+              officialOutputLabels: ["Electricista."],
+            },
+          ),
+        ),
+      ).toThrow(/Source output evidence URL/);
+    });
+
+    it("rejects authoritative evidence URLs not matching the inventory source", () => {
+      expect(() =>
+        validateExpansionAttemptData(
+          validInput(
+            {
+              officialOutputInventory: {
+                sourceUrl: evidence.sourceUrl,
+                labels: ["Electricista, en general."],
+              },
+              officialOutputReviews: [
+                {
+                  ...baseAttempt.officialOutputReviews[0],
+                  officialOutputLabel: "Electricista, en general.",
+                  sourceQuote: "Electricista, en general.",
+                },
+              ],
+              acceptedRelations: [
+                {
+                  kind: "link",
+                  programKey: "ELE01M",
+                  occupationId: "occupation:cno11:7521",
+                  sourceUrl: evidence.sourceUrl,
+                  sourceQuote: "Electricista, en general.",
+                  reviewedAt: "2026-08-09",
+                },
+              ],
+              seedReconciliations: [
+                {
+                  ...validReconciliation,
+                  authoritativeEvidence: {
+                    sourceUrl: "https://boe.es/other",
+                    sourceQuote: "Electricista, en general.",
+                    reviewedAt: "2026-08-09",
+                  },
+                  reason:
+                    "The programme output drift was reconciled against the authoritative source before publication.",
+                },
+              ],
+            },
+            {},
+            {
+              officialOutputLabels: ["Electricista."],
+            },
+          ),
+        ),
+      ).toThrow(/Authoritative evidence URL/);
+    });
+
+    it("rejects source output evidence quotes that do not match the source output label", () => {
+      expect(() =>
+        validateExpansionAttemptData(
+          validInput(
+            {
+              officialOutputInventory: {
+                sourceUrl: evidence.sourceUrl,
+                labels: ["Electricista, en general."],
+              },
+              officialOutputReviews: [
+                {
+                  ...baseAttempt.officialOutputReviews[0],
+                  officialOutputLabel: "Electricista, en general.",
+                  sourceQuote: "Electricista, en general.",
+                },
+              ],
+              seedReconciliations: [
+                {
+                  ...validReconciliation,
+                  sourceOutputEvidence: {
+                    ...recoEvidence,
+                    sourceUrl: "https://boe.es/ficha",
+                    sourceQuote: "Wrong quote.",
+                  },
+                  reason:
+                    "The programme output drift was reconciled against the authoritative source before publication.",
+                },
+              ],
+            },
+            {},
+            {
+              officialOutputLabels: ["Electricista."],
+            },
+          ),
+        ),
+      ).toThrow(/Source output evidence quote/);
+    });
+
+    it("rejects authoritative evidence quotes that do not match the authoritative output label", () => {
+      expect(() =>
+        validateExpansionAttemptData(
+          validInput(
+            {
+              officialOutputInventory: {
+                sourceUrl: evidence.sourceUrl,
+                labels: ["Electricista, en general."],
+              },
+              officialOutputReviews: [
+                {
+                  ...baseAttempt.officialOutputReviews[0],
+                  officialOutputLabel: "Electricista, en general.",
+                  sourceQuote: "Electricista, en general.",
+                },
+              ],
+              seedReconciliations: [
+                {
+                  ...validReconciliation,
+                  authoritativeEvidence: {
+                    ...recoEvidence,
+                    sourceUrl: evidence.sourceUrl,
+                    sourceQuote: "Wrong authoritative quote.",
+                  },
+                  reason:
+                    "The programme output drift was reconciled against the authoritative source before publication.",
+                },
+              ],
+            },
+            {},
+            {
+              officialOutputLabels: ["Electricista."],
+            },
+          ),
+        ),
+      ).toThrow(/Authoritative evidence quote/);
+    });
+
+    it("rejects short reason text", () => {
+      expect(() =>
+        validateExpansionAttemptData(
+          validInput(
+            {
+              officialOutputInventory: {
+                sourceUrl: evidence.sourceUrl,
+                labels: ["Electricista, en general."],
+              },
+              officialOutputReviews: [
+                {
+                  ...baseAttempt.officialOutputReviews[0],
+                  officialOutputLabel: "Electricista, en general.",
+                  sourceQuote: "Electricista, en general.",
+                },
+              ],
+              seedReconciliations: [
+                {
+                  ...validReconciliation,
+                  reason: "Short.",
+                },
+              ],
+            },
+            {},
+            {
+              officialOutputLabels: ["Electricista."],
+            },
+          ),
+        ),
+      ).toThrow(/reason|20|minimum/i);
+    });
+
+    it("rejects shuffled authoritative labels in the inventory", () => {
+      expect(() =>
+        validateExpansionAttemptData(
+          validInput(
+            {
+              officialOutputReviews: [
+                {
+                  order: 1,
+                  officialOutputLabel: "Label primero.",
+                  disposition: "accepted" as const,
+                  candidateOccupationIds: ["occupation:cno11:7521"],
+                  acceptedOccupationIds: ["occupation:cno11:7521"],
+                  sourceQuote: "Label primero.",
+                  sourceUrl: evidence.sourceUrl,
+                  classificationEvidence: [
+                    {
+                      occupationId: "occupation:cno11:7521",
+                      ...classificationEvidence,
+                    },
+                  ],
+                  reason: "First output.",
+                },
+              ],
+              acceptedRelations: [
+                {
+                  kind: "link",
+                  programKey: "ELE01M",
+                  occupationId: "occupation:cno11:7521",
+                  sourceUrl: evidence.sourceUrl,
+                  sourceQuote: "Label primero.",
+                  reviewedAt: "2026-08-09",
+                },
+              ],
+              rejectedRelations: [],
+              publicParity: {
+                publishedRelationKeys: ["ELE01M|occupation:cno11:7521"],
+                rejectedRelationKeys: [],
+              },
+              seedReconciliations: [
+                {
+                  seedLabel: "Seed uno.",
+                  sourceOutputLabel: "Label primero.",
+                  authoritativeOutputLabel: "Label primero.",
+                  sourceOutputEvidence: {
+                    sourceUrl: "https://boe.es/ficha",
+                    sourceQuote: "Label primero.",
+                    reviewedAt: "2026-08-09",
+                  },
+                  authoritativeEvidence: {
+                    sourceUrl: evidence.sourceUrl,
+                    sourceQuote: "Label primero.",
+                    reviewedAt: "2026-08-09",
+                  },
+                  reason:
+                    "The programme output drift was reconciled against the authoritative source before publication.",
+                },
+                {
+                  seedLabel: "Seed otro.",
+                  sourceOutputLabel: "Label otro.",
+                  authoritativeOutputLabel: "Label segundo.",
+                  sourceOutputEvidence: {
+                    sourceUrl: "https://boe.es/ficha",
+                    sourceQuote: "Label otro.",
+                    reviewedAt: "2026-08-09",
+                  },
+                  authoritativeEvidence: {
+                    sourceUrl: evidence.sourceUrl,
+                    sourceQuote: "Label segundo.",
+                    reviewedAt: "2026-08-09",
+                  },
+                  reason:
+                    "The programme output drift was reconciled against the authoritative source before publication.",
+                },
+              ],
+            },
+            {},
+            {
+              officialOutputLabels: ["Seed uno.", "Seed otro."],
+            },
+          ),
+        ),
+      ).toThrow(/candidate seed order|official inventory/i);
+    });
+  });
 });

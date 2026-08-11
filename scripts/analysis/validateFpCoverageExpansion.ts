@@ -114,6 +114,17 @@ const SourceDriftSchema = z
   })
   .strict();
 
+const SeedReconciliationSchema = z
+  .object({
+    seedLabel: z.string().trim().min(3).max(220),
+    sourceOutputLabel: z.string().trim().min(3).max(220),
+    authoritativeOutputLabel: z.string().trim().min(3).max(220),
+    sourceOutputEvidence: EvidenceSchema,
+    authoritativeEvidence: EvidenceSchema,
+    reason: z.string().trim().min(20).max(500),
+  })
+  .strict();
+
 const PhaseMinutesSchema = z
   .object({
     research: z.number().int().nonnegative(),
@@ -179,9 +190,20 @@ export const FpExpansionAttemptSchema = z
       })
       .strict()
       .optional(),
+    seedReconciliations: z.array(SeedReconciliationSchema).optional(),
   })
   .strict()
   .superRefine((attempt, context) => {
+    // Seed reconciliations may only exist on completed attempts (independent check)
+    if (
+      attempt.seedReconciliations !== undefined &&
+      attempt.state !== "completed"
+    )
+      context.addIssue({
+        code: "custom",
+        path: ["seedReconciliations"],
+        message: "Seed reconciliations may only exist on completed attempts.",
+      });
     const terminal = new Set(["completed", "deferred", "discarded"]);
     if (terminal.has(attempt.state)) {
       const required = [
@@ -661,17 +683,93 @@ export function validateExpansionAttemptData(
     );
   const normalizedLabels = labels.map(normalizeOutputSeed);
   if (attempt.state === "completed") {
-    let lastSeedIndex = -1;
-    for (const seed of candidate.officialOutputLabels) {
-      const normalizedSeed = normalizeOutputSeed(seed);
-      const seedIndex = normalizedLabels.findIndex(
-        (label, index) => index > lastSeedIndex && label === normalizedSeed,
+    const reconciliations = attempt.seedReconciliations ?? [];
+
+    const normalizedFrozenSeeds =
+      candidate.officialOutputLabels.map(normalizeOutputSeed);
+
+    const seedReconciliationMap = new Map<
+      string,
+      (typeof reconciliations)[number][]
+    >();
+    for (const reco of reconciliations) {
+      const normSeed = normalizeOutputSeed(reco.seedLabel);
+      const list = seedReconciliationMap.get(normSeed) ?? [];
+      list.push(reco);
+      seedReconciliationMap.set(normSeed, list);
+    }
+
+    const normalizedRecoSeeds = [...seedReconciliationMap.keys()];
+
+    for (const seed of normalizedRecoSeeds) {
+      const list = seedReconciliationMap.get(seed) ?? [];
+      if (list.length > 1)
+        fail("Duplicate reconciliations for the same seed are not allowed.");
+    }
+
+    const unusedRecoSeeds = new Set(normalizedRecoSeeds);
+    for (const seed of normalizedFrozenSeeds) unusedRecoSeeds.delete(seed);
+    if (unusedRecoSeeds.size > 0)
+      fail(
+        "Unused reconciliations referencing non-candidate seeds are rejected.",
       );
-      if (seedIndex === -1)
+
+    let lastInventoryIndex = -1;
+    for (const normalizedSeed of normalizedFrozenSeeds) {
+      const exactIndex = normalizedLabels.findIndex(
+        (label, index) =>
+          index > lastInventoryIndex && label === normalizedSeed,
+      );
+
+      if (exactIndex !== -1) {
+        if (seedReconciliationMap.has(normalizedSeed))
+          fail("Exact matches must not have reconciliations.");
+        lastInventoryIndex = exactIndex;
+        continue;
+      }
+
+      const reconciliation = seedReconciliationMap.get(normalizedSeed)?.[0];
+      if (reconciliation === undefined)
         fail(
-          "Official output reviews must contain every frozen ranking output seed in order.",
+          `Every seed without an exact inventory match requires exactly one reconciliation (seed: ${normalizedSeed}).`,
         );
-      lastSeedIndex = seedIndex;
+
+      const authoritativeLabel = normalizeOutputSeed(
+        reconciliation.authoritativeOutputLabel,
+      );
+      const authoritativeIndex = normalizedLabels.findIndex(
+        (label, index) =>
+          index > lastInventoryIndex && label === authoritativeLabel,
+      );
+      if (authoritativeIndex === -1)
+        fail(
+          "Reconciled authoritative labels must appear in candidate seed order in the official inventory.",
+        );
+      lastInventoryIndex = authoritativeIndex;
+    }
+
+    for (const reco of reconciliations) {
+      if (reco.sourceOutputEvidence.sourceQuote !== reco.sourceOutputLabel)
+        fail(
+          "Source output evidence quote must exactly match its source output label.",
+        );
+      if (
+        reco.authoritativeEvidence.sourceQuote !== reco.authoritativeOutputLabel
+      )
+        fail(
+          "Authoritative evidence quote must exactly match its authoritative output label.",
+        );
+      if (!candidate.sourceUrls.includes(reco.sourceOutputEvidence.sourceUrl))
+        fail(
+          "Source output evidence URL must be within candidate source URLs.",
+        );
+      if (
+        reco.authoritativeEvidence.sourceUrl !==
+        officialOutputInventory.sourceUrl
+      )
+        fail(
+          "Authoritative evidence URL must match the official output inventory source URL.",
+        );
     }
   }
   if (
