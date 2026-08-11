@@ -173,12 +173,12 @@ test.describe("contest readiness journeys", () => {
     });
     await programSelect.selectOption("COM01M");
     await expect(page.getByRole("status")).toContainText(
-      /cobertura revisada no disponible/i,
+      /salidas oficiales disponibles.*CNO-11.*aún no validado/i,
     );
     await page.getByRole("button", { name: "Ver ofertas" }).click();
     await expect(page).toHaveURL(/\/desde-fp\/COM01M$/u);
     await expect(
-      page.getByText(/Aún no hay una relación revisada/i),
+      page.getByText(/Aún no hemos validado una equivalencia CNO-11/i),
     ).toBeVisible();
     await expect(
       page.getByText(/no hay (empleo|trabajo|puestos)/iu),
