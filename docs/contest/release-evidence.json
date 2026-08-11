@@ -1,11 +1,11 @@
 {
   "schemaVersion": 1,
   "status": "deployed_verified",
-  "recordedAt": "2026-08-09T22:29:37.9176193Z",
+  "recordedAt": "2026-08-10T06:43:25Z",
   "expectedRootUrl": "https://huntsman1756.github.io/concursos_cyl/",
   "coverageFreezeCommitSha": "111039ea2678272452169bb30c31cc680a4d436e",
   "publicationCommitSha": "27e7b2ec5996868df6c05edd02d3434a2559c44b",
-  "localReviewHeadSha": "5e4510ca230daaedf8e2a769d66781a2b319ef1b",
+  "localReviewHeadSha": "0373b833665f5eb47fb492ef078ebe7df35e3ded",
   "captureProductCommitSha": "f423a208a7f8c140a1dfa342e8689d3b6d967e94",
   "manifest": {
     "snapshotId": "20260809185438334-65ce4d3c4e14",
@@ -50,12 +50,12 @@
       "testFiles": 71,
       "passedTestFiles": 70,
       "skippedTestFiles": 1,
-      "tests": 707,
-      "passed": 705,
+      "tests": 708,
+      "passed": 706,
       "skipped": 2,
-      "durationSeconds": 201.49,
+      "durationSeconds": 249.70,
       "command": "npm test -- --testTimeout=60000",
-      "workflowRunId": "31338739210"
+      "workflowRunId": "31362601931"
     },
     "playwright": {
       "status": "passed",
@@ -108,11 +108,11 @@
   },
   "deployment": {
     "status": "verified",
-    "commitSha": "5e4510ca230daaedf8e2a769d66781a2b319ef1b",
-    "workflowRunId": "31338739210",
-    "workflowUrl": "https://github.com/Huntsman1756/concursos_cyl/actions/runs/31338739210",
+    "commitSha": "0373b833665f5eb47fb492ef078ebe7df35e3ded",
+    "workflowRunId": "31362601931",
+    "workflowUrl": "https://github.com/Huntsman1756/concursos_cyl/actions/runs/31362601931",
     "liveRootVerified": true,
-    "verifiedAt": "2026-08-09T22:21:22.5248634Z"
+    "verifiedAt": "2026-08-10T06:43:25Z"
   },
   "publicVerification": {
     "rootUrl": "https://huntsman1756.github.io/concursos_cyl/",

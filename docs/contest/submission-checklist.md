@@ -11,10 +11,10 @@
 ## Campos técnicos
 
 - URL raíz a presentar: [https://huntsman1756.github.io/concursos_cyl/](https://huntsman1756.github.io/concursos_cyl/)
-- Commit fuente del freeze: `27e7b2ec5996868df6c05edd02d3434a2559c44b`.
+- Commit fuente del freeze: `4a8afbca80ecf4397c6f2ef0c6695b29506587c3`.
 - Snapshot: `20260809185438334-65ce4d3c4e14`.
-- Commit desplegado: `5e4510ca230daaedf8e2a769d66781a2b319ef1b`.
-- Run del workflow: `31338739210`.
+- Commit desplegado: `0373b833665f5eb47fb492ef078ebe7df35e3ded`.
+- Run del workflow: `31362601931`.
 - Evidencia visual: **capturada y validada en `docs/contest/evidence-capture.json`**.
 
 ## Gate final

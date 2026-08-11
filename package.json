@@ -24,7 +24,8 @@
     "analysis:pilot:report:check": "tsx scripts/analysis/renderFpCoveragePilotReport.ts",
     "data:build": "tsx scripts/data/buildSnapshots.ts",
     "data:income:verify": "tsx scripts/data/verifyEducabaseIncome.ts",
-    "license:check": "tsx scripts/checkLicenses.ts"
+    "license:check": "tsx scripts/checkLicenses.ts",
+    "contest:submission:check": "tsx scripts/release/renderContestSubmission.ts"
   },
   "keywords": [],
   "author": "",

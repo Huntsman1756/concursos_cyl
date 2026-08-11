@@ -29,6 +29,7 @@ jobs:
       - run: python -m pip install --disable-pip-version-check --no-input "jupyter==1.1.1" "pandas==3.0.2"
       - run: npm ci
       - run: npm run license:check
+      - run: npm run contest:submission:check
       - run: npm run lint
       - run: npm test -- --testTimeout=60000
       - run: npx playwright install --with-deps chromium

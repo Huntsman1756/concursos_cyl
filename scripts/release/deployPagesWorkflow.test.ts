@@ -2,6 +2,7 @@ import { readFile } from "node:fs/promises";
 import { resolve } from "node:path";
 import { describe, expect, it } from "vitest";
 
+const packageJsonPath = resolve("package.json");
 const workflowPath = resolve(".github/workflows/deploy-pages.yml");
 
 describe("GitHub Pages deployment workflow", () => {
@@ -67,5 +68,28 @@ describe("GitHub Pages deployment workflow", () => {
     expect(workflow).toContain("docker build -t salida-cyl:ci .");
     expect(workflow).toContain("CADDY_SMOKE_BASE_URL=http://127.0.0.1:18080");
     expect(workflow).toContain("npm run release:caddy:verify");
+  });
+
+  it("defines the contest:submission:check package script", async () => {
+    const pkg = await readFile(packageJsonPath, "utf8");
+    const parsed = JSON.parse(pkg) as { scripts?: Record<string, string> };
+    expect(parsed.scripts).toBeDefined();
+    expect(parsed.scripts?.["contest:submission:check"]).toBe(
+      "tsx scripts/release/renderContestSubmission.ts",
+    );
+  });
+
+  it("runs contest:submission:check between npm ci and build steps", async () => {
+    const workflow = await readFile(workflowPath, "utf8");
+    const verifyJob = workflow.slice(
+      workflow.indexOf("  verify-and-build:"),
+      workflow.indexOf("  deploy:"),
+    );
+    const npmCiIdx = verifyJob.indexOf("npm ci");
+    expect(npmCiIdx).toBeGreaterThanOrEqual(0);
+    const gateIdx = verifyJob.indexOf("npm run contest:submission:check");
+    expect(gateIdx).toBeGreaterThan(npmCiIdx);
+    const buildIdx = verifyJob.indexOf("npm run build");
+    expect(buildIdx).toBeGreaterThan(gateIdx);
   });
 });
