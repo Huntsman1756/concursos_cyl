@@ -55,14 +55,18 @@ async function loadMAM01MSnapshotId(): Promise<string> {
 }
 
 describe("MAM01M expansion reserve slot", () => {
-  it("proves the frozen public baseline has no approved MAM01M relation", async () => {
+  it("publishes exactly the two approved MAM01M relations", async () => {
     const manifest = await readJson<{
       resourceSnapshots: {
         trainingOccupationLinks: { resourcePath: string };
       };
     }>(resolve(rootDirectory, "public/data/v1/manifest.json"));
     const baselineLinks = await readJson<
-      { trainingProgramKey: string; reviewStatus: string }[]
+      {
+        trainingProgramKey: string;
+        occupationId: string;
+        reviewStatus: string;
+      }[]
     >(
       resolve(
         rootDirectory,
@@ -73,15 +77,17 @@ describe("MAM01M expansion reserve slot", () => {
       ),
     );
     expect(
-      baselineLinks.filter(
-        (link) =>
-          link.trainingProgramKey === "MAM01M" &&
-          link.reviewStatus === "approved",
-      ),
-    ).toEqual([]);
+      baselineLinks
+        .filter(
+          (link) =>
+            link.trainingProgramKey === "MAM01M" &&
+            link.reviewStatus === "approved",
+        )
+        .map((link) => link.occupationId),
+    ).toEqual(["occupation:cno11:7812", "occupation:cno11:8209"]);
   });
 
-  it("validates the deferred attempt with exhaustive BOE outputs and no publication", async () => {
+  it("validates the completed attempt with exhaustive BOE outputs and audited missing seed", async () => {
     const attempt = await readJson<FpExpansionAttempt>(
       resolve(rootDirectory, "analysis/fp_coverage_expansion/MAM01M.json"),
     );
@@ -92,7 +98,7 @@ describe("MAM01M expansion reserve slot", () => {
       ...ranking.primaryCandidates,
       ...ranking.reserveCandidates,
     ].find((entry) => entry.programKey === "MAM01M") as FpExpansionCandidate;
-    expect(attempt.state).toBe("deferred");
+    expect(attempt.state).toBe("completed");
     expect(attempt.officialOutputInventory?.labels).toEqual(
       MAM01M_OUTPUT_LABELS,
     );
@@ -102,7 +108,10 @@ describe("MAM01M expansion reserve slot", () => {
       ),
     ).toEqual(MAM01M_OUTPUT_LABELS);
     expect(attempt.publicParity).toEqual({
-      publishedRelationKeys: [],
+      publishedRelationKeys: [
+        "MAM01M|occupation:cno11:7812",
+        "MAM01M|occupation:cno11:8209",
+      ],
       rejectedRelationKeys: ["MAM01M|occupation:cno11:3206"],
     });
     const snapshotId = await loadMAM01MSnapshotId();
@@ -126,7 +135,10 @@ describe("MAM01M expansion reserve slot", () => {
     };
     const publicRelationSet = {
       manifestAddressed: true as const,
-      relationKeys: [],
+      relationKeys: [
+        "MAM01M|occupation:cno11:7812",
+        "MAM01M|occupation:cno11:8209",
+      ],
       resourcePaths: ["/data/v1/manifest.json"],
     };
     expect(
@@ -136,10 +148,11 @@ describe("MAM01M expansion reserve slot", () => {
         computed,
         publicRelationSet,
         reviewedCommitAt: attempt.reviewedCommitAt,
+        publicationPending: false,
       }),
     ).toMatchObject({
       programKey: "MAM01M",
-      state: "deferred",
+      state: "completed",
       acceptedRelations: [
         { occupationId: "occupation:cno11:7812" },
         { occupationId: "occupation:cno11:8209" },
@@ -151,7 +164,8 @@ describe("MAM01M expansion reserve slot", () => {
       validateExpansionAttempt(rootDirectory, "MAM01M", {
         compute: async () => computed,
         publicRelationSet: async () => publicRelationSet,
+        publicationPending: false,
       }),
-    ).resolves.toMatchObject({ state: "deferred" });
+    ).resolves.toMatchObject({ state: "completed" });
   });
 });

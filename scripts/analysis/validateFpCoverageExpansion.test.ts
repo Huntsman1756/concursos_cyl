@@ -282,6 +282,61 @@ describe("validateFpCoverageExpansion", () => {
     expect(() => validateExpansionAttemptData(deferredInput)).not.toThrow();
   });
 
+  it("allows a completed attempt to audit a ranking seed absent from an exhaustive official inventory", () => {
+    const completedInput = validInput(
+      {
+        officialOutputInventory: {
+          sourceUrl: evidence.sourceUrl,
+          labels: ["Electricista, en general."],
+        },
+        officialOutputReviews: [
+          {
+            ...baseAttempt.officialOutputReviews[0],
+            officialOutputLabel: "Electricista, en general.",
+            sourceQuote: "Electricista, en general.",
+          },
+        ],
+        acceptedRelations: [
+          {
+            ...baseAttempt.acceptedRelations[0],
+            sourceQuote: "Electricista, en general.",
+          },
+        ],
+        unmatchedSeedReviews: [
+          {
+            seedLabel: "Electricista.",
+            disposition: "not_in_authoritative_inventory",
+            authoritativeInventoryUrl: evidence.sourceUrl,
+            reason:
+              "The preliminary ranking seed is absent from the exhaustive BOE output inventory and is not publication evidence.",
+          },
+        ],
+      },
+      {},
+      { officialOutputLabels: ["Electricista."] },
+    );
+
+    expect(() => validateExpansionAttemptData(completedInput)).not.toThrow();
+  });
+
+  it("rejects an absent-seed audit when the seed exists in the authoritative inventory", () => {
+    expect(() =>
+      validateExpansionAttemptData(
+        validInput({
+          unmatchedSeedReviews: [
+            {
+              seedLabel: "Electricista.",
+              disposition: "not_in_authoritative_inventory",
+              authoritativeInventoryUrl: evidence.sourceUrl,
+              reason:
+                "This invalid control attempts to exclude a seed that is present in the exhaustive inventory.",
+            },
+          ],
+        }),
+      ),
+    ).toThrow(/seed|inventory|present|exact/i);
+  });
+
   it("allows only deferred attempts to record an explicit authoritative source correction", () => {
     const frozenCandidateUrl = "https://boe.es/ficha";
     const authoritativeUrl = "https://boe.es/corrected";

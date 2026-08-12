@@ -135,6 +135,20 @@ const programs: TrainingProgram[] = [
     familyCode: "IMA",
     familyName: "Instalación y Mantenimiento",
   },
+  {
+    programKey: "FME01M",
+    programTitle: "Mecanizado",
+    level: "intermediate",
+    familyCode: "FME",
+    familyName: "Fabricación Mecánica",
+  },
+  {
+    programKey: "MAM01M",
+    programTitle: "Carpintería y Mueble",
+    level: "intermediate",
+    familyCode: "MAM",
+    familyName: "Madera, Mueble y Corcho",
+  },
 ];
 
 const occupations = [
@@ -639,6 +653,11 @@ describe("curated occupation mappings", () => {
         "4123",
         "9820",
         "8333",
+        "7322",
+        "7323",
+        "7324",
+        "7812",
+        "8209",
       ],
     );
     expect(
@@ -666,6 +685,9 @@ describe("curated occupation mappings", () => {
       "EOC01M",
       "EOC01M",
       "EOC01M",
+      "FME01M",
+      "FME01M",
+      "FME01M",
       "FME02M",
       "FME02M",
       "FME02M",
@@ -674,6 +696,8 @@ describe("curated occupation mappings", () => {
       "IFC03S",
       "IFC03SD",
       "IMA02M",
+      "MAM01M",
+      "MAM01M",
       "SAN21",
       "SAN21",
       "SSC01M",

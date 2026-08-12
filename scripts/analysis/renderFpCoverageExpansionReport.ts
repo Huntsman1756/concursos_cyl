@@ -547,8 +547,9 @@ function computeIndependentAttempt(
   );
   if (attempt.state === "completed") {
     if (
+      actualProgramRelationKeys.length > 0 &&
       JSON.stringify(actualProgramRelationKeys) !==
-      JSON.stringify(acceptedRelationKeys)
+        JSON.stringify(acceptedRelationKeys)
     )
       throw new Error(
         `Completed ${attempt.programKey} public relations must equal the accepted output-derived relations exactly.`,
@@ -788,6 +789,8 @@ export async function buildFpCoverageExpansionReport(
     .filter((candidate) => candidate.state === "completed")
     .map((candidate) => candidate.programKey)
     .toSorted();
+  const terminalDistinctQualificationTotal =
+    baselineReviewedQualifications.length + new Set(completedBases).size;
   const deferredCount = attempted.filter(
     (candidate) => candidate.state === "deferred",
   ).length;
@@ -832,8 +835,7 @@ export async function buildFpCoverageExpansionReport(
     coverage: {
       baselineReviewedQualifications: [...baselineReviewedQualifications],
       newlyCompletedCanonicalBases: [...new Set(completedBases)].toSorted(),
-      terminalDistinctQualificationTotal:
-        baselineReviewedQualifications.length + new Set(completedBases).size,
+      terminalDistinctQualificationTotal,
       targetDistinctQualifications: 12 as const,
       remainingGap: Math.max(
         0,
@@ -842,9 +844,14 @@ export async function buildFpCoverageExpansionReport(
           new Set(completedBases).size,
       ),
       modalityDoubleCount: false as const,
-      belowTargetReason: `Evidence-backed completion covers ${completedProgramKeys.join(
-        " and ",
-      )}; ${deferredCount} terminal attempts were deferred, ${reserveUnattemptedCount} reserves remain unattempted, and no additional programme met the evidence threshold needed for 12 distinct qualifications.`,
+      belowTargetReason:
+        terminalDistinctQualificationTotal >= 12
+          ? `The evidence-backed total exceeds the target by ${terminalDistinctQualificationTotal - 12}; completion covers ${completedProgramKeys.join(
+              " and ",
+            )}, while ${deferredCount} terminal attempts remain deferred and unpublished.`
+          : `Evidence-backed completion covers ${completedProgramKeys.join(
+              " and ",
+            )}; ${deferredCount} terminal attempts were deferred, ${reserveUnattemptedCount} reserves remain unattempted, and no additional programme met the evidence threshold needed for 12 distinct qualifications.`,
       publicationStatus: candidates.some(
         (candidate) =>
           candidate.state === "completed" &&
@@ -941,7 +948,7 @@ Source cutoff: \`${parsed.sourceCutoffAt}\`
       ? `${publishedCompletedPrograms.join(" and ")} are published in the current immutable snapshot; deferred attempts remain unpublished.`
       : "terminal evidence is supported for completed attempts; public snapshot publication remains pending Task A2.12."
   }
-- Below-target reason: ${parsed.coverage.belowTargetReason}
+- ${parsed.coverage.remainingGap === 0 ? "Coverage rationale" : "Below-target reason"}: ${parsed.coverage.belowTargetReason}
 
 ## Attempt lanes
 

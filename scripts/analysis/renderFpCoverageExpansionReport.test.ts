@@ -24,8 +24,8 @@ describe("renderFpCoverageExpansionReport", () => {
     const result = await report();
 
     expect(result.counts).toMatchObject({
-      completed: 8,
-      deferred: 6,
+      completed: 10,
+      deferred: 4,
       discarded: 0,
       terminal: 14,
       primaryAttempted: 7,
@@ -42,7 +42,7 @@ describe("renderFpCoverageExpansionReport", () => {
         "qualification:SAN21",
         "qualification:SSC01M",
       ],
-      terminalDistinctQualificationTotal: 13,
+      terminalDistinctQualificationTotal: 15,
       targetDistinctQualifications: 12,
       remainingGap: 0,
       publicationStatus: "published_task_a2_12",
@@ -97,7 +97,7 @@ describe("renderFpCoverageExpansionReport", () => {
     ).toMatchObject({
       lane: "reserve",
       rank: 8,
-      state: "deferred",
+      state: "completed",
     });
     expect(unattempted.map((candidate) => candidate.programKey)).toEqual([]);
   });

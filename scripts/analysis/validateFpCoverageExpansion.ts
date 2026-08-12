@@ -125,6 +125,15 @@ const SeedReconciliationSchema = z
   })
   .strict();
 
+const UnmatchedSeedReviewSchema = z
+  .object({
+    seedLabel: z.string().trim().min(3).max(220),
+    disposition: z.literal("not_in_authoritative_inventory"),
+    authoritativeInventoryUrl: z.string().url().startsWith("https://"),
+    reason: z.string().trim().min(20).max(500),
+  })
+  .strict();
+
 const PhaseMinutesSchema = z
   .object({
     research: z.number().int().nonnegative(),
@@ -191,6 +200,7 @@ export const FpExpansionAttemptSchema = z
       .strict()
       .optional(),
     seedReconciliations: z.array(SeedReconciliationSchema).optional(),
+    unmatchedSeedReviews: z.array(UnmatchedSeedReviewSchema).optional(),
   })
   .strict()
   .superRefine((attempt, context) => {
@@ -203,6 +213,15 @@ export const FpExpansionAttemptSchema = z
         code: "custom",
         path: ["seedReconciliations"],
         message: "Seed reconciliations may only exist on completed attempts.",
+      });
+    if (
+      attempt.unmatchedSeedReviews !== undefined &&
+      attempt.state !== "completed"
+    )
+      context.addIssue({
+        code: "custom",
+        path: ["unmatchedSeedReviews"],
+        message: "Unmatched seed reviews may only exist on completed attempts.",
       });
     const terminal = new Set(["completed", "deferred", "discarded"]);
     if (terminal.has(attempt.state)) {
@@ -684,6 +703,7 @@ export function validateExpansionAttemptData(
   const normalizedLabels = labels.map(normalizeOutputSeed);
   if (attempt.state === "completed") {
     const reconciliations = attempt.seedReconciliations ?? [];
+    const unmatchedSeedReviews = attempt.unmatchedSeedReviews ?? [];
 
     const normalizedFrozenSeeds =
       candidate.officialOutputLabels.map(normalizeOutputSeed);
@@ -700,11 +720,29 @@ export function validateExpansionAttemptData(
     }
 
     const normalizedRecoSeeds = [...seedReconciliationMap.keys()];
+    const unmatchedSeedReviewMap = new Map<
+      string,
+      (typeof unmatchedSeedReviews)[number][]
+    >();
+    for (const review of unmatchedSeedReviews) {
+      const normSeed = normalizeOutputSeed(review.seedLabel);
+      const list = unmatchedSeedReviewMap.get(normSeed) ?? [];
+      list.push(review);
+      unmatchedSeedReviewMap.set(normSeed, list);
+    }
+    const normalizedUnmatchedSeeds = [...unmatchedSeedReviewMap.keys()];
 
     for (const seed of normalizedRecoSeeds) {
       const list = seedReconciliationMap.get(seed) ?? [];
       if (list.length > 1)
         fail("Duplicate reconciliations for the same seed are not allowed.");
+    }
+    for (const seed of normalizedUnmatchedSeeds) {
+      const list = unmatchedSeedReviewMap.get(seed) ?? [];
+      if (list.length > 1)
+        fail("Duplicate unmatched reviews for the same seed are not allowed.");
+      if (seedReconciliationMap.has(seed))
+        fail("A seed cannot be both reconciled and absent from the inventory.");
     }
 
     const unusedRecoSeeds = new Set(normalizedRecoSeeds);
@@ -712,6 +750,12 @@ export function validateExpansionAttemptData(
     if (unusedRecoSeeds.size > 0)
       fail(
         "Unused reconciliations referencing non-candidate seeds are rejected.",
+      );
+    const unusedUnmatchedSeeds = new Set(normalizedUnmatchedSeeds);
+    for (const seed of normalizedFrozenSeeds) unusedUnmatchedSeeds.delete(seed);
+    if (unusedUnmatchedSeeds.size > 0)
+      fail(
+        "Unused unmatched reviews referencing non-candidate seeds are rejected.",
       );
 
     let lastInventoryIndex = -1;
@@ -724,18 +768,38 @@ export function validateExpansionAttemptData(
       if (exactIndex !== -1) {
         if (seedReconciliationMap.has(normalizedSeed))
           fail("Exact matches must not have reconciliations.");
+        if (unmatchedSeedReviewMap.has(normalizedSeed))
+          fail(
+            "A seed present in the official inventory cannot be marked absent.",
+          );
         lastInventoryIndex = exactIndex;
         continue;
       }
 
       const reconciliation = seedReconciliationMap.get(normalizedSeed)?.[0];
-      if (reconciliation === undefined)
+      const unmatchedReview = unmatchedSeedReviewMap.get(normalizedSeed)?.[0];
+      if (reconciliation === undefined && unmatchedReview === undefined)
         fail(
-          `Every seed without an exact inventory match requires exactly one reconciliation (seed: ${normalizedSeed}).`,
+          `Every seed without an exact inventory match requires exactly one reconciliation or unmatched review (seed: ${normalizedSeed}).`,
         );
 
+      if (unmatchedReview !== undefined) {
+        if (normalizedLabels.includes(normalizedSeed))
+          fail(
+            "A seed present in the official inventory cannot be marked absent.",
+          );
+        if (
+          unmatchedReview.authoritativeInventoryUrl !==
+          officialOutputInventory.sourceUrl
+        )
+          fail(
+            "Unmatched seed reviews must reference the authoritative inventory URL.",
+          );
+        continue;
+      }
+
       const authoritativeLabel = normalizeOutputSeed(
-        reconciliation.authoritativeOutputLabel,
+        reconciliation!.authoritativeOutputLabel,
       );
       const authoritativeIndex = normalizedLabels.findIndex(
         (label, index) =>

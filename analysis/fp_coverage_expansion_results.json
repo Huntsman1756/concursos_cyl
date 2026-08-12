@@ -3,8 +3,8 @@
   "generatedAt": "2026-08-11T17:27:42.000Z",
   "sourceCutoffAt": "2026-08-11T17:27:42.000Z",
   "counts": {
-    "completed": 8,
-    "deferred": 6,
+    "completed": 10,
+    "deferred": 4,
     "discarded": 0,
     "terminal": 14,
     "primaryAttempted": 7,
@@ -27,15 +27,17 @@
       "qualification:COM01B",
       "qualification:COM02M",
       "qualification:ELE03S",
+      "qualification:FME01M",
       "qualification:FME02M",
       "qualification:IMA02M",
+      "qualification:MAM01M",
       "qualification:TMV01M"
     ],
-    "terminalDistinctQualificationTotal": 13,
+    "terminalDistinctQualificationTotal": 15,
     "targetDistinctQualifications": 12,
     "remainingGap": 0,
     "modalityDoubleCount": false,
-    "belowTargetReason": "Evidence-backed completion covers AGA01M and AGA03M and COM01B and COM02M and ELE03S and FME02M and IMA02M and TMV01M; 6 terminal attempts were deferred, 0 reserves remain unattempted, and no additional programme met the evidence threshold needed for 12 distinct qualifications.",
+    "belowTargetReason": "The evidence-backed total exceeds the target by 3; completion covers AGA01M and AGA03M and COM01B and COM02M and ELE03S and FME01M and FME02M and IMA02M and MAM01M and TMV01M, while 4 terminal attempts remain deferred and unpublished.",
     "publicationStatus": "published_task_a2_12"
   },
   "offerDeltas": {
@@ -303,7 +305,7 @@
       "lane": "primary",
       "rank": 7,
       "attempted": true,
-      "state": "deferred",
+      "state": "completed",
       "phaseMinutes": {
         "research": 12,
         "implementation": 4,
@@ -322,10 +324,14 @@
       ],
       "rejectedRelationKeys": ["FME01M|occupation:cno11:3139"],
       "publicParity": {
-        "publishedRelationKeys": [],
+        "publishedRelationKeys": [
+          "FME01M|occupation:cno11:7322",
+          "FME01M|occupation:cno11:7323",
+          "FME01M|occupation:cno11:7324"
+        ],
         "rejectedRelationKeys": ["FME01M|occupation:cno11:3139"]
       },
-      "limitation": "Las relaciones aceptadas (7322, 7323, 7324) se conservan como evidencia de auditoría pero no se publican porque el seed congelado 'Mecánico de mecanizado' no aparece en TodoFP y no existe reconciliación demostrable contra el inventario BOE-A-2007-20203. El candidato 3139 se mantiene rechazado."
+      "limitation": "El seed preliminar Mecánico de mecanizado no aparece en el inventario BOE exhaustivo y queda auditado como ausente. La publicación se limita a las relaciones 7322, 7323 y 7324 respaldadas por outputs BOE revisados y evidencia CNO independiente; el rechazo 3139 permanece."
     },
     {
       "programKey": "MAM01M",
@@ -334,7 +340,7 @@
       "lane": "reserve",
       "rank": 8,
       "attempted": true,
-      "state": "deferred",
+      "state": "completed",
       "phaseMinutes": {
         "research": 5,
         "implementation": 3,
@@ -352,10 +358,13 @@
       ],
       "rejectedRelationKeys": ["MAM01M|occupation:cno11:3206"],
       "publicParity": {
-        "publishedRelationKeys": [],
+        "publishedRelationKeys": [
+          "MAM01M|occupation:cno11:7812",
+          "MAM01M|occupation:cno11:8209"
+        ],
         "rejectedRelationKeys": ["MAM01M|occupation:cno11:3206"]
       },
-      "limitation": "Deferred because the frozen seed Carpintero de madera is not an exact BOE output. The two accepted relations remain curated but are not published; the rejected supervisory relation is audit-only. No aliases, offer deltas, snapshot regeneration, or public-resource changes are allowed in this slot."
+      "limitation": "El seed preliminar Carpintero de madera no aparece en el inventario BOE exhaustivo y queda auditado como ausente. La publicación se limita a las relaciones 7812 y 8209 respaldadas por outputs BOE revisados y evidencia CNO independiente; la relación de supervisión 3206 permanece rechazada."
     },
     {
       "programKey": "ELE03S",

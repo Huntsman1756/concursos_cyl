@@ -494,5 +494,60 @@
     "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
     "reviewedAt": "2026-08-11",
     "catalogVersion": "1.0.0"
+  },
+  {
+    "occupationId": "occupation:cno11:7322",
+    "preferredLabel": "Trabajadores de la fabricación de herramientas, mecánico-ajustadores, modelistas, matriceros y afines",
+    "confirmationLabel": "Fabricación de herramientas y ajuste mecánico",
+    "classificationSystem": "CNO-11",
+    "classificationCode": "7322",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+    "reviewedAt": "2026-08-12",
+    "catalogVersion": "1.0.0"
+  },
+  {
+    "occupationId": "occupation:cno11:7323",
+    "preferredLabel": "Ajustadores y operadores de máquinas-herramienta",
+    "confirmationLabel": "Ajuste y operación de máquinas-herramienta",
+    "classificationSystem": "CNO-11",
+    "classificationCode": "7323",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+    "reviewedAt": "2026-08-12",
+    "catalogVersion": "1.0.0"
+  },
+  {
+    "occupationId": "occupation:cno11:7324",
+    "preferredLabel": "Pulidores de metales y afiladores de herramientas",
+    "confirmationLabel": "Pulido de metales y afilado de herramientas",
+    "classificationSystem": "CNO-11",
+    "classificationCode": "7324",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+    "reviewedAt": "2026-08-12",
+    "catalogVersion": "1.0.0"
+  },
+  {
+    "occupationId": "occupation:cno11:7812",
+    "preferredLabel": "Ajustadores y operadores de máquinas para trabajar la madera",
+    "confirmationLabel": "Operación de máquinas para trabajar la madera",
+    "classificationSystem": "CNO-11",
+    "classificationCode": "7812",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+    "reviewedAt": "2026-08-09",
+    "catalogVersion": "1.0.0"
+  },
+  {
+    "occupationId": "occupation:cno11:8209",
+    "preferredLabel": "Montadores y ensambladores no clasificados en otros epígrafes",
+    "confirmationLabel": "Montaje y ensamblaje no clasificado",
+    "classificationSystem": "CNO-11",
+    "classificationCode": "8209",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+    "reviewedAt": "2026-08-09",
+    "catalogVersion": "1.0.0"
   }
 ]

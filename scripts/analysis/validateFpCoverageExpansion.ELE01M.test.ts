@@ -31,11 +31,11 @@ async function readJson<T>(path: string): Promise<T> {
   return JSON.parse(await readFile(path, "utf8")) as T;
 }
 
-function snapshotHash() {
+function snapshotHash(snapshotId: string) {
   return createHash("sha256")
     .update(
       JSON.stringify({
-        snapshotId: "20260812091756510-cac7c1d65a73",
+        snapshotId,
         programKey: "ELE01M",
         baselineMatchIds: [],
         currentMatchIds: [],
@@ -82,6 +82,8 @@ describe("ELE01M expansion slot", () => {
       ...ranking.reserveCandidates,
     ].find((entry) => entry.programKey === "ELE01M") as FpExpansionCandidate;
     expect(attempt.state).toBe("deferred");
+    if (attempt.snapshotId === undefined) throw new Error("Missing snapshot ID.");
+    const snapshotId = attempt.snapshotId;
     expect(attempt.officialOutputInventory?.labels).toEqual(outputLabels);
     expect(
       attempt.officialOutputReviews?.map(
@@ -98,15 +100,14 @@ describe("ELE01M expansion slot", () => {
         "ELE01M|occupation:cno11:7533",
       ],
     });
-    expect(attempt.snapshotHash).toBe(snapshotHash());
+    expect(attempt.snapshotHash).toBe(snapshotHash(snapshotId));
     const computed = {
       baselineMatchIds: [],
       currentMatchIds: [],
       newlyReachedOfferIdsByProgram: { ELE01M: [] },
       newlyReachedOfferUnionIds: [],
-      snapshotId: "20260812091756510-cac7c1d65a73",
-      snapshotHash:
-        "a01bbaddbdc9f78444edf606046d37e8af4ffa90c4a9dfd644212af576aa060b",
+      snapshotId,
+      snapshotHash: snapshotHash(snapshotId),
     };
     const publicRelationSet = {
       manifestAddressed: true as const,

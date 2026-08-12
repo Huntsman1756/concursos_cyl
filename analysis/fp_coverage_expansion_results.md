@@ -5,11 +5,11 @@ Source cutoff: `2026-08-11T17:27:42.000Z`
 
 ## Coverage result
 
-- Terminal attempts: 14 (8 completed, 6 deferred, 0 discarded).
-- Truthful terminal distinct total: 13 (baseline 5 + 8 newly completed canonical bases).
+- Terminal attempts: 14 (10 completed, 4 deferred, 0 discarded).
+- Truthful terminal distinct total: 15 (baseline 5 + 10 newly completed canonical bases).
 - Target: 12; remaining gap: 0.
-- Publication status: AGA01M and AGA03M and COM01B and COM02M and ELE03S and FME02M and IMA02M and TMV01M are published in the current immutable snapshot; deferred attempts remain unpublished.
-- Below-target reason: Evidence-backed completion covers AGA01M and AGA03M and COM01B and COM02M and ELE03S and FME02M and IMA02M and TMV01M; 6 terminal attempts were deferred, 0 reserves remain unattempted, and no additional programme met the evidence threshold needed for 12 distinct qualifications.
+- Publication status: AGA01M and AGA03M and COM01B and COM02M and ELE03S and FME01M and FME02M and IMA02M and MAM01M and TMV01M are published in the current immutable snapshot; deferred attempts remain unpublished.
+- Coverage rationale: The evidence-backed total exceeds the target by 3; completion covers AGA01M and AGA03M and COM01B and COM02M and ELE03S and FME01M and FME02M and IMA02M and MAM01M and TMV01M, while 4 terminal attempts remain deferred and unpublished.
 
 ## Attempt lanes
 
@@ -21,8 +21,8 @@ Source cutoff: `2026-08-11T17:27:42.000Z`
 | primary |    4 | ADG01M  | Gestión Administrativa                        | attempted | deferred  |         22 |       20 |
 | primary |    5 | ELE01M  | Instalaciones Eléctricas y Automáticas        | attempted | deferred  |         55 |       60 |
 | primary |    6 | IMA03M  | Mantenimiento Electromecánico                 | attempted | deferred  |         19 |        0 |
-| primary |    7 | FME01M  | Mecanizado                                    | attempted | deferred  |         19 |       13 |
-| reserve |    8 | MAM01M  | Carpintería y Mueble                          | attempted | deferred  |         10 |     9.43 |
+| primary |    7 | FME01M  | Mecanizado                                    | attempted | completed |         19 |       13 |
+| reserve |    8 | MAM01M  | Carpintería y Mueble                          | attempted | completed |         10 |     9.43 |
 | reserve |    9 | ELE03S  | Mantenimiento Electrónico                     | attempted | completed |         11 |       30 |
 | reserve |   10 | IMA02M  | Instalaciones Frigoríficas y de Climatización | attempted | completed |         15 |     25.5 |
 | reserve |   11 | AGA01M  | Producción Agroecológica                      | attempted | completed |         17 |       30 |

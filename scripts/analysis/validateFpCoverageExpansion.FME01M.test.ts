@@ -54,12 +54,16 @@ async function loadFME01MSnapshotId(): Promise<string> {
 }
 
 describe("FME01M expansion slot", () => {
-  it("proves the frozen public baseline has no approved FME01M relation", async () => {
+  it("publishes exactly the three approved FME01M relations", async () => {
     const manifest = await readJson<{
       resourceSnapshots: { trainingOccupationLinks: { resourcePath: string } };
     }>(resolve(rootDirectory, "public/data/v1/manifest.json"));
     const links = await readJson<
-      { trainingProgramKey: string; reviewStatus: string }[]
+      {
+        trainingProgramKey: string;
+        occupationId: string;
+        reviewStatus: string;
+      }[]
     >(
       resolve(
         rootDirectory,
@@ -70,15 +74,21 @@ describe("FME01M expansion slot", () => {
       ),
     );
     expect(
-      links.filter(
-        (link) =>
-          link.trainingProgramKey === "FME01M" &&
-          link.reviewStatus === "approved",
-      ),
-    ).toEqual([]);
+      links
+        .filter(
+          (link) =>
+            link.trainingProgramKey === "FME01M" &&
+            link.reviewStatus === "approved",
+        )
+        .map((link) => link.occupationId),
+    ).toEqual([
+      "occupation:cno11:7322",
+      "occupation:cno11:7323",
+      "occupation:cno11:7324",
+    ]);
   });
 
-  it("validates deferred state with exhaustive BOE reviews and empty published keys", async () => {
+  it("validates completed state with exhaustive BOE reviews and audited missing seed", async () => {
     const programKey = "FME01M";
     const snapshotId = await loadFME01MSnapshotId();
     const snapshotHash = expansionSnapshotHash({
@@ -95,7 +105,7 @@ describe("FME01M expansion slot", () => {
     const attempt = await readJson<FpExpansionAttempt>(
       resolve(rootDirectory, "analysis/fp_coverage_expansion/FME01M.json"),
     );
-    expect(attempt.state).toBe("deferred");
+    expect(attempt.state).toBe("completed");
     expect(attempt.officialOutputInventory?.labels).toEqual(
       FME01M_OUTPUT_LABELS,
     );
@@ -104,17 +114,25 @@ describe("FME01M expansion slot", () => {
         (review) => review.officialOutputLabel,
       ),
     ).toEqual(FME01M_OUTPUT_LABELS);
-    // seedReconciliations must be absent because TodoFP does not contain the seed
     expect(attempt.seedReconciliations).toBeUndefined();
+    expect(attempt.unmatchedSeedReviews).toEqual([
+      expect.objectContaining({
+        seedLabel: "Mecánico de mecanizado",
+        disposition: "not_in_authoritative_inventory",
+      }),
+    ]);
     // snapshot identity provenance must equal computed values
     expect(attempt.snapshotId).toBe(snapshotId);
     expect(attempt.snapshotHash).toBe(snapshotHash);
-    // publishedRelationKeys must be empty for deferred by seed-not-in-todofp
     expect(attempt.publicParity).toEqual({
-      publishedRelationKeys: [],
+      publishedRelationKeys: [
+        "FME01M|occupation:cno11:7322",
+        "FME01M|occupation:cno11:7323",
+        "FME01M|occupation:cno11:7324",
+      ],
       rejectedRelationKeys: ["FME01M|occupation:cno11:3139"],
     });
-    // Accepted audit relations: only 7322, 7323, 7324 — no published output
+    // Accepted audit relations: only 7322, 7323 and 7324 are published.
     expect(attempt.acceptedRelations).toHaveLength(3);
     const acceptedOccupancies = (attempt.acceptedRelations ?? []).map(
       (r) => r.occupationId,
@@ -130,7 +148,7 @@ describe("FME01M expansion slot", () => {
     expect(rejectedOccupancies).toContain("occupation:cno11:3139");
   });
 
-  it("accepts deferred FME01M attempt with empty published parity", async () => {
+  it("accepts completed FME01M against the rebuilt public snapshot", async () => {
     const programKey = "FME01M";
     const snapshotId = await loadFME01MSnapshotId();
     const snapshotHash = expansionSnapshotHash({
@@ -169,14 +187,19 @@ describe("FME01M expansion slot", () => {
         },
         publicRelationSet: {
           manifestAddressed: true as const,
-          relationKeys: [],
+          relationKeys: [
+            "FME01M|occupation:cno11:7322",
+            "FME01M|occupation:cno11:7323",
+            "FME01M|occupation:cno11:7324",
+          ],
           resourcePaths: ["/data/v1/manifest.json"],
         },
         reviewedCommitAt: attempt.reviewedCommitAt,
+        publicationPending: false,
       }),
     ).toMatchObject({
       programKey: "FME01M",
-      state: "deferred",
+      state: "completed",
     });
   });
 });

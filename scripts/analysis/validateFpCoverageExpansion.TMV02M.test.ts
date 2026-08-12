@@ -36,11 +36,11 @@ async function readJson<T>(path: string): Promise<T> {
   return JSON.parse(await readFile(path, "utf8")) as T;
 }
 
-function expansionSnapshotHash() {
+function expansionSnapshotHash(snapshotId: string) {
   return createHash("sha256")
     .update(
       JSON.stringify({
-        snapshotId: "20260812091756510-cac7c1d65a73",
+        snapshotId,
         programKey: "TMV02M",
         baselineMatchIds: [],
         currentMatchIds: [],
@@ -87,6 +87,8 @@ describe("TMV02M expansion slot", () => {
       ...ranking.reserveCandidates,
     ].find((entry) => entry.programKey === "TMV02M") as FpExpansionCandidate;
     expect(attempt.state).toBe("deferred");
+    if (attempt.snapshotId === undefined) throw new Error("Missing snapshot ID.");
+    const snapshotId = attempt.snapshotId;
     expect(attempt.officialOutputInventory?.labels).toEqual(outputLabels);
     expect(
       attempt.officialOutputReviews?.map(
@@ -97,15 +99,16 @@ describe("TMV02M expansion slot", () => {
       publishedRelationKeys: [],
       rejectedRelationKeys: ["TMV02M|occupation:cno11:7401"],
     });
-    expect(attempt.snapshotHash).toBe(expansionSnapshotHash());
+    expect(attempt.snapshotHash).toBe(
+      expansionSnapshotHash(snapshotId),
+    );
     const computed = {
       baselineMatchIds: [],
       currentMatchIds: [],
       newlyReachedOfferIdsByProgram: { TMV02M: [] },
       newlyReachedOfferUnionIds: [],
-      snapshotId: "20260812091756510-cac7c1d65a73",
-      snapshotHash:
-        "22b5d3254092a1a4a9c61ea2816157bf0e2b205aa55c502810dec72d3faaf1f0",
+      snapshotId,
+      snapshotHash: expansionSnapshotHash(snapshotId),
     };
     const publicRelationSet = {
       manifestAddressed: true as const,

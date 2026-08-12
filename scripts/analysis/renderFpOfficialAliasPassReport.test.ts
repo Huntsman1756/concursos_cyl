@@ -25,7 +25,9 @@ describe("renderFpOfficialAliasPassReport", () => {
     expect(checkedIn).toBe(report);
     expect(report.endsWith("\n")).toBe(true);
     expect(report).toContain("20260808215403108-add4c517860c");
-    expect(report).toContain("20260812091756510-cac7c1d65a73");
+    expect(report).toContain(
+      manifest.resourceSnapshots.programs.resourcePath.split("/")[4],
+    );
     expect(report).toContain("Alias aceptados: 11; rechazados: 44.");
     expect(report).toContain("## Alias aceptados y rechazados");
     expect(report).toContain("- EOC01M: 5 aceptados; 21 rechazados.");
@@ -38,10 +40,10 @@ describe("renderFpOfficialAliasPassReport", () => {
     expect(report.indexOf("HOT01M")).toBeLessThan(report.indexOf("SSC01M"));
     expect(report).toContain("Unión de ofertas nuevas: 1.");
     expect(manifest.resourceSnapshots.programs.recordCount).toBe(187);
-    expect(manifest.resourceSnapshots.occupations.recordCount).toBe(31);
+    expect(manifest.resourceSnapshots.occupations.recordCount).toBe(36);
     expect(manifest.resourceSnapshots.occupationAliases.recordCount).toBe(22);
     expect(manifest.resourceSnapshots.trainingOccupationLinks.recordCount).toBe(
-      36,
+      41,
     );
     expect(report).toContain("no estiman el empleo total");
     expect(report).toContain(
