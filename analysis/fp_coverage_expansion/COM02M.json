@@ -37,17 +37,6 @@
     },
     "reconciliationNote": "TodoFP and BOE identify the same intermediate programme and reconcile the six official outputs in order."
   },
-  "officialOutputInventory": {
-    "sourceUrl": "https://www.boe.es/eli/es/rd/189/2018",
-    "labels": [
-      "Responsable/encargado de establecimiento alimentario.",
-      "Responsable/encargado de sección/sala/departamento de tienda de alimentación.",
-      "Gestor/a de pequeño comercio alimentario.",
-      "Responsable/encargado de comercios alimentarios online.",
-      "Asesor/a comercial de productos alimentarios.",
-      "Vendedor/a de productos alimentarios."
-    ]
-  },
   "officialOutputReviews": [
     {
       "order": 1,
@@ -68,10 +57,10 @@
       "sourceQuote": "Responsable/encargado de sección/sala/departamento de tienda de alimentación.",
       "classificationEvidence": [
         {
-          "occupationId": "occupation:cno11:5210",
           "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
           "sourceQuote": "5210 Jefes de sección de tiendas y almacenes",
-          "reviewedAt": "2026-08-09"
+          "reviewedAt": "2026-08-09",
+          "occupationId": "occupation:cno11:5210"
         }
       ],
       "reason": "The official section responsibility is bounded by CNO 5210 section-chief duties."
@@ -113,15 +102,26 @@
       "sourceQuote": "Vendedor/a de productos alimentarios.",
       "classificationEvidence": [
         {
-          "occupationId": "occupation:cno11:5220",
           "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
           "sourceQuote": "5220 Vendedores en tiendas y almacenes",
-          "reviewedAt": "2026-08-09"
+          "reviewedAt": "2026-08-09",
+          "occupationId": "occupation:cno11:5220"
         }
       ],
       "reason": "The official seller output matches the CNO 5220 public retail seller boundary."
     }
   ],
+  "officialOutputInventory": {
+    "sourceUrl": "https://www.boe.es/eli/es/rd/189/2018",
+    "labels": [
+      "Responsable/encargado de establecimiento alimentario.",
+      "Responsable/encargado de sección/sala/departamento de tienda de alimentación.",
+      "Gestor/a de pequeño comercio alimentario.",
+      "Responsable/encargado de comercios alimentarios online.",
+      "Asesor/a comercial de productos alimentarios.",
+      "Vendedor/a de productos alimentarios."
+    ]
+  },
   "acceptedRelations": [
     {
       "kind": "link",
@@ -168,15 +168,13 @@
   ],
   "baselineMatchIds": [],
   "currentMatchIds": [],
-  "newlyReachedOfferIdsByProgram": {
-    "COM02M": []
-  },
+  "newlyReachedOfferIdsByProgram": { "COM02M": [] },
   "newlyReachedOfferUnionIds": [],
   "limitation": "The slot accepts only the direct section-chief and seller boundaries. Manager, proprietor, online and commercial-adviser outputs remain rejected; the in-memory overlay reaches no new offer IDs and no aliases are added.",
   "reviewedCommit": "14db13c8a7948100ff4e4238de01b357a8ca582e",
   "reviewedCommitAt": "2026-08-09T15:45:15.000Z",
-  "snapshotId": "20260811222221076-727a2dfa2791",
-  "snapshotHash": "900268e4d35d45406d88ac307c9b015788d0ad4ee40d2dd8334467a54d48bf5c",
+  "snapshotId": "20260812011203149-415d767a53f9",
+  "snapshotHash": "e9a0eedf858964a3eb2ed78beba966443422beb27185c5bb058849006719c827",
   "publicParity": {
     "publishedRelationKeys": [
       "COM02M|occupation:cno11:5210",

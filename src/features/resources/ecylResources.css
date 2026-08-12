@@ -1,0 +1,103 @@
+.resources-page {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 2.5rem 3rem 4rem;
+}
+.resources-page__intro {
+  max-width: 760px;
+  margin-bottom: 2rem;
+}
+.resources-page__intro h1 {
+  margin: 0.35rem 0 0.75rem;
+  font-size: clamp(2rem, 4vw, 3.5rem);
+}
+.resources-page__eyebrow {
+  color: var(--color-brand, #8b0015);
+  font-weight: 700;
+}
+.resources-filters {
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) minmax(220px, 1fr);
+  gap: 1rem;
+  padding: 1.25rem;
+  border: 1px solid #ded8d3;
+  border-radius: 14px;
+  background: #faf8f5;
+}
+.resources-filters label {
+  display: grid;
+  gap: 0.45rem;
+  font-weight: 650;
+}
+.resources-filters input,
+.resources-filters select {
+  min-height: 46px;
+  width: 100%;
+  padding: 0.7rem 0.85rem;
+  border: 1px solid #b9b2ad;
+  border-radius: 8px;
+  background: white;
+  font: inherit;
+}
+.resources-columns {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.5rem;
+  margin-top: 2rem;
+  align-items: start;
+}
+.resources-section-heading {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  align-items: baseline;
+}
+.resources-section-heading h2 {
+  margin-bottom: 0.25rem;
+}
+.resources-section-heading span,
+.resources-section-help {
+  color: #625d59;
+  font-size: 0.92rem;
+}
+.resource-list {
+  display: grid;
+  gap: 0.8rem;
+  margin-top: 1rem;
+}
+.resource-card {
+  padding: 1rem 1.1rem;
+  border: 1px solid #ded8d3;
+  border-radius: 12px;
+  background: white;
+}
+.resource-card h3 {
+  margin: 0.15rem 0 0.5rem;
+  font-size: 1.05rem;
+}
+.resource-card p {
+  margin: 0.35rem 0;
+  color: #514c48;
+}
+.resource-card a {
+  display: inline-block;
+  margin-top: 0.55rem;
+  color: #8b0015;
+  font-weight: 700;
+}
+.resource-card__code {
+  color: #8b0015 !important;
+  font-size: 0.82rem;
+  font-weight: 750;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+@media (max-width: 800px) {
+  .resources-page {
+    padding: 1.5rem 1rem 3rem;
+  }
+  .resources-filters,
+  .resources-columns {
+    grid-template-columns: 1fr;
+  }
+}

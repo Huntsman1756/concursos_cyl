@@ -25,7 +25,7 @@ describe("renderFpOfficialAliasPassReport", () => {
     expect(checkedIn).toBe(report);
     expect(report.endsWith("\n")).toBe(true);
     expect(report).toContain("20260808215403108-add4c517860c");
-    expect(report).toContain("20260811222221076-727a2dfa2791");
+    expect(report).toContain("20260812011203149-415d767a53f9");
     expect(report).toContain("Alias aceptados: 10; rechazados: 44.");
     expect(report).toContain("## Alias aceptados y rechazados");
     expect(report).toContain("- EOC01M: 5 aceptados; 21 rechazados.");

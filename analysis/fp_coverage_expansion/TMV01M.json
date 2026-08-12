@@ -37,32 +37,6 @@
     },
     "reconciliationNote": "TodoFP y BOE identifican el mismo título de Grado Medio en carrocería. La expansión audita los 3 perfiles profesionales de TodoFP como inventario oficial exclusivo."
   },
-  "seedReconciliations": [
-    {
-      "seedLabel": "Reparador de carrocerías",
-      "sourceOutputLabel": "Chapista reparador / reparadora de carrocería de automóviles, vehículos pesados, tractores, maquinaria agrícola, de industrias extractivas, de construcción y obras públicas y material ferroviario.",
-      "authoritativeOutputLabel": "Chapista reparador / reparadora de carrocería de automóviles, vehículos pesados, tractores, maquinaria agrícola, de industrias extractivas, de construcción y obras públicas y material ferroviario.",
-      "sourceOutputEvidence": {
-        "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/transporte-mantenimiento-vehiculos/carroceria.html",
-        "sourceQuote": "Chapista reparador / reparadora de carrocería de automóviles, vehículos pesados, tractores, maquinaria agrícola, de industrias extractivas, de construcción y obras públicas y material ferroviario.",
-        "reviewedAt": "2026-08-11"
-      },
-      "authoritativeEvidence": {
-        "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/transporte-mantenimiento-vehiculos/carroceria.html",
-        "sourceQuote": "Chapista reparador / reparadora de carrocería de automóviles, vehículos pesados, tractores, maquinaria agrícola, de industrias extractivas, de construcción y obras públicas y material ferroviario.",
-        "reviewedAt": "2026-08-11"
-      },
-      "reason": "El seed 'Reparador de carrocerías' (BOE) es amplio; se reconcilia al primer perfil real de TodoFP: Chapista reparador de carrocería de automóviles."
-    }
-  ],
-  "officialOutputInventory": {
-    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/transporte-mantenimiento-vehiculos/carroceria.html",
-    "labels": [
-      "Chapista reparador / reparadora de carrocería de automóviles, vehículos pesados, tractores, maquinaria agrícola, de industrias extractivas, de construcción y obras públicas y material ferroviario.",
-      "Instalador / instaladora de lunas y montador de accesorios.",
-      "Pintor / pintora de carrocería de automóviles, vehículos pesados, tractores, maquinaria agrícola, de industrias extractivas, de construcción y obras públicas y material ferroviario."
-    ]
-  },
   "officialOutputReviews": [
     {
       "order": 1,
@@ -74,10 +48,10 @@
       "sourceQuote": "Chapista reparador / reparadora de carrocería de automóviles, vehículos pesados, tractores, maquinaria agrícola, de industrias extractivas, de construcción y obras públicas y material ferroviario.",
       "classificationEvidence": [
         {
-          "occupationId": "occupation:cno11:7313",
           "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
           "sourceQuote": "7313 Chapistas y caldereros",
-          "reviewedAt": "2026-08-11"
+          "reviewedAt": "2026-08-11",
+          "occupationId": "occupation:cno11:7313"
         }
       ],
       "reason": "El chapista reparador de carrocería se encuadra en el límite CNO 7313 de chapistas y caldereros."
@@ -94,16 +68,16 @@
       "sourceQuote": "Instalador / instaladora de lunas y montador de accesorios.",
       "classificationEvidence": [
         {
-          "occupationId": "occupation:cno11:7211",
           "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
           "sourceQuote": "7211 Escayolistas",
-          "reviewedAt": "2026-08-11"
+          "reviewedAt": "2026-08-11",
+          "occupationId": "occupation:cno11:7211"
         },
         {
-          "occupationId": "occupation:cno11:7401",
           "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
           "sourceQuote": "7401 Mecánicos y ajustadores de vehículos de motor",
-          "reviewedAt": "2026-08-11"
+          "reviewedAt": "2026-08-11",
+          "occupationId": "occupation:cno11:7401"
         }
       ],
       "reason": "Rejected: candidate IDs 7211 (Escayolistas) and 7401 (vehicle mechanics/adjusters) are not evidence for glazing/accessory installer."
@@ -118,15 +92,23 @@
       "sourceQuote": "Pintor / pintora de carrocería de automóviles, vehículos pesados, tractores, maquinaria agrícola, de industrias extractivas, de construcción y obras públicas y material ferroviario.",
       "classificationEvidence": [
         {
-          "occupationId": "occupation:cno11:7232",
           "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
           "sourceQuote": "7232 Pintores en las industrias manufactureras",
-          "reviewedAt": "2026-08-11"
+          "reviewedAt": "2026-08-11",
+          "occupationId": "occupation:cno11:7232"
         }
       ],
       "reason": "El pintor de carrocería de automóviles se encuadra en el límite CNO 7232 de pintores en las industrias manufactureras."
     }
   ],
+  "officialOutputInventory": {
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/transporte-mantenimiento-vehiculos/carroceria.html",
+    "labels": [
+      "Chapista reparador / reparadora de carrocería de automóviles, vehículos pesados, tractores, maquinaria agrícola, de industrias extractivas, de construcción y obras públicas y material ferroviario.",
+      "Instalador / instaladora de lunas y montador de accesorios.",
+      "Pintor / pintora de carrocería de automóviles, vehículos pesados, tractores, maquinaria agrícola, de industrias extractivas, de construcción y obras públicas y material ferroviario."
+    ]
+  },
   "acceptedRelations": [
     {
       "kind": "link",
@@ -165,15 +147,13 @@
   ],
   "baselineMatchIds": [],
   "currentMatchIds": [],
-  "newlyReachedOfferIdsByProgram": {
-    "TMV01M": []
-  },
+  "newlyReachedOfferIdsByProgram": { "TMV01M": [] },
   "newlyReachedOfferUnionIds": [],
   "limitation": "Se aceptan CNO 7232 (pintores en las industrias manufactureras) y 7313 (chapistas y caldereros) para Carrocería. El candidato 7211 se rechaza porque corresponde a escayolistas, no a trabajos de carrocería. El candidato 7401 se rechaza porque corresponde a mecánicos y ajustadores de vehículos de motor, fuera del ámbito de este título.",
   "reviewedCommit": "84e6c581f47b5943c6ae50950859ce4db0be9a98",
   "reviewedCommitAt": "2026-08-11T17:27:42.000Z",
-  "snapshotId": "20260811222221076-727a2dfa2791",
-  "snapshotHash": "b8c95fbb80818db9e91c8f9184ec09177061ec105f9618a946bf1b7edcec2967",
+  "snapshotId": "20260812011203149-415d767a53f9",
+  "snapshotHash": "8873d0cc05e7bc737f3c52da869350679838c15fc0976bdd9c9df71a2d37a664",
   "publicParity": {
     "publishedRelationKeys": [
       "TMV01M|occupation:cno11:7232",
@@ -183,5 +163,23 @@
       "TMV01M|occupation:cno11:7211",
       "TMV01M|occupation:cno11:7401"
     ]
-  }
+  },
+  "seedReconciliations": [
+    {
+      "seedLabel": "Reparador de carrocerías",
+      "sourceOutputLabel": "Chapista reparador / reparadora de carrocería de automóviles, vehículos pesados, tractores, maquinaria agrícola, de industrias extractivas, de construcción y obras públicas y material ferroviario.",
+      "authoritativeOutputLabel": "Chapista reparador / reparadora de carrocería de automóviles, vehículos pesados, tractores, maquinaria agrícola, de industrias extractivas, de construcción y obras públicas y material ferroviario.",
+      "sourceOutputEvidence": {
+        "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/transporte-mantenimiento-vehiculos/carroceria.html",
+        "sourceQuote": "Chapista reparador / reparadora de carrocería de automóviles, vehículos pesados, tractores, maquinaria agrícola, de industrias extractivas, de construcción y obras públicas y material ferroviario.",
+        "reviewedAt": "2026-08-11"
+      },
+      "authoritativeEvidence": {
+        "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/transporte-mantenimiento-vehiculos/carroceria.html",
+        "sourceQuote": "Chapista reparador / reparadora de carrocería de automóviles, vehículos pesados, tractores, maquinaria agrícola, de industrias extractivas, de construcción y obras públicas y material ferroviario.",
+        "reviewedAt": "2026-08-11"
+      },
+      "reason": "El seed 'Reparador de carrocerías' (BOE) es amplio; se reconcilia al primer perfil real de TodoFP: Chapista reparador de carrocería de automóviles."
+    }
+  ]
 }

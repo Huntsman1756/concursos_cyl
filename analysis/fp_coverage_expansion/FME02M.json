@@ -37,35 +37,6 @@
     },
     "reconciliationNote": "TodoFP y BOE identifican el mismo título de Grado Medio en fabricación mecánica; el BOE enumera seis salidas cuyos límites CNO-11 se auditan bajo esta expansion."
   },
-  "seedReconciliations": [
-    {
-      "seedLabel": "Soldador",
-      "sourceOutputLabel": "Soldador / soldadora y oxicortador / oxicortadora.",
-      "authoritativeOutputLabel": "Soldadores y oxicortadores.",
-      "sourceOutputEvidence": {
-        "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/fabricacion-mecanica/soldadura-caldereria.html",
-        "sourceQuote": "Soldador / soldadora y oxicortador / oxicortadora.",
-        "reviewedAt": "2026-08-11"
-      },
-      "authoritativeEvidence": {
-        "sourceUrl": "https://www.boe.es/eli/es/rd/1692/2007",
-        "sourceQuote": "Soldadores y oxicortadores.",
-        "reviewedAt": "2026-08-11"
-      },
-      "reason": "The TodoFP gender-inclusive variant and the BOE output describe the same bounded welding occupation reconciled to CNO 7312."
-    }
-  ],
-  "officialOutputInventory": {
-    "sourceUrl": "https://www.boe.es/eli/es/rd/1692/2007",
-    "labels": [
-      "Soldadores y oxicortadores.",
-      "Operadores de proyección térmica.",
-      "Chapistas y caldereros.",
-      "Montadores de estructuras metálicas.",
-      "Carpintero metálico.",
-      "Tubero industrial de industria pesada."
-    ]
-  },
   "officialOutputReviews": [
     {
       "order": 1,
@@ -77,10 +48,10 @@
       "sourceQuote": "Soldadores y oxicortadores.",
       "classificationEvidence": [
         {
-          "occupationId": "occupation:cno11:7312",
           "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
           "sourceQuote": "7312 Soldadores y oxicortadores",
-          "reviewedAt": "2026-08-11"
+          "reviewedAt": "2026-08-11",
+          "occupationId": "occupation:cno11:7312"
         }
       ],
       "reason": "El output coincide literalmente con el encabezado CNO 7312 que delimita a quienes soldan y oxicortan piezas y estructuras metálicas."
@@ -94,10 +65,10 @@
       "sourceQuote": "Operadores de proyección térmica.",
       "classificationEvidence": [
         {
-          "occupationId": "occupation:cno11:7311",
           "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
           "sourceQuote": "7311 Choppers, pintores por proyección térmica y operarios de recubrimientos",
-          "reviewedAt": "2026-08-11"
+          "reviewedAt": "2026-08-11",
+          "occupationId": "occupation:cno11:7311"
         }
       ],
       "reason": "El CNO 7311 identifica choppers y pintores por proyección térmica, pero el output no es una reconciliación literal del seed Soldador; además, el límite exacto de proyección térmica permanece sin establecer en el título."
@@ -112,10 +83,10 @@
       "sourceQuote": "Chapistas y caldereros.",
       "classificationEvidence": [
         {
-          "occupationId": "occupation:cno11:7313",
           "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
           "sourceQuote": "7313 Chapistas y caldereros",
-          "reviewedAt": "2026-08-11"
+          "reviewedAt": "2026-08-11",
+          "occupationId": "occupation:cno11:7313"
         }
       ],
       "reason": "El output coincide literalmente con el encabezado CNO 7313 que delimita a los trabajadoras de chapistería y calderería."
@@ -130,10 +101,10 @@
       "sourceQuote": "Montadores de estructuras metálicas.",
       "classificationEvidence": [
         {
-          "occupationId": "occupation:cno11:7314",
           "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
           "sourceQuote": "7314 Montadores de estructuras metálicas",
-          "reviewedAt": "2026-08-11"
+          "reviewedAt": "2026-08-11",
+          "occupationId": "occupation:cno11:7314"
         }
       ],
       "reason": "El output coincide literalmente con el encabezado CNO 7314 que delimita a los montadores de estructuras metálicas."
@@ -148,10 +119,10 @@
       "sourceQuote": "Carpintero metálico.",
       "classificationEvidence": [
         {
-          "occupationId": "occupation:cno11:7132",
           "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
           "sourceQuote": "7132 Instaladores de cerramientos metálicos y carpinteros metálicos",
-          "reviewedAt": "2026-08-11"
+          "reviewedAt": "2026-08-11",
+          "occupationId": "occupation:cno11:7132"
         }
       ],
       "reason": "El CNO 7132 nombra expresamente a los carpinteros metálicos, limitando este output de forma exacta."
@@ -165,15 +136,26 @@
       "sourceQuote": "Tubero industrial de industria pesada.",
       "classificationEvidence": [
         {
-          "occupationId": "occupation:cno11:7402",
           "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
           "sourceQuote": "7402 Fontaneros",
-          "reviewedAt": "2026-08-11"
+          "reviewedAt": "2026-08-11",
+          "occupationId": "occupation:cno11:7402"
         }
       ],
       "reason": "La sección revisada no establece un límite exacto de cuatro dígitos para el operario de tubería industrial pesada; el CNO 7402 (fontaneros) incluye instaladores de tuberías pero no se delimita específicamente la industria pesada."
     }
   ],
+  "officialOutputInventory": {
+    "sourceUrl": "https://www.boe.es/eli/es/rd/1692/2007",
+    "labels": [
+      "Soldadores y oxicortadores.",
+      "Operadores de proyección térmica.",
+      "Chapistas y caldereros.",
+      "Montadores de estructuras metálicas.",
+      "Carpintero metálico.",
+      "Tubero industrial de industria pesada."
+    ]
+  },
   "acceptedRelations": [
     {
       "kind": "link",
@@ -228,15 +210,13 @@
   ],
   "baselineMatchIds": [],
   "currentMatchIds": [],
-  "newlyReachedOfferIdsByProgram": {
-    "FME02M": []
-  },
+  "newlyReachedOfferIdsByProgram": { "FME02M": [] },
   "newlyReachedOfferUnionIds": [],
   "limitation": "Se aceptan CNO 7312, 7313, 7314 y 7132 para Soldadura y Calderería. Los candidatos 8122 para proyección térmica y 7221 para tubería industrial se mantienen rechazados porque la evidencia revisada no establece con precisión esos límites de cuatro dígitos para las salidas del título.",
   "reviewedCommit": "e6ae073b1b451c7b9327916b6e4c4aaf5ab52c0d",
   "reviewedCommitAt": "2026-08-11T14:05:09.000Z",
-  "snapshotId": "20260811222221076-727a2dfa2791",
-  "snapshotHash": "14071d68fb4d32c25a37a35e04906ccfbf87768c54ba0c9ad734518a8b986583",
+  "snapshotId": "20260812011203149-415d767a53f9",
+  "snapshotHash": "29ffc9dc15fded4e8dfaafcc379761c0fc61485c3f8e2fb7b72366894ecbd8a9",
   "publicParity": {
     "publishedRelationKeys": [
       "FME02M|occupation:cno11:7132",
@@ -248,5 +228,23 @@
       "FME02M|occupation:cno11:7221",
       "FME02M|occupation:cno11:8122"
     ]
-  }
+  },
+  "seedReconciliations": [
+    {
+      "seedLabel": "Soldador",
+      "sourceOutputLabel": "Soldador / soldadora y oxicortador / oxicortadora.",
+      "authoritativeOutputLabel": "Soldadores y oxicortadores.",
+      "sourceOutputEvidence": {
+        "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/fabricacion-mecanica/soldadura-caldereria.html",
+        "sourceQuote": "Soldador / soldadora y oxicortador / oxicortadora.",
+        "reviewedAt": "2026-08-11"
+      },
+      "authoritativeEvidence": {
+        "sourceUrl": "https://www.boe.es/eli/es/rd/1692/2007",
+        "sourceQuote": "Soldadores y oxicortadores.",
+        "reviewedAt": "2026-08-11"
+      },
+      "reason": "The TodoFP gender-inclusive variant and the BOE output describe the same bounded welding occupation reconciled to CNO 7312."
+    }
+  ]
 }

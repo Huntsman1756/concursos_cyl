@@ -41,13 +41,16 @@ function observationsByMeasure(
   );
 }
 
-function hasNonProgressiveCuts(
+/** Whether the full P20-P40-P60-P80 sequence is strictly non-decreasing. */
+function isMonotoneCuts(
   observations: ReadonlyMap<OutcomeMeasure, OutcomeObservation>,
 ): boolean {
   const values = OUTCOME_MEASURE_ORDER.slice(1)
     .map((measure) => observations.get(measure)?.valueEur ?? null)
     .filter((value): value is number => value !== null);
-  return values.some((value, index) => index > 0 && value < values[index - 1]);
+  return values.every(
+    (value, index) => index === 0 || value >= values[index - 1],
+  );
 }
 
 function buildSeries(
@@ -103,6 +106,7 @@ export function IncomeEvidenceCard({
       <div className="income-series-list">
         {series.map((item) => {
           const indexed = observationsByMeasure(item.observations);
+          const monotone = isMonotoneCuts(indexed);
           return (
             <article className="income-series" key={item.key}>
               <header className="income-series__header">
@@ -120,6 +124,7 @@ export function IncomeEvidenceCard({
                 aria-label={`Distribución: ${item.label}`}
               >
                 {OUTCOME_MEASURE_ORDER.map((measure) => {
+                  if (!monotone && measure !== "mean") return null;
                   const observation = indexed.get(measure);
                   const value = observation?.valueEur ?? null;
                   const presentation = OUTCOME_MEASURE_PRESENTATION[measure];
@@ -149,12 +154,13 @@ export function IncomeEvidenceCard({
                 })}
               </ul>
 
-              {hasNonProgressiveCuts(indexed) ? (
+              {!monotone && (
                 <p className="income-data-warning" role="note">
-                  La fuente publica cortes que no aumentan de forma progresiva
-                  para este grupo. Los mostramos tal como fueron publicados.
+                  Los cortes publicados para este grupo no superan nuestra
+                  comprobación de coherencia. Mostramos únicamente la media
+                  publicada y ocultamos esos cortes.
                 </p>
-              ) : null}
+              )}
 
               <details className="income-technical-detail">
                 <summary>Ver términos técnicos y tabla de datos</summary>
@@ -170,7 +176,9 @@ export function IncomeEvidenceCard({
                       </tr>
                     </thead>
                     <tbody>
-                      {OUTCOME_MEASURE_ORDER.map((measure) => {
+                      {OUTCOME_MEASURE_ORDER.filter(
+                        (measure) => monotone || measure === "mean",
+                      ).map((measure) => {
                         const observation = indexed.get(measure);
                         return (
                           <tr key={measure}>

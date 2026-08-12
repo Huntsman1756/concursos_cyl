@@ -27,7 +27,7 @@ describe("contest submission renderer", () => {
       "submission-checklist.md",
     ]);
     expect(rendered["application-summary.md"]).toContain(
-      "20260811222221076-727a2dfa2791",
+      "20260812011203149-415d767a53f9",
     );
     expect(rendered["application-summary.md"]).toContain("13 cualificaciones");
     expect(rendered["application-summary.md"]).toContain(

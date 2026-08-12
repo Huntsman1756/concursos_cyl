@@ -266,6 +266,37 @@ export function MethodologyPage() {
           provenance={provenance}
           tables={tableLinks(REGIONAL_TABLES)}
         />
+        <article className="source-method-card">
+          <h2>Formación complementaria de Castilla y León</h2>
+          <section>
+            <h3>Qué aporta</h3>
+            <p>
+              Cursos publicados por el ECYL y el catálogo de certificados de
+              profesionalidad, con sus fechas, localidades, niveles, duración y
+              enlaces oficiales cuando la fuente los publica.
+            </p>
+          </section>
+          <section>
+            <h3>Qué no permite afirmar</h3>
+            <p>
+              Compartir una familia profesional no convierte un curso o
+              certificado en equivalente a un título de FP. No generamos esa
+              equivalencia ni garantizamos plazas disponibles.
+            </p>
+          </section>
+          <section>
+            <h3>Fuentes originales</h3>
+            <p>
+              <a href={SOURCE_CONFIG.ecylCourses.recordsUrl}>
+                Formación del ECYL
+              </a>
+              {" · "}
+              <a href={SOURCE_CONFIG.professionalCertificates.recordsUrl}>
+                Certificados de profesionalidad
+              </a>
+            </p>
+          </section>
+        </article>
         <article
           id="fp-catalogo"
           className="source-method-card methodology-catalog-card"

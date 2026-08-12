@@ -136,6 +136,24 @@ const fixedOptions = {
   now: () => new Date("2026-08-04T10:00:00.000Z"),
   fetchTrainingRecords: async () => [{ ...liveTrainingSourceRecord }],
   fetchOfferRecords: async () => [{ ...liveOfferSourceRecord }],
+  fetchEcylCourseRecords: async () => [
+    {
+      identificador: 1,
+      titulo: "Curso de prueba",
+      enlace_al_contenido: "https://empleo.jcyl.es/curso/1",
+    },
+  ],
+  fetchProfessionalCertificateRecords: async () => [
+    {
+      familia: "ADG",
+      codigo: "ADGG0108",
+      denominacion: "Asistencia a la dirección",
+      consultar_estructura: "https://sede.sepe.gob.es/estructura/ADGG0108",
+      consultar_programa_real_decreto:
+        "https://sede.sepe.gob.es/programa/ADGG0108.pdf",
+      nivel_cp: 3,
+    },
+  ],
   fetchIncomeBundle: loadFixtureIncomeBundle,
   loadCuratedMappings: async () => ({
     occupations: [],

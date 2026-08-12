@@ -9,6 +9,16 @@ export const SOURCE_CONFIG = {
     recordsUrl:
       "https://analisis.datosabiertos.jcyl.es/api/explore/v2.1/catalog/datasets/ofertas-de-empleo/records",
   },
+  ecylCourses: {
+    id: "jcyl-ecyl-training",
+    recordsUrl:
+      "https://analisis.datosabiertos.jcyl.es/api/explore/v2.1/catalog/datasets/formacion-del-ecyl/records",
+  },
+  professionalCertificates: {
+    id: "jcyl-professional-certificates",
+    recordsUrl:
+      "https://analisis.datosabiertos.jcyl.es/api/explore/v2.1/catalog/datasets/certificados-profesionalidad/records",
+  },
   educabaseIncome: {
     id: "educabase-fp-income-four-table-bundle",
     recordsUrl: "https://estadisticas.educacion.gob.es/EducaJaxiPx/",

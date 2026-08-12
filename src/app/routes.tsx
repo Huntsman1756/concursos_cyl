@@ -4,6 +4,7 @@ import { Link, Route, Routes } from "react-router-dom";
 import { CompareStudiesPage } from "../features/compare-studies/CompareStudiesPage";
 import { HomePage } from "../features/home/HomePage";
 import { MethodologyPage } from "../features/methodology/MethodologyPage";
+import { EcylResourcesPage } from "../features/resources/EcylResourcesPage";
 import { OccupationResultsPage } from "../features/occupation-first/OccupationResultsPage";
 import { OccupationSearchPage } from "../features/occupation-first/OccupationSearchPage";
 import { TrainingResultsPage } from "../features/training-first/TrainingResultsPage";
@@ -54,6 +55,7 @@ export function AppRoutes() {
         element={inShell(<OccupationResultsPage />)}
       />
       <Route path="/comparar" element={inShell(<CompareStudiesPage />)} />
+      <Route path="/recursos" element={inShell(<EcylResourcesPage />)} />
       <Route path="/metodologia" element={inShell(<MethodologyPage />)} />
       <Route
         path="*"

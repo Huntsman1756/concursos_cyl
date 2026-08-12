@@ -37,22 +37,204 @@
     },
     "reconciliationNote": "TodoFP identifica 11 salidas profesionales para Servicios Comerciales; se auditan bajo esta expansion."
   },
-  "seedReconciliations": [
+  "officialOutputReviews": [
     {
-      "seedLabel": "Auxiliar de comercio",
-      "sourceOutputLabel": "Auxiliar de animación del punto de venta.",
-      "authoritativeOutputLabel": "Auxiliar de animación del punto de venta.",
-      "sourceOutputEvidence": {
-        "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/comercio-marketing/servicios-comerciales.html",
-        "sourceQuote": "Auxiliar de animación del punto de venta.",
-        "reviewedAt": "2026-08-11"
-      },
-      "authoritativeEvidence": {
-        "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/comercio-marketing/servicios-comerciales.html",
-        "sourceQuote": "Auxiliar de animación del punto de venta.",
-        "reviewedAt": "2026-08-11"
-      },
-      "reason": "El frozen seed Auxiliar de comercio se reconcilia a la primera salida real TodoFP."
+      "order": 1,
+      "officialOutputLabel": "Auxiliar de animación del punto de venta.",
+      "disposition": "accepted",
+      "candidateOccupationIds": ["occupation:cno11:5492"],
+      "acceptedOccupationIds": ["occupation:cno11:5492"],
+      "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/comercio-marketing/servicios-comerciales.html",
+      "sourceQuote": "Auxiliar de animación del punto de venta.",
+      "classificationEvidence": [
+        {
+          "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+          "sourceQuote": "5492 Promotores de venta",
+          "reviewedAt": "2026-08-11",
+          "occupationId": "occupation:cno11:5492"
+        }
+      ],
+      "reason": "El output coincide con el límite CNO 5492 de promotores de venta."
+    },
+    {
+      "order": 2,
+      "officialOutputLabel": "Auxiliar de dependiente de comercio.",
+      "disposition": "accepted",
+      "candidateOccupationIds": ["occupation:cno11:5220"],
+      "acceptedOccupationIds": ["occupation:cno11:5220"],
+      "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/comercio-marketing/servicios-comerciales.html",
+      "sourceQuote": "Auxiliar de dependiente de comercio.",
+      "classificationEvidence": [
+        {
+          "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+          "sourceQuote": "5220 Vendedores en tiendas y almacenes",
+          "reviewedAt": "2026-08-11",
+          "occupationId": "occupation:cno11:5220"
+        }
+      ],
+      "reason": "El output coincide con el límite CNO 5220 de vendedores en tiendas y almacenes."
+    },
+    {
+      "order": 3,
+      "officialOutputLabel": "Auxiliar de información.",
+      "disposition": "accepted",
+      "candidateOccupationIds": ["occupation:cno11:5220"],
+      "acceptedOccupationIds": ["occupation:cno11:5220"],
+      "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/comercio-marketing/servicios-comerciales.html",
+      "sourceQuote": "Auxiliar de información.",
+      "classificationEvidence": [
+        {
+          "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+          "sourceQuote": "5220 Vendedores en tiendas y almacenes",
+          "reviewedAt": "2026-08-11",
+          "occupationId": "occupation:cno11:5220"
+        }
+      ],
+      "reason": "El output coincide con el límite CNO 5220 de vendedores en tiendas y almacenes, limitado a información al cliente en contexto de comercio minorista."
+    },
+    {
+      "order": 4,
+      "officialOutputLabel": "Auxiliar de promoción de ventas.",
+      "disposition": "accepted",
+      "candidateOccupationIds": ["occupation:cno11:5492"],
+      "acceptedOccupationIds": ["occupation:cno11:5492"],
+      "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/comercio-marketing/servicios-comerciales.html",
+      "sourceQuote": "Auxiliar de promoción de ventas.",
+      "classificationEvidence": [
+        {
+          "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+          "sourceQuote": "5492 Promotores de venta",
+          "reviewedAt": "2026-08-11",
+          "occupationId": "occupation:cno11:5492"
+        }
+      ],
+      "reason": "El output coincide con el límite CNO 5492 de promotores de venta."
+    },
+    {
+      "order": 5,
+      "officialOutputLabel": "Auxiliar de venta.",
+      "disposition": "accepted",
+      "candidateOccupationIds": ["occupation:cno11:5220"],
+      "acceptedOccupationIds": ["occupation:cno11:5220"],
+      "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/comercio-marketing/servicios-comerciales.html",
+      "sourceQuote": "Auxiliar de venta.",
+      "classificationEvidence": [
+        {
+          "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+          "sourceQuote": "5220 Vendedores en tiendas y almacenes",
+          "reviewedAt": "2026-08-11",
+          "occupationId": "occupation:cno11:5220"
+        }
+      ],
+      "reason": "El output coincide con el límite CNO 5220 de vendedores en tiendas y almacenes."
+    },
+    {
+      "order": 6,
+      "officialOutputLabel": "Carretillera / carretillero de recepción y expedición.",
+      "disposition": "accepted",
+      "candidateOccupationIds": ["occupation:cno11:8333"],
+      "acceptedOccupationIds": ["occupation:cno11:8333"],
+      "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/comercio-marketing/servicios-comerciales.html",
+      "sourceQuote": "Carretillera / carretillero de recepción y expedición.",
+      "classificationEvidence": [
+        {
+          "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+          "sourceQuote": "8333 Operadores de carretillas elevadoras",
+          "reviewedAt": "2026-08-11",
+          "occupationId": "occupation:cno11:8333"
+        }
+      ],
+      "reason": "El output coincide con el límite CNO 8333 de operadores de carretillas elevadoras."
+    },
+    {
+      "order": 7,
+      "officialOutputLabel": "Contador / contadora de recepción y expedición.",
+      "disposition": "accepted",
+      "candidateOccupationIds": ["occupation:cno11:4121"],
+      "acceptedOccupationIds": ["occupation:cno11:4121"],
+      "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/comercio-marketing/servicios-comerciales.html",
+      "sourceQuote": "Contador / contadora de recepción y expedición.",
+      "classificationEvidence": [
+        {
+          "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+          "sourceQuote": "4121 Empleados de control de abastecimientos e inventario",
+          "reviewedAt": "2026-08-11",
+          "occupationId": "occupation:cno11:4121"
+        }
+      ],
+      "reason": "El output coincide con el límite CNO 4121 de empleados de control de abastecimientos e inventario."
+    },
+    {
+      "order": 8,
+      "officialOutputLabel": "Empleada / empleado de reposición.",
+      "disposition": "accepted",
+      "candidateOccupationIds": ["occupation:cno11:9820"],
+      "acceptedOccupationIds": ["occupation:cno11:9820"],
+      "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/comercio-marketing/servicios-comerciales.html",
+      "sourceQuote": "Empleada / empleado de reposición.",
+      "classificationEvidence": [
+        {
+          "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+          "sourceQuote": "9820 Reponedores",
+          "reviewedAt": "2026-08-11",
+          "occupationId": "occupation:cno11:9820"
+        }
+      ],
+      "reason": "El output coincide con el límite CNO 9820 de reponedores."
+    },
+    {
+      "order": 9,
+      "officialOutputLabel": "Operador / operadora de cobro o Cajera / cajero.",
+      "disposition": "accepted",
+      "candidateOccupationIds": ["occupation:cno11:5500"],
+      "acceptedOccupationIds": ["occupation:cno11:5500"],
+      "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/comercio-marketing/servicios-comerciales.html",
+      "sourceQuote": "Operador / operadora de cobro o Cajera / cajero.",
+      "classificationEvidence": [
+        {
+          "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+          "sourceQuote": "5500 Cajeros y taquilleros (excepto bancos)",
+          "reviewedAt": "2026-08-11",
+          "occupationId": "occupation:cno11:5500"
+        }
+      ],
+      "reason": "El output coincide con el límite CNO 5500 de cajeros y taquilleros (excepto bancos)."
+    },
+    {
+      "order": 10,
+      "officialOutputLabel": "Operaria / operario de logística.",
+      "disposition": "accepted",
+      "candidateOccupationIds": ["occupation:cno11:4123"],
+      "acceptedOccupationIds": ["occupation:cno11:4123"],
+      "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/comercio-marketing/servicios-comerciales.html",
+      "sourceQuote": "Operaria / operario de logística.",
+      "classificationEvidence": [
+        {
+          "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+          "sourceQuote": "4123 Empleados de logística y transporte de pasajeros y mercancías",
+          "reviewedAt": "2026-08-11",
+          "occupationId": "occupation:cno11:4123"
+        }
+      ],
+      "reason": "El output coincide con el límite CNO 4123 de empleados de logística y transporte de pasajeros y mercancías."
+    },
+    {
+      "order": 11,
+      "officialOutputLabel": "Operaria / operario de pedidos.",
+      "disposition": "accepted",
+      "candidateOccupationIds": ["occupation:cno11:4123"],
+      "acceptedOccupationIds": ["occupation:cno11:4123"],
+      "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/comercio-marketing/servicios-comerciales.html",
+      "sourceQuote": "Operaria / operario de pedidos.",
+      "classificationEvidence": [
+        {
+          "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+          "sourceQuote": "4123 Empleados de logística y transporte de pasajeros y mercancías",
+          "reviewedAt": "2026-08-11",
+          "occupationId": "occupation:cno11:4123"
+        }
+      ],
+      "reason": "El output coincide con el límite CNO 4123 de empleados de logística y transporte de pasajeros y mercancías."
     }
   ],
   "officialOutputInventory": {
@@ -71,206 +253,6 @@
       "Operaria / operario de pedidos."
     ]
   },
-  "officialOutputReviews": [
-    {
-      "order": 1,
-      "officialOutputLabel": "Auxiliar de animación del punto de venta.",
-      "disposition": "accepted",
-      "candidateOccupationIds": ["occupation:cno11:5492"],
-      "acceptedOccupationIds": ["occupation:cno11:5492"],
-      "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/comercio-marketing/servicios-comerciales.html",
-      "sourceQuote": "Auxiliar de animación del punto de venta.",
-      "classificationEvidence": [
-        {
-          "occupationId": "occupation:cno11:5492",
-          "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
-          "sourceQuote": "5492 Promotores de venta",
-          "reviewedAt": "2026-08-11"
-        }
-      ],
-      "reason": "El output coincide con el límite CNO 5492 de promotores de venta."
-    },
-    {
-      "order": 2,
-      "officialOutputLabel": "Auxiliar de dependiente de comercio.",
-      "disposition": "accepted",
-      "candidateOccupationIds": ["occupation:cno11:5220"],
-      "acceptedOccupationIds": ["occupation:cno11:5220"],
-      "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/comercio-marketing/servicios-comerciales.html",
-      "sourceQuote": "Auxiliar de dependiente de comercio.",
-      "classificationEvidence": [
-        {
-          "occupationId": "occupation:cno11:5220",
-          "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
-          "sourceQuote": "5220 Vendedores en tiendas y almacenes",
-          "reviewedAt": "2026-08-11"
-        }
-      ],
-      "reason": "El output coincide con el límite CNO 5220 de vendedores en tiendas y almacenes."
-    },
-    {
-      "order": 3,
-      "officialOutputLabel": "Auxiliar de información.",
-      "disposition": "accepted",
-      "candidateOccupationIds": ["occupation:cno11:5220"],
-      "acceptedOccupationIds": ["occupation:cno11:5220"],
-      "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/comercio-marketing/servicios-comerciales.html",
-      "sourceQuote": "Auxiliar de información.",
-      "classificationEvidence": [
-        {
-          "occupationId": "occupation:cno11:5220",
-          "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
-          "sourceQuote": "5220 Vendedores en tiendas y almacenes",
-          "reviewedAt": "2026-08-11"
-        }
-      ],
-      "reason": "El output coincide con el límite CNO 5220 de vendedores en tiendas y almacenes, limitado a información al cliente en contexto de comercio minorista."
-    },
-    {
-      "order": 4,
-      "officialOutputLabel": "Auxiliar de promoción de ventas.",
-      "disposition": "accepted",
-      "candidateOccupationIds": ["occupation:cno11:5492"],
-      "acceptedOccupationIds": ["occupation:cno11:5492"],
-      "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/comercio-marketing/servicios-comerciales.html",
-      "sourceQuote": "Auxiliar de promoción de ventas.",
-      "classificationEvidence": [
-        {
-          "occupationId": "occupation:cno11:5492",
-          "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
-          "sourceQuote": "5492 Promotores de venta",
-          "reviewedAt": "2026-08-11"
-        }
-      ],
-      "reason": "El output coincide con el límite CNO 5492 de promotores de venta."
-    },
-    {
-      "order": 5,
-      "officialOutputLabel": "Auxiliar de venta.",
-      "disposition": "accepted",
-      "candidateOccupationIds": ["occupation:cno11:5220"],
-      "acceptedOccupationIds": ["occupation:cno11:5220"],
-      "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/comercio-marketing/servicios-comerciales.html",
-      "sourceQuote": "Auxiliar de venta.",
-      "classificationEvidence": [
-        {
-          "occupationId": "occupation:cno11:5220",
-          "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
-          "sourceQuote": "5220 Vendedores en tiendas y almacenes",
-          "reviewedAt": "2026-08-11"
-        }
-      ],
-      "reason": "El output coincide con el límite CNO 5220 de vendedores en tiendas y almacenes."
-    },
-    {
-      "order": 6,
-      "officialOutputLabel": "Carretillera / carretillero de recepción y expedición.",
-      "disposition": "accepted",
-      "candidateOccupationIds": ["occupation:cno11:8333"],
-      "acceptedOccupationIds": ["occupation:cno11:8333"],
-      "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/comercio-marketing/servicios-comerciales.html",
-      "sourceQuote": "Carretillera / carretillero de recepción y expedición.",
-      "classificationEvidence": [
-        {
-          "occupationId": "occupation:cno11:8333",
-          "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
-          "sourceQuote": "8333 Operadores de carretillas elevadoras",
-          "reviewedAt": "2026-08-11"
-        }
-      ],
-      "reason": "El output coincide con el límite CNO 8333 de operadores de carretillas elevadoras."
-    },
-    {
-      "order": 7,
-      "officialOutputLabel": "Contador / contadora de recepción y expedición.",
-      "disposition": "accepted",
-      "candidateOccupationIds": ["occupation:cno11:4121"],
-      "acceptedOccupationIds": ["occupation:cno11:4121"],
-      "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/comercio-marketing/servicios-comerciales.html",
-      "sourceQuote": "Contador / contadora de recepción y expedición.",
-      "classificationEvidence": [
-        {
-          "occupationId": "occupation:cno11:4121",
-          "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
-          "sourceQuote": "4121 Empleados de control de abastecimientos e inventario",
-          "reviewedAt": "2026-08-11"
-        }
-      ],
-      "reason": "El output coincide con el límite CNO 4121 de empleados de control de abastecimientos e inventario."
-    },
-    {
-      "order": 8,
-      "officialOutputLabel": "Empleada / empleado de reposición.",
-      "disposition": "accepted",
-      "candidateOccupationIds": ["occupation:cno11:9820"],
-      "acceptedOccupationIds": ["occupation:cno11:9820"],
-      "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/comercio-marketing/servicios-comerciales.html",
-      "sourceQuote": "Empleada / empleado de reposición.",
-      "classificationEvidence": [
-        {
-          "occupationId": "occupation:cno11:9820",
-          "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
-          "sourceQuote": "9820 Reponedores",
-          "reviewedAt": "2026-08-11"
-        }
-      ],
-      "reason": "El output coincide con el límite CNO 9820 de reponedores."
-    },
-    {
-      "order": 9,
-      "officialOutputLabel": "Operador / operadora de cobro o Cajera / cajero.",
-      "disposition": "accepted",
-      "candidateOccupationIds": ["occupation:cno11:5500"],
-      "acceptedOccupationIds": ["occupation:cno11:5500"],
-      "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/comercio-marketing/servicios-comerciales.html",
-      "sourceQuote": "Operador / operadora de cobro o Cajera / cajero.",
-      "classificationEvidence": [
-        {
-          "occupationId": "occupation:cno11:5500",
-          "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
-          "sourceQuote": "5500 Cajeros y taquilleros (excepto bancos)",
-          "reviewedAt": "2026-08-11"
-        }
-      ],
-      "reason": "El output coincide con el límite CNO 5500 de cajeros y taquilleros (excepto bancos)."
-    },
-    {
-      "order": 10,
-      "officialOutputLabel": "Operaria / operario de logística.",
-      "disposition": "accepted",
-      "candidateOccupationIds": ["occupation:cno11:4123"],
-      "acceptedOccupationIds": ["occupation:cno11:4123"],
-      "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/comercio-marketing/servicios-comerciales.html",
-      "sourceQuote": "Operaria / operario de logística.",
-      "classificationEvidence": [
-        {
-          "occupationId": "occupation:cno11:4123",
-          "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
-          "sourceQuote": "4123 Empleados de logística y transporte de pasajeros y mercancías",
-          "reviewedAt": "2026-08-11"
-        }
-      ],
-      "reason": "El output coincide con el límite CNO 4123 de empleados de logística y transporte de pasajeros y mercancías."
-    },
-    {
-      "order": 11,
-      "officialOutputLabel": "Operaria / operario de pedidos.",
-      "disposition": "accepted",
-      "candidateOccupationIds": ["occupation:cno11:4123"],
-      "acceptedOccupationIds": ["occupation:cno11:4123"],
-      "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/comercio-marketing/servicios-comerciales.html",
-      "sourceQuote": "Operaria / operario de pedidos.",
-      "classificationEvidence": [
-        {
-          "occupationId": "occupation:cno11:4123",
-          "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
-          "sourceQuote": "4123 Empleados de logística y transporte de pasajeros y mercancías",
-          "reviewedAt": "2026-08-11"
-        }
-      ],
-      "reason": "El output coincide con el límite CNO 4123 de empleados de logística y transporte de pasajeros y mercancías."
-    }
-  ],
   "acceptedRelations": [
     {
       "kind": "link",
@@ -332,15 +314,13 @@
   "rejectedRelations": [],
   "baselineMatchIds": [],
   "currentMatchIds": [],
-  "newlyReachedOfferIdsByProgram": {
-    "COM01B": []
-  },
+  "newlyReachedOfferIdsByProgram": { "COM01B": [] },
   "newlyReachedOfferUnionIds": [],
   "limitation": "Se aceptan CNO 4121, 4123, 5220, 5492, 5500, 8333 y 9820 para Servicios Comerciales. Las relaciones representan las competencias del título básico.",
   "reviewedCommit": "84e6c581f47b5943c6ae50950859ce4db0be9a98",
   "reviewedCommitAt": "2026-08-11T17:27:42.000Z",
-  "snapshotId": "20260811222221076-727a2dfa2791",
-  "snapshotHash": "8a015dd9f81c1b265f913f269aa36e12de56af8a46cb663c9c7f7cd82387d952",
+  "snapshotId": "20260812011203149-415d767a53f9",
+  "snapshotHash": "fc09a562570e01f0799048faf88fd9b21ca21ad4017f1e051a90d4870a84e45f",
   "publicParity": {
     "publishedRelationKeys": [
       "COM01B|occupation:cno11:4121",
@@ -352,5 +332,23 @@
       "COM01B|occupation:cno11:9820"
     ],
     "rejectedRelationKeys": []
-  }
+  },
+  "seedReconciliations": [
+    {
+      "seedLabel": "Auxiliar de comercio",
+      "sourceOutputLabel": "Auxiliar de animación del punto de venta.",
+      "authoritativeOutputLabel": "Auxiliar de animación del punto de venta.",
+      "sourceOutputEvidence": {
+        "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/comercio-marketing/servicios-comerciales.html",
+        "sourceQuote": "Auxiliar de animación del punto de venta.",
+        "reviewedAt": "2026-08-11"
+      },
+      "authoritativeEvidence": {
+        "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/comercio-marketing/servicios-comerciales.html",
+        "sourceQuote": "Auxiliar de animación del punto de venta.",
+        "reviewedAt": "2026-08-11"
+      },
+      "reason": "El frozen seed Auxiliar de comercio se reconcilia a la primera salida real TodoFP."
+    }
+  ]
 }

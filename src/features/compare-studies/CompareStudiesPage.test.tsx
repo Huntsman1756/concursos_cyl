@@ -207,7 +207,7 @@ describe("CompareStudiesPage", () => {
     expect(
       screen.getByRole("heading", { level: 1, name: "Ingresos observados" }),
     ).toBeVisible();
-    expect(screen.getByText(/Cohorte 2022-2023 · provisional/u)).toBeVisible();
+    expect(screen.getByText(/Cohorte 2019-2020 · año 4/u)).toBeVisible();
     expect(
       screen.getByRole("heading", {
         name: "Ingresos observados del ciclo o grupo en España",
@@ -287,10 +287,30 @@ describe("CompareStudiesPage", () => {
     await user.click(
       await screen.findByRole("radio", { name: "Grado superior" }),
     );
+    // 2022-2023 only has 2 years observed, so year 4 must be disabled
+    await user.selectOptions(
+      screen.getByRole("combobox", { name: "3. Cohorte de titulación" }),
+      "2022-2023",
+    );
     const yearFour = within(
       screen.getByRole("group", { name: "4. Año tras titularse" }),
     ).getByRole("radio", { name: "4" });
     expect(yearFour).toBeDisabled();
+  });
+
+  it("defaults to 2019-2020 cohort and year 4", async () => {
+    installData();
+    const user = userEvent.setup();
+    renderPage();
+
+    // Select Grado medio, which resets to 2019-2020 and year 4
+    await user.click(await screen.findByRole("radio", { name: "Grado medio" }));
+    await user.click(screen.getByRole("checkbox", { name: "Grupo medio 1" }));
+    expect(screen.getByText(/Cohorte 2019-2020/u)).toBeVisible();
+    const year4Checked = within(
+      screen.getByRole("group", { name: "4. Año tras titularse" }),
+    ).getByRole("radio", { name: "4" });
+    expect(year4Checked).toBeChecked();
   });
 
   it("keeps one chosen cohort shared while allowing an observed four-year window", async () => {

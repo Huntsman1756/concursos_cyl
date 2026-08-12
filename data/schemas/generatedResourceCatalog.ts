@@ -45,6 +45,14 @@ export const GENERATED_RESOURCE_CATALOG = {
     fileName: "outcome-indicators.json",
     sourceKind: "educabaseIncome",
   },
+  ecylCourses: {
+    fileName: "ecyl-courses.json",
+    sourceKind: "ecylCourses",
+  },
+  professionalCertificates: {
+    fileName: "professional-certificates.json",
+    sourceKind: "professionalCertificates",
+  },
 } as const;
 
 export type GeneratedResourceKey = keyof typeof GENERATED_RESOURCE_CATALOG;

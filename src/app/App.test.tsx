@@ -35,7 +35,7 @@ describe("App", () => {
       within(
         screen.getByRole("navigation", { name: "Principal" }),
       ).getAllByRole("link"),
-    ).toHaveLength(5);
+    ).toHaveLength(6);
     expect(screen.getByRole("link", { name: "Inicio" })).toHaveAttribute(
       "aria-current",
       "page",
@@ -43,6 +43,10 @@ describe("App", () => {
     expect(
       screen.getByRole("link", { name: "Comparar estudios" }),
     ).toHaveAttribute("href", "/comparar");
+    expect(screen.getByRole("link", { name: "Más formación" })).toHaveAttribute(
+      "href",
+      "/recursos",
+    );
     expect(
       within(screen.getByRole("navigation", { name: "Principal" })).getByRole(
         "link",

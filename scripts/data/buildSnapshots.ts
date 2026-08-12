@@ -50,6 +50,14 @@ import {
 } from "../../data/schemas/generated";
 import { OutcomeIndicatorsResourceSchema } from "../../data/schemas/outcomes";
 import {
+  EcylCourseSourceRecordSchema,
+  EcylCoursesResourceSchema,
+  ProfessionalCertificateSourceRecordSchema,
+  ProfessionalCertificatesResourceSchema,
+  type EcylCourseSourceRecord,
+  type ProfessionalCertificateSourceRecord,
+} from "../../data/schemas/ecylResources";
+import {
   ProfessionalProfilesResourceSchema,
   assertCompleteProfessionalProfileCoverage,
   type ProfessionalProfile,
@@ -83,6 +91,10 @@ import {
   normalizeOffersWithPublishedRequirements,
 } from "./normalizeOffers";
 import { normalizeTraining } from "./normalizeTraining";
+import {
+  normalizeEcylCourses,
+  normalizeProfessionalCertificates,
+} from "./normalizeEcylResources";
 import {
   buildMappingCoverage,
   loadCuratedMappingsFromDisk,
@@ -187,6 +199,14 @@ const RESOURCE_DEFINITIONS = {
     ...GENERATED_RESOURCE_CATALOG.outcomeIndicators,
     schema: OutcomeIndicatorsResourceSchema,
   },
+  ecylCourses: {
+    ...GENERATED_RESOURCE_CATALOG.ecylCourses,
+    schema: EcylCoursesResourceSchema,
+  },
+  professionalCertificates: {
+    ...GENERATED_RESOURCE_CATALOG.professionalCertificates,
+    schema: ProfessionalCertificatesResourceSchema,
+  },
 } as const;
 
 type ResourceKey = GeneratedResourceKey;
@@ -227,6 +247,10 @@ export interface BuildSnapshotsOptions {
   now?: () => Date;
   fetchTrainingRecords?: () => Promise<TrainingSourceRecord[]>;
   fetchOfferRecords?: () => Promise<OfferSourceRecord[]>;
+  fetchEcylCourseRecords?: () => Promise<EcylCourseSourceRecord[]>;
+  fetchProfessionalCertificateRecords?: () => Promise<
+    ProfessionalCertificateSourceRecord[]
+  >;
   fetchIncomeBundle?: () => Promise<EducabaseIncomeBundle>;
   loadCuratedMappings?: (
     programs: readonly z.infer<typeof TrainingProgramSchema>[],
@@ -1280,6 +1304,8 @@ async function writeCandidate(
   fetchedAt: string,
   trainingRecords: readonly TrainingSourceRecord[],
   offerRecords: readonly OfferSourceRecord[],
+  ecylCourseRecords: readonly EcylCourseSourceRecord[],
+  professionalCertificateRecords: readonly ProfessionalCertificateSourceRecord[],
   incomeBundle: EducabaseIncomeBundle,
   outcomeIndicators: z.infer<typeof OutcomeIndicatorsResourceSchema>,
   curatedMappings: ValidatedCuratedMappings,
@@ -1352,6 +1378,12 @@ async function writeCandidate(
     ),
     publishedRequirements: normalizedOfferArtifacts.publishedRequirements,
     outcomeIndicators: OutcomeIndicatorsResourceSchema.parse(outcomeIndicators),
+    ecylCourses: EcylCoursesResourceSchema.parse(
+      normalizeEcylCourses(ecylCourseRecords),
+    ),
+    professionalCertificates: ProfessionalCertificatesResourceSchema.parse(
+      normalizeProfessionalCertificates(professionalCertificateRecords),
+    ),
   };
   const qualityReport = runQualityGates(
     candidate,
@@ -1404,10 +1436,15 @@ async function writeCandidate(
               ? officialOccupationSource
               : RESOURCE_DEFINITIONS[key].sourceKind === "educabaseIncome"
                 ? SOURCE_CONFIG.educabaseIncome
-                : RESOURCE_DEFINITIONS[key].sourceKind ===
-                    "professionalProfiles"
-                  ? professionalProfileSource
-                  : curatedRelationshipSource,
+                : RESOURCE_DEFINITIONS[key].sourceKind === "ecylCourses"
+                  ? SOURCE_CONFIG.ecylCourses
+                  : RESOURCE_DEFINITIONS[key].sourceKind ===
+                      "professionalCertificates"
+                    ? SOURCE_CONFIG.professionalCertificates
+                    : RESOURCE_DEFINITIONS[key].sourceKind ===
+                        "professionalProfiles"
+                      ? professionalProfileSource
+                      : curatedRelationshipSource,
       fetchedAt,
       RESOURCE_DEFINITIONS[key].sourceKind === "offers"
         ? offerSourceSnapshot.sourceUpdatedAt
@@ -2179,23 +2216,50 @@ export async function buildSnapshots(
         ));
     const fetchIncomeBundle =
       options.fetchIncomeBundle ?? (() => loadEducabaseIncomeBundle());
+    const fetchEcylCourseRecords =
+      options.fetchEcylCourseRecords ??
+      (() =>
+        fetchAllRecords(
+          SOURCE_CONFIG.ecylCourses.recordsUrl,
+          EcylCourseSourceRecordSchema,
+        ));
+    const fetchProfessionalCertificateRecords =
+      options.fetchProfessionalCertificateRecords ??
+      (() =>
+        fetchAllRecords(
+          SOURCE_CONFIG.professionalCertificates.recordsUrl,
+          ProfessionalCertificateSourceRecordSchema,
+        ));
 
     let committed = false;
     let staging: string | undefined;
     let immutableDestination: string | undefined;
     try {
-      const [fetchedTrainingRecords, fetchedOfferRecords, incomeBundle] =
-        await Promise.all([
-          fetchTrainingRecords(),
-          fetchOfferRecords(),
-          fetchIncomeBundle(),
-        ]);
+      const [
+        fetchedTrainingRecords,
+        fetchedOfferRecords,
+        incomeBundle,
+        fetchedEcylCourseRecords,
+        fetchedProfessionalCertificateRecords,
+      ] = await Promise.all([
+        fetchTrainingRecords(),
+        fetchOfferRecords(),
+        fetchIncomeBundle(),
+        fetchEcylCourseRecords(),
+        fetchProfessionalCertificateRecords(),
+      ]);
       const trainingRecords = z
         .array(TrainingSourceRecordSchema)
         .parse(fetchedTrainingRecords);
       const offerRecords = z
         .array(OfferSourceRecordSchema)
         .parse(fetchedOfferRecords);
+      const ecylCourseRecords = z
+        .array(EcylCourseSourceRecordSchema)
+        .parse(fetchedEcylCourseRecords);
+      const professionalCertificateRecords = z
+        .array(ProfessionalCertificateSourceRecordSchema)
+        .parse(fetchedProfessionalCertificateRecords);
       const outcomeIndicators = OutcomeIndicatorsResourceSchema.parse(
         normalizeIncomeOutcomes(incomeBundle.tables),
       );
@@ -2247,6 +2311,8 @@ export async function buildSnapshots(
         })),
         offers: offerRecords,
         training: trainingRecords,
+        ecylCourses: ecylCourseRecords,
+        professionalCertificates: professionalCertificateRecords,
       });
       const snapshotId = `${fetchedAt.replace(/\D/gu, "").toLowerCase()}-${sourceHash.slice(0, 12)}`;
       const buildId = `${snapshotId}-${process.pid}`;
@@ -2258,6 +2324,8 @@ export async function buildSnapshots(
         fetchedAt,
         trainingRecords,
         offerRecords,
+        ecylCourseRecords,
+        professionalCertificateRecords,
         incomeBundle,
         outcomeIndicators,
         curatedMappings,

@@ -26,7 +26,7 @@ type PageState =
   | { status: "invalid" }
   | { status: "ready"; index: IncomeOutcomeIndex; stale: boolean };
 
-const LATEST_COHORT = "2022-2023";
+const DEFAULT_COHORT = "2019-2020";
 
 function findWindow(
   index: IncomeOutcomeIndex,
@@ -51,9 +51,9 @@ export function CompareStudiesPage() {
   const [trainingLevel, setTrainingLevel] =
     useState<OutcomeTrainingLevel | null>(null);
   const [groupKeys, setGroupKeys] = useState<readonly string[]>([]);
-  const [cohort, setCohort] = useState(LATEST_COHORT);
+  const [cohort, setCohort] = useState(DEFAULT_COHORT);
   const [postGraduationYear, setPostGraduationYear] = useState<1 | 2 | 3 | 4>(
-    1,
+    4,
   );
 
   useEffect(() => {
@@ -142,8 +142,8 @@ export function CompareStudiesPage() {
   function chooseTrainingLevel(level: OutcomeTrainingLevel) {
     setTrainingLevel(level);
     setGroupKeys([]);
-    setCohort(LATEST_COHORT);
-    setPostGraduationYear(1);
+    setCohort(DEFAULT_COHORT);
+    setPostGraduationYear(4);
   }
 
   function chooseCohort(nextCohort: string) {

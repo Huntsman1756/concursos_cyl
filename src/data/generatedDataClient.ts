@@ -43,6 +43,12 @@ import {
   ProfessionalProfilesResourceSchema,
   type ProfessionalProfile,
 } from "../../data/schemas/professionalProfiles";
+import {
+  EcylCoursesResourceSchema,
+  ProfessionalCertificatesResourceSchema,
+  type EcylCourse,
+  type ProfessionalCertificate,
+} from "../../data/schemas/ecylResources";
 
 export type GeneratedDataErrorCode = "network" | "schema" | "missing";
 
@@ -161,6 +167,33 @@ export function loadManifest(): Promise<LoadableGeneratedManifest> {
     LoadableGeneratedManifestSchema,
     { cache: "no-store" },
   );
+}
+
+export async function loadEcylCourses(
+  manifest: LoadableGeneratedManifest,
+): Promise<EcylCourse[]> {
+  const snapshot = (
+    manifest.resourceSnapshots as typeof manifest.resourceSnapshots &
+      Partial<Record<"ecylCourses", { resourcePath: string }>>
+  ).ecylCourses;
+  return snapshot === undefined
+    ? []
+    : loadGeneratedResource(snapshot.resourcePath, EcylCoursesResourceSchema);
+}
+
+export async function loadProfessionalCertificates(
+  manifest: LoadableGeneratedManifest,
+): Promise<ProfessionalCertificate[]> {
+  const snapshot = (
+    manifest.resourceSnapshots as typeof manifest.resourceSnapshots &
+      Partial<Record<"professionalCertificates", { resourcePath: string }>>
+  ).professionalCertificates;
+  return snapshot === undefined
+    ? []
+    : loadGeneratedResource(
+        snapshot.resourcePath,
+        ProfessionalCertificatesResourceSchema,
+      );
 }
 
 /**

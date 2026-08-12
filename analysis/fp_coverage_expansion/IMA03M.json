@@ -9,11 +9,7 @@
       "to": "in_progress",
       "at": "2026-08-09T17:26:04Z"
     },
-    {
-      "from": "in_progress",
-      "to": "deferred",
-      "at": "2026-08-09T17:26:04Z"
-    }
+    { "from": "in_progress", "to": "deferred", "at": "2026-08-09T17:26:04Z" }
   ],
   "startedAt": "2026-08-09T17:26:04Z",
   "completedAt": "2026-08-09T17:26:04Z",
@@ -37,20 +33,6 @@
     },
     "reconciliationNote": "TodoFP y BOE identifican el mismo título, pero el seed congelado Mantenedor electromecánico no coincide literalmente con ninguna de las nueve salidas BOE. Las salidas cruzan límites mecánicos, eléctricos, electrónicos y de montaje CNO-11."
   },
-  "officialOutputInventory": {
-    "sourceUrl": "https://www.boe.es/eli/es/rd/1589/2011",
-    "labels": [
-      "Mecánico de mantenimiento.",
-      "Montador industrial.",
-      "Montador de equipos eléctricos.",
-      "Montador de equipos electrónicos.",
-      "Mantenedor de línea automatizada.",
-      "Montador de bienes de equipo.",
-      "Montador de automatismos neumáticos e hidráulicos.",
-      "Instalador electricista industrial.",
-      "Electricista de mantenimiento y reparación de equipos de control, medida y precisión."
-    ]
-  },
   "officialOutputReviews": [
     {
       "order": 1,
@@ -61,10 +43,10 @@
       "sourceQuote": "Mecánico de mantenimiento.",
       "classificationEvidence": [
         {
-          "occupationId": "occupation:cno11:7403",
           "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
           "sourceQuote": "7403 Mecánicos y ajustadores de maquinaria agrícola e industrial",
-          "reviewedAt": "2026-08-09"
+          "reviewedAt": "2026-08-09",
+          "occupationId": "occupation:cno11:7403"
         }
       ],
       "reason": "7403 delimita el mantenimiento de maquinaria agrícola e industrial, pero el output no reconcilia literalmente el seed electromecánico congelado."
@@ -81,16 +63,16 @@
       "sourceQuote": "Montador industrial.",
       "classificationEvidence": [
         {
-          "occupationId": "occupation:cno11:8201",
           "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
           "sourceQuote": "8201 Ensambladores de maquinaria mecánica",
-          "reviewedAt": "2026-08-09"
+          "reviewedAt": "2026-08-09",
+          "occupationId": "occupation:cno11:8201"
         },
         {
-          "occupationId": "occupation:cno11:8202",
           "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
           "sourceQuote": "8202 Ensambladores de equipos eléctricos y electrónicos",
-          "reviewedAt": "2026-08-09"
+          "reviewedAt": "2026-08-09",
+          "occupationId": "occupation:cno11:8202"
         }
       ],
       "reason": "Montador industrial no determina si el conjunto ensamblado es mecánico o eléctrico/electrónico; 8201 y 8202 son fronteras alternativas explícitas."
@@ -104,10 +86,10 @@
       "sourceQuote": "Montador de equipos eléctricos.",
       "classificationEvidence": [
         {
-          "occupationId": "occupation:cno11:8202",
           "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
           "sourceQuote": "8202 Ensambladores de equipos eléctricos y electrónicos",
-          "reviewedAt": "2026-08-09"
+          "reviewedAt": "2026-08-09",
+          "occupationId": "occupation:cno11:8202"
         }
       ],
       "reason": "8202 es la frontera de ensamblaje eléctrico, pero el output no es el seed literal Mantenedor electromecánico."
@@ -121,10 +103,10 @@
       "sourceQuote": "Montador de equipos electrónicos.",
       "classificationEvidence": [
         {
-          "occupationId": "occupation:cno11:8202",
           "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
           "sourceQuote": "8202 Ensambladores de equipos eléctricos y electrónicos",
-          "reviewedAt": "2026-08-09"
+          "reviewedAt": "2026-08-09",
+          "occupationId": "occupation:cno11:8202"
         }
       ],
       "reason": "8202 incluye expresamente montadores de equipos electrónicos, pero la salida no reconcilia literalmente el seed congelado."
@@ -142,22 +124,22 @@
       "sourceQuote": "Mantenedor de línea automatizada.",
       "classificationEvidence": [
         {
-          "occupationId": "occupation:cno11:7403",
           "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
           "sourceQuote": "7403 Mecánicos y ajustadores de maquinaria agrícola e industrial",
-          "reviewedAt": "2026-08-09"
+          "reviewedAt": "2026-08-09",
+          "occupationId": "occupation:cno11:7403"
         },
         {
-          "occupationId": "occupation:cno11:7521",
           "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
           "sourceQuote": "7521 Mecánicos y reparadores de equipos eléctricos",
-          "reviewedAt": "2026-08-09"
+          "reviewedAt": "2026-08-09",
+          "occupationId": "occupation:cno11:7521"
         },
         {
-          "occupationId": "occupation:cno11:7531",
           "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
           "sourceQuote": "7531 Mecánicos y reparadores de equipos electrónicos",
-          "reviewedAt": "2026-08-09"
+          "reviewedAt": "2026-08-09",
+          "occupationId": "occupation:cno11:7531"
         }
       ],
       "reason": "Una línea automatizada combina maquinaria industrial, equipos eléctricos y sistemas de control; el output no fija una única frontera 7403/7521/7531."
@@ -174,16 +156,16 @@
       "sourceQuote": "Montador de bienes de equipo.",
       "classificationEvidence": [
         {
-          "occupationId": "occupation:cno11:8201",
           "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
           "sourceQuote": "8201 Ensambladores de maquinaria mecánica",
-          "reviewedAt": "2026-08-09"
+          "reviewedAt": "2026-08-09",
+          "occupationId": "occupation:cno11:8201"
         },
         {
-          "occupationId": "occupation:cno11:8202",
           "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
           "sourceQuote": "8202 Ensambladores de equipos eléctricos y electrónicos",
-          "reviewedAt": "2026-08-09"
+          "reviewedAt": "2026-08-09",
+          "occupationId": "occupation:cno11:8202"
         }
       ],
       "reason": "Bienes de equipo puede abarcar ensamblaje mecánico o eléctrico/electrónico; el literal BOE no selecciona 8201 frente a 8202."
@@ -197,10 +179,10 @@
       "sourceQuote": "Montador de automatismos neumáticos e hidráulicos.",
       "classificationEvidence": [
         {
-          "occupationId": "occupation:cno11:7403",
           "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
           "sourceQuote": "7403 Mecánicos y ajustadores de maquinaria agrícola e industrial",
-          "reviewedAt": "2026-08-09"
+          "reviewedAt": "2026-08-09",
+          "occupationId": "occupation:cno11:7403"
         }
       ],
       "reason": "7403 aporta el límite de maquinaria industrial, pero el output de montaje de automatismos no es una reconciliación literal del seed."
@@ -217,16 +199,16 @@
       "sourceQuote": "Instalador electricista industrial.",
       "classificationEvidence": [
         {
-          "occupationId": "occupation:cno11:7510",
           "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
           "sourceQuote": "7510 Electricistas de la construcción y afines",
-          "reviewedAt": "2026-08-09"
+          "reviewedAt": "2026-08-09",
+          "occupationId": "occupation:cno11:7510"
         },
         {
-          "occupationId": "occupation:cno11:7521",
           "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
           "sourceQuote": "7521 Mecánicos y reparadores de equipos eléctricos",
-          "reviewedAt": "2026-08-09"
+          "reviewedAt": "2026-08-09",
+          "occupationId": "occupation:cno11:7521"
         }
       ],
       "reason": "El calificativo industrial orienta a 7521, pero el título electricista también limita frente a 7510; el output no resuelve la frontera ni coincide con el seed congelado."
@@ -243,21 +225,35 @@
       "sourceQuote": "Electricista de mantenimiento y reparación de equipos de control, medida y precisión.",
       "classificationEvidence": [
         {
-          "occupationId": "occupation:cno11:7521",
           "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
           "sourceQuote": "7521 Mecánicos y reparadores de equipos eléctricos",
-          "reviewedAt": "2026-08-09"
+          "reviewedAt": "2026-08-09",
+          "occupationId": "occupation:cno11:7521"
         },
         {
-          "occupationId": "occupation:cno11:7531",
           "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
           "sourceQuote": "7531 Mecánicos y reparadores de equipos electrónicos",
-          "reviewedAt": "2026-08-09"
+          "reviewedAt": "2026-08-09",
+          "occupationId": "occupation:cno11:7531"
         }
       ],
       "reason": "El control y la medida pueden ser eléctricos o electrónicos; el output no resuelve la frontera 7521 frente a 7531 ni coincide literalmente con el seed."
     }
   ],
+  "officialOutputInventory": {
+    "sourceUrl": "https://www.boe.es/eli/es/rd/1589/2011",
+    "labels": [
+      "Mecánico de mantenimiento.",
+      "Montador industrial.",
+      "Montador de equipos eléctricos.",
+      "Montador de equipos electrónicos.",
+      "Mantenedor de línea automatizada.",
+      "Montador de bienes de equipo.",
+      "Montador de automatismos neumáticos e hidráulicos.",
+      "Instalador electricista industrial.",
+      "Electricista de mantenimiento y reparación de equipos de control, medida y precisión."
+    ]
+  },
   "acceptedRelations": [],
   "rejectedRelations": [
     {
@@ -311,15 +307,13 @@
   ],
   "baselineMatchIds": [],
   "currentMatchIds": [],
-  "newlyReachedOfferIdsByProgram": {
-    "IMA03M": []
-  },
+  "newlyReachedOfferIdsByProgram": { "IMA03M": [] },
   "newlyReachedOfferUnionIds": [],
   "limitation": "Deferred: el seed congelado Mantenedor electromecánico no aparece literalmente en el inventario BOE exhaustivo. Las fronteras CNO-11 auditadas no se promueven a relaciones publicadas; no se crean aliases, no se modifican data/curated, public ni snapshots, y el delta de ofertas permanece vacío.",
   "reviewedCommit": "9b0c329a98ad311ffd0bfdf2903ffd97fb375ea3",
   "reviewedCommitAt": "2026-08-09T17:26:04.000Z",
-  "snapshotId": "20260811222221076-727a2dfa2791",
-  "snapshotHash": "7e480c89ae6f1675c28e61924c4272620c118d3483876b9233349016f835ebef",
+  "snapshotId": "20260812011203149-415d767a53f9",
+  "snapshotHash": "aee9ff0b23887f990d8f542bf16e7795a4752410c36ea923024163b456e02aea",
   "publicParity": {
     "publishedRelationKeys": [],
     "rejectedRelationKeys": [

@@ -40,6 +40,9 @@ export function AppShell({ children }: AppShellProps) {
                 <NavLink to="/comparar">Comparar estudios</NavLink>
               </li>
               <li>
+                <NavLink to="/recursos">Más formación</NavLink>
+              </li>
+              <li>
                 <NavLink to="/metodologia">Metodología</NavLink>
               </li>
             </ul>

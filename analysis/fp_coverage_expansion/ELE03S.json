@@ -37,20 +37,6 @@
     },
     "reconciliationNote": "TodoFP enumera nueve salidas especializadas para el grado superior en Mantenimiento Electrónico; la denominación genérica de técnico de mantenimiento electrónico se subsume bajo el mismo conjunto de salidas TodoFP y se reconilia sobre el límite CNO 7531."
   },
-  "officialOutputInventory": {
-    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/electricidad-electronica/mantenimiento-electronico.html",
-    "labels": [
-      "Técnica / técnico en reparación y mantenimiento de equipos de redes locales y sistemas telemáticos.",
-      "Técnica / técnico en reparación y mantenimiento de equipos profesionales de audio, de video y de equipos industriales",
-      "Técnica / técnico en reparación y mantenimiento de sistemas de radio y televisión de sistemas de producción audiovisual y de radiodifusión.",
-      "Técnica / técnico en reparación y mantenimiento de sistemas domóticos, inmóticos y de seguridad electrónica.",
-      "Técnica / técnico en supervisión y verificación de equipos de sistemas de radio y televisión y sistemas de producción audiovisual.",
-      "Técnica / técnico en supervisión y verificación de equipos de sistemas de radiodifusión.",
-      "Técnica / técnico en supervisión y verificación de equipos de sistemas domóticos, inmóticos y de seguridad electrónica.",
-      "Técnica / técnico en supervisión y verificación en redes locales y sistemas telemáticos",
-      "Técnica / técnico en supervisión, verificación y control en sistemas de radioenlaces."
-    ]
-  },
   "officialOutputReviews": [
     {
       "order": 1,
@@ -62,10 +48,10 @@
       "sourceQuote": "Técnica / técnico en reparación y mantenimiento de equipos de redes locales y sistemas telemáticos.",
       "classificationEvidence": [
         {
-          "occupationId": "occupation:cno11:7531",
           "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
           "sourceQuote": "7531 Técnicos de reparación de equipos electrónicos y de comunicaciones",
-          "reviewedAt": "2026-08-11"
+          "reviewedAt": "2026-08-11",
+          "occupationId": "occupation:cno11:7531"
         }
       ],
       "reason": "La reparación y mantenimiento de equipos de redes locales y sistemas telemáticos se incluye en el límite CNO 7531 de técnicos de reparación de equipos electrónicos."
@@ -80,10 +66,10 @@
       "sourceQuote": "Técnica / técnico en reparación y mantenimiento de equipos profesionales de audio, de video y de equipos industriales",
       "classificationEvidence": [
         {
-          "occupationId": "occupation:cno11:7531",
           "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
           "sourceQuote": "7531 Técnicos de reparación de equipos electrónicos y de comunicaciones",
-          "reviewedAt": "2026-08-11"
+          "reviewedAt": "2026-08-11",
+          "occupationId": "occupation:cno11:7531"
         }
       ],
       "reason": "El mantenimiento de equipos profesionales de audio, video y equipos industriales especializados se subsume en el límite CNO 7531 de técnicos de reparación de equipos electrónicos."
@@ -98,10 +84,10 @@
       "sourceQuote": "Técnica / técnico en reparación y mantenimiento de sistemas de radio y televisión de sistemas de producción audiovisual y de radiodifusión.",
       "classificationEvidence": [
         {
-          "occupationId": "occupation:cno11:7531",
           "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
           "sourceQuote": "7531 Técnicos de reparación de equipos electrónicos y de comunicaciones",
-          "reviewedAt": "2026-08-11"
+          "reviewedAt": "2026-08-11",
+          "occupationId": "occupation:cno11:7531"
         }
       ],
       "reason": "La reparación y mantenimiento de sistemas de radio y televisión se incluye dentro del ámbito CNO 7531 de técnicos de reparación de equipos electrónicos y de comunicaciones."
@@ -116,10 +102,10 @@
       "sourceQuote": "Técnica / técnico en reparación y mantenimiento de sistemas domóticos, inmóticos y de seguridad electrónica.",
       "classificationEvidence": [
         {
-          "occupationId": "occupation:cno11:7531",
           "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
           "sourceQuote": "7531 Técnicos de reparación de equipos electrónicos y de comunicaciones",
-          "reviewedAt": "2026-08-11"
+          "reviewedAt": "2026-08-11",
+          "occupationId": "occupation:cno11:7531"
         }
       ],
       "reason": "El mantenimiento de sistemas domóticos e inmóticos de electrónica se cubre por el límite CNO 7531 de técnicos de reparación de equipos electrónicos."
@@ -134,10 +120,10 @@
       "sourceQuote": "Técnica / técnico en supervisión y verificación de equipos de sistemas de radio y televisión y sistemas de producción audiovisual.",
       "classificationEvidence": [
         {
-          "occupationId": "occupation:cno11:7531",
           "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
           "sourceQuote": "7531 Técnicos de reparación de equipos electrónicos y de communications",
-          "reviewedAt": "2026-08-11"
+          "reviewedAt": "2026-08-11",
+          "occupationId": "occupation:cno11:7531"
         }
       ],
       "reason": "La supervisión y verificación de equipos de radio, telecomunicaciones y producción audiovisual corresponde a técnicos de electrónica bajo el límite CNO 7531."
@@ -152,10 +138,10 @@
       "sourceQuote": "Técnica / técnico en supervisión y verificación de equipos de sistemas de radiodifusión.",
       "classificationEvidence": [
         {
-          "occupationId": "occupation:cno11:7531",
           "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
           "sourceQuote": "7531 Técnicos de reparación de equipos electrónicos y de comunicaciones",
-          "reviewedAt": "2026-08-11"
+          "reviewedAt": "2026-08-11",
+          "occupationId": "occupation:cno11:7531"
         }
       ],
       "reason": "La supervisión y verificación de equipos de radiodifusión se subsume en el límite CNO 7531 de técnicos de reparación de equipos electrónicos y de comunicaciones."
@@ -170,10 +156,10 @@
       "sourceQuote": "Técnica / técnico en supervisión y verificación de equipos de sistemas domóticos, inmóticos y de seguridad electrónica.",
       "classificationEvidence": [
         {
-          "occupationId": "occupation:cno11:7531",
           "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
           "sourceQuote": "7531 Técnicos de reparación de equipos electrónicos y de comunicaciones",
-          "reviewedAt": "2026-08-11"
+          "reviewedAt": "2026-08-11",
+          "occupationId": "occupation:cno11:7531"
         }
       ],
       "reason": "La supervisión y verificación de sistemas domóticos e inmóticos de electrónica corresponde al límite CNO 7531 de técnicos de reparación electrónica."
@@ -188,10 +174,10 @@
       "sourceQuote": "Técnica / técnico en supervisión y verificación en redes locales y sistemas telemáticos",
       "classificationEvidence": [
         {
-          "occupationId": "occupation:cno11:7531",
           "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
           "sourceQuote": "7531 Técnicos de reparación de equipos electrónicos y de comunicaciones",
-          "reviewedAt": "2026-08-11"
+          "reviewedAt": "2026-08-11",
+          "occupationId": "occupation:cno11:7531"
         }
       ],
       "reason": "La supervisión y verificación en redes locales y sistemas telemáticos se incluye en el límite CNO 7531 de técnicos de reparación de equipos electrónicos."
@@ -206,15 +192,53 @@
       "sourceQuote": "Técnica / técnico en supervisión, verificación y control en sistemas de radioenlaces.",
       "classificationEvidence": [
         {
-          "occupationId": "occupation:cno11:7531",
           "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
           "sourceQuote": "7531 Técnicos de reparación de equipos electrónicos y de comunicaciones",
-          "reviewedAt": "2026-08-11"
+          "reviewedAt": "2026-08-11",
+          "occupationId": "occupation:cno11:7531"
         }
       ],
       "reason": "La supervisión, verificación y control de sistemas de radioenlaces se subsume en el límite CNO 7531 de técnicos de reparación de equipos electrónicos y de comunicaciones."
     }
   ],
+  "officialOutputInventory": {
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/electricidad-electronica/mantenimiento-electronico.html",
+    "labels": [
+      "Técnica / técnico en reparación y mantenimiento de equipos de redes locales y sistemas telemáticos.",
+      "Técnica / técnico en reparación y mantenimiento de equipos profesionales de audio, de video y de equipos industriales",
+      "Técnica / técnico en reparación y mantenimiento de sistemas de radio y televisión de sistemas de producción audiovisual y de radiodifusión.",
+      "Técnica / técnico en reparación y mantenimiento de sistemas domóticos, inmóticos y de seguridad electrónica.",
+      "Técnica / técnico en supervisión y verificación de equipos de sistemas de radio y televisión y sistemas de producción audiovisual.",
+      "Técnica / técnico en supervisión y verificación de equipos de sistemas de radiodifusión.",
+      "Técnica / técnico en supervisión y verificación de equipos de sistemas domóticos, inmóticos y de seguridad electrónica.",
+      "Técnica / técnico en supervisión y verificación en redes locales y sistemas telemáticos",
+      "Técnica / técnico en supervisión, verificación y control en sistemas de radioenlaces."
+    ]
+  },
+  "acceptedRelations": [
+    {
+      "kind": "link",
+      "programKey": "ELE03S",
+      "occupationId": "occupation:cno11:7531",
+      "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+      "sourceQuote": "7531 Técnicos de reparación de equipos electrónicos y de comunicaciones",
+      "reviewedAt": "2026-08-11"
+    }
+  ],
+  "rejectedRelations": [],
+  "baselineMatchIds": [],
+  "currentMatchIds": [],
+  "newlyReachedOfferIdsByProgram": { "ELE03S": [] },
+  "newlyReachedOfferUnionIds": [],
+  "limitation": "El límite aceptado es solo CNO 7531 (técnicos de reparación de equipos electrónicos y de comunicaciones) para las nueve salidas de TodoFP del grado superior Mantenimiento Electrónico. La denominación genérica se subsume bajo la misma clasificación.",
+  "reviewedCommit": "84e6c581f47b5943c6ae50950859ce4db0be9a98",
+  "reviewedCommitAt": "2026-08-11T17:27:42.000Z",
+  "snapshotId": "20260812011203149-415d767a53f9",
+  "snapshotHash": "c5ea7195bc0f40dc0933d0f509cdad8cb3dd9e293ac063bc4dc296359440d516",
+  "publicParity": {
+    "publishedRelationKeys": ["ELE03S|occupation:cno11:7531"],
+    "rejectedRelationKeys": []
+  },
   "seedReconciliations": [
     {
       "seedLabel": "Técnico de mantenimiento electrónico",
@@ -232,31 +256,5 @@
       },
       "reason": "El seed congelado (frozen) es genérico y amplio ('Técnico de mantenimiento electrónico'). Esta reconciliación lo mapea a la primera salida especializada TodoFP del inventario autoritativo ('Técnica / técnico en reparación y mantenimiento de equipos de redes locales y sistemas telemáticos.') únicamente para preservar la procedencia del candidato, mientras que el inventario completo de 9 filas es revvisto. Se trata de una reconciliación, no de una coincidencia exacta."
     }
-  ],
-  "acceptedRelations": [
-    {
-      "kind": "link",
-      "programKey": "ELE03S",
-      "occupationId": "occupation:cno11:7531",
-      "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
-      "sourceQuote": "7531 Técnicos de reparación de equipos electrónicos y de comunicaciones",
-      "reviewedAt": "2026-08-11"
-    }
-  ],
-  "rejectedRelations": [],
-  "baselineMatchIds": [],
-  "currentMatchIds": [],
-  "newlyReachedOfferIdsByProgram": {
-    "ELE03S": []
-  },
-  "newlyReachedOfferUnionIds": [],
-  "limitation": "El límite aceptado es solo CNO 7531 (técnicos de reparación de equipos electrónicos y de comunicaciones) para las nueve salidas de TodoFP del grado superior Mantenimiento Electrónico. La denominación genérica se subsume bajo la misma clasificación.",
-  "reviewedCommit": "84e6c581f47b5943c6ae50950859ce4db0be9a98",
-  "reviewedCommitAt": "2026-08-11T17:27:42.000Z",
-  "snapshotId": "20260811222221076-727a2dfa2791",
-  "snapshotHash": "620e6e60820f14f100f0969dee79deb85ac3db0eb1b939c31d51d505b97837a5",
-  "publicParity": {
-    "publishedRelationKeys": ["ELE03S|occupation:cno11:7531"],
-    "rejectedRelationKeys": []
-  }
+  ]
 }

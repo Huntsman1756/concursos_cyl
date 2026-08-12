@@ -37,47 +37,6 @@
     },
     "reconciliationNote": "TodoFP and BOE identify the same intermediate programme; the BOE inventory is exhaustive, but its Jardinero, en general. label does not exactly match the frozen Jardinero seed."
   },
-  "seedReconciliations": [
-    {
-      "seedLabel": "Jardinero",
-      "sourceOutputLabel": "Jardinera / jardinero, en general.",
-      "authoritativeOutputLabel": "Jardinero, en general.",
-      "sourceOutputEvidence": {
-        "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/agraria/jardineria-floristeria.html",
-        "sourceQuote": "Jardinera / jardinero, en general.",
-        "reviewedAt": "2026-08-11"
-      },
-      "authoritativeEvidence": {
-        "sourceUrl": "https://www.boe.es/eli/es/rd/1129/2010",
-        "sourceQuote": "Jardinero, en general.",
-        "reviewedAt": "2026-08-11"
-      },
-      "reason": "Both sources identify the same bounded general-gardener role; the TodoFP gender-inclusive variant does not create a separate occupation from the authoritative BOE label."
-    }
-  ],
-  "officialOutputInventory": {
-    "sourceUrl": "https://www.boe.es/eli/es/rd/1129/2010",
-    "labels": [
-      "Trabajador de huertas, viveros y jardines.",
-      "Jardinero, en general.",
-      "Jardinero cuidador de campos de deporte.",
-      "Trabajador de parques urbanos, jardines históricos y botánicos.",
-      "Trabajador cualificado en la instalación de jardines y zonas verdes.",
-      "Trabajador cualificado en mantenimiento y mejora de jardines y zonas verdes.",
-      "Trabajador cualificado por cuenta propia en empresa de jardinería.",
-      "Viverista.",
-      "Trabajador en viveros, en general.",
-      "Trabajador cualificado en propagación de plantas en viveros.",
-      "Trabajador cualificado en cultivo de plantas en viveros.",
-      "Trabajador especialista en recolección de semillas y frutos en altura.",
-      "Trabajador cualificado en producción de semillas.",
-      "Injertador.",
-      "Trabajador cualificado en viveros.",
-      "Florista por cuenta propia o ajena.",
-      "Oficial de floristería.",
-      "Vendedor de floristería."
-    ]
-  },
   "officialOutputReviews": [
     {
       "order": 1,
@@ -89,10 +48,10 @@
       "sourceQuote": "Trabajador de huertas, viveros y jardines.",
       "classificationEvidence": [
         {
-          "occupationId": "occupation:cno11:6120",
           "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
           "sourceQuote": "6120 Trabajadores cualificados en huertas, invernaderos, viveros y jardines",
-          "reviewedAt": "2026-08-09"
+          "reviewedAt": "2026-08-09",
+          "occupationId": "occupation:cno11:6120"
         }
       ],
       "reason": "The output is directly within the CNO 6120 qualified horticulture, nursery and gardening boundary."
@@ -107,10 +66,10 @@
       "sourceQuote": "Jardinero, en general.",
       "classificationEvidence": [
         {
-          "occupationId": "occupation:cno11:6120",
           "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
           "sourceQuote": "6120 Trabajadores cualificados en huertas, invernaderos, viveros y jardines",
-          "reviewedAt": "2026-08-09"
+          "reviewedAt": "2026-08-09",
+          "occupationId": "occupation:cno11:6120"
         }
       ],
       "reason": "INE places general gardeners inside the CNO 6120 gardening boundary, but the output wording exposes the frozen seed mismatch."
@@ -125,10 +84,10 @@
       "sourceQuote": "Jardinero cuidador de campos de deporte.",
       "classificationEvidence": [
         {
-          "occupationId": "occupation:cno11:6120",
           "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
           "sourceQuote": "6120 Trabajadores cualificados en huertas, invernaderos, viveros y jardines",
-          "reviewedAt": "2026-08-09"
+          "reviewedAt": "2026-08-09",
+          "occupationId": "occupation:cno11:6120"
         }
       ],
       "reason": "The bounded maintenance of sports-field vegetation is a gardening duty within CNO 6120."
@@ -143,10 +102,10 @@
       "sourceQuote": "Trabajador de parques urbanos, jardines históricos y botánicos.",
       "classificationEvidence": [
         {
-          "occupationId": "occupation:cno11:6120",
           "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
           "sourceQuote": "6120 Trabajadores cualificados en huertas, invernaderos, viveros y jardines",
-          "reviewedAt": "2026-08-09"
+          "reviewedAt": "2026-08-09",
+          "occupationId": "occupation:cno11:6120"
         }
       ],
       "reason": "The official output is a bounded gardening and plant-maintenance role within CNO 6120."
@@ -161,10 +120,10 @@
       "sourceQuote": "Trabajador cualificado en la instalación de jardines y zonas verdes.",
       "classificationEvidence": [
         {
-          "occupationId": "occupation:cno11:6120",
           "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
           "sourceQuote": "6120 Trabajadores cualificados en huertas, invernaderos, viveros y jardines",
-          "reviewedAt": "2026-08-09"
+          "reviewedAt": "2026-08-09",
+          "occupationId": "occupation:cno11:6120"
         }
       ],
       "reason": "Installation and maintenance of gardens and green areas are bounded gardening work under CNO 6120."
@@ -179,10 +138,10 @@
       "sourceQuote": "Trabajador cualificado en mantenimiento y mejora de jardines y zonas verdes.",
       "classificationEvidence": [
         {
-          "occupationId": "occupation:cno11:6120",
           "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
           "sourceQuote": "6120 Trabajadores cualificados en huertas, invernaderos, viveros y jardines",
-          "reviewedAt": "2026-08-09"
+          "reviewedAt": "2026-08-09",
+          "occupationId": "occupation:cno11:6120"
         }
       ],
       "reason": "Maintenance, improvement, planting, pruning and irrigation are within the CNO 6120 gardening task boundary."
@@ -197,10 +156,10 @@
       "sourceQuote": "Trabajador cualificado por cuenta propia en empresa de jardinería.",
       "classificationEvidence": [
         {
-          "occupationId": "occupation:cno11:6120",
           "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
           "sourceQuote": "6120 Trabajadores cualificados en huertas, invernaderos, viveros y jardines",
-          "reviewedAt": "2026-08-09"
+          "reviewedAt": "2026-08-09",
+          "occupationId": "occupation:cno11:6120"
         }
       ],
       "reason": "Self-employment describes the work arrangement; the underlying qualified gardening work remains within CNO 6120."
@@ -215,10 +174,10 @@
       "sourceQuote": "Viverista.",
       "classificationEvidence": [
         {
-          "occupationId": "occupation:cno11:6120",
           "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
           "sourceQuote": "6120 Trabajadores cualificados en huertas, invernaderos, viveros y jardines",
-          "reviewedAt": "2026-08-09"
+          "reviewedAt": "2026-08-09",
+          "occupationId": "occupation:cno11:6120"
         }
       ],
       "reason": "Nursery and plant-production work is named within CNO 6120."
@@ -233,10 +192,10 @@
       "sourceQuote": "Trabajador en viveros, en general.",
       "classificationEvidence": [
         {
-          "occupationId": "occupation:cno11:6120",
           "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
           "sourceQuote": "6120 Trabajadores cualificados en huertas, invernaderos, viveros y jardines",
-          "reviewedAt": "2026-08-09"
+          "reviewedAt": "2026-08-09",
+          "occupationId": "occupation:cno11:6120"
         }
       ],
       "reason": "General nursery work is directly bounded by CNO 6120."
@@ -251,10 +210,10 @@
       "sourceQuote": "Trabajador cualificado en propagación de plantas en viveros.",
       "classificationEvidence": [
         {
-          "occupationId": "occupation:cno11:6120",
           "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
           "sourceQuote": "6120 Trabajadores cualificados en huertas, invernaderos, viveros y jardines",
-          "reviewedAt": "2026-08-09"
+          "reviewedAt": "2026-08-09",
+          "occupationId": "occupation:cno11:6120"
         }
       ],
       "reason": "Propagation from seeds or cuttings is explicitly part of the CNO 6120 nursery boundary."
@@ -269,10 +228,10 @@
       "sourceQuote": "Trabajador cualificado en cultivo de plantas en viveros.",
       "classificationEvidence": [
         {
-          "occupationId": "occupation:cno11:6120",
           "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
           "sourceQuote": "6120 Trabajadores cualificados en huertas, invernaderos, viveros y jardines",
-          "reviewedAt": "2026-08-09"
+          "reviewedAt": "2026-08-09",
+          "occupationId": "occupation:cno11:6120"
         }
       ],
       "reason": "Cultivation and maintenance of nursery plants are directly within CNO 6120."
@@ -287,10 +246,10 @@
       "sourceQuote": "Trabajador especialista en recolección de semillas y frutos en altura.",
       "classificationEvidence": [
         {
-          "occupationId": "occupation:cno11:6120",
           "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
           "sourceQuote": "6120 Trabajadores cualificados en huertas, invernaderos, viveros y jardines",
-          "reviewedAt": "2026-08-09"
+          "reviewedAt": "2026-08-09",
+          "occupationId": "occupation:cno11:6120"
         }
       ],
       "reason": "The seed-production component is within CNO 6120; the height modality does not create a separate occupation."
@@ -305,10 +264,10 @@
       "sourceQuote": "Trabajador cualificado en producción de semillas.",
       "classificationEvidence": [
         {
-          "occupationId": "occupation:cno11:6120",
           "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
           "sourceQuote": "6120 Trabajadores cualificados en huertas, invernaderos, viveros y jardines",
-          "reviewedAt": "2026-08-09"
+          "reviewedAt": "2026-08-09",
+          "occupationId": "occupation:cno11:6120"
         }
       ],
       "reason": "Production of seeds is explicitly within CNO 6120."
@@ -332,10 +291,10 @@
       "sourceQuote": "Trabajador cualificado en viveros.",
       "classificationEvidence": [
         {
-          "occupationId": "occupation:cno11:6120",
           "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
           "sourceQuote": "6120 Trabajadores cualificados en huertas, invernaderos, viveros y jardines",
-          "reviewedAt": "2026-08-09"
+          "reviewedAt": "2026-08-09",
+          "occupationId": "occupation:cno11:6120"
         }
       ],
       "reason": "Qualified nursery work is directly bounded by CNO 6120."
@@ -368,15 +327,38 @@
       "sourceQuote": "Vendedor de floristería.",
       "classificationEvidence": [
         {
-          "occupationId": "occupation:cno11:5220",
           "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
           "sourceQuote": "5220 Vendedores en tiendas y almacenes",
-          "reviewedAt": "2026-08-09"
+          "reviewedAt": "2026-08-09",
+          "occupationId": "occupation:cno11:5220"
         }
       ],
       "reason": "The explicit retail sale of flowers is within the CNO 5220 seller boundary."
     }
   ],
+  "officialOutputInventory": {
+    "sourceUrl": "https://www.boe.es/eli/es/rd/1129/2010",
+    "labels": [
+      "Trabajador de huertas, viveros y jardines.",
+      "Jardinero, en general.",
+      "Jardinero cuidador de campos de deporte.",
+      "Trabajador de parques urbanos, jardines históricos y botánicos.",
+      "Trabajador cualificado en la instalación de jardines y zonas verdes.",
+      "Trabajador cualificado en mantenimiento y mejora de jardines y zonas verdes.",
+      "Trabajador cualificado por cuenta propia en empresa de jardinería.",
+      "Viverista.",
+      "Trabajador en viveros, en general.",
+      "Trabajador cualificado en propagación de plantas en viveros.",
+      "Trabajador cualificado en cultivo de plantas en viveros.",
+      "Trabajador especialista en recolección de semillas y frutos en altura.",
+      "Trabajador cualificado en producción de semillas.",
+      "Injertador.",
+      "Trabajador cualificado en viveros.",
+      "Florista por cuenta propia o ajena.",
+      "Oficial de floristería.",
+      "Vendedor de floristería."
+    ]
+  },
   "acceptedRelations": [
     {
       "kind": "link",
@@ -415,15 +397,13 @@
   ],
   "baselineMatchIds": [],
   "currentMatchIds": [],
-  "newlyReachedOfferIdsByProgram": {
-    "AGA03M": []
-  },
+  "newlyReachedOfferIdsByProgram": { "AGA03M": [] },
   "newlyReachedOfferUnionIds": [],
   "limitation": "The reviewed boundary accepts CNO 6120 (trabajadores cualificados en huertas, viveros y jardines) and CNO 5220 (vendedores en tiendas y almacenes) as the occupation set for Jardinería y Floristería. Exclusions: CNO 6110 (injertador) and CNO 3142 (florista) are rejected due to unestablished exact boundaries.",
   "reviewedCommit": "8556f4c79fb3d3edc9dd41d13a4c2567027732d3",
   "reviewedCommitAt": "2026-08-11T12:40:12.000Z",
-  "snapshotId": "20260811222221076-727a2dfa2791",
-  "snapshotHash": "4406e4f3bfe26f023264ba4dea523fe0dbb072c40283caf95a69fd89e0c4aec6",
+  "snapshotId": "20260812011203149-415d767a53f9",
+  "snapshotHash": "0cdd454e4b34be7837c105222864bb28a6294f234d968ee84599fe06dbe4d12c",
   "publicParity": {
     "publishedRelationKeys": [
       "AGA03M|occupation:cno11:5220",
@@ -433,5 +413,23 @@
       "AGA03M|occupation:cno11:3142",
       "AGA03M|occupation:cno11:6110"
     ]
-  }
+  },
+  "seedReconciliations": [
+    {
+      "seedLabel": "Jardinero",
+      "sourceOutputLabel": "Jardinera / jardinero, en general.",
+      "authoritativeOutputLabel": "Jardinero, en general.",
+      "sourceOutputEvidence": {
+        "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/agraria/jardineria-floristeria.html",
+        "sourceQuote": "Jardinera / jardinero, en general.",
+        "reviewedAt": "2026-08-11"
+      },
+      "authoritativeEvidence": {
+        "sourceUrl": "https://www.boe.es/eli/es/rd/1129/2010",
+        "sourceQuote": "Jardinero, en general.",
+        "reviewedAt": "2026-08-11"
+      },
+      "reason": "Both sources identify the same bounded general-gardener role; the TodoFP gender-inclusive variant does not create a separate occupation from the authoritative BOE label."
+    }
+  ]
 }

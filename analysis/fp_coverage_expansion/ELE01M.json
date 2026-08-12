@@ -37,20 +37,6 @@
     },
     "reconciliationNote": "TodoFP y el BOE identifican el mismo título. El artículo 7.2 del BOE enumera nueve salidas en orden, pero ninguna coincide literalmente con el seed Instalador electricista."
   },
-  "officialOutputInventory": {
-    "sourceUrl": "https://www.boe.es/eli/es/rd/177/2008",
-    "labels": [
-      "Instalador-mantenedor electricista.",
-      "Electricista de construcción.",
-      "Electricista industrial.",
-      "Electricista de mantenimiento.",
-      "Instalador-mantenedor de sistemas domóticos.",
-      "Instalador-mantenedor de antenas.",
-      "Instalador de telecomunicaciones en edificios de viviendas.",
-      "Instalador-mantenedor de equipos e instalaciones telefónicas.",
-      "Montador de instalaciones de energía solar fotovoltaica."
-    ]
-  },
   "officialOutputReviews": [
     {
       "order": 1,
@@ -61,10 +47,10 @@
       "sourceQuote": "Instalador-mantenedor electricista.",
       "classificationEvidence": [
         {
-          "occupationId": "occupation:cno11:7510",
           "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
           "sourceQuote": "7510 Electricistas de la construcción y afines",
-          "reviewedAt": "2026-08-09"
+          "reviewedAt": "2026-08-09",
+          "occupationId": "occupation:cno11:7510"
         }
       ],
       "reason": "7510 is a construction-and-related-electricians boundary, but the BOE output is not the frozen seed literal."
@@ -78,10 +64,10 @@
       "sourceQuote": "Electricista de construcción.",
       "classificationEvidence": [
         {
-          "occupationId": "occupation:cno11:7510",
           "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
           "sourceQuote": "7510 Electricistas de la construcción y afines",
-          "reviewedAt": "2026-08-09"
+          "reviewedAt": "2026-08-09",
+          "occupationId": "occupation:cno11:7510"
         }
       ],
       "reason": "The construction qualifier fixes only the 7510 boundary and does not reconcile literally to Instalador electricista."
@@ -95,10 +81,10 @@
       "sourceQuote": "Electricista industrial.",
       "classificationEvidence": [
         {
-          "occupationId": "occupation:cno11:7510",
           "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
           "sourceQuote": "7510 Electricistas de la construcción y afines",
-          "reviewedAt": "2026-08-09"
+          "reviewedAt": "2026-08-09",
+          "occupationId": "occupation:cno11:7510"
         }
       ],
       "reason": "Industrial electrical work does not establish a distinct exact CNO-11 class here and is not the frozen seed literal."
@@ -112,10 +98,10 @@
       "sourceQuote": "Electricista de mantenimiento.",
       "classificationEvidence": [
         {
-          "occupationId": "occupation:cno11:7521",
           "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
           "sourceQuote": "7521 Mecánicos y reparadores de equipos eléctricos",
-          "reviewedAt": "2026-08-09"
+          "reviewedAt": "2026-08-09",
+          "occupationId": "occupation:cno11:7521"
         }
       ],
       "reason": "Maintenance is bounded toward 7521 equipment repair, but the output is distinct from the frozen seed and does not prove a broader relation."
@@ -132,16 +118,16 @@
       "sourceQuote": "Instalador-mantenedor de sistemas domóticos.",
       "classificationEvidence": [
         {
-          "occupationId": "occupation:cno11:7521",
           "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
           "sourceQuote": "7521 Mecánicos y reparadores de equipos eléctricos",
-          "reviewedAt": "2026-08-09"
+          "reviewedAt": "2026-08-09",
+          "occupationId": "occupation:cno11:7521"
         },
         {
-          "occupationId": "occupation:cno11:7533",
           "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
           "sourceQuote": "7533 Instaladores y reparadores en tecnologías de la información y las comunicaciones",
-          "reviewedAt": "2026-08-09"
+          "reviewedAt": "2026-08-09",
+          "occupationId": "occupation:cno11:7533"
         }
       ],
       "reason": "Domotics crosses electrical equipment and communications boundaries; the short output does not select one exact CNO-11 occupation."
@@ -155,10 +141,10 @@
       "sourceQuote": "Instalador-mantenedor de antenas.",
       "classificationEvidence": [
         {
-          "occupationId": "occupation:cno11:7533",
           "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
           "sourceQuote": "7533 Instaladores y reparadores en tecnologías de la información y las comunicaciones",
-          "reviewedAt": "2026-08-09"
+          "reviewedAt": "2026-08-09",
+          "occupationId": "occupation:cno11:7533"
         }
       ],
       "reason": "Antenna installation is a communications boundary under 7533, not the frozen seed literal."
@@ -172,10 +158,10 @@
       "sourceQuote": "Instalador de telecomunicaciones en edificios de viviendas.",
       "classificationEvidence": [
         {
-          "occupationId": "occupation:cno11:7533",
           "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
           "sourceQuote": "7533 Instaladores y reparadores en tecnologías de la información y las comunicaciones",
-          "reviewedAt": "2026-08-09"
+          "reviewedAt": "2026-08-09",
+          "occupationId": "occupation:cno11:7533"
         }
       ],
       "reason": "The explicit telecommunications scope is 7533 and remains distinct from the frozen seed."
@@ -189,10 +175,10 @@
       "sourceQuote": "Instalador-mantenedor de equipos e instalaciones telefónicas.",
       "classificationEvidence": [
         {
-          "occupationId": "occupation:cno11:7533",
           "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
           "sourceQuote": "7533 Instaladores y reparadores en tecnologías de la información y las comunicaciones",
-          "reviewedAt": "2026-08-09"
+          "reviewedAt": "2026-08-09",
+          "occupationId": "occupation:cno11:7533"
         }
       ],
       "reason": "Telephone equipment and installations are a 7533 communications boundary and cannot be promoted as the seed."
@@ -206,15 +192,29 @@
       "sourceQuote": "Montador de instalaciones de energía solar fotovoltaica.",
       "classificationEvidence": [
         {
-          "occupationId": "occupation:cno11:7294",
           "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
           "sourceQuote": "7294 Montadores-instaladores de placas de energía solar",
-          "reviewedAt": "2026-08-09"
+          "reviewedAt": "2026-08-09",
+          "occupationId": "occupation:cno11:7294"
         }
       ],
       "reason": "Photovoltaic mounting is the distinct 7294 solar-installation boundary and is not the frozen seed."
     }
   ],
+  "officialOutputInventory": {
+    "sourceUrl": "https://www.boe.es/eli/es/rd/177/2008",
+    "labels": [
+      "Instalador-mantenedor electricista.",
+      "Electricista de construcción.",
+      "Electricista industrial.",
+      "Electricista de mantenimiento.",
+      "Instalador-mantenedor de sistemas domóticos.",
+      "Instalador-mantenedor de antenas.",
+      "Instalador de telecomunicaciones en edificios de viviendas.",
+      "Instalador-mantenedor de equipos e instalaciones telefónicas.",
+      "Montador de instalaciones de energía solar fotovoltaica."
+    ]
+  },
   "acceptedRelations": [],
   "rejectedRelations": [
     {
@@ -252,15 +252,13 @@
   ],
   "baselineMatchIds": [],
   "currentMatchIds": [],
-  "newlyReachedOfferIdsByProgram": {
-    "ELE01M": []
-  },
+  "newlyReachedOfferIdsByProgram": { "ELE01M": [] },
   "newlyReachedOfferUnionIds": [],
   "limitation": "Deferred: the frozen seed Instalador electricista has no literal BOE output match. The exhaustive inventory spans CNO-11 boundaries 7510, 7521, 7533 and 7294, so no exact approved relation is published; curated data, public resources and snapshots remain unchanged.",
   "reviewedCommit": "07407b1a46a2eb01e89068db84ca2c70e350b27e",
   "reviewedCommitAt": "2026-08-09T17:14:11.000Z",
-  "snapshotId": "20260811222221076-727a2dfa2791",
-  "snapshotHash": "79063cf1b348b52fabe6ed8e4368ecceeea5e0aaef3897eadf261a6e17806f14",
+  "snapshotId": "20260812011203149-415d767a53f9",
+  "snapshotHash": "77e4d489fbe6b3987c3052d0646a8849e09b5e94f9bdc64dbc93fed24df07afc",
   "publicParity": {
     "publishedRelationKeys": [],
     "rejectedRelationKeys": [
