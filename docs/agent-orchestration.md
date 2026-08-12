@@ -190,7 +190,9 @@ Codex obtiene o convierte la fuente a un archivo local y ejecuta:
   -InputPath "data/boletin/2025/boe-2025-01.txt"
 ```
 
-Los boletines son siempre de solo lectura.
+Los boletines son siempre de solo lectura. El texto final se devuelve entre los
+marcadores `NAN DRAFT OUTPUT` y también queda en `draftOutput` dentro de la
+telemetría para que Codex pueda revisarlo; nunca se aprueba automáticamente.
 
 ## Telemetría
 
@@ -234,6 +236,7 @@ Cada ejecución escribe un archivo JSON en `.agent-runs/<guid>.json` (incluso `D
   },
   "success": true,
   "status": "success",
+  "draftOutput": "",
   "frontierContract": {
     "plannedBy": "frontier",
     "planHash": "abc123...",
@@ -323,7 +326,8 @@ completa sin control.
 - Escribe en las rutas permitidas del contrato.
 - Avisa si un archivo extra fue modificado (violación de contrato).
 - Reintenta hasta 3 veces antes de declarar fallo por modelo.
-- Respaldos con modelos NAN alternativos si el primario falla (solo para `code`; `bulletin` solo reintenta gemma4).
+- Respaldos con modelos NAN alternativos si el primario falla en tareas `code`;
+  `bulletin` reintenta el modelo elegido por `ModelProfile` sin mezclar modelos.
 - Registra toda la ejecución en telemetría JSON.
 - Soporta modo DryRun para validación sin coste (con telemetría incluida).
 - Soporta modo TestMode (`-TestMode`) para pruebas comportamentales inyectando un plan mock (`-MockPlan`). TestMode solo se activa con `-TestMode` o `-DryRun` explícito.

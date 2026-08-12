@@ -127,6 +127,18 @@ function Parse-JsonlTokens {
     return $r
 }
 
+function Get-JsonlDraftOutput {
+    param([string]$Jsonl)
+    $parts = New-Object 'System.Collections.Generic.List[string]'
+    foreach ($line in ($Jsonl -split "`n" | Where-Object { $_.Trim() })) {
+        $event = try { $line | ConvertFrom-Json } catch { continue }
+        if ($event.type -eq 'text' -and $event.part -and $event.part.text) {
+            $parts.Add([string]$event.part.text)
+        }
+    }
+    return ($parts -join "`n").Trim()
+}
+
 # ── Snapshot helpers ──
 function Get-Snapshot {
     $s = @{}
@@ -302,8 +314,12 @@ function Invoke-OpenCodeBudgeted {
         try { $process.WaitForExit() } catch {}
         $exitCode = if ($terminationReason) { 1 } else { $process.ExitCode }
         $raw = $rawLines -join "`n"
-        if (-not $terminationReason) { $usage = Parse-JsonlTokens -Jsonl $raw }
-        return @{exitCode=$exitCode;tokens=$usage;terminationReason=$terminationReason;stderr=($stderrLines -join "`n")}
+        $draftOutput = ''
+        if (-not $terminationReason) {
+            $usage = Parse-JsonlTokens -Jsonl $raw
+            $draftOutput = Get-JsonlDraftOutput -Jsonl $raw
+        }
+        return @{exitCode=$exitCode;tokens=$usage;terminationReason=$terminationReason;stderr=($stderrLines -join "`n");draftOutput=$draftOutput}
     } finally {
         $watch.Stop()
         $process.Dispose()
@@ -413,14 +429,17 @@ $totalAttempts = 0
     $candidateAgent = if ($candidateModel -eq $primaryModel) { $primaryAgent } else { 'nan-code' }
     for ($r = 0; $r -lt $MaxRetries; $r++) {
         $totalAttempts++
-        $attempt = @{model=$candidateModel;agent=$candidateAgent;attempt=$totalAttempts;retry=($r+1);exitCode=1;tokens=@{input=0;output=0;reasoning=0;cacheRead=0;cacheWrite=0;total=0};changedPaths=@();validationExitCode=$null}
+        $attempt = @{model=$candidateModel;agent=$candidateAgent;attempt=$totalAttempts;retry=($r+1);exitCode=1;tokens=@{input=0;output=0;reasoning=0;cacheRead=0;cacheWrite=0;total=0};changedPaths=@();validationExitCode=$null;draftOutput=''}
         $mp = $null
 
         if ($TestMode) {
             if ($planIndex -lt $mockPlans.Count) { $mp = $mockPlans[$planIndex]; $planIndex++ }
             if ($mp) {
                 $attempt.exitCode = if ($mp.exitCode -ne $null) { [int]$mp.exitCode } else { 0 }
-                if ($mp.jsonl) { $attempt.tokens = Parse-JsonlTokens -Jsonl $mp.jsonl }
+                if ($mp.jsonl) {
+                    $attempt.tokens = Parse-JsonlTokens -Jsonl $mp.jsonl
+                    $attempt.draftOutput = Get-JsonlDraftOutput -Jsonl $mp.jsonl
+                }
                 $attempt.changedPaths = if ($mp.changedPaths) { @($mp.changedPaths) } else { @() }
                 if ($mp.terminationReason) { $attempt.terminationReason = [string]$mp.terminationReason }
                 # Support both singular validationExitCode and list [$codes]
@@ -456,6 +475,7 @@ $totalAttempts = 0
             $attempt.exitCode = $liveResult.exitCode
             $attempt.tokens = $liveResult.tokens
             $attempt.terminationReason = $liveResult.terminationReason
+            $attempt.draftOutput = $liveResult.draftOutput
         }
 
         $attempts += $attempt
@@ -568,6 +588,7 @@ $telemetry = @{
     attempts=@($attempts | ForEach-Object { @{model=$_.model;agent=$_.agent;attempt=$_.attempt;retry=$_.retry;exitCode=$_.exitCode;tokens=$_.tokens;changedPaths=$_.changedPaths;validationExitCode=$_.validationExitCode;terminationReason=$_.terminationReason} })
     changedPaths=@($changedPaths);contractViolation=$contractViolation;validationFailed=$validationFailed
     tokensUsage=$agg;success=$success;status=$status;frontierContract=$fcTelemetry
+    draftOutput=if ($successResult) { $successResult.draftOutput } else { '' }
     contract=@{hash=$contractHash;headSha=$headSha;duplicateWindowSeconds=$DuplicateWindowSeconds}
     launch=@{harness='opencode';protocol='native-jsonl-stream-1.18.x';pure=$true;auto=$false;directory=$repoRoot;budgetProfile=$BudgetProfile;budgetSource=$budgetSource;maxObservedTokens=$effectiveMaxObservedTokens;maxExecutionSeconds=$MaxExecutionSeconds}
 }
@@ -577,6 +598,11 @@ Write-Host "Telemetry: $(Join-Path $tdir "$tid.json")" -ForegroundColor DarkGray
 # ── Exit ──
 if ($success) {
     if ($contractMutex) { $contractMutex.ReleaseMutex(); $contractMutex.Dispose() }
+    if ($TaskType -eq 'bulletin' -and -not [string]::IsNullOrWhiteSpace($successResult.draftOutput)) {
+        Write-Output '----- NAN DRAFT OUTPUT -----'
+        Write-Output $successResult.draftOutput
+        Write-Output '----- END NAN DRAFT OUTPUT -----'
+    }
     Write-Host "Task completed successfully. Model=$($successResult.model) Attempts=$totalAttempts Changed=$($changedPaths.Count)" -ForegroundColor Green
     exit 0
 }
