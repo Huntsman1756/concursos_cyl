@@ -81,7 +81,7 @@ async function prepareCapture(page: Page, evidenceId: string): Promise<void> {
       .getByLabel("Ciclo de Formación Profesional")
       .selectOption("EOC01M");
   }
-  if (evidenceId === "fp-pre-search-unavailable") {
+  if (evidenceId === "fp-pre-search-reviewed-zero") {
     await page
       .getByLabel("Ciclo de Formación Profesional")
       .selectOption("COM01M");
@@ -178,14 +178,13 @@ async function positionCapture(page: Page, evidenceId: string): Promise<void> {
       .scrollIntoViewIfNeeded();
     await page.evaluate(() => window.scrollBy(0, -180));
   }
-  if (evidenceId === "fp-zero-deferred") {
-    const unavailableMessage = page
-      .getByText(
-        "Todavía no hay una relación revisada que permita buscar ofertas",
-        { exact: false },
-      )
+  if (evidenceId === "fp-reviewed-zero-result") {
+    const zeroResultMessage = page
+      .getByText("No hay ofertas relacionadas en la copia de datos del", {
+        exact: false,
+      })
       .first();
-    await unavailableMessage.evaluate((element) =>
+    await zeroResultMessage.evaluate((element) =>
       element.scrollIntoView({ block: "center" }),
     );
   }
