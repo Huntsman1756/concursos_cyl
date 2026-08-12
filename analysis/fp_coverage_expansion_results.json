@@ -4,13 +4,13 @@
   "sourceCutoffAt": "2026-08-12T15:30:00.000Z",
   "counts": {
     "completed": 11,
-    "deferred": 3,
+    "deferred": 0,
     "discarded": 0,
-    "terminal": 14,
-    "primaryAttempted": 7,
+    "terminal": 11,
+    "primaryAttempted": 4,
     "reserveAttempted": 7,
-    "totalAttempted": 14,
-    "primaryUnattempted": 0,
+    "totalAttempted": 11,
+    "primaryUnattempted": 3,
     "reserveUnattempted": 0
   },
   "coverage": {
@@ -38,17 +38,14 @@
     "targetDistinctQualifications": 12,
     "remainingGap": 0,
     "modalityDoubleCount": false,
-    "belowTargetReason": "The evidence-backed total exceeds the target by 4; completion covers AGA01M and AGA03M and COM01B and COM02M and ELE01M and ELE03S and FME01M and FME02M and IMA02M and MAM01M and TMV01M, while 3 terminal attempts remain deferred and unpublished.",
+    "belowTargetReason": "The evidence-backed total exceeds the target by 4; completion covers AGA01M and AGA03M and COM01B and COM02M and ELE01M and ELE03S and FME01M and FME02M and IMA02M and MAM01M and TMV01M. No current terminal attempt remains deferred.",
     "publicationStatus": "published_task_a2_12"
   },
   "offerDeltas": {
     "byProgram": {
       "COM02M": [],
       "AGA03M": [],
-      "TMV02M": [],
-      "ADG01M": [],
       "ELE01M": [],
-      "IMA03M": [],
       "FME01M": [],
       "MAM01M": [],
       "ELE03S": [],
@@ -61,8 +58,8 @@
     "union": []
   },
   "time": {
-    "totalModeledActiveMinutes": 259,
-    "totalWallClockMinutes": 4651.65,
+    "totalModeledActiveMinutes": 205,
+    "totalWallClockMinutes": 4618.65,
     "totalReviewerMinutes": 18,
     "reviewerMinutesExcluded": true
   },
@@ -153,26 +150,25 @@
       "programTitle": "Electromecánica de Vehículos Automóviles",
       "lane": "primary",
       "rank": 3,
-      "attempted": true,
-      "state": "deferred",
+      "attempted": false,
+      "state": "not_attempted",
       "phaseMinutes": {
-        "research": 7,
-        "implementation": 3,
-        "test": 3,
+        "research": 0,
+        "implementation": 0,
+        "test": 0,
         "review": 0
       },
-      "modeledActiveMinutes": 13,
-      "wallClockMinutes": 13,
+      "modeledActiveMinutes": 0,
+      "wallClockMinutes": null,
       "reviewerMinutes": 0,
       "reviewerTimeExcluded": true,
       "offerDeltaIds": [],
       "acceptedRelationKeys": [],
-      "rejectedRelationKeys": ["TMV02M|occupation:cno11:7401"],
+      "rejectedRelationKeys": [],
       "publicParity": {
         "publishedRelationKeys": [],
-        "rejectedRelationKeys": ["TMV02M|occupation:cno11:7401"]
-      },
-      "limitation": "Deferred because the frozen seed does not match the authoritative BOE output literally and the exhaustive output set spans mechanical, electrical/electronic, ITV, accessory, manufacturing, and sales boundaries. No aliases, curated relations, offer deltas, snapshot regeneration, or public-resource changes are allowed in this slot."
+        "rejectedRelationKeys": []
+      }
     },
     {
       "programKey": "ADG01M",
@@ -180,46 +176,25 @@
       "programTitle": "Gestión Administrativa",
       "lane": "primary",
       "rank": 4,
-      "attempted": true,
-      "state": "deferred",
+      "attempted": false,
+      "state": "not_attempted",
       "phaseMinutes": {
-        "research": 14,
-        "implementation": 4,
-        "test": 4,
+        "research": 0,
+        "implementation": 0,
+        "test": 0,
         "review": 0
       },
-      "modeledActiveMinutes": 22,
-      "wallClockMinutes": 20,
+      "modeledActiveMinutes": 0,
+      "wallClockMinutes": null,
       "reviewerMinutes": 0,
       "reviewerTimeExcluded": true,
       "offerDeltaIds": [],
       "acceptedRelationKeys": [],
-      "rejectedRelationKeys": [
-        "ADG01M|occupation:cno11:4111",
-        "ADG01M|occupation:cno11:4112",
-        "ADG01M|occupation:cno11:4113",
-        "ADG01M|occupation:cno11:4223",
-        "ADG01M|occupation:cno11:4309",
-        "ADG01M|occupation:cno11:4411",
-        "ADG01M|occupation:cno11:4412",
-        "ADG01M|occupation:cno11:4441",
-        "ADG01M|occupation:cno11:4500"
-      ],
+      "rejectedRelationKeys": [],
       "publicParity": {
         "publishedRelationKeys": [],
-        "rejectedRelationKeys": [
-          "ADG01M|occupation:cno11:4111",
-          "ADG01M|occupation:cno11:4112",
-          "ADG01M|occupation:cno11:4113",
-          "ADG01M|occupation:cno11:4223",
-          "ADG01M|occupation:cno11:4309",
-          "ADG01M|occupation:cno11:4411",
-          "ADG01M|occupation:cno11:4412",
-          "ADG01M|occupation:cno11:4441",
-          "ADG01M|occupation:cno11:4500"
-        ]
-      },
-      "limitation": "Deferred: the frozen seed Empleado administrativo has no literal BOE output match, and the exhaustive output inventory spans multiple exact CNO-11 administrative, financial, reception and public-facing boundaries. No aliases, occupations, links, curated changes, offer deltas, snapshot regeneration or public-resource changes are published."
+        "rejectedRelationKeys": []
+      }
     },
     {
       "programKey": "ELE01M",
@@ -262,40 +237,25 @@
       "programTitle": "Mantenimiento Electromecánico",
       "lane": "primary",
       "rank": 6,
-      "attempted": true,
-      "state": "deferred",
+      "attempted": false,
+      "state": "not_attempted",
       "phaseMinutes": {
-        "research": 12,
-        "implementation": 4,
-        "test": 3,
+        "research": 0,
+        "implementation": 0,
+        "test": 0,
         "review": 0
       },
-      "modeledActiveMinutes": 19,
-      "wallClockMinutes": 0,
+      "modeledActiveMinutes": 0,
+      "wallClockMinutes": null,
       "reviewerMinutes": 0,
       "reviewerTimeExcluded": true,
       "offerDeltaIds": [],
       "acceptedRelationKeys": [],
-      "rejectedRelationKeys": [
-        "IMA03M|occupation:cno11:7403",
-        "IMA03M|occupation:cno11:7510",
-        "IMA03M|occupation:cno11:7521",
-        "IMA03M|occupation:cno11:7531",
-        "IMA03M|occupation:cno11:8201",
-        "IMA03M|occupation:cno11:8202"
-      ],
+      "rejectedRelationKeys": [],
       "publicParity": {
         "publishedRelationKeys": [],
-        "rejectedRelationKeys": [
-          "IMA03M|occupation:cno11:7403",
-          "IMA03M|occupation:cno11:7510",
-          "IMA03M|occupation:cno11:7521",
-          "IMA03M|occupation:cno11:7531",
-          "IMA03M|occupation:cno11:8201",
-          "IMA03M|occupation:cno11:8202"
-        ]
-      },
-      "limitation": "Deferred: el seed congelado Mantenedor electromecánico no aparece literalmente en el inventario BOE exhaustivo. Las fronteras CNO-11 auditadas no se promueven a relaciones publicadas; no se crean aliases, no se modifican data/curated, public ni snapshots, y el delta de ofertas permanece vacío."
+        "rejectedRelationKeys": []
+      }
     },
     {
       "programKey": "FME01M",

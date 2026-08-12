@@ -103,7 +103,7 @@ describe("rankFpOfferAliasCandidates – manifest-addressed loading", () => {
 
     expect(programs).toBeInstanceOf(Array);
     expect(offers.length).toBe(1054);
-    expect(links.length).toBe(131);
+    expect(links.length).toBe(135);
     expect(requirements.length).toBeGreaterThan(0);
     expect(programs.length).toBeGreaterThan(0);
     expect(occupations.length).toBeGreaterThan(0);

@@ -2,16 +2,16 @@
 
 ## Resumen del snapshot
 
-- Identificador del snapshot: `20260812170914964-b136734b1f03`
+- Identificador del snapshot: `20260812182823819-b36dc2a9111a`
 - Total de ofertas analizadas: 1054
-- Relaciones aprobadas (enlaces): 131
-- Relaciones con cero coincidencias: 117
-- Programas con cero coincidencias: 40
+- Relaciones aprobadas (enlaces): 135
+- Relaciones con cero coincidencias: 121
+- Programas con cero coincidencias: 44
 
 ## Recuentos de candidatos
 
-- Candidatos totales: 64
-- Hipótesis revisión (solapamiento): 57
+- Candidatos totales: 65
+- Hipótesis revisión (solapamiento): 58
 - Frases exactas contiguas (fuente oficial): 7
 - Coincidencias de alias aprobadas: 0
 - Coincidencias por frase: 0
@@ -61,6 +61,7 @@
 | `MECÁNICOS REPARADORES DE MAQUINARIA DE CONSTRUCCIÓN, MOVIMIENTO DE TIERRAS Y/O MINERÍA`              | ELE03S (Mantenimiento Electrónico)                                   | Mecánicos y reparadores de equipos electrónicos (occupation:cno11:7531)                    | 1 oferta  | token_overlap_hypothesis;share_stems=2;overlap=0.50 | —                                                                                                                 |
 | `MECÁNICOS-AJUSTADORES DE MAQUINARIA AGRÍCOLA, EN GENERAL`                                            | AGA01M (Producción Agroecológica)                                    | Operadores de maquinaria agrícola móvil (occupation:cno11:8321)                            | 1 oferta  | token_overlap_hypothesis;share_stems=2;overlap=0.50 | occupation:cno11:7401                                                                                             |
 | `MECÁNICOS-AJUSTADORES DE MAQUINARIA AGRÍCOLA, EN GENERAL`                                            | TMV01B (Mantenimiento de Vehículos)                                  | Mecánicos y ajustadores de vehículos de motor (occupation:cno11:7401)                      | 1 oferta  | token_overlap_hypothesis;share_stems=2;overlap=0.50 | occupation:cno11:8321                                                                                             |
+| `MECÁNICOS-AJUSTADORES DE MAQUINARIA AGRÍCOLA, EN GENERAL`                                            | TMV02M (Electromecánica de Vehículos Automóviles)                    | Mecánicos y ajustadores de vehículos de motor (occupation:cno11:7401)                      | 1 oferta  | token_overlap_hypothesis;share_stems=2;overlap=0.50 | occupation:cno11:8321                                                                                             |
 | `MONTADORES DE PLACAS DE ENERGÍA SOLAR`                                                               | ELE01M (Instalaciones Eléctricas y Automáticas)                      | Montadores-instaladores de placas de energía solar (occupation:cno11:7294)                 | 1 oferta  | token_overlap_hypothesis;share_stems=4;overlap=0.80 | —                                                                                                                 |
 | `MONTADORES DE PLACAS DE ENERGÍA SOLAR`                                                               | ELE01MD (Instalaciones Eléctricas y Automáticas (distancia))         | Montadores-instaladores de placas de energía solar (occupation:cno11:7294)                 | 1 oferta  | token_overlap_hypothesis;share_stems=4;overlap=0.80 | —                                                                                                                 |
 | `Oficial/a de servicios e información para Universidad de Valladolid`                                 | ADG01B (Servicios Administrativos)                                   | Telefonistas (occupation:cno11:4423)                                                       | 1 oferta  | token_overlap_hypothesis;share_stems=2;overlap=0.50 | —                                                                                                                 |
@@ -103,6 +104,6 @@
 
 ## Decisión
 
-Se identificaron 64 candidatos de alias como REVISIÓN para relaciones aprobadas sin coincidencia de ofertas. Ningún candidato se aprueba automáticamente; estos resultados son evidencia para revisión por Sol y Gemma.
+Se identificaron 65 candidatos de alias como REVISIÓN para relaciones aprobadas sin coincidencia de ofertas. Ningún candidato se aprueba automáticamente; estos resultados son evidencia para revisión por Sol y Gemma.
 
 El informe no incluye marcas de tiempo y sus recuentos corresponden a la instantánea controlada.

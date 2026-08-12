@@ -402,8 +402,8 @@
   "limitation": "The reviewed boundary accepts CNO 6120 (trabajadores cualificados en huertas, viveros y jardines) and CNO 5220 (vendedores en tiendas y almacenes) as the occupation set for Jardinería y Floristería. Exclusions: CNO 6110 (injertador) and CNO 3142 (florista) are rejected due to unestablished exact boundaries.",
   "reviewedCommit": "8556f4c79fb3d3edc9dd41d13a4c2567027732d3",
   "reviewedCommitAt": "2026-08-11T12:40:12.000Z",
-  "snapshotId": "20260812170914964-b136734b1f03",
-  "snapshotHash": "ca98d48022c18840f111b0519f023cbed4ba7b06d89cdab319c404d13bacfbcd",
+  "snapshotId": "20260812182823819-b36dc2a9111a",
+  "snapshotHash": "48098e4341052bddef615ffc3ac59bd3c05c128292a5e3bee0a91cf5cc36f15f",
   "publicParity": {
     "publishedRelationKeys": [
       "AGA03M|occupation:cno11:5220",

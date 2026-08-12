@@ -1380,5 +1380,45 @@
     "sourceQuote": "Delegada / delegado comercial de productos hospitalarios y farmacéuticos.",
     "reviewedAt": "2026-08-12",
     "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "ADG01M",
+    "occupationId": "occupation:cno11:4113",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.boe.es/eli/es/rd/2009/10/30/1631",
+    "sourceQuote": "Empleado de tesorería.",
+    "reviewedAt": "2026-08-12",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "ADG01MD",
+    "occupationId": "occupation:cno11:4113",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.boe.es/eli/es/rd/2009/10/30/1631",
+    "sourceQuote": "Empleado de tesorería.",
+    "reviewedAt": "2026-08-12",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "TMV02M",
+    "occupationId": "occupation:cno11:7401",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.boe.es/eli/es/rd/2010/03/19/453",
+    "sourceQuote": "Mecánico de automóviles.",
+    "reviewedAt": "2026-08-12",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "IMA03M",
+    "occupationId": "occupation:cno11:8202",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.boe.es/eli/es/rd/2011/11/04/1589",
+    "sourceQuote": "Montador de equipos eléctricos.",
+    "reviewedAt": "2026-08-12",
+    "mappingVersion": "1.0.0"
   }
 ]

@@ -53,15 +53,8 @@ function snapshotHash(snapshotId: string) {
     .digest("hex");
 }
 
-async function loadSnapshotId() {
-  const manifest = await readJson<{
-    resourceSnapshots: { programs: { resourcePath: string } };
-  }>(resolve(rootDirectory, "public/data/v1/manifest.json"));
-  return manifest.resourceSnapshots.programs.resourcePath.split("/")[4]!;
-}
-
 describe("IMA03M expansion slot", () => {
-  it("validates the deferred exhaustive BOE review and fail-closed parity", async () => {
+  it("retains the historical deferred audit after batch 6 supersedes it", async () => {
     const attempt = await readJson<FpExpansionAttempt>(
       resolve(rootDirectory, "analysis/fp_coverage_expansion/IMA03M.json"),
     );
@@ -72,7 +65,9 @@ describe("IMA03M expansion slot", () => {
       ...ranking.primaryCandidates,
       ...ranking.reserveCandidates,
     ].find((entry) => entry.programKey === "IMA03M") as FpExpansionCandidate;
-    const snapshotId = await loadSnapshotId();
+    if (attempt.snapshotId === undefined)
+      throw new Error("Missing historical snapshot ID.");
+    const snapshotId = attempt.snapshotId;
     const computed = {
       baselineMatchIds: [],
       currentMatchIds: [],
