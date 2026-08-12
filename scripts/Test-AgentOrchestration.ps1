@@ -119,12 +119,18 @@ function Invoke-WorkerDirect {
 
 # ── JSONL builder ──
 function New-Jsonl {
-    param([int]$Total = 1000, [int]$InputTokens = 400, [int]$Output = 300, [int]$Reasoning = 200, [int]$CacheRead = 50, [int]$CacheWrite = 50, [ValidateSet('tool-calls','stop')][string]$Reason = 'stop')
+    param([int]$Total = 1000, [int]$InputTokens = 400, [int]$Output = 300, [int]$Reasoning = 200, [int]$CacheRead = 50, [int]$CacheWrite = 50, [ValidateSet('tool-calls','stop')][string]$Reason = 'stop', [string]$DraftText = '')
     $cacheObj = @{ read = $CacheRead; write = $CacheWrite }
     $tokensObj = @{ total = $Total; input = $InputTokens; output = $Output; reasoning = $Reasoning; cache = $cacheObj }
     $start = @{ type = 'step_start'; sessionID = 'session-test'; part = @{ type = 'step-start' } }
     $finish = @{ type = 'step_finish'; sessionID = 'session-test'; part = @{ type = 'step-finish'; reason = $Reason; tokens = $tokensObj; cost = 0 } }
-    return (($start | ConvertTo-Json -Depth 10 -Compress), ($finish | ConvertTo-Json -Depth 10 -Compress)) -join "`n"
+    $events = @($start | ConvertTo-Json -Depth 10 -Compress)
+    if (-not [string]::IsNullOrWhiteSpace($DraftText)) {
+        $text = @{ type = 'text'; sessionID = 'session-test'; part = @{ type = 'text'; text = $DraftText } }
+        $events += $text | ConvertTo-Json -Depth 10 -Compress
+    }
+    $events += $finish | ConvertTo-Json -Depth 10 -Compress
+    return ($events -join "`n")
 }
 
 # ── Valid code contract helper ──
@@ -466,9 +472,9 @@ try {
         Assert-True ($r.ExitCode -ne 0) '11a: validation failure exits non-zero'
     }
 
-    # 12. Bulletin gemma4 only
+    # 12. Bulletin routing and draft retention
     if (-not $Only -or $Only -eq 'bulletin') {
-        Write-Host "`n*** 12. Bulletin gemma4 only ***" -ForegroundColor Cyan
+        Write-Host "`n*** 12. Bulletin routing and draft retention ***" -ForegroundColor Cyan
         Write-Host ("-" * 40) -ForegroundColor DarkGray
 
         $plan = @(
@@ -488,6 +494,18 @@ try {
                 Assert-True ($a.model -eq 'nan/gemma4') '12c: bulletin attempt uses gemma4'
             }
         }
+
+        $draftText = 'Relación revisable: TMV02M|occupation:cno11:7401'
+        $successPlan = @(
+            @{exitCode = 0; changedPaths = @(); validationExitCode = 0; jsonl = (New-Jsonl -Total 1200 -DraftText $draftText)}
+        ) | ConvertTo-Json -Compress
+        $pre = Get-FileSnapshot
+        $draftRun = Invoke-WorkerChild -WorkerParameters @{TaskType = 'bulletin'; Objective = 'bulletin-draft-output'; InputPath = @('AGENTS.md'); MaxRetries = 1; ModelProfile = 'long-context'; TestMode = $true; MockPlan = $successPlan}
+        Assert-True ($draftRun.ExitCode -eq 0) '12d: successful bulletin exits 0'
+        Assert-Contains $draftRun.Output $draftText '12e: bulletin draft is returned to the orchestrator'
+        $draftTelemetry = Get-Content -LiteralPath (Get-NewTelemetry -BeforeFiles $pre) -Raw | ConvertFrom-Json
+        Assert-Equal $draftTelemetry.draftOutput $draftText '12f: telemetry retains the reviewable draft'
+        Assert-Equal $draftTelemetry.selectedModel 'nan/mimo-v2.5' '12g: long-context bulletin records MiMo'
     }
 
     # 12b. Bulletin rejects -AllowedPath (read-only task)

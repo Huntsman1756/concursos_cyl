@@ -103,6 +103,7 @@ telemetry:
     - success
     - status
     - frontierContract
+    - draftOutput
   attemptFields:
     - model
     - agent
