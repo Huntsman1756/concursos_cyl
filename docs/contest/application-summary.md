@@ -10,14 +10,14 @@ La interfaz permite elegir directamente cualquiera de los 187 ciclos de FP o fil
 
 ## Cobertura congelada
 
-- Instantánea publicada: `20260812160320251-68effb257b28`.
+- Instantánea publicada: `20260812170914964-b136734b1f03`.
 - Grupos primarios CNO-11 consultables: **502**.
-- **28 cualificaciones distintas**.
-- Claves de modalidad públicas: **36** (ADG01B, ADG02S, ADG02SD, AGA01M, AGA03M, COM01B, COM02M, ELE01B, ELE01M, ELE01MD, ELE03S, EOC01M, FME01M, FME02M, HOT01B, HOT01M, IFC01M, IFC01MD, IFC01S, IFC01SD, IFC02S, IFC02SD, IFC03S, IFC03SD, IMA02M, IMP02M, MAM01M, SAN02M, SAN21, SSC01M, SSC01S, SSC01SD, SSC03S, SSC03SD, TMV01B, TMV01M).
-- Relaciones ocupacionales aprobadas: **100**.
-- Alias aprobados: **71**.
+- **36 cualificaciones distintas**.
+- Claves de modalidad públicas: **46** (ADG01B, ADG02S, ADG02SD, AFD01S, AFD01SD, AGA01M, AGA03M, COM01B, COM01M, COM02M, ELE01B, ELE01M, ELE01MD, ELE02M, ELE03S, EOC01M, FME01M, FME02M, HOT01B, HOT01M, IFC01B, IFC01M, IFC01MD, IFC01S, IFC01SD, IFC02S, IFC02SD, IFC03S, IFC03SD, IMA02M, IMA03S, IMP01B, IMP02M, MAM01M, SAN02M, SAN08S, SAN08SD, SAN21, SSC01M, SSC01S, SSC01SD, SSC03S, SSC03SD, TMV01B, TMV01M, TMV01S).
+- Relaciones ocupacionales aprobadas: **131**.
+- Alias aprobados: **102**.
 - **46 de las 1.054 ofertas de la instantánea** quedan alcanzadas por relaciones publicadas (unión de IDs).
-- Relaciones revisadas sin oferta alcanzada: **95**.
+- Relaciones revisadas sin oferta alcanzada: **125**.
 - Programas diferidos por evidencia insuficiente: ADG01M, IMA03M, TMV02M.
 
 Las claves de modalidad se informan aparte de las identidades de cualificación. Una relación revisada sin coincidencia no se convierte en una afirmación sobre la ausencia de oportunidades; un programa diferido permanece fuera de las afirmaciones revisadas.

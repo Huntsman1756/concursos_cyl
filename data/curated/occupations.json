@@ -27,9 +27,9 @@
     "confirmationLabel": "Atención telefónica remota",
     "classificationSystem": "CNO-11",
     "classificationCode": "4424",
-    "reviewStatus": "rejected",
+    "reviewStatus": "approved",
     "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
-    "reviewedAt": "2026-08-08",
+    "reviewedAt": "2026-08-12",
     "catalogVersion": "1.0.0"
   },
   {
@@ -259,9 +259,9 @@
     "confirmationLabel": "Representación comercial",
     "classificationSystem": "CNO-11",
     "classificationCode": "3510",
-    "reviewStatus": "rejected",
+    "reviewStatus": "approved",
     "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
-    "reviewedAt": "2026-08-08",
+    "reviewedAt": "2026-08-12",
     "catalogVersion": "1.0.0"
   },
   {
@@ -270,9 +270,9 @@
     "confirmationLabel": "Gestión de existencias y almacén",
     "classificationSystem": "CNO-11",
     "classificationCode": "3522",
-    "reviewStatus": "rejected",
+    "reviewStatus": "approved",
     "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
-    "reviewedAt": "2026-08-08",
+    "reviewedAt": "2026-08-12",
     "catalogVersion": "1.0.0"
   },
   {
@@ -303,9 +303,9 @@
     "confirmationLabel": "Venta comercial a distancia",
     "classificationSystem": "CNO-11",
     "classificationCode": "5420",
-    "reviewStatus": "rejected",
+    "reviewStatus": "approved",
     "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
-    "reviewedAt": "2026-08-08",
+    "reviewedAt": "2026-08-12",
     "catalogVersion": "1.0.0"
   },
   {
@@ -842,6 +842,138 @@
     "confirmationLabel": "Integración y apoyo social",
     "classificationSystem": "CNO-11",
     "classificationCode": "3713",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+    "reviewedAt": "2026-08-12",
+    "catalogVersion": "1.0.0"
+  },
+  {
+    "occupationId": "occupation:cno11:1432",
+    "preferredLabel": "Directores y gerentes de empresas de comercio al por menor",
+    "confirmationLabel": "Directores y gerentes de empresas de comercio al por menor",
+    "classificationSystem": "CNO-11",
+    "classificationCode": "1432",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+    "reviewedAt": "2026-08-12",
+    "catalogVersion": "1.0.0"
+  },
+  {
+    "occupationId": "occupation:cno11:2640",
+    "preferredLabel": "Profesionales de ventas técnicas y médicas (excepto las TIC)",
+    "confirmationLabel": "Profesionales de ventas técnicas y médicas (excepto las TIC)",
+    "classificationSystem": "CNO-11",
+    "classificationCode": "2640",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+    "reviewedAt": "2026-08-12",
+    "catalogVersion": "1.0.0"
+  },
+  {
+    "occupationId": "occupation:cno11:3126",
+    "preferredLabel": "Técnicos en mecánica",
+    "confirmationLabel": "Técnicos en mecánica",
+    "classificationSystem": "CNO-11",
+    "classificationCode": "3126",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+    "reviewedAt": "2026-08-12",
+    "catalogVersion": "1.0.0"
+  },
+  {
+    "occupationId": "occupation:cno11:3160",
+    "preferredLabel": "Técnicos de control de calidad de las ciencias físicas, químicas y de las ingenierías",
+    "confirmationLabel": "Técnicos de control de calidad de las ciencias físicas, químicas y de las ingenierías",
+    "classificationSystem": "CNO-11",
+    "classificationCode": "3160",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+    "reviewedAt": "2026-08-12",
+    "catalogVersion": "1.0.0"
+  },
+  {
+    "occupationId": "occupation:cno11:3314",
+    "preferredLabel": "Técnicos en laboratorio de diagnóstico clínico",
+    "confirmationLabel": "Técnicos en laboratorio de diagnóstico clínico",
+    "classificationSystem": "CNO-11",
+    "classificationCode": "3314",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+    "reviewedAt": "2026-08-12",
+    "catalogVersion": "1.0.0"
+  },
+  {
+    "occupationId": "occupation:cno11:3405",
+    "preferredLabel": "Tasadores",
+    "confirmationLabel": "Tasadores",
+    "classificationSystem": "CNO-11",
+    "classificationCode": "3405",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+    "reviewedAt": "2026-08-12",
+    "catalogVersion": "1.0.0"
+  },
+  {
+    "occupationId": "occupation:cno11:3722",
+    "preferredLabel": "Entrenadores y árbitros de actividades deportivas",
+    "confirmationLabel": "Entrenadores y árbitros de actividades deportivas",
+    "classificationSystem": "CNO-11",
+    "classificationCode": "3722",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+    "reviewedAt": "2026-08-12",
+    "catalogVersion": "1.0.0"
+  },
+  {
+    "occupationId": "occupation:cno11:3723",
+    "preferredLabel": "Instructores de actividades deportivas",
+    "confirmationLabel": "Instructores de actividades deportivas",
+    "classificationSystem": "CNO-11",
+    "classificationCode": "3723",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+    "reviewedAt": "2026-08-12",
+    "catalogVersion": "1.0.0"
+  },
+  {
+    "occupationId": "occupation:cno11:3724",
+    "preferredLabel": "Monitores de actividades recreativas y de entretenimiento",
+    "confirmationLabel": "Monitores de actividades recreativas y de entretenimiento",
+    "classificationSystem": "CNO-11",
+    "classificationCode": "3724",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+    "reviewedAt": "2026-08-12",
+    "catalogVersion": "1.0.0"
+  },
+  {
+    "occupationId": "occupation:cno11:4412",
+    "preferredLabel": "Recepcionistas (excepto de hoteles)",
+    "confirmationLabel": "Recepcionistas (excepto de hoteles)",
+    "classificationSystem": "CNO-11",
+    "classificationCode": "4412",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+    "reviewedAt": "2026-08-12",
+    "catalogVersion": "1.0.0"
+  },
+  {
+    "occupationId": "occupation:cno11:5300",
+    "preferredLabel": "Comerciantes propietarios de tiendas",
+    "confirmationLabel": "Comerciantes propietarios de tiendas",
+    "classificationSystem": "CNO-11",
+    "classificationCode": "5300",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+    "reviewedAt": "2026-08-12",
+    "catalogVersion": "1.0.0"
+  },
+  {
+    "occupationId": "occupation:cno11:5992",
+    "preferredLabel": "Bañistas-socorristas",
+    "confirmationLabel": "Bañistas-socorristas",
+    "classificationSystem": "CNO-11",
+    "classificationCode": "5992",
     "reviewStatus": "approved",
     "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
     "reviewedAt": "2026-08-12",

@@ -5,11 +5,11 @@
 <!-- prettier-ignore -->
 | Campo | Valor |
 | --- | --- |
-| Commit fuente | `e699d50d06d9513dd42a1b6d6d4c281b71ed413a` |
+| Commit fuente | `03b34e43a2e9293d4afb722841001eacb29149d3` |
 | Manifest | `public/data/v1/manifest.json` |
-| SHA-256 del manifest | `090d68ae09af54bfb484fb44ee83a50a21331663fee9aae707e5a413e490394e` |
-| Generado | 2026-08-12T16:03:20.251Z |
-| Snapshot | `20260812160320251-68effb257b28` |
+| SHA-256 del manifest | `3c14a8710f6817d19f7066b0cdd1cd8b9c471ad87010ff2e6bae41c9905cadd1` |
+| Generado | 2026-08-12T17:09:14.964Z |
+| Snapshot | `20260812170914964-b136734b1f03` |
 | Estado de calidad | passed |
 | Centros | 229 |
 | Programas | 187 |
@@ -21,25 +21,25 @@
 <!-- prettier-ignore -->
 | Recurso | Ruta | Registros | SHA-256 |
 | --- | --- | ---: | --- |
-| centers | `/data/v1/snapshots/20260812160320251-68effb257b28/centers.json` | 229 | `593b7780f6cb9511c02edb26a769e5e1f951624f6e4b923a8e34caacb230c87a` |
-| jobOffers | `/data/v1/snapshots/20260812160320251-68effb257b28/job-offers.json` | 1054 | `41022423f185311a9b98833497aa908d13ec24e0f125a69f022eb72047204300` |
-| mappingCoverage | `/data/v1/snapshots/20260812160320251-68effb257b28/mapping-coverage.json` | 209 | `880a033576396e6dd255bef5a37f4eb001cca0cd094e30976bd121afa2b15480` |
-| officialOccupations | `/data/v1/snapshots/20260812160320251-68effb257b28/official-occupations.json` | 502 | `76fa213f97c98e5af0f9bf120323ba3abb32df78e797c381e5454cadc858f64b` |
-| occupationAliases | `/data/v1/snapshots/20260812160320251-68effb257b28/occupation-aliases.json` | 71 | `0277820bea7de529d9166913479ae0a9824549a45054cc532d23fca64896d2a0` |
-| occupations | `/data/v1/snapshots/20260812160320251-68effb257b28/occupations.json` | 66 | `865d1bd84d1b8bfe056b39c1c3f7c473f512440ff8dbf13858f6606a97808f3f` |
-| outcomeIndicators | `/data/v1/snapshots/20260812160320251-68effb257b28/outcome-indicators.json` | 22170 | `4f2c6b73fc4171bb9daf21583712ab2ec99bcaa7d27b1f2fd0c070b9079ab3e2` |
-| programs | `/data/v1/snapshots/20260812160320251-68effb257b28/programs.json` | 187 | `90df87b283b5ff003dda20c9c4f7eac52b903e611753d107d4b927bbc4e19b72` |
-| publishedRequirements | `/data/v1/snapshots/20260812160320251-68effb257b28/published-requirements.json` | 322 | `fbf95ee4801f76af0f8cfad5465034a75a543f2e3d8a78c73cd4692afd33a3ad` |
-| trainingOccupationLinks | `/data/v1/snapshots/20260812160320251-68effb257b28/training-occupation-links.json` | 100 | `00229e114a19cd30cf7383c986ba191959b6be05852e87a4891cdf4a6e8fa0a6` |
-| trainingOfferings | `/data/v1/snapshots/20260812160320251-68effb257b28/training-offerings.json` | 1294 | `0948871f993a4f0a03ed42ccef060c4a395e0898dc230086f234345fee7e880a` |
+| centers | `/data/v1/snapshots/20260812170914964-b136734b1f03/centers.json` | 229 | `593b7780f6cb9511c02edb26a769e5e1f951624f6e4b923a8e34caacb230c87a` |
+| jobOffers | `/data/v1/snapshots/20260812170914964-b136734b1f03/job-offers.json` | 1054 | `d31e64af3ac58360c2326e332a9789b33d48c624ac31da574743ad523a62b92d` |
+| mappingCoverage | `/data/v1/snapshots/20260812170914964-b136734b1f03/mapping-coverage.json` | 209 | `f1e450ed999c5806d283e4a772622b5c7ec5cbeaa63e4e1cd17e80374529b0ee` |
+| officialOccupations | `/data/v1/snapshots/20260812170914964-b136734b1f03/official-occupations.json` | 502 | `76fa213f97c98e5af0f9bf120323ba3abb32df78e797c381e5454cadc858f64b` |
+| occupationAliases | `/data/v1/snapshots/20260812170914964-b136734b1f03/occupation-aliases.json` | 102 | `b7fec28a533a6c18e9c1832bd3f9d1c09c0871fc2c1209b7e8f536ebe2eb9f72` |
+| occupations | `/data/v1/snapshots/20260812170914964-b136734b1f03/occupations.json` | 82 | `5def10d5faf1715d29c0a01b45cafab7172592443be62b9a32b3e68b197078cc` |
+| outcomeIndicators | `/data/v1/snapshots/20260812170914964-b136734b1f03/outcome-indicators.json` | 22170 | `4f2c6b73fc4171bb9daf21583712ab2ec99bcaa7d27b1f2fd0c070b9079ab3e2` |
+| programs | `/data/v1/snapshots/20260812170914964-b136734b1f03/programs.json` | 187 | `90df87b283b5ff003dda20c9c4f7eac52b903e611753d107d4b927bbc4e19b72` |
+| publishedRequirements | `/data/v1/snapshots/20260812170914964-b136734b1f03/published-requirements.json` | 322 | `fbf95ee4801f76af0f8cfad5465034a75a543f2e3d8a78c73cd4692afd33a3ad` |
+| trainingOccupationLinks | `/data/v1/snapshots/20260812170914964-b136734b1f03/training-occupation-links.json` | 131 | `fcd029a59e30a14d5615426886378bc643f19a5b50328f305a45fc951032de30` |
+| trainingOfferings | `/data/v1/snapshots/20260812170914964-b136734b1f03/training-offerings.json` | 1294 | `0948871f993a4f0a03ed42ccef060c4a395e0898dc230086f234345fee7e880a` |
 
 ## Recomputación de cobertura
 
-- 28 cualificaciones distintas: `qualification:ADG01B, qualification:ADG02S, qualification:AGA01M, qualification:AGA03M, qualification:COM01B, qualification:COM02M, qualification:ELE01B, qualification:ELE01M, qualification:ELE03S, qualification:EOC01M, qualification:FME01M, qualification:FME02M, qualification:HOT01B, qualification:HOT01M, qualification:IFC01M, qualification:IFC01S, qualification:IFC02S, qualification:IFC03S, qualification:IMA02M, qualification:IMP02M, qualification:MAM01M, qualification:SAN02M, qualification:SAN21, qualification:SSC01M, qualification:SSC01S, qualification:SSC03S, qualification:TMV01B, qualification:TMV01M`.
-- 36 claves de modalidad: `ADG01B, ADG02S, ADG02SD, AGA01M, AGA03M, COM01B, COM02M, ELE01B, ELE01M, ELE01MD, ELE03S, EOC01M, FME01M, FME02M, HOT01B, HOT01M, IFC01M, IFC01MD, IFC01S, IFC01SD, IFC02S, IFC02SD, IFC03S, IFC03SD, IMA02M, IMP02M, MAM01M, SAN02M, SAN21, SSC01M, SSC01S, SSC01SD, SSC03S, SSC03SD, TMV01B, TMV01M`.
-- 100 relaciones aprobadas y 71 alias aprobados.
-- 5 programas con coincidencias y 31 programas revisados sin coincidencias.
-- 5 relaciones alcanzadas y 95 relaciones revisadas sin oferta alcanzada.
+- 36 cualificaciones distintas: `qualification:ADG01B, qualification:ADG02S, qualification:AFD01S, qualification:AGA01M, qualification:AGA03M, qualification:COM01B, qualification:COM01M, qualification:COM02M, qualification:ELE01B, qualification:ELE01M, qualification:ELE02M, qualification:ELE03S, qualification:EOC01M, qualification:FME01M, qualification:FME02M, qualification:HOT01B, qualification:HOT01M, qualification:IFC01B, qualification:IFC01M, qualification:IFC01S, qualification:IFC02S, qualification:IFC03S, qualification:IMA02M, qualification:IMA03S, qualification:IMP01B, qualification:IMP02M, qualification:MAM01M, qualification:SAN02M, qualification:SAN08S, qualification:SAN21, qualification:SSC01M, qualification:SSC01S, qualification:SSC03S, qualification:TMV01B, qualification:TMV01M, qualification:TMV01S`.
+- 46 claves de modalidad: `ADG01B, ADG02S, ADG02SD, AFD01S, AFD01SD, AGA01M, AGA03M, COM01B, COM01M, COM02M, ELE01B, ELE01M, ELE01MD, ELE02M, ELE03S, EOC01M, FME01M, FME02M, HOT01B, HOT01M, IFC01B, IFC01M, IFC01MD, IFC01S, IFC01SD, IFC02S, IFC02SD, IFC03S, IFC03SD, IMA02M, IMA03S, IMP01B, IMP02M, MAM01M, SAN02M, SAN08S, SAN08SD, SAN21, SSC01M, SSC01S, SSC01SD, SSC03S, SSC03SD, TMV01B, TMV01M, TMV01S`.
+- 131 relaciones aprobadas y 102 alias aprobados.
+- 6 programas con coincidencias y 40 programas revisados sin coincidencias.
+- 6 relaciones alcanzadas y 125 relaciones revisadas sin oferta alcanzada.
 - Unión de coincidencias: 46 IDs; delta marginal de la ampliación: 0 IDs.
 - Intentos terminales: 11 completado, 3 diferidos, 0 descartados; 0 reservas no intentadas.
 

@@ -319,8 +319,8 @@
   "limitation": "Se aceptan CNO 6110, 6120, 6204, 6205 y 8321 para Producción Agroecológica. Los candidatos 6201 (vacuno), 6202 (ovino y caprino), 6203 (porcino) y 6209 (ganaderas no clasificadas) se mantienen rechazados porque la evidencia revisada no establece esos límites de cuatro dígitos para las salidas del título.",
   "reviewedCommit": "84e6c581f47b5943c6ae50950859ce4db0be9a98",
   "reviewedCommitAt": "2026-08-11T17:27:42.000Z",
-  "snapshotId": "20260812160320251-68effb257b28",
-  "snapshotHash": "a8c5e09f60d36121ce4e4935317fabc4cadf26d7df02fd7d7239fda80762c77e",
+  "snapshotId": "20260812170914964-b136734b1f03",
+  "snapshotHash": "18a1d0fb79d971391fb0322c15c0ceb421bacc44f39dd8a320b0e534e77d60de",
   "publicParity": {
     "publishedRelationKeys": [
       "AGA01M|occupation:cno11:6110",
