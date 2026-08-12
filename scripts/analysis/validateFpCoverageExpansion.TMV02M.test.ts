@@ -87,7 +87,8 @@ describe("TMV02M expansion slot", () => {
       ...ranking.reserveCandidates,
     ].find((entry) => entry.programKey === "TMV02M") as FpExpansionCandidate;
     expect(attempt.state).toBe("deferred");
-    if (attempt.snapshotId === undefined) throw new Error("Missing snapshot ID.");
+    if (attempt.snapshotId === undefined)
+      throw new Error("Missing snapshot ID.");
     const snapshotId = attempt.snapshotId;
     expect(attempt.officialOutputInventory?.labels).toEqual(outputLabels);
     expect(
@@ -99,9 +100,7 @@ describe("TMV02M expansion slot", () => {
       publishedRelationKeys: [],
       rejectedRelationKeys: ["TMV02M|occupation:cno11:7401"],
     });
-    expect(attempt.snapshotHash).toBe(
-      expansionSnapshotHash(snapshotId),
-    );
+    expect(attempt.snapshotHash).toBe(expansionSnapshotHash(snapshotId));
     const computed = {
       baselineMatchIds: [],
       currentMatchIds: [],

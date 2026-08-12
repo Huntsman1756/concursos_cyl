@@ -83,7 +83,8 @@ describe("ADG01M expansion slot", () => {
       ...ranking.reserveCandidates,
     ].find((entry) => entry.programKey === "ADG01M") as FpExpansionCandidate;
     expect(attempt.state).toBe("deferred");
-    if (attempt.snapshotId === undefined) throw new Error("Missing snapshot ID.");
+    if (attempt.snapshotId === undefined)
+      throw new Error("Missing snapshot ID.");
     const snapshotId = attempt.snapshotId;
     expect(attempt.officialOutputInventory?.labels).toEqual(outputLabels);
     expect(

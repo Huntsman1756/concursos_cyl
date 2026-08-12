@@ -327,6 +327,7 @@ export function renderContestSubmission(
 
 function loadContestDeploymentEvidence(
   rootDir: string,
+  freeze: ContestFreeze,
 ): ContestDeploymentEvidence {
   const releaseEvidencePath = path.join(
     rootDir,
@@ -341,6 +342,7 @@ function loadContestDeploymentEvidence(
   const parsed = JSON.parse(fs.readFileSync(releaseEvidencePath, "utf8")) as {
     deployment?: Partial<ContestDeploymentEvidence>;
     captureProductCommitSha?: string;
+    manifest?: { snapshotId?: unknown };
     localGates?: {
       evidenceManifest?: { captureCount?: unknown };
     };
@@ -380,12 +382,19 @@ function loadContestDeploymentEvidence(
   }
 
   const deploymentCommit = deployment.commitSha ?? null;
+  const deploymentMatchesFreeze =
+    parsed.manifest?.snapshotId === freeze.manifest.snapshotId;
+  const effectiveStatus =
+    deployment.status === "verified" && deploymentMatchesFreeze
+      ? "verified"
+      : "pending";
   const capturesAreCurrent =
+    effectiveStatus === "verified" &&
     deploymentCommit !== null &&
     captureProductCommitSha !== null &&
     deploymentCommit === captureProductCommitSha;
   const evidence: ContestDeploymentEvidence = {
-    status: deployment.status,
+    status: effectiveStatus,
     commitSha: deploymentCommit,
     workflowRunId: deployment.workflowRunId ?? null,
     verifiedAt: deployment.verifiedAt ?? null,
@@ -434,7 +443,7 @@ export function loadAndRenderContestSubmission(
   rootDir = process.cwd(),
 ): ContestSubmissionDocuments {
   const freeze = loadAndValidateContestFreeze(rootDir);
-  const deployment = loadContestDeploymentEvidence(rootDir);
+  const deployment = loadContestDeploymentEvidence(rootDir, freeze);
   const documents = renderContestSubmission(freeze, deployment);
   validateRenderedContestSubmission(documents, rootDir);
   return documents;
