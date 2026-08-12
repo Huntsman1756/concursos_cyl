@@ -7,7 +7,8 @@ param(
     [string[]]$ValidationCommand = @(),
     [ValidateSet('default','json')][string]$Format = 'json',
     [ValidateRange(1,3)][int]$MaxRetries = 1,
-    [ValidateRange(1000,1000000)][int]$MaxObservedTokens = 50000,
+    [ValidateSet('small','batch','research','extended')][string]$BudgetProfile = 'small',
+    [int]$MaxObservedTokens = 0,
     [ValidateRange(10,3600)][int]$MaxExecutionSeconds = 300,
     [ValidateRange(0,86400)][int]$DuplicateWindowSeconds = 3600,
     [string[]]$FallbackModels = @(),
@@ -30,6 +31,22 @@ if (-not (Test-Path -LiteralPath $tdir)) { New-Item -ItemType Directory -Path $t
 $AllowedPath = @($AllowedPath | ForEach-Object { $_ -split ',' } | ForEach-Object { $_.Trim() } | Where-Object { $_ })
 $InputPath = @($InputPath | ForEach-Object { $_ -split ',' } | ForEach-Object { $_.Trim() } | Where-Object { $_ })
 $AcceptanceCriteria = @($AcceptanceCriteria | ForEach-Object { $_.Trim() } | Where-Object { $_ })
+
+$budgetProfiles = @{
+    small = 50000
+    batch = 150000
+    research = 300000
+    extended = 400000
+}
+if ($MaxObservedTokens -ne 0 -and ($MaxObservedTokens -lt 1000 -or $MaxObservedTokens -gt 1000000)) {
+    throw 'MaxObservedTokens must be 0 (use BudgetProfile) or between 1000 and 1000000.'
+}
+$effectiveMaxObservedTokens = if ($MaxObservedTokens -ne 0) {
+    $MaxObservedTokens
+} else {
+    [int]$budgetProfiles[$BudgetProfile]
+}
+$budgetSource = if ($MaxObservedTokens -ne 0) { 'override' } else { 'profile' }
 
 # ── Contract validation ──
 if ($TaskType -eq 'code' -and $AllowedPath.Count -eq 0) { throw 'Code delegation requires at least one -AllowedPath contract boundary.' }
@@ -313,7 +330,7 @@ if ($DryRun) {
         $planSha = Compute-StringSha256 -InputString $FrontierPlan
         $fc = @{plannedBy=$PlannedBy;planHash=$planSha;acceptanceCriteriaCount=$AcceptanceCriteria.Count;reviewRequired=$true}
     }
-    @{telemetryId=$tid;simulated=[bool]$true;taskType=$TaskType;selectedModel=$primaryModel;attempts=@();changedPaths=@();contractViolation=$false;validationFailed=$false;tokensUsage=@{input=0;output=0;reasoning=0;cacheRead=0;cacheWrite=0;total=0};success=$true;status='dry-run';frontierContract=$fc;contract=@{hash=$contractHash;headSha=$headSha;duplicateWindowSeconds=$DuplicateWindowSeconds};launch=@{maxObservedTokens=$MaxObservedTokens;maxExecutionSeconds=$MaxExecutionSeconds}} |
+    @{telemetryId=$tid;simulated=[bool]$true;taskType=$TaskType;selectedModel=$primaryModel;attempts=@();changedPaths=@();contractViolation=$false;validationFailed=$false;tokensUsage=@{input=0;output=0;reasoning=0;cacheRead=0;cacheWrite=0;total=0};success=$true;status='dry-run';frontierContract=$fc;contract=@{hash=$contractHash;headSha=$headSha;duplicateWindowSeconds=$DuplicateWindowSeconds};launch=@{budgetProfile=$BudgetProfile;budgetSource=$budgetSource;maxObservedTokens=$effectiveMaxObservedTokens;maxExecutionSeconds=$MaxExecutionSeconds}} |
         ConvertTo-Json -Depth 5 | Out-File (Join-Path $tdir "$tid.json") -Encoding utf8
     exit 0
 }
@@ -425,7 +442,7 @@ $totalAttempts = 0
             $contract += 'Do not commit, push, publish, deploy, or expand this contract.'
             $opts += @('--', ($contract -join "`n"))
             Write-Host ("Attempt " + $totalAttempts + ": ${candidateAgent} -> ${candidateModel}") -ForegroundColor Cyan
-            $liveResult = Invoke-OpenCodeBudgeted -Arguments $opts -TokenBudget $MaxObservedTokens -TimeoutSeconds $MaxExecutionSeconds
+            $liveResult = Invoke-OpenCodeBudgeted -Arguments $opts -TokenBudget $effectiveMaxObservedTokens -TimeoutSeconds $MaxExecutionSeconds
             $attempt.exitCode = $liveResult.exitCode
             $attempt.tokens = $liveResult.tokens
             $attempt.terminationReason = $liveResult.terminationReason
@@ -441,11 +458,11 @@ $totalAttempts = 0
             break modelLoop
         }
 
-        if ($attempt.terminationReason -eq 'token-budget' -or $attempt.tokens.total -gt $MaxObservedTokens) {
+        if ($attempt.terminationReason -eq 'token-budget' -or $attempt.tokens.total -gt $effectiveMaxObservedTokens) {
             $tokenBudgetExceeded = $true
             $attempt.exitCode = 1
             $attempts[-1] = $attempt
-            Write-Warning "Observed token budget exceeded: $($attempt.tokens.total) > $MaxObservedTokens"
+            Write-Warning "Observed token budget exceeded: $($attempt.tokens.total) > $effectiveMaxObservedTokens (profile=$BudgetProfile, source=$budgetSource)"
             break modelLoop
         }
 
@@ -542,7 +559,7 @@ $telemetry = @{
     changedPaths=@($changedPaths);contractViolation=$contractViolation;validationFailed=$validationFailed
     tokensUsage=$agg;success=$success;status=$status;frontierContract=$fcTelemetry
     contract=@{hash=$contractHash;headSha=$headSha;duplicateWindowSeconds=$DuplicateWindowSeconds}
-    launch=@{harness='opencode';protocol='native-jsonl-stream-1.18.x';pure=$true;auto=$false;directory=$repoRoot;maxObservedTokens=$MaxObservedTokens;maxExecutionSeconds=$MaxExecutionSeconds}
+    launch=@{harness='opencode';protocol='native-jsonl-stream-1.18.x';pure=$true;auto=$false;directory=$repoRoot;budgetProfile=$BudgetProfile;budgetSource=$budgetSource;maxObservedTokens=$effectiveMaxObservedTokens;maxExecutionSeconds=$MaxExecutionSeconds}
 }
 $telemetry | ConvertTo-Json -Depth 5 | Out-File (Join-Path $tdir "$tid.json") -Encoding utf8
 Write-Host "Telemetry: $(Join-Path $tdir "$tid.json")" -ForegroundColor DarkGray
