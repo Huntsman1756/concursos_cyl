@@ -2,6 +2,7 @@ schemaVersion: 1
 id: castilla-leon-openai-nan-pilot
 reference:
   repository: https://github.com/Huntsman1756/agent-orchestration-starter
+  commit: 0d95676ac2c5f2365021514458180ca40e6a37a2
   adaptation: api-first-retry-telemetry
 bindings:
   orchestrator:
@@ -16,11 +17,12 @@ bindings:
     model: qwen3.6
     agent: nan-code
     permissions: bounded-repository-write
-    maxSteps: 32
-    retryMax: 3
-    fallbackModels:
-      - nan/mimo-v2.5
-      - nan/deepseek-v4-flash
+    maxSteps: 10
+    retryMax: 1
+    maxObservedTokens: 50000
+    maxExecutionSeconds: 300
+    duplicateWindowSeconds: 3600
+    fallbackModels: []
   bulletinReader:
     harness: opencode
     provider: nan

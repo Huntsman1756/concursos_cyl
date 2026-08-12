@@ -10,8 +10,8 @@ OpenAI/Codex planifica y revisa; OpenCode ejecuta contratos acotados con NAN.
   Seguridad y decisiones de producto se reservan íntegramente a Codex.
 - **Implementación** — `nan/qwen3.6` (Qwen) pica código bajo contrato.
   Ejecuta cambios mecánicos en las rutas permitidas, incluso multiarchivo cuando
-  el contrato lo acota expresamente. Soporta retry (3 intentos), fallback
-  configurable y telemetría JSON.
+  el contrato lo acota expresamente. Usa un intento y ningún fallback por
+  defecto, con presupuesto observable y telemetría JSON.
 - **Boletines** — `nan/gemma4` (Gemma) solo lee boletines. Extrae información de
   boletines convertidos a archivos locales; es estrictamente de solo lectura.
 
@@ -35,6 +35,11 @@ entre **planificar/diagnosticar/revisar** (Frontier) e **implementar** (worker).
 
 Antes de delegar código, Codex debe indicar objetivo, rutas permitidas,
 criterios de aceptación, plan Frontier y validaciones, y ejecutar:
+
+La ejecución real de código solo comienza en un worktree Git enlazado, limpio y
+creado por el orquestador. Declarar un modelo aquí no prueba que se haya lanzado:
+la telemetría debe conservar ruta, launch, sesión/eventos JSONL, usage, cambios,
+validación independiente y el estado `awaiting-frontier-review`.
 
 ```powershell
 .\scripts\Invoke-NanWorker.ps1 -TaskType code `
@@ -76,10 +81,16 @@ Ejemplo DryRun (obligatorio incluir `-ValidationCommand` para code):
 
 El worker soporta:
 
-- `-MaxRetries 3` — reintentos por modelo primario.
-- `-FallbackModels "nan/mimo-v2.5,nan/deepseek-v4-flash"` — modelos alternativos.
+- `-MaxRetries 1` — valor seguro por defecto; aumentarlo requiere justificar el coste.
+- `-MaxObservedTokens 50000` — termina OpenCode durante la ejecución si supera el presupuesto observado, incluida la caché.
+- `-MaxExecutionSeconds 300` — termina el árbol del proceso al agotar el tiempo.
+- `-DuplicateWindowSeconds 3600` — bloquea contratos idénticos sobre el mismo SHA durante una hora.
+- `-FallbackModels` — vacío por defecto; cada fallback debe cualificarse explícitamente.
 - `-DryRun` — validación del contrato sin invocar opencode.
 - `-TestMode` — ejecución simulada con `-MockPlan` (solo para pruebas, no consume API).
+
+No se mantienen comandos directos en `.opencode/commands`: toda llamada NAN debe
+pasar por `Invoke-NanWorker.ps1` para aplicar presupuesto, deduplicación y telemetría.
 
 Cada ejecución escribe telemetría en `.agent-runs/<guid>.json`.
 

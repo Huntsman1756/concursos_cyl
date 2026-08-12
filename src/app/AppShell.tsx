@@ -1,6 +1,5 @@
 import type { ReactNode } from "react";
 import { Link, NavLink } from "react-router-dom";
-import { Icon } from "../components/Icon";
 import "../styles/global.css";
 
 interface AppShellProps {
@@ -47,10 +46,6 @@ export function AppShell({ children }: AppShellProps) {
               </li>
             </ul>
           </nav>
-          <Link className="official-data-link" to="/metodologia">
-            <Icon name="shield-check" size={18} />
-            Datos verificables
-          </Link>
         </div>
       </header>
       <main className="page-content" id="main-content" tabIndex={-1}>
