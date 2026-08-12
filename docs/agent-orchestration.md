@@ -10,12 +10,13 @@ contratos acotados emitidos por Sol, sin decidir arquitectura ni hacer
 diagnóstico por sí mismos.
 
 La referencia está fijada en el merge
-`0d95676ac2c5f2365021514458180ca40e6a37a2`. Cambiar modelo, harness, agente,
+`4b9ec4d8b07e285a6f58590ac0199e878548fcaf`. Cambiar modelo, harness, agente,
 permisos o launcher exige cualificar de nuevo la combinación exacta.
 
-Este flujo **no es el runtime V4 completo**. Es una adaptación local para Windows
-que aprovecha el CLI `opencode`, los agentes locales `nan-code` y `nan-bulletin`,
-y un worker PowerShell con presupuesto, fallback explícito y telemetría JSON.
+Este flujo **no es el runtime V4 completo**. Es una adaptación `BOUNDED_LOCAL`
+para Windows que aprovecha el CLI `opencode`, los agentes locales `nan-code` y
+`nan-bulletin`, un worker PowerShell y un supervisor Frontier. No constituye
+aislamiento duro ni una certificación de host de producción.
 
 ## Arquitectura
 
@@ -31,9 +32,9 @@ NAN se usa como proveedor de implementación principal. El worker:
   salida, tokens, rutas cambiadas y código de validación.
 - Modos: ejecución real y `DryRun` (simulación que también escribe telemetría).
 
-El worker **nunca** escala ni escribe código a través de Sol. El orquestador
-(Codex) coordina, revisa diffs, valida y puede redefinir un contrato; solo
-Codex inicia la escritura de código.
+El worker **nunca** escala ni escribe código a través de Sol. El supervisor
+puede pedir a Codex una decisión estructurada y relanzar NAN con instrucciones
+más cortas; Codex no toma el control de la implementación.
 
 ## Roles
 
@@ -96,25 +97,46 @@ Codex define:
 - Rutas permitidas (patrones glob, p.ej. `src/**`, `docs/agent-orchestration.md`).
 - Comandos de validación (p.ej. `npm test`, `prettier --check docs/agent-orchestration.md`).
 - El perfil de presupuesto: `small`, `batch`, `research` o `extended`.
-- Opcionalmente `MaxRetries`, `FallbackModels`, `MaxObservedTokens` como override y `DryRun`.
+- Opcionalmente los perfiles de modelo y presupuesto. Cambiar el binding exige
+  volver a cualificar la combinación exacta.
 
-### 2. Codex invoca el trabajador
+El contrato del supervisor es JSON y no contiene secretos:
 
-Ejecución acotada (un intento, sin fallback por defecto):
+```json
+{
+  "objective": "Implementa x",
+  "allowedPaths": ["src/**"],
+  "validationCommands": ["npm test"],
+  "frontierPlan": "Implementa el cambio localizado",
+  "acceptanceCriteria": ["Los tests pasan", "No hay regresión"],
+  "budgetProfile": "batch",
+  "modelProfile": "mechanical"
+}
+```
+
+### 2. Codex invoca el supervisor
+
+El estado y los worktrees viven fuera del repositorio. El directorio de estado
+debe ser nuevo para impedir reutilizar decisiones de otra ejecución:
 
 ```powershell
-.\scripts\Invoke-NanWorker.ps1 -TaskType code `
-  -Objective "Implementa x" `
-  -PlannedBy "frontier" `
-  -FrontierPlan "Diagnostico X, implemento Y en rutas acotadas" `
-  -AcceptanceCriteria @("1. Los tests pasan","2. No hay regression") `
-  -AllowedPath "src/**" `
-  -ValidationCommand "npm test" `
-  -MaxRetries 1 `
-  -BudgetProfile batch `
-  -MaxExecutionSeconds 300 `
-  -DuplicateWindowSeconds 3600
+.\scripts\Invoke-FrontierSupervisedNanWorker.ps1 `
+  -ContractPath C:\orchestration\contracts\task-001.json `
+  -StateDirectory C:\orchestration\state\task-001 `
+  -WorktreeParent C:\orchestration\worktrees `
+  -MaxAttempts 2
 ```
+
+Cada intento crea un worktree separado sobre el mismo SHA, llama al worker con
+`MaxRetries=1`, captura telemetría en una ruta elegida por el host y copia el
+parche fuera del worktree. Después elimina el worktree antes de pedir a Codex
+una decisión. `RETRY` añade hasta tres instrucciones acotadas y lanza una sesión
+NAN nueva; `ACCEPT` conserva el parche candidato y `ESCALATE` termina sin
+aplicarlo. El supervisor nunca hace commit, push, publicación ni despliegue.
+
+`Invoke-NanWorker.ps1` permanece como primitive de un solo intento para el
+supervisor y para diagnóstico. Invocarlo directamente no demuestra que haya
+ocurrido el ciclo Frontier completo.
 
 Cada campo es obligatorio y se valida en runtime (fail-closed):
 

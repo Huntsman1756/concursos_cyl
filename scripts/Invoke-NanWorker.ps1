@@ -19,7 +19,8 @@ param(
     [string]$MockPlan = '',
     [string]$PlannedBy = '',
     [string]$FrontierPlan = '',
-    [string[]]$AcceptanceCriteria = @()
+    [string[]]$AcceptanceCriteria = @(),
+    [string]$TelemetryOutputPath = ''
 )
 
 $ErrorActionPreference = 'Stop'
@@ -27,6 +28,32 @@ $repoRoot = [System.IO.Path]::GetFullPath((Split-Path -Parent $PSScriptRoot))
 $repoPrefix = $repoRoot.TrimEnd('\','/') + [System.IO.Path]::DirectorySeparatorChar
 $tdir = Join-Path $repoRoot '.agent-runs'
 if (-not (Test-Path -LiteralPath $tdir)) { New-Item -ItemType Directory -Path $tdir -Force | Out-Null }
+
+function Write-TelemetryRecord {
+    param([hashtable]$Value, [string]$TelemetryId)
+    $target = if ([string]::IsNullOrWhiteSpace($TelemetryOutputPath)) {
+        Join-Path $tdir "$TelemetryId.json"
+    } else {
+        if (-not [System.IO.Path]::IsPathRooted($TelemetryOutputPath)) {
+            throw 'TelemetryOutputPath must be absolute.'
+        }
+        [System.IO.Path]::GetFullPath($TelemetryOutputPath)
+    }
+    $parent = Split-Path -Parent $target
+    if (-not (Test-Path -LiteralPath $parent -PathType Container)) {
+        throw 'TelemetryOutputPath parent directory does not exist.'
+    }
+    $stream = [System.IO.File]::Open($target, [System.IO.FileMode]::CreateNew, [System.IO.FileAccess]::Write, [System.IO.FileShare]::None)
+    try {
+        # Preserve the existing Windows PowerShell 5.1 telemetry encoding so
+        # legacy Get-Content consumers decode non-ASCII evidence correctly.
+        $writer = New-Object System.IO.StreamWriter($stream, (New-Object System.Text.UTF8Encoding($true)))
+        try { $writer.Write(($Value | ConvertTo-Json -Depth 5)) } finally { $writer.Dispose() }
+    } finally {
+        if ($stream) { $stream.Dispose() }
+    }
+    return $target
+}
 
 # Normalize
 $AllowedPath = @($AllowedPath | ForEach-Object { $_ -split ',' } | ForEach-Object { $_.Trim() } | Where-Object { $_ })
@@ -356,8 +383,9 @@ if ($DryRun) {
         $planSha = Compute-StringSha256 -InputString $FrontierPlan
         $fc = @{plannedBy=$PlannedBy;planHash=$planSha;acceptanceCriteriaCount=$AcceptanceCriteria.Count;reviewRequired=$true}
     }
-    @{telemetryId=$tid;simulated=[bool]$true;taskType=$TaskType;selectedModel=$primaryModel;attempts=@();changedPaths=@();contractViolation=$false;validationFailed=$false;tokensUsage=@{input=0;output=0;reasoning=0;cacheRead=0;cacheWrite=0;total=0};success=$true;status='dry-run';frontierContract=$fc;contract=@{hash=$contractHash;headSha=$headSha;duplicateWindowSeconds=$DuplicateWindowSeconds};launch=@{budgetProfile=$BudgetProfile;budgetSource=$budgetSource;maxObservedTokens=$effectiveMaxObservedTokens;maxExecutionSeconds=$MaxExecutionSeconds}} |
-        ConvertTo-Json -Depth 5 | Out-File (Join-Path $tdir "$tid.json") -Encoding utf8
+    $dryRunTelemetry = @{telemetryId=$tid;simulated=[bool]$true;taskType=$TaskType;selectedModel=$primaryModel;attempts=@();changedPaths=@();contractViolation=$false;validationFailed=$false;tokensUsage=@{input=0;output=0;reasoning=0;cacheRead=0;cacheWrite=0;total=0};success=$true;status='dry-run';frontierContract=$fc;contract=@{hash=$contractHash;headSha=$headSha;duplicateWindowSeconds=$DuplicateWindowSeconds};launch=@{budgetProfile=$BudgetProfile;budgetSource=$budgetSource;maxObservedTokens=$effectiveMaxObservedTokens;maxExecutionSeconds=$MaxExecutionSeconds}}
+    $writtenTelemetryPath = Write-TelemetryRecord -Value $dryRunTelemetry -TelemetryId $tid
+    Write-Host "Telemetry: $writtenTelemetryPath" -ForegroundColor DarkGray
     exit 0
 }
 
@@ -592,8 +620,8 @@ $telemetry = @{
     contract=@{hash=$contractHash;headSha=$headSha;duplicateWindowSeconds=$DuplicateWindowSeconds}
     launch=@{harness='opencode';protocol='native-jsonl-stream-1.18.x';pure=$true;auto=$false;directory=$repoRoot;budgetProfile=$BudgetProfile;budgetSource=$budgetSource;maxObservedTokens=$effectiveMaxObservedTokens;maxExecutionSeconds=$MaxExecutionSeconds}
 }
-$telemetry | ConvertTo-Json -Depth 5 | Out-File (Join-Path $tdir "$tid.json") -Encoding utf8
-Write-Host "Telemetry: $(Join-Path $tdir "$tid.json")" -ForegroundColor DarkGray
+$writtenTelemetryPath = Write-TelemetryRecord -Value $telemetry -TelemetryId $tid
+Write-Host "Telemetry: $writtenTelemetryPath" -ForegroundColor DarkGray
 
 # ── Exit ──
 if ($success) {
