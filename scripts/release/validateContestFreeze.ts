@@ -509,19 +509,6 @@ function recomputeFreeze(
     readJson(rootDir, "analysis/fp_coverage_expansion_results.json"),
     "expansion results",
   );
-  const expansionCoverage = record(expansion.coverage, "expansion coverage");
-  const baseline = stringArray(
-    expansionCoverage.baselineReviewedQualifications,
-    "expansion baseline qualifications",
-  );
-  const newlyCompleted = stringArray(
-    expansionCoverage.newlyCompletedCanonicalBases,
-    "expansion completed qualifications",
-  );
-  const distinctQualificationKeys = sortedUnique([
-    ...baseline,
-    ...newlyCompleted,
-  ]);
   const approvedRelationKeys = sortedUnique(
     curated.links
       .filter((link) => link.reviewStatus === "approved")
@@ -536,6 +523,30 @@ function recomputeFreeze(
     curated.links
       .filter((link) => link.reviewStatus === "approved")
       .map((link) => link.trainingProgramKey),
+  );
+  const programsByKey = new Map(
+    programs.map((program) => [program.programKey, program]),
+  );
+  const distinctQualificationKeys = sortedUnique(
+    modalityKeys.map((programKey) => {
+      const program = programsByKey.get(programKey);
+      if (program === undefined)
+        throw new Error(`Reviewed relation references unknown ${programKey}`);
+      if (programKey.endsWith("D")) {
+        const possibleBaseKey = programKey.slice(0, -1);
+        const possibleBase = programsByKey.get(possibleBaseKey);
+        if (
+          possibleBase !== undefined &&
+          possibleBase.familyCode === program.familyCode &&
+          possibleBase.level === program.level &&
+          program.programTitle.replace(/\s*\(distancia\)\s*$/iu, "") ===
+            possibleBase.programTitle
+        ) {
+          return `qualification:${possibleBaseKey}`;
+        }
+      }
+      return `qualification:${programKey}`;
+    }),
   );
 
   const data = {

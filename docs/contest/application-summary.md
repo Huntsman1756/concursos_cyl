@@ -10,14 +10,14 @@ La interfaz permite elegir directamente cualquiera de los 187 ciclos de FP o fil
 
 ## Cobertura congelada
 
-- Instantánea publicada: `20260812123218779-818012d7bffb`.
+- Instantánea publicada: `20260812132331937-38e1812a9531`.
 - Grupos primarios CNO-11 consultables: **502**.
-- **15 cualificaciones distintas**.
-- Claves de modalidad públicas: **16** (AGA01M, AGA03M, COM01B, COM02M, ELE03S, EOC01M, FME01M, FME02M, HOT01M, IFC03S, IFC03SD, IMA02M, MAM01M, SAN21, SSC01M, TMV01M).
-- Relaciones ocupacionales aprobadas: **41**.
-- Alias aprobados: **22**.
-- **44 de las 1.054 ofertas de la instantánea** quedan alcanzadas por relaciones publicadas (unión de IDs).
-- Relaciones revisadas sin oferta alcanzada: **38**.
+- **17 cualificaciones distintas**.
+- Claves de modalidad públicas: **18** (AGA01M, AGA03M, COM01B, COM02M, ELE03S, EOC01M, FME01M, FME02M, HOT01M, IFC03S, IFC03SD, IMA02M, IMP02M, MAM01M, SAN02M, SAN21, SSC01M, TMV01M).
+- Relaciones ocupacionales aprobadas: **44**.
+- Alias aprobados: **28**.
+- **46 de las 1.054 ofertas de la instantánea** quedan alcanzadas por relaciones publicadas (unión de IDs).
+- Relaciones revisadas sin oferta alcanzada: **39**.
 - Programas diferidos por evidencia insuficiente: ADG01M, ELE01M, IMA03M, TMV02M.
 
 Las claves de modalidad se informan aparte de las identidades de cualificación. Una relación revisada sin coincidencia no se convierte en una afirmación sobre la ausencia de oportunidades; un programa diferido permanece fuera de las afirmaciones revisadas.
