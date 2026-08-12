@@ -6,8 +6,9 @@ param(
     [string[]]$InputPath = @(),
     [string[]]$ValidationCommand = @(),
     [ValidateSet('default','json')][string]$Format = 'json',
-    [int]$MaxRetries = 3,
-    [string[]]$FallbackModels = @('nan/mimo-v2.5','nan/deepseek-v4-flash'),
+    [ValidateRange(1,3)][int]$MaxRetries = 1,
+    [ValidateRange(1000,1000000)][int]$MaxObservedTokens = 50000,
+    [string[]]$FallbackModels = @(),
     [switch]$DryRun,
     [switch]$AllowNoChanges,
     [switch]$TestMode,
@@ -47,17 +48,46 @@ if ($TaskType -eq 'code') {
     if ($AcceptanceCriteria.Count -eq 0) { throw 'AcceptanceCriteria is required, must contain at least one item.' }
     # ValidationCommand required even in DryRun for code tasks
     if ($ValidationCommand.Count -eq 0) { throw 'Code delegation requires at least one -ValidationCommand.' }
+    if (-not $TestMode -and -not $DryRun) {
+        $gitDir = (& git -C $repoRoot rev-parse --path-format=absolute --git-dir).Trim()
+        $commonDir = (& git -C $repoRoot rev-parse --path-format=absolute --git-common-dir).Trim()
+        if ($LASTEXITCODE -ne 0 -or $gitDir -eq $commonDir) {
+            throw 'Live code delegation requires a linked Git worktree created by the frontier orchestrator.'
+        }
+        $dirty = (& git -C $repoRoot status --porcelain | Out-String).Trim()
+        if ($LASTEXITCODE -ne 0 -or $dirty) {
+            throw 'Live code delegation requires a clean isolated worktree.'
+        }
+    }
 }
 
 # ── JSONL token parser (PS 5.1 compatible) ──
 function Parse-JsonlTokens {
     param([string]$Jsonl)
     $r = @{input=0;output=0;reasoning=0;cacheRead=0;cacheWrite=0;total=0}
-    if ([string]::IsNullOrWhiteSpace($Jsonl)) { return $r }
+    if ([string]::IsNullOrWhiteSpace($Jsonl)) { throw 'OpenCode returned empty JSONL.' }
+    $sessionId = $null
+    $stepOpen = $false
+    $terminalCount = 0
+    $lastWasTerminal = $false
     foreach ($line in ($Jsonl -split "`n" | Where-Object { $_.Trim() })) {
-        $ev = try { $line | ConvertFrom-Json } catch { $null }
-        if (-not $ev) { continue }
-        if ($ev.type -eq 'step_finish' -and $ev.part -and $ev.part.tokens) {
+        $ev = try { $line | ConvertFrom-Json } catch { throw 'OpenCode returned malformed JSONL.' }
+        if ($ev.type -notin @('step_start','text','tool_use','step_finish')) { throw "Unexpected OpenCode event type: $($ev.type)" }
+        if (-not $ev.sessionID) { throw 'OpenCode event is missing sessionID.' }
+        if ($sessionId -and $ev.sessionID -ne $sessionId) { throw 'OpenCode output contains multiple sessions.' }
+        $sessionId = $ev.sessionID
+        $lastWasTerminal = $false
+        if ($ev.type -eq 'step_start') {
+            if ($stepOpen -or $ev.part.type -ne 'step-start') { throw 'Malformed OpenCode step start.' }
+            $stepOpen = $true
+        } elseif ($ev.type -eq 'step_finish') {
+            if (-not $stepOpen -or $ev.part.type -ne 'step-finish' -or $ev.part.reason -notin @('tool-calls','stop')) { throw 'Malformed OpenCode step finish.' }
+            $stepOpen = $false
+            if ($ev.part.reason -eq 'stop') { $terminalCount++; $lastWasTerminal = $true }
+        } elseif (-not $stepOpen) {
+            throw 'OpenCode event occurred outside a step.'
+        }
+        if ($ev.type -eq 'step_finish' -and $ev.part.tokens) {
             $t = $ev.part.tokens
             if ($t.input) { $r.input += [int]$t.input }
             if ($t.output) { $r.output += [int]$t.output }
@@ -69,6 +99,8 @@ function Parse-JsonlTokens {
             if ($t.total) { $r.total += [int]$t.total }
         }
     }
+    if ($stepOpen -or $terminalCount -ne 1 -or -not $lastWasTerminal) { throw 'OpenCode output has no unique final terminal step.' }
+    $r.sessionId = $sessionId
     return $r
 }
 
@@ -182,6 +214,7 @@ $successResult = $null
 $changedPaths = @()
 $contractViolation = $false
 $validationFailed = $false
+$tokenBudgetExceeded = $false
 $planIndex = 0
 $totalAttempts = 0
 
@@ -215,7 +248,7 @@ $totalAttempts = 0
             Write-Host ("Attempt " + $totalAttempts + ": ${candidateAgent} -> ${candidateModel} (Mock) exitCode=" + $attempt.exitCode) -ForegroundColor Cyan
         } else {
             # Live invocation
-            $opts = @('run','--pure','--model',$candidateModel,'--agent',$candidateAgent,'--format','json','--title',"orchestrated-$TaskType")
+            $opts = @('run','--pure','--auto','--dir',$repoRoot,'--model',$candidateModel,'--agent',$candidateAgent,'--format','json','--title',"orchestrated-$TaskType")
             foreach ($f in $InputPath) { $opts += @('--file',$f) }
             $contract = @("TASK TYPE: $TaskType","OBJECTIVE: $Objective")
             if ($TaskType -eq 'code') {
@@ -233,6 +266,14 @@ $totalAttempts = 0
         }
 
         $attempts += $attempt
+
+        if ($attempt.tokens.total -gt $MaxObservedTokens) {
+            $tokenBudgetExceeded = $true
+            $attempt.exitCode = 1
+            $attempts[-1] = $attempt
+            Write-Warning "Observed token budget exceeded: $($attempt.tokens.total) > $MaxObservedTokens"
+            break modelLoop
+        }
 
         if ($attempt.exitCode -eq 0) {
             $changedPaths = @($attempt.changedPaths | Where-Object { $_ -and $_.Trim() })
@@ -314,7 +355,7 @@ foreach ($a in $attempts) {
 
 # ── Telemetry (always written before exit) ──
 $tid = [guid]::NewGuid().ToString('N')
-$status = if ($successResult) { 'success' } else { 'blocked-needs-new-contract' }
+$status = if ($tokenBudgetExceeded) { 'blocked-token-budget' } elseif ($successResult) { 'awaiting-frontier-review' } else { 'blocked-needs-new-contract' }
 $success = ($successResult -ne $null) -and (-not $contractViolation) -and (-not $validationFailed)
 $fcTelemetry = @{}
 if ($TaskType -eq 'code') {
@@ -326,6 +367,7 @@ $telemetry = @{
     attempts=@($attempts | ForEach-Object { @{model=$_.model;agent=$_.agent;attempt=$_.attempt;retry=$_.retry;exitCode=$_.exitCode;tokens=$_.tokens;changedPaths=$_.changedPaths;validationExitCode=$_.validationExitCode} })
     changedPaths=@($changedPaths);contractViolation=$contractViolation;validationFailed=$validationFailed
     tokensUsage=$agg;success=$success;status=$status;frontierContract=$fcTelemetry
+    launch=@{harness='opencode';protocol='native-jsonl-1.18.x';pure=$true;auto=$true;directory=$repoRoot}
 }
 $telemetry | ConvertTo-Json -Depth 5 | Out-File (Join-Path $tdir "$tid.json") -Encoding utf8
 Write-Host "Telemetry: $(Join-Path $tdir "$tid.json")" -ForegroundColor DarkGray

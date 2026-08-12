@@ -119,12 +119,12 @@ function Invoke-WorkerDirect {
 
 # ── JSONL builder ──
 function New-Jsonl {
-    param([int]$Total = 1000, [int]$InputTokens = 400, [int]$Output = 300, [int]$Reasoning = 200, [int]$CacheRead = 50, [int]$CacheWrite = 50)
+    param([int]$Total = 1000, [int]$InputTokens = 400, [int]$Output = 300, [int]$Reasoning = 200, [int]$CacheRead = 50, [int]$CacheWrite = 50, [ValidateSet('tool-calls','stop')][string]$Reason = 'stop')
     $cacheObj = @{ read = $CacheRead; write = $CacheWrite }
     $tokensObj = @{ total = $Total; input = $InputTokens; output = $Output; reasoning = $Reasoning; cache = $cacheObj }
-    $partObj = @{ tokens = $tokensObj }
-    $o = @{ type = 'step_finish'; part = $partObj }
-    return ($o | ConvertTo-Json -Depth 10 -Compress)
+    $start = @{ type = 'step_start'; sessionID = 'session-test'; part = @{ type = 'step-start' } }
+    $finish = @{ type = 'step_finish'; sessionID = 'session-test'; part = @{ type = 'step-finish'; reason = $Reason; tokens = $tokensObj; cost = 0 } }
+    return (($start | ConvertTo-Json -Depth 10 -Compress), ($finish | ConvertTo-Json -Depth 10 -Compress)) -join "`n"
 }
 
 # ── Valid code contract helper ──
@@ -134,6 +134,7 @@ function New-ValidCodeContract {
         [string[]]$AllowedPath = @('scripts/**'),
         [string[]]$ValidationCommand = @('cmd /c exit 0'),
         [int]$MaxRetries = 3,
+        [int]$MaxObservedTokens = 50000,
         [string[]]$FallbackModels = @('nan/mimo-v2.5','nan/deepseek-v4-flash'),
         [switch]$AllowNoChanges,
         [switch]$TestMode,
@@ -147,6 +148,7 @@ function New-ValidCodeContract {
         AllowedPath = $AllowedPath
         ValidationCommand = $ValidationCommand
         MaxRetries = $MaxRetries
+        MaxObservedTokens = $MaxObservedTokens
         FallbackModels = $FallbackModels
         PlannedBy = 'frontier'
         FrontierPlan = 'Implement the required changes'
@@ -305,7 +307,7 @@ try {
         Write-Host "`n*** 7. JSONL token extraction ***" -ForegroundColor Cyan
         Write-Host ("-" * 40) -ForegroundColor DarkGray
 
-        $ev1 = New-Jsonl -Total 1500 -InputTokens 500 -Output 300 -Reasoning 200 -CacheRead 100 -CacheWrite 50
+        $ev1 = New-Jsonl -Total 1500 -InputTokens 500 -Output 300 -Reasoning 200 -CacheRead 100 -CacheWrite 50 -Reason tool-calls
         $ev2 = New-Jsonl -Total 800  -InputTokens 200 -Output 150 -Reasoning 100 -CacheRead 50  -CacheWrite 25
         $multiJsonl = "$ev1`n$ev2"
         $plan = @(
@@ -335,6 +337,14 @@ try {
             Assert-Equal $ta.cacheRead   150 '7l: attempt cacheRead sum = 150'
             Assert-Equal $ta.cacheWrite   75 '7m: attempt cacheWrite sum = 75'
         }
+
+        $tooLarge = New-Jsonl -Total 50001
+        $budgetPlan = @(@{exitCode = 0; changedPaths = @('scripts/output.txt'); validationExitCode = 0; jsonl = $tooLarge}) | ConvertTo-Json -Compress
+        $pre = Get-FileSnapshot
+        $budgetRun = Invoke-WorkerChild -WorkerParameters (New-ValidCodeContract -Objective 'token-budget' -MaxRetries 1 -MaxObservedTokens 50000 -TestMode -MockPlan $budgetPlan)
+        Assert-True ($budgetRun.ExitCode -ne 0) '7n: oversized trajectory fails closed'
+        $budgetTelemetry = Get-Content -LiteralPath (Get-NewTelemetry -BeforeFiles $pre) -Raw | ConvertFrom-Json
+        Assert-Equal $budgetTelemetry.status 'blocked-token-budget' '7o: oversized trajectory has explicit status'
     }
 
     # 8. No-change rejection
@@ -573,7 +583,7 @@ try {
         if ($telFile) {
             $tel = Get-Content -LiteralPath $telFile -Raw | ConvertFrom-Json
             Assert-True ($tel.validationFailed -eq $false) '17b: validationFailed=false on success'
-            Assert-True ($tel.status -eq 'success') '17c: status=success on success'
+            Assert-True ($tel.status -eq 'awaiting-frontier-review') '17c: successful worker awaits frontier review'
             Assert-True ($tel.attempts[0].validationExitCode -eq 0) '17d: attempt validationExitCode=0 on success'
         }
 
@@ -634,7 +644,7 @@ try {
         if ($telFile) {
             $tel = Get-Content -LiteralPath $telFile -Raw | ConvertFrom-Json
             Assert-True ($tel.validationFailed -eq $false) '17o: validationFailed=false with list [0,0]'
-            Assert-True ($tel.status -eq 'success') '17p: status=success with list [0,0]'
+            Assert-True ($tel.status -eq 'awaiting-frontier-review') '17p: all-zero validation awaits frontier review'
             Assert-True ($tel.attempts[0].validationExitCode -eq 0) '17q: attempt validationExitCode=0 from list [0,0]'
         }
     }
