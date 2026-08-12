@@ -36,7 +36,12 @@ entre **planificar/diagnosticar/revisar** (Frontier) e **implementar** (worker).
 ## Contrato de delegación
 
 Antes de delegar código, Codex debe indicar objetivo, rutas permitidas,
-criterios de aceptación, plan Frontier y validaciones, y ejecutar:
+criterios de aceptación, plan Frontier y validaciones. La entrada autónoma por
+defecto es `Invoke-FrontierSupervisedNanWorker.ps1`: crea un worktree nuevo por
+intento, ejecuta NAN una sola vez, conserva parche y telemetría fuera del repo,
+elimina los bytes candidatos y solicita a Codex `ACCEPT`, `RETRY` o `ESCALATE`.
+Un `RETRY` relanza un worker con sesión nueva sobre el mismo SHA y con
+instrucciones reducidas; nunca permite que Codex implemente silenciosamente.
 
 La ejecución real de código solo comienza en un worktree Git enlazado, limpio y
 creado por el orquestador. Declarar un modelo aquí no prueba que se haya lanzado:
@@ -44,14 +49,14 @@ la telemetría debe conservar ruta, launch, sesión/eventos JSONL, usage, cambio
 validación independiente y el estado `awaiting-frontier-review`.
 
 ```powershell
-.\scripts\Invoke-NanWorker.ps1 -TaskType code `
-  -Objective "Objetivo verificable" `
-  -PlannedBy "frontier" `
-  -FrontierPlan "Diagnostico X, implemento Y en rutas acotadas" `
-  -AcceptanceCriteria @("1. Los tests pasan","2. No hay regression") `
-  -AllowedPath "src/**" `
-  -ValidationCommand "npm test"
+.\scripts\Invoke-FrontierSupervisedNanWorker.ps1 `
+  -ContractPath C:\orchestration\contracts\task.json `
+  -StateDirectory C:\orchestration\state\task-001 `
+  -WorktreeParent C:\orchestration\worktrees
 ```
+
+`Invoke-NanWorker.ps1` sigue siendo el primitive de un solo intento usado por
+el supervisor; no debe presentarse como una orquestación completa.
 
 Cada campo es obligatorio y se valida en runtime (fail-closed):
 
@@ -94,7 +99,8 @@ El worker soporta:
 - `-TestMode` — ejecución simulada con `-MockPlan` (solo para pruebas, no consume API).
 
 No se mantienen comandos directos en `.opencode/commands`: toda llamada NAN debe
-pasar por `Invoke-NanWorker.ps1` para aplicar presupuesto, deduplicación y telemetría.
+pasar por el supervisor o por su primitive `Invoke-NanWorker.ps1` para aplicar
+presupuesto, deduplicación y telemetría.
 
 Cada ejecución escribe telemetría en `.agent-runs/<guid>.json`.
 
@@ -102,7 +108,8 @@ Cada ejecución escribe telemetría en `.agent-runs/<guid>.json`.
 > de fallo; nunca queda `null` tras ejecutar validación (mock o real).
 
 El trabajador no puede publicar, hacer commits, ampliar sus rutas ni aprobar su
-propio resultado. Si falla, debe retornar `blocked-needs-new-contract`; nunca
-escala automáticamente a Sol para escribir código. Codex revisa el diff y
-ejecuta las validaciones de forma independiente. No se delegan secretos,
+propio resultado. Si falla, el supervisor puede adaptar una vez el contrato y
+reintentar con NAN; agotado el presupuesto termina en `ESCALATE`. Codex revisa
+pero no toma el control de la implementación. Este host Windows es
+`BOUNDED_LOCAL`, no aislamiento duro certificado. No se delegan secretos,
 credenciales ni datos personales.

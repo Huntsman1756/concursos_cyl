@@ -2,8 +2,18 @@ schemaVersion: 1
 id: castilla-leon-openai-nan-pilot
 reference:
   repository: https://github.com/Huntsman1756/agent-orchestration-starter
-  commit: 0d95676ac2c5f2365021514458180ca40e6a37a2
-  adaptation: api-first-retry-telemetry
+  commit: 4b9ec4d8b07e285a6f58590ac0199e878548fcaf
+  adaptation: frontier-supervised-bounded-local
+frontierSupervisor:
+  enabled: true
+  entrypoint: scripts/Invoke-FrontierSupervisedNanWorker.ps1
+  maxAttempts: 2
+  automaticWorkerRelaunchAfterFrontierRetry: true
+  retryFromAcceptedBase: true
+  freshWorkerSessionPerAttempt: true
+  persistDecisionBeforeRelaunch: true
+  failClosedOnInvalidDecision: true
+  publicationAuthority: none
 bindings:
   orchestrator:
     harness: codex

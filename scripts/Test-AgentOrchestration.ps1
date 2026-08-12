@@ -800,6 +800,9 @@ try {
             Assert-True (([regex]::Matches($yamlText, '(?m)^\s+fallbackModels:')).Count -eq 1) '18ab: YAML has one fallbackModels key'
             Assert-True ($yamlText -match 'maxExecutionSeconds:\s*300') '18ac: YAML declares execution timeout'
             Assert-True ($yamlText -match 'duplicateWindowSeconds:\s*3600') '18ad: YAML declares duplicate window'
+            Assert-True ($yamlText -match 'frontierSupervisor:\s*\r?\n\s+enabled:\s*true') '18ad1: YAML enables frontier supervisor'
+            Assert-True ($yamlText -match 'automaticWorkerRelaunchAfterFrontierRetry:\s*true') '18ad2: YAML declares adaptive relaunch'
+            Assert-True ($yamlText -match 'retryFromAcceptedBase:\s*true') '18ad3: YAML requires repair from the accepted base'
 
             $workerText = Get-Content -LiteralPath $workerPath -Raw
             Assert-True ($workerText -notmatch "'--auto'") '18ae: worker does not pass --auto'
@@ -836,6 +839,28 @@ try {
     }
 
     # ── Results ──
+    # 19. Host-selected telemetry path for unambiguous supervisor evidence
+    if (-not $Only -or $Only -eq 'telemetry-path') {
+        Write-Host "`n*** 19. Explicit Telemetry Path ***" -ForegroundColor Cyan
+        Write-Host ("-" * 40) -ForegroundColor DarkGray
+        $explicitTelemetry = Join-Path $tdir "explicit_$([guid]::NewGuid().ToString('N')).json"
+        try {
+            $jsonlOk = New-Jsonl -Total 1000
+            $plan = @(@{exitCode = 0; changedPaths = @('scripts/result.txt'); validationExitCode = 0; jsonl = $jsonlOk}) | ConvertTo-Json -Compress
+            $parameters = New-ValidCodeContract -Objective 'explicit-telemetry' -MaxRetries 1 -TestMode -MockPlan $plan
+            $parameters.TelemetryOutputPath = $explicitTelemetry
+            $r = Invoke-WorkerDirect -WorkerParameters $parameters
+            Assert-True ($r.ExitCode -eq 0) '19a: explicit telemetry run succeeds'
+            Assert-True (Test-Path -LiteralPath $explicitTelemetry -PathType Leaf) '19b: host-selected telemetry file exists'
+            if (Test-Path -LiteralPath $explicitTelemetry -PathType Leaf) {
+                $telemetry = Get-Content -LiteralPath $explicitTelemetry -Raw | ConvertFrom-Json
+                Assert-True ($telemetry.status -eq 'awaiting-frontier-review') '19c: explicit telemetry is the terminal worker evidence'
+            }
+        } finally {
+            Remove-Item -LiteralPath $explicitTelemetry -Force -ErrorAction SilentlyContinue
+        }
+    }
+
     $status = if ($FAIL -eq 0) { 'ok' } else { 'fail' }
     $summary = @{
         status = $status
