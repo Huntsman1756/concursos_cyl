@@ -1,36 +1,19 @@
 {
   "schemaVersion": "1.0.0",
-  "snapshotId": "20260812011203149-415d767a53f9",
+  "snapshotId": "20260812091756510-cac7c1d65a73",
   "totalOffers": 1054,
   "approvedLinkCount": 36,
-  "zeroMatchRelations": 29,
-  "zeroMatchPrograms": 12,
-  "totalCandidates": 14,
+  "zeroMatchRelations": 27,
+  "zeroMatchPrograms": 11,
+  "totalCandidates": 11,
   "candidatesByConfidence": {
-    "review_only": 13,
-    "exact_contiguous_phrase": 1,
+    "review_only": 11,
+    "exact_contiguous_phrase": 0,
     "exact_alias_match": 0,
     "phrase_match": 0,
     "token_overlap": 0
   },
   "candidates": [
-    {
-      "aliasCandidate": "Auxiliar de ayuda a domicilio.",
-      "aliasCandidateNormalized": "auxiliar de ayuda a domicilio",
-      "programKey": "SSC01M",
-      "programTitle": "Atención a Personas en Situación de Dependencia",
-      "occupationId": "occupation:cno11:5710",
-      "occupationLabel": "Trabajadores de los cuidados personales a domicilio",
-      "confidence": "exact_contiguous_phrase",
-      "sourceUrl": "https://www.boe.es/eli/es/rd/2011/11/04/1593",
-      "sourceQuote": "Auxiliar de ayuda a domicilio.",
-      "matchFields": ["title"],
-      "matchedOfferIds": ["1285625266971"],
-      "matchedOfferTitles": ["Auxiliar de ayuda a domicilio para Burgos"],
-      "occurrenceCount": 1,
-      "normalizedCollisionOccupations": [],
-      "reasonCode": "single_offer_match;exact_source_phrase"
-    },
     {
       "aliasCandidate": "SOLDADORES DE ESTRUCTURAS METÁLICAS PESADAS",
       "aliasCandidateNormalized": "soldadores de estructuras metalicas pesadas",
@@ -100,23 +83,6 @@
       "occurrenceCount": 2,
       "normalizedCollisionOccupations": [],
       "reasonCode": "token_overlap_hypothesis;share_stems=2;overlap=0.67"
-    },
-    {
-      "aliasCandidate": "Auxiliar de ayuda a domicilio para Burgos",
-      "aliasCandidateNormalized": "auxiliar de ayuda a domicilio para burgos",
-      "programKey": "SSC01M",
-      "programTitle": "Atención a Personas en Situación de Dependencia",
-      "occupationId": "occupation:cno11:5710",
-      "occupationLabel": "Trabajadores de los cuidados personales a domicilio",
-      "confidence": "review_only",
-      "sourceUrl": "https://www.boe.es/eli/es/rd/2011/11/04/1593",
-      "sourceQuote": "Auxiliar de ayuda a domicilio.",
-      "matchFields": ["title"],
-      "matchedOfferIds": ["1285625266971"],
-      "matchedOfferTitles": ["Auxiliar de ayuda a domicilio para Burgos"],
-      "occurrenceCount": 1,
-      "normalizedCollisionOccupations": [],
-      "reasonCode": "token_overlap_hypothesis;share_stems=3;overlap=1.00"
     },
     {
       "aliasCandidate": "CONDUCTORES-OPERADORES DE MAQUINARIA DE TRANSPORTE DE TIERRAS, EN GENERAL",
@@ -244,25 +210,6 @@
       "matchedOfferIds": ["1285665562745"],
       "matchedOfferTitles": [
         "PINTORES DE ESTRUCTURAS METÁLICAS Y CASCOS DE BUQUES"
-      ],
-      "occurrenceCount": 1,
-      "normalizedCollisionOccupations": [],
-      "reasonCode": "token_overlap_hypothesis;share_stems=2;overlap=0.67"
-    },
-    {
-      "aliasCandidate": "Trabajador/a social - coordinador/a de ayuda a domicilio para León",
-      "aliasCandidateNormalized": "trabajador a social coordinador a de ayuda a domicilio para leon",
-      "programKey": "SSC01M",
-      "programTitle": "Atención a Personas en Situación de Dependencia",
-      "occupationId": "occupation:cno11:5710",
-      "occupationLabel": "Trabajadores de los cuidados personales a domicilio",
-      "confidence": "review_only",
-      "sourceUrl": "https://www.boe.es/eli/es/rd/2011/11/04/1593",
-      "sourceQuote": "Auxiliar de ayuda a domicilio.",
-      "matchFields": ["title"],
-      "matchedOfferIds": ["1285669062174"],
-      "matchedOfferTitles": [
-        "Trabajador/a social - coordinador/a de ayuda a domicilio para León"
       ],
       "occurrenceCount": 1,
       "normalizedCollisionOccupations": [],

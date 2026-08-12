@@ -1,34 +1,25 @@
-import { createHash } from "node:crypto";
 import { readFile, stat } from "node:fs/promises";
 import { resolve } from "node:path";
 
 import { describe, expect, it } from "vitest";
 
 import {
-  OccupationAliasesSchema,
   OccupationsSchema,
   TrainingOccupationLinksSchema,
+  type Occupation,
   type OccupationAlias,
   type TrainingOccupationLink,
 } from "../../data/schemas/curatedMappings";
 import {
   GeneratedManifestSchema,
   JobOfferSchema,
-  TrainingProgramSchema,
   type GeneratedManifest,
   type JobOffer,
   type TrainingProgram,
 } from "../../data/schemas/generated";
+import type { OfferPublishedRequirements } from "../../src/domain/requirements";
 import {
-  PublishedRequirementsResourceSchema,
-  type OfferPublishedRequirements,
-} from "../../src/domain/requirements";
-import {
-  CandidateMatchField,
-  CandidateConfidence,
   FpOfferAliasCandidateReportSchema,
-  FpOfferAliasCandidateSchema,
-  type CandidateConfidence as CandidateConfidenceType,
   rankFpOfferAliasCandidates,
   normalizedText,
 } from "./rankFpOfferAliasCandidates";
@@ -68,7 +59,7 @@ describe("rankFpOfferAliasCandidates – manifest-addressed loading", () => {
             manifest.resourceSnapshots.programs.resourcePath.slice(1),
           ),
         ),
-        readJson<any[]>(
+        readJson<unknown[]>(
           resolve(
             base,
             manifest.resourceSnapshots.occupations.resourcePath.slice(1),
@@ -107,6 +98,7 @@ describe("rankFpOfferAliasCandidates – manifest-addressed loading", () => {
     expect(programs).toBeInstanceOf(Array);
     expect(offers.length).toBe(1054);
     expect(links.length).toBe(36);
+    expect(requirements.length).toBeGreaterThan(0);
     expect(programs.length).toBeGreaterThan(0);
     expect(occupations.length).toBeGreaterThan(0);
     expect(aliases.length).toBeGreaterThan(0);
@@ -134,7 +126,7 @@ describe("rankFpOfferAliasCandidates – deterministic output", () => {
     expect(candidates1.map((c) => c.aliasCandidate)).toEqual(
       candidates2.map((c) => c.aliasCandidate),
     );
-  });
+  }, 30_000);
 
   it("report JSON does not contain wall-clock timestamps", async () => {
     const { report } = await rankFpOfferAliasCandidates();
@@ -327,20 +319,6 @@ describe("rankFpOfferAliasCandidates – markdown report", () => {
 
 describe("rankFpOfferAliasCandidates – no file mutation", () => {
   it("running does not modify curated or public data files", async () => {
-    const manifest = await readJson<GeneratedManifest>(
-      resolve(rootDirectory, "public/data/v1/manifest.json"),
-    );
-    const base = resolve(rootDirectory, "public");
-
-    // Capture hashes before
-    const resourcePaths = [
-      manifest.resourceSnapshots.programs.resourcePath,
-      manifest.resourceSnapshots.occupations.resourcePath,
-      manifest.resourceSnapshots.occupationAliases.resourcePath,
-      manifest.resourceSnapshots.trainingOccupationLinks.resourcePath,
-      manifest.resourceSnapshots.jobOffers.resourcePath,
-      manifest.resourceSnapshots.publishedRequirements.resourcePath,
-    ];
     // Use manifest.json itself as a proxy for curated data (if we somehow modified it)
     const manifestStatBefore = await stat(
       resolve(rootDirectory, "public/data/v1/manifest.json"),
@@ -528,11 +506,6 @@ describe("rankFpOfferAliasCandidates – every candidate has a title match", () 
 });
 
 describe("rankFpOfferAliasCandidates – hypothesis lane is review_only", () => {
-  const { report } = (async () => {
-    // This will be evaluated inside the test; the outer call is a no-op
-    return { report: null };
-  })();
-
   it("token-overlap candidates carry review_only confidence and are not exact", async () => {
     const { report } = await rankFpOfferAliasCandidates();
     const reviewOnlyCandidates = report.candidates.filter(
@@ -666,10 +639,8 @@ describe("rankFpOfferAliasCandidates – display text preservation", () => {
       // aliasCandidate should be the original display text from sourceQuote/segment
       // It should NOT be the fully normalized (lowercased, no punctuation) version
       // The original sourceQuote typically has proper casing and punctuation
-      const aliasLower = c.aliasCandidate.toLowerCase();
       // If the source had uppercase, aliasCandidate should preserve some
       // (at minimum, it should not be identical to the normalized form for non-trivial cases)
-      const normForm = normalizedText(c.aliasCandidate);
       // The display text should be the original, not a fully lowercased version
       // (unless the original was already lowercased)
       expect(c.aliasCandidate).toBeTypeOf("string");

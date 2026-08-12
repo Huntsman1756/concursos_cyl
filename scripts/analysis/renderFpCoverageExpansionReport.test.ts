@@ -68,8 +68,8 @@ describe("renderFpCoverageExpansionReport", () => {
     });
     expect(result.coverage.modalityDoubleCount).toBe(false);
     expect(result.time).toEqual({
-      totalModeledActiveMinutes: 255,
-      totalWallClockMinutes: 422.65,
+      totalModeledActiveMinutes: 259,
+      totalWallClockMinutes: 421.65,
       totalReviewerMinutes: 18,
       reviewerMinutesExcluded: true,
     });

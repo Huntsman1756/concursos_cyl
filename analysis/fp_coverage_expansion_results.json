@@ -58,8 +58,8 @@
     "union": []
   },
   "time": {
-    "totalModeledActiveMinutes": 255,
-    "totalWallClockMinutes": 422.65,
+    "totalModeledActiveMinutes": 259,
+    "totalWallClockMinutes": 421.65,
     "totalReviewerMinutes": 18,
     "reviewerMinutesExcluded": true
   },
@@ -310,8 +310,8 @@
         "test": 3,
         "review": 0
       },
-      "modeledActiveMinutes": 15,
-      "wallClockMinutes": 14,
+      "modeledActiveMinutes": 19,
+      "wallClockMinutes": 13,
       "reviewerMinutes": 0,
       "reviewerTimeExcluded": true,
       "offerDeltaIds": [],
@@ -325,7 +325,7 @@
         "publishedRelationKeys": [],
         "rejectedRelationKeys": ["FME01M|occupation:cno11:3139"]
       },
-      "limitation": "Las relaciones aceptadas (7322, 7323, 7324) se conservan como evidencia de auditoría pero no se publican porque TodoFP no contiene el seed congelado 'Mecánico de mecanizado' y no existe reconciliación demostrable contra el inventario BOE-A-2007-20203."
+      "limitation": "Las relaciones aceptadas (7322, 7323, 7324) se conservan como evidencia de auditoría pero no se publican porque el seed congelado 'Mecánico de mecanizado' no aparece en TodoFP y no existe reconciliación demostrable contra el inventario BOE-A-2007-20203. El candidato 3139 se mantiene rechazado."
     },
     {
       "programKey": "MAM01M",

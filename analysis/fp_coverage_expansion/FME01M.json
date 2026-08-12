@@ -210,13 +210,13 @@
   ],
   "baselineMatchIds": [],
   "currentMatchIds": [],
-  "newlyReachedOfferIdsByProgram": {},
+  "newlyReachedOfferIdsByProgram": { "FME01M": [] },
   "newlyReachedOfferUnionIds": [],
   "limitation": "Las relaciones aceptadas (7322, 7323, 7324) se conservan como evidencia de auditoría pero no se publican porque el seed congelado 'Mecánico de mecanizado' no aparece en TodoFP y no existe reconciliación demostrable contra el inventario BOE-A-2007-20203. El candidato 3139 se mantiene rechazado.",
   "reviewedCommit": "ffb756449ac004700cbd5aae170f17d676c0a920",
   "reviewedCommitAt": "2026-08-09T17:35:28.000Z",
-  "snapshotId": "20260812011203149-415d767a53f9",
-  "snapshotHash": "406a14b6105caf86be2a687b29f049bf0bf9e0006c68cce4c4ca50c65665f6c4",
+  "snapshotId": "20260812091756510-cac7c1d65a73",
+  "snapshotHash": "6c4429521afcf2eb9d1c052a692ffe51b14363b40fa0100247f27d48c06b0dbc",
   "publicParity": {
     "publishedRelationKeys": [],
     "rejectedRelationKeys": ["FME01M|occupation:cno11:3139"]

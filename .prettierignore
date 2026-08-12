@@ -6,3 +6,6 @@ public/data/v1/job-offers.json
 
 # Non-production research corpus preserves its source formatting.
 research/**
+
+# Deterministic writer owns the canonical serialization for this audit artifact.
+analysis/fp_official_alias_pass_results.json

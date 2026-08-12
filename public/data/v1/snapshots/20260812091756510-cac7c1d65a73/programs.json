@@ -1,0 +1,1311 @@
+[
+  {
+    "familyCode": "ADG",
+    "familyName": "Administración y Gestión",
+    "level": "basic",
+    "programKey": "ADG01B",
+    "programTitle": "Servicios Administrativos"
+  },
+  {
+    "familyCode": "ADG",
+    "familyName": "Administración y Gestión",
+    "level": "intermediate",
+    "programKey": "ADG01M",
+    "programTitle": "Gestión Administrativa"
+  },
+  {
+    "familyCode": "ADG",
+    "familyName": "Administración y Gestión",
+    "level": "intermediate",
+    "programKey": "ADG01MD",
+    "programTitle": "Gestión Administrativa (distancia)"
+  },
+  {
+    "familyCode": "ADG",
+    "familyName": "Administración y Gestión",
+    "level": "higher",
+    "programKey": "ADG01S",
+    "programTitle": "Asistencia a la Dirección"
+  },
+  {
+    "familyCode": "ADG",
+    "familyName": "Administración y Gestión",
+    "level": "higher",
+    "programKey": "ADG02S",
+    "programTitle": "Administración y Finanzas"
+  },
+  {
+    "familyCode": "ADG",
+    "familyName": "Administración y Gestión",
+    "level": "higher",
+    "programKey": "ADG02SD",
+    "programTitle": "Administración y Finanzas (distancia)"
+  },
+  {
+    "familyCode": "AFD",
+    "familyName": "Actividades Físicas y Deportivas",
+    "level": "intermediate",
+    "programKey": "AFD01M",
+    "programTitle": "Actividades Ecuestres"
+  },
+  {
+    "familyCode": "AFD",
+    "familyName": "Actividades Físicas y Deportivas",
+    "level": "higher",
+    "programKey": "AFD01S",
+    "programTitle": "Enseñanza y Animación Sociodeportiva"
+  },
+  {
+    "familyCode": "AFD",
+    "familyName": "Actividades Físicas y Deportivas",
+    "level": "higher",
+    "programKey": "AFD01SD",
+    "programTitle": "Enseñanza y Animación Sociodeportiva (distancia)"
+  },
+  {
+    "familyCode": "AFD",
+    "familyName": "Actividades Físicas y Deportivas",
+    "level": "intermediate",
+    "programKey": "AFD02M",
+    "programTitle": "Guía en el medio natural y de tiempo libre"
+  },
+  {
+    "familyCode": "AFD",
+    "familyName": "Actividades Físicas y Deportivas",
+    "level": "higher",
+    "programKey": "AFD02S",
+    "programTitle": "Acondicionamiento Físico"
+  },
+  {
+    "familyCode": "AFD",
+    "familyName": "Actividades Físicas y Deportivas",
+    "level": "higher",
+    "programKey": "AFD02SD",
+    "programTitle": "Acondicionamiento Físico (distancia)"
+  },
+  {
+    "familyCode": "AGA",
+    "familyName": "Agraria",
+    "level": "basic",
+    "programKey": "AGA01B",
+    "programTitle": "Agro-jardinería y Composiciones Florales"
+  },
+  {
+    "familyCode": "AGA",
+    "familyName": "Agraria",
+    "level": "intermediate",
+    "programKey": "AGA01M",
+    "programTitle": "Producción Agroecológica"
+  },
+  {
+    "familyCode": "AGA",
+    "familyName": "Agraria",
+    "level": "higher",
+    "programKey": "AGA01S",
+    "programTitle": "Gestión Forestal y del Medio Natural"
+  },
+  {
+    "familyCode": "AGA",
+    "familyName": "Agraria",
+    "level": "higher",
+    "programKey": "AGA01SD",
+    "programTitle": "Gestión Forestal y del Medio Natural (distancia)"
+  },
+  {
+    "familyCode": "AGA",
+    "familyName": "Agraria",
+    "level": "intermediate",
+    "programKey": "AGA02M",
+    "programTitle": "Producción Agropecuaria"
+  },
+  {
+    "familyCode": "AGA",
+    "familyName": "Agraria",
+    "level": "higher",
+    "programKey": "AGA02S",
+    "programTitle": "Paisajismo y Medio Rural"
+  },
+  {
+    "familyCode": "AGA",
+    "familyName": "Agraria",
+    "level": "basic",
+    "programKey": "AGA03B",
+    "programTitle": "Aprovechamientos Forestales"
+  },
+  {
+    "familyCode": "AGA",
+    "familyName": "Agraria",
+    "level": "intermediate",
+    "programKey": "AGA03M",
+    "programTitle": "Jardinería y Floristería"
+  },
+  {
+    "familyCode": "AGA",
+    "familyName": "Agraria",
+    "level": "higher",
+    "programKey": "AGA03S",
+    "programTitle": "Ganadería y Asistencia en Sanidad Animal"
+  },
+  {
+    "familyCode": "AGA",
+    "familyName": "Agraria",
+    "level": "intermediate",
+    "programKey": "AGA04M",
+    "programTitle": "Aprovechamiento y Conservación del Medio Natural"
+  },
+  {
+    "familyCode": "ARG",
+    "familyName": "Artes Gráficas",
+    "level": "intermediate",
+    "programKey": "ARG01M",
+    "programTitle": "Preimpresión Digital"
+  },
+  {
+    "familyCode": "ARG",
+    "familyName": "Artes Gráficas",
+    "level": "higher",
+    "programKey": "ARG01S",
+    "programTitle": "Diseño y Gestión de la Producción Gráfica"
+  },
+  {
+    "familyCode": "ARG",
+    "familyName": "Artes Gráficas",
+    "level": "higher",
+    "programKey": "ARG02S",
+    "programTitle": "Diseño y Edición de Publicaciones Impresas y Multimedia"
+  },
+  {
+    "familyCode": "COM",
+    "familyName": "Comercio y Marketing",
+    "level": "basic",
+    "programKey": "COM01B",
+    "programTitle": "Servicios Comerciales"
+  },
+  {
+    "familyCode": "COM",
+    "familyName": "Comercio y Marketing",
+    "level": "specialization",
+    "programKey": "COM01E",
+    "programTitle": "Posicionamiento en buscadores (SEO/SEM) y comunicación en redes sociales"
+  },
+  {
+    "familyCode": "COM",
+    "familyName": "Comercio y Marketing",
+    "level": "intermediate",
+    "programKey": "COM01M",
+    "programTitle": "Actividades Comerciales"
+  },
+  {
+    "familyCode": "COM",
+    "familyName": "Comercio y Marketing",
+    "level": "higher",
+    "programKey": "COM01S",
+    "programTitle": "Marketing y Publicidad"
+  },
+  {
+    "familyCode": "COM",
+    "familyName": "Comercio y Marketing",
+    "level": "specialization",
+    "programKey": "COM02E",
+    "programTitle": "Redacción de contenidos digitales para marketing y ventas"
+  },
+  {
+    "familyCode": "COM",
+    "familyName": "Comercio y Marketing",
+    "level": "intermediate",
+    "programKey": "COM02M",
+    "programTitle": "Comercialización de Productos Alimentarios"
+  },
+  {
+    "familyCode": "COM",
+    "familyName": "Comercio y Marketing",
+    "level": "higher",
+    "programKey": "COM02S",
+    "programTitle": "Transporte y Logística"
+  },
+  {
+    "familyCode": "COM",
+    "familyName": "Comercio y Marketing",
+    "level": "higher",
+    "programKey": "COM02SD",
+    "programTitle": "Transporte y Logística (distancia)"
+  },
+  {
+    "familyCode": "COM",
+    "familyName": "Comercio y Marketing",
+    "level": "higher",
+    "programKey": "COM03S",
+    "programTitle": "Gestión de Ventas y Espacios Comerciales"
+  },
+  {
+    "familyCode": "COM",
+    "familyName": "Comercio y Marketing",
+    "level": "higher",
+    "programKey": "COM03SD",
+    "programTitle": "Gestión de Ventas y Espacios Comerciales (distancia)"
+  },
+  {
+    "familyCode": "COM",
+    "familyName": "Comercio y Marketing",
+    "level": "higher",
+    "programKey": "COM04S",
+    "programTitle": "Comercio Internacional"
+  },
+  {
+    "familyCode": "COM",
+    "familyName": "Comercio y Marketing",
+    "level": "higher",
+    "programKey": "COM04SD",
+    "programTitle": "Comercio Internacional (distancia)"
+  },
+  {
+    "familyCode": "ELE",
+    "familyName": "Electricidad y Electrónica",
+    "level": "basic",
+    "programKey": "ELE01B",
+    "programTitle": "Electricidad y Electrónica"
+  },
+  {
+    "familyCode": "ELE",
+    "familyName": "Electricidad y Electrónica",
+    "level": "specialization",
+    "programKey": "ELE01E",
+    "programTitle": "Ciberseguridad en entornos de las tecnologías de la operación"
+  },
+  {
+    "familyCode": "ELE",
+    "familyName": "Electricidad y Electrónica",
+    "level": "intermediate",
+    "programKey": "ELE01M",
+    "programTitle": "Instalaciones Eléctricas y Automáticas"
+  },
+  {
+    "familyCode": "ELE",
+    "familyName": "Electricidad y Electrónica",
+    "level": "intermediate",
+    "programKey": "ELE01MD",
+    "programTitle": "Instalaciones Eléctricas y Automáticas (distancia)"
+  },
+  {
+    "familyCode": "ELE",
+    "familyName": "Electricidad y Electrónica",
+    "level": "higher",
+    "programKey": "ELE01S",
+    "programTitle": "Sistemas Electrotécnicos y Automatizados"
+  },
+  {
+    "familyCode": "ELE",
+    "familyName": "Electricidad y Electrónica",
+    "level": "basic",
+    "programKey": "ELE02B",
+    "programTitle": "Instalaciones Electrotécnicas y Mecánica"
+  },
+  {
+    "familyCode": "ELE",
+    "familyName": "Electricidad y Electrónica",
+    "level": "intermediate",
+    "programKey": "ELE02M",
+    "programTitle": "Instalaciones de Telecomunicaciones"
+  },
+  {
+    "familyCode": "ELE",
+    "familyName": "Electricidad y Electrónica",
+    "level": "higher",
+    "programKey": "ELE02S",
+    "programTitle": "Sistemas de Telecomunicaciones e Informáticos"
+  },
+  {
+    "familyCode": "ELE",
+    "familyName": "Electricidad y Electrónica",
+    "level": "higher",
+    "programKey": "ELE03S",
+    "programTitle": "Mantenimiento Electrónico"
+  },
+  {
+    "familyCode": "ELE",
+    "familyName": "Electricidad y Electrónica",
+    "level": "specialization",
+    "programKey": "ELE04E",
+    "programTitle": "Instalación y mantenimiento de sistemas conectados a internet (IOT)"
+  },
+  {
+    "familyCode": "ELE",
+    "familyName": "Electricidad y Electrónica",
+    "level": "higher",
+    "programKey": "ELE04S",
+    "programTitle": "Automatización y Robótica Industrial"
+  },
+  {
+    "familyCode": "ELE",
+    "familyName": "Electricidad y Electrónica",
+    "level": "specialization",
+    "programKey": "ELE05E",
+    "programTitle": "Robótica Colaborativa"
+  },
+  {
+    "familyCode": "ELE",
+    "familyName": "Electricidad y Electrónica",
+    "level": "higher",
+    "programKey": "ELE05S",
+    "programTitle": "Electromedicina Clínica"
+  },
+  {
+    "familyCode": "ENA",
+    "familyName": "Energía y Agua",
+    "level": "higher",
+    "programKey": "ENA01S",
+    "programTitle": "Eficiencia Energética y Energía Solar Térmica"
+  },
+  {
+    "familyCode": "ENA",
+    "familyName": "Energía y Agua",
+    "level": "higher",
+    "programKey": "ENA02S",
+    "programTitle": "Centrales Eléctricas"
+  },
+  {
+    "familyCode": "ENA",
+    "familyName": "Energía y Agua",
+    "level": "higher",
+    "programKey": "ENA03S",
+    "programTitle": "Energías Renovables"
+  },
+  {
+    "familyCode": "ENA",
+    "familyName": "Energía y Agua",
+    "level": "higher",
+    "programKey": "ENA04S",
+    "programTitle": "Gestión del agua"
+  },
+  {
+    "familyCode": "EOC",
+    "familyName": "Edificación y Obra Civil",
+    "level": "basic",
+    "programKey": "EOC01B",
+    "programTitle": "Reforma y Mantenimiento de Edificios"
+  },
+  {
+    "familyCode": "EOC",
+    "familyName": "Edificación y Obra Civil",
+    "level": "intermediate",
+    "programKey": "EOC01M",
+    "programTitle": "Construcción"
+  },
+  {
+    "familyCode": "EOC",
+    "familyName": "Edificación y Obra Civil",
+    "level": "higher",
+    "programKey": "EOC01S",
+    "programTitle": "Proyectos de Edificación"
+  },
+  {
+    "familyCode": "EOC",
+    "familyName": "Edificación y Obra Civil",
+    "level": "higher",
+    "programKey": "EOC01SD",
+    "programTitle": "Proyectos de Edificación (distancia)"
+  },
+  {
+    "familyCode": "EOC",
+    "familyName": "Edificación y Obra Civil",
+    "level": "intermediate",
+    "programKey": "EOC02M",
+    "programTitle": "Obras de Interior, Decoración y Rehabilitación"
+  },
+  {
+    "familyCode": "EOC",
+    "familyName": "Edificación y Obra Civil",
+    "level": "higher",
+    "programKey": "EOC02S",
+    "programTitle": "Proyectos de Obra Civil"
+  },
+  {
+    "familyCode": "EOC",
+    "familyName": "Edificación y Obra Civil",
+    "level": "higher",
+    "programKey": "EOC02SD",
+    "programTitle": "Proyectos de Obra Civil (distancia)"
+  },
+  {
+    "familyCode": "FME",
+    "familyName": "Fabricación Mecánica",
+    "level": "basic",
+    "programKey": "FME01B",
+    "programTitle": "Fabricación y Montaje"
+  },
+  {
+    "familyCode": "FME",
+    "familyName": "Fabricación Mecánica",
+    "level": "specialization",
+    "programKey": "FME01E",
+    "programTitle": "Fabricación aditiva"
+  },
+  {
+    "familyCode": "FME",
+    "familyName": "Fabricación Mecánica",
+    "level": "intermediate",
+    "programKey": "FME01M",
+    "programTitle": "Mecanizado"
+  },
+  {
+    "familyCode": "FME",
+    "familyName": "Fabricación Mecánica",
+    "level": "higher",
+    "programKey": "FME01S",
+    "programTitle": "Programación de la Producción en Fabricación Mecánica"
+  },
+  {
+    "familyCode": "FME",
+    "familyName": "Fabricación Mecánica",
+    "level": "basic",
+    "programKey": "FME02B",
+    "programTitle": "Fabricación de Elementos Metálicos"
+  },
+  {
+    "familyCode": "FME",
+    "familyName": "Fabricación Mecánica",
+    "level": "intermediate",
+    "programKey": "FME02M",
+    "programTitle": "Soldadura y Calderería"
+  },
+  {
+    "familyCode": "FME",
+    "familyName": "Fabricación Mecánica",
+    "level": "higher",
+    "programKey": "FME02S",
+    "programTitle": "Construcciones Metálicas"
+  },
+  {
+    "familyCode": "FME",
+    "familyName": "Fabricación Mecánica",
+    "level": "intermediate",
+    "programKey": "FME03M",
+    "programTitle": "Conformado por Moldeo de Metales y Polímeros"
+  },
+  {
+    "familyCode": "FME",
+    "familyName": "Fabricación Mecánica",
+    "level": "higher",
+    "programKey": "FME03S",
+    "programTitle": "Diseño en Fabricación Mecánica"
+  },
+  {
+    "familyCode": "HOT",
+    "familyName": "Hostelería y Turismo",
+    "level": "basic",
+    "programKey": "HOT01B",
+    "programTitle": "Cocina y Restauración"
+  },
+  {
+    "familyCode": "HOT",
+    "familyName": "Hostelería y Turismo",
+    "level": "specialization",
+    "programKey": "HOT01E",
+    "programTitle": "Panadería y bollería artesanales"
+  },
+  {
+    "familyCode": "HOT",
+    "familyName": "Hostelería y Turismo",
+    "level": "intermediate",
+    "programKey": "HOT01M",
+    "programTitle": "Cocina y Gastronomía"
+  },
+  {
+    "familyCode": "HOT",
+    "familyName": "Hostelería y Turismo",
+    "level": "higher",
+    "programKey": "HOT01S",
+    "programTitle": "Gestión de Alojamientos Turísticos"
+  },
+  {
+    "familyCode": "HOT",
+    "familyName": "Hostelería y Turismo",
+    "level": "basic",
+    "programKey": "HOT02B",
+    "programTitle": "Alojamiento y Lavandería"
+  },
+  {
+    "familyCode": "HOT",
+    "familyName": "Hostelería y Turismo",
+    "level": "intermediate",
+    "programKey": "HOT02M",
+    "programTitle": "Servicios en Restauración"
+  },
+  {
+    "familyCode": "HOT",
+    "familyName": "Hostelería y Turismo",
+    "level": "higher",
+    "programKey": "HOT02S",
+    "programTitle": "Agencias de Viajes y Gestión de Eventos"
+  },
+  {
+    "familyCode": "HOT",
+    "familyName": "Hostelería y Turismo",
+    "level": "higher",
+    "programKey": "HOT02SD",
+    "programTitle": "Agencias de Viajes y Gestión de Eventos (distancia)"
+  },
+  {
+    "familyCode": "HOT",
+    "familyName": "Hostelería y Turismo",
+    "level": "higher",
+    "programKey": "HOT03S",
+    "programTitle": "Guía, Información y Asistencias Turísticas"
+  },
+  {
+    "familyCode": "HOT",
+    "familyName": "Hostelería y Turismo",
+    "level": "higher",
+    "programKey": "HOT03SD",
+    "programTitle": "Guía, Información y Asistencia Turística (distancia)"
+  },
+  {
+    "familyCode": "HOT",
+    "familyName": "Hostelería y Turismo",
+    "level": "higher",
+    "programKey": "HOT04S",
+    "programTitle": "Dirección de Cocina"
+  },
+  {
+    "familyCode": "HOT",
+    "familyName": "Hostelería y Turismo",
+    "level": "higher",
+    "programKey": "HOT04SD",
+    "programTitle": "Dirección de cocina (distancia)"
+  },
+  {
+    "familyCode": "HOT",
+    "familyName": "Hostelería y Turismo",
+    "level": "higher",
+    "programKey": "HOT05S",
+    "programTitle": "Dirección de Servicios de Restauración"
+  },
+  {
+    "familyCode": "IFC",
+    "familyName": "Informática y Comunicaciones",
+    "level": "basic",
+    "programKey": "IFC01B",
+    "programTitle": "Informática y Comunicaciones"
+  },
+  {
+    "familyCode": "IFC",
+    "familyName": "Informática y Comunicaciones",
+    "level": "specialization",
+    "programKey": "IFC01E",
+    "programTitle": "Ciberseguridad en entornos de las tecnologías de la información"
+  },
+  {
+    "familyCode": "IFC",
+    "familyName": "Informática y Comunicaciones",
+    "level": "intermediate",
+    "programKey": "IFC01M",
+    "programTitle": "Sistemas Microinformáticos y Redes"
+  },
+  {
+    "familyCode": "IFC",
+    "familyName": "Informática y Comunicaciones",
+    "level": "intermediate",
+    "programKey": "IFC01MD",
+    "programTitle": "Sistemas Microinformáticos y Redes (distancia)"
+  },
+  {
+    "familyCode": "IFC",
+    "familyName": "Informática y Comunicaciones",
+    "level": "higher",
+    "programKey": "IFC01S",
+    "programTitle": "Administración de Sistemas Informáticos en Red"
+  },
+  {
+    "familyCode": "IFC",
+    "familyName": "Informática y Comunicaciones",
+    "level": "higher",
+    "programKey": "IFC01SD",
+    "programTitle": "Administración de Sistemas Informáticos en Red (distancia)"
+  },
+  {
+    "familyCode": "IFC",
+    "familyName": "Informática y Comunicaciones",
+    "level": "basic",
+    "programKey": "IFC02B",
+    "programTitle": "Informática de Oficina"
+  },
+  {
+    "familyCode": "IFC",
+    "familyName": "Informática y Comunicaciones",
+    "level": "specialization",
+    "programKey": "IFC02E",
+    "programTitle": "Desarrollo de Videojuegos y Realidad Virtual"
+  },
+  {
+    "familyCode": "IFC",
+    "familyName": "Informática y Comunicaciones",
+    "level": "higher",
+    "programKey": "IFC02S",
+    "programTitle": "Desarrollo de Aplicaciones Multiplataforma"
+  },
+  {
+    "familyCode": "IFC",
+    "familyName": "Informática y Comunicaciones",
+    "level": "higher",
+    "programKey": "IFC02SD",
+    "programTitle": "Desarrollo de Aplicaciones Multiplataforma (distancia)"
+  },
+  {
+    "familyCode": "IFC",
+    "familyName": "Informática y Comunicaciones",
+    "level": "specialization",
+    "programKey": "IFC03E",
+    "programTitle": "Inteligencia Artificial y Big Data"
+  },
+  {
+    "familyCode": "IFC",
+    "familyName": "Informática y Comunicaciones",
+    "level": "higher",
+    "programKey": "IFC03S",
+    "programTitle": "Desarrollo de Aplicaciones WEB"
+  },
+  {
+    "familyCode": "IFC",
+    "familyName": "Informática y Comunicaciones",
+    "level": "higher",
+    "programKey": "IFC03SD",
+    "programTitle": "Desarrollo de Aplicaciones WEB (distancia)"
+  },
+  {
+    "familyCode": "IMA",
+    "familyName": "Instalación y Mantenimiento",
+    "level": "specialization",
+    "programKey": "IMA01E",
+    "programTitle": "Digitalización del Mantenimiento Industrial"
+  },
+  {
+    "familyCode": "IMA",
+    "familyName": "Instalación y Mantenimiento",
+    "level": "intermediate",
+    "programKey": "IMA01M",
+    "programTitle": "Instalaciones de Producción de Calor"
+  },
+  {
+    "familyCode": "IMA",
+    "familyName": "Instalación y Mantenimiento",
+    "level": "specialization",
+    "programKey": "IMA02E",
+    "programTitle": "Fabricación inteligente"
+  },
+  {
+    "familyCode": "IMA",
+    "familyName": "Instalación y Mantenimiento",
+    "level": "intermediate",
+    "programKey": "IMA02M",
+    "programTitle": "Instalaciones Frigoríficas y de Climatización"
+  },
+  {
+    "familyCode": "IMA",
+    "familyName": "Instalación y Mantenimiento",
+    "level": "higher",
+    "programKey": "IMA02S",
+    "programTitle": "Mantenimiento de Instalaciones Térmicas y de Fluidos"
+  },
+  {
+    "familyCode": "IMA",
+    "familyName": "Instalación y Mantenimiento",
+    "level": "specialization",
+    "programKey": "IMA03E",
+    "programTitle": "Modelado de la información de la construcción (BIM)"
+  },
+  {
+    "familyCode": "IMA",
+    "familyName": "Instalación y Mantenimiento",
+    "level": "intermediate",
+    "programKey": "IMA03M",
+    "programTitle": "Mantenimiento Electromecánico"
+  },
+  {
+    "familyCode": "IMA",
+    "familyName": "Instalación y Mantenimiento",
+    "level": "higher",
+    "programKey": "IMA03S",
+    "programTitle": "Mecatrónica Industrial"
+  },
+  {
+    "familyCode": "IMP",
+    "familyName": "Imagen Personal",
+    "level": "basic",
+    "programKey": "IMP01B",
+    "programTitle": "Peluquería y Estética"
+  },
+  {
+    "familyCode": "IMP",
+    "familyName": "Imagen Personal",
+    "level": "intermediate",
+    "programKey": "IMP01M",
+    "programTitle": "Estética y Belleza"
+  },
+  {
+    "familyCode": "IMP",
+    "familyName": "Imagen Personal",
+    "level": "higher",
+    "programKey": "IMP01S",
+    "programTitle": "Estética Integral y Bienestar"
+  },
+  {
+    "familyCode": "IMP",
+    "familyName": "Imagen Personal",
+    "level": "intermediate",
+    "programKey": "IMP02M",
+    "programTitle": "Peluquería y Cosmética Capilar"
+  },
+  {
+    "familyCode": "IMP",
+    "familyName": "Imagen Personal",
+    "level": "intermediate",
+    "programKey": "IMP02MD",
+    "programTitle": "Peluquería y Cosmética Capilar (distancia)"
+  },
+  {
+    "familyCode": "IMP",
+    "familyName": "Imagen Personal",
+    "level": "higher",
+    "programKey": "IMP02S",
+    "programTitle": "Estilismo y Dirección de Peluquería"
+  },
+  {
+    "familyCode": "IMP",
+    "familyName": "Imagen Personal",
+    "level": "higher",
+    "programKey": "IMP02SD",
+    "programTitle": "Estilismo y Dirección de Peluquería (distancia)"
+  },
+  {
+    "familyCode": "IMP",
+    "familyName": "Imagen Personal",
+    "level": "higher",
+    "programKey": "IMP03S",
+    "programTitle": "Asesoría de Imagen Personal y Corporativa"
+  },
+  {
+    "familyCode": "IMP",
+    "familyName": "Imagen Personal",
+    "level": "higher",
+    "programKey": "IMP04S",
+    "programTitle": "Caracterización y Maquillaje Profesional"
+  },
+  {
+    "familyCode": "IMS",
+    "familyName": "Imagen y Sonido",
+    "level": "specialization",
+    "programKey": "IMS01E",
+    "programTitle": "Audiodescripción y subtitulación"
+  },
+  {
+    "familyCode": "IMS",
+    "familyName": "Imagen y Sonido",
+    "level": "intermediate",
+    "programKey": "IMS01M",
+    "programTitle": "Vídeo Disc-jockey y Sonido"
+  },
+  {
+    "familyCode": "IMS",
+    "familyName": "Imagen y Sonido",
+    "level": "higher",
+    "programKey": "IMS01S",
+    "programTitle": "Animaciones 3D, Juegos y Entornos Interactivos"
+  },
+  {
+    "familyCode": "IMS",
+    "familyName": "Imagen y Sonido",
+    "level": "higher",
+    "programKey": "IMS02S",
+    "programTitle": "Realización de Proyectos de Audiovisuales y Espectáculos"
+  },
+  {
+    "familyCode": "IMS",
+    "familyName": "Imagen y Sonido",
+    "level": "higher",
+    "programKey": "IMS03S",
+    "programTitle": "Producción de Audiovisuales y Espectáculos"
+  },
+  {
+    "familyCode": "IMS",
+    "familyName": "Imagen y Sonido",
+    "level": "higher",
+    "programKey": "IMS04S",
+    "programTitle": "Sonido para Audiovisuales y Espectáculos"
+  },
+  {
+    "familyCode": "IMS",
+    "familyName": "Imagen y Sonido",
+    "level": "higher",
+    "programKey": "IMS05S",
+    "programTitle": "Iluminación, Captación y tratamiento de Imagen"
+  },
+  {
+    "familyCode": "INA",
+    "familyName": "Industrias Alimentarias",
+    "level": "basic",
+    "programKey": "INA01B",
+    "programTitle": "Actividades de Panadería y Pastelería"
+  },
+  {
+    "familyCode": "INA",
+    "familyName": "Industrias Alimentarias",
+    "level": "intermediate",
+    "programKey": "INA01M",
+    "programTitle": "Panadería, Repostería y Confitería"
+  },
+  {
+    "familyCode": "INA",
+    "familyName": "Industrias Alimentarias",
+    "level": "higher",
+    "programKey": "INA01S",
+    "programTitle": "Vitivinicultura"
+  },
+  {
+    "familyCode": "INA",
+    "familyName": "Industrias Alimentarias",
+    "level": "higher",
+    "programKey": "INA01SD",
+    "programTitle": "Vitivinicultura (distancia)"
+  },
+  {
+    "familyCode": "INA",
+    "familyName": "Industrias Alimentarias",
+    "level": "basic",
+    "programKey": "INA02B",
+    "programTitle": "Industrias alimentarias"
+  },
+  {
+    "familyCode": "INA",
+    "familyName": "Industrias Alimentarias",
+    "level": "intermediate",
+    "programKey": "INA02M",
+    "programTitle": "Aceites de Oliva y Vinos"
+  },
+  {
+    "familyCode": "INA",
+    "familyName": "Industrias Alimentarias",
+    "level": "higher",
+    "programKey": "INA02S",
+    "programTitle": "Procesos y Calidad en la Industria Alimentaria"
+  },
+  {
+    "familyCode": "INA",
+    "familyName": "Industrias Alimentarias",
+    "level": "intermediate",
+    "programKey": "INA03M",
+    "programTitle": "Elaboración de Productos Alimenticios"
+  },
+  {
+    "familyCode": "MAM",
+    "familyName": "Madera, Mueble y Corcho",
+    "level": "basic",
+    "programKey": "MAM01B",
+    "programTitle": "Carpintería y Mueble"
+  },
+  {
+    "familyCode": "MAM",
+    "familyName": "Madera, Mueble y Corcho",
+    "level": "intermediate",
+    "programKey": "MAM01M",
+    "programTitle": "Carpintería y Mueble"
+  },
+  {
+    "familyCode": "MAM",
+    "familyName": "Madera, Mueble y Corcho",
+    "level": "higher",
+    "programKey": "MAM01S",
+    "programTitle": "Diseño y Amueblamiento"
+  },
+  {
+    "familyCode": "MAM",
+    "familyName": "Madera, Mueble y Corcho",
+    "level": "intermediate",
+    "programKey": "MAM02M",
+    "programTitle": "Instalación y Amueblamiento"
+  },
+  {
+    "familyCode": "IMA",
+    "familyName": "Instalación y Mantenimiento",
+    "level": "higher",
+    "programKey": "MSP34",
+    "programTitle": "Prevención de Riesgos Profesionales"
+  },
+  {
+    "familyCode": "QUI",
+    "familyName": "Química",
+    "level": "specialization",
+    "programKey": "QUI01E",
+    "programTitle": "Cultivos celulares"
+  },
+  {
+    "familyCode": "QUI",
+    "familyName": "Química",
+    "level": "intermediate",
+    "programKey": "QUI01M",
+    "programTitle": "Planta Química"
+  },
+  {
+    "familyCode": "QUI",
+    "familyName": "Química",
+    "level": "higher",
+    "programKey": "QUI01S",
+    "programTitle": "Laboratorio de Análisis y Control de Calidad"
+  },
+  {
+    "familyCode": "QUI",
+    "familyName": "Química",
+    "level": "intermediate",
+    "programKey": "QUI02M",
+    "programTitle": "Operaciones de Laboratorio"
+  },
+  {
+    "familyCode": "QUI",
+    "familyName": "Química",
+    "level": "higher",
+    "programKey": "QUI03S",
+    "programTitle": "Fabricación de Productos Farmacéuticos, Biotecnológicos y Afines"
+  },
+  {
+    "familyCode": "SAN",
+    "familyName": "Sanidad",
+    "level": "intermediate",
+    "programKey": "SAN01M",
+    "programTitle": "Emergencias Sanitarias"
+  },
+  {
+    "familyCode": "SAN",
+    "familyName": "Sanidad",
+    "level": "intermediate",
+    "programKey": "SAN01MD",
+    "programTitle": "Emergencias Sanitarias (distancia)"
+  },
+  {
+    "familyCode": "SAN",
+    "familyName": "Sanidad",
+    "level": "higher",
+    "programKey": "SAN01S",
+    "programTitle": "Audiología Protésica"
+  },
+  {
+    "familyCode": "SAN",
+    "familyName": "Sanidad",
+    "level": "higher",
+    "programKey": "SAN01SD",
+    "programTitle": "Audiología Protésica (distancia)"
+  },
+  {
+    "familyCode": "SAN",
+    "familyName": "Sanidad",
+    "level": "intermediate",
+    "programKey": "SAN02M",
+    "programTitle": "Farmacia y Parafarmacia"
+  },
+  {
+    "familyCode": "SAN",
+    "familyName": "Sanidad",
+    "level": "intermediate",
+    "programKey": "SAN02MD",
+    "programTitle": "Farmacia y Parafarmacia (distancia)"
+  },
+  {
+    "familyCode": "SAN",
+    "familyName": "Sanidad",
+    "level": "higher",
+    "programKey": "SAN02S",
+    "programTitle": "Prótesis Dentales"
+  },
+  {
+    "familyCode": "SAN",
+    "familyName": "Sanidad",
+    "level": "higher",
+    "programKey": "SAN04S",
+    "programTitle": "Anatomía Patológica y Citodiagnóstico"
+  },
+  {
+    "familyCode": "SAN",
+    "familyName": "Sanidad",
+    "level": "higher",
+    "programKey": "SAN05S",
+    "programTitle": "Documentación y Administración Sanitarias"
+  },
+  {
+    "familyCode": "SAN",
+    "familyName": "Sanidad",
+    "level": "higher",
+    "programKey": "SAN06S",
+    "programTitle": "Higiene Bucodental"
+  },
+  {
+    "familyCode": "SAN",
+    "familyName": "Sanidad",
+    "level": "higher",
+    "programKey": "SAN06SD",
+    "programTitle": "Higiene Bucodental (distancia)"
+  },
+  {
+    "familyCode": "SAN",
+    "familyName": "Sanidad",
+    "level": "higher",
+    "programKey": "SAN07S",
+    "programTitle": "Imagen para el Diagnóstico y Medicina Nuclear"
+  },
+  {
+    "familyCode": "SAN",
+    "familyName": "Sanidad",
+    "level": "higher",
+    "programKey": "SAN07SD",
+    "programTitle": "Imagen para el Diagnóstico y Medicina Nuclear (distancia)"
+  },
+  {
+    "familyCode": "SAN",
+    "familyName": "Sanidad",
+    "level": "higher",
+    "programKey": "SAN08S",
+    "programTitle": "Laboratorio Clínico y Biomédico"
+  },
+  {
+    "familyCode": "SAN",
+    "familyName": "Sanidad",
+    "level": "higher",
+    "programKey": "SAN08SD",
+    "programTitle": "Laboratorio Clínico y Biomédico (distancia)"
+  },
+  {
+    "familyCode": "SAN",
+    "familyName": "Sanidad",
+    "level": "higher",
+    "programKey": "SAN09S",
+    "programTitle": "Radioterapia y Dosimetría"
+  },
+  {
+    "familyCode": "SAN",
+    "familyName": "Sanidad",
+    "level": "higher",
+    "programKey": "SAN09SD",
+    "programTitle": "Radioterapia y Dosimetría (distancia)"
+  },
+  {
+    "familyCode": "SAN",
+    "familyName": "Sanidad",
+    "level": "intermediate",
+    "programKey": "SAN21",
+    "programTitle": "Cuidados Auxiliares de Enfermería"
+  },
+  {
+    "familyCode": "SAN",
+    "familyName": "Sanidad",
+    "level": "intermediate",
+    "programKey": "SAN21D",
+    "programTitle": "Cuidados Auxiliares de Enfermería (distancia)"
+  },
+  {
+    "familyCode": "SAN",
+    "familyName": "Sanidad",
+    "level": "higher",
+    "programKey": "SAN32",
+    "programTitle": "Dietética"
+  },
+  {
+    "familyCode": "SEA",
+    "familyName": "Seguridad y Medio Ambiente",
+    "level": "intermediate",
+    "programKey": "SEA01M",
+    "programTitle": "Emergencias y Protección Civil"
+  },
+  {
+    "familyCode": "SEA",
+    "familyName": "Seguridad y Medio Ambiente",
+    "level": "intermediate",
+    "programKey": "SEA01MD",
+    "programTitle": "Emergencias y Protección Civil (distancia)"
+  },
+  {
+    "familyCode": "SEA",
+    "familyName": "Seguridad y Medio Ambiente",
+    "level": "higher",
+    "programKey": "SEA03S",
+    "programTitle": "Química y Salud Ambiental"
+  },
+  {
+    "familyCode": "SSC",
+    "familyName": "Servicios Socioculturales y a la Comunidad",
+    "level": "intermediate",
+    "programKey": "SSC01M",
+    "programTitle": "Atención a Personas en Situación de Dependencia"
+  },
+  {
+    "familyCode": "SSC",
+    "familyName": "Servicios Socioculturales y a la Comunidad",
+    "level": "intermediate",
+    "programKey": "SSC01MD",
+    "programTitle": "Atención a Personas en Situación de Dependencia (distancia)"
+  },
+  {
+    "familyCode": "SSC",
+    "familyName": "Servicios Socioculturales y a la Comunidad",
+    "level": "higher",
+    "programKey": "SSC01S",
+    "programTitle": "Educación Infantil"
+  },
+  {
+    "familyCode": "SSC",
+    "familyName": "Servicios Socioculturales y a la Comunidad",
+    "level": "higher",
+    "programKey": "SSC01SD",
+    "programTitle": "Educación Infantil (distancia)"
+  },
+  {
+    "familyCode": "SSC",
+    "familyName": "Servicios Socioculturales y a la Comunidad",
+    "level": "higher",
+    "programKey": "SSC02S",
+    "programTitle": "Animación Sociocultural y Turística"
+  },
+  {
+    "familyCode": "SSC",
+    "familyName": "Servicios Socioculturales y a la Comunidad",
+    "level": "higher",
+    "programKey": "SSC03S",
+    "programTitle": "Integración Social"
+  },
+  {
+    "familyCode": "SSC",
+    "familyName": "Servicios Socioculturales y a la Comunidad",
+    "level": "higher",
+    "programKey": "SSC03SD",
+    "programTitle": "Integración Social (distancia)"
+  },
+  {
+    "familyCode": "SSC",
+    "familyName": "Servicios Socioculturales y a la Comunidad",
+    "level": "higher",
+    "programKey": "SSC04S",
+    "programTitle": "Promoción de Igualdad de Género"
+  },
+  {
+    "familyCode": "SSC",
+    "familyName": "Servicios Socioculturales y a la Comunidad",
+    "level": "higher",
+    "programKey": "SSC04SD",
+    "programTitle": "Promoción de Igualdad de Género (distancia)"
+  },
+  {
+    "familyCode": "SSC",
+    "familyName": "Servicios Socioculturales y a la Comunidad",
+    "level": "higher",
+    "programKey": "SSC05S",
+    "programTitle": "Mediación Comunicativa"
+  },
+  {
+    "familyCode": "SSC",
+    "familyName": "Servicios Socioculturales y a la Comunidad",
+    "level": "higher",
+    "programKey": "SSC06S",
+    "programTitle": "Formación para la movilidad segura y sostenible"
+  },
+  {
+    "familyCode": "SSC",
+    "familyName": "Servicios Socioculturales y a la Comunidad",
+    "level": "higher",
+    "programKey": "SSC06SD",
+    "programTitle": "Formación para la movilidad segura y sostenible (distancia)"
+  },
+  {
+    "familyCode": "TCP",
+    "familyName": "Textil, Confección y Piel",
+    "level": "intermediate",
+    "programKey": "TCP01M",
+    "programTitle": "Confección y Moda"
+  },
+  {
+    "familyCode": "TCP",
+    "familyName": "Textil, Confección y Piel",
+    "level": "higher",
+    "programKey": "TCP01S",
+    "programTitle": "Patronaje y Moda"
+  },
+  {
+    "familyCode": "TCP",
+    "familyName": "Textil, Confección y Piel",
+    "level": "basic",
+    "programKey": "TCP02B",
+    "programTitle": "Tapicería y Cortinaje"
+  },
+  {
+    "familyCode": "TMV",
+    "familyName": "Transporte y Mantenimiento de Vehículos",
+    "level": "basic",
+    "programKey": "TMV01B",
+    "programTitle": "Mantenimiento de Vehículos"
+  },
+  {
+    "familyCode": "TMV",
+    "familyName": "Transporte y Mantenimiento de Vehículos",
+    "level": "intermediate",
+    "programKey": "TMV01M",
+    "programTitle": "Carrocería"
+  },
+  {
+    "familyCode": "TMV",
+    "familyName": "Transporte y Mantenimiento de Vehículos",
+    "level": "higher",
+    "programKey": "TMV01S",
+    "programTitle": "Automoción"
+  },
+  {
+    "familyCode": "TMV",
+    "familyName": "Transporte y Mantenimiento de Vehículos",
+    "level": "specialization",
+    "programKey": "TMV02E",
+    "programTitle": "Mantenimiento de vehículos híbridos y eléctricos"
+  },
+  {
+    "familyCode": "TMV",
+    "familyName": "Transporte y Mantenimiento de Vehículos",
+    "level": "intermediate",
+    "programKey": "TMV02M",
+    "programTitle": "Electromecánica de Vehículos Automóviles"
+  },
+  {
+    "familyCode": "TMV",
+    "familyName": "Transporte y Mantenimiento de Vehículos",
+    "level": "higher",
+    "programKey": "TMV02S",
+    "programTitle": "Mantenimiento Aeromecánico de Aviones con Motor de Turbina"
+  },
+  {
+    "familyCode": "TMV",
+    "familyName": "Transporte y Mantenimiento de Vehículos",
+    "level": "specialization",
+    "programKey": "TMV03E",
+    "programTitle": "Mantenimiento y seguridad en sistemas de vehículos hibridos y eléctricos"
+  },
+  {
+    "familyCode": "TMV",
+    "familyName": "Transporte y Mantenimiento de Vehículos",
+    "level": "intermediate",
+    "programKey": "TMV03M",
+    "programTitle": "Electromecánica de maquinaria"
+  },
+  {
+    "familyCode": "TMV",
+    "familyName": "Transporte y Mantenimiento de Vehículos",
+    "level": "specialization",
+    "programKey": "TMV04E",
+    "programTitle": "Aeronaves pilotadas de forma remota - Drones"
+  },
+  {
+    "familyCode": "TMV",
+    "familyName": "Transporte y Mantenimiento de Vehículos",
+    "level": "higher",
+    "programKey": "TMV04S",
+    "programTitle": "Mantenimiento Aeromecánico de Helicópteros con Motor de Turbina"
+  },
+  {
+    "familyCode": "TMV",
+    "familyName": "Transporte y Mantenimiento de Vehículos",
+    "level": "intermediate",
+    "programKey": "TMV05M",
+    "programTitle": "Mantenimiento de Material Rodante Ferroviario"
+  }
+]

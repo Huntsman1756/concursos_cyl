@@ -25,27 +25,27 @@ describe("renderFpOfficialAliasPassReport", () => {
     expect(checkedIn).toBe(report);
     expect(report.endsWith("\n")).toBe(true);
     expect(report).toContain("20260808215403108-add4c517860c");
-    expect(report).toContain("20260812011203149-415d767a53f9");
-    expect(report).toContain("Alias aceptados: 10; rechazados: 44.");
+    expect(report).toContain("20260812091756510-cac7c1d65a73");
+    expect(report).toContain("Alias aceptados: 11; rechazados: 44.");
     expect(report).toContain("## Alias aceptados y rechazados");
     expect(report).toContain("- EOC01M: 5 aceptados; 21 rechazados.");
     expect(report).toContain("- HOT01M: 4 aceptados; 9 rechazados.");
-    expect(report).toContain("- SSC01M: 1 aceptado; 14 rechazados.");
+    expect(report).toContain("- SSC01M: 2 aceptados; 14 rechazados.");
     expect(report).toContain("- EOC01M: 0 → 0.");
     expect(report).toContain("- HOT01M: 0 → 0.");
-    expect(report).toContain("- SSC01M: 0 → 0.");
+    expect(report).toContain("- SSC01M: 0 → 1.");
     expect(report.indexOf("EOC01M")).toBeLessThan(report.indexOf("HOT01M"));
     expect(report.indexOf("HOT01M")).toBeLessThan(report.indexOf("SSC01M"));
-    expect(report).toContain("Unión de ofertas nuevas: 0.");
+    expect(report).toContain("Unión de ofertas nuevas: 1.");
     expect(manifest.resourceSnapshots.programs.recordCount).toBe(187);
     expect(manifest.resourceSnapshots.occupations.recordCount).toBe(31);
-    expect(manifest.resourceSnapshots.occupationAliases.recordCount).toBe(21);
+    expect(manifest.resourceSnapshots.occupationAliases.recordCount).toBe(22);
     expect(manifest.resourceSnapshots.trainingOccupationLinks.recordCount).toBe(
       36,
     );
     expect(report).toContain("no estiman el empleo total");
     expect(report).toContain(
-      "La pasada oficial acotada no aumenta las ofertas alcanzadas; no se amplían fuentes, CNO, ciclos ni reglas de coincidencia.",
+      "La pasada oficial acotada aumenta en 1 las ofertas alcanzadas mediante los alias validados; no se amplían fuentes, CNO, ciclos ni reglas de coincidencia.",
     );
     expect(() =>
       assertRenderedFpOfficialAliasPassReport("stale", report),

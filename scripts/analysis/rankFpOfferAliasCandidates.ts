@@ -2,6 +2,7 @@ import { readFile, writeFile } from "node:fs/promises";
 import { resolve } from "node:path";
 import { pathToFileURL } from "node:url";
 
+import { format as formatWithPrettier } from "prettier";
 import { z } from "zod";
 
 import {
@@ -477,11 +478,8 @@ function generateCandidates(
   offers: JobOffer[],
   occupationMap: Map<string, Occupation>,
   approvedAliasesByOccId: Map<string, OccupationAlias[]>,
-): Omit<FpOfferAliasCandidateSchema, "schemaVersion">[] {
-  const seen = new Map<
-    string,
-    Omit<FpOfferAliasCandidateSchema, "schemaVersion">
-  >();
+): FpOfferAliasCandidate[] {
+  const seen = new Map<string, FpOfferAliasCandidate>();
 
   // Pre-build the approved alias lookup for collision detection
   const approvedAliasLookup = buildApprovedAliasSet(approvedAliasesByOccId);
@@ -565,7 +563,7 @@ function generateCandidates(
         matchedOfferIds.length === 1
           ? "single_offer_match"
           : "multi_offer_match";
-      let reasonCode =
+      const reasonCode =
         source === "segment"
           ? `${offerPrefix};valid_occupational_segment`
           : source === "occupationLabel"
@@ -606,10 +604,7 @@ function generateCandidates(
     // ────────────────────────────────────────────────────────────────────
     // Phase 2 – Token-overlap hypothesis lane (review_only, never exact)
     // ────────────────────────────────────────────────────────────────────
-    const hypothesisLaneCandidates: Omit<
-      FpOfferAliasCandidateSchema,
-      "schemaVersion"
-    >[] = [];
+    const hypothesisLaneCandidates: FpOfferAliasCandidate[] = [];
 
     // Collect the official phrase tokens (sourceQuote or occupation label)
     const officialPhrases: RawCandidate[] = [
@@ -1007,14 +1002,22 @@ async function run(): Promise<void> {
     rootDirectory,
     "analysis/fp_offer_alias_candidates.json",
   );
-  await writeFile(jsonPath, JSON.stringify(report, null, 2), "utf8");
+  await writeFile(
+    jsonPath,
+    await formatWithPrettier(JSON.stringify(report), { parser: "json" }),
+    "utf8",
+  );
 
   // Write Markdown
   const mdPath = resolve(
     rootDirectory,
     "analysis/fp_offer_alias_candidates.md",
   );
-  await writeFile(mdPath, markdown, "utf8");
+  await writeFile(
+    mdPath,
+    await formatWithPrettier(markdown, { parser: "markdown" }),
+    "utf8",
+  );
 }
 
 if (
