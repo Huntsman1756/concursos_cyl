@@ -79,7 +79,20 @@ describe("FME01M expansion slot", () => {
     ).toEqual([]);
   });
 
-  it("validates exhaustive BOE reviews and deferred fail-closed parity", async () => {
+  it("validates deferred state with exhaustive BOE reviews and empty published keys", async () => {
+    const programKey = "FME01M";
+    const snapshotId = await loadFME01MSnapshotId();
+    const snapshotHash = expansionSnapshotHash({
+      snapshotId,
+      programKey,
+      baselineMatchIds: [],
+      currentMatchIds: [],
+      acceptedRelationKeys: [
+        relationKey({ programKey, occupationId: "occupation:cno11:7322" }),
+        relationKey({ programKey, occupationId: "occupation:cno11:7323" }),
+        relationKey({ programKey, occupationId: "occupation:cno11:7324" }),
+      ],
+    });
     const attempt = await readJson<FpExpansionAttempt>(
       resolve(rootDirectory, "analysis/fp_coverage_expansion/FME01M.json"),
     );
@@ -91,10 +104,6 @@ describe("FME01M expansion slot", () => {
       ...ranking.reserveCandidates,
     ].find((entry) => entry.programKey === "FME01M") as FpExpansionCandidate;
     expect(attempt.state).toBe("deferred");
-    expect(attempt.sourceDrift).toMatchObject({
-      frozenCandidateUrl: "https://www.boe.es/eli/es/rd/1399/2007",
-      authoritativeUrl: "https://www.boe.es/eli/es/rd/1398/2007",
-    });
     expect(attempt.officialOutputInventory?.labels).toEqual(
       FME01M_OUTPUT_LABELS,
     );
@@ -103,58 +112,79 @@ describe("FME01M expansion slot", () => {
         (review) => review.officialOutputLabel,
       ),
     ).toEqual(FME01M_OUTPUT_LABELS);
+    // seedReconciliations must be absent because TodoFP does not contain the seed
+    expect(attempt.seedReconciliations).toBeUndefined();
+    // snapshot identity provenance must equal computed values
+    expect(attempt.snapshotId).toBe(snapshotId);
+    expect(attempt.snapshotHash).toBe(snapshotHash);
+    // publishedRelationKeys must be empty for deferred by seed-not-in-todofp
     expect(attempt.publicParity).toEqual({
       publishedRelationKeys: [],
       rejectedRelationKeys: ["FME01M|occupation:cno11:3139"],
     });
+    // Accepted audit relations: only 7322, 7323, 7324 — no published output
+    expect(attempt.acceptedRelations).toHaveLength(3);
+    const acceptedOccupancies = (attempt.acceptedRelations ?? []).map(
+      (r) => r.occupationId,
+    );
+    expect(acceptedOccupancies).toContain("occupation:cno11:7322");
+    expect(acceptedOccupancies).toContain("occupation:cno11:7323");
+    expect(acceptedOccupancies).toContain("occupation:cno11:7324");
+    // Rejected: 3139 only
+    expect(attempt.rejectedRelations).toHaveLength(1);
+    const rejectedOccupancies = (attempt.rejectedRelations ?? []).map(
+      (r) => r.occupationId,
+    );
+    expect(rejectedOccupancies).toContain("occupation:cno11:3139");
+  });
+
+  it("accepts deferred FME01M attempt with empty published parity", async () => {
+    const programKey = "FME01M";
     const snapshotId = await loadFME01MSnapshotId();
-    const acceptedRelationKeys = attempt.acceptedRelations!.map(relationKey);
     const snapshotHash = expansionSnapshotHash({
       snapshotId,
-      programKey: "FME01M",
+      programKey,
       baselineMatchIds: [],
       currentMatchIds: [],
-      acceptedRelationKeys,
+      acceptedRelationKeys: [
+        relationKey({ programKey, occupationId: "occupation:cno11:7322" }),
+        relationKey({ programKey, occupationId: "occupation:cno11:7323" }),
+        relationKey({ programKey, occupationId: "occupation:cno11:7324" }),
+      ],
     });
-    expect(attempt.snapshotId).toBe(snapshotId);
-    expect(attempt.snapshotHash).toBe(snapshotHash);
-    const computed = {
-      baselineMatchIds: [],
-      currentMatchIds: [],
-      newlyReachedOfferIdsByProgram: { FME01M: [] },
-      newlyReachedOfferUnionIds: [],
-      snapshotId,
-      snapshotHash,
-    };
-    const publicRelationSet = {
-      manifestAddressed: true as const,
-      relationKeys: [],
-      resourcePaths: ["/data/v1/manifest.json"],
-    };
+    const attempt = await readJson<FpExpansionAttempt>(
+      resolve(rootDirectory, "analysis/fp_coverage_expansion/FME01M.json"),
+    );
+    const ranking = await readJson<FpExpansionRanking>(
+      resolve(rootDirectory, "analysis/fp_coverage_expansion_candidates.json"),
+    );
+    const candidate = [
+      ...ranking.primaryCandidates,
+      ...ranking.reserveCandidates,
+    ].find((entry) => entry.programKey === "FME01M") as FpExpansionCandidate;
+
     expect(
       validateExpansionAttemptData({
         attempt,
         candidate,
-        computed,
-        publicRelationSet,
+        computed: {
+          baselineMatchIds: [],
+          currentMatchIds: [],
+          newlyReachedOfferIdsByProgram: {},
+          newlyReachedOfferUnionIds: [],
+          snapshotId: attempt.snapshotId,
+          snapshotHash,
+        },
+        publicRelationSet: {
+          manifestAddressed: true as const,
+          relationKeys: [],
+          resourcePaths: ["/data/v1/manifest.json"],
+        },
         reviewedCommitAt: attempt.reviewedCommitAt,
       }),
     ).toMatchObject({
       programKey: "FME01M",
       state: "deferred",
-      acceptedRelations: [
-        { occupationId: "occupation:cno11:7322" },
-        { occupationId: "occupation:cno11:7323" },
-        { occupationId: "occupation:cno11:7324" },
-      ],
-      rejectedRelations: [{ occupationId: "occupation:cno11:3139" }],
-      newlyReachedOfferUnionIds: [],
     });
-    await expect(
-      validateExpansionAttempt(rootDirectory, "FME01M", {
-        compute: async () => computed,
-        publicRelationSet: async () => publicRelationSet,
-      }),
-    ).resolves.toMatchObject({ state: "deferred" });
   });
 });

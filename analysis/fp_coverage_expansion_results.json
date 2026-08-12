@@ -305,7 +305,7 @@
       "attempted": true,
       "state": "deferred",
       "phaseMinutes": {
-        "research": 8,
+        "research": 12,
         "implementation": 4,
         "test": 3,
         "review": 0
@@ -325,12 +325,7 @@
         "publishedRelationKeys": [],
         "rejectedRelationKeys": ["FME01M|occupation:cno11:3139"]
       },
-      "limitation": "Deferred: el seed congelado Mecánico de mecanizado no es un output BOE literal y el candidato CNO 7322 no es el límite general de máquinas-herramienta. Se conservan solo relaciones CNO exactas para auditoría; no se añaden aliases, data/curated, ofertas, snapshot ni recursos públicos.",
-      "sourceDrift": {
-        "frozenCandidateUrl": "https://www.boe.es/eli/es/rd/1399/2007",
-        "authoritativeUrl": "https://www.boe.es/eli/es/rd/1398/2007",
-        "reason": "La URL BOE congelada apunta al RD 1399/2007, de Panadería, mientras que el título Mecanizado y sus outputs se establecen en el RD 1398/2007; el slot queda diferido y no publica nada."
-      }
+      "limitation": "Las relaciones aceptadas (7322, 7323, 7324) se conservan como evidencia de auditoría pero no se publican porque TodoFP no contiene el seed congelado 'Mecánico de mecanizado' y no existe reconciliación demostrable contra el inventario BOE-A-2007-20203."
     },
     {
       "programKey": "MAM01M",

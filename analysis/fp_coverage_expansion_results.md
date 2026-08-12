@@ -8,8 +8,8 @@ Source cutoff: `2026-08-11T17:27:42.000Z`
 - Terminal attempts: 14 (8 completed, 6 deferred, 0 discarded).
 - Truthful terminal distinct total: 13 (baseline 5 + 8 newly completed canonical bases).
 - Target: 12; remaining gap: 0.
-- Publication status: AGA01M and AGA03M and COM01B and COM02M and ELE03S and FME02M and IMA02M and TMV01M are published in the current immutable snapshot; deferred attempts remain unpublished.
-- Below-target reason: Evidence-backed completion covers AGA01M and AGA03M and COM01B and COM02M and ELE03S and FME02M and IMA02M and TMV01M; 6 terminal attempts were deferred, 0 reserves remain unattempted, and no additional programme met the evidence threshold needed for 12 distinct qualifications.
+- Publication status: AGA01M and AGA03M and COM01B and COM02M and ELE03S and FME02M and IMA02M and TMV01M are published in the current immutable snapshot; FME01M remains deferred and unpublished. Deferred attempts remain unpublished.
+- Below-target reason: Evidence-backed completion covers AGA01M and AGA03M and COM01B and COM02M and ELE03S and FME02M and IMA02M and TMV01M; 6 terminal attempts were deferred (including FME01M, deferred because TodoFP does not contain the frozen seed), 0 reserves remain unattempted, and no additional programme met the evidence threshold needed for 12 distinct qualifications.
 
 ## Attempt lanes
 
