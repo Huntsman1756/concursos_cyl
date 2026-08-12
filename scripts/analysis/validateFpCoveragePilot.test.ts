@@ -808,7 +808,7 @@ describe("validateFpCoveragePilotResults", () => {
     expect(validate(seed).attempts).toHaveLength(5);
   });
 
-  it("defers COM01M without publishing an inferred CNO mapping", async () => {
+  it("preserves the historical COM01M deferral while allowing its later reviewed publication", async () => {
     const seed = await checkedInResults();
     const comAttempt = seed.attempts.find(
       (attempt) => attempt.programKey === "COM01M",
@@ -885,12 +885,12 @@ describe("validateFpCoveragePilotResults", () => {
       );
     }
     expect(
-      curatedLinks.some(
+      curatedLinks.filter(
         (link) =>
           link.trainingProgramKey === "COM01M" &&
           link.reviewStatus === "approved",
       ),
-    ).toBe(false);
+    ).toHaveLength(9);
     const manifest = JSON.parse(
       await readFile(
         resolve(process.cwd(), "public", "data", "v1", "manifest.json"),
@@ -918,7 +918,7 @@ describe("validateFpCoveragePilotResults", () => {
         manifest.resourceSnapshots.mappingCoverage.resourcePath,
       ),
     ]);
-    expect(publicLinks).not.toContainEqual(
+    expect(publicLinks).toContainEqual(
       expect.objectContaining({
         trainingProgramKey: "COM01M",
         reviewStatus: "approved",
@@ -928,8 +928,8 @@ describe("validateFpCoveragePilotResults", () => {
       expect.objectContaining({
         scope: "program",
         programKey: "COM01M",
-        coverageStatus: "uncovered",
-        approvedMappings: 0,
+        coverageStatus: "reviewed",
+        approvedMappings: 9,
         draftMappings: 0,
         rejectedMappings: 0,
       }),
