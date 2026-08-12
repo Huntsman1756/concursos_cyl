@@ -565,7 +565,7 @@ function generateCandidates(
         matchedOfferIds.length === 1
           ? "single_offer_match"
           : "multi_offer_match";
-      let reasonCode =
+      const reasonCode =
         source === "segment"
           ? `${offerPrefix};valid_occupational_segment`
           : source === "occupationLabel"
