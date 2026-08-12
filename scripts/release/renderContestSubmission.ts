@@ -22,6 +22,9 @@ export type ContestDeploymentEvidence = {
   commitSha: string | null;
   workflowRunId: string | null;
   verifiedAt: string | null;
+  captureProductCommitSha: string | null;
+  captureCount: number | null;
+  capturesAreCurrent: boolean;
 };
 
 const PENDING_DEPLOYMENT_EVIDENCE: ContestDeploymentEvidence = {
@@ -29,6 +32,9 @@ const PENDING_DEPLOYMENT_EVIDENCE: ContestDeploymentEvidence = {
   commitSha: null,
   workflowRunId: null,
   verifiedAt: null,
+  captureProductCommitSha: null,
+  captureCount: null,
+  capturesAreCurrent: false,
 };
 
 const DOCUMENT_NAMES = [
@@ -226,6 +232,56 @@ function renderSubmissionChecklist(
     deployment.status === "verified"
       ? "- [x] Rellenar el commit desplegado y el run del workflow con datos observados."
       : "- [ ] Rellenar el commit desplegado y el run del workflow con datos observados.";
+
+  let visualEvidenceLine: string;
+  let capturesReviewGate: string;
+  let figuresConfirmationGate: string;
+  if (deployment.status === "pending") {
+    visualEvidenceLine = "evidencia visual pendiente (no histórica).";
+    capturesReviewGate =
+      "- [ ] Revisar las capturas en contexto anónimo, sin datos personales ni credenciales.";
+    figuresConfirmationGate =
+      "- [ ] Confirmar que las cifras visibles siguen coincidiendo con `" +
+      freeze.manifest.snapshotId +
+      "`. (evidencia visual pendiente)";
+  } else if (deployment.capturesAreCurrent) {
+    visualEvidenceLine =
+      "**capturada y validada en `docs/contest/evidence-capture.json`**.";
+    capturesReviewGate =
+      "- [x] Revisar las capturas en contexto anónimo, sin datos personales ni credenciales.";
+    figuresConfirmationGate =
+      "- [x] Confirmar que las cifras visibles siguen coincidiendo con `" +
+      freeze.manifest.snapshotId +
+      "`.";
+  } else {
+    const captureLabel =
+      deployment.captureCount !== null
+        ? `las ${deployment.captureCount} capturas son`
+        : "las capturas son";
+    if (deployment.captureProductCommitSha !== null) {
+      visualEvidenceLine =
+        captureLabel +
+        " **históricas** (`captureProductCommitSha " +
+        deployment.captureProductCommitSha +
+        "`; " +
+        "commit desplegado " +
+        deploymentCommit +
+        "). La recaptura del commit desplegado está pendiente.";
+    } else {
+      visualEvidenceLine =
+        captureLabel +
+        " **históricas** respecto al commit desplegado; " +
+        "la recaptura del commit desplegado está pendiente.";
+    }
+    capturesReviewGate =
+      "- [ ] Revisar las capturas en contexto anónimo, sin datos personales ni credenciales. " +
+      "(capturas históricas — recaptura pendiente)";
+    figuresConfirmationGate =
+      "- [ ] Confirmar que las cifras visibles siguen coincidiendo con `" +
+      freeze.manifest.snapshotId +
+      "`. (capturas históricas — recaptura pendiente)";
+  }
+
   return `# Checklist de presentación
 
 ## Campos que debe completar una persona
@@ -243,14 +299,14 @@ function renderSubmissionChecklist(
 - Snapshot: \`${freeze.manifest.snapshotId}\`.
 - Commit desplegado: ${deploymentCommit}.
 - Run del workflow: ${workflowRun}.
-- Evidencia visual: **capturada y validada en \`docs/contest/evidence-capture.json\`**.
+- Evidencia visual: ${visualEvidenceLine}
 
 ## Gate final
 
 ${releaseGate}
 ${deploymentGate}
-- [x] Revisar las capturas en contexto anónimo, sin datos personales ni credenciales.
-- [x] Confirmar que las cifras visibles siguen coincidiendo con \`${freeze.manifest.snapshotId}\`.
+${capturesReviewGate}
+${figuresConfirmationGate}
 - [ ] Obtener aprobación humana explícita para la solicitud externa.
 
 **PENDIENTE DE APROBACIÓN HUMANA:** este repositorio no envía la solicitud al concurso ni decide los campos de identidad, contacto, declaraciones o consentimiento.
@@ -284,6 +340,10 @@ function loadContestDeploymentEvidence(
 
   const parsed = JSON.parse(fs.readFileSync(releaseEvidencePath, "utf8")) as {
     deployment?: Partial<ContestDeploymentEvidence>;
+    captureProductCommitSha?: string;
+    localGates?: {
+      evidenceManifest?: { captureCount?: unknown };
+    };
   };
   const deployment = parsed.deployment;
   if (
@@ -292,11 +352,46 @@ function loadContestDeploymentEvidence(
   ) {
     throw new Error("release-evidence.json has an invalid deployment record");
   }
+
+  // Read captureCount from localGates.evidenceManifest.captureCount
+  let captureCount: number | null = null;
+  const rawCaptureCount = parsed.localGates?.evidenceManifest?.captureCount;
+  if (rawCaptureCount !== undefined && rawCaptureCount !== null) {
+    if (
+      typeof rawCaptureCount === "number" &&
+      Number.isInteger(rawCaptureCount) &&
+      rawCaptureCount >= 0
+    ) {
+      captureCount = rawCaptureCount;
+    } else {
+      throw new Error(
+        "localGates.evidenceManifest.captureCount must be a non-negative integer",
+      );
+    }
+  }
+
+  const captureProductCommitSha = parsed.captureProductCommitSha ?? null;
+  if (captureProductCommitSha !== null) {
+    if (!/^[a-f0-9]{40}$/u.test(captureProductCommitSha)) {
+      throw new Error(
+        "captureProductCommitSha must be a 40-character hex SHA when present",
+      );
+    }
+  }
+
+  const deploymentCommit = deployment.commitSha ?? null;
+  const capturesAreCurrent =
+    deploymentCommit !== null &&
+    captureProductCommitSha !== null &&
+    deploymentCommit === captureProductCommitSha;
   const evidence: ContestDeploymentEvidence = {
     status: deployment.status,
-    commitSha: deployment.commitSha ?? null,
+    commitSha: deploymentCommit,
     workflowRunId: deployment.workflowRunId ?? null,
     verifiedAt: deployment.verifiedAt ?? null,
+    captureProductCommitSha,
+    captureCount,
+    capturesAreCurrent,
   };
   if (
     evidence.status === "verified" &&

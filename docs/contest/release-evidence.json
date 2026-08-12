@@ -1,20 +1,20 @@
 {
   "schemaVersion": 1,
   "status": "deployed_verified",
-  "recordedAt": "2026-08-11T08:28:36Z",
-  "expectedRootUrl": "https://huntsman1756.github.io/concursos_cyl/",
-  "coverageFreezeCommitSha": "b71b3a8655d00672fd976dba0f04a81840e44de5",
-  "publicationCommitSha": "6e64af43066159d92881e9435318511757dad841",
-  "localReviewHeadSha": "b71b3a8655d00672fd976dba0f04a81840e44de5",
+  "recordedAt": "2026-08-11T23:33:46Z",
+  "expectedRootUrl": "https://salida-cyl.157-90-22-40.sslip.io/",
+  "coverageFreezeCommitSha": "7d794b0f2b473ed4ee67f0f8a14eeb24473e4c2d",
+  "publicationCommitSha": "f1aeb187ca243165efc63753840e5eb76db9ba4c",
+  "localReviewHeadSha": "f1aeb187ca243165efc63753840e5eb76db9ba4c",
   "captureProductCommitSha": "f423a208a7f8c140a1dfa342e8689d3b6d967e94",
   "manifest": {
-    "snapshotId": "20260809185438334-65ce4d3c4e14",
-    "sha256": "27942a492d4f62fb9a3d1e448dfb708663000270564b1e0cb87f15ae86677da1",
+    "snapshotId": "20260811222221076-727a2dfa2791",
+    "sha256": "dc05d74a626d90c87a18ea88f1e0bd9e1762b41876c367e173412f4a4276a0f4",
     "qualityStatus": "passed",
     "programs": 187,
     "centers": 229,
     "offerings": 1294,
-    "offers": 1077
+    "offers": 1054
   },
   "localGates": {
     "coverageFreeze": {
@@ -28,7 +28,8 @@
     "evidenceManifest": {
       "status": "passed",
       "captureCount": 9,
-      "command": "npm exec -- tsx scripts/release/validateContestEvidenceManifest.ts"
+      "command": "npm exec -- tsx scripts/release/validateContestEvidenceManifest.ts",
+      "note": "Las 9 capturas validadas pertenecen a commits anteriores (captureProductCommitSha f423a208). Debe recapturarse evidencia visual del commit desplegado (f1aeb187) antes de la entrega final."
     },
     "focusedVitest": {
       "status": "passed",
@@ -41,25 +42,29 @@
       "tests": 35
     },
     "fullVitestSerial": {
-      "status": "incomplete",
-      "command": "CI=true npm test -- --run --pool=forks --maxWorkers=1",
-      "reason": "The Windows serial run produced no result for more than five minutes and was terminated; the complete GitHub Actions suite passed below."
+      "status": "passed",
+      "testFiles": 83,
+      "tests": 762,
+      "passed": 762,
+      "skipped": 0,
+      "durationSeconds": 128.14,
+      "command": "npm test -- --maxWorkers=4"
     },
     "fullVitestCi": {
       "status": "passed",
-      "testFiles": 71,
-      "passedTestFiles": 71,
-      "skippedTestFiles": 0,
-      "tests": 713,
-      "passed": 713,
-      "skipped": 0,
-      "durationSeconds": 258,
+      "testFiles": 83,
+      "passedTestFiles": 82,
+      "skippedTestFiles": 1,
+      "tests": 759,
+      "passed": 757,
+      "skipped": 2,
+      "durationSeconds": 258.59,
       "command": "npm test -- --testTimeout=60000",
-      "workflowRunId": "31470763926"
+      "workflowRunId": "31546107126"
     },
     "playwright": {
       "status": "passed",
-      "tests": 78,
+      "tests": 80,
       "command": "npm run test:e2e"
     },
     "lint": {
@@ -108,19 +113,19 @@
   },
   "deployment": {
     "status": "verified",
-    "commitSha": "b71b3a8655d00672fd976dba0f04a81840e44de5",
-    "workflowRunId": "31470763926",
-    "workflowUrl": "https://github.com/Huntsman1756/concursos_cyl/actions/runs/31470763926",
+    "commitSha": "f1aeb187ca243165efc63753840e5eb76db9ba4c",
+    "workflowRunId": "31546107126",
+    "workflowUrl": "https://github.com/Huntsman1756/concursos_cyl/actions/runs/31546107126",
     "liveRootVerified": true,
-    "verifiedAt": "2026-08-11T08:28:36Z"
+    "verifiedAt": "2026-08-11T23:33:46Z"
   },
   "publicVerification": {
-    "rootUrl": "https://huntsman1756.github.io/concursos_cyl/",
+    "rootUrl": "https://salida-cyl.157-90-22-40.sslip.io/",
     "https": true,
     "rootHttpStatus": 200,
     "rootTitle": "SALIDA CyL",
     "deepLinks": {
-      "httpStatus": 404,
+      "httpStatus": 200,
       "rendersAppThrough404Fallback": true,
       "paths": [
         "/comparar",
@@ -131,19 +136,19 @@
     },
     "manifest": {
       "httpStatus": 200,
-      "sha256": "27942a492d4f62fb9a3d1e448dfb708663000270564b1e0cb87f15ae86677da1",
+      "sha256": "dc05d74a626d90c87a18ea88f1e0bd9e1762b41876c367e173412f4a4276a0f4",
       "qualityStatus": "passed",
-      "snapshotGeneratedAt": "2026-08-09T18:54:38.334Z"
+      "snapshotGeneratedAt": "2026-08-11T22:22:21.076Z"
     },
     "outcomeIndicators": {
-      "logicalResourcePath": "/data/v1/snapshots/20260809185438334-65ce4d3c4e14/outcome-indicators.json",
-      "resolvedUrl": "https://huntsman1756.github.io/concursos_cyl/data/v1/snapshots/20260809185438334-65ce4d3c4e14/outcome-indicators.json",
+      "logicalResourcePath": "/data/v1/snapshots/20260811222221076-727a2dfa2791/outcome-indicators.json",
+      "resolvedUrl": "https://salida-cyl.157-90-22-40.sslip.io/data/v1/snapshots/20260811222221076-727a2dfa2791/outcome-indicators.json",
       "httpStatus": 200,
       "sha256": "4f2c6b73fc4171bb9daf21583712ab2ec99bcaa7d27b1f2fd0c070b9079ab3e2"
     },
     "hostHeaders": {
-      "strictTransportSecurity": "max-age=31556952",
-      "contentSecurityPolicy": null
+      "strictTransportSecurity": "max-age=31536000; includeSubDomains",
+      "contentSecurityPolicy": "default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'self'; frame-ancestors 'none'; form-action 'self'"
     }
   },
   "humanApproval": {
@@ -152,6 +157,7 @@
     "submissionAuthorized": false
   },
   "blockers": [
-    "Contest portal submission still requires the final application text, human-only fields, and immediate explicit submit authorization."
+    "Contest portal submission still requires the final application text, human-only fields, and immediate explicit submit authorization.",
+    "Las 9 capturas validadas en evidenceManifest pertenecen a commits anteriores (captureProductCommitSha f423a208). Debe recapturarse evidencia visual del commit desplegado (f1aeb187) antes de la entrega final."
   ]
 }

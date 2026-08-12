@@ -5,7 +5,7 @@
 <!-- prettier-ignore -->
 | Campo | Valor |
 | --- | --- |
-| Commit fuente | `0e0d6dc825176d372cc8316234af6421d8832d9a` |
+| Commit fuente | `6b37a4c3eb5be85bd6eb7fe4892e9d8a904f9ed9` |
 | Manifest | `public/data/v1/manifest.json` |
 | SHA-256 del manifest | `dc05d74a626d90c87a18ea88f1e0bd9e1762b41876c367e173412f4a4276a0f4` |
 | Generado | 2026-08-11T22:22:21.076Z |
@@ -69,7 +69,7 @@ La revisión independiente confirmó el manifest, sus 11 recursos, los conjuntos
 ## Despliegue
 
 - URL raíz esperada: [https://salida-cyl.157-90-22-40.sslip.io/](https://salida-cyl.157-90-22-40.sslip.io/)
-- Commit desplegado: `b71b3a8655d00672fd976dba0f04a81840e44de5`.
-- Run del workflow: `31470763926`.
+- Commit desplegado: `f1aeb187ca243165efc63753840e5eb76db9ba4c`.
+- Run del workflow: `31546107126`.
 
-El release público se verificó con el commit `b71b3a8655d00672fd976dba0f04a81840e44de5` y el run `31470763926` el 2026-08-11T08:28:36Z.
+El release público se verificó con el commit `f1aeb187ca243165efc63753840e5eb76db9ba4c` y el run `31546107126` el 2026-08-11T23:33:46Z.

@@ -11,18 +11,18 @@
 ## Campos técnicos
 
 - URL raíz a presentar: [https://salida-cyl.157-90-22-40.sslip.io/](https://salida-cyl.157-90-22-40.sslip.io/)
-- Commit fuente del freeze: `0e0d6dc825176d372cc8316234af6421d8832d9a`.
+- Commit fuente del freeze: `6b37a4c3eb5be85bd6eb7fe4892e9d8a904f9ed9`.
 - Snapshot: `20260811222221076-727a2dfa2791`.
-- Commit desplegado: `b71b3a8655d00672fd976dba0f04a81840e44de5`.
-- Run del workflow: `31470763926`.
-- Evidencia visual: **capturada y validada en `docs/contest/evidence-capture.json`**.
+- Commit desplegado: `f1aeb187ca243165efc63753840e5eb76db9ba4c`.
+- Run del workflow: `31546107126`.
+- Evidencia visual: las 9 capturas son **históricas** (`captureProductCommitSha f423a208a7f8c140a1dfa342e8689d3b6d967e94`; commit desplegado `f1aeb187ca243165efc63753840e5eb76db9ba4c`). La recaptura del commit desplegado está pendiente.
 
 ## Gate final
 
 - [x] Ejecutar los gates de release y verificar la aplicación pública.
 - [x] Rellenar el commit desplegado y el run del workflow con datos observados.
-- [x] Revisar las capturas en contexto anónimo, sin datos personales ni credenciales.
-- [x] Confirmar que las cifras visibles siguen coincidiendo con `20260811222221076-727a2dfa2791`.
+- [ ] Revisar las capturas en contexto anónimo, sin datos personales ni credenciales. (capturas históricas — recaptura pendiente)
+- [ ] Confirmar que las cifras visibles siguen coincidiendo con `20260811222221076-727a2dfa2791`. (capturas históricas — recaptura pendiente)
 - [ ] Obtener aprobación humana explícita para la solicitud externa.
 
 **PENDIENTE DE APROBACIÓN HUMANA:** este repositorio no envía la solicitud al concurso ni decide los campos de identidad, contacto, declaraciones o consentimiento.
