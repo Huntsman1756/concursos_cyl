@@ -219,5 +219,68 @@
     "reviewStatus": "approved",
     "reviewedAt": "2026-08-12",
     "mappingVersion": "1.0.0"
+  },
+  {
+    "alias": "Educador infantil",
+    "occupationId": "occupation:cno11:2252",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-12",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "alias": "Operador de sistemas informáticos",
+    "occupationId": "occupation:cno11:3811",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-12",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "alias": "Técnico de soporte informático",
+    "occupationId": "occupation:cno11:3812",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-12",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "alias": "Técnico de redes de datos",
+    "occupationId": "occupation:cno11:3813",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-12",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "alias": "Administrativo contable",
+    "occupationId": "occupation:cno11:4111",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-12",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "alias": "Administrativo financiero",
+    "occupationId": "occupation:cno11:4113",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-12",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "alias": "Administrativo de banca y seguros",
+    "occupationId": "occupation:cno11:4113",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-12",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "alias": "Administrativo de logística",
+    "occupationId": "occupation:cno11:4123",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-12",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "alias": "Administrativo de recursos humanos",
+    "occupationId": "occupation:cno11:4223",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-12",
+    "mappingVersion": "1.0.0"
   }
 ]

@@ -17,8 +17,8 @@
 
 ## Publicación
 
-- Instantánea publicada: `20260812132331937-38e1812a9531`.
-- Recursos publicados: 187 programas, 39 ocupaciones, 28 alias y 44 relaciones.
+- Instantánea publicada: `20260812151418614-7a7a10e4ad15`.
+- Recursos publicados: 187 programas, 46 ocupaciones, 37 alias y 60 relaciones.
 
 ## Límites
 
