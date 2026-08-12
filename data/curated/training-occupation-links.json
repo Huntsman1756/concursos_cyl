@@ -430,5 +430,55 @@
     "sourceQuote": "9820 Reponedores",
     "reviewedAt": "2026-08-11",
     "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "FME01M",
+    "occupationId": "occupation:cno11:7322",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+    "sourceQuote": "7322 Trabajadores de la fabricación de herramientas, mecánico-ajustadores, modelistas, matriceros y afines",
+    "reviewedAt": "2026-08-12",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "FME01M",
+    "occupationId": "occupation:cno11:7323",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.boe.es/eli/es/rd/2007/10/29/1398",
+    "sourceQuote": "Ajustador operario de máquinas herramientas.",
+    "reviewedAt": "2026-08-12",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "FME01M",
+    "occupationId": "occupation:cno11:7324",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+    "sourceQuote": "7324 Pulidores de metales y afiladores de herramientas",
+    "reviewedAt": "2026-08-12",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "MAM01M",
+    "occupationId": "occupation:cno11:7812",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.boe.es/eli/es/rd/1128/2010",
+    "sourceQuote": "Operador de máquinas fijas para fabricar productos de madera.",
+    "reviewedAt": "2026-08-09",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "MAM01M",
+    "occupationId": "occupation:cno11:8209",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.boe.es/eli/es/rd/1128/2010",
+    "sourceQuote": "Montador-ensamblador de elementos de carpintería.",
+    "reviewedAt": "2026-08-09",
+    "mappingVersion": "1.0.0"
   }
 ]

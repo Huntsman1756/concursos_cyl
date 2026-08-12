@@ -2,7 +2,7 @@
   "schemaVersion": "1.0.0",
   "programKey": "MAM01M",
   "baseQualificationIdentity": "qualification:MAM01M",
-  "state": "deferred",
+  "state": "completed",
   "transitions": [
     {
       "from": "not_started",
@@ -11,7 +11,7 @@
     },
     {
       "from": "in_progress",
-      "to": "deferred",
+      "to": "completed",
       "at": "2026-08-09T16:29:26.000Z"
     }
   ],
@@ -189,13 +189,24 @@
   "currentMatchIds": [],
   "newlyReachedOfferIdsByProgram": { "MAM01M": [] },
   "newlyReachedOfferUnionIds": [],
-  "limitation": "Deferred because the frozen seed Carpintero de madera is not an exact BOE output. The two accepted relations remain curated but are not published; the rejected supervisory relation is audit-only. No aliases, offer deltas, snapshot regeneration, or public-resource changes are allowed in this slot.",
+  "limitation": "El seed preliminar Carpintero de madera no aparece en el inventario BOE exhaustivo y queda auditado como ausente. La publicación se limita a las relaciones 7812 y 8209 respaldadas por outputs BOE revisados y evidencia CNO independiente; la relación de supervisión 3206 permanece rechazada.",
   "reviewedCommit": "a3bd273f7492ba1a8ca2f07306780e83e9f8d65c",
   "reviewedCommitAt": "2026-08-09T16:29:26.000Z",
-  "snapshotId": "20260812091756510-cac7c1d65a73",
-  "snapshotHash": "dedd13506283c2eda9f0ad75d14b956e17922f64d88bc56ef56deab025edf91e",
+  "snapshotId": "20260812123218779-818012d7bffb",
+  "snapshotHash": "589ad3e5559ef12fff83f6bc3953a39d63ca4ad9d7becd8bfa9b8d056c3ed0a6",
   "publicParity": {
-    "publishedRelationKeys": [],
+    "publishedRelationKeys": [
+      "MAM01M|occupation:cno11:7812",
+      "MAM01M|occupation:cno11:8209"
+    ],
     "rejectedRelationKeys": ["MAM01M|occupation:cno11:3206"]
-  }
+  },
+  "unmatchedSeedReviews": [
+    {
+      "seedLabel": "Carpintero de madera",
+      "disposition": "not_in_authoritative_inventory",
+      "authoritativeInventoryUrl": "https://www.boe.es/eli/es/rd/1128/2010",
+      "reason": "La etiqueta preliminar no aparece en el inventario BOE exhaustivo y no se usa como evidencia para publicar relaciones."
+    }
+  ]
 }

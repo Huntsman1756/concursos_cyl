@@ -1,0 +1,412 @@
+[
+  {
+    "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:6110",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
+    "sourceQuote": "6110 Trabajadores cualificados en actividades agrícolas (excepto en huertas, invernaderos, viveros y jardines)",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+    "trainingProgramKey": "AGA01M"
+  },
+  {
+    "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:6120",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
+    "sourceQuote": "6120 Trabajadores cualificados en huertas, invernaderos, viveros y jardines",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+    "trainingProgramKey": "AGA01M"
+  },
+  {
+    "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:6204",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
+    "sourceQuote": "6204 Trabajadores cualificados en apicultura y sericicultura",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+    "trainingProgramKey": "AGA01M"
+  },
+  {
+    "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:6205",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
+    "sourceQuote": "6205 Trabajadores cualificados en la avicultura y la cunicultura",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+    "trainingProgramKey": "AGA01M"
+  },
+  {
+    "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:8321",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
+    "sourceQuote": "8321 Operadores de maquinaria agrícola móvil",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+    "trainingProgramKey": "AGA01M"
+  },
+  {
+    "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:5220",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
+    "sourceQuote": "Vendedor de floristería.",
+    "sourceUrl": "https://www.boe.es/eli/es/rd/1129/2010",
+    "trainingProgramKey": "AGA03M"
+  },
+  {
+    "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:6120",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
+    "sourceQuote": "Trabajador de huertas, viveros y jardines.",
+    "sourceUrl": "https://www.boe.es/eli/es/rd/1129/2010",
+    "trainingProgramKey": "AGA03M"
+  },
+  {
+    "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:4121",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
+    "sourceQuote": "4121 Empleados de control de abastecimientos e inventario",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+    "trainingProgramKey": "COM01B"
+  },
+  {
+    "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:4123",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
+    "sourceQuote": "4123 Empleados de logística y transporte de pasajeros y mercancías",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+    "trainingProgramKey": "COM01B"
+  },
+  {
+    "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:5220",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
+    "sourceQuote": "5220 Vendedores en tiendas y almacenes",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+    "trainingProgramKey": "COM01B"
+  },
+  {
+    "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:5492",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
+    "sourceQuote": "5492 Promotores de venta",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+    "trainingProgramKey": "COM01B"
+  },
+  {
+    "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:5500",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
+    "sourceQuote": "5500 Cajeros y taquilleros (excepto bancos)",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+    "trainingProgramKey": "COM01B"
+  },
+  {
+    "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:8333",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
+    "sourceQuote": "8333 Operadores de carretillas elevadoras",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+    "trainingProgramKey": "COM01B"
+  },
+  {
+    "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:9820",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
+    "sourceQuote": "9820 Reponedores",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+    "trainingProgramKey": "COM01B"
+  },
+  {
+    "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:5210",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-09",
+    "sourceQuote": "Responsable/encargado de sección/sala/departamento de tienda de alimentación.",
+    "sourceUrl": "https://www.boe.es/eli/es/rd/189/2018",
+    "trainingProgramKey": "COM02M"
+  },
+  {
+    "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:5220",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-09",
+    "sourceQuote": "Vendedor/a de productos alimentarios.",
+    "sourceUrl": "https://www.boe.es/eli/es/rd/189/2018",
+    "trainingProgramKey": "COM02M"
+  },
+  {
+    "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:7531",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
+    "sourceQuote": "7531 Mecánicos y reparadores de equipos electrónicos",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+    "trainingProgramKey": "ELE03S"
+  },
+  {
+    "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:7111",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-08",
+    "sourceQuote": "– Encofrador.",
+    "sourceUrl": "https://www.boe.es/eli/es/rd/2011/11/04/1575",
+    "trainingProgramKey": "EOC01M"
+  },
+  {
+    "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:7121",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-08",
+    "sourceQuote": "– Albañil.",
+    "sourceUrl": "https://www.boe.es/eli/es/rd/2011/11/04/1575",
+    "trainingProgramKey": "EOC01M"
+  },
+  {
+    "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:7193",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-08",
+    "sourceQuote": "– Instalador de sistemas de impermeabilización en edificios y obra civil.",
+    "sourceUrl": "https://www.boe.es/eli/es/rd/2011/11/04/1575",
+    "trainingProgramKey": "EOC01M"
+  },
+  {
+    "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:7240",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-08",
+    "sourceQuote": "– Alicatador– solador.",
+    "sourceUrl": "https://www.boe.es/eli/es/rd/2011/11/04/1575",
+    "trainingProgramKey": "EOC01M"
+  },
+  {
+    "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:7291",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-08",
+    "sourceQuote": "– Tejador.",
+    "sourceUrl": "https://www.boe.es/eli/es/rd/2011/11/04/1575",
+    "trainingProgramKey": "EOC01M"
+  },
+  {
+    "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:7322",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-12",
+    "sourceQuote": "7322 Trabajadores de la fabricación de herramientas, mecánico-ajustadores, modelistas, matriceros y afines",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+    "trainingProgramKey": "FME01M"
+  },
+  {
+    "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:7323",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-12",
+    "sourceQuote": "Ajustador operario de máquinas herramientas.",
+    "sourceUrl": "https://www.boe.es/eli/es/rd/2007/10/29/1398",
+    "trainingProgramKey": "FME01M"
+  },
+  {
+    "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:7324",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-12",
+    "sourceQuote": "7324 Pulidores de metales y afiladores de herramientas",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+    "trainingProgramKey": "FME01M"
+  },
+  {
+    "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:7132",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
+    "sourceQuote": "7132 Instaladores de cerramientos metálicos y carpinteros metálicos",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+    "trainingProgramKey": "FME02M"
+  },
+  {
+    "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:7312",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
+    "sourceQuote": "7312 Soldadores y oxicortadores",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+    "trainingProgramKey": "FME02M"
+  },
+  {
+    "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:7313",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
+    "sourceQuote": "7313 Chapistas y caldereros",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+    "trainingProgramKey": "FME02M"
+  },
+  {
+    "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:7314",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
+    "sourceQuote": "7314 Montadores de estructuras metálicas",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+    "trainingProgramKey": "FME02M"
+  },
+  {
+    "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:5110",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-08",
+    "sourceQuote": "Las ocupaciones y puestos de trabajo más relevantes son los siguientes: Cocinero.",
+    "sourceUrl": "https://todofp.es/dam/jcr%3A63392ee9-4d38-449b-a196-d0efb714b364/n-tcocinagastronomiaes-pdf.pdf",
+    "trainingProgramKey": "HOT01M"
+  },
+  {
+    "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:2713",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-04",
+    "sourceQuote": "Desarrollador de aplicaciones en entornos Web.",
+    "sourceUrl": "https://www.boe.es/buscar/doc.php?id=BOE-A-2010-9269&lang=es",
+    "trainingProgramKey": "IFC03S"
+  },
+  {
+    "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:2713",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-04",
+    "sourceQuote": "Desarrollador de aplicaciones en entornos Web.",
+    "sourceUrl": "https://www.boe.es/buscar/doc.php?id=BOE-A-2010-9269&lang=es",
+    "trainingProgramKey": "IFC03SD"
+  },
+  {
+    "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:7250",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
+    "sourceQuote": "7250 Mecánicos-instaladores de refrigeración y climatización",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+    "trainingProgramKey": "IMA02M"
+  },
+  {
+    "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:7812",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-09",
+    "sourceQuote": "Operador de máquinas fijas para fabricar productos de madera.",
+    "sourceUrl": "https://www.boe.es/eli/es/rd/1128/2010",
+    "trainingProgramKey": "MAM01M"
+  },
+  {
+    "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:8209",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-09",
+    "sourceQuote": "Montador-ensamblador de elementos de carpintería.",
+    "sourceUrl": "https://www.boe.es/eli/es/rd/1128/2010",
+    "trainingProgramKey": "MAM01M"
+  },
+  {
+    "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:5611",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-08",
+    "sourceQuote": "Auxiliar de Enfermería/Clínica..",
+    "sourceUrl": "https://todofp.es/dam/jcr%3Aaf5b68fd-e75c-493b-94ff-0565d3886473/san21cuidauxilenfermeria-pdf.pdf",
+    "trainingProgramKey": "SAN21"
+  },
+  {
+    "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:5612",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-08",
+    "sourceQuote": "Auxiliar de Atención primaria.",
+    "sourceUrl": "https://todofp.es/dam/jcr%3Aaf5b68fd-e75c-493b-94ff-0565d3886473/san21cuidauxilenfermeria-pdf.pdf",
+    "trainingProgramKey": "SAN21"
+  },
+  {
+    "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:5629",
+    "relationshipType": "reviewed_relationship",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-08",
+    "sourceQuote": "Categoría: CUIDADORES DE PERSONAS CON DISCAPACIDAD (CNO 56291025) Titulación: FP grado medio en atención a personas en situación de dependencia",
+    "sourceUrl": "https://www.sepe.es/fr/SiteSepe/contenidos/COVID-19/documentos/documentacion-melilla/2021/201221-Resolucion-provisional--20-12-2021-firmada.pdf",
+    "trainingProgramKey": "SSC01M"
+  },
+  {
+    "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:5710",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-08",
+    "sourceQuote": "Auxiliar de ayuda a domicilio.",
+    "sourceUrl": "https://www.boe.es/eli/es/rd/2011/11/04/1593",
+    "trainingProgramKey": "SSC01M"
+  },
+  {
+    "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:7232",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
+    "sourceQuote": "7232 Pintores en las industrias manufactureras",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+    "trainingProgramKey": "TMV01M"
+  },
+  {
+    "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:7313",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
+    "sourceQuote": "7313 Chapistas y caldereros",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+    "trainingProgramKey": "TMV01M"
+  }
+]

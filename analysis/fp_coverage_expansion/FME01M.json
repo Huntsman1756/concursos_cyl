@@ -2,14 +2,14 @@
   "schemaVersion": "1.0.0",
   "programKey": "FME01M",
   "baseQualificationIdentity": "qualification:FME01M",
-  "state": "deferred",
+  "state": "completed",
   "transitions": [
     {
       "from": "not_started",
       "to": "in_progress",
       "at": "2026-08-09T17:20:00Z"
     },
-    { "from": "in_progress", "to": "deferred", "at": "2026-08-09T17:33:00Z" }
+    { "from": "in_progress", "to": "completed", "at": "2026-08-09T17:33:00Z" }
   ],
   "startedAt": "2026-08-09T17:20:00Z",
   "completedAt": "2026-08-09T17:33:00Z",
@@ -212,13 +212,25 @@
   "currentMatchIds": [],
   "newlyReachedOfferIdsByProgram": { "FME01M": [] },
   "newlyReachedOfferUnionIds": [],
-  "limitation": "Las relaciones aceptadas (7322, 7323, 7324) se conservan como evidencia de auditoría pero no se publican porque el seed congelado 'Mecánico de mecanizado' no aparece en TodoFP y no existe reconciliación demostrable contra el inventario BOE-A-2007-20203. El candidato 3139 se mantiene rechazado.",
+  "limitation": "El seed preliminar Mecánico de mecanizado no aparece en el inventario BOE exhaustivo y queda auditado como ausente. La publicación se limita a las relaciones 7322, 7323 y 7324 respaldadas por outputs BOE revisados y evidencia CNO independiente; el rechazo 3139 permanece.",
   "reviewedCommit": "ffb756449ac004700cbd5aae170f17d676c0a920",
   "reviewedCommitAt": "2026-08-09T17:35:28.000Z",
-  "snapshotId": "20260812091756510-cac7c1d65a73",
-  "snapshotHash": "6c4429521afcf2eb9d1c052a692ffe51b14363b40fa0100247f27d48c06b0dbc",
+  "snapshotId": "20260812123218779-818012d7bffb",
+  "snapshotHash": "854cebeb46acce9a086f3422e4ef09d228fe6d980f099e715faa46310a8a5c1f",
   "publicParity": {
-    "publishedRelationKeys": [],
+    "publishedRelationKeys": [
+      "FME01M|occupation:cno11:7322",
+      "FME01M|occupation:cno11:7323",
+      "FME01M|occupation:cno11:7324"
+    ],
     "rejectedRelationKeys": ["FME01M|occupation:cno11:3139"]
-  }
+  },
+  "unmatchedSeedReviews": [
+    {
+      "seedLabel": "Mecánico de mecanizado",
+      "disposition": "not_in_authoritative_inventory",
+      "authoritativeInventoryUrl": "https://www.boe.es/eli/es/rd/2007/10/29/1398",
+      "reason": "La etiqueta preliminar no aparece en el inventario exhaustivo del artículo 7.2 del BOE y no se usa como evidencia para publicar relaciones."
+    }
+  ]
 }
