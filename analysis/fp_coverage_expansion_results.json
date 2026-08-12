@@ -1,10 +1,10 @@
 {
   "schemaVersion": "1.0.0",
-  "generatedAt": "2026-08-11T17:27:42.000Z",
-  "sourceCutoffAt": "2026-08-11T17:27:42.000Z",
+  "generatedAt": "2026-08-12T15:30:00.000Z",
+  "sourceCutoffAt": "2026-08-12T15:30:00.000Z",
   "counts": {
-    "completed": 10,
-    "deferred": 4,
+    "completed": 11,
+    "deferred": 3,
     "discarded": 0,
     "terminal": 14,
     "primaryAttempted": 7,
@@ -26,6 +26,7 @@
       "qualification:AGA03M",
       "qualification:COM01B",
       "qualification:COM02M",
+      "qualification:ELE01M",
       "qualification:ELE03S",
       "qualification:FME01M",
       "qualification:FME02M",
@@ -33,11 +34,11 @@
       "qualification:MAM01M",
       "qualification:TMV01M"
     ],
-    "terminalDistinctQualificationTotal": 15,
+    "terminalDistinctQualificationTotal": 16,
     "targetDistinctQualifications": 12,
     "remainingGap": 0,
     "modalityDoubleCount": false,
-    "belowTargetReason": "The evidence-backed total exceeds the target by 3; completion covers AGA01M and AGA03M and COM01B and COM02M and ELE03S and FME01M and FME02M and IMA02M and MAM01M and TMV01M, while 4 terminal attempts remain deferred and unpublished.",
+    "belowTargetReason": "The evidence-backed total exceeds the target by 4; completion covers AGA01M and AGA03M and COM01B and COM02M and ELE01M and ELE03S and FME01M and FME02M and IMA02M and MAM01M and TMV01M, while 3 terminal attempts remain deferred and unpublished.",
     "publicationStatus": "published_task_a2_12"
   },
   "offerDeltas": {
@@ -61,7 +62,7 @@
   },
   "time": {
     "totalModeledActiveMinutes": 259,
-    "totalWallClockMinutes": 421.65,
+    "totalWallClockMinutes": 4651.65,
     "totalReviewerMinutes": 18,
     "reviewerMinutesExcluded": true
   },
@@ -227,7 +228,7 @@
       "lane": "primary",
       "rank": 5,
       "attempted": true,
-      "state": "deferred",
+      "state": "completed",
       "phaseMinutes": {
         "research": 35,
         "implementation": 10,
@@ -235,27 +236,25 @@
         "review": 0
       },
       "modeledActiveMinutes": 55,
-      "wallClockMinutes": 60,
+      "wallClockMinutes": 4290,
       "reviewerMinutes": 0,
       "reviewerTimeExcluded": true,
       "offerDeltaIds": [],
-      "acceptedRelationKeys": [],
-      "rejectedRelationKeys": [
+      "acceptedRelationKeys": [
         "ELE01M|occupation:cno11:7294",
         "ELE01M|occupation:cno11:7510",
-        "ELE01M|occupation:cno11:7521",
         "ELE01M|occupation:cno11:7533"
       ],
+      "rejectedRelationKeys": ["ELE01M|occupation:cno11:7521"],
       "publicParity": {
-        "publishedRelationKeys": [],
-        "rejectedRelationKeys": [
+        "publishedRelationKeys": [
           "ELE01M|occupation:cno11:7294",
           "ELE01M|occupation:cno11:7510",
-          "ELE01M|occupation:cno11:7521",
           "ELE01M|occupation:cno11:7533"
-        ]
+        ],
+        "rejectedRelationKeys": ["ELE01M|occupation:cno11:7521"]
       },
-      "limitation": "Deferred: the frozen seed Instalador electricista has no literal BOE output match. The exhaustive inventory spans CNO-11 boundaries 7510, 7521, 7533 and 7294, so no exact approved relation is published; curated data, public resources and snapshots remain unchanged."
+      "limitation": "La revisión ampliada acepta únicamente construcción eléctrica, telecomunicaciones y antenas, y montaje fotovoltaico. Mantenimiento eléctrico, industria y domótica permanecen fuera por límites CNO no resueltos."
     },
     {
       "programKey": "IMA03M",

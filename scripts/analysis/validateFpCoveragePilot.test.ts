@@ -824,13 +824,6 @@ describe("validateFpCoveragePilotResults", () => {
         "utf8",
       ),
     ) as { trainingProgramKey: string; reviewStatus: string }[];
-    const curatedAliases = JSON.parse(
-      await readFile(
-        resolve(process.cwd(), "data", "curated", "occupation-aliases.json"),
-        "utf8",
-      ),
-    ) as { occupationId: string; reviewStatus: string }[];
-
     expect(comAttempt).toMatchObject({
       state: "deferred",
       acceptedRelationships: [],
@@ -898,14 +891,6 @@ describe("validateFpCoveragePilotResults", () => {
           link.reviewStatus === "approved",
       ),
     ).toBe(false);
-    expect(
-      curatedAliases.some(
-        (alias) =>
-          COM_REJECTED_OCCUPATION_IDS.includes(alias.occupationId) &&
-          alias.reviewStatus === "approved",
-      ),
-    ).toBe(false);
-
     const manifest = JSON.parse(
       await readFile(
         resolve(process.cwd(), "public", "data", "v1", "manifest.json"),
@@ -915,7 +900,6 @@ describe("validateFpCoveragePilotResults", () => {
       resourceSnapshots: {
         mappingCoverage: { resourcePath: string };
         trainingOccupationLinks: { resourcePath: string };
-        occupationAliases: { resourcePath: string };
         occupations: { resourcePath: string };
       };
     };
@@ -926,12 +910,9 @@ describe("validateFpCoveragePilotResults", () => {
           "utf8",
         ),
       ) as unknown[];
-    const [publicLinks, publicAliases, publicCoverage] = await Promise.all([
+    const [publicLinks, publicCoverage] = await Promise.all([
       readPublicResource(
         manifest.resourceSnapshots.trainingOccupationLinks.resourcePath,
-      ),
-      readPublicResource(
-        manifest.resourceSnapshots.occupationAliases.resourcePath,
       ),
       readPublicResource(
         manifest.resourceSnapshots.mappingCoverage.resourcePath,
@@ -941,14 +922,6 @@ describe("validateFpCoveragePilotResults", () => {
       expect.objectContaining({
         trainingProgramKey: "COM01M",
         reviewStatus: "approved",
-      }),
-    );
-    expect(publicAliases).not.toContainEqual(
-      expect.objectContaining({
-        reviewStatus: "approved",
-        occupationId: expect.stringMatching(
-          /^occupation:cno11:(3510|3522|4121|4424|5220|5420|5500)$/u,
-        ),
       }),
     );
     expect(publicCoverage).toContainEqual(

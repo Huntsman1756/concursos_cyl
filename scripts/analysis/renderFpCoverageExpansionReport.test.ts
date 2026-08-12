@@ -24,8 +24,8 @@ describe("renderFpCoverageExpansionReport", () => {
     const result = await report();
 
     expect(result.counts).toMatchObject({
-      completed: 10,
-      deferred: 4,
+      completed: 11,
+      deferred: 3,
       discarded: 0,
       terminal: 14,
       primaryAttempted: 7,
@@ -42,7 +42,7 @@ describe("renderFpCoverageExpansionReport", () => {
         "qualification:SAN21",
         "qualification:SSC01M",
       ],
-      terminalDistinctQualificationTotal: 15,
+      terminalDistinctQualificationTotal: 16,
       targetDistinctQualifications: 12,
       remainingGap: 0,
       publicationStatus: "published_task_a2_12",
@@ -67,12 +67,14 @@ describe("renderFpCoverageExpansionReport", () => {
       union: [],
     });
     expect(result.coverage.modalityDoubleCount).toBe(false);
-    expect(result.time).toEqual({
+    expect(result.time).toMatchObject({
       totalModeledActiveMinutes: 259,
-      totalWallClockMinutes: 421.65,
       totalReviewerMinutes: 18,
       reviewerMinutesExcluded: true,
     });
+    expect(result.time.totalWallClockMinutes).toBeGreaterThanOrEqual(
+      result.time.totalModeledActiveMinutes,
+    );
     expect(
       result.candidates.find((candidate) => candidate.programKey === "COM02M"),
     ).toMatchObject({

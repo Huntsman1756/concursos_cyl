@@ -39,14 +39,18 @@ function snapshotHash(snapshotId: string) {
         programKey: "ELE01M",
         baselineMatchIds: [],
         currentMatchIds: [],
-        acceptedRelationKeys: [],
+        acceptedRelationKeys: [
+          "ELE01M|occupation:cno11:7294",
+          "ELE01M|occupation:cno11:7510",
+          "ELE01M|occupation:cno11:7533",
+        ],
       }),
     )
     .digest("hex");
 }
 
 describe("ELE01M expansion slot", () => {
-  it("proves the frozen public baseline has no approved ELE01M relation", async () => {
+  it("publishes the three independently reviewed ELE01M relations", async () => {
     const manifest = await readJson<{
       resourceSnapshots: { trainingOccupationLinks: { resourcePath: string } };
     }>(resolve(rootDirectory, "public/data/v1/manifest.json"));
@@ -67,10 +71,14 @@ describe("ELE01M expansion slot", () => {
           link.trainingProgramKey === "ELE01M" &&
           link.reviewStatus === "approved",
       ),
-    ).toEqual([]);
+    ).toMatchObject([
+      { occupationId: "occupation:cno11:7294" },
+      { occupationId: "occupation:cno11:7510" },
+      { occupationId: "occupation:cno11:7533" },
+    ]);
   });
 
-  it("validates the deferred attempt with exhaustive BOE outputs and no publication", async () => {
+  it("validates the completed attempt with exhaustive BOE outputs and exact publication", async () => {
     const attempt = await readJson<FpExpansionAttempt>(
       resolve(rootDirectory, "analysis/fp_coverage_expansion/ELE01M.json"),
     );
@@ -81,7 +89,7 @@ describe("ELE01M expansion slot", () => {
       ...ranking.primaryCandidates,
       ...ranking.reserveCandidates,
     ].find((entry) => entry.programKey === "ELE01M") as FpExpansionCandidate;
-    expect(attempt.state).toBe("deferred");
+    expect(attempt.state).toBe("completed");
     if (attempt.snapshotId === undefined)
       throw new Error("Missing snapshot ID.");
     const snapshotId = attempt.snapshotId;
@@ -93,13 +101,12 @@ describe("ELE01M expansion slot", () => {
     ).toEqual(outputLabels);
     expect(attempt.officialOutputReviews).toHaveLength(outputLabels.length);
     expect(attempt.publicParity).toEqual({
-      publishedRelationKeys: [],
-      rejectedRelationKeys: [
+      publishedRelationKeys: [
         "ELE01M|occupation:cno11:7294",
         "ELE01M|occupation:cno11:7510",
-        "ELE01M|occupation:cno11:7521",
         "ELE01M|occupation:cno11:7533",
       ],
+      rejectedRelationKeys: ["ELE01M|occupation:cno11:7521"],
     });
     expect(attempt.snapshotHash).toBe(snapshotHash(snapshotId));
     const computed = {
@@ -112,7 +119,11 @@ describe("ELE01M expansion slot", () => {
     };
     const publicRelationSet = {
       manifestAddressed: true as const,
-      relationKeys: [],
+      relationKeys: [
+        "ELE01M|occupation:cno11:7294",
+        "ELE01M|occupation:cno11:7510",
+        "ELE01M|occupation:cno11:7533",
+      ],
       resourcePaths: ["/data/v1/manifest.json"],
     };
     expect(
@@ -125,14 +136,13 @@ describe("ELE01M expansion slot", () => {
       }),
     ).toMatchObject({
       programKey: "ELE01M",
-      state: "deferred",
-      acceptedRelations: [],
-      rejectedRelations: [
+      state: "completed",
+      acceptedRelations: [
         { occupationId: "occupation:cno11:7294" },
         { occupationId: "occupation:cno11:7510" },
-        { occupationId: "occupation:cno11:7521" },
         { occupationId: "occupation:cno11:7533" },
       ],
+      rejectedRelations: [{ occupationId: "occupation:cno11:7521" }],
       newlyReachedOfferUnionIds: [],
     });
     await expect(
@@ -140,6 +150,6 @@ describe("ELE01M expansion slot", () => {
         compute: async () => computed,
         publicRelationSet: async () => publicRelationSet,
       }),
-    ).resolves.toMatchObject({ state: "deferred" });
+    ).resolves.toMatchObject({ state: "completed" });
   });
 });

@@ -1,6 +1,28 @@
 [
   {
     "catalogVersion": "1.0.0",
+    "classificationCode": "2252",
+    "classificationSystem": "CNO-11",
+    "confirmationLabel": "Educación infantil",
+    "occupationId": "occupation:cno11:2252",
+    "preferredLabel": "Técnicos en educación infantil",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-12",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf"
+  },
+  {
+    "catalogVersion": "1.0.0",
+    "classificationCode": "2312",
+    "classificationSystem": "CNO-11",
+    "confirmationLabel": "Educación especial",
+    "occupationId": "occupation:cno11:2312",
+    "preferredLabel": "Técnicos educadores de educación especial",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-12",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf"
+  },
+  {
+    "catalogVersion": "1.0.0",
     "classificationCode": "2713",
     "classificationSystem": "CNO-11",
     "confirmationLabel": "Programación y desarrollo web",
@@ -8,6 +30,116 @@
     "preferredLabel": "Analistas, programadores y diseñadores web y multimedia",
     "reviewStatus": "approved",
     "reviewedAt": "2026-08-04",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf"
+  },
+  {
+    "catalogVersion": "1.0.0",
+    "classificationCode": "2721",
+    "classificationSystem": "CNO-11",
+    "confirmationLabel": "Administración de bases de datos",
+    "occupationId": "occupation:cno11:2721",
+    "preferredLabel": "Diseñadores y administradores de bases de datos",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-12",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf"
+  },
+  {
+    "catalogVersion": "1.0.0",
+    "classificationCode": "2722",
+    "classificationSystem": "CNO-11",
+    "confirmationLabel": "Administración de sistemas y redes",
+    "occupationId": "occupation:cno11:2722",
+    "preferredLabel": "Administradores de sistemas y redes",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-12",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf"
+  },
+  {
+    "catalogVersion": "1.0.0",
+    "classificationCode": "3713",
+    "classificationSystem": "CNO-11",
+    "confirmationLabel": "Integración y apoyo social",
+    "occupationId": "occupation:cno11:3713",
+    "preferredLabel": "Profesionales de apoyo al trabajo y a la educación social",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-12",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf"
+  },
+  {
+    "catalogVersion": "1.0.0",
+    "classificationCode": "3811",
+    "classificationSystem": "CNO-11",
+    "confirmationLabel": "Operación de sistemas informáticos",
+    "occupationId": "occupation:cno11:3811",
+    "preferredLabel": "Técnicos en operaciones de sistemas informáticos",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-12",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf"
+  },
+  {
+    "catalogVersion": "1.0.0",
+    "classificationCode": "3812",
+    "classificationSystem": "CNO-11",
+    "confirmationLabel": "Soporte informático a usuarios",
+    "occupationId": "occupation:cno11:3812",
+    "preferredLabel": "Técnicos en asistencia al usuario de tecnologías de la información",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-12",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf"
+  },
+  {
+    "catalogVersion": "1.0.0",
+    "classificationCode": "3813",
+    "classificationSystem": "CNO-11",
+    "confirmationLabel": "Operación y soporte de redes",
+    "occupationId": "occupation:cno11:3813",
+    "preferredLabel": "Técnicos en redes",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-12",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf"
+  },
+  {
+    "catalogVersion": "1.0.0",
+    "classificationCode": "3814",
+    "classificationSystem": "CNO-11",
+    "confirmationLabel": "Operación y soporte web",
+    "occupationId": "occupation:cno11:3814",
+    "preferredLabel": "Técnicos de la Web",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-12",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf"
+  },
+  {
+    "catalogVersion": "1.0.0",
+    "classificationCode": "3820",
+    "classificationSystem": "CNO-11",
+    "confirmationLabel": "Programación de aplicaciones y software",
+    "occupationId": "occupation:cno11:3820",
+    "preferredLabel": "Programadores informáticos",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-12",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf"
+  },
+  {
+    "catalogVersion": "1.0.0",
+    "classificationCode": "4111",
+    "classificationSystem": "CNO-11",
+    "confirmationLabel": "Administración contable",
+    "occupationId": "occupation:cno11:4111",
+    "preferredLabel": "Empleados de contabilidad",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-12",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf"
+  },
+  {
+    "catalogVersion": "1.0.0",
+    "classificationCode": "4113",
+    "classificationSystem": "CNO-11",
+    "confirmationLabel": "Administración financiera, bancaria y de seguros",
+    "occupationId": "occupation:cno11:4113",
+    "preferredLabel": "Empleados de oficina de servicios estadísticos, financieros y bancarios",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-12",
     "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf"
   },
   {
@@ -34,6 +166,72 @@
   },
   {
     "catalogVersion": "1.0.0",
+    "classificationCode": "4210",
+    "classificationSystem": "CNO-11",
+    "confirmationLabel": "Archivo y apoyo documental",
+    "occupationId": "occupation:cno11:4210",
+    "preferredLabel": "Empleados de bibliotecas y archivos",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-12",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf"
+  },
+  {
+    "catalogVersion": "1.0.0",
+    "classificationCode": "4221",
+    "classificationSystem": "CNO-11",
+    "confirmationLabel": "Clasificación y distribución de correspondencia",
+    "occupationId": "occupation:cno11:4221",
+    "preferredLabel": "Empleados de servicios de correos (excepto empleados de mostrador)",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-12",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf"
+  },
+  {
+    "catalogVersion": "1.0.0",
+    "classificationCode": "4223",
+    "classificationSystem": "CNO-11",
+    "confirmationLabel": "Administración de recursos humanos",
+    "occupationId": "occupation:cno11:4223",
+    "preferredLabel": "Empleados de servicio de personal",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-12",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf"
+  },
+  {
+    "catalogVersion": "1.0.0",
+    "classificationCode": "4301",
+    "classificationSystem": "CNO-11",
+    "confirmationLabel": "Grabación y verificación de datos",
+    "occupationId": "occupation:cno11:4301",
+    "preferredLabel": "Grabadores de datos",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-12",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf"
+  },
+  {
+    "catalogVersion": "1.0.0",
+    "classificationCode": "4411",
+    "classificationSystem": "CNO-11",
+    "confirmationLabel": "Información y orientación al usuario",
+    "occupationId": "occupation:cno11:4411",
+    "preferredLabel": "Empleados de información al usuario",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-12",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf"
+  },
+  {
+    "catalogVersion": "1.0.0",
+    "classificationCode": "4423",
+    "classificationSystem": "CNO-11",
+    "confirmationLabel": "Operación de centralitas telefónicas",
+    "occupationId": "occupation:cno11:4423",
+    "preferredLabel": "Telefonistas",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-12",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf"
+  },
+  {
+    "catalogVersion": "1.0.0",
     "classificationCode": "5110",
     "classificationSystem": "CNO-11",
     "confirmationLabel": "Cocina profesional",
@@ -41,6 +239,17 @@
     "preferredLabel": "Cocineros asalariados",
     "reviewStatus": "approved",
     "reviewedAt": "2026-08-08",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf"
+  },
+  {
+    "catalogVersion": "1.0.0",
+    "classificationCode": "5120",
+    "classificationSystem": "CNO-11",
+    "confirmationLabel": "Servicio de sala y barra",
+    "occupationId": "occupation:cno11:5120",
+    "preferredLabel": "Camareros asalariados",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-12",
     "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf"
   },
   {
@@ -111,6 +320,17 @@
   },
   {
     "catalogVersion": "1.0.0",
+    "classificationCode": "5621",
+    "classificationSystem": "CNO-11",
+    "confirmationLabel": "Asistencia técnica en farmacia",
+    "occupationId": "occupation:cno11:5621",
+    "preferredLabel": "Técnicos auxiliares de farmacia",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-12",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf"
+  },
+  {
+    "catalogVersion": "1.0.0",
     "classificationCode": "5629",
     "classificationSystem": "CNO-11",
     "confirmationLabel": "Apoyo sanitario no clasificado",
@@ -129,6 +349,28 @@
     "preferredLabel": "Trabajadores de los cuidados personales a domicilio",
     "reviewStatus": "approved",
     "reviewedAt": "2026-08-08",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf"
+  },
+  {
+    "catalogVersion": "1.0.0",
+    "classificationCode": "5811",
+    "classificationSystem": "CNO-11",
+    "confirmationLabel": "Peluquería y cuidado del cabello",
+    "occupationId": "occupation:cno11:5811",
+    "preferredLabel": "Peluqueros",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-12",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf"
+  },
+  {
+    "catalogVersion": "1.0.0",
+    "classificationCode": "5812",
+    "classificationSystem": "CNO-11",
+    "confirmationLabel": "Tratamientos de estética y cuidado de uñas",
+    "occupationId": "occupation:cno11:5812",
+    "preferredLabel": "Especialistas en tratamientos de estética, bienestar y afines",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-12",
     "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf"
   },
   {
@@ -265,6 +507,28 @@
   },
   {
     "catalogVersion": "1.0.0",
+    "classificationCode": "7293",
+    "classificationSystem": "CNO-11",
+    "confirmationLabel": "Instalación de lunas de vehículos",
+    "occupationId": "occupation:cno11:7293",
+    "preferredLabel": "Cristaleros",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-12",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf"
+  },
+  {
+    "catalogVersion": "1.0.0",
+    "classificationCode": "7294",
+    "classificationSystem": "CNO-11",
+    "confirmationLabel": "Montaje de instalaciones solares",
+    "occupationId": "occupation:cno11:7294",
+    "preferredLabel": "Montadores-instaladores de placas de energía solar",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-12",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf"
+  },
+  {
+    "catalogVersion": "1.0.0",
     "classificationCode": "7312",
     "classificationSystem": "CNO-11",
     "confirmationLabel": "Soldadura y oxicorte",
@@ -331,6 +595,28 @@
   },
   {
     "catalogVersion": "1.0.0",
+    "classificationCode": "7401",
+    "classificationSystem": "CNO-11",
+    "confirmationLabel": "Mecánica y ajuste de vehículos",
+    "occupationId": "occupation:cno11:7401",
+    "preferredLabel": "Mecánicos y ajustadores de vehículos de motor",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-12",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf"
+  },
+  {
+    "catalogVersion": "1.0.0",
+    "classificationCode": "7510",
+    "classificationSystem": "CNO-11",
+    "confirmationLabel": "Instalaciones eléctricas de construcción",
+    "occupationId": "occupation:cno11:7510",
+    "preferredLabel": "Electricistas de la construcción y afines",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-12",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf"
+  },
+  {
+    "catalogVersion": "1.0.0",
     "classificationCode": "7531",
     "classificationSystem": "CNO-11",
     "confirmationLabel": "Mecánicos y reparadores de equipos electrónicos",
@@ -342,6 +628,17 @@
   },
   {
     "catalogVersion": "1.0.0",
+    "classificationCode": "7533",
+    "classificationSystem": "CNO-11",
+    "confirmationLabel": "Instalación y reparación de telecomunicaciones",
+    "occupationId": "occupation:cno11:7533",
+    "preferredLabel": "Instaladores y reparadores en tecnologías de la información y las comunicaciones",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-12",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf"
+  },
+  {
+    "catalogVersion": "1.0.0",
     "classificationCode": "7812",
     "classificationSystem": "CNO-11",
     "confirmationLabel": "Operación de máquinas para trabajar la madera",
@@ -349,6 +646,17 @@
     "preferredLabel": "Ajustadores y operadores de máquinas para trabajar la madera",
     "reviewStatus": "approved",
     "reviewedAt": "2026-08-09",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf"
+  },
+  {
+    "catalogVersion": "1.0.0",
+    "classificationCode": "8202",
+    "classificationSystem": "CNO-11",
+    "confirmationLabel": "Ensamblaje de equipos eléctricos y electrónicos",
+    "occupationId": "occupation:cno11:8202",
+    "preferredLabel": "Ensambladores de equipos eléctricos y electrónicos",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-12",
     "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf"
   },
   {
@@ -382,6 +690,28 @@
     "preferredLabel": "Operadores de carretillas elevadoras",
     "reviewStatus": "approved",
     "reviewedAt": "2026-08-11",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf"
+  },
+  {
+    "catalogVersion": "1.0.0",
+    "classificationCode": "9310",
+    "classificationSystem": "CNO-11",
+    "confirmationLabel": "Ayuda de cocina",
+    "occupationId": "occupation:cno11:9310",
+    "preferredLabel": "Ayudantes de cocina",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-12",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf"
+  },
+  {
+    "catalogVersion": "1.0.0",
+    "classificationCode": "9431",
+    "classificationSystem": "CNO-11",
+    "confirmationLabel": "Servicios internos de oficina",
+    "occupationId": "occupation:cno11:9431",
+    "preferredLabel": "Ordenanzas",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-12",
     "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf"
   },
   {

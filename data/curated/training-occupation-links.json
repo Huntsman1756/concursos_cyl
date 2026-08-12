@@ -670,5 +670,405 @@
     "sourceQuote": "Educador o educadora infantil en primer ciclo de educación infantil.",
     "reviewedAt": "2026-08-12",
     "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "IFC01S",
+    "occupationId": "occupation:cno11:2722",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.boe.es/eli/es/rd/2009/11/03/1629",
+    "sourceQuote": "Técnico en administración de sistemas.",
+    "reviewedAt": "2026-08-12",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "IFC01S",
+    "occupationId": "occupation:cno11:2721",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.boe.es/eli/es/rd/2009/11/03/1629",
+    "sourceQuote": "Técnico en administración de base de datos.",
+    "reviewedAt": "2026-08-12",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "IFC01S",
+    "occupationId": "occupation:cno11:3812",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.boe.es/eli/es/rd/2009/11/03/1629",
+    "sourceQuote": "Personal de apoyo y soporte técnico.",
+    "reviewedAt": "2026-08-12",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "IFC01S",
+    "occupationId": "occupation:cno11:3813",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/informatica-comunicaciones/admin-sist-informaticos-red.html",
+    "sourceQuote": "Técnica / técnico de redes.",
+    "reviewedAt": "2026-08-12",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "IFC01S",
+    "occupationId": "occupation:cno11:3814",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/informatica-comunicaciones/admin-sist-informaticos-red.html",
+    "sourceQuote": "Técnica / técnico en entornos web.",
+    "reviewedAt": "2026-08-12",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "IFC01SD",
+    "occupationId": "occupation:cno11:2722",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.boe.es/eli/es/rd/2009/11/03/1629",
+    "sourceQuote": "Técnico en administración de sistemas.",
+    "reviewedAt": "2026-08-12",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "IFC01SD",
+    "occupationId": "occupation:cno11:2721",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.boe.es/eli/es/rd/2009/11/03/1629",
+    "sourceQuote": "Técnico en administración de base de datos.",
+    "reviewedAt": "2026-08-12",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "IFC01SD",
+    "occupationId": "occupation:cno11:3812",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.boe.es/eli/es/rd/2009/11/03/1629",
+    "sourceQuote": "Personal de apoyo y soporte técnico.",
+    "reviewedAt": "2026-08-12",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "IFC01SD",
+    "occupationId": "occupation:cno11:3813",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/informatica-comunicaciones/admin-sist-informaticos-red.html",
+    "sourceQuote": "Técnica / técnico de redes.",
+    "reviewedAt": "2026-08-12",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "IFC01SD",
+    "occupationId": "occupation:cno11:3814",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/informatica-comunicaciones/admin-sist-informaticos-red.html",
+    "sourceQuote": "Técnica / técnico en entornos web.",
+    "reviewedAt": "2026-08-12",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "ELE01M",
+    "occupationId": "occupation:cno11:7510",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.boe.es/eli/es/rd/2008/02/08/177",
+    "sourceQuote": "Electricista de construcción.",
+    "reviewedAt": "2026-08-12",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "ELE01M",
+    "occupationId": "occupation:cno11:7533",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.boe.es/eli/es/rd/2008/02/08/177",
+    "sourceQuote": "Instalador-mantenedor de antenas.",
+    "reviewedAt": "2026-08-12",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "ELE01M",
+    "occupationId": "occupation:cno11:7294",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.boe.es/eli/es/rd/2008/02/08/177",
+    "sourceQuote": "Montador de instalaciones de energía solar fotovoltaica.",
+    "reviewedAt": "2026-08-12",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "ELE01MD",
+    "occupationId": "occupation:cno11:7510",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.boe.es/eli/es/rd/2008/02/08/177",
+    "sourceQuote": "Electricista de construcción.",
+    "reviewedAt": "2026-08-12",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "ELE01MD",
+    "occupationId": "occupation:cno11:7533",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.boe.es/eli/es/rd/2008/02/08/177",
+    "sourceQuote": "Instalador-mantenedor de antenas.",
+    "reviewedAt": "2026-08-12",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "ELE01MD",
+    "occupationId": "occupation:cno11:7294",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.boe.es/eli/es/rd/2008/02/08/177",
+    "sourceQuote": "Montador de instalaciones de energía solar fotovoltaica.",
+    "reviewedAt": "2026-08-12",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "ADG01B",
+    "occupationId": "occupation:cno11:4210",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.boe.es/eli/es/rd/2014/02/28/127",
+    "sourceQuote": "Auxiliar de archivo.",
+    "reviewedAt": "2026-08-12",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "ADG01B",
+    "occupationId": "occupation:cno11:4221",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.boe.es/eli/es/rd/2014/02/28/127",
+    "sourceQuote": "Clasificador y/o repartidor de correspondencia.",
+    "reviewedAt": "2026-08-12",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "ADG01B",
+    "occupationId": "occupation:cno11:4301",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.boe.es/eli/es/rd/2014/02/28/127",
+    "sourceQuote": "Grabador-verificador de datos.",
+    "reviewedAt": "2026-08-12",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "ADG01B",
+    "occupationId": "occupation:cno11:4411",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.boe.es/eli/es/rd/2014/02/28/127",
+    "sourceQuote": "Auxiliar de información.",
+    "reviewedAt": "2026-08-12",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "ADG01B",
+    "occupationId": "occupation:cno11:4423",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.boe.es/eli/es/rd/2014/02/28/127",
+    "sourceQuote": "Telefonista en servicios centrales de información.",
+    "reviewedAt": "2026-08-12",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "ADG01B",
+    "occupationId": "occupation:cno11:5220",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.boe.es/eli/es/rd/2014/02/28/127",
+    "sourceQuote": "Auxiliar de venta.",
+    "reviewedAt": "2026-08-12",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "ADG01B",
+    "occupationId": "occupation:cno11:5500",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.boe.es/eli/es/rd/2014/02/28/127",
+    "sourceQuote": "Operador de cobro o Cajero.",
+    "reviewedAt": "2026-08-12",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "ADG01B",
+    "occupationId": "occupation:cno11:9431",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.boe.es/eli/es/rd/2014/02/28/127",
+    "sourceQuote": "Ordenanza.",
+    "reviewedAt": "2026-08-12",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "ELE01B",
+    "occupationId": "occupation:cno11:7510",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.boe.es/eli/es/rd/2014/02/28/127",
+    "sourceQuote": "Operario de instalaciones eléctricas de baja tensión.",
+    "reviewedAt": "2026-08-12",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "ELE01B",
+    "occupationId": "occupation:cno11:7533",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.boe.es/eli/es/rd/2014/02/28/127",
+    "sourceQuote": "Ayudante de montador de antenas receptoras / televisión satélite.",
+    "reviewedAt": "2026-08-12",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "ELE01B",
+    "occupationId": "occupation:cno11:8202",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.boe.es/eli/es/rd/2014/02/28/127",
+    "sourceQuote": "Operador de ensamblado de equipos eléctricos y electrónicos.",
+    "reviewedAt": "2026-08-12",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "IFC02S",
+    "occupationId": "occupation:cno11:3820",
+    "relationshipType": "reviewed_relationship",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.boe.es/eli/es/rd/2010/05/21/450",
+    "sourceQuote": "Desarrollar aplicaciones de propósito general.",
+    "reviewedAt": "2026-08-12",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "IFC02S",
+    "occupationId": "occupation:cno11:2713",
+    "relationshipType": "reviewed_relationship",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/informatica-comunicaciones/des-aplicaciones-multiplataforma.html",
+    "sourceQuote": "Desarrollando aplicaciones en el ámbito del entretenimiento y la informática móvil.",
+    "reviewedAt": "2026-08-12",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "IFC02SD",
+    "occupationId": "occupation:cno11:3820",
+    "relationshipType": "reviewed_relationship",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.boe.es/eli/es/rd/2010/05/21/450",
+    "sourceQuote": "Desarrollar aplicaciones de propósito general.",
+    "reviewedAt": "2026-08-12",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "IFC02SD",
+    "occupationId": "occupation:cno11:2713",
+    "relationshipType": "reviewed_relationship",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/informatica-comunicaciones/des-aplicaciones-multiplataforma.html",
+    "sourceQuote": "Desarrollando aplicaciones en el ámbito del entretenimiento y la informática móvil.",
+    "reviewedAt": "2026-08-12",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "TMV01B",
+    "occupationId": "occupation:cno11:7401",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.boe.es/eli/es/rd/2014/02/28/127",
+    "sourceQuote": "Operario de taller de mecánica rápida.",
+    "reviewedAt": "2026-08-12",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "TMV01B",
+    "occupationId": "occupation:cno11:7313",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.boe.es/eli/es/rd/2014/02/28/127",
+    "sourceQuote": "Ayudante en el área de carrocería.",
+    "reviewedAt": "2026-08-12",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "TMV01B",
+    "occupationId": "occupation:cno11:7293",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.boe.es/eli/es/rd/2014/02/28/127",
+    "sourceQuote": "Operario empresas de sustitución de lunas.",
+    "reviewedAt": "2026-08-12",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "HOT01B",
+    "occupationId": "occupation:cno11:9310",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.boe.es/eli/es/rd/2014/02/28/127",
+    "sourceQuote": "Ayudante o auxiliar de cocina.",
+    "reviewedAt": "2026-08-12",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "HOT01B",
+    "occupationId": "occupation:cno11:5120",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.boe.es/eli/es/rd/2014/02/28/127",
+    "sourceQuote": "Auxiliar o ayudante de camarero en sala.",
+    "reviewedAt": "2026-08-12",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "SSC03S",
+    "occupationId": "occupation:cno11:3713",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.boe.es/eli/es/rd/2023/04/18/289",
+    "sourceQuote": "Integrador/a social.",
+    "reviewedAt": "2026-08-12",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "SSC03S",
+    "occupationId": "occupation:cno11:2312",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.boe.es/eli/es/rd/2023/04/18/289",
+    "sourceQuote": "Técnico/a educador/a de educación especial.",
+    "reviewedAt": "2026-08-12",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "SSC03SD",
+    "occupationId": "occupation:cno11:3713",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.boe.es/eli/es/rd/2023/04/18/289",
+    "sourceQuote": "Integrador/a social.",
+    "reviewedAt": "2026-08-12",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "SSC03SD",
+    "occupationId": "occupation:cno11:2312",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.boe.es/eli/es/rd/2023/04/18/289",
+    "sourceQuote": "Técnico/a educador/a de educación especial.",
+    "reviewedAt": "2026-08-12",
+    "mappingVersion": "1.0.0"
   }
 ]

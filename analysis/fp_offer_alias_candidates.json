@@ -1,19 +1,53 @@
 {
   "schemaVersion": "1.0.0",
-  "snapshotId": "20260812151418614-7a7a10e4ad15",
+  "snapshotId": "20260812160320251-68effb257b28",
   "totalOffers": 1054,
-  "approvedLinkCount": 60,
-  "zeroMatchRelations": 48,
-  "zeroMatchPrograms": 19,
-  "totalCandidates": 27,
+  "approvedLinkCount": 100,
+  "zeroMatchRelations": 88,
+  "zeroMatchPrograms": 31,
+  "totalCandidates": 55,
   "candidatesByConfidence": {
-    "review_only": 27,
-    "exact_contiguous_phrase": 0,
+    "review_only": 53,
+    "exact_contiguous_phrase": 2,
     "exact_alias_match": 0,
     "phrase_match": 0,
     "token_overlap": 0
   },
   "candidates": [
+    {
+      "aliasCandidate": "Integrador/a social.",
+      "aliasCandidateNormalized": "integrador a social",
+      "programKey": "SSC03S",
+      "programTitle": "Integración Social",
+      "occupationId": "occupation:cno11:3713",
+      "occupationLabel": "Profesionales de apoyo al trabajo y a la educación social",
+      "confidence": "exact_contiguous_phrase",
+      "sourceUrl": "https://www.boe.es/eli/es/rd/2023/04/18/289",
+      "sourceQuote": "Integrador/a social.",
+      "matchFields": ["title"],
+      "matchedOfferIds": ["1285667274442"],
+      "matchedOfferTitles": ["Integrador/a social para León"],
+      "occurrenceCount": 1,
+      "normalizedCollisionOccupations": [],
+      "reasonCode": "single_offer_match;exact_source_phrase"
+    },
+    {
+      "aliasCandidate": "Integrador/a social.",
+      "aliasCandidateNormalized": "integrador a social",
+      "programKey": "SSC03SD",
+      "programTitle": "Integración Social (distancia)",
+      "occupationId": "occupation:cno11:3713",
+      "occupationLabel": "Profesionales de apoyo al trabajo y a la educación social",
+      "confidence": "exact_contiguous_phrase",
+      "sourceUrl": "https://www.boe.es/eli/es/rd/2023/04/18/289",
+      "sourceQuote": "Integrador/a social.",
+      "matchFields": ["title"],
+      "matchedOfferIds": ["1285667274442"],
+      "matchedOfferTitles": ["Integrador/a social para León"],
+      "occurrenceCount": 1,
+      "normalizedCollisionOccupations": [],
+      "reasonCode": "single_offer_match;exact_source_phrase"
+    },
     {
       "aliasCandidate": "SOLDADORES DE ESTRUCTURAS METÁLICAS PESADAS",
       "aliasCandidateNormalized": "soldadores de estructuras metalicas pesadas",
@@ -87,6 +121,25 @@
       "reasonCode": "token_overlap_hypothesis;share_stems=2;overlap=1.00"
     },
     {
+      "aliasCandidate": "EURES: Información, Servicios y Ayudas económicas a la movilidad",
+      "aliasCandidateNormalized": "eures informacion servicios y ayudas economicas a la movilidad",
+      "programKey": "ADG01B",
+      "programTitle": "Servicios Administrativos",
+      "occupationId": "occupation:cno11:4423",
+      "occupationLabel": "Telefonistas",
+      "confidence": "review_only",
+      "sourceUrl": "https://www.boe.es/eli/es/rd/2014/02/28/127",
+      "sourceQuote": "Telefonista en servicios centrales de información.",
+      "matchFields": ["title"],
+      "matchedOfferIds": ["1285641047111", "1285647782006"],
+      "matchedOfferTitles": [
+        "EURES: Información, Servicios y Ayudas económicas a la movilidad"
+      ],
+      "occurrenceCount": 2,
+      "normalizedCollisionOccupations": [],
+      "reasonCode": "token_overlap_hypothesis;share_stems=2;overlap=0.50"
+    },
+    {
       "aliasCandidate": "MONTADORES DE GRANDES ESTRUCTURAS METÁLICAS, EN GENERAL",
       "aliasCandidateNormalized": "montadores de grandes estructuras metalicas en general",
       "programKey": "FME02M",
@@ -120,6 +173,72 @@
       "matchedOfferTitles": ["SOLDADORES DE ESTRUCTURAS METÁLICAS LIGERAS"],
       "occurrenceCount": 2,
       "normalizedCollisionOccupations": [],
+      "reasonCode": "token_overlap_hypothesis;share_stems=2;overlap=0.67"
+    },
+    {
+      "aliasCandidate": "8 Cuerpo Ayudante Facultativo (Ayudante Técnico/a de Laboratorio)",
+      "aliasCandidateNormalized": "8 cuerpo ayudante facultativo ayudante tecnico a de laboratorio",
+      "programKey": "HOT01B",
+      "programTitle": "Cocina y Restauración",
+      "occupationId": "occupation:cno11:5120",
+      "occupationLabel": "Camareros asalariados",
+      "confidence": "review_only",
+      "sourceUrl": "https://www.boe.es/eli/es/rd/2014/02/28/127",
+      "sourceQuote": "Auxiliar o ayudante de camarero en sala.",
+      "matchFields": ["title"],
+      "matchedOfferIds": ["1285666492933"],
+      "matchedOfferTitles": [
+        "8 Cuerpo Ayudante Facultativo (Ayudante Técnico/a de Laboratorio)"
+      ],
+      "occurrenceCount": 1,
+      "normalizedCollisionOccupations": [
+        "occupation:cno11:7313",
+        "occupation:cno11:9310"
+      ],
+      "reasonCode": "token_overlap_hypothesis;share_stems=2;overlap=0.50"
+    },
+    {
+      "aliasCandidate": "8 Cuerpo Ayudante Facultativo (Ayudante Técnico/a de Laboratorio)",
+      "aliasCandidateNormalized": "8 cuerpo ayudante facultativo ayudante tecnico a de laboratorio",
+      "programKey": "HOT01B",
+      "programTitle": "Cocina y Restauración",
+      "occupationId": "occupation:cno11:9310",
+      "occupationLabel": "Ayudantes de cocina",
+      "confidence": "review_only",
+      "sourceUrl": "https://www.boe.es/eli/es/rd/2014/02/28/127",
+      "sourceQuote": "Ayudante o auxiliar de cocina.",
+      "matchFields": ["title"],
+      "matchedOfferIds": ["1285666492933"],
+      "matchedOfferTitles": [
+        "8 Cuerpo Ayudante Facultativo (Ayudante Técnico/a de Laboratorio)"
+      ],
+      "occurrenceCount": 1,
+      "normalizedCollisionOccupations": [
+        "occupation:cno11:5120",
+        "occupation:cno11:7313"
+      ],
+      "reasonCode": "token_overlap_hypothesis;share_stems=2;overlap=0.67"
+    },
+    {
+      "aliasCandidate": "8 Cuerpo Ayudante Facultativo (Ayudante Técnico/a de Laboratorio)",
+      "aliasCandidateNormalized": "8 cuerpo ayudante facultativo ayudante tecnico a de laboratorio",
+      "programKey": "TMV01B",
+      "programTitle": "Mantenimiento de Vehículos",
+      "occupationId": "occupation:cno11:7313",
+      "occupationLabel": "Chapistas y caldereros",
+      "confidence": "review_only",
+      "sourceUrl": "https://www.boe.es/eli/es/rd/2014/02/28/127",
+      "sourceQuote": "Ayudante en el área de carrocería.",
+      "matchFields": ["title"],
+      "matchedOfferIds": ["1285666492933"],
+      "matchedOfferTitles": [
+        "8 Cuerpo Ayudante Facultativo (Ayudante Técnico/a de Laboratorio)"
+      ],
+      "occurrenceCount": 1,
+      "normalizedCollisionOccupations": [
+        "occupation:cno11:5120",
+        "occupation:cno11:9310"
+      ],
       "reasonCode": "token_overlap_hypothesis;share_stems=2;overlap=0.67"
     },
     {
@@ -170,7 +289,13 @@
       "matchedOfferIds": ["1285670028800"],
       "matchedOfferTitles": ["Arquitecto técnico/ingeniero técnico"],
       "occurrenceCount": 1,
-      "normalizedCollisionOccupations": ["occupation:cno11:3813"],
+      "normalizedCollisionOccupations": [
+        "occupation:cno11:2312",
+        "occupation:cno11:2721",
+        "occupation:cno11:2722",
+        "occupation:cno11:3813",
+        "occupation:cno11:3814"
+      ],
       "reasonCode": "token_overlap_hypothesis;share_stems=2;overlap=0.50"
     },
     {
@@ -187,7 +312,13 @@
       "matchedOfferIds": ["1285670028800"],
       "matchedOfferTitles": ["Arquitecto técnico/ingeniero técnico"],
       "occurrenceCount": 1,
-      "normalizedCollisionOccupations": ["occupation:cno11:3812"],
+      "normalizedCollisionOccupations": [
+        "occupation:cno11:2312",
+        "occupation:cno11:2721",
+        "occupation:cno11:2722",
+        "occupation:cno11:3812",
+        "occupation:cno11:3814"
+      ],
       "reasonCode": "token_overlap_hypothesis;share_stems=2;overlap=0.50"
     },
     {
@@ -204,7 +335,13 @@
       "matchedOfferIds": ["1285670028800"],
       "matchedOfferTitles": ["Arquitecto técnico/ingeniero técnico"],
       "occurrenceCount": 1,
-      "normalizedCollisionOccupations": ["occupation:cno11:3813"],
+      "normalizedCollisionOccupations": [
+        "occupation:cno11:2312",
+        "occupation:cno11:2721",
+        "occupation:cno11:2722",
+        "occupation:cno11:3813",
+        "occupation:cno11:3814"
+      ],
       "reasonCode": "token_overlap_hypothesis;share_stems=2;overlap=0.50"
     },
     {
@@ -221,7 +358,289 @@
       "matchedOfferIds": ["1285670028800"],
       "matchedOfferTitles": ["Arquitecto técnico/ingeniero técnico"],
       "occurrenceCount": 1,
-      "normalizedCollisionOccupations": ["occupation:cno11:3812"],
+      "normalizedCollisionOccupations": [
+        "occupation:cno11:2312",
+        "occupation:cno11:2721",
+        "occupation:cno11:2722",
+        "occupation:cno11:3812",
+        "occupation:cno11:3814"
+      ],
+      "reasonCode": "token_overlap_hypothesis;share_stems=2;overlap=0.50"
+    },
+    {
+      "aliasCandidate": "Arquitecto técnico/ingeniero técnico",
+      "aliasCandidateNormalized": "arquitecto tecnico ingeniero tecnico",
+      "programKey": "IFC01S",
+      "programTitle": "Administración de Sistemas Informáticos en Red",
+      "occupationId": "occupation:cno11:2721",
+      "occupationLabel": "Diseñadores y administradores de bases de datos",
+      "confidence": "review_only",
+      "sourceUrl": "https://www.boe.es/eli/es/rd/2009/11/03/1629",
+      "sourceQuote": "Técnico en administración de base de datos.",
+      "matchFields": ["title"],
+      "matchedOfferIds": ["1285670028800"],
+      "matchedOfferTitles": ["Arquitecto técnico/ingeniero técnico"],
+      "occurrenceCount": 1,
+      "normalizedCollisionOccupations": [
+        "occupation:cno11:2312",
+        "occupation:cno11:2722",
+        "occupation:cno11:3812",
+        "occupation:cno11:3813",
+        "occupation:cno11:3814"
+      ],
+      "reasonCode": "token_overlap_hypothesis;share_stems=2;overlap=0.50"
+    },
+    {
+      "aliasCandidate": "Arquitecto técnico/ingeniero técnico",
+      "aliasCandidateNormalized": "arquitecto tecnico ingeniero tecnico",
+      "programKey": "IFC01S",
+      "programTitle": "Administración de Sistemas Informáticos en Red",
+      "occupationId": "occupation:cno11:2722",
+      "occupationLabel": "Administradores de sistemas y redes",
+      "confidence": "review_only",
+      "sourceUrl": "https://www.boe.es/eli/es/rd/2009/11/03/1629",
+      "sourceQuote": "Técnico en administración de sistemas.",
+      "matchFields": ["title"],
+      "matchedOfferIds": ["1285670028800"],
+      "matchedOfferTitles": ["Arquitecto técnico/ingeniero técnico"],
+      "occurrenceCount": 1,
+      "normalizedCollisionOccupations": [
+        "occupation:cno11:2312",
+        "occupation:cno11:2721",
+        "occupation:cno11:3812",
+        "occupation:cno11:3813",
+        "occupation:cno11:3814"
+      ],
+      "reasonCode": "token_overlap_hypothesis;share_stems=2;overlap=0.67"
+    },
+    {
+      "aliasCandidate": "Arquitecto técnico/ingeniero técnico",
+      "aliasCandidateNormalized": "arquitecto tecnico ingeniero tecnico",
+      "programKey": "IFC01S",
+      "programTitle": "Administración de Sistemas Informáticos en Red",
+      "occupationId": "occupation:cno11:3812",
+      "occupationLabel": "Técnicos en asistencia al usuario de tecnologías de la información",
+      "confidence": "review_only",
+      "sourceUrl": "https://www.boe.es/eli/es/rd/2009/11/03/1629",
+      "sourceQuote": "Personal de apoyo y soporte técnico.",
+      "matchFields": ["title"],
+      "matchedOfferIds": ["1285670028800"],
+      "matchedOfferTitles": ["Arquitecto técnico/ingeniero técnico"],
+      "occurrenceCount": 1,
+      "normalizedCollisionOccupations": [
+        "occupation:cno11:2312",
+        "occupation:cno11:2721",
+        "occupation:cno11:2722",
+        "occupation:cno11:3813",
+        "occupation:cno11:3814"
+      ],
+      "reasonCode": "token_overlap_hypothesis;share_stems=2;overlap=0.50"
+    },
+    {
+      "aliasCandidate": "Arquitecto técnico/ingeniero técnico",
+      "aliasCandidateNormalized": "arquitecto tecnico ingeniero tecnico",
+      "programKey": "IFC01S",
+      "programTitle": "Administración de Sistemas Informáticos en Red",
+      "occupationId": "occupation:cno11:3813",
+      "occupationLabel": "Técnicos en redes",
+      "confidence": "review_only",
+      "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/informatica-comunicaciones/admin-sist-informaticos-red.html",
+      "sourceQuote": "Técnica / técnico de redes.",
+      "matchFields": ["title"],
+      "matchedOfferIds": ["1285670028800"],
+      "matchedOfferTitles": ["Arquitecto técnico/ingeniero técnico"],
+      "occurrenceCount": 1,
+      "normalizedCollisionOccupations": [
+        "occupation:cno11:2312",
+        "occupation:cno11:2721",
+        "occupation:cno11:2722",
+        "occupation:cno11:3812",
+        "occupation:cno11:3814"
+      ],
+      "reasonCode": "token_overlap_hypothesis;share_stems=2;overlap=0.67"
+    },
+    {
+      "aliasCandidate": "Arquitecto técnico/ingeniero técnico",
+      "aliasCandidateNormalized": "arquitecto tecnico ingeniero tecnico",
+      "programKey": "IFC01S",
+      "programTitle": "Administración de Sistemas Informáticos en Red",
+      "occupationId": "occupation:cno11:3814",
+      "occupationLabel": "Técnicos de la Web",
+      "confidence": "review_only",
+      "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/informatica-comunicaciones/admin-sist-informaticos-red.html",
+      "sourceQuote": "Técnica / técnico en entornos web.",
+      "matchFields": ["title"],
+      "matchedOfferIds": ["1285670028800"],
+      "matchedOfferTitles": ["Arquitecto técnico/ingeniero técnico"],
+      "occurrenceCount": 1,
+      "normalizedCollisionOccupations": [
+        "occupation:cno11:2312",
+        "occupation:cno11:2721",
+        "occupation:cno11:2722",
+        "occupation:cno11:3812",
+        "occupation:cno11:3813"
+      ],
+      "reasonCode": "token_overlap_hypothesis;share_stems=2;overlap=0.50"
+    },
+    {
+      "aliasCandidate": "Arquitecto técnico/ingeniero técnico",
+      "aliasCandidateNormalized": "arquitecto tecnico ingeniero tecnico",
+      "programKey": "IFC01SD",
+      "programTitle": "Administración de Sistemas Informáticos en Red (distancia)",
+      "occupationId": "occupation:cno11:2721",
+      "occupationLabel": "Diseñadores y administradores de bases de datos",
+      "confidence": "review_only",
+      "sourceUrl": "https://www.boe.es/eli/es/rd/2009/11/03/1629",
+      "sourceQuote": "Técnico en administración de base de datos.",
+      "matchFields": ["title"],
+      "matchedOfferIds": ["1285670028800"],
+      "matchedOfferTitles": ["Arquitecto técnico/ingeniero técnico"],
+      "occurrenceCount": 1,
+      "normalizedCollisionOccupations": [
+        "occupation:cno11:2312",
+        "occupation:cno11:2722",
+        "occupation:cno11:3812",
+        "occupation:cno11:3813",
+        "occupation:cno11:3814"
+      ],
+      "reasonCode": "token_overlap_hypothesis;share_stems=2;overlap=0.50"
+    },
+    {
+      "aliasCandidate": "Arquitecto técnico/ingeniero técnico",
+      "aliasCandidateNormalized": "arquitecto tecnico ingeniero tecnico",
+      "programKey": "IFC01SD",
+      "programTitle": "Administración de Sistemas Informáticos en Red (distancia)",
+      "occupationId": "occupation:cno11:2722",
+      "occupationLabel": "Administradores de sistemas y redes",
+      "confidence": "review_only",
+      "sourceUrl": "https://www.boe.es/eli/es/rd/2009/11/03/1629",
+      "sourceQuote": "Técnico en administración de sistemas.",
+      "matchFields": ["title"],
+      "matchedOfferIds": ["1285670028800"],
+      "matchedOfferTitles": ["Arquitecto técnico/ingeniero técnico"],
+      "occurrenceCount": 1,
+      "normalizedCollisionOccupations": [
+        "occupation:cno11:2312",
+        "occupation:cno11:2721",
+        "occupation:cno11:3812",
+        "occupation:cno11:3813",
+        "occupation:cno11:3814"
+      ],
+      "reasonCode": "token_overlap_hypothesis;share_stems=2;overlap=0.67"
+    },
+    {
+      "aliasCandidate": "Arquitecto técnico/ingeniero técnico",
+      "aliasCandidateNormalized": "arquitecto tecnico ingeniero tecnico",
+      "programKey": "IFC01SD",
+      "programTitle": "Administración de Sistemas Informáticos en Red (distancia)",
+      "occupationId": "occupation:cno11:3812",
+      "occupationLabel": "Técnicos en asistencia al usuario de tecnologías de la información",
+      "confidence": "review_only",
+      "sourceUrl": "https://www.boe.es/eli/es/rd/2009/11/03/1629",
+      "sourceQuote": "Personal de apoyo y soporte técnico.",
+      "matchFields": ["title"],
+      "matchedOfferIds": ["1285670028800"],
+      "matchedOfferTitles": ["Arquitecto técnico/ingeniero técnico"],
+      "occurrenceCount": 1,
+      "normalizedCollisionOccupations": [
+        "occupation:cno11:2312",
+        "occupation:cno11:2721",
+        "occupation:cno11:2722",
+        "occupation:cno11:3813",
+        "occupation:cno11:3814"
+      ],
+      "reasonCode": "token_overlap_hypothesis;share_stems=2;overlap=0.50"
+    },
+    {
+      "aliasCandidate": "Arquitecto técnico/ingeniero técnico",
+      "aliasCandidateNormalized": "arquitecto tecnico ingeniero tecnico",
+      "programKey": "IFC01SD",
+      "programTitle": "Administración de Sistemas Informáticos en Red (distancia)",
+      "occupationId": "occupation:cno11:3813",
+      "occupationLabel": "Técnicos en redes",
+      "confidence": "review_only",
+      "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/informatica-comunicaciones/admin-sist-informaticos-red.html",
+      "sourceQuote": "Técnica / técnico de redes.",
+      "matchFields": ["title"],
+      "matchedOfferIds": ["1285670028800"],
+      "matchedOfferTitles": ["Arquitecto técnico/ingeniero técnico"],
+      "occurrenceCount": 1,
+      "normalizedCollisionOccupations": [
+        "occupation:cno11:2312",
+        "occupation:cno11:2721",
+        "occupation:cno11:2722",
+        "occupation:cno11:3812",
+        "occupation:cno11:3814"
+      ],
+      "reasonCode": "token_overlap_hypothesis;share_stems=2;overlap=0.67"
+    },
+    {
+      "aliasCandidate": "Arquitecto técnico/ingeniero técnico",
+      "aliasCandidateNormalized": "arquitecto tecnico ingeniero tecnico",
+      "programKey": "IFC01SD",
+      "programTitle": "Administración de Sistemas Informáticos en Red (distancia)",
+      "occupationId": "occupation:cno11:3814",
+      "occupationLabel": "Técnicos de la Web",
+      "confidence": "review_only",
+      "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/informatica-comunicaciones/admin-sist-informaticos-red.html",
+      "sourceQuote": "Técnica / técnico en entornos web.",
+      "matchFields": ["title"],
+      "matchedOfferIds": ["1285670028800"],
+      "matchedOfferTitles": ["Arquitecto técnico/ingeniero técnico"],
+      "occurrenceCount": 1,
+      "normalizedCollisionOccupations": [
+        "occupation:cno11:2312",
+        "occupation:cno11:2721",
+        "occupation:cno11:2722",
+        "occupation:cno11:3812",
+        "occupation:cno11:3813"
+      ],
+      "reasonCode": "token_overlap_hypothesis;share_stems=2;overlap=0.50"
+    },
+    {
+      "aliasCandidate": "Arquitecto técnico/ingeniero técnico",
+      "aliasCandidateNormalized": "arquitecto tecnico ingeniero tecnico",
+      "programKey": "SSC03S",
+      "programTitle": "Integración Social",
+      "occupationId": "occupation:cno11:2312",
+      "occupationLabel": "Técnicos educadores de educación especial",
+      "confidence": "review_only",
+      "sourceUrl": "https://www.boe.es/eli/es/rd/2023/04/18/289",
+      "sourceQuote": "Técnico/a educador/a de educación especial.",
+      "matchFields": ["title"],
+      "matchedOfferIds": ["1285670028800"],
+      "matchedOfferTitles": ["Arquitecto técnico/ingeniero técnico"],
+      "occurrenceCount": 1,
+      "normalizedCollisionOccupations": [
+        "occupation:cno11:2721",
+        "occupation:cno11:2722",
+        "occupation:cno11:3812",
+        "occupation:cno11:3813",
+        "occupation:cno11:3814"
+      ],
+      "reasonCode": "token_overlap_hypothesis;share_stems=2;overlap=0.50"
+    },
+    {
+      "aliasCandidate": "Arquitecto técnico/ingeniero técnico",
+      "aliasCandidateNormalized": "arquitecto tecnico ingeniero tecnico",
+      "programKey": "SSC03SD",
+      "programTitle": "Integración Social (distancia)",
+      "occupationId": "occupation:cno11:2312",
+      "occupationLabel": "Técnicos educadores de educación especial",
+      "confidence": "review_only",
+      "sourceUrl": "https://www.boe.es/eli/es/rd/2023/04/18/289",
+      "sourceQuote": "Técnico/a educador/a de educación especial.",
+      "matchFields": ["title"],
+      "matchedOfferIds": ["1285670028800"],
+      "matchedOfferTitles": ["Arquitecto técnico/ingeniero técnico"],
+      "occurrenceCount": 1,
+      "normalizedCollisionOccupations": [
+        "occupation:cno11:2721",
+        "occupation:cno11:2722",
+        "occupation:cno11:3812",
+        "occupation:cno11:3813",
+        "occupation:cno11:3814"
+      ],
       "reasonCode": "token_overlap_hypothesis;share_stems=2;overlap=0.50"
     },
     {
@@ -261,6 +680,40 @@
       "occurrenceCount": 1,
       "normalizedCollisionOccupations": [],
       "reasonCode": "token_overlap_hypothesis;share_stems=2;overlap=0.50"
+    },
+    {
+      "aliasCandidate": "Integrador/a social para León",
+      "aliasCandidateNormalized": "integrador a social para leon",
+      "programKey": "SSC03S",
+      "programTitle": "Integración Social",
+      "occupationId": "occupation:cno11:3713",
+      "occupationLabel": "Profesionales de apoyo al trabajo y a la educación social",
+      "confidence": "review_only",
+      "sourceUrl": "https://www.boe.es/eli/es/rd/2023/04/18/289",
+      "sourceQuote": "Integrador/a social.",
+      "matchFields": ["title"],
+      "matchedOfferIds": ["1285667274442"],
+      "matchedOfferTitles": ["Integrador/a social para León"],
+      "occurrenceCount": 1,
+      "normalizedCollisionOccupations": [],
+      "reasonCode": "token_overlap_hypothesis;share_stems=2;overlap=1.00"
+    },
+    {
+      "aliasCandidate": "Integrador/a social para León",
+      "aliasCandidateNormalized": "integrador a social para leon",
+      "programKey": "SSC03SD",
+      "programTitle": "Integración Social (distancia)",
+      "occupationId": "occupation:cno11:3713",
+      "occupationLabel": "Profesionales de apoyo al trabajo y a la educación social",
+      "confidence": "review_only",
+      "sourceUrl": "https://www.boe.es/eli/es/rd/2023/04/18/289",
+      "sourceQuote": "Integrador/a social.",
+      "matchFields": ["title"],
+      "matchedOfferIds": ["1285667274442"],
+      "matchedOfferTitles": ["Integrador/a social para León"],
+      "occurrenceCount": 1,
+      "normalizedCollisionOccupations": [],
+      "reasonCode": "token_overlap_hypothesis;share_stems=2;overlap=1.00"
     },
     {
       "aliasCandidate": "MECÁNICOS REPARADORES DE CALEFACCIONES",
@@ -352,6 +805,78 @@
         "MECÁNICOS-AJUSTADORES DE MAQUINARIA AGRÍCOLA, EN GENERAL"
       ],
       "occurrenceCount": 1,
+      "normalizedCollisionOccupations": ["occupation:cno11:7401"],
+      "reasonCode": "token_overlap_hypothesis;share_stems=2;overlap=0.50"
+    },
+    {
+      "aliasCandidate": "MECÁNICOS-AJUSTADORES DE MAQUINARIA AGRÍCOLA, EN GENERAL",
+      "aliasCandidateNormalized": "mecanicos ajustadores de maquinaria agricola en general",
+      "programKey": "TMV01B",
+      "programTitle": "Mantenimiento de Vehículos",
+      "occupationId": "occupation:cno11:7401",
+      "occupationLabel": "Mecánicos y ajustadores de vehículos de motor",
+      "confidence": "review_only",
+      "sourceUrl": "https://www.boe.es/eli/es/rd/2014/02/28/127",
+      "sourceQuote": "Operario de taller de mecánica rápida.",
+      "matchFields": ["title"],
+      "matchedOfferIds": ["1285640949323"],
+      "matchedOfferTitles": [
+        "MECÁNICOS-AJUSTADORES DE MAQUINARIA AGRÍCOLA, EN GENERAL"
+      ],
+      "occurrenceCount": 1,
+      "normalizedCollisionOccupations": ["occupation:cno11:8321"],
+      "reasonCode": "token_overlap_hypothesis;share_stems=2;overlap=0.50"
+    },
+    {
+      "aliasCandidate": "MONTADORES DE PLACAS DE ENERGÍA SOLAR",
+      "aliasCandidateNormalized": "montadores de placas de energia solar",
+      "programKey": "ELE01M",
+      "programTitle": "Instalaciones Eléctricas y Automáticas",
+      "occupationId": "occupation:cno11:7294",
+      "occupationLabel": "Montadores-instaladores de placas de energía solar",
+      "confidence": "review_only",
+      "sourceUrl": "https://www.boe.es/eli/es/rd/2008/02/08/177",
+      "sourceQuote": "Montador de instalaciones de energía solar fotovoltaica.",
+      "matchFields": ["title"],
+      "matchedOfferIds": ["1285662950099"],
+      "matchedOfferTitles": ["MONTADORES DE PLACAS DE ENERGÍA SOLAR"],
+      "occurrenceCount": 1,
+      "normalizedCollisionOccupations": [],
+      "reasonCode": "token_overlap_hypothesis;share_stems=4;overlap=0.80"
+    },
+    {
+      "aliasCandidate": "MONTADORES DE PLACAS DE ENERGÍA SOLAR",
+      "aliasCandidateNormalized": "montadores de placas de energia solar",
+      "programKey": "ELE01MD",
+      "programTitle": "Instalaciones Eléctricas y Automáticas (distancia)",
+      "occupationId": "occupation:cno11:7294",
+      "occupationLabel": "Montadores-instaladores de placas de energía solar",
+      "confidence": "review_only",
+      "sourceUrl": "https://www.boe.es/eli/es/rd/2008/02/08/177",
+      "sourceQuote": "Montador de instalaciones de energía solar fotovoltaica.",
+      "matchFields": ["title"],
+      "matchedOfferIds": ["1285662950099"],
+      "matchedOfferTitles": ["MONTADORES DE PLACAS DE ENERGÍA SOLAR"],
+      "occurrenceCount": 1,
+      "normalizedCollisionOccupations": [],
+      "reasonCode": "token_overlap_hypothesis;share_stems=4;overlap=0.80"
+    },
+    {
+      "aliasCandidate": "Oficial/a de servicios e información para Universidad de Valladolid",
+      "aliasCandidateNormalized": "oficial a de servicios e informacion para universidad de valladolid",
+      "programKey": "ADG01B",
+      "programTitle": "Servicios Administrativos",
+      "occupationId": "occupation:cno11:4423",
+      "occupationLabel": "Telefonistas",
+      "confidence": "review_only",
+      "sourceUrl": "https://www.boe.es/eli/es/rd/2014/02/28/127",
+      "sourceQuote": "Telefonista en servicios centrales de información.",
+      "matchFields": ["title"],
+      "matchedOfferIds": ["1285667500185"],
+      "matchedOfferTitles": [
+        "Oficial/a de servicios e información para Universidad de Valladolid"
+      ],
+      "occurrenceCount": 1,
       "normalizedCollisionOccupations": [],
       "reasonCode": "token_overlap_hypothesis;share_stems=2;overlap=0.50"
     },
@@ -432,6 +957,63 @@
       "reasonCode": "token_overlap_hypothesis;share_stems=2;overlap=0.50"
     },
     {
+      "aliasCandidate": "Técnico/a de soporte n2 de automatización y robotización de farmacias para Miranda de Ebro (Burgos)",
+      "aliasCandidateNormalized": "tecnico a de soporte n2 de automatizacion y robotizacion de farmacias para miranda de ebro burgos",
+      "programKey": "IFC01S",
+      "programTitle": "Administración de Sistemas Informáticos en Red",
+      "occupationId": "occupation:cno11:3812",
+      "occupationLabel": "Técnicos en asistencia al usuario de tecnologías de la información",
+      "confidence": "review_only",
+      "sourceUrl": "https://www.boe.es/eli/es/rd/2009/11/03/1629",
+      "sourceQuote": "Personal de apoyo y soporte técnico.",
+      "matchFields": ["title"],
+      "matchedOfferIds": ["1285669061701"],
+      "matchedOfferTitles": [
+        "Técnico/a de soporte n2 de automatización y robotización de farmacias para Miranda de Ebro (Burgos)"
+      ],
+      "occurrenceCount": 1,
+      "normalizedCollisionOccupations": [],
+      "reasonCode": "token_overlap_hypothesis;share_stems=2;overlap=0.50"
+    },
+    {
+      "aliasCandidate": "Técnico/a de soporte n2 de automatización y robotización de farmacias para Miranda de Ebro (Burgos)",
+      "aliasCandidateNormalized": "tecnico a de soporte n2 de automatizacion y robotizacion de farmacias para miranda de ebro burgos",
+      "programKey": "IFC01SD",
+      "programTitle": "Administración de Sistemas Informáticos en Red (distancia)",
+      "occupationId": "occupation:cno11:3812",
+      "occupationLabel": "Técnicos en asistencia al usuario de tecnologías de la información",
+      "confidence": "review_only",
+      "sourceUrl": "https://www.boe.es/eli/es/rd/2009/11/03/1629",
+      "sourceQuote": "Personal de apoyo y soporte técnico.",
+      "matchFields": ["title"],
+      "matchedOfferIds": ["1285669061701"],
+      "matchedOfferTitles": [
+        "Técnico/a de soporte n2 de automatización y robotización de farmacias para Miranda de Ebro (Burgos)"
+      ],
+      "occurrenceCount": 1,
+      "normalizedCollisionOccupations": [],
+      "reasonCode": "token_overlap_hypothesis;share_stems=2;overlap=0.50"
+    },
+    {
+      "aliasCandidate": "Técnico/a Especialista, Área de Bibliotecas y Archivos para Universidad de León",
+      "aliasCandidateNormalized": "tecnico a especialista area de bibliotecas y archivos para universidad de leon",
+      "programKey": "ADG01B",
+      "programTitle": "Servicios Administrativos",
+      "occupationId": "occupation:cno11:4210",
+      "occupationLabel": "Empleados de bibliotecas y archivos",
+      "confidence": "review_only",
+      "sourceUrl": "https://www.boe.es/eli/es/rd/2014/02/28/127",
+      "sourceQuote": "Auxiliar de archivo.",
+      "matchFields": ["title"],
+      "matchedOfferIds": ["1285668830587"],
+      "matchedOfferTitles": [
+        "Técnico/a Especialista, Área de Bibliotecas y Archivos para Universidad de León"
+      ],
+      "occurrenceCount": 1,
+      "normalizedCollisionOccupations": [],
+      "reasonCode": "token_overlap_hypothesis;share_stems=2;overlap=0.67"
+    },
+    {
       "aliasCandidate": "Técnico/a informático/a para Ayto Villaquilambre (León)",
       "aliasCandidateNormalized": "tecnico a informatico a para ayto villaquilambre leon",
       "programKey": "IFC01M",
@@ -506,6 +1088,25 @@
       "occurrenceCount": 1,
       "normalizedCollisionOccupations": [],
       "reasonCode": "token_overlap_hypothesis;share_stems=2;overlap=0.50"
+    },
+    {
+      "aliasCandidate": "Titulado/a Superior de Archivos y Bibliotecas para Diputación de Palencia",
+      "aliasCandidateNormalized": "titulado a superior de archivos y bibliotecas para diputacion de palencia",
+      "programKey": "ADG01B",
+      "programTitle": "Servicios Administrativos",
+      "occupationId": "occupation:cno11:4210",
+      "occupationLabel": "Empleados de bibliotecas y archivos",
+      "confidence": "review_only",
+      "sourceUrl": "https://www.boe.es/eli/es/rd/2014/02/28/127",
+      "sourceQuote": "Auxiliar de archivo.",
+      "matchFields": ["title"],
+      "matchedOfferIds": ["1285668751255"],
+      "matchedOfferTitles": [
+        "Titulado/a Superior de Archivos y Bibliotecas para Diputación de Palencia"
+      ],
+      "occurrenceCount": 1,
+      "normalizedCollisionOccupations": [],
+      "reasonCode": "token_overlap_hypothesis;share_stems=2;overlap=0.67"
     }
   ],
   "limitations": [
