@@ -11,8 +11,8 @@
 ## Campos técnicos
 
 - URL raíz a presentar: [https://salida-cyl.157-90-22-40.sslip.io/](https://salida-cyl.157-90-22-40.sslip.io/)
-- Commit fuente del freeze: `bb43ff70b7a38d27b686c030258aa26a8d787c4c`.
-- Snapshot: `20260812011203149-415d767a53f9`.
+- Commit fuente del freeze: `c2e1ce978bbddb122b3e82dc62ef4885902a192d`.
+- Snapshot: `20260812105801084-cac7c1d65a73`.
 - Commit desplegado: `0914a8b926f97f79d4965879779692c8ee476b91`.
 - Run del workflow: `31549229861`.
 - Evidencia visual: las 9 capturas son **históricas** (`captureProductCommitSha f423a208a7f8c140a1dfa342e8689d3b6d967e94`; commit desplegado `0914a8b926f97f79d4965879779692c8ee476b91`). La recaptura del commit desplegado está pendiente.
@@ -22,7 +22,7 @@
 - [x] Ejecutar los gates de release y verificar la aplicación pública.
 - [x] Rellenar el commit desplegado y el run del workflow con datos observados.
 - [ ] Revisar las capturas en contexto anónimo, sin datos personales ni credenciales. (capturas históricas — recaptura pendiente)
-- [ ] Confirmar que las cifras visibles siguen coincidiendo con `20260812011203149-415d767a53f9`. (capturas históricas — recaptura pendiente)
+- [ ] Confirmar que las cifras visibles siguen coincidiendo con `20260812105801084-cac7c1d65a73`. (capturas históricas — recaptura pendiente)
 - [ ] Obtener aprobación humana explícita para la solicitud externa.
 
 **PENDIENTE DE APROBACIÓN HUMANA:** este repositorio no envía la solicitud al concurso ni decide los campos de identidad, contacto, declaraciones o consentimiento.
