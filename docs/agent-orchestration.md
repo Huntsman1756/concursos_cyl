@@ -42,6 +42,12 @@ Codex inicia la escritura de código.
 | **Orquestador**         | OpenAI / Codex Sol (esfuerzo medio)  | Analiza, diagnostica, diseña, descompone tareas, revisa diffs y valida.                      |
 | **Worker de código**    | `nan/qwen3.6` (agente `nan-code`)    | Aplica cambios mecánicos en rutas permitidas con 10 pasos máximos y presupuesto observable.  |
 | **Worker de boletines** | `nan/gemma4` (agente `nan-bulletin`) | Lee y extrae información de boletines convertidos a archivos locales legibles. Modo lectura. |
+| **Razonamiento acotado** | `nan/deepseek-v4-flash` | Perfil `reasoning` para contratos difíciles ya delimitados por Codex. |
+| **Contexto largo/multimodal** | `nan/mimo-v2.5` | Perfil `long-context` para fuentes extensas, imágenes o audio. |
+
+`nan/glm5.2` no está autorizado y el invocador lo rechaza también como fallback.
+El perfil se selecciona con `-ModelProfile mechanical`, `reasoning` o
+`long-context`; `auto` conserva Qwen para código y Gemma para extracción simple.
 
 Seguridad y decisiones de producto se reservan al orquestador (Codex).
 

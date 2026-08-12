@@ -231,6 +231,24 @@ try {
         $r = Invoke-WorkerDirect -WorkerParameters @{TaskType = 'bulletin'; Objective = 'bulletin-dryrun'; InputPath = @('AGENTS.md'); DryRun = $true}
         Assert-True ($r.ExitCode -eq 0) '2l: bulletin DryRun exit 0'
         Assert-Contains $r.Output 'gemma4' '2m: bulletin DryRun shows gemma4'
+
+        $reasoning = New-ValidCodeContract -Objective 'reasoning-route' -DryRun -TestMode
+        $reasoning.ModelProfile = 'reasoning'
+        $r = Invoke-WorkerDirect -WorkerParameters $reasoning
+        Assert-True ($r.ExitCode -eq 0) '2n: reasoning profile DryRun exits 0'
+        Assert-Contains $r.Output 'deepseek-v4-flash' '2o: reasoning profile selects DeepSeek'
+
+        $longContext = New-ValidCodeContract -Objective 'long-context-route' -DryRun -TestMode
+        $longContext.ModelProfile = 'long-context'
+        $r = Invoke-WorkerDirect -WorkerParameters $longContext
+        Assert-True ($r.ExitCode -eq 0) '2p: long-context profile DryRun exits 0'
+        Assert-Contains $r.Output 'mimo-v2.5' '2q: long-context profile selects Mimo'
+
+        $premium = New-ValidCodeContract -Objective 'premium-rejected' -DryRun -TestMode
+        $premium.FallbackModels = @('nan/glm5.2')
+        $r = Invoke-WorkerDirect -WorkerParameters $premium
+        Assert-True ($r.ExitCode -ne 0) '2r: GLM fallback fails closed'
+        Assert-Contains $r.Output 'premium NAN fallback' '2s: GLM rejection is explicit'
     }
 
     # 3. Primary succeeds after two failures (3 attempts)
