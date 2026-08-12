@@ -128,11 +128,15 @@ debe ser nuevo para impedir reutilizar decisiones de otra ejecución:
 ```
 
 Cada intento crea un worktree separado sobre el mismo SHA, llama al worker con
-`MaxRetries=1`, captura telemetría en una ruta elegida por el host y copia el
-parche fuera del worktree. Después elimina el worktree antes de pedir a Codex
-una decisión. `RETRY` añade hasta tres instrucciones acotadas y lanza una sesión
-NAN nueva; `ACCEPT` conserva el parche candidato y `ESCALATE` termina sin
-aplicarlo. El supervisor nunca hace commit, push, publicación ni despliegue.
+`MaxRetries=1`, captura telemetría en una ruta elegida por el host y copia fuera
+del worktree cualquier parche que respete las rutas del contrato. Si falla una
+validación, también conserva su código de salida y hasta 4.000 caracteres de la
+cola del diagnóstico por comando. Después elimina el worktree y pide a Codex una
+decisión con esa evidencia. `RETRY` añade hasta tres instrucciones acotadas y
+lanza una sesión NAN nueva desde el SHA original; solo un intento listo y con
+validaciones aprobadas admite `ACCEPT`. `ESCALATE` termina sin aplicar el parche.
+Los fallos fatales escriben un resultado `FAILED` sanitizado. El supervisor nunca
+hace commit, push, publicación ni despliegue.
 
 `Invoke-NanWorker.ps1` permanece como primitive de un solo intento para el
 supervisor y para diagnóstico. Invocarlo directamente no demuestra que haya

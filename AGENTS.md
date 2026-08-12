@@ -38,10 +38,12 @@ entre **planificar/diagnosticar/revisar** (Frontier) e **implementar** (worker).
 Antes de delegar código, Codex debe indicar objetivo, rutas permitidas,
 criterios de aceptación, plan Frontier y validaciones. La entrada autónoma por
 defecto es `Invoke-FrontierSupervisedNanWorker.ps1`: crea un worktree nuevo por
-intento, ejecuta NAN una sola vez, conserva parche y telemetría fuera del repo,
+intento, ejecuta NAN una sola vez, conserva parche, diagnósticos acotados y
+telemetría fuera del repo incluso si falla una validación determinista,
 elimina los bytes candidatos y solicita a Codex `ACCEPT`, `RETRY` o `ESCALATE`.
 Un `RETRY` relanza un worker con sesión nueva sobre el mismo SHA y con
 instrucciones reducidas; nunca permite que Codex implemente silenciosamente.
+Solo un intento listo y validado puede recibir `ACCEPT`.
 
 La ejecución real de código solo comienza en un worktree Git enlazado, limpio y
 creado por el orquestador. Declarar un modelo aquí no prueba que se haya lanzado:

@@ -108,12 +108,12 @@ function Get-AllowedActions {
 }
 
 function Invoke-CodexReview {
-    param([int]$Attempt, [bool]$CandidateReady, [string]$PatchPath, [object]$Evidence, [object]$Contract)
+    param([int]$Attempt, [bool]$CandidateReady, [bool]$PatchAvailable, [string]$PatchPath, [object]$Evidence, [object]$Contract)
     $capsule = Join-Path $StateDirectory "frontier-review-$Attempt"
     New-Item -ItemType Directory -Path $capsule | Out-Null
     Write-NewJson -Path (Join-Path $capsule 'contract.json') -Value $Contract
     Write-NewJson -Path (Join-Path $capsule 'evidence.json') -Value $Evidence
-    if ($CandidateReady) { [System.IO.File]::Copy($PatchPath, (Join-Path $capsule 'candidate.patch'), $false) }
+    if ($PatchAvailable) { [System.IO.File]::Copy($PatchPath, (Join-Path $capsule 'candidate.patch'), $false) }
     $allowed = @(Get-AllowedActions -CandidateReady $CandidateReady -BudgetRemaining ($Attempt -lt $MaxAttempts))
     $schema = [ordered]@{
         type='object';additionalProperties=$false;required=@('action','repairInstructions');properties=[ordered]@{
@@ -125,7 +125,7 @@ function Invoke-CodexReview {
     $outputPath = Join-Path $capsule 'decision.json'
     Write-NewJson -Path $schemaPath -Value $schema
     $terminal = if ($Attempt -ge $MaxAttempts) { 'The attempt budget is exhausted; RETRY is forbidden.' } else { '' }
-    $prompt = "Act as the independent frontier reviewer. Read contract.json, evidence.json and candidate.patch when present. ACCEPT only a valid candidate with passing deterministic checks. RETRY only with one to three short actionable repair instructions. Otherwise ESCALATE. $terminal Do not edit files or include reasoning."
+    $prompt = "Act as the independent frontier reviewer. Read contract.json, evidence.json and candidate.patch when present. A failed candidate patch may be present solely to inform repair. ACCEPT only when evidence.json says candidateReady=true and deterministic checks passed. RETRY only with one to three short actionable repair instructions grounded in the patch and bounded diagnostics. Otherwise ESCALATE. $terminal Do not edit files or include reasoning."
     $launch = Get-CodexLaunch
     $arguments = @($launch.prefix) + @(
         'exec','--ephemeral','--ignore-user-config','--ignore-rules','--sandbox','read-only',
@@ -176,7 +176,13 @@ function Assert-Decision {
     }
 }
 
+$failurePhase = 'initialization'
+$attempts = @()
+$decisions = @()
+$baseSha = $null
+$stateCreated = $false
 try {
+    $failurePhase = 'path-validation'
     $ContractPath = [System.IO.Path]::GetFullPath($ContractPath)
     $StateDirectory = [System.IO.Path]::GetFullPath($StateDirectory)
     $WorktreeParent = [System.IO.Path]::GetFullPath($WorktreeParent)
@@ -185,7 +191,9 @@ try {
     if (Test-Path -LiteralPath $StateDirectory) { throw 'StateDirectory must not already exist.' }
     if (-not (Test-Path -LiteralPath $WorktreeParent -PathType Container)) { throw 'WorktreeParent must already exist.' }
     New-Item -ItemType Directory -Path $StateDirectory | Out-Null
+    $stateCreated = $true
 
+    $failurePhase = 'contract-validation'
     $contract = Get-Content -LiteralPath $ContractPath -Raw | ConvertFrom-Json
     foreach ($field in @('objective','allowedPaths','validationCommands','frontierPlan','acceptanceCriteria')) {
         if (-not ($contract.PSObject.Properties.Name -contains $field)) { throw "Contract is missing $field." }
@@ -194,13 +202,13 @@ try {
     if (@($contract.allowedPaths).Count -eq 0 -or @($contract.validationCommands).Count -eq 0 -or @($contract.acceptanceCriteria).Count -eq 0) { throw 'Contract arrays must not be empty.' }
     $baseSha = (& git -C $repoRoot rev-parse HEAD).Trim()
     if ($LASTEXITCODE -ne 0 -or $baseSha -notmatch '^[a-f0-9]{40}$') { throw 'Repository base SHA is unavailable.' }
-    $mockDecisions = if ($TestMode) { @($MockFrontierDecisions | ConvertFrom-Json) } else { @() }
+    $failurePhase = 'test-input-validation'
+    [object[]]$mockDecisions = if ($TestMode) { @($MockFrontierDecisions | ConvertFrom-Json) } else { @() }
     if ($TestMode -and ($MockWorkerPlans.Count -lt $MaxAttempts -or $mockDecisions.Count -lt $MaxAttempts)) { throw 'TestMode requires one worker plan and frontier decision per attempt.' }
 
-    $attempts = @()
-    $decisions = @()
     $repairInstructions = @()
     for ($attempt = 1; $attempt -le $MaxAttempts; $attempt++) {
+        $failurePhase = "worker-attempt-$attempt"
         $attemptRoot = if ($TestMode) { $repoRoot } else { Join-Path $WorktreeParent ("castilla-nan-attempt-$([guid]::NewGuid().ToString('N'))") }
         $telemetryPath = Join-Path $StateDirectory "attempt-$attempt.worker-telemetry.json"
         $patchPath = Join-Path $StateDirectory "attempt-$attempt.candidate.patch"
@@ -226,7 +234,9 @@ try {
             if (-not (Test-Path -LiteralPath $telemetryPath -PathType Leaf)) { throw 'Worker telemetry evidence is missing.' }
             $telemetry = Get-Content -LiteralPath $telemetryPath -Raw | ConvertFrom-Json
             $candidateReady = $workerExit -eq 0 -and $telemetry.status -eq 'awaiting-frontier-review'
-            if ($candidateReady) {
+            $patchAvailable = @($telemetry.changedPaths).Count -gt 0 -and -not [bool]$telemetry.contractViolation
+            if ($patchAvailable) {
+                $failurePhase = "patch-capture-$attempt"
                 if ($TestMode) {
                     [System.IO.File]::WriteAllText($patchPath, "SIMULATED PATCH`n", $utf8)
                 } else {
@@ -238,9 +248,14 @@ try {
             }
             $attemptEvidence = [ordered]@{
                 attempt=$attempt;baseSha=$baseSha;status=$telemetry.status;candidateReady=$candidateReady
+                patchAvailable=$patchAvailable;contractViolation=[bool]$telemetry.contractViolation
+                validationFailed=[bool]$telemetry.validationFailed
                 telemetrySha256=(Get-Sha256Hex -Bytes ([System.IO.File]::ReadAllBytes($telemetryPath)))
-                patchSha256=$(if ($candidateReady) { Get-Sha256Hex -Bytes ([System.IO.File]::ReadAllBytes($patchPath)) } else { $null })
+                patchSha256=$(if ($patchAvailable) { Get-Sha256Hex -Bytes ([System.IO.File]::ReadAllBytes($patchPath)) } else { $null })
                 changedPaths=@($telemetry.changedPaths);tokensUsage=$telemetry.tokensUsage
+                validationExitCodes=@($telemetry.attempts | ForEach-Object { $_.validationExitCode })
+                validationDiagnostics=@($telemetry.attempts | ForEach-Object { @($_.validationDiagnostics) })
+                terminationReasons=@($telemetry.attempts | ForEach-Object { $_.terminationReason })
             }
         } finally {
             if ($worktreeAdded) {
@@ -249,18 +264,20 @@ try {
             }
         }
         $attempts += $attemptEvidence
+        $failurePhase = "frontier-review-$attempt"
         if ($TestMode) {
             $rawMock = $mockDecisions[$attempt-1]
             $rawBytes = ConvertTo-CanonicalBytes -Value $rawMock
             $decision = @{action=$rawMock.action;repairInstructions=@($rawMock.repairInstructions);authorityEvidenceHash=(Get-Sha256Hex -Bytes $rawBytes);frontierUsage=@{input_tokens=0;cached_input_tokens=0;cache_write_input_tokens=0;output_tokens=0;reasoning_output_tokens=0}}
         } else {
-            $decision = Invoke-CodexReview -Attempt $attempt -CandidateReady $candidateReady -PatchPath $patchPath -Evidence $attemptEvidence -Contract $contract
+            $decision = Invoke-CodexReview -Attempt $attempt -CandidateReady $candidateReady -PatchAvailable $patchAvailable -PatchPath $patchPath -Evidence $attemptEvidence -Contract $contract
         }
         Assert-Decision -Decision $decision -Attempt $attempt -CandidateReady $candidateReady
         $decisionId = 'decision_' + (Get-Sha256Hex -Bytes (ConvertTo-CanonicalBytes -Value ([ordered]@{attempt=$attempt;evidence=$attemptEvidence;authority=$decision.authorityEvidenceHash}))).Substring(0,16)
         $body = [ordered]@{schemaVersion=1;attempt=$attempt;decisionId=$decisionId;action=$decision.action;repairInstructions=@($decision.repairInstructions);authorityEvidenceHash=$decision.authorityEvidenceHash;frontierUsage=$decision.frontierUsage;attemptEvidence=$attemptEvidence}
         $event = [ordered]@{}; foreach ($key in $body.Keys) { $event[$key]=$body[$key] }
         $event.decisionHash = Get-Sha256Hex -Bytes (ConvertTo-CanonicalBytes -Value $body)
+        $failurePhase = "decision-persist-$attempt"
         Write-NewJson -Path (Join-Path $StateDirectory "attempt-$attempt.frontier-decision.json") -Value $event
         $decisions += $event
         if ($decision.action -eq 'ACCEPT') { $status='COMPLETE'; break }
@@ -274,6 +291,19 @@ try {
     if ($status -eq 'ESCALATE') { exit 2 }
     exit 0
 } catch {
+    $messageBytes = $utf8.GetBytes([string]$_.Exception.Message)
+    $failure = [ordered]@{
+        schemaVersion=1;status='FAILED';phase=$failurePhase;baseSha=$baseSha
+        attempts=@($attempts);decisions=@($decisions)
+        errorType=$_.Exception.GetType().FullName
+        errorMessageSha256=(Get-Sha256Hex -Bytes $messageBytes)
+    }
+    try {
+        if ($stateCreated -and -not [string]::IsNullOrWhiteSpace($StateDirectory) -and (Test-Path -LiteralPath $StateDirectory -PathType Container)) {
+            $failurePath = Join-Path $StateDirectory 'supervision-result.json'
+            if (-not (Test-Path -LiteralPath $failurePath)) { Write-NewJson -Path $failurePath -Value $failure }
+        }
+    } catch {}
     [Console]::Error.WriteLine('error: frontier supervision failed')
     exit 1
 }
