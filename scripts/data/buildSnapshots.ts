@@ -2075,10 +2075,21 @@ async function completedPilotSnapshotDistributionOptions(
   root: string,
   target: string,
 ): Promise<{ historicalSnapshotDirectories: string[] }> {
+  const snapshotsRoot = resolve(target, "snapshots");
+  const retainedSnapshotIds = (await pathExists(snapshotsRoot))
+    ? (await readdir(snapshotsRoot, { withFileTypes: true }))
+        .filter(
+          (entry) =>
+            entry.isDirectory() &&
+            IMMUTABLE_SNAPSHOT_ID_PATTERN.test(entry.name),
+        )
+        .map((entry) => entry.name)
+    : [];
   const historicalSnapshotIds = new Set([
     ...(await completedPilotSnapshotIds(root)),
     ...(await terminalExpansionSnapshotIds(root)),
     ...HISTORICAL_PINNED_SNAPSHOT_IDS,
+    ...retainedSnapshotIds,
   ]);
   return {
     historicalSnapshotDirectories: [...historicalSnapshotIds]

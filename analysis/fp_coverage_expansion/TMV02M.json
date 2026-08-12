@@ -198,8 +198,8 @@
   "limitation": "Deferred because the frozen seed does not match the authoritative BOE output literally and the exhaustive output set spans mechanical, electrical/electronic, ITV, accessory, manufacturing, and sales boundaries. No aliases, curated relations, offer deltas, snapshot regeneration, or public-resource changes are allowed in this slot.",
   "reviewedCommit": "afe6fb7990c34a34fe11464e75d29d72b8d80996",
   "reviewedCommitAt": "2026-08-09T16:47:53.000Z",
-  "snapshotId": "20260812123218779-818012d7bffb",
-  "snapshotHash": "9fe6bedf3f992a072d0cf445e094f43bbe42b29f9b2e61a944a88fcee4c5ec93",
+  "snapshotId": "20260812132331937-38e1812a9531",
+  "snapshotHash": "537078cb22c0cb690cbebedef555b04a3ae90bc48d9d5e0e9771add27910c3dd",
   "publicParity": {
     "publishedRelationKeys": [],
     "rejectedRelationKeys": ["TMV02M|occupation:cno11:7401"]

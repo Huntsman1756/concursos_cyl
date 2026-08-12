@@ -30,7 +30,9 @@
     "contest:submission:check": "tsx scripts/release/renderContestSubmission.ts",
     "contest:evidence:capture": "tsx scripts/release/captureContestEvidence.ts",
     "analysis:fp:alias-candidates": "tsx scripts/analysis/rankFpOfferAliasCandidates.ts",
-    "analysis:fp:alias-candidates:check": "npm test -- scripts/analysis/rankFpOfferAliasCandidates.test.ts"
+    "analysis:fp:alias-candidates:check": "npm test -- scripts/analysis/rankFpOfferAliasCandidates.test.ts",
+    "analysis:fp:research-queue": "tsx scripts/analysis/buildFpCoverageResearchQueue.ts",
+    "analysis:fp:research-queue:check": "npm test -- scripts/analysis/buildFpCoverageResearchQueue.test.ts"
   },
   "keywords": [],
   "author": "",

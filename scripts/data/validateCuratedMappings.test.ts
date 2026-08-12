@@ -149,6 +149,20 @@ const programs: TrainingProgram[] = [
     familyCode: "MAM",
     familyName: "Madera, Mueble y Corcho",
   },
+  {
+    programKey: "SAN02M",
+    programTitle: "Farmacia y Parafarmacia",
+    level: "intermediate",
+    familyCode: "SAN",
+    familyName: "Sanidad",
+  },
+  {
+    programKey: "IMP02M",
+    programTitle: "Peluquería y Cosmética Capilar",
+    level: "intermediate",
+    familyCode: "IMP",
+    familyName: "Imagen Personal",
+  },
 ];
 
 const occupations = [
@@ -658,6 +672,9 @@ describe("curated occupation mappings", () => {
         "7324",
         "7812",
         "8209",
+        "5621",
+        "5811",
+        "5812",
       ],
     );
     expect(
@@ -696,8 +713,11 @@ describe("curated occupation mappings", () => {
       "IFC03S",
       "IFC03SD",
       "IMA02M",
+      "IMP02M",
+      "IMP02M",
       "MAM01M",
       "MAM01M",
+      "SAN02M",
       "SAN21",
       "SAN21",
       "SSC01M",

@@ -549,5 +549,38 @@
     "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
     "reviewedAt": "2026-08-09",
     "catalogVersion": "1.0.0"
+  },
+  {
+    "occupationId": "occupation:cno11:5621",
+    "preferredLabel": "Técnicos auxiliares de farmacia",
+    "confirmationLabel": "Asistencia técnica en farmacia",
+    "classificationSystem": "CNO-11",
+    "classificationCode": "5621",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+    "reviewedAt": "2026-08-12",
+    "catalogVersion": "1.0.0"
+  },
+  {
+    "occupationId": "occupation:cno11:5811",
+    "preferredLabel": "Peluqueros",
+    "confirmationLabel": "Peluquería y cuidado del cabello",
+    "classificationSystem": "CNO-11",
+    "classificationCode": "5811",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+    "reviewedAt": "2026-08-12",
+    "catalogVersion": "1.0.0"
+  },
+  {
+    "occupationId": "occupation:cno11:5812",
+    "preferredLabel": "Especialistas en tratamientos de estética, bienestar y afines",
+    "confirmationLabel": "Tratamientos de estética y cuidado de uñas",
+    "classificationSystem": "CNO-11",
+    "classificationCode": "5812",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+    "reviewedAt": "2026-08-12",
+    "catalogVersion": "1.0.0"
   }
 ]

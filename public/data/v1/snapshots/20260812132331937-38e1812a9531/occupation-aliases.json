@@ -56,6 +56,20 @@
     "reviewedAt": "2026-08-08"
   },
   {
+    "alias": "Auxiliares de farmacia",
+    "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:5621",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-12"
+  },
+  {
+    "alias": "Ayudantes de farmacia",
+    "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:5621",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-12"
+  },
+  {
     "alias": "Cocineros asalariados",
     "mappingVersion": "1.0.0",
     "occupationId": "occupation:cno11:5110",
@@ -134,6 +148,13 @@
     "reviewedAt": "2026-08-09"
   },
   {
+    "alias": "Peluqueros de caballeros",
+    "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:5811",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-12"
+  },
+  {
     "alias": "programación web",
     "mappingVersion": "1.0.0",
     "occupationId": "occupation:cno11:2713",
@@ -148,10 +169,31 @@
     "reviewedAt": "2026-08-04"
   },
   {
+    "alias": "Técnico en manicura",
+    "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:5812",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-12"
+  },
+  {
+    "alias": "Técnico en pedicura",
+    "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:5812",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-12"
+  },
+  {
     "alias": "técnicos auxiliares de clínica",
     "mappingVersion": "1.0.0",
     "occupationId": "occupation:cno11:5611",
     "reviewStatus": "approved",
     "reviewedAt": "2026-08-08"
+  },
+  {
+    "alias": "Técnicos auxiliares de farmacia",
+    "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:5621",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-12"
   }
 ]

@@ -480,5 +480,35 @@
     "sourceQuote": "Montador-ensamblador de elementos de carpintería.",
     "reviewedAt": "2026-08-09",
     "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "SAN02M",
+    "occupationId": "occupation:cno11:5621",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/sanidad/farmacia-parafarmacia.html",
+    "sourceQuote": "Auxiliar de Farmacia.",
+    "reviewedAt": "2026-08-12",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "IMP02M",
+    "occupationId": "occupation:cno11:5811",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/imagen-personal/peluqueria-cosmetica-capilar.html",
+    "sourceQuote": "Peluquera / peluquero.",
+    "reviewedAt": "2026-08-12",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "IMP02M",
+    "occupationId": "occupation:cno11:5812",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/imagen-personal/peluqueria-cosmetica-capilar.html",
+    "sourceQuote": "Técnica / técnico en manicura.",
+    "reviewedAt": "2026-08-12",
+    "mappingVersion": "1.0.0"
   }
 ]

@@ -9,3 +9,9 @@ research/**
 
 # Deterministic writer owns the canonical serialization for this audit artifact.
 analysis/fp_official_alias_pass_results.json
+
+# Local orchestration and Codex workspaces are not project sources.
+.tmp/**
+.worktrees/**
+_codex_tmp/**
+_codex_worktrees/**
