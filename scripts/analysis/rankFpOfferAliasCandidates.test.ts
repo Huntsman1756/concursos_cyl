@@ -17,7 +17,10 @@ import {
   type JobOffer,
   type TrainingProgram,
 } from "../../data/schemas/generated";
-import type { OfferPublishedRequirements } from "../../src/domain/requirements";
+import {
+  PublishedRequirementsResourceSchema,
+  type OfferPublishedRequirements,
+} from "../../src/domain/requirements";
 import {
   FpOfferAliasCandidateReportSchema,
   rankFpOfferAliasCandidates,
@@ -51,7 +54,14 @@ describe("rankFpOfferAliasCandidates – manifest-addressed loading", () => {
     );
     const base = resolve(rootDirectory, "public");
 
-    const [programs, occupations, aliases, links, offers] = await Promise.all([
+    const [
+      programs,
+      occupations,
+      aliases,
+      links,
+      offers,
+      publishedRequirements,
+    ] = await Promise.all([
       readJson<TrainingProgram[]>(
         resolve(
           base,
@@ -84,12 +94,21 @@ describe("rankFpOfferAliasCandidates – manifest-addressed loading", () => {
           manifest.resourceSnapshots.jobOffers.resourcePath.slice(1),
         ),
       ),
+      readJson<OfferPublishedRequirements[]>(
+        resolve(
+          base,
+          manifest.resourceSnapshots.publishedRequirements.resourcePath.slice(
+            1,
+          ),
+        ),
+      ),
     ]);
 
     expect(programs).toBeInstanceOf(Array);
     expect(offers.length).toBe(1054);
     expect(links.length).toBe(36);
-    expect(requirements.length).toBeGreaterThan(0);
+    expect(publishedRequirements.length).toBeGreaterThan(0);
+    PublishedRequirementsResourceSchema.parse(publishedRequirements);
     expect(programs.length).toBeGreaterThan(0);
     expect(occupations.length).toBeGreaterThan(0);
     expect(aliases.length).toBeGreaterThan(0);

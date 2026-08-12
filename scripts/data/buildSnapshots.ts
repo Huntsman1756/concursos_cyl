@@ -1979,26 +1979,6 @@ const FP_COVERAGE_PILOT_RESULTS_PATH = [
   "analysis",
   "fp_coverage_pilot_results.json",
 ] as const;
-const FP_COVERAGE_EXPANSION_DIRECTORY = [
-  "analysis",
-  "fp_coverage_expansion",
-] as const;
-
-const ExpansionSnapshotReferenceSchema = z.discriminatedUnion("state", [
-  z
-    .object({
-      state: z.enum(["completed", "deferred", "discarded"]),
-      snapshotId: z.string().regex(IMMUTABLE_SNAPSHOT_ID_PATTERN),
-    })
-    .passthrough(),
-  z
-    .object({
-      state: z.enum(["not_started", "in_progress"]),
-      snapshotId: z.string().regex(IMMUTABLE_SNAPSHOT_ID_PATTERN).optional(),
-    })
-    .passthrough(),
-]);
-
 const FP_COVERAGE_EXPANSION_DIR_PATH = [
   "analysis",
   "fp_coverage_expansion",
