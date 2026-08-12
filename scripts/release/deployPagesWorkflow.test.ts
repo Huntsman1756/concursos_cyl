@@ -9,23 +9,29 @@ describe("GitHub Pages deployment workflow", () => {
   it("requests first-run Pages enablement before deployment", async () => {
     const workflow = await readFile(workflowPath, "utf8");
     expect(workflow).toMatch(
-      /uses: actions\/configure-pages@983d7736d9b0ae728b81ab479565c72886d7745b # v5\.0\.0\s+with:\s+enablement: true/u,
+      /uses: actions\/configure-pages@45bfe0192ca1faeb007ade9deae92b16b8254a0d # v6\.0\.0\s+with:\s+enablement: true/u,
     );
   });
 
   it("pins every action to an exact reviewed commit", async () => {
     const workflow = await readFile(workflowPath, "utf8");
     expect(workflow).toContain(
-      "actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1",
+      "actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1",
     );
     expect(workflow).toContain(
-      "actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0",
+      "actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0",
     );
     expect(workflow).toContain(
-      "actions/upload-pages-artifact@56afc609e74202658d3ffba0e8f6dda462b719fa # v3.0.1",
+      "actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0",
     );
     expect(workflow).toContain(
-      "actions/deploy-pages@d6db90164ac5ed86f2b6aed7e0febac5b3c0c03e # v4.0.5",
+      "actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5.0.0",
+    );
+    expect(workflow).toContain(
+      "actions/configure-pages@45bfe0192ca1faeb007ade9deae92b16b8254a0d # v6.0.0",
+    );
+    expect(workflow).toContain(
+      "actions/deploy-pages@cd2ce8fcbc39b97be8ca5fce6e763baed58fa128 # v5.0.0",
     );
     expect(workflow).not.toMatch(/uses: actions\/[\w-]+@v\d/u);
   });
@@ -33,7 +39,7 @@ describe("GitHub Pages deployment workflow", () => {
   it("checks out complete history and gives the shared runner a unit-test margin", async () => {
     const workflow = await readFile(workflowPath, "utf8");
     expect(workflow).toMatch(
-      /actions\/checkout@[a-f0-9]{40} # v4\.3\.1\s+with:\s+fetch-depth: 0/u,
+      /actions\/checkout@[a-f0-9]{40} # v7\.0\.1\s+with:\s+fetch-depth: 0/u,
     );
     expect(workflow).toContain("npm test -- --testTimeout=60000");
     expect(workflow).not.toMatch(/^\s+- run: npm test$/mu);
@@ -42,7 +48,7 @@ describe("GitHub Pages deployment workflow", () => {
   it("installs the pinned notebook runtime before the full unit suite", async () => {
     const workflow = await readFile(workflowPath, "utf8");
     expect(workflow).toMatch(
-      /actions\/setup-python@[a-f0-9]{40} # v5\.6\.0\s+with:\s+python-version: "3\.12"/u,
+      /actions\/setup-python@[a-f0-9]{40} # v7\.0\.0\s+with:\s+python-version: "3\.12"/u,
     );
     expect(workflow).toContain(
       'python -m pip install --disable-pip-version-check --no-input "jupyter==1.1.1" "pandas==3.0.2"',
