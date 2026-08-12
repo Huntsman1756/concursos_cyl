@@ -27,11 +27,11 @@ describe("contest submission renderer", () => {
       "submission-checklist.md",
     ]);
     expect(rendered["application-summary.md"]).toContain(
-      "20260812011203149-415d767a53f9",
+      "20260812091756510-cac7c1d65a73",
     );
     expect(rendered["application-summary.md"]).toContain("13 cualificaciones");
     expect(rendered["application-summary.md"]).toContain(
-      "43 de las 1.054 ofertas de la instantánea",
+      "44 de las 1.054 ofertas de la instantánea",
     );
     expect(rendered["submission-checklist.md"]).toContain(
       "https://salida-cyl.157-90-22-40.sslip.io/",
