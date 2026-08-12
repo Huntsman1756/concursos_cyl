@@ -29,7 +29,10 @@ async function chooseComparison(
   await page.getByLabel("Filtrar ciclos o grupos").fill(group);
   await page.getByText(group, { exact: true }).click();
   await page.getByLabel("3. Cohorte de titulación").selectOption(cohort);
-  await page.getByText(year, { exact: true }).click();
+  await page
+    .getByRole("group", { name: "4. Año tras titularse" })
+    .getByText(year, { exact: true })
+    .click();
 }
 
 test("completes a higher comparison with one shared provisional period", async ({

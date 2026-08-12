@@ -44,6 +44,7 @@ test("home exposes equal journeys, navigation, freshness, and no automated acces
     "Desde FP",
     "Desde ocupación",
     "Comparar estudios",
+    "Más formación",
     "Metodología",
   ]);
 
@@ -212,7 +213,7 @@ test("each remaining public route has distinct destination content", async ({
       path: "/comparar",
       heading: "Ingresos observados",
       outcome:
-        "Consulta la base de cotización anualizada publicada para una cohorte, sin convertirla en una predicción personal.",
+        "Compara la base de cotización anualizada publicada de hasta tres ciclos, usando la misma cohorte y el mismo año.",
       hasHomeLink: false,
     },
     {
@@ -360,7 +361,7 @@ test("the complete Spanish home copy fits without horizontal overflow", async ({
     }),
   ).toBeVisible();
   await expect(
-    page.getByText("Vínculos publicados solo con evidencia."),
+    page.getByText("Relaciones revisadas", { exact: true }),
   ).toBeVisible();
 
   const overflow = await page.evaluate(() => ({
