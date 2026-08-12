@@ -95,11 +95,33 @@ export function IncomeComparisonForm({
   }
 
   return (
-    <form className="income-comparison-form" aria-describedby="compare-help">
-      <p id="compare-help" className="form-introduction">
-        Elige un nivel y hasta tres ciclos o grupos oficiales. Todos los datos
-        que se muestren compartirán la misma cohorte y el mismo año.
-      </p>
+    <form className="income-comparison-form">
+      <ol className="comparison-steps" aria-label="Pasos de la comparación">
+        <li className={trainingLevel ? "is-complete" : "is-current"}>
+          <span>1</span>
+          <strong>Nivel</strong>
+        </li>
+        <li
+          className={
+            !trainingLevel
+              ? "is-pending"
+              : selectedGroupKeys.length > 0
+                ? "is-complete"
+                : "is-current"
+          }
+        >
+          <span>2</span>
+          <strong>Ciclos</strong>
+        </li>
+        <li className={trainingLevel ? "is-available" : "is-pending"}>
+          <span>3</span>
+          <strong>Cohorte</strong>
+        </li>
+        <li className={trainingLevel ? "is-available" : "is-pending"}>
+          <span>4</span>
+          <strong>Año</strong>
+        </li>
+      </ol>
       <fieldset className="income-form-fieldset">
         <legend>1. Nivel de formación</legend>
         <div className="income-level-options">

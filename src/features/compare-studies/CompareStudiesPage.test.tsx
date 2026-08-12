@@ -207,6 +207,12 @@ describe("CompareStudiesPage", () => {
     expect(
       screen.getByRole("heading", { level: 1, name: "Ingresos observados" }),
     ).toBeVisible();
+    expect(
+      screen.getByRole("list", { name: "Pasos de la comparación" }),
+    ).toHaveTextContent("1Nivel2Ciclos3Cohorte4Año");
+    expect(
+      screen.getByText("No es una predicción salarial personal."),
+    ).toBeVisible();
     expect(screen.getByText(/Cohorte 2019-2020 · año 4/u)).toBeVisible();
     expect(
       screen.getByRole("heading", {

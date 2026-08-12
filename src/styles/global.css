@@ -1445,9 +1445,12 @@ summary:focus-visible {
 
 .trust-strip > div {
   position: relative;
-  display: grid;
-  justify-items: center;
-  padding: 0.85rem 1rem 0.75rem;
+  display: flex;
+  min-height: 3.4rem;
+  align-items: center;
+  justify-content: center;
+  gap: 0.55rem;
+  padding: 0.7rem 1rem;
   text-align: center;
 }
 
@@ -1462,29 +1465,17 @@ summary:focus-visible {
 }
 
 .trust-strip strong {
-  position: relative;
-  padding-top: 0.32rem;
-  font-size: 0.78rem;
+  font-size: 0.8rem;
 }
 
-.trust-strip strong::before {
-  position: absolute;
-  top: 0;
-  left: 50%;
-  width: 1rem;
-  height: 2px;
-  background: var(--color-primary);
-  content: "";
-  transform: translateX(-50%);
+.trust-strip svg {
+  flex: 0 0 auto;
+  color: var(--color-primary);
+  stroke-width: 1.8;
 }
 
-.trust-strip > div:nth-child(2) strong::before {
-  background: var(--color-gold);
-}
-
-.trust-strip span {
-  color: var(--color-text-muted);
-  font-size: 0.72rem;
+.trust-strip > div:nth-child(2) svg {
+  color: var(--color-gold);
 }
 
 .secondary-access {

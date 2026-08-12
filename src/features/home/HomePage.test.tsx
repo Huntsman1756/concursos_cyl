@@ -201,11 +201,20 @@ describe("HomePage", () => {
     expect(
       screen.getByRole("region", { name: "Metodología y límites" }),
     ).toHaveTextContent(
-      /Solo publica relaciones respaldadas por una fuente o una revisión documentada/i,
+      /Datos públicos y relaciones revisadas.+Los resultados no garantizan empleo/i,
     );
     expect(
-      screen.getByRole("link", { name: "Saber más sobre cómo trabajamos" }),
+      screen.getByRole("link", { name: "Ver metodología" }),
     ).toHaveAttribute("href", "/metodologia");
+    const commitments = screen.getByRole("region", {
+      name: "Compromisos del proyecto",
+    });
+    expect(commitments).toHaveTextContent(
+      "Fuentes públicasRelaciones revisadasSin cuentas ni cookies",
+    );
+    expect(commitments).not.toHaveTextContent(
+      /Datos de administraciones|Vínculos publicados|Sin registro/i,
+    );
   });
 
   it("announces a pending manifest before rendering the validated update date", async () => {

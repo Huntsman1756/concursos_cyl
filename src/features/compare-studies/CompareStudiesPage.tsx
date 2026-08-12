@@ -188,8 +188,11 @@ export function CompareStudiesPage() {
         <p className="compare-page__eyebrow">Comparar estudios</p>
         <h1 id="compare-heading">Ingresos observados</h1>
         <p>
-          Consulta la base de cotización anualizada publicada para una cohorte,
-          sin convertirla en una predicción personal.
+          Compara la base de cotización anualizada publicada de hasta tres
+          ciclos, usando la misma cohorte y el mismo año.
+        </p>
+        <p className="compare-page__caveat">
+          No es una predicción salarial personal.
         </p>
       </header>
 

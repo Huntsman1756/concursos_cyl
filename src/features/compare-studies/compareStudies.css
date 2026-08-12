@@ -32,6 +32,19 @@
   line-height: 1.6;
 }
 
+.compare-page__intro .compare-page__caveat {
+  width: fit-content;
+  margin-top: var(--space-3);
+  padding: 0.35rem 0.65rem;
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
+  color: var(--color-action-text);
+  background: var(--color-surface-subtle);
+  font-size: 0.8rem;
+  font-weight: 680;
+  line-height: 1.2;
+}
+
 .compare-page__eyebrow {
   margin: 0 0 var(--space-3);
   color: var(--color-action-text);
@@ -50,7 +63,6 @@
   background: var(--color-surface-warm);
 }
 
-.form-introduction,
 .field-hint {
   margin: 0;
   color: var(--color-text-muted);
@@ -59,6 +71,76 @@
 
 .field-hint {
   font-size: 0.9375rem;
+}
+
+.comparison-steps {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  max-width: 46rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.comparison-steps li {
+  position: relative;
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--color-text-muted);
+  font-size: 0.82rem;
+}
+
+.comparison-steps li:not(:last-child)::after {
+  position: absolute;
+  z-index: 0;
+  top: 50%;
+  right: 0.55rem;
+  left: 2.2rem;
+  height: 1px;
+  background: var(--color-border);
+  content: "";
+}
+
+.comparison-steps span,
+.comparison-steps strong {
+  position: relative;
+  z-index: 1;
+  background: var(--color-surface-warm);
+}
+
+.comparison-steps span {
+  display: grid;
+  width: 1.75rem;
+  height: 1.75rem;
+  flex: 0 0 auto;
+  place-items: center;
+  border: 1px solid var(--color-border);
+  border-radius: 50%;
+  font-weight: 750;
+}
+
+.comparison-steps strong {
+  padding-right: 0.5rem;
+}
+
+.comparison-steps .is-current,
+.comparison-steps .is-complete,
+.comparison-steps .is-available {
+  color: var(--color-text);
+}
+
+.comparison-steps .is-current span {
+  border-color: var(--color-primary);
+  color: #fff;
+  background: var(--color-primary);
+}
+
+.comparison-steps .is-complete span {
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+  background: var(--color-primary-soft);
 }
 
 .income-form-fieldset {
@@ -528,6 +610,24 @@
 }
 
 @media (max-width: 47.999rem) {
+  .comparison-steps li {
+    display: grid;
+    justify-items: center;
+    gap: 0.35rem;
+    text-align: center;
+  }
+
+  .comparison-steps li:not(:last-child)::after {
+    top: 0.875rem;
+    right: calc(-50% + 1rem);
+    left: calc(50% + 1rem);
+  }
+
+  .comparison-steps strong {
+    padding-right: 0;
+    font-size: 0.75rem;
+  }
+
   .income-level-options,
   .income-form-grid {
     grid-template-columns: 1fr;

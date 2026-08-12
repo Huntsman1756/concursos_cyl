@@ -393,16 +393,16 @@ export function HomePage() {
 
       <section className="trust-strip" aria-label="Compromisos del proyecto">
         <div>
+          <Icon name="database" size={19} />
           <strong>Fuentes públicas</strong>
-          <span>Datos de administraciones públicas.</span>
         </div>
         <div>
+          <Icon name="badge-check" size={19} />
           <strong>Relaciones revisadas</strong>
-          <span>Vínculos publicados solo con evidencia.</span>
         </div>
         <div>
+          <Icon name="user-round-x" size={19} />
           <strong>Sin cuentas ni cookies</strong>
-          <span>Sin registro. Sin rastreo. Sin perfiles.</span>
         </div>
       </section>
 
@@ -411,10 +411,7 @@ export function HomePage() {
           <Icon name="search" size={34} />
           <span>
             <strong>Buscar por tu título</strong>
-            <small>
-              Consulta salidas profesionales, formación relacionada y
-              oportunidades vinculadas.
-            </small>
+            <small>Salidas y oportunidades vinculadas.</small>
           </span>
           <Icon name="arrow-right" size={21} />
         </Link>
@@ -422,10 +419,7 @@ export function HomePage() {
           <Icon name="briefcase" size={34} />
           <span>
             <strong>Explorar por ocupación</strong>
-            <small>
-              Consulta qué ciclos guardan una relación revisada con la ocupación
-              que te interesa.
-            </small>
+            <small>Ciclos relacionados con el trabajo que buscas.</small>
           </span>
           <Icon name="arrow-right" size={21} />
         </Link>
@@ -433,10 +427,7 @@ export function HomePage() {
           <Icon name="bar-chart" size={34} />
           <span>
             <strong>Comparar referencias de ingresos</strong>
-            <small>
-              Consulta referencias publicadas conservando su ámbito y sus
-              limitaciones.
-            </small>
+            <small>Datos publicados por ciclo y territorio.</small>
           </span>
           <Icon name="arrow-right" size={21} />
         </Link>
@@ -445,12 +436,11 @@ export function HomePage() {
       <section className="methodology-strip" aria-label="Metodología y límites">
         <p>
           <span aria-hidden="true">i</span>
-          <strong>Metodología y límites:</strong> SALIDA CyL utiliza datos
-          públicos. Solo publica relaciones respaldadas por una fuente o una
-          revisión documentada. Ningún resultado garantiza empleo.
+          <strong>Datos públicos y relaciones revisadas.</strong> Los resultados
+          no garantizan empleo.
         </p>
         <Link to="/metodologia">
-          Saber más sobre cómo trabajamos <Icon name="arrow-right" size={16} />
+          Ver metodología <Icon name="arrow-right" size={16} />
         </Link>
       </section>
     </div>
