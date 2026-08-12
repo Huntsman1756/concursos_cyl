@@ -23,7 +23,10 @@ NAN se usa como proveedor de implementación principal. El worker:
 
 - Intercambia con `opencode` mediante llamadas CLI.
 - Ejecuta un intento por defecto y no activa fallbacks implícitos.
-- Bloquea la trayectoria cuando el consumo observado supera 50.000 tokens.
+- Lee el JSONL durante la ejecución y termina el árbol de OpenCode cuando el
+  consumo observado, incluida la caché, supera 50.000 tokens.
+- Termina ejecuciones de más de 300 segundos y bloquea durante una hora la
+  repetición del mismo contrato sobre el mismo SHA.
 - Registra telemetría por ejecución: modelo, agente, intento, reintento, código de
   salida, tokens, rutas cambiadas y código de validación.
 - Modos: ejecución real y `DryRun` (simulación que también escribe telemetría).
@@ -37,7 +40,7 @@ Codex inicia la escritura de código.
 | Rol                     | Modelo / Alias                       | Responsabilidad                                                                              |
 | ----------------------- | ------------------------------------ | -------------------------------------------------------------------------------------------- |
 | **Orquestador**         | OpenAI / Codex Sol (esfuerzo medio)  | Analiza, diagnostica, diseña, descompone tareas, revisa diffs y valida.                      |
-| **Worker de código**    | `nan/qwen3.6` (agente `nan-code`)    | Aplica cambios mecánicos en rutas permitidas con 10 pasos máximos y presupuesto observable. |
+| **Worker de código**    | `nan/qwen3.6` (agente `nan-code`)    | Aplica cambios mecánicos en rutas permitidas con 10 pasos máximos y presupuesto observable.  |
 | **Worker de boletines** | `nan/gemma4` (agente `nan-bulletin`) | Lee y extrae información de boletines convertidos a archivos locales legibles. Modo lectura. |
 
 Seguridad y decisiones de producto se reservan al orquestador (Codex).
@@ -101,7 +104,9 @@ Ejecución acotada (un intento, sin fallback por defecto):
   -AllowedPath "src/**" `
   -ValidationCommand "npm test" `
   -MaxRetries 1 `
-  -MaxObservedTokens 50000
+  -MaxObservedTokens 50000 `
+  -MaxExecutionSeconds 300 `
+  -DuplicateWindowSeconds 3600
 ```
 
 Cada campo es obligatorio y se valida en runtime (fail-closed):
@@ -130,7 +135,8 @@ Ejecución DryRun (sin coste, valida contrato sin llamar a opencode):
 El script, cuando se ejecuta desde un worktree Git enlazado y limpio:
 
 1. Calcula un snapshot SHA-256 de los archivos versionados y no ignorados.
-2. Intenta ejecutar opencode con el modelo primario (`nan/qwen3.6`).
+2. Intenta ejecutar opencode con el modelo primario (`nan/qwen3.6`) y consume
+   su JSONL en streaming, sin `--auto`.
 3. Si falla, se detiene tras `{MaxRetries}` intentos; el valor por defecto es 1.
 4. Solo usa fallbacks enumerados y cualificados explícitamente.
 5. Tras la ejecución exitosa, compara el snapshot y detecta archivos cambiados.
@@ -138,6 +144,11 @@ El script, cuando se ejecuta desde un worktree Git enlazado y limpio:
 7. Escribe telemetría JSON en `.agent-runs/<guid>.json`.
 8. Ejecuta los comandos de validación definidos por Frontier fuera del modelo.
 9. Termina en `awaiting-frontier-review`; el worker nunca se autoacepta.
+
+No existen atajos en `.opencode/commands`: toda ejecución NAN pasa por el
+broker. El hash de contrato incluye tipo, objetivo, rutas, validaciones, plan,
+criterios y SHA Git, y evita ejecuciones concurrentes o repetidas durante la
+ventana configurada.
 
 Si algún archivo fuera de `AllowedPath` resulta modificado, el script genera un error de
 violación de contrato, lo cual es **esperado y necesario** — marca el fallo para
@@ -265,8 +276,11 @@ Gemma 4 la sesión `ses_00b2f4913ffe6H53pMxnPbY8TP` con 3.100 tokens; ambas term
 cambios. Esto prueba route, launch, eventos y usage, pero no certifica Runtime V4
 ni autoriza publicación. El probe Qwen consumió 122.724 tokens para una tarea
 sin cambios; esta regresión económica motivó `maxSteps: 10`, un solo intento,
-fallbacks vacíos y `MaxObservedTokens: 50000`. Un resultado técnicamente correcto
-que supera ese presupuesto queda `blocked-token-budget`, no se considera éxito.
+fallbacks vacíos y `MaxObservedTokens: 50000`. El broker corta la ejecución al
+observar el exceso y la deja en `blocked-token-budget`; un timeout queda en
+`blocked-timeout`. Como la API informa tokens por pasos completados, puede existir
+un pequeño sobrepaso correspondiente al paso en curso, pero no una trayectoria
+completa sin control.
 
 ## Límites y políticas
 
