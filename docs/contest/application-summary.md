@@ -10,7 +10,7 @@ La interfaz permite elegir directamente cualquiera de los 187 ciclos de FP o fil
 
 ## Cobertura congelada
 
-- Instantánea publicada: `20260811222221076-727a2dfa2791`.
+- Instantánea publicada: `20260812011203149-415d767a53f9`.
 - Grupos primarios CNO-11 consultables: **502**.
 - **13 cualificaciones distintas**.
 - Claves de modalidad públicas: **14** (AGA01M, AGA03M, COM01B, COM02M, ELE03S, EOC01M, FME02M, HOT01M, IFC03S, IFC03SD, IMA02M, SAN21, SSC01M, TMV01M).
