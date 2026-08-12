@@ -8,7 +8,9 @@ OpenAI/Codex planifica y revisa; OpenCode ejecuta contratos acotados con NAN.
 - **Sol/Frontier (Orquestador y Revisor)** — OpenAI/Codex Sol, esfuerzo medio.
   Analiza, diagnostica, diseña, descompone tareas y revisa cada entrega.
   Seguridad y decisiones de producto se reservan íntegramente a Codex.
-- **Implementación** — `nan/qwen3.6` (Qwen) pica código bajo contrato.
+- **Implementación mecánica** — `nan/qwen3.6` (Qwen) pica código bajo contrato.
+- **Razonamiento acotado** — `nan/deepseek-v4-flash` para contratos difíciles.
+- **Contexto largo/multimodal** — `nan/mimo-v2.5`. `nan/glm5.2` está prohibido.
   Ejecuta cambios mecánicos en las rutas permitidas, incluso multiarchivo cuando
   el contrato lo acota expresamente. Usa un intento y ningún fallback por
   defecto, con presupuesto observable y telemetría JSON.

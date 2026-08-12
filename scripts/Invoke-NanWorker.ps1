@@ -8,6 +8,7 @@ param(
     [ValidateSet('default','json')][string]$Format = 'json',
     [ValidateRange(1,3)][int]$MaxRetries = 1,
     [ValidateSet('small','batch','research','extended')][string]$BudgetProfile = 'small',
+    [ValidateSet('auto','mechanical','reasoning','long-context')][string]$ModelProfile = 'auto',
     [int]$MaxObservedTokens = 0,
     [ValidateRange(10,3600)][int]$MaxExecutionSeconds = 300,
     [ValidateRange(0,86400)][int]$DuplicateWindowSeconds = 3600,
@@ -149,9 +150,18 @@ function Test-AllowedPath {
     return $false
 }
 
-# ── Primary model ──
-$primaryModel = if ($TaskType -eq 'code') { 'nan/qwen3.6' } else { 'nan/gemma4' }
+# ── Model routing (premium glm5.2 is deliberately unsupported) ──
+$primaryModel = switch ($ModelProfile) {
+    'reasoning' { 'nan/deepseek-v4-flash' }
+    'long-context' { 'nan/mimo-v2.5' }
+    default { if ($TaskType -eq 'code') { 'nan/qwen3.6' } else { 'nan/gemma4' } }
+}
 $primaryAgent = if ($TaskType -eq 'code') { 'nan-code' } else { 'nan-bulletin' }
+$allowedNanModels = @('nan/qwen3.6','nan/gemma4','nan/deepseek-v4-flash','nan/mimo-v2.5')
+$forbiddenFallbacks = @($FallbackModels | Where-Object { $_ -match '(?i)(^|/)glm5\.2($|[-:])' })
+if ($forbiddenFallbacks.Count -gt 0) {
+    throw "Unsupported or premium NAN fallback model: $($forbiddenFallbacks -join ', ')"
+}
 
 # ── SHA-256 from string (PS 5.1 compatible) ──
 function Compute-StringSha256 {
@@ -323,7 +333,7 @@ if (-not $TestMode -and -not $DryRun) {
 
 # ── DryRun ──
 if ($DryRun) {
-    Write-Host "[DryRun] TaskType=$TaskType Objective=$Objective Model=$primaryModel Agent=$primaryAgent Retries=$MaxRetries Fallbacks=$($FallbackModels -join ',') Allowed=$($AllowedPath -join ',')" -ForegroundColor Yellow
+    Write-Host "[DryRun] TaskType=$TaskType Objective=$Objective ModelProfile=$ModelProfile Model=$primaryModel Agent=$primaryAgent Retries=$MaxRetries Fallbacks=$($FallbackModels -join ',') Allowed=$($AllowedPath -join ',')" -ForegroundColor Yellow
     $tid = [guid]::NewGuid().ToString('N')
     $fc = @{}
     if ($TaskType -eq 'code') {
@@ -363,7 +373,7 @@ if ($TaskType -eq 'bulletin') {
             if ($availableModels -notcontains $primaryModel) {
                 throw "Primary model $primaryModel is not available"
             }
-            $officialFallbacks = @('nan/mimo-v2.5','nan/deepseek-v4-flash')
+            $officialFallbacks = @('nan/mimo-v2.5','nan/deepseek-v4-flash','nan/qwen3.6') | Where-Object { $_ -ne $primaryModel }
             $availableFallbacks = @($officialFallbacks | Where-Object { $_ -in $FallbackModels -and $_ -in $availableModels })
             $modelList = @($primaryModel) + $availableFallbacks
             if ($modelList.Count -eq 0) {
@@ -374,7 +384,7 @@ if ($TaskType -eq 'bulletin') {
             throw "Models not available: $_"
         }
     } else {
-        $modelList = @($primaryModel) + @(@('nan/mimo-v2.5','nan/deepseek-v4-flash') | Where-Object { $_ -in $FallbackModels -and $_ -ne $primaryModel })
+        $modelList = @($primaryModel) + @(@('nan/mimo-v2.5','nan/deepseek-v4-flash','nan/qwen3.6') | Where-Object { $_ -in $FallbackModels -and $_ -ne $primaryModel })
     }
 }
 

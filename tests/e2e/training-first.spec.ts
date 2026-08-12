@@ -85,7 +85,7 @@ test("live DAW results name the dated zero-match snapshot without claiming there
   );
 });
 
-test("COM01M is explicitly unavailable before and after submit", async ({
+test("COM01M shows 9 reviewed occupation groups before and after submit", async ({
   page,
 }) => {
   await page.goto("/desde-fp");
@@ -93,14 +93,19 @@ test("COM01M is explicitly unavailable before and after submit", async ({
     .getByRole("combobox", { name: "Ciclo de Formación Profesional" })
     .selectOption("COM01M");
   await expect(page.getByRole("status")).toContainText(
-    /salidas oficiales disponibles.*todavía no hay una relación revisada para buscar ofertas/i,
+    /Relaciones revisadas con 9 grupos de ocupación/,
   );
   await page.getByRole("button", { name: "Ver salidas y ofertas" }).click();
+  await expect(page).toHaveURL(/\/desde-fp\/COM01M$/u);
   await expect(
-    page.getByText(
-      /Todavía no hay una relación revisada que permita buscar ofertas/i,
-    ),
+    page.getByRole("heading", { name: "Actividades Comerciales" }),
   ).toBeVisible();
+  const reviewedGroups = page
+    .getByRole("heading", {
+      name: "Grupos de ocupación revisados para buscar ofertas",
+    })
+    .locator("..");
+  await expect(reviewedGroups.getByRole("listitem")).toHaveCount(9);
 });
 
 test("the intercepted full DAW card makes a declared gap, action, filter, and evidence keyboard-accessible", async ({

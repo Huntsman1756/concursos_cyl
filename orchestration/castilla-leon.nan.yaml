@@ -15,6 +15,10 @@ bindings:
     harness: opencode
     provider: nan
     model: qwen3.6
+    selectableModelProfiles:
+      mechanical: qwen3.6
+      reasoning: deepseek-v4-flash
+      long-context: mimo-v2.5
     agent: nan-code
     permissions: bounded-repository-write
     maxSteps: 10
@@ -35,6 +39,10 @@ bindings:
     harness: opencode
     provider: nan
     model: gemma4
+    selectableModelProfiles:
+      mechanical: gemma4
+      reasoning: deepseek-v4-flash
+      long-context: mimo-v2.5
     agent: nan-bulletin
     permissions: repository-read-only
     maxSteps: 12
@@ -68,6 +76,8 @@ routing:
     verifyWith: reviewer
   manual_review: reviewer
 controls:
+  forbiddenNanModels:
+    - glm5.2
   requireAllowedPathsForCode: true
   requireIndependentReview: true
   requireFrontierPlanForCode: true
