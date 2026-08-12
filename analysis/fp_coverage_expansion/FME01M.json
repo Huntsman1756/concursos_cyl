@@ -9,12 +9,12 @@
       "to": "in_progress",
       "at": "2026-08-09T17:20:00Z"
     },
-    { "from": "in_progress", "to": "deferred", "at": "2026-08-09T17:34:00Z" }
+    { "from": "in_progress", "to": "deferred", "at": "2026-08-09T17:33:00Z" }
   ],
   "startedAt": "2026-08-09T17:20:00Z",
-  "completedAt": "2026-08-09T17:34:00Z",
+  "completedAt": "2026-08-09T17:33:00Z",
   "phaseMinutes": {
-    "research": 8,
+    "research": 12,
     "implementation": 4,
     "test": 3,
     "review": 0
@@ -27,16 +27,11 @@
       "reviewedAt": "2026-08-09"
     },
     "authoritativeOutputSource": {
-      "sourceUrl": "https://www.boe.es/eli/es/rd/1398/2007",
+      "sourceUrl": "https://www.boe.es/eli/es/rd/2007/10/29/1398",
       "sourceQuote": "Las ocupaciones y puestos de trabajo más relevantes son los siguientes:",
-      "reviewedAt": "2026-08-09"
+      "reviewedAt": "2026-08-12"
     },
-    "reconciliationNote": "TodoFP y BOE identifican el título de Grado Medio, pero el seed congelado Mecánico de mecanizado no coincide literalmente con los siete outputs BOE; además, el BOE correcto es el RD 1398/2007."
-  },
-  "sourceDrift": {
-    "frozenCandidateUrl": "https://www.boe.es/eli/es/rd/1399/2007",
-    "authoritativeUrl": "https://www.boe.es/eli/es/rd/1398/2007",
-    "reason": "La URL BOE congelada apunta al RD 1399/2007, de Panadería, mientras que el título Mecanizado y sus outputs se establecen en el RD 1398/2007; el slot queda diferido y no publica nada."
+    "reconciliationNote": "TodoFP no contiene el seed congelado 'Mecánico de mecanizado' y no se demuestra reconciliación literal contra BOE-A-2007-20203; el título genérico 'Técnico en Mecanizado' no equivale al seed. Se corrige la referencia BOE a la URL completa (eli/es/rd/2007/10/29/1398)."
   },
   "officialOutputReviews": [
     {
@@ -45,13 +40,13 @@
       "disposition": "accepted",
       "candidateOccupationIds": ["occupation:cno11:7323"],
       "acceptedOccupationIds": ["occupation:cno11:7323"],
-      "sourceUrl": "https://www.boe.es/eli/es/rd/1398/2007",
+      "sourceUrl": "https://www.boe.es/eli/es/rd/2007/10/29/1398",
       "sourceQuote": "Ajustador operario de máquinas herramientas.",
       "classificationEvidence": [
         {
           "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
           "sourceQuote": "7323 Ajustadores y operadores de máquinas-herramienta",
-          "reviewedAt": "2026-08-09",
+          "reviewedAt": "2026-08-12",
           "occupationId": "occupation:cno11:7323"
         }
       ],
@@ -63,13 +58,13 @@
       "disposition": "accepted",
       "candidateOccupationIds": ["occupation:cno11:7324"],
       "acceptedOccupationIds": ["occupation:cno11:7324"],
-      "sourceUrl": "https://www.boe.es/eli/es/rd/1398/2007",
+      "sourceUrl": "https://www.boe.es/eli/es/rd/2007/10/29/1398",
       "sourceQuote": "Pulidor de metales y afilador de herramientas.",
       "classificationEvidence": [
         {
           "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
           "sourceQuote": "7324 Pulidores de metales y afiladores de herramientas",
-          "reviewedAt": "2026-08-09",
+          "reviewedAt": "2026-08-12",
           "occupationId": "occupation:cno11:7324"
         }
       ],
@@ -81,13 +76,13 @@
       "disposition": "accepted",
       "candidateOccupationIds": ["occupation:cno11:7323"],
       "acceptedOccupationIds": ["occupation:cno11:7323"],
-      "sourceUrl": "https://www.boe.es/eli/es/rd/1398/2007",
+      "sourceUrl": "https://www.boe.es/eli/es/rd/2007/10/29/1398",
       "sourceQuote": "Operador de máquinas para trabajar metales.",
       "classificationEvidence": [
         {
           "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
           "sourceQuote": "7323 Ajustadores y operadores de máquinas-herramienta",
-          "reviewedAt": "2026-08-09",
+          "reviewedAt": "2026-08-12",
           "occupationId": "occupation:cno11:7323"
         }
       ],
@@ -99,13 +94,13 @@
       "disposition": "accepted",
       "candidateOccupationIds": ["occupation:cno11:7323"],
       "acceptedOccupationIds": ["occupation:cno11:7323"],
-      "sourceUrl": "https://www.boe.es/eli/es/rd/1398/2007",
+      "sourceUrl": "https://www.boe.es/eli/es/rd/2007/10/29/1398",
       "sourceQuote": "Operador de máquinas herramientas.",
       "classificationEvidence": [
         {
           "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
-          "sourceQuote": "- Operadores de máquinas herramientas",
-          "reviewedAt": "2026-08-09",
+          "sourceQuote": "7323 Ajustadores y operadores de máquinas-herramienta",
+          "reviewedAt": "2026-08-12",
           "occupationId": "occupation:cno11:7323"
         }
       ],
@@ -116,13 +111,13 @@
       "officialOutputLabel": "Operador de robots industriales.",
       "disposition": "rejected",
       "candidateOccupationIds": ["occupation:cno11:3139"],
-      "sourceUrl": "https://www.boe.es/eli/es/rd/1398/2007",
+      "sourceUrl": "https://www.boe.es/eli/es/rd/2007/10/29/1398",
       "sourceQuote": "Operador de robots industriales.",
       "classificationEvidence": [
         {
           "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
-          "sourceQuote": "- Controladores de robótica industrial",
-          "reviewedAt": "2026-08-09",
+          "sourceQuote": "3139 Controladores de robótica industrial",
+          "reviewedAt": "2026-08-12",
           "occupationId": "occupation:cno11:3139"
         }
       ],
@@ -134,17 +129,17 @@
       "disposition": "accepted",
       "candidateOccupationIds": ["occupation:cno11:7322"],
       "acceptedOccupationIds": ["occupation:cno11:7322"],
-      "sourceUrl": "https://www.boe.es/eli/es/rd/1398/2007",
+      "sourceUrl": "https://www.boe.es/eli/es/rd/2007/10/29/1398",
       "sourceQuote": "Trabajadores de la fabricación de herramientas, mecánicos y ajustadores, modelistas matriceros y asimilados.",
       "classificationEvidence": [
         {
           "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
           "sourceQuote": "7322 Trabajadores de la fabricación de herramientas, mecánico-ajustadores, modelistas, matriceros y afines",
-          "reviewedAt": "2026-08-09",
+          "reviewedAt": "2026-08-12",
           "occupationId": "occupation:cno11:7322"
         }
       ],
-      "reason": "El output BOE coincide con el encabezado oficial CNO 7322; se conserva como relación exacta auditada, sin publicarla."
+      "reason": "El output BOE coincide con el encabezado oficial CNO 7322; se conserva como relación exacta auditada."
     },
     {
       "order": 7,
@@ -152,13 +147,13 @@
       "disposition": "accepted",
       "candidateOccupationIds": ["occupation:cno11:7323"],
       "acceptedOccupationIds": ["occupation:cno11:7323"],
-      "sourceUrl": "https://www.boe.es/eli/es/rd/1398/2007",
+      "sourceUrl": "https://www.boe.es/eli/es/rd/2007/10/29/1398",
       "sourceQuote": "Tornero, fresador y mandrinador.",
       "classificationEvidence": [
         {
           "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
-          "sourceQuote": "- Torneros de piezas de metal",
-          "reviewedAt": "2026-08-09",
+          "sourceQuote": "7323 Ajustadores y operadores de máquinas-herramienta",
+          "reviewedAt": "2026-08-12",
           "occupationId": "occupation:cno11:7323"
         }
       ],
@@ -166,7 +161,7 @@
     }
   ],
   "officialOutputInventory": {
-    "sourceUrl": "https://www.boe.es/eli/es/rd/1398/2007",
+    "sourceUrl": "https://www.boe.es/eli/es/rd/2007/10/29/1398",
     "labels": [
       "Ajustador operario de máquinas herramientas.",
       "Pulidor de metales y afilador de herramientas.",
@@ -184,15 +179,15 @@
       "occupationId": "occupation:cno11:7322",
       "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
       "sourceQuote": "7322 Trabajadores de la fabricación de herramientas, mecánico-ajustadores, modelistas, matriceros y afines",
-      "reviewedAt": "2026-08-09"
+      "reviewedAt": "2026-08-12"
     },
     {
       "kind": "link",
       "programKey": "FME01M",
       "occupationId": "occupation:cno11:7323",
-      "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
-      "sourceQuote": "7323 Ajustadores y operadores de máquinas-herramienta",
-      "reviewedAt": "2026-08-09"
+      "sourceUrl": "https://www.boe.es/eli/es/rd/2007/10/29/1398",
+      "sourceQuote": "Ajustador operario de máquinas herramientas.",
+      "reviewedAt": "2026-08-12"
     },
     {
       "kind": "link",
@@ -200,7 +195,7 @@
       "occupationId": "occupation:cno11:7324",
       "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
       "sourceQuote": "7324 Pulidores de metales y afiladores de herramientas",
-      "reviewedAt": "2026-08-09"
+      "reviewedAt": "2026-08-12"
     }
   ],
   "rejectedRelations": [
@@ -208,20 +203,20 @@
       "kind": "link",
       "programKey": "FME01M",
       "occupationId": "occupation:cno11:3139",
-      "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
-      "sourceQuote": "- Controladores de robótica industrial",
-      "reviewedAt": "2026-08-09"
+      "sourceUrl": "https://www.boe.es/eli/es/rd/2007/10/29/1398",
+      "sourceQuote": "Operador de robots industriales.",
+      "reviewedAt": "2026-08-12"
     }
   ],
   "baselineMatchIds": [],
   "currentMatchIds": [],
   "newlyReachedOfferIdsByProgram": { "FME01M": [] },
   "newlyReachedOfferUnionIds": [],
-  "limitation": "Deferred: el seed congelado Mecánico de mecanizado no es un output BOE literal y el candidato CNO 7322 no es el límite general de máquinas-herramienta. Se conservan solo relaciones CNO exactas para auditoría; no se añaden aliases, data/curated, ofertas, snapshot ni recursos públicos.",
+  "limitation": "Las relaciones aceptadas (7322, 7323, 7324) se conservan como evidencia de auditoría pero no se publican porque el seed congelado 'Mecánico de mecanizado' no aparece en TodoFP y no existe reconciliación demostrable contra el inventario BOE-A-2007-20203. El candidato 3139 se mantiene rechazado.",
   "reviewedCommit": "ffb756449ac004700cbd5aae170f17d676c0a920",
   "reviewedCommitAt": "2026-08-09T17:35:28.000Z",
-  "snapshotId": "20260812011203149-415d767a53f9",
-  "snapshotHash": "406a14b6105caf86be2a687b29f049bf0bf9e0006c68cce4c4ca50c65665f6c4",
+  "snapshotId": "20260812091756510-cac7c1d65a73",
+  "snapshotHash": "6c4429521afcf2eb9d1c052a692ffe51b14363b40fa0100247f27d48c06b0dbc",
   "publicParity": {
     "publishedRelationKeys": [],
     "rejectedRelationKeys": ["FME01M|occupation:cno11:3139"]

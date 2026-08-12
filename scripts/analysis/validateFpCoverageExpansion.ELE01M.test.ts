@@ -35,7 +35,7 @@ function snapshotHash() {
   return createHash("sha256")
     .update(
       JSON.stringify({
-        snapshotId: "20260812011203149-415d767a53f9",
+        snapshotId: "20260812091756510-cac7c1d65a73",
         programKey: "ELE01M",
         baselineMatchIds: [],
         currentMatchIds: [],
@@ -104,9 +104,9 @@ describe("ELE01M expansion slot", () => {
       currentMatchIds: [],
       newlyReachedOfferIdsByProgram: { ELE01M: [] },
       newlyReachedOfferUnionIds: [],
-      snapshotId: "20260812011203149-415d767a53f9",
+      snapshotId: "20260812091756510-cac7c1d65a73",
       snapshotHash:
-        "77e4d489fbe6b3987c3052d0646a8849e09b5e94f9bdc64dbc93fed24df07afc",
+        "a01bbaddbdc9f78444edf606046d37e8af4ffa90c4a9dfd644212af576aa060b",
     };
     const publicRelationSet = {
       manifestAddressed: true as const,

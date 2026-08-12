@@ -94,6 +94,13 @@
     "mappingVersion": "1.0.0"
   },
   {
+    "alias": "Auxiliar de ayuda a domicilio",
+    "occupationId": "occupation:cno11:5710",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-12",
+    "mappingVersion": "1.0.0"
+  },
+  {
     "alias": "Auxiliares de ayuda a personas dependientes a domicilio",
     "occupationId": "occupation:cno11:5710",
     "reviewStatus": "approved",

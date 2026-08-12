@@ -21,7 +21,7 @@ Source cutoff: `2026-08-11T17:27:42.000Z`
 | primary |    4 | ADG01M  | Gestión Administrativa                        | attempted | deferred  |         22 |       20 |
 | primary |    5 | ELE01M  | Instalaciones Eléctricas y Automáticas        | attempted | deferred  |         55 |       60 |
 | primary |    6 | IMA03M  | Mantenimiento Electromecánico                 | attempted | deferred  |         19 |        0 |
-| primary |    7 | FME01M  | Mecanizado                                    | attempted | deferred  |         15 |       14 |
+| primary |    7 | FME01M  | Mecanizado                                    | attempted | deferred  |         19 |       13 |
 | reserve |    8 | MAM01M  | Carpintería y Mueble                          | attempted | deferred  |         10 |     9.43 |
 | reserve |    9 | ELE03S  | Mantenimiento Electrónico                     | attempted | completed |         11 |       30 |
 | reserve |   10 | IMA02M  | Instalaciones Frigoríficas y de Climatización | attempted | completed |         15 |     25.5 |
@@ -34,8 +34,8 @@ Source cutoff: `2026-08-11T17:27:42.000Z`
 
 - Exact offer deltas by attempted program: `{"COM02M":[],"AGA03M":[],"TMV02M":[],"ADG01M":[],"ELE01M":[],"IMA03M":[],"FME01M":[],"MAM01M":[],"ELE03S":[],"IMA02M":[],"AGA01M":[],"TMV01M":[],"FME02M":[],"COM01B":[]}`.
 - Sorted offer union: none.
-- Total modeled active minutes (research + implementation + test): 255.
-- Total wall-clock minutes across attempt windows: 422.65.
+- Total modeled active minutes (research + implementation + test): 259.
+- Total wall-clock minutes across attempt windows: 421.65.
 - Recorded reviewer minutes: 18; these are excluded from active-work denominators.
 - Reviewer time is explicitly excluded from modeled active minutes and remains excluded from all denominators.
 - Attempt denominator: 7 primary + 7 reserve = 14 total attempted; 0 reserve candidates remain unattempted.

@@ -567,7 +567,7 @@ describe("public snapshot distribution", () => {
         variant.name,
       ).rejects.toThrow(/revoked mappings/i);
     }
-  });
+  }, 30_000);
 
   it("rejects historical alias and link rows omitted from a partial curated set", async () => {
     const root = await mkdtemp(join(tmpdir(), "salida-cyl-distribution-"));

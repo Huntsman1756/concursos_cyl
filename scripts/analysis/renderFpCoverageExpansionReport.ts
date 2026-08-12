@@ -720,6 +720,41 @@ export async function loadFpCoverageExpansionInputs(rootDirectory: string) {
   return { ranking, attempts, independentlyComputed };
 }
 
+export async function refreshFpCoverageExpansionAttempts(
+  rootDirectory: string,
+): Promise<void> {
+  const paths = (
+    await readdir(resolve(rootDirectory, "analysis/fp_coverage_expansion"))
+  )
+    .filter((path) => path.endsWith(".json"))
+    .toSorted();
+  const resources = await loadEffectiveExpansionResources(rootDirectory);
+
+  for (const path of paths) {
+    const attemptPath = resolve(
+      rootDirectory,
+      "analysis/fp_coverage_expansion",
+      path,
+    );
+    const attempt = FpExpansionAttemptSchema.parse(
+      JSON.parse(await readFile(attemptPath, "utf8")),
+    );
+    const recomputed = computeIndependentAttempt(attempt, resources);
+    const refreshed = FpExpansionAttemptSchema.parse({
+      ...attempt,
+      ...recomputed.computed,
+      publicParity: {
+        publishedRelationKeys: recomputed.publicRelationSet.relationKeys,
+        rejectedRelationKeys: recomputed.relationKeys.rejected,
+      },
+    });
+    await writeFile(
+      attemptPath,
+      await formatPrettier(JSON.stringify(refreshed), { parser: "json" }),
+    );
+  }
+}
+
 export async function buildFpCoverageExpansionReport(
   rootDirectory: string,
 ): Promise<FpCoverageExpansionReport> {
@@ -973,6 +1008,11 @@ export async function checkFpCoverageExpansionReport(
 
 async function main(): Promise<void> {
   const root = process.cwd();
+  if (process.argv.includes("--refresh-attempts")) {
+    await refreshFpCoverageExpansionAttempts(root);
+    console.info("FP coverage expansion attempts refreshed from public data.");
+    return;
+  }
   if (process.argv.includes("--write")) {
     const report = await buildFpCoverageExpansionReport(root);
     await writeFile(

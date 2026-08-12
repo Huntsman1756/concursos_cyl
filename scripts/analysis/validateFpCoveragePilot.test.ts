@@ -523,6 +523,11 @@ describe("validateFpCoveragePilotResults", () => {
       ),
     ).toEqual([
       expect.objectContaining({
+        alias: "Auxiliar de ayuda a domicilio",
+        occupationId: "occupation:cno11:5710",
+        reviewedAt: "2026-08-12",
+      }),
+      expect.objectContaining({
         alias: "Auxiliares de ayuda a personas dependientes a domicilio",
         occupationId: "occupation:cno11:5710",
         reviewedAt: "2026-08-09",
@@ -545,7 +550,7 @@ describe("validateFpCoveragePilotResults", () => {
         publishedRequirements: context.publishedRequirements,
         humanOverrides: [],
       }),
-    ).toEqual([]);
+    ).toEqual([expect.objectContaining({ offerId: "1285625266971" })]);
   });
 
   it("accepts real canonical evidence only when its audit fields are complete", () => {

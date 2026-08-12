@@ -1,0 +1,228 @@
+{
+  "schemaVersion": "1.0.0",
+  "snapshotId": "20260812091756510-cac7c1d65a73",
+  "totalOffers": 1054,
+  "approvedLinkCount": 36,
+  "zeroMatchRelations": 27,
+  "zeroMatchPrograms": 11,
+  "totalCandidates": 11,
+  "candidatesByConfidence": {
+    "review_only": 11,
+    "exact_contiguous_phrase": 0,
+    "exact_alias_match": 0,
+    "phrase_match": 0,
+    "token_overlap": 0
+  },
+  "candidates": [
+    {
+      "aliasCandidate": "SOLDADORES DE ESTRUCTURAS METÁLICAS PESADAS",
+      "aliasCandidateNormalized": "soldadores de estructuras metalicas pesadas",
+      "programKey": "FME02M",
+      "programTitle": "Soldadura y Calderería",
+      "occupationId": "occupation:cno11:7314",
+      "occupationLabel": "Montadores de estructuras metálicas",
+      "confidence": "review_only",
+      "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+      "sourceQuote": "7314 Montadores de estructuras metálicas",
+      "matchFields": ["title"],
+      "matchedOfferIds": ["1285662378826", "1285662408238", "1285669925179"],
+      "matchedOfferTitles": ["SOLDADORES DE ESTRUCTURAS METÁLICAS PESADAS"],
+      "occurrenceCount": 3,
+      "normalizedCollisionOccupations": [],
+      "reasonCode": "token_overlap_hypothesis;share_stems=2;overlap=0.67"
+    },
+    {
+      "aliasCandidate": "CONDUCTORES-OPERADORES DE HORMIGONERA MÓVIL",
+      "aliasCandidateNormalized": "conductores operadores de hormigonera movil",
+      "programKey": "AGA01M",
+      "programTitle": "Producción Agroecológica",
+      "occupationId": "occupation:cno11:8321",
+      "occupationLabel": "Operadores de maquinaria agrícola móvil",
+      "confidence": "review_only",
+      "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+      "sourceQuote": "8321 Operadores de maquinaria agrícola móvil",
+      "matchFields": ["title"],
+      "matchedOfferIds": ["1285666442635", "1285670009338"],
+      "matchedOfferTitles": ["CONDUCTORES-OPERADORES DE HORMIGONERA MÓVIL"],
+      "occurrenceCount": 2,
+      "normalizedCollisionOccupations": [],
+      "reasonCode": "token_overlap_hypothesis;share_stems=2;overlap=0.50"
+    },
+    {
+      "aliasCandidate": "MONTADORES DE GRANDES ESTRUCTURAS METÁLICAS, EN GENERAL",
+      "aliasCandidateNormalized": "montadores de grandes estructuras metalicas en general",
+      "programKey": "FME02M",
+      "programTitle": "Soldadura y Calderería",
+      "occupationId": "occupation:cno11:7314",
+      "occupationLabel": "Montadores de estructuras metálicas",
+      "confidence": "review_only",
+      "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+      "sourceQuote": "7314 Montadores de estructuras metálicas",
+      "matchFields": ["title"],
+      "matchedOfferIds": ["1285668323234", "1285669380303"],
+      "matchedOfferTitles": [
+        "MONTADORES DE GRANDES ESTRUCTURAS METÁLICAS, EN GENERAL"
+      ],
+      "occurrenceCount": 2,
+      "normalizedCollisionOccupations": [],
+      "reasonCode": "token_overlap_hypothesis;share_stems=3;overlap=1.00"
+    },
+    {
+      "aliasCandidate": "SOLDADORES DE ESTRUCTURAS METÁLICAS LIGERAS",
+      "aliasCandidateNormalized": "soldadores de estructuras metalicas ligeras",
+      "programKey": "FME02M",
+      "programTitle": "Soldadura y Calderería",
+      "occupationId": "occupation:cno11:7314",
+      "occupationLabel": "Montadores de estructuras metálicas",
+      "confidence": "review_only",
+      "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+      "sourceQuote": "7314 Montadores de estructuras metálicas",
+      "matchFields": ["title"],
+      "matchedOfferIds": ["1285666962173", "1285669719418"],
+      "matchedOfferTitles": ["SOLDADORES DE ESTRUCTURAS METÁLICAS LIGERAS"],
+      "occurrenceCount": 2,
+      "normalizedCollisionOccupations": [],
+      "reasonCode": "token_overlap_hypothesis;share_stems=2;overlap=0.67"
+    },
+    {
+      "aliasCandidate": "CONDUCTORES-OPERADORES DE MAQUINARIA DE TRANSPORTE DE TIERRAS, EN GENERAL",
+      "aliasCandidateNormalized": "conductores operadores de maquinaria de transporte de tierras en general",
+      "programKey": "AGA01M",
+      "programTitle": "Producción Agroecológica",
+      "occupationId": "occupation:cno11:8321",
+      "occupationLabel": "Operadores de maquinaria agrícola móvil",
+      "confidence": "review_only",
+      "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+      "sourceQuote": "8321 Operadores de maquinaria agrícola móvil",
+      "matchFields": ["title"],
+      "matchedOfferIds": ["1285668765398"],
+      "matchedOfferTitles": [
+        "CONDUCTORES-OPERADORES DE MAQUINARIA DE TRANSPORTE DE TIERRAS, EN GENERAL"
+      ],
+      "occurrenceCount": 1,
+      "normalizedCollisionOccupations": [],
+      "reasonCode": "token_overlap_hypothesis;share_stems=2;overlap=0.50"
+    },
+    {
+      "aliasCandidate": "MECÁNICOS REPARADORES DE CALEFACCIONES",
+      "aliasCandidateNormalized": "mecanicos reparadores de calefacciones",
+      "programKey": "ELE03S",
+      "programTitle": "Mantenimiento Electrónico",
+      "occupationId": "occupation:cno11:7531",
+      "occupationLabel": "Mecánicos y reparadores de equipos electrónicos",
+      "confidence": "review_only",
+      "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+      "sourceQuote": "7531 Mecánicos y reparadores de equipos electrónicos",
+      "matchFields": ["title"],
+      "matchedOfferIds": ["1285667506968"],
+      "matchedOfferTitles": ["MECÁNICOS REPARADORES DE CALEFACCIONES"],
+      "occurrenceCount": 1,
+      "normalizedCollisionOccupations": [],
+      "reasonCode": "token_overlap_hypothesis;share_stems=2;overlap=0.50"
+    },
+    {
+      "aliasCandidate": "MECÁNICOS REPARADORES DE EQUIPOS INDUSTRIALES DE REFRIGERACIÓN Y CLIMATIZACIÓN",
+      "aliasCandidateNormalized": "mecanicos reparadores de equipos industriales de refrigeracion y climatizacion",
+      "programKey": "ELE03S",
+      "programTitle": "Mantenimiento Electrónico",
+      "occupationId": "occupation:cno11:7531",
+      "occupationLabel": "Mecánicos y reparadores de equipos electrónicos",
+      "confidence": "review_only",
+      "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+      "sourceQuote": "7531 Mecánicos y reparadores de equipos electrónicos",
+      "matchFields": ["title"],
+      "matchedOfferIds": ["1285669380331"],
+      "matchedOfferTitles": [
+        "MECÁNICOS REPARADORES DE EQUIPOS INDUSTRIALES DE REFRIGERACIÓN Y CLIMATIZACIÓN"
+      ],
+      "occurrenceCount": 1,
+      "normalizedCollisionOccupations": ["occupation:cno11:7250"],
+      "reasonCode": "token_overlap_hypothesis;share_stems=3;overlap=0.75"
+    },
+    {
+      "aliasCandidate": "MECÁNICOS REPARADORES DE EQUIPOS INDUSTRIALES DE REFRIGERACIÓN Y CLIMATIZACIÓN",
+      "aliasCandidateNormalized": "mecanicos reparadores de equipos industriales de refrigeracion y climatizacion",
+      "programKey": "IMA02M",
+      "programTitle": "Instalaciones Frigoríficas y de Climatización",
+      "occupationId": "occupation:cno11:7250",
+      "occupationLabel": "Mecánicos-instaladores de refrigeración y climatización",
+      "confidence": "review_only",
+      "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+      "sourceQuote": "7250 Mecánicos-instaladores de refrigeración y climatización",
+      "matchFields": ["title"],
+      "matchedOfferIds": ["1285669380331"],
+      "matchedOfferTitles": [
+        "MECÁNICOS REPARADORES DE EQUIPOS INDUSTRIALES DE REFRIGERACIÓN Y CLIMATIZACIÓN"
+      ],
+      "occurrenceCount": 1,
+      "normalizedCollisionOccupations": ["occupation:cno11:7531"],
+      "reasonCode": "token_overlap_hypothesis;share_stems=3;overlap=0.75"
+    },
+    {
+      "aliasCandidate": "MECÁNICOS REPARADORES DE MAQUINARIA DE CONSTRUCCIÓN, MOVIMIENTO DE TIERRAS Y/O MINERÍA",
+      "aliasCandidateNormalized": "mecanicos reparadores de maquinaria de construccion movimiento de tierras y o mineria",
+      "programKey": "ELE03S",
+      "programTitle": "Mantenimiento Electrónico",
+      "occupationId": "occupation:cno11:7531",
+      "occupationLabel": "Mecánicos y reparadores de equipos electrónicos",
+      "confidence": "review_only",
+      "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+      "sourceQuote": "7531 Mecánicos y reparadores de equipos electrónicos",
+      "matchFields": ["title"],
+      "matchedOfferIds": ["1285613206327"],
+      "matchedOfferTitles": [
+        "MECÁNICOS REPARADORES DE MAQUINARIA DE CONSTRUCCIÓN, MOVIMIENTO DE TIERRAS Y/O MINERÍA"
+      ],
+      "occurrenceCount": 1,
+      "normalizedCollisionOccupations": [],
+      "reasonCode": "token_overlap_hypothesis;share_stems=2;overlap=0.50"
+    },
+    {
+      "aliasCandidate": "MECÁNICOS-AJUSTADORES DE MAQUINARIA AGRÍCOLA, EN GENERAL",
+      "aliasCandidateNormalized": "mecanicos ajustadores de maquinaria agricola en general",
+      "programKey": "AGA01M",
+      "programTitle": "Producción Agroecológica",
+      "occupationId": "occupation:cno11:8321",
+      "occupationLabel": "Operadores de maquinaria agrícola móvil",
+      "confidence": "review_only",
+      "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+      "sourceQuote": "8321 Operadores de maquinaria agrícola móvil",
+      "matchFields": ["title"],
+      "matchedOfferIds": ["1285640949323"],
+      "matchedOfferTitles": [
+        "MECÁNICOS-AJUSTADORES DE MAQUINARIA AGRÍCOLA, EN GENERAL"
+      ],
+      "occurrenceCount": 1,
+      "normalizedCollisionOccupations": [],
+      "reasonCode": "token_overlap_hypothesis;share_stems=2;overlap=0.50"
+    },
+    {
+      "aliasCandidate": "PINTORES DE ESTRUCTURAS METÁLICAS Y CASCOS DE BUQUES",
+      "aliasCandidateNormalized": "pintores de estructuras metalicas y cascos de buques",
+      "programKey": "FME02M",
+      "programTitle": "Soldadura y Calderería",
+      "occupationId": "occupation:cno11:7314",
+      "occupationLabel": "Montadores de estructuras metálicas",
+      "confidence": "review_only",
+      "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+      "sourceQuote": "7314 Montadores de estructuras metálicas",
+      "matchFields": ["title"],
+      "matchedOfferIds": ["1285665562745"],
+      "matchedOfferTitles": [
+        "PINTORES DE ESTRUCTURAS METÁLICAS Y CASCOS DE BUQUES"
+      ],
+      "occurrenceCount": 1,
+      "normalizedCollisionOccupations": [],
+      "reasonCode": "token_overlap_hypothesis;share_stems=2;overlap=0.67"
+    }
+  ],
+  "limitations": [
+    "Análisis determinístico basado en la instantánea v1; no estima el empleo total del mercado.",
+    "Solo se examinan relaciones aprobadas con cero coincidencias actuales.",
+    "Las frases exactas contiguas de la cita oficial se priorizan sobre hipótesis de solapamiento.",
+    "No se modifica la colección de alias aprobados ni se aprueba ningún candidato automáticamente.",
+    "Solo se utilizan campos normalizados (título, descripción, requisitos); no se analiza el texto de la oferta original completo.",
+    "Los alias ya publicados en occupationAliases no se re-incluyen como candidatos nuevos.",
+    "No se consideran ofertas no publicadas ni requisitos fuera del recurso published-requirements."
+  ]
+}

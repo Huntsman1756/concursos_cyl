@@ -1979,6 +1979,25 @@ const FP_COVERAGE_PILOT_RESULTS_PATH = [
   "analysis",
   "fp_coverage_pilot_results.json",
 ] as const;
+const FP_COVERAGE_EXPANSION_DIRECTORY = [
+  "analysis",
+  "fp_coverage_expansion",
+] as const;
+
+const ExpansionSnapshotReferenceSchema = z.discriminatedUnion("state", [
+  z
+    .object({
+      state: z.enum(["completed", "deferred", "discarded"]),
+      snapshotId: z.string().regex(IMMUTABLE_SNAPSHOT_ID_PATTERN),
+    })
+    .passthrough(),
+  z
+    .object({
+      state: z.enum(["not_started", "in_progress"]),
+      snapshotId: z.string().regex(IMMUTABLE_SNAPSHOT_ID_PATTERN).optional(),
+    })
+    .passthrough(),
+]);
 
 const PilotSnapshotReferenceSchema = z
   .object({
@@ -2016,12 +2035,49 @@ async function completedPilotSnapshotIds(root: string): Promise<Set<string>> {
   );
 }
 
+async function terminalExpansionSnapshotIds(
+  root: string,
+): Promise<Set<string>> {
+  const directory = resolve(root, ...FP_COVERAGE_EXPANSION_DIRECTORY);
+  if (!(await pathExists(directory))) return new Set();
+  await assertPhysicalPath(root, directory);
+
+  const entries = (await readdir(directory, { withFileTypes: true }))
+    .filter((entry) => entry.isFile() && entry.name.endsWith(".json"))
+    .toSorted((left, right) => compareCanonicalText(left.name, right.name));
+  const snapshotIds = new Set<string>();
+
+  for (const entry of entries) {
+    const path = resolve(directory, entry.name);
+    try {
+      await assertPhysicalPath(root, path);
+      const attempt = ExpansionSnapshotReferenceSchema.parse(
+        JSON.parse(await readFile(path, "utf8")),
+      );
+      if (
+        attempt.state === "completed" ||
+        attempt.state === "deferred" ||
+        attempt.state === "discarded"
+      ) {
+        snapshotIds.add(attempt.snapshotId);
+      }
+    } catch (error) {
+      throw new Error(`Invalid expansion file ${entry.name}.`, {
+        cause: error,
+      });
+    }
+  }
+
+  return snapshotIds;
+}
+
 async function completedPilotSnapshotDistributionOptions(
   root: string,
   target: string,
 ): Promise<{ historicalSnapshotDirectories: string[] }> {
   const historicalSnapshotIds = new Set([
     ...(await completedPilotSnapshotIds(root)),
+    ...(await terminalExpansionSnapshotIds(root)),
     ...HISTORICAL_PINNED_SNAPSHOT_IDS,
   ]);
   return {
@@ -2087,6 +2143,7 @@ async function enforceSnapshotRetention(
   const retained = new Set([
     currentSnapshotId,
     ...(await completedPilotSnapshotIds(root)),
+    ...(await terminalExpansionSnapshotIds(root)),
     ...HISTORICAL_PINNED_SNAPSHOT_IDS,
     ...immutableSnapshotNames
       .filter(

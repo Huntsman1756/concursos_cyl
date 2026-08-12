@@ -134,6 +134,23 @@
       "reviewNote": "Aunque comparte Auxiliar, añade la frontera de enfermería y cuidador; no es la salida auxiliar de ayuda a domicilio exacta."
     },
     {
+      "alias": "Auxiliar de ayuda a domicilio",
+      "occupationId": "occupation:cno11:5710",
+      "disposition": "accepted",
+      "reasonCode": "literal_boe_program_output",
+      "sourceUrl": "https://www.boe.es/eli/es/rd/2011/11/04/1593",
+      "sourceQuote": "Auxiliar de ayuda a domicilio.",
+      "acceptedProgramOutputLabel": "Auxiliar de ayuda a domicilio.",
+      "acceptedProgramOutputSourceUrl": "https://www.boe.es/eli/es/rd/2011/11/04/1593",
+      "acceptedProgramOutputSourceQuote": "Auxiliar de ayuda a domicilio.",
+      "acceptedProgramOutputRelevance": {
+        "relationship": "exact_term",
+        "outputTerm": "Auxiliar",
+        "aliasTerm": "Auxiliar"
+      },
+      "reviewedAt": "2026-08-12"
+    },
+    {
       "alias": "Auxiliares de ayuda a personas dependientes a domicilio",
       "occupationId": "occupation:cno11:5710",
       "disposition": "accepted",

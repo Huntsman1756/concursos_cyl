@@ -192,8 +192,8 @@
   "limitation": "Deferred because the frozen seed Carpintero de madera is not an exact BOE output. The two accepted relations remain curated but are not published; the rejected supervisory relation is audit-only. No aliases, offer deltas, snapshot regeneration, or public-resource changes are allowed in this slot.",
   "reviewedCommit": "a3bd273f7492ba1a8ca2f07306780e83e9f8d65c",
   "reviewedCommitAt": "2026-08-09T16:29:26.000Z",
-  "snapshotId": "20260812011203149-415d767a53f9",
-  "snapshotHash": "7b138009ae7585430632d7eb08157baad05dd73336eabe3739167e2cad6b906a",
+  "snapshotId": "20260812091756510-cac7c1d65a73",
+  "snapshotHash": "dedd13506283c2eda9f0ad75d14b956e17922f64d88bc56ef56deab025edf91e",
   "publicParity": {
     "publishedRelationKeys": [],
     "rejectedRelationKeys": ["MAM01M|occupation:cno11:3206"]
