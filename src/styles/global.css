@@ -142,21 +142,6 @@ a:focus-visible {
   font-weight: 680;
 }
 
-.official-data-link {
-  display: inline-flex;
-  min-height: 2.65rem;
-  flex: 0 0 auto;
-  align-items: center;
-  gap: var(--space-2);
-  padding: 0.6rem 0.9rem;
-  border: 1px solid #e9dfe1;
-  border-radius: var(--radius-md);
-  color: var(--color-primary);
-  font-size: 0.9rem;
-  font-weight: 680;
-  text-decoration: none;
-}
-
 .page-content {
   padding-block: clamp(var(--space-6), 2.6vw, 2.25rem) 0;
 }
@@ -1641,10 +1626,6 @@ summary:focus-visible {
     padding-block: 0.4rem;
   }
 
-  .official-data-link {
-    margin-left: auto;
-  }
-
   .home-workspace {
     grid-template-columns: 1fr;
   }
@@ -1683,12 +1664,6 @@ summary:focus-visible {
 
   .site-descriptor {
     display: none;
-  }
-
-  .official-data-link {
-    min-height: 2.4rem;
-    padding: 0.45rem 0.6rem;
-    font-size: 0.75rem;
   }
 
   .site-nav ul {
