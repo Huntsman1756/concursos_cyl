@@ -523,6 +523,11 @@ describe("validateFpCoveragePilotResults", () => {
       ),
     ).toEqual([
       expect.objectContaining({
+        alias: "Auxiliar de ayuda a domicilio",
+        occupationId: "occupation:cno11:5710",
+        reviewedAt: "2026-08-12",
+      }),
+      expect.objectContaining({
         alias: "Auxiliares de ayuda a personas dependientes a domicilio",
         occupationId: "occupation:cno11:5710",
         reviewedAt: "2026-08-09",
@@ -533,19 +538,34 @@ describe("validateFpCoveragePilotResults", () => {
         SSC_REJECTED_OCCUPATION_IDS.includes(link.occupationId),
       ),
     ).toBe(false);
-    expect(
-      matchOffersForProgram("SSC01M", {
-        programs: context.programs,
-        qualifications: REVIEWED_QUALIFICATIONS,
-        programQualificationLinks: REVIEWED_PROGRAM_QUALIFICATION_LINKS,
-        occupations: context.occupations,
-        aliases: context.aliases,
-        links: context.links,
-        offers: context.offers,
-        publishedRequirements: context.publishedRequirements,
-        humanOverrides: [],
+    const sscMatches = matchOffersForProgram("SSC01M", {
+      programs: context.programs,
+      qualifications: REVIEWED_QUALIFICATIONS,
+      programQualificationLinks: REVIEWED_PROGRAM_QUALIFICATION_LINKS,
+      occupations: context.occupations,
+      aliases: context.aliases,
+      links: context.links,
+      offers: context.offers,
+      publishedRequirements: context.publishedRequirements,
+      humanOverrides: [],
+    });
+    expect(sscMatches).toHaveLength(1);
+    expect(sscMatches[0]).toEqual(
+      expect.objectContaining({
+        offerId: "1285625266971",
+        programKey: "SSC01M",
+        occupationId: "occupation:cno11:5710",
+        relationshipType: "official_output",
+        matchRule: "title_alias_phrase",
+        aliasEvidence: expect.objectContaining({
+          payload: expect.objectContaining({
+            alias: "Auxiliar de ayuda a domicilio",
+            occupationId: "occupation:cno11:5710",
+            reviewedAt: "2026-08-12",
+          }),
+        }),
       }),
-    ).toEqual([]);
+    );
   });
 
   it("accepts real canonical evidence only when its audit fields are complete", () => {

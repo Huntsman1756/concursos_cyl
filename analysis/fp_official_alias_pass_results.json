@@ -14,9 +14,7 @@
       "programKey": "SSC01M",
       "beforeOfferCount": 0,
       "afterOfferCount": 1,
-      "newlyReachedOfferIds": [
-        "1285625266971"
-      ]
+      "newlyReachedOfferIds": ["1285625266971"]
     },
     {
       "programKey": "EOC01M",
@@ -26,8 +24,6 @@
     }
   ],
   "newlyReachedOfferUnionCount": 1,
-  "newlyReachedOfferUnionIds": [
-    "1285625266971"
-  ],
+  "newlyReachedOfferUnionIds": ["1285625266971"],
   "nonTargetProgramDeltas": []
 }

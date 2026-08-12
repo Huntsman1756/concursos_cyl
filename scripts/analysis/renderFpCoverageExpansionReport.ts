@@ -318,7 +318,7 @@ async function readJson<T>(path: string): Promise<T> {
   return JSON.parse(await readFile(path, "utf8")) as T;
 }
 
-type EffectiveExpansionResources = {
+export type EffectiveExpansionResources = {
   snapshotId: string;
   matchingData: OfferMatchingData;
   curatedOccupations: Occupation[];
@@ -326,7 +326,7 @@ type EffectiveExpansionResources = {
   publicRelationKeys: ReadonlySet<string>;
 };
 
-type IndependentlyComputedAttempt = {
+export type IndependentlyComputedAttempt = {
   relationKeys: {
     accepted: string[];
     rejected: string[];
@@ -346,7 +346,7 @@ type IndependentlyComputedAttempt = {
   };
 };
 
-async function loadEffectiveExpansionResources(
+export async function loadEffectiveExpansionResources(
   rootDirectory: string,
 ): Promise<EffectiveExpansionResources> {
   const manifest = GeneratedManifestSchema.parse(
@@ -455,7 +455,7 @@ function relationKeysFromOfficialOutputReviews(
   };
 }
 
-function computeIndependentAttempt(
+export function computeIndependentAttempt(
   attempt: FpExpansionAttempt,
   resources: EffectiveExpansionResources,
 ): IndependentlyComputedAttempt {

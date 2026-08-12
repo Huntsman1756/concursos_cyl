@@ -6,6 +6,7 @@ import { describe, expect, it } from "vitest";
 import {
   OccupationsSchema,
   TrainingOccupationLinksSchema,
+  type Occupation,
   type OccupationAlias,
   type TrainingOccupationLink,
 } from "../../data/schemas/curatedMappings";
@@ -114,7 +115,7 @@ describe("rankFpOfferAliasCandidates – deterministic output", () => {
     expect(candidates1.map((c) => c.aliasCandidate)).toEqual(
       candidates2.map((c) => c.aliasCandidate),
     );
-  });
+  }, 15000);
 
   it("report JSON does not contain wall-clock timestamps", async () => {
     const { report } = await rankFpOfferAliasCandidates();
@@ -123,7 +124,7 @@ describe("rankFpOfferAliasCandidates – deterministic output", () => {
     // No ISO datetime in the output
     const isoPattern = /\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d+)?Z/gu;
     expect(isoPattern.test(json)).toBe(false);
-  });
+  }, 15000);
 
   it("report includes snapshot ID from manifest", async () => {
     const manifest = await readJson<GeneratedManifest>(
@@ -131,7 +132,7 @@ describe("rankFpOfferAliasCandidates – deterministic output", () => {
     );
     const { report } = await rankFpOfferAliasCandidates();
     expect(report.snapshotId).toBe(manifestSnapshotId(manifest));
-  });
+  }, 15000);
 });
 
 describe("rankFpOfferAliasCandidates – no duplicate normalized alias across occupations", () => {

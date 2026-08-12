@@ -2705,6 +2705,134 @@ describe("buildSnapshots", { timeout: BUILD_SNAPSHOTS_TEST_TIMEOUT }, () => {
     expect(retained).not.toContain(orphanId);
   });
 
+  it.each(["completed", "deferred", "discarded"] as const)(
+    "retains terminal-expansion snapshot (%s)",
+    async (state) => {
+      const root = await temporaryRoot();
+      const expansionDir = join(root, "analysis", "fp_coverage_expansion");
+      await mkdir(expansionDir, { recursive: true });
+
+      await buildSnapshots({
+        rootDirectory: root,
+        ...fixedOptions,
+        now: () => new Date("2026-09-01T10:00:00.000Z"),
+      });
+      const dayOneSnapshotId = (
+        await readManifest(root)
+      ).resourceSnapshots.programs.resourcePath
+        .split("/")
+        .at(-2)!;
+
+      await writeFile(
+        join(expansionDir, "TER01M.json"),
+        JSON.stringify({
+          programKey: "TER01M",
+          state,
+          snapshotId: dayOneSnapshotId,
+        }),
+        "utf8",
+      );
+
+      for (let day = 2; day <= 4; day += 1) {
+        await buildSnapshots({
+          rootDirectory: root,
+          ...fixedOptions,
+          now: () =>
+            new Date(`2026-09-${String(day).padStart(2, "0")}T10:00:00.000Z`),
+        });
+      }
+
+      await expect(
+        access(
+          join(root, "public", "data", "v1", "snapshots", dayOneSnapshotId),
+        ),
+      ).resolves.toBeUndefined();
+    },
+  );
+
+  it.each(["not_started", "in_progress"] as const)(
+    "does NOT pin non-terminal-expansion snapshot (%s)",
+    async (state) => {
+      const root = await temporaryRoot();
+      const expansionDir = join(root, "analysis", "fp_coverage_expansion");
+      await mkdir(expansionDir, { recursive: true });
+
+      await buildSnapshots({
+        rootDirectory: root,
+        ...fixedOptions,
+        now: () => new Date("2026-09-01T10:00:00.000Z"),
+      });
+      const dayOneSnapshotId = (
+        await readManifest(root)
+      ).resourceSnapshots.programs.resourcePath
+        .split("/")
+        .at(-2)!;
+
+      await writeFile(
+        join(expansionDir, "NST01M.json"),
+        JSON.stringify({
+          programKey: "NST01M",
+          state,
+          snapshotId: dayOneSnapshotId,
+        }),
+        "utf8",
+      );
+
+      for (let day = 2; day <= 4; day += 1) {
+        await buildSnapshots({
+          rootDirectory: root,
+          ...fixedOptions,
+          now: () =>
+            new Date(`2026-09-${String(day).padStart(2, "0")}T10:00:00.000Z`),
+        });
+      }
+
+      await expect(
+        access(
+          join(root, "public", "data", "v1", "snapshots", dayOneSnapshotId),
+        ),
+      ).rejects.toMatchObject({ code: "ENOENT" });
+    },
+  );
+
+  it.each([
+    {
+      name: "corrupt json",
+      content: "{truncated",
+      expectedFile: "BAD01M.json",
+    },
+    {
+      name: "unknown state",
+      content: JSON.stringify({ programKey: "UNK01M", state: "reviewed" }),
+      expectedFile: "UNK01M.json",
+    },
+    {
+      name: "invalid snapshotId",
+      content: JSON.stringify({
+        programKey: "BAD01M",
+        state: "completed",
+        snapshotId: "invalid",
+      }),
+      expectedFile: "BAD01M.json",
+    },
+  ])(
+    "throws Invalid expansion file for $name ($expectedFile)",
+    async ({ content, expectedFile }) => {
+      const root = await temporaryRoot();
+      await buildSnapshots({ rootDirectory: root, ...fixedOptions });
+      const expansionDir = join(root, "analysis", "fp_coverage_expansion");
+      await mkdir(expansionDir, { recursive: true });
+      await writeFile(join(expansionDir, expectedFile), content, "utf8");
+      await expect(
+        buildSnapshots({
+          rootDirectory: root,
+          ...fixedOptions,
+          now: () => new Date("2026-09-02T10:00:00.000Z"),
+        }),
+      ).rejects.toThrow(new RegExp(`Invalid expansion file ${expectedFile}`));
+    },
+  );
+
   it.each([{ linkedPath: "public/data" }, { linkedPath: ".codex-tmp" }])(
     "rejects a physical junction escape through $linkedPath",
     async ({ linkedPath }) => {

@@ -1,5 +1,5 @@
 import { createHash } from "node:crypto";
-import { readFile } from "node:fs/promises";
+import { access, readFile } from "node:fs/promises";
 import { resolve } from "node:path";
 
 import { describe, expect, it } from "vitest";
@@ -46,13 +46,6 @@ function expansionSnapshotHash(input: {
   return createHash("sha256").update(JSON.stringify(input)).digest("hex");
 }
 
-async function loadFME01MSnapshotId(): Promise<string> {
-  const manifest = await readJson<{
-    resourceSnapshots: { programs: { resourcePath: string } };
-  }>(resolve(rootDirectory, "public/data/v1/manifest.json"));
-  return manifest.resourceSnapshots.programs.resourcePath.split("/")[4]!;
-}
-
 describe("FME01M expansion slot", () => {
   it("proves the frozen public baseline has no approved FME01M relation", async () => {
     const manifest = await readJson<{
@@ -80,7 +73,13 @@ describe("FME01M expansion slot", () => {
 
   it("validates deferred state with exhaustive BOE reviews and empty published keys", async () => {
     const programKey = "FME01M";
-    const snapshotId = await loadFME01MSnapshotId();
+    const attempt = await readJson<FpExpansionAttempt>(
+      resolve(rootDirectory, "analysis/fp_coverage_expansion/FME01M.json"),
+    );
+    expect(typeof attempt.snapshotId).toBe("string");
+    expect(attempt.snapshotId!.length).toBeGreaterThan(0);
+
+    const snapshotId = attempt.snapshotId!;
     const snapshotHash = expansionSnapshotHash({
       snapshotId,
       programKey,
@@ -92,9 +91,6 @@ describe("FME01M expansion slot", () => {
         relationKey({ programKey, occupationId: "occupation:cno11:7324" }),
       ],
     });
-    const attempt = await readJson<FpExpansionAttempt>(
-      resolve(rootDirectory, "analysis/fp_coverage_expansion/FME01M.json"),
-    );
     expect(attempt.state).toBe("deferred");
     expect(attempt.officialOutputInventory?.labels).toEqual(
       FME01M_OUTPUT_LABELS,
@@ -128,11 +124,25 @@ describe("FME01M expansion slot", () => {
       (r) => r.occupationId,
     );
     expect(rejectedOccupancies).toContain("occupation:cno11:3139");
+
+    // The snapshotId from attempt must reference an existing public snapshot
+    const snapshotDir = resolve(
+      rootDirectory,
+      "public",
+      "data",
+      "v1",
+      "snapshots",
+      attempt.snapshotId!,
+    );
+    await expect(access(snapshotDir)).resolves.toBeUndefined();
   });
 
   it("accepts deferred FME01M attempt with empty published parity", async () => {
     const programKey = "FME01M";
-    const snapshotId = await loadFME01MSnapshotId();
+    const attempt = await readJson<FpExpansionAttempt>(
+      resolve(rootDirectory, "analysis/fp_coverage_expansion/FME01M.json"),
+    );
+    const snapshotId = attempt.snapshotId!;
     const snapshotHash = expansionSnapshotHash({
       snapshotId,
       programKey,
@@ -144,9 +154,6 @@ describe("FME01M expansion slot", () => {
         relationKey({ programKey, occupationId: "occupation:cno11:7324" }),
       ],
     });
-    const attempt = await readJson<FpExpansionAttempt>(
-      resolve(rootDirectory, "analysis/fp_coverage_expansion/FME01M.json"),
-    );
     const ranking = await readJson<FpExpansionRanking>(
       resolve(rootDirectory, "analysis/fp_coverage_expansion_candidates.json"),
     );
@@ -162,7 +169,7 @@ describe("FME01M expansion slot", () => {
         computed: {
           baselineMatchIds: [],
           currentMatchIds: [],
-          newlyReachedOfferIdsByProgram: {},
+          newlyReachedOfferIdsByProgram: { FME01M: [] },
           newlyReachedOfferUnionIds: [],
           snapshotId: attempt.snapshotId,
           snapshotHash,

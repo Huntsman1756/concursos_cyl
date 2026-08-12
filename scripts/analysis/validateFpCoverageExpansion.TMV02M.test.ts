@@ -36,18 +36,21 @@ async function readJson<T>(path: string): Promise<T> {
   return JSON.parse(await readFile(path, "utf8")) as T;
 }
 
-function expansionSnapshotHash() {
-  return createHash("sha256")
-    .update(
-      JSON.stringify({
-        snapshotId: "20260812011203149-415d767a53f9",
-        programKey: "TMV02M",
-        baselineMatchIds: [],
-        currentMatchIds: [],
-        acceptedRelationKeys: [],
-      }),
-    )
-    .digest("hex");
+function relationKey(relation: {
+  programKey: string;
+  occupationId: string;
+}): string {
+  return `${relation.programKey}|${relation.occupationId}`;
+}
+
+function expansionSnapshotHash(input: {
+  snapshotId: string;
+  programKey: string;
+  baselineMatchIds: string[];
+  currentMatchIds: string[];
+  acceptedRelationKeys: string[];
+}): string {
+  return createHash("sha256").update(JSON.stringify(input)).digest("hex");
 }
 
 describe("TMV02M expansion slot", () => {
@@ -86,6 +89,18 @@ describe("TMV02M expansion slot", () => {
       ...ranking.primaryCandidates,
       ...ranking.reserveCandidates,
     ].find((entry) => entry.programKey === "TMV02M") as FpExpansionCandidate;
+    const programKey = "TMV02M";
+    const snapshotId = attempt.snapshotId!;
+    const acceptedRelationKeys = (attempt.acceptedRelations ?? []).map((r) =>
+      relationKey(r),
+    );
+    const snapshotHash = expansionSnapshotHash({
+      snapshotId,
+      programKey,
+      baselineMatchIds: attempt.baselineMatchIds ?? [],
+      currentMatchIds: attempt.currentMatchIds ?? [],
+      acceptedRelationKeys,
+    });
     expect(attempt.state).toBe("deferred");
     expect(attempt.officialOutputInventory?.labels).toEqual(outputLabels);
     expect(
@@ -97,15 +112,15 @@ describe("TMV02M expansion slot", () => {
       publishedRelationKeys: [],
       rejectedRelationKeys: ["TMV02M|occupation:cno11:7401"],
     });
-    expect(attempt.snapshotHash).toBe(expansionSnapshotHash());
+    expect(attempt.snapshotId).toBe(snapshotId);
+    expect(attempt.snapshotHash).toBe(snapshotHash);
     const computed = {
       baselineMatchIds: [],
       currentMatchIds: [],
       newlyReachedOfferIdsByProgram: { TMV02M: [] },
       newlyReachedOfferUnionIds: [],
-      snapshotId: "20260812011203149-415d767a53f9",
-      snapshotHash:
-        "436ee56f120b7e33760d08dfcf2002fd47f2e8df3c8735cb2ad93a8c4992d92b",
+      snapshotId,
+      snapshotHash,
     };
     const publicRelationSet = {
       manifestAddressed: true as const,

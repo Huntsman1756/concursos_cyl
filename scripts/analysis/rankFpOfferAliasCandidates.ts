@@ -477,11 +477,8 @@ function generateCandidates(
   offers: JobOffer[],
   occupationMap: Map<string, Occupation>,
   approvedAliasesByOccId: Map<string, OccupationAlias[]>,
-): Omit<FpOfferAliasCandidateSchema, "schemaVersion">[] {
-  const seen = new Map<
-    string,
-    Omit<FpOfferAliasCandidateSchema, "schemaVersion">
-  >();
+): FpOfferAliasCandidate[] {
+  const seen = new Map<string, FpOfferAliasCandidate>();
 
   // Pre-build the approved alias lookup for collision detection
   const approvedAliasLookup = buildApprovedAliasSet(approvedAliasesByOccId);
@@ -606,10 +603,7 @@ function generateCandidates(
     // ────────────────────────────────────────────────────────────────────
     // Phase 2 – Token-overlap hypothesis lane (review_only, never exact)
     // ────────────────────────────────────────────────────────────────────
-    const hypothesisLaneCandidates: Omit<
-      FpOfferAliasCandidateSchema,
-      "schemaVersion"
-    >[] = [];
+    const hypothesisLaneCandidates: FpOfferAliasCandidate[] = [];
 
     // Collect the official phrase tokens (sourceQuote or occupation label)
     const officialPhrases: RawCandidate[] = [

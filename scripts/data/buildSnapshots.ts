@@ -1980,6 +1980,25 @@ const FP_COVERAGE_PILOT_RESULTS_PATH = [
   "fp_coverage_pilot_results.json",
 ] as const;
 
+const FP_COVERAGE_EXPANSION_DIR_PATH = [
+  "analysis",
+  "fp_coverage_expansion",
+] as const;
+
+const ExpansionAttemptTerminalSchema = z
+  .object({
+    state: z.enum(["completed", "deferred", "discarded"]),
+    snapshotId: z.string().regex(IMMUTABLE_SNAPSHOT_ID_PATTERN),
+  })
+  .passthrough();
+
+const ExpansionAttemptNonTerminalSchema = z
+  .object({
+    state: z.enum(["not_started", "in_progress"]),
+    snapshotId: z.string().regex(IMMUTABLE_SNAPSHOT_ID_PATTERN).optional(),
+  })
+  .passthrough();
+
 const PilotSnapshotReferenceSchema = z
   .object({
     state: z.string(),
@@ -2016,12 +2035,62 @@ async function completedPilotSnapshotIds(root: string): Promise<Set<string>> {
   );
 }
 
+async function terminalExpansionsSnapshotIds(
+  root: string,
+): Promise<Set<string>> {
+  const expansionDir = resolve(root, ...FP_COVERAGE_EXPANSION_DIR_PATH);
+  if (!(await pathExists(expansionDir))) return new Set();
+
+  const allEntries = await readdir(expansionDir, { withFileTypes: true });
+  const jsonEntries = allEntries
+    .filter(
+      (entry) =>
+        entry.isFile() &&
+        entry.name.endsWith(".json") &&
+        entry.name !== "fp_coverage_expansion_candidates.json",
+    )
+    .sort((left, right) => compareCanonicalText(left.name, right.name));
+
+  const snapshotIds = new Set<string>();
+  for (const entry of jsonEntries) {
+    const filePath = resolve(expansionDir, entry.name);
+    let raw;
+    try {
+      raw = JSON.parse(await readFile(filePath, "utf8"));
+    } catch (error) {
+      throw new Error(
+        `Invalid expansion file ${entry.name}: must be terminal (completed/deferred/discarded with snapshotId) or non-terminal (not_started/in_progress), parse failed.`,
+        { cause: error },
+      );
+    }
+
+    const terminalResult = ExpansionAttemptTerminalSchema.safeParse(raw);
+    if (terminalResult.success) {
+      snapshotIds.add(terminalResult.data.snapshotId);
+      continue;
+    }
+
+    const nonTerminalResult = ExpansionAttemptNonTerminalSchema.safeParse(raw);
+    if (nonTerminalResult.success) {
+      // Non-terminal states: not_started/in_progress — no snapshotId required, never retained.
+      continue;
+    }
+
+    throw new Error(
+      `Invalid expansion file ${entry.name}: must be terminal (completed/deferred/discarded with snapshotId) or non-terminal (not_started/in_progress), parse failed.`,
+    );
+  }
+
+  return snapshotIds;
+}
+
 async function completedPilotSnapshotDistributionOptions(
   root: string,
   target: string,
 ): Promise<{ historicalSnapshotDirectories: string[] }> {
   const historicalSnapshotIds = new Set([
     ...(await completedPilotSnapshotIds(root)),
+    ...(await terminalExpansionsSnapshotIds(root)),
     ...HISTORICAL_PINNED_SNAPSHOT_IDS,
   ]);
   return {
@@ -2087,6 +2156,7 @@ async function enforceSnapshotRetention(
   const retained = new Set([
     currentSnapshotId,
     ...(await completedPilotSnapshotIds(root)),
+    ...(await terminalExpansionsSnapshotIds(root)),
     ...HISTORICAL_PINNED_SNAPSHOT_IDS,
     ...immutableSnapshotNames
       .filter(

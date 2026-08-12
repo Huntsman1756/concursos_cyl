@@ -32,18 +32,21 @@ async function readJson<T>(path: string): Promise<T> {
   return JSON.parse(await readFile(path, "utf8")) as T;
 }
 
-function snapshotHash() {
-  return createHash("sha256")
-    .update(
-      JSON.stringify({
-        snapshotId: "20260812011203149-415d767a53f9",
-        programKey: "ADG01M",
-        baselineMatchIds: [],
-        currentMatchIds: [],
-        acceptedRelationKeys: [],
-      }),
-    )
-    .digest("hex");
+function relationKey(relation: {
+  programKey: string;
+  occupationId: string;
+}): string {
+  return `${relation.programKey}|${relation.occupationId}`;
+}
+
+function expansionSnapshotHash(input: {
+  snapshotId: string;
+  programKey: string;
+  baselineMatchIds: string[];
+  currentMatchIds: string[];
+  acceptedRelationKeys: string[];
+}): string {
+  return createHash("sha256").update(JSON.stringify(input)).digest("hex");
 }
 
 describe("ADG01M expansion slot", () => {
@@ -82,6 +85,18 @@ describe("ADG01M expansion slot", () => {
       ...ranking.primaryCandidates,
       ...ranking.reserveCandidates,
     ].find((entry) => entry.programKey === "ADG01M") as FpExpansionCandidate;
+    const programKey = "ADG01M";
+    const snapshotId = attempt.snapshotId!;
+    const acceptedRelationKeys = (attempt.acceptedRelations ?? []).map((r) =>
+      relationKey(r),
+    );
+    const snapshotHash = expansionSnapshotHash({
+      snapshotId,
+      programKey,
+      baselineMatchIds: attempt.baselineMatchIds ?? [],
+      currentMatchIds: attempt.currentMatchIds ?? [],
+      acceptedRelationKeys,
+    });
     expect(attempt.state).toBe("deferred");
     expect(attempt.officialOutputInventory?.labels).toEqual(outputLabels);
     expect(
@@ -104,15 +119,15 @@ describe("ADG01M expansion slot", () => {
         "ADG01M|occupation:cno11:4500",
       ],
     });
-    expect(attempt.snapshotHash).toBe(snapshotHash());
+    expect(attempt.snapshotId).toBe(snapshotId);
+    expect(attempt.snapshotHash).toBe(snapshotHash);
     const computed = {
       baselineMatchIds: [],
       currentMatchIds: [],
       newlyReachedOfferIdsByProgram: { ADG01M: [] },
       newlyReachedOfferUnionIds: [],
-      snapshotId: "20260812011203149-415d767a53f9",
-      snapshotHash:
-        "b30b9b75e4fe0e1ed10a7d43e1dc9d0f06d38c7d1d195c7af5d80fa4f1dfee7c",
+      snapshotId,
+      snapshotHash,
     };
     const publicRelationSet = {
       manifestAddressed: true as const,

@@ -1,27 +1,28 @@
-import { createHash } from "node:crypto";
 import { readdir, readFile, writeFile } from "node:fs/promises";
 import { resolve } from "node:path";
 
-import prettier from "prettier";
+import { format as formatPrettier } from "prettier";
 
-import { GeneratedManifestSchema } from "../../data/schemas/generated";
-import { FpExpansionAttemptSchema } from "./validateFpCoverageExpansion";
+import {
+  loadEffectiveExpansionResources,
+  computeIndependentAttempt,
+} from "./renderFpCoverageExpansionReport";
+import {
+  FpExpansionAttemptSchema,
+  type FpExpansionAttempt,
+} from "./validateFpCoverageExpansion";
 
-function sortedUnique(values: readonly string[]): string[] {
-  return [...new Set(values)].toSorted();
+const terminalStates = ["completed", "deferred", "discarded"] as const;
+type TerminalState = (typeof terminalStates)[number];
+function isTerminalAttempt(
+  attempt: FpExpansionAttempt,
+): attempt is FpExpansionAttempt & { state: TerminalState } {
+  return terminalStates.includes(attempt.state as TerminalState);
 }
 
 async function main(): Promise<void> {
   const root = process.cwd();
-  const manifest = GeneratedManifestSchema.parse(
-    JSON.parse(
-      await readFile(resolve(root, "public/data/v1/manifest.json"), "utf8"),
-    ),
-  );
-  const snapshotId =
-    manifest.resourceSnapshots.programs.resourcePath.split("/")[4];
-  if (snapshotId === undefined)
-    throw new Error("Manifest has no program snapshot ID.");
+  const resources = await loadEffectiveExpansionResources(root);
 
   const attemptsDirectory = resolve(root, "analysis/fp_coverage_expansion");
   const fileNames = (await readdir(attemptsDirectory))
@@ -33,29 +34,29 @@ async function main(): Promise<void> {
     const attempt = FpExpansionAttemptSchema.parse(
       JSON.parse(await readFile(path, "utf8")),
     );
-    const acceptedRelationKeys = sortedUnique(
-      (attempt.officialOutputReviews ?? [])
-        .filter((review) => review.disposition === "accepted")
-        .flatMap((review) => review.acceptedOccupationIds ?? [])
-        .map((occupationId) => `${attempt.programKey}|${occupationId}`),
-    );
-    const snapshotHash = createHash("sha256")
-      .update(
-        JSON.stringify({
-          snapshotId,
-          programKey: attempt.programKey,
-          baselineMatchIds: attempt.baselineMatchIds ?? [],
-          currentMatchIds: attempt.currentMatchIds ?? [],
-          acceptedRelationKeys,
-        }),
-      )
-      .digest("hex");
-    const refreshed = { ...attempt, snapshotId, snapshotHash };
-    await writeFile(
-      path,
-      await prettier.format(JSON.stringify(refreshed), { parser: "json" }),
-      "utf8",
-    );
+    if (!isTerminalAttempt(attempt)) continue;
+
+    const independent = computeIndependentAttempt(attempt, resources);
+
+    const refreshed: Record<string, unknown> = { ...attempt };
+
+    refreshed.baselineMatchIds = independent.computed.baselineMatchIds;
+    refreshed.currentMatchIds = independent.computed.currentMatchIds;
+    refreshed.newlyReachedOfferIdsByProgram =
+      independent.computed.newlyReachedOfferIdsByProgram;
+    refreshed.newlyReachedOfferUnionIds =
+      independent.computed.newlyReachedOfferUnionIds;
+    refreshed.snapshotId = independent.computed.snapshotId;
+    refreshed.snapshotHash = independent.computed.snapshotHash;
+    refreshed.publicParity = {
+      publishedRelationKeys: independent.publicRelationSet.relationKeys,
+      rejectedRelationKeys: independent.relationKeys.rejected,
+    };
+
+    const formatted = await formatPrettier(JSON.stringify(refreshed), {
+      parser: "json",
+    });
+    await writeFile(path, formatted, "utf8");
   }
 }
 

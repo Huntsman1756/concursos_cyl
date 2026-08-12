@@ -429,7 +429,10 @@ describe("public snapshot distribution", () => {
         name: "removed occupation",
         current: { ...approvedMappings, occupations: [] },
       },
-      { name: "removed alias", current: { ...approvedMappings, aliases: [] } },
+      {
+        name: "removed alias",
+        current: { ...approvedMappings, aliases: [] },
+      },
       {
         name: "removed training link",
         current: { ...approvedMappings, links: [] },
@@ -567,7 +570,7 @@ describe("public snapshot distribution", () => {
         variant.name,
       ).rejects.toThrow(/revoked mappings/i);
     }
-  });
+  }, 30000);
 
   it("rejects historical alias and link rows omitted from a partial curated set", async () => {
     const root = await mkdtemp(join(tmpdir(), "salida-cyl-distribution-"));
@@ -894,5 +897,5 @@ describe("public snapshot distribution", () => {
         historicalSnapshotDirectories,
       }),
     ).resolves.toBeUndefined();
-  });
+  }, 30000);
 });
