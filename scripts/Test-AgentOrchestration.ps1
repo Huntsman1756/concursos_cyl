@@ -675,8 +675,8 @@ try {
         # 17b: Mock with validationExitCode=1 on failure — attempt should be marked failed
         $pre2 = Get-FileSnapshot
         $plan2 = @(
-            @{exitCode = 0; changedPaths = @('scripts/ok2.txt'); validationExitCode = 1; jsonl = $jsonlOk}
-        ) | ConvertTo-Json -Compress
+            @{exitCode = 0; changedPaths = @('scripts/ok2.txt'); validationExitCode = 1; validationDiagnostics = @(@{commandIndex=1;exitCode=1;outputTail='focused failure tail';truncated=$false}); jsonl = $jsonlOk}
+        ) | ConvertTo-Json -Depth 8 -Compress
         $r2 = Invoke-WorkerChild -WorkerParameters (New-ValidCodeContract -Objective 've-fail' -ValidationCommand @('cmd /c exit 1') -MaxRetries 1 -TestMode -MockPlan $plan2)
         Assert-True ($r2.ExitCode -ne 0) '17e: mock validationExitCode=1 causes failure (exit non-zero)'
 
@@ -687,6 +687,8 @@ try {
             Assert-True ($tel2.status -eq 'blocked-needs-new-contract') '17g: status=blocked when validation fails'
             Assert-True ($tel2.attempts[0].validationExitCode -eq 1) '17h: attempt validationExitCode=1 captured'
             Assert-True ($tel2.attempts[0].exitCode -eq 1) '17i: attempt exitCode=1 after validation failure'
+            Assert-True ($tel2.changedPaths[0] -eq 'scripts/ok2.txt') '17i2: failed validation preserves changed paths'
+            Assert-True ($tel2.attempts[0].validationDiagnostics[0].outputTail -eq 'focused failure tail') '17i3: bounded validation diagnostic is retained'
         }
     }
 

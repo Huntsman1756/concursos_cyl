@@ -457,7 +457,7 @@ $totalAttempts = 0
     $candidateAgent = if ($candidateModel -eq $primaryModel) { $primaryAgent } else { 'nan-code' }
     for ($r = 0; $r -lt $MaxRetries; $r++) {
         $totalAttempts++
-        $attempt = @{model=$candidateModel;agent=$candidateAgent;attempt=$totalAttempts;retry=($r+1);exitCode=1;tokens=@{input=0;output=0;reasoning=0;cacheRead=0;cacheWrite=0;total=0};changedPaths=@();validationExitCode=$null;draftOutput=''}
+        $attempt = @{model=$candidateModel;agent=$candidateAgent;attempt=$totalAttempts;retry=($r+1);exitCode=1;tokens=@{input=0;output=0;reasoning=0;cacheRead=0;cacheWrite=0;total=0};changedPaths=@();validationExitCode=$null;validationDiagnostics=@();draftOutput=''}
         $mp = $null
 
         if ($TestMode) {
@@ -483,6 +483,7 @@ $totalAttempts = 0
                 } else {
                     $attempt.validationExitCode = [int]$rawVe
                 }
+                if ($mp.validationDiagnostics) { $attempt.validationDiagnostics = @($mp.validationDiagnostics) }
             }
             Write-Host ("Attempt " + $totalAttempts + ": ${candidateAgent} -> ${candidateModel} (Mock) exitCode=" + $attempt.exitCode) -ForegroundColor Cyan
         } else {
@@ -506,7 +507,28 @@ $totalAttempts = 0
             $attempt.draftOutput = $liveResult.draftOutput
         }
 
+        # Preserve bounded evidence even when NAN or deterministic validation
+        # fails. The frontier supervisor needs the partial patch to issue a
+        # useful repair contract from the original base SHA.
+        if ($TaskType -eq 'code' -and -not $TestMode) {
+            $after = Get-Snapshot
+            $all = @($beforeSnapshot.Keys) + @($after.Keys) | Sort-Object -Unique
+            $attempt.changedPaths = @($all | Where-Object { -not $beforeSnapshot.ContainsKey($_) -or -not $after.ContainsKey($_) -or $beforeSnapshot[$_] -ne $after[$_] })
+        }
+        $changedPaths = @($attempt.changedPaths | Where-Object { $_ -and $_.Trim() })
+        $attempt.changedPaths = $changedPaths
         $attempts += $attempt
+
+        if ($TaskType -eq 'code') {
+            $violations = @($changedPaths | Where-Object { -not (Test-AllowedPath -p $_ -patterns $AllowedPath) })
+            if ($violations.Count -gt 0) {
+                $contractViolation = $true
+                Write-Warning "Contract violation: paths outside AllowedPath changed: $($violations -join ', ')"
+                $attempt.exitCode = 1
+                $attempts[-1] = $attempt
+                break modelLoop
+            }
+        }
 
         if ($attempt.terminationReason -eq 'timeout') {
             $executionTimedOut = $true
@@ -525,31 +547,8 @@ $totalAttempts = 0
         }
 
         if ($attempt.exitCode -eq 0) {
-            $changedPaths = @($attempt.changedPaths | Where-Object { $_ -and $_.Trim() })
-            $validationFailedForAttempt = $false
-
             # Post-execution checks for code tasks
             if ($TaskType -eq 'code') {
-                # Detect changes in live mode
-                if (-not $TestMode) {
-                    $after = Get-Snapshot
-                    $all = @($beforeSnapshot.Keys) + @($after.Keys) | Sort-Object -Unique
-                    $changedPaths = @($all | Where-Object { -not $beforeSnapshot.ContainsKey($_) -or -not $after.ContainsKey($_) -or $beforeSnapshot[$_] -ne $after[$_] })
-                }
-
-                # Normalize changed paths before validation
-                $changedPaths = @($changedPaths | Where-Object { $_ -and $_.Trim() })
-
-                # Path violation check — final, no more retries or models
-                $violations = @($changedPaths | Where-Object { -not (Test-AllowedPath -p $_ -patterns $AllowedPath) })
-                if ($violations.Count -gt 0) {
-                    $contractViolation = $true
-                    Write-Warning "Contract violation: paths outside AllowedPath changed: $($violations -join ', ')"
-                    $attempt.exitCode = 1
-                    $attempts[-1] = $attempt
-                    break modelLoop
-                }
-
                 # No-change check
                 if ($changedPaths.Count -eq 0 -and -not $AllowNoChanges) {
                     Write-Host "  No changes detected (use -AllowNoChanges to accept)" -ForegroundColor Yellow
@@ -565,9 +564,21 @@ $totalAttempts = 0
                         $ve = if ($attempt.validationExitCode -ne $null) { [int]$attempt.validationExitCode } else { 0 }
                     } else {
                         $ve = 0
+                        $commandIndex = 0
                         foreach ($cmd in $ValidationCommand) {
-                            $null = Invoke-Expression $cmd 2>&1 | Out-String
-                            if ($LASTEXITCODE -ne 0 -and $ve -eq 0) { $ve = $LASTEXITCODE }
+                            $commandIndex++
+                            $validationOutput = Invoke-Expression $cmd 2>&1 | Out-String
+                            $commandExit = $LASTEXITCODE
+                            if ($commandExit -ne 0) {
+                                if ($ve -eq 0) { $ve = $commandExit }
+                                $normalizedOutput = ($validationOutput -replace "`e\[[0-9;]*[A-Za-z]", '').Trim()
+                                $truncated = $normalizedOutput.Length -gt 4000
+                                if ($truncated) { $normalizedOutput = $normalizedOutput.Substring($normalizedOutput.Length - 4000) }
+                                $attempt.validationDiagnostics += [ordered]@{
+                                    commandIndex=$commandIndex;exitCode=$commandExit
+                                    outputTail=$normalizedOutput;truncated=$truncated
+                                }
+                            }
                         }
                     }
                     # Persist validationExitCode before any failure branch
@@ -613,7 +624,7 @@ if ($TaskType -eq 'code') {
 }
 $telemetry = @{
     telemetryId=$tid;simulated=[bool]$TestMode;taskType=$TaskType;selectedModel=if ($successResult) { $successResult.model } else { $null }
-    attempts=@($attempts | ForEach-Object { @{model=$_.model;agent=$_.agent;attempt=$_.attempt;retry=$_.retry;exitCode=$_.exitCode;tokens=$_.tokens;changedPaths=$_.changedPaths;validationExitCode=$_.validationExitCode;terminationReason=$_.terminationReason} })
+    attempts=@($attempts | ForEach-Object { @{model=$_.model;agent=$_.agent;attempt=$_.attempt;retry=$_.retry;exitCode=$_.exitCode;tokens=$_.tokens;changedPaths=$_.changedPaths;validationExitCode=$_.validationExitCode;validationDiagnostics=@($_.validationDiagnostics);terminationReason=$_.terminationReason} })
     changedPaths=@($changedPaths);contractViolation=$contractViolation;validationFailed=$validationFailed
     tokensUsage=$agg;success=$success;status=$status;frontierContract=$fcTelemetry
     draftOutput=if ($successResult) { $successResult.draftOutput } else { '' }
