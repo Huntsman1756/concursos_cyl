@@ -59,6 +59,20 @@ const programs: TrainingProgram[] = [
     familyName: "Transporte y Mantenimiento de Vehículos",
   },
   {
+    programKey: "TMV02M",
+    programTitle: "Electromecánica de Vehículos Automóviles",
+    level: "intermediate",
+    familyCode: "TMV",
+    familyName: "Transporte y Mantenimiento de Vehículos",
+  },
+  {
+    programKey: "IMA03M",
+    programTitle: "Mantenimiento Electromecánico",
+    level: "intermediate",
+    familyCode: "IMA",
+    familyName: "Instalación y Mantenimiento",
+  },
+  {
     programKey: "COM01B",
     programTitle: "Servicios Comerciales",
     level: "basic",
@@ -791,8 +805,10 @@ describe("curated occupation mappings", () => {
     const administrativeAliases = curated.aliases.filter(
       (alias) => alias.occupationId === administrativeOccupation?.occupationId,
     );
-    const administrativeLinks = curated.links.filter((link) =>
-      ["ADG01M", "ADG01MD"].includes(link.trainingProgramKey),
+    const administrativeLinks = curated.links.filter(
+      (link) =>
+        ["ADG01M", "ADG01MD"].includes(link.trainingProgramKey) &&
+        link.occupationId === administrativeOccupation?.occupationId,
     );
 
     expect(administrativeOccupation).toMatchObject({
@@ -952,6 +968,10 @@ describe("curated occupation mappings", () => {
       AFD01SD: 4,
       SAN08S: 2,
       SAN08SD: 2,
+      ADG01M: 1,
+      ADG01MD: 1,
+      TMV02M: 1,
+      IMA03M: 1,
     });
 
     const coverage = buildMappingCoverage(programs, curated.links);
@@ -959,18 +979,18 @@ describe("curated occupation mappings", () => {
       expect.objectContaining({
         scope: "program",
         programKey: "ADG01M",
-        approvedMappings: 0,
+        approvedMappings: 1,
         draftMappings: 1,
-        coverageStatus: "draft",
+        coverageStatus: "reviewed",
       }),
     );
     expect(coverage).toContainEqual(
       expect.objectContaining({
         scope: "program",
         programKey: "ADG01MD",
-        approvedMappings: 0,
+        approvedMappings: 1,
         draftMappings: 1,
-        coverageStatus: "draft",
+        coverageStatus: "reviewed",
       }),
     );
     expect(coverage).toContainEqual(

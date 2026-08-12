@@ -1,13 +1,13 @@
 {
   "schemaVersion": "1.0.0",
-  "snapshotId": "20260812170914964-b136734b1f03",
+  "snapshotId": "20260812182823819-b36dc2a9111a",
   "totalOffers": 1054,
-  "approvedLinkCount": 131,
-  "zeroMatchRelations": 117,
-  "zeroMatchPrograms": 40,
-  "totalCandidates": 64,
+  "approvedLinkCount": 135,
+  "zeroMatchRelations": 121,
+  "zeroMatchPrograms": 44,
+  "totalCandidates": 65,
   "candidatesByConfidence": {
-    "review_only": 57,
+    "review_only": 58,
     "exact_contiguous_phrase": 7,
     "exact_alias_match": 0,
     "phrase_match": 0,
@@ -943,6 +943,25 @@
       "confidence": "review_only",
       "sourceUrl": "https://www.boe.es/eli/es/rd/2014/02/28/127",
       "sourceQuote": "Operario de taller de mecánica rápida.",
+      "matchFields": ["title"],
+      "matchedOfferIds": ["1285640949323"],
+      "matchedOfferTitles": [
+        "MECÁNICOS-AJUSTADORES DE MAQUINARIA AGRÍCOLA, EN GENERAL"
+      ],
+      "occurrenceCount": 1,
+      "normalizedCollisionOccupations": ["occupation:cno11:8321"],
+      "reasonCode": "token_overlap_hypothesis;share_stems=2;overlap=0.50"
+    },
+    {
+      "aliasCandidate": "MECÁNICOS-AJUSTADORES DE MAQUINARIA AGRÍCOLA, EN GENERAL",
+      "aliasCandidateNormalized": "mecanicos ajustadores de maquinaria agricola en general",
+      "programKey": "TMV02M",
+      "programTitle": "Electromecánica de Vehículos Automóviles",
+      "occupationId": "occupation:cno11:7401",
+      "occupationLabel": "Mecánicos y ajustadores de vehículos de motor",
+      "confidence": "review_only",
+      "sourceUrl": "https://www.boe.es/eli/es/rd/2010/03/19/453",
+      "sourceQuote": "Mecánico de automóviles.",
       "matchFields": ["title"],
       "matchedOfferIds": ["1285640949323"],
       "matchedOfferTitles": [
