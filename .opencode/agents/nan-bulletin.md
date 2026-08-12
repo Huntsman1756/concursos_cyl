@@ -5,6 +5,7 @@ model: nan/gemma4
 temperature: 0.1
 steps: 12
 permission:
+  "*": deny
   read: allow
   glob: allow
   grep: allow
@@ -16,7 +17,6 @@ permission:
   webfetch: deny
   websearch: deny
   skill: deny
-  "esdata_*": deny
 ---
 
 Eres un lector documental de solo lectura especializado en boletines oficiales.

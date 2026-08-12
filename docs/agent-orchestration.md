@@ -9,17 +9,21 @@ cada entrega. Los modelos NAN ejecutan cambios de código únicamente bajo
 contratos acotados emitidos por Sol, sin decidir arquitectura ni hacer
 diagnóstico por sí mismos.
 
+La referencia está fijada en el merge
+`0d95676ac2c5f2365021514458180ca40e6a37a2`. Cambiar modelo, harness, agente,
+permisos o launcher exige cualificar de nuevo la combinación exacta.
+
 Este flujo **no es el runtime V4 completo**. Es una adaptación local para Windows
 que aprovecha el CLI `opencode`, los agentes locales `nan-code` y `nan-bulletin`,
-y un worker PowerShell con retry, fallback y telemetría JSON.
+y un worker PowerShell con presupuesto, fallback explícito y telemetría JSON.
 
 ## Arquitectura
 
 NAN se usa como proveedor de implementación principal. El worker:
 
 - Intercambia con `opencode` mediante llamadas CLI.
-- Reintenta hasta 3 veces por modelo antes de dar por fallida una ejecución.
-- Usa modelos NAN alternativos como respaldo si el primario falla.
+- Ejecuta un intento por defecto y no activa fallbacks implícitos.
+- Bloquea la trayectoria cuando el consumo observado supera 50.000 tokens.
 - Registra telemetría por ejecución: modelo, agente, intento, reintento, código de
   salida, tokens, rutas cambiadas y código de validación.
 - Modos: ejecución real y `DryRun` (simulación que también escribe telemetría).
@@ -33,7 +37,7 @@ Codex inicia la escritura de código.
 | Rol                     | Modelo / Alias                       | Responsabilidad                                                                              |
 | ----------------------- | ------------------------------------ | -------------------------------------------------------------------------------------------- |
 | **Orquestador**         | OpenAI / Codex Sol (esfuerzo medio)  | Analiza, diagnostica, diseña, descompone tareas, revisa diffs y valida.                      |
-| **Worker de código**    | `nan/qwen3.6` (agente `nan-code`)    | Aplica cambios mecánicos en rutas permitidas. Soporta retry, fallback y telemetría.          |
+| **Worker de código**    | `nan/qwen3.6` (agente `nan-code`)    | Aplica cambios mecánicos en rutas permitidas con 10 pasos máximos y presupuesto observable. |
 | **Worker de boletines** | `nan/gemma4` (agente `nan-bulletin`) | Lee y extrae información de boletines convertidos a archivos locales legibles. Modo lectura. |
 
 Seguridad y decisiones de producto se reservan al orquestador (Codex).
@@ -86,7 +90,7 @@ Codex define:
 
 ### 2. Codex invoca el trabajador
 
-Ejecución con retry y fallback:
+Ejecución acotada (un intento, sin fallback por defecto):
 
 ```powershell
 .\scripts\Invoke-NanWorker.ps1 -TaskType code `
@@ -96,8 +100,8 @@ Ejecución con retry y fallback:
   -AcceptanceCriteria @("1. Los tests pasan","2. No hay regression") `
   -AllowedPath "src/**" `
   -ValidationCommand "npm test" `
-  -MaxRetries 3 `
-  -FallbackModels "nan/mimo-v2.5,nan/deepseek-v4-flash"
+  -MaxRetries 1 `
+  -MaxObservedTokens 50000
 ```
 
 Cada campo es obligatorio y se valida en runtime (fail-closed):
@@ -123,16 +127,17 @@ Ejecución DryRun (sin coste, valida contrato sin llamar a opencode):
   -DryRun
 ```
 
-El script:
+El script, cuando se ejecuta desde un worktree Git enlazado y limpio:
 
 1. Calcula un snapshot SHA-256 de los archivos versionados y no ignorados.
 2. Intenta ejecutar opencode con el modelo primario (`nan/qwen3.6`).
-3. Si falla, reintentará hasta `{MaxRetries}` veces.
-4. Si el primario se agota, intentará cada modelo de fallback.
+3. Si falla, se detiene tras `{MaxRetries}` intentos; el valor por defecto es 1.
+4. Solo usa fallbacks enumerados y cualificados explícitamente.
 5. Tras la ejecución exitosa, compara el snapshot y detecta archivos cambiados.
 6. Compara cada archivo cambiado contra las rutas permitidas.
 7. Escribe telemetría JSON en `.agent-runs/<guid>.json`.
-8. Ejecuta los comandos de validación opcionales.
+8. Ejecuta los comandos de validación definidos por Frontier fuera del modelo.
+9. Termina en `awaiting-frontier-review`; el worker nunca se autoacepta.
 
 Si algún archivo fuera de `AllowedPath` resulta modificado, el script genera un error de
 violación de contrato, lo cual es **esperado y necesario** — marca el fallo para
@@ -252,9 +257,16 @@ consumir API NAN:
 | **Fallback-reject**  | Modelo no oficial en fallback se ignora                                                  | Ninguno   |
 | **Validation-exit**  | validationExitCode en simulación: singular y lista (ej. `[1,0]`→bloquea, `[0,0]`→acepta) | Ninguno   |
 
-No existe fase `Live` implementada. Todas las fases usan `TestMode` con `MockPlan`
-y no consumen API NAN. Cada fase tiene tests individuales con PASS/FAIL reportados
-al final.
+La suite reproducible usa `TestMode` y no consume API NAN. La cualificación real
+se ejecuta por separado para no mezclar pruebas deterministas con el estado del
+proveedor. El 12 de agosto de 2026 se verificó el binding presupuestado exacto:
+Qwen 3.6 produjo la sesión `ses_00b2fa739ffe7psp29zyk79Ts4` con 4.077 tokens y
+Gemma 4 la sesión `ses_00b2f4913ffe6H53pMxnPbY8TP` con 3.100 tokens; ambas terminaron sin
+cambios. Esto prueba route, launch, eventos y usage, pero no certifica Runtime V4
+ni autoriza publicación. El probe Qwen consumió 122.724 tokens para una tarea
+sin cambios; esta regresión económica motivó `maxSteps: 10`, un solo intento,
+fallbacks vacíos y `MaxObservedTokens: 50000`. Un resultado técnicamente correcto
+que supera ese presupuesto queda `blocked-token-budget`, no se considera éxito.
 
 ## Límites y políticas
 
@@ -288,9 +300,11 @@ Este flujo es un **subconjunto local del patrón de orquestación de agentes**:
   sesiones, ni sistema de autenticación multi-usuario.
 - El orquestador es Codex, que invoca `opencode` con acceso a los modelos NAN;
   no es un servicio autónomo.
-- El worker de código es una invocación CLI directa: sin contenedores, sin
-  sandboxing ni aislamiento por proceso.
-- Soporta retry y fallback: gestiona fallos transitorios de la API.
+- El worker de código es una invocación CLI directa dentro de un worktree
+  enlazado y limpio: sin contenedores ni sandbox certificado. Por ello este
+  binding es `BOUNDED_LOCAL`, no Runtime V4 de producción.
+- Permite retry y fallback solo cuando el contrato los habilita expresamente;
+  por defecto usa un intento y ningún fallback.
 - La telemetría se guarda en archivos locales JSON ignorados por git.
 
 Esta simplicidad es una decisión deliberada: facilita la revisión humana, reduce
