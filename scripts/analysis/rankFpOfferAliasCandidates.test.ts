@@ -59,7 +59,7 @@ describe("rankFpOfferAliasCandidates – manifest-addressed loading", () => {
             manifest.resourceSnapshots.programs.resourcePath.slice(1),
           ),
         ),
-        readJson<unknown[]>(
+        readJson<Occupation[]>(
           resolve(
             base,
             manifest.resourceSnapshots.occupations.resourcePath.slice(1),
@@ -636,13 +636,6 @@ describe("rankFpOfferAliasCandidates – display text preservation", () => {
       (c) => c.confidence === "exact_contiguous_phrase",
     );
     for (const c of exactCandidates) {
-      // aliasCandidate should be the original display text from sourceQuote/segment
-      // It should NOT be the fully normalized (lowercased, no punctuation) version
-      // The original sourceQuote typically has proper casing and punctuation
-      // If the source had uppercase, aliasCandidate should preserve some
-      // (at minimum, it should not be identical to the normalized form for non-trivial cases)
-      // The display text should be the original, not a fully lowercased version
-      // (unless the original was already lowercased)
       expect(c.aliasCandidate).toBeTypeOf("string");
       expect(c.aliasCandidate.length).toBeGreaterThan(0);
     }
@@ -665,5 +658,44 @@ describe("rankFpOfferAliasCandidates – markdown collision column", () => {
     const { markdown } = await rankFpOfferAliasCandidates();
     // The markdown should have a Colisiones column header
     expect(markdown).toContain("Colisiones");
+  });
+});
+
+describe("rankFpOfferAliasCandidates – markdown row format", () => {
+  it("markdown table uses the 6-column header with Colisiones and every data row matches it, uses singular '1 oferta', excludes stray text, and ends with the snapshot disclaimer", async () => {
+    const { markdown } = await rankFpOfferAliasCandidates();
+    const lines = markdown.split("\n");
+
+    // Should not contain the 5-column header (no Colisiones column)
+    expect(lines).not.toContain(
+      "| Alias | Programa | Ocupación | Ofertas | Causa |",
+    );
+
+    // Every line starting with '| Alias |' must equal the 6-column header
+    const header =
+      "| Alias | Programa | Ocupación | Ofertas | Causa | Colisiones |";
+    const aliasHeaders = lines.filter((line) => line.startsWith("| Alias |"));
+    expect(aliasHeaders.length).toBeGreaterThan(0);
+    for (const h of aliasHeaders) {
+      expect(h).toBe(header);
+    }
+
+    // Must contain the singular form
+    expect(markdown).toContain("| 1 oferta |");
+
+    // Must not contain the plural form as a word boundary match
+    expect(markdown).not.toMatch(/1 ofertas\b/);
+
+    // Should not contain stray words
+    expect(markdown).not.toMatch(/murcielago/iu);
+
+    // Must end with the snapshot disclaimer (no trailing newline)
+    expect(
+      markdown
+        .trimEnd()
+        .endsWith(
+          "El informe no incluye marcas de tiempo y sus recuentos corresponden a la instantánea controlada.",
+        ),
+    ).toBe(true);
   });
 });
