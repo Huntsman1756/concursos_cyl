@@ -2662,6 +2662,98 @@ describe("buildSnapshots", { timeout: BUILD_SNAPSHOTS_TEST_TIMEOUT }, () => {
     expect(retained).toEqual(publishedIds.slice(1).sort());
   });
 
+  it("retains snapshots referenced by every terminal FP expansion state", async () => {
+    const root = await temporaryRoot();
+    await buildSnapshots({
+      rootDirectory: root,
+      ...fixedOptions,
+      now: () => new Date("2026-12-01T10:00:00.000Z"),
+    });
+    const snapshotId = (
+      await readManifest(root)
+    ).resourceSnapshots.programs.resourcePath
+      .split("/")
+      .at(-2)!;
+    const expansionDirectory = join(root, "analysis", "fp_coverage_expansion");
+    await mkdir(expansionDirectory, { recursive: true });
+    for (const [index, state] of [
+      "completed",
+      "deferred",
+      "discarded",
+    ].entries()) {
+      await writeFile(
+        join(expansionDirectory, `TER0${index + 1}M.json`),
+        JSON.stringify({ state, snapshotId }),
+        "utf8",
+      );
+    }
+
+    for (let day = 2; day <= 4; day += 1) {
+      await buildSnapshots({
+        rootDirectory: root,
+        ...fixedOptions,
+        now: () => new Date(`2026-12-0${day}T10:00:00.000Z`),
+      });
+    }
+
+    await expect(
+      access(join(root, "public", "data", "v1", "snapshots", snapshotId)),
+    ).resolves.toBeUndefined();
+  });
+
+  it("does not pin snapshots referenced only by non-terminal FP expansions", async () => {
+    const root = await temporaryRoot();
+    await buildSnapshots({
+      rootDirectory: root,
+      ...fixedOptions,
+      now: () => new Date("2027-01-01T10:00:00.000Z"),
+    });
+    const snapshotId = (
+      await readManifest(root)
+    ).resourceSnapshots.programs.resourcePath
+      .split("/")
+      .at(-2)!;
+    const expansionDirectory = join(root, "analysis", "fp_coverage_expansion");
+    await mkdir(expansionDirectory, { recursive: true });
+    for (const [index, state] of ["not_started", "in_progress"].entries()) {
+      await writeFile(
+        join(expansionDirectory, `OPEN0${index + 1}M.json`),
+        JSON.stringify({ state, snapshotId }),
+        "utf8",
+      );
+    }
+
+    for (let day = 2; day <= 4; day += 1) {
+      await buildSnapshots({
+        rootDirectory: root,
+        ...fixedOptions,
+        now: () => new Date(`2027-01-0${day}T10:00:00.000Z`),
+      });
+    }
+
+    await expect(
+      access(join(root, "public", "data", "v1", "snapshots", snapshotId)),
+    ).rejects.toMatchObject({ code: "ENOENT" });
+  });
+
+  it.each([
+    ["invalid JSON", "{"],
+    ["unknown state", JSON.stringify({ state: "unknown" })],
+    [
+      "invalid snapshot ID",
+      JSON.stringify({ state: "completed", snapshotId: "not-a-snapshot" }),
+    ],
+  ])("rejects an FP expansion with %s", async (_label, contents) => {
+    const root = await temporaryRoot();
+    const expansionDirectory = join(root, "analysis", "fp_coverage_expansion");
+    await mkdir(expansionDirectory, { recursive: true });
+    await writeFile(join(expansionDirectory, "INVALID.json"), contents, "utf8");
+
+    await expect(
+      buildSnapshots({ rootDirectory: root, ...fixedOptions }),
+    ).rejects.toThrow(/Invalid expansion file INVALID\.json/u);
+  });
+
   it("removes a crash orphan newer than the committed manifest on startup", async () => {
     const root = await temporaryRoot();
     const publishedIds: string[] = [];
