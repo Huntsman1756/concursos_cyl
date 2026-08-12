@@ -192,7 +192,19 @@ function Add-ObservedTokensFromLine {
 function Stop-WorkerProcessTree {
     param([System.Diagnostics.Process]$Process)
     if (-not $Process -or $Process.HasExited) { return }
-    & taskkill.exe /PID $Process.Id /T /F 2>&1 | Out-Null
+    # The process may exit between HasExited and taskkill.  On Windows PowerShell,
+    # taskkill's harmless "process not found" stderr becomes a terminating error
+    # because the broker runs with ErrorActionPreference=Stop.  Termination is
+    # best-effort; budget/timeout telemetry must still be persisted.
+    $previousErrorActionPreference = $ErrorActionPreference
+    try {
+        $ErrorActionPreference = 'SilentlyContinue'
+        & taskkill.exe /PID $Process.Id /T /F *> $null
+    } catch {
+        # A raced process exit is already the desired end state.
+    } finally {
+        $ErrorActionPreference = $previousErrorActionPreference
+    }
     try { $Process.WaitForExit(5000) | Out-Null } catch {}
 }
 
