@@ -51,12 +51,16 @@ function expansionSnapshotHash(snapshotId: string) {
 }
 
 describe("TMV02M expansion slot", () => {
-  it("proves the frozen public baseline has no approved TMV02M relation", async () => {
+  it("proves batch 6 supersedes the historical deferred decision", async () => {
     const manifest = await readJson<{
       resourceSnapshots: { trainingOccupationLinks: { resourcePath: string } };
     }>(resolve(rootDirectory, "public/data/v1/manifest.json"));
     const links = await readJson<
-      { trainingProgramKey: string; reviewStatus: string }[]
+      {
+        trainingProgramKey: string;
+        occupationId: string;
+        reviewStatus: string;
+      }[]
     >(
       resolve(
         rootDirectory,
@@ -72,7 +76,9 @@ describe("TMV02M expansion slot", () => {
           link.trainingProgramKey === "TMV02M" &&
           link.reviewStatus === "approved",
       ),
-    ).toEqual([]);
+    ).toEqual([
+      expect.objectContaining({ occupationId: "occupation:cno11:7401" }),
+    ]);
   });
 
   it("validates the deferred attempt with exhaustive BOE outputs and no publication", async () => {

@@ -65,6 +65,10 @@ function resourceRows(freeze: ContestFreeze): string {
 
 function renderApplicationSummary(freeze: ContestFreeze): string {
   const { coverage, offers } = freeze;
+  const deferredPrograms =
+    coverage.deferredProgramCount === 0
+      ? "ninguno"
+      : list(coverage.deferredPrograms);
   return `# SALIDA CyL
 
 ## Problema y audiencia
@@ -85,7 +89,7 @@ La interfaz permite elegir directamente cualquiera de los ${freeze.manifest.reso
 - Alias aprobados: **${coverage.approvedAliasCount}**.
 - **${offers.matchedOfferCount} de las ${spanishInteger(freeze.manifest.resourceSnapshots.jobOffers.recordCount)} ofertas de la instantánea** quedan alcanzadas por relaciones publicadas (unión de IDs).
 - Relaciones revisadas sin oferta alcanzada: **${coverage.zeroReviewedRelationCount}**.
-- Programas diferidos por evidencia insuficiente: ${list(coverage.deferredPrograms)}.
+- Programas diferidos por evidencia insuficiente: ${deferredPrograms}.
 
 Las claves de modalidad se informan aparte de las identidades de cualificación. Una relación revisada sin coincidencia no se convierte en una afirmación sobre la ausencia de oportunidades; un programa diferido permanece fuera de las afirmaciones revisadas.
 
@@ -186,6 +190,10 @@ function renderLimitations(
   freeze: ContestFreeze,
   deployment: ContestDeploymentEvidence,
 ): string {
+  const deferredCoverage =
+    freeze.coverage.deferredProgramCount === 0
+      ? "No hay programas diferidos en esta instantánea."
+      : `Los programas diferidos (${list(freeze.coverage.deferredPrograms)}) no se presentan como cobertura revisada.`;
   const releaseStatus =
     deployment.status === "verified" && deployment.commitSha !== null
       ? `El despliegue público está verificado para el commit \`${deployment.commitSha}\`; la verificación de rutas y recursos queda registrada en \`docs/contest/release-evidence.json\`.`
@@ -196,7 +204,7 @@ function renderLimitations(
 
 La publicación trabaja con un snapshot direccionado por manifest. Las cifras describen los registros publicados por las fuentes oficiales en esa captura; una relación revisada sin coincidencias no se interpreta como ausencia del mercado laboral.
 
-Las relaciones formación–ocupación se publican solo cuando la evidencia oficial y la revisión del catálogo sostienen el vínculo exacto. Los programas diferidos (${list(freeze.coverage.deferredPrograms)}) no se presentan como cobertura revisada. Los alias son formas auditadas del catálogo, no ampliaciones automáticas por similitud.
+Las relaciones formación–ocupación se publican solo cuando la evidencia oficial y la revisión del catálogo sostienen el vínculo exacto. ${deferredCoverage} Los alias son formas auditadas del catálogo, no ampliaciones automáticas por similitud.
 
 ## Ingresos de titulados
 

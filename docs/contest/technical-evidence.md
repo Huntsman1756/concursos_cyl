@@ -5,7 +5,7 @@
 <!-- prettier-ignore -->
 | Campo | Valor |
 | --- | --- |
-| Commit fuente | `ae8a8f10b2d872c3cb76b7f86b4f489535c976b3` |
+| Commit fuente | `e68f2ca7bb98af290dd6d25797398cf4d778d590` |
 | Manifest | `public/data/v1/manifest.json` |
 | SHA-256 del manifest | `90f96ed747c3d369c54c816701783cd0473e07d8a80d2b63f63cb9a1f6dec149` |
 | Generado | 2026-08-12T18:28:23.819Z |
@@ -41,7 +41,7 @@
 - 6 programas con coincidencias y 44 programas revisados sin coincidencias.
 - 6 relaciones alcanzadas y 129 relaciones revisadas sin oferta alcanzada.
 - Unión de coincidencias: 46 IDs; delta marginal de la ampliación: 0 IDs.
-- Intentos terminales: 11 completado, 3 diferidos, 0 descartados; 0 reservas no intentadas.
+- Intentos terminales: 11 completado, 0 diferidos, 0 descartados; 0 reservas no intentadas.
 
 La cifra de ofertas es una unión de IDs de ofertas que pasan las reglas de matching con los datos publicados. No es un recuento de todo el mercado ni una proyección.
 

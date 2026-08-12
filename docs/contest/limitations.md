@@ -4,7 +4,7 @@
 
 La publicación trabaja con un snapshot direccionado por manifest. Las cifras describen los registros publicados por las fuentes oficiales en esa captura; una relación revisada sin coincidencias no se interpreta como ausencia del mercado laboral.
 
-Las relaciones formación–ocupación se publican solo cuando la evidencia oficial y la revisión del catálogo sostienen el vínculo exacto. Los programas diferidos (ADG01M, IMA03M, TMV02M) no se presentan como cobertura revisada. Los alias son formas auditadas del catálogo, no ampliaciones automáticas por similitud.
+Las relaciones formación–ocupación se publican solo cuando la evidencia oficial y la revisión del catálogo sostienen el vínculo exacto. No hay programas diferidos en esta instantánea. Los alias son formas auditadas del catálogo, no ampliaciones automáticas por similitud.
 
 ## Ingresos de titulados
 
@@ -16,4 +16,4 @@ La representatividad de las tablas nacionales es la declarada por el Ministerio:
 
 Las rutas internas son recorridos de producto; la candidatura usa únicamente la raíz pública. La experiencia no requiere cuentas ni persistencia del navegador. La accesibilidad, el responsive y la semántica se deben confirmar de nuevo en la sesión de capturas finales.
 
-El objetivo de ampliar la cobertura está condicionado a evidencia: el freeze actual registra 39 cualificaciones distintas y deja 3 programas diferidos. El despliegue y la verificación pública aún están pendientes y no forman parte de este documento como hechos consumados.
+El objetivo de ampliar la cobertura está condicionado a evidencia: el freeze actual registra 39 cualificaciones distintas y deja 0 programas diferidos. El despliegue y la verificación pública aún están pendientes y no forman parte de este documento como hechos consumados.

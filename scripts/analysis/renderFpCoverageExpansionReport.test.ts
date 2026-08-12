@@ -25,13 +25,13 @@ describe("renderFpCoverageExpansionReport", () => {
 
     expect(result.counts).toMatchObject({
       completed: 11,
-      deferred: 3,
+      deferred: 0,
       discarded: 0,
-      terminal: 14,
-      primaryAttempted: 7,
+      terminal: 11,
+      primaryAttempted: 4,
       reserveAttempted: 7,
-      totalAttempted: 14,
-      primaryUnattempted: 0,
+      totalAttempted: 11,
+      primaryUnattempted: 3,
       reserveUnattempted: 0,
     });
     expect(result.coverage).toMatchObject({
@@ -49,16 +49,13 @@ describe("renderFpCoverageExpansionReport", () => {
     });
     expect(result.offerDeltas).toEqual({
       byProgram: {
-        ADG01M: [],
         AGA03M: [],
         COM02M: [],
         ELE01M: [],
         FME01M: [],
         FME02M: [],
         IMA02M: [],
-        IMA03M: [],
         MAM01M: [],
-        TMV02M: [],
         ELE03S: [],
         AGA01M: [],
         TMV01M: [],
@@ -68,7 +65,7 @@ describe("renderFpCoverageExpansionReport", () => {
     });
     expect(result.coverage.modalityDoubleCount).toBe(false);
     expect(result.time).toMatchObject({
-      totalModeledActiveMinutes: 259,
+      totalModeledActiveMinutes: 205,
       totalReviewerMinutes: 18,
       reviewerMinutesExcluded: true,
     });
@@ -92,8 +89,8 @@ describe("renderFpCoverageExpansionReport", () => {
       (candidate) => !candidate.attempted,
     );
 
-    expect(attempted).toHaveLength(14);
-    expect(unattempted).toHaveLength(0);
+    expect(attempted).toHaveLength(11);
+    expect(unattempted).toHaveLength(3);
     expect(
       attempted.find((candidate) => candidate.programKey === "MAM01M"),
     ).toMatchObject({
@@ -101,7 +98,11 @@ describe("renderFpCoverageExpansionReport", () => {
       rank: 8,
       state: "completed",
     });
-    expect(unattempted.map((candidate) => candidate.programKey)).toEqual([]);
+    expect(unattempted.map((candidate) => candidate.programKey)).toEqual([
+      "TMV02M",
+      "ADG01M",
+      "IMA03M",
+    ]);
   });
 
   it("renders the checked markdown byte-for-byte", async () => {

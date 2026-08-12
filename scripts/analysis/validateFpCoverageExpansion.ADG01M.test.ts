@@ -47,12 +47,16 @@ function snapshotHash(snapshotId: string) {
 }
 
 describe("ADG01M expansion slot", () => {
-  it("proves the frozen public baseline has no approved ADG01M relation", async () => {
+  it("proves batch 6 supersedes the historical deferred decision", async () => {
     const manifest = await readJson<{
       resourceSnapshots: { trainingOccupationLinks: { resourcePath: string } };
     }>(resolve(rootDirectory, "public/data/v1/manifest.json"));
     const links = await readJson<
-      { trainingProgramKey: string; reviewStatus: string }[]
+      {
+        trainingProgramKey: string;
+        occupationId: string;
+        reviewStatus: string;
+      }[]
     >(
       resolve(
         rootDirectory,
@@ -68,7 +72,9 @@ describe("ADG01M expansion slot", () => {
           link.trainingProgramKey === "ADG01M" &&
           link.reviewStatus === "approved",
       ),
-    ).toEqual([]);
+    ).toEqual([
+      expect.objectContaining({ occupationId: "occupation:cno11:4113" }),
+    ]);
   });
 
   it("validates the deferred attempt with exhaustive BOE outputs and no publication", async () => {

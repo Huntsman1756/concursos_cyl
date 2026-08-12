@@ -18,7 +18,7 @@ La interfaz permite elegir directamente cualquiera de los 187 ciclos de FP o fil
 - Alias aprobados: **102**.
 - **46 de las 1.054 ofertas de la instantánea** quedan alcanzadas por relaciones publicadas (unión de IDs).
 - Relaciones revisadas sin oferta alcanzada: **129**.
-- Programas diferidos por evidencia insuficiente: ADG01M, IMA03M, TMV02M.
+- Programas diferidos por evidencia insuficiente: ninguno.
 
 Las claves de modalidad se informan aparte de las identidades de cualificación. Una relación revisada sin coincidencia no se convierte en una afirmación sobre la ausencia de oportunidades; un programa diferido permanece fuera de las afirmaciones revisadas.
 

@@ -173,8 +173,8 @@
   "limitation": "The slot accepts only the direct section-chief and seller boundaries. Manager, proprietor, online and commercial-adviser outputs remain rejected; the in-memory overlay reaches no new offer IDs and no aliases are added.",
   "reviewedCommit": "14db13c8a7948100ff4e4238de01b357a8ca582e",
   "reviewedCommitAt": "2026-08-09T15:45:15.000Z",
-  "snapshotId": "20260812170914964-b136734b1f03",
-  "snapshotHash": "43e115580c49ba8677139b1d6d644b9fad7423b523880cc088dd608e093f7f03",
+  "snapshotId": "20260812182823819-b36dc2a9111a",
+  "snapshotHash": "fe94ed013102bc124b48e99638858559d3016462e7a5f84a1eb37880f256d1d8",
   "publicParity": {
     "publishedRelationKeys": [
       "COM02M|occupation:cno11:5210",

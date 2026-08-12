@@ -36,6 +36,14 @@ import {
 } from "./validateFpCoverageExpansion";
 
 const terminalStates = ["completed", "deferred", "discarded"] as const;
+// These records belong to the original fail-closed pass. Batch 6 later
+// superseded their relation decisions with output-by-output official evidence.
+// Keep the JSON for audit history, but do not reconcile it as current state.
+export const supersededExpansionAttemptKeys = new Set([
+  "ADG01M",
+  "IMA03M",
+  "TMV02M",
+]);
 const baselineReviewedQualifications = [
   "qualification:EOC01M",
   "qualification:HOT01M",
@@ -692,7 +700,11 @@ export async function loadFpCoverageExpansionInputs(rootDirectory: string) {
   ];
   const resources = await loadEffectiveExpansionResources(rootDirectory);
   const independentlyComputed = new Map<string, IndependentlyComputedAttempt>();
-  for (const attempt of attempts.values()) {
+  for (const [programKey, attempt] of attempts) {
+    if (supersededExpansionAttemptKeys.has(programKey)) {
+      attempts.delete(programKey);
+      continue;
+    }
     const candidate = candidates.find(
       (entry) => entry.programKey === attempt.programKey,
     );
@@ -740,6 +752,7 @@ export async function refreshFpCoverageExpansionAttempts(
     const attempt = FpExpansionAttemptSchema.parse(
       JSON.parse(await readFile(attemptPath, "utf8")),
     );
+    if (supersededExpansionAttemptKeys.has(attempt.programKey)) continue;
     const recomputed = computeIndependentAttempt(attempt, resources);
     const refreshed = FpExpansionAttemptSchema.parse({
       ...attempt,
@@ -848,7 +861,7 @@ export async function buildFpCoverageExpansionReport(
         terminalDistinctQualificationTotal >= 12
           ? `The evidence-backed total exceeds the target by ${terminalDistinctQualificationTotal - 12}; completion covers ${completedProgramKeys.join(
               " and ",
-            )}, while ${deferredCount} terminal attempts remain deferred and unpublished.`
+            )}${deferredCount === 0 ? ". No current terminal attempt remains deferred." : `, while ${deferredCount} terminal attempts remain deferred and unpublished.`}`
           : `Evidence-backed completion covers ${completedProgramKeys.join(
               " and ",
             )}; ${deferredCount} terminal attempts were deferred, ${reserveUnattemptedCount} reserves remain unattempted, and no additional programme met the evidence threshold needed for 12 distinct qualifications.`,
@@ -945,7 +958,7 @@ Source cutoff: \`${parsed.sourceCutoffAt}\`
 - Target: ${parsed.coverage.targetDistinctQualifications}; remaining gap: ${parsed.coverage.remainingGap}.
 - Publication status: ${
     parsed.coverage.publicationStatus === "published_task_a2_12"
-      ? `${publishedCompletedPrograms.join(" and ")} are published in the current immutable snapshot; deferred attempts remain unpublished.`
+      ? `${publishedCompletedPrograms.join(" and ")} are published in the current immutable snapshot${parsed.counts.deferred === 0 ? "; no current terminal attempt remains deferred." : "; deferred attempts remain unpublished."}`
       : "terminal evidence is supported for completed attempts; public snapshot publication remains pending Task A2.12."
   }
 - ${parsed.coverage.remainingGap === 0 ? "Coverage rationale" : "Below-target reason"}: ${parsed.coverage.belowTargetReason}

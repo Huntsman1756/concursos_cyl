@@ -43,7 +43,7 @@ describe("renderFpOfficialAliasPassReport", () => {
     expect(manifest.resourceSnapshots.occupations.recordCount).toBe(82);
     expect(manifest.resourceSnapshots.occupationAliases.recordCount).toBe(102);
     expect(manifest.resourceSnapshots.trainingOccupationLinks.recordCount).toBe(
-      131,
+      135,
     );
     expect(report).toContain("no estiman el empleo total");
     expect(report).toContain(
