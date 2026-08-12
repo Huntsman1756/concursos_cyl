@@ -839,8 +839,6 @@ function generateMarkdownReport(
     if (group.length === 0) continue;
     lines.push(`### ${label}`);
     lines.push("");
-    lines.push("| Alias | Programa | Ocupación | Ofertas | Causa |");
-    lines.push("| --- | --- | --- | --- | --- |");
     lines.push(
       "| Alias | Programa | Ocupación | Ofertas | Causa | Colisiones |",
     );
@@ -851,7 +849,7 @@ function generateMarkdownReport(
           ? c.normalizedCollisionOccupations.join(", ")
           : "—";
       lines.push(
-        `| \`${c.aliasCandidate}\` | ${c.programKey} (${c.programTitle}) | ${c.occupationLabel} (${c.occupationId}) | ${c.occurrenceCount} ofertas | ${c.reasonCode} | ${collisionText} |`,
+        `| \`${c.aliasCandidate}\` | ${c.programKey} (${c.programTitle}) | ${c.occupationLabel} (${c.occupationId}) | ${c.occurrenceCount === 1 ? "1 oferta" : `${c.occurrenceCount} ofertas`} | ${c.reasonCode} | ${collisionText} |`,
       );
     }
     lines.push("");
@@ -877,7 +875,7 @@ function generateMarkdownReport(
   }
   lines.push("");
   lines.push(
-    "[Este informe es determinístico y carece de marcas de tiempo murciélago. Los recuentos corresponden a la instantánea controlada.]",
+    "El informe no incluye marcas de tiempo y sus recuentos corresponden a la instantánea controlada.",
   );
 
   return lines.join("\n");
