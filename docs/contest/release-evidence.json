@@ -1,11 +1,11 @@
 {
   "schemaVersion": 1,
   "status": "deployed_verified",
-  "recordedAt": "2026-08-11T23:33:46Z",
+  "recordedAt": "2026-08-12T00:22:22Z",
   "expectedRootUrl": "https://salida-cyl.157-90-22-40.sslip.io/",
   "coverageFreezeCommitSha": "7d794b0f2b473ed4ee67f0f8a14eeb24473e4c2d",
-  "publicationCommitSha": "f1aeb187ca243165efc63753840e5eb76db9ba4c",
-  "localReviewHeadSha": "f1aeb187ca243165efc63753840e5eb76db9ba4c",
+  "publicationCommitSha": "0914a8b926f97f79d4965879779692c8ee476b91",
+  "localReviewHeadSha": "0914a8b926f97f79d4965879779692c8ee476b91",
   "captureProductCommitSha": "f423a208a7f8c140a1dfa342e8689d3b6d967e94",
   "manifest": {
     "snapshotId": "20260811222221076-727a2dfa2791",
@@ -29,7 +29,7 @@
       "status": "passed",
       "captureCount": 9,
       "command": "npm exec -- tsx scripts/release/validateContestEvidenceManifest.ts",
-      "note": "Las 9 capturas validadas pertenecen a commits anteriores (captureProductCommitSha f423a208). Debe recapturarse evidencia visual del commit desplegado (f1aeb187) antes de la entrega final."
+      "note": "Las 9 capturas validadas pertenecen a commits anteriores (captureProductCommitSha f423a208). Debe recapturarse evidencia visual del commit desplegado (0914a8b) antes de la entrega final."
     },
     "focusedVitest": {
       "status": "passed",
@@ -55,12 +55,12 @@
       "testFiles": 83,
       "passedTestFiles": 82,
       "skippedTestFiles": 1,
-      "tests": 759,
-      "passed": 757,
+      "tests": 762,
+      "passed": 760,
       "skipped": 2,
-      "durationSeconds": 258.59,
+      "durationSeconds": 254.19,
       "command": "npm test -- --testTimeout=60000",
-      "workflowRunId": "31546107126"
+      "workflowRunId": "31549229861"
     },
     "playwright": {
       "status": "passed",
@@ -113,11 +113,11 @@
   },
   "deployment": {
     "status": "verified",
-    "commitSha": "f1aeb187ca243165efc63753840e5eb76db9ba4c",
-    "workflowRunId": "31546107126",
-    "workflowUrl": "https://github.com/Huntsman1756/concursos_cyl/actions/runs/31546107126",
+    "commitSha": "0914a8b926f97f79d4965879779692c8ee476b91",
+    "workflowRunId": "31549229861",
+    "workflowUrl": "https://github.com/Huntsman1756/concursos_cyl/actions/runs/31549229861",
     "liveRootVerified": true,
-    "verifiedAt": "2026-08-11T23:33:46Z"
+    "verifiedAt": "2026-08-12T00:22:22Z"
   },
   "publicVerification": {
     "rootUrl": "https://salida-cyl.157-90-22-40.sslip.io/",
@@ -158,6 +158,6 @@
   },
   "blockers": [
     "Contest portal submission still requires the final application text, human-only fields, and immediate explicit submit authorization.",
-    "Las 9 capturas validadas en evidenceManifest pertenecen a commits anteriores (captureProductCommitSha f423a208). Debe recapturarse evidencia visual del commit desplegado (f1aeb187) antes de la entrega final."
+    "Las 9 capturas validadas en evidenceManifest pertenecen a commits anteriores (captureProductCommitSha f423a208). Debe recapturarse evidencia visual del commit desplegado (0914a8b) antes de la entrega final."
   ]
 }

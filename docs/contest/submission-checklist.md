@@ -13,9 +13,9 @@
 - URL raíz a presentar: [https://salida-cyl.157-90-22-40.sslip.io/](https://salida-cyl.157-90-22-40.sslip.io/)
 - Commit fuente del freeze: `6b37a4c3eb5be85bd6eb7fe4892e9d8a904f9ed9`.
 - Snapshot: `20260811222221076-727a2dfa2791`.
-- Commit desplegado: `f1aeb187ca243165efc63753840e5eb76db9ba4c`.
-- Run del workflow: `31546107126`.
-- Evidencia visual: las 9 capturas son **históricas** (`captureProductCommitSha f423a208a7f8c140a1dfa342e8689d3b6d967e94`; commit desplegado `f1aeb187ca243165efc63753840e5eb76db9ba4c`). La recaptura del commit desplegado está pendiente.
+- Commit desplegado: `0914a8b926f97f79d4965879779692c8ee476b91`.
+- Run del workflow: `31549229861`.
+- Evidencia visual: las 9 capturas son **históricas** (`captureProductCommitSha f423a208a7f8c140a1dfa342e8689d3b6d967e94`; commit desplegado `0914a8b926f97f79d4965879779692c8ee476b91`). La recaptura del commit desplegado está pendiente.
 
 ## Gate final
 
