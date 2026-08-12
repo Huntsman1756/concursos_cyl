@@ -10,15 +10,15 @@ La interfaz permite elegir directamente cualquiera de los 187 ciclos de FP o fil
 
 ## Cobertura congelada
 
-- Instantánea publicada: `20260812151418614-7a7a10e4ad15`.
+- Instantánea publicada: `20260812160320251-68effb257b28`.
 - Grupos primarios CNO-11 consultables: **502**.
-- **20 cualificaciones distintas**.
-- Claves de modalidad públicas: **24** (ADG02S, ADG02SD, AGA01M, AGA03M, COM01B, COM02M, ELE03S, EOC01M, FME01M, FME02M, HOT01M, IFC01M, IFC01MD, IFC03S, IFC03SD, IMA02M, IMP02M, MAM01M, SAN02M, SAN21, SSC01M, SSC01S, SSC01SD, TMV01M).
-- Relaciones ocupacionales aprobadas: **60**.
-- Alias aprobados: **37**.
+- **28 cualificaciones distintas**.
+- Claves de modalidad públicas: **36** (ADG01B, ADG02S, ADG02SD, AGA01M, AGA03M, COM01B, COM02M, ELE01B, ELE01M, ELE01MD, ELE03S, EOC01M, FME01M, FME02M, HOT01B, HOT01M, IFC01M, IFC01MD, IFC01S, IFC01SD, IFC02S, IFC02SD, IFC03S, IFC03SD, IMA02M, IMP02M, MAM01M, SAN02M, SAN21, SSC01M, SSC01S, SSC01SD, SSC03S, SSC03SD, TMV01B, TMV01M).
+- Relaciones ocupacionales aprobadas: **100**.
+- Alias aprobados: **71**.
 - **46 de las 1.054 ofertas de la instantánea** quedan alcanzadas por relaciones publicadas (unión de IDs).
-- Relaciones revisadas sin oferta alcanzada: **55**.
-- Programas diferidos por evidencia insuficiente: ADG01M, ELE01M, IMA03M, TMV02M.
+- Relaciones revisadas sin oferta alcanzada: **95**.
+- Programas diferidos por evidencia insuficiente: ADG01M, IMA03M, TMV02M.
 
 Las claves de modalidad se informan aparte de las identidades de cualificación. Una relación revisada sin coincidencia no se convierte en una afirmación sobre la ausencia de oportunidades; un programa diferido permanece fuera de las afirmaciones revisadas.
 

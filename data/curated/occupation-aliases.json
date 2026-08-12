@@ -282,5 +282,243 @@
     "reviewStatus": "approved",
     "reviewedAt": "2026-08-12",
     "mappingVersion": "1.0.0"
+  },
+  {
+    "alias": "Técnico en administración de sistemas",
+    "occupationId": "occupation:cno11:2722",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-12",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "alias": "Técnico en administración de base de datos",
+    "occupationId": "occupation:cno11:2721",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-12",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "alias": "Técnico de redes",
+    "occupationId": "occupation:cno11:3813",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-12",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "alias": "Técnico en entornos web",
+    "occupationId": "occupation:cno11:3814",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-12",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "alias": "Electricista de construcción",
+    "occupationId": "occupation:cno11:7510",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-12",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "alias": "Instalador-mantenedor de antenas",
+    "occupationId": "occupation:cno11:7533",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-12",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "alias": "Instalador de telecomunicaciones en edificios de viviendas",
+    "occupationId": "occupation:cno11:7533",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-12",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "alias": "Instalador-mantenedor de equipos e instalaciones telefónicas",
+    "occupationId": "occupation:cno11:7533",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-12",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "alias": "Montador de instalaciones de energía solar fotovoltaica",
+    "occupationId": "occupation:cno11:7294",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-12",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "alias": "Auxiliar de archivo",
+    "occupationId": "occupation:cno11:4210",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-12",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "alias": "Clasificador repartidor de correspondencia",
+    "occupationId": "occupation:cno11:4221",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-12",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "alias": "Grabador verificador de datos",
+    "occupationId": "occupation:cno11:4301",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-12",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "alias": "Auxiliar de información",
+    "occupationId": "occupation:cno11:4411",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-12",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "alias": "Telefonista de servicios centrales",
+    "occupationId": "occupation:cno11:4423",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-12",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "alias": "Auxiliar de venta",
+    "occupationId": "occupation:cno11:5220",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-12",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "alias": "Operador de cobro",
+    "occupationId": "occupation:cno11:5500",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-12",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "alias": "Ordenanza de oficina",
+    "occupationId": "occupation:cno11:9431",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-12",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "alias": "Operario de instalaciones eléctricas de baja tensión",
+    "occupationId": "occupation:cno11:7510",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-12",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "alias": "Ayudante de montador de sistemas microinformáticos",
+    "occupationId": "occupation:cno11:7533",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-12",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "alias": "Operador de ensamblado de equipos eléctricos y electrónicos",
+    "occupationId": "occupation:cno11:8202",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-12",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "alias": "Programador de aplicaciones",
+    "occupationId": "occupation:cno11:3820",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-12",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "alias": "Programador de software",
+    "occupationId": "occupation:cno11:3820",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-12",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "alias": "Programador de juegos de ordenador",
+    "occupationId": "occupation:cno11:2713",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-12",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "alias": "Operario de taller de mecánica rápida",
+    "occupationId": "occupation:cno11:7401",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-12",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "alias": "Ayudante de carrocería de vehículos",
+    "occupationId": "occupation:cno11:7313",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-12",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "alias": "Instalador de lunas de vehículos",
+    "occupationId": "occupation:cno11:7293",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-12",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "alias": "Ayudante de cocina",
+    "occupationId": "occupation:cno11:9310",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-12",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "alias": "Auxiliar de cocina",
+    "occupationId": "occupation:cno11:9310",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-12",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "alias": "Ayudante de camarero en sala",
+    "occupationId": "occupation:cno11:5120",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-12",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "alias": "Ayudante de camarero en bar-cafetería",
+    "occupationId": "occupation:cno11:5120",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-12",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "alias": "Integrador social",
+    "occupationId": "occupation:cno11:3713",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-12",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "alias": "Técnico de integración social",
+    "occupationId": "occupation:cno11:3713",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-12",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "alias": "Técnico educador de educación especial",
+    "occupationId": "occupation:cno11:2312",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-12",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "alias": "Técnico educador de personas con discapacidad",
+    "occupationId": "occupation:cno11:2312",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-12",
+    "mappingVersion": "1.0.0"
   }
 ]

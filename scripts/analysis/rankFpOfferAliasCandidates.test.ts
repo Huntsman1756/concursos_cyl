@@ -20,11 +20,17 @@ import {
 import type { OfferPublishedRequirements } from "../../src/domain/requirements";
 import {
   FpOfferAliasCandidateReportSchema,
-  rankFpOfferAliasCandidates,
+  rankFpOfferAliasCandidates as computeFpOfferAliasCandidates,
   normalizedText,
 } from "./rankFpOfferAliasCandidates";
 
 const rootDirectory = resolve(__dirname, "../..");
+let rankedResult: ReturnType<typeof computeFpOfferAliasCandidates> | undefined;
+
+function rankFpOfferAliasCandidates() {
+  rankedResult ??= computeFpOfferAliasCandidates();
+  return rankedResult;
+}
 
 async function readJson<T>(path: string): Promise<T> {
   return JSON.parse(await readFile(path, "utf8")) as T;
@@ -97,7 +103,7 @@ describe("rankFpOfferAliasCandidates – manifest-addressed loading", () => {
 
     expect(programs).toBeInstanceOf(Array);
     expect(offers.length).toBe(1054);
-    expect(links.length).toBe(60);
+    expect(links.length).toBe(100);
     expect(requirements.length).toBeGreaterThan(0);
     expect(programs.length).toBeGreaterThan(0);
     expect(occupations.length).toBeGreaterThan(0);
