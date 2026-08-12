@@ -142,6 +142,12 @@ describe("SSC01M official alias audit", () => {
         reasonCode: "semantic_broadening",
       },
       {
+        alias: "Auxiliar de ayuda a domicilio",
+        occupationId: "occupation:cno11:5710",
+        disposition: "accepted",
+        reasonCode: "literal_boe_program_output",
+      },
+      {
         alias: "Auxiliares de ayuda a personas dependientes a domicilio",
         occupationId: "occupation:cno11:5710",
         disposition: "accepted",

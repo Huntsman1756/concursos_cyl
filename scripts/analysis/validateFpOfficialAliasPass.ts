@@ -97,7 +97,10 @@ type AcceptedAliasReview = {
   alias: string;
   occupationId: string;
   disposition: "accepted";
-  reasonCode: "literal_ine_classification" | "literal_sepe_classification";
+  reasonCode:
+    | "literal_ine_classification"
+    | "literal_sepe_classification"
+    | "literal_boe_program_output";
   sourceUrl: string;
   sourceQuote: string;
   acceptedProgramOutputLabel: string;
@@ -290,6 +293,34 @@ function assertAliasBoundary(
   );
 }
 
+function assertLiteralBoeProgramOutput(review: AcceptedAliasReview): void {
+  const url = new URL(review.sourceUrl);
+  assert(
+    url.protocol === "https:" &&
+      url.username.length === 0 &&
+      url.password.length === 0 &&
+      (url.hostname === "boe.es" || url.hostname.endsWith(".boe.es")),
+    `literal_boe_program_output requires source host boe.es, found: ${url.hostname}.`,
+  );
+  assert(
+    review.acceptedProgramOutputSourceUrl === review.sourceUrl,
+    `literal_boe_program_output requires acceptedProgramOutputSourceUrl to match sourceUrl.`,
+  );
+  assert(
+    review.acceptedProgramOutputSourceQuote === review.sourceQuote,
+    `literal_boe_program_output requires acceptedProgramOutputSourceQuote to match sourceQuote.`,
+  );
+  const terminalRemoved = review.acceptedProgramOutputLabel
+    .replace(/[\u200B\uFEFF]+/g, "")
+    .replace(/[.!?„"''\u2026]+$/gu, "");
+  const normalizedAlias = normalizeMatcherAlias(review.alias);
+  const normalizedOutput = normalizeEvidencePhrase(terminalRemoved);
+  assert(
+    normalizedAlias === normalizedOutput,
+    `literal_boe_program_output requires the normalized alias to match the complete normalized output after terminal punctuation removal.`,
+  );
+}
+
 export function canonicalAliasIdentity(alias: {
   alias: string;
   occupationId: string;
@@ -373,11 +404,18 @@ export function validateProgramOfficialAliasReview(
     );
     seenReviewIdentities.add(identity);
 
-    const source = isIneOrSepeClassification(review.sourceUrl);
-    assert(
-      source !== undefined,
-      `Alias review ${review.alias} requires an HTTPS INE or SEPE classification URL.`,
-    );
+    const isBoeProgramOutputPath =
+      review.disposition === "accepted" &&
+      review.reasonCode === "literal_boe_program_output";
+
+    let source: "ine" | "sepe" | undefined;
+    if (!isBoeProgramOutputPath) {
+      source = isIneOrSepeClassification(review.sourceUrl);
+      assert(
+        source !== undefined,
+        `Alias review ${review.alias} requires an HTTPS INE or SEPE classification URL.`,
+      );
+    }
     assert(
       hasAcceptedProgramOutputBoundary(
         review,
@@ -414,6 +452,12 @@ export function validateProgramOfficialAliasReview(
           `Rejected alias ${review.alias} must be one word for matcher_policy_one_word.`,
         );
       }
+      continue;
+    }
+
+    if (review.reasonCode === "literal_boe_program_output") {
+      assertLiteralBoeProgramOutput(review as AcceptedAliasReview);
+      assertAliasBoundary(review as AcceptedAliasReview, context.pilotResults);
       continue;
     }
 

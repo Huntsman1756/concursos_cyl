@@ -27,7 +27,9 @@
     "data:cno:publish": "tsx scripts/data/publishOfficialOccupationCatalog.ts",
     "data:income:verify": "tsx scripts/data/verifyEducabaseIncome.ts",
     "license:check": "tsx scripts/checkLicenses.ts",
-    "contest:submission:check": "tsx scripts/release/renderContestSubmission.ts"
+    "contest:submission:check": "tsx scripts/release/renderContestSubmission.ts",
+    "analysis:fp:alias-candidates": "tsx scripts/analysis/rankFpOfferAliasCandidates.ts",
+    "analysis:fp:alias-candidates:check": "npm test -- scripts/analysis/rankFpOfferAliasCandidates.test.ts"
   },
   "keywords": [],
   "author": "",

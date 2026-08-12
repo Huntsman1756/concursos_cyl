@@ -173,6 +173,71 @@ describe("FP official alias pass validation", () => {
     );
   });
 
+  it("accepts a valid BOE literal_boe_program_output review through the source guard", async () => {
+    const context = await fixtureContext();
+    const boeAcceptedReview = {
+      schemaVersion: "1.0.0" as const,
+      programKey: "SSC01M",
+      baselineSnapshotId: BASELINE_SNAPSHOT_ID,
+      reviews: [
+        {
+          alias: "Auxiliar de ayuda a domicilio",
+          occupationId: "occupation:cno11:5710",
+          disposition: "accepted",
+          reasonCode: "literal_boe_program_output" as const,
+          sourceUrl: "https://www.boe.es/eli/es/rd/2011/11/04/1593",
+          sourceQuote: "Auxiliar de ayuda a domicilio.",
+          acceptedProgramOutputLabel: "Auxiliar de ayuda a domicilio.",
+          acceptedProgramOutputSourceUrl:
+            "https://www.boe.es/eli/es/rd/2011/11/04/1593",
+          acceptedProgramOutputSourceQuote: "Auxiliar de ayuda a domicilio.",
+          acceptedProgramOutputRelevance: {
+            relationship: "exact_term" as const,
+            outputTerm: "Auxiliar",
+            aliasTerm: "Auxiliar",
+          },
+          reviewedAt: "2026-08-12",
+        },
+      ],
+    };
+
+    expect(() =>
+      validateProgramOfficialAliasReview(boeAcceptedReview, context),
+    ).not.toThrow();
+  });
+
+  it("rejects a rejected BOE review at the source guard", async () => {
+    const context = await fixtureContext();
+    const boeRejectedReview = {
+      schemaVersion: "1.0.0" as const,
+      programKey: "SSC01M",
+      baselineSnapshotId: BASELINE_SNAPSHOT_ID,
+      reviews: [
+        {
+          alias: "Ayudante de farmacia",
+          occupationId: "occupation:cno11:5629",
+          disposition: "rejected",
+          reasonCode: "semantic_broadening" as const,
+          sourceUrl: "https://www.boe.es/eli/es/rd/2011/11/04/1593",
+          sourceQuote: "Ayudante de farmacia.",
+          acceptedProgramOutputLabel:
+            "Cuidador o cuidadora de personas en situación de dependencia en diferentes instituciones y/o domicilios.",
+          acceptedProgramOutputSourceUrl:
+            "https://www.boe.es/eli/es/rd/2011/11/04/1593",
+          acceptedProgramOutputSourceQuote:
+            "Cuidador o cuidadora de personas en situación de dependencia en diferentes instituciones y/o domicilios.",
+          reviewedAt: "2026-08-09",
+          reviewNote:
+            "La asistencia farmacéutica no pertenece al cuidado de dependencia aceptado.",
+        },
+      ],
+    };
+
+    expect(() =>
+      validateProgramOfficialAliasReview(boeRejectedReview, context),
+    ).toThrow(/INE or SEPE/i);
+  });
+
   it("rejects unknown scope, non-authoritative sources, nonliteral text, and source/reason mismatch", async () => {
     const context = await fixtureContext();
     const review = hotReview.reviews[0];
@@ -631,5 +696,105 @@ describe("FP official alias pass validation", () => {
       alias: "Ayudantes de dentista",
       occupationId: "occupation:cno11:5629",
     });
+  });
+
+  it("rejects literal_boe_program_output when sourceUrl host is INE", async () => {
+    const context = await fixtureContext();
+    const boeAcceptedReview = {
+      schemaVersion: "1.0.0" as const,
+      programKey: "SSC01M",
+      baselineSnapshotId: BASELINE_SNAPSHOT_ID,
+      reviews: [
+        {
+          alias: "Auxiliar de ayuda a domicilio",
+          occupationId: "occupation:cno11:5710",
+          disposition: "accepted",
+          reasonCode: "literal_boe_program_output" as const,
+          sourceUrl:
+            "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+          sourceQuote: "Auxiliar de ayuda a domicilio.",
+          acceptedProgramOutputLabel: "Auxiliar de ayuda a domicilio.",
+          acceptedProgramOutputSourceUrl:
+            "https://www.boe.es/eli/es/rd/2011/11/04/1593",
+          acceptedProgramOutputSourceQuote: "Auxiliar de ayuda a domicilio.",
+          acceptedProgramOutputRelevance: {
+            relationship: "exact_term" as const,
+            outputTerm: "Auxiliar",
+            aliasTerm: "Auxiliar",
+          },
+          reviewedAt: "2026-08-12",
+        },
+      ],
+    };
+
+    expect(() =>
+      validateProgramOfficialAliasReview(boeAcceptedReview, context),
+    ).toThrow(/source host boe\.es/);
+  });
+
+  it("rejects literal_boe_program_output when alias does not match the complete normalized output", async () => {
+    const context = await fixtureContext();
+    const boeAcceptedReview = {
+      schemaVersion: "1.0.0" as const,
+      programKey: "SSC01M",
+      baselineSnapshotId: BASELINE_SNAPSHOT_ID,
+      reviews: [
+        {
+          alias: "Auxiliar domiciliario",
+          occupationId: "occupation:cno11:5710",
+          disposition: "accepted",
+          reasonCode: "literal_boe_program_output" as const,
+          sourceUrl: "https://www.boe.es/eli/es/rd/2011/11/04/1593",
+          sourceQuote: "Auxiliar de ayuda a domicilio.",
+          acceptedProgramOutputLabel: "Auxiliar de ayuda a domicilio.",
+          acceptedProgramOutputSourceUrl:
+            "https://www.boe.es/eli/es/rd/2011/11/04/1593",
+          acceptedProgramOutputSourceQuote: "Auxiliar de ayuda a domicilio.",
+          acceptedProgramOutputRelevance: {
+            relationship: "exact_term" as const,
+            outputTerm: "Auxiliar",
+            aliasTerm: "Auxiliar",
+          },
+          reviewedAt: "2026-08-12",
+        },
+      ],
+    };
+
+    expect(() =>
+      validateProgramOfficialAliasReview(boeAcceptedReview, context),
+    ).toThrow(/normalized alias to match the complete normalized output/);
+  });
+
+  it("rejects literal_boe_program_output when sourceQuote alone is altered", async () => {
+    const context = await fixtureContext();
+    const boeAcceptedReview = {
+      schemaVersion: "1.0.0" as const,
+      programKey: "SSC01M",
+      baselineSnapshotId: BASELINE_SNAPSHOT_ID,
+      reviews: [
+        {
+          alias: "Auxiliar de ayuda a domicilio",
+          occupationId: "occupation:cno11:5710",
+          disposition: "accepted",
+          reasonCode: "literal_boe_program_output" as const,
+          sourceUrl: "https://www.boe.es/eli/es/rd/2011/11/04/1593",
+          sourceQuote: "Auxiliar de ayuda alterada.",
+          acceptedProgramOutputLabel: "Auxiliar de ayuda a domicilio.",
+          acceptedProgramOutputSourceUrl:
+            "https://www.boe.es/eli/es/rd/2011/11/04/1593",
+          acceptedProgramOutputSourceQuote: "Auxiliar de ayuda a domicilio.",
+          acceptedProgramOutputRelevance: {
+            relationship: "exact_term" as const,
+            outputTerm: "Auxiliar",
+            aliasTerm: "Auxiliar",
+          },
+          reviewedAt: "2026-08-12",
+        },
+      ],
+    };
+
+    expect(() =>
+      validateProgramOfficialAliasReview(boeAcceptedReview, context),
+    ).toThrow(/acceptedProgramOutputSourceQuote to match sourceQuote/);
   });
 });

@@ -20,6 +20,7 @@ export const TARGET_OCCUPATIONS_BY_PROGRAM = {
 export const AliasReasonCodeSchema = z.enum([
   "literal_ine_classification",
   "literal_sepe_classification",
+  "literal_boe_program_output",
   "official_evidence_absent",
   "official_evidence_indirect",
   "normalized_collision",
@@ -60,6 +61,7 @@ export const OfficialAliasReviewSchema = z.discriminatedUnion("disposition", [
     reasonCode: z.enum([
       "literal_ine_classification",
       "literal_sepe_classification",
+      "literal_boe_program_output",
     ]),
     acceptedProgramOutputRelevance: AcceptedProgramOutputRelevanceSchema,
   }).strict(),

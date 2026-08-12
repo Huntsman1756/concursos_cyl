@@ -3,17 +3,17 @@
 ## Resultado controlado
 
 - Instantánea base: `20260808215403108-add4c517860c`.
-- Alias aceptados: 10; rechazados: 44.
+- Alias aceptados: 11; rechazados: 44.
 - EOC01M: 0 → 0.
 - HOT01M: 0 → 0.
-- SSC01M: 0 → 0.
-- Unión de ofertas nuevas: 0.
+- SSC01M: 0 → 1.
+- Unión de ofertas nuevas: 1.
 
 ## Alias aceptados y rechazados
 
 - EOC01M: 5 aceptados; 21 rechazados.
 - HOT01M: 4 aceptados; 9 rechazados.
-- SSC01M: 1 aceptado; 14 rechazados.
+- SSC01M: 2 aceptados; 14 rechazados.
 
 ## Publicación
 
@@ -26,4 +26,4 @@ Los recuentos corresponden a la instantánea controlada y no estiman el empleo t
 
 ## Decisión
 
-La pasada oficial acotada no aumenta las ofertas alcanzadas; no se amplían fuentes, CNO, ciclos ni reglas de coincidencia.
+La pasada oficial acotada aumenta en 1 las ofertas alcanzadas mediante los alias validados; no se amplían fuentes, CNO, ciclos ni reglas de coincidencia.
