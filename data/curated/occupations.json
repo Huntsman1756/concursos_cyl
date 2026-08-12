@@ -582,5 +582,82 @@
     "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
     "reviewedAt": "2026-08-12",
     "catalogVersion": "1.0.0"
+  },
+  {
+    "occupationId": "occupation:cno11:2252",
+    "preferredLabel": "Técnicos en educación infantil",
+    "confirmationLabel": "Educación infantil",
+    "classificationSystem": "CNO-11",
+    "classificationCode": "2252",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+    "reviewedAt": "2026-08-12",
+    "catalogVersion": "1.0.0"
+  },
+  {
+    "occupationId": "occupation:cno11:3811",
+    "preferredLabel": "Técnicos en operaciones de sistemas informáticos",
+    "confirmationLabel": "Operación de sistemas informáticos",
+    "classificationSystem": "CNO-11",
+    "classificationCode": "3811",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+    "reviewedAt": "2026-08-12",
+    "catalogVersion": "1.0.0"
+  },
+  {
+    "occupationId": "occupation:cno11:3812",
+    "preferredLabel": "Técnicos en asistencia al usuario de tecnologías de la información",
+    "confirmationLabel": "Soporte informático a usuarios",
+    "classificationSystem": "CNO-11",
+    "classificationCode": "3812",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+    "reviewedAt": "2026-08-12",
+    "catalogVersion": "1.0.0"
+  },
+  {
+    "occupationId": "occupation:cno11:3813",
+    "preferredLabel": "Técnicos en redes",
+    "confirmationLabel": "Operación y soporte de redes",
+    "classificationSystem": "CNO-11",
+    "classificationCode": "3813",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+    "reviewedAt": "2026-08-12",
+    "catalogVersion": "1.0.0"
+  },
+  {
+    "occupationId": "occupation:cno11:4111",
+    "preferredLabel": "Empleados de contabilidad",
+    "confirmationLabel": "Administración contable",
+    "classificationSystem": "CNO-11",
+    "classificationCode": "4111",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+    "reviewedAt": "2026-08-12",
+    "catalogVersion": "1.0.0"
+  },
+  {
+    "occupationId": "occupation:cno11:4113",
+    "preferredLabel": "Empleados de oficina de servicios estadísticos, financieros y bancarios",
+    "confirmationLabel": "Administración financiera, bancaria y de seguros",
+    "classificationSystem": "CNO-11",
+    "classificationCode": "4113",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+    "reviewedAt": "2026-08-12",
+    "catalogVersion": "1.0.0"
+  },
+  {
+    "occupationId": "occupation:cno11:4223",
+    "preferredLabel": "Empleados de servicio de personal",
+    "confirmationLabel": "Administración de recursos humanos",
+    "classificationSystem": "CNO-11",
+    "classificationCode": "4223",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+    "reviewedAt": "2026-08-12",
+    "catalogVersion": "1.0.0"
   }
 ]
