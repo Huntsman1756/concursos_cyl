@@ -1,11 +1,9 @@
-import { createHash } from "node:crypto";
 import { readFile, stat } from "node:fs/promises";
 import { resolve } from "node:path";
 
 import { describe, expect, it } from "vitest";
 
 import {
-  OccupationAliasesSchema,
   OccupationsSchema,
   TrainingOccupationLinksSchema,
   type OccupationAlias,
@@ -14,21 +12,12 @@ import {
 import {
   GeneratedManifestSchema,
   JobOfferSchema,
-  TrainingProgramSchema,
   type GeneratedManifest,
   type JobOffer,
   type TrainingProgram,
 } from "../../data/schemas/generated";
 import {
-  PublishedRequirementsResourceSchema,
-  type OfferPublishedRequirements,
-} from "../../src/domain/requirements";
-import {
-  CandidateMatchField,
-  CandidateConfidence,
   FpOfferAliasCandidateReportSchema,
-  FpOfferAliasCandidateSchema,
-  type CandidateConfidence as CandidateConfidenceType,
   rankFpOfferAliasCandidates,
   normalizedText,
 } from "./rankFpOfferAliasCandidates";
@@ -60,49 +49,40 @@ describe("rankFpOfferAliasCandidates – manifest-addressed loading", () => {
     );
     const base = resolve(rootDirectory, "public");
 
-    const [programs, occupations, aliases, links, offers, requirements] =
-      await Promise.all([
-        readJson<TrainingProgram[]>(
-          resolve(
-            base,
-            manifest.resourceSnapshots.programs.resourcePath.slice(1),
+    const [programs, occupations, aliases, links, offers] = await Promise.all([
+      readJson<TrainingProgram[]>(
+        resolve(
+          base,
+          manifest.resourceSnapshots.programs.resourcePath.slice(1),
+        ),
+      ),
+      readJson<unknown[]>(
+        resolve(
+          base,
+          manifest.resourceSnapshots.occupations.resourcePath.slice(1),
+        ),
+      ),
+      readJson<OccupationAlias[]>(
+        resolve(
+          base,
+          manifest.resourceSnapshots.occupationAliases.resourcePath.slice(1),
+        ),
+      ),
+      readJson<TrainingOccupationLink[]>(
+        resolve(
+          base,
+          manifest.resourceSnapshots.trainingOccupationLinks.resourcePath.slice(
+            1,
           ),
         ),
-        readJson<any[]>(
-          resolve(
-            base,
-            manifest.resourceSnapshots.occupations.resourcePath.slice(1),
-          ),
+      ),
+      readJson<JobOffer[]>(
+        resolve(
+          base,
+          manifest.resourceSnapshots.jobOffers.resourcePath.slice(1),
         ),
-        readJson<OccupationAlias[]>(
-          resolve(
-            base,
-            manifest.resourceSnapshots.occupationAliases.resourcePath.slice(1),
-          ),
-        ),
-        readJson<TrainingOccupationLink[]>(
-          resolve(
-            base,
-            manifest.resourceSnapshots.trainingOccupationLinks.resourcePath.slice(
-              1,
-            ),
-          ),
-        ),
-        readJson<JobOffer[]>(
-          resolve(
-            base,
-            manifest.resourceSnapshots.jobOffers.resourcePath.slice(1),
-          ),
-        ),
-        readJson<OfferPublishedRequirements[]>(
-          resolve(
-            base,
-            manifest.resourceSnapshots.publishedRequirements.resourcePath.slice(
-              1,
-            ),
-          ),
-        ),
-      ]);
+      ),
+    ]);
 
     expect(programs).toBeInstanceOf(Array);
     expect(offers.length).toBe(1054);
@@ -327,20 +307,10 @@ describe("rankFpOfferAliasCandidates – markdown report", () => {
 
 describe("rankFpOfferAliasCandidates – no file mutation", () => {
   it("running does not modify curated or public data files", async () => {
-    const manifest = await readJson<GeneratedManifest>(
+    // Read manifest to verify it's accessible (mutation checked via stat below)
+    void readJson<GeneratedManifest>(
       resolve(rootDirectory, "public/data/v1/manifest.json"),
     );
-    const base = resolve(rootDirectory, "public");
-
-    // Capture hashes before
-    const resourcePaths = [
-      manifest.resourceSnapshots.programs.resourcePath,
-      manifest.resourceSnapshots.occupations.resourcePath,
-      manifest.resourceSnapshots.occupationAliases.resourcePath,
-      manifest.resourceSnapshots.trainingOccupationLinks.resourcePath,
-      manifest.resourceSnapshots.jobOffers.resourcePath,
-      manifest.resourceSnapshots.publishedRequirements.resourcePath,
-    ];
     // Use manifest.json itself as a proxy for curated data (if we somehow modified it)
     const manifestStatBefore = await stat(
       resolve(rootDirectory, "public/data/v1/manifest.json"),
@@ -528,11 +498,6 @@ describe("rankFpOfferAliasCandidates – every candidate has a title match", () 
 });
 
 describe("rankFpOfferAliasCandidates – hypothesis lane is review_only", () => {
-  const { report } = (async () => {
-    // This will be evaluated inside the test; the outer call is a no-op
-    return { report: null };
-  })();
-
   it("token-overlap candidates carry review_only confidence and are not exact", async () => {
     const { report } = await rankFpOfferAliasCandidates();
     const reviewOnlyCandidates = report.candidates.filter(
@@ -663,15 +628,6 @@ describe("rankFpOfferAliasCandidates – display text preservation", () => {
       (c) => c.confidence === "exact_contiguous_phrase",
     );
     for (const c of exactCandidates) {
-      // aliasCandidate should be the original display text from sourceQuote/segment
-      // It should NOT be the fully normalized (lowercased, no punctuation) version
-      // The original sourceQuote typically has proper casing and punctuation
-      const aliasLower = c.aliasCandidate.toLowerCase();
-      // If the source had uppercase, aliasCandidate should preserve some
-      // (at minimum, it should not be identical to the normalized form for non-trivial cases)
-      const normForm = normalizedText(c.aliasCandidate);
-      // The display text should be the original, not a fully lowercased version
-      // (unless the original was already lowercased)
       expect(c.aliasCandidate).toBeTypeOf("string");
       expect(c.aliasCandidate.length).toBeGreaterThan(0);
     }
@@ -694,5 +650,44 @@ describe("rankFpOfferAliasCandidates – markdown collision column", () => {
     const { markdown } = await rankFpOfferAliasCandidates();
     // The markdown should have a Colisiones column header
     expect(markdown).toContain("Colisiones");
+  });
+});
+
+describe("rankFpOfferAliasCandidates – markdown row format", () => {
+  it("markdown table uses the 6-column header with Colisiones and every data row matches it, uses singular '1 oferta', excludes stray text, and ends with the snapshot disclaimer", async () => {
+    const { markdown } = await rankFpOfferAliasCandidates();
+    const lines = markdown.split("\n");
+
+    // Should not contain the 5-column header (no Colisiones column)
+    expect(lines).not.toContain(
+      "| Alias | Programa | Ocupación | Ofertas | Causa |",
+    );
+
+    // Every line starting with '| Alias |' must equal the 6-column header
+    const header =
+      "| Alias | Programa | Ocupación | Ofertas | Causa | Colisiones |";
+    const aliasHeaders = lines.filter((line) => line.startsWith("| Alias |"));
+    expect(aliasHeaders.length).toBeGreaterThan(0);
+    for (const h of aliasHeaders) {
+      expect(h).toBe(header);
+    }
+
+    // Must contain the singular form
+    expect(markdown).toContain("| 1 oferta |");
+
+    // Must not contain the plural form as a word boundary match
+    expect(markdown).not.toMatch(/1 ofertas\b/);
+
+    // Should not contain stray words
+    expect(markdown).not.toMatch(/murcielago/iu);
+
+    // Must end with the snapshot disclaimer (no trailing newline)
+    expect(
+      markdown
+        .trimEnd()
+        .endsWith(
+          "El informe no incluye marcas de tiempo y sus recuentos corresponden a la instantánea controlada.",
+        ),
+    ).toBe(true);
   });
 });

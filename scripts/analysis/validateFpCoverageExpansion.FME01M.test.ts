@@ -10,7 +10,6 @@ import type {
 } from "../../data/schemas/fpCoverageExpansion";
 import {
   type FpExpansionAttempt,
-  validateExpansionAttempt,
   validateExpansionAttemptData,
 } from "./validateFpCoverageExpansion";
 
@@ -96,13 +95,6 @@ describe("FME01M expansion slot", () => {
     const attempt = await readJson<FpExpansionAttempt>(
       resolve(rootDirectory, "analysis/fp_coverage_expansion/FME01M.json"),
     );
-    const ranking = await readJson<FpExpansionRanking>(
-      resolve(rootDirectory, "analysis/fp_coverage_expansion_candidates.json"),
-    );
-    const candidate = [
-      ...ranking.primaryCandidates,
-      ...ranking.reserveCandidates,
-    ].find((entry) => entry.programKey === "FME01M") as FpExpansionCandidate;
     expect(attempt.state).toBe("deferred");
     expect(attempt.officialOutputInventory?.labels).toEqual(
       FME01M_OUTPUT_LABELS,
