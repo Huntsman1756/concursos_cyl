@@ -2,6 +2,7 @@ import {
   access,
   mkdir,
   mkdtemp,
+  readdir,
   readFile,
   rm,
   writeFile,
@@ -887,6 +888,21 @@ describe("public snapshot distribution", () => {
         "snapshots",
         FP_ONE_WORD_PUBLICATION_REVIEW_SNAPSHOT.snapshotId,
       ),
+      ...(
+        await readdir(join(root, "public", "data", "v1", "snapshots"), {
+          withFileTypes: true,
+        })
+      )
+        .filter(
+          (entry) =>
+            entry.isDirectory() &&
+            !manifest.resourceSnapshots.programs.resourcePath.includes(
+              `/snapshots/${entry.name}/`,
+            ),
+        )
+        .map((entry) =>
+          join(root, "public", "data", "v1", "snapshots", entry.name),
+        ),
     ];
 
     await expect(

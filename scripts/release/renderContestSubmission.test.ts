@@ -29,9 +29,9 @@ describe("contest submission renderer", () => {
     expect(rendered["application-summary.md"]).toContain(
       freeze.manifest.snapshotId,
     );
-    expect(rendered["application-summary.md"]).toContain("15 cualificaciones");
+    expect(rendered["application-summary.md"]).toContain("17 cualificaciones");
     expect(rendered["application-summary.md"]).toContain(
-      "44 de las 1.054 ofertas de la instantánea",
+      "46 de las 1.054 ofertas de la instantánea",
     );
     expect(rendered["submission-checklist.md"]).toContain(
       "https://salida-cyl.157-90-22-40.sslip.io/",

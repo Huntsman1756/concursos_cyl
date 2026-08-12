@@ -1,13 +1,13 @@
 {
   "schemaVersion": "1.0.0",
-  "snapshotId": "20260812091756510-cac7c1d65a73",
+  "snapshotId": "20260812132331937-38e1812a9531",
   "totalOffers": 1054,
-  "approvedLinkCount": 36,
-  "zeroMatchRelations": 27,
-  "zeroMatchPrograms": 11,
-  "totalCandidates": 11,
+  "approvedLinkCount": 44,
+  "zeroMatchRelations": 32,
+  "zeroMatchPrograms": 13,
+  "totalCandidates": 13,
   "candidatesByConfidence": {
-    "review_only": 11,
+    "review_only": 13,
     "exact_contiguous_phrase": 0,
     "exact_alias_match": 0,
     "phrase_match": 0,
@@ -104,6 +104,25 @@
       "reasonCode": "token_overlap_hypothesis;share_stems=2;overlap=0.50"
     },
     {
+      "aliasCandidate": "INSTALADORES-AJUSTADORES DE MÁQUINAS Y EQUIPOS INDUSTRIALES, EN GENERAL",
+      "aliasCandidateNormalized": "instaladores ajustadores de maquinas y equipos industriales en general",
+      "programKey": "FME01M",
+      "programTitle": "Mecanizado",
+      "occupationId": "occupation:cno11:7323",
+      "occupationLabel": "Ajustadores y operadores de máquinas-herramienta",
+      "confidence": "review_only",
+      "sourceUrl": "https://www.boe.es/eli/es/rd/2007/10/29/1398",
+      "sourceQuote": "Ajustador operario de máquinas herramientas.",
+      "matchFields": ["title"],
+      "matchedOfferIds": ["1285665210900"],
+      "matchedOfferTitles": [
+        "INSTALADORES-AJUSTADORES DE MÁQUINAS Y EQUIPOS INDUSTRIALES, EN GENERAL"
+      ],
+      "occurrenceCount": 1,
+      "normalizedCollisionOccupations": [],
+      "reasonCode": "token_overlap_hypothesis;share_stems=2;overlap=0.50"
+    },
+    {
       "aliasCandidate": "MECÁNICOS REPARADORES DE CALEFACCIONES",
       "aliasCandidateNormalized": "mecanicos reparadores de calefacciones",
       "programKey": "ELE03S",
@@ -191,6 +210,25 @@
       "matchedOfferIds": ["1285640949323"],
       "matchedOfferTitles": [
         "MECÁNICOS-AJUSTADORES DE MAQUINARIA AGRÍCOLA, EN GENERAL"
+      ],
+      "occurrenceCount": 1,
+      "normalizedCollisionOccupations": [],
+      "reasonCode": "token_overlap_hypothesis;share_stems=2;overlap=0.50"
+    },
+    {
+      "aliasCandidate": "OPERADORES DE MÁQUINAS PARA ELABORAR PASTAS ALIMENTICIAS",
+      "aliasCandidateNormalized": "operadores de maquinas para elaborar pastas alimenticias",
+      "programKey": "FME01M",
+      "programTitle": "Mecanizado",
+      "occupationId": "occupation:cno11:7323",
+      "occupationLabel": "Ajustadores y operadores de máquinas-herramienta",
+      "confidence": "review_only",
+      "sourceUrl": "https://www.boe.es/eli/es/rd/2007/10/29/1398",
+      "sourceQuote": "Ajustador operario de máquinas herramientas.",
+      "matchFields": ["title"],
+      "matchedOfferIds": ["1285661621831"],
+      "matchedOfferTitles": [
+        "OPERADORES DE MÁQUINAS PARA ELABORAR PASTAS ALIMENTICIAS"
       ],
       "occurrenceCount": 1,
       "normalizedCollisionOccupations": [],

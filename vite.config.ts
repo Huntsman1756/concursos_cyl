@@ -17,7 +17,14 @@ export default defineConfig({
   preview: { headers: SECURITY_HEADERS },
   test: {
     environment: "jsdom",
-    exclude: [...configDefaults.exclude, "tests/e2e/**"],
+    exclude: [
+      ...configDefaults.exclude,
+      "tests/e2e/**",
+      ".tmp/**",
+      ".worktrees/**",
+      "_codex_tmp/**",
+      "_codex_worktrees/**",
+    ],
     setupFiles: ["./src/test/setup.ts"],
   },
 });

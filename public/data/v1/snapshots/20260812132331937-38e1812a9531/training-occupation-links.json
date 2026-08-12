@@ -331,6 +331,26 @@
   },
   {
     "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:5811",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-12",
+    "sourceQuote": "Peluquera / peluquero.",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/imagen-personal/peluqueria-cosmetica-capilar.html",
+    "trainingProgramKey": "IMP02M"
+  },
+  {
+    "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:5812",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-12",
+    "sourceQuote": "Técnica / técnico en manicura.",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/imagen-personal/peluqueria-cosmetica-capilar.html",
+    "trainingProgramKey": "IMP02M"
+  },
+  {
+    "mappingVersion": "1.0.0",
     "occupationId": "occupation:cno11:7812",
     "relationshipType": "official_output",
     "reviewStatus": "approved",
@@ -348,6 +368,16 @@
     "sourceQuote": "Montador-ensamblador de elementos de carpintería.",
     "sourceUrl": "https://www.boe.es/eli/es/rd/1128/2010",
     "trainingProgramKey": "MAM01M"
+  },
+  {
+    "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:5621",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-12",
+    "sourceQuote": "Auxiliar de Farmacia.",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/sanidad/farmacia-parafarmacia.html",
+    "trainingProgramKey": "SAN02M"
   },
   {
     "mappingVersion": "1.0.0",
