@@ -80,7 +80,10 @@ async function chooseHigherComparison(page: Page): Promise<void> {
     .fill("Administración y finanzas");
   await page.getByText("Administración y finanzas", { exact: true }).click();
   await page.getByLabel("3. Cohorte de titulación").selectOption("2022-2023");
-  await page.getByText("2", { exact: true }).click();
+  await page
+    .getByRole("group", { name: "4. Año tras titularse" })
+    .getByText("2", { exact: true })
+    .click();
 }
 
 test.describe("contest readiness journeys", () => {
@@ -236,7 +239,7 @@ test.describe("contest readiness journeys", () => {
     ).toHaveCount(4);
     await expect(
       page.getByRole("heading", { name: "Qué no permite afirmar" }),
-    ).toHaveCount(3);
+    ).toHaveCount(4);
     await expect(
       page.getByRole("article", { name: "Qué estudiar y dónde se imparte" }),
     ).toContainText("187 ciclos oficiales");

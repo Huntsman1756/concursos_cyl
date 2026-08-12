@@ -2,6 +2,7 @@ import { readFile, writeFile } from "node:fs/promises";
 import { resolve } from "node:path";
 import { pathToFileURL } from "node:url";
 
+import { format as formatWithPrettier } from "prettier";
 import { z } from "zod";
 
 import {
@@ -999,14 +1000,22 @@ async function run(): Promise<void> {
     rootDirectory,
     "analysis/fp_offer_alias_candidates.json",
   );
-  await writeFile(jsonPath, JSON.stringify(report, null, 2), "utf8");
+  await writeFile(
+    jsonPath,
+    await formatWithPrettier(JSON.stringify(report), { parser: "json" }),
+    "utf8",
+  );
 
   // Write Markdown
   const mdPath = resolve(
     rootDirectory,
     "analysis/fp_offer_alias_candidates.md",
   );
-  await writeFile(mdPath, markdown, "utf8");
+  await writeFile(
+    mdPath,
+    await formatWithPrettier(markdown, { parser: "markdown" }),
+    "utf8",
+  );
 }
 
 if (

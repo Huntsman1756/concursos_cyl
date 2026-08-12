@@ -11,9 +11,9 @@
         {
           "kind": "role",
           "role": "heading",
-          "name": "Elige tu camino y actúa con información oficial"
+          "name": "De tu FP a tu siguiente paso"
         },
-        { "kind": "text", "value": "Disponible ahora" }
+        { "kind": "text", "value": "Relaciones revisadas" }
       ],
       "claimIds": [
         "problem_audience",
@@ -22,10 +22,10 @@
         "published_snapshot"
       ],
       "outputFile": "docs/contest/evidence/home-desktop.png",
-      "sha256": "bb1149a6c5c3bc29e0f32cd095a7c07fd27460e07fa6f1c5071121ef972e8a79",
-      "capturedAt": "2026-08-10T06:33:56.242Z",
-      "localCommitSha": "16eb60115db8eec24568037ed0433c01f0dfa50c",
-      "deployedCommitSha": "16eb60115db8eec24568037ed0433c01f0dfa50c",
+      "sha256": "d794513c0458da830e1755485330696b5a2b5a9c8eca93bb30f8be515dda97df",
+      "capturedAt": "2026-08-12T10:55:24.586Z",
+      "localCommitSha": "9ef3398ffa1e5952a93c11ebbd12a12a21cdb8a1",
+      "deployedCommitSha": "9ef3398ffa1e5952a93c11ebbd12a12a21cdb8a1",
       "freezeRequired": true,
       "redactionRule": "Use a fresh anonymous browser context; omit browser chrome, personal data, cookies, account identifiers, API keys, tokens, and local filesystem paths."
     },
@@ -37,14 +37,17 @@
         {
           "kind": "role",
           "role": "heading",
-          "name": "Encuentra ofertas relacionadas con tu FP"
+          "name": "Consulta salidas y ofertas relacionadas con tu FP"
         },
         {
           "kind": "role",
           "role": "combobox",
           "name": "Ciclo de Formación Profesional"
         },
-        { "kind": "text", "value": "Cobertura revisada" }
+        {
+          "kind": "text",
+          "value": "Relaciones revisadas con 5 grupos de ocupación."
+        }
       ],
       "claimIds": [
         "public_modality_keys",
@@ -52,10 +55,10 @@
         "approved_aliases"
       ],
       "outputFile": "docs/contest/evidence/fp-pre-search-reviewed.png",
-      "sha256": "be42797b91d4db2c3d3a6e7b1af19bd78e2499275a06f6777f8cd1a4fb15b7a3",
-      "capturedAt": "2026-08-10T06:33:56.242Z",
-      "localCommitSha": "16eb60115db8eec24568037ed0433c01f0dfa50c",
-      "deployedCommitSha": "16eb60115db8eec24568037ed0433c01f0dfa50c",
+      "sha256": "d98d2cd39795b2225bde518e4f4406db0d8133568b97f67daf8ab34d1686c779",
+      "capturedAt": "2026-08-12T10:55:24.586Z",
+      "localCommitSha": "9ef3398ffa1e5952a93c11ebbd12a12a21cdb8a1",
+      "deployedCommitSha": "9ef3398ffa1e5952a93c11ebbd12a12a21cdb8a1",
       "freezeRequired": true,
       "redactionRule": "Use a fresh anonymous browser context; omit browser chrome, personal data, cookies, account identifiers, API keys, tokens, and local filesystem paths."
     },
@@ -71,15 +74,15 @@
         },
         {
           "kind": "text",
-          "value": "Cobertura revisada no disponible para este ciclo."
+          "value": "Salidas oficiales disponibles; todavía no hay una relación revisada para buscar ofertas."
         }
       ],
       "claimIds": ["deferred_programs", "zero_reviewed_relations"],
       "outputFile": "docs/contest/evidence/fp-pre-search-unavailable.png",
-      "sha256": "90556e563056e0c8f10c8687af40ede2df106139c468bad6426a865f5e2e21ca",
-      "capturedAt": "2026-08-10T06:33:56.242Z",
-      "localCommitSha": "16eb60115db8eec24568037ed0433c01f0dfa50c",
-      "deployedCommitSha": "16eb60115db8eec24568037ed0433c01f0dfa50c",
+      "sha256": "4476425ce8dce3aadc3616ef5d2735d8c97e657f5e861df4fd3958ea998f95df",
+      "capturedAt": "2026-08-12T10:55:24.586Z",
+      "localCommitSha": "9ef3398ffa1e5952a93c11ebbd12a12a21cdb8a1",
+      "deployedCommitSha": "9ef3398ffa1e5952a93c11ebbd12a12a21cdb8a1",
       "freezeRequired": true,
       "redactionRule": "Use a fresh anonymous browser context; omit browser chrome, personal data, cookies, account identifiers, API keys, tokens, and local filesystem paths."
     },
@@ -90,7 +93,7 @@
       "requiredVisible": [
         { "kind": "role", "role": "heading", "name": "Construcción" },
         { "kind": "text", "value": "Código oficial EOC01M" },
-        { "kind": "text", "value": "Ofertas relacionadas con" }
+        { "kind": "text", "value": "Salidas y ofertas relacionadas con" }
       ],
       "claimIds": [
         "approved_relations",
@@ -99,10 +102,10 @@
         "no_salary_prediction"
       ],
       "outputFile": "docs/contest/evidence/fp-matched-result.png",
-      "sha256": "9c321b90a699561d0f1915818e21ebb9105a2dd8c2e0a85514cb6f285f33c3c5",
-      "capturedAt": "2026-08-09T20:51:35.418Z",
-      "localCommitSha": "f423a208a7f8c140a1dfa342e8689d3b6d967e94",
-      "deployedCommitSha": "5e4510ca230daaedf8e2a769d66781a2b319ef1b",
+      "sha256": "5e9bee78179e33ae17af7ddda6ef97605a5cc32405ec5e46f9158da00b4555e3",
+      "capturedAt": "2026-08-12T10:55:24.586Z",
+      "localCommitSha": "9ef3398ffa1e5952a93c11ebbd12a12a21cdb8a1",
+      "deployedCommitSha": "9ef3398ffa1e5952a93c11ebbd12a12a21cdb8a1",
       "freezeRequired": true,
       "redactionRule": "Use a fresh anonymous browser context; omit browser chrome, personal data, cookies, account identifiers, API keys, tokens, and local filesystem paths."
     },
@@ -118,15 +121,15 @@
         },
         {
           "kind": "text",
-          "value": "Aún no hay una relación revisada para este ciclo."
+          "value": "Todavía no hay una relación revisada que permita buscar ofertas"
         }
       ],
       "claimIds": ["deferred_programs", "zero_reviewed_relations"],
       "outputFile": "docs/contest/evidence/fp-zero-deferred.png",
-      "sha256": "fa981b1cdc092e15966aeef23e5298d5143d5ed45a75f7e785b61c7d893c5a92",
-      "capturedAt": "2026-08-09T20:51:35.418Z",
-      "localCommitSha": "f423a208a7f8c140a1dfa342e8689d3b6d967e94",
-      "deployedCommitSha": "5e4510ca230daaedf8e2a769d66781a2b319ef1b",
+      "sha256": "396ca0b8587318ff346ecdc030a7c1347d56cd61612e9a26008e00a0de3f1650",
+      "capturedAt": "2026-08-12T10:55:24.586Z",
+      "localCommitSha": "9ef3398ffa1e5952a93c11ebbd12a12a21cdb8a1",
+      "deployedCommitSha": "9ef3398ffa1e5952a93c11ebbd12a12a21cdb8a1",
       "freezeRequired": true,
       "redactionRule": "Use a fresh anonymous browser context; omit browser chrome, personal data, cookies, account identifiers, API keys, tokens, and local filesystem paths."
     },
@@ -145,10 +148,7 @@
           "role": "heading",
           "name": "Referencia de titulados de Grado Superior en Castilla y León"
         },
-        {
-          "kind": "text",
-          "value": "Mostramos ambas referencias por separado"
-        }
+        { "kind": "text", "value": "Mostramos ambas referencias por separado" }
       ],
       "claimIds": [
         "income_source_scope",
@@ -157,10 +157,10 @@
         "no_salary_prediction"
       ],
       "outputFile": "docs/contest/evidence/comparison-dual-scopes.png",
-      "sha256": "4fb7d01bed1af9c664e483d11f5cd1d2791ad2d2332c6f90c52b0a3acd6ce61e",
-      "capturedAt": "2026-08-09T20:53:53.927Z",
-      "localCommitSha": "f423a208a7f8c140a1dfa342e8689d3b6d967e94",
-      "deployedCommitSha": "5e4510ca230daaedf8e2a769d66781a2b319ef1b",
+      "sha256": "92539484a54130e55f1547605ef8cfd696bbeda9db080a9230258bdd402d834d",
+      "capturedAt": "2026-08-12T10:55:24.586Z",
+      "localCommitSha": "9ef3398ffa1e5952a93c11ebbd12a12a21cdb8a1",
+      "deployedCommitSha": "9ef3398ffa1e5952a93c11ebbd12a12a21cdb8a1",
       "freezeRequired": true,
       "redactionRule": "Use a fresh anonymous browser context; omit browser chrome, personal data, cookies, account identifiers, API keys, tokens, and local filesystem paths."
     },
@@ -169,11 +169,7 @@
       "route": "/metodologia",
       "viewport": { "width": 1440, "height": 900 },
       "requiredVisible": [
-        {
-          "kind": "role",
-          "role": "heading",
-          "name": "Metodología y fuentes"
-        },
+        { "kind": "role", "role": "heading", "name": "Metodología y fuentes" },
         { "kind": "text", "value": "Ficha oficial del catálogo" },
         { "kind": "text", "value": "Qué no permite afirmar" }
       ],
@@ -184,10 +180,10 @@
         "accessibility_intent"
       ],
       "outputFile": "docs/contest/evidence/methodology-sources.png",
-      "sha256": "31cb41ee84b74b6a0d95576b3a6eae3ff588f7e599d3330c1f200c9913c10344",
-      "capturedAt": "2026-08-10T06:33:56.242Z",
-      "localCommitSha": "16eb60115db8eec24568037ed0433c01f0dfa50c",
-      "deployedCommitSha": "16eb60115db8eec24568037ed0433c01f0dfa50c",
+      "sha256": "adeecf24a26f0f6b283bf8d8af1875018b1d63865c9da7f7f6dcdd93d0c531eb",
+      "capturedAt": "2026-08-12T10:55:24.586Z",
+      "localCommitSha": "9ef3398ffa1e5952a93c11ebbd12a12a21cdb8a1",
+      "deployedCommitSha": "9ef3398ffa1e5952a93c11ebbd12a12a21cdb8a1",
       "freezeRequired": true,
       "redactionRule": "Use a fresh anonymous browser context; omit browser chrome, personal data, cookies, account identifiers, API keys, tokens, and local filesystem paths."
     },
@@ -199,9 +195,9 @@
         {
           "kind": "role",
           "role": "heading",
-          "name": "Elige tu camino y actúa con información oficial"
+          "name": "De tu FP a tu siguiente paso"
         },
-        { "kind": "text", "value": "Disponible ahora" }
+        { "kind": "text", "value": "Relaciones revisadas" }
       ],
       "claimIds": [
         "problem_audience",
@@ -209,10 +205,10 @@
         "published_snapshot"
       ],
       "outputFile": "docs/contest/evidence/home-mobile.png",
-      "sha256": "ad9e2fc9ddc858e44658defe3180210b2897f815482d56b2de03506fdaaa324f",
-      "capturedAt": "2026-08-10T06:33:56.242Z",
-      "localCommitSha": "16eb60115db8eec24568037ed0433c01f0dfa50c",
-      "deployedCommitSha": "16eb60115db8eec24568037ed0433c01f0dfa50c",
+      "sha256": "73db4ad46fb020a17d757deabe3712dae3f6e9f4b49714b708dd2a91ab3ecd2d",
+      "capturedAt": "2026-08-12T10:55:24.586Z",
+      "localCommitSha": "9ef3398ffa1e5952a93c11ebbd12a12a21cdb8a1",
+      "deployedCommitSha": "9ef3398ffa1e5952a93c11ebbd12a12a21cdb8a1",
       "freezeRequired": true,
       "redactionRule": "Use a fresh anonymous browser context; omit browser chrome, personal data, cookies, account identifiers, API keys, tokens, and local filesystem paths."
     },
@@ -221,12 +217,11 @@
       "route": "/comparar",
       "viewport": { "width": 360, "height": 800 },
       "requiredVisible": [
+        { "kind": "role", "role": "heading", "name": "Ingresos observados" },
         {
-          "kind": "role",
-          "role": "heading",
-          "name": "Ingresos observados"
-        },
-        { "kind": "text", "value": "Consulta la base de cotización anualizada" }
+          "kind": "text",
+          "value": "Compara la base de cotización anualizada publicada"
+        }
       ],
       "claimIds": [
         "income_source_scope",
@@ -234,10 +229,10 @@
         "privacy_no_persistence"
       ],
       "outputFile": "docs/contest/evidence/comparison-mobile.png",
-      "sha256": "c57bf2a7b1e3c3b9228c9e8fc3a2634d18a064ac3204826c45ce6613e5f1edaa",
-      "capturedAt": "2026-08-09T20:51:35.418Z",
-      "localCommitSha": "f423a208a7f8c140a1dfa342e8689d3b6d967e94",
-      "deployedCommitSha": "5e4510ca230daaedf8e2a769d66781a2b319ef1b",
+      "sha256": "9a381a3bbf8b5a8c6277bdc4087ebdc5a10783d270661c910d4a59134c423b9c",
+      "capturedAt": "2026-08-12T10:55:24.586Z",
+      "localCommitSha": "9ef3398ffa1e5952a93c11ebbd12a12a21cdb8a1",
+      "deployedCommitSha": "9ef3398ffa1e5952a93c11ebbd12a12a21cdb8a1",
       "freezeRequired": true,
       "redactionRule": "Use a fresh anonymous browser context; omit browser chrome, personal data, cookies, account identifiers, API keys, tokens, and local filesystem paths."
     }
