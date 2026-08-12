@@ -135,6 +135,8 @@ function New-ValidCodeContract {
         [string[]]$ValidationCommand = @('cmd /c exit 0'),
         [int]$MaxRetries = 3,
         [int]$MaxObservedTokens = 50000,
+        [int]$MaxExecutionSeconds = 300,
+        [int]$DuplicateWindowSeconds = 3600,
         [string[]]$FallbackModels = @('nan/mimo-v2.5','nan/deepseek-v4-flash'),
         [switch]$AllowNoChanges,
         [switch]$TestMode,
@@ -149,6 +151,8 @@ function New-ValidCodeContract {
         ValidationCommand = $ValidationCommand
         MaxRetries = $MaxRetries
         MaxObservedTokens = $MaxObservedTokens
+        MaxExecutionSeconds = $MaxExecutionSeconds
+        DuplicateWindowSeconds = $DuplicateWindowSeconds
         FallbackModels = $FallbackModels
         PlannedBy = 'frontier'
         FrontierPlan = 'Implement the required changes'
@@ -345,6 +349,14 @@ try {
         Assert-True ($budgetRun.ExitCode -ne 0) '7n: oversized trajectory fails closed'
         $budgetTelemetry = Get-Content -LiteralPath (Get-NewTelemetry -BeforeFiles $pre) -Raw | ConvertFrom-Json
         Assert-Equal $budgetTelemetry.status 'blocked-token-budget' '7o: oversized trajectory has explicit status'
+
+        $timeoutPlan = @(@{exitCode = 1; changedPaths = @(); validationExitCode = 0; terminationReason = 'timeout'; jsonl = ''}) | ConvertTo-Json -Compress
+        $pre = Get-FileSnapshot
+        $timeoutRun = Invoke-WorkerChild -WorkerParameters (New-ValidCodeContract -Objective 'execution-timeout' -MaxRetries 1 -TestMode -MockPlan $timeoutPlan)
+        Assert-True ($timeoutRun.ExitCode -ne 0) '7p: timed out trajectory fails closed'
+        $timeoutTelemetry = Get-Content -LiteralPath (Get-NewTelemetry -BeforeFiles $pre) -Raw | ConvertFrom-Json
+        Assert-Equal $timeoutTelemetry.status 'blocked-timeout' '7q: timeout has explicit status'
+        Assert-Equal $timeoutTelemetry.attempts[0].terminationReason 'timeout' '7r: timeout reason persists on attempt'
     }
 
     # 8. No-change rejection
@@ -712,6 +724,15 @@ try {
             Assert-True ($yamlText -match 'requireAcceptanceCriteriaForCode:\s*true') '18y: YAML requireAcceptanceCriteriaForCode=true'
             Assert-True ($yamlText -match 'requireValidationForCode:\s*true') '18z: YAML requireValidationForCode=true'
             Assert-True ($yamlText -match 'frontierContract') '18aa: YAML telemetry has frontierContract topLevelField'
+            Assert-True (([regex]::Matches($yamlText, '(?m)^\s+fallbackModels:')).Count -eq 1) '18ab: YAML has one fallbackModels key'
+            Assert-True ($yamlText -match 'maxExecutionSeconds:\s*300') '18ac: YAML declares execution timeout'
+            Assert-True ($yamlText -match 'duplicateWindowSeconds:\s*3600') '18ad: YAML declares duplicate window'
+
+            $workerText = Get-Content -LiteralPath $workerPath -Raw
+            Assert-True ($workerText -notmatch "'--auto'") '18ae: worker does not pass --auto'
+            Assert-True ($workerText -match 'Invoke-OpenCodeBudgeted') '18af: worker uses streaming budget launcher'
+            Assert-True (-not (Test-Path -LiteralPath (Join-Path $repoRoot '.opencode\commands\implementar.md'))) '18ag: direct code command is absent'
+            Assert-True (-not (Test-Path -LiteralPath (Join-Path $repoRoot '.opencode\commands\boletin.md'))) '18ah: direct bulletin command is absent'
 
             # 18u-18w: Check specific routes use correct trio
             # Read YAML sections by detecting indented routes

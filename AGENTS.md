@@ -82,10 +82,15 @@ Ejemplo DryRun (obligatorio incluir `-ValidationCommand` para code):
 El worker soporta:
 
 - `-MaxRetries 1` — valor seguro por defecto; aumentarlo requiere justificar el coste.
-- `-MaxObservedTokens 50000` — bloquea la trayectoria si supera el presupuesto observado.
+- `-MaxObservedTokens 50000` — termina OpenCode durante la ejecución si supera el presupuesto observado, incluida la caché.
+- `-MaxExecutionSeconds 300` — termina el árbol del proceso al agotar el tiempo.
+- `-DuplicateWindowSeconds 3600` — bloquea contratos idénticos sobre el mismo SHA durante una hora.
 - `-FallbackModels` — vacío por defecto; cada fallback debe cualificarse explícitamente.
 - `-DryRun` — validación del contrato sin invocar opencode.
 - `-TestMode` — ejecución simulada con `-MockPlan` (solo para pruebas, no consume API).
+
+No se mantienen comandos directos en `.opencode/commands`: toda llamada NAN debe
+pasar por `Invoke-NanWorker.ps1` para aplicar presupuesto, deduplicación y telemetría.
 
 Cada ejecución escribe telemetría en `.agent-runs/<guid>.json`.
 

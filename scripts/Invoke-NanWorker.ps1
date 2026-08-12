@@ -8,6 +8,8 @@ param(
     [ValidateSet('default','json')][string]$Format = 'json',
     [ValidateRange(1,3)][int]$MaxRetries = 1,
     [ValidateRange(1000,1000000)][int]$MaxObservedTokens = 50000,
+    [ValidateRange(10,3600)][int]$MaxExecutionSeconds = 300,
+    [ValidateRange(0,86400)][int]$DuplicateWindowSeconds = 3600,
     [string[]]$FallbackModels = @(),
     [switch]$DryRun,
     [switch]$AllowNoChanges,
@@ -96,7 +98,10 @@ function Parse-JsonlTokens {
                 if ($t.cache.read) { $r.cacheRead += [int]$t.cache.read }
                 if ($t.cache.write) { $r.cacheWrite += [int]$t.cache.write }
             }
-            if ($t.total) { $r.total += [int]$t.total }
+            $observedTotal = [long]$t.input + [long]$t.output + [long]$t.reasoning
+            if ($t.cache) { $observedTotal += [long]$t.cache.read + [long]$t.cache.write }
+            if ([long]$t.total -gt $observedTotal) { $observedTotal = [long]$t.total }
+            $r.total += $observedTotal
         }
     }
     if ($stepOpen -or $terminalCount -ne 1 -or -not $lastWasTerminal) { throw 'OpenCode output has no unique final terminal step.' }
@@ -141,6 +146,152 @@ function Compute-StringSha256 {
     return -join ($hashBytes | ForEach-Object { $_.ToString('x2') })
 }
 
+function ConvertTo-NativeArgument {
+    param([AllowEmptyString()][string]$Argument)
+    if ($Argument -notmatch '[\s"]') { return $Argument }
+    $quoted = '"'
+    $slashes = 0
+    foreach ($char in $Argument.ToCharArray()) {
+        if ($char -eq '\') {
+            $slashes++
+            continue
+        }
+        if ($char -eq '"') {
+            if ($slashes -gt 0) { $quoted += (('\' * ($slashes * 2)) -join '') }
+            $quoted += '\"'
+        } else {
+            if ($slashes -gt 0) { $quoted += (('\' * $slashes) -join '') }
+            $quoted += $char
+        }
+        $slashes = 0
+    }
+    if ($slashes -gt 0) { $quoted += (('\' * ($slashes * 2)) -join '') }
+    return $quoted + '"'
+}
+
+function Add-ObservedTokensFromLine {
+    param([string]$Line, [hashtable]$Usage)
+    if ([string]::IsNullOrWhiteSpace($Line)) { return }
+    $event = try { $Line | ConvertFrom-Json } catch { return }
+    if ($event.type -ne 'step_finish' -or -not $event.part.tokens) { return }
+    $tokens = $event.part.tokens
+    $Usage.input += [long]$tokens.input
+    $Usage.output += [long]$tokens.output
+    $Usage.reasoning += [long]$tokens.reasoning
+    if ($tokens.cache) {
+        $Usage.cacheRead += [long]$tokens.cache.read
+        $Usage.cacheWrite += [long]$tokens.cache.write
+    }
+    $eventTotal = [long]$tokens.input + [long]$tokens.output + [long]$tokens.reasoning
+    if ($tokens.cache) { $eventTotal += [long]$tokens.cache.read + [long]$tokens.cache.write }
+    if ([long]$tokens.total -gt $eventTotal) { $eventTotal = [long]$tokens.total }
+    $Usage.total += $eventTotal
+    if (-not $Usage.sessionId -and $event.sessionID) { $Usage.sessionId = $event.sessionID }
+}
+
+function Stop-WorkerProcessTree {
+    param([System.Diagnostics.Process]$Process)
+    if (-not $Process -or $Process.HasExited) { return }
+    & taskkill.exe /PID $Process.Id /T /F 2>&1 | Out-Null
+    try { $Process.WaitForExit(5000) | Out-Null } catch {}
+}
+
+function Invoke-OpenCodeBudgeted {
+    param([string[]]$Arguments, [int]$TokenBudget, [int]$TimeoutSeconds)
+    $rawLines = New-Object 'System.Collections.Generic.List[string]'
+    $stderrLines = New-Object 'System.Collections.Generic.List[string]'
+    $usage = @{input=0L;output=0L;reasoning=0L;cacheRead=0L;cacheWrite=0L;total=0L;sessionId=$null}
+    $commandCandidates = @(Get-Command opencode -All -ErrorAction Stop)
+    $executable = @($commandCandidates | Where-Object { $_.Source -like '*.exe' } | Select-Object -First 1).Source
+    if (-not $executable) {
+        $cmdShim = @($commandCandidates | Where-Object { $_.Source -like '*.cmd' } | Select-Object -First 1).Source
+        if ($cmdShim) {
+            $npmBinary = Join-Path (Split-Path -Parent $cmdShim) 'node_modules\opencode-ai\bin\opencode.exe'
+            if (Test-Path -LiteralPath $npmBinary -PathType Leaf) { $executable = $npmBinary }
+        }
+    }
+    if (-not $executable) { throw 'Could not resolve the native opencode executable behind the PowerShell/npm shim.' }
+    $startInfo = New-Object System.Diagnostics.ProcessStartInfo
+    $startInfo.FileName = $executable
+    $startInfo.Arguments = (($Arguments | ForEach-Object { ConvertTo-NativeArgument -Argument $_ }) -join ' ')
+    $startInfo.WorkingDirectory = $repoRoot
+    $startInfo.UseShellExecute = $false
+    $startInfo.CreateNoWindow = $true
+    $startInfo.RedirectStandardOutput = $true
+    $startInfo.RedirectStandardError = $true
+    $process = New-Object System.Diagnostics.Process
+    $process.StartInfo = $startInfo
+    if (-not $process.Start()) { throw 'Failed to start OpenCode.' }
+    $stdoutTask = $process.StandardOutput.ReadLineAsync()
+    $stderrTask = $process.StandardError.ReadLineAsync()
+    $stdoutDone = $false
+    $stderrDone = $false
+    $watch = [System.Diagnostics.Stopwatch]::StartNew()
+    $terminationReason = $null
+    try {
+        while (-not $process.HasExited -or -not $stdoutDone -or -not $stderrDone) {
+            if (-not $stdoutDone -and $stdoutTask.IsCompleted) {
+                $line = $stdoutTask.GetAwaiter().GetResult()
+                if ($null -eq $line) {
+                    $stdoutDone = $true
+                } else {
+                    $rawLines.Add($line)
+                    Add-ObservedTokensFromLine -Line $line -Usage $usage
+                    $stdoutTask = $process.StandardOutput.ReadLineAsync()
+                }
+            }
+            if (-not $stderrDone -and $stderrTask.IsCompleted) {
+                $errorLine = $stderrTask.GetAwaiter().GetResult()
+                if ($null -eq $errorLine) {
+                    $stderrDone = $true
+                } else {
+                    $stderrLines.Add($errorLine)
+                    $stderrTask = $process.StandardError.ReadLineAsync()
+                }
+            }
+            if (-not $terminationReason -and $usage.total -gt $TokenBudget) {
+                $terminationReason = 'token-budget'
+                Stop-WorkerProcessTree -Process $process
+            }
+            if (-not $terminationReason -and $watch.Elapsed.TotalSeconds -ge $TimeoutSeconds) {
+                $terminationReason = 'timeout'
+                Stop-WorkerProcessTree -Process $process
+            }
+            if ($process.HasExited -and $stdoutDone -and $stderrDone) { break }
+            Start-Sleep -Milliseconds 100
+        }
+        try { $process.WaitForExit() } catch {}
+        $exitCode = if ($terminationReason) { 1 } else { $process.ExitCode }
+        $raw = $rawLines -join "`n"
+        if (-not $terminationReason) { $usage = Parse-JsonlTokens -Jsonl $raw }
+        return @{exitCode=$exitCode;tokens=$usage;terminationReason=$terminationReason;stderr=($stderrLines -join "`n")}
+    } finally {
+        $watch.Stop()
+        $process.Dispose()
+    }
+}
+
+$headSha = if ($TestMode -or $DryRun) { 'simulated' } else { (& git -C $repoRoot rev-parse HEAD).Trim() }
+$contractMaterial = [ordered]@{
+    taskType=$TaskType;objective=$Objective;allowedPaths=@($AllowedPath);inputPaths=@($InputPath)
+    validationCommands=@($ValidationCommand);frontierPlan=$FrontierPlan;acceptanceCriteria=@($AcceptanceCriteria);headSha=$headSha
+} | ConvertTo-Json -Depth 5 -Compress
+$contractHash = Compute-StringSha256 -InputString $contractMaterial
+$contractMutex = $null
+if (-not $TestMode -and -not $DryRun) {
+    $contractMutex = New-Object System.Threading.Mutex($false, "Local\NanWorker-$contractHash")
+    if (-not $contractMutex.WaitOne(0)) { throw "An identical NAN contract is already running: $contractHash" }
+    if ($DuplicateWindowSeconds -gt 0) {
+        $cutoff = [DateTime]::UtcNow.AddSeconds(-$DuplicateWindowSeconds)
+        $duplicate = Get-ChildItem -LiteralPath $tdir -Filter '*.json' -ErrorAction SilentlyContinue |
+            Where-Object { $_.LastWriteTimeUtc -ge $cutoff } |
+            ForEach-Object { try { Get-Content -LiteralPath $_.FullName -Raw | ConvertFrom-Json } catch {} } |
+            Where-Object { $_.contract.hash -eq $contractHash } |
+            Select-Object -First 1
+        if ($duplicate) { throw "An identical NAN contract ran within the last $DuplicateWindowSeconds seconds: $contractHash" }
+    }
+}
+
 # ── DryRun ──
 if ($DryRun) {
     Write-Host "[DryRun] TaskType=$TaskType Objective=$Objective Model=$primaryModel Agent=$primaryAgent Retries=$MaxRetries Fallbacks=$($FallbackModels -join ',') Allowed=$($AllowedPath -join ',')" -ForegroundColor Yellow
@@ -150,7 +301,7 @@ if ($DryRun) {
         $planSha = Compute-StringSha256 -InputString $FrontierPlan
         $fc = @{plannedBy=$PlannedBy;planHash=$planSha;acceptanceCriteriaCount=$AcceptanceCriteria.Count;reviewRequired=$true}
     }
-    @{telemetryId=$tid;simulated=[bool]$true;taskType=$TaskType;selectedModel=$primaryModel;attempts=@();changedPaths=@();contractViolation=$false;validationFailed=$false;tokensUsage=@{input=0;output=0;reasoning=0;cacheRead=0;cacheWrite=0;total=0};success=$true;status='dry-run';frontierContract=$fc} |
+    @{telemetryId=$tid;simulated=[bool]$true;taskType=$TaskType;selectedModel=$primaryModel;attempts=@();changedPaths=@();contractViolation=$false;validationFailed=$false;tokensUsage=@{input=0;output=0;reasoning=0;cacheRead=0;cacheWrite=0;total=0};success=$true;status='dry-run';frontierContract=$fc;contract=@{hash=$contractHash;headSha=$headSha;duplicateWindowSeconds=$DuplicateWindowSeconds};launch=@{maxObservedTokens=$MaxObservedTokens;maxExecutionSeconds=$MaxExecutionSeconds}} |
         ConvertTo-Json -Depth 5 | Out-File (Join-Path $tdir "$tid.json") -Encoding utf8
     exit 0
 }
@@ -215,6 +366,7 @@ $changedPaths = @()
 $contractViolation = $false
 $validationFailed = $false
 $tokenBudgetExceeded = $false
+$executionTimedOut = $false
 $planIndex = 0
 $totalAttempts = 0
 
@@ -231,6 +383,7 @@ $totalAttempts = 0
                 $attempt.exitCode = if ($mp.exitCode -ne $null) { [int]$mp.exitCode } else { 0 }
                 if ($mp.jsonl) { $attempt.tokens = Parse-JsonlTokens -Jsonl $mp.jsonl }
                 $attempt.changedPaths = if ($mp.changedPaths) { @($mp.changedPaths) } else { @() }
+                if ($mp.terminationReason) { $attempt.terminationReason = [string]$mp.terminationReason }
                 # Support both singular validationExitCode and list [$codes]
                 $rawVe = $mp.validationExitCode
                 if ($rawVe -eq $null) {
@@ -248,7 +401,7 @@ $totalAttempts = 0
             Write-Host ("Attempt " + $totalAttempts + ": ${candidateAgent} -> ${candidateModel} (Mock) exitCode=" + $attempt.exitCode) -ForegroundColor Cyan
         } else {
             # Live invocation
-            $opts = @('run','--pure','--auto','--dir',$repoRoot,'--model',$candidateModel,'--agent',$candidateAgent,'--format','json','--title',"orchestrated-$TaskType")
+            $opts = @('run','--pure','--dir',$repoRoot,'--model',$candidateModel,'--agent',$candidateAgent,'--format','json','--title',"orchestrated-$TaskType")
             foreach ($f in $InputPath) { $opts += @('--file',$f) }
             $contract = @("TASK TYPE: $TaskType","OBJECTIVE: $Objective")
             if ($TaskType -eq 'code') {
@@ -260,14 +413,23 @@ $totalAttempts = 0
             $contract += 'Do not commit, push, publish, deploy, or expand this contract.'
             $opts += @('--', ($contract -join "`n"))
             Write-Host ("Attempt " + $totalAttempts + ": ${candidateAgent} -> ${candidateModel}") -ForegroundColor Cyan
-            $raw = try { & opencode @opts 2>&1 | Out-String } catch { $_.Exception.Message }
-            $attempt.exitCode = $LASTEXITCODE
-            $attempt.tokens = Parse-JsonlTokens -Jsonl $raw
+            $liveResult = Invoke-OpenCodeBudgeted -Arguments $opts -TokenBudget $MaxObservedTokens -TimeoutSeconds $MaxExecutionSeconds
+            $attempt.exitCode = $liveResult.exitCode
+            $attempt.tokens = $liveResult.tokens
+            $attempt.terminationReason = $liveResult.terminationReason
         }
 
         $attempts += $attempt
 
-        if ($attempt.tokens.total -gt $MaxObservedTokens) {
+        if ($attempt.terminationReason -eq 'timeout') {
+            $executionTimedOut = $true
+            $attempt.exitCode = 1
+            $attempts[-1] = $attempt
+            Write-Warning "Execution timeout exceeded: $MaxExecutionSeconds seconds"
+            break modelLoop
+        }
+
+        if ($attempt.terminationReason -eq 'token-budget' -or $attempt.tokens.total -gt $MaxObservedTokens) {
             $tokenBudgetExceeded = $true
             $attempt.exitCode = 1
             $attempts[-1] = $attempt
@@ -355,7 +517,7 @@ foreach ($a in $attempts) {
 
 # ── Telemetry (always written before exit) ──
 $tid = [guid]::NewGuid().ToString('N')
-$status = if ($tokenBudgetExceeded) { 'blocked-token-budget' } elseif ($successResult) { 'awaiting-frontier-review' } else { 'blocked-needs-new-contract' }
+$status = if ($tokenBudgetExceeded) { 'blocked-token-budget' } elseif ($executionTimedOut) { 'blocked-timeout' } elseif ($successResult) { 'awaiting-frontier-review' } else { 'blocked-needs-new-contract' }
 $success = ($successResult -ne $null) -and (-not $contractViolation) -and (-not $validationFailed)
 $fcTelemetry = @{}
 if ($TaskType -eq 'code') {
@@ -364,19 +526,22 @@ if ($TaskType -eq 'code') {
 }
 $telemetry = @{
     telemetryId=$tid;simulated=[bool]$TestMode;taskType=$TaskType;selectedModel=if ($successResult) { $successResult.model } else { $null }
-    attempts=@($attempts | ForEach-Object { @{model=$_.model;agent=$_.agent;attempt=$_.attempt;retry=$_.retry;exitCode=$_.exitCode;tokens=$_.tokens;changedPaths=$_.changedPaths;validationExitCode=$_.validationExitCode} })
+    attempts=@($attempts | ForEach-Object { @{model=$_.model;agent=$_.agent;attempt=$_.attempt;retry=$_.retry;exitCode=$_.exitCode;tokens=$_.tokens;changedPaths=$_.changedPaths;validationExitCode=$_.validationExitCode;terminationReason=$_.terminationReason} })
     changedPaths=@($changedPaths);contractViolation=$contractViolation;validationFailed=$validationFailed
     tokensUsage=$agg;success=$success;status=$status;frontierContract=$fcTelemetry
-    launch=@{harness='opencode';protocol='native-jsonl-1.18.x';pure=$true;auto=$true;directory=$repoRoot}
+    contract=@{hash=$contractHash;headSha=$headSha;duplicateWindowSeconds=$DuplicateWindowSeconds}
+    launch=@{harness='opencode';protocol='native-jsonl-stream-1.18.x';pure=$true;auto=$false;directory=$repoRoot;maxObservedTokens=$MaxObservedTokens;maxExecutionSeconds=$MaxExecutionSeconds}
 }
 $telemetry | ConvertTo-Json -Depth 5 | Out-File (Join-Path $tdir "$tid.json") -Encoding utf8
 Write-Host "Telemetry: $(Join-Path $tdir "$tid.json")" -ForegroundColor DarkGray
 
 # ── Exit ──
 if ($success) {
+    if ($contractMutex) { $contractMutex.ReleaseMutex(); $contractMutex.Dispose() }
     Write-Host "Task completed successfully. Model=$($successResult.model) Attempts=$totalAttempts Changed=$($changedPaths.Count)" -ForegroundColor Green
     exit 0
 }
+if ($contractMutex) { $contractMutex.ReleaseMutex(); $contractMutex.Dispose() }
 Write-Host "Task failed. Status=$status" -ForegroundColor Red
 if ($contractViolation) { Write-Host "Reason: Contract violation (paths outside AllowedPath)" -ForegroundColor Red }
 if ($validationFailed) { Write-Host "Reason: Validation failure" -ForegroundColor Red }

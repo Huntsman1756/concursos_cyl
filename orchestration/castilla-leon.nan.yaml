@@ -20,10 +20,9 @@ bindings:
     maxSteps: 10
     retryMax: 1
     maxObservedTokens: 50000
+    maxExecutionSeconds: 300
+    duplicateWindowSeconds: 3600
     fallbackModels: []
-    fallbackModels:
-      - nan/mimo-v2.5
-      - nan/deepseek-v4-flash
   bulletinReader:
     harness: opencode
     provider: nan
