@@ -1,0 +1,23 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "share": "disabled",
+  "autoupdate": false,
+  "enabled_providers": ["nan"],
+  "subagent_depth": 0,
+  "mcp": {
+    "esdata": {
+      "enabled": false
+    }
+  },
+  "watcher": {
+    "ignore": [
+      ".git/**",
+      "node_modules/**",
+      "dist/**",
+      "build/**",
+      ".agent-runs/**",
+      "_codex_tmp/**",
+      "_codex_worktrees/**"
+    ]
+  }
+}

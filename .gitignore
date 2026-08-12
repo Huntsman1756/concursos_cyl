@@ -14,6 +14,9 @@ test-results/
 .codex-tmp/
 .superpowers/
 .worktrees/
+_codex_tmp/
+_codex_worktrees/
+.agent-runs/
 tmp/
 
 # Local accidental placeholder retained outside version control

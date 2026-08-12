@@ -1,0 +1,49 @@
+schemaVersion: 1
+id: castilla-leon-openai-nan-pilot
+reference:
+  repository: https://github.com/Huntsman1756/agent-orchestration-starter
+  adaptation: project-local-windows-pilot
+bindings:
+  orchestrator:
+    harness: codex
+    provider: openai
+    model: gpt-5.6-sol
+    reasoningEffort: medium
+    permissions: plan-and-review
+  codeExecutor:
+    harness: opencode
+    provider: nan
+    model: qwen3.6
+    agent: nan-code
+    permissions: bounded-repository-write
+    maxSteps: 32
+  bulletinReader:
+    harness: opencode
+    provider: nan
+    model: gemma4
+    agent: nan-bulletin
+    permissions: repository-read-only
+    maxSteps: 12
+  reviewer:
+    harness: codex
+    provider: openai
+    model: gpt-5.6-sol
+    reasoningEffort: medium
+    permissions: read-only-review
+routing:
+  code:
+    default: codeExecutor
+    escalateTo: orchestrator
+  bulletin:
+    default: bulletinReader
+    verifyWith: reviewer
+  architecture: orchestrator
+  security_review: orchestrator
+  debugging: orchestrator
+  cross_file_refactor: orchestrator
+controls:
+  maxConcurrentNanRequests: 2
+  requireAllowedPathsForCode: true
+  requireIndependentReview: true
+  allowWorkerPublication: false
+  credentialsInRepository: false
