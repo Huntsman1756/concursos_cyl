@@ -75,6 +75,7 @@ Ejemplo DryRun (obligatorio incluir `-ValidationCommand` para code):
   -FrontierPlan "Revisión de configuración" `
   -AcceptanceCriteria @("Sin errores","Verificada estructura") `
   -AllowedPath "src/**" `
+  -BudgetProfile batch `
   -ValidationCommand "npm run lint" `
   -DryRun
 ```
@@ -82,7 +83,8 @@ Ejemplo DryRun (obligatorio incluir `-ValidationCommand` para code):
 El worker soporta:
 
 - `-MaxRetries 1` — valor seguro por defecto; aumentarlo requiere justificar el coste.
-- `-MaxObservedTokens 50000` — termina OpenCode durante la ejecución si supera el presupuesto observado, incluida la caché.
+- `-BudgetProfile small|batch|research|extended` — aplica respectivamente 50k, 150k, 300k o 400k tokens observados por ejecución, incluida la caché. El valor seguro por defecto es `small`.
+- `-MaxObservedTokens <n>` — override excepcional entre 1k y 1M; prevalece sobre el perfil y queda identificado como `override` en telemetría.
 - `-MaxExecutionSeconds 300` — termina el árbol del proceso al agotar el tiempo.
 - `-DuplicateWindowSeconds 3600` — bloquea contratos idénticos sobre el mismo SHA durante una hora.
 - `-FallbackModels` — vacío por defecto; cada fallback debe cualificarse explícitamente.

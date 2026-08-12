@@ -134,7 +134,8 @@ function New-ValidCodeContract {
         [string[]]$AllowedPath = @('scripts/**'),
         [string[]]$ValidationCommand = @('cmd /c exit 0'),
         [int]$MaxRetries = 3,
-        [int]$MaxObservedTokens = 50000,
+        [ValidateSet('small','batch','research','extended')][string]$BudgetProfile = 'small',
+        [int]$MaxObservedTokens = 0,
         [int]$MaxExecutionSeconds = 300,
         [int]$DuplicateWindowSeconds = 3600,
         [string[]]$FallbackModels = @('nan/mimo-v2.5','nan/deepseek-v4-flash'),
@@ -150,7 +151,7 @@ function New-ValidCodeContract {
         AllowedPath = $AllowedPath
         ValidationCommand = $ValidationCommand
         MaxRetries = $MaxRetries
-        MaxObservedTokens = $MaxObservedTokens
+        BudgetProfile = $BudgetProfile
         MaxExecutionSeconds = $MaxExecutionSeconds
         DuplicateWindowSeconds = $DuplicateWindowSeconds
         FallbackModels = $FallbackModels
@@ -158,6 +159,7 @@ function New-ValidCodeContract {
         FrontierPlan = 'Implement the required changes'
         AcceptanceCriteria = @('1. All tests pass','2. No regression')
     }
+    if ($MaxObservedTokens -ne 0) { $ht.MaxObservedTokens = $MaxObservedTokens }
     if ($AllowNoChanges) { $ht.AllowNoChanges = $true }
     if ($DryRun) { $ht.DryRun = $true }
     if ($TestMode) { $ht.TestMode = $true }
@@ -191,9 +193,44 @@ try {
         Assert-Contains $r.Output 'DryRun' '2b: DryRun label in output'
         Assert-Contains $r.Output 'qwen3.6' '2c: DryRun shows primary model'
 
+        $pre = Get-FileSnapshot
+        $r = Invoke-WorkerChild -WorkerParameters (New-ValidCodeContract -Objective 'batch-budget-profile' -BudgetProfile batch -DryRun -TestMode)
+        Assert-True ($r.ExitCode -eq 0) '2d: batch budget DryRun exits 0'
+        $budgetProfileTelemetry = Get-Content -LiteralPath (Get-NewTelemetry -BeforeFiles $pre) -Raw | ConvertFrom-Json
+        Assert-Equal $budgetProfileTelemetry.launch.budgetProfile 'batch' '2e: telemetry records batch profile'
+        Assert-Equal $budgetProfileTelemetry.launch.budgetSource 'profile' '2f: telemetry records profile source'
+        Assert-Equal $budgetProfileTelemetry.launch.maxObservedTokens 150000 '2g: batch profile resolves to 150000 tokens'
+
+        foreach ($profileCase in @(
+            @{Name='small';Tokens=50000},
+            @{Name='research';Tokens=300000},
+            @{Name='extended';Tokens=400000}
+        )) {
+            $pre = Get-FileSnapshot
+            $profileParams = New-ValidCodeContract -Objective "budget-profile-$($profileCase.Name)" -DryRun -TestMode
+            $profileParams.BudgetProfile = $profileCase.Name
+            $r = Invoke-WorkerChild -WorkerParameters $profileParams
+            Assert-True ($r.ExitCode -eq 0) "2g: $($profileCase.Name) budget DryRun exits 0"
+            $profileTelemetry = Get-Content -LiteralPath (Get-NewTelemetry -BeforeFiles $pre) -Raw | ConvertFrom-Json
+            Assert-Equal $profileTelemetry.launch.budgetProfile $profileCase.Name "2g: telemetry records $($profileCase.Name) profile"
+            Assert-Equal $profileTelemetry.launch.maxObservedTokens $profileCase.Tokens "2g: $($profileCase.Name) profile resolves to $($profileCase.Tokens) tokens"
+        }
+
+        $pre = Get-FileSnapshot
+        $r = Invoke-WorkerChild -WorkerParameters (New-ValidCodeContract -Objective 'budget-override' -BudgetProfile research -MaxObservedTokens 175000 -DryRun -TestMode)
+        Assert-True ($r.ExitCode -eq 0) '2h: explicit budget override DryRun exits 0'
+        $budgetOverrideTelemetry = Get-Content -LiteralPath (Get-NewTelemetry -BeforeFiles $pre) -Raw | ConvertFrom-Json
+        Assert-Equal $budgetOverrideTelemetry.launch.budgetProfile 'research' '2i: telemetry preserves requested profile with override'
+        Assert-Equal $budgetOverrideTelemetry.launch.budgetSource 'override' '2j: telemetry records override source'
+        Assert-Equal $budgetOverrideTelemetry.launch.maxObservedTokens 175000 '2k: explicit override wins over profile'
+
+        $r = Invoke-WorkerDirect -WorkerParameters (New-ValidCodeContract -Objective 'invalid-budget-override' -MaxObservedTokens 1000001 -DryRun -TestMode)
+        Assert-True ($r.ExitCode -ne 0) '2k: out-of-range budget override fails closed'
+        Assert-Contains $r.Output 'MaxObservedTokens' '2k: invalid override error names MaxObservedTokens'
+
         $r = Invoke-WorkerDirect -WorkerParameters @{TaskType = 'bulletin'; Objective = 'bulletin-dryrun'; InputPath = @('AGENTS.md'); DryRun = $true}
-        Assert-True ($r.ExitCode -eq 0) '2d: bulletin DryRun exit 0'
-        Assert-Contains $r.Output 'gemma4' '2e: bulletin DryRun shows gemma4'
+        Assert-True ($r.ExitCode -eq 0) '2l: bulletin DryRun exit 0'
+        Assert-Contains $r.Output 'gemma4' '2m: bulletin DryRun shows gemma4'
     }
 
     # 3. Primary succeeds after two failures (3 attempts)

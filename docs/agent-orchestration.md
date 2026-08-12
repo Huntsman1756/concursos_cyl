@@ -89,7 +89,8 @@ Codex define:
 - Objetivo verificable (una frase o párrafo corto).
 - Rutas permitidas (patrones glob, p.ej. `src/**`, `docs/agent-orchestration.md`).
 - Comandos de validación (p.ej. `npm test`, `prettier --check docs/agent-orchestration.md`).
-- Opcionalmente `MaxRetries`, `FallbackModels` y `DryRun`.
+- El perfil de presupuesto: `small`, `batch`, `research` o `extended`.
+- Opcionalmente `MaxRetries`, `FallbackModels`, `MaxObservedTokens` como override y `DryRun`.
 
 ### 2. Codex invoca el trabajador
 
@@ -104,7 +105,7 @@ Ejecución acotada (un intento, sin fallback por defecto):
   -AllowedPath "src/**" `
   -ValidationCommand "npm test" `
   -MaxRetries 1 `
-  -MaxObservedTokens 50000 `
+  -BudgetProfile batch `
   -MaxExecutionSeconds 300 `
   -DuplicateWindowSeconds 3600
 ```
@@ -118,6 +119,18 @@ Cada campo es obligatorio y se valida en runtime (fail-closed):
 | `AcceptanceCriteria` | Criterios de aceptación como arreglo de strings `string[]`, un elemento por criterio (no un string con saltos de línea)                                                            | `@("1. Tests pasan","2. Sin regression")` |
 | `AllowedPath`        | Glob o lista glob que delimita escrituras                                                                                                                                          | `"src/**"`                                |
 | `ValidationCommand`  | Comando(s) que deben devolver 0. Si alguno falla, el intento se bloquea inmediatamente; se persiste en `validationExitCode` el **primer código no cero** encontrado, no el último. | `"npm test"`                              |
+| `BudgetProfile`      | Presupuesto observado por ejecución. `small` es el valor seguro por defecto; los perfiles mayores deben declararse según el alcance del contrato.                                  | `"batch"`                                 |
+
+| Perfil     |  Tokens | Uso previsto                                               |
+| ---------- | ------: | ---------------------------------------------------------- |
+| `small`    |  50.000 | Cambio mecánico pequeño y localizado.                      |
+| `batch`    | 150.000 | Incorporación mecánica de un lote previamente investigado. |
+| `research` | 300.000 | Lectura y extracción extensa de fuentes.                   |
+| `extended` | 400.000 | Lote excepcional que combina bastante contexto y trabajo.  |
+
+`MaxObservedTokens` acepta de 1.000 a 1.000.000 y prevalece sobre la tabla,
+pero queda registrado como `budgetSource: override`; no debe usarse como valor
+habitual ni para ocultar un contrato demasiado amplio.
 
 Ejecución DryRun (sin coste, valida contrato sin llamar a opencode):
 
@@ -276,7 +289,11 @@ Gemma 4 la sesión `ses_00b2f4913ffe6H53pMxnPbY8TP` con 3.100 tokens; ambas term
 cambios. Esto prueba route, launch, eventos y usage, pero no certifica Runtime V4
 ni autoriza publicación. El probe Qwen consumió 122.724 tokens para una tarea
 sin cambios; esta regresión económica motivó `maxSteps: 10`, un solo intento,
-fallbacks vacíos y `MaxObservedTokens: 50000`. El broker corta la ejecución al
+fallbacks vacíos y un perfil seguro `small` de 50.000 tokens. Para no convertir
+ese cortafuegos en un cuello de botella, el broker ofrece perfiles por contrato:
+`small` (50k), `batch` (150k), `research` (300k) y `extended` (400k). Un
+`MaxObservedTokens` explícito entre 1k y 1M prevalece como override auditable.
+El broker corta la ejecución al
 observar el exceso y la deja en `blocked-token-budget`; un timeout queda en
 `blocked-timeout`. Como la API informa tokens por pasos completados, puede existir
 un pequeño sobrepaso correspondiente al paso en curso, pero no una trayectoria

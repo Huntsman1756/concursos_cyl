@@ -19,7 +19,15 @@ bindings:
     permissions: bounded-repository-write
     maxSteps: 10
     retryMax: 1
-    maxObservedTokens: 50000
+    defaultBudgetProfile: small
+    budgetProfiles:
+      small: 50000
+      batch: 150000
+      research: 300000
+      extended: 400000
+    maxObservedTokensOverrideRange:
+      min: 1000
+      max: 1000000
     maxExecutionSeconds: 300
     duplicateWindowSeconds: 3600
     fallbackModels: []
