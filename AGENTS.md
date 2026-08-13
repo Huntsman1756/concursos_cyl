@@ -3,6 +3,13 @@
 Este repositorio usa un flujo inspirado en `agent-orchestration-starter`:
 OpenAI/Codex planifica y revisa; OpenCode ejecuta contratos acotados con NAN.
 
+La referencia de compatibilidad incluye el contrato de procedencia firmada V4
+del merge `42cf5c2b1b55628332ce9fc1089957bd4fca3931`. La integracion actual sigue
+siendo `BOUNDED_LOCAL`: no debe anunciar evidencia firmada ni enforcement
+`REQUIRED`. Solo el host privilegiado puede firmar y la clave, la evidencia y
+la clave publica confiada permanecen fuera del repositorio y del contexto del
+modelo.
+
 ## Roles y rutas
 
 - **Sol/Frontier (Orquestador y Revisor)** — OpenAI/Codex Sol, esfuerzo medio.
