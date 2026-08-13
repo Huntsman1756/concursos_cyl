@@ -1,72 +1,72 @@
 {
   "schemaVersion": "1.0.0",
   "freezeStatus": "frozen",
-  "sourceCommitSha": "e68f2ca7bb98af290dd6d25797398cf4d778d590",
+  "sourceCommitSha": "1c109293a0433494ba25bcf9faff6ca67e05ba23",
   "manifest": {
     "path": "public/data/v1/manifest.json",
-    "sha256": "90f96ed747c3d369c54c816701783cd0473e07d8a80d2b63f63cb9a1f6dec149",
-    "generatedAt": "2026-08-12T18:28:23.819Z",
-    "snapshotId": "20260812182823819-b36dc2a9111a",
+    "sha256": "e7822376ed1854bb0c760a20eb7628652517e7f61c868f5d6155ec61d8ca9cc2",
+    "generatedAt": "2026-08-13T00:33:33.450Z",
+    "snapshotId": "20260813003333450-c67e16c08825",
     "qualityStatus": "passed",
     "qualityCounts": {
       "centers": 229,
       "offerings": 1294,
-      "offers": 1054,
+      "offers": 1044,
       "programs": 187
     },
     "resourceSnapshots": {
       "centers": {
-        "resourcePath": "/data/v1/snapshots/20260812182823819-b36dc2a9111a/centers.json",
+        "resourcePath": "/data/v1/snapshots/20260813003333450-c67e16c08825/centers.json",
         "sha256": "593b7780f6cb9511c02edb26a769e5e1f951624f6e4b923a8e34caacb230c87a",
         "recordCount": 229
       },
       "jobOffers": {
-        "resourcePath": "/data/v1/snapshots/20260812182823819-b36dc2a9111a/job-offers.json",
-        "sha256": "9a7c56e441e300d90b42a20cf7da5a345bc91069c11a635e27c211107ac3d7e4",
-        "recordCount": 1054
+        "resourcePath": "/data/v1/snapshots/20260813003333450-c67e16c08825/job-offers.json",
+        "sha256": "8067a20dabaaf7cd97703356888b818e9b2c294e90f97b3f5bb0182b9af85db4",
+        "recordCount": 1044
       },
       "mappingCoverage": {
-        "resourcePath": "/data/v1/snapshots/20260812182823819-b36dc2a9111a/mapping-coverage.json",
+        "resourcePath": "/data/v1/snapshots/20260813003333450-c67e16c08825/mapping-coverage.json",
         "sha256": "a1b3a62cadaa7adee6d86a7f18ae971bf807fd620df57f8b117e23db68979c2b",
         "recordCount": 209
       },
       "officialOccupations": {
-        "resourcePath": "/data/v1/snapshots/20260812182823819-b36dc2a9111a/official-occupations.json",
+        "resourcePath": "/data/v1/snapshots/20260813003333450-c67e16c08825/official-occupations.json",
         "sha256": "76fa213f97c98e5af0f9bf120323ba3abb32df78e797c381e5454cadc858f64b",
         "recordCount": 502
       },
       "occupationAliases": {
-        "resourcePath": "/data/v1/snapshots/20260812182823819-b36dc2a9111a/occupation-aliases.json",
-        "sha256": "b7fec28a533a6c18e9c1832bd3f9d1c09c0871fc2c1209b7e8f536ebe2eb9f72",
-        "recordCount": 102
+        "resourcePath": "/data/v1/snapshots/20260813003333450-c67e16c08825/occupation-aliases.json",
+        "sha256": "ae937ec50dde7edca17e77bca77053f5c51844c6facd444fc8dc682ab2e2c222",
+        "recordCount": 105
       },
       "occupations": {
-        "resourcePath": "/data/v1/snapshots/20260812182823819-b36dc2a9111a/occupations.json",
+        "resourcePath": "/data/v1/snapshots/20260813003333450-c67e16c08825/occupations.json",
         "sha256": "5def10d5faf1715d29c0a01b45cafab7172592443be62b9a32b3e68b197078cc",
         "recordCount": 82
       },
       "outcomeIndicators": {
-        "resourcePath": "/data/v1/snapshots/20260812182823819-b36dc2a9111a/outcome-indicators.json",
+        "resourcePath": "/data/v1/snapshots/20260813003333450-c67e16c08825/outcome-indicators.json",
         "sha256": "4f2c6b73fc4171bb9daf21583712ab2ec99bcaa7d27b1f2fd0c070b9079ab3e2",
         "recordCount": 22170
       },
       "programs": {
-        "resourcePath": "/data/v1/snapshots/20260812182823819-b36dc2a9111a/programs.json",
+        "resourcePath": "/data/v1/snapshots/20260813003333450-c67e16c08825/programs.json",
         "sha256": "90df87b283b5ff003dda20c9c4f7eac52b903e611753d107d4b927bbc4e19b72",
         "recordCount": 187
       },
       "publishedRequirements": {
-        "resourcePath": "/data/v1/snapshots/20260812182823819-b36dc2a9111a/published-requirements.json",
-        "sha256": "fbf95ee4801f76af0f8cfad5465034a75a543f2e3d8a78c73cd4692afd33a3ad",
-        "recordCount": 322
+        "resourcePath": "/data/v1/snapshots/20260813003333450-c67e16c08825/published-requirements.json",
+        "sha256": "39e458bb581492931b2964ba85cb37d71f0f7360141d359c05951b63c2283765",
+        "recordCount": 320
       },
       "trainingOccupationLinks": {
-        "resourcePath": "/data/v1/snapshots/20260812182823819-b36dc2a9111a/training-occupation-links.json",
+        "resourcePath": "/data/v1/snapshots/20260813003333450-c67e16c08825/training-occupation-links.json",
         "sha256": "d9e31ea9a2a82214e8e6f1fc83b0e6c4cf0f4b2d631d3381aec8f62991f2e08c",
         "recordCount": 135
       },
       "trainingOfferings": {
-        "resourcePath": "/data/v1/snapshots/20260812182823819-b36dc2a9111a/training-offerings.json",
+        "resourcePath": "/data/v1/snapshots/20260813003333450-c67e16c08825/training-offerings.json",
         "sha256": "0948871f993a4f0a03ed42ccef060c4a395e0898dc230086f234345fee7e880a",
         "recordCount": 1294
       }
@@ -312,6 +312,7 @@
       "Administrativo de logística|occupation:cno11:4123",
       "Administrativo de recursos humanos|occupation:cno11:4223",
       "Administrativo financiero|occupation:cno11:4113",
+      "Agentes de compras|occupation:cno11:3522",
       "Animador turístico|occupation:cno11:3724",
       "Auxiliar de archivo|occupation:cno11:4210",
       "Auxiliar de ayuda a domicilio|occupation:cno11:5710",
@@ -332,6 +333,7 @@
       "Ayudante de maquillaje|occupation:cno11:5812",
       "Ayudante de montador de sistemas microinformáticos|occupation:cno11:7533",
       "Ayudantes de farmacia|occupation:cno11:5621",
+      "Bañistas-socorristas|occupation:cno11:5992",
       "Clasificador repartidor de correspondencia|occupation:cno11:4221",
       "Cocineros (no propietarios)|occupation:cno11:5110",
       "Cocineros asalariados|occupation:cno11:5110",
@@ -358,6 +360,7 @@
       "Instructor de educación física|occupation:cno11:3723",
       "Instructor de natación|occupation:cno11:3723",
       "Integrador social|occupation:cno11:3713",
+      "Integrador/a social|occupation:cno11:3713",
       "Monitor de tiempo libre|occupation:cno11:3724",
       "Montador de instalaciones de energía solar fotovoltaica|occupation:cno11:7294",
       "Operador de cobro|occupation:cno11:5500",
@@ -410,24 +413,26 @@
       "técnicos auxiliares de clínica|occupation:cno11:5611",
       "Árbitro deportivo|occupation:cno11:3722"
     ],
-    "approvedAliasCount": 102,
+    "approvedAliasCount": 105,
     "matchedProgramKeys": [
+      "AFD01S",
+      "AFD01SD",
       "EOC01M",
       "IMP01B",
       "IMP02M",
       "SAN02M",
       "SAN21",
-      "SSC01M"
+      "SSC01M",
+      "SSC03S",
+      "SSC03SD"
     ],
-    "matchedProgramCount": 6,
+    "matchedProgramCount": 10,
     "zeroReviewedProgramKeys": [
       "ADG01B",
       "ADG01M",
       "ADG01MD",
       "ADG02S",
       "ADG02SD",
-      "AFD01S",
-      "AFD01SD",
       "AGA01M",
       "AGA03M",
       "COM01B",
@@ -459,23 +464,25 @@
       "SAN08SD",
       "SSC01S",
       "SSC01SD",
-      "SSC03S",
-      "SSC03SD",
       "TMV01B",
       "TMV01M",
       "TMV01S",
       "TMV02M"
     ],
-    "zeroReviewedProgramCount": 44,
+    "zeroReviewedProgramCount": 40,
     "matchedRelationKeys": [
+      "AFD01SD|occupation:cno11:5992",
+      "AFD01S|occupation:cno11:5992",
       "EOC01M|occupation:cno11:7111",
       "IMP01B|occupation:cno11:5811",
       "IMP02M|occupation:cno11:5811",
       "SAN02M|occupation:cno11:5621",
       "SAN21|occupation:cno11:5611",
-      "SSC01M|occupation:cno11:5710"
+      "SSC01M|occupation:cno11:5710",
+      "SSC03SD|occupation:cno11:3713",
+      "SSC03S|occupation:cno11:3713"
     ],
-    "matchedRelationCount": 6,
+    "matchedRelationCount": 10,
     "zeroReviewedRelationKeys": [
       "ADG01B|occupation:cno11:4210",
       "ADG01B|occupation:cno11:4221",
@@ -498,11 +505,9 @@
       "AFD01SD|occupation:cno11:3722",
       "AFD01SD|occupation:cno11:3723",
       "AFD01SD|occupation:cno11:3724",
-      "AFD01SD|occupation:cno11:5992",
       "AFD01S|occupation:cno11:3722",
       "AFD01S|occupation:cno11:3723",
       "AFD01S|occupation:cno11:3724",
-      "AFD01S|occupation:cno11:5992",
       "AGA01M|occupation:cno11:6110",
       "AGA01M|occupation:cno11:6120",
       "AGA01M|occupation:cno11:6204",
@@ -594,9 +599,7 @@
       "SSC01SD|occupation:cno11:2252",
       "SSC01S|occupation:cno11:2252",
       "SSC03SD|occupation:cno11:2312",
-      "SSC03SD|occupation:cno11:3713",
       "SSC03S|occupation:cno11:2312",
-      "SSC03S|occupation:cno11:3713",
       "TMV01B|occupation:cno11:7293",
       "TMV01B|occupation:cno11:7313",
       "TMV01B|occupation:cno11:7401",
@@ -607,7 +610,7 @@
       "TMV01S|occupation:cno11:4412",
       "TMV02M|occupation:cno11:7401"
     ],
-    "zeroReviewedRelationCount": 129,
+    "zeroReviewedRelationCount": 125,
     "deferredPrograms": [],
     "deferredProgramCount": 0
   },
@@ -616,7 +619,6 @@
       "1285619684957",
       "1285625266971",
       "1285634475038",
-      "1285636902492",
       "1285637783304",
       "1285638302131",
       "1285639439371",
@@ -625,13 +627,13 @@
       "1285643523185",
       "1285645658066",
       "1285647198339",
-      "1285648074767",
       "1285656851320",
       "1285662030438",
       "1285662467494",
       "1285662541494",
       "1285662949567",
       "1285663160304",
+      "1285663318503",
       "1285663377553",
       "1285663377586",
       "1285663973698",
@@ -640,6 +642,7 @@
       "1285664934590",
       "1285665380332",
       "1285665942298",
+      "1285667274442",
       "1285667333543",
       "1285667539377",
       "1285667589914",
@@ -655,12 +658,14 @@
       "1285669453017",
       "1285669509738",
       "1285669665440",
-      "1285669665506",
+      "1285669689957",
       "1285669924974",
       "1285669958098",
-      "1285670018399"
+      "1285670018399",
+      "1285670397102",
+      "1285670397130"
     ],
-    "matchedOfferCount": 46,
+    "matchedOfferCount": 48,
     "marginalOfferDeltas": { "unionOfferIds": [], "unionOfferCount": 0 }
   },
   "attempts": {
