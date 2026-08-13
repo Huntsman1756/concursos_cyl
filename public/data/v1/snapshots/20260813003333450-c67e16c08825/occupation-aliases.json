@@ -35,6 +35,27 @@
     "reviewedAt": "2026-08-12"
   },
   {
+    "alias": "Agentes de compras",
+    "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:3522",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-13"
+  },
+  {
+    "alias": "Animador turístico",
+    "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:3724",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-12"
+  },
+  {
+    "alias": "Árbitro deportivo",
+    "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:3722",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-12"
+  },
+  {
     "alias": "Auxiliar de archivo",
     "mappingVersion": "1.0.0",
     "occupationId": "occupation:cno11:4210",
@@ -56,9 +77,23 @@
     "reviewedAt": "2026-08-12"
   },
   {
+    "alias": "Auxiliar de depilación",
+    "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:5812",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-12"
+  },
+  {
     "alias": "Auxiliar de información",
     "mappingVersion": "1.0.0",
     "occupationId": "occupation:cno11:4411",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-12"
+  },
+  {
+    "alias": "Auxiliar de peluquería",
+    "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:5811",
     "reviewStatus": "approved",
     "reviewedAt": "2026-08-12"
   },
@@ -154,6 +189,34 @@
     "reviewedAt": "2026-08-12"
   },
   {
+    "alias": "Ayudante de instalador de equipos y sistemas de comunicación",
+    "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:7533",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-12"
+  },
+  {
+    "alias": "Ayudante de instalador de sistemas para transmisión de datos",
+    "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:7533",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-12"
+  },
+  {
+    "alias": "Ayudante de manicura y pedicura",
+    "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:5812",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-12"
+  },
+  {
+    "alias": "Ayudante de maquillaje",
+    "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:5812",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-12"
+  },
+  {
     "alias": "Ayudante de montador de sistemas microinformáticos",
     "mappingVersion": "1.0.0",
     "occupationId": "occupation:cno11:7533",
@@ -166,6 +229,13 @@
     "occupationId": "occupation:cno11:5621",
     "reviewStatus": "approved",
     "reviewedAt": "2026-08-12"
+  },
+  {
+    "alias": "Bañistas-socorristas",
+    "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:5992",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-13"
   },
   {
     "alias": "Clasificador repartidor de correspondencia",
@@ -203,6 +273,27 @@
     "reviewedAt": "2026-08-09"
   },
   {
+    "alias": "Comerciante de tienda",
+    "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:5300",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-12"
+  },
+  {
+    "alias": "Cronometrador de competiciones deportivas",
+    "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:3722",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-12"
+  },
+  {
+    "alias": "Delegado comercial de productos hospitalarios y farmacéuticos",
+    "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:2640",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-12"
+  },
+  {
     "alias": "desarrollador web",
     "mappingVersion": "1.0.0",
     "occupationId": "occupation:cno11:2713",
@@ -224,12 +315,26 @@
     "reviewedAt": "2026-08-12"
   },
   {
+    "alias": "Encargado de ITV",
+    "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:3160",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-12"
+  },
+  {
     "alias": "encofradores",
     "mappingVersion": "1.0.0",
     "matchPolicy": "approved_single_token",
     "occupationId": "occupation:cno11:7111",
     "reviewStatus": "approved",
     "reviewedAt": "2026-08-09"
+  },
+  {
+    "alias": "Gerente de pequeño comercio",
+    "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:1432",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-12"
   },
   {
     "alias": "Grabador verificador de datos",
@@ -246,6 +351,13 @@
     "reviewedAt": "2026-08-09"
   },
   {
+    "alias": "Instalador de antenas",
+    "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:7533",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-12"
+  },
+  {
     "alias": "Instalador de lunas de vehículos",
     "mappingVersion": "1.0.0",
     "occupationId": "occupation:cno11:7293",
@@ -254,6 +366,13 @@
   },
   {
     "alias": "Instalador de telecomunicaciones en edificios de viviendas",
+    "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:7533",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-12"
+  },
+  {
+    "alias": "Instalador de telefonía",
     "mappingVersion": "1.0.0",
     "occupationId": "occupation:cno11:7533",
     "reviewStatus": "approved",
@@ -274,6 +393,13 @@
     "reviewedAt": "2026-08-12"
   },
   {
+    "alias": "Instalador-montador de equipos telefónicos y telemáticos",
+    "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:7533",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-12"
+  },
+  {
     "alias": "Instaladores de materiales de impermeabilización en edificios",
     "mappingVersion": "1.0.0",
     "occupationId": "occupation:cno11:7193",
@@ -288,9 +414,37 @@
     "reviewedAt": "2026-08-09"
   },
   {
+    "alias": "Instructor de educación física",
+    "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:3723",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-12"
+  },
+  {
+    "alias": "Instructor de natación",
+    "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:3723",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-12"
+  },
+  {
+    "alias": "Integrador/a social",
+    "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:3713",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-13"
+  },
+  {
     "alias": "Integrador social",
     "mappingVersion": "1.0.0",
     "occupationId": "occupation:cno11:3713",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-12"
+  },
+  {
+    "alias": "Monitor de tiempo libre",
+    "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:3724",
     "reviewStatus": "approved",
     "reviewedAt": "2026-08-12"
   },
@@ -365,6 +519,13 @@
     "reviewedAt": "2026-08-12"
   },
   {
+    "alias": "Perito tasador de vehículos",
+    "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:3405",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-12"
+  },
+  {
     "alias": "programación web",
     "mappingVersion": "1.0.0",
     "occupationId": "occupation:cno11:2713",
@@ -400,9 +561,44 @@
     "reviewedAt": "2026-08-04"
   },
   {
+    "alias": "Recepcionista de vehículos",
+    "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:4412",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-12"
+  },
+  {
+    "alias": "Representante comercial",
+    "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:3510",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-12"
+  },
+  {
+    "alias": "Socorrista de piscina",
+    "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:5992",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-12"
+  },
+  {
+    "alias": "Socorrista en instalaciones acuáticas",
+    "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:5992",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-12"
+  },
+  {
     "alias": "Técnico de integración social",
     "mappingVersion": "1.0.0",
     "occupationId": "occupation:cno11:3713",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-12"
+  },
+  {
+    "alias": "Técnico de laboratorio sanitario",
+    "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:3314",
     "reviewStatus": "approved",
     "reviewedAt": "2026-08-12"
   },
@@ -463,6 +659,27 @@
     "reviewedAt": "2026-08-12"
   },
   {
+    "alias": "Técnico en gestión de stocks y almacén",
+    "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:3522",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-12"
+  },
+  {
+    "alias": "Técnico en instalación y mantenimiento de redes locales",
+    "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:3813",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-12"
+  },
+  {
+    "alias": "Técnico en laboratorio de diagnóstico clínico",
+    "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:3314",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-12"
+  },
+  {
     "alias": "Técnico en manicura",
     "mappingVersion": "1.0.0",
     "occupationId": "occupation:cno11:5812",
@@ -473,6 +690,27 @@
     "alias": "Técnico en pedicura",
     "mappingVersion": "1.0.0",
     "occupationId": "occupation:cno11:5812",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-12"
+  },
+  {
+    "alias": "Técnico en planificación y programación de procesos de mantenimiento de instalaciones de maquinaria y equipo industrial",
+    "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:3126",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-12"
+  },
+  {
+    "alias": "Técnico en redes locales y telemática",
+    "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:3813",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-12"
+  },
+  {
+    "alias": "Técnico instalador-mantenedor de equipos informáticos",
+    "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:7533",
     "reviewStatus": "approved",
     "reviewedAt": "2026-08-12"
   },

@@ -16,4 +16,4 @@ La representatividad de las tablas nacionales es la declarada por el Ministerio:
 
 Las rutas internas son recorridos de producto; la candidatura usa únicamente la raíz pública. La experiencia no requiere cuentas ni persistencia del navegador. La accesibilidad, el responsive y la semántica se deben confirmar de nuevo en la sesión de capturas finales.
 
-El objetivo de ampliar la cobertura está condicionado a evidencia: el freeze actual registra 39 cualificaciones distintas y deja 0 programas diferidos. El despliegue público está verificado para el commit `ed2583f6fbabcd73b9c07d20d222e0be4b0efa2d`; la verificación de rutas y recursos queda registrada en `docs/contest/release-evidence.json`.
+El objetivo de ampliar la cobertura está condicionado a evidencia: el freeze actual registra 39 cualificaciones distintas y deja 0 programas diferidos. El despliegue y la verificación pública aún están pendientes y no forman parte de este documento como hechos consumados.

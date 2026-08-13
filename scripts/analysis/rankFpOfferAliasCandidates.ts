@@ -68,7 +68,11 @@ export const FpOfferAliasCandidateSchema = z
     matchFields: z.array(CandidateMatchFieldSchema).min(1),
     matchedOfferIds: z.array(z.string().min(1)).min(1),
     matchedOfferTitles: z.array(z.string().min(1)).min(1),
-    occurrenceCount: z.number().int().min(1).max(1054),
+    occurrenceCount: z.number().int().min(1),
+    marginalOfferIds: z.array(z.string().min(1)).min(1),
+    marginalOfferCount: z.number().int().min(1),
+    currentRelationMatchCount: z.number().int().min(0),
+    currentProgramMatchCount: z.number().int().min(0),
     normalizedCollisionOccupations: z
       .array(z.string().regex(/^occupation:cno11:\d{4}$/u))
       .min(0),
@@ -79,7 +83,7 @@ export type FpOfferAliasCandidate = z.infer<typeof FpOfferAliasCandidateSchema>;
 
 export const FpOfferAliasCandidateReportSchema = z
   .object({
-    schemaVersion: z.literal("1.0.0"),
+    schemaVersion: z.literal("1.1.0"),
     snapshotId: z.string().min(1),
     snapshotHash: z
       .string()
@@ -87,8 +91,11 @@ export const FpOfferAliasCandidateReportSchema = z
       .optional(),
     totalOffers: z.number().int().min(1),
     approvedLinkCount: z.number().int().min(0),
+    analyzedRelations: z.number().int().min(0),
+    relationsWithExistingMatches: z.number().int().min(0),
     zeroMatchRelations: z.number().int().min(0),
     zeroMatchPrograms: z.number().int().min(0),
+    marginalCandidateOfferCount: z.number().int().min(0),
     totalCandidates: z.number().int().min(0),
     candidatesByConfidence: z.object({
       review_only: z.number().int().min(0),
@@ -300,9 +307,11 @@ interface ProgramOccupationRelation {
   occupationLabel: string;
   link: TrainingOccupationLink;
   existingAliases: OccupationAlias[];
+  currentRelationMatchedOfferIds: ReadonlySet<string>;
+  currentProgramMatchedOfferIds: ReadonlySet<string>;
 }
 
-function detectZeroMatchRelations(
+function buildApprovedRelations(
   programs: TrainingProgram[],
   occupations: Occupation[],
   aliases: OccupationAlias[],
@@ -333,7 +342,7 @@ function detectZeroMatchRelations(
     linksByProgram.set(link.trainingProgramKey, arr);
   }
 
-  const zeroMatchRelations: ProgramOccupationRelation[] = [];
+  const relations: ProgramOccupationRelation[] = [];
 
   for (const [programKey, programLinks] of linksByProgram) {
     const program = programs.find((p) => p.programKey === programKey);
@@ -351,41 +360,38 @@ function detectZeroMatchRelations(
         publishedRequirements,
         humanOverrides: [],
       });
-      if (matches.length === 0) {
-        // Zero-match relation – collect all links for this program
-        for (const link of programLinks) {
-          const occ = occupationMap.get(link.occupationId);
-          if (!occ) continue;
-          const existing = approvedAliasesByOccId.get(link.occupationId) ?? [];
-          zeroMatchRelations.push({
-            programKey,
-            programTitle,
-            occupationId: link.occupationId,
-            occupationLabel: occ.preferredLabel,
-            link,
-            existingAliases: existing,
-          });
-        }
-      }
-    } catch {
-      // If matching fails, treat as no match but do not crash the analysis
+      const currentProgramMatchedOfferIds = new Set(
+        matches.map((match) => match.offerId),
+      );
+      // Preserve one baseline per approved program-occupation relation.
       for (const link of programLinks) {
         const occ = occupationMap.get(link.occupationId);
         if (!occ) continue;
         const existing = approvedAliasesByOccId.get(link.occupationId) ?? [];
-        zeroMatchRelations.push({
+        relations.push({
           programKey,
           programTitle,
           occupationId: link.occupationId,
           occupationLabel: occ.preferredLabel,
           link,
           existingAliases: existing,
+          currentRelationMatchedOfferIds: new Set(
+            matches
+              .filter((match) => match.occupationId === link.occupationId)
+              .map((match) => match.offerId),
+          ),
+          currentProgramMatchedOfferIds,
         });
       }
+    } catch (error) {
+      throw new Error(
+        `No se pudieron calcular coincidencias para ${programKey}.`,
+        { cause: error },
+      );
     }
   }
 
-  return zeroMatchRelations;
+  return relations;
 }
 
 // ──────────────────────────────────────────────────────────────────────────────
@@ -500,30 +506,21 @@ function generateCandidates(
 
       // ── Title discovery: must find a bounded match in at least one offer title ──
       const titleMatchIds: string[] = [];
-      const supportingTitleIds: Map<string, CandidateMatchField> = new Map();
+      const supportingFields = new Set<CandidateMatchField>();
 
       for (const offer of offers) {
         const normTitle = normalizedText(offer.title);
         if (isBoundedPhrase(normTitle, normalized)) {
           titleMatchIds.push(offer.id);
-        } else {
-          // description/requirements may only add supporting fields
-          // AFTER a title match for the same offer
           const normReqs = offer.descriptionSections.requirements
             .map(normalizedText)
             .join(" ");
           const normDesc = normalizedText(offer.descriptionText);
-          if (
-            isBoundedPhrase(normReqs, normalized) &&
-            supportingTitleIds.has(offer.id)
-          ) {
-            supportingTitleIds.set(offer.id, "requirements");
+          if (isBoundedPhrase(normReqs, normalized)) {
+            supportingFields.add("requirements");
           }
-          if (
-            isBoundedPhrase(normDesc, normalized) &&
-            supportingTitleIds.has(offer.id)
-          ) {
-            supportingTitleIds.set(offer.id, "description");
+          if (isBoundedPhrase(normDesc, normalized)) {
+            supportingFields.add("description");
           }
         }
       }
@@ -533,7 +530,7 @@ function generateCandidates(
 
       // Determine which other fields are present (supporting)
       const matchFieldSet = new Set<CandidateMatchField>(["title"]);
-      for (const [, field] of supportingTitleIds) {
+      for (const field of supportingFields) {
         matchFieldSet.add(field);
       }
 
@@ -553,9 +550,12 @@ function generateCandidates(
 
       // Deduplicate matched offer IDs
       const matchedOfferIds = [...new Set(titleMatchIds)].sort();
+      const marginalOfferIds = matchedOfferIds.filter(
+        (offerId) => !rel.currentProgramMatchedOfferIds.has(offerId),
+      );
 
-      // One-off niche occurrences allowed (minimum 1)
-      if (matchedOfferIds.length < 1) continue;
+      // Candidates without incremental coverage are not actionable.
+      if (marginalOfferIds.length === 0) continue;
 
       const fields = [...matchFieldSet].toSorted();
 
@@ -593,6 +593,10 @@ function generateCandidates(
             (id) => offers.find((o) => o.id === id)?.title ?? "Unknown",
           ),
           occurrenceCount: matchedOfferIds.length,
+          marginalOfferIds,
+          marginalOfferCount: marginalOfferIds.length,
+          currentRelationMatchCount: rel.currentRelationMatchedOfferIds.size,
+          currentProgramMatchCount: rel.currentProgramMatchedOfferIds.size,
           normalizedCollisionOccupations: [
             ...new Set(collisionOccupations),
           ].toSorted(),
@@ -625,6 +629,7 @@ function generateCandidates(
 
     // For each offer title, compute token overlap with the official phrases
     for (const offer of offers) {
+      if (rel.currentProgramMatchedOfferIds.has(offer.id)) continue;
       const normTitle = normalizedText(offer.title);
       if (!normTitle) continue;
 
@@ -685,6 +690,10 @@ function generateCandidates(
           matchedOfferIds: [offer.id],
           matchedOfferTitles: [offer.title],
           occurrenceCount: 1,
+          marginalOfferIds: [offer.id],
+          marginalOfferCount: 1,
+          currentRelationMatchCount: rel.currentRelationMatchedOfferIds.size,
+          currentProgramMatchCount: rel.currentProgramMatchedOfferIds.size,
           normalizedCollisionOccupations: [],
           reasonCode: `token_overlap_hypothesis;share_stems=${sharedStems.length};overlap=${overlap.toFixed(2)}`,
         });
@@ -703,17 +712,24 @@ function generateCandidates(
         existing.matchedOfferIds.push(...h.matchedOfferIds);
         existing.matchedOfferTitles.push(...h.matchedOfferTitles);
         existing.occurrenceCount += h.occurrenceCount;
+        existing.marginalOfferIds.push(...h.marginalOfferIds);
         existing.matchedOfferIds = [
           ...new Set(existing.matchedOfferIds),
         ].sort();
         existing.matchedOfferTitles = [
           ...new Set(existing.matchedOfferTitles),
         ].sort();
+        existing.marginalOfferIds = [
+          ...new Set(existing.marginalOfferIds),
+        ].sort();
+        existing.marginalOfferCount = existing.marginalOfferIds.length;
         continue;
       }
       seenTitles.set(normH, h);
     }
     const cappedHypotheses = [...seenTitles.values()].sort((a, b) => {
+      if (a.marginalOfferCount !== b.marginalOfferCount)
+        return b.marginalOfferCount - a.marginalOfferCount;
       if (a.occurrenceCount !== b.occurrenceCount)
         return b.occurrenceCount - a.occurrenceCount;
       return a.aliasCandidate.localeCompare(b.aliasCandidate);
@@ -770,6 +786,8 @@ function generateCandidates(
     const aConf = confidenceOrder[a.confidence] ?? 5;
     const bConf = confidenceOrder[b.confidence] ?? 5;
     if (aConf !== bConf) return aConf - bConf;
+    if (a.marginalOfferCount !== b.marginalOfferCount)
+      return b.marginalOfferCount - a.marginalOfferCount;
     if (a.occurrenceCount !== b.occurrenceCount)
       return b.occurrenceCount - a.occurrenceCount;
     return (
@@ -795,10 +813,17 @@ function generateMarkdownReport(
   lines.push(`- Identificador del snapshot: \`${report.snapshotId}\``);
   lines.push(`- Total de ofertas analizadas: ${report.totalOffers}`);
   lines.push(`- Relaciones aprobadas (enlaces): ${report.approvedLinkCount}`);
+  lines.push(`- Relaciones analizadas: ${report.analyzedRelations}`);
+  lines.push(
+    `- Relaciones con coincidencias actuales: ${report.relationsWithExistingMatches}`,
+  );
   lines.push(
     `- Relaciones con cero coincidencias: ${report.zeroMatchRelations}`,
   );
   lines.push(`- Programas con cero coincidencias: ${report.zeroMatchPrograms}`);
+  lines.push(
+    `- Ofertas marginales únicas entre candidatos: ${report.marginalCandidateOfferCount}`,
+  );
   lines.push("");
   lines.push("## Recuentos de candidatos");
   lines.push("");
@@ -835,16 +860,16 @@ function generateMarkdownReport(
     lines.push(`### ${label}`);
     lines.push("");
     lines.push(
-      "| Alias | Programa | Ocupación | Ofertas | Causa | Colisiones |",
+      "| Alias | Programa | Ocupación | Ofertas | Ganancia marginal | Causa | Colisiones |",
     );
-    lines.push("| --- | --- | --- | --- | --- | --- |");
+    lines.push("| --- | --- | --- | --- | --- | --- | --- |");
     for (const c of group) {
       const collisionText =
         c.normalizedCollisionOccupations.length > 0
           ? c.normalizedCollisionOccupations.join(", ")
           : "—";
       lines.push(
-        `| \`${c.aliasCandidate}\` | ${c.programKey} (${c.programTitle}) | ${c.occupationLabel} (${c.occupationId}) | ${c.occurrenceCount === 1 ? "1 oferta" : `${c.occurrenceCount} ofertas`} | ${c.reasonCode} | ${collisionText} |`,
+        `| \`${c.aliasCandidate}\` | ${c.programKey} (${c.programTitle}) | ${c.occupationLabel} (${c.occupationId}) | ${c.occurrenceCount === 1 ? "1 oferta" : `${c.occurrenceCount} ofertas`} | ${c.marginalOfferCount} | ${c.reasonCode} | ${collisionText} |`,
       );
     }
     lines.push("");
@@ -861,11 +886,11 @@ function generateMarkdownReport(
   lines.push("");
   if (report.totalCandidates === 0) {
     lines.push(
-      "No se identificaron candidatos de alias para programas con relaciones aprobadas que no alcanzan ofertas. No se amplían alias ni se auto-aprueran relaciones.",
+      "No se identificaron candidatos de alias con ganancia marginal para las relaciones aprobadas. No se amplían alias ni se auto-aprueban relaciones.",
     );
   } else {
     lines.push(
-      `Se identificaron ${report.totalCandidates} candidatos de alias como REVISIÓN para relaciones aprobadas sin coincidencia de ofertas. Ningún candidato se aprueba automáticamente; estos resultados son evidencia para revisión por Sol y Gemma.`,
+      `Se identificaron ${report.totalCandidates} candidatos de alias con ganancia marginal para relaciones aprobadas. Ningún candidato se aprueba automáticamente; estos resultados son evidencia para revisión por Sol y Gemma.`,
     );
   }
   lines.push("");
@@ -915,8 +940,8 @@ export async function rankFpOfferAliasCandidates(
     approvedAliasesByOccId.set(occId, arr);
   }
 
-  // Detect zero-match relations
-  const zeroMatchRelations = detectZeroMatchRelations(
+  // Analyze every approved relation and retain its current match baseline.
+  const approvedRelations = buildApprovedRelations(
     programs,
     occupations,
     aliases,
@@ -928,8 +953,13 @@ export async function rankFpOfferAliasCandidates(
   );
 
   // Count zero-match unique programs
+  const zeroMatchRelations = approvedRelations.filter(
+    (relation) => relation.currentRelationMatchedOfferIds.size === 0,
+  );
   const zeroMatchProgramKeys = new Set(
-    zeroMatchRelations.map((r) => r.programKey),
+    approvedRelations
+      .filter((relation) => relation.currentProgramMatchedOfferIds.size === 0)
+      .map((relation) => relation.programKey),
   );
 
   // Total approved links
@@ -939,7 +969,7 @@ export async function rankFpOfferAliasCandidates(
 
   // Generate candidates
   const candidates = generateCandidates(
-    zeroMatchRelations,
+    approvedRelations,
     offers,
     occupationMap,
     approvedAliasesByOccId,
@@ -960,7 +990,7 @@ export async function rankFpOfferAliasCandidates(
   // Limitations
   const limitations = [
     "Análisis determinístico basado en la instantánea v1; no estima el empleo total del mercado.",
-    "Solo se examinan relaciones aprobadas con cero coincidencias actuales.",
+    "Se examinan todas las relaciones aprobadas y se descartan candidatos sin ganancia marginal para su programa.",
     "Las frases exactas contiguas de la cita oficial se priorizan sobre hipótesis de solapamiento.",
     "No se modifica la colección de alias aprobados ni se aprueba ningún candidato automáticamente.",
     "Solo se utilizan campos normalizados (título, descripción, requisitos); no se analiza el texto de la oferta original completo.",
@@ -969,13 +999,20 @@ export async function rankFpOfferAliasCandidates(
   ];
 
   const report: z.infer<typeof FpOfferAliasCandidateReportSchema> = {
-    schemaVersion: "1.0.0",
+    schemaVersion: "1.1.0",
     snapshotId,
     snapshotHash: undefined,
     totalOffers: offers.length,
     approvedLinkCount,
+    analyzedRelations: approvedRelations.length,
+    relationsWithExistingMatches: approvedRelations.filter(
+      (relation) => relation.currentRelationMatchedOfferIds.size > 0,
+    ).length,
     zeroMatchRelations: zeroMatchRelations.length,
     zeroMatchPrograms: zeroMatchProgramKeys.size,
+    marginalCandidateOfferCount: new Set(
+      candidates.flatMap((candidate) => candidate.marginalOfferIds),
+    ).size,
     totalCandidates: candidates.length,
     candidatesByConfidence: counts,
     candidates,

@@ -31,7 +31,7 @@ describe("contest submission renderer", () => {
     );
     expect(rendered["application-summary.md"]).toContain("39 cualificaciones");
     expect(rendered["application-summary.md"]).toContain(
-      "46 de las 1.054 ofertas de la instantánea",
+      "48 de las 1.044 ofertas de la instantánea",
     );
     expect(rendered["submission-checklist.md"]).toContain(
       "https://salida-cyl.157-90-22-40.sslip.io/",
