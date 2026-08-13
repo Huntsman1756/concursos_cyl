@@ -81,6 +81,26 @@
   },
   {
     "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:4113",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-12",
+    "sourceQuote": "Empleado de tesorería.",
+    "sourceUrl": "https://www.boe.es/eli/es/rd/2009/10/30/1631",
+    "trainingProgramKey": "ADG01M"
+  },
+  {
+    "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:4113",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-12",
+    "sourceQuote": "Empleado de tesorería.",
+    "sourceUrl": "https://www.boe.es/eli/es/rd/2009/10/30/1631",
+    "trainingProgramKey": "ADG01MD"
+  },
+  {
+    "mappingVersion": "1.0.0",
     "occupationId": "occupation:cno11:4111",
     "relationshipType": "official_output",
     "reviewStatus": "approved",
@@ -491,6 +511,66 @@
   },
   {
     "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:3522",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-13",
+    "sourceQuote": "Técnico en comercio exterior.",
+    "sourceUrl": "https://www.boe.es/boe/dias/2011/12/13/pdfs/BOE-A-2011-19439.pdf",
+    "trainingProgramKey": "COM04S"
+  },
+  {
+    "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:3523",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-13",
+    "sourceQuote": "Consignatario de buques.",
+    "sourceUrl": "https://www.boe.es/boe/dias/2011/12/13/pdfs/BOE-A-2011-19439.pdf",
+    "trainingProgramKey": "COM04S"
+  },
+  {
+    "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:4123",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-13",
+    "sourceQuote": "Transitario.",
+    "sourceUrl": "https://www.boe.es/boe/dias/2011/12/13/pdfs/BOE-A-2011-19439.pdf",
+    "trainingProgramKey": "COM04S"
+  },
+  {
+    "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:3522",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-13",
+    "sourceQuote": "Técnico en comercio exterior.",
+    "sourceUrl": "https://www.boe.es/boe/dias/2011/12/13/pdfs/BOE-A-2011-19439.pdf",
+    "trainingProgramKey": "COM04SD"
+  },
+  {
+    "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:3523",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-13",
+    "sourceQuote": "Consignatario de buques.",
+    "sourceUrl": "https://www.boe.es/boe/dias/2011/12/13/pdfs/BOE-A-2011-19439.pdf",
+    "trainingProgramKey": "COM04SD"
+  },
+  {
+    "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:4123",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-13",
+    "sourceQuote": "Transitario.",
+    "sourceUrl": "https://www.boe.es/boe/dias/2011/12/13/pdfs/BOE-A-2011-19439.pdf",
+    "trainingProgramKey": "COM04SD"
+  },
+  {
+    "mappingVersion": "1.0.0",
     "occupationId": "occupation:cno11:7510",
     "relationshipType": "official_output",
     "reviewStatus": "approved",
@@ -658,6 +738,26 @@
     "sourceQuote": "– Tejador.",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2011/11/04/1575",
     "trainingProgramKey": "EOC01M"
+  },
+  {
+    "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:7221",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-13",
+    "sourceQuote": "Fontanero/a.",
+    "sourceUrl": "https://www.boe.es/boe/dias/2014/03/05/pdfs/BOE-A-2014-2360.pdf",
+    "trainingProgramKey": "FME01B"
+  },
+  {
+    "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:9700",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-13",
+    "sourceQuote": "Peones de industrias manufactureras.",
+    "sourceUrl": "https://www.boe.es/boe/dias/2014/03/05/pdfs/BOE-A-2014-2360.pdf",
+    "trainingProgramKey": "FME01B"
   },
   {
     "mappingVersion": "1.0.0",
@@ -1011,6 +1111,16 @@
   },
   {
     "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:8202",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-12",
+    "sourceQuote": "Montador de equipos eléctricos.",
+    "sourceUrl": "https://www.boe.es/eli/es/rd/2011/11/04/1589",
+    "trainingProgramKey": "IMA03M"
+  },
+  {
+    "mappingVersion": "1.0.0",
     "occupationId": "occupation:cno11:3126",
     "relationshipType": "official_output",
     "reviewStatus": "approved",
@@ -1308,5 +1418,15 @@
     "sourceQuote": "Recepcionista de vehículos.",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2008/11/03/1796",
     "trainingProgramKey": "TMV01S"
+  },
+  {
+    "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:7401",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-12",
+    "sourceQuote": "Mecánico de automóviles.",
+    "sourceUrl": "https://www.boe.es/eli/es/rd/2010/03/19/453",
+    "trainingProgramKey": "TMV02M"
   }
 ]

@@ -1,0 +1,31 @@
+{
+  "schemaVersion": "sanitized-worker-telemetry-v1",
+  "evidenceClass": "repository-sanitized-copy",
+  "telemetryId": "fme01b-source-review-attempt-2",
+  "simulated": false,
+  "taskType": "code",
+  "selectedModel": "nan/mimo-v2.5",
+  "nativeSessionId": "ses_005854367ffelsIcYoLcwdggJl",
+  "status": "COMPLETE",
+  "baseSha": "796c9d11825f03801653966dc0190b76bf217381",
+  "resultCommitSha": "d4e81889e4bc294c9a620703119b20c77d4d3d77",
+  "changedPaths": ["analysis/fp_coverage_expansion/FME01B-sources.md"],
+  "tokensUsage": {
+    "input": 10454,
+    "output": 1199,
+    "reasoning": 1170,
+    "cacheRead": 37760,
+    "cacheWrite": 0,
+    "total": 50583
+  },
+  "validationExitCode": 0,
+  "frontierDecision": "ACCEPT",
+  "contractHash": "e3983796b3c86361c308c2e96287521176bd33ef47b077e6bc4884cfe2ec4b4b",
+  "planHash": "587d8327b6122890bd0d05d2cbb4ab932bf6477cdd5f900a5fd7ef8f41906b14",
+  "sourceTelemetrySha256": "15f6530628ef7c1ae58ee8389968520cbef28347bd35193b93a2ac47984f89ba",
+  "candidatePatchSha256": "209caf0478a4adf7c4d2cd7943723fa191e2fd4e3d94cfa98d47f5e6ede2681f",
+  "decisionHash": "38b4f784df241e92ea8138eabe5704327033e43a0e75f27d0fd608ef529e4de1",
+  "authorityEvidenceHash": "411da514a35c8e5b54c105dd38fce70607445197d5f8999e8292a153a6cc5958",
+  "hostSigned": false,
+  "provenanceEnforcement": "DISABLED"
+}

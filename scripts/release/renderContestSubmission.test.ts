@@ -29,7 +29,7 @@ describe("contest submission renderer", () => {
     expect(rendered["application-summary.md"]).toContain(
       freeze.manifest.snapshotId,
     );
-    expect(rendered["application-summary.md"]).toContain("40 cualificaciones");
+    expect(rendered["application-summary.md"]).toContain("41 cualificaciones");
     expect(rendered["application-summary.md"]).toContain(
       "69 de las 1.044 ofertas de la instantánea",
     );

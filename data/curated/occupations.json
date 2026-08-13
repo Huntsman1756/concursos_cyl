@@ -989,5 +989,27 @@
     "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
     "reviewedAt": "2026-08-12",
     "catalogVersion": "1.0.0"
+  },
+  {
+    "occupationId": "occupation:cno11:7221",
+    "preferredLabel": "Fontaneros",
+    "confirmationLabel": "Fontaneros",
+    "classificationSystem": "CNO-11",
+    "classificationCode": "7221",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+    "reviewedAt": "2026-08-13",
+    "catalogVersion": "1.0.0"
+  },
+  {
+    "occupationId": "occupation:cno11:9700",
+    "preferredLabel": "Peones de las industrias manufactureras",
+    "confirmationLabel": "Peones de las industrias manufactureras",
+    "classificationSystem": "CNO-11",
+    "classificationCode": "9700",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+    "reviewedAt": "2026-08-13",
+    "catalogVersion": "1.0.0"
   }
 ]

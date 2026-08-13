@@ -1,0 +1,24 @@
+{
+  "schemaVersion": "sanitized-research-telemetry-v1",
+  "evidenceClass": "repository-sanitized-copy",
+  "telemetryId": "fme01b-bulletin-attempt-2",
+  "simulated": false,
+  "taskType": "bulletin",
+  "selectedModel": "nan/gemma4",
+  "nativeSessionId": "ses_0059d1ab5ffegLz37GVoev2WvS",
+  "workerStatus": "awaiting-frontier-review",
+  "codexReviewDisposition": "accepted-as-research-input",
+  "baseSha": "796c9d11825f03801653966dc0190b76bf217381",
+  "tokensUsage": {
+    "input": 9946,
+    "output": 892,
+    "reasoning": 0,
+    "cacheRead": 0,
+    "cacheWrite": 0,
+    "total": 10838
+  },
+  "contractHash": "638fe918887929dd34be0b9c986cbe1c055533ff363a26ad46cb8e976b89635c",
+  "sourceTelemetrySha256": "68c7dc3e421461ccfb09e74b845f3687165e2ff65091a0db95972d1f89391d7a",
+  "hostSigned": false,
+  "provenanceEnforcement": "DISABLED"
+}
