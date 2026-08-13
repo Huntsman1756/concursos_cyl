@@ -43,8 +43,8 @@ describe("real NAN shakedown evidence", () => {
     .filter((fileName) => fileName.endsWith(".worker-telemetry.json"))
     .sort();
 
-  it("retains exactly three non-simulated accepted worker records", () => {
-    expect(files).toHaveLength(3);
+  it("retains exactly five non-simulated accepted worker records", () => {
+    expect(files).toHaveLength(5);
     const records = files.map((fileName) =>
       Evidence.parse(
         JSON.parse(readFileSync(resolve(evidenceDirectory, fileName), "utf8")),
@@ -52,7 +52,40 @@ describe("real NAN shakedown evidence", () => {
     );
     expect(
       records.reduce((total, record) => total + record.tokensUsage.total, 0),
-    ).toBe(480382);
+    ).toBe(988796);
+  });
+
+  it("retains the reviewed Gemma bulletin extraction without presenting it as frontier-accepted code", () => {
+    const record = z
+      .object({
+        schemaVersion: z.literal("sanitized-research-telemetry-v1"),
+        evidenceClass: z.literal("repository-sanitized-copy"),
+        simulated: z.literal(false),
+        taskType: z.literal("bulletin"),
+        selectedModel: z.literal("nan/gemma4"),
+        nativeSessionId: z.string().regex(/^ses_[A-Za-z0-9]+$/u),
+        workerStatus: z.literal("awaiting-frontier-review"),
+        codexReviewDisposition: z.literal("accepted-as-research-input"),
+        tokensUsage: z
+          .object({ total: z.number().int().positive() })
+          .passthrough(),
+        sourceTelemetrySha256: Hash,
+        hostSigned: z.literal(false),
+        provenanceEnforcement: z.literal("DISABLED"),
+      })
+      .parse(
+        JSON.parse(
+          readFileSync(
+            resolve(
+              evidenceDirectory,
+              "FME01B-bulletin.research-telemetry.json",
+            ),
+            "utf8",
+          ),
+        ),
+      );
+
+    expect(record.tokensUsage.total).toBe(10838);
   });
 
   it.each(files)(
