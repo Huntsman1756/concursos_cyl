@@ -52,10 +52,12 @@ Un `RETRY` relanza un worker con sesión nueva sobre el mismo SHA y con
 instrucciones reducidas; nunca permite que Codex implemente silenciosamente.
 Solo un intento listo y validado puede recibir `ACCEPT`.
 
-La ejecución real de código solo comienza en un worktree Git enlazado, limpio y
-creado por el orquestador. Declarar un modelo aquí no prueba que se haya lanzado:
-la telemetría debe conservar ruta, launch, sesión/eventos JSONL, usage, cambios,
-validación independiente y el estado `awaiting-frontier-review`.
+La ejecución de código solo comienza en un worktree Git enlazado, limpio y
+creado por el orquestador. Declarar un modelo o conservar una sesión OpenCode no
+prueba uso NAN. Además del JSONL local, la telemetría debe incluir evidencia de
+respuesta observada en `api.nan.builders`: estado 2xx, ID, modelo, usage,
+fingerprint de clave y vínculo exacto con contrato y repositorio. Sin ella el
+estado es `blocked-unverified-provider`, nunca `awaiting-frontier-review`.
 
 ```powershell
 .\scripts\Invoke-FrontierSupervisedNanWorker.ps1 `
@@ -99,7 +101,7 @@ Ejemplo DryRun (obligatorio incluir `-ValidationCommand` para code):
 El worker soporta:
 
 - `-MaxRetries 1` — valor seguro por defecto; aumentarlo requiere justificar el coste.
-- `-BudgetProfile small|batch|research|extended` — aplica respectivamente 50k, 150k, 300k o 400k tokens observados por ejecución, incluida la caché. El valor seguro por defecto es `small`.
+- `-BudgetProfile small|batch|research|extended` — aplica respectivamente 100k, 500k, 450k o 750k tokens observados por ejecución, incluida la caché. El valor seguro por defecto es `small`.
 - `-MaxObservedTokens <n>` — override excepcional entre 1k y 1M; prevalece sobre el perfil y queda identificado como `override` en telemetría.
 - `-MaxExecutionSeconds 300` — termina el árbol del proceso al agotar el tiempo.
 - `-DuplicateWindowSeconds 3600` — bloquea contratos idénticos sobre el mismo SHA durante una hora.
@@ -112,6 +114,11 @@ pasar por el supervisor o por su primitive `Invoke-NanWorker.ps1` para aplicar
 presupuesto, deduplicación y telemetría.
 
 Cada ejecución escribe telemetría en `.agent-runs/<guid>.json`.
+
+El perfil predeterminado admite hasta cinco workers NAN, cada uno con estado
+OpenCode efímero y aislado. Los boletines reciben sus archivos mediante
+`-InputPath`; después se deshabilita la lectura libre del repositorio para que
+un contrato no pueda explorar fuentes de otro ciclo.
 
 > `validationExitCode` se persiste en telemetría antes de entrar a cualquier rama
 > de fallo; nunca queda `null` tras ejecutar validación (mock o real).

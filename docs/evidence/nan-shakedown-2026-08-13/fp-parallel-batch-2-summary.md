@@ -13,7 +13,7 @@ Date: 2026-08-13
 - The immutable snapshot `20260813171226999-2d8bfc777753` publishes 178
   training–occupation relations.
 
-## Real NAN execution
+## Historical OpenCode telemetry
 
 | Model                   | Contracts | Observed tokens |
 | ----------------------- | --------: | --------------: |
@@ -22,21 +22,21 @@ Date: 2026-08-13
 | `nan/deepseek-v4-flash` |        26 |       2,678,230 |
 | **Total**               |    **47** |   **4,266,151** |
 
-All contracts were real (`simulated: false`). Eight contracts completed
-successfully and nine produced a bounded changed-path candidate; the ninth was
+OpenCode marked all contracts `simulated: false`. These totals predate
+provider-response attribution, contain no NAN response IDs and are not
+confirmed NAN consumption. Eight contracts completed locally and nine produced
+a bounded changed-path candidate; the ninth was
 the mechanical incorporation contract, which exceeded its token budget and
 therefore required independent frontier correction before acceptance.
 
 ## Concurrency finding
 
-The first fan-out attempts used eight, then four, then two simultaneous NAN
-sessions. Every concurrent session ended with zero observed tokens and no
-changes. A single isolated DeepSeek probe immediately observed 65,074 tokens,
-and isolated workers then completed all eight proposals. The effective runtime
-for this account/environment is therefore serialized even though the
-orchestrator can launch several processes. Future waves should keep research
-worktrees parallel but admit only one active NAN request until provider-side
-concurrency is verified again.
+The first fan-out attempts used eight, then four, then two simultaneous OpenCode
+processes sharing one state database. Every concurrent session ended with zero
+observed tokens and no changes. A single isolated DeepSeek-configured probe
+immediately observed 65,074 client tokens, and isolated workers then completed
+all eight proposals. This indicates local OpenCode state contention; it does
+not establish a provider-side concurrency limit.
 
 ## Frontier decisions
 

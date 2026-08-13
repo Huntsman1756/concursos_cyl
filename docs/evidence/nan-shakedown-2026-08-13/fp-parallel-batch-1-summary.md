@@ -12,14 +12,17 @@ Date: 2026-08-13
 - `SAN06S` and `COM01S` remain pending because the available candidates did
   not meet the evidence threshold.
 
-## Real NAN execution
+## Historical OpenCode telemetry
 
 | Stage                          | Contracts | Result                                                     | Observed tokens |
 | ------------------------------ | --------: | ---------------------------------------------------------- | --------------: |
 | TodoFP extraction with Gemma   |         8 | 7 completed; `SAN06S` timed out with no usable output      |          27,982 |
 | Isolated CNO proposals         |         8 | 8 completed; one used MiMo after Qwen produced no change   |       1,835,033 |
 | Mechanical batch incorporation |         1 | Token budget exceeded; no repository changes were produced |         426,525 |
-| **Total**                      |    **17** | All executions were real (`simulated: false`)              |   **2,289,540** |
+| **Total**                      |    **17** | OpenCode marked all executions `simulated: false`          |   **2,289,540** |
+
+These client-side totals predate provider-response attribution. They do not
+contain NAN response IDs and are not confirmed NAN consumption.
 
 The successful proposal contracts ran in eight independent Git worktrees. Each
 worker could modify only its own Markdown proposal and could not commit, push,

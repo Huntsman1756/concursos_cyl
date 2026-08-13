@@ -202,12 +202,12 @@ Cada campo es obligatorio y se valida en runtime (fail-closed):
 pero queda registrado como `budgetSource: override`; no debe usarse como valor
 habitual ni para ocultar un contrato demasiado amplio.
 
-El perfil de admisión predeterminado es `observed-serial`. Es más conservador
-que el máximo oficial de cinco solicitudes simultáneas porque el shakedown real
-del 13 de agosto de 2026 produjo bloqueos sin tokens con 2, 4 y 8 sesiones, pero
-progreso inmediato con una sesión aislada. `provider-limit` queda disponible
-como opt-in para volver a probar concurrencia; no debe activarse sin conservar
-telemetría real que demuestre progreso concurrente.
+El perfil predeterminado es `provider-limit`, con cinco plazas, que coincide con
+el límite publicado por NAN. Cada proceso recibe directorios XDG de datos,
+estado y caché distintos; así varias instancias de OpenCode no comparten la base
+SQLite. `observed-serial` queda disponible solo como diagnóstico de capacidad 1.
+Los bloqueos históricos con 2, 4 y 8 procesos no demostraban un límite del
+proveedor porque todos compartían el mismo estado mutable de OpenCode.
 
 Ejecución DryRun (sin coste, valida contrato sin llamar a opencode):
 
@@ -225,15 +225,27 @@ Ejecución DryRun (sin coste, valida contrato sin llamar a opencode):
 El script, cuando se ejecuta desde un worktree Git enlazado y limpio:
 
 1. Calcula un snapshot SHA-256 de los archivos versionados y no ignorados.
-2. Intenta ejecutar opencode con el modelo primario (`nan/qwen3.6`) y consume
-   su JSONL en streaming, sin `--auto`.
-3. Si falla, se detiene tras `{MaxRetries}` intentos; el valor por defecto es 1.
-4. Solo usa fallbacks enumerados y cualificados explícitamente.
-5. Tras la ejecución exitosa, compara el snapshot y detecta archivos cambiados.
-6. Compara cada archivo cambiado contra las rutas permitidas.
-7. Escribe telemetría JSON en `.agent-runs/<guid>.json`.
-8. Ejecuta los comandos de validación definidos por Frontier fuera del modelo.
-9. Termina en `awaiting-frontier-review`; el worker nunca se autoacepta.
+2. Crea estado OpenCode efímero y aislado, copiando solo la credencial NAN; lo
+   elimina al terminar el intento.
+3. Inicia un proxy local que reenvía exclusivamente a `api.nan.builders` y no
+   conserva prompts ni respuestas. Registra hashes, estado HTTP, modelo, usage,
+   fingerprint de clave e ID de respuesta ligados al contrato y repositorio.
+4. Ejecuta opencode con el modelo primario (`nan/qwen3.6`) y consume su JSONL en
+   streaming, sin `--auto`.
+5. Si falla, se detiene tras `{MaxRetries}` intentos; el valor por defecto es 1.
+6. Solo usa fallbacks enumerados y cualificados explícitamente.
+7. Tras la ejecución exitosa, compara el snapshot y detecta archivos cambiados.
+8. Compara cada archivo cambiado contra las rutas permitidas.
+9. Escribe telemetría JSON en `.agent-runs/<guid>.json`.
+10. Ejecuta las validaciones definidas por Frontier fuera del modelo.
+11. Solo termina en `awaiting-frontier-review` si existe al menos una respuesta
+    NAN 2xx con ID, modelo esperado y uso positivo. En otro caso termina en
+    `blocked-unverified-provider`.
+
+`tokensUsage` es telemetría del cliente OpenCode. No prueba consumo NAN. El
+campo separado `providerEvidence.providerReportedTokens` procede de respuestas
+observadas en el endpoint NAN, pero sigue siendo evidencia local del host hasta
+que la procedencia firmada V4 se active en modo `REQUIRED`.
 
 No existen atajos en `.opencode/commands`: toda ejecución NAN pasa por el
 broker. El hash de contrato incluye tipo, objetivo, rutas, validaciones, plan,
