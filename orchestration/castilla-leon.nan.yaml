@@ -55,14 +55,20 @@ bindings:
     retryMax: 1
     defaultBudgetProfile: small
     budgetProfiles:
-      small: 50000
-      batch: 150000
-      research: 300000
-      extended: 400000
+      small: 100000
+      batch: 500000
+      research: 450000
+      extended: 750000
     maxObservedTokensOverrideRange:
       min: 1000
       max: 1000000
-    maxExecutionSeconds: 300
+    maxExecutionSeconds: 900
+    admission:
+      profile: observed-serial
+      capacity: 1
+      timeoutSeconds: 7200
+      queueTimeConsumesExecutionTimeout: false
+      scope: nan-provider-host-session
     duplicateWindowSeconds: 3600
     fallbackModels: []
   bulletinReader:
@@ -134,6 +140,7 @@ telemetry:
     - status
     - frontierContract
     - draftOutput
+    - admission
   attemptFields:
     - model
     - agent
