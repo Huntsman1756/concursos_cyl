@@ -758,5 +758,20 @@
     "reviewStatus": "approved",
     "reviewedAt": "2026-08-13",
     "mappingVersion": "1.0.0"
+  },
+  {
+    "alias": "Peluqueros unisex",
+    "occupationId": "occupation:cno11:5811",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-13",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "alias": "teleoperadores",
+    "occupationId": "occupation:cno11:4424",
+    "matchPolicy": "approved_single_token",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-13",
+    "mappingVersion": "1.0.0"
   }
 ]

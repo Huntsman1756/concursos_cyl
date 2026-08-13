@@ -5,6 +5,7 @@ import { resolve } from "node:path";
 import { z } from "zod";
 
 import {
+  APPROVED_SINGLE_TOKEN_AUDIT_TUPLES,
   FP_ONE_WORD_PUBLICATION_REVIEW_ARTIFACT_PATH,
   FP_ONE_WORD_PUBLICATION_REVIEW_SCHEMA,
   FP_ONE_WORD_PUBLICATION_REVIEW_SNAPSHOT,
@@ -14,14 +15,8 @@ import {
 
 type Offer = { id: string; title: string };
 export const APPROVED_SINGLE_TOKEN_MATCH_POLICY = "approved_single_token";
-const APPROVED_SINGLE_TOKEN_AUDIT_TUPLE = {
-  alias: "encofradores",
-  occupationId: "occupation:cno11:7111",
-  programKey: "EOC01M",
-  matchPolicy: APPROVED_SINGLE_TOKEN_MATCH_POLICY,
-} as const;
 const PINNED_TERMINAL_REVIEW_EVIDENCE_SHA256 =
-  "fbb08149af0afe55151f03bb4273ed08bd65f9cc742e27a4680435fb38d09b82";
+  "18271f3a82d8a2af80a4e5fe0911b5a8330e2ffe46d3ab717f995a43248f3c1f";
 
 const RAW_PINNED_OFFER_SCHEMA = z
   .object({
@@ -125,6 +120,13 @@ const CANDIDATES = [
     programKey: "EOC01M",
     occupationId: "occupation:cno11:7111",
     ids: ["1285667539377", "1285668256621"],
+  },
+  {
+    candidateId: "teleoperadores",
+    forms: ["teleoperadores"],
+    programKey: "COM01M",
+    occupationId: "occupation:cno11:4424",
+    ids: ["1285663377359"],
   },
 ] as const;
 
@@ -249,6 +251,7 @@ function expectedDecision(rows: readonly ReviewRow[]) {
     "albañil",
     "albañiles",
     "encofradores",
+    "teleoperadores",
   ] as const;
   return Object.fromEntries(
     forms.map((form) => {
@@ -330,9 +333,12 @@ export function approvedSingleTokenAuditIdentities(
     if (
       row.disposition === "accepted" &&
       validatedArtifact.publicationDecision[row.form].status === "accepted" &&
-      row.form === APPROVED_SINGLE_TOKEN_AUDIT_TUPLE.alias &&
-      row.occupationId === APPROVED_SINGLE_TOKEN_AUDIT_TUPLE.occupationId &&
-      row.programKey === APPROVED_SINGLE_TOKEN_AUDIT_TUPLE.programKey
+      APPROVED_SINGLE_TOKEN_AUDIT_TUPLES.some(
+        (tuple) =>
+          row.form === tuple.alias &&
+          row.occupationId === tuple.occupationId &&
+          row.programKey === tuple.programKey,
+      )
     ) {
       identities.add(
         approvedSingleTokenAuditIdentity({
@@ -426,15 +432,14 @@ export function isApprovedSingleTokenAlias(
   alias: string,
   occupationId: string,
 ): boolean {
-  return approvedSingleTokenAuditIdentities(
+  const identities = approvedSingleTokenAuditIdentities(
     validateFpOneWordPublicationReview(rootDirectory),
-  ).has(
-    approvedSingleTokenAuditIdentity({
-      alias,
-      occupationId,
-      programKey: APPROVED_SINGLE_TOKEN_AUDIT_TUPLE.programKey,
-      matchPolicy: APPROVED_SINGLE_TOKEN_MATCH_POLICY,
-    }),
+  );
+  return APPROVED_SINGLE_TOKEN_AUDIT_TUPLES.some(
+    (tuple) =>
+      tuple.alias === alias &&
+      tuple.occupationId === occupationId &&
+      identities.has(approvedSingleTokenAuditIdentity(tuple)),
   );
 }
 

@@ -11,21 +11,43 @@ export const FP_ONE_WORD_PUBLICATION_REVIEW_SNAPSHOT = {
 export const FP_ONE_WORD_PUBLICATION_REVIEW_ARTIFACT_PATH =
   "analysis/fp_one_word_publication_reviews.json" as const;
 
+export const APPROVED_SINGLE_TOKEN_AUDIT_TUPLES = [
+  {
+    alias: "encofradores",
+    occupationId: "occupation:cno11:7111",
+    programKey: "EOC01M",
+    matchPolicy: "approved_single_token",
+  },
+  {
+    alias: "teleoperadores",
+    occupationId: "occupation:cno11:4424",
+    programKey: "COM01M",
+    matchPolicy: "approved_single_token",
+  },
+] as const;
+
 export const REVIEW_ROW_SCHEMA = z
   .object({
-    candidateId: z.enum(["cocinero-s", "albanil-es", "encofradores"]),
+    candidateId: z.enum([
+      "cocinero-s",
+      "albanil-es",
+      "encofradores",
+      "teleoperadores",
+    ]),
     form: z.enum([
       "cocinero",
       "cocineros",
       "albañil",
       "albañiles",
       "encofradores",
+      "teleoperadores",
     ]),
-    programKey: z.enum(["HOT01M", "EOC01M"]),
+    programKey: z.enum(["HOT01M", "EOC01M", "COM01M"]),
     occupationId: z.enum([
       "occupation:cno11:5110",
       "occupation:cno11:7111",
       "occupation:cno11:7121",
+      "occupation:cno11:4424",
     ]),
     offerId: z.string().regex(/^\d+$/u),
     offerTitle: z.string().trim().min(1),
@@ -64,6 +86,7 @@ export const FP_ONE_WORD_PUBLICATION_REVIEW_SCHEMA = z
         albañil: PUBLICATION_DECISION_SCHEMA,
         albañiles: PUBLICATION_DECISION_SCHEMA,
         encofradores: PUBLICATION_DECISION_SCHEMA,
+        teleoperadores: PUBLICATION_DECISION_SCHEMA,
       })
       .strict(),
   })

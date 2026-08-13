@@ -319,8 +319,8 @@
   "limitation": "Se aceptan CNO 4121, 4123, 5220, 5492, 5500, 8333 y 9820 para Servicios Comerciales. Las relaciones representan las competencias del título básico.",
   "reviewedCommit": "84e6c581f47b5943c6ae50950859ce4db0be9a98",
   "reviewedCommitAt": "2026-08-11T17:27:42.000Z",
-  "snapshotId": "20260813003333450-c67e16c08825",
-  "snapshotHash": "d5e692958c7616c43bab3ecd17833073b708ae83c57d0deac5c3f62de96e7240",
+  "snapshotId": "20260813014001646-8616fc30ab76",
+  "snapshotHash": "e64b6f14348964728ff298656f8391155f36c48bf13e4f298bf1cb01880f5510",
   "publicParity": {
     "publishedRelationKeys": [
       "COM01B|occupation:cno11:4121",

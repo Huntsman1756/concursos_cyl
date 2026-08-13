@@ -156,7 +156,10 @@ function data(
   return {
     programs,
     qualifications: REVIEWED_QUALIFICATIONS,
-    programQualificationLinks: REVIEWED_PROGRAM_QUALIFICATION_LINKS,
+    programQualificationLinks: REVIEWED_PROGRAM_QUALIFICATION_LINKS.filter(
+      (link) =>
+        programs.some(({ programKey }) => programKey === link.programKey),
+    ),
     occupations: [occupation],
     aliases,
     links,
@@ -167,7 +170,7 @@ function data(
 }
 
 describe("reviewed program qualification links", () => {
-  it("links both live DAW keys to one reviewed qualification with primary evidence", () => {
+  it("links reviewed live qualifications to their programs with primary evidence", () => {
     expect(REVIEWED_PROGRAM_QUALIFICATION_LINKS).toEqual([
       expect.objectContaining({
         programKey: "IFC03S",

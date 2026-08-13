@@ -136,6 +136,7 @@ function createInProgressArtifact(): FpOneWordPublicationReview {
     "albañil",
     "albañiles",
     "encofradores",
+    "teleoperadores",
   ] as const) {
     artifact.publicationDecision[form] = {
       status: "rejected",
@@ -203,6 +204,14 @@ function createTerminalArtifact(): FpOneWordPublicationReview {
         .map((row) => row.offerId),
       reason: "No offers are approved for publication.",
     },
+    teleoperadores: {
+      status: "rejected",
+      acceptedOfferIds: [],
+      rejectedOfferIds: artifact.rows
+        .filter((row) => row.form === "teleoperadores")
+        .map((row) => row.offerId),
+      reason: "No offers are approved for publication.",
+    },
   };
   return artifact;
 }
@@ -240,9 +249,9 @@ function withTemporaryRoot(
 }
 
 describe("FP one-word publication review validator", () => {
-  it("validates the checked-in strict 67-row artifact as terminal", () => {
+  it("validates the checked-in strict 68-row artifact as terminal", () => {
     const artifact = readArtifact();
-    expect(artifact.rows).toHaveLength(67);
+    expect(artifact.rows).toHaveLength(68);
     expect(artifact.rows.map((row) => row.offerId)).toContain("1285664848132");
     expect(() =>
       validateFpOneWordPublicationReviewArtifact(artifact),
@@ -509,7 +518,7 @@ describe("FP one-word publication review validator", () => {
     ).toEqual(acceptedIdentities);
   });
 
-  it("recomputes only the accepted encofradores offer delta in memory and keeps equal-title ids distinct", async () => {
+  it("recomputes every accepted single-token delta and keeps equal-title ids distinct", async () => {
     const artifact = validateFpOneWordPublicationReview(ROOT);
     const historicalAcceptedOfferIds = [
       ...artifact.publicationDecision.encofradores.acceptedOfferIds,
@@ -591,9 +600,18 @@ describe("FP one-word publication review validator", () => {
 
     expect(eocDelta.addedOfferIds).toEqual(acceptedOfferIds);
     expect(eocDelta.removedOfferIds).toEqual([]);
+    const comDelta = deltaByProgram.find(
+      ({ programKey }) => programKey === "COM01M",
+    );
+    if (comDelta === undefined) throw new Error("Missing COM01M coverage.");
+    expect(comDelta.addedOfferIds).toEqual(["1285663377359"]);
+    expect(comDelta.removedOfferIds).toEqual([]);
     expect(
       deltaByProgram
-        .filter(({ programKey }) => programKey !== "EOC01M")
+        .filter(
+          ({ programKey }) =>
+            programKey !== "EOC01M" && programKey !== "COM01M",
+        )
         .every(
           ({ addedOfferIds, removedOfferIds }) =>
             addedOfferIds.length === 0 && removedOfferIds.length === 0,
@@ -603,7 +621,11 @@ describe("FP one-word publication review validator", () => {
       deltaByProgram
         .flatMap(({ addedOfferIds }) => addedOfferIds)
         .sort(compareNormalizedCodePointStrings),
-    ).toEqual(acceptedOfferIds);
+    ).toEqual(
+      [...acceptedOfferIds, "1285663377359"].sort(
+        compareNormalizedCodePointStrings,
+      ),
+    );
     expect(
       deltaByProgram.flatMap(({ removedOfferIds }) => removedOfferIds),
     ).toEqual([]);
