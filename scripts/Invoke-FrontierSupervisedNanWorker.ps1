@@ -194,7 +194,7 @@ try {
     $stateCreated = $true
 
     $failurePhase = 'contract-validation'
-    $contract = Get-Content -LiteralPath $ContractPath -Raw | ConvertFrom-Json
+    $contract = Get-Content -LiteralPath $ContractPath -Raw -Encoding UTF8 | ConvertFrom-Json
     foreach ($field in @('objective','allowedPaths','validationCommands','frontierPlan','acceptanceCriteria')) {
         if (-not ($contract.PSObject.Properties.Name -contains $field)) { throw "Contract is missing $field." }
     }
@@ -228,9 +228,24 @@ try {
                 DuplicateWindowSeconds=0;PlannedBy='frontier';FrontierPlan=$activePlan
                 AcceptanceCriteria=@($contract.acceptanceCriteria);TelemetryOutputPath=$telemetryPath
             }
+            if ($contract.PSObject.Properties.Name -contains 'maxObservedTokens') {
+                $workerParameters.MaxObservedTokens = [int]$contract.maxObservedTokens
+            }
+            if ($contract.PSObject.Properties.Name -contains 'maxExecutionSeconds') {
+                $workerParameters.MaxExecutionSeconds = [int]$contract.maxExecutionSeconds
+            }
             if ($TestMode) { $workerParameters.TestMode=$true; $workerParameters.MockPlan=$MockWorkerPlans[$attempt-1] }
-            $workerOutput = & (Join-Path $attemptRoot $workerRelativePath) @workerParameters *>&1
-            $workerExit = $LASTEXITCODE
+            $previousErrorActionPreference = $ErrorActionPreference
+            try {
+                # Native stderr is worker evidence, not a supervisor-terminating
+                # PowerShell error. The worker exit code and signed telemetry
+                # remain the authority for success or failure.
+                $ErrorActionPreference = 'Continue'
+                $workerOutput = & (Join-Path $attemptRoot $workerRelativePath) @workerParameters *>&1
+                $workerExit = $LASTEXITCODE
+            } finally {
+                $ErrorActionPreference = $previousErrorActionPreference
+            }
             if (-not (Test-Path -LiteralPath $telemetryPath -PathType Leaf)) { throw 'Worker telemetry evidence is missing.' }
             $telemetry = Get-Content -LiteralPath $telemetryPath -Raw | ConvertFrom-Json
             $candidateReady = $workerExit -eq 0 -and $telemetry.status -eq 'awaiting-frontier-review'
