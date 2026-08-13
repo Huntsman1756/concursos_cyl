@@ -164,8 +164,8 @@
   "limitation": "Se aceptan CNO 7232 (pintores en las industrias manufactureras) y 7313 (chapistas y caldereros) para Carrocería. El candidato 7211 se rechaza porque corresponde a escayolistas, no a trabajos de carrocería. El candidato 7401 se rechaza porque corresponde a mecánicos y ajustadores de vehículos de motor, fuera del ámbito de este título.",
   "reviewedCommit": "84e6c581f47b5943c6ae50950859ce4db0be9a98",
   "reviewedCommitAt": "2026-08-11T17:27:42.000Z",
-  "snapshotId": "20260813132103035-eb57640834e9",
-  "snapshotHash": "aa3e676b24ea74bd576d0794a5aca2c3ccdf09c4faae1c9fe01185dcd248a92d",
+  "snapshotId": "20260813143109650-7e5e93b57bca",
+  "snapshotHash": "c91a8d4b23bdc834c3934f80ce215002f82934f3051f1739a8d32343dd1d0d75",
   "publicParity": {
     "publishedRelationKeys": [
       "TMV01M|occupation:cno11:7232",

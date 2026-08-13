@@ -261,6 +261,46 @@
   },
   {
     "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:3723",
+    "relationshipType": "reviewed_relationship",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-13",
+    "sourceQuote": "Diseñar y organizar actividades físico-deportivas recreativas guiadas por el medio natural.",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/actividades-fisicas-deportivas/guia-medio-natural-tiempo-libre.html",
+    "trainingProgramKey": "AFD02M"
+  },
+  {
+    "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:3724",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-13",
+    "sourceQuote": "Monitor de campamentos, de albergues de juventud, de casas de colonias, de granjas-escuelas, y de aulas y escuelas de naturaleza.",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/actividades-fisicas-deportivas/guia-medio-natural-tiempo-libre.html",
+    "trainingProgramKey": "AFD02M"
+  },
+  {
+    "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:3723",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-13",
+    "sourceQuote": "Entrenador/a personal.",
+    "sourceUrl": "https://www.boe.es/boe/dias/2017/07/08/pdfs/BOE-A-2017-7981.pdf",
+    "trainingProgramKey": "AFD02S"
+  },
+  {
+    "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:3723",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-13",
+    "sourceQuote": "Entrenador/a personal.",
+    "sourceUrl": "https://www.boe.es/boe/dias/2017/07/08/pdfs/BOE-A-2017-7981.pdf",
+    "trainingProgramKey": "AFD02SD"
+  },
+  {
+    "mappingVersion": "1.0.0",
     "occupationId": "occupation:cno11:6110",
     "relationshipType": "official_output",
     "reviewStatus": "approved",
@@ -511,6 +551,86 @@
   },
   {
     "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:3510",
+    "relationshipType": "reviewed_relationship",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-13",
+    "sourceQuote": "Comercial de servicios de transporte por carretera.",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/comercio-marketing/transporte-logistica.html",
+    "trainingProgramKey": "COM02S"
+  },
+  {
+    "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:3523",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-13",
+    "sourceQuote": "Consignatario / consignataria de buques.",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/comercio-marketing/transporte-logistica.html",
+    "trainingProgramKey": "COM02S"
+  },
+  {
+    "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:4123",
+    "relationshipType": "reviewed_relationship",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-13",
+    "sourceQuote": "Operador / operadora logística.",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/comercio-marketing/transporte-logistica.html",
+    "trainingProgramKey": "COM02S"
+  },
+  {
+    "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:5210",
+    "relationshipType": "reviewed_relationship",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-13",
+    "sourceQuote": "Jefa / jefe de almacén.",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/comercio-marketing/transporte-logistica.html",
+    "trainingProgramKey": "COM02S"
+  },
+  {
+    "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:3510",
+    "relationshipType": "reviewed_relationship",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-13",
+    "sourceQuote": "Comercial de servicios de transporte por carretera.",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/comercio-marketing/transporte-logistica.html",
+    "trainingProgramKey": "COM02SD"
+  },
+  {
+    "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:3523",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-13",
+    "sourceQuote": "Consignatario / consignataria de buques.",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/comercio-marketing/transporte-logistica.html",
+    "trainingProgramKey": "COM02SD"
+  },
+  {
+    "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:4123",
+    "relationshipType": "reviewed_relationship",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-13",
+    "sourceQuote": "Operador / operadora logística.",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/comercio-marketing/transporte-logistica.html",
+    "trainingProgramKey": "COM02SD"
+  },
+  {
+    "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:5210",
+    "relationshipType": "reviewed_relationship",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-13",
+    "sourceQuote": "Jefa / jefe de almacén.",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/comercio-marketing/transporte-logistica.html",
+    "trainingProgramKey": "COM02SD"
+  },
+  {
+    "mappingVersion": "1.0.0",
     "occupationId": "occupation:cno11:3522",
     "relationshipType": "official_output",
     "reviewStatus": "approved",
@@ -661,6 +781,26 @@
   },
   {
     "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:3123",
+    "relationshipType": "reviewed_relationship",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-13",
+    "sourceQuote": "Técnica / técnico en proyectos electrotécnicos.",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/electricidad-electronica/sistemas-electrotecnicos-automatizados.html",
+    "trainingProgramKey": "ELE01S"
+  },
+  {
+    "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:7510",
+    "relationshipType": "reviewed_relationship",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-13",
+    "sourceQuote": "Jefa / jefe de equipo de instaladores / instaladoras de baja tensión para edificios.",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/electricidad-electronica/sistemas-electrotecnicos-automatizados.html",
+    "trainingProgramKey": "ELE01S"
+  },
+  {
+    "mappingVersion": "1.0.0",
     "occupationId": "occupation:cno11:3813",
     "relationshipType": "official_output",
     "reviewStatus": "approved",
@@ -688,6 +828,66 @@
     "sourceQuote": "7531 Mecánicos y reparadores de equipos electrónicos",
     "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
     "trainingProgramKey": "ELE03S"
+  },
+  {
+    "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:3123",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-13",
+    "sourceQuote": "Técnico de puesta en marcha de sistemas de automatización industrial.",
+    "sourceUrl": "https://www.boe.es/eli/es/rd/2011/11/04/1581/dof/spa/pdf",
+    "trainingProgramKey": "ELE04S"
+  },
+  {
+    "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:3124",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-13",
+    "sourceQuote": "Diseñador de circuitos y sistemas integrados en automatización industrial.",
+    "sourceUrl": "https://www.boe.es/eli/es/rd/2011/11/04/1581/dof/spa/pdf",
+    "trainingProgramKey": "ELE04S"
+  },
+  {
+    "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:3129",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-13",
+    "sourceQuote": "Técnico en organización de mantenimiento de sistemas de automatización industrial.",
+    "sourceUrl": "https://www.boe.es/eli/es/rd/2011/11/04/1581/dof/spa/pdf",
+    "trainingProgramKey": "ELE04S"
+  },
+  {
+    "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:3139",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-13",
+    "sourceQuote": "Programador-controlador de robots industriales.",
+    "sourceUrl": "https://www.boe.es/eli/es/rd/2011/11/04/1581/dof/spa/pdf",
+    "trainingProgramKey": "ELE04S"
+  },
+  {
+    "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:3209",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-13",
+    "sourceQuote": "Jefe de equipo de supervisión de montaje de sistemas de automatización industrial.",
+    "sourceUrl": "https://www.boe.es/eli/es/rd/2011/11/04/1581/dof/spa/pdf",
+    "trainingProgramKey": "ELE04S"
+  },
+  {
+    "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:7521",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-13",
+    "sourceQuote": "Verificador de aparatos, cuadros y equipos eléctricos.",
+    "sourceUrl": "https://www.boe.es/eli/es/rd/2011/11/04/1581/dof/spa/pdf",
+    "trainingProgramKey": "ELE04S"
   },
   {
     "mappingVersion": "1.0.0",
@@ -858,6 +1058,16 @@
     "sourceQuote": "Las ocupaciones y puestos de trabajo más relevantes son los siguientes: Cocinero.",
     "sourceUrl": "https://todofp.es/dam/jcr%3A63392ee9-4d38-449b-a196-d0efb714b364/n-tcocinagastronomiaes-pdf.pdf",
     "trainingProgramKey": "HOT01M"
+  },
+  {
+    "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:5110",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-13",
+    "sourceQuote": "Cocinera / cocinero.",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/hosteleria-turismo/direccion-cocina.html",
+    "trainingProgramKey": "HOT04S"
   },
   {
     "mappingVersion": "1.0.0",
@@ -1041,6 +1251,16 @@
   },
   {
     "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:7533",
+    "relationshipType": "reviewed_relationship",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-13",
+    "sourceQuote": "Ayudante de montador / montadora de sistemas microinformáticos.",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/informatica-comunicaciones/informatica-oficina.html",
+    "trainingProgramKey": "IFC02B"
+  },
+  {
+    "mappingVersion": "1.0.0",
     "occupationId": "occupation:cno11:2713",
     "relationshipType": "reviewed_relationship",
     "reviewStatus": "approved",
@@ -1198,6 +1418,26 @@
     "sourceQuote": "Auxiliar de Farmacia.",
     "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/sanidad/farmacia-parafarmacia.html",
     "trainingProgramKey": "SAN02M"
+  },
+  {
+    "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:2640",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-13",
+    "sourceQuote": "Delegada / delegado comercial de productos hospitalarios y farmacéuticos.",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/sanidad/imagen-diagnostico-medicina-nuclear.html",
+    "trainingProgramKey": "SAN07S"
+  },
+  {
+    "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:2640",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-13",
+    "sourceQuote": "Delegada / delegado comercial de productos hospitalarios y farmacéuticos.",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/sanidad/imagen-diagnostico-medicina-nuclear.html",
+    "trainingProgramKey": "SAN07SD"
   },
   {
     "mappingVersion": "1.0.0",

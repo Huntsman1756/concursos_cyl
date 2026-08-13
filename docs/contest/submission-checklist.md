@@ -11,8 +11,8 @@
 ## Campos técnicos
 
 - URL raíz a presentar: [https://salida-cyl.157-90-22-40.sslip.io/](https://salida-cyl.157-90-22-40.sslip.io/)
-- Commit fuente del freeze: `ab9144a655d758e3d5041397f4be50453c1ff4bb`.
-- Snapshot: `20260813132103035-eb57640834e9`.
+- Commit fuente del freeze: `a21399ef72677ab6fa63f9483178690572a3fc14`.
+- Snapshot: `20260813143109650-7e5e93b57bca`.
 - Commit desplegado: **PENDIENTE DE DESPLIEGUE Y VERIFICACIÓN**.
 - Run del workflow: **PENDIENTE DE DESPLIEGUE Y VERIFICACIÓN**.
 - Evidencia visual: evidencia visual pendiente (no histórica).
@@ -22,7 +22,7 @@
 - [ ] Ejecutar los gates de release y verificar la aplicación pública.
 - [ ] Rellenar el commit desplegado y el run del workflow con datos observados.
 - [ ] Revisar las capturas en contexto anónimo, sin datos personales ni credenciales.
-- [ ] Confirmar que las cifras visibles siguen coincidiendo con `20260813132103035-eb57640834e9`. (evidencia visual pendiente)
+- [ ] Confirmar que las cifras visibles siguen coincidiendo con `20260813143109650-7e5e93b57bca`. (evidencia visual pendiente)
 - [ ] Obtener aprobación humana explícita para la solicitud externa.
 
 **PENDIENTE DE APROBACIÓN HUMANA:** este repositorio no envía la solicitud al concurso ni decide los campos de identidad, contacto, declaraciones o consentimiento.
