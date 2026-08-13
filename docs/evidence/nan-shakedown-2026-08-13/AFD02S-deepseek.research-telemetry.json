@@ -1,0 +1,24 @@
+{
+  "schemaVersion": "sanitized-research-telemetry-v1",
+  "evidenceClass": "repository-sanitized-copy",
+  "telemetryId": "afd02s-deepseek-boundary-attempt-1",
+  "simulated": false,
+  "taskType": "bulletin",
+  "selectedModel": "nan/deepseek-v4-flash",
+  "nativeSessionId": "ses_00518a7f8ffeTnt27H0q42vE0n",
+  "workerStatus": "awaiting-frontier-review",
+  "codexReviewDisposition": "accepted-as-research-input",
+  "baseSha": "49b9bde844ec18b395becc3736c36d11f362c715",
+  "tokensUsage": {
+    "input": 15480,
+    "output": 1741,
+    "reasoning": 8826,
+    "cacheRead": 0,
+    "cacheWrite": 0,
+    "total": 26047
+  },
+  "contractHash": "a29c2e46d530f1093369bd584192891e0f74bd20496c6ce11aa2a3698568cb09",
+  "sourceTelemetrySha256": "56c3d770d24ce3a86d9a46adc73dd9dfc5688ac8aa2d4f49b5395213e369e1da",
+  "hostSigned": false,
+  "provenanceEnforcement": "DISABLED"
+}

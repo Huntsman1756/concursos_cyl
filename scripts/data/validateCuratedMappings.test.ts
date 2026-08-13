@@ -357,6 +357,20 @@ const programs: TrainingProgram[] = [
     familyName: "Fabricación Mecánica",
   },
   {
+    programKey: "AFD02S",
+    programTitle: "Acondicionamiento Físico",
+    level: "higher",
+    familyCode: "AFD",
+    familyName: "Actividades Físicas y Deportivas",
+  },
+  {
+    programKey: "AFD02SD",
+    programTitle: "Acondicionamiento Físico (distancia)",
+    level: "higher",
+    familyCode: "AFD",
+    familyName: "Actividades Físicas y Deportivas",
+  },
+  {
     programKey: "MAM01M",
     programTitle: "Carpintería y Mueble",
     level: "intermediate",
@@ -999,6 +1013,8 @@ describe("curated occupation mappings", () => {
       COM04S: 3,
       COM04SD: 3,
       FME01B: 2,
+      AFD02S: 1,
+      AFD02SD: 1,
     });
 
     const coverage = buildMappingCoverage(programs, curated.links);
