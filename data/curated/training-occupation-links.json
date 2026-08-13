@@ -1740,5 +1740,115 @@
     "sourceQuote": "Ayudante de montador / montadora de sistemas microinformáticos.",
     "reviewedAt": "2026-08-13",
     "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "HOT01S",
+    "occupationId": "occupation:cno11:3510",
+    "relationshipType": "reviewed_relationship",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/hosteleria-turismo/gestion-alojamientos-turisticos.html",
+    "sourceQuote": "Comercial de establecimientos de alojamientos turísticos.",
+    "reviewedAt": "2026-08-13",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "ADG01S",
+    "occupationId": "occupation:cno11:4223",
+    "relationshipType": "reviewed_relationship",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/administracion-gestion/asistencia-direccion.html",
+    "sourceQuote": "Asistente en departamentos de Recursos Humanos.",
+    "reviewedAt": "2026-08-13",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "IMP01M",
+    "occupationId": "occupation:cno11:5812",
+    "relationshipType": "reviewed_relationship",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/imagen-personal/estetica-belleza.html",
+    "sourceQuote": "Técnica / técnico esteticista en centros de belleza y gabinetes de estética.",
+    "reviewedAt": "2026-08-13",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "IMP01M",
+    "occupationId": "occupation:cno11:3510",
+    "relationshipType": "reviewed_relationship",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/imagen-personal/estetica-belleza.html",
+    "sourceQuote": "Agente comercial en empresas del sector.",
+    "reviewedAt": "2026-08-13",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "IMP01M",
+    "occupationId": "occupation:cno11:5220",
+    "relationshipType": "reviewed_relationship",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/imagen-personal/estetica-belleza.html",
+    "sourceQuote": "Asesor-vendedor / asesora-vendedora en perfumerías y droguerías.",
+    "reviewedAt": "2026-08-13",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "IMP01M",
+    "occupationId": "occupation:cno11:5492",
+    "relationshipType": "reviewed_relationship",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/imagen-personal/estetica-belleza.html",
+    "sourceQuote": "Demostrador / demostradora de equipos, cosméticos y técnicas estéticas.",
+    "reviewedAt": "2026-08-13",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "IMP01M",
+    "occupationId": "occupation:cno11:4412",
+    "relationshipType": "reviewed_relationship",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/imagen-personal/estetica-belleza.html",
+    "sourceQuote": "Recepcionista en empresas estéticas.",
+    "reviewedAt": "2026-08-13",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "HOT03S",
+    "occupationId": "occupation:cno11:4411",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/hosteleria-turismo/guia-informacion-asistencias-turisticas.html",
+    "sourceQuote": "Informador turístico / informadora turística.",
+    "reviewedAt": "2026-08-13",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "HOT03S",
+    "occupationId": "occupation:cno11:4123",
+    "relationshipType": "reviewed_relationship",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/hosteleria-turismo/guia-informacion-asistencias-turisticas.html",
+    "sourceQuote": "Asistente en terminales (estaciones, puertos y aeropuertos).",
+    "reviewedAt": "2026-08-13",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "AGA01B",
+    "occupationId": "occupation:cno11:4121",
+    "relationshipType": "reviewed_relationship",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/agraria/agrojardineria-composiciones-florales.html",
+    "sourceQuote": "Auxiliar de almacén de flores.",
+    "reviewedAt": "2026-08-13",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "AGA01B",
+    "occupationId": "occupation:cno11:5220",
+    "relationshipType": "reviewed_relationship",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/agraria/agrojardineria-composiciones-florales.html",
+    "sourceQuote": "Auxiliar de ventas en floristería.",
+    "reviewedAt": "2026-08-13",
+    "mappingVersion": "1.0.0"
   }
 ]

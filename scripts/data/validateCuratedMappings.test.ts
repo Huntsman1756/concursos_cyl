@@ -449,6 +449,35 @@ const programs: TrainingProgram[] = [
       "IFC",
       "Informática y Comunicaciones",
     ],
+    [
+      "HOT01S",
+      "Gestión de Alojamientos Turísticos",
+      "higher",
+      "HOT",
+      "Hostelería y Turismo",
+    ],
+    [
+      "HOT03S",
+      "Guía, Información y Asistencias Turísticas",
+      "higher",
+      "HOT",
+      "Hostelería y Turismo",
+    ],
+    [
+      "ADG01S",
+      "Asistencia a la Dirección",
+      "higher",
+      "ADG",
+      "Administración y Gestión",
+    ],
+    ["IMP01M", "Estética y Belleza", "intermediate", "IMP", "Imagen Personal"],
+    [
+      "AGA01B",
+      "Agro-jardinería y Composiciones Florales",
+      "basic",
+      "AGA",
+      "Agraria",
+    ],
   ].map(([programKey, programTitle, level, familyCode, familyName]) => ({
     programKey,
     programTitle,
@@ -891,7 +920,7 @@ describe("curated occupation mappings", () => {
         approvedMappings: 0,
         draftMappings: 1,
         rejectedMappings: 1,
-        uncoveredPrograms: 4,
+        uncoveredPrograms: 5,
       }),
     );
   });
@@ -1095,6 +1124,11 @@ describe("curated occupation mappings", () => {
       COM02SD: 4,
       AFD02M: 2,
       IFC02B: 1,
+      HOT01S: 1,
+      ADG01S: 1,
+      IMP01M: 5,
+      HOT03S: 2,
+      AGA01B: 2,
     });
 
     const coverage = buildMappingCoverage(programs, curated.links);

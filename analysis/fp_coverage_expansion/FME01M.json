@@ -215,8 +215,8 @@
   "limitation": "El seed preliminar Mecánico de mecanizado no aparece en el inventario BOE exhaustivo y queda auditado como ausente. La publicación se limita a las relaciones 7322, 7323 y 7324 respaldadas por outputs BOE revisados y evidencia CNO independiente; el rechazo 3139 permanece.",
   "reviewedCommit": "ffb756449ac004700cbd5aae170f17d676c0a920",
   "reviewedCommitAt": "2026-08-09T17:35:28.000Z",
-  "snapshotId": "20260813143109650-7e5e93b57bca",
-  "snapshotHash": "5f1e3930bc3a00e4c6ba8d976593187848cb27c569ec7800e33f0f250c8ca552",
+  "snapshotId": "20260813171226999-2d8bfc777753",
+  "snapshotHash": "087e83840edccdafb3954d80902db389b15fe4d5d1e87853c14e9af9196dc805",
   "publicParity": {
     "publishedRelationKeys": [
       "FME01M|occupation:cno11:7322",
