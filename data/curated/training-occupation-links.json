@@ -1420,5 +1420,65 @@
     "sourceQuote": "Montador de equipos eléctricos.",
     "reviewedAt": "2026-08-12",
     "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "COM04S",
+    "occupationId": "occupation:cno11:3522",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.boe.es/boe/dias/2011/12/13/pdfs/BOE-A-2011-19439.pdf",
+    "sourceQuote": "Técnico en comercio exterior.",
+    "reviewedAt": "2026-08-13",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "COM04S",
+    "occupationId": "occupation:cno11:3523",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.boe.es/boe/dias/2011/12/13/pdfs/BOE-A-2011-19439.pdf",
+    "sourceQuote": "Consignatario de buques.",
+    "reviewedAt": "2026-08-13",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "COM04S",
+    "occupationId": "occupation:cno11:4123",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.boe.es/boe/dias/2011/12/13/pdfs/BOE-A-2011-19439.pdf",
+    "sourceQuote": "Transitario.",
+    "reviewedAt": "2026-08-13",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "COM04SD",
+    "occupationId": "occupation:cno11:3522",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.boe.es/boe/dias/2011/12/13/pdfs/BOE-A-2011-19439.pdf",
+    "sourceQuote": "Técnico en comercio exterior.",
+    "reviewedAt": "2026-08-13",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "COM04SD",
+    "occupationId": "occupation:cno11:3523",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.boe.es/boe/dias/2011/12/13/pdfs/BOE-A-2011-19439.pdf",
+    "sourceQuote": "Consignatario de buques.",
+    "reviewedAt": "2026-08-13",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "COM04SD",
+    "occupationId": "occupation:cno11:4123",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.boe.es/boe/dias/2011/12/13/pdfs/BOE-A-2011-19439.pdf",
+    "sourceQuote": "Transitario.",
+    "reviewedAt": "2026-08-13",
+    "mappingVersion": "1.0.0"
   }
 ]

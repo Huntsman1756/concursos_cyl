@@ -276,6 +276,17 @@
     "catalogVersion": "1.0.0"
   },
   {
+    "occupationId": "occupation:cno11:3523",
+    "preferredLabel": "Consignatarios",
+    "confirmationLabel": "Consignatarios",
+    "classificationSystem": "CNO-11",
+    "classificationCode": "3523",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+    "reviewedAt": "2026-08-13",
+    "catalogVersion": "1.0.0"
+  },
+  {
     "occupationId": "occupation:cno11:5210",
     "preferredLabel": "Jefes de sección de tiendas y almacenes",
     "confirmationLabel": "Supervisión de secciones de tienda y almacén",

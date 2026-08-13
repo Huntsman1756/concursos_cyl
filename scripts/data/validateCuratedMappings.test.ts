@@ -38,6 +38,20 @@ const programs: TrainingProgram[] = [
     familyName: "Comercio y Marketing",
   },
   {
+    programKey: "COM04S",
+    programTitle: "Comercio Internacional",
+    level: "higher",
+    familyCode: "COM",
+    familyName: "Comercio y Marketing",
+  },
+  {
+    programKey: "COM04SD",
+    programTitle: "Comercio Internacional (distancia)",
+    level: "higher",
+    familyCode: "COM",
+    familyName: "Comercio y Marketing",
+  },
+  {
     programKey: "ELE03S",
     programTitle: "Mantenimiento Electrónico",
     level: "higher",
@@ -849,6 +863,7 @@ describe("curated occupation mappings", () => {
         "7291",
         "3510",
         "3522",
+        "3523",
         "5210",
         "5220",
         "5420",
@@ -972,6 +987,8 @@ describe("curated occupation mappings", () => {
       ADG01MD: 1,
       TMV02M: 1,
       IMA03M: 1,
+      COM04S: 3,
+      COM04SD: 3,
     });
 
     const coverage = buildMappingCoverage(programs, curated.links);
