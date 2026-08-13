@@ -398,6 +398,22 @@ const programs: TrainingProgram[] = [
     familyCode: "ELE",
     familyName: "Electricidad y Electrónica",
   },
+  ...([
+    ["SAN07S", "Imagen para el Diagnóstico y Medicina Nuclear", "higher", "SAN", "Sanidad"],
+    ["SAN07SD", "Imagen para el Diagnóstico y Medicina Nuclear (distancia)", "higher", "SAN", "Sanidad"],
+    ["HOT04S", "Dirección de Cocina", "higher", "HOT", "Hostelería y Turismo"],
+    ["ELE01S", "Sistemas Electrotécnicos y Automatizados", "higher", "ELE", "Electricidad y Electrónica"],
+    ["COM02S", "Transporte y Logística", "higher", "COM", "Comercio y Marketing"],
+    ["COM02SD", "Transporte y Logística (distancia)", "higher", "COM", "Comercio y Marketing"],
+    ["AFD02M", "Guía en el Medio Natural y de Tiempo Libre", "intermediate", "AFD", "Actividades Físicas y Deportivas"],
+    ["IFC02B", "Informática de Oficina", "basic", "IFC", "Informática y Comunicaciones"],
+  ].map(([programKey, programTitle, level, familyCode, familyName]) => ({
+    programKey,
+    programTitle,
+    level,
+    familyCode,
+    familyName,
+  })) as TrainingProgram[]),
 ];
 
 const occupations = [
@@ -1029,6 +1045,14 @@ describe("curated occupation mappings", () => {
       FME01B: 2,
       AFD02S: 1,
       AFD02SD: 1,
+      SAN07S: 1,
+      SAN07SD: 1,
+      HOT04S: 1,
+      ELE01S: 2,
+      COM02S: 4,
+      COM02SD: 4,
+      AFD02M: 2,
+      IFC02B: 1,
     });
 
     const coverage = buildMappingCoverage(programs, curated.links);
