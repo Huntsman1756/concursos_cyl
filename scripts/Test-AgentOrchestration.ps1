@@ -812,8 +812,13 @@ try {
             Assert-True ($yamlText -match 'delegationProvenance:\s*\r?\n\s+schemaVersion:\s*4') '18ad8: YAML identifies delegation provenance V4'
             Assert-True ($yamlText -match 'enforcement:\s*DISABLED') '18ad9: YAML keeps provenance enforcement disabled before qualification'
             Assert-True ($yamlText -match 'publicationThroughRuntimeV4:\s*false') '18ad10: YAML does not claim broker-owned publication'
-            Assert-True ($yamlText -match 'protectedHostSigner:\s*false') '18ad11: YAML records the missing protected signer'
-            Assert-True ($yamlText -match 'syntheticShakedownPassed:\s*false') '18ad12: YAML records the pending signed shakedown'
+            Assert-True ($yamlText -match 'runtimeV4Installed:\s*true') '18ad10a: YAML records the immutable runtime installation'
+            Assert-True ($yamlText -match 'activationTarget:\s*ANALYSIS_ONLY') '18ad10b: YAML records analysis-only activation'
+            Assert-True ($yamlText -match 'hostCompositionHash:\s*null') '18ad10c: YAML does not invent a host composition'
+            Assert-True ($yamlText -match 'protectedHostSigner:\s*true') '18ad11: YAML records the protected host signer'
+            Assert-True ($yamlText -match 'syntheticShakedownPassed:\s*true') '18ad12: YAML records the signed shakedown'
+            Assert-True ($yamlText -match 'restartRecoveryPassed:\s*true') '18ad12a: YAML records evidence recovery in a new process'
+            Assert-True ($yamlText -match 'ciVerificationConfigured:\s*false') '18ad12b: YAML keeps CI provenance verification pending'
             Assert-True ($yamlText -notmatch 'BEGIN (?:EC |OPENSSH |RSA |DSA )?PRIVATE KEY') '18ad13: YAML contains no private signing key'
 
             $workerText = Get-Content -LiteralPath $workerPath -Raw

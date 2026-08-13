@@ -8,18 +8,25 @@ reference:
   adaptation: frontier-supervised-bounded-local
 adoption:
   level: BOUNDED_LOCAL
-  runtimeV4Installed: false
+  runtimeV4Installed: true
+  activationTarget: ANALYSIS_ONLY
+  installationHash: e1a992bc17b3b484ea7fb0b94a211ee869a5f1975d54b3eda881ed45951ccdc7
+  activationHash: ba50d0e3a916a66b1e7b3bd30e6d9296e3c2549cfdee5cbcbbc90b5153b8cce6
+  hostCompositionHash: null
   publicationThroughRuntimeV4: false
 delegationProvenance:
   schemaVersion: 4
   enforcement: DISABLED
   configurationRole: readiness-inventory-only
   readiness:
-    protectedHostSigner: false
-    protectedEvidenceStore: false
-    syntheticShakedownPassed: false
-    restartRecoveryPassed: false
+    protectedHostSigner: true
+    protectedEvidenceStore: true
+    syntheticShakedownPassed: true
+    restartRecoveryPassed: true
     ciVerificationConfigured: false
+  externalEvidence:
+    signerKeyId: 8324060de49d8db6bd01f232854f24babda0ab7a01dce691eed7f3d0b253b53d
+    shakedownProvenanceHash: 219c0d83ba174fd56cc07810179a37ef15a0cea15278965c52cdd22f1e896303
   trustBoundary:
     privateKey: protected-host-only
     publicKey: protected-ci-or-control-plane-only

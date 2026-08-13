@@ -53,6 +53,31 @@ La activación segura debe respetar este orden:
 Hasta completar los seis pasos, una ejecución local puede afirmar delegación
 acotada respaldada por telemetría, pero no procedencia firmada obligatoria.
 
+### Estado operativo del 13 de agosto de 2026
+
+El runtime exacto del merge `42cf5c2b1b55628332ce9fc1089957bd4fca3931`
+está instalado de forma inmutable en el host Linux x64. La instalación
+`0.2.0-d75ffac76e3a8838` verifica con el hash
+`e1a992bc17b3b484ea7fb0b94a211ee869a5f1975d54b3eda881ed45951ccdc7`.
+El repositorio está registrado como `concursos-cyl` con destino
+`ANALYSIS_ONLY`, política
+`bdbd1b3f04c7c2c2084665d7ef041205945beb9cea27e90ae0eee97daa695444`
+y perfil
+`d249b9c4842d76b5a96eec117e14de62552245962ab55b18574d97850beea908`.
+
+El firmante Ed25519 y el almacén de evidencia son propiedad de `root`, con
+permisos `0700`/`0600`, fuera de repositorios y worktrees. El shakedown firmado
+se recuperó y verificó desde un proceso nuevo con provenance hash
+`219c0d83ba174fd56cc07810179a37ef15a0cea15278965c52cdd22f1e896303`.
+Una vinculación de commit alterada y una ejecución como el usuario sin privilegios
+`caddy` fueron rechazadas.
+
+El `doctor` permanece correctamente bloqueado con `CAPABILITY_UNVERIFIED`: la
+instalación de análisis no contiene aún la composición certificada de ocho
+componentes, Docker ni un gateway de credenciales NAN para Linux. Por tanto,
+`publicationThroughRuntimeV4` sigue en `false`, la verificación CI no se anuncia
+como activa y `REQUIRED` no se habilita.
+
 ## Arquitectura
 
 NAN se usa como proveedor de implementación principal. El worker:
