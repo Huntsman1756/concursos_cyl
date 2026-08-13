@@ -1,0 +1,31 @@
+{
+  "schemaVersion": "sanitized-worker-telemetry-v1",
+  "evidenceClass": "repository-sanitized-copy",
+  "telemetryId": "links-attempt-1",
+  "simulated": false,
+  "taskType": "code",
+  "selectedModel": "nan/mimo-v2.5",
+  "nativeSessionId": "ses_005da062dffesMMS099Bi2Tdx1",
+  "status": "COMPLETE",
+  "baseSha": "75223a8aa69a052db829d3efaa321f465090e0cb",
+  "resultCommitSha": "d2f7099d5036337bd776824f9b602f05d49718f6",
+  "changedPaths": ["data/curated/training-occupation-links.json"],
+  "tokensUsage": {
+    "input": 35276,
+    "output": 2478,
+    "reasoning": 888,
+    "cacheRead": 196608,
+    "cacheWrite": 0,
+    "total": 235250
+  },
+  "validationExitCode": 0,
+  "frontierDecision": "ACCEPT",
+  "contractHash": "0c7574ffa904977ea76dbd439919f6caf7cd93fb62d9fd09aed09e53185e1f3f",
+  "planHash": "d342303e63af217c1057131cb84e1e739a101db9b5156d5562835214bc7b0de6",
+  "sourceTelemetrySha256": "5944c167cf9dd3f59b4c5fce7f3420165bfc6ea3653570d49fe433b89ee721b0",
+  "candidatePatchSha256": "a3de709bebe8ece130bf528aaa65952a9082930db603aba7cde969f66cc28c85",
+  "decisionHash": "1600cc1faf3fc82f23bd3150d5d65c5eab4de9de5ba08689efebc0919de9582b",
+  "authorityEvidenceHash": "411da514a35c8e5b54c105dd38fce70607445197d5f8999e8292a153a6cc5958",
+  "hostSigned": false,
+  "provenanceEnforcement": "DISABLED"
+}

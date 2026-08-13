@@ -1,0 +1,31 @@
+{
+  "schemaVersion": "sanitized-worker-telemetry-v1",
+  "evidenceClass": "repository-sanitized-copy",
+  "telemetryId": "cno3523-attempt-1",
+  "simulated": false,
+  "taskType": "code",
+  "selectedModel": "nan/qwen3.6",
+  "nativeSessionId": "ses_005d3bda2ffemwXTJhIIv6tm3z",
+  "status": "COMPLETE",
+  "baseSha": "75223a8aa69a052db829d3efaa321f465090e0cb",
+  "resultCommitSha": "d2f7099d5036337bd776824f9b602f05d49718f6",
+  "changedPaths": ["data/curated/occupations.json"],
+  "tokensUsage": {
+    "input": 74534,
+    "output": 1676,
+    "reasoning": 1151,
+    "cacheRead": 73360,
+    "cacheWrite": 0,
+    "total": 150721
+  },
+  "validationExitCode": 0,
+  "frontierDecision": "ACCEPT",
+  "contractHash": "a0a52179f36dde944280e2d7d096a744bb3c8aebea0039ec70ff3808350d588e",
+  "planHash": "8778c23e5d2e750bebd931f402c43bded715fb0a48a2f48a95bdc1c64e82b78b",
+  "sourceTelemetrySha256": "b8e85d6150042d80b0020cb0fef0dec72d35a75d49fec6d37cb582a583710dcf",
+  "candidatePatchSha256": "b5f5d9c4f673a940b36caed148378815d6f915d472e30673bc48023ab9355d64",
+  "decisionHash": "12cc1d28723791353fb60851a3dcc29e45e0c39f293b8aea3832007502d1508d",
+  "authorityEvidenceHash": "411da514a35c8e5b54c105dd38fce70607445197d5f8999e8292a153a6cc5958",
+  "hostSigned": false,
+  "provenanceEnforcement": "DISABLED"
+}
