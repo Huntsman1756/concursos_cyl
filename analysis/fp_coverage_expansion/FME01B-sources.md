@@ -18,10 +18,10 @@ SHA-256: 24DC15F91F5F5A8EA04F41017250E508E9681F794E3451903EEB52D20F1592C4
 
 ## Accepted table
 
-| BOE output | CNO-11 code | Quote | Page |
-|---|---|---|---|
-| Fontanero/a. | occupation:cno11:7221 | 7221 Fontaneros | 252 |
-| Peones de industrias manufactureras. | occupation:cno11:9700 | 9700 Peones de las industrias manufactureras | 347 |
+| BOE output                           | CNO-11 code           | Quote                                        | Page |
+| ------------------------------------ | --------------------- | -------------------------------------------- | ---- |
+| Fontanero/a.                         | occupation:cno11:7221 | 7221 Fontaneros                              | 252  |
+| Peones de industrias manufactureras. | occupation:cno11:9700 | 9700 Peones de las industrias manufactureras | 347  |
 
 ## Deferred outputs
 
