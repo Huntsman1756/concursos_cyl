@@ -261,6 +261,26 @@
   },
   {
     "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:3723",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-13",
+    "sourceQuote": "Entrenador/a personal.",
+    "sourceUrl": "https://www.boe.es/boe/dias/2017/07/08/pdfs/BOE-A-2017-7981.pdf",
+    "trainingProgramKey": "AFD02S"
+  },
+  {
+    "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:3723",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-13",
+    "sourceQuote": "Entrenador/a personal.",
+    "sourceUrl": "https://www.boe.es/boe/dias/2017/07/08/pdfs/BOE-A-2017-7981.pdf",
+    "trainingProgramKey": "AFD02SD"
+  },
+  {
+    "mappingVersion": "1.0.0",
     "occupationId": "occupation:cno11:6110",
     "relationshipType": "official_output",
     "reviewStatus": "approved",
@@ -691,6 +711,66 @@
   },
   {
     "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:3123",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-13",
+    "sourceQuote": "Técnico de puesta en marcha de sistemas de automatización industrial.",
+    "sourceUrl": "https://www.boe.es/eli/es/rd/2011/11/04/1581/dof/spa/pdf",
+    "trainingProgramKey": "ELE04S"
+  },
+  {
+    "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:3124",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-13",
+    "sourceQuote": "Diseñador de circuitos y sistemas integrados en automatización industrial.",
+    "sourceUrl": "https://www.boe.es/eli/es/rd/2011/11/04/1581/dof/spa/pdf",
+    "trainingProgramKey": "ELE04S"
+  },
+  {
+    "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:3129",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-13",
+    "sourceQuote": "Técnico en organización de mantenimiento de sistemas de automatización industrial.",
+    "sourceUrl": "https://www.boe.es/eli/es/rd/2011/11/04/1581/dof/spa/pdf",
+    "trainingProgramKey": "ELE04S"
+  },
+  {
+    "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:3139",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-13",
+    "sourceQuote": "Programador-controlador de robots industriales.",
+    "sourceUrl": "https://www.boe.es/eli/es/rd/2011/11/04/1581/dof/spa/pdf",
+    "trainingProgramKey": "ELE04S"
+  },
+  {
+    "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:3209",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-13",
+    "sourceQuote": "Jefe de equipo de supervisión de montaje de sistemas de automatización industrial.",
+    "sourceUrl": "https://www.boe.es/eli/es/rd/2011/11/04/1581/dof/spa/pdf",
+    "trainingProgramKey": "ELE04S"
+  },
+  {
+    "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:7521",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-13",
+    "sourceQuote": "Verificador de aparatos, cuadros y equipos eléctricos.",
+    "sourceUrl": "https://www.boe.es/eli/es/rd/2011/11/04/1581/dof/spa/pdf",
+    "trainingProgramKey": "ELE04S"
+  },
+  {
+    "mappingVersion": "1.0.0",
     "occupationId": "occupation:cno11:7111",
     "relationshipType": "official_output",
     "reviewStatus": "approved",
@@ -738,6 +818,26 @@
     "sourceQuote": "– Tejador.",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2011/11/04/1575",
     "trainingProgramKey": "EOC01M"
+  },
+  {
+    "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:7221",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-13",
+    "sourceQuote": "Fontanero/a.",
+    "sourceUrl": "https://www.boe.es/boe/dias/2014/03/05/pdfs/BOE-A-2014-2360.pdf",
+    "trainingProgramKey": "FME01B"
+  },
+  {
+    "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:9700",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-13",
+    "sourceQuote": "Peones de industrias manufactureras.",
+    "sourceUrl": "https://www.boe.es/boe/dias/2014/03/05/pdfs/BOE-A-2014-2360.pdf",
+    "trainingProgramKey": "FME01B"
   },
   {
     "mappingVersion": "1.0.0",
