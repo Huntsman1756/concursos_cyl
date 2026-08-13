@@ -102,7 +102,9 @@ describe("rankFpOfferAliasCandidates – manifest-addressed loading", () => {
       ]);
 
     expect(programs).toBeInstanceOf(Array);
-    expect(offers.length).toBe(1054);
+    expect(offers.length).toBe(
+      manifest.resourceSnapshots.jobOffers.recordCount,
+    );
     expect(links.length).toBe(135);
     expect(requirements.length).toBeGreaterThan(0);
     expect(programs.length).toBeGreaterThan(0);
@@ -269,7 +271,6 @@ describe("rankFpOfferAliasCandidates – JSON schema validity", () => {
     );
     const { report } = await rankFpOfferAliasCandidates();
     expect(report.totalOffers).toBe(offers.length);
-    expect(report.totalOffers).toBe(1054);
   });
 });
 

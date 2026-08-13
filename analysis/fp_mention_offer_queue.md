@@ -1,12 +1,12 @@
 # Cola de ofertas no enlazadas con mención a FP
 
-- Snapshot: `20260812182823819-b36dc2a9111a`
-- Ofertas: 1054
-- Ofertas enlazadas: 46
-- Ofertas no enlazadas: 1008
+- Snapshot: `20260813003333450-c67e16c08825`
+- Ofertas: 1044
+- Ofertas enlazadas: 48
+- Ofertas no enlazadas: 996
 - Cola FP: 44
-- Mención en requisitos: 28
-- Solo mención en descripción: 6
+- Mención en requisitos: 27
+- Solo mención en descripción: 7
 - Titulación revisada exacta: 10
 
 | Prioridad                    | Oferta                                                                                                                                                                                                                                  | Provincia  | Titulación revisada             | Ciclos candidatos |
@@ -17,12 +17,12 @@
 | description_only_fp          | [EMPLEADOS ADMINISTRATIVOS, EN GENERAL](https://empleo.jcyl.es/web/jcyl/Empleo/es/Plantilla100Detalle/1284216458054/OfertasEmpleo/1285670009206/Empleo) (`1285670009206`)                                                               | León       | —                               | —                 |
 | description_only_fp          | [MECÁNICOS DE MANTENIMIENTO Y REPARACIÓN DE AUTOMOCIÓN, EN GENERAL](https://empleo.jcyl.es/web/jcyl/Empleo/es/Plantilla100Detalle/1284216458054/OfertasEmpleo/1285664411823/Empleo) (`1285664411823`)                                   | Soria      | —                               | —                 |
 | description_only_fp          | [MONITORES DE EDUCACIÓN Y TIEMPO LIBRE](https://empleo.jcyl.es/web/jcyl/Empleo/es/Plantilla100Detalle/1284216458054/OfertasEmpleo/1285667333256/Empleo) (`1285667333256`)                                                               | León       | —                               | —                 |
+| description_only_fp          | [TÉCNICOS EN CONTROL DE CALIDAD, EN GENERAL](https://empleo.jcyl.es/web/jcyl/Empleo/es/Plantilla100Detalle/1284216458054/OfertasEmpleo/1285670398073/Empleo) (`1285670398073`)                                                          | León       | —                               | —                 |
 | requirement_generic_fp       | [10 Operarios/as de producción industrial con FP para Ponferrada (León)](https://empleo.jcyl.es/web/jcyl/Empleo/es/Plantilla100Detalle/1284216458054/OfertasEmpleo/1285669061505/Empleo) (`1285669061505`)                              | León       | —                               | —                 |
 | requirement_generic_fp       | [2 Auxiliar Administrativo/a para Ayto. de Tordesillas (Valladolid)](https://empleo.jcyl.es/web/jcyl/Empleo/es/Plantilla100Detalle/1284216458054/OfertasEmpleo/1285666473419/Empleo) (`1285666473419`)                                  | Valladolid | —                               | —                 |
 | requirement_generic_fp       | [2 Técnicos/as de mantenimiento industrial para Ponferrada (León)](https://empleo.jcyl.es/web/jcyl/Empleo/es/Plantilla100Detalle/1284216458054/OfertasEmpleo/1285669061395/Empleo) (`1285669061395`)                                    | León       | —                               | —                 |
 | requirement_generic_fp       | [Administrativo/a con inglés para Miranda de Ebro (Burgos)](https://empleo.jcyl.es/web/jcyl/Empleo/es/Plantilla100Detalle/1284216458054/OfertasEmpleo/1285669061283/Empleo) (`1285669061283`)                                           | Burgos     | —                               | —                 |
 | requirement_generic_fp       | [Auxiliar de Biblioteca para Ayto. de Santovenia de Pisuerga (Valladolid)](https://empleo.jcyl.es/web/jcyl/Empleo/es/Plantilla100Detalle/1284216458054/OfertasEmpleo/1285669341562/Empleo) (`1285669341562`)                            | Valladolid | —                               | —                 |
-| requirement_generic_fp       | [Auxiliar de Mantenimiento de Edificios para Valladolid](https://empleo.jcyl.es/web/jcyl/Empleo/es/Plantilla100Detalle/1284216458054/OfertasEmpleo/1285669062498/Empleo) (`1285669062498`)                                              | Valladolid | —                               | —                 |
 | requirement_generic_fp       | [Chapista Soldador/a para Valladolid](https://empleo.jcyl.es/web/jcyl/Empleo/es/Plantilla100Detalle/1284216458054/OfertasEmpleo/1285669062388/Empleo) (`1285669062388`)                                                                 | Valladolid | —                               | —                 |
 | requirement_generic_fp       | [CHAPISTAS INDUSTRIALES](https://empleo.jcyl.es/web/jcyl/Empleo/es/Plantilla100Detalle/1284216458054/OfertasEmpleo/1285650939495/Empleo) (`1285650939495`)                                                                              | Zamora     | —                               | —                 |
 | requirement_generic_fp       | [CUIDADORES DE PERSONAS CON DISCAPACIDAD Y/O DEPENDENCIA, EN INSTITUCIONES](https://empleo.jcyl.es/web/jcyl/Empleo/es/Plantilla100Detalle/1284216458054/OfertasEmpleo/1285639171849/Empleo) (`1285639171849`)                           | Zamora     | —                               | —                 |
@@ -31,9 +31,9 @@
 | requirement_generic_fp       | [ELECTROMECÁNICOS DE MANTENIMIENTO INDUSTRIAL (MANTENIMIENTO Y REPARACIÓN GENERAL)](https://empleo.jcyl.es/web/jcyl/Empleo/es/Plantilla100Detalle/1284216458054/OfertasEmpleo/1285667169339/Empleo) (`1285667169339`)                   | León       | —                               | —                 |
 | requirement_generic_fp       | [EMPLEADOS ADMINISTRATIVOS, EN GENERAL](https://empleo.jcyl.es/web/jcyl/Empleo/es/Plantilla100Detalle/1284216458054/OfertasEmpleo/1285631873078/Empleo) (`1285631873078`)                                                               | Zamora     | —                               | —                 |
 | requirement_generic_fp       | [ENCARGADOS DE OBRA CIVIL, EN GENERAL](https://empleo.jcyl.es/web/jcyl/Empleo/es/Plantilla100Detalle/1284216458054/OfertasEmpleo/1285650938999/Empleo) (`1285650938999`)                                                                | Zamora     | —                               | —                 |
-| requirement_generic_fp       | [Integrador/a social para León](https://empleo.jcyl.es/web/jcyl/Empleo/es/Plantilla100Detalle/1284216458054/OfertasEmpleo/1285667274442/Empleo) (`1285667274442`)                                                                       | León       | —                               | —                 |
 | requirement_generic_fp       | [Maquinista para la Diputación de Salamanca](https://empleo.jcyl.es/web/jcyl/Empleo/es/Plantilla100Detalle/1284216458054/OfertasEmpleo/1285669974728/Empleo) (`1285669974728`)                                                          | Salamanca  | —                               | —                 |
 | requirement_generic_fp       | [Maquinista para la Diputación de Salamanca](https://empleo.jcyl.es/web/jcyl/Empleo/es/Plantilla100Detalle/1284216458054/OfertasEmpleo/1285670033786/Empleo) (`1285670033786`)                                                          | Salamanca  | —                               | —                 |
+| requirement_generic_fp       | [MECÁNICOS DE MANTENIMIENTO Y REPARACIÓN DE AUTOMOCIÓN, EN GENERAL](https://empleo.jcyl.es/web/jcyl/Empleo/es/Plantilla100Detalle/1284216458054/OfertasEmpleo/1285670315056/Empleo) (`1285670315056`)                                   | León       | —                               | —                 |
 | requirement_generic_fp       | [Montador/a mecánico/a de vagones para Medina del Campo (Valladolid)](https://empleo.jcyl.es/web/jcyl/Empleo/es/Plantilla100Detalle/1284216458054/OfertasEmpleo/1285669061645/Empleo) (`1285669061645`)                                 | Valladolid | —                               | —                 |
 | requirement_generic_fp       | [Oficial/a de 2ª para Ayto. de Ólvega (Soria)](https://empleo.jcyl.es/web/jcyl/Empleo/es/Plantilla100Detalle/1284216458054/OfertasEmpleo/1285667535089/Empleo) (`1285667535089`)                                                        | Otra       | —                               | —                 |
 | requirement_generic_fp       | [PELUQUEROS UNISEX](https://empleo.jcyl.es/web/jcyl/Empleo/es/Plantilla100Detalle/1284216458054/OfertasEmpleo/1285661589449/Empleo) (`1285661589449`)                                                                                   | León       | —                               | —                 |

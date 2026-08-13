@@ -1,12 +1,12 @@
 {
   "schemaVersion": "1.0.0",
-  "snapshotId": "20260812182823819-b36dc2a9111a",
-  "totalOffers": 1054,
-  "matchedOfferCount": 46,
-  "unmatchedOfferCount": 1008,
+  "snapshotId": "20260813003333450-c67e16c08825",
+  "totalOffers": 1044,
+  "matchedOfferCount": 48,
+  "unmatchedOfferCount": 996,
   "queuedOfferCount": 44,
-  "requirementMentionOfferCount": 28,
-  "descriptionOnlyMentionOfferCount": 6,
+  "requirementMentionOfferCount": 27,
+  "descriptionOnlyMentionOfferCount": 7,
   "reviewedQualificationExactOfferCount": 10,
   "entries": [
     {
@@ -76,6 +76,17 @@
       "requirementQuotes": []
     },
     {
+      "offerId": "1285670398073",
+      "title": "TÉCNICOS EN CONTROL DE CALIDAD, EN GENERAL",
+      "province": "León",
+      "sourceName": "ECYL",
+      "originalUrl": "https://empleo.jcyl.es/web/jcyl/Empleo/es/Plantilla100Detalle/1284216458054/OfertasEmpleo/1285670398073/Empleo",
+      "mentionScope": "description_only_fp",
+      "reviewedQualificationLabels": [],
+      "candidateProgramKeys": [],
+      "requirementQuotes": []
+    },
+    {
       "offerId": "1285669061505",
       "title": "10 Operarios/as de producción industrial con FP para Ponferrada (León)",
       "province": "León",
@@ -134,19 +145,6 @@
       "candidateProgramKeys": [],
       "requirementQuotes": [
         "Graduado Escolar, Graduado ESO, Formación Profesional de Grado medio o equivalente"
-      ]
-    },
-    {
-      "offerId": "1285669062498",
-      "title": "Auxiliar de Mantenimiento de Edificios para Valladolid",
-      "province": "Valladolid",
-      "sourceName": "Internet / Prensa",
-      "originalUrl": "https://empleo.jcyl.es/web/jcyl/Empleo/es/Plantilla100Detalle/1284216458054/OfertasEmpleo/1285669062498/Empleo",
-      "mentionScope": "requirement_generic_fp",
-      "reviewedQualificationLabels": [],
-      "candidateProgramKeys": [],
-      "requirementQuotes": [
-        "Valorable Formación Profesional relacionada con mantenimiento de edificios e instalaciones."
       ]
     },
     {
@@ -250,19 +248,6 @@
       ]
     },
     {
-      "offerId": "1285667274442",
-      "title": "Integrador/a social para León",
-      "province": "León",
-      "sourceName": "Internet / Prensa",
-      "originalUrl": "https://empleo.jcyl.es/web/jcyl/Empleo/es/Plantilla100Detalle/1284216458054/OfertasEmpleo/1285667274442/Empleo",
-      "mentionScope": "requirement_generic_fp",
-      "reviewedQualificationLabels": [],
-      "candidateProgramKeys": [],
-      "requirementQuotes": [
-        "Formación Profesional de Grado Superior en Integración Social o titulación afín."
-      ]
-    },
-    {
       "offerId": "1285669974728",
       "title": "Maquinista para la Diputación de Salamanca",
       "province": "Salamanca",
@@ -283,6 +268,19 @@
       "reviewedQualificationLabels": [],
       "candidateProgramKeys": [],
       "requirementQuotes": ["ESO, GE, FP 1 Grado o equivalente"]
+    },
+    {
+      "offerId": "1285670315056",
+      "title": "MECÁNICOS DE MANTENIMIENTO Y REPARACIÓN DE AUTOMOCIÓN, EN GENERAL",
+      "province": "León",
+      "sourceName": "ECYL",
+      "originalUrl": "https://empleo.jcyl.es/web/jcyl/Empleo/es/Plantilla100Detalle/1284216458054/OfertasEmpleo/1285670315056/Empleo",
+      "mentionScope": "requirement_generic_fp",
+      "reviewedQualificationLabels": [],
+      "candidateProgramKeys": [],
+      "requirementQuotes": [
+        "Contar con titulación de FP electromecánica o similar, permiso de conducir B y conocimientos a nivel de diagnóstico de vehículos, búsquedas de información, esquemas eléctricos."
+      ]
     },
     {
       "offerId": "1285669061645",

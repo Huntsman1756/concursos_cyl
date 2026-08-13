@@ -61,15 +61,13 @@ describe("FP marginal alias review", () => {
     const manifest = await readJson<GeneratedManifest>(
       resolve(root, "public/data/v1/manifest.json"),
     );
-    expect(
-      manifest.resourceSnapshots.jobOffers.resourcePath.split("/").at(-2),
-    ).toBe(artifact.snapshotId);
+    const pinnedOffersPath =
+      manifest.resourceSnapshots.jobOffers.resourcePath.replace(
+        /\/snapshots\/[^/]+\//u,
+        `/snapshots/${artifact.snapshotId}/`,
+      );
     const offers = await readJson<JobOffer[]>(
-      resolve(
-        root,
-        "public",
-        manifest.resourceSnapshots.jobOffers.resourcePath.slice(1),
-      ),
+      resolve(root, "public", pinnedOffersPath.slice(1)),
     );
     const offersById = new Map(offers.map((offer) => [offer.id, offer]));
     for (const row of artifact.rows) {

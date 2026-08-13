@@ -68,11 +68,11 @@ export const FpOfferAliasCandidateSchema = z
     matchFields: z.array(CandidateMatchFieldSchema).min(1),
     matchedOfferIds: z.array(z.string().min(1)).min(1),
     matchedOfferTitles: z.array(z.string().min(1)).min(1),
-    occurrenceCount: z.number().int().min(1).max(1054),
+    occurrenceCount: z.number().int().min(1),
     marginalOfferIds: z.array(z.string().min(1)).min(1),
-    marginalOfferCount: z.number().int().min(1).max(1054),
-    currentRelationMatchCount: z.number().int().min(0).max(1054),
-    currentProgramMatchCount: z.number().int().min(0).max(1054),
+    marginalOfferCount: z.number().int().min(1),
+    currentRelationMatchCount: z.number().int().min(0),
+    currentProgramMatchCount: z.number().int().min(0),
     normalizedCollisionOccupations: z
       .array(z.string().regex(/^occupation:cno11:\d{4}$/u))
       .min(0),
