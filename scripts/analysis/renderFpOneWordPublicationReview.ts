@@ -23,6 +23,7 @@ export function renderValidatedFpOneWordPublicationReview(
     "albañil",
     "albañiles",
     "encofradores",
+    "teleoperadores",
   ] as const;
   const plural = (count: number, word: string) =>
     `${count} ${word}${count === 1 ? "" : "s"}`;
@@ -60,7 +61,7 @@ ${rejected.join("\n")}
 
 No se aprueba ninguna regla general de coincidencia de una sola palabra. No se propone ninguna lista negra por ID de oferta.
 
-${publishable.length > 0 ? `Solo ${publishable.map((form) => `\`${form}\``).join(", ")} puede publicarse condicionalmente tras la política acotada posterior.` : "Ninguna forma puede publicarse condicionalmente."} ${blocked.map((form) => `\`${form}\``).join(", ")} no se publican porque contienen colisiones rechazadas conocidas.
+${publishable.length > 0 ? `Solo ${publishable.map((form) => `\`${form}\``).join(", ")} ${publishable.length === 1 ? "puede" : "pueden"} publicarse condicionalmente tras la política acotada posterior.` : "Ninguna forma puede publicarse condicionalmente."} ${blocked.map((form) => `\`${form}\``).join(", ")} no se publican porque contienen colisiones rechazadas conocidas.
 `;
 }
 

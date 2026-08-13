@@ -2,13 +2,14 @@
 
 ## Resultado
 
-67 ofertas auditadas.
+68 ofertas auditadas.
 
 - `cocinero`: 0 aceptadas; 1 rechazada.
 - `cocineros`: 30 aceptadas; 10 rechazadas.
 - `albañil`: 1 aceptada; 1 rechazada.
 - `albañiles`: 20 aceptadas; 2 rechazadas.
 - `encofradores`: 2 aceptadas; 0 rechazadas.
+- `teleoperadores`: 1 aceptada; 0 rechazadas.
 
 ## Colisiones rechazadas
 
@@ -31,4 +32,4 @@
 
 No se aprueba ninguna regla general de coincidencia de una sola palabra. No se propone ninguna lista negra por ID de oferta.
 
-Solo `encofradores` puede publicarse condicionalmente tras la política acotada posterior. `cocinero`, `cocineros`, `albañil`, `albañiles` no se publican porque contienen colisiones rechazadas conocidas.
+Solo `encofradores`, `teleoperadores` pueden publicarse condicionalmente tras la política acotada posterior. `cocinero`, `cocineros`, `albañil`, `albañiles` no se publican porque contienen colisiones rechazadas conocidas.
