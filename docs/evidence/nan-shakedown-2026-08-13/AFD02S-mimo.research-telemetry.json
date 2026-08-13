@@ -1,0 +1,24 @@
+{
+  "schemaVersion": "sanitized-research-telemetry-v1",
+  "evidenceClass": "repository-sanitized-copy",
+  "telemetryId": "afd02s-mimo-adversarial-attempt-1",
+  "simulated": false,
+  "taskType": "bulletin",
+  "selectedModel": "nan/mimo-v2.5",
+  "nativeSessionId": "ses_0051a2d2bffefOjmXH3SuKzfhq",
+  "workerStatus": "awaiting-frontier-review",
+  "codexReviewDisposition": "used-with-corrections-as-research-input",
+  "baseSha": "49b9bde844ec18b395becc3736c36d11f362c715",
+  "tokensUsage": {
+    "input": 20789,
+    "output": 2730,
+    "reasoning": 2366,
+    "cacheRead": 17344,
+    "cacheWrite": 0,
+    "total": 43229
+  },
+  "contractHash": "a64a2a4ef012985f9a3188c9149b45224af8c434a1c0050e8993d918ce564398",
+  "sourceTelemetrySha256": "1adf1c8d48eddb98dd516112e3e16b41eb3427a757a4d2b48ac14f8b5e959af3",
+  "hostSigned": false,
+  "provenanceEnforcement": "DISABLED"
+}

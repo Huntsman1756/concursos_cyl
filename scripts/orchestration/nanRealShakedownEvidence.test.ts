@@ -43,8 +43,8 @@ describe("real NAN shakedown evidence", () => {
     .filter((fileName) => fileName.endsWith(".worker-telemetry.json"))
     .sort();
 
-  it("retains exactly five non-simulated accepted worker records", () => {
-    expect(files).toHaveLength(5);
+  it("retains exactly seven non-simulated accepted worker records", () => {
+    expect(files).toHaveLength(7);
     const records = files.map((fileName) =>
       Evidence.parse(
         JSON.parse(readFileSync(resolve(evidenceDirectory, fileName), "utf8")),
@@ -52,7 +52,50 @@ describe("real NAN shakedown evidence", () => {
     );
     expect(
       records.reduce((total, record) => total + record.tokensUsage.total, 0),
-    ).toBe(988796);
+    ).toBe(1602767);
+  });
+
+  it("retains three independently reviewed AFD02S research records", () => {
+    const ResearchEvidence = z
+      .object({
+        schemaVersion: z.literal("sanitized-research-telemetry-v1"),
+        evidenceClass: z.literal("repository-sanitized-copy"),
+        simulated: z.literal(false),
+        taskType: z.literal("bulletin"),
+        selectedModel: z.enum([
+          "nan/gemma4",
+          "nan/mimo-v2.5",
+          "nan/deepseek-v4-flash",
+        ]),
+        nativeSessionId: z.string().regex(/^ses_[A-Za-z0-9]+$/u),
+        workerStatus: z.literal("awaiting-frontier-review"),
+        codexReviewDisposition: z.enum([
+          "accepted-as-research-input",
+          "used-with-corrections-as-research-input",
+        ]),
+        tokensUsage: z
+          .object({ total: z.number().int().positive() })
+          .passthrough(),
+        sourceTelemetrySha256: Hash,
+        hostSigned: z.literal(false),
+        provenanceEnforcement: z.literal("DISABLED"),
+      })
+      .passthrough();
+    const researchFiles = [
+      "AFD02S-gemma.research-telemetry.json",
+      "AFD02S-mimo.research-telemetry.json",
+      "AFD02S-deepseek.research-telemetry.json",
+    ];
+    const records = researchFiles.map((fileName) =>
+      ResearchEvidence.parse(
+        JSON.parse(readFileSync(resolve(evidenceDirectory, fileName), "utf8")),
+      ),
+    );
+
+    expect(new Set(records.map((record) => record.selectedModel)).size).toBe(3);
+    expect(
+      records.reduce((total, record) => total + record.tokensUsage.total, 0),
+    ).toBe(85844);
   });
 
   it("retains the reviewed Gemma bulletin extraction without presenting it as frontier-accepted code", () => {

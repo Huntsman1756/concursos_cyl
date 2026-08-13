@@ -1,0 +1,24 @@
+{
+  "schemaVersion": "sanitized-research-telemetry-v1",
+  "evidenceClass": "repository-sanitized-copy",
+  "telemetryId": "afd02s-gemma-positive-attempt-1",
+  "simulated": false,
+  "taskType": "bulletin",
+  "selectedModel": "nan/gemma4",
+  "nativeSessionId": "ses_0051afa39ffe19w7OImE2iPa5Y",
+  "workerStatus": "awaiting-frontier-review",
+  "codexReviewDisposition": "used-with-corrections-as-research-input",
+  "baseSha": "49b9bde844ec18b395becc3736c36d11f362c715",
+  "tokensUsage": {
+    "input": 15504,
+    "output": 1064,
+    "reasoning": 0,
+    "cacheRead": 0,
+    "cacheWrite": 0,
+    "total": 16568
+  },
+  "contractHash": "837ff67de2ff3993c5f600632612f9787c3fe1aff48d4312dbdff50488e9a257",
+  "sourceTelemetrySha256": "3bad83628f19f7a50deb812bbe34539882af7989b09ec5989dc56d1d37d3e94d",
+  "hostSigned": false,
+  "provenanceEnforcement": "DISABLED"
+}

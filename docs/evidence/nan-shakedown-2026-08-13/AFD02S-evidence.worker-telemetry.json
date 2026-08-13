@@ -1,0 +1,31 @@
+{
+  "schemaVersion": "sanitized-worker-telemetry-v1",
+  "evidenceClass": "repository-sanitized-copy",
+  "telemetryId": "afd02s-evidence-attempt-2",
+  "simulated": false,
+  "taskType": "code",
+  "selectedModel": "nan/mimo-v2.5",
+  "nativeSessionId": "ses_0050d59f1ffexAhVqO6hY91k4T",
+  "status": "COMPLETE",
+  "baseSha": "8c4ca6bdf916d80eaf51b166ea9962132be16bef",
+  "resultCommitSha": "0ad32a0cb48362bddc092d9562e222b352062f4c",
+  "changedPaths": ["analysis/fp_coverage_expansion/AFD02S-sources.md"],
+  "tokensUsage": {
+    "input": 43292,
+    "output": 3159,
+    "reasoning": 3699,
+    "cacheRead": 249280,
+    "cacheWrite": 0,
+    "total": 299430
+  },
+  "validationExitCode": 0,
+  "frontierDecision": "ACCEPT",
+  "contractHash": "08f5649fd8445214db75f472b3332a94d719c8049322924b11e10b6dc8a62578",
+  "planHash": "a274234fe0e44e360d8feab36d6711c85ca31b1f8fc4e71f5b9319fba34184ad",
+  "sourceTelemetrySha256": "b0791106d3f05f3c183df19ffb3a7e733c4247208dda057e4c7633a04f379574",
+  "candidatePatchSha256": "d814c6103e8a0886a7915114bb8988e348cbfbf17912050c59bdcb47dbf5a854",
+  "decisionHash": "62d482dd7f0a29f443076d4d122262dcbf1d8f0900513c27af13d754f49493f3",
+  "authorityEvidenceHash": "411da514a35c8e5b54c105dd38fce70607445197d5f8999e8292a153a6cc5958",
+  "hostSigned": false,
+  "provenanceEnforcement": "DISABLED"
+}

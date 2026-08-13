@@ -1,7 +1,7 @@
 # Shakedown NAN real del 13 de agosto de 2026
 
 Este directorio conserva copias sanitizadas de telemetrías reales usadas para
-producir los lotes COM04S y FME01B. Se omiten la salida
+producir los lotes COM04S, FME01B y AFD02S. Se omiten la salida
 libre del modelo, rutas locales y cualquier material de credenciales. Los hashes
 `sourceTelemetrySha256` y `candidatePatchSha256` identifican los artefactos
 originales retenidos fuera del worktree candidato por el supervisor.
@@ -22,3 +22,8 @@ para la evidencia documental y la publicación de datos. También conserva por
 separado la extracción real de Gemma como entrada de investigación revisada por
 Codex; no se etiqueta como código aceptado por frontier porque ese worker de
 boletines no produjo un parche.
+
+AFD02S conserva tres investigaciones independientes (Gemma, MiMo y DeepSeek),
+dos ciclos de código MiMo aceptados y el `RETRY` documental previo. Los registros
+de investigación declaran si Codex aceptó el borrador o lo utilizó con
+correcciones; no se presentan como parches frontier.

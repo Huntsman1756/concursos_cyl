@@ -1500,5 +1500,25 @@
     "sourceQuote": "Peones de industrias manufactureras.",
     "reviewedAt": "2026-08-13",
     "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "AFD02S",
+    "occupationId": "occupation:cno11:3723",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.boe.es/boe/dias/2017/07/08/pdfs/BOE-A-2017-7981.pdf",
+    "sourceQuote": "Entrenador/a personal.",
+    "reviewedAt": "2026-08-13",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "AFD02SD",
+    "occupationId": "occupation:cno11:3723",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.boe.es/boe/dias/2017/07/08/pdfs/BOE-A-2017-7981.pdf",
+    "sourceQuote": "Entrenador/a personal.",
+    "reviewedAt": "2026-08-13",
+    "mappingVersion": "1.0.0"
   }
 ]
