@@ -60,8 +60,11 @@ NAN se usa como proveedor de implementación principal. El worker:
 - Intercambia con `opencode` mediante llamadas CLI.
 - Ejecuta un intento por defecto y no activa fallbacks implícitos.
 - Lee el JSONL durante la ejecución y termina el árbol de OpenCode cuando el
-  consumo observado, incluida la caché, supera 50.000 tokens.
-- Termina ejecuciones de más de 300 segundos y bloquea durante una hora la
+  consumo observado, incluida la caché, supera el presupuesto del perfil.
+- Admite una sola ejecución NAN activa por sesión del host. Los contratos pueden
+  prepararse en paralelo, pero esperan turno hasta 7.200 segundos y esa espera
+  no consume el tiempo de inferencia.
+- Termina ejecuciones de más de 900 segundos y bloquea durante una hora la
   repetición del mismo contrato sobre el mismo SHA.
 - Registra telemetría por ejecución: modelo, agente, intento, reintento, código de
   salida, tokens, rutas cambiadas y código de validación.
@@ -190,14 +193,21 @@ Cada campo es obligatorio y se valida en runtime (fail-closed):
 
 | Perfil     |  Tokens | Uso previsto                                               |
 | ---------- | ------: | ---------------------------------------------------------- |
-| `small`    |  50.000 | Cambio mecánico pequeño y localizado.                      |
-| `batch`    | 150.000 | Incorporación mecánica de un lote previamente investigado. |
-| `research` | 300.000 | Lectura y extracción extensa de fuentes.                   |
-| `extended` | 400.000 | Lote excepcional que combina bastante contexto y trabajo.  |
+| `small`    | 100.000 | Cambio mecánico pequeño y localizado.                      |
+| `batch`    | 500.000 | Incorporación mecánica de un lote previamente investigado. |
+| `research` | 450.000 | Lectura y extracción extensa de fuentes.                   |
+| `extended` | 750.000 | Lote excepcional que combina bastante contexto y trabajo.  |
 
 `MaxObservedTokens` acepta de 1.000 a 1.000.000 y prevalece sobre la tabla,
 pero queda registrado como `budgetSource: override`; no debe usarse como valor
 habitual ni para ocultar un contrato demasiado amplio.
+
+El perfil de admisión predeterminado es `observed-serial`. Es más conservador
+que el máximo oficial de cinco solicitudes simultáneas porque el shakedown real
+del 13 de agosto de 2026 produjo bloqueos sin tokens con 2, 4 y 8 sesiones, pero
+progreso inmediato con una sesión aislada. `provider-limit` queda disponible
+como opt-in para volver a probar concurrencia; no debe activarse sin conservar
+telemetría real que demuestre progreso concurrente.
 
 Ejecución DryRun (sin coste, valida contrato sin llamar a opencode):
 
@@ -359,9 +369,9 @@ Gemma 4 la sesión `ses_00b2f4913ffe6H53pMxnPbY8TP` con 3.100 tokens; ambas term
 cambios. Esto prueba route, launch, eventos y usage, pero no certifica Runtime V4
 ni autoriza publicación. El probe Qwen consumió 122.724 tokens para una tarea
 sin cambios; esta regresión económica motivó `maxSteps: 10`, un solo intento,
-fallbacks vacíos y un perfil seguro `small` de 50.000 tokens. Para no convertir
-ese cortafuegos en un cuello de botella, el broker ofrece perfiles por contrato:
-`small` (50k), `batch` (150k), `research` (300k) y `extended` (400k). Un
+fallbacks vacíos. La oleada real posterior mostró que 50k–400k era insuficiente
+para varios contratos útiles, por lo que el broker ofrece perfiles revisados:
+`small` (100k), `batch` (500k), `research` (450k) y `extended` (750k). Un
 `MaxObservedTokens` explícito entre 1k y 1M prevalece como override auditable.
 El broker corta la ejecución al
 observar el exceso y la deja en `blocked-token-budget`; un timeout queda en
@@ -387,8 +397,8 @@ completa sin control.
 - Escribe en las rutas permitidas del contrato.
 - Avisa si un archivo extra fue modificado (violación de contrato).
 - Reintenta hasta 3 veces antes de declarar fallo por modelo.
-- Respaldos con modelos NAN alternativos si el primario falla en tareas `code`;
-  `bulletin` reintenta el modelo elegido por `ModelProfile` sin mezclar modelos.
+- Usa respaldos NAN alternativos solo cuando el contrato los declara
+  explícitamente; esto se aplica por igual a `code` y `bulletin`.
 - Registra toda la ejecución en telemetría JSON.
 - Soporta modo DryRun para validación sin coste (con telemetría incluida).
 - Soporta modo TestMode (`-TestMode`) para pruebas comportamentales inyectando un plan mock (`-MockPlan`). TestMode solo se activa con `-TestMode` o `-DryRun` explícito.

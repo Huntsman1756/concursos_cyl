@@ -10,7 +10,9 @@ param(
     [ValidateSet('small','batch','research','extended')][string]$BudgetProfile = 'small',
     [ValidateSet('auto','mechanical','reasoning','long-context')][string]$ModelProfile = 'auto',
     [int]$MaxObservedTokens = 0,
-    [ValidateRange(10,3600)][int]$MaxExecutionSeconds = 300,
+    [ValidateRange(10,3600)][int]$MaxExecutionSeconds = 900,
+    [ValidateSet('observed-serial','provider-limit')][string]$AdmissionProfile = 'observed-serial',
+    [ValidateRange(1,86400)][int]$AdmissionTimeoutSeconds = 7200,
     [ValidateRange(0,86400)][int]$DuplicateWindowSeconds = 3600,
     [string[]]$FallbackModels = @(),
     [switch]$DryRun,
@@ -61,10 +63,10 @@ $InputPath = @($InputPath | ForEach-Object { $_ -split ',' } | ForEach-Object { 
 $AcceptanceCriteria = @($AcceptanceCriteria | ForEach-Object { $_.Trim() } | Where-Object { $_ })
 
 $budgetProfiles = @{
-    small = 50000
-    batch = 150000
-    research = 300000
-    extended = 400000
+    small = 100000
+    batch = 500000
+    research = 450000
+    extended = 750000
 }
 if ($MaxObservedTokens -ne 0 -and ($MaxObservedTokens -lt 1000 -or $MaxObservedTokens -gt 1000000)) {
     throw 'MaxObservedTokens must be 0 (use BudgetProfile) or between 1000 and 1000000.'
@@ -197,6 +199,7 @@ $primaryModel = switch ($ModelProfile) {
 }
 $primaryAgent = if ($TaskType -eq 'code') { 'nan-code' } else { 'nan-bulletin' }
 $allowedNanModels = @('nan/qwen3.6','nan/gemma4','nan/deepseek-v4-flash','nan/mimo-v2.5')
+$fallbackPriority = @('nan/mimo-v2.5','nan/deepseek-v4-flash','nan/qwen3.6','nan/gemma4')
 $forbiddenFallbacks = @($FallbackModels | Where-Object { $_ -match '(?i)(^|/)glm5\.2($|[-:])' })
 if ($forbiddenFallbacks.Count -gt 0) {
     throw "Unsupported or premium NAN fallback model: $($forbiddenFallbacks -join ', ')"
@@ -383,7 +386,7 @@ if ($DryRun) {
         $planSha = Compute-StringSha256 -InputString $FrontierPlan
         $fc = @{plannedBy=$PlannedBy;planHash=$planSha;acceptanceCriteriaCount=$AcceptanceCriteria.Count;reviewRequired=$true}
     }
-    $dryRunTelemetry = @{telemetryId=$tid;simulated=[bool]$true;taskType=$TaskType;selectedModel=$primaryModel;attempts=@();changedPaths=@();contractViolation=$false;validationFailed=$false;tokensUsage=@{input=0;output=0;reasoning=0;cacheRead=0;cacheWrite=0;total=0};success=$true;status='dry-run';frontierContract=$fc;contract=@{hash=$contractHash;headSha=$headSha;duplicateWindowSeconds=$DuplicateWindowSeconds};launch=@{budgetProfile=$BudgetProfile;budgetSource=$budgetSource;maxObservedTokens=$effectiveMaxObservedTokens;maxExecutionSeconds=$MaxExecutionSeconds}}
+    $dryRunTelemetry = @{telemetryId=$tid;simulated=[bool]$true;taskType=$TaskType;selectedModel=$primaryModel;attempts=@();changedPaths=@();contractViolation=$false;validationFailed=$false;tokensUsage=@{input=0;output=0;reasoning=0;cacheRead=0;cacheWrite=0;total=0};success=$true;status='dry-run';frontierContract=$fc;contract=@{hash=$contractHash;headSha=$headSha;duplicateWindowSeconds=$DuplicateWindowSeconds};admission=@{profile=$AdmissionProfile;capacity=$(if ($AdmissionProfile -eq 'observed-serial') { 1 } else { 5 });timeoutSeconds=$AdmissionTimeoutSeconds;queueWaitMs=0;acquired=$false};launch=@{budgetProfile=$BudgetProfile;budgetSource=$budgetSource;maxObservedTokens=$effectiveMaxObservedTokens;maxExecutionSeconds=$MaxExecutionSeconds}}
     $writtenTelemetryPath = Write-TelemetryRecord -Value $dryRunTelemetry -TelemetryId $tid
     Write-Host "Telemetry: $writtenTelemetryPath" -ForegroundColor DarkGray
     exit 0
@@ -391,45 +394,64 @@ if ($DryRun) {
 
 # ── Model list ──
 $modelList = @()
-if ($TaskType -eq 'bulletin') {
-    if (-not $DryRun -and -not $TestMode) {
-        # Live availability check for bulletin (gemma4 only)
-        try {
-            $modelOutput = & opencode models nan 2>&1 | Out-String
-            $availableModels = @($modelOutput -split "`n" | ForEach-Object { $_.Trim() } | Where-Object { $_ -and $_ -match '^nan/' })
-            if ($availableModels -notcontains $primaryModel) {
-                throw "Model $primaryModel is not available"
-            }
-            $modelList = @($primaryModel)
-        } catch {
-            Write-Warning "Model availability check failed: $_"
-            throw "Model $primaryModel is not available"
+if (-not $DryRun -and -not $TestMode) {
+    try {
+        $modelOutput = & opencode models nan 2>&1 | Out-String
+        $availableModels = @($modelOutput -split "`n" | ForEach-Object { $_.Trim() } | Where-Object { $_ -and $_ -match '^nan/' })
+        if ($availableModels -notcontains $primaryModel) {
+            throw "Primary model $primaryModel is not available"
         }
-    } else {
-        $modelList = @($primaryModel)
+        $availableFallbacks = @($fallbackPriority | Where-Object { $_ -in $FallbackModels -and $_ -ne $primaryModel -and $_ -in $availableModels })
+        $modelList = @($primaryModel) + $availableFallbacks
+        $unavailableFallbacks = @($FallbackModels | Where-Object { $_ -notin $availableFallbacks -and $_ -ne $primaryModel })
+        if ($unavailableFallbacks.Count -gt 0) {
+            throw "Fallback models are unavailable or unsupported: $($unavailableFallbacks -join ', ')"
+        }
+    } catch {
+        Write-Warning "Model availability check failed: $_"
+        throw "Models not available: $_"
     }
 } else {
-    # Code: primary + official fallbacks checked against availability
-    if (-not $DryRun -and -not $TestMode) {
+    $modelList = @($primaryModel) + @($fallbackPriority | Where-Object { $_ -in $FallbackModels -and $_ -ne $primaryModel })
+}
+
+# Preparation can stay parallel, but NAN inference is admitted serially.  The
+# retained shakedown evidence for this host showed zero-token stalls with 2/4/8
+# concurrent OpenCode sessions and immediate progress with one isolated session.
+# Queue time is deliberately not charged to MaxExecutionSeconds.
+$providerAdmissionMutex = $null
+$admissionAcquired = $false
+$admissionWaitMs = 0L
+if (-not $TestMode -and $AdmissionProfile -eq 'observed-serial') {
+    $admissionName = if ($env:OS -eq 'Windows_NT') { 'Local\NanBuilders-Chat-Admission-v1' } else { 'NanBuilders-Chat-Admission-v1' }
+    $providerAdmissionMutex = New-Object System.Threading.Mutex($false, $admissionName)
+    $admissionWatch = [System.Diagnostics.Stopwatch]::StartNew()
+    try {
         try {
-            $modelOutput = & opencode models nan 2>&1 | Out-String
-            $availableModels = @($modelOutput -split "`n" | ForEach-Object { $_.Trim() } | Where-Object { $_ -and $_ -match '^nan/' })
-            if ($availableModels -notcontains $primaryModel) {
-                throw "Primary model $primaryModel is not available"
-            }
-            $officialFallbacks = @('nan/mimo-v2.5','nan/deepseek-v4-flash','nan/qwen3.6') | Where-Object { $_ -ne $primaryModel }
-            $availableFallbacks = @($officialFallbacks | Where-Object { $_ -in $FallbackModels -and $_ -in $availableModels })
-            $modelList = @($primaryModel) + $availableFallbacks
-            if ($modelList.Count -eq 0) {
-                throw "No fallback models available from $($FallbackModels -join ',')"
-            }
-        } catch {
-            Write-Warning "Model availability check failed: $_"
-            throw "Models not available: $_"
+            $admissionAcquired = $providerAdmissionMutex.WaitOne($AdmissionTimeoutSeconds * 1000)
+        } catch [System.Threading.AbandonedMutexException] {
+            $admissionAcquired = $true
         }
-    } else {
-        $modelList = @($primaryModel) + @(@('nan/mimo-v2.5','nan/deepseek-v4-flash','nan/qwen3.6') | Where-Object { $_ -in $FallbackModels -and $_ -ne $primaryModel })
+    } finally {
+        $admissionWatch.Stop()
+        $admissionWaitMs = [long]$admissionWatch.ElapsedMilliseconds
     }
+    if (-not $admissionAcquired) {
+        $tid = [guid]::NewGuid().ToString('N')
+        $fc = @{}
+        if ($TaskType -eq 'code') {
+            $fc = @{plannedBy=$PlannedBy;planHash=(Compute-StringSha256 -InputString $FrontierPlan);acceptanceCriteriaCount=$AcceptanceCriteria.Count;reviewRequired=$true}
+        }
+        $blockedTelemetry = @{telemetryId=$tid;simulated=$false;taskType=$TaskType;selectedModel=$null;attempts=@();changedPaths=@();contractViolation=$false;validationFailed=$false;tokensUsage=@{input=0;output=0;reasoning=0;cacheRead=0;cacheWrite=0;total=0};success=$false;status='blocked-admission-timeout';frontierContract=$fc;draftOutput='';contract=@{hash=$contractHash;headSha=$headSha;duplicateWindowSeconds=$DuplicateWindowSeconds};admission=@{profile=$AdmissionProfile;capacity=1;timeoutSeconds=$AdmissionTimeoutSeconds;queueWaitMs=$admissionWaitMs;acquired=$false};launch=@{harness='opencode';protocol='native-jsonl-stream-1.18.x';pure=$true;auto=$false;directory=$repoRoot;budgetProfile=$BudgetProfile;budgetSource=$budgetSource;maxObservedTokens=$effectiveMaxObservedTokens;maxExecutionSeconds=$MaxExecutionSeconds}}
+        $writtenTelemetryPath = Write-TelemetryRecord -Value $blockedTelemetry -TelemetryId $tid
+        Write-Host "Telemetry: $writtenTelemetryPath" -ForegroundColor DarkGray
+        if ($providerAdmissionMutex) { $providerAdmissionMutex.Dispose() }
+        if ($contractMutex) { $contractMutex.ReleaseMutex(); $contractMutex.Dispose() }
+        Write-Host 'Task failed. Status=blocked-admission-timeout' -ForegroundColor Red
+        exit 1
+    }
+} elseif (-not $TestMode) {
+    $admissionAcquired = $true
 }
 
 # ── Parse MockPlan ──
@@ -454,7 +476,7 @@ $planIndex = 0
 $totalAttempts = 0
 
 :modelLoop foreach ($candidateModel in $modelList) {
-    $candidateAgent = if ($candidateModel -eq $primaryModel) { $primaryAgent } else { 'nan-code' }
+    $candidateAgent = if ($TaskType -eq 'bulletin') { 'nan-bulletin' } else { 'nan-code' }
     for ($r = 0; $r -lt $MaxRetries; $r++) {
         $totalAttempts++
         $attempt = @{model=$candidateModel;agent=$candidateAgent;attempt=$totalAttempts;retry=($r+1);exitCode=1;tokens=@{input=0;output=0;reasoning=0;cacheRead=0;cacheWrite=0;total=0};changedPaths=@();validationExitCode=$null;validationDiagnostics=@();draftOutput=''}
@@ -647,6 +669,7 @@ $telemetry = @{
     tokensUsage=$agg;success=$success;status=$status;frontierContract=$fcTelemetry
     draftOutput=if ($successResult) { $successResult.draftOutput } else { '' }
     contract=@{hash=$contractHash;headSha=$headSha;duplicateWindowSeconds=$DuplicateWindowSeconds}
+    admission=@{profile=$AdmissionProfile;capacity=$(if ($AdmissionProfile -eq 'observed-serial') { 1 } else { 5 });timeoutSeconds=$AdmissionTimeoutSeconds;queueWaitMs=$admissionWaitMs;acquired=[bool]$admissionAcquired}
     launch=@{harness='opencode';protocol='native-jsonl-stream-1.18.x';pure=$true;auto=$false;directory=$repoRoot;budgetProfile=$BudgetProfile;budgetSource=$budgetSource;maxObservedTokens=$effectiveMaxObservedTokens;maxExecutionSeconds=$MaxExecutionSeconds}
 }
 $writtenTelemetryPath = Write-TelemetryRecord -Value $telemetry -TelemetryId $tid
@@ -654,6 +677,7 @@ Write-Host "Telemetry: $writtenTelemetryPath" -ForegroundColor DarkGray
 
 # ── Exit ──
 if ($success) {
+    if ($providerAdmissionMutex -and $admissionAcquired) { $providerAdmissionMutex.ReleaseMutex(); $providerAdmissionMutex.Dispose() }
     if ($contractMutex) { $contractMutex.ReleaseMutex(); $contractMutex.Dispose() }
     if ($TaskType -eq 'bulletin' -and -not [string]::IsNullOrWhiteSpace($successResult.draftOutput)) {
         Write-Output '----- NAN DRAFT OUTPUT -----'
@@ -663,6 +687,7 @@ if ($success) {
     Write-Host "Task completed successfully. Model=$($successResult.model) Attempts=$totalAttempts Changed=$($changedPaths.Count)" -ForegroundColor Green
     exit 0
 }
+if ($providerAdmissionMutex -and $admissionAcquired) { $providerAdmissionMutex.ReleaseMutex(); $providerAdmissionMutex.Dispose() }
 if ($contractMutex) { $contractMutex.ReleaseMutex(); $contractMutex.Dispose() }
 Write-Host "Task failed. Status=$status" -ForegroundColor Red
 if ($contractViolation) { Write-Host "Reason: Contract violation (paths outside AllowedPath)" -ForegroundColor Red }

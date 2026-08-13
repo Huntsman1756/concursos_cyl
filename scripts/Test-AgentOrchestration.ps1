@@ -205,12 +205,15 @@ try {
         $budgetProfileTelemetry = Get-Content -LiteralPath (Get-NewTelemetry -BeforeFiles $pre) -Raw | ConvertFrom-Json
         Assert-Equal $budgetProfileTelemetry.launch.budgetProfile 'batch' '2e: telemetry records batch profile'
         Assert-Equal $budgetProfileTelemetry.launch.budgetSource 'profile' '2f: telemetry records profile source'
-        Assert-Equal $budgetProfileTelemetry.launch.maxObservedTokens 150000 '2g: batch profile resolves to 150000 tokens'
+        Assert-Equal $budgetProfileTelemetry.launch.maxObservedTokens 500000 '2g: batch profile resolves to 500000 tokens'
+        Assert-Equal $budgetProfileTelemetry.admission.profile 'observed-serial' '2g1: dry run records observed serial admission'
+        Assert-Equal $budgetProfileTelemetry.admission.capacity 1 '2g2: dry run records one active NAN slot'
+        Assert-Equal $budgetProfileTelemetry.admission.timeoutSeconds 7200 '2g3: dry run records admission timeout'
 
         foreach ($profileCase in @(
-            @{Name='small';Tokens=50000},
-            @{Name='research';Tokens=300000},
-            @{Name='extended';Tokens=400000}
+            @{Name='small';Tokens=100000},
+            @{Name='research';Tokens=450000},
+            @{Name='extended';Tokens=750000}
         )) {
             $pre = Get-FileSnapshot
             $profileParams = New-ValidCodeContract -Objective "budget-profile-$($profileCase.Name)" -DryRun -TestMode
@@ -800,7 +803,10 @@ try {
             Assert-True ($yamlText -match 'requireValidationForCode:\s*true') '18z: YAML requireValidationForCode=true'
             Assert-True ($yamlText -match 'frontierContract') '18aa: YAML telemetry has frontierContract topLevelField'
             Assert-True (([regex]::Matches($yamlText, '(?m)^\s+fallbackModels:')).Count -eq 1) '18ab: YAML has one fallbackModels key'
-            Assert-True ($yamlText -match 'maxExecutionSeconds:\s*300') '18ac: YAML declares execution timeout'
+            Assert-True ($yamlText -match 'maxExecutionSeconds:\s*900') '18ac: YAML declares execution timeout'
+            Assert-True ($yamlText -match 'profile:\s*observed-serial') '18ac1: YAML enables evidence-based serialized admission'
+            Assert-True ($yamlText -match 'capacity:\s*1') '18ac2: YAML admits one active NAN worker'
+            Assert-True ($yamlText -match 'queueTimeConsumesExecutionTimeout:\s*false') '18ac3: YAML excludes queue wait from execution timeout'
             Assert-True ($yamlText -match 'duplicateWindowSeconds:\s*3600') '18ad: YAML declares duplicate window'
             Assert-True ($yamlText -match 'frontierSupervisor:\s*\r?\n\s+enabled:\s*true') '18ad1: YAML enables frontier supervisor'
             Assert-True ($yamlText -match 'automaticWorkerRelaunchAfterFrontierRetry:\s*true') '18ad2: YAML declares adaptive relaunch'
