@@ -17,6 +17,9 @@ export default defineConfig({
   preview: { headers: SECURITY_HEADERS },
   test: {
     environment: "jsdom",
+    // Snapshot suites perform repeated filesystem builds; bounding workers
+    // prevents unrelated test files from exhausting their explicit timeouts.
+    maxWorkers: 4,
     exclude: [
       ...configDefaults.exclude,
       "tests/e2e/**",
