@@ -567,8 +567,26 @@ $totalAttempts = 0
                         $commandIndex = 0
                         foreach ($cmd in $ValidationCommand) {
                             $commandIndex++
-                            $validationOutput = Invoke-Expression $cmd 2>&1 | Out-String
-                            $commandExit = $LASTEXITCODE
+                            $previousErrorActionPreference = $ErrorActionPreference
+                            $validationOutput = ''
+                            $commandExit = 1
+                            Push-Location -LiteralPath $repoRoot
+                            try {
+                                # Validation belongs to the worker worktree, not
+                                # the supervisor's current directory. Native
+                                # stderr is diagnostic evidence and must not
+                                # abort telemetry persistence.
+                                $ErrorActionPreference = 'Continue'
+                                $validationOutput = Invoke-Expression $cmd 2>&1 | Out-String
+                                $commandExit = $LASTEXITCODE
+                                if ($null -eq $commandExit) { $commandExit = 0 }
+                            } catch {
+                                $validationOutput = ($_ | Out-String)
+                                $commandExit = 1
+                            } finally {
+                                $ErrorActionPreference = $previousErrorActionPreference
+                                Pop-Location
+                            }
                             if ($commandExit -ne 0) {
                                 if ($ve -eq 0) { $ve = $commandExit }
                                 $normalizedOutput = ($validationOutput -replace "`e\[[0-9;]*[A-Za-z]", '').Trim()
