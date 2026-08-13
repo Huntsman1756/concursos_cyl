@@ -1,14 +1,14 @@
 {
   "schemaVersion": "1.0.0",
-  "snapshotId": "20260813014001646-8616fc30ab76",
+  "snapshotId": "20260813053424432-677d0b4c2be7",
   "totalOffers": 1044,
-  "matchedOfferCount": 56,
-  "unmatchedOfferCount": 988,
-  "queuedOfferCount": 43,
-  "requirementMentionOfferCount": 26,
-  "descriptionOnlyMentionOfferCount": 7,
+  "matchedOfferCount": 69,
+  "unmatchedOfferCount": 975,
+  "queuedOfferCount": 36,
+  "requirementMentionOfferCount": 21,
+  "descriptionOnlyMentionOfferCount": 5,
   "reviewedQualificationExactOfferCount": 10,
-  "specificCycleEvidenceReviewCount": 19,
+  "specificCycleEvidenceReviewCount": 12,
   "genericFpInsufficientCount": 14,
   "outsideFpCycleScopeCount": 10,
   "entries": [
@@ -18,19 +18,6 @@
       "province": "León",
       "sourceName": "ECYL",
       "originalUrl": "https://empleo.jcyl.es/web/jcyl/Empleo/es/Plantilla100Detalle/1284216458054/OfertasEmpleo/1285665268984/Empleo",
-      "mentionScope": "description_only_fp",
-      "reviewedQualificationLabels": [],
-      "candidateProgramKeys": [],
-      "requirementQuotes": [],
-      "triageDisposition": "specific_cycle_evidence_review",
-      "triageReason": "La oferta contiene una familia, especialidad o titulación FP concreta que requiere validar el ciclo y la frontera ocupacional antes de publicarse."
-    },
-    {
-      "offerId": "1285665418087",
-      "title": "CHAPISTAS-PINTORES DE VEHÍCULOS",
-      "province": "Zamora",
-      "sourceName": "ECYL",
-      "originalUrl": "https://empleo.jcyl.es/web/jcyl/Empleo/es/Plantilla100Detalle/1284216458054/OfertasEmpleo/1285665418087/Empleo",
       "mentionScope": "description_only_fp",
       "reviewedQualificationLabels": [],
       "candidateProgramKeys": [],
@@ -57,19 +44,6 @@
       "province": "León",
       "sourceName": "ECYL",
       "originalUrl": "https://empleo.jcyl.es/web/jcyl/Empleo/es/Plantilla100Detalle/1284216458054/OfertasEmpleo/1285670009206/Empleo",
-      "mentionScope": "description_only_fp",
-      "reviewedQualificationLabels": [],
-      "candidateProgramKeys": [],
-      "requirementQuotes": [],
-      "triageDisposition": "specific_cycle_evidence_review",
-      "triageReason": "La oferta contiene una familia, especialidad o titulación FP concreta que requiere validar el ciclo y la frontera ocupacional antes de publicarse."
-    },
-    {
-      "offerId": "1285664411823",
-      "title": "MECÁNICOS DE MANTENIMIENTO Y REPARACIÓN DE AUTOMOCIÓN, EN GENERAL",
-      "province": "Soria",
-      "sourceName": "ECYL",
-      "originalUrl": "https://empleo.jcyl.es/web/jcyl/Empleo/es/Plantilla100Detalle/1284216458054/OfertasEmpleo/1285664411823/Empleo",
       "mentionScope": "description_only_fp",
       "reviewedQualificationLabels": [],
       "candidateProgramKeys": [],
@@ -184,19 +158,6 @@
       "reviewedQualificationLabels": [],
       "candidateProgramKeys": [],
       "requirementQuotes": ["Formación: FP Grado Medio."],
-      "triageDisposition": "specific_cycle_evidence_review",
-      "triageReason": "La oferta contiene una familia, especialidad o titulación FP concreta que requiere validar el ciclo y la frontera ocupacional antes de publicarse."
-    },
-    {
-      "offerId": "1285650939495",
-      "title": "CHAPISTAS INDUSTRIALES",
-      "province": "Zamora",
-      "sourceName": "ECYL",
-      "originalUrl": "https://empleo.jcyl.es/web/jcyl/Empleo/es/Plantilla100Detalle/1284216458054/OfertasEmpleo/1285650939495/Empleo",
-      "mentionScope": "requirement_generic_fp",
-      "reviewedQualificationLabels": [],
-      "candidateProgramKeys": [],
-      "requirementQuotes": ["FP de Automoción. Permiso de circulación."],
       "triageDisposition": "specific_cycle_evidence_review",
       "triageReason": "La oferta contiene una familia, especialidad o titulación FP concreta que requiere validar el ciclo y la frontera ocupacional antes de publicarse."
     },
@@ -317,21 +278,6 @@
       "triageReason": "La mención a FP es genérica, equivalente o alternativa y no identifica por sí sola un ciclo concreto."
     },
     {
-      "offerId": "1285670315056",
-      "title": "MECÁNICOS DE MANTENIMIENTO Y REPARACIÓN DE AUTOMOCIÓN, EN GENERAL",
-      "province": "León",
-      "sourceName": "ECYL",
-      "originalUrl": "https://empleo.jcyl.es/web/jcyl/Empleo/es/Plantilla100Detalle/1284216458054/OfertasEmpleo/1285670315056/Empleo",
-      "mentionScope": "requirement_generic_fp",
-      "reviewedQualificationLabels": [],
-      "candidateProgramKeys": [],
-      "requirementQuotes": [
-        "Contar con titulación de FP electromecánica o similar, permiso de conducir B y conocimientos a nivel de diagnóstico de vehículos, búsquedas de información, esquemas eléctricos."
-      ],
-      "triageDisposition": "specific_cycle_evidence_review",
-      "triageReason": "La oferta contiene una familia, especialidad o titulación FP concreta que requiere validar el ciclo y la frontera ocupacional antes de publicarse."
-    },
-    {
       "offerId": "1285669061645",
       "title": "Montador/a mecánico/a de vagones para Medina del Campo (Valladolid)",
       "province": "Valladolid",
@@ -362,36 +308,6 @@
       "triageReason": "La mención a FP es genérica, equivalente o alternativa y no identifica por sí sola un ciclo concreto."
     },
     {
-      "offerId": "1285625266787",
-      "title": "Soldador/a TIG para Burgos",
-      "province": "Burgos",
-      "sourceName": "Internet / Prensa",
-      "originalUrl": "https://empleo.jcyl.es/web/jcyl/Empleo/es/Plantilla100Detalle/1284216458054/OfertasEmpleo/1285625266787/Empleo",
-      "mentionScope": "requirement_generic_fp",
-      "reviewedQualificationLabels": [],
-      "candidateProgramKeys": [],
-      "requirementQuotes": [
-        "Formación Profesional Grado Superior o Ciclo formativo de Grado Medio en soldadura o áreas similares."
-      ],
-      "triageDisposition": "specific_cycle_evidence_review",
-      "triageReason": "La oferta contiene una familia, especialidad o titulación FP concreta que requiere validar el ciclo y la frontera ocupacional antes de publicarse."
-    },
-    {
-      "offerId": "1285669061673",
-      "title": "Soldador/a TIG-MAG para Burgos",
-      "province": "Burgos",
-      "sourceName": "Internet / Prensa",
-      "originalUrl": "https://empleo.jcyl.es/web/jcyl/Empleo/es/Plantilla100Detalle/1284216458054/OfertasEmpleo/1285669061673/Empleo",
-      "mentionScope": "requirement_generic_fp",
-      "reviewedQualificationLabels": [],
-      "candidateProgramKeys": [],
-      "requirementQuotes": [
-        "Formación Profesional de Grado Medio en Mecanizado o similar."
-      ],
-      "triageDisposition": "specific_cycle_evidence_review",
-      "triageReason": "La oferta contiene una familia, especialidad o titulación FP concreta que requiere validar el ciclo y la frontera ocupacional antes de publicarse."
-    },
-    {
       "offerId": "1285667274780",
       "title": "Técnico/a de mantenimiento industrial para Venta de Baños (Palencia)",
       "province": "Palencia",
@@ -402,21 +318,6 @@
       "candidateProgramKeys": [],
       "requirementQuotes": [
         "FP Superior en Electromecánica o rama técnica (formación mínima exigible)."
-      ],
-      "triageDisposition": "specific_cycle_evidence_review",
-      "triageReason": "La oferta contiene una familia, especialidad o titulación FP concreta que requiere validar el ciclo y la frontera ocupacional antes de publicarse."
-    },
-    {
-      "offerId": "1285669061701",
-      "title": "Técnico/a de soporte n2 de automatización y robotización de farmacias para Miranda de Ebro (Burgos)",
-      "province": "Burgos",
-      "sourceName": "Internet / Prensa",
-      "originalUrl": "https://empleo.jcyl.es/web/jcyl/Empleo/es/Plantilla100Detalle/1284216458054/OfertasEmpleo/1285669061701/Empleo",
-      "mentionScope": "requirement_generic_fp",
-      "reviewedQualificationLabels": [],
-      "candidateProgramKeys": [],
-      "requirementQuotes": [
-        "Formación académica: FP Superior en Informática, Telecomunicaciones o similar."
       ],
       "triageDisposition": "specific_cycle_evidence_review",
       "triageReason": "La oferta contiene una familia, especialidad o titulación FP concreta que requiere validar el ciclo y la frontera ocupacional antes de publicarse."

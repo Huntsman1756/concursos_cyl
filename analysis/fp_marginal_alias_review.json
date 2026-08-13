@@ -140,6 +140,94 @@
       "reviewedAt": "2026-08-13",
       "disposition": "accepted",
       "reasonCode": "literal_official_classification"
+    },
+    {
+      "alias": "Chapistas-pintores de vehículos",
+      "occupationId": "occupation:cno11:7313",
+      "programKeys": ["FME02M", "TMV01B", "TMV01M"],
+      "marginalOfferIds": [
+        "1285631247493",
+        "1285665418087",
+        "1285666878838",
+        "1285668446305"
+      ],
+      "classificationSourceUrl": "https://empleo.jcyl.es/web/jcyl/Empleo/es/Plantilla100Detalle/1284216458054/OfertasEmpleo/1285665418087/Empleo",
+      "classificationSourceQuote": "CHAPISTAS-PINTORES DE VEHÍCULOS",
+      "programSourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+      "programSourceQuote": "7313 Chapistas y caldereros",
+      "reviewedAt": "2026-08-13",
+      "disposition": "accepted",
+      "reasonCode": "bounded_official_offer_title"
+    },
+    {
+      "alias": "Chapistas industriales",
+      "occupationId": "occupation:cno11:7313",
+      "programKeys": ["FME02M", "TMV01B", "TMV01M"],
+      "marginalOfferIds": ["1285650939495"],
+      "classificationSourceUrl": "https://empleo.jcyl.es/web/jcyl/Empleo/es/Plantilla100Detalle/1284216458054/OfertasEmpleo/1285650939495/Empleo",
+      "classificationSourceQuote": "CHAPISTAS INDUSTRIALES",
+      "programSourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+      "programSourceQuote": "7313 Chapistas y caldereros",
+      "reviewedAt": "2026-08-13",
+      "disposition": "accepted",
+      "reasonCode": "bounded_official_offer_title"
+    },
+    {
+      "alias": "Mecánicos de mantenimiento y reparación de automoción",
+      "occupationId": "occupation:cno11:7401",
+      "programKeys": ["TMV01B", "TMV02M"],
+      "marginalOfferIds": [
+        "1285663193189",
+        "1285663565027",
+        "1285664411823",
+        "1285666878866"
+      ],
+      "classificationSourceUrl": "https://empleo.jcyl.es/web/jcyl/Empleo/es/Plantilla100Detalle/1284216458054/OfertasEmpleo/1285664411823/Empleo",
+      "classificationSourceQuote": "MECÁNICOS DE MANTENIMIENTO Y REPARACIÓN DE AUTOMOCIÓN, EN GENERAL",
+      "programSourceUrl": "https://www.boe.es/eli/es/rd/2010/03/19/453",
+      "programSourceQuote": "Mecánico de automóviles.",
+      "reviewedAt": "2026-08-13",
+      "disposition": "accepted",
+      "reasonCode": "bounded_official_offer_title"
+    },
+    {
+      "alias": "Soldador/a TIG",
+      "occupationId": "occupation:cno11:7312",
+      "programKeys": ["FME02M"],
+      "marginalOfferIds": ["1285625266787", "1285669061673"],
+      "classificationSourceUrl": "https://empleo.jcyl.es/web/jcyl/Empleo/es/Plantilla100Detalle/1284216458054/OfertasEmpleo/1285625266787/Empleo",
+      "classificationSourceQuote": "Soldador/a TIG para Burgos",
+      "programSourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+      "programSourceQuote": "7312 Soldadores y oxicortadores",
+      "reviewedAt": "2026-08-13",
+      "disposition": "accepted",
+      "reasonCode": "bounded_official_offer_title"
+    },
+    {
+      "alias": "Soldador/a TIG-MAG",
+      "occupationId": "occupation:cno11:7312",
+      "programKeys": ["FME02M"],
+      "marginalOfferIds": ["1285669061673"],
+      "classificationSourceUrl": "https://empleo.jcyl.es/web/jcyl/Empleo/es/Plantilla100Detalle/1284216458054/OfertasEmpleo/1285669061673/Empleo",
+      "classificationSourceQuote": "Soldador/a TIG-MAG para Burgos",
+      "programSourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+      "programSourceQuote": "7312 Soldadores y oxicortadores",
+      "reviewedAt": "2026-08-13",
+      "disposition": "accepted",
+      "reasonCode": "bounded_official_offer_title"
+    },
+    {
+      "alias": "Técnico/a de soporte n2",
+      "occupationId": "occupation:cno11:3812",
+      "programKeys": ["IFC01M", "IFC01MD", "IFC01S", "IFC01SD"],
+      "marginalOfferIds": ["1285669061701"],
+      "classificationSourceUrl": "https://empleo.jcyl.es/web/jcyl/Empleo/es/Plantilla100Detalle/1284216458054/OfertasEmpleo/1285669061701/Empleo",
+      "classificationSourceQuote": "Técnico/a de soporte n2 de automatización y robotización de farmacias para Miranda de Ebro (Burgos)",
+      "programSourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/informatica-comunicaciones/sistemas-microniformaticos-redes.html",
+      "programSourceQuote": "Técnica / técnico de soporte informático.",
+      "reviewedAt": "2026-08-13",
+      "disposition": "accepted",
+      "reasonCode": "bounded_official_offer_title"
     }
   ]
 }

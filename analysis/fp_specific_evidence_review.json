@@ -1,0 +1,116 @@
+{
+  "schemaVersion": "1.0.0",
+  "snapshotId": "20260813014001646-8616fc30ab76",
+  "reviewedAt": "2026-08-13",
+  "sourceQueue": "analysis/fp_mention_offer_queue.json",
+  "totalReviewed": 19,
+  "acceptedOfferCount": 7,
+  "deferredOfferCount": 12,
+  "additionalPinnedSnapshotOfferIds": [
+    "1285631247493",
+    "1285663193189",
+    "1285663565027",
+    "1285666878838",
+    "1285666878866",
+    "1285668446305"
+  ],
+  "accepted": [
+    {
+      "offerId": "1285665418087",
+      "occupationId": "occupation:cno11:7313",
+      "alias": "Chapistas-pintores de vehículos",
+      "reasonCode": "exact_official_offer_title_and_approved_cno_boundary"
+    },
+    {
+      "offerId": "1285664411823",
+      "occupationId": "occupation:cno11:7401",
+      "alias": "Mecánicos de mantenimiento y reparación de automoción",
+      "reasonCode": "exact_official_offer_title_and_approved_cno_boundary"
+    },
+    {
+      "offerId": "1285650939495",
+      "occupationId": "occupation:cno11:7313",
+      "alias": "Chapistas industriales",
+      "reasonCode": "exact_official_offer_title_and_approved_cno_boundary"
+    },
+    {
+      "offerId": "1285670315056",
+      "occupationId": "occupation:cno11:7401",
+      "alias": "Mecánicos de mantenimiento y reparación de automoción",
+      "reasonCode": "exact_official_offer_title_and_approved_cno_boundary"
+    },
+    {
+      "offerId": "1285625266787",
+      "occupationId": "occupation:cno11:7312",
+      "alias": "Soldador/a TIG",
+      "reasonCode": "exact_official_offer_title_and_approved_cno_boundary"
+    },
+    {
+      "offerId": "1285669061673",
+      "occupationId": "occupation:cno11:7312",
+      "alias": "Soldador/a TIG-MAG",
+      "reasonCode": "exact_official_offer_title_and_approved_cno_boundary"
+    },
+    {
+      "offerId": "1285669061701",
+      "occupationId": "occupation:cno11:3812",
+      "alias": "Técnico/a de soporte n2",
+      "reasonCode": "exact_official_offer_title_and_approved_cno_boundary"
+    }
+  ],
+  "deferred": [
+    {
+      "offerId": "1285665268984",
+      "reasonCode": "alternative_fp_programs_in_description"
+    },
+    {
+      "offerId": "1285670009206",
+      "reasonCode": "administrative_cno_4309_4500_unresolved"
+    },
+    {
+      "offerId": "1285669061505",
+      "reasonCode": "multiple_technical_families_or_similar"
+    },
+    {
+      "offerId": "1285669061395",
+      "reasonCode": "optional_multiple_technical_families_or_similar"
+    },
+    {
+      "offerId": "1285669061283",
+      "reasonCode": "administrative_cno_4309_4500_unresolved"
+    },
+    {
+      "offerId": "1285669062388",
+      "reasonCode": "compound_chapista_soldador_boundary"
+    },
+    {
+      "offerId": "1285631873078",
+      "reasonCode": "administrative_cno_4309_4500_unresolved"
+    },
+    {
+      "offerId": "1285650938999",
+      "reasonCode": "supervisor_cno_boundary_rejected"
+    },
+    {
+      "offerId": "1285669061645",
+      "reasonCode": "fp_not_mandatory_and_multiple_specialties"
+    },
+    {
+      "offerId": "1285667274780",
+      "reasonCode": "generic_electromechanical_or_technical_branch"
+    },
+    {
+      "offerId": "1285667844992",
+      "reasonCode": "generic_maintenance_title_requires_functional_cno_review"
+    },
+    {
+      "offerId": "1285667665377",
+      "reasonCode": "generic_maintenance_title_requires_functional_cno_review"
+    }
+  ],
+  "evidence": {
+    "offerSource": "https://empleo.jcyl.es/",
+    "occupationBoundarySource": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+    "policy": "Only bounded multiword phrases from official offer titles are published, and only when the target occupation and at least one training relationship are already approved. Ambiguous alternatives remain deferred."
+  }
+}

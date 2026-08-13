@@ -1983,6 +1983,16 @@ const FP_COVERAGE_EXPANSION_DIRECTORY = [
   "analysis",
   "fp_coverage_expansion",
 ] as const;
+const FP_MARGINAL_ALIAS_REVIEW_PATH = [
+  "analysis",
+  "fp_marginal_alias_review.json",
+] as const;
+
+const MarginalAliasSnapshotReferenceSchema = z
+  .object({
+    snapshotId: z.string().regex(IMMUTABLE_SNAPSHOT_ID_PATTERN),
+  })
+  .passthrough();
 
 const ExpansionSnapshotReferenceSchema = z.discriminatedUnion("state", [
   z
@@ -2033,6 +2043,18 @@ async function completedPilotSnapshotIds(root: string): Promise<Set<string>> {
         : [],
     ),
   );
+}
+
+async function marginalAliasReviewSnapshotIds(
+  root: string,
+): Promise<Set<string>> {
+  const path = resolve(root, ...FP_MARGINAL_ALIAS_REVIEW_PATH);
+  if (!(await pathExists(path))) return new Set();
+
+  const review = MarginalAliasSnapshotReferenceSchema.parse(
+    JSON.parse(await readFile(path, "utf8")),
+  );
+  return new Set([review.snapshotId]);
 }
 
 async function terminalExpansionSnapshotIds(
@@ -2088,6 +2110,7 @@ async function completedPilotSnapshotDistributionOptions(
   const historicalSnapshotIds = new Set([
     ...(await completedPilotSnapshotIds(root)),
     ...(await terminalExpansionSnapshotIds(root)),
+    ...(await marginalAliasReviewSnapshotIds(root)),
     ...HISTORICAL_PINNED_SNAPSHOT_IDS,
     ...retainedSnapshotIds,
   ]);
@@ -2155,6 +2178,7 @@ async function enforceSnapshotRetention(
     currentSnapshotId,
     ...(await completedPilotSnapshotIds(root)),
     ...(await terminalExpansionSnapshotIds(root)),
+    ...(await marginalAliasReviewSnapshotIds(root)),
     ...HISTORICAL_PINNED_SNAPSHOT_IDS,
     ...immutableSnapshotNames
       .filter(

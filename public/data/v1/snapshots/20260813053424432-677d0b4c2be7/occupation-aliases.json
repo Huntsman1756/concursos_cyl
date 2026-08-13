@@ -238,6 +238,20 @@
     "reviewedAt": "2026-08-13"
   },
   {
+    "alias": "Chapistas industriales",
+    "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:7313",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-13"
+  },
+  {
+    "alias": "Chapistas-pintores de vehículos",
+    "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:7313",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-13"
+  },
+  {
     "alias": "Clasificador repartidor de correspondencia",
     "mappingVersion": "1.0.0",
     "occupationId": "occupation:cno11:4221",
@@ -442,6 +456,13 @@
     "reviewedAt": "2026-08-12"
   },
   {
+    "alias": "Mecánicos de mantenimiento y reparación de automoción",
+    "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:7401",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-13"
+  },
+  {
     "alias": "Monitor de tiempo libre",
     "mappingVersion": "1.0.0",
     "occupationId": "occupation:cno11:3724",
@@ -519,6 +540,13 @@
     "reviewedAt": "2026-08-12"
   },
   {
+    "alias": "Peluqueros unisex",
+    "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:5811",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-13"
+  },
+  {
     "alias": "Perito tasador de vehículos",
     "mappingVersion": "1.0.0",
     "occupationId": "occupation:cno11:3405",
@@ -587,6 +615,27 @@
     "occupationId": "occupation:cno11:5992",
     "reviewStatus": "approved",
     "reviewedAt": "2026-08-12"
+  },
+  {
+    "alias": "Soldador/a TIG-MAG",
+    "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:7312",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-13"
+  },
+  {
+    "alias": "Soldador/a TIG",
+    "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:7312",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-13"
+  },
+  {
+    "alias": "Técnico/a de soporte n2",
+    "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:3812",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-13"
   },
   {
     "alias": "Técnico de integración social",
@@ -734,5 +783,13 @@
     "occupationId": "occupation:cno11:4423",
     "reviewStatus": "approved",
     "reviewedAt": "2026-08-12"
+  },
+  {
+    "alias": "teleoperadores",
+    "mappingVersion": "1.0.0",
+    "matchPolicy": "approved_single_token",
+    "occupationId": "occupation:cno11:4424",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-13"
   }
 ]

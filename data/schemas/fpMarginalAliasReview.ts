@@ -20,6 +20,7 @@ export const FpMarginalAliasReviewRowSchema = z.discriminatedUnion(
       reasonCode: z.enum([
         "literal_official_classification",
         "literal_boe_program_output",
+        "bounded_official_offer_title",
       ]),
     }).strict(),
     ReviewBaseSchema.extend({
