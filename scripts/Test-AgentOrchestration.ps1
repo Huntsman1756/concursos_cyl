@@ -206,8 +206,8 @@ try {
         Assert-Equal $budgetProfileTelemetry.launch.budgetProfile 'batch' '2e: telemetry records batch profile'
         Assert-Equal $budgetProfileTelemetry.launch.budgetSource 'profile' '2f: telemetry records profile source'
         Assert-Equal $budgetProfileTelemetry.launch.maxObservedTokens 500000 '2g: batch profile resolves to 500000 tokens'
-        Assert-Equal $budgetProfileTelemetry.admission.profile 'observed-serial' '2g1: dry run records observed serial admission'
-        Assert-Equal $budgetProfileTelemetry.admission.capacity 1 '2g2: dry run records one active NAN slot'
+        Assert-Equal $budgetProfileTelemetry.admission.profile 'provider-limit' '2g1: dry run records provider-limit admission'
+        Assert-Equal $budgetProfileTelemetry.admission.capacity 5 '2g2: dry run records five active NAN slots'
         Assert-Equal $budgetProfileTelemetry.admission.timeoutSeconds 7200 '2g3: dry run records admission timeout'
 
         foreach ($profileCase in @(
@@ -804,8 +804,8 @@ try {
             Assert-True ($yamlText -match 'frontierContract') '18aa: YAML telemetry has frontierContract topLevelField'
             Assert-True (([regex]::Matches($yamlText, '(?m)^\s+fallbackModels:')).Count -eq 1) '18ab: YAML has one fallbackModels key'
             Assert-True ($yamlText -match 'maxExecutionSeconds:\s*900') '18ac: YAML declares execution timeout'
-            Assert-True ($yamlText -match 'profile:\s*observed-serial') '18ac1: YAML enables evidence-based serialized admission'
-            Assert-True ($yamlText -match 'capacity:\s*1') '18ac2: YAML admits one active NAN worker'
+            Assert-True ($yamlText -match 'profile:\s*provider-limit') '18ac1: YAML enables official provider-limit admission'
+            Assert-True ($yamlText -match 'capacity:\s*5') '18ac2: YAML admits five active NAN workers'
             Assert-True ($yamlText -match 'queueTimeConsumesExecutionTimeout:\s*false') '18ac3: YAML excludes queue wait from execution timeout'
             Assert-True ($yamlText -match 'duplicateWindowSeconds:\s*3600') '18ad: YAML declares duplicate window'
             Assert-True ($yamlText -match 'frontierSupervisor:\s*\r?\n\s+enabled:\s*true') '18ad1: YAML enables frontier supervisor'
@@ -820,11 +820,16 @@ try {
             Assert-True ($yamlText -match 'publicationThroughRuntimeV4:\s*false') '18ad10: YAML does not claim broker-owned publication'
             Assert-True ($yamlText -match 'protectedHostSigner:\s*false') '18ad11: YAML records the missing protected signer'
             Assert-True ($yamlText -match 'syntheticShakedownPassed:\s*false') '18ad12: YAML records the pending signed shakedown'
+            Assert-True ($yamlText -match 'providerAttributionShakedownPassed:\s*true') '18ad12a: YAML records provider attribution shakedown'
+            Assert-True ($yamlText -match 'maxConcurrentProviderResponsesVerified:\s*5') '18ad12b: YAML records five verified concurrent responses'
             Assert-True ($yamlText -notmatch 'BEGIN (?:EC |OPENSSH |RSA |DSA )?PRIVATE KEY') '18ad13: YAML contains no private signing key'
 
             $workerText = Get-Content -LiteralPath $workerPath -Raw
             Assert-True ($workerText -notmatch "'--auto'") '18ae: worker does not pass --auto'
             Assert-True ($workerText -match 'Invoke-OpenCodeBudgeted') '18af: worker uses streaming budget launcher'
+            Assert-True ($workerText -match 'blocked-unverified-provider') '18af1: worker fails closed without provider response evidence'
+            Assert-True ($workerText -match 'XDG_DATA_HOME') '18af2: worker isolates OpenCode state per execution'
+            Assert-True (Test-Path -LiteralPath (Join-Path $repoRoot 'scripts\orchestration\nan-audit-proxy.mjs')) '18af3: provider response audit proxy exists'
             Assert-True (-not (Test-Path -LiteralPath (Join-Path $repoRoot '.opencode\commands\implementar.md'))) '18ag: direct code command is absent'
             Assert-True (-not (Test-Path -LiteralPath (Join-Path $repoRoot '.opencode\commands\boletin.md'))) '18ah: direct bulletin command is absent'
 
@@ -873,6 +878,7 @@ try {
             if (Test-Path -LiteralPath $explicitTelemetry -PathType Leaf) {
                 $telemetry = Get-Content -LiteralPath $explicitTelemetry -Raw | ConvertFrom-Json
                 Assert-True ($telemetry.status -eq 'awaiting-frontier-review') '19c: explicit telemetry is the terminal worker evidence'
+                Assert-True ($telemetry.providerEvidence.evidenceClass -eq 'simulated') '19d: test telemetry never claims provider evidence'
             }
         } finally {
             Remove-Item -LiteralPath $explicitTelemetry -Force -ErrorAction SilentlyContinue

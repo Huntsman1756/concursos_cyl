@@ -18,6 +18,8 @@ delegationProvenance:
     protectedHostSigner: false
     protectedEvidenceStore: false
     syntheticShakedownPassed: false
+    providerAttributionShakedownPassed: true
+    maxConcurrentProviderResponsesVerified: 5
     restartRecoveryPassed: false
     ciVerificationConfigured: false
   trustBoundary:
@@ -64,11 +66,15 @@ bindings:
       max: 1000000
     maxExecutionSeconds: 900
     admission:
-      profile: observed-serial
-      capacity: 1
+      profile: provider-limit
+      capacity: 5
       timeoutSeconds: 7200
       queueTimeConsumesExecutionTimeout: false
       scope: nan-provider-host-session
+    isolation:
+      xdgStatePerWorker: true
+      credentialCopy: nan-only-temporary
+      cleanupAfterAttempt: true
     duplicateWindowSeconds: 3600
     fallbackModels: []
   bulletinReader:
@@ -122,6 +128,9 @@ controls:
   allowWorkerPublication: false
   credentialsInRepository: false
   enforceTelemetryRecording: true
+  requireProviderResponseEvidence: true
+  rejectClientOnlyUsageAsProviderEvidence: true
+  restrictBulletinReadsToStagedInputs: true
   autoEscalationToSol: false
 telemetry:
   directory: .agent-runs
@@ -139,6 +148,7 @@ telemetry:
     - success
     - status
     - frontierContract
+    - providerEvidence
     - draftOutput
     - admission
   attemptFields:

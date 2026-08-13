@@ -4,8 +4,9 @@ Date: 2026-08-13
 
 ## Result
 
-The revised worker completed a real, read-only NAN contract after acquiring the
-new serialized provider admission slot.
+The revised worker completed a read-only OpenCode contract configured for NAN
+after acquiring the serialized admission slot. This historical shakedown did
+not retain provider response IDs and cannot certify NAN consumption.
 
 | Field                 | Observed value                   |
 | --------------------- | -------------------------------- |
@@ -38,8 +39,7 @@ needed to qualify routing, real token usage, and admission behavior.
 
 ## Scope of the evidence
 
-This proves one real NAN request can pass through the new serialized admission
-path and produce non-zero usage telemetry. It does not prove that provider-level
-parallelism is reliable. The retained 2/4/8-session zero-token results remain
-the authority for keeping capacity at one until a later controlled shakedown
-demonstrates otherwise.
+This proves only that one OpenCode session produced non-zero client telemetry.
+It does not prove provider attribution or a NAN concurrency limit. The retained
+2/4/8-session zero-token results all shared mutable OpenCode state, so they are
+not authority for reducing the provider's published concurrency of five.

@@ -1,8 +1,11 @@
 # NAN execution summary — adaptive batch 3
 
-All eight contracts were real (`simulated: false`), used
-`nan/deepseek-v4-flash`, acquired the `observed-serial` admission slot and
-finished as `awaiting-frontier-review`. Total observed usage was 240,323 tokens.
+All eight contracts were marked `simulated: false` by OpenCode, selected
+`nan/deepseek-v4-flash`, acquired the historical `observed-serial` admission
+slot and finished locally as `awaiting-frontier-review`. OpenCode reported
+240,323 tokens. These records predate provider-response attribution: they do
+not contain NAN response IDs and therefore must not be described as confirmed
+NAN consumption.
 
 | Program  | Session                          | Tokens | Queue wait (ms) | Raw telemetry SHA-256                                              |
 | -------- | -------------------------------- | -----: | --------------: | ------------------------------------------------------------------ |
@@ -21,7 +24,7 @@ to the local terminal evidence without publishing model output as authority.
 
 ## Mechanical incorporation
 
-Qwen 3.6 generated the bounded two-file incorporation candidate in session
+OpenCode attributes the bounded two-file incorporation candidate to Qwen 3.6 in session
 `ses_00356e76bffejuew7hydFLM3Z0`. The broker observed 534,263 tokens and
 correctly blocked the attempt because it exceeded the 500,000-token `batch`
 budget. The candidate respected both allowed paths, but Frontier found invented
@@ -29,4 +32,4 @@ TodoFP URLs, paraphrased quotes and incorrect fixture titles. Frontier corrected
 all 13 entries against `professional-profiles.json`, independently confirmed
 that every occupation is `approved`, and ran the focused mapping test. The
 blocked worker result is therefore evidence of mechanical delegation, not
-acceptance authority.
+acceptance authority or provider billing evidence.
