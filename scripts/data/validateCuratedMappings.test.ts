@@ -350,6 +350,13 @@ const programs: TrainingProgram[] = [
     familyName: "Fabricación Mecánica",
   },
   {
+    programKey: "FME01B",
+    programTitle: "Fabricación y Montaje",
+    level: "basic",
+    familyCode: "FME",
+    familyName: "Fabricación Mecánica",
+  },
+  {
     programKey: "MAM01M",
     programTitle: "Carpintería y Mueble",
     level: "intermediate",
@@ -928,6 +935,8 @@ describe("curated occupation mappings", () => {
         "4412",
         "5300",
         "5992",
+        "7221",
+        "9700",
       ],
     );
     expect(
@@ -989,6 +998,7 @@ describe("curated occupation mappings", () => {
       IMA03M: 1,
       COM04S: 3,
       COM04SD: 3,
+      FME01B: 2,
     });
 
     const coverage = buildMappingCoverage(programs, curated.links);
