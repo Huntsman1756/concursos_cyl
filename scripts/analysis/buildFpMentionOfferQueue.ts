@@ -30,6 +30,12 @@ const MentionScopeSchema = z.enum([
   "description_only_fp",
 ]);
 
+const TriageDispositionSchema = z.enum([
+  "specific_cycle_evidence_review",
+  "generic_fp_insufficient",
+  "outside_fp_cycle_scope",
+]);
+
 export const FpMentionOfferQueueEntrySchema = z
   .object({
     offerId: z.string().min(1),
@@ -41,6 +47,8 @@ export const FpMentionOfferQueueEntrySchema = z
     reviewedQualificationLabels: z.array(z.string().min(1)),
     candidateProgramKeys: z.array(z.string().min(1)),
     requirementQuotes: z.array(z.string().min(1)),
+    triageDisposition: TriageDispositionSchema,
+    triageReason: z.string().min(20),
   })
   .strict();
 
@@ -55,6 +63,9 @@ export const FpMentionOfferQueueReportSchema = z
     requirementMentionOfferCount: z.number().int().nonnegative(),
     descriptionOnlyMentionOfferCount: z.number().int().nonnegative(),
     reviewedQualificationExactOfferCount: z.number().int().nonnegative(),
+    specificCycleEvidenceReviewCount: z.number().int().nonnegative(),
+    genericFpInsufficientCount: z.number().int().nonnegative(),
+    outsideFpCycleScopeCount: z.number().int().nonnegative(),
     entries: z.array(FpMentionOfferQueueEntrySchema),
     limitations: z.array(z.string().min(5)),
   })
@@ -76,6 +87,8 @@ function normalizedText(value: string): string {
 
 const FP_MENTION_PATTERN =
   /\b(?:formacion profesional|f p|fp(?:\s*(?:i{1,2}|1|2))?)\b/iu;
+const SPECIFIC_FP_EVIDENCE_PATTERN =
+  /\b(?:administracion y finanzas|atencion a personas en situacion de dependencia|automocion|chapa|cuidados auxiliares de enfermeria|electromecanica|gestion administrativa|informatica|mantenimiento de vehiculos|mecanizado|mecatronica|proyectos de obra civil|robotica|soldadura|telecomunicaciones)\b/iu;
 
 export function mentionsFp(value: string): boolean {
   return FP_MENTION_PATTERN.test(normalizedText(value));
@@ -214,6 +227,21 @@ export async function buildFpMentionOfferQueue(
           : requirementQuotes.length > 0
             ? "requirement_generic_fp"
             : "description_only_fp";
+      const evidenceText = normalizedText(
+        [offer.descriptionText, ...requirementQuotes].join(" "),
+      );
+      const triageDisposition =
+        mentionScope === "reviewed_qualification_exact"
+          ? "outside_fp_cycle_scope"
+          : SPECIFIC_FP_EVIDENCE_PATTERN.test(evidenceText)
+            ? "specific_cycle_evidence_review"
+            : "generic_fp_insufficient";
+      const triageReason =
+        triageDisposition === "specific_cycle_evidence_review"
+          ? "La oferta contiene una familia, especialidad o titulación FP concreta que requiere validar el ciclo y la frontera ocupacional antes de publicarse."
+          : triageDisposition === "outside_fp_cycle_scope"
+            ? "La titulación exacta revisada no tiene un enlace aprobado con ningún ciclo FP del catálogo actual."
+            : "La mención a FP es genérica, equivalente o alternativa y no identifica por sí sola un ciclo concreto.";
 
       return [
         {
@@ -226,6 +254,8 @@ export async function buildFpMentionOfferQueue(
           reviewedQualificationLabels: [...reviewedLabels].toSorted(),
           candidateProgramKeys: [...candidateProgramKeys].toSorted(),
           requirementQuotes: [...new Set(requirementQuotes)].toSorted(),
+          triageDisposition,
+          triageReason,
         },
       ];
     })
@@ -252,6 +282,15 @@ export async function buildFpMentionOfferQueue(
     reviewedQualificationExactOfferCount: entries.filter(
       (entry) => entry.mentionScope === "reviewed_qualification_exact",
     ).length,
+    specificCycleEvidenceReviewCount: entries.filter(
+      (entry) => entry.triageDisposition === "specific_cycle_evidence_review",
+    ).length,
+    genericFpInsufficientCount: entries.filter(
+      (entry) => entry.triageDisposition === "generic_fp_insufficient",
+    ).length,
+    outsideFpCycleScopeCount: entries.filter(
+      (entry) => entry.triageDisposition === "outside_fp_cycle_scope",
+    ).length,
     entries,
     limitations: [
       "La cola solo prioriza ofertas no enlazadas de la instantánea publicada.",
@@ -277,13 +316,16 @@ function renderMarkdown(report: FpMentionOfferQueueReport): string {
     `- Mención en requisitos: ${report.requirementMentionOfferCount}`,
     `- Solo mención en descripción: ${report.descriptionOnlyMentionOfferCount}`,
     `- Titulación revisada exacta: ${report.reviewedQualificationExactOfferCount}`,
+    `- Evidencia específica pendiente de validar: ${report.specificCycleEvidenceReviewCount}`,
+    `- Mención genérica insuficiente: ${report.genericFpInsufficientCount}`,
+    `- Fuera del alcance de ciclos FP: ${report.outsideFpCycleScopeCount}`,
     "",
-    "| Prioridad | Oferta | Provincia | Titulación revisada | Ciclos candidatos |",
-    "| --- | --- | --- | --- | --- |",
+    "| Prioridad | Triaje | Oferta | Provincia | Titulación revisada | Ciclos candidatos |",
+    "| --- | --- | --- | --- | --- | --- |",
   ];
   for (const entry of report.entries) {
     lines.push(
-      `| ${entry.mentionScope} | [${entry.title}](${entry.originalUrl}) (\`${entry.offerId}\`) | ${entry.province ?? "—"} | ${entry.reviewedQualificationLabels.join(", ") || "—"} | ${entry.candidateProgramKeys.join(", ") || "—"} |`,
+      `| ${entry.mentionScope} | ${entry.triageDisposition} | [${entry.title}](${entry.originalUrl}) (\`${entry.offerId}\`) | ${entry.province ?? "—"} | ${entry.reviewedQualificationLabels.join(", ") || "—"} | ${entry.candidateProgramKeys.join(", ") || "—"} |`,
     );
   }
   lines.push("", "## Limitaciones", "");

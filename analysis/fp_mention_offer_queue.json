@@ -1,13 +1,16 @@
 {
   "schemaVersion": "1.0.0",
-  "snapshotId": "20260813003333450-c67e16c08825",
+  "snapshotId": "20260813014001646-8616fc30ab76",
   "totalOffers": 1044,
-  "matchedOfferCount": 48,
-  "unmatchedOfferCount": 996,
-  "queuedOfferCount": 44,
-  "requirementMentionOfferCount": 27,
+  "matchedOfferCount": 56,
+  "unmatchedOfferCount": 988,
+  "queuedOfferCount": 43,
+  "requirementMentionOfferCount": 26,
   "descriptionOnlyMentionOfferCount": 7,
   "reviewedQualificationExactOfferCount": 10,
+  "specificCycleEvidenceReviewCount": 19,
+  "genericFpInsufficientCount": 14,
+  "outsideFpCycleScopeCount": 10,
   "entries": [
     {
       "offerId": "1285665268984",
@@ -18,7 +21,9 @@
       "mentionScope": "description_only_fp",
       "reviewedQualificationLabels": [],
       "candidateProgramKeys": [],
-      "requirementQuotes": []
+      "requirementQuotes": [],
+      "triageDisposition": "specific_cycle_evidence_review",
+      "triageReason": "La oferta contiene una familia, especialidad o titulación FP concreta que requiere validar el ciclo y la frontera ocupacional antes de publicarse."
     },
     {
       "offerId": "1285665418087",
@@ -29,7 +34,9 @@
       "mentionScope": "description_only_fp",
       "reviewedQualificationLabels": [],
       "candidateProgramKeys": [],
-      "requirementQuotes": []
+      "requirementQuotes": [],
+      "triageDisposition": "specific_cycle_evidence_review",
+      "triageReason": "La oferta contiene una familia, especialidad o titulación FP concreta que requiere validar el ciclo y la frontera ocupacional antes de publicarse."
     },
     {
       "offerId": "1285669925123",
@@ -40,7 +47,9 @@
       "mentionScope": "description_only_fp",
       "reviewedQualificationLabels": [],
       "candidateProgramKeys": [],
-      "requirementQuotes": []
+      "requirementQuotes": [],
+      "triageDisposition": "generic_fp_insufficient",
+      "triageReason": "La mención a FP es genérica, equivalente o alternativa y no identifica por sí sola un ciclo concreto."
     },
     {
       "offerId": "1285670009206",
@@ -51,7 +60,9 @@
       "mentionScope": "description_only_fp",
       "reviewedQualificationLabels": [],
       "candidateProgramKeys": [],
-      "requirementQuotes": []
+      "requirementQuotes": [],
+      "triageDisposition": "specific_cycle_evidence_review",
+      "triageReason": "La oferta contiene una familia, especialidad o titulación FP concreta que requiere validar el ciclo y la frontera ocupacional antes de publicarse."
     },
     {
       "offerId": "1285664411823",
@@ -62,7 +73,9 @@
       "mentionScope": "description_only_fp",
       "reviewedQualificationLabels": [],
       "candidateProgramKeys": [],
-      "requirementQuotes": []
+      "requirementQuotes": [],
+      "triageDisposition": "specific_cycle_evidence_review",
+      "triageReason": "La oferta contiene una familia, especialidad o titulación FP concreta que requiere validar el ciclo y la frontera ocupacional antes de publicarse."
     },
     {
       "offerId": "1285667333256",
@@ -73,7 +86,9 @@
       "mentionScope": "description_only_fp",
       "reviewedQualificationLabels": [],
       "candidateProgramKeys": [],
-      "requirementQuotes": []
+      "requirementQuotes": [],
+      "triageDisposition": "generic_fp_insufficient",
+      "triageReason": "La mención a FP es genérica, equivalente o alternativa y no identifica por sí sola un ciclo concreto."
     },
     {
       "offerId": "1285670398073",
@@ -84,7 +99,9 @@
       "mentionScope": "description_only_fp",
       "reviewedQualificationLabels": [],
       "candidateProgramKeys": [],
-      "requirementQuotes": []
+      "requirementQuotes": [],
+      "triageDisposition": "generic_fp_insufficient",
+      "triageReason": "La mención a FP es genérica, equivalente o alternativa y no identifica por sí sola un ciclo concreto."
     },
     {
       "offerId": "1285669061505",
@@ -97,7 +114,9 @@
       "candidateProgramKeys": [],
       "requirementQuotes": [
         "Formación Profesional Grado Superior (FP Superior/FP II) en Electricidad, Mecánica, Robótica, Mecatrónica o similar."
-      ]
+      ],
+      "triageDisposition": "specific_cycle_evidence_review",
+      "triageReason": "La oferta contiene una familia, especialidad o titulación FP concreta que requiere validar el ciclo y la frontera ocupacional antes de publicarse."
     },
     {
       "offerId": "1285666473419",
@@ -108,7 +127,9 @@
       "mentionScope": "requirement_generic_fp",
       "reviewedQualificationLabels": [],
       "candidateProgramKeys": [],
-      "requirementQuotes": ["Graduado en ESO, FP básica o equivalente"]
+      "requirementQuotes": ["Graduado en ESO, FP básica o equivalente"],
+      "triageDisposition": "generic_fp_insufficient",
+      "triageReason": "La mención a FP es genérica, equivalente o alternativa y no identifica por sí sola un ciclo concreto."
     },
     {
       "offerId": "1285669061395",
@@ -121,7 +142,9 @@
       "candidateProgramKeys": [],
       "requirementQuotes": [
         "Se valorará Formación Profesional en Mantenimiento industrial (mecánica, electricidad, automatización, mecatrónica, etc.) o similar."
-      ]
+      ],
+      "triageDisposition": "specific_cycle_evidence_review",
+      "triageReason": "La oferta contiene una familia, especialidad o titulación FP concreta que requiere validar el ciclo y la frontera ocupacional antes de publicarse."
     },
     {
       "offerId": "1285669061283",
@@ -132,7 +155,9 @@
       "mentionScope": "requirement_generic_fp",
       "reviewedQualificationLabels": [],
       "candidateProgramKeys": [],
-      "requirementQuotes": ["Formación: FP Grado Medio."]
+      "requirementQuotes": ["Formación: FP Grado Medio."],
+      "triageDisposition": "specific_cycle_evidence_review",
+      "triageReason": "La oferta contiene una familia, especialidad o titulación FP concreta que requiere validar el ciclo y la frontera ocupacional antes de publicarse."
     },
     {
       "offerId": "1285669341562",
@@ -145,7 +170,9 @@
       "candidateProgramKeys": [],
       "requirementQuotes": [
         "Graduado Escolar, Graduado ESO, Formación Profesional de Grado medio o equivalente"
-      ]
+      ],
+      "triageDisposition": "generic_fp_insufficient",
+      "triageReason": "La mención a FP es genérica, equivalente o alternativa y no identifica por sí sola un ciclo concreto."
     },
     {
       "offerId": "1285669062388",
@@ -156,7 +183,9 @@
       "mentionScope": "requirement_generic_fp",
       "reviewedQualificationLabels": [],
       "candidateProgramKeys": [],
-      "requirementQuotes": ["Formación: FP Grado Medio."]
+      "requirementQuotes": ["Formación: FP Grado Medio."],
+      "triageDisposition": "specific_cycle_evidence_review",
+      "triageReason": "La oferta contiene una familia, especialidad o titulación FP concreta que requiere validar el ciclo y la frontera ocupacional antes de publicarse."
     },
     {
       "offerId": "1285650939495",
@@ -167,7 +196,9 @@
       "mentionScope": "requirement_generic_fp",
       "reviewedQualificationLabels": [],
       "candidateProgramKeys": [],
-      "requirementQuotes": ["FP de Automoción. Permiso de circulación."]
+      "requirementQuotes": ["FP de Automoción. Permiso de circulación."],
+      "triageDisposition": "specific_cycle_evidence_review",
+      "triageReason": "La oferta contiene una familia, especialidad o titulación FP concreta que requiere validar el ciclo y la frontera ocupacional antes de publicarse."
     },
     {
       "offerId": "1285639171849",
@@ -180,7 +211,9 @@
       "candidateProgramKeys": [],
       "requirementQuotes": [
         "Formación Profesional ó Certificado de Profesionalidad relacionado con la ocupación. Permiso de circulación."
-      ]
+      ],
+      "triageDisposition": "generic_fp_insufficient",
+      "triageReason": "La mención a FP es genérica, equivalente o alternativa y no identifica por sí sola un ciclo concreto."
     },
     {
       "offerId": "1285666004744",
@@ -193,7 +226,9 @@
       "candidateProgramKeys": [],
       "requirementQuotes": [
         "Formación en atención Sociosanitaria o FP de Auxiliar de Enfermería."
-      ]
+      ],
+      "triageDisposition": "generic_fp_insufficient",
+      "triageReason": "La mención a FP es genérica, equivalente o alternativa y no identifica por sí sola un ciclo concreto."
     },
     {
       "offerId": "1285669061367",
@@ -206,7 +241,9 @@
       "candidateProgramKeys": [],
       "requirementQuotes": [
         "Estudios mínimos: Formación Profesional Grado Medio."
-      ]
+      ],
+      "triageDisposition": "generic_fp_insufficient",
+      "triageReason": "La mención a FP es genérica, equivalente o alternativa y no identifica por sí sola un ciclo concreto."
     },
     {
       "offerId": "1285667169339",
@@ -219,7 +256,9 @@
       "candidateProgramKeys": [],
       "requirementQuotes": [
         "Formación Profesional en el área y experiencia de 12 meses."
-      ]
+      ],
+      "triageDisposition": "generic_fp_insufficient",
+      "triageReason": "La mención a FP es genérica, equivalente o alternativa y no identifica por sí sola un ciclo concreto."
     },
     {
       "offerId": "1285631873078",
@@ -232,7 +271,9 @@
       "candidateProgramKeys": [],
       "requirementQuotes": [
         "FP Administración y Finanzas o Graduados en ADE, Economía o similares."
-      ]
+      ],
+      "triageDisposition": "specific_cycle_evidence_review",
+      "triageReason": "La oferta contiene una familia, especialidad o titulación FP concreta que requiere validar el ciclo y la frontera ocupacional antes de publicarse."
     },
     {
       "offerId": "1285650938999",
@@ -245,7 +286,9 @@
       "candidateProgramKeys": [],
       "requirementQuotes": [
         "Título de formación profesional de Grado Superior Proyectos de Obra Civil. Permiso de conducir clase B."
-      ]
+      ],
+      "triageDisposition": "specific_cycle_evidence_review",
+      "triageReason": "La oferta contiene una familia, especialidad o titulación FP concreta que requiere validar el ciclo y la frontera ocupacional antes de publicarse."
     },
     {
       "offerId": "1285669974728",
@@ -256,7 +299,9 @@
       "mentionScope": "requirement_generic_fp",
       "reviewedQualificationLabels": [],
       "candidateProgramKeys": [],
-      "requirementQuotes": ["ESO, GE, FP 1 Grado o equivalente"]
+      "requirementQuotes": ["ESO, GE, FP 1 Grado o equivalente"],
+      "triageDisposition": "generic_fp_insufficient",
+      "triageReason": "La mención a FP es genérica, equivalente o alternativa y no identifica por sí sola un ciclo concreto."
     },
     {
       "offerId": "1285670033786",
@@ -267,7 +312,9 @@
       "mentionScope": "requirement_generic_fp",
       "reviewedQualificationLabels": [],
       "candidateProgramKeys": [],
-      "requirementQuotes": ["ESO, GE, FP 1 Grado o equivalente"]
+      "requirementQuotes": ["ESO, GE, FP 1 Grado o equivalente"],
+      "triageDisposition": "generic_fp_insufficient",
+      "triageReason": "La mención a FP es genérica, equivalente o alternativa y no identifica por sí sola un ciclo concreto."
     },
     {
       "offerId": "1285670315056",
@@ -280,7 +327,9 @@
       "candidateProgramKeys": [],
       "requirementQuotes": [
         "Contar con titulación de FP electromecánica o similar, permiso de conducir B y conocimientos a nivel de diagnóstico de vehículos, búsquedas de información, esquemas eléctricos."
-      ]
+      ],
+      "triageDisposition": "specific_cycle_evidence_review",
+      "triageReason": "La oferta contiene una familia, especialidad o titulación FP concreta que requiere validar el ciclo y la frontera ocupacional antes de publicarse."
     },
     {
       "offerId": "1285669061645",
@@ -293,7 +342,9 @@
       "candidateProgramKeys": [],
       "requirementQuotes": [
         "Nivel de estudios requerido: FP o cualquier otro nivel de estudios, siempre que la persona tenga habilidad demostrable en montaje y desmontaje."
-      ]
+      ],
+      "triageDisposition": "specific_cycle_evidence_review",
+      "triageReason": "La oferta contiene una familia, especialidad o titulación FP concreta que requiere validar el ciclo y la frontera ocupacional antes de publicarse."
     },
     {
       "offerId": "1285667535089",
@@ -306,18 +357,9 @@
       "candidateProgramKeys": [],
       "requirementQuotes": [
         "Graduado Escolar, Graduado E.S.O., F.P. I o equivalentes"
-      ]
-    },
-    {
-      "offerId": "1285661589449",
-      "title": "PELUQUEROS UNISEX",
-      "province": "León",
-      "sourceName": "ECYL",
-      "originalUrl": "https://empleo.jcyl.es/web/jcyl/Empleo/es/Plantilla100Detalle/1284216458054/OfertasEmpleo/1285661589449/Empleo",
-      "mentionScope": "requirement_generic_fp",
-      "reviewedQualificationLabels": [],
-      "candidateProgramKeys": [],
-      "requirementQuotes": ["- Formación Profesional en el área."]
+      ],
+      "triageDisposition": "generic_fp_insufficient",
+      "triageReason": "La mención a FP es genérica, equivalente o alternativa y no identifica por sí sola un ciclo concreto."
     },
     {
       "offerId": "1285625266787",
@@ -330,7 +372,9 @@
       "candidateProgramKeys": [],
       "requirementQuotes": [
         "Formación Profesional Grado Superior o Ciclo formativo de Grado Medio en soldadura o áreas similares."
-      ]
+      ],
+      "triageDisposition": "specific_cycle_evidence_review",
+      "triageReason": "La oferta contiene una familia, especialidad o titulación FP concreta que requiere validar el ciclo y la frontera ocupacional antes de publicarse."
     },
     {
       "offerId": "1285669061673",
@@ -343,7 +387,9 @@
       "candidateProgramKeys": [],
       "requirementQuotes": [
         "Formación Profesional de Grado Medio en Mecanizado o similar."
-      ]
+      ],
+      "triageDisposition": "specific_cycle_evidence_review",
+      "triageReason": "La oferta contiene una familia, especialidad o titulación FP concreta que requiere validar el ciclo y la frontera ocupacional antes de publicarse."
     },
     {
       "offerId": "1285667274780",
@@ -356,7 +402,9 @@
       "candidateProgramKeys": [],
       "requirementQuotes": [
         "FP Superior en Electromecánica o rama técnica (formación mínima exigible)."
-      ]
+      ],
+      "triageDisposition": "specific_cycle_evidence_review",
+      "triageReason": "La oferta contiene una familia, especialidad o titulación FP concreta que requiere validar el ciclo y la frontera ocupacional antes de publicarse."
     },
     {
       "offerId": "1285669061701",
@@ -369,7 +417,9 @@
       "candidateProgramKeys": [],
       "requirementQuotes": [
         "Formación académica: FP Superior en Informática, Telecomunicaciones o similar."
-      ]
+      ],
+      "triageDisposition": "specific_cycle_evidence_review",
+      "triageReason": "La oferta contiene una familia, especialidad o titulación FP concreta que requiere validar el ciclo y la frontera ocupacional antes de publicarse."
     },
     {
       "offerId": "1285667844992",
@@ -382,7 +432,9 @@
       "candidateProgramKeys": [],
       "requirementQuotes": [
         "Formación FP mantenimiento de vehículos. Permiso de conducir B. Permiso C y CAP recomendable. Experiencia 12 meses."
-      ]
+      ],
+      "triageDisposition": "specific_cycle_evidence_review",
+      "triageReason": "La oferta contiene una familia, especialidad o titulación FP concreta que requiere validar el ciclo y la frontera ocupacional antes de publicarse."
     },
     {
       "offerId": "1285667665377",
@@ -395,7 +447,9 @@
       "candidateProgramKeys": [],
       "requirementQuotes": [
         "Formación FP mantenimiento de vehículos. Permiso de conducir B. Permiso C y CAP recomendable. Experiencia 12 meses."
-      ]
+      ],
+      "triageDisposition": "specific_cycle_evidence_review",
+      "triageReason": "La oferta contiene una familia, especialidad o titulación FP concreta que requiere validar el ciclo y la frontera ocupacional antes de publicarse."
     },
     {
       "offerId": "1285665334667",
@@ -408,7 +462,9 @@
       "candidateProgramKeys": [],
       "requirementQuotes": [
         "Valorable F.P. medio/superior en mantenimiento industrial, fontanería, electricidad, climatización o similares."
-      ]
+      ],
+      "triageDisposition": "generic_fp_insufficient",
+      "triageReason": "La mención a FP es genérica, equivalente o alternativa y no identifica por sí sola un ciclo concreto."
     },
     {
       "offerId": "1285665380230",
@@ -421,7 +477,9 @@
       "candidateProgramKeys": [],
       "requirementQuotes": [
         "Valorable F.P. medio/superior de mantenimiento industrial, fontanería, electricidad, climatización y/o similares."
-      ]
+      ],
+      "triageDisposition": "generic_fp_insufficient",
+      "triageReason": "La mención a FP es genérica, equivalente o alternativa y no identifica por sí sola un ciclo concreto."
     },
     {
       "offerId": "1285666782201",
@@ -432,7 +490,9 @@
       "mentionScope": "reviewed_qualification_exact",
       "reviewedQualificationLabels": ["Bachiller o equivalente"],
       "candidateProgramKeys": [],
-      "requirementQuotes": []
+      "requirementQuotes": [],
+      "triageDisposition": "outside_fp_cycle_scope",
+      "triageReason": "La titulación exacta revisada no tiene un enlace aprobado con ningún ciclo FP del catálogo actual."
     },
     {
       "offerId": "1285663591944",
@@ -443,7 +503,9 @@
       "mentionScope": "reviewed_qualification_exact",
       "reviewedQualificationLabels": ["Graduado en ESO o equivalente"],
       "candidateProgramKeys": [],
-      "requirementQuotes": []
+      "requirementQuotes": [],
+      "triageDisposition": "outside_fp_cycle_scope",
+      "triageReason": "La titulación exacta revisada no tiene un enlace aprobado con ningún ciclo FP del catálogo actual."
     },
     {
       "offerId": "1285668469050",
@@ -454,7 +516,9 @@
       "mentionScope": "reviewed_qualification_exact",
       "reviewedQualificationLabels": ["Graduado en ESO o equivalente"],
       "candidateProgramKeys": [],
-      "requirementQuotes": []
+      "requirementQuotes": [],
+      "triageDisposition": "outside_fp_cycle_scope",
+      "triageReason": "La titulación exacta revisada no tiene un enlace aprobado con ningún ciclo FP del catálogo actual."
     },
     {
       "offerId": "1285659956971",
@@ -465,7 +529,9 @@
       "mentionScope": "reviewed_qualification_exact",
       "reviewedQualificationLabels": ["Técnico en Cocina y Gastronomía"],
       "candidateProgramKeys": [],
-      "requirementQuotes": []
+      "requirementQuotes": [],
+      "triageDisposition": "outside_fp_cycle_scope",
+      "triageReason": "La titulación exacta revisada no tiene un enlace aprobado con ningún ciclo FP del catálogo actual."
     },
     {
       "offerId": "1285625267155",
@@ -476,7 +542,9 @@
       "mentionScope": "reviewed_qualification_exact",
       "reviewedQualificationLabels": ["Grado en Enfermería"],
       "candidateProgramKeys": [],
-      "requirementQuotes": []
+      "requirementQuotes": [],
+      "triageDisposition": "outside_fp_cycle_scope",
+      "triageReason": "La titulación exacta revisada no tiene un enlace aprobado con ningún ciclo FP del catálogo actual."
     },
     {
       "offerId": "1285641113411",
@@ -487,7 +555,9 @@
       "mentionScope": "reviewed_qualification_exact",
       "reviewedQualificationLabels": ["Grado en Enfermería"],
       "candidateProgramKeys": [],
-      "requirementQuotes": []
+      "requirementQuotes": [],
+      "triageDisposition": "outside_fp_cycle_scope",
+      "triageReason": "La titulación exacta revisada no tiene un enlace aprobado con ningún ciclo FP del catálogo actual."
     },
     {
       "offerId": "1285643614679",
@@ -498,7 +568,9 @@
       "mentionScope": "reviewed_qualification_exact",
       "reviewedQualificationLabels": ["Grado en Enfermería"],
       "candidateProgramKeys": [],
-      "requirementQuotes": []
+      "requirementQuotes": [],
+      "triageDisposition": "outside_fp_cycle_scope",
+      "triageReason": "La titulación exacta revisada no tiene un enlace aprobado con ningún ciclo FP del catálogo actual."
     },
     {
       "offerId": "1285640580510",
@@ -509,7 +581,9 @@
       "mentionScope": "reviewed_qualification_exact",
       "reviewedQualificationLabels": ["Grado en Fisioterapia"],
       "candidateProgramKeys": [],
-      "requirementQuotes": []
+      "requirementQuotes": [],
+      "triageDisposition": "outside_fp_cycle_scope",
+      "triageReason": "La titulación exacta revisada no tiene un enlace aprobado con ningún ciclo FP del catálogo actual."
     },
     {
       "offerId": "1285659957727",
@@ -520,7 +594,9 @@
       "mentionScope": "reviewed_qualification_exact",
       "reviewedQualificationLabels": ["Grado en Fisioterapia"],
       "candidateProgramKeys": [],
-      "requirementQuotes": []
+      "requirementQuotes": [],
+      "triageDisposition": "outside_fp_cycle_scope",
+      "triageReason": "La titulación exacta revisada no tiene un enlace aprobado con ningún ciclo FP del catálogo actual."
     },
     {
       "offerId": "1285659957783",
@@ -531,7 +607,9 @@
       "mentionScope": "reviewed_qualification_exact",
       "reviewedQualificationLabels": ["Grado en Terapia Ocupacional"],
       "candidateProgramKeys": [],
-      "requirementQuotes": []
+      "requirementQuotes": [],
+      "triageDisposition": "outside_fp_cycle_scope",
+      "triageReason": "La titulación exacta revisada no tiene un enlace aprobado con ningún ciclo FP del catálogo actual."
     }
   ],
   "limitations": [

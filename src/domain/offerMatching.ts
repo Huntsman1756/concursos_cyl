@@ -32,6 +32,7 @@ import {
   type JobOffer,
   type TrainingProgram,
 } from "../../data/schemas/generated";
+import { APPROVED_SINGLE_TOKEN_AUDIT_TUPLES } from "../../data/schemas/fpOneWordPublicationReview";
 import {
   PublishedRequirementSchema,
   PublishedRequirementsResourceSchema,
@@ -49,12 +50,6 @@ export const MatchRuleSchema = z.enum([
 
 export type MatchRule = z.infer<typeof MatchRuleSchema>;
 const STRICT_MULTIWORD_MATCH_POLICY = "strict_multiword";
-const APPROVED_SINGLE_TOKEN_AUDIT_TUPLE = {
-  alias: "encofradores",
-  occupationId: "occupation:cno11:7111",
-  programKey: "EOC01M",
-  matchPolicy: "approved_single_token",
-} as const;
 type ResolvedAliasMatchPolicy =
   typeof STRICT_MULTIWORD_MATCH_POLICY | "approved_single_token";
 
@@ -779,11 +774,14 @@ function bestAlias(
       }
       return (
         normalizedTokenCount(alias.alias) === 1 &&
-        alias.alias === APPROVED_SINGLE_TOKEN_AUDIT_TUPLE.alias &&
-        alias.occupationId === APPROVED_SINGLE_TOKEN_AUDIT_TUPLE.occupationId &&
-        programKey === APPROVED_SINGLE_TOKEN_AUDIT_TUPLE.programKey &&
-        matchPolicy === APPROVED_SINGLE_TOKEN_AUDIT_TUPLE.matchPolicy &&
-        normalized === APPROVED_SINGLE_TOKEN_AUDIT_TUPLE.alias
+        APPROVED_SINGLE_TOKEN_AUDIT_TUPLES.some(
+          (tuple) =>
+            alias.alias === tuple.alias &&
+            alias.occupationId === tuple.occupationId &&
+            programKey === tuple.programKey &&
+            matchPolicy === tuple.matchPolicy &&
+            normalized === tuple.alias,
+        )
       );
     })
     .filter(({ normalized }) => isBoundedPhrase(title, normalized))

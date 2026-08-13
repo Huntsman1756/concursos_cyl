@@ -946,6 +946,21 @@
       "reasonCode": "exact_occupation_title",
       "rationale": "Audited pinned title; requirements, functions, conditions, and summary contain no additional occupation detail.",
       "requirementQuotes": ["ENCOFRADORES"]
+    },
+    {
+      "candidateId": "teleoperadores",
+      "form": "teleoperadores",
+      "programKey": "COM01M",
+      "occupationId": "occupation:cno11:4424",
+      "offerId": "1285663377359",
+      "offerTitle": "TELEOPERADORES",
+      "disposition": "accepted",
+      "reasonCode": "exact_occupation_title",
+      "rationale": "Audited pinned payload: the vacancy requests telephone customer service in Spanish and French using telephony and computer tools.",
+      "requirementQuotes": [
+        "TELEOPERADORES",
+        "TAREAS A DESARROLLAR: ATENCION A LOS CLIENTES EN AMBOS IDIOMAS MEDIANTE GESTION Y ATENCION TELEFONICA USANDO HERRAMIENTAS DE TELEFONIA E INFORMATICA"
+      ]
     }
   ],
   "publicationDecision": {
@@ -1039,6 +1054,12 @@
     "encofradores": {
       "status": "accepted",
       "acceptedOfferIds": ["1285667539377", "1285668256621"],
+      "rejectedOfferIds": [],
+      "reason": "Accepted offers are eligible for publication."
+    },
+    "teleoperadores": {
+      "status": "accepted",
+      "acceptedOfferIds": ["1285663377359"],
       "rejectedOfferIds": [],
       "reason": "Accepted offers are eligible for publication."
     }

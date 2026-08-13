@@ -17,8 +17,8 @@ describe("measureFpMarginalAliasImpact", () => {
     const { report } = await measuredImpact();
     expect(FpMarginalAliasImpactSchema.parse(report)).toEqual(report);
     expect(report.baselineMatchedOfferCount).toBe(46);
-    expect(report.proposedMatchedOfferCount).toBe(50);
-    expect(report.marginalOfferCount).toBe(4);
+    expect(report.proposedMatchedOfferCount).toBe(58);
+    expect(report.marginalOfferCount).toBe(12);
     expect(report.marginalOfferIds).toEqual(report.expectedAcceptedOfferIds);
     expect(report.missingExpectedOfferIds).toEqual([]);
     expect(report.unexpectedOfferIds).toEqual([]);
@@ -30,6 +30,8 @@ describe("measureFpMarginalAliasImpact", () => {
       "AFD01S",
       "AFD01SD",
       "COM01M",
+      "IMP01B",
+      "IMP02M",
       "SSC03S",
       "SSC03SD",
     ]);
@@ -41,7 +43,7 @@ describe("measureFpMarginalAliasImpact", () => {
   it("renders a frozen-snapshot before/after report", async () => {
     const { markdown } = await measuredImpact();
     expect(markdown).toContain("Ofertas enlazadas antes: 46");
-    expect(markdown).toContain("Ofertas enlazadas después: 50");
+    expect(markdown).toContain("Ofertas enlazadas después: 58");
     expect(markdown).toContain("misma instantánea congelada");
   });
 });

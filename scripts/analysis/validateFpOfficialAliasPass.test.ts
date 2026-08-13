@@ -669,13 +669,15 @@ describe("FP official alias pass validation", () => {
       ...approvedSingleTokenAuditIdentities(
         validateFpOneWordPublicationReview(ROOT_DIRECTORY),
       ),
-    ].map((identity) => {
-      const [alias, occupationId] = identity.split("\u0000");
-      if (alias === undefined || occupationId === undefined) {
-        throw new Error("Malformed approved single-token audit identity.");
-      }
-      return { alias, occupationId };
-    });
+    ]
+      .map((identity) => {
+        const [alias, occupationId] = identity.split("\u0000");
+        if (alias === undefined || occupationId === undefined) {
+          throw new Error("Malformed approved single-token audit identity.");
+        }
+        return { alias, occupationId };
+      })
+      .filter(({ occupationId }) => targetOccupationIds.has(occupationId));
     const accepted = [
       ...acceptedOfficialAliases,
       ...oneWordAcceptedAliases,

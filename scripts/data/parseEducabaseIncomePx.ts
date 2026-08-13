@@ -47,12 +47,21 @@ const NOTE_HASHES = {
   ccaa_3_07: "5a17e47ad31a102aa51f7beb1cd2bbe5339c79afd7605ba371644dc25dc90fb8",
 } as const;
 const SEMANTIC_METADATA_HASHES = {
-  famprof_2_08:
+  famprof_2_08: [
     "6ee8f704d892315cdb20e24b3d685aac0fe6c366260a7188f671a0ee7a34ec7c",
-  famprof_3_08:
+  ],
+  famprof_3_08: [
     "8e0be361ad093848702077c6fc87bef20472d5255dbccd8e8981c10f9d172e51",
-  ccaa_2_07: "72f76d9a2203b35c980a277ab724bada0f479cffd99c885cdc28016bd58fbc39",
-  ccaa_3_07: "5c3d2ee13cee37f14dd09c198ef9880e343749b390142394996a5e5249050b3e",
+    // Educabase began emitting SUBJECT-CODE="null" on 2026-08-13 while
+    // preserving the allowlisted URL, dimensions, notes and reconciled cells.
+    "537a76c27612fc9bc88f2f01d831d85962d3022dd595e1f6a09f7deb95939805",
+  ],
+  ccaa_2_07: [
+    "72f76d9a2203b35c980a277ab724bada0f479cffd99c885cdc28016bd58fbc39",
+  ],
+  ccaa_3_07: [
+    "5c3d2ee13cee37f14dd09c198ef9880e343749b390142394996a5e5249050b3e",
+  ],
 } as const;
 const REQUIRED_SEMANTIC_METADATA = [
   "TITLE",
@@ -245,7 +254,11 @@ function assertSemanticMetadata(
   const fingerprint = createHash("sha256")
     .update(values.join("\0"))
     .digest("hex");
-  if (fingerprint !== SEMANTIC_METADATA_HASHES[source.tableId]) {
+  if (
+    !(SEMANTIC_METADATA_HASHES[source.tableId] as readonly string[]).includes(
+      fingerprint,
+    )
+  ) {
     throw new Error(
       `Educabase PX semantic metadata does not match ${source.tableId}`,
     );

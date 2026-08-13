@@ -2,19 +2,35 @@
   "schemaVersion": "1.0.0",
   "snapshotId": "20260812182823819-b36dc2a9111a",
   "baselineMatchedOfferCount": 46,
-  "proposedMatchedOfferCount": 50,
-  "marginalOfferCount": 4,
+  "proposedMatchedOfferCount": 58,
+  "marginalOfferCount": 12,
   "marginalOfferIds": [
+    "1285620089808",
+    "1285661589449",
     "1285663318503",
+    "1285663377359",
+    "1285664081823",
     "1285667274442",
+    "1285667927355",
+    "1285667995591",
     "1285668536344",
+    "1285669240377",
+    "1285669597129",
     "1285669689957"
   ],
-  "expectedAcceptedOfferCount": 4,
+  "expectedAcceptedOfferCount": 12,
   "expectedAcceptedOfferIds": [
+    "1285620089808",
+    "1285661589449",
     "1285663318503",
+    "1285663377359",
+    "1285664081823",
     "1285667274442",
+    "1285667927355",
+    "1285667995591",
     "1285668536344",
+    "1285669240377",
+    "1285669597129",
     "1285669689957"
   ],
   "missingExpectedOfferIds": [],
@@ -35,8 +51,36 @@
     {
       "programKey": "COM01M",
       "beforeOfferCount": 0,
-      "afterOfferCount": 1,
-      "marginalOfferIds": ["1285668536344"]
+      "afterOfferCount": 2,
+      "marginalOfferIds": ["1285663377359", "1285668536344"]
+    },
+    {
+      "programKey": "IMP01B",
+      "beforeOfferCount": 1,
+      "afterOfferCount": 8,
+      "marginalOfferIds": [
+        "1285620089808",
+        "1285661589449",
+        "1285664081823",
+        "1285667927355",
+        "1285667995591",
+        "1285669240377",
+        "1285669597129"
+      ]
+    },
+    {
+      "programKey": "IMP02M",
+      "beforeOfferCount": 1,
+      "afterOfferCount": 8,
+      "marginalOfferIds": [
+        "1285620089808",
+        "1285661589449",
+        "1285664081823",
+        "1285667927355",
+        "1285667995591",
+        "1285669240377",
+        "1285669597129"
+      ]
     },
     {
       "programKey": "SSC03S",

@@ -55,7 +55,7 @@
       "reviewNote": "La forma singular aparece literalmente en el BOE, pero la política vigente exige una auditoría terminal específica para alias de una palabra."
     },
     {
-      "alias": "Peluqueros",
+      "alias": "Peluqueros unisex",
       "occupationId": "occupation:cno11:5811",
       "programKeys": ["IMP01B", "IMP02M"],
       "marginalOfferIds": [
@@ -72,9 +72,8 @@
       "programSourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/imagen-personal/peluqueria-cosmetica-capilar.html",
       "programSourceQuote": "Peluquera / peluquero.",
       "reviewedAt": "2026-08-13",
-      "disposition": "deferred",
-      "reasonCode": "single_token_audit_required",
-      "reviewNote": "INE y TodoFP sostienen la frontera ocupacional, pero la política vigente exige una auditoría terminal específica para alias de una palabra."
+      "disposition": "accepted",
+      "reasonCode": "literal_official_classification"
     },
     {
       "alias": "Bañistas-socorristas",
@@ -130,7 +129,7 @@
       "reviewNote": "La única oferta marginal es de mecánica de automoción, mientras la salida aprobada corresponde al mantenimiento de maquinaria y equipo industrial."
     },
     {
-      "alias": "Teleoperadores",
+      "alias": "teleoperadores",
       "occupationId": "occupation:cno11:4424",
       "programKeys": ["COM01M"],
       "marginalOfferIds": ["1285663377359"],
@@ -139,9 +138,8 @@
       "programSourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/comercio-marketing/actividades-comerciales.html",
       "programSourceQuote": "Teleoperador / teleoperadora (Call - Center).",
       "reviewedAt": "2026-08-13",
-      "disposition": "deferred",
-      "reasonCode": "single_token_audit_required",
-      "reviewNote": "INE y TodoFP sostienen la frontera ocupacional, pero la política vigente exige una auditoría terminal específica para alias de una palabra."
+      "disposition": "accepted",
+      "reasonCode": "literal_official_classification"
     }
   ]
 }

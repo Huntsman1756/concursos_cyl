@@ -2,20 +2,20 @@
 
 ## Resumen del snapshot
 
-- Identificador del snapshot: `20260813003333450-c67e16c08825`
+- Identificador del snapshot: `20260813014001646-8616fc30ab76`
 - Total de ofertas analizadas: 1044
 - Relaciones aprobadas (enlaces): 135
 - Relaciones analizadas: 135
-- Relaciones con coincidencias actuales: 10
-- Relaciones con cero coincidencias: 125
-- Programas con cero coincidencias: 40
-- Ofertas marginales únicas entre candidatos: 112
+- Relaciones con coincidencias actuales: 11
+- Relaciones con cero coincidencias: 124
+- Programas con cero coincidencias: 39
+- Ofertas marginales únicas entre candidatos: 104
 
 ## Recuentos de candidatos
 
-- Candidatos totales: 71
+- Candidatos totales: 68
 - Hipótesis revisión (solapamiento): 65
-- Frases exactas contiguas (fuente oficial): 6
+- Frases exactas contiguas (fuente oficial): 3
 - Coincidencias de alias aprobadas: 0
 - Coincidencias por frase: 0
 - Coincidencias por solapamiento de tokens: 0
@@ -92,14 +92,11 @@
 
 ### Frases exactas contiguas (fuente oficial)
 
-| Alias                  | Programa                                | Ocupación                                    | Ofertas    | Ganancia marginal | Causa                                 | Colisiones |
-| ---------------------- | --------------------------------------- | -------------------------------------------- | ---------- | ----------------- | ------------------------------------- | ---------- |
-| `Albañiles`            | EOC01M (Construcción)                   | Albañiles (occupation:cno11:7121)            | 24 ofertas | 24                | multi_offer_match;occupation_label    | —          |
-| `Peluqueros`           | IMP01B (Peluquería y Estética)          | Peluqueros (occupation:cno11:5811)           | 8 ofertas  | 7                 | multi_offer_match;occupation_label    | —          |
-| `Peluqueros`           | IMP02M (Peluquería y Cosmética Capilar) | Peluqueros (occupation:cno11:5811)           | 8 ofertas  | 7                 | multi_offer_match;occupation_label    | —          |
-| `– Albañil.`           | EOC01M (Construcción)                   | Albañiles (occupation:cno11:7121)            | 2 ofertas  | 2                 | multi_offer_match;exact_source_phrase | —          |
-| `Técnicos en mecánica` | IMA03S (Mecatrónica Industrial)         | Técnicos en mecánica (occupation:cno11:3126) | 1 oferta   | 1                 | single_offer_match;occupation_label   | —          |
-| `Teleoperadores`       | COM01M (Actividades Comerciales)        | Teleoperadores (occupation:cno11:4424)       | 1 oferta   | 1                 | single_offer_match;occupation_label   | —          |
+| Alias                  | Programa                        | Ocupación                                    | Ofertas    | Ganancia marginal | Causa                                 | Colisiones |
+| ---------------------- | ------------------------------- | -------------------------------------------- | ---------- | ----------------- | ------------------------------------- | ---------- |
+| `Albañiles`            | EOC01M (Construcción)           | Albañiles (occupation:cno11:7121)            | 24 ofertas | 24                | multi_offer_match;occupation_label    | —          |
+| `– Albañil.`           | EOC01M (Construcción)           | Albañiles (occupation:cno11:7121)            | 2 ofertas  | 2                 | multi_offer_match;exact_source_phrase | —          |
+| `Técnicos en mecánica` | IMA03S (Mecatrónica Industrial) | Técnicos en mecánica (occupation:cno11:3126) | 1 oferta   | 1                 | single_offer_match;occupation_label   | —          |
 
 ## Limitaciones
 
@@ -113,6 +110,6 @@
 
 ## Decisión
 
-Se identificaron 71 candidatos de alias con ganancia marginal para relaciones aprobadas. Ningún candidato se aprueba automáticamente; estos resultados son evidencia para revisión por Sol y Gemma.
+Se identificaron 68 candidatos de alias con ganancia marginal para relaciones aprobadas. Ningún candidato se aprueba automáticamente; estos resultados son evidencia para revisión por Sol y Gemma.
 
 El informe no incluye marcas de tiempo y sus recuentos corresponden a la instantánea controlada.

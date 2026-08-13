@@ -112,6 +112,18 @@ describe("parseEducabaseIncomePx", () => {
     }
   });
 
+  it("accepts the exact live higher-level SUBJECT-CODE null metadata variant", async () => {
+    const bytes = await fixture("famprof_3_08.px");
+    const variant = Buffer.from(bytes)
+      .toString("latin1")
+      .replace('SUBJECT-CODE="BCCFP"', 'SUBJECT-CODE="null"');
+    const parsed = parseEducabaseIncomePx(
+      EDUCABASE_INCOME_SOURCES.famprof_3_08,
+      Buffer.from(variant, "latin1"),
+    );
+    expect(parsed.cells).toHaveLength(14880);
+  });
+
   it("rejects invalid data, invalid concatenation, and cardinality changes", () => {
     const text = [
       'AXIS-VERSION="2006";',

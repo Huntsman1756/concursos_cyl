@@ -6,6 +6,10 @@ import { describe, expect, it } from "vitest";
 import curatedAliases from "../../data/curated/occupation-aliases.json";
 import { FpMarginalAliasReviewSchema } from "../../data/schemas/fpMarginalAliasReview";
 import type { GeneratedManifest, JobOffer } from "../../data/schemas/generated";
+import {
+  approvedSingleTokenAuditIdentities,
+  validateFpOneWordPublicationReview,
+} from "./validateFpOneWordPublicationReview";
 
 const root = resolve(__dirname, "../..");
 
@@ -30,10 +34,10 @@ describe("FP marginal alias review", () => {
     expect(artifact.rows).toHaveLength(8);
     expect(
       artifact.rows.filter((row) => row.disposition === "accepted"),
-    ).toHaveLength(3);
+    ).toHaveLength(5);
     expect(
       artifact.rows.filter((row) => row.disposition === "deferred"),
-    ).toHaveLength(4);
+    ).toHaveLength(2);
     expect(
       artifact.rows.filter((row) => row.disposition === "rejected"),
     ).toHaveLength(1);
@@ -80,15 +84,30 @@ describe("FP marginal alias review", () => {
     }
   });
 
-  it("defers only one-token aliases and keeps accepted aliases multi-token", async () => {
+  it("defers unaudited one-token aliases and permits only terminally audited exceptions", async () => {
     const artifact = FpMarginalAliasReviewSchema.parse(
       await readJson(resolve(root, "analysis/fp_marginal_alias_review.json")),
+    );
+    const audited = approvedSingleTokenAuditIdentities(
+      validateFpOneWordPublicationReview(root),
     );
     for (const row of artifact.rows) {
       const tokenCount = normalized(row.alias).split(" ").length;
       if (row.disposition === "deferred") expect(tokenCount).toBe(1);
-      if (row.disposition === "accepted")
-        expect(tokenCount).toBeGreaterThanOrEqual(2);
+      if (row.disposition === "accepted" && tokenCount === 1) {
+        expect(
+          row.programKeys.some((programKey) =>
+            audited.has(
+              [
+                row.alias,
+                row.occupationId,
+                programKey,
+                "approved_single_token",
+              ].join("\u0000"),
+            ),
+          ),
+        ).toBe(true);
+      }
     }
   });
 });

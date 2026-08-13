@@ -1,12 +1,12 @@
 {
   "schemaVersion": "1.0.0",
   "freezeStatus": "frozen",
-  "sourceCommitSha": "1c109293a0433494ba25bcf9faff6ca67e05ba23",
+  "sourceCommitSha": "b6d195c66e9ac3fce447f7e7e3f56cd173d94b6f",
   "manifest": {
     "path": "public/data/v1/manifest.json",
-    "sha256": "e7822376ed1854bb0c760a20eb7628652517e7f61c868f5d6155ec61d8ca9cc2",
-    "generatedAt": "2026-08-13T00:33:33.450Z",
-    "snapshotId": "20260813003333450-c67e16c08825",
+    "sha256": "e703eeaa92c829ad820d89b4407643131f3471f8de9f4846fa776073d2a5e2cf",
+    "generatedAt": "2026-08-13T01:40:01.646Z",
+    "snapshotId": "20260813014001646-8616fc30ab76",
     "qualityStatus": "passed",
     "qualityCounts": {
       "centers": 229,
@@ -16,57 +16,57 @@
     },
     "resourceSnapshots": {
       "centers": {
-        "resourcePath": "/data/v1/snapshots/20260813003333450-c67e16c08825/centers.json",
+        "resourcePath": "/data/v1/snapshots/20260813014001646-8616fc30ab76/centers.json",
         "sha256": "593b7780f6cb9511c02edb26a769e5e1f951624f6e4b923a8e34caacb230c87a",
         "recordCount": 229
       },
       "jobOffers": {
-        "resourcePath": "/data/v1/snapshots/20260813003333450-c67e16c08825/job-offers.json",
-        "sha256": "8067a20dabaaf7cd97703356888b818e9b2c294e90f97b3f5bb0182b9af85db4",
+        "resourcePath": "/data/v1/snapshots/20260813014001646-8616fc30ab76/job-offers.json",
+        "sha256": "fa011e5e0c866a424f941dd6dddc0713edaafcbb42f617353ba79330425c45ee",
         "recordCount": 1044
       },
       "mappingCoverage": {
-        "resourcePath": "/data/v1/snapshots/20260813003333450-c67e16c08825/mapping-coverage.json",
+        "resourcePath": "/data/v1/snapshots/20260813014001646-8616fc30ab76/mapping-coverage.json",
         "sha256": "a1b3a62cadaa7adee6d86a7f18ae971bf807fd620df57f8b117e23db68979c2b",
         "recordCount": 209
       },
       "officialOccupations": {
-        "resourcePath": "/data/v1/snapshots/20260813003333450-c67e16c08825/official-occupations.json",
+        "resourcePath": "/data/v1/snapshots/20260813014001646-8616fc30ab76/official-occupations.json",
         "sha256": "76fa213f97c98e5af0f9bf120323ba3abb32df78e797c381e5454cadc858f64b",
         "recordCount": 502
       },
       "occupationAliases": {
-        "resourcePath": "/data/v1/snapshots/20260813003333450-c67e16c08825/occupation-aliases.json",
-        "sha256": "ae937ec50dde7edca17e77bca77053f5c51844c6facd444fc8dc682ab2e2c222",
-        "recordCount": 105
+        "resourcePath": "/data/v1/snapshots/20260813014001646-8616fc30ab76/occupation-aliases.json",
+        "sha256": "60641f7dbb2f570da4ce463d47a4287dd9314a5041ff9543191032dcda1ef5f6",
+        "recordCount": 107
       },
       "occupations": {
-        "resourcePath": "/data/v1/snapshots/20260813003333450-c67e16c08825/occupations.json",
+        "resourcePath": "/data/v1/snapshots/20260813014001646-8616fc30ab76/occupations.json",
         "sha256": "5def10d5faf1715d29c0a01b45cafab7172592443be62b9a32b3e68b197078cc",
         "recordCount": 82
       },
       "outcomeIndicators": {
-        "resourcePath": "/data/v1/snapshots/20260813003333450-c67e16c08825/outcome-indicators.json",
+        "resourcePath": "/data/v1/snapshots/20260813014001646-8616fc30ab76/outcome-indicators.json",
         "sha256": "4f2c6b73fc4171bb9daf21583712ab2ec99bcaa7d27b1f2fd0c070b9079ab3e2",
         "recordCount": 22170
       },
       "programs": {
-        "resourcePath": "/data/v1/snapshots/20260813003333450-c67e16c08825/programs.json",
+        "resourcePath": "/data/v1/snapshots/20260813014001646-8616fc30ab76/programs.json",
         "sha256": "90df87b283b5ff003dda20c9c4f7eac52b903e611753d107d4b927bbc4e19b72",
         "recordCount": 187
       },
       "publishedRequirements": {
-        "resourcePath": "/data/v1/snapshots/20260813003333450-c67e16c08825/published-requirements.json",
+        "resourcePath": "/data/v1/snapshots/20260813014001646-8616fc30ab76/published-requirements.json",
         "sha256": "39e458bb581492931b2964ba85cb37d71f0f7360141d359c05951b63c2283765",
         "recordCount": 320
       },
       "trainingOccupationLinks": {
-        "resourcePath": "/data/v1/snapshots/20260813003333450-c67e16c08825/training-occupation-links.json",
+        "resourcePath": "/data/v1/snapshots/20260813014001646-8616fc30ab76/training-occupation-links.json",
         "sha256": "d9e31ea9a2a82214e8e6f1fc83b0e6c4cf0f4b2d631d3381aec8f62991f2e08c",
         "recordCount": 135
       },
       "trainingOfferings": {
-        "resourcePath": "/data/v1/snapshots/20260813003333450-c67e16c08825/training-offerings.json",
+        "resourcePath": "/data/v1/snapshots/20260813014001646-8616fc30ab76/training-offerings.json",
         "sha256": "0948871f993a4f0a03ed42ccef060c4a395e0898dc230086f234345fee7e880a",
         "recordCount": 1294
       }
@@ -372,6 +372,7 @@
       "Pavimentadores a base de hormigón|occupation:cno11:7111",
       "Pavimentadores con adoquines|occupation:cno11:7240",
       "Peluqueros de caballeros|occupation:cno11:5811",
+      "Peluqueros unisex|occupation:cno11:5811",
       "Perito tasador de vehículos|occupation:cno11:3405",
       "Programador de aplicaciones|occupation:cno11:3820",
       "Programador de juegos de ordenador|occupation:cno11:2713",
@@ -410,13 +411,15 @@
       "encofradores|occupation:cno11:7111",
       "programación web|occupation:cno11:2713",
       "programador web|occupation:cno11:2713",
+      "teleoperadores|occupation:cno11:4424",
       "técnicos auxiliares de clínica|occupation:cno11:5611",
       "Árbitro deportivo|occupation:cno11:3722"
     ],
-    "approvedAliasCount": 105,
+    "approvedAliasCount": 107,
     "matchedProgramKeys": [
       "AFD01S",
       "AFD01SD",
+      "COM01M",
       "EOC01M",
       "IMP01B",
       "IMP02M",
@@ -426,7 +429,7 @@
       "SSC03S",
       "SSC03SD"
     ],
-    "matchedProgramCount": 10,
+    "matchedProgramCount": 11,
     "zeroReviewedProgramKeys": [
       "ADG01B",
       "ADG01M",
@@ -436,7 +439,6 @@
       "AGA01M",
       "AGA03M",
       "COM01B",
-      "COM01M",
       "COM02M",
       "ELE01B",
       "ELE01M",
@@ -469,10 +471,11 @@
       "TMV01S",
       "TMV02M"
     ],
-    "zeroReviewedProgramCount": 40,
+    "zeroReviewedProgramCount": 39,
     "matchedRelationKeys": [
       "AFD01SD|occupation:cno11:5992",
       "AFD01S|occupation:cno11:5992",
+      "COM01M|occupation:cno11:4424",
       "EOC01M|occupation:cno11:7111",
       "IMP01B|occupation:cno11:5811",
       "IMP02M|occupation:cno11:5811",
@@ -482,7 +485,7 @@
       "SSC03SD|occupation:cno11:3713",
       "SSC03S|occupation:cno11:3713"
     ],
-    "matchedRelationCount": 10,
+    "matchedRelationCount": 11,
     "zeroReviewedRelationKeys": [
       "ADG01B|occupation:cno11:4210",
       "ADG01B|occupation:cno11:4221",
@@ -525,7 +528,6 @@
       "COM01M|occupation:cno11:1432",
       "COM01M|occupation:cno11:3510",
       "COM01M|occupation:cno11:3522",
-      "COM01M|occupation:cno11:4424",
       "COM01M|occupation:cno11:5300",
       "COM01M|occupation:cno11:5420",
       "COM01M|occupation:cno11:5492",
@@ -610,13 +612,14 @@
       "TMV01S|occupation:cno11:4412",
       "TMV02M|occupation:cno11:7401"
     ],
-    "zeroReviewedRelationCount": 125,
+    "zeroReviewedRelationCount": 124,
     "deferredPrograms": [],
     "deferredProgramCount": 0
   },
   "offers": {
     "matchedOfferIds": [
       "1285619684957",
+      "1285620089808",
       "1285625266971",
       "1285634475038",
       "1285637783304",
@@ -628,15 +631,18 @@
       "1285645658066",
       "1285647198339",
       "1285656851320",
+      "1285661589449",
       "1285662030438",
       "1285662467494",
       "1285662541494",
       "1285662949567",
       "1285663160304",
       "1285663318503",
+      "1285663377359",
       "1285663377553",
       "1285663377586",
       "1285663973698",
+      "1285664081823",
       "1285664451719",
       "1285664658652",
       "1285664934590",
@@ -649,14 +655,18 @@
       "1285667589943",
       "1285667632216",
       "1285667844877",
+      "1285667927355",
       "1285667995414",
+      "1285667995591",
       "1285668050973",
       "1285668256565",
       "1285668256621",
       "1285668730148",
+      "1285669240377",
       "1285669380098",
       "1285669453017",
       "1285669509738",
+      "1285669597129",
       "1285669665440",
       "1285669689957",
       "1285669924974",
@@ -665,7 +675,7 @@
       "1285670397102",
       "1285670397130"
     ],
-    "matchedOfferCount": 48,
+    "matchedOfferCount": 56,
     "marginalOfferDeltas": { "unionOfferIds": [], "unionOfferCount": 0 }
   },
   "attempts": {
