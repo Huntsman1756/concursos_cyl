@@ -105,7 +105,7 @@ describe("rankFpOfferAliasCandidates – manifest-addressed loading", () => {
     expect(offers.length).toBe(
       manifest.resourceSnapshots.jobOffers.recordCount,
     );
-    expect(links.length).toBe(178);
+    expect(links.length).toBe(191);
     expect(requirements.length).toBeGreaterThan(0);
     expect(programs.length).toBeGreaterThan(0);
     expect(occupations.length).toBeGreaterThan(0);
