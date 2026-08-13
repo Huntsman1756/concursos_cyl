@@ -192,8 +192,8 @@
   "limitation": "El seed preliminar Carpintero de madera no aparece en el inventario BOE exhaustivo y queda auditado como ausente. La publicación se limita a las relaciones 7812 y 8209 respaldadas por outputs BOE revisados y evidencia CNO independiente; la relación de supervisión 3206 permanece rechazada.",
   "reviewedCommit": "a3bd273f7492ba1a8ca2f07306780e83e9f8d65c",
   "reviewedCommitAt": "2026-08-09T16:29:26.000Z",
-  "snapshotId": "20260813014001646-8616fc30ab76",
-  "snapshotHash": "c1a3607b47ddabfc8083af919f8665d805f78428d91d558ceb68f1d1810a92be",
+  "snapshotId": "20260813053424432-677d0b4c2be7",
+  "snapshotHash": "a042ed8095f47d63a3e4e2cdb2f15b3f702fb01312c7cb70bc0a8b0c4c965d6b",
   "publicParity": {
     "publishedRelationKeys": [
       "MAM01M|occupation:cno11:7812",

@@ -12,7 +12,7 @@ import {
   writeFile,
 } from "node:fs/promises";
 import { tmpdir } from "node:os";
-import { dirname, join, resolve, sep } from "node:path";
+import { basename, dirname, join, resolve, sep } from "node:path";
 
 import { afterEach, describe, expect, it, vi } from "vitest";
 
@@ -2340,6 +2340,34 @@ describe("buildSnapshots", { timeout: BUILD_SNAPSHOTS_TEST_TIMEOUT }, () => {
     }
 
     await expect(access(pinnedSnapshot)).resolves.toBeUndefined();
+  });
+
+  it("retains the FP marginal-alias review snapshot beyond ordinary history", async () => {
+    const root = await temporaryRoot();
+    await buildSnapshots({ rootDirectory: root, ...fixedOptions });
+    const initialSnapshot = dirname(
+      assetPath(
+        root,
+        (await readManifest(root)).resourceSnapshots.programs.resourcePath,
+      ),
+    );
+    const snapshotId = basename(initialSnapshot);
+    await mkdir(join(root, "analysis"), { recursive: true });
+    await writeFile(
+      join(root, "analysis", "fp_marginal_alias_review.json"),
+      JSON.stringify({ snapshotId }),
+      "utf8",
+    );
+
+    for (let day = 2; day <= 5; day += 1) {
+      await buildSnapshots({
+        rootDirectory: root,
+        ...fixedOptions,
+        now: () => new Date(`2026-08-0${day}T10:00:00.000Z`),
+      });
+    }
+
+    await expect(access(initialSnapshot)).resolves.toBeUndefined();
   });
 
   it("retains a pinned pilot snapshot as an approved subset after a later mapping addition", async () => {

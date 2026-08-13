@@ -773,5 +773,47 @@
     "reviewStatus": "approved",
     "reviewedAt": "2026-08-13",
     "mappingVersion": "1.0.0"
+  },
+  {
+    "alias": "Chapistas-pintores de vehículos",
+    "occupationId": "occupation:cno11:7313",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-13",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "alias": "Chapistas industriales",
+    "occupationId": "occupation:cno11:7313",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-13",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "alias": "Mecánicos de mantenimiento y reparación de automoción",
+    "occupationId": "occupation:cno11:7401",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-13",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "alias": "Soldador/a TIG",
+    "occupationId": "occupation:cno11:7312",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-13",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "alias": "Soldador/a TIG-MAG",
+    "occupationId": "occupation:cno11:7312",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-13",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "alias": "Técnico/a de soporte n2",
+    "occupationId": "occupation:cno11:3812",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-13",
+    "mappingVersion": "1.0.0"
   }
 ]

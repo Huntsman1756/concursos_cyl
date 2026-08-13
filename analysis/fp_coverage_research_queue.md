@@ -1,6 +1,6 @@
 # Cola incremental de investigación FP–ocupación
 
-- Snapshot: 2026-08-12T18:28:23.819Z
+- Snapshot: 2026-08-13T05:34:24.432Z
 - Cualificaciones base revisadas: 39
 - Cualificaciones base pendientes: 115
 - Contrato: Training-offer signals prioritize official research only; they are not CNO evidence and never authorize publication.

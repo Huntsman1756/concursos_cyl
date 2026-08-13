@@ -136,17 +136,26 @@ describe("FME02M expansion slot", () => {
     const snapshotId = await loadFME02MSnapshotId();
     expect(attempt.snapshotId).toBe(snapshotId);
     const acceptedRelationKeys = attempt.acceptedRelations!.map(relationKey);
+    const matchedOfferIds = [
+      "1285625266787",
+      "1285631247493",
+      "1285650939495",
+      "1285665418087",
+      "1285666878838",
+      "1285668446305",
+      "1285669061673",
+    ];
     const snapshotHash = expansionSnapshotHash({
       snapshotId,
       programKey: "FME02M",
-      baselineMatchIds: [],
-      currentMatchIds: [],
+      baselineMatchIds: matchedOfferIds,
+      currentMatchIds: matchedOfferIds,
       acceptedRelationKeys,
     });
     expect(attempt.snapshotHash).toBe(snapshotHash);
     const computed = {
-      baselineMatchIds: [],
-      currentMatchIds: [],
+      baselineMatchIds: matchedOfferIds,
+      currentMatchIds: matchedOfferIds,
       newlyReachedOfferIdsByProgram: { FME02M: [] },
       newlyReachedOfferUnionIds: [],
       snapshotId,

@@ -208,15 +208,31 @@
       "reviewedAt": "2026-08-11"
     }
   ],
-  "baselineMatchIds": [],
-  "currentMatchIds": [],
+  "baselineMatchIds": [
+    "1285625266787",
+    "1285631247493",
+    "1285650939495",
+    "1285665418087",
+    "1285666878838",
+    "1285668446305",
+    "1285669061673"
+  ],
+  "currentMatchIds": [
+    "1285625266787",
+    "1285631247493",
+    "1285650939495",
+    "1285665418087",
+    "1285666878838",
+    "1285668446305",
+    "1285669061673"
+  ],
   "newlyReachedOfferIdsByProgram": { "FME02M": [] },
   "newlyReachedOfferUnionIds": [],
   "limitation": "Se aceptan CNO 7312, 7313, 7314 y 7132 para Soldadura y Calderería. Los candidatos 8122 para proyección térmica y 7221 para tubería industrial se mantienen rechazados porque la evidencia revisada no establece con precisión esos límites de cuatro dígitos para las salidas del título.",
   "reviewedCommit": "e6ae073b1b451c7b9327916b6e4c4aaf5ab52c0d",
   "reviewedCommitAt": "2026-08-11T14:05:09.000Z",
-  "snapshotId": "20260813014001646-8616fc30ab76",
-  "snapshotHash": "e1ea61adb7fca73911e6f2183d33c5fa021ef058979811c74b83b66202d3924e",
+  "snapshotId": "20260813053424432-677d0b4c2be7",
+  "snapshotHash": "6c522eb8c23858bf9d220bc49b22f834d657e041390c97faef47d914654c0f74",
   "publicParity": {
     "publishedRelationKeys": [
       "FME02M|occupation:cno11:7132",

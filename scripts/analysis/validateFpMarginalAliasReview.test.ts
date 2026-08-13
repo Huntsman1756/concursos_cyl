@@ -31,10 +31,10 @@ describe("FP marginal alias review", () => {
     const artifact = FpMarginalAliasReviewSchema.parse(
       await readJson(resolve(root, "analysis/fp_marginal_alias_review.json")),
     );
-    expect(artifact.rows).toHaveLength(8);
+    expect(artifact.rows).toHaveLength(14);
     expect(
       artifact.rows.filter((row) => row.disposition === "accepted"),
-    ).toHaveLength(5);
+    ).toHaveLength(11);
     expect(
       artifact.rows.filter((row) => row.disposition === "deferred"),
     ).toHaveLength(2);
