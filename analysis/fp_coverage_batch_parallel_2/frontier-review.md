@@ -9,19 +9,19 @@ sufficient.
 
 ## Accepted for incorporation
 
-| Program | CNO-11 | Curated occupation | Evidence boundary |
-| --- | --- | --- | --- |
-| `HOT01S` | 3510 | Agentes y representantes comerciales | TodoFP explicitly lists a commercial role for tourist accommodation establishments. This does not cover hotel management or reservations. |
-| `ADG01S` | 4223 | Empleados de servicio de personal | TodoFP explicitly lists assistant work in human-resources departments. |
-| `IMP01M` | 5812 | Especialistas en tratamientos de estética, bienestar y afines | TodoFP explicitly lists esthetician, depilation, make-up, manicure, pedicure, and artificial-nail roles. |
-| `IMP01M` | 3510 | Agentes y representantes comerciales | TodoFP explicitly lists a commercial agent in sector companies. |
-| `IMP01M` | 5220 | Vendedores en tiendas y almacenes | TodoFP explicitly lists an adviser-salesperson in perfume shops and drugstores. |
-| `IMP01M` | 5492 | Promotores de venta | TodoFP explicitly lists demonstration of esthetic equipment, cosmetics, and techniques. |
-| `IMP01M` | 4412 | Recepcionistas (excepto de hoteles) | TodoFP explicitly lists receptionist work in esthetic companies. |
-| `HOT03S` | 4411 | Empleados de información al usuario | TodoFP explicitly lists tourist information staff. Acceptance does not classify tourist guides as generic information clerks. |
-| `HOT03S` | 4123 | Empleados de logística y transporte de pasajeros y mercancías | TodoFP explicitly lists terminal assistance and terminal transport check-in roles. |
-| `AGA01B` | 4121 | Empleados de control de abastecimientos e inventario | TodoFP explicitly lists flower-warehouse assistance; the relationship is limited to inventory and supply work. |
-| `AGA01B` | 5220 | Vendedores en tiendas y almacenes | TodoFP explicitly lists flower-shop sales assistance. |
+| Program  | CNO-11 | Curated occupation                                            | Evidence boundary                                                                                                                         |
+| -------- | ------ | ------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------- |
+| `HOT01S` | 3510   | Agentes y representantes comerciales                          | TodoFP explicitly lists a commercial role for tourist accommodation establishments. This does not cover hotel management or reservations. |
+| `ADG01S` | 4223   | Empleados de servicio de personal                             | TodoFP explicitly lists assistant work in human-resources departments.                                                                    |
+| `IMP01M` | 5812   | Especialistas en tratamientos de estética, bienestar y afines | TodoFP explicitly lists esthetician, depilation, make-up, manicure, pedicure, and artificial-nail roles.                                  |
+| `IMP01M` | 3510   | Agentes y representantes comerciales                          | TodoFP explicitly lists a commercial agent in sector companies.                                                                           |
+| `IMP01M` | 5220   | Vendedores en tiendas y almacenes                             | TodoFP explicitly lists an adviser-salesperson in perfume shops and drugstores.                                                           |
+| `IMP01M` | 5492   | Promotores de venta                                           | TodoFP explicitly lists demonstration of esthetic equipment, cosmetics, and techniques.                                                   |
+| `IMP01M` | 4412   | Recepcionistas (excepto de hoteles)                           | TodoFP explicitly lists receptionist work in esthetic companies.                                                                          |
+| `HOT03S` | 4411   | Empleados de información al usuario                           | TodoFP explicitly lists tourist information staff. Acceptance does not classify tourist guides as generic information clerks.             |
+| `HOT03S` | 4123   | Empleados de logística y transporte de pasajeros y mercancías | TodoFP explicitly lists terminal assistance and terminal transport check-in roles.                                                        |
+| `AGA01B` | 4121   | Empleados de control de abastecimientos e inventario          | TodoFP explicitly lists flower-warehouse assistance; the relationship is limited to inventory and supply work.                            |
+| `AGA01B` | 5220   | Vendedores en tiendas y almacenes                             | TodoFP explicitly lists flower-shop sales assistance.                                                                                     |
 
 ## Rejected candidates and unresolved programs
 

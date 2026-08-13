@@ -21,34 +21,34 @@
 
 ### 2.1. educador o educadora en salud bucodental
 
-| Campo                            | Valor                                                                                                                                                                                                                                                               |
-| -------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Resultado**                    | **Sin correspondencia suficiente**                                                                                                                                                                                                                                  |
-| **Cita literal de TodoFP**       | "educador o educadora en salud bucodental"                                                                                                                                                                                                                          |
-| **Candidatos explorados**        | `occupation:cno11:3713` (Profesionales de apoyo al trabajo y a la educación social), `occupation:cno11:2252` (Técnicos en educación infantil)                                                                                                                        |
-| **Etiqueta exacta del catálogo** | N/A — ninguna etiqueta del catálogo contiene "educación sanitaria", "salud pública", "promoción de la salud" o "educador sanitario".                                                                                                                                |
+| Campo                            | Valor                                                                                                                                                                                                                                                             |
+| -------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Resultado**                    | **Sin correspondencia suficiente**                                                                                                                                                                                                                                |
+| **Cita literal de TodoFP**       | "educador o educadora en salud bucodental"                                                                                                                                                                                                                        |
+| **Candidatos explorados**        | `occupation:cno11:3713` (Profesionales de apoyo al trabajo y a la educación social), `occupation:cno11:2252` (Técnicos en educación infantil)                                                                                                                     |
+| **Etiqueta exacta del catálogo** | N/A — ninguna etiqueta del catálogo contiene "educación sanitaria", "salud pública", "promoción de la salud" o "educador sanitario".                                                                                                                              |
 | **Motivo del rechazo**           | El catálogo curado no incluye ocupaciones de educación sanitaria ni promoción de la salud oral. CNO-11 3713 se refiere a educación social (inserción laboral, trabajo social), no a instrucción sanitaria. CNO-11 2252 está acotado a educación infantil reglada. |
-| **Confianza**                    | **Nula** — no existe código sanitario-educativo en el catálogo actual.                                                                                                                                                                                              |
+| **Confianza**                    | **Nula** — no existe código sanitario-educativo en el catálogo actual.                                                                                                                                                                                            |
 
 ### 2.2. higienista bucodental
 
-| Campo                            | Valor                                                                                                                                                                                                                                                                                                                               |
-| -------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Resultado**                    | **Sin correspondencia suficiente. No existe código adecuado para higienista dental en el catálogo actual.**                                                                                                                                                                                                                         |
-| **Cita literal de TodoFP**       | "higienista bucodental"                                                                                                                                                                                                                                                                                                             |
-| **Candidatos explorados**        | `occupation:cno11:3314` (Técnicos en laboratorio de diagnóstico clínico), `occupation:cno11:5611` (Auxiliares de enfermería hospitalaria), `occupation:cno11:5612` (Auxiliares de enfermería de atención primaria), `occupation:cno11:5621` (Técnicos auxiliares de farmacia), `occupation:cno11:5629` (Trabajadores de cuidados) |
-| **Etiqueta exacta del catálogo** | N/A                                                                                                                                                                                                                                                                                                                                 |
+| Campo                            | Valor                                                                                                                                                                                                                                                                                                                                                                                                                |
+| -------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Resultado**                    | **Sin correspondencia suficiente. No existe código adecuado para higienista dental en el catálogo actual.**                                                                                                                                                                                                                                                                                                          |
+| **Cita literal de TodoFP**       | "higienista bucodental"                                                                                                                                                                                                                                                                                                                                                                                              |
+| **Candidatos explorados**        | `occupation:cno11:3314` (Técnicos en laboratorio de diagnóstico clínico), `occupation:cno11:5611` (Auxiliares de enfermería hospitalaria), `occupation:cno11:5612` (Auxiliares de enfermería de atención primaria), `occupation:cno11:5621` (Técnicos auxiliares de farmacia), `occupation:cno11:5629` (Trabajadores de cuidados)                                                                                    |
+| **Etiqueta exacta del catálogo** | N/A                                                                                                                                                                                                                                                                                                                                                                                                                  |
 | **Motivo del rechazo**           | Ninguna ocupación del catálogo recoge las funciones nucleares del higienista dental: raspado dental, pulido, aplicación de flúor, selladores de fisuras, educación en higiene oral, radiografías intraorales. Los candidatos explorados pertenecen a laboratorio clínico (3314), enfermería (5611/5612), farmacia (5621) o cuidados genéricos (5629); todos difieren en competencias clínicas y ámbito odontológico. |
-| **Confianza**                    | **Nula** — forzar cualquier código existente sería una correspondencia engañosa.                                                                                                                                                                                                                                                    |
+| **Confianza**                    | **Nula** — forzar cualquier código existente sería una correspondencia engañosa.                                                                                                                                                                                                                                                                                                                                     |
 
 ### 2.3. técnico o técnica especialista higienista dental
 
-| Campo                            | Valor                                                                                                                                                                                           |
-| -------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Resultado**                    | **Sin correspondencia suficiente (sinónimo de 2.2)**                                                                                                                                            |
-| **Cita literal de TodoFP**       | "técnico o técnica especialista higienista dental"                                                                                                                                              |
-| **Motivo del rechazo**           | Se trata de una variación sinonímica de "higienista bucodental". Aplica el mismo análisis que 2.2: el catálogo carece de código odontológico/higiene dental.                                    |
-| **Confianza**                    | **Nula** — idéntico a 2.2.                                                                                                                                                                     |
+| Campo                      | Valor                                                                                                                                                        |
+| -------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| **Resultado**              | **Sin correspondencia suficiente (sinónimo de 2.2)**                                                                                                         |
+| **Cita literal de TodoFP** | "técnico o técnica especialista higienista dental"                                                                                                           |
+| **Motivo del rechazo**     | Se trata de una variación sinonímica de "higienista bucodental". Aplica el mismo análisis que 2.2: el catálogo carece de código odontológico/higiene dental. |
+| **Confianza**              | **Nula** — idéntico a 2.2.                                                                                                                                   |
 
 ### 2.4. técnico o técnica superior en Higiene Bucodental
 
@@ -57,7 +57,7 @@
 | **Resultado**              | **Sin correspondencia (título oficial, no perfil laboral)**                                                                                                                                      |
 | **Cita literal de TodoFP** | "técnico o técnica superior en Higiene Bucodental"                                                                                                                                               |
 | **Motivo del rechazo**     | Es la denominación del título formativo, no una salida profesional distinta. Su correspondencia laboral está cubierta por los perfiles de higienista bucodental (2.2) y educador en salud (2.1). |
-| **Confianza**              | **N/A** — no procede.                                                                                                                                                                           |
+| **Confianza**              | **N/A** — no procede.                                                                                                                                                                            |
 
 ---
 
@@ -67,15 +67,15 @@ Las ~96 ocupaciones restantes de `data/curated/occupations.json` (construcción,
 
 **Ocupaciones sanitarias del catálogo y su descarte:**
 
-| occupationId               | Etiqueta                                       | Resultado   |
-| -------------------------- | ---------------------------------------------- | ----------- |
-| `occupation:cno11:3314`    | Técnicos en laboratorio de diagnóstico clínico | Descartado  |
-| `occupation:cno11:5611`    | Auxiliares de enfermería hospitalaria          | Descartado  |
-| `occupation:cno11:5612`    | Auxiliares de enfermería de atención primaria  | Descartado  |
-| `occupation:cno11:5621`    | Técnicos auxiliares de farmacia                | Descartado  |
-| `occupation:cno11:5629`    | Trabajadores de cuidados en servicios de salud | Descartado  |
-| `occupation:cno11:3713`    | Profesionales de apoyo a la educación social   | Descartado  |
-| `occupation:cno11:2252`    | Técnicos en educación infantil                 | Descartado  |
+| occupationId            | Etiqueta                                       | Resultado  |
+| ----------------------- | ---------------------------------------------- | ---------- |
+| `occupation:cno11:3314` | Técnicos en laboratorio de diagnóstico clínico | Descartado |
+| `occupation:cno11:5611` | Auxiliares de enfermería hospitalaria          | Descartado |
+| `occupation:cno11:5612` | Auxiliares de enfermería de atención primaria  | Descartado |
+| `occupation:cno11:5621` | Técnicos auxiliares de farmacia                | Descartado |
+| `occupation:cno11:5629` | Trabajadores de cuidados en servicios de salud | Descartado |
+| `occupation:cno11:3713` | Profesionales de apoyo a la educación social   | Descartado |
+| `occupation:cno11:2252` | Técnicos en educación infantil                 | Descartado |
 
 **Todas las demás (~93):** sin correlación domínica alguna con odontología/higiene bucodental.
 
