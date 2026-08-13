@@ -1850,5 +1850,135 @@
     "sourceQuote": "Auxiliar de ventas en floristería.",
     "reviewedAt": "2026-08-13",
     "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "ELE02S",
+    "occupationId": "occupation:cno11:7533",
+    "relationshipType": "reviewed_relationship",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/electricidad-electronica/sistemas-telecomunicaciones-informaticos.html",
+    "sourceQuote": "Especialista en instalación, integración y mantenimiento de equipos y sistemas de telecomunicación.",
+    "reviewedAt": "2026-08-13",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "ELE02S",
+    "occupationId": "occupation:cno11:3811",
+    "relationshipType": "reviewed_relationship",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/electricidad-electronica/sistemas-telecomunicaciones-informaticos.html",
+    "sourceQuote": "Especialista en integración, instalación y mantenimiento de equipos y sistemas informáticos.",
+    "reviewedAt": "2026-08-13",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "ELE02S",
+    "occupationId": "occupation:cno11:3813",
+    "relationshipType": "reviewed_relationship",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/electricidad-electronica/sistemas-telecomunicaciones-informaticos.html",
+    "sourceQuote": "Técnica / técnico en supervisión, instalación, mantener, verificación y control en redes locales y sistemas telemáticos",
+    "reviewedAt": "2026-08-13",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "ELE02S",
+    "occupationId": "occupation:cno11:3124",
+    "relationshipType": "reviewed_relationship",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/electricidad-electronica/sistemas-telecomunicaciones-informaticos.html",
+    "sourceQuote": "Técnica / técnico en supervisión, instalación, mantenimiento, verificación y control de equipos de sistemas de radiodifusión.",
+    "reviewedAt": "2026-08-13",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "IMP01S",
+    "occupationId": "occupation:cno11:5812",
+    "relationshipType": "reviewed_relationship",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/imagen-personal/estetica-integral-bienestar.html",
+    "sourceQuote": "Esteticista.",
+    "reviewedAt": "2026-08-13",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "IMP01S",
+    "occupationId": "occupation:cno11:2640",
+    "relationshipType": "reviewed_relationship",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/imagen-personal/estetica-integral-bienestar.html",
+    "sourceQuote": "Técnica / técnico comercial.",
+    "reviewedAt": "2026-08-13",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "HOT02M",
+    "occupationId": "occupation:cno11:5120",
+    "relationshipType": "reviewed_relationship",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/hosteleria-turismo/servicios-restauracion.html",
+    "sourceQuote": "Camarera / camarero de bar-cafetería o restaurante.",
+    "reviewedAt": "2026-08-13",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "HOT02M",
+    "occupationId": "occupation:cno11:4121",
+    "relationshipType": "reviewed_relationship",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/hosteleria-turismo/servicios-restauracion.html",
+    "sourceQuote": "Empleada / empleado de economato de unidades de producción y servicio de alimentos y bebidas.",
+    "reviewedAt": "2026-08-13",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "MAM01B",
+    "occupationId": "occupation:cno11:7812",
+    "relationshipType": "reviewed_relationship",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/madera-mueble-corcho/carpinteria-mueble.html",
+    "sourceQuote": "Operador / operadora de máquinas fijas para fabricar productos de madera.",
+    "reviewedAt": "2026-08-13",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "MAM01B",
+    "occupationId": "occupation:cno11:9700",
+    "relationshipType": "reviewed_relationship",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/madera-mueble-corcho/fpb-carpinteria-mueble.html",
+    "sourceQuote": "Peón de la industria de la madera y del corcho.",
+    "reviewedAt": "2026-08-13",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "MAM01B",
+    "occupationId": "occupation:cno11:8209",
+    "relationshipType": "reviewed_relationship",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/madera-mueble-corcho/fpb-carpinteria-mueble.html",
+    "sourceQuote": "Montador / montadora de muebles de madera o similares.",
+    "reviewedAt": "2026-08-13",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "COM03S",
+    "occupationId": "occupation:cno11:3510",
+    "relationshipType": "reviewed_relationship",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/comercio-marketing/gestion-ventas-espacios-comerciales.html",
+    "sourceQuote": "Agente comercial.",
+    "reviewedAt": "2026-08-13",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "COM03S",
+    "occupationId": "occupation:cno11:5210",
+    "relationshipType": "reviewed_relationship",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/comercio-marketing/gestion-ventas-espacios-comerciales.html",
+    "sourceQuote": "Encargada / encargado de sección de un comercio.",
+    "reviewedAt": "2026-08-13",
+    "mappingVersion": "1.0.0"
   }
 ]

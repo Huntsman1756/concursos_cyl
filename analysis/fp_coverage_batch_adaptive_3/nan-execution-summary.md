@@ -18,3 +18,15 @@ finished as `awaiting-frontier-review`. Total observed usage was 240,323 tokens.
 The raw `.agent-runs` files remain intentionally unversioned because they retain
 the full generated drafts. Their hashes and session IDs above bind this review
 to the local terminal evidence without publishing model output as authority.
+
+## Mechanical incorporation
+
+Qwen 3.6 generated the bounded two-file incorporation candidate in session
+`ses_00356e76bffejuew7hydFLM3Z0`. The broker observed 534,263 tokens and
+correctly blocked the attempt because it exceeded the 500,000-token `batch`
+budget. The candidate respected both allowed paths, but Frontier found invented
+TodoFP URLs, paraphrased quotes and incorrect fixture titles. Frontier corrected
+all 13 entries against `professional-profiles.json`, independently confirmed
+that every occupation is `approved`, and ran the focused mapping test. The
+blocked worker result is therefore evidence of mechanical delegation, not
+acceptance authority.

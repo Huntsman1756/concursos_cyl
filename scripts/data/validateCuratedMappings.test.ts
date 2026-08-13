@@ -478,6 +478,41 @@ const programs: TrainingProgram[] = [
       "AGA",
       "Agraria",
     ],
+    [
+      "COM03S",
+      "Gestión de Ventas y Espacios Comerciales",
+      "higher",
+      "COM",
+      "Comercio y Marketing",
+    ],
+    [
+      "ELE02S",
+      "Sistemas de Telecomunicaciones e Informáticos",
+      "higher",
+      "ELE",
+      "Electricidad y Electrónica",
+    ],
+    [
+      "HOT02M",
+      "Servicios en Restauración",
+      "intermediate",
+      "HOT",
+      "Hostelería y Turismo",
+    ],
+    [
+      "IMP01S",
+      "Estética Integral y Bienestar",
+      "higher",
+      "IMP",
+      "Imagen Personal",
+    ],
+    [
+      "MAM01B",
+      "Carpintería y Mueble",
+      "basic",
+      "MAM",
+      "Madera, Mueble y Corcho",
+    ],
   ].map(([programKey, programTitle, level, familyCode, familyName]) => ({
     programKey,
     programTitle,
@@ -1129,6 +1164,11 @@ describe("curated occupation mappings", () => {
       IMP01M: 5,
       HOT03S: 2,
       AGA01B: 2,
+      COM03S: 2,
+      ELE02S: 4,
+      HOT02M: 2,
+      IMP01S: 2,
+      MAM01B: 3,
     });
 
     const coverage = buildMappingCoverage(programs, curated.links);
