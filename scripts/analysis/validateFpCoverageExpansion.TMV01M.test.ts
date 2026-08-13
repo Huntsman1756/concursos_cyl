@@ -144,17 +144,24 @@ describe("TMV01M expansion slot", () => {
     const snapshotId = await loadTMV01MSnapshotId();
     expect(attempt.snapshotId).toBe(snapshotId);
     const acceptedRelationKeys = attempt.acceptedRelations!.map(relationKey);
+    const matchedOfferIds = [
+      "1285631247493",
+      "1285650939495",
+      "1285665418087",
+      "1285666878838",
+      "1285668446305",
+    ];
     const snapshotHash = expansionSnapshotHash({
       snapshotId,
       programKey: "TMV01M",
-      baselineMatchIds: [],
-      currentMatchIds: [],
+      baselineMatchIds: matchedOfferIds,
+      currentMatchIds: matchedOfferIds,
       acceptedRelationKeys,
     });
     expect(attempt.snapshotHash).toBe(snapshotHash);
     const computed = {
-      baselineMatchIds: [],
-      currentMatchIds: [],
+      baselineMatchIds: matchedOfferIds,
+      currentMatchIds: matchedOfferIds,
       newlyReachedOfferIdsByProgram: { TMV01M: [] },
       newlyReachedOfferUnionIds: [],
       snapshotId,
