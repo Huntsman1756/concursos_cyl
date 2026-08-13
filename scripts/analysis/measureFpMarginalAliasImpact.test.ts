@@ -5,6 +5,7 @@ import {
   measureFpMarginalAliasImpact,
 } from "./measureFpMarginalAliasImpact";
 
+const HEAVY_ANALYSIS_TEST_TIMEOUT = process.env.CI === "true" ? 60_000 : 15_000;
 let impact: ReturnType<typeof measureFpMarginalAliasImpact> | undefined;
 
 function measuredImpact() {
@@ -13,16 +14,20 @@ function measuredImpact() {
 }
 
 describe("measureFpMarginalAliasImpact", () => {
-  it("matches the accepted review exactly without lateral offers", async () => {
-    const { report } = await measuredImpact();
-    expect(FpMarginalAliasImpactSchema.parse(report)).toEqual(report);
-    expect(report.baselineMatchedOfferCount).toBe(46);
-    expect(report.proposedMatchedOfferCount).toBe(70);
-    expect(report.marginalOfferCount).toBe(24);
-    expect(report.marginalOfferIds).toEqual(report.expectedAcceptedOfferIds);
-    expect(report.missingExpectedOfferIds).toEqual([]);
-    expect(report.unexpectedOfferIds).toEqual([]);
-  }, 15_000);
+  it(
+    "matches the accepted review exactly without lateral offers",
+    async () => {
+      const { report } = await measuredImpact();
+      expect(FpMarginalAliasImpactSchema.parse(report)).toEqual(report);
+      expect(report.baselineMatchedOfferCount).toBe(46);
+      expect(report.proposedMatchedOfferCount).toBe(70);
+      expect(report.marginalOfferCount).toBe(24);
+      expect(report.marginalOfferIds).toEqual(report.expectedAcceptedOfferIds);
+      expect(report.missingExpectedOfferIds).toEqual([]);
+      expect(report.unexpectedOfferIds).toEqual([]);
+    },
+    HEAVY_ANALYSIS_TEST_TIMEOUT,
+  );
 
   it("limits deltas to the reviewed programs", async () => {
     const { report } = await measuredImpact();

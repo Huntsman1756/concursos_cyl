@@ -15,3 +15,17 @@ it("keeps build-snapshot tests strict locally and resilient only on CI", async (
   );
   expect(source.match(/BUILD_SNAPSHOTS_TEST_TIMEOUT/gu)).toHaveLength(3);
 });
+
+it.each([
+  "scripts/analysis/buildFpMentionOfferQueue.test.ts",
+  "scripts/analysis/measureFpMarginalAliasImpact.test.ts",
+])(
+  "keeps heavy analysis strict locally and resilient on CI: %s",
+  async (path) => {
+    const source = await readFile(resolve(path), "utf8");
+    expect(source).toMatch(
+      /const HEAVY_ANALYSIS_TEST_TIMEOUT\s*=\s*process\.env\.CI === "true" \? 60_000 : 15_000;/u,
+    );
+    expect(source.match(/HEAVY_ANALYSIS_TEST_TIMEOUT/gu)).toHaveLength(2);
+  },
+);

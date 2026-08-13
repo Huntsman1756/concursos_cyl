@@ -10,6 +10,7 @@ import {
 } from "./buildFpMentionOfferQueue";
 
 const rootDirectory = resolve(__dirname, "../..");
+const HEAVY_ANALYSIS_TEST_TIMEOUT = process.env.CI === "true" ? 60_000 : 15_000;
 let result: ReturnType<typeof computeQueue> | undefined;
 
 function buildFpMentionOfferQueue() {
@@ -18,14 +19,18 @@ function buildFpMentionOfferQueue() {
 }
 
 describe("buildFpMentionOfferQueue", () => {
-  it("is deterministic and validates its strict schema", async () => {
-    const first = await buildFpMentionOfferQueue();
-    const second = await computeQueue();
-    expect(FpMentionOfferQueueReportSchema.parse(first.report)).toEqual(
-      first.report,
-    );
-    expect(second).toEqual(first);
-  }, 15_000);
+  it(
+    "is deterministic and validates its strict schema",
+    async () => {
+      const first = await buildFpMentionOfferQueue();
+      const second = await computeQueue();
+      expect(FpMentionOfferQueueReportSchema.parse(first.report)).toEqual(
+        first.report,
+      );
+      expect(second).toEqual(first);
+    },
+    HEAVY_ANALYSIS_TEST_TIMEOUT,
+  );
 
   it("keeps report counts internally consistent", async () => {
     const { report } = await buildFpMentionOfferQueue();
