@@ -1,0 +1,545 @@
+{
+  "schemaVersion": "1.0.0",
+  "snapshotId": "20260812182823819-b36dc2a9111a",
+  "totalOffers": 1054,
+  "matchedOfferCount": 46,
+  "unmatchedOfferCount": 1008,
+  "queuedOfferCount": 44,
+  "requirementMentionOfferCount": 28,
+  "descriptionOnlyMentionOfferCount": 6,
+  "reviewedQualificationExactOfferCount": 10,
+  "entries": [
+    {
+      "offerId": "1285665268984",
+      "title": "AUXILIARES DE ENFERMERÍA",
+      "province": "León",
+      "sourceName": "ECYL",
+      "originalUrl": "https://empleo.jcyl.es/web/jcyl/Empleo/es/Plantilla100Detalle/1284216458054/OfertasEmpleo/1285665268984/Empleo",
+      "mentionScope": "description_only_fp",
+      "reviewedQualificationLabels": [],
+      "candidateProgramKeys": [],
+      "requirementQuotes": []
+    },
+    {
+      "offerId": "1285665418087",
+      "title": "CHAPISTAS-PINTORES DE VEHÍCULOS",
+      "province": "Zamora",
+      "sourceName": "ECYL",
+      "originalUrl": "https://empleo.jcyl.es/web/jcyl/Empleo/es/Plantilla100Detalle/1284216458054/OfertasEmpleo/1285665418087/Empleo",
+      "mentionScope": "description_only_fp",
+      "reviewedQualificationLabels": [],
+      "candidateProgramKeys": [],
+      "requirementQuotes": []
+    },
+    {
+      "offerId": "1285669925123",
+      "title": "ELECTROMECÁNICOS DE MANTENIMIENTO INDUSTRIAL (MANTENIMIENTO Y REPARACIÓN GENERAL)",
+      "province": "Soria",
+      "sourceName": "ECYL",
+      "originalUrl": "https://empleo.jcyl.es/web/jcyl/Empleo/es/Plantilla100Detalle/1284216458054/OfertasEmpleo/1285669925123/Empleo",
+      "mentionScope": "description_only_fp",
+      "reviewedQualificationLabels": [],
+      "candidateProgramKeys": [],
+      "requirementQuotes": []
+    },
+    {
+      "offerId": "1285670009206",
+      "title": "EMPLEADOS ADMINISTRATIVOS, EN GENERAL",
+      "province": "León",
+      "sourceName": "ECYL",
+      "originalUrl": "https://empleo.jcyl.es/web/jcyl/Empleo/es/Plantilla100Detalle/1284216458054/OfertasEmpleo/1285670009206/Empleo",
+      "mentionScope": "description_only_fp",
+      "reviewedQualificationLabels": [],
+      "candidateProgramKeys": [],
+      "requirementQuotes": []
+    },
+    {
+      "offerId": "1285664411823",
+      "title": "MECÁNICOS DE MANTENIMIENTO Y REPARACIÓN DE AUTOMOCIÓN, EN GENERAL",
+      "province": "Soria",
+      "sourceName": "ECYL",
+      "originalUrl": "https://empleo.jcyl.es/web/jcyl/Empleo/es/Plantilla100Detalle/1284216458054/OfertasEmpleo/1285664411823/Empleo",
+      "mentionScope": "description_only_fp",
+      "reviewedQualificationLabels": [],
+      "candidateProgramKeys": [],
+      "requirementQuotes": []
+    },
+    {
+      "offerId": "1285667333256",
+      "title": "MONITORES DE EDUCACIÓN Y TIEMPO LIBRE",
+      "province": "León",
+      "sourceName": "ECYL",
+      "originalUrl": "https://empleo.jcyl.es/web/jcyl/Empleo/es/Plantilla100Detalle/1284216458054/OfertasEmpleo/1285667333256/Empleo",
+      "mentionScope": "description_only_fp",
+      "reviewedQualificationLabels": [],
+      "candidateProgramKeys": [],
+      "requirementQuotes": []
+    },
+    {
+      "offerId": "1285669061505",
+      "title": "10 Operarios/as de producción industrial con FP para Ponferrada (León)",
+      "province": "León",
+      "sourceName": "Internet / Prensa",
+      "originalUrl": "https://empleo.jcyl.es/web/jcyl/Empleo/es/Plantilla100Detalle/1284216458054/OfertasEmpleo/1285669061505/Empleo",
+      "mentionScope": "requirement_generic_fp",
+      "reviewedQualificationLabels": [],
+      "candidateProgramKeys": [],
+      "requirementQuotes": [
+        "Formación Profesional Grado Superior (FP Superior/FP II) en Electricidad, Mecánica, Robótica, Mecatrónica o similar."
+      ]
+    },
+    {
+      "offerId": "1285666473419",
+      "title": "2 Auxiliar Administrativo/a para Ayto. de Tordesillas (Valladolid)",
+      "province": "Valladolid",
+      "sourceName": "Organismo oficial",
+      "originalUrl": "https://empleo.jcyl.es/web/jcyl/Empleo/es/Plantilla100Detalle/1284216458054/OfertasEmpleo/1285666473419/Empleo",
+      "mentionScope": "requirement_generic_fp",
+      "reviewedQualificationLabels": [],
+      "candidateProgramKeys": [],
+      "requirementQuotes": ["Graduado en ESO, FP básica o equivalente"]
+    },
+    {
+      "offerId": "1285669061395",
+      "title": "2 Técnicos/as de mantenimiento industrial para Ponferrada (León)",
+      "province": "León",
+      "sourceName": "Internet / Prensa",
+      "originalUrl": "https://empleo.jcyl.es/web/jcyl/Empleo/es/Plantilla100Detalle/1284216458054/OfertasEmpleo/1285669061395/Empleo",
+      "mentionScope": "requirement_generic_fp",
+      "reviewedQualificationLabels": [],
+      "candidateProgramKeys": [],
+      "requirementQuotes": [
+        "Se valorará Formación Profesional en Mantenimiento industrial (mecánica, electricidad, automatización, mecatrónica, etc.) o similar."
+      ]
+    },
+    {
+      "offerId": "1285669061283",
+      "title": "Administrativo/a con inglés para Miranda de Ebro (Burgos)",
+      "province": "Burgos",
+      "sourceName": "Internet / Prensa",
+      "originalUrl": "https://empleo.jcyl.es/web/jcyl/Empleo/es/Plantilla100Detalle/1284216458054/OfertasEmpleo/1285669061283/Empleo",
+      "mentionScope": "requirement_generic_fp",
+      "reviewedQualificationLabels": [],
+      "candidateProgramKeys": [],
+      "requirementQuotes": ["Formación: FP Grado Medio."]
+    },
+    {
+      "offerId": "1285669341562",
+      "title": "Auxiliar de Biblioteca para Ayto. de Santovenia de Pisuerga (Valladolid)",
+      "province": "Valladolid",
+      "sourceName": "Organismo oficial",
+      "originalUrl": "https://empleo.jcyl.es/web/jcyl/Empleo/es/Plantilla100Detalle/1284216458054/OfertasEmpleo/1285669341562/Empleo",
+      "mentionScope": "requirement_generic_fp",
+      "reviewedQualificationLabels": [],
+      "candidateProgramKeys": [],
+      "requirementQuotes": [
+        "Graduado Escolar, Graduado ESO, Formación Profesional de Grado medio o equivalente"
+      ]
+    },
+    {
+      "offerId": "1285669062498",
+      "title": "Auxiliar de Mantenimiento de Edificios para Valladolid",
+      "province": "Valladolid",
+      "sourceName": "Internet / Prensa",
+      "originalUrl": "https://empleo.jcyl.es/web/jcyl/Empleo/es/Plantilla100Detalle/1284216458054/OfertasEmpleo/1285669062498/Empleo",
+      "mentionScope": "requirement_generic_fp",
+      "reviewedQualificationLabels": [],
+      "candidateProgramKeys": [],
+      "requirementQuotes": [
+        "Valorable Formación Profesional relacionada con mantenimiento de edificios e instalaciones."
+      ]
+    },
+    {
+      "offerId": "1285669062388",
+      "title": "Chapista Soldador/a para Valladolid",
+      "province": "Valladolid",
+      "sourceName": "Internet / Prensa",
+      "originalUrl": "https://empleo.jcyl.es/web/jcyl/Empleo/es/Plantilla100Detalle/1284216458054/OfertasEmpleo/1285669062388/Empleo",
+      "mentionScope": "requirement_generic_fp",
+      "reviewedQualificationLabels": [],
+      "candidateProgramKeys": [],
+      "requirementQuotes": ["Formación: FP Grado Medio."]
+    },
+    {
+      "offerId": "1285650939495",
+      "title": "CHAPISTAS INDUSTRIALES",
+      "province": "Zamora",
+      "sourceName": "ECYL",
+      "originalUrl": "https://empleo.jcyl.es/web/jcyl/Empleo/es/Plantilla100Detalle/1284216458054/OfertasEmpleo/1285650939495/Empleo",
+      "mentionScope": "requirement_generic_fp",
+      "reviewedQualificationLabels": [],
+      "candidateProgramKeys": [],
+      "requirementQuotes": ["FP de Automoción. Permiso de circulación."]
+    },
+    {
+      "offerId": "1285639171849",
+      "title": "CUIDADORES DE PERSONAS CON DISCAPACIDAD Y/O DEPENDENCIA, EN INSTITUCIONES",
+      "province": "Zamora",
+      "sourceName": "ECYL",
+      "originalUrl": "https://empleo.jcyl.es/web/jcyl/Empleo/es/Plantilla100Detalle/1284216458054/OfertasEmpleo/1285639171849/Empleo",
+      "mentionScope": "requirement_generic_fp",
+      "reviewedQualificationLabels": [],
+      "candidateProgramKeys": [],
+      "requirementQuotes": [
+        "Formación Profesional ó Certificado de Profesionalidad relacionado con la ocupación. Permiso de circulación."
+      ]
+    },
+    {
+      "offerId": "1285666004744",
+      "title": "CUIDADORES DE PERSONAS CON DISCAPACIDAD Y/O DEPENDENCIA, EN INSTITUCIONES",
+      "province": "Zamora",
+      "sourceName": "ECYL",
+      "originalUrl": "https://empleo.jcyl.es/web/jcyl/Empleo/es/Plantilla100Detalle/1284216458054/OfertasEmpleo/1285666004744/Empleo",
+      "mentionScope": "requirement_generic_fp",
+      "reviewedQualificationLabels": [],
+      "candidateProgramKeys": [],
+      "requirementQuotes": [
+        "Formación en atención Sociosanitaria o FP de Auxiliar de Enfermería."
+      ]
+    },
+    {
+      "offerId": "1285669061367",
+      "title": "Diseñador/a de interiores- Comercial para Burgos",
+      "province": "Burgos",
+      "sourceName": "Internet / Prensa",
+      "originalUrl": "https://empleo.jcyl.es/web/jcyl/Empleo/es/Plantilla100Detalle/1284216458054/OfertasEmpleo/1285669061367/Empleo",
+      "mentionScope": "requirement_generic_fp",
+      "reviewedQualificationLabels": [],
+      "candidateProgramKeys": [],
+      "requirementQuotes": [
+        "Estudios mínimos: Formación Profesional Grado Medio."
+      ]
+    },
+    {
+      "offerId": "1285667169339",
+      "title": "ELECTROMECÁNICOS DE MANTENIMIENTO INDUSTRIAL (MANTENIMIENTO Y REPARACIÓN GENERAL)",
+      "province": "León",
+      "sourceName": "ECYL",
+      "originalUrl": "https://empleo.jcyl.es/web/jcyl/Empleo/es/Plantilla100Detalle/1284216458054/OfertasEmpleo/1285667169339/Empleo",
+      "mentionScope": "requirement_generic_fp",
+      "reviewedQualificationLabels": [],
+      "candidateProgramKeys": [],
+      "requirementQuotes": [
+        "Formación Profesional en el área y experiencia de 12 meses."
+      ]
+    },
+    {
+      "offerId": "1285631873078",
+      "title": "EMPLEADOS ADMINISTRATIVOS, EN GENERAL",
+      "province": "Zamora",
+      "sourceName": "ECYL",
+      "originalUrl": "https://empleo.jcyl.es/web/jcyl/Empleo/es/Plantilla100Detalle/1284216458054/OfertasEmpleo/1285631873078/Empleo",
+      "mentionScope": "requirement_generic_fp",
+      "reviewedQualificationLabels": [],
+      "candidateProgramKeys": [],
+      "requirementQuotes": [
+        "FP Administración y Finanzas o Graduados en ADE, Economía o similares."
+      ]
+    },
+    {
+      "offerId": "1285650938999",
+      "title": "ENCARGADOS DE OBRA CIVIL, EN GENERAL",
+      "province": "Zamora",
+      "sourceName": "ECYL",
+      "originalUrl": "https://empleo.jcyl.es/web/jcyl/Empleo/es/Plantilla100Detalle/1284216458054/OfertasEmpleo/1285650938999/Empleo",
+      "mentionScope": "requirement_generic_fp",
+      "reviewedQualificationLabels": [],
+      "candidateProgramKeys": [],
+      "requirementQuotes": [
+        "Título de formación profesional de Grado Superior Proyectos de Obra Civil. Permiso de conducir clase B."
+      ]
+    },
+    {
+      "offerId": "1285667274442",
+      "title": "Integrador/a social para León",
+      "province": "León",
+      "sourceName": "Internet / Prensa",
+      "originalUrl": "https://empleo.jcyl.es/web/jcyl/Empleo/es/Plantilla100Detalle/1284216458054/OfertasEmpleo/1285667274442/Empleo",
+      "mentionScope": "requirement_generic_fp",
+      "reviewedQualificationLabels": [],
+      "candidateProgramKeys": [],
+      "requirementQuotes": [
+        "Formación Profesional de Grado Superior en Integración Social o titulación afín."
+      ]
+    },
+    {
+      "offerId": "1285669974728",
+      "title": "Maquinista para la Diputación de Salamanca",
+      "province": "Salamanca",
+      "sourceName": "Organismo oficial",
+      "originalUrl": "https://empleo.jcyl.es/web/jcyl/Empleo/es/Plantilla100Detalle/1284216458054/OfertasEmpleo/1285669974728/Empleo",
+      "mentionScope": "requirement_generic_fp",
+      "reviewedQualificationLabels": [],
+      "candidateProgramKeys": [],
+      "requirementQuotes": ["ESO, GE, FP 1 Grado o equivalente"]
+    },
+    {
+      "offerId": "1285670033786",
+      "title": "Maquinista para la Diputación de Salamanca",
+      "province": "Salamanca",
+      "sourceName": "Organismo oficial",
+      "originalUrl": "https://empleo.jcyl.es/web/jcyl/Empleo/es/Plantilla100Detalle/1284216458054/OfertasEmpleo/1285670033786/Empleo",
+      "mentionScope": "requirement_generic_fp",
+      "reviewedQualificationLabels": [],
+      "candidateProgramKeys": [],
+      "requirementQuotes": ["ESO, GE, FP 1 Grado o equivalente"]
+    },
+    {
+      "offerId": "1285669061645",
+      "title": "Montador/a mecánico/a de vagones para Medina del Campo (Valladolid)",
+      "province": "Valladolid",
+      "sourceName": "Internet / Prensa",
+      "originalUrl": "https://empleo.jcyl.es/web/jcyl/Empleo/es/Plantilla100Detalle/1284216458054/OfertasEmpleo/1285669061645/Empleo",
+      "mentionScope": "requirement_generic_fp",
+      "reviewedQualificationLabels": [],
+      "candidateProgramKeys": [],
+      "requirementQuotes": [
+        "Nivel de estudios requerido: FP o cualquier otro nivel de estudios, siempre que la persona tenga habilidad demostrable en montaje y desmontaje."
+      ]
+    },
+    {
+      "offerId": "1285667535089",
+      "title": "Oficial/a de 2ª para Ayto. de Ólvega (Soria)",
+      "province": "Otra",
+      "sourceName": "Organismo oficial",
+      "originalUrl": "https://empleo.jcyl.es/web/jcyl/Empleo/es/Plantilla100Detalle/1284216458054/OfertasEmpleo/1285667535089/Empleo",
+      "mentionScope": "requirement_generic_fp",
+      "reviewedQualificationLabels": [],
+      "candidateProgramKeys": [],
+      "requirementQuotes": [
+        "Graduado Escolar, Graduado E.S.O., F.P. I o equivalentes"
+      ]
+    },
+    {
+      "offerId": "1285661589449",
+      "title": "PELUQUEROS UNISEX",
+      "province": "León",
+      "sourceName": "ECYL",
+      "originalUrl": "https://empleo.jcyl.es/web/jcyl/Empleo/es/Plantilla100Detalle/1284216458054/OfertasEmpleo/1285661589449/Empleo",
+      "mentionScope": "requirement_generic_fp",
+      "reviewedQualificationLabels": [],
+      "candidateProgramKeys": [],
+      "requirementQuotes": ["- Formación Profesional en el área."]
+    },
+    {
+      "offerId": "1285625266787",
+      "title": "Soldador/a TIG para Burgos",
+      "province": "Burgos",
+      "sourceName": "Internet / Prensa",
+      "originalUrl": "https://empleo.jcyl.es/web/jcyl/Empleo/es/Plantilla100Detalle/1284216458054/OfertasEmpleo/1285625266787/Empleo",
+      "mentionScope": "requirement_generic_fp",
+      "reviewedQualificationLabels": [],
+      "candidateProgramKeys": [],
+      "requirementQuotes": [
+        "Formación Profesional Grado Superior o Ciclo formativo de Grado Medio en soldadura o áreas similares."
+      ]
+    },
+    {
+      "offerId": "1285669061673",
+      "title": "Soldador/a TIG-MAG para Burgos",
+      "province": "Burgos",
+      "sourceName": "Internet / Prensa",
+      "originalUrl": "https://empleo.jcyl.es/web/jcyl/Empleo/es/Plantilla100Detalle/1284216458054/OfertasEmpleo/1285669061673/Empleo",
+      "mentionScope": "requirement_generic_fp",
+      "reviewedQualificationLabels": [],
+      "candidateProgramKeys": [],
+      "requirementQuotes": [
+        "Formación Profesional de Grado Medio en Mecanizado o similar."
+      ]
+    },
+    {
+      "offerId": "1285667274780",
+      "title": "Técnico/a de mantenimiento industrial para Venta de Baños (Palencia)",
+      "province": "Palencia",
+      "sourceName": "Internet / Prensa",
+      "originalUrl": "https://empleo.jcyl.es/web/jcyl/Empleo/es/Plantilla100Detalle/1284216458054/OfertasEmpleo/1285667274780/Empleo",
+      "mentionScope": "requirement_generic_fp",
+      "reviewedQualificationLabels": [],
+      "candidateProgramKeys": [],
+      "requirementQuotes": [
+        "FP Superior en Electromecánica o rama técnica (formación mínima exigible)."
+      ]
+    },
+    {
+      "offerId": "1285669061701",
+      "title": "Técnico/a de soporte n2 de automatización y robotización de farmacias para Miranda de Ebro (Burgos)",
+      "province": "Burgos",
+      "sourceName": "Internet / Prensa",
+      "originalUrl": "https://empleo.jcyl.es/web/jcyl/Empleo/es/Plantilla100Detalle/1284216458054/OfertasEmpleo/1285669061701/Empleo",
+      "mentionScope": "requirement_generic_fp",
+      "reviewedQualificationLabels": [],
+      "candidateProgramKeys": [],
+      "requirementQuotes": [
+        "Formación académica: FP Superior en Informática, Telecomunicaciones o similar."
+      ]
+    },
+    {
+      "offerId": "1285667844992",
+      "title": "TÉCNICOS DE MANTENIMIENTO DE EQUIPOS ELECTROMECÁNICOS",
+      "province": "Zamora",
+      "sourceName": "ECYL",
+      "originalUrl": "https://empleo.jcyl.es/web/jcyl/Empleo/es/Plantilla100Detalle/1284216458054/OfertasEmpleo/1285667844992/Empleo",
+      "mentionScope": "requirement_generic_fp",
+      "reviewedQualificationLabels": [],
+      "candidateProgramKeys": [],
+      "requirementQuotes": [
+        "Formación FP mantenimiento de vehículos. Permiso de conducir B. Permiso C y CAP recomendable. Experiencia 12 meses."
+      ]
+    },
+    {
+      "offerId": "1285667665377",
+      "title": "TÉCNICOS DE MANTENIMIENTO MECÁNICO",
+      "province": "Zamora",
+      "sourceName": "ECYL",
+      "originalUrl": "https://empleo.jcyl.es/web/jcyl/Empleo/es/Plantilla100Detalle/1284216458054/OfertasEmpleo/1285667665377/Empleo",
+      "mentionScope": "requirement_generic_fp",
+      "reviewedQualificationLabels": [],
+      "candidateProgramKeys": [],
+      "requirementQuotes": [
+        "Formación FP mantenimiento de vehículos. Permiso de conducir B. Permiso C y CAP recomendable. Experiencia 12 meses."
+      ]
+    },
+    {
+      "offerId": "1285665334667",
+      "title": "TÉCNICOS EN ORGANIZACIÓN DE MANTENIMIENTO INDUSTRIAL",
+      "province": "León",
+      "sourceName": "ECYL",
+      "originalUrl": "https://empleo.jcyl.es/web/jcyl/Empleo/es/Plantilla100Detalle/1284216458054/OfertasEmpleo/1285665334667/Empleo",
+      "mentionScope": "requirement_generic_fp",
+      "reviewedQualificationLabels": [],
+      "candidateProgramKeys": [],
+      "requirementQuotes": [
+        "Valorable F.P. medio/superior en mantenimiento industrial, fontanería, electricidad, climatización o similares."
+      ]
+    },
+    {
+      "offerId": "1285665380230",
+      "title": "TÉCNICOS EN ORGANIZACIÓN DE MANTENIMIENTO INDUSTRIAL",
+      "province": "León",
+      "sourceName": "ECYL",
+      "originalUrl": "https://empleo.jcyl.es/web/jcyl/Empleo/es/Plantilla100Detalle/1284216458054/OfertasEmpleo/1285665380230/Empleo",
+      "mentionScope": "requirement_generic_fp",
+      "reviewedQualificationLabels": [],
+      "candidateProgramKeys": [],
+      "requirementQuotes": [
+        "Valorable F.P. medio/superior de mantenimiento industrial, fontanería, electricidad, climatización y/o similares."
+      ]
+    },
+    {
+      "offerId": "1285666782201",
+      "title": "10 Bombero/a para Diputación de Burgos",
+      "province": "Burgos",
+      "sourceName": "Organismo oficial",
+      "originalUrl": "https://empleo.jcyl.es/web/jcyl/Empleo/es/Plantilla100Detalle/1284216458054/OfertasEmpleo/1285666782201/Empleo",
+      "mentionScope": "reviewed_qualification_exact",
+      "reviewedQualificationLabels": ["Bachiller o equivalente"],
+      "candidateProgramKeys": [],
+      "requirementQuotes": []
+    },
+    {
+      "offerId": "1285663591944",
+      "title": "2 Auxiliar Administrativo/a para Ayto. de Onzonilla (León)",
+      "province": "León",
+      "sourceName": "Organismo oficial",
+      "originalUrl": "https://empleo.jcyl.es/web/jcyl/Empleo/es/Plantilla100Detalle/1284216458054/OfertasEmpleo/1285663591944/Empleo",
+      "mentionScope": "reviewed_qualification_exact",
+      "reviewedQualificationLabels": ["Graduado en ESO o equivalente"],
+      "candidateProgramKeys": [],
+      "requirementQuotes": []
+    },
+    {
+      "offerId": "1285668469050",
+      "title": "Agente de información, colaboración y gestión ciudadana para Ayto. de Santa María del Páramo (León)",
+      "province": "León",
+      "sourceName": "Organismo oficial",
+      "originalUrl": "https://empleo.jcyl.es/web/jcyl/Empleo/es/Plantilla100Detalle/1284216458054/OfertasEmpleo/1285668469050/Empleo",
+      "mentionScope": "reviewed_qualification_exact",
+      "reviewedQualificationLabels": ["Graduado en ESO o equivalente"],
+      "candidateProgramKeys": [],
+      "requirementQuotes": []
+    },
+    {
+      "offerId": "1285659956971",
+      "title": "COCINEROS, EN GENERAL",
+      "province": "Burgos",
+      "sourceName": "ECYL",
+      "originalUrl": "https://empleo.jcyl.es/web/jcyl/Empleo/es/Plantilla100Detalle/1284216458054/OfertasEmpleo/1285659956971/Empleo",
+      "mentionScope": "reviewed_qualification_exact",
+      "reviewedQualificationLabels": ["Técnico en Cocina y Gastronomía"],
+      "candidateProgramKeys": [],
+      "requirementQuotes": []
+    },
+    {
+      "offerId": "1285625267155",
+      "title": "Enfermero/a para Zamora",
+      "province": "Zamora",
+      "sourceName": "Internet / Prensa",
+      "originalUrl": "https://empleo.jcyl.es/web/jcyl/Empleo/es/Plantilla100Detalle/1284216458054/OfertasEmpleo/1285625267155/Empleo",
+      "mentionScope": "reviewed_qualification_exact",
+      "reviewedQualificationLabels": ["Grado en Enfermería"],
+      "candidateProgramKeys": [],
+      "requirementQuotes": []
+    },
+    {
+      "offerId": "1285641113411",
+      "title": "ENFERMEROS DE CUIDADOS GENERALES",
+      "province": "Zamora",
+      "sourceName": "ECYL",
+      "originalUrl": "https://empleo.jcyl.es/web/jcyl/Empleo/es/Plantilla100Detalle/1284216458054/OfertasEmpleo/1285641113411/Empleo",
+      "mentionScope": "reviewed_qualification_exact",
+      "reviewedQualificationLabels": ["Grado en Enfermería"],
+      "candidateProgramKeys": [],
+      "requirementQuotes": []
+    },
+    {
+      "offerId": "1285643614679",
+      "title": "ENFERMEROS DE CUIDADOS GENERALES",
+      "province": "Zamora",
+      "sourceName": "ECYL",
+      "originalUrl": "https://empleo.jcyl.es/web/jcyl/Empleo/es/Plantilla100Detalle/1284216458054/OfertasEmpleo/1285643614679/Empleo",
+      "mentionScope": "reviewed_qualification_exact",
+      "reviewedQualificationLabels": ["Grado en Enfermería"],
+      "candidateProgramKeys": [],
+      "requirementQuotes": []
+    },
+    {
+      "offerId": "1285640580510",
+      "title": "FISIOTERAPEUTAS, EN GENERAL",
+      "province": "Zamora",
+      "sourceName": "ECYL",
+      "originalUrl": "https://empleo.jcyl.es/web/jcyl/Empleo/es/Plantilla100Detalle/1284216458054/OfertasEmpleo/1285640580510/Empleo",
+      "mentionScope": "reviewed_qualification_exact",
+      "reviewedQualificationLabels": ["Grado en Fisioterapia"],
+      "candidateProgramKeys": [],
+      "requirementQuotes": []
+    },
+    {
+      "offerId": "1285659957727",
+      "title": "FISIOTERAPEUTAS, EN GENERAL",
+      "province": "Zamora",
+      "sourceName": "ECYL",
+      "originalUrl": "https://empleo.jcyl.es/web/jcyl/Empleo/es/Plantilla100Detalle/1284216458054/OfertasEmpleo/1285659957727/Empleo",
+      "mentionScope": "reviewed_qualification_exact",
+      "reviewedQualificationLabels": ["Grado en Fisioterapia"],
+      "candidateProgramKeys": [],
+      "requirementQuotes": []
+    },
+    {
+      "offerId": "1285659957783",
+      "title": "TERAPEUTAS OCUPACIONALES",
+      "province": "Zamora",
+      "sourceName": "ECYL",
+      "originalUrl": "https://empleo.jcyl.es/web/jcyl/Empleo/es/Plantilla100Detalle/1284216458054/OfertasEmpleo/1285659957783/Empleo",
+      "mentionScope": "reviewed_qualification_exact",
+      "reviewedQualificationLabels": ["Grado en Terapia Ocupacional"],
+      "candidateProgramKeys": [],
+      "requirementQuotes": []
+    }
+  ],
+  "limitations": [
+    "La cola solo prioriza ofertas no enlazadas de la instantánea publicada.",
+    "Una mención genérica a FP no demuestra por sí sola una relación con un ciclo concreto.",
+    "Solo las titulaciones del catálogo cerrado revisado se marcan como coincidencia exacta.",
+    "Ninguna entrada se publica automáticamente como relación o alias."
+  ]
+}

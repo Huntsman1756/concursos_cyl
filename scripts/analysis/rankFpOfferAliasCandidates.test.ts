@@ -184,7 +184,7 @@ describe("rankFpOfferAliasCandidates – exclusion of already-published aliases"
   });
 });
 
-describe("rankFpOfferAliasCandidates – zero-match-only scope", () => {
+describe("rankFpOfferAliasCandidates – all-approved-relations scope", () => {
   it("zeroMatchRelations count matches the number of program-occupation pairs with zero offer matches", async () => {
     const { report } = await rankFpOfferAliasCandidates();
 
@@ -193,6 +193,15 @@ describe("rankFpOfferAliasCandidates – zero-match-only scope", () => {
     expect(report.zeroMatchRelations).toBeLessThanOrEqual(
       report.approvedLinkCount,
     );
+  });
+
+  it("analyzes every approved relation, including relations with existing matches", async () => {
+    const { report } = await rankFpOfferAliasCandidates();
+    expect(report.analyzedRelations).toBe(report.approvedLinkCount);
+    expect(report.relationsWithExistingMatches).toBeGreaterThan(0);
+    expect(
+      report.relationsWithExistingMatches + report.zeroMatchRelations,
+    ).toBe(report.analyzedRelations);
   });
 
   it("all candidates reference approved links (sourceUrl and sourceQuote match)", async () => {
@@ -269,6 +278,38 @@ describe("rankFpOfferAliasCandidates – candidate properties", () => {
     const { report } = await rankFpOfferAliasCandidates();
     for (const c of report.candidates) {
       expect(c.occurrenceCount).toBeGreaterThanOrEqual(1);
+    }
+  });
+
+  it("every candidate adds sorted offers beyond its current program baseline", async () => {
+    const { report } = await rankFpOfferAliasCandidates();
+    const marginalUnion = new Set<string>();
+    for (const candidate of report.candidates) {
+      expect(candidate.marginalOfferCount).toBe(
+        candidate.marginalOfferIds.length,
+      );
+      expect(candidate.marginalOfferCount).toBeGreaterThan(0);
+      expect(candidate.marginalOfferIds).toEqual(
+        [...candidate.marginalOfferIds].sort(),
+      );
+      for (const offerId of candidate.marginalOfferIds) {
+        expect(candidate.matchedOfferIds).toContain(offerId);
+        marginalUnion.add(offerId);
+      }
+    }
+    expect(report.marginalCandidateOfferCount).toBe(marginalUnion.size);
+  });
+
+  it("sorts candidates by confidence and then marginal offer gain", async () => {
+    const { report } = await rankFpOfferAliasCandidates();
+    for (let index = 1; index < report.candidates.length; index += 1) {
+      const previous = report.candidates[index - 1];
+      const current = report.candidates[index];
+      if (previous.confidence === current.confidence) {
+        expect(previous.marginalOfferCount).toBeGreaterThanOrEqual(
+          current.marginalOfferCount,
+        );
+      }
     }
   });
 
@@ -668,7 +709,7 @@ describe("rankFpOfferAliasCandidates – markdown collision column", () => {
 });
 
 describe("rankFpOfferAliasCandidates – markdown row format", () => {
-  it("markdown table uses the 6-column header with Colisiones and every data row matches it, uses singular '1 oferta', excludes stray text, and ends with the snapshot disclaimer", async () => {
+  it("markdown table exposes marginal gain and collisions, uses singular '1 oferta', excludes stray text, and ends with the snapshot disclaimer", async () => {
     const { markdown } = await rankFpOfferAliasCandidates();
     const lines = markdown.split("\n");
 
@@ -677,9 +718,9 @@ describe("rankFpOfferAliasCandidates – markdown row format", () => {
       "| Alias | Programa | Ocupación | Ofertas | Causa |",
     );
 
-    // Every line starting with '| Alias |' must equal the 6-column header
+    // Every line starting with '| Alias |' must equal the 7-column header
     const header =
-      "| Alias | Programa | Ocupación | Ofertas | Causa | Colisiones |";
+      "| Alias | Programa | Ocupación | Ofertas | Ganancia marginal | Causa | Colisiones |";
     const aliasHeaders = lines.filter((line) => line.startsWith("| Alias |"));
     expect(aliasHeaders.length).toBeGreaterThan(0);
     for (const h of aliasHeaders) {

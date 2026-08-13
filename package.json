@@ -32,6 +32,10 @@
     "contest:evidence:capture": "tsx scripts/release/captureContestEvidence.ts",
     "analysis:fp:alias-candidates": "tsx scripts/analysis/rankFpOfferAliasCandidates.ts",
     "analysis:fp:alias-candidates:check": "npm test -- scripts/analysis/rankFpOfferAliasCandidates.test.ts",
+    "analysis:fp:mention-queue": "tsx scripts/analysis/buildFpMentionOfferQueue.ts",
+    "analysis:fp:mention-queue:check": "npm test -- scripts/analysis/buildFpMentionOfferQueue.test.ts",
+    "analysis:fp:marginal-impact": "tsx scripts/analysis/measureFpMarginalAliasImpact.ts",
+    "analysis:fp:marginal-impact:check": "npm test -- scripts/analysis/measureFpMarginalAliasImpact.test.ts scripts/analysis/validateFpMarginalAliasReview.test.ts",
     "analysis:fp:research-queue": "tsx scripts/analysis/buildFpCoverageResearchQueue.ts",
     "analysis:fp:research-queue:check": "npm test -- scripts/analysis/buildFpCoverageResearchQueue.test.ts"
   },

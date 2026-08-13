@@ -737,5 +737,26 @@
     "reviewStatus": "approved",
     "reviewedAt": "2026-08-12",
     "mappingVersion": "1.0.0"
+  },
+  {
+    "alias": "Bañistas-socorristas",
+    "occupationId": "occupation:cno11:5992",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-13",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "alias": "Agentes de compras",
+    "occupationId": "occupation:cno11:3522",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-13",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "alias": "Integrador/a social",
+    "occupationId": "occupation:cno11:3713",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-13",
+    "mappingVersion": "1.0.0"
   }
 ]

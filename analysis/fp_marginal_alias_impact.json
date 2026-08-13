@@ -1,0 +1,54 @@
+{
+  "schemaVersion": "1.0.0",
+  "snapshotId": "20260812182823819-b36dc2a9111a",
+  "baselineMatchedOfferCount": 46,
+  "proposedMatchedOfferCount": 50,
+  "marginalOfferCount": 4,
+  "marginalOfferIds": [
+    "1285663318503",
+    "1285667274442",
+    "1285668536344",
+    "1285669689957"
+  ],
+  "expectedAcceptedOfferCount": 4,
+  "expectedAcceptedOfferIds": [
+    "1285663318503",
+    "1285667274442",
+    "1285668536344",
+    "1285669689957"
+  ],
+  "missingExpectedOfferIds": [],
+  "unexpectedOfferIds": [],
+  "programDeltas": [
+    {
+      "programKey": "AFD01S",
+      "beforeOfferCount": 0,
+      "afterOfferCount": 2,
+      "marginalOfferIds": ["1285663318503", "1285669689957"]
+    },
+    {
+      "programKey": "AFD01SD",
+      "beforeOfferCount": 0,
+      "afterOfferCount": 2,
+      "marginalOfferIds": ["1285663318503", "1285669689957"]
+    },
+    {
+      "programKey": "COM01M",
+      "beforeOfferCount": 0,
+      "afterOfferCount": 1,
+      "marginalOfferIds": ["1285668536344"]
+    },
+    {
+      "programKey": "SSC03S",
+      "beforeOfferCount": 0,
+      "afterOfferCount": 1,
+      "marginalOfferIds": ["1285667274442"]
+    },
+    {
+      "programKey": "SSC03SD",
+      "beforeOfferCount": 0,
+      "afterOfferCount": 1,
+      "marginalOfferIds": ["1285667274442"]
+    }
+  ]
+}
