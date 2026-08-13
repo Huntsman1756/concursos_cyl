@@ -1987,6 +1987,10 @@ const FP_MARGINAL_ALIAS_REVIEW_PATH = [
   "analysis",
   "fp_marginal_alias_review.json",
 ] as const;
+const FP_SPECIFIC_EVIDENCE_REVIEW_PATH = [
+  "analysis",
+  "fp_specific_evidence_review.json",
+] as const;
 
 const MarginalAliasSnapshotReferenceSchema = z
   .object({
@@ -2057,6 +2061,18 @@ async function marginalAliasReviewSnapshotIds(
   return new Set([review.snapshotId]);
 }
 
+async function specificEvidenceReviewSnapshotIds(
+  root: string,
+): Promise<Set<string>> {
+  const path = resolve(root, ...FP_SPECIFIC_EVIDENCE_REVIEW_PATH);
+  if (!(await pathExists(path))) return new Set();
+
+  const review = MarginalAliasSnapshotReferenceSchema.parse(
+    JSON.parse(await readFile(path, "utf8")),
+  );
+  return new Set([review.snapshotId]);
+}
+
 async function terminalExpansionSnapshotIds(
   root: string,
 ): Promise<Set<string>> {
@@ -2111,6 +2127,7 @@ async function completedPilotSnapshotDistributionOptions(
     ...(await completedPilotSnapshotIds(root)),
     ...(await terminalExpansionSnapshotIds(root)),
     ...(await marginalAliasReviewSnapshotIds(root)),
+    ...(await specificEvidenceReviewSnapshotIds(root)),
     ...HISTORICAL_PINNED_SNAPSHOT_IDS,
     ...retainedSnapshotIds,
   ]);
@@ -2179,6 +2196,7 @@ async function enforceSnapshotRetention(
     ...(await completedPilotSnapshotIds(root)),
     ...(await terminalExpansionSnapshotIds(root)),
     ...(await marginalAliasReviewSnapshotIds(root)),
+    ...(await specificEvidenceReviewSnapshotIds(root)),
     ...HISTORICAL_PINNED_SNAPSHOT_IDS,
     ...immutableSnapshotNames
       .filter(

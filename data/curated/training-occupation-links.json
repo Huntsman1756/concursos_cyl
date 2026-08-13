@@ -1480,5 +1480,25 @@
     "sourceQuote": "Transitario.",
     "reviewedAt": "2026-08-13",
     "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "FME01B",
+    "occupationId": "occupation:cno11:7221",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.boe.es/boe/dias/2014/03/05/pdfs/BOE-A-2014-2360.pdf",
+    "sourceQuote": "Fontanero/a.",
+    "reviewedAt": "2026-08-13",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "FME01B",
+    "occupationId": "occupation:cno11:9700",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.boe.es/boe/dias/2014/03/05/pdfs/BOE-A-2014-2360.pdf",
+    "sourceQuote": "Peones de industrias manufactureras.",
+    "reviewedAt": "2026-08-13",
+    "mappingVersion": "1.0.0"
   }
 ]

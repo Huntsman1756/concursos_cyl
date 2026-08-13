@@ -2370,6 +2370,34 @@ describe("buildSnapshots", { timeout: BUILD_SNAPSHOTS_TEST_TIMEOUT }, () => {
     await expect(access(initialSnapshot)).resolves.toBeUndefined();
   });
 
+  it("retains the FP specific-evidence review snapshot beyond ordinary history", async () => {
+    const root = await temporaryRoot();
+    await buildSnapshots({ rootDirectory: root, ...fixedOptions });
+    const initialSnapshot = dirname(
+      assetPath(
+        root,
+        (await readManifest(root)).resourceSnapshots.programs.resourcePath,
+      ),
+    );
+    const snapshotId = basename(initialSnapshot);
+    await mkdir(join(root, "analysis"), { recursive: true });
+    await writeFile(
+      join(root, "analysis", "fp_specific_evidence_review.json"),
+      JSON.stringify({ snapshotId }),
+      "utf8",
+    );
+
+    for (let day = 2; day <= 5; day += 1) {
+      await buildSnapshots({
+        rootDirectory: root,
+        ...fixedOptions,
+        now: () => new Date(`2026-08-0${day}T10:00:00.000Z`),
+      });
+    }
+
+    await expect(access(initialSnapshot)).resolves.toBeUndefined();
+  });
+
   it("retains a pinned pilot snapshot as an approved subset after a later mapping addition", async () => {
     const root = await temporaryRoot();
     await buildSnapshots({ rootDirectory: root, ...fixedOptions });
