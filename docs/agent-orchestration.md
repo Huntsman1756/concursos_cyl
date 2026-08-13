@@ -9,14 +9,49 @@ cada entrega. Los modelos NAN ejecutan cambios de código únicamente bajo
 contratos acotados emitidos por Sol, sin decidir arquitectura ni hacer
 diagnóstico por sí mismos.
 
-La referencia está fijada en el merge
-`4b9ec4d8b07e285a6f58590ac0199e878548fcaf`. Cambiar modelo, harness, agente,
-permisos o launcher exige cualificar de nuevo la combinación exacta.
+La referencia publicada sigue siendo `v0.2.0`, commit
+`b899e1f546b974ccea0f9580510753c04cd6ccac`. La compatibilidad con la procedencia
+de delegación firmada V4 se revisó contra el merge posterior
+`42cf5c2b1b55628332ce9fc1089957bd4fca3931` de `agent-orchestration-starter`.
+Este último commit aún no tiene release propio, por lo que no se distribuye ni
+instala desde este repositorio. Cambiar modelo, harness, agente, permisos o
+launcher exige cualificar de nuevo la combinación exacta.
 
 Este flujo **no es el runtime V4 completo**. Es una adaptación `BOUNDED_LOCAL`
 para Windows que aprovecha el CLI `opencode`, los agentes locales `nan-code` y
 `nan-bulletin`, un worker PowerShell y un supervisor Frontier. No constituye
 aislamiento duro ni una certificación de host de producción.
+
+## Procedencia de delegación firmada V4
+
+El PR upstream #57 añade un gate opcional antes de publicar. Una firma Ed25519
+del host vincula la ejecución aceptada con el commit, el árbol Git, la política,
+el perfil, la capacidad del worker, la validación, la revisión y las decisiones
+Frontier. Un worker o un modelo no puede fabricar esa autoridad.
+
+Castilla y León no usa todavía `publishFinalizedRunV4`: su supervisor PowerShell
+termina entregando un parche para revisión y la publicación se realiza fuera del
+broker V4. Por ello el inventario de `castilla-leon.nan.yaml` mantiene
+`enforcement: DISABLED`. Ese campo documenta preparación; por sí solo no crea un
+gate ni convierte la telemetría local en evidencia V4.
+
+La activación segura debe respetar este orden:
+
+1. Publicar o fijar un artefacto inmutable del runtime que contenga el merge
+   `42cf5c2b1b55628332ce9fc1089957bd4fca3931`.
+2. Instalar el runtime y conectar las nuevas tareas al supervisor del host, con
+   política y perfil separados y vinculados por hash.
+3. Desplegar el firmante Ed25519 en el almacén de credenciales del host. La clave
+   privada no entra en el repositorio, worktree, entorno del modelo ni logs.
+4. Guardar la evidencia fuera del árbol candidato y completar un shakedown
+   sintético, incluida su recuperación después de reiniciar el host.
+5. Verificar en CI con `runtime verify-delegation`, obteniendo evidencia, clave
+   pública confiada y hashes esperados desde almacenamiento protegido.
+6. Solo entonces cambiar el gate real de publicación a `REQUIRED` y convertir
+   esa verificación en check obligatorio de la rama.
+
+Hasta completar los seis pasos, una ejecución local puede afirmar delegación
+acotada respaldada por telemetría, pero no procedencia firmada obligatoria.
 
 ## Arquitectura
 

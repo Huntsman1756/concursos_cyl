@@ -805,6 +805,16 @@ try {
             Assert-True ($yamlText -match 'frontierSupervisor:\s*\r?\n\s+enabled:\s*true') '18ad1: YAML enables frontier supervisor'
             Assert-True ($yamlText -match 'automaticWorkerRelaunchAfterFrontierRetry:\s*true') '18ad2: YAML declares adaptive relaunch'
             Assert-True ($yamlText -match 'retryFromAcceptedBase:\s*true') '18ad3: YAML requires repair from the accepted base'
+            Assert-True ($yamlText -match 'release:\s*v0\.2\.0') '18ad4: YAML pins the latest released runtime tag'
+            Assert-True ($yamlText -match 'releaseCommit:\s*b899e1f546b974ccea0f9580510753c04cd6ccac') '18ad5: YAML pins the released runtime commit'
+            Assert-True ($yamlText -match 'commit:\s*42cf5c2b1b55628332ce9fc1089957bd4fca3931') '18ad6: YAML pins signed provenance merge'
+            Assert-True ($yamlText -match 'level:\s*BOUNDED_LOCAL') '18ad7: YAML states the evidenced adoption level'
+            Assert-True ($yamlText -match 'delegationProvenance:\s*\r?\n\s+schemaVersion:\s*4') '18ad8: YAML identifies delegation provenance V4'
+            Assert-True ($yamlText -match 'enforcement:\s*DISABLED') '18ad9: YAML keeps provenance enforcement disabled before qualification'
+            Assert-True ($yamlText -match 'publicationThroughRuntimeV4:\s*false') '18ad10: YAML does not claim broker-owned publication'
+            Assert-True ($yamlText -match 'protectedHostSigner:\s*false') '18ad11: YAML records the missing protected signer'
+            Assert-True ($yamlText -match 'syntheticShakedownPassed:\s*false') '18ad12: YAML records the pending signed shakedown'
+            Assert-True ($yamlText -notmatch 'BEGIN (?:EC |OPENSSH |RSA |DSA )?PRIVATE KEY') '18ad13: YAML contains no private signing key'
 
             $workerText = Get-Content -LiteralPath $workerPath -Raw
             Assert-True ($workerText -notmatch "'--auto'") '18ae: worker does not pass --auto'

@@ -2,8 +2,28 @@ schemaVersion: 1
 id: castilla-leon-openai-nan-pilot
 reference:
   repository: https://github.com/Huntsman1756/agent-orchestration-starter
-  commit: 4b9ec4d8b07e285a6f58590ac0199e878548fcaf
+  release: v0.2.0
+  releaseCommit: b899e1f546b974ccea0f9580510753c04cd6ccac
+  commit: 42cf5c2b1b55628332ce9fc1089957bd4fca3931
   adaptation: frontier-supervised-bounded-local
+adoption:
+  level: BOUNDED_LOCAL
+  runtimeV4Installed: false
+  publicationThroughRuntimeV4: false
+delegationProvenance:
+  schemaVersion: 4
+  enforcement: DISABLED
+  configurationRole: readiness-inventory-only
+  readiness:
+    protectedHostSigner: false
+    protectedEvidenceStore: false
+    syntheticShakedownPassed: false
+    restartRecoveryPassed: false
+    ciVerificationConfigured: false
+  trustBoundary:
+    privateKey: protected-host-only
+    publicKey: protected-ci-or-control-plane-only
+    evidence: protected-broker-artifact-only
 frontierSupervisor:
   enabled: true
   entrypoint: scripts/Invoke-FrontierSupervisedNanWorker.ps1
