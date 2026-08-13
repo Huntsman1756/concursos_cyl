@@ -40,10 +40,10 @@ describe("renderFpOfficialAliasPassReport", () => {
     expect(report.indexOf("HOT01M")).toBeLessThan(report.indexOf("SSC01M"));
     expect(report).toContain("Unión de ofertas nuevas: 1.");
     expect(manifest.resourceSnapshots.programs.recordCount).toBe(187);
-    expect(manifest.resourceSnapshots.occupations.recordCount).toBe(82);
+    expect(manifest.resourceSnapshots.occupations.recordCount).toBe(83);
     expect(manifest.resourceSnapshots.occupationAliases.recordCount).toBe(113);
     expect(manifest.resourceSnapshots.trainingOccupationLinks.recordCount).toBe(
-      135,
+      141,
     );
     expect(report).toContain("no estiman el empleo total");
     expect(report).toContain(

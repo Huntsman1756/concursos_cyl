@@ -10,11 +10,11 @@ Source: https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf (págs. 1
 
 ## Aceptadas
 
-| BOE output | CNO | INE quote | Página |
-|---|---|---|---|
-| Técnico en comercio exterior. | occupation:cno11:3522 | Técnicos en comercio exterior/compras | 156 |
-| Consignatario de buques. | occupation:cno11:3523 | 3523 Consignatarios | 156 |
-| Transitario. | occupation:cno11:4123 | Transitarios | 185 |
+| BOE output                    | CNO                   | INE quote                             | Página |
+| ----------------------------- | --------------------- | ------------------------------------- | ------ |
+| Técnico en comercio exterior. | occupation:cno11:3522 | Técnicos en comercio exterior/compras | 156    |
+| Consignatario de buques.      | occupation:cno11:3523 | 3523 Consignatarios                   | 156    |
+| Transitario.                  | occupation:cno11:4123 | Transitarios                          | 185    |
 
 ## Diferidas
 
@@ -32,4 +32,4 @@ Source: https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf (págs. 1
 - Coordinador logístico.
 - Técnico en logística inversa.
 
-No semantic inference authorizes publication.
+No semantic inference authorizes publication.
