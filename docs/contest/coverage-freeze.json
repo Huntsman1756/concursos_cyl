@@ -1,12 +1,12 @@
 {
   "schemaVersion": "1.0.0",
   "freezeStatus": "frozen",
-  "sourceCommitSha": "1302348a2fe1b85a60ca224766f8a12b525d4d09",
+  "sourceCommitSha": "6d3195e09f7eab0c05dd09d276a970edd3a76178",
   "manifest": {
     "path": "public/data/v1/manifest.json",
-    "sha256": "ba3d41e846347a5e621020674c4e358a4d2c7ee0c92215d4f03553a16ef14e5b",
-    "generatedAt": "2026-08-13T17:12:26.999Z",
-    "snapshotId": "20260813171226999-2d8bfc777753",
+    "sha256": "8041dc2db878d5188998d5bb42c32b85d9b03b3066fb2d41080ef7151916835a",
+    "generatedAt": "2026-08-13T19:52:05.361Z",
+    "snapshotId": "20260813195205361-475f84ab6ac8",
     "qualityStatus": "passed",
     "qualityCounts": {
       "centers": 229,
@@ -16,57 +16,57 @@
     },
     "resourceSnapshots": {
       "centers": {
-        "resourcePath": "/data/v1/snapshots/20260813171226999-2d8bfc777753/centers.json",
+        "resourcePath": "/data/v1/snapshots/20260813195205361-475f84ab6ac8/centers.json",
         "sha256": "593b7780f6cb9511c02edb26a769e5e1f951624f6e4b923a8e34caacb230c87a",
         "recordCount": 229
       },
       "jobOffers": {
-        "resourcePath": "/data/v1/snapshots/20260813171226999-2d8bfc777753/job-offers.json",
-        "sha256": "dfffc4ebfca0cf9e1b3caea29c0dbdd61ca0d866b237b6c6b8dc28bbd76dfd7c",
+        "resourcePath": "/data/v1/snapshots/20260813195205361-475f84ab6ac8/job-offers.json",
+        "sha256": "41662418a2e401cfbb66667027d3ec61c699b174b80b75ec608f342fa9c6634b",
         "recordCount": 1044
       },
       "mappingCoverage": {
-        "resourcePath": "/data/v1/snapshots/20260813171226999-2d8bfc777753/mapping-coverage.json",
-        "sha256": "b7bf3b33a4315769937d43677e9f0ab4b401f6c34895858b9c123942564e8dde",
+        "resourcePath": "/data/v1/snapshots/20260813195205361-475f84ab6ac8/mapping-coverage.json",
+        "sha256": "43499b83343e73d5c3ce0fa634d822968c95c2edc7a84b31fd29c6cd5eda0520",
         "recordCount": 209
       },
       "officialOccupations": {
-        "resourcePath": "/data/v1/snapshots/20260813171226999-2d8bfc777753/official-occupations.json",
+        "resourcePath": "/data/v1/snapshots/20260813195205361-475f84ab6ac8/official-occupations.json",
         "sha256": "76fa213f97c98e5af0f9bf120323ba3abb32df78e797c381e5454cadc858f64b",
         "recordCount": 502
       },
       "occupationAliases": {
-        "resourcePath": "/data/v1/snapshots/20260813171226999-2d8bfc777753/occupation-aliases.json",
+        "resourcePath": "/data/v1/snapshots/20260813195205361-475f84ab6ac8/occupation-aliases.json",
         "sha256": "71d2b317fdaa4776864d67e7d463dea1e28e86c0b7afccc4ba060852833af5c9",
         "recordCount": 113
       },
       "occupations": {
-        "resourcePath": "/data/v1/snapshots/20260813171226999-2d8bfc777753/occupations.json",
+        "resourcePath": "/data/v1/snapshots/20260813195205361-475f84ab6ac8/occupations.json",
         "sha256": "f6c4b34a6fd5760c967273e4cc085abf6a3865baadfa2c721ac07dcd90fe3f09",
         "recordCount": 91
       },
       "outcomeIndicators": {
-        "resourcePath": "/data/v1/snapshots/20260813171226999-2d8bfc777753/outcome-indicators.json",
+        "resourcePath": "/data/v1/snapshots/20260813195205361-475f84ab6ac8/outcome-indicators.json",
         "sha256": "4f2c6b73fc4171bb9daf21583712ab2ec99bcaa7d27b1f2fd0c070b9079ab3e2",
         "recordCount": 22170
       },
       "programs": {
-        "resourcePath": "/data/v1/snapshots/20260813171226999-2d8bfc777753/programs.json",
+        "resourcePath": "/data/v1/snapshots/20260813195205361-475f84ab6ac8/programs.json",
         "sha256": "90df87b283b5ff003dda20c9c4f7eac52b903e611753d107d4b927bbc4e19b72",
         "recordCount": 187
       },
       "publishedRequirements": {
-        "resourcePath": "/data/v1/snapshots/20260813171226999-2d8bfc777753/published-requirements.json",
+        "resourcePath": "/data/v1/snapshots/20260813195205361-475f84ab6ac8/published-requirements.json",
         "sha256": "39e458bb581492931b2964ba85cb37d71f0f7360141d359c05951b63c2283765",
         "recordCount": 320
       },
       "trainingOccupationLinks": {
-        "resourcePath": "/data/v1/snapshots/20260813171226999-2d8bfc777753/training-occupation-links.json",
-        "sha256": "0af976d1bb5b07fc0723d94b29ab6777e4dacab3c6967bed28910511de8b532e",
-        "recordCount": 178
+        "resourcePath": "/data/v1/snapshots/20260813195205361-475f84ab6ac8/training-occupation-links.json",
+        "sha256": "7df3a6b03217cc2b9d10ef1d0c8f073f5ff2d8cfad29ae11ee8fdcc4ba290daa",
+        "recordCount": 191
       },
       "trainingOfferings": {
-        "resourcePath": "/data/v1/snapshots/20260813171226999-2d8bfc777753/training-offerings.json",
+        "resourcePath": "/data/v1/snapshots/20260813195205361-475f84ab6ac8/training-offerings.json",
         "sha256": "0948871f993a4f0a03ed42ccef060c4a395e0898dc230086f234345fee7e880a",
         "recordCount": 1294
       }
@@ -88,11 +88,13 @@
       "qualification:COM01M",
       "qualification:COM02M",
       "qualification:COM02S",
+      "qualification:COM03S",
       "qualification:COM04S",
       "qualification:ELE01B",
       "qualification:ELE01M",
       "qualification:ELE01S",
       "qualification:ELE02M",
+      "qualification:ELE02S",
       "qualification:ELE03S",
       "qualification:ELE04S",
       "qualification:EOC01M",
@@ -102,6 +104,7 @@
       "qualification:HOT01B",
       "qualification:HOT01M",
       "qualification:HOT01S",
+      "qualification:HOT02M",
       "qualification:HOT03S",
       "qualification:HOT04S",
       "qualification:IFC01B",
@@ -115,7 +118,9 @@
       "qualification:IMA03S",
       "qualification:IMP01B",
       "qualification:IMP01M",
+      "qualification:IMP01S",
       "qualification:IMP02M",
+      "qualification:MAM01B",
       "qualification:MAM01M",
       "qualification:SAN02M",
       "qualification:SAN07S",
@@ -129,7 +134,7 @@
       "qualification:TMV01S",
       "qualification:TMV02M"
     ],
-    "distinctQualificationCount": 54,
+    "distinctQualificationCount": 59,
     "modalityKeys": [
       "ADG01B",
       "ADG01M",
@@ -150,6 +155,7 @@
       "COM02M",
       "COM02S",
       "COM02SD",
+      "COM03S",
       "COM04S",
       "COM04SD",
       "ELE01B",
@@ -157,6 +163,7 @@
       "ELE01MD",
       "ELE01S",
       "ELE02M",
+      "ELE02S",
       "ELE03S",
       "ELE04S",
       "EOC01M",
@@ -166,6 +173,7 @@
       "HOT01B",
       "HOT01M",
       "HOT01S",
+      "HOT02M",
       "HOT03S",
       "HOT04S",
       "IFC01B",
@@ -183,7 +191,9 @@
       "IMA03S",
       "IMP01B",
       "IMP01M",
+      "IMP01S",
       "IMP02M",
+      "MAM01B",
       "MAM01M",
       "SAN02M",
       "SAN07S",
@@ -201,7 +211,7 @@
       "TMV01S",
       "TMV02M"
     ],
-    "modalityKeyCount": 69,
+    "modalityKeyCount": 74,
     "approvedRelationKeys": [
       "ADG01B|occupation:cno11:4210",
       "ADG01B|occupation:cno11:4221",
@@ -269,6 +279,8 @@
       "COM02S|occupation:cno11:3523",
       "COM02S|occupation:cno11:4123",
       "COM02S|occupation:cno11:5210",
+      "COM03S|occupation:cno11:3510",
+      "COM03S|occupation:cno11:5210",
       "COM04SD|occupation:cno11:3522",
       "COM04SD|occupation:cno11:3523",
       "COM04SD|occupation:cno11:4123",
@@ -288,6 +300,10 @@
       "ELE01S|occupation:cno11:7510",
       "ELE02M|occupation:cno11:3813",
       "ELE02M|occupation:cno11:7533",
+      "ELE02S|occupation:cno11:3124",
+      "ELE02S|occupation:cno11:3811",
+      "ELE02S|occupation:cno11:3813",
+      "ELE02S|occupation:cno11:7533",
       "ELE03S|occupation:cno11:7531",
       "ELE04S|occupation:cno11:3123",
       "ELE04S|occupation:cno11:3124",
@@ -313,6 +329,8 @@
       "HOT01B|occupation:cno11:9310",
       "HOT01M|occupation:cno11:5110",
       "HOT01S|occupation:cno11:3510",
+      "HOT02M|occupation:cno11:4121",
+      "HOT02M|occupation:cno11:5120",
       "HOT03S|occupation:cno11:4123",
       "HOT03S|occupation:cno11:4411",
       "HOT04S|occupation:cno11:5110",
@@ -351,8 +369,13 @@
       "IMP01M|occupation:cno11:5220",
       "IMP01M|occupation:cno11:5492",
       "IMP01M|occupation:cno11:5812",
+      "IMP01S|occupation:cno11:2640",
+      "IMP01S|occupation:cno11:5812",
       "IMP02M|occupation:cno11:5811",
       "IMP02M|occupation:cno11:5812",
+      "MAM01B|occupation:cno11:7812",
+      "MAM01B|occupation:cno11:8209",
+      "MAM01B|occupation:cno11:9700",
       "MAM01M|occupation:cno11:7812",
       "MAM01M|occupation:cno11:8209",
       "SAN02M|occupation:cno11:5621",
@@ -382,7 +405,7 @@
       "TMV01S|occupation:cno11:4412",
       "TMV02M|occupation:cno11:7401"
     ],
-    "approvedRelationCount": 178,
+    "approvedRelationCount": 191,
     "approvedAliasKeys": [
       "Administrativo contable|occupation:cno11:4111",
       "Administrativo de banca y seguros|occupation:cno11:4113",
@@ -538,6 +561,7 @@
       "COM02M",
       "COM02S",
       "COM02SD",
+      "COM03S",
       "COM04S",
       "COM04SD",
       "ELE01B",
@@ -545,6 +569,7 @@
       "ELE01MD",
       "ELE01S",
       "ELE02M",
+      "ELE02S",
       "ELE03S",
       "ELE04S",
       "FME01B",
@@ -552,6 +577,7 @@
       "HOT01B",
       "HOT01M",
       "HOT01S",
+      "HOT02M",
       "HOT03S",
       "HOT04S",
       "IFC01B",
@@ -564,6 +590,8 @@
       "IMA03M",
       "IMA03S",
       "IMP01M",
+      "IMP01S",
+      "MAM01B",
       "MAM01M",
       "SAN07S",
       "SAN07SD",
@@ -573,7 +601,7 @@
       "SSC01SD",
       "TMV01S"
     ],
-    "zeroReviewedProgramCount": 50,
+    "zeroReviewedProgramCount": 55,
     "matchedRelationKeys": [
       "AFD01SD|occupation:cno11:5992",
       "AFD01S|occupation:cno11:5992",
@@ -662,6 +690,8 @@
       "COM02S|occupation:cno11:3523",
       "COM02S|occupation:cno11:4123",
       "COM02S|occupation:cno11:5210",
+      "COM03S|occupation:cno11:3510",
+      "COM03S|occupation:cno11:5210",
       "COM04SD|occupation:cno11:3522",
       "COM04SD|occupation:cno11:3523",
       "COM04SD|occupation:cno11:4123",
@@ -681,6 +711,10 @@
       "ELE01S|occupation:cno11:7510",
       "ELE02M|occupation:cno11:3813",
       "ELE02M|occupation:cno11:7533",
+      "ELE02S|occupation:cno11:3124",
+      "ELE02S|occupation:cno11:3811",
+      "ELE02S|occupation:cno11:3813",
+      "ELE02S|occupation:cno11:7533",
       "ELE03S|occupation:cno11:7531",
       "ELE04S|occupation:cno11:3123",
       "ELE04S|occupation:cno11:3124",
@@ -703,6 +737,8 @@
       "HOT01B|occupation:cno11:9310",
       "HOT01M|occupation:cno11:5110",
       "HOT01S|occupation:cno11:3510",
+      "HOT02M|occupation:cno11:4121",
+      "HOT02M|occupation:cno11:5120",
       "HOT03S|occupation:cno11:4123",
       "HOT03S|occupation:cno11:4411",
       "HOT04S|occupation:cno11:5110",
@@ -736,7 +772,12 @@
       "IMP01M|occupation:cno11:5220",
       "IMP01M|occupation:cno11:5492",
       "IMP01M|occupation:cno11:5812",
+      "IMP01S|occupation:cno11:2640",
+      "IMP01S|occupation:cno11:5812",
       "IMP02M|occupation:cno11:5812",
+      "MAM01B|occupation:cno11:7812",
+      "MAM01B|occupation:cno11:8209",
+      "MAM01B|occupation:cno11:9700",
       "MAM01M|occupation:cno11:7812",
       "MAM01M|occupation:cno11:8209",
       "SAN07SD|occupation:cno11:2640",
@@ -757,7 +798,7 @@
       "TMV01S|occupation:cno11:3405",
       "TMV01S|occupation:cno11:4412"
     ],
-    "zeroReviewedRelationCount": 157,
+    "zeroReviewedRelationCount": 170,
     "deferredPrograms": [],
     "deferredProgramCount": 0
   },

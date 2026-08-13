@@ -10,14 +10,14 @@ La interfaz permite elegir directamente cualquiera de los 187 ciclos de FP o fil
 
 ## Cobertura congelada
 
-- Instantánea publicada: `20260813171226999-2d8bfc777753`.
+- Instantánea publicada: `20260813195205361-475f84ab6ac8`.
 - Grupos primarios CNO-11 consultables: **502**.
-- **54 cualificaciones distintas**.
-- Claves de modalidad públicas: **69** (ADG01B, ADG01M, ADG01MD, ADG01S, ADG02S, ADG02SD, AFD01S, AFD01SD, AFD02M, AFD02S, AFD02SD, AGA01B, AGA01M, AGA03M, COM01B, COM01M, COM02M, COM02S, COM02SD, COM04S, COM04SD, ELE01B, ELE01M, ELE01MD, ELE01S, ELE02M, ELE03S, ELE04S, EOC01M, FME01B, FME01M, FME02M, HOT01B, HOT01M, HOT01S, HOT03S, HOT04S, IFC01B, IFC01M, IFC01MD, IFC01S, IFC01SD, IFC02B, IFC02S, IFC02SD, IFC03S, IFC03SD, IMA02M, IMA03M, IMA03S, IMP01B, IMP01M, IMP02M, MAM01M, SAN02M, SAN07S, SAN07SD, SAN08S, SAN08SD, SAN21, SSC01M, SSC01S, SSC01SD, SSC03S, SSC03SD, TMV01B, TMV01M, TMV01S, TMV02M).
-- Relaciones ocupacionales aprobadas: **178**.
+- **59 cualificaciones distintas**.
+- Claves de modalidad públicas: **74** (ADG01B, ADG01M, ADG01MD, ADG01S, ADG02S, ADG02SD, AFD01S, AFD01SD, AFD02M, AFD02S, AFD02SD, AGA01B, AGA01M, AGA03M, COM01B, COM01M, COM02M, COM02S, COM02SD, COM03S, COM04S, COM04SD, ELE01B, ELE01M, ELE01MD, ELE01S, ELE02M, ELE02S, ELE03S, ELE04S, EOC01M, FME01B, FME01M, FME02M, HOT01B, HOT01M, HOT01S, HOT02M, HOT03S, HOT04S, IFC01B, IFC01M, IFC01MD, IFC01S, IFC01SD, IFC02B, IFC02S, IFC02SD, IFC03S, IFC03SD, IMA02M, IMA03M, IMA03S, IMP01B, IMP01M, IMP01S, IMP02M, MAM01B, MAM01M, SAN02M, SAN07S, SAN07SD, SAN08S, SAN08SD, SAN21, SSC01M, SSC01S, SSC01SD, SSC03S, SSC03SD, TMV01B, TMV01M, TMV01S, TMV02M).
+- Relaciones ocupacionales aprobadas: **191**.
 - Alias aprobados: **113**.
 - **69 de las 1.044 ofertas de la instantánea** quedan alcanzadas por relaciones publicadas (unión de IDs).
-- Relaciones revisadas sin oferta alcanzada: **157**.
+- Relaciones revisadas sin oferta alcanzada: **170**.
 - Programas diferidos por evidencia insuficiente: ninguno.
 
 Las claves de modalidad se informan aparte de las identidades de cualificación. Una relación revisada sin coincidencia no se convierte en una afirmación sobre la ausencia de oportunidades; un programa diferido permanece fuera de las afirmaciones revisadas.
