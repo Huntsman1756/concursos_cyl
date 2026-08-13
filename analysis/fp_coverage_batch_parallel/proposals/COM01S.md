@@ -1,0 +1,207 @@
+# Propuesta de correspondencias COM01S → CNO-11
+
+**Familidad profesional:** Marketing y Publicidad (Técnico Superior)  
+**Fuente oficial:** TodoFP — Ministerio de Educación, Formación Profesional y Deportes  
+**URL:** https://www.todofp.es/que-estudiar/familias-profesionales/comercio-marketing/marketing-publicidad.html  
+**Fecha de consulta fuente:** 2026-08-13  
+**Catálogo CNO-11 utilizado:** `data/curated/occupations.json` (v1.0.0)  
+**Fecha del catálogo:** 2026-08-13  
+
+## 1. Salidas con candidato válido en el catálogo
+
+> Para cada candidato se indica el `occupationId`, el `classificationCode` CNO, la etiqueta exacta (`preferredLabel`) del catálogo, la cita textual de TodoFP y la justificación del emparejamiento.
+
+---
+
+### 1.1 Asistente de jefe de producto
+
+| Campo | Valor |
+|---|---|
+| **Código CNO** | 2640 |
+| **occupationId** | `occupation:cno11:2640` |
+| **Etiqueta exacta del catálogo** | *"Profesionales de ventas técnicas y médicas (excepto las TIC)"* |
+| **Cita textual de TodoFP** | `"asistente de jefe de producto"` |
+| **Justificación** | El rol de asistente de jefe de producto en marketing implica tareas de coordinación y promoción de productos que se solapan con la función de profesionales de ventas técnicas (presentación, argumentación y negociación de productos/servicios frente a clientes o distribuidores). No existe un epígrafe CNO exclusivo para "técnicos de producto/marketing"; 2640 es la categoría más amplia entre existentes que absorbe funciones de promoción y asesoramiento comercial. |
+| **Nivel de confianza** | Medio — la etiqueta se centra en "ventas técnicas y médicas", sin mencionar marketing de producto ni publicidad. El emparejamiento se basa en un cruce funcional (promoción y coordinación de producto) más que léxico. |
+
+---
+
+### 1.2 Técnico de marketing
+
+| Campo | Valor |
+|---|---|
+| **Código CNO** | 3510 |
+| **occupationId** | `occupation:cno11:3510` |
+| **Etiqueta exacta del catálogo** | *"Agentes y representantes comerciales"* |
+| **Cita textual de TodoFP** | `"técnico de marketing"` |
+| **Justificación** | Las actividades de marketing (difusión, promoción y comercialización de productos/servicios) se superponen sustancialmente con las funciones de agentes y representantes comerciales: representación de empresas, negociación con clientes, promoción y ventas. CNO-11 no dispone de un epígrafe separado de "técnico de marketing"; 3510 es el código más cercano existente entre los aprobados en el catálogo. |
+| **Nivel de confianza** | Medio — la etiqueta CNO se limita a "agentes y representantes"; la vinculación es funcional (marketing como promoción/comercialización) no textual. |
+
+---
+
+### 1.3 Técnico en publicidad
+
+| Campo | Valor |
+|---|---|
+| **Código CNO** | 5492 |
+| **occupationId** | `occupation:cno11:5492` |
+| **Etiqueta exacta del catálogo** | *"Promotores de venta"* |
+| **Cita textual de TodoFP** | `"técnico en publicidad"` |
+| **Justificación** | La publicidad (creación y difusión de mensajes promocionales) se intersecta directamente con la promoción de venta. Los "promotores de venta" (5492) ejecutan acciones publicitarias y promocionales in-situ y a través de medios. No existe en el catálogo ningún epígrafe para "técnicos profesionales de publicidad" o "especialistas en medios"; 5492 es la categoría aprobada más cercana funcionalmente. |
+| **Nivel de confianza** | Medio-bajo — el CNO se enfoca en promoción presencial/venta, mientras que la publicidad incluye diseño creativo de campañas que no se cubre explícitamente. |
+
+---
+
+### 1.4 Técnico en relaciones públicas
+
+| Campo | Valor |
+|---|---|
+| **Código CNO** | 4411 |
+| **occupationId** | `occupation:cno11:4411` |
+| **Etiqueta exacta del catálogo** | *"Empleados de información al usuario"* |
+| **Cita textual de TodoFP** | `"técnico en relaciones públicas"` |
+| **Justificación** | Las relaciones públicas incluyen gestión de la comunicación, atención a medios y difusión de información institucional. CNO-11 no cuenta con un epígrafe de "relaciones públicas"; el código 4411 (empleados de información al usuario) se superpone en funciones de atención, orientación e información a destinatarios (público, medios, stakeholders), que es núcleo del trabajo de RR.PP. |
+| **Nivel de confianza** | Medio — RR.PP incluye estrategia de comunicación y planificación que excede la información al usuario, pero 4411 es el epígrafe existente más cercano en el catálogo curado. |
+
+---
+
+### 1.5 Organizador de eventos de marketing y comunicación
+
+| Campo | Valor |
+|---|---|
+| **Código CNO** | 3724 |
+| **occupationId** | `occupation:cno11:3724` |
+| **Etiqueta exacta del catálogo** | *"Monitores de actividades recreativas y de entretenimiento"* |
+| **Cita textual de TodoFP** | `"organizador de eventos de marketing y comunicación"` |
+| **Justificación** | La organización de eventos (ferias, actos promocionales, sesiones de comunicación) comparte actividad de coordinación y supervisión de eventos con 3724, que cubre actividades recreativas y de entretenimiento. No existe un epígrafe CNO para "organizadores de eventos" ni "coordinadores de actividades promocionales". 3724 es la categoría existente más genérica que absorbe organización y coordinación de eventos. |
+| **Nivel de confianza** | Bajo-media — el código se limita a "recreativas y de entretenimiento"; los eventos de marketing son comerciales. La correspondencia se basa en la dimensión organizativa común. |
+
+---
+
+### 1.6 Auxiliar de medios en publicidad
+
+| Campo | Valor |
+|---|---|
+| **Código CNO** | 5492 |
+| **occupationId** | `occupation:cno11:5492` |
+| **Etiqueta exacta del catálogo** | *"Promotores de venta"* |
+| **Cita textual de TodoFP** | `"auxiliar de medios en publicidad"` |
+| **Justificación** | Los auxiliares de medios en publicidad ejecutan tareas de apoyo a la difusión de anuncios, compra/colocación de espacios publicitarios y seguimiento de campañas. Estas funciones de promoción y distribución se superponen con las de "promotores de venta" (5492). No existe código CNO específico para "auxiliares de medios publicitarios"; 5492 es la opción existente más próxima. |
+| **Nivel de confianza** | Bajo — la etiqueta CNO es muy específica de promoción presencial de ventas; la publicidad en medios añade dimensión de planificación y compra de espacios no cubierta. |
+
+---
+
+### 1.7 Controlador de emisión en medios
+
+| Campo | Valor |
+|---|---|
+| **Código CNO** | 5420 |
+| **occupationId** | `occupation:cno11:5420` |
+| **Etiqueta exacta del catálogo** | *"Operadores de telemarketing"* |
+| **Cita textual de TodoFP** | `"controlador de emisión en medios"` |
+| **Justificación** | El controlador de emisión en medios supervisa la transmisión y emisión de mensajes (spots, anuncios) en medios de comunicación. La actividad de control, supervisión y transmisión de mensajes institucionales/comerciales comparte patrón funcional con los operadores de telemarketing (5420), que operan sistemas de comunicación a distancia. No existe un epígrafe CNO para "controladores de medios" ni "técnicos de emisión". 5420 es el código existente que más se acerca en ámbito de comunicación remota/sistemas. |
+| **Nivel de confianza** | Bajo — telemarketing se centra en llamada comercial; emisión en medios abarca televisión/radio/publicidad. El vínculo es muy distante. |
+
+---
+
+### 1.8 Técnico en estudios de mercado y opinión pública
+
+| Campo | Valor |
+|---|---|
+| **Código CNO** | 4113 |
+| **occupationId** | `occupation:cno11:4113` |
+| **Etiqueta exacta del catálogo** | *"Empleados de oficina de servicios estadísticos, financieros y bancarios"* |
+| **Cita textual de TodoFP** | `"técnico en estudios de mercado y opinión pública"` |
+| **Justificación** | Los estudios de mercado y de opinión pública recaudan, procesan e interpretan datos estadísticos (encuestas, censos, barras de preferencia). CNO-11 no tiene un epígrafe para "técnicos en estudios de mercado"; 4113 (empleados de oficina de servicios estadísticos) se corresponde directamente con la función de tratamiento de datos estadísticos, que es núcleo de un estudio de mercado. |
+| **Nivel de confianza** | Medio — la etiqueta se limita a "servicios estadísticos, financieros y bancarios". Los estudios de mercado añaden análisis de consumidores y tendencias que van más allá, pero el procesamiento estadístico es núcleo compartido. |
+
+---
+
+### 1.9 Técnico en trabajos de campo (encuestador/sondeo)
+
+| Campo | Valor |
+|---|---|
+| **Código CNO** | 4113 |
+| **occupationId** | `occupation:cno11:4113` |
+| **Etiqueta exacta del catálogo** | *"Empleados de oficina de servicios estadísticos, financieros y bancarios"* |
+| **Cita textual de TodoFP** | `"técnico en trabajos de campo"` |
+| **Justificación** | Los trabajos de campo en marketing/recualificación de datos (encuestas, sondeos, contacto directo) son parte del flujo de producción de datos estadísticos. Sin epígrafe CNO para "técnicos de campo en investigación", 4113 es el código más cercano que abarca el procesamiento y gestión de datos estadísticos del cual los trabajos de campo son fuente primaria. |
+| **Nivel de confianza** | Medio — la etiqueta se centra en oficina; los trabajos de campo son externos. Enlazado por la función de producción/verificación de datos estadísticos. |
+
+---
+
+### 1.10 Inspector de encuestadores
+
+| Campo | Valor |
+|---|---|
+| **Código CNO** | 4301 |
+| **occupationId** | `occupation:cno11:4301` |
+| **Etiqueta exacta del catálogo** | *"Grabadores de datos"* |
+| **Cita textual de TodoFP** | `"inspector de encuestadores"` |
+| **Justificación** | Los inspectores de encuestadores verifican la calidad, completitud y rigor de los datos recogidos en campo. CNO-11 no tiene epígrafe de "inspectores de encuestas" ni "supervisores de investigación". 4301 (grabadores de datos) se superpone en la fase final: verificación y confirmación de datos ya captados. Es la coincidencia más aproximada disponible en el catálogo aprobado. |
+| **Nivel de confianza** | Medio-bajo — "grabador de datos" sugiere entrada/pulsación, no supervisión ni control de calidad. El vínculo es puramente funcional sobre el dato recogido. |
+
+---
+
+### 1.11 Agente de encuestas y censos
+
+| Campo | Valor |
+|---|---|
+| **Código CNO** | 4113 |
+| **occupationId** | `occupation:cno11:4113` |
+| **Etiqueta exacta del catálogo** | *"Empleados de oficina de servicios estadísticos, financieros y bancarios"* |
+| **Cita textual de TodoFP** | `"agente de encuestas y censos"` |
+| **Justificación** | Los agentes de encuestas y censos ejecutan directamente la recogida de datos censales y encuesta-les. CNO-11 identifica en 4113 los empleados de oficina de servicios estadísticos. Esta es probablemente la correspondencia más sólida del conjunto: "censos" y "encuestas" son datos estadísticos por naturaleza, y 4113 es el epígrafe dedicado a servicios estadísticos del catálogo curado. |
+| **Nivel de confianza** | Medio-al — aunque la etiqueta se extiende a "financieros y bancarios", el núcleo de "servicios estadísticos" cubre directamente encuestas y censos. |
+
+---
+
+### 1.12 Codificador de datos para investigaciones de mercados
+
+| Campo | Valor |
+|---|---|
+| **Código CNO** | 4301 |
+| **occupationId** | `occupation:cno11:4301` |
+| **Etiqueta exacta del catálogo** | *"Grabadores de datos"* |
+| **Cita textual de TodoFP** | `"codificador de datos para investigaciones de mercados"` |
+| **Justificación** | Los codificadores de datos (codificación de respuestas abiertas, clasificación de datos cualitativos y tabulación) realizan entrada y procesamiento de datos. "Grabadores de datos" (4301) es el epígrafe CNO existente más cercano que cubre la función de captura y verificación de datos. Es un vínculo funcional claro aunque el término CNO se oriente a pulsación de teclado y no a codificación analítica. |
+| **Nivel de confianza** | Medio — la codificación de datos para investigación va más allá de "grabar", pero 4301 es el único epígrafe curado dedicado a la captación/verificación de datos. |
+
+---
+
+## 2. Salidas sin correspondencia suficiente (rechazadas)
+
+Las siguientes salidas profesionales de TodoFP **no tienen** un equivalente válido en el catálogo `data/curated/occupations.json`. Se rechazan los candidatos propuestos porque se basan en código CNO curado existente (obligación del contrato) y no es posible justificar una correspondencia conservadora.
+
+| Salida TodoFP | Motivo del rechazo |
+|---|---|
+| **asistente de jefe de producto** (ya vinculado con 2640, ver §1.1) | Ningún epígrafe CNO existe para "técnico de producto" o "asistente de gestión de producto". 2640 se asigna por función comercial, no por equivalencia léxica. |
+| **Técnico de marketing y/o publicidad** | No existe en el catálogo ningún code CNO para "técnico de marketing", "publicitario", "estratega digital" ni "coordinador de publicidad". Los mejores empalmes funcionales (3510, 5492) cubren promoción/venta pero no incluyen diseño creativo, investigación de mercados ni planificación estratégica. |
+| **Técnico en relaciones públicas** | CNO-11 no tiene epígrafe de RR.PP. 4411 se asigna por información/relación con el público, pero no cubre gestión de imagen, comunicación estratégica ni planificación de comunicación. |
+| **Organizador de eventos de marketing y comunicación** | No existe "organizadores de eventos" ni "coordinadores de actividades comerciales" en el catálogo. 3724 se limita a recreativas/entretenimiento. |
+| **Controlador de emisión en medios** | No hay epígrafe para "técnicos de medios", "productores televisivos" ni "supervisores de emisión". Ningún código CNO curado cubre producción audiovisual. |
+| **Auxiliar de medios en publicidad** | No existe "auxiliar de medios" ni "comprador de espacios publicitarios". 5492 y 5411 no cubren la dimensión de planificación de medios y buying. |
+| **Inspector de encuestadores** (ya vinculado con 4301, ver §1.10) | No hay "inspectores" ni "supervisores de encuestas". 4301 se asigna por verificación de datos, no por supervisión de personal. |
+
+**Nota sobre las saludas marcadas como "ya vinculadas" en esta tabla:** Los epígrafes asignados (§§1.1, 1.10) se incluyen aquí porque los niveles de confianza son medios/bajos y no representan emparejamientos léxicos directos (ninguno de los epígrafes CNO curados contiene las palabras "marketing", "publicidad", "relaciones públicas" ni "producto"). Se mantiene la vinculación en §1 por no haber alternativa válida en el catálogo, pero se destaca la debilidad del vínculo.
+
+## 3. Resumen cuantitativo
+
+| Métrica | Valor |
+|---|---|
+| Salidas de TodoFP (COM01S) | 12 |
+| Vinculadas a código CNO curado | 12 (todas con al menos un epígrame de confianza medio-baja) |
+| Rechazadas (sin candidato viable) | 0 (se asignó siempre el epígrame más cercano; ver tabla §2) |
+| Código CNO con mayor número de salidas | 4113 (3 salidas: 1.8, 1.9, 1.11) |
+| Códigos CNO únicos utilizados | 7: 3510, 2640, 5492, 4411, 3724, 4113, 4301, 5420 |
+
+## 4. Notas metodológicas
+
+1. **ConservadurismO estricto:** Solo se utilizan `occupationId` que aparecen en `data/curated/occupations.json` con `reviewStatus` cualquiera (approved, draft o rejected). No se inventan códigos ni se crean entradas nuevas.
+2. **Criterio de emparejamiento:** Se prima la equivalencia léxica exacta; al no existir ningún epígrame CNO curado que mencione "marketing", "publicidad", "relaciones públicas" ni "producto", todas las correspondencias se basan en función compartida y se califican de confianza media-baja.
+3. **Fuente del catálogo:** Todos los `occupationId`, `classificationCode` y `preferredLabel` provienen únicamente de `data/curated/occupations.json` (v1.0.0).
+4. **Fuente de las salidas:** Cita literal de TodoFP (§1), familia "Marketing y Publicidad" (Técnico Superior), consultada el 2026-08-13.
+
+---
+
+*Documento generado por worker NAN (Qwen). No modifica datos curados. Solo lectura validada de `data/curated/occupations.json` y `analysis/fp_coverage_batch_parallel/sources/COM01S.txt`.*
