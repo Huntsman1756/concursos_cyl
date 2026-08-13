@@ -1,0 +1,78 @@
+schemaVersion: 4
+id: castilla-leon-nan-2026-08-13
+bindings:
+  orchestrator: &frontier_read
+    harness: codex
+    provider: openai
+    model: gpt-5.6-sol
+    capability: frontier_reasoning
+    allowedDataScopes:
+      - SOURCE_CODE_ONLY
+    allowedSourceSensitivity:
+      - PUBLIC
+      - PRIVATE
+    permissions: read-only
+    guidance: &frontier_guidance
+      id: codex-sol-guidance
+      revision: 2026-08-13
+      sourceUrls:
+        - https://developers.openai.com/codex
+      promptFormat: markdown
+      contextPlacement: before-task
+      reasoningEffort: medium
+      textVerbosity: low
+      temperature: null
+      maxSteps: 48
+      instructions:
+        - Plan and review independently; never claim worker execution without native receipts.
+  executor: &nan_qwen
+    harness: opencode
+    provider: nan
+    model: qwen3.6
+    capability: agentic_tool_execution
+    allowedDataScopes:
+      - SOURCE_CODE_ONLY
+    allowedSourceSensitivity:
+      - PUBLIC
+    permissions: contract-write
+    guidance: &nan_guidance
+      id: nan-opencode-guidance
+      revision: 2026-08-13-opencode-1.18.16
+      sourceUrls:
+        - https://nan.builders/docs/models
+        - https://opencode.ai/docs/cli/
+      promptFormat: markdown
+      contextPlacement: before-task
+      reasoningEffort: low
+      textVerbosity: low
+      temperature: 0
+      maxSteps: 10
+      instructions:
+        - Change only contract-allowed paths and stop after deterministic validation.
+  escalationExecutor:
+    harness: opencode
+    provider: nan
+    model: deepseek-v4-flash
+    capability: agentic_tool_execution
+    allowedDataScopes:
+      - SOURCE_CODE_ONLY
+    allowedSourceSensitivity:
+      - PUBLIC
+    permissions: contract-write
+    guidance: *nan_guidance
+  frontierExecutor:
+    harness: codex
+    provider: openai
+    model: gpt-5.6-sol
+    capability: frontier_tool_execution
+    allowedDataScopes:
+      - SOURCE_CODE_ONLY
+    allowedSourceSensitivity:
+      - PUBLIC
+      - PRIVATE
+    permissions: contract-write
+    guidance: *frontier_guidance
+  reviewer: *frontier_read
+runtime:
+  maxEconomyParallelRequests: 2
+  maxConcurrentRunsPerRepository: 1
