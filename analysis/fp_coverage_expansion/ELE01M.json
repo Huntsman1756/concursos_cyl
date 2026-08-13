@@ -257,8 +257,8 @@
   "limitation": "La revisión ampliada acepta únicamente construcción eléctrica, telecomunicaciones y antenas, y montaje fotovoltaico. Mantenimiento eléctrico, industria y domótica permanecen fuera por límites CNO no resueltos.",
   "reviewedCommit": "068aa114a457c2bab4ef938fe0fd888d4f1e2f0f",
   "reviewedCommitAt": "2026-08-12T15:37:16.000Z",
-  "snapshotId": "20260813115711843-f7ea169cda29",
-  "snapshotHash": "5f61ea53158e23e40e4e78a8b3f68f707f241cf274b8c61909554386e200a973",
+  "snapshotId": "20260813132103035-eb57640834e9",
+  "snapshotHash": "8cf91b33e03166724a527ab60d375a7c3ebfacde920eb9a64ba8b3531f6b0640",
   "publicParity": {
     "publishedRelationKeys": [
       "ELE01M|occupation:cno11:7294",
