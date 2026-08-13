@@ -1,0 +1,31 @@
+{
+  "schemaVersion": "sanitized-worker-telemetry-v1",
+  "evidenceClass": "repository-sanitized-copy",
+  "telemetryId": "source-review-attempt-2",
+  "simulated": false,
+  "taskType": "code",
+  "selectedModel": "nan/qwen3.6",
+  "nativeSessionId": "ses_005ecb789ffehM0CzCJfUxd5EM",
+  "status": "COMPLETE",
+  "baseSha": "b0c635eade11fcf70a961a1127bb0690b097ecd2",
+  "resultCommitSha": "75223a8aa69a052db829d3efaa321f465090e0cb",
+  "changedPaths": ["analysis/fp_coverage_expansion/COM04S-sources.md"],
+  "tokensUsage": {
+    "input": 28340,
+    "output": 1820,
+    "reasoning": 1371,
+    "cacheRead": 62880,
+    "cacheWrite": 0,
+    "total": 94411
+  },
+  "validationExitCode": 0,
+  "frontierDecision": "ACCEPT",
+  "contractHash": "2a945324c37b10e618d0daa85e7b82bf2eb53e525041087cc6341f19da26b08e",
+  "planHash": "a590b92983290128ce153b9e8260b601a3134e2da7823f7f210f71050feba880",
+  "sourceTelemetrySha256": "5fc9b8848a247c4e21765bbcbdf3721bc90ba50119ab25668ec8649c594e7930",
+  "candidatePatchSha256": "f61cb6bf03ff7d2313919d30bdc452050b2d33de08497763a86fd9a4f9377e22",
+  "decisionHash": "ed0c040cd9e3431c050a79a5a72e1278679afb12d4cdcc3dc6de989de86475bd",
+  "authorityEvidenceHash": "411da514a35c8e5b54c105dd38fce70607445197d5f8999e8292a153a6cc5958",
+  "hostSigned": false,
+  "provenanceEnforcement": "DISABLED"
+}
