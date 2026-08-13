@@ -13,12 +13,12 @@
 
 ### Candidato 1 — `occupation:cno11:3123`
 
-| Campo | Valor |
-|---|---|
-| **occupationId** | `occupation:cno11:3123` |
-| **Código CNO-11** | 3123 |
+| Campo                     | Valor                    |
+| ------------------------- | ------------------------ |
+| **occupationId**          | `occupation:cno11:3123`  |
+| **Código CNO-11**         | 3123                     |
 | **Etiqueta del catálogo** | Técnicos en electricidad |
-| **Nivel de confianza** | **ALTA** |
+| **Nivel de confianza**    | **ALTA**                 |
 
 **Salidas FP mapeadas (6 de 10):**
 
@@ -41,12 +41,12 @@ Las seis salidas descritas corresponden a funciones de diseño, proyecto, coordi
 
 ### Candidato 2 — `occupation:cno11:7510`
 
-| Campo | Valor |
-|---|---|
-| **occupationId** | `occupation:cno11:7510` |
-| **Código CNO-11** | 7510 |
+| Campo                     | Valor                                     |
+| ------------------------- | ----------------------------------------- |
+| **occupationId**          | `occupation:cno11:7510`                   |
+| **Código CNO-11**         | 7510                                      |
 | **Etiqueta del catálogo** | Electricistas de la construcción y afines |
-| **Nivel de confianza** | **MEDIA-ALTA** |
+| **Nivel de confianza**    | **MEDIA-ALTA**                            |
 
 **Salidas FP mapeadas (3 de 10):**
 
@@ -66,12 +66,12 @@ Estas tres salidas describen roles de dirección, coordinación y supervisión d
 
 ### Candidato 3 — `occupation:cno11:7521`
 
-| Campo | Valor |
-|---|---|
-| **occupationId** | `occupation:cno11:7521` |
-| **Código CNO-11** | 7521 |
+| Campo                     | Valor                                         |
+| ------------------------- | --------------------------------------------- |
+| **occupationId**          | `occupation:cno11:7521`                       |
+| **Código CNO-11**         | 7521                                          |
 | **Etiqueta del catálogo** | Mecánicos y reparadores de equipos eléctricos |
-| **Nivel de confianza** | **MEDIA-BAJA** |
+| **Nivel de confianza**    | **MEDIA-BAJA**                                |
 
 **Salidas FP mapeadas (1 de 10):**
 
@@ -89,9 +89,9 @@ La componente de "mantenimiento de instalaciones eléctricas" de esta salida se 
 
 ## 2. Salidas rechazadas o sin correspondencia clara en el catálogo
 
-| # | Salida FP | Motivo de rechazo |
-|---|---|---|
-| — | *(Ninguna)* | Todas las salidas del catálogo oficial al menos una candidata, aunque con niveles de confianza variables (ver sección 1). |
+| #   | Salida FP   | Motivo de rechazo                                                                                                         |
+| --- | ----------- | ------------------------------------------------------------------------------------------------------------------------- |
+| —   | _(Ninguna)_ | Todas las salidas del catálogo oficial al menos una candidata, aunque con niveles de confianza variables (ver sección 1). |
 
 **Observación:** No existe una salida del catálogo CNO-11 que carezca completamente de candidato. Sin embargo, la salida 10 ("gestor del mantenimiento de instalaciones eléctricas de distribución y alumbrado exterior") tiene la correspondencia más débil (MEDIA-BAJA) y podría no superar la revisión de Frontier. Si se requiere un umbral de confianza mínimo de MEDIA, esta salida quedaría como sin correspondencia confirmada.
 
@@ -99,11 +99,11 @@ La componente de "mantenimiento de instalaciones eléctricas" de esta salida se 
 
 ## 3. Resumen de cobertura
 
-| occupationId | CNO-11 | Etiqueta | Salidas FP cubiertas | Confianza |
-|---|---|---|---|---|
-| `occupation:cno11:3123` | 3123 | Técnicos en electricidad | 6 de 10 | ALTA |
-| `occupation:cno11:7510` | 7510 | Electricistas de la construcción y afines | 3 de 10 | MEDIA-ALTA |
-| `occupation:cno11:7521` | 7521 | Mecánicos y reparadores de equipos eléctricos | 1 de 10 | MEDIA-BAJA |
+| occupationId            | CNO-11 | Etiqueta                                      | Salidas FP cubiertas | Confianza  |
+| ----------------------- | ------ | --------------------------------------------- | -------------------- | ---------- |
+| `occupation:cno11:3123` | 3123   | Técnicos en electricidad                      | 6 de 10              | ALTA       |
+| `occupation:cno11:7510` | 7510   | Electricistas de la construcción y afines     | 3 de 10              | MEDIA-ALTA |
+| `occupation:cno11:7521` | 7521   | Mecánicos y reparadores de equipos eléctricos | 1 de 10              | MEDIA-BAJA |
 
 **Cobertura total:** 10 de 10 salidas cubiertas (al menos parcialmente). La categoría `occupation:cno11:3123` concentra la mayor parte de las salidas (60%), lo que refleja que el perfil principal del FP es el de técnico en electricidad a nivel de ingeniería/proyecto.
 

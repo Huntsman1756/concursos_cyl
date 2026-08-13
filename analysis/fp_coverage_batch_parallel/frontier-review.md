@@ -8,19 +8,19 @@ enough to publish a training-to-occupation relationship.
 
 ## Accepted for mechanical incorporation
 
-| Program | CNO-11 | Curated occupation | Evidence boundary |
-| --- | --- | --- | --- |
-| `SAN07S` | 2640 | Professionals in technical and medical sales | TodoFP explicitly lists a commercial delegate for hospital and pharmaceutical products. |
-| `HOT04S` | 5110 | Salaried cooks | TodoFP explicitly lists cook. |
-| `ELE01S` | 3123 | Electrical engineering technicians | TodoFP explicitly lists electrotechnical project, coordination, supervision, and verification roles. |
-| `ELE01S` | 7510 | Building and related electricians | TodoFP explicitly lists leaders and foremen of low-voltage installation teams; publish as a reviewed relationship, not as an exact official-output label. |
-| `COM02S` | 3523 | Ship and freight agents | TodoFP explicitly lists ship consignee. This acceptance does not automatically extend to freight forwarders or generic transport agents. |
-| `COM02S` | 4123 | Transport and logistics clerks | TodoFP explicitly lists logistics operator and transport-logistics technician. |
-| `COM02S` | 3510 | Commercial sales representatives | TodoFP explicitly lists a road-transport commercial role. |
-| `COM02S` | 5210 | Shop and warehouse supervisors | TodoFP explicitly lists warehouse manager. |
-| `AFD02M` | 3723 | Sports instructors | TodoFP explicitly lists the organisation of guided physical-sports activities in the natural environment. The relationship does not assert that every nature guide is a sports instructor. |
-| `AFD02M` | 3724 | Recreation and entertainment activity leaders | TodoFP explicitly lists camp, youth-hostel, colony, farm-school, and nature-school monitors. |
-| `IFC02B` | 7533 | ICT installers and repairers | TodoFP explicitly lists assistant installer of microcomputer systems. |
+| Program  | CNO-11 | Curated occupation                            | Evidence boundary                                                                                                                                                                          |
+| -------- | ------ | --------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `SAN07S` | 2640   | Professionals in technical and medical sales  | TodoFP explicitly lists a commercial delegate for hospital and pharmaceutical products.                                                                                                    |
+| `HOT04S` | 5110   | Salaried cooks                                | TodoFP explicitly lists cook.                                                                                                                                                              |
+| `ELE01S` | 3123   | Electrical engineering technicians            | TodoFP explicitly lists electrotechnical project, coordination, supervision, and verification roles.                                                                                       |
+| `ELE01S` | 7510   | Building and related electricians             | TodoFP explicitly lists leaders and foremen of low-voltage installation teams; publish as a reviewed relationship, not as an exact official-output label.                                  |
+| `COM02S` | 3523   | Ship and freight agents                       | TodoFP explicitly lists ship consignee. This acceptance does not automatically extend to freight forwarders or generic transport agents.                                                   |
+| `COM02S` | 4123   | Transport and logistics clerks                | TodoFP explicitly lists logistics operator and transport-logistics technician.                                                                                                             |
+| `COM02S` | 3510   | Commercial sales representatives              | TodoFP explicitly lists a road-transport commercial role.                                                                                                                                  |
+| `COM02S` | 5210   | Shop and warehouse supervisors                | TodoFP explicitly lists warehouse manager.                                                                                                                                                 |
+| `AFD02M` | 3723   | Sports instructors                            | TodoFP explicitly lists the organisation of guided physical-sports activities in the natural environment. The relationship does not assert that every nature guide is a sports instructor. |
+| `AFD02M` | 3724   | Recreation and entertainment activity leaders | TodoFP explicitly lists camp, youth-hostel, colony, farm-school, and nature-school monitors.                                                                                               |
+| `IFC02B` | 7533   | ICT installers and repairers                  | TodoFP explicitly lists assistant installer of microcomputer systems.                                                                                                                      |
 
 ## Rejected NAN candidates
 
