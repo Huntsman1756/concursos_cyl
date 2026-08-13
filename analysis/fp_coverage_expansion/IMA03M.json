@@ -312,8 +312,8 @@
   "limitation": "Deferred: el seed congelado Mantenedor electromecánico no aparece literalmente en el inventario BOE exhaustivo. Las fronteras CNO-11 auditadas no se promueven a relaciones publicadas; no se crean aliases, no se modifican data/curated, public ni snapshots, y el delta de ofertas permanece vacío.",
   "reviewedCommit": "9b0c329a98ad311ffd0bfdf2903ffd97fb375ea3",
   "reviewedCommitAt": "2026-08-09T17:26:04.000Z",
-  "snapshotId": "20260813115711843-f7ea169cda29",
-  "snapshotHash": "1ad7c05d25ad4e66571bc8960cb10d090800a6cf553ad70410f53011cb01b41a",
+  "snapshotId": "20260813132103035-eb57640834e9",
+  "snapshotHash": "66a26061e935f85496d46eaffa30b6d1ceac3d6d12c1e27264bd201c8ba672d7",
   "publicParity": {
     "publishedRelationKeys": [],
     "rejectedRelationKeys": [

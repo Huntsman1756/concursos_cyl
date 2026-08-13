@@ -391,6 +391,13 @@ const programs: TrainingProgram[] = [
     familyCode: "IMP",
     familyName: "Imagen Personal",
   },
+  {
+    programKey: "ELE04S",
+    programTitle: "Automatización y Robótica Industrial",
+    level: "higher",
+    familyCode: "ELE",
+    familyName: "Electricidad y Electrónica",
+  },
 ];
 
 const occupations = [
@@ -951,6 +958,12 @@ describe("curated occupation mappings", () => {
         "5992",
         "7221",
         "9700",
+        "3123",
+        "3124",
+        "3129",
+        "3139",
+        "3209",
+        "7521",
       ],
     );
     expect(
@@ -971,6 +984,7 @@ describe("curated occupation mappings", () => {
       FME02M: 4,
       IMA02M: 1,
       ELE03S: 1,
+      ELE04S: 6,
       AGA01M: 5,
       TMV01M: 2,
       COM01B: 7,

@@ -78,6 +78,28 @@
   },
   {
     "catalogVersion": "1.0.0",
+    "classificationCode": "3123",
+    "classificationSystem": "CNO-11",
+    "confirmationLabel": "Técnicos en electricidad",
+    "occupationId": "occupation:cno11:3123",
+    "preferredLabel": "Técnicos en electricidad",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-13",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf"
+  },
+  {
+    "catalogVersion": "1.0.0",
+    "classificationCode": "3124",
+    "classificationSystem": "CNO-11",
+    "confirmationLabel": "Técnicos en electrónica (excepto electromedicina)",
+    "occupationId": "occupation:cno11:3124",
+    "preferredLabel": "Técnicos en electrónica (excepto electromedicina)",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-13",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf"
+  },
+  {
+    "catalogVersion": "1.0.0",
     "classificationCode": "3126",
     "classificationSystem": "CNO-11",
     "confirmationLabel": "Técnicos en mecánica",
@@ -89,6 +111,28 @@
   },
   {
     "catalogVersion": "1.0.0",
+    "classificationCode": "3129",
+    "classificationSystem": "CNO-11",
+    "confirmationLabel": "Otros técnicos de las ciencias físicas, químicas, medioambientales y de las ingenierías",
+    "occupationId": "occupation:cno11:3129",
+    "preferredLabel": "Otros técnicos de las ciencias físicas, químicas, medioambientales y de las ingenierías",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-13",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf"
+  },
+  {
+    "catalogVersion": "1.0.0",
+    "classificationCode": "3139",
+    "classificationSystem": "CNO-11",
+    "confirmationLabel": "Técnicos en control de procesos no clasificados bajo otros epígrafes",
+    "occupationId": "occupation:cno11:3139",
+    "preferredLabel": "Técnicos en control de procesos no clasificados bajo otros epígrafes",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-13",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf"
+  },
+  {
+    "catalogVersion": "1.0.0",
     "classificationCode": "3160",
     "classificationSystem": "CNO-11",
     "confirmationLabel": "Técnicos de control de calidad de las ciencias físicas, químicas y de las ingenierías",
@@ -96,6 +140,17 @@
     "preferredLabel": "Técnicos de control de calidad de las ciencias físicas, químicas y de las ingenierías",
     "reviewStatus": "approved",
     "reviewedAt": "2026-08-12",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf"
+  },
+  {
+    "catalogVersion": "1.0.0",
+    "classificationCode": "3209",
+    "classificationSystem": "CNO-11",
+    "confirmationLabel": "Supervisores de otras industrias manufactureras",
+    "occupationId": "occupation:cno11:3209",
+    "preferredLabel": "Supervisores de otras industrias manufactureras",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-13",
     "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf"
   },
   {
@@ -650,6 +705,17 @@
   },
   {
     "catalogVersion": "1.0.0",
+    "classificationCode": "7221",
+    "classificationSystem": "CNO-11",
+    "confirmationLabel": "Fontaneros",
+    "occupationId": "occupation:cno11:7221",
+    "preferredLabel": "Fontaneros",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-13",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf"
+  },
+  {
+    "catalogVersion": "1.0.0",
     "classificationCode": "7232",
     "classificationSystem": "CNO-11",
     "confirmationLabel": "Pintores en las industrias manufactureras",
@@ -804,6 +870,17 @@
   },
   {
     "catalogVersion": "1.0.0",
+    "classificationCode": "7521",
+    "classificationSystem": "CNO-11",
+    "confirmationLabel": "Mecánicos y reparadores de equipos eléctricos",
+    "occupationId": "occupation:cno11:7521",
+    "preferredLabel": "Mecánicos y reparadores de equipos eléctricos",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-13",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf"
+  },
+  {
+    "catalogVersion": "1.0.0",
     "classificationCode": "7531",
     "classificationSystem": "CNO-11",
     "confirmationLabel": "Mecánicos y reparadores de equipos electrónicos",
@@ -899,6 +976,17 @@
     "preferredLabel": "Ordenanzas",
     "reviewStatus": "approved",
     "reviewedAt": "2026-08-12",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf"
+  },
+  {
+    "catalogVersion": "1.0.0",
+    "classificationCode": "9700",
+    "classificationSystem": "CNO-11",
+    "confirmationLabel": "Peones de las industrias manufactureras",
+    "occupationId": "occupation:cno11:9700",
+    "preferredLabel": "Peones de las industrias manufactureras",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-13",
     "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf"
   },
   {

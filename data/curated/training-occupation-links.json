@@ -1520,5 +1520,65 @@
     "sourceQuote": "Entrenador/a personal.",
     "reviewedAt": "2026-08-13",
     "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "ELE04S",
+    "occupationId": "occupation:cno11:3123",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.boe.es/eli/es/rd/2011/11/04/1581/dof/spa/pdf",
+    "sourceQuote": "T\u00e9cnico de puesta en marcha de sistemas de automatizaci\u00f3n industrial.",
+    "reviewedAt": "2026-08-13",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "ELE04S",
+    "occupationId": "occupation:cno11:3124",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.boe.es/eli/es/rd/2011/11/04/1581/dof/spa/pdf",
+    "sourceQuote": "Dise\u00f1ador de circuitos y sistemas integrados en automatizaci\u00f3n industrial.",
+    "reviewedAt": "2026-08-13",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "ELE04S",
+    "occupationId": "occupation:cno11:3129",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.boe.es/eli/es/rd/2011/11/04/1581/dof/spa/pdf",
+    "sourceQuote": "T\u00e9cnico en organizaci\u00f3n de mantenimiento de sistemas de automatizaci\u00f3n industrial.",
+    "reviewedAt": "2026-08-13",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "ELE04S",
+    "occupationId": "occupation:cno11:3139",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.boe.es/eli/es/rd/2011/11/04/1581/dof/spa/pdf",
+    "sourceQuote": "Programador-controlador de robots industriales.",
+    "reviewedAt": "2026-08-13",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "ELE04S",
+    "occupationId": "occupation:cno11:3209",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.boe.es/eli/es/rd/2011/11/04/1581/dof/spa/pdf",
+    "sourceQuote": "Jefe de equipo de supervisi\u00f3n de montaje de sistemas de automatizaci\u00f3n industrial.",
+    "reviewedAt": "2026-08-13",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "ELE04S",
+    "occupationId": "occupation:cno11:7521",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.boe.es/eli/es/rd/2011/11/04/1581/dof/spa/pdf",
+    "sourceQuote": "Verificador de aparatos, cuadros y equipos el\u00e9ctricos.",
+    "reviewedAt": "2026-08-13",
+    "mappingVersion": "1.0.0"
   }
 ]
