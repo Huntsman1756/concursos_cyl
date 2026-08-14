@@ -124,10 +124,10 @@ bindings:
     retryMax: 1
     defaultBudgetProfile: small
     budgetProfiles:
-      small: 100000
-      batch: 500000
-      research: 450000
-      extended: 750000
+      small: 175000
+      batch: 600000
+      research: 500000
+      extended: 900000
     maxObservedTokensOverrideRange:
       min: 1000
       max: 1000000

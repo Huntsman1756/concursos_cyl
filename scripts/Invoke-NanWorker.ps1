@@ -68,10 +68,10 @@ $InputPath = @($InputPath | ForEach-Object { $_ -split ',' } | ForEach-Object { 
 $AcceptanceCriteria = @($AcceptanceCriteria | ForEach-Object { $_.Trim() } | Where-Object { $_ })
 
 $budgetProfiles = @{
-    small = 100000
-    batch = 500000
-    research = 450000
-    extended = 750000
+    small = 175000
+    batch = 600000
+    research = 500000
+    extended = 900000
 }
 if ($MaxObservedTokens -ne 0 -and ($MaxObservedTokens -lt 1000 -or $MaxObservedTokens -gt 1000000)) {
     throw 'MaxObservedTokens must be 0 (use BudgetProfile) or between 1000 and 1000000.'
