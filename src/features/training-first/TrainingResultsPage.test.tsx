@@ -79,6 +79,8 @@ const offer: JobOffer = {
 
 const data: TrainingFeatureData = {
   programs: [program],
+  centers: [],
+  offerings: [],
   offers: [offer],
   occupations: [occupation],
   aliases: [alias],

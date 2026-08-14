@@ -4,6 +4,8 @@ import { AppShell } from "./AppShell";
 import { HomePage } from "../features/home/HomePage";
 import { TrainingSearchPage } from "../features/training-first/TrainingSearchPage";
 import { TrainingResultsPage } from "../features/training-first/TrainingResultsPage";
+import { OccupationSearchPage } from "../features/occupation-first/OccupationSearchPage";
+import { OccupationResultsPage } from "../features/occupation-first/OccupationResultsPage";
 import {
   loadTrainingData,
   type TrainingFeatureData,
@@ -41,6 +43,60 @@ function TrainingResultsRoute() {
   return <TrainingResultsPage programKey={programKey} data={data} />;
 }
 
+function OccupationSearchRoute() {
+  const [data, setData] = useState<TrainingFeatureData | null>(null);
+  const [error, setError] = useState(false);
+  useEffect(() => {
+    let active = true;
+    void loadTrainingData().then(
+      (value) => {
+        if (active) setData(value);
+      },
+      () => {
+        if (active) setError(true);
+      },
+    );
+    return () => {
+      active = false;
+    };
+  }, []);
+  if (error)
+    return (
+      <p role="status">No se pudieron cargar las ocupaciones revisadas.</p>
+    );
+  if (!data) return <p role="status">Cargando ocupaciones revisadas…</p>;
+  return (
+    <OccupationSearchPage
+      occupations={data.occupations}
+      aliases={data.aliases}
+    />
+  );
+}
+
+function OccupationResultsRoute() {
+  const { occupationId = "" } = useParams();
+  const [data, setData] = useState<TrainingFeatureData | null>(null);
+  const [error, setError] = useState(false);
+  useEffect(() => {
+    let active = true;
+    void loadTrainingData().then(
+      (value) => {
+        if (active) setData(value);
+      },
+      () => {
+        if (active) setError(true);
+      },
+    );
+    return () => {
+      active = false;
+    };
+  }, []);
+  if (error)
+    return <p role="status">No se pudieron cargar las rutas revisadas.</p>;
+  if (!data) return <p role="status">Cargando rutas revisadas…</p>;
+  return <OccupationResultsPage occupationId={occupationId} data={data} />;
+}
+
 function EntryPlaceholder({ title }: { title: string }) {
   return (
     <div className="placeholder-page">
@@ -61,9 +117,10 @@ export function AppRoutes() {
           path="/desde-fp/:programKey"
           element={<TrainingResultsRoute />}
         />
+        <Route path="/desde-ocupacion" element={<OccupationSearchRoute />} />
         <Route
-          path="/desde-ocupacion"
-          element={<EntryPlaceholder title="Quiero trabajar de…" />}
+          path="/desde-ocupacion/:occupationId"
+          element={<OccupationResultsRoute />}
         />
         <Route
           path="/comparar-estudios"

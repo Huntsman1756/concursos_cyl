@@ -16,6 +16,14 @@
     "mappingVersion": "1.0.0"
   },
   {
+    "occupationId": "occupation:web-development",
+    "alias": "programación web",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://analisis.datosabiertos.jcyl.es/api/explore/v2.1/catalog/datasets/oferta-de-formacion-profesional/records",
+    "reviewedAt": "2026-08-14",
+    "mappingVersion": "1.0.0"
+  },
+  {
     "occupationId": "occupation:administrative-assistant",
     "alias": "auxiliar administrativo",
     "reviewStatus": "approved",
