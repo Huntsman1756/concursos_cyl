@@ -1290,7 +1290,7 @@ function assertSnapshotCoverage(
   });
   assert(
     coverage.newlyReachedOfferCount === matches.length,
-    `Claimed snapshot coverage for ${attempt.programKey} does not match the accepted-relationship union.`,
+    `Claimed snapshot coverage for ${attempt.programKey} does not match the accepted-relationship union (claimed ${coverage.newlyReachedOfferCount}, recomputed ${matches.length}).`,
   );
   if (attempt.programKey === "EOC01M") {
     assert(

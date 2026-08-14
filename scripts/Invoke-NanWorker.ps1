@@ -68,10 +68,10 @@ $InputPath = @($InputPath | ForEach-Object { $_ -split ',' } | ForEach-Object { 
 $AcceptanceCriteria = @($AcceptanceCriteria | ForEach-Object { $_.Trim() } | Where-Object { $_ })
 
 $budgetProfiles = @{
-    small = 100000
-    batch = 500000
-    research = 450000
-    extended = 750000
+    small = 175000
+    batch = 600000
+    research = 500000
+    extended = 900000
 }
 if ($MaxObservedTokens -ne 0 -and ($MaxObservedTokens -lt 1000 -or $MaxObservedTokens -gt 1000000)) {
     throw 'MaxObservedTokens must be 0 (use BudgetProfile) or between 1000 and 1000000.'
@@ -196,18 +196,37 @@ function Test-AllowedPath {
     return $false
 }
 
-# ── Model routing (premium glm5.2 is deliberately unsupported) ──
+# ── Model routing and agent selection (premium glm5.2 deliberately unsupported) ──
+# Fixed table: model → agent per TaskType.  gemma4 is bulletin-only; never
+# receives a code agent and never appears in code fallback chains.
+$codeAgents = @{
+    'nan/qwen3.6'          = 'nan-code'
+    'nan/deepseek-v4-flash' = 'nan-reasoning-code'
+    'nan/mimo-v2.5'        = 'nan-long-context-code'
+}
 $primaryModel = switch ($ModelProfile) {
     'reasoning' { 'nan/deepseek-v4-flash' }
     'long-context' { 'nan/mimo-v2.5' }
     default { if ($TaskType -eq 'code') { 'nan/qwen3.6' } else { 'nan/gemma4' } }
 }
-$primaryAgent = if ($TaskType -eq 'code') { 'nan-code' } else { 'nan-bulletin' }
+$primaryAgent = if ($TaskType -eq 'code') {
+    $codeAgents[$primaryModel]
+} else { 'nan-bulletin' }
 $allowedNanModels = @('nan/qwen3.6','nan/gemma4','nan/deepseek-v4-flash','nan/mimo-v2.5')
-$fallbackPriority = @('nan/mimo-v2.5','nan/deepseek-v4-flash','nan/qwen3.6','nan/gemma4')
+# Code fallbacks exclude Gemma. Read-only bulletin work may explicitly fall
+# back to any supported text model while retaining the nan-bulletin permissions.
+$fallbackPriority = if ($TaskType -eq 'code') {
+    @('nan/mimo-v2.5','nan/deepseek-v4-flash','nan/qwen3.6')
+} else { @('nan/mimo-v2.5','nan/deepseek-v4-flash','nan/qwen3.6','nan/gemma4') }
 $forbiddenFallbacks = @($FallbackModels | Where-Object { $_ -match '(?i)(^|/)glm5\.2($|[-:])' })
 if ($forbiddenFallbacks.Count -gt 0) {
     throw "Unsupported or premium NAN fallback model: $($forbiddenFallbacks -join ', ')"
+}
+if ($TaskType -eq 'code') {
+    $gemmaFallbacks = @($FallbackModels | Where-Object { $_ -eq 'nan/gemma4' -or $_ -eq 'gemma4' })
+    if ($gemmaFallbacks.Count -gt 0) {
+        throw "gemma4 is bulletin-only and cannot be used as a code fallback: $($gemmaFallbacks -join ', ')"
+    }
 }
 
 # ── SHA-256 from string (PS 5.1 compatible) ──
@@ -265,7 +284,11 @@ function Start-NanAuditProxy {
     if (-not (Test-Path -LiteralPath $script -PathType Leaf)) { throw 'NAN audit proxy script is missing.' }
     $start = New-Object System.Diagnostics.ProcessStartInfo
     $start.FileName = $node
-    $proxyArgs = @($script,'--evidence',$EvidencePath,'--contract-hash',$ContractHash,'--repository-id',$RepositoryId)
+    $proxyArgs = @(
+        $script,'--evidence',$EvidencePath,'--contract-hash',$ContractHash,
+        '--repository-id',$RepositoryId,'--max-attempts','3',
+        '--base-delay-ms','1000','--max-delay-ms','30000'
+    )
     $start.Arguments = (($proxyArgs | ForEach-Object { ConvertTo-NativeArgument -Argument $_ }) -join ' ')
     $start.WorkingDirectory = $repoRoot
     $start.UseShellExecute = $false
@@ -398,6 +421,7 @@ function Invoke-OpenCodeBudgeted {
         $startInfo.EnvironmentVariables['XDG_CACHE_HOME'] = $RunContext.cache
         $override = @{
             provider=@{nan=@{options=@{baseURL=$RunContext.baseUrl}}}
+            mcp=@{esdata=@{enabled=$false}}
         }
         if ($RunContext.taskType -eq 'bulletin') {
             # Files named with --file are attached by the host before inference.
@@ -470,6 +494,8 @@ $headSha = if ($TestMode -or $DryRun) { 'simulated' } else { (& git -C $repoRoot
 $contractMaterial = [ordered]@{
     taskType=$TaskType;objective=$Objective;allowedPaths=@($AllowedPath);inputPaths=@($InputPath)
     validationCommands=@($ValidationCommand);frontierPlan=$FrontierPlan;acceptanceCriteria=@($AcceptanceCriteria);headSha=$headSha
+    modelProfile=$ModelProfile;budgetProfile=$BudgetProfile;maxObservedTokens=$MaxObservedTokens
+    maxExecutionSeconds=$MaxExecutionSeconds;fallbackModels=@($FallbackModels)
 } | ConvertTo-Json -Depth 5 -Compress
 $contractHash = Compute-StringSha256 -InputString $contractMaterial
 $contractMutex = $null
@@ -496,7 +522,7 @@ if ($DryRun) {
         $planSha = Compute-StringSha256 -InputString $FrontierPlan
         $fc = @{plannedBy=$PlannedBy;planHash=$planSha;acceptanceCriteriaCount=$AcceptanceCriteria.Count;reviewRequired=$true}
     }
-    $dryRunTelemetry = @{telemetryId=$tid;simulated=[bool]$true;taskType=$TaskType;selectedModel=$primaryModel;attempts=@();changedPaths=@();contractViolation=$false;validationFailed=$false;tokensUsage=@{input=0;output=0;reasoning=0;cacheRead=0;cacheWrite=0;total=0};success=$true;status='dry-run';frontierContract=$fc;contract=@{hash=$contractHash;headSha=$headSha;duplicateWindowSeconds=$DuplicateWindowSeconds};admission=@{profile=$AdmissionProfile;capacity=$(if ($AdmissionProfile -eq 'observed-serial') { 1 } else { 5 });timeoutSeconds=$AdmissionTimeoutSeconds;queueWaitMs=0;acquired=$false};launch=@{budgetProfile=$BudgetProfile;budgetSource=$budgetSource;maxObservedTokens=$effectiveMaxObservedTokens;maxExecutionSeconds=$MaxExecutionSeconds}}
+    $dryRunTelemetry = @{telemetryId=$tid;simulated=[bool]$true;taskType=$TaskType;selectedModel=$primaryModel;selectedAgent=$primaryAgent;attempts=@();changedPaths=@();contractViolation=$false;validationFailed=$false;tokensUsage=@{input=0;output=0;reasoning=0;cacheRead=0;cacheWrite=0;total=0};success=$true;status='dry-run';frontierContract=$fc;contract=@{hash=$contractHash;headSha=$headSha;duplicateWindowSeconds=$DuplicateWindowSeconds};admission=@{profile=$AdmissionProfile;capacity=$(if ($AdmissionProfile -eq 'observed-serial') { 1 } else { 5 });timeoutSeconds=$AdmissionTimeoutSeconds;queueWaitMs=0;acquired=$false};launch=@{modelProfile=$ModelProfile;budgetProfile=$BudgetProfile;budgetSource=$budgetSource;maxObservedTokens=$effectiveMaxObservedTokens;maxExecutionSeconds=$MaxExecutionSeconds}}
     $writtenTelemetryPath = Write-TelemetryRecord -Value $dryRunTelemetry -TelemetryId $tid
     Write-Host "Telemetry: $writtenTelemetryPath" -ForegroundColor DarkGray
     exit 0
@@ -613,7 +639,10 @@ $planIndex = 0
 $totalAttempts = 0
 
 :modelLoop foreach ($candidateModel in $modelList) {
-    $candidateAgent = if ($TaskType -eq 'bulletin') { 'nan-bulletin' } else { 'nan-code' }
+    $candidateAgent = if ($TaskType -eq 'bulletin') { 'nan-bulletin' } else { $codeAgents[$candidateModel] }
+    if ([string]::IsNullOrWhiteSpace($candidateAgent)) {
+        throw "No bounded code agent is configured for model: $candidateModel"
+    }
     for ($r = 0; $r -lt $MaxRetries; $r++) {
         $totalAttempts++
         $attempt = @{model=$candidateModel;agent=$candidateAgent;attempt=$totalAttempts;retry=($r+1);exitCode=1;tokens=@{input=0;output=0;reasoning=0;cacheRead=0;cacheWrite=0;total=0};changedPaths=@();validationExitCode=$null;validationDiagnostics=@();draftOutput=''}
@@ -797,12 +826,40 @@ if (-not $TestMode -and (Test-Path -LiteralPath $providerEvidencePath -PathType 
         try { $_ | ConvertFrom-Json } catch { $null }
     } | Where-Object { $_ })
 }
-$expectedProviderModel = if ($successResult) { ([string]$successResult.model -replace '^nan/','') } else { $null }
-$verifiedProviderRecords = @($providerRecords | Where-Object {
+$observedProviderRecords = @($providerRecords | Where-Object {
     $_.evidenceClass -eq 'provider-observed' -and
     $_.contractHash -eq $contractHash -and
-    $_.keyFingerprint -eq $expectedNanKeyFingerprint -and
+    $_.keyFingerprint -eq $expectedNanKeyFingerprint
+})
+$providerRetryRecords = @($observedProviderRecords | Where-Object {
+    $_.retry -and $_.retry.retryable -eq $true -and $_.retry.terminal -eq $false
+})
+$terminalProviderErrors = @($observedProviderRecords | Where-Object {
+    [int]$_.response.status -ge 400 -and (!$_.retry -or $_.retry.terminal -eq $true)
+} | ForEach-Object {
+    @{
+        status=[int]$_.response.status
+        code=$(if ($_.retry.error) { [string]$_.retry.error.code } else { $null })
+        type=$(if ($_.retry.error) { [string]$_.retry.error.type } else { $null })
+        param=$(if ($_.retry.error) { [string]$_.retry.error.param } else { $null })
+        attempt=$(if ($_.retry) { [int]$_.retry.attempt } else { 1 })
+    }
+})
+$lastProviderError = @($terminalProviderErrors | Select-Object -Last 1)
+$providerFailureStatus = $null
+if ($lastProviderError.Count -gt 0) {
+    $errorStatus = [int]$lastProviderError[0].status
+    $errorCode = [string]$lastProviderError[0].code
+    $providerFailureStatus = if ($errorStatus -in @(401,403)) { 'blocked-provider-auth' } `
+        elseif ($errorStatus -eq 402 -or $errorCode -in @('insufficient_quota','quota_exceeded')) { 'blocked-provider-quota' } `
+        elseif ($errorStatus -eq 429) { 'blocked-provider-rate-limit' } `
+        elseif ($errorStatus -ge 500) { 'blocked-provider-unavailable' } `
+        else { 'blocked-provider-request' }
+}
+$expectedProviderModel = if ($successResult) { ([string]$successResult.model -replace '^nan/','') } else { $null }
+$verifiedProviderRecords = @($observedProviderRecords | Where-Object {
     [int]$_.response.status -ge 200 -and [int]$_.response.status -lt 300 -and
+    $_.request.path -in @('/v1/chat/completions','/v1/responses') -and
     $_.response.id -match '^(chatcmpl|resp|cmpl)[_-]'
 })
 if ($expectedProviderModel) {
@@ -820,7 +877,7 @@ $providerResponseSetHash = if ($providerResponseIds.Count -gt 0) { Compute-Strin
 
 # ── Telemetry (always written before exit) ──
 $tid = $runtimeId
-$status = if ($tokenBudgetExceeded) { 'blocked-token-budget' } elseif ($executionTimedOut) { 'blocked-timeout' } elseif ($successResult -and -not $providerEvidenceVerified) { 'blocked-unverified-provider' } elseif ($successResult) { 'awaiting-frontier-review' } else { 'blocked-needs-new-contract' }
+$status = if ($tokenBudgetExceeded) { 'blocked-token-budget' } elseif ($executionTimedOut) { 'blocked-timeout' } elseif ($successResult -and -not $providerEvidenceVerified) { 'blocked-unverified-provider' } elseif ($successResult) { 'awaiting-frontier-review' } elseif ($providerFailureStatus) { $providerFailureStatus } else { 'blocked-needs-new-contract' }
 $success = ($successResult -ne $null) -and (-not $contractViolation) -and (-not $validationFailed) -and $providerEvidenceVerified
 $fcTelemetry = @{}
 if ($TaskType -eq 'code') {
@@ -828,15 +885,15 @@ if ($TaskType -eq 'code') {
     $fcTelemetry = @{plannedBy=$PlannedBy;planHash=$planSha;acceptanceCriteriaCount=$AcceptanceCriteria.Count;reviewRequired=$true}
 }
 $telemetry = @{
-    telemetryId=$tid;simulated=[bool]$TestMode;taskType=$TaskType;selectedModel=if ($successResult) { $successResult.model } else { $null }
+    telemetryId=$tid;simulated=[bool]$TestMode;taskType=$TaskType;selectedModel=if ($successResult) { $successResult.model } else { $null };selectedAgent=if ($successResult) { $successResult.agent } else { $null }
     attempts=@($attempts | ForEach-Object { @{model=$_.model;agent=$_.agent;attempt=$_.attempt;retry=$_.retry;exitCode=$_.exitCode;tokens=$_.tokens;changedPaths=$_.changedPaths;validationExitCode=$_.validationExitCode;validationDiagnostics=@($_.validationDiagnostics);terminationReason=$_.terminationReason} })
     changedPaths=@($changedPaths);contractViolation=$contractViolation;validationFailed=$validationFailed
     tokensUsage=$agg;success=$success;status=$status;frontierContract=$fcTelemetry
     draftOutput=if ($successResult) { $successResult.draftOutput } else { '' }
     contract=@{hash=$contractHash;headSha=$headSha;duplicateWindowSeconds=$DuplicateWindowSeconds}
-    providerEvidence=@{verified=[bool]$providerEvidenceVerified;evidenceClass=$(if ($TestMode) { 'simulated' } elseif ($verifiedProviderRecords.Count -gt 0) { 'provider-observed' } else { 'insufficient-evidence' });recordCount=$verifiedProviderRecords.Count;providerReportedTokens=$providerReportedTokens;responseIdSetHash=$providerResponseSetHash;rawEvidenceFile=$(if ($TestMode) { $null } else { [System.IO.Path]::GetFileName($providerEvidencePath) })}
+    providerEvidence=@{verified=[bool]$providerEvidenceVerified;evidenceClass=$(if ($TestMode) { 'simulated' } elseif ($observedProviderRecords.Count -gt 0) { 'provider-observed' } else { 'insufficient-evidence' });recordCount=$verifiedProviderRecords.Count;observedRecordCount=$observedProviderRecords.Count;retryCount=$providerRetryRecords.Count;terminalErrorCount=$terminalProviderErrors.Count;terminalErrors=@($terminalProviderErrors | Select-Object -Last 5);providerReportedTokens=$providerReportedTokens;responseIdSetHash=$providerResponseSetHash;rawEvidenceFile=$(if ($TestMode) { $null } else { [System.IO.Path]::GetFileName($providerEvidencePath) })}
     admission=@{profile=$AdmissionProfile;capacity=$(if ($AdmissionProfile -eq 'observed-serial') { 1 } else { 5 });timeoutSeconds=$AdmissionTimeoutSeconds;queueWaitMs=$admissionWaitMs;acquired=[bool]$admissionAcquired}
-    launch=@{harness='opencode';protocol='native-jsonl-stream-1.18.x';pure=$true;auto=$false;directory=$repoRoot;budgetProfile=$BudgetProfile;budgetSource=$budgetSource;maxObservedTokens=$effectiveMaxObservedTokens;maxExecutionSeconds=$MaxExecutionSeconds}
+    launch=@{harness='opencode';protocol='native-jsonl-stream-1.18.x';pure=$true;auto=$false;directory=$repoRoot;modelProfile=$ModelProfile;budgetProfile=$BudgetProfile;budgetSource=$budgetSource;maxObservedTokens=$effectiveMaxObservedTokens;maxExecutionSeconds=$MaxExecutionSeconds}
 }
 $writtenTelemetryPath = Write-TelemetryRecord -Value $telemetry -TelemetryId $tid
 Write-Host "Telemetry: $writtenTelemetryPath" -ForegroundColor DarkGray

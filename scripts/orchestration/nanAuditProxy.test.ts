@@ -23,6 +23,14 @@ type ProviderEvidence = {
     usage: { input: number; output: number; total: number };
     requestIds: Record<string, string>;
   };
+  retry?: {
+    attempt: number;
+    maxAttempts: number;
+    terminal: boolean;
+    retryable: boolean;
+    retryDelayMs: number;
+    error?: { code: string | null; type: string | null; param: string | null };
+  };
 };
 
 afterEach(async () => {
@@ -52,6 +60,59 @@ function firstLine(child: ProxyProcess): Promise<string> {
     });
     child.once("error", reject);
     child.once("exit", (code) => reject(new Error(`proxy exited ${code}`)));
+  });
+}
+
+async function startProxy(
+  upstreamPort: number,
+  extraArgs: string[] = [],
+): Promise<{ port: number; evidencePath: string }> {
+  const directory = await mkdtemp(path.join(os.tmpdir(), "nan-proxy-test-"));
+  directories.push(directory);
+  const evidencePath = path.join(directory, "evidence.jsonl");
+  const proxy = spawn(
+    process.execPath,
+    [
+      path.resolve("scripts/orchestration/nan-audit-proxy.mjs"),
+      "--evidence",
+      evidencePath,
+      "--contract-hash",
+      "contract-test",
+      "--repository-id",
+      "repository-test",
+      "--upstream",
+      `http://127.0.0.1:${upstreamPort}`,
+      "--allow-http-upstream",
+      "true",
+      ...extraArgs,
+    ],
+    { stdio: ["ignore", "pipe", "pipe"] },
+  );
+  children.push(proxy);
+  const ready = JSON.parse(await firstLine(proxy)) as { port: number };
+  return { port: ready.port, evidencePath };
+}
+
+function drain(request: import("node:http").IncomingMessage): Promise<void> {
+  return new Promise((resolve, reject) => {
+    request.resume();
+    request.once("end", resolve);
+    request.once("error", reject);
+  });
+}
+
+function postChat(port: number, stream = false): Promise<Response> {
+  return fetch(`http://127.0.0.1:${port}/v1/chat/completions`, {
+    method: "POST",
+    headers: {
+      authorization: "Bearer sk-test-retry-secret",
+      "content-type": "application/json",
+    },
+    body: JSON.stringify({
+      model: "qwen3.6",
+      messages: [{ role: "user", content: "RETRY-PROMPT" }],
+      stream,
+    }),
   });
 }
 
@@ -160,6 +221,186 @@ describe("NAN audit proxy", () => {
     );
     expect(rejectedStatus).toBe(400);
     expect(upstreamRequests).toBe(1);
+
+    upstream.close();
+  });
+
+  it("retries 429 rate_limit_exceeded then streams the successful 200", async () => {
+    let upstreamRequests = 0;
+    const upstream = http.createServer(async (request, response) => {
+      upstreamRequests += 1;
+      await drain(request);
+      if (upstreamRequests === 1) {
+        response.writeHead(429, {
+          "content-type": "application/json",
+          "retry-after": "0",
+        });
+        response.end(
+          JSON.stringify({
+            error: { code: "rate_limit_exceeded", message: "slow down" },
+          }),
+        );
+        return;
+      }
+      response.writeHead(200, {
+        "content-type": "text/event-stream",
+        "x-request-id": "nan-retry-ok",
+      });
+      response.end(
+        [
+          'data: {"id":"chatcmpl-retry","model":"qwen3.6","choices":[]}',
+          'data: {"id":"chatcmpl-retry","model":"qwen3.6","usage":{"prompt_tokens":4,"completion_tokens":1,"total_tokens":5}}',
+          "data: [DONE]",
+          "",
+        ].join("\n"),
+      );
+    });
+    const upstreamPort = await listen(upstream);
+    const { port, evidencePath } = await startProxy(upstreamPort, [
+      "--max-attempts",
+      "3",
+      "--base-delay-ms",
+      "10",
+      "--max-delay-ms",
+      "50",
+    ]);
+
+    const result = await postChat(port, true);
+    expect(result.status).toBe(200);
+    const body = await result.text();
+    expect(body).toContain("chatcmpl-retry");
+
+    const rawEvidence = await readFile(evidencePath, "utf8");
+    const lines = rawEvidence
+      .trim()
+      .split("\n")
+      .map((line) => JSON.parse(line) as ProviderEvidence);
+    expect(lines).toHaveLength(2);
+    expect(lines[0].response.status).toBe(429);
+    expect(lines[0].retry).toMatchObject({
+      attempt: 1,
+      maxAttempts: 3,
+      terminal: false,
+      retryable: true,
+    });
+    expect(lines[0].retry?.error).toEqual({
+      code: "rate_limit_exceeded",
+      type: null,
+      param: null,
+    });
+    expect(lines[1].response.status).toBe(200);
+    expect(lines[1].response.id).toBe("chatcmpl-retry");
+    expect(lines[1].retry).toMatchObject({
+      attempt: 2,
+      maxAttempts: 3,
+      terminal: true,
+      retryable: false,
+      retryDelayMs: 0,
+    });
+    expect(rawEvidence).not.toContain("slow down");
+    expect(rawEvidence).not.toContain("RETRY-PROMPT");
+    expect(rawEvidence).not.toContain("sk-test-retry-secret");
+    expect(upstreamRequests).toBe(2);
+
+    upstream.close();
+  });
+
+  it("does not retry 429 insufficient_quota", async () => {
+    let upstreamRequests = 0;
+    const upstream = http.createServer(async (request, response) => {
+      upstreamRequests += 1;
+      await drain(request);
+      response.writeHead(429, { "content-type": "application/json" });
+      response.end(
+        JSON.stringify({
+          error: { code: "insufficient_quota", message: "no quota left" },
+        }),
+      );
+    });
+    const upstreamPort = await listen(upstream);
+    const { port, evidencePath } = await startProxy(upstreamPort, [
+      "--max-attempts",
+      "5",
+      "--base-delay-ms",
+      "10",
+    ]);
+
+    const result = await postChat(port);
+    expect(result.status).toBe(429);
+    await result.text();
+
+    const rawEvidence = await readFile(evidencePath, "utf8");
+    const lines = rawEvidence
+      .trim()
+      .split("\n")
+      .map((line) => JSON.parse(line) as ProviderEvidence);
+    expect(lines).toHaveLength(1);
+    expect(lines[0].response.status).toBe(429);
+    expect(lines[0].retry).toMatchObject({
+      attempt: 1,
+      maxAttempts: 5,
+      terminal: true,
+      retryable: false,
+      retryDelayMs: 0,
+    });
+    expect(lines[0].retry?.error?.code).toBe("insufficient_quota");
+    expect(rawEvidence).not.toContain("no quota left");
+    expect(upstreamRequests).toBe(1);
+
+    upstream.close();
+  });
+
+  it("exhausts all attempts on 503 and reports the terminal attempt", async () => {
+    let upstreamRequests = 0;
+    const upstream = http.createServer(async (request, response) => {
+      upstreamRequests += 1;
+      await drain(request);
+      response.writeHead(503, {
+        "content-type": "application/json",
+        "retry-after": "999999",
+      });
+      response.end(
+        JSON.stringify({
+          error: { code: "service_unavailable", message: "down for now" },
+        }),
+      );
+    });
+    const upstreamPort = await listen(upstream);
+    const { port, evidencePath } = await startProxy(upstreamPort, [
+      "--max-attempts",
+      "3",
+      "--base-delay-ms",
+      "1",
+      "--max-delay-ms",
+      "2",
+    ]);
+
+    const result = await postChat(port);
+    expect(result.status).toBe(503);
+    await result.text();
+
+    const rawEvidence = await readFile(evidencePath, "utf8");
+    const lines = rawEvidence
+      .trim()
+      .split("\n")
+      .map((line) => JSON.parse(line) as ProviderEvidence);
+    expect(lines).toHaveLength(3);
+    for (const [index, line] of lines.entries()) {
+      expect(line.response.status).toBe(503);
+      expect(line.retry).toMatchObject({
+        attempt: index + 1,
+        maxAttempts: 3,
+        retryable: true,
+        error: { code: "service_unavailable", type: null, param: null },
+      });
+      expect(line.retry?.terminal).toBe(index === 2);
+    }
+    // Retry-After of 999999 seconds is bounded by --max-delay-ms.
+    expect(lines[0].retry?.retryDelayMs).toBeLessThanOrEqual(2);
+    expect(rawEvidence).not.toContain("down for now");
+    expect(rawEvidence).not.toContain("RETRY-PROMPT");
+    expect(rawEvidence).not.toContain("sk-test-retry-secret");
+    expect(upstreamRequests).toBe(3);
 
     upstream.close();
   });

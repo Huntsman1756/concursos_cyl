@@ -105,7 +105,9 @@ describe("rankFpOfferAliasCandidates – manifest-addressed loading", () => {
     expect(offers.length).toBe(
       manifest.resourceSnapshots.jobOffers.recordCount,
     );
-    expect(links.length).toBe(191);
+    expect(links.length).toBe(
+      manifest.resourceSnapshots.trainingOccupationLinks.recordCount,
+    );
     expect(requirements.length).toBeGreaterThan(0);
     expect(programs.length).toBeGreaterThan(0);
     expect(occupations.length).toBeGreaterThan(0);
@@ -527,7 +529,8 @@ describe("rankFpOfferAliasCandidates – every candidate has a title match", () 
 
     // For each candidate, verify at least one matched offer title contains the bounded phrase
     for (const c of report.candidates) {
-      const normCandidate = normalizedText(c.aliasCandidate);
+      const normCandidate =
+        c.aliasCandidateNormalized ?? normalizedText(c.aliasCandidate);
       for (const offerId of c.matchedOfferIds) {
         const offer = offers.find((o) => o.id === offerId);
         if (!offer) {
@@ -545,10 +548,14 @@ describe("rankFpOfferAliasCandidates – every candidate has a title match", () 
         const offer = offers.find((o) => o.id === offerId);
         if (!offer) return false;
         const normTitle = normalizedText(offer.title);
-        const normCandidate = normalizedText(c.aliasCandidate);
+        const normCandidate =
+          c.aliasCandidateNormalized ?? normalizedText(c.aliasCandidate);
         return ` ${normTitle} `.includes(` ${normCandidate} `);
       });
-      expect(anyMatch).toBe(true);
+      expect(
+        anyMatch,
+        `candidate without a bounded title match: ${c.aliasCandidate}`,
+      ).toBe(true);
     }
   });
 });
@@ -732,7 +739,7 @@ describe("rankFpOfferAliasCandidates – markdown row format", () => {
     expect(markdown).toContain("| 1 oferta |");
 
     // Must not contain the plural form as a word boundary match
-    expect(markdown).not.toMatch(/1 ofertas\b/);
+    expect(markdown).not.toMatch(/\b1 ofertas\b/);
 
     // Should not contain stray words
     expect(markdown).not.toMatch(/murcielago/iu);

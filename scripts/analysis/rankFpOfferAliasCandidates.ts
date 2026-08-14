@@ -570,16 +570,15 @@ function generateCandidates(
             ? `${offerPrefix};occupation_label`
             : `${offerPrefix};exact_source_phrase`;
 
-      // Preserve Spanish display text in aliasCandidate; use aliasCandidateNormalized
-      // exclusively for identity/comparison (collision detection).
-      const rawDisplay = raw.source === "segment" ? raw.original : raw.original;
-      const normalizedDisplay = normalizedText(rawDisplay);
+      // Preserve Spanish display text in aliasCandidate; keep the exact normalized
+      // phrase that was matched for identity/comparison and evidence checks.
+      const rawDisplay = raw.original;
 
       seen.set(
-        `${normalizedDisplay}\u0000${rel.programKey}\u0000${rel.occupationId}`,
+        `${normalized}\u0000${rel.programKey}\u0000${rel.occupationId}`,
         {
           aliasCandidate: rawDisplay,
-          aliasCandidateNormalized: normalizedDisplay,
+          aliasCandidateNormalized: normalized,
           programKey: rel.programKey,
           programTitle: rel.programTitle,
           occupationId: rel.occupationId,

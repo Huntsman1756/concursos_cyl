@@ -190,6 +190,27 @@
     ]
   },
   {
+    "offerId": "1285670667306",
+    "requirements": [
+      {
+        "category": "unclassified",
+        "id": "requirement:6eefb740d09f0edb0c96c8c4bb5c4fd84962f57d7728f5c4d0950190a0880554",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Educación Secundaria Obligatoria."
+      },
+      {
+        "category": "experience",
+        "id": "requirement:1e32ce80f5a3bf2bf78372f1682c702e8554d7a018a13d01fba9d2b764011750",
+        "normalizedValue": 12,
+        "parserRule": "experience.years",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Experiencia mínima de al menos 1 año."
+      }
+    ]
+  },
+  {
     "offerId": "1285669061561",
     "requirements": [
       {
@@ -231,35 +252,6 @@
         "parserRule": "unclassified.conservative_fallback",
         "parserVersion": "1.0.0",
         "sourceQuote": "Rigor en las normas de higiene y seguridad alimentaria."
-      }
-    ]
-  },
-  {
-    "offerId": "1285667275160",
-    "requirements": [
-      {
-        "category": "unclassified",
-        "id": "requirement:4a1210b66964e002977305dba18c9e19572092389c49e815bb700b58f349cd44",
-        "normalizedValue": null,
-        "parserRule": "unclassified.conservative_fallback",
-        "parserVersion": "1.0.0",
-        "sourceQuote": "Grado de Fisioterapeuta."
-      },
-      {
-        "category": "certificate_or_regulated_license",
-        "id": "requirement:daa111a564fc012cb77848565197102dbee6d259daeae55167ab3ea67ef71474",
-        "normalizedValue": "professional_registration",
-        "parserRule": "certificate.professional_registration",
-        "parserVersion": "1.0.0",
-        "sourceQuote": "Colegiación vigente."
-      },
-      {
-        "category": "experience",
-        "id": "requirement:edb4632f433c2e6009076a61e6b00e67579f8f4f87cd14adc838aaa26d1ceded",
-        "normalizedValue": 12,
-        "parserRule": "experience.years",
-        "parserVersion": "1.0.0",
-        "sourceQuote": "Experiencia mínima de al menos 1 año."
       }
     ]
   },
@@ -436,6 +428,35 @@
     ]
   },
   {
+    "offerId": "1285670666806",
+    "requirements": [
+      {
+        "category": "driving_license_or_vehicle",
+        "id": "requirement:aeb74d5104c9faaf95c29d5ce54d9c0a8d9eabaa491e1fea46f9a236ff8986a3",
+        "normalizedValue": "B",
+        "parserRule": "license.driving_b",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Permiso de conducir B en vigor."
+      },
+      {
+        "category": "unclassified",
+        "id": "requirement:b44bbfd98cfadedadd980964f35755e14ef5f2d85dbc4ca35d387672dedbdc02",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Disponibilidad completa para trabajar y desplazarse diariamente al polígono de Burgos."
+      },
+      {
+        "category": "unclassified",
+        "id": "requirement:a79b04c5c1a1388156ed3c6a8d45119a242d7daceb8dcbaccdb734350dc0efc4",
+        "normalizedValue": null,
+        "parserRule": "unclassified.ambiguous_or_negated",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Valorable experiencia previa conduciendo vehículos de reparto (furgonetas)."
+      }
+    ]
+  },
+  {
     "offerId": "1285666774753",
     "requirements": [
       {
@@ -539,6 +560,80 @@
     ]
   },
   {
+    "offerId": "1285670666890",
+    "requirements": [
+      {
+        "category": "unclassified",
+        "id": "requirement:ad802f3d668aeef7d5789039887c9b68a1b887607c27ae6f0a93c06b67369d97",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Ciclo Formativo Grado Medio."
+      },
+      {
+        "category": "experience",
+        "id": "requirement:9ddb6263b78a56a9c288bec26fc2865accac2f5534360da26e544f85e491dd76",
+        "normalizedValue": 12,
+        "parserRule": "experience.years",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Experiencia mínima de al menos 1 año."
+      },
+      {
+        "category": "unclassified",
+        "id": "requirement:146e5e653489182ea5e0061f8df0c2bdf166d72ad7e879326769c9f9e22f777a",
+        "normalizedValue": null,
+        "parserRule": "unclassified.ambiguous_or_negated",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Valorable formación homologada en manejo de Puente Grúa."
+      },
+      {
+        "category": "unclassified",
+        "id": "requirement:1b2f925a2a3b496d4d3deb43f8e7a6915ac36d7d3e3e33a1defc4736e1998e8f",
+        "normalizedValue": null,
+        "parserRule": "unclassified.ambiguous_or_negated",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Valorable conocimientos de CNC e interpretación de planos."
+      }
+    ]
+  },
+  {
+    "offerId": "1285670666862",
+    "requirements": [
+      {
+        "category": "unclassified",
+        "id": "requirement:63de3ea9a8b8720d5e7c4ac27c9b5e1bc0d41754955d1bb484ce87efec5d4ec1",
+        "normalizedValue": null,
+        "parserRule": "unclassified.ambiguous_or_negated",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Experiencia mínima de 1 año en taller, mantenimiento o construcción manejando herramientas."
+      },
+      {
+        "category": "unclassified",
+        "id": "requirement:daf4f0977f0f76ffce679a24d268ab88c89d00307736a22e1e542c6d9dda73ea",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Conocimientos o experiencia relacionados con mantenimiento, soldadura o similar."
+      },
+      {
+        "category": "unclassified",
+        "id": "requirement:c6ce6a5fd59c579d27ff9d76f9f5c5f6e92f8a9e522714b5ac7af9fc6b2e8a96",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Conocimientos de Office a nivel usuario."
+      },
+      {
+        "category": "unclassified",
+        "id": "requirement:a91f36a92b0ada11a542b32502116a4a563f8b928a36d98ebefa95aaa8cc37e6",
+        "normalizedValue": null,
+        "parserRule": "unclassified.ambiguous_or_negated",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Imprescindible disponer de vehículo propio para desplazarse al centro de trabajo."
+      }
+    ]
+  },
+  {
     "offerId": "1285668805747",
     "requirements": [
       {
@@ -564,6 +659,51 @@
         "parserRule": "unclassified.conservative_fallback",
         "parserVersion": "1.0.0",
         "sourceQuote": "Información obtenida de: Empleo público. BOP Burgos 30/07/2026"
+      }
+    ]
+  },
+  {
+    "offerId": "1285670666224",
+    "requirements": [
+      {
+        "category": "unclassified",
+        "id": "requirement:6a0a9aa542366c74c8681cf2344de00b73967ccdd78c3d0528c49e5c5fc00859",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Educación Secundaria Obligatoria."
+      },
+      {
+        "category": "unclassified",
+        "id": "requirement:87c9afae46d90e8549572d482252a0d917558ad9712f90548f0a038393864c7a",
+        "normalizedValue": null,
+        "parserRule": "unclassified.ambiguous_or_negated",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Experiencia mínima de al menos 1 año en supermercados."
+      },
+      {
+        "category": "unclassified",
+        "id": "requirement:b72486438c5fa7430ffc0c79632933759f15aa7e9c450d79dea448aeccc48241",
+        "normalizedValue": null,
+        "parserRule": "unclassified.ambiguous_or_negated",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Disponibilidad horaria para trabajar en turnos rotativos (mañana/tarde)."
+      },
+      {
+        "category": "unclassified",
+        "id": "requirement:51a82f06d4c5fb2b9e2601893d81753539c349c8ddda4853b467837a317eaf19",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Orientación al cliente."
+      },
+      {
+        "category": "unclassified",
+        "id": "requirement:0bf7cc3fa9ec9c930acd2d922a15c0579def79d531a1b18c52d692814d3f0237",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Capacidad para trabajar en equipo."
       }
     ]
   },
@@ -703,6 +843,162 @@
     ]
   },
   {
+    "offerId": "1285670666778",
+    "requirements": [
+      {
+        "category": "unclassified",
+        "id": "requirement:e5b3bf72adafd4a235d623c4979e53578aaa3569b73284f146723ad1ccae33ee",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Estudios mínimos: E.S.O. o equivalente."
+      },
+      {
+        "category": "unclassified",
+        "id": "requirement:c9cd8c37645fff94c57ef8f0e4accc4743e88e42e6bd327833b8be84fd09a352",
+        "normalizedValue": null,
+        "parserRule": "unclassified.ambiguous_or_negated",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Experiencia previa de al menos un año en almacenes y manejo de carretilla."
+      },
+      {
+        "category": "unclassified",
+        "id": "requirement:b06e8d54cf0e60493aadbec4b8e013fbd79e063b5e7feb550c48c879b4b1686b",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Carnet de carretilla elevadora en vigor."
+      },
+      {
+        "category": "unclassified",
+        "id": "requirement:1383d75aa363ffd977df1f92c164a37710bc34e74f7b044af0251db9e8cae1af",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Capacidad de trabajo en equipo y bajo presión."
+      },
+      {
+        "category": "unclassified",
+        "id": "requirement:e8673b4708cda237e53d3c18a1cb5e80b1b9f057496154fae043fc6843c1b62d",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Compromiso, responsabilidad y buena comunicación en el desempeño de sus funciones."
+      }
+    ]
+  },
+  {
+    "offerId": "1285670667142",
+    "requirements": [
+      {
+        "category": "unclassified",
+        "id": "requirement:549f4bebc0ee413301eac52ac379c14eb200447271b31808e76687c268581506",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Coche propio para desplazarse hasta Villanubla a las oficinas."
+      },
+      {
+        "category": "unclassified",
+        "id": "requirement:02260a1b0e365c560ee62c52d89d900965b02858394632c4a7797bb0d0507570",
+        "normalizedValue": null,
+        "parserRule": "unclassified.ambiguous_or_negated",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Disponibilidad para viajar en Valladolid y provincia."
+      },
+      {
+        "category": "unclassified",
+        "id": "requirement:56b6ae5320b249ea5377e266744474ef9a8765cd83f06c17423d8448e8ac22ff",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Experiencia como repartidor y mozo."
+      }
+    ]
+  },
+  {
+    "offerId": "1285670667168",
+    "requirements": [
+      {
+        "category": "unclassified",
+        "id": "requirement:9f822baddc30ac01a4c0a9e1800b43345e5c396426761e88ed4bfabaca4a1fda",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Coche propio para desplazarse hasta Villanubla a las oficinas."
+      },
+      {
+        "category": "unclassified",
+        "id": "requirement:3147a1c254b31bd58d145c102e7414860cee0382dc1f99bb72b6adafce28317b",
+        "normalizedValue": null,
+        "parserRule": "unclassified.ambiguous_or_negated",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Disponibilidad para viajar en Valladolid y provincia."
+      },
+      {
+        "category": "unclassified",
+        "id": "requirement:05fb0378d3e6d0d6c98ae7b6cb1d8a680ecb67aced4d26a2fd1d0d02e6d4d901",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Experiencia como repartidor y mozo."
+      }
+    ]
+  },
+  {
+    "offerId": "1285670667670",
+    "requirements": [
+      {
+        "category": "unclassified",
+        "id": "requirement:07b0557a722caf5d7319d3a92035cccec5728d0789dd1bafd9c630a541519783",
+        "normalizedValue": null,
+        "parserRule": "unclassified.ambiguous_or_negated",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Se valora tener Educación Secundaria Obligatoria."
+      },
+      {
+        "category": "unclassified",
+        "id": "requirement:ee665420dae95a463d610c03c5b052bce054435325e5386b84795505b7033c98",
+        "normalizedValue": null,
+        "parserRule": "unclassified.ambiguous_or_negated",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Es valorable contar con experiencia previa en reposición o logística, pero no es excluyente."
+      },
+      {
+        "category": "unclassified",
+        "id": "requirement:075be0084aaedc13c471cf6ba0b904bea71bb596dbf5f6499b0d8aef9252233c",
+        "normalizedValue": null,
+        "parserRule": "unclassified.ambiguous_or_negated",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Más allá del currículum, valoramos la actitud y la capacidad de trabajo."
+      },
+      {
+        "category": "unclassified",
+        "id": "requirement:bd32db4e3b8b32660c05119616f8b635e754b62ba4cec522b50aa8882dee14f2",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Disposición para trabajar de forma activa y en movimiento, ya que el rol requiere agilidad y resistencia física."
+      },
+      {
+        "category": "unclassified",
+        "id": "requirement:4c1c07ecd50634f226cce759a750109e6d8a861f78506c79e358d27d072ce32a",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Capacidad de organización, limpieza y abastecimiento para mantener la excelencia en la sala y el almacén."
+      },
+      {
+        "category": "unclassified",
+        "id": "requirement:dd7dd8ed8fe78f5aec0f94c410f616217dc8ec2cbc1015dca5059e802650ef7e",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Disponibilidad de incorporación inmediata"
+      }
+    ]
+  },
+  {
     "offerId": "1285666480228",
     "requirements": [
       {
@@ -765,6 +1061,35 @@
         "parserRule": "unclassified.conservative_fallback",
         "parserVersion": "1.0.0",
         "sourceQuote": "Información obtenida de: Empleo público. BOP de León de 15/07/2026; BOCYL 13/07/2026; BOE 07/08/2026"
+      }
+    ]
+  },
+  {
+    "offerId": "1285670667446",
+    "requirements": [
+      {
+        "category": "unclassified",
+        "id": "requirement:5fba19d82dcec127067dc47c47a85ca15aa0051e3571035ecce66932a9c57717",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Disponibilidad para para trabajar durante la campaña de la vendimia."
+      },
+      {
+        "category": "unclassified",
+        "id": "requirement:545cb8ecdcc2068758b10b010a8eb165f738c71e5c3c12841bc4f923b641adeb",
+        "normalizedValue": null,
+        "parserRule": "unclassified.ambiguous_or_negated",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Valorable experiencia previa en recolecta de fruta y/o trabajos agrarios."
+      },
+      {
+        "category": "unclassified",
+        "id": "requirement:e959523d3d4d19999e36339018b6d46d6a71222caf2ef5676a231260f4d4f714",
+        "normalizedValue": null,
+        "parserRule": "unclassified.ambiguous_or_negated",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Valorable poseer carnet de conducir y vehículo propio."
       }
     ]
   },
@@ -930,51 +1255,6 @@
     ]
   },
   {
-    "offerId": "1285667274723",
-    "requirements": [
-      {
-        "category": "unclassified",
-        "id": "requirement:1a880cf353e159490a4770422a979e4bbf09ea49fed520f36c56568cec94e928",
-        "normalizedValue": null,
-        "parserRule": "unclassified.conservative_fallback",
-        "parserVersion": "1.0.0",
-        "sourceQuote": "Educación Secundaria Obligatoria."
-      },
-      {
-        "category": "unclassified",
-        "id": "requirement:47a704088a13fefa488023f2870d85b8241e2e7948c420190012173b73122edb",
-        "normalizedValue": null,
-        "parserRule": "unclassified.ambiguous_or_negated",
-        "parserVersion": "1.0.0",
-        "sourceQuote": "Experiencia mínima de 1 año en ventas de seguros."
-      },
-      {
-        "category": "unclassified",
-        "id": "requirement:5a0f840c5f648bea5a46e1cae69793d158c9462583b78b7a0f186da8aa3e26a7",
-        "normalizedValue": null,
-        "parserRule": "unclassified.conservative_fallback",
-        "parserVersion": "1.0.0",
-        "sourceQuote": "Conocimientos en marketing telefónico."
-      },
-      {
-        "category": "unclassified",
-        "id": "requirement:f709d4457970e464d19942893374140e43b021943f7b4f8700ef255e9138245f",
-        "normalizedValue": null,
-        "parserRule": "unclassified.conservative_fallback",
-        "parserVersion": "1.0.0",
-        "sourceQuote": "Conocimientos en tareas administrativas, gestión administrativa, tramitación de documentación, gestión de correspondencia, gestión de expedientes, revisión de documentos, ofimática y aptitudes de secretariado."
-      },
-      {
-        "category": "unclassified",
-        "id": "requirement:41375eb6a15d47fbcc5f5dc10bcc7db0af7b566ad0d4904feca93b9575e56722",
-        "normalizedValue": null,
-        "parserRule": "unclassified.conservative_fallback",
-        "parserVersion": "1.0.0",
-        "sourceQuote": "Motivación y orientación a resultados."
-      }
-    ]
-  },
-  {
     "offerId": "1285669061283",
     "requirements": [
       {
@@ -1085,6 +1365,59 @@
         "parserRule": "unclassified.conservative_fallback",
         "parserVersion": "1.0.0",
         "sourceQuote": "Persona organizada, responsable, con capacidad de trabajo en equipo y orientación al cliente."
+      }
+    ]
+  },
+  {
+    "offerId": "1285670667250",
+    "requirements": [
+      {
+        "category": "unclassified",
+        "id": "requirement:54ddb35988fb2665d68854efa3b966bdae72764a9ff8c0d9c8632235034081ce",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "FP Grado Medio."
+      },
+      {
+        "category": "unclassified",
+        "id": "requirement:7bf4bc03101cd16cedb4102d0a2f16d65200365203b754f8219777f866e1f270",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Conocimientos en atención y recepción al público."
+      },
+      {
+        "category": "unclassified",
+        "id": "requirement:6c84c8d59fb00598fa7311f2438c29e1c0a77de987e19b0a74a32ddb4caccd7c",
+        "normalizedValue": null,
+        "parserRule": "unclassified.ambiguous_or_negated",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Experiencia mínima de 1 año en puesto similar en sector sanitario."
+      },
+      {
+        "category": "unclassified",
+        "id": "requirement:a4db7681364a3802df2008b43961c780622a13c26b8de3b00a647d50b94fbef6",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Disponibilidad de incorporación inmediata."
+      },
+      {
+        "category": "unclassified",
+        "id": "requirement:8e27907c3798e1d398a9873c63b58c0cdb91b037fdcd4a1331951a5fab6da12e",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Disponibilidad para trabajar a jornada completa."
+      },
+      {
+        "category": "unclassified",
+        "id": "requirement:a1da3da9d67133e02d151b19180ac086d1d19813484915afeb2849ffc934c296",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Ofimática nivel medio."
       }
     ]
   },
@@ -1220,35 +1553,6 @@
         "parserRule": "unclassified.conservative_fallback",
         "parserVersion": "1.0.0",
         "sourceQuote": "Información obtenida de: Empleo público. BOP de León de 17/07/2026; BOCYL 21/07/2026; BOE 01/08/2026"
-      }
-    ]
-  },
-  {
-    "offerId": "1285669061589",
-    "requirements": [
-      {
-        "category": "unclassified",
-        "id": "requirement:af8a87213dd4bbac3e6fa1c89e88ca8fa6984cb691dda1521d2f4ec311791941",
-        "normalizedValue": null,
-        "parserRule": "unclassified.conservative_fallback",
-        "parserVersion": "1.0.0",
-        "sourceQuote": "Experiencia previa como albañil y en diferentes técnicas constructivas."
-      },
-      {
-        "category": "unclassified",
-        "id": "requirement:a1ed3a433840eec3f1733d1af885651df8f42c0b1d1fa6c049bd3bf444ca083d",
-        "normalizedValue": null,
-        "parserRule": "unclassified.conservative_fallback",
-        "parserVersion": "1.0.0",
-        "sourceQuote": "Capacidad para interpretar planos, organizar el trabajo diario y cumplir con los estándares de seguridad en obra."
-      },
-      {
-        "category": "unclassified",
-        "id": "requirement:558296893bc46be5e162530b2b6b7ce26f1da32841425fb389741bc960c71250",
-        "normalizedValue": null,
-        "parserRule": "unclassified.conservative_fallback",
-        "parserVersion": "1.0.0",
-        "sourceQuote": "Persona resolutiva, comprometida y orientada al detalle."
       }
     ]
   },
@@ -1923,6 +2227,91 @@
     ]
   },
   {
+    "offerId": "1285670666974",
+    "requirements": [
+      {
+        "category": "unclassified",
+        "id": "requirement:f34b6b027901f755a7161bf6294c1c403ccf83333fb02dfe33fc27aeb48cd98b",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Bachillerato."
+      },
+      {
+        "category": "unclassified",
+        "id": "requirement:8c322936ef249c579bc7ebfe0dd5e879aef9fb9708e9b74692b10468aa3d25ab",
+        "normalizedValue": null,
+        "parserRule": "unclassified.ambiguous_or_negated",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Experiencia previa de al menos un año en posiciones de responsabilidad en retail (preferiblemente en belleza o moda)."
+      },
+      {
+        "category": "unclassified",
+        "id": "requirement:0b6e9c114dc8fee3277ef317479c8d364776c8c205959ef3fc475fbb94fce506",
+        "normalizedValue": null,
+        "parserRule": "unclassified.ambiguous_or_negated",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Español nivel nativo o bilinge."
+      },
+      {
+        "category": "unclassified",
+        "id": "requirement:d161324ac10ab368e58f6407cd9426ad117aa4be808f3f64f0d8430a743a6bb0",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Orientación a resultados y seguimiento de KPIs."
+      },
+      {
+        "category": "unclassified",
+        "id": "requirement:5e863913b7877faf8161fe8ff2353847d0d46293a1051ed409d964940d579c23",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Capacidad de liderazgo y desarrollo de equipos."
+      },
+      {
+        "category": "unclassified",
+        "id": "requirement:b049148962d1e243eab3c54e192f2c358daef2d8d207d65d846e779473cdbcac",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Perfil comercial con clara orientación al cliente."
+      },
+      {
+        "category": "unclassified",
+        "id": "requirement:198f77c0f6287db3e82c1acae5c21f9118b214acb24ef8e9527175bf754e4408",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Capacidad organizativa y resolución de problemas."
+      },
+      {
+        "category": "unclassified",
+        "id": "requirement:9d33223f52869e81189d2d93c31dba5a87307d07ee5576ed1ef1bdfdac942b42",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Actitud positiva, dinámica y proactiva."
+      },
+      {
+        "category": "unclassified",
+        "id": "requirement:987f962ec5e4fbc097f3ee8c8e01ac1e4c7bbc11572b026244ff9694b005c423",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Imagen cuidada y alineada con el mundo beauty."
+      },
+      {
+        "category": "unclassified",
+        "id": "requirement:03008780bdefcbd38e215ff93b2833f86845d971956486c5c3c426534503ef6b",
+        "normalizedValue": null,
+        "parserRule": "unclassified.ambiguous_or_negated",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Disponibilidad horaria (turnos rotativos, fines de semana y festivos)."
+      }
+    ]
+  },
+  {
     "offerId": "1285645491622",
     "requirements": [
       {
@@ -1940,6 +2329,43 @@
         "parserRule": "unclassified.ambiguous_or_negated",
         "parserVersion": "1.0.0",
         "sourceQuote": "Experiencia mínima no requerida."
+      }
+    ]
+  },
+  {
+    "offerId": "1285670666535",
+    "requirements": [
+      {
+        "category": "unclassified",
+        "id": "requirement:ff7b9a53b8342f6ea3d9b8d237f3ef81dd90752ab38db078ad60ec9371ee0350",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Bachillerato."
+      },
+      {
+        "category": "unclassified",
+        "id": "requirement:ddd93042dfaf7e05eb03a798dfb9caf2fe37dff6a042de6056ed862548b84149",
+        "normalizedValue": null,
+        "parserRule": "unclassified.ambiguous_or_negated",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Experiencia mínima de 1 año en el sector administrativo."
+      },
+      {
+        "category": "unclassified",
+        "id": "requirement:872205a3e7aae2abe18df5d8130ea77c95282967a33a5e1704aa23b9549a3507",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Conocimiento alto de paquete Office, usuario habitual de herramientas ofimáticas (Excel)."
+      },
+      {
+        "category": "unclassified",
+        "id": "requirement:a9418f6b73ec241a7b2133679c4aa5cfa6884ca0e7a306a38de0c295258fbaf2",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Competencias: Flexibilidad, atención al detalle, polivalencia y alta capacidad de organización."
       }
     ]
   },
@@ -2101,6 +2527,43 @@
         "parserRule": "unclassified.conservative_fallback",
         "parserVersion": "1.0.0",
         "sourceQuote": "Habilidades: orientación al cliente, trabajo en equipo, proactividad."
+      }
+    ]
+  },
+  {
+    "offerId": "1285670667362",
+    "requirements": [
+      {
+        "category": "unclassified",
+        "id": "requirement:033c82da0043614e7d30adec3b97adf11557bdd99db724b84c842fd844dd54ca",
+        "normalizedValue": null,
+        "parserRule": "unclassified.ambiguous_or_negated",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Técnico en Cuidados Auxiliares de Enfermería, Auxiliar de Enfermería o Certificado de Profesionalidad de Atención Sociosanitaria a personas dependientes en instituciones sociales."
+      },
+      {
+        "category": "unclassified",
+        "id": "requirement:cdbed9ecc976d2b8f9e1ce24945affbde445b7ae025a894b1801c7502b468ac8",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Al menos 1 año de experiencia previa en funciones similares."
+      },
+      {
+        "category": "driving_license_or_vehicle",
+        "id": "requirement:7bc13dff66317334e3510f935a8308e715dea572dd88e6de3487f673720d1367",
+        "normalizedValue": "B",
+        "parserRule": "license.driving_b",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Permiso de conducción B."
+      },
+      {
+        "category": "driving_license_or_vehicle",
+        "id": "requirement:af3604094cf826d53db16b85c43b69ca48045263e53515dedd16990bd3f565db",
+        "normalizedValue": "vehicle_owned",
+        "parserRule": "mobility.own_vehicle",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Vehículo propio."
       }
     ]
   },
@@ -2536,6 +2999,35 @@
     ]
   },
   {
+    "offerId": "1285670667418",
+    "requirements": [
+      {
+        "category": "unclassified",
+        "id": "requirement:30ed65c7455d9abb733c470fa59e1d47e1f49b7941e3f1d69f4b94f5c4427511",
+        "normalizedValue": null,
+        "parserRule": "unclassified.ambiguous_or_negated",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Experiencia como personal de limpieza, se valorará la experiencia en colectividades."
+      },
+      {
+        "category": "unclassified",
+        "id": "requirement:008069d693c20f2e8d0765c2f5ad8f13463031964db169310b092d4ca4635436",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Disponibilidad completa e inmediata."
+      },
+      {
+        "category": "unclassified",
+        "id": "requirement:84e3ec024e746b89459bd25ebcaec41cd91683164630591dd5c95169182c46cd",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Trabajo en equipo."
+      }
+    ]
+  },
+  {
     "offerId": "1285667273580",
     "requirements": [
       {
@@ -2734,6 +3226,43 @@
     ]
   },
   {
+    "offerId": "1285670667194",
+    "requirements": [
+      {
+        "category": "unclassified",
+        "id": "requirement:a57574b1e2d969fe48676620a96fb22b151060429e7e0a3c5dc28394ab0be221",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Estudios mínimos: Educación Secundaria Obligatoria."
+      },
+      {
+        "category": "experience",
+        "id": "requirement:6fb5b7490a0b1d57068b84b4c27b4d837a2e021cefb909ae00cef34e0b48b245",
+        "normalizedValue": 12,
+        "parserRule": "experience.years",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Experiencia mínima: Al menos 1 año."
+      },
+      {
+        "category": "unclassified",
+        "id": "requirement:4f5864b8f2207dba48fb708e9c2ccc85242d59c2d5450134c37d4e10d71947de",
+        "normalizedValue": null,
+        "parserRule": "unclassified.ambiguous_or_negated",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Valorable formación relacionada con comercio/atención al cliente."
+      },
+      {
+        "category": "unclassified",
+        "id": "requirement:0028161dcf2c5152f6b5e79bc7711f7bfe354d7da2f845caad021e99211f43d6",
+        "normalizedValue": null,
+        "parserRule": "unclassified.ambiguous_or_negated",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Valorable conocimientos de inglés en atención al cliente, así como otros idiomas."
+      }
+    ]
+  },
+  {
     "offerId": "1285636525301",
     "requirements": [
       {
@@ -2747,6 +3276,27 @@
       {
         "category": "unclassified",
         "id": "requirement:28cdcc51cef09a25e5116bac6ff2a22242d8e26ec2dc5550c77791199ae625df",
+        "normalizedValue": null,
+        "parserRule": "unclassified.ambiguous_or_negated",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Experiencia mínima: No requerida."
+      }
+    ]
+  },
+  {
+    "offerId": "1285670667502",
+    "requirements": [
+      {
+        "category": "unclassified",
+        "id": "requirement:01077c04f8d9e2c94d9f2e3b87de26b7c010d8454c41a49bf8b432a2bf13fb35",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Estudios mínimos: Educación Secundaria Obligatoria."
+      },
+      {
+        "category": "unclassified",
+        "id": "requirement:93253a27d669dadd0b63cf9248806d5868c04f1023c83792cea271b8f634bc4f",
         "normalizedValue": null,
         "parserRule": "unclassified.ambiguous_or_negated",
         "parserVersion": "1.0.0",
@@ -2863,51 +3413,6 @@
     ]
   },
   {
-    "offerId": "1285669062388",
-    "requirements": [
-      {
-        "category": "unclassified",
-        "id": "requirement:15d9e85240a73288c0a7a633b689cdc650a6d80abe4c0e07c947f080952518e8",
-        "normalizedValue": null,
-        "parserRule": "unclassified.conservative_fallback",
-        "parserVersion": "1.0.0",
-        "sourceQuote": "Formación: FP Grado Medio."
-      },
-      {
-        "category": "unclassified",
-        "id": "requirement:f71d1dd13619fae0f4608aad605b08d8f01a0e99bb47b3d98cc9787fda09312f",
-        "normalizedValue": null,
-        "parserRule": "unclassified.conservative_fallback",
-        "parserVersion": "1.0.0",
-        "sourceQuote": "montaje estructuras metálicas."
-      },
-      {
-        "category": "experience",
-        "id": "requirement:d81a16acffd1d1d1adcdaea023341296601736d9a6ce477ac8f47370e43b826a",
-        "normalizedValue": 12,
-        "parserRule": "experience.years",
-        "parserVersion": "1.0.0",
-        "sourceQuote": "Experiencia: 1 año."
-      },
-      {
-        "category": "unclassified",
-        "id": "requirement:122fa2f64ca534332255e1d2844a0abecd94c5778f47220589d0aa76d64ecb74",
-        "normalizedValue": null,
-        "parserRule": "unclassified.conservative_fallback",
-        "parserVersion": "1.0.0",
-        "sourceQuote": "Experiencia previa en montaje de estructuras mecánicas o similar."
-      },
-      {
-        "category": "unclassified",
-        "id": "requirement:90131e224c54dcd8db3b715eb47283ab64a84fcc96a430b1ca330bce279f5db9",
-        "normalizedValue": null,
-        "parserRule": "unclassified.conservative_fallback",
-        "parserVersion": "1.0.0",
-        "sourceQuote": "Soldadura de electrodo y de hilo tanto de hierro como de aluminio."
-      }
-    ]
-  },
-  {
     "offerId": "1285650939495",
     "requirements": [
       {
@@ -2946,6 +3451,67 @@
         "parserRule": "unclassified.conservative_fallback",
         "parserVersion": "1.0.0",
         "sourceQuote": "Para más información acuda a Oficina Virtual"
+      }
+    ]
+  },
+  {
+    "offerId": "1285670667586",
+    "requirements": [
+      {
+        "category": "unclassified",
+        "id": "requirement:79cd9a7adc4f17931e7508d29e5a11bc86b73660fdaa6bed0d821a025b9b05b3",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Estudios mínimos: Sin estudios."
+      },
+      {
+        "category": "experience",
+        "id": "requirement:f6dd118d665e71bf63b6bf62ffb63d32e22e4912642e63ca56ec610712e83b4a",
+        "normalizedValue": 24,
+        "parserRule": "experience.years",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Experiencia mínima: Al menos 2 años."
+      },
+      {
+        "category": "unclassified",
+        "id": "requirement:0c172c58c0fdb6cef4b329e798713c6ad956ca72b5e0a0e55e50b9ff9e946020",
+        "normalizedValue": null,
+        "parserRule": "unclassified.ambiguous_or_negated",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Carnet de conducir C1 en vigor."
+      },
+      {
+        "category": "unclassified",
+        "id": "requirement:dad8c4bb3056b404347ebd6a6f408e90ef677f3dec4b8e3ad9fd32ca7fa4950c",
+        "normalizedValue": null,
+        "parserRule": "unclassified.ambiguous_or_negated",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Cap y tarjeta de tacógrafo (valorable o imprescindible, según el puesto)."
+      },
+      {
+        "category": "unclassified",
+        "id": "requirement:1fe99aa16fac92762c45449e2894348188ec300429bfd6612be320cdfe42d694",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Responsabilidad, puntualidad y compromiso."
+      },
+      {
+        "category": "unclassified",
+        "id": "requirement:9defb486e6b5a85c18d3dfdb08b39803d87735f65808767c9fb99084e2941667",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Capacidad para trabajar en equipo."
+      },
+      {
+        "category": "unclassified",
+        "id": "requirement:303d0f4222a78333d4bec3a8c4d5052a730bb6b34129ec530a7ad068d539ddf5",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Disponibilidad para incorporación inmediata."
       }
     ]
   },
@@ -3206,6 +3772,67 @@
         "parserRule": "unclassified.conservative_fallback",
         "parserVersion": "1.0.0",
         "sourceQuote": "Para más información acuda a Oficina Virtual"
+      }
+    ]
+  },
+  {
+    "offerId": "1285670667558",
+    "requirements": [
+      {
+        "category": "experience",
+        "id": "requirement:f88848d1260a9965376fd889489af07207b74db14b201f8a319e710dfc172668",
+        "normalizedValue": 12,
+        "parserRule": "experience.years",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Experiencia mínima de un año."
+      },
+      {
+        "category": "unclassified",
+        "id": "requirement:823d383cd495b2a91f5eb1bede7af7d1cf4d72620462df32b566ec6af83ef618",
+        "normalizedValue": null,
+        "parserRule": "unclassified.ambiguous_or_negated",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Permiso de conducción C + E en vigor."
+      },
+      {
+        "category": "unclassified",
+        "id": "requirement:413aa507ba3119cb0d04ac77621846ac6df22c61ed1b9d403ec1ff8704e44245",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "CAP vigente."
+      },
+      {
+        "category": "unclassified",
+        "id": "requirement:73e8af5ac09ca625bb87d2e6b22eeb28e7ccc6b630da76ce37fb4102078826bd",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Tarjeta de tacógrafo digital."
+      },
+      {
+        "category": "unclassified",
+        "id": "requirement:edc04c619cc03e3631c7505999be952f049a06c8e89e945d933addca88785567",
+        "normalizedValue": null,
+        "parserRule": "unclassified.ambiguous_or_negated",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Vehículo propio para desplazarse al centro de trabajo."
+      },
+      {
+        "category": "unclassified",
+        "id": "requirement:e5068953e46a3bf505629d89a1450cddf844f7e367b7d667fe478f92b8d69943",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Experiencia en manejo de camión pluma, grúa forestal o maquinaria similar."
+      },
+      {
+        "category": "unclassified",
+        "id": "requirement:96ef331dd8b525302e6f76f8d9025454febf497d3cca1f7217589126198c2ffe",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Persona responsable, comprometida y con ganas de formar parte de un equipo estable."
       }
     ]
   },
@@ -3474,6 +4101,67 @@
         "parserRule": "unclassified.conservative_fallback",
         "parserVersion": "1.0.0",
         "sourceQuote": "Para más información acuda a Oficina Virtual"
+      }
+    ]
+  },
+  {
+    "offerId": "1285670666175",
+    "requirements": [
+      {
+        "category": "unclassified",
+        "id": "requirement:292f549f02a534cedacec4ffc42897abfc7ac6362ec104d2449100136b02cec3",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Estudios mínimos: Formación Profesional Grado Superior. Formación Profesional en Administración y Finanzas, Gestión Administrativo/a o similar."
+      },
+      {
+        "category": "unclassified",
+        "id": "requirement:37cc66e25ce96ddb19eb869b912a3d7c11c8e571429c559fc34085b3e8993c55",
+        "normalizedValue": null,
+        "parserRule": "unclassified.ambiguous_or_negated",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Experiencia al menos 2 años. previa en funciones de controller y administrativas, control de gestión o gestión documental."
+      },
+      {
+        "category": "unclassified",
+        "id": "requirement:6424991f84ed81379f93c5bbf3907114480662bbb6e61e03798f41f19ebe623d",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Buen manejo del paquete Office."
+      },
+      {
+        "category": "unclassified",
+        "id": "requirement:5ffdb409c465a07b917fa758bb6a28029841cb34f5428593524813a1821ed620",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Conocimientos básicos o experiencia trabajando con sistemas ERP."
+      },
+      {
+        "category": "unclassified",
+        "id": "requirement:593b79743c98572720d8c1c5f4ec5d02a33ecbdb36e48514de44da0a027042fa",
+        "normalizedValue": null,
+        "parserRule": "unclassified.ambiguous_or_negated",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Nivel de inglés mínimo B2."
+      },
+      {
+        "category": "unclassified",
+        "id": "requirement:af70f14cfad799bc4ef3cd1ab7bd5dffa238c1b19d648f5bbabea78a075222b3",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Persona organizada, resolutiva, con carácter, capacidad de aprendizaje y orientación a la mejora continua."
+      },
+      {
+        "category": "unclassified",
+        "id": "requirement:05cb2dd45191e2e253211ebc45638a3b62bcbb077fb317e0e42cf90c61c589cc",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Residencia en Burgos o alrededores."
       }
     ]
   },
@@ -3788,6 +4476,27 @@
     ]
   },
   {
+    "offerId": "1285670647538",
+    "requirements": [
+      {
+        "category": "unclassified",
+        "id": "requirement:1fbc2e89cba14ce08cb5f835735938ff75eafe1febc688021ded7803b22c5989",
+        "normalizedValue": null,
+        "parserRule": "unclassified.ambiguous_or_negated",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Titulación: Técnico en Atención a Personas en Situación de Dependencia. Técnico en Cuidados Auxiliares de Enfermería. Técnico en Integración Social. Certificado de Profesionalidad de Atención Sociosanitaria a Personas Dependientes en Instituciones Sociales. Otras titulaciones relacionadas con la atención a personas con discapacidad."
+      },
+      {
+        "category": "unclassified",
+        "id": "requirement:8966f53a27edfb9b3ca479f2ce8c7c53c79aca71a54fe0298c068ce54104171a",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Para más información acuda a Oficina Virtual"
+      }
+    ]
+  },
+  {
     "offerId": "1285645657811",
     "requirements": [
       {
@@ -3805,67 +4514,6 @@
         "parserRule": "unclassified.conservative_fallback",
         "parserVersion": "1.0.0",
         "sourceQuote": "Para más información acuda a Oficina Virtual"
-      }
-    ]
-  },
-  {
-    "offerId": "1285667274271",
-    "requirements": [
-      {
-        "category": "unclassified",
-        "id": "requirement:3a52752851e4eebb298b820a13f75b97153a90397337f9ff6e9831149138ba6a",
-        "normalizedValue": null,
-        "parserRule": "unclassified.conservative_fallback",
-        "parserVersion": "1.0.0",
-        "sourceQuote": "Formación superior en Administración, Finanzas, Contabilidad, Economía, ADE o similar (mínimo Ciclo Formativo Grado Superior)."
-      },
-      {
-        "category": "unclassified",
-        "id": "requirement:7793f6cb30284fc810966b4c74a98f33917d9d2ef341196a0936b893d1cd0459",
-        "normalizedValue": null,
-        "parserRule": "unclassified.ambiguous_or_negated",
-        "parserVersion": "1.0.0",
-        "sourceQuote": "Experiencia mínima demostrable de 2 años en puestos de responsabilidad financiera y administrativa."
-      },
-      {
-        "category": "language",
-        "id": "requirement:9ad2bbaa7c476c70af2ddd99fb34c5b10f373c0ca3b91ac452b4da0d412e3584",
-        "normalizedValue": "español",
-        "parserRule": "language.named",
-        "parserVersion": "1.0.0",
-        "sourceQuote": "Dominio del idioma castellano."
-      },
-      {
-        "category": "driving_license_or_vehicle",
-        "id": "requirement:0ac1fea79e4d5661d84f40d5252050449f9d096b857faa235de87b909b0006c5",
-        "normalizedValue": "B",
-        "parserRule": "license.driving_b",
-        "parserVersion": "1.0.0",
-        "sourceQuote": "Permiso de conducir B y vehículo propio."
-      },
-      {
-        "category": "unclassified",
-        "id": "requirement:390389a9f0fd340f167f8cf47cdf06f132e7e8de6892f487ea64e863e02bc899",
-        "normalizedValue": null,
-        "parserRule": "unclassified.conservative_fallback",
-        "parserVersion": "1.0.0",
-        "sourceQuote": "Conocimientos sólidos en contabilidad, tesorería, presupuestos y análisis de costes."
-      },
-      {
-        "category": "unclassified",
-        "id": "requirement:cc882af8f30dd8b5a8b9d2e34d6d35edc8cef7050ffd2d3aa9365e2dcd14eebe",
-        "normalizedValue": null,
-        "parserRule": "unclassified.conservative_fallback",
-        "parserVersion": "1.0.0",
-        "sourceQuote": "Manejo de ERP y Microsoft Excel."
-      },
-      {
-        "category": "unclassified",
-        "id": "requirement:ab10476afd673d4af28ec5e5e9a0c86bcd4f4ae7f405db116c84ce22af869172",
-        "normalizedValue": null,
-        "parserRule": "unclassified.conservative_fallback",
-        "parserVersion": "1.0.0",
-        "sourceQuote": "Residencia en León o disponibilidad para trabajar presencialmente en Santovenia de la Valdoncina."
       }
     ]
   },
@@ -3997,55 +4645,23 @@
     ]
   },
   {
-    "offerId": "1285669062230",
+    "offerId": "1285670666072",
     "requirements": [
       {
         "category": "unclassified",
-        "id": "requirement:47f27a92f4e41e5557cbccdcdfc19e0a9aa0bcc5e11121a2f745d8d1c7bcd641",
+        "id": "requirement:287ff32e6e49f677a29718642b0d2e1351505c4d348d1a87a5afcb8a0df310dd",
         "normalizedValue": null,
         "parserRule": "unclassified.conservative_fallback",
         "parserVersion": "1.0.0",
-        "sourceQuote": "Título Grado en Educación Social."
+        "sourceQuote": "Carné profesional de Operador de Grúa Torre."
       },
       {
-        "category": "unclassified",
-        "id": "requirement:092d99699561785645515356542dd928082b5a069d6ee534fb98aaadd09e6553",
-        "normalizedValue": null,
-        "parserRule": "unclassified.ambiguous_or_negated",
+        "category": "experience",
+        "id": "requirement:ef17d264d36a85b2607255bb253fbd7ccd05366dbbf3527539abdf648abaada7",
+        "normalizedValue": 36,
+        "parserRule": "experience.years",
         "parserVersion": "1.0.0",
-        "sourceQuote": "Recomendable. Formación complementaria y específica en infancia, adolescencia y discapacidad."
-      },
-      {
-        "category": "unclassified",
-        "id": "requirement:02bbd0aab837c674f74a831b418f8e8c428a95e1e24443427274d867ebaf31c1",
-        "normalizedValue": null,
-        "parserRule": "unclassified.conservative_fallback",
-        "parserVersion": "1.0.0",
-        "sourceQuote": "Experiencia demostrable en el ámbito de infancia, adolescencia y discapacidad."
-      },
-      {
-        "category": "driving_license_or_vehicle",
-        "id": "requirement:2948bca34865c0b8a4085362138a3f88b88200c7c2730309d2eec4fbce9e6e2d",
-        "normalizedValue": "B",
-        "parserRule": "license.driving_b",
-        "parserVersion": "1.0.0",
-        "sourceQuote": "Permiso de conducción tipo B."
-      },
-      {
-        "category": "unclassified",
-        "id": "requirement:42da06faf475532b890bbeb26a75da9836a06e2669d0aa6078968d2d7b4e9d28",
-        "normalizedValue": null,
-        "parserRule": "unclassified.conservative_fallback",
-        "parserVersion": "1.0.0",
-        "sourceQuote": "En caso necesario, uso del coche del Hogar (tipo: marchas)."
-      },
-      {
-        "category": "unclassified",
-        "id": "requirement:2e53ccffece778f8cb6c217f8f7277a1be974a323abb353f621fdeadc493dc74",
-        "normalizedValue": null,
-        "parserRule": "unclassified.ambiguous_or_negated",
-        "parserVersion": "1.0.0",
-        "sourceQuote": "Se valora certificado de discapacidad o acreditación de formar parte de colectivo de especial vulnerabilidad."
+        "sourceQuote": "Experiencia profesional de al menos 3 años."
       }
     ]
   },
@@ -4115,75 +4731,6 @@
         "parserRule": "unclassified.conservative_fallback",
         "parserVersion": "1.0.0",
         "sourceQuote": "Experiencia mínima de 2años."
-      }
-    ]
-  },
-  {
-    "offerId": "1285667274893",
-    "requirements": [
-      {
-        "category": "unclassified",
-        "id": "requirement:b5915fc9ae87dff6b2f91f1acba64ede1681f077bb41f41f0642379b50efed81",
-        "normalizedValue": null,
-        "parserRule": "unclassified.ambiguous_or_negated",
-        "parserVersion": "1.0.0",
-        "sourceQuote": "Experiencia mínima de 6 años como electromecánico/a de vehículos."
-      },
-      {
-        "category": "unclassified",
-        "id": "requirement:0bc24f8774b569901b0b6df405374f6f3cce8c80f0f6a5fa77ce8e0411d90ca6",
-        "normalizedValue": null,
-        "parserRule": "unclassified.conservative_fallback",
-        "parserVersion": "1.0.0",
-        "sourceQuote": "Formación en Electromecánica, Automoción o especialidades relacionadas (Ciclo Formativo Grado Superior)."
-      },
-      {
-        "category": "unclassified",
-        "id": "requirement:779b543275a1411cee6466bf8580dccdae0c99b1c90788fd51a11fc7b10cd25e",
-        "normalizedValue": null,
-        "parserRule": "unclassified.conservative_fallback",
-        "parserVersion": "1.0.0",
-        "sourceQuote": "Amplios conocimientos de mecánica, electricidad y electrónica del automóvil."
-      },
-      {
-        "category": "unclassified",
-        "id": "requirement:5aa4f7652539d9aac03cf9d4bd9138c68d69b5ef43634124bb3516709cfaf931",
-        "normalizedValue": null,
-        "parserRule": "unclassified.conservative_fallback",
-        "parserVersion": "1.0.0",
-        "sourceQuote": "Experiencia demostrable en diagnóstico y resolución de averías complejas."
-      },
-      {
-        "category": "unclassified",
-        "id": "requirement:0b73328770301f3b15e67453c1381f2fcbe6b8e01b031c7903c9f7baf427ecdb",
-        "normalizedValue": null,
-        "parserRule": "unclassified.conservative_fallback",
-        "parserVersion": "1.0.0",
-        "sourceQuote": "Manejo habitual de equipos de diagnosis multimarca."
-      },
-      {
-        "category": "unclassified",
-        "id": "requirement:fa6e2f86b4af69a0af694a80b0b7da1e27fc560a37bfbd306b3509aeb56b5448",
-        "normalizedValue": null,
-        "parserRule": "unclassified.conservative_fallback",
-        "parserVersion": "1.0.0",
-        "sourceQuote": "Conocimientos de herramientas informáticas."
-      },
-      {
-        "category": "driving_license_or_vehicle",
-        "id": "requirement:57e0477cc5ab8a1d68e5605ae8d34ae11c483d71818fb41686cf5567ff335dd9",
-        "normalizedValue": "B",
-        "parserRule": "license.driving_b",
-        "parserVersion": "1.0.0",
-        "sourceQuote": "Permiso de conducir B."
-      },
-      {
-        "category": "unclassified",
-        "id": "requirement:f63eaa7d545359cc4bc9f00d8a985faa4fb84e41ed3f4d14c77075d09fd3751a",
-        "normalizedValue": null,
-        "parserRule": "unclassified.ambiguous_or_negated",
-        "parserVersion": "1.0.0",
-        "sourceQuote": "Se valorará especialmente: Formación técnica impartida por fabricantes de automoción; experiencia en vehículos híbridos y eléctricos; conocimientos de programación y actualización de unidades de control; experiencia en el uso de osciloscopio."
       }
     ]
   },
@@ -4339,6 +4886,67 @@
         "parserRule": "unclassified.conservative_fallback",
         "parserVersion": "1.0.0",
         "sourceQuote": "Para más información acuda a Oficina Virtual"
+      }
+    ]
+  },
+  {
+    "offerId": "1285670666346",
+    "requirements": [
+      {
+        "category": "unclassified",
+        "id": "requirement:69625abac385f0b1a2fef2c8d332de83410da9562ee922df932fd1003414d05b",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Educación Secundaria Obligatoria."
+      },
+      {
+        "category": "experience",
+        "id": "requirement:fd2d7e0cb8b1d18bbd9cffec2c312fc5e3880ee454d86eb6eba481d580a2c550",
+        "normalizedValue": 12,
+        "parserRule": "experience.years",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Experiencia mínima de al menos 1 año."
+      },
+      {
+        "category": "unclassified",
+        "id": "requirement:a2d45316ef629ea2a2b689a592fe11afdca9538c69a58739a3073d495d2a8043",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Residencia en Burgos o alrededores."
+      },
+      {
+        "category": "unclassified",
+        "id": "requirement:e043d019f8571a78222ceb6f6dbaadd9c205ca25f5130eedaff1b4e64ac57bc5",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Disponibilidad para formación remunerada a cargo de la empresa en Burgos."
+      },
+      {
+        "category": "unclassified",
+        "id": "requirement:5965a2cc9ebfecf08500af2691d7aefee0debd8a3b01eb01b9e4e516f002ebd5",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Experiencia en gestión de equipos y liderazgo."
+      },
+      {
+        "category": "unclassified",
+        "id": "requirement:c94ab1e6ac1b98eea504eb4c58c0a490f954c46560e70d877ad4f8c5a8d70356",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Experiencia indispensable en el sector de la distribución, valorándose positivamente en el ámbito de la alimentación."
+      },
+      {
+        "category": "unclassified",
+        "id": "requirement:8758ee34fec24b460e5cc14696c2aff2c050244f6aa65ae44068f6f380d0f924",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Orientación al cliente."
       }
     ]
   },
@@ -4544,6 +5152,43 @@
         "parserRule": "license.driving_b",
         "parserVersion": "1.0.0",
         "sourceQuote": "Carnet de conducir B."
+      }
+    ]
+  },
+  {
+    "offerId": "1285670667114",
+    "requirements": [
+      {
+        "category": "unclassified",
+        "id": "requirement:a7c840d22e98d48ae1301882ca3f0eb1ec907dcbb56251868640726e688ba405",
+        "normalizedValue": null,
+        "parserRule": "unclassified.ambiguous_or_negated",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Indispensable diplomatura/grado universitario en Enfermería finalizado y homologado (en caso de haber sido cursado en universidad extranjera)."
+      },
+      {
+        "category": "unclassified",
+        "id": "requirement:d403836a191b35341122351fdf25436a88e6727bb4f53ea568354f28964bb260",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Colegiación en vigor."
+      },
+      {
+        "category": "unclassified",
+        "id": "requirement:7ad28a534dd4f78517ad15dc0604c8f9edbb1f6e52fef80f11067a24289a722f",
+        "normalizedValue": null,
+        "parserRule": "unclassified.ambiguous_or_negated",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "No se requiere experiencia previa."
+      },
+      {
+        "category": "unclassified",
+        "id": "requirement:8fc67b1317d3a360356351db65ad95b80be50083173fc6a407f14461eabbb45e",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Gusto e interés por realizar las funciones inherentes a la profesión con objetivos de excelencia y calidad de trato al usuario."
       }
     ]
   },
@@ -5259,51 +5904,6 @@
     ]
   },
   {
-    "offerId": "1285669061984",
-    "requirements": [
-      {
-        "category": "unclassified",
-        "id": "requirement:234de71e9f86844f284e90de633e3e8abc5ed19bff25a15f58a832713494b630",
-        "normalizedValue": null,
-        "parserRule": "unclassified.conservative_fallback",
-        "parserVersion": "1.0.0",
-        "sourceQuote": "Estudios mínimos: Grado en Farmacia."
-      },
-      {
-        "category": "unclassified",
-        "id": "requirement:9f425a8b6662117be9290a5ecd0b39d5d40029b03a183db2ca870eca45462cfc",
-        "normalizedValue": null,
-        "parserRule": "unclassified.conservative_fallback",
-        "parserVersion": "1.0.0",
-        "sourceQuote": "Experiencia mínima: Se requiere la experiencia de prácticas previa y reciente en oficina de farmacia."
-      },
-      {
-        "category": "unclassified",
-        "id": "requirement:4516fb78f1c6c2a7712c8a73cd368a59932217f87bbb35d6fe792cadcb7f9f52",
-        "normalizedValue": null,
-        "parserRule": "unclassified.conservative_fallback",
-        "parserVersion": "1.0.0",
-        "sourceQuote": "Actitud y ganas de aprender y trabajar."
-      },
-      {
-        "category": "unclassified",
-        "id": "requirement:941e3faac222118b3b9520d97ef46a0398c9f1939796ee3e0c0d21d023fa7ba9",
-        "normalizedValue": null,
-        "parserRule": "unclassified.conservative_fallback",
-        "parserVersion": "1.0.0",
-        "sourceQuote": "Capacidad de trabajo en equipo."
-      },
-      {
-        "category": "unclassified",
-        "id": "requirement:dbcec8b9628704899be47555c39e5dfd0beefacfbb851ee63187b3bf1b867b85",
-        "normalizedValue": null,
-        "parserRule": "unclassified.conservative_fallback",
-        "parserVersion": "1.0.0",
-        "sourceQuote": "Iniciativa y proactividad."
-      }
-    ]
-  },
-  {
     "offerId": "1285640580510",
     "requirements": [
       {
@@ -5633,6 +6233,128 @@
     ]
   },
   {
+    "offerId": "1285670667058",
+    "requirements": [
+      {
+        "category": "unclassified",
+        "id": "requirement:d02b647d2cd61f9463f532a3f982175e2b2b3a8da550cefcd667dee1c45d1250",
+        "normalizedValue": null,
+        "parserRule": "unclassified.ambiguous_or_negated",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Entre 4 y 6 años de experiencia en entornos DevOps y trabajando con Kubernetes y Docker."
+      },
+      {
+        "category": "unclassified",
+        "id": "requirement:e146e0adaf233db3a25ee682378f7d1ce19d6a21b76eec84ef5dfb4d13176c29",
+        "normalizedValue": null,
+        "parserRule": "unclassified.ambiguous_or_negated",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Al menos 4-5 años de experiencia con Helm."
+      },
+      {
+        "category": "unclassified",
+        "id": "requirement:9f39a887122b935ebb5537f3c88e1659af5048278996c847d3e3dde071c12b5e",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Experiencia demostrable en el desarrollo y mantenimiento de pipelines CI/CD."
+      },
+      {
+        "category": "unclassified",
+        "id": "requirement:f358ae6caaf614669ffa0f9b94f3173ba40b7a960d3daceaeaee4f8a27992d6a",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Experiencia con Jenkins, GitLab u otras herramientas similares."
+      },
+      {
+        "category": "unclassified",
+        "id": "requirement:852c544d13b9debc4a7f942917dd945c8951464de23687732e813cc55cf0df07",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Titulación en Ingeniería Informática, Ingeniería de Telecomunicaciones o similar."
+      },
+      {
+        "category": "unclassified",
+        "id": "requirement:4d54be3415419fd07432b50c697d5d193bc5d4f6b72d773e53263d5f175671a3",
+        "normalizedValue": null,
+        "parserRule": "unclassified.ambiguous_or_negated",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Nivel de inglés alto, tanto hablado como escrito."
+      }
+    ]
+  },
+  {
+    "offerId": "1285670666692",
+    "requirements": [
+      {
+        "category": "unclassified",
+        "id": "requirement:3e27a8eb62c768cc072f9429c48d768adc91af64c1ca03f1c9dc2ed2be8a73b5",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Formación en Ingeniería Mecánica o similar."
+      },
+      {
+        "category": "unclassified",
+        "id": "requirement:2f6b536647794076be24f8bbe5090f2c6585a3430792a9463f21c32e48c34387",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Experiencia en diseño mecánico realizando proyectos en 2D y 3D, fundamentalmente con SolidWorks, AutoCad."
+      },
+      {
+        "category": "unclassified",
+        "id": "requirement:af6624449299b15503fb71d4f0391f443f3d5c98aefcb19db02dd99a0bc40f62",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Competencias en acotación y realización de planos de piezas y conjuntos, lista de materiales."
+      },
+      {
+        "category": "unclassified",
+        "id": "requirement:a39b896b54e82f606e58ea53641b5ad9dd9176ac0a7f2dec37b2e9e781e3308b",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Competencias para la realización de cálculos analíticos de justificación mecánica."
+      },
+      {
+        "category": "unclassified",
+        "id": "requirement:464b5ac079bb27d69b36800762a5f9c10b4f8011ab3f56e742d94e5c84b69b00",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Conocimientos de procesos de fabricación de piezas y conjuntos."
+      },
+      {
+        "category": "unclassified",
+        "id": "requirement:79935b979618091d11cc21e7f46fa84af741cbb37d4eb677444c307eb24bd008",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Comprensión de especificaciones técnicas de cliente y elaboración de diseños para su cumplimiento."
+      },
+      {
+        "category": "language",
+        "id": "requirement:825cbbe2faab1fea1d83d909da55762f053b6865dc2958956e7b88ca6571abab",
+        "normalizedValue": "inglés:B2",
+        "parserRule": "language.cefr",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Inglés B2."
+      },
+      {
+        "category": "unclassified",
+        "id": "requirement:beb06fb172037d4f22f1e0232e6a1308336db90b09c7b399093ce6f57bd26a5a",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Incorporación inmediata."
+      }
+    ]
+  },
+  {
     "offerId": "1285668482543",
     "requirements": [
       {
@@ -5807,43 +6529,6 @@
     ]
   },
   {
-    "offerId": "1285667274442",
-    "requirements": [
-      {
-        "category": "unclassified",
-        "id": "requirement:224182f70e627ee45b37166ccfe49083055c93aab38b29249b5ac19e5656a4f7",
-        "normalizedValue": null,
-        "parserRule": "unclassified.conservative_fallback",
-        "parserVersion": "1.0.0",
-        "sourceQuote": "Formación Profesional de Grado Superior en Integración Social o titulación afín."
-      },
-      {
-        "category": "unclassified",
-        "id": "requirement:04ee0f99acd37cae35865500541db2ee47fd5a43a2cdb0da0bb8ef4ea87abde0",
-        "normalizedValue": null,
-        "parserRule": "unclassified.conservative_fallback",
-        "parserVersion": "1.0.0",
-        "sourceQuote": "Formación complementaria acreditada en igualdad de género, prevención e intervención en violencia de género, derechos humanos y atención a personas en situación de vulnerabilidad."
-      },
-      {
-        "category": "experience",
-        "id": "requirement:380fc3a9993fc9b9ea7dc21bba369fd89d822bbf723e646ff354bb8323932b77",
-        "normalizedValue": 12,
-        "parserRule": "experience.years",
-        "parserVersion": "1.0.0",
-        "sourceQuote": "Experiencia mínima de al menos 1 año."
-      },
-      {
-        "category": "driving_license_or_vehicle",
-        "id": "requirement:8ddd30fbe34321f1a3a4f63ebca06f14f8307ebe32161e00e0d661ed98a6ccee",
-        "normalizedValue": "B",
-        "parserRule": "license.driving_b",
-        "parserVersion": "1.0.0",
-        "sourceQuote": "Carnet de conducir tipo B."
-      }
-    ]
-  },
-  {
     "offerId": "1285670194075",
     "requirements": [
       {
@@ -5906,59 +6591,6 @@
         "parserRule": "unclassified.conservative_fallback",
         "parserVersion": "1.0.0",
         "sourceQuote": "Orientación al cliente y al logro."
-      }
-    ]
-  },
-  {
-    "offerId": "1285667275104",
-    "requirements": [
-      {
-        "category": "unclassified",
-        "id": "requirement:fe57a668e50d8a55e9b6d53e6a29e4d1c445d202733b36f4c319960a965c8e60",
-        "normalizedValue": null,
-        "parserRule": "unclassified.conservative_fallback",
-        "parserVersion": "1.0.0",
-        "sourceQuote": "Titulación universitaria o formación técnica superior en Ingeniería Mecánica, Ingeniería Industrial, Ingeniería Electromecánica u otras especialidades afines."
-      },
-      {
-        "category": "unclassified",
-        "id": "requirement:42cf6ac2ba802613c7e53c90fc0510846bea775a5296dbc478cac0cef6312bb7",
-        "normalizedValue": null,
-        "parserRule": "unclassified.conservative_fallback",
-        "parserVersion": "1.0.0",
-        "sourceQuote": "Conocimientos de SAP y herramientas del entorno Microsoft Office."
-      },
-      {
-        "category": "unclassified",
-        "id": "requirement:0c08e3fb8f45a2fed6e36b909fcf5d45af464f31d8708fa3b4a1e9d30f80f5ad",
-        "normalizedValue": null,
-        "parserRule": "unclassified.ambiguous_or_negated",
-        "parserVersion": "1.0.0",
-        "sourceQuote": "Experiencia mínima de 3 años en posiciones de responsabilidad dentro de áreas de mantenimiento industrial."
-      },
-      {
-        "category": "unclassified",
-        "id": "requirement:9f1635f396b5bc87ef0e101076c9e51aa2fa69844b1e17464ea5bd2219711347",
-        "normalizedValue": null,
-        "parserRule": "unclassified.conservative_fallback",
-        "parserVersion": "1.0.0",
-        "sourceQuote": "Experiencia en gestión de equipos y liderazgo de personas."
-      },
-      {
-        "category": "unclassified",
-        "id": "requirement:f12d99d2eacf6ec164f4c85f0631a9a96b6b78ffaceaff7f4a5263093d554140",
-        "normalizedValue": null,
-        "parserRule": "unclassified.conservative_fallback",
-        "parserVersion": "1.0.0",
-        "sourceQuote": "Disponibilidad para trabajar presencialmente en turno central."
-      },
-      {
-        "category": "unclassified",
-        "id": "requirement:8f6f096452876ebb8fc51996091e19e214f9c8c46f6a630a63aafbce0e26c3f0",
-        "normalizedValue": null,
-        "parserRule": "unclassified.ambiguous_or_negated",
-        "parserVersion": "1.0.0",
-        "sourceQuote": "Valorable formación específica en Mantenimiento Industrial, Prevención de Riesgos Laborales y metodologías de mejora continua."
       }
     ]
   },
@@ -6049,6 +6681,35 @@
         "parserRule": "unclassified.conservative_fallback",
         "parserVersion": "1.0.0",
         "sourceQuote": "Para más información acuda a Oficina Virtual"
+      }
+    ]
+  },
+  {
+    "offerId": "1285670667030",
+    "requirements": [
+      {
+        "category": "unclassified",
+        "id": "requirement:fd665b8ffcce1e003bb525156c979417f2df7d47ba8a836f596f922d82cdd93b",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Experiencia en limpieza en oficinas."
+      },
+      {
+        "category": "unclassified",
+        "id": "requirement:2cc3b81d3916f4461680a6fb259a1c1927daa1f6d34fccdd915624709f1a5237",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Disponibilidad de incorporación inmediata."
+      },
+      {
+        "category": "unclassified",
+        "id": "requirement:867d99c325cc705be2fd3d3d6b41ecb737c1feacd293348eeeabe01b6c70fbc9",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Certificado de discapacidad igual o superior al 33%"
       }
     ]
   },
@@ -6148,51 +6809,6 @@
     ]
   },
   {
-    "offerId": "1285667274568",
-    "requirements": [
-      {
-        "category": "unclassified",
-        "id": "requirement:e67c7ae9202a2fb18ae599a0e93a39857ff958a74d990048576e860fa6c9934c",
-        "normalizedValue": null,
-        "parserRule": "unclassified.conservative_fallback",
-        "parserVersion": "1.0.0",
-        "sourceQuote": "Ciclo Formativo Grado Medio Electromecánica o Superior en Automoción."
-      },
-      {
-        "category": "experience",
-        "id": "requirement:de3917d40b31f20e4a11b5ff719d11121f9e1be8d7406b8c945ed90fa9bea416",
-        "normalizedValue": 12,
-        "parserRule": "experience.years",
-        "parserVersion": "1.0.0",
-        "sourceQuote": "Experiencia mínima de al menos 1 año."
-      },
-      {
-        "category": "unclassified",
-        "id": "requirement:fd08d0f53906c604fe6860543ad9431c6f390ee9e35b05d0509a1c5955f8988b",
-        "normalizedValue": null,
-        "parserRule": "unclassified.conservative_fallback",
-        "parserVersion": "1.0.0",
-        "sourceQuote": "Imprescindible residencia en Zamora."
-      },
-      {
-        "category": "unclassified",
-        "id": "requirement:7881b16a5a7129bedc87b5865c6dc9ccc1bc7c65a0c45d5eabb2cf7c9a47dee2",
-        "normalizedValue": null,
-        "parserRule": "unclassified.conservative_fallback",
-        "parserVersion": "1.0.0",
-        "sourceQuote": "Conocimientos de mecánica, electricidad y mantenimiento del automóvil."
-      },
-      {
-        "category": "unclassified",
-        "id": "requirement:0296d0c205f0217628e07a45c74f498a4cc2164087daf3d8f967cf43c1905f43",
-        "normalizedValue": null,
-        "parserRule": "unclassified.conservative_fallback",
-        "parserVersion": "1.0.0",
-        "sourceQuote": "Experiencia en mecánica pesada."
-      }
-    ]
-  },
-  {
     "offerId": "1285670315056",
     "requirements": [
       {
@@ -6202,6 +6818,43 @@
         "parserRule": "unclassified.ambiguous_or_negated",
         "parserVersion": "1.0.0",
         "sourceQuote": "Contar con titulación de FP electromecánica o similar, permiso de conducir B y conocimientos a nivel de diagnóstico de vehículos, búsquedas de información, esquemas eléctricos."
+      }
+    ]
+  },
+  {
+    "offerId": "1285670667222",
+    "requirements": [
+      {
+        "category": "unclassified",
+        "id": "requirement:64714c183835891e6add0c35d244338ad6a77dc1e038e723ad7c214b79aedf23",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Licenciatura o Grado en Medicina completada u homologada."
+      },
+      {
+        "category": "unclassified",
+        "id": "requirement:d8f491156082fedcc79a48ed8c704a8408c796c270da803581510fa2bc780c0a",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Especialidad en Medicina del Trabajo."
+      },
+      {
+        "category": "unclassified",
+        "id": "requirement:8fb39998ee4337cd109b682d8f7671bb10edc2e64de95206a5483713a08e70be",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Colegiación imprescindible."
+      },
+      {
+        "category": "unclassified",
+        "id": "requirement:d52a1844cc65bd30c3330c16bb0f7622f9b656f3082dcabeaaceab9fb747460d",
+        "normalizedValue": null,
+        "parserRule": "unclassified.ambiguous_or_negated",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Se valorará experiencia en el sector de la prevención de riesgos laborales y labores de vigilancia de la salud."
       }
     ]
   },
@@ -6580,6 +7233,67 @@
     ]
   },
   {
+    "offerId": "1285670666282",
+    "requirements": [
+      {
+        "category": "unclassified",
+        "id": "requirement:1df2023916be0c9e737bec498e131da004cbebb92bf33925f8d8d5da4725e2dc",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Carnet carretillero en Vigor."
+      },
+      {
+        "category": "unclassified",
+        "id": "requirement:802655013cd466fd95e9a743f85062a9db82c19577f12c050e3884f729fe804f",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Experiencia en almacenes manejando carretillas , transpaletas eléctricas y preparando pedidos."
+      },
+      {
+        "category": "unclassified",
+        "id": "requirement:2842da24f67dcf0bbf5099f8fc398f87fbd39989fac0dc8286435f47765cea2c",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Conocimiento de informática nivel usuario."
+      },
+      {
+        "category": "unclassified",
+        "id": "requirement:a96e4580f22df9968eb8b7775e2f9507dcd9fc274189b421d1571313dc885b47",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Se ofrece"
+      },
+      {
+        "category": "unclassified",
+        "id": "requirement:c24dbf40e2816c69ddedeb5f425a77e990e7272427d742972d3ce2899072cae0",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Contrato Indefinido."
+      },
+      {
+        "category": "unclassified",
+        "id": "requirement:403c33fcaade61a20b66b6edf60fe6ceaafbaf36e6abadecf6cb1c103b0078ca",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Horario de lunes a viernes en turno de mañana."
+      },
+      {
+        "category": "unclassified",
+        "id": "requirement:e5a6e5e8bb4872bcd86eaf07aefff0c7c3fdbbac31c17bddd3b5f78c93b75edd",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Salario convenio."
+      }
+    ]
+  },
+  {
     "offerId": "1285669061899",
     "requirements": [
       {
@@ -6659,6 +7373,104 @@
     ]
   },
   {
+    "offerId": "1285670667642",
+    "requirements": [
+      {
+        "category": "unclassified",
+        "id": "requirement:4f1f9f3bf58351afa79d995094cf901360bb8739af89335f0cd37073f47d9de9",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Curso de carretillero y experiencia previa en el puesto."
+      },
+      {
+        "category": "unclassified",
+        "id": "requirement:07df263610ff87659d6e27d5bc5ddc5426fc64b46f2fa7e3d7c1cf9de7c108ff",
+        "normalizedValue": null,
+        "parserRule": "unclassified.ambiguous_or_negated",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Flexibilidad horaria y con disponibilidad para trabajar los fines de semana."
+      }
+    ]
+  },
+  {
+    "offerId": "1285670667530",
+    "requirements": [
+      {
+        "category": "unclassified",
+        "id": "requirement:95088f56d6b367015996c03acc922fcf45565c2e39ca05dc538e9bea4dea40c3",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Estudios mínimos Formación Profesional Grado Medi"
+      },
+      {
+        "category": "unclassified",
+        "id": "requirement:f6d23dd104d406c5ed3876c7d983f66db6a18ffbc40d034a4831bf602245854f",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Experiencia mínima: Al menos 1 añ"
+      },
+      {
+        "category": "unclassified",
+        "id": "requirement:f681203c2eedad70daca2e065bf8af5e212f326ffed4d8d26b68d9bd80238b40",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Conocimientos en electricidad, mecanizado y calidad."
+      },
+      {
+        "category": "unclassified",
+        "id": "requirement:20526e48f34b92d97b8437ab388416a2926882da0164f488a5ce78e0b2fb0675",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Habilidad y destreza manual demostrada en trabajos similares."
+      },
+      {
+        "category": "unclassified",
+        "id": "requirement:4a4970f13eaef648f868f5de8328b2ef06fee8477cc6b5c682719c7420303e8c",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Conocimiento y manejo de herramientas básicas como taladros, destornilladores y remaches."
+      },
+      {
+        "category": "unclassified",
+        "id": "requirement:3a50573740f5cd91f94ebf06c6265feddd2c0100cc69f5ceaad7428d9bac3e9d",
+        "normalizedValue": null,
+        "parserRule": "unclassified.ambiguous_or_negated",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Se valorará experiencia previa en entornos industriales y manejo de polipastos."
+      },
+      {
+        "category": "unclassified",
+        "id": "requirement:1fe8d9e71e7f600df7b608f24a449c208628e6f2c48a4edf2510bf211d796d5c",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Formación en metal (C9)."
+      },
+      {
+        "category": "unclassified",
+        "id": "requirement:735d84597bb39e39ca6d700482d795cc2ef0b9dafa5d298ee0f8739e4627712d",
+        "normalizedValue": null,
+        "parserRule": "unclassified.ambiguous_or_negated",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Disponibilidad de vehículo propio y permiso de conducción tipo B."
+      },
+      {
+        "category": "unclassified",
+        "id": "requirement:b93aca2dd64a9aef92774dc262e4f829990038f6fa0ed0d5dc6abac737c1abdd",
+        "normalizedValue": null,
+        "parserRule": "unclassified.ambiguous_or_negated",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Capacidad para trabajar de forma presencial en la localidad de Burgos."
+      }
+    ]
+  },
+  {
     "offerId": "1285669061311",
     "requirements": [
       {
@@ -6728,39 +7540,137 @@
     ]
   },
   {
-    "offerId": "1285669062202",
+    "offerId": "1285670666946",
+    "requirements": [
+      {
+        "category": "experience",
+        "id": "requirement:92f60b8a4047663b6dd6806f12d3f0f7038e2f70342faa638ad466fb132a0cd3",
+        "normalizedValue": 12,
+        "parserRule": "experience.years",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Experiencia mínima de 1 año."
+      },
+      {
+        "category": "unclassified",
+        "id": "requirement:af9997cabf2a3e14114ece31d0cb083610f9c64ab55c34363716a618898c51cd",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Conocimientos de operario de alimentación."
+      },
+      {
+        "category": "unclassified",
+        "id": "requirement:c5c4e54c88b5c6d9ca4e51038076dacf747157cfe7c1bd9c6fc106b5b4787c99",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Flexibilidad horaria."
+      },
+      {
+        "category": "unclassified",
+        "id": "requirement:dd6c88f9010b4fd1a874ff996d3b91dec91c293970933e8e563b087a8da7dbb5",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Habilidad para el cálculo y gestión de inventarios/stocks."
+      },
+      {
+        "category": "unclassified",
+        "id": "requirement:3679d64478cb597f17080d649aea6024aeb6718f7444e8d6e78b0c27388ae7f0",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Proactividad y capacidad de trabajo en equipo dentro de planta de producción."
+      }
+    ]
+  },
+  {
+    "offerId": "1285670666918",
     "requirements": [
       {
         "category": "unclassified",
-        "id": "requirement:b1e71774cae623e04bfbd00608126c1ab752d0885717b5aceaf57ccc2e02db7e",
+        "id": "requirement:9e3dd6aef70617a9a1c2a10c6194c1b4c257cacee9887b2f19397f64f4ee6898",
         "normalizedValue": null,
         "parserRule": "unclassified.conservative_fallback",
         "parserVersion": "1.0.0",
-        "sourceQuote": "Capacidad para realizar trabajos manuales y físicos/as."
+        "sourceQuote": "Conocimientos de peón de vendimia."
+      },
+      {
+        "category": "experience",
+        "id": "requirement:e92edd95e2e9b930ea0ec6816961ea99943300f165982fc994a08f03ea17719e",
+        "normalizedValue": 12,
+        "parserRule": "experience.years",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Experiencia de 1 año."
       },
       {
         "category": "unclassified",
-        "id": "requirement:345e7fccc222728c68ed3441aaab35c2c64d4a05730b7f2d2dba698eb44bc2c2",
+        "id": "requirement:1eafce8342171f5f568254864e102277c3ac5be6020d4d285a27ddd6578813d7",
         "normalizedValue": null,
         "parserRule": "unclassified.conservative_fallback",
         "parserVersion": "1.0.0",
-        "sourceQuote": "Atención al detalle y compromiso con la limpieza y el orden."
+        "sourceQuote": "Experiencia acreditada en la conducción y manejo de tractor."
       },
       {
         "category": "unclassified",
-        "id": "requirement:3d96a0aacf7f68b5ca39409a26aa1a1b0b2ad3d3ef632e50dab8aa2908c3218a",
+        "id": "requirement:d559b98f304541b04e3e5abcf406d660c010851cb1b2e22b8bc579c27cf4bffd",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Conocimientos básicos o experiencia previa en trabajos agrícolas, cuidado de arbolado y huerta."
+      },
+      {
+        "category": "unclassified",
+        "id": "requirement:f9120baa13fcab1e9ab0306042871dac36e14135ccd86909a21d091536a627da",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Persona responsable, autónoma y con iniciativa."
+      },
+      {
+        "category": "unclassified",
+        "id": "requirement:820ac0b0f61b58e03f26869cff867716f60d7e00f4139300c5c373fd08b023c7",
         "normalizedValue": null,
         "parserRule": "unclassified.ambiguous_or_negated",
         "parserVersion": "1.0.0",
-        "sourceQuote": "Valorable experiencia previa en limpieza industrial o entornos similares."
-      },
+        "sourceQuote": "Carnet de conducir y vehículo propio."
+      }
+    ]
+  },
+  {
+    "offerId": "1285670667278",
+    "requirements": [
       {
         "category": "unclassified",
-        "id": "requirement:d72651fdc1e54105f7b1090c870113577465dc6e3c14f71f28e6b86342c5a1f1",
+        "id": "requirement:4ff60296342951c4c815ec7a5a9577aec53b76c6acd5ac783bb6794d54a1750f",
         "normalizedValue": null,
         "parserRule": "unclassified.conservative_fallback",
         "parserVersion": "1.0.0",
-        "sourceQuote": "Responsabilidad y trabajo en equipo."
+        "sourceQuote": "Estudios mínimos: Grado en Óptica y Optometría."
+      },
+      {
+        "category": "unclassified",
+        "id": "requirement:838032a8312d84ec6be85f41e8b896e10a67523297f2496383e75d11b9690f42",
+        "normalizedValue": null,
+        "parserRule": "unclassified.ambiguous_or_negated",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Experiencia mínima: no requerida."
+      },
+      {
+        "category": "unclassified",
+        "id": "requirement:7a102b76d59ea9f7d5fa4e0452c0755ded232e94d140e7c952ab1ea3266a00b1",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Excelentes dotes de comunicación y trabajo en equipo."
+      },
+      {
+        "category": "unclassified",
+        "id": "requirement:731b4c9c2b64dbe19cf036ddb00a43e5b02df5919f999e0ba9979c741885f74d",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Destreza manual y precisión, así como atención al detalle."
       }
     ]
   },
@@ -7062,31 +7972,23 @@
     ]
   },
   {
-    "offerId": "1285669061533",
+    "offerId": "1285670538097",
     "requirements": [
       {
         "category": "unclassified",
-        "id": "requirement:6e4437af3f5fe189a96453351069180d779cf9924b7e9f079c52f2b19f977f6c",
+        "id": "requirement:4d33db4687f28bfaffada93e00a0306c8b978a829827ec7eef3fccb271182681",
         "normalizedValue": null,
-        "parserRule": "unclassified.conservative_fallback",
+        "parserRule": "unclassified.ambiguous_or_negated",
         "parserVersion": "1.0.0",
-        "sourceQuote": "Formación mínima: Educación Secundaria Obligatoria o equivalente."
-      },
-      {
-        "category": "driving_license_or_vehicle",
-        "id": "requirement:b63246bffd67d604307c472485691c545b2e80dd762806942d09a113a6a7bc58",
-        "normalizedValue": "B",
-        "parserRule": "license.driving_b",
-        "parserVersion": "1.0.0",
-        "sourceQuote": "Carné de conducir B."
+        "sourceQuote": "Se valorará experiencia y permiso de circulación."
       },
       {
         "category": "unclassified",
-        "id": "requirement:ee1422d681af21212fc8da8e3388dbeada95416888933dc78df309299d4683b2",
+        "id": "requirement:5da9a1bcd4f5729ccad362a261bc8e54bede6c00953d0c7a4c536673d97583a1",
         "normalizedValue": null,
         "parserRule": "unclassified.conservative_fallback",
         "parserVersion": "1.0.0",
-        "sourceQuote": "Disponibilidad inmediata."
+        "sourceQuote": "Para más información acuda a Oficina Virtual"
       }
     ]
   },
@@ -7133,31 +8035,73 @@
     ]
   },
   {
-    "offerId": "1285670298515",
+    "offerId": "1285670583848",
     "requirements": [
       {
         "category": "unclassified",
-        "id": "requirement:322596da208d2186fbe7e9f208a9b2f0e027859431c6d6c225b75cc7b80701d7",
+        "id": "requirement:98bbaa2c1c1f3c212d97f2ef2f9fdcd29e308d8ccf3784e9a7e0ec1c1f5019c4",
         "normalizedValue": null,
         "parserRule": "unclassified.ambiguous_or_negated",
         "parserVersion": "1.0.0",
-        "sourceQuote": "Necesario contar con experiencia en limpieza, permiso de conducir y vehiculo propio. Valorable título en Educación General Básica o título en ESO.Valorable contar con nociones en materia de PRL, calidad y medio ambiente."
-      },
+        "sourceQuote": "Experiencia en limpieza de cristales, superficies, empleo de productos y maquinas para garantizar higienización, conservación y mantenimiento de superficies. Permiso de conducir y vehículo propio."
+      }
+    ]
+  },
+  {
+    "offerId": "1285670667086",
+    "requirements": [
       {
         "category": "unclassified",
-        "id": "requirement:9e140a20cb96778b626f04915cf538968e08a102514603c198a609108c73203e",
+        "id": "requirement:f3c588c5c598fe51fd7af6b7322660f656f4c36f29c5c68429b7bedc41c6af50",
         "normalizedValue": null,
         "parserRule": "unclassified.conservative_fallback",
         "parserVersion": "1.0.0",
-        "sourceQuote": "PERSONAS INTERESADAS CONTACTAR O.E DE PONFERRADA TEFL.: 987 410 859 EXT-2"
+        "sourceQuote": "Estudios mínimos: Ciclo Formativo Grado Medio."
       },
       {
+        "category": "experience",
+        "id": "requirement:92518d0fb671d3fee451baf3449c8f7be2386c873ecd38ac19c8493f80fc54c4",
+        "normalizedValue": 24,
+        "parserRule": "experience.years",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Experiencia mínima: Al menos 2 años."
+      }
+    ]
+  },
+  {
+    "offerId": "1285670667390",
+    "requirements": [
+      {
         "category": "unclassified",
-        "id": "requirement:a2cc0ff33651554fb95f5bd3923cbe18de5ba7df70dcbb1d11c7cd5de0664b56",
+        "id": "requirement:0d43352eee0feee59b92ac19f3309e13c032aadb7309152736fe94ac9ce477a6",
         "normalizedValue": null,
         "parserRule": "unclassified.conservative_fallback",
         "parserVersion": "1.0.0",
-        "sourceQuote": "Para más información acuda a Oficina Virtual"
+        "sourceQuote": "Educación Secundaria Obligatoria.."
+      },
+      {
+        "category": "experience",
+        "id": "requirement:b13ecec89e66ce2f4c7e4578d9385fc5b4536b9703b9c9e1e83d16c7b331d975",
+        "normalizedValue": 12,
+        "parserRule": "experience.years",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Experiencia mínima de al menos 1 año."
+      },
+      {
+        "category": "unclassified",
+        "id": "requirement:d685465a5f3f665681e71a1304275d105dd4aa831a8eb75bbcc3aa03f3559981",
+        "normalizedValue": null,
+        "parserRule": "unclassified.ambiguous_or_negated",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Disponer de vehículo propio para poder desplazarse hasta el centro de trabajo."
+      },
+      {
+        "category": "unclassified",
+        "id": "requirement:a44567ec230db67ba7c87525221d5d7daa3d38db4ded7a7fd6389387e55cbfd4",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Contar con experiencia previa en tareas de limpieza, maquinaria industrial, naves o instalaciones similares."
       }
     ]
   },
@@ -7270,31 +8214,63 @@
     ]
   },
   {
-    "offerId": "1285667274024",
+    "offerId": "1285670667002",
     "requirements": [
       {
         "category": "unclassified",
-        "id": "requirement:7b9fc83854818567145f019ed6e991ebe2b5e7b84819e918bce61dcf4b7c7a87",
+        "id": "requirement:e6b1384a9b1776effe73bb6e288bf3d64f6b499b38879bd313725b1eb72d9b06",
         "normalizedValue": null,
         "parserRule": "unclassified.conservative_fallback",
         "parserVersion": "1.0.0",
-        "sourceQuote": "Grado en Ingeniería."
+        "sourceQuote": "Sólidos conocimientos de programación en C++."
       },
       {
         "category": "unclassified",
-        "id": "requirement:07e591dba0367e9fad692e7c7e5f62920562eecddcf0737f56eee256d7b8b967",
+        "id": "requirement:bd41e1dc4fa6296b0ac4a9ea89e8172b42a24ca2459c45eac077ef6c4a04dcd1",
         "normalizedValue": null,
         "parserRule": "unclassified.conservative_fallback",
         "parserVersion": "1.0.0",
-        "sourceQuote": "Máster del profesorado."
+        "sourceQuote": "Experiencia en desarrollo y mantenimiento de firmware."
       },
       {
         "category": "unclassified",
-        "id": "requirement:1effa8bf587e217d2cbb1147a0b0dda695acf9ce24e417646a7d28531947eb86",
+        "id": "requirement:72848a1289e5d06a1dc16916d2d0c848f1865f49d9813cba7492c3fd92bf9add",
         "normalizedValue": null,
         "parserRule": "unclassified.conservative_fallback",
         "parserVersion": "1.0.0",
-        "sourceQuote": "Cumplir con los requisitos de contratación de suplencia de paternidad."
+        "sourceQuote": "Integración hardware/Firmware."
+      },
+      {
+        "category": "unclassified",
+        "id": "requirement:f59c061e27113b3ae42accd711c91c568765730723ec77672ececec0dcc4ad83",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Capacidad para trabajar en equipo y colaborar con otros departamentos."
+      },
+      {
+        "category": "unclassified",
+        "id": "requirement:0c1acf45f402dc2a2d674eadaad66a2f479f4a1b9836d4dec7407e3b758206ba",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Habilidad para documentar procesos técnicos de forma clara y precisa."
+      },
+      {
+        "category": "unclassified",
+        "id": "requirement:545f75d013d2ed856a1f9b45ebd623ec5601b38c422cce1760f14fc481f28a32",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Conocimientos en pruebas y depuración de software."
+      },
+      {
+        "category": "unclassified",
+        "id": "requirement:b144bfe22525ce209ae2f355ea5561bb779dae80a3a75bb65862c19facdbdb8e",
+        "normalizedValue": null,
+        "parserRule": "unclassified.ambiguous_or_negated",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Deseable experiencia previa en el sector de tecnología y telecomunicaciones."
       }
     ]
   },
@@ -7385,6 +8361,104 @@
         "parserRule": "license.driving_generic",
         "parserVersion": "1.0.0",
         "sourceQuote": "Carnet de conducir."
+      }
+    ]
+  },
+  {
+    "offerId": "1285670666098",
+    "requirements": [
+      {
+        "category": "unclassified",
+        "id": "requirement:a16e8c2367083a60309314c89415f132522cd753748f6721b2c696099efa182d",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Experiencia en búsqueda de piezas a través de catálogos online."
+      },
+      {
+        "category": "unclassified",
+        "id": "requirement:786d3dcd4b43fcbffa6880dbc97ce5c9573ac7ea3f71adffb6a7fce7523ec520",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Buen manejo de herramientas informáticas."
+      },
+      {
+        "category": "unclassified",
+        "id": "requirement:8de32878d63dcf1d3edc3b4303f749c51fd08fc8b120878d258ebcde4874d876",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Habilidades de comunicación y orientación al cliente."
+      },
+      {
+        "category": "unclassified",
+        "id": "requirement:4604603211459e945c152053d819ea5c49c69306d6f8df8fbf4df301de675087",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Actitud y ganas de formar parte de un equipo dinámico."
+      },
+      {
+        "category": "unclassified",
+        "id": "requirement:4ec0ed4dece28b7795bf5608d2cf4a2fbcd0816a349cd708959bc17104afcd10",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Capacidad de trabajo en equipo y gestión de incidencias."
+      }
+    ]
+  },
+  {
+    "offerId": "1285670666446",
+    "requirements": [
+      {
+        "category": "unclassified",
+        "id": "requirement:013353a4aa7f460c84a282aac6818f7168c78a1715d227ca7256a5167aae6861",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Estudios mínimos: Diplomatura en Turismo o similar."
+      },
+      {
+        "category": "experience",
+        "id": "requirement:93171ecb9e488c814b468da420826fc5dcc737c0a1e9b601985c5820bcf95073",
+        "normalizedValue": 24,
+        "parserRule": "experience.years",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Experiencia mínima: 2 años."
+      },
+      {
+        "category": "unclassified",
+        "id": "requirement:f26c8469788b2cf153b3faf883aeca035024300d488d356781daa797ad016acc",
+        "normalizedValue": null,
+        "parserRule": "unclassified.ambiguous_or_negated",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Se valorará experiencia dentro del Departamento de Recepción en hoteles 4*."
+      },
+      {
+        "category": "unclassified",
+        "id": "requirement:151e760855828a7abff23fd940759095c647e7cf65340ce875003ae0ed270fc1",
+        "normalizedValue": null,
+        "parserRule": "unclassified.ambiguous_or_negated",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Idiomas: inglés avanzado."
+      },
+      {
+        "category": "unclassified",
+        "id": "requirement:89840df64cb4f8a5f54173463092af38c68b785b1603824ad16a5a612b395735",
+        "normalizedValue": null,
+        "parserRule": "unclassified.ambiguous_or_negated",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Se valorará francés y/o alemán."
+      },
+      {
+        "category": "unclassified",
+        "id": "requirement:a51d021fddcba21f7aa0cc73c1d2b95ab64d45b2079a1323aa3b6d399dacc104",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Conocimiento del programa Ulyses Cloud."
       }
     ]
   },
@@ -7625,23 +8699,55 @@
     ]
   },
   {
-    "offerId": "1285667274191",
+    "offerId": "1285670666044",
     "requirements": [
       {
         "category": "unclassified",
-        "id": "requirement:d2e5c8e63368a0756ac56a8f576eea4f3dae731555dcd6a30e529218cb8b501c",
+        "id": "requirement:dd2ab47eaffd7e6474c47e2a36193d48c53c5504d08c8894cc8c91ac37b21920",
         "normalizedValue": null,
         "parserRule": "unclassified.conservative_fallback",
         "parserVersion": "1.0.0",
-        "sourceQuote": "Estudios mínimos: Grado."
+        "sourceQuote": "Titulación en ADE o similar."
       },
       {
-        "category": "experience",
-        "id": "requirement:42545acf8485f117b8677f79c94679abd09c669669a9e1fdc49537e1bed26650",
-        "normalizedValue": 36,
-        "parserRule": "experience.years",
+        "category": "unclassified",
+        "id": "requirement:f478ab8b18b82093b16836fc2266d232ee87ab16bfdd9dad7fb4371878a74c26",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
         "parserVersion": "1.0.0",
-        "sourceQuote": "Experiencia mínima: Al menos 3 años."
+        "sourceQuote": "Experiencia en posiciones como Team Leader, responsable departamental... etc."
+      },
+      {
+        "category": "unclassified",
+        "id": "requirement:f947c6f8bbd30bc692edf6b514300c6d361f440667314d8bc5460af35e24e680",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Nivel de inglés (B2-C1)."
+      },
+      {
+        "category": "unclassified",
+        "id": "requirement:907d616eaa2f00192eb2651b0a65c547a064b22ecb0c1075416651f942a05496",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Conocimientos contables, fiscales y financieros."
+      },
+      {
+        "category": "unclassified",
+        "id": "requirement:e3c83d79470cac765c406c29b1eb1a168b16e642708af887f211942553bdd97f",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Perfil analítico, resolutivo y orientado a resultados."
+      },
+      {
+        "category": "unclassified",
+        "id": "requirement:e4ed013fb86cb2967ae5887d8b6328dcd5ade6850a8140853d4565d5fc89b5a3",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Capacidad de organización y visión de mejora."
       }
     ]
   },
@@ -7829,6 +8935,83 @@
     ]
   },
   {
+    "offerId": "1285670667334",
+    "requirements": [
+      {
+        "category": "unclassified",
+        "id": "requirement:0e778c93eac73c9c71f397e73548c9aacf44926c15d7b9bc53882fc87852c3a5",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Bachillerato."
+      },
+      {
+        "category": "unclassified",
+        "id": "requirement:557cb254b0fa8e0692249ea841b0569c83ca197a767f7ac1cc13369b61e61c63",
+        "normalizedValue": null,
+        "parserRule": "unclassified.ambiguous_or_negated",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Experiencia previa de al menos un año gestionando equipos en retail (preferiblemente en sector belleza o moda)."
+      },
+      {
+        "category": "unclassified",
+        "id": "requirement:950e4b6c191303c98392ee6805a8dd71fea9e59beefad3d4c17cc15647664f0c",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Fuerte orientación a resultados y análisis de KPIs."
+      },
+      {
+        "category": "unclassified",
+        "id": "requirement:f6aca15c84f5703a65bb6676a7dafca3544d68c96def466a8201665fafd4f394",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Liderazgo inspirador y capacidad de desarrollo de talento."
+      },
+      {
+        "category": "unclassified",
+        "id": "requirement:378df69317969bff592b0ba503087f7813846a4c424a9b65138e1ac1e325adb8",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Perfil comercial con foco en cliente."
+      },
+      {
+        "category": "unclassified",
+        "id": "requirement:f2968bdc1151a714b01a9f47f94a435c26c8d2191893b7c7ff8110ae1a4793ab",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Alta capacidad organizativa y de toma de decisiones."
+      },
+      {
+        "category": "unclassified",
+        "id": "requirement:1f0f96692e65fca6f9d24547f6782f25d9e310f6647b830e409fc3676fdf1be7",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Actitud positiva, dinámica y resolutiva."
+      },
+      {
+        "category": "unclassified",
+        "id": "requirement:6c0c06a73adc7c6b969e5ed844091373ac379d4bd57391fb7e60f20bdbfae41d",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Imagen cuidada y alineada con el mundo beauty."
+      },
+      {
+        "category": "unclassified",
+        "id": "requirement:cf65abb646904988824ae7647a9a0cac46df0834312c4dde3b03394800284cd3",
+        "normalizedValue": null,
+        "parserRule": "unclassified.ambiguous_or_negated",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Disponibilidad horaria (turnos rotativos, fines de semana y festivos)."
+      }
+    ]
+  },
+  {
     "offerId": "1285668718820",
     "requirements": [
       {
@@ -7879,138 +9062,6 @@
     ]
   },
   {
-    "offerId": "1285669062286",
-    "requirements": [
-      {
-        "category": "unclassified",
-        "id": "requirement:8bf22122d65d6c876818fa34767ebcc74c94ed5538ff490264a77ba7076d6a7c",
-        "normalizedValue": null,
-        "parserRule": "unclassified.ambiguous_or_negated",
-        "parserVersion": "1.0.0",
-        "sourceQuote": "Estudios mínimos: Certificado de Profesionalidad Nivel 2 SEAG0110 Servicios para el Control de Plagas."
-      },
-      {
-        "category": "unclassified",
-        "id": "requirement:d55b4f475a9bb2f246cf8faabdc564d7fdb456f288073f552fa59f82af434716",
-        "normalizedValue": null,
-        "parserRule": "unclassified.conservative_fallback",
-        "parserVersion": "1.0.0",
-        "sourceQuote": "Experiencia previa en control de plagas, preferiblemente en entornos relacionados con hostelería, restauración, colectividades o la industria alimentaria."
-      },
-      {
-        "category": "unclassified",
-        "id": "requirement:49cfe18fdd18bc23f072e60659b3dbcac62b224b56ce2b4f4083521fa310bcdb",
-        "normalizedValue": null,
-        "parserRule": "unclassified.ambiguous_or_negated",
-        "parserVersion": "1.0.0",
-        "sourceQuote": "Carnet de conducir B en vigor y disponibilidad de vehículo para desplazamientos."
-      }
-    ]
-  },
-  {
-    "offerId": "1285667273718",
-    "requirements": [
-      {
-        "category": "unclassified",
-        "id": "requirement:91ed3fc79ae1261be392a0adbd74c98c3eb1a1e528a7dfc59803aa84c972240a",
-        "normalizedValue": null,
-        "parserRule": "unclassified.conservative_fallback",
-        "parserVersion": "1.0.0",
-        "sourceQuote": "Conocimientos en fontanería, electricidad, climatización, ACS y PCI."
-      },
-      {
-        "category": "unclassified",
-        "id": "requirement:f40e134917d153b5b5c4f2e65e84582fea600bc10c965e30b87da783719cf9e7",
-        "normalizedValue": null,
-        "parserRule": "unclassified.conservative_fallback",
-        "parserVersion": "1.0.0",
-        "sourceQuote": "Experiencia en prevención de legionela (SPA y piscinas)."
-      },
-      {
-        "category": "unclassified",
-        "id": "requirement:712f30dc9651397425f12c232081e1df9fdb1215270ce70f545d9830c1ad16d4",
-        "normalizedValue": null,
-        "parserRule": "unclassified.conservative_fallback",
-        "parserVersion": "1.0.0",
-        "sourceQuote": "Experiencia en mantenimiento de hoteles o grandes edificios."
-      },
-      {
-        "category": "unclassified",
-        "id": "requirement:811cda24420a90dd1d2011e78d4c068d58df5e8fb118753577884e6a276f8f60",
-        "normalizedValue": null,
-        "parserRule": "unclassified.ambiguous_or_negated",
-        "parserVersion": "1.0.0",
-        "sourceQuote": "Disponibilidad para trabajar de lunes a domingo."
-      },
-      {
-        "category": "unclassified",
-        "id": "requirement:50520532f2113c58f487b419a1592f763b2ea60b790c89f71815bd571ad40499",
-        "normalizedValue": null,
-        "parserRule": "unclassified.conservative_fallback",
-        "parserVersion": "1.0.0",
-        "sourceQuote": "Persona autónoma, dinámica, con capacidad de adaptación y orientación al servicio."
-      }
-    ]
-  },
-  {
-    "offerId": "1285667274780",
-    "requirements": [
-      {
-        "category": "unclassified",
-        "id": "requirement:f8b39001f15c1fa0642a6aca9f2a7ef7037c452a0f3f0c852b1745d33891c9e0",
-        "normalizedValue": null,
-        "parserRule": "unclassified.conservative_fallback",
-        "parserVersion": "1.0.0",
-        "sourceQuote": "FP Superior en Electromecánica o rama técnica (formación mínima exigible)."
-      },
-      {
-        "category": "unclassified",
-        "id": "requirement:0942957bbf29c0f5537751b83e006886bf2ed0f41e1403821d49bfb86379bdbc",
-        "normalizedValue": null,
-        "parserRule": "unclassified.conservative_fallback",
-        "parserVersion": "1.0.0",
-        "sourceQuote": "Grado en Ingeniería Mecánica, Ingeniería Electromecánica o ingenierías afines."
-      },
-      {
-        "category": "unclassified",
-        "id": "requirement:074affb65e25ca25a4179e6d31e98cb72f4ee2596f7e8d05e43a01f2d5f2828f",
-        "normalizedValue": null,
-        "parserRule": "unclassified.ambiguous_or_negated",
-        "parserVersion": "1.0.0",
-        "sourceQuote": "Experiencia previa de al menos dos años en posiciones similares."
-      }
-    ]
-  },
-  {
-    "offerId": "1285667274149",
-    "requirements": [
-      {
-        "category": "unclassified",
-        "id": "requirement:233834acaa5bf4c6e69e1014b516c8b93cabd7504ae208b1449c53bab2a6bdd9",
-        "normalizedValue": null,
-        "parserRule": "unclassified.conservative_fallback",
-        "parserVersion": "1.0.0",
-        "sourceQuote": "Titulado/a Superior en PRL."
-      },
-      {
-        "category": "unclassified",
-        "id": "requirement:b4edc8a3497aca9f99e2021884bb33dffa8062dcfb7965b85b928d751fbb44a6",
-        "normalizedValue": null,
-        "parserRule": "unclassified.conservative_fallback",
-        "parserVersion": "1.0.0",
-        "sourceQuote": "Tener una experiencia previa en puesto similar en obras (sector construcción)."
-      },
-      {
-        "category": "driving_license_or_vehicle",
-        "id": "requirement:6029ff3d5727c66a817324df9e19a794b892ccfe85e21bc4675d9259a1c14ed9",
-        "normalizedValue": "driving_license",
-        "parserRule": "license.driving_generic",
-        "parserVersion": "1.0.0",
-        "sourceQuote": "Disponer de carné de conducir."
-      }
-    ]
-  },
-  {
     "offerId": "1285669061701",
     "requirements": [
       {
@@ -8028,6 +9079,59 @@
         "parserRule": "unclassified.ambiguous_or_negated",
         "parserVersion": "1.0.0",
         "sourceQuote": "Valorable grado universitario en IT."
+      }
+    ]
+  },
+  {
+    "offerId": "1285670666582",
+    "requirements": [
+      {
+        "category": "unclassified",
+        "id": "requirement:9d681aaf2cfe82749965655cbc25e403a628815eea4a76560e70e5f927528cb4",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Ciclo formativo grado medio."
+      },
+      {
+        "category": "experience",
+        "id": "requirement:49b4378de80bf705bb1671bf39e2c78fc83002354adde79359edc5593b635e58",
+        "normalizedValue": 24,
+        "parserRule": "experience.years",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Experiencia mínima de al menos 2 años."
+      },
+      {
+        "category": "unclassified",
+        "id": "requirement:f0a4e499ff8d73ef63c55b89e927bccbfb7987c560de75eb5dea77850e1b4789",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Autocad Avanzado."
+      },
+      {
+        "category": "unclassified",
+        "id": "requirement:9cce7cd55a79e4c61be9da7fd7a230037ac349018b3a2c933bf91ea06e7c0ec4",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Paquete Office."
+      },
+      {
+        "category": "unclassified",
+        "id": "requirement:63b613d00ce60c61c924826d5126c754bd8ebf3e8897164712ce06da3c1bc14e",
+        "normalizedValue": null,
+        "parserRule": "unclassified.ambiguous_or_negated",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Inglés nivel intermedio."
+      },
+      {
+        "category": "unclassified",
+        "id": "requirement:7f9be1bdfd40cf15d472f54f10d872a37ba9a8201b4414d5fdb88926a74ab616",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Coche propio."
       }
     ]
   },
@@ -8111,27 +9215,6 @@
     ]
   },
   {
-    "offerId": "1285667273912",
-    "requirements": [
-      {
-        "category": "unclassified",
-        "id": "requirement:650059383bb91f9731b5f5ba0ad911866790d565f6081c0e0a3147b4fee48282",
-        "normalizedValue": null,
-        "parserRule": "unclassified.conservative_fallback",
-        "parserVersion": "1.0.0",
-        "sourceQuote": "Ciclo Formativo Grado Superior/ Ingeniería Agrícola/ Administración y Fianzas."
-      },
-      {
-        "category": "unclassified",
-        "id": "requirement:034512d0d2a51b7c64d1090ecdbd9abc8797dc8574931b4ab0ed147264dbda07",
-        "normalizedValue": null,
-        "parserRule": "unclassified.ambiguous_or_negated",
-        "parserVersion": "1.0.0",
-        "sourceQuote": "Experiencia mínima de 12 meses en el sector agrícola."
-      }
-    ]
-  },
-  {
     "offerId": "1285667857132",
     "requirements": [
       {
@@ -8157,6 +9240,91 @@
         "parserRule": "unclassified.conservative_fallback",
         "parserVersion": "1.0.0",
         "sourceQuote": "Información obtenida de: Empleo público. BOP León 17/07/2026; BOCYL 23/07/2026; BOE 31/07/2026"
+      }
+    ]
+  },
+  {
+    "offerId": "1285670667614",
+    "requirements": [
+      {
+        "category": "unclassified",
+        "id": "requirement:40d5633937cd7263587ede945ac8fd66acb4b7372a98c0bf05a892e8887ee94f",
+        "normalizedValue": null,
+        "parserRule": "unclassified.ambiguous_or_negated",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Titulación en Ingeniería Técnica, Arquitectura Técnica o similar. Nivel de inglés B2 o superior."
+      },
+      {
+        "category": "unclassified",
+        "id": "requirement:30a342895b6b82a0b4ec4fe68a77294df4489afdff8741829fe83df89889eada",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Conocimientos de herramientas ofimáticas."
+      },
+      {
+        "category": "unclassified",
+        "id": "requirement:871d24a86552aeaa3d5ef858f41f86f728e9be5058d8181dbff8f6b7a319da88",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Capacidad de organización y gestión de varias tareas simultáneamente."
+      },
+      {
+        "category": "unclassified",
+        "id": "requirement:ba7ed43d611e85dac880513369604eacbfd50b1455b7f2948a150397d2743a0b",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Interés por desarrollarse profesionalmente en un entorno técnico e industrial."
+      },
+      {
+        "category": "unclassified",
+        "id": "requirement:563cc912db86b7c38d358d782eb470aff11f086fe9c6c701c86bd75c7a8bdfaa",
+        "normalizedValue": null,
+        "parserRule": "unclassified.ambiguous_or_negated",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Competencias valoradas"
+      },
+      {
+        "category": "unclassified",
+        "id": "requirement:3d79900fa671f107f7ab7d3a226cc02b389b90d83a43e96f1934852ae2f08981",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Orientación al cliente."
+      },
+      {
+        "category": "unclassified",
+        "id": "requirement:1825f960dd3b5785c6e35554dcf886a41561223a6858a4e579ec249249b58207",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Capacidad analítica."
+      },
+      {
+        "category": "unclassified",
+        "id": "requirement:a6480c6feea16f2c6c0336781ab4bd401fc35449c5dfd8f812450f0c83489114",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Iniciativa y proactividad."
+      },
+      {
+        "category": "unclassified",
+        "id": "requirement:e4563ce96ba39a889dfcd97e0f79f4dcc44f5c0aa4eab2a4470680c1aaa17b7c",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Facilidad para trabajar en equipo."
+      },
+      {
+        "category": "unclassified",
+        "id": "requirement:284fd0882937358b803f13715c343dc86f88bf4ee9a84f7850e243888c72e2f1",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Adaptabilidad y aprendizaje continuo."
       }
     ]
   },
@@ -9143,6 +10311,64 @@
         "parserRule": "unclassified.conservative_fallback",
         "parserVersion": "1.0.0",
         "sourceQuote": "Interés por el sector de las energías renovables y la conservación del medio ambiente."
+      }
+    ]
+  },
+  {
+    "offerId": "1285670667474",
+    "requirements": [
+      {
+        "category": "unclassified",
+        "id": "requirement:73b5b923019860c17c9bde43bfee03f36e8436162f48a81592af0885b7eed79e",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Estudios mínimos: Educación Secundaria Obligatoria."
+      },
+      {
+        "category": "unclassified",
+        "id": "requirement:78e748dd35a96993fc9099a9165ef8819fad769b46f1de88219103d6545b4acd",
+        "normalizedValue": null,
+        "parserRule": "unclassified.ambiguous_or_negated",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Experiencia mínima: No requerida."
+      },
+      {
+        "category": "unclassified",
+        "id": "requirement:1f9a06224a60d86687caca3824c1f707b14a1bb22e2da154a5f02e574c245441",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Estar en posesión de la TIP."
+      },
+      {
+        "category": "unclassified",
+        "id": "requirement:6112744cf6841f3b84e456fbdedc70971acb1c98d10852b38e3a9c24e98c186a",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Disponibilidad de incorporación inmediata."
+      },
+      {
+        "category": "unclassified",
+        "id": "requirement:14b623574db55e85b70b51d6b84fe063a62bc2e0c2b242da2ade2261501a6f02",
+        "normalizedValue": null,
+        "parserRule": "unclassified.ambiguous_or_negated",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Disponibilidad para trabajar en turnos de lunes a domingo."
+      }
+    ]
+  },
+  {
+    "offerId": "1285670666834",
+    "requirements": [
+      {
+        "category": "unclassified",
+        "id": "requirement:5dd137f59be0cbcf00bbf10e1b66f6e146cda49f68e6d3116e0d4ce0f1f071f9",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Estar en posesión de la T.I.P. de Vigilante de Seguridad."
       }
     ]
   },

@@ -1980,5 +1980,15 @@
     "sourceQuote": "Encargada / encargado de sección de un comercio.",
     "reviewedAt": "2026-08-13",
     "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "IMP02S",
+    "occupationId": "occupation:cno11:5811",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.boe.es/diario_boe/txt.php?id=BOE-A-2011-19352",
+    "sourceQuote": "Peluquero/a especialista.",
+    "reviewedAt": "2026-08-14",
+    "mappingVersion": "1.0.0"
   }
 ]

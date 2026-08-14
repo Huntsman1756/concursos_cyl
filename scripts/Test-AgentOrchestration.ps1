@@ -205,15 +205,15 @@ try {
         $budgetProfileTelemetry = Get-Content -LiteralPath (Get-NewTelemetry -BeforeFiles $pre) -Raw | ConvertFrom-Json
         Assert-Equal $budgetProfileTelemetry.launch.budgetProfile 'batch' '2e: telemetry records batch profile'
         Assert-Equal $budgetProfileTelemetry.launch.budgetSource 'profile' '2f: telemetry records profile source'
-        Assert-Equal $budgetProfileTelemetry.launch.maxObservedTokens 500000 '2g: batch profile resolves to 500000 tokens'
+        Assert-Equal $budgetProfileTelemetry.launch.maxObservedTokens 600000 '2g: batch profile resolves to 600000 tokens'
         Assert-Equal $budgetProfileTelemetry.admission.profile 'provider-limit' '2g1: dry run records provider-limit admission'
         Assert-Equal $budgetProfileTelemetry.admission.capacity 5 '2g2: dry run records five active NAN slots'
         Assert-Equal $budgetProfileTelemetry.admission.timeoutSeconds 7200 '2g3: dry run records admission timeout'
 
         foreach ($profileCase in @(
-            @{Name='small';Tokens=100000},
-            @{Name='research';Tokens=450000},
-            @{Name='extended';Tokens=750000}
+            @{Name='small';Tokens=175000},
+            @{Name='research';Tokens=500000},
+            @{Name='extended';Tokens=900000}
         )) {
             $pre = Get-FileSnapshot
             $profileParams = New-ValidCodeContract -Objective "budget-profile-$($profileCase.Name)" -DryRun -TestMode
@@ -246,12 +246,20 @@ try {
         $r = Invoke-WorkerDirect -WorkerParameters $reasoning
         Assert-True ($r.ExitCode -eq 0) '2n: reasoning profile DryRun exits 0'
         Assert-Contains $r.Output 'deepseek-v4-flash' '2o: reasoning profile selects DeepSeek'
+        Assert-Contains $r.Output 'nan-reasoning-code' '2o1: reasoning profile selects its bounded agent'
 
         $longContext = New-ValidCodeContract -Objective 'long-context-route' -DryRun -TestMode
         $longContext.ModelProfile = 'long-context'
         $r = Invoke-WorkerDirect -WorkerParameters $longContext
         Assert-True ($r.ExitCode -eq 0) '2p: long-context profile DryRun exits 0'
         Assert-Contains $r.Output 'mimo-v2.5' '2q: long-context profile selects Mimo'
+        Assert-Contains $r.Output 'nan-long-context-code' '2q1: long-context profile selects its bounded agent'
+
+        $gemmaCode = New-ValidCodeContract -Objective 'gemma-code-rejected' -DryRun -TestMode
+        $gemmaCode.FallbackModels = @('nan/gemma4')
+        $r = Invoke-WorkerDirect -WorkerParameters $gemmaCode
+        Assert-True ($r.ExitCode -ne 0) '2q2: Gemma code fallback fails closed'
+        Assert-Contains $r.Output 'bulletin-only' '2q3: Gemma rejection explains the task boundary'
 
         $premium = New-ValidCodeContract -Objective 'premium-rejected' -DryRun -TestMode
         $premium.FallbackModels = @('nan/glm5.2')
@@ -306,6 +314,7 @@ try {
         if ($telFile) {
             $tel = Get-Content -LiteralPath $telFile -Raw | ConvertFrom-Json
             Assert-True ($tel.selectedModel -eq 'nan/mimo-v2.5') '4b: selected model is fallback mimo-v2.5'
+            Assert-True ($tel.selectedAgent -eq 'nan-long-context-code') '4b1: Mimo fallback uses long-context code agent'
             Assert-True ($tel.attempts[0].model -eq 'nan/qwen3.6') '4c: attempt 0 is qwen3.6'
             Assert-True ($tel.attempts[3].model -eq 'nan/mimo-v2.5') '4d: attempt 3 is fallback mimo'
         }
@@ -840,6 +849,8 @@ try {
             Assert-True ($workerText -match 'blocked-unverified-provider') '18af1: worker fails closed without provider response evidence'
             Assert-True ($workerText -match 'XDG_DATA_HOME') '18af2: worker isolates OpenCode state per execution'
             Assert-True (Test-Path -LiteralPath (Join-Path $repoRoot 'scripts\orchestration\nan-audit-proxy.mjs')) '18af3: provider response audit proxy exists'
+            Assert-True (Test-Path -LiteralPath (Join-Path $repoRoot '.opencode\agents\nan-reasoning-code.md')) '18af4: DeepSeek bounded code agent exists'
+            Assert-True (Test-Path -LiteralPath (Join-Path $repoRoot '.opencode\agents\nan-long-context-code.md')) '18af5: MiMo bounded code agent exists'
             Assert-True (-not (Test-Path -LiteralPath (Join-Path $repoRoot '.opencode\commands\implementar.md'))) '18ag: direct code command is absent'
             Assert-True (-not (Test-Path -LiteralPath (Join-Path $repoRoot '.opencode\commands\boletin.md'))) '18ah: direct bulletin command is absent'
 
@@ -892,6 +903,109 @@ try {
             }
         } finally {
             Remove-Item -LiteralPath $explicitTelemetry -Force -ErrorAction SilentlyContinue
+        }
+    }
+
+    # 20. Structural configuration checks (no network)
+    if (-not $Only -or $Only -eq 'structure') {
+        Write-Host "`n*** 20. Structural configuration checks ***" -ForegroundColor Cyan
+        Write-Host ("-" * 40) -ForegroundColor DarkGray
+
+        # --- opencode.json checks ---
+        $ocPath = Join-Path $repoRoot 'opencode.json'
+        Assert-True (Test-Path -LiteralPath $ocPath) '20a: opencode.json exists'
+        if (Test-Path -LiteralPath $ocPath) {
+            $ocRaw = Get-Content -LiteralPath $ocPath -Raw
+            $oc = $ocRaw | ConvertFrom-Json
+
+            # Provider declaration
+            Assert-True ($null -ne $oc.provider) '20b: opencode.json has provider'
+            Assert-True ($null -ne $oc.provider.nan) '20c: opencode.json declares nan provider'
+            Assert-Equal $oc.provider.nan.npm '@ai-sdk/openai-compatible' '20d: nan adapter is @ai-sdk/openai-compatible'
+            Assert-Equal $oc.provider.nan.options.baseURL 'https://api.nan.builders/v1' '20e: nan baseURL is https://api.nan.builders/v1'
+            Assert-Equal $oc.provider.nan.options.timeout 600000 '20f: nan timeout is 600000'
+
+            # No apiKey in nan provider
+            Assert-True ($null -eq $oc.provider.nan.options.apiKey) '20g: nan provider has no apiKey'
+            Assert-True ($ocRaw -notmatch '"apiKey"') '20h: raw opencode.json has no apiKey field anywhere'
+
+            # Exactly 4 models declared
+            $modelNames = @($oc.provider.nan.models.PSObject.Properties.Name)
+            Assert-Equal $modelNames.Count 4 '20i: exactly 4 models declared'
+            Assert-True ($modelNames -contains 'qwen3.6') '20j: qwen3.6 model present'
+            Assert-True ($modelNames -contains 'gemma4') '20k: gemma4 model present'
+            Assert-True ($modelNames -contains 'deepseek-v4-flash') '20l: deepseek-v4-flash model present'
+            Assert-True ($modelNames -contains 'mimo-v2.5') '20m: mimo-v2.5 model present'
+
+            # Context window limits
+            Assert-Equal $oc.provider.nan.models.'qwen3.6'.limit.context 262144 '20n: qwen3.6 contextWindow 262144'
+            Assert-Equal $oc.provider.nan.models.gemma4.limit.context 262144 '20o: gemma4 contextWindow 262144'
+            Assert-Equal $oc.provider.nan.models.'deepseek-v4-flash'.limit.context 1048576 '20p: deepseek-v4-flash contextWindow 1048576'
+            Assert-Equal $oc.provider.nan.models.'mimo-v2.5'.limit.context 1048576 '20q: mimo-v2.5 contextWindow 1048576'
+
+            # Output token limits
+            foreach ($modelName in $modelNames) {
+                Assert-Equal $oc.provider.nan.models.$modelName.limit.output 16384 "20r: $modelName output limit 16384"
+            }
+
+            # No GLM model anywhere
+            Assert-True ($ocRaw -notmatch 'glm5\.2') '20t: no glm5.2 in opencode.json'
+            Assert-True ($ocRaw -notmatch 'glm') '20u: no glm string at all in opencode.json'
+
+            # Existing guards preserved
+            Assert-Equal $oc.share 'disabled' '20v: share is disabled'
+            Assert-Equal $oc.autoupdate $false '20w: autoupdate is false'
+            Assert-Equal $oc.subagent_depth 0 '20x: subagent_depth is 0'
+            Assert-True (($oc.enabled_providers | Where-Object { $_ -eq 'nan' }).Count -eq 1) '20y: nan in enabled_providers'
+            Assert-True ($oc.mcp.esdata.enabled -eq $false) '20z: MCP esdata is disabled'
+            Assert-True ($null -ne $oc.watcher.ignore) '20aa: watcher ignore list is present (not null)'
+        }
+
+        # --- YAML structural checks ---
+        if (Test-Path -LiteralPath $yamlPath) {
+            $yamlText = Get-Content -LiteralPath $yamlPath -Raw
+
+            # Retry policy
+            Assert-True ($yamlText -match 'retryPolicy:') '20ab: YAML has retryPolicy section'
+            Assert-True ($yamlText -match 'maxAttempts:\s*3') '20ac: retryPolicy maxAttempts is 3'
+            Assert-True ($yamlText -match '429') '20ad: retryPolicy includes 429 rate_limit_exceeded'
+            Assert-True ($yamlText -match '5xx') '20ae: retryPolicy includes 5xx server errors'
+            Assert-True ($yamlText -match 'retryAfterCapSeconds:\s*30') '20af: Retry-After cap is 30s'
+            Assert-True ($yamlText -match 'nonRetryableStatuses:') '20ag: YAML defines nonRetryableStatuses'
+            Assert-True ($yamlText -match '401') '20ah: nonRetryable includes 401 auth'
+            Assert-True ($yamlText -match '403') '20ai: nonRetryable includes 403 quota/authorization'
+            Assert-True ($yamlText -match '400') '20aj: nonRetryable includes invalid requests'
+            Assert-True ($yamlText -match 'nonRetryable429Codes:') '20aj1: quota 429 codes do not retry'
+
+            # Agent table
+            Assert-True ($yamlText -match 'agentTable:') '20ak: YAML has agentTable section'
+            Assert-True ($yamlText -match 'model:\s*qwen3\.6') '20al: agentTable has qwen3.6'
+            Assert-True ($yamlText -match 'agent:\s*nan-code') '20am: agentTable has nan-code agent'
+            Assert-True ($yamlText -match 'model:\s*deepseek-v4-flash') '20an: agentTable has deepseek-v4-flash'
+            Assert-True ($yamlText -match 'agent:\s*nan-reasoning-code') '20ao: agentTable has nan-reasoning-code agent'
+            Assert-True ($yamlText -match 'model:\s*mimo-v2\.5') '20ap: agentTable has mimo-v2.5'
+            Assert-True ($yamlText -match 'agent:\s*nan-long-context-code') '20aq: agentTable has nan-long-context-code agent'
+            Assert-True ($yamlText -match 'model:\s*gemma4') '20ar: agentTable has gemma4'
+            Assert-True ($yamlText -match 'agent:\s*nan-bulletin') '20as: agentTable has nan-bulletin agent'
+        } else {
+            Write-Host "  SKIP: YAML structural checks (file not at $yamlPath)" -ForegroundColor Yellow
+        }
+
+        # --- AGENTS.md structural checks ---
+        $agentsPath = Join-Path $repoRoot 'AGENTS.md'
+        if (Test-Path -LiteralPath $agentsPath) {
+            $agentsText = Get-Content -LiteralPath $agentsPath -Raw
+            Assert-True ($agentsText -match 'Criterios de selección de modelo') '20at: AGENTS.md has selection criteria section'
+            Assert-True ($agentsText -match 'nan-code') '20au: AGENTS.md references nan-code agent'
+            Assert-True ($agentsText -match 'nan-reasoning-code') '20av: AGENTS.md references nan-reasoning-code agent'
+            Assert-True ($agentsText -match 'nan-long-context-code') '20aw: AGENTS.md references nan-long-context-code agent'
+            Assert-True ($agentsText -match 'nan-bulletin') '20ax: AGENTS.md references nan-bulletin agent'
+            Assert-True ($agentsText -match 'Prohibiciones de modelo') '20ay: AGENTS.md has prohibitions section'
+            Assert-True ($agentsText -match 'glm5\.2.*[Pp]rohibido') '20az: GLM5.2 marked as prohibited'
+            Assert-True ($agentsText -match 'gemma4.*[Ss]olo lectura|Prohibido.*gemma4') '20ba: Gemma4 prohibition for code documented'
+            Assert-True ($agentsText -match 'broker rechaza el parámetro') '20bb: Gemma code fallback is rejected before execution'
+        } else {
+            Write-Host "  SKIP: AGENTS.md structural checks (file not at $agentsPath)" -ForegroundColor Yellow
         }
     }
 

@@ -101,6 +101,16 @@
   },
   {
     "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:4223",
+    "relationshipType": "reviewed_relationship",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-13",
+    "sourceQuote": "Asistente en departamentos de Recursos Humanos.",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/administracion-gestion/asistencia-direccion.html",
+    "trainingProgramKey": "ADG01S"
+  },
+  {
+    "mappingVersion": "1.0.0",
     "occupationId": "occupation:cno11:4111",
     "relationshipType": "official_output",
     "reviewStatus": "approved",
@@ -298,6 +308,26 @@
     "sourceQuote": "Entrenador/a personal.",
     "sourceUrl": "https://www.boe.es/boe/dias/2017/07/08/pdfs/BOE-A-2017-7981.pdf",
     "trainingProgramKey": "AFD02SD"
+  },
+  {
+    "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:4121",
+    "relationshipType": "reviewed_relationship",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-13",
+    "sourceQuote": "Auxiliar de almacén de flores.",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/agraria/agrojardineria-composiciones-florales.html",
+    "trainingProgramKey": "AGA01B"
+  },
+  {
+    "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:5220",
+    "relationshipType": "reviewed_relationship",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-13",
+    "sourceQuote": "Auxiliar de ventas en floristería.",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/agraria/agrojardineria-composiciones-florales.html",
+    "trainingProgramKey": "AGA01B"
   },
   {
     "mappingVersion": "1.0.0",
@@ -631,6 +661,26 @@
   },
   {
     "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:3510",
+    "relationshipType": "reviewed_relationship",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-13",
+    "sourceQuote": "Agente comercial.",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/comercio-marketing/gestion-ventas-espacios-comerciales.html",
+    "trainingProgramKey": "COM03S"
+  },
+  {
+    "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:5210",
+    "relationshipType": "reviewed_relationship",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-13",
+    "sourceQuote": "Encargada / encargado de sección de un comercio.",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/comercio-marketing/gestion-ventas-espacios-comerciales.html",
+    "trainingProgramKey": "COM03S"
+  },
+  {
+    "mappingVersion": "1.0.0",
     "occupationId": "occupation:cno11:3522",
     "relationshipType": "official_output",
     "reviewStatus": "approved",
@@ -818,6 +868,46 @@
     "sourceQuote": "Instalador de antenas.",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2009/10/30/1632",
     "trainingProgramKey": "ELE02M"
+  },
+  {
+    "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:3124",
+    "relationshipType": "reviewed_relationship",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-13",
+    "sourceQuote": "Técnica / técnico en supervisión, instalación, mantenimiento, verificación y control de equipos de sistemas de radiodifusión.",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/electricidad-electronica/sistemas-telecomunicaciones-informaticos.html",
+    "trainingProgramKey": "ELE02S"
+  },
+  {
+    "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:3811",
+    "relationshipType": "reviewed_relationship",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-13",
+    "sourceQuote": "Especialista en integración, instalación y mantenimiento de equipos y sistemas informáticos.",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/electricidad-electronica/sistemas-telecomunicaciones-informaticos.html",
+    "trainingProgramKey": "ELE02S"
+  },
+  {
+    "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:3813",
+    "relationshipType": "reviewed_relationship",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-13",
+    "sourceQuote": "Técnica / técnico en supervisión, instalación, mantener, verificación y control en redes locales y sistemas telemáticos",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/electricidad-electronica/sistemas-telecomunicaciones-informaticos.html",
+    "trainingProgramKey": "ELE02S"
+  },
+  {
+    "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:7533",
+    "relationshipType": "reviewed_relationship",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-13",
+    "sourceQuote": "Especialista en instalación, integración y mantenimiento de equipos y sistemas de telecomunicación.",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/electricidad-electronica/sistemas-telecomunicaciones-informaticos.html",
+    "trainingProgramKey": "ELE02S"
   },
   {
     "mappingVersion": "1.0.0",
@@ -1058,6 +1148,56 @@
     "sourceQuote": "Las ocupaciones y puestos de trabajo más relevantes son los siguientes: Cocinero.",
     "sourceUrl": "https://todofp.es/dam/jcr%3A63392ee9-4d38-449b-a196-d0efb714b364/n-tcocinagastronomiaes-pdf.pdf",
     "trainingProgramKey": "HOT01M"
+  },
+  {
+    "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:3510",
+    "relationshipType": "reviewed_relationship",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-13",
+    "sourceQuote": "Comercial de establecimientos de alojamientos turísticos.",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/hosteleria-turismo/gestion-alojamientos-turisticos.html",
+    "trainingProgramKey": "HOT01S"
+  },
+  {
+    "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:4121",
+    "relationshipType": "reviewed_relationship",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-13",
+    "sourceQuote": "Empleada / empleado de economato de unidades de producción y servicio de alimentos y bebidas.",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/hosteleria-turismo/servicios-restauracion.html",
+    "trainingProgramKey": "HOT02M"
+  },
+  {
+    "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:5120",
+    "relationshipType": "reviewed_relationship",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-13",
+    "sourceQuote": "Camarera / camarero de bar-cafetería o restaurante.",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/hosteleria-turismo/servicios-restauracion.html",
+    "trainingProgramKey": "HOT02M"
+  },
+  {
+    "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:4123",
+    "relationshipType": "reviewed_relationship",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-13",
+    "sourceQuote": "Asistente en terminales (estaciones, puertos y aeropuertos).",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/hosteleria-turismo/guia-informacion-asistencias-turisticas.html",
+    "trainingProgramKey": "HOT03S"
+  },
+  {
+    "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:4411",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-13",
+    "sourceQuote": "Informador turístico / informadora turística.",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/hosteleria-turismo/guia-informacion-asistencias-turisticas.html",
+    "trainingProgramKey": "HOT03S"
   },
   {
     "mappingVersion": "1.0.0",
@@ -1371,6 +1511,76 @@
   },
   {
     "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:3510",
+    "relationshipType": "reviewed_relationship",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-13",
+    "sourceQuote": "Agente comercial en empresas del sector.",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/imagen-personal/estetica-belleza.html",
+    "trainingProgramKey": "IMP01M"
+  },
+  {
+    "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:4412",
+    "relationshipType": "reviewed_relationship",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-13",
+    "sourceQuote": "Recepcionista en empresas estéticas.",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/imagen-personal/estetica-belleza.html",
+    "trainingProgramKey": "IMP01M"
+  },
+  {
+    "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:5220",
+    "relationshipType": "reviewed_relationship",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-13",
+    "sourceQuote": "Asesor-vendedor / asesora-vendedora en perfumerías y droguerías.",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/imagen-personal/estetica-belleza.html",
+    "trainingProgramKey": "IMP01M"
+  },
+  {
+    "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:5492",
+    "relationshipType": "reviewed_relationship",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-13",
+    "sourceQuote": "Demostrador / demostradora de equipos, cosméticos y técnicas estéticas.",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/imagen-personal/estetica-belleza.html",
+    "trainingProgramKey": "IMP01M"
+  },
+  {
+    "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:5812",
+    "relationshipType": "reviewed_relationship",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-13",
+    "sourceQuote": "Técnica / técnico esteticista en centros de belleza y gabinetes de estética.",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/imagen-personal/estetica-belleza.html",
+    "trainingProgramKey": "IMP01M"
+  },
+  {
+    "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:2640",
+    "relationshipType": "reviewed_relationship",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-13",
+    "sourceQuote": "Técnica / técnico comercial.",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/imagen-personal/estetica-integral-bienestar.html",
+    "trainingProgramKey": "IMP01S"
+  },
+  {
+    "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:5812",
+    "relationshipType": "reviewed_relationship",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-13",
+    "sourceQuote": "Esteticista.",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/imagen-personal/estetica-integral-bienestar.html",
+    "trainingProgramKey": "IMP01S"
+  },
+  {
+    "mappingVersion": "1.0.0",
     "occupationId": "occupation:cno11:5811",
     "relationshipType": "official_output",
     "reviewStatus": "approved",
@@ -1388,6 +1598,46 @@
     "sourceQuote": "Técnica / técnico en manicura.",
     "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/imagen-personal/peluqueria-cosmetica-capilar.html",
     "trainingProgramKey": "IMP02M"
+  },
+  {
+    "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:5811",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-14",
+    "sourceQuote": "Peluquero/a especialista.",
+    "sourceUrl": "https://www.boe.es/diario_boe/txt.php?id=BOE-A-2011-19352",
+    "trainingProgramKey": "IMP02S"
+  },
+  {
+    "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:7812",
+    "relationshipType": "reviewed_relationship",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-13",
+    "sourceQuote": "Operador / operadora de máquinas fijas para fabricar productos de madera.",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/madera-mueble-corcho/carpinteria-mueble.html",
+    "trainingProgramKey": "MAM01B"
+  },
+  {
+    "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:8209",
+    "relationshipType": "reviewed_relationship",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-13",
+    "sourceQuote": "Montador / montadora de muebles de madera o similares.",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/madera-mueble-corcho/fpb-carpinteria-mueble.html",
+    "trainingProgramKey": "MAM01B"
+  },
+  {
+    "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:9700",
+    "relationshipType": "reviewed_relationship",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-13",
+    "sourceQuote": "Peón de la industria de la madera y del corcho.",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/madera-mueble-corcho/fpb-carpinteria-mueble.html",
+    "trainingProgramKey": "MAM01B"
   },
   {
     "mappingVersion": "1.0.0",

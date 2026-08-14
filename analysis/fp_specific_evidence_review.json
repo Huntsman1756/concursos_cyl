@@ -1,11 +1,11 @@
 {
   "schemaVersion": "1.0.0",
-  "snapshotId": "20260813014001646-8616fc30ab76",
-  "reviewedAt": "2026-08-13",
+  "snapshotId": "20260814062213925-6b2a94f09dbc",
+  "reviewedAt": "2026-08-14",
   "sourceQueue": "analysis/fp_mention_offer_queue.json",
-  "totalReviewed": 19,
+  "totalReviewed": 21,
   "acceptedOfferCount": 7,
-  "deferredOfferCount": 12,
+  "deferredOfferCount": 14,
   "additionalPinnedSnapshotOfferIds": [
     "1285631247493",
     "1285663193189",
@@ -106,6 +106,14 @@
     {
       "offerId": "1285667665377",
       "reasonCode": "generic_maintenance_title_requires_functional_cno_review"
+    },
+    {
+      "offerId": "1285670666175",
+      "reasonCode": "administrative_cno_4309_4500_unresolved"
+    },
+    {
+      "offerId": "1285670667530",
+      "reasonCode": "generic_mechanical_assembly_requires_functional_cno_review"
     }
   ],
   "evidence": {

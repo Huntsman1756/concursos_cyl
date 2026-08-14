@@ -604,7 +604,7 @@ describe("FP one-word publication review validator", () => {
       ({ programKey }) => programKey === "COM01M",
     );
     if (comDelta === undefined) throw new Error("Missing COM01M coverage.");
-    expect(comDelta.addedOfferIds).toEqual(["1285663377359"]);
+    expect(comDelta.addedOfferIds).toEqual(["1285663377359", "1285670665932"]);
     expect(comDelta.removedOfferIds).toEqual([]);
     expect(
       deltaByProgram
@@ -622,7 +622,7 @@ describe("FP one-word publication review validator", () => {
         .flatMap(({ addedOfferIds }) => addedOfferIds)
         .sort(compareNormalizedCodePointStrings),
     ).toEqual(
-      [...acceptedOfferIds, "1285663377359"].sort(
+      [...acceptedOfferIds, "1285663377359", "1285670665932"].sort(
         compareNormalizedCodePointStrings,
       ),
     );
