@@ -15,15 +15,15 @@
 
 ## Citas literales TodoFP (7)
 
-| #   | Cita literal                                                                          |
-| --- | ------------------------------------------------------------------------------------- |
-| 1   | Vitivinícola                                                                          |
-| 2   | Analista sensorial                                                                    |
-| 3   | Encargada / encargado de envejecimiento y crianza de destilados y vinagres            |
-| 4   | Encargada / encargado de la línea de envasado de destilación, concentrados y vinagres |
-| 5   | Encargada / encargado de proceso de destilación y rectificación                       |
-| 6   | Encargada / encargado de recepción de mostos frescos y sulfatados                     |
-| 7   | Supervisor / supervisora de columnas de destilación y concentración                   |
+| #   | Cita literal                                                                           |
+| --- | -------------------------------------------------------------------------------------- |
+| 1   | Analista sensorial.                                                                    |
+| 2   | Encargada / encargado de envejecimiento y crianza de destilados y vinagres.            |
+| 3   | Encargada / encargado de la línea de envasado de destilación, concentrados y vinagres. |
+| 4   | Encargada / encargado de proceso de destilación y rectificación.                       |
+| 5   | Encargada / encargado de recepción de mostos frescos y sulfatados.                     |
+| 6   | Supervisor / supervisora de columnas de destilación y concentración.                   |
+| 7   | Vitivinícola.                                                                          |
 
 ---
 

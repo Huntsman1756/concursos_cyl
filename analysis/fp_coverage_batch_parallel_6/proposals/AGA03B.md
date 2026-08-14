@@ -1,6 +1,6 @@
 # AGA03B — Aprovechamientos Forestales (Título Profesional Básico)
 
-**Fuente:** TodoFP · `family: AGA` · `level: basic`  
+**Fuente:** TodoFP · `family: AGA` · `level: basic`
 **Categoría:** Agraria
 
 ---
@@ -15,7 +15,7 @@
 | ----------------- | ----- |
 | **SIN CANDIDATO** |       |
 
-**Justificación:**  
+**Justificación:**
 El tratamiento y aplicación de plaguicidas fitosanitarios es una especialización técnica que no se corresponde con ninguna de las categorías genéricas de trabajadores agrícolas (6110), de jardinería/viveros (6120), de apicultura (6204) o de avicultura/cunicultura (6205). El código CNO-11 6204 cubre exclusivamente apicultura y sericicultura, no la aplicación general de fitosanitarios en cualquier cultivo. No hay en el catálogo aprobado ninguna ocupación CNO-11 que incluya explícitamente aplicadores de plaguicidas ni profesionales de manejo integrado de plagas.
 
 **Riesgo:** Alto. El peonaje forestal incluye aplicador de plaguicidas como ocupación básica. Al no existir candidato CNO-11 approved, esta función quedaría sin mapeo. Se requeriría un nuevo registro en `occupations.json` bajo `reviewStatus: "draft"` con evidencia oficial del INE/CNO-11 que incluya aplicadores de fitosanitarios, o bien redefinir el alcance de 6110 o 6120.
@@ -111,7 +111,7 @@ El tratamiento y aplicación de plaguicidas fitosanitarios es una especializaci�
 | **Justificación**   | El mantenimiento de jardines (corte de césped, limpieza, poda básica, riego, tratamientos preventivos menores) es directamente la categoría de jardines de 6120. Corresponde a la misma etiqueta que el candidato de la cita 3 ("Peón de jardinería"). |
 | **Riesgo**          | Bajo. Igual que cita 3. Relación exacta.                                                                                                                                                                                                               |
 
-**⚠️ Variante casi duplicada:**  
+**⚠️ Variante casi duplicada:**
 Esta cita (8) y la cita 3 ("Peón de jardinería") comparten el mismo candidato CNO-11: `6120`. Son equivalentes funcionales: "peón de jardinería" es la denominación genérica y "peón en empresas de mantenimiento de jardines" es el contexto empresarial del mismo trabajo. Se trata como una correspondencia única mapeada a 6120 con dos citas fuente.
 
 ---
@@ -140,7 +140,7 @@ Esta cita (8) y la cita 3 ("Peón de jardinería") comparten el mismo candidato 
 | **Justificación**   | Explotaciones forestales (producción de madera, leña, corcho, resinas, frutos silvestres) se corresponde funcionalmente con actividades de producción primaria del sector primario. Sin categoría forestal específica en CNO-11, se aplica 6110 como correspondencia funcional. |
 | **Riesgo**          | Medio. Subsumidor genérico. Sin ascenso jerárquico. Peón forestal que produce y extrae, no técnico que planifica.                                                                                                                                                               |
 
-**⚠️ Variante casi duplicada:**  
+**⚠️ Variante casi duplicada:**
 Esta cita (10) y la cita 11 ("Peón forestal") comparten el mismo candidato CNO-11: `6110`. "Peón en explotaciones forestales" describe el contexto empresarial (explotación) mientras que "Peón forestal" es la denominación genérica. Ambas se mapean a 6110 como una correspondencia única con dos citas fuente.
 
 ---
@@ -166,8 +166,8 @@ Esta cita (10) y la cita 11 ("Peón forestal") comparten el mismo candidato CNO-
 | **6120** | `Trabajadores cualificados en huertas, invernaderos, viveros y jardines`                                    | 3, 4, 8 (3 citas)               |
 | —        | **SIN CANDIDATO**                                                                                           | 1 (1 cita)                      |
 
-**Total de citas TodoFP:** 11  
-**Citas con candidato approved:** 10 (dos grupos de variantes casi duplicadas tratados como mapeos únicos a sus respectivos candidatos)  
+**Total de citas TodoFP:** 11
+**Citas con candidato approved:** 10 (dos grupos de variantes casi duplicadas tratados como mapeos únicos a sus respectivos candidatos)
 **Citas SIN candidato approved:** 1
 
 - `Aplicador / aplicadora de nivel básico de plaguicidas de uso fitosanitario.`
