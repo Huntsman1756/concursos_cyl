@@ -16,6 +16,9 @@ const evidencePath = args.get("--evidence");
 const contractHash = args.get("--contract-hash");
 const repositoryId = args.get("--repository-id");
 const allowHttpUpstream = args.get("--allow-http-upstream") === "true";
+const maxAttempts = parseInt(args.get("--max-attempts") ?? "3", 10);
+const baseDelayMs = parseInt(args.get("--base-delay-ms") ?? "1000", 10);
+const maxDelayMs = parseInt(args.get("--max-delay-ms") ?? "30000", 10);
 
 if (!evidencePath || !contractHash || !repositoryId) {
   throw new Error(
@@ -34,6 +37,19 @@ if (
 ) {
   throw new Error("The production upstream must be https://api.nan.builders");
 }
+if (
+  !Number.isFinite(maxAttempts) ||
+  maxAttempts < 1 ||
+  !Number.isFinite(baseDelayMs) ||
+  baseDelayMs < 0 ||
+  !Number.isFinite(maxDelayMs) ||
+  maxDelayMs < 0 ||
+  maxDelayMs < baseDelayMs
+) {
+  throw new Error(
+    "--max-attempts (>=1), --base-delay-ms (>=0) and --max-delay-ms (>=base) are required",
+  );
+}
 
 await mkdir(path.dirname(evidencePath), { recursive: true });
 
@@ -44,6 +60,64 @@ function sha256(value) {
 function bearerFingerprint(header) {
   const match = /^Bearer\s+(.+)$/iu.exec(header ?? "");
   return match ? sha256(match[1]).slice(0, 16) : null;
+}
+
+function parseErrorBody(buffer) {
+  try {
+    const parsed = JSON.parse(buffer.toString("utf8"));
+    const err = parsed.error ?? {};
+    return {
+      code: typeof err.code === "string" ? err.code : null,
+      type: typeof err.type === "string" ? err.type : null,
+      param:
+        err.param === undefined || err.param === null
+          ? null
+          : String(err.param),
+    };
+  } catch {
+    return { code: null, type: null, param: null };
+  }
+}
+
+function isRetryableError(errorCode, status) {
+  if (status === 429) return errorCode === "rate_limit_exceeded";
+  return status >= 500 && status < 600;
+}
+
+function parseRetryAfter(header) {
+  if (!header) return null;
+  const seconds = Number.parseInt(header, 10);
+  if (Number.isFinite(seconds)) return Math.max(0, seconds * 1000);
+  const date = new Date(header);
+  if (Number.isFinite(date.getTime())) {
+    return Math.max(0, date.getTime() - Date.now());
+  }
+  return null;
+}
+
+function retryDelayMsFor(attempt, retryAfterMs) {
+  if (retryAfterMs !== null) {
+    return Math.min(retryAfterMs, maxDelayMs);
+  }
+  const exponential = Math.min(baseDelayMs * 2 ** (attempt - 1), maxDelayMs);
+  // Deterministic jitter so tests and production are reproducible.
+  const jitter = (attempt * 9973) % 251;
+  return Math.min(exponential + jitter, maxDelayMs);
+}
+
+async function readBoundedBody(body, maxBytes) {
+  const chunks = [];
+  let retainedBytes = 0;
+  if (!body) return Buffer.alloc(0);
+  for await (const chunk of Readable.fromWeb(body)) {
+    const bytes = Buffer.from(chunk);
+    if (retainedBytes < maxBytes) {
+      const retained = bytes.subarray(0, maxBytes - retainedBytes);
+      chunks.push(retained);
+      retainedBytes += retained.length;
+    }
+  }
+  return Buffer.concat(chunks);
 }
 
 function safeRequestMetadata(body) {
@@ -117,7 +191,6 @@ async function writeEvidence(record) {
 }
 
 const server = http.createServer(async (request, response) => {
-  const observedAt = new Date().toISOString();
   const requestId = randomUUID();
   const bodyChunks = [];
   for await (const chunk of request) bodyChunks.push(Buffer.from(chunk));
@@ -145,19 +218,145 @@ const server = http.createServer(async (request, response) => {
     );
     return;
   }
-  let upstreamResponse;
-  try {
-    upstreamResponse = await fetch(target, {
-      method: request.method,
-      headers,
-      body:
-        request.method === "GET" || request.method === "HEAD"
-          ? undefined
-          : requestBody,
-      redirect: "manual",
-    });
-  } catch (error) {
-    response.writeHead(502, { "content-type": "application/json" });
+
+  for (let attempt = 1; attempt <= maxAttempts; attempt++) {
+    const observedAt = new Date().toISOString();
+    let upstreamResponse;
+    try {
+      upstreamResponse = await fetch(target, {
+        method: request.method,
+        headers,
+        body:
+          request.method === "GET" || request.method === "HEAD"
+            ? undefined
+            : requestBody,
+        redirect: "manual",
+      });
+    } catch (error) {
+      // Transport errors are not retryable per contract (only 429
+      // rate_limit_exceeded and 5xx qualify).
+      await writeEvidence({
+        schemaVersion: 1,
+        evidenceClass: "provider-observed",
+        repositoryId,
+        contractHash,
+        requestId,
+        observedAt,
+        keyFingerprint: bearerFingerprint(authorization),
+        request: {
+          method: request.method,
+          path: target.pathname,
+          bodySha256: sha256(requestBody),
+          ...requestMetadata,
+        },
+        response: { status: 502, transportError: error?.name ?? "Error" },
+        retry: {
+          attempt,
+          maxAttempts,
+          terminal: true,
+          retryable: false,
+          retryDelayMs: 0,
+        },
+      });
+      response.writeHead(502, { "content-type": "application/json" });
+      response.end(
+        JSON.stringify({ error: { code: "nan_proxy_upstream_error" } }),
+      );
+      return;
+    }
+
+    // 2xx success – stream response body and write evidence.
+    if (upstreamResponse.status >= 200 && upstreamResponse.status < 300) {
+      const responseHeaders = {};
+      upstreamResponse.headers.forEach((value, name) => {
+        if (
+          ![/^content-length$/iu, /^content-encoding$/iu].some((p) =>
+            p.test(name),
+          )
+        ) {
+          responseHeaders[name] = value;
+        }
+      });
+      response.writeHead(upstreamResponse.status, responseHeaders);
+
+      const responseHash = createHash("sha256");
+      const metadataChunks = [];
+      let metadataBytes = 0;
+      if (upstreamResponse.body) {
+        for await (const chunk of Readable.fromWeb(upstreamResponse.body)) {
+          const bytes = Buffer.from(chunk);
+          responseHash.update(bytes);
+          if (metadataBytes < 4 * 1024 * 1024) {
+            metadataChunks.push(bytes);
+            metadataBytes += bytes.length;
+          }
+          response.write(bytes);
+        }
+      }
+      const metadata = collectResponseMetadata(Buffer.concat(metadataChunks));
+      const responseRequestIds = {};
+      for (const name of ["x-request-id", "request-id", "cf-ray"]) {
+        const value = upstreamResponse.headers.get(name);
+        if (value) responseRequestIds[name] = value;
+      }
+
+      await writeEvidence({
+        schemaVersion: 1,
+        evidenceClass: "provider-observed",
+        repositoryId,
+        contractHash,
+        requestId,
+        observedAt,
+        keyFingerprint: bearerFingerprint(authorization),
+        request: {
+          method: request.method,
+          path: target.pathname,
+          bodySha256: sha256(requestBody),
+          ...requestMetadata,
+        },
+        response: {
+          status: upstreamResponse.status,
+          id: metadata.id,
+          model: metadata.model,
+          usage: normalizedUsage(metadata.usage),
+          bodySha256: responseHash.digest("hex"),
+          requestIds: responseRequestIds,
+        },
+        retry: {
+          attempt,
+          maxAttempts,
+          terminal: true,
+          retryable: false,
+          retryDelayMs: 0,
+        },
+      });
+      response.end();
+      return;
+    }
+
+    // Non-2xx – drain error body (limited to 4 KB) and decide whether to retry.
+    const errorBody = await readBoundedBody(upstreamResponse.body, 4 * 1024);
+    const errorInfo = parseErrorBody(errorBody);
+
+    const retryable = isRetryableError(errorInfo.code, upstreamResponse.status);
+    const terminal = !retryable || attempt === maxAttempts;
+
+    let retryDelayMs = 0;
+    if (retryable && !terminal) {
+      const retryAfterMs = parseRetryAfter(
+        upstreamResponse.headers.get("retry-after"),
+      );
+      retryDelayMs = retryDelayMsFor(attempt, retryAfterMs);
+    }
+
+    // Sanitized error: code, type, param but never message or prompt.
+    const sanitizedError =
+      errorInfo.code !== null ||
+      errorInfo.type !== null ||
+      errorInfo.param !== null
+        ? { code: errorInfo.code, type: errorInfo.type, param: errorInfo.param }
+        : undefined;
+
     await writeEvidence({
       schemaVersion: 1,
       evidenceClass: "provider-observed",
@@ -172,69 +371,28 @@ const server = http.createServer(async (request, response) => {
         bodySha256: sha256(requestBody),
         ...requestMetadata,
       },
-      response: { status: 502, transportError: error?.name ?? "Error" },
+      response: { status: upstreamResponse.status },
+      retry: {
+        attempt,
+        maxAttempts,
+        terminal,
+        retryable,
+        retryDelayMs,
+        error: sanitizedError,
+      },
     });
-    response.end(
-      JSON.stringify({ error: { code: "nan_proxy_upstream_error" } }),
-    );
-    return;
-  }
 
-  const responseHeaders = {};
-  upstreamResponse.headers.forEach((value, name) => {
-    if (
-      ![/^content-length$/iu, /^content-encoding$/iu].some((p) => p.test(name))
-    ) {
-      responseHeaders[name] = value;
+    if (terminal) {
+      response.writeHead(upstreamResponse.status, {
+        "content-type": "application/json",
+      });
+      response.end(errorBody);
+      return;
     }
-  });
-  response.writeHead(upstreamResponse.status, responseHeaders);
 
-  const responseHash = createHash("sha256");
-  const metadataChunks = [];
-  let metadataBytes = 0;
-  if (upstreamResponse.body) {
-    for await (const chunk of Readable.fromWeb(upstreamResponse.body)) {
-      const bytes = Buffer.from(chunk);
-      responseHash.update(bytes);
-      if (metadataBytes < 4 * 1024 * 1024) {
-        metadataChunks.push(bytes);
-        metadataBytes += bytes.length;
-      }
-      response.write(bytes);
-    }
+    // Wait before next attempt.
+    await new Promise((resolve) => setTimeout(resolve, retryDelayMs));
   }
-  const metadata = collectResponseMetadata(Buffer.concat(metadataChunks));
-  const responseRequestIds = {};
-  for (const name of ["x-request-id", "request-id", "cf-ray"]) {
-    const value = upstreamResponse.headers.get(name);
-    if (value) responseRequestIds[name] = value;
-  }
-
-  await writeEvidence({
-    schemaVersion: 1,
-    evidenceClass: "provider-observed",
-    repositoryId,
-    contractHash,
-    requestId,
-    observedAt,
-    keyFingerprint: bearerFingerprint(authorization),
-    request: {
-      method: request.method,
-      path: target.pathname,
-      bodySha256: sha256(requestBody),
-      ...requestMetadata,
-    },
-    response: {
-      status: upstreamResponse.status,
-      id: metadata.id,
-      model: metadata.model,
-      usage: normalizedUsage(metadata.usage),
-      bodySha256: responseHash.digest("hex"),
-      requestIds: responseRequestIds,
-    },
-  });
-  response.end();
 });
 
 server.listen(0, "127.0.0.1", () => {

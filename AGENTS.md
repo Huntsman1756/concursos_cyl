@@ -28,6 +28,28 @@ modelo.
 > ni la revisión. Sol/Frontier conserva el control del diseño, la descomposición
 > y la validación de cada cambio.
 
+## Criterios de selección de modelo
+
+| Modelo NAN              | Agente asignado         | Cuándo usarlo                                                        |
+| ----------------------- | ----------------------- | -------------------------------------------------------------------- |
+| `nan/qwen3.6`           | `nan-code`              | Edits mecánicos, bounded paths, tareas con claridad de pasos.        |
+| `nan/deepseek-v4-flash` | `nan-reasoning-code`    | Contratos que requieren razonamiento explícito antes de implementar. |
+| `nan/mimo-v2.5`         | `nan-long-context-code` | Contexto largo (>100k tokens), varios archivos, contratos amplios.   |
+| `nan/gemma4`            | `nan-bulletin`          | **Solo lectura** de boletines convertidos a archivo local.           |
+
+La selección es explícita por perfil: `mechanical` usa Qwen, `reasoning` usa
+DeepSeek y `long-context` usa MiMo. No existe fallback automático: Codex debe
+autorizar cada fallback compatible en el contrato.
+
+## Prohibiciones de modelo
+
+- **`nan/glm5.2`**: Prohibido globalmente. No se declara en `opencode.json`, no se usa en
+  fallback, no se menciona en contratos.
+- **`nan/gemma4` para código**: Prohibido. Gemma es exclusivamente de lectura de boletines.
+  Cualquier intento de usar Gemma en un contrato de código debe fallar de forma determinista.
+- **Fallback a Gemma desde código**: Prohibido. El broker rechaza el parámetro
+  antes de iniciar una sesión de modelo.
+
 ## Flujo Frontier → worker → Frontier
 
 1. **Frontier** (Codex/Sol) analiza, diagnostica, diseña y descompone el trabajo
