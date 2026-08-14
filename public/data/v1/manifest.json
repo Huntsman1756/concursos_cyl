@@ -1,13 +1,13 @@
 {
   "schemaVersion": "1.0.0",
-  "generatedAt": "2026-08-14T20:28:07.655Z",
+  "generatedAt": "2026-08-14T20:49:29.301Z",
   "qualityStatus": "passed",
   "sources": {
     "training": {
       "sourceId": "jcyl-vocational-training-offer",
       "sourceUrl": "https://analisis.datosabiertos.jcyl.es/api/explore/v2.1/catalog/datasets/oferta-de-formacion-profesional/records",
       "sourceUpdatedAt": null,
-      "snapshotFetchedAt": "2026-08-14T20:28:07.655Z",
+      "snapshotFetchedAt": "2026-08-14T20:49:29.301Z",
       "schemaVersion": "1.0.0",
       "recordCount": 1293,
       "sha256": "e36f383ecc98a8487d4476c5f08ed73ecd4d5bc421983631f56e874443a20dcc",
@@ -17,11 +17,21 @@
       "sourceId": "jcyl-employment-offers",
       "sourceUrl": "https://analisis.datosabiertos.jcyl.es/api/explore/v2.1/catalog/datasets/ofertas-de-empleo/records",
       "sourceUpdatedAt": null,
-      "snapshotFetchedAt": "2026-08-14T20:28:07.655Z",
+      "snapshotFetchedAt": "2026-08-14T20:49:29.301Z",
       "schemaVersion": "1.0.0",
       "recordCount": 1091,
-      "sha256": "3090a9959fd082d03a5f325435d5d09e4d2a0fcae3d326e6294a6a150b7c76ab",
+      "sha256": "7ce5bcb9a2d0f6de5ff298d115e7fad3b0ccfe9f547ec852278dcf399d3e8ecf",
       "qualityStatus": "passed"
+    },
+    "outcomes": {
+      "sourceId": "educabase-outcomes",
+      "sourceUrl": "https://estadisticas.educacion.gob.es/EducaJaxiPx/api/v1/es/laborales/insercion/famprof/l0/famprof_2_02.px",
+      "sourceUpdatedAt": null,
+      "snapshotFetchedAt": "2026-08-14T20:49:29.301Z",
+      "schemaVersion": "1.0.0",
+      "recordCount": 0,
+      "sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+      "qualityStatus": "stale"
     }
   },
   "counts": {

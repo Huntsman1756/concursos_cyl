@@ -14,6 +14,7 @@ import { normalizeTraining } from "./normalizeTraining";
 import { runQualityGates } from "./qualityGates";
 import { SOURCE_CONFIG } from "./sourceConfig";
 import { validateCuratedMappings } from "./validateCuratedMappings";
+import { EDUCABASE_SOURCES } from "./educabaseSources";
 
 const scriptPath = fileURLToPath(import.meta.url);
 const repoRoot = resolve(dirname(scriptPath), "../..");
@@ -29,6 +30,7 @@ function sourceSnapshot(
   fetchedAt: string,
   recordCount: number,
   hash: string,
+  qualityStatus: SourceSnapshot["qualityStatus"] = "passed",
 ): SourceSnapshot {
   return {
     sourceId,
@@ -38,7 +40,7 @@ function sourceSnapshot(
     schemaVersion: "1.0.0",
     recordCount,
     sha256: hash,
-    qualityStatus: "passed",
+    qualityStatus,
   };
 }
 
@@ -133,11 +135,13 @@ export async function buildSnapshots(): Promise<void> {
     "occupation-aliases": jsonText(curated.aliases),
     "training-occupation-links": jsonText(curated.links),
     "mapping-coverage": jsonText(curated.coverage),
+    "outcome-indicators": jsonText([]),
   };
   const trainingHash = sha256Text(
     `${resourceTexts.programs}${resourceTexts.centers}${resourceTexts["training-offerings"]}`,
   );
   const offerHash = sha256Text(resourceTexts["job-offers"]);
+  const outcomeHash = sha256Text(resourceTexts["outcome-indicators"]);
   const manifest = GeneratedManifestSchema.parse({
     schemaVersion: "1.0.0",
     generatedAt: fetchedAt,
@@ -156,6 +160,14 @@ export async function buildSnapshots(): Promise<void> {
         fetchedAt,
         offers.length,
         offerHash,
+      ),
+      outcomes: sourceSnapshot(
+        "educabase-outcomes",
+        EDUCABASE_SOURCES.intermediateProgramEmployment.apiUrl,
+        fetchedAt,
+        0,
+        outcomeHash,
+        "stale",
       ),
     },
     counts: quality.counts,

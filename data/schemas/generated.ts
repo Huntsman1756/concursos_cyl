@@ -81,6 +81,42 @@ export const PublishedRequirementSchema = z.object({
   parserVersion: z.literal("1.0.0"),
 });
 
+export const OutcomeIndicatorSchema = z.object({
+  indicatorId: z.string().trim().min(1),
+  trainingProgramKey: z.string().trim().min(1).nullable(),
+  officialProgramGroupLabel: z.string().trim().min(1).nullable(),
+  trainingLevel: z.enum(["basic", "intermediate", "higher"]),
+  scope: z.enum([
+    "spain_program_group",
+    "castilla_leon_professional_family",
+    "castilla_leon_training_level",
+  ]),
+  cohort: z.string().trim().min(1),
+  postGraduationYear: z.union([
+    z.literal(1),
+    z.literal(2),
+    z.literal(3),
+    z.literal(4),
+  ]),
+  measure: z.enum([
+    "affiliation_rate",
+    "mean",
+    "quintile_1",
+    "quintile_2",
+    "quintile_3",
+    "quintile_4",
+  ]),
+  value: z.number().nullable(),
+  unit: z.enum(["eur_annualized_contribution_base", "percent"]),
+  suppressionState: z.enum([
+    "published",
+    "not_published",
+    "not_applicable",
+    "provisional",
+  ]),
+  sourceId: z.string().trim().min(1),
+});
+
 export const JobOfferSchema = z.object({
   id: z.string().trim().min(1),
   title: z.string().trim().min(1),
@@ -117,6 +153,7 @@ export const GeneratedManifestSchema = z.object({
   sources: z.object({
     training: SourceSnapshotSchema,
     offers: SourceSnapshotSchema,
+    outcomes: SourceSnapshotSchema.optional(),
   }),
   counts: z.object({
     programs: z.number().int().nonnegative(),
@@ -130,6 +167,7 @@ export const TrainingProgramsSchema = z.array(TrainingProgramSchema);
 export const EducationCentersSchema = z.array(EducationCenterSchema);
 export const TrainingOfferingsSchema = z.array(TrainingOfferingSchema);
 export const JobOffersSchema = z.array(JobOfferSchema);
+export const OutcomeIndicatorsSchema = z.array(OutcomeIndicatorSchema);
 
 export type TrainingLevel = z.infer<typeof TrainingLevelSchema>;
 export type Modality = z.infer<typeof ModalitySchema>;
@@ -139,6 +177,7 @@ export type TrainingOffering = z.infer<typeof TrainingOfferingSchema>;
 export type DescriptionSections = z.infer<typeof DescriptionSectionsSchema>;
 export type RequirementCategory = z.infer<typeof RequirementCategorySchema>;
 export type PublishedRequirement = z.infer<typeof PublishedRequirementSchema>;
+export type OutcomeIndicator = z.infer<typeof OutcomeIndicatorSchema>;
 export type JobOffer = z.infer<typeof JobOfferSchema>;
 export type SourceSnapshot = z.infer<typeof SourceSnapshotSchema>;
 export type GeneratedManifest = z.infer<typeof GeneratedManifestSchema>;
