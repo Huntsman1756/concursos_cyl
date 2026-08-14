@@ -2,6 +2,9 @@ docs/**
 research/**
 *.png
 stdout
+.codex-tmp/**
+.superpowers/**
+.agent-runs/**
 .tmp/**
 tmp/**
 .worktrees/**
