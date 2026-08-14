@@ -1,0 +1,27 @@
+Program Key: EOC02S
+Program Title: Proyectos de Obra Civil
+Family Code: EOC
+Family Name: Edificación y Obra Civil
+Official Title: Técnico Superior en Proyectos de Obra Civil
+Level: higher
+Source System: TodoFP
+Source URL: https://www.todofp.es/que-estudiar/familias-profesionales/edificacion-obra-civil/proyectos-obra-civil.html
+
+## Source Quotes (first-seen order, deduplicated — 16 total)
+
+1. Aparatista.
+2. Ayudante de jefa / jefe de oficina técnica.
+3. Ayudante de planificador / planificadora.
+4. Ayudante de técnica / técnico de control de costes.
+5. Delineante de obra civil.
+6. Delineante de servicios urbanos.
+7. Delineante de topografía.
+8. Delineante proyectista de carreteras.
+9. Delineante proyectista de redes y sistemas de distribución de fluidos.
+10. Delineante proyectista de urbanización.
+11. Especialista en levantamiento de construcciones.
+12. Especialista en levantamiento de terrenos.
+13. Especialista en replanteos.
+14. Maquetista de construcción.
+15. Práctico en topografía.
+16. Técnica / técnico de control documental.

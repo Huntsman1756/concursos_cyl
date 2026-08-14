@@ -1,0 +1,17 @@
+Program Key: ELE05E
+Program Title: Robótica Colaborativa
+Family Code: ELE
+Family Name: Electricidad y Electrónica
+Official Title: Curso de Especialización en Robótica colaborativa (Acceso GS)
+Level: specialization
+Source System: TodoFP
+Source URL: https://www.todofp.es/que-estudiar/familias-profesionales/electricidad-electronica/ce-robotica-colaborativa.html
+
+## Source Quotes (first-seen order, deduplicated — 6 total)
+
+1. colaborativa.
+2. Jefe de equipo de supervisión de mantenimiento de sistemas de robótica
+3. Jefe de equipo de supervisión de montaje de sistemas de robótica colaborativa.
+4. Programador de robots colaborativos.
+5. Proyectista de sistemas de robótica colaborativa.
+6. Técnico de puesta en marcha de sistemas de robótica colaborativa.

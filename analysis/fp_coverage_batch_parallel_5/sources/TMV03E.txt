@@ -1,0 +1,20 @@
+Program Key: TMV03E
+Program Title: Mantenimiento y seguridad en sistemas de vehículos hibridos y eléctricos
+Family Code: TMV
+Family Name: Transporte y Mantenimiento de Vehículos
+Official Title: Curso de Especialización en Mantenimiento y seguridad en sistemas de vehículos híbridos y eléctricos (Acceso GS)
+Level: specialization
+Source System: TodoFP
+Source URL: https://www.todofp.es/que-estudiar/familias-profesionales/transporte-mantenimiento-vehiculos/ce-mantenimiento-seguridad-hibridos-electricos.html
+
+## Source Quotes (first-seen order, deduplicated — 9 total)
+
+1. Encargado/a de área comercial de equipos relacionados con los vehículos.
+2. Encargado/a de inspección técnica de vehículos.
+3. Encargado/a en empresas de fabricación de recambios.
+4. Jefe/a del área de carrocería.
+5. Jefe/a del área de mantenimiento de vehículos híbridos y eléctricos.
+6. Jefe/a del área de recambios y equipos de diagnosis.
+7. Perito tasador de vehículos.
+8. Responsable de recepción de vehículos.
+9. Responsable de seguridad en el área de mantenimiento de vehículos.

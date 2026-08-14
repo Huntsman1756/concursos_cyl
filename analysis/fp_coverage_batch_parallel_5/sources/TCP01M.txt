@@ -1,0 +1,21 @@
+Program Key: TCP01M
+Program Title: Confección y Moda
+Family Code: TCP
+Family Name: Textil, Confección y Piel
+Official Title: Técnico en Confección y Moda
+Level: intermediate
+Source System: TodoFP
+Source URL: https://www.todofp.es/que-estudiar/familias-profesionales/textil-confeccion-piel/confeccion-moda.html
+
+## Source Quotes (first-seen order, deduplicated — 10 total)
+
+1. Ayudante de sastrería y modistería.
+2. Confeccionista.
+3. Cortador / cortadora de prendas y artículos textiles.
+4. Cosedor-ensamblador / cosedora-ensambladora.
+5. Especialista en confección.
+6. Marcador-cortador / marcadora-cortadora de prendas y artículos en textil y piel.
+7. Oficial de confección.
+8. Operador / operadora de máquinas de acabado.
+9. Operador / operadora de máquinas industriales de coser y bordar.
+10. Planchador-acabador / planchadora-acabadora.

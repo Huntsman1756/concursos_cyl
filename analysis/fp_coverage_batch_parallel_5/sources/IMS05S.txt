@@ -1,0 +1,24 @@
+Program Key: IMS05S
+Program Title: Iluminación, Captación y tratamiento de Imagen
+Family Code: IMS
+Family Name: Imagen y Sonido
+Official Title: Técnico Superior en Iluminación, Captación y Tratamiento de Imagen
+Level: higher
+Source System: TodoFP
+Source URL: https://www.todofp.es/que-estudiar/familias-profesionales/imagen-sonido/iluminacion-captacion-tratamiento-imagen.html
+
+## Source Quotes (first-seen order, deduplicated — 13 total)
+
+1. Ayudante de cámara.
+2. Ayudante de iluminación.
+3. Cámara de cine, vídeo y televisión.
+4. Cámara de ENG (Electronics News Gathering).
+5. Foto fija.
+6. Fotógrafa / fotógrafo.
+7. Iluminador / iluminadora de televisión.
+8. Luminotécnica / luminotécnico de espectáculos en vivo.
+9. Reportero gráfico / reportera gráfica.
+10. Responsable de iluminación en espectáculos en vivo.
+11. Retocador fotográfico / retocadora fotográfica digital.
+12. Supervisor de sistemas digitales y vectoriales de imagen.
+13. Técnica / técnico de mesas de control de iluminación en espectáculos.
