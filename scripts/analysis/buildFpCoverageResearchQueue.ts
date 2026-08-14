@@ -1,3 +1,4 @@
+import { createHash } from "node:crypto";
 import { readFile, writeFile } from "node:fs/promises";
 import { resolve, sep } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -10,6 +11,10 @@ import {
   type TrainingProgram,
 } from "../../data/schemas/generated";
 import { MappingCoverageResourceSchema } from "../../data/schemas/curatedMappings";
+import {
+  FpCoverageResearchOutcomesSchema,
+  type FpCoverageResearchOutcomeEntry,
+} from "../../data/schemas/fpCoverageResearchOutcomes";
 import {
   FpCoverageResearchQueueSchema,
   type FpCoverageResearchCandidate,
@@ -67,6 +72,8 @@ export function buildFpCoverageResearchQueue(input: {
   programs: readonly TrainingProgram[];
   offerings: readonly TrainingOffering[];
   coverage: readonly ProgramCoverage[];
+  researchOutcomes: readonly FpCoverageResearchOutcomeEntry[];
+  catalogSha256: string;
 }): FpCoverageResearchQueue {
   const programsByKey = new Map(
     input.programs.map((program) => [program.programKey, program]),
@@ -74,6 +81,15 @@ export function buildFpCoverageResearchQueue(input: {
   const coverageByKey = new Map(
     input.coverage.map((row) => [row.programKey, row]),
   );
+  const noMatchOutcomesByKey = new Map<
+    string,
+    FpCoverageResearchOutcomeEntry
+  >();
+  for (const entry of input.researchOutcomes) {
+    if (entry.status === "reviewed-no-publishable-match") {
+      noMatchOutcomesByKey.set(entry.baseProgramKey, entry);
+    }
+  }
   const groups = new Map<string, TrainingProgram[]>();
   for (const program of input.programs) {
     const baseKey = deriveBaseProgramKey(program, programsByKey);
@@ -83,6 +99,7 @@ export function buildFpCoverageResearchQueue(input: {
   }
 
   let reviewedBaseCount = 0;
+  let completedNoMatchBaseCount = 0;
   const candidates: Array<Omit<FpCoverageResearchCandidate, "rank">> = [];
   for (const [baseProgramKey, group] of groups) {
     const programKeys = group.map(({ programKey }) => programKey).toSorted();
@@ -95,6 +112,14 @@ export function buildFpCoverageResearchQueue(input: {
       )
     ) {
       reviewedBaseCount += 1;
+      continue;
+    }
+    const noMatchOutcome = noMatchOutcomesByKey.get(baseProgramKey);
+    if (
+      noMatchOutcome !== undefined &&
+      noMatchOutcome.occupationCatalogSha256 === input.catalogSha256
+    ) {
+      completedNoMatchBaseCount += 1;
       continue;
     }
     const groupOfferings = input.offerings.filter((offering) =>
@@ -125,6 +150,7 @@ export function buildFpCoverageResearchQueue(input: {
   return FpCoverageResearchQueueSchema.parse({
     snapshotGeneratedAt: input.snapshotGeneratedAt,
     reviewedBaseCount,
+    completedNoMatchBaseCount,
     pendingBaseCount: ranked.length,
     contract: CONTRACT,
     candidates: ranked,
@@ -141,7 +167,7 @@ export function renderFpCoverageResearchQueue(
         `| ${candidate.rank} | ${candidate.baseProgramKey} | ${candidate.programTitle} | ${candidate.familyName} | ${candidate.offeringCount} | ${candidate.provinceCount} | ${candidate.centerCount} | ${candidate.priorDraft ? "sí" : "no"} |`,
     )
     .join("\n");
-  return `# Cola incremental de investigación FP–ocupación\n\n- Snapshot: ${queue.snapshotGeneratedAt}\n- Cualificaciones base revisadas: ${queue.reviewedBaseCount}\n- Cualificaciones base pendientes: ${queue.pendingBaseCount}\n- Contrato: ${queue.contract}\n\nLa tabla muestra las primeras 30 prioridades. La cola JSON conserva todo el universo pendiente.\n\n| Prioridad | Ciclo base | Título | Familia | Ofertas formativas | Provincias | Centros | Borrador previo |\n| ---: | --- | --- | --- | ---: | ---: | ---: | --- |\n${rows}\n`;
+  return `# Cola incremental de investigación FP–ocupación\n\n- Snapshot: ${queue.snapshotGeneratedAt}\n- Cualificaciones base revisadas: ${queue.reviewedBaseCount}\n- Cualificaciones base sin coincidencia publicable (completadas): ${queue.completedNoMatchBaseCount}\n- Cualificaciones base pendientes: ${queue.pendingBaseCount}\n- Contrato: ${queue.contract}\n\nLa tabla muestra las primeras 30 prioridades. La cola JSON conserva todo el universo pendiente.\n\n| Prioridad | Ciclo base | Título | Familia | Ofertas formativas | Provincias | Centros | Borrador previo |\n| ---: | --- | --- | --- | ---: | ---: | ---: | --- |\n${rows}\n`;
 }
 
 function publicResourcePath(root: string, resourcePath: string): string {
@@ -165,11 +191,20 @@ export async function loadFpCoverageResearchQueueInputs(root: string) {
     if (resourcePath === undefined) throw new Error(`Missing ${key} snapshot.`);
     return publicResourcePath(root, resourcePath);
   };
-  const [programs, offerings, coverage] = await Promise.all([
-    readFile(pathFor("programs"), "utf8"),
-    readFile(pathFor("trainingOfferings"), "utf8"),
-    readFile(pathFor("mappingCoverage"), "utf8"),
-  ]);
+  const [programs, offerings, coverage, outcomesRaw, occupationsRaw] =
+    await Promise.all([
+      readFile(pathFor("programs"), "utf8"),
+      readFile(pathFor("trainingOfferings"), "utf8"),
+      readFile(pathFor("mappingCoverage"), "utf8"),
+      readFile(
+        resolve(root, "data/curated/fp-coverage-research-outcomes.json"),
+        "utf8",
+      ),
+      readFile(resolve(root, "data/curated/occupations.json"), "utf8"),
+    ]);
+  const catalogSha256 = createHash("sha256")
+    .update(occupationsRaw)
+    .digest("hex");
   return {
     snapshotGeneratedAt: manifest.generatedAt,
     programs: TrainingProgramSchema.array().parse(JSON.parse(programs)),
@@ -177,6 +212,10 @@ export async function loadFpCoverageResearchQueueInputs(root: string) {
     coverage: MappingCoverageResourceSchema.parse(JSON.parse(coverage)).filter(
       (row): row is ProgramCoverage => row.scope === "program",
     ),
+    researchOutcomes: FpCoverageResearchOutcomesSchema.parse(
+      JSON.parse(outcomesRaw),
+    ).outcomes,
+    catalogSha256,
   };
 }
 
