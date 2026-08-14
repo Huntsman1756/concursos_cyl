@@ -1,0 +1,19 @@
+Program Key: SAN04S
+Program Title: Anatomía Patológica y Citodiagnóstico
+Family Code: SAN
+Family Name: Sanidad
+Official Title: Técnico Superior en Anatomía Patológica y Citodiagnóstico
+Level: higher
+Source System: TodoFP
+Source URL: https://www.todofp.es/que-estudiar/familias-profesionales/sanidad/anatomia-patologica-citodiagnostico.html
+
+## Source Quotes (first-seen order, deduplicated — 8 total)
+
+1. Ayudante de forensía.
+2. Citotécnica / citotécnico.
+3. Colaborador / colaboradora y asistente de investigación.
+4. Colaborador / colaboradora y asistente en biología molecular.
+5. Prosector / prosectora de autopsias clínicas y médico-legales.
+6. Tanatopractor / tanatopractora
+7. Técnica / técnico especialista en anatomía patológica y citología.
+8. Técnica / técnico superior en anatomía patológica y citología.

@@ -1,0 +1,205 @@
+{
+  "schemaVersion": 1,
+  "stories": [
+    {
+      "id": "san04s-research",
+      "objective": "Investiga SAN04S usando solo analysis/fp_coverage_batch_parallel_5/sources/SAN04S.txt y data/curated/occupations.json. Crea un informe conciso con citas literales TodoFP y candidatos CNO-11 aprobados de correspondencia exacta o funcional directa para anatomia patologica, citodiagnostico, histologia, inmunohistoquimica y biopsia. Para cada candidato incluye occupationId, codigo, etiqueta exacta, cita literal, justificacion y riesgo. Enumera todas las salidas sin candidato. No modifiques datos curados ni infieras por mera semejanza sectorial.",
+      "allowedPaths": [
+        "analysis/fp_coverage_batch_parallel_5/proposals/SAN04S.md"
+      ],
+      "validationCommands": [
+        "powershell -NoProfile -Command \"if (-not (Test-Path -LiteralPath 'analysis/fp_coverage_batch_parallel_5/proposals/SAN04S.md')) { exit 1 }\""
+      ],
+      "frontierPlan": "Usar contexto amplio para revisar todo el catalogo CNO y evitar sustituciones entre funciones de laboratorio, histologia y citodiagnostico.",
+      "acceptanceCriteria": [
+        "cada candidato existe y esta approved",
+        "cada candidato conserva cita TodoFP literal",
+        "las salidas sin match quedan explicitas",
+        "no modifica datos curados"
+      ],
+      "modelProfile": "reasoning",
+      "budgetProfile": "research",
+      "maxExecutionSeconds": 1800
+    },
+    {
+      "id": "aga04m-research",
+      "objective": "Investiga AGA04M usando solo analysis/fp_coverage_batch_parallel_5/sources/AGA04M.txt y data/curated/occupations.json. Crea un informe conciso con citas literales TodoFP y candidatos CNO-11 approved de correspondencia exacta o funcional directa para aprovechamiento del medio natural, conservacion ambiental, gestion forestal, agricultura sostenible y biodiversidad. Para cada candidato incluye occupationId, codigo, etiqueta exacta, cita literal, justificacion y riesgo. Enumera todas las salidas sin candidato. No modifiques datos curados ni infieras por semejanza sectorial.",
+      "allowedPaths": [
+        "analysis/fp_coverage_batch_parallel_5/proposals/AGA04M.md"
+      ],
+      "validationCommands": [
+        "powershell -NoProfile -Command \"if (-not (Test-Path -LiteralPath 'analysis/fp_coverage_batch_parallel_5/proposals/AGA04M.md')) { exit 1 }\""
+      ],
+      "frontierPlan": "Usar contexto amplio para preservar jerarquia laboral y diferenciar funciones de aprovechamiento del medio natural, conservacion ambiental, gestion forestal y biodiversidad. Excluir expresamente gestion del arbolado, levantamientos geodesicos y seguridad ciudadana por contaminacion de otros AGA.",
+      "acceptanceCriteria": [
+        "preserva jerarquia laboral",
+        "solo approved",
+        "excluye gestion del arbolado, levantamientos geodesicos y seguridad ciudadana",
+        "cubre todas las salidas"
+      ],
+      "modelProfile": "long-context",
+      "budgetProfile": "research",
+      "maxExecutionSeconds": 1800
+    },
+    {
+      "id": "fme02s-research",
+      "objective": "Investiga FME02S usando solo analysis/fp_coverage_batch_parallel_5/sources/FME02S.txt y data/curated/occupations.json. Crea un informe conciso con candidatos CNO-11 approved de correspondencia exacta o funcional directa para construcciones metalicas, carpinteria metalica, soldadura, corte de metales y montaje de estructuras. Para cada candidato incluye occupationId, codigo, etiqueta exacta, cita literal, justificacion y riesgo. Enumera todas las salidas sin candidato. No rebajes funciones de montaje y soldadura a peonaria general sin cualificacion.",
+      "allowedPaths": [
+        "analysis/fp_coverage_batch_parallel_5/proposals/FME02S.md"
+      ],
+      "validationCommands": [
+        "powershell -NoProfile -Command \"if (-not (Test-Path -LiteralPath 'analysis/fp_coverage_batch_parallel_5/proposals/FME02S.md')) { exit 1 }\""
+      ],
+      "frontierPlan": "Aplicar mecanicamente el filtro approved y distinguir funciones de carpinteria metalica, soldadura, corte y montaje de estructuras.",
+      "acceptanceCriteria": [
+        "solo catalogo approved",
+        "citas literales sin perder salidas",
+        "exclusiones explicitas",
+        "un informe conciso"
+      ],
+      "modelProfile": "mechanical",
+      "budgetProfile": "research",
+      "maxExecutionSeconds": 1800
+    },
+    {
+      "id": "ims05s-research",
+      "objective": "Investiga IMS05S usando solo analysis/fp_coverage_batch_parallel_5/sources/IMS05S.txt y data/curated/occupations.json. Crea un informe conciso con citas literales TodoFP y candidatos CNO-11 approved de correspondencia exacta o funcional directa para iluminacion, captacion de imagen, tratamiento de imagen, fotografia y video. Para cada candidato incluye occupationId, codigo, etiqueta exacta, cita literal, justificacion y riesgo. Enumera todas las salidas sin candidato. No equipares roles de iluminacion con sonorizacion ni con animacion musical.",
+      "allowedPaths": [
+        "analysis/fp_coverage_batch_parallel_5/proposals/IMS05S.md"
+      ],
+      "validationCommands": [
+        "powershell -NoProfile -Command \"if (-not (Test-Path -LiteralPath 'analysis/fp_coverage_batch_parallel_5/proposals/IMS05S.md')) { exit 1 }\""
+      ],
+      "frontierPlan": "Usar contexto amplio para revisar el catalogo amplio preservando la funcion de iluminacion, captacion y tratamiento de imagen. Excluir expresamente sonorizacion, animacion musical e iluminacion escenica como perfiles distintos.",
+      "acceptanceCriteria": [
+        "roles audiovisuales y de imagen separados",
+        "solo approved",
+        "excluye sonorizacion y animacion musical",
+        "ausencias completas"
+      ],
+      "modelProfile": "long-context",
+      "budgetProfile": "research",
+      "maxExecutionSeconds": 1800
+    },
+    {
+      "id": "sea03s-research",
+      "objective": "Investiga SEA03S usando solo analysis/fp_coverage_batch_parallel_5/sources/SEA03S.txt y data/curated/occupations.json. Crea un informe conciso con candidatos CNO-11 approved de correspondencia exacta o funcional directa para quimica, salud ambiental, analisis quimico, control de calidad y seguridad medioambiental. Para cada candidato incluye occupationId, codigo, etiqueta exacta, cita literal, justificacion y riesgo. Enumera todas las salidas sin candidato. No equipares analisis quimico con microbiologia ni con control de calidad alimentaria.",
+      "allowedPaths": [
+        "analysis/fp_coverage_batch_parallel_5/proposals/SEA03S.md"
+      ],
+      "validationCommands": [
+        "powershell -NoProfile -Command \"if (-not (Test-Path -LiteralPath 'analysis/fp_coverage_batch_parallel_5/proposals/SEA03S.md')) { exit 1 }\""
+      ],
+      "frontierPlan": "Revisar el catalogo amplio preservando funciones de analisis quimico, salud ambiental y seguridad medioambiental. Excluir expresamente microbiologia y control de calidad alimentaria como perfiles distintos.",
+      "acceptanceCriteria": [
+        "preserva nivel funcional",
+        "solo approved",
+        "excluye microbiologia y control de calidad alimentaria",
+        "ausencias explicitas"
+      ],
+      "modelProfile": "long-context",
+      "budgetProfile": "research",
+      "maxExecutionSeconds": 1800
+    },
+    {
+      "id": "ssc05s-research",
+      "objective": "Investiga SSC05S usando solo analysis/fp_coverage_batch_parallel_5/sources/SSC05S.txt y data/curated/occupations.json. Crea un informe conciso con citas literales TodoFP y candidatos CNO-11 approved de correspondencia exacta o funcional directa para mediacion comunicativa, lenguaje corporal, expresion oral, interpretacion simultanea y relacion con medios. Para cada candidato incluye occupationId, codigo, etiqueta exacta, cita literal, justificacion y riesgo. Enumera todas las salidas sin candidato. No equipares mediacion con periodismo ni con relacion publica.",
+      "allowedPaths": [
+        "analysis/fp_coverage_batch_parallel_5/proposals/SSC05S.md"
+      ],
+      "validationCommands": [
+        "powershell -NoProfile -Command \"if (-not (Test-Path -LiteralPath 'analysis/fp_coverage_batch_parallel_5/proposals/SSC05S.md')) { exit 1 }\""
+      ],
+      "frontierPlan": "Razonar por funcion laboral exacta de mediacion comunicativa y rechazar sustituciones hacia periodismo, relacion publica o gestion de comunidades.",
+      "acceptanceCriteria": [
+        "solo approved",
+        "citas literales",
+        "no confunde mediacion con periodismo ni relacion publica",
+        "ausencias documentadas"
+      ],
+      "modelProfile": "reasoning",
+      "budgetProfile": "research",
+      "maxExecutionSeconds": 1800
+    },
+    {
+      "id": "tcp01m-research",
+      "objective": "Investiga TCP01M usando solo analysis/fp_coverage_batch_parallel_5/sources/TCP01M.txt y data/curated/occupations.json. Crea un informe conciso con candidatos CNO-11 approved de correspondencia exacta o funcional directa para confeccion, moda, patronaje, corte y costura industrial. Para cada candidato incluye occupationId, codigo, etiqueta exacta, cita literal, justificacion y riesgo. Enumera todas las salidas sin candidato. No rebajes funciones de patronaje y moda a confeccion simple sin cualificacion.",
+      "allowedPaths": [
+        "analysis/fp_coverage_batch_parallel_5/proposals/TCP01M.md"
+      ],
+      "validationCommands": [
+        "powershell -NoProfile -Command \"if (-not (Test-Path -LiteralPath 'analysis/fp_coverage_batch_parallel_5/proposals/TCP01M.md')) { exit 1 }\""
+      ],
+      "frontierPlan": "Aplicar mecanicamente el filtro approved y distinguir funciones de patronaje, moda, corte y costura industrial.",
+      "acceptanceCriteria": [
+        "solo catalogo approved",
+        "citas literales sin perder salidas",
+        "exclusiones explicitas",
+        "un informe conciso"
+      ],
+      "modelProfile": "mechanical",
+      "budgetProfile": "research",
+      "maxExecutionSeconds": 1800
+    },
+    {
+      "id": "tmv03e-research",
+      "objective": "Investiga TMV03E usando solo analysis/fp_coverage_batch_parallel_5/sources/TMV03E.txt y data/curated/occupations.json. Crea un informe conciso con citas literales TodoFP y candidatos CNO-11 approved de correspondencia exacta o funcional directa para mantenimiento de vehiculos hibridos y electricos, sistemas electricos de propulsion, baterias de alta tension y diagnostico de averias. Para cada candidato incluye occupationId, codigo, etiqueta exacta, cita literal, justificacion y riesgo. Enumera todas las salidas sin candidato. No equipares mantenimiento electrico de vehiculos con mecanica general ni con mantenimiento industrial.",
+      "allowedPaths": [
+        "analysis/fp_coverage_batch_parallel_5/proposals/TMV03E.md"
+      ],
+      "validationCommands": [
+        "powershell -NoProfile -Command \"if (-not (Test-Path -LiteralPath 'analysis/fp_coverage_batch_parallel_5/proposals/TMV03E.md')) { exit 1 }\""
+      ],
+      "frontierPlan": "Razonar por funcion de mantenimiento de vehiculos hibridos y electricos y rechazar sustituciones hacia mecanica general o mantenimiento industrial.",
+      "acceptanceCriteria": [
+        "solo approved",
+        "citas literales",
+        "no confunde mantenimiento electrico vehicular con mecanica general",
+        "ausencias documentadas"
+      ],
+      "modelProfile": "reasoning",
+      "budgetProfile": "research",
+      "maxExecutionSeconds": 1800
+    },
+    {
+      "id": "ele05e-research",
+      "objective": "Investiga ELE05E usando solo analysis/fp_coverage_batch_parallel_5/sources/ELE05E.txt y data/curated/occupations.json. Crea un informe conciso con candidatos CNO-11 approved de correspondencia exacta o funcional directa para robotica colaborativa, programacion de robots, automatizacion industrial e integracion de sistemas roboticos. Para cada candidato incluye occupationId, codigo, etiqueta exacta, cita literal, justificacion y riesgo. Enumera todas las salidas sin candidato. No equipares robotica colaborativa con automatizacion general ni con mantenimiento electrico industrial.",
+      "allowedPaths": [
+        "analysis/fp_coverage_batch_parallel_5/proposals/ELE05E.md"
+      ],
+      "validationCommands": [
+        "powershell -NoProfile -Command \"if (-not (Test-Path -LiteralPath 'analysis/fp_coverage_batch_parallel_5/proposals/ELE05E.md')) { exit 1 }\""
+      ],
+      "frontierPlan": "Revisar el catalogo amplio preservando nivel funcional de robotica colaborativa y evitando mapear funciones cualificadas a automatizacion general o mantenimiento electrico.",
+      "acceptanceCriteria": [
+        "preserva nivel funcional",
+        "solo approved",
+        "citas y riesgos",
+        "ausencias explicitas"
+      ],
+      "modelProfile": "reasoning",
+      "budgetProfile": "research",
+      "maxExecutionSeconds": 1800
+    },
+    {
+      "id": "eoc02s-research",
+      "objective": "Investiga EOC02S usando solo analysis/fp_coverage_batch_parallel_5/sources/EOC02S.txt y data/curated/occupations.json. Crea un informe conciso con citas literales TodoFP y candidatos CNO-11 approved de correspondencia exacta o funcional directa para proyectos de obra civil, planificacion de obras, direccion de obra y topografia aplicada. Para cada candidato incluye occupationId, codigo, etiqueta exacta, cita literal, justificacion y riesgo. Enumera todas las salidas sin candidato. No equipares obra civil con edificacion residencial ni con instalaciones hidraulicas.",
+      "allowedPaths": [
+        "analysis/fp_coverage_batch_parallel_5/proposals/EOC02S.md"
+      ],
+      "validationCommands": [
+        "powershell -NoProfile -Command \"if (-not (Test-Path -LiteralPath 'analysis/fp_coverage_batch_parallel_5/proposals/EOC02S.md')) { exit 1 }\""
+      ],
+      "frontierPlan": "Usar contexto amplio para revisar el catalogo amplio preservando funcion de proyectos de obra civil, planificacion, direccion y topografia. Excluir expresamente edificacion residencial e instalaciones hidraulicas como perfiles distintos.",
+      "acceptanceCriteria": [
+        "roles de obra civil separados de edificacion",
+        "solo approved",
+        "excluye edificacion residencial e instalaciones hidraulicas",
+        "ausencias completas"
+      ],
+      "modelProfile": "long-context",
+      "budgetProfile": "research",
+      "maxExecutionSeconds": 1800
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+Program Key: FME02S
+Program Title: Construcciones Metálicas
+Family Code: FME
+Family Name: Fabricación Mecánica
+Official Title: Técnico Superior en Construcciones Metálicas
+Level: higher
+Source System: TodoFP
+Source URL: https://www.todofp.es/que-estudiar/familias-profesionales/fabricacion-mecanica/construcciones-metalicas.html
+
+## Source Quotes (first-seen order, deduplicated — 10 total)
+
+1. Construcción mecánica.
+2. Construcciones metálicas y montaje
+3. Delineante proyectista de calderería y estructuras metálicas.
+4. Desarrollo de tuberías.
+5. Diseño asistido por ordenador (CAD) de calderería y estructuras metálicas.
+6. Diseño técnico de calderería y estructuras.
+7. Fabricación en construcciones metálicas.
+8. Montaje en construcciones metálicas.
+9. Programación de la producción en fabricación mecánica.
+10. Programación de sistemas automatizados en fabricación mecánica.

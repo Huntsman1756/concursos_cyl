@@ -2170,5 +2170,105 @@
     "sourceQuote": "Peones y auxiliares de industrias metalúrgicas, de fabricación de productos metálicos y manufactureras.",
     "reviewedAt": "2026-08-14",
     "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "SAN04S",
+    "occupationId": "occupation:cno11:3314",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/sanidad/anatomia-patologica-citodiagnostico.html",
+    "sourceQuote": "Técnica / técnico especialista en anatomía patológica y citología.",
+    "reviewedAt": "2026-08-14",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "AGA04M",
+    "occupationId": "occupation:cno11:8321",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/agraria/aprovechamiento-conservacion-medio-natural.html",
+    "sourceQuote": "Tractorista.",
+    "reviewedAt": "2026-08-14",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "AGA04M",
+    "occupationId": "occupation:cno11:6120",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/agraria/aprovechamiento-conservacion-medio-natural.html",
+    "sourceQuote": "Viverista.",
+    "reviewedAt": "2026-08-14",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "FME02S",
+    "occupationId": "occupation:cno11:7314",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/fabricacion-mecanica/construcciones-metalicas.html",
+    "sourceQuote": "Montaje en construcciones metálicas.",
+    "reviewedAt": "2026-08-14",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "SEA03S",
+    "occupationId": "occupation:cno11:3129",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/seguridad-medio-ambiente/quimica-salud-ambiental.html",
+    "sourceQuote": "Técnica / técnico en gestión ambiental.",
+    "reviewedAt": "2026-08-14",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "SEA03S",
+    "occupationId": "occupation:cno11:2640",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/seguridad-medio-ambiente/quimica-salud-ambiental.html",
+    "sourceQuote": "Comercial de información de productos biocidas y fitosanitarios",
+    "reviewedAt": "2026-08-14",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "SSC05S",
+    "occupationId": "occupation:cno11:3713",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/servicios-socioculturales-comunidad/mediacion-comunicativa.html",
+    "sourceQuote": "Mediador / mediadora social de la comunidad sorda.",
+    "reviewedAt": "2026-08-14",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "TMV03E",
+    "occupationId": "occupation:cno11:3405",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/transporte-mantenimiento-vehiculos/ce-mantenimiento-seguridad-hibridos-electricos.html",
+    "sourceQuote": "Perito tasador de vehículos.",
+    "reviewedAt": "2026-08-14",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "EOC02S",
+    "occupationId": "occupation:cno11:3129",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/edificacion-obra-civil/proyectos-obra-civil.html",
+    "sourceQuote": "Delineante de obra civil.",
+    "reviewedAt": "2026-08-14",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "EOC02SD",
+    "occupationId": "occupation:cno11:3129",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/edificacion-obra-civil/proyectos-obra-civil.html",
+    "sourceQuote": "Delineante de obra civil.",
+    "reviewedAt": "2026-08-14",
+    "mappingVersion": "1.0.0"
   }
 ]

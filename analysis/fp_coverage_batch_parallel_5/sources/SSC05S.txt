@@ -1,0 +1,20 @@
+Program Key: SSC05S
+Program Title: Mediación Comunicativa
+Family Code: SSC
+Family Name: Servicios Socioculturales y a la Comunidad
+Official Title: Técnico Superior en Mediación Comunicativa
+Level: higher
+Source System: TodoFP
+Source URL: https://www.todofp.es/que-estudiar/familias-profesionales/servicios-socioculturales-comunidad/mediacion-comunicativa.html
+
+## Source Quotes (first-seen order, deduplicated — 9 total)
+
+1. Agente de desarrollo de la comunidad sorda.
+2. Agente de desarrollo de la comunidad sordociega.
+3. Agente dinamizador de la comunidad sorda.
+4. Agente dinamizador de la comunidad sordociega.
+5. Asistente de personas sordociegas.
+6. Mediador / mediadora de personas con dificultades de comunicación
+7. Mediador / mediadora de personas sordociegas.
+8. Mediador / mediadora social de la comunidad sorda.
+9. Técnica / técnico en promoción, atención y formación a personas sordas.

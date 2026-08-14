@@ -233,8 +233,8 @@
   "limitation": "El límite aceptado es solo CNO 7531 (técnicos de reparación de equipos electrónicos y de comunicaciones) para las nueve salidas de TodoFP del grado superior Mantenimiento Electrónico. La denominación genérica se subsume bajo la misma clasificación.",
   "reviewedCommit": "84e6c581f47b5943c6ae50950859ce4db0be9a98",
   "reviewedCommitAt": "2026-08-11T17:27:42.000Z",
-  "snapshotId": "20260814133150584-59317804e0a5",
-  "snapshotHash": "9552410dea98069daadff1f425320931451a6fe869a2d0a64cadd59179c7afaf",
+  "snapshotId": "20260814145738962-5cbe9b01d271",
+  "snapshotHash": "11401583b1f62981b5a3d594ee4df33877738830d553324e805355ce353db570",
   "publicParity": {
     "publishedRelationKeys": ["ELE03S|occupation:cno11:7531"],
     "rejectedRelationKeys": []

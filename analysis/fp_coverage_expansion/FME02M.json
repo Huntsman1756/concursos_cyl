@@ -231,8 +231,8 @@
   "limitation": "Se aceptan CNO 7312, 7313, 7314 y 7132 para Soldadura y Calderería. Los candidatos 8122 para proyección térmica y 7221 para tubería industrial se mantienen rechazados porque la evidencia revisada no establece con precisión esos límites de cuatro dígitos para las salidas del título.",
   "reviewedCommit": "e6ae073b1b451c7b9327916b6e4c4aaf5ab52c0d",
   "reviewedCommitAt": "2026-08-11T14:05:09.000Z",
-  "snapshotId": "20260814133150584-59317804e0a5",
-  "snapshotHash": "cfc4bab1c7044cce1b5b3964930b24a93a3282e1dd4dfde6bb811f3f00000ff3",
+  "snapshotId": "20260814145738962-5cbe9b01d271",
+  "snapshotHash": "c42f3eee3d30888f048f8f8848666dd2b6f06963b8eceb7a1520d0146339349e",
   "publicParity": {
     "publishedRelationKeys": [
       "FME02M|occupation:cno11:7132",

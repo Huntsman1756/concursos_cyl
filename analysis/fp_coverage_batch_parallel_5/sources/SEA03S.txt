@@ -1,0 +1,21 @@
+Program Key: SEA03S
+Program Title: Química y Salud Ambiental
+Family Code: SEA
+Family Name: Seguridad y Medio Ambiente
+Official Title: Técnico Superior en Química y Salud Ambiental
+Level: higher
+Source System: TodoFP
+Source URL: https://www.todofp.es/que-estudiar/familias-profesionales/seguridad-medio-ambiente/quimica-salud-ambiental.html
+
+## Source Quotes (first-seen order, deduplicated — 10 total)
+
+1. Comercial de información de productos biocidas y fitosanitarios
+2. Coordinador / coordinadora de sistemas de gestión ambiental
+3. Documentalista ambiental.
+4. Programador / programadora de actividades ambientales.
+5. Técnica / técnico de control de contaminación acústica.
+6. Técnica / técnico de control de contaminación atmosférica.
+7. Técnica / técnico de control de organismos nocivos.
+8. Técnica / técnico de control sanitario (alimentos, aguas, atmósfera, residuos…).
+9. Técnica / técnico en control de plagas en el medio urbano y entorno natural asociado.
+10. Técnica / técnico en gestión ambiental.
