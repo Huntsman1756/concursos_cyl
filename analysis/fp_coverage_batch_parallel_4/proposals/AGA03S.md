@@ -41,7 +41,7 @@ Las siguientes 9 salidas **no tienen correspondencia exacta ni funcional directa
 
 | Campo                    | Valor                                                                                                                                                                                                                         |
 | ------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Cita literal**         | "Ayudante de veterinaria en equipos veterinarios especializados en animales de granja y produccion, en explotaciones ganaderas, en empresas del sector agroalimentario y de servicios a la ganaderia"                         |
+| **Cita literal**         | "Ayudante de veterinaria en equipos veterinarios especializados en animales de granja y producción, en explotaciones ganaderas,en empresas del sector agroalimentario y de servicios a la ganadería"                          |
 | **Motivo sin candidato** | El catalogo curado no contiene ocupaciones de asistencia veterinaria ni de salud animal. La ocupacion mas cercana del catalogo oficial (3327 - Ayudantes de veterinaria) no esta presente en `data/curated/occupations.json`. |
 | **Riesgo**               | La ocupacion 5621 (Tecnicos auxiliares de farmacia) cubre asistencia tecnica en farmacia humana, no veterinaria. No es correspondencia funcional directa.                                                                     |
 
@@ -49,7 +49,7 @@ Las siguientes 9 salidas **no tienen correspondencia exacta ni funcional directa
 
 | Campo                    | Valor                                                                                                                                                                                                                            |
 | ------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Cita literal**         | "Encargada / encargado de explotacion ganadera, en general."                                                                                                                                                                     |
+| **Cita literal**         | "Encargada / encargado de explotación ganadera, en general."                                                                                                                                                                     |
 | **Motivo sin candidato** | No existe en el catalogo curado una ocupacion de direccion o gestion de explotaciones ganaderas. Las ocupaciones 6110/6120 (actividades agricolas/huertas) se refieren a trabajos cualificados agricolas, no a gestion ganadera. |
 | **Riesgo**               | Alto. La gestion de explotaciones ganaderas es una funcion de supervision tecnica que no tiene equivalente en el catalogo curado.                                                                                                |
 
@@ -57,7 +57,7 @@ Las siguientes 9 salidas **no tienen correspondencia exacta ni funcional directa
 
 | Campo                    | Valor                                                                                                                                                                                                                             |
 | ------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Cita literal**         | "Encargada / encargado de maquinas y equipos ganaderos."                                                                                                                                                                          |
+| **Cita literal**         | "Encargada / encargado de máquinas y equipos ganaderos."                                                                                                                                                                          |
 | **Motivo sin candidato** | La ocupacion 8321 (Operadores de maquinaria agricola movil) es de nivel 8 (operador) y se refiere a la operacion de maquinaria, no a la gestion o supervision de equipos ganaderos especificos. La jerarquia laboral no coincide. |
 | **Riesgo**               | Alto. Diferencia de nivel jerarquico (tecnico superior vs. operador) y de ambito (ganadero vs. agricola general).                                                                                                                 |
 
@@ -65,7 +65,7 @@ Las siguientes 9 salidas **no tienen correspondencia exacta ni funcional directa
 
 | Campo                    | Valor                                                                                                                                          |
 | ------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Cita literal**         | "Responsable de inseminacion artificial en explotaciones ganaderas o en centros de recogida de semen."                                         |
+| **Cita literal**         | "Responsable de inseminación artificial en explotaciones ganaderas o en centros de recogida de semen."                                         |
 | **Motivo sin candidato** | No existe en el catalogo curado ninguna ocupacion relacionada con reproduccion animal, inseminacion artificial o centros de recogida de semen. |
 | **Riesgo**               | Muy alto. Funcion altamente especializada sin equivalente en el catalogo CNO-11 curado.                                                        |
 
@@ -73,7 +73,7 @@ Las siguientes 9 salidas **no tienen correspondencia exacta ni funcional directa
 
 | Campo                    | Valor                                                                                                                                                                                           |
 | ------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Cita literal**         | "Responsable de la produccion en explotaciones o empresas ganaderas."                                                                                                                           |
+| **Cita literal**         | "Responsable de la producción en explotaciones o empresas ganaderas."                                                                                                                           |
 | **Motivo sin candidato** | No existe en el catalogo curado una ocupacion de gestion de produccion ganadera. Las ocupaciones 6201-6205 y 6209 (actividades ganaderas) del catalogo oficial no estan presentes en el curado. |
 | **Riesgo**               | Alto. Funcion de supervision tecnica de produccion ganadera sin equivalente en el catalogo curado.                                                                                              |
 
@@ -89,7 +89,7 @@ Las siguientes 9 salidas **no tienen correspondencia exacta ni funcional directa
 
 | Campo                    | Valor                                                                                                                                          |
 | ------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Cita literal**         | "Responsable del manejo, de los cuidados y de la administracion de terapias en centros de pupilaje, descanso y recuperacion de ganado equino." |
+| **Cita literal**         | "Responsable del manejo, de los cuidados y de la administración de terapias en centros de pupilaje, descanso y recuperación de ganado equino." |
 | **Motivo sin candidato** | No existe en el catalogo curado una ocupacion de cuidado y terapia de ganado equino.                                                           |
 | **Riesgo**               | Alto. Funcion que combina manejo ganadero equino con administracion de terapias, sin equivalente en el catalogo curado.                        |
 
@@ -97,7 +97,7 @@ Las siguientes 9 salidas **no tienen correspondencia exacta ni funcional directa
 
 | Campo                    | Valor                                                                             |
 | ------------------------ | --------------------------------------------------------------------------------- |
-| **Cita literal**         | "Responsable/gestor de ganaderias equinas."                                       |
+| **Cita literal**         | "Responsable/gestor de ganaderías equinas."                                       |
 | **Motivo sin candidato** | No existe en el catalogo curado una ocupacion de gestion de ganaderias equinas.   |
 | **Riesgo**               | Alto. Gestion especifica del sector equino sin equivalente en el catalogo curado. |
 
@@ -105,7 +105,7 @@ Las siguientes 9 salidas **no tienen correspondencia exacta ni funcional directa
 
 | Campo                    | Valor                                                                                                                                                                                                                                                |
 | ------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Cita literal**         | "Asesor / asesora y supervisor / supervisora para la planificacion, montaje y funcionamiento de empresas y entidades asociadas a eventos, espectaculos, demostraciones ecuestres, actividades recreativas, deportivas y terapeuticas (hipoterapia)." |
+| **Cita literal**         | "Asesor / asesora y supervisor / supervisora para la planificación, montaje y funcionamiento de empresas y entidades asociadas a eventos, espectáculos, demostraciones ecuestres, actividades recreativas, deportivas y terapéuticas (hipoterapia)." |
 | **Motivo sin candidato** | Aunque hay cierto termino solapante con actividades recreativas y deportivas (3722/3723/3724), la salida describe una funcion de asesoria y supervision de empresas ecuestres, no de instruccion deportiva. No es correspondencia funcional directa. |
 | **Riesgo**               | Alto. Funcion de asesoria empresarial ecuestre sin equivalente directo.                                                                                                                                                                              |
 
