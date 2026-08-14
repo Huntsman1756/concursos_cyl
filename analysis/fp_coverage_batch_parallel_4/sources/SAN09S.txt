@@ -1,0 +1,15 @@
+# TodoFP Source: SAN09S
+
+## Provenance
+
+**System:** TodoFP
+**URL:** https://www.todofp.es/que-estudiar/familias-profesionales/sanidad/radioterapia-dosimetria.html
+**Official title:** Técnico Superior en Radioterapia y Dosimetría
+**Family:** Sanidad (SAN)
+
+## Distinct sourceQuotes (first-seen order)
+
+1. Delegada / delegado comercial de equipos de radioelectrología médica
+2. Personal auxiliar de los servicios de protección radiológica.
+3. Técnica / técnico especialista en radioterapia.
+4. Técnica / técnico superior en radioterapia.

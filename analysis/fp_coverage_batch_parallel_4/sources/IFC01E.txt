@@ -1,0 +1,15 @@
+# TodoFP Source: IFC01E
+
+## Provenance
+
+**System:** TodoFP
+**URL:** https://www.todofp.es/que-estudiar/familias-profesionales/informatica-comunicaciones/ce-ciberseguridad-entornos-tecnologias-informacion.html
+**Official title:** Curso de Especialización en Ciberseguridad en Entornos de las Tecnologías de la Información (Acceso GS)
+**Family:** Informática y Comunicaciones (IFC)
+
+## Distinct sourceQuotes (first-seen order)
+
+1. Auditor/a de ciberseguridad.
+2. Consultor/a de ciberseguridad.
+3. Experto/a en ciberseguridad.
+4. Hacker ético.

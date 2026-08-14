@@ -543,6 +543,66 @@ const programs: TrainingProgram[] = [
   })) as TrainingProgram[]),
 ];
 
+const diskPrograms: TrainingProgram[] = [
+  ...programs,
+  {
+    programKey: "AGA03S",
+    programTitle: "Ganadería y Asistencia en Sanidad Animal",
+    level: "higher",
+    familyCode: "AGA",
+    familyName: "Agraria",
+  },
+  {
+    programKey: "ENA03S",
+    programTitle: "Energías Renovables",
+    level: "higher",
+    familyCode: "ENA",
+    familyName: "Energía y Agua",
+  },
+  {
+    programKey: "FME02B",
+    programTitle: "Fabricación de Elementos Metálicos",
+    level: "basic",
+    familyCode: "FME",
+    familyName: "Fabricación Mecánica",
+  },
+  {
+    programKey: "HOT05S",
+    programTitle: "Dirección de Servicios de Restauración",
+    level: "higher",
+    familyCode: "HOT",
+    familyName: "Hostelería y Turismo",
+  },
+  {
+    programKey: "INA02S",
+    programTitle: "Procesos y Calidad en la Industria Alimentaria",
+    level: "higher",
+    familyCode: "INA",
+    familyName: "Industrias Alimentarias",
+  },
+  {
+    programKey: "QUI01S",
+    programTitle: "Laboratorio de Análisis y Control de Calidad",
+    level: "higher",
+    familyCode: "QUI",
+    familyName: "Química",
+  },
+  {
+    programKey: "SAN09S",
+    programTitle: "Radioterapia y Dosimetría",
+    level: "higher",
+    familyCode: "SAN",
+    familyName: "Sanidad",
+  },
+  {
+    programKey: "SAN09SD",
+    programTitle: "Radioterapia y Dosimetría (distancia)",
+    level: "higher",
+    familyCode: "SAN",
+    familyName: "Sanidad",
+  },
+];
+
 const occupations = [
   {
     occupationId: "occupation:cno11:2713",
@@ -982,7 +1042,10 @@ describe("curated occupation mappings", () => {
   });
 
   it("keeps the unresolved Gestión Administrativa 4309/4500 choice in draft data only", async () => {
-    const curated = await loadCuratedMappingsFromDisk(process.cwd(), programs);
+    const curated = await loadCuratedMappingsFromDisk(
+      process.cwd(),
+      diskPrograms,
+    );
     const approved = loadApprovedMappings(curated);
     const administrativeOccupation = curated.occupations.find(
       (occupation) => occupation.classificationCode === "4309",
@@ -1193,6 +1256,14 @@ describe("curated occupation mappings", () => {
       HOT02M: 2,
       IMP01S: 2,
       MAM01B: 3,
+      AGA03S: 1,
+      ENA03S: 2,
+      FME02B: 5,
+      HOT05S: 1,
+      INA02S: 3,
+      QUI01S: 2,
+      SAN09S: 1,
+      SAN09SD: 1,
     });
 
     const coverage = buildMappingCoverage(programs, curated.links);
@@ -1225,7 +1296,10 @@ describe("curated occupation mappings", () => {
   });
 
   it("publishes only EOC01M aliases accepted by the official audit", async () => {
-    const curated = await loadCuratedMappingsFromDisk(process.cwd(), programs);
+    const curated = await loadCuratedMappingsFromDisk(
+      process.cwd(),
+      diskPrograms,
+    );
     const approved = loadApprovedMappings(curated);
     const eocLinks = approved.links.filter(
       (link) => link.trainingProgramKey === "EOC01M",

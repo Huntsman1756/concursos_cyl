@@ -2010,5 +2010,165 @@
     "sourceQuote": "control de calidad de materiales",
     "reviewedAt": "2026-08-14",
     "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "QUI01S",
+    "occupationId": "occupation:cno11:3160",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/quimica/lab-analisis-control-calidad.html",
+    "sourceQuote": "Técnica / técnico en control de calidad en industrias de manufacturas diversas.",
+    "reviewedAt": "2026-08-14",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "QUI01S",
+    "occupationId": "occupation:cno11:3129",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/quimica/lab-analisis-control-calidad.html",
+    "sourceQuote": "Analista de laboratorio químico.",
+    "reviewedAt": "2026-08-14",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "SAN09S",
+    "occupationId": "occupation:cno11:2640",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/sanidad/radioterapia-dosimetria.html",
+    "sourceQuote": "Delegada / delegado comercial de equipos de radioelectrología médica",
+    "reviewedAt": "2026-08-14",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "SAN09SD",
+    "occupationId": "occupation:cno11:2640",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/sanidad/radioterapia-dosimetria.html",
+    "sourceQuote": "Delegada / delegado comercial de equipos de radioelectrología médica",
+    "reviewedAt": "2026-08-14",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "AGA03S",
+    "occupationId": "occupation:cno11:2640",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/agraria/ganaderia-asistencia-sanidad-animal.html",
+    "sourceQuote": "Visitador / visitadora de productos de veterinaria.",
+    "reviewedAt": "2026-08-14",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "ENA03S",
+    "occupationId": "occupation:cno11:7294",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/energia-agua/energias-renovables.html",
+    "sourceQuote": "Montador-operador / montadora-operadora de instalaciones solares fotovoltaicas.",
+    "reviewedAt": "2026-08-14",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "ENA03S",
+    "occupationId": "occupation:cno11:3123",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/energia-agua/energias-renovables.html",
+    "sourceQuote": "Operador-mantenedor / operadora-mantenedora de subestaciones eléctricas de instalaciones eólicas y fotovoltaicas.",
+    "reviewedAt": "2026-08-14",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "HOT05S",
+    "occupationId": "occupation:cno11:3522",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/hosteleria-turismo/direccion-servicios-restauracion.html",
+    "sourceQuote": "Responsable de compra de bebidas.",
+    "reviewedAt": "2026-08-14",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "INA02S",
+    "occupationId": "occupation:cno11:3160",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/industrias-alimentarias/procesos-calidad-industria-alimentaria.html",
+    "sourceQuote": "Técnica / técnico en laboratorio de control de calidad.",
+    "reviewedAt": "2026-08-14",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "INA02S",
+    "occupationId": "occupation:cno11:3209",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/industrias-alimentarias/procesos-calidad-industria-alimentaria.html",
+    "sourceQuote": "Supervisor / supervisora de equipos, procesos y productos.",
+    "reviewedAt": "2026-08-14",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "INA02S",
+    "occupationId": "occupation:cno11:3510",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/industrias-alimentarias/procesos-calidad-industria-alimentaria.html",
+    "sourceQuote": "Técnica / técnico comercial.",
+    "reviewedAt": "2026-08-14",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "FME02B",
+    "occupationId": "occupation:cno11:7132",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/fabricacion-mecanica/fabricacion-elementos-metalicos.html",
+    "sourceQuote": "Auxiliar de carpintero / carpintera metálico.",
+    "reviewedAt": "2026-08-14",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "FME02B",
+    "occupationId": "occupation:cno11:7312",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/fabricacion-mecanica/fabricacion-elementos-metalicos.html",
+    "sourceQuote": "Auxiliar de oxicortador / oxicortadora a mano.",
+    "reviewedAt": "2026-08-14",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "FME02B",
+    "occupationId": "occupation:cno11:7314",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/fabricacion-mecanica/fabricacion-elementos-metalicos.html",
+    "sourceQuote": "Auxiliar de montador / montadora de estructuras metálicas",
+    "reviewedAt": "2026-08-14",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "FME02B",
+    "occupationId": "occupation:cno11:8202",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/fabricacion-mecanica/fabricacion-elementos-metalicos.html",
+    "sourceQuote": "Operador / operadora de ensamblado de equipos eléctricos y electrónicos.",
+    "reviewedAt": "2026-08-14",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "FME02B",
+    "occupationId": "occupation:cno11:9700",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/fabricacion-mecanica/fabricacion-elementos-metalicos.html",
+    "sourceQuote": "Peones y auxiliares de industrias metalúrgicas, de fabricación de productos metálicos y manufactureras.",
+    "reviewedAt": "2026-08-14",
+    "mappingVersion": "1.0.0"
   }
 ]

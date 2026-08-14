@@ -1,0 +1,24 @@
+# TodoFP Source: ENA03S
+
+## Provenance
+
+**System:** TodoFP
+**URL:** https://www.todofp.es/que-estudiar/familias-profesionales/energia-agua/energias-renovables.html
+**Official title:** Técnico Superior en Energías Renovables
+**Family:** Energía y Agua (ENA)
+
+## Distinct sourceQuotes (first-seen order)
+
+1. Encargada / encargado de mantenimiento de subestaciones eléctricas de instalaciones eólicas y fotovoltaicas.
+2. Encargada / encargado de montaje de subestaciones eléctricas de instalaciones eólicas y fotovoltaicas.
+3. Especialista en mantenimiento de parques eólicos.
+4. Especialista montador de aerogeneradores.
+5. Montador-operador / montadora-operadora de instalaciones solares fotovoltaicas.
+6. Operador-mantenedor / operadora-mantenedora de subestaciones eléctricas de instalaciones eólicas y fotovoltaicas.
+7. Promotor / promotora de instalaciones solares.
+8. Proyectista de instalaciones solares fotovoltaicas.
+9. Responsable de explotación y mantenimiento de pequeñas centrales solares fotovoltaicas.
+10. Responsable de montaje de aerogeneradores.
+11. Responsable de montaje de parques eólicos.
+12. Responsable de montaje y mantenimiento de instalaciones solares fotovoltaicas.
+13. Técnica / técnico de gestión de operación y mantenimiento en instalaciones eólicas.

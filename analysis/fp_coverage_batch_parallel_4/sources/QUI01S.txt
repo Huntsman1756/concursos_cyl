@@ -1,0 +1,25 @@
+# TodoFP Source: QUI01S
+
+## Provenance
+
+**System:** TodoFP
+**URL:** https://www.todofp.es/que-estudiar/familias-profesionales/quimica/lab-analisis-control-calidad.html
+**Official title:** Técnico Superior en Laboratorio de Análisis y de Control de Calidad
+**Family:** Química (QUI)
+
+## Distinct sourceQuotes (first-seen order)
+
+1. Analista de centros de formación, investigación y desarrollo.
+2. Analista de control microbiológico de la Industria Farmacéutica.
+3. Analista de laboratorio de industrias agroalimentarias.
+4. Analista de laboratorio de industrias transformadoras.
+5. Analista de laboratorio de materiales.
+6. Analista de laboratorio microbiológico.
+7. Analista de laboratorio químico.
+8. Analista de materias primas y acabados.
+9. Analista microbiológico de aguas potables y residuales.
+10. Analista microbiológico de industrias alimentarias, empresas medioambientales, industrias biotecnológicas.
+11. Técnica / técnico de ensayos de materiales de construcción.
+12. Técnica / técnico de ensayos de productos de fabricación mecánica.
+13. Técnica / técnico de laboratorio de química industrial.
+14. Técnica / técnico en control de calidad en industrias de manufacturas diversas.
