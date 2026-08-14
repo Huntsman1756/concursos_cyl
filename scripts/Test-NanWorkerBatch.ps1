@@ -636,6 +636,11 @@ try {
     $mockPlanFail = @(@{exitCode=0;changedPaths=@('scripts/rp.txt');validationExitCode=1;validationDiagnostics=@(@{commandIndex=1;exitCode=1;outputTail='Expected 42, got 0.';truncated=$false});jsonl=$repairJsonl1}) | ConvertTo-Json -Depth 8 -Compress
     $mockPlanSucc = @(@{exitCode=0;changedPaths=@('scripts/rp.txt');validationExitCode=0;jsonl=$repairJsonl2}) | ConvertTo-Json -Depth 8 -Compress
 
+    $repairBothPlans = @()
+    $repairBothPlans += $mockPlanFail
+    $repairBothPlans += $mockPlanSucc
+    $repairBothPlanJson = ($repairBothPlans | ConvertTo-Json -Depth 8 -Compress)
+
     $rpBatch = @{
         schemaVersion = 1
         stories = @(
@@ -649,9 +654,10 @@ try {
                 modelProfile = 'mechanical'
                 budgetProfile = 'small'
                 maxRetries = 2
+                mockPlan = $repairBothPlanJson
             }
         )
-        mockPlans = @($mockPlanFail, $mockPlanSucc)
+        mockPlans = @($repairBothPlanJson)
     }
     $rpPath = Join-Path $temporaryRoot 'repair-batch.json'
     $rpState = Join-Path $temporaryRoot 'repair-state'
@@ -680,6 +686,8 @@ try {
     # ────────────────────────────────────────────────────────────────
     # Test 16: batch-contract snapshot includes maxRetries + metered fields
     # ────────────────────────────────────────────────────────────────
+    $meteredMockPlan = @(@{exitCode=0;changedPaths=@('scripts/metered.txt');validationExitCode=0;jsonl=$validJsonl}) | ConvertTo-Json -Depth 8 -Compress
+
     $meteredBatch = @{
         schemaVersion = 1
         stories = @(
@@ -695,8 +703,10 @@ try {
                 maxRetries = 3
                 allowMeteredModel = $true
                 meteredModelJustification = "Required for $($rpBatch | Out-String)"
+                mockPlan = $meteredMockPlan
             }
         )
+        mockPlans = @($meteredMockPlan)
     }
     $meteredBatchPath = Join-Path $temporaryRoot 'metered-batch.json'
     $meteredBatchState = Join-Path $temporaryRoot 'metered-batch-state'
