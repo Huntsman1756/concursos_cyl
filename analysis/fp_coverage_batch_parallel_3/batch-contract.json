@@ -1,0 +1,165 @@
+{
+  "schemaVersion": 1,
+  "stories": [
+    {
+      "id": "eoc01s-research",
+      "objective": "Investiga EOC01S usando solo analysis/fp_coverage_batch_parallel_3/sources/EOC01S.txt y data/curated/occupations.json. Crea un informe conciso con citas literales TodoFP y candidatos CNO-11 aprobados de correspondencia exacta o funcional directa. Para cada candidato incluye occupationId, codigo, etiqueta exacta, cita y riesgo. Enumera todas las salidas sin candidato. No propongas ocupaciones draft/rejected ni relaciones por mera semejanza sectorial.",
+      "allowedPaths": [
+        "analysis/fp_coverage_batch_parallel_3/proposals/EOC01S.md"
+      ],
+      "validationCommands": [
+        "powershell -NoProfile -Command \"if (-not (Test-Path -LiteralPath 'analysis/fp_coverage_batch_parallel_3/proposals/EOC01S.md')) { exit 1 }\""
+      ],
+      "frontierPlan": "Comparar salidas TodoFP literales con etiquetas del catalogo CNO aprobado y separar candidatos exactos de ausencias.",
+      "acceptanceCriteria": [
+        "cada candidato existe y esta approved",
+        "cada candidato conserva cita TodoFP literal",
+        "las salidas sin match quedan explicitas",
+        "no modifica datos curados"
+      ],
+      "modelProfile": "reasoning",
+      "budgetProfile": "research",
+      "maxExecutionSeconds": 1200
+    },
+    {
+      "id": "san32-research",
+      "objective": "Investiga SAN32 usando solo analysis/fp_coverage_batch_parallel_3/sources/SAN32.txt y data/curated/occupations.json. Crea un informe conciso con citas literales TodoFP y candidatos CNO-11 approved de correspondencia exacta o funcional directa. Incluye occupationId, codigo, etiqueta, cita, justificacion y riesgo; enumera salidas sin candidato. No equipares dietista, nutricionista o educador sanitario con profesiones sanitarias distintas.",
+      "allowedPaths": [
+        "analysis/fp_coverage_batch_parallel_3/proposals/SAN32.md"
+      ],
+      "validationCommands": [
+        "powershell -NoProfile -Command \"if (-not (Test-Path -LiteralPath 'analysis/fp_coverage_batch_parallel_3/proposals/SAN32.md')) { exit 1 }\""
+      ],
+      "frontierPlan": "Usar contexto amplio para revisar todo el catalogo y evitar sustituciones entre profesiones sanitarias.",
+      "acceptanceCriteria": [
+        "solo occupationId approved",
+        "citas TodoFP literales",
+        "no confunde profesiones sanitarias",
+        "ausencias documentadas"
+      ],
+      "modelProfile": "long-context",
+      "budgetProfile": "research",
+      "maxExecutionSeconds": 1200
+    },
+    {
+      "id": "ina01m-research",
+      "objective": "Investiga INA01M con analysis/fp_coverage_batch_parallel_3/sources/INA01M.txt y data/curated/occupations.json. Crea un informe breve que agrupe salidas TodoFP equivalentes y proponga solo ocupaciones CNO approved con coincidencia directa. Incluye occupationId, codigo, etiqueta exacta, citas cubiertas y exclusiones. No uses similitud de industria como evidencia.",
+      "allowedPaths": [
+        "analysis/fp_coverage_batch_parallel_3/proposals/INA01M.md"
+      ],
+      "validationCommands": [
+        "powershell -NoProfile -Command \"if (-not (Test-Path -LiteralPath 'analysis/fp_coverage_batch_parallel_3/proposals/INA01M.md')) { exit 1 }\""
+      ],
+      "frontierPlan": "Aplicar mecanicamente el filtro approved y agrupar oficios de panaderia/reposteria solo cuando la etiqueta CNO los cubra.",
+      "acceptanceCriteria": [
+        "solo catalogo approved",
+        "citas literales agrupadas sin perder salidas",
+        "exclusiones explicitas",
+        "un unico informe"
+      ],
+      "modelProfile": "mechanical",
+      "budgetProfile": "research",
+      "maxExecutionSeconds": 1200
+    },
+    {
+      "id": "ims01m-research",
+      "objective": "Investiga IMS01M con analysis/fp_coverage_batch_parallel_3/sources/IMS01M.txt y data/curated/occupations.json. Genera un informe conciso de candidatos CNO approved exactos/directos con occupationId, codigo, etiqueta, cita TodoFP y riesgo. Distingue sonido, microfonia, DJ, iluminacion y retoque fotografico; documenta cada ausencia sin forzar categorias audiovisuales adyacentes.",
+      "allowedPaths": [
+        "analysis/fp_coverage_batch_parallel_3/proposals/IMS01M.md"
+      ],
+      "validationCommands": [
+        "powershell -NoProfile -Command \"if (-not (Test-Path -LiteralPath 'analysis/fp_coverage_batch_parallel_3/proposals/IMS01M.md')) { exit 1 }\""
+      ],
+      "frontierPlan": "Razonar por funcion laboral exacta y rechazar sustituciones entre roles audiovisuales distintos.",
+      "acceptanceCriteria": [
+        "roles audiovisuales separados",
+        "solo approved",
+        "citas TodoFP",
+        "ausencias completas"
+      ],
+      "modelProfile": "reasoning",
+      "budgetProfile": "research",
+      "maxExecutionSeconds": 1200
+    },
+    {
+      "id": "fme01s-research",
+      "objective": "Investiga FME01S con analysis/fp_coverage_batch_parallel_3/sources/FME01S.txt y data/curated/occupations.json. Crea informe de candidatos CNO approved exactos/directos con occupationId, codigo, etiqueta, cita y riesgo. Distingue encargado, programador CNC, programador de produccion, automatizacion y tecnico mecanico. Explicita salidas sin match y no rebajes supervision/programacion a operarios.",
+      "allowedPaths": [
+        "analysis/fp_coverage_batch_parallel_3/proposals/FME01S.md"
+      ],
+      "validationCommands": [
+        "powershell -NoProfile -Command \"if (-not (Test-Path -LiteralPath 'analysis/fp_coverage_batch_parallel_3/proposals/FME01S.md')) { exit 1 }\""
+      ],
+      "frontierPlan": "Revisar el catalogo amplio preservando nivel funcional y evitando mapear supervision a ejecucion operaria.",
+      "acceptanceCriteria": [
+        "preserva nivel funcional",
+        "solo approved",
+        "citas y riesgos",
+        "ausencias explicitas"
+      ],
+      "modelProfile": "long-context",
+      "budgetProfile": "research",
+      "maxExecutionSeconds": 1200
+    },
+    {
+      "id": "hot01e-research",
+      "objective": "Investiga HOT01E con analysis/fp_coverage_batch_parallel_3/sources/HOT01E.txt y data/curated/occupations.json. Crea informe breve agrupando panadero, repostero, elaborador y catador. Propone solo CNO approved de cobertura literal/directa, con occupationId, codigo, etiqueta exacta, citas y exclusiones. No equipares cata o maestria con puestos no presentes.",
+      "allowedPaths": [
+        "analysis/fp_coverage_batch_parallel_3/proposals/HOT01E.md"
+      ],
+      "validationCommands": [
+        "powershell -NoProfile -Command \"if (-not (Test-Path -LiteralPath 'analysis/fp_coverage_batch_parallel_3/proposals/HOT01E.md')) { exit 1 }\""
+      ],
+      "frontierPlan": "Aplicar correspondencia mecanica a oficios de panificacion y declarar cata/maestria sin match si procede.",
+      "acceptanceCriteria": [
+        "solo approved",
+        "citas literales",
+        "no fuerza catador",
+        "un informe conciso"
+      ],
+      "modelProfile": "mechanical",
+      "budgetProfile": "research",
+      "maxExecutionSeconds": 1200
+    },
+    {
+      "id": "qui02m-research",
+      "objective": "Investiga QUI02M con analysis/fp_coverage_batch_parallel_3/sources/QUI02M.txt y data/curated/occupations.json. Crea informe conciso de candidatos CNO approved exactos/directos. Separa laboratorio, muestreo de campo, mantenimiento auxiliar y almacen; incluye occupationId, codigo, etiqueta, cita, justificacion, riesgo y todas las ausencias. No conviertas sectores enumerados en ocupaciones.",
+      "allowedPaths": [
+        "analysis/fp_coverage_batch_parallel_3/proposals/QUI02M.md"
+      ],
+      "validationCommands": [
+        "powershell -NoProfile -Command \"if (-not (Test-Path -LiteralPath 'analysis/fp_coverage_batch_parallel_3/proposals/QUI02M.md')) { exit 1 }\""
+      ],
+      "frontierPlan": "Interpretar la salida compuesta sin tratar industrias o laboratorios sectoriales como puestos distintos.",
+      "acceptanceCriteria": [
+        "sectores no se convierten en ocupaciones",
+        "solo approved",
+        "citas y riesgos",
+        "ausencias explicitas"
+      ],
+      "modelProfile": "reasoning",
+      "budgetProfile": "research",
+      "maxExecutionSeconds": 1200
+    },
+    {
+      "id": "aga01s-research",
+      "objective": "Investiga AGA01S con analysis/fp_coverage_batch_parallel_3/sources/AGA01S.txt y data/curated/occupations.json. Crea informe conciso con candidatos CNO approved exactos/directos para funciones forestales, vigilancia, incendios, viveros, caza/pesca y topografia. Incluye occupationId, codigo, etiqueta, cita, justificacion y riesgo; enumera ausencias. No rebajes coordinadores/encargados a trabajadores ni confundas guardas con policia.",
+      "allowedPaths": [
+        "analysis/fp_coverage_batch_parallel_3/proposals/AGA01S.md"
+      ],
+      "validationCommands": [
+        "powershell -NoProfile -Command \"if (-not (Test-Path -LiteralPath 'analysis/fp_coverage_batch_parallel_3/proposals/AGA01S.md')) { exit 1 }\""
+      ],
+      "frontierPlan": "Usar contexto amplio para preservar jerarquia y diferenciar funciones forestales, cinegeticas, vigilancia y topografia.",
+      "acceptanceCriteria": [
+        "preserva jerarquia laboral",
+        "solo approved",
+        "no confunde vigilancia con policia",
+        "cubre todas las salidas"
+      ],
+      "modelProfile": "long-context",
+      "budgetProfile": "research",
+      "maxExecutionSeconds": 1200
+    }
+  ]
+}

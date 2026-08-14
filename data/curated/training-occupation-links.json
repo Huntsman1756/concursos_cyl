@@ -462,6 +462,16 @@
     "mappingVersion": "1.0.0"
   },
   {
+    "trainingProgramKey": "FME01S",
+    "occupationId": "occupation:cno11:3126",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/fabricacion-mecanica/programacion-produccion-fab-mecanica.html",
+    "sourceQuote": "Técnicas / técnicos en mecánica.",
+    "reviewedAt": "2026-08-14",
+    "mappingVersion": "1.0.0"
+  },
+  {
     "trainingProgramKey": "MAM01M",
     "occupationId": "occupation:cno11:7812",
     "relationshipType": "official_output",
@@ -1988,6 +1998,16 @@
     "reviewStatus": "approved",
     "sourceUrl": "https://www.boe.es/diario_boe/txt.php?id=BOE-A-2011-19352",
     "sourceQuote": "Peluquero/a especialista.",
+    "reviewedAt": "2026-08-14",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "QUI02M",
+    "occupationId": "occupation:cno11:3160",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/quimica/operaciones-laboratorio.html",
+    "sourceQuote": "control de calidad de materiales",
     "reviewedAt": "2026-08-14",
     "mappingVersion": "1.0.0"
   }
