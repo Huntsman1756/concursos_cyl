@@ -349,8 +349,17 @@ try {
             try {
                 if (-not $TestMode) {
                     $jobWorktreePath = Join-Path $WorktreeParent "castilla-nan-batch-$batchId-story-$idx"
-                    & git -C $repoRoot worktree add --detach $jobWorktreePath $baseRef 2>&1 | Out-Null
-                    if ($LASTEXITCODE -ne 0) { throw "Failed to create detached worktree at $jobWorktreePath" }
+                    $previousErrorActionPreference = $ErrorActionPreference
+                    try {
+                        $ErrorActionPreference = 'Continue'
+                        $gitOutput = @(& git -C $repoRoot worktree add --detach $jobWorktreePath $baseRef 2>&1)
+                        $gitExitCode = $LASTEXITCODE
+                    } finally {
+                        $ErrorActionPreference = $previousErrorActionPreference
+                    }
+                    if ($gitExitCode -ne 0) {
+                        throw "Failed to create detached worktree at $jobWorktreePath`: $($gitOutput -join ' ')"
+                    }
                 }
                 $job = Start-StoryJob -Index $idx -ContractPath $storyContractPaths[$idx] `
                     -StateDir $StateDirectory -Worktree $jobWorktreePath -TestModeOn $TestMode
