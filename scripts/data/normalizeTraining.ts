@@ -28,6 +28,7 @@ const levelMap: Record<string, TrainingLevel> = {
   superior: "higher",
   "grado superior": "higher",
   especializacion: "specialization",
+  "curso especializacion": "specialization",
   "curso de especializacion": "specialization",
 };
 
@@ -61,6 +62,21 @@ function mapModality(value: string): Modality {
   return modalityMap[normalizedKey(value)] ?? "unknown";
 }
 
+function validEmail(value: string | null | undefined): string | null {
+  const normalized = value?.trim() ?? "";
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(normalized) ? normalized : null;
+}
+
+function validWebsite(value: string | null | undefined): string | null {
+  const normalized = value?.trim() ?? "";
+  try {
+    const url = new URL(normalized);
+    return /^https?:$/i.test(url.protocol) ? url.toString() : null;
+  } catch {
+    return null;
+  }
+}
+
 function sortByLabel<T>(
   items: T[],
   label: (item: T) => string,
@@ -83,27 +99,27 @@ export function normalizeTraining(
     const record = TrainingSourceRecordSchema.parse(rawRecord);
     const programKey = record.clave_ciclo.trim();
     const centerCode = record.codigo_centro.trim();
-    const level = mapLevel(record.nivel);
+    const level = mapLevel(record.nivel_educativo);
     const modality = mapModality(record.modalidad);
 
     const program = TrainingProgramSchema.parse({
       programKey,
-      programTitle: record.nombre_ciclo.trim(),
+      programTitle: record.ciclo_formativo_curso_de_especializacion.trim(),
       level,
-      familyCode: record.familia_profesional_codigo.trim(),
-      familyName: record.familia_profesional_nombre.trim(),
+      familyCode: record.codigo_familia.trim(),
+      familyName: record.familia_profesional.trim(),
     });
     programs.set(programKey, programs.get(programKey) ?? program);
 
     const center = EducationCenterSchema.parse({
       centerCode,
-      centerName: record.nombre_centro.trim(),
+      centerName: record.centro_educativo.trim(),
       province: record.provincia.trim(),
       locality: record.localidad.trim(),
-      address: null,
-      phone: null,
-      email: null,
-      website: null,
+      address: record.direccion_centro?.trim() || null,
+      phone: record.telefono?.trim() || null,
+      email: validEmail(record.e_mail),
+      website: validWebsite(record.web),
     });
     centers.set(centerCode, centers.get(centerCode) ?? center);
 

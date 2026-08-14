@@ -11,8 +11,8 @@ describe("normalizeOffers", () => {
           provincia: " ",
           localidad: null,
           fecha_publicacion: "2026-08-14",
-          fecha_actualizacion: "2026-08-14T12:00:00Z",
-          nombre_fuente: "ECYL",
+          actualizacionmetadatos: "2026-08-14T12:00:00Z",
+          fuentecontenido: "ECYL",
           descripcion:
             "<strong>Requisitos:</strong><ul><li>Carné B</li></ul><script>alert(1)</script>",
           enlace_al_contenido: "https://empleo.jcyl.es/oferta/offer-1",

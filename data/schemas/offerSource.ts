@@ -7,8 +7,8 @@ export const OfferSourceRecordSchema = z
     provincia: z.string().trim().nullable().optional(),
     localidad: z.string().trim().nullable().optional(),
     fecha_publicacion: z.string().trim().min(1).nullable().optional(),
-    fecha_actualizacion: z.string().trim().min(1).nullable().optional(),
-    nombre_fuente: z.string().trim().min(1).nullable().optional(),
+    actualizacionmetadatos: z.string().trim().min(1).nullable().optional(),
+    fuentecontenido: z.string().trim().min(1).nullable().optional(),
     descripcion: z.string().nullable().optional(),
     enlace_al_contenido: z.string().url(),
   })

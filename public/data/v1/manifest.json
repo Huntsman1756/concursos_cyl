@@ -1,0 +1,33 @@
+{
+  "schemaVersion": "1.0.0",
+  "generatedAt": "2026-08-14T20:07:29.811Z",
+  "qualityStatus": "passed",
+  "sources": {
+    "training": {
+      "sourceId": "jcyl-vocational-training-offer",
+      "sourceUrl": "https://analisis.datosabiertos.jcyl.es/api/explore/v2.1/catalog/datasets/oferta-de-formacion-profesional/records",
+      "sourceUpdatedAt": null,
+      "snapshotFetchedAt": "2026-08-14T20:07:29.811Z",
+      "schemaVersion": "1.0.0",
+      "recordCount": 1293,
+      "sha256": "e36f383ecc98a8487d4476c5f08ed73ecd4d5bc421983631f56e874443a20dcc",
+      "qualityStatus": "passed"
+    },
+    "offers": {
+      "sourceId": "jcyl-employment-offers",
+      "sourceUrl": "https://analisis.datosabiertos.jcyl.es/api/explore/v2.1/catalog/datasets/ofertas-de-empleo/records",
+      "sourceUpdatedAt": null,
+      "snapshotFetchedAt": "2026-08-14T20:07:29.811Z",
+      "schemaVersion": "1.0.0",
+      "recordCount": 1091,
+      "sha256": "f0b8a8ee8f75de1da69335d8e2a15d5dc7230c13317fc09586c54462bb87eea5",
+      "qualityStatus": "passed"
+    }
+  },
+  "counts": {
+    "programs": 187,
+    "centers": 229,
+    "offerings": 1293,
+    "offers": 1091
+  }
+}

@@ -2,6 +2,7 @@ docs/**
 research/**
 *.png
 stdout
+public/data/**
 .codex-tmp/**
 .superpowers/**
 .agent-runs/**

@@ -105,6 +105,11 @@ export const GeneratedManifestSchema = z.object({
   }),
 });
 
+export const TrainingProgramsSchema = z.array(TrainingProgramSchema);
+export const EducationCentersSchema = z.array(EducationCenterSchema);
+export const TrainingOfferingsSchema = z.array(TrainingOfferingSchema);
+export const JobOffersSchema = z.array(JobOfferSchema);
+
 export type TrainingLevel = z.infer<typeof TrainingLevelSchema>;
 export type Modality = z.infer<typeof ModalitySchema>;
 export type TrainingProgram = z.infer<typeof TrainingProgramSchema>;

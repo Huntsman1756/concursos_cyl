@@ -3,15 +3,15 @@ import { normalizeTraining } from "./normalizeTraining";
 
 const sourceRecord = {
   clave_ciclo: "IFC03S",
-  nombre_ciclo: "Desarrollo de Aplicaciones Web",
-  nivel: "Grado Superior",
-  familia_profesional_codigo: "IFC",
-  familia_profesional_nombre: "Informática y Comunicaciones",
+  nivel_educativo: "Grado Superior",
+  codigo_familia: "IFC",
+  familia_profesional: "Informática y Comunicaciones",
   codigo_centro: "47000000",
-  nombre_centro: "IES Río Esgueva",
+  centro_educativo: "IES Río Esgueva",
   provincia: "Valladolid",
   localidad: "Valladolid",
   modalidad: "Presencial",
+  ciclo_formativo_curso_de_especializacion: "Desarrollo de Aplicaciones Web",
 };
 
 describe("normalizeTraining", () => {
@@ -21,7 +21,8 @@ describe("normalizeTraining", () => {
       {
         ...sourceRecord,
         clave_ciclo: "IFC02S",
-        nombre_ciclo: "Administración de Sistemas Informáticos",
+        ciclo_formativo_curso_de_especializacion:
+          "Administración de Sistemas Informáticos",
         modalidad: "A distancia",
       },
       sourceRecord,
@@ -41,7 +42,7 @@ describe("normalizeTraining", () => {
       normalizeTraining([{ ...sourceRecord, clave_ciclo: " " }]),
     ).toThrow();
     expect(() =>
-      normalizeTraining([{ ...sourceRecord, nivel: "Doctorado" }]),
+      normalizeTraining([{ ...sourceRecord, nivel_educativo: "Doctorado" }]),
     ).toThrow(/unsupported training level/i);
   });
 });
