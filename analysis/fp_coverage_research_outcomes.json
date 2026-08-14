@@ -90,6 +90,36 @@
       "proposalPath": "analysis/fp_coverage_batch_parallel_3/proposals/AGA01S.md",
       "frontierReviewPath": "analysis/fp_coverage_batch_parallel_3/frontier-review.md",
       "note": "No publicable match found in the current approved occupation catalog for this FP program. The candidates either change an owner or coordinator role into an operative one or cover only an adjacent activity."
+    },
+    {
+      "baseProgramKey": "IFC01E",
+      "status": "reviewed-no-publishable-match",
+      "reviewedAt": "2026-08-14",
+      "occupationCatalogSha256": "f77079a15d7246c04b44889c733fda7fc9bade892c9d78c79607fcb1c3e21e90",
+      "sourcePath": "analysis/fp_coverage_batch_parallel_4/sources/IFC01E.txt",
+      "proposalPath": "analysis/fp_coverage_batch_parallel_4/proposals/IFC01E.md",
+      "frontierReviewPath": "analysis/fp_coverage_batch_parallel_4/frontier-review.md",
+      "note": "No publicable match found in the current approved occupation catalog for cyber security auditing, consulting, analysis or testing. System administration, networks or web development are not used as substitutes."
+    },
+    {
+      "baseProgramKey": "IMS02S",
+      "status": "reviewed-no-publishable-match",
+      "reviewedAt": "2026-08-14",
+      "occupationCatalogSha256": "f77079a15d7246c04b44889c733fda7fc9bade892c9d78c79607fcb1c3e21e90",
+      "sourcePath": "analysis/fp_coverage_batch_parallel_4/sources/IMS02S.txt",
+      "proposalPath": "analysis/fp_coverage_batch_parallel_4/proposals/IMS02S.md",
+      "frontierReviewPath": "analysis/fp_coverage_batch_parallel_4/frontier-review.md",
+      "note": "No publishable match found in the current approved occupation catalog for audiovisual production, direction or stage management."
+    },
+    {
+      "baseProgramKey": "MSP34",
+      "status": "reviewed-no-publishable-match",
+      "reviewedAt": "2026-08-14",
+      "occupationCatalogSha256": "f77079a15d7246c04b44889c733fda7fc9bade892c9d78c79607fcb1c3e21e90",
+      "sourcePath": "analysis/fp_coverage_batch_parallel_4/sources/MSP34.txt",
+      "proposalPath": "analysis/fp_coverage_batch_parallel_4/proposals/MSP34.md",
+      "frontierReviewPath": "analysis/fp_coverage_batch_parallel_4/frontier-review.md",
+      "note": "No publishable match found in the current approved occupation catalog for risk prevention, preventive coordination or occupational safety and health."
     }
   ]
 }
