@@ -9,6 +9,10 @@ import {
 const repoRoot = resolve(__dirname, "../..");
 const outcomesPath = resolve(
   repoRoot,
+  "analysis/fp_coverage_research_outcomes.json",
+);
+const oldOutcomesPath = resolve(
+  repoRoot,
   "data/curated/fp-coverage-research-outcomes.json",
 );
 
@@ -115,5 +119,9 @@ describe("fp-coverage-research-outcomes.json", () => {
         expect(lower).not.toContain(phrase);
       }
     }
+  });
+
+  it("old curated path data/curated/fp-coverage-research-outcomes.json does not exist", () => {
+    expect(existsSync(oldOutcomesPath)).toBe(false);
   });
 });

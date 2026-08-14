@@ -197,7 +197,7 @@ export async function loadFpCoverageResearchQueueInputs(root: string) {
       readFile(pathFor("trainingOfferings"), "utf8"),
       readFile(pathFor("mappingCoverage"), "utf8"),
       readFile(
-        resolve(root, "data/curated/fp-coverage-research-outcomes.json"),
+        resolve(root, "analysis/fp_coverage_research_outcomes.json"),
         "utf8",
       ),
       readFile(resolve(root, "data/curated/occupations.json"), "utf8"),
