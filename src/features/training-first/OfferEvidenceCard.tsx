@@ -11,12 +11,14 @@ export function OfferEvidenceCard({
   answers,
   actions,
   onAnswer,
+  onAddSessionCheck,
 }: {
   match: OfferMatch;
   state: EvidenceState;
   answers: SessionAnswers;
   actions: ReliableAction[];
   onAnswer: (requirementId: string, value: "has" | "lacks" | "unsure") => void;
+  onAddSessionCheck: (requirementId: string | null, label: string) => void;
 }) {
   return (
     <article className="evidence-card">
@@ -67,7 +69,7 @@ export function OfferEvidenceCard({
       </section>
       <section>
         <h3>Siguiente acción</h3>
-        <ActionPanel actions={actions} />
+        <ActionPanel actions={actions} onAddSessionCheck={onAddSessionCheck} />
       </section>
     </article>
   );

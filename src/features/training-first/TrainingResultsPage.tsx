@@ -79,6 +79,12 @@ export function TrainingResultsPage({
                 onAnswer={(requirementId, answer) =>
                   session.answerRequirement(requirementId, answer)
                 }
+                onAddSessionCheck={(requirementId, label) =>
+                  session.addChecklistItem({
+                    id: requirementId ?? match.offer.id,
+                    label,
+                  })
+                }
               />
             );
           })}

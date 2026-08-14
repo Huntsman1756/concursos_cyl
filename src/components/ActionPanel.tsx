@@ -1,6 +1,12 @@
 import type { ReliableAction } from "../domain/actionEngine";
 
-export function ActionPanel({ actions }: { actions: ReliableAction[] }) {
+export function ActionPanel({
+  actions,
+  onAddSessionCheck,
+}: {
+  actions: ReliableAction[];
+  onAddSessionCheck?: (requirementId: string | null, label: string) => void;
+}) {
   return (
     <div className="action-panel">
       {actions.map((action) =>
@@ -9,7 +15,15 @@ export function ActionPanel({ actions }: { actions: ReliableAction[] }) {
             {action.label}
           </a>
         ) : (
-          <button key={action.actionType} type="button">
+          <button
+            key={action.actionType}
+            type="button"
+            onClick={
+              action.actionType === "add_session_check"
+                ? () => onAddSessionCheck?.(action.requirementId, action.label)
+                : undefined
+            }
+          >
             {action.label}
           </button>
         ),
