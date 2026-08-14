@@ -658,7 +658,7 @@ $repairContext = ''
     if ([string]::IsNullOrWhiteSpace($candidateAgent)) {
         throw "No bounded code agent is configured for model: $candidateModel"
     }
-    for ($r = 0; $r -lt $MaxRetries; $r++) {
+    :retryLoop for ($r = 0; $r -lt $MaxRetries; $r++) {
         $totalAttempts++
         $attempt = @{model=$candidateModel;agent=$candidateAgent;attempt=$totalAttempts;retry=($r+1);exitCode=1;tokens=@{input=0;output=0;reasoning=0;cacheRead=0;cacheWrite=0;total=0};changedPaths=@();validationExitCode=$null;validationDiagnostics=@();draftOutput=''}
         $mp = $null
@@ -816,13 +816,13 @@ $repairContext = ''
                             $diagSummary = 'mock validation (exitCode=%s)' -f $ve
                             $repairContext = "$repairContext|$diagSummary"
                         }
-                        # On failure: if not the last retry, break inner loop
-                        # and let r auto-increment re-invoke Qwen with repair
-                        # context (command, exitCode, outputTail) in the contract.
-                        if ($r -lt ($MaxRetries - 1)) { break }  # retry
+                        $attempt.exitCode = 1
+                        $attempts[-1] = $attempt
+                        # On failure: if not the last retry, continue to next
+                        # retry with repair context injected into the contract.
+                        if ($r -lt ($MaxRetries - 1)) { continue retryLoop }
                         # Exhausted all retries — mark as failure.
                         $validationFailed = $true
-                        $attempt.exitCode = 1
                         $attempts[-1] = $attempt
                         break modelLoop
                     }

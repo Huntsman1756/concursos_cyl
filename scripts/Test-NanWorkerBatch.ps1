@@ -585,7 +585,7 @@ try {
     Write-TestResult -Name $testName -Success ($mrResult.storiesReady -eq 1) -Detail "ready=$($mrResult.storiesReady)"
 
     # Verify maxRetries field was persisted in the story contract.
-    $storyContractPathMR = Join-Path $batchMRState 'story-story-mr' 'contract.json'
+    $storyContractPathMR = Join-Path (Join-Path $batchMRState 'story-story-mr') 'contract.json'
     $testName = 'Batch maxRetries: persisted in contract.json'
     if (Test-Path -LiteralPath $storyContractPathMR) {
         $contractContentMR = Get-Content -LiteralPath $storyContractPathMR -Raw | ConvertFrom-Json
