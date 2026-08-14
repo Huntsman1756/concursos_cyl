@@ -277,9 +277,9 @@ foreach ($story in $stories) {
         }
     }
     # Persist maxRetries so the contract adapter forwards it to the worker.
-    if (-not $storyObj['maxRetries'] -and $story.PSObject.Properties.Name -contains 'maxRetries') {
+    if ($story.PSObject.Properties.Name -contains 'maxRetries') {
         $storyObj['maxRetries'] = [int]$story.maxRetries
-    } elseif (-not $storyObj.ContainsKey('maxRetries')) {
+    } else {
         $storyObj['maxRetries'] = 2
     }
     Write-NewJson -Path $storyContractPath -Value ([pscustomobject]$storyObj)

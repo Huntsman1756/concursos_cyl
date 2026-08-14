@@ -706,7 +706,10 @@ try {
     $meteredExit = $LASTEXITCODE
 
     $testName = 'Metered batch: maxRetries=3 accepted with auth'
-    Write-TestResult -Name $testName -Success ($meteredExit -ne 0) -Detail "exit=$meteredExit" # may still fail but did not reject on validation
+    Write-TestResult -Name $testName -Success ($meteredExit -eq 0) -Detail "exit=$meteredExit"
+
+    $meteredResult = $meteredOut | ConvertFrom-Json
+    Write-TestResult -Name 'Metered batch: all stories ready' -Success ($meteredResult.storiesReady -eq 1) -Detail "ready=$($meteredResult.storiesReady)"
 
     $snapshotPath = Join-Path $meteredBatchState 'batch-contract.json'
     if (Test-Path -LiteralPath $snapshotPath) {
@@ -716,7 +719,8 @@ try {
             $hasMR3 = ($storyData[0].maxRetries -eq 3)
             $hasBP = ($storyData[0].budgetProfile -eq 'batch')
             $hasMp = ($storyData[0].modelProfile -eq 'reasoning')
-            Write-TestResult -Name 'Batch snapshot: maxRetries/budgetModel/allowMetered persisted' -Success ($hasMR3 -and $hasBP -and $hasMp) -Detail "mr=$hasMR3 bp=$hasBP mp=$hasMp"
+            $hasAM = [bool]$storyData[0].allowMeteredModel
+            Write-TestResult -Name 'Batch snapshot: maxRetries/budgetModel/allowMetered persisted' -Success ($hasMR3 -and $hasBP -and $hasMp -and $hasAM) -Detail "mr=$hasMR3 bp=$hasBP mp=$hasMp am=$hasAM"
         }
     }
 
