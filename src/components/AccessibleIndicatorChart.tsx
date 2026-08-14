@@ -38,6 +38,7 @@ export function AccessibleIndicatorChart({
     plotContainer.current.replaceChildren();
     if (publishedItems.length === 0) return;
     const plot = Plot.plot({
+      width: Math.max(1, plotContainer.current.clientWidth),
       height: 190,
       marginLeft: 48,
       marginBottom: 50,

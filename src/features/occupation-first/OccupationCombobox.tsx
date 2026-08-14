@@ -27,20 +27,19 @@ export function OccupationCombobox({
         placeholder="Escribe una ocupación cotidiana"
       />
       {results.length > 0 ? (
-        <ul id="occupation-options" role="listbox">
+        <div id="occupation-options" role="listbox">
           {results.map((result) => (
-            <li key={result.occupationId}>
-              <button
-                type="button"
-                role="option"
-                aria-selected={confirmedOccupationId === result.occupationId}
-                onClick={() => onSelect(result)}
-              >
-                {result.matchedAlias} — {result.preferredLabel}
-              </button>
-            </li>
+            <button
+              key={result.occupationId}
+              type="button"
+              role="option"
+              aria-selected={confirmedOccupationId === result.occupationId}
+              onClick={() => onSelect(result)}
+            >
+              {result.matchedAlias} — {result.preferredLabel}
+            </button>
           ))}
-        </ul>
+        </div>
       ) : null}
     </div>
   );

@@ -80,23 +80,26 @@ export function TrainingSearchPage({
           <p role="status">No se pudieron cargar los ciclos oficiales.</p>
         ) : null}
         {!loading && visiblePrograms.length > 0 ? (
-          <ul id="program-options" role="listbox" aria-label="Ciclos oficiales">
+          <div
+            id="program-options"
+            role="listbox"
+            aria-label="Ciclos oficiales"
+          >
             {visiblePrograms.map((program) => (
-              <li key={program.programKey}>
-                <button
-                  type="button"
-                  role="option"
-                  aria-selected={selectedProgramKey === program.programKey}
-                  onClick={() => {
-                    setQuery(program.programTitle);
-                    setSelectedProgramKey(program.programKey);
-                  }}
-                >
-                  {program.programTitle} ({program.programKey})
-                </button>
-              </li>
+              <button
+                key={program.programKey}
+                type="button"
+                role="option"
+                aria-selected={selectedProgramKey === program.programKey}
+                onClick={() => {
+                  setQuery(program.programTitle);
+                  setSelectedProgramKey(program.programKey);
+                }}
+              >
+                {program.programTitle} ({program.programKey})
+              </button>
             ))}
-          </ul>
+          </div>
         ) : null}
         <label htmlFor="province-filter">Provincia (opcional)</label>
         <select id="province-filter" defaultValue="">
