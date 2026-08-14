@@ -371,6 +371,13 @@ const programs: TrainingProgram[] = [
     familyName: "Fabricación Mecánica",
   },
   {
+    programKey: "QUI02M",
+    programTitle: "Operaciones de Laboratorio",
+    level: "intermediate",
+    familyCode: "QUI",
+    familyName: "Química",
+  },
+  {
     programKey: "AFD02S",
     programTitle: "Acondicionamiento Físico",
     level: "higher",
@@ -1161,6 +1168,7 @@ describe("curated occupation mappings", () => {
       ADG01MD: 1,
       TMV02M: 1,
       IMA03M: 1,
+      QUI02M: 1,
       COM04S: 3,
       COM04SD: 3,
       FME01B: 2,
