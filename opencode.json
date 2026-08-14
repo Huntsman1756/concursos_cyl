@@ -16,6 +16,8 @@
       "dist/**",
       "build/**",
       ".agent-runs/**",
+      ".tmp/**",
+      ".worktrees/**",
       "_codex_tmp/**",
       "_codex_worktrees/**"
     ]

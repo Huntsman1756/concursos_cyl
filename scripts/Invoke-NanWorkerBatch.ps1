@@ -34,6 +34,20 @@ function Confirm-OutsideSource {
     return -not $candidate.StartsWith($source, [System.StringComparison]::OrdinalIgnoreCase)
 }
 
+function Remove-BatchWorktree {
+    param([string]$Path,[string]$Parent,[string]$BatchId)
+    if ([string]::IsNullOrWhiteSpace($Path) -or -not (Test-Path -LiteralPath $Path -PathType Container)) { return }
+    $resolvedPath = [System.IO.Path]::GetFullPath($Path)
+    $resolvedParent = [System.IO.Path]::GetFullPath($Parent).TrimEnd('\','/') + [System.IO.Path]::DirectorySeparatorChar
+    $expectedName = "castilla-nan-batch-$BatchId-story-"
+    if (-not $resolvedPath.StartsWith($resolvedParent, [System.StringComparison]::OrdinalIgnoreCase) -or
+        -not ([System.IO.Path]::GetFileName($resolvedPath)).StartsWith($expectedName, [System.StringComparison]::Ordinal)) {
+        throw "Refusing to remove unexpected batch worktree: $resolvedPath"
+    }
+    & git -C $repoRoot worktree remove --force $resolvedPath 2>$null | Out-Null
+    if ($LASTEXITCODE -ne 0) { throw "Unable to remove batch worktree: $resolvedPath" }
+}
+
 function Test-PathsDisjoint {
     param([string[]]$PathsA, [string[]]$PathsB)
     $normA = @($PathsA | ForEach-Object { $_.Replace('\','/').TrimEnd('/') })
@@ -106,18 +120,12 @@ if (-not [string]::IsNullOrWhiteSpace($WorktreeParent)) {
 }
 
 # ── Validate baseSha ──
-if ($batch.PSObject.Properties.Name -contains 'baseSha') {
-    $baseSha = [string]$batch.baseSha
-    if ($baseSha -ne '') {
-        if ($baseSha -notmatch '^[a-f0-9]{40}$') {
-            throw "baseSha must be a 40-character hex string."
-        }
-        $headSha = (& git -C $repoRoot rev-parse HEAD).Trim()
-        if ($LASTEXITCODE -ne 0 -or $headSha -ne $baseSha) {
-            throw "baseSha does not match repository HEAD ($headSha)."
-        }
-    }
-}
+$headSha = (& git -C $repoRoot rev-parse HEAD).Trim()
+if ($LASTEXITCODE -ne 0 -or $headSha -notmatch '^[a-f0-9]{40}$') { throw 'Repository HEAD is unavailable.' }
+$requestedBaseSha = if ($batch.PSObject.Properties.Name -contains 'baseSha') { [string]$batch.baseSha } else { '' }
+if ($requestedBaseSha -and $requestedBaseSha -notmatch '^[a-f0-9]{40}$') { throw 'baseSha must be a 40-character hex string.' }
+if ($requestedBaseSha -and $requestedBaseSha -ne $headSha) { throw "baseSha does not match repository HEAD ($headSha)." }
+$baseRef = $headSha
 
 # ── Validate stories ──
 $seenIds = @{}
@@ -185,6 +193,7 @@ foreach ($story in $stories) {
         $apNorm = $ap.Replace('\','/')
         if ($apNorm -match '^[a-zA-Z]:/' -or $apNorm -match '^/') { throw "Story '$($story.id)' allowed path '$ap' is absolute. Use relative paths only." }
         if ($apNorm -match '(^|/)\.\.(/|$)') { throw "Story '$($story.id)' allowed path '$ap' contains directory traversal." }
+        if ($apNorm -match '[*?\[\]]') { throw "Story '$($story.id)' allowed path '$ap' contains a wildcard; batch paths must be exact." }
     }
 }
 
@@ -206,15 +215,19 @@ $contractSnapshot = [ordered]@{
     schemaVersion = 1
     storyCount = $stories.Count
     maxConcurrency = $MaxConcurrency
-    baseSha = if ($batch.PSObject.Properties.Name -contains 'baseSha') { $batch.baseSha } else { $null }
+    baseSha = $baseRef
     stories = @($stories | ForEach-Object {
         [ordered]@{
             id = $_.id
             objective = $_.objective
             allowedPaths = @($_.allowedPaths)
             validationCommands = @($_.validationCommands)
+            frontierPlan = $_.frontierPlan
+            acceptanceCriteria = @($_.acceptanceCriteria)
             modelProfile = if ($_.PSObject.Properties.Name -contains 'modelProfile') { $_.modelProfile } else { 'mechanical' }
             budgetProfile = if ($_.PSObject.Properties.Name -contains 'budgetProfile') { $_.budgetProfile } else { 'small' }
+            maxObservedTokens = if ($_.PSObject.Properties.Name -contains 'maxObservedTokens') { $_.maxObservedTokens } else { $null }
+            maxExecutionSeconds = if ($_.PSObject.Properties.Name -contains 'maxExecutionSeconds') { $_.maxExecutionSeconds } else { 900 }
         }
     })
 }
@@ -223,11 +236,6 @@ Write-NewJson -Path (Join-Path $StateDirectory 'batch-contract.json') -Value $co
 $batchHash = Get-Sha256Hex -Bytes ($utf8.GetBytes(($contractSnapshot | ConvertTo-Json -Depth 12 -Compress)))
 
 # ── Resolve baseRef for detached worktrees ──
-$baseRef = if ($batch.PSObject.Properties.Name -contains 'baseSha') {
-    [string]$batch.baseSha
-} else {
-    (& git -C $repoRoot rev-parse HEAD).Trim()
-}
 
 # ── Store individual story contract files ──
 $storyContractPaths = @()
@@ -277,7 +285,7 @@ function Start-StoryJob {
     }
     $start = New-Object System.Diagnostics.ProcessStartInfo
     $start.FileName = 'powershell.exe'
-    $start.Arguments = (($argList | ForEach-Object { ConvertTo-NativeArgument -Argument $_ }) -join ' ')
+    $start.Arguments = (($argList | ForEach-Object { ConvertTo-NativeArgument -Value $_ }) -join ' ')
     $start.WorkingDirectory = $repoRoot
     $start.UseShellExecute = $false
     $start.CreateNoWindow = $true
@@ -337,19 +345,22 @@ try {
             $jobSemaphore.WaitOne() | Out-Null
             $idx = $queueIndex
             $queueIndex++
-            # Create detached worktree for live execution; store exact path on the job
             $jobWorktreePath = $null
-            if (-not $TestMode) {
-                $jobWorktreePath = Join-Path $WorktreeParent "castilla-nan-batch-$batchId-story-$idx"
-                & git worktree add --detach --force $jobWorktreePath $baseRef 2>&1 | Out-Null
-                if ($LASTEXITCODE -ne 0) {
-                    throw "Failed to create detached worktree at $jobWorktreePath"
+            try {
+                if (-not $TestMode) {
+                    $jobWorktreePath = Join-Path $WorktreeParent "castilla-nan-batch-$batchId-story-$idx"
+                    & git -C $repoRoot worktree add --detach $jobWorktreePath $baseRef 2>&1 | Out-Null
+                    if ($LASTEXITCODE -ne 0) { throw "Failed to create detached worktree at $jobWorktreePath" }
                 }
+                $job = Start-StoryJob -Index $idx -ContractPath $storyContractPaths[$idx] `
+                    -StateDir $StateDirectory -Worktree $jobWorktreePath -TestModeOn $TestMode
+                $job | Add-Member -NotePropertyName '__worktreePath' -NotePropertyValue $jobWorktreePath -Force
+                $activeJobs += $job
+            } catch {
+                $jobSemaphore.Release() | Out-Null
+                if (-not $TestMode) { Remove-BatchWorktree -Path $jobWorktreePath -Parent $WorktreeParent -BatchId $batchId }
+                throw
             }
-            $job = Start-StoryJob -Index $idx -ContractPath $storyContractPaths[$idx] `
-                -StateDir $StateDirectory -Worktree $jobWorktreePath -TestModeOn $TestMode
-            $job | Add-Member -NotePropertyName '__worktreePath' -NotePropertyValue $jobWorktreePath -Force
-            $activeJobs += $job
         }
 
         # Poll for completions
@@ -370,9 +381,7 @@ try {
             $wtPath = if ($job.PSObject.Properties.Name -contains '__worktreePath') {
                 $job.__worktreePath
             } else { $null }
-            if (-not $TestMode -and -not [string]::IsNullOrWhiteSpace($wtPath) -and (Test-Path -LiteralPath $wtPath -PathType Container)) {
-                try { & git -C $repoRoot worktree remove --force $wtPath 2>$null | Out-Null } catch { /* best-effort */ }
-            }
+            if (-not $TestMode) { Remove-BatchWorktree -Path $wtPath -Parent $WorktreeParent -BatchId $batchId }
         }
 
         if ($completedJobs.Count -eq 0 -and $activeJobs.Count -gt 0) {
@@ -390,9 +399,7 @@ try {
         $wtPath = if ($job.PSObject.Properties.Name -contains '__worktreePath') {
             $job.__worktreePath
         } else { $null }
-        if (-not $TestMode -and -not [string]::IsNullOrWhiteSpace($wtPath) -and (Test-Path -LiteralPath $wtPath -PathType Container)) {
-            try { & git -C $repoRoot worktree remove --force $wtPath 2>$null | Out-Null } catch { /* best-effort */ }
-        }
+        if (-not $TestMode) { Remove-BatchWorktree -Path $wtPath -Parent $WorktreeParent -BatchId $batchId }
     }
     $jobSemaphore.Dispose()
 }
@@ -415,6 +422,12 @@ foreach ($collected in $storyResults) {
         changedPaths = if ($r) { @($r.changedPaths) } else { @() }
         providerTokens = if ($r) { [long]$r.providerEvidence.providerReportedTokens } else { 0 }
         providerVerified = if ($r) { [bool]$r.providerEvidence.verified } else { $false }
+        responseIdSetHash = if ($r) { $r.providerEvidence.responseIdSetHash } else { $null }
+        selectedModel = if ($r -and @($r.attempts).Count -gt 0) { $r.attempts[0].model } else { $null }
+        patchPath = if ($r) { $r.patchPath } else { $null }
+        patchSha256 = if ($r) { $r.patchSha256 } else { $null }
+        telemetryPath = if ($r) { $r.telemetryPath } else { $null }
+        telemetrySha256 = if ($r) { $r.telemetrySha256 } else { $null }
         clientTokens = if ($r) { $r.tokensUsage } else { @{input=0;output=0;reasoning=0;cacheRead=0;cacheWrite=0;total=0} }
     }
     $aggregate += $storyEntry
@@ -443,7 +456,7 @@ $batchResult = [ordered]@{
     storiesCompleted = @($storyResults).Count
     storiesReady = $awaitingReview
     maxConcurrency = $MaxConcurrency
-    baseSha = if ($batch.PSObject.Properties.Name -contains 'baseSha') { $batch.baseSha } else { (& git -C $repoRoot rev-parse HEAD).Trim() }
+    baseSha = $baseRef
     providerReportedTokens = $allProviderTokens
     clientObservedTokens = $allClientTokens
     stories = @($aggregate)

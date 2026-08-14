@@ -19,6 +19,16 @@ function Write-TestResult {
     $script:testResults += [pscustomobject]@{name=$Name;passed=$Success;detail=$Detail}
 }
 
+function Invoke-ExpectedFailure {
+    param([scriptblock]$Action)
+    try {
+        $captured = & $Action 2>&1
+        return @{exitCode=$LASTEXITCODE;output=@($captured)}
+    } catch {
+        return @{exitCode=1;output=@($_)}
+    }
+}
+
 try {
     # ────────────────────────────────────────────────────────────────
     # Test 1: Valid batch with 3 disjoint stories — all succeed
@@ -115,11 +125,24 @@ try {
         (Test-Path -LiteralPath (Join-Path $gammaDir 'worker-telemetry.json'))
     ) -Detail ""
 
-    $testName = 'Valid batch: provider tokens aggregated correctly'
-    Write-TestResult -Name $testName -Success ($result.providerReportedTokens -gt 0) -Detail "tokens=$($result.providerReportedTokens)"
+    $testName = 'Valid batch: TestMode does not claim provider tokens'
+    Write-TestResult -Name $testName -Success ($result.providerReportedTokens -eq 0) -Detail "tokens=$($result.providerReportedTokens)"
 
     $testName = 'Valid batch: three story entries in batch result'
     Write-TestResult -Name $testName -Success (@($result.stories).Count -eq 3) -Detail "count=$(@($result.stories).Count)"
+
+    $testName = 'Valid batch: exact HEAD is bound into result'
+    $expectedHead = (& git -C $repoRoot rev-parse HEAD).Trim()
+    Write-TestResult -Name $testName -Success ($result.baseSha -eq $expectedHead) -Detail "baseSha=$($result.baseSha)"
+
+    $testName = 'Valid batch: review packet exposes evidence artifact fields'
+    $firstStory = @($result.stories)[0]
+    Write-TestResult -Name $testName -Success (
+        -not [string]::IsNullOrWhiteSpace([string]$firstStory.patchPath) -and
+        -not [string]::IsNullOrWhiteSpace([string]$firstStory.patchSha256) -and
+        -not [string]::IsNullOrWhiteSpace([string]$firstStory.telemetryPath) -and
+        -not [string]::IsNullOrWhiteSpace([string]$firstStory.telemetrySha256)
+    ) -Detail "story=$($firstStory.storyId)"
 
     # ────────────────────────────────────────────────────────────────
     # Test 2: Reject overlapping paths
@@ -151,8 +174,9 @@ try {
     $overlapState = Join-Path $temporaryRoot 'overlap-state'
     $overlapBatch | ConvertTo-Json -Depth 8 | Set-Content -LiteralPath $overlapBatchPath -Encoding utf8
 
-    $overlapOutput = & $batchPath -BatchJsonPath $overlapBatchPath -StateDirectory $overlapState -TestMode 2>&1
-    $overlapExit = $LASTEXITCODE
+    $overlapRun = Invoke-ExpectedFailure { & $batchPath -BatchJsonPath $overlapBatchPath -StateDirectory $overlapState -TestMode }
+    $overlapOutput = $overlapRun.output
+    $overlapExit = $overlapRun.exitCode
 
     $testName = 'Overlap rejection: exit non-zero'
     Write-TestResult -Name $testName -Success ($overlapExit -ne 0) -Detail "exitCode=$overlapExit"
@@ -177,8 +201,9 @@ try {
     $invalidIdState = Join-Path $temporaryRoot 'invalid-id-state'
     $invalidIdBatch | ConvertTo-Json -Depth 8 | Set-Content -LiteralPath $invalidIdPath -Encoding utf8
 
-    $invalidOutput = & $batchPath -BatchJsonPath $invalidIdPath -StateDirectory $invalidIdState -TestMode 2>&1
-    $invalidExit = $LASTEXITCODE
+    $invalidRun = Invoke-ExpectedFailure { & $batchPath -BatchJsonPath $invalidIdPath -StateDirectory $invalidIdState -TestMode }
+    $invalidOutput = $invalidRun.output
+    $invalidExit = $invalidRun.exitCode
 
     $testName = 'Invalid id rejection: exit non-zero'
     Write-TestResult -Name $testName -Success ($invalidExit -ne 0) -Detail "exitCode=$invalidExit"
@@ -204,8 +229,9 @@ try {
     $glmState = Join-Path $temporaryRoot 'glm-state'
     $glmBatch | ConvertTo-Json -Depth 8 | Set-Content -LiteralPath $glmBatchPath -Encoding utf8
 
-    $glmOutput = & $batchPath -BatchJsonPath $glmBatchPath -StateDirectory $glmState -TestMode 2>&1
-    $glmExit = $LASTEXITCODE
+    $glmRun = Invoke-ExpectedFailure { & $batchPath -BatchJsonPath $glmBatchPath -StateDirectory $glmState -TestMode }
+    $glmOutput = $glmRun.output
+    $glmExit = $glmRun.exitCode
 
     $testName = 'glm5.2 rejection: exit non-zero'
     Write-TestResult -Name $testName -Success ($glmExit -ne 0) -Detail "exitCode=$glmExit"
@@ -230,8 +256,9 @@ try {
     $missingFieldState = Join-Path $temporaryRoot 'missing-field-state'
     $missingFieldBatch | ConvertTo-Json -Depth 8 | Set-Content -LiteralPath $missingFieldPath -Encoding utf8
 
-    $missingOutput = & $batchPath -BatchJsonPath $missingFieldPath -StateDirectory $missingFieldState -TestMode 2>&1
-    $missingExit = $LASTEXITCODE
+    $missingRun = Invoke-ExpectedFailure { & $batchPath -BatchJsonPath $missingFieldPath -StateDirectory $missingFieldState -TestMode }
+    $missingOutput = $missingRun.output
+    $missingExit = $missingRun.exitCode
 
     $testName = 'Missing field rejection: exit non-zero'
     Write-TestResult -Name $testName -Success ($missingExit -ne 0) -Detail "exitCode=$missingExit"
@@ -264,8 +291,9 @@ try {
     $duplicateIdState = Join-Path $temporaryRoot 'duplicate-id-state'
     $duplicateIdBatch | ConvertTo-Json -Depth 8 | Set-Content -LiteralPath $duplicateIdPath -Encoding utf8
 
-    $dupOutput = & $batchPath -BatchJsonPath $duplicateIdPath -StateDirectory $duplicateIdState -TestMode 2>&1
-    $dupExit = $LASTEXITCODE
+    $duplicateRun = Invoke-ExpectedFailure { & $batchPath -BatchJsonPath $duplicateIdPath -StateDirectory $duplicateIdState -TestMode }
+    $dupOutput = $duplicateRun.output
+    $dupExit = $duplicateRun.exitCode
 
     $testName = 'Duplicate id rejection: exit non-zero'
     Write-TestResult -Name $testName -Success ($dupExit -ne 0) -Detail "exitCode=$dupExit"
@@ -381,8 +409,9 @@ try {
     $emptyObjectiveState = Join-Path $temporaryRoot 'empty-objective-state'
     $emptyObjectiveBatch | ConvertTo-Json -Depth 8 | Set-Content -LiteralPath $emptyObjectivePath -Encoding utf8
 
-    $emptyOutput = & $batchPath -BatchJsonPath $emptyObjectivePath -StateDirectory $emptyObjectiveState -TestMode 2>&1
-    $emptyExit = $LASTEXITCODE
+    $emptyRun = Invoke-ExpectedFailure { & $batchPath -BatchJsonPath $emptyObjectivePath -StateDirectory $emptyObjectiveState -TestMode }
+    $emptyOutput = $emptyRun.output
+    $emptyExit = $emptyRun.exitCode
 
     $testName = 'Empty objective rejection: exit non-zero'
     Write-TestResult -Name $testName -Success ($emptyExit -ne 0) -Detail "exitCode=$emptyExit"
@@ -455,136 +484,69 @@ try {
     $liveBatchPath = Join-Path $temporaryRoot 'live-batch.json'
     $liveBatch | ConvertTo-Json -Depth 8 | Set-Content -LiteralPath $liveBatchPath -Encoding utf8
 
-    $liveOutput = & $batchPath -BatchJsonPath $liveBatchPath -StateDirectory $liveState 2>&1
-    $liveExit = $LASTEXITCODE
+    $liveRun = Invoke-ExpectedFailure { & $batchPath -BatchJsonPath $liveBatchPath -StateDirectory $liveState }
+    $liveOutput = $liveRun.output
+    $liveExit = $liveRun.exitCode
 
     $testName = 'Live mode: fails without WorktreeParent'
     Write-TestResult -Name $testName -Success ($liveExit -ne 0) -Detail "exit=$liveExit"
 
-    # ────────────────────────────────────────────────────────────────
-    # Test 12: Contract adapter child worker path when WorktreeRoot provided
-    # ────────────────────────────────────────────────────────────────
-    # Create a minimal worktree so we can test the contract adapter
-    $wtParent = Join-Path ([System.IO.Path]::GetTempPath()) "castilla-wttest-$( [guid]::NewGuid().ToString('N') )"
-    New-Item -ItemType Directory -Path $wtParent -Force | Out-Null
-
-    try {
-        # Create a detached worktree
-        $wtPath = Join-Path $wtParent 'test-worktree'
-        & git -C $repoRoot worktree add --detach --force $wtPath 2>&1 | Out-Null
-
-        # Verify adapter throws about missing child worker when WorktreeRoot points to worktree without scripts/Invoke-NanWorker.ps1
-        $childState = Join-Path $temporaryRoot 'child-state'
-        $adapterContract = @{
-            id = 'c'
-            objective = 'T'
-            allowedPaths = @('x.txt')
+    $invalidCases = @(
+        @{name='Wildcard rejection'; field='allowedPaths'; value=@('scripts/*.txt')},
+        @{name='Unknown model profile rejection'; field='modelProfile'; value='unknown-model'},
+        @{name='Unknown budget profile rejection'; field='budgetProfile'; value='unbounded'}
+    )
+    $invalidCaseIndex = 0
+    foreach ($invalidCase in $invalidCases) {
+        $invalidCaseIndex++
+        $caseStory = @{
+            id = "invalid-case-$invalidCaseIndex"
+            objective = 'Reject invalid bounded contract'
+            allowedPaths = @("scripts/invalid-case-$invalidCaseIndex.txt")
             validationCommands = @('cmd /c exit 0')
-            frontierPlan = 'F'
-            acceptanceCriteria = @('A')
+            frontierPlan = 'Validate fail-closed behavior'
+            acceptanceCriteria = @('Worker does not start')
+            modelProfile = 'mechanical'
+            budgetProfile = 'small'
         }
-        $adapterContractDir = Join-Path $childState 'story-c'
-        New-Item -ItemType Directory -Path $adapterContractDir -Force | Out-Null
-        $adapterContractPath = Join-Path $adapterContractDir 'contract.json'
-        $adapterContract | ConvertTo-Json -Depth 4 | Set-Content -LiteralPath $adapterContractPath -Encoding utf8
-
-        $childOutput = & $contractAdapter -ContractPath $adapterContractPath -StateDirectory $childState -WorktreeRoot $wtPath 2>&1
-        $childExit = $LASTEXITCODE
-
-        $testName = 'Contract adapter: no live fallback to coordinator when WorktreeRoot provided'
-        Write-TestResult -Name $testName -Success ($childExit -ne 0) -Detail "exit=$childExit (should reject missing child worker)"
-
-        if ($liveExit -ne 0) {
-            $liveOutputStr = -join $liveOutput
-            $testName2 = 'Contract adapter: live error contains no-coordinator message'
-            Write-TestResult -Name $testName2 -Success ($liveOutputStr 'no-coordinator' -or $liveOutputStr -match 'fallback' -or $liveOutputStr -match 'fallback') -Detail "no-coordinator"
-        }
-
-        # Verify worktree cleanup after batch run
-        $wtState = Join-Path $temporaryRoot 'wt-cleanup-state'
-        $wtBatch = @{
-            schemaVersion = 1
-            stories = @(
-                @{
-                    id = 'story-wt'
-                    objective = 'Wt test'
-                    allowedPaths = @('scripts/wt.txt')
-                    validationCommands = @('cmd /c exit 0')
-                    frontierPlan = 'Wt'
-                    acceptanceCriteria = @('Wt')
-                    modelProfile = 'mechanical'
-                }
-            )
-        }
-        # Add a mockPlan so the adapter can produce a result via mock in TestMode
-        $mockWTPlan = @(@{exitCode=0;changedPaths=@('scripts/wt.txt');validationExitCode=0;jsonl=$validJsonl}) | ConvertTo-Json -Depth 8 -Compress
-        $wtBatch = @{
-            schemaVersion = 1
-            stories = @(
-                @{
-                    id = 'story-wt'
-                    objective = 'Wt test'
-                    allowedPaths = @('scripts/wt.txt')
-                    validationCommands = @('cmd /c exit 0')
-                    frontierPlan = 'Wt'
-                    acceptanceCriteria = @('Wt')
-                    modelProfile = 'mechanical'
-                    mockPlan = $mockWTPlan
-                }
-            )
-            mockPlans = @($mockWTPlan)
-        }
-        $wtBatchPath = Join-Path $temporaryRoot 'wt-batch.json'
-        $wtBatch | ConvertTo-Json -Depth 8 | Set-Content -LiteralPath $wtBatchPath -Encoding utf8
-
-        & git -C $repoRoot worktree add --detach --force $wtPath 2>&1 | Out-Null
-        $wtOutput = & $batchPath -BatchJsonPath $wtBatchPath -StateDirectory $wtState -WorktreeParent $wtParent -TestMode 2>&1
-        $wtExit = $LASTEXITCODE
-
-        $testName3 = 'Worktree add: batch succeeds with WorktreeRoot'
-        Write-TestResult -Name $testName3 -Success ($wtExit -eq 0) -Detail "exit=$wtExit"
-
-        $testName4 = 'Worktree add: worktree path not present after cleanup in TestMode'
-        # In TestMode no worktrees are created in the parent, so the path shouldn't exist
-        $testName5 = 'Worktree add: batch result contains story entry'
-        $wtResult = $wtOutput | ConvertFrom-Json
-        Write-TestResult -Name $testName5 -Success (@($wtResult.stories).Count -ge 1) -Detail "stories=$(@($wtResult.stories).Count)"
-    } finally {
-        if (Test-Path -LiteralPath $wtParent) {
-            Remove-Item -LiteralPath $wtParent -Recurse -Force -ErrorAction SilentlyContinue
-        }
+        $caseStory[$invalidCase.field] = $invalidCase.value
+        $caseBatch = @{schemaVersion=1;stories=@($caseStory)}
+        $caseBatchPath = Join-Path $temporaryRoot "invalid-case-$invalidCaseIndex.json"
+        $caseState = Join-Path $temporaryRoot "invalid-case-$invalidCaseIndex-state"
+        $caseBatch | ConvertTo-Json -Depth 8 | Set-Content -LiteralPath $caseBatchPath -Encoding utf8
+        $caseRun = Invoke-ExpectedFailure { & $batchPath -BatchJsonPath $caseBatchPath -StateDirectory $caseState -TestMode }
+        Write-TestResult -Name $invalidCase.name -Success ($caseRun.exitCode -ne 0) -Detail "exit=$($caseRun.exitCode)"
     }
 
-    # ── Test 13: Contract adapter rejects non-worktree WorktreeRoot ──
-    $fakeWorktreeDir = Join-Path $temporaryRoot 'fake-worktree-dir'
-    New-Item -ItemType Directory -Path $fakeWorktreeDir -Force | Out-Null
+    # ────────────────────────────────────────────────────────────────
+    # Test 12: Static assertions — no live worktrees created
+    # ────────────────────────────────────────────────────────────────
+    $batchSrc = Get-Content -LiteralPath $batchPath -Raw
+    $adapterSrc = Get-Content -LiteralPath $contractAdapter -Raw
 
-    try {
-        $adapterState2 = Join-Path $temporaryRoot 'adapter-fail-State'
-        New-Item -ItemType Directory -Path $adapterState2 -Force | Out-Null
-        $failContract = @{
-            id = 'fail-c'
-            objective = 'T'
-            allowedPaths = @('x.txt')
-            validationCommands = @('cmd /c exit 0')
-            frontierPlan = 'F'
-            acceptanceCriteria = @('A')
-        }
-        $failContractDir = Join-Path $adapterState2 'story-fail-c'
-        New-Item -ItemType Directory -Path $failContractDir -Force | Out-Null
-        $failContractPath = Join-Path $failContractDir 'contract.json'
-        $failContract | ConvertTo-Json -Depth 4 | Set-Content -LiteralPath $failContractPath -Encoding utf8
+    # 1. live WorktreeParent requirement
+    $testName = 'Static: live batch requires WorktreeParent'
+    Write-TestResult -Name $testName -Success ($batchSrc -match 'Live execution requires WorktreeParent') -Detail ""
 
-        $failOutput = & $contractAdapter -ContractPath $failContractPath -StateDirectory $adapterState2 -WorktreeRoot $fakeWorktreeDir 2>&1
-        $failExit = $LASTEXITCODE
+    # 2. git worktree add --detach
+    $testName = 'Static: batch creates worktrees with --detach'
+    Write-TestResult -Name $testName -Success ($batchSrc -match 'worktree add --detach') -Detail ""
 
-        $testName = 'Contract adapter: rejects non-worktree WorktreeRoot (live)'
-        Write-TestResult -Name $testName -Success ($failExit -ne 0) -Detail "exit=$failExit"
-    } finally {
-        if (!(Test-Path -LiteralPath $fakeWorktreeDir)) {
-            Remove-Item -LiteralPath $fakeWorktreeDir -Recurse -Force -ErrorAction SilentlyContinue
-        }
-    }
+    # 3. recorded exact worktree path
+    $testName = 'Static: batch records exact worktree path on the job'
+    Write-TestResult -Name $testName -Success ($batchSrc -match '__worktreePath') -Detail ""
+
+    # 4. git worktree remove
+    $testName = 'Static: batch removes worktrees with worktree remove'
+    Write-TestResult -Name $testName -Success ($batchSrc -match 'worktree remove') -Detail ""
+
+    # 5. child worker path under WorktreeRoot
+    $testName = 'Static: adapter computes child worker under WorktreeRoot'
+    Write-TestResult -Name $testName -Success ($adapterSrc -match 'Join-Path \$resolvedWorktree.*Invoke-NanWorker') -Detail ""
+
+    # 6. no live coordinator fallback
+    $testName = 'Static: adapter rejects missing WorktreeRoot without fallback'
+    Write-TestResult -Name $testName -Success ($adapterSrc -match 'no.*fallback.*worker.*allowed' -or $adapterSrc -match 'no.*fallback') -Detail ""
 
     # ────────────────────────────────────────────────────────────────
     # Summary

@@ -44,13 +44,29 @@ entre **planificar/diagnosticar/revisar** (Frontier) e **implementar** (worker).
 
 Antes de delegar código, Codex debe indicar objetivo, rutas permitidas,
 criterios de aceptación, plan Frontier y validaciones. La entrada autónoma por
-defecto es `Invoke-FrontierSupervisedNanWorker.ps1`: crea un worktree nuevo por
+defecto para una sola historia es `Invoke-FrontierSupervisedNanWorker.ps1`: crea un worktree nuevo por
 intento, ejecuta NAN una sola vez, conserva parche, diagnósticos acotados y
 telemetría fuera del repo incluso si falla una validación determinista,
 elimina los bytes candidatos y solicita a Codex `ACCEPT`, `RETRY` o `ESCALATE`.
 Un `RETRY` relanza un worker con sesión nueva sobre el mismo SHA y con
 instrucciones reducidas; nunca permite que Codex implemente silenciosamente.
 Solo un intento listo y validado puede recibir `ACCEPT`.
+
+Cuando haya dos o más historias independientes, la entrada preferida y
+obligatoria es `Invoke-NanWorkerBatch.ps1`. Codex debe separar rutas exactas y
+disjuntas, y el broker lanza hasta cinco contextos NAN frescos en worktrees
+detached distintos. Cada historia conserva contrato, parche, telemetría y hashes
+fuera del repositorio; Codex revisa la oleada completa una sola vez. No se usa
+un lote para cambios con rutas solapadas, decisiones de arquitectura o
+dependencias secuenciales.
+
+```powershell
+.\scripts\Invoke-NanWorkerBatch.ps1 `
+  -BatchJsonPath C:\orchestration\contracts\batch-001.json `
+  -StateDirectory C:\orchestration\state\batch-001 `
+  -WorktreeParent C:\orchestration\worktrees `
+  -MaxConcurrency 5
+```
 
 La ejecución de código solo comienza en un worktree Git enlazado, limpio y
 creado por el orquestador. Declarar un modelo o conservar una sesión OpenCode no
@@ -129,3 +145,8 @@ reintentar con NAN; agotado el presupuesto termina en `ESCALATE`. Codex revisa
 pero no toma el control de la implementación. Este host Windows es
 `BOUNDED_LOCAL`, no aislamiento duro certificado. No se delegan secretos,
 credenciales ni datos personales.
+
+Los tokens no son una métrica de éxito ni se estiman. `tokensUsage` es una
+observación del cliente; solo `providerEvidence.providerReportedTokens` de
+respuestas NAN 2xx puede comunicarse como consumo del proveedor. `DryRun`,
+`TestMode` y cualquier ejecución sin evidencia verificable cuentan como cero.

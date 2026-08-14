@@ -14,12 +14,18 @@ $utf8 = New-Object System.Text.UTF8Encoding($false)
 
 # ── When WorktreeRoot is supplied and not TestMode: validate and use child worker ──
 if ($WorktreeRoot -and -not $TestMode) {
-    $resolvedWorktree = [System.IO.Path]::GetFullPath($WorktreeRoot)
-    $wtList = (& git -C $repoRoot worktree list --porcelain 2>&1) -join "`n"
-    if (-not ($wtList -match [regex]::Escape($resolvedWorktree))) {
+    $resolvedWorktree = [System.IO.Path]::GetFullPath($WorktreeRoot).TrimEnd('\','/')
+    $linkedWorktrees = @(& git -C $repoRoot worktree list --porcelain 2>&1 | ForEach-Object {
+        if ($_ -match '^worktree (.+)$') {
+            [System.IO.Path]::GetFullPath($Matches[1]).TrimEnd('\','/')
+        }
+    })
+    if ($LASTEXITCODE -ne 0 -or -not @($linkedWorktrees | Where-Object {
+        $_.Equals($resolvedWorktree, [System.StringComparison]::OrdinalIgnoreCase)
+    }).Count) {
         throw "WorktreeRoot '$resolvedWorktree' is not a linked worktree of the repo."
     }
-    $childWorker = Join-Path $WorktreeRoot 'scripts\Invoke-NanWorker.ps1'
+    $childWorker = Join-Path $resolvedWorktree 'scripts\Invoke-NanWorker.ps1'
     if (-not (Test-Path -LiteralPath $childWorker)) {
         throw "Child worker script not found at $childWorker"
     }
@@ -68,9 +74,25 @@ if (@($contract.allowedPaths).Count -eq 0) { throw 'allowedPaths must contain at
 if (@($contract.validationCommands).Count -eq 0) { throw 'validationCommands must contain at least one command.' }
 if (@($contract.acceptanceCriteria).Count -eq 0) { throw 'acceptanceCriteria must contain at least one item.' }
 
-# Reject glm5.2 in modelProfile
+# Validate paths and profiles before launching the worker.
+foreach ($allowedPath in @($contract.allowedPaths)) {
+    $pathText = [string]$allowedPath
+    if ([string]::IsNullOrWhiteSpace($pathText)) { throw 'allowedPaths cannot contain empty values.' }
+    $normalizedPath = $pathText.Replace('\','/')
+    if ($normalizedPath -match '^[a-zA-Z]:/' -or $normalizedPath.StartsWith('/')) { throw "Allowed path '$pathText' must be relative." }
+    if ($normalizedPath -match '(^|/)\.\.(/|$)') { throw "Allowed path '$pathText' contains directory traversal." }
+    if ($normalizedPath -match '[*?\[\]]') { throw "Allowed path '$pathText' contains a wildcard; batch paths must be exact." }
+}
+
 $modelProfile = if ($contract.PSObject.Properties.Name -contains 'modelProfile') { [string]$contract.modelProfile } else { 'mechanical' }
 if ($modelProfile -match '(?i)glm5\.2') { throw "Model profile '$modelProfile' references unsupported glm5.2." }
+if (@('mechanical','reasoning','long-context') -notcontains $modelProfile) {
+    throw "Model profile '$modelProfile' is not valid."
+}
+$budgetProfile = if ($contract.PSObject.Properties.Name -contains 'budgetProfile') { [string]$contract.budgetProfile } else { 'small' }
+if (@('small','batch','research','extended') -notcontains $budgetProfile) {
+    throw "Budget profile '$budgetProfile' is not valid."
+}
 
 # Build worker parameters (splat)
 $workerParameters = @{
@@ -83,7 +105,7 @@ $workerParameters = @{
     PlannedBy = 'frontier'
     MaxRetries = 1
     FallbackModels = @()
-    BudgetProfile = if ($contract.PSObject.Properties.Name -contains 'budgetProfile') { $contract.budgetProfile } else { 'small' }
+    BudgetProfile = $budgetProfile
     ModelProfile = $modelProfile
     DuplicateWindowSeconds = 0
 }
@@ -97,12 +119,14 @@ if ($contract.PSObject.Properties.Name -contains 'maxExecutionSeconds') {
 
 # ── Allocate state paths outside the source repository ──
 $storyId = $contract.id
-$storyDir = if (-not [string]::IsNullOrWhiteSpace($StateDirectory)) {
-    Join-Path $StateDirectory "story-$storyId"
-} else {
-    $tempRoot = Join-Path ([System.IO.Path]::GetTempPath()) "castilla-nan-contract-$storyId-$( [guid]::NewGuid().ToString('N') )"
-    $tempRoot
+if ([string]::IsNullOrWhiteSpace($StateDirectory)) { throw 'StateDirectory is required.' }
+$resolvedStateDirectory = [System.IO.Path]::GetFullPath($StateDirectory)
+$sourcePrefix = $repoRoot.TrimEnd('\','/') + [System.IO.Path]::DirectorySeparatorChar
+$statePrefix = $resolvedStateDirectory.TrimEnd('\','/') + [System.IO.Path]::DirectorySeparatorChar
+if ($statePrefix.StartsWith($sourcePrefix, [System.StringComparison]::OrdinalIgnoreCase)) {
+    throw 'StateDirectory must be outside the source repository.'
 }
+$storyDir = Join-Path $resolvedStateDirectory "story-$storyId"
 New-Item -ItemType Directory -Path $storyDir -Force | Out-Null
 $telemetryPath = Join-Path $storyDir 'worker-telemetry.json'
 $patchPath = Join-Path $storyDir 'candidate.patch'
