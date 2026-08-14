@@ -1,0 +1,205 @@
+{
+  "schemaVersion": 1,
+  "stories": [
+    {
+      "id": "fme03s-research",
+      "objective": "Investiga FME03S usando solo analysis/fp_coverage_batch_parallel_6/sources/FME03S.txt y data/curated/occupations.json. Crea analysis/fp_coverage_batch_parallel_6/proposals/FME03S.md con todas las citas literales TodoFP y candidatos CNO-11 approved de correspondencia exacta o funcional directa para delineación proyectista, CAD, desarrollo de productos, moldes, matrices y utillajes. Para cada candidato incluye occupationId, código, etiqueta exacta, cita literal, justificación y riesgo; enumera toda salida sin candidato. No rebajes funciones técnicas de diseño a operadores de fabricación ni aceptes coincidencias por sector.",
+      "allowedPaths": [
+        "analysis/fp_coverage_batch_parallel_6/proposals/FME03S.md"
+      ],
+      "validationCommands": [
+        "powershell -NoProfile -Command \"if (-not (Select-String -LiteralPath 'analysis/fp_coverage_batch_parallel_6/proposals/FME03S.md' -Pattern 'FME03S' -Quiet)) { exit 1 }\""
+      ],
+      "frontierPlan": "Comparar mecánicamente las siete salidas con todo el catálogo approved, preservando nivel técnico y separando diseño de operación de máquinas.",
+      "acceptanceCriteria": [
+        "solo candidatos approved",
+        "7 citas literales cubiertas",
+        "riesgos y rechazos explícitos",
+        "no modifica datos curados"
+      ],
+      "modelProfile": "mechanical",
+      "budgetProfile": "research",
+      "maxExecutionSeconds": 1800
+    },
+    {
+      "id": "hot02s-research",
+      "objective": "Investiga HOT02S usando solo analysis/fp_coverage_batch_parallel_6/sources/HOT02S.txt y data/curated/occupations.json. Crea analysis/fp_coverage_batch_parallel_6/proposals/HOT02S.md con todas las citas literales TodoFP y candidatos CNO-11 approved de correspondencia exacta o funcional directa para agencia de viajes, reservas, consultoría turística, venta de viajes y organización de eventos. Para cada candidato incluye occupationId, código, etiqueta exacta, cita literal, justificación y riesgo; enumera toda salida sin candidato. No equipares gestión de eventos con publicidad, relaciones públicas o animación turística.",
+      "allowedPaths": [
+        "analysis/fp_coverage_batch_parallel_6/proposals/HOT02S.md"
+      ],
+      "validationCommands": [
+        "powershell -NoProfile -Command \"if (-not (Select-String -LiteralPath 'analysis/fp_coverage_batch_parallel_6/proposals/HOT02S.md' -Pattern 'HOT02S' -Quiet)) { exit 1 }\""
+      ],
+      "frontierPlan": "Razonar por función laboral exacta y separar intermediación y venta turística, reservas, dirección de agencia y organización de eventos.",
+      "acceptanceCriteria": [
+        "solo candidatos approved",
+        "8 citas literales cubiertas",
+        "no confunde eventos con publicidad",
+        "ausencias documentadas"
+      ],
+      "modelProfile": "reasoning",
+      "budgetProfile": "research",
+      "maxExecutionSeconds": 1800
+    },
+    {
+      "id": "ims03s-research",
+      "objective": "Investiga IMS03S usando solo analysis/fp_coverage_batch_parallel_6/sources/IMS03S.txt y data/curated/occupations.json. Crea analysis/fp_coverage_batch_parallel_6/proposals/IMS03S.md con todas las citas literales TodoFP y candidatos CNO-11 approved de correspondencia exacta o funcional directa para producción de cine, televisión, vídeo, radio, animación, multimedia y espectáculos en vivo. Para cada candidato incluye occupationId, código, etiqueta exacta, cita literal, justificación y riesgo; enumera toda salida sin candidato. No sustituyas producción por realización, cámara, sonido, interpretación artística o gerencia genérica.",
+      "allowedPaths": [
+        "analysis/fp_coverage_batch_parallel_6/proposals/IMS03S.md"
+      ],
+      "validationCommands": [
+        "powershell -NoProfile -Command \"if (-not (Select-String -LiteralPath 'analysis/fp_coverage_batch_parallel_6/proposals/IMS03S.md' -Pattern 'IMS03S' -Quiet)) { exit 1 }\""
+      ],
+      "frontierPlan": "Revisar el catálogo amplio preservando la función de producción audiovisual y de espectáculos frente a oficios creativos o técnicos adyacentes.",
+      "acceptanceCriteria": [
+        "solo candidatos approved",
+        "9 citas literales cubiertas",
+        "producción no se confunde con realización",
+        "ausencias completas"
+      ],
+      "modelProfile": "long-context",
+      "budgetProfile": "research",
+      "maxExecutionSeconds": 1800
+    },
+    {
+      "id": "ssc02s-research",
+      "objective": "Investiga SSC02S usando solo analysis/fp_coverage_batch_parallel_6/sources/SSC02S.txt y data/curated/occupations.json. Crea analysis/fp_coverage_batch_parallel_6/proposals/SSC02S.md con todas las citas literales TodoFP y candidatos CNO-11 approved de correspondencia exacta o funcional directa para animación sociocultural y turística, tiempo libre educativo, dinamización comunitaria, información juvenil y servicios culturales. Para cada candidato incluye occupationId, código, etiqueta exacta, cita literal, justificación y riesgo; enumera toda salida sin candidato. No equipares animación sociocultural con animación 3D, entretenimiento artístico, guía turístico o trabajo social genérico.",
+      "allowedPaths": [
+        "analysis/fp_coverage_batch_parallel_6/proposals/SSC02S.md"
+      ],
+      "validationCommands": [
+        "powershell -NoProfile -Command \"if (-not (Select-String -LiteralPath 'analysis/fp_coverage_batch_parallel_6/proposals/SSC02S.md' -Pattern 'SSC02S' -Quiet)) { exit 1 }\""
+      ],
+      "frontierPlan": "Razonar por función social, educativa, comunitaria y turística, rechazando homónimos tecnológicos y ocupaciones de asistencia social de otra jerarquía.",
+      "acceptanceCriteria": [
+        "solo candidatos approved",
+        "12 citas literales cubiertas",
+        "rechaza homónimos de animación",
+        "ausencias documentadas"
+      ],
+      "modelProfile": "reasoning",
+      "budgetProfile": "research",
+      "maxExecutionSeconds": 1800
+    },
+    {
+      "id": "ina01s-research",
+      "objective": "Investiga INA01S usando solo analysis/fp_coverage_batch_parallel_6/sources/INA01S.txt y data/curated/occupations.json. Crea analysis/fp_coverage_batch_parallel_6/proposals/INA01S.md con todas las citas literales TodoFP y candidatos CNO-11 approved de correspondencia exacta o funcional directa para vitivinicultura, análisis sensorial, elaboración y crianza, envasado, destilación, mostos y concentración. Para cada candidato incluye occupationId, código, etiqueta exacta, cita literal, justificación y riesgo; enumera toda salida sin candidato. No rebajes supervisión técnica a peonaje agrícola ni confundas industria del vino con hostelería o venta minorista.",
+      "allowedPaths": [
+        "analysis/fp_coverage_batch_parallel_6/proposals/INA01S.md"
+      ],
+      "validationCommands": [
+        "powershell -NoProfile -Command \"if (-not (Select-String -LiteralPath 'analysis/fp_coverage_batch_parallel_6/proposals/INA01S.md' -Pattern 'INA01S' -Quiet)) { exit 1 }\""
+      ],
+      "frontierPlan": "Usar contexto amplio para preservar jerarquía industrial entre análisis, supervisión, elaboración, destilación y tareas agrícolas.",
+      "acceptanceCriteria": [
+        "solo candidatos approved",
+        "7 citas literales cubiertas",
+        "preserva jerarquía laboral",
+        "ausencias completas"
+      ],
+      "modelProfile": "long-context",
+      "budgetProfile": "research",
+      "maxExecutionSeconds": 1800
+    },
+    {
+      "id": "aga02m-research",
+      "objective": "Investiga AGA02M usando solo analysis/fp_coverage_batch_parallel_6/sources/AGA02M.txt y data/curated/occupations.json. Crea analysis/fp_coverage_batch_parallel_6/proposals/AGA02M.md con todas las citas literales TodoFP y candidatos CNO-11 approved de correspondencia exacta o funcional directa para agricultura, apicultura, avicultura, ganadería, floricultura, fruticultura, horticultura, maquinaria agrícola y producción de huevos o leche. Para cada candidato incluye occupationId, código, etiqueta exacta, cita literal, justificación y riesgo; enumera toda salida sin candidato. No sustituir productores especializados por peones ni viceversa.",
+      "allowedPaths": [
+        "analysis/fp_coverage_batch_parallel_6/proposals/AGA02M.md"
+      ],
+      "validationCommands": [
+        "powershell -NoProfile -Command \"if (-not (Select-String -LiteralPath 'analysis/fp_coverage_batch_parallel_6/proposals/AGA02M.md' -Pattern 'AGA02M' -Quiet)) { exit 1 }\""
+      ],
+      "frontierPlan": "Comparar las diez ocupaciones agrarias con el catálogo approved y preservar especialidad y jerarquía entre productores, operadores y peones.",
+      "acceptanceCriteria": [
+        "solo candidatos approved",
+        "10 citas literales cubiertas",
+        "especialidades agrarias separadas",
+        "ausencias explícitas"
+      ],
+      "modelProfile": "mechanical",
+      "budgetProfile": "research",
+      "maxExecutionSeconds": 1800
+    },
+    {
+      "id": "aga03b-research",
+      "objective": "Investiga AGA03B usando solo analysis/fp_coverage_batch_parallel_6/sources/AGA03B.txt y data/curated/occupations.json. Crea analysis/fp_coverage_batch_parallel_6/proposals/AGA03B.md con todas las citas literales TodoFP y candidatos CNO-11 approved de correspondencia exacta o funcional directa para peonaje forestal, viveros, jardinería, cultivos, aprovechamientos e implantaciones forestales y tratamientos selvícolas. Para cada candidato incluye occupationId, código, etiqueta exacta, cita literal, justificación y riesgo; enumera toda salida sin candidato. No elevar peonaje básico a técnicos forestales, ingenieros o encargados.",
+      "allowedPaths": [
+        "analysis/fp_coverage_batch_parallel_6/proposals/AGA03B.md"
+      ],
+      "validationCommands": [
+        "powershell -NoProfile -Command \"if (-not (Select-String -LiteralPath 'analysis/fp_coverage_batch_parallel_6/proposals/AGA03B.md' -Pattern 'AGA03B' -Quiet)) { exit 1 }\""
+      ],
+      "frontierPlan": "Aplicar filtro approved y preservar el nivel básico de peonaje, distinguiendo bosque, vivero, jardín y cultivo sin ascensos de jerarquía.",
+      "acceptanceCriteria": [
+        "solo candidatos approved",
+        "11 citas literales cubiertas",
+        "no eleva jerarquía",
+        "variantes casi duplicadas tratadas explícitamente"
+      ],
+      "modelProfile": "mechanical",
+      "budgetProfile": "research",
+      "maxExecutionSeconds": 1800
+    },
+    {
+      "id": "com02e-research",
+      "objective": "Investiga COM02E usando solo analysis/fp_coverage_batch_parallel_6/sources/COM02E.txt y data/curated/occupations.json. Crea analysis/fp_coverage_batch_parallel_6/proposals/COM02E.md con todas las citas literales TodoFP y candidatos CNO-11 approved de correspondencia exacta o funcional directa para comercio electrónico, marketing de crecimiento y digital, captación de clientes, gestión de contenidos, comunidades digitales y redacción publicitaria. Para cada candidato incluye occupationId, código, etiqueta exacta, cita literal, justificación y riesgo; enumera toda salida sin candidato. No uses profesionales genéricos de ventas, periodistas, relaciones públicas o programadores web por mera proximidad sectorial.",
+      "allowedPaths": [
+        "analysis/fp_coverage_batch_parallel_6/proposals/COM02E.md"
+      ],
+      "validationCommands": [
+        "powershell -NoProfile -Command \"if (-not (Select-String -LiteralPath 'analysis/fp_coverage_batch_parallel_6/proposals/COM02E.md' -Pattern 'COM02E' -Quiet)) { exit 1 }\""
+      ],
+      "frontierPlan": "Razonar por función digital concreta y rechazar sustituciones por ventas, periodismo, relaciones públicas o desarrollo web sin evidencia funcional directa.",
+      "acceptanceCriteria": [
+        "solo candidatos approved",
+        "7 citas literales cubiertas",
+        "sin equivalencias sectoriales",
+        "riesgos y ausencias explícitos"
+      ],
+      "modelProfile": "reasoning",
+      "budgetProfile": "research",
+      "maxExecutionSeconds": 1800
+    },
+    {
+      "id": "ele02b-research",
+      "objective": "Investiga ELE02B usando solo analysis/fp_coverage_batch_parallel_6/sources/ELE02B.txt y data/curated/occupations.json. Crea analysis/fp_coverage_batch_parallel_6/proposals/ELE02B.md con todas las 12 citas literales TodoFP, conservando variantes textuales, y candidatos CNO-11 approved de correspondencia exacta o funcional directa para auxiliares automatizados, ayudantes de telecomunicaciones, antenas, baja tensión y peonaje industrial o energético. Para cada candidato incluye occupationId, código, etiqueta exacta, cita literal, justificación y riesgo; enumera toda salida sin candidato. No elevar ayudantes a instaladores titulados ni fusionar variantes antes de documentarlas.",
+      "allowedPaths": [
+        "analysis/fp_coverage_batch_parallel_6/proposals/ELE02B.md"
+      ],
+      "validationCommands": [
+        "powershell -NoProfile -Command \"if (-not (Select-String -LiteralPath 'analysis/fp_coverage_batch_parallel_6/proposals/ELE02B.md' -Pattern 'ELE02B' -Quiet)) { exit 1 }\""
+      ],
+      "frontierPlan": "Aplicar comparación approved preservando el nivel auxiliar y básico, documentando por separado las variantes de telecomunicaciones, antenas y peonaje.",
+      "acceptanceCriteria": [
+        "solo candidatos approved",
+        "12 citas literales cubiertas",
+        "no eleva ayudantes",
+        "dos procedencias oficiales conservadas"
+      ],
+      "modelProfile": "mechanical",
+      "budgetProfile": "research",
+      "maxExecutionSeconds": 1800
+    },
+    {
+      "id": "ima01m-research",
+      "objective": "Investiga IMA01M usando solo analysis/fp_coverage_batch_parallel_6/sources/IMA01M.txt y data/curated/occupations.json. Crea analysis/fp_coverage_batch_parallel_6/proposals/IMA01M.md con las cinco citas literales TodoFP y candidatos CNO-11 approved de correspondencia exacta o funcional directa para instalación y mantenimiento de producción de calor, agua, calefacción y ACS, gas y combustibles líquidos y solar térmica. Para cada candidato incluye occupationId, código, etiqueta exacta, cita literal, justificación y riesgo; enumera toda salida sin candidato. No equipares estas funciones con fontanería general, climatización frigorífica o producción de energía sin evidencia directa.",
+      "allowedPaths": [
+        "analysis/fp_coverage_batch_parallel_6/proposals/IMA01M.md"
+      ],
+      "validationCommands": [
+        "powershell -NoProfile -Command \"if (-not (Select-String -LiteralPath 'analysis/fp_coverage_batch_parallel_6/proposals/IMA01M.md' -Pattern 'IMA01M' -Quiet)) { exit 1 }\""
+      ],
+      "frontierPlan": "Usar contexto amplio para diferenciar calor, agua, calefacción, gas y solar térmica frente a ocupaciones genéricas o frigoríficas.",
+      "acceptanceCriteria": [
+        "solo candidatos approved",
+        "5 citas literales cubiertas",
+        "funciones térmicas diferenciadas",
+        "riesgos y ausencias explícitos"
+      ],
+      "modelProfile": "long-context",
+      "budgetProfile": "research",
+      "maxExecutionSeconds": 1800
+    }
+  ]
+}
