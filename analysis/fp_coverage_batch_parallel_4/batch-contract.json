@@ -1,0 +1,205 @@
+{
+  "schemaVersion": 1,
+  "stories": [
+    {
+      "id": "qui01s-research",
+      "objective": "Investiga QUI01S usando solo analysis/fp_coverage_batch_parallel_4/sources/QUI01S.txt y data/curated/occupations.json. Crea un informe conciso con citas literales TodoFP y candidatos CNO-11 aprobados de correspondencia exacta o funcional directa para analista de laboratorio, control microbiologico, control de calidad, ensayos de materiales y quimica industrial. Para cada candidato incluye occupationId, codigo, etiqueta exacta, cita literal, justificacion y riesgo. Enumera todas las salidas sin candidato. No modifiques datos curados ni infieras por mera semejanza sectorial.",
+      "allowedPaths": [
+        "analysis/fp_coverage_batch_parallel_4/proposals/QUI01S.md"
+      ],
+      "validationCommands": [
+        "powershell -NoProfile -Command \"if (-not (Test-Path -LiteralPath 'analysis/fp_coverage_batch_parallel_4/proposals/QUI01S.md')) { exit 1 }\""
+      ],
+      "frontierPlan": "Usar contexto amplio para revisar todo el catalogo CNO y evitar sustituciones entre roles de laboratorio, control de calidad y ensayos de materiales.",
+      "acceptanceCriteria": [
+        "cada candidato existe y esta approved",
+        "cada candidato conserva cita TodoFP literal",
+        "las salidas sin match quedan explicitas",
+        "no modifica datos curados"
+      ],
+      "modelProfile": "long-context",
+      "budgetProfile": "research",
+      "maxExecutionSeconds": 1800
+    },
+    {
+      "id": "san09s-research",
+      "objective": "Investiga SAN09S usando solo analysis/fp_coverage_batch_parallel_4/sources/SAN09S.txt y data/curated/occupations.json. Crea un informe conciso con citas literales TodoFP y candidatos CNO-11 approved de correspondencia exacta o funcional directa para radioterapia, dosimetria, proteccion radiologica y comercial de equipos de radioelectrologia medica. Incluye occupationId, codigo, etiqueta exacta, cita literal, justificacion y riesgo; enumera salidas sin candidato. No equipares roles de radioterapia con oncologia medica ni con radiodiagnostico.",
+      "allowedPaths": [
+        "analysis/fp_coverage_batch_parallel_4/proposals/SAN09S.md"
+      ],
+      "validationCommands": [
+        "powershell -NoProfile -Command \"if (-not (Test-Path -LiteralPath 'analysis/fp_coverage_batch_parallel_4/proposals/SAN09S.md')) { exit 1 }\""
+      ],
+      "frontierPlan": "Razonar por funcion laboral exacta y rechazar sustituciones entre roles sanitarios adyacentes como radiodiagnostico o oncologia medica.",
+      "acceptanceCriteria": [
+        "solo occupationId approved",
+        "citas TodoFP literales",
+        "no confunde radioterapia con radiodiagnostico ni oncologia",
+        "ausencias documentadas"
+      ],
+      "modelProfile": "reasoning",
+      "budgetProfile": "research",
+      "maxExecutionSeconds": 1800
+    },
+    {
+      "id": "aga03s-research",
+      "objective": "Investiga AGA03S usando solo analysis/fp_coverage_batch_parallel_4/sources/AGA03S.txt y data/curated/occupations.json. Este titulo cubre exclusivamente ganaderia, asistencia en sanidad animal, cuidados equinos y productos veterinarios. Crea un informe conciso con candidatos CNO-11 approved de correspondencia exacta o funcional directa. Para cada candidato incluye occupationId, codigo, etiqueta exacta, cita literal, justificacion y riesgo. Enumera todas las salidas sin candidato. Este titulo no cubre gestion del arbolado, levantamientos geodesicos ni seguridad ciudadana; no existen salidas equivalentes en esos ambitos.",
+      "allowedPaths": [
+        "analysis/fp_coverage_batch_parallel_4/proposals/AGA03S.md"
+      ],
+      "validationCommands": [
+        "powershell -NoProfile -Command \"if (-not (Test-Path -LiteralPath 'analysis/fp_coverage_batch_parallel_4/proposals/AGA03S.md')) { exit 1 }\""
+      ],
+      "frontierPlan": "Usar contexto amplio para preservar jerarquia laboral y diferenciar funciones ganaderas, equinas, veterinarias y de salud animal. Excluir expresamente gestion del arbolado, levantamientos geodesicos y seguridad ciudadana por contaminacion de otros AGA.",
+      "acceptanceCriteria": [
+        "preserva jerarquia laboral",
+        "solo approved",
+        "excluye gestion del arbolado, levantamientos geodesicos y seguridad ciudadana",
+        "cubre todas las salidas"
+      ],
+      "modelProfile": "long-context",
+      "budgetProfile": "research",
+      "maxExecutionSeconds": 1800
+    },
+    {
+      "id": "ena03s-research",
+      "objective": "Investiga ENA03S usando solo analysis/fp_coverage_batch_parallel_4/sources/ENA03S.txt y data/curated/occupations.json. Crea un informe conciso con candidatos CNO-11 approved de correspondencia exacta o funcional directa para instalaciones eolicas, fotovoltaicas, subestaciones electricas, aerogeneradores y centrales solares. Para cada candidato incluye occupationId, codigo, etiqueta exacta, cita literal, justificacion y riesgo. Enumera todas las salidas sin candidato. No modifiques datos curados ni infieras por semejanza sectorial.",
+      "allowedPaths": [
+        "analysis/fp_coverage_batch_parallel_4/proposals/ENA03S.md"
+      ],
+      "validationCommands": [
+        "powershell -NoProfile -Command \"if (-not (Test-Path -LiteralPath 'analysis/fp_coverage_batch_parallel_4/proposals/ENA03S.md')) { exit 1 }\""
+      ],
+      "frontierPlan": "Aplicar mecanicamente el filtro approved y distinguir montaje, mantenimiento, gestion de operacion y proyectismo en instalaciones renovables.",
+      "acceptanceCriteria": [
+        "solo catalogo approved",
+        "citas literales sin perder salidas",
+        "exclusiones explicitas",
+        "un informe conciso"
+      ],
+      "modelProfile": "mechanical",
+      "budgetProfile": "research",
+      "maxExecutionSeconds": 1800
+    },
+    {
+      "id": "hot05s-research",
+      "objective": "Investiga HOT05S usando solo analysis/fp_coverage_batch_parallel_4/sources/HOT05S.txt y data/curated/occupations.json. Este titulo cubre exclusivamente direccion de servicios de restauracion, maître, sumiller, banquetes y catering. No incluye elaboracion de bolleria ni analisis organoleptico profesional. Crea un informe conciso con candidatos CNO-11 approved de correspondencia exacta o funcional directa. Para cada candidato incluye occupationId, codigo, etiqueta exacta, cita literal, justificacion y riesgo. Enumera todas las salidas sin candidato. No modifiques datos curados.",
+      "allowedPaths": [
+        "analysis/fp_coverage_batch_parallel_4/proposals/HOT05S.md"
+      ],
+      "validationCommands": [
+        "powershell -NoProfile -Command \"if (-not (Test-Path -LiteralPath 'analysis/fp_coverage_batch_parallel_4/proposals/HOT05S.md')) { exit 1 }\""
+      ],
+      "frontierPlan": "Razonar por funcion laboral exacta de direccion de restauracion y rechazar sustituciones hacia bolleria, confiteria o analisis organoleptico profesional.",
+      "acceptanceCriteria": [
+        "solo approved",
+        "citas literales",
+        "excluye bolleria y analisis organoleptico profesional",
+        "un informe conciso"
+      ],
+      "modelProfile": "reasoning",
+      "budgetProfile": "research",
+      "maxExecutionSeconds": 1800
+    },
+    {
+      "id": "ims02s-research",
+      "objective": "Investiga IMS02S usando solo analysis/fp_coverage_batch_parallel_4/sources/IMS02S.txt y data/curated/occupations.json. Este titulo cubre exclusivamente realizacion de proyectos audiovisuales y espectaculos, direccion de cine/television/video y regiduria de espectaculos en vivo. No incluye sonorizacion, animacion musical ni ajuste de imagen digital. Crea un informe conciso con candidatos CNO-11 approved de correspondencia exacta o funcional directa. Para cada candidato incluye occupationId, codigo, etiqueta exacta, cita literal, justificacion y riesgo. Enumera todas las salidas sin candidato.",
+      "allowedPaths": [
+        "analysis/fp_coverage_batch_parallel_4/proposals/IMS02S.md"
+      ],
+      "validationCommands": [
+        "powershell -NoProfile -Command \"if (-not (Test-Path -LiteralPath 'analysis/fp_coverage_batch_parallel_4/proposals/IMS02S.md')) { exit 1 }\""
+      ],
+      "frontierPlan": "Revisar el catalogo amplio preservando la funcion de realizacion, direccion y regiduria. Excluir expresamente sonorizacion, animacion musical e iluminacion como perfiles distintos.",
+      "acceptanceCriteria": [
+        "roles audiovisuales y de regiduria separados",
+        "solo approved",
+        "excluye sonorizacion, animacion musical e iluminacion",
+        "ausencias completas"
+      ],
+      "modelProfile": "long-context",
+      "budgetProfile": "research",
+      "maxExecutionSeconds": 1800
+    },
+    {
+      "id": "ina02s-research",
+      "objective": "Investiga INA02S usando solo analysis/fp_coverage_batch_parallel_4/sources/INA02S.txt y data/curated/occupations.json. Este titulo cubre exclusivamente procesos y calidad en la industria alimentaria, produccion, laboratorio de control de calidad, seguridad alimentaria e inspeccion. No define elaboracion de bolleria ni confiteria como perfil principal. Crea un informe conciso con candidatos CNO-11 approved de correspondencia exacta o funcional directa. Para cada candidato incluye occupationId, codigo, etiqueta exacta, cita literal, justificacion y riesgo. Enumera todas las salidas sin candidato.",
+      "allowedPaths": [
+        "analysis/fp_coverage_batch_parallel_4/proposals/INA02S.md"
+      ],
+      "validationCommands": [
+        "powershell -NoProfile -Command \"if (-not (Test-Path -LiteralPath 'analysis/fp_coverage_batch_parallel_4/proposals/INA02S.md')) { exit 1 }\""
+      ],
+      "frontierPlan": "Aplicar correspondencia mecanica a oficios de industria alimentaria, preservando funciones de calidad, laboratorio, produccion y seguridad alimentaria. Excluir bolleria y confiteria como perfil definitorio.",
+      "acceptanceCriteria": [
+        "solo approved",
+        "citas literales",
+        "excluye bolleria y confiteria como perfil definitorio",
+        "un informe conciso"
+      ],
+      "modelProfile": "long-context",
+      "budgetProfile": "research",
+      "maxExecutionSeconds": 1800
+    },
+    {
+      "id": "msp34-research",
+      "objective": "Investiga MSP34 usando solo analysis/fp_coverage_batch_parallel_4/sources/MSP34.txt y data/curated/occupations.json. Crea un informe conciso con candidatos CNO-11 approved de correspondencia exacta o funcional directa para prevencion de riesgos laborales, coordinacion de seguridad y salud en obras, actividades preventivas y seguridad e higiene en el trabajo. Para cada candidato incluye occupationId, codigo, etiqueta exacta, cita literal, justificacion y riesgo. Enumera todas las salidas sin candidato. No equipares prevencion con ingenieria de seguridad ni con auditoria ISO.",
+      "allowedPaths": [
+        "analysis/fp_coverage_batch_parallel_4/proposals/MSP34.md"
+      ],
+      "validationCommands": [
+        "powershell -NoProfile -Command \"if (-not (Test-Path -LiteralPath 'analysis/fp_coverage_batch_parallel_4/proposals/MSP34.md')) { exit 1 }\""
+      ],
+      "frontierPlan": "Razonar por funcion preventiva exacta y rechazar sustituciones hacia ingenieria de seguridad, auditoria ISO o puestos de direccion de seguridad distintos.",
+      "acceptanceCriteria": [
+        "solo approved",
+        "citas literales",
+        "no confunde prevencion con auditoria ISO ni ingenieria de seguridad",
+        "ausencias documentadas"
+      ],
+      "modelProfile": "reasoning",
+      "budgetProfile": "research",
+      "maxExecutionSeconds": 1800
+    },
+    {
+      "id": "fme02b-research",
+      "objective": "Investiga FME02B usando solo analysis/fp_coverage_batch_parallel_4/sources/FME02B.txt y data/curated/occupations.json. Crea un informe conciso con candidatos CNO-11 approved de correspondencia exacta o funcional directa para carpinteria metalica, corte y oxicorte de metales, soldadura, montaje de estructuras metalicas, ensamblado de componentes electronicos y procesos automatizados. Para cada candidato incluye occupationId, codigo, etiqueta exacta, cita literal, justificacion y riesgo. Enumera todas las salidas sin candidato. No rebajes funciones de montaje y soldadura a peonaria general sin cualificacion.",
+      "allowedPaths": [
+        "analysis/fp_coverage_batch_parallel_4/proposals/FME02B.md"
+      ],
+      "validationCommands": [
+        "powershell -NoProfile -Command \"if (-not (Test-Path -LiteralPath 'analysis/fp_coverage_batch_parallel_4/proposals/FME02B.md')) { exit 1 }\""
+      ],
+      "frontierPlan": "Revisar el catalogo amplio preservando nivel funcional y evitando mapear funciones cualificadas a peonaria general.",
+      "acceptanceCriteria": [
+        "preserva nivel funcional",
+        "solo approved",
+        "citas y riesgos",
+        "ausencias explicitas"
+      ],
+      "modelProfile": "mechanical",
+      "budgetProfile": "research",
+      "maxExecutionSeconds": 1800
+    },
+    {
+      "id": "ifc01e-research",
+      "objective": "Investiga IFC01E usando solo analysis/fp_coverage_batch_parallel_4/sources/IFC01E.txt y data/curated/occupations.json. Crea un informe conciso con candidatos CNO-11 approved de correspondencia exacta o funcional directa para auditoria de ciberseguridad, consultoria de ciberseguridad, analista de ciberseguridad y pentesting/hacker etico. Para cada candidato incluye occupationId, codigo, etiqueta exacta, cita literal, justificacion y riesgo. Enumera todas las salidas sin candidato. No equipares ciberseguridad con administracion de sistemas ni con redes genericas.",
+      "allowedPaths": [
+        "analysis/fp_coverage_batch_parallel_4/proposals/IFC01E.md"
+      ],
+      "validationCommands": [
+        "powershell -NoProfile -Command \"if (-not (Test-Path -LiteralPath 'analysis/fp_coverage_batch_parallel_4/proposals/IFC01E.md')) { exit 1 }\""
+      ],
+      "frontierPlan": "Razonar por funcion de ciberseguridad exacta y rechazar sustituciones hacia administracion de sistemas o redes genericas.",
+      "acceptanceCriteria": [
+        "solo approved",
+        "citas literales",
+        "no confunde ciberseguridad con administracion de sistemas",
+        "ausencias documentadas"
+      ],
+      "modelProfile": "reasoning",
+      "budgetProfile": "research",
+      "maxExecutionSeconds": 1800
+    }
+  ]
+}
