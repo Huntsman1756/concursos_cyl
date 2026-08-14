@@ -67,6 +67,7 @@ export const JobOfferSchema = z.object({
   province: z.string().trim().min(1).nullable(),
   locality: z.string().trim().min(1).nullable(),
   publishedAt: z.string().datetime().nullable(),
+  updatedAt: z.string().datetime().nullable().default(null),
   sourceName: z.string().trim().min(1),
   descriptionText: z.string().trim().min(1),
   descriptionSections: DescriptionSectionsSchema,
