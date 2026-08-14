@@ -22,6 +22,21 @@ para Windows que aprovecha el CLI `opencode`, los agentes locales `nan-code` y
 `nan-bulletin`, un worker PowerShell y un supervisor Frontier. No constituye
 aislamiento duro ni una certificación de host de producción.
 
+## Política NAN-first obligatoria
+
+> **Regla**: Codex planifica, diagnostica, diseña, revisa y publica; el worker
+> NAN ejecuta toda la implementación manual elegible sin que Codex escriba
+> directamente. Un objetivo coherente usa contrato multiarchivo; dos o más
+> historias independientes disjuntas usan batch hasta cinco, sin microcontratos
+> artificiales.
+
+Para código, tests, datos, artefactos de análisis y documentación, NAN-first
+es obligatorio: Codex planifica, decide, revisa, valida y publica; el worker
+NAN ejecuta la implementación sin que Codex escriba directamente ni tome
+control tras un fallo NAN. Un objetivo coherente usa contrato multiarchivo;
+dos o más historias independientes disjuntas usan batch hasta cinco, sin
+microcontratos artificiales. Esta política es inviolable en el flujo actual.
+
 ## Procedencia de delegación firmada V4
 
 El PR upstream #57 añade un gate opcional antes de publicar. Una firma Ed25519
@@ -65,7 +80,7 @@ NAN se usa como proveedor de implementación principal. El worker:
   OpenCode aislado. El broker respeta además 60 solicitudes por minuto y 1,5 M
   tokens por minuto y modelo; una espera de admisión no consume el tiempo de
   inferencia.
-- Termina ejecuciones de más de 900 segundos y bloquea durante una hora la
+- Termina ejecuciones de más de 1800 segundos y bloquea durante una hora la
   repetición del mismo contrato sobre el mismo SHA.
 - Registra telemetría por ejecución: modelo, agente, intento, reintento, código de
   salida, tokens, rutas cambiadas y código de validación.
@@ -80,10 +95,10 @@ más cortas; Codex no toma el control de la implementación.
 | Rol                           | Modelo / Alias                       | Responsabilidad                                                                              |
 | ----------------------------- | ------------------------------------ | -------------------------------------------------------------------------------------------- |
 | **Orquestador**               | OpenAI / Codex Sol (esfuerzo medio)  | Analiza, diagnostica, diseña, descompone tareas, revisa diffs y valida.                      |
-| **Worker de código**          | `nan/qwen3.6` (agente `nan-code`)    | Aplica cambios mecánicos en rutas permitidas con 10 pasos máximos y presupuesto observable.  |
+| **Worker de código**          | `nan/qwen3.6` (agente `nan-code`)    | Aplica cambios mecánicos en rutas permitidas con 40 pasos máximos y presupuesto observable.  |
 | **Worker de boletines**       | `nan/gemma4` (agente `nan-bulletin`) | Lee y extrae información de boletines convertidos a archivos locales legibles. Modo lectura. |
-| **Razonamiento acotado**      | `nan/deepseek-v4-flash`              | Perfil `reasoning` para contratos difíciles ya delimitados por Codex.                        |
-| **Contexto largo/multimodal** | `nan/mimo-v2.5`                      | Perfil `long-context` para fuentes extensas, imágenes o audio.                               |
+| **Razonamiento acotado**      | `nan/deepseek-v4-flash`              | Perfil `reasoning` para contratos difíciles ya delimitados por Codex, con 40 pasos máximos.  |
+| **Contexto largo/multimodal** | `nan/mimo-v2.5`                      | Perfil `long-context` para fuentes extensas, imágenes o audio, con 50 pasos máximos.         |
 
 `nan/glm5.2` no está autorizado y el invocador lo rechaza también como fallback.
 El perfil se selecciona con `-ModelProfile mechanical`, `reasoning` o
@@ -232,25 +247,27 @@ Cada campo es obligatorio y se valida en runtime (fail-closed):
 | `AcceptanceCriteria` | Criterios de aceptación como arreglo de strings `string[]`, un elemento por criterio (no un string con saltos de línea)                                                            | `@("1. Tests pasan","2. Sin regression")` |
 | `AllowedPath`        | Glob o lista glob que delimita escrituras                                                                                                                                          | `"src/**"`                                |
 | `ValidationCommand`  | Comando(s) que deben devolver 0. Si alguno falla, el intento se bloquea inmediatamente; se persiste en `validationExitCode` el **primer código no cero** encontrado, no el último. | `"npm test"`                              |
-| `BudgetProfile`      | Presupuesto observado por ejecución. `small` es el valor seguro por defecto; los perfiles mayores deben declararse según el alcance del contrato.                                  | `"batch"`                                 |
+| `BudgetProfile`      | Presupuesto observado por ejecución. `extended` es el valor seguro por defecto; los perfiles menores deben declararse según el alcance del contrato.                               | `"extended"`                              |
 
-| Perfil     |  Tokens | Uso previsto                                               |
-| ---------- | ------: | ---------------------------------------------------------- |
-| `small`    | 100.000 | Cambio mecánico pequeño y localizado.                      |
-| `batch`    | 500.000 | Incorporación mecánica de un lote previamente investigado. |
-| `research` | 450.000 | Lectura y extracción extensa de fuentes.                   |
-| `extended` | 750.000 | Lote excepcional que combina bastante contexto y trabajo.  |
+| Perfil     |    Tokens | Uso previsto                                               |
+| ---------- | --------: | ---------------------------------------------------------- |
+| `small`    |   500.000 | Cambio mecánico pequeño y localizado.                      |
+| `batch`    | 1.250.000 | Incorporación mecánica de un lote previamente investigado. |
+| `research` | 1.250.000 | Lectura y extracción extensa de fuentes.                   |
+| `extended` | 1.500.000 | Lote excepcional que combina bastante contexto y trabajo.  |
 
-`MaxObservedTokens` acepta de 1.000 a 1.000.000 y prevalece sobre la tabla,
+`MaxObservedTokens` acepta de 1.000 a 2.000.000 y prevalece sobre la tabla,
 pero queda registrado como `budgetSource: override`; no debe usarse como valor
 habitual ni para ocultar un contrato demasiado amplio.
 
-El perfil predeterminado es `provider-limit`, con cinco plazas, que coincide con
-el límite publicado por NAN. Cada proceso recibe directorios XDG de datos,
-estado y caché distintos; así varias instancias de OpenCode no comparten la base
-SQLite. `observed-serial` queda disponible solo como diagnóstico de capacidad 1.
-Los bloqueos históricos con 2, 4 y 8 procesos no demostraban un límite del
-proveedor porque todos compartían el mismo estado mutable de OpenCode.
+El perfil de admisión predeterminado es `provider-limit`, con capacidad de cinco
+plazas concurrentes por clave, que coincide con el límite publicado por NAN. Este
+perfil es independiente del `BudgetProfile`; las cinco plazas no se atribuyen al
+perfil extended. Cada proceso recibe directorios XDG de datos, estado y caché
+distintos; así varias instancias de OpenCode no comparten la base SQLite.
+`observed-serial` queda disponible solo como diagnóstico de capacidad 1. Los
+bloqueos históricos con 2, 4 y 8 procesos no demostraban un límite del proveedor
+porque todos compartían el mismo estado mutable de OpenCode.
 
 Ejecución DryRun (sin coste, valida contrato sin llamar a opencode):
 
@@ -291,8 +308,11 @@ observadas en el endpoint NAN, pero sigue siendo evidencia local del host hasta
 que la procedencia firmada V4 se active en modo `REQUIRED`.
 
 Nunca se infiere consumo desde el tamaño del prompt, el tiempo de ejecución o
-el panel mensual. `DryRun`, `TestMode`, respuestas fallidas y ejecuciones sin
-evidencia de proveedor se contabilizan como cero en los informes del broker.
+el panel mensual. El panel NAN es agregado por periodo y modelo; la telemetría
+local del broker es por sesión. `DryRun`, `TestMode`, respuestas fallidas y
+ejecuciones sin evidencia de proveedor se contabilizan como cero en los informes
+del broker. Para aceptar un cambio, la telemetría debe incluir
+`providerEvidence.verified=true` en al menos una respuesta NAN válida.
 
 No existen atajos en `.opencode/commands`: toda ejecución NAN pasa por el
 broker. El hash de contrato incluye tipo, objetivo, rutas, validaciones, plan,
@@ -428,10 +448,13 @@ Gemma 4 la sesión `ses_00b2f4913ffe6H53pMxnPbY8TP` con 3.100 tokens; ambas term
 cambios. Esto prueba route, launch, eventos y usage, pero no certifica Runtime V4
 ni autoriza publicación. El probe Qwen consumió 122.724 tokens para una tarea
 sin cambios; esta regresión económica motivó `maxSteps: 10`, un solo intento,
-fallbacks vacíos. La oleada real posterior mostró que 50k–400k era insuficiente
-para varios contratos útiles, por lo que el broker ofrece perfiles revisados:
-`small` (100k), `batch` (500k), `research` (450k) y `extended` (750k). Un
-`MaxObservedTokens` explícito entre 1k y 1M prevalece como override auditable.
+fallbacks vacíos. **Valor histórico supersedido**: el `maxSteps` actual es 40
+para Qwen y DeepSeek, 50 para MiMo. La oleada real posterior mostró que
+50k–400k era insuficiente para varios contratos útiles, por lo que el broker
+ofrece perfiles revisados: `small` (500k), `batch` (1.250k), `research` (1.250k)
+y `extended` (1.500k). **Valores históricos superseded**: 100k/500k/450k/750k.
+Un `MaxObservedTokens` explícito entre 1k y 2M prevalece como override
+auditable.
 El broker corta la ejecución al
 observar el exceso y la deja en `blocked-token-budget`; un timeout queda en
 `blocked-timeout`. Como la API informa tokens por pasos completados, puede existir
