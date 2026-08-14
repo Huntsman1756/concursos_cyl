@@ -120,7 +120,7 @@ bindings:
       long-context: mimo-v2.5
     agent: nan-code
     permissions: bounded-repository-write
-    maxSteps: 10
+    maxSteps: 50
     retryMax: 1
     defaultBudgetProfile: extended
     budgetProfiles:

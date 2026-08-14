@@ -3,7 +3,7 @@ description: Implementa contratos acotados con contexto grande; Codex planifica 
 mode: primary
 model: nan/mimo-v2.5
 temperature: 0.2
-steps: 20
+steps: 50
 permission:
   "*": deny
   read: allow

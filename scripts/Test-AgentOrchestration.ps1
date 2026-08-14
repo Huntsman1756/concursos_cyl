@@ -883,6 +883,60 @@ try {
         }
     }
 
+    # 21. Step limits structural test (steplimits)
+    if (-not $Only -or $Only -eq 'steplimits') {
+        Write-Host "`n*** 21. Step limits structural test ***" -ForegroundColor Cyan
+        Write-Host ("-" * 40) -ForegroundColor DarkGray
+
+        # 21a-21c: agent markdown step limits
+        $agentCodePath     = Join-Path $repoRoot '.opencode\agents\nan-code.md'
+        $agentReasoningPath= Join-Path $repoRoot '.opencode\agents\nan-reasoning-code.md'
+        $agentContextPath  = Join-Path $repoRoot '.opencode\agents\nan-long-context-code.md'
+        Assert-True (Test-Path -LiteralPath $agentCodePath) '21a: nan-code.md exists'
+        Assert-True (Test-Path -LiteralPath $agentReasoningPath) '21b: nan-reasoning-code.md exists'
+        Assert-True (Test-Path -LiteralPath $agentContextPath) '21c: nan-long-context-code.md exists'
+
+        $codeSteps = [int](Select-String -Path $agentCodePath -Pattern '^\s*steps:\s*\d+' | ForEach-Object { ($_.Line -split '\s+')[1] })
+        Assert-Equal $codeSteps 40 '21d: nan-code.md steps equals 40'
+
+        $reasoningSteps = [int](Select-String -Path $agentReasoningPath -Pattern '^\s*steps:\s*\d+' | ForEach-Object { ($_.Line -split '\s+')[1] })
+        Assert-Equal $reasoningSteps 40 '21e: nan-reasoning-code.md steps equals 40'
+
+        $contextSteps = [int](Select-String -Path $agentContextPath -Pattern '^\s*steps:\s*\d+' | ForEach-Object { ($_.Line -split '\s+')[1] })
+        Assert-Equal $contextSteps 50 '21f: nan-long-context-code.md steps equals 50'
+
+        # 21g-21i: bash: deny on all three agents
+        $codeText     = Get-Content -LiteralPath $agentCodePath -Raw
+        $reasoningText= Get-Content -LiteralPath $agentReasoningPath -Raw
+        $contextText  = Get-Content -LiteralPath $agentContextPath -Raw
+        Assert-True ($codeText -match 'bash:\s*deny') '21g: code agent has bash:deny'
+        Assert-True ($reasoningText -match 'bash:\s*deny') '21h: reasoning agent has bash:deny'
+        Assert-True ($contextText -match 'bash:\s*deny') '21i: context agent has bash:deny'
+
+        # 21j-21l: task: deny on all three agents
+        Assert-True ($codeText -match 'task:\s*deny') '21j: code agent has task:deny'
+        Assert-True ($reasoningText -match 'task:\s*deny') '21k: reasoning agent has task:deny'
+        Assert-True ($contextText -match 'task:\s*deny') '21l: context agent has task:deny'
+
+        # 21m-21n: YAML codeExecutor maxSteps and bulletinReader maxSteps
+        if (Test-Path -LiteralPath $yamlPath) {
+            $yamlText = Get-Content -LiteralPath $yamlPath -Raw
+
+            # Use singleline regex to traverse newlines inside the codeExecutor block
+            Assert-True ($yamlText -match '(?s)codeExecutor:.*?maxSteps:\s*50\b') '21m: YAML codeExecutor maxSteps=50 (singleline regex)'
+            Assert-True ($yamlText -match '(?s)bulletinReader:.*?maxSteps:\s*12\b') '21n: YAML bulletinReader maxSteps=12 (singleline regex)'
+
+            # 21o: verify bulletinReader section via newline-traversing regex (the repair)
+            Assert-True ($yamlText -match '(?ms)^\s{2}bulletinReader:.*?^\s{4}maxSteps:\s*12') '21o: bulletinReader section regex traverses newlines'
+
+            # 21p: codeExecutor section also parsed via newline-traversing regex
+            Assert-True ($yamlText -match '(?ms)^\s{2}codeExecutor:.*?^\s{4}maxSteps:\s*50') '21p: codeExecutor section regex traverses newlines'
+
+            # 21q: verify a non-point-matches-does-not-cross-section (negative check)
+            Assert-True ($yamlText -notmatch 'bulletinReader.*codeExecutor') '21q: bulletinReader does not span into codeExecutor'
+        }
+    }
+
     # ── Results ──
     # 19. Host-selected telemetry path for unambiguous supervisor evidence
     if (-not $Only -or $Only -eq 'telemetry-path') {
