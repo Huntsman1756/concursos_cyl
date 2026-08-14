@@ -8,7 +8,11 @@ export default defineConfig({
     setupFiles: ["./src/test/setup.ts"],
     globals: true,
     css: true,
-    include: ["src/**/*.test.{ts,tsx}"],
+    include: [
+      "src/**/*.test.{ts,tsx}",
+      "data/**/*.test.ts",
+      "scripts/**/*.test.ts",
+    ],
     exclude: [
       "**/node_modules/**",
       "**/dist/**",
