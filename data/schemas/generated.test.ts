@@ -80,6 +80,7 @@ describe("generated data contracts", () => {
         application: [],
         other: [],
       },
+      publishedRequirements: [],
       originalUrl: "https://empleo.jcyl.es/oferta/offer-1",
       snapshot: {
         sourceId: "jcyl-employment-offers",

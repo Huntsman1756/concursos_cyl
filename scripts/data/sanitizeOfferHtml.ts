@@ -61,6 +61,19 @@ function sectionForHeading(text: string): OfferDescriptionSection | null {
     .toLowerCase();
 
   if (normalized.includes("requisit")) return "requirements";
+  if (normalized.includes("titulacion") || normalized.includes("permiso")) {
+    return "requirements";
+  }
+  if (normalized.includes("plazo") || normalized.includes("solicitud")) {
+    return "application";
+  }
+  if (
+    normalized.includes("observacion") ||
+    normalized.includes("informacion") ||
+    normalized.includes("enlaces")
+  ) {
+    return "other";
+  }
   if (normalized.includes("funcion")) return "functions";
   if (normalized.includes("condicion")) return "conditions";
   if (normalized.includes("solicitud") || normalized.includes("inscripcion")) {
@@ -70,6 +83,19 @@ function sectionForHeading(text: string): OfferDescriptionSection | null {
     return "summary";
   }
   return null;
+}
+
+function textFragmentsFromMarkup(markup: string): string[] {
+  const rawText = decodeEntities(markup.replace(/<[^>]*>/g, " "))
+    .replace(/\r?\n/g, " ")
+    .replace(
+      /(?=(?:funciones|condiciones|requisitos|titulacion|titulación|permisos? de conducir|plazo|solicitud)\s*:)/gi,
+      "\n",
+    );
+  return rawText
+    .split(/\n+/)
+    .map((fragment) => fragment.replace(/\s+/g, " ").trim())
+    .filter(Boolean);
 }
 
 export function sanitizeOfferHtml(html: string): SanitizedOfferDescription {
@@ -87,16 +113,15 @@ export function sanitizeOfferHtml(html: string): SanitizedOfferDescription {
   const plainBlocks: string[] = [];
 
   for (const block of blocks) {
-    const text = textFromMarkup(block);
-    if (!text) continue;
-
-    const headingSection = sectionForHeading(text.replace(/:$/, ""));
-    if (headingSection) {
-      currentSection = headingSection;
-    }
-    if (!/^<br/i.test(block)) {
-      sections[currentSection].push(text);
-      plainBlocks.push(text);
+    for (const text of textFragmentsFromMarkup(block)) {
+      const headingSection = sectionForHeading(text.replace(/:$/, ""));
+      if (headingSection) {
+        currentSection = headingSection;
+      }
+      if (!/^<br/i.test(block)) {
+        sections[currentSection].push(text);
+        plainBlocks.push(text);
+      }
     }
   }
 

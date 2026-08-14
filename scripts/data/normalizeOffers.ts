@@ -5,6 +5,7 @@ import {
 } from "../../data/schemas/offerSource";
 import { SOURCE_CONFIG } from "./sourceConfig";
 import { sanitizeOfferHtml } from "./sanitizeOfferHtml";
+import { extractPublishedRequirements } from "../../src/domain/requirements";
 
 export interface NormalizeOffersOptions {
   snapshotFetchedAt?: string;
@@ -48,6 +49,12 @@ export function normalizeOffers(
         sourceName: nullableText(record.fuentecontenido) ?? "ECYL",
         descriptionText,
         descriptionSections: description.sections,
+        publishedRequirements: extractPublishedRequirements(
+          record.identificador,
+          {
+            sections: description.sections,
+          },
+        ),
         originalUrl: record.enlace_al_contenido,
         snapshot: {
           sourceId: SOURCE_CONFIG.offers.id,

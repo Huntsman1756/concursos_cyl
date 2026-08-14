@@ -61,6 +61,26 @@ export const DescriptionSectionsSchema = z.object({
   other: z.array(z.string().trim().min(1)),
 });
 
+export const RequirementCategorySchema = z.enum([
+  "qualification_or_specialization",
+  "experience",
+  "driving_license_or_vehicle",
+  "certificate_or_regulated_license",
+  "language",
+  "schedule_availability",
+  "mobility_or_work_mode",
+  "unclassified",
+]);
+
+export const PublishedRequirementSchema = z.object({
+  id: z.string().trim().min(1),
+  category: RequirementCategorySchema,
+  normalizedValue: z.union([z.string(), z.number(), z.null()]),
+  sourceQuote: z.string().trim().min(1),
+  parserRule: z.string().trim().min(1),
+  parserVersion: z.literal("1.0.0"),
+});
+
 export const JobOfferSchema = z.object({
   id: z.string().trim().min(1),
   title: z.string().trim().min(1),
@@ -71,6 +91,7 @@ export const JobOfferSchema = z.object({
   sourceName: z.string().trim().min(1),
   descriptionText: z.string().trim().min(1),
   descriptionSections: DescriptionSectionsSchema,
+  publishedRequirements: z.array(PublishedRequirementSchema),
   originalUrl: HttpUrlSchema,
   snapshot: z.object({
     sourceId: z.string().trim().min(1),
@@ -116,6 +137,8 @@ export type TrainingProgram = z.infer<typeof TrainingProgramSchema>;
 export type EducationCenter = z.infer<typeof EducationCenterSchema>;
 export type TrainingOffering = z.infer<typeof TrainingOfferingSchema>;
 export type DescriptionSections = z.infer<typeof DescriptionSectionsSchema>;
+export type RequirementCategory = z.infer<typeof RequirementCategorySchema>;
+export type PublishedRequirement = z.infer<typeof PublishedRequirementSchema>;
 export type JobOffer = z.infer<typeof JobOfferSchema>;
 export type SourceSnapshot = z.infer<typeof SourceSnapshotSchema>;
 export type GeneratedManifest = z.infer<typeof GeneratedManifestSchema>;
