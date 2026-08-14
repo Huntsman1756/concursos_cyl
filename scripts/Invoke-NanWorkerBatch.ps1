@@ -48,11 +48,27 @@ function Test-PathsDisjoint {
     return $true
 }
 
-# ── ConvertTo-NativeArgument ──
+# ── ConvertTo-NativeArgument (proven StringBuilder version) ──
 function ConvertTo-NativeArgument {
-    param([AllowEmptyString()][string]$Argument)
-    if ($Argument -notmatch '[\s"]') { return $Argument }
-    return '"' + ($Argument -replace '(\\*)"','$1$1\"' -replace '(\\+)$','$1$1') + '"'
+    param([string]$Value)
+    if ($Value.Length -gt 0 -and $Value -notmatch '[\s"]') { return $Value }
+    $builder = New-Object System.Text.StringBuilder
+    [void]$builder.Append('"')
+    $slashes = 0
+    foreach ($character in $Value.ToCharArray()) {
+        if ($character -eq '\') { $slashes++; continue }
+        if ($character -eq '"') {
+            [void]$builder.Append(('\' * (($slashes * 2) + 1)))
+            [void]$builder.Append('"')
+        } else {
+            [void]$builder.Append(('\' * $slashes))
+            [void]$builder.Append($character)
+        }
+        $slashes = 0
+    }
+    [void]$builder.Append(('\' * ($slashes * 2)))
+    [void]$builder.Append('"')
+    return $builder.ToString()
 }
 
 # ── Load batch contract ──
@@ -136,6 +152,39 @@ foreach ($story in $stories) {
     $storyContracts += @{
         id = $id
         modelProfile = $modelProfile
+    }
+}
+
+# ── Validate schemaVersion ──
+$schemaVersion = if ($batch.PSObject.Properties.Name -contains 'schemaVersion') { [int]$batch.schemaVersion } else { $null }
+if ($schemaVersion -ne 1) { throw "schemaVersion must be 1, got '$schemaVersion'." }
+
+# ── Validate modelProfile values ──
+$validModelProfiles = @('mechanical','reasoning','long-context')
+foreach ($story in $stories) {
+    $mp = if ($story.PSObject.Properties.Name -contains 'modelProfile') { [string]$story.modelProfile } else { 'mechanical' }
+    if ($mp -match '(?i)glm5\.2') { throw "Story '$($story.id)' model profile references unsupported glm5.2." }
+    if ($validModelProfiles -notcontains $mp) {
+        throw "Story '$($story.id)' modelProfile '$mp' is not valid. Allowed: $($validModelProfiles -join ', ')."
+    }
+}
+
+# ── Validate budgetProfile values ──
+$validBudgetProfiles = @('small','batch','research','extended')
+foreach ($story in $stories) {
+    $bp = if ($story.PSObject.Properties.Name -contains 'budgetProfile') { [string]$story.budgetProfile } else { 'small' }
+    if ($validBudgetProfiles -notcontains $bp) {
+        throw "Story '$($story.id)' budgetProfile '$bp' is not valid. Allowed: $($validBudgetProfiles -join ', ')."
+    }
+}
+
+# ── Validate allowed paths (reject empty, absolute, traversal) ──
+foreach ($story in $stories) {
+    foreach ($ap in @($story.allowedPaths)) {
+        if ([string]::IsNullOrWhiteSpace($ap)) { throw "Story '$($story.id)' contains an empty allowed path." }
+        $apNorm = $ap.Replace('\','/')
+        if ($apNorm -match '^[a-zA-Z]:/' -or $apNorm -match '^/') { throw "Story '$($story.id)' allowed path '$ap' is absolute. Use relative paths only." }
+        if ($apNorm -match '(^|/)\.\.(/|$)') { throw "Story '$($story.id)' allowed path '$ap' contains directory traversal." }
     }
 }
 
