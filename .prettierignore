@@ -3,6 +3,7 @@ research/**
 *.png
 stdout
 public/data/**
+.opencode/**
 .codex-tmp/**
 .superpowers/**
 .agent-runs/**

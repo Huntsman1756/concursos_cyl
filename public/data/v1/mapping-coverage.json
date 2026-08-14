@@ -1,0 +1,10 @@
+{
+  "totalPrograms": 187,
+  "coveredPrograms": 2,
+  "uncoveredPrograms": 185,
+  "linksByReviewStatus": {
+    "approved": 2,
+    "draft": 1,
+    "rejected": 0
+  }
+}

@@ -1,0 +1,12 @@
+[
+  {
+    "occupationId": "occupation:web-development",
+    "preferredLabel": "Desarrollador web",
+    "description": "Diseña, desarrolla y mantiene aplicaciones y servicios web."
+  },
+  {
+    "occupationId": "occupation:administrative-assistant",
+    "preferredLabel": "Personal administrativo",
+    "description": "Realiza tareas de gestión, documentación y apoyo administrativo."
+  }
+]

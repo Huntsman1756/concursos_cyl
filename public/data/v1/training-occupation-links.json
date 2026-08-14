@@ -1,0 +1,22 @@
+[
+  {
+    "trainingProgramKey": "IFC03S",
+    "occupationId": "occupation:web-development",
+    "relationshipType": "reviewed_relationship",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://analisis.datosabiertos.jcyl.es/api/explore/v2.1/catalog/datasets/oferta-de-formacion-profesional/records",
+    "sourceQuote": "Desarrollo de Aplicaciones Web",
+    "reviewedAt": "2026-08-14",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "ADG01M",
+    "occupationId": "occupation:administrative-assistant",
+    "relationshipType": "reviewed_relationship",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://analisis.datosabiertos.jcyl.es/api/explore/v2.1/catalog/datasets/oferta-de-formacion-profesional/records",
+    "sourceQuote": "Gestión Administrativa",
+    "reviewedAt": "2026-08-14",
+    "mappingVersion": "1.0.0"
+  }
+]

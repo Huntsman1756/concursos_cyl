@@ -13,6 +13,7 @@ import { normalizeOffers } from "./normalizeOffers";
 import { normalizeTraining } from "./normalizeTraining";
 import { runQualityGates } from "./qualityGates";
 import { SOURCE_CONFIG } from "./sourceConfig";
+import { validateCuratedMappings } from "./validateCuratedMappings";
 
 const scriptPath = fileURLToPath(import.meta.url);
 const repoRoot = resolve(dirname(scriptPath), "../..");
@@ -59,6 +60,12 @@ async function readPreviousCounts() {
   }
 }
 
+async function readCuratedFile(name: string): Promise<unknown[]> {
+  return JSON.parse(
+    await readFile(join(repoRoot, "data", "curated", name), "utf8"),
+  ) as unknown[];
+}
+
 async function replaceDirectory(candidateDirectory: string): Promise<void> {
   await mkdir(dirname(targetDirectory), { recursive: true });
   const backupDirectory = `${targetDirectory}.previous`;
@@ -97,6 +104,14 @@ export async function buildSnapshots(): Promise<void> {
   const offers = normalizeOffers(offerRecords, {
     snapshotFetchedAt: fetchedAt,
   });
+  const curated = validateCuratedMappings(
+    {
+      occupations: await readCuratedFile("occupations.json"),
+      aliases: await readCuratedFile("occupation-aliases.json"),
+      links: await readCuratedFile("training-occupation-links.json"),
+    },
+    training.programs.map((program) => program.programKey),
+  );
   const candidate = {
     ...training,
     offers,
@@ -114,6 +129,10 @@ export async function buildSnapshots(): Promise<void> {
     centers: jsonText(training.centers),
     "training-offerings": jsonText(training.offerings),
     "job-offers": jsonText(offers),
+    occupations: jsonText(curated.occupations),
+    "occupation-aliases": jsonText(curated.aliases),
+    "training-occupation-links": jsonText(curated.links),
+    "mapping-coverage": jsonText(curated.coverage),
   };
   const trainingHash = sha256Text(
     `${resourceTexts.programs}${resourceTexts.centers}${resourceTexts["training-offerings"]}`,
