@@ -122,16 +122,16 @@ bindings:
     permissions: bounded-repository-write
     maxSteps: 10
     retryMax: 1
-    defaultBudgetProfile: small
+    defaultBudgetProfile: extended
     budgetProfiles:
-      small: 175000
-      batch: 600000
-      research: 500000
-      extended: 900000
+      small: 500000
+      batch: 1250000
+      research: 1250000
+      extended: 1500000
     maxObservedTokensOverrideRange:
       min: 1000
       max: 2000000
-    maxExecutionSeconds: 900
+    maxExecutionSeconds: 1800
     admission:
       profile: provider-limit
       capacity: 5

@@ -7,10 +7,10 @@ param(
     [string[]]$ValidationCommand = @(),
     [ValidateSet('default','json')][string]$Format = 'json',
     [ValidateRange(1,3)][int]$MaxRetries = 1,
-    [ValidateSet('small','batch','research','extended')][string]$BudgetProfile = 'small',
+    [ValidateSet('small','batch','research','extended')][string]$BudgetProfile = 'extended',
     [ValidateSet('auto','mechanical','reasoning','long-context')][string]$ModelProfile = 'auto',
     [int]$MaxObservedTokens = 0,
-    [ValidateRange(10,3600)][int]$MaxExecutionSeconds = 900,
+    [ValidateRange(10,3600)][int]$MaxExecutionSeconds = 1800,
     [ValidateSet('observed-serial','provider-limit')][string]$AdmissionProfile = 'provider-limit',
     [ValidateRange(1,86400)][int]$AdmissionTimeoutSeconds = 7200,
     [ValidateRange(0,86400)][int]$DuplicateWindowSeconds = 3600,
@@ -68,10 +68,10 @@ $InputPath = @($InputPath | ForEach-Object { $_ -split ',' } | ForEach-Object { 
 $AcceptanceCriteria = @($AcceptanceCriteria | ForEach-Object { $_.Trim() } | Where-Object { $_ })
 
 $budgetProfiles = @{
-    small = 175000
-    batch = 600000
-    research = 500000
-    extended = 900000
+    small = 500000
+    batch = 1250000
+    research = 1250000
+    extended = 1500000
 }
 if ($MaxObservedTokens -ne 0 -and ($MaxObservedTokens -lt 1000 -or $MaxObservedTokens -gt 2000000)) {
     throw 'MaxObservedTokens must be 0 (use BudgetProfile) or between 1000 and 2000000.'

@@ -205,15 +205,16 @@ try {
         $budgetProfileTelemetry = Get-Content -LiteralPath (Get-NewTelemetry -BeforeFiles $pre) -Raw | ConvertFrom-Json
         Assert-Equal $budgetProfileTelemetry.launch.budgetProfile 'batch' '2e: telemetry records batch profile'
         Assert-Equal $budgetProfileTelemetry.launch.budgetSource 'profile' '2f: telemetry records profile source'
-        Assert-Equal $budgetProfileTelemetry.launch.maxObservedTokens 600000 '2g: batch profile resolves to 600000 tokens'
+        Assert-Equal $budgetProfileTelemetry.launch.maxObservedTokens 1250000 '2g: batch profile resolves to 1250000 tokens'
         Assert-Equal $budgetProfileTelemetry.admission.profile 'provider-limit' '2g1: dry run records provider-limit admission'
         Assert-Equal $budgetProfileTelemetry.admission.capacity 5 '2g2: dry run records five active NAN slots'
         Assert-Equal $budgetProfileTelemetry.admission.timeoutSeconds 7200 '2g3: dry run records admission timeout'
 
         foreach ($profileCase in @(
-            @{Name='small';Tokens=175000},
-            @{Name='research';Tokens=500000},
-            @{Name='extended';Tokens=900000}
+            @{Name='small';Tokens=500000},
+            @{Name='batch';Tokens=1250000},
+            @{Name='research';Tokens=1250000},
+            @{Name='extended';Tokens=1500000}
         )) {
             $pre = Get-FileSnapshot
             $profileParams = New-ValidCodeContract -Objective "budget-profile-$($profileCase.Name)" -DryRun -TestMode
@@ -812,7 +813,7 @@ try {
             Assert-True ($yamlText -match 'requireValidationForCode:\s*true') '18z: YAML requireValidationForCode=true'
             Assert-True ($yamlText -match 'frontierContract') '18aa: YAML telemetry has frontierContract topLevelField'
             Assert-True (([regex]::Matches($yamlText, '(?m)^\s+fallbackModels:')).Count -eq 1) '18ab: YAML has one fallbackModels key'
-            Assert-True ($yamlText -match 'maxExecutionSeconds:\s*900') '18ac: YAML declares execution timeout'
+            Assert-True ($yamlText -match 'maxExecutionSeconds:\s*1800') '18ac: YAML declares execution timeout'
             Assert-True ($yamlText -match 'profile:\s*provider-limit') '18ac1: YAML enables official provider-limit admission'
             Assert-True ($yamlText -match 'capacity:\s*5') '18ac2: YAML admits five active NAN workers'
             Assert-True ($yamlText -match 'queueTimeConsumesExecutionTimeout:\s*false') '18ac3: YAML excludes queue wait from execution timeout'
