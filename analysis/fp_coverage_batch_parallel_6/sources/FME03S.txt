@@ -1,0 +1,18 @@
+Program Key: FME03S
+Program Title: Diseño en Fabricación Mecánica
+Family Code: FME
+Family Name: Fabricación Mecánica
+Official Title: Técnico Superior en Diseño en Fabricación Mecánica
+Level: higher
+Source System: TodoFP
+Source URL: https://www.todofp.es/que-estudiar/familias-profesionales/fabricacion-mecanica/diseno-fabricacion-mecanica.html
+
+## Source Quotes (first-seen order, deduplicated — 7 total)
+
+1. Delineante proyectista.
+2. Técnica / técnico de desarrollo de productos y moldes
+3. Técnica / técnico en CAD.
+4. Técnica / técnico en desarrollo de matrices.
+5. Técnica / técnico en desarrollo de moldes.
+6. Técnica / técnico en desarrollo de productos.
+7. Técnica / técnico en desarrollo de utillajes.

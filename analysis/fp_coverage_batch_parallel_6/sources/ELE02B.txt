@@ -1,0 +1,25 @@
+Program Key: ELE02B
+Program Title: Instalaciones Electrotécnicas y Mecánica
+Family Code: ELE
+Family Name: Electricidad y Electrónica
+Official Title: Título Profesional Básico en Instalaciones Electrotécnicas y Mecánica
+Level: basic
+Source System: TodoFP
+
+Source URL 1: https://www.todofp.es/que-estudiar/familias-profesionales/electricidad-electronica/instalaciones-electrotecnicas-mecanica.html
+Source URL 2: https://www.todofp.es/que-estudiar/familias-profesionales/fabricacion-mecanica/instalaciones-electrotecnicas-mecanica.html
+
+Source Quotes:
+
+1. Auxiliares de procesos automatizados.
+2. Ayudante de instalador / instaladora de equipos y sistemas de comunicación.
+3. Ayudante de instalador / instaladora y reparador / reparadora de equipos telefónicos y telegráficos.
+4. Ayudante de instalador / instaladora y reparador / reparadora de instalaciones telefónicas.
+5. Ayudante de instalador reparador / instaladora reparadora de equipos telefónicos y telegráficos.
+6. Ayudante de instalador reparador / instaladora reparadora de instalaciones telefónicas.
+7. Ayudante de montador / montadora de antenas receptoras/ televisión satélite.
+8. Ayudante de montador / montadora de antenas receptoras/televisión satélite.
+9. Operaria / operario de instalaciones eléctricas de baja tensión.
+10. Peón de industrias manufactureras.
+11. Peón de la industria de producción y distribución de energía eléctrica.
+12. Peones de industrias manufactureras.

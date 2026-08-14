@@ -1,0 +1,23 @@
+Program Key: AGA02M
+Program Title: Producción Agropecuaria
+Family Code: AGA
+Family Name: Agraria
+Official Title: Técnico en Producción Agropecuaria
+Level: intermediate
+Source System: TodoFP
+
+Source URLs:
+- https://www.todofp.es/que-estudiar/familias-profesionales/agraria/produccion-agropecuaria.html
+
+Source Quotes:
+
+1. Agricultor / agricultora.
+2. Apicultor / apicultora.
+3. Avicultor / avicultora.
+4. Criador / criadora de ganado.
+5. Floricultor / floricultora.
+6. Fruticultor / fruticultora.
+7. Horticultor / horticultora.
+8. Operador / operadora de maquinaria agrícola y ganadera.
+9. Productor / productora de huevos.
+10. Productor / productora de leche.
