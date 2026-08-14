@@ -222,6 +222,13 @@ Write-NewJson -Path (Join-Path $StateDirectory 'batch-contract.json') -Value $co
 
 $batchHash = Get-Sha256Hex -Bytes ($utf8.GetBytes(($contractSnapshot | ConvertTo-Json -Depth 12 -Compress)))
 
+# ── Resolve baseRef for detached worktrees ──
+$baseRef = if ($batch.PSObject.Properties.Name -contains 'baseSha') {
+    [string]$batch.baseSha
+} else {
+    (& git -C $repoRoot rev-parse HEAD).Trim()
+}
+
 # ── Store individual story contract files ──
 $storyContractPaths = @()
 $storyIndex = 0
@@ -229,9 +236,8 @@ foreach ($story in $stories) {
     $storyDir = Join-Path $StateDirectory "story-$($story.id)"
     New-Item -ItemType Directory -Path $storyDir -Force | Out-Null
     $storyContractPath = Join-Path $storyDir 'contract.json'
-    Write-NewJson -Path $storyContractPath -Value $story
-    $storyContractPaths += $storyContractPath
-    # Embed mockPlan into per-story contract for TestMode
+
+    $storyObj = $story
     if ($TestMode -and $batch.PSObject.Properties.Name -contains 'mockPlans') {
         $batchMockPlans = @($batch.mockPlans)
         if ($storyIndex -lt $batchMockPlans.Count -and $batchMockPlans[$storyIndex] -ne $null) {
@@ -240,9 +246,10 @@ foreach ($story in $stories) {
                 $storyObj[$prop.Name] = $prop.Value
             }
             $storyObj['mockPlan'] = $batchMockPlans[$storyIndex]
-            Write-NewJson -Path $storyContractPath -Value ([pscustomobject]$storyObj)
         }
     }
+    Write-NewJson -Path $storyContractPath -Value ([pscustomobject]$storyObj)
+    $storyContractPaths += $storyContractPath
     $storyIndex++
 }
 
@@ -319,17 +326,29 @@ function Collect-Job {
 $jobSemaphore = New-Object System.Threading.Semaphore($MaxConcurrency, $MaxConcurrency)
 
 try {
+    # In live mode WorktreeParent is required
+    if (-not $TestMode -and [string]::IsNullOrWhiteSpace($WorktreeParent)) {
+        throw 'Live execution requires WorktreeParent to be set.'
+    }
+
     while ($queueIndex -lt $stories.Count -or $activeJobs.Count -gt 0) {
         # Launch new jobs when concurrency permits
         while ($activeJobs.Count -lt $MaxConcurrency -and $queueIndex -lt $stories.Count) {
             $jobSemaphore.WaitOne() | Out-Null
             $idx = $queueIndex
             $queueIndex++
-            $worktree = if (-not [string]::IsNullOrWhiteSpace($WorktreeParent)) {
-                Join-Path $WorktreeParent "castilla-nan-batch-$batchId-story-$idx"
-            } else { '' }
+            # Create detached worktree for live execution; store exact path on the job
+            $jobWorktreePath = $null
+            if (-not $TestMode) {
+                $jobWorktreePath = Join-Path $WorktreeParent "castilla-nan-batch-$batchId-story-$idx"
+                & git worktree add --detach --force $jobWorktreePath $baseRef 2>&1 | Out-Null
+                if ($LASTEXITCODE -ne 0) {
+                    throw "Failed to create detached worktree at $jobWorktreePath"
+                }
+            }
             $job = Start-StoryJob -Index $idx -ContractPath $storyContractPaths[$idx] `
-                -StateDir $StateDirectory -Worktree $worktree -TestModeOn $TestMode
+                -StateDir $StateDirectory -Worktree $jobWorktreePath -TestModeOn $TestMode
+            $job | Add-Member -NotePropertyName '__worktreePath' -NotePropertyValue $jobWorktreePath -Force
             $activeJobs += $job
         }
 
@@ -347,10 +366,12 @@ try {
             $jobSemaphore.Release() | Out-Null
             $activeJobs = @($activeJobs | Where-Object { $_ -ne $job })
 
-            # Clean up worktree if created
-            $worktreePath = Join-Path $WorktreeParent "castilla-nan-batch-$batchId-story-$($job.index)"
-            if (-not $TestMode -and -not [string]::IsNullOrWhiteSpace($WorktreeParent) -and (Test-Path -LiteralPath $worktreePath -PathType Container)) {
-                & git -C $repoRoot worktree remove --force $worktreePath 2>$null | Out-Null
+            # Clean up the exact worktree path recorded on the job
+            $wtPath = if ($job.PSObject.Properties.Name -contains '__worktreePath') {
+                $job.__worktreePath
+            } else { $null }
+            if (-not $TestMode -and -not [string]::IsNullOrWhiteSpace($wtPath) -and (Test-Path -LiteralPath $wtPath -PathType Container)) {
+                try { & git -C $repoRoot worktree remove --force $wtPath 2>$null | Out-Null } catch { /* best-effort */ }
             }
         }
 
@@ -365,6 +386,13 @@ try {
             $job.process.WaitForExit(5000) | Out-Null
         }
         $job.process.Dispose()
+        # Cleanup worktree for killed jobs using stored exact path
+        $wtPath = if ($job.PSObject.Properties.Name -contains '__worktreePath') {
+            $job.__worktreePath
+        } else { $null }
+        if (-not $TestMode -and -not [string]::IsNullOrWhiteSpace($wtPath) -and (Test-Path -LiteralPath $wtPath -PathType Container)) {
+            try { & git -C $repoRoot worktree remove --force $wtPath 2>$null | Out-Null } catch { /* best-effort */ }
+        }
     }
     $jobSemaphore.Dispose()
 }

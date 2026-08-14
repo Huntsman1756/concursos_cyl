@@ -8,8 +8,25 @@ param(
 
 $ErrorActionPreference = 'Stop'
 $repoRoot = [System.IO.Path]::GetFullPath((Split-Path -Parent $PSScriptRoot))
-$workerPath = Join-Path $PSScriptRoot 'Invoke-NanWorker.ps1'
+$coordinatorWorker = Join-Path $PSScriptRoot 'Invoke-NanWorker.ps1'
+$workerPath = $coordinatorWorker
 $utf8 = New-Object System.Text.UTF8Encoding($false)
+
+# ── When WorktreeRoot is supplied and not TestMode: validate and use child worker ──
+if ($WorktreeRoot -and -not $TestMode) {
+    $resolvedWorktree = [System.IO.Path]::GetFullPath($WorktreeRoot)
+    $wtList = (& git -C $repoRoot worktree list --porcelain 2>&1) -join "`n"
+    if (-not ($wtList -match [regex]::Escape($resolvedWorktree))) {
+        throw "WorktreeRoot '$resolvedWorktree' is not a linked worktree of the repo."
+    }
+    $childWorker = Join-Path $WorktreeRoot 'scripts\Invoke-NanWorker.ps1'
+    if (-not (Test-Path -LiteralPath $childWorker)) {
+        throw "Child worker script not found at $childWorker"
+    }
+    $workerPath = $childWorker
+} elseif (-not $WorktreeRoot -and -not $TestMode) {
+    throw 'Live execution requires WorktreeRoot; no fallback to coordinator worker is allowed.'
+}
 
 # ── Helpers ──
 function Get-Sha256Hex {

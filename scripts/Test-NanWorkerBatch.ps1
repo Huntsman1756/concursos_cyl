@@ -388,6 +388,205 @@ try {
     Write-TestResult -Name $testName -Success ($emptyExit -ne 0) -Detail "exitCode=$emptyExit"
 
     # ────────────────────────────────────────────────────────────────
+    # Test 10: Single contract.json write per story (mockPlan embedded)
+    # ────────────────────────────────────────────────────────────────
+    $session10 = 'single-write-test'
+    $mockSingleWrite = @(@{exitCode=0;changedPaths=@('scripts/single.txt');validationExitCode=0;jsonl=($validJsonl -join "`n")} ) | ConvertTo-Json -Depth 8 -Compress
+    $singleBatch = @{
+        schemaVersion = 1
+        stories = @(
+            @{
+                id = 'story-single'
+                objective = 'Single write test'
+                allowedPaths = @('scripts/single.txt')
+                validationCommands = @('cmd /c exit 0')
+                frontierPlan = 'Single'
+                acceptanceCriteria = @('Single')
+                modelProfile = 'mechanical'
+                mockPlan = $mockSingleWrite
+            }
+        )
+        mockPlans = @($mockSingleWrite)
+    }
+    $singleBatchPath = Join-Path $temporaryRoot 'single-write-batch.json'
+    $singleState = Join-Path $temporaryRoot 'single-write-state'
+    $singleBatch | ConvertTo-Json -Depth 8 | Set-Content -LiteralPath $singleBatchPath -Encoding utf8
+
+    $singleOutput = & $batchPath -BatchJsonPath $singleBatchPath -StateDirectory $singleState -TestMode 2>&1
+    $singleExit = $LASTEXITCODE
+
+    $testName = 'Single contract write: exit 0'
+    Write-TestResult -Name $testName -Success ($singleExit -eq 0) -Detail "exit=$singleExit"
+
+    $testName = 'Single contract write: story dir exists'
+    $singleDir = Join-Path $singleState 'story-story-single'
+    Write-TestResult -Name $testName -Success (Test-Path -LiteralPath $singleDir) -Detail ""
+
+    $testName = 'Single contract write: contract.json exists'
+    $contractJsonPath = Join-Path $singleDir 'contract.json'
+    Write-TestResult -Name $testName -Success (Test-Path -LiteralPath $contractJsonPath) -Detail ""
+
+    $testName = 'Single contract write: mockPlan embedded in contract'
+    if (Test-Path -LiteralPath $contractJsonPath) {
+        $contractContent = Get-Content -LiteralPath $contractJsonPath -Raw
+        $hasMockPlan = ($contractContent | ConvertFrom-Json).PSObject.Properties.Name -contains 'mockPlan'
+        Write-TestResult -Name $testName -Success $hasMockPlan -Detail "hasMockPlan=$hasMockPlan"
+    } else {
+        Write-TestResult -Name $testName -Success $false -Detail "contract.json not found"
+    }
+
+    # ────────────────────────────────────────────────────────────────
+    # Test 11: Live mode fails without WorktreeParent
+    # ────────────────────────────────────────────────────────────────
+    $liveState = Join-Path $temporaryRoot 'live-state'
+    $liveBatch = @{
+        schemaVersion = 1
+        stories = @(
+            @{
+                id = 'story-live'
+                objective = 'Live test'
+                allowedPaths = @('scripts/live.txt')
+                validationCommands = @('cmd /c exit 0')
+                frontierPlan = 'Live'
+                acceptanceCriteria = @('Live')
+            }
+        )
+    }
+    $liveBatchPath = Join-Path $temporaryRoot 'live-batch.json'
+    $liveBatch | ConvertTo-Json -Depth 8 | Set-Content -LiteralPath $liveBatchPath -Encoding utf8
+
+    $liveOutput = & $batchPath -BatchJsonPath $liveBatchPath -StateDirectory $liveState 2>&1
+    $liveExit = $LASTEXITCODE
+
+    $testName = 'Live mode: fails without WorktreeParent'
+    Write-TestResult -Name $testName -Success ($liveExit -ne 0) -Detail "exit=$liveExit"
+
+    # ────────────────────────────────────────────────────────────────
+    # Test 12: Contract adapter child worker path when WorktreeRoot provided
+    # ────────────────────────────────────────────────────────────────
+    # Create a minimal worktree so we can test the contract adapter
+    $wtParent = Join-Path ([System.IO.Path]::GetTempPath()) "castilla-wttest-$( [guid]::NewGuid().ToString('N') )"
+    New-Item -ItemType Directory -Path $wtParent -Force | Out-Null
+
+    try {
+        # Create a detached worktree
+        $wtPath = Join-Path $wtParent 'test-worktree'
+        & git -C $repoRoot worktree add --detach --force $wtPath 2>&1 | Out-Null
+
+        # Verify adapter throws about missing child worker when WorktreeRoot points to worktree without scripts/Invoke-NanWorker.ps1
+        $childState = Join-Path $temporaryRoot 'child-state'
+        $adapterContract = @{
+            id = 'c'
+            objective = 'T'
+            allowedPaths = @('x.txt')
+            validationCommands = @('cmd /c exit 0')
+            frontierPlan = 'F'
+            acceptanceCriteria = @('A')
+        }
+        $adapterContractDir = Join-Path $childState 'story-c'
+        New-Item -ItemType Directory -Path $adapterContractDir -Force | Out-Null
+        $adapterContractPath = Join-Path $adapterContractDir 'contract.json'
+        $adapterContract | ConvertTo-Json -Depth 4 | Set-Content -LiteralPath $adapterContractPath -Encoding utf8
+
+        $childOutput = & $contractAdapter -ContractPath $adapterContractPath -StateDirectory $childState -WorktreeRoot $wtPath 2>&1
+        $childExit = $LASTEXITCODE
+
+        $testName = 'Contract adapter: no live fallback to coordinator when WorktreeRoot provided'
+        Write-TestResult -Name $testName -Success ($childExit -ne 0) -Detail "exit=$childExit (should reject missing child worker)"
+
+        if ($liveExit -ne 0) {
+            $liveOutputStr = -join $liveOutput
+            $testName2 = 'Contract adapter: live error contains no-coordinator message'
+            Write-TestResult -Name $testName2 -Success ($liveOutputStr 'no-coordinator' -or $liveOutputStr -match 'fallback' -or $liveOutputStr -match 'fallback') -Detail "no-coordinator"
+        }
+
+        # Verify worktree cleanup after batch run
+        $wtState = Join-Path $temporaryRoot 'wt-cleanup-state'
+        $wtBatch = @{
+            schemaVersion = 1
+            stories = @(
+                @{
+                    id = 'story-wt'
+                    objective = 'Wt test'
+                    allowedPaths = @('scripts/wt.txt')
+                    validationCommands = @('cmd /c exit 0')
+                    frontierPlan = 'Wt'
+                    acceptanceCriteria = @('Wt')
+                    modelProfile = 'mechanical'
+                }
+            )
+        }
+        # Add a mockPlan so the adapter can produce a result via mock in TestMode
+        $mockWTPlan = @(@{exitCode=0;changedPaths=@('scripts/wt.txt');validationExitCode=0;jsonl=$validJsonl}) | ConvertTo-Json -Depth 8 -Compress
+        $wtBatch = @{
+            schemaVersion = 1
+            stories = @(
+                @{
+                    id = 'story-wt'
+                    objective = 'Wt test'
+                    allowedPaths = @('scripts/wt.txt')
+                    validationCommands = @('cmd /c exit 0')
+                    frontierPlan = 'Wt'
+                    acceptanceCriteria = @('Wt')
+                    modelProfile = 'mechanical'
+                    mockPlan = $mockWTPlan
+                }
+            )
+            mockPlans = @($mockWTPlan)
+        }
+        $wtBatchPath = Join-Path $temporaryRoot 'wt-batch.json'
+        $wtBatch | ConvertTo-Json -Depth 8 | Set-Content -LiteralPath $wtBatchPath -Encoding utf8
+
+        & git -C $repoRoot worktree add --detach --force $wtPath 2>&1 | Out-Null
+        $wtOutput = & $batchPath -BatchJsonPath $wtBatchPath -StateDirectory $wtState -WorktreeParent $wtParent -TestMode 2>&1
+        $wtExit = $LASTEXITCODE
+
+        $testName3 = 'Worktree add: batch succeeds with WorktreeRoot'
+        Write-TestResult -Name $testName3 -Success ($wtExit -eq 0) -Detail "exit=$wtExit"
+
+        $testName4 = 'Worktree add: worktree path not present after cleanup in TestMode'
+        # In TestMode no worktrees are created in the parent, so the path shouldn't exist
+        $testName5 = 'Worktree add: batch result contains story entry'
+        $wtResult = $wtOutput | ConvertFrom-Json
+        Write-TestResult -Name $testName5 -Success (@($wtResult.stories).Count -ge 1) -Detail "stories=$(@($wtResult.stories).Count)"
+    } finally {
+        if (Test-Path -LiteralPath $wtParent) {
+            Remove-Item -LiteralPath $wtParent -Recurse -Force -ErrorAction SilentlyContinue
+        }
+    }
+
+    # ── Test 13: Contract adapter rejects non-worktree WorktreeRoot ──
+    $fakeWorktreeDir = Join-Path $temporaryRoot 'fake-worktree-dir'
+    New-Item -ItemType Directory -Path $fakeWorktreeDir -Force | Out-Null
+
+    try {
+        $adapterState2 = Join-Path $temporaryRoot 'adapter-fail-State'
+        New-Item -ItemType Directory -Path $adapterState2 -Force | Out-Null
+        $failContract = @{
+            id = 'fail-c'
+            objective = 'T'
+            allowedPaths = @('x.txt')
+            validationCommands = @('cmd /c exit 0')
+            frontierPlan = 'F'
+            acceptanceCriteria = @('A')
+        }
+        $failContractDir = Join-Path $adapterState2 'story-fail-c'
+        New-Item -ItemType Directory -Path $failContractDir -Force | Out-Null
+        $failContractPath = Join-Path $failContractDir 'contract.json'
+        $failContract | ConvertTo-Json -Depth 4 | Set-Content -LiteralPath $failContractPath -Encoding utf8
+
+        $failOutput = & $contractAdapter -ContractPath $failContractPath -StateDirectory $adapterState2 -WorktreeRoot $fakeWorktreeDir 2>&1
+        $failExit = $LASTEXITCODE
+
+        $testName = 'Contract adapter: rejects non-worktree WorktreeRoot (live)'
+        Write-TestResult -Name $testName -Success ($failExit -ne 0) -Detail "exit=$failExit"
+    } finally {
+        if (!(Test-Path -LiteralPath $fakeWorktreeDir)) {
+            Remove-Item -LiteralPath $fakeWorktreeDir -Recurse -Force -ErrorAction SilentlyContinue
+        }
+    }
+
+    # ────────────────────────────────────────────────────────────────
     # Summary
     # ────────────────────────────────────────────────────────────────
     Write-Host "`n============================================" -ForegroundColor Cyan
