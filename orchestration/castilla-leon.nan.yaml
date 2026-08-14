@@ -20,6 +20,8 @@ delegationProvenance:
     syntheticShakedownPassed: false
     providerAttributionShakedownPassed: true
     maxConcurrentProviderResponsesVerified: 5
+    providerAttributionBatchShakedownPassed: true
+    concurrentBatchWorkersVerified: 2
     restartRecoveryPassed: false
     ciVerificationConfigured: false
   trustBoundary:
@@ -36,6 +38,28 @@ frontierSupervisor:
   persistDecisionBeforeRelaunch: true
   failClosedOnInvalidDecision: true
   publicationAuthority: none
+batchExecutor:
+  enabled: true
+  entrypoint: scripts/Invoke-NanWorkerBatch.ps1
+  adapter: scripts/Invoke-NanWorkerContract.ps1
+  preferredForIndependentStoriesAtLeast: 2
+  maxStoriesPerBatch: 20
+  maxConcurrency: 5
+  exactDisjointPathsRequired: true
+  detachedWorktreePerStory: true
+  stateOutsideRepository: true
+  reviewMode: one-frontier-wave
+  applyPatchesAutomatically: false
+  bindContractToExactHead: true
+nanProviderLimits:
+  requestsPerMinutePerKey: 60
+  concurrentRequestsPerKey: 5
+  tokensPerMinutePerModel: 1500000
+  scheduling:
+    isolatedSessionPerStory: true
+    parallelizeIndependentStories: true
+    serializeOverlappingPaths: true
+    retryAfterProviderBackoff: true
 bindings:
   orchestrator:
     harness: codex
@@ -132,6 +156,10 @@ controls:
   rejectClientOnlyUsageAsProviderEvidence: true
   restrictBulletinReadsToStagedInputs: true
   autoEscalationToSol: false
+  requireBatchForIndependentStoriesAtLeast: 2
+  requireExactPathsInBatch: true
+  requireProviderReportedTokensForUsageClaims: true
+  treatSimulatedTokensAsZero: true
 telemetry:
   directory: .agent-runs
   format: json

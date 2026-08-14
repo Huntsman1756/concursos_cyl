@@ -822,7 +822,17 @@ try {
             Assert-True ($yamlText -match 'syntheticShakedownPassed:\s*false') '18ad12: YAML records the pending signed shakedown'
             Assert-True ($yamlText -match 'providerAttributionShakedownPassed:\s*true') '18ad12a: YAML records provider attribution shakedown'
             Assert-True ($yamlText -match 'maxConcurrentProviderResponsesVerified:\s*5') '18ad12b: YAML records five verified concurrent responses'
+            Assert-True ($yamlText -match 'providerAttributionBatchShakedownPassed:\s*true') '18ad12c: YAML records real provider-attributed batch shakedown'
+            Assert-True ($yamlText -match 'concurrentBatchWorkersVerified:\s*2') '18ad12d: YAML records two concurrent batch workers'
             Assert-True ($yamlText -notmatch 'BEGIN (?:EC |OPENSSH |RSA |DSA )?PRIVATE KEY') '18ad13: YAML contains no private signing key'
+            Assert-True ($yamlText -match 'batchExecutor:\s*\r?\n\s+enabled:\s*true') '18ad14: YAML enables bounded batch executor'
+            Assert-True ($yamlText -match 'maxConcurrency:\s*5') '18ad15: YAML caps batch concurrency at five'
+            Assert-True ($yamlText -match 'exactDisjointPathsRequired:\s*true') '18ad16: YAML requires disjoint exact batch paths'
+            Assert-True ($yamlText -match 'requestsPerMinutePerKey:\s*60') '18ad17: YAML records NAN request limit'
+            Assert-True ($yamlText -match 'tokensPerMinutePerModel:\s*1500000') '18ad18: YAML records NAN per-model TPM limit'
+            Assert-True ($yamlText -match 'requireProviderReportedTokensForUsageClaims:\s*true') '18ad19: YAML forbids client-only usage claims'
+            Assert-True (Test-Path -LiteralPath (Join-Path $repoRoot 'scripts\Invoke-NanWorkerBatch.ps1')) '18ad20: batch executor exists'
+            Assert-True (Test-Path -LiteralPath (Join-Path $repoRoot 'scripts\Invoke-NanWorkerContract.ps1')) '18ad21: batch contract adapter exists'
 
             $workerText = Get-Content -LiteralPath $workerPath -Raw
             Assert-True ($workerText -notmatch "'--auto'") '18ae: worker does not pass --auto'

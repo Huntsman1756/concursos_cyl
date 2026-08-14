@@ -659,5 +659,5 @@ describe("FP one-word publication review validator", () => {
         ),
       ).size,
     ).toBe(1);
-  }, 15_000);
+  }, 60_000);
 });

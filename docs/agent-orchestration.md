@@ -61,9 +61,10 @@ NAN se usa como proveedor de implementación principal. El worker:
 - Ejecuta un intento por defecto y no activa fallbacks implícitos.
 - Lee el JSONL durante la ejecución y termina el árbol de OpenCode cuando el
   consumo observado, incluida la caché, supera el presupuesto del perfil.
-- Admite una sola ejecución NAN activa por sesión del host. Los contratos pueden
-  prepararse en paralelo, pero esperan turno hasta 7.200 segundos y esa espera
-  no consume el tiempo de inferencia.
+- Admite hasta cinco ejecuciones NAN activas por clave, cada una con estado
+  OpenCode aislado. El broker respeta además 60 solicitudes por minuto y 1,5 M
+  tokens por minuto y modelo; una espera de admisión no consume el tiempo de
+  inferencia.
 - Termina ejecuciones de más de 900 segundos y bloquea durante una hora la
   repetición del mismo contrato sobre el mismo SHA.
 - Registra telemetría por ejecución: modelo, agente, intento, reintento, código de
@@ -180,6 +181,48 @@ hace commit, push, publicación ni despliegue.
 supervisor y para diagnóstico. Invocarlo directamente no demuestra que haya
 ocurrido el ciclo Frontier completo.
 
+### Oleadas paralelas para trabajo independiente
+
+Si Codex identifica dos o más historias sin dependencia y con rutas exactas
+disjuntas, usa `Invoke-NanWorkerBatch.ps1` en vez de encadenar supervisores. Un
+lote admite de 1 a 20 historias y ejecuta como máximo cinco a la vez, cada una
+en un worktree detached y una sesión NAN nueva. El contrato completo y el SHA
+Git base quedan ligados por hash; parches y telemetría se guardan fuera del
+repositorio. El lote nunca aplica los parches ni publica resultados.
+
+```json
+{
+  "schemaVersion": 1,
+  "baseSha": "0123456789abcdef0123456789abcdef01234567",
+  "stories": [
+    {
+      "id": "ajuste-a",
+      "objective": "Implementa el ajuste A",
+      "allowedPaths": ["src/a.ts"],
+      "validationCommands": ["npm test -- src/a.test.ts"],
+      "frontierPlan": "Cambio localizado ya diseñado por Codex",
+      "acceptanceCriteria": ["Pasa la prueba focalizada"],
+      "modelProfile": "mechanical",
+      "budgetProfile": "small"
+    }
+  ]
+}
+```
+
+```powershell
+.\scripts\Invoke-NanWorkerBatch.ps1 `
+  -BatchJsonPath C:\orchestration\contracts\batch-001.json `
+  -StateDirectory C:\orchestration\state\batch-001 `
+  -WorktreeParent C:\orchestration\worktrees `
+  -MaxConcurrency 5
+```
+
+Las rutas de lote no aceptan globs ni `..`: esta restricción permite demostrar
+que dos workers no escriben el mismo subárbol. Los cambios secuenciales o con
+rutas solapadas vuelven al supervisor individual. Codex recibe un único paquete
+de revisión con estado, modelo, rutas, hashes de parche/telemetría y tokens
+reportados por el proveedor para todas las historias.
+
 Cada campo es obligatorio y se valida en runtime (fail-closed):
 
 | Campo                | Descripción                                                                                                                                                                        | Ejemplo                                   |
@@ -246,6 +289,10 @@ El script, cuando se ejecuta desde un worktree Git enlazado y limpio:
 campo separado `providerEvidence.providerReportedTokens` procede de respuestas
 observadas en el endpoint NAN, pero sigue siendo evidencia local del host hasta
 que la procedencia firmada V4 se active en modo `REQUIRED`.
+
+Nunca se infiere consumo desde el tamaño del prompt, el tiempo de ejecución o
+el panel mensual. `DryRun`, `TestMode`, respuestas fallidas y ejecuciones sin
+evidencia de proveedor se contabilizan como cero en los informes del broker.
 
 No existen atajos en `.opencode/commands`: toda ejecución NAN pasa por el
 broker. El hash de contrato incluye tipo, objetivo, rutas, validaciones, plan,
@@ -390,6 +437,14 @@ observar el exceso y la deja en `blocked-token-budget`; un timeout queda en
 `blocked-timeout`. Como la API informa tokens por pasos completados, puede existir
 un pequeño sobrepaso correspondiente al paso en curso, pero no una trayectoria
 completa sin control.
+
+El 14 de agosto de 2026 se ejecutó además el primer lote real con dos worktrees
+concurrentes. Qwen 3.6 reportó 15.746 tokens y DeepSeek V4 Flash 27.133, para un
+total de 42.879 tokens observado en respuestas NAN 2xx. Ambos workers respetaron
+sus rutas y produjeron parche y telemetría con hash. Esto cualifica el transporte,
+la concurrencia y la atribución del lote, no sus cambios: el parche Qwen fue
+rechazado en revisión por un defecto de codificación y ninguno de los dos
+artefactos de prueba se incorporó al producto.
 
 ## Límites y políticas
 
