@@ -1,0 +1,10 @@
+{
+  "id": ["Cohorte", "Periodo", "Medida"],
+  "size": [1, 1, 1],
+  "dimension": {
+    "Cohorte": { "category": { "index": { "2021-2022": 0 } } },
+    "Periodo": { "category": { "index": { "Año 4": 0 } } },
+    "Medida": { "category": { "index": { "Media": 0 } } }
+  },
+  "value": [18450]
+}
