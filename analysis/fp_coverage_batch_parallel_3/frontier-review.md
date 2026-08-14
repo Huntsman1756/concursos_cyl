@@ -9,9 +9,10 @@ generic fallback categories, and changes of responsibility level are rejected.
 
 ## Accepted for incorporation
 
-| Program  | CNO-11 | Curated occupation   | Evidence boundary                                                                                                                                  |
-| -------- | ------ | -------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `FME01S` | 3126   | Técnicos en mecánica | TodoFP explicitly lists “Técnicas / técnicos en mecánica.” This does not cover its supervisor, CNC, production-programming, or automation outputs. |
+| Program  | CNO-11 | Curated occupation                                                                    | Evidence boundary                                                                                                                                                                                                         |
+| -------- | ------ | ------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `FME01S` | 3126   | Técnicos en mecánica                                                                  | TodoFP explicitly lists “Técnicas / técnicos en mecánica.” This does not cover its supervisor, CNC, production-programming, or automation outputs.                                                                        |
+| `QUI02M` | 3160   | Técnicos de control de calidad de las ciencias físicas, químicas y de las ingenierías | TodoFP explicitly lists laboratory work in “control de calidad de materiales”; INE defines 3160 around technical quality inspection. This does not cover general laboratory, sampling, maintenance, or warehouse outputs. |
 
 ## Rejected candidates and unresolved programs
 
@@ -37,9 +38,13 @@ generic fallback categories, and changes of responsibility level are rejected.
   owner/coordinator/manager role into an operative one or cover only an adjacent
   activity. Forest, wildlife, rural surveillance, fire-prevention, habitat, and
   forestry-supervision roles remain absent.
-- `QUI02M`: the worker produced provider traffic but did not complete the
-  auditable worker contract after its runtime became orphaned. No candidate is
-  accepted from that incomplete execution; it must be retried.
+- `QUI02M→3129`: rejected after checking the INE CNO-11 explanatory notes. The
+  residual group covers other engineering, production-planning, industrial
+  organization, environmental-equipment, and robotics technicians; it is not a
+  substitute for chemistry-laboratory technicians. CNO-11 3121 is the closer
+  official group but is not present in the approved curated catalog. Sampling,
+  auxiliary-services maintenance, equipment, and warehouse outputs also remain
+  unmatched.
 
-This review therefore adds one evidence-backed relationship and records six
-programs as researched without a publishable match. `QUI02M` remains pending.
+This review therefore adds two evidence-backed relationships and records six
+programs as researched without a publishable match.

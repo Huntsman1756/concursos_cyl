@@ -16,6 +16,12 @@ audit proxy became orphaned. Those tokens are intentionally excluded from the
 verified completed total, and no result from that execution is treated as
 delegated evidence.
 
-The batch finished as `partial-awaiting-frontier-review`: seven verified
-candidates, one explicit failure. The frontier review independently accepted
-only `FME01S→3126` for incorporation.
+The isolated retry completed with `nan/qwen3.6`, terminal provider verification,
+and 115,168 reported tokens. Its proposal was then reviewed against the TodoFP
+page and the INE CNO-11 explanatory notes. Frontier accepted only
+`QUI02M→3160`; the broader `3129` candidate was rejected.
+
+The original batch finished as `partial-awaiting-frontier-review`: seven
+verified candidates, one explicit failure. After the isolated verified retry,
+the frontier review independently accepted `FME01S→3126` and `QUI02M→3160`
+for incorporation.
