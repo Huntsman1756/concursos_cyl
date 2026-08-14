@@ -12,12 +12,14 @@ test-results/
 
 # Agent and temporary workspaces
 .codex-tmp/
+.tmp/
 .superpowers/
 .worktrees/
 _codex_tmp/
 _codex_worktrees/
 .agent-runs/
 tmp/
+*.tsbuildinfo
 
 # Local accidental placeholder retained outside version control
 /=
