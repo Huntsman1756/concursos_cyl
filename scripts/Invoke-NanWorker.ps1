@@ -6,7 +6,7 @@ param(
     [string[]]$InputPath = @(),
     [string[]]$ValidationCommand = @(),
     [ValidateSet('default','json')][string]$Format = 'json',
-    [ValidateRange(1,3)][int]$MaxRetries = 1,
+    [ValidateRange(1,3)][int]$MaxRetries = 2,
     [ValidateSet('small','batch','research','extended')][string]$BudgetProfile = 'extended',
     [ValidateSet('auto','mechanical','reasoning','long-context')][string]$ModelProfile = 'auto',
     [int]$MaxObservedTokens = 0,
@@ -22,6 +22,8 @@ param(
     [string]$PlannedBy = '',
     [string]$FrontierPlan = '',
     [string[]]$AcceptanceCriteria = @(),
+    [switch]$AllowMeteredModel,
+    [string]$MeteredModelJustification = '',
     [string]$TelemetryOutputPath = ''
 )
 
@@ -212,6 +214,17 @@ $primaryModel = switch ($ModelProfile) {
 $primaryAgent = if ($TaskType -eq 'code') {
     $codeAgents[$primaryModel]
 } else { 'nan-bulletin' }
+
+# ── Qwen-first: reject metered profiles (reasoning/long-context) unless
+#    the contract explicitly authorises them with a non-empty justification.
+if ($TaskType -eq 'code') {
+    $meteredProfiles = @('reasoning', 'long-context')
+    if ($meteredProfiles -contains $ModelProfile) {
+        if (-not $AllowMeteredModel -or [string]::IsNullOrWhiteSpace($MeteredModelJustification)) {
+            throw "Metered model profile '$ModelProfile' is rejected: use AllowMeteredModel with a non-empty MeteredModelJustification."
+        }
+    }
+}
 $allowedNanModels = @('nan/qwen3.6','nan/gemma4','nan/deepseek-v4-flash','nan/mimo-v2.5')
 # Code fallbacks exclude Gemma. Read-only bulletin work may explicitly fall
 # back to any supported text model while retaining the nan-bulletin permissions.
@@ -496,6 +509,7 @@ $contractMaterial = [ordered]@{
     validationCommands=@($ValidationCommand);frontierPlan=$FrontierPlan;acceptanceCriteria=@($AcceptanceCriteria);headSha=$headSha
     modelProfile=$ModelProfile;budgetProfile=$BudgetProfile;maxObservedTokens=$MaxObservedTokens
     maxExecutionSeconds=$MaxExecutionSeconds;fallbackModels=@($FallbackModels)
+    allowMeteredModel=[bool]$AllowMeteredModel;meteredModelJustification=$MeteredModelJustification
 } | ConvertTo-Json -Depth 5 -Compress
 $contractHash = Compute-StringSha256 -InputString $contractMaterial
 $contractMutex = $null
@@ -681,6 +695,14 @@ $totalAttempts = 0
             $contract = @("TASK TYPE: $TaskType","OBJECTIVE: $Objective")
             if ($TaskType -eq 'code') {
                 $contract += "FRONTIER PLAN: $FrontierPlan"
+                # On retry, attach the diagnostic context to the contract
+                # so the worker can repair the exact failure surface.
+                if ($r -gt 0 -and $ve -ne 0) {
+                    $diagSummary = @($attempt.validationDiagnostics | ForEach-Object {
+                        "cmd=$($_.commandIndex) exitCode=$($_.exitCode) outputTail=$($_.outputTail)"
+                    }) -join ' | '
+                    $contract += "REPAIR CONTEXT: validation failed (exitCode=$ve). $diagSummary"
+                }
                 $contract += "ACCEPTANCE CRITERIA: $($AcceptanceCriteria -join "`n")"
             }
             if ($AllowedPath.Count -gt 0) { $contract += "ALLOWED PATHS: $($AllowedPath -join ', ')" }
@@ -745,7 +767,10 @@ $totalAttempts = 0
                     continue
                 }
 
-                # Validation — final, no more retries or models
+                # Auto-retry: on validation failure, re-invoke Qwen on the same
+                # attempt while retries remain; only mark validationFailed when
+                # retries are exhausted.  Includes command, exit code and
+                # output tail in the repair context on re-invocation.
                 if ($ValidationCommand.Count -gt 0) {
                     $ve = $null
                     if ($TestMode) {
@@ -760,10 +785,6 @@ $totalAttempts = 0
                             $commandExit = 1
                             Push-Location -LiteralPath $repoRoot
                             try {
-                                # Validation belongs to the worker worktree, not
-                                # the supervisor's current directory. Native
-                                # stderr is diagnostic evidence and must not
-                                # abort telemetry persistence.
                                 $ErrorActionPreference = 'Continue'
                                 $validationOutput = Invoke-Expression $cmd 2>&1 | Out-String
                                 $commandExit = $LASTEXITCODE
@@ -791,8 +812,13 @@ $totalAttempts = 0
                     $attempt.validationExitCode = $ve
                     $attempts[-1] = $attempt
                     if ($ve -ne 0) {
-                        $validationFailed = $true
                         if ($TestMode) { Write-Warning "Mock validation failure (exitCode=$ve)" }
+                        # On failure: if not the last retry, break inner loop
+                        # and let r auto-increment re-invoke Qwen with repair
+                        # context (command, exitCode, outputTail) in the contract.
+                        if ($r -lt ($MaxRetries - 1)) { break }  # retry
+                        # Exhausted all retries — mark as failure.
+                        $validationFailed = $true
                         $attempt.exitCode = 1
                         $attempts[-1] = $attempt
                         break modelLoop

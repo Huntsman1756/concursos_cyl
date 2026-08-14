@@ -89,7 +89,19 @@ if ($modelProfile -match '(?i)glm5\.2') { throw "Model profile '$modelProfile' r
 if (@('mechanical','reasoning','long-context') -notcontains $modelProfile) {
     throw "Model profile '$modelProfile' is not valid."
 }
-$budgetProfile = if ($contract.PSObject.Properties.Name -contains 'budgetProfile') { [string]$contract.budgetProfile } else { 'small' }
+
+# ── Metered model authorisation (Qwen-first policy) ──
+$meteredProfiles = @('reasoning', 'long-context')
+if ($meteredProfiles -contains $modelProfile) {
+    if (-not ($contract.PSObject.Properties.Name -contains 'allowMeteredModel') -or -not [bool]$contract.allowMeteredModel) {
+        throw "Metered model profile '$modelProfile' rejected: contract must include allowMeteredModel=true."
+    }
+    if ([string]::IsNullOrWhiteSpace($contract.meteredModelJustification)) {
+        throw "Metered model profile '$modelProfile' rejected: contract must include a non-empty meteredModelJustification."
+    }
+}
+
+$budgetProfile = if ($contract.PSObject.Properties.Name -contains 'budgetProfile') { [string]$contract.budgetProfile } else { 'extended' }
 if (@('small','batch','research','extended') -notcontains $budgetProfile) {
     throw "Budget profile '$budgetProfile' is not valid."
 }
@@ -103,11 +115,18 @@ $workerParameters = @{
     FrontierPlan = $contract.frontierPlan
     AcceptanceCriteria = @($contract.acceptanceCriteria)
     PlannedBy = 'frontier'
-    MaxRetries = 1
+    MaxRetries = 2
     FallbackModels = @()
     BudgetProfile = $budgetProfile
     ModelProfile = $modelProfile
     DuplicateWindowSeconds = 0
+}
+
+if ($contract.PSObject.Properties.Name -contains 'allowMeteredModel') {
+    $workerParameters.AllowMeteredModel = [bool]$contract.allowMeteredModel
+}
+if ($contract.PSObject.Properties.Name -contains 'meteredModelJustification') {
+    $workerParameters.MeteredModelJustification = [string]$contract.meteredModelJustification
 }
 
 if ($contract.PSObject.Properties.Name -contains 'maxObservedTokens') {

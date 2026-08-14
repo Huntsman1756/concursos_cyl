@@ -175,12 +175,23 @@ foreach ($story in $stories) {
     if ($validModelProfiles -notcontains $mp) {
         throw "Story '$($story.id)' modelProfile '$mp' is not valid. Allowed: $($validModelProfiles -join ', ')."
     }
+
+    # ── Metered model authorisation (Qwen-first policy) ──
+    $meteredProfiles = @('reasoning', 'long-context')
+    if ($meteredProfiles -contains $mp) {
+        if (-not ($story.PSObject.Properties.Name -contains 'allowMeteredModel') -or -not [bool]$story.allowMeteredModel) {
+            throw "Story '$($story.id)' metered model '$mp' rejected: must include allowMeteredModel=true."
+        }
+        if ([string]::IsNullOrWhiteSpace($story.meteredModelJustification)) {
+            throw "Story '$($story.id)' metered model '$mp' rejected: must include a non-empty meteredModelJustification."
+        }
+    }
 }
 
 # ── Validate budgetProfile values ──
 $validBudgetProfiles = @('small','batch','research','extended')
 foreach ($story in $stories) {
-    $bp = if ($story.PSObject.Properties.Name -contains 'budgetProfile') { [string]$story.budgetProfile } else { 'small' }
+    $bp = if ($story.PSObject.Properties.Name -contains 'budgetProfile') { [string]$story.budgetProfile } else { 'extended' }
     if ($validBudgetProfiles -notcontains $bp) {
         throw "Story '$($story.id)' budgetProfile '$bp' is not valid. Allowed: $($validBudgetProfiles -join ', ')."
     }
@@ -225,7 +236,9 @@ $contractSnapshot = [ordered]@{
             frontierPlan = $_.frontierPlan
             acceptanceCriteria = @($_.acceptanceCriteria)
             modelProfile = if ($_.PSObject.Properties.Name -contains 'modelProfile') { $_.modelProfile } else { 'mechanical' }
-            budgetProfile = if ($_.PSObject.Properties.Name -contains 'budgetProfile') { $_.budgetProfile } else { 'small' }
+            budgetProfile = if ($_.PSObject.Properties.Name -contains 'budgetProfile') { $_.budgetProfile } else { 'extended' }
+            allowMeteredModel = if ($_.PSObject.Properties.Name -contains 'allowMeteredModel') { [bool]$_.allowMeteredModel } else { $null }
+            meteredModelJustification = if ($_.PSObject.Properties.Name -contains 'meteredModelJustification') { $_.meteredModelJustification } else { '' }
             maxObservedTokens = if ($_.PSObject.Properties.Name -contains 'maxObservedTokens') { $_.maxObservedTokens } else { $null }
             maxExecutionSeconds = if ($_.PSObject.Properties.Name -contains 'maxExecutionSeconds') { $_.maxExecutionSeconds } else { 900 }
         }
