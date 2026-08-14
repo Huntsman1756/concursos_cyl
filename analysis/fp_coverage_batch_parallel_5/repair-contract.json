@@ -1,0 +1,131 @@
+{
+  "schemaVersion": 1,
+  "stories": [
+    {
+      "id": "aga04m-repair",
+      "objective": "Reparar analysis/fp_coverage_batch_parallel_5/proposals/AGA04M.md comparándolo exclusivamente con analysis/fp_coverage_batch_parallel_5/sources/AGA04M.txt. Asegurar que cada una de las 12 source quotes numeradas del archivo fuente aparezca al menos una vez en la propuesta de forma literal incluyendo puntuación. Conservar todos los candidate IDs existentes (occupation:cno11:8321, occupation:cno11:6120), todas las decisiones de correspondencia, todas las rechazos y todas las justificaciones y riesgos tal como están. No agregar ni eliminar candidatos, no modificar datos curados ni públicos.",
+      "allowedPaths": [
+        "analysis/fp_coverage_batch_parallel_5/proposals/AGA04M.md"
+      ],
+      "validationCommands": [
+        "powershell -NoProfile -Command \"if (-not (Test-Path -LiteralPath 'analysis/fp_coverage_batch_parallel_5/proposals/AGA04M.md')) { exit 1 }\""
+      ],
+      "frontierPlan": "Usar contexto amplio para verificar que las 12 source quotes (1-12) del archivo AGA04M.txt están todas representadas literalmente en la propuesta existente. Si falta alguna, agregarla en la sección correspondiente (candidatos o salidas sin candidato) sin alterar el contenido existente. Conservar occupation:cno11:8321 y occupation:cno11:6120 con sus justificaciones y riesgos originales.",
+      "acceptanceCriteria": [
+        "Las 12 source quotes aparecen literalmente incluyendo puntuación",
+        "Todos los candidate IDs existentes se conservan sin cambio",
+        "No se agregan ni eliminan candidatos",
+        "No se modifican justificaciones ni riesgos existentes",
+        "No se alteran datos curados ni públicos"
+      ],
+      "modelProfile": "long-context",
+      "budgetProfile": "research",
+      "maxExecutionSeconds": 1800
+    },
+    {
+      "id": "ims05s-repair",
+      "objective": "Reparar analysis/fp_coverage_batch_parallel_5/proposals/IMS05S.md comparándolo exclusivamente con analysis/fp_coverage_batch_parallel_5/sources/IMS05S.txt. Asegurar que cada una de las 13 source quotes numeradas del archivo fuente aparezca al menos una vez en la propuesta de forma literal incluyendo puntuación. Conservar todos los candidate IDs existentes (occupation:cno11:2713), todas las decisiones de correspondencia, todas las rechazos y todas las justificaciones y riesgos tal como están. No agregar ni eliminar candidatos, no modificar datos curados ni públicos.",
+      "allowedPaths": [
+        "analysis/fp_coverage_batch_parallel_5/proposals/IMS05S.md"
+      ],
+      "validationCommands": [
+        "powershell -NoProfile -Command \"if (-not (Test-Path -LiteralPath 'analysis/fp_coverage_batch_parallel_5/proposals/IMS05S.md')) { exit 1 }\""
+      ],
+      "frontierPlan": "Usar contexto amplio para verificar que las 13 source quotes (1-13) del archivo IMS05S.txt están todas representadas literalmente en la propuesta existente. Si falta alguna, agregarla en la sección correspondiente (candidatos, ausencias o excluidas) sin alterar el contenido existente. Conservar occupation:cno11:2713 con su justificación y riesgo originales.",
+      "acceptanceCriteria": [
+        "Las 13 source quotes aparecen literalmente incluyendo puntuación",
+        "Todos los candidate IDs existentes se conservan sin cambio",
+        "No se agregan ni eliminan candidatos",
+        "No se modifican justificaciones ni riesgos existentes",
+        "No se alteran datos curados ni públicos"
+      ],
+      "modelProfile": "long-context",
+      "budgetProfile": "research",
+      "maxExecutionSeconds": 1800
+    },
+    {
+      "id": "sea03s-repair",
+      "objective": "Reparar analysis/fp_coverage_batch_parallel_5/proposals/SEA03S.md comparándolo exclusivamente con analysis/fp_coverage_batch_parallel_5/sources/SEA03S.txt. Asegurar que cada una de las 10 source quotes numeradas del archivo fuente aparezca al menos una vez en la propuesta de forma literal incluyendo puntuación. Conservar todos los candidate IDs existentes (occupation:cno11:3129, occupation:cno11:3160, occupation:cno11:2640), todas las decisiones de correspondencia, todas las rechazos y todas las justificaciones y riesgos tal como están. No agregar ni eliminar candidatos, no modificar datos curados ni públicos.",
+      "allowedPaths": [
+        "analysis/fp_coverage_batch_parallel_5/proposals/SEA03S.md"
+      ],
+      "validationCommands": [
+        "powershell -NoProfile -Command \"if (-not (Test-Path -LiteralPath 'analysis/fp_coverage_batch_parallel_5/proposals/SEA03S.md')) { exit 1 }\""
+      ],
+      "frontierPlan": "Usar contexto amplio para verificar que las 10 source quotes (1-10) del archivo SEA03S.txt están todas representadas literalmente en la propuesta existente. Si falta alguna, agregarla en la sección correspondiente (candidatos o salidas sin candidato) sin alterar el contenido existente. Conservar occupation:cno11:3129, occupation:cno11:3160 y occupation:cno11:2640 con sus justificaciones y riesgos originales.",
+      "acceptanceCriteria": [
+        "Las 10 source quotes aparecen literalmente incluyendo puntuación",
+        "Todos los candidate IDs existentes se conservan sin cambio",
+        "No se agregan ni eliminan candidatos",
+        "No se modifican justificaciones ni riesgos existentes",
+        "No se alteran datos curados ni públicos"
+      ],
+      "modelProfile": "long-context",
+      "budgetProfile": "research",
+      "maxExecutionSeconds": 1800
+    },
+    {
+      "id": "ssc05s-repair",
+      "objective": "Reparar analysis/fp_coverage_batch_parallel_5/proposals/SSC05S.md comparándolo exclusivamente con analysis/fp_coverage_batch_parallel_5/sources/SSC05S.txt. Asegurar que cada una de las 9 source quotes numeradas del archivo fuente aparezca al menos una vez en la propuesta de forma literal incluyendo puntuación. Conservar todos los candidate IDs existentes (occupation:cno11:3713, occupation:cno11:2312), todas las decisiones de correspondencia, todas las rechazos y todas las justificaciones y riesgos tal como están. No agregar ni eliminar candidatos, no modificar datos curados ni públicos.",
+      "allowedPaths": [
+        "analysis/fp_coverage_batch_parallel_5/proposals/SSC05S.md"
+      ],
+      "validationCommands": [
+        "powershell -NoProfile -Command \"if (-not (Test-Path -LiteralPath 'analysis/fp_coverage_batch_parallel_5/proposals/SSC05S.md')) { exit 1 }\""
+      ],
+      "frontierPlan": "Razonar por función laboral exacta de mediación comunicativa y verificar que las 9 source quotes (1-9) del archivo SSC05S.txt están todas representadas literalmente en la propuesta existente. Si falta alguna, agregarla en la sección correspondiente (candidatos o salidas sin candidato) sin alterar el contenido existente. Conservar occupation:cno11:3713 y occupation:cno11:2312 con sus justificaciones y riesgos originales.",
+      "acceptanceCriteria": [
+        "Las 9 source quotes aparecen literalmente incluyendo puntuación",
+        "Todos los candidate IDs existentes se conservan sin cambio",
+        "No se agregan ni eliminan candidatos",
+        "No se modifican justificaciones ni riesgos existentes",
+        "No se alteran datos curados ni públicos"
+      ],
+      "modelProfile": "reasoning",
+      "budgetProfile": "research",
+      "maxExecutionSeconds": 1800
+    },
+    {
+      "id": "tcp01m-repair",
+      "objective": "Reparar analysis/fp_coverage_batch_parallel_5/proposals/TCP01M.md comparándolo exclusivamente con analysis/fp_coverage_batch_parallel_5/sources/TCP01M.txt. Asegurar que cada una de las 10 source quotes numeradas del archivo fuente aparezca al menos una vez en la propuesta de forma literal incluyendo puntuación. Conservar todos los candidate IDs existentes (occupation:cno11:8209), todas las decisiones de correspondencia, todas las rechazos y todas las justificaciones y riesgos tal como están. No agregar ni eliminar candidatos, no modificar datos curados ni públicos.",
+      "allowedPaths": [
+        "analysis/fp_coverage_batch_parallel_5/proposals/TCP01M.md"
+      ],
+      "validationCommands": [
+        "powershell -NoProfile -Command \"if (-not (Test-Path -LiteralPath 'analysis/fp_coverage_batch_parallel_5/proposals/TCP01M.md')) { exit 1 }\""
+      ],
+      "frontierPlan": "Aplicar mecánicamente el filtro approved y verificar que las 10 source quotes (1-10) del archivo TCP01M.txt están todas representadas literalmente en la propuesta existente. Si falta alguna, agregarla en la sección correspondiente (candidatos o salidas sin candidato) sin alterar el contenido existente. Conservar occupation:cno11:8209 con su justificación y riesgo originales.",
+      "acceptanceCriteria": [
+        "Las 10 source quotes aparecen literalmente incluyendo puntuación",
+        "Todos los candidate IDs existentes se conservan sin cambio",
+        "No se agregan ni eliminan candidatos",
+        "No se modifican justificaciones ni riesgos existentes",
+        "No se alteran datos curados ni públicos"
+      ],
+      "modelProfile": "mechanical",
+      "budgetProfile": "research",
+      "maxExecutionSeconds": 1800
+    },
+    {
+      "id": "eoc02s-repair",
+      "objective": "Reparar analysis/fp_coverage_batch_parallel_5/proposals/EOC02S.md comparándolo exclusivamente con analysis/fp_coverage_batch_parallel_5/sources/EOC02S.txt. Asegurar que cada una de las 16 source quotes numeradas del archivo fuente aparezca al menos una vez en la propuesta de forma literal incluyendo puntuación. Conservar todos los candidate IDs existentes (occupation:cno11:3129), todas las decisiones de correspondencia, todas las rechazos y todas las justificaciones y riesgos tal como están. No agregar ni eliminar candidatos, no modificar datos curados ni públicos.",
+      "allowedPaths": [
+        "analysis/fp_coverage_batch_parallel_5/proposals/EOC02S.md"
+      ],
+      "validationCommands": [
+        "powershell -NoProfile -Command \"if (-not (Test-Path -LiteralPath 'analysis/fp_coverage_batch_parallel_5/proposals/EOC02S.md')) { exit 1 }\""
+      ],
+      "frontierPlan": "Usar contexto amplio para verificar que las 16 source quotes (1-16) del archivo EOC02S.txt están todas representadas literalmente en la propuesta existente. Si falta alguna, agregarla en la sección correspondiente (candidatos o salidas sin candidato) sin alterar el contenido existente. Conservar occupation:cno11:3129 con su justificación y riesgo originales.",
+      "acceptanceCriteria": [
+        "Las 16 source quotes aparecen literalmente incluyendo puntuación",
+        "Todos los candidate IDs existentes se conservan sin cambio",
+        "No se agregan ni eliminan candidatos",
+        "No se modifican justificaciones ni riesgos existentes",
+        "No se alteran datos curados ni públicos"
+      ],
+      "modelProfile": "long-context",
+      "budgetProfile": "research",
+      "maxExecutionSeconds": 1800
+    }
+  ]
+}
