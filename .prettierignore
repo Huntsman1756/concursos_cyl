@@ -1,0 +1,9 @@
+docs/**
+research/**
+*.png
+stdout
+.tmp/**
+tmp/**
+.worktrees/**
+_codex_worktrees/**
+_codex_tmp/**
