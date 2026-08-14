@@ -1,0 +1,15 @@
+# TodoFP Source: MSP34
+
+## Provenance
+
+**System:** TodoFP
+**URL:** https://www.todofp.es/que-estudiar/familias-profesionales/seguridad-medio-ambiente/prevencion-riesgos-profesionales.html
+**Official title:** Técnico Superior en Prevención de Riesgos Profesionales
+**Family:** Instalación y Mantenimiento (IMA)
+
+## Distinct sourceQuotes (first-seen order)
+
+1. Coordinador/a de seguridad y salud en las obras de construcción.
+2. Encargado/a de la coordinación de las actividades preventivas.
+3. Técnico/a de prevención de nivel intermedio.
+4. Técnico/a intermedios en seguridad y salud en el trabajo.

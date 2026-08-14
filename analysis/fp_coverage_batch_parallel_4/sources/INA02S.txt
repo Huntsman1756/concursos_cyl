@@ -1,0 +1,25 @@
+# TodoFP Source: INA02S
+
+## Provenance
+
+**System:** TodoFP
+**URL:** https://www.todofp.es/que-estudiar/familias-profesionales/industrias-alimentarias/procesos-calidad-industria-alimentaria.html
+**Official title:** Técnico Superior en Procesos y Calidad en la Industria Alimentaria
+**Family:** Industrias Alimentarias (INA)
+
+## Distinct sourceQuotes (first-seen order)
+
+1. Encargada / encargado de aprovisionamientos.
+2. Encargada / encargado de control ambiental y seguridad laboral.
+3. Encargada / encargado de elaboración de nuevos productos y desarrollo de procesos.
+4. Encargada / encargado de la gestión de la seguridad alimentaria.
+5. Encargada / encargado de la línea de envasado y embalaje.
+6. Encargada / encargado de producción.
+7. Inspector / inspectora o auditor / auditora de calidad.
+8. Jefa / jefe de línea, planta de fabricación, sección o de almacén.
+9. Jefa / jefe de turno.
+10. Supervisor / supervisora de equipos, procesos y productos.
+11. Técnica / técnico comercial.
+12. Técnica / técnico en análisis de alimentos.
+13. Técnica / técnico en análisis sensorial.
+14. Técnica / técnico en laboratorio de control de calidad.

@@ -1,0 +1,30 @@
+# TodoFP Source: FME02B
+
+## Provenance
+
+**System:** TodoFP
+**URLs:**
+- https://www.todofp.es/que-estudiar/familias-profesionales/electricidad-electronica/fabricacion-elementos-metalicos.html
+- https://www.todofp.es/que-estudiar/familias-profesionales/fabricacion-mecanica/fabricacion-elementos-metalicos.html
+**Official title:** Título Profesional Básico en Fabricación de Elementos Metálicos
+**Family:** Fabricación Mecánica (FME)
+
+## Distinct sourceQuotes (first-seen order, deduplicated)
+
+1. Auxiliar de carpintera / carpintero metálico.
+2. Auxiliar de carpintero / carpintera metálico.
+3. Auxiliar de cortador / cortador de metales por plasma, a mano.
+4. Auxiliar de cortador / cortadora de metales por plasma, a mano.
+5. Auxiliar de mantenimiento de equipos eléctricos y electrónicos.
+6. Auxiliar de montador / montadora de estructuras metálicas
+7. Auxiliar de oxicortador / oxicortadora a mano.
+8. Auxiliar de soldador / soldadora de estructuras metálicas pesadas, ligeras y tubería.
+9. Auxiliar soldador / soldadora de materiales de acero al carbono por arco eléctrico con electrodo revestido de rutilo.
+10. Auxiliares de procesos automatizados.
+11. Ayudante de montador / montadora de antenas receptoras/ televisión satélite.
+12. Ayudante/a de montador / montadora de antenas receptoras/ televisión satélite.
+13. Montador / montadora de componentes en placas de circuito impreso.
+14. Operador / operadora de ensamblado de equipos eléctricos y electrónicos.
+15. Operaria / operario de instalaciones eléctricas de baja tensión.
+16. Peones y auxiliares de industrias metalúrgicas, de fabricación de productos metálicos y manufactureras.
+17. Probador-ajustador / probadora-ajustadora de placas y equipos eléctricos y electrónicos.
