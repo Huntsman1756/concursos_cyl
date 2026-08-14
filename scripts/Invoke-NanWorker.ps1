@@ -284,7 +284,11 @@ function Start-NanAuditProxy {
     if (-not (Test-Path -LiteralPath $script -PathType Leaf)) { throw 'NAN audit proxy script is missing.' }
     $start = New-Object System.Diagnostics.ProcessStartInfo
     $start.FileName = $node
-    $proxyArgs = @($script,'--evidence',$EvidencePath,'--contract-hash',$ContractHash,'--repository-id',$RepositoryId)
+    $proxyArgs = @(
+        $script,'--evidence',$EvidencePath,'--contract-hash',$ContractHash,
+        '--repository-id',$RepositoryId,'--max-attempts','3',
+        '--base-delay-ms','1000','--max-delay-ms','30000'
+    )
     $start.Arguments = (($proxyArgs | ForEach-Object { ConvertTo-NativeArgument -Argument $_ }) -join ' ')
     $start.WorkingDirectory = $repoRoot
     $start.UseShellExecute = $false
@@ -417,6 +421,7 @@ function Invoke-OpenCodeBudgeted {
         $startInfo.EnvironmentVariables['XDG_CACHE_HOME'] = $RunContext.cache
         $override = @{
             provider=@{nan=@{options=@{baseURL=$RunContext.baseUrl}}}
+            mcp=@{esdata=@{enabled=$false}}
         }
         if ($RunContext.taskType -eq 'bulletin') {
             # Files named with --file are attached by the host before inference.
@@ -821,12 +826,40 @@ if (-not $TestMode -and (Test-Path -LiteralPath $providerEvidencePath -PathType 
         try { $_ | ConvertFrom-Json } catch { $null }
     } | Where-Object { $_ })
 }
-$expectedProviderModel = if ($successResult) { ([string]$successResult.model -replace '^nan/','') } else { $null }
-$verifiedProviderRecords = @($providerRecords | Where-Object {
+$observedProviderRecords = @($providerRecords | Where-Object {
     $_.evidenceClass -eq 'provider-observed' -and
     $_.contractHash -eq $contractHash -and
-    $_.keyFingerprint -eq $expectedNanKeyFingerprint -and
+    $_.keyFingerprint -eq $expectedNanKeyFingerprint
+})
+$providerRetryRecords = @($observedProviderRecords | Where-Object {
+    $_.retry -and $_.retry.retryable -eq $true -and $_.retry.terminal -eq $false
+})
+$terminalProviderErrors = @($observedProviderRecords | Where-Object {
+    [int]$_.response.status -ge 400 -and (!$_.retry -or $_.retry.terminal -eq $true)
+} | ForEach-Object {
+    @{
+        status=[int]$_.response.status
+        code=$(if ($_.retry.error) { [string]$_.retry.error.code } else { $null })
+        type=$(if ($_.retry.error) { [string]$_.retry.error.type } else { $null })
+        param=$(if ($_.retry.error) { [string]$_.retry.error.param } else { $null })
+        attempt=$(if ($_.retry) { [int]$_.retry.attempt } else { 1 })
+    }
+})
+$lastProviderError = @($terminalProviderErrors | Select-Object -Last 1)
+$providerFailureStatus = $null
+if ($lastProviderError.Count -gt 0) {
+    $errorStatus = [int]$lastProviderError[0].status
+    $errorCode = [string]$lastProviderError[0].code
+    $providerFailureStatus = if ($errorStatus -in @(401,403)) { 'blocked-provider-auth' } `
+        elseif ($errorStatus -eq 402 -or $errorCode -in @('insufficient_quota','quota_exceeded')) { 'blocked-provider-quota' } `
+        elseif ($errorStatus -eq 429) { 'blocked-provider-rate-limit' } `
+        elseif ($errorStatus -ge 500) { 'blocked-provider-unavailable' } `
+        else { 'blocked-provider-request' }
+}
+$expectedProviderModel = if ($successResult) { ([string]$successResult.model -replace '^nan/','') } else { $null }
+$verifiedProviderRecords = @($observedProviderRecords | Where-Object {
     [int]$_.response.status -ge 200 -and [int]$_.response.status -lt 300 -and
+    $_.request.path -in @('/v1/chat/completions','/v1/responses') -and
     $_.response.id -match '^(chatcmpl|resp|cmpl)[_-]'
 })
 if ($expectedProviderModel) {
@@ -844,7 +877,7 @@ $providerResponseSetHash = if ($providerResponseIds.Count -gt 0) { Compute-Strin
 
 # ── Telemetry (always written before exit) ──
 $tid = $runtimeId
-$status = if ($tokenBudgetExceeded) { 'blocked-token-budget' } elseif ($executionTimedOut) { 'blocked-timeout' } elseif ($successResult -and -not $providerEvidenceVerified) { 'blocked-unverified-provider' } elseif ($successResult) { 'awaiting-frontier-review' } else { 'blocked-needs-new-contract' }
+$status = if ($tokenBudgetExceeded) { 'blocked-token-budget' } elseif ($executionTimedOut) { 'blocked-timeout' } elseif ($successResult -and -not $providerEvidenceVerified) { 'blocked-unverified-provider' } elseif ($successResult) { 'awaiting-frontier-review' } elseif ($providerFailureStatus) { $providerFailureStatus } else { 'blocked-needs-new-contract' }
 $success = ($successResult -ne $null) -and (-not $contractViolation) -and (-not $validationFailed) -and $providerEvidenceVerified
 $fcTelemetry = @{}
 if ($TaskType -eq 'code') {
@@ -858,7 +891,7 @@ $telemetry = @{
     tokensUsage=$agg;success=$success;status=$status;frontierContract=$fcTelemetry
     draftOutput=if ($successResult) { $successResult.draftOutput } else { '' }
     contract=@{hash=$contractHash;headSha=$headSha;duplicateWindowSeconds=$DuplicateWindowSeconds}
-    providerEvidence=@{verified=[bool]$providerEvidenceVerified;evidenceClass=$(if ($TestMode) { 'simulated' } elseif ($verifiedProviderRecords.Count -gt 0) { 'provider-observed' } else { 'insufficient-evidence' });recordCount=$verifiedProviderRecords.Count;providerReportedTokens=$providerReportedTokens;responseIdSetHash=$providerResponseSetHash;rawEvidenceFile=$(if ($TestMode) { $null } else { [System.IO.Path]::GetFileName($providerEvidencePath) })}
+    providerEvidence=@{verified=[bool]$providerEvidenceVerified;evidenceClass=$(if ($TestMode) { 'simulated' } elseif ($observedProviderRecords.Count -gt 0) { 'provider-observed' } else { 'insufficient-evidence' });recordCount=$verifiedProviderRecords.Count;observedRecordCount=$observedProviderRecords.Count;retryCount=$providerRetryRecords.Count;terminalErrorCount=$terminalProviderErrors.Count;terminalErrors=@($terminalProviderErrors | Select-Object -Last 5);providerReportedTokens=$providerReportedTokens;responseIdSetHash=$providerResponseSetHash;rawEvidenceFile=$(if ($TestMode) { $null } else { [System.IO.Path]::GetFileName($providerEvidencePath) })}
     admission=@{profile=$AdmissionProfile;capacity=$(if ($AdmissionProfile -eq 'observed-serial') { 1 } else { 5 });timeoutSeconds=$AdmissionTimeoutSeconds;queueWaitMs=$admissionWaitMs;acquired=[bool]$admissionAcquired}
     launch=@{harness='opencode';protocol='native-jsonl-stream-1.18.x';pure=$true;auto=$false;directory=$repoRoot;modelProfile=$ModelProfile;budgetProfile=$BudgetProfile;budgetSource=$budgetSource;maxObservedTokens=$effectiveMaxObservedTokens;maxExecutionSeconds=$MaxExecutionSeconds}
 }

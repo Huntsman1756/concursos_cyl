@@ -55,11 +55,54 @@ nanProviderLimits:
   requestsPerMinutePerKey: 60
   concurrentRequestsPerKey: 5
   tokensPerMinutePerModel: 1500000
+  retryPolicy:
+    maxAttempts: 3
+    retryableStatuses:
+      - 429 # rate_limit_exceeded
+      - 5xx # server errors
+    retryAfterHeader: true
+    retryAfterCapSeconds: 30
+    nonRetryableStatuses:
+      - 400 # invalid request
+      - 401 # authentication failure
+      - 402 # payment required
+      - 403 # authorization failure
+      - 404 # invalid endpoint/model path
+    nonRetryable429Codes:
+      - insufficient_quota
+      - quota_exceeded
+    rationale: |
+      Only transient provider congestion (429 rate_limit_exceeded and 5xx
+      server errors) justifies automatic retry. Authentication, quota, and
+      the documented 400/401/402/403/404 errors are permanent for the session and must
+      escalate to Frontier immediately.  Retry-After is respected but capped
+      at 30 s to prevent unbounded stall.
   scheduling:
     isolatedSessionPerStory: true
     parallelizeIndependentStories: true
     serializeOverlappingPaths: true
     retryAfterProviderBackoff: true
+agentTable:
+  - model: qwen3.6
+    agent: nan-code
+    taskTypes:
+      - code
+    notes: "Primary mechanical code executor.  Fastest for bounded edits."
+  - model: deepseek-v4-flash
+    agent: nan-reasoning-code
+    taskTypes:
+      - code
+    notes: "Reasoning contracts that exceed Qwen capability."
+  - model: mimo-v2.5
+    agent: nan-long-context-code
+    taskTypes:
+      - code
+    notes: "Long-context and multi-file code contracts. Bulletin fallback retains nan-bulletin permissions."
+  - model: gemma4
+    agent: nan-bulletin
+    taskTypes:
+      - bulletin
+    notes: "Bulletin-only reader.  Strictly prohibited for code tasks."
 bindings:
   orchestrator:
     harness: codex
