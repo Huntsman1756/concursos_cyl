@@ -120,18 +120,18 @@ bindings:
       long-context: mimo-v2.5
     agent: nan-code
     permissions: bounded-repository-write
-    maxSteps: 10
+    maxSteps: 50
     retryMax: 1
-    defaultBudgetProfile: small
+    defaultBudgetProfile: extended
     budgetProfiles:
-      small: 175000
-      batch: 600000
-      research: 500000
-      extended: 900000
+      small: 500000
+      batch: 1250000
+      research: 1250000
+      extended: 1500000
     maxObservedTokensOverrideRange:
       min: 1000
-      max: 1000000
-    maxExecutionSeconds: 900
+      max: 2000000
+    maxExecutionSeconds: 1800
     admission:
       profile: provider-limit
       capacity: 5

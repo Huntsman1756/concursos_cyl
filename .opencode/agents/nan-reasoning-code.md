@@ -3,7 +3,7 @@ description: Implementa un contrato acotado que requiere razonamiento; Codex dia
 mode: primary
 model: nan/deepseek-v4-flash
 temperature: 0.2
-steps: 18
+steps: 40
 permission:
   "*": deny
   read: allow

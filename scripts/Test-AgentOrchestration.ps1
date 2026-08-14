@@ -205,15 +205,16 @@ try {
         $budgetProfileTelemetry = Get-Content -LiteralPath (Get-NewTelemetry -BeforeFiles $pre) -Raw | ConvertFrom-Json
         Assert-Equal $budgetProfileTelemetry.launch.budgetProfile 'batch' '2e: telemetry records batch profile'
         Assert-Equal $budgetProfileTelemetry.launch.budgetSource 'profile' '2f: telemetry records profile source'
-        Assert-Equal $budgetProfileTelemetry.launch.maxObservedTokens 600000 '2g: batch profile resolves to 600000 tokens'
+        Assert-Equal $budgetProfileTelemetry.launch.maxObservedTokens 1250000 '2g: batch profile resolves to 1250000 tokens'
         Assert-Equal $budgetProfileTelemetry.admission.profile 'provider-limit' '2g1: dry run records provider-limit admission'
         Assert-Equal $budgetProfileTelemetry.admission.capacity 5 '2g2: dry run records five active NAN slots'
         Assert-Equal $budgetProfileTelemetry.admission.timeoutSeconds 7200 '2g3: dry run records admission timeout'
 
         foreach ($profileCase in @(
-            @{Name='small';Tokens=175000},
-            @{Name='research';Tokens=500000},
-            @{Name='extended';Tokens=900000}
+            @{Name='small';Tokens=500000},
+            @{Name='batch';Tokens=1250000},
+            @{Name='research';Tokens=1250000},
+            @{Name='extended';Tokens=1500000}
         )) {
             $pre = Get-FileSnapshot
             $profileParams = New-ValidCodeContract -Objective "budget-profile-$($profileCase.Name)" -DryRun -TestMode
@@ -233,7 +234,7 @@ try {
         Assert-Equal $budgetOverrideTelemetry.launch.budgetSource 'override' '2j: telemetry records override source'
         Assert-Equal $budgetOverrideTelemetry.launch.maxObservedTokens 175000 '2k: explicit override wins over profile'
 
-        $r = Invoke-WorkerDirect -WorkerParameters (New-ValidCodeContract -Objective 'invalid-budget-override' -MaxObservedTokens 1000001 -DryRun -TestMode)
+        $r = Invoke-WorkerDirect -WorkerParameters (New-ValidCodeContract -Objective 'invalid-budget-override' -MaxObservedTokens 2000001 -DryRun -TestMode)
         Assert-True ($r.ExitCode -ne 0) '2k: out-of-range budget override fails closed'
         Assert-Contains $r.Output 'MaxObservedTokens' '2k: invalid override error names MaxObservedTokens'
 
@@ -812,7 +813,7 @@ try {
             Assert-True ($yamlText -match 'requireValidationForCode:\s*true') '18z: YAML requireValidationForCode=true'
             Assert-True ($yamlText -match 'frontierContract') '18aa: YAML telemetry has frontierContract topLevelField'
             Assert-True (([regex]::Matches($yamlText, '(?m)^\s+fallbackModels:')).Count -eq 1) '18ab: YAML has one fallbackModels key'
-            Assert-True ($yamlText -match 'maxExecutionSeconds:\s*900') '18ac: YAML declares execution timeout'
+            Assert-True ($yamlText -match 'maxExecutionSeconds:\s*1800') '18ac: YAML declares execution timeout'
             Assert-True ($yamlText -match 'profile:\s*provider-limit') '18ac1: YAML enables official provider-limit admission'
             Assert-True ($yamlText -match 'capacity:\s*5') '18ac2: YAML admits five active NAN workers'
             Assert-True ($yamlText -match 'queueTimeConsumesExecutionTimeout:\s*false') '18ac3: YAML excludes queue wait from execution timeout'
@@ -879,6 +880,60 @@ try {
             }
         } else {
             Write-Host "  SKIP: YAML checks (file not at $yamlPath)" -ForegroundColor Yellow
+        }
+    }
+
+    # 21. Step limits structural test (steplimits)
+    if (-not $Only -or $Only -eq 'steplimits') {
+        Write-Host "`n*** 21. Step limits structural test ***" -ForegroundColor Cyan
+        Write-Host ("-" * 40) -ForegroundColor DarkGray
+
+        # 21a-21c: agent markdown step limits
+        $agentCodePath     = Join-Path $repoRoot '.opencode\agents\nan-code.md'
+        $agentReasoningPath= Join-Path $repoRoot '.opencode\agents\nan-reasoning-code.md'
+        $agentContextPath  = Join-Path $repoRoot '.opencode\agents\nan-long-context-code.md'
+        Assert-True (Test-Path -LiteralPath $agentCodePath) '21a: nan-code.md exists'
+        Assert-True (Test-Path -LiteralPath $agentReasoningPath) '21b: nan-reasoning-code.md exists'
+        Assert-True (Test-Path -LiteralPath $agentContextPath) '21c: nan-long-context-code.md exists'
+
+        $codeSteps = [int](Select-String -Path $agentCodePath -Pattern '^\s*steps:\s*\d+' | ForEach-Object { ($_.Line -split '\s+')[1] })
+        Assert-Equal $codeSteps 40 '21d: nan-code.md steps equals 40'
+
+        $reasoningSteps = [int](Select-String -Path $agentReasoningPath -Pattern '^\s*steps:\s*\d+' | ForEach-Object { ($_.Line -split '\s+')[1] })
+        Assert-Equal $reasoningSteps 40 '21e: nan-reasoning-code.md steps equals 40'
+
+        $contextSteps = [int](Select-String -Path $agentContextPath -Pattern '^\s*steps:\s*\d+' | ForEach-Object { ($_.Line -split '\s+')[1] })
+        Assert-Equal $contextSteps 50 '21f: nan-long-context-code.md steps equals 50'
+
+        # 21g-21i: bash: deny on all three agents
+        $codeText     = Get-Content -LiteralPath $agentCodePath -Raw
+        $reasoningText= Get-Content -LiteralPath $agentReasoningPath -Raw
+        $contextText  = Get-Content -LiteralPath $agentContextPath -Raw
+        Assert-True ($codeText -match 'bash:\s*deny') '21g: code agent has bash:deny'
+        Assert-True ($reasoningText -match 'bash:\s*deny') '21h: reasoning agent has bash:deny'
+        Assert-True ($contextText -match 'bash:\s*deny') '21i: context agent has bash:deny'
+
+        # 21j-21l: task: deny on all three agents
+        Assert-True ($codeText -match 'task:\s*deny') '21j: code agent has task:deny'
+        Assert-True ($reasoningText -match 'task:\s*deny') '21k: reasoning agent has task:deny'
+        Assert-True ($contextText -match 'task:\s*deny') '21l: context agent has task:deny'
+
+        # 21m-21n: YAML codeExecutor maxSteps and bulletinReader maxSteps
+        if (Test-Path -LiteralPath $yamlPath) {
+            $yamlText = Get-Content -LiteralPath $yamlPath -Raw
+
+            # Use singleline regex to traverse newlines inside the codeExecutor block
+            Assert-True ($yamlText -match '(?s)codeExecutor:.*?maxSteps:\s*50\b') '21m: YAML codeExecutor maxSteps=50 (singleline regex)'
+            Assert-True ($yamlText -match '(?s)bulletinReader:.*?maxSteps:\s*12\b') '21n: YAML bulletinReader maxSteps=12 (singleline regex)'
+
+            # 21o: verify bulletinReader section via newline-traversing regex (the repair)
+            Assert-True ($yamlText -match '(?ms)^\s{2}bulletinReader:.*?^\s{4}maxSteps:\s*12') '21o: bulletinReader section regex traverses newlines'
+
+            # 21p: codeExecutor section also parsed via newline-traversing regex
+            Assert-True ($yamlText -match '(?ms)^\s{2}codeExecutor:.*?^\s{4}maxSteps:\s*50') '21p: codeExecutor section regex traverses newlines'
+
+            # 21q: verify a non-point-matches-does-not-cross-section (negative check)
+            Assert-True ($yamlText -notmatch 'bulletinReader.*codeExecutor') '21q: bulletinReader does not span into codeExecutor'
         }
     }
 

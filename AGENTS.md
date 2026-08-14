@@ -50,6 +50,20 @@ autorizar cada fallback compatible en el contrato.
 - **Fallback a Gemma desde código**: Prohibido. El broker rechaza el parámetro
   antes de iniciar una sesión de modelo.
 
+## Pasos por agente
+
+El límite `40/40/50` se refiere exclusivamente a los pasos máximos permitidos
+por agente en un contrato NAN: `nan-code` (40 pasos), `nan-reasoning-code`
+(40 pasos) y `nan-long-context-code` (50 pasos). Son conteos de iteraciones
+de agente, no porcentajes, ni ratios, ni repartos de esfuerzo.
+
+## Política NAN-first obligatoria
+
+Para código, tests, datos, artefactos de análisis y documentación, NAN-first
+es obligatorio: Codex planifica, decide, revisa, valida y publica; el worker
+NAN ejecuta la implementación sin que Codex escriba directamente ni tome
+control tras un fallo NAN.
+
 ## Flujo Frontier → worker → Frontier
 
 1. **Frontier** (Codex/Sol) analiza, diagnostica, diseña y descompone el trabajo
@@ -139,9 +153,9 @@ Ejemplo DryRun (obligatorio incluir `-ValidationCommand` para code):
 El worker soporta:
 
 - `-MaxRetries 1` — valor seguro por defecto; aumentarlo requiere justificar el coste.
-- `-BudgetProfile small|batch|research|extended` — aplica respectivamente 100k, 500k, 450k o 750k tokens observados por ejecución, incluida la caché. El valor seguro por defecto es `small`.
-- `-MaxObservedTokens <n>` — override excepcional entre 1k y 1M; prevalece sobre el perfil y queda identificado como `override` en telemetría.
-- `-MaxExecutionSeconds 300` — termina el árbol del proceso al agotar el tiempo.
+- `-BudgetProfile small|batch|research|extended` — aplica respectivamente 500k, 1250k, 1250k o 1500k tokens observados por ejecución, incluida la caché. El valor seguro por defecto es `extended`.
+- `-MaxObservedTokens <n>` — override excepcional entre 1k y 2M; prevalece sobre el perfil y queda identificado como `override` en telemetría.
+- `-MaxExecutionSeconds 1800` — termina el árbol del proceso al agotar el tiempo.
 - `-DuplicateWindowSeconds 3600` — bloquea contratos idénticos sobre el mismo SHA durante una hora.
 - `-FallbackModels` — vacío por defecto; cada fallback debe cualificarse explícitamente.
 - `-DryRun` — validación del contrato sin invocar opencode.
@@ -164,7 +178,9 @@ un contrato no pueda explorar fuentes de otro ciclo.
 El trabajador no puede publicar, hacer commits, ampliar sus rutas ni aprobar su
 propio resultado. Si falla, el supervisor puede adaptar una vez el contrato y
 reintentar con NAN; agotado el presupuesto termina en `ESCALATE`. Codex revisa
-pero no toma el control de la implementación. Este host Windows es
+pero no escribe directamente ni toma el control de la implementación. El objetivo
+coherente usa contrato multiarchivo; historias independientes usan batch hasta cinco;
+microcontratos artificiales prohibidos. Este host Windows es
 `BOUNDED_LOCAL`, no aislamiento duro certificado. No se delegan secretos,
 credenciales ni datos personales.
 
