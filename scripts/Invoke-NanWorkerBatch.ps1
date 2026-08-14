@@ -265,14 +265,17 @@ foreach ($story in $stories) {
     New-Item -ItemType Directory -Path $storyDir -Force | Out-Null
     $storyContractPath = Join-Path $storyDir 'contract.json'
 
-    $storyObj = $story
+    # Build storyObj as [ordered] hashtable so the indexer works on Windows
+    # PowerShell 5.1 (ConvertFrom-Json returns PSCustomObject which has no
+    # index operator).  Copy PSObject.Properties before adding mockPlan /
+    # maxRetries and write a PSCustomObject for JSON serialisation.
+    $storyObj = [ordered]@{}
+    foreach ($prop in $story.PSObject.Properties) {
+        $storyObj[$prop.Name] = $prop.Value
+    }
     if ($TestMode -and $batch.PSObject.Properties.Name -contains 'mockPlans') {
         $batchMockPlans = @($batch.mockPlans)
         if ($storyIndex -lt $batchMockPlans.Count -and $batchMockPlans[$storyIndex] -ne $null) {
-            $storyObj = @{}
-            foreach ($prop in $story.PSObject.Properties) {
-                $storyObj[$prop.Name] = $prop.Value
-            }
             $storyObj['mockPlan'] = $batchMockPlans[$storyIndex]
         }
     }
