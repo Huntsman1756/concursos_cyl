@@ -186,6 +186,12 @@ foreach ($story in $stories) {
             throw "Story '$($story.id)' metered model '$mp' rejected: must include a non-empty meteredModelJustification."
         }
     }
+
+    # ── maxRetries validation (default 2, configurable 1..3) ──
+    $mr = if ($story.PSObject.Properties.Name -contains 'maxRetries') { [int]$story.maxRetries } else { 2 }
+    if ($mr -lt 1 -or $mr -gt 3) {
+        throw "Story '$($story.id)' maxRetries must be between 1 and 3, got $mr."
+    }
 }
 
 # ── Validate budgetProfile values ──
@@ -241,6 +247,7 @@ $contractSnapshot = [ordered]@{
             meteredModelJustification = if ($_.PSObject.Properties.Name -contains 'meteredModelJustification') { $_.meteredModelJustification } else { '' }
             maxObservedTokens = if ($_.PSObject.Properties.Name -contains 'maxObservedTokens') { $_.maxObservedTokens } else { $null }
             maxExecutionSeconds = if ($_.PSObject.Properties.Name -contains 'maxExecutionSeconds') { $_.maxExecutionSeconds } else { 900 }
+            maxRetries = if ($_.PSObject.Properties.Name -contains 'maxRetries') { [int]$_.maxRetries } else { 2 }
         }
     })
 }
@@ -268,6 +275,12 @@ foreach ($story in $stories) {
             }
             $storyObj['mockPlan'] = $batchMockPlans[$storyIndex]
         }
+    }
+    # Persist maxRetries so the contract adapter forwards it to the worker.
+    if (-not $storyObj['maxRetries'] -and $story.PSObject.Properties.Name -contains 'maxRetries') {
+        $storyObj['maxRetries'] = [int]$story.maxRetries
+    } elseif (-not $storyObj.ContainsKey('maxRetries')) {
+        $storyObj['maxRetries'] = 2
     }
     Write-NewJson -Path $storyContractPath -Value ([pscustomobject]$storyObj)
     $storyContractPaths += $storyContractPath

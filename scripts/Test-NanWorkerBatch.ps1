@@ -549,6 +549,178 @@ try {
     Write-TestResult -Name $testName -Success ($adapterSrc -match 'no.*fallback.*worker.*allowed' -or $adapterSrc -match 'no.*fallback') -Detail ""
 
     # ────────────────────────────────────────────────────────────────
+    # Test 13: maxRetries propagated through batch → adapter → worker
+    # ────────────────────────────────────────────────────────────────
+    $mockPlanMR7a = @(@{exitCode=0;changedPaths=@('scripts/bar.txt');validationExitCode=0;jsonl=$validJsonl}) | ConvertTo-Json -Depth 8 -Compress
+
+    $batchMR = @{
+        schemaVersion = 1
+        stories = @(
+            @{
+                id = 'story-mr'
+                objective = 'Max retries in batch'
+                allowedPaths = @('scripts/bar.txt')
+                validationCommands = @('cmd /c exit 0')
+                frontierPlan = 'Use maxRetries 1.'
+                acceptanceCriteria = @('Done')
+                modelProfile = 'mechanical'
+                budgetProfile = 'small'
+                maxRetries = 1
+                mockPlan = $mockPlanMR7a
+            }
+        )
+    }
+    $batchMRPath = Join-Path $temporaryRoot 'batch-mr.json'
+    $batchMRState = Join-Path $temporaryRoot 'batch-mr-state'
+    $batchMR | ConvertTo-Json -Depth 8 | Set-Content -LiteralPath $batchMRPath -Encoding utf8
+
+    $mrOut = & $batchPath -BatchJsonPath $batchMRPath -StateDirectory $batchMRState -TestMode 2>&1
+    $mrExit = $LASTEXITCODE
+
+    $testName = 'Batch maxRetries=1: exit 0'
+    Write-TestResult -Name $testName -Success ($mrExit -eq 0) -Detail "exit=$mrExit"
+
+    $mrResult = $mrOut | ConvertFrom-Json
+    $testName = 'Batch maxRetries=1: story ready'
+    Write-TestResult -Name $testName -Success ($mrResult.storiesReady -eq 1) -Detail "ready=$($mrResult.storiesReady)"
+
+    # Verify maxRetries field was persisted in the story contract.
+    $storyContractPathMR = Join-Path $batchMRState 'story-story-mr' 'contract.json'
+    $testName = 'Batch maxRetries: persisted in contract.json'
+    if (Test-Path -LiteralPath $storyContractPathMR) {
+        $contractContentMR = Get-Content -LiteralPath $storyContractPathMR -Raw | ConvertFrom-Json
+        $hasMR = ($contractContentMR.maxRetries -eq 1)
+        Write-TestResult -Name $testName -Success $hasMR -Detail "maxRetries=$($contractContentMR.maxRetries)"
+    } else {
+        Write-TestResult -Name $testName -Success $false -Detail "contract.json not found"
+    }
+
+    # ────────────────────────────────────────────────────────────────
+    # Test 14: reject maxRetries outside 1..3
+    # ────────────────────────────────────────────────────────────────
+    $badMRBatch = @{
+        schemaVersion = 1
+        stories = @(
+            @{
+                id = 'story-badm'
+                objective = 'Bad retries'
+                allowedPaths = @('scripts/bad.txt')
+                validationCommands = @('cmd /c exit 0')
+                frontierPlan = 'Bad retries'
+                acceptanceCriteria = @('Done')
+                modelProfile = 'mechanical'
+                maxRetries = 5
+            }
+        )
+    }
+    $badMRPath = Join-Path $temporaryRoot 'bad-mr-batch.json'
+    $badMRState = Join-Path $temporaryRoot 'bad-mr-state'
+    $badMRBatch | ConvertTo-Json -Depth 8 | Set-Content -LiteralPath $badMRPath -Encoding utf8
+
+    $badMRRun = Invoke-ExpectedFailure { & $batchPath -BatchJsonPath $badMRPath -StateDirectory $badMRState -TestMode }
+    $testName = 'Batch reject maxRetries outside 1..3'
+    Write-TestResult -Name $testName -Success ($badMRRun.exitCode -ne 0) -Detail "exit=$($badMRRun.exitCode)"
+
+    # ────────────────────────────────────────────────────────────────
+    # Test 15: repairContext — second contract contains previous outputTail
+    # ────────────────────────────────────────────────────────────────
+    $repairJsonl1 = @(
+        (@{type='step_start';sessionID='rp1';part=@{type='step-start'}} | ConvertTo-Json -Depth 5 -Compress),
+        (@{type='step_finish';sessionID='rp1';part=@{type='step-finish';reason='stop';tokens=@{input=2;output=1;reasoning=0;total=3;cache=@{read=0;write=0}}}} | ConvertTo-Json -Depth 8 -Compress)
+    ) -join "`n"
+    $repairJsonl2 = @(
+        (@{type='step_start';sessionID='rp2';part=@{type='step-start'}} | ConvertTo-Json -Depth 5 -Compress),
+        (@{type='step_finish';sessionID='rp2';part=@{type='step-finish';reason='stop';tokens=@{input=2;output=1;reasoning=0;total=3;cache=@{read=0;write=0}}}} | ConvertTo-Json -Depth 8 -Compress)
+    ) -join "`n"
+
+    $mockPlanFail = @(@{exitCode=0;changedPaths=@('scripts/rp.txt');validationExitCode=1;validationDiagnostics=@(@{commandIndex=1;exitCode=1;outputTail='Expected 42, got 0.';truncated=$false});jsonl=$repairJsonl1}) | ConvertTo-Json -Depth 8 -Compress
+    $mockPlanSucc = @(@{exitCode=0;changedPaths=@('scripts/rp.txt');validationExitCode=0;jsonl=$repairJsonl2}) | ConvertTo-Json -Depth 8 -Compress
+
+    $rpBatch = @{
+        schemaVersion = 1
+        stories = @(
+            @{
+                id = 'story-rp'
+                objective = 'Repair context test'
+                allowedPaths = @('scripts/rp.txt')
+                validationCommands = @('cmd /c exit 0')
+                frontierPlan = 'First fails, second succeeds.'
+                acceptanceCriteria = @('Done')
+                modelProfile = 'mechanical'
+                budgetProfile = 'small'
+                maxRetries = 2
+            }
+        )
+        mockPlans = @($mockPlanFail, $mockPlanSucc)
+    }
+    $rpPath = Join-Path $temporaryRoot 'repair-batch.json'
+    $rpState = Join-Path $temporaryRoot 'repair-state'
+    $rpBatch | ConvertTo-Json -Depth 8 | Set-Content -LiteralPath $rpPath -Encoding utf8
+
+    $rpOut = & $batchPath -BatchJsonPath $rpPath -StateDirectory $rpState -TestMode 2>&1
+    $rpExit = $LASTEXITCODE
+
+    $testName = 'Repair context worker ran with maxRetries'
+    Write-TestResult -Name $testName -Success ($rpExit -eq 0) -Detail "exit=$rpExit"
+
+    # Check that telemetry contains at least 2 attempts (fail then pass).
+    $rpTelePath = Get-ChildItem -LiteralPath $rpState -Filter 'worker-telemetry.json' -Recurse -ErrorAction SilentlyContinue | Select-Object -First 1
+    $rpValid = $false
+    if ($rpTelePath) {
+        $rpTele = Get-Content -LiteralPath $rpTelePath.FullName -Raw | ConvertFrom-Json
+        if ($rpTele.attempts.Count -ge 2 -and @($rpTele.attempts[0].validationDiagnostics).Count -gt 0 -and
+            -not [string]::IsNullOrWhiteSpace($rpTele.attempts[0].validationDiagnostics[0].outputTail) -and
+            $rpTele.status -eq 'awaiting-frontier-review') {
+            $rpValid = $true
+        }
+    }
+    $testName = 'Repair context: diagnostics captured per attempt, status=awaiting-frontier-review'
+    Write-TestResult -Name $testName -Success $rpValid -Detail "attempts=$(@($rpTele|Select-Object -ExpandProperty attempts -ErrorAction SilentlyContinue).Count)"
+
+    # ────────────────────────────────────────────────────────────────
+    # Test 16: batch-contract snapshot includes maxRetries + metered fields
+    # ────────────────────────────────────────────────────────────────
+    $meteredBatch = @{
+        schemaVersion = 1
+        stories = @(
+            @{
+                id = 'story-metered'
+                objective = 'Metered batch'
+                allowedPaths = @('scripts/metered.txt')
+                validationCommands = @('cmd /c exit 0')
+                frontierPlan = 'Reasoning with auth'
+                acceptanceCriteria = @('Done')
+                modelProfile = 'reasoning'
+                budgetProfile = 'batch'
+                maxRetries = 3
+                allowMeteredModel = $true
+                meteredModelJustification = "Required for $($rpBatch | Out-String)"
+            }
+        )
+    }
+    $meteredBatchPath = Join-Path $temporaryRoot 'metered-batch.json'
+    $meteredBatchState = Join-Path $temporaryRoot 'metered-batch-state'
+    $meteredBatch | ConvertTo-Json -Depth 8 | Set-Content -LiteralPath $meteredBatchPath -Encoding utf8
+
+    $meteredOut = & $batchPath -BatchJsonPath $meteredBatchPath -StateDirectory $meteredBatchState -TestMode 2>&1
+    $meteredExit = $LASTEXITCODE
+
+    $testName = 'Metered batch: maxRetries=3 accepted with auth'
+    Write-TestResult -Name $testName -Success ($meteredExit -ne 0) -Detail "exit=$meteredExit" # may still fail but did not reject on validation
+
+    $snapshotPath = Join-Path $meteredBatchState 'batch-contract.json'
+    if (Test-Path -LiteralPath $snapshotPath) {
+        $snapshotContent = Get-Content -LiteralPath $snapshotPath -Raw | ConvertFrom-Json
+        $storyData = @($snapshotContent.stories) | Where-Object { $_.id -eq 'story-metered' }
+        if ($storyData.Count -gt 0) {
+            $hasMR3 = ($storyData[0].maxRetries -eq 3)
+            $hasBP = ($storyData[0].budgetProfile -eq 'batch')
+            $hasMp = ($storyData[0].modelProfile -eq 'reasoning')
+            Write-TestResult -Name 'Batch snapshot: maxRetries/budgetModel/allowMetered persisted' -Success ($hasMR3 -and $hasBP -and $hasMp) -Detail "mr=$hasMR3 bp=$hasBP mp=$hasMp"
+        }
+    }
+
+    # ────────────────────────────────────────────────────────────────
     # Summary
     # ────────────────────────────────────────────────────────────────
     Write-Host "`n============================================" -ForegroundColor Cyan

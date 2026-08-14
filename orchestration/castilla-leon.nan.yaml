@@ -121,7 +121,8 @@ bindings:
     agent: nan-code
     permissions: bounded-repository-write
     maxSteps: 50
-    retryMax: 1
+    retryMax: 2
+    maxRetries: 2
     defaultBudgetProfile: extended
     budgetProfiles:
       small: 500000

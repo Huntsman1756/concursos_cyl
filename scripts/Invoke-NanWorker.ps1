@@ -651,6 +651,7 @@ $tokenBudgetExceeded = $false
 $executionTimedOut = $false
 $planIndex = 0
 $totalAttempts = 0
+$repairContext = ''
 
 :modelLoop foreach ($candidateModel in $modelList) {
     $candidateAgent = if ($TaskType -eq 'bulletin') { 'nan-bulletin' } else { $codeAgents[$candidateModel] }
@@ -697,11 +698,8 @@ $totalAttempts = 0
                 $contract += "FRONTIER PLAN: $FrontierPlan"
                 # On retry, attach the diagnostic context to the contract
                 # so the worker can repair the exact failure surface.
-                if ($r -gt 0 -and $ve -ne 0) {
-                    $diagSummary = @($attempt.validationDiagnostics | ForEach-Object {
-                        "cmd=$($_.commandIndex) exitCode=$($_.exitCode) outputTail=$($_.outputTail)"
-                    }) -join ' | '
-                    $contract += "REPAIR CONTEXT: validation failed (exitCode=$ve). $diagSummary"
+                if ($r -gt 0 -and -not [string]::IsNullOrWhiteSpace($repairContext)) {
+                    $contract += "REPAIR CONTEXT: $repairContext"
                 }
                 $contract += "ACCEPTANCE CRITERIA: $($AcceptanceCriteria -join "`n")"
             }
@@ -801,6 +799,7 @@ $totalAttempts = 0
                                 $normalizedOutput = ($validationOutput -replace "`e\[[0-9;]*[A-Za-z]", '').Trim()
                                 $truncated = $normalizedOutput.Length -gt 4000
                                 if ($truncated) { $normalizedOutput = $normalizedOutput.Substring($normalizedOutput.Length - 4000) }
+                                $repairContext = "$repairContext|$normalizedOutput"
                                 $attempt.validationDiagnostics += [ordered]@{
                                     commandIndex=$commandIndex;exitCode=$commandExit
                                     outputTail=$normalizedOutput;truncated=$truncated
@@ -813,6 +812,10 @@ $totalAttempts = 0
                     $attempts[-1] = $attempt
                     if ($ve -ne 0) {
                         if ($TestMode) { Write-Warning "Mock validation failure (exitCode=$ve)" }
+                        if ($attempt.validationDiagnostics.Count -eq 0) {
+                            $diagSummary = 'mock validation (exitCode=%s)' -f $ve
+                            $repairContext = "$repairContext|$diagSummary"
+                        }
                         # On failure: if not the last retry, break inner loop
                         # and let r auto-increment re-invoke Qwen with repair
                         # context (command, exitCode, outputTail) in the contract.
@@ -827,7 +830,12 @@ $totalAttempts = 0
             }
 
             # Bulletin tasks or code with all checks passed
-            $successResult = $attempt
+                    #
+                    # ── Clear repair context after a successful validation ──
+                    # so subsequent attempts in the same run have no stale context.
+                    #
+                    $repairContext = ''
+                    $successResult = $attempt
             break modelLoop
         }
 

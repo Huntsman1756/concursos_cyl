@@ -106,6 +106,12 @@ if (@('small','batch','research','extended') -notcontains $budgetProfile) {
     throw "Budget profile '$budgetProfile' is not valid."
 }
 
+# ── maxRetries: default 2, configurable 1..3 ──
+$maxRetriesContract = if ($contract.PSObject.Properties.Name -contains 'maxRetries') { [int]$contract.maxRetries } else { 2 }
+if ($maxRetriesContract -lt 1 -or $maxRetriesContract -gt 3) {
+    throw "maxRetries must be between 1 and 3, got $maxRetriesContract."
+}
+
 # Build worker parameters (splat)
 $workerParameters = @{
     TaskType = 'code'
@@ -115,7 +121,7 @@ $workerParameters = @{
     FrontierPlan = $contract.frontierPlan
     AcceptanceCriteria = @($contract.acceptanceCriteria)
     PlannedBy = 'frontier'
-    MaxRetries = 2
+    MaxRetries = $maxRetriesContract
     FallbackModels = @()
     BudgetProfile = $budgetProfile
     ModelProfile = $modelProfile

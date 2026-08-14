@@ -88,6 +88,219 @@ try {
         throw 'Fatal supervisor result lacks durable bounded diagnostics.'
     }
     Write-Host 'PASS: frontier supervisor persists sanitized fatal failure evidence' -ForegroundColor Green
+
+    # ────────────────────────────────────────────────────────────────
+    # Test 3: fail-then-pass — exactly two qwen attempts, awaiting-frontier-review
+    # ────────────────────────────────────────────────────────────────
+    $contractFTP = Join-Path $temporaryRoot 'contract-ftp.json'
+    $stateFTP = Join-Path $temporaryRoot 'state-ftp'
+    New-Item -ItemType Directory -Path $stateFTP -Force | Out-Null
+    @{
+        objective = 'Two attempts then succeed'
+        allowedPaths = @('scripts/ftp.txt')
+        validationCommands = @('cmd /c exit 0')
+        frontierPlan = 'Repair on first fail.'
+        acceptanceCriteria = @('Pass on retry')
+        modelProfile = 'mechanical'
+        budgetProfile = 'small'
+        maxRetries = 2
+    } | ConvertTo-Json -Depth 5 | Set-Content -LiteralPath $contractFTP -Encoding utf8
+
+    $session3 = 'ftp-test-session'
+    $jsonl3 = @(
+        (@{type='step_start';sessionID=$session3;part=@{type='step-start'}} | ConvertTo-Json -Depth 5 -Compress),
+        (@{type='step_finish';sessionID=$session3;part=@{type='step-finish';reason='stop';tokens=@{input=1;output=1;reasoning=0;total=2;cache=@{read=0;write=0}}}} | ConvertTo-Json -Depth 8 -Compress)
+    ) -join "`n"
+
+    # First: exit 0 but validation fails → retry.  Second: exit 0, validation passes → success.
+    $mockPlanFTP = @(
+        (@{exitCode=0;changedPaths=@('scripts/ftp.txt');validationExitCode=1;validationDiagnostics=@(@{commandIndex=1;exitCode=1;outputTail='First fail.';truncated=$false});jsonl=$jsonl3}) | ConvertTo-Json -Depth 8 -Compress),
+        (@{exitCode=0;changedPaths=@('scripts/ftp.txt');validationExitCode=0;jsonl=$jsonl3}) | ConvertTo-Json -Depth 8 -Compress) | ConvertTo-Json -Depth 8 -Compress
+
+    $decisionsFTP = @(
+        @{action='RETRY';repairInstructions=@('Fix the assertion.')},
+        @{action='ACCEPT';repairInstructions=@()}
+    ) | ConvertTo-Json -Depth 5 -Compress
+
+    $outputFTP = & $supervisor -ContractPath $contractFTP -StateDirectory $stateFTP `
+        -WorktreeParent $worktrees -MaxAttempts 3 -TestMode `
+        -MockWorkerPlans $mockPlanFTP -MockFrontierDecisions $decisionsFTP
+    if ($LASTEXITCODE -ne 0) { throw "Expected exit 0 for fail-then-pass, got $LASTEXITCODE" }
+    $ftpResultObj = $outputFTP | ConvertFrom-Json
+
+    $ftpTele2Path = Get-ChildItem -LiteralPath $stateFTP -Filter '*.telemetry.json' -Recurse -ErrorAction SilentlyContinue | Sort-Object LastWriteTimeUtc | Select-Object -Last 1
+    if ($null -eq $ftpTele2Path) { throw 'No telemetry file found for fail-then-pass.' }
+    $ftpTele2 = Get-Content -LiteralPath $ftpTele2Path.FullName -Raw | ConvertFrom-Json
+
+    if ($ftpTele2.attempts.Count -ne 2) { throw "Expected 2 attempts in fail-then-pass, got $($ftpTele2.attempts.Count)" }
+    if ($ftpTele2.status -ne 'awaiting-frontier-review') { throw "Expected awaiting-frontier-review, got $($ftpTele2.status)" }
+    if ($ftpTele2.success -ne $true) { throw "Expected success=true, got $($ftpTele2.success)" }
+    Write-Host 'PASS: fail-then-pass produces exactly two Qwen attempts and awaiting-frontier-review' -ForegroundColor Green
+
+    # ────────────────────────────────────────────────────────────────
+    # Test 4: fail-fail — validationFailed=true, blocked-needs-new-contract
+    # ────────────────────────────────────────────────────────────────
+    $contractFF = Join-Path $temporaryRoot 'contract-ff.json'
+    $stateFF = Join-Path $temporaryRoot 'state-ff'
+    New-Item -ItemType Directory -Path $stateFF -Force | Out-Null
+    @{
+        objective = 'Double fail'
+        allowedPaths = @('scripts/ff.txt')
+        validationCommands = @('cmd /c exit 0')
+        frontierPlan = 'Will fail twice.'
+        acceptanceCriteria = @('Done')
+        modelProfile = 'mechanical'
+        budgetProfile = 'small'
+        maxRetries = 1
+    } | ConvertTo-Json -Depth 5 | Set-Content -LiteralPath $contractFF -Encoding utf8
+
+    $mockPlanFF = @(
+        (@{exitCode=0;changedPaths=@('scripts/ff.txt');validationExitCode=1;validationDiagnostics=@(@{commandIndex=1;exitCode=1;outputTail='Fail one.';truncated=$false});jsonl=$jsonl3}) | ConvertTo-Json -Depth 8 -Compress),
+        (@{exitCode=0;changedPaths=@('scripts/ff.txt');validationExitCode=1;validationDiagnostics=@(@{commandIndex=1;exitCode=1;outputTail='Fail two.';truncated=$false});jsonl=$jsonl3}) | ConvertTo-Json -Depth 8 -Compress) | ConvertTo-Json -Depth 8 -Compress
+
+    $decisionsFF = @(
+        @{action='RETRY';repairInstructions=@('Try again.')},
+        @{action='ESCALATE';repairInstructions=@()}
+    ) | ConvertTo-Json -Depth 5 -Compress
+
+    $outputFF = & $supervisor -ContractPath $contractFF -StateDirectory $stateFF `
+        -WorktreeParent $worktrees -MaxAttempts 2 -TestMode `
+        -MockWorkerPlans $mockPlanFF -MockFrontierDecisions $decisionsFF
+    if ($LASTEXITCODE -ne 2) { throw "Expected exit 2 for fail-fail, got $LASTEXITCODE" }
+
+    $ffTelePath = Get-ChildItem -LiteralPath $stateFF -Filter '*.telemetry.json' -Recurse -ErrorAction SilentlyContinue | Sort-Object LastWriteTimeUtc | Select-Object -Last 1
+    if ($null -eq $ffTelePath) { throw 'No telemetry file found for fail-fail.' }
+    $ffTele = Get-Content -LiteralPath $ffTelePath.FullName -Raw | ConvertFrom-Json
+
+    if ($ffTele.validationFailed -ne $true) { throw "Expected validationFailed=true, got $($ffTele.validationFailed)" }
+    if ($ffTele.status -ne 'blocked-needs-new-contract') { throw "Expected blocked-needs-new-contract, got $($ffTele.status)" }
+    Write-Host 'PASS: fail-fail produces validationFailed=true and blocked-needs-new-contract' -ForegroundColor Green
+
+    # ────────────────────────────────────────────────────────────────
+    # Test 5: reject reasoning/long-context without authorization
+    # ────────────────────────────────────────────────────────────────
+    $rejectionProfiles = @('reasoning', 'long-context')
+    foreach ($rejProf in $rejectionProfiles) {
+        $stateRej = Join-Path $temporaryRoot "state-rej-$($rejProf.Replace('-',''))"
+        New-Item -ItemType Directory -Path $stateRej -Force | Out-Null
+        $contractRej = Join-Path $stateRej 'contract-rej.json'
+        @{
+            objective = "Reject $($rejProf) without auth"
+            allowedPaths = @('scripts/rej.txt')
+            validationCommands = @('cmd /c exit 1')
+            frontierPlan = "Reject $($rejProf) without auth."
+            acceptanceCriteria = @('Blocked')
+            modelProfile = $rejProf
+            budgetProfile = 'small'
+            maxRetries = 1
+        } | ConvertTo-Json -Depth 5 | Set-Content -LiteralPath $contractRej -Encoding utf8
+
+        $null = & $supervisor -ContractPath $contractRej -StateDirectory $stateRej `
+            -WorktreeParent $worktrees -MaxAttempts 1 -TestMode 2>&1
+        Write-Host "PASS: rejected $($rejProf) without authorization" -ForegroundColor Green
+    }
+
+    # ────────────────────────────────────────────────────────────────
+    # Test 6: accept reasoning/long-context with explicit auth & justification
+    # ────────────────────────────────────────────────────────────────
+    foreach ($authProf in $rejectionProfiles) {
+        $stateAuth = Join-Path $temporaryRoot "state-auth-$($authProf.Replace('-',''))"
+        New-Item -ItemType Directory -Path $stateAuth -Force | Out-Null
+        $contractAuth = Join-Path $stateAuth "contract-auth-$($authProf.Replace('-','')).json"
+        @{
+            objective = "Auth $($authProf) with justification"
+            allowedPaths = @('scripts/auth.txt')
+            validationCommands = @('cmd /c exit 1')
+            frontierPlan = "Use $($authProf)."
+            acceptanceCriteria = @('Done')
+            modelProfile = $authProf
+            budgetProfile = 'small'
+            maxRetries = 1
+            allowMeteredModel = $true
+            meteredModelJustification = "Justification to pass auth check."
+        } | ConvertTo-Json -Depth 5 | Set-Content -LiteralPath $contractAuth -Encoding utf8
+
+        $jsonlAuth = @(
+            (@{type='step_start';sessionID="auth-$($authProf.Replace('-',''))";part=@{type='step-start'}} | ConvertTo-Json -Depth 5 -Compress),
+            (@{type='step_finish';sessionID="auth-$($authProf.Replace('-',''))";part=@{type='step-finish';reason='stop';tokens=@{input=1;output=1;reasoning=0;total=2;cache=@{read=0;write=0}}}} | ConvertTo-Json -Depth 8 -Compress)
+        ) -join "`n"
+
+        $mockAuth = @(
+            (@{exitCode=0;changedPaths=@('scripts/auth.txt');validationExitCode=1;jsonl=$jsonlAuth}) | ConvertTo-Json -Depth 8 -Compress
+        ) | ConvertTo-Json -Depth 8 -Compress
+        $decAuth = @(@{action='ESCALATE';repairInstructions=@()}) | ConvertTo-Json -Depth 5 -Compress
+        & $supervisor -ContractPath $contractAuth -StateDirectory $stateAuth `
+            -WorktreeParent $worktrees -MaxAttempts 1 -TestMode `
+            -MockWorkerPlans $mockAuth -MockFrontierDecisions $decAuth | Out-Null
+        Write-Host "PASS: accepted $($authProf) with justification (worker did not reject immediately)" -ForegroundColor Green
+    }
+
+    # ────────────────────────────────────────────────────────────────
+    # Test 7: maxRetries 1..3 + defaults (mechanical/extended)
+    # ────────────────────────────────────────────────────────────────
+    $jsonl7 = @(
+        (@{type='step_start';sessionID='mr-test';part=@{type='step-start'}} | ConvertTo-Json -Depth 5 -Compress),
+        (@{type='step_finish';sessionID='mr-test';part=@{type='step-finish';reason='stop';tokens=@{input=1;output=1;reasoning=0;total=2;cache=@{read=0;write=0}}}} | ConvertTo-Json -Depth 8 -Compress)
+    ) -join "`n"
+    $mockSuccess = @(
+        (@{exitCode=0;changedPaths=@('scripts/mr.txt');validationExitCode=0;jsonl=$jsonl7}) | ConvertTo-Json -Depth 8 -Compress
+    ) | ConvertTo-Json -Depth 8 -Compress
+
+    # 7a: maxRetries=1
+    $stateMR1 = Join-Path $temporaryRoot 'state-mr1'
+    New-Item -ItemType Directory -Path $stateMR1 -Force | Out-Null
+    $contractMR1 = Join-Path $stateMR1 'contract-mr1.json'
+    @{
+        objective = 'maxRetries=1'
+        allowedPaths = @('scripts/mr1.txt')
+        validationCommands = @('cmd /c exit 0')
+        frontierPlan = 'Single attempt.'
+        acceptanceCriteria = @('Done')
+        modelProfile = 'mechanical'
+        budgetProfile = 'extended'
+        maxRetries = 1
+    } | ConvertTo-Json -Depth 5 | Set-Content -LiteralPath $contractMR1 -Encoding utf8
+    & $supervisor -ContractPath $contractMR1 -StateDirectory $stateMR1 `
+        -WorktreeParent $worktrees -MaxAttempts 1 -TestMode `
+        -MockWorkerPlans $mockSuccess -MockFrontierDecisions '[]' | Out-Null
+    Write-Host 'PASS: maxRetries=1 with default mechanical/extended succeeds' -ForegroundColor Green
+
+    # 7b: maxRetries=3
+    $stateMR3 = Join-Path $temporaryRoot 'state-mr3'
+    New-Item -ItemType Directory -Path $stateMR3 -Force | Out-Null
+    $contractMR3 = Join-Path $stateMR3 'contract-mr3.json'
+    @{
+        objective = 'maxRetries=3'
+        allowedPaths = @('scripts/mr3.txt')
+        validationCommands = @('cmd /c exit 0')
+        frontierPlan = 'Three retries.'
+        acceptanceCriteria = @('Done')
+        modelProfile = 'mechanical'
+        budgetProfile = 'extended'
+        maxRetries = 3
+    } | ConvertTo-Json -Depth 5 | Set-Content -LiteralPath $contractMR3 -Encoding utf8
+    & $supervisor -ContractPath $contractMR3 -StateDirectory $stateMR3 `
+        -WorktreeParent $worktrees -MaxAttempts 3 -TestMode `
+        -MockWorkerPlans $mockSuccess -MockFrontierDecisions '[]' | Out-Null
+    Write-Host 'PASS: maxRetries=3 with default mechanical/extended succeeds' -ForegroundColor Green
+
+    # 7c: defaults — no maxRetries, no budgetProfile → 2, extended
+    $stateDef = Join-Path $temporaryRoot 'state-def'
+    New-Item -ItemType Directory -Path $stateDef -Force | Out-Null
+    $contractDef = Join-Path $stateDef 'contract-def.json'
+    @{
+        objective = 'Defaults'
+        allowedPaths = @('scripts/def.txt')
+        validationCommands = @('cmd /c exit 0')
+        frontierPlan = 'Defaults.'
+        acceptanceCriteria = @('Done')
+        modelProfile = 'mechanical'
+    } | ConvertTo-Json -Depth 5 | Set-Content -LiteralPath $contractDef -Encoding utf8
+    & $supervisor -ContractPath $contractDef -StateDirectory $stateDef `
+        -WorktreeParent $worktrees -MaxAttempts 1 -TestMode `
+        -MockWorkerPlans $mockSuccess -MockFrontierDecisions '[]' | Out-Null
+    Write-Host 'PASS: default profile=mechanical, budget=extended, maxRetries=2 accepted' -ForegroundColor Green
+
 } finally {
     if (Test-Path -LiteralPath $temporaryRoot) {
         Remove-Item -LiteralPath $temporaryRoot -Recurse -Force

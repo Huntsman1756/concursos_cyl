@@ -81,6 +81,27 @@ respeta `Retry-After` y registra cada intento sin conservar prompts ni secretos.
 - Errores de contrato mal formado.
 - Timeouts de ejecución (se reportan como `blocked-timeout`).
 
+## 4b. Repair Context (reparación con contexto)
+
+Cuando la validación de un intento falla, el worker captura los _diagnostics_
+(commandIndex, exitCode, outputTail truncado a 4000) y los acumula en
+`repairContext`.  En cada reintento (mientras queden reintentos) se adjunta el
+contexto al contrato de ejecución para que el worker pueda reparar la
+superficie exacta del fallo:
+
+```
+REPAIR CONTEXT: <outputTail-0>|<outputTail-1>
+```
+
+Si la validación pasa `repairContext` se limpia para que los intentos sucesivos
+no reciban contexto obsoleto.  Al agotar los reintentos se marca
+`validationFailed=true` y el estado pasa a `blocked-needs-new-contract`.
+
+Cada intento puede configurar `maxRetries` entre **1 y 3**; el valor de
+defecto es **2**.  `maxRetries` se propaga desde el lote (`batch.story.maxRetries`),
+pasa por el adaptador (`Invoke-NanWorkerContract.ps1`) hasta el worker
+(`Invoke-NanWorker.ps1`) como parámetro `-MaxRetries`.
+
 ## 5. Estados del pipeline
 
 | Estado                         | Significado                                                              |
@@ -143,7 +164,7 @@ Al inspeccionar un intento fallido, sigue estos cuatro pasos:
 
 1. Lee `status` y `terminalErrors` del JSONL de telemetría para identificar el estado y los errores terminales.
 2. Comprueba `retryCount` y los códigos NAN retornados; descarta reintentos si el código no es `429` o `5xx`.
-3. Revisa `validationDiagnostics` para confirmar si la validación falló, se bloqueó antes o no se ejecutó.
+3. Revisa `validationDiagnostics` (en cada intento) y `repairContext` (en el contrato de reintento) para confirmar si la validación falló, se bloqueó antes o no se ejecutó.
 4. Crea un **nuevo contrato acotado** (nuevo SHA, nuevas rutas o criterios ajustados) y **no reutilices el worktree sucio**.
 
 ## 11. Referencias rápidas
