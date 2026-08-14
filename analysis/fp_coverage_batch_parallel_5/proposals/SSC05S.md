@@ -1,9 +1,9 @@
 # SSC05S — Mediación Comunicativa
 
-**Official TodoFP title:** Técnico Superior en Mediación Comunicativa  
-**Source:** <https://www.todofp.es/que-estudiar/familias-profesionales/servicios-socioculturales-comunidad/mediacion-comunicativa.html>  
-**Family:** Servicios Socioculturales y a la Comunidad (SSC)  
-**Level:** higher (Técnico Superior)  
+**Official TodoFP title:** Técnico Superior en Mediación Comunicativa
+**Source:** <https://www.todofp.es/que-estudiar/familias-profesionales/servicios-socioculturales-comunidad/mediacion-comunicativa.html>
+**Family:** Servicios Socioculturales y a la Comunidad (SSC)
+**Level:** higher (Técnico Superior)
 **Catálogo base:** `data/curated/occupations.json`, versión 1.0.0 (solo `approved`)
 
 ---
@@ -12,13 +12,13 @@
 
 ### Literal sourceQuotes
 
-> "Mediador / mediadora de personas con dificultades de comunicación"  
+> "Mediador / mediadora de personas con dificultades de comunicación"
 > _(SSC05S.txt, quote 6)_
 
-> "Mediador / mediadora de personas sordociegas."  
+> "Mediador / mediadora de personas sordociegas."
 > _(SSC05S.txt, quote 7)_
 
-> "Mediador / mediadora social de la comunidad sorda."  
+> "Mediador / mediadora social de la comunidad sorda."
 > _(SSC05S.txt, quote 8)_
 
 ### CNO-11 candidate
@@ -30,7 +30,7 @@
 | **preferredLabel**     | Profesionales de apoyo al trabajo y a la educación social |
 | **reviewStatus**       | approved                                                  |
 
-**Justificación:**  
+**Justificación:**
 El mediador/a de personas con dificultades de comunicación, el mediador/a de personas sordociegas y el mediador/a social de la comunidad sorda ejercen una función de apoyo a la inclusión social y a la participación comunitaria de personas con discapacidad sensorial: facilitan el acceso a servicios, recursos y entornos sociales mediante la intermediación comunicativa. CNO-11 3713 ("Profesionales de apoyo al trabajo y a la educación social") es la categoría approved que captura el perfil de integración y apoyo social (integradores y mediadores sociales), constituyendo la correspondencia funcional directa dentro del catálogo.
 
 **Riesgo:** Categoría genérica de apoyo socioeducativo que no refleja la especialización en lengua de signos, sistemas de comunicación aumentativa ni guía-interpretación de personas sordociegas. No existe en el catálogo approved ningún epígrafe específico de "mediador" ni de "intérprete de lengua de signos"; 3713 es la categoría más próxima por función laboral, no por técnica comunicativa.
@@ -41,7 +41,7 @@ El mediador/a de personas con dificultades de comunicación, el mediador/a de pe
 
 ### Literal sourceQuote
 
-> "Técnica / técnico en promoción, atención y formación a personas sordas."  
+> "Técnica / técnico en promoción, atención y formación a personas sordas."
 > _(SSC05S.txt, quote 9)_
 
 ### CNO-11 candidate
@@ -53,7 +53,7 @@ El mediador/a de personas con dificultades de comunicación, el mediador/a de pe
 | **preferredLabel**     | Técnicos educadores de educación especial |
 | **reviewStatus**       | approved                                  |
 
-**Justificación:**  
+**Justificación:**
 La función de formación de personas sordas se desarrolla en contextos educativos especializados, donde el técnico en promoción, atención y formación actúa como educador y apoyo pedagógico de alumnado con discapacidad auditiva. CNO-11 2312 ("Técnicos educadores de educación especial") corresponde funcionalmente al componente formativo de esta salida: docencia y apoyo educativo a personas con necesidades educativas especiales, entre las que se incluyen las personas sordas.
 
 **Riesgo:** 2312 cubre el componente educativo pero no los componentes de "promoción" ni de "atención" (dinamización comunitaria y cuidados), que exceden la función docente. Además, 2312 es una categoría general de educación especial, sin especificidad auditiva ni comunicativa. La correspondencia es funcional parcial (formación), no exacta.
@@ -96,5 +96,5 @@ La función de formación de personas sordas se desarrolla en contextos educativ
 | Mediación social (comunidad sorda) | `occupation:cno11:3713` | 3713   | (compartido)                                              | "Mediador / mediadora social de la comunidad sorda." (quote 8)                      | Funcional directa                                 |
 | Formación a personas sordas        | `occupation:cno11:2312` | 2312   | Técnicos educadores de educación especial                 | "Técnica / técnico en promoción, atención y formación a personas sordas." (quote 9) | Funcional directa (parcial, componente formación) |
 
-**Salidas sin candidato:** 5 de 9 (quotes 1–5). **Áreas funcionales sin candidato:** lenguaje corporal, expresión oral, interpretación simultánea, relación con medios.  
+**Salidas sin candidato:** 5 de 9 (quotes 1–5). **Áreas funcionales sin candidato:** lenguaje corporal, expresión oral, interpretación simultánea, relación con medios.
 **Total salidas de la fuente:** 9 — **Con candidato:** 4 (quotes 6, 7, 8, 9) — **Sin candidato:** 5 (quotes 1, 2, 3, 4, 5).

@@ -1,8 +1,8 @@
 # Propuesta de cobertura: TMV03E
 
-**Programa:** Mantenimiento y seguridad en sistemas de vehículos híbridos y eléctricos  
-**Fuente:** TodoFP  
-**Archivo fuente:** `analysis/fp_coverage_batch_parallel_5/sources/TMV03E.txt`  
+**Programa:** Mantenimiento y seguridad en sistemas de vehículos híbridos y eléctricos
+**Fuente:** TodoFP
+**Archivo fuente:** `analysis/fp_coverage_batch_parallel_5/sources/TMV03E.txt`
 **Catálogo ocupacional:** `data/curated/occupations.json` (CNO-11, solo `approved`)
 
 ---

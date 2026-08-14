@@ -1,7 +1,7 @@
 # Revisión frontier del quinto lote FP
 
-Fecha de revisión: `2026-08-14`  
-Catálogo CNO-11 aprobado: `data/curated/occupations.json`  
+Fecha de revisión: `2026-08-14`
+Catálogo CNO-11 aprobado: `data/curated/occupations.json`
 SHA-256 del catálogo: `f77079a15d7246c04b44889c733fda7fc9bade892c9d78c79607fcb1c3e21e90`
 
 ## Criterio
