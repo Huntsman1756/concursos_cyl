@@ -1081,6 +1081,16 @@
   },
   {
     "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:3126",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-14",
+    "sourceQuote": "Técnicas / técnicos en mecánica.",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/fabricacion-mecanica/programacion-produccion-fab-mecanica.html",
+    "trainingProgramKey": "FME01S"
+  },
+  {
+    "mappingVersion": "1.0.0",
     "occupationId": "occupation:cno11:7132",
     "relationshipType": "official_output",
     "reviewStatus": "approved",
@@ -1601,6 +1611,16 @@
   },
   {
     "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:5811",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-14",
+    "sourceQuote": "Peluquero/a especialista.",
+    "sourceUrl": "https://www.boe.es/diario_boe/txt.php?id=BOE-A-2011-19352",
+    "trainingProgramKey": "IMP02S"
+  },
+  {
+    "mappingVersion": "1.0.0",
     "occupationId": "occupation:cno11:7812",
     "relationshipType": "reviewed_relationship",
     "reviewStatus": "approved",
@@ -1648,6 +1668,16 @@
     "sourceQuote": "Montador-ensamblador de elementos de carpintería.",
     "sourceUrl": "https://www.boe.es/eli/es/rd/1128/2010",
     "trainingProgramKey": "MAM01M"
+  },
+  {
+    "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:3160",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-14",
+    "sourceQuote": "control de calidad de materiales",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/quimica/operaciones-laboratorio.html",
+    "trainingProgramKey": "QUI02M"
   },
   {
     "mappingVersion": "1.0.0",

@@ -2000,5 +2000,15 @@
     "sourceQuote": "Peluquero/a especialista.",
     "reviewedAt": "2026-08-14",
     "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "QUI02M",
+    "occupationId": "occupation:cno11:3160",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/quimica/operaciones-laboratorio.html",
+    "sourceQuote": "control de calidad de materiales",
+    "reviewedAt": "2026-08-14",
+    "mappingVersion": "1.0.0"
   }
 ]

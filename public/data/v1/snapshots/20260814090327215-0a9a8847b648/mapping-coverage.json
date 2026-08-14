@@ -832,9 +832,9 @@
     "uncoveredPrograms": 0
   },
   {
-    "approvedMappings": 0,
-    "coverageNote": "Aún no hay una relación ocupacional aprobada; esto no significa que el ciclo no tenga salidas profesionales.",
-    "coverageStatus": "uncovered",
+    "approvedMappings": 1,
+    "coverageNote": "Incluye relaciones ocupacionales revisadas y citadas.",
+    "coverageStatus": "reviewed",
     "draftMappings": 0,
     "familyCode": "FME",
     "familyName": "Fabricación Mecánica",
@@ -842,7 +842,7 @@
     "programTitle": "Programación de la Producción en Fabricación Mecánica",
     "rejectedMappings": 0,
     "scope": "program",
-    "uncoveredPrograms": 1
+    "uncoveredPrograms": 0
   },
   {
     "approvedMappings": 0,
@@ -1417,9 +1417,9 @@
     "uncoveredPrograms": 1
   },
   {
-    "approvedMappings": 0,
-    "coverageNote": "Aún no hay una relación ocupacional aprobada; esto no significa que el ciclo no tenga salidas profesionales.",
-    "coverageStatus": "uncovered",
+    "approvedMappings": 1,
+    "coverageNote": "Incluye relaciones ocupacionales revisadas y citadas.",
+    "coverageStatus": "reviewed",
     "draftMappings": 0,
     "familyCode": "IMP",
     "familyName": "Imagen Personal",
@@ -1427,7 +1427,7 @@
     "programTitle": "Estilismo y Dirección de Peluquería",
     "rejectedMappings": 0,
     "scope": "program",
-    "uncoveredPrograms": 1
+    "uncoveredPrograms": 0
   },
   {
     "approvedMappings": 0,
@@ -1768,9 +1768,9 @@
     "uncoveredPrograms": 1
   },
   {
-    "approvedMappings": 0,
-    "coverageNote": "Aún no hay una relación ocupacional aprobada; esto no significa que el ciclo no tenga salidas profesionales.",
-    "coverageStatus": "uncovered",
+    "approvedMappings": 1,
+    "coverageNote": "Incluye relaciones ocupacionales revisadas y citadas.",
+    "coverageStatus": "reviewed",
     "draftMappings": 0,
     "familyCode": "QUI",
     "familyName": "Química",
@@ -1778,7 +1778,7 @@
     "programTitle": "Operaciones de Laboratorio",
     "rejectedMappings": 0,
     "scope": "program",
-    "uncoveredPrograms": 1
+    "uncoveredPrograms": 0
   },
   {
     "approvedMappings": 0,
@@ -2519,7 +2519,7 @@
     "uncoveredPrograms": 6
   },
   {
-    "approvedMappings": 9,
+    "approvedMappings": 10,
     "coverageNote": "La cobertura mide relaciones revisadas del catálogo, no la existencia de salidas profesionales.",
     "draftMappings": 0,
     "familyCode": "FME",
@@ -2527,7 +2527,7 @@
     "programCount": 9,
     "rejectedMappings": 0,
     "scope": "family",
-    "uncoveredPrograms": 6
+    "uncoveredPrograms": 5
   },
   {
     "approvedMappings": 9,
@@ -2563,7 +2563,7 @@
     "uncoveredPrograms": 6
   },
   {
-    "approvedMappings": 11,
+    "approvedMappings": 12,
     "coverageNote": "La cobertura mide relaciones revisadas del catálogo, no la existencia de salidas profesionales.",
     "draftMappings": 0,
     "familyCode": "IMP",
@@ -2571,7 +2571,7 @@
     "programCount": 9,
     "rejectedMappings": 0,
     "scope": "family",
-    "uncoveredPrograms": 5
+    "uncoveredPrograms": 4
   },
   {
     "approvedMappings": 0,
@@ -2607,7 +2607,7 @@
     "uncoveredPrograms": 2
   },
   {
-    "approvedMappings": 0,
+    "approvedMappings": 1,
     "coverageNote": "La cobertura mide relaciones revisadas del catálogo, no la existencia de salidas profesionales.",
     "draftMappings": 0,
     "familyCode": "QUI",
@@ -2615,7 +2615,7 @@
     "programCount": 5,
     "rejectedMappings": 0,
     "scope": "family",
-    "uncoveredPrograms": 5
+    "uncoveredPrograms": 4
   },
   {
     "approvedMappings": 9,

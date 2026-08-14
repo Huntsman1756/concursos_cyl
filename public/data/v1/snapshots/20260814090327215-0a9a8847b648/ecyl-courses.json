@@ -6,120 +6,6 @@
     ],
     "durationHours": null,
     "endDate": null,
-    "id": "1285563516917",
-    "locality": "Zamora",
-    "modality": "Presencial",
-    "officialUrl": "https://empleo.jcyl.es/web/jcyl/Empleo/es/Plantilla100Detalle/1284216458054/Formacion/1285563516917/Propuesta",
-    "places": 30,
-    "registration": "Diríjase para obtener más información a: · · U.S. COMISIONES OBRERAS CASTILLA Y LEON · PZ/ MADRID, 4, 2 · VALLADOLID · Teléfono: 983391516",
-    "requirements": null,
-    "startDate": null,
-    "subject": "Familia genérica",
-    "title": "116_TALLER DE EMPLEO 1",
-    "venue": "A determinar, / , nº, ZAMORA(ZAMORA)"
-  },
-  {
-    "applicationDeadline": null,
-    "audience": [
-      "Desempleado"
-    ],
-    "durationHours": 40,
-    "endDate": null,
-    "id": "1285564635765",
-    "locality": "Ávila",
-    "modality": "Presencial",
-    "officialUrl": "https://empleo.jcyl.es/web/jcyl/Empleo/es/Plantilla100Detalle/1284216458054/Formacion/1285564635765/Propuesta",
-    "places": 30,
-    "registration": "Diríjase para obtener más información a: · · UGT CASTILLA Y LEÓN · CL/ GAMAZO , 13, 1º · VALLADOLID · Teléfono: 983329001",
-    "requirements": null,
-    "startDate": null,
-    "subject": "Familia genérica",
-    "title": "116_TALLER DE EMPLEO 1",
-    "venue": "A determinar, / , nº, ÁVILA(ÁVILA)"
-  },
-  {
-    "applicationDeadline": null,
-    "audience": [
-      "Desempleado"
-    ],
-    "durationHours": null,
-    "endDate": null,
-    "id": "1285564636329",
-    "locality": "Palencia",
-    "modality": "Presencial",
-    "officialUrl": "https://empleo.jcyl.es/web/jcyl/Empleo/es/Plantilla100Detalle/1284216458054/Formacion/1285564636329/Propuesta",
-    "places": 30,
-    "registration": "Diríjase para obtener más información a: · · CEOE CASTILLA Y LEÓN · CL/ FLORENCIA, 8 · VALLADOLID · Teléfono: 983212020",
-    "requirements": null,
-    "startDate": null,
-    "subject": "Familia genérica",
-    "title": "116_TALLER DE EMPLEO 1",
-    "venue": "A determinar, / , nº, PALENCIA(PALENCIA)"
-  },
-  {
-    "applicationDeadline": null,
-    "audience": [
-      "Desempleado"
-    ],
-    "durationHours": null,
-    "endDate": null,
-    "id": "1285564636564",
-    "locality": "Zamora",
-    "modality": "Presencial",
-    "officialUrl": "https://empleo.jcyl.es/web/jcyl/Empleo/es/Plantilla100Detalle/1284216458054/Formacion/1285564636564/Propuesta",
-    "places": 30,
-    "registration": "Diríjase para obtener más información a: · · CEOE CASTILLA Y LEÓN · CL/ FLORENCIA, 8 · VALLADOLID · Teléfono: 983212020",
-    "requirements": null,
-    "startDate": null,
-    "subject": "Familia genérica",
-    "title": "116_TALLER DE EMPLEO 1",
-    "venue": "A determinar, / , nº, ZAMORA(ZAMORA)"
-  },
-  {
-    "applicationDeadline": null,
-    "audience": [
-      "Desempleado"
-    ],
-    "durationHours": null,
-    "endDate": null,
-    "id": "1285563516588",
-    "locality": "Burgos",
-    "modality": "Presencial",
-    "officialUrl": "https://empleo.jcyl.es/web/jcyl/Empleo/es/Plantilla100Detalle/1284216458054/Formacion/1285563516588/Propuesta",
-    "places": 30,
-    "registration": "Diríjase para obtener más información a: · · U.S. COMISIONES OBRERAS CASTILLA Y LEON · PZ/ MADRID, 4, 2 · VALLADOLID · Teléfono: 983391516",
-    "requirements": null,
-    "startDate": null,
-    "subject": "Familia genérica",
-    "title": "116_TALLER DE EMPLEO 1",
-    "venue": "A determinar, / , nº, BURGOS(BURGOS)"
-  },
-  {
-    "applicationDeadline": null,
-    "audience": [
-      "Desempleado"
-    ],
-    "durationHours": null,
-    "endDate": null,
-    "id": "1285563516823",
-    "locality": "Soria",
-    "modality": "Presencial",
-    "officialUrl": "https://empleo.jcyl.es/web/jcyl/Empleo/es/Plantilla100Detalle/1284216458054/Formacion/1285563516823/Propuesta",
-    "places": 30,
-    "registration": "Diríjase para obtener más información a: · · U.S. COMISIONES OBRERAS CASTILLA Y LEON · PZ/ MADRID, 4, 2 · VALLADOLID · Teléfono: 983391516",
-    "requirements": null,
-    "startDate": null,
-    "subject": "Familia genérica",
-    "title": "116_TALLER DE EMPLEO 1",
-    "venue": "A determinar, / , nº, SORIA(SORIA)"
-  },
-  {
-    "applicationDeadline": null,
-    "audience": [
-      "Desempleado"
-    ],
-    "durationHours": null,
-    "endDate": null,
     "id": "1285563516870",
     "locality": "Valladolid",
     "modality": "Presencial",
@@ -156,101 +42,6 @@
     "audience": [
       "Desempleado"
     ],
-    "durationHours": 40,
-    "endDate": null,
-    "id": "1285564635953",
-    "locality": "Salamanca",
-    "modality": "Presencial",
-    "officialUrl": "https://empleo.jcyl.es/web/jcyl/Empleo/es/Plantilla100Detalle/1284216458054/Formacion/1285564635953/Propuesta",
-    "places": 30,
-    "registration": "Diríjase para obtener más información a: · · UGT CASTILLA Y LEÓN · CL/ GAMAZO , 13, 1º · VALLADOLID · Teléfono: 983329001",
-    "requirements": null,
-    "startDate": null,
-    "subject": "Familia genérica",
-    "title": "116_TALLER DE EMPLEO 1",
-    "venue": "A determinar, / , nº, SALAMANCA(SALAMANCA)"
-  },
-  {
-    "applicationDeadline": null,
-    "audience": [
-      "Desempleado"
-    ],
-    "durationHours": null,
-    "endDate": null,
-    "id": "1285564636188",
-    "locality": "Ávila",
-    "modality": "Presencial",
-    "officialUrl": "https://empleo.jcyl.es/web/jcyl/Empleo/es/Plantilla100Detalle/1284216458054/Formacion/1285564636188/Propuesta",
-    "places": 30,
-    "registration": "Diríjase para obtener más información a: · · CEOE CASTILLA Y LEÓN · CL/ FLORENCIA, 8 · VALLADOLID · Teléfono: 983212020",
-    "requirements": null,
-    "startDate": null,
-    "subject": "Familia genérica",
-    "title": "116_TALLER DE EMPLEO 1",
-    "venue": "A determinar, / , nº, ÁVILA(ÁVILA)"
-  },
-  {
-    "applicationDeadline": null,
-    "audience": [
-      "Desempleado"
-    ],
-    "durationHours": null,
-    "endDate": null,
-    "id": "1285564636235",
-    "locality": "Burgos",
-    "modality": "Presencial",
-    "officialUrl": "https://empleo.jcyl.es/web/jcyl/Empleo/es/Plantilla100Detalle/1284216458054/Formacion/1285564636235/Propuesta",
-    "places": 30,
-    "registration": "Diríjase para obtener más información a: · · CEOE CASTILLA Y LEÓN · CL/ FLORENCIA, 8 · VALLADOLID · Teléfono: 983212020",
-    "requirements": null,
-    "startDate": null,
-    "subject": "Familia genérica",
-    "title": "116_TALLER DE EMPLEO 1",
-    "venue": "A determinar, / , nº, BURGOS(BURGOS)"
-  },
-  {
-    "applicationDeadline": null,
-    "audience": [
-      "Desempleado"
-    ],
-    "durationHours": null,
-    "endDate": null,
-    "id": "1285563516635",
-    "locality": "León",
-    "modality": "Presencial",
-    "officialUrl": "https://empleo.jcyl.es/web/jcyl/Empleo/es/Plantilla100Detalle/1284216458054/Formacion/1285563516635/Propuesta",
-    "places": 30,
-    "registration": "Diríjase para obtener más información a: · · U.S. COMISIONES OBRERAS CASTILLA Y LEON · PZ/ MADRID, 4, 2 · VALLADOLID · Teléfono: 983391516",
-    "requirements": null,
-    "startDate": null,
-    "subject": "Familia genérica",
-    "title": "116_TALLER DE EMPLEO 1",
-    "venue": "A determinar, / , nº, LEÓN(LEÓN)"
-  },
-  {
-    "applicationDeadline": null,
-    "audience": [
-      "Desempleado"
-    ],
-    "durationHours": null,
-    "endDate": null,
-    "id": "1285563516776",
-    "locality": "Segovia",
-    "modality": "Presencial",
-    "officialUrl": "https://empleo.jcyl.es/web/jcyl/Empleo/es/Plantilla100Detalle/1284216458054/Formacion/1285563516776/Propuesta",
-    "places": 30,
-    "registration": "Diríjase para obtener más información a: · · U.S. COMISIONES OBRERAS CASTILLA Y LEON · PZ/ MADRID, 4, 2 · VALLADOLID · Teléfono: 983391516",
-    "requirements": null,
-    "startDate": null,
-    "subject": "Familia genérica",
-    "title": "116_TALLER DE EMPLEO 1",
-    "venue": "A determinar, / , nº, SEGOVIA(SEGOVIA)"
-  },
-  {
-    "applicationDeadline": null,
-    "audience": [
-      "Desempleado"
-    ],
     "durationHours": null,
     "endDate": null,
     "id": "1285564635859",
@@ -272,25 +63,6 @@
     ],
     "durationHours": null,
     "endDate": null,
-    "id": "1285564635906",
-    "locality": "Palencia",
-    "modality": "Presencial",
-    "officialUrl": "https://empleo.jcyl.es/web/jcyl/Empleo/es/Plantilla100Detalle/1284216458054/Formacion/1285564635906/Propuesta",
-    "places": 30,
-    "registration": "Diríjase para obtener más información a: · · UGT CASTILLA Y LEÓN · CL/ GAMAZO , 13, 1º · VALLADOLID · Teléfono: 983329001",
-    "requirements": null,
-    "startDate": null,
-    "subject": "Familia genérica",
-    "title": "116_TALLER DE EMPLEO 1",
-    "venue": "A determinar, / , nº, PALENCIA(PALENCIA)"
-  },
-  {
-    "applicationDeadline": null,
-    "audience": [
-      "Desempleado"
-    ],
-    "durationHours": null,
-    "endDate": null,
     "id": "1285564636000",
     "locality": "Segovia",
     "modality": "Presencial",
@@ -302,44 +74,6 @@
     "subject": "Familia genérica",
     "title": "116_TALLER DE EMPLEO 1",
     "venue": "A determinar, / , nº, SEGOVIA(SEGOVIA)"
-  },
-  {
-    "applicationDeadline": null,
-    "audience": [
-      "Desempleado"
-    ],
-    "durationHours": null,
-    "endDate": null,
-    "id": "1285564636047",
-    "locality": "Soria",
-    "modality": "Presencial",
-    "officialUrl": "https://empleo.jcyl.es/web/jcyl/Empleo/es/Plantilla100Detalle/1284216458054/Formacion/1285564636047/Propuesta",
-    "places": 30,
-    "registration": "Diríjase para obtener más información a: · · UGT CASTILLA Y LEÓN · CL/ GAMAZO , 13, 1º · VALLADOLID · Teléfono: 983329001",
-    "requirements": null,
-    "startDate": null,
-    "subject": "Familia genérica",
-    "title": "116_TALLER DE EMPLEO 1",
-    "venue": "A determinar, / , nº, SORIA(SORIA)"
-  },
-  {
-    "applicationDeadline": null,
-    "audience": [
-      "Desempleado"
-    ],
-    "durationHours": null,
-    "endDate": null,
-    "id": "1285564636094",
-    "locality": "Valladolid",
-    "modality": "Presencial",
-    "officialUrl": "https://empleo.jcyl.es/web/jcyl/Empleo/es/Plantilla100Detalle/1284216458054/Formacion/1285564636094/Propuesta",
-    "places": 30,
-    "registration": "Diríjase para obtener más información a: · · UGT CASTILLA Y LEÓN · CL/ GAMAZO , 13, 1º · VALLADOLID · Teléfono: 983329001",
-    "requirements": null,
-    "startDate": null,
-    "subject": "Familia genérica",
-    "title": "116_TALLER DE EMPLEO 1",
-    "venue": "A determinar, / , nº, VALLADOLID(VALLADOLID)"
   },
   {
     "applicationDeadline": null,
@@ -367,17 +101,112 @@
     ],
     "durationHours": null,
     "endDate": null,
-    "id": "1285564636282",
-    "locality": "León",
+    "id": "1285564636188",
+    "locality": "Ávila",
     "modality": "Presencial",
-    "officialUrl": "https://empleo.jcyl.es/web/jcyl/Empleo/es/Plantilla100Detalle/1284216458054/Formacion/1285564636282/Propuesta",
+    "officialUrl": "https://empleo.jcyl.es/web/jcyl/Empleo/es/Plantilla100Detalle/1284216458054/Formacion/1285564636188/Propuesta",
     "places": 30,
     "registration": "Diríjase para obtener más información a: · · CEOE CASTILLA Y LEÓN · CL/ FLORENCIA, 8 · VALLADOLID · Teléfono: 983212020",
     "requirements": null,
     "startDate": null,
     "subject": "Familia genérica",
     "title": "116_TALLER DE EMPLEO 1",
-    "venue": "A determinar, / , nº, LEÓN(LEÓN)"
+    "venue": "A determinar, / , nº, ÁVILA(ÁVILA)"
+  },
+  {
+    "applicationDeadline": null,
+    "audience": [
+      "Desempleado"
+    ],
+    "durationHours": null,
+    "endDate": null,
+    "id": "1285563516588",
+    "locality": "Burgos",
+    "modality": "Presencial",
+    "officialUrl": "https://empleo.jcyl.es/web/jcyl/Empleo/es/Plantilla100Detalle/1284216458054/Formacion/1285563516588/Propuesta",
+    "places": 30,
+    "registration": "Diríjase para obtener más información a: · · U.S. COMISIONES OBRERAS CASTILLA Y LEON · PZ/ MADRID, 4, 2 · VALLADOLID · Teléfono: 983391516",
+    "requirements": null,
+    "startDate": null,
+    "subject": "Familia genérica",
+    "title": "116_TALLER DE EMPLEO 1",
+    "venue": "A determinar, / , nº, BURGOS(BURGOS)"
+  },
+  {
+    "applicationDeadline": null,
+    "audience": [
+      "Desempleado"
+    ],
+    "durationHours": null,
+    "endDate": null,
+    "id": "1285563516917",
+    "locality": "Zamora",
+    "modality": "Presencial",
+    "officialUrl": "https://empleo.jcyl.es/web/jcyl/Empleo/es/Plantilla100Detalle/1284216458054/Formacion/1285563516917/Propuesta",
+    "places": 30,
+    "registration": "Diríjase para obtener más información a: · · U.S. COMISIONES OBRERAS CASTILLA Y LEON · PZ/ MADRID, 4, 2 · VALLADOLID · Teléfono: 983391516",
+    "requirements": null,
+    "startDate": null,
+    "subject": "Familia genérica",
+    "title": "116_TALLER DE EMPLEO 1",
+    "venue": "A determinar, / , nº, ZAMORA(ZAMORA)"
+  },
+  {
+    "applicationDeadline": null,
+    "audience": [
+      "Desempleado"
+    ],
+    "durationHours": null,
+    "endDate": null,
+    "id": "1285564635906",
+    "locality": "Palencia",
+    "modality": "Presencial",
+    "officialUrl": "https://empleo.jcyl.es/web/jcyl/Empleo/es/Plantilla100Detalle/1284216458054/Formacion/1285564635906/Propuesta",
+    "places": 30,
+    "registration": "Diríjase para obtener más información a: · · UGT CASTILLA Y LEÓN · CL/ GAMAZO , 13, 1º · VALLADOLID · Teléfono: 983329001",
+    "requirements": null,
+    "startDate": null,
+    "subject": "Familia genérica",
+    "title": "116_TALLER DE EMPLEO 1",
+    "venue": "A determinar, / , nº, PALENCIA(PALENCIA)"
+  },
+  {
+    "applicationDeadline": null,
+    "audience": [
+      "Desempleado"
+    ],
+    "durationHours": null,
+    "endDate": null,
+    "id": "1285564636094",
+    "locality": "Valladolid",
+    "modality": "Presencial",
+    "officialUrl": "https://empleo.jcyl.es/web/jcyl/Empleo/es/Plantilla100Detalle/1284216458054/Formacion/1285564636094/Propuesta",
+    "places": 30,
+    "registration": "Diríjase para obtener más información a: · · UGT CASTILLA Y LEÓN · CL/ GAMAZO , 13, 1º · VALLADOLID · Teléfono: 983329001",
+    "requirements": null,
+    "startDate": null,
+    "subject": "Familia genérica",
+    "title": "116_TALLER DE EMPLEO 1",
+    "venue": "A determinar, / , nº, VALLADOLID(VALLADOLID)"
+  },
+  {
+    "applicationDeadline": null,
+    "audience": [
+      "Desempleado"
+    ],
+    "durationHours": null,
+    "endDate": null,
+    "id": "1285564636235",
+    "locality": "Burgos",
+    "modality": "Presencial",
+    "officialUrl": "https://empleo.jcyl.es/web/jcyl/Empleo/es/Plantilla100Detalle/1284216458054/Formacion/1285564636235/Propuesta",
+    "places": 30,
+    "registration": "Diríjase para obtener más información a: · · CEOE CASTILLA Y LEÓN · CL/ FLORENCIA, 8 · VALLADOLID · Teléfono: 983212020",
+    "requirements": null,
+    "startDate": null,
+    "subject": "Familia genérica",
+    "title": "116_TALLER DE EMPLEO 1",
+    "venue": "A determinar, / , nº, BURGOS(BURGOS)"
   },
   {
     "applicationDeadline": null,
@@ -424,12 +253,145 @@
     ],
     "durationHours": null,
     "endDate": null,
-    "id": "1285564636470",
-    "locality": "Soria",
+    "id": "1285564636517",
+    "locality": "Valladolid",
     "modality": "Presencial",
-    "officialUrl": "https://empleo.jcyl.es/web/jcyl/Empleo/es/Plantilla100Detalle/1284216458054/Formacion/1285564636470/Propuesta",
+    "officialUrl": "https://empleo.jcyl.es/web/jcyl/Empleo/es/Plantilla100Detalle/1284216458054/Formacion/1285564636517/Propuesta",
     "places": 30,
     "registration": "Diríjase para obtener más información a: · · CEOE CASTILLA Y LEÓN · CL/ FLORENCIA, 8 · VALLADOLID · Teléfono: 983212020",
+    "requirements": null,
+    "startDate": null,
+    "subject": "Familia genérica",
+    "title": "116_TALLER DE EMPLEO 1",
+    "venue": "A determinar, / , nº, VALLADOLID(VALLADOLID)"
+  },
+  {
+    "applicationDeadline": null,
+    "audience": [
+      "Desempleado"
+    ],
+    "durationHours": null,
+    "endDate": null,
+    "id": "1285564636564",
+    "locality": "Zamora",
+    "modality": "Presencial",
+    "officialUrl": "https://empleo.jcyl.es/web/jcyl/Empleo/es/Plantilla100Detalle/1284216458054/Formacion/1285564636564/Propuesta",
+    "places": 30,
+    "registration": "Diríjase para obtener más información a: · · CEOE CASTILLA Y LEÓN · CL/ FLORENCIA, 8 · VALLADOLID · Teléfono: 983212020",
+    "requirements": null,
+    "startDate": null,
+    "subject": "Familia genérica",
+    "title": "116_TALLER DE EMPLEO 1",
+    "venue": "A determinar, / , nº, ZAMORA(ZAMORA)"
+  },
+  {
+    "applicationDeadline": null,
+    "audience": [
+      "Desempleado"
+    ],
+    "durationHours": null,
+    "endDate": null,
+    "id": "1285563516635",
+    "locality": "León",
+    "modality": "Presencial",
+    "officialUrl": "https://empleo.jcyl.es/web/jcyl/Empleo/es/Plantilla100Detalle/1284216458054/Formacion/1285563516635/Propuesta",
+    "places": 30,
+    "registration": "Diríjase para obtener más información a: · · U.S. COMISIONES OBRERAS CASTILLA Y LEON · PZ/ MADRID, 4, 2 · VALLADOLID · Teléfono: 983391516",
+    "requirements": null,
+    "startDate": null,
+    "subject": "Familia genérica",
+    "title": "116_TALLER DE EMPLEO 1",
+    "venue": "A determinar, / , nº, LEÓN(LEÓN)"
+  },
+  {
+    "applicationDeadline": null,
+    "audience": [
+      "Desempleado"
+    ],
+    "durationHours": null,
+    "endDate": null,
+    "id": "1285563516776",
+    "locality": "Segovia",
+    "modality": "Presencial",
+    "officialUrl": "https://empleo.jcyl.es/web/jcyl/Empleo/es/Plantilla100Detalle/1284216458054/Formacion/1285563516776/Propuesta",
+    "places": 30,
+    "registration": "Diríjase para obtener más información a: · · U.S. COMISIONES OBRERAS CASTILLA Y LEON · PZ/ MADRID, 4, 2 · VALLADOLID · Teléfono: 983391516",
+    "requirements": null,
+    "startDate": null,
+    "subject": "Familia genérica",
+    "title": "116_TALLER DE EMPLEO 1",
+    "venue": "A determinar, / , nº, SEGOVIA(SEGOVIA)"
+  },
+  {
+    "applicationDeadline": null,
+    "audience": [
+      "Desempleado"
+    ],
+    "durationHours": null,
+    "endDate": null,
+    "id": "1285563516823",
+    "locality": "Soria",
+    "modality": "Presencial",
+    "officialUrl": "https://empleo.jcyl.es/web/jcyl/Empleo/es/Plantilla100Detalle/1284216458054/Formacion/1285563516823/Propuesta",
+    "places": 30,
+    "registration": "Diríjase para obtener más información a: · · U.S. COMISIONES OBRERAS CASTILLA Y LEON · PZ/ MADRID, 4, 2 · VALLADOLID · Teléfono: 983391516",
+    "requirements": null,
+    "startDate": null,
+    "subject": "Familia genérica",
+    "title": "116_TALLER DE EMPLEO 1",
+    "venue": "A determinar, / , nº, SORIA(SORIA)"
+  },
+  {
+    "applicationDeadline": null,
+    "audience": [
+      "Desempleado"
+    ],
+    "durationHours": 40,
+    "endDate": null,
+    "id": "1285564635765",
+    "locality": "Ávila",
+    "modality": "Presencial",
+    "officialUrl": "https://empleo.jcyl.es/web/jcyl/Empleo/es/Plantilla100Detalle/1284216458054/Formacion/1285564635765/Propuesta",
+    "places": 30,
+    "registration": "Diríjase para obtener más información a: · · UGT CASTILLA Y LEÓN · CL/ GAMAZO , 13, 1º · VALLADOLID · Teléfono: 983329001",
+    "requirements": null,
+    "startDate": null,
+    "subject": "Familia genérica",
+    "title": "116_TALLER DE EMPLEO 1",
+    "venue": "A determinar, / , nº, ÁVILA(ÁVILA)"
+  },
+  {
+    "applicationDeadline": null,
+    "audience": [
+      "Desempleado"
+    ],
+    "durationHours": 40,
+    "endDate": null,
+    "id": "1285564635953",
+    "locality": "Salamanca",
+    "modality": "Presencial",
+    "officialUrl": "https://empleo.jcyl.es/web/jcyl/Empleo/es/Plantilla100Detalle/1284216458054/Formacion/1285564635953/Propuesta",
+    "places": 30,
+    "registration": "Diríjase para obtener más información a: · · UGT CASTILLA Y LEÓN · CL/ GAMAZO , 13, 1º · VALLADOLID · Teléfono: 983329001",
+    "requirements": null,
+    "startDate": null,
+    "subject": "Familia genérica",
+    "title": "116_TALLER DE EMPLEO 1",
+    "venue": "A determinar, / , nº, SALAMANCA(SALAMANCA)"
+  },
+  {
+    "applicationDeadline": null,
+    "audience": [
+      "Desempleado"
+    ],
+    "durationHours": null,
+    "endDate": null,
+    "id": "1285564636047",
+    "locality": "Soria",
+    "modality": "Presencial",
+    "officialUrl": "https://empleo.jcyl.es/web/jcyl/Empleo/es/Plantilla100Detalle/1284216458054/Formacion/1285564636047/Propuesta",
+    "places": 30,
+    "registration": "Diríjase para obtener más información a: · · UGT CASTILLA Y LEÓN · CL/ GAMAZO , 13, 1º · VALLADOLID · Teléfono: 983329001",
     "requirements": null,
     "startDate": null,
     "subject": "Familia genérica",
@@ -443,17 +405,55 @@
     ],
     "durationHours": null,
     "endDate": null,
-    "id": "1285564636517",
-    "locality": "Valladolid",
+    "id": "1285564636282",
+    "locality": "León",
     "modality": "Presencial",
-    "officialUrl": "https://empleo.jcyl.es/web/jcyl/Empleo/es/Plantilla100Detalle/1284216458054/Formacion/1285564636517/Propuesta",
+    "officialUrl": "https://empleo.jcyl.es/web/jcyl/Empleo/es/Plantilla100Detalle/1284216458054/Formacion/1285564636282/Propuesta",
     "places": 30,
     "registration": "Diríjase para obtener más información a: · · CEOE CASTILLA Y LEÓN · CL/ FLORENCIA, 8 · VALLADOLID · Teléfono: 983212020",
     "requirements": null,
     "startDate": null,
     "subject": "Familia genérica",
     "title": "116_TALLER DE EMPLEO 1",
-    "venue": "A determinar, / , nº, VALLADOLID(VALLADOLID)"
+    "venue": "A determinar, / , nº, LEÓN(LEÓN)"
+  },
+  {
+    "applicationDeadline": null,
+    "audience": [
+      "Desempleado"
+    ],
+    "durationHours": null,
+    "endDate": null,
+    "id": "1285564636329",
+    "locality": "Palencia",
+    "modality": "Presencial",
+    "officialUrl": "https://empleo.jcyl.es/web/jcyl/Empleo/es/Plantilla100Detalle/1284216458054/Formacion/1285564636329/Propuesta",
+    "places": 30,
+    "registration": "Diríjase para obtener más información a: · · CEOE CASTILLA Y LEÓN · CL/ FLORENCIA, 8 · VALLADOLID · Teléfono: 983212020",
+    "requirements": null,
+    "startDate": null,
+    "subject": "Familia genérica",
+    "title": "116_TALLER DE EMPLEO 1",
+    "venue": "A determinar, / , nº, PALENCIA(PALENCIA)"
+  },
+  {
+    "applicationDeadline": null,
+    "audience": [
+      "Desempleado"
+    ],
+    "durationHours": null,
+    "endDate": null,
+    "id": "1285564636470",
+    "locality": "Soria",
+    "modality": "Presencial",
+    "officialUrl": "https://empleo.jcyl.es/web/jcyl/Empleo/es/Plantilla100Detalle/1284216458054/Formacion/1285564636470/Propuesta",
+    "places": 30,
+    "registration": "Diríjase para obtener más información a: · · CEOE CASTILLA Y LEÓN · CL/ FLORENCIA, 8 · VALLADOLID · Teléfono: 983212020",
+    "requirements": null,
+    "startDate": null,
+    "subject": "Familia genérica",
+    "title": "116_TALLER DE EMPLEO 1",
+    "venue": "A determinar, / , nº, SORIA(SORIA)"
   },
   {
     "applicationDeadline": null,
@@ -973,25 +973,6 @@
     "audience": [
       "Desempleado"
     ],
-    "durationHours": 20,
-    "endDate": null,
-    "id": "1285578502590",
-    "locality": "Zamora",
-    "modality": "Presencial",
-    "officialUrl": "https://empleo.jcyl.es/web/jcyl/Empleo/es/Plantilla100Detalle/1284216458054/Formacion/1285578502590/Propuesta",
-    "places": 30,
-    "registration": "Diríjase para obtener más información a: · · UGT CASTILLA Y LEÓN · CL/ GAMAZO , 13, 1º · VALLADOLID · Teléfono: 983329001",
-    "requirements": null,
-    "startDate": null,
-    "subject": "Familia genérica",
-    "title": "116_TALLER DE EMPLEO 7",
-    "venue": "A determinar, / , nº, ZAMORA(ZAMORA)"
-  },
-  {
-    "applicationDeadline": null,
-    "audience": [
-      "Desempleado"
-    ],
     "durationHours": 1,
     "endDate": null,
     "id": "1285583866221",
@@ -1005,6 +986,25 @@
     "subject": "Familia genérica",
     "title": "116_TALLER DE EMPLEO 7",
     "venue": "A determinar, / , nº, SALAMANCA(SALAMANCA)"
+  },
+  {
+    "applicationDeadline": null,
+    "audience": [
+      "Desempleado"
+    ],
+    "durationHours": 20,
+    "endDate": null,
+    "id": "1285578502590",
+    "locality": "Zamora",
+    "modality": "Presencial",
+    "officialUrl": "https://empleo.jcyl.es/web/jcyl/Empleo/es/Plantilla100Detalle/1284216458054/Formacion/1285578502590/Propuesta",
+    "places": 30,
+    "registration": "Diríjase para obtener más información a: · · UGT CASTILLA Y LEÓN · CL/ GAMAZO , 13, 1º · VALLADOLID · Teléfono: 983329001",
+    "requirements": null,
+    "startDate": null,
+    "subject": "Familia genérica",
+    "title": "116_TALLER DE EMPLEO 7",
+    "venue": "A determinar, / , nº, ZAMORA(ZAMORA)"
   },
   {
     "applicationDeadline": null,
@@ -1230,6 +1230,26 @@
     ],
     "durationHours": 50,
     "endDate": null,
+    "id": "1285667069013",
+    "locality": "Segovia",
+    "modality": "Teleformación",
+    "officialUrl": "https://empleo.jcyl.es/web/jcyl/Empleo/es/Plantilla100Detalle/1284216458054/Formacion/1285667069013/Propuesta",
+    "places": 13,
+    "registration": "Diríjase para obtener más información a: · · CORVIA, SL · CL/ San Antón, nº 2 · 40005 - SEGOVIA (SEGOVIA) · · Teléfono: 921443016 · Correo electrónico: gestioncursos@logosformacion.com",
+    "requirements": null,
+    "startDate": "2026-09-03",
+    "subject": "Actividades físicas y deportivas",
+    "title": "ACTUACIONES EN PRIMEROS AUXILIOS",
+    "venue": "CORVIA, S.L., CL/ SAN ANTÓN, nº 2, 40005 - SEGOVIA(SEGOVIA), Tfno: 921443016"
+  },
+  {
+    "applicationDeadline": null,
+    "audience": [
+      "Ocupado",
+      "Desempleado"
+    ],
+    "durationHours": 50,
+    "endDate": null,
     "id": "1285587284948",
     "locality": null,
     "modality": "Presencial",
@@ -1301,26 +1321,6 @@
     "subject": "Actividades físicas y deportivas",
     "title": "ACTUACIONES EN PRIMEROS AUXILIOS",
     "venue": "Ámbito territorial de impartición: Sin determinar"
-  },
-  {
-    "applicationDeadline": null,
-    "audience": [
-      "Ocupado",
-      "Desempleado"
-    ],
-    "durationHours": 50,
-    "endDate": null,
-    "id": "1285667069013",
-    "locality": "Segovia",
-    "modality": "Teleformación",
-    "officialUrl": "https://empleo.jcyl.es/web/jcyl/Empleo/es/Plantilla100Detalle/1284216458054/Formacion/1285667069013/Propuesta",
-    "places": 13,
-    "registration": "Diríjase para obtener más información a: · · CORVIA, SL · CL/ San Antón, nº 2 · 40005 - SEGOVIA (SEGOVIA) · · Teléfono: 921443016 · Correo electrónico: gestioncursos@logosformacion.com",
-    "requirements": null,
-    "startDate": "2026-09-03",
-    "subject": "Actividades físicas y deportivas",
-    "title": "ACTUACIONES EN PRIMEROS AUXILIOS",
-    "venue": "CORVIA, S.L., CL/ SAN ANTÓN, nº 2, 40005 - SEGOVIA(SEGOVIA), Tfno: 921443016"
   },
   {
     "applicationDeadline": null,
@@ -1530,26 +1530,6 @@
     ],
     "durationHours": 10,
     "endDate": null,
-    "id": "1285652014760",
-    "locality": "Peñaranda de Bracamonte",
-    "modality": "Presencial",
-    "officialUrl": "https://empleo.jcyl.es/web/jcyl/Empleo/es/Plantilla100Detalle/1284216458054/Formacion/1285652014760/Propuesta",
-    "places": 15,
-    "registration": "Diríjase para obtener más información a: · · FORMACION Y GESTION DE SERVICOS SOCIALES S.COOP. · CL/ PIRITA, nº 35 · 47012 - VALLADOLID (VALLADOLID) · · Teléfono: 983307329 · Correo electrónico: jesus.coop7@gmail.com",
-    "requirements": null,
-    "startDate": "2026-10-07",
-    "subject": "Formación complementaria",
-    "title": "ALFABETIZACION INFORMATICA: INTERNET",
-    "venue": "ACADEMIA LIDER, CL/ CL DEL CARMEN, nº 37 -Piso: 1º -Puerta: IZQª, 37300 - PEÑARANDA DE BRACAMONTE(SALAMANCA), Tfno: 606341781"
-  },
-  {
-    "applicationDeadline": null,
-    "audience": [
-      "Ocupado",
-      "Desempleado"
-    ],
-    "durationHours": 10,
-    "endDate": null,
     "id": "1285587271259",
     "locality": null,
     "modality": "Presencial",
@@ -1581,6 +1561,26 @@
     "subject": "Formación complementaria",
     "title": "ALFABETIZACION INFORMATICA: INTERNET",
     "venue": "Ámbito territorial de impartición: Sin determinar"
+  },
+  {
+    "applicationDeadline": null,
+    "audience": [
+      "Ocupado",
+      "Desempleado"
+    ],
+    "durationHours": 10,
+    "endDate": null,
+    "id": "1285652014760",
+    "locality": "Peñaranda de Bracamonte",
+    "modality": "Presencial",
+    "officialUrl": "https://empleo.jcyl.es/web/jcyl/Empleo/es/Plantilla100Detalle/1284216458054/Formacion/1285652014760/Propuesta",
+    "places": 15,
+    "registration": "Diríjase para obtener más información a: · · FORMACION Y GESTION DE SERVICOS SOCIALES S.COOP. · CL/ PIRITA, nº 35 · 47012 - VALLADOLID (VALLADOLID) · · Teléfono: 983307329 · Correo electrónico: jesus.coop7@gmail.com",
+    "requirements": null,
+    "startDate": "2026-10-07",
+    "subject": "Formación complementaria",
+    "title": "ALFABETIZACION INFORMATICA: INTERNET",
+    "venue": "ACADEMIA LIDER, CL/ CL DEL CARMEN, nº 37 -Piso: 1º -Puerta: IZQª, 37300 - PEÑARANDA DE BRACAMONTE(SALAMANCA), Tfno: 606341781"
   },
   {
     "applicationDeadline": null,
@@ -2670,12 +2670,12 @@
     ],
     "durationHours": 20,
     "endDate": null,
-    "id": "1285587260952",
+    "id": "1285587266572",
     "locality": null,
     "modality": "Presencial",
-    "officialUrl": "https://empleo.jcyl.es/web/jcyl/Empleo/es/Plantilla100Detalle/1284216458054/Formacion/1285587260952/Propuesta",
+    "officialUrl": "https://empleo.jcyl.es/web/jcyl/Empleo/es/Plantilla100Detalle/1284216458054/Formacion/1285587266572/Propuesta",
     "places": 15,
-    "registration": "Diríjase para obtener más información a: · · FUNDACION LESMES · CL/ MANUEL ALTOLAGUIRRE, nº S/N · 09006 - BURGOS (BURGOS) · · Teléfono: 947244511 · Correo electrónico: elenasanz@fundacionlesmes.org",
+    "registration": "Diríjase para obtener más información a: · · ASOCIACION CASTILLA PARA LA EDUCACION DEPORTE Y CULTURA · CL/ CASTILLA, nº 38 -Piso: 1ºº -Puerta: IZQª · 05230 - NAVAS DEL MARQUÉS (LAS) (ÁVILA) · · Teléfono: 918972502 · Correo electrónico: info@aeduca.es",
     "requirements": null,
     "startDate": null,
     "subject": "Agraria",
@@ -2690,12 +2690,12 @@
     ],
     "durationHours": 20,
     "endDate": null,
-    "id": "1285587266572",
+    "id": "1285587260952",
     "locality": null,
     "modality": "Presencial",
-    "officialUrl": "https://empleo.jcyl.es/web/jcyl/Empleo/es/Plantilla100Detalle/1284216458054/Formacion/1285587266572/Propuesta",
+    "officialUrl": "https://empleo.jcyl.es/web/jcyl/Empleo/es/Plantilla100Detalle/1284216458054/Formacion/1285587260952/Propuesta",
     "places": 15,
-    "registration": "Diríjase para obtener más información a: · · ASOCIACION CASTILLA PARA LA EDUCACION DEPORTE Y CULTURA · CL/ CASTILLA, nº 38 -Piso: 1ºº -Puerta: IZQª · 05230 - NAVAS DEL MARQUÉS (LAS) (ÁVILA) · · Teléfono: 918972502 · Correo electrónico: info@aeduca.es",
+    "registration": "Diríjase para obtener más información a: · · FUNDACION LESMES · CL/ MANUEL ALTOLAGUIRRE, nº S/N · 09006 - BURGOS (BURGOS) · · Teléfono: 947244511 · Correo electrónico: elenasanz@fundacionlesmes.org",
     "requirements": null,
     "startDate": null,
     "subject": "Agraria",
@@ -3509,63 +3509,6 @@
     ],
     "durationHours": 26,
     "endDate": null,
-    "id": "1285522275066",
-    "locality": "Mansilla de las Mulas",
-    "modality": "Presencial",
-    "officialUrl": "https://empleo.jcyl.es/web/jcyl/Empleo/es/Plantilla100Detalle/1284216458054/Formacion/1285522275066/Propuesta",
-    "places": 8,
-    "registration": "Diríjase para obtener más información a: · · ASOCIACION VALPONASCA · CL/ SAN JUAN BOSCO, 20 · LEÓN · Teléfono: 651416864",
-    "requirements": null,
-    "startDate": null,
-    "subject": "Formación complementaria",
-    "title": "Competencias digitales básicas para el empleo",
-    "venue": "A determinar, AV/ CONSTITUCION, nº 22, 24210 - MANSILLA DE LAS MULAS(LEÓN)"
-  },
-  {
-    "applicationDeadline": null,
-    "audience": [
-      "Desempleado"
-    ],
-    "durationHours": 26,
-    "endDate": null,
-    "id": "1285538965390",
-    "locality": "Villalón de Campos",
-    "modality": "Presencial",
-    "officialUrl": "https://empleo.jcyl.es/web/jcyl/Empleo/es/Plantilla100Detalle/1284216458054/Formacion/1285538965390/Propuesta",
-    "places": 15,
-    "registration": "Diríjase para obtener más información a: · · ENLACES · CL/ PABLO MORILLO , 25 Esc. BAJO, 0 · ZAMORA",
-    "requirements": null,
-    "startDate": null,
-    "subject": "Formación complementaria",
-    "title": "Competencias digitales básicas para el empleo",
-    "venue": "A determinar, / , nº, VILLALÓN DE CAMPOS(VALLADOLID)"
-  },
-  {
-    "applicationDeadline": null,
-    "audience": [
-      "Desempleado"
-    ],
-    "durationHours": 26,
-    "endDate": null,
-    "id": "1285575444138",
-    "locality": "Villalpando",
-    "modality": "Presencial",
-    "officialUrl": "https://empleo.jcyl.es/web/jcyl/Empleo/es/Plantilla100Detalle/1284216458054/Formacion/1285575444138/Propuesta",
-    "places": 15,
-    "registration": "Diríjase para obtener más información a: · · CENTRO FORMATIVO CYLCAE TIERRA DE CAMPOS · PZ/ MAYOR , nº 1 · VILLALPANDO · Teléfono: 681243429 · E-mail: CYLCAE@CYLCAE.ORG",
-    "requirements": null,
-    "startDate": null,
-    "subject": "Formación complementaria",
-    "title": "Competencias digitales básicas para el empleo",
-    "venue": "CENTRO FORMATIVO CYLCAE TIERRA DE CAMPOS, PZ/ MAYOR , nº 1, 49630 - VILLALPANDO(ZAMORA), Tfno: 681243429"
-  },
-  {
-    "applicationDeadline": null,
-    "audience": [
-      "Desempleado"
-    ],
-    "durationHours": 26,
-    "endDate": null,
     "id": "1285575444186",
     "locality": "Zamora",
     "modality": "Presencial",
@@ -3596,6 +3539,63 @@
     "subject": "Formación complementaria",
     "title": "Competencias digitales básicas para el empleo",
     "venue": "A determinar, / , nº, VILLALÓN DE CAMPOS(VALLADOLID)"
+  },
+  {
+    "applicationDeadline": null,
+    "audience": [
+      "Desempleado"
+    ],
+    "durationHours": 26,
+    "endDate": null,
+    "id": "1285538965390",
+    "locality": "Villalón de Campos",
+    "modality": "Presencial",
+    "officialUrl": "https://empleo.jcyl.es/web/jcyl/Empleo/es/Plantilla100Detalle/1284216458054/Formacion/1285538965390/Propuesta",
+    "places": 15,
+    "registration": "Diríjase para obtener más información a: · · ENLACES · CL/ PABLO MORILLO , 25 Esc. BAJO, 0 · ZAMORA",
+    "requirements": null,
+    "startDate": null,
+    "subject": "Formación complementaria",
+    "title": "Competencias digitales básicas para el empleo",
+    "venue": "A determinar, / , nº, VILLALÓN DE CAMPOS(VALLADOLID)"
+  },
+  {
+    "applicationDeadline": null,
+    "audience": [
+      "Desempleado"
+    ],
+    "durationHours": 26,
+    "endDate": null,
+    "id": "1285522275066",
+    "locality": "Mansilla de las Mulas",
+    "modality": "Presencial",
+    "officialUrl": "https://empleo.jcyl.es/web/jcyl/Empleo/es/Plantilla100Detalle/1284216458054/Formacion/1285522275066/Propuesta",
+    "places": 8,
+    "registration": "Diríjase para obtener más información a: · · ASOCIACION VALPONASCA · CL/ SAN JUAN BOSCO, 20 · LEÓN · Teléfono: 651416864",
+    "requirements": null,
+    "startDate": null,
+    "subject": "Formación complementaria",
+    "title": "Competencias digitales básicas para el empleo",
+    "venue": "A determinar, AV/ CONSTITUCION, nº 22, 24210 - MANSILLA DE LAS MULAS(LEÓN)"
+  },
+  {
+    "applicationDeadline": null,
+    "audience": [
+      "Desempleado"
+    ],
+    "durationHours": 26,
+    "endDate": null,
+    "id": "1285575444138",
+    "locality": "Villalpando",
+    "modality": "Presencial",
+    "officialUrl": "https://empleo.jcyl.es/web/jcyl/Empleo/es/Plantilla100Detalle/1284216458054/Formacion/1285575444138/Propuesta",
+    "places": 15,
+    "registration": "Diríjase para obtener más información a: · · CENTRO FORMATIVO CYLCAE TIERRA DE CAMPOS · PZ/ MAYOR , nº 1 · VILLALPANDO · Teléfono: 681243429 · E-mail: CYLCAE@CYLCAE.ORG",
+    "requirements": null,
+    "startDate": null,
+    "subject": "Formación complementaria",
+    "title": "Competencias digitales básicas para el empleo",
+    "venue": "CENTRO FORMATIVO CYLCAE TIERRA DE CAMPOS, PZ/ MAYOR , nº 1, 49630 - VILLALPANDO(ZAMORA), Tfno: 681243429"
   },
   {
     "applicationDeadline": null,
@@ -3764,25 +3764,6 @@
     ],
     "durationHours": 240,
     "endDate": null,
-    "id": "1285589471150",
-    "locality": "Villamuriel de Cerrato",
-    "modality": "Presencial",
-    "officialUrl": "https://empleo.jcyl.es/web/jcyl/Empleo/es/Plantilla100Detalle/1284216458054/Formacion/1285589471150/Propuesta",
-    "places": 15,
-    "registration": "· De forma presencial: Diríjase a su oficina de empleo · De forma telemática: Acceda a la oficina virtual . Si necesita ayuda puede consultar el Manual de inscripción telemática",
-    "requirements": null,
-    "startDate": null,
-    "subject": "Formación complementaria",
-    "title": "Comunicación en lengua castellana y competencia matemática",
-    "venue": "JAVAN FORMACIÓN, Pº/ DEL CANAL, nº 13, 34190 - VILLAMURIEL DE CERRATO(PALENCIA), Tfno: 979767013"
-  },
-  {
-    "applicationDeadline": null,
-    "audience": [
-      "Desempleado"
-    ],
-    "durationHours": 240,
-    "endDate": null,
     "id": "1285586849481",
     "locality": "Palencia",
     "modality": "Presencial",
@@ -3794,6 +3775,25 @@
     "subject": "Formación complementaria",
     "title": "Comunicación en lengua castellana y competencia matemática",
     "venue": "ANDRAVI FORMACION, CL/ ANTONIO MACHADO, nº 1Bajoº Izdº, 34004 - PALENCIA(PALENCIA), Tfno: 979165058"
+  },
+  {
+    "applicationDeadline": null,
+    "audience": [
+      "Desempleado"
+    ],
+    "durationHours": 240,
+    "endDate": null,
+    "id": "1285589471150",
+    "locality": "Villamuriel de Cerrato",
+    "modality": "Presencial",
+    "officialUrl": "https://empleo.jcyl.es/web/jcyl/Empleo/es/Plantilla100Detalle/1284216458054/Formacion/1285589471150/Propuesta",
+    "places": 15,
+    "registration": "· De forma presencial: Diríjase a su oficina de empleo · De forma telemática: Acceda a la oficina virtual . Si necesita ayuda puede consultar el Manual de inscripción telemática",
+    "requirements": null,
+    "startDate": null,
+    "subject": "Formación complementaria",
+    "title": "Comunicación en lengua castellana y competencia matemática",
+    "venue": "JAVAN FORMACIÓN, Pº/ DEL CANAL, nº 13, 34190 - VILLAMURIEL DE CERRATO(PALENCIA), Tfno: 979767013"
   },
   {
     "applicationDeadline": null,
@@ -3863,12 +3863,12 @@
     ],
     "durationHours": 50,
     "endDate": null,
-    "id": "1285587314324",
+    "id": "1285587307969",
     "locality": null,
-    "modality": "Presencial",
-    "officialUrl": "https://empleo.jcyl.es/web/jcyl/Empleo/es/Plantilla100Detalle/1284216458054/Formacion/1285587314324/Propuesta",
-    "places": 15,
-    "registration": "Diríjase para obtener más información a: · · TRAINING CONSULTING, S.L · Pº/ DEL RENACIMIENTO, nº 10 -Piso: 8º · 47010 - VALLADOLID (VALLADOLID) · · Teléfono: 983658200 · Correo electrónico: direccion.training@gmail.com",
+    "modality": "Teleformación",
+    "officialUrl": "https://empleo.jcyl.es/web/jcyl/Empleo/es/Plantilla100Detalle/1284216458054/Formacion/1285587307969/Propuesta",
+    "places": 16,
+    "registration": "Diríjase para obtener más información a: · · ASOCIACIÓN PARA LA PROMOCIÓN SOCIO LABORAL DE BURGOS · AV/ SAGRADA FAMILIA, nº 31 -Piso: BAJOº · 09006 - BURGOS (BURGOS) · · Teléfono: 947110001 · Correo electrónico: melisa@gruposieburgos.es",
     "requirements": null,
     "startDate": null,
     "subject": "Administración y gestión",
@@ -3883,17 +3883,17 @@
     ],
     "durationHours": 50,
     "endDate": null,
-    "id": "1285587307969",
-    "locality": null,
-    "modality": "Teleformación",
-    "officialUrl": "https://empleo.jcyl.es/web/jcyl/Empleo/es/Plantilla100Detalle/1284216458054/Formacion/1285587307969/Propuesta",
-    "places": 16,
-    "registration": "Diríjase para obtener más información a: · · ASOCIACIÓN PARA LA PROMOCIÓN SOCIO LABORAL DE BURGOS · AV/ SAGRADA FAMILIA, nº 31 -Piso: BAJOº · 09006 - BURGOS (BURGOS) · · Teléfono: 947110001 · Correo electrónico: melisa@gruposieburgos.es",
+    "id": "1285670736479",
+    "locality": "Burgos",
+    "modality": "Presencial",
+    "officialUrl": "https://empleo.jcyl.es/web/jcyl/Empleo/es/Plantilla100Detalle/1284216458054/Formacion/1285670736479/Propuesta",
+    "places": 15,
+    "registration": "Diríjase para obtener más información a: · · TRAINING CONSULTING, S.L · Pº/ DEL RENACIMIENTO, nº 10 -Piso: 8º · 47010 - VALLADOLID (VALLADOLID) · · Teléfono: 983658200 · Correo electrónico: direccion.training@gmail.com",
     "requirements": null,
-    "startDate": null,
+    "startDate": "2026-09-14",
     "subject": "Administración y gestión",
     "title": "CONTABILIDAD",
-    "venue": "Ámbito territorial de impartición: Sin determinar"
+    "venue": "GRUPO SIE-SAGRADA FAMILIA, CL/ Sagrada Familia, nº 31 -Piso: BAJOº, 09006 - BURGOS(BURGOS), Tfno: 613522429"
   },
   {
     "applicationDeadline": null,
@@ -5343,12 +5343,12 @@
     ],
     "durationHours": 40,
     "endDate": null,
-    "id": "1285587319346",
+    "id": "1285587293470",
     "locality": null,
     "modality": "Teleformación",
-    "officialUrl": "https://empleo.jcyl.es/web/jcyl/Empleo/es/Plantilla100Detalle/1284216458054/Formacion/1285587319346/Propuesta",
-    "places": 14,
-    "registration": "Diríjase para obtener más información a: · · TRAINING CONSULTING, S.L · Pº/ DEL RENACIMIENTO, nº 10 -Piso: 8º · 47010 - VALLADOLID (VALLADOLID) · · Teléfono: 983658200 · Correo electrónico: direccion.training@gmail.com",
+    "officialUrl": "https://empleo.jcyl.es/web/jcyl/Empleo/es/Plantilla100Detalle/1284216458054/Formacion/1285587293470/Propuesta",
+    "places": 12,
+    "registration": "Diríjase para obtener más información a: · · FORMACION Y GESTION DE SERVICOS SOCIALES S.COOP. · CL/ PIRITA, nº 35 · 47012 - VALLADOLID (VALLADOLID) · · Teléfono: 983307329 · Correo electrónico: jesus.coop7@gmail.com",
     "requirements": null,
     "startDate": null,
     "subject": "Seguridad y medioambiente",
@@ -5363,12 +5363,12 @@
     ],
     "durationHours": 40,
     "endDate": null,
-    "id": "1285587293470",
+    "id": "1285587319346",
     "locality": null,
     "modality": "Teleformación",
-    "officialUrl": "https://empleo.jcyl.es/web/jcyl/Empleo/es/Plantilla100Detalle/1284216458054/Formacion/1285587293470/Propuesta",
-    "places": 12,
-    "registration": "Diríjase para obtener más información a: · · FORMACION Y GESTION DE SERVICOS SOCIALES S.COOP. · CL/ PIRITA, nº 35 · 47012 - VALLADOLID (VALLADOLID) · · Teléfono: 983307329 · Correo electrónico: jesus.coop7@gmail.com",
+    "officialUrl": "https://empleo.jcyl.es/web/jcyl/Empleo/es/Plantilla100Detalle/1284216458054/Formacion/1285587319346/Propuesta",
+    "places": 14,
+    "registration": "Diríjase para obtener más información a: · · TRAINING CONSULTING, S.L · Pº/ DEL RENACIMIENTO, nº 10 -Piso: 8º · 47010 - VALLADOLID (VALLADOLID) · · Teléfono: 983658200 · Correo electrónico: direccion.training@gmail.com",
     "requirements": null,
     "startDate": null,
     "subject": "Seguridad y medioambiente",
@@ -6137,6 +6137,26 @@
     ],
     "durationHours": 20,
     "endDate": null,
+    "id": "1285649524208",
+    "locality": "Peñaranda de Bracamonte",
+    "modality": "Presencial",
+    "officialUrl": "https://empleo.jcyl.es/web/jcyl/Empleo/es/Plantilla100Detalle/1284216458054/Formacion/1285649524208/Propuesta",
+    "places": 15,
+    "registration": "Diríjase para obtener más información a: · · FORMACION Y GESTION DE SERVICOS SOCIALES S.COOP. · CL/ PIRITA, nº 35 · 47012 - VALLADOLID (VALLADOLID) · · Teléfono: 983307329 · Correo electrónico: jesus.coop7@gmail.com",
+    "requirements": null,
+    "startDate": "2026-09-22",
+    "subject": "Administración y gestión",
+    "title": "EXCEL AVANZADO",
+    "venue": "ACADEMIA LIDER, CL/ CL DEL CARMEN, nº 37 -Piso: 1º -Puerta: IZQª, 37300 - PEÑARANDA DE BRACAMONTE(SALAMANCA), Tfno: 606341781"
+  },
+  {
+    "applicationDeadline": null,
+    "audience": [
+      "Ocupado",
+      "Desempleado"
+    ],
+    "durationHours": 20,
+    "endDate": null,
     "id": "1285587297988",
     "locality": null,
     "modality": "Teleformación",
@@ -6208,26 +6228,6 @@
     "subject": "Administración y gestión",
     "title": "EXCEL AVANZADO",
     "venue": "Ámbito territorial de impartición: Sin determinar"
-  },
-  {
-    "applicationDeadline": null,
-    "audience": [
-      "Ocupado",
-      "Desempleado"
-    ],
-    "durationHours": 20,
-    "endDate": null,
-    "id": "1285649524208",
-    "locality": "Peñaranda de Bracamonte",
-    "modality": "Presencial",
-    "officialUrl": "https://empleo.jcyl.es/web/jcyl/Empleo/es/Plantilla100Detalle/1284216458054/Formacion/1285649524208/Propuesta",
-    "places": 15,
-    "registration": "Diríjase para obtener más información a: · · FORMACION Y GESTION DE SERVICOS SOCIALES S.COOP. · CL/ PIRITA, nº 35 · 47012 - VALLADOLID (VALLADOLID) · · Teléfono: 983307329 · Correo electrónico: jesus.coop7@gmail.com",
-    "requirements": null,
-    "startDate": "2026-09-22",
-    "subject": "Administración y gestión",
-    "title": "EXCEL AVANZADO",
-    "venue": "ACADEMIA LIDER, CL/ CL DEL CARMEN, nº 37 -Piso: 1º -Puerta: IZQª, 37300 - PEÑARANDA DE BRACAMONTE(SALAMANCA), Tfno: 606341781"
   },
   {
     "applicationDeadline": null,
@@ -6377,6 +6377,26 @@
     ],
     "durationHours": 30,
     "endDate": null,
+    "id": "1285647489158",
+    "locality": "Toro",
+    "modality": "Presencial",
+    "officialUrl": "https://empleo.jcyl.es/web/jcyl/Empleo/es/Plantilla100Detalle/1284216458054/Formacion/1285647489158/Propuesta",
+    "places": 10,
+    "registration": "Diríjase para obtener más información a: · · FORMACION Y GESTION DE SERVICOS SOCIALES S.COOP. · CL/ PIRITA, nº 35 · 47012 - VALLADOLID (VALLADOLID) · · Teléfono: 983307329 · Correo electrónico: jesus.coop7@gmail.com",
+    "requirements": null,
+    "startDate": "2026-10-13",
+    "subject": "Administración y gestión",
+    "title": "FACTURA DIGITAL",
+    "venue": "MICROTEC, CL/ CORREDERA, nº 26 -Piso: BAJOº, 49800 - TORO(ZAMORA), Tfno: 980691871"
+  },
+  {
+    "applicationDeadline": null,
+    "audience": [
+      "Ocupado",
+      "Desempleado"
+    ],
+    "durationHours": 30,
+    "endDate": null,
     "id": "1285585365172",
     "locality": null,
     "modality": "Presencial",
@@ -6508,26 +6528,6 @@
     "subject": "Administración y gestión",
     "title": "FACTURA DIGITAL",
     "venue": "Pendiente de asignar provincia por parte de la entidad de impartición"
-  },
-  {
-    "applicationDeadline": null,
-    "audience": [
-      "Ocupado",
-      "Desempleado"
-    ],
-    "durationHours": 30,
-    "endDate": null,
-    "id": "1285647489158",
-    "locality": "Toro",
-    "modality": "Presencial",
-    "officialUrl": "https://empleo.jcyl.es/web/jcyl/Empleo/es/Plantilla100Detalle/1284216458054/Formacion/1285647489158/Propuesta",
-    "places": 10,
-    "registration": "Diríjase para obtener más información a: · · FORMACION Y GESTION DE SERVICOS SOCIALES S.COOP. · CL/ PIRITA, nº 35 · 47012 - VALLADOLID (VALLADOLID) · · Teléfono: 983307329 · Correo electrónico: jesus.coop7@gmail.com",
-    "requirements": null,
-    "startDate": "2026-10-13",
-    "subject": "Administración y gestión",
-    "title": "FACTURA DIGITAL",
-    "venue": "MICROTEC, CL/ CORREDERA, nº 26 -Piso: BAJOº, 49800 - TORO(ZAMORA), Tfno: 980691871"
   },
   {
     "applicationDeadline": null,
@@ -7117,26 +7117,6 @@
     ],
     "durationHours": 20,
     "endDate": null,
-    "id": "1285587260911",
-    "locality": null,
-    "modality": "Presencial",
-    "officialUrl": "https://empleo.jcyl.es/web/jcyl/Empleo/es/Plantilla100Detalle/1284216458054/Formacion/1285587260911/Propuesta",
-    "places": 15,
-    "registration": "Diríjase para obtener más información a: · · FUNDACION LESMES · CL/ MANUEL ALTOLAGUIRRE, nº S/N · 09006 - BURGOS (BURGOS) · · Teléfono: 947244511 · Correo electrónico: elenasanz@fundacionlesmes.org",
-    "requirements": null,
-    "startDate": null,
-    "subject": "Comercio y marketing",
-    "title": "GESTIÓN BÁSICA DEL ALMACÉN",
-    "venue": "Ámbito territorial de impartición: SALAMANCA"
-  },
-  {
-    "applicationDeadline": null,
-    "audience": [
-      "Ocupado",
-      "Desempleado"
-    ],
-    "durationHours": 20,
-    "endDate": null,
     "id": "1285587263259",
     "locality": null,
     "modality": "Presencial",
@@ -7288,6 +7268,26 @@
     "subject": "Comercio y marketing",
     "title": "GESTIÓN BÁSICA DEL ALMACÉN",
     "venue": "Ámbito territorial de impartición: BURGOS"
+  },
+  {
+    "applicationDeadline": null,
+    "audience": [
+      "Ocupado",
+      "Desempleado"
+    ],
+    "durationHours": 20,
+    "endDate": null,
+    "id": "1285587260911",
+    "locality": null,
+    "modality": "Presencial",
+    "officialUrl": "https://empleo.jcyl.es/web/jcyl/Empleo/es/Plantilla100Detalle/1284216458054/Formacion/1285587260911/Propuesta",
+    "places": 15,
+    "registration": "Diríjase para obtener más información a: · · FUNDACION LESMES · CL/ MANUEL ALTOLAGUIRRE, nº S/N · 09006 - BURGOS (BURGOS) · · Teléfono: 947244511 · Correo electrónico: elenasanz@fundacionlesmes.org",
+    "requirements": null,
+    "startDate": null,
+    "subject": "Comercio y marketing",
+    "title": "GESTIÓN BÁSICA DEL ALMACÉN",
+    "venue": "Ámbito territorial de impartición: SALAMANCA"
   },
   {
     "applicationDeadline": null,
@@ -8197,26 +8197,6 @@
     ],
     "durationHours": 50,
     "endDate": null,
-    "id": "1285587260747",
-    "locality": null,
-    "modality": "Presencial",
-    "officialUrl": "https://empleo.jcyl.es/web/jcyl/Empleo/es/Plantilla100Detalle/1284216458054/Formacion/1285587260747/Propuesta",
-    "places": 14,
-    "registration": "Diríjase para obtener más información a: · · FUNDACION LESMES · CL/ MANUEL ALTOLAGUIRRE, nº S/N · 09006 - BURGOS (BURGOS) · · Teléfono: 947244511 · Correo electrónico: elenasanz@fundacionlesmes.org",
-    "requirements": null,
-    "startDate": null,
-    "subject": "Imagen personal",
-    "title": "HIGIENE E HIDRATACIÓN DE LA PIEL DEL ROSTRO Y CUERPO",
-    "venue": "Ámbito territorial de impartición: SALAMANCA"
-  },
-  {
-    "applicationDeadline": null,
-    "audience": [
-      "Ocupado",
-      "Desempleado"
-    ],
-    "durationHours": 50,
-    "endDate": null,
     "id": "1285670483064",
     "locality": "Burgos",
     "modality": "Presencial",
@@ -8228,6 +8208,26 @@
     "subject": "Imagen personal",
     "title": "HIGIENE E HIDRATACIÓN DE LA PIEL DEL ROSTRO Y CUERPO",
     "venue": "GRUPO SIE ? AVENIDA CANTABRIA, 69, AV/ Cantabria, nº 69 -Piso: BAJOº, 09006 - BURGOS(BURGOS), Tfno: 664384569"
+  },
+  {
+    "applicationDeadline": null,
+    "audience": [
+      "Ocupado",
+      "Desempleado"
+    ],
+    "durationHours": 50,
+    "endDate": null,
+    "id": "1285587260747",
+    "locality": null,
+    "modality": "Presencial",
+    "officialUrl": "https://empleo.jcyl.es/web/jcyl/Empleo/es/Plantilla100Detalle/1284216458054/Formacion/1285587260747/Propuesta",
+    "places": 14,
+    "registration": "Diríjase para obtener más información a: · · FUNDACION LESMES · CL/ MANUEL ALTOLAGUIRRE, nº S/N · 09006 - BURGOS (BURGOS) · · Teléfono: 947244511 · Correo electrónico: elenasanz@fundacionlesmes.org",
+    "requirements": null,
+    "startDate": null,
+    "subject": "Imagen personal",
+    "title": "HIGIENE E HIDRATACIÓN DE LA PIEL DEL ROSTRO Y CUERPO",
+    "venue": "Ámbito territorial de impartición: SALAMANCA"
   },
   {
     "applicationDeadline": null,
@@ -8872,25 +8872,6 @@
   {
     "applicationDeadline": null,
     "audience": [
-      "Mujeres desempleadas residentes en municipios de menos de 30.000 habitantes de Castilla y León."
-    ],
-    "durationHours": 40,
-    "endDate": null,
-    "id": "1285379451787",
-    "locality": "Carrizo",
-    "modality": "Presencial",
-    "officialUrl": "https://empleo.jcyl.es/web/jcyl/Empleo/es/Plantilla100Detalle/1284216458054/Formacion/1285379451787/Propuesta",
-    "places": 15,
-    "registration": "· De forma presencial diríjase: A la entidad responsable de la impartición de la acción formativa. A su oficina de empleo · De forma telemática: Acceda a la oficina virtual . Si necesita ayuda puede consultar el Manual de inscripción telemática",
-    "requirements": null,
-    "startDate": null,
-    "subject": "Formación complementaria",
-    "title": "INICIACIÓN A LA CREACIÓN Y EDICIÓN DE TEXTOS",
-    "venue": "ATU ASESORÍA DE FORMACIÓN SL (CASA DE CULTURA DE LA MILLA DEL RÍO), CL/ LAS ERAS (LA MILLA DEL RÍO), nº 2, 24283 - CARRIZO(LEÓN), Tfno: 667961283"
-  },
-  {
-    "applicationDeadline": null,
-    "audience": [
       "Ocupado",
       "Desempleado"
     ],
@@ -8907,6 +8888,25 @@
     "subject": null,
     "title": "INICIACIÓN A LA CREACIÓN Y EDICIÓN DE TEXTOS",
     "venue": "Ámbito territorial de impartición: Sin determinar"
+  },
+  {
+    "applicationDeadline": null,
+    "audience": [
+      "Mujeres desempleadas residentes en municipios de menos de 30.000 habitantes de Castilla y León."
+    ],
+    "durationHours": 40,
+    "endDate": null,
+    "id": "1285379451787",
+    "locality": "Carrizo",
+    "modality": "Presencial",
+    "officialUrl": "https://empleo.jcyl.es/web/jcyl/Empleo/es/Plantilla100Detalle/1284216458054/Formacion/1285379451787/Propuesta",
+    "places": 15,
+    "registration": "· De forma presencial diríjase: A la entidad responsable de la impartición de la acción formativa. A su oficina de empleo · De forma telemática: Acceda a la oficina virtual . Si necesita ayuda puede consultar el Manual de inscripción telemática",
+    "requirements": null,
+    "startDate": null,
+    "subject": "Formación complementaria",
+    "title": "INICIACIÓN A LA CREACIÓN Y EDICIÓN DE TEXTOS",
+    "venue": "ATU ASESORÍA DE FORMACIÓN SL (CASA DE CULTURA DE LA MILLA DEL RÍO), CL/ LAS ERAS (LA MILLA DEL RÍO), nº 2, 24283 - CARRIZO(LEÓN), Tfno: 667961283"
   },
   {
     "applicationDeadline": null,
@@ -9049,17 +9049,17 @@
     ],
     "durationHours": 26,
     "endDate": null,
-    "id": "1285538206166",
-    "locality": "Morales del Vino",
+    "id": "1285547284204",
+    "locality": "Santiago Millas",
     "modality": "Presencial",
-    "officialUrl": "https://empleo.jcyl.es/web/jcyl/Empleo/es/Plantilla100Detalle/1284216458054/Formacion/1285538206166/Propuesta",
+    "officialUrl": "https://empleo.jcyl.es/web/jcyl/Empleo/es/Plantilla100Detalle/1284216458054/Formacion/1285547284204/Propuesta",
     "places": 15,
-    "registration": "Diríjase para obtener más información a: · · ENLACES · CL/ PABLO MORILLO , 25 Esc. BAJO, 0 · ZAMORA",
+    "registration": "Diríjase para obtener más información a: · · FUNDACIÓN PROYECTO JOVEN · CL/ EL TORREJÓN, 4, BJ · LEÓN · Teléfono: 663402129",
     "requirements": null,
     "startDate": null,
     "subject": "Formación complementaria",
     "title": "INICIACIÓN EN COMPETENCIAS DIGITALES BÁSICAS",
-    "venue": "A determinar, / DIPUTACION , nº 1BAJOº, 47071 - MORALES DEL VINO(ZAMORA)"
+    "venue": "A determinar, / , nº, SANTIAGO MILLAS(LEÓN)"
   },
   {
     "applicationDeadline": null,
@@ -9079,6 +9079,82 @@
     "subject": "Formación complementaria",
     "title": "INICIACIÓN EN COMPETENCIAS DIGITALES BÁSICAS",
     "venue": "A determinar, / , nº, ASTORGA(LEÓN)"
+  },
+  {
+    "applicationDeadline": null,
+    "audience": [
+      "Desempleado"
+    ],
+    "durationHours": 26,
+    "endDate": null,
+    "id": "1285538206119",
+    "locality": "Morales del Vino",
+    "modality": "Presencial",
+    "officialUrl": "https://empleo.jcyl.es/web/jcyl/Empleo/es/Plantilla100Detalle/1284216458054/Formacion/1285538206119/Propuesta",
+    "places": 15,
+    "registration": "Diríjase para obtener más información a: · · ENLACES · CL/ PABLO MORILLO , 25 Esc. BAJO, 0 · ZAMORA",
+    "requirements": null,
+    "startDate": null,
+    "subject": "Formación complementaria",
+    "title": "INICIACIÓN EN COMPETENCIAS DIGITALES BÁSICAS",
+    "venue": "A determinar, / DIPUTACION , nº 1BAJOº, 47071 - MORALES DEL VINO(ZAMORA)"
+  },
+  {
+    "applicationDeadline": null,
+    "audience": [
+      "Desempleado"
+    ],
+    "durationHours": 26,
+    "endDate": null,
+    "id": "1285538206166",
+    "locality": "Morales del Vino",
+    "modality": "Presencial",
+    "officialUrl": "https://empleo.jcyl.es/web/jcyl/Empleo/es/Plantilla100Detalle/1284216458054/Formacion/1285538206166/Propuesta",
+    "places": 15,
+    "registration": "Diríjase para obtener más información a: · · ENLACES · CL/ PABLO MORILLO , 25 Esc. BAJO, 0 · ZAMORA",
+    "requirements": null,
+    "startDate": null,
+    "subject": "Formación complementaria",
+    "title": "INICIACIÓN EN COMPETENCIAS DIGITALES BÁSICAS",
+    "venue": "A determinar, / DIPUTACION , nº 1BAJOº, 47071 - MORALES DEL VINO(ZAMORA)"
+  },
+  {
+    "applicationDeadline": null,
+    "audience": [
+      "Desempleado"
+    ],
+    "durationHours": 26,
+    "endDate": null,
+    "id": "1285538206213",
+    "locality": "Morales del Vino",
+    "modality": "Presencial",
+    "officialUrl": "https://empleo.jcyl.es/web/jcyl/Empleo/es/Plantilla100Detalle/1284216458054/Formacion/1285538206213/Propuesta",
+    "places": 15,
+    "registration": "Diríjase para obtener más información a: · · ENLACES · CL/ PABLO MORILLO , 25 Esc. BAJO, 0 · ZAMORA",
+    "requirements": null,
+    "startDate": null,
+    "subject": "Formación complementaria",
+    "title": "INICIACIÓN EN COMPETENCIAS DIGITALES BÁSICAS",
+    "venue": "A determinar, / DIPUTACION , nº 1BAJOº, 47071 - MORALES DEL VINO(ZAMORA)"
+  },
+  {
+    "applicationDeadline": null,
+    "audience": [
+      "Desempleado"
+    ],
+    "durationHours": 26,
+    "endDate": null,
+    "id": "1285536266169",
+    "locality": "Villalbilla de Burgos",
+    "modality": "Presencial",
+    "officialUrl": "https://empleo.jcyl.es/web/jcyl/Empleo/es/Plantilla100Detalle/1284216458054/Formacion/1285536266169/Propuesta",
+    "places": 14,
+    "registration": "Diríjase para obtener más información a: · · CIRCULO EMPRESARIAL EIBUR, S.L.U. · CL/ LOS NOGALES (P.I. LOS BREZOS), nº 11 · VILLALBILLA DE BURGOS · Teléfono: 947278047 · E-mail: profesores@eibur.com",
+    "requirements": null,
+    "startDate": null,
+    "subject": "Formación complementaria",
+    "title": "INICIACIÓN EN COMPETENCIAS DIGITALES BÁSICAS",
+    "venue": "CIRCULO EMPRESARIAL EIBUR, S.L.U., CL/ LOS NOGALES (P.I. LOS BREZOS), nº 11, 09197 - VILLALBILLA DE BURGOS(BURGOS), Tfno: 947278047"
   },
   {
     "applicationDeadline": null,
@@ -9117,82 +9193,6 @@
     "subject": "Formación complementaria",
     "title": "INICIACIÓN EN COMPETENCIAS DIGITALES BÁSICAS",
     "venue": "A determinar, / , nº, CABRERIZOS(SALAMANCA)"
-  },
-  {
-    "applicationDeadline": null,
-    "audience": [
-      "Desempleado"
-    ],
-    "durationHours": 26,
-    "endDate": null,
-    "id": "1285547284204",
-    "locality": "Santiago Millas",
-    "modality": "Presencial",
-    "officialUrl": "https://empleo.jcyl.es/web/jcyl/Empleo/es/Plantilla100Detalle/1284216458054/Formacion/1285547284204/Propuesta",
-    "places": 15,
-    "registration": "Diríjase para obtener más información a: · · FUNDACIÓN PROYECTO JOVEN · CL/ EL TORREJÓN, 4, BJ · LEÓN · Teléfono: 663402129",
-    "requirements": null,
-    "startDate": null,
-    "subject": "Formación complementaria",
-    "title": "INICIACIÓN EN COMPETENCIAS DIGITALES BÁSICAS",
-    "venue": "A determinar, / , nº, SANTIAGO MILLAS(LEÓN)"
-  },
-  {
-    "applicationDeadline": null,
-    "audience": [
-      "Desempleado"
-    ],
-    "durationHours": 26,
-    "endDate": null,
-    "id": "1285536266169",
-    "locality": "Villalbilla de Burgos",
-    "modality": "Presencial",
-    "officialUrl": "https://empleo.jcyl.es/web/jcyl/Empleo/es/Plantilla100Detalle/1284216458054/Formacion/1285536266169/Propuesta",
-    "places": 14,
-    "registration": "Diríjase para obtener más información a: · · CIRCULO EMPRESARIAL EIBUR, S.L.U. · CL/ LOS NOGALES (P.I. LOS BREZOS), nº 11 · VILLALBILLA DE BURGOS · Teléfono: 947278047 · E-mail: profesores@eibur.com",
-    "requirements": null,
-    "startDate": null,
-    "subject": "Formación complementaria",
-    "title": "INICIACIÓN EN COMPETENCIAS DIGITALES BÁSICAS",
-    "venue": "CIRCULO EMPRESARIAL EIBUR, S.L.U., CL/ LOS NOGALES (P.I. LOS BREZOS), nº 11, 09197 - VILLALBILLA DE BURGOS(BURGOS), Tfno: 947278047"
-  },
-  {
-    "applicationDeadline": null,
-    "audience": [
-      "Desempleado"
-    ],
-    "durationHours": 26,
-    "endDate": null,
-    "id": "1285538206119",
-    "locality": "Morales del Vino",
-    "modality": "Presencial",
-    "officialUrl": "https://empleo.jcyl.es/web/jcyl/Empleo/es/Plantilla100Detalle/1284216458054/Formacion/1285538206119/Propuesta",
-    "places": 15,
-    "registration": "Diríjase para obtener más información a: · · ENLACES · CL/ PABLO MORILLO , 25 Esc. BAJO, 0 · ZAMORA",
-    "requirements": null,
-    "startDate": null,
-    "subject": "Formación complementaria",
-    "title": "INICIACIÓN EN COMPETENCIAS DIGITALES BÁSICAS",
-    "venue": "A determinar, / DIPUTACION , nº 1BAJOº, 47071 - MORALES DEL VINO(ZAMORA)"
-  },
-  {
-    "applicationDeadline": null,
-    "audience": [
-      "Desempleado"
-    ],
-    "durationHours": 26,
-    "endDate": null,
-    "id": "1285538206213",
-    "locality": "Morales del Vino",
-    "modality": "Presencial",
-    "officialUrl": "https://empleo.jcyl.es/web/jcyl/Empleo/es/Plantilla100Detalle/1284216458054/Formacion/1285538206213/Propuesta",
-    "places": 15,
-    "registration": "Diríjase para obtener más información a: · · ENLACES · CL/ PABLO MORILLO , 25 Esc. BAJO, 0 · ZAMORA",
-    "requirements": null,
-    "startDate": null,
-    "subject": "Formación complementaria",
-    "title": "INICIACIÓN EN COMPETENCIAS DIGITALES BÁSICAS",
-    "venue": "A determinar, / DIPUTACION , nº 1BAJOº, 47071 - MORALES DEL VINO(ZAMORA)"
   },
   {
     "applicationDeadline": null,
@@ -10017,17 +10017,17 @@
     ],
     "durationHours": 40,
     "endDate": null,
-    "id": "1285587316924",
-    "locality": null,
+    "id": "1285670736575",
+    "locality": "Burgos",
     "modality": "Presencial",
-    "officialUrl": "https://empleo.jcyl.es/web/jcyl/Empleo/es/Plantilla100Detalle/1284216458054/Formacion/1285587316924/Propuesta",
+    "officialUrl": "https://empleo.jcyl.es/web/jcyl/Empleo/es/Plantilla100Detalle/1284216458054/Formacion/1285670736575/Propuesta",
     "places": 15,
     "registration": "Diríjase para obtener más información a: · · TRAINING CONSULTING, S.L · Pº/ DEL RENACIMIENTO, nº 10 -Piso: 8º · 47010 - VALLADOLID (VALLADOLID) · · Teléfono: 983658200 · Correo electrónico: direccion.training@gmail.com",
     "requirements": null,
-    "startDate": null,
+    "startDate": "2026-08-25",
     "subject": "Imagen personal",
     "title": "MANICURA",
-    "venue": "Ámbito territorial de impartición: BURGOS"
+    "venue": "GRUPO SIE-SAGRADA FAMILIA, CL/ Sagrada Familia, nº 31 -Piso: BAJOº, 09006 - BURGOS(BURGOS), Tfno: 613522429"
   },
   {
     "applicationDeadline": null,
@@ -10037,17 +10037,17 @@
     ],
     "durationHours": 40,
     "endDate": null,
-    "id": "1285587317293",
-    "locality": null,
+    "id": "1285670736623",
+    "locality": "Burgos",
     "modality": "Presencial",
-    "officialUrl": "https://empleo.jcyl.es/web/jcyl/Empleo/es/Plantilla100Detalle/1284216458054/Formacion/1285587317293/Propuesta",
+    "officialUrl": "https://empleo.jcyl.es/web/jcyl/Empleo/es/Plantilla100Detalle/1284216458054/Formacion/1285670736623/Propuesta",
     "places": 15,
     "registration": "Diríjase para obtener más información a: · · TRAINING CONSULTING, S.L · Pº/ DEL RENACIMIENTO, nº 10 -Piso: 8º · 47010 - VALLADOLID (VALLADOLID) · · Teléfono: 983658200 · Correo electrónico: direccion.training@gmail.com",
     "requirements": null,
-    "startDate": null,
+    "startDate": "2026-09-21",
     "subject": "Imagen personal",
     "title": "MANICURA",
-    "venue": "Ámbito territorial de impartición: BURGOS"
+    "venue": "GRUPO SIE-SAGRADA FAMILIA, CL/ Sagrada Familia, nº 31 -Piso: BAJOº, 09006 - BURGOS(BURGOS), Tfno: 613522429"
   },
   {
     "applicationDeadline": null,
@@ -10097,17 +10097,17 @@
     ],
     "durationHours": 50,
     "endDate": null,
-    "id": "1285587317482",
-    "locality": null,
+    "id": "1285670736671",
+    "locality": "Burgos",
     "modality": "Presencial",
-    "officialUrl": "https://empleo.jcyl.es/web/jcyl/Empleo/es/Plantilla100Detalle/1284216458054/Formacion/1285587317482/Propuesta",
+    "officialUrl": "https://empleo.jcyl.es/web/jcyl/Empleo/es/Plantilla100Detalle/1284216458054/Formacion/1285670736671/Propuesta",
     "places": 15,
     "registration": "Diríjase para obtener más información a: · · TRAINING CONSULTING, S.L · Pº/ DEL RENACIMIENTO, nº 10 -Piso: 8º · 47010 - VALLADOLID (VALLADOLID) · · Teléfono: 983658200 · Correo electrónico: direccion.training@gmail.com",
     "requirements": null,
-    "startDate": null,
+    "startDate": "2026-09-07",
     "subject": "Imagen personal",
     "title": "MAQUILLAJE",
-    "venue": "Ámbito territorial de impartición: BURGOS"
+    "venue": "GRUPO SIE-SAGRADA FAMILIA, CL/ Sagrada Familia, nº 31 -Piso: BAJOº, 09006 - BURGOS(BURGOS), Tfno: 613522429"
   },
   {
     "applicationDeadline": null,
@@ -10474,26 +10474,6 @@
     ],
     "durationHours": 25,
     "endDate": null,
-    "id": "1285585357122",
-    "locality": null,
-    "modality": "Presencial",
-    "officialUrl": "https://empleo.jcyl.es/web/jcyl/Empleo/es/Plantilla100Detalle/1284216458054/Formacion/1285585357122/Propuesta",
-    "places": 15,
-    "registration": "Diríjase para obtener más información a: · · CENTRO FORMATIVO PLANFORM, S.L · CL/ MANUEL AZAÑA, nº 22 · 47014 - VALLADOLID (VALLADOLID) · · Teléfono: 983301839 · Correo electrónico: mercedes@planform.es",
-    "requirements": null,
-    "startDate": null,
-    "subject": "Servicios socioculturales y a la comunidad",
-    "title": "NUEVAS TECNOLOGÍAS INTERACTIVAS EN EN AULA",
-    "venue": "Pendiente de asignar provincia por parte de la entidad de impartición"
-  },
-  {
-    "applicationDeadline": null,
-    "audience": [
-      "Ocupado",
-      "Desempleado"
-    ],
-    "durationHours": 25,
-    "endDate": null,
     "id": "1285652015000",
     "locality": "Serrada (La)",
     "modality": "Presencial",
@@ -10505,6 +10485,26 @@
     "subject": "Servicios socioculturales y a la comunidad",
     "title": "NUEVAS TECNOLOGÍAS INTERACTIVAS EN EN AULA",
     "venue": "FORMACION Y GESTION DE SERVICIOS SOCIALES S. COOP. - AVILA, CL/ SAN ISIDRO, nº 3, 05192 - SERRADA (LA)(ÁVILA), Tfno: 606341781"
+  },
+  {
+    "applicationDeadline": null,
+    "audience": [
+      "Ocupado",
+      "Desempleado"
+    ],
+    "durationHours": 25,
+    "endDate": null,
+    "id": "1285585357122",
+    "locality": null,
+    "modality": "Presencial",
+    "officialUrl": "https://empleo.jcyl.es/web/jcyl/Empleo/es/Plantilla100Detalle/1284216458054/Formacion/1285585357122/Propuesta",
+    "places": 15,
+    "registration": "Diríjase para obtener más información a: · · CENTRO FORMATIVO PLANFORM, S.L · CL/ MANUEL AZAÑA, nº 22 · 47014 - VALLADOLID (VALLADOLID) · · Teléfono: 983301839 · Correo electrónico: mercedes@planform.es",
+    "requirements": null,
+    "startDate": null,
+    "subject": "Servicios socioculturales y a la comunidad",
+    "title": "NUEVAS TECNOLOGÍAS INTERACTIVAS EN EN AULA",
+    "venue": "Pendiente de asignar provincia por parte de la entidad de impartición"
   },
   {
     "applicationDeadline": null,
@@ -10574,26 +10574,6 @@
     ],
     "durationHours": 100,
     "endDate": null,
-    "id": "1285587314507",
-    "locality": null,
-    "modality": "Presencial",
-    "officialUrl": "https://empleo.jcyl.es/web/jcyl/Empleo/es/Plantilla100Detalle/1284216458054/Formacion/1285587314507/Propuesta",
-    "places": 14,
-    "registration": "Diríjase para obtener más información a: · · TRAINING CONSULTING, S.L · Pº/ DEL RENACIMIENTO, nº 10 -Piso: 8º · 47010 - VALLADOLID (VALLADOLID) · · Teléfono: 983658200 · Correo electrónico: direccion.training@gmail.com",
-    "requirements": null,
-    "startDate": null,
-    "subject": "Administración y gestión",
-    "title": "OFIMÁTICA",
-    "venue": "Ámbito territorial de impartición: Sin determinar"
-  },
-  {
-    "applicationDeadline": null,
-    "audience": [
-      "Ocupado",
-      "Desempleado"
-    ],
-    "durationHours": 100,
-    "endDate": null,
     "id": "1285670156493",
     "locality": "Burgos",
     "modality": "Teleformación",
@@ -10625,6 +10605,26 @@
     "subject": "Administración y gestión",
     "title": "OFIMÁTICA",
     "venue": "Ámbito territorial de impartición: Sin determinar"
+  },
+  {
+    "applicationDeadline": null,
+    "audience": [
+      "Ocupado",
+      "Desempleado"
+    ],
+    "durationHours": 100,
+    "endDate": null,
+    "id": "1285670736527",
+    "locality": "Burgos",
+    "modality": "Presencial",
+    "officialUrl": "https://empleo.jcyl.es/web/jcyl/Empleo/es/Plantilla100Detalle/1284216458054/Formacion/1285670736527/Propuesta",
+    "places": 14,
+    "registration": "Diríjase para obtener más información a: · · TRAINING CONSULTING, S.L · Pº/ DEL RENACIMIENTO, nº 10 -Piso: 8º · 47010 - VALLADOLID (VALLADOLID) · · Teléfono: 983658200 · Correo electrónico: direccion.training@gmail.com",
+    "requirements": null,
+    "startDate": "2026-09-01",
+    "subject": "Administración y gestión",
+    "title": "OFIMÁTICA",
+    "venue": "GRUPO SIE-SAGRADA FAMILIA, CL/ Sagrada Familia, nº 31 -Piso: BAJOº, 09006 - BURGOS(BURGOS), Tfno: 664384569"
   },
   {
     "applicationDeadline": null,
@@ -13167,26 +13167,6 @@
     ],
     "durationHours": 40,
     "endDate": null,
-    "id": "1285587277349",
-    "locality": null,
-    "modality": "Presencial",
-    "officialUrl": "https://empleo.jcyl.es/web/jcyl/Empleo/es/Plantilla100Detalle/1284216458054/Formacion/1285587277349/Propuesta",
-    "places": 13,
-    "registration": "Diríjase para obtener más información a: · · SANASE COSMETIC SL · CL/ PADRE MANJON, nº 2 · 47013 - VALLADOLID (VALLADOLID) · · Teléfono: 983398830 · Correo electrónico: SANASE_CYL@GRUPOASPASIA.COM",
-    "requirements": null,
-    "startDate": null,
-    "subject": "Fabricación mecánica",
-    "title": "SOLDADURA MAG",
-    "venue": "Ámbito territorial de impartición: BRIVIESCA"
-  },
-  {
-    "applicationDeadline": null,
-    "audience": [
-      "Ocupado",
-      "Desempleado"
-    ],
-    "durationHours": 40,
-    "endDate": null,
     "id": "1285647489014",
     "locality": "Salamanca",
     "modality": "Presencial",
@@ -13198,6 +13178,26 @@
     "subject": "Fabricación mecánica",
     "title": "SOLDADURA MAG",
     "venue": "COLEGIO SALESIANO SAN JOSE, CT/ DE LEDESMA , nº 32, 37006 - SALAMANCA(SALAMANCA), Tfno: 606341781"
+  },
+  {
+    "applicationDeadline": null,
+    "audience": [
+      "Ocupado",
+      "Desempleado"
+    ],
+    "durationHours": 40,
+    "endDate": null,
+    "id": "1285587277349",
+    "locality": null,
+    "modality": "Presencial",
+    "officialUrl": "https://empleo.jcyl.es/web/jcyl/Empleo/es/Plantilla100Detalle/1284216458054/Formacion/1285587277349/Propuesta",
+    "places": 13,
+    "registration": "Diríjase para obtener más información a: · · SANASE COSMETIC SL · CL/ PADRE MANJON, nº 2 · 47013 - VALLADOLID (VALLADOLID) · · Teléfono: 983398830 · Correo electrónico: SANASE_CYL@GRUPOASPASIA.COM",
+    "requirements": null,
+    "startDate": null,
+    "subject": "Fabricación mecánica",
+    "title": "SOLDADURA MAG",
+    "venue": "Ámbito territorial de impartición: BRIVIESCA"
   },
   {
     "applicationDeadline": null,
@@ -13406,17 +13406,17 @@
     ],
     "durationHours": 40,
     "endDate": null,
-    "id": "1285587290182",
-    "locality": null,
+    "id": "1285670736431",
+    "locality": "Salamanca",
     "modality": "Teleformación",
-    "officialUrl": "https://empleo.jcyl.es/web/jcyl/Empleo/es/Plantilla100Detalle/1284216458054/Formacion/1285587290182/Propuesta",
+    "officialUrl": "https://empleo.jcyl.es/web/jcyl/Empleo/es/Plantilla100Detalle/1284216458054/Formacion/1285670736431/Propuesta",
     "places": 15,
     "registration": "Diríjase para obtener más información a: · · ACQUIRE FORMACION AND TRAINING, S.L. · RD/ DE LA FERIA, nº 27 -Piso: BAJOº · 49005 - ZAMORA (ZAMORA) · · Teléfono: 673286357 · Correo electrónico: zamora@acquireformacion.es",
     "requirements": null,
-    "startDate": null,
+    "startDate": "2026-09-03",
     "subject": "Servicios socioculturales y a la comunidad",
     "title": "TÉCNICAS DE ANIMACIÓN DE GRUPOS.",
-    "venue": "Ámbito territorial de impartición: Sin determinar"
+    "venue": "ACQUIRE FORMACION AND TRAINING S.L., Pº/ DE LOS ROBLES, nº 48 -Piso: BAJOº, 37004 - SALAMANCA(SALAMANCA), Tfno: 673286357"
   },
   {
     "applicationDeadline": null,
@@ -13806,26 +13806,6 @@
     ],
     "durationHours": 25,
     "endDate": null,
-    "id": "1285587261157",
-    "locality": null,
-    "modality": "Teleformación",
-    "officialUrl": "https://empleo.jcyl.es/web/jcyl/Empleo/es/Plantilla100Detalle/1284216458054/Formacion/1285587261157/Propuesta",
-    "places": 20,
-    "registration": "Diríjase para obtener más información a: · · FUNDACION LESMES · CL/ MANUEL ALTOLAGUIRRE, nº S/N · 09006 - BURGOS (BURGOS) · · Teléfono: 947244511 · Correo electrónico: elenasanz@fundacionlesmes.org",
-    "requirements": null,
-    "startDate": null,
-    "subject": "Administración y gestión",
-    "title": "TRAMITES ON-LINE CON LA ADMINISTRACION",
-    "venue": "Ámbito territorial de impartición: Sin determinar"
-  },
-  {
-    "applicationDeadline": null,
-    "audience": [
-      "Ocupado",
-      "Desempleado"
-    ],
-    "durationHours": 25,
-    "endDate": null,
     "id": "1285587282257",
     "locality": null,
     "modality": "Teleformación",
@@ -13877,6 +13857,26 @@
     "subject": "Administración y gestión",
     "title": "TRAMITES ON-LINE CON LA ADMINISTRACION",
     "venue": "Pendiente de asignar provincia por parte de la entidad de impartición"
+  },
+  {
+    "applicationDeadline": null,
+    "audience": [
+      "Ocupado",
+      "Desempleado"
+    ],
+    "durationHours": 25,
+    "endDate": null,
+    "id": "1285587261157",
+    "locality": null,
+    "modality": "Teleformación",
+    "officialUrl": "https://empleo.jcyl.es/web/jcyl/Empleo/es/Plantilla100Detalle/1284216458054/Formacion/1285587261157/Propuesta",
+    "places": 20,
+    "registration": "Diríjase para obtener más información a: · · FUNDACION LESMES · CL/ MANUEL ALTOLAGUIRRE, nº S/N · 09006 - BURGOS (BURGOS) · · Teléfono: 947244511 · Correo electrónico: elenasanz@fundacionlesmes.org",
+    "requirements": null,
+    "startDate": null,
+    "subject": "Administración y gestión",
+    "title": "TRAMITES ON-LINE CON LA ADMINISTRACION",
+    "venue": "Ámbito territorial de impartición: Sin determinar"
   },
   {
     "applicationDeadline": null,
@@ -14006,26 +14006,6 @@
     ],
     "durationHours": 50,
     "endDate": null,
-    "id": "1285649524544",
-    "locality": "Serrada (La)",
-    "modality": "Presencial",
-    "officialUrl": "https://empleo.jcyl.es/web/jcyl/Empleo/es/Plantilla100Detalle/1284216458054/Formacion/1285649524544/Propuesta",
-    "places": 10,
-    "registration": "Diríjase para obtener más información a: · · FORMACION Y GESTION DE SERVICOS SOCIALES S.COOP. · CL/ PIRITA, nº 35 · 47012 - VALLADOLID (VALLADOLID) · · Teléfono: 983307329 · Correo electrónico: jesus.coop7@gmail.com",
-    "requirements": null,
-    "startDate": "2026-09-09",
-    "subject": "Servicios socioculturales y a la comunidad",
-    "title": "TUTORIZACION EN TELEFORMACIÓN",
-    "venue": "FORMACION Y GESTION DE SERVICIOS SOCIALES S. COOP. - AVILA, CL/ SAN ISIDRO, nº 3, 05192 - SERRADA (LA)(ÁVILA), Tfno: 606341781"
-  },
-  {
-    "applicationDeadline": null,
-    "audience": [
-      "Ocupado",
-      "Desempleado"
-    ],
-    "durationHours": 50,
-    "endDate": null,
     "id": "1285585363901",
     "locality": null,
     "modality": "Presencial",
@@ -14037,6 +14017,26 @@
     "subject": "Servicios socioculturales y a la comunidad",
     "title": "TUTORIZACION EN TELEFORMACIÓN",
     "venue": "Pendiente de asignar provincia por parte de la entidad de impartición"
+  },
+  {
+    "applicationDeadline": null,
+    "audience": [
+      "Ocupado",
+      "Desempleado"
+    ],
+    "durationHours": 50,
+    "endDate": null,
+    "id": "1285649524544",
+    "locality": "Serrada (La)",
+    "modality": "Presencial",
+    "officialUrl": "https://empleo.jcyl.es/web/jcyl/Empleo/es/Plantilla100Detalle/1284216458054/Formacion/1285649524544/Propuesta",
+    "places": 10,
+    "registration": "Diríjase para obtener más información a: · · FORMACION Y GESTION DE SERVICOS SOCIALES S.COOP. · CL/ PIRITA, nº 35 · 47012 - VALLADOLID (VALLADOLID) · · Teléfono: 983307329 · Correo electrónico: jesus.coop7@gmail.com",
+    "requirements": null,
+    "startDate": "2026-09-09",
+    "subject": "Servicios socioculturales y a la comunidad",
+    "title": "TUTORIZACION EN TELEFORMACIÓN",
+    "venue": "FORMACION Y GESTION DE SERVICIOS SOCIALES S. COOP. - AVILA, CL/ SAN ISIDRO, nº 3, 05192 - SERRADA (LA)(ÁVILA), Tfno: 606341781"
   },
   {
     "applicationDeadline": null,
@@ -14546,11 +14546,11 @@
     ],
     "durationHours": 40,
     "endDate": null,
-    "id": "1285587260829",
+    "id": "1285587261198",
     "locality": null,
-    "modality": "Presencial",
-    "officialUrl": "https://empleo.jcyl.es/web/jcyl/Empleo/es/Plantilla100Detalle/1284216458054/Formacion/1285587260829/Propuesta",
-    "places": 15,
+    "modality": "Teleformación",
+    "officialUrl": "https://empleo.jcyl.es/web/jcyl/Empleo/es/Plantilla100Detalle/1284216458054/Formacion/1285587261198/Propuesta",
+    "places": 20,
     "registration": "Diríjase para obtener más información a: · · FUNDACION LESMES · CL/ MANUEL ALTOLAGUIRRE, nº S/N · 09006 - BURGOS (BURGOS) · · Teléfono: 947244511 · Correo electrónico: elenasanz@fundacionlesmes.org",
     "requirements": null,
     "startDate": null,
@@ -14646,6 +14646,26 @@
     ],
     "durationHours": 40,
     "endDate": null,
+    "id": "1285587260829",
+    "locality": null,
+    "modality": "Presencial",
+    "officialUrl": "https://empleo.jcyl.es/web/jcyl/Empleo/es/Plantilla100Detalle/1284216458054/Formacion/1285587260829/Propuesta",
+    "places": 15,
+    "registration": "Diríjase para obtener más información a: · · FUNDACION LESMES · CL/ MANUEL ALTOLAGUIRRE, nº S/N · 09006 - BURGOS (BURGOS) · · Teléfono: 947244511 · Correo electrónico: elenasanz@fundacionlesmes.org",
+    "requirements": null,
+    "startDate": null,
+    "subject": "Administración y gestión",
+    "title": "WORD. NIVEL AVANZADO",
+    "venue": "Ámbito territorial de impartición: Sin determinar"
+  },
+  {
+    "applicationDeadline": null,
+    "audience": [
+      "Ocupado",
+      "Desempleado"
+    ],
+    "durationHours": 40,
+    "endDate": null,
     "id": "1285587296354",
     "locality": null,
     "modality": "Teleformación",
@@ -14712,26 +14732,6 @@
     "officialUrl": "https://empleo.jcyl.es/web/jcyl/Empleo/es/Plantilla100Detalle/1284216458054/Formacion/1285587318180/Propuesta",
     "places": 15,
     "registration": "Diríjase para obtener más información a: · · TRAINING CONSULTING, S.L · Pº/ DEL RENACIMIENTO, nº 10 -Piso: 8º · 47010 - VALLADOLID (VALLADOLID) · · Teléfono: 983658200 · Correo electrónico: direccion.training@gmail.com",
-    "requirements": null,
-    "startDate": null,
-    "subject": "Administración y gestión",
-    "title": "WORD. NIVEL AVANZADO",
-    "venue": "Ámbito territorial de impartición: Sin determinar"
-  },
-  {
-    "applicationDeadline": null,
-    "audience": [
-      "Ocupado",
-      "Desempleado"
-    ],
-    "durationHours": 40,
-    "endDate": null,
-    "id": "1285587261198",
-    "locality": null,
-    "modality": "Teleformación",
-    "officialUrl": "https://empleo.jcyl.es/web/jcyl/Empleo/es/Plantilla100Detalle/1284216458054/Formacion/1285587261198/Propuesta",
-    "places": 20,
-    "registration": "Diríjase para obtener más información a: · · FUNDACION LESMES · CL/ MANUEL ALTOLAGUIRRE, nº S/N · 09006 - BURGOS (BURGOS) · · Teléfono: 947244511 · Correo electrónico: elenasanz@fundacionlesmes.org",
     "requirements": null,
     "startDate": null,
     "subject": "Administración y gestión",
