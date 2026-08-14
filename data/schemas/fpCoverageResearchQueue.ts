@@ -21,6 +21,7 @@ export const FpCoverageResearchQueueSchema = z
   .object({
     snapshotGeneratedAt: z.string().datetime(),
     reviewedBaseCount: z.number().int().nonnegative(),
+    completedNoMatchBaseCount: z.number().int().nonnegative(),
     pendingBaseCount: z.number().int().nonnegative(),
     contract: z.literal(
       "Training-offer signals prioritize official research only; they are not CNO evidence and never authorize publication.",

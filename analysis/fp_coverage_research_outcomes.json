@@ -1,0 +1,95 @@
+{
+  "schemaVersion": 1,
+  "outcomes": [
+    {
+      "baseProgramKey": "SAN06S",
+      "status": "reviewed-no-publishable-match",
+      "reviewedAt": "2026-08-13",
+      "occupationCatalogSha256": "f77079a15d7246c04b44889c733fda7fc9bade892c9d78c79607fcb1c3e21e90",
+      "sourcePath": "analysis/fp_coverage_batch_parallel_2/sources/SAN06S.txt",
+      "proposalPath": "analysis/fp_coverage_batch_parallel_2/proposals/SAN06S.md",
+      "frontierReviewPath": "analysis/fp_coverage_batch_parallel_2/frontier-review.md",
+      "note": "No publicable match found in the current approved occupation catalog for this FP program. The reviewed codes describe different clinical, care, social-education, or early-years roles."
+    },
+    {
+      "baseProgramKey": "COM01S",
+      "status": "reviewed-no-publishable-match",
+      "reviewedAt": "2026-08-13",
+      "occupationCatalogSha256": "f77079a15d7246c04b44889c733fda7fc9bade892c9d78c79607fcb1c3e21e90",
+      "sourcePath": "analysis/fp_coverage_batch_parallel_2/sources/COM01S.txt",
+      "proposalPath": "analysis/fp_coverage_batch_parallel_2/proposals/COM01S.md",
+      "frontierReviewPath": "analysis/fp_coverage_batch_parallel_2/frontier-review.md",
+      "note": "No publicable match found in the current approved occupation catalog for this FP program. Proposed codes replace the marketing and advertising domain with adjacent sales, telemarketing, or data-entry occupations."
+    },
+    {
+      "baseProgramKey": "SAN01M",
+      "status": "reviewed-no-publishable-match",
+      "reviewedAt": "2026-08-13",
+      "occupationCatalogSha256": "f77079a15d7246c04b44889c733fda7fc9bade892c9d78c79607fcb1c3e21e90",
+      "sourcePath": "analysis/fp_coverage_batch_parallel_2/sources/SAN01M.txt",
+      "proposalPath": "analysis/fp_coverage_batch_parallel_2/proposals/SAN01M.md",
+      "frontierReviewPath": "analysis/fp_coverage_batch_parallel_2/frontier-review.md",
+      "note": "No publicable match found in the current approved occupation catalog for this FP program. Emergency coordination, emergency medical work, telecare, and patient transport are not equivalent to the proposed generic roles."
+    },
+    {
+      "baseProgramKey": "SAN32",
+      "status": "reviewed-no-publishable-match",
+      "reviewedAt": "2026-08-14",
+      "occupationCatalogSha256": "f77079a15d7246c04b44889c733fda7fc9bade892c9d78c79607fcb1c3e21e90",
+      "sourcePath": "analysis/fp_coverage_batch_parallel_3/sources/SAN32.txt",
+      "proposalPath": "analysis/fp_coverage_batch_parallel_3/proposals/SAN32.md",
+      "frontierReviewPath": "analysis/fp_coverage_batch_parallel_3/frontier-review.md",
+      "note": "No publicable match found in the current approved occupation catalog for this FP program. Dietetics, nutrition, food hygiene, health education, and catering food-management roles are absent from the catalog."
+    },
+    {
+      "baseProgramKey": "EOC01S",
+      "status": "reviewed-no-publishable-match",
+      "reviewedAt": "2026-08-14",
+      "occupationCatalogSha256": "f77079a15d7246c04b44889c733fda7fc9bade892c9d78c79607fcb1c3e21e90",
+      "sourcePath": "analysis/fp_coverage_batch_parallel_3/sources/EOC01S.txt",
+      "proposalPath": "analysis/fp_coverage_batch_parallel_3/proposals/EOC01S.md",
+      "frontierReviewPath": "analysis/fp_coverage_batch_parallel_3/frontier-review.md",
+      "note": "No publicable match found in the current approved occupation catalog for this FP program. The approved catalog has no direct occupation for building-project drafting, BIM, energy certification, cost control, or technical document management."
+    },
+    {
+      "baseProgramKey": "INA01M",
+      "status": "reviewed-no-publishable-match",
+      "reviewedAt": "2026-08-14",
+      "occupationCatalogSha256": "f77079a15d7246c04b44889c733fda7fc9bade892c9d78c79607fcb1c3e21e90",
+      "sourcePath": "analysis/fp_coverage_batch_parallel_3/sources/INA01M.txt",
+      "proposalPath": "analysis/fp_coverage_batch_parallel_3/proposals/INA01M.md",
+      "frontierReviewPath": "analysis/fp_coverage_batch_parallel_3/frontier-review.md",
+      "note": "No publicable match found in the current approved occupation catalog for this FP program. Bakery, pastry, confectionery, and related production roles are absent. Cooks and kitchen assistants are not direct equivalents."
+    },
+    {
+      "baseProgramKey": "IMS01M",
+      "status": "reviewed-no-publishable-match",
+      "reviewedAt": "2026-08-14",
+      "occupationCatalogSha256": "f77079a15d7246c04b44889c733fda7fc9bade892c9d78c79607fcb1c3e21e90",
+      "sourcePath": "analysis/fp_coverage_batch_parallel_3/sources/IMS01M.txt",
+      "proposalPath": "analysis/fp_coverage_batch_parallel_3/proposals/IMS01M.md",
+      "frontierReviewPath": "analysis/fp_coverage_batch_parallel_3/frontier-review.md",
+      "note": "No publicable match found in the current approved occupation catalog for this FP program. Sound production, microphone operation, DJ/VJ, event lighting, and photographic retouching roles are absent from the catalog."
+    },
+    {
+      "baseProgramKey": "HOT01E",
+      "status": "reviewed-no-publishable-match",
+      "reviewedAt": "2026-08-14",
+      "occupationCatalogSha256": "f77079a15d7246c04b44889c733fda7fc9bade892c9d78c79607fcb1c3e21e90",
+      "sourcePath": "analysis/fp_coverage_batch_parallel_3/sources/HOT01E.txt",
+      "proposalPath": "analysis/fp_coverage_batch_parallel_3/proposals/HOT01E.md",
+      "frontierReviewPath": "analysis/fp_coverage_batch_parallel_3/frontier-review.md",
+      "note": "No publicable match found in the current approved occupation catalog for this FP program. Cooks and kitchen assistants do not directly represent master bakers, pastry makers, dough producers, confectioners, or sensory tasters."
+    },
+    {
+      "baseProgramKey": "AGA01S",
+      "status": "reviewed-no-publishable-match",
+      "reviewedAt": "2026-08-14",
+      "occupationCatalogSha256": "f77079a15d7246c04b44889c733fda7fc9bade892c9d78c79607fcb1c3e21e90",
+      "sourcePath": "analysis/fp_coverage_batch_parallel_3/sources/AGA01S.txt",
+      "proposalPath": "analysis/fp_coverage_batch_parallel_3/proposals/AGA01S.md",
+      "frontierReviewPath": "analysis/fp_coverage_batch_parallel_3/frontier-review.md",
+      "note": "No publicable match found in the current approved occupation catalog for this FP program. The candidates either change an owner or coordinator role into an operative one or cover only an adjacent activity."
+    }
+  ]
+}
