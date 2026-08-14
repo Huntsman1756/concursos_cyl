@@ -1,0 +1,105 @@
+{
+  "schemaVersion": 1,
+  "stories": [
+    {
+      "id": "hot02s-completion",
+      "objective": "Investiga HOT02S usando solo analysis/fp_coverage_batch_parallel_6/sources/HOT02S.txt y data/curated/occupations.json. Crea analysis/fp_coverage_batch_parallel_6/proposals/HOT02S.md con las 8 citas TodoFP copiadas literalmente, candidatos CNO-11 approved de correspondencia exacta o funcional directa para agencia de viajes, reservas, consultoría turística, venta de viajes y organización de eventos, y las ausencias explícitas. Para cada candidato incluye occupationId, código, etiqueta exacta del catálogo, cita literal, justificación y riesgo. No equipares eventos con publicidad, relaciones públicas o animación turística.",
+      "allowedPaths": [
+        "analysis/fp_coverage_batch_parallel_6/proposals/HOT02S.md"
+      ],
+      "validationCommands": [
+        "powershell -NoProfile -Command \"if (-not (Select-String -LiteralPath 'analysis/fp_coverage_batch_parallel_6/proposals/HOT02S.md' -Pattern 'HOT02S' -Quiet)) { exit 1 }\""
+      ],
+      "frontierPlan": "Separar intermediación y venta turística, reservas, dirección de agencia y organización de eventos; rechazar proximidad sectorial.",
+      "acceptanceCriteria": [
+        "8 citas exactas",
+        "solo occupationId approved",
+        "etiquetas exactas",
+        "ausencias explícitas"
+      ],
+      "modelProfile": "reasoning",
+      "budgetProfile": "research",
+      "maxExecutionSeconds": 1800
+    },
+    {
+      "id": "com02e-completion",
+      "objective": "Investiga COM02E usando solo analysis/fp_coverage_batch_parallel_6/sources/COM02E.txt y data/curated/occupations.json. Crea analysis/fp_coverage_batch_parallel_6/proposals/COM02E.md con las 7 citas TodoFP copiadas literalmente, candidatos CNO-11 approved de correspondencia exacta o funcional directa para comercio electrónico, marketing digital y de crecimiento, captación, contenidos, comunidades digitales y redacción publicitaria, y las ausencias explícitas. Para cada candidato incluye occupationId, código, etiqueta exacta del catálogo, cita literal, justificación y riesgo. No uses ventas genéricas, periodistas, relaciones públicas ni programadores por proximidad sectorial.",
+      "allowedPaths": [
+        "analysis/fp_coverage_batch_parallel_6/proposals/COM02E.md"
+      ],
+      "validationCommands": [
+        "powershell -NoProfile -Command \"if (-not (Select-String -LiteralPath 'analysis/fp_coverage_batch_parallel_6/proposals/COM02E.md' -Pattern 'COM02E' -Quiet)) { exit 1 }\""
+      ],
+      "frontierPlan": "Razonar por función digital concreta y rechazar sustituciones sectoriales sin evidencia funcional directa.",
+      "acceptanceCriteria": [
+        "7 citas exactas",
+        "solo occupationId approved",
+        "etiquetas exactas",
+        "ausencias explícitas"
+      ],
+      "modelProfile": "reasoning",
+      "budgetProfile": "research",
+      "maxExecutionSeconds": 1800
+    },
+    {
+      "id": "ele02b-completion",
+      "objective": "Investiga ELE02B usando solo analysis/fp_coverage_batch_parallel_6/sources/ELE02B.txt y data/curated/occupations.json. Crea analysis/fp_coverage_batch_parallel_6/proposals/ELE02B.md con las 12 citas TodoFP copiadas literalmente y conservando sus variantes, candidatos CNO-11 approved directos para auxiliares automatizados, ayudantes de telecomunicaciones, antenas, baja tensión y peonaje industrial o energético, y las ausencias explícitas. Para cada candidato incluye occupationId, código, etiqueta exacta del catálogo, cita literal, justificación y riesgo. No eleves ayudantes a instaladores titulados.",
+      "allowedPaths": [
+        "analysis/fp_coverage_batch_parallel_6/proposals/ELE02B.md"
+      ],
+      "validationCommands": [
+        "powershell -NoProfile -Command \"if (-not (Select-String -LiteralPath 'analysis/fp_coverage_batch_parallel_6/proposals/ELE02B.md' -Pattern 'ELE02B' -Quiet)) { exit 1 }\""
+      ],
+      "frontierPlan": "Preservar nivel auxiliar y básico y documentar por separado telecomunicaciones, antenas, baja tensión y peonaje.",
+      "acceptanceCriteria": [
+        "12 citas exactas",
+        "solo occupationId approved",
+        "no eleva jerarquía",
+        "dos URL oficiales conservadas"
+      ],
+      "modelProfile": "mechanical",
+      "budgetProfile": "research",
+      "maxExecutionSeconds": 1800
+    },
+    {
+      "id": "ima01m-completion",
+      "objective": "Investiga IMA01M usando solo analysis/fp_coverage_batch_parallel_6/sources/IMA01M.txt y data/curated/occupations.json. Crea analysis/fp_coverage_batch_parallel_6/proposals/IMA01M.md con las 5 citas TodoFP copiadas literalmente, candidatos CNO-11 approved directos para producción de calor, agua, calefacción y ACS, gas y combustibles líquidos y solar térmica, y las ausencias explícitas. Para cada candidato incluye occupationId, código, etiqueta exacta del catálogo, cita literal, justificación y riesgo. No equipares con fontanería general, refrigeración o producción energética sin evidencia directa.",
+      "allowedPaths": [
+        "analysis/fp_coverage_batch_parallel_6/proposals/IMA01M.md"
+      ],
+      "validationCommands": [
+        "powershell -NoProfile -Command \"if (-not (Select-String -LiteralPath 'analysis/fp_coverage_batch_parallel_6/proposals/IMA01M.md' -Pattern 'IMA01M' -Quiet)) { exit 1 }\""
+      ],
+      "frontierPlan": "Diferenciar las cinco funciones térmicas y de fluidos frente a ocupaciones genéricas o frigoríficas.",
+      "acceptanceCriteria": [
+        "5 citas exactas",
+        "solo occupationId approved",
+        "etiquetas exactas",
+        "ausencias explícitas"
+      ],
+      "modelProfile": "long-context",
+      "budgetProfile": "research",
+      "maxExecutionSeconds": 1800
+    },
+    {
+      "id": "ina01s-citation-repair",
+      "objective": "Repara únicamente analysis/fp_coverage_batch_parallel_6/proposals/INA01S.md usando analysis/fp_coverage_batch_parallel_6/sources/INA01S.txt. Conserva el análisis y candidatos existentes, pero reemplaza cada cita TodoFP por el texto literal exacto, incluida puntuación, y ordénalas en el mismo orden de la fuente. Deben aparecer literalmente las 7 citas completas. No añadas candidatos, no cambies occupationId y no modifiques ningún otro archivo.",
+      "allowedPaths": [
+        "analysis/fp_coverage_batch_parallel_6/proposals/INA01S.md"
+      ],
+      "validationCommands": [
+        "powershell -NoProfile -Command \"$s = Get-Content -Raw -Encoding utf8 'analysis/fp_coverage_batch_parallel_6/sources/INA01S.txt'; $p = Get-Content -Raw -Encoding utf8 'analysis/fp_coverage_batch_parallel_6/proposals/INA01S.md'; if (-not $p.Contains('Analista sensorial.') -or -not $p.Contains('Vitivinícola.')) { exit 1 }\""
+      ],
+      "frontierPlan": "Reparación puramente mecánica de citas y orden, sin permitir nuevas decisiones semánticas.",
+      "acceptanceCriteria": [
+        "7 citas fuente exactas",
+        "mismos occupationId",
+        "sin candidatos nuevos",
+        "solo INA01S.md"
+      ],
+      "modelProfile": "mechanical",
+      "budgetProfile": "small",
+      "maxExecutionSeconds": 900
+    }
+  ]
+}
