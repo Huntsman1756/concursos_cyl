@@ -39,9 +39,9 @@
     "uncoveredPrograms": 0
   },
   {
-    "approvedMappings": 0,
-    "coverageNote": "Aún no hay una relación ocupacional aprobada; esto no significa que el ciclo no tenga salidas profesionales.",
-    "coverageStatus": "uncovered",
+    "approvedMappings": 1,
+    "coverageNote": "Incluye relaciones ocupacionales revisadas y citadas.",
+    "coverageStatus": "reviewed",
     "draftMappings": 0,
     "familyCode": "ADG",
     "familyName": "Administración y Gestión",
@@ -49,7 +49,7 @@
     "programTitle": "Asistencia a la Dirección",
     "rejectedMappings": 0,
     "scope": "program",
-    "uncoveredPrograms": 1
+    "uncoveredPrograms": 0
   },
   {
     "approvedMappings": 4,
@@ -156,9 +156,9 @@
     "uncoveredPrograms": 0
   },
   {
-    "approvedMappings": 0,
-    "coverageNote": "Aún no hay una relación ocupacional aprobada; esto no significa que el ciclo no tenga salidas profesionales.",
-    "coverageStatus": "uncovered",
+    "approvedMappings": 2,
+    "coverageNote": "Incluye relaciones ocupacionales revisadas y citadas.",
+    "coverageStatus": "reviewed",
     "draftMappings": 0,
     "familyCode": "AGA",
     "familyName": "Agraria",
@@ -166,7 +166,7 @@
     "programTitle": "Agro-jardinería y Composiciones Florales",
     "rejectedMappings": 0,
     "scope": "program",
-    "uncoveredPrograms": 1
+    "uncoveredPrograms": 0
   },
   {
     "approvedMappings": 5,
@@ -429,9 +429,9 @@
     "uncoveredPrograms": 0
   },
   {
-    "approvedMappings": 0,
-    "coverageNote": "Aún no hay una relación ocupacional aprobada; esto no significa que el ciclo no tenga salidas profesionales.",
-    "coverageStatus": "uncovered",
+    "approvedMappings": 2,
+    "coverageNote": "Incluye relaciones ocupacionales revisadas y citadas.",
+    "coverageStatus": "reviewed",
     "draftMappings": 0,
     "familyCode": "COM",
     "familyName": "Comercio y Marketing",
@@ -439,7 +439,7 @@
     "programTitle": "Gestión de Ventas y Espacios Comerciales",
     "rejectedMappings": 0,
     "scope": "program",
-    "uncoveredPrograms": 1
+    "uncoveredPrograms": 0
   },
   {
     "approvedMappings": 0,
@@ -572,9 +572,9 @@
     "uncoveredPrograms": 0
   },
   {
-    "approvedMappings": 0,
-    "coverageNote": "Aún no hay una relación ocupacional aprobada; esto no significa que el ciclo no tenga salidas profesionales.",
-    "coverageStatus": "uncovered",
+    "approvedMappings": 4,
+    "coverageNote": "Incluye relaciones ocupacionales revisadas y citadas.",
+    "coverageStatus": "reviewed",
     "draftMappings": 0,
     "familyCode": "ELE",
     "familyName": "Electricidad y Electrónica",
@@ -582,7 +582,7 @@
     "programTitle": "Sistemas de Telecomunicaciones e Informáticos",
     "rejectedMappings": 0,
     "scope": "program",
-    "uncoveredPrograms": 1
+    "uncoveredPrograms": 0
   },
   {
     "approvedMappings": 1,
@@ -949,9 +949,9 @@
     "uncoveredPrograms": 0
   },
   {
-    "approvedMappings": 0,
-    "coverageNote": "Aún no hay una relación ocupacional aprobada; esto no significa que el ciclo no tenga salidas profesionales.",
-    "coverageStatus": "uncovered",
+    "approvedMappings": 1,
+    "coverageNote": "Incluye relaciones ocupacionales revisadas y citadas.",
+    "coverageStatus": "reviewed",
     "draftMappings": 0,
     "familyCode": "HOT",
     "familyName": "Hostelería y Turismo",
@@ -959,7 +959,7 @@
     "programTitle": "Gestión de Alojamientos Turísticos",
     "rejectedMappings": 0,
     "scope": "program",
-    "uncoveredPrograms": 1
+    "uncoveredPrograms": 0
   },
   {
     "approvedMappings": 0,
@@ -975,9 +975,9 @@
     "uncoveredPrograms": 1
   },
   {
-    "approvedMappings": 0,
-    "coverageNote": "Aún no hay una relación ocupacional aprobada; esto no significa que el ciclo no tenga salidas profesionales.",
-    "coverageStatus": "uncovered",
+    "approvedMappings": 2,
+    "coverageNote": "Incluye relaciones ocupacionales revisadas y citadas.",
+    "coverageStatus": "reviewed",
     "draftMappings": 0,
     "familyCode": "HOT",
     "familyName": "Hostelería y Turismo",
@@ -985,7 +985,7 @@
     "programTitle": "Servicios en Restauración",
     "rejectedMappings": 0,
     "scope": "program",
-    "uncoveredPrograms": 1
+    "uncoveredPrograms": 0
   },
   {
     "approvedMappings": 0,
@@ -1014,9 +1014,9 @@
     "uncoveredPrograms": 1
   },
   {
-    "approvedMappings": 0,
-    "coverageNote": "Aún no hay una relación ocupacional aprobada; esto no significa que el ciclo no tenga salidas profesionales.",
-    "coverageStatus": "uncovered",
+    "approvedMappings": 2,
+    "coverageNote": "Incluye relaciones ocupacionales revisadas y citadas.",
+    "coverageStatus": "reviewed",
     "draftMappings": 0,
     "familyCode": "HOT",
     "familyName": "Hostelería y Turismo",
@@ -1024,7 +1024,7 @@
     "programTitle": "Guía, Información y Asistencias Turísticas",
     "rejectedMappings": 0,
     "scope": "program",
-    "uncoveredPrograms": 1
+    "uncoveredPrograms": 0
   },
   {
     "approvedMappings": 0,
@@ -1365,9 +1365,9 @@
     "uncoveredPrograms": 0
   },
   {
-    "approvedMappings": 0,
-    "coverageNote": "Aún no hay una relación ocupacional aprobada; esto no significa que el ciclo no tenga salidas profesionales.",
-    "coverageStatus": "uncovered",
+    "approvedMappings": 5,
+    "coverageNote": "Incluye relaciones ocupacionales revisadas y citadas.",
+    "coverageStatus": "reviewed",
     "draftMappings": 0,
     "familyCode": "IMP",
     "familyName": "Imagen Personal",
@@ -1375,12 +1375,12 @@
     "programTitle": "Estética y Belleza",
     "rejectedMappings": 0,
     "scope": "program",
-    "uncoveredPrograms": 1
+    "uncoveredPrograms": 0
   },
   {
-    "approvedMappings": 0,
-    "coverageNote": "Aún no hay una relación ocupacional aprobada; esto no significa que el ciclo no tenga salidas profesionales.",
-    "coverageStatus": "uncovered",
+    "approvedMappings": 2,
+    "coverageNote": "Incluye relaciones ocupacionales revisadas y citadas.",
+    "coverageStatus": "reviewed",
     "draftMappings": 0,
     "familyCode": "IMP",
     "familyName": "Imagen Personal",
@@ -1388,7 +1388,7 @@
     "programTitle": "Estética Integral y Bienestar",
     "rejectedMappings": 0,
     "scope": "program",
-    "uncoveredPrograms": 1
+    "uncoveredPrograms": 0
   },
   {
     "approvedMappings": 2,
@@ -1417,9 +1417,9 @@
     "uncoveredPrograms": 1
   },
   {
-    "approvedMappings": 0,
-    "coverageNote": "Aún no hay una relación ocupacional aprobada; esto no significa que el ciclo no tenga salidas profesionales.",
-    "coverageStatus": "uncovered",
+    "approvedMappings": 1,
+    "coverageNote": "Incluye relaciones ocupacionales revisadas y citadas.",
+    "coverageStatus": "reviewed",
     "draftMappings": 0,
     "familyCode": "IMP",
     "familyName": "Imagen Personal",
@@ -1427,7 +1427,7 @@
     "programTitle": "Estilismo y Dirección de Peluquería",
     "rejectedMappings": 0,
     "scope": "program",
-    "uncoveredPrograms": 1
+    "uncoveredPrograms": 0
   },
   {
     "approvedMappings": 0,
@@ -1664,9 +1664,9 @@
     "uncoveredPrograms": 1
   },
   {
-    "approvedMappings": 0,
-    "coverageNote": "Aún no hay una relación ocupacional aprobada; esto no significa que el ciclo no tenga salidas profesionales.",
-    "coverageStatus": "uncovered",
+    "approvedMappings": 3,
+    "coverageNote": "Incluye relaciones ocupacionales revisadas y citadas.",
+    "coverageStatus": "reviewed",
     "draftMappings": 0,
     "familyCode": "MAM",
     "familyName": "Madera, Mueble y Corcho",
@@ -1674,7 +1674,7 @@
     "programTitle": "Carpintería y Mueble",
     "rejectedMappings": 0,
     "scope": "program",
-    "uncoveredPrograms": 1
+    "uncoveredPrograms": 0
   },
   {
     "approvedMappings": 2,
@@ -2431,7 +2431,7 @@
     "uncoveredPrograms": 1
   },
   {
-    "approvedMappings": 18,
+    "approvedMappings": 19,
     "coverageNote": "La cobertura mide relaciones revisadas del catálogo, no la existencia de salidas profesionales.",
     "draftMappings": 2,
     "familyCode": "ADG",
@@ -2439,7 +2439,7 @@
     "programCount": 6,
     "rejectedMappings": 0,
     "scope": "family",
-    "uncoveredPrograms": 1
+    "uncoveredPrograms": 0
   },
   {
     "approvedMappings": 12,
@@ -2453,7 +2453,7 @@
     "uncoveredPrograms": 1
   },
   {
-    "approvedMappings": 7,
+    "approvedMappings": 9,
     "coverageNote": "La cobertura mide relaciones revisadas del catálogo, no la existencia de salidas profesionales.",
     "draftMappings": 0,
     "familyCode": "AGA",
@@ -2461,7 +2461,7 @@
     "programCount": 10,
     "rejectedMappings": 0,
     "scope": "family",
-    "uncoveredPrograms": 8
+    "uncoveredPrograms": 7
   },
   {
     "approvedMappings": 0,
@@ -2475,7 +2475,7 @@
     "uncoveredPrograms": 3
   },
   {
-    "approvedMappings": 32,
+    "approvedMappings": 34,
     "coverageNote": "La cobertura mide relaciones revisadas del catálogo, no la existencia de salidas profesionales.",
     "draftMappings": 0,
     "familyCode": "COM",
@@ -2483,10 +2483,10 @@
     "programCount": 12,
     "rejectedMappings": 0,
     "scope": "family",
-    "uncoveredPrograms": 5
+    "uncoveredPrograms": 4
   },
   {
-    "approvedMappings": 20,
+    "approvedMappings": 24,
     "coverageNote": "La cobertura mide relaciones revisadas del catálogo, no la existencia de salidas profesionales.",
     "draftMappings": 0,
     "familyCode": "ELE",
@@ -2494,7 +2494,7 @@
     "programCount": 13,
     "rejectedMappings": 0,
     "scope": "family",
-    "uncoveredPrograms": 6
+    "uncoveredPrograms": 5
   },
   {
     "approvedMappings": 0,
@@ -2530,7 +2530,7 @@
     "uncoveredPrograms": 6
   },
   {
-    "approvedMappings": 4,
+    "approvedMappings": 9,
     "coverageNote": "La cobertura mide relaciones revisadas del catálogo, no la existencia de salidas profesionales.",
     "draftMappings": 0,
     "familyCode": "HOT",
@@ -2538,7 +2538,7 @@
     "programCount": 13,
     "rejectedMappings": 0,
     "scope": "family",
-    "uncoveredPrograms": 10
+    "uncoveredPrograms": 7
   },
   {
     "approvedMappings": 25,
@@ -2563,7 +2563,7 @@
     "uncoveredPrograms": 6
   },
   {
-    "approvedMappings": 4,
+    "approvedMappings": 12,
     "coverageNote": "La cobertura mide relaciones revisadas del catálogo, no la existencia de salidas profesionales.",
     "draftMappings": 0,
     "familyCode": "IMP",
@@ -2571,7 +2571,7 @@
     "programCount": 9,
     "rejectedMappings": 0,
     "scope": "family",
-    "uncoveredPrograms": 7
+    "uncoveredPrograms": 4
   },
   {
     "approvedMappings": 0,
@@ -2596,7 +2596,7 @@
     "uncoveredPrograms": 8
   },
   {
-    "approvedMappings": 2,
+    "approvedMappings": 5,
     "coverageNote": "La cobertura mide relaciones revisadas del catálogo, no la existencia de salidas profesionales.",
     "draftMappings": 0,
     "familyCode": "MAM",
@@ -2604,7 +2604,7 @@
     "programCount": 4,
     "rejectedMappings": 0,
     "scope": "family",
-    "uncoveredPrograms": 3
+    "uncoveredPrograms": 2
   },
   {
     "approvedMappings": 0,

@@ -1,15 +1,15 @@
 {
   "schemaVersion": "1.0.0",
-  "snapshotId": "20260813053424432-677d0b4c2be7",
-  "totalOffers": 1044,
-  "matchedOfferCount": 69,
-  "unmatchedOfferCount": 975,
-  "queuedOfferCount": 36,
-  "requirementMentionOfferCount": 21,
-  "descriptionOnlyMentionOfferCount": 5,
+  "snapshotId": "20260814062213925-6b2a94f09dbc",
+  "totalOffers": 1075,
+  "matchedOfferCount": 66,
+  "unmatchedOfferCount": 1009,
+  "queuedOfferCount": 40,
+  "requirementMentionOfferCount": 22,
+  "descriptionOnlyMentionOfferCount": 8,
   "reviewedQualificationExactOfferCount": 10,
   "specificCycleEvidenceReviewCount": 12,
-  "genericFpInsufficientCount": 14,
+  "genericFpInsufficientCount": 18,
   "outsideFpCycleScopeCount": 10,
   "entries": [
     {
@@ -24,6 +24,32 @@
       "requirementQuotes": [],
       "triageDisposition": "specific_cycle_evidence_review",
       "triageReason": "La oferta contiene una familia, especialidad o titulación FP concreta que requiere validar el ciclo y la frontera ocupacional antes de publicarse."
+    },
+    {
+      "offerId": "1285670666126",
+      "title": "Coordinador/a de Centro de FP para Valladolid",
+      "province": "Valladolid",
+      "sourceName": "Internet / Prensa",
+      "originalUrl": "https://empleo.jcyl.es/web/jcyl/Empleo/es/Plantilla100Detalle/1284216458054/OfertasEmpleo/1285670666126/Empleo",
+      "mentionScope": "description_only_fp",
+      "reviewedQualificationLabels": [],
+      "candidateProgramKeys": [],
+      "requirementQuotes": [],
+      "triageDisposition": "generic_fp_insufficient",
+      "triageReason": "La mención a FP es genérica, equivalente o alternativa y no identifica por sí sola un ciclo concreto."
+    },
+    {
+      "offerId": "1285670666072",
+      "title": "Docentes Cursos de Operador de Grúa Torre para Burgos y Valladolid",
+      "province": "Valladolid",
+      "sourceName": "Internet / Prensa",
+      "originalUrl": "https://empleo.jcyl.es/web/jcyl/Empleo/es/Plantilla100Detalle/1284216458054/OfertasEmpleo/1285670666072/Empleo",
+      "mentionScope": "description_only_fp",
+      "reviewedQualificationLabels": [],
+      "candidateProgramKeys": [],
+      "requirementQuotes": [],
+      "triageDisposition": "generic_fp_insufficient",
+      "triageReason": "La mención a FP es genérica, equivalente o alternativa y no identifica por sí sola un ciclo concreto."
     },
     {
       "offerId": "1285669925123",
@@ -70,6 +96,19 @@
       "province": "León",
       "sourceName": "ECYL",
       "originalUrl": "https://empleo.jcyl.es/web/jcyl/Empleo/es/Plantilla100Detalle/1284216458054/OfertasEmpleo/1285670398073/Empleo",
+      "mentionScope": "description_only_fp",
+      "reviewedQualificationLabels": [],
+      "candidateProgramKeys": [],
+      "requirementQuotes": [],
+      "triageDisposition": "generic_fp_insufficient",
+      "triageReason": "La mención a FP es genérica, equivalente o alternativa y no identifica por sí sola un ciclo concreto."
+    },
+    {
+      "offerId": "1285670648620",
+      "title": "TÉCNICOS MEDIOS EN CONTABILIDAD, EN GENERAL",
+      "province": "Valladolid",
+      "sourceName": "ECYL",
+      "originalUrl": "https://empleo.jcyl.es/web/jcyl/Empleo/es/Plantilla100Detalle/1284216458054/OfertasEmpleo/1285670648620/Empleo",
       "mentionScope": "description_only_fp",
       "reviewedQualificationLabels": [],
       "candidateProgramKeys": [],
@@ -134,6 +173,19 @@
       "triageReason": "La oferta contiene una familia, especialidad o titulación FP concreta que requiere validar el ciclo y la frontera ocupacional antes de publicarse."
     },
     {
+      "offerId": "1285670667250",
+      "title": "Administrativo/a recepcionista para Valladolid",
+      "province": "Valladolid",
+      "sourceName": "Internet / Prensa",
+      "originalUrl": "https://empleo.jcyl.es/web/jcyl/Empleo/es/Plantilla100Detalle/1284216458054/OfertasEmpleo/1285670667250/Empleo",
+      "mentionScope": "requirement_generic_fp",
+      "reviewedQualificationLabels": [],
+      "candidateProgramKeys": [],
+      "requirementQuotes": ["FP Grado Medio."],
+      "triageDisposition": "generic_fp_insufficient",
+      "triageReason": "La mención a FP es genérica, equivalente o alternativa y no identifica por sí sola un ciclo concreto."
+    },
+    {
       "offerId": "1285669341562",
       "title": "Auxiliar de Biblioteca para Ayto. de Santovenia de Pisuerga (Valladolid)",
       "province": "Valladolid",
@@ -149,15 +201,17 @@
       "triageReason": "La mención a FP es genérica, equivalente o alternativa y no identifica por sí sola un ciclo concreto."
     },
     {
-      "offerId": "1285669062388",
-      "title": "Chapista Soldador/a para Valladolid",
-      "province": "Valladolid",
+      "offerId": "1285670666175",
+      "title": "Controller administrativo/a para Burgos",
+      "province": "Burgos",
       "sourceName": "Internet / Prensa",
-      "originalUrl": "https://empleo.jcyl.es/web/jcyl/Empleo/es/Plantilla100Detalle/1284216458054/OfertasEmpleo/1285669062388/Empleo",
+      "originalUrl": "https://empleo.jcyl.es/web/jcyl/Empleo/es/Plantilla100Detalle/1284216458054/OfertasEmpleo/1285670666175/Empleo",
       "mentionScope": "requirement_generic_fp",
       "reviewedQualificationLabels": [],
       "candidateProgramKeys": [],
-      "requirementQuotes": ["Formación: FP Grado Medio."],
+      "requirementQuotes": [
+        "Estudios mínimos: Formación Profesional Grado Superior. Formación Profesional en Administración y Finanzas, Gestión Administrativo/a o similar."
+      ],
       "triageDisposition": "specific_cycle_evidence_review",
       "triageReason": "La oferta contiene una familia, especialidad o titulación FP concreta que requiere validar el ciclo y la frontera ocupacional antes de publicarse."
     },
@@ -308,16 +362,16 @@
       "triageReason": "La mención a FP es genérica, equivalente o alternativa y no identifica por sí sola un ciclo concreto."
     },
     {
-      "offerId": "1285667274780",
-      "title": "Técnico/a de mantenimiento industrial para Venta de Baños (Palencia)",
-      "province": "Palencia",
+      "offerId": "1285670667530",
+      "title": "Operario/a de montaje mecánico para Burgos",
+      "province": "Burgos",
       "sourceName": "Internet / Prensa",
-      "originalUrl": "https://empleo.jcyl.es/web/jcyl/Empleo/es/Plantilla100Detalle/1284216458054/OfertasEmpleo/1285667274780/Empleo",
+      "originalUrl": "https://empleo.jcyl.es/web/jcyl/Empleo/es/Plantilla100Detalle/1284216458054/OfertasEmpleo/1285670667530/Empleo",
       "mentionScope": "requirement_generic_fp",
       "reviewedQualificationLabels": [],
       "candidateProgramKeys": [],
       "requirementQuotes": [
-        "FP Superior en Electromecánica o rama técnica (formación mínima exigible)."
+        "Estudios mínimos Formación Profesional Grado Medi"
       ],
       "triageDisposition": "specific_cycle_evidence_review",
       "triageReason": "La oferta contiene una familia, especialidad o titulación FP concreta que requiere validar el ciclo y la frontera ocupacional antes de publicarse."

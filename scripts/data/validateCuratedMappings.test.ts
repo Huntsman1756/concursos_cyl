@@ -329,6 +329,13 @@ const programs: TrainingProgram[] = [
     familyName: "Edificación y Obra Civil",
   },
   {
+    programKey: "IMP02S",
+    programTitle: "Estilismo y Dirección de Peluquería",
+    level: "higher",
+    familyCode: "IMP",
+    familyName: "Imagen Personal",
+  },
+  {
     programKey: "FME02M",
     programTitle: "Soldadura y Calderería",
     level: "intermediate",
@@ -1114,6 +1121,7 @@ describe("curated occupation mappings", () => {
       MAM01M: 2,
       SAN02M: 1,
       IMP02M: 2,
+      IMP02S: 1,
       ADG02S: 4,
       ADG02SD: 4,
       IFC01M: 3,
