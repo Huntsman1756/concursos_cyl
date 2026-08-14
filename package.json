@@ -15,7 +15,8 @@
     "test:e2e": "playwright test",
     "lint": "eslint .",
     "format:check": "prettier --check .",
-    "data:build": "tsx scripts/data/buildSnapshots.ts"
+    "data:build": "tsx scripts/data/buildSnapshots.ts",
+    "licenses:check": "tsx scripts/checkLicenses.ts"
   },
   "repository": {
     "type": "git",
