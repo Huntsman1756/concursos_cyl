@@ -364,6 +364,13 @@ const programs: TrainingProgram[] = [
     familyName: "Fabricación Mecánica",
   },
   {
+    programKey: "FME01S",
+    programTitle: "Programación de la Producción en Fabricación Mecánica",
+    level: "higher",
+    familyCode: "FME",
+    familyName: "Fabricación Mecánica",
+  },
+  {
     programKey: "AFD02S",
     programTitle: "Acondicionamiento Físico",
     level: "higher",
@@ -1157,6 +1164,7 @@ describe("curated occupation mappings", () => {
       COM04S: 3,
       COM04SD: 3,
       FME01B: 2,
+      FME01S: 1,
       AFD02S: 1,
       AFD02SD: 1,
       SAN07S: 1,
