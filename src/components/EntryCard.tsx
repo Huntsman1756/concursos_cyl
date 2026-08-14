@@ -14,10 +14,10 @@ export function EntryCard({ title, outcome, to, icon }: EntryCardProps) {
       <span className="entry-card__icon">
         <Icon name={icon} />
       </span>
-      <span>
+      <div>
         <h2>{title}</h2>
         <p>{outcome}</p>
-      </span>
+      </div>
       <span className="entry-card__cta">
         Empezar <Icon name="arrow-right" />
       </span>

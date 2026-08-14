@@ -1,6 +1,47 @@
+import { useEffect, useState } from "react";
+import {
+  GeneratedManifestSchema,
+  type GeneratedManifest,
+} from "../../../data/schemas/generated";
 import { EntryCard } from "../../components/EntryCard";
+import {
+  loadGeneratedResource,
+  type GeneratedDataError,
+} from "../../data/generatedDataClient";
+
+function formatDate(value: string): string {
+  return new Intl.DateTimeFormat("es-ES", {
+    dateStyle: "medium",
+    timeZone: "UTC",
+  }).format(new Date(value));
+}
 
 export function HomePage() {
+  const [manifest, setManifest] = useState<GeneratedManifest | null>(null);
+  const [manifestError, setManifestError] = useState<GeneratedDataError | null>(
+    null,
+  );
+
+  useEffect(() => {
+    let active = true;
+    void loadGeneratedResource(
+      "/data/v1/manifest.json",
+      GeneratedManifestSchema,
+    ).then(
+      (value) => {
+        if (active) setManifest(value);
+      },
+      (error: unknown) => {
+        if (active && error instanceof Error) {
+          setManifestError(error as GeneratedDataError);
+        }
+      },
+    );
+    return () => {
+      active = false;
+    };
+  }, []);
+
   return (
     <div className="home-page">
       <section className="home-page__intro" aria-labelledby="home-title">
@@ -37,6 +78,29 @@ export function HomePage() {
         <li>Sin nota opaca</li>
         <li>Datos con fecha</li>
       </ul>
+
+      <section
+        className="freshness"
+        aria-live="polite"
+        aria-label="Estado de los datos"
+      >
+        {manifest ? (
+          <>
+            <p>Datos actualizados: {formatDate(manifest.generatedAt)}</p>
+            {manifest.qualityStatus === "stale" ? (
+              <p role="status">
+                Estos datos necesitan revisión antes de usarse.
+              </p>
+            ) : null}
+          </>
+        ) : manifestError ? (
+          <p role="status">
+            No se pudo verificar la fecha de los datos. Revisa la metodología.
+          </p>
+        ) : (
+          <p>Comprobando la fecha de los datos…</p>
+        )}
+      </section>
     </div>
   );
 }
