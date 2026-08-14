@@ -94,8 +94,8 @@ try {
     $testName = 'Valid batch: exit 0 with all stories ready'
     Write-TestResult -Name $testName -Success ($exitCode -eq 0) -Detail "exitCode=$exitCode"
 
-    $testName = 'Valid batch: status is complete'
-    Write-TestResult -Name $testName -Success ($result.status -eq 'complete') -Detail "status=$($result.status)"
+    $testName = 'Valid batch: status awaits Frontier review'
+    Write-TestResult -Name $testName -Success ($result.status -eq 'awaiting-frontier-review') -Detail "status=$($result.status)"
 
     $testName = 'Valid batch: 3 stories ready'
     Write-TestResult -Name $testName -Success ($result.storiesReady -eq 3) -Detail "ready=$($result.storiesReady)"
@@ -383,8 +383,8 @@ try {
     $testName = 'Partial success: exit non-zero'
     Write-TestResult -Name $testName -Success ($partialExit -ne 0) -Detail "exit=$partialExit"
 
-    $testName = 'Partial success: status is partial'
-    Write-TestResult -Name $testName -Success ($partialResult.status -eq 'partial') -Detail "status=$($partialResult.status)"
+    $testName = 'Partial success: status still requires Frontier review'
+    Write-TestResult -Name $testName -Success ($partialResult.status -eq 'partial-awaiting-frontier-review') -Detail "status=$($partialResult.status)"
 
     $testName = 'Partial success: 1 story ready out of 2'
     Write-TestResult -Name $testName -Success ($partialResult.storiesReady -eq 1 -and $partialResult.storiesCompleted -eq 2) -Detail "ready=$($partialResult.storiesReady) completed=$($partialResult.storiesCompleted)"

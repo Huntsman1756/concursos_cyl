@@ -454,7 +454,13 @@ foreach ($collected in $storyResults) {
     }
 }
 
-$finalStatus = if ($awaitingReview -eq $stories.Count) { 'complete' } else { 'partial' }
+$finalStatus = if ($awaitingReview -eq $stories.Count) {
+    'awaiting-frontier-review'
+} elseif ($awaitingReview -gt 0) {
+    'partial-awaiting-frontier-review'
+} else {
+    'blocked'
+}
 
 $batchResult = [ordered]@{
     schemaVersion = 1

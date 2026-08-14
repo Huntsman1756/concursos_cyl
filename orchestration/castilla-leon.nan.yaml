@@ -20,6 +20,8 @@ delegationProvenance:
     syntheticShakedownPassed: false
     providerAttributionShakedownPassed: true
     maxConcurrentProviderResponsesVerified: 5
+    providerAttributionBatchShakedownPassed: true
+    concurrentBatchWorkersVerified: 2
     restartRecoveryPassed: false
     ciVerificationConfigured: false
   trustBoundary:

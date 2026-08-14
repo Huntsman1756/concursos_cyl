@@ -822,6 +822,8 @@ try {
             Assert-True ($yamlText -match 'syntheticShakedownPassed:\s*false') '18ad12: YAML records the pending signed shakedown'
             Assert-True ($yamlText -match 'providerAttributionShakedownPassed:\s*true') '18ad12a: YAML records provider attribution shakedown'
             Assert-True ($yamlText -match 'maxConcurrentProviderResponsesVerified:\s*5') '18ad12b: YAML records five verified concurrent responses'
+            Assert-True ($yamlText -match 'providerAttributionBatchShakedownPassed:\s*true') '18ad12c: YAML records real provider-attributed batch shakedown'
+            Assert-True ($yamlText -match 'concurrentBatchWorkersVerified:\s*2') '18ad12d: YAML records two concurrent batch workers'
             Assert-True ($yamlText -notmatch 'BEGIN (?:EC |OPENSSH |RSA |DSA )?PRIVATE KEY') '18ad13: YAML contains no private signing key'
             Assert-True ($yamlText -match 'batchExecutor:\s*\r?\n\s+enabled:\s*true') '18ad14: YAML enables bounded batch executor'
             Assert-True ($yamlText -match 'maxConcurrency:\s*5') '18ad15: YAML caps batch concurrency at five'

@@ -438,6 +438,14 @@ observar el exceso y la deja en `blocked-token-budget`; un timeout queda en
 un pequeño sobrepaso correspondiente al paso en curso, pero no una trayectoria
 completa sin control.
 
+El 14 de agosto de 2026 se ejecutó además el primer lote real con dos worktrees
+concurrentes. Qwen 3.6 reportó 15.746 tokens y DeepSeek V4 Flash 27.133, para un
+total de 42.879 tokens observado en respuestas NAN 2xx. Ambos workers respetaron
+sus rutas y produjeron parche y telemetría con hash. Esto cualifica el transporte,
+la concurrencia y la atribución del lote, no sus cambios: el parche Qwen fue
+rechazado en revisión por un defecto de codificación y ninguno de los dos
+artefactos de prueba se incorporó al producto.
+
 ## Límites y políticas
 
 ### Lo que el trabajador NO hace
