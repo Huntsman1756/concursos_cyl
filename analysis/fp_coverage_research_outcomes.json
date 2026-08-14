@@ -120,6 +120,36 @@
       "proposalPath": "analysis/fp_coverage_batch_parallel_4/proposals/MSP34.md",
       "frontierReviewPath": "analysis/fp_coverage_batch_parallel_4/frontier-review.md",
       "note": "No publishable match found in the current approved occupation catalog for risk prevention, preventive coordination or occupational safety and health."
+    },
+    {
+      "baseProgramKey": "IMS05S",
+      "status": "reviewed-no-publishable-match",
+      "reviewedAt": "2026-08-14",
+      "occupationCatalogSha256": "f77079a15d7246c04b44889c733fda7fc9bade892c9d78c79607fcb1c3e21e90",
+      "sourcePath": "analysis/fp_coverage_batch_parallel_5/sources/IMS05S.txt",
+      "proposalPath": "analysis/fp_coverage_batch_parallel_5/proposals/IMS05S.md",
+      "frontierReviewPath": "analysis/fp_coverage_batch_parallel_5/frontier-review.md",
+      "note": "No publishable match found in the current approved occupation catalog. The source describes photographic capture and video roles whose CNO-11 approved codes cover only web/multimedia development, leaving a cautious gap for dedicated camera and photography occupations."
+    },
+    {
+      "baseProgramKey": "TCP01M",
+      "status": "reviewed-no-publishable-match",
+      "reviewedAt": "2026-08-14",
+      "occupationCatalogSha256": "f77079a15d7246c04b44889c733fda7fc9bade892c9d78c79607fcb1c3e21e90",
+      "sourcePath": "analysis/fp_coverage_batch_parallel_5/sources/TCP01M.txt",
+      "proposalPath": "analysis/fp_coverage_batch_parallel_5/proposals/TCP01M.md",
+      "frontierReviewPath": "analysis/fp_coverage_batch_parallel_5/frontier-review.md",
+      "note": "No publishable match found in the current approved occupation catalog. The textile and fashion sector lacks specific CNO-11 epigraphs; the generic assembler code 8209 does not preserve the sector qualification and a cautious gap is recorded for tailored, cut and industrial sewing roles."
+    },
+    {
+      "baseProgramKey": "ELE05E",
+      "status": "reviewed-no-publishable-match",
+      "reviewedAt": "2026-08-14",
+      "occupationCatalogSha256": "f77079a15d7246c04b44889c733fda7fc9bade892c9d78c79607fcb1c3e21e90",
+      "sourcePath": "analysis/fp_coverage_batch_parallel_5/sources/ELE05E.txt",
+      "proposalPath": "analysis/fp_coverage_batch_parallel_5/proposals/ELE05E.md",
+      "frontierReviewPath": "analysis/fp_coverage_batch_parallel_5/frontier-review.md",
+      "note": "No publishable match found in the current approved occupation catalog. The source concerns collaborative robotics — programming, integration, deployment and supervision of robotic systems — and the approved catalog lacks any robotics-specific entry; cautious notes record that forcing generic automation or electrician codes would violate the contract prohibition on substituting general-purpose categories."
     }
   ]
 }

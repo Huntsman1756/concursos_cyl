@@ -29,6 +29,9 @@ const EXPECTED_KEYS = [
   "IFC01E",
   "IMS02S",
   "MSP34",
+  "IMS05S",
+  "TCP01M",
+  "ELE05E",
 ] as const;
 
 const EXPECTED_HASH =
@@ -53,21 +56,21 @@ describe("fp-coverage-research-outcomes.json", () => {
     ).toThrow();
   });
 
-  it("contains exactly the twelve expected baseProgramKey values", () => {
+  it("contains exactly the fifteen expected baseProgramKey values", () => {
     const keys = document.outcomes.map(
       (entry: { baseProgramKey: string }) => entry.baseProgramKey,
     );
-    expect(keys).toHaveLength(12);
+    expect(keys).toHaveLength(15);
     expect(keys).toEqual([...EXPECTED_KEYS]);
   });
 
-  it("assigns three outcomes to batch 2 (2026-08-13) and nine to batch 4 (2026-08-14)", () => {
+  it("assigns three outcomes to batch 2 (2026-08-13) and twelve to batch 5 (2026-08-14)", () => {
     const dateMap = new Map<string, number>();
     for (const entry of document.outcomes) {
       dateMap.set(entry.reviewedAt, (dateMap.get(entry.reviewedAt) ?? 0) + 1);
     }
     expect(dateMap.get("2026-08-13")).toBe(3);
-    expect(dateMap.get("2026-08-14")).toBe(9);
+    expect(dateMap.get("2026-08-14")).toBe(12);
     expect(dateMap.size).toBe(2);
   });
 
