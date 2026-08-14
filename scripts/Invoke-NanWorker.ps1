@@ -73,8 +73,8 @@ $budgetProfiles = @{
     research = 500000
     extended = 900000
 }
-if ($MaxObservedTokens -ne 0 -and ($MaxObservedTokens -lt 1000 -or $MaxObservedTokens -gt 1000000)) {
-    throw 'MaxObservedTokens must be 0 (use BudgetProfile) or between 1000 and 1000000.'
+if ($MaxObservedTokens -ne 0 -and ($MaxObservedTokens -lt 1000 -or $MaxObservedTokens -gt 2000000)) {
+    throw 'MaxObservedTokens must be 0 (use BudgetProfile) or between 1000 and 2000000.'
 }
 $effectiveMaxObservedTokens = if ($MaxObservedTokens -ne 0) {
     $MaxObservedTokens

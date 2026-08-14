@@ -233,7 +233,7 @@ try {
         Assert-Equal $budgetOverrideTelemetry.launch.budgetSource 'override' '2j: telemetry records override source'
         Assert-Equal $budgetOverrideTelemetry.launch.maxObservedTokens 175000 '2k: explicit override wins over profile'
 
-        $r = Invoke-WorkerDirect -WorkerParameters (New-ValidCodeContract -Objective 'invalid-budget-override' -MaxObservedTokens 1000001 -DryRun -TestMode)
+        $r = Invoke-WorkerDirect -WorkerParameters (New-ValidCodeContract -Objective 'invalid-budget-override' -MaxObservedTokens 2000001 -DryRun -TestMode)
         Assert-True ($r.ExitCode -ne 0) '2k: out-of-range budget override fails closed'
         Assert-Contains $r.Output 'MaxObservedTokens' '2k: invalid override error names MaxObservedTokens'
 
