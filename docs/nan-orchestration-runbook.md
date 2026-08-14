@@ -126,7 +126,7 @@ Antes de solicitar `ACCEPT` a Codex, verificar:
 
 Hasta que el shakedown firmado no se ejecute y se confirme, la verificación de procedencia permanece en `DISABLED`.
 
-## 9. Perfiles de presupuesto
+## 10. Perfiles de presupuesto
 
 | Perfil     | Límite observado |
 | ---------- | ---------------- |
@@ -137,7 +137,16 @@ Hasta que el shakedown firmado no se ejecute y se confirme, la verificación de 
 
 Se puede forzar un override con `-MaxObservedTokens <n>` (entre 1 k y 1 M); queda marcado como `override` en telemetría. El valor seguro por defecto es `small`.
 
-## 10. Referencias rápidas
+## 9. Diagnóstico rápido
+
+Al inspeccionar un intento fallido, sigue estos cuatro pasos:
+
+1. Lee `status` y `terminalErrors` del JSONL de telemetría para identificar el estado y los errores terminales.
+2. Comprueba `retryCount` y los códigos NAN retornados; descarta reintentos si el código no es `429` o `5xx`.
+3. Revisa `validationDiagnostics` para confirmar si la validación falló, se bloqueó antes o no se ejecutó.
+4. Crea un **nuevo contrato acotado** (nuevo SHA, nuevas rutas o criterios ajustados) y **no reutilices el worktree sucio**.
+
+## 11. Referencias rápidas
 
 | Script                                   | Función                                           |
 | ---------------------------------------- | ------------------------------------------------- |
