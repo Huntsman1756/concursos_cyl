@@ -246,12 +246,20 @@ try {
         $r = Invoke-WorkerDirect -WorkerParameters $reasoning
         Assert-True ($r.ExitCode -eq 0) '2n: reasoning profile DryRun exits 0'
         Assert-Contains $r.Output 'deepseek-v4-flash' '2o: reasoning profile selects DeepSeek'
+        Assert-Contains $r.Output 'nan-reasoning-code' '2o1: reasoning profile selects its bounded agent'
 
         $longContext = New-ValidCodeContract -Objective 'long-context-route' -DryRun -TestMode
         $longContext.ModelProfile = 'long-context'
         $r = Invoke-WorkerDirect -WorkerParameters $longContext
         Assert-True ($r.ExitCode -eq 0) '2p: long-context profile DryRun exits 0'
         Assert-Contains $r.Output 'mimo-v2.5' '2q: long-context profile selects Mimo'
+        Assert-Contains $r.Output 'nan-long-context-code' '2q1: long-context profile selects its bounded agent'
+
+        $gemmaCode = New-ValidCodeContract -Objective 'gemma-code-rejected' -DryRun -TestMode
+        $gemmaCode.FallbackModels = @('nan/gemma4')
+        $r = Invoke-WorkerDirect -WorkerParameters $gemmaCode
+        Assert-True ($r.ExitCode -ne 0) '2q2: Gemma code fallback fails closed'
+        Assert-Contains $r.Output 'bulletin-only' '2q3: Gemma rejection explains the task boundary'
 
         $premium = New-ValidCodeContract -Objective 'premium-rejected' -DryRun -TestMode
         $premium.FallbackModels = @('nan/glm5.2')
@@ -306,6 +314,7 @@ try {
         if ($telFile) {
             $tel = Get-Content -LiteralPath $telFile -Raw | ConvertFrom-Json
             Assert-True ($tel.selectedModel -eq 'nan/mimo-v2.5') '4b: selected model is fallback mimo-v2.5'
+            Assert-True ($tel.selectedAgent -eq 'nan-long-context-code') '4b1: Mimo fallback uses long-context code agent'
             Assert-True ($tel.attempts[0].model -eq 'nan/qwen3.6') '4c: attempt 0 is qwen3.6'
             Assert-True ($tel.attempts[3].model -eq 'nan/mimo-v2.5') '4d: attempt 3 is fallback mimo'
         }
@@ -840,6 +849,8 @@ try {
             Assert-True ($workerText -match 'blocked-unverified-provider') '18af1: worker fails closed without provider response evidence'
             Assert-True ($workerText -match 'XDG_DATA_HOME') '18af2: worker isolates OpenCode state per execution'
             Assert-True (Test-Path -LiteralPath (Join-Path $repoRoot 'scripts\orchestration\nan-audit-proxy.mjs')) '18af3: provider response audit proxy exists'
+            Assert-True (Test-Path -LiteralPath (Join-Path $repoRoot '.opencode\agents\nan-reasoning-code.md')) '18af4: DeepSeek bounded code agent exists'
+            Assert-True (Test-Path -LiteralPath (Join-Path $repoRoot '.opencode\agents\nan-long-context-code.md')) '18af5: MiMo bounded code agent exists'
             Assert-True (-not (Test-Path -LiteralPath (Join-Path $repoRoot '.opencode\commands\implementar.md'))) '18ag: direct code command is absent'
             Assert-True (-not (Test-Path -LiteralPath (Join-Path $repoRoot '.opencode\commands\boletin.md'))) '18ah: direct bulletin command is absent'
 
