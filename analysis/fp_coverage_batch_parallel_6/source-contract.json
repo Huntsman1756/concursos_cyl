@@ -1,0 +1,205 @@
+{
+  "schemaVersion": 1,
+  "stories": [
+    {
+      "id": "fme03s-source",
+      "objective": "Usa exclusivamente los registros con programKey FME03S de data/curated/professional-profiles.json. Crea analysis/fp_coverage_batch_parallel_6/sources/FME03S.txt con Program Key, Program Title, Family Code, Family Name, Official Title, Level, Source System, todas las Source URL distintas en orden de primera aparición y una sección Source Quotes numerada con las 7 sourceQuote distintas en orden de primera aparición. Copia cada valor literalmente en UTF-8; no investigues ni inventes contenido.",
+      "allowedPaths": [
+        "analysis/fp_coverage_batch_parallel_6/sources/FME03S.txt"
+      ],
+      "validationCommands": [
+        "powershell -NoProfile -Command \"if (-not (Select-String -LiteralPath 'analysis/fp_coverage_batch_parallel_6/sources/FME03S.txt' -Pattern 'Program Key: FME03S' -Quiet)) { exit 1 }\""
+      ],
+      "frontierPlan": "Extracción mecánica y deduplicación estable de evidencia TodoFP ya incorporada en el repositorio.",
+      "acceptanceCriteria": [
+        "7 citas exactas y únicas",
+        "metadatos exactos",
+        "solo el archivo permitido",
+        "UTF-8 legible"
+      ],
+      "modelProfile": "mechanical",
+      "budgetProfile": "small",
+      "maxExecutionSeconds": 900
+    },
+    {
+      "id": "hot02s-source",
+      "objective": "Usa exclusivamente los registros con programKey HOT02S de data/curated/professional-profiles.json. Crea analysis/fp_coverage_batch_parallel_6/sources/HOT02S.txt con Program Key, Program Title, Family Code, Family Name, Official Title, Level, Source System, todas las Source URL distintas en orden de primera aparición y una sección Source Quotes numerada con las 8 sourceQuote distintas en orden de primera aparición. Copia cada valor literalmente en UTF-8; no investigues ni inventes contenido. HOT02SD comparte esta evidencia, pero no lo incluyas en la extracción base.",
+      "allowedPaths": [
+        "analysis/fp_coverage_batch_parallel_6/sources/HOT02S.txt"
+      ],
+      "validationCommands": [
+        "powershell -NoProfile -Command \"if (-not (Select-String -LiteralPath 'analysis/fp_coverage_batch_parallel_6/sources/HOT02S.txt' -Pattern 'Program Key: HOT02S' -Quiet)) { exit 1 }\""
+      ],
+      "frontierPlan": "Extracción mecánica y deduplicación estable de evidencia TodoFP ya incorporada en el repositorio.",
+      "acceptanceCriteria": [
+        "8 citas exactas y únicas",
+        "metadatos exactos",
+        "solo el archivo permitido",
+        "UTF-8 legible"
+      ],
+      "modelProfile": "mechanical",
+      "budgetProfile": "small",
+      "maxExecutionSeconds": 900
+    },
+    {
+      "id": "ims03s-source",
+      "objective": "Usa exclusivamente los registros con programKey IMS03S de data/curated/professional-profiles.json. Crea analysis/fp_coverage_batch_parallel_6/sources/IMS03S.txt con Program Key, Program Title, Family Code, Family Name, Official Title, Level, Source System, todas las Source URL distintas en orden de primera aparición y una sección Source Quotes numerada con las 9 sourceQuote distintas en orden de primera aparición. Copia cada valor literalmente en UTF-8; no investigues ni inventes contenido.",
+      "allowedPaths": [
+        "analysis/fp_coverage_batch_parallel_6/sources/IMS03S.txt"
+      ],
+      "validationCommands": [
+        "powershell -NoProfile -Command \"if (-not (Select-String -LiteralPath 'analysis/fp_coverage_batch_parallel_6/sources/IMS03S.txt' -Pattern 'Program Key: IMS03S' -Quiet)) { exit 1 }\""
+      ],
+      "frontierPlan": "Extracción mecánica y deduplicación estable de evidencia TodoFP ya incorporada en el repositorio.",
+      "acceptanceCriteria": [
+        "9 citas exactas y únicas",
+        "metadatos exactos",
+        "solo el archivo permitido",
+        "UTF-8 legible"
+      ],
+      "modelProfile": "mechanical",
+      "budgetProfile": "small",
+      "maxExecutionSeconds": 900
+    },
+    {
+      "id": "ssc02s-source",
+      "objective": "Usa exclusivamente los registros con programKey SSC02S de data/curated/professional-profiles.json. Crea analysis/fp_coverage_batch_parallel_6/sources/SSC02S.txt con Program Key, Program Title, Family Code, Family Name, Official Title, Level, Source System, todas las Source URL distintas en orden de primera aparición y una sección Source Quotes numerada con las 12 sourceQuote distintas en orden de primera aparición. Copia cada valor literalmente en UTF-8; no investigues ni inventes contenido.",
+      "allowedPaths": [
+        "analysis/fp_coverage_batch_parallel_6/sources/SSC02S.txt"
+      ],
+      "validationCommands": [
+        "powershell -NoProfile -Command \"if (-not (Select-String -LiteralPath 'analysis/fp_coverage_batch_parallel_6/sources/SSC02S.txt' -Pattern 'Program Key: SSC02S' -Quiet)) { exit 1 }\""
+      ],
+      "frontierPlan": "Extracción mecánica y deduplicación estable de evidencia TodoFP ya incorporada en el repositorio.",
+      "acceptanceCriteria": [
+        "12 citas exactas y únicas",
+        "metadatos exactos",
+        "solo el archivo permitido",
+        "UTF-8 legible"
+      ],
+      "modelProfile": "mechanical",
+      "budgetProfile": "small",
+      "maxExecutionSeconds": 900
+    },
+    {
+      "id": "ina01s-source",
+      "objective": "Usa exclusivamente los registros con programKey INA01S de data/curated/professional-profiles.json. Crea analysis/fp_coverage_batch_parallel_6/sources/INA01S.txt con Program Key, Program Title, Family Code, Family Name, Official Title, Level, Source System, todas las Source URL distintas en orden de primera aparición y una sección Source Quotes numerada con las 7 sourceQuote distintas en orden de primera aparición. Copia cada valor literalmente en UTF-8; no investigues ni inventes contenido. INA01SD comparte esta evidencia, pero no lo incluyas en la extracción base.",
+      "allowedPaths": [
+        "analysis/fp_coverage_batch_parallel_6/sources/INA01S.txt"
+      ],
+      "validationCommands": [
+        "powershell -NoProfile -Command \"if (-not (Select-String -LiteralPath 'analysis/fp_coverage_batch_parallel_6/sources/INA01S.txt' -Pattern 'Program Key: INA01S' -Quiet)) { exit 1 }\""
+      ],
+      "frontierPlan": "Extracción mecánica y deduplicación estable de evidencia TodoFP ya incorporada en el repositorio.",
+      "acceptanceCriteria": [
+        "7 citas exactas y únicas",
+        "metadatos exactos",
+        "solo el archivo permitido",
+        "UTF-8 legible"
+      ],
+      "modelProfile": "mechanical",
+      "budgetProfile": "small",
+      "maxExecutionSeconds": 900
+    },
+    {
+      "id": "aga02m-source",
+      "objective": "Usa exclusivamente los registros con programKey AGA02M de data/curated/professional-profiles.json. Crea analysis/fp_coverage_batch_parallel_6/sources/AGA02M.txt con Program Key, Program Title, Family Code, Family Name, Official Title, Level, Source System, todas las Source URL distintas en orden de primera aparición y una sección Source Quotes numerada con las 10 sourceQuote distintas en orden de primera aparición. Copia cada valor literalmente en UTF-8; no investigues ni inventes contenido.",
+      "allowedPaths": [
+        "analysis/fp_coverage_batch_parallel_6/sources/AGA02M.txt"
+      ],
+      "validationCommands": [
+        "powershell -NoProfile -Command \"if (-not (Select-String -LiteralPath 'analysis/fp_coverage_batch_parallel_6/sources/AGA02M.txt' -Pattern 'Program Key: AGA02M' -Quiet)) { exit 1 }\""
+      ],
+      "frontierPlan": "Extracción mecánica y deduplicación estable de evidencia TodoFP ya incorporada en el repositorio.",
+      "acceptanceCriteria": [
+        "10 citas exactas y únicas",
+        "metadatos exactos",
+        "solo el archivo permitido",
+        "UTF-8 legible"
+      ],
+      "modelProfile": "mechanical",
+      "budgetProfile": "small",
+      "maxExecutionSeconds": 900
+    },
+    {
+      "id": "aga03b-source",
+      "objective": "Usa exclusivamente los registros con programKey AGA03B de data/curated/professional-profiles.json. Crea analysis/fp_coverage_batch_parallel_6/sources/AGA03B.txt con Program Key, Program Title, Family Code, Family Name, Official Title, Level, Source System, todas las Source URL distintas en orden de primera aparición y una sección Source Quotes numerada con las 11 sourceQuote distintas en orden de primera aparición. Copia cada valor literalmente en UTF-8; no investigues ni inventes contenido.",
+      "allowedPaths": [
+        "analysis/fp_coverage_batch_parallel_6/sources/AGA03B.txt"
+      ],
+      "validationCommands": [
+        "powershell -NoProfile -Command \"if (-not (Select-String -LiteralPath 'analysis/fp_coverage_batch_parallel_6/sources/AGA03B.txt' -Pattern 'Program Key: AGA03B' -Quiet)) { exit 1 }\""
+      ],
+      "frontierPlan": "Extracción mecánica y deduplicación estable de evidencia TodoFP ya incorporada en el repositorio.",
+      "acceptanceCriteria": [
+        "11 citas exactas y únicas",
+        "metadatos exactos",
+        "solo el archivo permitido",
+        "UTF-8 legible"
+      ],
+      "modelProfile": "mechanical",
+      "budgetProfile": "small",
+      "maxExecutionSeconds": 900
+    },
+    {
+      "id": "com02e-source",
+      "objective": "Usa exclusivamente los registros con programKey COM02E de data/curated/professional-profiles.json. Crea analysis/fp_coverage_batch_parallel_6/sources/COM02E.txt con Program Key, Program Title, Family Code, Family Name, Official Title, Level, Source System, todas las Source URL distintas en orden de primera aparición y una sección Source Quotes numerada con las 7 sourceQuote distintas en orden de primera aparición. Copia cada valor literalmente en UTF-8; no investigues ni inventes contenido.",
+      "allowedPaths": [
+        "analysis/fp_coverage_batch_parallel_6/sources/COM02E.txt"
+      ],
+      "validationCommands": [
+        "powershell -NoProfile -Command \"if (-not (Select-String -LiteralPath 'analysis/fp_coverage_batch_parallel_6/sources/COM02E.txt' -Pattern 'Program Key: COM02E' -Quiet)) { exit 1 }\""
+      ],
+      "frontierPlan": "Extracción mecánica y deduplicación estable de evidencia TodoFP ya incorporada en el repositorio.",
+      "acceptanceCriteria": [
+        "7 citas exactas y únicas",
+        "metadatos exactos",
+        "solo el archivo permitido",
+        "UTF-8 legible"
+      ],
+      "modelProfile": "mechanical",
+      "budgetProfile": "small",
+      "maxExecutionSeconds": 900
+    },
+    {
+      "id": "ele02b-source",
+      "objective": "Usa exclusivamente los registros con programKey ELE02B de data/curated/professional-profiles.json. Crea analysis/fp_coverage_batch_parallel_6/sources/ELE02B.txt con Program Key, Program Title, Family Code, Family Name, Official Title, Level, Source System, las 2 Source URL distintas en orden de primera aparición y una sección Source Quotes numerada con las 12 sourceQuote distintas en orden de primera aparición. Copia cada valor literalmente en UTF-8; no colapses variantes textuales distintas, no investigues ni inventes contenido.",
+      "allowedPaths": [
+        "analysis/fp_coverage_batch_parallel_6/sources/ELE02B.txt"
+      ],
+      "validationCommands": [
+        "powershell -NoProfile -Command \"if (-not (Select-String -LiteralPath 'analysis/fp_coverage_batch_parallel_6/sources/ELE02B.txt' -Pattern 'Program Key: ELE02B' -Quiet)) { exit 1 }\""
+      ],
+      "frontierPlan": "Extracción mecánica y deduplicación estable de evidencia TodoFP ya incorporada en el repositorio, preservando dos procedencias oficiales.",
+      "acceptanceCriteria": [
+        "12 citas exactas y únicas",
+        "2 URL exactas",
+        "solo el archivo permitido",
+        "UTF-8 legible"
+      ],
+      "modelProfile": "mechanical",
+      "budgetProfile": "small",
+      "maxExecutionSeconds": 900
+    },
+    {
+      "id": "ima01m-source",
+      "objective": "Usa exclusivamente los registros con programKey IMA01M de data/curated/professional-profiles.json. Crea analysis/fp_coverage_batch_parallel_6/sources/IMA01M.txt con Program Key, Program Title, Family Code, Family Name, Official Title, Level, Source System, todas las Source URL distintas en orden de primera aparición y una sección Source Quotes numerada con las 5 sourceQuote distintas en orden de primera aparición. Copia cada valor literalmente en UTF-8; no investigues ni inventes contenido.",
+      "allowedPaths": [
+        "analysis/fp_coverage_batch_parallel_6/sources/IMA01M.txt"
+      ],
+      "validationCommands": [
+        "powershell -NoProfile -Command \"if (-not (Select-String -LiteralPath 'analysis/fp_coverage_batch_parallel_6/sources/IMA01M.txt' -Pattern 'Program Key: IMA01M' -Quiet)) { exit 1 }\""
+      ],
+      "frontierPlan": "Extracción mecánica y deduplicación estable de evidencia TodoFP ya incorporada en el repositorio.",
+      "acceptanceCriteria": [
+        "5 citas exactas y únicas",
+        "metadatos exactos",
+        "solo el archivo permitido",
+        "UTF-8 legible"
+      ],
+      "modelProfile": "mechanical",
+      "budgetProfile": "small",
+      "maxExecutionSeconds": 900
+    }
+  ]
+}
