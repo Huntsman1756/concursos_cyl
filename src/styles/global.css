@@ -458,6 +458,61 @@ h1 {
   text-align: right;
 }
 
+.source-method-list {
+  display: grid;
+  gap: var(--space-4);
+}
+
+.source-method-card {
+  display: grid;
+  gap: var(--space-3);
+  padding: var(--space-4);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+}
+
+.source-method-card h2,
+.source-method-card p {
+  margin-bottom: 0;
+}
+
+.source-method-card p {
+  color: var(--color-text-muted);
+  line-height: 1.55;
+}
+
+.source-method-card strong {
+  color: var(--color-text);
+}
+
+.source-method-card a,
+.methodology-notes a {
+  color: var(--color-action);
+  font-weight: 700;
+}
+
+.source-method-card details {
+  padding-top: var(--space-3);
+  border-top: 1px solid var(--color-border);
+}
+
+.source-method-card summary {
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.methodology-notes {
+  display: grid;
+  gap: var(--space-3);
+}
+
+.methodology-notes ul {
+  display: grid;
+  gap: var(--space-2);
+  padding-left: var(--space-6);
+}
+
 #program-options button {
   width: 100%;
   padding: var(--space-2) var(--space-3);

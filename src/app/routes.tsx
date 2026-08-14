@@ -7,9 +7,12 @@ import { TrainingResultsPage } from "../features/training-first/TrainingResultsP
 import { OccupationSearchPage } from "../features/occupation-first/OccupationSearchPage";
 import { OccupationResultsPage } from "../features/occupation-first/OccupationResultsPage";
 import { CompareStudiesPage } from "../features/compare-studies/CompareStudiesPage";
+import { MethodologyPage } from "../features/methodology/MethodologyPage";
 import {
+  GeneratedManifestSchema,
   OutcomeIndicatorsSchema,
   TrainingProgramsSchema,
+  type GeneratedManifest,
   type OutcomeIndicator,
   type TrainingProgram,
 } from "../../data/schemas/generated";
@@ -139,14 +142,30 @@ function CompareStudiesRoute() {
   return <CompareStudiesPage data={data} />;
 }
 
-function EntryPlaceholder({ title }: { title: string }) {
-  return (
-    <div className="placeholder-page">
-      <Link to="/">Volver al inicio</Link>
-      <h1>{title}</h1>
-      <p>Esta ruta se completará con datos oficiales en la siguiente fase.</p>
-    </div>
-  );
+function MethodologyRoute() {
+  const [manifest, setManifest] = useState<GeneratedManifest | null>(null);
+  const [error, setError] = useState(false);
+  useEffect(() => {
+    let active = true;
+    void loadGeneratedResource(
+      "/data/v1/manifest.json",
+      GeneratedManifestSchema,
+    ).then(
+      (value) => {
+        if (active) setManifest(value);
+      },
+      () => {
+        if (active) setError(true);
+      },
+    );
+    return () => {
+      active = false;
+    };
+  }, []);
+  if (error)
+    return <p role="status">No se pudo cargar el manifiesto de datos.</p>;
+  if (!manifest) return <p role="status">Cargando metodología…</p>;
+  return <MethodologyPage manifest={manifest} />;
 }
 
 export function AppRoutes() {
@@ -165,10 +184,7 @@ export function AppRoutes() {
           element={<OccupationResultsRoute />}
         />
         <Route path="/comparar-estudios" element={<CompareStudiesRoute />} />
-        <Route
-          path="/metodologia"
-          element={<EntryPlaceholder title="Metodología" />}
-        />
+        <Route path="/metodologia" element={<MethodologyRoute />} />
         <Route path="*" element={<HomePage />} />
       </Routes>
     </AppShell>
