@@ -6,6 +6,14 @@ import { TrainingSearchPage } from "../features/training-first/TrainingSearchPag
 import { TrainingResultsPage } from "../features/training-first/TrainingResultsPage";
 import { OccupationSearchPage } from "../features/occupation-first/OccupationSearchPage";
 import { OccupationResultsPage } from "../features/occupation-first/OccupationResultsPage";
+import { CompareStudiesPage } from "../features/compare-studies/CompareStudiesPage";
+import {
+  OutcomeIndicatorsSchema,
+  TrainingProgramsSchema,
+  type OutcomeIndicator,
+  type TrainingProgram,
+} from "../../data/schemas/generated";
+import { loadGeneratedResource } from "../data/generatedDataClient";
 import {
   loadTrainingData,
   type TrainingFeatureData,
@@ -97,6 +105,40 @@ function OccupationResultsRoute() {
   return <OccupationResultsPage occupationId={occupationId} data={data} />;
 }
 
+function CompareStudiesRoute() {
+  const [data, setData] = useState<{
+    programs: TrainingProgram[];
+    indicators: OutcomeIndicator[];
+  } | null>(null);
+  const [error, setError] = useState(false);
+  useEffect(() => {
+    let active = true;
+    void Promise.all([
+      loadGeneratedResource("/data/v1/programs.json", TrainingProgramsSchema),
+      loadGeneratedResource(
+        "/data/v1/outcome-indicators.json",
+        OutcomeIndicatorsSchema,
+      ),
+    ]).then(
+      ([programs, indicators]) => {
+        if (active) setData({ programs, indicators });
+      },
+      () => {
+        if (active) setError(true);
+      },
+    );
+    return () => {
+      active = false;
+    };
+  }, []);
+  if (error)
+    return (
+      <p role="status">No se pudieron cargar los indicadores oficiales.</p>
+    );
+  if (!data) return <p role="status">Cargando indicadores oficiales…</p>;
+  return <CompareStudiesPage data={data} />;
+}
+
 function EntryPlaceholder({ title }: { title: string }) {
   return (
     <div className="placeholder-page">
@@ -122,10 +164,7 @@ export function AppRoutes() {
           path="/desde-ocupacion/:occupationId"
           element={<OccupationResultsRoute />}
         />
-        <Route
-          path="/comparar-estudios"
-          element={<EntryPlaceholder title="Comparar estudios" />}
-        />
+        <Route path="/comparar-estudios" element={<CompareStudiesRoute />} />
         <Route
           path="/metodologia"
           element={<EntryPlaceholder title="Metodología" />}
