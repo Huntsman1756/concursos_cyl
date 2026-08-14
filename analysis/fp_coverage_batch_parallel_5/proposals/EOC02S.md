@@ -85,3 +85,30 @@ Los delineantes (obra civil, servicios urbanos, topografía, carreteras, redes, 
 4. **No se equipararon con instalaciones hidráulicas.** El código 7221 (fontaneros) y 7223 (conductos en obra pública, además rechazado) corresponden a instalaciones hidráulicas, no a proyectos de infraestructura civil. Se excluyeron.
 
 5. **Riesgo principal del candidato 3129.** La etiqueta "Otros técnicos de las ingenierías" es un catch-all que incluye técnicos de múltiples ramas (eléctrica, mecánica, química, ambiental). La correspondencia funcional es real pero genérica: un reclutador o sistema de clasificación que use 3129 no distinguirá entre un delineante de carreteras y un técnico de laboratorio químico.
+
+---
+
+## Apéndice: Citas literales fuente verificadas (16 de 16)
+
+Las siguientes son las dieciséis citas literales de `sources/EOC02S.txt` reproducidas **verbatim** (mismo texto, misma puntuación, misma ortografía). Corresponen exactamente al orden del archivo fuente (1-16).
+
+| #   | Cita literal fuente (verbatim)                                           | Estado en propuesta                                    |
+| --- | ------------------------------------------------------------------------ | ------------------------------------------------------ |
+| 1   | `Aparatista.`                                                            | Ausente de candidato (sección "Sin candidato", fila 1) |
+| 2   | `Ayudante de jefa / jefe de oficina técnica.`                            | Ausente de candidato (sección "Sin candidato", fila 2) |
+| 3   | `Ayudante de planificador / planificadora.`                              | Ausente de candidato (sección "Sin candidato", fila 3) |
+| 4   | `Ayudante de técnica / técnico de control de costes.`                    | Ausente de candidato (sección "Sin candidato", fila 4) |
+| 5   | `Delineante de obra civil.`                                              | Candidato 3129 (sección "Citas cubiertas", fila 1)     |
+| 6   | `Delineante de servicios urbanos.`                                       | Candidato 3129 (sección "Citas cubiertas", fila 2)     |
+| 7   | `Delineante de topografía.`                                              | Candidato 3129 (sección "Citas cubiertas", fila 3)     |
+| 8   | `Delineante proyectista de carreteras.`                                  | Candidato 3129 (sección "Citas cubiertas", fila 4)     |
+| 9   | `Delineante proyectista de redes y sistemas de distribución de fluidos.` | Candidato 3129 (sección "Citas cubiertas", fila 5)     |
+| 10  | `Delineante proyectista de urbanización.`                                | Candidato 3129 (sección "Citas cubiertas", fila 6)     |
+| 11  | `Especialista en levantamiento de construcciones.`                       | Candidato 3129 (sección "Citas cubiertas", fila 7)     |
+| 12  | `Especialista en levantamiento de terrenos.`                             | Candidato 3129 (sección "Citas cubiertas", fila 8)     |
+| 13  | `Especialista en replanteos.`                                            | Candidato 3129 (sección "Citas cubiertas", fila 9)     |
+| 14  | `Maquetista de construcción.`                                            | Candidato 3129 (sección "Citas cubiertas", fila 10)    |
+| 15  | `Práctico en topografía.`                                                | Candidato 3129 (sección "Citas cubiertas", fila 11)    |
+| 16  | `Técnica / técnico de control documental.`                               | Ausente de candidato (sección "Sin candidato", fila 5) |
+
+**Cuenta:** 16 de 16 citas fuente presentes en la propuesta (11 en "Citas cubiertas" + 5 en "Sin candidato"). No se añade, ni elimina, ni altera ningún candidato ni decisión semántica. Esta tabla es una verificación de integridad de texto.
