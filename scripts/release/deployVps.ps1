@@ -7,8 +7,11 @@ param(
 
 $ErrorActionPreference = "Stop"
 
+# Calculate SHA once at the start
+$commit = (git rev-parse HEAD).Trim().ToLower()
+if ($commit -notmatch "^[0-9a-f]{40}$") { throw "Invalid commit SHA: $commit" }
+
 if ($ReleaseId -eq "") {
-  $commit = (git rev-parse --short=12 HEAD).Trim()
   $timestamp = [DateTime]::UtcNow.ToString("yyyyMMddHHmmss")
   $ReleaseId = "$timestamp-$commit"
 }
@@ -23,12 +26,32 @@ $archive = Join-Path ([System.IO.Path]::GetTempPath()) "salida-cyl-$ReleaseId.ta
 $remoteArchive = "/tmp/salida-cyl-$ReleaseId.tar.gz"
 $remoteRelease = "/srv/salida-cyl/releases/$ReleaseId"
 
+# Capture existing env vars to restore later
+$oldBase = $env:VITE_PUBLIC_BASE_PATH
+$oldSmokeCommit = $env:CADDY_SMOKE_EXPECTED_COMMIT
+$oldSmokeUrl = $env:CADDY_SMOKE_BASE_URL
+
 try {
   Push-Location $root
+  $gitStatus = git status --porcelain
+  if ($LASTEXITCODE -ne 0) { throw "git status failed." }
+  if ($gitStatus) { throw "Working directory is not clean. Commit or stash changes before deployment." }
+
   $env:VITE_PUBLIC_BASE_PATH = "/"
   npm ci
+  if ($LASTEXITCODE -ne 0) { throw "npm ci failed." }
   npm run build
   if ($LASTEXITCODE -ne 0) { throw "Production build failed." }
+
+  if (-not (Test-Path $dist)) { throw "Build output directory '$dist' not found." }
+
+  # Use relative script path and pass expected SHA
+  $scriptRelPath = Join-Path "scripts" "release" "writeVersionMetadata.ts"
+  $scriptFullPath = Join-Path $root $scriptRelPath
+  $tsxPath = Join-Path $root "node_modules\.bin\tsx.cmd"
+  if (-not (Test-Path $tsxPath)) { throw "tsx.cmd not found at $tsxPath" }
+  & $tsxPath "$scriptFullPath" "$dist" "$commit"
+  if ($LASTEXITCODE -ne 0) { throw "Failed to write version metadata." }
 
   tar -czf $archive -C $dist .
   if ($LASTEXITCODE -ne 0) { throw "Could not create release archive." }
@@ -50,6 +73,7 @@ systemctl reload caddy
 "@
   if ($LASTEXITCODE -ne 0) { throw "Remote activation failed." }
 
+  $env:CADDY_SMOKE_EXPECTED_COMMIT = $commit
   $env:CADDY_SMOKE_BASE_URL = $PublicUrl
   npm run release:caddy:verify
   if ($LASTEXITCODE -ne 0) { throw "Live deployment verification failed." }
@@ -58,4 +82,8 @@ systemctl reload caddy
 } finally {
   Pop-Location
   Remove-Item -LiteralPath $archive -Force -ErrorAction SilentlyContinue
+  # Restore original env values
+  $env:VITE_PUBLIC_BASE_PATH = $oldBase
+  $env:CADDY_SMOKE_EXPECTED_COMMIT = $oldSmokeCommit
+  $env:CADDY_SMOKE_BASE_URL = $oldSmokeUrl
 }

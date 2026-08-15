@@ -62,3 +62,12 @@ The deployment script does a clean dependency install, builds locally, uploads
 one release archive, switches the symlink atomically, retains the five newest
 releases, reloads Caddy and runs the same live SPA/header verifier used for the
 container. It never copies repository metadata or credentials to the server.
+
+## Operational version identification
+
+Identifica operativamente el SHA, pero en BOUNDED_LOCAL no es evidencia firmada ni prueba criptográfica de procedencia.
+
+```sh
+curl https://salida-cyl.157-90-22-40.sslip.io/version.json
+ssh mcpspain-official-sources-vps "cat /srv/salida-cyl/current/version.json"
+```

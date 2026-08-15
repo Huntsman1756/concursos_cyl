@@ -29,7 +29,10 @@ describe("VPS deployment", () => {
       "utf8",
     );
 
-    expect(deployScript).toContain('$env:VITE_PUBLIC_BASE_PATH = "/"');
+    expect(deployScript).toContain("git status --porcelain");
+    expect(deployScript).toContain(
+      'if ($LASTEXITCODE -ne 0) { throw "git status failed." }',
+    );
     expect(deployScript).toContain("npm ci");
     expect(deployScript).toContain("mv -Tf");
     expect(deployScript).toContain("tail -n +6");

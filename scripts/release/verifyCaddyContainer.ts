@@ -80,10 +80,51 @@ function verifyCaddyHeaders(response: Response): void {
 export async function verifyCaddyContainer(
   baseUrl: string,
   request: Request = fetch,
+  expectedCommit?: string,
 ): Promise<void> {
   const base = requiredOrigin(baseUrl);
   const home = await requiredResponse(request, base, "text/html");
   verifyCaddyHeaders(home);
+
+  const commitRegex = /^[0-9a-f]{40}$/;
+
+  if (expectedCommit) {
+    if (!commitRegex.test(expectedCommit)) {
+      throw new Error(`Invalid expectedCommit SHA format: ${expectedCommit}`);
+    }
+
+    const versionResponse = await requiredResponse(
+      request,
+      new URL("version.json", base),
+      "application/json",
+    );
+    const version = (await versionResponse.json()) as {
+      schemaVersion: string;
+      commit: string;
+    };
+
+    if (version.schemaVersion !== "1.0.0") {
+      throw new Error(
+        "version.json has an invalid 'schemaVersion'. Expected '1.0.0'.",
+      );
+    }
+
+    if (!version.commit) {
+      throw new Error("version.json is missing the 'commit' field.");
+    }
+
+    if (!commitRegex.test(version.commit)) {
+      throw new Error(
+        `version.json commit is not a 40-hex SHA: ${version.commit}`,
+      );
+    }
+
+    if (version.commit !== expectedCommit) {
+      throw new Error(
+        `Version mismatch: expected ${expectedCommit}, but found ${version.commit}.`,
+      );
+    }
+  }
 
   for (const path of ["comparar", "metodologia"]) {
     const response = await requiredResponse(
