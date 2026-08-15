@@ -15,11 +15,10 @@ export function AppShell({ children }: { children: ReactNode }) {
             <span>SALIDA CyL</span>
           </Link>
           <nav className="app-shell__nav" aria-label="Navegación principal">
-            <NavLink to="/" end>
-              Inicio
-            </NavLink>
-            <NavLink to="/comparar-estudios">Comparar estudios</NavLink>
-            <NavLink to="/metodologia">Metodología</NavLink>
+            <NavLink to="/desde-fp">Desde FP</NavLink>
+            <NavLink to="/desde-ocupacion">Desde ocupación</NavLink>
+            <NavLink to="/comparar">Comparar estudios</NavLink>
+            <NavLink to="/recursos">Más formación</NavLink>
           </nav>
         </div>
       </header>

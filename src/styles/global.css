@@ -10,7 +10,7 @@
     "Segoe UI",
     sans-serif;
   color: var(--color-text);
-  background: var(--color-surface-subtle);
+  background: var(--color-surface);
   font-synthesis: none;
   text-rendering: optimizeLegibility;
 }
@@ -23,8 +23,9 @@ body {
   min-width: 320px;
   min-height: 100vh;
   margin: 0;
-  background: var(--color-surface-subtle);
+  background: var(--color-surface-warm);
 }
+
 
 a {
   color: inherit;
@@ -34,8 +35,8 @@ a:focus-visible,
 button:focus-visible,
 input:focus-visible,
 select:focus-visible {
-  outline: none;
-  box-shadow: var(--focus-ring);
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
 }
 
 .visually-hidden {
@@ -187,7 +188,7 @@ h1 {
 
 .entry-card:hover {
   border-color: var(--color-primary);
-  box-shadow: 0 0.75rem 2rem rgb(22 60 50 / 10%);
+  box-shadow: 0 0.75rem 2rem rgba(0, 0, 0, 0.12);
   transform: translateY(-0.2rem);
 }
 
@@ -197,7 +198,7 @@ h1 {
   height: 3rem;
   place-items: center;
   color: var(--color-primary);
-  background: var(--color-surface-subtle);
+  background: var(--color-gold-soft, var(--color-gold, #fdf4e6));
   border-radius: 50%;
 }
 

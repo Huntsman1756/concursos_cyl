@@ -8,6 +8,7 @@ import { OccupationSearchPage } from "../features/occupation-first/OccupationSea
 import { OccupationResultsPage } from "../features/occupation-first/OccupationResultsPage";
 import { CompareStudiesPage } from "../features/compare-studies/CompareStudiesPage";
 import { MethodologyPage } from "../features/methodology/MethodologyPage";
+import { EcylResourcesPage } from "../features/resources/EcylResourcesPage";
 import {
   GeneratedManifestSchema,
   OutcomeIndicatorsSchema,
@@ -178,12 +179,18 @@ export function AppRoutes() {
           path="/desde-fp/:programKey"
           element={<TrainingResultsRoute />}
         />
+        <Route
+          path="/formacion/:programKey"
+          element={<TrainingResultsRoute />}
+        />
         <Route path="/desde-ocupacion" element={<OccupationSearchRoute />} />
         <Route
           path="/desde-ocupacion/:occupationId"
           element={<OccupationResultsRoute />}
         />
+        <Route path="/comparar" element={<CompareStudiesRoute />} />
         <Route path="/comparar-estudios" element={<CompareStudiesRoute />} />
+        <Route path="/recursos" element={<EcylResourcesPage />} />
         <Route path="/metodologia" element={<MethodologyRoute />} />
         <Route path="*" element={<HomePage />} />
       </Routes>

@@ -58,7 +58,7 @@ export function TrainingSearchPage({
       <form
         onSubmit={(event) => {
           event.preventDefault();
-          if (selectedProgramKey) navigate(`/desde-fp/${selectedProgramKey}`);
+          if (selectedProgramKey) navigate(`/formacion/${selectedProgramKey}`);
         }}
       >
         <label htmlFor="program-search">Ciclo formativo</label>

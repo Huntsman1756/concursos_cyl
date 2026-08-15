@@ -46,7 +46,7 @@ export function HomePage() {
     <div className="home-page">
       <section className="home-page__intro" aria-labelledby="home-title">
         <p className="eyebrow">Tu siguiente paso, con fuentes oficiales</p>
-        <h1 id="home-title">Convierte lo que sabes en una salida posible.</h1>
+        <h1 id="home-title">De tu FP a tu siguiente paso</h1>
         <p>
           Explora ofertas, requisitos y rutas formativas de Castilla y León sin
           notas opacas ni recomendaciones imposibles de comprobar.
