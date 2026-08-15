@@ -61,7 +61,7 @@ describe("App", () => {
     );
   });
 
-  it("routes the comparison navigation to the income-only page", () => {
+  it("routes the comparison navigation to the income-only page", async () => {
     cleanup();
     render(
       <MemoryRouter initialEntries={["/comparar"]}>
@@ -70,7 +70,10 @@ describe("App", () => {
     );
 
     expect(
-      screen.getByRole("heading", { level: 1, name: "Ingresos observados" }),
+      await screen.findByRole("heading", {
+        level: 1,
+        name: "Ingresos observados",
+      }),
     ).toBeVisible();
     expect(screen.queryByText(/Empleo e ingresos/u)).not.toBeInTheDocument();
   });
