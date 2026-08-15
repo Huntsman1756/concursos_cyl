@@ -46,8 +46,7 @@ try {
   if (-not (Test-Path $dist)) { throw "Build output directory '$dist' not found." }
 
   # Use relative script path and pass expected SHA
-  $scriptRelPath = Join-Path "scripts" "release" "writeVersionMetadata.ts"
-  $scriptFullPath = Join-Path $root $scriptRelPath
+  $scriptFullPath = Join-Path $root 'scripts\release\writeVersionMetadata.ts'
   $tsxPath = Join-Path $root "node_modules\.bin\tsx.cmd"
   if (-not (Test-Path $tsxPath)) { throw "tsx.cmd not found at $tsxPath" }
   & $tsxPath "$scriptFullPath" "$dist" "$commit"

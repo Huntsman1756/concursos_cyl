@@ -38,5 +38,10 @@ describe("VPS deployment", () => {
     expect(deployScript).toContain("tail -n +6");
     expect(deployScript).toContain("CADDY_SMOKE_BASE_URL");
     expect(deployScript).toContain("npm run release:caddy:verify");
+    // scriptRelPath must not exist; scriptFullPath built directly from root
+    expect(deployScript).not.toContain("scriptRelPath");
+    expect(deployScript).toContain(
+      "Join-Path $root 'scripts\\release\\writeVersionMetadata.ts'",
+    );
   });
 });
