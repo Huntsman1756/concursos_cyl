@@ -205,6 +205,83 @@ export function HomePage() {
         </div>
 
         <div className="home-workspace">
+          <aside
+            className="coverage-panel"
+            aria-label="Cobertura revisada"
+            role="region"
+            aria-live="polite"
+            aria-busy={coverage.status === "loading"}
+          >
+            <div className="coverage-panel__heading">
+              <h2>
+                <Icon name="clock" size={19} />
+                Cobertura revisada
+              </h2>
+              <span
+                className="data-freshness"
+                role="region"
+                aria-label="Actualización de datos"
+                aria-busy={freshness.status === "loading"}
+              >
+                {freshness.status === "loading" ? "Comprobando fecha…" : null}
+                {freshness.status === "ready" ? (
+                  <>
+                    Actualizado:{" "}
+                    <time dateTime={freshness.dateTime}>{freshness.date}</time>
+                  </>
+                ) : null}
+                {freshness.status === "unavailable"
+                  ? "Fecha no disponible"
+                  : null}
+              </span>
+            </div>
+
+            {coverage.status === "loading" ? (
+              <p className="coverage-panel__message">
+                Comprobando la cobertura revisada…
+              </p>
+            ) : null}
+            {coverage.status === "unavailable" ? (
+              <p className="coverage-panel__message">
+                No se ha podido comprobar la cobertura revisada.
+              </p>
+            ) : null}
+            {coverage.status === "ready" ? (
+              <ul
+                className="coverage-panel__programs"
+                aria-label="Ciclos revisados destacados"
+              >
+                {featuredPrograms.map((program) => {
+                  const catalogProgram = programsByKey.get(program.programKey);
+                  return (
+                    <li key={program.programKey}>
+                      <Link to={`/desde-fp/${program.programKey}`}>
+                        <span>
+                          <strong>{program.programTitle}</strong>
+                          <small>
+                            {catalogProgram === undefined
+                              ? program.programKey
+                              : trainingLevelLabel(catalogProgram.level)}
+                          </small>
+                        </span>
+                        <Icon name="arrow-right" size={17} />
+                      </Link>
+                    </li>
+                  );
+                })}
+              </ul>
+            ) : null}
+
+            {freshness.status === "ready" && freshness.stale ? (
+              <p className="data-freshness__warning">
+                Mostramos la última copia disponible.
+              </p>
+            ) : null}
+            <Link className="coverage-panel__link" to="/metodologia">
+              Ver toda la cobertura <Icon name="arrow-right" size={16} />
+            </Link>
+          </aside>
+
           <section
             className="entry-panels"
             aria-label="Elige tu punto de partida"
@@ -319,83 +396,6 @@ export function HomePage() {
               }
             />
           </section>
-
-          <aside
-            className="coverage-panel"
-            aria-label="Cobertura revisada"
-            role="region"
-            aria-live="polite"
-            aria-busy={coverage.status === "loading"}
-          >
-            <div className="coverage-panel__heading">
-              <h2>
-                <Icon name="clock" size={19} />
-                Cobertura revisada
-              </h2>
-              <span
-                className="data-freshness"
-                role="region"
-                aria-label="Actualización de datos"
-                aria-busy={freshness.status === "loading"}
-              >
-                {freshness.status === "loading" ? "Comprobando fecha…" : null}
-                {freshness.status === "ready" ? (
-                  <>
-                    Actualizado:{" "}
-                    <time dateTime={freshness.dateTime}>{freshness.date}</time>
-                  </>
-                ) : null}
-                {freshness.status === "unavailable"
-                  ? "Fecha no disponible"
-                  : null}
-              </span>
-            </div>
-
-            {coverage.status === "loading" ? (
-              <p className="coverage-panel__message">
-                Comprobando la cobertura revisada…
-              </p>
-            ) : null}
-            {coverage.status === "unavailable" ? (
-              <p className="coverage-panel__message">
-                No se ha podido comprobar la cobertura revisada.
-              </p>
-            ) : null}
-            {coverage.status === "ready" ? (
-              <ul
-                className="coverage-panel__programs"
-                aria-label="Ciclos revisados destacados"
-              >
-                {featuredPrograms.map((program) => {
-                  const catalogProgram = programsByKey.get(program.programKey);
-                  return (
-                    <li key={program.programKey}>
-                      <Link to={`/desde-fp/${program.programKey}`}>
-                        <span>
-                          <strong>{program.programTitle}</strong>
-                          <small>
-                            {catalogProgram === undefined
-                              ? program.programKey
-                              : trainingLevelLabel(catalogProgram.level)}
-                          </small>
-                        </span>
-                        <Icon name="arrow-right" size={17} />
-                      </Link>
-                    </li>
-                  );
-                })}
-              </ul>
-            ) : null}
-
-            {freshness.status === "ready" && freshness.stale ? (
-              <p className="data-freshness__warning">
-                Mostramos la última copia disponible.
-              </p>
-            ) : null}
-            <Link className="coverage-panel__link" to="/metodologia">
-              Ver toda la cobertura <Icon name="arrow-right" size={16} />
-            </Link>
-          </aside>
         </div>
       </section>
 
