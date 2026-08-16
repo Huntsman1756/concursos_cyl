@@ -5,6 +5,7 @@ import { dirname, resolve } from "node:path";
 import { pathToFileURL } from "node:url";
 
 import { buildMappingCoverage } from "../data/validateCuratedMappings";
+import { extractPublishedRequirements } from "../data/extractRequirements";
 
 const HISTORICAL_FREEZE_COMMIT = "111039ea2678272452169bb30c31cc680a4d436e";
 const EXPECTED_RELATIONS = 14;
@@ -18,6 +19,17 @@ function sha256(text: string): string {
 
 function serialize(value: unknown): string {
   return `${JSON.stringify(value, null, 2)}\n`;
+}
+
+function normalizedAliasIdentity(alias: JsonRecord): string {
+  const normalized = String(alias.alias)
+    .normalize("NFD")
+    .replace(/\p{Diacritic}/gu, "")
+    .toLocaleLowerCase("es-ES")
+    .replace(/[^\p{Letter}\p{Number}]+/gu, " ")
+    .replace(/\s+/gu, " ")
+    .trim();
+  return `${normalized}:${String(alias.occupationId)}`;
 }
 
 function parseArguments(): { rootDirectory: string; write: boolean } {
@@ -98,16 +110,30 @@ export function prepareContestFallback646(
   const curatedAliases = readJson(
     resolve(rootDirectory, "data/curated/occupation-aliases.json"),
   ) as JsonRecord[];
-  const links = curatedLinks.filter(
-    (link) =>
-      link.reviewStatus === "approved" &&
-      relationKeys.has(`${link.trainingProgramKey}|${link.occupationId}`),
-  );
-  const aliases = curatedAliases.filter(
-    (alias) =>
-      alias.reviewStatus === "approved" &&
-      aliasKeys.has(`${alias.alias}|${alias.occupationId}`),
-  );
+  const links = curatedLinks
+    .filter(
+      (link) =>
+        link.reviewStatus === "approved" &&
+        relationKeys.has(`${link.trainingProgramKey}|${link.occupationId}`),
+    )
+    .sort((left, right) =>
+      `${left.trainingProgramKey}:${left.occupationId}:${left.relationshipType}`.localeCompare(
+        `${right.trainingProgramKey}:${right.occupationId}:${right.relationshipType}`,
+        "en",
+      ),
+    );
+  const aliases = curatedAliases
+    .filter(
+      (alias) =>
+        alias.reviewStatus === "approved" &&
+        aliasKeys.has(`${alias.alias}|${alias.occupationId}`),
+    )
+    .sort((left, right) =>
+      normalizedAliasIdentity(left).localeCompare(
+        normalizedAliasIdentity(right),
+        "en",
+      ),
+    );
 
   if (
     links.length !== EXPECTED_RELATIONS ||
@@ -138,16 +164,33 @@ export function prepareContestFallback646(
     sourceValues.set(key, JSON.parse(text));
   }
 
-  for (const key of ["jobOffers", "publishedRequirements"] as const) {
-    const historicalSpecification = historicalResourceSnapshots[key];
-    if (historicalSpecification === undefined) {
-      throw new Error(`Historical manifest lacks ${key}.`);
-    }
-    const historicalPath = `public${String(historicalSpecification.resourcePath)}`;
-    const text = gitShowText(rootDirectory, historicalPath);
-    sourceTexts.set(key, text);
-    sourceValues.set(key, JSON.parse(text));
+  const historicalJobOffersSpecification =
+    historicalResourceSnapshots.jobOffers;
+  if (historicalJobOffersSpecification === undefined) {
+    throw new Error("Historical manifest lacks jobOffers.");
   }
+  const historicalJobOffersText = gitShowText(
+    rootDirectory,
+    `public${String(historicalJobOffersSpecification.resourcePath)}`,
+  );
+  const historicalJobOffers = JSON.parse(historicalJobOffersText) as Array<{
+    id: string;
+    descriptionSections: Parameters<
+      typeof extractPublishedRequirements
+    >[1]["sections"];
+  }>;
+  sourceTexts.set("jobOffers", historicalJobOffersText);
+  sourceValues.set("jobOffers", historicalJobOffers);
+  const publishedRequirements = historicalJobOffers.flatMap((offer) => {
+    const requirements = extractPublishedRequirements(offer.id, {
+      sections: offer.descriptionSections,
+    });
+    return requirements.length === 0
+      ? []
+      : [{ offerId: offer.id, requirements }];
+  });
+  sourceTexts.set("publishedRequirements", serialize(publishedRequirements));
+  sourceValues.set("publishedRequirements", publishedRequirements);
 
   const programs = sourceValues.get("programs") as Parameters<
     typeof buildMappingCoverage
@@ -185,9 +228,7 @@ export function prepareContestFallback646(
       if (!Array.isArray(value))
         throw new Error(`${key} is not an array resource.`);
       const provenanceSpecification =
-        key === "jobOffers" || key === "publishedRequirements"
-          ? historicalResourceSnapshots[key]
-          : specification;
+        key === "jobOffers" ? historicalResourceSnapshots[key] : specification;
       const filename = String(provenanceSpecification.resourcePath)
         .split("/")
         .at(-1);
