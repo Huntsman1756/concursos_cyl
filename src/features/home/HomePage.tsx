@@ -199,8 +199,8 @@ export function HomePage() {
             <span>siguiente paso</span>
           </h1>
           <p>
-            Explora ciclos de FP, salidas revisadas
-            <br className="desktop-break" /> y oportunidades en Castilla y León.
+            SALIDA CyL conecta FP, salidas profesionales y evidencia pública; no
+            es un buscador general de empleo ni de cursos.
           </p>
         </div>
 
@@ -263,10 +263,18 @@ export function HomePage() {
               }
             />
 
+            <span
+              className="entry-panels__separator"
+              role="separator"
+              aria-label="Alternativa"
+            >
+              {" o "}
+            </span>
+
             <EntryCard
               title="Quiero trabajar de…"
               outcome="Busca una ocupación y conoce cómo llegar."
-              accent="gold"
+              accent="burgundy"
               control={
                 searchData.status === "ready" ? (
                   <OccupationCombobox
