@@ -432,7 +432,7 @@ describe("TrainingResultsPage", () => {
     const requirementDisclosure = disclosures[1].closest("details");
     expect(mappingDisclosure).not.toBeNull();
     expect(requirementDisclosure).not.toBeNull();
-    expect(screen.getByText(sourceQuote)).not.toBeVisible();
+    expect(screen.getByText(sourceQuote)).toBeVisible();
     await user.click(disclosures[0]);
     expect(
       within(mappingDisclosure!).getByText(
@@ -473,6 +473,10 @@ describe("TrainingResultsPage", () => {
     expect(
       await screen.findByRole("link", { name: /Consultar trámite oficial/ }),
     ).toHaveAttribute("target", "_blank");
+    expect(screen.getByText("Requisito no cumplido")).toBeVisible();
+    expect(
+      screen.getByText("Requisito no cumplido").closest("div"),
+    ).toHaveClass("evidence-state evidence-state--gap");
     expect(
       screen.queryByText(/compatibilidad|porcentaje|%/iu),
     ).not.toBeInTheDocument();
@@ -684,6 +688,10 @@ describe("TrainingResultsPage", () => {
     expect(
       screen.getByRole("article", { name: "Programador web junior" }),
     ).toBeVisible();
+    expect(screen.getByText("Requisito no publicado")).toBeVisible();
+    expect(
+      screen.getByText("Requisito no publicado").closest("div"),
+    ).toHaveClass("requirement-state requirement-state--unpublished");
     expect(screen.getByText("Zona elegida: León")).toBeVisible();
     expect(screen.getByLabelText("Dirección actual")).toHaveTextContent(
       "/desde-fp/IFC03S?province=León",

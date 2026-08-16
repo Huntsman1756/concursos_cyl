@@ -729,18 +729,18 @@ summary:focus-visible {
   margin-top: var(--space-3);
 }
 
-.evidence-disclosure summary {
+.evidence-disclosure__quote {
+  margin: 0 0 var(--space-3);
+  padding-left: var(--space-4);
+  border-left: 0.2rem solid var(--color-border);
+  color: var(--color-text-muted);
+}
+
+.evidence-disclosure__provenance summary {
   width: fit-content;
   color: var(--color-action-text);
   font-weight: 700;
   cursor: pointer;
-}
-
-.evidence-disclosure blockquote {
-  margin: var(--space-3) 0;
-  padding-left: var(--space-4);
-  border-left: 0.2rem solid var(--color-border);
-  color: var(--color-text-muted);
 }
 
 .evidence-metadata {
@@ -887,6 +887,30 @@ summary:focus-visible {
 
 .requirement-row__label {
   font-weight: 750;
+}
+
+.requirement-state {
+  padding: var(--space-4);
+  border-radius: var(--radius-sm);
+}
+
+.requirement-state--unpublished {
+  border: 1px solid var(--color-gold);
+  border-left: 0.3rem solid var(--color-gold);
+  background: var(--color-warning-surface);
+  color: var(--color-text);
+}
+
+.evidence-state {
+  padding: var(--space-4);
+  border-radius: var(--radius-sm);
+}
+
+.evidence-state--gap {
+  border: 1px solid var(--color-primary);
+  border-left: 0.3rem solid var(--color-primary);
+  background: var(--color-primary-soft);
+  color: var(--color-text);
 }
 
 .requirement-row fieldset {

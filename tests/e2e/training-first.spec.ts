@@ -135,12 +135,16 @@ test("the intercepted full DAW card makes a declared gap, action, filter, and ev
     card.getByRole("heading", { name: "Siguiente acción" }),
   ).toBeVisible();
 
-  const mappingDisclosure = card.getByText("Ver cita exacta").first();
+  const mappingDisclosure = card
+    .getByText("Ver cita exacta", { exact: true })
+    .first();
   await tabTo(page, mappingDisclosure);
   await expect(mappingDisclosure).toBeFocused();
   await page.keyboard.press("Enter");
   await expect(
-    card.getByText("Desarrollador de aplicaciones en entornos Web."),
+    card.getByText("Desarrollador de aplicaciones en entornos Web.", {
+      exact: true,
+    }),
   ).toBeVisible();
 
   const firstExperienceAnswer = card.getByRole("radio", {
