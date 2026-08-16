@@ -256,9 +256,14 @@ try {
                     [System.IO.File]::WriteAllText($patchPath, "SIMULATED PATCH`n", $utf8)
                 } else {
                     foreach ($changedPath in @($telemetry.changedPaths)) { & git -C $attemptRoot add -N -- $changedPath | Out-Null }
-                    $patchText = (& git -C $attemptRoot diff --binary --no-ext-diff HEAD -- | Out-String)
-                    if ($LASTEXITCODE -ne 0 -or [string]::IsNullOrWhiteSpace($patchText)) { throw 'Candidate patch evidence is missing.' }
-                    [System.IO.File]::WriteAllText($patchPath, $patchText, $utf8)
+                    & git -C $attemptRoot diff --binary --no-ext-diff HEAD --output=$patchPath --
+                    if ($LASTEXITCODE -ne 0) {
+                        throw 'Candidate patch evidence is missing.'
+                    } elseif (-not (Test-Path -LiteralPath $patchPath -PathType Leaf)) {
+                        throw 'Candidate patch evidence is missing.'
+                    } elseif ((Get-Item -LiteralPath $patchPath).Length -eq 0) {
+                        throw 'Candidate patch evidence is missing.'
+                    }
                 }
             }
             $attemptEvidence = [ordered]@{

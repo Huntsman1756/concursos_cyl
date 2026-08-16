@@ -176,10 +176,12 @@ if ($patchAvailable) {
         foreach ($changedPath in @($telemetry.changedPaths)) {
             & git -C $worktree add -N -- $changedPath | Out-Null
         }
-        $patchText = (& git -C $worktree diff --binary --no-ext-diff HEAD -- | Out-String)
-        if ($LASTEXITCODE -eq 0 -and -not [string]::IsNullOrWhiteSpace($patchText)) {
-            [System.IO.File]::WriteAllText($patchPath, $patchText, $utf8)
-        } else {
+        & git -C $worktree diff --binary --no-ext-diff HEAD --output=$patchPath --
+        if ($LASTEXITCODE -ne 0) {
+            $patchAvailable = $false
+        } elseif (-not (Test-Path -LiteralPath $patchPath -PathType Leaf)) {
+            $patchAvailable = $false
+        } elseif ((Get-Item -LiteralPath $patchPath).Length -eq 0) {
             $patchAvailable = $false
         }
     }
