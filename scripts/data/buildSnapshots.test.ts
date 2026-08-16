@@ -132,6 +132,25 @@ async function addInactiveDraftSnapshot(
   return directory;
 }
 
+/** Tracks concurrent execution count and peak for ingestion limiter tests. */
+let ingestionCurrent = 0;
+let ingestionPeak = 0;
+
+function track<T>(fn: () => Promise<T>): () => Promise<T> {
+  return async () => {
+    ingestionCurrent += 1;
+    if (ingestionCurrent > ingestionPeak) {
+      ingestionPeak = ingestionCurrent;
+    }
+    await new Promise((resolve) => setTimeout(resolve, 25));
+    try {
+      return await fn();
+    } finally {
+      ingestionCurrent -= 1;
+    }
+  };
+}
+
 const fixedOptions = {
   now: () => new Date("2026-08-04T10:00:00.000Z"),
   fetchTrainingRecords: async () => [{ ...liveTrainingSourceRecord }],
@@ -2916,5 +2935,30 @@ describe("buildSnapshots", { timeout: BUILD_SNAPSHOTS_TEST_TIMEOUT }, () => {
       ).rejects.toThrow(/symbolic link|junction|reparse|physical path/i);
       await expect(readFile(marker, "utf8")).resolves.toBe("untouched");
     },
+  );
+
+  it(
+    "limits concurrent ingestion to 3 with peak concurrency and releases all slots",
+    async () => {
+      const root = await temporaryRoot();
+      ingestionCurrent = 0;
+      ingestionPeak = 0;
+
+      await buildSnapshots({
+        rootDirectory: root,
+        ...fixedOptions,
+        fetchTrainingRecords: track(fixedOptions.fetchTrainingRecords),
+        fetchOfferRecords: track(fixedOptions.fetchOfferRecords),
+        fetchEcylCourseRecords: track(fixedOptions.fetchEcylCourseRecords),
+        fetchProfessionalCertificateRecords: track(
+          fixedOptions.fetchProfessionalCertificateRecords,
+        ),
+        fetchIncomeBundle: track(fixedOptions.fetchIncomeBundle),
+      });
+
+      expect(ingestionPeak).toBe(3);
+      expect(ingestionCurrent).toBe(0);
+    },
+    BUILD_SNAPSHOTS_TEST_TIMEOUT,
   );
 });

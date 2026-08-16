@@ -2281,6 +2281,49 @@ async function cleanupAfterCommit(
   });
 }
 
+/**
+ * Returns a function that limits concurrent execution of async functions
+ * to at most `limit` at a time. Queued functions are dispatched via an
+ * internal pump that drains while active < limit. Each completed or
+ * rejected call releases its slot and triggers the next pump cycle.
+ */
+function createConcurrencyLimiter(
+  limit: number,
+): <T>(fn: () => Promise<T>) => Promise<T> {
+  type QueueItem = {
+    fn: () => Promise<unknown>;
+    resolve: (value: unknown) => void;
+    reject: (reason: unknown) => void;
+  };
+  const queue: QueueItem[] = [];
+  let active = 0;
+
+  function pump(): void {
+    while (active < limit && queue.length > 0) {
+      const item = queue.shift()!;
+      active += 1;
+      Promise.resolve(item.fn())
+        .then(item.resolve)
+        .catch(item.reject)
+        .finally(() => {
+          active -= 1;
+          pump();
+        });
+    }
+  }
+
+  return function limitIngestion<T>(fn: () => Promise<T>): Promise<T> {
+    return new Promise<T>((resolve, reject) => {
+      queue.push({
+        fn,
+        resolve: resolve as (value: unknown) => void,
+        reject,
+      });
+      pump();
+    });
+  };
+}
+
 /** Builds and publishes immutable resource sets with a manifest-last commit. */
 export async function buildSnapshots(
   options: BuildSnapshotsOptions = {},
@@ -2364,6 +2407,7 @@ export async function buildSnapshots(
     let staging: string | undefined;
     let immutableDestination: string | undefined;
     try {
+      const limitIngestion = createConcurrencyLimiter(3);
       const [
         fetchedTrainingRecords,
         fetchedOfferRecords,
@@ -2371,11 +2415,11 @@ export async function buildSnapshots(
         fetchedEcylCourseRecords,
         fetchedProfessionalCertificateRecords,
       ] = await Promise.all([
-        fetchTrainingRecords(),
-        fetchOfferRecords(),
-        fetchIncomeBundle(),
-        fetchEcylCourseRecords(),
-        fetchProfessionalCertificateRecords(),
+        limitIngestion(() => fetchTrainingRecords()),
+        limitIngestion(() => fetchOfferRecords()),
+        limitIngestion(() => fetchIncomeBundle()),
+        limitIngestion(() => fetchEcylCourseRecords()),
+        limitIngestion(() => fetchProfessionalCertificateRecords()),
       ]);
       const trainingRecords = z
         .array(TrainingSourceRecordSchema)
