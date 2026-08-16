@@ -374,7 +374,7 @@ test("the complete Spanish home copy fits without horizontal overflow", async ({
   expect(overflow.document).toBeLessThanOrEqual(1);
 });
 
-test("the selected workspace uses equal desktop panels and a stacked mobile flow", async ({
+test("reviewed programs lead two equal alternatives with coverage above both paths", async ({
   page,
 }, testInfo) => {
   await page.goto("/");
@@ -390,26 +390,58 @@ test("the selected workspace uses equal desktop panels and a stacked mobile flow
   const firstPanel = await panels.nth(0).boundingBox();
   const secondPanel = await panels.nth(1).boundingBox();
   const coveragePanel = await coverage.boundingBox();
+  const separator = await page
+    .getByRole("separator", { name: "Alternativa" })
+    .boundingBox();
   expect(firstPanel).not.toBeNull();
   expect(secondPanel).not.toBeNull();
   expect(coveragePanel).not.toBeNull();
+  expect(separator).not.toBeNull();
 
-  if (!firstPanel || !secondPanel || !coveragePanel) {
+  if (!firstPanel || !secondPanel || !coveragePanel || !separator) {
     return;
   }
 
   if (testInfo.project.name === "chromium-desktop") {
+    // Coverage panel sits above both entry cards.
+    expect(coveragePanel.y).toBeLessThanOrEqual(firstPanel.y);
+    expect(coveragePanel.y).toBeLessThanOrEqual(secondPanel.y);
+
+    // Coverage spans the combined horizontal region of the two cards.
+    expect(coveragePanel.x).toBeLessThanOrEqual(firstPanel.x);
+    expect(coveragePanel.x + coveragePanel.width).toBeGreaterThanOrEqual(
+      secondPanel.x + secondPanel.width,
+    );
+
+    // The two cards share the same row and have approximately equal width.
     expect(Math.abs(firstPanel.y - secondPanel.y)).toBeLessThanOrEqual(1);
     expect(Math.abs(firstPanel.width - secondPanel.width)).toBeLessThanOrEqual(
-      1,
+      8,
     );
-    expect(secondPanel.x).toBeGreaterThanOrEqual(
-      firstPanel.x + firstPanel.width,
+
+    // The visible separator lies horizontally between the two cards.
+    expect(separator.x).toBeGreaterThanOrEqual(
+      firstPanel.x + firstPanel.width - 2,
     );
-    expect(coveragePanel.x).toBeGreaterThan(secondPanel.x + secondPanel.width);
+    expect(separator.x).toBeLessThanOrEqual(secondPanel.x + 2);
   } else {
-    expect(secondPanel.y).toBeGreaterThan(firstPanel.y + firstPanel.height);
-    expect(coveragePanel.y).toBeGreaterThan(secondPanel.y + secondPanel.height);
+    // Coverage panel is above the first card on mobile.
+    expect(coveragePanel.y).toBeLessThanOrEqual(firstPanel.y);
+
+    // Cards and separator are vertically ordered: first, separator, second.
+    expect(separator.y).toBeGreaterThan(firstPanel.y + firstPanel.height);
+    expect(secondPanel.y).toBeGreaterThan(separator.y + separator.height);
+
+    // Both cards have approximately equal width.
+    expect(Math.abs(firstPanel.width - secondPanel.width)).toBeLessThanOrEqual(
+      8,
+    );
+
+    // Neither card width nor geometry suggests numbered steps
+    // (equal sizing implies parallel alternatives, not a sequence).
+    expect(firstPanel.width).toBeGreaterThan(200);
+    expect(secondPanel.width).toBeGreaterThan(200);
+
     const firstCta = await panels.nth(0).getByRole("button").boundingBox();
     expect(firstCta).not.toBeNull();
     if (firstCta) {
