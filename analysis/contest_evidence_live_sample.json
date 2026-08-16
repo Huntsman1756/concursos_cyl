@@ -1,0 +1,109 @@
+{
+  "schemaVersion": "1.0.0",
+  "population": 220,
+  "sampleSize": 15,
+  "seed": "f3813d12cff3876db8760975cf82b0ad47c5d3ea76983d809ef45891324bf21c",
+  "selectionAlgorithm": "Sort relation keys by SHA-256(seed + '|' + relationKey), ascending; take the first 15.",
+  "cutoff": "2026-08-19T18:00:00+02:00",
+  "auditedAt": "2026-08-16",
+  "summary": {
+    "pass": 9,
+    "failSemanticBoundary": 4,
+    "needsLevelReview": 1,
+    "failExactQuoteOnly": 1,
+    "cleanSample": false,
+    "decision": "Do not ratify 76 qualifications / 220 relations for contest submission; activate the verified 6 / 46 fallback."
+  },
+  "relations": [
+    {
+      "relationKey": "EOC01M|occupation:cno11:7121",
+      "status": "pass",
+      "liveQuote": true,
+      "note": "Direct official-output match; BOE contains 'Albañil'."
+    },
+    {
+      "relationKey": "SAN02M|occupation:cno11:5621",
+      "status": "pass",
+      "liveQuote": true,
+      "note": "Direct TodoFP output and CNO boundary."
+    },
+    {
+      "relationKey": "SAN08SD|occupation:cno11:2640",
+      "status": "pass",
+      "liveQuote": true,
+      "note": "TodoFP explicitly limits the commercial role to hospital and pharmaceutical products, matching CNO 2640."
+    },
+    {
+      "relationKey": "FME02B|occupation:cno11:7314",
+      "status": "needs_level_review",
+      "liveQuote": true,
+      "note": "The source says auxiliary fitter; CNO 7314 describes skilled structural-metal workers. The level boundary needs explicit support."
+    },
+    {
+      "relationKey": "TMV01M|occupation:cno11:7232",
+      "status": "pass",
+      "liveQuote": true,
+      "note": "Direct INE CNO heading for manufacturing-industry painters."
+    },
+    {
+      "relationKey": "FME02B|occupation:cno11:9700",
+      "status": "pass",
+      "liveQuote": true,
+      "note": "Direct TodoFP wording for labourers and auxiliaries in metal industries."
+    },
+    {
+      "relationKey": "ELE01M|occupation:cno11:7510",
+      "status": "pass",
+      "liveQuote": true,
+      "note": "BOE contains the exact official output 'Electricista de construcción'."
+    },
+    {
+      "relationKey": "EOC02SD|occupation:cno11:3129",
+      "status": "fail_semantic_boundary",
+      "liveQuote": true,
+      "note": "The live CNO has the specific group 3110 for technical draughtspersons, including civil engineering; residual 3129 is not justified by a missing local catalog entry."
+    },
+    {
+      "relationKey": "IMP01S|occupation:cno11:2640",
+      "status": "fail_semantic_boundary",
+      "liveQuote": true,
+      "note": "Generic aesthetics commercial technician does not establish the industrial, medical or pharmaceutical product boundary of CNO 2640."
+    },
+    {
+      "relationKey": "SSC01S|occupation:cno11:2252",
+      "status": "fail_exact_quote_only",
+      "liveQuote": false,
+      "note": "Semantic match is sound, but the stored quotation replaces the BOE continuation after a comma with a period and is not an exact contiguous quote."
+    },
+    {
+      "relationKey": "SSC01M|occupation:cno11:5629",
+      "status": "pass",
+      "liveQuote": true,
+      "note": "Official SEPE document directly couples CNO 56291025 with the named FP qualification."
+    },
+    {
+      "relationKey": "AGA01B|occupation:cno11:4121",
+      "status": "fail_semantic_boundary",
+      "liveQuote": true,
+      "note": "Flower warehouse assistant does not by itself prove the clerical stock-control duties required by CNO 4121."
+    },
+    {
+      "relationKey": "IFC01MD|occupation:cno11:3812",
+      "status": "pass",
+      "liveQuote": true,
+      "note": "Direct TodoFP support-technician output aligns with CNO user-support technicians."
+    },
+    {
+      "relationKey": "SAN08S|occupation:cno11:2640",
+      "status": "pass",
+      "liveQuote": true,
+      "note": "TodoFP explicitly limits the commercial role to hospital and pharmaceutical products, matching CNO 2640."
+    },
+    {
+      "relationKey": "COM01M|occupation:cno11:5300",
+      "status": "fail_semantic_boundary",
+      "liveQuote": true,
+      "note": "CNO 5300 requires ownership/operation of a small shop; TodoFP's 'Comerciante de tienda' does not establish ownership and earlier review had rejected this ambiguity."
+    }
+  ]
+}
