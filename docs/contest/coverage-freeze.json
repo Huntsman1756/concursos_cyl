@@ -1,12 +1,12 @@
 {
   "schemaVersion": "1.0.0",
   "freezeStatus": "frozen",
-  "sourceCommitSha": "89399207ea8c123a441b4d5884563c33eae18078",
+  "sourceCommitSha": "efdd1b93f1718d4f94a0344a88d97ca748ed2313",
   "manifest": {
     "path": "public/data/v1/manifest.json",
-    "sha256": "a2cb69cf7b4c6158246596a53ce6eb83282cd97f3064ce96d685c89b956584ee",
+    "sha256": "8cd5c5bcbd53ea7fca0cec11d7a7866e1d7dcfebdee2d3bf58dad15825001321",
     "generatedAt": "2026-08-09T18:54:38.334Z",
-    "snapshotId": "20260809185438334-c185e1165fbd",
+    "snapshotId": "20260809185438334-e9ea8694331b",
     "qualityStatus": "passed",
     "qualityCounts": {
       "centers": 229,
@@ -16,57 +16,57 @@
     },
     "resourceSnapshots": {
       "centers": {
-        "resourcePath": "/data/v1/snapshots/20260809185438334-c185e1165fbd/centers.json",
+        "resourcePath": "/data/v1/snapshots/20260809185438334-e9ea8694331b/centers.json",
         "sha256": "593b7780f6cb9511c02edb26a769e5e1f951624f6e4b923a8e34caacb230c87a",
         "recordCount": 229
       },
       "jobOffers": {
-        "resourcePath": "/data/v1/snapshots/20260809185438334-c185e1165fbd/job-offers.json",
+        "resourcePath": "/data/v1/snapshots/20260809185438334-e9ea8694331b/job-offers.json",
         "sha256": "0631d0880485df26e2f450ee7da70ce7a0b210fe088eca02398a9474a2e6907b",
         "recordCount": 1077
       },
       "mappingCoverage": {
-        "resourcePath": "/data/v1/snapshots/20260809185438334-c185e1165fbd/mapping-coverage.json",
+        "resourcePath": "/data/v1/snapshots/20260809185438334-e9ea8694331b/mapping-coverage.json",
         "sha256": "bec38d839c701074a755d92f3b8eb5d984d2002605d2b78ceba84af3458a0503",
         "recordCount": 209
       },
       "officialOccupations": {
-        "resourcePath": "/data/v1/snapshots/20260809185438334-c185e1165fbd/official-occupations.json",
+        "resourcePath": "/data/v1/snapshots/20260809185438334-e9ea8694331b/official-occupations.json",
         "sha256": "76fa213f97c98e5af0f9bf120323ba3abb32df78e797c381e5454cadc858f64b",
         "recordCount": 502
       },
       "occupationAliases": {
-        "resourcePath": "/data/v1/snapshots/20260809185438334-c185e1165fbd/occupation-aliases.json",
-        "sha256": "1d0911ee718e1103aad61e7e02c0b3f5c324e0405d010f4a6fbb08a04a089b1a",
+        "resourcePath": "/data/v1/snapshots/20260809185438334-e9ea8694331b/occupation-aliases.json",
+        "sha256": "fbd4ca379e14c5152ee1620de5b4176d8102fc554c4e31139a98550d8855dd68",
         "recordCount": 21
       },
       "occupations": {
-        "resourcePath": "/data/v1/snapshots/20260809185438334-c185e1165fbd/occupations.json",
+        "resourcePath": "/data/v1/snapshots/20260809185438334-e9ea8694331b/occupations.json",
         "sha256": "f6c4b34a6fd5760c967273e4cc085abf6a3865baadfa2c721ac07dcd90fe3f09",
         "recordCount": 91
       },
       "outcomeIndicators": {
-        "resourcePath": "/data/v1/snapshots/20260809185438334-c185e1165fbd/outcome-indicators.json",
+        "resourcePath": "/data/v1/snapshots/20260809185438334-e9ea8694331b/outcome-indicators.json",
         "sha256": "4f2c6b73fc4171bb9daf21583712ab2ec99bcaa7d27b1f2fd0c070b9079ab3e2",
         "recordCount": 22170
       },
       "programs": {
-        "resourcePath": "/data/v1/snapshots/20260809185438334-c185e1165fbd/programs.json",
+        "resourcePath": "/data/v1/snapshots/20260809185438334-e9ea8694331b/programs.json",
         "sha256": "90df87b283b5ff003dda20c9c4f7eac52b903e611753d107d4b927bbc4e19b72",
         "recordCount": 187
       },
       "publishedRequirements": {
-        "resourcePath": "/data/v1/snapshots/20260809185438334-c185e1165fbd/published-requirements.json",
-        "sha256": "0a9061ecea0e25ef0038ec93839941c8584246e280e0453b4be816ce2d9e3a65",
+        "resourcePath": "/data/v1/snapshots/20260809185438334-e9ea8694331b/published-requirements.json",
+        "sha256": "cb9e2383f4f3ad92e9f6c26f6843d8e5de143098e8d69c46ca09092f8148ee40",
         "recordCount": 337
       },
       "trainingOccupationLinks": {
-        "resourcePath": "/data/v1/snapshots/20260809185438334-c185e1165fbd/training-occupation-links.json",
-        "sha256": "6c82ea8c4f844ec6a0155322220f003a47e708c72c7d12976b9cfb6c47e275ce",
+        "resourcePath": "/data/v1/snapshots/20260809185438334-e9ea8694331b/training-occupation-links.json",
+        "sha256": "6905d125dd051934d1bf3efca0fe04dca45204a7464317f9634d1e753c6098ef",
         "recordCount": 14
       },
       "trainingOfferings": {
-        "resourcePath": "/data/v1/snapshots/20260809185438334-c185e1165fbd/training-offerings.json",
+        "resourcePath": "/data/v1/snapshots/20260809185438334-e9ea8694331b/training-offerings.json",
         "sha256": "0948871f993a4f0a03ed42ccef060c4a395e0898dc230086f234345fee7e880a",
         "recordCount": 1294
       }
