@@ -215,18 +215,17 @@ state composites (`results-states-desktop.png` / `results-states-mobile.png`) as
 
 ### Test evidence
 
-| Suite                                | Passed / Total | Notes                                 |
-| ------------------------------------ | -------------- | ------------------------------------- |
-| `HomePage` unit (focused)            | 2 / 2          |                                       |
-| `TrainingResultsPage` unit (focused) | 12 / 12        |                                       |
-| Home + training E2E (focused)        | 32 / 32        |                                       |
-| Exact-capture QA                     | 4 / 4          |                                       |
-| Full E2E suite                       | 88 / 88        | Includes keyboard, overflow, Axe runs |
+| Suite                                | Passed / Total | Notes                                                    |
+| ------------------------------------ | -------------- | -------------------------------------------------------- |
+| `HomePage` unit (focused)            | 2 / 2          |                                                          |
+| `TrainingResultsPage` unit (focused) | 12 / 12        |                                                          |
+| Home + training E2E (focused)        | 32 / 32        |                                                          |
+| Exact-capture QA                     | 4 / 4          |                                                          |
+| Full Vitest suite                    | 95 / 95        | `npm test` (maxWorkers: 2); 95 archivos, 880 / 880 tests |
+| Full E2E suite                       | 88 / 88        | Includes keyboard, overflow, Axe runs                    |
 
-> **Nota:** La suite unitaria completa no está verde: cuatro pruebas preexistentes
-> _contest-freeze / buildSnapshots_ fallan de forma independiente (`sourceCommitSha`
-> / `data-ingestion` boundary y un timeout de 30 s). No se afirma que la suite
-> completa haya pasado.
+> **Nota:** La suite unitaria completa está verde: `npm test` ejecutó 95 archivos (/ 95)
+> y 880 tests (/ 880) exitosamente con `maxWorkers: 2` configurado y sin flags adicionales.
 
 ### Final line
 
