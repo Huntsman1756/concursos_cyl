@@ -160,7 +160,7 @@ a:focus-visible {
 .home-intro h1 {
   margin: 0;
   max-width: 70rem;
-  color: #111816;
+  color: var(--color-text);
   font-size: clamp(2rem, 3.4vw, 2.75rem);
   line-height: 1.12;
   text-wrap: balance;
@@ -223,7 +223,7 @@ a:focus-visible {
 .entry-card__preview {
   min-height: 3.25rem;
   padding: 0.8rem var(--space-4);
-  border: 1px solid #84928d;
+  border: 1px solid var(--color-border);
   border-radius: var(--radius-sm);
   color: var(--color-text-muted);
   background: var(--color-surface);
@@ -242,7 +242,7 @@ a:focus-visible {
   width: 100%;
   min-height: 3.25rem;
   padding: var(--space-3);
-  border: 1px solid #84928d;
+  border: 1px solid var(--color-border);
   border-radius: var(--radius-sm);
   color: var(--color-text);
   background: var(--color-surface);
@@ -577,7 +577,7 @@ a:focus-visible {
   border: 1px solid var(--color-border);
   border-radius: var(--radius-sm);
   background: var(--color-surface);
-  box-shadow: 0 0.5rem 1.5rem rgb(22 60 50 / 14%);
+  box-shadow: 0 0.5rem 1.5rem rgb(149 17 38 / 14%);
   list-style: none;
 }
 
