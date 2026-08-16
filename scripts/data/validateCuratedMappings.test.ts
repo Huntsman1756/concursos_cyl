@@ -1391,6 +1391,10 @@ describe("curated occupation mappings", () => {
         .map(({ alias, occupationId }) => ({ alias, occupationId })),
     ).toEqual([
       {
+        alias: "encofradores",
+        occupationId: "occupation:cno11:7111",
+      },
+      {
         alias: "Impermeabilizadores de terrazas",
         occupationId: "occupation:cno11:7193",
       },
@@ -1404,10 +1408,6 @@ describe("curated occupation mappings", () => {
       },
       {
         alias: "Pavimentadores a base de hormigón",
-        occupationId: "occupation:cno11:7111",
-      },
-      {
-        alias: "encofradores",
         occupationId: "occupation:cno11:7111",
       },
       {
