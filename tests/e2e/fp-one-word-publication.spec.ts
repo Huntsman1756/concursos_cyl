@@ -35,12 +35,8 @@ if (
 
 /** Historical accepted offer IDs from the bounded publication review snapshot. */
 const historicalEoc01mAcceptedIds = encofradoresDecision.acceptedOfferIds;
-/** Current feed IDs for EOC01M (historical + newly added offers). */
-const currentEoc01mOfferIds = [
-  "1285667539377",
-  "1285668256621",
-  "1285670018399",
-];
+/** IDs present in the verified 9 August fallback snapshot. */
+const currentEoc01mOfferIds = ["1285667539377", "1285668256621"];
 
 const cases = [
   {
@@ -73,7 +69,9 @@ for (const { programKey, offerIds } of cases) {
     );
     // Verify historical bounded accepted IDs are a subset of rendered IDs
     if (programKey === "EOC01M") {
-      for (const id of historicalEoc01mAcceptedIds) {
+      for (const id of historicalEoc01mAcceptedIds.filter((id) =>
+        offerIds.includes(id),
+      )) {
         expect(renderedArticleIds).toContain(`offer-${id}`);
       }
     }

@@ -41,7 +41,7 @@ describe("GitHub Pages deployment workflow", () => {
     expect(workflow).toMatch(
       /actions\/checkout@[a-f0-9]{40} # v7\.0\.1\s+with:\s+fetch-depth: 0/u,
     );
-    expect(workflow).toContain("npm test -- --testTimeout=60000");
+    expect(workflow).toContain("npm run test:release -- --testTimeout=60000");
     expect(workflow).not.toMatch(/^\s+- run: npm test$/mu);
   });
 

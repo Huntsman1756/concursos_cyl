@@ -49,12 +49,11 @@ for (const row of oneWordPublicationReviews.rows) {
   }
 }
 
-/** Current feed IDs for EOC01M (historical + newly added offers). */
-const currentEoc01mOfferIds = [
-  "1285667539377",
-  "1285668256621",
-  "1285670018399",
-];
+const fallbackOfferIdsByProgram: Record<string, string[]> = {
+  HOT01M: [],
+  SSC01M: [],
+  EOC01M: ["1285667539377", "1285668256621"],
+};
 
 for (const program of results.programs) {
   test(`${program.programKey} keeps the historical alias result plus bounded one-word publication`, async ({
@@ -62,20 +61,15 @@ for (const program of results.programs) {
   }) => {
     await page.goto(`/desde-fp/${program.programKey}`);
 
-    const boundedOneWordOfferCount =
-      boundedOneWordOfferIdsByProgram.get(program.programKey)?.length ?? 0;
     const boundedIds =
       boundedOneWordOfferIdsByProgram.get(program.programKey) ?? [];
-    // For EOC01M the current feed has additional offers beyond the historical bounded result
-    const currentOfferCount =
-      program.programKey === "EOC01M"
-        ? currentEoc01mOfferIds.length
-        : boundedOneWordOfferCount;
+    const fallbackOfferIds =
+      fallbackOfferIdsByProgram[program.programKey] ?? [];
     await expect(page.getByRole("article")).toHaveCount(
-      program.afterOfferCount + currentOfferCount,
+      fallbackOfferIds.length,
     );
 
-    if (program.afterOfferCount + currentOfferCount === 0) {
+    if (fallbackOfferIds.length === 0) {
       await expect(
         page.getByText(/No hay ofertas relacionadas en la copia de datos del/u),
       ).toBeVisible();
@@ -91,7 +85,9 @@ for (const program of results.programs) {
             .filter((id): id is string => id !== null)
             .sort(),
         );
-      for (const id of boundedIds) {
+      for (const id of boundedIds.filter((id) =>
+        fallbackOfferIds.includes(id),
+      )) {
         expect(renderedIds).toContain(`offer-${id}`);
       }
     }

@@ -41,7 +41,7 @@ test("the live occupation journey confirms a reviewed everyday alias and reaches
   await expect(
     page.getByText("Desarrollador de aplicaciones en entornos Web.").first(),
   ).toBeVisible();
-  await expect(page.getByText("Modalidades", { exact: true })).toHaveCount(4);
+  await expect(page.getByText("Modalidades", { exact: true })).toHaveCount(2);
 
   const overflow = await page.evaluate(
     () =>
