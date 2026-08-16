@@ -2937,28 +2937,24 @@ describe("buildSnapshots", { timeout: BUILD_SNAPSHOTS_TEST_TIMEOUT }, () => {
     },
   );
 
-  it(
-    "limits concurrent ingestion to 3 with peak concurrency and releases all slots",
-    async () => {
-      const root = await temporaryRoot();
-      ingestionCurrent = 0;
-      ingestionPeak = 0;
+  it("limits concurrent ingestion to 3 with peak concurrency and releases all slots", async () => {
+    const root = await temporaryRoot();
+    ingestionCurrent = 0;
+    ingestionPeak = 0;
 
-      await buildSnapshots({
-        rootDirectory: root,
-        ...fixedOptions,
-        fetchTrainingRecords: track(fixedOptions.fetchTrainingRecords),
-        fetchOfferRecords: track(fixedOptions.fetchOfferRecords),
-        fetchEcylCourseRecords: track(fixedOptions.fetchEcylCourseRecords),
-        fetchProfessionalCertificateRecords: track(
-          fixedOptions.fetchProfessionalCertificateRecords,
-        ),
-        fetchIncomeBundle: track(fixedOptions.fetchIncomeBundle),
-      });
+    await buildSnapshots({
+      rootDirectory: root,
+      ...fixedOptions,
+      fetchTrainingRecords: track(fixedOptions.fetchTrainingRecords),
+      fetchOfferRecords: track(fixedOptions.fetchOfferRecords),
+      fetchEcylCourseRecords: track(fixedOptions.fetchEcylCourseRecords),
+      fetchProfessionalCertificateRecords: track(
+        fixedOptions.fetchProfessionalCertificateRecords,
+      ),
+      fetchIncomeBundle: track(fixedOptions.fetchIncomeBundle),
+    });
 
-      expect(ingestionPeak).toBe(3);
-      expect(ingestionCurrent).toBe(0);
-    },
-    BUILD_SNAPSHOTS_TEST_TIMEOUT,
-  );
+    expect(ingestionPeak).toBe(3);
+    expect(ingestionCurrent).toBe(0);
+  });
 });
