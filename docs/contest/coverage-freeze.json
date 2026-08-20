@@ -1,72 +1,72 @@
 {
   "schemaVersion": "1.0.0",
   "freezeStatus": "frozen",
-  "sourceCommitSha": "1504b42ad7d95d901a7aefa988128f1ba1f408b9",
+  "sourceCommitSha": "38b1bc940534d13bcc573866265a9c6c63949685",
   "manifest": {
     "path": "public/data/v1/manifest.json",
-    "sha256": "8cd5c5bcbd53ea7fca0cec11d7a7866e1d7dcfebdee2d3bf58dad15825001321",
-    "generatedAt": "2026-08-09T18:54:38.334Z",
-    "snapshotId": "20260809185438334-e9ea8694331b",
+    "sha256": "4efd9990fb7e30f466bb592e70616b7ecbaaee8b6539c084660840980f9d9f3f",
+    "generatedAt": "2026-08-20T06:40:24.473Z",
+    "snapshotId": "20260820064024473-eb120ecc88eb",
     "qualityStatus": "passed",
     "qualityCounts": {
       "centers": 229,
       "offerings": 1294,
-      "offers": 1077,
+      "offers": 1026,
       "programs": 187
     },
     "resourceSnapshots": {
       "centers": {
-        "resourcePath": "/data/v1/snapshots/20260809185438334-e9ea8694331b/centers.json",
+        "resourcePath": "/data/v1/snapshots/20260820064024473-eb120ecc88eb/centers.json",
         "sha256": "593b7780f6cb9511c02edb26a769e5e1f951624f6e4b923a8e34caacb230c87a",
         "recordCount": 229
       },
       "jobOffers": {
-        "resourcePath": "/data/v1/snapshots/20260809185438334-e9ea8694331b/job-offers.json",
-        "sha256": "0631d0880485df26e2f450ee7da70ce7a0b210fe088eca02398a9474a2e6907b",
-        "recordCount": 1077
+        "resourcePath": "/data/v1/snapshots/20260820064024473-eb120ecc88eb/job-offers.json",
+        "sha256": "c3c6827f40c0c5fb4178c495f7f739a0510ed2d4eb61a6c2f05cf6453dd85806",
+        "recordCount": 1026
       },
       "mappingCoverage": {
-        "resourcePath": "/data/v1/snapshots/20260809185438334-e9ea8694331b/mapping-coverage.json",
-        "sha256": "bec38d839c701074a755d92f3b8eb5d984d2002605d2b78ceba84af3458a0503",
+        "resourcePath": "/data/v1/snapshots/20260820064024473-eb120ecc88eb/mapping-coverage.json",
+        "sha256": "03647dbc7995f1f6f6984f8ea3e9b0818d5f3cb4e5bc812acafd0c8e3d02b8f9",
         "recordCount": 209
       },
       "officialOccupations": {
-        "resourcePath": "/data/v1/snapshots/20260809185438334-e9ea8694331b/official-occupations.json",
+        "resourcePath": "/data/v1/snapshots/20260820064024473-eb120ecc88eb/official-occupations.json",
         "sha256": "76fa213f97c98e5af0f9bf120323ba3abb32df78e797c381e5454cadc858f64b",
         "recordCount": 502
       },
       "occupationAliases": {
-        "resourcePath": "/data/v1/snapshots/20260809185438334-e9ea8694331b/occupation-aliases.json",
-        "sha256": "fbd4ca379e14c5152ee1620de5b4176d8102fc554c4e31139a98550d8855dd68",
+        "resourcePath": "/data/v1/snapshots/20260820064024473-eb120ecc88eb/occupation-aliases.json",
+        "sha256": "4f37bc7c6ff4d76140c79d9e9245c7155ff5f77d5b3bc397796985e13c2fbe7c",
         "recordCount": 21
       },
       "occupations": {
-        "resourcePath": "/data/v1/snapshots/20260809185438334-e9ea8694331b/occupations.json",
+        "resourcePath": "/data/v1/snapshots/20260820064024473-eb120ecc88eb/occupations.json",
         "sha256": "f6c4b34a6fd5760c967273e4cc085abf6a3865baadfa2c721ac07dcd90fe3f09",
         "recordCount": 91
       },
       "outcomeIndicators": {
-        "resourcePath": "/data/v1/snapshots/20260809185438334-e9ea8694331b/outcome-indicators.json",
+        "resourcePath": "/data/v1/snapshots/20260820064024473-eb120ecc88eb/outcome-indicators.json",
         "sha256": "4f2c6b73fc4171bb9daf21583712ab2ec99bcaa7d27b1f2fd0c070b9079ab3e2",
         "recordCount": 22170
       },
       "programs": {
-        "resourcePath": "/data/v1/snapshots/20260809185438334-e9ea8694331b/programs.json",
+        "resourcePath": "/data/v1/snapshots/20260820064024473-eb120ecc88eb/programs.json",
         "sha256": "90df87b283b5ff003dda20c9c4f7eac52b903e611753d107d4b927bbc4e19b72",
         "recordCount": 187
       },
       "publishedRequirements": {
-        "resourcePath": "/data/v1/snapshots/20260809185438334-e9ea8694331b/published-requirements.json",
-        "sha256": "cb9e2383f4f3ad92e9f6c26f6843d8e5de143098e8d69c46ca09092f8148ee40",
-        "recordCount": 337
+        "resourcePath": "/data/v1/snapshots/20260820064024473-eb120ecc88eb/published-requirements.json",
+        "sha256": "791ed86a1805afffdea2125fb682b14ab1e67b63d9d759b4af11f86776b8e3a2",
+        "recordCount": 333
       },
       "trainingOccupationLinks": {
-        "resourcePath": "/data/v1/snapshots/20260809185438334-e9ea8694331b/training-occupation-links.json",
-        "sha256": "6905d125dd051934d1bf3efca0fe04dca45204a7464317f9634d1e753c6098ef",
+        "resourcePath": "/data/v1/snapshots/20260820064024473-eb120ecc88eb/training-occupation-links.json",
+        "sha256": "f53dab591ec336fb9b64cdbf6616a26a500866e08cae1abe466a3f9b1217ede3",
         "recordCount": 14
       },
       "trainingOfferings": {
-        "resourcePath": "/data/v1/snapshots/20260809185438334-e9ea8694331b/training-offerings.json",
+        "resourcePath": "/data/v1/snapshots/20260820064024473-eb120ecc88eb/training-offerings.json",
         "sha256": "0948871f993a4f0a03ed42ccef060c4a395e0898dc230086f234345fee7e880a",
         "recordCount": 1294
       }
@@ -170,39 +170,25 @@
     "matchedOfferIds": [
       "1285619684957",
       "1285634475038",
-      "1285636902492",
-      "1285637348332",
-      "1285637348360",
       "1285637783304",
-      "1285638302131",
-      "1285639439371",
       "1285641461864",
       "1285642318120",
       "1285643523185",
       "1285645658066",
       "1285647198339",
-      "1285648074767",
       "1285656851320",
-      "1285660488886",
-      "1285661621377",
       "1285662030438",
-      "1285662467494",
       "1285662541494",
       "1285662949567",
-      "1285663160304",
-      "1285663377553",
-      "1285663377586",
       "1285663973698",
       "1285664658652",
       "1285664934590",
       "1285665380332",
       "1285665942298",
-      "1285667333543",
       "1285667539377",
       "1285667589914",
       "1285667589943",
       "1285667632216",
-      "1285667844877",
       "1285667995414",
       "1285668050973",
       "1285668256565",
@@ -212,10 +198,17 @@
       "1285669453017",
       "1285669509738",
       "1285669665440",
-      "1285669665506",
-      "1285669719277"
+      "1285670397102",
+      "1285670397130",
+      "1285671046319",
+      "1285671119163",
+      "1285671119191",
+      "1285671248012",
+      "1285671523023",
+      "1285671620760",
+      "1285671836401"
     ],
-    "matchedOfferCount": 46,
+    "matchedOfferCount": 39,
     "marginalOfferDeltas": { "unionOfferIds": [], "unionOfferCount": 0 }
   },
   "attempts": {

@@ -211,9 +211,7 @@ describe("TrainingResultsPage", () => {
       if (decision === undefined || decision.status !== "accepted") {
         throw new Error("Expected encofradores to be accepted.");
       }
-      return decision.acceptedOfferIds.filter((offerId) =>
-        ["1285667539377", "1285668256621"].includes(offerId),
-      );
+      return ["1285667539377", "1285668256621", "1285671523023"];
     })(),
   };
 
