@@ -8,6 +8,7 @@ This ledger keeps source evidence separate from claims about the application. UR
 | Castilla y León employment offers         | <https://analisis.datosabiertos.jcyl.es/api/explore/v2.1/catalog/datasets/ofertas-de-empleo/records>                                                                        | `scripts/data/sourceConfig.ts` (`jcyl-employment-offers`)                 |
 | ECYL training courses                     | <https://analisis.datosabiertos.jcyl.es/api/explore/v2.1/catalog/datasets/formacion-del-ecyl/records>                                                                       | `scripts/data/sourceConfig.ts` (`jcyl-ecyl-training`)                     |
 | Professional certificates                 | <https://analisis.datosabiertos.jcyl.es/api/explore/v2.1/catalog/datasets/certificados-profesionalidad/records>                                                             | `scripts/data/sourceConfig.ts` (`jcyl-professional-certificates`)         |
+| Castilla y León public employment calls   | <https://analisis.datosabiertos.jcyl.es/api/explore/v2.1/catalog/datasets/convocatorias-de-empleo-publico/records>                                                          | `scripts/data/sourceConfig.ts` (`jcyl-public-employment-calls`)           |
 | Provincial employment contracts           | <https://analisis.datosabiertos.jcyl.es/api/explore/v2.1/catalog/datasets/contratos-realizados-en-las-provincias-de-castilla-y-leon/records?where=provincia%21%3D%27CYL%27> | `scripts/data/sourceConfig.ts` (`jcyl-provincial-employment-contracts`)   |
 | Castilla y León municipal registry        | <https://analisis.datosabiertos.jcyl.es/api/explore/v2.1/catalog/datasets/registro-de-municipios-de-castilla-y-leon/records>                                                | `scripts/data/sourceConfig.ts` (`jcyl-municipal-registry`)                |
 | EDUCAbase income tables                   | <https://estadisticas.educacion.gob.es/EducaJaxiPx/>                                                                                                                        | `scripts/data/sourceConfig.ts` and `docs/methodology/educabase-income.md` |
@@ -21,7 +22,7 @@ This ledger keeps source evidence separate from claims about the application. UR
 ## Interpretation boundaries
 
 - The Junta datasets describe the published regional training and offer snapshots; they do not prove every possible offer.
-- The six Junta datasets used by the product declare CC BY 4.0 ES in the portal. Their normalized copies, record counts and dates are exposed in the product methodology.
+- The seven Junta datasets used by the product declare CC BY 4.0 ES in the portal. Their normalized copies, record counts and dates are exposed in the product methodology.
 - EDUCAbase tables describe the published contribution-base measures and their declared cohorts/scopes; they are not individual salary or employment predictions.
 - The 502 CNO-11 primary groups form the complete searchable classification catalog. CNO-11 is a statistical classification: catalog presence is not evidence of an FP equivalence.
 - CNO-11 and BOE evidence is used for reviewed training–occupation relationships. An unresolved or deferred relation remains unavailable rather than being broadened by similarity.

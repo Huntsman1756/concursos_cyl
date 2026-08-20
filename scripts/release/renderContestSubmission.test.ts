@@ -33,6 +33,9 @@ describe("contest submission renderer", () => {
     expect(rendered["application-summary.md"]).toContain(
       "39 de las 1.026 ofertas de la instantánea",
     );
+    expect(rendered["application-summary.md"]).toContain(
+      "dataset derivado descargable en JSON y CSV",
+    );
     expect(rendered["submission-checklist.md"]).toContain(
       "https://salida-cyl.157-90-22-40.sslip.io/",
     );

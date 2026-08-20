@@ -59,6 +59,9 @@ describe("App", () => {
     expect(
       screen.queryByRole("link", { name: "Datos verificables" }),
     ).not.toBeInTheDocument();
+    expect(
+      screen.getByRole("link", { name: "Datos abiertos" }),
+    ).toHaveAttribute("href", "/datos-abiertos");
     expect(screen.getByRole("contentinfo")).toHaveTextContent(
       /Proyecto independiente basado en datos públicos/i,
     );

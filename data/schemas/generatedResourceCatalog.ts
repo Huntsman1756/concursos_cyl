@@ -65,6 +65,14 @@ export const GENERATED_RESOURCE_CATALOG = {
     fileName: "municipalities.json",
     sourceKind: "municipalities",
   },
+  derivedFpOccupationGraph: {
+    fileName: "derived-fp-occupation-graph.json",
+    sourceKind: "derivedRelationships",
+  },
+  openDataCatalog: {
+    fileName: "open-data-catalog.json",
+    sourceKind: "derivedRelationships",
+  },
 } as const;
 
 export type GeneratedResourceKey = keyof typeof GENERATED_RESOURCE_CATALOG;
@@ -84,6 +92,8 @@ export const GENERATED_RESOURCE_FILE_NAME_PATTERN =
   /^[a-z\d]+(?:-[a-z\d]+)*\.json$/u;
 export const GENERATED_SNAPSHOT_ID_PATTERN = /^[a-z\d]+(?:-[a-z\d]+)*$/u;
 const GENERATED_SNAPSHOT_RESOURCE_PREFIX = `${GENERATED_DATA_VERSION_PATH}/snapshots/`;
+const DERIVED_FP_OCCUPATION_GRAPH_CSV_FILE_NAME =
+  "derived-fp-occupation-graph.csv";
 
 interface ImmutableGeneratedResourcePathParts {
   snapshotId: string;
@@ -155,6 +165,27 @@ export function immutableGeneratedResourceFilePath(
   return `${GENERATED_SNAPSHOT_RESOURCE_PREFIX}${snapshotId}/${fileName}`;
 }
 
+export function immutableDerivedFpOccupationGraphCsvPath(
+  snapshotId: string,
+): string {
+  if (!GENERATED_SNAPSHOT_ID_PATTERN.test(snapshotId)) {
+    throw new Error("Invalid generated snapshot descriptor.");
+  }
+  return `${GENERATED_SNAPSHOT_RESOURCE_PREFIX}${snapshotId}/${DERIVED_FP_OCCUPATION_GRAPH_CSV_FILE_NAME}`;
+}
+
+export function isImmutableDerivedFpOccupationGraphCsvPath(
+  path: string,
+): boolean {
+  const parts = path.replace(GENERATED_SNAPSHOT_RESOURCE_PREFIX, "").split("/");
+  return (
+    path.startsWith(GENERATED_SNAPSHOT_RESOURCE_PREFIX) &&
+    parts.length === 2 &&
+    GENERATED_SNAPSHOT_ID_PATTERN.test(parts[0] ?? "") &&
+    parts[1] === DERIVED_FP_OCCUPATION_GRAPH_CSV_FILE_NAME
+  );
+}
+
 export function isImmutableGeneratedResourceFilePath(
   fileName: string,
   path: string,
@@ -189,6 +220,7 @@ export function isPermittedGeneratedAssetPath(path: string): boolean {
     GENERATED_FOUNDATION_RESOURCE_KEYS.some(
       (key) => path === legacyGeneratedResourcePath(key),
     ) ||
-    isGenericImmutableGeneratedResourcePath(path)
+    isGenericImmutableGeneratedResourcePath(path) ||
+    isImmutableDerivedFpOccupationGraphCsvPath(path)
   );
 }

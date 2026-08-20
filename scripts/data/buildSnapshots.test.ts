@@ -636,6 +636,71 @@ describe("buildSnapshots", { timeout: BUILD_SNAPSHOTS_TEST_TIMEOUT }, () => {
     ).toBe(true);
   });
 
+  it("publishes the derived FP occupation graph in hashed JSON and CSV formats", async () => {
+    const root = await temporaryRoot();
+
+    await buildSnapshots({
+      rootDirectory: root,
+      ...fixedOptions,
+      loadCuratedMappings: async () => ({
+        occupations: [
+          {
+            occupationId: "occupation:cno11:7510",
+            preferredLabel: "Electricistas de la construcción",
+            confirmationLabel: "Electricidad en construcción",
+            classificationSystem: "CNO-11",
+            classificationCode: "7510",
+            reviewStatus: "approved",
+            sourceUrl: "https://www.ine.es/",
+            reviewedAt: "2026-08-20",
+            catalogVersion: "1.0.0",
+          },
+        ],
+        aliases: [],
+        links: [
+          {
+            trainingProgramKey: "ELE01B",
+            occupationId: "occupation:cno11:7510",
+            relationshipType: "official_output",
+            reviewStatus: "approved",
+            sourceUrl: "https://www.boe.es/eli/es/rd/2026/01/01/1",
+            sourceQuote: "Electricista de construcción y mantenimiento.",
+            reviewedAt: "2026-08-20",
+            mappingVersion: "1.0.0",
+          },
+        ],
+      }),
+    });
+
+    const manifest = await readManifest(root);
+    const graphSnapshot = manifest.resourceSnapshots.derivedFpOccupationGraph;
+    const catalogSnapshot = manifest.resourceSnapshots.openDataCatalog;
+    const graph = JSON.parse(
+      await readFile(assetPath(root, graphSnapshot.resourcePath), "utf8"),
+    ) as Array<Record<string, unknown>>;
+    const [catalog] = JSON.parse(
+      await readFile(assetPath(root, catalogSnapshot.resourcePath), "utf8"),
+    ) as Array<{
+      csvResourcePath: string;
+      csvSha256: string;
+      recordCount: number;
+    }>;
+    const csv = await readFile(assetPath(root, catalog.csvResourcePath));
+
+    expect(graph).toEqual([
+      expect.objectContaining({
+        programKey: "ELE01B",
+        cno11Code: "7510",
+        occupationLabel: "Electricistas de la construcción",
+      }),
+    ]);
+    expect(catalog.recordCount).toBe(1);
+    expect(createHash("sha256").update(csv).digest("hex")).toBe(
+      catalog.csvSha256,
+    );
+    expect(csv.toString("utf8")).toContain('"ELE01B"');
+  });
+
   it("publishes quote-backed requirements as an additive hashed resource", async () => {
     const root = await temporaryRoot();
     const requirementQuote = "Permiso de conducir B y vehículo propio.";

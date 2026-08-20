@@ -3,10 +3,10 @@ name: Deploy GitHub Pages
 on:
   pull_request:
     branches:
-      - feature/salida-cyl-development
+      - main
   push:
     branches:
-      - feature/salida-cyl-development
+      - main
   workflow_dispatch:
 
 concurrency:

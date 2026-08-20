@@ -20,6 +20,11 @@ const EcylResourcesPage = lazy(() =>
     default: module.EcylResourcesPage,
   })),
 );
+const OpenDataPage = lazy(() =>
+  import("../features/open-data/OpenDataPage").then((module) => ({
+    default: module.OpenDataPage,
+  })),
+);
 const OccupationResultsPage = lazy(() =>
   import("../features/occupation-first/OccupationResultsPage").then(
     (module) => ({ default: module.OccupationResultsPage }),
@@ -88,6 +93,7 @@ export function AppRoutes() {
             />
             <Route path="/comparar" element={<CompareStudiesPage />} />
             <Route path="/recursos" element={<EcylResourcesPage />} />
+            <Route path="/datos-abiertos" element={<OpenDataPage />} />
             <Route path="/metodologia" element={<MethodologyPage />} />
             <Route
               path="*"

@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 
 import type { LoadableGeneratedManifest } from "../../../data/schemas/generated";
 import { SOURCE_CONFIG } from "../../../scripts/data/sourceConfig";
@@ -494,6 +495,31 @@ export function MethodologyPage() {
             <p>
               Conservamos una copia fechada de los ciclos, centros y modalidades
               antes de generar la interfaz.
+            </p>
+          </section>
+        </article>
+        <article className="source-method-card">
+          <h2>Dataset derivado abierto</h2>
+          <section>
+            <h3>Qué aporta</h3>
+            <p>
+              Publicamos el grafo FP↔CNO-11 que utiliza la aplicación en JSON y
+              CSV, con la fuente, cita y fecha de revisión de cada relación.
+            </p>
+          </section>
+          <section>
+            <h3>Qué no permite afirmar</h3>
+            <p>
+              Solo contiene relaciones revisadas. Una ausencia expresa cobertura
+              pendiente, no incompatibilidad entre un ciclo y una ocupación.
+            </p>
+          </section>
+          <section>
+            <h3>Descarga y licencia</h3>
+            <p>
+              <Link to="/datos-abiertos">
+                Consultar el dataset, su licencia y sus hashes
+              </Link>
             </p>
           </section>
         </article>

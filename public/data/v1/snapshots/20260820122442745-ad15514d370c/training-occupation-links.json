@@ -21,6 +21,16 @@
   },
   {
     "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:7510",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-20",
+    "sourceQuote": "Electricista de construcción.",
+    "sourceUrl": "https://www.boe.es/eli/es/rd/2008/02/08/177",
+    "trainingProgramKey": "ELE01M"
+  },
+  {
+    "mappingVersion": "1.0.0",
     "occupationId": "occupation:cno11:7111",
     "relationshipType": "official_output",
     "reviewStatus": "approved",
@@ -71,6 +81,16 @@
   },
   {
     "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:9700",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-20",
+    "sourceQuote": "Peones y auxiliares de industrias metalúrgicas, de fabricación de productos metálicos y manufactureras.",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/fabricacion-mecanica/fabricacion-elementos-metalicos.html",
+    "trainingProgramKey": "FME02B"
+  },
+  {
+    "mappingVersion": "1.0.0",
     "occupationId": "occupation:cno11:5110",
     "relationshipType": "official_output",
     "reviewStatus": "approved",
@@ -78,6 +98,16 @@
     "sourceQuote": "Las ocupaciones y puestos de trabajo más relevantes son los siguientes: Cocinero.",
     "sourceUrl": "https://todofp.es/dam/jcr%3A63392ee9-4d38-449b-a196-d0efb714b364/n-tcocinagastronomiaes-pdf.pdf",
     "trainingProgramKey": "HOT01M"
+  },
+  {
+    "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:3812",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-20",
+    "sourceQuote": "Técnica / técnico de soporte informático.",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/informatica-comunicaciones/sistemas-microniformaticos-redes.html",
+    "trainingProgramKey": "IFC01MD"
   },
   {
     "mappingVersion": "1.0.0",
@@ -98,6 +128,36 @@
     "sourceQuote": "Desarrollador de aplicaciones en entornos Web.",
     "sourceUrl": "https://www.boe.es/buscar/doc.php?id=BOE-A-2010-9269&lang=es",
     "trainingProgramKey": "IFC03SD"
+  },
+  {
+    "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:5621",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-20",
+    "sourceQuote": "Auxiliar de Farmacia.",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/sanidad/farmacia-parafarmacia.html",
+    "trainingProgramKey": "SAN02M"
+  },
+  {
+    "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:2640",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-20",
+    "sourceQuote": "Delegada / delegado comercial de productos hospitalarios y farmacéuticos.",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/sanidad/laboratorio-clinico-biomedico.html",
+    "trainingProgramKey": "SAN08S"
+  },
+  {
+    "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:2640",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-20",
+    "sourceQuote": "Delegada / delegado comercial de productos hospitalarios y farmacéuticos.",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/sanidad/laboratorio-clinico-biomedico.html",
+    "trainingProgramKey": "SAN08SD"
   },
   {
     "mappingVersion": "1.0.0",
@@ -138,5 +198,15 @@
     "sourceQuote": "Auxiliar de ayuda a domicilio.",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2011/11/04/1593",
     "trainingProgramKey": "SSC01M"
+  },
+  {
+    "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:7232",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-20",
+    "sourceQuote": "7232 Pintores en las industrias manufactureras",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+    "trainingProgramKey": "TMV01M"
   }
 ]

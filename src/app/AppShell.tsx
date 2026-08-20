@@ -58,7 +58,7 @@ export function AppShell({ children }: AppShellProps) {
             <span>Proyecto independiente basado en datos públicos.</span>
           </div>
           <nav aria-label="Pie de página">
-            <Link to="/metodologia">Fuentes</Link>
+            <Link to="/datos-abiertos">Datos abiertos</Link>
             <Link to="/metodologia">Metodología</Link>
             <Link to="/metodologia">Limitaciones</Link>
             <Link to="/metodologia">Accesibilidad</Link>

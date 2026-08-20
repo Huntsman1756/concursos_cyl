@@ -18,11 +18,11 @@ La orientación es pública, gratuita y usable sin registro, también desde un m
 
 ## 4. Originalidad e innovación
 
-El núcleo es una relación bidireccional FP ↔ ocupación con evidencia trazable y cobertura explícita. Las relaciones no revisadas quedan pendientes; el sistema no las completa por similitud ni con texto generado. La interfaz convierte varios catálogos públicos en una decisión explicable y muestra la incertidumbre sin puntuaciones ni recomendaciones opacas.
+El núcleo es una relación bidireccional FP ↔ ocupación con evidencia trazable y cobertura explícita. Las relaciones no revisadas quedan pendientes; el sistema no las completa por similitud ni con texto generado. La interfaz convierte varios catálogos públicos en una decisión explicable y devuelve el grafo revisado a la comunidad en JSON y CSV bajo licencia abierta.
 
 ## 5. Variedad de datasets del Portal de Datos Abiertos de la Junta de Castilla y León
 
-Los seis conjuntos regionales tienen un uso visible en la interfaz y una copia normalizada dentro del snapshot `20260820064024473-eb120ecc88eb`.
+Los siete conjuntos regionales tienen un uso visible en la interfaz y una copia normalizada dentro del snapshot `20260820122442745-ad15514d370c`.
 
 | Dataset JCyL                       | Dónde se usa                                 | Registros usados | Fecha usada           | Licencia     |
 | ---------------------------------- | -------------------------------------------- | ---------------: | --------------------- | ------------ |
@@ -30,6 +30,7 @@ Los seis conjuntos regionales tienen un uso visible en la interfaz y una copia n
 | Ofertas de empleo                  | Ofertas relacionadas y requisitos publicados |            1.026 | Fuente del 18/08/2026 | CC BY 4.0 ES |
 | Formación del ECYL                 | Alternativas de formación complementaria     |              749 | Copia del 20/08/2026  | CC BY 4.0 ES |
 | Certificados de profesionalidad    | Rutas formativas complementarias             |              583 | Copia del 20/08/2026  | CC BY 4.0 ES |
+| Convocatorias de Empleo Público    | Procesos públicos con plazo abierto          |              307 | Copia del 20/08/2026  | CC BY 4.0 ES |
 | Contratos realizados por provincia | Contexto laboral territorial en resultados   |            2.331 | Copia del 20/08/2026  | CC BY 4.0 ES |
 | Registro de municipios             | Población del municipio donde se estudia     |            2.248 | Copia del 20/08/2026  | CC BY 4.0 ES |
 
@@ -41,11 +42,11 @@ La portada pide primero el punto de partida y muestra un solo formulario y un so
 
 ## 7. Calidad técnica
 
-La ingesta descarga las fuentes, valida esquemas y genera recursos inmutables bajo `/data/v1/`. El manifiesto publica recuentos, fechas, hashes SHA-256 y estado de calidad. Una actualización parcial o inválida no sustituye la última copia válida. El corte de candidatura está ligado a un commit y a un snapshot reproducible. El estado actual supera 712 pruebas unitarias y de integración, 80 recorridos E2E en escritorio y móvil, lint, compilación, control de licencias y verificación de la documentación de concurso.
+La ingesta descarga las fuentes, valida esquemas y genera recursos inmutables bajo `/data/v1/`. El manifiesto publica recuentos, fechas, hashes SHA-256 y estado de calidad. El grafo derivado añade descargas JSON y CSV con integridad verificable. Una actualización parcial o inválida no sustituye la última copia válida. El corte de candidatura queda ligado a un commit y a un snapshot reproducible.
 
 ## Límites declarados
 
-- Las 14 relaciones FP-ocupación publicadas son cobertura revisada, no el universo completo de relaciones posibles.
+- Las 21 relaciones FP-ocupación publicadas son cobertura revisada, no el universo completo de relaciones posibles.
 - Las 39 ofertas alcanzadas pertenecen a una copia fechada de 1.026 ofertas; no representan todo el mercado laboral.
 - Los contratos provinciales aportan contexto territorial agregado, no demanda por ocupación.
 - La población municipal describe el lugar de estudio, no la residencia del alumnado.
@@ -56,5 +57,6 @@ La ingesta descarga las fuentes, valida esquemas y genera recursos inmutables ba
 - Producto público: <https://salida-cyl.157-90-22-40.sslip.io/>
 - Fuentes y metodología: <https://salida-cyl.157-90-22-40.sslip.io/metodologia>
 - Manifiesto de datos: <https://salida-cyl.157-90-22-40.sslip.io/data/v1/manifest.json>
+- Dataset derivado: <https://salida-cyl.157-90-22-40.sslip.io/datos-abiertos>
 - Evidencia técnica: [technical-evidence.md](technical-evidence.md)
 - Límites completos: [limitations.md](limitations.md)

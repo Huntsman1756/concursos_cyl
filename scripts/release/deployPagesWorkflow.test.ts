@@ -6,6 +6,14 @@ const packageJsonPath = resolve("package.json");
 const workflowPath = resolve(".github/workflows/deploy-pages.yml");
 
 describe("GitHub Pages deployment workflow", () => {
+  it("deploys the production branch instead of the retired feature branch", async () => {
+    const workflow = await readFile(workflowPath, "utf8");
+    const eventBlock = workflow.slice(0, workflow.indexOf("concurrency:"));
+
+    expect(eventBlock.match(/- main/gu)).toHaveLength(2);
+    expect(eventBlock).not.toContain("feature/salida-cyl-development");
+  });
+
   it("requests first-run Pages enablement before deployment", async () => {
     const workflow = await readFile(workflowPath, "utf8");
     expect(workflow).toMatch(

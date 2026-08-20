@@ -81,6 +81,8 @@ La interfaz permite elegir directamente cualquiera de los ${freeze.manifest.reso
 
 SALIDA CyL conecta FP y ocupación en ambos sentidos con evidencia verificable. Integra siete datasets del Portal de Datos Abiertos de la Junta de Castilla y León, todos visibles en la ficha o en las rutas de apoyo.
 
+El grafo revisado se devuelve a la comunidad como dataset derivado descargable en JSON y CSV, con licencia abierta, fuente por relación e integridad SHA-256 verificable.
+
 ## Cobertura congelada
 
 - Instantánea publicada: \`${freeze.manifest.snapshotId}\`.
@@ -98,6 +100,8 @@ Las claves de modalidad se informan aparte de las identidades de cualificación.
 ## Acceso
 
 URL raíz para la candidatura: [${ROOT_URL}](${ROOT_URL})
+
+Datos derivados: [${ROOT_URL}datos-abiertos](${ROOT_URL}datos-abiertos)
 
 La memoria ordenada por criterios está en [jury-memo.md](jury-memo.md). La procedencia técnica, los límites estadísticos, las pruebas y los campos que requieren confirmación humana están en [technical-evidence.md](technical-evidence.md), [limitations.md](limitations.md) y [submission-checklist.md](submission-checklist.md).
 `;

@@ -59,6 +59,12 @@ import {
   PublicEmploymentCallsResourceSchema,
   type PublicEmploymentCall,
 } from "../../data/schemas/publicEmployment";
+import {
+  DerivedFpOccupationGraphResourceSchema,
+  OpenDataCatalogResourceSchema,
+  type DerivedFpOccupationRow,
+  type OpenDataCatalogRecord,
+} from "../../data/schemas/openData";
 
 export type GeneratedDataErrorCode = "network" | "schema" | "missing";
 
@@ -177,6 +183,36 @@ export function loadManifest(): Promise<LoadableGeneratedManifest> {
     LoadableGeneratedManifestSchema,
     { cache: "no-store" },
   );
+}
+
+export async function loadDerivedFpOccupationGraph(
+  manifest: LoadableGeneratedManifest,
+): Promise<DerivedFpOccupationRow[]> {
+  const snapshot = (
+    manifest.resourceSnapshots as typeof manifest.resourceSnapshots &
+      Partial<Record<"derivedFpOccupationGraph", { resourcePath: string }>>
+  ).derivedFpOccupationGraph;
+  return snapshot === undefined
+    ? []
+    : loadGeneratedResource(
+        snapshot.resourcePath,
+        DerivedFpOccupationGraphResourceSchema,
+      );
+}
+
+export async function loadOpenDataCatalog(
+  manifest: LoadableGeneratedManifest,
+): Promise<OpenDataCatalogRecord[]> {
+  const snapshot = (
+    manifest.resourceSnapshots as typeof manifest.resourceSnapshots &
+      Partial<Record<"openDataCatalog", { resourcePath: string }>>
+  ).openDataCatalog;
+  return snapshot === undefined
+    ? []
+    : loadGeneratedResource(
+        snapshot.resourcePath,
+        OpenDataCatalogResourceSchema,
+      );
 }
 
 export async function loadEcylCourses(

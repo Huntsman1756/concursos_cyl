@@ -50,6 +50,10 @@ import {
 } from "../../data/schemas/generated";
 import { OutcomeIndicatorsResourceSchema } from "../../data/schemas/outcomes";
 import {
+  DerivedFpOccupationGraphResourceSchema,
+  OpenDataCatalogResourceSchema,
+} from "../../data/schemas/openData";
+import {
   EcylCourseSourceRecordSchema,
   EcylCoursesResourceSchema,
   ProfessionalCertificateSourceRecordSchema,
@@ -79,6 +83,7 @@ import {
   GENERATED_RESOURCE_CATALOG,
   GENERATED_FOUNDATION_RESOURCE_KEYS,
   GENERATED_RESOURCE_KEYS,
+  immutableDerivedFpOccupationGraphCsvPath,
   immutableGeneratedResourcePath,
   type GeneratedResourceKey,
 } from "../../data/schemas/generatedResourceCatalog";
@@ -93,6 +98,11 @@ import {
 import { loadApprovedMappings } from "../../src/domain/occupation";
 import { PublishedRequirementsResourceSchema } from "../../src/domain/requirements";
 import { fetchAllRecords } from "./fetchAllRecords";
+import {
+  buildDerivedFpOccupationGraph,
+  serializeDerivedFpOccupationGraphCsv,
+  sha256Text,
+} from "./buildDerivedFpOccupationGraph";
 import { hashFile } from "./hashFile";
 import {
   loadEducabaseIncomeBundle,
@@ -236,6 +246,14 @@ const RESOURCE_DEFINITIONS = {
   municipalities: {
     ...GENERATED_RESOURCE_CATALOG.municipalities,
     schema: MunicipalitiesResourceSchema,
+  },
+  derivedFpOccupationGraph: {
+    ...GENERATED_RESOURCE_CATALOG.derivedFpOccupationGraph,
+    schema: DerivedFpOccupationGraphResourceSchema,
+  },
+  openDataCatalog: {
+    ...GENERATED_RESOURCE_CATALOG.openDataCatalog,
+    schema: OpenDataCatalogResourceSchema,
   },
 } as const;
 
@@ -1010,6 +1028,17 @@ async function validateSnapshotDirectory(
     if ((await hashFile(filePath)) !== snapshot.sha256) {
       throw new Error(`Snapshot hash mismatch for additive resource ${key}.`);
     }
+    if (key === "openDataCatalog") {
+      const [catalog] = OpenDataCatalogResourceSchema.parse(records);
+      const csvPath = resourceFileInSnapshot(
+        directory,
+        catalog.csvResourcePath,
+      );
+      await assertPhysicalPath(root, csvPath);
+      if ((await hashFile(csvPath)) !== catalog.csvSha256) {
+        throw new Error("Open-data CSV hash does not match its catalog.");
+      }
+    }
   }
 
   const report =
@@ -1076,6 +1105,19 @@ async function validateFlatCandidateDirectory(
         `Staged resource validation failed for ${definition.fileName}.`,
       );
     }
+  }
+  const [catalog] = OpenDataCatalogResourceSchema.parse(
+    JSON.parse(
+      await readFile(
+        resolve(staging, RESOURCE_DEFINITIONS.openDataCatalog.fileName),
+        "utf8",
+      ),
+    ),
+  );
+  const csvPath = resolve(staging, basename(catalog.csvResourcePath));
+  await assertPhysicalPath(root, csvPath);
+  if ((await hashFile(csvPath)) !== catalog.csvSha256) {
+    throw new Error("Staged open-data CSV hash does not match its catalog.");
   }
 }
 
@@ -1368,6 +1410,17 @@ async function writeCandidate(
   );
   const offers = normalizedOfferArtifacts.jobOffers;
   const approvedMappings = loadApprovedMappings(curatedMappings);
+  const derivedFpOccupationGraph = buildDerivedFpOccupationGraph(
+    training.programs,
+    approvedMappings.occupations,
+    approvedMappings.links,
+  );
+  const derivedGraphCsvFileName = "derived-fp-occupation-graph.csv";
+  const derivedGraphCsv = serializeDerivedFpOccupationGraphCsv(
+    derivedFpOccupationGraph,
+  );
+  const derivedGraphCsvResourcePath =
+    immutableDerivedFpOccupationGraphCsvPath(snapshotId);
   const canonicalAliasIdentity = (alias: {
     alias: string;
     occupationId: string;
@@ -1431,6 +1484,21 @@ async function writeCandidate(
     municipalities: MunicipalitiesResourceSchema.parse(
       normalizeMunicipalities(municipalityRecords),
     ),
+    derivedFpOccupationGraph,
+    openDataCatalog: OpenDataCatalogResourceSchema.parse([
+      {
+        datasetId: "salida-cyl-fp-occupation-graph",
+        title: "Grafo FP y ocupaciones de SALIDA CyL",
+        description:
+          "Relaciones revisadas entre ciclos de Formación Profesional y grupos primarios CNO-11 con evidencia de procedencia.",
+        generatedAt: fetchedAt,
+        licenseName: "CC BY 4.0",
+        licenseUrl: "https://creativecommons.org/licenses/by/4.0/",
+        csvResourcePath: derivedGraphCsvResourcePath,
+        csvSha256: sha256Text(derivedGraphCsv),
+        recordCount: derivedFpOccupationGraph.length,
+      },
+    ]),
   };
   const qualityReport = runQualityGates(
     candidate,
@@ -1439,6 +1507,11 @@ async function writeCandidate(
   );
 
   await safeMkdir(root, staging);
+  await safeWriteFile(
+    root,
+    resolve(staging, derivedGraphCsvFileName),
+    derivedGraphCsv,
+  );
   const resourceHashes = {} as Record<ResourceKey, string>;
   for (const key of GENERATED_RESOURCE_KEYS) {
     const definition = RESOURCE_DEFINITIONS[key];
@@ -1470,6 +1543,10 @@ async function writeCandidate(
     recordsUrl:
       "https://www.todofp.es/que-estudiar/familias-profesionales.html",
   };
+  const derivedRelationshipSource = {
+    id: "salida-cyl-derived-fp-occupation-graph",
+    recordsUrl: "https://github.com/Huntsman1756/concursos_cyl",
+  };
   const resourceSnapshot = (key: ResourceKey, count: number) => ({
     ...sourceSnapshot(
       RESOURCE_DEFINITIONS[key].sourceKind === "training"
@@ -1500,7 +1577,10 @@ async function writeCandidate(
                           : RESOURCE_DEFINITIONS[key].sourceKind ===
                               "municipalities"
                             ? SOURCE_CONFIG.municipalities
-                            : curatedRelationshipSource,
+                            : RESOURCE_DEFINITIONS[key].sourceKind ===
+                                "derivedRelationships"
+                              ? derivedRelationshipSource
+                              : curatedRelationshipSource,
       fetchedAt,
       RESOURCE_DEFINITIONS[key].sourceKind === "offers"
         ? offerSourceSnapshot.sourceUpdatedAt
