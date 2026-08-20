@@ -19,6 +19,16 @@ export const SOURCE_CONFIG = {
     recordsUrl:
       "https://analisis.datosabiertos.jcyl.es/api/explore/v2.1/catalog/datasets/certificados-profesionalidad/records",
   },
+  regionalContracts: {
+    id: "jcyl-provincial-employment-contracts",
+    recordsUrl:
+      "https://analisis.datosabiertos.jcyl.es/api/explore/v2.1/catalog/datasets/contratos-realizados-en-las-provincias-de-castilla-y-leon/records",
+  },
+  municipalities: {
+    id: "jcyl-municipal-registry",
+    recordsUrl:
+      "https://analisis.datosabiertos.jcyl.es/api/explore/v2.1/catalog/datasets/registro-de-municipios-de-castilla-y-leon/records",
+  },
   educabaseIncome: {
     id: "educabase-fp-income-four-table-bundle",
     recordsUrl: "https://estadisticas.educacion.gob.es/EducaJaxiPx/",
