@@ -129,6 +129,10 @@ function installFetch({
         ...snapshot,
         resourcePath: "/data/v1/snapshots/build-1/occupations.json",
       },
+      officialOccupations: {
+        ...snapshot,
+        resourcePath: "/data/v1/snapshots/build-1/official-occupations.json",
+      },
       occupationAliases: {
         ...snapshot,
         resourcePath: "/data/v1/snapshots/build-1/occupation-aliases.json",
@@ -152,6 +156,7 @@ function installFetch({
     [manifest.resourceSnapshots.trainingOfferings.resourcePath, offerings],
     [manifest.resourceSnapshots.jobOffers.resourcePath, []],
     [manifest.resourceSnapshots.occupations.resourcePath, occupations],
+    [manifest.resourceSnapshots.officialOccupations.resourcePath, occupations],
     [manifest.resourceSnapshots.occupationAliases.resourcePath, []],
     [
       manifest.resourceSnapshots.trainingOccupationLinks.resourcePath,
@@ -297,6 +302,32 @@ describe("occupation-first results", () => {
     expect(
       within(cards[0]).getByRole("link", { name: "Ver dónde estudiarlo" }),
     ).toHaveAttribute("href", "/formacion/IFC03S");
+  });
+
+  it("shows the source behind every route summary metric", async () => {
+    installFetch();
+    render(
+      <MemoryRouter
+        initialEntries={[`/desde-ocupacion/${occupation.occupationId}`]}
+      >
+        <AppRoutes />
+      </MemoryRouter>,
+    );
+
+    expect(
+      await screen.findByRole("heading", {
+        name: "Qué rutas hemos podido comprobar",
+      }),
+    ).toBeVisible();
+    expect(
+      screen.getByRole("link", { name: "Fuente: relación FP-ocupación" }),
+    ).toHaveAttribute("target", "_blank");
+    expect(
+      screen.getByRole("link", { name: "Fuente: oferta FP JCyL" }),
+    ).toHaveAttribute("target", "_blank");
+    expect(
+      screen.getByRole("link", { name: "Fuente: catálogo CNO-11" }),
+    ).toHaveAttribute("target", "_blank");
   });
 
   it("warns when the official training snapshot is stale", async () => {

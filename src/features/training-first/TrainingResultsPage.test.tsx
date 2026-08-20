@@ -500,6 +500,33 @@ describe("TrainingResultsPage", () => {
     expect(studyHeading).toBeVisible();
   });
 
+  it("makes every decision summary metric traceable to its source", async () => {
+    installResultsFetch();
+    render(
+      <MemoryRouter initialEntries={["/desde-fp/IFC03S"]}>
+        <AppRoutes />
+      </MemoryRouter>,
+    );
+
+    expect(
+      await screen.findByRole("heading", {
+        name: "Qué sabemos de este título",
+      }),
+    ).toBeVisible();
+    expect(
+      screen.getByRole("link", { name: "Fuente: TodoFP" }),
+    ).toHaveAttribute("href", expect.stringContaining("todofp.es"));
+    expect(
+      screen.getByRole("link", { name: "Fuente: relación revisada" }),
+    ).toHaveAttribute("target", "_blank");
+    expect(
+      screen.getByRole("link", { name: "Fuente: ofertas ECYL" }),
+    ).toHaveAttribute("target", "_blank");
+    expect(
+      screen.getByRole("link", { name: "Fuente: oferta FP JCyL" }),
+    ).toHaveAttribute("target", "_blank");
+  });
+
   it("shows approved occupation and zero match message when no offers exist", async () => {
     installResultsFetch();
     render(

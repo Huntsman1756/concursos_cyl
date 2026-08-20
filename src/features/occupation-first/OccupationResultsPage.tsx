@@ -1,6 +1,9 @@
 import { useEffect, useMemo, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import type { LoadableGeneratedManifest } from "../../../data/schemas/generated";
+import type {
+  LoadableGeneratedManifest,
+  SourceSnapshot,
+} from "../../../data/schemas/generated";
 import type { Occupation } from "../../../data/schemas/curatedMappings";
 import {
   loadAuditedRelationships,
@@ -137,6 +140,23 @@ export function OccupationResultsPage() {
   const linkedProvinces = new Set(
     linkedOfferings.map((offering) => offering.province),
   );
+  const resourceSnapshots = state.manifest
+    .resourceSnapshots as typeof state.manifest.resourceSnapshots &
+    Partial<
+      Record<
+        "officialOccupations" | "trainingOccupationLinks",
+        SourceSnapshot & { resourcePath: string }
+      >
+    >;
+  const occupationSnapshot = resourceSnapshots.officialOccupations;
+  const relationshipSnapshot = resourceSnapshots.trainingOccupationLinks;
+  const occupationSourceUrl = occupationSnapshot?.sourceUrl;
+  const relationshipSourceUrl =
+    orderedLinks[0]?.sourceUrl ?? relationshipSnapshot?.sourceUrl;
+  const relationshipDate =
+    orderedLinks[0]?.reviewedAt ??
+    relationshipSnapshot?.sourceUpdatedAt ??
+    relationshipSnapshot?.snapshotFetchedAt;
 
   return (
     <section className="training-page occupation-result-page">
@@ -152,23 +172,93 @@ export function OccupationResultsPage() {
         Ocupación que quieres <span aria-hidden="true">→</span> FP que te lleva
         a ella
       </p>
-      <dl className="result-summary" aria-label="Resumen de rutas formativas">
-        <div>
-          <dt>FP relacionadas</dt>
-          <dd>{linkedProgramKeys.size}</dd>
+      <section className="decision-basis" aria-labelledby="route-basis-title">
+        <div className="decision-basis__heading">
+          <p>Base para decidir</p>
+          <h2 id="route-basis-title">Qué rutas hemos podido comprobar</h2>
         </div>
-        <div>
-          <dt>Centros</dt>
-          <dd>{linkedCenters.size}</dd>
-        </div>
-        <div>
-          <dt>Provincias</dt>
-          <dd>{linkedProvinces.size}</dd>
-        </div>
-      </dl>
+        <dl className="result-summary" aria-label="Resumen de rutas formativas">
+          <div>
+            <dt>FP relacionadas</dt>
+            <dd>
+              <strong>{linkedProgramKeys.size}</strong>
+              <span className="result-summary__unit">rutas revisadas</span>
+              <span className="result-summary__source">
+                {relationshipSourceUrl !== undefined && (
+                  <a
+                    href={relationshipSourceUrl}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    Fuente: relación FP-ocupación
+                  </a>
+                )}
+                {relationshipDate !== undefined && (
+                  <time dateTime={relationshipDate}>
+                    Revisada el {spanishDate(relationshipDate)}
+                  </time>
+                )}
+              </span>
+            </dd>
+          </div>
+          <div>
+            <dt>Centros</dt>
+            <dd>
+              <strong>{linkedCenters.size}</strong>
+              <span className="result-summary__unit">centros publicados</span>
+              <span className="result-summary__source">
+                <a
+                  href={trainingSnapshot.sourceUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  Fuente: oferta FP JCyL
+                </a>
+                <time dateTime={snapshotInstant}>
+                  Copia del {spanishDate(snapshotInstant)}
+                </time>
+              </span>
+            </dd>
+          </div>
+          <div>
+            <dt>Provincias</dt>
+            <dd>
+              <strong>{linkedProvinces.size}</strong>
+              <span className="result-summary__unit">
+                provincias con oferta
+              </span>
+              <span className="result-summary__source">
+                {occupationSourceUrl !== undefined && (
+                  <a
+                    href={occupationSourceUrl}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    Fuente: catálogo CNO-11
+                  </a>
+                )}
+                {occupationSnapshot !== undefined && (
+                  <time
+                    dateTime={
+                      occupationSnapshot.sourceUpdatedAt ??
+                      occupationSnapshot.snapshotFetchedAt
+                    }
+                  >
+                    Catálogo comprobado el{" "}
+                    {spanishDate(
+                      occupationSnapshot.sourceUpdatedAt ??
+                        occupationSnapshot.snapshotFetchedAt,
+                    )}
+                  </time>
+                )}
+              </span>
+            </dd>
+          </div>
+        </dl>
+      </section>
       <p className="coverage-note">
-        La cobertura aún es limitada: una ausencia indica que la relación no ha
-        sido revisada, no que no exista formación relacionada.
+        Cobertura en revisión. Un resultado ausente no demuestra que no exista
+        formación relacionada.
       </p>
       {stale && (
         <p className="stale-warning" role="status">

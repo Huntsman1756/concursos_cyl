@@ -5,6 +5,7 @@ import { REVIEWED_QUALIFICATIONS } from "../../../data/catalogs/reviewedQualific
 import type {
   JobOffer,
   LoadableGeneratedManifest,
+  SourceSnapshot,
   TrainingProgram,
 } from "../../../data/schemas/generated";
 import type { ProfessionalProfile } from "../../../data/schemas/professionalProfiles";
@@ -62,6 +63,20 @@ function snapshotDate(manifest: LoadableGeneratedManifest): string {
     year: "numeric",
     timeZone: "UTC",
   }).format(new Date(instant));
+}
+
+function evidenceDate(snapshot: SourceSnapshot | undefined): string | null {
+  if (snapshot === undefined) return null;
+  return snapshot.sourceUpdatedAt ?? snapshot.snapshotFetchedAt;
+}
+
+function shortDate(value: string): string {
+  return new Intl.DateTimeFormat("es-ES", {
+    day: "numeric",
+    month: "short",
+    year: "numeric",
+    timeZone: "UTC",
+  }).format(new Date(value));
 }
 
 function normalizedLocation(value: string | null | undefined): string {
@@ -270,6 +285,23 @@ export function TrainingResultsPage() {
       .resourceSnapshots as typeof state.manifest.resourceSnapshots &
       Partial<Record<"provincialContracts", { sourceUrl: string }>>
   ).provincialContracts?.sourceUrl;
+  const resourceSnapshots = state.manifest
+    .resourceSnapshots as typeof state.manifest.resourceSnapshots &
+    Partial<
+      Record<
+        "professionalProfiles" | "trainingOccupationLinks",
+        SourceSnapshot & { resourcePath: string }
+      >
+    >;
+  const profilesSnapshot = resourceSnapshots.professionalProfiles;
+  const relationshipsSnapshot = resourceSnapshots.trainingOccupationLinks;
+  const offeringsSnapshot = resourceSnapshots.trainingOfferings;
+  const offersSnapshot = resourceSnapshots.jobOffers;
+  const profilesEvidenceDate = evidenceDate(profilesSnapshot);
+  const relationshipEvidenceDate =
+    approvedLinks[0]?.reviewedAt ?? evidenceDate(relationshipsSnapshot);
+  const offersEvidenceDate = evidenceDate(offersSnapshot);
+  const offeringsEvidenceDate = evidenceDate(offeringsSnapshot);
 
   function applyUnpublishedRequirementFilter(
     action: Extract<
@@ -300,24 +332,110 @@ export function TrainingResultsPage() {
         </p>
         {selectedProvince !== null && <p>Zona elegida: {selectedProvince}</p>}
       </header>
-      <dl className="result-summary" aria-label="Resumen del resultado">
-        <div>
-          <dt>Salidas oficiales</dt>
-          <dd>{officialProfiles.length}</dd>
+      <section
+        className="decision-basis"
+        aria-labelledby="decision-basis-title"
+      >
+        <div className="decision-basis__heading">
+          <p>Base para decidir</p>
+          <h2 id="decision-basis-title">Qué sabemos de este título</h2>
         </div>
-        <div>
-          <dt>Grupos revisados</dt>
-          <dd>{resolvedOccupations.length}</dd>
-        </div>
-        <div>
-          <dt>Ofertas relacionadas</dt>
-          <dd>{orderedMatches.length}</dd>
-        </div>
-        <div>
-          <dt>Centros</dt>
-          <dd>{studyCenters.length}</dd>
-        </div>
-      </dl>
+        <dl className="result-summary" aria-label="Resumen con fuentes">
+          <div>
+            <dt>Salidas profesionales</dt>
+            <dd>
+              <strong>{officialProfiles.length}</strong>
+              <span className="result-summary__unit">perfiles oficiales</span>
+              <span className="result-summary__source">
+                {officialProfiles[0] !== undefined && (
+                  <a
+                    href={officialProfiles[0].sourceUrl}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    Fuente: TodoFP
+                  </a>
+                )}
+                {profilesEvidenceDate !== null && (
+                  <time dateTime={profilesEvidenceDate}>
+                    Copia del {shortDate(profilesEvidenceDate)}
+                  </time>
+                )}
+              </span>
+            </dd>
+          </div>
+          <div>
+            <dt>Ocupaciones vinculadas</dt>
+            <dd>
+              <strong>{resolvedOccupations.length}</strong>
+              <span className="result-summary__unit">grupos revisados</span>
+              <span className="result-summary__source">
+                {(approvedLinks[0] !== undefined ||
+                  relationshipsSnapshot !== undefined) && (
+                  <a
+                    href={
+                      approvedLinks[0]?.sourceUrl ??
+                      relationshipsSnapshot?.sourceUrl
+                    }
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    Fuente: relación revisada
+                  </a>
+                )}
+                {relationshipEvidenceDate !== null && (
+                  <time dateTime={relationshipEvidenceDate}>
+                    {approvedLinks[0] === undefined ? "Copia" : "Revisada"} del{" "}
+                    {shortDate(relationshipEvidenceDate)}
+                  </time>
+                )}
+              </span>
+            </dd>
+          </div>
+          <div>
+            <dt>Ofertas relacionadas</dt>
+            <dd>
+              <strong>{orderedMatches.length}</strong>
+              <span className="result-summary__unit">en la copia actual</span>
+              <span className="result-summary__source">
+                <a
+                  href={offersSnapshot.sourceUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  Fuente: ofertas ECYL
+                </a>
+                {offersEvidenceDate !== null && (
+                  <time dateTime={offersEvidenceDate}>
+                    Copia del {shortDate(offersEvidenceDate)}
+                  </time>
+                )}
+              </span>
+            </dd>
+          </div>
+          <div>
+            <dt>Dónde estudiarlo</dt>
+            <dd>
+              <strong>{studyCenters.length}</strong>
+              <span className="result-summary__unit">centros publicados</span>
+              <span className="result-summary__source">
+                <a
+                  href={offeringsSnapshot.sourceUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  Fuente: oferta FP JCyL
+                </a>
+                {offeringsEvidenceDate !== null && (
+                  <time dateTime={offeringsEvidenceDate}>
+                    Copia del {shortDate(offeringsEvidenceDate)}
+                  </time>
+                )}
+              </span>
+            </dd>
+          </div>
+        </dl>
+      </section>
       {stale && (
         <p className="stale-warning" role="status">
           No se han podido actualizar los datos. Mostramos la última copia
