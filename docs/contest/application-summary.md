@@ -10,13 +10,13 @@ La interfaz permite elegir directamente cualquiera de los 187 ciclos de FP o fil
 
 ## Cobertura congelada
 
-- Instantánea publicada: `20260809185438334-e9ea8694331b`.
+- Instantánea publicada: `20260820064024473-eb120ecc88eb`.
 - Grupos primarios CNO-11 consultables: **502**.
 - **6 cualificaciones distintas**.
 - Claves de modalidad públicas: **7** (COM02M, EOC01M, HOT01M, IFC03S, IFC03SD, SAN21, SSC01M).
 - Relaciones ocupacionales aprobadas: **14**.
 - Alias aprobados: **21**.
-- **46 de las 1.077 ofertas de la instantánea** quedan alcanzadas por relaciones publicadas (unión de IDs).
+- **39 de las 1.026 ofertas de la instantánea** quedan alcanzadas por relaciones publicadas (unión de IDs).
 - Relaciones revisadas sin oferta alcanzada: **11**.
 - Programas diferidos por evidencia insuficiente: ninguno.
 
