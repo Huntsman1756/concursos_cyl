@@ -65,6 +65,10 @@ import {
   type DerivedFpOccupationRow,
   type OpenDataCatalogRecord,
 } from "../../data/schemas/openData";
+import {
+  EducationCenterDirectoryResourceSchema,
+  type EducationCenterDirectoryRecord,
+} from "../../data/schemas/educationCenterDirectory";
 
 export type GeneratedDataErrorCode = "network" | "schema" | "missing";
 
@@ -260,6 +264,7 @@ export async function loadPublicEmploymentCalls(
 export interface LoadedRegionalContext {
   provincialContracts: ProvincialContract[];
   municipalities: MunicipalityContext[];
+  educationCenterDirectory: EducationCenterDirectoryRecord[];
 }
 
 /** Loads optional JCyL territorial context; historical snapshots resolve empty. */
@@ -270,25 +275,32 @@ export async function loadRegionalContext(
     manifest.resourceSnapshots as typeof manifest.resourceSnapshots &
       Partial<
         Record<
-          "provincialContracts" | "municipalities",
+          "provincialContracts" | "municipalities" | "educationCenterDirectory",
           { resourcePath: string }
         >
       >;
-  const [provincialContracts, municipalities] = await Promise.all([
-    snapshots.provincialContracts === undefined
-      ? Promise.resolve([])
-      : loadGeneratedResource(
-          snapshots.provincialContracts.resourcePath,
-          ProvincialContractsResourceSchema,
-        ),
-    snapshots.municipalities === undefined
-      ? Promise.resolve([])
-      : loadGeneratedResource(
-          snapshots.municipalities.resourcePath,
-          MunicipalitiesResourceSchema,
-        ),
-  ]);
-  return { provincialContracts, municipalities };
+  const [provincialContracts, municipalities, educationCenterDirectory] =
+    await Promise.all([
+      snapshots.provincialContracts === undefined
+        ? Promise.resolve([])
+        : loadGeneratedResource(
+            snapshots.provincialContracts.resourcePath,
+            ProvincialContractsResourceSchema,
+          ),
+      snapshots.municipalities === undefined
+        ? Promise.resolve([])
+        : loadGeneratedResource(
+            snapshots.municipalities.resourcePath,
+            MunicipalitiesResourceSchema,
+          ),
+      snapshots.educationCenterDirectory === undefined
+        ? Promise.resolve([])
+        : loadGeneratedResource(
+            snapshots.educationCenterDirectory.resourcePath,
+            EducationCenterDirectoryResourceSchema,
+          ),
+    ]);
+  return { provincialContracts, municipalities, educationCenterDirectory };
 }
 
 /**

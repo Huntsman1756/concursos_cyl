@@ -10,12 +10,17 @@ test("methodology exposes official source, download, terms, and normalized evide
     page.getByRole("heading", { level: 1, name: "Metodología y fuentes" }),
   ).toHaveCount(1);
   const regionalInventory = page.getByRole("region", {
-    name: "7 datasets de la Junta",
+    name: "8 datasets de la Junta",
   });
   await expect(regionalInventory).toBeVisible();
-  await expect(regionalInventory.getByRole("row")).toHaveCount(8);
+  await expect(regionalInventory.getByRole("row")).toHaveCount(9);
   await expect(
     regionalInventory.getByRole("link", { name: "Contratos por provincia" }),
+  ).toBeVisible();
+  await expect(
+    regionalInventory.getByRole("link", {
+      name: "Directorio de Centros Docentes",
+    }),
   ).toBeVisible();
   for (const disclosure of await page
     .getByText("Ver actualización, identificadores y descargas")

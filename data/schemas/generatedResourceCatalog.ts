@@ -65,6 +65,10 @@ export const GENERATED_RESOURCE_CATALOG = {
     fileName: "municipalities.json",
     sourceKind: "municipalities",
   },
+  educationCenterDirectory: {
+    fileName: "education-center-directory.json",
+    sourceKind: "educationCenterDirectory",
+  },
   derivedFpOccupationGraph: {
     fileName: "derived-fp-occupation-graph.json",
     sourceKind: "derivedRelationships",

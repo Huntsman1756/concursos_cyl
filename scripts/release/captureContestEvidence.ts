@@ -177,7 +177,7 @@ async function positionCapture(page: Page, evidenceId: string): Promise<void> {
   }
   if (evidenceId === "methodology-sources") {
     await page
-      .getByRole("heading", { name: "7 datasets de la Junta" })
+      .getByRole("heading", { name: "8 datasets de la Junta" })
       .scrollIntoViewIfNeeded();
     await page.evaluate(() => window.scrollBy(0, -120));
   }

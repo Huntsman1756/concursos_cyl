@@ -32,6 +32,12 @@ import { ReliableActionSchema } from "../../domain/actionEngine";
 import { useDecisionSession } from "../../domain/session";
 import { trainingLevelLabel } from "../../domain/trainingPresentation";
 import { OfferEvidenceCard } from "./OfferEvidenceCard";
+import { DecisionEvidencePath } from "./DecisionEvidencePath";
+import {
+  TerritorialDistribution,
+  type TerritorialCenterPoint,
+} from "./TerritorialDistribution";
+import "./result-evidence.css";
 import { resolveApprovedOccupations } from "./resolveApprovedOccupations";
 
 interface ReadyResults {
@@ -257,6 +263,36 @@ export function TrainingResultsPage() {
     );
   }, [state]);
 
+  const territorialCenterPoints = useMemo<TerritorialCenterPoint[]>(() => {
+    if (state.status !== "ready") return [];
+    const directoryByCode = new Map(
+      state.regionalContext.educationCenterDirectory.map((entry) => [
+        entry.centerCode,
+        entry,
+      ]),
+    );
+    return studyCenters.flatMap((center) => {
+      const directoryEntry = directoryByCode.get(center.centerCode);
+      if (
+        directoryEntry?.latitude === null ||
+        directoryEntry?.latitude === undefined ||
+        directoryEntry.longitude === null
+      ) {
+        return [];
+      }
+      return [
+        {
+          centerCode: center.centerCode,
+          centerName: center.centerName,
+          locality: center.locality,
+          province: center.province,
+          latitude: directoryEntry.latitude,
+          longitude: directoryEntry.longitude,
+        },
+      ];
+    });
+  }, [state, studyCenters]);
+
   if (state.status === "loading") return <p>Buscando ofertas relacionadas…</p>;
   if (state.status === "failed") {
     return (
@@ -289,13 +325,17 @@ export function TrainingResultsPage() {
     .resourceSnapshots as typeof state.manifest.resourceSnapshots &
     Partial<
       Record<
-        "professionalProfiles" | "trainingOccupationLinks",
+        | "professionalProfiles"
+        | "trainingOccupationLinks"
+        | "educationCenterDirectory",
         SourceSnapshot & { resourcePath: string }
       >
     >;
   const profilesSnapshot = resourceSnapshots.professionalProfiles;
   const relationshipsSnapshot = resourceSnapshots.trainingOccupationLinks;
   const offeringsSnapshot = resourceSnapshots.trainingOfferings;
+  const educationCenterDirectorySnapshot =
+    resourceSnapshots.educationCenterDirectory;
   const offersSnapshot = resourceSnapshots.jobOffers;
   const profilesEvidenceDate = evidenceDate(profilesSnapshot);
   const relationshipEvidenceDate =
@@ -332,6 +372,14 @@ export function TrainingResultsPage() {
         </p>
         {selectedProvince !== null && <p>Zona elegida: {selectedProvince}</p>}
       </header>
+      <DecisionEvidencePath
+        programTitle={state.program.programTitle}
+        professionalOutputCount={officialProfiles.length}
+        reviewedOccupationCount={resolvedOccupations.length}
+        currentOfferCount={orderedMatches.length}
+        studyCenterCount={studyCenters.length}
+        offerEvidenceDate={offersEvidenceDate}
+      />
       <section
         className="decision-basis"
         aria-labelledby="decision-basis-title"
@@ -540,6 +588,16 @@ export function TrainingResultsPage() {
           </p>
         </div>
       </section>
+      {educationCenterDirectorySnapshot !== undefined && (
+        <TerritorialDistribution
+          points={territorialCenterPoints}
+          sourceUrl={educationCenterDirectorySnapshot.sourceUrl}
+          academicYear={
+            state.regionalContext.educationCenterDirectory[0]?.academicYear ??
+            null
+          }
+        />
+      )}
       <section className="occupations-section">
         <h2>Salidas profesionales oficiales</h2>
         <p>

@@ -34,6 +34,11 @@ export const SOURCE_CONFIG = {
     recordsUrl:
       "https://analisis.datosabiertos.jcyl.es/api/explore/v2.1/catalog/datasets/registro-de-municipios-de-castilla-y-leon/records",
   },
+  educationCenterDirectory: {
+    id: "jcyl-education-center-directory",
+    recordsUrl:
+      "https://analisis.datosabiertos.jcyl.es/api/explore/v2.1/catalog/datasets/directorio-de-centros-docentes/records",
+  },
   educabaseIncome: {
     id: "educabase-fp-income-four-table-bundle",
     recordsUrl: "https://estadisticas.educacion.gob.es/EducaJaxiPx/",

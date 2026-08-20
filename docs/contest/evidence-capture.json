@@ -194,7 +194,7 @@
       "viewport": { "width": 1440, "height": 900 },
       "requiredVisible": [
         { "kind": "role", "role": "heading", "name": "Metodología y fuentes" },
-        { "kind": "role", "role": "heading", "name": "7 datasets de la Junta" },
+        { "kind": "role", "role": "heading", "name": "8 datasets de la Junta" },
         { "kind": "text", "value": "Contratos por provincia" },
         { "kind": "text", "value": "CC BY 4.0 ES" }
       ],

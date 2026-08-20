@@ -101,6 +101,12 @@ const JCYL_DATASETS = [
     use: "Población del municipio donde se estudia",
     sourceUrl: SOURCE_CONFIG.municipalities.recordsUrl,
   },
+  {
+    key: "educationCenterDirectory",
+    title: "Directorio de Centros Docentes",
+    use: "Coordenadas oficiales para la distribución territorial",
+    sourceUrl: SOURCE_CONFIG.educationCenterDirectory.recordsUrl,
+  },
 ] as const;
 
 function incomeSnapshotFrom(
@@ -173,7 +179,9 @@ function RegionalDatasetInventory({ state }: { state: ManifestState }) {
       <div className="regional-dataset-inventory__heading">
         <div>
           <p className="methodology-page__eyebrow">Datos regionales en uso</p>
-          <h2 id="regional-datasets-heading">7 datasets de la Junta</h2>
+          <h2 id="regional-datasets-heading">
+            {JCYL_DATASETS.length} datasets de la Junta
+          </h2>
         </div>
         <p>Cada fuente tiene un uso visible en el producto.</p>
       </div>

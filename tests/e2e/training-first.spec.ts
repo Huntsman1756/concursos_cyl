@@ -42,6 +42,20 @@ test("live DAW results shows formacion link and approved occupation", async ({
   await expect(page.getByText("CNO-11 2713")).toBeVisible();
 
   await expect(
+    page.getByRole("heading", { name: "Del título a la evidencia disponible" }),
+  ).toBeVisible();
+  await expect(
+    page.getByRole("img", {
+      name: "Distribución territorial de los centros",
+    }),
+  ).toBeVisible();
+  await expect(
+    page.getByRole("link", {
+      name: /Fuente: Directorio de Centros Docentes JCyL/,
+    }),
+  ).toBeVisible();
+
+  await expect(
     page.getByRole("link", {
       name: /Analistas, programadores y diseñadores web y multimedia CNO-11 2713/,
     }),

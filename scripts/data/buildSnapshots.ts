@@ -35,6 +35,11 @@ import {
 import { FP_OFFICIAL_ALIAS_PASS_BASELINE_SNAPSHOT_ID } from "../../data/schemas/fpOfficialAliasPass";
 import { FP_ONE_WORD_PUBLICATION_REVIEW_SNAPSHOT } from "../../data/schemas/fpOneWordPublicationReview";
 import {
+  EducationCenterDirectoryResourceSchema,
+  EducationCenterDirectorySourceRecordSchema,
+  type EducationCenterDirectorySourceRecord,
+} from "../../data/schemas/educationCenterDirectory";
+import {
   EducationCenterSchema,
   GeneratedManifestSchema,
   JobOfferSchema,
@@ -123,6 +128,7 @@ import {
   normalizeProfessionalCertificates,
 } from "./normalizeEcylResources";
 import { normalizePublicEmploymentCalls } from "./normalizePublicEmployment";
+import { normalizeEducationCenterDirectory } from "./normalizeEducationCenterDirectory";
 import {
   buildMappingCoverage,
   loadCuratedMappingsFromDisk,
@@ -247,6 +253,10 @@ const RESOURCE_DEFINITIONS = {
     ...GENERATED_RESOURCE_CATALOG.municipalities,
     schema: MunicipalitiesResourceSchema,
   },
+  educationCenterDirectory: {
+    ...GENERATED_RESOURCE_CATALOG.educationCenterDirectory,
+    schema: EducationCenterDirectoryResourceSchema,
+  },
   derivedFpOccupationGraph: {
     ...GENERATED_RESOURCE_CATALOG.derivedFpOccupationGraph,
     schema: DerivedFpOccupationGraphResourceSchema,
@@ -304,6 +314,9 @@ export interface BuildSnapshotsOptions {
   >;
   fetchRegionalContractRecords?: () => Promise<RegionalContractSourceRecord[]>;
   fetchMunicipalityRecords?: () => Promise<MunicipalitySourceRecord[]>;
+  fetchEducationCenterDirectoryRecords?: () => Promise<
+    EducationCenterDirectorySourceRecord[]
+  >;
   fetchIncomeBundle?: () => Promise<EducabaseIncomeBundle>;
   loadCuratedMappings?: (
     programs: readonly z.infer<typeof TrainingProgramSchema>[],
@@ -1386,6 +1399,7 @@ async function writeCandidate(
   publicEmploymentCallRecords: readonly PublicEmploymentCallSourceRecord[],
   regionalContractRecords: readonly RegionalContractSourceRecord[],
   municipalityRecords: readonly MunicipalitySourceRecord[],
+  educationCenterDirectoryRecords: readonly EducationCenterDirectorySourceRecord[],
   incomeBundle: EducabaseIncomeBundle,
   outcomeIndicators: z.infer<typeof OutcomeIndicatorsResourceSchema>,
   curatedMappings: ValidatedCuratedMappings,
@@ -1484,6 +1498,9 @@ async function writeCandidate(
     municipalities: MunicipalitiesResourceSchema.parse(
       normalizeMunicipalities(municipalityRecords),
     ),
+    educationCenterDirectory: EducationCenterDirectoryResourceSchema.parse(
+      normalizeEducationCenterDirectory(educationCenterDirectoryRecords),
+    ),
     derivedFpOccupationGraph,
     openDataCatalog: OpenDataCatalogResourceSchema.parse([
       {
@@ -1578,9 +1595,12 @@ async function writeCandidate(
                               "municipalities"
                             ? SOURCE_CONFIG.municipalities
                             : RESOURCE_DEFINITIONS[key].sourceKind ===
-                                "derivedRelationships"
-                              ? derivedRelationshipSource
-                              : curatedRelationshipSource,
+                                "educationCenterDirectory"
+                              ? SOURCE_CONFIG.educationCenterDirectory
+                              : RESOURCE_DEFINITIONS[key].sourceKind ===
+                                  "derivedRelationships"
+                                ? derivedRelationshipSource
+                                : curatedRelationshipSource,
       fetchedAt,
       RESOURCE_DEFINITIONS[key].sourceKind === "offers"
         ? offerSourceSnapshot.sourceUpdatedAt
@@ -2559,6 +2579,13 @@ export async function buildSnapshots(
           SOURCE_CONFIG.municipalities.recordsUrl,
           MunicipalitySourceRecordSchema,
         ));
+    const fetchEducationCenterDirectoryRecords =
+      options.fetchEducationCenterDirectoryRecords ??
+      (() =>
+        fetchAllRecords(
+          SOURCE_CONFIG.educationCenterDirectory.recordsUrl,
+          EducationCenterDirectorySourceRecordSchema,
+        ));
 
     let committed = false;
     let staging: string | undefined;
@@ -2574,6 +2601,7 @@ export async function buildSnapshots(
         fetchedPublicEmploymentCallRecords,
         fetchedRegionalContractRecords,
         fetchedMunicipalityRecords,
+        fetchedEducationCenterDirectoryRecords,
       ] = await Promise.all([
         limitIngestion(() => fetchTrainingRecords()),
         limitIngestion(() => fetchOfferRecords()),
@@ -2583,6 +2611,7 @@ export async function buildSnapshots(
         limitIngestion(() => fetchPublicEmploymentCallRecords()),
         limitIngestion(() => fetchRegionalContractRecords()),
         limitIngestion(() => fetchMunicipalityRecords()),
+        limitIngestion(() => fetchEducationCenterDirectoryRecords()),
       ]);
       const trainingRecords = z
         .array(TrainingSourceRecordSchema)
@@ -2605,6 +2634,9 @@ export async function buildSnapshots(
       const municipalityRecords = z
         .array(MunicipalitySourceRecordSchema)
         .parse(fetchedMunicipalityRecords);
+      const educationCenterDirectoryRecords = z
+        .array(EducationCenterDirectorySourceRecordSchema)
+        .parse(fetchedEducationCenterDirectoryRecords);
       const outcomeIndicators = OutcomeIndicatorsResourceSchema.parse(
         normalizeIncomeOutcomes(incomeBundle.tables),
       );
@@ -2661,6 +2693,7 @@ export async function buildSnapshots(
         publicEmploymentCalls: publicEmploymentCallRecords,
         regionalContracts: regionalContractRecords,
         municipalities: municipalityRecords,
+        educationCenterDirectory: educationCenterDirectoryRecords,
       });
       const snapshotId = `${fetchedAt.replace(/\D/gu, "").toLowerCase()}-${sourceHash.slice(0, 12)}`;
       const buildId = `${snapshotId}-${process.pid}`;
@@ -2677,6 +2710,7 @@ export async function buildSnapshots(
         publicEmploymentCallRecords,
         regionalContractRecords,
         municipalityRecords,
+        educationCenterDirectoryRecords,
         incomeBundle,
         outcomeIndicators,
         curatedMappings,

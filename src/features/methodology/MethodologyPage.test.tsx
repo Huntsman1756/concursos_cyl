@@ -152,19 +152,27 @@ describe("MethodologyPage", () => {
       name: "Metodología y fuentes",
     });
     const inventory = screen.getByRole("region", {
-      name: "7 datasets de la Junta",
+      name: "8 datasets de la Junta",
     });
     await waitFor(() =>
       expect(
         within(inventory).getByRole("row", { name: /Ofertas de empleo/ }),
       ).toHaveTextContent(/1/),
     );
-    expect(within(inventory).getAllByText("CC BY 4.0 ES")).toHaveLength(7);
+    expect(within(inventory).getAllByText("CC BY 4.0 ES")).toHaveLength(8);
     expect(
       within(inventory).getByRole("link", { name: "Contratos por provincia" }),
     ).toHaveAttribute("href", SOURCE_CONFIG.regionalContracts.recordsUrl);
     expect(inventory).toHaveTextContent(
       /Contexto laboral territorial en resultados/i,
+    );
+    expect(
+      within(inventory).getByRole("link", {
+        name: "Directorio de Centros Docentes",
+      }),
+    ).toHaveAttribute(
+      "href",
+      SOURCE_CONFIG.educationCenterDirectory.recordsUrl,
     );
     expect(methodology).toHaveTextContent(
       /cruce administrativo.*registros educativos.*Seguridad Social/i,
