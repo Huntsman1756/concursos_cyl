@@ -32,12 +32,12 @@ export const SOURCE_CONFIG = {
   municipalities: {
     id: "jcyl-municipal-registry",
     recordsUrl:
-      "https://analisis.datosabiertos.jcyl.es/api/explore/v2.1/catalog/datasets/registro-de-municipios-de-castilla-y-leon/records",
+      "https://analisis.datosabiertos.jcyl.es/api/explore/v2.1/catalog/datasets/registro-de-municipios-de-castilla-y-leon/records?order_by=cod_ine",
   },
   educationCenterDirectory: {
     id: "jcyl-education-center-directory",
     recordsUrl:
-      "https://analisis.datosabiertos.jcyl.es/api/explore/v2.1/catalog/datasets/directorio-de-centros-docentes/records",
+      "https://analisis.datosabiertos.jcyl.es/api/explore/v2.1/catalog/datasets/directorio-de-centros-docentes/records?order_by=codigo",
   },
   educabaseIncome: {
     id: "educabase-fp-income-four-table-bundle",
