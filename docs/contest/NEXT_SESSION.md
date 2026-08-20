@@ -2,7 +2,7 @@
 
 ## Estado confirmado
 
-- Producto actualizado localmente; despliegue y recaptura pendientes al cerrar este documento.
+- Producto y documentación publicados en `c72b891f302a6a189ed507e05a6b443366c841d7`.
 - Freeze fuente: `647554e6cd71d650431da6e67c3c74d77d66fdb6`.
 - Snapshot activo: `20260820184643129-a5594cf94fc7`.
 - Ocho datasets JCyL visibles y 20 recursos inmutables en el manifiesto.
@@ -10,18 +10,19 @@
 - Ofertas alcanzadas: 39 de 1.026; la cifra es una unión acotada de IDs, no todo el mercado.
 - Directorio educativo: 1.741 registros y reconciliación exacta de los 229 centros FP por código.
 - La ficha de ciclo incorpora ingresos observados de EDUCAbase con referencia nacional y agregada de Castilla y León, sin presentarlos como predicción individual.
-- QA focal del cambio: 18 pruebas de componente y 20/20 E2E en escritorio y móvil; lint, formato, build y presupuesto de recursos aprobados.
+- QA final: 744 pruebas aprobadas y 180 omitidas por condiciones de plataforma; 100/100 E2E en escritorio y móvil.
 - Matriz opcional preparada para Chromium, Firefox y WebKit sin encarecer el CI ordinario.
+- Workflow verificado: `32406662946`.
+- Diez capturas finales anónimas ligadas al commit desplegado y validadas con Axe, red, consola y overflow.
 
 ## Orden de trabajo
 
 1. Confirmar la convocatoria oficial vigente; el portal visible continúa mostrando la IX edición.
 2. Completar identidad, contacto, declaraciones, consentimiento y adjuntos humanos.
 3. Obtener aprobación explícita antes de cualquier envío externo.
-4. Completar el release: ejecutar la matriz completa, desplegar el SHA revisado, verificar producción y recapturar las diez vistas.
-5. Construir una evaluación etiquetada de precisión/cobertura antes de ampliar el matching de ofertas.
-6. Priorizar nuevas relaciones para ciclos con evidencia oficial y utilidad laboral observada.
-7. Repetir freeze, capturas y release completo después de cualquier cambio posterior de producto o datos.
+4. Construir una evaluación etiquetada de precisión/cobertura antes de ampliar el matching de ofertas.
+5. Priorizar nuevas relaciones para ciclos con evidencia oficial y utilidad laboral observada.
+6. Repetir freeze, capturas y release completo después de cualquier cambio posterior de producto o datos.
 
 ## Política de ejecución NAN
 
