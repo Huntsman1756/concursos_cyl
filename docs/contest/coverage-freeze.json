@@ -1,7 +1,7 @@
 {
   "schemaVersion": "1.0.0",
   "freezeStatus": "frozen",
-  "sourceCommitSha": "dca976c442581f177a0de934cb3422e6165e9dc3",
+  "sourceCommitSha": "1504b42ad7d95d901a7aefa988128f1ba1f408b9",
   "manifest": {
     "path": "public/data/v1/manifest.json",
     "sha256": "8cd5c5bcbd53ea7fca0cec11d7a7866e1d7dcfebdee2d3bf58dad15825001321",
