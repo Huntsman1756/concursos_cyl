@@ -135,6 +135,35 @@ function ConvertTo-NativeArgument {
     return $builder.ToString()
 }
 
+function Remove-IsolatedWorkerWorktree {
+    param([string]$RepositoryRoot,[string]$WorktreePath)
+    $git = (Get-Command git -ErrorAction Stop).Source
+    $start = New-Object System.Diagnostics.ProcessStartInfo
+    $start.FileName = $git
+    $start.Arguments = (@('-C',$RepositoryRoot,'worktree','remove','--force',$WorktreePath) | ForEach-Object { ConvertTo-NativeArgument -Argument $_ }) -join ' '
+    $start.UseShellExecute = $false
+    $start.CreateNoWindow = $true
+    $start.RedirectStandardInput = $true
+    $start.RedirectStandardOutput = $true
+    $start.RedirectStandardError = $true
+    $process = New-Object System.Diagnostics.Process
+    $process.StartInfo = $start
+    if (-not $process.Start()) { return @{succeeded=$false;exitCode=-1;error='start-failed'} }
+    $process.StandardInput.Close()
+    $stderrTask = $process.StandardError.ReadToEndAsync()
+    $stdoutTask = $process.StandardOutput.ReadToEndAsync()
+    $process.WaitForExit()
+    $stderr = $stderrTask.GetAwaiter().GetResult()
+    $stdoutTask.GetAwaiter().GetResult() | Out-Null
+    $exitCode = $process.ExitCode
+    $process.Dispose()
+    return @{
+        succeeded=($exitCode -eq 0)
+        exitCode=$exitCode
+        error=$(if ([string]::IsNullOrWhiteSpace($stderr)) { $null } else { 'git-worktree-remove-failed' })
+    }
+}
+
 function Invoke-NativeCaptured {
     param([string]$Executable, [string[]]$Arguments, [string]$WorkingDirectory, [int]$TimeoutSeconds)
     $start = New-Object System.Diagnostics.ProcessStartInfo
@@ -343,8 +372,8 @@ try {
             }
         } finally {
             if ($worktreeAdded) {
-                & git -C $repoRoot worktree remove --force $attemptRoot | Out-Null
-                if ($LASTEXITCODE -ne 0) { throw 'Unable to remove isolated worker worktree.' }
+                $cleanupResult = Remove-IsolatedWorkerWorktree -RepositoryRoot $repoRoot -WorktreePath $attemptRoot
+                if ($attemptEvidence) { $attemptEvidence.cleanup = $cleanupResult }
             }
         }
         $attempts += $attemptEvidence

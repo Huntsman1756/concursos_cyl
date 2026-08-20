@@ -119,7 +119,7 @@ function Invoke-WorkerDirect {
 
 # ── JSONL builder ──
 function New-Jsonl {
-    param([int]$Total = 1000, [int]$InputTokens = 400, [int]$Output = 300, [int]$Reasoning = 200, [int]$CacheRead = 50, [int]$CacheWrite = 50, [ValidateSet('tool-calls','stop')][string]$Reason = 'stop', [string]$DraftText = '')
+    param([int]$Total = 1000, [int]$InputTokens = 400, [int]$Output = 300, [int]$Reasoning = 200, [int]$CacheRead = 50, [int]$CacheWrite = 50, [ValidateSet('stop','length','tool-calls','content-filter','error','unknown')][string]$Reason = 'stop', [string]$DraftText = '')
     $cacheObj = @{ read = $CacheRead; write = $CacheWrite }
     $tokensObj = @{ total = $Total; input = $InputTokens; output = $Output; reasoning = $Reasoning; cache = $cacheObj }
     $start = @{ type = 'step_start'; sessionID = 'session-test'; part = @{ type = 'step-start' } }
@@ -985,6 +985,36 @@ try {
             }
         } finally {
             Remove-Item -LiteralPath $explicitTelemetry -Force -ErrorAction SilentlyContinue
+        }
+    }
+
+    # 22. OpenCode 1.18 finish reasons and isolated config bootstrap
+    if (-not $Only -or $Only -eq 'opencode-bootstrap') {
+        Write-Host "`n*** 22. OpenCode bootstrap compatibility ***" -ForegroundColor Cyan
+        Write-Host ("-" * 40) -ForegroundColor DarkGray
+
+        $workerSource = Get-Content -LiteralPath $workerPath -Raw
+        Assert-Contains $workerSource 'XDG_CONFIG_HOME' '22a: child receives isolated XDG_CONFIG_HOME'
+        Assert-Contains $workerSource "'content-filter','error','unknown'" '22b: parser includes all OpenCode finish reasons'
+
+        foreach ($reason in @('length','content-filter','error','unknown')) {
+            $explicitTelemetry = Join-Path $tdir "finish_${reason}_$([guid]::NewGuid().ToString('N')).json"
+            try {
+                $jsonl = New-Jsonl -Total 1234 -Reason $reason
+                $plan = @(@{exitCode = 0; changedPaths = @(); validationExitCode = 0; jsonl = $jsonl}) | ConvertTo-Json -Compress
+                $parameters = New-ValidCodeContract -Objective "finish-$reason" -MaxRetries 1 -AllowNoChanges -TestMode -MockPlan $plan
+                $parameters.TelemetryOutputPath = $explicitTelemetry
+                $result = Invoke-WorkerDirect -WorkerParameters $parameters
+                Assert-True ($result.ExitCode -ne 0) "22c: $reason is not accepted as success"
+                Assert-True (Test-Path -LiteralPath $explicitTelemetry -PathType Leaf) "22d: $reason still writes telemetry"
+                if (Test-Path -LiteralPath $explicitTelemetry -PathType Leaf) {
+                    $telemetry = Get-Content -LiteralPath $explicitTelemetry -Raw | ConvertFrom-Json
+                    Assert-Equal $telemetry.status 'blocked-harness-failure' "22e: $reason is classified as harness failure"
+                    Assert-Equal $telemetry.tokensUsage.total 1234 "22f: $reason usage is retained"
+                }
+            } finally {
+                Remove-Item -LiteralPath $explicitTelemetry -Force -ErrorAction SilentlyContinue
+            }
         }
     }
 

@@ -31,7 +31,18 @@ $repoPrefix = $repoRoot.TrimEnd('\','/') + [System.IO.Path]::DirectorySeparatorC
 $tdir = Join-Path $repoRoot '.agent-runs'
 if (-not (Test-Path -LiteralPath $tdir)) { New-Item -ItemType Directory -Path $tdir -Force | Out-Null }
 $runtimeId = [guid]::NewGuid().ToString('N')
-$providerEvidencePath = Join-Path $tdir "$runtimeId.provider.jsonl"
+$providerEvidenceDirectory = $tdir
+if (-not [string]::IsNullOrWhiteSpace($TelemetryOutputPath)) {
+    if (-not [System.IO.Path]::IsPathRooted($TelemetryOutputPath)) {
+        throw 'TelemetryOutputPath must be absolute.'
+    }
+    $telemetryParent = Split-Path -Parent ([System.IO.Path]::GetFullPath($TelemetryOutputPath))
+    if (-not (Test-Path -LiteralPath $telemetryParent -PathType Container)) {
+        throw 'TelemetryOutputPath parent directory does not exist.'
+    }
+    $providerEvidenceDirectory = $telemetryParent
+}
+$providerEvidencePath = Join-Path $providerEvidenceDirectory "$runtimeId.provider.jsonl"
 $nanProxyProcess = $null
 $isolatedOpenCodeRoot = $null
 $expectedNanKeyFingerprint = $null
@@ -123,6 +134,7 @@ function Parse-JsonlTokens {
     $sessionId = $null
     $stepOpen = $false
     $terminalCount = 0
+    $finalReason = $null
     $lastWasTerminal = $false
     foreach ($line in ($Jsonl -split "`n" | Where-Object { $_.Trim() })) {
         $ev = try { $line | ConvertFrom-Json } catch { throw 'OpenCode returned malformed JSONL.' }
@@ -135,9 +147,14 @@ function Parse-JsonlTokens {
             if ($stepOpen -or $ev.part.type -ne 'step-start') { throw 'Malformed OpenCode step start.' }
             $stepOpen = $true
         } elseif ($ev.type -eq 'step_finish') {
-            if (-not $stepOpen -or $ev.part.type -ne 'step-finish' -or $ev.part.reason -notin @('tool-calls','stop')) { throw 'Malformed OpenCode step finish.' }
+            $allowedFinishReasons = @('stop','length','tool-calls','content-filter','error','unknown')
+            if (-not $stepOpen -or $ev.part.type -ne 'step-finish' -or $ev.part.reason -notin $allowedFinishReasons) { throw 'Malformed OpenCode step finish.' }
             $stepOpen = $false
-            if ($ev.part.reason -eq 'stop') { $terminalCount++; $lastWasTerminal = $true }
+            if ($ev.part.reason -ne 'tool-calls') {
+                $terminalCount++
+                $finalReason = [string]$ev.part.reason
+                $lastWasTerminal = $true
+            }
         } elseif (-not $stepOpen) {
             throw 'OpenCode event occurred outside a step.'
         }
@@ -158,6 +175,8 @@ function Parse-JsonlTokens {
     }
     if ($stepOpen -or $terminalCount -ne 1 -or -not $lastWasTerminal) { throw 'OpenCode output has no unique final terminal step.' }
     $r.sessionId = $sessionId
+    $r.finishReason = $finalReason
+    $r.terminalSuccess = ($finalReason -eq 'stop')
     return $r
 }
 
@@ -296,8 +315,9 @@ function Initialize-IsolatedOpenCodeState {
     $dataRoot = Join-Path $root 'data'
     $stateRoot = Join-Path $root 'state'
     $cacheRoot = Join-Path $root 'cache'
+    $configRoot = Join-Path $root 'config'
     $authDirectory = Join-Path $dataRoot 'opencode'
-    foreach ($directory in @($authDirectory,$stateRoot,$cacheRoot)) {
+    foreach ($directory in @($authDirectory,$stateRoot,$cacheRoot,$configRoot)) {
         New-Item -ItemType Directory -Path $directory -Force | Out-Null
     }
     $credential = Get-NanCredentialRecord
@@ -308,7 +328,7 @@ function Initialize-IsolatedOpenCodeState {
     $isolatedAuth = @{nan=$credential.record} | ConvertTo-Json -Depth 4
     $authPath = Join-Path $authDirectory 'auth.json'
     [System.IO.File]::WriteAllText($authPath, $isolatedAuth, (New-Object System.Text.UTF8Encoding($false)))
-    return @{root=$root;data=$dataRoot;state=$stateRoot;cache=$cacheRoot;credentialSource=$credential.source;keyFingerprint=$credentialHash.Substring(0,16)}
+    return @{root=$root;data=$dataRoot;state=$stateRoot;cache=$cacheRoot;config=$configRoot;credentialSource=$credential.source;keyFingerprint=$credentialHash.Substring(0,16)}
 }
 
 function Start-NanAuditProxy {
@@ -453,6 +473,7 @@ function Invoke-OpenCodeBudgeted {
         $startInfo.EnvironmentVariables['XDG_DATA_HOME'] = $RunContext.data
         $startInfo.EnvironmentVariables['XDG_STATE_HOME'] = $RunContext.state
         $startInfo.EnvironmentVariables['XDG_CACHE_HOME'] = $RunContext.cache
+        $startInfo.EnvironmentVariables['XDG_CONFIG_HOME'] = $RunContext.config
         $override = @{
             provider=@{nan=@{options=@{baseURL=$RunContext.baseUrl}}}
             mcp=@{esdata=@{enabled=$false}}
@@ -516,6 +537,10 @@ function Invoke-OpenCodeBudgeted {
         if (-not $terminationReason) {
             $usage = Parse-JsonlTokens -Jsonl $raw
             $draftOutput = Get-JsonlDraftOutput -Jsonl $raw
+            if (-not $usage.terminalSuccess) {
+                $terminationReason = "finish-$($usage.finishReason)"
+                $exitCode = 1
+            }
         }
         return @{exitCode=$exitCode;tokens=$usage;terminationReason=$terminationReason;stderr=($stderrLines -join "`n");draftOutput=$draftOutput}
     } finally {
@@ -630,7 +655,7 @@ if (-not $TestMode) {
         $repositoryId = Compute-StringSha256 -InputString $repositoryRemote
         $proxy = Start-NanAuditProxy -EvidencePath $providerEvidencePath -ContractHash $contractHash -RepositoryId $repositoryId
         $nanProxyProcess = $proxy.process
-        $openCodeRunContext = @{data=$isolated.data;state=$isolated.state;cache=$isolated.cache;baseUrl=$proxy.baseUrl;taskType=$TaskType}
+        $openCodeRunContext = @{data=$isolated.data;state=$isolated.state;cache=$isolated.cache;config=$isolated.config;baseUrl=$proxy.baseUrl;taskType=$TaskType}
         $exitCleanup = @{runtimeRoot=$isolatedOpenCodeRoot;proxyPid=$nanProxyProcess.Id}
         Register-EngineEvent -SourceIdentifier PowerShell.Exiting -MessageData $exitCleanup -Action {
             $cleanup = $event.MessageData
@@ -689,6 +714,10 @@ $totalAttempts = 0
                 if ($mp.jsonl) {
                     $attempt.tokens = Parse-JsonlTokens -Jsonl $mp.jsonl
                     $attempt.draftOutput = Get-JsonlDraftOutput -Jsonl $mp.jsonl
+                    if (-not $attempt.tokens.terminalSuccess) {
+                        $attempt.exitCode = 1
+                        $attempt.terminationReason = "finish-$($attempt.tokens.finishReason)"
+                    }
                 }
                 $attempt.changedPaths = if ($mp.changedPaths) { @($mp.changedPaths) } else { @() }
                 if ($mp.terminationReason) { $attempt.terminationReason = [string]$mp.terminationReason }
@@ -733,7 +762,12 @@ $totalAttempts = 0
             $contract += 'Do not commit, push, publish, deploy, or expand this contract.'
             $opts += @('--', ($contract -join "`n"))
             Write-Host ("Attempt " + $totalAttempts + ": ${candidateAgent} -> ${candidateModel}") -ForegroundColor Cyan
-            $liveResult = Invoke-OpenCodeBudgeted -Arguments $opts -TokenBudget $effectiveMaxObservedTokens -TimeoutSeconds $MaxExecutionSeconds -RunContext $openCodeRunContext
+            try {
+                $liveResult = Invoke-OpenCodeBudgeted -Arguments $opts -TokenBudget $effectiveMaxObservedTokens -TimeoutSeconds $MaxExecutionSeconds -RunContext $openCodeRunContext
+            } catch {
+                Stop-NanAuditRuntime
+                throw
+            }
             $attempt.exitCode = $liveResult.exitCode
             $attempt.tokens = $liveResult.tokens
             $attempt.terminationReason = $liveResult.terminationReason
@@ -924,7 +958,8 @@ $providerResponseSetHash = if ($providerResponseIds.Count -gt 0) { Compute-Strin
 
 # ── Telemetry (always written before exit) ──
 $tid = $runtimeId
-$status = if ($tokenBudgetExceeded) { 'blocked-token-budget' } elseif ($executionTimedOut) { 'blocked-timeout' } elseif ($successResult -and -not $providerEvidenceVerified) { 'blocked-unverified-provider' } elseif ($successResult) { 'awaiting-frontier-review' } elseif ($providerFailureStatus) { $providerFailureStatus } else { 'blocked-needs-new-contract' }
+$harnessFailure = @($attempts | Where-Object { $_.terminationReason -like 'finish-*' }).Count -gt 0
+$status = if ($tokenBudgetExceeded) { 'blocked-token-budget' } elseif ($executionTimedOut) { 'blocked-timeout' } elseif ($successResult -and -not $providerEvidenceVerified) { 'blocked-unverified-provider' } elseif ($successResult) { 'awaiting-frontier-review' } elseif ($providerFailureStatus) { $providerFailureStatus } elseif ($harnessFailure) { 'blocked-harness-failure' } else { 'blocked-needs-new-contract' }
 $success = ($successResult -ne $null) -and (-not $contractViolation) -and (-not $validationFailed) -and $providerEvidenceVerified
 $fcTelemetry = @{}
 if ($TaskType -eq 'code') {
