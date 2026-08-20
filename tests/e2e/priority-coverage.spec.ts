@@ -2,6 +2,11 @@ import { expect, test } from "@playwright/test";
 
 const reviewedPrograms = [
   {
+    programKey: "ADG01M",
+    title: "Gestión Administrativa",
+    occupationCodes: ["4113"],
+  },
+  {
     programKey: "ADG02S",
     title: "Administración y Finanzas",
     occupationCodes: ["4111", "4113", "4123", "4223"],
@@ -15,6 +20,16 @@ const reviewedPrograms = [
     programKey: "SSC01S",
     title: "Educación Infantil",
     occupationCodes: ["2252"],
+  },
+  {
+    programKey: "IMA03M",
+    title: "Mantenimiento Electromecánico",
+    occupationCodes: ["8202"],
+  },
+  {
+    programKey: "TMV02M",
+    title: "Electromecánica de Vehículos Automóviles",
+    occupationCodes: ["7401"],
   },
 ] as const;
 

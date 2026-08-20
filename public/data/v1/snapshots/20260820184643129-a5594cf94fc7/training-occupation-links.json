@@ -1,6 +1,26 @@
 [
   {
     "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:4113",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-12",
+    "sourceQuote": "Empleado de tesorería.",
+    "sourceUrl": "https://www.boe.es/eli/es/rd/2009/10/30/1631",
+    "trainingProgramKey": "ADG01M"
+  },
+  {
+    "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:4113",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-12",
+    "sourceQuote": "Empleado de tesorería.",
+    "sourceUrl": "https://www.boe.es/eli/es/rd/2009/10/30/1631",
+    "trainingProgramKey": "ADG01MD"
+  },
+  {
+    "mappingVersion": "1.0.0",
     "occupationId": "occupation:cno11:4223",
     "relationshipType": "reviewed_relationship",
     "reviewStatus": "approved",
@@ -8,6 +28,86 @@
     "sourceQuote": "Asistente en departamentos de Recursos Humanos.",
     "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/administracion-gestion/asistencia-direccion.html",
     "trainingProgramKey": "ADG01S"
+  },
+  {
+    "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:4111",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-12",
+    "sourceQuote": "Administrativa / administrativo contable.",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/administracion-gestion/administracion-finanzas.html",
+    "trainingProgramKey": "ADG02S"
+  },
+  {
+    "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:4113",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-12",
+    "sourceQuote": "Administrativa / administrativo de banca y de seguros.",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/administracion-gestion/administracion-finanzas.html",
+    "trainingProgramKey": "ADG02S"
+  },
+  {
+    "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:4123",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-12",
+    "sourceQuote": "Administrativa / administrativo de logística.",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/administracion-gestion/administracion-finanzas.html",
+    "trainingProgramKey": "ADG02S"
+  },
+  {
+    "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:4223",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-12",
+    "sourceQuote": "Administrativa / administrativo de recursos humanos.",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/administracion-gestion/administracion-finanzas.html",
+    "trainingProgramKey": "ADG02S"
+  },
+  {
+    "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:4111",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-12",
+    "sourceQuote": "Administrativa / administrativo contable.",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/administracion-gestion/administracion-finanzas.html",
+    "trainingProgramKey": "ADG02SD"
+  },
+  {
+    "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:4113",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-12",
+    "sourceQuote": "Administrativa / administrativo de banca y de seguros.",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/administracion-gestion/administracion-finanzas.html",
+    "trainingProgramKey": "ADG02SD"
+  },
+  {
+    "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:4123",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-12",
+    "sourceQuote": "Administrativa / administrativo de logística.",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/administracion-gestion/administracion-finanzas.html",
+    "trainingProgramKey": "ADG02SD"
+  },
+  {
+    "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:4223",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-12",
+    "sourceQuote": "Administrativa / administrativo de recursos humanos.",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/administracion-gestion/administracion-finanzas.html",
+    "trainingProgramKey": "ADG02SD"
   },
   {
     "mappingVersion": "1.0.0",
@@ -522,6 +622,46 @@
   {
     "mappingVersion": "1.0.0",
     "occupationId": "occupation:cno11:2713",
+    "relationshipType": "reviewed_relationship",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-12",
+    "sourceQuote": "Desarrollando aplicaciones en el ámbito del entretenimiento y la informática móvil.",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/informatica-comunicaciones/des-aplicaciones-multiplataforma.html",
+    "trainingProgramKey": "IFC02S"
+  },
+  {
+    "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:3820",
+    "relationshipType": "reviewed_relationship",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-12",
+    "sourceQuote": "Desarrollar aplicaciones de propósito general.",
+    "sourceUrl": "https://www.boe.es/eli/es/rd/2010/05/21/450",
+    "trainingProgramKey": "IFC02S"
+  },
+  {
+    "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:2713",
+    "relationshipType": "reviewed_relationship",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-12",
+    "sourceQuote": "Desarrollando aplicaciones en el ámbito del entretenimiento y la informática móvil.",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/informatica-comunicaciones/des-aplicaciones-multiplataforma.html",
+    "trainingProgramKey": "IFC02SD"
+  },
+  {
+    "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:3820",
+    "relationshipType": "reviewed_relationship",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-12",
+    "sourceQuote": "Desarrollar aplicaciones de propósito general.",
+    "sourceUrl": "https://www.boe.es/eli/es/rd/2010/05/21/450",
+    "trainingProgramKey": "IFC02SD"
+  },
+  {
+    "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:2713",
     "relationshipType": "official_output",
     "reviewStatus": "approved",
     "reviewedAt": "2026-08-04",
@@ -538,6 +678,16 @@
     "sourceQuote": "Desarrollador de aplicaciones en entornos Web.",
     "sourceUrl": "https://www.boe.es/buscar/doc.php?id=BOE-A-2010-9269&lang=es",
     "trainingProgramKey": "IFC03SD"
+  },
+  {
+    "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:8202",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-12",
+    "sourceQuote": "Montador de equipos eléctricos.",
+    "sourceUrl": "https://www.boe.es/eli/es/rd/2011/11/04/1589",
+    "trainingProgramKey": "IMA03M"
   },
   {
     "mappingVersion": "1.0.0",
@@ -841,6 +991,26 @@
   },
   {
     "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:2252",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-12",
+    "sourceQuote": "Educador o educadora infantil en primer ciclo de educación infantil.",
+    "sourceUrl": "https://www.boe.es/eli/es/rd/2007/10/29/1394",
+    "trainingProgramKey": "SSC01S"
+  },
+  {
+    "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:2252",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-12",
+    "sourceQuote": "Educador o educadora infantil en primer ciclo de educación infantil.",
+    "sourceUrl": "https://www.boe.es/eli/es/rd/2007/10/29/1394",
+    "trainingProgramKey": "SSC01SD"
+  },
+  {
+    "mappingVersion": "1.0.0",
     "occupationId": "occupation:cno11:3713",
     "relationshipType": "official_output",
     "reviewStatus": "approved",
@@ -858,6 +1028,16 @@
     "sourceQuote": "7232 Pintores en las industrias manufactureras",
     "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
     "trainingProgramKey": "TMV01M"
+  },
+  {
+    "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:7401",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-12",
+    "sourceQuote": "Mecánico de automóviles.",
+    "sourceUrl": "https://www.boe.es/eli/es/rd/2010/03/19/453",
+    "trainingProgramKey": "TMV02M"
   },
   {
     "mappingVersion": "1.0.0",

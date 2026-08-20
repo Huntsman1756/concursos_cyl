@@ -12,6 +12,8 @@ const REVIEWED_SOURCE_COMMIT = "c3344cc6718a835f061190c20a9c38ee63834d1b";
 const LINKS_PATH = "data/curated/training-occupation-links.json";
 
 export const ACCEPTED_RELATION_KEYS = [
+  "ADG01M|4113",
+  "ADG01MD|4113",
   "ADG01S|4223",
   "ADG02S|4111",
   "ADG02S|4113",
@@ -66,6 +68,7 @@ export const ACCEPTED_RELATION_KEYS = [
   "IFC02S|3820",
   "IFC02SD|2713",
   "IFC02SD|3820",
+  "IMA03M|8202",
   "IMP01M|3510",
   "IMP01M|4412",
   "IMP01M|5220",
@@ -92,6 +95,7 @@ export const ACCEPTED_RELATION_KEYS = [
   "SSC01S|2252",
   "SSC01SD|2252",
   "SSC05S|3713",
+  "TMV02M|7401",
   "TMV03E|3405",
 ] as const;
 

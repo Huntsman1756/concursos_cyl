@@ -39,12 +39,16 @@ describe("mergeFrontierReviewedCoverage", () => {
     );
     expect(restoredKeys).toEqual(
       expect.arrayContaining([
+        "ADG01M|4113",
+        "ADG01MD|4113",
         "ADG02S|4111",
         "ADG02SD|4223",
         "IFC02S|2713",
         "IFC02SD|3820",
         "SSC01S|2252",
         "SSC01SD|2252",
+        "IMA03M|8202",
+        "TMV02M|7401",
       ]),
     );
   });
@@ -66,13 +70,14 @@ describe("mergeFrontierReviewedCoverage", () => {
         reviewNote: "Pendiente de una revisión oficial adicional.",
       },
     ];
-    const reviewed = [
-      {
+    const reviewed = ACCEPTED_RELATION_KEYS.map((key) => {
+      const [trainingProgramKey, classificationCode] = key.split("|");
+      return {
         ...base,
-        trainingProgramKey: "ADG01S",
-        occupationId: "occupation:cno11:4223",
-      },
-    ];
+        trainingProgramKey,
+        occupationId: `occupation:cno11:${classificationCode}`,
+      } satisfies TrainingOccupationLink;
+    });
     expect(() => mergeFrontierReviewedCoverage(current, reviewed)).toThrow(
       /is not approved/u,
     );

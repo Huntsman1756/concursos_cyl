@@ -1343,18 +1343,18 @@ describe("curated occupation mappings", () => {
       expect.objectContaining({
         scope: "program",
         programKey: "ADG01M",
-        approvedMappings: 0,
+        approvedMappings: 1,
         draftMappings: 0,
-        coverageStatus: "uncovered",
+        coverageStatus: "reviewed",
       }),
     );
     expect(coverage).toContainEqual(
       expect.objectContaining({
         scope: "program",
         programKey: "ADG01MD",
-        approvedMappings: 0,
+        approvedMappings: 1,
         draftMappings: 0,
-        coverageStatus: "uncovered",
+        coverageStatus: "reviewed",
       }),
     );
     expect(coverage).toContainEqual(

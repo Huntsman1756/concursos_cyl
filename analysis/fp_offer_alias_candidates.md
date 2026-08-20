@@ -2,19 +2,19 @@
 
 ## Resumen del snapshot
 
-- Identificador del snapshot: `20260820151255897-e91792c94054`
+- Identificador del snapshot: `20260820184643129-a5594cf94fc7`
 - Total de ofertas analizadas: 1026
-- Relaciones aprobadas (enlaces): 101
-- Relaciones analizadas: 101
+- Relaciones aprobadas (enlaces): 105
+- Relaciones analizadas: 105
 - Relaciones con coincidencias actuales: 3
-- Relaciones con cero coincidencias: 98
-- Programas con cero coincidencias: 52
-- Ofertas marginales únicas entre candidatos: 99
+- Relaciones con cero coincidencias: 102
+- Programas con cero coincidencias: 56
+- Ofertas marginales únicas entre candidatos: 104
 
 ## Recuentos de candidatos
 
-- Candidatos totales: 54
-- Hipótesis revisión (solapamiento): 49
+- Candidatos totales: 59
+- Hipótesis revisión (solapamiento): 54
 - Frases exactas contiguas (fuente oficial): 5
 - Coincidencias de alias aprobadas: 0
 - Coincidencias por frase: 0
@@ -35,6 +35,7 @@
 | `ENCARGADOS DE OBRA CIVIL, EN GENERAL`                                                                             | EOC02S (Proyectos de Obra Civil)                               | Otros técnicos de las ciencias físicas, químicas, medioambientales y de las ingenierías (occupation:cno11:3129) | 3 ofertas  | 3                 | token_overlap_hypothesis;share_stems=2;overlap=0.67 | —                                                                                          |
 | `ENCARGADOS DE OBRA CIVIL, EN GENERAL`                                                                             | EOC02SD (Proyectos de Obra Civil (distancia))                  | Otros técnicos de las ciencias físicas, químicas, medioambientales y de las ingenierías (occupation:cno11:3129) | 3 ofertas  | 3                 | token_overlap_hypothesis;share_stems=2;overlap=0.67 | —                                                                                          |
 | `CONDUCTORES-OPERADORES DE HORMIGONERA MÓVIL`                                                                      | AGA04M (Aprovechamiento y Conservación del Medio Natural)      | Operadores de maquinaria agrícola móvil (occupation:cno11:8321)                                                 | 2 ofertas  | 2                 | token_overlap_hypothesis;share_stems=2;overlap=0.50 | —                                                                                          |
+| `MECÁNICOS-AJUSTADORES DE CAMIONES Y AUTOBUSES, EN GENERAL`                                                        | TMV02M (Electromecánica de Vehículos Automóviles)              | Mecánicos y ajustadores de vehículos de motor (occupation:cno11:7401)                                           | 2 ofertas  | 2                 | token_overlap_hypothesis;share_stems=2;overlap=0.50 | —                                                                                          |
 | `MONTADORES DE GRANDES ESTRUCTURAS METÁLICAS, EN GENERAL`                                                          | FME02B (Fabricación de Elementos Metálicos)                    | Montadores de estructuras metálicas (occupation:cno11:7314)                                                     | 2 ofertas  | 2                 | token_overlap_hypothesis;share_stems=3;overlap=1.00 | —                                                                                          |
 | `MONTADORES DE GRANDES ESTRUCTURAS METÁLICAS, EN GENERAL`                                                          | FME02S (Construcciones Metálicas)                              | Montadores de estructuras metálicas (occupation:cno11:7314)                                                     | 2 ofertas  | 2                 | token_overlap_hypothesis;share_stems=3;overlap=1.00 | —                                                                                          |
 | `MONTADORES DE MUEBLES DE MADERA O SIMILARES`                                                                      | MAM01B (Carpintería y Mueble)                                  | Montadores y ensambladores no clasificados en otros epígrafes (occupation:cno11:8209)                           | 2 ofertas  | 2                 | token_overlap_hypothesis;share_stems=3;overlap=0.60 | —                                                                                          |
@@ -52,7 +53,11 @@
 | `Jefe/a almacén distribución para León`                                                                            | COM02SD (Transporte y Logística (distancia))                   | Jefes de sección de tiendas y almacenes (occupation:cno11:5210)                                                 | 1 oferta   | 1                 | token_overlap_hypothesis;share_stems=2;overlap=0.67 | —                                                                                          |
 | `MAESTROS DE EDUCACIÓN INFANTIL`                                                                                   | SSC01S (Educación Infantil)                                    | Técnicos en educación infantil (occupation:cno11:2252)                                                          | 1 oferta   | 1                 | token_overlap_hypothesis;share_stems=2;overlap=0.67 | —                                                                                          |
 | `MAESTROS DE EDUCACIÓN INFANTIL`                                                                                   | SSC01SD (Educación Infantil (distancia))                       | Técnicos en educación infantil (occupation:cno11:2252)                                                          | 1 oferta   | 1                 | token_overlap_hypothesis;share_stems=2;overlap=0.67 | —                                                                                          |
-| `MECÁNICOS-AJUSTADORES DE MAQUINARIA AGRÍCOLA, EN GENERAL`                                                         | AGA04M (Aprovechamiento y Conservación del Medio Natural)      | Operadores de maquinaria agrícola móvil (occupation:cno11:8321)                                                 | 1 oferta   | 1                 | token_overlap_hypothesis;share_stems=2;overlap=0.50 | —                                                                                          |
+| `MECÁNICOS-AJUSTADORES DE INSTRUMENTOS DE PRECISIÓN, EN GENERAL`                                                   | TMV02M (Electromecánica de Vehículos Automóviles)              | Mecánicos y ajustadores de vehículos de motor (occupation:cno11:7401)                                           | 1 oferta   | 1                 | token_overlap_hypothesis;share_stems=2;overlap=0.50 | —                                                                                          |
+| `MECÁNICOS-AJUSTADORES DE MAQUINARIA AGRÍCOLA, EN GENERAL`                                                         | AGA04M (Aprovechamiento y Conservación del Medio Natural)      | Operadores de maquinaria agrícola móvil (occupation:cno11:8321)                                                 | 1 oferta   | 1                 | token_overlap_hypothesis;share_stems=2;overlap=0.50 | occupation:cno11:7401                                                                      |
+| `MECÁNICOS-AJUSTADORES DE MAQUINARIA AGRÍCOLA, EN GENERAL`                                                         | TMV02M (Electromecánica de Vehículos Automóviles)              | Mecánicos y ajustadores de vehículos de motor (occupation:cno11:7401)                                           | 1 oferta   | 1                 | token_overlap_hypothesis;share_stems=2;overlap=0.50 | occupation:cno11:8321                                                                      |
+| `MECÁNICOS-AJUSTADORES DE MOTORES DIESEL (VEHÍCULOS)`                                                              | TMV02M (Electromecánica de Vehículos Automóviles)              | Mecánicos y ajustadores de vehículos de motor (occupation:cno11:7401)                                           | 1 oferta   | 1                 | token_overlap_hypothesis;share_stems=3;overlap=0.75 | —                                                                                          |
+| `MONTADORES-AJUSTADORES DE GRUPOS MECÁNICOS Y MOTORES EN AUTOMOCIÓN`                                               | TMV02M (Electromecánica de Vehículos Automóviles)              | Mecánicos y ajustadores de vehículos de motor (occupation:cno11:7401)                                           | 1 oferta   | 1                 | token_overlap_hypothesis;share_stems=2;overlap=0.50 | —                                                                                          |
 | `PEONES DE LA INDUSTRIA DE LA MADERA Y DEL CORCHO`                                                                 | MAM01B (Carpintería y Mueble)                                  | Peones de las industrias manufactureras (occupation:cno11:9700)                                                 | 1 oferta   | 1                 | token_overlap_hypothesis;share_stems=3;overlap=0.75 | —                                                                                          |
 | `PINTORES DE ESTRUCTURAS METÁLICAS Y CASCOS DE BUQUES`                                                             | FME02B (Fabricación de Elementos Metálicos)                    | Montadores de estructuras metálicas (occupation:cno11:7314)                                                     | 1 oferta   | 1                 | token_overlap_hypothesis;share_stems=2;overlap=0.67 | —                                                                                          |
 | `PINTORES DE ESTRUCTURAS METÁLICAS Y CASCOS DE BUQUES`                                                             | FME02S (Construcciones Metálicas)                              | Montadores de estructuras metálicas (occupation:cno11:7314)                                                     | 1 oferta   | 1                 | token_overlap_hypothesis;share_stems=2;overlap=0.67 | —                                                                                          |
@@ -96,6 +101,6 @@
 
 ## Decisión
 
-Se identificaron 54 candidatos de alias con ganancia marginal para relaciones aprobadas. Ningún candidato se aprueba automáticamente; estos resultados son evidencia para revisión por Sol y Gemma.
+Se identificaron 59 candidatos de alias con ganancia marginal para relaciones aprobadas. Ningún candidato se aprueba automáticamente; estos resultados son evidencia para revisión por Sol y Gemma.
 
 El informe no incluye marcas de tiempo y sus recuentos corresponden a la instantánea controlada.
