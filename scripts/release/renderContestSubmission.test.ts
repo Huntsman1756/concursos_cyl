@@ -29,7 +29,7 @@ describe("contest submission renderer", () => {
     expect(rendered["application-summary.md"]).toContain(
       freeze.manifest.snapshotId,
     );
-    expect(rendered["application-summary.md"]).toContain("6 cualificaciones");
+    expect(rendered["application-summary.md"]).toContain("12 cualificaciones");
     expect(rendered["application-summary.md"]).toContain(
       "39 de las 1.026 ofertas de la instantánea",
     );
@@ -169,7 +169,7 @@ describe("contest submission renderer", () => {
     expect(() => validateRenderedContestSubmission(first)).not.toThrow();
     for (const content of Object.values(first)) {
       expect(content.endsWith("\n")).toBe(true);
-      expect(content).not.toContain("12 cualificaciones");
+      expect(content).not.toContain("6 cualificaciones");
       expect(content).not.toMatch(/salario esperado|tasa de empleo/iu);
     }
   });
