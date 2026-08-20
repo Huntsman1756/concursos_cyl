@@ -207,16 +207,17 @@ try {
         $budgetProfileTelemetry = Get-Content -LiteralPath (Get-NewTelemetry -BeforeFiles $pre) -Raw | ConvertFrom-Json
         Assert-Equal $budgetProfileTelemetry.launch.budgetProfile 'batch' '2e: telemetry records batch profile'
         Assert-Equal $budgetProfileTelemetry.launch.budgetSource 'profile' '2f: telemetry records profile source'
-        Assert-Equal $budgetProfileTelemetry.launch.maxObservedTokens 350000 '2g: batch profile resolves to 350000 tokens'
+        Assert-Equal $budgetProfileTelemetry.launch.maxObservedTokens 90000 '2g: batch profile resolves to 90000 tokens'
+        Assert-Equal $budgetProfileTelemetry.launch.maxStepsWithoutMutation 3 '2g0: dry run records no-edit progress guard'
         Assert-Equal $budgetProfileTelemetry.admission.profile 'provider-limit' '2g1: dry run records provider-limit admission'
         Assert-Equal $budgetProfileTelemetry.admission.capacity 5 '2g2: dry run records five active NAN slots'
         Assert-Equal $budgetProfileTelemetry.admission.timeoutSeconds 7200 '2g3: dry run records admission timeout'
 
         foreach ($profileCase in @(
-            @{Name='small';Tokens=120000},
-            @{Name='batch';Tokens=350000},
-            @{Name='research';Tokens=700000},
-            @{Name='extended';Tokens=1200000}
+            @{Name='small';Tokens=40000},
+            @{Name='batch';Tokens=90000},
+            @{Name='research';Tokens=180000},
+            @{Name='extended';Tokens=300000}
         )) {
             $pre = Get-FileSnapshot
             $profileParams = New-ValidCodeContract -Objective "budget-profile-$($profileCase.Name)" -DryRun -TestMode
@@ -433,6 +434,14 @@ try {
         $timeoutTelemetry = Get-Content -LiteralPath (Get-NewTelemetry -BeforeFiles $pre) -Raw | ConvertFrom-Json
         Assert-Equal $timeoutTelemetry.status 'blocked-timeout' '7q: timeout has explicit status'
         Assert-Equal $timeoutTelemetry.attempts[0].terminationReason 'timeout' '7r: timeout reason persists on attempt'
+
+        $noEditPlan = @(@{exitCode = 1; changedPaths = @(); validationExitCode = 0; terminationReason = 'no-edit-progress'; jsonl = ''}) | ConvertTo-Json -Compress
+        $pre = Get-FileSnapshot
+        $noEditRun = Invoke-WorkerChild -WorkerParameters (New-ValidCodeContract -Objective 'no-edit-progress' -MaxRetries 1 -TestMode -MockPlan $noEditPlan)
+        Assert-True ($noEditRun.ExitCode -ne 0) '7s: no-edit trajectory fails closed'
+        $noEditTelemetry = Get-Content -LiteralPath (Get-NewTelemetry -BeforeFiles $pre) -Raw | ConvertFrom-Json
+        Assert-Equal $noEditTelemetry.status 'blocked-no-edit-progress' '7t: no-edit guard has explicit status'
+        Assert-Equal $noEditTelemetry.attempts[0].terminationReason 'no-edit-progress' '7u: no-edit reason persists on attempt'
     }
 
     # 8. No-change rejection
@@ -1007,13 +1016,13 @@ try {
         Assert-True (Test-Path -LiteralPath $agentContextPath) '21c: nan-long-context-code.md exists'
 
         $codeSteps = [int](Select-String -Path $agentCodePath -Pattern '^\s*steps:\s*\d+' | ForEach-Object { ($_.Line -split '\s+')[1] })
-        Assert-Equal $codeSteps 8 '21d: nan-code.md steps equals 8'
+        Assert-Equal $codeSteps 5 '21d: nan-code.md steps equals 5'
 
         $reasoningSteps = [int](Select-String -Path $agentReasoningPath -Pattern '^\s*steps:\s*\d+' | ForEach-Object { ($_.Line -split '\s+')[1] })
-        Assert-Equal $reasoningSteps 40 '21e: nan-reasoning-code.md steps equals 40'
+        Assert-Equal $reasoningSteps 10 '21e: nan-reasoning-code.md steps equals 10'
 
         $contextSteps = [int](Select-String -Path $agentContextPath -Pattern '^\s*steps:\s*\d+' | ForEach-Object { ($_.Line -split '\s+')[1] })
-        Assert-Equal $contextSteps 50 '21f: nan-long-context-code.md steps equals 50'
+        Assert-Equal $contextSteps 14 '21f: nan-long-context-code.md steps equals 14'
 
         # 21g-21i: bash: deny on all three agents
         $codeText     = Get-Content -LiteralPath $agentCodePath -Raw
@@ -1033,14 +1042,14 @@ try {
             $yamlText = Get-Content -LiteralPath $yamlPath -Raw
 
             # Use singleline regex to traverse newlines inside the codeExecutor block
-            Assert-True ($yamlText -match '(?s)codeExecutor:.*?maxSteps:\s*50\b') '21m: YAML codeExecutor maxSteps=50 (singleline regex)'
+            Assert-True ($yamlText -match '(?s)codeExecutor:.*?maxSteps:\s*14\b') '21m: YAML codeExecutor maxSteps=14 (singleline regex)'
             Assert-True ($yamlText -match '(?s)bulletinReader:.*?maxSteps:\s*12\b') '21n: YAML bulletinReader maxSteps=12 (singleline regex)'
 
             # 21o: verify bulletinReader section via newline-traversing regex (the repair)
             Assert-True ($yamlText -match '(?ms)^\s{2}bulletinReader:.*?^\s{4}maxSteps:\s*12') '21o: bulletinReader section regex traverses newlines'
 
             # 21p: codeExecutor section also parsed via newline-traversing regex
-            Assert-True ($yamlText -match '(?ms)^\s{2}codeExecutor:.*?^\s{4}maxSteps:\s*50') '21p: codeExecutor section regex traverses newlines'
+            Assert-True ($yamlText -match '(?ms)^\s{2}codeExecutor:.*?^\s{4}maxSteps:\s*14') '21p: codeExecutor section regex traverses newlines'
 
             # 21q: verify a non-point-matches-does-not-cross-section (negative check)
             Assert-True ($yamlText -notmatch 'bulletinReader.*codeExecutor') '21q: bulletinReader does not span into codeExecutor'

@@ -228,6 +228,7 @@ $contractSnapshot = [ordered]@{
             budgetProfile = if ($_.PSObject.Properties.Name -contains 'budgetProfile') { $_.budgetProfile } else { 'small' }
             maxObservedTokens = if ($_.PSObject.Properties.Name -contains 'maxObservedTokens') { $_.maxObservedTokens } else { $null }
             maxExecutionSeconds = if ($_.PSObject.Properties.Name -contains 'maxExecutionSeconds') { $_.maxExecutionSeconds } else { 900 }
+            maxStepsWithoutMutation = if ($_.PSObject.Properties.Name -contains 'maxStepsWithoutMutation') { $_.maxStepsWithoutMutation } else { 3 }
         }
     })
 }

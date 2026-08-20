@@ -58,10 +58,15 @@ autorizar cada fallback compatible en el contrato.
 
 ## Pasos por agente
 
-El límite `8/40/50` se refiere exclusivamente a los pasos máximos permitidos
-por agente en un contrato NAN: `nan-code` (8 pasos), `nan-reasoning-code`
-(40 pasos) y `nan-long-context-code` (50 pasos). Son conteos de iteraciones
+El límite `5/10/14` se refiere exclusivamente a los pasos máximos permitidos
+por agente en un contrato NAN: `nan-code` (5 pasos), `nan-reasoning-code`
+(10 pasos) y `nan-long-context-code` (14 pasos). Son conteos de iteraciones
 de agente, no porcentajes, ni ratios, ni repartos de esfuerzo.
+
+Todo contrato de código debe producir su primera edición antes de completar
+tres pasos. El broker termina con `blocked-no-edit-progress` cuando el worker
+consume tres pasos sin usar una herramienta de edición. Esta guardia evita
+repetir contexto caro en encargos que necesitan un contrato mejor acotado.
 El proxy auditable del repositorio desactiva el razonamiento extendido de Qwen para contratos mecanicos; DeepSeek mantiene razonamiento explicito.
 
 ## Política NAN-first obligatoria
@@ -165,7 +170,8 @@ Ejemplo DryRun (obligatorio incluir `-ValidationCommand` para code):
 El worker soporta:
 
 - `-MaxRetries 1` — valor seguro por defecto; aumentarlo requiere justificar el coste.
-- `-BudgetProfile small|batch|research|extended` — aplica respectivamente 120k, 350k, 700k o 1200k tokens observados acumulados por trayectoria, incluida la caché entre turnos. No representan la ventana de contexto de una petición ni el límite de velocidad de NAN. El valor seguro por defecto es `small`.
+- `-BudgetProfile small|batch|research|extended` — aplica respectivamente 40k, 90k, 180k o 300k tokens observados acumulados por trayectoria, incluida la caché entre turnos. No representan la ventana de contexto de una petición ni el límite de velocidad de NAN. El valor seguro por defecto es `small`.
+- `-MaxStepsWithoutMutation 3` — corta un contrato de código que no ha editado tras tres pasos completos.
 - `-MaxObservedTokens <n>` — override excepcional entre 1k y 2M; prevalece sobre el perfil y queda identificado como `override` en telemetría.
 - `-MaxExecutionSeconds 1800` — termina el árbol del proceso al agotar el tiempo.
 - `-DuplicateWindowSeconds 3600` — bloquea contratos idénticos sobre el mismo SHA durante una hora.

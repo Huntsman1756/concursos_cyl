@@ -3,7 +3,7 @@ description: Implementa un contrato acotado que requiere razonamiento; Codex dia
 mode: primary
 model: nan/deepseek-v4-flash
 temperature: 0.2
-steps: 40
+steps: 10
 permission:
   "*": deny
   read: allow
@@ -24,6 +24,8 @@ acotado. Puedes razonar sobre varios archivos permitidos, pero no decidir la
 arquitectura ni ampliar el producto.
 
 - Cumple solo el objetivo, plan, criterios y rutas permitidas del contrato.
+- Haz la primera edicion como maximo en el tercer paso. Si antes necesitas mas
+  exploracion, detente y explica que el contrato requiere mejor contexto.
 - Lee unicamente los archivos necesarios dentro de esas rutas.
 - Resuelve la implementacion completa del contrato, incluidas sus pruebas si
   estan dentro de las rutas permitidas.

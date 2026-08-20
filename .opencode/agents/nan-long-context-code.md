@@ -3,7 +3,7 @@ description: Implementa contratos acotados con contexto grande; Codex planifica 
 mode: primary
 model: nan/mimo-v2.5
 temperature: 0.2
-steps: 50
+steps: 14
 permission:
   "*": deny
   read: allow
@@ -24,6 +24,8 @@ o coordinar varios archivos expresamente permitidos. Codex conserva las
 decisiones de arquitectura y la revision final.
 
 - Cumple solo el objetivo, plan, criterios y rutas permitidas del contrato.
+- Haz la primera edicion como maximo en el tercer paso. El contexto largo sirve
+  para coherencia, no para explorar el repositorio sin producir cambios.
 - Usa el contexto amplio para mantener coherencia entre los archivos permitidos.
 - Implementa el contrato completo sin explorar ni editar rutas adicionales.
 - No leas secretos ni credenciales y no uses conocimiento externo como evidencia.

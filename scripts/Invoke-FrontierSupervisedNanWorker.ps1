@@ -335,6 +335,9 @@ try {
             if ($contract.PSObject.Properties.Name -contains 'maxExecutionSeconds') {
                 $workerParameters.MaxExecutionSeconds = [int]$contract.maxExecutionSeconds
             }
+            if ($contract.PSObject.Properties.Name -contains 'maxStepsWithoutMutation') {
+                $workerParameters.MaxStepsWithoutMutation = [int]$contract.maxStepsWithoutMutation
+            }
             if ($contract.PSObject.Properties.Name -contains 'validationMayWriteAllowedPaths') {
                 # Opt-in switch: forward only the JSON boolean true; when absent
                 # or false defaults to the worker's opt-in false behavior.

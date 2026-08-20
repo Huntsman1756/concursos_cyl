@@ -10,6 +10,7 @@ param(
     [ValidateSet('small','batch','research','extended')][string]$BudgetProfile = 'small',
     [ValidateSet('auto','mechanical','reasoning','long-context')][string]$ModelProfile = 'auto',
     [int]$MaxObservedTokens = 0,
+    [ValidateRange(1,20)][int]$MaxStepsWithoutMutation = 3,
     [ValidateRange(10,3600)][int]$MaxExecutionSeconds = 1800,
     [ValidateSet('observed-serial','provider-limit')][string]$AdmissionProfile = 'provider-limit',
     [ValidateRange(1,86400)][int]$AdmissionTimeoutSeconds = 7200,
@@ -83,10 +84,10 @@ $AcceptanceCriteria = @($AcceptanceCriteria | ForEach-Object { $_.Trim() } | Whe
 # cached context across agent turns. They are not model context-window or NAN
 # rate limits. MaxObservedTokens remains the explicit exceptional override.
 $budgetProfiles = @{
-    small = 120000
-    batch = 350000
-    research = 700000
-    extended = 1200000
+    small = 40000
+    batch = 90000
+    research = 180000
+    extended = 300000
 }
 if ($MaxObservedTokens -ne 0 -and ($MaxObservedTokens -lt 1000 -or $MaxObservedTokens -gt 2000000)) {
     throw 'MaxObservedTokens must be 0 (use BudgetProfile) or between 1000 and 2000000.'
@@ -462,7 +463,15 @@ function Add-ObservedTokensFromLine {
     param([string]$Line, [hashtable]$Usage)
     if ([string]::IsNullOrWhiteSpace($Line)) { return }
     $event = try { $Line | ConvertFrom-Json } catch { return }
+    if ($event.type -eq 'tool_use') {
+        $Usage.toolUses++
+        if ([string]$event.part.tool -in @('edit','write','patch','apply_patch')) {
+            $Usage.mutationToolUses++
+        }
+        return
+    }
     if ($event.type -ne 'step_finish' -or -not $event.part.tokens) { return }
+    $Usage.steps++
     $tokens = $event.part.tokens
     $Usage.input += [long]$tokens.input
     $Usage.output += [long]$tokens.output
@@ -498,10 +507,16 @@ function Stop-WorkerProcessTree {
 }
 
 function Invoke-OpenCodeBudgeted {
-    param([string[]]$Arguments, [int]$TokenBudget, [int]$TimeoutSeconds, [hashtable]$RunContext)
+    param(
+        [string[]]$Arguments,
+        [int]$TokenBudget,
+        [int]$TimeoutSeconds,
+        [int]$NoMutationStepLimit,
+        [hashtable]$RunContext
+    )
     $rawLines = New-Object 'System.Collections.Generic.List[string]'
     $stderrLines = New-Object 'System.Collections.Generic.List[string]'
-    $usage = @{input=0L;output=0L;reasoning=0L;cacheRead=0L;cacheWrite=0L;total=0L;sessionId=$null}
+    $usage = @{input=0L;output=0L;reasoning=0L;cacheRead=0L;cacheWrite=0L;total=0L;sessionId=$null;steps=0;toolUses=0;mutationToolUses=0}
     $commandCandidates = @(Get-Command opencode -All -ErrorAction Stop)
     $executable = @($commandCandidates | Where-Object { $_.Source -like '*.exe' } | Select-Object -First 1).Source
     if (-not $executable) {
@@ -574,6 +589,11 @@ function Invoke-OpenCodeBudgeted {
                 $terminationReason = 'token-budget'
                 Stop-WorkerProcessTree -Process $process
             }
+            if (-not $terminationReason -and $RunContext.taskType -eq 'code' -and
+                $usage.steps -ge $NoMutationStepLimit -and $usage.mutationToolUses -eq 0) {
+                $terminationReason = 'no-edit-progress'
+                Stop-WorkerProcessTree -Process $process
+            }
             if (-not $terminationReason -and $watch.Elapsed.TotalSeconds -ge $TimeoutSeconds) {
                 $terminationReason = 'timeout'
                 Stop-WorkerProcessTree -Process $process
@@ -605,7 +625,8 @@ $contractMaterial = [ordered]@{
     taskType=$TaskType;objective=$Objective;allowedPaths=@($AllowedPath);inputPaths=@($InputPath)
     validationCommands=@($ValidationCommand);frontierPlan=$FrontierPlan;acceptanceCriteria=@($AcceptanceCriteria);headSha=$headSha
     modelProfile=$ModelProfile;budgetProfile=$BudgetProfile;maxObservedTokens=$MaxObservedTokens
-    maxExecutionSeconds=$MaxExecutionSeconds;fallbackModels=@($FallbackModels)
+    maxExecutionSeconds=$MaxExecutionSeconds;maxStepsWithoutMutation=$MaxStepsWithoutMutation
+    fallbackModels=@($FallbackModels)
     validationMayWriteAllowedPaths=[bool]$ValidationMayWriteAllowedPaths
 } | ConvertTo-Json -Depth 5 -Compress
 $contractHash = Compute-StringSha256 -InputString $contractMaterial
@@ -633,7 +654,7 @@ if ($DryRun) {
         $planSha = Compute-StringSha256 -InputString $FrontierPlan
         $fc = @{plannedBy=$PlannedBy;planHash=$planSha;acceptanceCriteriaCount=$AcceptanceCriteria.Count;reviewRequired=$true}
     }
-    $dryRunTelemetry = @{telemetryId=$tid;simulated=[bool]$true;taskType=$TaskType;selectedModel=$primaryModel;selectedAgent=$primaryAgent;attempts=@();changedPaths=@();contractViolation=$false;validationFailed=$false;validationMayWriteAllowedPaths=[bool]$ValidationMayWriteAllowedPaths;tokensUsage=@{input=0;output=0;reasoning=0;cacheRead=0;cacheWrite=0;total=0};success=$true;status='dry-run';frontierContract=$fc;contract=@{hash=$contractHash;headSha=$headSha;duplicateWindowSeconds=$DuplicateWindowSeconds};admission=@{profile=$AdmissionProfile;capacity=$(if ($AdmissionProfile -eq 'observed-serial') { 1 } else { 5 });timeoutSeconds=$AdmissionTimeoutSeconds;queueWaitMs=0;acquired=$false};launch=@{modelProfile=$ModelProfile;budgetProfile=$BudgetProfile;budgetSource=$budgetSource;maxObservedTokens=$effectiveMaxObservedTokens;maxExecutionSeconds=$MaxExecutionSeconds}}
+    $dryRunTelemetry = @{telemetryId=$tid;simulated=[bool]$true;taskType=$TaskType;selectedModel=$primaryModel;selectedAgent=$primaryAgent;attempts=@();changedPaths=@();contractViolation=$false;validationFailed=$false;validationMayWriteAllowedPaths=[bool]$ValidationMayWriteAllowedPaths;tokensUsage=@{input=0;output=0;reasoning=0;cacheRead=0;cacheWrite=0;total=0};success=$true;status='dry-run';frontierContract=$fc;contract=@{hash=$contractHash;headSha=$headSha;duplicateWindowSeconds=$DuplicateWindowSeconds};admission=@{profile=$AdmissionProfile;capacity=$(if ($AdmissionProfile -eq 'observed-serial') { 1 } else { 5 });timeoutSeconds=$AdmissionTimeoutSeconds;queueWaitMs=0;acquired=$false};launch=@{modelProfile=$ModelProfile;budgetProfile=$BudgetProfile;budgetSource=$budgetSource;maxObservedTokens=$effectiveMaxObservedTokens;maxExecutionSeconds=$MaxExecutionSeconds;maxStepsWithoutMutation=$MaxStepsWithoutMutation}}
     $writtenTelemetryPath = Write-TelemetryRecord -Value $dryRunTelemetry -TelemetryId $tid
     Write-Host "Telemetry: $writtenTelemetryPath" -ForegroundColor DarkGray
     exit 0
@@ -747,6 +768,7 @@ $contractViolation = $false
 $validationFailed = $false
 $tokenBudgetExceeded = $false
 $executionTimedOut = $false
+$noEditProgress = $false
 $planIndex = 0
 $totalAttempts = 0
 
@@ -821,7 +843,7 @@ $totalAttempts = 0
             $opts += @('--', ($contract -join "`n"))
             Write-Host ("Attempt " + $totalAttempts + ": ${candidateAgent} -> ${candidateModel}") -ForegroundColor Cyan
             try {
-                $liveResult = Invoke-OpenCodeBudgeted -Arguments $opts -TokenBudget $effectiveMaxObservedTokens -TimeoutSeconds $MaxExecutionSeconds -RunContext $openCodeRunContext
+                $liveResult = Invoke-OpenCodeBudgeted -Arguments $opts -TokenBudget $effectiveMaxObservedTokens -TimeoutSeconds $MaxExecutionSeconds -NoMutationStepLimit $MaxStepsWithoutMutation -RunContext $openCodeRunContext
             } catch {
                 Stop-NanAuditRuntime
                 throw
@@ -868,6 +890,14 @@ $totalAttempts = 0
             $attempt.exitCode = 1
             $attempts[-1] = $attempt
             Write-Warning "Execution timeout exceeded: $MaxExecutionSeconds seconds"
+            break modelLoop
+        }
+
+        if ($attempt.terminationReason -eq 'no-edit-progress') {
+            $noEditProgress = $true
+            $attempt.exitCode = 1
+            $attempts[-1] = $attempt
+            Write-Warning "NAN made no edit after $MaxStepsWithoutMutation completed steps; ending the attempt before more context is replayed."
             break modelLoop
         }
 
@@ -1065,7 +1095,7 @@ $providerResponseSetHash = if ($providerResponseIds.Count -gt 0) { Compute-Strin
 # ── Telemetry (always written before exit) ──
 $tid = $runtimeId
 $harnessFailure = @($attempts | Where-Object { $_.terminationReason -like 'finish-*' }).Count -gt 0
-$status = if ($tokenBudgetExceeded) { 'blocked-token-budget' } elseif ($executionTimedOut) { 'blocked-timeout' } elseif ($successResult -and -not $providerEvidenceVerified) { 'blocked-unverified-provider' } elseif ($successResult) { 'awaiting-frontier-review' } elseif ($providerFailureStatus) { $providerFailureStatus } elseif ($harnessFailure) { 'blocked-harness-failure' } else { 'blocked-needs-new-contract' }
+$status = if ($tokenBudgetExceeded) { 'blocked-token-budget' } elseif ($executionTimedOut) { 'blocked-timeout' } elseif ($noEditProgress) { 'blocked-no-edit-progress' } elseif ($successResult -and -not $providerEvidenceVerified) { 'blocked-unverified-provider' } elseif ($successResult) { 'awaiting-frontier-review' } elseif ($providerFailureStatus) { $providerFailureStatus } elseif ($harnessFailure) { 'blocked-harness-failure' } else { 'blocked-needs-new-contract' }
 $success = ($successResult -ne $null) -and (-not $contractViolation) -and (-not $validationFailed) -and $providerEvidenceVerified
 $fcTelemetry = @{}
 if ($TaskType -eq 'code') {
@@ -1081,7 +1111,7 @@ $telemetry = @{
     contract=@{hash=$contractHash;headSha=$headSha;duplicateWindowSeconds=$DuplicateWindowSeconds}
     providerEvidence=@{verified=[bool]$providerEvidenceVerified;evidenceClass=$(if ($TestMode) { 'simulated' } elseif ($observedProviderRecords.Count -gt 0) { 'provider-observed' } else { 'insufficient-evidence' });recordCount=$verifiedProviderRecords.Count;observedRecordCount=$observedProviderRecords.Count;retryCount=$providerRetryRecords.Count;terminalErrorCount=$terminalProviderErrors.Count;terminalErrors=@($terminalProviderErrors | Select-Object -Last 5);providerReportedTokens=$providerReportedTokens;responseIdSetHash=$providerResponseSetHash;rawEvidenceFile=$(if ($TestMode) { $null } else { [System.IO.Path]::GetFileName($providerEvidencePath) })}
     admission=@{profile=$AdmissionProfile;capacity=$(if ($AdmissionProfile -eq 'observed-serial') { 1 } else { 5 });timeoutSeconds=$AdmissionTimeoutSeconds;queueWaitMs=$admissionWaitMs;acquired=[bool]$admissionAcquired}
-    launch=@{harness='opencode';protocol='native-jsonl-stream-1.18.x';pure=$true;auto=$false;directory=$repoRoot;modelProfile=$ModelProfile;budgetProfile=$BudgetProfile;budgetSource=$budgetSource;maxObservedTokens=$effectiveMaxObservedTokens;maxExecutionSeconds=$MaxExecutionSeconds;validationMayWriteAllowedPaths=[bool]$ValidationMayWriteAllowedPaths}
+    launch=@{harness='opencode';protocol='native-jsonl-stream-1.18.x';pure=$true;auto=$false;directory=$repoRoot;modelProfile=$ModelProfile;budgetProfile=$BudgetProfile;budgetSource=$budgetSource;maxObservedTokens=$effectiveMaxObservedTokens;maxExecutionSeconds=$MaxExecutionSeconds;maxStepsWithoutMutation=$MaxStepsWithoutMutation;validationMayWriteAllowedPaths=[bool]$ValidationMayWriteAllowedPaths}
 }
 $writtenTelemetryPath = Write-TelemetryRecord -Value $telemetry -TelemetryId $tid
 Write-Host "Telemetry: $writtenTelemetryPath" -ForegroundColor DarkGray
