@@ -138,29 +138,36 @@ function ConvertTo-NativeArgument {
 function Remove-IsolatedWorkerWorktree {
     param([string]$RepositoryRoot,[string]$WorktreePath)
     $git = (Get-Command git -ErrorAction Stop).Source
-    $start = New-Object System.Diagnostics.ProcessStartInfo
-    $start.FileName = $git
-    $start.Arguments = (@('-C',$RepositoryRoot,'worktree','remove','--force',$WorktreePath) | ForEach-Object { ConvertTo-NativeArgument -Argument $_ }) -join ' '
-    $start.UseShellExecute = $false
-    $start.CreateNoWindow = $true
-    $start.RedirectStandardInput = $true
-    $start.RedirectStandardOutput = $true
-    $start.RedirectStandardError = $true
-    $process = New-Object System.Diagnostics.Process
-    $process.StartInfo = $start
-    if (-not $process.Start()) { return @{succeeded=$false;exitCode=-1;error='start-failed'} }
-    $process.StandardInput.Close()
-    $stderrTask = $process.StandardError.ReadToEndAsync()
-    $stdoutTask = $process.StandardOutput.ReadToEndAsync()
-    $process.WaitForExit()
-    $stderr = $stderrTask.GetAwaiter().GetResult()
-    $stdoutTask.GetAwaiter().GetResult() | Out-Null
-    $exitCode = $process.ExitCode
-    $process.Dispose()
+    $exitCode = -1
+    $stderr = ''
+    for ($cleanupAttempt = 1; $cleanupAttempt -le 4; $cleanupAttempt++) {
+        if ($cleanupAttempt -gt 1) { Start-Sleep -Milliseconds (250 * ($cleanupAttempt - 1)) }
+        $start = New-Object System.Diagnostics.ProcessStartInfo
+        $start.FileName = $git
+        $start.Arguments = (@('-C',$RepositoryRoot,'worktree','remove','--force',$WorktreePath) | ForEach-Object { ConvertTo-NativeArgument -Value $_ }) -join ' '
+        $start.UseShellExecute = $false
+        $start.CreateNoWindow = $true
+        $start.RedirectStandardInput = $true
+        $start.RedirectStandardOutput = $true
+        $start.RedirectStandardError = $true
+        $process = New-Object System.Diagnostics.Process
+        $process.StartInfo = $start
+        if (-not $process.Start()) { return @{succeeded=$false;exitCode=-1;error='start-failed';attempts=$cleanupAttempt} }
+        $process.StandardInput.Close()
+        $stderrTask = $process.StandardError.ReadToEndAsync()
+        $stdoutTask = $process.StandardOutput.ReadToEndAsync()
+        $process.WaitForExit()
+        $stderr = $stderrTask.GetAwaiter().GetResult()
+        $stdoutTask.GetAwaiter().GetResult() | Out-Null
+        $exitCode = $process.ExitCode
+        $process.Dispose()
+        if ($exitCode -eq 0) { break }
+    }
     return @{
         succeeded=($exitCode -eq 0)
         exitCode=$exitCode
         error=$(if ([string]::IsNullOrWhiteSpace($stderr)) { $null } else { 'git-worktree-remove-failed' })
+        attempts=$cleanupAttempt
     }
 }
 

@@ -16,6 +16,11 @@ $staticContract = Join-Path $temporaryRoot 'static-contract.json'
 $failureContract = Join-Path $temporaryRoot 'failure-contract.json'
 New-Item -ItemType Directory -Path $temporaryRoot, $worktrees | Out-Null
 
+$supervisorText = Get-Content -LiteralPath $supervisor -Raw
+if ($supervisorText -notmatch 'cleanupAttempt\s*-le\s*4') { throw 'Supervisor must retry transient Windows worktree cleanup failures.' }
+if ($supervisorText -notmatch 'ConvertTo-NativeArgument\s+-Value') { throw 'Supervisor cleanup must use the declared argument parameter.' }
+Write-Host 'PASS: frontier supervisor retries bounded Windows worktree cleanup' -ForegroundColor Green
+
 try {
     @{
         objective = 'Update the bounded fixture.'
