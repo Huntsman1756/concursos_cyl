@@ -2,13 +2,18 @@ schemaVersion: 1
 id: castilla-leon-openai-nan-pilot
 reference:
   repository: https://github.com/Huntsman1756/agent-orchestration-starter
-  release: v0.2.0
-  releaseCommit: b899e1f546b974ccea0f9580510753c04cd6ccac
-  commit: 42cf5c2b1b55628332ce9fc1089957bd4fca3931
+  release: v0.3.1
+  releaseCommit: ae1640e2a7d6151bc6a331be62c6e196d7852c66
+  commit: ae1640e2a7d6151bc6a331be62c6e196d7852c66
+  provenanceCompatibilityCommit: 42cf5c2b1b55628332ce9fc1089957bd4fca3931
   adaptation: frontier-supervised-bounded-local
 adoption:
   level: BOUNDED_LOCAL
-  runtimeV4Installed: false
+  runtimeV4Installed: true
+  activationTarget: ANALYSIS_ONLY
+  installationHash: dc6738a8e8f6dad24f0f9d9d5df13819e7756e1d0cd553b8ba0fbef99fb97b1a
+  activationHash: 277ce2ab6a8af496a4654d2760e1ae741a65bf673769e75df660fa1a3be085b1
+  hostCompositionHash: null
   publicationThroughRuntimeV4: false
 delegationProvenance:
   schemaVersion: 4
@@ -32,6 +37,8 @@ frontierSupervisor:
   enabled: true
   entrypoint: scripts/Invoke-FrontierSupervisedNanWorker.ps1
   maxAttempts: 2
+  shiftLeftStaticQualityRepair: true
+  noProgressDetection: true
   automaticWorkerRelaunchAfterFrontierRetry: true
   retryFromAcceptedBase: true
   freshWorkerSessionPerAttempt: true
@@ -44,6 +51,7 @@ batchExecutor:
   adapter: scripts/Invoke-NanWorkerContract.ps1
   preferredForIndependentStoriesAtLeast: 2
   maxStoriesPerBatch: 20
+  defaultConcurrency: 1
   maxConcurrency: 5
   exactDisjointPathsRequired: true
   detachedWorktreePerStory: true

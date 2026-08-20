@@ -8,8 +8,11 @@ $temporaryRoot = Join-Path ([System.IO.Path]::GetTempPath()) ("castilla-frontier
 $state = Join-Path $temporaryRoot 'state'
 $acceptState = Join-Path $temporaryRoot 'accept-state'
 $failureState = Join-Path $temporaryRoot 'failure-state'
+$staticSuccessState = Join-Path $temporaryRoot 'static-success-state'
+$noProgressState = Join-Path $temporaryRoot 'no-progress-state'
 $worktrees = Join-Path $temporaryRoot 'worktrees'
 $contract = Join-Path $temporaryRoot 'contract.json'
+$staticContract = Join-Path $temporaryRoot 'static-contract.json'
 $failureContract = Join-Path $temporaryRoot 'failure-contract.json'
 New-Item -ItemType Directory -Path $temporaryRoot, $worktrees | Out-Null
 
@@ -56,6 +59,70 @@ try {
         throw 'Terminal frontier decision was not persisted.'
     }
     Write-Host 'PASS: frontier supervisor preserves failed evidence, retries, and escalates durably' -ForegroundColor Green
+
+    @{
+        objective = 'Format the bounded fixture.'
+        allowedPaths = @('scripts/result.txt')
+        validationCommands = @('npm run format:check')
+        frontierPlan = 'Make the exact localized change and preserve formatting.'
+        acceptanceCriteria = @('The format validation passes.')
+        budgetProfile = 'small'
+        modelProfile = 'mechanical'
+    } | ConvertTo-Json -Depth 5 | Set-Content -LiteralPath $staticContract -Encoding utf8
+
+    $staticFailurePlan = @(@{
+        exitCode=0
+        changedPaths=@('scripts/result.txt')
+        validationExitCode=1
+        validationDiagnostics=@(@{commandIndex=1;exitCode=1;outputTail='Checking formatting...';truncated=$false})
+        jsonl=''
+    }) | ConvertTo-Json -Depth 8 -Compress
+    $staticSuccessPlan = @(@{exitCode=0;changedPaths=@('scripts/result.txt');validationExitCode=0;jsonl=''}) | ConvertTo-Json -Depth 8 -Compress
+    $staticAcceptDecision = @(@{action='ACCEPT';repairInstructions=@()}) | ConvertTo-Json -Depth 5 -Compress
+    $staticOutput = & $supervisor -ContractPath $staticContract -StateDirectory $staticSuccessState `
+        -WorktreeParent $worktrees -MaxAttempts 2 -TestMode `
+        -MockWorkerPlans @($staticFailurePlan,$staticSuccessPlan) -MockFrontierDecisions $staticAcceptDecision
+    if ($LASTEXITCODE -ne 0) { throw "Expected shift-left repair success, got $LASTEXITCODE" }
+    $staticResult = $staticOutput | ConvertFrom-Json
+    if ($staticResult.status -ne 'COMPLETE' -or $staticResult.policyEvents.Count -ne 1 -or $staticResult.decisions.Count -ne 1) {
+        throw 'Static-quality failure did not use exactly one policy retry before Frontier acceptance.'
+    }
+    if ($staticResult.policyEvents[0].decisionOwner -ne 'broker-shift-left-policy') {
+        throw 'Static-quality retry was not attributed to broker policy.'
+    }
+    $packetPath = Join-Path $staticSuccessState 'attempt-1.repair-packet.json'
+    $policyPath = Join-Path $staticSuccessState 'attempt-1.policy-retry.json'
+    if (-not (Test-Path -LiteralPath $packetPath) -or -not (Test-Path -LiteralPath $policyPath)) {
+        throw 'Static-quality retry evidence was not persisted.'
+    }
+    $packet = Get-Content -LiteralPath $packetPath -Raw | ConvertFrom-Json
+    $packetBody = [ordered]@{
+        schemaVersion=$packet.schemaVersion
+        packetType=$packet.packetType
+        failedAttempt=$packet.failedAttempt
+        failureSignature=$packet.failureSignature
+        findings=@($packet.findings)
+    }
+    $sha = [System.Security.Cryptography.SHA256]::Create()
+    try {
+        $packetBytes = [System.Text.Encoding]::UTF8.GetBytes(($packetBody | ConvertTo-Json -Depth 12 -Compress))
+        $recomputedPacketHash = -join ($sha.ComputeHash($packetBytes) | ForEach-Object { $_.ToString('x2') })
+    } finally { $sha.Dispose() }
+    if ($packet.packetHash -ne $recomputedPacketHash) { throw 'Static-quality repair packet hash is invalid.' }
+    Write-Host 'PASS: static-quality failure uses a hash-bound policy repair before Frontier review' -ForegroundColor Green
+
+    $noProgressOutput = & $supervisor -ContractPath $staticContract -StateDirectory $noProgressState `
+        -WorktreeParent $worktrees -MaxAttempts 2 -TestMode `
+        -MockWorkerPlans @($staticFailurePlan,$staticFailurePlan) -MockFrontierDecisions '[]'
+    if ($LASTEXITCODE -ne 2) { throw "Expected NO_PROGRESS exit 2, got $LASTEXITCODE" }
+    $noProgressResult = $noProgressOutput | ConvertFrom-Json
+    if ($noProgressResult.status -ne 'NO_PROGRESS' -or $noProgressResult.decisions.Count -ne 0) {
+        throw 'Repeated static-quality signature must stop without a Frontier decision.'
+    }
+    if (-not (Test-Path -LiteralPath (Join-Path $noProgressState 'attempt-2.no-progress.json'))) {
+        throw 'NO_PROGRESS evidence was not persisted.'
+    }
+    Write-Host 'PASS: repeated static-quality signature terminates durably as NO_PROGRESS' -ForegroundColor Green
 
     $session = 'frontier-accept-test'
     $jsonl = @(

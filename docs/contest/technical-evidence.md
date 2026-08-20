@@ -5,42 +5,42 @@
 <!-- prettier-ignore -->
 | Campo | Valor |
 | --- | --- |
-| Commit fuente | `ee58c6f9efb7b8fdd0dd2886ccbfa960d125bbb2` |
+| Commit fuente | `4fdf078c87905fe7adf84b07850789306f87b3f1` |
 | Manifest | `public/data/v1/manifest.json` |
-| SHA-256 del manifest | `6f69e887ecc59e28487ed350742c1c347c663aef948423cb2291a87f690a381c` |
-| Generado | 2026-08-14T14:57:38.962Z |
-| Snapshot | `20260814145738962-5cbe9b01d271` |
+| SHA-256 del manifest | `8cd5c5bcbd53ea7fca0cec11d7a7866e1d7dcfebdee2d3bf58dad15825001321` |
+| Generado | 2026-08-09T18:54:38.334Z |
+| Snapshot | `20260809185438334-e9ea8694331b` |
 | Estado de calidad | passed |
 | Centros | 229 |
 | Programas | 187 |
 | Ofertas formativas | 1294 |
-| Ofertas laborales | 1075 |
+| Ofertas laborales | 1077 |
 
 ### Recursos inmutables del snapshot
 
 <!-- prettier-ignore -->
 | Recurso | Ruta | Registros | SHA-256 |
 | --- | --- | ---: | --- |
-| centers | `/data/v1/snapshots/20260814145738962-5cbe9b01d271/centers.json` | 229 | `593b7780f6cb9511c02edb26a769e5e1f951624f6e4b923a8e34caacb230c87a` |
-| jobOffers | `/data/v1/snapshots/20260814145738962-5cbe9b01d271/job-offers.json` | 1075 | `0b87af9cd119e7f510fa9591f04444d45e3e431b2dc442200da9c8ba2f5a906d` |
-| mappingCoverage | `/data/v1/snapshots/20260814145738962-5cbe9b01d271/mapping-coverage.json` | 209 | `bf729967ecf61f8f0f558fbcc782c881ee1e95e6de0cf00dbe4bb32efb1cf78c` |
-| officialOccupations | `/data/v1/snapshots/20260814145738962-5cbe9b01d271/official-occupations.json` | 502 | `76fa213f97c98e5af0f9bf120323ba3abb32df78e797c381e5454cadc858f64b` |
-| occupationAliases | `/data/v1/snapshots/20260814145738962-5cbe9b01d271/occupation-aliases.json` | 113 | `71d2b317fdaa4776864d67e7d463dea1e28e86c0b7afccc4ba060852833af5c9` |
-| occupations | `/data/v1/snapshots/20260814145738962-5cbe9b01d271/occupations.json` | 91 | `f6c4b34a6fd5760c967273e4cc085abf6a3865baadfa2c721ac07dcd90fe3f09` |
-| outcomeIndicators | `/data/v1/snapshots/20260814145738962-5cbe9b01d271/outcome-indicators.json` | 22170 | `4f2c6b73fc4171bb9daf21583712ab2ec99bcaa7d27b1f2fd0c070b9079ab3e2` |
-| programs | `/data/v1/snapshots/20260814145738962-5cbe9b01d271/programs.json` | 187 | `90df87b283b5ff003dda20c9c4f7eac52b903e611753d107d4b927bbc4e19b72` |
-| publishedRequirements | `/data/v1/snapshots/20260814145738962-5cbe9b01d271/published-requirements.json` | 346 | `a7d5be7f13f45ff3ea3280a269c1bb71c0b21e98acc61ab7ad4734ffeccd5fab` |
-| trainingOccupationLinks | `/data/v1/snapshots/20260814145738962-5cbe9b01d271/training-occupation-links.json` | 220 | `3a5c6db8a85294f44ea5c2c0c837210ff8ea6975a1ca333a86eb41be2a616743` |
-| trainingOfferings | `/data/v1/snapshots/20260814145738962-5cbe9b01d271/training-offerings.json` | 1294 | `0948871f993a4f0a03ed42ccef060c4a395e0898dc230086f234345fee7e880a` |
+| centers | `/data/v1/snapshots/20260809185438334-e9ea8694331b/centers.json` | 229 | `593b7780f6cb9511c02edb26a769e5e1f951624f6e4b923a8e34caacb230c87a` |
+| jobOffers | `/data/v1/snapshots/20260809185438334-e9ea8694331b/job-offers.json` | 1077 | `0631d0880485df26e2f450ee7da70ce7a0b210fe088eca02398a9474a2e6907b` |
+| mappingCoverage | `/data/v1/snapshots/20260809185438334-e9ea8694331b/mapping-coverage.json` | 209 | `bec38d839c701074a755d92f3b8eb5d984d2002605d2b78ceba84af3458a0503` |
+| officialOccupations | `/data/v1/snapshots/20260809185438334-e9ea8694331b/official-occupations.json` | 502 | `76fa213f97c98e5af0f9bf120323ba3abb32df78e797c381e5454cadc858f64b` |
+| occupationAliases | `/data/v1/snapshots/20260809185438334-e9ea8694331b/occupation-aliases.json` | 21 | `fbd4ca379e14c5152ee1620de5b4176d8102fc554c4e31139a98550d8855dd68` |
+| occupations | `/data/v1/snapshots/20260809185438334-e9ea8694331b/occupations.json` | 91 | `f6c4b34a6fd5760c967273e4cc085abf6a3865baadfa2c721ac07dcd90fe3f09` |
+| outcomeIndicators | `/data/v1/snapshots/20260809185438334-e9ea8694331b/outcome-indicators.json` | 22170 | `4f2c6b73fc4171bb9daf21583712ab2ec99bcaa7d27b1f2fd0c070b9079ab3e2` |
+| programs | `/data/v1/snapshots/20260809185438334-e9ea8694331b/programs.json` | 187 | `90df87b283b5ff003dda20c9c4f7eac52b903e611753d107d4b927bbc4e19b72` |
+| publishedRequirements | `/data/v1/snapshots/20260809185438334-e9ea8694331b/published-requirements.json` | 337 | `cb9e2383f4f3ad92e9f6c26f6843d8e5de143098e8d69c46ca09092f8148ee40` |
+| trainingOccupationLinks | `/data/v1/snapshots/20260809185438334-e9ea8694331b/training-occupation-links.json` | 14 | `6905d125dd051934d1bf3efca0fe04dca45204a7464317f9634d1e753c6098ef` |
+| trainingOfferings | `/data/v1/snapshots/20260809185438334-e9ea8694331b/training-offerings.json` | 1294 | `0948871f993a4f0a03ed42ccef060c4a395e0898dc230086f234345fee7e880a` |
 
 ## Recomputación de cobertura
 
-- 76 cualificaciones distintas: `qualification:ADG01B, qualification:ADG01M, qualification:ADG01S, qualification:ADG02S, qualification:AFD01S, qualification:AFD02M, qualification:AFD02S, qualification:AGA01B, qualification:AGA01M, qualification:AGA03M, qualification:AGA03S, qualification:AGA04M, qualification:COM01B, qualification:COM01M, qualification:COM02M, qualification:COM02S, qualification:COM03S, qualification:COM04S, qualification:ELE01B, qualification:ELE01M, qualification:ELE01S, qualification:ELE02M, qualification:ELE02S, qualification:ELE03S, qualification:ELE04S, qualification:ENA03S, qualification:EOC01M, qualification:EOC02S, qualification:FME01B, qualification:FME01M, qualification:FME01S, qualification:FME02B, qualification:FME02M, qualification:FME02S, qualification:HOT01B, qualification:HOT01M, qualification:HOT01S, qualification:HOT02M, qualification:HOT03S, qualification:HOT04S, qualification:HOT05S, qualification:IFC01B, qualification:IFC01M, qualification:IFC01S, qualification:IFC02B, qualification:IFC02S, qualification:IFC03S, qualification:IMA02M, qualification:IMA03M, qualification:IMA03S, qualification:IMP01B, qualification:IMP01M, qualification:IMP01S, qualification:IMP02M, qualification:IMP02S, qualification:INA02S, qualification:MAM01B, qualification:MAM01M, qualification:QUI01S, qualification:QUI02M, qualification:SAN02M, qualification:SAN04S, qualification:SAN07S, qualification:SAN08S, qualification:SAN09S, qualification:SAN21, qualification:SEA03S, qualification:SSC01M, qualification:SSC01S, qualification:SSC03S, qualification:SSC05S, qualification:TMV01B, qualification:TMV01M, qualification:TMV01S, qualification:TMV02M, qualification:TMV03E`.
-- 93 claves de modalidad: `ADG01B, ADG01M, ADG01MD, ADG01S, ADG02S, ADG02SD, AFD01S, AFD01SD, AFD02M, AFD02S, AFD02SD, AGA01B, AGA01M, AGA03M, AGA03S, AGA04M, COM01B, COM01M, COM02M, COM02S, COM02SD, COM03S, COM04S, COM04SD, ELE01B, ELE01M, ELE01MD, ELE01S, ELE02M, ELE02S, ELE03S, ELE04S, ENA03S, EOC01M, EOC02S, EOC02SD, FME01B, FME01M, FME01S, FME02B, FME02M, FME02S, HOT01B, HOT01M, HOT01S, HOT02M, HOT03S, HOT04S, HOT05S, IFC01B, IFC01M, IFC01MD, IFC01S, IFC01SD, IFC02B, IFC02S, IFC02SD, IFC03S, IFC03SD, IMA02M, IMA03M, IMA03S, IMP01B, IMP01M, IMP01S, IMP02M, IMP02S, INA02S, MAM01B, MAM01M, QUI01S, QUI02M, SAN02M, SAN04S, SAN07S, SAN07SD, SAN08S, SAN08SD, SAN09S, SAN09SD, SAN21, SEA03S, SSC01M, SSC01S, SSC01SD, SSC03S, SSC03SD, SSC05S, TMV01B, TMV01M, TMV01S, TMV02M, TMV03E`.
-- 220 relaciones aprobadas y 113 alias aprobados.
-- 20 programas con coincidencias y 73 programas revisados sin coincidencias.
-- 22 relaciones alcanzadas y 198 relaciones revisadas sin oferta alcanzada.
-- Unión de coincidencias: 66 IDs; delta marginal de la ampliación: 0 IDs.
+- 6 cualificaciones distintas: `qualification:COM02M, qualification:EOC01M, qualification:HOT01M, qualification:IFC03S, qualification:SAN21, qualification:SSC01M`.
+- 7 claves de modalidad: `COM02M, EOC01M, HOT01M, IFC03S, IFC03SD, SAN21, SSC01M`.
+- 14 relaciones aprobadas y 21 alias aprobados.
+- 2 programas con coincidencias y 5 programas revisados sin coincidencias.
+- 3 relaciones alcanzadas y 11 relaciones revisadas sin oferta alcanzada.
+- Unión de coincidencias: 46 IDs; delta marginal de la ampliación: 0 IDs.
 - Intentos terminales: 11 completado, 0 diferidos, 0 descartados; 0 reservas no intentadas.
 
 La cifra de ofertas es una unión de IDs de ofertas que pasan las reglas de matching con los datos publicados. No es un recuento de todo el mercado ni una proyección.

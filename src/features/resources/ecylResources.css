@@ -12,7 +12,7 @@
   font-size: clamp(2rem, 4vw, 3.5rem);
 }
 .resources-page__eyebrow {
-  color: var(--color-brand, #8b0015);
+  color: var(--color-primary);
   font-weight: 700;
 }
 .resources-filters {
@@ -82,11 +82,11 @@
 .resource-card a {
   display: inline-block;
   margin-top: 0.55rem;
-  color: #8b0015;
+  color: var(--color-primary);
   font-weight: 700;
 }
 .resource-card__code {
-  color: #8b0015 !important;
+  color: var(--color-primary) !important;
   font-size: 0.82rem;
   font-weight: 750;
   text-transform: uppercase;

@@ -87,7 +87,7 @@ try {
     $successState = Join-Path $temporaryRoot 'success-state'
     $successBatch | ConvertTo-Json -Depth 8 | Set-Content -LiteralPath $successBatchPath -Encoding utf8
 
-    $output = & $batchPath -BatchJsonPath $successBatchPath -StateDirectory $successState -MaxConcurrency 3 -TestMode
+    $output = & $batchPath -BatchJsonPath $successBatchPath -StateDirectory $successState -TestMode
     $exitCode = $LASTEXITCODE
 
     $result = $output | ConvertFrom-Json
@@ -99,6 +99,9 @@ try {
 
     $testName = 'Valid batch: 3 stories ready'
     Write-TestResult -Name $testName -Success ($result.storiesReady -eq 3) -Detail "ready=$($result.storiesReady)"
+
+    $testName = 'Valid batch: default concurrency is provider-safe serial execution'
+    Write-TestResult -Name $testName -Success ($result.maxConcurrency -eq 1) -Detail "max=$($result.maxConcurrency)"
 
     $testName = 'Valid batch: batch-result.json exists'
     $brPath = Join-Path $successState 'batch-result.json'

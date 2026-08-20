@@ -113,3 +113,120 @@ The before/after captures were inspected together at the same desktop viewport a
 No actionable P0, P1 or P2 visual issue remains. The exact technical table is intentionally secondary but fully available.
 
 final result: passed
+
+---
+
+## Closure QA — 2026-08-16 · home hierarchy and results / breaches
+
+- Evidence path: `docs/contest/evidence/design-qa-20260816/`
+- Source visual truth: `G:\_Descargas\ChatGPT Image 11 ago 2026, 22_13_40.png`
+- Viewports: desktop 1440 × 900 CSS px; mobile 360 × 800 CSS px.
+- Density normalization: screenshots compared at 1× CSS density by proportional page geometry.
+
+### Evidence captures (12 tracked items)
+
+1. `home-desktop-1440x900.png`
+2. `home-mobile-360x800.png`
+3. `home-mobile-360x800-entry-alternatives.png`
+4. `results-desktop-1440x900.png`
+5. `results-desktop-1440x900-gap.png`
+6. `results-desktop-1440x900-unpublished.png`
+7. `results-mobile-360x800.png`
+8. `results-mobile-360x800-gap.png`
+9. `results-mobile-360x800-unpublished.png`
+10. `home-reference-vs-implementation.png`
+11. `results-states-desktop.png`
+12. `results-states-mobile.png`
+
+### Source-reference transparency
+
+There is no prior visual reference capture for results / breaches in the historical register.
+No source image is invented or implied. Results / breaches QA compares the live screen against
+the brief evidence contract and the existing token system directly, supplemented by the two
+state composites (`results-states-desktop.png` / `results-states-mobile.png`) as implementation evidence.
+
+### Comparison by region
+
+| Region                       | Observation                                                                                                                                                         |
+| ---------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Hero                         | Copy renders exactly: «SALIDA CyL conecta FP, salidas profesionales y evidencia pública; no es un buscador general de empleo ni de cursos.»                         |
+| Reviewed coverage            | The three deterministically selected reviewed programmes appear first in both semantic and visual order, preceding any interaction.                                 |
+| FP / Occupation alternatives | Selectors are equal burgundy alternative cards; mobile stacking remains alternative rather than sequential.                                                         |
+| Visible 'o'                  | Present in the hero and primary panel text as designed, no truncation or overflow.                                                                                  |
+| Result quote                 | Evidence blockquotes render as visible blockquotes before collapsed provenance metadata.                                                                            |
+| Evidence states              | «Requisito no cumplido» uses burgundy; «Requisito no publicado» uses gold — visually distinct.                                                                      |
+| Palette                      | `#951126`, `#761020`, gold `#bf7700` / `#995f00` and warm neutrals confirmed across the audited site; no green / terracotta remnants in audited styles or features. |
+| Responsive overflow          | Body and document horizontal overflow at 0 px in all four views (desktop / mobile × 1440×900 / 360×800).                                                            |
+
+### Findings / history
+
+| #   | Item                                             | Finding                                                                                                           |
+| --- | ------------------------------------------------ | ----------------------------------------------------------------------------------------------------------------- |
+| 1   | Semantic home reorder (FP/occupation first)      | **Implementation fix applied.**                                                                                   |
+| 2   | Mobile stacking mode (alternative vs sequential) | Confirmed no-change — stacking is alternative as requested.                                                       |
+| 3   | Hero copy fidelity                               | Confirmed match — exact copy as specified in the brief.                                                           |
+| 4   | Result evidence blockquotes                      | Confirmed — blockquotes visible before collapsed provenance.                                                      |
+| 5   | Requirement state colours                        | Confirmed — burgundy / gold distinct as specified.                                                                |
+| 6   | Results / breaches reference capture             | **No prior capture exists.** QA relies on brief evidence contract plus token system and the two state composites. |
+| 7   | Compare Studies                                  | Unchanged.                                                                                                        |
+| 8   | Matching engine                                  | Unchanged.                                                                                                        |
+| 9   | Catalogs / manifests                             | Unchanged.                                                                                                        |
+| 10  | Snapshots                                        | Unchanged.                                                                                                        |
+| 11  | Result rendering                                 | Unchanged.                                                                                                        |
+
+### Palette confirmation
+
+| Token                                     | Value                 | Status                                      |
+| ----------------------------------------- | --------------------- | ------------------------------------------- |
+| Burgundy primary                          | `#951126`             | Confirmed                                   |
+| Burgundy dark                             | `#761020`             | Confirmed                                   |
+| Gold highlight / Requirement no published | `#bf7700` / `#995f00` | Confirmed                                   |
+| Warm neutrals (backgrounds, borders)      | Warm neutral palette  | Confirmed                                   |
+| Green remnants                            | —                     | None detected in audited styles or features |
+| Terracotta remnants                       | —                     | None detected in audited styles or features |
+
+### Accessibility (Axe)
+
+- Axe Core: **0 violations** on home in desktop 1440 × 900.
+- Axe Core: **0 violations** on home in mobile 360 × 800.
+- Axe Core: **0 violations** on results / breaches in desktop 1440 × 900.
+- Axe Core: **0 violations** on results / breaches in mobile 360 × 800.
+
+### Keyboard coverage
+
+- Skip link moves focus to main content.
+- Alternative entry cards are sequentially focusable.
+- Exact-citation disclosure toggles via Enter / Space.
+- Requirement answer (no cumplido / no publicado) is focusable.
+- Existing E2E also covers `ArrowRight` navigation and related-offers interactions.
+
+### Console / network
+
+- Browser console errors: **0**.
+- Console warnings: **0**.
+- Page-level errors: **0**.
+- Failed requests: **0**.
+- HTTP error responses: **0**.
+
+### Overflow
+
+- Body horizontal overflow: **0 px** (all four views).
+- Document horizontal overflow: **0 px** (all four views).
+
+### Test evidence
+
+| Suite                                | Passed / Total | Notes                                                    |
+| ------------------------------------ | -------------- | -------------------------------------------------------- |
+| `HomePage` unit (focused)            | 2 / 2          |                                                          |
+| `TrainingResultsPage` unit (focused) | 12 / 12        |                                                          |
+| Home + training E2E (focused)        | 32 / 32        |                                                          |
+| Exact-capture QA                     | 4 / 4          |                                                          |
+| Full Vitest suite                    | 95 / 95        | `npm test` (maxWorkers: 2); 95 archivos, 880 / 880 tests |
+| Full E2E suite                       | 88 / 88        | Includes keyboard, overflow, Axe runs                    |
+
+> **Nota:** La suite unitaria completa está verde: `npm test` ejecutó 95 archivos (/ 95)
+> y 880 tests (/ 880) exitosamente con `maxWorkers: 2` configurado y sin flags adicionales.
+
+### Final line
+
+final result: passed

@@ -9,15 +9,14 @@ cada entrega. Los modelos NAN ejecutan cambios de código únicamente bajo
 contratos acotados emitidos por Sol, sin decidir arquitectura ni hacer
 diagnóstico por sí mismos.
 
-La referencia publicada sigue siendo `v0.2.0`, commit
-`b899e1f546b974ccea0f9580510753c04cd6ccac`. La compatibilidad con la procedencia
-de delegación firmada V4 se revisó contra el merge posterior
-`42cf5c2b1b55628332ce9fc1089957bd4fca3931` de `agent-orchestration-starter`.
-Este último commit aún no tiene release propio, por lo que no se distribuye ni
-instala desde este repositorio. Cambiar modelo, harness, agente, permisos o
-launcher exige cualificar de nuevo la combinación exacta.
+La referencia publicada es `v0.3.1`, commit
+`ae1640e2a7d6151bc6a331be62c6e196d7852c66`. La compatibilidad histórica con la
+procedencia firmada V4 conserva el merge
+`42cf5c2b1b55628332ce9fc1089957bd4fca3931`. Cambiar runtime, modelo, harness,
+agente, permisos o launcher exige cualificar de nuevo la combinación exacta.
 
-Este flujo **no es el runtime V4 completo**. Es una adaptación `BOUNDED_LOCAL`
+Este flujo **no es el runtime V4 completo**. La activación V4 es
+`ANALYSIS_ONLY` y la ejecución sigue siendo una adaptación `BOUNDED_LOCAL`
 para Windows que aprovecha el CLI `opencode`, los agentes locales `nan-code` y
 `nan-bulletin`, un worker PowerShell y un supervisor Frontier. No constituye
 aislamiento duro ni una certificación de host de producción.
@@ -76,7 +75,8 @@ NAN se usa como proveedor de implementación principal. El worker:
 - Ejecuta un intento por defecto y no activa fallbacks implícitos.
 - Lee el JSONL durante la ejecución y termina el árbol de OpenCode cuando el
   consumo observado, incluida la caché, supera el presupuesto del perfil.
-- Admite hasta cinco ejecuciones NAN activas por clave, cada una con estado
+- Usa una ejecución NAN por defecto y admite hasta cinco solo mediante override
+  explícito, cada una con estado
   OpenCode aislado. El broker respeta además 60 solicitudes por minuto y 1,5 M
   tokens por minuto y modelo; una espera de admisión no consume el tiempo de
   inferencia.
@@ -184,9 +184,12 @@ debe ser nuevo para impedir reutilizar decisiones de otra ejecución:
 Cada intento crea un worktree separado sobre el mismo SHA, llama al worker con
 `MaxRetries=1`, captura telemetría en una ruta elegida por el host y copia fuera
 del worktree cualquier parche que respete las rutas del contrato. Si falla una
-validación, también conserva su código de salida y hasta 4.000 caracteres de la
-cola del diagnóstico por comando. Después elimina el worktree y pide a Codex una
-decisión con esa evidencia. `RETRY` añade hasta tres instrucciones acotadas y
+validación, también conserva su código de salida, clasificación, hashes y hasta
+4.000 caracteres de la cola del diagnóstico por comando. Un fallo exclusivamente
+de lint o formato genera un repair packet hash-bound y un reintento mecánico en
+un contexto fresco antes de gastar una revisión Frontier. Si la firma se repite,
+termina en `NO_PROGRESS`. Los demás fallos eliminan el worktree y piden a Codex
+una decisión con esa evidencia. `RETRY` añade hasta tres instrucciones acotadas y
 lanza una sesión NAN nueva desde el SHA original; solo un intento listo y con
 validaciones aprobadas admite `ACCEPT`. `ESCALATE` termina sin aplicar el parche.
 Los fallos fatales escriben un resultado `FAILED` sanitizado. El supervisor nunca
@@ -200,7 +203,8 @@ ocurrido el ciclo Frontier completo.
 
 Si Codex identifica dos o más historias sin dependencia y con rutas exactas
 disjuntas, usa `Invoke-NanWorkerBatch.ps1` en vez de encadenar supervisores. Un
-lote admite de 1 a 20 historias y ejecuta como máximo cinco a la vez, cada una
+lote admite de 1 a 20 historias y ejecuta una por defecto. `-MaxConcurrency`
+permite hasta cinco de forma explícita, cada una
 en un worktree detached y una sesión NAN nueva. El contrato completo y el SHA
 Git base quedan ligados por hash; parches y telemetría se guardan fuera del
 repositorio. El lote nunca aplica los parches ni publica resultados.
@@ -260,9 +264,9 @@ Cada campo es obligatorio y se valida en runtime (fail-closed):
 pero queda registrado como `budgetSource: override`; no debe usarse como valor
 habitual ni para ocultar un contrato demasiado amplio.
 
-El perfil de admisión predeterminado es `provider-limit`, con capacidad de cinco
-plazas concurrentes por clave, que coincide con el límite publicado por NAN. Este
-perfil es independiente del `BudgetProfile`; las cinco plazas no se atribuyen al
+El perfil de admisión conserva capacidad técnica de cinco plazas por clave, pero
+el coordinador batch usa una por defecto. Elevar `-MaxConcurrency` requiere una
+decisión explícita. Este perfil es independiente del `BudgetProfile`; las plazas no se atribuyen al
 perfil extended. Cada proceso recibe directorios XDG de datos, estado y caché
 distintos; así varias instancias de OpenCode no comparten la base SQLite.
 `observed-serial` queda disponible solo como diagnóstico de capacidad 1. Los

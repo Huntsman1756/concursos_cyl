@@ -85,7 +85,7 @@ test("live DAW results name the dated zero-match snapshot without claiming there
   );
 });
 
-test("COM01M shows 9 reviewed occupation groups before and after submit", async ({
+test("COM01M stays explicitly outside reviewed fallback coverage", async ({
   page,
 }) => {
   await page.goto("/desde-fp");
@@ -93,19 +93,18 @@ test("COM01M shows 9 reviewed occupation groups before and after submit", async 
     .getByRole("combobox", { name: "Ciclo de Formación Profesional" })
     .selectOption("COM01M");
   await expect(page.getByRole("status")).toContainText(
-    /Relaciones revisadas con 9 grupos de ocupación/,
+    /todavía no hay una relación revisada para buscar ofertas/,
   );
   await page.getByRole("button", { name: "Ver salidas y ofertas" }).click();
   await expect(page).toHaveURL(/\/desde-fp\/COM01M$/u);
   await expect(
     page.getByRole("heading", { name: "Actividades Comerciales" }),
   ).toBeVisible();
-  const reviewedGroups = page
-    .getByRole("heading", {
-      name: "Grupos de ocupación revisados para buscar ofertas",
-    })
-    .locator("..");
-  await expect(reviewedGroups.getByRole("listitem")).toHaveCount(9);
+  await expect(
+    page.getByText(
+      /Todavía no hay una relación revisada que permita buscar ofertas/,
+    ),
+  ).toBeVisible();
 });
 
 test("the intercepted full DAW card makes a declared gap, action, filter, and evidence keyboard-accessible", async ({
@@ -135,12 +134,16 @@ test("the intercepted full DAW card makes a declared gap, action, filter, and ev
     card.getByRole("heading", { name: "Siguiente acción" }),
   ).toBeVisible();
 
-  const mappingDisclosure = card.getByText("Ver cita exacta").first();
+  const mappingDisclosure = card
+    .getByText("Ver cita exacta", { exact: true })
+    .first();
   await tabTo(page, mappingDisclosure);
   await expect(mappingDisclosure).toBeFocused();
   await page.keyboard.press("Enter");
   await expect(
-    card.getByText("Desarrollador de aplicaciones en entornos Web."),
+    card.getByText("Desarrollador de aplicaciones en entornos Web.", {
+      exact: true,
+    }),
   ).toBeVisible();
 
   const firstExperienceAnswer = card.getByRole("radio", {

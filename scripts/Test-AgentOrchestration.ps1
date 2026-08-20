@@ -690,7 +690,7 @@ try {
         $plan2 = @(
             @{exitCode = 0; changedPaths = @('scripts/ok2.txt'); validationExitCode = 1; validationDiagnostics = @(@{commandIndex=1;exitCode=1;outputTail='focused failure tail';truncated=$false}); jsonl = $jsonlOk}
         ) | ConvertTo-Json -Depth 8 -Compress
-        $r2 = Invoke-WorkerChild -WorkerParameters (New-ValidCodeContract -Objective 've-fail' -ValidationCommand @('cmd /c exit 1') -MaxRetries 1 -TestMode -MockPlan $plan2)
+        $r2 = Invoke-WorkerChild -WorkerParameters (New-ValidCodeContract -Objective 've-fail' -ValidationCommand @('npm run format:check') -MaxRetries 1 -TestMode -MockPlan $plan2)
         Assert-True ($r2.ExitCode -ne 0) '17e: mock validationExitCode=1 causes failure (exit non-zero)'
 
         $telFile2 = Get-NewTelemetry -BeforeFiles $pre2
@@ -702,6 +702,11 @@ try {
             Assert-True ($tel2.attempts[0].exitCode -eq 1) '17i: attempt exitCode=1 after validation failure'
             Assert-True ($tel2.changedPaths[0] -eq 'scripts/ok2.txt') '17i2: failed validation preserves changed paths'
             Assert-True ($tel2.attempts[0].validationDiagnostics[0].outputTail -eq 'focused failure tail') '17i3: bounded validation diagnostic is retained'
+            Assert-True ($tel2.attempts[0].validationDiagnostics[0].validationId -eq 'format') '17i4: format validation is classified'
+            Assert-True ($tel2.attempts[0].validationDiagnostics[0].categoryCode -eq 'shift_left_static_quality') '17i5: format maps to static-quality repair'
+            Assert-True ($tel2.attempts[0].validationDiagnostics[0].commandSha256 -match '^[a-f0-9]{64}$') '17i6: validation command is represented by a SHA-256'
+            Assert-True ($tel2.attempts[0].validationDiagnostics[0].normalizedFailureSignature -match '^[a-f0-9]{64}$') '17i7: normalized failure signature is stable hash material'
+            Assert-True (-not ($tel2.attempts[0].validationDiagnostics[0].PSObject.Properties.Name -contains 'command')) '17i8: raw validation command is absent from diagnostics'
         }
     }
 
@@ -821,10 +826,13 @@ try {
             Assert-True ($yamlText -match 'frontierSupervisor:\s*\r?\n\s+enabled:\s*true') '18ad1: YAML enables frontier supervisor'
             Assert-True ($yamlText -match 'automaticWorkerRelaunchAfterFrontierRetry:\s*true') '18ad2: YAML declares adaptive relaunch'
             Assert-True ($yamlText -match 'retryFromAcceptedBase:\s*true') '18ad3: YAML requires repair from the accepted base'
-            Assert-True ($yamlText -match 'release:\s*v0\.2\.0') '18ad4: YAML pins the latest released runtime tag'
-            Assert-True ($yamlText -match 'releaseCommit:\s*b899e1f546b974ccea0f9580510753c04cd6ccac') '18ad5: YAML pins the released runtime commit'
-            Assert-True ($yamlText -match 'commit:\s*42cf5c2b1b55628332ce9fc1089957bd4fca3931') '18ad6: YAML pins signed provenance merge'
+            Assert-True ($yamlText -match 'release:\s*v0\.3\.1') '18ad4: YAML pins the latest released runtime tag'
+            Assert-True ($yamlText -match 'releaseCommit:\s*ae1640e2a7d6151bc6a331be62c6e196d7852c66') '18ad5: YAML pins the released runtime commit'
+            Assert-True ($yamlText -match 'commit:\s*ae1640e2a7d6151bc6a331be62c6e196d7852c66') '18ad6: YAML pins Runtime V4 v0.3.1'
+            Assert-True ($yamlText -match 'provenanceCompatibilityCommit:\s*42cf5c2b1b55628332ce9fc1089957bd4fca3931') '18ad6a: YAML preserves signed provenance compatibility merge'
             Assert-True ($yamlText -match 'level:\s*BOUNDED_LOCAL') '18ad7: YAML states the evidenced adoption level'
+            Assert-True ($yamlText -match 'activationTarget:\s*ANALYSIS_ONLY') '18ad7a: YAML limits Runtime V4 activation to analysis'
+            Assert-True ($yamlText -match 'hostCompositionHash:\s*null') '18ad7b: YAML records absence of certified host composition'
             Assert-True ($yamlText -match 'delegationProvenance:\s*\r?\n\s+schemaVersion:\s*4') '18ad8: YAML identifies delegation provenance V4'
             Assert-True ($yamlText -match 'enforcement:\s*DISABLED') '18ad9: YAML keeps provenance enforcement disabled before qualification'
             Assert-True ($yamlText -match 'publicationThroughRuntimeV4:\s*false') '18ad10: YAML does not claim broker-owned publication'
@@ -837,12 +845,31 @@ try {
             Assert-True ($yamlText -notmatch 'BEGIN (?:EC |OPENSSH |RSA |DSA )?PRIVATE KEY') '18ad13: YAML contains no private signing key'
             Assert-True ($yamlText -match 'batchExecutor:\s*\r?\n\s+enabled:\s*true') '18ad14: YAML enables bounded batch executor'
             Assert-True ($yamlText -match 'maxConcurrency:\s*5') '18ad15: YAML caps batch concurrency at five'
+            Assert-True ($yamlText -match 'defaultConcurrency:\s*1') '18ad15a: YAML defaults batch concurrency to one'
             Assert-True ($yamlText -match 'exactDisjointPathsRequired:\s*true') '18ad16: YAML requires disjoint exact batch paths'
             Assert-True ($yamlText -match 'requestsPerMinutePerKey:\s*60') '18ad17: YAML records NAN request limit'
             Assert-True ($yamlText -match 'tokensPerMinutePerModel:\s*1500000') '18ad18: YAML records NAN per-model TPM limit'
             Assert-True ($yamlText -match 'requireProviderReportedTokensForUsageClaims:\s*true') '18ad19: YAML forbids client-only usage claims'
             Assert-True (Test-Path -LiteralPath (Join-Path $repoRoot 'scripts\Invoke-NanWorkerBatch.ps1')) '18ad20: batch executor exists'
             Assert-True (Test-Path -LiteralPath (Join-Path $repoRoot 'scripts\Invoke-NanWorkerContract.ps1')) '18ad21: batch contract adapter exists'
+            $runtimePolicyPath = Join-Path $repoRoot 'policies\repository-policy.yaml'
+            $runtimeProfilePath = Join-Path $repoRoot 'profiles\runtime-2026-08-16.yaml'
+            $runtimeActivationPath = Join-Path $repoRoot '.agent-orchestration\activation-v4.json'
+            Assert-True (Test-Path -LiteralPath $runtimePolicyPath) '18ad22: Runtime V4 repository policy exists'
+            Assert-True (Test-Path -LiteralPath $runtimeProfilePath) '18ad23: Runtime V4 profile exists'
+            Assert-True (Test-Path -LiteralPath $runtimeActivationPath) '18ad24: Runtime V4 analysis activation exists'
+            if ((Test-Path -LiteralPath $runtimePolicyPath) -and (Test-Path -LiteralPath $runtimeProfilePath) -and (Test-Path -LiteralPath $runtimeActivationPath)) {
+                $runtimePolicyText = Get-Content -LiteralPath $runtimePolicyPath -Raw
+                $runtimeProfileText = Get-Content -LiteralPath $runtimeProfilePath -Raw
+                $runtimeActivation = Get-Content -LiteralPath $runtimeActivationPath -Raw | ConvertFrom-Json
+                Assert-True ($runtimePolicyText -match 'publication:\s*\r?\n\s+enabled:\s*false') '18ad25: Runtime V4 publication is disabled'
+                Assert-True ($runtimeProfileText -match 'maxEconomyParallelRequests:\s*1') '18ad26: Runtime V4 economy concurrency is one'
+                Assert-True ($runtimeProfileText -match 'maxConcurrentRunsPerRepository:\s*1') '18ad27: Runtime V4 repository concurrency is one'
+                Assert-True ($runtimeActivation.target -eq 'ANALYSIS_ONLY') '18ad28: activation target is analysis only'
+                Assert-True ($null -eq $runtimeActivation.hostCompositionHash) '18ad29: activation has no certified host composition'
+                Assert-True ($runtimeActivation.activationHash -match '^[a-f0-9]{64}$') '18ad30: activation is hash-bound'
+                Assert-True (-not (Test-Path -LiteralPath (Join-Path $repoRoot '.codex\config.toml'))) '18ad31: unavailable required MCP binding is not retained'
+            }
 
             $workerText = Get-Content -LiteralPath $workerPath -Raw
             Assert-True ($workerText -notmatch "'--auto'") '18ae: worker does not pass --auto'

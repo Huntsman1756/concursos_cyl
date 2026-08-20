@@ -199,119 +199,12 @@ export function HomePage() {
             <span>siguiente paso</span>
           </h1>
           <p>
-            Explora ciclos de FP, salidas revisadas
-            <br className="desktop-break" /> y oportunidades en Castilla y León.
+            SALIDA CyL conecta FP, salidas profesionales y evidencia pública; no
+            es un buscador general de empleo ni de cursos.
           </p>
         </div>
 
         <div className="home-workspace">
-          <section
-            className="entry-panels"
-            aria-label="Elige tu punto de partida"
-          >
-            <EntryCard
-              title="He terminado FP"
-              outcome="Indica tu título y descubre tus siguientes pasos."
-              accent="burgundy"
-              control={
-                searchData.status === "ready" ? (
-                  <div className="entry-card__field">
-                    <label className="sr-only" htmlFor="home-program">
-                      Título de Formación Profesional
-                    </label>
-                    <select
-                      id="home-program"
-                      value={selectedProgram}
-                      onChange={(event) =>
-                        setSelectedProgram(event.target.value)
-                      }
-                    >
-                      <option value="">Selecciona tu título de FP</option>
-                      {searchData.programs.map((program) => (
-                        <option
-                          key={program.programKey}
-                          value={program.programKey}
-                        >
-                          {program.programTitle} ({program.programKey})
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-                ) : (
-                  <p className="form-message">
-                    {searchData.status === "loading"
-                      ? "Cargando el catálogo oficial de FP…"
-                      : "El selector no está disponible ahora mismo."}
-                  </p>
-                )
-              }
-              action={
-                searchData.status === "ready" ? (
-                  <button
-                    className="entry-card__cta"
-                    type="button"
-                    disabled={selectedProgram === ""}
-                    onClick={() => navigate(`/desde-fp/${selectedProgram}`)}
-                  >
-                    Ver mis opciones
-                  </button>
-                ) : (
-                  <Link className="entry-card__cta" to="/desde-fp">
-                    Abrir buscador de FP
-                  </Link>
-                )
-              }
-            />
-
-            <EntryCard
-              title="Quiero trabajar de…"
-              outcome="Busca una ocupación y conoce cómo llegar."
-              accent="gold"
-              control={
-                searchData.status === "ready" ? (
-                  <OccupationCombobox
-                    occupations={searchData.occupations}
-                    aliases={searchData.aliases}
-                    confirmedOccupation={confirmedOccupation}
-                    onConfirm={setConfirmedOccupation}
-                    onClear={() => setConfirmedOccupation(null)}
-                    label="Ocupación que te interesa"
-                    hint="Escribe una ocupación y selecciónala en la lista."
-                    showConfirmation={false}
-                  />
-                ) : (
-                  <p className="form-message">
-                    {searchData.status === "loading"
-                      ? "Cargando el catálogo oficial de ocupaciones…"
-                      : "El buscador no está disponible ahora mismo."}
-                  </p>
-                )
-              }
-              action={
-                searchData.status === "ready" ? (
-                  <button
-                    className="entry-card__cta"
-                    type="button"
-                    disabled={confirmedOccupation === null}
-                    onClick={() =>
-                      confirmedOccupation === null
-                        ? undefined
-                        : navigate(
-                            `/desde-ocupacion/${encodeURIComponent(confirmedOccupation.occupationId)}`,
-                          )
-                    }
-                  >
-                    Buscar ocupación
-                  </button>
-                ) : (
-                  <Link className="entry-card__cta" to="/desde-ocupacion">
-                    Abrir buscador de ocupaciones
-                  </Link>
-                )
-              }
-            />
-          </section>
-
           <aside
             className="coverage-panel"
             aria-label="Cobertura revisada"
@@ -388,6 +281,121 @@ export function HomePage() {
               Ver toda la cobertura <Icon name="arrow-right" size={16} />
             </Link>
           </aside>
+
+          <section
+            className="entry-panels"
+            aria-label="Elige tu punto de partida"
+          >
+            <EntryCard
+              title="He terminado FP"
+              outcome="Indica tu título y descubre tus siguientes pasos."
+              accent="burgundy"
+              control={
+                searchData.status === "ready" ? (
+                  <div className="entry-card__field">
+                    <label className="sr-only" htmlFor="home-program">
+                      Título de Formación Profesional
+                    </label>
+                    <select
+                      id="home-program"
+                      value={selectedProgram}
+                      onChange={(event) =>
+                        setSelectedProgram(event.target.value)
+                      }
+                    >
+                      <option value="">Selecciona tu título de FP</option>
+                      {searchData.programs.map((program) => (
+                        <option
+                          key={program.programKey}
+                          value={program.programKey}
+                        >
+                          {program.programTitle} ({program.programKey})
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                ) : (
+                  <p className="form-message">
+                    {searchData.status === "loading"
+                      ? "Cargando el catálogo oficial de FP…"
+                      : "El selector no está disponible ahora mismo."}
+                  </p>
+                )
+              }
+              action={
+                searchData.status === "ready" ? (
+                  <button
+                    className="entry-card__cta"
+                    type="button"
+                    disabled={selectedProgram === ""}
+                    onClick={() => navigate(`/desde-fp/${selectedProgram}`)}
+                  >
+                    Ver mis opciones
+                  </button>
+                ) : (
+                  <Link className="entry-card__cta" to="/desde-fp">
+                    Abrir buscador de FP
+                  </Link>
+                )
+              }
+            />
+
+            <span
+              className="entry-panels__separator"
+              role="separator"
+              aria-label="Alternativa"
+            >
+              {" o "}
+            </span>
+
+            <EntryCard
+              title="Quiero trabajar de…"
+              outcome="Busca una ocupación y conoce cómo llegar."
+              accent="burgundy"
+              control={
+                searchData.status === "ready" ? (
+                  <OccupationCombobox
+                    occupations={searchData.occupations}
+                    aliases={searchData.aliases}
+                    confirmedOccupation={confirmedOccupation}
+                    onConfirm={setConfirmedOccupation}
+                    onClear={() => setConfirmedOccupation(null)}
+                    label="Ocupación que te interesa"
+                    hint="Escribe una ocupación y selecciónala en la lista."
+                    showConfirmation={false}
+                  />
+                ) : (
+                  <p className="form-message">
+                    {searchData.status === "loading"
+                      ? "Cargando el catálogo oficial de ocupaciones…"
+                      : "El buscador no está disponible ahora mismo."}
+                  </p>
+                )
+              }
+              action={
+                searchData.status === "ready" ? (
+                  <button
+                    className="entry-card__cta"
+                    type="button"
+                    disabled={confirmedOccupation === null}
+                    onClick={() =>
+                      confirmedOccupation === null
+                        ? undefined
+                        : navigate(
+                            `/desde-ocupacion/${encodeURIComponent(confirmedOccupation.occupationId)}`,
+                          )
+                    }
+                  >
+                    Buscar ocupación
+                  </button>
+                ) : (
+                  <Link className="entry-card__cta" to="/desde-ocupacion">
+                    Abrir buscador de ocupaciones
+                  </Link>
+                )
+              }
+            />
+          </section>
         </div>
       </section>
 

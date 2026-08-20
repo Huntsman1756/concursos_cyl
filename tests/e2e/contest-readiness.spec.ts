@@ -165,7 +165,7 @@ test.describe("contest readiness journeys", () => {
     await expectStableRoute(page, diagnostics);
   });
 
-  test("shows COM01M reviewed coverage before and after the search", async ({
+  test("keeps COM01M explicitly outside reviewed fallback coverage", async ({
     page,
   }) => {
     const diagnostics = installRouteDiagnostics(page);
@@ -176,19 +176,18 @@ test.describe("contest readiness journeys", () => {
     });
     await programSelect.selectOption("COM01M");
     await expect(page.getByRole("status")).toContainText(
-      /Relaciones revisadas con 9 grupos de ocupación/,
+      /todavía no hay una relación revisada para buscar ofertas/,
     );
     await page.getByRole("button", { name: "Ver salidas y ofertas" }).click();
     await expect(page).toHaveURL(/\/desde-fp\/COM01M$/u);
     await expect(
       page.getByRole("heading", { name: "Actividades Comerciales" }),
     ).toBeVisible();
-    const reviewedGroups = page
-      .getByRole("heading", {
-        name: "Grupos de ocupación revisados para buscar ofertas",
-      })
-      .locator("..");
-    await expect(reviewedGroups.getByRole("listitem")).toHaveCount(9);
+    await expect(
+      page.getByText(
+        /Todavía no hay una relación revisada que permita buscar ofertas/,
+      ),
+    ).toBeVisible();
     await expect(
       page.getByText(/no hay (empleo|trabajo|puestos)/iu),
     ).toHaveCount(0);

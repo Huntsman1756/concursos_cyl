@@ -86,10 +86,13 @@ export function OfferEvidenceCard(props: OfferEvidenceCardProps) {
       <div className="evidence-step">
         <h3>Qué publica la vacante</h3>
         {props.match.requirements.length === 0 ? (
-          <p>
-            No hemos podido extraer requisitos concretos del texto publicado.
-            Compruébalos en la oferta original.
-          </p>
+          <div className="requirement-state requirement-state--unpublished">
+            <strong>Requisito no publicado</strong>
+            <p>
+              No hemos podido extraer requisitos concretos del texto publicado.
+              Compruébalos en la oferta original.
+            </p>
+          </div>
         ) : (
           <ul className="requirement-list">
             {props.match.requirements.map((requirement) => (
@@ -112,7 +115,14 @@ export function OfferEvidenceCard(props: OfferEvidenceCardProps) {
       </div>
       <div className="evidence-step">
         <h3>Tu comprobación</h3>
-        <p aria-live="polite">{evidenceCopy(props.evidenceState)}</p>
+        <div
+          className={`evidence-state${props.evidenceState === "declared_explicit_gap" ? " evidence-state--gap" : ""}`}
+        >
+          {props.evidenceState === "declared_explicit_gap" && (
+            <strong>Requisito no cumplido</strong>
+          )}
+          <p aria-live="polite">{evidenceCopy(props.evidenceState)}</p>
+        </div>
         {props.match.requirements.length > 0 && (
           <ul className="requirement-list">
             {props.match.requirements.map((requirement) => (

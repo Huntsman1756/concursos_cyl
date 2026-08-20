@@ -10,6 +10,11 @@ research/**
 # Deterministic writer owns the canonical serialization for this audit artifact.
 analysis/fp_official_alias_pass_results.json
 
+# Contest evidence and Runtime V4 activation use canonical hash-bound serialization.
+analysis/contest_evidence_matrix.json
+analysis/contest_evidence_matrix.md
+.agent-orchestration/activation-v4.json
+
 # Local orchestration and Codex workspaces are not project sources.
 .tmp/**
 .worktrees/**

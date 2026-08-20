@@ -13,6 +13,7 @@
     "pages:prepare": "tsx scripts/release/preparePagesFallback.ts",
     "release:caddy:verify": "tsx scripts/release/verifyCaddyContainerCli.ts",
     "test": "vitest run",
+    "test:release": "npm test",
     "test:watch": "vitest",
     "test:e2e": "playwright test",
     "orchestration:batch:test": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/Test-NanWorkerBatch.ps1",

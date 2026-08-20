@@ -29,32 +29,34 @@ export function EvidenceDisclosure({
   parserVersion,
 }: EvidenceDisclosureProps) {
   return (
-    <details className="evidence-disclosure">
-      <summary>Ver cita exacta</summary>
-      <blockquote>{quote}</blockquote>
-      <div className="evidence-metadata">
-        {sourceDate !== undefined && (
-          <p>Fecha de la fuente: {spanishDate(sourceDate)}</p>
+    <div className="evidence-disclosure">
+      <blockquote className="evidence-disclosure__quote">{quote}</blockquote>
+      <details className="evidence-disclosure__provenance">
+        <summary>Ver cita exacta</summary>
+        <div className="evidence-metadata">
+          {sourceDate !== undefined && (
+            <p>Fecha de la fuente: {spanishDate(sourceDate)}</p>
+          )}
+          {reviewedAt !== undefined && (
+            <p>Revisión de la relación: {spanishDate(reviewedAt)}</p>
+          )}
+          {mappingVersion !== undefined && (
+            <p>Versión de la relación: {mappingVersion}</p>
+          )}
+          {parserRule !== undefined && (
+            <p>Regla técnica de extracción: {parserRule}</p>
+          )}
+          {parserVersion !== undefined && (
+            <p>Versión de la extracción: {parserVersion}</p>
+          )}
+        </div>
+        {sourceUrl !== undefined && (
+          <a href={sourceUrl} target="_blank" rel="noreferrer">
+            {sourceLabel}{" "}
+            <span className="sr-only">(abre en una pestaña nueva)</span>
+          </a>
         )}
-        {reviewedAt !== undefined && (
-          <p>Revisión de la relación: {spanishDate(reviewedAt)}</p>
-        )}
-        {mappingVersion !== undefined && (
-          <p>Versión de la relación: {mappingVersion}</p>
-        )}
-        {parserRule !== undefined && (
-          <p>Regla técnica de extracción: {parserRule}</p>
-        )}
-        {parserVersion !== undefined && (
-          <p>Versión de la extracción: {parserVersion}</p>
-        )}
-      </div>
-      {sourceUrl !== undefined && (
-        <a href={sourceUrl} target="_blank" rel="noreferrer">
-          {sourceLabel}{" "}
-          <span className="sr-only">(abre en una pestaña nueva)</span>
-        </a>
-      )}
-    </details>
+      </details>
+    </div>
   );
 }

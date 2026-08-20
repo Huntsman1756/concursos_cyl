@@ -3,12 +3,18 @@
 Este repositorio usa un flujo inspirado en `agent-orchestration-starter`:
 OpenAI/Codex planifica y revisa; OpenCode ejecuta contratos acotados con NAN.
 
-La referencia de compatibilidad incluye el contrato de procedencia firmada V4
-del merge `42cf5c2b1b55628332ce9fc1089957bd4fca3931`. La integracion actual sigue
+La referencia del runtime es `v0.3.1`, commit
+`ae1640e2a7d6151bc6a331be62c6e196d7852c66`; la compatibilidad de procedencia
+firmada conserva el merge `42cf5c2b1b55628332ce9fc1089957bd4fca3931`.
+La integracion actual sigue
 siendo `BOUNDED_LOCAL`: no debe anunciar evidencia firmada ni enforcement
 `REQUIRED`. Solo el host privilegiado puede firmar y la clave, la evidencia y
 la clave publica confiada permanecen fuera del repositorio y del contexto del
 modelo.
+
+La activacion Runtime V4 registrada es exclusivamente `ANALYSIS_ONLY`, con
+`hostCompositionHash: null` y publicacion deshabilitada. No se conserva un
+binding MCP ejecutable mientras falte un driver de host confiado.
 
 ## Roles y rutas
 
@@ -84,13 +90,18 @@ defecto para una sola historia es `Invoke-FrontierSupervisedNanWorker.ps1`: crea
 intento, ejecuta NAN una sola vez, conserva parche, diagnósticos acotados y
 telemetría fuera del repo incluso si falla una validación determinista,
 elimina los bytes candidatos y solicita a Codex `ACCEPT`, `RETRY` o `ESCALATE`.
+Una validacion exclusivamente de `lint` o formato puede producir antes un
+repair packet hash-bound y un reintento mecanico de politica en contexto fresco;
+si se repite la misma firma termina en `NO_PROGRESS`. Pruebas, build y datos
+siguen pasando siempre por la decision independiente de Codex.
 Un `RETRY` relanza un worker con sesión nueva sobre el mismo SHA y con
 instrucciones reducidas; nunca permite que Codex implemente silenciosamente.
 Solo un intento listo y validado puede recibir `ACCEPT`.
 
 Cuando haya dos o más historias independientes, la entrada preferida y
 obligatoria es `Invoke-NanWorkerBatch.ps1`. Codex debe separar rutas exactas y
-disjuntas, y el broker lanza hasta cinco contextos NAN frescos en worktrees
+disjuntas. El broker usa uno por defecto para evitar presion sobre la API; una
+excepcion explicita puede lanzar hasta cinco contextos NAN frescos en worktrees
 detached distintos. Cada historia conserva contrato, parche, telemetría y hashes
 fuera del repositorio; Codex revisa la oleada completa una sola vez. No se usa
 un lote para cambios con rutas solapadas, decisiones de arquitectura o
@@ -167,7 +178,8 @@ presupuesto, deduplicación y telemetría.
 
 Cada ejecución escribe telemetría en `.agent-runs/<guid>.json`.
 
-El perfil predeterminado admite hasta cinco workers NAN, cada uno con estado
+El perfil predeterminado admite un worker NAN. El limite configurable sigue
+siendo cinco para oleadas justificadas, cada worker con estado
 OpenCode efímero y aislado. Los boletines reciben sus archivos mediante
 `-InputPath`; después se deshabilita la lectura libre del repositorio para que
 un contrato no pueda explorar fuentes de otro ciclo.

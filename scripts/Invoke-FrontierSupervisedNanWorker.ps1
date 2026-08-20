@@ -34,6 +34,67 @@ function Write-NewJson {
     try { $stream.Write($bytes, 0, $bytes.Length); $stream.Flush($true) } finally { $stream.Dispose() }
 }
 
+function Get-StaticQualitySummary {
+    param([object]$AttemptEvidence)
+    if (-not [bool]$AttemptEvidence.validationFailed) { return $null }
+    if (-not [bool]$AttemptEvidence.patchAvailable -or [bool]$AttemptEvidence.contractViolation) { return $null }
+    $diagnostics = @($AttemptEvidence.validationDiagnostics | Where-Object { $_ })
+    if ($diagnostics.Count -eq 0) { return $null }
+    if (@($diagnostics | Where-Object { $_.categoryCode -ne 'shift_left_static_quality' }).Count -gt 0) { return $null }
+    if (@($diagnostics | Where-Object { [string]$_.normalizedFailureSignature -notmatch '^[a-f0-9]{64}$' }).Count -gt 0) { return $null }
+    $signatures = @($diagnostics | ForEach-Object { [string]$_.normalizedFailureSignature } | Sort-Object -Unique)
+    $aggregate = Get-Sha256Hex -Bytes (ConvertTo-CanonicalBytes -Value ([ordered]@{
+        schemaVersion=1
+        categoryCode='shift_left_static_quality'
+        signatures=$signatures
+        changedPaths=@($AttemptEvidence.changedPaths | Sort-Object -Unique)
+    }))
+    return @{diagnostics=$diagnostics;failureSignature=$aggregate}
+}
+
+function New-ShiftLeftRepairPacket {
+    param([int]$Attempt, [object]$Summary)
+    $findings = @($Summary.diagnostics | Sort-Object -Property normalizedFailureSignature -Unique | ForEach-Object {
+        $instruction = if ($_.validationId -eq 'format') {
+            'Run the repository formatter only on contract-allowed changed files, then rerun the declared format validation.'
+        } else {
+            'Fix only the reported static lint issues in contract-allowed changed files, then rerun the declared lint validation.'
+        }
+        [ordered]@{
+            findingId=('shift-left-' + ([string]$_.normalizedFailureSignature).Substring(0,16))
+            source='VALIDATION'
+            categoryCode='shift_left_static_quality'
+            validationId=[string]$_.validationId
+            commandSha256=[string]$_.commandSha256
+            instruction=$instruction
+            evidenceHash=[string]$_.normalizedFailureSignature
+        }
+    })
+    $body = [ordered]@{
+        schemaVersion=1
+        packetType='shift-left-static-quality'
+        failedAttempt=$Attempt
+        failureSignature=[string]$Summary.failureSignature
+        findings=$findings
+    }
+    $packet = [ordered]@{}; foreach ($key in $body.Keys) { $packet[$key]=$body[$key] }
+    $packet.packetHash = Get-Sha256Hex -Bytes (ConvertTo-CanonicalBytes -Value $body)
+    return $packet
+}
+
+function Test-RepairPacketIntegrity {
+    param([object]$Packet)
+    if ([string]$Packet.packetHash -notmatch '^[a-f0-9]{64}$') { return $false }
+    $body = [ordered]@{
+        schemaVersion=$Packet.schemaVersion
+        packetType=$Packet.packetType
+        failedAttempt=$Packet.failedAttempt
+        failureSignature=$Packet.failureSignature
+        findings=@($Packet.findings)
+    }
+    return [string]$Packet.packetHash -eq (Get-Sha256Hex -Bytes (ConvertTo-CanonicalBytes -Value $body))
+}
+
 function Test-OutsideSource {
     param([string]$Path)
     $source = $repoRoot.TrimEnd('\','/') + [System.IO.Path]::DirectorySeparatorChar
@@ -204,9 +265,12 @@ try {
     if ($LASTEXITCODE -ne 0 -or $baseSha -notmatch '^[a-f0-9]{40}$') { throw 'Repository base SHA is unavailable.' }
     $failurePhase = 'test-input-validation'
     [object[]]$mockDecisions = if ($TestMode) { @($MockFrontierDecisions | ConvertFrom-Json) } else { @() }
-    if ($TestMode -and ($MockWorkerPlans.Count -lt $MaxAttempts -or $mockDecisions.Count -lt $MaxAttempts)) { throw 'TestMode requires one worker plan and frontier decision per attempt.' }
+    if ($TestMode -and $MockWorkerPlans.Count -lt $MaxAttempts) { throw 'TestMode requires one worker plan per possible attempt.' }
 
     $repairInstructions = @()
+    $policyEvents = @()
+    $seenStaticFailureSignatures = @{}
+    $mockDecisionIndex = 0
     for ($attempt = 1; $attempt -le $MaxAttempts; $attempt++) {
         $failurePhase = "worker-attempt-$attempt"
         $attemptRoot = if ($TestMode) { $repoRoot } else { Join-Path $WorktreeParent ("castilla-nan-attempt-$([guid]::NewGuid().ToString('N'))") }
@@ -219,7 +283,7 @@ try {
                 if ($LASTEXITCODE -ne 0) { throw 'Unable to create isolated worker worktree.' }
                 $worktreeAdded = $true
             }
-            $activePlan = (@($contract.frontierPlan) + @($repairInstructions)) -join "`nFrontier repair: "
+            $activePlan = (@($contract.frontierPlan) + @($repairInstructions)) -join "`nBounded repair: "
             $workerParameters = @{
                 TaskType='code';Objective=$contract.objective;AllowedPath=@($contract.allowedPaths)
                 ValidationCommand=@($contract.validationCommands);MaxRetries=1;FallbackModels=@()
@@ -256,9 +320,14 @@ try {
                     [System.IO.File]::WriteAllText($patchPath, "SIMULATED PATCH`n", $utf8)
                 } else {
                     foreach ($changedPath in @($telemetry.changedPaths)) { & git -C $attemptRoot add -N -- $changedPath | Out-Null }
-                    $patchText = (& git -C $attemptRoot diff --binary --no-ext-diff HEAD -- | Out-String)
-                    if ($LASTEXITCODE -ne 0 -or [string]::IsNullOrWhiteSpace($patchText)) { throw 'Candidate patch evidence is missing.' }
-                    [System.IO.File]::WriteAllText($patchPath, $patchText, $utf8)
+                    & git -C $attemptRoot diff --binary --no-ext-diff HEAD --output=$patchPath --
+                    if ($LASTEXITCODE -ne 0) {
+                        throw 'Candidate patch evidence is missing.'
+                    } elseif (-not (Test-Path -LiteralPath $patchPath -PathType Leaf)) {
+                        throw 'Candidate patch evidence is missing.'
+                    } elseif ((Get-Item -LiteralPath $patchPath).Length -eq 0) {
+                        throw 'Candidate patch evidence is missing.'
+                    }
                 }
             }
             $attemptEvidence = [ordered]@{
@@ -279,9 +348,58 @@ try {
             }
         }
         $attempts += $attemptEvidence
+
+        $staticSummary = Get-StaticQualitySummary -AttemptEvidence $attemptEvidence
+        if ($staticSummary) {
+            $repairPacket = New-ShiftLeftRepairPacket -Attempt $attempt -Summary $staticSummary
+            if (-not (Test-RepairPacketIntegrity -Packet $repairPacket)) { throw 'Shift-left repair packet integrity check failed.' }
+            $repairPacketPath = Join-Path $StateDirectory "attempt-$attempt.repair-packet.json"
+            Write-NewJson -Path $repairPacketPath -Value $repairPacket
+
+            if ($seenStaticFailureSignatures.ContainsKey($staticSummary.failureSignature)) {
+                $failurePhase = "no-progress-$attempt"
+                $noProgressBody = [ordered]@{
+                    schemaVersion=1
+                    status='NO_PROGRESS'
+                    attempt=$attempt
+                    firstSeenAttempt=[int]$seenStaticFailureSignatures[$staticSummary.failureSignature]
+                    failureSignature=$staticSummary.failureSignature
+                    repairPacketHash=$repairPacket.packetHash
+                }
+                $noProgress = [ordered]@{}; foreach ($key in $noProgressBody.Keys) { $noProgress[$key]=$noProgressBody[$key] }
+                $noProgress.eventHash = Get-Sha256Hex -Bytes (ConvertTo-CanonicalBytes -Value $noProgressBody)
+                Write-NewJson -Path (Join-Path $StateDirectory "attempt-$attempt.no-progress.json") -Value $noProgress
+                $policyEvents += $noProgress
+                $status='NO_PROGRESS'
+                break
+            }
+            $seenStaticFailureSignatures[$staticSummary.failureSignature] = $attempt
+
+            if ($attempt -lt $MaxAttempts) {
+                $failurePhase = "shift-left-retry-$attempt"
+                $policyBody = [ordered]@{
+                    schemaVersion=1
+                    attempt=$attempt
+                    action='RETRY'
+                    decisionOwner='broker-shift-left-policy'
+                    failureSignature=$staticSummary.failureSignature
+                    repairPacketHash=$repairPacket.packetHash
+                    attemptTelemetrySha256=$attemptEvidence.telemetrySha256
+                }
+                $policyEvent = [ordered]@{}; foreach ($key in $policyBody.Keys) { $policyEvent[$key]=$policyBody[$key] }
+                $policyEvent.eventHash = Get-Sha256Hex -Bytes (ConvertTo-CanonicalBytes -Value $policyBody)
+                Write-NewJson -Path (Join-Path $StateDirectory "attempt-$attempt.policy-retry.json") -Value $policyEvent
+                $policyEvents += $policyEvent
+                $repairInstructions = @($repairPacket.findings | ForEach-Object { $_.instruction } | Sort-Object -Unique)
+                continue
+            }
+        }
+
         $failurePhase = "frontier-review-$attempt"
         if ($TestMode) {
-            $rawMock = $mockDecisions[$attempt-1]
+            if ($mockDecisionIndex -ge $mockDecisions.Count) { throw 'TestMode requires a Frontier decision for each attempt that reaches Frontier review.' }
+            $rawMock = $mockDecisions[$mockDecisionIndex]
+            $mockDecisionIndex++
             $rawBytes = ConvertTo-CanonicalBytes -Value $rawMock
             $decision = @{action=$rawMock.action;repairInstructions=@($rawMock.repairInstructions);authorityEvidenceHash=(Get-Sha256Hex -Bytes $rawBytes);frontierUsage=@{input_tokens=0;cached_input_tokens=0;cache_write_input_tokens=0;output_tokens=0;reasoning_output_tokens=0}}
         } else {
@@ -300,10 +418,10 @@ try {
         $repairInstructions = @($decision.repairInstructions)
     }
     if (-not $status) { throw 'Supervisor exhausted without a terminal decision.' }
-    $result = [ordered]@{status=$status;baseSha=$baseSha;attempts=$attempts;decisions=$decisions;acceptedPatchPath=$(if ($status -eq 'COMPLETE') { $patchPath } else { $null })}
+    $result = [ordered]@{status=$status;baseSha=$baseSha;attempts=$attempts;decisions=$decisions;policyEvents=$policyEvents;acceptedPatchPath=$(if ($status -eq 'COMPLETE') { $patchPath } else { $null })}
     Write-NewJson -Path (Join-Path $StateDirectory 'supervision-result.json') -Value $result
     Write-Output ($result | ConvertTo-Json -Depth 12 -Compress)
-    if ($status -eq 'ESCALATE') { exit 2 }
+    if ($status -in @('ESCALATE','NO_PROGRESS')) { exit 2 }
     exit 0
 } catch {
     $messageBytes = $utf8.GetBytes([string]$_.Exception.Message)

@@ -1,0 +1,62 @@
+schemaVersion: 4
+repositoryId: salida-cyl
+base:
+  allowedBranches: [feature/salida-cyl-development]
+worktrees:
+  parentRef: broker-managed-worktrees
+routing:
+  frontierOnly:
+    riskClasses: [security, architecture, product-decision]
+    taskClasses: [sensitive-change]
+    paths:
+      [
+        .github,
+        scripts/release,
+        policies,
+        profiles,
+        .agent-orchestration,
+        .codex,
+      ]
+    sourceSensitivity: [PRIVATE]
+validation:
+  unit:
+    argv: [npm, test, --, --testTimeout=60000]
+    workingDirectory: .
+    timeoutSeconds: 900
+    sandboxProfile: validation-untrusted
+  build:
+    argv: [npm, run, build]
+    workingDirectory: .
+    timeoutSeconds: 600
+    sandboxProfile: validation-untrusted
+  lint:
+    argv: [npm, run, lint]
+    workingDirectory: .
+    timeoutSeconds: 600
+    sandboxProfile: validation-untrusted
+  format-check:
+    argv: [npm, run, format:check]
+    workingDirectory: .
+    timeoutSeconds: 600
+    sandboxProfile: validation-untrusted
+sourcePolicy:
+  dataScope: SOURCE_CODE_ONLY
+  sourceSensitivity: PUBLIC
+sandbox:
+  requiredBackend: container
+  requiredProfiles:
+    [
+      executor-networked,
+      frontier-networked,
+      validation-untrusted,
+      review-capsule,
+    ]
+instructions:
+  approvedSources: [AGENTS.md]
+publication:
+  enabled: false
+  remote: origin
+  baseBranch: feature/salida-cyl-development
+  mergeMethod: merge
+  requireRequiredChecks: true
+  timeoutSeconds: 1200

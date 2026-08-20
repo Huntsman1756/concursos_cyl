@@ -35,7 +35,7 @@ jobs:
       - run: npm run contest:submission:check
       - run: npm run format:check
       - run: npm run lint
-      - run: npm test -- --testTimeout=60000
+      - run: npm run test:release -- --testTimeout=60000
       - run: npx playwright install --with-deps chromium
       - run: npm run test:e2e
       - name: Verify Caddy container headers and SPA fallback

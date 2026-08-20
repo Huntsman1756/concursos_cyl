@@ -58,11 +58,12 @@ _Prohibido usar `nan/glm5.2` o delegar código a `nan/gemma4`._
 
 ## 3. Límites NAN
 
-| Límite                           | Valor                         |
-| -------------------------------- | ----------------------------- |
-| **RPM** (solicitudes por minuto) | **60**                        |
-| **Concurrencia**                 | **5** workers simultáneos     |
-| **TPM por modelo**               | **1 500 000** tokens / minuto |
+| Límite                            | Valor                         |
+| --------------------------------- | ----------------------------- |
+| **RPM** (solicitudes por minuto)  | **60**                        |
+| **Concurrencia predeterminada**   | **1** worker                  |
+| **Concurrencia máxima explícita** | **5** workers simultáneos     |
+| **TPM por modelo**                | **1 500 000** tokens / minuto |
 
 El límite de tokens se aplica por modelo; RPM y concurrencia, por clave. El proxy
 respeta `Retry-After` y registra cada intento sin conservar prompts ni secretos.
@@ -92,6 +93,7 @@ respeta `Retry-After` y registra cada intento sin conservar prompts ni secretos.
 | `blocked-provider-unavailable` | Proveedor no responde o caída                                            |
 | `blocked-unverified-provider`  | No se pudo verificar evidencia 2xx del proveedor (ID, modelo, usage)     |
 | `blocked-needs-new-contract`   | El contrato es ambiguo, supera las rutas permitidas o requiere rediseño  |
+| `NO_PROGRESS`                  | Se repitió la misma firma de lint/formato tras una reparación acotada    |
 
 > La telemetría con evidencia verificable de respuesta 2xx marca el flujo como activo;
 > sin ella se establece `blocked-unverified-provider` de forma determinista.
@@ -143,7 +145,7 @@ Al inspeccionar un intento fallido, sigue estos cuatro pasos:
 
 1. Lee `status` y `terminalErrors` del JSONL de telemetría para identificar el estado y los errores terminales.
 2. Comprueba `retryCount` y los códigos NAN retornados; descarta reintentos si el código no es `429` o `5xx`.
-3. Revisa `validationDiagnostics` para confirmar si la validación falló, se bloqueó antes o no se ejecutó.
+3. Revisa `validationDiagnostics` para confirmar clasificación, hash del comando y firma normalizada. Los fallos exclusivos de lint/formato producen un repair packet; los demás requieren revisión Frontier.
 4. Crea un **nuevo contrato acotado** (nuevo SHA, nuevas rutas o criterios ajustados) y **no reutilices el worktree sucio**.
 
 ## 11. Referencias rápidas
@@ -151,7 +153,7 @@ Al inspeccionar un intento fallido, sigue estos cuatro pasos:
 | Script                                   | Función                                           |
 | ---------------------------------------- | ------------------------------------------------- |
 | `Invoke-FrontierSupervisedNanWorker.ps1` | Orquesta un único worker en un worktree           |
-| `Invoke-NanWorkerBatch.ps1`              | Lanza hasta cinco workers disjuntos en paralelo   |
+| `Invoke-NanWorkerBatch.ps1`              | Lanza uno por defecto; hasta cinco con override   |
 | `Invoke-NanWorker.ps1`                   | Primitiva individual (uso interno del supervisor) |
 
 ---

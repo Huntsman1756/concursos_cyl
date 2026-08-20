@@ -1,0 +1,1053 @@
+
+> salida-cyl-development@1.0.0 test
+> vitest run --reporter=verbose --reporter=dot
+
+
+ RUN  v4.1.10 F:/castilla_leon_rev2
+
+
+ RUN  v4.1.10 F:/castilla_leon_rev2
+
+ ✓ scripts/data/buildSnapshots.test.ts > hashFile > hashes the exact bytes written to disk 10ms
+· ✓ scripts/data/buildSnapshots.test.ts > buildSnapshots > publishes one immutable verified outcome artifact with all upstream hashes 1037ms
+· ✓ scripts/data/buildSnapshots.test.ts > buildSnapshots > changes the immutable snapshot identity when an upstream income hash changes 1287ms
+· ✓ scripts/release/validateContestFreeze.test.ts > contest coverage freeze validator > accepts the synchronized Track A freeze and recomputes its figures 5937ms
+· ✓ scripts/release/validateContestFreeze.test.ts > contest coverage freeze validator > rejects a changed manifest hash instead of trusting copied figures 5339ms
+· ✓ scripts/release/validateContestFreeze.test.ts > contest coverage freeze validator > rejects a source commit that cannot prove the no-mutation boundary 30ms
+· ✓ scripts/release/validateContestFreeze.test.ts > contest coverage freeze validator > rejects inconsistent coverage counts and marginal deltas 5456ms
+· ✓ scripts/data/buildSnapshots.test.ts > buildSnapshots > retains the last-known-good outcome artifact when income ingestion fails 25615ms
+· ✓ scripts/analysis/buildFpMentionOfferQueue.test.ts > buildFpMentionOfferQueue > is deterministic and validates its strict schema 11010ms
+· ✓ scripts/analysis/buildFpMentionOfferQueue.test.ts > buildFpMentionOfferQueue > keeps report counts internally consistent 0ms
+· ✓ scripts/analysis/buildFpMentionOfferQueue.test.ts > buildFpMentionOfferQueue > keeps generic and description-only mentions separate 1ms
+· ✓ scripts/analysis/buildFpMentionOfferQueue.test.ts > buildFpMentionOfferQueue > never proposes program keys without an exact reviewed qualification 0ms
+· ✓ scripts/analysis/buildFpMentionOfferQueue.test.ts > buildFpMentionOfferQueue > does not mutate curated data or the manifest 71ms
+· ✓ scripts/analysis/buildFpMentionOfferQueue.test.ts > buildFpMentionOfferQueue > renders a source-linked queue and explicit non-automation limitation 0ms
+· ✓ scripts/data/buildSnapshots.test.ts > buildSnapshots > publishes the four curated mapping resources through the manifest 655ms
+· ✓ scripts/data/buildSnapshots.test.ts > buildSnapshots > publishes quote-backed requirements as an additive hashed resource 605ms
+· ✓ scripts/analysis/validateFpOneWordPublicationReview.test.ts > FP one-word publication review validator > validates the checked-in strict 68-row artifact as terminal 22ms
+· ✓ scripts/analysis/validateFpOneWordPublicationReview.test.ts > FP one-word publication review validator > rejects missing row 7ms
+· ✓ scripts/analysis/validateFpOneWordPublicationReview.test.ts > FP one-word publication review validator > rejects extra row 6ms
+· ✓ scripts/analysis/validateFpOneWordPublicationReview.test.ts > FP one-word publication review validator > rejects altered id 7ms
+· ✓ scripts/analysis/validateFpOneWordPublicationReview.test.ts > FP one-word publication review validator > rejects altered title 6ms
+· ✓ scripts/analysis/validateFpOneWordPublicationReview.test.ts > FP one-word publication review validator > rejects altered form 8ms
+· ✓ scripts/analysis/validateFpOneWordPublicationReview.test.ts > FP one-word publication review validator > rejects altered program 7ms
+· ✓ scripts/analysis/validateFpOneWordPublicationReview.test.ts > FP one-word publication review validator > rejects altered CNO 9ms
+· ✓ scripts/analysis/validateFpOneWordPublicationReview.test.ts > FP one-word publication review validator > rejects duplicate identity 12ms
+· ✓ scripts/analysis/validateFpOneWordPublicationReview.test.ts > FP one-word publication review validator > rejects non-locale ordering 6ms
+· ✓ scripts/analysis/validateFpOneWordPublicationReview.test.ts > FP one-word publication review validator > rejects count drift 7ms
+· ✓ scripts/analysis/validateFpOneWordPublicationReview.test.ts > FP one-word publication review validator > rejects accepted/rejected drift 7ms
+· ✓ scripts/analysis/validateFpOneWordPublicationReview.test.ts > FP one-word publication review validator > rejects missing required identity 7ms
+· ✓ scripts/analysis/validateFpOneWordPublicationReview.test.ts > FP one-word publication review validator > rejects changed snapshot id 2ms
+· ✓ scripts/analysis/validateFpOneWordPublicationReview.test.ts > FP one-word publication review validator > rejects hand-edited publication decision 8ms
+· ✓ scripts/analysis/validateFpOneWordPublicationReview.test.ts > FP one-word publication review validator > rejects in-progress disposition drift 7ms
+· ✓ scripts/analysis/validateFpOneWordPublicationReview.test.ts > FP one-word publication review validator > rejects in-progress reasonCode drift 8ms
+· ✓ scripts/analysis/validateFpOneWordPublicationReview.test.ts > FP one-word publication review validator > rejects in-progress rationale drift 13ms
+· ✓ scripts/analysis/validateFpOneWordPublicationReview.test.ts > FP one-word publication review validator > rejects in-progress requirementQuotes drift 11ms
+· ✓ scripts/analysis/validateFpOneWordPublicationReview.test.ts > FP one-word publication review validator > rejects unresolved rows in terminal validation 11ms
+· ✓ scripts/analysis/validateFpOneWordPublicationReview.test.ts > FP one-word publication review validator > rejects a mixed form even when it retains its exact accepted offer IDs 15ms
+· ✓ scripts/analysis/validateFpOneWordPublicationReview.test.ts > FP one-word publication review validator > verifies snapshot bytes before parsing and reconstructs exact identities 3ms
+· ✓ scripts/analysis/validateFpOneWordPublicationReview.test.ts > FP one-word publication review validator > rejects changed snapshot bytes from the caller-supplied rootDirectory 35ms
+· ✓ scripts/data/buildSnapshots.test.ts > buildSnapshots > publishes Gestión Administrativa as draft coverage without exposing the unresolved CNO mapping 585ms
+· ✓ scripts/data/buildSnapshots.test.ts > buildSnapshots > restores an inactive revoked snapshot byte-for-byte when quarantine fails 2514ms
+· ✓ scripts/data/buildSnapshots.test.ts > buildSnapshots > restores inactive quarantine when manifest validation or swap is interrupted 1509ms
+· ✓ scripts/data/buildSnapshots.test.ts > buildSnapshots > recovers an interrupted journaled quarantine before the next publication 1605ms
+· ✓ scripts/data/buildSnapshots.test.ts > buildSnapshots > keeps an active revoked snapshot available until the replacement manifest is committed 1447ms
+· ✓ scripts/analysis/validateFpOneWordPublicationReview.test.ts > FP one-word publication review validator > orders strings by normalized code points with a raw-string tiebreaker 0ms
+· ✓ scripts/analysis/validateFpOneWordPublicationReview.test.ts > FP one-word publication review validator > requires strict row shape 1ms
+· ✓ scripts/analysis/validateFpOneWordPublicationReview.test.ts > FP one-word publication review validator > requires strict projected pinned offers 0ms
+· ✓ scripts/analysis/validateFpOneWordPublicationReview.test.ts > FP one-word publication review validator > does not accept an edited artifact 11ms
+· ✓ scripts/analysis/validateFpOneWordPublicationReview.test.ts > FP one-word publication review validator > keeps curated approved_single_token aliases in exact parity with the accepted terminal audit tuple 62ms
+· ✓ scripts/analysis/validateFpOneWordPublicationReview.test.ts > FP one-word publication review validator > recomputes every accepted single-token delta and keeps equal-title ids distinct 8022ms
+· ✓ scripts/data/buildSnapshots.test.ts > buildSnapshots > restores the active revoked snapshot and manifest when post-swap quarantine fails 1502ms
+· ✓ scripts/data/buildSnapshots.test.ts > buildSnapshots > preserves a manifest-addressed candidate when post-swap rollback also fails 2585ms
+· ✓ scripts/data/buildSnapshots.test.ts > buildSnapshots > finalizes a crash-pending quarantine when the candidate manifest is active 3087ms
+· ✓ scripts/data/buildSnapshots.test.ts > buildSnapshots > finishes an entry journaled before its first rename when the candidate is active 2142ms
+· ✓ scripts/analysis/measureFpMarginalAliasImpact.test.ts > measureFpMarginalAliasImpact > matches the accepted review exactly without lateral offers 9485ms
+· ✓ scripts/analysis/measureFpMarginalAliasImpact.test.ts > measureFpMarginalAliasImpact > limits deltas to the reviewed programs 1ms
+· ✓ scripts/analysis/measureFpMarginalAliasImpact.test.ts > measureFpMarginalAliasImpact > renders a frozen-snapshot before/after report 0ms
+· ✓ scripts/data/buildSnapshots.test.ts > buildSnapshots > recovers a crash immediately after manifest commit from predeclared active entries 2929ms
+· ✓ scripts/data/buildSnapshots.test.ts > buildSnapshots > leaves predeclared unmoved active entries intact when commit never happens 1899ms
+· ✓ scripts/data/buildSnapshots.test.ts > buildSnapshots > restores moved entries when a committed journal still has the previous manifest active 2116ms
+· ✓ scripts/data/buildSnapshots.test.ts > buildSnapshots > isolates a corrupt quarantine journal without restoring or looping forever 2302ms
+· ✓ scripts/data/buildSnapshots.test.ts > buildSnapshots > lets one builder hold the lock while two competitors fail before fetch 1511ms
+· ✓ scripts/analysis/validateEcylFpFamilyPilotNotebook.test.ts > ECYL FP family pilot notebook > executes the contamination assertions against the real snapshot 7809ms
+· ✓ scripts/data/buildSnapshots.test.ts > buildSnapshots > fails closed on a dead-owner lock and preserves the last known good snapshot 570ms
+· ✓ scripts/data/buildSnapshots.test.ts > buildSnapshots > fails closed on malformed lock metadata without marking data stale 544ms
+· ✓ scripts/data/buildSnapshots.test.ts > buildSnapshots > rejects lock metadata whose build identity does not match pid and token 7ms
+· ✓ scripts/data/buildSnapshots.test.ts > buildSnapshots > rejects a non-canonical stored root before any build work 8ms
+· ✓ scripts/data/buildSnapshots.test.ts > buildSnapshots > cleans its atomically created lock after 'handle close rejection' 561ms
+· ✓ scripts/analysis/renderFpCoverageExpansionReport.test.ts > renderFpCoverageExpansionReport > reconciles exact terminal counts, zero gap, and zero offer union 792ms
+· ✓ scripts/data/buildSnapshots.test.ts > buildSnapshots > cleans its atomically created lock after 'post-close physical assertion failure' 575ms
+· ✓ scripts/analysis/renderFpCoverageExpansionReport.test.ts > renderFpCoverageExpansionReport > keeps attempted and unattempted lanes explicit 655ms
+· ✓ scripts/data/buildSnapshots.test.ts > buildSnapshots > preserves a cooperative replacement installed before normal release validation 548ms
+· ✓ scripts/data/buildSnapshots.test.ts > buildSnapshots > preserves a cooperative replacement installed before failed-acquisition cleanup validation 16ms
+· ✓ scripts/data/buildSnapshots.test.ts > buildSnapshots > preserves a contender that acquires the canonical path after normal release renames its owned lock 749ms
+· ✓ scripts/data/buildSnapshots.test.ts > buildSnapshots > preserves a contender that acquires the canonical path after failed-acquisition cleanup renames its owned lock 19ms
+· ✓ scripts/data/buildSnapshots.test.ts > buildSnapshots > refuses an existing symbolic lock with safe operator guidance without following it 564ms
+· ✓ scripts/analysis/renderFpCoverageExpansionReport.test.ts > renderFpCoverageExpansionReport > renders the checked markdown byte-for-byte 897ms
+· ✓ scripts/analysis/renderFpCoverageExpansionReport.test.ts > renderFpCoverageExpansionReport > rejects duplicate canonical bases and tampered report counts 794ms
+· ✓ scripts/data/buildSnapshots.test.ts > buildSnapshots > writes validated immutable resources with exact counts and hashes 588ms
+· ✓ scripts/analysis/renderFpCoverageExpansionReport.test.ts > renderFpCoverageExpansionReport > rejects a tampered snapshot hash against independent current resources 793ms
+· ✓ scripts/analysis/renderFpCoverageExpansionReport.test.ts > renderFpCoverageExpansionReport > does not copy relation evidence or public parity from an attempt 793ms
+· ✓ scripts/data/buildSnapshots.test.ts > buildSnapshots > migrates the transitional top-level offer timestamp before refresh 1298ms
+· ✓ scripts/analysis/renderFpCoverageExpansionReport.test.ts > renderFpCoverageExpansionReport > requires exact public parity for a completed attempt 795ms
+· ✓ scripts/analysis/rankFpOfferAliasCandidates.test.ts > rankFpOfferAliasCandidates – manifest-addressed loading > reads the manifest from the path referenced by the module 9ms
+· ✓ scripts/analysis/rankFpOfferAliasCandidates.test.ts > rankFpOfferAliasCandidates – manifest-addressed loading > loads all resource snapshots at the manifest-addressed paths 10ms
+· ✓ scripts/analysis/rankFpOfferAliasCandidates.test.ts > rankFpOfferAliasCandidates – deterministic output > produces stable ordering across invocations (deterministic JSON) 5394ms
+· ✓ scripts/analysis/rankFpOfferAliasCandidates.test.ts > rankFpOfferAliasCandidates – deterministic output > report JSON does not contain wall-clock timestamps 1ms
+· ✓ scripts/analysis/rankFpOfferAliasCandidates.test.ts > rankFpOfferAliasCandidates – deterministic output > report includes snapshot ID from manifest 1ms
+· ✓ scripts/analysis/rankFpOfferAliasCandidates.test.ts > rankFpOfferAliasCandidates – no duplicate normalized alias across occupations > every candidate alias is unique per (program, occupation) 1ms
+· ✓ scripts/analysis/rankFpOfferAliasCandidates.test.ts > rankFpOfferAliasCandidates – exclusion of already-published aliases > candidates are derived from zero-match relations only (not already matched) 0ms
+· ✓ scripts/analysis/rankFpOfferAliasCandidates.test.ts > rankFpOfferAliasCandidates – all-approved-relations scope > zeroMatchRelations count matches the number of program-occupation pairs with zero offer matches 0ms
+· ✓ scripts/analysis/rankFpOfferAliasCandidates.test.ts > rankFpOfferAliasCandidates – all-approved-relations scope > analyzes every approved relation, including relations with existing matches 0ms
+· ✓ scripts/analysis/rankFpOfferAliasCandidates.test.ts > rankFpOfferAliasCandidates – all-approved-relations scope > all candidates reference approved links (sourceUrl and sourceQuote match) 3ms
+· ✓ scripts/analysis/rankFpOfferAliasCandidates.test.ts > rankFpOfferAliasCandidates – JSON schema validity > report validates against FpOfferAliasCandidateReportSchema 3ms
+· ✓ scripts/analysis/rankFpOfferAliasCandidates.test.ts > rankFpOfferAliasCandidates – JSON schema validity > every candidate individually validates 5ms
+· ✓ scripts/analysis/rankFpOfferAliasCandidates.test.ts > rankFpOfferAliasCandidates – JSON schema validity > report counts are consistent 0ms
+· ✓ scripts/analysis/rankFpOfferAliasCandidates.test.ts > rankFpOfferAliasCandidates – JSON schema validity > totalOffers matches manifest offer count 8ms
+· ✓ scripts/analysis/rankFpOfferAliasCandidates.test.ts > rankFpOfferAliasCandidates – candidate properties > occurrence counts are at least 1 (one-off niche allowed) 1ms
+· ✓ scripts/analysis/rankFpOfferAliasCandidates.test.ts > rankFpOfferAliasCandidates – candidate properties > every candidate adds sorted offers beyond its current program baseline 8ms
+· ✓ scripts/analysis/rankFpOfferAliasCandidates.test.ts > rankFpOfferAliasCandidates – candidate properties > sorts candidates by confidence and then marginal offer gain 1ms
+· ✓ scripts/analysis/rankFpOfferAliasCandidates.test.ts > rankFpOfferAliasCandidates – candidate properties > matchFields are never empty 1ms
+· ✓ scripts/analysis/rankFpOfferAliasCandidates.test.ts > rankFpOfferAliasCandidates – candidate properties > matchedOfferIds are sorted 2ms
+· ✓ scripts/analysis/rankFpOfferAliasCandidates.test.ts > rankFpOfferAliasCandidates – candidate properties > normalizedCollisionOccupations are sorted 1ms
+· ✓ scripts/analysis/rankFpOfferAliasCandidates.test.ts > rankFpOfferAliasCandidates – markdown report > markdown contains Spanish summary sections 0ms
+· ✓ scripts/analysis/rankFpOfferAliasCandidates.test.ts > rankFpOfferAliasCandidates – markdown report > markdown references snapshotId 1ms
+· ✓ scripts/analysis/rankFpOfferAliasCandidates.test.ts > rankFpOfferAliasCandidates – markdown report > markdown does not contain wall-clock timestamps 0ms
+· ✓ scripts/analysis/rankFpOfferAliasCandidates.test.ts > rankFpOfferAliasCandidates – no file mutation > running does not modify curated or public data files 0ms
+· ✓ scripts/analysis/rankFpOfferAliasCandidates.test.ts > rankFpOfferAliasCandidates – stopword-only rejection > rejects candidates starting with function words such as 'en la', 'de los', 'y la' 1ms
+· ✓ scripts/analysis/rankFpOfferAliasCandidates.test.ts > rankFpOfferAliasCandidates – stopword-only rejection > rejects candidates that are stopword-only phrases 1ms
+· ✓ scripts/analysis/rankFpOfferAliasCandidates.test.ts > rankFpOfferAliasCandidates – exact candidates are literal official phrases > every exact candidate is contained in its relation's sourceQuote or occupationLabel 2ms
+· ✓ scripts/analysis/rankFpOfferAliasCandidates.test.ts > rankFpOfferAliasCandidates – every candidate has a title match > all candidates include 'title' in matchFields 2ms
+· ✓ scripts/analysis/rankFpOfferAliasCandidates.test.ts > rankFpOfferAliasCandidates – every candidate has a title match > matchedOfferRefs in title contain the candidates 17ms
+· ✓ scripts/analysis/rankFpOfferAliasCandidates.test.ts > rankFpOfferAliasCandidates – hypothesis lane is review_only > token-overlap candidates carry review_only confidence and are not exact 1ms
+· ✓ scripts/analysis/rankFpOfferAliasCandidates.test.ts > rankFpOfferAliasCandidates – global cross-occupation collisions > reciprocal normalizedCollisionOccupations for duplicated refrigeration title (ELE03S:7531 ↔ IMA02M:7250) 0ms
+· ✓ scripts/analysis/rankFpOfferAliasCandidates.test.ts > rankFpOfferAliasCandidates – global cross-occupation collisions > every candidate with collisions lists all other colliding occupation IDs reciprocally 5ms
+· ✓ scripts/analysis/rankFpOfferAliasCandidates.test.ts > rankFpOfferAliasCandidates – reason code accuracy > single-offer exact candidates use single_offer_match prefix 0ms
+· ✓ scripts/analysis/rankFpOfferAliasCandidates.test.ts > rankFpOfferAliasCandidates – reason code accuracy > multi-offer exact candidates use multi_offer_match prefix 0ms
+· ✓ scripts/analysis/rankFpOfferAliasCandidates.test.ts > rankFpOfferAliasCandidates – reason code accuracy > hypothesis candidates use token_overlap_hypothesis (not single/multi_offer_match) 3ms
+· ✓ scripts/analysis/rankFpOfferAliasCandidates.test.ts > rankFpOfferAliasCandidates – display text preservation > exact candidates preserve original Spanish display text (not fully lowercased) 0ms
+· ✓ scripts/analysis/rankFpOfferAliasCandidates.test.ts > rankFpOfferAliasCandidates – display text preservation > aliasCandidateNormalized is present and consistent with normalizedText(aliasCandidate) 1ms
+· ✓ scripts/analysis/rankFpOfferAliasCandidates.test.ts > rankFpOfferAliasCandidates – markdown collision column > markdown table includes collision info for candidates with cross-occupation collisions 0ms
+· ✓ scripts/analysis/rankFpOfferAliasCandidates.test.ts > rankFpOfferAliasCandidates – markdown row format > markdown table exposes marginal gain and collisions, uses singular '1 oferta', excludes stray text, and ends with the snapshot disclaimer 0ms
+· ✓ scripts/release/renderContestSubmission.test.ts > contest submission renderer > renders the four final documents from the frozen values 2ms
+· ✓ scripts/release/renderContestSubmission.test.ts > contest submission renderer > renders verified deployment provenance and current capture checks 0ms
+· ✓ scripts/release/renderContestSubmission.test.ts > contest submission renderer > marks captures as historical and leaves review gates unchecked when captureProductCommitSha differs 0ms
+· ✓ scripts/release/renderContestSubmission.test.ts > contest submission renderer > renders pending deployment with visual evidence pending and unchecked checks 0ms
+· ✓ scripts/release/renderContestSubmission.test.ts > contest submission renderer > renders historical captures with captureCount when captureProductCommitSha is null 0ms
+· ✓ scripts/release/renderContestSubmission.test.ts > contest submission renderer > is byte-stable and rejects forbidden or stale claims 3ms
+· ✓ scripts/analysis/validateFpCoveragePilot.test.ts > validateFpCoveragePilotResults > requires verified reviewed-commit timing bounds and reports active work separately 1568ms
+· ✓ scripts/analysis/validateFpCoveragePilot.test.ts > validateFpCoveragePilotResults > publishes the reviewed SAN21 CNO outputs in the manifest-addressed snapshot 1ms
+· ✓ scripts/analysis/validateFpCoveragePilot.test.ts > validateFpCoveragePilotResults > publishes the reviewed HOT01M cook output in the manifest-addressed snapshot 0ms
+· ✓ scripts/analysis/validateFpCoveragePilot.test.ts > validateFpCoveragePilotResults > preserves the independently evidenced SSC01M pilot relationships with the current reviewed alias 22ms
+· ✓ scripts/analysis/validateFpCoveragePilot.test.ts > validateFpCoveragePilotResults > accepts real canonical evidence only when its audit fields are complete 45ms
+· ✓ scripts/analysis/validateFpCoveragePilot.test.ts > validateFpCoveragePilotResults > accepts the untouched five-attempt seed without invented timing or outcomes 0ms
+· ✓ scripts/analysis/validateFpCoveragePilot.test.ts > validateFpCoveragePilotResults > rejects a missing, extra, or duplicate pilot program key 1ms
+· ✓ scripts/analysis/validateFpCoveragePilot.test.ts > validateFpCoveragePilotResults > rejects a pilot key whose fixed title, family, or stratum is changed 0ms
+· ✓ scripts/analysis/validateFpCoveragePilot.test.ts > validateFpCoveragePilotResults > rejects state histories that skip the required in-progress transition 0ms
+· ✓ scripts/analysis/validateFpCoveragePilot.test.ts > validateFpCoveragePilotResults > rejects timestamps or phase effort on a not-started attempt 0ms
+· ✓ scripts/analysis/validateFpCoveragePilot.test.ts > validateFpCoveragePilotResults > rejects negative phase minutes 1ms
+· ✓ scripts/analysis/validateFpCoveragePilot.test.ts > validateFpCoveragePilotResults > requires completed attempts to carry accepted official evidence and snapshot provenance 2ms
+· ✓ scripts/analysis/validateFpCoveragePilot.test.ts > validateFpCoveragePilotResults > requires coded reasons for rejected links and non-completion ambiguity 1ms
+· ✓ scripts/analysis/validateFpCoveragePilot.test.ts > validateFpCoveragePilotResults > rejects unknown and contradictory occupation dispositions 1ms
+· ✓ scripts/analysis/validateFpCoveragePilot.test.ts > validateFpCoveragePilotResults > rejects an accepted relationship whose type and reason code disagree 1ms
+· ✓ scripts/analysis/validateFpCoveragePilot.test.ts > validateFpCoveragePilotResults > rejects deceptive or placeholder-like official evidence 1ms
+· ✓ scripts/analysis/validateFpCoveragePilot.test.ts > validateFpCoveragePilotResults > rejects unknown snapshot claims, impossible elapsed effort, and future transitions 45ms
+· ✓ scripts/analysis/validateFpCoveragePilot.test.ts > validateFpCoveragePilotResults > rejects a completion timestamp before a task-owned terminal transition 126ms
+· ✓ scripts/analysis/validateFpCoveragePilot.test.ts > validateFpCoveragePilotResults > requires a coded ambiguity reason for deferred attempts 1ms
+· ✓ scripts/analysis/validateFpCoveragePilot.test.ts > validateFpCoveragePilotResults > requires a coded ambiguity reason for discarded attempts 0ms
+· ✓ scripts/analysis/validateFpCoveragePilot.test.ts > validateFpCoveragePilotResults > validates the checked-in seed as an executable contract 564ms
+· ✓ scripts/analysis/validateFpCoveragePilot.test.ts > validateFpCoveragePilotResults > preserves the historical COM01M deferral while allowing its later reviewed publication 7ms
+· ✓ scripts/analysis/validateFpCoveragePilot.test.ts > validateFpCoveragePilotResults > requires COM01M's complete deferred output audit 194ms
+· ✓ scripts/analysis/validateFpCoveragePilot.test.ts > validateFpCoveragePilotResults > requires exact INE classification evidence for every COM01M candidate 136ms
+· ✓ scripts/analysis/validateFpCoveragePilot.test.ts > validateFpCoveragePilotResults > rejects a COM01M classification quote that is not the exact INE heading 147ms
+· ✓ scripts/analysis/validateFpCoveragePilot.test.ts > validateFpCoveragePilotResults > requires the COM01M review-candidate union to match all seven rejections 146ms
+· ✓ scripts/analysis/validateFpCoveragePilot.test.ts > validateFpCoveragePilotResults > records all eleven SSC01M official outputs independently 2ms
+· ✓ scripts/analysis/validateFpCoveragePilot.test.ts > validateFpCoveragePilotResults > rejects an SSC01M professional-output quote that is not its exact canonical BOE label 96ms
+· ✓ scripts/analysis/validateFpCoveragePilot.test.ts > validateFpCoveragePilotResults > records each official TodoFP output for SAN21 in exact source order 1ms
+· ✓ scripts/analysis/validateFpCoveragePilot.test.ts > validateFpCoveragePilotResults > records each official TodoFP output for HOT01M in exact source order 1ms
+· ✓ scripts/analysis/validateFpCoveragePilot.test.ts > validateFpCoveragePilotResults > rejects EOC public evidence that combines an accepted output with a rejected output 112ms
+· ✓ scripts/analysis/validateFpCoveragePilot.test.ts > validateFpCoveragePilotResults > rejects a SAN21 audit that omits an official TodoFP output 2ms
+· ✓ scripts/analysis/validateFpCoveragePilot.test.ts > validateFpCoveragePilotResults > rejects a HOT01M audit with TodoFP outputs reordered 81ms
+· ✓ scripts/analysis/validateFpCoveragePilot.test.ts > validateFpCoveragePilotResults > rejects a SAN21 accepted output without independent CNO classification evidence 1ms
+· ✓ scripts/analysis/validateFpCoveragePilot.test.ts > validateFpCoveragePilotResults > rejects a SAN21 accepted review candidate that is not promoted to a top-level acceptance 1ms
+· ✓ scripts/analysis/validateFpCoveragePilot.test.ts > validateFpCoveragePilotResults > rejects a SAN21 candidate accepted in a review but also listed as top-level rejected 1ms
+· ✓ scripts/analysis/validateFpCoveragePilot.test.ts > validateFpCoveragePilotResults > rejects a three-character pilot evidence quote 2ms
+· ✓ scripts/analysis/validateFpCoveragePilot.test.ts > validateFpCoveragePilotResults > rejects a HOT01M output whose accepted candidates contradict its disposition 1ms
+· ✓ scripts/analysis/validateFpCoveragePilot.test.ts > validateFpCoveragePilotResults > rejects a SAN21 output review with a synthetic rather than contiguous TodoFP quote 1ms
+· ✓ scripts/analysis/validateFpCoveragePilot.test.ts > validateFpCoveragePilotResults > records all thirty-three EOC01M official outputs independently 1ms
+· ✓ scripts/analysis/validateFpCoveragePilot.test.ts > validateFpCoveragePilotResults > rejects an accepted EOC output without independent CNO boundary evidence 111ms
+· ✓ scripts/analysis/validateFpCoveragePilot.test.ts > validateFpCoveragePilotResults > rejects EOC top-level dispositions that contradict output-review acceptance 116ms
+· ✓ scripts/analysis/validateFpCoveragePilot.test.ts > validateFpCoveragePilotResults > rejects synthetic EOC BOE output quotes 119ms
+· ✓ scripts/analysis/validateFpCoveragePilot.test.ts > validateFpCoveragePilotResults > reports the bounded EOC01M one-word publication delta below the family signal 60ms
+· ✓ scripts/analysis/validateFpCoveragePilot.test.ts > validateFpCoveragePilotResults > validates a completed prior attempt against its retained immutable snapshot 608ms
+· ✓ src/features/compare-studies/CompareStudiesPage.test.tsx > CompareStudiesPage > selects one level first and presents up to three groups with shared evidence 714ms
+· ✓ src/features/compare-studies/CompareStudiesPage.test.tsx > CompareStudiesPage > keeps unavailable, invalid, and stale evidence explicit 102ms
+· ✓ src/features/compare-studies/CompareStudiesPage.test.tsx > CompareStudiesPage > disables years outside the selected observation window 180ms
+· ✓ src/features/compare-studies/CompareStudiesPage.test.tsx > CompareStudiesPage > defaults to 2019-2020 cohort and year 4 273ms
+· ✓ src/features/compare-studies/CompareStudiesPage.test.tsx > CompareStudiesPage > keeps one chosen cohort shared while allowing an observed four-year window 235ms
+· ✓ src/features/compare-studies/CompareStudiesPage.test.tsx > CompareStudiesPage > preserves an explicitly selected unobserved year after changing cohort 524ms
+· ✓ src/features/compare-studies/CompareStudiesPage.test.tsx > CompareStudiesPage > filters official groups without hiding a selected group or ignoring diacritics 877ms
+· ✓ src/features/compare-studies/CompareStudiesPage.test.tsx > CompareStudiesPage > matches every normalized search word without requiring a contiguous phrase 415ms
+· ✓ src/features/compare-studies/CompareStudiesPage.test.tsx > CompareStudiesPage > counts a selected matching group as visible instead of showing an empty state 497ms
+· ✓ src/features/compare-studies/CompareStudiesPage.test.tsx > CompareStudiesPage > stacks the visual comparison on mobile without removing table semantics 0ms
+· ✓ scripts/data/buildSnapshots.test.ts > buildSnapshots > preserves prior resource bytes and records staleness after refresh failure 25093ms
+· ✓ src/features/occupation-first/OccupationSearchPage.test.tsx > occupation-first search > requires explicit confirmation of an alias-backed official occupation 795ms
+· ✓ src/features/occupation-first/OccupationSearchPage.test.tsx > occupation-first search > supports preferred-label search and keyboard selection 510ms
+· ✓ src/features/occupation-first/OccupationSearchPage.test.tsx > occupation-first search > never exposes a rejected occupation or alias 404ms
+· ✓ src/features/occupation-first/OccupationSearchPage.test.tsx > occupation-first search > clears a stale confirmation when the text is edited 632ms
+· ✓ src/features/occupation-first/OccupationSearchPage.test.tsx > occupation-first search > clears the confirmed occupation for a new search 437ms
+· ✓ src/features/occupation-first/OccupationSearchPage.test.tsx > occupation-first search > shows a recoverable load error 39ms
+· ✓ src/features/occupation-first/OccupationSearchPage.test.tsx > occupation-first search > keeps search interaction to static reads without browser-state writes 406ms
+· ✓ scripts/analysis/validateFpOfficialAliasPass.test.ts > FP official alias pass validation > accepts a literal INE alias with an exact approved output boundary 15ms
+· ✓ scripts/analysis/validateFpOfficialAliasPass.test.ts > FP official alias pass validation > accepts a valid BOE literal_boe_program_output review through the source guard 7ms
+· ✓ scripts/analysis/validateFpOfficialAliasPass.test.ts > FP official alias pass validation > rejects a rejected BOE review at the source guard 9ms
+· ✓ scripts/analysis/validateFpOfficialAliasPass.test.ts > FP official alias pass validation > rejects unknown scope, non-authoritative sources, nonliteral text, and source/reason mismatch 8ms
+· ✓ scripts/analysis/validateFpOfficialAliasPass.test.ts > FP official alias pass validation > rejects an accepted alias whose output evidence is altered or semantically broadens SSC01M 7ms
+· ✓ scripts/analysis/validateFpOfficialAliasPass.test.ts > FP official alias pass validation > requires official rejected-record sources and reason-consistent literal evidence 6ms
+· ✓ scripts/analysis/validateFpOfficialAliasPass.test.ts > FP official alias pass validation > rejects a rejected-row tamper in acceptedProgramOutputLabel before disposition semantics 8ms
+· ✓ scripts/analysis/validateFpOfficialAliasPass.test.ts > FP official alias pass validation > rejects a rejected-row tamper in acceptedProgramOutputSourceUrl before disposition semantics 7ms
+· ✓ scripts/analysis/validateFpOfficialAliasPass.test.ts > FP official alias pass validation > rejects a rejected-row tamper in acceptedProgramOutputSourceQuote before disposition semantics 19ms
+· ✓ scripts/analysis/validateFpOfficialAliasPass.test.ts > FP official alias pass validation > rejects globally unsafe aliases and gives input-order-independent zero-delta results 1061ms
+· ✓ scripts/analysis/validateFpOfficialAliasPass.test.ts > FP official alias pass validation > rejects a normalized alias collision even when the duplicate is audit-only 10ms
+· ✓ scripts/analysis/validateFpOfficialAliasPass.test.ts > FP official alias pass validation > rejects a rejected audit alias that collides with a baseline alias 15ms
+· ✓ scripts/analysis/validateFpOfficialAliasPass.test.ts > FP official alias pass validation > rejects a one-byte change to a pinned baseline resource before matching 8ms
+· ✓ scripts/analysis/validateFpOfficialAliasPass.test.ts > FP official alias pass validation > coalesces matching two-program CNO support but rejects conflicting literal evidence 0ms
+· ✓ scripts/analysis/validateFpOfficialAliasPass.test.ts > FP official alias pass validation > rejects unsupported CLI arguments and writes deterministic result bytes 318ms
+· ✓ scripts/analysis/validateFpOfficialAliasPass.test.ts > FP official alias pass validation > rejects schema-valid stale checked-in results before reporting success 325ms
+· ✓ scripts/analysis/validateFpOfficialAliasPass.test.ts > FP official alias pass validation > keeps published target aliases in exact parity with both audited sources 33ms
+· ✓ scripts/analysis/validateFpOfficialAliasPass.test.ts > FP official alias pass validation > rejects literal_boe_program_output when sourceUrl host is INE 9ms
+· ✓ scripts/analysis/validateFpOfficialAliasPass.test.ts > FP official alias pass validation > rejects literal_boe_program_output when alias does not match the complete normalized output 8ms
+· ✓ scripts/analysis/validateFpOfficialAliasPass.test.ts > FP official alias pass validation > rejects literal_boe_program_output when sourceQuote alone is altered 8ms
+· ✓ scripts/data/validatePublicDistribution.test.ts > public snapshot distribution > rejects every retained sidecar that differs from current recomputation 41ms
+· ✓ scripts/data/validatePublicDistribution.test.ts > public snapshot distribution > allows pre-sidecar history but requires jobs and canonical order for a sidecar 15ms
+· ✓ scripts/data/validatePublicDistribution.test.ts > public snapshot distribution > finds every retained snapshot that exposes a currently draft curated record 18ms
+· ✓ scripts/data/validatePublicDistribution.test.ts > public snapshot distribution > revokes a historical approved record deleted from the curated catalog 8ms
+· ✓ scripts/data/validatePublicDistribution.test.ts > public snapshot distribution > allows a pinned historical snapshot to omit later approved catalog additions 15ms
+· ✓ scripts/data/validatePublicDistribution.test.ts > public snapshot distribution > quarantines pinned snapshots that contain removed, non-approved, or changed approved identities 595ms
+· ✓ scripts/data/validatePublicDistribution.test.ts > public snapshot distribution > rejects historical alias and link rows omitted from a partial curated set 5ms
+· ✓ scripts/data/validatePublicDistribution.test.ts > public snapshot distribution > rejects an approved identity whose public payload was mutated 6ms
+· ✓ scripts/data/validatePublicDistribution.test.ts > public snapshot distribution > rejects an unknown approved identity 5ms
+· ✓ scripts/data/validatePublicDistribution.test.ts > public snapshot distribution > fails closed when checking the snapshot tree returns an access error 1ms
+· ✓ scripts/data/validatePublicDistribution.test.ts > public snapshot distribution > rejects every partial decision-resource set 8ms
+· ✓ scripts/data/validatePublicDistribution.test.ts > public snapshot distribution > rejects missing programs, malformed coverage, and forged coverage fields 40ms
+· ✓ scripts/data/validatePublicDistribution.test.ts > public snapshot distribution > requires the complete canonical approved arrays without subsets, duplicates, or reordering 30ms
+· ✓ scripts/data/validatePublicDistribution.test.ts > public snapshot distribution > rejects duplicate or non-canonically ordered programs 17ms
+· ✓ scripts/data/validatePublicDistribution.test.ts > public snapshot distribution > keeps every checked-in deployable snapshot free of revoked curated mappings 1466ms
+· ✓ src/features/training-first/TrainingResultsPage.test.tsx > TrainingResultsPage > keeps the current bounded publication result for HOT01M 798ms
+· ✓ src/features/training-first/TrainingResultsPage.test.tsx > TrainingResultsPage > keeps the current bounded publication result for EOC01M 248ms
+· ✓ src/features/training-first/TrainingResultsPage.test.tsx > TrainingResultsPage > does not activate an unpublished-requirement filter from arbitrary URL parameters 14ms
+· ✓ src/features/training-first/TrainingResultsPage.test.tsx > TrainingResultsPage > separates missing CNO coverage from official professional outputs 15ms
+· ✓ src/features/training-first/TrainingResultsPage.test.tsx > TrainingResultsPage > shows literal TodoFP outputs with their official source 46ms
+· ✓ src/features/training-first/TrainingResultsPage.test.tsx > TrainingResultsPage > describes a truthful zero-match snapshot without claiming there are no jobs 20ms
+· ✓ src/features/training-first/TrainingResultsPage.test.tsx > TrainingResultsPage > warns above results when the generated snapshot is stale 12ms
+· ✓ src/features/training-first/TrainingResultsPage.test.tsx > TrainingResultsPage > renders the vertical evidence story and derives a reliable action from an answer 211ms
+· ✓ src/features/training-first/TrainingResultsPage.test.tsx > TrainingResultsPage > shows Dónde estudiar link even without approved relationship 54ms
+· ✓ src/features/training-first/TrainingResultsPage.test.tsx > TrainingResultsPage > shows approved occupation and zero match message when no offers exist 111ms
+· ✓ src/features/training-first/TrainingResultsPage.test.tsx > TrainingResultsPage > filters out draft links, duplicates and unresolvable occupations 0ms
+· ✓ src/features/training-first/TrainingResultsPage.test.tsx > TrainingResultsPage > applies the intact unpublished-requirement action in memory and preserves province 380ms
+· ✓ scripts/data/normalizeIncomeOutcomes.test.ts > normalizeIncomeOutcomes > publishes the exact approved groups, windows, and observed cells 516ms
+· ✓ scripts/data/normalizeIncomeOutcomes.test.ts > normalizeIncomeOutcomes > keeps scopes, windows, and unavailable cells separate 433ms
+· ✓ scripts/data/normalizeIncomeOutcomes.test.ts > normalizeIncomeOutcomes > sorts a shuffled verified-table input into byte-identical public records 573ms
+· ✓ scripts/analysis/renderFpCoveragePilotReport.test.ts > renderFpCoveragePilotReport > rejects a stale checked-in report 2ms
+· ✓ scripts/analysis/renderFpCoveragePilotReport.test.ts > renderFpCoveragePilotReport > rejects every leading, trailing, and final-newline difference 0ms
+· ✓ scripts/analysis/renderFpCoveragePilotReport.test.ts > renderFpCoveragePilotReport > rejects terminal pilot states that disagree with public coverage 751ms
+· ✓ scripts/analysis/renderFpCoveragePilotReport.test.ts > renderFpCoveragePilotReport > renders validated terminal counts, separate time measures, and the zero-match bottleneck 694ms
+· ✓ src/features/training-first/TrainingSearchPage.test.tsx > training-first search > shows reviewed and unavailable coverage before submitting an official program 502ms
+· ✓ src/features/training-first/TrainingSearchPage.test.tsx > training-first search > announces loading while the official programs are pending 8ms
+· ✓ src/features/training-first/TrainingSearchPage.test.tsx > training-first search > keeps navigation disabled until an official program is selected 97ms
+· ✓ src/features/training-first/TrainingSearchPage.test.tsx > training-first search > distinguishes homonymous official programs by level and key 29ms
+· ✓ src/features/training-first/TrainingSearchPage.test.tsx > training-first search > rejects an unknown program key with a useful path back 346ms
+· ✓ src/features/training-first/TrainingSearchPage.test.tsx > training-first search > shows a recoverable error when official data cannot be loaded 28ms
+· ✓ src/domain/outcomes.test.ts > income comparison domain > returns separate national and regional evidence for one shared coordinate 4ms
+· ✓ src/domain/outcomes.test.ts > income comparison domain > rejects impossible selections instead of changing their meaning 1ms
+· ✓ src/domain/outcomes.test.ts > income comparison domain > passes an official unavailable value through without interpolation 0ms
+· ✓ src/domain/outcomes.test.ts > income comparison domain > rejects a resource that lacks the exact regional reference 64ms
+· ✓ src/domain/outcomes.test.ts > income comparison domain > indexes a valid resource independently of record ordering 71ms
+· ✓ src/domain/outcomes.test.ts > income comparison domain > rejects empty and incomplete outcome universes 195ms
+· ✓ src/features/occupation-first/OccupationResultsPage.test.tsx > occupation-first results > rejects an unknown occupation with a useful path back 431ms
+· ✓ src/features/occupation-first/OccupationResultsPage.test.tsx > occupation-first results > explains when no reviewed training route is available 28ms
+· ✓ src/features/occupation-first/OccupationResultsPage.test.tsx > occupation-first results > orders explained routes without scores and shows real offering coverage 62ms
+· ✓ src/features/occupation-first/OccupationResultsPage.test.tsx > occupation-first results > discloses exact provenance and links to the existing centers route 105ms
+· ✓ src/features/occupation-first/OccupationResultsPage.test.tsx > occupation-first results > warns when the official training snapshot is stale 29ms
+· ✓ src/features/occupation-first/OccupationResultsPage.test.tsx > occupation-first results > keeps results interaction to static reads without browser-state writes 96ms
+· ✓ scripts/orchestration/nanRealShakedownEvidence.test.ts > real NAN shakedown evidence > retains exactly seven non-simulated accepted worker records 5ms
+· ✓ scripts/orchestration/nanRealShakedownEvidence.test.ts > real NAN shakedown evidence > retains three independently reviewed AFD02S research records 4ms
+· ✓ scripts/orchestration/nanRealShakedownEvidence.test.ts > real NAN shakedown evidence > retains the reviewed Gemma bulletin extraction without presenting it as frontier-accepted code 1ms
+· ✓ scripts/orchestration/nanRealShakedownEvidence.test.ts > real NAN shakedown evidence > binds AFD02S-data.worker-telemetry.json to commits that contain every declared path 62ms
+· ✓ scripts/orchestration/nanRealShakedownEvidence.test.ts > real NAN shakedown evidence > binds AFD02S-evidence.worker-telemetry.json to commits that contain every declared path 67ms
+· ✓ scripts/orchestration/nanRealShakedownEvidence.test.ts > real NAN shakedown evidence > binds CNO3523.worker-telemetry.json to commits that contain every declared path 53ms
+· ✓ scripts/orchestration/nanRealShakedownEvidence.test.ts > real NAN shakedown evidence > binds COM04S-links.worker-telemetry.json to commits that contain every declared path 55ms
+· ✓ scripts/orchestration/nanRealShakedownEvidence.test.ts > real NAN shakedown evidence > binds COM04S-sources.worker-telemetry.json to commits that contain every declared path 70ms
+· ✓ scripts/orchestration/nanRealShakedownEvidence.test.ts > real NAN shakedown evidence > binds FME01B-publish.worker-telemetry.json to commits that contain every declared path 57ms
+· ✓ scripts/orchestration/nanRealShakedownEvidence.test.ts > real NAN shakedown evidence > binds FME01B-sources.worker-telemetry.json to commits that contain every declared path 84ms
+· ✓ scripts/data/buildSnapshots.test.ts > buildSnapshots > blocks upstream field drift and preserves the previous published resources 27879ms
+· ✓ scripts/analysis/fpOfficialAliasPass.EOC01M.test.ts > EOC01M official alias audit > records but does not publish EOC01M one-word official terms 756ms
+· ✓ src/features/methodology/MethodologyPage.test.tsx > MethodologyPage > explains each income scope and its statistical limits without merging them 382ms
+· ✓ src/features/methodology/MethodologyPage.test.tsx > MethodologyPage > documents unavailable cells, provisional windows, and last-known-good behavior 16ms
+· ✓ src/features/methodology/MethodologyPage.test.tsx > MethodologyPage > reports a historical manifest without income evidence as unavailable 85ms
+· ✓ scripts/orchestration/nanAuditProxy.test.ts > NAN audit proxy > binds provider response evidence without retaining prompts or credentials 135ms
+· ✓ scripts/orchestration/nanAuditProxy.test.ts > NAN audit proxy > retries 429 rate_limit_exceeded then streams the successful 200 185ms
+· ✓ scripts/orchestration/nanAuditProxy.test.ts > NAN audit proxy > does not retry 429 insufficient_quota 175ms
+· ✓ scripts/orchestration/nanAuditProxy.test.ts > NAN audit proxy > exhausts all attempts on 503 and reports the terminal attempt 234ms
+· ✓ src/app/App.test.tsx > App > presents both approved entry points 138ms
+· ✓ src/app/App.test.tsx > App > uses the compact product shell and identifies the project independently 78ms
+· ✓ src/app/App.test.tsx > App > routes the comparison navigation to the income-only page 323ms
+· ✓ src/features/training-first/TrainingRoutePage.test.tsx > TrainingRoutePage > shows the official regulated offering and its center 450ms
+· ✓ scripts/data/reconcileEducabaseIncome.test.ts > assertEquivalentIncomeTables > accepts semantically equivalent complete official formats 59ms
+· ✓ scripts/data/reconcileEducabaseIncome.test.ts > assertEquivalentIncomeTables > rejects changed cells, dimensions, labels, notes and unavailable values 73ms
+· ✓ scripts/data/reconcileEducabaseIncome.test.ts > assertEquivalentIncomeTables > rejects fractional, negative, blank and non-numeric PX values without rounding 73ms
+· ✓ scripts/data/reconcileEducabaseIncome.test.ts > assertEquivalentIncomeTables > uses exact integer cents and the official half-up display boundary 77ms
+· ✓ scripts/data/reconcileEducabaseIncome.test.ts > assertEquivalentIncomeTables > rejects values beyond the safe displayed-euro range before serialization 73ms
+· ✓ scripts/data/reconcileEducabaseIncome.test.ts > assertEquivalentIncomeTables > has no binary-number parsing or floating-point arithmetic in reconciliation 1ms
+· ✓ src/components/ActionPanel.test.tsx > ActionPanel integration > routes an engine-issued regulated-training action to centers, not employment results 119ms
+· ✓ src/components/ActionPanel.test.tsx > ActionPanel integration > does not silently omit an issued training route without official metadata 5ms
+· ✓ src/components/ActionPanel.test.tsx > ActionPanel integration > passes the intact engine-issued checklist action into session memory 65ms
+· ✓ src/components/ActionPanel.test.tsx > ActionPanel integration > passes the intact engine-issued unpublished-requirement action to its handler 58ms
+· ✓ src/components/ActionPanel.test.tsx > ActionPanel integration > suppresses a province-change action for remote evidence but keeps it for on-site evidence 12ms
+· ✓ src/features/home/HomePage.test.tsx > HomePage > presents manifest-addressed reviewed coverage and excludes unsupported programs 276ms
+· ✓ src/features/home/HomePage.test.tsx > HomePage > announces a pending manifest before rendering the validated update date 39ms
+· ✓ scripts/data/loadEducabaseIncome.test.ts > loadEducabaseIncomeBundle > loads four reconciled tables in source order and CSV/PX artifact order 442ms
+· ✓ scripts/data/loadEducabaseIncome.test.ts > loadEducabaseIncomeBundle > fails the complete bundle when one source fails 5ms
+· ✓ scripts/data/loadEducabaseIncome.test.ts > loadEducabaseIncomeBundle > names fixture files only as a test helper 0ms
+· ✓ scripts/data/validateCuratedMappings.test.ts > curated occupation mappings > rejects unknown fields and malformed stable occupation identifiers 4ms
+· ✓ scripts/data/validateCuratedMappings.test.ts > curated occupation mappings > rejects an approved relationship without a primary official citation 0ms
+· ✓ scripts/data/validateCuratedMappings.test.ts > curated occupation mappings > accepts a short contiguous official BOE bullet as mapping evidence 23ms
+· ✓ scripts/data/validateCuratedMappings.test.ts > curated occupation mappings > rejects a meaningless three-character official citation quote 0ms
+· ✓ scripts/data/validateCuratedMappings.test.ts > curated occupation mappings > rejects an empty occupation confirmation label 1ms
+· ✓ scripts/data/validateCuratedMappings.test.ts > curated occupation mappings > rejects a generic one-word alias 18ms
+· ✓ scripts/data/validateCuratedMappings.test.ts > curated occupation mappings > rejects a dangling occupation relationship 14ms
+· ✓ scripts/data/validateCuratedMappings.test.ts > curated occupation mappings > accepts the audited accepted single-token alias only with approved_single_token 16ms
+· ✓ scripts/data/validateCuratedMappings.test.ts > curated occupation mappings > rejects approved_single_token when the literal form or occupation is not the audited accepted pair 30ms
+· ✓ scripts/data/validateCuratedMappings.test.ts > curated occupation mappings > rejects the audited single-token alias when its approved relationship uses a non-target program 13ms
+· ✓ scripts/data/validateCuratedMappings.test.ts > curated occupation mappings > fails closed when terminal single-token audit evidence changes 9ms
+· ✓ scripts/data/validateCuratedMappings.test.ts > curated occupation mappings > fails closed when a rejected audit form is changed to accepted 8ms
+· ✓ scripts/data/validateCuratedMappings.test.ts > curated occupation mappings > rejects unknown alias matchPolicy values 0ms
+· ✓ scripts/data/validateCuratedMappings.test.ts > curated occupation mappings > rejects a normalized alias assigned to different occupations 19ms
+· ✓ scripts/data/validateCuratedMappings.test.ts > curated occupation mappings > builds deterministic reviewed alias search without exposing a score 3ms
+· ✓ scripts/data/validateCuratedMappings.test.ts > curated occupation mappings > publishes only approved occupations, aliases, and relationships 1ms
+· ✓ scripts/data/validateCuratedMappings.test.ts > curated occupation mappings > reports approved, draft, rejected, and uncovered counts by program and family 8ms
+· ✓ scripts/data/validateCuratedMappings.test.ts > curated occupation mappings > keeps the unresolved Gestión Administrativa 4309/4500 choice in draft data only 26ms
+· ✓ scripts/data/validateCuratedMappings.test.ts > curated occupation mappings > publishes only EOC01M aliases accepted by the official audit 16ms
+· ✓ scripts/analysis/validateFpCoverageExpansion.COM02M.test.ts > COM02M expansion slot > proves the published snapshot contains exactly COM02M's accepted relations 3ms
+· ✓ scripts/analysis/validateFpCoverageExpansion.COM02M.test.ts > COM02M expansion slot > validates the completed attempt against the in-memory curated overlay 113ms
+node.exe : stderr | src/app/RouteLoadBoundary.test.tsx > RouteLoadBoundary > shows error message and retry button on
+error
+En línea: 1 Carácter: 1
++ & "C:\Program Files\nodejs/node.exe" "C:\Program Files\nodejs/node_mo ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (stderr | src/ap...button on error:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+
+Error: Test error
+    at Thrower (F:/castilla_leon_rev2/src/app/RouteLoadBoundary.test.tsx:19:13)
+    at Object.react_stack_bottom_frame
+(F:\castilla_leon_rev2\node_modules\react-dom\cjs\react-dom-client.development.js:25904:20)
+    at renderWithHooks (F:\castilla_leon_rev2\node_modules\react-dom\cjs\react-dom-client.development.js:7662:22)
+    at updateFunctionComponent
+(F:\castilla_leon_rev2\node_modules\react-dom\cjs\react-dom-client.development.js:10166:19)
+    at beginWork (F:\castilla_leon_rev2\node_modules\react-dom\cjs\react-dom-client.development.js:11778:18)
+    at runWithFiberInDEV (F:\castilla_leon_rev2\node_modules\react-dom\cjs\react-dom-client.development.js:874:13)
+    at performUnitOfWork (F:\castilla_leon_rev2\node_modules\react-dom\cjs\react-dom-client.development.js:17641:22)
+    at workLoopSync (F:\castilla_leon_rev2\node_modules\react-dom\cjs\react-dom-client.development.js:17469:41)
+    at renderRootSync (F:\castilla_leon_rev2\node_modules\react-dom\cjs\react-dom-client.development.js:17450:11)
+    at performWorkOnRoot (F:\castilla_leon_rev2\node_modules\react-dom\cjs\react-dom-client.development.js:16583:35) {
+  [stack]: [Getter/Setter],
+  [message]: 'Test error'
+}
+
+The above error occurred in the <Thrower> component.
+
+React will try to recreate this component tree from scratch using the error boundary you provided, RouteLoadBoundary.
+
+
+stderr | src/app/RouteLoadBoundary.test.tsx > RouteLoadBoundary > shows error message and retry button on error
+Error: Test error
+    at Thrower (F:/castilla_leon_rev2/src/app/RouteLoadBoundary.test.tsx:19:13)
+    at Object.react_stack_bottom_frame
+(F:\castilla_leon_rev2\node_modules\react-dom\cjs\react-dom-client.development.js:25904:20)
+    at renderWithHooks (F:\castilla_leon_rev2\node_modules\react-dom\cjs\react-dom-client.development.js:7662:22)
+    at updateFunctionComponent
+(F:\castilla_leon_rev2\node_modules\react-dom\cjs\react-dom-client.development.js:10166:19)
+    at beginWork (F:\castilla_leon_rev2\node_modules\react-dom\cjs\react-dom-client.development.js:11778:18)
+    at runWithFiberInDEV (F:\castilla_leon_rev2\node_modules\react-dom\cjs\react-dom-client.development.js:874:13)
+    at performUnitOfWork (F:\castilla_leon_rev2\node_modules\react-dom\cjs\react-dom-client.development.js:17641:22)
+    at workLoopSync (F:\castilla_leon_rev2\node_modules\react-dom\cjs\react-dom-client.development.js:17469:41)
+    at renderRootSync (F:\castilla_leon_rev2\node_modules\react-dom\cjs\react-dom-client.development.js:17450:11)
+    at performWorkOnRoot (F:\castilla_leon_rev2\node_modules\react-dom\cjs\react-dom-client.development.js:16583:35) {
+  [stack]: [Getter/Setter],
+  [message]: 'Test error'
+}
+
+The above error occurred in the <Thrower> component.
+
+React will try to recreate this component tree from scratch using the error boundary you provided, RouteLoadBoundary.
+
+
+stderr | src/app/RouteLoadBoundary.test.tsx > RouteLoadBoundary > uses correct aria role for fallback (default alert)
+Error: Test error
+    at Thrower (F:/castilla_leon_rev2/src/app/RouteLoadBoundary.test.tsx:39:13)
+    at Object.react_stack_bottom_frame
+(F:\castilla_leon_rev2\node_modules\react-dom\cjs\react-dom-client.development.js:25904:20)
+    at renderWithHooks (F:\castilla_leon_rev2\node_modules\react-dom\cjs\react-dom-client.development.js:7662:22)
+    at updateFunctionComponent
+(F:\castilla_leon_rev2\node_modules\react-dom\cjs\react-dom-client.development.js:10166:19)
+    at beginWork (F:\castilla_leon_rev2\node_modules\react-dom\cjs\react-dom-client.development.js:11778:18)
+    at runWithFiberInDEV (F:\castilla_leon_rev2\node_modules\react-dom\cjs\react-dom-client.development.js:874:13)
+    at performUnitOfWork (F:\castilla_leon_rev2\node_modules\react-dom\cjs\react-dom-client.development.js:17641:22)
+    at workLoopSync (F:\castilla_leon_rev2\node_modules\react-dom\cjs\react-dom-client.development.js:17469:41)
+    at renderRootSync (F:\castilla_leon_rev2\node_modules\react-dom\cjs\react-dom-client.development.js:17450:11)
+    at performWorkOnRoot (F:\castilla_leon_rev2\node_modules\react-dom\cjs\react-dom-client.development.js:16583:35) {
+  [stack]: [Getter/Setter],
+  [message]: 'Test error'
+}
+
+The above error occurred in the <Thrower> component.
+
+React will try to recreate this component tree from scratch using the error boundary you provided, RouteLoadBoundary.
+
+
+stderr | src/app/RouteLoadBoundary.test.tsx > RouteLoadBoundary > uses correct aria role for fallback (default alert)
+Error: Test error
+    at Thrower (F:/castilla_leon_rev2/src/app/RouteLoadBoundary.test.tsx:39:13)
+    at Object.react_stack_bottom_frame
+(F:\castilla_leon_rev2\node_modules\react-dom\cjs\react-dom-client.development.js:25904:20)
+    at renderWithHooks (F:\castilla_leon_rev2\node_modules\react-dom\cjs\react-dom-client.development.js:7662:22)
+    at updateFunctionComponent
+(F:\castilla_leon_rev2\node_modules\react-dom\cjs\react-dom-client.development.js:10166:19)
+    at beginWork (F:\castilla_leon_rev2\node_modules\react-dom\cjs\react-dom-client.development.js:11778:18)
+    at runWithFiberInDEV (F:\castilla_leon_rev2\node_modules\react-dom\cjs\react-dom-client.development.js:874:13)
+    at performUnitOfWork (F:\castilla_leon_rev2\node_modules\react-dom\cjs\react-dom-client.development.js:17641:22)
+    at workLoopSync (F:\castilla_leon_rev2\node_modules\react-dom\cjs\react-dom-client.development.js:17469:41)
+    at renderRootSync (F:\castilla_leon_rev2\node_modules\react-dom\cjs\react-dom-client.development.js:17450:11)
+    at performWorkOnRoot (F:\castilla_leon_rev2\node_modules\react-dom\cjs\react-dom-client.development.js:16583:35) {
+  [stack]: [Getter/Setter],
+  [message]: 'Test error'
+}
+
+The above error occurred in the <Thrower> component.
+
+React will try to recreate this component tree from scratch using the error boundary you provided, RouteLoadBoundary.
+
+
+stderr | src/app/RouteLoadBoundary.test.tsx > RouteLoadBoundary > uses custom aria role for fallback
+Error: Test error
+    at Thrower (F:/castilla_leon_rev2/src/app/RouteLoadBoundary.test.tsx:55:13)
+    at Object.react_stack_bottom_frame
+(F:\castilla_leon_rev2\node_modules\react-dom\cjs\react-dom-client.development.js:25904:20)
+    at renderWithHooks (F:\castilla_leon_rev2\node_modules\react-dom\cjs\react-dom-client.development.js:7662:22)
+    at updateFunctionComponent
+(F:\castilla_leon_rev2\node_modules\react-dom\cjs\react-dom-client.development.js:10166:19)
+    at beginWork (F:\castilla_leon_rev2\node_modules\react-dom\cjs\react-dom-client.development.js:11778:18)
+    at runWithFiberInDEV (F:\castilla_leon_rev2\node_modules\react-dom\cjs\react-dom-client.development.js:874:13)
+    at performUnitOfWork (F:\castilla_leon_rev2\node_modules\react-dom\cjs\react-dom-client.development.js:17641:22)
+    at workLoopSync (F:\castilla_leon_rev2\node_modules\react-dom\cjs\react-dom-client.development.js:17469:41)
+    at renderRootSync (F:\castilla_leon_rev2\node_modules\react-dom\cjs\react-dom-client.development.js:17450:11)
+    at performWorkOnRoot (F:\castilla_leon_rev2\node_modules\react-dom\cjs\react-dom-client.development.js:16583:35) {
+  [stack]: [Getter/Setter],
+  [message]: 'Test error'
+}
+
+The above error occurred in the <Thrower> component.
+
+React will try to recreate this component tree from scratch using the error boundary you provided, RouteLoadBoundary.
+
+
+stderr | src/app/RouteLoadBoundary.test.tsx > RouteLoadBoundary > uses custom aria role for fallback
+Error: Test error
+    at Thrower (F:/castilla_leon_rev2/src/app/RouteLoadBoundary.test.tsx:55:13)
+    at Object.react_stack_bottom_frame
+(F:\castilla_leon_rev2\node_modules\react-dom\cjs\react-dom-client.development.js:25904:20)
+    at renderWithHooks (F:\castilla_leon_rev2\node_modules\react-dom\cjs\react-dom-client.development.js:7662:22)
+    at updateFunctionComponent
+(F:\castilla_leon_rev2\node_modules\react-dom\cjs\react-dom-client.development.js:10166:19)
+    at beginWork (F:\castilla_leon_rev2\node_modules\react-dom\cjs\react-dom-client.development.js:11778:18)
+    at runWithFiberInDEV (F:\castilla_leon_rev2\node_modules\react-dom\cjs\react-dom-client.development.js:874:13)
+    at performUnitOfWork (F:\castilla_leon_rev2\node_modules\react-dom\cjs\react-dom-client.development.js:17641:22)
+    at workLoopSync (F:\castilla_leon_rev2\node_modules\react-dom\cjs\react-dom-client.development.js:17469:41)
+    at renderRootSync (F:\castilla_leon_rev2\node_modules\react-dom\cjs\react-dom-client.development.js:17450:11)
+    at performWorkOnRoot (F:\castilla_leon_rev2\node_modules\react-dom\cjs\react-dom-client.development.js:16583:35) {
+  [stack]: [Getter/Setter],
+  [message]: 'Test error'
+}
+
+The above error occurred in the <Thrower> component.
+
+React will try to recreate this component tree from scratch using the error boundary you provided, RouteLoadBoundary.
+
+
+· ✓ src/app/RouteLoadBoundary.test.tsx > RouteLoadBoundary > renders children when there is no error 15ms
+· ✓ src/app/RouteLoadBoundary.test.tsx > RouteLoadBoundary > shows error message and retry button on error 70ms
+· ✓ src/app/RouteLoadBoundary.test.tsx > RouteLoadBoundary > uses correct aria role for fallback (default alert) 8ms
+· ✓ src/app/RouteLoadBoundary.test.tsx > RouteLoadBoundary > uses custom aria role for fallback 16ms
+· ✓ scripts/data/parseEducabaseIncomePx.test.ts > parseEducabaseIncomePx > parses the approved full PC-Axis subset with exact dimensions and data cardinality 25ms
+· ✓ scripts/data/parseEducabaseIncomePx.test.ts > parseEducabaseIncomePx > requires the exact PC-Axis encoding and structural declarations 11ms
+· ✓ scripts/data/parseEducabaseIncomePx.test.ts > parseEducabaseIncomePx > fails closed on changed notes, required metadata, dimension placement, and unused VALUES 83ms
+· ✓ scripts/data/parseEducabaseIncomePx.test.ts > parseEducabaseIncomePx > requires singleton semantic metadata and a valid mutable creation date 17ms
+· ✓ scripts/data/parseEducabaseIncomePx.test.ts > parseEducabaseIncomePx > accepts the exact live higher-level SUBJECT-CODE null metadata variant 22ms
+· ✓ scripts/data/parseEducabaseIncomePx.test.ts > parseEducabaseIncomePx > rejects invalid data, invalid concatenation, and cardinality changes 1ms
+· ✓ scripts/data/parseEducabaseIncomeCsv.test.ts > parseEducabaseIncomeCsv > parses the full national and regional CSV responses with exact dimensions 107ms
+· ✓ scripts/data/parseEducabaseIncomeCsv.test.ts > parseEducabaseIncomeCsv > requires one UTF-8 BOM, exact source header and strict values 13ms
+· ✓ scripts/data/parseEducabaseIncomeCsv.test.ts > parseEducabaseIncomeCsv > handles quoted delimiters and newlines but rejects malformed quotes, NULs, and duplicate coordinates 1ms
+· ✓ scripts/analysis/validateFpCoverageExpansion.FME02M.test.ts > FME02M expansion slot > publishes exactly the four reviewed FME02M relations 3ms
+· ✓ scripts/analysis/validateFpCoverageExpansion.FME02M.test.ts > FME02M expansion slot > validates exhaustive BOE reviews, seed reconciliation and completed parity 63ms
+· ✓ scripts/analysis/validateFpCoverageExpansion.IMA02M.test.ts > IMA02M expansion slot > publishes exactly the reviewed IMA02M relation 3ms
+· ✓ scripts/analysis/validateFpCoverageExpansion.IMA02M.test.ts > IMA02M expansion slot > validates exhaustive BOE reviews, seed reconciliation and completed parity 67ms
+· ✓ scripts/analysis/validateFpCoverageExpansion.TMV01M.test.ts > TMV01M expansion slot > publishes exactly the two reviewed TMV01M relations 3ms
+· ✓ scripts/analysis/validateFpCoverageExpansion.TMV01M.test.ts > TMV01M expansion slot > validates exhaustive BOE reviews, seed reconciliation, two rejected and completed parity 49ms
+· ✓ scripts/data/extractRequirements.test.ts > extractPublishedRequirements > fails closed for extended conditional prose: Permiso de conducir B si el puesto lo requiere. 3ms
+· ✓ scripts/data/extractRequirements.test.ts > extractPublishedRequirements > fails closed for extended conditional prose: Permiso de conducir B si procede. 0ms
+· ✓ scripts/data/extractRequirements.test.ts > extractPublishedRequirements > fails closed for extended conditional prose: Permiso de conducir B si aplica. 0ms
+· ✓ scripts/data/extractRequirements.test.ts > extractPublishedRequirements > fails closed for extended conditional prose: Permiso de conducir B si cabe. 0ms
+· ✓ scripts/data/extractRequirements.test.ts > extractPublishedRequirements > fails closed for extended conditional prose: Permiso de conducir B en su caso. 0ms
+· ✓ scripts/data/extractRequirements.test.ts > extractPublishedRequirements > fails closed for extended conditional prose: Permiso de conducir B cuando proceda. 0ms
+· ✓ scripts/data/extractRequirements.test.ts > extractPublishedRequirements > fails closed for extended conditional prose: Permiso de conducir B cuando corresponda. 0ms
+· ✓ scripts/data/extractRequirements.test.ts > extractPublishedRequirements > fails closed for extended conditional prose: Permiso de conducir B cuando aplique. 0ms
+· ✓ scripts/data/extractRequirements.test.ts > extractPublishedRequirements > fails closed for extended conditional prose: Experiencia mínima de 2 años siempre que sea posible. 1ms
+· ✓ scripts/data/extractRequirements.test.ts > extractPublishedRequirements > fails closed for extended conditional prose: Experiencia mínima de 2 años de poder ser. 1ms
+· ✓ scripts/data/extractRequirements.test.ts > extractPublishedRequirements > fails closed for extended conditional prose: Experiencia mínima de 2 años; se podría valorar. 0ms
+· ✓ scripts/data/extractRequirements.test.ts > extractPublishedRequirements > fails closed for extended conditional prose: Experiencia mínima de 2 años; se podrían valorar. 0ms
+· ✓ scripts/data/extractRequirements.test.ts > extractPublishedRequirements > fails closed for extended conditional prose: Experiencia mínima de 2 años: podría valorarse. 0ms
+· ✓ scripts/data/extractRequirements.test.ts > extractPublishedRequirements > fails closed for extended conditional prose: Experiencia mínima de 2 años: podrían valorarse. 0ms
+· ✓ scripts/data/extractRequirements.test.ts > extractPublishedRequirements > fails closed for extended conditional prose: • PERMISO DE CONDUCIR B, SI PROCEDE. 1ms
+· ✓ scripts/data/extractRequirements.test.ts > extractPublishedRequirements > fails closed for extended conditional prose: SI TIENE permiso de conducir B. 0ms
+· ✓ scripts/data/extractRequirements.test.ts > extractPublishedRequirements > keeps accented affirmative driving requirements: Sí, se requiere permiso de conducir B. 3ms
+· ✓ scripts/data/extractRequirements.test.ts > extractPublishedRequirements > keeps accented affirmative driving requirements: SÍ: SE REQUIERE PERMISO DE CONDUCIR B. 1ms
+· ✓ scripts/data/extractRequirements.test.ts > extractPublishedRequirements > keeps accented affirmative driving requirements: • Sí; se requiere permiso de conducir B. 1ms
+· ✓ scripts/data/extractRequirements.test.ts > extractPublishedRequirements > keeps accented affirmative driving requirements: - SÍ, permiso de conducir B obligatorio. 0ms
+· ✓ scripts/data/extractRequirements.test.ts > extractPublishedRequirements > keeps explicit live requirement grammar: Observaciones: Se requiere carné de conducir clase B 0ms
+· ✓ scripts/data/extractRequirements.test.ts > extractPublishedRequirements > keeps explicit live requirement grammar: Carnet de conducir B en vigor. 0ms
+· ✓ scripts/data/extractRequirements.test.ts > extractPublishedRequirements > keeps explicit live requirement grammar: Permiso de conducción B y vehículo propio. 0ms
+· ✓ scripts/data/extractRequirements.test.ts > extractPublishedRequirements > keeps explicit live requirement grammar: Vehículo propio para acudir al centro de trabajo. 1ms
+· ✓ scripts/data/extractRequirements.test.ts > extractPublishedRequirements > keeps explicit live requirement grammar: Graduado en ESO o equivalente. 1ms
+· ✓ scripts/data/extractRequirements.test.ts > extractPublishedRequirements > keeps explicit live requirement grammar: Nivel C1 o superior de Español 2ms
+· ✓ scripts/data/extractRequirements.test.ts > extractPublishedRequirements > keeps explicit live requirement grammar: Idiomas: Castellano (nivel C1). 0ms
+· ✓ scripts/data/extractRequirements.test.ts > extractPublishedRequirements > keeps explicit live requirement grammar: Horarios en turnos rotativos de lunes a sábados. 1ms
+· ✓ scripts/data/extractRequirements.test.ts > extractPublishedRequirements > keeps explicit live requirement grammar: Disponibilidad para trabajar en turnos rotativos de mañana, tarde y noche. 2ms
+· ✓ scripts/data/extractRequirements.test.ts > extractPublishedRequirements > fails closed when recognized evidence has unknown residue: Permiso de conducir B bajo criterio empresarial. 0ms
+· ✓ scripts/data/extractRequirements.test.ts > extractPublishedRequirements > fails closed when recognized evidence has unknown residue: Experiencia mínima de 2 años según circunstancias futuras. 4ms
+· ✓ scripts/data/extractRequirements.test.ts > extractPublishedRequirements > rejects unreviewed or alternative qualification prose: Grado en Derecho bajo revisión posterior. 0ms
+· ✓ scripts/data/extractRequirements.test.ts > extractPublishedRequirements > rejects unreviewed or alternative qualification prose: Grado en Derecho según criterio de la empresa. 0ms
+· ✓ scripts/data/extractRequirements.test.ts > extractPublishedRequirements > rejects unreviewed or alternative qualification prose: Grado en Derecho salvo decisión del centro. 1ms
+· ✓ scripts/data/extractRequirements.test.ts > extractPublishedRequirements > rejects unreviewed or alternative qualification prose: Grado en Derecho cuando cambie la normativa. 1ms
+· ✓ scripts/data/extractRequirements.test.ts > extractPublishedRequirements > rejects unreviewed or alternative qualification prose: Grado en Derecho con condiciones por definir. 1ms
+· ✓ scripts/data/extractRequirements.test.ts > extractPublishedRequirements > rejects unreviewed or alternative qualification prose: Grado en Derecho o equivalente a determinar. 0ms
+· ✓ scripts/data/extractRequirements.test.ts > extractPublishedRequirements > rejects unreviewed or alternative qualification prose: Grado en Derecho podría ser necesario. 0ms
+· ✓ scripts/data/extractRequirements.test.ts > extractPublishedRequirements > rejects unreviewed or alternative qualification prose: Grado en Derecho en función del proyecto. 0ms
+· ✓ scripts/data/extractRequirements.test.ts > extractPublishedRequirements > rejects unreviewed or alternative qualification prose: Grado en Derecho a confirmar en entrevista. 0ms
+· ✓ scripts/data/extractRequirements.test.ts > extractPublishedRequirements > rejects unreviewed or alternative qualification prose: Técnico en Cuidados Auxiliares de Enfermería o Certificación Profesional Sociosanitaria. 0ms
+· ✓ scripts/data/extractRequirements.test.ts > extractPublishedRequirements > rejects unreviewed or alternative qualification prose: Titulación de Administración de Empresas. Relaciones laborales. Administración y Finanzas. 0ms
+· ✓ scripts/data/extractRequirements.test.ts > extractPublishedRequirements > rejects unreviewed or alternative qualification prose: Grado en Ingeniería Química o similar. 0ms
+· ✓ scripts/data/extractRequirements.test.ts > extractPublishedRequirements > rejects unreviewed or alternative qualification prose: Grado en Ingeniería Mecánica, Ingeniería Electromecánica o ingenierías afines. 0ms
+· ✓ scripts/data/extractRequirements.test.ts > extractPublishedRequirements > rejects unreviewed or alternative qualification prose: Técnico/a Superior en Laboratorio Clínico y Biomédico o de Técnico/a Superior en Laboratorio de Análisis y Control de Calidad o equivalentes 0ms
+· ✓ scripts/data/extractRequirements.test.ts > extractPublishedRequirements > fails closed for fuzzed suffixes after a reviewed qualification 53ms
+· ✓ scripts/data/extractRequirements.test.ts > extractPublishedRequirements > preserves exact quote bytes and exports the canonical SHA-256 ID 1ms
+· ✓ scripts/data/extractRequirements.test.ts > extractPublishedRequirements > fails closed for clause-bound conditional prose: Experiencia mínima de 2 años, si fuera posible. 0ms
+· ✓ scripts/data/extractRequirements.test.ts > extractPublishedRequirements > fails closed for clause-bound conditional prose: Experiencia mínima de 2 años, si fuese posible. 0ms
+· ✓ scripts/data/extractRequirements.test.ts > extractPublishedRequirements > fails closed for clause-bound conditional prose: Experiencia mínima de 2 años; se valorase. 0ms
+· ✓ scripts/data/extractRequirements.test.ts > extractPublishedRequirements > fails closed for clause-bound conditional prose: La valoraríamos: experiencia mínima de 2 años. 0ms
+· ✓ scripts/data/extractRequirements.test.ts > extractPublishedRequirements > fails closed for clause-bound conditional prose: Experiencia mínima de 2 años, de ser posible. 0ms
+· ✓ scripts/data/extractRequirements.test.ts > extractPublishedRequirements > fails closed for clause-bound conditional prose: Permiso de conducir B en caso de disponer de él. 0ms
+· ✓ scripts/data/extractRequirements.test.ts > extractPublishedRequirements > fails closed for clause-bound conditional prose: Permiso de conducir B en caso de tenerlo. 0ms
+· ✓ scripts/data/extractRequirements.test.ts > extractPublishedRequirements > fails closed for clause-bound conditional prose: Si dispone de permiso de conducir B. 0ms
+· ✓ scripts/data/extractRequirements.test.ts > extractPublishedRequirements > fails closed for clause-bound conditional prose: Si dispusiera de permiso de conducir B. 0ms
+· ✓ scripts/data/extractRequirements.test.ts > extractPublishedRequirements > fails closed for clause-bound conditional prose: Si tiene permiso de conducir B. 0ms
+· ✓ scripts/data/extractRequirements.test.ts > extractPublishedRequirements > fails closed for clause-bound conditional prose: Si tuviera permiso de conducir B. 0ms
+· ✓ scripts/data/extractRequirements.test.ts > extractPublishedRequirements > fails closed for clause-bound conditional prose: Permiso de conducir B en caso de contar con él. 0ms
+· ✓ scripts/data/extractRequirements.test.ts > extractPublishedRequirements > fails closed for clause-bound conditional prose: • SI DISPUSIERA de permiso de conducir B. 0ms
+· ✓ scripts/data/extractRequirements.test.ts > extractPublishedRequirements > fails closed for clause-bound conditional prose: Experiencia mínima de 2 años; SE VALORASEN. 0ms
+· ✓ scripts/data/extractRequirements.test.ts > extractPublishedRequirements > fails closed for review-round optional prose: Experiencias valorables: experiencia mínima de 2 años. 0ms
+· ✓ scripts/data/extractRequirements.test.ts > extractPublishedRequirements > fails closed for review-round optional prose: • EXPERIENCIAS VALORABLES: experiencia mínima de 2 años. 0ms
+· ✓ scripts/data/extractRequirements.test.ts > extractPublishedRequirements > fails closed for review-round optional prose: Titulaciones valorables: Grado en Derecho. 0ms
+· ✓ scripts/data/extractRequirements.test.ts > extractPublishedRequirements > fails closed for review-round optional prose: Se valoraría permiso de conducir B. 0ms
+· ✓ scripts/data/extractRequirements.test.ts > extractPublishedRequirements > fails closed for review-round optional prose: Se valorarían inglés B2 y modalidad híbrida. 0ms
+· ✓ scripts/data/extractRequirements.test.ts > extractPublishedRequirements > fails closed for review-round optional prose: No hace falta carné de manipulador de alimentos. 0ms
+· ✓ scripts/data/extractRequirements.test.ts > extractPublishedRequirements > fails closed for review-round optional prose: No hace falta vehículo propio. 0ms
+· ✓ scripts/data/extractRequirements.test.ts > extractPublishedRequirements > fails closed for review-round optional prose: Certificados opcionales: carné de manipulador de alimentos. 0ms
+· ✓ scripts/data/extractRequirements.test.ts > extractPublishedRequirements > fails closed for review-round optional prose: Idiomas preferibles: inglés B2. 0ms
+· ✓ scripts/data/extractRequirements.test.ts > extractPublishedRequirements > fails closed for review-round optional prose: Turnos deseables: disponibilidad horaria. 0ms
+· ✓ scripts/data/extractRequirements.test.ts > extractPublishedRequirements > fails closed for review-round optional prose: Vehículos valorados: vehículo propio. 0ms
+· ✓ scripts/data/extractRequirements.test.ts > extractPublishedRequirements > keeps mandatory prose structured when sin does not negate the requirement: Permiso de conducir B sin restricciones. 0ms
+· ✓ scripts/data/extractRequirements.test.ts > extractPublishedRequirements > keeps mandatory prose structured when sin does not negate the requirement: Permiso de conducir B sin incidencias. 0ms
+· ✓ scripts/data/extractRequirements.test.ts > extractPublishedRequirements > keeps mandatory prose structured when sin does not negate the requirement: Experiencia mínima de 2 años sin interrupciones. 2ms
+· ✓ scripts/data/extractRequirements.test.ts > extractPublishedRequirements > keeps mandatory prose structured when sin does not negate the requirement: Experiencia mínima de 2 años sin limitaciones. 0ms
+· ✓ scripts/data/extractRequirements.test.ts > extractPublishedRequirements > does not treat the standalone adjective preferente as optional 0ms
+· ✓ scripts/data/extractRequirements.test.ts > extractPublishedRequirements > fails closed for guarded requirement prose: Preferentemente Grado en Derecho. 0ms
+· ✓ scripts/data/extractRequirements.test.ts > extractPublishedRequirements > fails closed for guarded requirement prose: Experiencia mínima de 1 a 2 años. 0ms
+· ✓ scripts/data/extractRequirements.test.ts > extractPublishedRequirements > fails closed for guarded requirement prose: Experiencia mínima de 2-3 años. 0ms
+· ✓ scripts/data/extractRequirements.test.ts > extractPublishedRequirements > fails closed for guarded requirement prose: Experiencia mínima de 2–3 años. 0ms
+· ✓ scripts/data/extractRequirements.test.ts > extractPublishedRequirements > fails closed for guarded requirement prose: Experiencia mínima de 1 año y 6 meses. 1ms
+· ✓ scripts/data/extractRequirements.test.ts > extractPublishedRequirements > fails closed for guarded requirement prose: Experiencia mínima de 6 meses o 1 año. 0ms
+· ✓ scripts/data/extractRequirements.test.ts > extractPublishedRequirements > fails closed for guarded requirement prose: Experiencia mínima de 1/2 año. 0ms
+· ✓ scripts/data/extractRequirements.test.ts > extractPublishedRequirements > fails closed for guarded requirement prose: Experiencia valorada de 2 años. 0ms
+· ✓ scripts/data/extractRequirements.test.ts > extractPublishedRequirements > fails closed for guarded requirement prose: Valoramos experiencia de 2 años. 0ms
+· ✓ scripts/data/extractRequirements.test.ts > extractPublishedRequirements > fails closed for guarded requirement prose: Sin experiencia de 2 años. 0ms
+· ✓ scripts/data/extractRequirements.test.ts > extractPublishedRequirements > fails closed for guarded requirement prose: Se valorará experiencia de 2 años. 0ms
+· ✓ scripts/data/extractRequirements.test.ts > extractPublishedRequirements > fails closed for guarded requirement prose: No se requiere permiso de conducir B. 0ms
+· ✓ scripts/data/extractRequirements.test.ts > extractPublishedRequirements > fails closed for guarded requirement prose: No requerido permiso de conducir B. 0ms
+· ✓ scripts/data/extractRequirements.test.ts > extractPublishedRequirements > fails closed for guarded requirement prose: Carnet de conducir B opcional. 0ms
+· ✓ scripts/data/extractRequirements.test.ts > extractPublishedRequirements > fails closed for guarded requirement prose: Preferentemente carnet de conducir B. 0ms
+· ✓ scripts/data/extractRequirements.test.ts > extractPublishedRequirements > fails closed for guarded requirement prose: Carné de manipulador de alimentos opcional. 0ms
+· ✓ scripts/data/extractRequirements.test.ts > extractPublishedRequirements > fails closed for guarded requirement prose: Preferentemente inglés B2. 0ms
+· ✓ scripts/data/extractRequirements.test.ts > extractPublishedRequirements > fails closed for guarded requirement prose: Disponibilidad horaria deseable. 0ms
+· ✓ scripts/data/extractRequirements.test.ts > extractPublishedRequirements > fails closed for guarded requirement prose: Se valora modalidad híbrida. 0ms
+· ✓ scripts/data/extractRequirements.test.ts > extractPublishedRequirements > fails closed for guarded requirement prose: Sin disponibilidad para viajar. 0ms
+· ✓ scripts/data/extractRequirements.test.ts > extractPublishedRequirements > extracts qualifications and regulated credentials from exact quotes 1ms
+· ✓ scripts/data/extractRequirements.test.ts > extractPublishedRequirements > normalizes explicit experience durations to months 1ms
+· ✓ scripts/data/extractRequirements.test.ts > extractPublishedRequirements > extracts licence, CEFR, schedule and mobility evidence conservatively 3ms
+· ✓ scripts/data/extractRequirements.test.ts > extractPublishedRequirements > keeps ambiguous, optional, negated and conflicting prose unclassified 2ms
+· ✓ scripts/data/extractRequirements.test.ts > extractPublishedRequirements > does not infer requirements from non-requirement sections or absence 0ms
+· ✓ scripts/data/extractRequirements.test.ts > extractPublishedRequirements > uses boundaries and supports accents, casing, punctuation and list markers 1ms
+· ✓ scripts/data/extractRequirements.test.ts > extractPublishedRequirements > deduplicates exact repeated items and keeps deterministic source order 1ms
+· ✓ scripts/data/extractRequirements.test.ts > extractPublishedRequirements > rejects duplicate offer keys in the additive resource contract 1ms
+· ✓ scripts/data/extractRequirements.test.ts > extractPublishedRequirements > rejects contradictory published requirement 0 0ms
+· ✓ scripts/data/extractRequirements.test.ts > extractPublishedRequirements > rejects contradictory published requirement 1 0ms
+· ✓ scripts/data/extractRequirements.test.ts > extractPublishedRequirements > rejects contradictory published requirement 2 0ms
+· ✓ scripts/data/extractRequirements.test.ts > extractPublishedRequirements > rejects contradictory published requirement 3 0ms
+· ✓ scripts/data/extractRequirements.test.ts > extractPublishedRequirements > rejects contradictory published requirement 4 0ms
+· ✓ scripts/data/extractRequirements.test.ts > extractPublishedRequirements > rejects contradictory published requirement 5 0ms
+· ✓ scripts/data/extractRequirements.test.ts > extractPublishedRequirements > rejects contradictory published requirement 6 0ms
+· ✓ scripts/data/extractRequirements.test.ts > extractPublishedRequirements > rejects contradictory published requirement 7 0ms
+· ✓ scripts/data/extractRequirements.test.ts > extractPublishedRequirements > accepts 12 months for an experience.years normalized value 0ms
+· ✓ scripts/data/extractRequirements.test.ts > extractPublishedRequirements > accepts 24 months for an experience.years normalized value 0ms
+· ✓ scripts/data/extractRequirements.test.ts > extractPublishedRequirements > rejects 13 months for an experience.years normalized value 0ms
+· ✓ scripts/data/extractRequirements.test.ts > extractPublishedRequirements > rejects 18 months for an experience.years normalized value 0ms
+· ✓ scripts/data/extractRequirements.test.ts > extractPublishedRequirements > rejects whitespace-only requirement strings 0 0ms
+· ✓ scripts/data/extractRequirements.test.ts > extractPublishedRequirements > rejects whitespace-only requirement strings 1 0ms
+· ✓ scripts/data/extractRequirements.test.ts > extractPublishedRequirements > rejects whitespace-only requirement strings 2 0ms
+· ✓ scripts/data/extractRequirements.test.ts > extractPublishedRequirements > rejects blank offer IDs and format-valid forged requirement IDs 0ms
+· ✓ scripts/analysis/validateFpCoverageExpansion.AGA03M.test.ts > AGA03M expansion slot > publishes exactly the two reviewed AGA03M relations 2ms
+· ✓ scripts/analysis/validateFpCoverageExpansion.AGA03M.test.ts > AGA03M expansion slot > validates the completed attempt against the published snapshot 46ms
+· ✓ scripts/analysis/validateFpCoverageExpansion.ELE03S.test.ts > ELE03S expansion slot > publishes exactly the one reviewed ELE03S relation 3ms
+· ✓ scripts/analysis/validateFpCoverageExpansion.ELE03S.test.ts > ELE03S expansion slot > validates exhaustive BOE reviews, seed reconciliation and completed parity 50ms
+· ✓ scripts/data/buildSnapshots.test.ts > buildSnapshots > publishes identical bytes for equivalent source arrays in reverse order 26137ms
+· ✓ scripts/analysis/validateFpCoverageExpansion.COM01B.test.ts > COM01B expansion slot > publishes exactly the seven reviewed COM01B relations 3ms
+· ✓ scripts/analysis/validateFpCoverageExpansion.COM01B.test.ts > COM01B expansion slot > validates exhaustive TodoFP reviews, seed reconciliation, seven accepted and completed parity 52ms
+· ✓ scripts/data/buildSnapshots.test.ts > buildSnapshots > keeps the old manifest live when interrupted before the manifest commit 1787ms
+· ✓ scripts/analysis/validateFpCoverageExpansion.AGA01M.test.ts > AGA01M expansion slot > publishes exactly the five reviewed AGA01M relations 3ms
+· ✓ scripts/analysis/validateFpCoverageExpansion.AGA01M.test.ts > AGA01M expansion slot > validates exhaustive BOE reviews, seed reconciliation, four rejected and completed parity 60ms
+· ✓ scripts/analysis/rankFpCoverageExpansionCandidates.test.ts > rankFpCoverageExpansionCandidates > ranks seven primaries and at least seven reserves with the specified tuple 5ms
+· ✓ scripts/analysis/rankFpCoverageExpansionCandidates.test.ts > rankFpCoverageExpansionCandidates > uses readiness, collisions, descending signals, then strict code-point key order 2ms
+· ✓ scripts/analysis/rankFpCoverageExpansionCandidates.test.ts > rankFpCoverageExpansionCandidates > rejects duplicate modality bases, stale reviewed bases, unknown keys, hand-entered scores, and too few candidates 1ms
+· ✓ scripts/analysis/rankFpCoverageExpansionCandidates.test.ts > rankFpCoverageExpansionCandidates > rejects the distance modality when its reviewed base qualification is IFC03S 0ms
+· ✓ scripts/analysis/rankFpCoverageExpansionCandidates.test.ts > rankFpCoverageExpansionCandidates > states that primary and reserve order is research priority and output-only candidates cannot complete or publish 1ms
+· ✓ scripts/analysis/rankFpCoverageExpansionCandidates.test.ts > rankFpCoverageExpansionCandidates > serializes the JSON report with Prettier-compliant bytes 44ms
+· ✓ scripts/analysis/rankFpCoverageExpansionCandidates.test.ts > rankFpCoverageExpansionCandidates > rejects COM01M without new classification evidence and enforces family gates 1ms
+· ✓ scripts/data/buildSnapshots.test.ts > buildSnapshots > leaves the newly committed snapshot fresh when interrupted after commit 1820ms
+· ✓ scripts/data/buildSnapshots.test.ts > buildSnapshots > treats post-commit cleanup failure as non-fatal and keeps data fresh 613ms
+· ✓ scripts/analysis/validateFpCoverageExpansion.IMA03M.test.ts > IMA03M expansion slot > retains the historical deferred audit after batch 6 supersedes it 47ms
+· ✓ scripts/data/buildSnapshots.test.ts > buildSnapshots > rejects corrupt but self-consistent prior snapshots before fetching 753ms
+· ✓ scripts/analysis/validateFpCoverageExpansion.MAM01M.test.ts > MAM01M expansion reserve slot > publishes exactly the two approved MAM01M relations 3ms
+· ✓ scripts/analysis/validateFpCoverageExpansion.MAM01M.test.ts > MAM01M expansion reserve slot > validates the completed attempt with exhaustive BOE outputs and audited missing seed 45ms
+· ✓ scripts/data/buildSnapshots.test.ts > buildSnapshots > rejects a prior manifest with contradictory null-rate metadata 745ms
+· ✓ scripts/data/buildSnapshots.test.ts > buildSnapshots > rejects a current prior manifest missing its quality report 629ms
+· ✓ scripts/analysis/validateFpCoverageExpansion.ELE01M.test.ts > ELE01M expansion slot > publishes the three independently reviewed ELE01M relations 3ms
+· ✓ scripts/analysis/validateFpCoverageExpansion.ELE01M.test.ts > ELE01M expansion slot > validates the completed attempt with exhaustive BOE outputs and exact publication 47ms
+· ✓ scripts/analysis/validateFpCoverageExpansion.test.ts > validateFpCoverageExpansion > accepts a completed attempt with exact deterministic parity 13ms
+· ✓ scripts/analysis/validateFpCoverageExpansion.test.ts > validateFpCoverageExpansion > requires explicit pending-publication mode before a completed snapshot is rebuilt 4ms
+· ✓ scripts/analysis/validateFpCoverageExpansion.test.ts > validateFpCoverageExpansion > rejects an omitted output from the authoritative inventory 1ms
+· ✓ scripts/analysis/validateFpCoverageExpansion.test.ts > validateFpCoverageExpansion > allows deferred evidence to record an authoritative seed mismatch without publishing 1ms
+· ✓ scripts/analysis/validateFpCoverageExpansion.test.ts > validateFpCoverageExpansion > allows a completed attempt to audit a ranking seed absent from an exhaustive official inventory 1ms
+· ✓ scripts/analysis/validateFpCoverageExpansion.test.ts > validateFpCoverageExpansion > rejects an absent-seed audit when the seed exists in the authoritative inventory 1ms
+· ✓ scripts/analysis/validateFpCoverageExpansion.test.ts > validateFpCoverageExpansion > allows only deferred attempts to record an explicit authoritative source correction 1ms
+· ✓ scripts/analysis/validateFpCoverageExpansion.test.ts > validateFpCoverageExpansion > accepts a multi-word alias with exact output and classification evidence 2ms
+· ✓ scripts/analysis/validateFpCoverageExpansion.test.ts > validateFpCoverageExpansion > allows exhaustive official outputs beyond the ranking seed labels 1ms
+· ✓ scripts/analysis/validateFpCoverageExpansion.test.ts > validateFpCoverageExpansion > matches frozen output seeds across punctuation and official gender variants 3ms
+· ✓ scripts/analysis/validateFpCoverageExpansion.test.ts > validateFpCoverageExpansion > accepts classification evidence as relation provenance 0ms
+· ✓ scripts/analysis/validateFpCoverageExpansion.test.ts > validateFpCoverageExpansion > uses the injected matcher for accepted multi-word aliases 4ms
+· ✓ scripts/analysis/validateFpCoverageExpansion.test.ts > validateFpCoverageExpansion > rejects a matchPolicy on a multi-word alias 1ms
+· ✓ scripts/analysis/validateFpCoverageExpansion.test.ts > validateFpCoverageExpansion > applies alias policy to rejected relations as well 0ms
+· ✓ scripts/analysis/validateFpCoverageExpansion.test.ts > validateFpCoverageExpansion > requires the frozen candidate schema, exact output labels, and no passthrough fields 2ms
+· ✓ scripts/analysis/validateFpCoverageExpansion.test.ts > validateFpCoverageExpansion > requires exact relation evidence pairs and a complete manifest-addressed set 1ms
+· ✓ scripts/analysis/validateFpCoverageExpansion.test.ts > validateFpCoverageExpansion > rejects an occupation accepted in one output and rejected in another 1ms
+· ✓ scripts/analysis/validateFpCoverageExpansion.test.ts > validateFpCoverageExpansion > accepts not-started and in-progress attempts without terminal fields 0ms
+· ✓ scripts/analysis/validateFpCoverageExpansion.test.ts > validateFpCoverageExpansion > requires terminal fields for terminal states 0ms
+· ✓ scripts/analysis/validateFpCoverageExpansion.test.ts > validateFpCoverageExpansion > requires completedAt for terminal schema records 0ms
+· ✓ scripts/analysis/validateFpCoverageExpansion.test.ts > validateFpCoverageExpansion > enforces the only legal state path 1ms
+· ✓ scripts/analysis/validateFpCoverageExpansion.test.ts > validateFpCoverageExpansion > rejects missing official output 1ms
+· ✓ scripts/analysis/validateFpCoverageExpansion.test.ts > validateFpCoverageExpansion > rejects fake quote or domain 1ms
+· ✓ scripts/analysis/validateFpCoverageExpansion.test.ts > validateFpCoverageExpansion > rejects contradictory IDs 0ms
+· ✓ scripts/analysis/validateFpCoverageExpansion.test.ts > validateFpCoverageExpansion > rejects broadened alias 1ms
+· ✓ scripts/analysis/validateFpCoverageExpansion.test.ts > validateFpCoverageExpansion > rejects one-word alias without policy 0ms
+· ✓ scripts/analysis/validateFpCoverageExpansion.test.ts > validateFpCoverageExpansion > rejects stale snapshot or hash 1ms
+· ✓ scripts/analysis/validateFpCoverageExpansion.test.ts > validateFpCoverageExpansion > rejects missing snapshot provenance 1ms
+· ✓ scripts/analysis/validateFpCoverageExpansion.test.ts > validateFpCoverageExpansion > rejects incomplete timing 1ms
+· ✓ scripts/analysis/validateFpCoverageExpansion.test.ts > validateFpCoverageExpansion > rejects altered match ID 1ms
+· ✓ scripts/analysis/validateFpCoverageExpansion.test.ts > validateFpCoverageExpansion > rejects overlong modeled work 1ms
+· ✓ scripts/analysis/validateFpCoverageExpansion.test.ts > validateFpCoverageExpansion > rejects misaligned transition timestamp 1ms
+· ✓ scripts/analysis/validateFpCoverageExpansion.test.ts > validateFpCoverageExpansion > rejects missing classification evidence 1ms
+· ✓ scripts/analysis/validateFpCoverageExpansion.test.ts > validateFpCoverageExpansion > rejects fake classification authority 0ms
+· ✓ scripts/analysis/validateFpCoverageExpansion.test.ts > validateFpCoverageExpansion > rejects mismatched classification occupation 0ms
+· ✓ scripts/analysis/validateFpCoverageExpansion.test.ts > validateFpCoverageExpansion > rejects wrong relation program 0ms
+· ✓ scripts/analysis/validateFpCoverageExpansion.test.ts > validateFpCoverageExpansion > rejects unrelated accepted occupation 0ms
+· ✓ scripts/analysis/validateFpCoverageExpansion.test.ts > validateFpCoverageExpansion > rejects wrong bounded single token policy tuple 0ms
+· ✓ scripts/analysis/validateFpCoverageExpansion.test.ts > validateFpCoverageExpansion > rejects duplicate stored IDs 0ms
+· ✓ scripts/analysis/validateFpCoverageExpansion.test.ts > validateFpCoverageExpansion > rejects unsorted stored IDs 0ms
+· ✓ scripts/analysis/validateFpCoverageExpansion.test.ts > validateFpCoverageExpansion > rejects modality double counting and public leaks 1ms
+· ✓ scripts/analysis/validateFpCoverageExpansion.test.ts > validateFpCoverageExpansion > requires exact rejected public parity 0ms
+· ✓ scripts/analysis/validateFpCoverageExpansion.test.ts > validateFpCoverageExpansion > requires the full injected public relation set to equal accepted relations 1ms
+· ✓ scripts/analysis/validateFpCoverageExpansion.test.ts > validateFpCoverageExpansion > unions injected reviewed bases with the mandatory defaults 1ms
+· ✓ scripts/analysis/validateFpCoverageExpansion.test.ts > validateFpCoverageExpansion > requires exact output-to-relation disposition correspondence 1ms
+· ✓ scripts/analysis/validateFpCoverageExpansion.test.ts > validateFpCoverageExpansion > rejects unsorted recomputed delta maps instead of normalizing them 1ms
+· ✓ scripts/analysis/validateFpCoverageExpansion.test.ts > validateFpCoverageExpansion > requires the reviewed commit timestamp to match the injected git timestamp 0ms
+· ✓ scripts/analysis/validateFpCoverageExpansion.test.ts > validateFpCoverageExpansion > validates not_started attempts without invoking terminal dependencies 1ms
+· ✓ scripts/analysis/validateFpCoverageExpansion.test.ts > validateFpCoverageExpansion > validates in_progress attempts without invoking terminal dependencies 1ms
+· ✓ scripts/analysis/validateFpCoverageExpansion.test.ts > validateFpCoverageExpansion > rejects a reviewed or stale candidate through the API 1ms
+· ✓ scripts/analysis/validateFpCoverageExpansion.test.ts > validateFpCoverageExpansion > uses the exact default reviewed bases and leaves COM01M eligible 1ms
+· ✓ scripts/analysis/validateFpCoverageExpansion.test.ts > validateFpCoverageExpansion > counts terminal attempts without trusting declared counts 1ms
+· ✓ scripts/analysis/validateFpCoverageExpansion.test.ts > validateFpCoverageExpansion > requires terminal aggregate inputs and counts each state 2ms
+· ✓ scripts/analysis/validateFpCoverageExpansion.test.ts > validateFpCoverageExpansion > exports a strict aggregate schema for terminal unique canonical bases 2ms
+· ✓ scripts/analysis/validateFpCoverageExpansion.test.ts > validateFpCoverageExpansion > rejects completed attempts reviewed after the terminal transition 0ms
+· ✓ scripts/analysis/validateFpCoverageExpansion.test.ts > validateFpCoverageExpansion > seedReconciliations > accepts a completed attempt with a valid seed reconciliation 2ms
+· ✓ scripts/analysis/validateFpCoverageExpansion.test.ts > validateFpCoverageExpansion > seedReconciliations > rejects reconciliations on non-completed attempts 1ms
+· ✓ scripts/analysis/validateFpCoverageExpansion.test.ts > validateFpCoverageExpansion > seedReconciliations > rejects duplicate reconciliations for the same seed 0ms
+· ✓ scripts/analysis/validateFpCoverageExpansion.test.ts > validateFpCoverageExpansion > seedReconciliations > rejects unused reconciliations for non-candidate seeds 1ms
+· ✓ scripts/analysis/validateFpCoverageExpansion.test.ts > validateFpCoverageExpansion > seedReconciliations > rejects reconciliations missing from candidate seeds when no exact match exists 0ms
+· ✓ scripts/analysis/validateFpCoverageExpansion.test.ts > validateFpCoverageExpansion > seedReconciliations > does not require reconciliation when there is an exact inventory match 0ms
+· ✓ scripts/analysis/validateFpCoverageExpansion.test.ts > validateFpCoverageExpansion > seedReconciliations > rejects authoritative output labels not present in the inventory 1ms
+· ✓ scripts/analysis/validateFpCoverageExpansion.test.ts > validateFpCoverageExpansion > seedReconciliations > rejects source output evidence URLs outside candidate source URLs 1ms
+· ✓ scripts/analysis/validateFpCoverageExpansion.test.ts > validateFpCoverageExpansion > seedReconciliations > rejects authoritative evidence URLs not matching the inventory source 2ms
+· ✓ scripts/analysis/validateFpCoverageExpansion.test.ts > validateFpCoverageExpansion > seedReconciliations > rejects source output evidence quotes that do not match the source output label 1ms
+· ✓ scripts/analysis/validateFpCoverageExpansion.test.ts > validateFpCoverageExpansion > seedReconciliations > rejects authoritative evidence quotes that do not match the authoritative output label 0ms
+· ✓ scripts/analysis/validateFpCoverageExpansion.test.ts > validateFpCoverageExpansion > seedReconciliations > rejects short reason text 1ms
+· ✓ scripts/analysis/validateFpCoverageExpansion.test.ts > validateFpCoverageExpansion > seedReconciliations > rejects shuffled authoritative labels in the inventory 0ms
+· ✓ scripts/data/educabaseIncomeSources.test.ts > EDUCABASE_INCOME_SOURCES > allows exactly four income tables and eight direct artifacts 2ms
+· ✓ scripts/data/educabaseIncomeSources.test.ts > EDUCABASE_INCOME_SOURCES > pins every artifact to its exact approved direct-download tuple 1ms
+· ✓ scripts/data/educabaseIncomeSources.test.ts > EDUCABASE_INCOME_SOURCES > retains all eight approved full-response fixtures byte-for-byte 7ms
+· ✓ scripts/data/educabaseIncomeSources.test.ts > EDUCABASE_INCOME_SOURCES > matches strict UTF-8 decoded fixture headers without mojibake 5ms
+· ✓ scripts/data/educabaseIncomeSources.test.ts > EDUCABASE_INCOME_SOURCES > accepts non-BOM PC-Axis content while requiring a CSV UTF-8 BOM 1ms
+· ✓ scripts/data/educabaseIncomeSources.test.ts > EDUCABASE_INCOME_SOURCES > records the exact declared transport contracts 0ms
+· ✓ scripts/data/educabaseIncomeSources.test.ts > EDUCABASE_INCOME_SOURCES > writes verified fixture bytes through the injected capture boundary 10ms
+· ✓ scripts/data/educabaseIncomeSources.test.ts > EDUCABASE_INCOME_SOURCES > refuses an existing fixture directory before any request 4ms
+· ✓ scripts/data/educabaseIncomeSources.test.ts > EDUCABASE_INCOME_SOURCES > rejects a non-200 response 2ms
+· ✓ scripts/data/educabaseIncomeSources.test.ts > EDUCABASE_INCOME_SOURCES > rejects an off-host redirect 2ms
+· ✓ scripts/data/educabaseIncomeSources.test.ts > EDUCABASE_INCOME_SOURCES > rejects a redirected final path 2ms
+· ✓ scripts/data/educabaseIncomeSources.test.ts > EDUCABASE_INCOME_SOURCES > rejects a redirected final query 2ms
+· ✓ scripts/data/educabaseIncomeSources.test.ts > EDUCABASE_INCOME_SOURCES > rejects an HTML content type 2ms
+· ✓ scripts/data/educabaseIncomeSources.test.ts > EDUCABASE_INCOME_SOURCES > rejects an altered verified fixture length 3ms
+· ✓ scripts/data/educabaseIncomeSources.test.ts > EDUCABASE_INCOME_SOURCES > rejects an altered verified fixture hash 3ms
+· ✓ scripts/data/educabaseIncomeSources.test.ts > EDUCABASE_INCOME_SOURCES > rejects an altered verified fixture bom 2ms
+· ✓ src/domain/actionEngine.test.ts > closed trusted action contract > produces and validates all seven action members from exact triggers 15ms
+· ✓ src/domain/actionEngine.test.ts > closed trusted action contract > parses the one static DGT procedure with its deterministic full-payload ID 1ms
+· ✓ src/domain/actionEngine.test.ts > closed trusted action contract > rejects a procedure action with forged id 1ms
+· ✓ src/domain/actionEngine.test.ts > closed trusted action contract > rejects a procedure action with forged requirementCategory 1ms
+· ✓ src/domain/actionEngine.test.ts > closed trusted action contract > rejects a procedure action with forged normalizedValue 1ms
+· ✓ src/domain/actionEngine.test.ts > closed trusted action contract > rejects a procedure action with forged href 1ms
+· ✓ src/domain/actionEngine.test.ts > closed trusted action contract > rejects a procedure action with forged sourceNote 1ms
+· ✓ src/domain/actionEngine.test.ts > closed trusted action contract > rejects invalid target pairings and extra target fields 0ms
+· ✓ src/domain/actionEngine.test.ts > closed trusted action contract > rejects a forged program key on an otherwise valid training action 0ms
+· ✓ src/domain/actionEngine.test.ts > closed trusted action contract > separates a valid payload from an engine-issued action 1ms
+· ✓ src/domain/actionEngine.test.ts > closed trusted action contract > rejects exact DGT reconstructions and cross-offer requoting as unissued 1ms
+· ✓ src/domain/actionEngine.test.ts > closed trusted action contract > deep-freezes issued actions and all nested evidence 1ms
+· ✓ src/domain/actionEngine.test.ts > deriveActions > always opens the exact original offer 0ms
+· ✓ src/domain/actionEngine.test.ts > deriveActions > verifies an empty publication even when the occupational fit is exact 0ms
+· ✓ src/domain/actionEngine.test.ts > deriveActions > verifies incomplete and all-unclassified publication evidence 0ms
+· ✓ src/domain/actionEngine.test.ts > deriveActions > resolves a DAW qualification only through approved reviewed links 0ms
+· ✓ src/domain/actionEngine.test.ts > deriveActions > does not copy a wrong input program for unlinked qualification Grado en Derecho 0ms
+· ✓ src/domain/actionEngine.test.ts > deriveActions > does not copy a wrong input program for unlinked qualification Grado en Enfermería 0ms
+· ✓ src/domain/actionEngine.test.ts > deriveActions > does not copy a wrong input program for unlinked qualification Técnico en Cuidados Auxiliares de Enfermería 0ms
+· ✓ src/domain/actionEngine.test.ts > deriveActions > uses the static exact DGT route for an explicit missing driving B requirement 0ms
+· ✓ src/domain/actionEngine.test.ts > deriveActions > falls back when no exact static procedure exists 0ms
+· ✓ src/domain/actionEngine.test.ts > deriveActions > ignores a caller-injected procedure catalog 0ms
+· ✓ src/domain/actionEngine.test.ts > deriveActions > routes a declared experience gap only to offers where it is not published 0ms
+· ✓ src/domain/actionEngine.test.ts > deriveActions > routes a declared language gap only to offers where it is not published 0ms
+· ✓ src/domain/actionEngine.test.ts > deriveActions > routes a declared schedule_availability gap only to offers where it is not published 0ms
+· ✓ src/domain/actionEngine.test.ts > deriveActions > routes a declared mobility_or_work_mode gap only to offers where it is not published 0ms
+· ✓ src/domain/actionEngine.test.ts > deriveActions > ignores stale answer IDs 0ms
+· ✓ src/domain/actionEngine.test.ts > deriveActions > suppresses location adjustment for explicit remote evidence 0ms
+· ✓ src/domain/actionEngine.test.ts > deriveActions > suppresses location adjustment for explicit hybrid evidence 0ms
+· ✓ src/domain/actionEngine.test.ts > deriveActions > adjusts location only from exact on-site evidence 0ms
+· ✓ src/domain/actionEngine.test.ts > deriveActions > deduplicates and orders actions deterministically 0ms
+· ✓ scripts/analysis/validateFpCoverageExpansion.TMV02M.test.ts > TMV02M expansion slot > proves batch 6 supersedes the historical deferred decision 3ms
+· ✓ scripts/analysis/validateFpCoverageExpansion.TMV02M.test.ts > TMV02M expansion slot > validates the deferred attempt with exhaustive BOE outputs and no publication 42ms
+· ✓ scripts/data/buildSnapshots.test.ts > buildSnapshots > accepts the exact fixed-point immutable manifest with pre-hardening payloads 4962ms
+· ✓ scripts/analysis/validateFpCoverageExpansion.ADG01M.test.ts > ADG01M expansion slot > proves batch 6 supersedes the historical deferred decision 3ms
+· ✓ scripts/analysis/validateFpCoverageExpansion.ADG01M.test.ts > ADG01M expansion slot > validates the deferred attempt with exhaustive BOE outputs and no publication 50ms
+· ✓ scripts/analysis/validateFpMarginalAliasReview.test.ts > FP marginal alias review > validates a unique terminal decision for every reviewed alias 7ms
+· ✓ scripts/analysis/validateFpMarginalAliasReview.test.ts > FP marginal alias review > publishes exactly the accepted decisions and no deferred or rejected alias 2ms
+· ✓ scripts/analysis/validateFpMarginalAliasReview.test.ts > FP marginal alias review > pins every marginal offer to the reviewed snapshot and a bounded title phrase 8ms
+· ✓ scripts/analysis/validateFpMarginalAliasReview.test.ts > FP marginal alias review > defers unaudited one-token aliases and permits only terminally audited exceptions 21ms
+· ✓ src/data/generatedDataClient.test.ts > generated data client > treats outcome indicators as optional but validates an advertised resource 9ms
+· ✓ src/data/generatedDataClient.test.ts > generated data client > resolves logical generated asset paths below the configured Vite base 0ms
+· ✓ src/data/generatedDataClient.test.ts > generated data client > loads manifest-addressed published requirements without changing offers 3ms
+· ✓ src/data/generatedDataClient.test.ts > generated data client > treats the additive requirements resource as absent for retained manifests 1ms
+· ✓ src/data/generatedDataClient.test.ts > generated data client > rejects a format-valid forged requirement ID through the generated data client 1ms
+· ✓ src/data/generatedDataClient.test.ts > generated data client > does not fetch a sidecar for a current immutable manifest that predates it 0ms
+· ✓ src/data/generatedDataClient.test.ts > generated data client > accepts an explicit stale manifest 1ms
+· ✓ src/data/generatedDataClient.test.ts > generated data client > migrates a valid pre-versioned manifest to known direct resource paths 1ms
+· ✓ src/data/generatedDataClient.test.ts > generated data client > loads retained flat resources after migrating a legacy manifest 4ms
+· ✓ src/data/generatedDataClient.test.ts > generated data client > tags immutable resources with the current contract discriminator 1ms
+· ✓ src/data/generatedDataClient.test.ts > generated data client > loads retained pre-hardening payloads behind a stale immutable manifest 1ms
+· ✓ src/data/generatedDataClient.test.ts > generated data client > throws the missing code for an absent generated asset 0ms
+· ✓ src/data/generatedDataClient.test.ts > generated data client > rejects non-relative or non-generated asset path https://example.test/data/v1/programs.json before fetch 0ms
+· ✓ src/data/generatedDataClient.test.ts > generated data client > rejects non-relative or non-generated asset path //example.test/data/v1/programs.json before fetch 1ms
+· ✓ src/data/generatedDataClient.test.ts > generated data client > rejects non-relative or non-generated asset path data:text/plain,not-json before fetch 0ms
+· ✓ src/data/generatedDataClient.test.ts > generated data client > rejects non-relative or non-generated asset path /outside/generated.json before fetch 0ms
+· ✓ src/data/generatedDataClient.test.ts > generated data client > rejects non-relative or non-generated asset path data/v1/programs.json before fetch 0ms
+· ✓ src/data/generatedDataClient.test.ts > generated data client > rejects non-relative or non-generated asset path /data/v1/../programs.json before fetch 0ms
+· ✓ src/data/generatedDataClient.test.ts > generated data client > rejects non-relative or non-generated asset path /data/v1/%2e%2e/programs.json before fetch 0ms
+· ✓ src/data/generatedDataClient.test.ts > generated data client > rejects non-relative or non-generated asset path /data/v1/snapshots/build-1/%2E%2E/programs.json before fetch 0ms
+· ✓ src/data/generatedDataClient.test.ts > generated data client > rejects non-relative or non-generated asset path /data/v1/snapshots/build-1%2f..%2fprograms.json before fetch 0ms
+· ✓ src/data/generatedDataClient.test.ts > generated data client > rejects non-relative or non-generated asset path /data/v1/snapshots/build-1%5c..%5cprograms.json before fetch 0ms
+· ✓ src/data/generatedDataClient.test.ts > generated data client > rejects non-relative or non-generated asset path /data/v1/programs.json?cache=1 before fetch 0ms
+· ✓ src/data/generatedDataClient.test.ts > generated data client > rejects non-relative or non-generated asset path /data/v1/programs.json#fragment before fetch 0ms
+· ✓ src/data/generatedDataClient.test.ts > generated data client > rejects non-relative or non-generated asset path /data/v1/unknown.json before fetch 0ms
+· ✓ src/data/generatedDataClient.test.ts > generated data client > accepts a manifest-addressed immutable resource path 0ms
+· ✓ src/data/generatedDataClient.test.ts > generated data client > accepts a future manifest-addressed kebab-case resource path 0ms
+· ✓ src/data/generatedDataClient.test.ts > generated data client > throws the network code for failed requests and HTTP errors 1ms
+· ✓ src/data/generatedDataClient.test.ts > generated data client > throws the schema code for malformed JSON and invalid contracts 1ms
+· ✓ src/domain/offerMatching.test.ts > reviewed program qualification links > links reviewed live qualifications to their programs with primary evidence 2ms
+· ✓ src/domain/offerMatching.test.ts > reviewed program qualification links > rejects duplicate program and qualification identities 1ms
+· ✓ src/domain/offerMatching.test.ts > reviewed program qualification links > binds the program qualification identity to the complete review payload 0ms
+· ✓ src/domain/offerMatching.test.ts > matchOffersForProgram > binds alias evidence identity to matchPolicy 0ms
+· ✓ src/domain/offerMatching.test.ts > matchOffersForProgram > records the full approved link and alias payload with recomputed identities 6ms
+· ✓ src/domain/offerMatching.test.ts > matchOffersForProgram > matches a reviewed qualification despite the real source program title 2ms
+· ✓ src/domain/offerMatching.test.ts > matchOffersForProgram > does not match a qualification when its program link is missing 0ms
+· ✓ src/domain/offerMatching.test.ts > matchOffersForProgram > does not match a qualification when its program link is draft 1ms
+· ✓ src/domain/offerMatching.test.ts > matchOffersForProgram > does not match a qualification when its program link is wrong qualification 1ms
+· ✓ src/domain/offerMatching.test.ts > matchOffersForProgram > requires bounded phrases and deterministically prefers exact then longest alias 2ms
+· ✓ src/domain/offerMatching.test.ts > matchOffersForProgram > matches approved_single_token aliases only on exact whole tokens and keeps equal-title distinct IDs 1ms
+· ✓ src/domain/offerMatching.test.ts > matchOffersForProgram > does not match the unapproved single-token tuple cocinero / occupation:cno11:5110 / HOT01M 0ms
+· ✓ src/domain/offerMatching.test.ts > matchOffersForProgram > does not match the unapproved single-token tuple cocineros / occupation:cno11:5110 / HOT01M 0ms
+· ✓ src/domain/offerMatching.test.ts > matchOffersForProgram > does not match the unapproved single-token tuple albañil / occupation:cno11:7121 / EOC01M 0ms
+· ✓ src/domain/offerMatching.test.ts > matchOffersForProgram > does not match the unapproved single-token tuple albañiles / occupation:cno11:7121 / EOC01M 0ms
+· ✓ src/domain/offerMatching.test.ts > matchOffersForProgram > does not match the unapproved single-token tuple encofradores / occupation:cno11:7121 / EOC01M 0ms
+· ✓ src/domain/offerMatching.test.ts > matchOffersForProgram > does not match the unapproved single-token tuple encofradores / occupation:cno11:7111 / HOT01M 0ms
+· ✓ src/domain/offerMatching.test.ts > matchOffersForProgram > does not match the unapproved single-token tuple técnico / occupation:cno11:7111 / EOC01M 0ms
+· ✓ src/domain/offerMatching.test.ts > matchOffersForProgram > rejects exact and phrase rule masquerading and title evidence tampering 2ms
+· ✓ src/domain/offerMatching.test.ts > matchOffersForProgram > requires and preserves an explicit strict in-memory human confirmation 1ms
+· ✓ src/domain/offerMatching.test.ts > matchOffersForProgram > excludes draft Gestión Administrativa mappings 0ms
+· ✓ src/domain/offerMatching.test.ts > matchOffersForProgram > rejects duplicate semantic links and conflicting overrides 1ms
+· ✓ src/domain/offerMatching.test.ts > matchOffersForProgram > is byte-identical across complete input permutations 2ms
+· ✓ src/domain/offerMatching.test.ts > matchOffersForProgram > rejects forged link, alias, qualification and confirmation audit atoms 5ms
+· ✓ src/domain/offerMatching.test.ts > matchOffersForProgram > rejects an unreviewed qualification catalog and missing live program keys 1ms
+· ✓ scripts/analysis/renderFpOneWordPublicationReview.test.ts > renderFpOneWordPublicationReview > renders the exact terminal 68-offer audit from validated JSON 19ms
+· ✓ scripts/analysis/renderFpOneWordPublicationReview.test.ts > renderFpOneWordPublicationReview > rejects every stale byte variation 1ms
+· ✓ scripts/analysis/renderFpOneWordPublicationReview.test.ts > renderFpOneWordPublicationReview > derives the total and publication conclusion from a terminal decision fixture 1ms
+· ✓ scripts/data/buildSnapshots.test.ts > buildSnapshots > marks a valid legacy flat snapshot stale without changing resource bytes 5349ms
+· ✓ scripts/analysis/renderFpOfficialAliasPassReport.test.ts > renderFpOfficialAliasPassReport > renders the exact controlled result 17ms
+· ✓ scripts/analysis/renderFpOfficialAliasPassReport.test.ts > renderFpOfficialAliasPassReport > does not claim no increase for a positive schema-valid result 1ms
+· ✓ scripts/data/buildSnapshots.test.ts > buildSnapshots > recovers a legacy interrupted backup before attempting refresh 1189ms
+· ✓ scripts/data/buildSnapshots.test.ts > buildSnapshots > cleans abandoned staging state after the next successful commit 718ms
+· ✓ src/domain/session.test.tsx > useDecisionSession > stores exact answers and clears them 10ms
+· ✓ src/domain/session.test.tsx > useDecisionSession > accepts only the actual engine-issued action, deduplicates it and removes it 2ms
+· ✓ src/domain/session.test.tsx > useDecisionSession > rejects clones and reconstructed self-consistent public payloads 1ms
+· ✓ src/domain/session.test.tsx > useDecisionSession > rejects mutation before first insert and safely reuses the intact issued action 1ms
+· ✓ src/domain/session.test.tsx > useDecisionSession > preserves concurrent distinct engine-issued checks and rejects duplicates 1ms
+· ✓ src/domain/session.test.tsx > useDecisionSession > never writes storage, network, beacon or history state 2ms
+· ✓ src/domain/session.test.tsx > useDecisionSession > starts empty after remount and clearSession resets the checklist 2ms
+· ✓ scripts/data/normalizeOffers.test.ts > normalizeOffers > accepts the configured employment-offers endpoint record shape 1ms
+· ✓ scripts/data/normalizeOffers.test.ts > normalizeOffers > sanitizes descriptions into the public offer contract without raw HTML 5ms
+· ✓ scripts/data/normalizeOffers.test.ts > normalizeOffers > keeps the strict JobOffer contract unchanged and returns requirements as a sidecar 6ms
+· ✓ scripts/data/normalizeOffers.test.ts > normalizeOffers > keeps the record update timestamp separate from dataset snapshot provenance 0ms
+· ✓ scripts/data/normalizeOffers.test.ts > normalizeOffers > normalizes missing locations to null instead of empty strings 0ms
+· ✓ scripts/data/normalizeOffers.test.ts > normalizeOffers > orders offers by Spanish title and stable official identifier 1ms
+· ✓ scripts/data/normalizeOffers.test.ts > normalizeOffers > produces canonical order when titles differ only by accents or case, with stable id tie-break 1ms
+· ✓ scripts/data/normalizeOffers.test.ts > normalizeOffers > rejects a blank official identifier 0ms
+· ✓ scripts/data/normalizeOffers.test.ts > normalizeOffers > rejects impossible publication date 2026-02-31 0ms
+· ✓ scripts/data/normalizeOffers.test.ts > normalizeOffers > rejects impossible publication date 2026-02-31T10:00:00.000Z 0ms
+· ✓ scripts/data/normalizeOffers.test.ts > normalizeOffers > rejects an impossible metadata update date 0ms
+· ✓ scripts/data/normalizeOffers.test.ts > normalizeOffers > returns deterministic normalized data for equivalent input order 1ms
+· ✓ scripts/data/normalizeOffers.test.ts > normalizeOffers > rejects duplicate official identifiers instead of hiding collisions 0ms
+· ✓ scripts/data/extractTodoFpProfessionalProfiles.test.ts > TodoFP professional profile extraction > decodes literal source text without carrying markup 4ms
+· ✓ scripts/data/extractTodoFpProfessionalProfiles.test.ts > TodoFP professional profile extraction > normalizes official prefixes and delivery qualifiers 1ms
+· ✓ scripts/data/extractTodoFpProfessionalProfiles.test.ts > TodoFP professional profile extraction > discovers only internal TodoFP family and program links 1ms
+· ✓ scripts/data/extractTodoFpProfessionalProfiles.test.ts > TodoFP professional profile extraction > extracts only literal list items from the professional section 1ms
+· ✓ scripts/data/extractTodoFpProfessionalProfiles.test.ts > TodoFP professional profile extraction > does not treat later study options as professional outputs 1ms
+· ✓ scripts/data/extractTodoFpProfessionalProfiles.test.ts > TodoFP professional profile extraction > returns no outputs when TodoFP does not publish Trabajar como 0ms
+· ✓ scripts/data/extractTodoFpProfessionalProfiles.test.ts > TodoFP professional profile extraction > accepts the literal TodoFP heading Trabajar 1ms
+· ✓ scripts/data/extractTodoFpProfessionalProfiles.test.ts > TodoFP professional profile extraction > reuses one official profile for every matching delivery mode 9ms
+· ✓ scripts/data/extractTodoFpProfessionalProfiles.test.ts > TodoFP professional profile extraction > supports the official catalog's uppercase distance suffix 0ms
+· ✓ scripts/data/extractTodoFpProfessionalProfiles.test.ts > TodoFP professional profile extraction > reports unmatched pages and programs without fabricating a relation 0ms
+· ✓ scripts/data/buildSnapshots.test.ts > buildSnapshots > retains a completed pilot's referenced snapshot beyond ordinary history 2940ms
+· ✓ scripts/analysis/validateFpCoverageExpansion.FME01M.test.ts > FME01M expansion slot > publishes exactly the three approved FME01M relations 3ms
+· ✓ scripts/analysis/validateFpCoverageExpansion.FME01M.test.ts > FME01M expansion slot > validates completed state with exhaustive BOE reviews and audited missing seed 3ms
+· ✓ scripts/analysis/validateFpCoverageExpansion.FME01M.test.ts > FME01M expansion slot > accepts completed FME01M against the rebuilt public snapshot 8ms
+· ✓ src/domain/evidence.test.ts > deriveEvidenceState > creates a gap only from a real published requirement answered lacks 10ms
+· ✓ src/domain/evidence.test.ts > deriveEvidenceState > ignores stale answer IDs and never turns absence into a gap 3ms
+· ✓ src/domain/evidence.test.ts > deriveEvidenceState > keeps has and unsure neutral while exact approved evidence remains explicit 2ms
+· ✓ src/domain/evidence.test.ts > deriveEvidenceState > exposes a closed answer contract 1ms
+· ✓ src/domain/evidence.test.ts > orderOfferMatches > orders by evidence group, publication date descending and stable offer ID 4ms
+· ✓ src/domain/evidence.test.ts > orderOfferMatches > rejects duplicate offer matches before sorting 2ms
+· ✓ scripts/data/fetchOfficialBinary.test.ts > fetchOfficialBinary > returns raw bytes and auditable provenance for an allowlisted response 6ms
+· ✓ scripts/data/fetchOfficialBinary.test.ts > fetchOfficialBinary > rejects non-HTTPS, wrong final URL, empty and HTML responses 2ms
+· ✓ scripts/data/fetchOfficialBinary.test.ts > fetchOfficialBinary > bounds streaming bodies, retries transient failures, and fails 404 immediately 2ms
+· ✓ scripts/data/fetchOfficialBinary.test.ts > fetchOfficialBinary > retries genuine network failures up to the bounded exhaustion limit 1ms
+· ✓ scripts/data/fetchOfficialBinary.test.ts > fetchOfficialBinary > aborts each stalled attempt after ten seconds without wall-clock waiting 2ms
+· ✓ data/schemas/generated.test.ts > generated data contracts > accepts only the complete allowlisted EDUCAbase provenance on outcome indicators 6ms
+· ✓ data/schemas/generated.test.ts > generated data contracts > accepts a normalized training offering and rejects an empty program key 1ms
+· ✓ data/schemas/generated.test.ts > generated data contracts > requires normalized center ownership in canonical center resources 1ms
+· ✓ data/schemas/generated.test.ts > generated data contracts > accepts snapshot provenance and rejects invalid IDs, URLs, and dates 1ms
+· ✓ data/schemas/generated.test.ts > generated data contracts > accepts a sanitized offer and rejects raw HTML 3ms
+· ✓ data/schemas/generated.test.ts > generated data contracts > associates a source snapshot with every generated resource family 1ms
+· ✓ data/schemas/generated.test.ts > generated data contracts > keeps the current schema immutable while explicitly migrating legacy manifests 1ms
+· ✓ data/schemas/generated.test.ts > generated data contracts > accepts additive future resource snapshots while retaining all foundation resources 1ms
+· ✓ data/schemas/generated.test.ts > generated data contracts > rejects a hybrid legacy manifest with nested resourcePath /data/v1/snapshots/build-1/programs.json 1ms
+· ✓ data/schemas/generated.test.ts > generated data contracts > rejects a hybrid legacy manifest with nested resourcePath /data/v1/snapshots/%2e%2e/programs.json 0ms
+· ✓ data/schemas/generated.test.ts > generated data contracts > rejects a hybrid legacy manifest with nested resourcePath /data/v1/programs.json 0ms
+· ✓ scripts/data/buildSnapshots.test.ts > buildSnapshots > retains the FP official-alias baseline beyond ordinary history 3827ms
+· ✓ scripts/data/extractBoeCnoOccupations.test.ts > BOE CNO-11 occupation extraction > keeps only four-digit primary groups and strips presentation punctuation 9ms
+· ✓ scripts/data/extractBoeCnoOccupations.test.ts > BOE CNO-11 occupation extraction > preserves reviewed everyday confirmation labels without hiding official groups 1ms
+· ✓ scripts/analysis/fpOfficialAliasPass.SSC01M.test.ts > SSC01M official alias audit > keeps SSC01M aliases inside accepted disability/home-care boundaries 13ms
+· ✓ scripts/data/normalizeTraining.test.ts > normalizeTraining > accepts the configured FP endpoint record shape 1ms
+· ✓ scripts/data/normalizeTraining.test.ts > normalizeTraining > deduplicates programs and centers while retaining each offering 3ms
+· ✓ scripts/data/normalizeTraining.test.ts > normalizeTraining > uses official lookup values and sorts Spanish labels with stable identifiers 1ms
+· ✓ scripts/data/normalizeTraining.test.ts > normalizeTraining > accepts the live Curso Especialización level label 0ms
+· ✓ scripts/data/normalizeTraining.test.ts > normalizeTraining > normalizes recoverable websites and drops malformed optional URLs 0ms
+· ✓ scripts/data/normalizeTraining.test.ts > normalizeTraining > rejects blank official training and center identifiers 1ms
+· ✓ scripts/data/normalizeTraining.test.ts > normalizeTraining > returns the same normalized values for equivalent input order 1ms
+· ✓ scripts/data/normalizeTraining.test.ts > normalizeTraining > resolves duplicate stable offering identities independently of input order 1ms
+· ✓ scripts/data/normalizeTraining.test.ts > normalizeTraining > retains official rows that differ by teaching type in the stable identity 1ms
+· ✓ scripts/data/normalizeTraining.test.ts > normalizeTraining > reconciles canonical program metadata by normalized majority and reports material conflicts 1ms
+· ✓ scripts/data/normalizeTraining.test.ts > normalizeTraining > treats phone-number spacing as equivalent canonical evidence 0ms
+· ✓ scripts/data/buildSnapshots.test.ts > buildSnapshots > retains the FP one-word publication review snapshot beyond ordinary history 3695ms
+· ✓ scripts/analysis/fpOfficialAliasPass.HOT01M.test.ts > HOT01M official alias audit > records every literal CNO 5110 label/example with a bounded HOT01M decision 14ms
+· ✓ scripts/release/validateContestEvidenceManifest.test.ts > contest evidence manifest validator > accepts the strict route, viewport, claim, and output contract 2ms
+· ✓ scripts/release/validateContestEvidenceManifest.test.ts > contest evidence manifest validator > rejects unknown fields, duplicate evidence IDs, and duplicate outputs 1ms
+· ✓ scripts/release/validateContestEvidenceManifest.test.ts > contest evidence manifest validator > rejects non-final viewports, unsafe outputs, and unknown claims 0ms
+· ✓ scripts/release/validateContestEvidenceManifest.test.ts > contest evidence manifest validator > rejects an existing frozen output before a freeze record exists 4ms
+· ✓ scripts/release/validateContestEvidenceManifest.test.ts > contest evidence manifest validator > renders a deterministic human checklist from the validated entries 1ms
+· ✓ scripts/release/validateContestEvidenceManifest.test.ts > contest evidence manifest validator > accepts final capture provenance and verifies the PNG hash 4ms
+· ✓ scripts/release/validateContestEvidenceManifest.test.ts > contest evidence manifest validator > rejects missing provenance fields and stale image hashes 0ms
+· ✓ scripts/release/deployPagesWorkflow.test.ts > GitHub Pages deployment workflow > requests first-run Pages enablement before deployment 3ms
+· ✓ scripts/release/deployPagesWorkflow.test.ts > GitHub Pages deployment workflow > pins every action to an exact reviewed commit 1ms
+· ✓ scripts/release/deployPagesWorkflow.test.ts > GitHub Pages deployment workflow > checks out complete history and gives the shared runner a unit-test margin 1ms
+· ✓ scripts/release/deployPagesWorkflow.test.ts > GitHub Pages deployment workflow > installs the pinned notebook runtime before the full unit suite 1ms
+· ✓ scripts/release/deployPagesWorkflow.test.ts > GitHub Pages deployment workflow > grants each job only its required permissions 1ms
+· ✓ scripts/release/deployPagesWorkflow.test.ts > GitHub Pages deployment workflow > verifies Caddy headers against the running release container 1ms
+· ✓ scripts/release/deployPagesWorkflow.test.ts > GitHub Pages deployment workflow > defines the contest:submission:check package script 1ms
+· ✓ scripts/release/deployPagesWorkflow.test.ts > GitHub Pages deployment workflow > runs submission and format gates between npm ci and build steps 1ms
+· ✓ data/schemas/fpCoverageResearchOutcomes.test.ts > fp-coverage-research-outcomes.json > parses against the container schema with strict unknown rejection 4ms
+· ✓ data/schemas/fpCoverageResearchOutcomes.test.ts > fp-coverage-research-outcomes.json > contains exactly the fifteen expected baseProgramKey values 1ms
+· ✓ data/schemas/fpCoverageResearchOutcomes.test.ts > fp-coverage-research-outcomes.json > assigns three outcomes to batch 2 (2026-08-13) and twelve to batch 5 (2026-08-14) 0ms
+· ✓ data/schemas/fpCoverageResearchOutcomes.test.ts > fp-coverage-research-outcomes.json > uses the approved occupations catalog SHA-256 for every entry 0ms
+· ✓ data/schemas/fpCoverageResearchOutcomes.test.ts > fp-coverage-research-outcomes.json > rejects duplicate baseProgramKey values 0ms
+· ✓ data/schemas/fpCoverageResearchOutcomes.test.ts > fp-coverage-research-outcomes.json > all sourcePath, proposalPath, and frontierReviewPath files exist on disk 3ms
+· ✓ data/schemas/fpCoverageResearchOutcomes.test.ts > fp-coverage-research-outcomes.json > every entry has status reviewed-no-publishable-match 0ms
+· ✓ data/schemas/fpCoverageResearchOutcomes.test.ts > fp-coverage-research-outcomes.json > no note claims absence of professional outputs or salidas 1ms
+· ✓ data/schemas/fpCoverageResearchOutcomes.test.ts > fp-coverage-research-outcomes.json > old curated path data/curated/fp-coverage-research-outcomes.json does not exist 0ms
+· ✓ scripts/data/buildSnapshots.test.ts > buildSnapshots > retains the FP marginal-alias review snapshot beyond ordinary history 3583ms
+· ✓ scripts/data/qualityGates.test.ts > runQualityGates > rejects a candidate that unexpectedly loses most records 2ms
+· ✓ scripts/data/qualityGates.test.ts > runQualityGates > rejects duplicate stable identifiers in every resource family 1ms
+· ✓ scripts/data/qualityGates.test.ts > runQualityGates > rejects offerings with broken program or center references 0ms
+· ✓ scripts/data/qualityGates.test.ts > runQualityGates > rejects every duplicated offering attribute that differs from its canonical resource 2ms
+· ✓ scripts/data/qualityGates.test.ts > runQualityGates > rejects an offering ID that does not encode all official differentiators 0ms
+· ✓ scripts/data/qualityGates.test.ts > runQualityGates > publishes deterministic reconciliation anomalies in the quality report 4ms
+· ✓ scripts/data/qualityGates.test.ts > runQualityGates > rejects blank required labels and invalid URLs 0ms
+· ✓ scripts/data/qualityGates.test.ts > runQualityGates > reports documented optional-field null rates without rejecting them 0ms
+· ✓ scripts/release/verifyVersionMetadata.test.ts > verifyCaddyContainer (Metadata) > passes on match 4ms
+· ✓ scripts/release/verifyVersionMetadata.test.ts > verifyCaddyContainer (Metadata) > fails on incorrect schema 1ms
+· ✓ scripts/release/verifyVersionMetadata.test.ts > verifyCaddyContainer (Metadata) > fails on malformed SHA remote 0ms
+· ✓ scripts/release/verifyVersionMetadata.test.ts > verifyCaddyContainer (Metadata) > fails on mismatch 0ms
+· ✓ scripts/analysis/buildFpCoverageResearchQueue.test.ts > FP coverage research queue > collapses a verified distance modality but not an unrelated D key 3ms
+· ✓ scripts/analysis/buildFpCoverageResearchQueue.test.ts > FP coverage research queue > excludes a whole modality group when one modality is reviewed 3ms
+· ✓ scripts/analysis/buildFpCoverageResearchQueue.test.ts > FP coverage research queue > orders deployment signals deterministically and marks drafts 2ms
+· ✓ scripts/analysis/buildFpCoverageResearchQueue.test.ts > FP coverage research queue > excludes a completed-no-match base when the catalog hash matches 0ms
+· ✓ scripts/analysis/buildFpCoverageResearchQueue.test.ts > FP coverage research queue > keeps a base pending when the catalog hash is stale 0ms
+· ✓ scripts/analysis/buildFpCoverageResearchQueue.test.ts > FP coverage research queue > excludes base and distance modalities together when hash matches 0ms
+· ✓ scripts/analysis/buildFpCoverageResearchQueue.test.ts > FP coverage research queue > does not inflate reviewedBaseCount when excluding completed-no-match 0ms
+· ✓ scripts/analysis/buildFpCoverageResearchQueue.test.ts > FP coverage research queue > preserves deterministic ranking after excluding completed-no-match bases 0ms
+· ✓ scripts/release/verifyCaddyContainer.test.ts > verifyCaddyContainer > checks Caddy headers, SPA deep links, and manifest-addressed evidence 5ms
+· ✓ scripts/release/verifyCaddyContainer.test.ts > verifyCaddyContainer > rejects a release response without the Caddy CSP 1ms
+· ✓ scripts/release/verifyCaddyContainer.test.ts > verifyCaddyContainer > rejects invalid container URL file:///srv 0ms
+· ✓ scripts/release/verifyCaddyContainer.test.ts > verifyCaddyContainer > rejects invalid container URL //example.com 0ms
+· ✓ scripts/release/verifyCaddyContainer.test.ts > verifyCaddyContainer > rejects invalid container URL http://user@example.com 0ms
+· ✓ scripts/data/buildSnapshots.test.ts > buildSnapshots > retains the FP specific-evidence review snapshot beyond ordinary history 3660ms
+· ✓ scripts/data/fetchAllRecords.test.ts > fetchAllRecords > fetches pages until total_count is reached 4ms
+· ✓ scripts/data/fetchAllRecords.test.ts > fetchAllRecords > rejects a repeated upstream page before it can loop forever 1ms
+· ✓ scripts/data/fetchAllRecords.test.ts > fetchAllRecords > rejects a repeated page even when the upstream record order changes 0ms
+· ✓ scripts/data/fetchAllRecords.test.ts > fetchAllRecords > rejects records that do not match the supplied schema 1ms
+· ✓ scripts/data/fetchAllRecords.test.ts > fetchJson > retries a 429 response with the bounded backoff schedule 1ms
+· ✓ scripts/data/fetchAllRecords.test.ts > fetchJson > does not retry non-rate-limit client responses 0ms
+· ✓ data/schemas/outcomes.test.ts > outcome indicator schemas > accepts the three exact record kinds without unknown fields 4ms
+· ✓ data/schemas/outcomes.test.ts > outcome indicator schemas > rejects unknown and forbidden statistical semantics 1ms
+· ✓ data/schemas/outcomes.test.ts > outcome indicator schemas > keeps availability, source scope, group identity, and provisional state coherent 1ms
+· ✓ data/schemas/outcomes.test.ts > outcome indicator schemas > accepts only the twelve approved consecutive cohort labels 0ms
+· ✓ data/schemas/outcomes.test.ts > outcome indicator schemas > accepts only a region-level reference without a cycle group 0ms
+·stdout | scripts/release/writeVersionMetadata.test.ts > writeVersionMetadata > should create version.json with correct content
+Version metadata written to C:\Users\rome_\AppData\Local\Temp\test-dist-1786900412101\version.json
+
+stdout | scripts/release/writeVersionMetadata.test.ts > writeVersionMetadata > should create version.json with correct content
+Version metadata written to C:\Users\rome_\AppData\Local\Temp\test-dist-1786900412101\version.json
+
+ ✓ scripts/release/writeVersionMetadata.test.ts > writeVersionMetadata > should create version.json with correct content 4ms
+· ✓ scripts/release/writeVersionMetadata.test.ts > writeVersionMetadata > should throw error if commit is invalid 1ms
+· ✓ scripts/release/writeVersionMetadata.test.ts > writeVersionMetadata > should throw error if dist does not exist 0ms
+· ✓ scripts/data/buildSnapshots.test.ts > buildSnapshots > retains the snapshot referenced by fp_offer_alias_candidates.json 3626ms
+· ✓ scripts/data/pathSafety.test.ts > Windows snapshot root aliases > rejects an uppercase alias of the home directory without writing 3ms
+· ✓ scripts/data/pathSafety.test.ts > Windows snapshot root aliases > rejects extended-device aliases of home and the drive root 1ms
+· ✓ scripts/release/ciTestTimeouts.test.ts > keeps build-snapshot tests strict locally and resilient only on CI 3ms
+· ✓ scripts/release/ciTestTimeouts.test.ts > keeps heavy analysis strict locally and resilient on CI: scripts/analysis/buildFpMentionOfferQueue.test.ts 1ms
+· ✓ scripts/release/ciTestTimeouts.test.ts > keeps heavy analysis strict locally and resilient on CI: scripts/analysis/measureFpMarginalAliasImpact.test.ts 0ms
+· ✓ data/schemas/professionalProfiles.test.ts > professional profile publication gate > accepts literal official profiles covering every program 2ms
+· ✓ data/schemas/professionalProfiles.test.ts > professional profile publication gate > rejects incomplete current-program coverage 0ms
+· ✓ data/schemas/professionalProfiles.test.ts > professional profile publication gate > rejects invented labels and non-official hosts 0ms
+· ✓ src/domain/occupation.test.ts > controlled occupation search corpus > searches official labels, reviewed aliases, and everyday confirmation labels 5ms
+· ✓ scripts/data/buildSnapshots.test.ts > buildSnapshots > retains the snapshot referenced by fp_mention_offer_queue.json 3526ms
+· ✓ data/catalogs/reviewedQualifications.test.ts > reviewed qualification catalog > normalizes only safe presentation differences 1ms
+· ✓ data/catalogs/reviewedQualifications.test.ts > reviewed qualification catalog > is strict and rejects duplicate normalized labels 1ms
+· ✓ data/catalogs/reviewedQualifications.test.ts > reviewed qualification catalog > requires each canonical label to be an accepted label 0ms
+· ✓ data/catalogs/reviewedQualifications.test.ts > reviewed qualification catalog > rejects duplicate normalized canonical labels across entries 1ms
+· ✓ data/catalogs/reviewedQualifications.test.ts > reviewed qualification catalog > accepts the reviewed catalog as its valid control 0ms
+· ✓ scripts/data/buildSnapshots.test.ts > buildSnapshots > retains a pinned pilot snapshot as an approved subset after a later mapping addition 1299ms
+· ✓ scripts/release/validateContestClaims.test.ts > contest claim validator > accepts strict claims with source-bound evidence 2ms
+· ✓ scripts/release/validateContestClaims.test.ts > contest claim validator > rejects unknown fields and duplicate claim IDs 1ms
+· ✓ scripts/release/validateContestClaims.test.ts > contest claim validator > rejects freeze-derived numeric prose and missing evidence 0ms
+· ✓ scripts/release/validateContestClaims.test.ts > contest claim validator > rejects salary or employment claims and deep-link submitted URLs 0ms
+· ✓ scripts/release/validateContestClaims.test.ts > contest claim validator > finds forbidden claims in scoped repository documents 0ms
+· ✓ scripts/release/validateContestClaims.test.ts > contest claim validator > requires symbolic freeze evidence and safe document paths 0ms
+· ✓ scripts/data/sanitizeOfferHtml.test.ts > sanitizeOfferHtml > removes scripts while preserving requirement list text 3ms
+· ✓ scripts/data/sanitizeOfferHtml.test.ts > sanitizeOfferHtml > routes text trailing an inline section label to that named section 0ms
+· ✓ scripts/data/sanitizeOfferHtml.test.ts > sanitizeOfferHtml > assigns normalized source-order blocks to the fixed section contract 2ms
+· ✓ scripts/data/buildSnapshots.test.ts > buildSnapshots > recovers a candidate quarantine with a pinned approved subset after a later mapping addition 1806ms
+· ✓ data/schemas/sourceFields.test.ts > official source field signatures > accepts exactly the current 21-field vocational-training signature 3ms
+· ✓ data/schemas/sourceFields.test.ts > official source field signatures > accepts exactly the current 15-field employment-offer signature 1ms
+· ✓ scripts/release/publicBasePath.test.ts > normalizePublicBasePath > normalizes undefined 1ms
+· ✓ scripts/release/publicBasePath.test.ts > normalizePublicBasePath > normalizes / 0ms
+· ✓ scripts/release/publicBasePath.test.ts > normalizePublicBasePath > normalizes /concursos_cyl 0ms
+· ✓ scripts/release/publicBasePath.test.ts > normalizePublicBasePath > normalizes /concursos_cyl/ 0ms
+· ✓ scripts/release/publicBasePath.test.ts > normalizePublicBasePath > rejects external or ambiguous base https://example.com/app/ 1ms
+· ✓ scripts/release/publicBasePath.test.ts > normalizePublicBasePath > rejects external or ambiguous base //example.com/app/ 0ms
+· ✓ scripts/release/publicBasePath.test.ts > normalizePublicBasePath > rejects external or ambiguous base app/ 0ms
+· ✓ scripts/release/publicBasePath.test.ts > normalizePublicBasePath > rejects external or ambiguous base /app/../other/ 0ms
+· ✓ scripts/release/publicBasePath.test.ts > normalizePublicBasePath > rejects external or ambiguous base /app?next=/ 0ms
+· ✓ scripts/release/publicBasePath.test.ts > normalizePublicBasePath > rejects external or ambiguous base /app#fragment 0ms
+· ✓ scripts/release/publicBasePath.test.ts > normalizePublicBasePath > rejects external or ambiguous base /app\child/ 0ms
+· ✓ scripts/release/publicBasePath.test.ts > normalizePublicBasePath > rejects external or ambiguous base /app/%2e%2e/ 0ms
+· ✓ scripts/data/buildSnapshots.test.ts > buildSnapshots > preserves a candidate when rollback fallback validates a pinned approved subset 1822ms
+· ✓ scripts/release/containerRelease.test.ts > release container > pins both official base images by exact multi-platform digest 2ms
+· ✓ scripts/analysis/fpSpecificEvidenceReview.test.ts > FP-specific offer evidence review > removes accepted cases and retains deferred cases in the live queue 2ms
+· ✓ scripts/analysis/fpSpecificEvidenceReview.test.ts > FP-specific offer evidence review > publishes every accepted phrase against an approved linked occupation 2ms
+· ✓ scripts/data/buildSnapshots.test.ts > buildSnapshots > transactionally quarantines a self-consistent snapshot with stale requirement semantics 1358ms
+· ✓ src/features/occupation-first/occupationFirstBoundaries.test.ts > occupation-first runtime boundaries > contains no AI provider integration or browser persistence writes 3ms
+· ✓ scripts/data/publishOfficialOccupationCatalog.test.ts > official occupation sidecar publication > binds the manifest entry to the exact bytes and official BOE source 2ms
+· ✓ scripts/data/buildSnapshots.test.ts > buildSnapshots > still enforces retention when earlier post-commit cleanup fails 2813ms
+· ✓ scripts/release/playwrightConfig.test.ts > starts the Playwright web server without local helper dependencies 2ms
+· ✓ src/features/compare-studies/outcomePresentation.test.ts > formatOutcomeLabel > normalizes source casing while preserving known acronyms 1ms
+· ✓ scripts/release/vpsDeployment.test.ts > VPS deployment > serves the root build with HTTPS, SPA fallback and hardened headers 1ms
+· ✓ scripts/release/vpsDeployment.test.ts > VPS deployment > builds from scratch, activates atomically and verifies production 0ms
+· ✓ scripts/licensePolicy.test.ts > dependency license policy > accepts approved software licenses and reviewed open-content exceptions 1ms
+· ✓ scripts/licensePolicy.test.ts > dependency license policy > rejects proprietary, missing, and unreviewed exception licenses 0ms
+· ✓ scripts/data/buildSnapshots.test.ts > buildSnapshots > removes each immutable candidate when manifest commit fails 4927ms
+· ✓ scripts/data/buildSnapshots.test.ts > buildSnapshots > does not retain a failed future candidate as published history 4114ms
+· ✓ scripts/data/buildSnapshots.test.ts > buildSnapshots > retains snapshots referenced by every terminal FP expansion state 2857ms
+· ✓ scripts/data/buildSnapshots.test.ts > buildSnapshots > does not pin snapshots referenced only by non-terminal FP expansions 2643ms
+· ✓ scripts/data/buildSnapshots.test.ts > buildSnapshots > rejects an FP expansion with invalid JSON 536ms
+· ✓ scripts/data/buildSnapshots.test.ts > buildSnapshots > rejects an FP expansion with unknown state 661ms
+· ✓ scripts/data/buildSnapshots.test.ts > buildSnapshots > rejects an FP expansion with invalid snapshot ID 580ms
+· ✓ scripts/data/buildSnapshots.test.ts > buildSnapshots > removes a crash orphan newer than the committed manifest on startup 2697ms
+· ✓ scripts/data/buildSnapshots.test.ts > buildSnapshots > rejects a physical junction escape through 'public/data' 4ms
+· ✓ scripts/data/buildSnapshots.test.ts > buildSnapshots > rejects a physical junction escape through '.codex-tmp' 4ms
+· ✓ scripts/data/buildSnapshots.test.ts > buildSnapshots > limits concurrent ingestion to 3 with peak concurrency and releases all slots 636ms
+·
+ Test Files  95 passed (95)
+      Tests  880 passed (880)
+   Start at  19:10:29
+   Duration  215.82s (transform 1.57s, setup 10.59s, import 9.82s, tests 313.84s, environment 68.64s)
+
+
+
+ Test Files  95 passed (95)
+      Tests  880 passed (880)
+   Start at  19:10:29
+   Duration  215.82s (transform 1.57s, setup 10.59s, import 9.82s, tests 313.84s, environment 68.64s)
