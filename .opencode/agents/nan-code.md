@@ -3,7 +3,7 @@ description: Implementa un contrato de codigo acotado; Codex planifica, valida y
 mode: primary
 model: nan/qwen3.6
 temperature: 0.2
-steps: 40
+steps: 20
 permission:
   "*": deny
   read: allow
