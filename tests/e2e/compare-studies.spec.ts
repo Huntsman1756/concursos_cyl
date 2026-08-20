@@ -108,7 +108,14 @@ test("reports an historical manifest without income evidence", async ({
   await expectReleaseAccessibility(page);
 });
 
-test("keeps the comparison form keyboard reachable", async ({ page }) => {
+test("keeps the comparison form keyboard reachable", async ({
+  page,
+  browserName,
+}) => {
+  test.skip(
+    browserName === "webkit",
+    "WebKit keyboard focus follows the host Safari full-keyboard-access preference.",
+  );
   await page.goto("/comparar");
   await page.keyboard.press("Tab");
   await expect(

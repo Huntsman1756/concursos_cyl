@@ -93,6 +93,7 @@ function expectNoSerializedRequestState(url: string): void {
 
 test("answer, exact-absence filter, and checklist remain ephemeral and never leave the browser", async ({
   page,
+  browserName,
 }) => {
   const privacyEvents: string[] = [];
   const domStorageMutations: string[] = [];
@@ -167,15 +168,17 @@ test("answer, exact-absence filter, and checklist remain ephemeral and never lea
     window.addEventListener("hashchange", () => record("history:hashchange"));
   });
   await installDecisionFlowFixture(page);
-  const cdp = await page.context().newCDPSession(page);
-  await cdp.send("DOMStorage.enable");
-  for (const event of [
-    "DOMStorage.domStorageItemAdded",
-    "DOMStorage.domStorageItemUpdated",
-    "DOMStorage.domStorageItemRemoved",
-    "DOMStorage.domStorageItemsCleared",
-  ]) {
-    cdp.on(event, () => domStorageMutations.push(event));
+  if (browserName === "chromium") {
+    const cdp = await page.context().newCDPSession(page);
+    await cdp.send("DOMStorage.enable");
+    for (const event of [
+      "DOMStorage.domStorageItemAdded",
+      "DOMStorage.domStorageItemUpdated",
+      "DOMStorage.domStorageItemRemoved",
+      "DOMStorage.domStorageItemsCleared",
+    ]) {
+      cdp.on(event, () => domStorageMutations.push(event));
+    }
   }
   await page.goto("/desde-fp/IFC03S");
   const card = page.getByRole("article", {
@@ -183,13 +186,25 @@ test("answer, exact-absence filter, and checklist remain ephemeral and never lea
   });
   await expect(card).toBeVisible();
 
-  await page.evaluate((probeKey) => {
-    localStorage[probeKey] = "probe";
-    delete localStorage[probeKey];
-    sessionStorage[probeKey] = "probe";
-    delete sessionStorage[probeKey];
-  }, "__e2e_direct_storage_probe__");
-  await expect.poll(() => domStorageMutations.length).toBeGreaterThanOrEqual(4);
+  if (browserName === "chromium") {
+    await page.evaluate((probeKey) => {
+      localStorage[probeKey] = "probe";
+      delete localStorage[probeKey];
+      sessionStorage[probeKey] = "probe";
+      delete sessionStorage[probeKey];
+    }, "__e2e_direct_storage_probe__");
+    await expect
+      .poll(() => domStorageMutations.length)
+      .toBeGreaterThanOrEqual(4);
+  } else {
+    await page.evaluate((probeKey) => {
+      localStorage.setItem(probeKey, "probe");
+      localStorage.removeItem(probeKey);
+      sessionStorage.setItem(probeKey, "probe");
+      sessionStorage.removeItem(probeKey);
+    }, "__e2e_storage_probe__");
+    await expect.poll(() => privacyEvents.length).toBeGreaterThanOrEqual(4);
+  }
   await expectEmptyBrowserPersistence(page);
   await page.evaluate(async () => {
     await window.recordDecisionPrivacyEvent?.("privacy-calibration-barrier");

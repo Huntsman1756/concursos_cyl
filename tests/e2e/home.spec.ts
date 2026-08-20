@@ -304,7 +304,12 @@ test("a current manifest falls back to the fetched timestamp and formats its UTC
 
 test("the skip link moves keyboard focus to the main content", async ({
   page,
+  browserName,
 }) => {
+  test.skip(
+    browserName === "webkit",
+    "WebKit keyboard focus follows the host Safari full-keyboard-access preference.",
+  );
   await page.goto("/");
 
   await page.keyboard.press("Tab");
