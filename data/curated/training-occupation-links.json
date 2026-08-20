@@ -10,6 +10,86 @@
     "mappingVersion": "1.0.0"
   },
   {
+    "trainingProgramKey": "ADG02S",
+    "occupationId": "occupation:cno11:4111",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/administracion-gestion/administracion-finanzas.html",
+    "sourceQuote": "Administrativa / administrativo contable.",
+    "reviewedAt": "2026-08-12",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "ADG02S",
+    "occupationId": "occupation:cno11:4113",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/administracion-gestion/administracion-finanzas.html",
+    "sourceQuote": "Administrativa / administrativo de banca y de seguros.",
+    "reviewedAt": "2026-08-12",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "ADG02S",
+    "occupationId": "occupation:cno11:4123",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/administracion-gestion/administracion-finanzas.html",
+    "sourceQuote": "Administrativa / administrativo de logística.",
+    "reviewedAt": "2026-08-12",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "ADG02S",
+    "occupationId": "occupation:cno11:4223",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/administracion-gestion/administracion-finanzas.html",
+    "sourceQuote": "Administrativa / administrativo de recursos humanos.",
+    "reviewedAt": "2026-08-12",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "ADG02SD",
+    "occupationId": "occupation:cno11:4111",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/administracion-gestion/administracion-finanzas.html",
+    "sourceQuote": "Administrativa / administrativo contable.",
+    "reviewedAt": "2026-08-12",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "ADG02SD",
+    "occupationId": "occupation:cno11:4113",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/administracion-gestion/administracion-finanzas.html",
+    "sourceQuote": "Administrativa / administrativo de banca y de seguros.",
+    "reviewedAt": "2026-08-12",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "ADG02SD",
+    "occupationId": "occupation:cno11:4123",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/administracion-gestion/administracion-finanzas.html",
+    "sourceQuote": "Administrativa / administrativo de logística.",
+    "reviewedAt": "2026-08-12",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "ADG02SD",
+    "occupationId": "occupation:cno11:4223",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/administracion-gestion/administracion-finanzas.html",
+    "sourceQuote": "Administrativa / administrativo de recursos humanos.",
+    "reviewedAt": "2026-08-12",
+    "mappingVersion": "1.0.0"
+  },
+  {
     "trainingProgramKey": "AFD02M",
     "occupationId": "occupation:cno11:3723",
     "relationshipType": "reviewed_relationship",
@@ -520,6 +600,46 @@
     "mappingVersion": "1.0.0"
   },
   {
+    "trainingProgramKey": "IFC02S",
+    "occupationId": "occupation:cno11:2713",
+    "relationshipType": "reviewed_relationship",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/informatica-comunicaciones/des-aplicaciones-multiplataforma.html",
+    "sourceQuote": "Desarrollando aplicaciones en el ámbito del entretenimiento y la informática móvil.",
+    "reviewedAt": "2026-08-12",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "IFC02S",
+    "occupationId": "occupation:cno11:3820",
+    "relationshipType": "reviewed_relationship",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.boe.es/eli/es/rd/2010/05/21/450",
+    "sourceQuote": "Desarrollar aplicaciones de propósito general.",
+    "reviewedAt": "2026-08-12",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "IFC02SD",
+    "occupationId": "occupation:cno11:2713",
+    "relationshipType": "reviewed_relationship",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/informatica-comunicaciones/des-aplicaciones-multiplataforma.html",
+    "sourceQuote": "Desarrollando aplicaciones en el ámbito del entretenimiento y la informática móvil.",
+    "reviewedAt": "2026-08-12",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "IFC02SD",
+    "occupationId": "occupation:cno11:3820",
+    "relationshipType": "reviewed_relationship",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.boe.es/eli/es/rd/2010/05/21/450",
+    "sourceQuote": "Desarrollar aplicaciones de propósito general.",
+    "reviewedAt": "2026-08-12",
+    "mappingVersion": "1.0.0"
+  },
+  {
     "trainingProgramKey": "IFC03S",
     "occupationId": "occupation:cno11:2713",
     "relationshipType": "official_output",
@@ -837,6 +957,26 @@
     "sourceUrl": "https://www.boe.es/eli/es/rd/2011/11/04/1593",
     "sourceQuote": "Auxiliar de ayuda a domicilio.",
     "reviewedAt": "2026-08-08",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "SSC01S",
+    "occupationId": "occupation:cno11:2252",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.boe.es/eli/es/rd/2007/10/29/1394",
+    "sourceQuote": "Educador o educadora infantil en primer ciclo de educación infantil.",
+    "reviewedAt": "2026-08-12",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "SSC01SD",
+    "occupationId": "occupation:cno11:2252",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.boe.es/eli/es/rd/2007/10/29/1394",
+    "sourceQuote": "Educador o educadora infantil en primer ciclo de educación infantil.",
+    "reviewedAt": "2026-08-12",
     "mappingVersion": "1.0.0"
   },
   {

@@ -1,7 +1,7 @@
 import AxeBuilder from "@axe-core/playwright";
 import { expect, test } from "@playwright/test";
 
-test("the live occupation journey confirms a reviewed everyday alias and reaches official DAW centers", async ({
+test("the live occupation journey confirms a reviewed everyday alias and reaches every reviewed development route", async ({
   page,
 }, testInfo) => {
   await page.goto("/desde-ocupacion");
@@ -30,18 +30,21 @@ test("the live occupation journey confirms a reviewed everyday alias and reaches
     /\/desde-ocupacion\/occupation%3Acno11%3A2713$/u,
   );
 
+  const reviewedProgramKeys = ["IFC02S", "IFC02SD", "IFC03S", "IFC03SD"];
   await expect(page.getByText("Salida profesional oficial")).toHaveCount(2);
-  await expect(
-    page.getByText("Grado superior · IFC03S", { exact: true }),
-  ).toBeVisible();
-  await expect(
-    page.getByText("Grado superior · IFC03SD", { exact: true }),
-  ).toBeVisible();
+  await expect(page.getByText("Relación revisada")).toHaveCount(2);
+  for (const programKey of reviewedProgramKeys) {
+    await expect(
+      page.getByText(`Grado superior · ${programKey}`, { exact: true }),
+    ).toBeVisible();
+  }
   await page.getByText("Ver cita exacta").first().click();
   await expect(
     page.getByText("Desarrollador de aplicaciones en entornos Web.").first(),
   ).toBeVisible();
-  await expect(page.getByText("Modalidades", { exact: true })).toHaveCount(2);
+  await expect(page.getByText("Modalidades", { exact: true })).toHaveCount(
+    reviewedProgramKeys.length,
+  );
 
   const overflow = await page.evaluate(
     () =>
@@ -53,7 +56,7 @@ test("the live occupation journey confirms a reviewed everyday alias and reaches
   expect(axe.violations, JSON.stringify(axe.violations, null, 2)).toEqual([]);
 
   const resultsUrl = page.url();
-  for (const programKey of ["IFC03S", "IFC03SD"]) {
+  for (const programKey of reviewedProgramKeys) {
     await page.goto(resultsUrl);
     await page.locator(`a[href="/formacion/${programKey}"]`).click();
     await expect(page).toHaveURL(new RegExp(`/formacion/${programKey}$`, "u"));

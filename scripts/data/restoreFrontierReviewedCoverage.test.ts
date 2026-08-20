@@ -1,7 +1,10 @@
 import { describe, expect, it } from "vitest";
 
 import type { TrainingOccupationLink } from "../../data/schemas/curatedMappings";
-import { mergeFrontierReviewedCoverage } from "./restoreFrontierReviewedCoverage";
+import {
+  ACCEPTED_RELATION_KEYS,
+  mergeFrontierReviewedCoverage,
+} from "./restoreFrontierReviewedCoverage";
 
 const base = {
   relationshipType: "official_output",
@@ -13,6 +16,39 @@ const base = {
 } as const;
 
 describe("mergeFrontierReviewedCoverage", () => {
+  it("restores the selected priority relations from a complete reviewed source", () => {
+    const reviewed = ACCEPTED_RELATION_KEYS.map((key) => {
+      const [trainingProgramKey, classificationCode] = key.split("|");
+      return {
+        ...base,
+        trainingProgramKey,
+        occupationId: `occupation:cno11:${classificationCode}`,
+      } satisfies TrainingOccupationLink;
+    });
+
+    const result = mergeFrontierReviewedCoverage([], reviewed);
+    const restoredKeys = result.map(
+      ({ trainingProgramKey, occupationId }) =>
+        `${trainingProgramKey}|${occupationId.replace("occupation:cno11:", "")}`,
+    );
+
+    expect(restoredKeys).toEqual(
+      [...ACCEPTED_RELATION_KEYS].sort((left, right) =>
+        left.localeCompare(right, "en"),
+      ),
+    );
+    expect(restoredKeys).toEqual(
+      expect.arrayContaining([
+        "ADG02S|4111",
+        "ADG02SD|4223",
+        "IFC02S|2713",
+        "IFC02SD|3820",
+        "SSC01S|2252",
+        "SSC01SD|2252",
+      ]),
+    );
+  });
+
   it("fails closed when the reviewed source does not contain every accepted key", () => {
     const current: TrainingOccupationLink[] = [];
     expect(() => mergeFrontierReviewedCoverage(current, [])).toThrow(
