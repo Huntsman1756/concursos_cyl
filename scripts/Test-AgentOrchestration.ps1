@@ -1088,9 +1088,10 @@ try {
             Assert-Equal $oc.provider.nan.models.'mimo-v2.5'.limit.context 1048576 '20q: mimo-v2.5 contextWindow 1048576'
 
             # Output token limits
-            foreach ($modelName in $modelNames) {
-                Assert-Equal $oc.provider.nan.models.$modelName.limit.output 16384 "20r: $modelName output limit 16384"
-            }
+            Assert-Equal $oc.provider.nan.models.'qwen3.6'.limit.output 16384 '20r: qwen3.6 output limit 16384'
+            Assert-Equal $oc.provider.nan.models.gemma4.limit.output 16384 '20r1: gemma4 output limit 16384'
+            Assert-Equal $oc.provider.nan.models.'deepseek-v4-flash'.limit.output 65536 '20r2: deepseek-v4-flash output limit 65536'
+            Assert-Equal $oc.provider.nan.models.'mimo-v2.5'.limit.output 65536 '20r3: mimo-v2.5 output limit 65536'
 
             # No GLM model anywhere
             Assert-True ($ocRaw -notmatch 'glm5\.2') '20t: no glm5.2 in opencode.json'
