@@ -98,21 +98,6 @@ async function prepareCapture(page: Page, evidenceId: string): Promise<void> {
       .getByText("2", { exact: true })
       .click();
   }
-  if (evidenceId === "methodology-sources") {
-    for (const disclosure of await page
-      .getByText("Ver actualización, identificadores y descargas")
-      .all()) {
-      await disclosure.click();
-    }
-    for (const tableId of [
-      "famprof_2_08",
-      "famprof_3_08",
-      "ccaa_2_07",
-      "ccaa_3_07",
-    ]) {
-      await page.getByText(new RegExp(`^${tableId}`, "u")).click();
-    }
-  }
 }
 
 async function assertRequiredState(
@@ -172,16 +157,10 @@ async function assertCaptureQuality(
 }
 
 async function positionCapture(page: Page, evidenceId: string): Promise<void> {
-  if (evidenceId === "fp-matched-result") {
-    await page
-      .locator("[aria-label='Ofertas relacionadas']")
-      .scrollIntoViewIfNeeded();
-    await page.evaluate(() => window.scrollBy(0, -180));
-  }
-  if (evidenceId === "fp-reviewed-zero-result") {
+  if (evidenceId === "fp-unreviewed-result") {
     const zeroResultMessage = page
-      .getByText("No hay ofertas relacionadas en la copia de datos del", {
-        exact: false,
+      .getByRole("heading", {
+        name: "Cómo buscar oportunidades ahora",
       })
       .first();
     await zeroResultMessage.evaluate((element) =>
@@ -198,10 +177,9 @@ async function positionCapture(page: Page, evidenceId: string): Promise<void> {
   }
   if (evidenceId === "methodology-sources") {
     await page
-      .getByRole("link", { name: "Ficha oficial del catálogo" })
-      .first()
+      .getByRole("heading", { name: "6 datasets de la Junta" })
       .scrollIntoViewIfNeeded();
-    await page.evaluate(() => window.scrollBy(0, -240));
+    await page.evaluate(() => window.scrollBy(0, -120));
   }
 }
 
