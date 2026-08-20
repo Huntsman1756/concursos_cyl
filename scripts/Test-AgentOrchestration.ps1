@@ -205,16 +205,16 @@ try {
         $budgetProfileTelemetry = Get-Content -LiteralPath (Get-NewTelemetry -BeforeFiles $pre) -Raw | ConvertFrom-Json
         Assert-Equal $budgetProfileTelemetry.launch.budgetProfile 'batch' '2e: telemetry records batch profile'
         Assert-Equal $budgetProfileTelemetry.launch.budgetSource 'profile' '2f: telemetry records profile source'
-        Assert-Equal $budgetProfileTelemetry.launch.maxObservedTokens 1250000 '2g: batch profile resolves to 1250000 tokens'
+        Assert-Equal $budgetProfileTelemetry.launch.maxObservedTokens 350000 '2g: batch profile resolves to 350000 tokens'
         Assert-Equal $budgetProfileTelemetry.admission.profile 'provider-limit' '2g1: dry run records provider-limit admission'
         Assert-Equal $budgetProfileTelemetry.admission.capacity 5 '2g2: dry run records five active NAN slots'
         Assert-Equal $budgetProfileTelemetry.admission.timeoutSeconds 7200 '2g3: dry run records admission timeout'
 
         foreach ($profileCase in @(
-            @{Name='small';Tokens=500000},
-            @{Name='batch';Tokens=1250000},
-            @{Name='research';Tokens=1250000},
-            @{Name='extended';Tokens=1500000}
+            @{Name='small';Tokens=120000},
+            @{Name='batch';Tokens=350000},
+            @{Name='research';Tokens=700000},
+            @{Name='extended';Tokens=1200000}
         )) {
             $pre = Get-FileSnapshot
             $profileParams = New-ValidCodeContract -Objective "budget-profile-$($profileCase.Name)" -DryRun -TestMode

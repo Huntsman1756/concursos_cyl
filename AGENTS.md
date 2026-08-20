@@ -164,7 +164,7 @@ Ejemplo DryRun (obligatorio incluir `-ValidationCommand` para code):
 El worker soporta:
 
 - `-MaxRetries 1` — valor seguro por defecto; aumentarlo requiere justificar el coste.
-- `-BudgetProfile small|batch|research|extended` — aplica respectivamente 500k, 1250k, 1250k o 1500k tokens observados por ejecución, incluida la caché. El valor seguro por defecto es `extended`.
+- `-BudgetProfile small|batch|research|extended` — aplica respectivamente 120k, 350k, 700k o 1200k tokens observados acumulados por trayectoria, incluida la caché entre turnos. No representan la ventana de contexto de una petición ni el límite de velocidad de NAN. El valor seguro por defecto es `small`.
 - `-MaxObservedTokens <n>` — override excepcional entre 1k y 2M; prevalece sobre el perfil y queda identificado como `override` en telemetría.
 - `-MaxExecutionSeconds 1800` — termina el árbol del proceso al agotar el tiempo.
 - `-DuplicateWindowSeconds 3600` — bloquea contratos idénticos sobre el mismo SHA durante una hora.
