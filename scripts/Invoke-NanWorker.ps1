@@ -195,6 +195,18 @@ function Get-JsonlDraftOutput {
     return ($parts -join "`n").Trim()
 }
 
+function Compute-FileSha256 {
+    param([Parameter(Mandatory)][string]$Path)
+    $stream = [System.IO.File]::OpenRead($Path)
+    $sha = [System.Security.Cryptography.SHA256]::Create()
+    try {
+        return -join ($sha.ComputeHash($stream) | ForEach-Object { $_.ToString('x2') })
+    } finally {
+        $sha.Dispose()
+        $stream.Dispose()
+    }
+}
+
 function Protect-HarnessDiagnosticText {
     param([string]$Text, [int]$MaxLength = 16000)
     if ([string]::IsNullOrWhiteSpace($Text)) {
@@ -224,7 +236,7 @@ function Write-HarnessEventLog {
     }).Count
     return @{
         file=[System.IO.Path]::GetFileName($target)
-        sha256=(Get-FileHash -Algorithm SHA256 -LiteralPath $target).Hash.ToLowerInvariant()
+        sha256=(Compute-FileSha256 -Path $target)
         eventCount=$events.Count
         toolUseCount=$toolUseCount
     }
@@ -236,7 +248,7 @@ function Get-Snapshot {
     foreach ($rel in (& git -C $repoRoot ls-files --cached --others --exclude-standard 2>&1 | Where-Object { $_ })) {
         $abs = Join-Path $repoRoot $rel
         if (Test-Path -LiteralPath $abs -PathType Leaf) {
-            try { $s[$rel.Replace('\','/')] = (Get-FileHash -Algorithm SHA256 -LiteralPath $abs).Hash } catch {}
+            try { $s[$rel.Replace('\','/')] = (Compute-FileSha256 -Path $abs) } catch {}
         }
     }
     return $s

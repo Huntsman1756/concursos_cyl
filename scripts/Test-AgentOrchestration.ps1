@@ -874,6 +874,8 @@ try {
             $workerText = Get-Content -LiteralPath $workerPath -Raw
             Assert-True ($workerText -notmatch "'--auto'") '18ae: worker does not pass --auto'
             Assert-True ($workerText -match 'Invoke-OpenCodeBudgeted') '18af: worker uses streaming budget launcher'
+            Assert-True ($workerText -match 'function\s+Compute-FileSha256') '18af0: worker provides a PowerShell 5.1-compatible file hasher'
+            Assert-True ($workerText -notmatch 'Get-FileHash') '18af0a: worker does not depend on unavailable Get-FileHash cmdlet'
             Assert-True ($workerText -match 'blocked-unverified-provider') '18af1: worker fails closed without provider response evidence'
             Assert-True ($workerText -match 'XDG_DATA_HOME') '18af2: worker isolates OpenCode state per execution'
             Assert-True (Test-Path -LiteralPath (Join-Path $repoRoot 'scripts\orchestration\nan-audit-proxy.mjs')) '18af3: provider response audit proxy exists'
