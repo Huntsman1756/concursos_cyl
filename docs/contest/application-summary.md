@@ -14,14 +14,14 @@ El grafo revisado se devuelve a la comunidad como dataset derivado descargable e
 
 ## Cobertura congelada
 
-- Instantánea publicada: `20260820140321122-facb099dd11b`.
+- Instantánea publicada: `20260820151255897-e91792c94054`.
 - Grupos primarios CNO-11 consultables: **502**.
-- **42 cualificaciones distintas**.
-- Claves de modalidad públicas: **48** (ADG01S, AFD02M, AGA01B, AGA03S, AGA04M, COM02M, COM02S, COM02SD, COM03S, ELE01M, ELE01S, ELE02S, ENA03S, EOC01M, EOC02S, EOC02SD, FME01S, FME02B, FME02S, HOT01M, HOT01S, HOT02M, HOT03S, HOT05S, IFC01MD, IFC02B, IFC03S, IFC03SD, IMP01M, IMP01S, INA02S, MAM01B, QUI01S, QUI02M, SAN02M, SAN04S, SAN07S, SAN07SD, SAN08S, SAN08SD, SAN09S, SAN09SD, SAN21, SEA03S, SSC01M, SSC05S, TMV01M, TMV03E).
-- Relaciones ocupacionales aprobadas: **87**.
+- **45 cualificaciones distintas**.
+- Claves de modalidad públicas: **54** (ADG01S, ADG02S, ADG02SD, AFD02M, AGA01B, AGA03S, AGA04M, COM02M, COM02S, COM02SD, COM03S, ELE01M, ELE01S, ELE02S, ENA03S, EOC01M, EOC02S, EOC02SD, FME01S, FME02B, FME02S, HOT01M, HOT01S, HOT02M, HOT03S, HOT05S, IFC01MD, IFC02B, IFC02S, IFC02SD, IFC03S, IFC03SD, IMP01M, IMP01S, INA02S, MAM01B, QUI01S, QUI02M, SAN02M, SAN04S, SAN07S, SAN07SD, SAN08S, SAN08SD, SAN09S, SAN09SD, SAN21, SEA03S, SSC01M, SSC01S, SSC01SD, SSC05S, TMV01M, TMV03E).
+- Relaciones ocupacionales aprobadas: **101**.
 - Alias aprobados: **21**.
 - **39 de las 1.026 ofertas de la instantánea** quedan alcanzadas por relaciones publicadas (unión de IDs).
-- Relaciones revisadas sin oferta alcanzada: **84**.
+- Relaciones revisadas sin oferta alcanzada: **98**.
 - Programas diferidos por evidencia insuficiente: ninguno.
 
 Las claves de modalidad se informan aparte de las identidades de cualificación. Una relación revisada sin coincidencia no se convierte en una afirmación sobre la ausencia de oportunidades; un programa diferido permanece fuera de las afirmaciones revisadas.
