@@ -1,20 +1,20 @@
 {
   "schemaVersion": 1,
   "status": "deployed_verified",
-  "recordedAt": "2026-08-20T19:14:04Z",
+  "recordedAt": "2026-08-20T21:31:03Z",
   "expectedRootUrl": "https://salida-cyl.157-90-22-40.sslip.io/",
-  "coverageFreezeCommitSha": "c72b891f302a6a189ed507e05a6b443366c841d7",
-  "publicationCommitSha": "c72b891f302a6a189ed507e05a6b443366c841d7",
-  "localReviewHeadSha": "c72b891f302a6a189ed507e05a6b443366c841d7",
-  "captureProductCommitSha": "c72b891f302a6a189ed507e05a6b443366c841d7",
+  "coverageFreezeCommitSha": "c07ff44bbfe404f5b5c12d6c461a38442ab2dbba",
+  "publicationCommitSha": "c07ff44bbfe404f5b5c12d6c461a38442ab2dbba",
+  "localReviewHeadSha": "c07ff44bbfe404f5b5c12d6c461a38442ab2dbba",
+  "captureProductCommitSha": "c07ff44bbfe404f5b5c12d6c461a38442ab2dbba",
   "manifest": {
-    "snapshotId": "20260820184643129-a5594cf94fc7",
-    "sha256": "4d2cd578830d33886451d84f1f5aa6c9c38a31f40da54b2a51f232590f36a60f",
+    "snapshotId": "20260820205536270-ce82eadd0fb9",
+    "sha256": "705ea13a5f6cd558efd06204428e2aed7145873492264ba66eeda97e7137f96b",
     "qualityStatus": "passed",
     "programs": 187,
     "centers": 229,
     "offerings": 1294,
-    "offers": 1026
+    "offers": 1055
   },
   "localGates": {
     "coverageFreeze": {
@@ -29,7 +29,7 @@
       "status": "passed",
       "captureCount": 10,
       "command": "npm exec -- tsx scripts/release/validateContestEvidenceManifest.ts",
-      "note": "Las 10 capturas se recapturaron desde la URL oficial con el commit desplegado c72b891f y superaron los gates de estado visible, red, consola, overflow y Axe."
+      "note": "Las 10 capturas se recapturaron desde la URL oficial con el commit desplegado c07ff44b y superaron los gates de estado visible, red, consola, overflow y Axe."
     },
     "focusedVitest": {
       "status": "passed",
@@ -43,15 +43,15 @@
     },
     "fullVitestCi": {
       "status": "passed",
-      "testFiles": 108,
-      "passedTestFiles": 85,
+      "testFiles": 110,
+      "passedTestFiles": 87,
       "skippedTestFiles": 23,
-      "tests": 924,
-      "passed": 744,
+      "tests": 931,
+      "passed": 751,
       "skipped": 180,
-      "durationSeconds": 271.18,
+      "durationSeconds": 277.14,
       "command": "npm test -- --testTimeout=60000",
-      "workflowRunId": "32406662946"
+      "workflowRunId": "32418815858"
     },
     "playwright": {
       "status": "passed",
@@ -104,11 +104,11 @@
   },
   "deployment": {
     "status": "verified",
-    "commitSha": "c72b891f302a6a189ed507e05a6b443366c841d7",
-    "workflowRunId": "32406662946",
-    "workflowUrl": "https://github.com/Huntsman1756/concursos_cyl/actions/runs/32406662946",
+    "commitSha": "c07ff44bbfe404f5b5c12d6c461a38442ab2dbba",
+    "workflowRunId": "32418815858",
+    "workflowUrl": "https://github.com/Huntsman1756/concursos_cyl/actions/runs/32418815858",
     "liveRootVerified": true,
-    "verifiedAt": "2026-08-20T19:14:04Z"
+    "verifiedAt": "2026-08-20T21:31:03Z"
   },
   "publicVerification": {
     "rootUrl": "https://salida-cyl.157-90-22-40.sslip.io/",
@@ -136,13 +136,13 @@
     },
     "manifest": {
       "httpStatus": 200,
-      "sha256": "4d2cd578830d33886451d84f1f5aa6c9c38a31f40da54b2a51f232590f36a60f",
+      "sha256": "705ea13a5f6cd558efd06204428e2aed7145873492264ba66eeda97e7137f96b",
       "qualityStatus": "passed",
-      "snapshotGeneratedAt": "2026-08-20T18:46:43.129Z"
+      "snapshotGeneratedAt": "2026-08-20T20:55:36.270Z"
     },
     "outcomeIndicators": {
-      "logicalResourcePath": "/data/v1/snapshots/20260820184643129-a5594cf94fc7/outcome-indicators.json",
-      "resolvedUrl": "https://salida-cyl.157-90-22-40.sslip.io/data/v1/snapshots/20260820184643129-a5594cf94fc7/outcome-indicators.json",
+      "logicalResourcePath": "/data/v1/snapshots/20260820205536270-ce82eadd0fb9/outcome-indicators.json",
+      "resolvedUrl": "https://salida-cyl.157-90-22-40.sslip.io/data/v1/snapshots/20260820205536270-ce82eadd0fb9/outcome-indicators.json",
       "httpStatus": 200,
       "sha256": "4f2c6b73fc4171bb9daf21583712ab2ec99bcaa7d27b1f2fd0c070b9079ab3e2"
     },
