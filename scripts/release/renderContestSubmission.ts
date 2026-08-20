@@ -79,6 +79,8 @@ SALIDA CyL ayuda a personas de Castilla y León a explorar opciones de formació
 
 La interfaz permite elegir directamente cualquiera de los ${freeze.manifest.resourceSnapshots.programs.recordCount} ciclos de FP o filtrar los ${freeze.manifest.resourceSnapshots.officialOccupations.recordCount} grupos primarios de la CNO-11. Expone por separado el catálogo oficial completo y la cobertura parcial de relaciones FP–ocupación revisadas, incluidas las relaciones con ofertas, las revisadas sin coincidencias y las todavía no validadas. La metodología explica el origen de cada dato y los límites de interpretación.
 
+SALIDA CyL conecta FP y ocupación en ambos sentidos con evidencia verificable. Integra seis datasets del Portal de Datos Abiertos de la Junta de Castilla y León, todos visibles en la ficha o en las rutas de apoyo.
+
 ## Cobertura congelada
 
 - Instantánea publicada: \`${freeze.manifest.snapshotId}\`.
@@ -97,7 +99,7 @@ Las claves de modalidad se informan aparte de las identidades de cualificación.
 
 URL raíz para la candidatura: [${ROOT_URL}](${ROOT_URL})
 
-La procedencia técnica, los límites estadísticos, las pruebas y los campos que requieren confirmación humana están en [technical-evidence.md](technical-evidence.md), [limitations.md](limitations.md) y [submission-checklist.md](submission-checklist.md).
+La memoria ordenada por criterios está en [jury-memo.md](jury-memo.md). La procedencia técnica, los límites estadísticos, las pruebas y los campos que requieren confirmación humana están en [technical-evidence.md](technical-evidence.md), [limitations.md](limitations.md) y [submission-checklist.md](submission-checklist.md).
 `;
 }
 
@@ -294,8 +296,8 @@ function renderSubmissionChecklist(
 
 ## Campos que debe completar una persona
 
-- Título oficial del concurso: **PENDIENTE — confirmar manualmente**.
-- Categoría: **PENDIENTE — confirmar manualmente**.
+- Título oficial del concurso: **PENDIENTE — el portal oficial consultado sigue mostrando la IX edición; confirmar la convocatoria vigente antes de registrar**.
+- Categoría prevista: **Productos y Servicios — confirmar contra la convocatoria vigente**.
 - Identidad de la persona solicitante: **PENDIENTE — no consta en el repositorio**.
 - Contacto: **PENDIENTE — no consta en el repositorio**.
 - Declaraciones, consentimiento y adjuntos exigidos: **PENDIENTE — revisar en el portal**.
