@@ -10,9 +10,11 @@ La interfaz permite elegir directamente cualquiera de los 187 ciclos de FP o fil
 
 SALIDA CyL conecta FP y ocupación en ambos sentidos con evidencia verificable. Integra siete datasets del Portal de Datos Abiertos de la Junta de Castilla y León, todos visibles en la ficha o en las rutas de apoyo.
 
+El grafo revisado se devuelve a la comunidad como dataset derivado descargable en JSON y CSV, con licencia abierta, fuente por relación e integridad SHA-256 verificable.
+
 ## Cobertura congelada
 
-- Instantánea publicada: `20260820115124718-ad15514d370c`.
+- Instantánea publicada: `20260820122442745-ad15514d370c`.
 - Grupos primarios CNO-11 consultables: **502**.
 - **12 cualificaciones distintas**.
 - Claves de modalidad públicas: **14** (COM02M, ELE01M, EOC01M, FME02B, HOT01M, IFC01MD, IFC03S, IFC03SD, SAN02M, SAN08S, SAN08SD, SAN21, SSC01M, TMV01M).
@@ -27,5 +29,7 @@ Las claves de modalidad se informan aparte de las identidades de cualificación.
 ## Acceso
 
 URL raíz para la candidatura: [https://salida-cyl.157-90-22-40.sslip.io/](https://salida-cyl.157-90-22-40.sslip.io/)
+
+Datos derivados: [https://salida-cyl.157-90-22-40.sslip.io/datos-abiertos](https://salida-cyl.157-90-22-40.sslip.io/datos-abiertos)
 
 La memoria ordenada por criterios está en [jury-memo.md](jury-memo.md). La procedencia técnica, los límites estadísticos, las pruebas y los campos que requieren confirmación humana están en [technical-evidence.md](technical-evidence.md), [limitations.md](limitations.md) y [submission-checklist.md](submission-checklist.md).

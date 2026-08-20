@@ -1,12 +1,12 @@
 {
   "schemaVersion": "1.0.0",
   "freezeStatus": "frozen",
-  "sourceCommitSha": "8eacf131348dba283cca23f9475c1b0619548749",
+  "sourceCommitSha": "36880aaa30728711329614771e97595a884fcbba",
   "manifest": {
     "path": "public/data/v1/manifest.json",
-    "sha256": "01ecc258ade7b4b08c3e12f4b2f079a1cc3287cdd2645448481ee84ca55c21d9",
-    "generatedAt": "2026-08-20T11:51:24.718Z",
-    "snapshotId": "20260820115124718-ad15514d370c",
+    "sha256": "7b3d9dbdcb2a2019a33a47042a5ceea3779c83a8a87cd310450a927f40a40ec7",
+    "generatedAt": "2026-08-20T12:24:42.745Z",
+    "snapshotId": "20260820122442745-ad15514d370c",
     "qualityStatus": "passed",
     "qualityCounts": {
       "centers": 229,
@@ -16,57 +16,97 @@
     },
     "resourceSnapshots": {
       "centers": {
-        "resourcePath": "/data/v1/snapshots/20260820115124718-ad15514d370c/centers.json",
+        "resourcePath": "/data/v1/snapshots/20260820122442745-ad15514d370c/centers.json",
         "sha256": "593b7780f6cb9511c02edb26a769e5e1f951624f6e4b923a8e34caacb230c87a",
         "recordCount": 229
       },
+      "derivedFpOccupationGraph": {
+        "resourcePath": "/data/v1/snapshots/20260820122442745-ad15514d370c/derived-fp-occupation-graph.json",
+        "sha256": "a8299d30c177aea682b9a53e6cfb7d32a565a37586740d13b2ea26e015bf6bec",
+        "recordCount": 21
+      },
+      "ecylCourses": {
+        "resourcePath": "/data/v1/snapshots/20260820122442745-ad15514d370c/ecyl-courses.json",
+        "sha256": "9ae0bb5a207ac6fad836b746fb2638d4a830aa96dd473f6f4479cc5f099bdc2a",
+        "recordCount": 749
+      },
       "jobOffers": {
-        "resourcePath": "/data/v1/snapshots/20260820115124718-ad15514d370c/job-offers.json",
-        "sha256": "ef2654d8148abcb9ce26fe66b02fb25713ef7c21570d33eb78b5ed7c7d256321",
+        "resourcePath": "/data/v1/snapshots/20260820122442745-ad15514d370c/job-offers.json",
+        "sha256": "80067f2c15e4a4b4161d9bc837873adb7b2b97fc58de86b93841cbbbe5ed3abb",
         "recordCount": 1026
       },
       "mappingCoverage": {
-        "resourcePath": "/data/v1/snapshots/20260820115124718-ad15514d370c/mapping-coverage.json",
+        "resourcePath": "/data/v1/snapshots/20260820122442745-ad15514d370c/mapping-coverage.json",
         "sha256": "a32669dfa623342955dc8168d8f9ab973b9e30e6d179137ec56bc30e55a131e8",
         "recordCount": 209
       },
+      "municipalities": {
+        "resourcePath": "/data/v1/snapshots/20260820122442745-ad15514d370c/municipalities.json",
+        "sha256": "71ac22dfbcc5f95927fd17fa6b0a03bc77d39482fcad1640f9c6b08dec609f10",
+        "recordCount": 2248
+      },
       "officialOccupations": {
-        "resourcePath": "/data/v1/snapshots/20260820115124718-ad15514d370c/official-occupations.json",
+        "resourcePath": "/data/v1/snapshots/20260820122442745-ad15514d370c/official-occupations.json",
         "sha256": "76fa213f97c98e5af0f9bf120323ba3abb32df78e797c381e5454cadc858f64b",
         "recordCount": 502
       },
       "occupationAliases": {
-        "resourcePath": "/data/v1/snapshots/20260820115124718-ad15514d370c/occupation-aliases.json",
+        "resourcePath": "/data/v1/snapshots/20260820122442745-ad15514d370c/occupation-aliases.json",
         "sha256": "4f37bc7c6ff4d76140c79d9e9245c7155ff5f77d5b3bc397796985e13c2fbe7c",
         "recordCount": 21
       },
       "occupations": {
-        "resourcePath": "/data/v1/snapshots/20260820115124718-ad15514d370c/occupations.json",
+        "resourcePath": "/data/v1/snapshots/20260820122442745-ad15514d370c/occupations.json",
         "sha256": "f6c4b34a6fd5760c967273e4cc085abf6a3865baadfa2c721ac07dcd90fe3f09",
         "recordCount": 91
       },
+      "openDataCatalog": {
+        "resourcePath": "/data/v1/snapshots/20260820122442745-ad15514d370c/open-data-catalog.json",
+        "sha256": "c703f1f36aa588fc03b0613b8d77279dc053d381f8486c1610d8203863f8f058",
+        "recordCount": 1
+      },
       "outcomeIndicators": {
-        "resourcePath": "/data/v1/snapshots/20260820115124718-ad15514d370c/outcome-indicators.json",
+        "resourcePath": "/data/v1/snapshots/20260820122442745-ad15514d370c/outcome-indicators.json",
         "sha256": "4f2c6b73fc4171bb9daf21583712ab2ec99bcaa7d27b1f2fd0c070b9079ab3e2",
         "recordCount": 22170
       },
+      "professionalCertificates": {
+        "resourcePath": "/data/v1/snapshots/20260820122442745-ad15514d370c/professional-certificates.json",
+        "sha256": "a66ebe6b4439dca39091b0f06d587bc326389d9f7e2ecfc7a8c88b5a8937a7cb",
+        "recordCount": 583
+      },
+      "professionalProfiles": {
+        "resourcePath": "/data/v1/snapshots/20260820122442745-ad15514d370c/professional-profiles.json",
+        "sha256": "2794228570e734a5dca0f8d594a199a67b9b732d7f54ffd56abe3af22f66d22b",
+        "recordCount": 1728
+      },
       "programs": {
-        "resourcePath": "/data/v1/snapshots/20260820115124718-ad15514d370c/programs.json",
+        "resourcePath": "/data/v1/snapshots/20260820122442745-ad15514d370c/programs.json",
         "sha256": "90df87b283b5ff003dda20c9c4f7eac52b903e611753d107d4b927bbc4e19b72",
         "recordCount": 187
       },
+      "provincialContracts": {
+        "resourcePath": "/data/v1/snapshots/20260820122442745-ad15514d370c/provincial-contracts.json",
+        "sha256": "a6b9ddf9886dcb0638dbce19afe791253503988b509fc7fcb200f44d7c33002b",
+        "recordCount": 2331
+      },
+      "publicEmploymentCalls": {
+        "resourcePath": "/data/v1/snapshots/20260820122442745-ad15514d370c/public-employment-calls.json",
+        "sha256": "1b65936297d049b3d287dcfe1f93c81b2ad035dfb6d9bdfece263529249253cc",
+        "recordCount": 307
+      },
       "publishedRequirements": {
-        "resourcePath": "/data/v1/snapshots/20260820115124718-ad15514d370c/published-requirements.json",
+        "resourcePath": "/data/v1/snapshots/20260820122442745-ad15514d370c/published-requirements.json",
         "sha256": "791ed86a1805afffdea2125fb682b14ab1e67b63d9d759b4af11f86776b8e3a2",
         "recordCount": 333
       },
       "trainingOccupationLinks": {
-        "resourcePath": "/data/v1/snapshots/20260820115124718-ad15514d370c/training-occupation-links.json",
+        "resourcePath": "/data/v1/snapshots/20260820122442745-ad15514d370c/training-occupation-links.json",
         "sha256": "508219bfd051ad9ff17d527c436a53f7d1d1d587a017db07f252319f2078e4c0",
         "recordCount": 21
       },
       "trainingOfferings": {
-        "resourcePath": "/data/v1/snapshots/20260820115124718-ad15514d370c/training-offerings.json",
+        "resourcePath": "/data/v1/snapshots/20260820122442745-ad15514d370c/training-offerings.json",
         "sha256": "0948871f993a4f0a03ed42ccef060c4a395e0898dc230086f234345fee7e880a",
         "recordCount": 1294
       }

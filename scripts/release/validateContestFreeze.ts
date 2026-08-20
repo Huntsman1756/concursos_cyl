@@ -25,13 +25,21 @@ const MANIFEST_KEYS = [
 ] as const;
 const RESOURCE_KEYS = [
   "centers",
+  "derivedFpOccupationGraph",
+  "ecylCourses",
   "jobOffers",
   "mappingCoverage",
+  "municipalities",
   "officialOccupations",
   "occupationAliases",
   "occupations",
+  "openDataCatalog",
   "outcomeIndicators",
+  "professionalCertificates",
+  "professionalProfiles",
   "programs",
+  "provincialContracts",
+  "publicEmploymentCalls",
   "publishedRequirements",
   "trainingOccupationLinks",
   "trainingOfferings",
@@ -796,21 +804,54 @@ if (
       rootDir,
       "docs/contest/coverage-freeze.json",
     );
-    const existing = parseFreeze(
+    const existingJson = record(
       JSON.parse(fs.readFileSync(freezePath, "utf8")),
+      "coverage freeze",
     );
-    const sourceCommitSha = execFileSync("git", ["rev-parse", "HEAD"], {
-      cwd: rootDir,
-      encoding: "utf8",
-    }).trim();
-    const currentManifest = record(
-      readJson(rootDir, existing.manifest.path),
-      "manifest",
+    const existingManifest = record(
+      existingJson.manifest,
+      "coverage freeze manifest",
     );
+    const existingResourceSnapshots = record(
+      existingManifest.resourceSnapshots,
+      "coverage freeze resource snapshots",
+    );
+    const manifestPath = stringValue(
+      existingManifest.path,
+      "coverage freeze manifest path",
+    );
+    const currentManifest = record(readJson(rootDir, manifestPath), "manifest");
     const currentResourceSnapshots = record(
       currentManifest.resourceSnapshots,
       "manifest.resourceSnapshots",
     );
+    const migrationResourceSnapshots = Object.fromEntries(
+      RESOURCE_KEYS.map((key) => {
+        const current = record(
+          currentResourceSnapshots[key],
+          `manifest.resourceSnapshots.${key}`,
+        );
+        return [
+          key,
+          existingResourceSnapshots[key] ?? {
+            resourcePath: current.resourcePath,
+            sha256: current.sha256,
+            recordCount: current.recordCount,
+          },
+        ];
+      }),
+    );
+    const existing = parseFreeze({
+      ...existingJson,
+      manifest: {
+        ...existingManifest,
+        resourceSnapshots: migrationResourceSnapshots,
+      },
+    });
+    const sourceCommitSha = execFileSync("git", ["rev-parse", "HEAD"], {
+      cwd: rootDir,
+      encoding: "utf8",
+    }).trim();
     const seededResourceSnapshots = Object.fromEntries(
       RESOURCE_KEYS.map((key) => {
         const specification = record(
