@@ -7,7 +7,7 @@
   border-block: 1px solid var(--color-border);
 }
 
-.decision-path__heading p,
+.decision-path__heading > p:first-child,
 .territorial-distribution figcaption p {
   margin: 0 0 var(--space-1);
   color: var(--color-action-text);
@@ -24,55 +24,105 @@
   line-height: 1.2;
 }
 
-.decision-path ol {
+.decision-path__context {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-.decision-path li {
-  position: relative;
-  display: grid;
-  align-content: start;
   gap: var(--space-1);
-  min-width: 0;
-  padding: 0 var(--space-4) var(--space-4) 0;
-}
-
-.decision-path li:not(:last-child)::after {
-  position: absolute;
-  top: 0.45rem;
-  right: var(--space-3);
-  width: 2rem;
-  border-top: 1px solid var(--color-action);
-  content: "";
-}
-
-.decision-path__step {
-  max-width: calc(100% - 2.5rem);
+  margin: var(--space-4) 0 0;
   color: var(--color-text-muted);
+  font-size: 0.875rem;
+  line-height: 1.45;
+}
+
+.decision-path__context span:first-child {
+  color: var(--color-text);
   font-size: 0.75rem;
   font-weight: 750;
   letter-spacing: 0.04em;
   text-transform: uppercase;
 }
 
-.decision-path strong {
+.decision-path__context strong {
+  color: var(--color-text);
   line-height: 1.25;
 }
 
-.decision-path small {
+.decision-path__metrics {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  margin: 0;
+  padding: 0;
+}
+
+.decision-path__metrics > div {
+  min-width: 0;
+  padding-inline: var(--space-4);
+}
+
+.decision-path__metrics > div:first-child {
+  padding-left: 0;
+}
+
+.decision-path__metrics > div:last-child {
+  padding-right: 0;
+}
+
+.decision-path__metrics > div + div {
+  border-left: 1px solid var(--color-border);
+}
+
+.decision-path dt {
   color: var(--color-text-muted);
+  font-size: 0.875rem;
+  line-height: 1.35;
+}
+
+.decision-path dd {
+  margin: var(--space-2) 0 0;
+}
+
+.decision-path dd > strong {
+  display: block;
+  color: var(--color-primary);
+  font-size: clamp(1.6rem, 4vw, 2.25rem);
+  font-weight: 800;
+  line-height: 1.25;
+}
+
+.decision-path__unit {
+  display: block;
+  min-height: 2.5em;
+  margin-top: var(--space-1);
+  color: var(--color-text);
+  font-size: 0.875rem;
+  font-weight: 650;
   line-height: 1.45;
 }
 
-.decision-path__study {
-  grid-column: 2;
-  margin: 0;
+.decision-path__source {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-top: var(--space-3);
   color: var(--color-text-muted);
-  font-size: 0.875rem;
+  font-size: 0.75rem;
+  line-height: 1.45;
+}
+
+.decision-path__source a {
+  width: fit-content;
+  color: var(--color-action-text);
+  font-weight: 750;
+}
+
+.decision-path__source time {
+  margin-top: var(--space-1);
+}
+
+.decision-path__note {
+  margin-top: var(--space-1);
+  color: var(--color-text-muted);
+  font-size: inherit;
+  line-height: inherit;
 }
 
 .territorial-distribution {
@@ -145,29 +195,59 @@
     gap: var(--space-4);
   }
 
-  .decision-path ol {
+  .decision-path__metrics {
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: var(--space-5) var(--space-3);
   }
 
-  .decision-path__study {
-    grid-column: 1;
+  .decision-path__metrics > div {
+    padding-block: var(--space-3);
+  }
+
+  .decision-path__metrics > div:nth-child(3),
+  .decision-path__metrics > div:nth-child(4) {
+    border-top: 1px solid var(--color-border);
+  }
+
+  .decision-path__metrics > div:nth-child(3) {
+    padding-left: 0;
+    border-left: 0;
   }
 }
 
 @media (max-width: 36rem) {
-  .decision-path ol,
+  .decision-path__metrics,
   .territorial-distribution__legend {
     grid-template-columns: 1fr;
   }
 
-  .decision-path li {
-    padding-bottom: var(--space-3);
+  .decision-path__metrics > div,
+  .decision-path__metrics > div:first-child,
+  .decision-path__metrics > div:last-child {
+    padding: var(--space-3) 0;
     border-bottom: 1px solid var(--color-border);
+    border-left: 0;
   }
 
-  .decision-path li:not(:last-child)::after {
-    display: none;
+  .decision-path__metrics > div:first-child {
+    padding-top: 0;
+  }
+
+  .decision-path__metrics > div:last-child {
+    padding-bottom: 0;
+    border-bottom: 0;
+  }
+
+  .decision-path__metrics > div:nth-child(3),
+  .decision-path__metrics > div:nth-child(4) {
+    border-top: 0;
+  }
+
+  .decision-path__context {
+    margin-top: var(--space-3);
+  }
+
+  .decision-path__context strong {
+    overflow-wrap: anywhere;
   }
 
   .territorial-distribution figcaption {

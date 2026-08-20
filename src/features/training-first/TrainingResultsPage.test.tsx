@@ -529,7 +529,7 @@ describe("TrainingResultsPage", () => {
     expect(studyHeading).toBeVisible();
   });
 
-  it("makes every decision summary metric traceable to its source", async () => {
+  it("keeps one concise decision summary traceable to its sources", async () => {
     installResultsFetch();
     render(
       <MemoryRouter initialEntries={["/desde-fp/IFC03S"]}>
@@ -542,6 +542,16 @@ describe("TrainingResultsPage", () => {
         name: "Qué sabemos de este título",
       }),
     ).toBeVisible();
+    expect(
+      screen.getAllByRole("heading", {
+        name: "Qué sabemos de este título",
+      }),
+    ).toHaveLength(1);
+    expect(
+      screen.queryByRole("heading", {
+        name: "Del título a la evidencia disponible",
+      }),
+    ).not.toBeInTheDocument();
     expect(
       screen.getByRole("link", { name: "Fuente: TodoFP" }),
     ).toHaveAttribute("href", expect.stringContaining("todofp.es"));
