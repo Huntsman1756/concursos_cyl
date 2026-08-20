@@ -33,7 +33,7 @@ describe("contest submission renderer", () => {
       `${freeze.coverage.distinctQualificationCount} cualificaciones distintas`,
     );
     expect(rendered["application-summary.md"]).toContain(
-      "39 de las 1.026 ofertas de la instantánea",
+      `${freeze.offers.matchedOfferCount} de las ${freeze.manifest.resourceSnapshots.jobOffers.recordCount.toLocaleString("es-ES", { useGrouping: "always" })} ofertas de la instantánea`,
     );
     expect(rendered["application-summary.md"]).toContain(
       "dataset derivado descargable en JSON y CSV",
