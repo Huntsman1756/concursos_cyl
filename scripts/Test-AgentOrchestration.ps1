@@ -1018,6 +1018,36 @@ try {
         }
     }
 
+    # 23. Failed harness diagnostics remain reviewable and sanitized
+    if (-not $Only -or $Only -eq 'harness-diagnostics') {
+        Write-Host "`n*** 23. Failed harness diagnostics are retained safely ***" -ForegroundColor Cyan
+        Write-Host ("-" * 40) -ForegroundColor DarkGray
+
+        $diagnosticDraft = 'Worker stopped before invoking edit because the tool call failed.'
+        $diagnosticJsonl = New-Jsonl -Total 900 -DraftText $diagnosticDraft
+        $diagnosticPlan = @(@{
+            exitCode = 1
+            changedPaths = @()
+            validationExitCode = 1
+            jsonl = $diagnosticJsonl
+            stderr = 'Authorization: Bearer sk-diagnostic-secret NAN_API_KEY=sk-another-secret harness failed'
+        }) | ConvertTo-Json -Depth 8 -Compress
+        $beforeDiagnostics = Get-FileSnapshot
+        $diagnosticRun = Invoke-WorkerChild -WorkerParameters (New-ValidCodeContract -Objective 'harness-diagnostics' -MaxRetries 1 -TestMode -MockPlan $diagnosticPlan)
+        Assert-True ($diagnosticRun.ExitCode -ne 0) '23a: failed harness remains blocked'
+        $diagnosticTelemetryFile = Get-NewTelemetry -BeforeFiles $beforeDiagnostics
+        Assert-True ($null -ne $diagnosticTelemetryFile) '23b: failed harness writes telemetry'
+        if ($diagnosticTelemetryFile) {
+            $diagnosticTelemetry = Get-Content -LiteralPath $diagnosticTelemetryFile -Raw | ConvertFrom-Json
+            Assert-Equal $diagnosticTelemetry.attempts[0].draftOutput $diagnosticDraft '23c: failed draft is retained'
+            Assert-Contains $diagnosticTelemetry.attempts[0].harnessStderrTail '[REDACTED]' '23d: stderr records redaction markers'
+            Assert-True ($diagnosticTelemetry.attempts[0].harnessStderrTail -notmatch 'sk-diagnostic-secret|sk-another-secret') '23e: stderr does not retain API keys'
+            Assert-True ($diagnosticTelemetry.attempts[0].harnessStderrTruncated -eq $false) '23f: short stderr is not marked truncated'
+            Assert-True ($diagnosticTelemetry.attempts[0].PSObject.Properties.Name -contains 'eventLogFile') '23g: event-log evidence field is present'
+            Assert-True ($diagnosticTelemetry.attempts[0].PSObject.Properties.Name -contains 'toolUseCount') '23h: tool-use evidence field is present'
+        }
+    }
+
     # 20. Structural configuration checks (no network)
     if (-not $Only -or $Only -eq 'structure') {
         Write-Host "`n*** 20. Structural configuration checks ***" -ForegroundColor Cyan

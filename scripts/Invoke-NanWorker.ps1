@@ -195,6 +195,41 @@ function Get-JsonlDraftOutput {
     return ($parts -join "`n").Trim()
 }
 
+function Protect-HarnessDiagnosticText {
+    param([string]$Text, [int]$MaxLength = 16000)
+    if ([string]::IsNullOrWhiteSpace($Text)) {
+        return @{text='';truncated=$false}
+    }
+    $protected = $Text -replace "`e\[[0-9;]*[A-Za-z]", ''
+    $protected = $protected -replace '(?i)(authorization\s*:\s*bearer)\s+\S+', '$1 [REDACTED]'
+    $protected = $protected -replace '(?i)\bsk-[a-z0-9_-]{8,}\b', '[REDACTED_API_KEY]'
+    $protected = $protected -replace '(?i)((?:NAN|OPENAI)_API_KEY\s*[=:]\s*)\S+', '$1[REDACTED]'
+    $protected = $protected.Trim()
+    $truncated = $protected.Length -gt $MaxLength
+    if ($truncated) { $protected = $protected.Substring($protected.Length - $MaxLength) }
+    return @{text=$protected;truncated=$truncated}
+}
+
+function Write-HarnessEventLog {
+    param([string]$Jsonl, [int]$AttemptNumber)
+    if ([string]::IsNullOrWhiteSpace($Jsonl)) {
+        return @{file=$null;sha256=$null;eventCount=0;toolUseCount=0}
+    }
+    $protected = (Protect-HarnessDiagnosticText -Text $Jsonl -MaxLength 2000000).text
+    $target = Join-Path $providerEvidenceDirectory "$runtimeId.attempt-$AttemptNumber.opencode.jsonl"
+    [System.IO.File]::WriteAllText($target, $protected + "`n", (New-Object System.Text.UTF8Encoding($false)))
+    $events = @($protected -split "`n" | Where-Object { $_.Trim() })
+    $toolUseCount = @($events | Where-Object {
+        try { (($_ | ConvertFrom-Json).type) -eq 'tool_use' } catch { $false }
+    }).Count
+    return @{
+        file=[System.IO.Path]::GetFileName($target)
+        sha256=(Get-FileHash -Algorithm SHA256 -LiteralPath $target).Hash.ToLowerInvariant()
+        eventCount=$events.Count
+        toolUseCount=$toolUseCount
+    }
+}
+
 # ── Snapshot helpers ──
 function Get-Snapshot {
     $s = @{}
@@ -545,7 +580,7 @@ function Invoke-OpenCodeBudgeted {
                 $exitCode = 1
             }
         }
-        return @{exitCode=$exitCode;tokens=$usage;terminationReason=$terminationReason;stderr=($stderrLines -join "`n");draftOutput=$draftOutput}
+        return @{exitCode=$exitCode;tokens=$usage;terminationReason=$terminationReason;stderr=($stderrLines -join "`n");draftOutput=$draftOutput;rawJsonl=$raw}
     } finally {
         $watch.Stop()
         $process.Dispose()
@@ -707,7 +742,7 @@ $totalAttempts = 0
     }
     for ($r = 0; $r -lt $MaxRetries; $r++) {
         $totalAttempts++
-        $attempt = @{model=$candidateModel;agent=$candidateAgent;attempt=$totalAttempts;retry=($r+1);exitCode=1;tokens=@{input=0;output=0;reasoning=0;cacheRead=0;cacheWrite=0;total=0};changedPaths=@();validationExitCode=$null;validationDiagnostics=@();draftOutput=''}
+        $attempt = @{model=$candidateModel;agent=$candidateAgent;attempt=$totalAttempts;retry=($r+1);exitCode=1;tokens=@{input=0;output=0;reasoning=0;cacheRead=0;cacheWrite=0;total=0};changedPaths=@();validationExitCode=$null;validationDiagnostics=@();draftOutput='';harnessStderrTail='';harnessStderrTruncated=$false;eventLogFile=$null;eventLogSha256=$null;eventCount=0;toolUseCount=0}
         $mp = $null
 
         if ($TestMode) {
@@ -721,6 +756,11 @@ $totalAttempts = 0
                         $attempt.exitCode = 1
                         $attempt.terminationReason = "finish-$($attempt.tokens.finishReason)"
                     }
+                }
+                if ($mp.stderr) {
+                    $mockStderrDiagnostic = Protect-HarnessDiagnosticText -Text ([string]$mp.stderr)
+                    $attempt.harnessStderrTail = $mockStderrDiagnostic.text
+                    $attempt.harnessStderrTruncated = [bool]$mockStderrDiagnostic.truncated
                 }
                 $attempt.changedPaths = if ($mp.changedPaths) { @($mp.changedPaths) } else { @() }
                 if ($mp.terminationReason) { $attempt.terminationReason = [string]$mp.terminationReason }
@@ -775,6 +815,14 @@ $totalAttempts = 0
             $attempt.tokens = $liveResult.tokens
             $attempt.terminationReason = $liveResult.terminationReason
             $attempt.draftOutput = $liveResult.draftOutput
+            $stderrDiagnostic = Protect-HarnessDiagnosticText -Text $liveResult.stderr
+            $attempt.harnessStderrTail = $stderrDiagnostic.text
+            $attempt.harnessStderrTruncated = [bool]$stderrDiagnostic.truncated
+            $eventLog = Write-HarnessEventLog -Jsonl $liveResult.rawJsonl -AttemptNumber $totalAttempts
+            $attempt.eventLogFile = $eventLog.file
+            $attempt.eventLogSha256 = $eventLog.sha256
+            $attempt.eventCount = $eventLog.eventCount
+            $attempt.toolUseCount = $eventLog.toolUseCount
         }
 
         # Preserve bounded evidence even when NAN or deterministic validation
@@ -971,7 +1019,7 @@ if ($TaskType -eq 'code') {
 }
 $telemetry = @{
     telemetryId=$tid;simulated=[bool]$TestMode;taskType=$TaskType;selectedModel=if ($successResult) { $successResult.model } else { $null };selectedAgent=if ($successResult) { $successResult.agent } else { $null }
-    attempts=@($attempts | ForEach-Object { @{model=$_.model;agent=$_.agent;attempt=$_.attempt;retry=$_.retry;exitCode=$_.exitCode;tokens=$_.tokens;changedPaths=$_.changedPaths;validationExitCode=$_.validationExitCode;validationDiagnostics=@($_.validationDiagnostics);terminationReason=$_.terminationReason} })
+    attempts=@($attempts | ForEach-Object { @{model=$_.model;agent=$_.agent;attempt=$_.attempt;retry=$_.retry;exitCode=$_.exitCode;tokens=$_.tokens;changedPaths=$_.changedPaths;validationExitCode=$_.validationExitCode;validationDiagnostics=@($_.validationDiagnostics);terminationReason=$_.terminationReason;draftOutput=$_.draftOutput;harnessStderrTail=$_.harnessStderrTail;harnessStderrTruncated=[bool]$_.harnessStderrTruncated;eventLogFile=$_.eventLogFile;eventLogSha256=$_.eventLogSha256;eventCount=$_.eventCount;toolUseCount=$_.toolUseCount} })
     changedPaths=@($changedPaths);contractViolation=$contractViolation;validationFailed=$validationFailed
     tokensUsage=$agg;success=$success;status=$status;frontierContract=$fcTelemetry
     draftOutput=if ($successResult) { $successResult.draftOutput } else { '' }
