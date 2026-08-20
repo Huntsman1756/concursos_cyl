@@ -402,7 +402,6 @@ function metricForRows(
 }
 
 function shadowPredictions(
-  rows: readonly ReviewRow[],
   offers: readonly JobOffer[],
   formToProgram: ReadonlyMap<string, string>,
 ): Prediction[] {
@@ -577,11 +576,7 @@ function buildResults(
 ): EvaluationResults {
   const rows = labels.review.rows;
   const formToProgram = formProgramMap(rows);
-  const shadowPredictionRows = shadowPredictions(
-    rows,
-    inputs.offers,
-    formToProgram,
-  );
+  const shadowPredictionRows = shadowPredictions(inputs.offers, formToProgram);
   const baselineMatches = buildBaselineMatches(inputs);
   const baselinePredictionRows = baselinePredictions(rows, baselineMatches);
   const shadow = metricForRows(
