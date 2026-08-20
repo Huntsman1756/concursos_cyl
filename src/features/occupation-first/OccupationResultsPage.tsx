@@ -125,20 +125,47 @@ export function OccupationResultsPage() {
   const stale =
     state.manifest.qualityStatus === "stale" ||
     trainingSnapshot.qualityStatus === "stale";
+  const linkedProgramKeys = new Set(
+    orderedLinks.map((link) => link.trainingProgramKey),
+  );
+  const linkedOfferings = state.foundation.trainingOfferings.filter(
+    (offering) => linkedProgramKeys.has(offering.programKey),
+  );
+  const linkedCenters = new Set(
+    linkedOfferings.map((offering) => offering.centerCode),
+  );
+  const linkedProvinces = new Set(
+    linkedOfferings.map((offering) => offering.province),
+  );
 
   return (
-    <section className="training-page">
+    <section className="training-page occupation-result-page">
       <header className="training-page__header">
         <Link to="/desde-ocupacion">Buscar otra ocupación</Link>
         <p className="training-page__eyebrow">
           Ocupación seleccionada del catálogo oficial
         </p>
         <h1>{occupation.preferredLabel}</h1>
-        <p>
-          CNO-11 {occupation.classificationCode}. Mostramos las relaciones
-          revisadas por SALIDA CyL y la fuente que respalda cada una.
-        </p>
+        <p>CNO-11 {occupation.classificationCode}</p>
       </header>
+      <p className="decision-direction">
+        Ocupación que quieres <span aria-hidden="true">→</span> FP que te lleva
+        a ella
+      </p>
+      <dl className="result-summary" aria-label="Resumen de rutas formativas">
+        <div>
+          <dt>FP relacionadas</dt>
+          <dd>{linkedProgramKeys.size}</dd>
+        </div>
+        <div>
+          <dt>Centros</dt>
+          <dd>{linkedCenters.size}</dd>
+        </div>
+        <div>
+          <dt>Provincias</dt>
+          <dd>{linkedProvinces.size}</dd>
+        </div>
+      </dl>
       <p className="coverage-note">
         La cobertura aún es limitada: una ausencia indica que la relación no ha
         sido revisada, no que no exista formación relacionada.
@@ -170,28 +197,34 @@ export function OccupationResultsPage() {
           <Link to="/desde-ocupacion">Probar otra búsqueda</Link>
         </div>
       ) : (
-        <div
-          className="training-route-list"
-          aria-label="Rutas formativas revisadas"
+        <section
+          className="occupation-routes"
+          aria-labelledby="training-routes-heading"
         >
-          {orderedLinks.map((link) => {
-            const program = state.foundation.programs.find(
-              (candidate) => candidate.programKey === link.trainingProgramKey,
-            );
-            if (program === undefined) return null;
-            return (
-              <TrainingRouteCard
-                key={`${link.trainingProgramKey}-${link.relationshipType}`}
-                link={link}
-                program={program}
-                offerings={state.foundation.trainingOfferings.filter(
-                  (offering) => offering.programKey === program.programKey,
-                )}
-                snapshotDate={spanishDate(snapshotInstant)}
-              />
-            );
-          })}
-        </div>
+          <div className="section-heading">
+            <h2 id="training-routes-heading">FP relacionadas</h2>
+            <span>Datos del {spanishDate(snapshotInstant)}</span>
+          </div>
+          <div className="training-route-list">
+            {orderedLinks.map((link) => {
+              const program = state.foundation.programs.find(
+                (candidate) => candidate.programKey === link.trainingProgramKey,
+              );
+              if (program === undefined) return null;
+              return (
+                <TrainingRouteCard
+                  key={`${link.trainingProgramKey}-${link.relationshipType}`}
+                  link={link}
+                  program={program}
+                  offerings={state.foundation.trainingOfferings.filter(
+                    (offering) => offering.programKey === program.programKey,
+                  )}
+                  snapshotDate={spanishDate(snapshotInstant)}
+                />
+              );
+            })}
+          </div>
+        </section>
       )}
     </section>
   );

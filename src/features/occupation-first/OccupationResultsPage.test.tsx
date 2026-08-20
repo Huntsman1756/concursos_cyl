@@ -231,6 +231,13 @@ describe("occupation-first results", () => {
     expect(
       await screen.findByRole("heading", { name: occupation.preferredLabel }),
     ).toBeVisible();
+    expect(screen.getByText(/Ocupación que quieres/)).toHaveTextContent(
+      /FP que te lleva a ella/,
+    );
+    const routeSummary = screen.getByLabelText("Resumen de rutas formativas");
+    expect(routeSummary).toHaveTextContent(/FP relacionadas2/);
+    expect(routeSummary).toHaveTextContent(/Centros3/);
+    expect(routeSummary).toHaveTextContent(/Provincias3/);
     const cards = screen.getAllByTestId("training-route-card");
     expect(
       within(cards[0]).getByText("Salida profesional oficial"),
