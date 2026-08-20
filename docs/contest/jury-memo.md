@@ -16,7 +16,7 @@ La sección «Para centros y administraciones» explica cómo reutilizar el prod
 
 ## 3. Valor público y social
 
-La orientación es pública, gratuita y usable sin registro, también desde un móvil. Esto facilita el acceso donde no hay orientación presencial continua, especialmente en municipios pequeños. La interfaz muestra dónde estudiar, población del municipio, modalidades y contexto provincial, pero distingue ese contexto de la demanda de una ocupación concreta. La finalidad es que una persona pueda valorar opciones formativas y laborales en Castilla y León con la misma evidencia, viva donde viva.
+La orientación es pública, gratuita y usable sin registro, también desde un móvil. Esto facilita el acceso donde no hay orientación presencial continua, especialmente en municipios pequeños. La interfaz muestra dónde estudiar, la distribución territorial de los centros, población municipal, modalidades y contexto provincial, pero distingue ese contexto de la demanda de una ocupación concreta. La finalidad es que una persona pueda valorar opciones formativas y laborales en Castilla y León con la misma evidencia, viva donde viva.
 
 ## 4. Originalidad e innovación
 
@@ -24,7 +24,7 @@ El núcleo es una relación bidireccional FP ↔ ocupación con evidencia trazab
 
 ## 5. Variedad de datasets del Portal de Datos Abiertos de la Junta de Castilla y León
 
-Los siete conjuntos regionales tienen un uso visible en la interfaz y una copia normalizada dentro del snapshot `20260820131614043-1c06f1f9f7e6`.
+Los ocho conjuntos regionales tienen un uso visible en la interfaz y una copia normalizada dentro del snapshot `20260820140321122-facb099dd11b`.
 
 | Dataset JCyL                       | Dónde se usa                                 | Registros usados | Fecha usada           | Licencia     |
 | ---------------------------------- | -------------------------------------------- | ---------------: | --------------------- | ------------ |
@@ -35,6 +35,7 @@ Los siete conjuntos regionales tienen un uso visible en la interfaz y una copia 
 | Convocatorias de Empleo Público    | Procesos públicos con plazo abierto          |              307 | Copia del 20/08/2026  | CC BY 4.0 ES |
 | Contratos realizados por provincia | Contexto laboral territorial en resultados   |            2.331 | Copia del 20/08/2026  | CC BY 4.0 ES |
 | Registro de municipios             | Población del municipio donde se estudia     |            2.248 | Copia del 20/08/2026  | CC BY 4.0 ES |
+| Directorio de Centros Docentes     | Coordenadas de la distribución territorial   |            1.741 | Copia del 20/08/2026  | CC BY 4.0 ES |
 
 Se combinan con fuentes estatales oficiales: CNO-11, TodoFP, BOE y las tablas de inserción de EducaBase. La interfaz identifica el ámbito de cada fuente para impedir conclusiones que los datos no sostienen.
 
@@ -52,6 +53,7 @@ La ingesta descarga las fuentes, valida esquemas y genera recursos inmutables ba
 - Las 39 ofertas alcanzadas pertenecen a una copia fechada de 1.026 ofertas; no representan todo el mercado laboral.
 - Los contratos provinciales aportan contexto territorial agregado, no demanda por ocupación.
 - La población municipal describe el lugar de estudio, no la residencia del alumnado.
+- Las coordenadas del Directorio sitúan los centros publicados; la visualización no calcula distancias ni tiempos de desplazamiento.
 - Las estadísticas de cotización no predicen salario, empleo ni residencia de una persona.
 
 ## Acceso y verificabilidad

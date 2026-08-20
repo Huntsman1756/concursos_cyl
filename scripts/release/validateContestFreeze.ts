@@ -27,6 +27,7 @@ const RESOURCE_KEYS = [
   "centers",
   "derivedFpOccupationGraph",
   "ecylCourses",
+  "educationCenterDirectory",
   "jobOffers",
   "mappingCoverage",
   "municipalities",

@@ -5,11 +5,11 @@
 <!-- prettier-ignore -->
 | Campo | Valor |
 | --- | --- |
-| Commit fuente | `42f5ed938ad555612b2709a255e6668428577e4e` |
+| Commit fuente | `769872ef19b6ef43ff81026a7e999e52f57dcaa1` |
 | Manifest | `public/data/v1/manifest.json` |
-| SHA-256 del manifest | `cfe88ed469f146c107363092dfee67ecc7adc1dca7a10f2bb45f02fd2421afb9` |
-| Generado | 2026-08-20T13:16:14.043Z |
-| Snapshot | `20260820131614043-1c06f1f9f7e6` |
+| SHA-256 del manifest | `0673f4bc987b91280c4d72d18e213b1dbcf6d4e93e13f60e6302b945af606a86` |
+| Generado | 2026-08-20T14:03:21.122Z |
+| Snapshot | `20260820140321122-facb099dd11b` |
 | Estado de calidad | passed |
 | Centros | 229 |
 | Programas | 187 |
@@ -21,25 +21,26 @@
 <!-- prettier-ignore -->
 | Recurso | Ruta | Registros | SHA-256 |
 | --- | --- | ---: | --- |
-| centers | `/data/v1/snapshots/20260820131614043-1c06f1f9f7e6/centers.json` | 229 | `593b7780f6cb9511c02edb26a769e5e1f951624f6e4b923a8e34caacb230c87a` |
-| derivedFpOccupationGraph | `/data/v1/snapshots/20260820131614043-1c06f1f9f7e6/derived-fp-occupation-graph.json` | 87 | `d2562191143855dc44eff50858833918405c2ff1bb0077bd73a9a5f9ea08fcf3` |
-| ecylCourses | `/data/v1/snapshots/20260820131614043-1c06f1f9f7e6/ecyl-courses.json` | 749 | `9ae0bb5a207ac6fad836b746fb2638d4a830aa96dd473f6f4479cc5f099bdc2a` |
-| jobOffers | `/data/v1/snapshots/20260820131614043-1c06f1f9f7e6/job-offers.json` | 1026 | `35fe5c3954b52b1e71aa13397366d0198ffed9b71cfef20b8203bfd2d66c8055` |
-| mappingCoverage | `/data/v1/snapshots/20260820131614043-1c06f1f9f7e6/mapping-coverage.json` | 209 | `9a5b522d5ff8cca1443ad9b7747ad18cb80f6fe94ba629c3c7c1399067b0624a` |
-| municipalities | `/data/v1/snapshots/20260820131614043-1c06f1f9f7e6/municipalities.json` | 2248 | `71ac22dfbcc5f95927fd17fa6b0a03bc77d39482fcad1640f9c6b08dec609f10` |
-| officialOccupations | `/data/v1/snapshots/20260820131614043-1c06f1f9f7e6/official-occupations.json` | 502 | `76fa213f97c98e5af0f9bf120323ba3abb32df78e797c381e5454cadc858f64b` |
-| occupationAliases | `/data/v1/snapshots/20260820131614043-1c06f1f9f7e6/occupation-aliases.json` | 21 | `4f37bc7c6ff4d76140c79d9e9245c7155ff5f77d5b3bc397796985e13c2fbe7c` |
-| occupations | `/data/v1/snapshots/20260820131614043-1c06f1f9f7e6/occupations.json` | 91 | `f6c4b34a6fd5760c967273e4cc085abf6a3865baadfa2c721ac07dcd90fe3f09` |
-| openDataCatalog | `/data/v1/snapshots/20260820131614043-1c06f1f9f7e6/open-data-catalog.json` | 1 | `0bdd59876c083ba62dcf035778596ae9214ea02c9a3a0c97a4173d4b1fe4dad3` |
-| outcomeIndicators | `/data/v1/snapshots/20260820131614043-1c06f1f9f7e6/outcome-indicators.json` | 22170 | `4f2c6b73fc4171bb9daf21583712ab2ec99bcaa7d27b1f2fd0c070b9079ab3e2` |
-| professionalCertificates | `/data/v1/snapshots/20260820131614043-1c06f1f9f7e6/professional-certificates.json` | 583 | `a66ebe6b4439dca39091b0f06d587bc326389d9f7e2ecfc7a8c88b5a8937a7cb` |
-| professionalProfiles | `/data/v1/snapshots/20260820131614043-1c06f1f9f7e6/professional-profiles.json` | 1728 | `2794228570e734a5dca0f8d594a199a67b9b732d7f54ffd56abe3af22f66d22b` |
-| programs | `/data/v1/snapshots/20260820131614043-1c06f1f9f7e6/programs.json` | 187 | `90df87b283b5ff003dda20c9c4f7eac52b903e611753d107d4b927bbc4e19b72` |
-| provincialContracts | `/data/v1/snapshots/20260820131614043-1c06f1f9f7e6/provincial-contracts.json` | 2331 | `a6b9ddf9886dcb0638dbce19afe791253503988b509fc7fcb200f44d7c33002b` |
-| publicEmploymentCalls | `/data/v1/snapshots/20260820131614043-1c06f1f9f7e6/public-employment-calls.json` | 307 | `1b65936297d049b3d287dcfe1f93c81b2ad035dfb6d9bdfece263529249253cc` |
-| publishedRequirements | `/data/v1/snapshots/20260820131614043-1c06f1f9f7e6/published-requirements.json` | 333 | `791ed86a1805afffdea2125fb682b14ab1e67b63d9d759b4af11f86776b8e3a2` |
-| trainingOccupationLinks | `/data/v1/snapshots/20260820131614043-1c06f1f9f7e6/training-occupation-links.json` | 87 | `64fc21f36253ad679f037d3cde49703df4a4808df142f08fec6e5540efb07dad` |
-| trainingOfferings | `/data/v1/snapshots/20260820131614043-1c06f1f9f7e6/training-offerings.json` | 1294 | `0948871f993a4f0a03ed42ccef060c4a395e0898dc230086f234345fee7e880a` |
+| centers | `/data/v1/snapshots/20260820140321122-facb099dd11b/centers.json` | 229 | `593b7780f6cb9511c02edb26a769e5e1f951624f6e4b923a8e34caacb230c87a` |
+| derivedFpOccupationGraph | `/data/v1/snapshots/20260820140321122-facb099dd11b/derived-fp-occupation-graph.json` | 87 | `d2562191143855dc44eff50858833918405c2ff1bb0077bd73a9a5f9ea08fcf3` |
+| ecylCourses | `/data/v1/snapshots/20260820140321122-facb099dd11b/ecyl-courses.json` | 749 | `9ae0bb5a207ac6fad836b746fb2638d4a830aa96dd473f6f4479cc5f099bdc2a` |
+| educationCenterDirectory | `/data/v1/snapshots/20260820140321122-facb099dd11b/education-center-directory.json` | 1741 | `2a35b80acb70651e94ce747af74989760d53c3ef02fa1cf080a27296317d1ecd` |
+| jobOffers | `/data/v1/snapshots/20260820140321122-facb099dd11b/job-offers.json` | 1026 | `db312f3f7956025e965b6b3f6cbd67c831602a84da0b819b7f3a544bfedd62e6` |
+| mappingCoverage | `/data/v1/snapshots/20260820140321122-facb099dd11b/mapping-coverage.json` | 209 | `9a5b522d5ff8cca1443ad9b7747ad18cb80f6fe94ba629c3c7c1399067b0624a` |
+| municipalities | `/data/v1/snapshots/20260820140321122-facb099dd11b/municipalities.json` | 2248 | `71ac22dfbcc5f95927fd17fa6b0a03bc77d39482fcad1640f9c6b08dec609f10` |
+| officialOccupations | `/data/v1/snapshots/20260820140321122-facb099dd11b/official-occupations.json` | 502 | `76fa213f97c98e5af0f9bf120323ba3abb32df78e797c381e5454cadc858f64b` |
+| occupationAliases | `/data/v1/snapshots/20260820140321122-facb099dd11b/occupation-aliases.json` | 21 | `4f37bc7c6ff4d76140c79d9e9245c7155ff5f77d5b3bc397796985e13c2fbe7c` |
+| occupations | `/data/v1/snapshots/20260820140321122-facb099dd11b/occupations.json` | 91 | `f6c4b34a6fd5760c967273e4cc085abf6a3865baadfa2c721ac07dcd90fe3f09` |
+| openDataCatalog | `/data/v1/snapshots/20260820140321122-facb099dd11b/open-data-catalog.json` | 1 | `65aad65f789f50a7d6537821d411a0d419684b5d653fab33fcbf12d14b07db8f` |
+| outcomeIndicators | `/data/v1/snapshots/20260820140321122-facb099dd11b/outcome-indicators.json` | 22170 | `4f2c6b73fc4171bb9daf21583712ab2ec99bcaa7d27b1f2fd0c070b9079ab3e2` |
+| professionalCertificates | `/data/v1/snapshots/20260820140321122-facb099dd11b/professional-certificates.json` | 583 | `a66ebe6b4439dca39091b0f06d587bc326389d9f7e2ecfc7a8c88b5a8937a7cb` |
+| professionalProfiles | `/data/v1/snapshots/20260820140321122-facb099dd11b/professional-profiles.json` | 1728 | `2794228570e734a5dca0f8d594a199a67b9b732d7f54ffd56abe3af22f66d22b` |
+| programs | `/data/v1/snapshots/20260820140321122-facb099dd11b/programs.json` | 187 | `90df87b283b5ff003dda20c9c4f7eac52b903e611753d107d4b927bbc4e19b72` |
+| provincialContracts | `/data/v1/snapshots/20260820140321122-facb099dd11b/provincial-contracts.json` | 2331 | `a6b9ddf9886dcb0638dbce19afe791253503988b509fc7fcb200f44d7c33002b` |
+| publicEmploymentCalls | `/data/v1/snapshots/20260820140321122-facb099dd11b/public-employment-calls.json` | 307 | `1b65936297d049b3d287dcfe1f93c81b2ad035dfb6d9bdfece263529249253cc` |
+| publishedRequirements | `/data/v1/snapshots/20260820140321122-facb099dd11b/published-requirements.json` | 333 | `791ed86a1805afffdea2125fb682b14ab1e67b63d9d759b4af11f86776b8e3a2` |
+| trainingOccupationLinks | `/data/v1/snapshots/20260820140321122-facb099dd11b/training-occupation-links.json` | 87 | `64fc21f36253ad679f037d3cde49703df4a4808df142f08fec6e5540efb07dad` |
+| trainingOfferings | `/data/v1/snapshots/20260820140321122-facb099dd11b/training-offerings.json` | 1294 | `0948871f993a4f0a03ed42ccef060c4a395e0898dc230086f234345fee7e880a` |
 
 ## Recomputación de cobertura
 
@@ -72,7 +73,7 @@ npm run analysis:pilot:report:check
 npm exec -- tsx scripts/release/validateContestFreeze.ts
 ```
 
-La revisión independiente confirmó el manifest, sus 19 recursos, los conjuntos de relaciones y la ausencia de cambios en `data/curated`, `public/data`, `src/domain` y `src/features` desde el commit fuente.
+La revisión independiente confirmó el manifest, sus 20 recursos, los conjuntos de relaciones y la ausencia de cambios en `data/curated`, `public/data`, `src/domain` y `src/features` desde el commit fuente.
 
 ## Despliegue
 
