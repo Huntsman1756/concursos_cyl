@@ -1,5 +1,85 @@
 [
   {
+    "trainingProgramKey": "ADG01S",
+    "occupationId": "occupation:cno11:4223",
+    "relationshipType": "reviewed_relationship",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/administracion-gestion/asistencia-direccion.html",
+    "sourceQuote": "Asistente en departamentos de Recursos Humanos.",
+    "reviewedAt": "2026-08-13",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "AFD02M",
+    "occupationId": "occupation:cno11:3723",
+    "relationshipType": "reviewed_relationship",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/actividades-fisicas-deportivas/guia-medio-natural-tiempo-libre.html",
+    "sourceQuote": "Diseñar y organizar actividades físico-deportivas recreativas guiadas por el medio natural.",
+    "reviewedAt": "2026-08-13",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "AFD02M",
+    "occupationId": "occupation:cno11:3724",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/actividades-fisicas-deportivas/guia-medio-natural-tiempo-libre.html",
+    "sourceQuote": "Monitor de campamentos, de albergues de juventud, de casas de colonias, de granjas-escuelas, y de aulas y escuelas de naturaleza.",
+    "reviewedAt": "2026-08-13",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "AGA01B",
+    "occupationId": "occupation:cno11:4121",
+    "relationshipType": "reviewed_relationship",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/agraria/agrojardineria-composiciones-florales.html",
+    "sourceQuote": "Auxiliar de almacén de flores.",
+    "reviewedAt": "2026-08-13",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "AGA01B",
+    "occupationId": "occupation:cno11:5220",
+    "relationshipType": "reviewed_relationship",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/agraria/agrojardineria-composiciones-florales.html",
+    "sourceQuote": "Auxiliar de ventas en floristería.",
+    "reviewedAt": "2026-08-13",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "AGA03S",
+    "occupationId": "occupation:cno11:2640",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/agraria/ganaderia-asistencia-sanidad-animal.html",
+    "sourceQuote": "Visitador / visitadora de productos de veterinaria.",
+    "reviewedAt": "2026-08-14",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "AGA04M",
+    "occupationId": "occupation:cno11:6120",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/agraria/aprovechamiento-conservacion-medio-natural.html",
+    "sourceQuote": "Viverista.",
+    "reviewedAt": "2026-08-14",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "AGA04M",
+    "occupationId": "occupation:cno11:8321",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/agraria/aprovechamiento-conservacion-medio-natural.html",
+    "sourceQuote": "Tractorista.",
+    "reviewedAt": "2026-08-14",
+    "mappingVersion": "1.0.0"
+  },
+  {
     "trainingProgramKey": "COM02M",
     "occupationId": "occupation:cno11:5210",
     "relationshipType": "official_output",
@@ -17,6 +97,196 @@
     "sourceUrl": "https://www.boe.es/eli/es/rd/189/2018",
     "sourceQuote": "Vendedor/a de productos alimentarios.",
     "reviewedAt": "2026-08-09",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "COM02S",
+    "occupationId": "occupation:cno11:3510",
+    "relationshipType": "reviewed_relationship",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/comercio-marketing/transporte-logistica.html",
+    "sourceQuote": "Comercial de servicios de transporte por carretera.",
+    "reviewedAt": "2026-08-13",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "COM02S",
+    "occupationId": "occupation:cno11:3523",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/comercio-marketing/transporte-logistica.html",
+    "sourceQuote": "Consignatario / consignataria de buques.",
+    "reviewedAt": "2026-08-13",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "COM02S",
+    "occupationId": "occupation:cno11:4123",
+    "relationshipType": "reviewed_relationship",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/comercio-marketing/transporte-logistica.html",
+    "sourceQuote": "Operador / operadora logística.",
+    "reviewedAt": "2026-08-13",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "COM02S",
+    "occupationId": "occupation:cno11:5210",
+    "relationshipType": "reviewed_relationship",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/comercio-marketing/transporte-logistica.html",
+    "sourceQuote": "Jefa / jefe de almacén.",
+    "reviewedAt": "2026-08-13",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "COM02SD",
+    "occupationId": "occupation:cno11:3510",
+    "relationshipType": "reviewed_relationship",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/comercio-marketing/transporte-logistica.html",
+    "sourceQuote": "Comercial de servicios de transporte por carretera.",
+    "reviewedAt": "2026-08-13",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "COM02SD",
+    "occupationId": "occupation:cno11:3523",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/comercio-marketing/transporte-logistica.html",
+    "sourceQuote": "Consignatario / consignataria de buques.",
+    "reviewedAt": "2026-08-13",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "COM02SD",
+    "occupationId": "occupation:cno11:4123",
+    "relationshipType": "reviewed_relationship",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/comercio-marketing/transporte-logistica.html",
+    "sourceQuote": "Operador / operadora logística.",
+    "reviewedAt": "2026-08-13",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "COM02SD",
+    "occupationId": "occupation:cno11:5210",
+    "relationshipType": "reviewed_relationship",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/comercio-marketing/transporte-logistica.html",
+    "sourceQuote": "Jefa / jefe de almacén.",
+    "reviewedAt": "2026-08-13",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "COM03S",
+    "occupationId": "occupation:cno11:3510",
+    "relationshipType": "reviewed_relationship",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/comercio-marketing/gestion-ventas-espacios-comerciales.html",
+    "sourceQuote": "Agente comercial.",
+    "reviewedAt": "2026-08-13",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "COM03S",
+    "occupationId": "occupation:cno11:5210",
+    "relationshipType": "reviewed_relationship",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/comercio-marketing/gestion-ventas-espacios-comerciales.html",
+    "sourceQuote": "Encargada / encargado de sección de un comercio.",
+    "reviewedAt": "2026-08-13",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "ELE01M",
+    "occupationId": "occupation:cno11:7510",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.boe.es/eli/es/rd/2008/02/08/177",
+    "sourceQuote": "Electricista de construcción.",
+    "reviewedAt": "2026-08-20",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "ELE01S",
+    "occupationId": "occupation:cno11:3123",
+    "relationshipType": "reviewed_relationship",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/electricidad-electronica/sistemas-electrotecnicos-automatizados.html",
+    "sourceQuote": "Técnica / técnico en proyectos electrotécnicos.",
+    "reviewedAt": "2026-08-13",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "ELE01S",
+    "occupationId": "occupation:cno11:7510",
+    "relationshipType": "reviewed_relationship",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/electricidad-electronica/sistemas-electrotecnicos-automatizados.html",
+    "sourceQuote": "Jefa / jefe de equipo de instaladores / instaladoras de baja tensión para edificios.",
+    "reviewedAt": "2026-08-13",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "ELE02S",
+    "occupationId": "occupation:cno11:3124",
+    "relationshipType": "reviewed_relationship",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/electricidad-electronica/sistemas-telecomunicaciones-informaticos.html",
+    "sourceQuote": "Técnica / técnico en supervisión, instalación, mantenimiento, verificación y control de equipos de sistemas de radiodifusión.",
+    "reviewedAt": "2026-08-13",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "ELE02S",
+    "occupationId": "occupation:cno11:3811",
+    "relationshipType": "reviewed_relationship",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/electricidad-electronica/sistemas-telecomunicaciones-informaticos.html",
+    "sourceQuote": "Especialista en integración, instalación y mantenimiento de equipos y sistemas informáticos.",
+    "reviewedAt": "2026-08-13",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "ELE02S",
+    "occupationId": "occupation:cno11:3813",
+    "relationshipType": "reviewed_relationship",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/electricidad-electronica/sistemas-telecomunicaciones-informaticos.html",
+    "sourceQuote": "Técnica / técnico en supervisión, instalación, mantener, verificación y control en redes locales y sistemas telemáticos",
+    "reviewedAt": "2026-08-13",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "ELE02S",
+    "occupationId": "occupation:cno11:7533",
+    "relationshipType": "reviewed_relationship",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/electricidad-electronica/sistemas-telecomunicaciones-informaticos.html",
+    "sourceQuote": "Especialista en instalación, integración y mantenimiento de equipos y sistemas de telecomunicación.",
+    "reviewedAt": "2026-08-13",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "ENA03S",
+    "occupationId": "occupation:cno11:3123",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/energia-agua/energias-renovables.html",
+    "sourceQuote": "Operador-mantenedor / operadora-mantenedora de subestaciones eléctricas de instalaciones eólicas y fotovoltaicas.",
+    "reviewedAt": "2026-08-14",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "ENA03S",
+    "occupationId": "occupation:cno11:7294",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/energia-agua/energias-renovables.html",
+    "sourceQuote": "Montador-operador / montadora-operadora de instalaciones solares fotovoltaicas.",
+    "reviewedAt": "2026-08-14",
     "mappingVersion": "1.0.0"
   },
   {
@@ -70,6 +340,96 @@
     "mappingVersion": "1.0.0"
   },
   {
+    "trainingProgramKey": "EOC02S",
+    "occupationId": "occupation:cno11:3129",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/edificacion-obra-civil/proyectos-obra-civil.html",
+    "sourceQuote": "Delineante de obra civil.",
+    "reviewedAt": "2026-08-14",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "EOC02SD",
+    "occupationId": "occupation:cno11:3129",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/edificacion-obra-civil/proyectos-obra-civil.html",
+    "sourceQuote": "Delineante de obra civil.",
+    "reviewedAt": "2026-08-14",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "FME01S",
+    "occupationId": "occupation:cno11:3126",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/fabricacion-mecanica/programacion-produccion-fab-mecanica.html",
+    "sourceQuote": "Técnicas / técnicos en mecánica.",
+    "reviewedAt": "2026-08-14",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "FME02B",
+    "occupationId": "occupation:cno11:7132",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/fabricacion-mecanica/fabricacion-elementos-metalicos.html",
+    "sourceQuote": "Auxiliar de carpintero / carpintera metálico.",
+    "reviewedAt": "2026-08-14",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "FME02B",
+    "occupationId": "occupation:cno11:7312",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/fabricacion-mecanica/fabricacion-elementos-metalicos.html",
+    "sourceQuote": "Auxiliar de oxicortador / oxicortadora a mano.",
+    "reviewedAt": "2026-08-14",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "FME02B",
+    "occupationId": "occupation:cno11:7314",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/fabricacion-mecanica/fabricacion-elementos-metalicos.html",
+    "sourceQuote": "Auxiliar de montador / montadora de estructuras metálicas",
+    "reviewedAt": "2026-08-14",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "FME02B",
+    "occupationId": "occupation:cno11:8202",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/fabricacion-mecanica/fabricacion-elementos-metalicos.html",
+    "sourceQuote": "Operador / operadora de ensamblado de equipos eléctricos y electrónicos.",
+    "reviewedAt": "2026-08-14",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "FME02B",
+    "occupationId": "occupation:cno11:9700",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/fabricacion-mecanica/fabricacion-elementos-metalicos.html",
+    "sourceQuote": "Peones y auxiliares de industrias metalúrgicas, de fabricación de productos metálicos y manufactureras.",
+    "reviewedAt": "2026-08-20",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "FME02S",
+    "occupationId": "occupation:cno11:7314",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/fabricacion-mecanica/construcciones-metalicas.html",
+    "sourceQuote": "Montaje en construcciones metálicas.",
+    "reviewedAt": "2026-08-14",
+    "mappingVersion": "1.0.0"
+  },
+  {
     "trainingProgramKey": "HOT01M",
     "occupationId": "occupation:cno11:5110",
     "relationshipType": "official_output",
@@ -77,6 +437,86 @@
     "sourceUrl": "https://todofp.es/dam/jcr%3A63392ee9-4d38-449b-a196-d0efb714b364/n-tcocinagastronomiaes-pdf.pdf",
     "sourceQuote": "Las ocupaciones y puestos de trabajo más relevantes son los siguientes: Cocinero.",
     "reviewedAt": "2026-08-08",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "HOT01S",
+    "occupationId": "occupation:cno11:3510",
+    "relationshipType": "reviewed_relationship",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/hosteleria-turismo/gestion-alojamientos-turisticos.html",
+    "sourceQuote": "Comercial de establecimientos de alojamientos turísticos.",
+    "reviewedAt": "2026-08-13",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "HOT02M",
+    "occupationId": "occupation:cno11:4121",
+    "relationshipType": "reviewed_relationship",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/hosteleria-turismo/servicios-restauracion.html",
+    "sourceQuote": "Empleada / empleado de economato de unidades de producción y servicio de alimentos y bebidas.",
+    "reviewedAt": "2026-08-13",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "HOT02M",
+    "occupationId": "occupation:cno11:5120",
+    "relationshipType": "reviewed_relationship",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/hosteleria-turismo/servicios-restauracion.html",
+    "sourceQuote": "Camarera / camarero de bar-cafetería o restaurante.",
+    "reviewedAt": "2026-08-13",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "HOT03S",
+    "occupationId": "occupation:cno11:4123",
+    "relationshipType": "reviewed_relationship",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/hosteleria-turismo/guia-informacion-asistencias-turisticas.html",
+    "sourceQuote": "Asistente en terminales (estaciones, puertos y aeropuertos).",
+    "reviewedAt": "2026-08-13",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "HOT03S",
+    "occupationId": "occupation:cno11:4411",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/hosteleria-turismo/guia-informacion-asistencias-turisticas.html",
+    "sourceQuote": "Informador turístico / informadora turística.",
+    "reviewedAt": "2026-08-13",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "HOT05S",
+    "occupationId": "occupation:cno11:3522",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/hosteleria-turismo/direccion-servicios-restauracion.html",
+    "sourceQuote": "Responsable de compra de bebidas.",
+    "reviewedAt": "2026-08-14",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "IFC01MD",
+    "occupationId": "occupation:cno11:3812",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/informatica-comunicaciones/sistemas-microniformaticos-redes.html",
+    "sourceQuote": "Técnica / técnico de soporte informático.",
+    "reviewedAt": "2026-08-20",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "IFC02B",
+    "occupationId": "occupation:cno11:7533",
+    "relationshipType": "reviewed_relationship",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/informatica-comunicaciones/informatica-oficina.html",
+    "sourceQuote": "Ayudante de montador / montadora de sistemas microinformáticos.",
+    "reviewedAt": "2026-08-13",
     "mappingVersion": "1.0.0"
   },
   {
@@ -100,73 +540,163 @@
     "mappingVersion": "1.0.0"
   },
   {
-    "trainingProgramKey": "SAN21",
-    "occupationId": "occupation:cno11:5611",
-    "relationshipType": "official_output",
-    "reviewStatus": "approved",
-    "sourceUrl": "https://todofp.es/dam/jcr%3Aaf5b68fd-e75c-493b-94ff-0565d3886473/san21cuidauxilenfermeria-pdf.pdf",
-    "sourceQuote": "Auxiliar de Enfermería/Clínica..",
-    "reviewedAt": "2026-08-08",
-    "mappingVersion": "1.0.0"
-  },
-  {
-    "trainingProgramKey": "SAN21",
-    "occupationId": "occupation:cno11:5612",
-    "relationshipType": "official_output",
-    "reviewStatus": "approved",
-    "sourceUrl": "https://todofp.es/dam/jcr%3Aaf5b68fd-e75c-493b-94ff-0565d3886473/san21cuidauxilenfermeria-pdf.pdf",
-    "sourceQuote": "Auxiliar de Atención primaria.",
-    "reviewedAt": "2026-08-08",
-    "mappingVersion": "1.0.0"
-  },
-  {
-    "trainingProgramKey": "SSC01M",
-    "occupationId": "occupation:cno11:5629",
+    "trainingProgramKey": "IMP01M",
+    "occupationId": "occupation:cno11:3510",
     "relationshipType": "reviewed_relationship",
     "reviewStatus": "approved",
-    "sourceUrl": "https://www.sepe.es/fr/SiteSepe/contenidos/COVID-19/documentos/documentacion-melilla/2021/201221-Resolucion-provisional--20-12-2021-firmada.pdf",
-    "sourceQuote": "Categoría: CUIDADORES DE PERSONAS CON DISCAPACIDAD (CNO 56291025) Titulación: FP grado medio en atención a personas en situación de dependencia",
-    "reviewedAt": "2026-08-08",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/imagen-personal/estetica-belleza.html",
+    "sourceQuote": "Agente comercial en empresas del sector.",
+    "reviewedAt": "2026-08-13",
     "mappingVersion": "1.0.0"
   },
   {
-    "trainingProgramKey": "SSC01M",
-    "occupationId": "occupation:cno11:5710",
+    "trainingProgramKey": "IMP01M",
+    "occupationId": "occupation:cno11:4412",
+    "relationshipType": "reviewed_relationship",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/imagen-personal/estetica-belleza.html",
+    "sourceQuote": "Recepcionista en empresas estéticas.",
+    "reviewedAt": "2026-08-13",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "IMP01M",
+    "occupationId": "occupation:cno11:5220",
+    "relationshipType": "reviewed_relationship",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/imagen-personal/estetica-belleza.html",
+    "sourceQuote": "Asesor-vendedor / asesora-vendedora en perfumerías y droguerías.",
+    "reviewedAt": "2026-08-13",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "IMP01M",
+    "occupationId": "occupation:cno11:5492",
+    "relationshipType": "reviewed_relationship",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/imagen-personal/estetica-belleza.html",
+    "sourceQuote": "Demostrador / demostradora de equipos, cosméticos y técnicas estéticas.",
+    "reviewedAt": "2026-08-13",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "IMP01M",
+    "occupationId": "occupation:cno11:5812",
+    "relationshipType": "reviewed_relationship",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/imagen-personal/estetica-belleza.html",
+    "sourceQuote": "Técnica / técnico esteticista en centros de belleza y gabinetes de estética.",
+    "reviewedAt": "2026-08-13",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "IMP01S",
+    "occupationId": "occupation:cno11:2640",
+    "relationshipType": "reviewed_relationship",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/imagen-personal/estetica-integral-bienestar.html",
+    "sourceQuote": "Técnica / técnico comercial.",
+    "reviewedAt": "2026-08-13",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "IMP01S",
+    "occupationId": "occupation:cno11:5812",
+    "relationshipType": "reviewed_relationship",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/imagen-personal/estetica-integral-bienestar.html",
+    "sourceQuote": "Esteticista.",
+    "reviewedAt": "2026-08-13",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "INA02S",
+    "occupationId": "occupation:cno11:3160",
     "relationshipType": "official_output",
     "reviewStatus": "approved",
-    "sourceUrl": "https://www.boe.es/eli/es/rd/2011/11/04/1593",
-    "sourceQuote": "Auxiliar de ayuda a domicilio.",
-    "reviewedAt": "2026-08-08",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/industrias-alimentarias/procesos-calidad-industria-alimentaria.html",
+    "sourceQuote": "Técnica / técnico en laboratorio de control de calidad.",
+    "reviewedAt": "2026-08-14",
     "mappingVersion": "1.0.0"
   },
   {
-    "trainingProgramKey": "ELE01M",
-    "occupationId": "occupation:cno11:7510",
+    "trainingProgramKey": "INA02S",
+    "occupationId": "occupation:cno11:3209",
     "relationshipType": "official_output",
     "reviewStatus": "approved",
-    "sourceUrl": "https://www.boe.es/eli/es/rd/2008/02/08/177",
-    "sourceQuote": "Electricista de construcción.",
-    "reviewedAt": "2026-08-20",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/industrias-alimentarias/procesos-calidad-industria-alimentaria.html",
+    "sourceQuote": "Supervisor / supervisora de equipos, procesos y productos.",
+    "reviewedAt": "2026-08-14",
     "mappingVersion": "1.0.0"
   },
   {
-    "trainingProgramKey": "FME02B",
+    "trainingProgramKey": "INA02S",
+    "occupationId": "occupation:cno11:3510",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/industrias-alimentarias/procesos-calidad-industria-alimentaria.html",
+    "sourceQuote": "Técnica / técnico comercial.",
+    "reviewedAt": "2026-08-14",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "MAM01B",
+    "occupationId": "occupation:cno11:7812",
+    "relationshipType": "reviewed_relationship",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/madera-mueble-corcho/carpinteria-mueble.html",
+    "sourceQuote": "Operador / operadora de máquinas fijas para fabricar productos de madera.",
+    "reviewedAt": "2026-08-13",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "MAM01B",
+    "occupationId": "occupation:cno11:8209",
+    "relationshipType": "reviewed_relationship",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/madera-mueble-corcho/fpb-carpinteria-mueble.html",
+    "sourceQuote": "Montador / montadora de muebles de madera o similares.",
+    "reviewedAt": "2026-08-13",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "MAM01B",
     "occupationId": "occupation:cno11:9700",
-    "relationshipType": "official_output",
+    "relationshipType": "reviewed_relationship",
     "reviewStatus": "approved",
-    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/fabricacion-mecanica/fabricacion-elementos-metalicos.html",
-    "sourceQuote": "Peones y auxiliares de industrias metalúrgicas, de fabricación de productos metálicos y manufactureras.",
-    "reviewedAt": "2026-08-20",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/madera-mueble-corcho/fpb-carpinteria-mueble.html",
+    "sourceQuote": "Peón de la industria de la madera y del corcho.",
+    "reviewedAt": "2026-08-13",
     "mappingVersion": "1.0.0"
   },
   {
-    "trainingProgramKey": "IFC01MD",
-    "occupationId": "occupation:cno11:3812",
+    "trainingProgramKey": "QUI01S",
+    "occupationId": "occupation:cno11:3129",
     "relationshipType": "official_output",
     "reviewStatus": "approved",
-    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/informatica-comunicaciones/sistemas-microniformaticos-redes.html",
-    "sourceQuote": "Técnica / técnico de soporte informático.",
-    "reviewedAt": "2026-08-20",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/quimica/lab-analisis-control-calidad.html",
+    "sourceQuote": "Analista de laboratorio químico.",
+    "reviewedAt": "2026-08-14",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "QUI01S",
+    "occupationId": "occupation:cno11:3160",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/quimica/lab-analisis-control-calidad.html",
+    "sourceQuote": "Técnica / técnico en control de calidad en industrias de manufacturas diversas.",
+    "reviewedAt": "2026-08-14",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "QUI02M",
+    "occupationId": "occupation:cno11:3160",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/quimica/operaciones-laboratorio.html",
+    "sourceQuote": "control de calidad de materiales",
+    "reviewedAt": "2026-08-14",
     "mappingVersion": "1.0.0"
   },
   {
@@ -177,6 +707,36 @@
     "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/sanidad/farmacia-parafarmacia.html",
     "sourceQuote": "Auxiliar de Farmacia.",
     "reviewedAt": "2026-08-20",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "SAN04S",
+    "occupationId": "occupation:cno11:3314",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/sanidad/anatomia-patologica-citodiagnostico.html",
+    "sourceQuote": "Técnica / técnico especialista en anatomía patológica y citología.",
+    "reviewedAt": "2026-08-14",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "SAN07S",
+    "occupationId": "occupation:cno11:2640",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/sanidad/imagen-diagnostico-medicina-nuclear.html",
+    "sourceQuote": "Delegada / delegado comercial de productos hospitalarios y farmacéuticos.",
+    "reviewedAt": "2026-08-13",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "SAN07SD",
+    "occupationId": "occupation:cno11:2640",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/sanidad/imagen-diagnostico-medicina-nuclear.html",
+    "sourceQuote": "Delegada / delegado comercial de productos hospitalarios y farmacéuticos.",
+    "reviewedAt": "2026-08-13",
     "mappingVersion": "1.0.0"
   },
   {
@@ -200,6 +760,96 @@
     "mappingVersion": "1.0.0"
   },
   {
+    "trainingProgramKey": "SAN09S",
+    "occupationId": "occupation:cno11:2640",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/sanidad/radioterapia-dosimetria.html",
+    "sourceQuote": "Delegada / delegado comercial de equipos de radioelectrología médica",
+    "reviewedAt": "2026-08-14",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "SAN09SD",
+    "occupationId": "occupation:cno11:2640",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/sanidad/radioterapia-dosimetria.html",
+    "sourceQuote": "Delegada / delegado comercial de equipos de radioelectrología médica",
+    "reviewedAt": "2026-08-14",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "SAN21",
+    "occupationId": "occupation:cno11:5611",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://todofp.es/dam/jcr%3Aaf5b68fd-e75c-493b-94ff-0565d3886473/san21cuidauxilenfermeria-pdf.pdf",
+    "sourceQuote": "Auxiliar de Enfermería/Clínica..",
+    "reviewedAt": "2026-08-08",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "SAN21",
+    "occupationId": "occupation:cno11:5612",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://todofp.es/dam/jcr%3Aaf5b68fd-e75c-493b-94ff-0565d3886473/san21cuidauxilenfermeria-pdf.pdf",
+    "sourceQuote": "Auxiliar de Atención primaria.",
+    "reviewedAt": "2026-08-08",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "SEA03S",
+    "occupationId": "occupation:cno11:2640",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/seguridad-medio-ambiente/quimica-salud-ambiental.html",
+    "sourceQuote": "Comercial de información de productos biocidas y fitosanitarios",
+    "reviewedAt": "2026-08-14",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "SEA03S",
+    "occupationId": "occupation:cno11:3129",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/seguridad-medio-ambiente/quimica-salud-ambiental.html",
+    "sourceQuote": "Técnica / técnico en gestión ambiental.",
+    "reviewedAt": "2026-08-14",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "SSC01M",
+    "occupationId": "occupation:cno11:5629",
+    "relationshipType": "reviewed_relationship",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.sepe.es/fr/SiteSepe/contenidos/COVID-19/documentos/documentacion-melilla/2021/201221-Resolucion-provisional--20-12-2021-firmada.pdf",
+    "sourceQuote": "Categoría: CUIDADORES DE PERSONAS CON DISCAPACIDAD (CNO 56291025) Titulación: FP grado medio en atención a personas en situación de dependencia",
+    "reviewedAt": "2026-08-08",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "SSC01M",
+    "occupationId": "occupation:cno11:5710",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.boe.es/eli/es/rd/2011/11/04/1593",
+    "sourceQuote": "Auxiliar de ayuda a domicilio.",
+    "reviewedAt": "2026-08-08",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "SSC05S",
+    "occupationId": "occupation:cno11:3713",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/servicios-socioculturales-comunidad/mediacion-comunicativa.html",
+    "sourceQuote": "Mediador / mediadora social de la comunidad sorda.",
+    "reviewedAt": "2026-08-14",
+    "mappingVersion": "1.0.0"
+  },
+  {
     "trainingProgramKey": "TMV01M",
     "occupationId": "occupation:cno11:7232",
     "relationshipType": "official_output",
@@ -207,6 +857,16 @@
     "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
     "sourceQuote": "7232 Pintores en las industrias manufactureras",
     "reviewedAt": "2026-08-20",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "TMV03E",
+    "occupationId": "occupation:cno11:3405",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/transporte-mantenimiento-vehiculos/ce-mantenimiento-seguridad-hibridos-electricos.html",
+    "sourceQuote": "Perito tasador de vehículos.",
+    "reviewedAt": "2026-08-14",
     "mappingVersion": "1.0.0"
   }
 ]

@@ -62,6 +62,13 @@ describe("App", () => {
     expect(
       screen.getByRole("link", { name: "Datos abiertos" }),
     ).toHaveAttribute("href", "/datos-abiertos");
+    expect(
+      screen.getByRole("link", { name: "Para organizaciones" }),
+    ).toHaveAttribute("href", "/para-organizaciones");
+    expect(screen.getByRole("link", { name: "Accesibilidad" })).toHaveAttribute(
+      "href",
+      "/accesibilidad",
+    );
     expect(screen.getByRole("contentinfo")).toHaveTextContent(
       /Proyecto independiente basado en datos públicos/i,
     );

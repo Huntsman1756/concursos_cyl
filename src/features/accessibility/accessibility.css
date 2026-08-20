@@ -1,0 +1,123 @@
+.accessibility-page,
+.organizations-page {
+  display: grid;
+  gap: var(--space-8);
+  max-width: 72rem;
+  margin: 0 auto;
+}
+
+.support-page-intro {
+  max-width: 52rem;
+}
+
+.support-page-intro__eyebrow,
+.accessibility-status > div > p,
+.organizations-audience__label {
+  margin: 0 0 var(--space-2);
+  color: var(--color-primary);
+  font-size: 0.82rem;
+  font-weight: 750;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.support-page-intro h1 {
+  margin: 0;
+  font-size: clamp(2.2rem, 5vw, 4rem);
+  line-height: 1.02;
+  text-wrap: balance;
+}
+
+.support-page-intro > p:last-child {
+  color: var(--color-text-muted);
+  font-size: 1.08rem;
+  line-height: 1.65;
+}
+
+.accessibility-status {
+  display: grid;
+  grid-template-columns: minmax(15rem, 0.9fr) minmax(0, 1.5fr);
+  gap: var(--space-8);
+  padding-block: var(--space-6);
+  border-block: 1px solid var(--color-border);
+}
+
+.accessibility-status h2,
+.accessibility-measures h2,
+.accessibility-limitations h2,
+.accessibility-contact h2 {
+  margin-top: 0;
+}
+
+.accessibility-status > p {
+  max-width: 44rem;
+  margin: 0;
+  color: var(--color-text-muted);
+  line-height: 1.7;
+}
+
+.accessibility-measures dl {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  margin: 0;
+  border-top: 1px solid var(--color-border);
+}
+
+.accessibility-measures dl > div {
+  padding: var(--space-4) var(--space-5) var(--space-4) 0;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.accessibility-measures dt {
+  font-weight: 750;
+}
+
+.accessibility-measures dd {
+  margin: var(--space-1) 0 0;
+  color: var(--color-text-muted);
+}
+
+.accessibility-limitations {
+  max-width: 52rem;
+}
+
+.accessibility-contact {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-6);
+  padding: var(--space-6);
+  border-left: 0.3rem solid var(--color-primary);
+  background: var(--color-surface);
+}
+
+.accessibility-contact p {
+  max-width: 42rem;
+  margin-bottom: 0;
+  color: var(--color-text-muted);
+}
+
+.accessibility-contact a {
+  flex: 0 0 auto;
+  text-decoration: none;
+}
+
+.accessibility-page__related {
+  margin-top: 0;
+}
+
+@media (max-width: 44rem) {
+  .accessibility-status,
+  .accessibility-measures dl {
+    grid-template-columns: 1fr;
+  }
+
+  .accessibility-contact {
+    display: grid;
+    padding: var(--space-5);
+  }
+
+  .accessibility-contact a {
+    width: 100%;
+  }
+}

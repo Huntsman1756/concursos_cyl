@@ -1326,7 +1326,7 @@ describe("curated occupation mappings", () => {
           EOC02S: 1,
           EOC02SD: 1,
           ENA03S: 2,
-          FME02B: 1,
+          FME02B: 5,
           HOT05S: 1,
           INA02S: 3,
           QUI01S: 2,

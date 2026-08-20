@@ -25,6 +25,16 @@ const OpenDataPage = lazy(() =>
     default: module.OpenDataPage,
   })),
 );
+const AccessibilityPage = lazy(() =>
+  import("../features/accessibility/AccessibilityPage").then((module) => ({
+    default: module.AccessibilityPage,
+  })),
+);
+const OrganizationsPage = lazy(() =>
+  import("../features/organizations/OrganizationsPage").then((module) => ({
+    default: module.OrganizationsPage,
+  })),
+);
 const OccupationResultsPage = lazy(() =>
   import("../features/occupation-first/OccupationResultsPage").then(
     (module) => ({ default: module.OccupationResultsPage }),
@@ -94,6 +104,11 @@ export function AppRoutes() {
             <Route path="/comparar" element={<CompareStudiesPage />} />
             <Route path="/recursos" element={<EcylResourcesPage />} />
             <Route path="/datos-abiertos" element={<OpenDataPage />} />
+            <Route path="/accesibilidad" element={<AccessibilityPage />} />
+            <Route
+              path="/para-organizaciones"
+              element={<OrganizationsPage />}
+            />
             <Route path="/metodologia" element={<MethodologyPage />} />
             <Route
               path="*"

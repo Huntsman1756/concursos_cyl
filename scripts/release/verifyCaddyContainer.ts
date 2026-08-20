@@ -128,7 +128,13 @@ export async function verifyCaddyContainer(
     }
   }
 
-  for (const path of ["comparar", "datos-abiertos", "metodologia"]) {
+  for (const path of [
+    "comparar",
+    "datos-abiertos",
+    "accesibilidad",
+    "para-organizaciones",
+    "metodologia",
+  ]) {
     const response = await requiredResponse(
       request,
       new URL(path, base),

@@ -61,7 +61,8 @@ export function AppShell({ children }: AppShellProps) {
             <Link to="/datos-abiertos">Datos abiertos</Link>
             <Link to="/metodologia">Metodología</Link>
             <Link to="/metodologia">Limitaciones</Link>
-            <Link to="/metodologia">Accesibilidad</Link>
+            <Link to="/para-organizaciones">Para organizaciones</Link>
+            <Link to="/accesibilidad">Accesibilidad</Link>
           </nav>
           <p>Datos públicos estatales y de Castilla y León</p>
         </div>

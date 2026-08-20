@@ -6,6 +6,8 @@ const RELEASE_PATHS = [
   "/desde-ocupacion",
   "/comparar",
   "/datos-abiertos",
+  "/accesibilidad",
+  "/para-organizaciones",
   "/metodologia",
 ];
 
