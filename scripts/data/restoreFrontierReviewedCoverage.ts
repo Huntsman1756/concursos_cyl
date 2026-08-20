@@ -12,6 +12,7 @@ const REVIEWED_SOURCE_COMMIT = "c3344cc6718a835f061190c20a9c38ee63834d1b";
 const LINKS_PATH = "data/curated/training-occupation-links.json";
 
 export const ACCEPTED_RELATION_KEYS = [
+  "ADG01B|4411",
   "ADG01M|4113",
   "ADG01MD|4113",
   "ADG01S|4223",
@@ -40,8 +41,10 @@ export const ACCEPTED_RELATION_KEYS = [
   "COM02SD|5210",
   "COM03S|3510",
   "COM03S|5210",
+  "ELE01B|7510",
   "ELE01S|3123",
   "ELE01S|7510",
+  "ELE02M|7533",
   "ELE02S|3124",
   "ELE02S|3811",
   "ELE02S|3813",
@@ -57,6 +60,7 @@ export const ACCEPTED_RELATION_KEYS = [
   "FME02B|8202",
   "FME02B|9700",
   "FME02S|7314",
+  "HOT01B|9310",
   "HOT01S|3510",
   "HOT02M|4121",
   "HOT02M|5120",
@@ -95,6 +99,7 @@ export const ACCEPTED_RELATION_KEYS = [
   "SSC01S|2252",
   "SSC01SD|2252",
   "SSC05S|3713",
+  "TMV01B|7401",
   "TMV02M|7401",
   "TMV03E|3405",
 ] as const;

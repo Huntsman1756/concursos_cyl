@@ -39,15 +39,20 @@ describe("mergeFrontierReviewedCoverage", () => {
     );
     expect(restoredKeys).toEqual(
       expect.arrayContaining([
+        "ADG01B|4411",
         "ADG01M|4113",
         "ADG01MD|4113",
         "ADG02S|4111",
         "ADG02SD|4223",
         "IFC02S|2713",
         "IFC02SD|3820",
+        "ELE01B|7510",
+        "ELE02M|7533",
+        "HOT01B|9310",
         "SSC01S|2252",
         "SSC01SD|2252",
         "IMA03M|8202",
+        "TMV01B|7401",
         "TMV02M|7401",
       ]),
     );

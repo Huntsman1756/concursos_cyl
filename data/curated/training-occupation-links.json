@@ -1,5 +1,15 @@
 [
   {
+    "trainingProgramKey": "ADG01B",
+    "occupationId": "occupation:cno11:4411",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.boe.es/eli/es/rd/2014/02/28/127",
+    "sourceQuote": "Auxiliar de información.",
+    "reviewedAt": "2026-08-12",
+    "mappingVersion": "1.0.0"
+  },
+  {
     "trainingProgramKey": "ADG01M",
     "occupationId": "occupation:cno11:4113",
     "relationshipType": "official_output",
@@ -300,6 +310,16 @@
     "mappingVersion": "1.0.0"
   },
   {
+    "trainingProgramKey": "ELE01B",
+    "occupationId": "occupation:cno11:7510",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.boe.es/eli/es/rd/2014/02/28/127",
+    "sourceQuote": "Operario de instalaciones eléctricas de baja tensión.",
+    "reviewedAt": "2026-08-12",
+    "mappingVersion": "1.0.0"
+  },
+  {
     "trainingProgramKey": "ELE01M",
     "occupationId": "occupation:cno11:7510",
     "relationshipType": "official_output",
@@ -327,6 +347,16 @@
     "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/electricidad-electronica/sistemas-electrotecnicos-automatizados.html",
     "sourceQuote": "Jefa / jefe de equipo de instaladores / instaladoras de baja tensión para edificios.",
     "reviewedAt": "2026-08-13",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "ELE02M",
+    "occupationId": "occupation:cno11:7533",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.boe.es/eli/es/rd/2009/10/30/1632",
+    "sourceQuote": "Instalador de antenas.",
+    "reviewedAt": "2026-08-12",
     "mappingVersion": "1.0.0"
   },
   {
@@ -527,6 +557,16 @@
     "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/fabricacion-mecanica/construcciones-metalicas.html",
     "sourceQuote": "Montaje en construcciones metálicas.",
     "reviewedAt": "2026-08-14",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "HOT01B",
+    "occupationId": "occupation:cno11:9310",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.boe.es/eli/es/rd/2014/02/28/127",
+    "sourceQuote": "Ayudante o auxiliar de cocina.",
+    "reviewedAt": "2026-08-12",
     "mappingVersion": "1.0.0"
   },
   {
@@ -1017,6 +1057,16 @@
     "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/servicios-socioculturales-comunidad/mediacion-comunicativa.html",
     "sourceQuote": "Mediador / mediadora social de la comunidad sorda.",
     "reviewedAt": "2026-08-14",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "TMV01B",
+    "occupationId": "occupation:cno11:7401",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.boe.es/eli/es/rd/2014/02/28/127",
+    "sourceQuote": "Operario de taller de mecánica rápida.",
+    "reviewedAt": "2026-08-12",
     "mappingVersion": "1.0.0"
   },
   {
