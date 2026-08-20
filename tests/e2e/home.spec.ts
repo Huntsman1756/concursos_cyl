@@ -100,9 +100,7 @@ test("the single search reaches both routes one mode at a time", async ({
   ).toBeVisible();
 
   await page.getByRole("link", { name: "SALIDA CyL" }).click();
-  await page
-    .getByRole("radio", { name: /Tengo un empleo en mente/iu })
-    .check();
+  await page.getByRole("radio", { name: /Tengo un empleo en mente/iu }).check();
   const occupationSearch = page.getByRole("combobox", {
     name: "Ocupación que te interesa",
   });
@@ -410,9 +408,9 @@ test("reviewed programs and the single search module keep stable responsive geom
   if (testInfo.project.name === "chromium-desktop") {
     expect(coveragePanel.y).toBeLessThanOrEqual(searchPanel.y);
     expect(Math.abs(coveragePanel.x - searchPanel.x)).toBeLessThanOrEqual(1);
-    expect(Math.abs(coveragePanel.width - searchPanel.width)).toBeLessThanOrEqual(
-      1,
-    );
+    expect(
+      Math.abs(coveragePanel.width - searchPanel.width),
+    ).toBeLessThanOrEqual(1);
   } else {
     expect(coveragePanel.y).toBeLessThanOrEqual(searchPanel.y);
     expect(searchPanel.width).toBeGreaterThan(280);

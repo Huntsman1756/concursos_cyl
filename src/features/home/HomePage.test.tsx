@@ -193,12 +193,8 @@ describe("HomePage", () => {
         name: "Ver las salidas de este título",
       }),
     ).toBeDisabled();
-    expect(
-      screen.getByText("Tu título de FP"),
-    ).toBeVisible();
-    expect(
-      screen.getByText("Elige un título."),
-    ).toBeVisible();
+    expect(screen.getByText("Tu título de FP")).toBeVisible();
+    expect(screen.getByText("Elige un título.")).toBeVisible();
 
     const user = userEvent.setup();
     const fpMode = screen.getByRole("radio", {
@@ -220,9 +216,7 @@ describe("HomePage", () => {
         name: "Ver cómo llegar a esta ocupación",
       }),
     ).toBeDisabled();
-    expect(
-      screen.getByText("Elige una ocupación de la lista."),
-    ).toBeVisible();
+    expect(screen.getByText("Elige una ocupación de la lista.")).toBeVisible();
     expect(
       screen.queryByRole("button", {
         name: "Ver las salidas de este título",
@@ -252,10 +246,7 @@ describe("HomePage", () => {
   });
 
   it("restores a valid saved search mode and ignores invalid values", () => {
-    window.localStorage.setItem(
-      "salida-cyl:home-search-mode",
-      "occupation",
-    );
+    window.localStorage.setItem("salida-cyl:home-search-mode", "occupation");
     vi.stubGlobal(
       "fetch",
       vi.fn(() => new Promise<Response>(() => undefined)),

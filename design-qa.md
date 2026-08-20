@@ -260,4 +260,3 @@ La referencia corresponde a una ficha de resultado, no a la portada. La comparac
 - No fue necesario un recorte adicional: el módulo completo es legible a resolución nativa en la comparación de escritorio y la captura móvil cubre el comportamiento responsive.
 
 final result: passed
-

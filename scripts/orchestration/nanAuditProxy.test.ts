@@ -280,14 +280,17 @@ describe("NAN audit proxy", () => {
       model: "qwen3.6",
       input: ["NON-CHAT-UNCHANGED"],
     });
-    const nonChatResult = await fetch(`http://127.0.0.1:${port}/v1/embeddings`, {
-      method: "POST",
-      headers: {
-        authorization: "Bearer sk-non-chat",
-        "content-type": "application/json",
+    const nonChatResult = await fetch(
+      `http://127.0.0.1:${port}/v1/embeddings`,
+      {
+        method: "POST",
+        headers: {
+          authorization: "Bearer sk-non-chat",
+          "content-type": "application/json",
+        },
+        body: nonChatBody,
       },
-      body: nonChatBody,
-    });
+    );
     expect(nonChatResult.status).toBe(200);
     await nonChatResult.text();
 

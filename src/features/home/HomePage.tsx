@@ -227,7 +227,10 @@ export function HomePage() {
         </div>
 
         <div className="home-workspace">
-          <section className="search-entry" aria-labelledby="search-entry-title">
+          <section
+            className="search-entry"
+            aria-labelledby="search-entry-title"
+          >
             <fieldset
               className="search-entry__modes"
               onKeyDown={(event) => {
@@ -388,7 +391,10 @@ export function HomePage() {
                       showConfirmation={false}
                     />
                     {confirmedOccupation === null ? (
-                      <p className="search-entry__hint" id="occupation-required">
+                      <p
+                        className="search-entry__hint"
+                        id="occupation-required"
+                      >
                         Elige una ocupación de la lista.
                       </p>
                     ) : null}
