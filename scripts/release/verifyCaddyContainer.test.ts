@@ -1,3 +1,5 @@
+import { createHash } from "node:crypto";
+
 import { describe, expect, it } from "vitest";
 import { verifyCaddyContainer } from "./verifyCaddyContainer";
 
@@ -9,6 +11,8 @@ const headers = {
   "referrer-policy": "strict-origin-when-cross-origin",
   "x-content-type-options": "nosniff",
 };
+const csvBytes = "\uFEFFprogram_key,program_title\n";
+const csvSha256 = createHash("sha256").update(csvBytes).digest("hex");
 
 function validRequest(input: string | URL): Promise<Response> {
   const path = new URL(input).pathname;
@@ -19,9 +23,38 @@ function validRequest(input: string | URL): Promise<Response> {
           outcomeIndicators: {
             resourcePath: "/data/v1/snapshots/release/outcome-indicators.json",
           },
+          derivedFpOccupationGraph: {
+            resourcePath:
+              "/data/v1/snapshots/release/derived-fp-occupation-graph.json",
+            recordCount: 0,
+          },
+          openDataCatalog: {
+            resourcePath: "/data/v1/snapshots/release/open-data-catalog.json",
+            recordCount: 1,
+          },
         },
       }),
     );
+  }
+  if (path.endsWith("/open-data-catalog.json")) {
+    return Promise.resolve(
+      Response.json([
+        {
+          csvResourcePath:
+            "/data/v1/snapshots/release/derived-fp-occupation-graph.csv",
+          csvSha256,
+          recordCount: 0,
+        },
+      ]),
+    );
+  }
+  if (path.endsWith("/derived-fp-occupation-graph.csv")) {
+    return Promise.resolve(
+      new Response(csvBytes, { headers: { "content-type": "text/csv" } }),
+    );
+  }
+  if (path.endsWith("/derived-fp-occupation-graph.json")) {
+    return Promise.resolve(Response.json([]));
   }
   if (path.endsWith("/outcome-indicators.json")) {
     return Promise.resolve(

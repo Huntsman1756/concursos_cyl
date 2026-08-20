@@ -1,3 +1,5 @@
+import { createHash } from "node:crypto";
+
 type Request = (input: string | URL) => Promise<Response>;
 
 function requiredOrigin(baseUrl: string): URL {
@@ -126,7 +128,7 @@ export async function verifyCaddyContainer(
     }
   }
 
-  for (const path of ["comparar", "metodologia"]) {
+  for (const path of ["comparar", "datos-abiertos", "metodologia"]) {
     const response = await requiredResponse(
       request,
       new URL(path, base),
@@ -143,7 +145,10 @@ export async function verifyCaddyContainer(
     "application/json",
   );
   const manifest = (await manifestResponse.json()) as {
-    resourceSnapshots?: { outcomeIndicators?: { resourcePath?: unknown } };
+    resourceSnapshots?: Record<
+      string,
+      { resourcePath?: unknown; recordCount?: unknown }
+    >;
   };
   const resourcePath =
     manifest.resourceSnapshots?.outcomeIndicators?.resourcePath;
@@ -162,4 +167,68 @@ export async function verifyCaddyContainer(
     throw new Error("Caddy manifest outcome resource must remain same-origin.");
   }
   await requiredResponse(request, outcomeUrl, "application/json");
+
+  const graphSnapshot = manifest.resourceSnapshots?.derivedFpOccupationGraph;
+  const catalogSnapshot = manifest.resourceSnapshots?.openDataCatalog;
+  if (
+    typeof graphSnapshot?.resourcePath !== "string" ||
+    typeof graphSnapshot.recordCount !== "number" ||
+    !/^\/data\/v1\/snapshots\/[^/]+\/derived-fp-occupation-graph\.json$/u.test(
+      graphSnapshot.resourcePath,
+    ) ||
+    typeof catalogSnapshot?.resourcePath !== "string" ||
+    !/^\/data\/v1\/snapshots\/[^/]+\/open-data-catalog\.json$/u.test(
+      catalogSnapshot.resourcePath,
+    )
+  ) {
+    throw new Error(
+      "Caddy manifest does not address the derived open-data release.",
+    );
+  }
+  const graphUrl = new URL(graphSnapshot.resourcePath, base);
+  const catalogUrl = new URL(catalogSnapshot.resourcePath, base);
+  if (graphUrl.origin !== base.origin || catalogUrl.origin !== base.origin) {
+    throw new Error("Caddy open-data resources must remain same-origin.");
+  }
+  const graphResponse = await requiredResponse(
+    request,
+    graphUrl,
+    "application/json",
+  );
+  const graph = (await graphResponse.json()) as unknown[];
+  if (graph.length !== graphSnapshot.recordCount) {
+    throw new Error("Caddy derived graph count does not match the manifest.");
+  }
+  const catalogResponse = await requiredResponse(
+    request,
+    catalogUrl,
+    "application/json",
+  );
+  const [catalog] = (await catalogResponse.json()) as Array<{
+    csvResourcePath?: unknown;
+    csvSha256?: unknown;
+    recordCount?: unknown;
+  }>;
+  if (
+    typeof catalog?.csvResourcePath !== "string" ||
+    typeof catalog.csvSha256 !== "string" ||
+    !/^[a-f0-9]{64}$/u.test(catalog.csvSha256) ||
+    catalog.recordCount !== graphSnapshot.recordCount ||
+    !/^\/data\/v1\/snapshots\/[^/]+\/derived-fp-occupation-graph\.csv$/u.test(
+      catalog.csvResourcePath,
+    )
+  ) {
+    throw new Error("Caddy open-data catalog is inconsistent.");
+  }
+  const csvUrl = new URL(catalog.csvResourcePath, base);
+  if (csvUrl.origin !== base.origin) {
+    throw new Error("Caddy open-data CSV must remain same-origin.");
+  }
+  const csvResponse = await requiredResponse(request, csvUrl, "text/csv");
+  const csvHash = createHash("sha256")
+    .update(Buffer.from(await csvResponse.arrayBuffer()))
+    .digest("hex");
+  if (csvHash !== catalog.csvSha256) {
+    throw new Error("Caddy open-data CSV hash does not match the catalog.");
+  }
 }
