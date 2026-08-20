@@ -26,12 +26,12 @@ test("live DAW results shows formacion link and approved occupation", async ({
 
   await expect(
     page.getByRole("link", {
-      name: "Acceder a la información formativa de Desarrollo de Aplicaciones Web",
+      name: "Ver centros y modalidades",
     }),
   ).toBeVisible();
   await expect(
     page.getByRole("link", {
-      name: "Acceder a la información formativa de Desarrollo de Aplicaciones Web",
+      name: "Ver centros y modalidades",
     }),
   ).toHaveAttribute("href", "/formacion/IFC03S");
 
@@ -39,11 +39,13 @@ test("live DAW results shows formacion link and approved occupation", async ({
     page.getByText("Analistas, programadores y diseñadores web y multimedia"),
   ).toBeVisible();
 
-  await expect(page.getByText("Código CNO-11: 2713")).toBeVisible();
+  await expect(page.getByText("CNO-11 2713")).toBeVisible();
 
   await expect(
-    page.getByRole("link", { name: "Ver perfil profesional" }),
-  ).toBeVisible();
+    page.getByRole("link", {
+      name: /Analistas, programadores y diseñadores web y multimedia CNO-11 2713/,
+    }),
+  ).toHaveAttribute("href", "/desde-ocupacion/occupation%3Acno11%3A2713");
 });
 
 test("live DAW results name the dated zero-match snapshot without claiming there are no jobs", async ({
@@ -121,6 +123,14 @@ test("the intercepted full DAW card makes a declared gap, action, filter, and ev
     name: "Desarrollador web para servicios públicos",
   });
   await expect(card).toBeVisible();
+
+  const evidenceDisclosure = card.getByText("Ver evidencia y requisitos", {
+    exact: true,
+  });
+  await tabTo(page, evidenceDisclosure);
+  await expect(evidenceDisclosure).toBeFocused();
+  await page.keyboard.press("Enter");
+
   await expect(
     card.getByRole("heading", { name: "Por qué aparece" }),
   ).toBeVisible();

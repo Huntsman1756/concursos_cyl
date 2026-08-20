@@ -35,8 +35,12 @@ if (
 
 /** Historical accepted offer IDs from the bounded publication review snapshot. */
 const historicalEoc01mAcceptedIds = encofradoresDecision.acceptedOfferIds;
-/** IDs present in the verified 9 August fallback snapshot. */
-const currentEoc01mOfferIds = ["1285667539377", "1285668256621"];
+/** IDs present in the current verified fallback snapshot. */
+const currentEoc01mOfferIds = [
+  "1285667539377",
+  "1285668256621",
+  "1285671523023",
+];
 
 const cases = [
   {

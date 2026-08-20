@@ -257,7 +257,9 @@ test.describe("contest readiness journeys", () => {
     await page
       .getByLabel("Título de Formación Profesional")
       .selectOption("COM01M");
-    await page.getByRole("button", { name: "Ver mis opciones" }).click();
+    await page
+      .getByRole("button", { name: "Ver las salidas de este título" })
+      .click();
     await expect(page).toHaveURL(/\/desde-fp\/COM01M$/u);
     await page.getByRole("link", { name: "Comparar estudios" }).click();
     await expect(page).toHaveURL(/\/comparar$/u);

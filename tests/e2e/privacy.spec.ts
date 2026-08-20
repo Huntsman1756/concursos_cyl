@@ -203,6 +203,8 @@ test("answer, exact-absence filter, and checklist remain ephemeral and never lea
   };
   page.on("request", recordRequest);
 
+  await card.getByText("Ver evidencia y requisitos", { exact: true }).click();
+
   await card
     .getByRole("radio", {
       name: `No lo tengo: ${syntheticQuotes.experienceQuote}`,
@@ -217,6 +219,8 @@ test("answer, exact-absence filter, and checklist remain ephemeral and never lea
   await expectPrivateLocation(page);
   await page.getByRole("button", { name: "Quitar filtro" }).click();
   await expectPrivateLocation(page);
+
+  await card.getByText("Ver evidencia y requisitos", { exact: true }).click();
 
   await card
     .getByRole("radio", {
@@ -248,6 +252,7 @@ test("answer, exact-absence filter, and checklist remain ephemeral and never lea
 
   await page.reload();
   await expect(card).toBeVisible();
+  await card.getByText("Ver evidencia y requisitos", { exact: true }).click();
   await expect(
     card.getByRole("radio", {
       name: `No lo tengo: ${syntheticQuotes.experienceQuote}`,

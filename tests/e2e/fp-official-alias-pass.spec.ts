@@ -52,7 +52,7 @@ for (const row of oneWordPublicationReviews.rows) {
 const fallbackOfferIdsByProgram: Record<string, string[]> = {
   HOT01M: [],
   SSC01M: [],
-  EOC01M: ["1285667539377", "1285668256621"],
+  EOC01M: ["1285667539377", "1285668256621", "1285671523023"],
 };
 
 for (const program of results.programs) {
