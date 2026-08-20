@@ -297,6 +297,7 @@ try {
     }
     if ([string]::IsNullOrWhiteSpace($contract.objective) -or [string]::IsNullOrWhiteSpace($contract.frontierPlan)) { throw 'Contract text fields are invalid.' }
     if (@($contract.allowedPaths).Count -eq 0 -or @($contract.validationCommands).Count -eq 0 -or @($contract.acceptanceCriteria).Count -eq 0) { throw 'Contract arrays must not be empty.' }
+    if ($contract.PSObject.Properties.Name -contains 'validationMayWriteAllowedPaths' -and $contract.validationMayWriteAllowedPaths -isnot [bool]) { throw 'Contract validationMayWriteAllowedPaths must be a JSON boolean.' }
     $baseSha = (& git -C $repoRoot rev-parse HEAD).Trim()
     if ($LASTEXITCODE -ne 0 -or $baseSha -notmatch '^[a-f0-9]{40}$') { throw 'Repository base SHA is unavailable.' }
     $failurePhase = 'test-input-validation'
@@ -333,6 +334,13 @@ try {
             }
             if ($contract.PSObject.Properties.Name -contains 'maxExecutionSeconds') {
                 $workerParameters.MaxExecutionSeconds = [int]$contract.maxExecutionSeconds
+            }
+            if ($contract.PSObject.Properties.Name -contains 'validationMayWriteAllowedPaths') {
+                # Opt-in switch: forward only the JSON boolean true; when absent
+                # or false defaults to the worker's opt-in false behavior.
+                if ([bool]$contract.validationMayWriteAllowedPaths) {
+                    $workerParameters.ValidationMayWriteAllowedPaths = $true
+                }
             }
             if ($TestMode) { $workerParameters.TestMode=$true; $workerParameters.MockPlan=$MockWorkerPlans[$attempt-1] }
             $previousErrorActionPreference = $ErrorActionPreference

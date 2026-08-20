@@ -17,6 +17,7 @@ param(
     [string[]]$FallbackModels = @(),
     [switch]$DryRun,
     [switch]$AllowNoChanges,
+    [switch]$ValidationMayWriteAllowedPaths,
     [switch]$TestMode,
     [string]$MockPlan = '',
     [string]$PlannedBy = '',
@@ -605,6 +606,7 @@ $contractMaterial = [ordered]@{
     validationCommands=@($ValidationCommand);frontierPlan=$FrontierPlan;acceptanceCriteria=@($AcceptanceCriteria);headSha=$headSha
     modelProfile=$ModelProfile;budgetProfile=$BudgetProfile;maxObservedTokens=$MaxObservedTokens
     maxExecutionSeconds=$MaxExecutionSeconds;fallbackModels=@($FallbackModels)
+    validationMayWriteAllowedPaths=[bool]$ValidationMayWriteAllowedPaths
 } | ConvertTo-Json -Depth 5 -Compress
 $contractHash = Compute-StringSha256 -InputString $contractMaterial
 $contractMutex = $null
@@ -631,7 +633,7 @@ if ($DryRun) {
         $planSha = Compute-StringSha256 -InputString $FrontierPlan
         $fc = @{plannedBy=$PlannedBy;planHash=$planSha;acceptanceCriteriaCount=$AcceptanceCriteria.Count;reviewRequired=$true}
     }
-    $dryRunTelemetry = @{telemetryId=$tid;simulated=[bool]$true;taskType=$TaskType;selectedModel=$primaryModel;selectedAgent=$primaryAgent;attempts=@();changedPaths=@();contractViolation=$false;validationFailed=$false;tokensUsage=@{input=0;output=0;reasoning=0;cacheRead=0;cacheWrite=0;total=0};success=$true;status='dry-run';frontierContract=$fc;contract=@{hash=$contractHash;headSha=$headSha;duplicateWindowSeconds=$DuplicateWindowSeconds};admission=@{profile=$AdmissionProfile;capacity=$(if ($AdmissionProfile -eq 'observed-serial') { 1 } else { 5 });timeoutSeconds=$AdmissionTimeoutSeconds;queueWaitMs=0;acquired=$false};launch=@{modelProfile=$ModelProfile;budgetProfile=$BudgetProfile;budgetSource=$budgetSource;maxObservedTokens=$effectiveMaxObservedTokens;maxExecutionSeconds=$MaxExecutionSeconds}}
+    $dryRunTelemetry = @{telemetryId=$tid;simulated=[bool]$true;taskType=$TaskType;selectedModel=$primaryModel;selectedAgent=$primaryAgent;attempts=@();changedPaths=@();contractViolation=$false;validationFailed=$false;validationMayWriteAllowedPaths=[bool]$ValidationMayWriteAllowedPaths;tokensUsage=@{input=0;output=0;reasoning=0;cacheRead=0;cacheWrite=0;total=0};success=$true;status='dry-run';frontierContract=$fc;contract=@{hash=$contractHash;headSha=$headSha;duplicateWindowSeconds=$DuplicateWindowSeconds};admission=@{profile=$AdmissionProfile;capacity=$(if ($AdmissionProfile -eq 'observed-serial') { 1 } else { 5 });timeoutSeconds=$AdmissionTimeoutSeconds;queueWaitMs=0;acquired=$false};launch=@{modelProfile=$ModelProfile;budgetProfile=$BudgetProfile;budgetSource=$budgetSource;maxObservedTokens=$effectiveMaxObservedTokens;maxExecutionSeconds=$MaxExecutionSeconds}}
     $writtenTelemetryPath = Write-TelemetryRecord -Value $dryRunTelemetry -TelemetryId $tid
     Write-Host "Telemetry: $writtenTelemetryPath" -ForegroundColor DarkGray
     exit 0
@@ -684,7 +686,7 @@ if (-not $TestMode) {
         if ($TaskType -eq 'code') {
             $fc = @{plannedBy=$PlannedBy;planHash=(Compute-StringSha256 -InputString $FrontierPlan);acceptanceCriteriaCount=$AcceptanceCriteria.Count;reviewRequired=$true}
         }
-        $blockedTelemetry = @{telemetryId=$tid;simulated=$false;taskType=$TaskType;selectedModel=$null;attempts=@();changedPaths=@();contractViolation=$false;validationFailed=$false;tokensUsage=@{input=0;output=0;reasoning=0;cacheRead=0;cacheWrite=0;total=0};success=$false;status='blocked-admission-timeout';frontierContract=$fc;draftOutput='';contract=@{hash=$contractHash;headSha=$headSha;duplicateWindowSeconds=$DuplicateWindowSeconds};admission=@{profile=$AdmissionProfile;capacity=$admissionCapacity;timeoutSeconds=$AdmissionTimeoutSeconds;queueWaitMs=$admissionWaitMs;acquired=$false};launch=@{harness='opencode';protocol='native-jsonl-stream-1.18.x';pure=$true;auto=$false;directory=$repoRoot;budgetProfile=$BudgetProfile;budgetSource=$budgetSource;maxObservedTokens=$effectiveMaxObservedTokens;maxExecutionSeconds=$MaxExecutionSeconds}}
+        $blockedTelemetry = @{telemetryId=$tid;simulated=$false;taskType=$TaskType;selectedModel=$null;attempts=@();changedPaths=@();contractViolation=$false;validationFailed=$false;validationMayWriteAllowedPaths=[bool]$ValidationMayWriteAllowedPaths;tokensUsage=@{input=0;output=0;reasoning=0;cacheRead=0;cacheWrite=0;total=0};success=$false;status='blocked-admission-timeout';frontierContract=$fc;draftOutput='';contract=@{hash=$contractHash;headSha=$headSha;duplicateWindowSeconds=$DuplicateWindowSeconds};admission=@{profile=$AdmissionProfile;capacity=$admissionCapacity;timeoutSeconds=$AdmissionTimeoutSeconds;queueWaitMs=$admissionWaitMs;acquired=$false};launch=@{harness='opencode';protocol='native-jsonl-stream-1.18.x';pure=$true;auto=$false;directory=$repoRoot;budgetProfile=$BudgetProfile;budgetSource=$budgetSource;maxObservedTokens=$effectiveMaxObservedTokens;maxExecutionSeconds=$MaxExecutionSeconds}}
         $writtenTelemetryPath = Write-TelemetryRecord -Value $blockedTelemetry -TelemetryId $tid
         Write-Host "Telemetry: $writtenTelemetryPath" -ForegroundColor DarkGray
         if ($providerAdmissionMutex) { $providerAdmissionMutex.Dispose() }
@@ -737,6 +739,7 @@ if ($TestMode -and -not [string]::IsNullOrWhiteSpace($MockPlan)) {
 
 # ── Execution ──
 $beforeSnapshot = if ($TaskType -eq 'code' -and -not $TestMode) { Get-Snapshot } else { @{} }
+$validationMayWrite = [bool]$ValidationMayWriteAllowedPaths
 $attempts = @()
 $successResult = $null
 $changedPaths = @()
@@ -879,8 +882,10 @@ $totalAttempts = 0
         if ($attempt.exitCode -eq 0) {
             # Post-execution checks for code tasks
             if ($TaskType -eq 'code') {
-                # No-change check
-                if ($changedPaths.Count -eq 0 -and -not $AllowNoChanges) {
+                # No-change check. When opt-in validation writes are enabled the
+                # bounded no-change decision is deferred until after validations
+                # have run, so the final change set includes validator artifacts.
+                if (-not $validationMayWrite -and $changedPaths.Count -eq 0 -and -not $AllowNoChanges) {
                     Write-Host "  No changes detected (use -AllowNoChanges to accept)" -ForegroundColor Yellow
                     $attempt.exitCode = 1
                     $attempts[-1] = $attempt
@@ -888,8 +893,8 @@ $totalAttempts = 0
                 }
 
                 # Validation — final, no more retries or models
+                $ve = 0
                 if ($ValidationCommand.Count -gt 0) {
-                    $ve = $null
                     if ($TestMode) {
                         $ve = if ($attempt.validationExitCode -ne $null) { [int]$attempt.validationExitCode } else { 0 }
                     } else {
@@ -934,6 +939,34 @@ $totalAttempts = 0
                     # Persist validationExitCode before any failure branch
                     $attempt.validationExitCode = $ve
                     $attempts[-1] = $attempt
+
+                    # Opt-in capture of validation-generated artifacts: recompute
+                    # the bounded change set once from the original snapshot after
+                    # validations have finished, so validator writes are retained
+                    # on both success and validation failure. TestMode reads the
+                    # caller's postValidationChangedPaths simulation instead.
+                    if ($validationMayWrite) {
+                        if ($TestMode) {
+                            $attempt.changedPaths = @($mp.postValidationChangedPaths | Where-Object { $_ -and $_.Trim() })
+                        } else {
+                            $validationAfter = Get-Snapshot
+                            $validationAll = @($beforeSnapshot.Keys) + @($validationAfter.Keys) | Sort-Object -Unique
+                            $attempt.changedPaths = @($validationAll | Where-Object { -not $beforeSnapshot.ContainsKey($_) -or -not $validationAfter.ContainsKey($_) -or $beforeSnapshot[$_] -ne $validationAfter[$_] })
+                        }
+                        $changedPaths = @($attempt.changedPaths | Where-Object { $_ -and $_.Trim() })
+                        $attempt.changedPaths = $changedPaths
+                        $attempts[-1] = $attempt
+                        # Generated artifacts must remain inside AllowedPath.
+                        $generatedViolations = @($changedPaths | Where-Object { -not (Test-AllowedPath -p $_ -patterns $AllowedPath) })
+                        if ($generatedViolations.Count -gt 0) {
+                            $contractViolation = $true
+                            Write-Warning "Contract violation: validation-generated paths outside AllowedPath: $($generatedViolations -join ', ')"
+                            $attempt.exitCode = 1
+                            $attempts[-1] = $attempt
+                            break modelLoop
+                        }
+                    }
+
                     if ($ve -ne 0) {
                         $validationFailed = $true
                         if ($TestMode) { Write-Warning "Mock validation failure (exitCode=$ve)" }
@@ -941,6 +974,16 @@ $totalAttempts = 0
                         $attempts[-1] = $attempt
                         break modelLoop
                     }
+                }
+
+                # Opt-in validation deferred the bounded no-change decision until
+                # after validations; the final empty candidate still requires the
+                # explicit -AllowNoChanges opt-out like the default path.
+                if ($validationMayWrite -and $changedPaths.Count -eq 0 -and -not $AllowNoChanges) {
+                    Write-Host "  No changes detected after validation (use -AllowNoChanges to accept)" -ForegroundColor Yellow
+                    $attempt.exitCode = 1
+                    $attempts[-1] = $attempt
+                    continue
                 }
             }
 
@@ -1032,13 +1075,13 @@ if ($TaskType -eq 'code') {
 $telemetry = @{
     telemetryId=$tid;simulated=[bool]$TestMode;taskType=$TaskType;selectedModel=if ($successResult) { $successResult.model } else { $null };selectedAgent=if ($successResult) { $successResult.agent } else { $null }
     attempts=@($attempts | ForEach-Object { @{model=$_.model;agent=$_.agent;attempt=$_.attempt;retry=$_.retry;exitCode=$_.exitCode;tokens=$_.tokens;changedPaths=$_.changedPaths;validationExitCode=$_.validationExitCode;validationDiagnostics=@($_.validationDiagnostics);terminationReason=$_.terminationReason;draftOutput=$_.draftOutput;harnessStderrTail=$_.harnessStderrTail;harnessStderrTruncated=[bool]$_.harnessStderrTruncated;eventLogFile=$_.eventLogFile;eventLogSha256=$_.eventLogSha256;eventCount=$_.eventCount;toolUseCount=$_.toolUseCount} })
-    changedPaths=@($changedPaths);contractViolation=$contractViolation;validationFailed=$validationFailed
+    changedPaths=@($changedPaths);contractViolation=$contractViolation;validationFailed=$validationFailed;validationMayWriteAllowedPaths=[bool]$ValidationMayWriteAllowedPaths
     tokensUsage=$agg;success=$success;status=$status;frontierContract=$fcTelemetry
     draftOutput=if ($successResult) { $successResult.draftOutput } else { '' }
     contract=@{hash=$contractHash;headSha=$headSha;duplicateWindowSeconds=$DuplicateWindowSeconds}
     providerEvidence=@{verified=[bool]$providerEvidenceVerified;evidenceClass=$(if ($TestMode) { 'simulated' } elseif ($observedProviderRecords.Count -gt 0) { 'provider-observed' } else { 'insufficient-evidence' });recordCount=$verifiedProviderRecords.Count;observedRecordCount=$observedProviderRecords.Count;retryCount=$providerRetryRecords.Count;terminalErrorCount=$terminalProviderErrors.Count;terminalErrors=@($terminalProviderErrors | Select-Object -Last 5);providerReportedTokens=$providerReportedTokens;responseIdSetHash=$providerResponseSetHash;rawEvidenceFile=$(if ($TestMode) { $null } else { [System.IO.Path]::GetFileName($providerEvidencePath) })}
     admission=@{profile=$AdmissionProfile;capacity=$(if ($AdmissionProfile -eq 'observed-serial') { 1 } else { 5 });timeoutSeconds=$AdmissionTimeoutSeconds;queueWaitMs=$admissionWaitMs;acquired=[bool]$admissionAcquired}
-    launch=@{harness='opencode';protocol='native-jsonl-stream-1.18.x';pure=$true;auto=$false;directory=$repoRoot;modelProfile=$ModelProfile;budgetProfile=$BudgetProfile;budgetSource=$budgetSource;maxObservedTokens=$effectiveMaxObservedTokens;maxExecutionSeconds=$MaxExecutionSeconds}
+    launch=@{harness='opencode';protocol='native-jsonl-stream-1.18.x';pure=$true;auto=$false;directory=$repoRoot;modelProfile=$ModelProfile;budgetProfile=$BudgetProfile;budgetSource=$budgetSource;maxObservedTokens=$effectiveMaxObservedTokens;maxExecutionSeconds=$MaxExecutionSeconds;validationMayWriteAllowedPaths=[bool]$ValidationMayWriteAllowedPaths}
 }
 $writtenTelemetryPath = Write-TelemetryRecord -Value $telemetry -TelemetryId $tid
 Write-Host "Telemetry: $writtenTelemetryPath" -ForegroundColor DarkGray

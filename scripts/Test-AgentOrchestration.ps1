@@ -148,6 +148,7 @@ function New-ValidCodeContract {
         [switch]$AllowNoChanges,
         [switch]$TestMode,
         [switch]$DryRun,
+        [switch]$ValidationMayWriteAllowedPaths,
         [string]$MockPlan = '',
         [hashtable]$ExtraParams = @{}
     )
@@ -169,6 +170,7 @@ function New-ValidCodeContract {
     if ($AllowNoChanges) { $ht.AllowNoChanges = $true }
     if ($DryRun) { $ht.DryRun = $true }
     if ($TestMode) { $ht.TestMode = $true }
+    if ($ValidationMayWriteAllowedPaths) { $ht.ValidationMayWriteAllowedPaths = $true }
     if (-not [string]::IsNullOrWhiteSpace($MockPlan)) { $ht.MockPlan = $MockPlan }
     if ($ExtraParams.Count -gt 0) {
         foreach ($k in $ExtraParams.Keys) { $ht[$k] = $ExtraParams[$k] }
@@ -751,6 +753,85 @@ try {
             Assert-True ($tel.validationFailed -eq $false) '17o: validationFailed=false with list [0,0]'
             Assert-True ($tel.status -eq 'awaiting-frontier-review') '17p: all-zero validation awaits frontier review'
             Assert-True ($tel.attempts[0].validationExitCode -eq 0) '17q: attempt validationExitCode=0 from list [0,0]'
+        }
+    }
+
+    # 17d. Opt-in validation writes capture generated artifacts end-to-end
+    if (-not $Only -or $Only -eq 'validationwrites') {
+        Write-Host "`n*** 17d. Opt-in validation-generated artifacts ***" -ForegroundColor Cyan
+        Write-Host ("-" * 40) -ForegroundColor DarkGray
+
+        $jsonlOk = New-Jsonl -Total 500
+
+        # 17d1: Allowed generated-only artifact is captured and accepted
+        $genOnlyPlan = @(@{
+            exitCode = 0
+            changedPaths = @()
+            postValidationChangedPaths = @('scripts/generated.txt')
+            validationExitCode = 0
+            jsonl = $jsonlOk
+        }) | ConvertTo-Json -Depth 8 -Compress
+        $preGen = Get-FileSnapshot
+        $genRun = Invoke-WorkerChild -WorkerParameters (New-ValidCodeContract -Objective 'gen-only-accept' -MaxRetries 1 -TestMode -MockPlan $genOnlyPlan -ValidationMayWriteAllowedPaths)
+        Assert-True ($genRun.ExitCode -eq 0) '17d1: allowed generated-only artifact is accepted'
+        $genTel = Get-Content -LiteralPath (Get-NewTelemetry -BeforeFiles $preGen) -Raw | ConvertFrom-Json
+        if ($genTel) {
+            Assert-True ($genTel.status -eq 'awaiting-frontier-review') '17d2: generated-only success awaits frontier review'
+            Assert-True ($genTel.validationMayWriteAllowedPaths -eq $true) '17d3: telemetry records opt-in validation writes'
+            Assert-True ($genTel.attempts[0].changedPaths[0] -eq 'scripts/generated.txt') '17d4: generated artifact is captured after validation'
+            Assert-True ($genTel.attempts[0].changedPaths.Count -eq 1) '17d5: exactly one generated path is captured'
+        }
+
+        # 17d2: Out-of-bounds generated artifact fails closed
+        $outOfBoundPlan = @(@{
+            exitCode = 0
+            changedPaths = @('scripts/ok.txt')
+            postValidationChangedPaths = @('outside/forbidden.txt')
+            validationExitCode = 0
+            jsonl = $jsonlL
+        }) | ConvertTo-Json -Depth 8 -Compress
+        $preOut = Get-FileSnapshot
+        $outRun = Invoke-WorkerChild -WorkerParameters (New-ValidCodeContract -Objective 'gen-out-of-bound' -MaxRetries 1 -TestMode -MockPlan $outOfBoundPlan -ValidationMayWriteAllowedPaths)
+        Assert-True ($outRun.ExitCode -ne 0) '17d6: out-of-bound generated artifact fails closed'
+        $outTel = Get-Content -LiteralPath (Get-NewTelemetry -BeforeFiles $preOut) -Raw | ConvertFrom-Json
+        if ($outTel) {
+            Assert-True ($outTel.contractViolation -eq $true) '17d7: out-of-bound generated path marks a contract violation'
+            Assert-True ($outTel.status -eq 'blocked-needs-new-contract') '17d8: out-of-bound generated path is blocked'
+        }
+
+        # 17d3: Default (no opt-in) still rejects an empty candidate
+        $defaultNoChangePlan = @(@{
+            exitCode = 0
+            changedPaths = @()
+            validationExitCode = 0
+            jsonl = $jsonlL
+        }) | ConvertTo-Json -Depth 8 -Compress
+        $preDefault = Get-FileSnapshot
+        $defaultRun = Invoke-WorkerChild -WorkerParameters (New-ValidCodeContract -Objective 'default-nochange-optout' -MaxRetries 1 -TestMode -MockPlan $defaultNoChangePlan)
+        Assert-True ($defaultRun.ExitCode -ne 0) '17d9: default no-change is still rejected without opt-in'
+        $defaultTel = Get-Content -LiteralPath (Get-NewTelemetry -BeforeFiles $preDefault) -Raw | ConvertFrom-Json
+        if ($defaultTel) {
+            Assert-True ($defaultTel.validationMayWriteAllowedPaths -eq $false) '17d10: default telemetry leaves opt-in writes false'
+        }
+
+        # 17d4: Failed validation retains generated paths in telemetry
+        $retainPlan = @(@{
+            exitCode = 0
+            changedPaths = @('scripts/old.txt')
+            postValidationChangedPaths = @('scripts/kept.txt')
+            validationExitCode = 1
+            validationDiagnostics = @(@{commandIndex=1;exitCode=1;outputTail='focused validation failure';truncated=$false})
+            jsonl = $jsonlL
+        }) | ConvertTo-Json -Depth 8 -Compress
+        $preRetain = Get-FileSnapshot
+        $retainRun = Invoke-WorkerChild -WorkerParameters (New-ValidCodeContract -Objective 'retain-generated' -MaxRetries 1 -TestMode -MockPlan $retainPlan -ValidationMayWriteAllowedPaths)
+        Assert-True ($retainRun.ExitCode -ne 0) '17d11: failed validation with opt-in exits non-zero'
+        $retainTel = Get-Content -LiteralPath (Get-NewTelemetry -BeforeFiles $preRetain) -Raw | ConvertFrom-Json
+        if ($retainTel) {
+            Assert-True ($retainTel.validationFailed -eq $true) '17d12: retained failure marks validationFailed'
+            Assert-True ($retainTel.attempts[0].changedPaths[0] -eq 'scripts/kept.txt') '17d13: generated paths are retained on validation failure'
+            Assert-True ($retainTel.attempts[0].validationDiagnostics[0].outputTail -eq 'focused validation failure') '17d14: failed validation diagnostic is retained'
+            Assert-True ($retainTel.status -eq 'blocked-needs-new-contract') '17d15: retained failure is blocked'
         }
     }
 
