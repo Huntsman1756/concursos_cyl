@@ -132,6 +132,32 @@ function safeRequestMetadata(body) {
   }
 }
 
+function disableQwenThinkingBody(body, method, pathname) {
+  // Only POST /v1/chat/completions with valid JSON and the mechanical Qwen
+  // model is transformed; every other body is returned byte-for-byte unchanged.
+  if (method !== "POST" || pathname !== "/v1/chat/completions") return body;
+  let parsed;
+  try {
+    parsed = JSON.parse(body.toString("utf8"));
+  } catch {
+    return body;
+  }
+  if (
+    parsed === null ||
+    typeof parsed !== "object" ||
+    Array.isArray(parsed) ||
+    parsed.model !== "qwen3.6"
+  ) {
+    return body;
+  }
+  const transformed = { ...parsed };
+  transformed.chat_template_kwargs = {
+    ...(parsed.chat_template_kwargs ?? {}),
+    enable_thinking: false,
+  };
+  return Buffer.from(JSON.stringify(transformed), "utf8");
+}
+
 function collectResponseMetadata(buffer) {
   const text = buffer.toString("utf8");
   const result = { id: null, model: null, usage: null };
@@ -219,6 +245,14 @@ const server = http.createServer(async (request, response) => {
     return;
   }
 
+  // Disable Qwen thinking once per incoming request; every retry forwards the
+  // same Buffer and every evidence branch hashes that exact forwarded body.
+  const forwardedBody = disableQwenThinkingBody(
+    requestBody,
+    request.method,
+    target.pathname,
+  );
+
   for (let attempt = 1; attempt <= maxAttempts; attempt++) {
     const observedAt = new Date().toISOString();
     let upstreamResponse;
@@ -229,7 +263,7 @@ const server = http.createServer(async (request, response) => {
         body:
           request.method === "GET" || request.method === "HEAD"
             ? undefined
-            : requestBody,
+            : forwardedBody,
         redirect: "manual",
       });
     } catch (error) {
@@ -246,7 +280,7 @@ const server = http.createServer(async (request, response) => {
         request: {
           method: request.method,
           path: target.pathname,
-          bodySha256: sha256(requestBody),
+          bodySha256: sha256(forwardedBody),
           ...requestMetadata,
         },
         response: { status: 502, transportError: error?.name ?? "Error" },
@@ -311,7 +345,7 @@ const server = http.createServer(async (request, response) => {
         request: {
           method: request.method,
           path: target.pathname,
-          bodySha256: sha256(requestBody),
+          bodySha256: sha256(forwardedBody),
           ...requestMetadata,
         },
         response: {
@@ -368,7 +402,7 @@ const server = http.createServer(async (request, response) => {
       request: {
         method: request.method,
         path: target.pathname,
-        bodySha256: sha256(requestBody),
+        bodySha256: sha256(forwardedBody),
         ...requestMetadata,
       },
       response: { status: upstreamResponse.status },

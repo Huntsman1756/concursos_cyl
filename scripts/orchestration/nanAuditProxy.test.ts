@@ -15,7 +15,7 @@ const directories: string[] = [];
 type ProviderEvidence = {
   contractHash: string;
   keyFingerprint: string;
-  request: { model: string };
+  request: { model: string; bodySha256?: string };
   response: {
     status: number;
     id: string;
@@ -119,12 +119,12 @@ function postChat(port: number, stream = false): Promise<Response> {
 describe("NAN audit proxy", () => {
   it("binds provider response evidence without retaining prompts or credentials", async () => {
     let upstreamRequests = 0;
+    const retainedBodies: Buffer[] = [];
     const upstream = http.createServer(async (request, response) => {
       upstreamRequests += 1;
-      for await (const chunk of request) {
-        // Drain the request without retaining its prompt.
-        void chunk;
-      }
+      const chunks: Buffer[] = [];
+      for await (const chunk of request) chunks.push(Buffer.from(chunk));
+      retainedBodies.push(Buffer.concat(chunks));
       response.writeHead(200, {
         "content-type": "text/event-stream",
         "x-request-id": "nan-request-test",
@@ -175,6 +175,7 @@ describe("NAN audit proxy", () => {
         body: JSON.stringify({
           model: "qwen3.6",
           messages: [{ role: "user", content: prompt }],
+          chat_template_kwargs: { customKey: "preserved-custom-key" },
           stream: true,
         }),
       },
@@ -182,10 +183,30 @@ describe("NAN audit proxy", () => {
     expect(result.status).toBe(200);
     await result.text();
 
+    // The proxy forwards the exact Qwen chat body with enable_thinking false,
+    // preserving every other field including custom chat_template_kwargs.
+    const forwardedBody = retainedBodies[0]!;
+    const forwarded = JSON.parse(forwardedBody.toString("utf8")) as Record<
+      string,
+      unknown
+    >;
+    expect(forwarded.model).toBe("qwen3.6");
+    expect(forwarded.chat_template_kwargs).toEqual({
+      customKey: "preserved-custom-key",
+      enable_thinking: false,
+    });
+    expect(forwarded).toMatchObject({
+      messages: [{ role: "user", content: prompt }],
+      stream: true,
+    });
+
     const rawEvidence = await readFile(evidencePath, "utf8");
     const evidence = JSON.parse(rawEvidence.trim()) as ProviderEvidence;
     expect(evidence.contractHash).toBe("contract-test");
     expect(evidence.request.model).toBe("qwen3.6");
+    expect(evidence.request.bodySha256).toBe(
+      createHash("sha256").update(forwardedBody).digest("hex"),
+    );
     expect(evidence.response).toMatchObject({
       status: 200,
       id: "chatcmpl-test",
@@ -221,6 +242,62 @@ describe("NAN audit proxy", () => {
     );
     expect(rejectedStatus).toBe(400);
     expect(upstreamRequests).toBe(1);
+
+    upstream.close();
+  });
+
+  it("forwards non-Qwen and non-chat request bodies byte-for-byte unchanged", async () => {
+    const receivedBodies: Buffer[] = [];
+    const upstream = http.createServer(async (request, response) => {
+      const chunks: Buffer[] = [];
+      for await (const chunk of request) chunks.push(Buffer.from(chunk));
+      receivedBodies.push(Buffer.concat(chunks));
+      response.writeHead(200, { "content-type": "application/json" });
+      response.end(JSON.stringify({ id: "chatcmpl-bytewise", model: "probe" }));
+    });
+    const upstreamPort = await listen(upstream);
+    const { port } = await startProxy(upstreamPort);
+
+    const nonQwenBody = JSON.stringify({
+      model: "some-other-model",
+      messages: [{ role: "user", content: "NON-QWEN-UNCHANGED" }],
+    });
+    const nonQwenResult = await fetch(
+      `http://127.0.0.1:${port}/v1/chat/completions`,
+      {
+        method: "POST",
+        headers: {
+          authorization: "Bearer sk-non-qwen",
+          "content-type": "application/json",
+        },
+        body: nonQwenBody,
+      },
+    );
+    expect(nonQwenResult.status).toBe(200);
+    await nonQwenResult.text();
+
+    const nonChatBody = JSON.stringify({
+      model: "qwen3.6",
+      input: ["NON-CHAT-UNCHANGED"],
+    });
+    const nonChatResult = await fetch(`http://127.0.0.1:${port}/v1/embeddings`, {
+      method: "POST",
+      headers: {
+        authorization: "Bearer sk-non-chat",
+        "content-type": "application/json",
+      },
+      body: nonChatBody,
+    });
+    expect(nonChatResult.status).toBe(200);
+    await nonChatResult.text();
+
+    expect(receivedBodies).toHaveLength(2);
+    expect(receivedBodies[0]!.equals(Buffer.from(nonQwenBody, "utf8"))).toBe(
+      true,
+    );
+    expect(receivedBodies[1]!.equals(Buffer.from(nonChatBody, "utf8"))).toBe(
+      true,
+    );
 
     upstream.close();
   });
