@@ -63,6 +63,14 @@ import {
   type ProfessionalProfile,
 } from "../../data/schemas/professionalProfiles";
 import {
+  MunicipalitiesResourceSchema,
+  MunicipalitySourceRecordSchema,
+  ProvincialContractsResourceSchema,
+  RegionalContractSourceRecordSchema,
+  type MunicipalitySourceRecord,
+  type RegionalContractSourceRecord,
+} from "../../data/schemas/regionalContext";
+import {
   GENERATED_RESOURCE_CATALOG,
   GENERATED_FOUNDATION_RESOURCE_KEYS,
   GENERATED_RESOURCE_KEYS,
@@ -91,6 +99,10 @@ import {
   normalizeOffersWithPublishedRequirements,
 } from "./normalizeOffers";
 import { normalizeTraining } from "./normalizeTraining";
+import {
+  normalizeMunicipalities,
+  normalizeRegionalContracts,
+} from "./normalizeRegionalContext";
 import {
   normalizeEcylCourses,
   normalizeProfessionalCertificates,
@@ -207,6 +219,14 @@ const RESOURCE_DEFINITIONS = {
     ...GENERATED_RESOURCE_CATALOG.professionalCertificates,
     schema: ProfessionalCertificatesResourceSchema,
   },
+  provincialContracts: {
+    ...GENERATED_RESOURCE_CATALOG.provincialContracts,
+    schema: ProvincialContractsResourceSchema,
+  },
+  municipalities: {
+    ...GENERATED_RESOURCE_CATALOG.municipalities,
+    schema: MunicipalitiesResourceSchema,
+  },
 } as const;
 
 type ResourceKey = GeneratedResourceKey;
@@ -251,6 +271,8 @@ export interface BuildSnapshotsOptions {
   fetchProfessionalCertificateRecords?: () => Promise<
     ProfessionalCertificateSourceRecord[]
   >;
+  fetchRegionalContractRecords?: () => Promise<RegionalContractSourceRecord[]>;
+  fetchMunicipalityRecords?: () => Promise<MunicipalitySourceRecord[]>;
   fetchIncomeBundle?: () => Promise<EducabaseIncomeBundle>;
   loadCuratedMappings?: (
     programs: readonly z.infer<typeof TrainingProgramSchema>[],
@@ -1306,6 +1328,8 @@ async function writeCandidate(
   offerRecords: readonly OfferSourceRecord[],
   ecylCourseRecords: readonly EcylCourseSourceRecord[],
   professionalCertificateRecords: readonly ProfessionalCertificateSourceRecord[],
+  regionalContractRecords: readonly RegionalContractSourceRecord[],
+  municipalityRecords: readonly MunicipalitySourceRecord[],
   incomeBundle: EducabaseIncomeBundle,
   outcomeIndicators: z.infer<typeof OutcomeIndicatorsResourceSchema>,
   curatedMappings: ValidatedCuratedMappings,
@@ -1384,6 +1408,12 @@ async function writeCandidate(
     professionalCertificates: ProfessionalCertificatesResourceSchema.parse(
       normalizeProfessionalCertificates(professionalCertificateRecords),
     ),
+    provincialContracts: ProvincialContractsResourceSchema.parse(
+      normalizeRegionalContracts(regionalContractRecords),
+    ),
+    municipalities: MunicipalitiesResourceSchema.parse(
+      normalizeMunicipalities(municipalityRecords),
+    ),
   };
   const qualityReport = runQualityGates(
     candidate,
@@ -1444,7 +1474,13 @@ async function writeCandidate(
                     : RESOURCE_DEFINITIONS[key].sourceKind ===
                         "professionalProfiles"
                       ? professionalProfileSource
-                      : curatedRelationshipSource,
+                      : RESOURCE_DEFINITIONS[key].sourceKind ===
+                          "regionalContracts"
+                        ? SOURCE_CONFIG.regionalContracts
+                        : RESOURCE_DEFINITIONS[key].sourceKind ===
+                            "municipalities"
+                          ? SOURCE_CONFIG.municipalities
+                          : curatedRelationshipSource,
       fetchedAt,
       RESOURCE_DEFINITIONS[key].sourceKind === "offers"
         ? offerSourceSnapshot.sourceUpdatedAt
@@ -2402,6 +2438,20 @@ export async function buildSnapshots(
           SOURCE_CONFIG.professionalCertificates.recordsUrl,
           ProfessionalCertificateSourceRecordSchema,
         ));
+    const fetchRegionalContractRecords =
+      options.fetchRegionalContractRecords ??
+      (() =>
+        fetchAllRecords(
+          SOURCE_CONFIG.regionalContracts.recordsUrl,
+          RegionalContractSourceRecordSchema,
+        ));
+    const fetchMunicipalityRecords =
+      options.fetchMunicipalityRecords ??
+      (() =>
+        fetchAllRecords(
+          SOURCE_CONFIG.municipalities.recordsUrl,
+          MunicipalitySourceRecordSchema,
+        ));
 
     let committed = false;
     let staging: string | undefined;
@@ -2414,12 +2464,16 @@ export async function buildSnapshots(
         incomeBundle,
         fetchedEcylCourseRecords,
         fetchedProfessionalCertificateRecords,
+        fetchedRegionalContractRecords,
+        fetchedMunicipalityRecords,
       ] = await Promise.all([
         limitIngestion(() => fetchTrainingRecords()),
         limitIngestion(() => fetchOfferRecords()),
         limitIngestion(() => fetchIncomeBundle()),
         limitIngestion(() => fetchEcylCourseRecords()),
         limitIngestion(() => fetchProfessionalCertificateRecords()),
+        limitIngestion(() => fetchRegionalContractRecords()),
+        limitIngestion(() => fetchMunicipalityRecords()),
       ]);
       const trainingRecords = z
         .array(TrainingSourceRecordSchema)
@@ -2433,6 +2487,12 @@ export async function buildSnapshots(
       const professionalCertificateRecords = z
         .array(ProfessionalCertificateSourceRecordSchema)
         .parse(fetchedProfessionalCertificateRecords);
+      const regionalContractRecords = z
+        .array(RegionalContractSourceRecordSchema)
+        .parse(fetchedRegionalContractRecords);
+      const municipalityRecords = z
+        .array(MunicipalitySourceRecordSchema)
+        .parse(fetchedMunicipalityRecords);
       const outcomeIndicators = OutcomeIndicatorsResourceSchema.parse(
         normalizeIncomeOutcomes(incomeBundle.tables),
       );
@@ -2486,6 +2546,8 @@ export async function buildSnapshots(
         training: trainingRecords,
         ecylCourses: ecylCourseRecords,
         professionalCertificates: professionalCertificateRecords,
+        regionalContracts: regionalContractRecords,
+        municipalities: municipalityRecords,
       });
       const snapshotId = `${fetchedAt.replace(/\D/gu, "").toLowerCase()}-${sourceHash.slice(0, 12)}`;
       const buildId = `${snapshotId}-${process.pid}`;
@@ -2499,6 +2561,8 @@ export async function buildSnapshots(
         offerRecords,
         ecylCourseRecords,
         professionalCertificateRecords,
+        regionalContractRecords,
+        municipalityRecords,
         incomeBundle,
         outcomeIndicators,
         curatedMappings,

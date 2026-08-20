@@ -53,6 +53,14 @@ export const GENERATED_RESOURCE_CATALOG = {
     fileName: "professional-certificates.json",
     sourceKind: "professionalCertificates",
   },
+  provincialContracts: {
+    fileName: "provincial-contracts.json",
+    sourceKind: "regionalContracts",
+  },
+  municipalities: {
+    fileName: "municipalities.json",
+    sourceKind: "municipalities",
+  },
 } as const;
 
 export type GeneratedResourceKey = keyof typeof GENERATED_RESOURCE_CATALOG;

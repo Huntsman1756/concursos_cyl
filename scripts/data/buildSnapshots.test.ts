@@ -173,6 +173,39 @@ const fixedOptions = {
       nivel_cp: 3,
     },
   ],
+  fetchRegionalContractRecords: async () => [
+    {
+      fecha: "2026-07-01",
+      codigo_territorio: "47",
+      nombre_territorio: "Valladolid",
+      longitud: -4.7245,
+      latitud: 41.6523,
+      total: 1_000,
+      indefinido: 400,
+      temporal: 600,
+      posicion: { lon: -4.7245, lat: 41.6523 },
+      provincia: "VA",
+    },
+  ],
+  fetchMunicipalityRecords: async () => [
+    {
+      municipio: "Valladolid",
+      cod_municipio: "186",
+      provincia: "Valladolid",
+      cod_provincia: "47",
+      cod_ine: 47186,
+      poblacion: 300_000,
+      mancomunidades: null,
+      entidades_locales_menores: null,
+      comarca: null,
+      longitud: -4.7245,
+      latitud: 41.6523,
+      coordenadax: 356_000,
+      coordenaday: 4_613_000,
+      posicion: { lon: -4.7245, lat: 41.6523 },
+      presencia_de_comercio: "Sí",
+    },
+  ],
   fetchIncomeBundle: loadFixtureIncomeBundle,
   loadCuratedMappings: async () => ({
     occupations: [],
@@ -411,6 +444,48 @@ const BUILD_SNAPSHOTS_TEST_TIMEOUT =
   process.env.CI === "true" ? 90_000 : 30_000;
 
 describe("buildSnapshots", { timeout: BUILD_SNAPSHOTS_TEST_TIMEOUT }, () => {
+  it("publishes regional context resources with source provenance", async () => {
+    const root = await temporaryRoot();
+
+    await buildSnapshots({ rootDirectory: root, ...fixedOptions });
+
+    const manifest = await readManifest(root);
+    const contractsSnapshot = manifest.resourceSnapshots.provincialContracts;
+    const municipalitiesSnapshot = manifest.resourceSnapshots.municipalities;
+    expect(contractsSnapshot).toMatchObject({
+      recordCount: 1,
+      sourceId: "jcyl-provincial-employment-contracts",
+    });
+    expect(municipalitiesSnapshot).toMatchObject({
+      recordCount: 1,
+      sourceId: "jcyl-municipal-registry",
+    });
+
+    const contracts = JSON.parse(
+      await readFile(assetPath(root, contractsSnapshot.resourcePath), "utf8"),
+    ) as unknown[];
+    const municipalities = JSON.parse(
+      await readFile(
+        assetPath(root, municipalitiesSnapshot.resourcePath),
+        "utf8",
+      ),
+    ) as unknown[];
+    expect(contracts).toEqual([
+      expect.objectContaining({
+        month: "2026-07-01T00:00:00.000Z",
+        provinceCode: "47",
+        totalContracts: 1_000,
+      }),
+    ]);
+    expect(municipalities).toEqual([
+      expect.objectContaining({
+        ineCode: "47186",
+        municipalityName: "Valladolid",
+        population: 300_000,
+      }),
+    ]);
+  });
+
   it("publishes one immutable verified outcome artifact with all upstream hashes", async () => {
     const root = await temporaryRoot();
 
@@ -2951,6 +3026,10 @@ describe("buildSnapshots", { timeout: BUILD_SNAPSHOTS_TEST_TIMEOUT }, () => {
       fetchProfessionalCertificateRecords: track(
         fixedOptions.fetchProfessionalCertificateRecords,
       ),
+      fetchRegionalContractRecords: track(
+        fixedOptions.fetchRegionalContractRecords,
+      ),
+      fetchMunicipalityRecords: track(fixedOptions.fetchMunicipalityRecords),
       fetchIncomeBundle: track(fixedOptions.fetchIncomeBundle),
     });
 
