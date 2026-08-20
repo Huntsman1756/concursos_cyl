@@ -25,7 +25,7 @@ const staleLegacyManifest = {
   },
 } as const;
 
-test("home exposes equal journeys, navigation, freshness, and no automated accessibility violations", async ({
+test("home exposes one chosen journey, navigation, freshness, and no automated accessibility violations", async ({
   page,
 }) => {
   const manifestResponsePromise = page.waitForResponse((response) =>
@@ -48,13 +48,13 @@ test("home exposes equal journeys, navigation, freshness, and no automated acces
     "Metodología",
   ]);
 
-  const journeyButtons = page
-    .getByLabel("Elige tu punto de partida")
-    .getByRole("button");
-  await expect(journeyButtons).toHaveText([
-    "Ver mis opciones",
-    "Buscar ocupación",
-  ]);
+  const startingPoint = page.getByRole("group", {
+    name: "¿Cuál es tu punto de partida?",
+  });
+  await expect(startingPoint.getByRole("radio")).toHaveCount(2);
+  await expect(
+    page.getByRole("button", { name: "Ver las salidas de este título" }),
+  ).toHaveCount(1);
   const jobOffersSnapshot = manifest.resourceSnapshots.jobOffers;
   const expectedDateTime =
     jobOffersSnapshot.sourceUpdatedAt ?? jobOffersSnapshot.snapshotFetchedAt;
@@ -381,12 +381,12 @@ test("the complete Spanish home copy fits without horizontal overflow", async ({
   expect(overflow.document).toBeLessThanOrEqual(1);
 });
 
-test("reviewed programs lead two equal alternatives with coverage above both paths", async ({
+test("reviewed programs and the single search module keep stable responsive geometry", async ({
   page,
 }, testInfo) => {
   await page.goto("/");
 
-  const panels = page.locator(".entry-card");
+  const searchEntry = page.locator(".search-entry");
   const coverage = page.getByRole("region", { name: "Cobertura revisada" });
   const reviewedPrograms = coverage
     .getByRole("list", {
@@ -394,66 +394,28 @@ test("reviewed programs lead two equal alternatives with coverage above both pat
     })
     .getByRole("listitem");
   await expect(reviewedPrograms).toHaveCount(3);
-  const firstPanel = await panels.nth(0).boundingBox();
-  const secondPanel = await panels.nth(1).boundingBox();
+  const searchPanel = await searchEntry.boundingBox();
   const coveragePanel = await coverage.boundingBox();
-  const separator = await page
-    .getByRole("separator", { name: "Alternativa" })
-    .boundingBox();
-  expect(firstPanel).not.toBeNull();
-  expect(secondPanel).not.toBeNull();
+  const modeChoices = page.getByRole("group", {
+    name: "¿Cuál es tu punto de partida?",
+  });
+  await expect(modeChoices.getByRole("radio")).toHaveCount(2);
+  expect(searchPanel).not.toBeNull();
   expect(coveragePanel).not.toBeNull();
-  expect(separator).not.toBeNull();
 
-  if (!firstPanel || !secondPanel || !coveragePanel || !separator) {
+  if (!searchPanel || !coveragePanel) {
     return;
   }
 
   if (testInfo.project.name === "chromium-desktop") {
-    // Coverage panel sits above both entry cards.
-    expect(coveragePanel.y).toBeLessThanOrEqual(firstPanel.y);
-    expect(coveragePanel.y).toBeLessThanOrEqual(secondPanel.y);
-
-    // Coverage spans the combined horizontal region of the two cards.
-    expect(coveragePanel.x).toBeLessThanOrEqual(firstPanel.x);
-    expect(coveragePanel.x + coveragePanel.width).toBeGreaterThanOrEqual(
-      secondPanel.x + secondPanel.width,
+    expect(coveragePanel.y).toBeLessThanOrEqual(searchPanel.y);
+    expect(Math.abs(coveragePanel.x - searchPanel.x)).toBeLessThanOrEqual(1);
+    expect(Math.abs(coveragePanel.width - searchPanel.width)).toBeLessThanOrEqual(
+      1,
     );
-
-    // The two cards share the same row and have approximately equal width.
-    expect(Math.abs(firstPanel.y - secondPanel.y)).toBeLessThanOrEqual(1);
-    expect(Math.abs(firstPanel.width - secondPanel.width)).toBeLessThanOrEqual(
-      8,
-    );
-
-    // The visible separator lies horizontally between the two cards.
-    expect(separator.x).toBeGreaterThanOrEqual(
-      firstPanel.x + firstPanel.width - 2,
-    );
-    expect(separator.x).toBeLessThanOrEqual(secondPanel.x + 2);
   } else {
-    // Coverage panel is above the first card on mobile.
-    expect(coveragePanel.y).toBeLessThanOrEqual(firstPanel.y);
-
-    // Cards and separator are vertically ordered: first, separator, second.
-    expect(separator.y).toBeGreaterThan(firstPanel.y + firstPanel.height);
-    expect(secondPanel.y).toBeGreaterThan(separator.y + separator.height);
-
-    // Both cards have approximately equal width.
-    expect(Math.abs(firstPanel.width - secondPanel.width)).toBeLessThanOrEqual(
-      8,
-    );
-
-    // Neither card width nor geometry suggests numbered steps
-    // (equal sizing implies parallel alternatives, not a sequence).
-    expect(firstPanel.width).toBeGreaterThan(200);
-    expect(secondPanel.width).toBeGreaterThan(200);
-
-    const firstCta = await panels.nth(0).getByRole("button").boundingBox();
-    expect(firstCta).not.toBeNull();
-    if (firstCta) {
-      expect(firstCta.width).toBeGreaterThan(firstPanel.width * 0.8);
-    }
+    expect(coveragePanel.y).toBeLessThanOrEqual(searchPanel.y);
+    expect(searchPanel.width).toBeGreaterThan(280);
   }
 
   const overflow = await page.evaluate(

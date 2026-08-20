@@ -197,7 +197,7 @@ describe("HomePage", () => {
       screen.getByText("Tu título de FP"),
     ).toBeVisible();
     expect(
-      screen.getByText("Elige un título para ver sus salidas profesionales."),
+      screen.getByText("Elige un título."),
     ).toBeVisible();
 
     const user = userEvent.setup();
@@ -221,7 +221,7 @@ describe("HomePage", () => {
       }),
     ).toBeDisabled();
     expect(
-      screen.getByText("Selecciona una ocupación de la lista para continuar."),
+      screen.getByText("Elige una ocupación de la lista."),
     ).toBeVisible();
     expect(
       screen.queryByRole("button", {
@@ -232,19 +232,20 @@ describe("HomePage", () => {
       "occupation",
     );
     expect(
-      screen.getByRole("region", { name: "Metodología y límites" }),
-    ).toHaveTextContent(
-      /Datos públicos y relaciones revisadas.+Los resultados no garantizan empleo/i,
-    );
-    expect(
-      screen.getByRole("link", { name: "Ver metodología" }),
+      screen.getByRole("link", { name: "Método y límites" }),
     ).toHaveAttribute("href", "/metodologia");
     const commitments = screen.getByRole("region", {
       name: "Compromisos del proyecto",
     });
     expect(commitments).toHaveTextContent(
-      "Fuentes públicasRelaciones revisadasSin cuentas ni cookies",
+      "Fuentes públicasRelaciones revisadasSin cuentas ni cookiesMétodo y límites",
     );
+    expect(
+      screen.getByRole("link", { name: /Comparar ingresos/u }),
+    ).toHaveAttribute("href", "/comparar");
+    expect(
+      screen.queryByRole("link", { name: /Buscar por tu título/u }),
+    ).not.toBeInTheDocument();
     expect(commitments).not.toHaveTextContent(
       /Datos de administraciones|Vínculos publicados|Sin registro/i,
     );

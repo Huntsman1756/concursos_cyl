@@ -221,8 +221,8 @@ export function HomePage() {
             <span>siguiente paso</span>
           </h1>
           <p>
-            SALIDA CyL conecta FP, salidas profesionales y evidencia pública; no
-            es un buscador general de empleo ni de cursos.
+            Conecta tu FP con ocupaciones y datos públicos, sin promesas de
+            empleo.
           </p>
         </div>
 
@@ -341,11 +341,14 @@ export function HomePage() {
                     checked={searchMode === "fp"}
                     onChange={() => selectSearchMode("fp")}
                   />
+                  <Icon
+                    className="search-entry__mode-icon"
+                    name="graduation-cap"
+                    size={21}
+                  />
                   <span>
                     <strong>Tengo un título de FP</strong>
-                    <small>
-                      Dime en qué puedo trabajar con lo que ya he estudiado.
-                    </small>
+                    <small>Ver ocupaciones relacionadas.</small>
                   </span>
                 </label>
                 <label
@@ -359,9 +362,14 @@ export function HomePage() {
                     checked={searchMode === "occupation"}
                     onChange={() => selectSearchMode("occupation")}
                   />
+                  <Icon
+                    className="search-entry__mode-icon"
+                    name="briefcase"
+                    size={21}
+                  />
                   <span>
                     <strong>Tengo un empleo en mente</strong>
-                    <small>Dime qué FP me lleva hasta esa ocupación.</small>
+                    <small>Encontrar la FP adecuada.</small>
                   </span>
                 </label>
               </div>
@@ -408,7 +416,7 @@ export function HomePage() {
                     </div>
                     {selectedProgram === "" ? (
                       <p className="search-entry__hint" id="program-required">
-                        Elige un título para ver sus salidas profesionales.
+                        Elige un título.
                       </p>
                     ) : null}
                     <button
@@ -463,12 +471,12 @@ export function HomePage() {
                       onConfirm={setConfirmedOccupation}
                       onClear={() => setConfirmedOccupation(null)}
                       label="Ocupación que te interesa"
-                      hint="Escribe una ocupación y selecciónala en la lista."
+                      hint="Escribe y elige una ocupación."
                       showConfirmation={false}
                     />
                     {confirmedOccupation === null ? (
                       <p className="search-entry__hint" id="occupation-required">
-                        Selecciona una ocupación de la lista para continuar.
+                        Elige una ocupación de la lista.
                       </p>
                     ) : null}
                     <button
@@ -520,45 +528,22 @@ export function HomePage() {
           <Icon name="user-round-x" size={19} />
           <strong>Sin cuentas ni cookies</strong>
         </div>
+        <Link to="/metodologia">
+          <Icon name="file-check" size={19} />
+          <strong>Método y límites</strong>
+        </Link>
       </section>
 
-      <nav className="secondary-access" aria-label="Explora SALIDA CyL">
-        <Link to="/desde-fp">
-          <Icon name="search" size={34} />
-          <span>
-            <strong>Buscar por tu título</strong>
-            <small>Salidas y oportunidades vinculadas.</small>
-          </span>
-          <Icon name="arrow-right" size={21} />
-        </Link>
-        <Link to="/desde-ocupacion">
-          <Icon name="briefcase" size={34} />
-          <span>
-            <strong>Explorar por ocupación</strong>
-            <small>Ciclos relacionados con el trabajo que buscas.</small>
-          </span>
-          <Icon name="arrow-right" size={21} />
-        </Link>
+      <nav className="compare-access" aria-label="Otras herramientas">
         <Link to="/comparar">
-          <Icon name="bar-chart" size={34} />
+          <Icon name="bar-chart" size={22} />
           <span>
-            <strong>Comparar referencias de ingresos</strong>
-            <small>Datos publicados por ciclo y territorio.</small>
+            <strong>Comparar ingresos</strong>
+            <small>Por ciclo y territorio.</small>
           </span>
-          <Icon name="arrow-right" size={21} />
+          <Icon name="arrow-right" size={18} />
         </Link>
       </nav>
-
-      <section className="methodology-strip" aria-label="Metodología y límites">
-        <p>
-          <span aria-hidden="true">i</span>
-          <strong>Datos públicos y relaciones revisadas.</strong> Los resultados
-          no garantizan empleo.
-        </p>
-        <Link to="/metodologia">
-          Ver metodología <Icon name="arrow-right" size={16} />
-        </Link>
-      </section>
     </div>
   );
 }
