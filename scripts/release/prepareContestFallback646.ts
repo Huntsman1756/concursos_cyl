@@ -1,7 +1,7 @@
 import { createHash } from "node:crypto";
 import { execFileSync } from "node:child_process";
 import { mkdirSync, readFileSync, realpathSync, writeFileSync } from "node:fs";
-import { dirname, resolve } from "node:path";
+import { dirname, posix, resolve } from "node:path";
 import { pathToFileURL } from "node:url";
 
 import { buildMappingCoverage } from "../data/validateCuratedMappings";
@@ -81,7 +81,7 @@ function relativeResourcePath(resourcePath: string): string {
   if (!resourcePath.startsWith("/data/v1/")) {
     throw new Error(`Unexpected resource path: ${resourcePath}`);
   }
-  return `public${resourcePath}`.replaceAll("/", "\\");
+  return posix.join("public", resourcePath.slice(1));
 }
 
 export function prepareContestFallback646(
