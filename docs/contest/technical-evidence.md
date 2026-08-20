@@ -5,11 +5,11 @@
 <!-- prettier-ignore -->
 | Campo | Valor |
 | --- | --- |
-| Commit fuente | `d6229c261c679b739e2c9c836c70b016d54f1d07` |
+| Commit fuente | `8eacf131348dba283cca23f9475c1b0619548749` |
 | Manifest | `public/data/v1/manifest.json` |
-| SHA-256 del manifest | `3e0e151b3df1857c162aec77d3a30ad0c49bd644a5b057257ac2b0ceab6d49fd` |
-| Generado | 2026-08-20T10:40:51.538Z |
-| Snapshot | `20260820104051538-f386fb5c0b86` |
+| SHA-256 del manifest | `01ecc258ade7b4b08c3e12f4b2f079a1cc3287cdd2645448481ee84ca55c21d9` |
+| Generado | 2026-08-20T11:51:24.718Z |
+| Snapshot | `20260820115124718-ad15514d370c` |
 | Estado de calidad | passed |
 | Centros | 229 |
 | Programas | 187 |
@@ -21,17 +21,17 @@
 <!-- prettier-ignore -->
 | Recurso | Ruta | Registros | SHA-256 |
 | --- | --- | ---: | --- |
-| centers | `/data/v1/snapshots/20260820104051538-f386fb5c0b86/centers.json` | 229 | `593b7780f6cb9511c02edb26a769e5e1f951624f6e4b923a8e34caacb230c87a` |
-| jobOffers | `/data/v1/snapshots/20260820104051538-f386fb5c0b86/job-offers.json` | 1026 | `680cafdf102e9959895039cb4a4bb45ad02be4773e9a546a0e05797e62c240f1` |
-| mappingCoverage | `/data/v1/snapshots/20260820104051538-f386fb5c0b86/mapping-coverage.json` | 209 | `a32669dfa623342955dc8168d8f9ab973b9e30e6d179137ec56bc30e55a131e8` |
-| officialOccupations | `/data/v1/snapshots/20260820104051538-f386fb5c0b86/official-occupations.json` | 502 | `76fa213f97c98e5af0f9bf120323ba3abb32df78e797c381e5454cadc858f64b` |
-| occupationAliases | `/data/v1/snapshots/20260820104051538-f386fb5c0b86/occupation-aliases.json` | 21 | `4f37bc7c6ff4d76140c79d9e9245c7155ff5f77d5b3bc397796985e13c2fbe7c` |
-| occupations | `/data/v1/snapshots/20260820104051538-f386fb5c0b86/occupations.json` | 91 | `f6c4b34a6fd5760c967273e4cc085abf6a3865baadfa2c721ac07dcd90fe3f09` |
-| outcomeIndicators | `/data/v1/snapshots/20260820104051538-f386fb5c0b86/outcome-indicators.json` | 22170 | `4f2c6b73fc4171bb9daf21583712ab2ec99bcaa7d27b1f2fd0c070b9079ab3e2` |
-| programs | `/data/v1/snapshots/20260820104051538-f386fb5c0b86/programs.json` | 187 | `90df87b283b5ff003dda20c9c4f7eac52b903e611753d107d4b927bbc4e19b72` |
-| publishedRequirements | `/data/v1/snapshots/20260820104051538-f386fb5c0b86/published-requirements.json` | 333 | `791ed86a1805afffdea2125fb682b14ab1e67b63d9d759b4af11f86776b8e3a2` |
-| trainingOccupationLinks | `/data/v1/snapshots/20260820104051538-f386fb5c0b86/training-occupation-links.json` | 21 | `508219bfd051ad9ff17d527c436a53f7d1d1d587a017db07f252319f2078e4c0` |
-| trainingOfferings | `/data/v1/snapshots/20260820104051538-f386fb5c0b86/training-offerings.json` | 1294 | `0948871f993a4f0a03ed42ccef060c4a395e0898dc230086f234345fee7e880a` |
+| centers | `/data/v1/snapshots/20260820115124718-ad15514d370c/centers.json` | 229 | `593b7780f6cb9511c02edb26a769e5e1f951624f6e4b923a8e34caacb230c87a` |
+| jobOffers | `/data/v1/snapshots/20260820115124718-ad15514d370c/job-offers.json` | 1026 | `ef2654d8148abcb9ce26fe66b02fb25713ef7c21570d33eb78b5ed7c7d256321` |
+| mappingCoverage | `/data/v1/snapshots/20260820115124718-ad15514d370c/mapping-coverage.json` | 209 | `a32669dfa623342955dc8168d8f9ab973b9e30e6d179137ec56bc30e55a131e8` |
+| officialOccupations | `/data/v1/snapshots/20260820115124718-ad15514d370c/official-occupations.json` | 502 | `76fa213f97c98e5af0f9bf120323ba3abb32df78e797c381e5454cadc858f64b` |
+| occupationAliases | `/data/v1/snapshots/20260820115124718-ad15514d370c/occupation-aliases.json` | 21 | `4f37bc7c6ff4d76140c79d9e9245c7155ff5f77d5b3bc397796985e13c2fbe7c` |
+| occupations | `/data/v1/snapshots/20260820115124718-ad15514d370c/occupations.json` | 91 | `f6c4b34a6fd5760c967273e4cc085abf6a3865baadfa2c721ac07dcd90fe3f09` |
+| outcomeIndicators | `/data/v1/snapshots/20260820115124718-ad15514d370c/outcome-indicators.json` | 22170 | `4f2c6b73fc4171bb9daf21583712ab2ec99bcaa7d27b1f2fd0c070b9079ab3e2` |
+| programs | `/data/v1/snapshots/20260820115124718-ad15514d370c/programs.json` | 187 | `90df87b283b5ff003dda20c9c4f7eac52b903e611753d107d4b927bbc4e19b72` |
+| publishedRequirements | `/data/v1/snapshots/20260820115124718-ad15514d370c/published-requirements.json` | 333 | `791ed86a1805afffdea2125fb682b14ab1e67b63d9d759b4af11f86776b8e3a2` |
+| trainingOccupationLinks | `/data/v1/snapshots/20260820115124718-ad15514d370c/training-occupation-links.json` | 21 | `508219bfd051ad9ff17d527c436a53f7d1d1d587a017db07f252319f2078e4c0` |
+| trainingOfferings | `/data/v1/snapshots/20260820115124718-ad15514d370c/training-offerings.json` | 1294 | `0948871f993a4f0a03ed42ccef060c4a395e0898dc230086f234345fee7e880a` |
 
 ## Recomputación de cobertura
 
