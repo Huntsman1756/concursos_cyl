@@ -242,7 +242,7 @@ test.describe("contest readiness journeys", () => {
     ).toHaveCount(4);
     await expect(
       page.getByRole("heading", { name: "Qué no permite afirmar" }),
-    ).toHaveCount(4);
+    ).toHaveCount(5);
     await expect(
       page.getByRole("article", { name: "Qué estudiar y dónde se imparte" }),
     ).toContainText("187 ciclos oficiales");

@@ -108,4 +108,16 @@ describe("GitHub Pages deployment workflow", () => {
     const buildIdx = verifyJob.indexOf("npm run build");
     expect(buildIdx).toBeGreaterThan(formatIdx);
   });
+
+  it("publishes the exact deployed commit before preparing the Pages artifact", async () => {
+    const workflow = await readFile(workflowPath, "utf8");
+    const buildIdx = workflow.indexOf("npm run build");
+    const versionIdx = workflow.indexOf(
+      'npx tsx scripts/release/writeVersionMetadata.ts dist "${{ github.sha }}"',
+    );
+    const prepareIdx = workflow.indexOf("npm run pages:prepare");
+
+    expect(versionIdx).toBeGreaterThan(buildIdx);
+    expect(prepareIdx).toBeGreaterThan(versionIdx);
+  });
 });
