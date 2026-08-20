@@ -1,0 +1,142 @@
+[
+  {
+    "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:5210",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-09",
+    "sourceQuote": "Responsable/encargado de sección/sala/departamento de tienda de alimentación.",
+    "sourceUrl": "https://www.boe.es/eli/es/rd/189/2018",
+    "trainingProgramKey": "COM02M"
+  },
+  {
+    "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:5220",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-09",
+    "sourceQuote": "Vendedor/a de productos alimentarios.",
+    "sourceUrl": "https://www.boe.es/eli/es/rd/189/2018",
+    "trainingProgramKey": "COM02M"
+  },
+  {
+    "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:7111",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-08",
+    "sourceQuote": "– Encofrador.",
+    "sourceUrl": "https://www.boe.es/eli/es/rd/2011/11/04/1575",
+    "trainingProgramKey": "EOC01M"
+  },
+  {
+    "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:7121",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-08",
+    "sourceQuote": "– Albañil.",
+    "sourceUrl": "https://www.boe.es/eli/es/rd/2011/11/04/1575",
+    "trainingProgramKey": "EOC01M"
+  },
+  {
+    "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:7193",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-08",
+    "sourceQuote": "– Instalador de sistemas de impermeabilización en edificios y obra civil.",
+    "sourceUrl": "https://www.boe.es/eli/es/rd/2011/11/04/1575",
+    "trainingProgramKey": "EOC01M"
+  },
+  {
+    "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:7240",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-08",
+    "sourceQuote": "– Alicatador– solador.",
+    "sourceUrl": "https://www.boe.es/eli/es/rd/2011/11/04/1575",
+    "trainingProgramKey": "EOC01M"
+  },
+  {
+    "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:7291",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-08",
+    "sourceQuote": "– Tejador.",
+    "sourceUrl": "https://www.boe.es/eli/es/rd/2011/11/04/1575",
+    "trainingProgramKey": "EOC01M"
+  },
+  {
+    "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:5110",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-08",
+    "sourceQuote": "Las ocupaciones y puestos de trabajo más relevantes son los siguientes: Cocinero.",
+    "sourceUrl": "https://todofp.es/dam/jcr%3A63392ee9-4d38-449b-a196-d0efb714b364/n-tcocinagastronomiaes-pdf.pdf",
+    "trainingProgramKey": "HOT01M"
+  },
+  {
+    "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:2713",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-04",
+    "sourceQuote": "Desarrollador de aplicaciones en entornos Web.",
+    "sourceUrl": "https://www.boe.es/buscar/doc.php?id=BOE-A-2010-9269&lang=es",
+    "trainingProgramKey": "IFC03S"
+  },
+  {
+    "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:2713",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-04",
+    "sourceQuote": "Desarrollador de aplicaciones en entornos Web.",
+    "sourceUrl": "https://www.boe.es/buscar/doc.php?id=BOE-A-2010-9269&lang=es",
+    "trainingProgramKey": "IFC03SD"
+  },
+  {
+    "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:5611",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-08",
+    "sourceQuote": "Auxiliar de Enfermería/Clínica..",
+    "sourceUrl": "https://todofp.es/dam/jcr%3Aaf5b68fd-e75c-493b-94ff-0565d3886473/san21cuidauxilenfermeria-pdf.pdf",
+    "trainingProgramKey": "SAN21"
+  },
+  {
+    "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:5612",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-08",
+    "sourceQuote": "Auxiliar de Atención primaria.",
+    "sourceUrl": "https://todofp.es/dam/jcr%3Aaf5b68fd-e75c-493b-94ff-0565d3886473/san21cuidauxilenfermeria-pdf.pdf",
+    "trainingProgramKey": "SAN21"
+  },
+  {
+    "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:5629",
+    "relationshipType": "reviewed_relationship",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-08",
+    "sourceQuote": "Categoría: CUIDADORES DE PERSONAS CON DISCAPACIDAD (CNO 56291025) Titulación: FP grado medio en atención a personas en situación de dependencia",
+    "sourceUrl": "https://www.sepe.es/fr/SiteSepe/contenidos/COVID-19/documentos/documentacion-melilla/2021/201221-Resolucion-provisional--20-12-2021-firmada.pdf",
+    "trainingProgramKey": "SSC01M"
+  },
+  {
+    "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:5710",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-08",
+    "sourceQuote": "Auxiliar de ayuda a domicilio.",
+    "sourceUrl": "https://www.boe.es/eli/es/rd/2011/11/04/1593",
+    "trainingProgramKey": "SSC01M"
+  }
+]

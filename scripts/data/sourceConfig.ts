@@ -22,7 +22,7 @@ export const SOURCE_CONFIG = {
   regionalContracts: {
     id: "jcyl-provincial-employment-contracts",
     recordsUrl:
-      "https://analisis.datosabiertos.jcyl.es/api/explore/v2.1/catalog/datasets/contratos-realizados-en-las-provincias-de-castilla-y-leon/records",
+      "https://analisis.datosabiertos.jcyl.es/api/explore/v2.1/catalog/datasets/contratos-realizados-en-las-provincias-de-castilla-y-leon/records?where=provincia%21%3D%27CYL%27",
   },
   municipalities: {
     id: "jcyl-municipal-registry",
