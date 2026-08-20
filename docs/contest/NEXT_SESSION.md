@@ -2,16 +2,16 @@
 
 ## Estado confirmado
 
-- Producto preparado en `533203a149ece5dc2b5f862b4abe45e8d28cf375`; despliegue y evidencia final pendientes de esta sesión.
+- Producto y documentación técnica publicados en `acf29b7997d1ad8c10859d36e695da76070b789c`.
 - Freeze fuente: `533203a149ece5dc2b5f862b4abe45e8d28cf375`.
 - Snapshot activo: `20260820151255897-e91792c94054`.
 - Ocho datasets JCyL visibles y 20 recursos inmutables en el manifiesto.
 - Cobertura: 45 cualificaciones, 54 claves de modalidad, 101 relaciones aprobadas y 21 alias.
 - Ofertas alcanzadas: 39 de 1.026; la cifra es una unión acotada de IDs, no todo el mercado.
 - Directorio educativo: 1.741 registros y reconciliación exacta de los 229 centros FP por código.
-- QA local previsto tras el último cambio: 732 pruebas aprobadas, 178 históricas omitidas y 94 E2E en escritorio y móvil; confirmar en el cierre de release.
-- Workflow y despliegue de este snapshot: pendientes.
-- Las capturas actuales corresponden al release anterior y deben regenerarse tras publicar.
+- QA del workflow: 730 pruebas aprobadas y 180 omitidas por condiciones de plataforma; 94/94 E2E en escritorio y móvil.
+- Workflow verificado: `32386658829`.
+- Diez capturas finales anónimas ligadas al commit desplegado.
 
 ## Orden de trabajo
 
