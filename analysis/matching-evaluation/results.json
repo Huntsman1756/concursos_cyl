@@ -1,0 +1,383 @@
+{
+  "schemaVersion": "1.0.0",
+  "snapshot": {
+    "snapshotId": "20260809014318761-5b22c488ce4b",
+    "resourcePath": "public/data/v1/snapshots/20260809014318761-5b22c488ce4b/job-offers.json",
+    "sha256": "5c8ca9fde40e1fe8d58097ffd6f8823ff70f7de04abcab20d7e35c600b6ef5ba",
+    "recordCount": 1077
+  },
+  "truthArtifactSha256": "d7fce4553804dfcd87ba2039c170f399746cc3b67a084791f59f67f5f00cfdf1",
+  "currentAliases": {
+    "path": "data/curated/occupation-aliases.json",
+    "sha256": "fbd4ca379e14c5152ee1620de5b4176d8102fc554c4e31139a98550d8855dd68",
+    "recordCount": 21
+  },
+  "labeledTruth": {
+    "rowCount": 68,
+    "acceptedCount": 54,
+    "rejectedCount": 14,
+    "forms": [
+      {
+        "form": "albañil",
+        "programKey": "EOC01M",
+        "rowCount": 2,
+        "acceptedCount": 1,
+        "rejectedCount": 1
+      },
+      {
+        "form": "albañiles",
+        "programKey": "EOC01M",
+        "rowCount": 22,
+        "acceptedCount": 20,
+        "rejectedCount": 2
+      },
+      {
+        "form": "cocinero",
+        "programKey": "HOT01M",
+        "rowCount": 1,
+        "acceptedCount": 0,
+        "rejectedCount": 1
+      },
+      {
+        "form": "cocineros",
+        "programKey": "HOT01M",
+        "rowCount": 40,
+        "acceptedCount": 30,
+        "rejectedCount": 10
+      },
+      {
+        "form": "encofradores",
+        "programKey": "EOC01M",
+        "rowCount": 2,
+        "acceptedCount": 2,
+        "rejectedCount": 0
+      },
+      {
+        "form": "teleoperadores",
+        "programKey": "COM01M",
+        "rowCount": 1,
+        "acceptedCount": 1,
+        "rejectedCount": 0
+      }
+    ]
+  },
+  "closedSet": {
+    "labelPairCount": 68,
+    "shadowPredictionPairCount": 68,
+    "shadowUnlabeledPredictionCount": 0,
+    "shadowUnpredictedLabelCount": 0
+  },
+  "shadow": {
+    "lane": "shadow_lexical",
+    "predictedCount": 68,
+    "labeledPredictionCount": 68,
+    "unlabeledPredictionCount": 0,
+    "truePositiveCount": 54,
+    "falsePositiveCount": 14,
+    "precision": 0.7941176470588235,
+    "knownPositiveCount": 54,
+    "coveredKnownPositiveCount": 54,
+    "knownPositiveCoverage": 1,
+    "byForm": [
+      {
+        "form": "albañil",
+        "programKey": "EOC01M",
+        "predictedCount": 2,
+        "labeledPredictionCount": 2,
+        "unlabeledPredictionCount": 0,
+        "truePositiveCount": 1,
+        "falsePositiveCount": 1,
+        "precision": 0.5,
+        "knownPositiveCount": 1,
+        "coveredKnownPositiveCount": 1,
+        "knownPositiveCoverage": 1
+      },
+      {
+        "form": "albañiles",
+        "programKey": "EOC01M",
+        "predictedCount": 22,
+        "labeledPredictionCount": 22,
+        "unlabeledPredictionCount": 0,
+        "truePositiveCount": 20,
+        "falsePositiveCount": 2,
+        "precision": 0.9090909090909091,
+        "knownPositiveCount": 20,
+        "coveredKnownPositiveCount": 20,
+        "knownPositiveCoverage": 1
+      },
+      {
+        "form": "cocinero",
+        "programKey": "HOT01M",
+        "predictedCount": 1,
+        "labeledPredictionCount": 1,
+        "unlabeledPredictionCount": 0,
+        "truePositiveCount": 0,
+        "falsePositiveCount": 1,
+        "precision": 0,
+        "knownPositiveCount": 0,
+        "coveredKnownPositiveCount": 0,
+        "knownPositiveCoverage": null
+      },
+      {
+        "form": "cocineros",
+        "programKey": "HOT01M",
+        "predictedCount": 40,
+        "labeledPredictionCount": 40,
+        "unlabeledPredictionCount": 0,
+        "truePositiveCount": 30,
+        "falsePositiveCount": 10,
+        "precision": 0.75,
+        "knownPositiveCount": 30,
+        "coveredKnownPositiveCount": 30,
+        "knownPositiveCoverage": 1
+      },
+      {
+        "form": "encofradores",
+        "programKey": "EOC01M",
+        "predictedCount": 2,
+        "labeledPredictionCount": 2,
+        "unlabeledPredictionCount": 0,
+        "truePositiveCount": 2,
+        "falsePositiveCount": 0,
+        "precision": 1,
+        "knownPositiveCount": 2,
+        "coveredKnownPositiveCount": 2,
+        "knownPositiveCoverage": 1
+      },
+      {
+        "form": "teleoperadores",
+        "programKey": "COM01M",
+        "predictedCount": 1,
+        "labeledPredictionCount": 1,
+        "unlabeledPredictionCount": 0,
+        "truePositiveCount": 1,
+        "falsePositiveCount": 0,
+        "precision": 1,
+        "knownPositiveCount": 1,
+        "coveredKnownPositiveCount": 1,
+        "knownPositiveCoverage": 1
+      }
+    ],
+    "predictionsByForm": [
+      {
+        "form": "albañil",
+        "programKey": "EOC01M",
+        "offerIds": ["1285664848132", "1285669061589"]
+      },
+      {
+        "form": "albañiles",
+        "programKey": "EOC01M",
+        "offerIds": [
+          "1285613685343",
+          "1285614585114",
+          "1285658958752",
+          "1285662949857",
+          "1285663783370",
+          "1285663974168",
+          "1285664082111",
+          "1285664861533",
+          "1285665269105",
+          "1285665380724",
+          "1285665380790",
+          "1285665634810",
+          "1285667539516",
+          "1285667539544",
+          "1285667590834",
+          "1285667964750",
+          "1285668256677",
+          "1285668256705",
+          "1285668323262",
+          "1285668412750",
+          "1285668877598",
+          "1285669638729"
+        ]
+      },
+      {
+        "form": "cocinero",
+        "programKey": "HOT01M",
+        "offerIds": ["1285669506800"]
+      },
+      {
+        "form": "cocineros",
+        "programKey": "HOT01M",
+        "offerIds": [
+          "1285614233577",
+          "1285626761329",
+          "1285627823296",
+          "1285637347955",
+          "1285639495437",
+          "1285640091376",
+          "1285640170324",
+          "1285645512831",
+          "1285655155784",
+          "1285659376390",
+          "1285659956971",
+          "1285660807038",
+          "1285662378630",
+          "1285663812475",
+          "1285664451544",
+          "1285665562689",
+          "1285665634431",
+          "1285665790208",
+          "1285666442607",
+          "1285666499205",
+          "1285666617717",
+          "1285666617827",
+          "1285666878773",
+          "1285666909272",
+          "1285666909300",
+          "1285666999271",
+          "1285667211184",
+          "1285667333359",
+          "1285667333387",
+          "1285667926910",
+          "1285667926938",
+          "1285667926966",
+          "1285668256453",
+          "1285668323029",
+          "1285668911911",
+          "1285669059164",
+          "1285669380024",
+          "1285669380068",
+          "1285669482753",
+          "1285669719137"
+        ]
+      },
+      {
+        "form": "encofradores",
+        "programKey": "EOC01M",
+        "offerIds": ["1285667539377", "1285668256621"]
+      },
+      {
+        "form": "teleoperadores",
+        "programKey": "COM01M",
+        "offerIds": ["1285663377359"]
+      }
+    ]
+  },
+  "publishedBaseline": {
+    "lane": "published_baseline",
+    "predictedCount": 2,
+    "labeledPredictionCount": 2,
+    "unlabeledPredictionCount": 0,
+    "truePositiveCount": 2,
+    "falsePositiveCount": 0,
+    "precision": 1,
+    "knownPositiveCount": 54,
+    "coveredKnownPositiveCount": 2,
+    "knownPositiveCoverage": 0.037037037037037035,
+    "byForm": [
+      {
+        "form": "albañil",
+        "programKey": "EOC01M",
+        "predictedCount": 0,
+        "labeledPredictionCount": 0,
+        "unlabeledPredictionCount": 0,
+        "truePositiveCount": 0,
+        "falsePositiveCount": 0,
+        "precision": null,
+        "knownPositiveCount": 1,
+        "coveredKnownPositiveCount": 0,
+        "knownPositiveCoverage": 0
+      },
+      {
+        "form": "albañiles",
+        "programKey": "EOC01M",
+        "predictedCount": 0,
+        "labeledPredictionCount": 0,
+        "unlabeledPredictionCount": 0,
+        "truePositiveCount": 0,
+        "falsePositiveCount": 0,
+        "precision": null,
+        "knownPositiveCount": 20,
+        "coveredKnownPositiveCount": 0,
+        "knownPositiveCoverage": 0
+      },
+      {
+        "form": "cocinero",
+        "programKey": "HOT01M",
+        "predictedCount": 0,
+        "labeledPredictionCount": 0,
+        "unlabeledPredictionCount": 0,
+        "truePositiveCount": 0,
+        "falsePositiveCount": 0,
+        "precision": null,
+        "knownPositiveCount": 0,
+        "coveredKnownPositiveCount": 0,
+        "knownPositiveCoverage": null
+      },
+      {
+        "form": "cocineros",
+        "programKey": "HOT01M",
+        "predictedCount": 0,
+        "labeledPredictionCount": 0,
+        "unlabeledPredictionCount": 0,
+        "truePositiveCount": 0,
+        "falsePositiveCount": 0,
+        "precision": null,
+        "knownPositiveCount": 30,
+        "coveredKnownPositiveCount": 0,
+        "knownPositiveCoverage": 0
+      },
+      {
+        "form": "encofradores",
+        "programKey": "EOC01M",
+        "predictedCount": 2,
+        "labeledPredictionCount": 2,
+        "unlabeledPredictionCount": 0,
+        "truePositiveCount": 2,
+        "falsePositiveCount": 0,
+        "precision": 1,
+        "knownPositiveCount": 2,
+        "coveredKnownPositiveCount": 2,
+        "knownPositiveCoverage": 1
+      },
+      {
+        "form": "teleoperadores",
+        "programKey": "COM01M",
+        "predictedCount": 0,
+        "labeledPredictionCount": 0,
+        "unlabeledPredictionCount": 0,
+        "truePositiveCount": 0,
+        "falsePositiveCount": 0,
+        "precision": null,
+        "knownPositiveCount": 1,
+        "coveredKnownPositiveCount": 0,
+        "knownPositiveCoverage": 0
+      }
+    ],
+    "predictionsByForm": [
+      { "form": "albañil", "programKey": "EOC01M", "offerIds": [] },
+      { "form": "albañiles", "programKey": "EOC01M", "offerIds": [] },
+      { "form": "cocinero", "programKey": "HOT01M", "offerIds": [] },
+      { "form": "cocineros", "programKey": "HOT01M", "offerIds": [] },
+      {
+        "form": "encofradores",
+        "programKey": "EOC01M",
+        "offerIds": ["1285667539377", "1285668256621"]
+      },
+      { "form": "teleoperadores", "programKey": "COM01M", "offerIds": [] }
+    ],
+    "matches": [
+      {
+        "programKey": "EOC01M",
+        "offerId": "1285667539377",
+        "offerTitle": "ENCOFRADORES",
+        "matchRule": "title_alias_exact"
+      },
+      {
+        "programKey": "EOC01M",
+        "offerId": "1285668256621",
+        "offerTitle": "ENCOFRADORES",
+        "matchRule": "title_alias_exact"
+      }
+    ]
+  },
+  "limitations": [
+    "La verdad etiquetada es el audit existente de ofertas candidatas; este benchmark no crea etiquetas nuevas.",
+    "La cobertura positiva conocida usa como denominador los positivos del audit cerrado y no es recall del mercado ni cobertura de todas las ofertas de Castilla y León.",
+    "La lane shadow aplica matching léxico a la instantánea histórica y no modifica aliases, datos publicados ni la lógica pública.",
+    "La lane published_baseline reproduce el matcher publicado con aliases curados actuales sobre la instantánea histórica fijada.",
+    "Los resultados dependen de los hashes de la verdad, aliases y snapshot declarados en este artefacto."
+  ]
+}

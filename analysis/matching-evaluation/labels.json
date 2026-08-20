@@ -1,0 +1,1087 @@
+{
+  "schemaVersion": "1.0.0",
+  "sourceArtifactPath": "analysis/fp_one_word_publication_reviews.json",
+  "sourceArtifactSha256": "d7fce4553804dfcd87ba2039c170f399746cc3b67a084791f59f67f5f00cfdf1",
+  "snapshot": {
+    "snapshotId": "20260809014318761-5b22c488ce4b",
+    "resourcePath": "public/data/v1/snapshots/20260809014318761-5b22c488ce4b/job-offers.json",
+    "sha256": "5c8ca9fde40e1fe8d58097ffd6f8823ff70f7de04abcab20d7e35c600b6ef5ba",
+    "recordCount": 1077
+  },
+  "review": {
+    "schemaVersion": "1.0.0",
+    "snapshotId": "20260809014318761-5b22c488ce4b",
+    "rows": [
+      {
+        "candidateId": "albanil-es",
+        "form": "albañil",
+        "programKey": "EOC01M",
+        "occupationId": "occupation:cno11:7121",
+        "offerId": "1285664848132",
+        "offerTitle": "3 Oficial/a Segunda Oficios (Especialidad Albañil-Conductor/a) para Ayto. de Palencia",
+        "disposition": "rejected",
+        "reasonCode": "mixed_role",
+        "rationale": "Audited combined-role evidence: OFICIAL/A SEGUNDA OFICIOS (Especialidad Albañil-Conductor/a).",
+        "requirementQuotes": [
+          "3 Oficial/a Segunda Oficios (Especialidad Albañil-Conductor/a) para Ayto. de Palencia",
+          "No se especifica"
+        ]
+      },
+      {
+        "candidateId": "albanil-es",
+        "form": "albañil",
+        "programKey": "EOC01M",
+        "occupationId": "occupation:cno11:7121",
+        "offerId": "1285669061589",
+        "offerTitle": "Albañil para reformas en Valladolid",
+        "disposition": "accepted",
+        "reasonCode": "exact_occupation_title",
+        "rationale": "Audited pinned payload: Experiencia previa como albañil y en diferentes técnicas constructivas.",
+        "requirementQuotes": [
+          "Albañil para reformas en Valladolid",
+          "Experiencia previa como albañil y en diferentes técnicas constructivas."
+        ]
+      },
+      {
+        "candidateId": "albanil-es",
+        "form": "albañiles",
+        "programKey": "EOC01M",
+        "occupationId": "occupation:cno11:7121",
+        "offerId": "1285613685343",
+        "offerTitle": "ALBAÑILES",
+        "disposition": "rejected",
+        "reasonCode": "contradictory_requirement",
+        "rationale": "Audited pinned payload: Permiso de conducir y vehículo propio.",
+        "requirementQuotes": [
+          "ALBAÑILES",
+          "Permiso de conducir y vehículo propio."
+        ]
+      },
+      {
+        "candidateId": "albanil-es",
+        "form": "albañiles",
+        "programKey": "EOC01M",
+        "occupationId": "occupation:cno11:7121",
+        "offerId": "1285614585114",
+        "offerTitle": "ALBAÑILES",
+        "disposition": "accepted",
+        "reasonCode": "exact_occupation_title",
+        "rationale": "Audited pinned payload: Permiso de circulación.",
+        "requirementQuotes": ["ALBAÑILES", "Permiso de circulación."]
+      },
+      {
+        "candidateId": "albanil-es",
+        "form": "albañiles",
+        "programKey": "EOC01M",
+        "occupationId": "occupation:cno11:7121",
+        "offerId": "1285658958752",
+        "offerTitle": "ALBAÑILES",
+        "disposition": "accepted",
+        "reasonCode": "exact_occupation_title",
+        "rationale": "Audited pinned payload: Permiso de conducir.",
+        "requirementQuotes": ["ALBAÑILES", "Permiso de conducir."]
+      },
+      {
+        "candidateId": "albanil-es",
+        "form": "albañiles",
+        "programKey": "EOC01M",
+        "occupationId": "occupation:cno11:7121",
+        "offerId": "1285662949857",
+        "offerTitle": "ALBAÑILES",
+        "disposition": "accepted",
+        "reasonCode": "exact_occupation_title",
+        "rationale": "Audited pinned payload: Curso de PRL de 20 horas en albañilería o otro oficio similar.",
+        "requirementQuotes": [
+          "ALBAÑILES",
+          "Curso de PRL de 20 horas en albañilería o otro oficio similar."
+        ]
+      },
+      {
+        "candidateId": "albanil-es",
+        "form": "albañiles",
+        "programKey": "EOC01M",
+        "occupationId": "occupation:cno11:7121",
+        "offerId": "1285663783370",
+        "offerTitle": "ALBAÑILES",
+        "disposition": "accepted",
+        "reasonCode": "exact_occupation_title",
+        "rationale": "Audited pinned title; requirements, functions, conditions, and summary contain no additional occupation detail.",
+        "requirementQuotes": ["ALBAÑILES"]
+      },
+      {
+        "candidateId": "albanil-es",
+        "form": "albañiles",
+        "programKey": "EOC01M",
+        "occupationId": "occupation:cno11:7121",
+        "offerId": "1285663974168",
+        "offerTitle": "ALBAÑILES",
+        "disposition": "accepted",
+        "reasonCode": "exact_occupation_title",
+        "rationale": "Audited pinned payload: Acreditación de la Formación en PRL.",
+        "requirementQuotes": [
+          "ALBAÑILES",
+          "Acreditación de la Formación en PRL."
+        ]
+      },
+      {
+        "candidateId": "albanil-es",
+        "form": "albañiles",
+        "programKey": "EOC01M",
+        "occupationId": "occupation:cno11:7121",
+        "offerId": "1285664082111",
+        "offerTitle": "ALBAÑILES",
+        "disposition": "accepted",
+        "reasonCode": "exact_occupation_title",
+        "rationale": "Audited pinned payload: contrato indefinido, jornada completa, de lunes a viernes.",
+        "requirementQuotes": [
+          "ALBAÑILES",
+          "contrato indefinido, jornada completa, de lunes a viernes."
+        ]
+      },
+      {
+        "candidateId": "albanil-es",
+        "form": "albañiles",
+        "programKey": "EOC01M",
+        "occupationId": "occupation:cno11:7121",
+        "offerId": "1285664861533",
+        "offerTitle": "ALBAÑILES",
+        "disposition": "accepted",
+        "reasonCode": "exact_occupation_title",
+        "rationale": "Audited pinned title; requirements, functions, conditions, and summary contain no additional occupation detail.",
+        "requirementQuotes": ["ALBAÑILES"]
+      },
+      {
+        "candidateId": "albanil-es",
+        "form": "albañiles",
+        "programKey": "EOC01M",
+        "occupationId": "occupation:cno11:7121",
+        "offerId": "1285665269105",
+        "offerTitle": "ALBAÑILES",
+        "disposition": "accepted",
+        "reasonCode": "exact_occupation_title",
+        "rationale": "Audited pinned payload: La empresa GRANITOS, TURISMO Y PIEDRAS, S.L. necesita cubrir 3 puestos de trabajo para la ocupación de ALBAÑIL. OFICIAL DE 2ª.",
+        "requirementQuotes": [
+          "ALBAÑILES",
+          "La empresa GRANITOS, TURISMO Y PIEDRAS, S.L. necesita cubrir 3 puestos de trabajo para la ocupación de ALBAÑIL. OFICIAL DE 2ª."
+        ]
+      },
+      {
+        "candidateId": "albanil-es",
+        "form": "albañiles",
+        "programKey": "EOC01M",
+        "occupationId": "occupation:cno11:7121",
+        "offerId": "1285665380724",
+        "offerTitle": "ALBAÑILES",
+        "disposition": "accepted",
+        "reasonCode": "exact_occupation_title",
+        "rationale": "Audited pinned payload: OFICIAL DE TERCERA DE ALBAÑILERÍA, en Villagonzalo Pedernales (Burgos.)",
+        "requirementQuotes": [
+          "ALBAÑILES",
+          "OFICIAL DE TERCERA DE ALBAÑILERÍA, en Villagonzalo Pedernales (Burgos.)"
+        ]
+      },
+      {
+        "candidateId": "albanil-es",
+        "form": "albañiles",
+        "programKey": "EOC01M",
+        "occupationId": "occupation:cno11:7121",
+        "offerId": "1285665380790",
+        "offerTitle": "ALBAÑILES",
+        "disposition": "accepted",
+        "reasonCode": "exact_occupation_title",
+        "rationale": "Audited pinned payload: La empresa JUAN MANUEL AFONSO ALVES - CONSTRUCCIÓN- necesita cubrir un puesto de trabajo de ALBAÑIL OFICIAL DE 1ª para Valdespino- Zamora.",
+        "requirementQuotes": [
+          "ALBAÑILES",
+          "La empresa JUAN MANUEL AFONSO ALVES - CONSTRUCCIÓN- necesita cubrir un puesto de trabajo de ALBAÑIL OFICIAL DE 1ª para Valdespino- Zamora."
+        ]
+      },
+      {
+        "candidateId": "albanil-es",
+        "form": "albañiles",
+        "programKey": "EOC01M",
+        "occupationId": "occupation:cno11:7121",
+        "offerId": "1285665634810",
+        "offerTitle": "ALBAÑILES",
+        "disposition": "accepted",
+        "reasonCode": "exact_occupation_title",
+        "rationale": "Audited pinned payload: Oferta 15986 de oficial albañil para empresa en Sariegos",
+        "requirementQuotes": [
+          "ALBAÑILES",
+          "Oferta 15986 de oficial albañil para empresa en Sariegos"
+        ]
+      },
+      {
+        "candidateId": "albanil-es",
+        "form": "albañiles",
+        "programKey": "EOC01M",
+        "occupationId": "occupation:cno11:7121",
+        "offerId": "1285667539516",
+        "offerTitle": "ALBAÑILES",
+        "disposition": "accepted",
+        "reasonCode": "exact_occupation_title",
+        "rationale": "Audited pinned payload: OFERTA 16417. Oficial 2ª albañilería para León. Contrato INDEFINIDO, J. COMPLETA. Se requiere tarjeta profesional de la construcción y curso de formación en riesgos laborales de 60 horas. Interesados contactar con oficina de empleo León Centro, C/ Ramón y Cajal 14, tfno. 987 24 95 30.",
+        "requirementQuotes": [
+          "ALBAÑILES",
+          "OFERTA 16417. Oficial 2ª albañilería para León. Contrato INDEFINIDO, J. COMPLETA. Se requiere tarjeta profesional de la construcción y curso de formación en riesgos laborales de 60 horas. Interesados contactar con oficina de empleo León Centro, C/ Ramón y Cajal 14, tfno. 987 24 95 30."
+        ]
+      },
+      {
+        "candidateId": "albanil-es",
+        "form": "albañiles",
+        "programKey": "EOC01M",
+        "occupationId": "occupation:cno11:7121",
+        "offerId": "1285667539544",
+        "offerTitle": "ALBAÑILES",
+        "disposition": "accepted",
+        "reasonCode": "exact_occupation_title",
+        "rationale": "Audited pinned payload: OFERTA 16423. Oficial 1ª albañilería para León. Contrato INDEFINIDO, J. COMPLETA. Se requiere tarjeta profesional de la construcción y curso de formación en riesgos laborales de 60 horas. Interesados contactar con oficina de empleo León Centro, C/ Ramón y Cajal 14, tfno. 987 24 95 30.",
+        "requirementQuotes": [
+          "ALBAÑILES",
+          "OFERTA 16423. Oficial 1ª albañilería para León. Contrato INDEFINIDO, J. COMPLETA. Se requiere tarjeta profesional de la construcción y curso de formación en riesgos laborales de 60 horas. Interesados contactar con oficina de empleo León Centro, C/ Ramón y Cajal 14, tfno. 987 24 95 30."
+        ]
+      },
+      {
+        "candidateId": "albanil-es",
+        "form": "albañiles",
+        "programKey": "EOC01M",
+        "occupationId": "occupation:cno11:7121",
+        "offerId": "1285667590834",
+        "offerTitle": "ALBAÑILES",
+        "disposition": "accepted",
+        "reasonCode": "exact_occupation_title",
+        "rationale": "Audited pinned payload: Oferta 16445 de albañil para la Robla",
+        "requirementQuotes": [
+          "ALBAÑILES",
+          "Oferta 16445 de albañil para la Robla"
+        ]
+      },
+      {
+        "candidateId": "albanil-es",
+        "form": "albañiles",
+        "programKey": "EOC01M",
+        "occupationId": "occupation:cno11:7121",
+        "offerId": "1285667964750",
+        "offerTitle": "ALBAÑILES",
+        "disposition": "accepted",
+        "reasonCode": "exact_occupation_title",
+        "rationale": "Audited pinned payload: OFERTA 16512. Albañil oficial de 1ª para León con 5 años de experiencia y curso de 60 horas de prevención de riesgos laborales. Contrato indefinido, jornada completa. Interesados contactar con oficina de empleo León Centro. C/ Ramón y Cajal 14, tfno. 987 24 95 30, sección ofertas.",
+        "requirementQuotes": [
+          "ALBAÑILES",
+          "OFERTA 16512. Albañil oficial de 1ª para León con 5 años de experiencia y curso de 60 horas de prevención de riesgos laborales. Contrato indefinido, jornada completa. Interesados contactar con oficina de empleo León Centro. C/ Ramón y Cajal 14, tfno. 987 24 95 30, sección ofertas."
+        ]
+      },
+      {
+        "candidateId": "albanil-es",
+        "form": "albañiles",
+        "programKey": "EOC01M",
+        "occupationId": "occupation:cno11:7121",
+        "offerId": "1285668256677",
+        "offerTitle": "ALBAÑILES",
+        "disposition": "accepted",
+        "reasonCode": "exact_occupation_title",
+        "rationale": "Audited pinned title; requirements, functions, conditions, and summary contain no additional occupation detail.",
+        "requirementQuotes": ["ALBAÑILES"]
+      },
+      {
+        "candidateId": "albanil-es",
+        "form": "albañiles",
+        "programKey": "EOC01M",
+        "occupationId": "occupation:cno11:7121",
+        "offerId": "1285668256705",
+        "offerTitle": "ALBAÑILES",
+        "disposition": "rejected",
+        "reasonCode": "mixed_role",
+        "rationale": "Audited pinned payload: Granja de ganado porcino ubicada en San Pedro Manrique precisa ocupar un puesto de Técnico en Mantenimiento (albañilería y soldadura). Se requiere permiso de conducir B y se valorarán cursos reolacionados con la ocupación. Interesados enviar currículum vitae a la dirección de email: ecylempleosoria@jcyl.es, indicando en el asunto 'Oferta 16453 TÉCNICO MANTENIMIENTO granja San Pedro Manrique'",
+        "requirementQuotes": [
+          "ALBAÑILES",
+          "Granja de ganado porcino ubicada en San Pedro Manrique precisa ocupar un puesto de Técnico en Mantenimiento (albañilería y soldadura). Se requiere permiso de conducir B y se valorarán cursos reolacionados con la ocupación. Interesados enviar currículum vitae a la dirección de email: ecylempleosoria@jcyl.es, indicando en el asunto 'Oferta 16453 TÉCNICO MANTENIMIENTO granja San Pedro Manrique'"
+        ]
+      },
+      {
+        "candidateId": "albanil-es",
+        "form": "albañiles",
+        "programKey": "EOC01M",
+        "occupationId": "occupation:cno11:7121",
+        "offerId": "1285668323262",
+        "offerTitle": "ALBAÑILES",
+        "disposition": "accepted",
+        "reasonCode": "exact_occupation_title",
+        "rationale": "Audited pinned payload: Tarjeta profesional de la construcción (TPC).",
+        "requirementQuotes": [
+          "ALBAÑILES",
+          "Tarjeta profesional de la construcción (TPC)."
+        ]
+      },
+      {
+        "candidateId": "albanil-es",
+        "form": "albañiles",
+        "programKey": "EOC01M",
+        "occupationId": "occupation:cno11:7121",
+        "offerId": "1285668412750",
+        "offerTitle": "ALBAÑILES",
+        "disposition": "accepted",
+        "reasonCode": "exact_occupation_title",
+        "rationale": "Audited pinned payload: EXPERIENCIA DEMOSTRABLE, CARNET DE CONDUCIR Y PRL ESPECÍFICO DE ALBAÑILERÍA",
+        "requirementQuotes": [
+          "ALBAÑILES",
+          "EXPERIENCIA DEMOSTRABLE, CARNET DE CONDUCIR Y PRL ESPECÍFICO DE ALBAÑILERÍA"
+        ]
+      },
+      {
+        "candidateId": "albanil-es",
+        "form": "albañiles",
+        "programKey": "EOC01M",
+        "occupationId": "occupation:cno11:7121",
+        "offerId": "1285668877598",
+        "offerTitle": "ALBAÑILES",
+        "disposition": "accepted",
+        "reasonCode": "exact_occupation_title",
+        "rationale": "Audited pinned payload: ALBAÑIL OFICIAL DE 1ª O 2ª. Imprescindible experiencia mínima de 1 año en el puesto. Para contrato temporal prorrogable.",
+        "requirementQuotes": [
+          "ALBAÑILES",
+          "ALBAÑIL OFICIAL DE 1ª O 2ª. Imprescindible experiencia mínima de 1 año en el puesto. Para contrato temporal prorrogable."
+        ]
+      },
+      {
+        "candidateId": "albanil-es",
+        "form": "albañiles",
+        "programKey": "EOC01M",
+        "occupationId": "occupation:cno11:7121",
+        "offerId": "1285669638729",
+        "offerTitle": "ALBAÑILES",
+        "disposition": "accepted",
+        "reasonCode": "exact_occupation_title",
+        "rationale": "Audited pinned payload: Las propias del puesto de trabajo.",
+        "requirementQuotes": ["ALBAÑILES", "Las propias del puesto de trabajo."]
+      },
+      {
+        "candidateId": "cocinero-s",
+        "form": "cocinero",
+        "programKey": "HOT01M",
+        "occupationId": "occupation:cno11:5110",
+        "offerId": "1285669506800",
+        "offerTitle": "Oficial de Oficios/Cocinero/a Pinche de cocina para Residencia Universitaria Duques de Soria (Soria)",
+        "disposition": "rejected",
+        "reasonCode": "mixed_role",
+        "rationale": "Audited pinned payload: Manipulador de alimentos",
+        "requirementQuotes": [
+          "Oficial de Oficios/Cocinero/a Pinche de cocina para Residencia Universitaria Duques de Soria (Soria)",
+          "Manipulador de alimentos"
+        ]
+      },
+      {
+        "candidateId": "cocinero-s",
+        "form": "cocineros",
+        "programKey": "HOT01M",
+        "occupationId": "occupation:cno11:5110",
+        "offerId": "1285614233577",
+        "offerTitle": "COCINEROS, EN GENERAL",
+        "disposition": "accepted",
+        "reasonCode": "exact_occupation_title",
+        "rationale": "Audited pinned payload: Se valorará experiencia.",
+        "requirementQuotes": [
+          "COCINEROS, EN GENERAL",
+          "Se valorará experiencia."
+        ]
+      },
+      {
+        "candidateId": "cocinero-s",
+        "form": "cocineros",
+        "programKey": "HOT01M",
+        "occupationId": "occupation:cno11:5110",
+        "offerId": "1285626761329",
+        "offerTitle": "COCINEROS, EN GENERAL",
+        "disposition": "rejected",
+        "reasonCode": "degree_or_license_led",
+        "rationale": "Audited pinned payload: Titulación de Cocina. Experiencia acreditada. Carnet de manipulador de alimentos.",
+        "requirementQuotes": [
+          "COCINEROS, EN GENERAL",
+          "Titulación de Cocina. Experiencia acreditada. Carnet de manipulador de alimentos."
+        ]
+      },
+      {
+        "candidateId": "cocinero-s",
+        "form": "cocineros",
+        "programKey": "HOT01M",
+        "occupationId": "occupation:cno11:5110",
+        "offerId": "1285627823296",
+        "offerTitle": "COCINEROS, EN GENERAL",
+        "disposition": "accepted",
+        "reasonCode": "exact_occupation_title",
+        "rationale": "Audited pinned payload: Se valorará experiencia y formación. Necesario permiso de conducir si no reside en Carbajales de Alba.",
+        "requirementQuotes": [
+          "COCINEROS, EN GENERAL",
+          "Se valorará experiencia y formación. Necesario permiso de conducir si no reside en Carbajales de Alba."
+        ]
+      },
+      {
+        "candidateId": "cocinero-s",
+        "form": "cocineros",
+        "programKey": "HOT01M",
+        "occupationId": "occupation:cno11:5110",
+        "offerId": "1285637347955",
+        "offerTitle": "COCINEROS, EN GENERAL",
+        "disposition": "accepted",
+        "reasonCode": "exact_occupation_title",
+        "rationale": "Audited pinned payload: Oferta 9250 de cocinera/o para residencia de mayores en Pola de Gordon",
+        "requirementQuotes": [
+          "COCINEROS, EN GENERAL",
+          "Oferta 9250 de cocinera/o para residencia de mayores en Pola de Gordon"
+        ]
+      },
+      {
+        "candidateId": "cocinero-s",
+        "form": "cocineros",
+        "programKey": "HOT01M",
+        "occupationId": "occupation:cno11:5110",
+        "offerId": "1285639495437",
+        "offerTitle": "COCINEROS, EN GENERAL",
+        "disposition": "accepted",
+        "reasonCode": "exact_occupation_title",
+        "rationale": "Audited pinned payload: Valorable titulación y experiencia en el puesto.",
+        "requirementQuotes": [
+          "COCINEROS, EN GENERAL",
+          "Valorable titulación y experiencia en el puesto."
+        ]
+      },
+      {
+        "candidateId": "cocinero-s",
+        "form": "cocineros",
+        "programKey": "HOT01M",
+        "occupationId": "occupation:cno11:5110",
+        "offerId": "1285640091376",
+        "offerTitle": "COCINEROS, EN GENERAL",
+        "disposition": "accepted",
+        "reasonCode": "exact_occupation_title",
+        "rationale": "Audited pinned payload: COCINERA/O, en el municipio de Burgos.",
+        "requirementQuotes": [
+          "COCINEROS, EN GENERAL",
+          "COCINERA/O, en el municipio de Burgos."
+        ]
+      },
+      {
+        "candidateId": "cocinero-s",
+        "form": "cocineros",
+        "programKey": "HOT01M",
+        "occupationId": "occupation:cno11:5110",
+        "offerId": "1285640170324",
+        "offerTitle": "COCINEROS, EN GENERAL",
+        "disposition": "accepted",
+        "reasonCode": "exact_occupation_title",
+        "rationale": "Audited pinned payload: Experiencia 6 meses.",
+        "requirementQuotes": ["COCINEROS, EN GENERAL", "Experiencia 6 meses."]
+      },
+      {
+        "candidateId": "cocinero-s",
+        "form": "cocineros",
+        "programKey": "HOT01M",
+        "occupationId": "occupation:cno11:5110",
+        "offerId": "1285645512831",
+        "offerTitle": "COCINEROS, EN GENERAL",
+        "disposition": "accepted",
+        "reasonCode": "exact_occupation_title",
+        "rationale": "Audited pinned payload: Oferta 11664: Cocinero/a Residencia de Mayores en La Robla.",
+        "requirementQuotes": [
+          "COCINEROS, EN GENERAL",
+          "Oferta 11664: Cocinero/a Residencia de Mayores en La Robla."
+        ]
+      },
+      {
+        "candidateId": "cocinero-s",
+        "form": "cocineros",
+        "programKey": "HOT01M",
+        "occupationId": "occupation:cno11:5110",
+        "offerId": "1285655155784",
+        "offerTitle": "COCINEROS, EN GENERAL",
+        "disposition": "accepted",
+        "reasonCode": "exact_occupation_title",
+        "rationale": "Audited pinned payload: Las propias de cocinero-a para colectividades.",
+        "requirementQuotes": [
+          "COCINEROS, EN GENERAL",
+          "Las propias de cocinero-a para colectividades."
+        ]
+      },
+      {
+        "candidateId": "cocinero-s",
+        "form": "cocineros",
+        "programKey": "HOT01M",
+        "occupationId": "occupation:cno11:5110",
+        "offerId": "1285659376390",
+        "offerTitle": "COCINEROS, EN GENERAL",
+        "disposition": "rejected",
+        "reasonCode": "degree_or_license_led",
+        "rationale": "Audited pinned payload: . Título de Técnico en Cocina y Gastronomía.",
+        "requirementQuotes": [
+          "COCINEROS, EN GENERAL",
+          ". Título de Técnico en Cocina y Gastronomía."
+        ]
+      },
+      {
+        "candidateId": "cocinero-s",
+        "form": "cocineros",
+        "programKey": "HOT01M",
+        "occupationId": "occupation:cno11:5110",
+        "offerId": "1285659956971",
+        "offerTitle": "COCINEROS, EN GENERAL",
+        "disposition": "rejected",
+        "reasonCode": "degree_or_license_led",
+        "rationale": "Audited pinned payload: Técnico en Cocina y Gastronomía.",
+        "requirementQuotes": [
+          "COCINEROS, EN GENERAL",
+          "Técnico en Cocina y Gastronomía."
+        ]
+      },
+      {
+        "candidateId": "cocinero-s",
+        "form": "cocineros",
+        "programKey": "HOT01M",
+        "occupationId": "occupation:cno11:5110",
+        "offerId": "1285660807038",
+        "offerTitle": "COCINEROS, EN GENERAL",
+        "disposition": "accepted",
+        "reasonCode": "exact_occupation_title",
+        "rationale": "Audited pinned payload: Contrato temporal, de julio al 2 de octubre.",
+        "requirementQuotes": [
+          "COCINEROS, EN GENERAL",
+          "Contrato temporal, de julio al 2 de octubre."
+        ]
+      },
+      {
+        "candidateId": "cocinero-s",
+        "form": "cocineros",
+        "programKey": "HOT01M",
+        "occupationId": "occupation:cno11:5110",
+        "offerId": "1285662378630",
+        "offerTitle": "COCINEROS, EN GENERAL",
+        "disposition": "accepted",
+        "reasonCode": "exact_occupation_title",
+        "rationale": "Audited pinned title; requirements, functions, conditions, and summary contain no additional occupation detail.",
+        "requirementQuotes": ["COCINEROS, EN GENERAL"]
+      },
+      {
+        "candidateId": "cocinero-s",
+        "form": "cocineros",
+        "programKey": "HOT01M",
+        "occupationId": "occupation:cno11:5110",
+        "offerId": "1285663812475",
+        "offerTitle": "COCINEROS, EN GENERAL",
+        "disposition": "accepted",
+        "reasonCode": "exact_occupation_title",
+        "rationale": "Audited pinned payload: Experiencia 12 meses.",
+        "requirementQuotes": ["COCINEROS, EN GENERAL", "Experiencia 12 meses."]
+      },
+      {
+        "candidateId": "cocinero-s",
+        "form": "cocineros",
+        "programKey": "HOT01M",
+        "occupationId": "occupation:cno11:5110",
+        "offerId": "1285664451544",
+        "offerTitle": "COCINEROS, EN GENERAL",
+        "disposition": "accepted",
+        "reasonCode": "exact_occupation_title",
+        "rationale": "Audited pinned payload: Residencia de ancianos. 2 días a la semana turno partido y 3 días continuado de mañana o tarde. Posibilidad de plus por kilometraje. Incorporación inmediata",
+        "requirementQuotes": [
+          "COCINEROS, EN GENERAL",
+          "Residencia de ancianos. 2 días a la semana turno partido y 3 días continuado de mañana o tarde. Posibilidad de plus por kilometraje. Incorporación inmediata"
+        ]
+      },
+      {
+        "candidateId": "cocinero-s",
+        "form": "cocineros",
+        "programKey": "HOT01M",
+        "occupationId": "occupation:cno11:5110",
+        "offerId": "1285665562689",
+        "offerTitle": "COCINEROS, EN GENERAL",
+        "disposition": "accepted",
+        "reasonCode": "exact_occupation_title",
+        "rationale": "Audited pinned payload: Se precisa cubrir 1 puesto de COCINERO Oficial de Tercera para Residencia de Ancianos en BURGOS-Villatoro.",
+        "requirementQuotes": [
+          "COCINEROS, EN GENERAL",
+          "Se precisa cubrir 1 puesto de COCINERO Oficial de Tercera para Residencia de Ancianos en BURGOS-Villatoro."
+        ]
+      },
+      {
+        "candidateId": "cocinero-s",
+        "form": "cocineros",
+        "programKey": "HOT01M",
+        "occupationId": "occupation:cno11:5110",
+        "offerId": "1285665634431",
+        "offerTitle": "COCINEROS, EN GENERAL",
+        "disposition": "accepted",
+        "reasonCode": "exact_occupation_title",
+        "rationale": "Audited pinned payload: Oferta 15983 Cocinera para bar en Benavente. Personas interesadas pasar por Avenida El Ferial 68 en Benavente, de lunes a viernes en horario de 10:00 a 13:00,persona de contacto: Erica",
+        "requirementQuotes": [
+          "COCINEROS, EN GENERAL",
+          "Oferta 15983 Cocinera para bar en Benavente. Personas interesadas pasar por Avenida El Ferial 68 en Benavente, de lunes a viernes en horario de 10:00 a 13:00,persona de contacto: Erica"
+        ]
+      },
+      {
+        "candidateId": "cocinero-s",
+        "form": "cocineros",
+        "programKey": "HOT01M",
+        "occupationId": "occupation:cno11:5110",
+        "offerId": "1285665790208",
+        "offerTitle": "COCINEROS, EN GENERAL",
+        "disposition": "accepted",
+        "reasonCode": "exact_occupation_title",
+        "rationale": "Audited pinned payload: SE BUSCA COCINERO CON EXPERIENCIA EN RESTAURACION COLECTIVA PARA COLEGIO UYBICADO EN SORIA CAPITAL",
+        "requirementQuotes": [
+          "COCINEROS, EN GENERAL",
+          "SE BUSCA COCINERO CON EXPERIENCIA EN RESTAURACION COLECTIVA PARA COLEGIO UYBICADO EN SORIA CAPITAL"
+        ]
+      },
+      {
+        "candidateId": "cocinero-s",
+        "form": "cocineros",
+        "programKey": "HOT01M",
+        "occupationId": "occupation:cno11:5110",
+        "offerId": "1285666442607",
+        "offerTitle": "COCINEROS, EN GENERAL",
+        "disposition": "accepted",
+        "reasonCode": "exact_occupation_title",
+        "rationale": "Audited pinned title; requirements, functions, conditions, and summary contain no additional occupation detail.",
+        "requirementQuotes": ["COCINEROS, EN GENERAL"]
+      },
+      {
+        "candidateId": "cocinero-s",
+        "form": "cocineros",
+        "programKey": "HOT01M",
+        "occupationId": "occupation:cno11:5110",
+        "offerId": "1285666499205",
+        "offerTitle": "COCINEROS, EN GENERAL",
+        "disposition": "rejected",
+        "reasonCode": "contradictory_requirement",
+        "rationale": "Audited pinned payload: LA PROPIAS DE AYUDANTE DE COCINA",
+        "requirementQuotes": [
+          "COCINEROS, EN GENERAL",
+          "LA PROPIAS DE AYUDANTE DE COCINA"
+        ]
+      },
+      {
+        "candidateId": "cocinero-s",
+        "form": "cocineros",
+        "programKey": "HOT01M",
+        "occupationId": "occupation:cno11:5110",
+        "offerId": "1285666617717",
+        "offerTitle": "COCINEROS, EN GENERAL",
+        "disposition": "rejected",
+        "reasonCode": "degree_or_license_led",
+        "rationale": "Audited pinned payload: PUESTO SOLICITADO: Cocinero en residencia privada.",
+        "requirementQuotes": [
+          "COCINEROS, EN GENERAL",
+          "PUESTO SOLICITADO: Cocinero en residencia privada."
+        ]
+      },
+      {
+        "candidateId": "cocinero-s",
+        "form": "cocineros",
+        "programKey": "HOT01M",
+        "occupationId": "occupation:cno11:5110",
+        "offerId": "1285666617827",
+        "offerTitle": "COCINEROS, EN GENERAL",
+        "disposition": "accepted",
+        "reasonCode": "exact_occupation_title",
+        "rationale": "Audited pinned payload: Cocinero/a para residencia de personas mayores para cubrir vacaciones.",
+        "requirementQuotes": [
+          "COCINEROS, EN GENERAL",
+          "Cocinero/a para residencia de personas mayores para cubrir vacaciones."
+        ]
+      },
+      {
+        "candidateId": "cocinero-s",
+        "form": "cocineros",
+        "programKey": "HOT01M",
+        "occupationId": "occupation:cno11:5110",
+        "offerId": "1285666878773",
+        "offerTitle": "COCINEROS, EN GENERAL",
+        "disposition": "rejected",
+        "reasonCode": "mixed_role",
+        "rationale": "Audited pinned payload: Oferta 16276 para personal de cocina y limpieza del centro residencial y asistencial Los Álamos en Quiruelas de vidriales, para cubrir descansos y vacaciones. Personas interesadas ponerse en contacto al mail: amara@grupomatellanes.com",
+        "requirementQuotes": [
+          "COCINEROS, EN GENERAL",
+          "Oferta 16276 para personal de cocina y limpieza del centro residencial y asistencial Los Álamos en Quiruelas de vidriales, para cubrir descansos y vacaciones. Personas interesadas ponerse en contacto al mail: amara@grupomatellanes.com"
+        ]
+      },
+      {
+        "candidateId": "cocinero-s",
+        "form": "cocineros",
+        "programKey": "HOT01M",
+        "occupationId": "occupation:cno11:5110",
+        "offerId": "1285666909272",
+        "offerTitle": "COCINEROS, EN GENERAL",
+        "disposition": "accepted",
+        "reasonCode": "exact_occupation_title",
+        "rationale": "Audited pinned payload: Oferta 16293 de cocinera/o para residencia de mayores en Vilecha",
+        "requirementQuotes": [
+          "COCINEROS, EN GENERAL",
+          "Oferta 16293 de cocinera/o para residencia de mayores en Vilecha"
+        ]
+      },
+      {
+        "candidateId": "cocinero-s",
+        "form": "cocineros",
+        "programKey": "HOT01M",
+        "occupationId": "occupation:cno11:5110",
+        "offerId": "1285666909300",
+        "offerTitle": "COCINEROS, EN GENERAL",
+        "disposition": "rejected",
+        "reasonCode": "contradictory_requirement",
+        "rationale": "Audited pinned payload: OFERTA 16289. Ayudante de cocina para hotel en León ciudad. Contrato temporal, media jornada. Experiencia demostrable de 4 meses. Interesados contactar con oficina de empleo León Centro. C/ Ramón y Cajal 14, tfno. 987 24 95 30.",
+        "requirementQuotes": [
+          "COCINEROS, EN GENERAL",
+          "OFERTA 16289. Ayudante de cocina para hotel en León ciudad. Contrato temporal, media jornada. Experiencia demostrable de 4 meses. Interesados contactar con oficina de empleo León Centro. C/ Ramón y Cajal 14, tfno. 987 24 95 30."
+        ]
+      },
+      {
+        "candidateId": "cocinero-s",
+        "form": "cocineros",
+        "programKey": "HOT01M",
+        "occupationId": "occupation:cno11:5110",
+        "offerId": "1285666999271",
+        "offerTitle": "COCINEROS, EN GENERAL",
+        "disposition": "accepted",
+        "reasonCode": "exact_occupation_title",
+        "rationale": "Audited pinned payload: Carné manipulador de alimentos. Valorable titulación en cocina o similar.",
+        "requirementQuotes": [
+          "COCINEROS, EN GENERAL",
+          "Carné manipulador de alimentos. Valorable titulación en cocina o similar."
+        ]
+      },
+      {
+        "candidateId": "cocinero-s",
+        "form": "cocineros",
+        "programKey": "HOT01M",
+        "occupationId": "occupation:cno11:5110",
+        "offerId": "1285667211184",
+        "offerTitle": "COCINEROS, EN GENERAL",
+        "disposition": "rejected",
+        "reasonCode": "degree_or_license_led",
+        "rationale": "Audited pinned payload: OFERTA 16345. Cocinero para Hospital de León. Se requiere título de Técnico/a Superior en Dirección de Servicios de Restauración. Contrato temporal para cubrir baja. Interesados contactar con oficina de empleo León Centro. C/ Ramón y Cajal 14, tfno. 987 24 95 30.",
+        "requirementQuotes": [
+          "COCINEROS, EN GENERAL",
+          "OFERTA 16345. Cocinero para Hospital de León. Se requiere título de Técnico/a Superior en Dirección de Servicios de Restauración. Contrato temporal para cubrir baja. Interesados contactar con oficina de empleo León Centro. C/ Ramón y Cajal 14, tfno. 987 24 95 30."
+        ]
+      },
+      {
+        "candidateId": "cocinero-s",
+        "form": "cocineros",
+        "programKey": "HOT01M",
+        "occupationId": "occupation:cno11:5110",
+        "offerId": "1285667333359",
+        "offerTitle": "COCINEROS, EN GENERAL",
+        "disposition": "accepted",
+        "reasonCode": "exact_occupation_title",
+        "rationale": "Audited pinned payload: contrato indefinido, jornada completa.",
+        "requirementQuotes": [
+          "COCINEROS, EN GENERAL",
+          "contrato indefinido, jornada completa."
+        ]
+      },
+      {
+        "candidateId": "cocinero-s",
+        "form": "cocineros",
+        "programKey": "HOT01M",
+        "occupationId": "occupation:cno11:5110",
+        "offerId": "1285667333387",
+        "offerTitle": "COCINEROS, EN GENERAL",
+        "disposition": "accepted",
+        "reasonCode": "exact_occupation_title",
+        "rationale": "Audited pinned title; requirements, functions, conditions, and summary contain no additional occupation detail.",
+        "requirementQuotes": ["COCINEROS, EN GENERAL"]
+      },
+      {
+        "candidateId": "cocinero-s",
+        "form": "cocineros",
+        "programKey": "HOT01M",
+        "occupationId": "occupation:cno11:5110",
+        "offerId": "1285667926910",
+        "offerTitle": "COCINEROS, EN GENERAL",
+        "disposition": "accepted",
+        "reasonCode": "exact_occupation_title",
+        "rationale": "Audited pinned payload: ELABORACIÓN DE MENÚS Y DIETAS ESPECIALES Y CONTROL Y RECEPCIÓN DE PEDIDOS.",
+        "requirementQuotes": [
+          "COCINEROS, EN GENERAL",
+          "ELABORACIÓN DE MENÚS Y DIETAS ESPECIALES Y CONTROL Y RECEPCIÓN DE PEDIDOS."
+        ]
+      },
+      {
+        "candidateId": "cocinero-s",
+        "form": "cocineros",
+        "programKey": "HOT01M",
+        "occupationId": "occupation:cno11:5110",
+        "offerId": "1285667926938",
+        "offerTitle": "COCINEROS, EN GENERAL",
+        "disposition": "accepted",
+        "reasonCode": "exact_occupation_title",
+        "rationale": "Audited pinned title; requirements, functions, conditions, and summary contain no additional occupation detail.",
+        "requirementQuotes": ["COCINEROS, EN GENERAL"]
+      },
+      {
+        "candidateId": "cocinero-s",
+        "form": "cocineros",
+        "programKey": "HOT01M",
+        "occupationId": "occupation:cno11:5110",
+        "offerId": "1285667926966",
+        "offerTitle": "COCINEROS, EN GENERAL",
+        "disposition": "rejected",
+        "reasonCode": "degree_or_license_led",
+        "rationale": "Audited pinned payload: OFERTA ECYL 16383- COCINERO PARA EPOCA BURGOS- INDEFINIDO- MEDIA JORNADA MAÑANAS- TITULACION EN COCINA - SI ESTA INTERESADO DEBE ENVIAR CV A EPOCABURGOS@GMAIL.COM CON COPIA A ECYLJUANDEPADILLA.OFERTAS@JCYL.ES CON ASUNTO( PARTICIPO OFERTA 16383- COCINERO) SMS- O.E. JUAN DE PADILLA",
+        "requirementQuotes": [
+          "COCINEROS, EN GENERAL",
+          "OFERTA ECYL 16383- COCINERO PARA EPOCA BURGOS- INDEFINIDO- MEDIA JORNADA MAÑANAS- TITULACION EN COCINA - SI ESTA INTERESADO DEBE ENVIAR CV A EPOCABURGOS@GMAIL.COM CON COPIA A ECYLJUANDEPADILLA.OFERTAS@JCYL.ES CON ASUNTO( PARTICIPO OFERTA 16383- COCINERO) SMS- O.E. JUAN DE PADILLA"
+        ]
+      },
+      {
+        "candidateId": "cocinero-s",
+        "form": "cocineros",
+        "programKey": "HOT01M",
+        "occupationId": "occupation:cno11:5110",
+        "offerId": "1285668256453",
+        "offerTitle": "COCINEROS, EN GENERAL",
+        "disposition": "accepted",
+        "reasonCode": "exact_occupation_title",
+        "rationale": "Audited pinned title; requirements, functions, conditions, and summary contain no additional occupation detail.",
+        "requirementQuotes": ["COCINEROS, EN GENERAL"]
+      },
+      {
+        "candidateId": "cocinero-s",
+        "form": "cocineros",
+        "programKey": "HOT01M",
+        "occupationId": "occupation:cno11:5110",
+        "offerId": "1285668323029",
+        "offerTitle": "COCINEROS, EN GENERAL",
+        "disposition": "accepted",
+        "reasonCode": "exact_occupation_title",
+        "rationale": "Audited pinned payload: Se valorará experiencia.",
+        "requirementQuotes": [
+          "COCINEROS, EN GENERAL",
+          "Se valorará experiencia."
+        ]
+      },
+      {
+        "candidateId": "cocinero-s",
+        "form": "cocineros",
+        "programKey": "HOT01M",
+        "occupationId": "occupation:cno11:5110",
+        "offerId": "1285668911911",
+        "offerTitle": "COCINEROS, EN GENERAL",
+        "disposition": "rejected",
+        "reasonCode": "degree_or_license_led",
+        "rationale": "Audited pinned payload: Graduado en E.S.O.",
+        "requirementQuotes": ["COCINEROS, EN GENERAL", "Graduado en E.S.O."]
+      },
+      {
+        "candidateId": "cocinero-s",
+        "form": "cocineros",
+        "programKey": "HOT01M",
+        "occupationId": "occupation:cno11:5110",
+        "offerId": "1285669059164",
+        "offerTitle": "COCINEROS, EN GENERAL",
+        "disposition": "accepted",
+        "reasonCode": "exact_occupation_title",
+        "rationale": "Audited pinned payload: Oferta 16743 Cocinero para Residencia de Mayores en Cistierna. Bases Resolución 2026-0537 Sede electrónica Ayto. Cistierna. Contactar con la Oficina de Empleo de Cistierna Tfno 987701387",
+        "requirementQuotes": [
+          "COCINEROS, EN GENERAL",
+          "Oferta 16743 Cocinero para Residencia de Mayores en Cistierna. Bases Resolución 2026-0537 Sede electrónica Ayto. Cistierna. Contactar con la Oficina de Empleo de Cistierna Tfno 987701387"
+        ]
+      },
+      {
+        "candidateId": "cocinero-s",
+        "form": "cocineros",
+        "programKey": "HOT01M",
+        "occupationId": "occupation:cno11:5110",
+        "offerId": "1285669380024",
+        "offerTitle": "COCINEROS, EN GENERAL",
+        "disposition": "accepted",
+        "reasonCode": "exact_occupation_title",
+        "rationale": "Audited pinned payload: Se necesita 1 COCINERO/A EN GENERAL para Restaurante en Tordesillas (Valladolid). Se ofrece Contrato indefinido a jornada completa. Interesados ponerse en contacto con la Oficina de Tordesillas",
+        "requirementQuotes": [
+          "COCINEROS, EN GENERAL",
+          "Se necesita 1 COCINERO/A EN GENERAL para Restaurante en Tordesillas (Valladolid). Se ofrece Contrato indefinido a jornada completa. Interesados ponerse en contacto con la Oficina de Tordesillas"
+        ]
+      },
+      {
+        "candidateId": "cocinero-s",
+        "form": "cocineros",
+        "programKey": "HOT01M",
+        "occupationId": "occupation:cno11:5110",
+        "offerId": "1285669380068",
+        "offerTitle": "COCINEROS, EN GENERAL",
+        "disposition": "accepted",
+        "reasonCode": "exact_occupation_title",
+        "rationale": "Audited pinned payload: carné de manipulador de alimentos. Valorable titulación de restauración, cocina o similar. Conocimiento del proceso de elaboración de línea fría.",
+        "requirementQuotes": [
+          "COCINEROS, EN GENERAL",
+          "carné de manipulador de alimentos. Valorable titulación de restauración, cocina o similar. Conocimiento del proceso de elaboración de línea fría."
+        ]
+      },
+      {
+        "candidateId": "cocinero-s",
+        "form": "cocineros",
+        "programKey": "HOT01M",
+        "occupationId": "occupation:cno11:5110",
+        "offerId": "1285669482753",
+        "offerTitle": "COCINEROS, EN GENERAL",
+        "disposition": "accepted",
+        "reasonCode": "exact_occupation_title",
+        "rationale": "Audited pinned title; requirements, functions, conditions, and summary contain no additional occupation detail.",
+        "requirementQuotes": ["COCINEROS, EN GENERAL"]
+      },
+      {
+        "candidateId": "cocinero-s",
+        "form": "cocineros",
+        "programKey": "HOT01M",
+        "occupationId": "occupation:cno11:5110",
+        "offerId": "1285669719137",
+        "offerTitle": "COCINEROS, EN GENERAL",
+        "disposition": "accepted",
+        "reasonCode": "exact_occupation_title",
+        "rationale": "Audited pinned title; requirements, functions, conditions, and summary contain no additional occupation detail.",
+        "requirementQuotes": ["COCINEROS, EN GENERAL"]
+      },
+      {
+        "candidateId": "encofradores",
+        "form": "encofradores",
+        "programKey": "EOC01M",
+        "occupationId": "occupation:cno11:7111",
+        "offerId": "1285667539377",
+        "offerTitle": "ENCOFRADORES",
+        "disposition": "accepted",
+        "reasonCode": "exact_occupation_title",
+        "rationale": "Audited pinned payload: Curso PRL de 20 horas construcción. Permiso de conducir.",
+        "requirementQuotes": [
+          "ENCOFRADORES",
+          "Curso PRL de 20 horas construcción. Permiso de conducir."
+        ]
+      },
+      {
+        "candidateId": "encofradores",
+        "form": "encofradores",
+        "programKey": "EOC01M",
+        "occupationId": "occupation:cno11:7111",
+        "offerId": "1285668256621",
+        "offerTitle": "ENCOFRADORES",
+        "disposition": "accepted",
+        "reasonCode": "exact_occupation_title",
+        "rationale": "Audited pinned title; requirements, functions, conditions, and summary contain no additional occupation detail.",
+        "requirementQuotes": ["ENCOFRADORES"]
+      },
+      {
+        "candidateId": "teleoperadores",
+        "form": "teleoperadores",
+        "programKey": "COM01M",
+        "occupationId": "occupation:cno11:4424",
+        "offerId": "1285663377359",
+        "offerTitle": "TELEOPERADORES",
+        "disposition": "accepted",
+        "reasonCode": "exact_occupation_title",
+        "rationale": "Audited pinned payload: the vacancy requests telephone customer service in Spanish and French using telephony and computer tools.",
+        "requirementQuotes": [
+          "TELEOPERADORES",
+          "TAREAS A DESARROLLAR: ATENCION A LOS CLIENTES EN AMBOS IDIOMAS MEDIANTE GESTION Y ATENCION TELEFONICA USANDO HERRAMIENTAS DE TELEFONIA E INFORMATICA"
+        ]
+      }
+    ],
+    "publicationDecision": {
+      "cocinero": {
+        "status": "rejected",
+        "acceptedOfferIds": [],
+        "rejectedOfferIds": ["1285669506800"],
+        "reason": "No offers are approved for publication."
+      },
+      "cocineros": {
+        "status": "rejected",
+        "acceptedOfferIds": [
+          "1285614233577",
+          "1285627823296",
+          "1285637347955",
+          "1285639495437",
+          "1285640091376",
+          "1285640170324",
+          "1285645512831",
+          "1285655155784",
+          "1285660807038",
+          "1285662378630",
+          "1285663812475",
+          "1285664451544",
+          "1285665562689",
+          "1285665634431",
+          "1285665790208",
+          "1285666442607",
+          "1285666617827",
+          "1285666909272",
+          "1285666999271",
+          "1285667333359",
+          "1285667333387",
+          "1285667926910",
+          "1285667926938",
+          "1285668256453",
+          "1285668323029",
+          "1285669059164",
+          "1285669380024",
+          "1285669380068",
+          "1285669482753",
+          "1285669719137"
+        ],
+        "rejectedOfferIds": [
+          "1285626761329",
+          "1285659376390",
+          "1285659956971",
+          "1285666499205",
+          "1285666617717",
+          "1285666878773",
+          "1285666909300",
+          "1285667211184",
+          "1285667926966",
+          "1285668911911"
+        ],
+        "reason": "Known rejected offers prevent publication."
+      },
+      "albañil": {
+        "status": "rejected",
+        "acceptedOfferIds": ["1285669061589"],
+        "rejectedOfferIds": ["1285664848132"],
+        "reason": "Known rejected offers prevent publication."
+      },
+      "albañiles": {
+        "status": "rejected",
+        "acceptedOfferIds": [
+          "1285614585114",
+          "1285658958752",
+          "1285662949857",
+          "1285663783370",
+          "1285663974168",
+          "1285664082111",
+          "1285664861533",
+          "1285665269105",
+          "1285665380724",
+          "1285665380790",
+          "1285665634810",
+          "1285667539516",
+          "1285667539544",
+          "1285667590834",
+          "1285667964750",
+          "1285668256677",
+          "1285668323262",
+          "1285668412750",
+          "1285668877598",
+          "1285669638729"
+        ],
+        "rejectedOfferIds": ["1285613685343", "1285668256705"],
+        "reason": "Known rejected offers prevent publication."
+      },
+      "encofradores": {
+        "status": "accepted",
+        "acceptedOfferIds": ["1285667539377", "1285668256621"],
+        "rejectedOfferIds": [],
+        "reason": "Accepted offers are eligible for publication."
+      },
+      "teleoperadores": {
+        "status": "accepted",
+        "acceptedOfferIds": ["1285663377359"],
+        "rejectedOfferIds": [],
+        "reason": "Accepted offers are eligible for publication."
+      }
+    }
+  }
+}

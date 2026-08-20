@@ -44,7 +44,10 @@
     "analysis:fp:marginal-impact": "tsx scripts/analysis/measureFpMarginalAliasImpact.ts",
     "analysis:fp:marginal-impact:check": "npm test -- scripts/analysis/measureFpMarginalAliasImpact.test.ts scripts/analysis/validateFpMarginalAliasReview.test.ts",
     "analysis:fp:research-queue": "tsx scripts/analysis/buildFpCoverageResearchQueue.ts",
-    "analysis:fp:research-queue:check": "npm test -- scripts/analysis/buildFpCoverageResearchQueue.test.ts"
+    "analysis:fp:research-queue:check": "npm test -- scripts/analysis/buildFpCoverageResearchQueue.test.ts",
+    "analysis:fp:matching-evaluation": "tsx scripts/analysis/evaluateFpOfferMatching.ts --check",
+    "analysis:fp:matching-evaluation:write": "tsx scripts/analysis/evaluateFpOfferMatching.ts --write",
+    "analysis:fp:matching-evaluation:check": "npm test -- scripts/analysis/evaluateFpOfferMatching.test.ts"
   },
   "keywords": [],
   "author": "",
