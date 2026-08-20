@@ -13,7 +13,7 @@ test("methodology exposes official source, download, terms, and normalized evide
     name: "7 datasets de la Junta",
   });
   await expect(regionalInventory).toBeVisible();
-  await expect(regionalInventory.getByRole("row")).toHaveCount(7);
+  await expect(regionalInventory.getByRole("row")).toHaveCount(8);
   await expect(
     regionalInventory.getByRole("link", { name: "Contratos por provincia" }),
   ).toBeVisible();
