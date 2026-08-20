@@ -53,6 +53,10 @@ export const GENERATED_RESOURCE_CATALOG = {
     fileName: "professional-certificates.json",
     sourceKind: "professionalCertificates",
   },
+  publicEmploymentCalls: {
+    fileName: "public-employment-calls.json",
+    sourceKind: "publicEmploymentCalls",
+  },
   provincialContracts: {
     fileName: "provincial-contracts.json",
     sourceKind: "regionalContracts",

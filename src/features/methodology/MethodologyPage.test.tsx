@@ -152,14 +152,14 @@ describe("MethodologyPage", () => {
       name: "Metodología y fuentes",
     });
     const inventory = screen.getByRole("region", {
-      name: "6 datasets de la Junta",
+      name: "7 datasets de la Junta",
     });
     await waitFor(() =>
       expect(
         within(inventory).getByRole("row", { name: /Ofertas de empleo/ }),
       ).toHaveTextContent(/1/),
     );
-    expect(within(inventory).getAllByText("CC BY 4.0 ES")).toHaveLength(6);
+    expect(within(inventory).getAllByText("CC BY 4.0 ES")).toHaveLength(7);
     expect(
       within(inventory).getByRole("link", { name: "Contratos por provincia" }),
     ).toHaveAttribute("href", SOURCE_CONFIG.regionalContracts.recordsUrl);

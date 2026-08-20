@@ -4,10 +4,12 @@ import type {
   EcylCourse,
   ProfessionalCertificate,
 } from "../../../data/schemas/ecylResources";
+import type { PublicEmploymentCall } from "../../../data/schemas/publicEmployment";
 import {
   loadEcylCourses,
   loadManifest,
   loadProfessionalCertificates,
+  loadPublicEmploymentCalls,
 } from "../../data/generatedDataClient";
 import "./ecylResources.css";
 
@@ -18,6 +20,9 @@ type State =
       status: "ready";
       courses: EcylCourse[];
       certificates: ProfessionalCertificate[];
+      publicCalls: PublicEmploymentCall[];
+      publicCallsSourceUrl: string | null;
+      publicCallsUpdatedAt: string | null;
     };
 
 function normalized(value: string): string {
@@ -51,11 +56,36 @@ export function EcylResourcesPage() {
     let active = true;
     void loadManifest()
       .then(async (manifest) => {
-        const [courses, certificates] = await Promise.all([
+        const [courses, certificates, publicCalls] = await Promise.all([
           loadEcylCourses(manifest),
           loadProfessionalCertificates(manifest),
+          loadPublicEmploymentCalls(manifest),
         ]);
-        if (active) setState({ status: "ready", courses, certificates });
+        const publicCallsSnapshot = (
+          manifest.resourceSnapshots as typeof manifest.resourceSnapshots &
+            Partial<
+              Record<
+                "publicEmploymentCalls",
+                {
+                  sourceUrl: string;
+                  sourceUpdatedAt: string | null;
+                  snapshotFetchedAt: string;
+                }
+              >
+            >
+        ).publicEmploymentCalls;
+        if (active)
+          setState({
+            status: "ready",
+            courses,
+            certificates,
+            publicCalls,
+            publicCallsSourceUrl: publicCallsSnapshot?.sourceUrl ?? null,
+            publicCallsUpdatedAt:
+              publicCallsSnapshot?.sourceUpdatedAt ??
+              publicCallsSnapshot?.snapshotFetchedAt ??
+              null,
+          });
       })
       .catch(() => active && setState({ status: "error" }));
     return () => {
@@ -93,6 +123,16 @@ export function EcylResourcesPage() {
           )
           .slice(0, 60)
       : [];
+  const today = new Date().toISOString().slice(0, 10);
+  const openPublicCalls =
+    state.status === "ready"
+      ? state.publicCalls.filter(
+          (call) =>
+            call.applicationDeadline !== null &&
+            call.applicationDeadline >= today &&
+            (call.applicationStart === null || call.applicationStart <= today),
+        )
+      : [];
 
   return (
     <section className="resources-page" aria-labelledby="resources-heading">
@@ -100,9 +140,8 @@ export function EcylResourcesPage() {
         <p className="resources-page__eyebrow">Recursos de Castilla y León</p>
         <h1 id="resources-heading">Formación para seguir avanzando</h1>
         <p>
-          Consulta cursos publicados por el ECYL y certificados de
-          profesionalidad. Son opciones complementarias: no equivalen
-          automáticamente a un ciclo de FP ni garantizan acceso a un empleo.
+          Consulta formación complementaria y convocatorias públicas abiertas.
+          Cada opción conserva su alcance y su fuente oficial.
         </p>
       </header>
 
@@ -139,76 +178,156 @@ export function EcylResourcesPage() {
         <p role="alert">No se han podido cargar estos recursos.</p>
       ) : null}
       {state.status === "ready" ? (
-        <div className="resources-columns">
-          <section aria-labelledby="courses-heading">
+        <>
+          <section
+            className="public-calls"
+            aria-labelledby="public-calls-heading"
+          >
             <div className="resources-section-heading">
-              <h2 id="courses-heading">Cursos del ECYL</h2>
-              <span>{visibleCourses.length} mostrados</span>
+              <h2 id="public-calls-heading">Empleo público abierto ahora</h2>
+              <span>
+                {openPublicCalls.length}{" "}
+                {openPublicCalls.length === 1
+                  ? "convocatoria"
+                  : "convocatorias"}
+              </span>
             </div>
             <p className="resources-section-help">
-              Revisa destinatarios, fechas y requisitos en la ficha oficial
-              antes de solicitar una plaza.
+              Procesos con plazo publicado todavía abierto. Comprueba siempre
+              los requisitos completos antes de presentar la solicitud.
             </p>
-            <div className="resource-list">
-              {visibleCourses.map((course) => (
-                <article className="resource-card" key={course.id}>
-                  <h3>{readableOfficialTitle(course.title)}</h3>
-                  <p>
-                    {[
-                      course.locality,
-                      course.modality,
-                      course.durationHours ? `${course.durationHours} h` : null,
-                    ]
-                      .filter(Boolean)
-                      .join(" · ") ||
-                      "Consulta los detalles en la ficha oficial"}
-                  </p>
-                  {course.startDate ? (
-                    <p>Inicio: {displayDate(course.startDate)}</p>
-                  ) : null}
-                  <a href={course.officialUrl} target="_blank" rel="noreferrer">
-                    Ver ficha oficial
-                  </a>
-                </article>
-              ))}
-            </div>
+            {openPublicCalls.length === 0 ? (
+              <p>No hay convocatorias con plazo abierto en la copia actual.</p>
+            ) : (
+              <div className="public-call-list">
+                {openPublicCalls.map((call) => (
+                  <article className="public-call" key={call.id}>
+                    <p className="resource-card__code">
+                      {call.accessType === "open"
+                        ? "Turno libre"
+                        : call.accessType === "internal"
+                          ? "Promoción interna"
+                          : "Consulta el tipo de acceso"}
+                    </p>
+                    <h3>{readableOfficialTitle(call.title)}</h3>
+                    <p>
+                      {call.places === null
+                        ? "Plazas no publicadas"
+                        : `${call.places} ${call.places === 1 ? "plaza" : "plazas"}`}
+                      {call.municipality ? ` · ${call.municipality}` : ""}
+                    </p>
+                    <p>
+                      Plazo hasta el {displayDate(call.applicationDeadline)}
+                    </p>
+                    <a href={call.officialUrl} target="_blank" rel="noreferrer">
+                      Ver convocatoria oficial
+                    </a>
+                  </article>
+                ))}
+              </div>
+            )}
+            <footer className="public-calls__source">
+              {state.publicCallsSourceUrl !== null && (
+                <a
+                  href={state.publicCallsSourceUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  Fuente: Convocatorias de Empleo Público JCyL
+                </a>
+              )}
+              {state.publicCallsUpdatedAt !== null && (
+                <span>
+                  Copia del{" "}
+                  {new Intl.DateTimeFormat("es-ES", {
+                    dateStyle: "medium",
+                  }).format(new Date(state.publicCallsUpdatedAt))}
+                </span>
+              )}
+            </footer>
           </section>
 
-          <section aria-labelledby="certificates-heading">
-            <div className="resources-section-heading">
-              <h2 id="certificates-heading">Certificados de profesionalidad</h2>
-              <span>{visibleCertificates.length} mostrados</span>
-            </div>
-            <p className="resources-section-help">
-              La familia y el nivel proceden del catálogo oficial. No atribuimos
-              equivalencias con títulos de FP.
-            </p>
-            <div className="resource-list">
-              {visibleCertificates.map((certificate) => (
-                <article className="resource-card" key={certificate.code}>
-                  <p className="resource-card__code">
-                    {certificate.code} · Familia {certificate.familyCode}
-                  </p>
-                  <h3>{readableOfficialTitle(certificate.title)}</h3>
-                  <p>
-                    Nivel {certificate.level}
-                    {certificate.totalHours
-                      ? ` · ${certificate.totalHours} h`
-                      : ""}
-                    {certificate.fullyOnline ? " · Teleformación completa" : ""}
-                  </p>
-                  <a
-                    href={certificate.programUrl}
-                    target="_blank"
-                    rel="noreferrer"
-                  >
-                    Consultar programa oficial
-                  </a>
-                </article>
-              ))}
-            </div>
-          </section>
-        </div>
+          <div className="resources-columns">
+            <section aria-labelledby="courses-heading">
+              <div className="resources-section-heading">
+                <h2 id="courses-heading">Cursos del ECYL</h2>
+                <span>{visibleCourses.length} mostrados</span>
+              </div>
+              <p className="resources-section-help">
+                Revisa destinatarios, fechas y requisitos en la ficha oficial
+                antes de solicitar una plaza.
+              </p>
+              <div className="resource-list">
+                {visibleCourses.map((course) => (
+                  <article className="resource-card" key={course.id}>
+                    <h3>{readableOfficialTitle(course.title)}</h3>
+                    <p>
+                      {[
+                        course.locality,
+                        course.modality,
+                        course.durationHours
+                          ? `${course.durationHours} h`
+                          : null,
+                      ]
+                        .filter(Boolean)
+                        .join(" · ") ||
+                        "Consulta los detalles en la ficha oficial"}
+                    </p>
+                    {course.startDate ? (
+                      <p>Inicio: {displayDate(course.startDate)}</p>
+                    ) : null}
+                    <a
+                      href={course.officialUrl}
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      Ver ficha oficial
+                    </a>
+                  </article>
+                ))}
+              </div>
+            </section>
+
+            <section aria-labelledby="certificates-heading">
+              <div className="resources-section-heading">
+                <h2 id="certificates-heading">
+                  Certificados de profesionalidad
+                </h2>
+                <span>{visibleCertificates.length} mostrados</span>
+              </div>
+              <p className="resources-section-help">
+                La familia y el nivel proceden del catálogo oficial. No
+                atribuimos equivalencias con títulos de FP.
+              </p>
+              <div className="resource-list">
+                {visibleCertificates.map((certificate) => (
+                  <article className="resource-card" key={certificate.code}>
+                    <p className="resource-card__code">
+                      {certificate.code} · Familia {certificate.familyCode}
+                    </p>
+                    <h3>{readableOfficialTitle(certificate.title)}</h3>
+                    <p>
+                      Nivel {certificate.level}
+                      {certificate.totalHours
+                        ? ` · ${certificate.totalHours} h`
+                        : ""}
+                      {certificate.fullyOnline
+                        ? " · Teleformación completa"
+                        : ""}
+                    </p>
+                    <a
+                      href={certificate.programUrl}
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      Consultar programa oficial
+                    </a>
+                  </article>
+                ))}
+              </div>
+            </section>
+          </div>
+        </>
       ) : null}
     </section>
   );

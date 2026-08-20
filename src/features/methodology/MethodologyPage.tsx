@@ -83,6 +83,12 @@ const JCYL_DATASETS = [
     sourceUrl: SOURCE_CONFIG.professionalCertificates.recordsUrl,
   },
   {
+    key: "publicEmploymentCalls",
+    title: "Convocatorias de Empleo Público",
+    use: "Procesos con plazo abierto en la página de recursos",
+    sourceUrl: SOURCE_CONFIG.publicEmploymentCalls.recordsUrl,
+  },
+  {
     key: "provincialContracts",
     title: "Contratos por provincia",
     use: "Contexto laboral territorial en resultados",
@@ -166,7 +172,7 @@ function RegionalDatasetInventory({ state }: { state: ManifestState }) {
       <div className="regional-dataset-inventory__heading">
         <div>
           <p className="methodology-page__eyebrow">Datos regionales en uso</p>
-          <h2 id="regional-datasets-heading">6 datasets de la Junta</h2>
+          <h2 id="regional-datasets-heading">7 datasets de la Junta</h2>
         </div>
         <p>Cada fuente tiene un uso visible en el producto.</p>
       </div>

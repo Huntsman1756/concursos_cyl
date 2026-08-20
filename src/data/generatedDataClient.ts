@@ -55,6 +55,10 @@ import {
   type MunicipalityContext,
   type ProvincialContract,
 } from "../../data/schemas/regionalContext";
+import {
+  PublicEmploymentCallsResourceSchema,
+  type PublicEmploymentCall,
+} from "../../data/schemas/publicEmployment";
 
 export type GeneratedDataErrorCode = "network" | "schema" | "missing";
 
@@ -199,6 +203,21 @@ export async function loadProfessionalCertificates(
     : loadGeneratedResource(
         snapshot.resourcePath,
         ProfessionalCertificatesResourceSchema,
+      );
+}
+
+export async function loadPublicEmploymentCalls(
+  manifest: LoadableGeneratedManifest,
+): Promise<PublicEmploymentCall[]> {
+  const snapshot = (
+    manifest.resourceSnapshots as typeof manifest.resourceSnapshots &
+      Partial<Record<"publicEmploymentCalls", { resourcePath: string }>>
+  ).publicEmploymentCalls;
+  return snapshot === undefined
+    ? []
+    : loadGeneratedResource(
+        snapshot.resourcePath,
+        PublicEmploymentCallsResourceSchema,
       );
 }
 

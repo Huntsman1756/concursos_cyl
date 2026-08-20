@@ -79,7 +79,7 @@ SALIDA CyL ayuda a personas de Castilla y León a explorar opciones de formació
 
 La interfaz permite elegir directamente cualquiera de los ${freeze.manifest.resourceSnapshots.programs.recordCount} ciclos de FP o filtrar los ${freeze.manifest.resourceSnapshots.officialOccupations.recordCount} grupos primarios de la CNO-11. Expone por separado el catálogo oficial completo y la cobertura parcial de relaciones FP–ocupación revisadas, incluidas las relaciones con ofertas, las revisadas sin coincidencias y las todavía no validadas. La metodología explica el origen de cada dato y los límites de interpretación.
 
-SALIDA CyL conecta FP y ocupación en ambos sentidos con evidencia verificable. Integra seis datasets del Portal de Datos Abiertos de la Junta de Castilla y León, todos visibles en la ficha o en las rutas de apoyo.
+SALIDA CyL conecta FP y ocupación en ambos sentidos con evidencia verificable. Integra siete datasets del Portal de Datos Abiertos de la Junta de Castilla y León, todos visibles en la ficha o en las rutas de apoyo.
 
 ## Cobertura congelada
 

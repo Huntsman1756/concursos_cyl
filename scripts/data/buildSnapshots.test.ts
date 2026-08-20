@@ -173,6 +173,23 @@ const fixedOptions = {
       nivel_cp: 3,
     },
   ],
+  fetchPublicEmploymentCallRecords: async () => [
+    {
+      identificador: "call-1",
+      titulo: "Ayudante Técnico de Laboratorio",
+      clasificador: "Convocatorias / Turno Libre",
+      organismo_gestor: "Consejería de Educación",
+      numeroplazas: 8,
+      municipio: "Valladolid",
+      fecha_de_inicio: "2026-07-28",
+      fechafinalizacion: "2026-08-24",
+      requisitos_necesarios: "Título exigido",
+      plazo_de_presentacion: "20 días hábiles",
+      urlenlaceaplicacion: null,
+      actualizacionmetadatos: "2026-08-17",
+      enlace_al_contenido: "https://empleopublico.jcyl.es/convocatoria/1",
+    },
+  ],
   fetchRegionalContractRecords: async () => [
     {
       fecha: "2026-07-01",

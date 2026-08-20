@@ -19,6 +19,11 @@ export const SOURCE_CONFIG = {
     recordsUrl:
       "https://analisis.datosabiertos.jcyl.es/api/explore/v2.1/catalog/datasets/certificados-profesionalidad/records",
   },
+  publicEmploymentCalls: {
+    id: "jcyl-public-employment-calls",
+    recordsUrl:
+      "https://analisis.datosabiertos.jcyl.es/api/explore/v2.1/catalog/datasets/convocatorias-de-empleo-publico/records",
+  },
   regionalContracts: {
     id: "jcyl-provincial-employment-contracts",
     recordsUrl:
