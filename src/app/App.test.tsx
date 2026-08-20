@@ -5,18 +5,21 @@ import { App } from "./App";
 import { AppShell } from "./AppShell";
 
 describe("App", () => {
-  it("presents both approved entry points", () => {
+  it("presents both approved starting-point choices", () => {
     render(
       <MemoryRouter>
         <App />
       </MemoryRouter>,
     );
     expect(
-      screen.getByRole("heading", { name: "He terminado FP" }),
+      screen.getByRole("region", { name: "¿Cuál es tu punto de partida?" }),
     ).toBeVisible();
     expect(
-      screen.getByRole("heading", { name: "Quiero trabajar de…" }),
-    ).toBeVisible();
+      screen.getByRole("radio", { name: /Tengo un título de FP/u }),
+    ).toBeChecked();
+    expect(
+      screen.getByRole("radio", { name: /Tengo un empleo en mente/u }),
+    ).not.toBeChecked();
   });
 
   it("uses the compact product shell and identifies the project independently", () => {

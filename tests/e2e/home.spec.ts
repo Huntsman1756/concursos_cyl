@@ -81,7 +81,7 @@ test("home exposes equal journeys, navigation, freshness, and no automated acces
   ).toEqual([]);
 });
 
-test("both entry routes remain reachable in their approved order", async ({
+test("the single search reaches both routes one mode at a time", async ({
   page,
 }) => {
   await page.goto("/");
@@ -89,7 +89,9 @@ test("both entry routes remain reachable in their approved order", async ({
   await page
     .getByLabel("Título de Formación Profesional")
     .selectOption("IFC03S");
-  await page.getByRole("button", { name: "Ver mis opciones" }).click();
+  await page
+    .getByRole("button", { name: "Ver las salidas de este título" })
+    .click();
   await expect(page).toHaveURL(/\/desde-fp\/IFC03S$/u);
   await expect(
     page.getByRole("heading", {
@@ -98,6 +100,9 @@ test("both entry routes remain reachable in their approved order", async ({
   ).toBeVisible();
 
   await page.getByRole("link", { name: "SALIDA CyL" }).click();
+  await page
+    .getByRole("radio", { name: /Tengo un empleo en mente/iu })
+    .check();
   const occupationSearch = page.getByRole("combobox", {
     name: "Ocupación que te interesa",
   });
@@ -107,7 +112,9 @@ test("both entry routes remain reachable in their approved order", async ({
       name: /Analistas, programadores y diseñadores web y multimedia/iu,
     })
     .click();
-  await page.getByRole("button", { name: "Buscar ocupación" }).click();
+  await page
+    .getByRole("button", { name: "Ver cómo llegar a esta ocupación" })
+    .click();
   await expect(page).toHaveURL(
     /\/desde-ocupacion\/occupation%3Acno11%3A2713$/u,
   );

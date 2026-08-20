@@ -5,6 +5,7 @@ import {
   waitFor,
   within,
 } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import { MemoryRouter } from "react-router-dom";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { currentManifestFixture } from "../../../tests/fixtures/generatedManifest";
@@ -12,6 +13,7 @@ import { HomePage } from "./HomePage";
 
 afterEach(() => {
   cleanup();
+  window.localStorage.clear();
   vi.unstubAllGlobals();
 });
 
@@ -184,20 +186,51 @@ describe("HomePage", () => {
       await screen.findByLabelText("Título de Formación Profesional"),
     ).toBeVisible();
     expect(
+      screen.queryByRole("combobox", { name: "Ocupación que te interesa" }),
+    ).not.toBeInTheDocument();
+    expect(
+      screen.getByRole("button", {
+        name: "Ver las salidas de este título",
+      }),
+    ).toBeDisabled();
+    expect(
+      screen.getByText("Tu título de FP"),
+    ).toBeVisible();
+    expect(
+      screen.getByText("Elige un título para ver sus salidas profesionales."),
+    ).toBeVisible();
+
+    const user = userEvent.setup();
+    const fpMode = screen.getByRole("radio", {
+      name: /Tengo un título de FP/i,
+    });
+    fpMode.focus();
+    await user.keyboard("{ArrowRight}");
+    expect(
+      screen.getByRole("radio", { name: /Tengo un empleo en mente/i }),
+    ).toHaveFocus();
+    expect(
+      screen.queryByLabelText("Título de Formación Profesional"),
+    ).not.toBeInTheDocument();
+    expect(
       screen.getByRole("combobox", { name: "Ocupación que te interesa" }),
     ).toBeVisible();
     expect(
-      screen.getByRole("button", { name: "Ver mis opciones" }),
+      screen.getByRole("button", {
+        name: "Ver cómo llegar a esta ocupación",
+      }),
     ).toBeDisabled();
     expect(
-      screen.getByRole("button", { name: "Buscar ocupación" }),
-    ).toBeDisabled();
-    expect(
-      screen.getByText("Indica tu título y descubre tus siguientes pasos."),
+      screen.getByText("Selecciona una ocupación de la lista para continuar."),
     ).toBeVisible();
     expect(
-      screen.getByText("Busca una ocupación y conoce cómo llegar."),
-    ).toBeVisible();
+      screen.queryByRole("button", {
+        name: "Ver las salidas de este título",
+      }),
+    ).not.toBeInTheDocument();
+    expect(window.localStorage.getItem("salida-cyl:home-search-mode")).toBe(
+      "occupation",
+    );
     expect(
       screen.getByRole("region", { name: "Metodología y límites" }),
     ).toHaveTextContent(
@@ -215,6 +248,38 @@ describe("HomePage", () => {
     expect(commitments).not.toHaveTextContent(
       /Datos de administraciones|Vínculos publicados|Sin registro/i,
     );
+  });
+
+  it("restores a valid saved search mode and ignores invalid values", () => {
+    window.localStorage.setItem(
+      "salida-cyl:home-search-mode",
+      "occupation",
+    );
+    vi.stubGlobal(
+      "fetch",
+      vi.fn(() => new Promise<Response>(() => undefined)),
+    );
+
+    const { unmount } = render(
+      <MemoryRouter>
+        <HomePage />
+      </MemoryRouter>,
+    );
+    expect(
+      screen.getByRole("radio", { name: /Tengo un empleo en mente/i }),
+    ).toBeChecked();
+    expect(screen.getByText("Ocupación que quieres")).toBeVisible();
+
+    unmount();
+    window.localStorage.setItem("salida-cyl:home-search-mode", "invalid");
+    render(
+      <MemoryRouter>
+        <HomePage />
+      </MemoryRouter>,
+    );
+    expect(
+      screen.getByRole("radio", { name: /Tengo un título de FP/i }),
+    ).toBeChecked();
   });
 
   it("announces a pending manifest before rendering the validated update date", async () => {

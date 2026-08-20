@@ -1,6 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { EntryCard } from "../../components/EntryCard";
 import { Icon } from "../../components/Icon";
 import {
   loadAuditedRelationships,
@@ -47,6 +46,19 @@ type SearchDataState =
       programs: TrainingProgram[];
     };
 
+type SearchMode = "fp" | "occupation";
+
+const SEARCH_MODE_STORAGE_KEY = "salida-cyl:home-search-mode";
+
+function initialSearchMode(): SearchMode {
+  try {
+    const savedMode = window.localStorage.getItem(SEARCH_MODE_STORAGE_KEY);
+    return savedMode === "fp" || savedMode === "occupation" ? savedMode : "fp";
+  } catch {
+    return "fp";
+  }
+}
+
 function featuredCoverage(
   programs: Extract<MappingCoverage, { scope: "program" }>[],
 ) {
@@ -76,6 +88,7 @@ export function HomePage() {
   const [searchData, setSearchData] = useState<SearchDataState>({
     status: "loading",
   });
+  const [searchMode, setSearchMode] = useState<SearchMode>(initialSearchMode);
   const [selectedProgram, setSelectedProgram] = useState("");
   const [confirmedOccupation, setConfirmedOccupation] =
     useState<Occupation | null>(null);
@@ -188,6 +201,15 @@ export function HomePage() {
     [searchData],
   );
 
+  const selectSearchMode = (mode: SearchMode) => {
+    setSearchMode(mode);
+    try {
+      window.localStorage.setItem(SEARCH_MODE_STORAGE_KEY, mode);
+    } catch {
+      // The choice still works for this visit when storage is unavailable.
+    }
+  };
+
   return (
     <div className="home-page">
       <section className="home-hero" aria-labelledby="home-heading">
@@ -282,119 +304,205 @@ export function HomePage() {
             </Link>
           </aside>
 
-          <section
-            className="entry-panels"
-            aria-label="Elige tu punto de partida"
-          >
-            <EntryCard
-              title="He terminado FP"
-              outcome="Indica tu título y descubre tus siguientes pasos."
-              accent="burgundy"
-              control={
-                searchData.status === "ready" ? (
-                  <div className="entry-card__field">
-                    <label className="sr-only" htmlFor="home-program">
-                      Título de Formación Profesional
-                    </label>
-                    <select
-                      id="home-program"
-                      value={selectedProgram}
-                      onChange={(event) =>
-                        setSelectedProgram(event.target.value)
+          <section className="search-entry" aria-labelledby="search-entry-title">
+            <fieldset
+              className="search-entry__modes"
+              onKeyDown={(event) => {
+                if (
+                  !["ArrowLeft", "ArrowRight", "ArrowUp", "ArrowDown"].includes(
+                    event.key,
+                  )
+                ) {
+                  return;
+                }
+                event.preventDefault();
+                const nextMode =
+                  event.key === "ArrowLeft" || event.key === "ArrowUp"
+                    ? "fp"
+                    : "occupation";
+                selectSearchMode(nextMode);
+                event.currentTarget
+                  .querySelector<HTMLInputElement>(`input[value="${nextMode}"]`)
+                  ?.focus();
+              }}
+            >
+              <legend id="search-entry-title">
+                ¿Cuál es tu punto de partida?
+              </legend>
+              <div className="search-entry__mode-options">
+                <label
+                  className="search-entry__mode"
+                  data-selected={searchMode === "fp"}
+                >
+                  <input
+                    type="radio"
+                    name="home-search-mode"
+                    value="fp"
+                    checked={searchMode === "fp"}
+                    onChange={() => selectSearchMode("fp")}
+                  />
+                  <span>
+                    <strong>Tengo un título de FP</strong>
+                    <small>
+                      Dime en qué puedo trabajar con lo que ya he estudiado.
+                    </small>
+                  </span>
+                </label>
+                <label
+                  className="search-entry__mode"
+                  data-selected={searchMode === "occupation"}
+                >
+                  <input
+                    type="radio"
+                    name="home-search-mode"
+                    value="occupation"
+                    checked={searchMode === "occupation"}
+                    onChange={() => selectSearchMode("occupation")}
+                  />
+                  <span>
+                    <strong>Tengo un empleo en mente</strong>
+                    <small>Dime qué FP me lleva hasta esa ocupación.</small>
+                  </span>
+                </label>
+              </div>
+            </fieldset>
+
+            {searchMode === "fp" ? (
+              <form
+                className="search-entry__panel"
+                onSubmit={(event) => {
+                  event.preventDefault();
+                  if (selectedProgram !== "") {
+                    navigate(`/desde-fp/${selectedProgram}`);
+                  }
+                }}
+              >
+                <p className="search-entry__direction">
+                  <span>Tu título de FP</span>
+                  <Icon name="arrow-right" size={18} />
+                  <strong>Ocupaciones con evidencia</strong>
+                </p>
+                {searchData.status === "ready" ? (
+                  <>
+                    <div className="search-entry__field">
+                      <label htmlFor="home-program">
+                        Título de Formación Profesional
+                      </label>
+                      <select
+                        id="home-program"
+                        value={selectedProgram}
+                        onChange={(event) =>
+                          setSelectedProgram(event.target.value)
+                        }
+                      >
+                        <option value="">Elige un título</option>
+                        {searchData.programs.map((program) => (
+                          <option
+                            key={program.programKey}
+                            value={program.programKey}
+                          >
+                            {program.programTitle} ({program.programKey})
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+                    {selectedProgram === "" ? (
+                      <p className="search-entry__hint" id="program-required">
+                        Elige un título para ver sus salidas profesionales.
+                      </p>
+                    ) : null}
+                    <button
+                      className="search-entry__cta"
+                      type="submit"
+                      disabled={selectedProgram === ""}
+                      aria-describedby={
+                        selectedProgram === "" ? "program-required" : undefined
                       }
                     >
-                      <option value="">Selecciona tu título de FP</option>
-                      {searchData.programs.map((program) => (
-                        <option
-                          key={program.programKey}
-                          value={program.programKey}
-                        >
-                          {program.programTitle} ({program.programKey})
-                        </option>
-                      ))}
-                    </select>
-                  </div>
+                      Ver las salidas de este título
+                    </button>
+                  </>
                 ) : (
-                  <p className="form-message">
-                    {searchData.status === "loading"
-                      ? "Cargando el catálogo oficial de FP…"
-                      : "El selector no está disponible ahora mismo."}
-                  </p>
-                )
-              }
-              action={
-                searchData.status === "ready" ? (
-                  <button
-                    className="entry-card__cta"
-                    type="button"
-                    disabled={selectedProgram === ""}
-                    onClick={() => navigate(`/desde-fp/${selectedProgram}`)}
-                  >
-                    Ver mis opciones
-                  </button>
+                  <>
+                    <p className="form-message" role="status">
+                      {searchData.status === "loading"
+                        ? "Cargando el catálogo oficial de FP…"
+                        : "El selector no está disponible ahora mismo."}
+                    </p>
+                    {searchData.status === "unavailable" ? (
+                      <Link className="search-entry__fallback" to="/desde-fp">
+                        Abrir buscador de FP
+                      </Link>
+                    ) : null}
+                  </>
+                )}
+              </form>
+            ) : (
+              <form
+                className="search-entry__panel"
+                onSubmit={(event) => {
+                  event.preventDefault();
+                  if (confirmedOccupation !== null) {
+                    navigate(
+                      `/desde-ocupacion/${encodeURIComponent(confirmedOccupation.occupationId)}`,
+                    );
+                  }
+                }}
+              >
+                <p className="search-entry__direction">
+                  <span>Ocupación que quieres</span>
+                  <Icon name="arrow-right" size={18} />
+                  <strong>FP que te lleva a ella</strong>
+                </p>
+                {searchData.status === "ready" ? (
+                  <>
+                    <OccupationCombobox
+                      occupations={searchData.occupations}
+                      aliases={searchData.aliases}
+                      confirmedOccupation={confirmedOccupation}
+                      onConfirm={setConfirmedOccupation}
+                      onClear={() => setConfirmedOccupation(null)}
+                      label="Ocupación que te interesa"
+                      hint="Escribe una ocupación y selecciónala en la lista."
+                      showConfirmation={false}
+                    />
+                    {confirmedOccupation === null ? (
+                      <p className="search-entry__hint" id="occupation-required">
+                        Selecciona una ocupación de la lista para continuar.
+                      </p>
+                    ) : null}
+                    <button
+                      className="search-entry__cta"
+                      type="submit"
+                      disabled={confirmedOccupation === null}
+                      aria-describedby={
+                        confirmedOccupation === null
+                          ? "occupation-required"
+                          : undefined
+                      }
+                    >
+                      Ver cómo llegar a esta ocupación
+                    </button>
+                  </>
                 ) : (
-                  <Link className="entry-card__cta" to="/desde-fp">
-                    Abrir buscador de FP
-                  </Link>
-                )
-              }
-            />
-
-            <span
-              className="entry-panels__separator"
-              role="separator"
-              aria-label="Alternativa"
-            >
-              {" o "}
-            </span>
-
-            <EntryCard
-              title="Quiero trabajar de…"
-              outcome="Busca una ocupación y conoce cómo llegar."
-              accent="burgundy"
-              control={
-                searchData.status === "ready" ? (
-                  <OccupationCombobox
-                    occupations={searchData.occupations}
-                    aliases={searchData.aliases}
-                    confirmedOccupation={confirmedOccupation}
-                    onConfirm={setConfirmedOccupation}
-                    onClear={() => setConfirmedOccupation(null)}
-                    label="Ocupación que te interesa"
-                    hint="Escribe una ocupación y selecciónala en la lista."
-                    showConfirmation={false}
-                  />
-                ) : (
-                  <p className="form-message">
-                    {searchData.status === "loading"
-                      ? "Cargando el catálogo oficial de ocupaciones…"
-                      : "El buscador no está disponible ahora mismo."}
-                  </p>
-                )
-              }
-              action={
-                searchData.status === "ready" ? (
-                  <button
-                    className="entry-card__cta"
-                    type="button"
-                    disabled={confirmedOccupation === null}
-                    onClick={() =>
-                      confirmedOccupation === null
-                        ? undefined
-                        : navigate(
-                            `/desde-ocupacion/${encodeURIComponent(confirmedOccupation.occupationId)}`,
-                          )
-                    }
-                  >
-                    Buscar ocupación
-                  </button>
-                ) : (
-                  <Link className="entry-card__cta" to="/desde-ocupacion">
-                    Abrir buscador de ocupaciones
-                  </Link>
-                )
-              }
-            />
+                  <>
+                    <p className="form-message" role="status">
+                      {searchData.status === "loading"
+                        ? "Cargando el catálogo oficial de ocupaciones…"
+                        : "El buscador no está disponible ahora mismo."}
+                    </p>
+                    {searchData.status === "unavailable" ? (
+                      <Link
+                        className="search-entry__fallback"
+                        to="/desde-ocupacion"
+                      >
+                        Abrir buscador de ocupaciones
+                      </Link>
+                    ) : null}
+                  </>
+                )}
+              </form>
+            )}
           </section>
         </div>
       </section>

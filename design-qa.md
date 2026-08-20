@@ -230,3 +230,34 @@ state composites (`results-states-desktop.png` / `results-states-mobile.png`) as
 ### Final line
 
 final result: passed
+
+---
+
+## Buscador único «decide primero, busca después» — 2026-08-20
+
+- Referencia visual: `C:\Users\rome_\.codex\generated_images\01a01d4b-d9ac-7373-aeb2-970068ec4424\exec-82613655-fd3c-4ccf-83f2-af9873c36817.png`.
+- Implementación, escritorio: `C:\Users\rome_\.codex\visualizations\2026\08\20\01a01d4b-d9ac-7373-aeb2-970068ec4424\home-desktop-1488.png`.
+- Implementación, móvil: `C:\Users\rome_\.codex\visualizations\2026\08\20\01a01d4b-d9ac-7373-aeb2-970068ec4424\home-mobile-390.png`.
+- Comparación lado a lado: `C:\Users\rome_\.codex\visualizations\2026\08\20\01a01d4b-d9ac-7373-aeb2-970068ec4424\design-qa-comparison.png`.
+- Viewports: 1488 × 1058 px y 390 × 844 px, densidad 1×.
+
+La referencia corresponde a una ficha de resultado, no a la portada. La comparación valida la continuidad del sistema visual —burdeos, superficies cálidas, tipografía editorial, bordes finos, jerarquía y densidad— y no una clonación de estructura o contenido.
+
+### Estados verificados
+
+- Modo inicial «Tengo un título de FP», con un único formulario y un único CTA primario.
+- Cambio a «Tengo un empleo en mente», con montaje exclusivo del combobox correspondiente.
+- Navegación del grupo radio con flechas; la opción activa queda marcada y enfocada.
+- Persistencia y restauración del modo mediante `localStorage`, incluida la recuperación segura ante un valor inválido.
+- Estado deshabilitado con una pista explícita de lo que falta.
+- Vista móvil sin desbordamiento horizontal.
+- Consola sin errores ni advertencias durante el flujo principal.
+
+### Hallazgos y correcciones
+
+- En la primera revisión interactiva, el cambio con flechas dependía del comportamiento nativo del navegador y no dejaba una evidencia consistente de foco. Se añadió manejo explícito para Flecha izquierda/arriba y derecha/abajo, y se volvió a verificar el estado marcado y enfocado.
+- No quedan discrepancias accionables P0, P1 o P2.
+- No fue necesario un recorte adicional: el módulo completo es legible a resolución nativa en la comparación de escritorio y la captura móvil cubre el comportamiento responsive.
+
+final result: passed
+
