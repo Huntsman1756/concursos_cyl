@@ -1415,8 +1415,8 @@ summary:focus-visible {
   display: grid;
   grid-template-columns: 1fr;
   grid-template-areas:
-    "coverage"
-    "entries";
+    "entries"
+    "coverage";
   gap: clamp(1rem, 1.7vw, 1.75rem);
   align-items: stretch;
 }
@@ -1484,7 +1484,7 @@ summary:focus-visible {
 
 .search-entry__mode {
   display: grid;
-  grid-template-columns: auto auto minmax(0, 1fr);
+  grid-template-columns: auto minmax(0, 1fr);
   gap: 0.7rem;
   align-items: start;
   min-width: 0;
@@ -1511,16 +1511,6 @@ summary:focus-visible {
   height: 1.1rem;
   margin: 0.15rem 0 0;
   accent-color: var(--color-primary);
-}
-
-.search-entry__mode-icon {
-  margin-top: 0.05rem;
-  color: var(--color-primary);
-  stroke-width: 1.8;
-}
-
-.search-entry__mode[data-selected="false"] .search-entry__mode-icon {
-  color: var(--color-text-muted);
 }
 
 .search-entry__mode span {
