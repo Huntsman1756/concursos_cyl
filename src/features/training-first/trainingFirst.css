@@ -1,0 +1,194 @@
+.training-outcome {
+  display: grid;
+  gap: var(--space-5);
+  margin-bottom: var(--space-8);
+  padding: clamp(var(--space-5), 3vw, var(--space-6));
+  border: 1px solid var(--color-border);
+  border-top: 3px solid var(--color-primary);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-subtle);
+}
+
+.training-outcome__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-5);
+}
+
+.training-outcome__header h2,
+.training-outcome__header p,
+.training-outcome__metric p,
+.training-outcome__metric strong,
+.training-outcome__metric span,
+.training-outcome__distribution p,
+.training-outcome__note,
+.training-outcome__source {
+  margin: 0;
+}
+
+.training-outcome__header h2 {
+  color: var(--color-text);
+  font-size: 1.25rem;
+  line-height: 1.25;
+}
+
+.training-outcome__header p {
+  margin-top: var(--space-2);
+  color: var(--color-text-muted);
+  font-size: 0.875rem;
+}
+
+.training-outcome__compare {
+  flex: 0 0 auto;
+  color: var(--color-action-text);
+  font-size: 0.9rem;
+  font-weight: 750;
+  text-underline-offset: 0.2em;
+}
+
+.training-outcome__metrics {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-3);
+}
+
+.training-outcome__metrics--single {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.training-outcome__metric {
+  display: grid;
+  gap: var(--space-2);
+  min-width: 0;
+  padding: var(--space-4);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background: var(--color-surface-subtle);
+}
+
+.training-outcome__metric--national {
+  border-color: var(--color-primary-muted);
+  background: var(--color-primary-soft);
+}
+
+.training-outcome__metric p {
+  color: var(--color-action-text);
+  font-size: 0.78rem;
+  font-weight: 750;
+}
+
+.training-outcome__metric strong {
+  color: var(--color-primary);
+  font-size: clamp(1.55rem, 4vw, 2rem);
+  line-height: 1;
+}
+
+.training-outcome__metric span {
+  min-height: 1.35em;
+  color: var(--color-text-muted);
+  font-size: 0.82rem;
+  line-height: 1.35;
+}
+
+.training-outcome__distribution {
+  display: grid;
+  grid-template-columns: minmax(11rem, 0.7fr) minmax(0, 1.3fr);
+  gap: var(--space-4);
+  align-items: start;
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--color-border);
+}
+
+.training-outcome__distribution > p {
+  color: var(--color-text-muted);
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+
+.training-outcome__distribution dl {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-3);
+  margin: 0;
+}
+
+.training-outcome__distribution dl div {
+  min-width: 0;
+}
+
+.training-outcome__distribution dt {
+  color: var(--color-text-muted);
+  font-size: 0.78rem;
+  line-height: 1.35;
+}
+
+.training-outcome__distribution dd {
+  margin: var(--space-1) 0 0;
+  color: var(--color-text);
+  font-weight: 750;
+}
+
+.training-outcome__note {
+  color: var(--color-text-muted);
+  font-size: 0.85rem;
+}
+
+.training-outcome__source {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-4);
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--color-border);
+  color: var(--color-text-muted);
+  font-size: 0.78rem;
+  line-height: 1.4;
+}
+
+.training-outcome__source a {
+  flex: 0 0 auto;
+  color: var(--color-action-text);
+  font-weight: 700;
+  text-underline-offset: 0.2em;
+}
+
+.training-outcome--unavailable {
+  gap: var(--space-2);
+  border-top-color: var(--color-border);
+  background: var(--color-surface-subtle);
+}
+
+.training-outcome--unavailable h2,
+.training-outcome--unavailable p {
+  margin: 0;
+}
+
+.training-outcome--unavailable h2 {
+  color: var(--color-text);
+  font-size: 1.1rem;
+}
+
+.training-outcome--unavailable p {
+  color: var(--color-text-muted);
+  font-size: 0.9rem;
+}
+
+@media (max-width: 47.999rem) {
+  .training-outcome__header,
+  .training-outcome__source {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .training-outcome__compare {
+    font-size: 0.875rem;
+  }
+
+  .training-outcome__metrics,
+  .training-outcome__distribution,
+  .training-outcome__distribution dl {
+    grid-template-columns: 1fr;
+  }
+}

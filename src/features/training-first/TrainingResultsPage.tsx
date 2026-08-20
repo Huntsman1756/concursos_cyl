@@ -8,11 +8,13 @@ import type {
   SourceSnapshot,
   TrainingProgram,
 } from "../../../data/schemas/generated";
+import type { OutcomeIndicatorsResource } from "../../../data/schemas/outcomes";
 import type { ProfessionalProfile } from "../../../data/schemas/professionalProfiles";
 import {
   loadAuditedRelationships,
   loadFoundationResources,
   loadManifest,
+  loadOutcomeIndicators,
   loadProfessionalProfiles,
   loadPublishedRequirements,
   loadRegionalContext,
@@ -20,6 +22,7 @@ import {
   type LoadedFoundationResources,
   type LoadedRegionalContext,
 } from "../../data/generatedDataClient";
+import { indexIncomeOutcomes } from "../../domain/outcomes";
 import { deriveActions } from "../../domain/actionEngine";
 import { deriveEvidenceState, orderOfferMatches } from "../../domain/evidence";
 import {
@@ -39,6 +42,12 @@ import {
 } from "./TerritorialDistribution";
 import "./result-evidence.css";
 import { resolveApprovedOccupations } from "./resolveApprovedOccupations";
+import { TrainingOutcomeEvidence } from "./TrainingOutcomeEvidence";
+import type {
+  TrainingOutcomeSnapshot,
+  TrainingOutcomeState,
+} from "./trainingOutcome";
+import "./trainingFirst.css";
 
 interface ReadyResults {
   status: "ready";
@@ -52,6 +61,7 @@ interface ReadyResults {
   foundation: LoadedFoundationResources;
   regionalContext: LoadedRegionalContext;
   matches: OfferMatch[];
+  outcome: TrainingOutcomeState;
 }
 
 type ResultsState =
@@ -92,6 +102,45 @@ function normalizedLocation(value: string | null | undefined): string {
     .toLowerCase();
 }
 
+type OutcomeSnapshotDescriptor = Pick<
+  TrainingOutcomeSnapshot,
+  "sourceUrl" | "snapshotFetchedAt"
+> & {
+  qualityStatus: "passed" | "stale";
+};
+
+function outcomeSnapshotOf(
+  manifest: LoadableGeneratedManifest,
+): OutcomeSnapshotDescriptor | undefined {
+  const snapshots =
+    manifest.resourceSnapshots as typeof manifest.resourceSnapshots &
+      Record<string, OutcomeSnapshotDescriptor | undefined>;
+  return snapshots.outcomeIndicators;
+}
+
+async function loadTrainingOutcomeState(
+  manifest: LoadableGeneratedManifest,
+): Promise<TrainingOutcomeState> {
+  const records: OutcomeIndicatorsResource | null =
+    await loadOutcomeIndicators(manifest);
+  if (records === null) return { status: "unavailable" };
+
+  const snapshot = outcomeSnapshotOf(manifest);
+  if (snapshot === undefined) return { status: "invalid" };
+
+  return {
+    status: "available",
+    index: indexIncomeOutcomes(records),
+    snapshot: {
+      sourceUrl: snapshot.sourceUrl,
+      snapshotFetchedAt: snapshot.snapshotFetchedAt,
+      stale:
+        manifest.qualityStatus === "stale" ||
+        snapshot.qualityStatus === "stale",
+    },
+  };
+}
+
 export function TrainingResultsPage() {
   const { programKey = "" } = useParams();
   const [searchParams] = useSearchParams();
@@ -117,11 +166,15 @@ export function TrainingResultsPage() {
           relationships,
           professionalProfiles,
           regionalContext,
+          outcome,
         ] = await Promise.all([
           loadPublishedRequirements(manifest),
           loadAuditedRelationships(manifest),
           loadProfessionalProfiles(manifest),
           loadRegionalContext(manifest),
+          loadTrainingOutcomeState(manifest).catch(
+            (): TrainingOutcomeState => ({ status: "invalid" }),
+          ),
         ]);
         const matches = matchOffersForProgram(programKey, {
           programs: foundation.programs,
@@ -146,6 +199,7 @@ export function TrainingResultsPage() {
           foundation,
           regionalContext,
           matches,
+          outcome,
         };
       })
       .then((nextState) => {
@@ -315,7 +369,8 @@ export function TrainingResultsPage() {
 
   const stale =
     state.manifest.qualityStatus === "stale" ||
-    state.manifest.resourceSnapshots.jobOffers.qualityStatus === "stale";
+    state.manifest.resourceSnapshots.jobOffers.qualityStatus === "stale" ||
+    (state.outcome.status === "available" && state.outcome.snapshot.stale);
   const regionalContractsSource = (
     state.manifest
       .resourceSnapshots as typeof state.manifest.resourceSnapshots &
@@ -509,6 +564,10 @@ export function TrainingResultsPage() {
           </button>
         </div>
       )}
+      <TrainingOutcomeEvidence
+        program={state.program}
+        outcome={state.outcome}
+      />
       <section className="decision-evidence" aria-label="Evidencia territorial">
         <div className="study-section">
           <div className="section-heading">

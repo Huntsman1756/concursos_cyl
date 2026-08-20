@@ -257,6 +257,35 @@ describe("TrainingResultsPage", () => {
     },
   );
 
+  it("brings the validated income reference into the training decision page", async () => {
+    await installActiveAliasPassFetch();
+    render(
+      <MemoryRouter initialEntries={["/desde-fp/IFC03S"]}>
+        <AppRoutes />
+      </MemoryRouter>,
+    );
+
+    expect(
+      await screen.findByRole("heading", {
+        name: "Ingresos observados tras titularse",
+      }),
+    ).toBeVisible();
+    expect(screen.getByText("España · grupo del ciclo")).toBeVisible();
+    expect(screen.getByText("Castilla y León · Grado superior")).toBeVisible();
+    const outcome = screen.getByRole("region", {
+      name: "Ingresos observados tras titularse",
+    });
+    expect(
+      within(outcome).getByRole("link", { name: "Comparar estudios" }),
+    ).toHaveAttribute("href", "/comparar");
+    expect(
+      within(outcome).getByRole("link", { name: /Fuente: EDUCAbase/u }),
+    ).toHaveAttribute(
+      "href",
+      "https://estadisticas.educacion.gob.es/EducaJaxiPx/",
+    );
+  });
+
   it("does not activate an unpublished-requirement filter from arbitrary URL parameters", async () => {
     installResultsFetch();
     render(
