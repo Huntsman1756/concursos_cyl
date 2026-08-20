@@ -5,7 +5,7 @@
 <!-- prettier-ignore -->
 | Campo | Valor |
 | --- | --- |
-| Commit fuente | `f14c3bfe23eae25b922abccaba39e137d006c28b` |
+| Commit fuente | `3c66cdbd719e3fe3daed606845f477b87a9bc7b9` |
 | Manifest | `public/data/v1/manifest.json` |
 | SHA-256 del manifest | `4efd9990fb7e30f466bb592e70616b7ecbaaee8b6539c084660840980f9d9f3f` |
 | Generado | 2026-08-20T06:40:24.473Z |
