@@ -14,7 +14,10 @@ import {
   loadManifest,
   loadProfessionalProfiles,
   loadPublishedRequirements,
+  loadRegionalContext,
   type LoadedAuditedRelationships,
+  type LoadedFoundationResources,
+  type LoadedRegionalContext,
 } from "../../data/generatedDataClient";
 import { deriveActions } from "../../domain/actionEngine";
 import { deriveEvidenceState, orderOfferMatches } from "../../domain/evidence";
@@ -39,6 +42,8 @@ interface ReadyResults {
   requirements: OfferPublishedRequirements[];
   relationships: LoadedAuditedRelationships;
   professionalProfiles: ProfessionalProfile[];
+  foundation: LoadedFoundationResources;
+  regionalContext: LoadedRegionalContext;
   matches: OfferMatch[];
 }
 
@@ -86,12 +91,17 @@ export function TrainingResultsPage() {
           (candidate) => candidate.programKey === programKey,
         );
         if (program === undefined) return { status: "unknown" as const };
-        const [requirements, relationships, professionalProfiles] =
-          await Promise.all([
-            loadPublishedRequirements(manifest),
-            loadAuditedRelationships(manifest),
-            loadProfessionalProfiles(manifest),
-          ]);
+        const [
+          requirements,
+          relationships,
+          professionalProfiles,
+          regionalContext,
+        ] = await Promise.all([
+          loadPublishedRequirements(manifest),
+          loadAuditedRelationships(manifest),
+          loadProfessionalProfiles(manifest),
+          loadRegionalContext(manifest),
+        ]);
         const matches = matchOffersForProgram(programKey, {
           programs: foundation.programs,
           qualifications: REVIEWED_QUALIFICATIONS,
@@ -112,6 +122,8 @@ export function TrainingResultsPage() {
           requirements,
           relationships,
           professionalProfiles,
+          foundation,
+          regionalContext,
           matches,
         };
       })
@@ -176,6 +188,60 @@ export function TrainingResultsPage() {
     [programKey, state],
   );
 
+  const studyCenters = useMemo(() => {
+    if (state.status !== "ready") return [];
+    const centerCodes = new Set(
+      state.foundation.trainingOfferings
+        .filter((offering) => offering.programKey === programKey)
+        .map((offering) => offering.centerCode),
+    );
+    return state.foundation.centers
+      .filter((center) => centerCodes.has(center.centerCode))
+      .sort(
+        (left, right) =>
+          left.province.localeCompare(right.province, "es") ||
+          left.locality.localeCompare(right.locality, "es") ||
+          left.centerName.localeCompare(right.centerName, "es"),
+      );
+  }, [programKey, state]);
+
+  const latestProvincialContracts = useMemo(() => {
+    if (state.status !== "ready") return [];
+    const relevantProvinces = new Set(
+      (selectedProvince === null
+        ? studyCenters.map((center) => center.province)
+        : [selectedProvince]
+      ).map(normalizedLocation),
+    );
+    const latest = new Map<
+      string,
+      LoadedRegionalContext["provincialContracts"][number]
+    >();
+    for (const row of state.regionalContext.provincialContracts) {
+      if (!relevantProvinces.has(normalizedLocation(row.provinceName)))
+        continue;
+      const previous = latest.get(row.provinceCode);
+      if (previous === undefined || previous.month < row.month) {
+        latest.set(row.provinceCode, row);
+      }
+    }
+    return [...latest.values()]
+      .sort((left, right) =>
+        left.provinceName.localeCompare(right.provinceName, "es"),
+      )
+      .slice(0, 4);
+  }, [selectedProvince, state, studyCenters]);
+
+  const municipalityByLocation = useMemo(() => {
+    if (state.status !== "ready") return new Map<string, number>();
+    return new Map(
+      state.regionalContext.municipalities.map((municipality) => [
+        `${normalizedLocation(municipality.municipalityName)}|${normalizedLocation(municipality.provinceName)}`,
+        municipality.population,
+      ]),
+    );
+  }, [state]);
+
   if (state.status === "loading") return <p>Buscando ofertas relacionadas…</p>;
   if (state.status === "failed") {
     return (
@@ -199,6 +265,11 @@ export function TrainingResultsPage() {
   const stale =
     state.manifest.qualityStatus === "stale" ||
     state.manifest.resourceSnapshots.jobOffers.qualityStatus === "stale";
+  const regionalContractsSource = (
+    state.manifest
+      .resourceSnapshots as typeof state.manifest.resourceSnapshots &
+      Partial<Record<"provincialContracts", { sourceUrl: string }>>
+  ).provincialContracts?.sourceUrl;
 
   function applyUnpublishedRequirementFilter(
     action: Extract<
@@ -229,6 +300,24 @@ export function TrainingResultsPage() {
         </p>
         {selectedProvince !== null && <p>Zona elegida: {selectedProvince}</p>}
       </header>
+      <dl className="result-summary" aria-label="Resumen del resultado">
+        <div>
+          <dt>Salidas oficiales</dt>
+          <dd>{officialProfiles.length}</dd>
+        </div>
+        <div>
+          <dt>Grupos revisados</dt>
+          <dd>{resolvedOccupations.length}</dd>
+        </div>
+        <div>
+          <dt>Ofertas relacionadas</dt>
+          <dd>{orderedMatches.length}</dd>
+        </div>
+        <div>
+          <dt>Centros</dt>
+          <dd>{studyCenters.length}</dd>
+        </div>
+      </dl>
       {stale && (
         <p className="stale-warning" role="status">
           No se han podido actualizar los datos. Mostramos la última copia
@@ -254,13 +343,84 @@ export function TrainingResultsPage() {
           </button>
         </div>
       )}
-      <section className="study-section">
-        <h2>Dónde estudiar este ciclo</h2>
-        <p>
-          <Link to={`/formacion/${encodeURIComponent(programKey)}`}>
-            Acceder a la información formativa de {state.program.programTitle}
+      <section className="decision-evidence" aria-label="Evidencia territorial">
+        <div className="study-section">
+          <div className="section-heading">
+            <h2>Dónde estudiar</h2>
+            <span>
+              {studyCenters.length}{" "}
+              {studyCenters.length === 1 ? "centro" : "centros"}
+            </span>
+          </div>
+          {studyCenters.length === 0 ? (
+            <p>No hay centros publicados para este ciclo en la copia actual.</p>
+          ) : (
+            <ul className="study-center-preview">
+              {studyCenters.slice(0, 4).map((center) => {
+                const population = municipalityByLocation.get(
+                  `${normalizedLocation(center.locality)}|${normalizedLocation(center.province)}`,
+                );
+                return (
+                  <li key={center.centerCode}>
+                    <strong>{center.centerName}</strong>
+                    <span>
+                      {center.locality}, {center.province}
+                      {population === undefined
+                        ? ""
+                        : ` · ${new Intl.NumberFormat("es-ES").format(population)} habitantes`}
+                    </span>
+                  </li>
+                );
+              })}
+            </ul>
+          )}
+          <Link
+            className="evidence-link"
+            to={`/formacion/${encodeURIComponent(programKey)}`}
+          >
+            Ver centros y modalidades
           </Link>
-        </p>
+        </div>
+        <div className="regional-context">
+          <div className="section-heading">
+            <h2>Contexto laboral</h2>
+            <span>Contratos provinciales</span>
+          </div>
+          {latestProvincialContracts.length === 0 ? (
+            <p>Sin contexto provincial para los centros mostrados.</p>
+          ) : (
+            <ul className="contract-context-list">
+              {latestProvincialContracts.map((row) => (
+                <li key={row.provinceCode}>
+                  <span>{row.provinceName}</span>
+                  <strong>
+                    {new Intl.NumberFormat("es-ES").format(row.totalContracts)}
+                  </strong>
+                  <small>
+                    {new Intl.DateTimeFormat("es-ES", {
+                      month: "short",
+                      year: "numeric",
+                      timeZone: "UTC",
+                    }).format(new Date(row.month))}
+                  </small>
+                </li>
+              ))}
+            </ul>
+          )}
+          {regionalContractsSource !== undefined && (
+            <a
+              className="evidence-link"
+              href={regionalContractsSource}
+              target="_blank"
+              rel="noreferrer"
+            >
+              Fuente: Datos Abiertos JCyL
+            </a>
+          )}
+          <p className="evidence-limit">
+            Contexto de la provincia, no demanda de una ocupación concreta.
+          </p>
+        </div>
       </section>
       <section className="occupations-section">
         <h2>Salidas profesionales oficiales</h2>
@@ -271,11 +431,21 @@ export function TrainingResultsPage() {
         </p>
         {officialProfiles.length > 0 ? (
           <>
-            <ul>
-              {officialProfiles.map((profile) => (
+            <ul className="professional-output-list">
+              {officialProfiles.slice(0, 6).map((profile) => (
                 <li key={profile.profileId}>{profile.outputLabel}</li>
               ))}
             </ul>
+            {officialProfiles.length > 6 && (
+              <details className="more-outputs">
+                <summary>Ver {officialProfiles.length - 6} salidas más</summary>
+                <ul className="professional-output-list">
+                  {officialProfiles.slice(6).map((profile) => (
+                    <li key={profile.profileId}>{profile.outputLabel}</li>
+                  ))}
+                </ul>
+              </details>
+            )}
             <p>
               <a
                 href={officialProfiles[0]!.sourceUrl}
@@ -293,22 +463,17 @@ export function TrainingResultsPage() {
       {resolvedOccupations.length > 0 && (
         <section className="occupations-section">
           <h2>Grupos de ocupación revisados para buscar ofertas</h2>
-          <ul>
+          <ul className="reviewed-occupation-list">
             {resolvedOccupations.map((occupation) => (
               <li key={occupation.occupationId}>
-                <p>
+                <Link
+                  to={`/desde-ocupacion/${encodeURIComponent(occupation.occupationId)}`}
+                >
                   <strong>{occupation.preferredLabel}</strong>
-                </p>
-                {occupation.classificationCode !== "" && (
-                  <p>Código CNO-11: {occupation.classificationCode}</p>
-                )}
-                <p>
-                  <Link
-                    to={`/desde-ocupacion/${encodeURIComponent(occupation.occupationId)}`}
-                  >
-                    Ver perfil profesional
-                  </Link>
-                </p>
+                  {occupation.classificationCode !== "" && (
+                    <span>CNO-11 {occupation.classificationCode}</span>
+                  )}
+                </Link>
               </li>
             ))}
           </ul>
@@ -340,51 +505,60 @@ export function TrainingResultsPage() {
           </p>
         </div>
       ) : (
-        <div className="offer-list" aria-label="Ofertas relacionadas">
-          {orderedMatches.map((match) => {
-            const offer = state.offers.find(({ id }) => id === match.offerId);
-            if (offer === undefined) return null;
-            const evidenceState = deriveEvidenceState(match, session.answers);
-            const remoteOrHybrid = match.requirements.some(
-              (requirement) =>
-                requirement.category === "mobility_or_work_mode" &&
-                (requirement.normalizedValue === "remote" ||
-                  requirement.normalizedValue === "hybrid"),
-            );
-            const suitable =
-              selectedProvince === null
-                ? null
-                : remoteOrHybrid ||
-                  normalizedLocation(offer.province) ===
-                    normalizedLocation(selectedProvince);
-            const actions = deriveActions({
-              offer,
-              evidenceState,
-              requirements: match.requirements,
-              answers: session.answers,
-              selectedProvince,
-              isSelectedProvinceSuitable: suitable,
-            });
-            return (
-              <OfferEvidenceCard
-                key={match.offerId}
-                programs={state.programs}
-                offer={offer}
-                match={match}
-                evidenceState={evidenceState}
-                answers={session.answers}
-                actions={actions}
-                checklist={session.checklist}
-                onAnswer={session.answerRequirement}
-                onAddChecklist={session.addChecklistItem}
-                onRemoveChecklist={session.removeChecklistItem}
-                onExploreUnpublishedRequirement={
-                  applyUnpublishedRequirementFilter
-                }
-              />
-            );
-          })}
-        </div>
+        <section
+          className="offer-results"
+          aria-labelledby="offer-results-title"
+        >
+          <div className="section-heading">
+            <h2 id="offer-results-title">Ofertas relacionadas ahora</h2>
+            <span>Copia del {snapshotDate(state.manifest)}</span>
+          </div>
+          <div className="offer-list">
+            {orderedMatches.map((match) => {
+              const offer = state.offers.find(({ id }) => id === match.offerId);
+              if (offer === undefined) return null;
+              const evidenceState = deriveEvidenceState(match, session.answers);
+              const remoteOrHybrid = match.requirements.some(
+                (requirement) =>
+                  requirement.category === "mobility_or_work_mode" &&
+                  (requirement.normalizedValue === "remote" ||
+                    requirement.normalizedValue === "hybrid"),
+              );
+              const suitable =
+                selectedProvince === null
+                  ? null
+                  : remoteOrHybrid ||
+                    normalizedLocation(offer.province) ===
+                      normalizedLocation(selectedProvince);
+              const actions = deriveActions({
+                offer,
+                evidenceState,
+                requirements: match.requirements,
+                answers: session.answers,
+                selectedProvince,
+                isSelectedProvinceSuitable: suitable,
+              });
+              return (
+                <OfferEvidenceCard
+                  key={match.offerId}
+                  programs={state.programs}
+                  offer={offer}
+                  match={match}
+                  evidenceState={evidenceState}
+                  answers={session.answers}
+                  actions={actions}
+                  checklist={session.checklist}
+                  onAnswer={session.answerRequirement}
+                  onAddChecklist={session.addChecklistItem}
+                  onRemoveChecklist={session.removeChecklistItem}
+                  onExploreUnpublishedRequirement={
+                    applyUnpublishedRequirementFilter
+                  }
+                />
+              );
+            })}
+          </div>
+        </section>
       )}
     </section>
   );

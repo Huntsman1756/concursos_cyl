@@ -418,6 +418,7 @@ describe("TrainingResultsPage", () => {
     const card = await screen.findByRole("article", {
       name: "Programador web para servicios públicos",
     });
+    await user.click(within(card).getByText("Ver evidencia y requisitos"));
     const headings = Array.from(card.querySelectorAll("h3")).map(
       (heading) => heading.textContent,
     );
@@ -491,11 +492,11 @@ describe("TrainingResultsPage", () => {
     );
 
     const estudioLink = await screen.findByRole("link", {
-      name: /Acceder a la información formativa de Desarrollo de Aplicaciones Web/u,
+      name: "Ver centros y modalidades",
     });
     expect(estudioLink).toBeVisible();
     expect(estudioLink).toHaveAttribute("href", "/formacion/IFC03S");
-    const studyHeading = await screen.findByText("Dónde estudiar este ciclo");
+    const studyHeading = await screen.findByText("Dónde estudiar");
     expect(studyHeading).toBeVisible();
   });
 
@@ -508,7 +509,7 @@ describe("TrainingResultsPage", () => {
     );
 
     const estudioLink = await screen.findByRole("link", {
-      name: /Acceder a la información formativa de Desarrollo de Aplicaciones Web/u,
+      name: "Ver centros y modalidades",
     });
     expect(estudioLink).toHaveAttribute("href", "/formacion/IFC03S");
 
@@ -517,12 +518,11 @@ describe("TrainingResultsPage", () => {
     );
     expect(ocupacion).toBeVisible();
 
-    const enlaceCno = await screen.findByText("Código CNO-11: 2713");
+    const enlaceCno = await screen.findByText("CNO-11 2713");
     expect(enlaceCno).toBeVisible();
 
-    const perfilLink = await screen.findByRole("link", {
-      name: "Ver perfil profesional",
-    });
+    const perfilLink = ocupacion.closest("a");
+    expect(perfilLink).not.toBeNull();
     expect(perfilLink).toBeVisible();
     expect(perfilLink).toHaveAttribute(
       "href",
@@ -665,6 +665,13 @@ describe("TrainingResultsPage", () => {
       </MemoryRouter>,
     );
 
+    const firstOffer = await screen.findByRole("article", {
+      name: "Programador web con experiencia",
+    });
+    await user.click(
+      within(firstOffer).getByText("Ver evidencia y requisitos"),
+    );
+
     await user.click(
       await screen.findByRole("radio", {
         name: `No lo tengo: ${sourceQuote}`,
@@ -688,6 +695,11 @@ describe("TrainingResultsPage", () => {
     expect(
       screen.getByRole("article", { name: "Programador web junior" }),
     ).toBeVisible();
+    await user.click(
+      within(
+        screen.getByRole("article", { name: "Programador web junior" }),
+      ).getByText("Ver evidencia y requisitos"),
+    );
     expect(screen.getByText("Requisito no publicado")).toBeVisible();
     expect(
       screen.getByText("Requisito no publicado").closest("div"),

@@ -104,14 +104,48 @@ describe("ActionPanel integration", () => {
 
     expect(
       screen.getByRole("link", {
-        name: "Desarrollo de Aplicaciones Web — Grado superior · IFC03S",
+        name: "Desarrollo de Aplicaciones Web, Grado superior, IFC03S",
       }),
     ).toHaveAttribute("href", "/formacion/IFC03S");
     expect(
       screen.getByRole("link", {
-        name: "Desarrollo de Aplicaciones Web (distancia) — Grado superior · IFC03SD",
+        name: "Desarrollo de Aplicaciones Web (distancia), Grado superior, IFC03SD",
       }),
     ).toHaveAttribute("href", "/formacion/IFC03SD");
+  });
+
+  it("shows one explicit external action when verification and source share a URL", () => {
+    const jobOffer = offer("offer:shared-url");
+    const actions = deriveActions({
+      offer: jobOffer,
+      evidenceState: "explicit_fit",
+      requirements: [],
+      answers: {},
+    });
+
+    render(
+      <MemoryRouter>
+        <ActionPanel
+          programs={programs}
+          actions={actions}
+          checklist={[]}
+          onAddChecklist={() => undefined}
+          onRemoveChecklist={() => undefined}
+          onExploreUnpublishedRequirement={() => undefined}
+        />
+      </MemoryRouter>,
+    );
+
+    expect(
+      screen.getByRole("link", {
+        name: /Comprobar requisitos en la oferta.*abre en una pestaña nueva/,
+      }),
+    ).toHaveAttribute("href", jobOffer.originalUrl);
+    expect(
+      screen.queryByRole("link", {
+        name: /Abrir oferta original.*abre en una pestaña nueva/,
+      }),
+    ).not.toBeInTheDocument();
   });
 
   it("does not silently omit an issued training route without official metadata", () => {

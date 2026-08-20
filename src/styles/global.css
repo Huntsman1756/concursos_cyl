@@ -455,7 +455,7 @@ a:focus-visible {
 }
 
 .training-page {
-  max-width: 54rem;
+  max-width: 72rem;
   margin-inline: auto;
 }
 
@@ -481,6 +481,190 @@ a:focus-visible {
   margin: var(--space-4) 0 0;
   color: var(--color-action-text);
   font-weight: 750;
+}
+
+.result-summary {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  margin: 0 0 var(--space-8);
+  padding-block: var(--space-5);
+  border-block: 1px solid var(--color-border);
+}
+
+.result-summary div {
+  padding-inline: var(--space-5);
+}
+
+.result-summary div + div {
+  border-left: 1px solid var(--color-border);
+}
+
+.result-summary dt {
+  color: var(--color-text-muted);
+  font-size: 0.875rem;
+}
+
+.result-summary dd {
+  margin: var(--space-1) 0 0;
+  color: var(--color-primary);
+  font-size: clamp(1.6rem, 4vw, 2.25rem);
+  font-weight: 800;
+  line-height: 1;
+}
+
+.decision-evidence {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(18rem, 0.8fr);
+  gap: var(--space-5);
+  margin-bottom: var(--space-9);
+}
+
+.study-section,
+.regional-context {
+  padding: var(--space-6);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-surface-subtle);
+}
+
+.section-heading {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-4);
+  margin-bottom: var(--space-5);
+}
+
+.section-heading h2 {
+  margin: 0;
+  font-size: 1.35rem;
+}
+
+.section-heading span {
+  color: var(--color-text-muted);
+  font-size: 0.875rem;
+  white-space: nowrap;
+}
+
+.study-center-preview,
+.contract-context-list,
+.professional-output-list,
+.reviewed-occupation-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.study-center-preview {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-4);
+}
+
+.study-center-preview li {
+  display: grid;
+  gap: var(--space-1);
+}
+
+.study-center-preview span,
+.evidence-limit {
+  color: var(--color-text-muted);
+  font-size: 0.875rem;
+}
+
+.evidence-link {
+  display: inline-block;
+  margin-top: var(--space-5);
+  color: var(--color-action-text);
+  font-weight: 750;
+}
+
+.contract-context-list {
+  display: grid;
+  gap: var(--space-3);
+}
+
+.contract-context-list li {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: baseline;
+  gap: 0 var(--space-3);
+}
+
+.contract-context-list strong {
+  color: var(--color-primary);
+  font-size: 1.15rem;
+}
+
+.contract-context-list small {
+  grid-column: 1 / -1;
+  color: var(--color-text-muted);
+}
+
+.evidence-limit {
+  margin: var(--space-3) 0 0;
+  line-height: 1.45;
+}
+
+.occupations-section {
+  margin-bottom: var(--space-9);
+}
+
+.occupations-section > p {
+  max-width: 66ch;
+}
+
+.professional-output-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-2) var(--space-8);
+  margin-block: var(--space-5);
+}
+
+.professional-output-list li {
+  position: relative;
+  padding-left: var(--space-4);
+}
+
+.professional-output-list li::before {
+  position: absolute;
+  left: 0;
+  color: var(--color-primary);
+  content: "+";
+}
+
+.more-outputs summary,
+.offer-card__evidence > summary {
+  width: fit-content;
+  color: var(--color-action-text);
+  font-weight: 750;
+  cursor: pointer;
+}
+
+.reviewed-occupation-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-3);
+}
+
+.reviewed-occupation-list a {
+  display: grid;
+  gap: var(--space-1);
+  height: 100%;
+  padding: var(--space-4);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  color: var(--color-text);
+  text-decoration: none;
+}
+
+.reviewed-occupation-list a:hover {
+  border-color: var(--color-primary);
+}
+
+.reviewed-occupation-list span {
+  color: var(--color-text-muted);
+  font-size: 0.875rem;
 }
 
 .training-catalog-note {
@@ -682,7 +866,9 @@ summary:focus-visible {
 
 .offer-list {
   display: grid;
-  gap: var(--space-8);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-items: start;
+  gap: var(--space-5);
 }
 
 .offer-card {
@@ -693,9 +879,10 @@ summary:focus-visible {
 }
 
 .offer-card__header {
-  padding: clamp(var(--space-6), 4vw, var(--space-8));
-  color: var(--color-surface);
-  background: var(--color-primary);
+  padding: var(--space-5) var(--space-6);
+  border-top: 0.25rem solid var(--color-primary);
+  color: var(--color-text);
+  background: var(--color-surface-subtle);
 }
 
 .offer-card__header p {
@@ -705,8 +892,13 @@ summary:focus-visible {
 
 .offer-card__header h2 {
   margin: var(--space-2) 0;
-  font-size: clamp(1.5rem, 4vw, 2rem);
+  color: var(--color-primary);
+  font-size: clamp(1.3rem, 3vw, 1.65rem);
   line-height: 1.2;
+}
+
+.offer-card__evidence > summary {
+  margin: var(--space-4) var(--space-6);
 }
 
 .evidence-step {
@@ -1870,6 +2062,45 @@ summary:focus-visible {
 
   .page-content {
     padding-top: 1.4rem;
+  }
+
+  .result-summary {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .result-summary div {
+    padding: var(--space-3);
+  }
+
+  .result-summary div + div {
+    border-left: 0;
+  }
+
+  .result-summary div:nth-child(even) {
+    border-left: 1px solid var(--color-border);
+  }
+
+  .result-summary div:nth-child(n + 3) {
+    border-top: 1px solid var(--color-border);
+  }
+
+  .decision-evidence,
+  .offer-list,
+  .study-center-preview,
+  .professional-output-list,
+  .reviewed-occupation-list {
+    grid-template-columns: 1fr;
+  }
+
+  .offer-results > .section-heading {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: var(--space-1);
+  }
+
+  .study-section,
+  .regional-context {
+    padding: var(--space-5);
   }
 
   .home-hero__art {

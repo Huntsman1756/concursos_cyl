@@ -31,10 +31,20 @@ export function ActionPanel({
   onRemoveChecklist,
   onExploreUnpublishedRequirement,
 }: ActionPanelProps) {
+  const visibleActions = actions.filter(
+    (action) =>
+      action.actionType !== "open_original_offer" ||
+      !actions.some(
+        (candidate) =>
+          candidate.actionType === "verify_offer_requirements" &&
+          candidate.href === action.href,
+      ),
+  );
+
   return (
     <div className="action-panel">
       <ul className="action-list">
-        {actions.map((action) => {
+        {visibleActions.map((action) => {
           const key = `${action.actionType}-${action.offerId}-${action.label}`;
           if (
             action.actionType === "open_original_offer" ||
@@ -77,8 +87,8 @@ export function ActionPanel({
                           className="action-link"
                           to={`/formacion/${encodeURIComponent(routeProgramKey)}`}
                         >
-                          {program.programTitle} —{" "}
-                          {trainingLevelLabel(program.level)} ·{" "}
+                          {program.programTitle},{" "}
+                          {trainingLevelLabel(program.level)},{" "}
                           {program.programKey}
                         </Link>
                       </li>

@@ -73,69 +73,72 @@ export function OfferEvidenceCard(props: OfferEvidenceCardProps) {
         <h2 id={headingId}>{props.offer.title}</h2>
         <p>{props.offer.sourceName}</p>
       </header>
-      <div className="evidence-step">
-        <h3>Por qué aparece</h3>
-        <p>{relationshipCopy(props.match)}</p>
-        <EvidenceDisclosure
-          quote={link.sourceQuote}
-          sourceUrl={link.sourceUrl}
-          reviewedAt={link.reviewedAt}
-          mappingVersion={link.mappingVersion}
-        />
-      </div>
-      <div className="evidence-step">
-        <h3>Qué publica la vacante</h3>
-        {props.match.requirements.length === 0 ? (
-          <div className="requirement-state requirement-state--unpublished">
-            <strong>Requisito no publicado</strong>
-            <p>
-              No hemos podido extraer requisitos concretos del texto publicado.
-              Compruébalos en la oferta original.
-            </p>
-          </div>
-        ) : (
-          <ul className="requirement-list">
-            {props.match.requirements.map((requirement) => (
-              <li className="requirement-row" key={requirement.id}>
-                <p className="requirement-row__label">
-                  {publishedRequirementLabel(requirement)}
-                </p>
-                <EvidenceDisclosure
-                  quote={requirement.sourceQuote}
-                  sourceUrl={props.offer.sourceSnapshot.sourceUrl}
-                  sourceLabel="Abrir fuente de la vacante"
-                  sourceDate={props.offer.sourceSnapshot.sourceUpdatedAt}
-                  parserRule={requirement.parserRule}
-                  parserVersion={requirement.parserVersion}
-                />
-              </li>
-            ))}
-          </ul>
-        )}
-      </div>
-      <div className="evidence-step">
-        <h3>Tu comprobación</h3>
-        <div
-          className={`evidence-state${props.evidenceState === "declared_explicit_gap" ? " evidence-state--gap" : ""}`}
-        >
-          {props.evidenceState === "declared_explicit_gap" && (
-            <strong>Requisito no cumplido</strong>
-          )}
-          <p aria-live="polite">{evidenceCopy(props.evidenceState)}</p>
+      <details className="offer-card__evidence">
+        <summary>Ver evidencia y requisitos</summary>
+        <div className="evidence-step">
+          <h3>Por qué aparece</h3>
+          <p>{relationshipCopy(props.match)}</p>
+          <EvidenceDisclosure
+            quote={link.sourceQuote}
+            sourceUrl={link.sourceUrl}
+            reviewedAt={link.reviewedAt}
+            mappingVersion={link.mappingVersion}
+          />
         </div>
-        {props.match.requirements.length > 0 && (
-          <ul className="requirement-list">
-            {props.match.requirements.map((requirement) => (
-              <RequirementRow
-                key={requirement.id}
-                requirement={requirement}
-                answer={props.answers[requirement.id]}
-                onAnswer={props.onAnswer}
-              />
-            ))}
-          </ul>
-        )}
-      </div>
+        <div className="evidence-step">
+          <h3>Qué publica la vacante</h3>
+          {props.match.requirements.length === 0 ? (
+            <div className="requirement-state requirement-state--unpublished">
+              <strong>Requisito no publicado</strong>
+              <p>
+                No hemos podido extraer requisitos concretos del texto
+                publicado. Compruébalos en la oferta original.
+              </p>
+            </div>
+          ) : (
+            <ul className="requirement-list">
+              {props.match.requirements.map((requirement) => (
+                <li className="requirement-row" key={requirement.id}>
+                  <p className="requirement-row__label">
+                    {publishedRequirementLabel(requirement)}
+                  </p>
+                  <EvidenceDisclosure
+                    quote={requirement.sourceQuote}
+                    sourceUrl={props.offer.sourceSnapshot.sourceUrl}
+                    sourceLabel="Abrir fuente de la vacante"
+                    sourceDate={props.offer.sourceSnapshot.sourceUpdatedAt}
+                    parserRule={requirement.parserRule}
+                    parserVersion={requirement.parserVersion}
+                  />
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
+        <div className="evidence-step">
+          <h3>Tu comprobación</h3>
+          <div
+            className={`evidence-state${props.evidenceState === "declared_explicit_gap" ? " evidence-state--gap" : ""}`}
+          >
+            {props.evidenceState === "declared_explicit_gap" && (
+              <strong>Requisito no cumplido</strong>
+            )}
+            <p aria-live="polite">{evidenceCopy(props.evidenceState)}</p>
+          </div>
+          {props.match.requirements.length > 0 && (
+            <ul className="requirement-list">
+              {props.match.requirements.map((requirement) => (
+                <RequirementRow
+                  key={requirement.id}
+                  requirement={requirement}
+                  answer={props.answers[requirement.id]}
+                  onAnswer={props.onAnswer}
+                />
+              ))}
+            </ul>
+          )}
+        </div>
+      </details>
       <div className="evidence-step">
         <h3>Siguiente acción</h3>
         <ActionPanel

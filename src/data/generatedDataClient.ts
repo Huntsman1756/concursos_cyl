@@ -49,6 +49,12 @@ import {
   type EcylCourse,
   type ProfessionalCertificate,
 } from "../../data/schemas/ecylResources";
+import {
+  MunicipalitiesResourceSchema,
+  ProvincialContractsResourceSchema,
+  type MunicipalityContext,
+  type ProvincialContract,
+} from "../../data/schemas/regionalContext";
 
 export type GeneratedDataErrorCode = "network" | "schema" | "missing";
 
@@ -194,6 +200,40 @@ export async function loadProfessionalCertificates(
         snapshot.resourcePath,
         ProfessionalCertificatesResourceSchema,
       );
+}
+
+export interface LoadedRegionalContext {
+  provincialContracts: ProvincialContract[];
+  municipalities: MunicipalityContext[];
+}
+
+/** Loads optional JCyL territorial context; historical snapshots resolve empty. */
+export async function loadRegionalContext(
+  manifest: LoadableGeneratedManifest,
+): Promise<LoadedRegionalContext> {
+  const snapshots =
+    manifest.resourceSnapshots as typeof manifest.resourceSnapshots &
+      Partial<
+        Record<
+          "provincialContracts" | "municipalities",
+          { resourcePath: string }
+        >
+      >;
+  const [provincialContracts, municipalities] = await Promise.all([
+    snapshots.provincialContracts === undefined
+      ? Promise.resolve([])
+      : loadGeneratedResource(
+          snapshots.provincialContracts.resourcePath,
+          ProvincialContractsResourceSchema,
+        ),
+    snapshots.municipalities === undefined
+      ? Promise.resolve([])
+      : loadGeneratedResource(
+          snapshots.municipalities.resourcePath,
+          MunicipalitiesResourceSchema,
+        ),
+  ]);
+  return { provincialContracts, municipalities };
 }
 
 /**
