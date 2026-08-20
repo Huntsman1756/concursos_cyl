@@ -35,7 +35,6 @@ import { ReliableActionSchema } from "../../domain/actionEngine";
 import { useDecisionSession } from "../../domain/session";
 import { trainingLevelLabel } from "../../domain/trainingPresentation";
 import { OfferEvidenceCard } from "./OfferEvidenceCard";
-import { DecisionEvidencePath } from "./DecisionEvidencePath";
 import {
   TerritorialDistribution,
   type TerritorialCenterPoint,
@@ -427,14 +426,6 @@ export function TrainingResultsPage() {
         </p>
         {selectedProvince !== null && <p>Zona elegida: {selectedProvince}</p>}
       </header>
-      <DecisionEvidencePath
-        programTitle={state.program.programTitle}
-        professionalOutputCount={officialProfiles.length}
-        reviewedOccupationCount={resolvedOccupations.length}
-        currentOfferCount={orderedMatches.length}
-        studyCenterCount={studyCenters.length}
-        offerEvidenceDate={offersEvidenceDate}
-      />
       <section
         className="decision-basis"
         aria-labelledby="decision-basis-title"
@@ -538,6 +529,9 @@ export function TrainingResultsPage() {
             </dd>
           </div>
         </dl>
+        <p className="decision-basis__scope">
+          La copia de ofertas no representa todo el mercado laboral.
+        </p>
       </section>
       {stale && (
         <p className="stale-warning" role="status">
