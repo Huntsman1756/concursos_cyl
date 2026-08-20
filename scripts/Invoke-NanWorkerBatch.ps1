@@ -3,7 +3,7 @@ param(
     [Parameter(Mandatory)][string]$BatchJsonPath,
     [Parameter(Mandatory)][string]$StateDirectory,
     [string]$WorktreeParent = '',
-    [ValidateRange(1,5)][int]$MaxConcurrency = 5,
+    [ValidateRange(1,5)][int]$MaxConcurrency = 1,
     [switch]$TestMode
 )
 

@@ -239,6 +239,40 @@ function Compute-StringSha256 {
     return -join ($hashBytes | ForEach-Object { $_.ToString('x2') })
 }
 
+function Get-ValidationMetadata {
+    param([string]$CommandText)
+    $normalized = $CommandText.Trim().ToLowerInvariant()
+    if ($normalized -match '(^|[^a-z])(prettier|format|format:check|fmt)([^a-z]|$)') {
+        return @{validationId='format';categoryCode='shift_left_static_quality'}
+    }
+    if ($normalized -match '(^|[^a-z])(eslint|lint|stylelint|tslint)([^a-z]|$)') {
+        return @{validationId='lint';categoryCode='shift_left_static_quality'}
+    }
+    return @{validationId='deterministic-validation';categoryCode='deterministic_validation'}
+}
+
+function New-ValidationDiagnostic {
+    param(
+        [int]$CommandIndex,
+        [int]$ExitCode,
+        [string]$CommandText,
+        [string]$OutputTail,
+        [bool]$Truncated
+    )
+    $metadata = Get-ValidationMetadata -CommandText $CommandText
+    $signatureMaterial = "schema=1|category=$($metadata.categoryCode)|validation=$($metadata.validationId)"
+    return [ordered]@{
+        commandIndex=$CommandIndex
+        exitCode=$ExitCode
+        validationId=$metadata.validationId
+        categoryCode=$metadata.categoryCode
+        commandSha256=(Compute-StringSha256 -InputString $CommandText)
+        outputTail=$OutputTail
+        truncated=$Truncated
+        normalizedFailureSignature=(Compute-StringSha256 -InputString $signatureMaterial)
+    }
+}
+
 function Get-NanCredentialRecord {
     $candidates = @(
         (Join-Path $env:USERPROFILE '.local\share\opencode\auth.json'),
@@ -671,7 +705,18 @@ $totalAttempts = 0
                 } else {
                     $attempt.validationExitCode = [int]$rawVe
                 }
-                if ($mp.validationDiagnostics) { $attempt.validationDiagnostics = @($mp.validationDiagnostics) }
+                if ($mp.validationDiagnostics) {
+                    $attempt.validationDiagnostics = @($mp.validationDiagnostics | ForEach-Object {
+                        $diagnosticIndex = if ($_.commandIndex) { [int]$_.commandIndex } else { 1 }
+                        $diagnosticCommand = if ($diagnosticIndex -le $ValidationCommand.Count) { [string]$ValidationCommand[$diagnosticIndex - 1] } else { 'unknown-validation' }
+                        New-ValidationDiagnostic `
+                            -CommandIndex $diagnosticIndex `
+                            -ExitCode $(if ($_.exitCode -ne $null) { [int]$_.exitCode } else { 1 }) `
+                            -CommandText $diagnosticCommand `
+                            -OutputTail $(if ($_.outputTail) { [string]$_.outputTail } else { '' }) `
+                            -Truncated $(if ($_.truncated -ne $null) { [bool]$_.truncated } else { $false })
+                    })
+                }
             }
             Write-Host ("Attempt " + $totalAttempts + ": ${candidateAgent} -> ${candidateModel} (Mock) exitCode=" + $attempt.exitCode) -ForegroundColor Cyan
         } else {
@@ -780,10 +825,12 @@ $totalAttempts = 0
                                 $normalizedOutput = ($validationOutput -replace "`e\[[0-9;]*[A-Za-z]", '').Trim()
                                 $truncated = $normalizedOutput.Length -gt 4000
                                 if ($truncated) { $normalizedOutput = $normalizedOutput.Substring($normalizedOutput.Length - 4000) }
-                                $attempt.validationDiagnostics += [ordered]@{
-                                    commandIndex=$commandIndex;exitCode=$commandExit
-                                    outputTail=$normalizedOutput;truncated=$truncated
-                                }
+                                $attempt.validationDiagnostics += New-ValidationDiagnostic `
+                                    -CommandIndex $commandIndex `
+                                    -ExitCode $commandExit `
+                                    -CommandText $cmd `
+                                    -OutputTail $normalizedOutput `
+                                    -Truncated $truncated
                             }
                         }
                     }
