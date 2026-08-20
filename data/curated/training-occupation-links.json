@@ -138,5 +138,75 @@
     "sourceQuote": "Auxiliar de ayuda a domicilio.",
     "reviewedAt": "2026-08-08",
     "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "ELE01M",
+    "occupationId": "occupation:cno11:7510",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.boe.es/eli/es/rd/2008/02/08/177",
+    "sourceQuote": "Electricista de construcción.",
+    "reviewedAt": "2026-08-20",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "FME02B",
+    "occupationId": "occupation:cno11:9700",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/fabricacion-mecanica/fabricacion-elementos-metalicos.html",
+    "sourceQuote": "Peones y auxiliares de industrias metalúrgicas, de fabricación de productos metálicos y manufactureras.",
+    "reviewedAt": "2026-08-20",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "IFC01MD",
+    "occupationId": "occupation:cno11:3812",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/informatica-comunicaciones/sistemas-microniformaticos-redes.html",
+    "sourceQuote": "Técnica / técnico de soporte informático.",
+    "reviewedAt": "2026-08-20",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "SAN02M",
+    "occupationId": "occupation:cno11:5621",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/sanidad/farmacia-parafarmacia.html",
+    "sourceQuote": "Auxiliar de Farmacia.",
+    "reviewedAt": "2026-08-20",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "SAN08S",
+    "occupationId": "occupation:cno11:2640",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/sanidad/laboratorio-clinico-biomedico.html",
+    "sourceQuote": "Delegada / delegado comercial de productos hospitalarios y farmacéuticos.",
+    "reviewedAt": "2026-08-20",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "SAN08SD",
+    "occupationId": "occupation:cno11:2640",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/sanidad/laboratorio-clinico-biomedico.html",
+    "sourceQuote": "Delegada / delegado comercial de productos hospitalarios y farmacéuticos.",
+    "reviewedAt": "2026-08-20",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "TMV01M",
+    "occupationId": "occupation:cno11:7232",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+    "sourceQuote": "7232 Pintores en las industrias manufactureras",
+    "reviewedAt": "2026-08-20",
+    "mappingVersion": "1.0.0"
   }
 ]
