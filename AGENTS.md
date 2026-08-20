@@ -58,10 +58,11 @@ autorizar cada fallback compatible en el contrato.
 
 ## Pasos por agente
 
-El límite `40/40/50` se refiere exclusivamente a los pasos máximos permitidos
-por agente en un contrato NAN: `nan-code` (40 pasos), `nan-reasoning-code`
+El límite `8/40/50` se refiere exclusivamente a los pasos máximos permitidos
+por agente en un contrato NAN: `nan-code` (8 pasos), `nan-reasoning-code`
 (40 pasos) y `nan-long-context-code` (50 pasos). Son conteos de iteraciones
 de agente, no porcentajes, ni ratios, ni repartos de esfuerzo.
+El proxy auditable del repositorio desactiva el razonamiento extendido de Qwen para contratos mecanicos; DeepSeek mantiene razonamiento explicito.
 
 ## Política NAN-first obligatoria
 

@@ -95,16 +95,19 @@ agentTable:
     agent: nan-code
     taskTypes:
       - code
+    maxSteps: 8
     notes: "Primary mechanical code executor.  Fastest for bounded edits."
   - model: deepseek-v4-flash
     agent: nan-reasoning-code
     taskTypes:
       - code
+    maxSteps: 40
     notes: "Reasoning contracts that exceed Qwen capability."
   - model: mimo-v2.5
     agent: nan-long-context-code
     taskTypes:
       - code
+    maxSteps: 50
     notes: "Long-context and multi-file code contracts. Bulletin fallback retains nan-bulletin permissions."
   - model: gemma4
     agent: nan-bulletin
@@ -130,12 +133,12 @@ bindings:
     permissions: bounded-repository-write
     maxSteps: 50
     retryMax: 1
-    defaultBudgetProfile: extended
+    defaultBudgetProfile: small
     budgetProfiles:
-      small: 500000
-      batch: 1250000
-      research: 1250000
-      extended: 1500000
+      small: 120000
+      batch: 350000
+      research: 700000
+      extended: 1200000
     maxObservedTokensOverrideRange:
       min: 1000
       max: 2000000

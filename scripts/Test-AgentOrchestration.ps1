@@ -926,7 +926,7 @@ try {
         Assert-True (Test-Path -LiteralPath $agentContextPath) '21c: nan-long-context-code.md exists'
 
         $codeSteps = [int](Select-String -Path $agentCodePath -Pattern '^\s*steps:\s*\d+' | ForEach-Object { ($_.Line -split '\s+')[1] })
-        Assert-Equal $codeSteps 20 '21d: nan-code.md steps equals 20'
+        Assert-Equal $codeSteps 8 '21d: nan-code.md steps equals 8'
 
         $reasoningSteps = [int](Select-String -Path $agentReasoningPath -Pattern '^\s*steps:\s*\d+' | ForEach-Object { ($_.Line -split '\s+')[1] })
         Assert-Equal $reasoningSteps 40 '21e: nan-reasoning-code.md steps equals 40'
