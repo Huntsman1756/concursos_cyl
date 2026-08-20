@@ -406,13 +406,13 @@ test("reviewed programs and the single search module keep stable responsive geom
   }
 
   if (testInfo.project.name === "chromium-desktop") {
-    expect(coveragePanel.y).toBeLessThanOrEqual(searchPanel.y);
+    expect(searchPanel.y).toBeLessThanOrEqual(coveragePanel.y);
     expect(Math.abs(coveragePanel.x - searchPanel.x)).toBeLessThanOrEqual(1);
     expect(
       Math.abs(coveragePanel.width - searchPanel.width),
     ).toBeLessThanOrEqual(1);
   } else {
-    expect(coveragePanel.y).toBeLessThanOrEqual(searchPanel.y);
+    expect(searchPanel.y).toBeLessThanOrEqual(coveragePanel.y);
     expect(searchPanel.width).toBeGreaterThan(280);
   }
 
