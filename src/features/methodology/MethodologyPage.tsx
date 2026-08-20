@@ -46,6 +46,56 @@ type TrainingCatalogState =
   | { status: "unavailable" }
   | { status: "ready"; snapshot: TrainingCatalogSnapshot };
 
+type ManifestState =
+  | { status: "loading" }
+  | { status: "unavailable" }
+  | { status: "ready"; manifest: LoadableGeneratedManifest };
+
+type SnapshotMetadata = {
+  recordCount: number;
+  snapshotFetchedAt: string;
+  sourceUpdatedAt: string | null;
+};
+
+const JCYL_DATASETS = [
+  {
+    key: "trainingOfferings",
+    title: "Oferta de estudios de FP",
+    use: "Selector de ciclos, centros y modalidades",
+    sourceUrl: SOURCE_CONFIG.training.recordsUrl,
+  },
+  {
+    key: "jobOffers",
+    title: "Ofertas de empleo",
+    use: "Ofertas relacionadas y requisitos publicados",
+    sourceUrl: SOURCE_CONFIG.offers.recordsUrl,
+  },
+  {
+    key: "ecylCourses",
+    title: "Formación del ECYL",
+    use: "Alternativas de formación complementaria",
+    sourceUrl: SOURCE_CONFIG.ecylCourses.recordsUrl,
+  },
+  {
+    key: "professionalCertificates",
+    title: "Certificados de profesionalidad",
+    use: "Rutas formativas complementarias",
+    sourceUrl: SOURCE_CONFIG.professionalCertificates.recordsUrl,
+  },
+  {
+    key: "provincialContracts",
+    title: "Contratos por provincia",
+    use: "Contexto laboral territorial en resultados",
+    sourceUrl: SOURCE_CONFIG.regionalContracts.recordsUrl,
+  },
+  {
+    key: "municipalities",
+    title: "Registro de municipios",
+    use: "Población del municipio donde se estudia",
+    sourceUrl: SOURCE_CONFIG.municipalities.recordsUrl,
+  },
+] as const;
+
 function incomeSnapshotFrom(
   manifest: LoadableGeneratedManifest,
 ): IncomeSnapshot | null {
@@ -105,6 +155,78 @@ function formattedDate(timestamp: string): string {
 
 function countLabel(count: number, singular: string, plural: string): string {
   return `${count} ${count === 1 ? singular : plural}`;
+}
+
+function RegionalDatasetInventory({ state }: { state: ManifestState }) {
+  return (
+    <section
+      className="regional-dataset-inventory"
+      aria-labelledby="regional-datasets-heading"
+    >
+      <div className="regional-dataset-inventory__heading">
+        <div>
+          <p className="methodology-page__eyebrow">Datos regionales en uso</p>
+          <h2 id="regional-datasets-heading">6 datasets de la Junta</h2>
+        </div>
+        <p>Cada fuente tiene un uso visible en el producto.</p>
+      </div>
+      <div className="regional-dataset-inventory__table-wrap">
+        <table className="regional-dataset-inventory__table">
+          <caption className="sr-only">
+            Dataset, uso en SALIDA CyL, registros, fecha usada y licencia
+          </caption>
+          <thead>
+            <tr>
+              <th scope="col">Dataset</th>
+              <th scope="col">Dónde se usa</th>
+              <th scope="col">Registros</th>
+              <th scope="col">Fecha usada</th>
+              <th scope="col">Licencia</th>
+            </tr>
+          </thead>
+          <tbody>
+            {JCYL_DATASETS.map((dataset) => {
+              const snapshots =
+                state.status === "ready"
+                  ? (state.manifest
+                      .resourceSnapshots as typeof state.manifest.resourceSnapshots &
+                      Record<string, SnapshotMetadata | undefined>)
+                  : null;
+              const snapshot = snapshots?.[dataset.key];
+              const date = snapshot
+                ? formattedDate(
+                    snapshot.sourceUpdatedAt ?? snapshot.snapshotFetchedAt,
+                  )
+                : null;
+              return (
+                <tr key={dataset.key}>
+                  <th scope="row" data-label="Dataset">
+                    <a href={dataset.sourceUrl}>{dataset.title}</a>
+                  </th>
+                  <td data-label="Dónde se usa">{dataset.use}</td>
+                  <td data-label="Registros">
+                    {snapshot?.recordCount.toLocaleString("es-ES") ?? "—"}
+                  </td>
+                  <td data-label="Fecha usada">
+                    {state.status === "loading"
+                      ? "Comprobando…"
+                      : date
+                        ? `${snapshot?.sourceUpdatedAt ? "Fuente" : "Copia"}: ${date}`
+                        : "No disponible"}
+                  </td>
+                  <td data-label="Licencia">
+                    <a href="https://creativecommons.org/licenses/by/4.0/deed.es">
+                      CC BY 4.0 ES
+                    </a>
+                  </td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </div>
+    </section>
+  );
 }
 
 function Provenance({ state }: { state: EvidenceState }) {
@@ -184,12 +306,16 @@ export function MethodologyPage() {
   const [trainingCatalog, setTrainingCatalog] = useState<TrainingCatalogState>({
     status: "loading",
   });
+  const [manifestState, setManifestState] = useState<ManifestState>({
+    status: "loading",
+  });
 
   useEffect(() => {
     let active = true;
     void loadManifest()
       .then((manifest) => {
         if (!active) return;
+        setManifestState({ status: "ready", manifest });
         const snapshot = incomeSnapshotFrom(manifest);
         setTrainingCatalog({
           status: "ready",
@@ -209,6 +335,7 @@ export function MethodologyPage() {
         if (active) {
           setEvidence({ status: "unavailable" });
           setTrainingCatalog({ status: "unavailable" });
+          setManifestState({ status: "unavailable" });
         }
       });
     return () => {
@@ -227,6 +354,8 @@ export function MethodologyPage() {
           permite concluir.
         </p>
       </header>
+
+      <RegionalDatasetInventory state={manifestState} />
 
       <div className="source-method-grid">
         <SourceMethodCard

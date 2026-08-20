@@ -9,6 +9,14 @@ test("methodology exposes official source, download, terms, and normalized evide
   await expect(
     page.getByRole("heading", { level: 1, name: "Metodología y fuentes" }),
   ).toHaveCount(1);
+  const regionalInventory = page.getByRole("region", {
+    name: "6 datasets de la Junta",
+  });
+  await expect(regionalInventory).toBeVisible();
+  await expect(regionalInventory.getByRole("row")).toHaveCount(7);
+  await expect(
+    regionalInventory.getByRole("link", { name: "Contratos por provincia" }),
+  ).toBeVisible();
   for (const disclosure of await page
     .getByText("Ver actualización, identificadores y descargas")
     .all()) {

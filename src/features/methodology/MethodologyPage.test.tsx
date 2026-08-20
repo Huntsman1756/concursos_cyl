@@ -10,6 +10,7 @@ import { MemoryRouter } from "react-router-dom";
 import { afterEach, describe, expect, it, vi } from "vitest";
 
 import { EDUCABASE_INCOME_SOURCES } from "../../../scripts/data/educabaseIncomeSources";
+import { SOURCE_CONFIG } from "../../../scripts/data/sourceConfig";
 import { currentManifestFixture } from "../../../tests/fixtures/generatedManifest";
 import { MethodologyPage } from "./MethodologyPage";
 
@@ -150,6 +151,21 @@ describe("MethodologyPage", () => {
     const methodology = screen.getByRole("region", {
       name: "Metodología y fuentes",
     });
+    const inventory = screen.getByRole("region", {
+      name: "6 datasets de la Junta",
+    });
+    await waitFor(() =>
+      expect(
+        within(inventory).getByRole("row", { name: /Ofertas de empleo/ }),
+      ).toHaveTextContent(/1/),
+    );
+    expect(within(inventory).getAllByText("CC BY 4.0 ES")).toHaveLength(6);
+    expect(
+      within(inventory).getByRole("link", { name: "Contratos por provincia" }),
+    ).toHaveAttribute("href", SOURCE_CONFIG.regionalContracts.recordsUrl);
+    expect(inventory).toHaveTextContent(
+      /Contexto laboral territorial en resultados/i,
+    );
     expect(methodology).toHaveTextContent(
       /cruce administrativo.*registros educativos.*Seguridad Social/i,
     );
@@ -193,7 +209,6 @@ describe("MethodologyPage", () => {
       /revisa cada posible colisión.*título que combina varios roles/i,
     );
 
-    expect(methodology).not.toHaveTextContent(/\bCC BY\b/i);
     expect(methodology).not.toHaveTextContent(/respaldo del Ministerio/i);
     expect(methodology).not.toHaveTextContent(
       /tasa de (?:empleo|afiliación)|indicador de (?:empleo|afiliación)/i,

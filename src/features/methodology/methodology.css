@@ -26,6 +26,71 @@
   font-size: 1.0625rem;
 }
 
+.regional-dataset-inventory {
+  overflow: hidden;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+}
+
+.regional-dataset-inventory__heading {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: var(--space-6);
+  padding: var(--space-6);
+  border-bottom: 1px solid var(--color-border);
+  background: var(--color-surface-subtle);
+}
+
+.regional-dataset-inventory__heading h2,
+.regional-dataset-inventory__heading p {
+  margin: 0;
+}
+
+.regional-dataset-inventory__heading h2 {
+  font-size: 1.75rem;
+}
+
+.regional-dataset-inventory__heading > p {
+  color: var(--color-text-muted);
+}
+
+.regional-dataset-inventory__table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9375rem;
+}
+
+.regional-dataset-inventory__table th,
+.regional-dataset-inventory__table td {
+  padding: var(--space-4) var(--space-5);
+  border-bottom: 1px solid var(--color-border);
+  text-align: left;
+  vertical-align: top;
+}
+
+.regional-dataset-inventory__table thead th {
+  color: var(--color-text-muted);
+  font-size: 0.8125rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.regional-dataset-inventory__table tbody tr:last-child > * {
+  border-bottom: 0;
+}
+
+.regional-dataset-inventory__table tbody th {
+  color: var(--color-text);
+  font-weight: 700;
+}
+
+.regional-dataset-inventory__table a {
+  color: var(--color-action-text);
+  text-underline-offset: 0.2em;
+}
+
 .source-method-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -174,5 +239,52 @@
 @media (max-width: 47.999rem) {
   .source-method-grid {
     grid-template-columns: 1fr;
+  }
+
+  .regional-dataset-inventory__heading {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+
+  .regional-dataset-inventory__table thead {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+  }
+
+  .regional-dataset-inventory__table,
+  .regional-dataset-inventory__table tbody,
+  .regional-dataset-inventory__table tr,
+  .regional-dataset-inventory__table th,
+  .regional-dataset-inventory__table td {
+    display: block;
+  }
+
+  .regional-dataset-inventory__table tr {
+    padding: var(--space-5);
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .regional-dataset-inventory__table th,
+  .regional-dataset-inventory__table td {
+    display: grid;
+    grid-template-columns: 7rem minmax(0, 1fr);
+    gap: var(--space-3);
+    padding: var(--space-1) 0;
+    border: 0;
+  }
+
+  .regional-dataset-inventory__table th::before,
+  .regional-dataset-inventory__table td::before {
+    content: attr(data-label);
+    color: var(--color-text-muted);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
   }
 }
