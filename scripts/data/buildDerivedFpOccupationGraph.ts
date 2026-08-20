@@ -46,29 +46,29 @@ export function buildDerivedFpOccupationGraph(
   return DerivedFpOccupationGraphResourceSchema.parse(
     links
       .filter((link) => link.reviewStatus === "approved")
-      .map((link) => {
+      .flatMap((link) => {
         const program = programByKey.get(link.trainingProgramKey);
         const occupation = occupationById.get(link.occupationId);
         if (program === undefined || occupation === undefined) {
-          throw new Error(
-            `Derived graph cannot resolve ${link.trainingProgramKey} -> ${link.occupationId}.`,
-          );
+          return [];
         }
-        return {
-          programKey: program.programKey,
-          programTitle: program.programTitle,
-          trainingLevel: program.level,
-          familyCode: program.familyCode,
-          familyName: program.familyName,
-          occupationId: occupation.occupationId,
-          cno11Code: occupation.classificationCode,
-          occupationLabel: occupation.preferredLabel,
-          relationshipType: link.relationshipType,
-          sourceUrl: link.sourceUrl,
-          sourceQuote: link.sourceQuote,
-          reviewedAt: link.reviewedAt,
-          mappingVersion: link.mappingVersion,
-        };
+        return [
+          {
+            programKey: program.programKey,
+            programTitle: program.programTitle,
+            trainingLevel: program.level,
+            familyCode: program.familyCode,
+            familyName: program.familyName,
+            occupationId: occupation.occupationId,
+            cno11Code: occupation.classificationCode,
+            occupationLabel: occupation.preferredLabel,
+            relationshipType: link.relationshipType,
+            sourceUrl: link.sourceUrl,
+            sourceQuote: link.sourceQuote,
+            reviewedAt: link.reviewedAt,
+            mappingVersion: link.mappingVersion,
+          },
+        ];
       })
       .sort((left, right) =>
         `${left.programKey}:${left.cno11Code}`.localeCompare(

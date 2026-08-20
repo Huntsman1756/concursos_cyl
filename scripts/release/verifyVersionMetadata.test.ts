@@ -1,3 +1,5 @@
+import { createHash } from "node:crypto";
+
 import { describe, expect, it, vi } from "vitest";
 import { verifyCaddyContainer } from "./verifyCaddyContainer";
 
@@ -17,56 +19,71 @@ describe("verifyCaddyContainer (Metadata)", () => {
   };
 
   it("passes on match", async () => {
-    const request = vi
-      .fn()
-      .mockResolvedValueOnce(
-        new Response('<html><div id="root"></div></html>', {
-          status: 200,
-          headers: validHeaders,
-        }),
-      )
-      .mockResolvedValueOnce(
-        new Response(
-          JSON.stringify({ schemaVersion: "1.0.0", commit: validCommit }),
-          {
-            status: 200,
-            headers: { "content-type": "application/json" },
-          },
-        ),
-      )
-      .mockResolvedValueOnce(
-        new Response('<html><div id="root"></div></html>', {
-          status: 200,
-          headers: validHeaders,
-        }),
-      )
-      .mockResolvedValueOnce(
-        new Response('<html><div id="root"></div></html>', {
-          status: 200,
-          headers: validHeaders,
-        }),
-      )
-      .mockResolvedValueOnce(
-        new Response(
-          JSON.stringify({
+    const csv = "\uFEFFprogram_key,program_title\n";
+    const csvSha256 = createHash("sha256").update(csv).digest("hex");
+    const request = vi.fn((input: string | URL) => {
+      const path = new URL(input).pathname;
+      if (path === "/version.json") {
+        return Promise.resolve(
+          new Response(
+            JSON.stringify({ schemaVersion: "1.0.0", commit: validCommit }),
+            {
+              status: 200,
+              headers: { "content-type": "application/json" },
+            },
+          ),
+        );
+      }
+      if (path === "/data/v1/manifest.json") {
+        return Promise.resolve(
+          Response.json({
             resourceSnapshots: {
               outcomeIndicators: {
                 resourcePath: "/data/v1/snapshots/abc/outcome-indicators.json",
               },
+              derivedFpOccupationGraph: {
+                resourcePath:
+                  "/data/v1/snapshots/abc/derived-fp-occupation-graph.json",
+                recordCount: 0,
+              },
+              openDataCatalog: {
+                resourcePath: "/data/v1/snapshots/abc/open-data-catalog.json",
+                recordCount: 1,
+              },
             },
           }),
-          {
-            status: 200,
-            headers: { "content-type": "application/json" },
-          },
-        ),
-      )
-      .mockResolvedValueOnce(
-        new Response("{}", {
+        );
+      }
+      if (path.endsWith("/open-data-catalog.json")) {
+        return Promise.resolve(
+          Response.json([
+            {
+              csvResourcePath:
+                "/data/v1/snapshots/abc/derived-fp-occupation-graph.csv",
+              csvSha256,
+              recordCount: 0,
+            },
+          ]),
+        );
+      }
+      if (path.endsWith("/derived-fp-occupation-graph.csv")) {
+        return Promise.resolve(
+          new Response(csv, { headers: { "content-type": "text/csv" } }),
+        );
+      }
+      if (
+        path.endsWith("/outcome-indicators.json") ||
+        path.endsWith("/derived-fp-occupation-graph.json")
+      ) {
+        return Promise.resolve(Response.json([]));
+      }
+      return Promise.resolve(
+        new Response('<html><div id="root"></div></html>', {
           status: 200,
-          headers: { "content-type": "application/json" },
+          headers: validHeaders,
         }),
       );
+    });
 
     await expect(
       verifyCaddyContainer(baseUrl, request as MockRequest, validCommit),
