@@ -543,6 +543,14 @@ describe("TrainingResultsPage", () => {
       }),
     ).toBeVisible();
     expect(
+      screen.queryByRole("heading", {
+        name: "Del título a la evidencia disponible",
+      }),
+    ).not.toBeInTheDocument();
+    expect(
+      screen.getByText(/no representa todo el mercado laboral/u),
+    ).toBeVisible();
+    expect(
       screen.getByRole("link", { name: "Fuente: TodoFP" }),
     ).toHaveAttribute("href", expect.stringContaining("todofp.es"));
     expect(

@@ -42,7 +42,10 @@ test("live DAW results shows formacion link and approved occupation", async ({
   await expect(page.getByText("CNO-11 2713")).toBeVisible();
 
   await expect(
-    page.getByRole("heading", { name: "Del título a la evidencia disponible" }),
+    page.getByRole("heading", { name: "Qué sabemos de este título" }),
+  ).toBeVisible();
+  await expect(
+    page.getByText(/no representa todo el mercado laboral/u),
   ).toBeVisible();
   await expect(
     page.getByRole("img", {
