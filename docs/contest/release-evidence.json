@@ -1,12 +1,12 @@
 {
   "schemaVersion": 1,
   "status": "deployed_verified",
-  "recordedAt": "2026-08-20T21:31:03Z",
+  "recordedAt": "2026-08-20T22:33:29Z",
   "expectedRootUrl": "https://salida-cyl.157-90-22-40.sslip.io/",
-  "coverageFreezeCommitSha": "c07ff44bbfe404f5b5c12d6c461a38442ab2dbba",
-  "publicationCommitSha": "c07ff44bbfe404f5b5c12d6c461a38442ab2dbba",
-  "localReviewHeadSha": "c07ff44bbfe404f5b5c12d6c461a38442ab2dbba",
-  "captureProductCommitSha": "c07ff44bbfe404f5b5c12d6c461a38442ab2dbba",
+  "coverageFreezeCommitSha": "dfa2a33d612c0f1d3a2cb5a4b7748e697da35c93",
+  "publicationCommitSha": "dfa2a33d612c0f1d3a2cb5a4b7748e697da35c93",
+  "localReviewHeadSha": "dfa2a33d612c0f1d3a2cb5a4b7748e697da35c93",
+  "captureProductCommitSha": "dfa2a33d612c0f1d3a2cb5a4b7748e697da35c93",
   "manifest": {
     "snapshotId": "20260820205536270-ce82eadd0fb9",
     "sha256": "705ea13a5f6cd558efd06204428e2aed7145873492264ba66eeda97e7137f96b",
@@ -29,7 +29,7 @@
       "status": "passed",
       "captureCount": 10,
       "command": "npm exec -- tsx scripts/release/validateContestEvidenceManifest.ts",
-      "note": "Las 10 capturas se recapturaron desde la URL oficial con el commit desplegado c07ff44b y superaron los gates de estado visible, red, consola, overflow y Axe."
+      "note": "Las 10 capturas se recapturaron desde la URL oficial con el commit desplegado dfa2a33d y superaron los gates de estado visible, red, consola, overflow y Axe."
     },
     "focusedVitest": {
       "status": "passed",
@@ -43,15 +43,15 @@
     },
     "fullVitestCi": {
       "status": "passed",
-      "testFiles": 110,
-      "passedTestFiles": 87,
+      "testFiles": 109,
+      "passedTestFiles": 86,
       "skippedTestFiles": 23,
-      "tests": 931,
-      "passed": 751,
+      "tests": 929,
+      "passed": 749,
       "skipped": 180,
-      "durationSeconds": 277.14,
+      "durationSeconds": 231.03,
       "command": "npm test -- --testTimeout=60000",
-      "workflowRunId": "32418815858"
+      "workflowRunId": "32423643267"
     },
     "playwright": {
       "status": "passed",
@@ -104,11 +104,11 @@
   },
   "deployment": {
     "status": "verified",
-    "commitSha": "c07ff44bbfe404f5b5c12d6c461a38442ab2dbba",
-    "workflowRunId": "32418815858",
-    "workflowUrl": "https://github.com/Huntsman1756/concursos_cyl/actions/runs/32418815858",
+    "commitSha": "dfa2a33d612c0f1d3a2cb5a4b7748e697da35c93",
+    "workflowRunId": "32423643267",
+    "workflowUrl": "https://github.com/Huntsman1756/concursos_cyl/actions/runs/32423643267",
     "liveRootVerified": true,
-    "verifiedAt": "2026-08-20T21:31:03Z"
+    "verifiedAt": "2026-08-20T22:33:29Z"
   },
   "publicVerification": {
     "rootUrl": "https://salida-cyl.157-90-22-40.sslip.io/",

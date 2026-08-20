@@ -2,7 +2,7 @@
 
 ## Estado confirmado
 
-- Producto y documentación publicados en `c72b891f302a6a189ed507e05a6b443366c841d7`.
+- Producto publicado y verificado en `dfa2a33d612c0f1d3a2cb5a4b7748e697da35c93`.
 - Freeze fuente: `647554e6cd71d650431da6e67c3c74d77d66fdb6`.
 - Snapshot activo: `20260820184643129-a5594cf94fc7`.
 - Ocho datasets JCyL visibles y 20 recursos inmutables en el manifiesto.
@@ -12,7 +12,7 @@
 - La ficha de ciclo incorpora ingresos observados de EDUCAbase con referencia nacional y agregada de Castilla y León, sin presentarlos como predicción individual.
 - QA final: 744 pruebas aprobadas y 180 omitidas por condiciones de plataforma; 100/100 E2E en escritorio y móvil.
 - Matriz opcional preparada para Chromium, Firefox y WebKit sin encarecer el CI ordinario.
-- Workflow verificado: `32406662946`.
+- Workflow verificado: `32423643267`.
 - Diez capturas finales anónimas ligadas al commit desplegado y validadas con Axe, red, consola y overflow.
 
 ## Orden de trabajo

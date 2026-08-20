@@ -13,8 +13,8 @@
 - URL raíz a presentar: [https://salida-cyl.157-90-22-40.sslip.io/](https://salida-cyl.157-90-22-40.sslip.io/)
 - Commit fuente del freeze: `d4082f97c5086dd8c74883aa1226db0b9d8567df`.
 - Snapshot: `20260820205536270-ce82eadd0fb9`.
-- Commit desplegado: `c07ff44bbfe404f5b5c12d6c461a38442ab2dbba`.
-- Run del workflow: `32418815858`.
+- Commit desplegado: `dfa2a33d612c0f1d3a2cb5a4b7748e697da35c93`.
+- Run del workflow: `32423643267`.
 - Evidencia visual: **capturada y validada en `docs/contest/evidence-capture.json`**.
 
 ## Gate final
