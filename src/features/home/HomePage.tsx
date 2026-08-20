@@ -227,83 +227,6 @@ export function HomePage() {
         </div>
 
         <div className="home-workspace">
-          <aside
-            className="coverage-panel"
-            aria-label="Cobertura revisada"
-            role="region"
-            aria-live="polite"
-            aria-busy={coverage.status === "loading"}
-          >
-            <div className="coverage-panel__heading">
-              <h2>
-                <Icon name="clock" size={19} />
-                Cobertura revisada
-              </h2>
-              <span
-                className="data-freshness"
-                role="region"
-                aria-label="Actualización de datos"
-                aria-busy={freshness.status === "loading"}
-              >
-                {freshness.status === "loading" ? "Comprobando fecha…" : null}
-                {freshness.status === "ready" ? (
-                  <>
-                    Actualizado:{" "}
-                    <time dateTime={freshness.dateTime}>{freshness.date}</time>
-                  </>
-                ) : null}
-                {freshness.status === "unavailable"
-                  ? "Fecha no disponible"
-                  : null}
-              </span>
-            </div>
-
-            {coverage.status === "loading" ? (
-              <p className="coverage-panel__message">
-                Comprobando la cobertura revisada…
-              </p>
-            ) : null}
-            {coverage.status === "unavailable" ? (
-              <p className="coverage-panel__message">
-                No se ha podido comprobar la cobertura revisada.
-              </p>
-            ) : null}
-            {coverage.status === "ready" ? (
-              <ul
-                className="coverage-panel__programs"
-                aria-label="Ciclos revisados destacados"
-              >
-                {featuredPrograms.map((program) => {
-                  const catalogProgram = programsByKey.get(program.programKey);
-                  return (
-                    <li key={program.programKey}>
-                      <Link to={`/desde-fp/${program.programKey}`}>
-                        <span>
-                          <strong>{program.programTitle}</strong>
-                          <small>
-                            {catalogProgram === undefined
-                              ? program.programKey
-                              : trainingLevelLabel(catalogProgram.level)}
-                          </small>
-                        </span>
-                        <Icon name="arrow-right" size={17} />
-                      </Link>
-                    </li>
-                  );
-                })}
-              </ul>
-            ) : null}
-
-            {freshness.status === "ready" && freshness.stale ? (
-              <p className="data-freshness__warning">
-                Mostramos la última copia disponible.
-              </p>
-            ) : null}
-            <Link className="coverage-panel__link" to="/metodologia">
-              Ver toda la cobertura <Icon name="arrow-right" size={16} />
-            </Link>
-          </aside>
-
           <section className="search-entry" aria-labelledby="search-entry-title">
             <fieldset
               className="search-entry__modes"
@@ -341,11 +264,6 @@ export function HomePage() {
                     checked={searchMode === "fp"}
                     onChange={() => selectSearchMode("fp")}
                   />
-                  <Icon
-                    className="search-entry__mode-icon"
-                    name="graduation-cap"
-                    size={21}
-                  />
                   <span>
                     <strong>Tengo un título de FP</strong>
                     <small>Ver ocupaciones relacionadas.</small>
@@ -361,11 +279,6 @@ export function HomePage() {
                     value="occupation"
                     checked={searchMode === "occupation"}
                     onChange={() => selectSearchMode("occupation")}
-                  />
-                  <Icon
-                    className="search-entry__mode-icon"
-                    name="briefcase"
-                    size={21}
                   />
                   <span>
                     <strong>Tengo un empleo en mente</strong>
@@ -512,31 +425,103 @@ export function HomePage() {
               </form>
             )}
           </section>
+
+          <aside
+            className="coverage-panel"
+            aria-label="Cobertura revisada"
+            role="region"
+            aria-live="polite"
+            aria-busy={coverage.status === "loading"}
+          >
+            <div className="coverage-panel__heading">
+              <h2>
+                <Icon name="clock" size={19} />
+                Cobertura revisada
+              </h2>
+              <span
+                className="data-freshness"
+                role="region"
+                aria-label="Actualización de datos"
+                aria-busy={freshness.status === "loading"}
+              >
+                {freshness.status === "loading" ? "Comprobando fecha…" : null}
+                {freshness.status === "ready" ? (
+                  <>
+                    Actualizado:{" "}
+                    <time dateTime={freshness.dateTime}>{freshness.date}</time>
+                  </>
+                ) : null}
+                {freshness.status === "unavailable"
+                  ? "Fecha no disponible"
+                  : null}
+              </span>
+            </div>
+
+            {coverage.status === "loading" ? (
+              <p className="coverage-panel__message">
+                Comprobando la cobertura revisada…
+              </p>
+            ) : null}
+            {coverage.status === "unavailable" ? (
+              <p className="coverage-panel__message">
+                No se ha podido comprobar la cobertura revisada.
+              </p>
+            ) : null}
+            {coverage.status === "ready" ? (
+              <ul
+                className="coverage-panel__programs"
+                aria-label="Ciclos revisados destacados"
+              >
+                {featuredPrograms.map((program) => {
+                  const catalogProgram = programsByKey.get(program.programKey);
+                  return (
+                    <li key={program.programKey}>
+                      <Link to={`/desde-fp/${program.programKey}`}>
+                        <span>
+                          <strong>{program.programTitle}</strong>
+                          <small>
+                            {catalogProgram === undefined
+                              ? program.programKey
+                              : trainingLevelLabel(catalogProgram.level)}
+                          </small>
+                        </span>
+                        <Icon name="arrow-right" size={17} />
+                      </Link>
+                    </li>
+                  );
+                })}
+              </ul>
+            ) : null}
+
+            {freshness.status === "ready" && freshness.stale ? (
+              <p className="data-freshness__warning">
+                Mostramos la última copia disponible.
+              </p>
+            ) : null}
+            <Link className="coverage-panel__link" to="/metodologia">
+              Ver toda la cobertura <Icon name="arrow-right" size={16} />
+            </Link>
+          </aside>
         </div>
       </section>
 
       <section className="trust-strip" aria-label="Compromisos del proyecto">
         <div>
-          <Icon name="database" size={19} />
           <strong>Fuentes públicas</strong>
         </div>
         <div>
-          <Icon name="badge-check" size={19} />
           <strong>Relaciones revisadas</strong>
         </div>
         <div>
-          <Icon name="user-round-x" size={19} />
           <strong>Sin cuentas ni cookies</strong>
         </div>
         <Link to="/metodologia">
-          <Icon name="file-check" size={19} />
           <strong>Método y límites</strong>
         </Link>
       </section>
 
       <nav className="compare-access" aria-label="Otras herramientas">
         <Link to="/comparar">
-          <Icon name="bar-chart" size={22} />
           <span>
             <strong>Comparar ingresos</strong>
             <small>Por ciclo y territorio.</small>
