@@ -80,7 +80,10 @@ describe("GitHub Pages deployment workflow", () => {
     );
     expect(verifyJob).toMatch(/permissions:\s+contents: read/u);
     expect(verifyJob).not.toMatch(/pages: write|id-token: write/u);
-    const deployJob = workflow.slice(workflow.indexOf("  deploy:"));
+    const deployJob = workflow.slice(
+      workflow.indexOf("  deploy:"),
+      workflow.indexOf("  verify-live:"),
+    );
     expect(deployJob).toMatch(/permissions:\s+pages: write\s+id-token: write/u);
     expect(deployJob).not.toContain("contents: read");
   });
@@ -137,15 +140,49 @@ describe("GitHub Pages deployment workflow", () => {
     expect(prepareIdx).toBeGreaterThan(versionIdx);
   });
 
-  it("stages only runtime-required data before versioning the Pages artifact", async () => {
+  it("relies on build for runtime-data staging without a duplicate workflow step", async () => {
     const workflow = await readFile(workflowPath, "utf8");
     const buildIdx = workflow.indexOf("npm run build");
     const runtimeDataIdx = workflow.indexOf("npm run release:runtime-data");
-    const versionIdx = workflow.indexOf(
-      'npx --no-install tsx scripts/release/writeVersionMetadata.ts dist "${{ github.sha }}"',
-    );
 
-    expect(runtimeDataIdx).toBeGreaterThan(buildIdx);
-    expect(versionIdx).toBeGreaterThan(runtimeDataIdx);
+    expect(buildIdx).toBeGreaterThanOrEqual(0);
+    expect(runtimeDataIdx).toBe(-1);
+  });
+
+  it("exposes the deployed Pages URL and verifies it in a read-only live job", async () => {
+    const workflow = await readFile(workflowPath, "utf8");
+    const deployJob = workflow.slice(
+      workflow.indexOf("  deploy:"),
+      workflow.indexOf("  verify-live:"),
+    );
+    const verifyLive = workflow.slice(workflow.indexOf("  verify-live:"));
+
+    expect(deployJob).toContain(
+      "page_url: ${{ steps.deployment.outputs.page_url }}",
+    );
+    expect(verifyLive).toContain("needs: deploy");
+    expect(verifyLive).toContain("if: github.event_name != 'pull_request'");
+    expect(verifyLive).toMatch(/permissions:\s+contents: read/u);
+    expect(verifyLive).not.toMatch(/pages: write|id-token: write/u);
+    expect(verifyLive).toContain(
+      "actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1",
+    );
+    expect(verifyLive).toContain("ref: ${{ github.sha }}");
+    expect(verifyLive).toContain(
+      "actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0",
+    );
+    expect(verifyLive).toContain("npm ci");
+    expect(verifyLive).toContain(
+      'npm run release:pages:verify -- "${{ needs.deploy.outputs.page_url }}" "${{ github.sha }}"',
+    );
+    expect(verifyLive).not.toContain("npm run build");
+  });
+
+  it("defines the live Pages verifier package script", async () => {
+    const pkg = await readFile(packageJsonPath, "utf8");
+    const parsed = JSON.parse(pkg) as { scripts?: Record<string, string> };
+    expect(parsed.scripts?.["release:pages:verify"]).toBe(
+      "tsx scripts/release/verifyPagesDeployment.ts",
+    );
   });
 });
