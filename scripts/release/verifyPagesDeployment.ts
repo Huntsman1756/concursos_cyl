@@ -1,5 +1,10 @@
 import { resolve } from "node:path";
 import { pathToFileURL } from "node:url";
+import {
+  GeneratedManifestSchema,
+  type GeneratedManifest,
+} from "../../data/schemas/generated";
+import { GENERATED_RESOURCE_KEYS } from "../../data/schemas/generatedResourceCatalog";
 
 const COMMIT_PATTERN = /^[0-9a-f]{40}$/u;
 const SNAPSHOT_RESOURCE_PATTERN =
@@ -9,6 +14,7 @@ const ROOT_MOUNT_PATTERN = /id=["']root["']/u;
 
 export const MAX_VERIFICATION_ATTEMPTS = 6;
 export const DEFAULT_RETRY_DELAY_MS = 10_000;
+export const DEFAULT_REQUEST_TIMEOUT_MS = 5_000;
 
 export type PagesFetch = (
   input: string | URL,
@@ -22,6 +28,7 @@ export interface VerifyPagesDeploymentOptions {
   fetchImpl?: PagesFetch;
   attempts?: number;
   retryDelayMs?: number;
+  requestTimeoutMs?: number;
   delayImpl?: PagesDelay;
   delay?: PagesDelay;
 }
@@ -63,18 +70,105 @@ function urlForBasePath(base: URL, path: string): URL {
   return new URL(path.replace(/^\/+/, ""), base);
 }
 
+async function withTimeout<T>(
+  operation: Promise<T>,
+  timeoutMs: number,
+  controller: AbortController,
+  description: string,
+): Promise<T> {
+  let timeout: ReturnType<typeof setTimeout> | undefined;
+  const deadline = new Promise<never>((_, reject) => {
+    timeout = setTimeout(() => {
+      controller.abort();
+      reject(
+        new Error(
+          `Pages ${description} timed out after ${timeoutMs} milliseconds.`,
+        ),
+      );
+    }, timeoutMs);
+  });
+  try {
+    return await Promise.race([operation, deadline]);
+  } finally {
+    if (timeout !== undefined) clearTimeout(timeout);
+  }
+}
+
+function assertResponseUrl(
+  response: Response,
+  expectedUrl: URL,
+  description: string,
+): void {
+  if (response.url === "") return;
+  let finalUrl: URL;
+  try {
+    finalUrl = new URL(response.url);
+  } catch (error) {
+    throw new Error(`Pages ${description} returned an invalid response URL.`, {
+      cause: error,
+    });
+  }
+  if (
+    finalUrl.origin !== expectedUrl.origin ||
+    finalUrl.pathname !== expectedUrl.pathname ||
+    finalUrl.search !== expectedUrl.search ||
+    finalUrl.hash !== expectedUrl.hash
+  ) {
+    throw new Error(
+      `Pages ${description} followed an escaped or cross-origin redirect to ${response.url}.`,
+    );
+  }
+}
+
 async function requiredResponse(
   request: PagesFetch,
   url: URL,
   description: string,
+  requestTimeoutMs: number,
 ): Promise<Response> {
-  const response = await request(url);
+  const controller = new AbortController();
+  const response = await withTimeout(
+    request(url, { redirect: "error", signal: controller.signal }),
+    requestTimeoutMs,
+    controller,
+    description,
+  );
+  assertResponseUrl(response, url, description);
   if (response.status !== 200) {
     throw new Error(
       `Pages ${description} at ${url.pathname} returned HTTP ${response.status}.`,
     );
   }
   return response;
+}
+
+async function readResponseText(
+  response: Response,
+  description: string,
+  requestTimeoutMs: number,
+): Promise<string> {
+  const controller = new AbortController();
+  return withTimeout(
+    response.text(),
+    requestTimeoutMs,
+    controller,
+    `${description} body`,
+  );
+}
+
+async function readJsonResponse(
+  response: Response,
+  description: string,
+  requestTimeoutMs: number,
+): Promise<unknown> {
+  const body = await readResponseText(response, description, requestTimeoutMs);
+  try {
+    return JSON.parse(body) as unknown;
+  } catch (error) {
+    throw new Error(`Pages ${description} body is not valid JSON.`, {
+      cause: error,
+    });
+  }
 }
 
 function assertApplicationRoot(body: string, description: string): void {
@@ -86,46 +180,33 @@ function assertApplicationRoot(body: string, description: string): void {
 }
 
 function parseManifest(value: unknown): PagesManifest {
-  if (value === null || typeof value !== "object" || Array.isArray(value)) {
-    throw new Error("Pages manifest must be a JSON object.");
-  }
-
-  const candidate = value as {
-    schemaVersion?: unknown;
-    resourceSnapshots?: unknown;
-  };
-  if (candidate.schemaVersion !== "1.0.0") {
+  const parsed = GeneratedManifestSchema.safeParse(value);
+  if (!parsed.success) {
+    const paths = parsed.error.issues
+      .map((issue) => issue.path.join("."))
+      .filter(Boolean)
+      .join(", ");
     throw new Error(
-      `Pages manifest has an invalid schemaVersion: ${String(candidate.schemaVersion)}.`,
+      `Pages manifest does not satisfy the generated schema${paths ? ` (${paths})` : ""}.`,
     );
   }
+
+  const manifest = parsed.data as GeneratedManifest;
+  const actualKeys = Object.keys(manifest.resourceSnapshots).sort();
+  const expectedKeys = [...GENERATED_RESOURCE_KEYS].sort();
   if (
-    candidate.resourceSnapshots === null ||
-    typeof candidate.resourceSnapshots !== "object" ||
-    Array.isArray(candidate.resourceSnapshots)
+    actualKeys.length !== expectedKeys.length ||
+    actualKeys.some((key, index) => key !== expectedKeys[index])
   ) {
-    throw new Error("Pages manifest resourceSnapshots must be an object.");
+    throw new Error(
+      `Pages manifest must contain exactly the generated resource keys: ${expectedKeys.join(", ")}.`,
+    );
   }
 
   const resourceSnapshots: Record<string, ResourceSnapshot> = {};
   const snapshotIds = new Set<string>();
-  for (const [key, valueForKey] of Object.entries(
-    candidate.resourceSnapshots,
-  )) {
-    if (
-      valueForKey === null ||
-      typeof valueForKey !== "object" ||
-      Array.isArray(valueForKey)
-    ) {
-      throw new Error(`Pages manifest resourceSnapshots.${key} is invalid.`);
-    }
-    const resourcePath = (valueForKey as { resourcePath?: unknown })
-      .resourcePath;
-    if (typeof resourcePath !== "string") {
-      throw new Error(
-        `Pages manifest resourceSnapshots.${key}.resourcePath is invalid.`,
-      );
-    }
+  for (const [key, valueForKey] of Object.entries(manifest.resourceSnapshots)) {
+    const resourcePath = valueForKey.resourcePath;
     const match = SNAPSHOT_RESOURCE_PATTERN.exec(resourcePath);
     if (!match) {
       throw new Error(
@@ -150,22 +231,31 @@ async function verifyOnce(
   base: URL,
   expectedCommit: string,
   request: PagesFetch,
+  requestTimeoutMs: number,
 ): Promise<void> {
-  const rootResponse = await requiredResponse(request, base, "root");
-  assertApplicationRoot(await rootResponse.text(), "root response");
+  const rootResponse = await requiredResponse(
+    request,
+    base,
+    "root",
+    requestTimeoutMs,
+  );
+  assertApplicationRoot(
+    await readResponseText(rootResponse, "root response", requestTimeoutMs),
+    "root response",
+  );
 
   const versionUrl = urlForBasePath(base, "version.json");
   const versionResponse = await requiredResponse(
     request,
     versionUrl,
     "version metadata",
+    requestTimeoutMs,
   );
-  let version: unknown;
-  try {
-    version = (await versionResponse.json()) as unknown;
-  } catch (error) {
-    throw new Error("Pages version.json is not valid JSON.", { cause: error });
-  }
+  const version = await readJsonResponse(
+    versionResponse,
+    "version.json",
+    requestTimeoutMs,
+  );
   if (
     version === null ||
     typeof version !== "object" ||
@@ -197,14 +287,11 @@ async function verifyOnce(
     request,
     manifestUrl,
     "manifest",
+    requestTimeoutMs,
   );
-  let manifestValue: unknown;
-  try {
-    manifestValue = (await manifestResponse.json()) as unknown;
-  } catch (error) {
-    throw new Error("Pages manifest is not valid JSON.", { cause: error });
-  }
-  const manifest = parseManifest(manifestValue);
+  const manifest = parseManifest(
+    await readJsonResponse(manifestResponse, "manifest", requestTimeoutMs),
+  );
 
   for (const [key, snapshot] of Object.entries(manifest.resourceSnapshots)) {
     const resourceUrl = urlForBasePath(base, snapshot.resourcePath);
@@ -213,17 +300,40 @@ async function verifyOnce(
         `Pages manifest resource ${key} must remain same-origin.`,
       );
     }
-    await requiredResponse(request, resourceUrl, `resource ${key}`);
+    const resourceResponse = await requiredResponse(
+      request,
+      resourceUrl,
+      `resource ${key}`,
+      requestTimeoutMs,
+    );
+    await readJsonResponse(resourceResponse, `resource ${key}`, requestTimeoutMs);
   }
 
   const deepLinkUrl = urlForBasePath(base, "comparar");
-  const deepLinkResponse = await request(deepLinkUrl);
+  const deepLinkController = new AbortController();
+  const deepLinkResponse = await withTimeout(
+    request(deepLinkUrl, {
+      redirect: "error",
+      signal: deepLinkController.signal,
+    }),
+    requestTimeoutMs,
+    deepLinkController,
+    "/comparar",
+  );
+  assertResponseUrl(deepLinkResponse, deepLinkUrl, "/comparar");
   if (deepLinkResponse.status !== 200 && deepLinkResponse.status !== 404) {
     throw new Error(
       `Pages /comparar returned HTTP ${deepLinkResponse.status} at ${deepLinkUrl.pathname}.`,
     );
   }
-  assertApplicationRoot(await deepLinkResponse.text(), "/comparar fallback");
+  assertApplicationRoot(
+    await readResponseText(
+      deepLinkResponse,
+      "/comparar fallback",
+      requestTimeoutMs,
+    ),
+    "/comparar fallback",
+  );
 }
 
 function defaultDelay(milliseconds: number): Promise<void> {
@@ -238,6 +348,7 @@ export async function verifyPagesDeployment({
   fetchImpl = fetch,
   attempts = MAX_VERIFICATION_ATTEMPTS,
   retryDelayMs = DEFAULT_RETRY_DELAY_MS,
+  requestTimeoutMs = DEFAULT_REQUEST_TIMEOUT_MS,
   delayImpl,
   delay,
 }: VerifyPagesDeploymentOptions): Promise<void> {
@@ -256,6 +367,9 @@ export async function verifyPagesDeployment({
   if (!Number.isFinite(retryDelayMs) || retryDelayMs < 0) {
     throw new Error("Verification retry delay must be a non-negative number.");
   }
+  if (!Number.isFinite(requestTimeoutMs) || requestTimeoutMs <= 0) {
+    throw new Error("Verification request timeout must be a positive number.");
+  }
 
   const base = normalizeBaseUrl(baseUrl);
   const wait = delayImpl ?? delay ?? defaultDelay;
@@ -263,7 +377,7 @@ export async function verifyPagesDeployment({
 
   for (let attempt = 1; attempt <= attempts; attempt += 1) {
     try {
-      await verifyOnce(base, expectedCommit, fetchImpl);
+      await verifyOnce(base, expectedCommit, fetchImpl, requestTimeoutMs);
       return;
     } catch (error) {
       lastError = error;

@@ -1,25 +1,28 @@
+import { readFileSync } from "node:fs";
 import { describe, expect, it, vi } from "vitest";
 import { verifyPagesDeployment } from "./verifyPagesDeployment";
 
-type FetchImpl = (input: string | URL) => Promise<Response>;
+type FetchImpl = (
+  input: string | URL,
+  init?: RequestInit,
+) => Promise<Response>;
 
 const baseUrl = "https://example.github.io/concursos_cyl/";
 const expectedCommit = "a".repeat(40);
-const snapshotId = "20260821162954121-087e3c5155c6";
-
-const manifest = {
-  schemaVersion: "1.0.0",
-  generatedAt: "2026-08-21T16:29:54.121Z",
-  qualityStatus: "passed",
-  resourceSnapshots: {
-    programs: {
-      resourcePath: `/data/v1/snapshots/${snapshotId}/programs.json`,
-    },
-    jobOffers: {
-      resourcePath: `/data/v1/snapshots/${snapshotId}/job-offers.json`,
-    },
-  },
+const manifest = JSON.parse(
+  readFileSync("public/data/v1/manifest.json", "utf8"),
+) as {
+  schemaVersion: string;
+  resourceSnapshots: Record<string, { resourcePath: string; [key: string]: unknown }>;
+  [key: string]: unknown;
 };
+const snapshotId = manifest.resourceSnapshots.programs!.resourcePath.split(
+  "/",
+)[4]!;
+
+function cloneManifest() {
+  return JSON.parse(JSON.stringify(manifest)) as typeof manifest;
+}
 
 function responseFor(
   path: string,
@@ -89,16 +92,27 @@ describe("verifyPagesDeployment", () => {
       }),
     ).resolves.toBeUndefined();
 
-    expect(
-      fetchImpl.mock.calls.map(([input]) => new URL(input).pathname),
-    ).toEqual([
+    const requestedPaths = fetchImpl.mock.calls.map(([input]) =>
+      new URL(input).pathname,
+    );
+    expect(requestedPaths.slice(0, 3)).toEqual([
       "/concursos_cyl/",
       "/concursos_cyl/version.json",
       "/concursos_cyl/data/v1/manifest.json",
-      "/concursos_cyl/data/v1/snapshots/20260821162954121-087e3c5155c6/programs.json",
-      "/concursos_cyl/data/v1/snapshots/20260821162954121-087e3c5155c6/job-offers.json",
-      "/concursos_cyl/comparar",
     ]);
+    const expectedResourcePaths = Object.values(manifest.resourceSnapshots).map(
+      ({ resourcePath }) => `/concursos_cyl${resourcePath}`,
+    );
+    expect(requestedPaths.slice(3, -1)).toHaveLength(
+      expectedResourcePaths.length,
+    );
+    expect(new Set(requestedPaths.slice(3, -1))).toEqual(
+      new Set(expectedResourcePaths),
+    );
+    expect(requestedPaths.at(-1)).toBe("/concursos_cyl/comparar");
+    expect(fetchImpl.mock.calls.every(([, init]) => init?.redirect === "error")).toBe(
+      true,
+    );
   });
 
   it("rejects a version commit that differs from the expected commit", async () => {
@@ -123,9 +137,11 @@ describe("verifyPagesDeployment", () => {
   });
 
   it("rejects an invalid manifest", async () => {
+    const invalidManifest = cloneManifest();
+    invalidManifest.schemaVersion = "2.0.0";
     const fetchImpl = successfulFetch({
       "/concursos_cyl/data/v1/manifest.json": responseFor("manifest.json", {
-        body: JSON.stringify({ ...manifest, schemaVersion: "2.0.0" }),
+        body: JSON.stringify(invalidManifest),
       }),
     });
 
@@ -138,6 +154,58 @@ describe("verifyPagesDeployment", () => {
         retryDelayMs: 0,
       }),
     ).rejects.toThrow(/manifest.*schemaVersion/iu);
+  });
+
+  it("rejects a manifest that omits a required resource key", async () => {
+    const invalidManifest = cloneManifest();
+    delete invalidManifest.resourceSnapshots.programs;
+    const fetchImpl = successfulFetch({
+      "/concursos_cyl/data/v1/manifest.json": responseFor("manifest.json", {
+        body: JSON.stringify(invalidManifest),
+      }),
+    });
+
+    await expect(
+      verifyPagesDeployment({
+        baseUrl,
+        expectedCommit,
+        fetchImpl,
+        attempts: 1,
+        retryDelayMs: 0,
+      }),
+    ).rejects.toThrow(/required resource key|programs/iu);
+  });
+
+  it.each([
+    ["wrong filename", (candidate: typeof manifest) => {
+      candidate.resourceSnapshots.programs!.resourcePath =
+        candidate.resourceSnapshots.jobOffers!.resourcePath;
+    }],
+    ["duplicate resource path", (candidate: typeof manifest) => {
+      candidate.resourceSnapshots.jobOffers!.resourcePath =
+        candidate.resourceSnapshots.programs!.resourcePath;
+    }],
+    ["invalid metadata", (candidate: typeof manifest) => {
+      candidate.resourceSnapshots.programs!.sha256 = "not-a-sha256";
+    }],
+  ] as const)("rejects a manifest with %s", async (_name, mutate) => {
+    const invalidManifest = cloneManifest();
+    mutate(invalidManifest);
+    const fetchImpl = successfulFetch({
+      "/concursos_cyl/data/v1/manifest.json": responseFor("manifest.json", {
+        body: JSON.stringify(invalidManifest),
+      }),
+    });
+
+    await expect(
+      verifyPagesDeployment({
+        baseUrl,
+        expectedCommit,
+        fetchImpl,
+        attempts: 1,
+        retryDelayMs: 0,
+      }),
+    ).rejects.toThrow(/manifest|resource|sha256|duplicate|filename/iu);
   });
 
   it("rejects a missing active resource", async () => {
@@ -155,6 +223,25 @@ describe("verifyPagesDeployment", () => {
         retryDelayMs: 0,
       }),
     ).rejects.toThrow(/job-offers\.json.*404/iu);
+  });
+
+  it("rejects an HTML body served for a manifest resource", async () => {
+    const resourcePath = manifest.resourceSnapshots.programs!.resourcePath;
+    const fetchImpl = successfulFetch({
+      [`/concursos_cyl${resourcePath}`]: responseFor("programs.json", {
+        body: "<!doctype html><html>not JSON</html>",
+      }),
+    });
+
+    await expect(
+      verifyPagesDeployment({
+        baseUrl,
+        expectedCommit,
+        fetchImpl,
+        attempts: 1,
+        retryDelayMs: 0,
+      }),
+    ).rejects.toThrow(/resource.*JSON/iu);
   });
 
   it("rejects a root response with the wrong application title", async () => {
@@ -220,5 +307,72 @@ describe("verifyPagesDeployment", () => {
 
     expect(delay).toHaveBeenCalledWith(50);
     expect(calls).toBeGreaterThan(6);
+  });
+
+  it("times out a hung request and keeps the timeout within the full-check retry", async () => {
+    let firstRequest = true;
+    const fetchImpl: FetchImpl = async (input) => {
+      if (firstRequest) {
+        firstRequest = false;
+        return new Promise<Response>(() => undefined);
+      }
+      return successfulFetch()(input);
+    };
+
+    await expect(
+      verifyPagesDeployment({
+        baseUrl,
+        expectedCommit,
+        fetchImpl,
+        attempts: 1,
+        retryDelayMs: 0,
+        requestTimeoutMs: 5,
+      }),
+    ).rejects.toThrow(/timed out|timeout/iu);
+  });
+
+  it("times out a hung response body read", async () => {
+    const response = responseFor("index.html", {
+      body: '<!doctype html><html><head><title>SALIDA CyL</title></head><body><div id="root"></div></body></html>',
+    });
+    Object.defineProperty(response, "text", {
+      value: () => new Promise<string>(() => undefined),
+    });
+    const fetchImpl = successfulFetch({ "/concursos_cyl/": response });
+
+    await expect(
+      verifyPagesDeployment({
+        baseUrl,
+        expectedCommit,
+        fetchImpl,
+        attempts: 1,
+        retryDelayMs: 0,
+        requestTimeoutMs: 5,
+      }),
+    ).rejects.toThrow(/root response body.*timed out/iu);
+  });
+
+  it("rejects an escaped final response URL", async () => {
+    const fetchImpl = successfulFetch({
+      "/concursos_cyl/": (() => {
+        const response = responseFor("index.html", {
+          body: '<!doctype html><html><head><title>SALIDA CyL</title></head><body><div id="root"></div></body></html>',
+        });
+        Object.defineProperty(response, "url", {
+          value: "https://evil.example/redirected",
+        });
+        return response;
+      })(),
+    });
+
+    await expect(
+      verifyPagesDeployment({
+        baseUrl,
+        expectedCommit,
+        fetchImpl,
+        attempts: 1,
+        retryDelayMs: 0,
+      }),
+    ).rejects.toThrow(/same-origin|redirect/iu);
   });
 });

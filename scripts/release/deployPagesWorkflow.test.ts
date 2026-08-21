@@ -172,6 +172,7 @@ describe("GitHub Pages deployment workflow", () => {
       "actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0",
     );
     expect(verifyLive).toContain("npm ci");
+    expect(verifyLive).toContain("timeout-minutes: 15");
     expect(verifyLive).toContain(
       'npm run release:pages:verify -- "${{ needs.deploy.outputs.page_url }}" "${{ github.sha }}"',
     );
