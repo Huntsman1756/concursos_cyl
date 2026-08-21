@@ -3,13 +3,14 @@ import {
   mkdtemp,
   readFile,
   readdir,
+  rename,
   rm,
   symlink,
   writeFile,
 } from "node:fs/promises";
 import { createServer } from "node:net";
 import { tmpdir } from "node:os";
-import { join } from "node:path";
+import { basename, dirname, join } from "node:path";
 
 import { describe, expect, it } from "vitest";
 
@@ -160,6 +161,61 @@ describe("prepareRuntimeData", () => {
     ).toBe("[]\n");
   });
 
+  it("restores the old target when staged replacement fails", async () => {
+    const fixture = await createMinimalRuntimeFixture(
+      `/data/v1/snapshots/20260821144454118-a56e3eeaffa6/programs.json`,
+    );
+    await writeJson(join(fixture.target, "old.json"), { old: true });
+    const stagingPrefix = join(
+      dirname(fixture.target),
+      `.${basename(fixture.target)}.runtime-`,
+    );
+    let replacementFailureInjected = false;
+    const renameOperation: typeof rename = async (from, to) => {
+      if (
+        !replacementFailureInjected &&
+        String(to) === fixture.target &&
+        String(from).startsWith(stagingPrefix)
+      ) {
+        replacementFailureInjected = true;
+        throw new Error("injected replacement failure");
+      }
+      return rename(from, to);
+    };
+
+    await expect(
+      prepareRuntimeData(
+        {
+          root: fixture.root,
+          source: fixture.source,
+          target: fixture.target,
+        },
+        { rename: renameOperation },
+      ),
+    ).rejects.toThrow("injected replacement failure");
+
+    expect(await readFile(join(fixture.target, "old.json"), "utf8")).toBe(
+      '{"old":true}\n',
+    );
+    expect(
+      (await readdir(dirname(fixture.target))).filter((entry) =>
+        entry.startsWith(`.${basename(fixture.target)}.runtime-`),
+      ),
+    ).toEqual([]);
+    expect(
+      await readFile(
+        join(
+          fixture.source,
+          "v1",
+          "snapshots",
+          fixture.active,
+          "programs.json",
+        ),
+        "utf8",
+      ),
+    ).toBe("[]\n");
+  });
+
   it("rejects a missing terminal evidence file", async () => {
     const root = await mkdtemp(join(tmpdir(), "salida-runtime-data-"));
     const source = join(root, "public", "data");
@@ -260,6 +316,28 @@ describe("prepareRuntimeData", () => {
     await expect(prepareRuntimeData({ root, source, target })).rejects.toThrow(
       "Referenced runtime resource is missing",
     );
+  });
+
+  it("rejects an active manifest resource file that is missing", async () => {
+    const fixture = await createMinimalRuntimeFixture(
+      `/data/v1/snapshots/20260821144454118-a56e3eeaffa6/programs.json`,
+    );
+    await writeJson(join(fixture.source, "v1", "manifest.json"), {
+      snapshotId: fixture.active,
+      resourceSnapshots: {
+        programs: {
+          resourcePath: `/data/v1/snapshots/${fixture.active}/missing.json`,
+        },
+      },
+    });
+
+    await expect(
+      prepareRuntimeData({
+        root: fixture.root,
+        source: fixture.source,
+        target: fixture.target,
+      }),
+    ).rejects.toThrow("Referenced runtime resource is missing");
   });
 
   it("rejects malformed terminal evidence JSON", async () => {
@@ -376,6 +454,29 @@ describe("prepareRuntimeData", () => {
         target,
       }),
     ).rejects.toThrow("disjoint");
+  });
+
+  it("rejects an existing target symlink before replacing it", async () => {
+    if (process.platform === "win32") return;
+    const fixture = await createMinimalRuntimeFixture(
+      "/data/v1/snapshots/20260821144454118-a56e3eeaffa6/programs.json",
+    );
+    const outsideTarget = join(fixture.root, "outside-target");
+    const target = join(fixture.root, "linked-output", "data");
+    await writeJson(join(outsideTarget, "sentinel.json"), { preserved: true });
+    await mkdir(dirname(target), { recursive: true });
+    await symlink(outsideTarget, target, "dir");
+
+    await expect(
+      prepareRuntimeData({
+        root: fixture.root,
+        source: fixture.source,
+        target,
+      }),
+    ).rejects.toThrow("symbolic link");
+    expect(
+      JSON.parse(await readFile(join(outsideTarget, "sentinel.json"), "utf8")),
+    ).toEqual({ preserved: true });
   });
 
   it("rejects symlinks in flat resources before copying", async () => {

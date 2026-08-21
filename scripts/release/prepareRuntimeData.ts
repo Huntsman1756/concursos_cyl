@@ -45,6 +45,10 @@ export interface PrepareRuntimeDataOptions {
   target: string;
 }
 
+interface PrepareRuntimeDataDependencies {
+  rename: typeof rename;
+}
+
 export interface PreparedRuntimeData {
   snapshotIds: string[];
 }
@@ -271,7 +275,9 @@ async function assertReferencedResource(
   }
 }
 
-async function activeSnapshotId(source: string): Promise<string> {
+async function activeSnapshotId(
+  source: string,
+): Promise<{ references: SnapshotReference[]; snapshotId: string }> {
   const manifest = JSON.parse(
     await readFile(join(source, "v1", "manifest.json"), "utf8"),
   ) as {
@@ -279,6 +285,7 @@ async function activeSnapshotId(source: string): Promise<string> {
     resourceSnapshots?: unknown;
   };
   const addressedIds = new Set<string>();
+  const references: SnapshotReference[] = [];
   if (manifest.snapshotId !== undefined) {
     if (
       typeof manifest.snapshotId !== "string" ||
@@ -323,20 +330,89 @@ async function activeSnapshotId(source: string): Promise<string> {
           `The runtime manifest resourceSnapshots.${key}.resourcePath is invalid.`,
         );
       }
+      references.push(reference);
       addressedIds.add(reference.snapshotId);
     }
   }
   if (addressedIds.size !== 1) {
     throw new Error("The runtime manifest must address exactly one snapshot.");
   }
-  return [...addressedIds][0]!;
+  return { references, snapshotId: [...addressedIds][0]! };
 }
 
-export async function prepareRuntimeData({
-  root,
-  source,
-  target,
-}: PrepareRuntimeDataOptions): Promise<PreparedRuntimeData> {
+async function lstatIfPresent(path: string) {
+  try {
+    return await lstat(path);
+  } catch (error) {
+    if ((error as NodeJS.ErrnoException).code === "ENOENT") return undefined;
+    throw error;
+  }
+}
+
+async function atomicallyReplaceRuntimeTarget(
+  temporaryTarget: string,
+  targetPath: string,
+  renameOperation: typeof rename,
+): Promise<void> {
+  const backupPath = join(
+    dirname(targetPath),
+    `.${basename(targetPath)}.runtime-backup-${randomUUID()}`,
+  );
+  let targetBackedUp = false;
+
+  try {
+    const targetStat = await lstatIfPresent(targetPath);
+    if (targetStat?.isSymbolicLink()) {
+      throw new Error(
+        `Runtime target must not be a symbolic link: ${targetPath}.`,
+      );
+    }
+    if (await lstatIfPresent(backupPath)) {
+      throw new Error(
+        `Runtime target backup path already exists: ${backupPath}.`,
+      );
+    }
+
+    if (targetStat) {
+      await renameOperation(targetPath, backupPath);
+      targetBackedUp = true;
+    }
+
+    try {
+      await renameOperation(temporaryTarget, targetPath);
+    } catch (error) {
+      if (targetBackedUp) {
+        try {
+          await renameOperation(backupPath, targetPath);
+          targetBackedUp = false;
+        } catch (restoreError) {
+          throw new AggregateError(
+            [error, restoreError],
+            "Failed to install runtime data and restore the previous target.",
+            { cause: restoreError },
+          );
+        }
+      }
+      throw error;
+    }
+
+    if (targetBackedUp) {
+      await rm(backupPath, { recursive: true, force: true });
+      targetBackedUp = false;
+    }
+  } finally {
+    if (!targetBackedUp) {
+      await rm(backupPath, { recursive: true, force: true });
+    }
+  }
+}
+
+export async function prepareRuntimeData(
+  { root, source, target }: PrepareRuntimeDataOptions,
+  { rename: renameOperation = rename }: PrepareRuntimeDataDependencies = {
+    rename,
+  },
+): Promise<PreparedRuntimeData> {
   const { sourcePath, targetPath } = await assertDistinctPaths(source, target);
 
   const snapshotsSource = join(sourcePath, "v1", "snapshots");
@@ -347,16 +423,21 @@ export async function prepareRuntimeData({
       )
       .map((entry) => entry.name),
   );
-  const active = await activeSnapshotId(sourcePath);
+  const { references: activeManifestReferences, snapshotId: active } =
+    await activeSnapshotId(sourcePath);
   if (!availableSnapshotIds.has(active)) {
     throw new Error(`Active runtime snapshot is missing: ${active}.`);
   }
 
   const referencedResources = await referencedSnapshotResources(resolve(root));
+  const allReferencedResources = [
+    ...activeManifestReferences,
+    ...referencedResources,
+  ];
   const referenced = new Set(
-    referencedResources.map((reference) => reference.snapshotId),
+    allReferencedResources.map((reference) => reference.snapshotId),
   );
-  for (const reference of referencedResources) {
+  for (const reference of allReferencedResources) {
     if (!availableSnapshotIds.has(reference.snapshotId)) {
       throw new Error(
         `Referenced runtime snapshot is missing: ${reference.snapshotId}.`,
@@ -380,6 +461,12 @@ export async function prepareRuntimeData({
   );
 
   await mkdir(dirname(targetPath), { recursive: true });
+  const targetStat = await lstatIfPresent(targetPath);
+  if (targetStat?.isSymbolicLink()) {
+    throw new Error(
+      `Runtime target must not be a symbolic link: ${targetPath}.`,
+    );
+  }
   try {
     await cp(sourcePath, temporaryTarget, {
       recursive: true,
@@ -398,8 +485,11 @@ export async function prepareRuntimeData({
       );
     }
 
-    await rm(targetPath, { recursive: true, force: true });
-    await rename(temporaryTarget, targetPath);
+    await atomicallyReplaceRuntimeTarget(
+      temporaryTarget,
+      targetPath,
+      renameOperation,
+    );
   } catch (error) {
     await rm(temporaryTarget, { recursive: true, force: true });
     throw error;
