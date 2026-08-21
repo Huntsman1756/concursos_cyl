@@ -6,6 +6,7 @@ import {
   mkdtemp,
   readFile,
   readdir,
+  realpath,
   rename,
   rm,
   symlink,
@@ -40,7 +41,10 @@ import { assertPublicSnapshotDistribution } from "./validatePublicDistribution";
 const temporaryRoots: string[] = [];
 
 async function temporaryRoot(): Promise<string> {
-  const root = await mkdtemp(join(tmpdir(), "salida-cyl-task-6-"));
+  const physicalTemporaryDirectory = await realpath(tmpdir());
+  const root = await mkdtemp(
+    join(physicalTemporaryDirectory, "salida-cyl-task-6-"),
+  );
   temporaryRoots.push(root);
   return root;
 }
