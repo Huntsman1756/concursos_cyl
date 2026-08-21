@@ -49,7 +49,11 @@ esac
 }
 
 function runWithDeploymentFakes(options: {
+  observedSha?: string;
+  observedTarget?: string;
+  scpExit?: number;
   sshExit?: number;
+  sshMode?: "release-exists";
   verifyExit?: number;
 }) {
   const sandbox = mkdtempSync(join(tmpdir(), "cyl-vps-deployment-"));
@@ -91,11 +95,11 @@ printf '{"schemaVersion":"1.0.0","commit":"%s"}\\n' "$3" > "$2/version.json"
   writeExecutable(join(fakeBin, "tar"), '#!/bin/sh\n: > "$2"\n');
   writeExecutable(
     join(fakeBin, "scp"),
-    "#!/bin/sh\nprintf '%s\\n' scp >> \"$TRACE_FILE\"\nexit 0\n",
+    '#!/bin/sh\nprintf \'%s\\n\' scp >> "$TRACE_FILE"\nexit "${SCP_EXIT:-0}"\n',
   );
   writeExecutable(
     join(fakeBin, "ssh"),
-    '#!/bin/sh\nprintf \'%s\\n\' "$*" > "$SSH_COMMAND_FILE"\nexit "${SSH_EXIT:-0}"\n',
+    '#!/bin/sh\nprintf \'%s\\n\' "$*" >> "$SSH_COMMAND_FILE"\ncase "${SSH_MODE:-}" in\n  release-exists) exit 17;;\nesac\ncase "$*" in\n  *version.json*) printf \'%s\\n\' "${OBSERVED_SHA:-}";;\n  *readlink*) printf \'%s\\n\' "${OBSERVED_TARGET:-}";;\nesac\nexit "${SSH_EXIT:-0}"\n',
   );
 
   const result = spawnSync("sh", [scriptPath, "salida-cyl-vps", "round-1"], {
@@ -105,8 +109,12 @@ printf '{"schemaVersion":"1.0.0","commit":"%s"}\\n' "$3" > "$2/version.json"
       CADDY_VERIFY_EXIT: String(options.verifyExit ?? 0),
       FIXTURE_ROOT: fixtureRoot,
       PATH: `${fakeBin}:${process.env.PATH ?? ""}`,
+      OBSERVED_SHA: options.observedSha ?? "",
+      OBSERVED_TARGET: options.observedTarget ?? "",
       SSH_COMMAND_FILE: sshCommandFile,
       SSH_EXIT: String(options.sshExit ?? 0),
+      SSH_MODE: options.sshMode ?? "",
+      SCP_EXIT: String(options.scpExit ?? 0),
       TRACE_FILE: traceFile,
     },
   });
@@ -186,14 +194,15 @@ describe("VPS deployment", () => {
       "tar -xzf",
       "chown -R",
       "test -f",
+      "mv -Tf '$REMOTE_STAGING' '$REMOTE_RELEASE'",
       "ln -sfn",
-      "mv -Tf",
+      "mv -Tf '/srv/salida-cyl/current.next' '/srv/salida-cyl/current'",
       "rm -f '$REMOTE_ARCHIVE'",
       "tail -n +6",
       "systemctl reload caddy",
     ];
     const remoteSection = deployScript.slice(
-      deployScript.indexOf('ssh "$SSH_HOST"'),
+      deployScript.indexOf('ssh "$SSH_HOST" "set -eu'),
     );
     let previousIndex = -1;
     for (const command of remoteCommands) {
@@ -247,13 +256,18 @@ describe("VPS deployment", () => {
     expect(result.stderr).toContain(
       "expected commit aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
     );
-    expect(result.stderr).toContain("current activation state");
+    expect(result.stderr).toContain("observed SHA: unknown");
+    expect(result.stderr).toContain("current activation state: unknown");
     expect(sshCommand).toContain("trap remote_cleanup EXIT");
     expect(sshCommand).toContain("rm -f -- '/tmp/salida-cyl-round-1.tar.gz'");
   });
 
   it("reports the active release when live verification fails", () => {
-    const { result } = runWithDeploymentFakes({ verifyExit: 31 });
+    const { result } = runWithDeploymentFakes({
+      observedSha: "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+      observedTarget: "/srv/salida-cyl/releases/round-1",
+      verifyExit: 31,
+    });
 
     expect(result.status).toBe(1);
     expect(result.stderr).toContain(
@@ -263,7 +277,48 @@ describe("VPS deployment", () => {
       "expected commit aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
     );
     expect(result.stderr).toContain(
+      "observed SHA: bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+    );
+    expect(result.stderr).toContain(
       "current activation state: release round-1",
     );
+  });
+
+  it("refuses an existing remote release before extracting into staging", () => {
+    const { result, sshCommand } = runWithDeploymentFakes({
+      sshMode: "release-exists",
+    });
+
+    expect(result.status).toBe(1);
+    const releaseGuard = sshCommand.indexOf(
+      "test -e '/srv/salida-cyl/releases/round-1'",
+    );
+    const extraction = sshCommand.indexOf(
+      "tar -xzf '/tmp/salida-cyl-round-1.tar.gz'",
+    );
+    expect(releaseGuard).toBeGreaterThan(-1);
+    expect(sshCommand).toContain("test -L '/srv/salida-cyl/releases/round-1'");
+    expect(sshCommand).toContain("/srv/salida-cyl/releases/.staging-round-1");
+    expect(sshCommand).toContain(
+      "tar -xzf '/tmp/salida-cyl-round-1.tar.gz' -C '/srv/salida-cyl/releases/.staging-round-1'",
+    );
+    expect(sshCommand).toContain(
+      "test -e '/srv/salida-cyl/releases/.staging-round-1'",
+    );
+    expect(extraction).toBeGreaterThan(releaseGuard);
+  });
+
+  it("attempts only bounded remote archive cleanup when scp fails", () => {
+    const { result, sshCommand } = runWithDeploymentFakes({
+      scpExit: 19,
+      sshExit: 31,
+    });
+
+    expect(result.status).toBe(1);
+    expect(result.stderr).toContain(
+      "Archive upload failed for release round-1",
+    );
+    expect(sshCommand).toContain("rm -f -- '/tmp/salida-cyl-round-1.tar.gz'");
+    expect(sshCommand).not.toContain("REMOTE_STAGING");
   });
 });

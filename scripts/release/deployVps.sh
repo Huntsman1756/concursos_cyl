@@ -56,8 +56,12 @@ fi
 DIST="$ROOT/dist"
 REMOTE_ARCHIVE="/tmp/salida-cyl-$RELEASE_ID.tar.gz"
 REMOTE_RELEASE="/srv/salida-cyl/releases/$RELEASE_ID"
+REMOTE_STAGING="/srv/salida-cyl/releases/.staging-$RELEASE_ID"
+REMOTE_CURRENT="/srv/salida-cyl/current"
 PUBLIC_URL=${CADDY_SMOKE_BASE_URL:-https://salida-cyl.157-90-22-40.sslip.io}
 ARCHIVE=
+LIVE_OBSERVED_SHA=unknown
+LIVE_CURRENT_ACTIVATION_STATE=unknown
 
 cleanup() {
   if [ -n "$ARCHIVE" ]; then
@@ -65,6 +69,41 @@ cleanup() {
   fi
 }
 trap cleanup EXIT
+
+normalise_sha() {
+  value=${1:-}
+  if [ "${#value}" -eq 40 ]; then
+    case "$value" in
+      *[!0-9a-f]*) ;;
+      *) printf '%s\n' "$value"; return 0;;
+    esac
+  fi
+  printf '%s\n' unknown
+}
+
+normalise_current_state() {
+  case "${1:-}" in
+    "$REMOTE_RELEASE") printf 'release %s\n' "$RELEASE_ID";;
+    unknown|'') printf '%s\n' unknown;;
+    *) printf '%s\n' other;;
+  esac
+}
+
+observe_current_state() {
+  observed_sha_raw=$(ssh "$SSH_HOST" "if test -f '$REMOTE_CURRENT/version.json'; then
+sed -n -E 's/.*\"commit\"[[:space:]]*:[[:space:]]*\"([0-9a-f]{40})\".*/\1/p' '$REMOTE_CURRENT/version.json' | head -n 1
+else
+printf '%s\\n' unknown
+fi" 2>/dev/null) || observed_sha_raw=unknown
+  LIVE_OBSERVED_SHA=$(normalise_sha "$observed_sha_raw")
+
+  current_target_raw=$(ssh "$SSH_HOST" "if test -L '$REMOTE_CURRENT'; then
+readlink '$REMOTE_CURRENT'
+else
+printf '%s\\n' unknown
+fi" 2>/dev/null) || current_target_raw=unknown
+  LIVE_CURRENT_ACTIVATION_STATE=$(normalise_current_state "$current_target_raw")
+}
 
 export VITE_PUBLIC_BASE_PATH="/"
 npm ci
@@ -83,18 +122,34 @@ fi
 ARCHIVE=$(mktemp "${TMPDIR:-/tmp}/salida-cyl-${RELEASE_ID}.tar.gz.XXXXXX")
 tar -czf "$ARCHIVE" -C "$DIST" .
 
-scp "$ARCHIVE" "$SSH_HOST:$REMOTE_ARCHIVE"
+if scp "$ARCHIVE" "$SSH_HOST:$REMOTE_ARCHIVE"; then
+  :
+else
+  ssh "$SSH_HOST" "rm -f -- '$REMOTE_ARCHIVE'" >/dev/null 2>&1 || :
+  echo "Archive upload failed for release $RELEASE_ID (expected commit $COMMIT; remote archive cleanup was attempted)." >&2
+  exit 1
+fi
 
 if ssh "$SSH_HOST" "set -eu
 remote_cleanup() {
   rm -f -- '$REMOTE_ARCHIVE'
+  rm -rf -- '$REMOTE_STAGING'
 }
 trap remote_cleanup EXIT
-install -d -o caddy -g caddy -m 0755 '$REMOTE_RELEASE'
-tar -xzf '$REMOTE_ARCHIVE' -C '$REMOTE_RELEASE'
-chown -R caddy:caddy '$REMOTE_RELEASE'
-test -f '$REMOTE_RELEASE/index.html'
-test -f '$REMOTE_RELEASE/version.json'
+if test -e '$REMOTE_RELEASE' || test -L '$REMOTE_RELEASE'; then
+  echo 'Release already exists; refusing to mutate it.' >&2
+  exit 1
+fi
+if test -e '$REMOTE_STAGING' || test -L '$REMOTE_STAGING'; then
+  echo 'Release staging path already exists; refusing to mutate it.' >&2
+  exit 1
+fi
+install -d -o caddy -g caddy -m 0755 '$REMOTE_STAGING'
+tar -xzf '$REMOTE_ARCHIVE' -C '$REMOTE_STAGING'
+chown -R caddy:caddy '$REMOTE_STAGING'
+test -f '$REMOTE_STAGING/index.html'
+test -f '$REMOTE_STAGING/version.json'
+mv -Tf '$REMOTE_STAGING' '$REMOTE_RELEASE'
 ln -sfn '$REMOTE_RELEASE' '/srv/salida-cyl/current.next'
 mv -Tf '/srv/salida-cyl/current.next' '/srv/salida-cyl/current'
 rm -f '$REMOTE_ARCHIVE'
@@ -102,7 +157,8 @@ find '/srv/salida-cyl/releases' -mindepth 1 -maxdepth 1 -type d -printf '%T@ %p\
 systemctl reload caddy"; then
   :
 else
-  echo "Remote activation failed for release $RELEASE_ID (expected commit $COMMIT; current activation state: release may be active after atomic switch)." >&2
+  observe_current_state
+  echo "Remote activation failed for release $RELEASE_ID (expected commit $COMMIT; observed SHA: $LIVE_OBSERVED_SHA; current activation state: $LIVE_CURRENT_ACTIVATION_STATE)." >&2
   exit 1
 fi
 
@@ -111,7 +167,8 @@ export CADDY_SMOKE_BASE_URL="$PUBLIC_URL"
 if npm run release:caddy:verify; then
   :
 else
-  echo "Live deployment verification failed for release $RELEASE_ID (expected commit $COMMIT; current activation state: release $RELEASE_ID)." >&2
+  observe_current_state
+  echo "Live deployment verification failed for release $RELEASE_ID (expected commit $COMMIT; observed SHA: $LIVE_OBSERVED_SHA; current activation state: $LIVE_CURRENT_ACTIVATION_STATE)." >&2
   exit 1
 fi
 
