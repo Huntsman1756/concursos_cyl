@@ -85,6 +85,14 @@ describe("GitHub Pages deployment workflow", () => {
     expect(deployJob).not.toContain("contents: read");
   });
 
+  it("publishes Pages for pushes and manual dispatches, but not pull requests", async () => {
+    const workflow = await readFile(workflowPath, "utf8");
+    const deployJob = workflow.slice(workflow.indexOf("  deploy:"));
+
+    expect(workflow).toContain("workflow_dispatch:");
+    expect(deployJob).toContain("if: github.event_name != 'pull_request'");
+  });
+
   it("verifies Caddy headers against the running release container", async () => {
     const workflow = await readFile(workflowPath, "utf8");
     expect(workflow).toContain("docker build -t salida-cyl:ci .");
