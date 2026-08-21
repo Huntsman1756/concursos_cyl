@@ -18,14 +18,14 @@ El grafo revisado se devuelve a la comunidad como dataset derivado descargable e
 
 ## Cobertura congelada
 
-- Instantánea publicada: `20260821120933391-9bd4488f9029`.
+- Instantánea publicada: `20260821144454118-a56e3eeaffa6`.
 - Grupos primarios CNO-11 consultables: **502**.
-- **77 cualificaciones distintas**.
-- Claves de modalidad públicas: **93** (ADG01B, ADG01M, ADG01MD, ADG01S, ADG02S, ADG02SD, AFD01S, AFD01SD, AFD02M, AFD02S, AFD02SD, AGA01B, AGA03S, AGA04M, COM01B, COM01M, COM02M, COM02S, COM02SD, COM03S, COM04S, COM04SD, ELE01B, ELE01M, ELE01S, ELE02M, ELE02S, ELE03S, ELE04S, ENA03S, EOC01M, EOC02S, EOC02SD, FME01B, FME01M, FME01S, FME02B, FME02M, FME02S, FME03S, HOT01B, HOT01M, HOT01S, HOT02M, HOT02S, HOT03S, HOT04S, HOT05S, IFC01B, IFC01MD, IFC01S, IFC01SD, IFC02B, IFC02S, IFC02SD, IFC03S, IFC03SD, IMA02M, IMA03M, IMA03S, IMP01B, IMP01M, IMP01S, IMP02M, IMP02MD, IMP02S, INA02S, MAM01B, MAM01M, QUI01S, QUI02M, SAN02M, SAN04S, SAN07S, SAN07SD, SAN08S, SAN08SD, SAN09S, SAN09SD, SAN21, SEA03S, SSC01M, SSC01S, SSC01SD, SSC02S, SSC03S, SSC03SD, SSC05S, TMV01B, TMV01M, TMV01S, TMV02M, TMV03E).
-- Relaciones ocupacionales aprobadas: **196**.
+- **81 cualificaciones distintas**.
+- Claves de modalidad públicas: **97** (ADG01B, ADG01M, ADG01MD, ADG01S, ADG02S, ADG02SD, AFD01S, AFD01SD, AFD02M, AFD02S, AFD02SD, AGA01B, AGA01M, AGA02M, AGA03B, AGA03S, AGA04M, COM01B, COM01M, COM02M, COM02S, COM02SD, COM03S, COM04S, COM04SD, ELE01B, ELE01M, ELE01S, ELE02M, ELE02S, ELE03S, ELE04S, ENA03S, EOC01M, EOC02S, EOC02SD, FME01B, FME01M, FME01S, FME02B, FME02M, FME02S, FME03S, HOT01B, HOT01M, HOT01S, HOT02M, HOT02S, HOT03S, HOT04S, HOT05S, IFC01B, IFC01MD, IFC01S, IFC01SD, IFC02B, IFC02S, IFC02SD, IFC03S, IFC03SD, IMA02M, IMA03M, IMA03S, IMP01B, IMP01M, IMP01S, IMP02M, IMP02MD, IMP02S, INA01S, INA02S, MAM01B, MAM01M, QUI01S, QUI02M, SAN02M, SAN04S, SAN07S, SAN07SD, SAN08S, SAN08SD, SAN09S, SAN09SD, SAN21, SEA03S, SSC01M, SSC01S, SSC01SD, SSC02S, SSC03S, SSC03SD, SSC05S, TMV01B, TMV01M, TMV01S, TMV02M, TMV03E).
+- Relaciones ocupacionales aprobadas: **213**.
 - Alias aprobados: **21**.
 - **39 de las 1.055 ofertas de la instantánea** quedan alcanzadas por relaciones publicadas (unión de IDs).
-- Relaciones revisadas sin oferta alcanzada: **193**.
+- Relaciones revisadas sin oferta alcanzada: **210**.
 - Programas diferidos por evidencia insuficiente: ninguno.
 
 Las claves de modalidad se informan aparte de las identidades de cualificación. Una relación revisada sin coincidencia no se convierte en una afirmación sobre la ausencia de oportunidades; un programa diferido permanece fuera de las afirmaciones revisadas.
