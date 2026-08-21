@@ -80,7 +80,14 @@ async function withTimeout<T>(
   timeoutMs: number,
   controller: AbortController,
   description: string,
+  onLateValue?: (value: T) => void,
 ): Promise<T> {
+  void operation.then(
+    (value) => {
+      if (controller.signal.aborted) onLateValue?.(value);
+    },
+    () => undefined,
+  );
   let timeout: ReturnType<typeof setTimeout> | undefined;
   const deadline = new Promise<never>((_, reject) => {
     timeout = setTimeout(() => {
@@ -132,17 +139,28 @@ async function fetchResponse(
   requestTimeoutMs: number,
 ): Promise<ResponseContext> {
   const controller = new AbortController();
+  let fetchPromise: Promise<Response>;
+  try {
+    fetchPromise = request(url, {
+      redirect: "error",
+      signal: controller.signal,
+    });
+  } catch (error) {
+    controller.abort();
+    throw error;
+  }
   const response = await withTimeout(
-    request(url, { redirect: "error", signal: controller.signal }),
+    fetchPromise,
     requestTimeoutMs,
     controller,
     description,
+    cancelResponseBody,
   );
   try {
     assertResponseUrl(response, url, description);
   } catch (error) {
-    await cancelResponseBody(response);
     controller.abort();
+    cancelResponseBody(response);
     throw error;
   }
   return { response, controller };
@@ -161,8 +179,8 @@ async function requiredResponse(
     requestTimeoutMs,
   );
   if (context.response.status !== 200) {
-    await cancelResponseBody(context.response);
     context.controller.abort();
+    cancelResponseBody(context.response);
     throw new Error(
       `Pages ${description} at ${url.pathname} returned HTTP ${context.response.status}.`,
     );
@@ -170,11 +188,15 @@ async function requiredResponse(
   return context;
 }
 
-async function cancelResponseBody(response: Response): Promise<void> {
+function cancelResponseBody(response: Response): void {
+  let cancellation: Promise<unknown> | undefined;
   try {
-    await response.body?.cancel();
+    cancellation = response.body?.cancel();
   } catch {
     // The body can already be locked or consumed; the controller still aborts it.
+  }
+  if (cancellation !== undefined) {
+    void cancellation.catch(() => undefined);
   }
 }
 
@@ -191,7 +213,8 @@ async function readResponseText(
       `${description} body`,
     );
   } catch (error) {
-    await cancelResponseBody(context.response);
+    context.controller.abort();
+    cancelResponseBody(context.response);
     throw error;
   } finally {
     context.controller.abort();
@@ -370,8 +393,8 @@ async function verifyOnce(
     deepLinkContext.response.status !== 200 &&
     deepLinkContext.response.status !== 404
   ) {
-    await cancelResponseBody(deepLinkContext.response);
     deepLinkContext.controller.abort();
+    cancelResponseBody(deepLinkContext.response);
     throw new Error(
       `Pages /comparar returned HTTP ${deepLinkContext.response.status} at ${deepLinkUrl.pathname}.`,
     );

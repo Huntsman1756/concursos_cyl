@@ -335,7 +335,7 @@ describe("verifyPagesDeployment", () => {
     const response = responseFor("index.html", {
       body: '<!doctype html><html><head><title>SALIDA CyL</title></head><body><div id="root"></div></body></html>',
     });
-    const cancel = vi.fn(async () => undefined);
+    const cancel = vi.fn(() => new Promise<void>(() => undefined));
     let aborted = false;
     const fetchImpl: FetchImpl = async (_input, init) => {
       init?.signal?.addEventListener("abort", () => {
@@ -387,5 +387,41 @@ describe("verifyPagesDeployment", () => {
         retryDelayMs: 0,
       }),
     ).rejects.toThrow(/same-origin|redirect/iu);
+  });
+
+  it("retries while cleaning up a late response from a signal-ignoring fetch", async () => {
+    const lateCancel = vi.fn(async () => undefined);
+    let rootCalls = 0;
+    const fetchImpl: FetchImpl = async (input) => {
+      const path = new URL(input).pathname;
+      if (path === "/concursos_cyl/" && rootCalls++ === 0) {
+        return new Promise<Response>((resolve) => {
+          setTimeout(() => {
+            const response = responseFor("index.html", {
+              body: '<!doctype html><html><head><title>SALIDA CyL</title></head><body><div id="root"></div></body></html>',
+            });
+            Object.defineProperty(response, "body", {
+              configurable: true,
+              value: { cancel: lateCancel },
+            });
+            resolve(response);
+          }, 20);
+        });
+      }
+      return successfulFetch()(input);
+    };
+
+    await expect(
+      verifyPagesDeployment({
+        baseUrl,
+        expectedCommit,
+        fetchImpl,
+        attempts: 2,
+        retryDelayMs: 0,
+        requestTimeoutMs: 5,
+      }),
+    ).resolves.toBeUndefined();
+    await new Promise((resolve) => setTimeout(resolve, 30));
+    expect(lateCancel).toHaveBeenCalledOnce();
   });
 });
