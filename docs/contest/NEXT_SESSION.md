@@ -3,7 +3,7 @@
 ## Estado confirmado
 
 - Producto publicado y verificado en `dfa2a33d612c0f1d3a2cb5a4b7748e697da35c93`.
-- Freeze fuente: `d50bca93b05da77696cf403e59047606d11515c9`.
+- Freeze fuente: `9a9b40037c7506a787a6db0af5a7c41dab2bbeaa`.
 - Snapshot activo: `20260821054822692-00c61c822d41`.
 - Ocho datasets JCyL visibles y 20 recursos inmutables en el manifiesto.
 - Cobertura: 55 cualificaciones, 67 claves de modalidad, 124 relaciones aprobadas y 21 alias.
