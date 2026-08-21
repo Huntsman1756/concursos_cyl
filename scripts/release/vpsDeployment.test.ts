@@ -1,10 +1,119 @@
 import { spawnSync } from "node:child_process";
-import { readFileSync } from "node:fs";
-import { resolve } from "node:path";
+import {
+  chmodSync,
+  mkdtempSync,
+  mkdirSync,
+  readFileSync,
+  rmSync,
+  writeFileSync,
+} from "node:fs";
+import { tmpdir } from "node:os";
+import { join, resolve } from "node:path";
 
 import { describe, expect, it } from "vitest";
 
 const root = resolve(import.meta.dirname, "../..");
+const scriptPath = resolve(root, "scripts/release/deployVps.sh");
+
+function writeExecutable(path: string, contents: string): void {
+  writeFileSync(path, contents, "utf8");
+  chmodSync(path, 0o755);
+}
+
+function runWithValidationFakes(args: string[]) {
+  const fakeBin = mkdtempSync(join(tmpdir(), "cyl-vps-validation-"));
+  writeExecutable(
+    join(fakeBin, "git"),
+    `#!/bin/sh
+case "$*" in
+  *--show-toplevel*) printf '%s\\n' '${root}';;
+  *'rev-parse HEAD'*) printf '%s\\n' 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa';;
+  *'status --porcelain'*) exit 0;;
+  *) exit 1;;
+esac
+`,
+  );
+  writeExecutable(join(fakeBin, "npm"), "#!/bin/sh\nexit 77\n");
+
+  try {
+    return spawnSync("sh", [scriptPath, ...args], {
+      encoding: "utf8",
+      env: {
+        ...process.env,
+        PATH: `${fakeBin}:${process.env.PATH ?? ""}`,
+      },
+    });
+  } finally {
+    rmSync(fakeBin, { force: true, recursive: true });
+  }
+}
+
+function runWithDeploymentFakes(options: {
+  sshExit?: number;
+  verifyExit?: number;
+}) {
+  const sandbox = mkdtempSync(join(tmpdir(), "cyl-vps-deployment-"));
+  const fakeBin = join(sandbox, "bin");
+  const fixtureRoot = join(sandbox, "root");
+  const traceFile = join(sandbox, "trace");
+  const sshCommandFile = join(sandbox, "ssh-command");
+  mkdirSync(fakeBin);
+  mkdirSync(join(fixtureRoot, "node_modules", ".bin"), { recursive: true });
+
+  writeExecutable(
+    join(fakeBin, "git"),
+    `#!/bin/sh
+case "$*" in
+  *--show-toplevel*) printf '%s\\n' "$FIXTURE_ROOT";;
+  *'rev-parse HEAD'*) printf '%s\\n' 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa';;
+  *'status --porcelain'*) exit 0;;
+  *) exit 1;;
+esac
+`,
+  );
+  writeExecutable(
+    join(fakeBin, "npm"),
+    `#!/bin/sh
+case "$*" in
+  ci) exit 0;;
+  'run build') mkdir -p dist; printf '%s\\n' '<html></html>' > dist/index.html; exit 0;;
+  'run release:caddy:verify') exit "\${CADDY_VERIFY_EXIT:-0}";;
+  *) exit 1;;
+esac
+`,
+  );
+  writeExecutable(
+    join(fixtureRoot, "node_modules", ".bin", "tsx"),
+    `#!/bin/sh
+printf '{"schemaVersion":"1.0.0","commit":"%s"}\\n' "$3" > "$2/version.json"
+`,
+  );
+  writeExecutable(join(fakeBin, "tar"), '#!/bin/sh\n: > "$2"\n');
+  writeExecutable(
+    join(fakeBin, "scp"),
+    "#!/bin/sh\nprintf '%s\\n' scp >> \"$TRACE_FILE\"\nexit 0\n",
+  );
+  writeExecutable(
+    join(fakeBin, "ssh"),
+    '#!/bin/sh\nprintf \'%s\\n\' "$*" > "$SSH_COMMAND_FILE"\nexit "${SSH_EXIT:-0}"\n',
+  );
+
+  const result = spawnSync("sh", [scriptPath, "salida-cyl-vps", "round-1"], {
+    encoding: "utf8",
+    env: {
+      ...process.env,
+      CADDY_VERIFY_EXIT: String(options.verifyExit ?? 0),
+      FIXTURE_ROOT: fixtureRoot,
+      PATH: `${fakeBin}:${process.env.PATH ?? ""}`,
+      SSH_COMMAND_FILE: sshCommandFile,
+      SSH_EXIT: String(options.sshExit ?? 0),
+      TRACE_FILE: traceFile,
+    },
+  });
+  const sshCommand = readFileSync(sshCommandFile, "utf8");
+  rmSync(sandbox, { force: true, recursive: true });
+  return { result, sshCommand };
+}
 
 describe("VPS deployment", () => {
   it("serves the root build with HTTPS, SPA fallback and hardened headers", () => {
@@ -59,7 +168,9 @@ describe("VPS deployment", () => {
     expect(deployScript).toContain("npm run build");
     expect(deployScript).toContain("writeVersionMetadata.ts");
     expect(deployScript).toContain("mktemp");
+    expect(deployScript).toMatch(/mktemp "[^"\n]*\.tar\.gz\.XXXXXX"/);
     expect(deployScript).toContain("trap cleanup EXIT");
+    expect(deployScript).toContain("trap remote_cleanup EXIT");
     expect(deployScript).toContain("scp");
     expect(deployScript).toContain("test -f");
     expect(deployScript).toContain("index.html");
@@ -77,7 +188,7 @@ describe("VPS deployment", () => {
       "test -f",
       "ln -sfn",
       "mv -Tf",
-      "rm -f",
+      "rm -f '$REMOTE_ARCHIVE'",
       "tail -n +6",
       "systemctl reload caddy",
     ];
@@ -96,12 +207,63 @@ describe("VPS deployment", () => {
   });
 
   it("rejects an unsafe SSH host before attempting deployment", () => {
-    const scriptPath = resolve(root, "scripts/release/deployVps.sh");
     const result = spawnSync("sh", [scriptPath, "host with spaces"], {
       encoding: "utf8",
     });
 
     expect(result.status).toBe(1);
     expect(result.stderr).toContain("SSH host contains unsupported characters");
+  });
+
+  it.each(["-salida-cyl-vps", "-", "--host"])(
+    "rejects SSH hosts beginning with '-' (%s)",
+    (host) => {
+      const result = runWithValidationFakes([host]);
+
+      expect(result.status).toBe(1);
+      expect(result.stderr).toContain("SSH host must not start with '-'");
+    },
+  );
+
+  it.each([".", "..", "../release", "release/../current", "..\\release"])(
+    "rejects traversal-like release IDs (%s)",
+    (releaseId) => {
+      const result = runWithValidationFakes(["salida-cyl-vps", releaseId]);
+
+      expect(result.status).toBe(1);
+      expect(result.stderr).toContain(
+        "Release ID contains unsupported characters",
+      );
+    },
+  );
+
+  it("reports release, expected commit and activation state when remote activation fails", () => {
+    const { result, sshCommand } = runWithDeploymentFakes({ sshExit: 23 });
+
+    expect(result.status).toBe(1);
+    expect(result.stderr).toContain(
+      "Remote activation failed for release round-1",
+    );
+    expect(result.stderr).toContain(
+      "expected commit aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    );
+    expect(result.stderr).toContain("current activation state");
+    expect(sshCommand).toContain("trap remote_cleanup EXIT");
+    expect(sshCommand).toContain("rm -f -- '/tmp/salida-cyl-round-1.tar.gz'");
+  });
+
+  it("reports the active release when live verification fails", () => {
+    const { result } = runWithDeploymentFakes({ verifyExit: 31 });
+
+    expect(result.status).toBe(1);
+    expect(result.stderr).toContain(
+      "Live deployment verification failed for release round-1",
+    );
+    expect(result.stderr).toContain(
+      "expected commit aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    );
+    expect(result.stderr).toContain(
+      "current activation state: release round-1",
+    );
   });
 });

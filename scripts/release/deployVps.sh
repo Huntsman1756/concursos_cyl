@@ -11,6 +11,10 @@ SSH_HOST=${1:-mcpspain-official-sources-vps}
 RELEASE_ID=${2:-}
 
 case "$SSH_HOST" in
+  -*)
+    echo "SSH host must not start with '-'." >&2
+    exit 1
+    ;;
   ''|*[!A-Za-z0-9._-]*)
     echo "SSH host contains unsupported characters." >&2
     exit 1
@@ -37,7 +41,7 @@ if [ -z "$RELEASE_ID" ]; then
   RELEASE_ID="$(date -u +%Y%m%d%H%M%S)-$COMMIT"
 fi
 case "$RELEASE_ID" in
-  ''|*[!A-Za-z0-9._-]*)
+  ''|'.'|'..'|*[!A-Za-z0-9._-]*)
     echo "Release ID contains unsupported characters." >&2
     exit 1
     ;;
@@ -76,12 +80,16 @@ fi
   "$DIST" \
   "$COMMIT"
 
-ARCHIVE=$(mktemp "${TMPDIR:-/tmp}/salida-cyl-${RELEASE_ID}.XXXXXX.tar.gz")
+ARCHIVE=$(mktemp "${TMPDIR:-/tmp}/salida-cyl-${RELEASE_ID}.tar.gz.XXXXXX")
 tar -czf "$ARCHIVE" -C "$DIST" .
 
 scp "$ARCHIVE" "$SSH_HOST:$REMOTE_ARCHIVE"
 
-ssh "$SSH_HOST" "set -eu
+if ssh "$SSH_HOST" "set -eu
+remote_cleanup() {
+  rm -f -- '$REMOTE_ARCHIVE'
+}
+trap remote_cleanup EXIT
 install -d -o caddy -g caddy -m 0755 '$REMOTE_RELEASE'
 tar -xzf '$REMOTE_ARCHIVE' -C '$REMOTE_RELEASE'
 chown -R caddy:caddy '$REMOTE_RELEASE'
@@ -91,10 +99,20 @@ ln -sfn '$REMOTE_RELEASE' '/srv/salida-cyl/current.next'
 mv -Tf '/srv/salida-cyl/current.next' '/srv/salida-cyl/current'
 rm -f '$REMOTE_ARCHIVE'
 find '/srv/salida-cyl/releases' -mindepth 1 -maxdepth 1 -type d -printf '%T@ %p\\n' | sort -nr | tail -n +6 | cut -d' ' -f2- | xargs -r rm -rf --
-systemctl reload caddy"
+systemctl reload caddy"; then
+  :
+else
+  echo "Remote activation failed for release $RELEASE_ID (expected commit $COMMIT; current activation state: release may be active after atomic switch)." >&2
+  exit 1
+fi
 
 export CADDY_SMOKE_EXPECTED_COMMIT="$COMMIT"
 export CADDY_SMOKE_BASE_URL="$PUBLIC_URL"
-npm run release:caddy:verify
+if npm run release:caddy:verify; then
+  :
+else
+  echo "Live deployment verification failed for release $RELEASE_ID (expected commit $COMMIT; current activation state: release $RELEASE_ID)." >&2
+  exit 1
+fi
 
 echo "Published release $RELEASE_ID at $PUBLIC_URL"
