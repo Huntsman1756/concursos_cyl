@@ -48,7 +48,9 @@
     "analysis:fp:research-queue:check": "npm test -- scripts/analysis/buildFpCoverageResearchQueue.test.ts",
     "analysis:fp:matching-evaluation": "tsx scripts/analysis/evaluateFpOfferMatching.ts --check",
     "analysis:fp:matching-evaluation:write": "tsx scripts/analysis/evaluateFpOfferMatching.ts --write",
-    "analysis:fp:matching-evaluation:check": "npm test -- scripts/analysis/evaluateFpOfferMatching.test.ts"
+    "analysis:fp:matching-evaluation:check": "npm test -- scripts/analysis/evaluateFpOfferMatching.test.ts",
+    "pilot:anonymous:test": "vitest run scripts/pilot/validateAnonymousPilot.test.ts",
+    "pilot:anonymous:validate": "tsx scripts/pilot/validateAnonymousPilot.ts"
   },
   "keywords": [],
   "author": "",
