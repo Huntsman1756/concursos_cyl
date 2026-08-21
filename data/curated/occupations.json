@@ -1231,5 +1231,82 @@
     "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
     "reviewedAt": "2026-08-21",
     "catalogVersion": "1.0.0"
+  },
+  {
+    "occupationId": "occupation:cno11:3141",
+    "preferredLabel": "Técnicos en ciencias biológicas (excepto en áreas sanitarias)",
+    "confirmationLabel": "Técnicos en ciencias biológicas (excepto en áreas sanitarias)",
+    "classificationSystem": "CNO-11",
+    "classificationCode": "3141",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+    "reviewedAt": "2026-08-21",
+    "catalogVersion": "1.0.0"
+  },
+  {
+    "occupationId": "occupation:cno11:3316",
+    "preferredLabel": "Técnicos en prótesis dentales",
+    "confirmationLabel": "Técnicos en prótesis dentales",
+    "classificationSystem": "CNO-11",
+    "classificationCode": "3316",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+    "reviewedAt": "2026-08-21",
+    "catalogVersion": "1.0.0"
+  },
+  {
+    "occupationId": "occupation:cno11:3317",
+    "preferredLabel": "Técnicos en audioprótesis",
+    "confirmationLabel": "Técnicos en audioprótesis",
+    "classificationSystem": "CNO-11",
+    "classificationCode": "3317",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+    "reviewedAt": "2026-08-21",
+    "catalogVersion": "1.0.0"
+  },
+  {
+    "occupationId": "occupation:cno11:5931",
+    "preferredLabel": "Bomberos (excepto forestales)",
+    "confirmationLabel": "Bomberos (excepto forestales)",
+    "classificationSystem": "CNO-11",
+    "classificationCode": "5931",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+    "reviewedAt": "2026-08-21",
+    "catalogVersion": "1.0.0"
+  },
+  {
+    "occupationId": "occupation:cno11:5932",
+    "preferredLabel": "Bomberos forestales",
+    "confirmationLabel": "Bomberos forestales",
+    "classificationSystem": "CNO-11",
+    "classificationCode": "5932",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+    "reviewedAt": "2026-08-21",
+    "catalogVersion": "1.0.0"
+  },
+  {
+    "occupationId": "occupation:cno11:5993",
+    "preferredLabel": "Agentes forestales y medioambientales",
+    "confirmationLabel": "Agentes forestales y medioambientales",
+    "classificationSystem": "CNO-11",
+    "classificationCode": "5993",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+    "reviewedAt": "2026-08-21",
+    "catalogVersion": "1.0.0"
+  },
+  {
+    "occupationId": "occupation:cno11:7403",
+    "preferredLabel": "Mecánicos y ajustadores de maquinaria agrícola e industrial",
+    "confirmationLabel": "Mecánicos y ajustadores de maquinaria agrícola e industrial",
+    "classificationSystem": "CNO-11",
+    "classificationCode": "7403",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+    "reviewedAt": "2026-08-21",
+    "catalogVersion": "1.0.0"
   }
 ]

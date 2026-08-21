@@ -15,6 +15,21 @@ const base = {
   mappingVersion: "1.0.0",
 } as const;
 
+const SECOND_PRIORITY_WAVE_KEYS = [
+  "QUI01E|3141",
+  "SAN01S|3317",
+  "SAN01SD|3317",
+  "SAN02S|3316",
+  "SAN02S|2640",
+  "SEA01M|5931",
+  "SEA01MD|5931",
+  "SEA01M|5932",
+  "SEA01MD|5932",
+  "SEA01M|5993",
+  "SEA01MD|5993",
+  "TMV03M|7403",
+] as const;
+
 describe("mergeFrontierReviewedCoverage", () => {
   it("restores the selected priority relations from a complete reviewed source", () => {
     const reviewed = ACCEPTED_RELATION_KEYS.map((key) => {
@@ -163,6 +178,9 @@ describe("mergeFrontierReviewedCoverage", () => {
         "TMV02M|7401",
       ]),
     );
+    expect(restoredKeys).toEqual(
+      expect.arrayContaining([...SECOND_PRIORITY_WAVE_KEYS]),
+    );
     expect(restoredKeys).not.toContain("COM01M|3522");
   });
 
@@ -170,6 +188,24 @@ describe("mergeFrontierReviewedCoverage", () => {
     const current: TrainingOccupationLink[] = [];
     expect(() => mergeFrontierReviewedCoverage(current, [])).toThrow(
       /Expected one approved reviewed relationship/u,
+    );
+  });
+
+  it("does not invent second priority wave relations when the reviewed source omits them", () => {
+    const waveKeys = new Set<string>(SECOND_PRIORITY_WAVE_KEYS);
+    const reviewed = ACCEPTED_RELATION_KEYS.filter(
+      (key) => !waveKeys.has(key),
+    ).map((key) => {
+      const [trainingProgramKey, classificationCode] = key.split("|");
+      return {
+        ...base,
+        trainingProgramKey,
+        occupationId: `occupation:cno11:${classificationCode}`,
+      } satisfies TrainingOccupationLink;
+    });
+
+    expect(() => mergeFrontierReviewedCoverage([], reviewed)).toThrow(
+      /QUI01E\|3141/u,
     );
   });
 

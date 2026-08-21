@@ -1383,6 +1383,13 @@ describe("curated occupation mappings", () => {
         "7705",
         "7707",
         "8193",
+        "3141",
+        "3316",
+        "3317",
+        "5931",
+        "5932",
+        "5993",
+        "7403",
       ],
     );
     expect(
@@ -1499,6 +1506,13 @@ describe("curated occupation mappings", () => {
           QUI01S: 2,
           SAN09S: 1,
           SAN09SD: 1,
+          QUI01E: 1,
+          SAN01S: 1,
+          SAN01SD: 1,
+          SAN02S: 2,
+          SEA01M: 3,
+          SEA01MD: 3,
+          TMV03M: 1,
         }).filter(([programKey]) =>
           approved.links.some((link) => link.trainingProgramKey === programKey),
         ),

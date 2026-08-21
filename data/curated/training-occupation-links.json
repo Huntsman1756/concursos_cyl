@@ -2278,5 +2278,125 @@
     "sourceQuote": "Comercial de aceites de oliva, vinos y otras bebidas.",
     "reviewedAt": "2026-08-21",
     "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "QUI01E",
+    "occupationId": "occupation:cno11:3141",
+    "relationshipType": "reviewed_relationship",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/quimica/ce-cultivos-celulares.html",
+    "sourceQuote": "Experta / experto en cultivos celulares",
+    "reviewedAt": "2026-08-21",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "SAN01S",
+    "occupationId": "occupation:cno11:3317",
+    "relationshipType": "reviewed_relationship",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/sanidad/audiologia-protesica.html",
+    "sourceQuote": "Audioprotésica / audioprotésico.",
+    "reviewedAt": "2026-08-21",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "SAN01SD",
+    "occupationId": "occupation:cno11:3317",
+    "relationshipType": "reviewed_relationship",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/sanidad/audiologia-protesica.html",
+    "sourceQuote": "Audioprotésica / audioprotésico.",
+    "reviewedAt": "2026-08-21",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "SAN02S",
+    "occupationId": "occupation:cno11:3316",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/sanidad/protesis-dentales.html",
+    "sourceQuote": "Técnica / técnico especialista en prótesis dental.",
+    "reviewedAt": "2026-08-21",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "SAN02S",
+    "occupationId": "occupation:cno11:2640",
+    "relationshipType": "reviewed_relationship",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/sanidad/protesis-dentales.html",
+    "sourceQuote": "Comercial en la industria dental o depósitos dentales.",
+    "reviewedAt": "2026-08-21",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "SEA01M",
+    "occupationId": "occupation:cno11:5931",
+    "relationshipType": "reviewed_relationship",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/seguridad-medio-ambiente/emergencias-proteccion-civil.html",
+    "sourceQuote": "Bombera / bombero de aeropuertos.",
+    "reviewedAt": "2026-08-21",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "SEA01MD",
+    "occupationId": "occupation:cno11:5931",
+    "relationshipType": "reviewed_relationship",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/seguridad-medio-ambiente/emergencias-proteccion-civil.html",
+    "sourceQuote": "Bombera / bombero de aeropuertos.",
+    "reviewedAt": "2026-08-21",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "SEA01M",
+    "occupationId": "occupation:cno11:5932",
+    "relationshipType": "reviewed_relationship",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/seguridad-medio-ambiente/emergencias-proteccion-civil.html",
+    "sourceQuote": "Bombera / bombero forestal.",
+    "reviewedAt": "2026-08-21",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "SEA01MD",
+    "occupationId": "occupation:cno11:5932",
+    "relationshipType": "reviewed_relationship",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/seguridad-medio-ambiente/emergencias-proteccion-civil.html",
+    "sourceQuote": "Bombera / bombero forestal.",
+    "reviewedAt": "2026-08-21",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "SEA01M",
+    "occupationId": "occupation:cno11:5993",
+    "relationshipType": "reviewed_relationship",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/seguridad-medio-ambiente/emergencias-proteccion-civil.html",
+    "sourceQuote": "Vigilante de incendios forestales.",
+    "reviewedAt": "2026-08-21",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "SEA01MD",
+    "occupationId": "occupation:cno11:5993",
+    "relationshipType": "reviewed_relationship",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/seguridad-medio-ambiente/emergencias-proteccion-civil.html",
+    "sourceQuote": "Vigilante de incendios forestales.",
+    "reviewedAt": "2026-08-21",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "TMV03M",
+    "occupationId": "occupation:cno11:7403",
+    "relationshipType": "reviewed_relationship",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/transporte-mantenimiento-vehiculos/electromecanica-maquinaria.html",
+    "sourceQuote": "Electromecánica / electromecánico de maquinaria agrícola.",
+    "reviewedAt": "2026-08-21",
+    "mappingVersion": "1.0.0"
   }
 ]
