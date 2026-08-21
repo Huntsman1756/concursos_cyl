@@ -18,6 +18,7 @@ param(
     [string[]]$FallbackModels = @(),
     [switch]$DryRun,
     [switch]$AllowNoChanges,
+    [switch]$CreateOnly,
     [switch]$ValidationMayWriteAllowedPaths,
     [switch]$TestMode,
     [string]$MockPlan = '',
@@ -118,6 +119,19 @@ if ($TaskType -eq 'code') {
     if ($AcceptanceCriteria.Count -eq 0) { throw 'AcceptanceCriteria is required, must contain at least one item.' }
     # ValidationCommand required even in DryRun for code tasks
     if ($ValidationCommand.Count -eq 0) { throw 'Code delegation requires at least one -ValidationCommand.' }
+    if ($CreateOnly) {
+        if ($AllowedPath.Count -ne 1) { throw 'CreateOnly requires exactly one AllowedPath.' }
+        $createPath = [string]$AllowedPath[0]
+        $normalizedCreatePath = $createPath.Replace('\','/')
+        if ([System.IO.Path]::IsPathRooted($createPath) -or $normalizedCreatePath -match '(^|/)\.\.(/|$)' -or $normalizedCreatePath -match '[*?\[\]]') {
+            throw 'CreateOnly requires one exact repository-relative AllowedPath.'
+        }
+        $createTarget = [System.IO.Path]::GetFullPath((Join-Path $repoRoot $createPath))
+        if (-not $createTarget.StartsWith($repoPrefix, [System.StringComparison]::OrdinalIgnoreCase)) {
+            throw 'CreateOnly target must stay inside the repository.'
+        }
+        if (Test-Path -LiteralPath $createTarget) { throw "CreateOnly target already exists: $createPath" }
+    }
     if (-not $TestMode -and -not $DryRun) {
         $gitDir = (& git -C $repoRoot rev-parse --path-format=absolute --git-dir).Trim()
         $commonDir = (& git -C $repoRoot rev-parse --path-format=absolute --git-common-dir).Trim()
@@ -551,6 +565,16 @@ function Invoke-OpenCodeBudgeted {
             $override.agent = @{
                 'nan-bulletin'=@{permission=@{read='deny';glob='deny';grep='deny';list='deny'}}
             }
+        } elseif ($RunContext.createOnly) {
+            # Artifact creation contracts carry all required content in the
+            # prompt. Deny repository discovery so a completed edit cannot be
+            # followed by expensive reads or broad searches.
+            $writeOnlyPermission = @{read='deny';glob='deny';grep='deny';list='deny'}
+            $override.agent = @{
+                'nan-code'=@{permission=$writeOnlyPermission}
+                'nan-reasoning-code'=@{permission=$writeOnlyPermission}
+                'nan-long-context-code'=@{permission=$writeOnlyPermission}
+            }
         }
         $override = $override | ConvertTo-Json -Depth 8 -Compress
         $startInfo.EnvironmentVariables['OPENCODE_CONFIG_CONTENT'] = $override
@@ -627,6 +651,7 @@ $contractMaterial = [ordered]@{
     modelProfile=$ModelProfile;budgetProfile=$BudgetProfile;maxObservedTokens=$MaxObservedTokens
     maxExecutionSeconds=$MaxExecutionSeconds;maxStepsWithoutMutation=$MaxStepsWithoutMutation
     fallbackModels=@($FallbackModels)
+    createOnly=[bool]$CreateOnly
     validationMayWriteAllowedPaths=[bool]$ValidationMayWriteAllowedPaths
 } | ConvertTo-Json -Depth 5 -Compress
 $contractHash = Compute-StringSha256 -InputString $contractMaterial
@@ -654,7 +679,7 @@ if ($DryRun) {
         $planSha = Compute-StringSha256 -InputString $FrontierPlan
         $fc = @{plannedBy=$PlannedBy;planHash=$planSha;acceptanceCriteriaCount=$AcceptanceCriteria.Count;reviewRequired=$true}
     }
-    $dryRunTelemetry = @{telemetryId=$tid;simulated=[bool]$true;taskType=$TaskType;selectedModel=$primaryModel;selectedAgent=$primaryAgent;attempts=@();changedPaths=@();contractViolation=$false;validationFailed=$false;validationMayWriteAllowedPaths=[bool]$ValidationMayWriteAllowedPaths;tokensUsage=@{input=0;output=0;reasoning=0;cacheRead=0;cacheWrite=0;total=0};success=$true;status='dry-run';frontierContract=$fc;contract=@{hash=$contractHash;headSha=$headSha;duplicateWindowSeconds=$DuplicateWindowSeconds};admission=@{profile=$AdmissionProfile;capacity=$(if ($AdmissionProfile -eq 'observed-serial') { 1 } else { 5 });timeoutSeconds=$AdmissionTimeoutSeconds;queueWaitMs=0;acquired=$false};launch=@{modelProfile=$ModelProfile;budgetProfile=$BudgetProfile;budgetSource=$budgetSource;maxObservedTokens=$effectiveMaxObservedTokens;maxExecutionSeconds=$MaxExecutionSeconds;maxStepsWithoutMutation=$MaxStepsWithoutMutation}}
+    $dryRunTelemetry = @{telemetryId=$tid;simulated=[bool]$true;taskType=$TaskType;selectedModel=$primaryModel;selectedAgent=$primaryAgent;attempts=@();changedPaths=@();contractViolation=$false;validationFailed=$false;validationMayWriteAllowedPaths=[bool]$ValidationMayWriteAllowedPaths;tokensUsage=@{input=0;output=0;reasoning=0;cacheRead=0;cacheWrite=0;total=0};success=$true;status='dry-run';frontierContract=$fc;contract=@{hash=$contractHash;headSha=$headSha;duplicateWindowSeconds=$DuplicateWindowSeconds};admission=@{profile=$AdmissionProfile;capacity=$(if ($AdmissionProfile -eq 'observed-serial') { 1 } else { 5 });timeoutSeconds=$AdmissionTimeoutSeconds;queueWaitMs=0;acquired=$false};launch=@{modelProfile=$ModelProfile;budgetProfile=$BudgetProfile;budgetSource=$budgetSource;maxObservedTokens=$effectiveMaxObservedTokens;maxExecutionSeconds=$MaxExecutionSeconds;maxStepsWithoutMutation=$MaxStepsWithoutMutation;createOnly=[bool]$CreateOnly}}
     $writtenTelemetryPath = Write-TelemetryRecord -Value $dryRunTelemetry -TelemetryId $tid
     Write-Host "Telemetry: $writtenTelemetryPath" -ForegroundColor DarkGray
     exit 0
@@ -707,7 +732,7 @@ if (-not $TestMode) {
         if ($TaskType -eq 'code') {
             $fc = @{plannedBy=$PlannedBy;planHash=(Compute-StringSha256 -InputString $FrontierPlan);acceptanceCriteriaCount=$AcceptanceCriteria.Count;reviewRequired=$true}
         }
-        $blockedTelemetry = @{telemetryId=$tid;simulated=$false;taskType=$TaskType;selectedModel=$null;attempts=@();changedPaths=@();contractViolation=$false;validationFailed=$false;validationMayWriteAllowedPaths=[bool]$ValidationMayWriteAllowedPaths;tokensUsage=@{input=0;output=0;reasoning=0;cacheRead=0;cacheWrite=0;total=0};success=$false;status='blocked-admission-timeout';frontierContract=$fc;draftOutput='';contract=@{hash=$contractHash;headSha=$headSha;duplicateWindowSeconds=$DuplicateWindowSeconds};admission=@{profile=$AdmissionProfile;capacity=$admissionCapacity;timeoutSeconds=$AdmissionTimeoutSeconds;queueWaitMs=$admissionWaitMs;acquired=$false};launch=@{harness='opencode';protocol='native-jsonl-stream-1.18.x';pure=$true;auto=$false;directory=$repoRoot;budgetProfile=$BudgetProfile;budgetSource=$budgetSource;maxObservedTokens=$effectiveMaxObservedTokens;maxExecutionSeconds=$MaxExecutionSeconds}}
+        $blockedTelemetry = @{telemetryId=$tid;simulated=$false;taskType=$TaskType;selectedModel=$null;attempts=@();changedPaths=@();contractViolation=$false;validationFailed=$false;validationMayWriteAllowedPaths=[bool]$ValidationMayWriteAllowedPaths;tokensUsage=@{input=0;output=0;reasoning=0;cacheRead=0;cacheWrite=0;total=0};success=$false;status='blocked-admission-timeout';frontierContract=$fc;draftOutput='';contract=@{hash=$contractHash;headSha=$headSha;duplicateWindowSeconds=$DuplicateWindowSeconds};admission=@{profile=$AdmissionProfile;capacity=$admissionCapacity;timeoutSeconds=$AdmissionTimeoutSeconds;queueWaitMs=$admissionWaitMs;acquired=$false};launch=@{harness='opencode';protocol='native-jsonl-stream-1.18.x';pure=$true;auto=$false;directory=$repoRoot;budgetProfile=$BudgetProfile;budgetSource=$budgetSource;maxObservedTokens=$effectiveMaxObservedTokens;maxExecutionSeconds=$MaxExecutionSeconds;createOnly=[bool]$CreateOnly}}
         $writtenTelemetryPath = Write-TelemetryRecord -Value $blockedTelemetry -TelemetryId $tid
         Write-Host "Telemetry: $writtenTelemetryPath" -ForegroundColor DarkGray
         if ($providerAdmissionMutex) { $providerAdmissionMutex.Dispose() }
@@ -728,7 +753,7 @@ if (-not $TestMode) {
         $repositoryId = Compute-StringSha256 -InputString $repositoryRemote
         $proxy = Start-NanAuditProxy -EvidencePath $providerEvidencePath -ContractHash $contractHash -RepositoryId $repositoryId
         $nanProxyProcess = $proxy.process
-        $openCodeRunContext = @{data=$isolated.data;state=$isolated.state;cache=$isolated.cache;config=$isolated.config;baseUrl=$proxy.baseUrl;taskType=$TaskType}
+        $openCodeRunContext = @{data=$isolated.data;state=$isolated.state;cache=$isolated.cache;config=$isolated.config;baseUrl=$proxy.baseUrl;taskType=$TaskType;createOnly=[bool]$CreateOnly}
         $exitCleanup = @{runtimeRoot=$isolatedOpenCodeRoot;proxyPid=$nanProxyProcess.Id}
         Register-EngineEvent -SourceIdentifier PowerShell.Exiting -MessageData $exitCleanup -Action {
             $cleanup = $event.MessageData
@@ -839,6 +864,9 @@ $totalAttempts = 0
             }
             if ($AllowedPath.Count -gt 0) { $contract += "ALLOWED PATHS: $($AllowedPath -join ', ')" }
             if ($ValidationCommand.Count -gt 0) { $contract += "REQUIRED VALIDATION: $($ValidationCommand -join ' ; ')" }
+            if ($CreateOnly) {
+                $contract += 'CREATE-ONLY MODE: all required content is in this contract. Create the exact allowed file immediately. Repository read, glob, grep and list tools are intentionally unavailable. After writing, summarize and stop.'
+            }
             $contract += 'Do not commit, push, publish, deploy, or expand this contract.'
             $opts += @('--', ($contract -join "`n"))
             Write-Host ("Attempt " + $totalAttempts + ": ${candidateAgent} -> ${candidateModel}") -ForegroundColor Cyan
@@ -1111,7 +1139,7 @@ $telemetry = @{
     contract=@{hash=$contractHash;headSha=$headSha;duplicateWindowSeconds=$DuplicateWindowSeconds}
     providerEvidence=@{verified=[bool]$providerEvidenceVerified;evidenceClass=$(if ($TestMode) { 'simulated' } elseif ($observedProviderRecords.Count -gt 0) { 'provider-observed' } else { 'insufficient-evidence' });recordCount=$verifiedProviderRecords.Count;observedRecordCount=$observedProviderRecords.Count;retryCount=$providerRetryRecords.Count;terminalErrorCount=$terminalProviderErrors.Count;terminalErrors=@($terminalProviderErrors | Select-Object -Last 5);providerReportedTokens=$providerReportedTokens;responseIdSetHash=$providerResponseSetHash;rawEvidenceFile=$(if ($TestMode) { $null } else { [System.IO.Path]::GetFileName($providerEvidencePath) })}
     admission=@{profile=$AdmissionProfile;capacity=$(if ($AdmissionProfile -eq 'observed-serial') { 1 } else { 5 });timeoutSeconds=$AdmissionTimeoutSeconds;queueWaitMs=$admissionWaitMs;acquired=[bool]$admissionAcquired}
-    launch=@{harness='opencode';protocol='native-jsonl-stream-1.18.x';pure=$true;auto=$false;directory=$repoRoot;modelProfile=$ModelProfile;budgetProfile=$BudgetProfile;budgetSource=$budgetSource;maxObservedTokens=$effectiveMaxObservedTokens;maxExecutionSeconds=$MaxExecutionSeconds;maxStepsWithoutMutation=$MaxStepsWithoutMutation;validationMayWriteAllowedPaths=[bool]$ValidationMayWriteAllowedPaths}
+    launch=@{harness='opencode';protocol='native-jsonl-stream-1.18.x';pure=$true;auto=$false;directory=$repoRoot;modelProfile=$ModelProfile;budgetProfile=$BudgetProfile;budgetSource=$budgetSource;maxObservedTokens=$effectiveMaxObservedTokens;maxExecutionSeconds=$MaxExecutionSeconds;maxStepsWithoutMutation=$MaxStepsWithoutMutation;createOnly=[bool]$CreateOnly;validationMayWriteAllowedPaths=[bool]$ValidationMayWriteAllowedPaths}
 }
 $writtenTelemetryPath = Write-TelemetryRecord -Value $telemetry -TelemetryId $tid
 Write-Host "Telemetry: $writtenTelemetryPath" -ForegroundColor DarkGray

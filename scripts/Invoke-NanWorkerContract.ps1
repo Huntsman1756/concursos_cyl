@@ -119,6 +119,9 @@ if ($contract.PSObject.Properties.Name -contains 'maxExecutionSeconds') {
 if ($contract.PSObject.Properties.Name -contains 'maxStepsWithoutMutation') {
     $workerParameters.MaxStepsWithoutMutation = [int]$contract.maxStepsWithoutMutation
 }
+if ($contract.PSObject.Properties.Name -contains 'createOnly' -and [bool]$contract.createOnly) {
+    $workerParameters.CreateOnly = $true
+}
 
 # ── Allocate state paths outside the source repository ──
 $storyId = $contract.id

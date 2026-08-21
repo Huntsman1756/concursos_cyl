@@ -148,6 +148,7 @@ function New-ValidCodeContract {
         [switch]$AllowNoChanges,
         [switch]$TestMode,
         [switch]$DryRun,
+        [switch]$CreateOnly,
         [switch]$ValidationMayWriteAllowedPaths,
         [string]$MockPlan = '',
         [hashtable]$ExtraParams = @{}
@@ -170,6 +171,7 @@ function New-ValidCodeContract {
     if ($AllowNoChanges) { $ht.AllowNoChanges = $true }
     if ($DryRun) { $ht.DryRun = $true }
     if ($TestMode) { $ht.TestMode = $true }
+    if ($CreateOnly) { $ht.CreateOnly = $true }
     if ($ValidationMayWriteAllowedPaths) { $ht.ValidationMayWriteAllowedPaths = $true }
     if (-not [string]::IsNullOrWhiteSpace($MockPlan)) { $ht.MockPlan = $MockPlan }
     if ($ExtraParams.Count -gt 0) {
@@ -189,6 +191,10 @@ try {
         $r = Invoke-WorkerDirect -WorkerParameters @{TaskType = 'code'; Objective = 'test'; PlannedBy = 'frontier'; FrontierPlan = 'p'; AcceptanceCriteria = 'c'; ValidationCommand = @('cmd /c exit 0'); TestMode = $true}
         Assert-True ($r.ExitCode -ne 0) '1a: code without AllowedPath exits non-zero'
         Assert-Contains $r.Output 'AllowedPath' '1a: error mentions AllowedPath'
+
+        $r = Invoke-WorkerDirect -WorkerParameters (New-ValidCodeContract -Objective 'create-only-wildcard' -AllowedPath @('analysis/**') -CreateOnly -DryRun -TestMode)
+        Assert-True ($r.ExitCode -ne 0) '1b: CreateOnly rejects wildcard paths'
+        Assert-Contains $r.Output 'CreateOnly' '1b: CreateOnly rejection is explicit'
     }
 
     # 2. DryRun
