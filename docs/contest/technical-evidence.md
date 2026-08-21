@@ -78,7 +78,7 @@ La revisión independiente confirmó el manifest, sus 20 recursos, los conjuntos
 ## Despliegue
 
 - URL raíz esperada: [https://salida-cyl.157-90-22-40.sslip.io/](https://salida-cyl.157-90-22-40.sslip.io/)
-- Commit desplegado: **PENDIENTE DE DESPLIEGUE Y VERIFICACIÓN**.
-- Run del workflow: **PENDIENTE DE DESPLIEGUE Y VERIFICACIÓN**.
+- Commit desplegado: `e1f6d22cfe3baa4824ac8e4f68ada6829a441968`.
+- Run del workflow: `32463399531`.
 
-Estos dos campos no se inventan antes de ejecutar y verificar el release.
+El release público se verificó con el commit `e1f6d22cfe3baa4824ac8e4f68ada6829a441968` y el run `32463399531` el 2026-08-21T08:35:15Z.

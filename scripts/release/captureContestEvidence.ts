@@ -84,7 +84,7 @@ async function prepareCapture(page: Page, evidenceId: string): Promise<void> {
   if (evidenceId === "fp-pre-search-reviewed-zero") {
     await page
       .getByLabel("Ciclo de Formación Profesional")
-      .selectOption("COM01M");
+      .selectOption("AFD01M");
   }
   if (evidenceId === "comparison-dual-scopes") {
     await page.getByText("Grado superior", { exact: true }).click();
@@ -157,10 +157,10 @@ async function assertCaptureQuality(
 }
 
 async function positionCapture(page: Page, evidenceId: string): Promise<void> {
-  if (evidenceId === "fp-unreviewed-result") {
+  if (evidenceId === "fp-reviewed-zero-result") {
     const zeroResultMessage = page
       .getByRole("heading", {
-        name: "Cómo buscar oportunidades ahora",
+        name: "Grupos de ocupación revisados para buscar ofertas",
       })
       .first();
     await zeroResultMessage.evaluate((element) =>
