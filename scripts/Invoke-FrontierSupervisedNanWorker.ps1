@@ -336,6 +336,7 @@ try {
                 ValidationCommand=@($contract.validationCommands);MaxRetries=1;FallbackModels=@()
                 BudgetProfile=$(if ($contract.budgetProfile) { $contract.budgetProfile } else { 'small' })
                 ModelProfile=$(if ($contract.modelProfile) { $contract.modelProfile } else { 'mechanical' })
+                ProviderRoute=$(if ($contract.providerRoute) { $contract.providerRoute } else { 'nan' })
                 DuplicateWindowSeconds=0;PlannedBy='frontier';FrontierPlan=$activePlan
                 AcceptanceCriteria=@($contract.acceptanceCriteria);TelemetryOutputPath=$telemetryPath
             }

@@ -26,6 +26,10 @@ if ($supervisorText -notmatch 'Initialize-WorktreeDependencies' -or $supervisorT
     throw 'Supervisor must provision repository dependencies in isolated worktrees.'
 }
 Write-Host 'PASS: frontier supervisor provisions ephemeral worktree dependencies' -ForegroundColor Green
+if ($supervisorText -notmatch 'ProviderRoute=\$\(if \(\$contract\.providerRoute\)') {
+    throw 'Supervisor must forward the selected provider route to the worker.'
+}
+Write-Host 'PASS: frontier supervisor forwards explicit provider routes' -ForegroundColor Green
 
 try {
     @{
