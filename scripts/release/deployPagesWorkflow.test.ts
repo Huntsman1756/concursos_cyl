@@ -136,4 +136,16 @@ describe("GitHub Pages deployment workflow", () => {
     expect(versionIdx).toBeGreaterThan(buildIdx);
     expect(prepareIdx).toBeGreaterThan(versionIdx);
   });
+
+  it("stages only runtime-required data before versioning the Pages artifact", async () => {
+    const workflow = await readFile(workflowPath, "utf8");
+    const buildIdx = workflow.indexOf("npm run build");
+    const runtimeDataIdx = workflow.indexOf("npm run release:runtime-data");
+    const versionIdx = workflow.indexOf(
+      'npx --no-install tsx scripts/release/writeVersionMetadata.ts dist "${{ github.sha }}"',
+    );
+
+    expect(runtimeDataIdx).toBeGreaterThan(buildIdx);
+    expect(versionIdx).toBeGreaterThan(runtimeDataIdx);
+  });
 });

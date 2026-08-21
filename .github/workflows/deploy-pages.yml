@@ -48,6 +48,7 @@ jobs:
       - run: npm run build
         env:
           VITE_PUBLIC_BASE_PATH: /concursos_cyl/
+      - run: npm run release:runtime-data
       - name: Write deployment version metadata
         run: npx --no-install tsx scripts/release/writeVersionMetadata.ts dist "${{ github.sha }}"
       - run: npm run pages:prepare
