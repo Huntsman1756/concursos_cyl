@@ -343,6 +343,18 @@ describe("VPS deployment", () => {
     },
   );
 
+  it.each([".staging-round-1", ".staging-"])(
+    "rejects the reserved staging release prefix (%s)",
+    (releaseId) => {
+      const result = runWithValidationFakes(["salida-cyl-vps", releaseId]);
+
+      expect(result.status).toBe(1);
+      expect(result.stderr).toContain(
+        "Release ID contains unsupported characters",
+      );
+    },
+  );
+
   it("reports release, expected commit and activation state when remote activation fails", () => {
     const { result, sshCommand } = runWithDeploymentFakes({ sshExit: 23 });
 

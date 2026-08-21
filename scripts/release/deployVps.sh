@@ -41,7 +41,7 @@ if [ -z "$RELEASE_ID" ]; then
   RELEASE_ID="$(date -u +%Y%m%d%H%M%S)-$COMMIT"
 fi
 case "$RELEASE_ID" in
-  ''|'.'|'..'|*[!A-Za-z0-9._-]*)
+  ''|'.'|'..'|.staging-*|*[!A-Za-z0-9._-]*)
     echo "Release ID contains unsupported characters." >&2
     exit 1
     ;;
