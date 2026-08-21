@@ -99,5 +99,17 @@ describe("QA package scripts", () => {
     expect(scripts["qa:assets:check"]).toBe(
       "tsx scripts/release/assetBudget.ts",
     );
+    expect(scripts["qa:distribution:check"]).toBe(
+      "tsx scripts/release/distributionCheck.ts",
+    );
+    expect(scripts.build).toContain("npm run qa:distribution:check");
+  });
+
+  it("forwards release test flags directly to Vitest", async () => {
+    const packageJson = JSON.parse(await readFile(packageJsonPath, "utf8")) as {
+      scripts?: Record<string, string>;
+    };
+
+    expect(packageJson.scripts?.["test:release"]).toBe("vitest run");
   });
 });

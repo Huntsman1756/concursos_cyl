@@ -5,9 +5,10 @@ import { verifyCaddyContainer } from "./verifyCaddyContainer";
 
 const headers = {
   "content-security-policy":
-    "default-src 'self'; script-src 'self'; object-src 'none'; frame-ancestors 'none'",
+    "default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'self'; frame-ancestors 'none'; form-action 'self'",
   "content-type": "text/html; charset=utf-8",
-  "permissions-policy": "camera=(), microphone=(), geolocation=()",
+  "permissions-policy":
+    "camera=(), microphone=(), geolocation=(), payment=(), usb=()",
   "referrer-policy": "strict-origin-when-cross-origin",
   "x-content-type-options": "nosniff",
 };

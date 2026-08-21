@@ -47,8 +47,15 @@ function verifyCaddyHeaders(response: Response): void {
   const csp = response.headers.get("content-security-policy") ?? "";
   for (const directive of [
     "default-src 'self'",
+    "script-src 'self'",
+    "style-src 'self'",
+    "img-src 'self' data:",
+    "font-src 'self'",
+    "connect-src 'self'",
     "object-src 'none'",
+    "base-uri 'self'",
     "frame-ancestors 'none'",
+    "form-action 'self'",
   ]) {
     if (!csp.includes(directive)) {
       throw new Error(
@@ -66,7 +73,13 @@ function verifyCaddyHeaders(response: Response): void {
     throw new Error("Missing Caddy Referrer-Policy header.");
   }
   const permissions = response.headers.get("permissions-policy") ?? "";
-  for (const policy of ["camera=()", "microphone=()", "geolocation=()"]) {
+  for (const policy of [
+    "camera=()",
+    "microphone=()",
+    "geolocation=()",
+    "payment=()",
+    "usb=()",
+  ]) {
     if (!permissions.includes(policy)) {
       throw new Error(
         `Missing Caddy Permissions-Policy restriction: ${policy}.`,

@@ -50,7 +50,15 @@ describe("GitHub Pages deployment workflow", () => {
       /actions\/checkout@[a-f0-9]{40} # v7\.0\.1\s+with:\s+fetch-depth: 0/u,
     );
     expect(workflow).toContain("npm run test:release -- --testTimeout=60000");
+    expect(workflow).toContain(
+      "npx --no-install playwright install --with-deps chromium",
+    );
     expect(workflow).not.toMatch(/^\s+- run: npm test$/mu);
+    const verifyJob = workflow.slice(
+      workflow.indexOf("  verify-and-build:"),
+      workflow.indexOf("  deploy:"),
+    );
+    expect(verifyJob).toContain("timeout-minutes: 45");
   });
 
   it("installs the pinned notebook runtime before the full unit suite", async () => {
@@ -113,7 +121,7 @@ describe("GitHub Pages deployment workflow", () => {
     const workflow = await readFile(workflowPath, "utf8");
     const buildIdx = workflow.indexOf("npm run build");
     const versionIdx = workflow.indexOf(
-      'npx tsx scripts/release/writeVersionMetadata.ts dist "${{ github.sha }}"',
+      'npx --no-install tsx scripts/release/writeVersionMetadata.ts dist "${{ github.sha }}"',
     );
     const prepareIdx = workflow.indexOf("npm run pages:prepare");
 
