@@ -1,14 +1,48 @@
-import { mkdir, mkdtemp, readFile, readdir, writeFile } from "node:fs/promises";
+import {
+  mkdir,
+  mkdtemp,
+  readFile,
+  readdir,
+  rm,
+  symlink,
+  writeFile,
+} from "node:fs/promises";
+import { createServer } from "node:net";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 
 import { describe, expect, it } from "vitest";
 
-import { prepareRuntimeData } from "./prepareRuntimeData";
+import {
+  prepareRuntimeData,
+  shouldCopyRuntimeCandidate,
+} from "./prepareRuntimeData";
 
 async function writeJson(path: string, value: unknown): Promise<void> {
   await mkdir(join(path, ".."), { recursive: true });
   await writeFile(path, `${JSON.stringify(value)}\n`, "utf8");
+}
+
+async function createMinimalRuntimeFixture(evidencePath: string) {
+  const root = await mkdtemp(join(tmpdir(), "salida-runtime-data-"));
+  const source = join(root, "public", "data");
+  const target = join(root, "dist", "data");
+  const active = "20260821144454118-a56e3eeaffa6";
+
+  await writeJson(join(source, "v1", "manifest.json"), {
+    snapshotId: active,
+    resourceSnapshots: {},
+  });
+  await writeJson(join(source, "v1", "programs.json"), []);
+  await writeJson(join(source, "v1", "snapshots", active, "programs.json"), []);
+  await writeJson(join(root, "docs", "contest", "coverage-freeze.json"), {
+    resourcePath: evidencePath,
+  });
+  await writeJson(join(root, "docs", "contest", "release-evidence.json"), {
+    logicalResourcePath: `/data/v1/snapshots/${active}/programs.json`,
+  });
+
+  return { active, root, source, target };
 }
 
 describe("prepareRuntimeData", () => {
@@ -202,7 +236,7 @@ describe("prepareRuntimeData", () => {
     );
   });
 
-  it("rejects a referenced resource that is not a regular file", async () => {
+  it("rejects a referenced resource file that is missing", async () => {
     const root = await mkdtemp(join(tmpdir(), "salida-runtime-data-"));
     const source = join(root, "public", "data");
     const target = join(root, "dist", "data");
@@ -281,5 +315,149 @@ describe("prepareRuntimeData", () => {
     await expect(prepareRuntimeData({ root, source, target })).rejects.toThrow(
       "Malformed runtime snapshot resource path",
     );
+  });
+
+  it.each([
+    [
+      "percent-encoded route",
+      "%2Fdata%2Fv1%2Fsnapshots%2F20260821144454118-a56e3eeaffa6%2Fprograms.json",
+    ],
+    [
+      "query abuse",
+      "/data/v1/snapshots/20260821144454118-a56e3eeaffa6/programs.json?download=1",
+    ],
+    [
+      "path traversal",
+      "/data/v1/snapshots/20260821144454118-a56e3eeaffa6/../programs.json",
+    ],
+  ])("rejects snapshot-like %s", async (_name, evidencePath) => {
+    const fixture = await createMinimalRuntimeFixture(evidencePath);
+
+    await expect(
+      prepareRuntimeData({
+        root: fixture.root,
+        source: fixture.source,
+        target: fixture.target,
+      }),
+    ).rejects.toThrow("Malformed runtime snapshot resource path");
+  });
+
+  it("rejects a target parent symlink that resolves into source", async () => {
+    if (process.platform === "win32") return;
+    const fixture = await createMinimalRuntimeFixture(
+      "/data/v1/snapshots/20260821144454118-a56e3eeaffa6/programs.json",
+    );
+    const targetParent = join(fixture.root, "linked-output");
+    await symlink(fixture.source, targetParent, "dir");
+
+    await expect(
+      prepareRuntimeData({
+        root: fixture.root,
+        source: fixture.source,
+        target: join(targetParent, "data"),
+      }),
+    ).rejects.toThrow("disjoint");
+  });
+
+  it("rejects symlinks in flat resources before copying", async () => {
+    if (process.platform === "win32") return;
+    const fixture = await createMinimalRuntimeFixture(
+      "/data/v1/snapshots/20260821144454118-a56e3eeaffa6/programs.json",
+    );
+    await symlink(
+      join(fixture.source, "v1", "programs.json"),
+      join(fixture.source, "v1", "unsafe-link"),
+    );
+
+    await expect(
+      prepareRuntimeData({
+        root: fixture.root,
+        source: fixture.source,
+        target: fixture.target,
+      }),
+    ).rejects.toThrow("symbolic link");
+  });
+
+  it("rejects symlinks in each retained snapshot tree", async () => {
+    if (process.platform === "win32") return;
+    const fixture = await createMinimalRuntimeFixture(
+      "/data/v1/snapshots/20260821144454118-a56e3eeaffa6/programs.json",
+    );
+    await symlink(
+      join(fixture.source, "v1", "programs.json"),
+      join(fixture.source, "v1", "snapshots", fixture.active, "unsafe-link"),
+    );
+
+    await expect(
+      prepareRuntimeData({
+        root: fixture.root,
+        source: fixture.source,
+        target: fixture.target,
+      }),
+    ).rejects.toThrow("symbolic link");
+  });
+
+  it("rejects non-regular flat resource entries", async () => {
+    if (process.platform === "win32") return;
+    const fixture = await createMinimalRuntimeFixture(
+      "/data/v1/snapshots/20260821144454118-a56e3eeaffa6/programs.json",
+    );
+    const socketPath = join(fixture.source, "v1", "runtime.sock");
+    const server = createServer();
+    await new Promise<void>((resolve, reject) => {
+      server.once("error", reject);
+      server.listen(socketPath, () => resolve());
+    });
+
+    try {
+      await expect(
+        prepareRuntimeData({
+          root: fixture.root,
+          source: fixture.source,
+          target: fixture.target,
+        }),
+      ).rejects.toThrow("non-regular entry");
+    } finally {
+      await new Promise<void>((resolve, reject) => {
+        server.close((error) => (error ? reject(error) : resolve()));
+      });
+      await rm(socketPath, { force: true });
+    }
+  });
+
+  it("permits nested directories containing regular flat resources", async () => {
+    const fixture = await createMinimalRuntimeFixture(
+      "/data/v1/snapshots/20260821144454118-a56e3eeaffa6/programs.json",
+    );
+    await writeJson(join(fixture.source, "v1", "nested", "metadata.json"), {
+      ok: true,
+    });
+
+    await prepareRuntimeData({
+      root: fixture.root,
+      source: fixture.source,
+      target: fixture.target,
+    });
+
+    expect(
+      JSON.parse(
+        await readFile(
+          join(fixture.target, "v1", "nested", "metadata.json"),
+          "utf8",
+        ),
+      ),
+    ).toEqual({ ok: true });
+  });
+
+  it("filters snapshot paths independently of path separators", () => {
+    expect(shouldCopyRuntimeCandidate("")).toBe(true);
+    expect(shouldCopyRuntimeCandidate("v1/snapshots")).toBe(false);
+    expect(
+      shouldCopyRuntimeCandidate("v1/snapshots/active/programs.json"),
+    ).toBe(false);
+    expect(
+      shouldCopyRuntimeCandidate("v1\\snapshots\\active\\programs.json"),
+    ).toBe(false);
+    expect(shouldCopyRuntimeCandidate("v1\\programs.json")).toBe(true);
   });
 });

@@ -5,6 +5,7 @@ import {
   mkdir,
   readFile,
   readdir,
+  realpath,
   rename,
   rm,
 } from "node:fs/promises";
@@ -24,6 +25,8 @@ const SNAPSHOT_RESOURCE_PATH =
 const SNAPSHOT_PATH_WITHOUT_RESOURCE =
   /^\/data\/v1\/snapshots\/\d{17}-[a-f0-9]{12}$/u;
 const SNAPSHOT_PATH_MARKER = "/data/v1/snapshots/";
+const SNAPSHOT_PATH_MARKER_ENCODED =
+  /(?:%2f|\/)data(?:%2f|\/)v1(?:%2f|\/)snapshots(?:%2f|\/)/iu;
 const SAFE_RESOURCE_FILENAME = /^[A-Za-z0-9][A-Za-z0-9._-]*$/u;
 const TERMINAL_EVIDENCE_PATHS = [
   "docs/contest/coverage-freeze.json",
@@ -45,17 +48,67 @@ export interface PreparedRuntimeData {
   snapshotIds: string[];
 }
 
-function assertDistinctPaths(source: string, target: string): void {
-  const sourcePath = resolve(source);
+async function resolveExistingAncestor(path: string): Promise<string> {
+  const missingSegments: string[] = [];
+  let candidate = resolve(path);
+  while (true) {
+    try {
+      const physicalCandidate = await realpath(candidate);
+      return join(physicalCandidate, ...missingSegments.reverse());
+    } catch (error) {
+      if ((error as NodeJS.ErrnoException).code !== "ENOENT") throw error;
+      const parent = dirname(candidate);
+      if (parent === candidate) throw error;
+      missingSegments.unshift(basename(candidate));
+      candidate = parent;
+    }
+  }
+}
+
+async function assertDistinctPaths(
+  source: string,
+  target: string,
+): Promise<{ sourcePath: string; targetPath: string }> {
+  const sourcePath = await realpath(resolve(source));
   const targetPath = resolve(target);
-  const targetFromSource = relative(sourcePath, targetPath);
-  const sourceFromTarget = relative(targetPath, sourcePath);
+  const physicalTargetPath = await resolveExistingAncestor(targetPath);
+  const targetFromSource = relative(sourcePath, physicalTargetPath);
+  const sourceFromTarget = relative(physicalTargetPath, sourcePath);
   if (
-    sourcePath === targetPath ||
+    sourcePath === physicalTargetPath ||
     (!targetFromSource.startsWith("..") && targetFromSource !== "") ||
     (!sourceFromTarget.startsWith("..") && sourceFromTarget !== "")
   ) {
     throw new Error("Runtime source and target directories must be disjoint.");
+  }
+  return { sourcePath, targetPath };
+}
+
+export function shouldCopyRuntimeCandidate(relativeCandidate: string): boolean {
+  const components = relativeCandidate.split(/[\\/]+/u).filter(Boolean);
+  return !(components[0] === "v1" && components[1] === "snapshots");
+}
+
+async function assertSafeTree(
+  root: string,
+  description: string,
+  skipDirectory?: string,
+): Promise<void> {
+  for (const entry of await readdir(root, { withFileTypes: true })) {
+    const path = join(root, entry.name);
+    if (entry.isSymbolicLink()) {
+      throw new Error(`${description} contains a symbolic link: ${path}.`);
+    }
+    if (entry.isDirectory()) {
+      if (skipDirectory !== undefined && resolve(path) === skipDirectory) {
+        continue;
+      }
+      await assertSafeTree(path, description, skipDirectory);
+      continue;
+    }
+    if (!entry.isFile()) {
+      throw new Error(`${description} contains a non-regular entry: ${path}.`);
+    }
   }
 }
 
@@ -63,7 +116,15 @@ function snapshotReferenceFromString(
   value: string,
   evidencePath: string,
 ): SnapshotReference | undefined {
-  if (!value.includes(SNAPSHOT_PATH_MARKER)) return undefined;
+  const hasEncodedMarker = SNAPSHOT_PATH_MARKER_ENCODED.test(value);
+  if (!value.includes(SNAPSHOT_PATH_MARKER)) {
+    if (hasEncodedMarker) {
+      throw new Error(
+        `Malformed runtime snapshot resource path in ${evidencePath}: ${value}.`,
+      );
+    }
+    return undefined;
+  }
   if (/(?:^|\/)\.\.?(?:\/|$)|\\|%2e|%2f|%5c/iu.test(value)) {
     throw new Error(
       `Malformed runtime snapshot resource path in ${evidencePath}: ${value}.`,
@@ -232,9 +293,7 @@ export async function prepareRuntimeData({
   source,
   target,
 }: PrepareRuntimeDataOptions): Promise<PreparedRuntimeData> {
-  const sourcePath = resolve(source);
-  const targetPath = resolve(target);
-  assertDistinctPaths(sourcePath, targetPath);
+  const { sourcePath, targetPath } = await assertDistinctPaths(source, target);
 
   const snapshotsSource = join(sourcePath, "v1", "snapshots");
   const availableSnapshotIds = new Set(
@@ -264,6 +323,13 @@ export async function prepareRuntimeData({
   const snapshotIds = [...availableSnapshotIds]
     .filter((snapshotId) => snapshotId === active || referenced.has(snapshotId))
     .sort();
+  await assertSafeTree(sourcePath, "runtime source", resolve(snapshotsSource));
+  for (const snapshotId of snapshotIds) {
+    await assertSafeTree(
+      join(snapshotsSource, snapshotId),
+      `runtime snapshot ${snapshotId}`,
+    );
+  }
   const temporaryTarget = join(
     dirname(targetPath),
     `.${basename(targetPath)}.runtime-${randomUUID()}`,
@@ -275,11 +341,7 @@ export async function prepareRuntimeData({
       recursive: true,
       filter: (candidate) => {
         const relativeCandidate = relative(sourcePath, candidate);
-        return (
-          relativeCandidate === "" ||
-          (relativeCandidate !== join("v1", "snapshots") &&
-            !relativeCandidate.startsWith(`${join("v1", "snapshots")}/`))
-        );
+        return shouldCopyRuntimeCandidate(relativeCandidate);
       },
     });
     const snapshotsTarget = join(temporaryTarget, "v1", "snapshots");
