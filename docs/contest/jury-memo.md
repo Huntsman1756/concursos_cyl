@@ -26,18 +26,18 @@ El núcleo es una relación bidireccional FP ↔ ocupación con evidencia trazab
 
 ## 5. Variedad de datasets del Portal de Datos Abiertos de la Junta de Castilla y León
 
-Los ocho conjuntos regionales tienen un uso visible en la interfaz y una copia normalizada dentro del snapshot `20260821054822692-00c61c822d41`.
+Los ocho conjuntos regionales tienen un uso visible en la interfaz y una copia normalizada dentro del snapshot `20260821070248908-85affbaf7072`.
 
 | Dataset JCyL                       | Dónde se usa                                 | Registros usados | Fecha usada           | Licencia     |
 | ---------------------------------- | -------------------------------------------- | ---------------: | --------------------- | ------------ |
-| Oferta de estudios de FP           | Selectores, ciclos, centros y modalidades    |            1.294 | Copia del 20/08/2026  | CC BY 4.0 ES |
+| Oferta de estudios de FP           | Selectores, ciclos, centros y modalidades    |            1.294 | Copia del 21/08/2026  | CC BY 4.0 ES |
 | Ofertas de empleo                  | Ofertas relacionadas y requisitos publicados |            1.055 | Fuente del 19/08/2026 | CC BY 4.0 ES |
-| Formación del ECYL                 | Alternativas de formación complementaria     |              778 | Copia del 20/08/2026  | CC BY 4.0 ES |
-| Certificados de profesionalidad    | Rutas formativas complementarias             |              583 | Copia del 20/08/2026  | CC BY 4.0 ES |
-| Convocatorias de Empleo Público    | Procesos públicos con plazo abierto          |              307 | Copia del 20/08/2026  | CC BY 4.0 ES |
-| Contratos realizados por provincia | Contexto laboral territorial en resultados   |            2.331 | Copia del 20/08/2026  | CC BY 4.0 ES |
-| Registro de municipios             | Población del municipio donde se estudia     |            2.248 | Copia del 20/08/2026  | CC BY 4.0 ES |
-| Directorio de Centros Docentes     | Coordenadas de la distribución territorial   |            1.741 | Copia del 20/08/2026  | CC BY 4.0 ES |
+| Formación del ECYL                 | Alternativas de formación complementaria     |              778 | Copia del 21/08/2026  | CC BY 4.0 ES |
+| Certificados de profesionalidad    | Rutas formativas complementarias             |              583 | Copia del 21/08/2026  | CC BY 4.0 ES |
+| Convocatorias de Empleo Público    | Procesos públicos con plazo abierto          |              307 | Copia del 21/08/2026  | CC BY 4.0 ES |
+| Contratos realizados por provincia | Contexto laboral territorial en resultados   |            2.331 | Copia del 21/08/2026  | CC BY 4.0 ES |
+| Registro de municipios             | Población del municipio donde se estudia     |            2.248 | Copia del 21/08/2026  | CC BY 4.0 ES |
+| Directorio de Centros Docentes     | Coordenadas de la distribución territorial   |            1.741 | Copia del 21/08/2026  | CC BY 4.0 ES |
 
 Se combinan con fuentes estatales oficiales: CNO-11, TodoFP, BOE y las tablas de inserción de EducaBase. La interfaz identifica el ámbito de cada fuente para impedir conclusiones que los datos no sostienen.
 
@@ -51,7 +51,7 @@ La ingesta descarga las fuentes, valida esquemas y genera recursos inmutables ba
 
 ## Límites declarados
 
-- Las 124 relaciones FP-ocupación publicadas cubren 55 cualificaciones distintas y 67 claves de modalidad; son cobertura revisada, no el universo completo de relaciones posibles.
+- Las 132 relaciones FP-ocupación publicadas cubren 56 cualificaciones distintas y 69 claves de modalidad; son cobertura revisada, no el universo completo de relaciones posibles.
 - Las 39 ofertas alcanzadas pertenecen a una copia fechada de 1.055 ofertas; no representan todo el mercado laboral.
 - Los contratos provinciales aportan contexto territorial agregado, no demanda por ocupación.
 - La población municipal describe el lugar de estudio, no la residencia del alumnado.

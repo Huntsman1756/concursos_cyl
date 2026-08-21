@@ -1,27 +1,27 @@
-# Próxima sesión: release verificado y cierre humano
+# Próxima sesión: publicar el lote AFD y continuar cobertura
 
 ## Estado confirmado
 
-- Producto publicado y verificado en `dfa2a33d612c0f1d3a2cb5a4b7748e697da35c93`.
-- Freeze fuente: `9a9b40037c7506a787a6db0af5a7c41dab2bbeaa`.
-- Snapshot activo: `20260821054822692-00c61c822d41`.
+- Producto público anterior verificado en `b0cbf69b103610b4d371e215688f254c3aeeb207`.
+- Freeze candidato: `62bb32dd794dfb67f57899eb7861724273b4448f`.
+- Snapshot candidato: `20260821070248908-85affbaf7072`.
 - Ocho datasets JCyL visibles y 20 recursos inmutables en el manifiesto.
-- Cobertura: 55 cualificaciones, 67 claves de modalidad, 124 relaciones aprobadas y 21 alias.
+- Cobertura candidata: 56 cualificaciones, 69 claves de modalidad, 132 relaciones aprobadas y 21 alias.
 - Ofertas alcanzadas: 39 de 1.055; la cifra es una unión acotada de IDs, no todo el mercado.
 - Directorio educativo: 1.741 registros y reconciliación exacta de los 229 centros FP por código.
 - La ficha de ciclo incorpora ingresos observados de EDUCAbase con referencia nacional y agregada de Castilla y León, sin presentarlos como predicción individual.
-- QA final en CI: 749 pruebas aprobadas y 180 omitidas por condiciones de plataforma; 100/100 E2E en escritorio y móvil.
+- QA del lote: 346 pruebas de datos y 18 E2E focalizadas aprobadas; CI completo pendiente del PR.
 - Matriz opcional preparada para Chromium, Firefox y WebKit sin encarecer el CI ordinario.
-- Workflow verificado: `32423643267`.
-- Diez capturas finales anónimas ligadas al commit desplegado y validadas con Axe, red, consola y overflow.
+- Último workflow público verificado: `32454915276`.
+- Las capturas del release anterior permanecen válidas para `b0cbf69b`; el lote candidato requiere recaptura tras desplegarse.
 
 ## Orden de trabajo
 
-1. Completar identidad, contacto, declaraciones, consentimiento y adjuntos humanos para el X Concurso.
-2. Obtener aprobación explícita antes de cualquier envío externo.
+1. Publicar y verificar el snapshot candidato con 132 relaciones.
+2. Recapturar la evidencia visual contra el commit desplegado.
 3. Mantener la evaluación etiquetada de precisión/cobertura antes de ampliar el matching de ofertas.
-4. Priorizar nuevas relaciones para ciclos con evidencia oficial y utilidad laboral observada.
-5. Repetir freeze, capturas y release completo después de cualquier cambio posterior de producto o datos.
+4. Continuar la cola con relaciones que dispongan de evidencia oficial suficiente.
+5. Completar identidad, consentimiento y aprobación humana antes del envío externo.
 
 ## Política de ejecución NAN
 

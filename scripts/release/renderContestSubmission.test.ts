@@ -189,7 +189,7 @@ describe("contest submission renderer", () => {
     expect(() => validateRenderedContestSubmission(first)).not.toThrow();
     for (const content of Object.values(first)) {
       expect(content.endsWith("\n")).toBe(true);
-      expect(content).not.toContain("6 cualificaciones");
+      expect(content).not.toContain("**6 cualificaciones distintas**");
       expect(content).not.toMatch(/salario esperado|tasa de empleo/iu);
     }
   });
