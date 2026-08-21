@@ -1,3 +1,4 @@
+import { spawnSync } from "node:child_process";
 import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
 
@@ -43,5 +44,64 @@ describe("VPS deployment", () => {
     expect(deployScript).toContain(
       "Join-Path $root 'scripts\\release\\writeVersionMetadata.ts'",
     );
+  });
+
+  it("defines the POSIX deployment contract and its ordered remote checks", () => {
+    const deployScript = readFileSync(
+      resolve(root, "scripts/release/deployVps.sh"),
+      "utf8",
+    );
+
+    expect(deployScript).toContain("set -eu");
+    expect(deployScript).toContain("git status --porcelain");
+    expect(deployScript).toContain('export VITE_PUBLIC_BASE_PATH="/"');
+    expect(deployScript).toContain("npm ci");
+    expect(deployScript).toContain("npm run build");
+    expect(deployScript).toContain("writeVersionMetadata.ts");
+    expect(deployScript).toContain("mktemp");
+    expect(deployScript).toContain("trap cleanup EXIT");
+    expect(deployScript).toContain("scp");
+    expect(deployScript).toContain("test -f");
+    expect(deployScript).toContain("index.html");
+    expect(deployScript).toContain("version.json");
+    expect(deployScript).toContain("mv -Tf");
+    expect(deployScript).toContain("tail -n +6");
+    expect(deployScript).toContain("systemctl reload caddy");
+    expect(deployScript).toContain("CADDY_SMOKE_EXPECTED_COMMIT");
+    expect(deployScript).toContain("npm run release:caddy:verify");
+
+    const remoteCommands = [
+      "install -d",
+      "tar -xzf",
+      "chown -R",
+      "test -f",
+      "ln -sfn",
+      "mv -Tf",
+      "rm -f",
+      "tail -n +6",
+      "systemctl reload caddy",
+    ];
+    const remoteSection = deployScript.slice(
+      deployScript.indexOf('ssh "$SSH_HOST"'),
+    );
+    let previousIndex = -1;
+    for (const command of remoteCommands) {
+      const index = remoteSection.indexOf(command);
+      expect(index, `missing remote command: ${command}`).toBeGreaterThan(-1);
+      expect(index, `${command} is out of order`).toBeGreaterThan(
+        previousIndex,
+      );
+      previousIndex = index;
+    }
+  });
+
+  it("rejects an unsafe SSH host before attempting deployment", () => {
+    const scriptPath = resolve(root, "scripts/release/deployVps.sh");
+    const result = spawnSync("sh", [scriptPath, "host with spaces"], {
+      encoding: "utf8",
+    });
+
+    expect(result.status).toBe(1);
+    expect(result.stderr).toContain("SSH host contains unsupported characters");
   });
 });

@@ -58,6 +58,17 @@ From PowerShell, publish and verify a root build with:
 ./scripts/release/deployVps.ps1
 ```
 
+On macOS or Linux, keep `deployVps.ps1` as the Windows entry point and use the
+POSIX counterpart after the read-only SSH preflight succeeds:
+
+```sh
+ssh -o BatchMode=yes -o IdentitiesOnly=yes salida-cyl-vps true
+./scripts/release/deployVps.sh salida-cyl-vps
+```
+
+The POSIX command accepts an optional release ID as its second argument. The
+preflight only checks authentication and does not change the remote host.
+
 The deployment script does a clean dependency install, builds locally, uploads
 one release archive, switches the symlink atomically, retains the five newest
 releases, reloads Caddy and runs the same live SPA/header verifier used for the
