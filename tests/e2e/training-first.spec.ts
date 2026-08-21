@@ -104,7 +104,7 @@ test("live DAW results name the dated zero-match snapshot without claiming there
   );
 });
 
-test("COM01M stays explicitly outside reviewed fallback coverage", async ({
+test("COM01M exposes eight reviewed groups without inventing current offers", async ({
   page,
 }) => {
   await page.goto("/desde-fp");
@@ -112,7 +112,7 @@ test("COM01M stays explicitly outside reviewed fallback coverage", async ({
     .getByRole("combobox", { name: "Ciclo de Formación Profesional" })
     .selectOption("COM01M");
   await expect(page.getByRole("status")).toContainText(
-    /todavía no hay una relación revisada para buscar ofertas/,
+    "Relaciones revisadas con 8 grupos de ocupación.",
   );
   await page.getByRole("button", { name: "Ver salidas y ofertas" }).click();
   await expect(page).toHaveURL(/\/desde-fp\/COM01M$/u);
@@ -120,9 +120,12 @@ test("COM01M stays explicitly outside reviewed fallback coverage", async ({
     page.getByRole("heading", { name: "Actividades Comerciales" }),
   ).toBeVisible();
   await expect(
-    page.getByText(
-      /Todavía no hay una relación revisada que permita buscar ofertas/,
-    ),
+    page.getByRole("heading", {
+      name: "Grupos de ocupación revisados para buscar ofertas",
+    }),
+  ).toBeVisible();
+  await expect(
+    page.getByText(/No hay ofertas relacionadas en la copia de datos del/u),
   ).toBeVisible();
 });
 

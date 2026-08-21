@@ -110,7 +110,7 @@
       "redactionRule": "Use a fresh anonymous browser context; omit browser chrome, personal data, cookies, account identifiers, API keys, tokens, and local filesystem paths."
     },
     {
-      "evidenceId": "fp-unreviewed-result",
+      "evidenceId": "fp-reviewed-zero-result",
       "route": "/desde-fp/COM01M",
       "viewport": { "width": 1440, "height": 900 },
       "requiredVisible": [
@@ -122,7 +122,7 @@
         {
           "kind": "role",
           "role": "heading",
-          "name": "Cómo buscar oportunidades ahora"
+          "name": "Grupos de ocupación revisados para buscar ofertas"
         }
       ],
       "claimIds": ["approved_relations", "zero_reviewed_relations"],

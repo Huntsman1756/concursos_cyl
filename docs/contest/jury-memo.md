@@ -26,7 +26,7 @@ El núcleo es una relación bidireccional FP ↔ ocupación con evidencia trazab
 
 ## 5. Variedad de datasets del Portal de Datos Abiertos de la Junta de Castilla y León
 
-Los ocho conjuntos regionales tienen un uso visible en la interfaz y una copia normalizada dentro del snapshot `20260821070248908-85affbaf7072`.
+Los ocho conjuntos regionales tienen un uso visible en la interfaz y una copia normalizada dentro del snapshot `20260821081317938-ed24cccf3125`.
 
 | Dataset JCyL                       | Dónde se usa                                 | Registros usados | Fecha usada           | Licencia     |
 | ---------------------------------- | -------------------------------------------- | ---------------: | --------------------- | ------------ |
@@ -51,7 +51,7 @@ La ingesta descarga las fuentes, valida esquemas y genera recursos inmutables ba
 
 ## Límites declarados
 
-- Las 132 relaciones FP-ocupación publicadas cubren 56 cualificaciones distintas y 69 claves de modalidad; son cobertura revisada, no el universo completo de relaciones posibles.
+- Las 143 relaciones FP-ocupación publicadas cubren 59 cualificaciones distintas y 72 claves de modalidad; son cobertura revisada, no el universo completo de relaciones posibles.
 - Las 39 ofertas alcanzadas pertenecen a una copia fechada de 1.055 ofertas; no representan todo el mercado laboral.
 - Los contratos provinciales aportan contexto territorial agregado, no demanda por ocupación.
 - La población municipal describe el lugar de estudio, no la residencia del alumnado.

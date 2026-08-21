@@ -445,5 +445,4 @@ test("the home coverage panel exposes only manifest-reviewed program keys", asyn
   expect(
     hrefs.every((href) => /^\/desde-fp\/[A-Z0-9]+$/u.test(href ?? "")),
   ).toBe(true);
-  await expect(coverage.getByText("COM01M", { exact: false })).toHaveCount(0);
 });
