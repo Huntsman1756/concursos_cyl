@@ -1639,7 +1639,7 @@ describe("curated occupation mappings", () => {
       diskPrograms,
     );
     const approved = loadApprovedMappings(curated);
-    const waveOccupationCodes = [
+    const newOccupationCodes = [
       "3141",
       "3316",
       "3317",
@@ -1648,6 +1648,7 @@ describe("curated occupation mappings", () => {
       "5993",
       "7403",
     ];
+    const relationOccupationCodes = [...newOccupationCodes, "2640"];
     const waveProgramKeys = [
       "QUI01E",
       "SAN01S",
@@ -1657,46 +1658,121 @@ describe("curated occupation mappings", () => {
       "SEA01MD",
       "TMV03M",
     ];
-    const expectedWaveKeys = [
-      "QUI01E|3141",
-      "SAN01S|3317",
-      "SAN01SD|3317",
-      "SAN02S|3316",
-      "SAN02S|2640",
-      "SEA01M|5931",
-      "SEA01MD|5931",
-      "SEA01M|5932",
-      "SEA01MD|5932",
-      "SEA01M|5993",
-      "SEA01MD|5993",
-      "TMV03M|7403",
-    ].sort();
+    const expectedWaveEvidence = [
+      {
+        key: "QUI01E|3141",
+        relationshipType: "reviewed_relationship",
+        sourceUrl:
+          "https://www.todofp.es/que-estudiar/familias-profesionales/quimica/ce-cultivos-celulares.html",
+        sourceQuote: "Experta / experto en cultivos celulares",
+      },
+      {
+        key: "SAN01S|3317",
+        relationshipType: "reviewed_relationship",
+        sourceUrl:
+          "https://www.todofp.es/que-estudiar/familias-profesionales/sanidad/audiologia-protesica.html",
+        sourceQuote: "Audioprotésica / audioprotésico.",
+      },
+      {
+        key: "SAN01SD|3317",
+        relationshipType: "reviewed_relationship",
+        sourceUrl:
+          "https://www.todofp.es/que-estudiar/familias-profesionales/sanidad/audiologia-protesica.html",
+        sourceQuote: "Audioprotésica / audioprotésico.",
+      },
+      {
+        key: "SAN02S|3316",
+        relationshipType: "official_output",
+        sourceUrl:
+          "https://www.todofp.es/que-estudiar/familias-profesionales/sanidad/protesis-dentales.html",
+        sourceQuote: "Técnica / técnico especialista en prótesis dental.",
+      },
+      {
+        key: "SAN02S|2640",
+        relationshipType: "reviewed_relationship",
+        sourceUrl:
+          "https://www.todofp.es/que-estudiar/familias-profesionales/sanidad/protesis-dentales.html",
+        sourceQuote: "Comercial en la industria dental o depósitos dentales.",
+      },
+      {
+        key: "SEA01M|5931",
+        relationshipType: "reviewed_relationship",
+        sourceUrl:
+          "https://www.todofp.es/que-estudiar/familias-profesionales/seguridad-medio-ambiente/emergencias-proteccion-civil.html",
+        sourceQuote: "Bombera / bombero de aeropuertos.",
+      },
+      {
+        key: "SEA01MD|5931",
+        relationshipType: "reviewed_relationship",
+        sourceUrl:
+          "https://www.todofp.es/que-estudiar/familias-profesionales/seguridad-medio-ambiente/emergencias-proteccion-civil.html",
+        sourceQuote: "Bombera / bombero de aeropuertos.",
+      },
+      {
+        key: "SEA01M|5932",
+        relationshipType: "reviewed_relationship",
+        sourceUrl:
+          "https://www.todofp.es/que-estudiar/familias-profesionales/seguridad-medio-ambiente/emergencias-proteccion-civil.html",
+        sourceQuote: "Bombera / bombero forestal.",
+      },
+      {
+        key: "SEA01MD|5932",
+        relationshipType: "reviewed_relationship",
+        sourceUrl:
+          "https://www.todofp.es/que-estudiar/familias-profesionales/seguridad-medio-ambiente/emergencias-proteccion-civil.html",
+        sourceQuote: "Bombera / bombero forestal.",
+      },
+      {
+        key: "SEA01M|5993",
+        relationshipType: "reviewed_relationship",
+        sourceUrl:
+          "https://www.todofp.es/que-estudiar/familias-profesionales/seguridad-medio-ambiente/emergencias-proteccion-civil.html",
+        sourceQuote: "Vigilante de incendios forestales.",
+      },
+      {
+        key: "SEA01MD|5993",
+        relationshipType: "reviewed_relationship",
+        sourceUrl:
+          "https://www.todofp.es/que-estudiar/familias-profesionales/seguridad-medio-ambiente/emergencias-proteccion-civil.html",
+        sourceQuote: "Vigilante de incendios forestales.",
+      },
+      {
+        key: "TMV03M|7403",
+        relationshipType: "reviewed_relationship",
+        sourceUrl:
+          "https://www.todofp.es/que-estudiar/familias-profesionales/transporte-mantenimiento-vehiculos/electromecanica-maquinaria.html",
+        sourceQuote:
+          "Electromecánica / electromecánico de maquinaria agrícola.",
+      },
+    ].sort((left, right) => left.key.localeCompare(right.key));
 
     expect
       .soft(
-        waveOccupationCodes.filter((code) =>
+        newOccupationCodes.filter((code) =>
           approved.occupations.some(
             (occupation) => occupation.classificationCode === code,
           ),
         ),
       )
-      .toEqual(waveOccupationCodes);
+      .toEqual(newOccupationCodes);
 
-    const actualWaveKeys = approved.links
+    const actualWaveEvidence = approved.links
       .filter((link) => waveProgramKeys.includes(link.trainingProgramKey))
-      .map(
-        (link) =>
-          `${link.trainingProgramKey}|${link.occupationId.replace("occupation:cno11:", "")}`,
-      )
-      .sort();
-    expect.soft(actualWaveKeys).toEqual(expectedWaveKeys);
+      .map((link) => ({
+        key: `${link.trainingProgramKey}|${link.occupationId.replace("occupation:cno11:", "")}`,
+        relationshipType: link.relationshipType,
+        sourceUrl: link.sourceUrl,
+        sourceQuote: link.sourceQuote,
+      }))
+      .sort((left, right) => left.key.localeCompare(right.key));
+    expect.soft(actualWaveEvidence).toEqual(expectedWaveEvidence);
 
-    const waveOccupationIds = waveOccupationCodes.map(
+    const relationOccupationIds = relationOccupationCodes.map(
       (code) => `occupation:cno11:${code}`,
     );
     expect(
       curated.aliases.filter((alias) =>
-        waveOccupationIds.includes(alias.occupationId),
+        relationOccupationIds.includes(alias.occupationId),
       ),
     ).toEqual([]);
 

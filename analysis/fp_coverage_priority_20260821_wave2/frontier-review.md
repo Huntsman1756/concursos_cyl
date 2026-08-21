@@ -13,22 +13,22 @@ use `reviewed_relationship`. No alias is accepted.
 
 ## Accepted set
 
-| Relation key | CNO-11 label | Type                                                          | TodoFP output quote used | Frontier rationale                                          |
-| ------------ | ------------ | ------------------------------------------------------------- | ------------------------ | ----------------------------------------------------------- |
-| `QUI01E      | 3141`        | Técnicos en ciencias biológicas (excepto en áreas sanitarias) | `reviewed_relationship`  | «Experta / experto en cultivos celulares»                   | Cellular culture is biological laboratory work; 3141 preserves the function without implying clinical diagnosis. |
-| `SAN01S      | 3317`        | Técnicos en audioprótesis                                     | `reviewed_relationship`  | «Audioprotésica / audioprotésico.»                          | Exact audioprosthetic function.                                                                                  |
-| `SAN01SD     | 3317`        | Técnicos en audioprótesis                                     | `reviewed_relationship`  | «Audioprotésica / audioprotésico.»                          | Same output on the distance modality.                                                                            |
-| `SAN02S      | 3316`        | Técnicos en prótesis dentales                                 | `official_output`        | «Técnica / técnico especialista en prótesis dental.»        | Direct official dental-prosthesis technician output.                                                             |
-| `SAN02S      | 2640`        | Profesionales de ventas técnicas y médicas (excepto las TIC)  | `reviewed_relationship`  | «Comercial en la industria dental o depósitos dentales.»    | Technical/medical dental sales; rejects generic commercial substitution.                                         |
-| `SEA01M      | 5931`        | Bomberos (excepto forestales)                                 | `reviewed_relationship`  | «Bombera / bombero de aeropuertos.»                         | Civil non-forest firefighter output.                                                                             |
-| `SEA01MD     | 5931`        | Bomberos (excepto forestales)                                 | `reviewed_relationship`  | «Bombera / bombero de aeropuertos.»                         | Same output on the distance modality.                                                                            |
-| `SEA01M      | 5932`        | Bomberos forestales                                           | `reviewed_relationship`  | «Bombera / bombero forestal.»                               | Forest-specific firefighter output.                                                                              |
-| `SEA01MD     | 5932`        | Bomberos forestales                                           | `reviewed_relationship`  | «Bombera / bombero forestal.»                               | Same output on the distance modality.                                                                            |
-| `SEA01M      | 5993`        | Agentes forestales y medioambientales                         | `reviewed_relationship`  | «Vigilante de incendios forestales.»                        | Forest/environmental patrol boundary; no broad security alias.                                                   |
-| `SEA01MD     | 5993`        | Agentes forestales y medioambientales                         | `reviewed_relationship`  | «Vigilante de incendios forestales.»                        | Same output on the distance modality.                                                                            |
-| `TMV03M      | 7403`        | Mecánicos y ajustadores de maquinaria agrícola e industrial   | `reviewed_relationship`  | «Electromecánica / electromecánico de maquinaria agrícola.» | Agricultural/industrial machinery maintenance boundary; not vehicle repair or machinery operation.               |
+| Relation key    | CNO-11 label                                                  | Type                    | TodoFP output quote used                                    | Frontier rationale                                                                                               |
+| --------------- | ------------------------------------------------------------- | ----------------------- | ----------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------- |
+| `QUI01E\|3141`  | Técnicos en ciencias biológicas (excepto en áreas sanitarias) | `reviewed_relationship` | «Experta / experto en cultivos celulares»                   | Cellular culture is biological laboratory work; 3141 preserves the function without implying clinical diagnosis. |
+| `SAN01S\|3317`  | Técnicos en audioprótesis                                     | `reviewed_relationship` | «Audioprotésica / audioprotésico.»                          | Exact audioprosthetic function.                                                                                  |
+| `SAN01SD\|3317` | Técnicos en audioprótesis                                     | `reviewed_relationship` | «Audioprotésica / audioprotésico.»                          | Same output on the distance modality.                                                                            |
+| `SAN02S\|3316`  | Técnicos en prótesis dentales                                 | `official_output`       | «Técnica / técnico especialista en prótesis dental.»        | Direct official dental-prosthesis technician output.                                                             |
+| `SAN02S\|2640`  | Profesionales de ventas técnicas y médicas (excepto las TIC)  | `reviewed_relationship` | «Comercial en la industria dental o depósitos dentales.»    | Technical/medical dental sales; rejects generic commercial substitution.                                         |
+| `SEA01M\|5931`  | Bomberos (excepto forestales)                                 | `reviewed_relationship` | «Bombera / bombero de aeropuertos.»                         | Civil non-forest firefighter output.                                                                             |
+| `SEA01MD\|5931` | Bomberos (excepto forestales)                                 | `reviewed_relationship` | «Bombera / bombero de aeropuertos.»                         | Same output on the distance modality.                                                                            |
+| `SEA01M\|5932`  | Bomberos forestales                                           | `reviewed_relationship` | «Bombera / bombero forestal.»                               | Forest-specific firefighter output.                                                                              |
+| `SEA01MD\|5932` | Bomberos forestales                                           | `reviewed_relationship` | «Bombera / bombero forestal.»                               | Same output on the distance modality.                                                                            |
+| `SEA01M\|5993`  | Agentes forestales y medioambientales                         | `reviewed_relationship` | «Vigilante de incendios forestales.»                        | Forest/environmental patrol boundary; no broad security alias.                                                   |
+| `SEA01MD\|5993` | Agentes forestales y medioambientales                         | `reviewed_relationship` | «Vigilante de incendios forestales.»                        | Same output on the distance modality.                                                                            |
+| `TMV03M\|7403`  | Mecánicos y ajustadores de maquinaria agrícola e industrial   | `reviewed_relationship` | «Electromecánica / electromecánico de maquinaria agrícola.» | Agricultural/industrial machinery maintenance boundary; not vehicle repair or machinery operation.               |
 
-## Seven occupation identities
+## Seven new occupation identities
 
 These identities already exist in `data/curated/official-occupations.json`
 and are copied with approved review metadata by Task 2:
@@ -42,6 +42,9 @@ and are copied with approved review metadata by Task 2:
 | `5932` | Bomberos forestales                                           |
 | `5993` | Agentes forestales y medioambientales                         |
 | `7403` | Mecánicos y ajustadores de maquinaria agrícola e industrial   |
+
+`2640` is already present in the curated catalog and is used only for
+`SAN02S|2640`; it is not part of the seven new occupation identities.
 
 Classification identity is bounded by the [BOE CNO-11 decree](https://www.boe.es/eli/es/rd/2010/11/26/1591)
 and the [INE explanatory notes](https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf).

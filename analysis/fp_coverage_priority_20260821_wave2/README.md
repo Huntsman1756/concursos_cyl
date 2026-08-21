@@ -19,7 +19,7 @@ Primary classification sources:
 - [BOE CNO-11](https://www.boe.es/eli/es/rd/2010/11/26/1591)
 - [INE CNO-11 explanatory notes](https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf)
 
-## Seven occupation records required by publication
+## Seven new occupation records required by publication
 
 | CNO-11 | Preferred label in the registered official catalog            |
 | -----: | ------------------------------------------------------------- |
@@ -30,6 +30,9 @@ Primary classification sources:
 |   5932 | Bomberos forestales                                           |
 |   5993 | Agentes forestales y medioambientales                         |
 |   7403 | Mecánicos y ajustadores de maquinaria agrícola e industrial   |
+
+`2640` is already curated and is used only by the accepted dental technical
+sales relation; it is not one of the seven new occupation records.
 
 ## Exact accepted relation set
 

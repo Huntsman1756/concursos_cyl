@@ -21,9 +21,9 @@ TodoFP records:
 
 ## Accepted relation
 
-| Key     | CNO-11 label | Type                                                        | Evidence quote          | Rationale                                                   |
-| ------- | ------------ | ----------------------------------------------------------- | ----------------------- | ----------------------------------------------------------- |
-| `TMV03M | 7403`        | Mecánicos y ajustadores de maquinaria agrícola e industrial | `reviewed_relationship` | «Electromecánica / electromecánico de maquinaria agrícola.» | The machinery-maintenance output names agricultural machinery directly; 7403 preserves the agricultural/industrial machinery maintenance boundary. The row is deliberately reviewed rather than an asserted direct official CNO output. |
+| Key            | CNO-11 label                                                | Type                    | Evidence quote                                              | Rationale                                                                                                                                                                                                                               |
+| -------------- | ----------------------------------------------------------- | ----------------------- | ----------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `TMV03M\|7403` | Mecánicos y ajustadores de maquinaria agrícola e industrial | `reviewed_relationship` | «Electromecánica / electromecánico de maquinaria agrícola.» | The machinery-maintenance output names agricultural machinery directly; 7403 preserves the agricultural/industrial machinery maintenance boundary. The row is deliberately reviewed rather than an asserted direct official CNO output. |
 
 No alias is created.
 

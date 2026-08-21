@@ -23,14 +23,14 @@ TodoFP records the same twelve outputs for the base and distance modalities:
 
 ## Accepted relations
 
-| Key      | CNO-11 label | Type                                  | Evidence quote          | Rationale                            |
-| -------- | ------------ | ------------------------------------- | ----------------------- | ------------------------------------ |
-| `SEA01M  | 5931`        | Bomberos (excepto forestales)         | `reviewed_relationship` | «Bombera / bombero de aeropuertos.»  | Airport, private, municipal, provincial, consorciado, mancomunado, and other public-service firefighter outputs are non-forest firefighting. |
-| `SEA01MD | 5931`        | Bomberos (excepto forestales)         | `reviewed_relationship` | «Bombera / bombero de aeropuertos.»  | The distance modality has the same official output and receives the same relation.                                                           |
-| `SEA01M  | 5932`        | Bomberos forestales                   | `reviewed_relationship` | «Bombera / bombero forestal.»        | The forest-firefighter output matches the forest-specific CNO-11 boundary.                                                                   |
-| `SEA01MD | 5932`        | Bomberos forestales                   | `reviewed_relationship` | «Bombera / bombero forestal.»        | The distance modality has the same forest-firefighter output.                                                                                |
-| `SEA01M  | 5993`        | Agentes forestales y medioambientales | `reviewed_relationship` | «Vigilante de incendios forestales.» | The forest-fire patrol output is retained at the forest/environmental-agent boundary; no generic security or emergency alias is added.       |
-| `SEA01MD | 5993`        | Agentes forestales y medioambientales | `reviewed_relationship` | «Vigilante de incendios forestales.» | The distance modality has the same forest-fire patrol output.                                                                                |
+| Key             | CNO-11 label                          | Type                    | Evidence quote                       | Rationale                                                                                                                                    |
+| --------------- | ------------------------------------- | ----------------------- | ------------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------- |
+| `SEA01M\|5931`  | Bomberos (excepto forestales)         | `reviewed_relationship` | «Bombera / bombero de aeropuertos.»  | Airport, private, municipal, provincial, consorciado, mancomunado, and other public-service firefighter outputs are non-forest firefighting. |
+| `SEA01MD\|5931` | Bomberos (excepto forestales)         | `reviewed_relationship` | «Bombera / bombero de aeropuertos.»  | The distance modality has the same official output and receives the same relation.                                                           |
+| `SEA01M\|5932`  | Bomberos forestales                   | `reviewed_relationship` | «Bombera / bombero forestal.»        | The forest-firefighter output matches the forest-specific CNO-11 boundary.                                                                   |
+| `SEA01MD\|5932` | Bomberos forestales                   | `reviewed_relationship` | «Bombera / bombero forestal.»        | The distance modality has the same forest-firefighter output.                                                                                |
+| `SEA01M\|5993`  | Agentes forestales y medioambientales | `reviewed_relationship` | «Vigilante de incendios forestales.» | The forest-fire patrol output is retained at the forest/environmental-agent boundary; no generic security or emergency alias is added.       |
+| `SEA01MD\|5993` | Agentes forestales y medioambientales | `reviewed_relationship` | «Vigilante de incendios forestales.» | The distance modality has the same forest-fire patrol output.                                                                                |
 
 ## Rejected alternatives
 

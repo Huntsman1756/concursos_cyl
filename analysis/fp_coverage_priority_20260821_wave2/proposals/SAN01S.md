@@ -16,10 +16,10 @@ TodoFP records the following outputs for both the base and distance modality:
 
 ## Accepted relations
 
-| Key      | CNO-11 label | Type                      | Evidence quote          | Rationale                          |
-| -------- | ------------ | ------------------------- | ----------------------- | ---------------------------------- |
-| `SAN01S  | 3317`        | Técnicos en audioprótesis | `reviewed_relationship` | «Audioprotésica / audioprotésico.» | The output names the audioprosthetic function directly, and 3317 is the corresponding CNO-11 audioprosthesis boundary. |
-| `SAN01SD | 3317`        | Técnicos en audioprótesis | `reviewed_relationship` | «Audioprotésica / audioprotésico.» | The distance modality has the same official output and receives the same conservative relation.                        |
+| Key             | CNO-11 label              | Type                    | Evidence quote                     | Rationale                                                                                                              |
+| --------------- | ------------------------- | ----------------------- | ---------------------------------- | ---------------------------------------------------------------------------------------------------------------------- |
+| `SAN01S\|3317`  | Técnicos en audioprótesis | `reviewed_relationship` | «Audioprotésica / audioprotésico.» | The output names the audioprosthetic function directly, and 3317 is the corresponding CNO-11 audioprosthesis boundary. |
+| `SAN01SD\|3317` | Técnicos en audioprótesis | `reviewed_relationship` | «Audioprotésica / audioprotésico.» | The distance modality has the same official output and receives the same conservative relation.                        |
 
 No alias is created for `3317`.
 

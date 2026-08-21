@@ -16,10 +16,10 @@ TodoFP records:
 
 ## Accepted relations
 
-| Key     | CNO-11 label | Type                                                         | Evidence quote          | Rationale                                                |
-| ------- | ------------ | ------------------------------------------------------------ | ----------------------- | -------------------------------------------------------- |
-| `SAN02S | 3316`        | Técnicos en prótesis dentales                                | `official_output`       | «Técnica / técnico especialista en prótesis dental.»     | This is the direct official TodoFP output for the dental-prosthesis technician function, so it is the one direct-output row in this wave.                 |
-| `SAN02S | 2640`        | Profesionales de ventas técnicas y médicas (excepto las TIC) | `reviewed_relationship` | «Comercial en la industria dental o depósitos dentales.» | The dental-industry sales output is technical/medical product sales. 2640 preserves that boundary; it is not promoted to a generic commercial occupation. |
+| Key            | CNO-11 label                                                 | Type                    | Evidence quote                                           | Rationale                                                                                                                                                 |
+| -------------- | ------------------------------------------------------------ | ----------------------- | -------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `SAN02S\|3316` | Técnicos en prótesis dentales                                | `official_output`       | «Técnica / técnico especialista en prótesis dental.»     | This is the direct official TodoFP output for the dental-prosthesis technician function, so it is the one direct-output row in this wave.                 |
+| `SAN02S\|2640` | Profesionales de ventas técnicas y médicas (excepto las TIC) | `reviewed_relationship` | «Comercial en la industria dental o depósitos dentales.» | The dental-industry sales output is technical/medical product sales. 2640 preserves that boundary; it is not promoted to a generic commercial occupation. |
 
 No alias is created.
 

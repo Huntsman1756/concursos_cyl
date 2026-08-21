@@ -11,9 +11,9 @@ celulares»**.
 
 ## Accepted relation
 
-| Key     | CNO-11 label | Type                                                          | Evidence quote          | Rationale                                 |
-| ------- | ------------ | ------------------------------------------------------------- | ----------------------- | ----------------------------------------- |
-| `QUI01E | 3141`        | Técnicos en ciencias biológicas (excepto en áreas sanitarias) | `reviewed_relationship` | «Experta / experto en cultivos celulares» | Cellular-culture work is a biological laboratory function. CNO-11 3141 preserves that biological-science boundary without converting it into clinical diagnosis or a generic chemical-plant role. |
+| Key            | CNO-11 label                                                  | Type                    | Evidence quote                            | Rationale                                                                                                                                                                                         |
+| -------------- | ------------------------------------------------------------- | ----------------------- | ----------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `QUI01E\|3141` | Técnicos en ciencias biológicas (excepto en áreas sanitarias) | `reviewed_relationship` | «Experta / experto en cultivos celulares» | Cellular-culture work is a biological laboratory function. CNO-11 3141 preserves that biological-science boundary without converting it into clinical diagnosis or a generic chemical-plant role. |
 
 The occupation identity is the existing official catalog record
 `occupation:cno11:3141`; no alias is created.

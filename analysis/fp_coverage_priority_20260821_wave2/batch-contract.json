@@ -13,7 +13,7 @@
       "unreviewed management or military-emergency outputs"
     ]
   },
-  "acceptedOccupationCodes": [
+  "newOccupationCodes": [
     "3141",
     "3316",
     "3317",
@@ -51,6 +51,7 @@
     {
       "id": "qui01e-review",
       "programKey": "QUI01E",
+      "objective": "Record the exact primary evidence and bounded CNO-11 review for QUI01E without modifying curated data.",
       "sourcePath": "analysis/fp_coverage_priority_20260821_wave2/sources/QUI01E.txt",
       "proposalPath": "analysis/fp_coverage_priority_20260821_wave2/proposals/QUI01E.md",
       "allowedPaths": [
@@ -64,13 +65,14 @@
         "do not create an alias"
       ],
       "validationCommands": [
-        "test -f analysis/fp_coverage_priority_20260821_wave2/proposals/QUI01E.md"
+        "powershell -NoProfile -Command \"if (-not (Test-Path -LiteralPath 'analysis/fp_coverage_priority_20260821_wave2/proposals/QUI01E.md')) { exit 1 }\""
       ]
     },
     {
       "id": "san01s-review",
       "programKey": "SAN01S",
       "programKeys": ["SAN01S", "SAN01SD"],
+      "objective": "Record the exact primary evidence and bounded CNO-11 review for SAN01S and SAN01SD without modifying curated data.",
       "sourcePath": "analysis/fp_coverage_priority_20260821_wave2/sources/SAN01S.txt",
       "proposalPath": "analysis/fp_coverage_priority_20260821_wave2/proposals/SAN01S.md",
       "allowedPaths": [
@@ -84,12 +86,13 @@
         "do not create an alias"
       ],
       "validationCommands": [
-        "test -f analysis/fp_coverage_priority_20260821_wave2/proposals/SAN01S.md"
+        "powershell -NoProfile -Command \"if (-not (Test-Path -LiteralPath 'analysis/fp_coverage_priority_20260821_wave2/proposals/SAN01S.md')) { exit 1 }\""
       ]
     },
     {
       "id": "san02s-review",
       "programKey": "SAN02S",
+      "objective": "Record the direct dental-prosthesis output and bounded technical-sales review for SAN02S without modifying curated data.",
       "sourcePath": "analysis/fp_coverage_priority_20260821_wave2/sources/SAN02S.txt",
       "proposalPath": "analysis/fp_coverage_priority_20260821_wave2/proposals/SAN02S.md",
       "allowedPaths": [
@@ -103,13 +106,14 @@
         "do not create an alias"
       ],
       "validationCommands": [
-        "test -f analysis/fp_coverage_priority_20260821_wave2/proposals/SAN02S.md"
+        "powershell -NoProfile -Command \"if (-not (Test-Path -LiteralPath 'analysis/fp_coverage_priority_20260821_wave2/proposals/SAN02S.md')) { exit 1 }\""
       ]
     },
     {
       "id": "sea01m-review",
       "programKey": "SEA01M",
       "programKeys": ["SEA01M", "SEA01MD"],
+      "objective": "Record the exact primary evidence and separate firefighter and forest-patrol CNO-11 boundaries for SEA01M and SEA01MD without modifying curated data.",
       "sourcePath": "analysis/fp_coverage_priority_20260821_wave2/sources/SEA01M.txt",
       "proposalPath": "analysis/fp_coverage_priority_20260821_wave2/proposals/SEA01M.md",
       "allowedPaths": [
@@ -123,12 +127,13 @@
         "do not create an alias"
       ],
       "validationCommands": [
-        "test -f analysis/fp_coverage_priority_20260821_wave2/proposals/SEA01M.md"
+        "powershell -NoProfile -Command \"if (-not (Test-Path -LiteralPath 'analysis/fp_coverage_priority_20260821_wave2/proposals/SEA01M.md')) { exit 1 }\""
       ]
     },
     {
       "id": "tmv03m-review",
       "programKey": "TMV03M",
+      "objective": "Record the exact primary evidence and agricultural/industrial machinery CNO-11 boundary for TMV03M without modifying curated data.",
       "sourcePath": "analysis/fp_coverage_priority_20260821_wave2/sources/TMV03M.txt",
       "proposalPath": "analysis/fp_coverage_priority_20260821_wave2/proposals/TMV03M.md",
       "allowedPaths": [
@@ -142,7 +147,7 @@
         "do not create an alias"
       ],
       "validationCommands": [
-        "test -f analysis/fp_coverage_priority_20260821_wave2/proposals/TMV03M.md"
+        "powershell -NoProfile -Command \"if (-not (Test-Path -LiteralPath 'analysis/fp_coverage_priority_20260821_wave2/proposals/TMV03M.md')) { exit 1 }\""
       ]
     }
   ]
