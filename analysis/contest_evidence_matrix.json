@@ -1,13 +1,13 @@
 {
   "schemaVersion": 1,
   "sourcePath": "data/curated/training-occupation-links.json",
-  "sourceCommitSha": "1fb9f98c1f27dbde78f87afedcc60c50a3712d08",
+  "sourceCommitSha": "b1d25a8a427a0f9949b9c9dea169478de640efdb",
   "auditCutoff": "2026-08-21T18:30:00+02:00",
-  "relationCount": 240,
+  "relationCount": 241,
   "commonFloorFailures": 0,
   "depthCounts": {
     "relation_artifact_discovered": 152,
-    "program_artifact_discovered": 74,
+    "program_artifact_discovered": 75,
     "common_validator_only": 14
   },
   "limitations": [
@@ -882,6 +882,34 @@
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "relation_artifact_discovered",
+      "frontierSufficiency": "pending_live_sample"
+    },
+    {
+      "relationKey": "AGA01S|occupation:cno11:5993",
+      "programKey": "AGA01S",
+      "occupationId": "occupation:cno11:5993",
+      "relationshipType": "official_output",
+      "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/agraria/gestion-forestal-medio-natural.html",
+      "sourceQuote": "Agente forestal o similar.",
+      "reviewedAt": "2026-08-21",
+      "commonFloor": {
+        "officialSource": true,
+        "quotedEvidence": true,
+        "passes": true
+      },
+      "artifactDiscovery": {
+        "relationCooccurrencePaths": [],
+        "programMentionPaths": [
+          "analysis/fp_coverage_batch_parallel_3/batch-contract.json",
+          "analysis/fp_coverage_batch_parallel_3/frontier-review.md",
+          "analysis/fp_coverage_batch_parallel_3/proposals/AGA01S.md",
+          "analysis/fp_coverage_batch_parallel_3/README.md",
+          "analysis/fp_coverage_priority_20260821_wave2/no-match-catalog-revalidation.md",
+          "analysis/fp_coverage_priority_20260821/frontier-review.md"
+        ],
+        "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
+      },
+      "evidenceDepth": "program_artifact_discovered",
       "frontierSufficiency": "pending_live_sample"
     },
     {
