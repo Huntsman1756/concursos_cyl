@@ -517,8 +517,7 @@ describe("generated data client", () => {
         },
         trainingOfferings: {
           ...snapshot,
-          resourcePath:
-            "/data/v1/snapshots/build-1/training-offerings.json",
+          resourcePath: "/data/v1/snapshots/build-1/training-offerings.json",
         },
         jobOffers: {
           ...snapshot,
@@ -552,10 +551,7 @@ describe("generated data client", () => {
     );
 
     await expect(
-      loadFoundationResourceSubset(manifest, [
-        "programs",
-        "trainingOfferings",
-      ]),
+      loadFoundationResourceSubset(manifest, ["programs", "trainingOfferings"]),
     ).resolves.toEqual({
       contract: "legacy",
       programs: foundationResourceValues.programs,

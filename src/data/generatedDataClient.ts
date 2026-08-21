@@ -448,9 +448,7 @@ export type LoadedFoundationResources =
 
 export type FoundationResourceKey = GeneratedFoundationResourceKey;
 
-export type LoadedFoundationResourceSubset<
-  K extends FoundationResourceKey,
-> =
+export type LoadedFoundationResourceSubset<K extends FoundationResourceKey> =
   | Pick<LoadedCurrentFoundationResources, "contract" | K>
   | Pick<LoadedLegacyFoundationResources, "contract" | K>;
 
@@ -543,13 +541,16 @@ export async function loadFoundationResourceSubset<
 ): Promise<LoadedFoundationResourceSubset<K>> {
   const requestedKeys = [...new Set(keys)] as FoundationResourceKey[];
   const loadedEntries = await Promise.all(
-    requestedKeys.map(async (key) => [
-      key,
-      await loadGeneratedResource(
-        manifest.resourceSnapshots[key].resourcePath,
-        z.unknown(),
-      ),
-    ] as const),
+    requestedKeys.map(
+      async (key) =>
+        [
+          key,
+          await loadGeneratedResource(
+            manifest.resourceSnapshots[key].resourcePath,
+            z.unknown(),
+          ),
+        ] as const,
+    ),
   );
   const resources = Object.fromEntries(loadedEntries) as Record<
     FoundationResourceKey,

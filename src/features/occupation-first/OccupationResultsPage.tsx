@@ -19,9 +19,7 @@ import { TrainingRouteCard } from "./TrainingRouteCard";
 interface ReadyState {
   status: "ready";
   manifest: LoadableGeneratedManifest;
-  foundation: LoadedFoundationResourceSubset<
-    "programs" | "trainingOfferings"
-  >;
+  foundation: LoadedFoundationResourceSubset<"programs" | "trainingOfferings">;
   relationships: LoadedAuditedRelationships;
   officialOccupations: Occupation[];
 }

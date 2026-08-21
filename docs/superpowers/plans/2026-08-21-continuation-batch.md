@@ -24,11 +24,13 @@
 ### Task 1: Verify the committed mobile geometry fix
 
 **Files:**
+
 - Verify: `src/styles/global.css`
 - Verify: `tests/e2e/home.spec.ts`
 - Verify: `tests/e2e/occupation-first.spec.ts`
 
 **Interfaces:**
+
 - Consumes: existing `.site-nav`, `.site-footer`, `.training-page__header`, and `.occupation-options` selectors.
 - Produces: mobile navigation without internal overflow, touch targets at least 40 px high, and an in-flow occupation listbox.
 
@@ -41,6 +43,7 @@
 ### Task 2: Add typed selective foundation loaders
 
 **Files:**
+
 - Modify: `src/data/generatedDataClient.ts`
 - Modify: `src/data/generatedDataClient.test.ts`
 - Modify: `src/features/home/HomePage.tsx`
@@ -51,6 +54,7 @@
 - Test: the corresponding page test files already colocated with these components.
 
 **Interfaces:**
+
 - Produces: `FoundationResourceKey`, `LoadedFoundationResourceSubset<K>`, and `loadFoundationResourceSubset<const K extends FoundationResourceKey>(manifest, keys)`.
 - Preserves: `loadFoundationResources(manifest)` for consumers needing all four resources.
 
@@ -65,6 +69,7 @@
 ### Task 3: Add the anonymous aggregate pilot kit
 
 **Files:**
+
 - Create: `docs/pilot/anonymous-protocol.md`
 - Create: `docs/pilot/anonymous-task-script.md`
 - Create: `docs/pilot/anonymous-consent-template.md`
@@ -74,6 +79,7 @@
 - Modify: `package.json`
 
 **Interfaces:**
+
 - Produces: `AnonymousPilotAggregateSchema` and `validateAnonymousPilotAggregate(value, { requireComplete })`.
 - CLI: `tsx scripts/pilot/validateAnonymousPilot.ts --input <path> [--require-complete]`.
 
@@ -87,10 +93,12 @@
 ### Task 4: Publish the next evidence-backed FP batch
 
 **Files:**
+
 - Modify only after research: `data/curated/occupations.json`, `data/curated/training-occupation-links.json`, `analysis/fp_coverage_research_outcomes.json`, queue artifacts, restore script/tests, mapping tests, manifest/snapshot, freeze and rendered contest documents.
 - Create: one dated evidence directory under `analysis/` with sources, proposals, and Frontier review.
 
 **Interfaces:**
+
 - Consumes: the current 57-item research queue and primary BOE/TodoFP/INE evidence.
 - Produces: exact approved relationship keys or explicit `reviewed-no-publishable-match` outcomes bound to the occupation-catalog hash.
 
@@ -103,12 +111,14 @@
 ### Task 5: Stage only contractually retained runtime data
 
 **Files:**
+
 - Create: `scripts/release/prepareRuntimeData.ts`
 - Create: `scripts/release/prepareRuntimeData.test.ts`
 - Modify: `package.json`
 - Modify: `.github/workflows/deploy-pages.yml`
 
 **Interfaces:**
+
 - CLI: `tsx scripts/release/prepareRuntimeData.ts --source public/data/v1 --destination <staging>/data/v1`.
 - Produces: manifest, flat compatibility resources, active snapshot, and all snapshot IDs referenced by terminal evidence artifacts.
 
@@ -121,9 +131,11 @@
 ### Task 6: Whole-branch verification and deployment
 
 **Files:**
+
 - Modify only generated deployment evidence after observing successful remote state.
 
 **Interfaces:**
+
 - Consumes: all task commits.
 - Produces: a reviewed branch, GitHub workflow result, GitHub Pages deployment, and VPS deployment at the exact verified commit.
 
