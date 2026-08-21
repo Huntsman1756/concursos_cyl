@@ -346,7 +346,13 @@ export function TrainingResultsPage() {
     });
   }, [state, studyCenters]);
 
-  if (state.status === "loading") return <p>Buscando ofertas relacionadas…</p>;
+  if (state.status === "loading") {
+    return (
+      <p role="status" aria-live="polite">
+        Buscando ofertas relacionadas…
+      </p>
+    );
+  }
   if (state.status === "failed") {
     return (
       <section className="status-panel" role="alert">

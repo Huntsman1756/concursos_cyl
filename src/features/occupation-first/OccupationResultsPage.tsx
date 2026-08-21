@@ -92,7 +92,13 @@ export function OccupationResultsPage() {
       });
   }, [occupationId, state]);
 
-  if (state.status === "loading") return <p>Preparando las rutas revisadas…</p>;
+  if (state.status === "loading") {
+    return (
+      <p role="status" aria-live="polite">
+        Preparando las rutas revisadas…
+      </p>
+    );
+  }
   if (state.status === "failed") {
     return (
       <section className="status-panel" role="alert">

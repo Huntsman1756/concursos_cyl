@@ -1,5 +1,48 @@
 import AxeBuilder from "@axe-core/playwright";
 import { expect, test } from "@playwright/test";
+import { currentManifestFixture } from "../fixtures/generatedManifest";
+
+test("occupation catalog loading is announced as a polite status", async ({
+  page,
+}) => {
+  let releaseManifest!: () => void;
+  const manifestDelay = new Promise<void>((resolve) => {
+    releaseManifest = resolve;
+  });
+  await page.route("**/data/v1/manifest.json", async (route) => {
+    await manifestDelay;
+    await route.fulfill({ json: currentManifestFixture() });
+  });
+
+  await page.goto("/desde-ocupacion");
+  const loading = page.getByText(/Preparando las ocupaciones oficiales/u);
+  await expect(loading).toBeVisible();
+  await expect(loading).toHaveAttribute("role", "status");
+  await expect(loading).toHaveAttribute("aria-live", "polite");
+
+  releaseManifest();
+});
+
+test("occupation results loading is announced as a polite status", async ({
+  page,
+}) => {
+  let releaseManifest!: () => void;
+  const manifestDelay = new Promise<void>((resolve) => {
+    releaseManifest = resolve;
+  });
+  await page.route("**/data/v1/manifest.json", async (route) => {
+    await manifestDelay;
+    await route.fulfill({ json: currentManifestFixture() });
+  });
+
+  await page.goto("/desde-ocupacion/occupation%3Acno11%3A2713");
+  const loading = page.getByText(/Preparando las rutas revisadas/u);
+  await expect(loading).toBeVisible();
+  await expect(loading).toHaveAttribute("role", "status");
+  await expect(loading).toHaveAttribute("aria-live", "polite");
+
+  releaseManifest();
+});
 
 test("the live occupation journey confirms a reviewed everyday alias and reaches every reviewed development route", async ({
   page,

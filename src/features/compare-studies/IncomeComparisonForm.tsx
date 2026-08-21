@@ -84,6 +84,8 @@ export function IncomeComparisonForm({
       matchingCount: selected.filter(matchesQuery).length + matches.length,
     };
   }, [groups, queryTokens, selectedGroups]);
+  const currentStep =
+    trainingLevel === null ? 1 : selectedGroupKeys.length === 0 ? 2 : 3;
 
   function toggleGroup(groupKey: string, checked: boolean) {
     if (checked) {
@@ -95,9 +97,15 @@ export function IncomeComparisonForm({
   }
 
   return (
-    <form className="income-comparison-form">
+    <form
+      className="income-comparison-form"
+      aria-label="Seleccionar datos de comparación"
+    >
       <ol className="comparison-steps" aria-label="Pasos de la comparación">
-        <li className={trainingLevel ? "is-complete" : "is-current"}>
+        <li
+          className={trainingLevel ? "is-complete" : "is-current"}
+          aria-current={currentStep === 1 ? "step" : undefined}
+        >
           <span>1</span>
           <strong>Nivel</strong>
         </li>
@@ -109,11 +117,15 @@ export function IncomeComparisonForm({
                 ? "is-complete"
                 : "is-current"
           }
+          aria-current={currentStep === 2 ? "step" : undefined}
         >
           <span>2</span>
           <strong>Ciclos</strong>
         </li>
-        <li className={trainingLevel ? "is-available" : "is-pending"}>
+        <li
+          className={trainingLevel ? "is-available" : "is-pending"}
+          aria-current={currentStep === 3 ? "step" : undefined}
+        >
           <span>3</span>
           <strong>Cohorte</strong>
         </li>

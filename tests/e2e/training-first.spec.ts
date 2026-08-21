@@ -4,6 +4,7 @@ import {
   installDecisionFlowFixture,
   syntheticQuotes,
 } from "../fixtures/decisionFlowFixture";
+import { currentManifestFixture } from "../fixtures/generatedManifest";
 
 async function tabTo(page: Page, target: Locator): Promise<void> {
   for (let steps = 0; steps < 80; steps += 1) {
@@ -13,6 +14,44 @@ async function tabTo(page: Page, target: Locator): Promise<void> {
   }
   throw new Error("Expected the control to be reachable in page tab order.");
 }
+
+test("FP catalog loading is announced as a polite status", async ({ page }) => {
+  let releaseManifest!: () => void;
+  const manifestDelay = new Promise<void>((resolve) => {
+    releaseManifest = resolve;
+  });
+  await page.route("**/data/v1/manifest.json", async (route) => {
+    await manifestDelay;
+    await route.fulfill({ json: currentManifestFixture() });
+  });
+
+  await page.goto("/desde-fp");
+  const loading = page.getByText(/Preparando los ciclos oficiales/u);
+  await expect(loading).toBeVisible();
+  await expect(loading).toHaveAttribute("role", "status");
+  await expect(loading).toHaveAttribute("aria-live", "polite");
+
+  releaseManifest();
+});
+
+test("FP results loading is announced as a polite status", async ({ page }) => {
+  let releaseManifest!: () => void;
+  const manifestDelay = new Promise<void>((resolve) => {
+    releaseManifest = resolve;
+  });
+  await page.route("**/data/v1/manifest.json", async (route) => {
+    await manifestDelay;
+    await route.fulfill({ json: currentManifestFixture() });
+  });
+
+  await page.goto("/desde-fp/IFC03S");
+  const loading = page.getByText(/Buscando ofertas relacionadas/u);
+  await expect(loading).toBeVisible();
+  await expect(loading).toHaveAttribute("role", "status");
+  await expect(loading).toHaveAttribute("aria-live", "polite");
+
+  releaseManifest();
+});
 
 test("live DAW results shows formacion link and approved occupation", async ({
   page,
