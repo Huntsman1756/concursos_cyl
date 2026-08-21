@@ -120,6 +120,86 @@
     "mappingVersion": "1.0.0"
   },
   {
+    "trainingProgramKey": "AFD01S",
+    "occupationId": "occupation:cno11:3722",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/actividades-fisicas-deportivas/ensenanza-animacion-sociodeportiva.html",
+    "sourceQuote": "Cronometrador / cronometradora, juez / jueza y árbitra / árbitro de competiciones deportivas no oficiales.",
+    "reviewedAt": "2026-08-12",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "AFD01S",
+    "occupationId": "occupation:cno11:3723",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.boe.es/eli/es/rd/2017/06/23/653",
+    "sourceQuote": "Profesor/a de actividades físico-deportivas.",
+    "reviewedAt": "2026-08-12",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "AFD01S",
+    "occupationId": "occupation:cno11:3724",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/actividades-fisicas-deportivas/ensenanza-animacion-sociodeportiva.html",
+    "sourceQuote": "Animador / animadora de veladas, espectáculos y actividades recreativas en instalaciones turísticas.",
+    "reviewedAt": "2026-08-12",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "AFD01S",
+    "occupationId": "occupation:cno11:5992",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.boe.es/eli/es/rd/2017/06/23/653",
+    "sourceQuote": "Socorrista en instalaciones acuáticas.",
+    "reviewedAt": "2026-08-12",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "AFD01SD",
+    "occupationId": "occupation:cno11:3722",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/actividades-fisicas-deportivas/ensenanza-animacion-sociodeportiva.html",
+    "sourceQuote": "Cronometrador / cronometradora, juez / jueza y árbitra / árbitro de competiciones deportivas no oficiales.",
+    "reviewedAt": "2026-08-12",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "AFD01SD",
+    "occupationId": "occupation:cno11:3723",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.boe.es/eli/es/rd/2017/06/23/653",
+    "sourceQuote": "Profesor/a de actividades físico-deportivas.",
+    "reviewedAt": "2026-08-12",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "AFD01SD",
+    "occupationId": "occupation:cno11:3724",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/actividades-fisicas-deportivas/ensenanza-animacion-sociodeportiva.html",
+    "sourceQuote": "Animador / animadora de veladas, espectáculos y actividades recreativas en instalaciones turísticas.",
+    "reviewedAt": "2026-08-12",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "AFD01SD",
+    "occupationId": "occupation:cno11:5992",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.boe.es/eli/es/rd/2017/06/23/653",
+    "sourceQuote": "Socorrista en instalaciones acuáticas.",
+    "reviewedAt": "2026-08-12",
+    "mappingVersion": "1.0.0"
+  },
+  {
     "trainingProgramKey": "AFD02M",
     "occupationId": "occupation:cno11:3723",
     "relationshipType": "reviewed_relationship",

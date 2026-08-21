@@ -12,6 +12,11 @@ const reviewedPrograms = [
     occupationCodes: ["4111", "4113", "4123", "4223"],
   },
   {
+    programKey: "AFD01S",
+    title: "Enseñanza y Animación Sociodeportiva",
+    occupationCodes: ["3722", "3723", "3724", "5992"],
+  },
+  {
     programKey: "IFC02S",
     title: "Desarrollo de Aplicaciones Multiplataforma",
     occupationCodes: ["2713", "3820"],

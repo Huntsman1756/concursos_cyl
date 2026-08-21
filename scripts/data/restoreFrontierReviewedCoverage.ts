@@ -26,6 +26,14 @@ export const ACCEPTED_RELATION_KEYS = [
   "ADG02SD|4223",
   "AFD02M|3723",
   "AFD02M|3724",
+  "AFD01S|3722",
+  "AFD01S|3723",
+  "AFD01S|3724",
+  "AFD01S|5992",
+  "AFD01SD|3722",
+  "AFD01SD|3723",
+  "AFD01SD|3724",
+  "AFD01SD|5992",
   "AGA01B|4121",
   "AGA01B|5220",
   "AGA03S|2640",
@@ -122,10 +130,32 @@ const TODO_FP_ASIR_URL =
   "https://www.todofp.es/que-estudiar/familias-profesionales/informatica-comunicaciones/admin-sist-informaticos-red.html";
 const TODO_FP_INTEGRATION_URL =
   "https://www.todofp.es/que-estudiar/familias-profesionales/servicios-socioculturales-comunidad/integracion-social.html";
+const TODO_FP_SOCIOCULTURAL_ANIMATION_URL =
+  "https://www.todofp.es/que-estudiar/familias-profesionales/actividades-fisicas-deportivas/ensenanza-animacion-sociodeportiva.html";
+const BOE_SOCIOCULTURAL_ANIMATION_URL =
+  "https://www.boe.es/eli/es/rd/2017/06/23/653";
 
 const CURRENT_SOURCE_OVERRIDES: Readonly<
   Record<string, Pick<TrainingOccupationLink, "sourceUrl" | "sourceQuote">>
 > = {
+  "AFD01S|3722": {
+    sourceUrl: TODO_FP_SOCIOCULTURAL_ANIMATION_URL,
+    sourceQuote:
+      "Cronometrador / cronometradora, juez / jueza y árbitra / árbitro de competiciones deportivas no oficiales.",
+  },
+  "AFD01S|3723": {
+    sourceUrl: BOE_SOCIOCULTURAL_ANIMATION_URL,
+    sourceQuote: "Profesor/a de actividades físico-deportivas.",
+  },
+  "AFD01S|3724": {
+    sourceUrl: TODO_FP_SOCIOCULTURAL_ANIMATION_URL,
+    sourceQuote:
+      "Animador / animadora de veladas, espectáculos y actividades recreativas en instalaciones turísticas.",
+  },
+  "AFD01S|5992": {
+    sourceUrl: BOE_SOCIOCULTURAL_ANIMATION_URL,
+    sourceQuote: "Socorrista en instalaciones acuáticas.",
+  },
   "IFC01S|2721": {
     sourceUrl: TODO_FP_ASIR_URL,
     sourceQuote: "Técnica / técnico en administración de base de datos.",
@@ -160,6 +190,7 @@ function currentSourceOverride(
   key: string,
 ): Pick<TrainingOccupationLink, "sourceUrl" | "sourceQuote"> | undefined {
   const baseKey = key
+    .replace("AFD01SD|", "AFD01S|")
     .replace("IFC01SD|", "IFC01S|")
     .replace("SSC03SD|", "SSC03S|");
   return CURRENT_SOURCE_OVERRIDES[baseKey];

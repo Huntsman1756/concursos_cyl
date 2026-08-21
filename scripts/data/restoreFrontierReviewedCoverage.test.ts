@@ -49,6 +49,12 @@ describe("mergeFrontierReviewedCoverage", () => {
           occupationId: "occupation:cno11:3713",
           sourceQuote: "Técnica / técnico de integración social.",
         }),
+        expect.objectContaining({
+          trainingProgramKey: "AFD01SD",
+          occupationId: "occupation:cno11:5992",
+          sourceUrl: "https://www.boe.es/eli/es/rd/2017/06/23/653",
+          sourceQuote: "Socorrista en instalaciones acuáticas.",
+        }),
       ]),
     );
     expect(restoredKeys).toEqual(
