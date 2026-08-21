@@ -1,227 +1,212 @@
-import { expect, describe, it } from "vitest";
+import { mkdtemp } from "node:fs/promises";
+import { tmpdir } from "node:os";
+import { join } from "node:path";
 
-import {
-  ANONYMOUS_PILOT_TASK_KEYS,
-  AnonymousPilotAggregateSchema,
-} from "./anonymousPilotSchema";
+import { describe, expect, it } from "vitest";
+
+import { ANONYMOUS_PILOT_TASK_IDS } from "./anonymousPilotSchema";
 import {
   validateAnonymousPilotAggregate,
   validateAnonymousPilotAggregateFile,
 } from "./validateAnonymousPilot";
 
-function completeAggregate() {
-  const sessions = 3;
-  const tasks = ANONYMOUS_PILOT_TASK_KEYS.map((taskKey) => ({
-    taskKey,
-    started: sessions,
-    completed: sessions,
-    blocked: 0,
-  }));
-
+function taskResult(
+  taskId: (typeof ANONYMOUS_PILOT_TASK_IDS)[number],
+  attempted = 0,
+) {
   return {
-    schemaVersion: 1,
-    pilotKey: "anonymous-fp-navigation",
-    status: "complete",
-    tasks,
-    counts: {
-      sessions,
-      taskStarts: sessions * ANONYMOUS_PILOT_TASK_KEYS.length,
-      taskCompletions: sessions * ANONYMOUS_PILOT_TASK_KEYS.length,
-      taskBlocks: 0,
+    taskId,
+    attempted,
+    completed: attempted,
+    blocked: 0,
+    abandoned: 0,
+    misinterpretations: 0,
+    timeBands: {
+      under_5m: attempted,
+      "5_to_10m": 0,
+      over_10m: 0,
+      not_recorded: 0,
     },
-    safety: {
+    issueCounts: { minor: 0, major: 0, stop: 0 },
+  };
+}
+
+function aggregate(status: "draft" | "complete" | "blocked" = "draft") {
+  const sessions = status === "complete" ? 5 : 0;
+  return {
+    schemaVersion: "1.0.0",
+    artifactKind: "anonymous_pilot_aggregate",
+    status,
+    blockerCodes: status === "blocked" ? ["missing_sample"] : [],
+    protocol: {
+      protocolVersion: "1.0.0",
+      taskCatalogVersion: "1.0.0",
       adultOnly: true,
-      recording: false,
-      dataMode: "aggregate-only",
-      consent: "unsigned-template",
+      minorsIncluded: false,
+      targetSessions: 5,
+      minimumByRole: { learner: 1, counsellor: 1 },
+      protocolSha256: "a".repeat(64),
+      taskScriptSha256: "b".repeat(64),
     },
-    blockers: [],
-    review: {
-      status: "approved",
-      reviewedAt: "2026-08-21T12:00:00.000Z",
+    release: {
+      rootUrl: "https://salida-cyl.157-90-22-40.sslip.io/",
+      deployedCommitSha: "c".repeat(40),
+      snapshotId: "20260821144454118-a56e3eeaffa6",
+    },
+    consentPolicy: {
+      participation: "required_before_session",
+      recording: "none",
+      publicQuotes: "none",
+      publicMedia: "none",
+      rawConsentStorage: "outside_repository",
+    },
+    sample: {
+      totalSessions: sessions,
+      consentedSessions: sessions,
+      withdrawnSessions: 0,
+      analyzableSessions: sessions,
+      byRole: {
+        learner: status === "complete" ? 4 : 0,
+        counsellor: status === "complete" ? 1 : 0,
+      },
+    },
+    taskResults: ANONYMOUS_PILOT_TASK_IDS.map((taskId) =>
+      taskResult(taskId, sessions),
+    ),
+    issues: [],
+    privacy: {
+      aggregateOnly: true,
+      aggregateContainsPii: false,
+      rawMaterialsInRepository: false,
+      retentionDays: 30,
+    },
+    verification: {
+      humanReview: status === "complete" ? "approved" : "pending",
+      protocolApproved: status === "complete",
+      consentApproved: status === "complete",
+      noPiiReview: status === "complete" ? "approved" : "pending",
+      reviewedAt: status === "complete" ? "2026-08-21T12:00:00.000Z" : null,
     },
   };
 }
 
-describe("validateAnonymousPilotAggregate", () => {
-  it("accepts an empty draft but requires a complete aggregate when requested", () => {
-    const draft = validateAnonymousPilotAggregate(
-      {},
-      { requireComplete: false },
-    );
-
-    expect(draft.status).toBe("draft");
-    expect(draft.counts.sessions).toBe(0);
-    expect(() =>
-      validateAnonymousPilotAggregate({}, { requireComplete: true }),
-    ).toThrow(/complete/i);
+describe("anonymous pilot aggregate", () => {
+  it("accepts an empty draft and a reviewed complete aggregate", () => {
+    expect(validateAnonymousPilotAggregate(aggregate()).status).toBe("draft");
+    expect(
+      validateAnonymousPilotAggregate(aggregate("complete"), {
+        requireComplete: true,
+      }).status,
+    ).toBe("complete");
   });
 
-  it("accepts a complete aggregate with exactly the five fixed tasks", () => {
-    const aggregate = validateAnonymousPilotAggregate(completeAggregate(), {
-      requireComplete: true,
-    });
-
-    expect(aggregate.status).toBe("complete");
-    expect(aggregate.tasks).toHaveLength(ANONYMOUS_PILOT_TASK_KEYS.length);
-    expect(aggregate.counts.taskCompletions).toBe(15);
+  it("rejects unknown and participant-level fields", () => {
+    expect(() =>
+      validateAnonymousPilotAggregate({
+        ...aggregate(),
+        participantName: "not allowed",
+      }),
+    ).toThrow(/schema|unknown|unrecognized/i);
+    expect(() =>
+      validateAnonymousPilotAggregate({ ...aggregate(), sessions: [] }),
+    ).toThrow(/schema|unknown|unrecognized/i);
   });
 
-  it("rejects unknown and participant-level keys", () => {
-    const aggregate = completeAggregate();
-
-    expect(() =>
-      validateAnonymousPilotAggregate(
-        { ...aggregate, unexpected: true },
-        { requireComplete: true },
-      ),
-    ).toThrow(/unexpected|unknown/i);
-    expect(() =>
-      validateAnonymousPilotAggregate(
-        {
-          ...aggregate,
-          tasks: aggregate.tasks.map((task, index) =>
-            index === 0 ? { ...task, participantId: "participant-1" } : task,
-          ),
-        },
-        { requireComplete: true },
-      ),
-    ).toThrow(/participant|unknown/i);
-  });
-
-  it("rejects PII-like leaf strings without echoing the input", () => {
-    const aggregate = completeAggregate();
-    const withEmail = {
-      ...aggregate,
-      review: {
-        ...aggregate.review,
-        note: "contact@example.invalid",
-      },
-    };
-
-    expect(() =>
-      validateAnonymousPilotAggregate(withEmail, { requireComplete: true }),
-    ).toThrow(/personal|PII/i);
+  it.each([
+    "contact@example.invalid",
+    "+34 612 345 678",
+    "12345678Z",
+    "ES9121000418450200051332",
+    "192.168.1.20",
+    "https://example.invalid/?person=1",
+  ])("rejects PII-like leaf values without echoing them: %s", (value) => {
+    const candidate = aggregate() as Record<string, unknown>;
+    candidate.release = { ...(candidate.release as object), rootUrl: value };
     try {
-      validateAnonymousPilotAggregate(withEmail, { requireComplete: true });
+      validateAnonymousPilotAggregate(candidate);
+      throw new Error("expected validation to fail");
     } catch (error) {
-      expect(String(error)).not.toContain("contact@example.invalid");
+      expect(String(error)).not.toContain(value);
     }
   });
 
-  it("rejects minors and recording", () => {
-    const aggregate = completeAggregate();
-
-    expect(() =>
-      validateAnonymousPilotAggregate(
-        { ...aggregate, safety: { ...aggregate.safety, adultOnly: false } },
-        { requireComplete: true },
-      ),
-    ).toThrow(/adult|minor/i);
-    expect(() =>
-      validateAnonymousPilotAggregate(
-        { ...aggregate, safety: { ...aggregate.safety, recording: true } },
-        { requireComplete: true },
-      ),
-    ).toThrow(/record/i);
+  it("rejects minors, recording, quotes and public media", () => {
+    for (const mutation of [
+      { protocol: { ...aggregate().protocol, minorsIncluded: true } },
+      { consentPolicy: { ...aggregate().consentPolicy, recording: "audio" } },
+      { consentPolicy: { ...aggregate().consentPolicy, publicQuotes: "yes" } },
+      { consentPolicy: { ...aggregate().consentPolicy, publicMedia: "yes" } },
+    ])
+      expect(() =>
+        validateAnonymousPilotAggregate({ ...aggregate(), ...mutation }),
+      ).toThrow(/schema|invalid|literal|expected/i);
   });
 
-  it("rejects task and count invariant violations", () => {
-    const aggregate = completeAggregate();
-    const inconsistentTask = {
-      ...aggregate,
-      tasks: aggregate.tasks.map((task, index) =>
-        index === 0 ? { ...task, completed: task.completed + 1 } : task,
-      ),
+  it("rejects inconsistent sample, task and time-band counts", () => {
+    const badSample = aggregate("complete");
+    badSample.sample.analyzableSessions = 4;
+    expect(() => validateAnonymousPilotAggregate(badSample)).toThrow(/sample/i);
+    const badTask = aggregate("complete");
+    badTask.taskResults[0]!.blocked = 1;
+    expect(() => validateAnonymousPilotAggregate(badTask)).toThrow(/task/i);
+    const badBand = aggregate("complete");
+    badBand.taskResults[0]!.timeBands.under_5m = 4;
+    expect(() => validateAnonymousPilotAggregate(badBand)).toThrow(/time/i);
+  });
+
+  it("rejects missing, duplicate and unknown tasks", () => {
+    const missing = aggregate();
+    missing.taskResults.pop();
+    expect(() => validateAnonymousPilotAggregate(missing)).toThrow(/task/i);
+    const duplicate = aggregate();
+    duplicate.taskResults[1]!.taskId = duplicate.taskResults[0]!.taskId;
+    expect(() => validateAnonymousPilotAggregate(duplicate)).toThrow(/task/i);
+    const unknown = aggregate() as Record<string, unknown>;
+    unknown.taskResults = [
+      ...aggregate().taskResults.slice(0, 4),
+      { ...aggregate().taskResults[4], taskId: "T6_unknown" },
+    ];
+    expect(() => validateAnonymousPilotAggregate(unknown)).toThrow(
+      /task|schema/i,
+    );
+  });
+
+  it("rejects complete status without five sessions, both roles and human review", () => {
+    const tooSmall = aggregate("complete");
+    tooSmall.sample = {
+      totalSessions: 4,
+      consentedSessions: 4,
+      withdrawnSessions: 0,
+      analyzableSessions: 4,
+      byRole: { learner: 4, counsellor: 0 },
     };
+    tooSmall.taskResults = ANONYMOUS_PILOT_TASK_IDS.map((id) =>
+      taskResult(id, 4),
+    );
+    expect(() => validateAnonymousPilotAggregate(tooSmall)).toThrow(
+      /complete/i,
+    );
+    const unreviewed = aggregate("complete");
+    unreviewed.verification.humanReview = "pending";
+    unreviewed.verification.reviewedAt = null;
+    expect(() => validateAnonymousPilotAggregate(unreviewed)).toThrow(
+      /review/i,
+    );
+  });
+
+  it("rejects blocked status without an enumerated blocker", () => {
     expect(() =>
-      validateAnonymousPilotAggregate(inconsistentTask, {
-        requireComplete: true,
+      validateAnonymousPilotAggregate({
+        ...aggregate("blocked"),
+        blockerCodes: [],
       }),
-    ).toThrow(/task|count|started|completed/i);
-
-    const inconsistentTotals = {
-      ...aggregate,
-      counts: { ...aggregate.counts, taskCompletions: 14 },
-    };
-    expect(() =>
-      validateAnonymousPilotAggregate(inconsistentTotals, {
-        requireComplete: true,
-      }),
-    ).toThrow(/task|count|total/i);
-  });
-
-  it("rejects a missing task and a non-enumerated task key", () => {
-    const aggregate = completeAggregate();
-
-    expect(() =>
-      validateAnonymousPilotAggregate(
-        { ...aggregate, tasks: aggregate.tasks.slice(0, 4) },
-        { requireComplete: true },
-      ),
-    ).toThrow(/five|task/i);
-    expect(() =>
-      validateAnonymousPilotAggregate(
-        {
-          ...aggregate,
-          tasks: aggregate.tasks.map((task, index) =>
-            index === 0 ? { ...task, taskKey: "task-6" } : task,
-          ),
-        },
-        { requireComplete: true },
-      ),
-    ).toThrow(/task/i);
-  });
-
-  it("requires terminal review gates for completion", () => {
-    const aggregate = completeAggregate();
-
-    expect(() =>
-      validateAnonymousPilotAggregate(
-        { ...aggregate, review: { status: "pending" } },
-        { requireComplete: true },
-      ),
-    ).toThrow(/review/i);
-    expect(() =>
-      validateAnonymousPilotAggregate(
-        { ...aggregate, review: { status: "approved" } },
-        { requireComplete: true },
-      ),
-    ).toThrow(/review/i);
-  });
-
-  it("rejects unresolved blockers for a complete aggregate", () => {
-    const aggregate = completeAggregate();
-    const blocked = {
-      ...aggregate,
-      blockers: [
-        {
-          code: "technical",
-          status: "open",
-          count: 1,
-          summary: "The route was unavailable.",
-        },
-      ],
-    };
-
-    expect(() =>
-      validateAnonymousPilotAggregate(blocked, { requireComplete: true }),
     ).toThrow(/blocker/i);
   });
 
-  it("fails closed when the input file is missing", async () => {
+  it("fails closed when the aggregate file is missing", async () => {
+    const directory = await mkdtemp(join(tmpdir(), "anonymous-pilot-"));
     await expect(
-      validateAnonymousPilotAggregateFile(
-        "/tmp/anonymous-pilot-input-that-does-not-exist.json",
-      ),
-    ).rejects.toThrow(/missing|input|file/i);
-  });
-
-  it("keeps the aggregate schema strict", () => {
-    expect(
-      AnonymousPilotAggregateSchema.safeParse({
-        participant: { id: "not-allowed" },
-      }).success,
-    ).toBe(false);
+      validateAnonymousPilotAggregateFile(join(directory, "missing.json")),
+    ).rejects.toThrow(/missing|unreadable/i);
   });
 });

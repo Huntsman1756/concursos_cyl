@@ -1,153 +1,144 @@
 import { z } from "zod";
 
-/**
- * The task keys are deliberately positional.  The task script is versioned
- * documentation, while the aggregate keeps only these stable keys and counts.
- */
-export const ANONYMOUS_PILOT_TASK_KEYS = [
-  "task-1",
-  "task-2",
-  "task-3",
-  "task-4",
-  "task-5",
+export const ANONYMOUS_PILOT_TASK_IDS = [
+  "T1_fp_to_occupation",
+  "T2_honest_zero_or_deferred",
+  "T3_occupation_to_fp",
+  "T4_compare_scopes",
+  "T5_sources_and_limits",
 ] as const;
 
-export const AnonymousPilotTaskKeySchema = z.enum(ANONYMOUS_PILOT_TASK_KEYS);
+export const AnonymousPilotTaskIdSchema = z.enum(ANONYMOUS_PILOT_TASK_IDS);
 
-const NonNegativeCountSchema = z.number().int().min(0);
-
-const AnonymousPilotTaskSchema = z
-  .object({
-    taskKey: AnonymousPilotTaskKeySchema,
-    started: NonNegativeCountSchema,
-    completed: NonNegativeCountSchema,
-    blocked: NonNegativeCountSchema,
-    note: z.string().trim().max(280).optional(),
-  })
-  .strict();
-
-function taskSchemaForKey(taskKey: (typeof ANONYMOUS_PILOT_TASK_KEYS)[number]) {
-  return AnonymousPilotTaskSchema.extend({
-    taskKey: z.literal(taskKey),
-  });
-}
-
-export const AnonymousPilotTasksSchema = z.tuple([
-  taskSchemaForKey("task-1"),
-  taskSchemaForKey("task-2"),
-  taskSchemaForKey("task-3"),
-  taskSchemaForKey("task-4"),
-  taskSchemaForKey("task-5"),
+export const AnonymousPilotBlockerCodeSchema = z.enum([
+  "no_authorization",
+  "missing_consent",
+  "minor_participant_review_required",
+  "missing_sample",
+  "incomplete_observation",
+  "pii_detected",
+  "privacy_review_pending",
+  "release_mismatch",
 ]);
 
-export const AnonymousPilotCountsSchema = z
+const CountSchema = z.number().int().nonnegative();
+const Sha256Schema = z.string().regex(/^[a-f0-9]{64}$/u);
+const TaskResultSchema = z
   .object({
-    sessions: NonNegativeCountSchema.default(0),
-    taskStarts: NonNegativeCountSchema.default(0),
-    taskCompletions: NonNegativeCountSchema.default(0),
-    taskBlocks: NonNegativeCountSchema.default(0),
+    taskId: AnonymousPilotTaskIdSchema,
+    attempted: CountSchema,
+    completed: CountSchema,
+    blocked: CountSchema,
+    abandoned: CountSchema,
+    misinterpretations: CountSchema,
+    timeBands: z
+      .object({
+        under_5m: CountSchema,
+        "5_to_10m": CountSchema,
+        over_10m: CountSchema,
+        not_recorded: CountSchema,
+      })
+      .strict(),
+    issueCounts: z
+      .object({ minor: CountSchema, major: CountSchema, stop: CountSchema })
+      .strict(),
   })
-  .strict()
-  .default({
-    sessions: 0,
-    taskStarts: 0,
-    taskCompletions: 0,
-    taskBlocks: 0,
-  });
+  .strict();
 
-export const AnonymousPilotSafetySchema = z
+const IssueSchema = z
   .object({
-    adultOnly: z.boolean().default(true),
-    recording: z.boolean().default(false),
-    dataMode: z.literal("aggregate-only").default("aggregate-only"),
-    consent: z.literal("unsigned-template").default("unsigned-template"),
-  })
-  .strict()
-  .default({
-    adultOnly: true,
-    recording: false,
-    dataMode: "aggregate-only",
-    consent: "unsigned-template",
-  });
-
-export const AnonymousPilotBlockerSchema = z
-  .object({
-    code: z.enum([
+    taskId: AnonymousPilotTaskIdSchema,
+    category: z.enum([
+      "navigation",
+      "label_comprehension",
+      "scope_confusion",
       "accessibility",
-      "comprehension",
-      "consent",
-      "technical",
-      "privacy",
+      "loading_or_error",
+      "privacy_concern",
       "other",
     ]),
-    status: z.enum(["open", "resolved"]),
+    severity: z.enum(["minor", "major", "stop"]),
     count: z.number().int().positive(),
-    summary: z.string().trim().min(1).max(280).optional(),
+    actionCode: z.enum([
+      "none",
+      "clarify_copy",
+      "adjust_navigation",
+      "add_limit_disclosure",
+      "run_accessibility_review",
+      "investigate_bug",
+    ]),
   })
   .strict();
 
-export const AnonymousPilotReviewSchema = z
+export const AnonymousPilotAggregateSchema = z
   .object({
-    status: z.enum(["pending", "approved"]).default("pending"),
-    reviewedAt: z.string().datetime().optional(),
-    note: z.string().trim().max(280).optional(),
-  })
-  .strict()
-  .default({ status: "pending" });
-
-const DEFAULT_TASKS: [
-  { taskKey: "task-1"; started: number; completed: number; blocked: number },
-  { taskKey: "task-2"; started: number; completed: number; blocked: number },
-  { taskKey: "task-3"; started: number; completed: number; blocked: number },
-  { taskKey: "task-4"; started: number; completed: number; blocked: number },
-  { taskKey: "task-5"; started: number; completed: number; blocked: number },
-] = [
-  { taskKey: "task-1", started: 0, completed: 0, blocked: 0 },
-  { taskKey: "task-2", started: 0, completed: 0, blocked: 0 },
-  { taskKey: "task-3", started: 0, completed: 0, blocked: 0 },
-  { taskKey: "task-4", started: 0, completed: 0, blocked: 0 },
-  { taskKey: "task-5", started: 0, completed: 0, blocked: 0 },
-];
-
-const AnonymousPilotAggregateBaseSchema = z
-  .object({
-    schemaVersion: z.literal(1).default(1),
-    pilotKey: z
-      .literal("anonymous-fp-navigation")
-      .default("anonymous-fp-navigation"),
-    status: z.enum(["draft", "complete"]).default("draft"),
-    tasks: AnonymousPilotTasksSchema.default(DEFAULT_TASKS),
-    counts: AnonymousPilotCountsSchema,
-    safety: AnonymousPilotSafetySchema,
-    blockers: z.array(AnonymousPilotBlockerSchema).max(20).default([]),
-    review: AnonymousPilotReviewSchema,
+    schemaVersion: z.literal("1.0.0"),
+    artifactKind: z.literal("anonymous_pilot_aggregate"),
+    status: z.enum(["draft", "complete", "blocked"]),
+    blockerCodes: z.array(AnonymousPilotBlockerCodeSchema),
+    protocol: z
+      .object({
+        protocolVersion: z.literal("1.0.0"),
+        taskCatalogVersion: z.literal("1.0.0"),
+        adultOnly: z.literal(true),
+        minorsIncluded: z.literal(false),
+        targetSessions: z.literal(5),
+        minimumByRole: z
+          .object({ learner: z.literal(1), counsellor: z.literal(1) })
+          .strict(),
+        protocolSha256: Sha256Schema,
+        taskScriptSha256: Sha256Schema,
+      })
+      .strict(),
+    release: z
+      .object({
+        rootUrl: z.literal("https://salida-cyl.157-90-22-40.sslip.io/"),
+        deployedCommitSha: z.string().regex(/^[a-f0-9]{40}$/u),
+        snapshotId: z.string().regex(/^\d{17}-[a-f0-9]{12}$/u),
+      })
+      .strict(),
+    consentPolicy: z
+      .object({
+        participation: z.literal("required_before_session"),
+        recording: z.literal("none"),
+        publicQuotes: z.literal("none"),
+        publicMedia: z.literal("none"),
+        rawConsentStorage: z.literal("outside_repository"),
+      })
+      .strict(),
+    sample: z
+      .object({
+        totalSessions: CountSchema,
+        consentedSessions: CountSchema,
+        withdrawnSessions: CountSchema,
+        analyzableSessions: CountSchema,
+        byRole: z
+          .object({ learner: CountSchema, counsellor: CountSchema })
+          .strict(),
+      })
+      .strict(),
+    taskResults: z.array(TaskResultSchema).length(5),
+    issues: z.array(IssueSchema),
+    privacy: z
+      .object({
+        aggregateOnly: z.literal(true),
+        aggregateContainsPii: z.literal(false),
+        rawMaterialsInRepository: z.literal(false),
+        retentionDays: z.literal(30),
+      })
+      .strict(),
+    verification: z
+      .object({
+        humanReview: z.enum(["pending", "approved"]),
+        protocolApproved: z.boolean(),
+        consentApproved: z.boolean(),
+        noPiiReview: z.enum(["pending", "approved"]),
+        reviewedAt: z.string().datetime().nullable(),
+      })
+      .strict(),
   })
   .strict();
-
-/**
- * Structural contract for the anonymous pilot.  No participant, identity,
- * contact, transcript, or recording field is part of this schema.
- */
-export const AnonymousPilotAggregateSchema =
-  AnonymousPilotAggregateBaseSchema.superRefine((aggregate, context) => {
-    if (!aggregate.safety.adultOnly) {
-      context.addIssue({
-        code: "custom",
-        path: ["safety", "adultOnly"],
-        message: "The anonymous pilot is adult-only; minors are not permitted.",
-      });
-    }
-    if (aggregate.safety.recording) {
-      context.addIssue({
-        code: "custom",
-        path: ["safety", "recording"],
-        message: "Recording is not permitted for the anonymous pilot.",
-      });
-    }
-  });
 
 export type AnonymousPilotAggregate = z.infer<
   typeof AnonymousPilotAggregateSchema
 >;
-export type AnonymousPilotTask = z.infer<typeof AnonymousPilotTaskSchema>;
-export type AnonymousPilotCounts = z.infer<typeof AnonymousPilotCountsSchema>;

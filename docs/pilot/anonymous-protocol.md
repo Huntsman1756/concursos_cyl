@@ -1,8 +1,9 @@
 # Protocolo de piloto anónimo
 
 Este protocolo prepara una revisión humana pequeña de los flujos públicos de
-SALIDA CyL. El repositorio solo puede recibir un agregado de conteos; no se
-crea ni se incorpora un fichero de resultados del piloto.
+SALIDA CyL. El repositorio solo puede recibir, después de ejecutar y revisar el
+piloto, un agregado de conteos validado. Este kit no crea resultados ni afirma
+que el piloto ya se haya realizado.
 
 ## Límites obligatorios
 
@@ -35,20 +36,18 @@ se transcribe al repositorio.
 
 ## Registro permitido
 
-Por cada sesión se incrementan los contadores `started`, `completed` o
-`blocked` de cada una de las cinco tareas. Un bloqueo se resume solo con uno de
-los códigos `accessibility`, `comprehension`, `consent`, `technical`, `privacy`
-u `other`; nunca se escribe una explicación que identifique a la persona.
+Por cada tarea se consolidan únicamente conteos de `attempted`, `completed`,
+`blocked`, `abandoned`, `misinterpretations`, bandas de tiempo e incidencias
+mediante enumeraciones cerradas. No existen notas ni resúmenes de texto libre.
 
 El agregado debe conservar esta forma conceptual:
 
 ```text
-five fixed task rows
-aggregate session/task counts
-adultOnly=true, recording=false, dataMode=aggregate-only
-unsigned-template consent mode
-open/resolved blocker codes
-pending/approved review gate
+five exact task IDs and aggregate task counts
+adultOnly=true, minorsIncluded=false, recording=none
+learner/counsellor role counts without participant rows
+closed issue/action/blocker codes
+pending/approved human and no-PII review gates
 ```
 
 La validación estructural y de invariantes se ejecuta sin imprimir el valor de
@@ -56,16 +55,17 @@ entrada:
 
 ```bash
 rtk npm run pilot:anonymous:test
-rtk npm run pilot:anonymous:validate -- --input /ruta/al/agregado.json --require-complete
+rtk npm run pilot:anonymous:validate
 ```
 
-El archivo de entrada es una preparación local y efímera. No se debe llamar
-`results-aggregate.json`, añadirlo al repositorio ni distribuirlo.
+Antes del piloto no se crea `analysis/pilot/anonymous/results-aggregate.json`.
+Después, solo ese agregado puede proponerse para revisión; consentimientos,
+hojas locales, capturas, transcripciones y cualquier material individual se
+mantienen fuera del repositorio.
 
 ## Cierre y revisión
 
-El piloto solo se considera completo cuando todas las tareas tienen un conteo
-por sesión, cada inicio termina como completado o bloqueado, no quedan
-bloqueadores abiertos y la revisión está `approved` con marca temporal. La
-revisión confirma de nuevo que se usó la plantilla sin firma, que solo hay
-conteos agregados y que no hubo grabación ni datos personales.
+El piloto solo se considera completo con al menos cinco sesiones analizables,
+al menos una persona de cada rol (`learner` y `counsellor`), consentimiento
+completo, las cinco tareas contabilizadas y las revisiones humana y anti-PII
+aprobadas con marca temporal. Un estado `blocked` requiere un código de bloqueo.

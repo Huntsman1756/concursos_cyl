@@ -1,57 +1,47 @@
 # Guion de tareas del piloto anónimo
 
-Las cinco tareas son fijas y se ejecutan en este orden. El moderador lee el
-texto de la tarea, responde solo preguntas de funcionamiento y no sugiere qué
-enlace debe elegir la persona.
+Las cinco tareas se leen en este orden y con el mismo texto a todas las
+personas. El moderador no indica qué control deben usar ni registra respuestas
+textuales.
 
-## Tarea 1 — Encontrar una formación desde el inicio (`task-1`)
+## T1 — De FP a ocupación (`T1_fp_to_occupation`)
 
-«Desde la portada, encuentra una formación profesional que te parezca
-relacionada con tu próximo paso y abre su ficha.»
+«Partiendo de la portada, elige un título de FP y encuentra una ocupación
+relacionada que tenga evidencia revisada.»
 
-Éxito: la ficha de una formación queda abierta. Bloqueo: no puede localizar el
-acceso o la búsqueda.
+Se completa al abrir una salida revisada del título elegido.
 
-## Tarea 2 — Buscar desde FP (`task-2`)
+## T2 — Resultado honesto (`T2_honest_zero_or_deferred`)
 
-«En la búsqueda Desde FP, selecciona una familia y un programa, y llega a sus
-resultados de ofertas.»
+«Busca un título o filtro que no ofrezca un resultado inmediato y explica qué
+te permite hacer la página a continuación.»
 
-Éxito: se muestran los resultados del programa. Bloqueo: el selector, la
-búsqueda o la navegación impide continuar.
+Se completa cuando la persona identifica correctamente un estado sin
+resultados, diferido o limitado, sin interpretar que garantiza empleo.
 
-## Tarea 3 — Interpretar un resultado de formación (`task-3`)
+## T3 — De ocupación a FP (`T3_occupation_to_fp`)
 
-«En estos resultados, identifica qué siguiente paso ofrece la página para una
-persona que quiere explorar una ocupación.»
+«Busca una ocupación y encuentra una FP que pueda llevarte hacia ella.»
 
-Éxito: señala el siguiente paso visible sin que el moderador lo nombre.
-Bloqueo: la persona no encuentra una acción comprensible o la página no carga.
+Se completa al abrir una relación revisada desde una ocupación oficial.
 
-## Tarea 4 — Buscar desde una ocupación (`task-4`)
+## T4 — Comparar alcances (`T4_compare_scopes`)
 
-«En Desde ocupación, busca una ocupación y abre el resultado que explica qué
-formación puede relacionarse con ella.»
+«Abre la comparación de ingresos, cambia el alcance y distingue qué territorio
+y periodo se están comparando.»
 
-Éxito: se abre un resultado de ocupación. Bloqueo: la ocupación no se puede
-encontrar o el resultado no es utilizable.
+Se completa cuando la persona diferencia los alcances mostrados.
 
-## Tarea 5 — Comparar el contexto de ingresos (`task-5`)
+## T5 — Fuentes y límites (`T5_sources_and_limits`)
 
-«Abre la comparación y cambia el alcance disponible para entender qué
-contexto de ingresos se está mostrando.»
+«Encuentra de dónde proceden los datos y una limitación importante del
+proyecto.»
 
-Éxito: cambia el alcance y puede describirlo con sus propias palabras.
-Bloqueo: la comparación o el selector no responde.
+Se completa al localizar una fuente pública y una limitación declarada.
 
-## Hoja de conteo efímera
+## Registro permitido
 
-El operador usa una hoja local sin nombre ni identificador. Para cada tarea
-solo marca un inicio y exactamente un resultado final: `completed` o `blocked`.
-Los bloqueos se cuentan y se clasifican con un código; no se anotan frases,
-respuestas, citas, capturas ni datos demográficos. Al terminar, se destruye la
-hoja local y se conserva únicamente el agregado anónimo validado.
-
-Si la persona pide parar, se detiene la sesión y no se convierte esa petición
-en una nota descriptiva. El consentimiento puede retirarse antes de consolidar
-los conteos.
+Para cada tarea solo se agregan conteos de intento, finalización, bloqueo,
+abandono, malinterpretación, banda de tiempo e incidencias mediante códigos
+cerrados. No se guardan frases, citas, nombres, centros, ubicaciones, capturas,
+transcripciones ni filas por sesión.
