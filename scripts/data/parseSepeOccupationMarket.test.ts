@@ -100,6 +100,57 @@ describe("parseSepeOccupationMarket", () => {
     expect("contractCharacteristics" in parsed.national).toBe(false);
   });
 
+  it("requires both national annual variations and their source tables", async () => {
+    const html = await fixture();
+    const withoutContractsTable = html.replace(
+      /<table>\s*<caption>\s*Contratos según sexo y edad\s*<\/caption>[\s\S]*?<\/table>/u,
+      "",
+    );
+    expect(() =>
+      parseSepeOccupationMarket(withoutContractsTable, options),
+    ).toThrow(/annual variation.*contracts/i);
+
+    const withoutUnemploymentAnnual = html.replace(
+      "<td>17,50 %</td>",
+      "<td></td>",
+    );
+    expect(() =>
+      parseSepeOccupationMarket(withoutUnemploymentAnnual, options),
+    ).toThrow(/annual variation.*unemployment/i);
+  });
+
+  it("rejects numeric suffixes and malformed grouping instead of accepting prefixes", async () => {
+    const html = await fixture();
+    expect(() =>
+      parseSepeOccupationMarket(
+        html.replace("2,65% (2)", "2,65garbage"),
+        options,
+      ),
+    ).toThrow(/decimal/i);
+    expect(() =>
+      parseSepeOccupationMarket(
+        html.replace("-4,92% (1)", "-4.92.1% (1)"),
+        options,
+      ),
+    ).toThrow(/decimal/i);
+  });
+
+  it("scopes optional characteristics to the marked section", async () => {
+    const html = await fixture();
+    const withoutSection = html.replace(
+      /<section class="contract-characteristics">[\s\S]*?<\/section>/u,
+      "",
+    );
+    const unrelatedText =
+      "<p>999 han sido de duración Indefinido y 9,99 es el índice de rotación de los contratos</p>";
+    const parsed = parseSepeOccupationMarket(
+      withoutSection.replace("</main>", `${unrelatedText}</main>`),
+      options,
+    );
+
+    expect("contractCharacteristics" in parsed.national).toBe(false);
+  });
+
   it("fails closed for CNO mismatch, malformed period, duplicate and unknown province", async () => {
     const html = await fixture();
     expect(() =>
@@ -117,6 +168,43 @@ describe("parseSepeOccupationMarket", () => {
     expect(() =>
       parseSepeOccupationMarket(html.replaceAll("Ávila", "Madrid"), options),
     ).toThrow(/unknown|province|Castilla/i);
+    expect(() =>
+      parseSepeOccupationMarket(html.replaceAll("Ávila", "Avila"), options),
+    ).toThrow(/unknown|province|canonical|Castilla/i);
+  });
+
+  it("rejects unknown rows in an explicitly marked CyL subset regardless of row count", async () => {
+    const html = await fixture();
+    const marker =
+      "<caption>\n      Distribución geográfica de parados\n    </caption>";
+    const markerIndex = html.indexOf(marker);
+    expect(markerIndex).toBeGreaterThanOrEqual(0);
+    const before = html.slice(0, markerIndex);
+    const after = html.slice(markerIndex);
+    const unknownRows = ["Madrid", "Toledo", "Cuenca", "Cáceres"]
+      .map(
+        (province) =>
+          `<tr><td>${province}</td><td>1</td><td>0,00 %</td><td>0,00 %</td></tr>`,
+      )
+      .join("");
+    const withUnknownRows = `${before}${after.replace(
+      "</tbody>",
+      `${unknownRows}</tbody>`,
+    )}`;
+
+    expect(() => parseSepeOccupationMarket(withUnknownRows, options)).toThrow(
+      /unknown|province|Castilla/i,
+    );
+  });
+
+  it("rejects non-HTTPS provenance at parser boundaries", async () => {
+    const html = await fixture();
+    expect(() =>
+      parseSepeOccupationMarket(html, {
+        ...options,
+        sourceUrl: "http://www.sepe.es/HomeSepe/occupation/2721",
+      }),
+    ).toThrow(/https|scheme|url/i);
   });
 
   it("uses supplied provenance and never performs a network request", async () => {

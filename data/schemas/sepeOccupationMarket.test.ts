@@ -66,6 +66,35 @@ describe("SepeOccupationMarketSchema", () => {
     expect("contractCharacteristics" in parsed.national).toBe(false);
   });
 
+  it("requires annual national variations while keeping province metrics reusable", () => {
+    const { annualVariationPercent: _removed, ...contractsWithoutAnnual } =
+      validRecord.national.registeredContracts;
+    void _removed;
+    expect(() =>
+      SepeOccupationMarketSchema.parse({
+        ...validRecord,
+        national: {
+          ...validRecord.national,
+          registeredContracts: contractsWithoutAnnual,
+        },
+      }),
+    ).toThrow(/annualVariationPercent/i);
+  });
+
+  it("requires an HTTPS SEPE source URL", () => {
+    for (const protocol of ["http", "ftp"]) {
+      expect(() =>
+        SepeOccupationMarketSchema.parse({
+          ...validRecord,
+          source: {
+            ...validRecord.source,
+            url: `${protocol}://www.sepe.es/HomeSepe/occupation/2721`,
+          },
+        }),
+      ).toThrow(/https|scheme|url/i);
+    }
+  });
+
   it("rejects a duplicate or unknown Castilla y León province", () => {
     const duplicate = validRecord.provinces.map((row, index) =>
       index === 1

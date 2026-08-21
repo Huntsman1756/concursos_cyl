@@ -28,9 +28,18 @@ export const SepeOccupationMetricSchema = z
   })
   .strict();
 
-export const SepeRegisteredContractsSchema = SepeOccupationMetricSchema.extend({
-  people: NonNegativeInteger.optional(),
-}).strict();
+export const SepeOccupationNationalMetricSchema = z
+  .object({
+    total: NonNegativeInteger,
+    monthlyVariationPercent: Percentage,
+    annualVariationPercent: Percentage,
+  })
+  .strict();
+
+export const SepeRegisteredContractsSchema =
+  SepeOccupationNationalMetricSchema.extend({
+    people: NonNegativeInteger.optional(),
+  }).strict();
 
 export const SepeContractCharacteristicsSchema = z
   .object({
@@ -71,9 +80,17 @@ const SourceUrl = z
   .string()
   .url()
   .refine((value) => {
-    const hostname = new URL(value).hostname.toLocaleLowerCase("en-US");
-    return hostname === "sepe.es" || hostname.endsWith(".sepe.es");
-  }, "Source URL must be hosted by sepe.es.");
+    try {
+      const parsed = new URL(value);
+      const hostname = parsed.hostname.toLocaleLowerCase("en-US");
+      return (
+        parsed.protocol === "https:" &&
+        (hostname === "sepe.es" || hostname.endsWith(".sepe.es"))
+      );
+    } catch {
+      return false;
+    }
+  }, "Source URL must use HTTPS and be hosted by sepe.es.");
 
 export const SepeOccupationMarketSchema = z
   .object({
@@ -87,7 +104,7 @@ export const SepeOccupationMarketSchema = z
     national: z
       .object({
         registeredContracts: SepeRegisteredContractsSchema,
-        registeredUnemployment: SepeOccupationMetricSchema,
+        registeredUnemployment: SepeOccupationNationalMetricSchema,
         contractCharacteristics: SepeContractCharacteristicsSchema.optional(),
       })
       .strict(),
@@ -130,6 +147,9 @@ export const SepeOccupationMarketResourceSchema = z.array(
 );
 
 export type SepeOccupationMetric = z.infer<typeof SepeOccupationMetricSchema>;
+export type SepeOccupationNationalMetric = z.infer<
+  typeof SepeOccupationNationalMetricSchema
+>;
 export type SepeRegisteredContracts = z.infer<
   typeof SepeRegisteredContractsSchema
 >;

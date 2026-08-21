@@ -6,6 +6,7 @@ import {
   SepeOccupationMarketSchema,
   type SepeContractCharacteristics,
   type SepeOccupationMarket,
+  type SepeOccupationNationalMetric,
   type SepeOccupationMetric,
 } from "../../data/schemas/sepeOccupationMarket";
 
@@ -35,6 +36,13 @@ type ProvinceMetrics = {
   registeredUnemployment?: SepeOccupationMetric;
 };
 
+type ProvinceTableScope = "national" | "castilla-y-leon";
+
+type TableRows = {
+  rows: string[][];
+  scope: ProvinceTableScope;
+};
+
 function normalizeWhitespace(value: string): string {
   return value.replace(/\s+/gu, " ").trim();
 }
@@ -62,14 +70,11 @@ function normalizedKey(value: string): string {
     .toLocaleLowerCase("es-ES");
 }
 
-const PROVINCE_BY_KEY = new Map(
-  SEPE_CYL_PROVINCES.map((province) => [normalizedKey(province), province]),
-);
-
 function provinceName(
   value: string,
 ): (typeof SEPE_CYL_PROVINCES)[number] | undefined {
-  return PROVINCE_BY_KEY.get(normalizedKey(value));
+  const canonical = normalizeWhitespace(value);
+  return SEPE_CYL_PROVINCES.find((province) => province === canonical);
 }
 
 function parsePeriod(value: string): string {
@@ -102,20 +107,31 @@ function parseCount(value: string): number | undefined {
 }
 
 function parseDecimal(value: string): number | undefined {
-  const normalized = normalizeWhitespace(value)
-    .replace(/%/gu, "")
-    .replace(/\s/gu, "");
+  const normalized = normalizeWhitespace(value);
   if (normalized === "" || normalized === "-" || normalized === "—") {
     return undefined;
   }
-  const numberText = /^-?\d[\d.]*(?:,\d+)?/u.exec(normalized)?.[0];
+  const numberText =
+    /^-?(?:(?:\d{1,3}(?:\.\d{3})+|\d+)(?:,\d+)?|\d+\.\d+)(?:\s*%?)(?:\s*\(\d+\))?$/u.exec(
+      normalized,
+    )?.[0];
   if (numberText === undefined) {
     throw new Error(`SEPE occupation market decimal is malformed: ${value}`);
   }
+  const numericPart =
+    /^(-?(?:(?:\d{1,3}(?:\.\d{3})+|\d+)(?:,\d+)?|\d+\.\d+))/u.exec(
+      numberText,
+    )?.[1];
+  if (numericPart === undefined) {
+    throw new Error(`SEPE occupation market decimal is malformed: ${value}`);
+  }
+  const isGroupedInteger = /^-?\d{1,3}(?:\.\d{3})+$/u.test(numericPart);
   const parsed = Number(
-    numberText.includes(",")
-      ? numberText.replace(/\./gu, "").replace(",", ".")
-      : numberText,
+    numericPart.includes(",")
+      ? numericPart.replace(/\./gu, "").replace(",", ".")
+      : isGroupedInteger
+        ? numericPart.replace(/\./gu, "")
+        : numericPart,
   );
   if (!Number.isFinite(parsed)) {
     throw new Error(`SEPE occupation market decimal is malformed: ${value}`);
@@ -176,7 +192,7 @@ function bannerMetric(
   return result;
 }
 
-function tableRows(html: string, caption: RegExp): string[][] | undefined {
+function tableRows(html: string, caption: RegExp): TableRows | undefined {
   const tables = /<table\b[^>]*>[\s\S]*?<\/table>/giu;
   for (const tableMatch of html.matchAll(tables)) {
     const table = tableMatch[0] ?? "";
@@ -184,15 +200,25 @@ function tableRows(html: string, caption: RegExp): string[][] | undefined {
       /<caption\b[^>]*>([\s\S]*?)<\/caption>/iu.exec(table)?.[1] ?? "",
     );
     if (!caption.test(captionText)) continue;
+    const scopeValue =
+      /data-scope=["']([^"']+)["']/iu.exec(table)?.[1]?.trim() ?? "national";
+    if (scopeValue !== "national" && scopeValue !== "castilla-y-leon") {
+      throw new Error(
+        `SEPE occupation market has an unsupported province table scope: ${scopeValue}`,
+      );
+    }
     const body =
       /<tbody\b[^>]*>([\s\S]*?)<\/tbody>/iu.exec(table)?.[1] ?? table;
     const rows = /<tr\b[^>]*>([\s\S]*?)<\/tr>/giu;
-    return [...body.matchAll(rows)].map((rowMatch) => {
-      const cells = /<(?:td|th)\b[^>]*>([\s\S]*?)<\/(?:td|th)>/giu;
-      return [...(rowMatch[1] ?? "").matchAll(cells)].map((cellMatch) =>
-        htmlText(cellMatch[1] ?? ""),
-      );
-    });
+    return {
+      rows: [...body.matchAll(rows)].map((rowMatch) => {
+        const cells = /<(?:td|th)\b[^>]*>([\s\S]*?)<\/(?:td|th)>/giu;
+        return [...(rowMatch[1] ?? "").matchAll(cells)].map((cellMatch) =>
+          htmlText(cellMatch[1] ?? ""),
+        );
+      }),
+      scope: scopeValue,
+    };
   }
   return undefined;
 }
@@ -214,20 +240,25 @@ function metricFromCells(
 }
 
 function totalMetricFromTable(
-  rows: readonly (readonly string[])[] | undefined,
+  table: TableRows | undefined,
 ): SepeOccupationMetric | undefined {
-  const totalRow = rows?.find((row) => normalizedKey(row[0] ?? "") === "total");
+  const totalRow = table?.rows.find(
+    (row) => normalizedKey(row[0] ?? "") === "total",
+  );
   return totalRow === undefined ? undefined : metricFromCells(totalRow);
 }
 
 function mergeAnnualVariation(
   metric: SepeOccupationMetric & { people?: number },
   annualVariationPercent: number | undefined,
-): SepeOccupationMetric & { people?: number } {
-  if (annualVariationPercent !== undefined) {
-    metric.annualVariationPercent = annualVariationPercent;
+  metricName: string,
+): SepeOccupationNationalMetric & { people?: number } {
+  if (annualVariationPercent === undefined) {
+    throw new Error(
+      `SEPE occupation market is missing annual variation for ${metricName}`,
+    );
   }
-  return metric;
+  return { ...metric, annualVariationPercent };
 }
 
 function provincialMetrics(
@@ -235,24 +266,24 @@ function provincialMetrics(
   caption: RegExp,
   field: keyof ProvinceMetrics,
 ): Map<string, ProvinceMetrics> {
-  const rows = tableRows(html, caption);
-  if (rows === undefined) {
+  const table = tableRows(html, caption);
+  if (table === undefined) {
     return new Map();
   }
+  const rows = table.rows;
   const dataRows = rows.filter(
     (row) =>
       row.length >= 2 &&
       normalizedKey(row[0] ?? "") !== "provincia" &&
       normalizedKey(row[0] ?? "") !== "total",
   );
-  const likelyCyLSubset = dataRows.length <= SEPE_CYL_PROVINCES.length + 3;
   const seen = new Set<string>();
   const result = new Map<string, ProvinceMetrics>();
   for (const row of dataRows) {
     const rawName = normalizeWhitespace(row[0] ?? "");
     const canonicalName = provinceName(rawName);
     if (canonicalName === undefined) {
-      if (likelyCyLSubset) {
+      if (table.scope === "castilla-y-leon") {
         throw new Error(
           `Unknown province in the Castilla y León subset: ${rawName}`,
         );
@@ -268,15 +299,41 @@ function provincialMetrics(
     const metric = metricFromCells(row);
     const current = result.get(canonicalName) ?? {};
     if (metric !== undefined) current[field] = metric;
-    result.set(normalizedKey(canonicalName), current);
+    result.set(canonicalName, current);
   }
   return result;
+}
+
+function contractCharacteristicsSection(html: string): string | undefined {
+  const start = /<h4\b[^>]*>\s*Cifras mensuales de contratos\s*<\/h4>/iu.exec(
+    html,
+  );
+  if (start === null || start.index === undefined) return undefined;
+  const sectionStart = start.index + start[0].length;
+  const remainder = html.slice(sectionStart);
+  const boundaries = [
+    /<h4\b[^>]*>\s*Las actividades económicas\b[\s\S]*?<\/h4>/iu,
+    /<div\b[^>]*role=["']tabpanel["']/iu,
+    /<\/section>/iu,
+  ];
+  const boundaryIndexes = boundaries
+    .map((boundary) => boundary.exec(remainder)?.index)
+    .filter((index): index is number => index !== undefined);
+  if (boundaryIndexes.length === 0) {
+    throw new Error(
+      "SEPE occupation market contract-characteristics section has no boundary",
+    );
+  }
+  const sectionEnd = Math.min(...boundaryIndexes);
+  return remainder.slice(0, sectionEnd);
 }
 
 function characteristicsFromPage(
   html: string,
 ): SepeContractCharacteristics | undefined {
-  const text = htmlText(html);
+  const section = contractCharacteristicsSection(html);
+  if (section === undefined) return undefined;
+  const text = htmlText(section);
   const characteristics: SepeContractCharacteristics = {};
   const lastTwelveMonths =
     /Durante los últimos doce meses(?: del año)? se registran\s+([^\s]+)\s+contratos/iu.exec(
@@ -370,10 +427,12 @@ export function parseSepeOccupationMarket(
   const registeredUnemployment = mergeAnnualVariation(
     unemploymentBanner,
     unemploymentTable?.annualVariationPercent,
+    "registered unemployment",
   );
   const registeredContracts = mergeAnnualVariation(
     contractBanner,
     contractsTable?.annualVariationPercent,
+    "registered contracts",
   );
   const unemploymentByProvince = provincialMetrics(
     html,
@@ -386,11 +445,10 @@ export function parseSepeOccupationMarket(
     "registeredContracts",
   );
   const provinceRows = SEPE_CYL_PROVINCES.map((province) => {
-    const key = normalizedKey(province);
     const metrics = {
       province,
-      ...(contractsByProvince.get(key) ?? {}),
-      ...(unemploymentByProvince.get(key) ?? {}),
+      ...(contractsByProvince.get(province) ?? {}),
+      ...(unemploymentByProvince.get(province) ?? {}),
     };
     return metrics;
   });
