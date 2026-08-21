@@ -335,10 +335,21 @@ describe("verifyPagesDeployment", () => {
     const response = responseFor("index.html", {
       body: '<!doctype html><html><head><title>SALIDA CyL</title></head><body><div id="root"></div></body></html>',
     });
+    const cancel = vi.fn(async () => undefined);
+    let aborted = false;
+    const fetchImpl: FetchImpl = async (_input, init) => {
+      init?.signal?.addEventListener("abort", () => {
+        aborted = true;
+      });
+      Object.defineProperty(response, "body", {
+        configurable: true,
+        value: { cancel },
+      });
+      return response;
+    };
     Object.defineProperty(response, "text", {
       value: () => new Promise<string>(() => undefined),
     });
-    const fetchImpl = successfulFetch({ "/concursos_cyl/": response });
 
     await expect(
       verifyPagesDeployment({
@@ -350,6 +361,8 @@ describe("verifyPagesDeployment", () => {
         requestTimeoutMs: 5,
       }),
     ).rejects.toThrow(/root response body.*timed out/iu);
+    expect(aborted).toBe(true);
+    expect(cancel).toHaveBeenCalledOnce();
   });
 
   it("rejects an escaped final response URL", async () => {

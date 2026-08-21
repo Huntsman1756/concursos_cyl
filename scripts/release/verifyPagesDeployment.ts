@@ -42,6 +42,11 @@ interface PagesManifest {
   resourceSnapshots: Record<string, ResourceSnapshot>;
 }
 
+interface ResponseContext {
+  response: Response;
+  controller: AbortController;
+}
+
 function normalizeBaseUrl(value: string): URL {
   let base: URL;
   try {
@@ -120,12 +125,12 @@ function assertResponseUrl(
   }
 }
 
-async function requiredResponse(
+async function fetchResponse(
   request: PagesFetch,
   url: URL,
   description: string,
   requestTimeoutMs: number,
-): Promise<Response> {
+): Promise<ResponseContext> {
   const controller = new AbortController();
   const response = await withTimeout(
     request(url, { redirect: "error", signal: controller.signal }),
@@ -133,35 +138,72 @@ async function requiredResponse(
     controller,
     description,
   );
-  assertResponseUrl(response, url, description);
-  if (response.status !== 200) {
+  try {
+    assertResponseUrl(response, url, description);
+  } catch (error) {
+    await cancelResponseBody(response);
+    controller.abort();
+    throw error;
+  }
+  return { response, controller };
+}
+
+async function requiredResponse(
+  request: PagesFetch,
+  url: URL,
+  description: string,
+  requestTimeoutMs: number,
+): Promise<ResponseContext> {
+  const context = await fetchResponse(
+    request,
+    url,
+    description,
+    requestTimeoutMs,
+  );
+  if (context.response.status !== 200) {
+    await cancelResponseBody(context.response);
+    context.controller.abort();
     throw new Error(
-      `Pages ${description} at ${url.pathname} returned HTTP ${response.status}.`,
+      `Pages ${description} at ${url.pathname} returned HTTP ${context.response.status}.`,
     );
   }
-  return response;
+  return context;
+}
+
+async function cancelResponseBody(response: Response): Promise<void> {
+  try {
+    await response.body?.cancel();
+  } catch {
+    // The body can already be locked or consumed; the controller still aborts it.
+  }
 }
 
 async function readResponseText(
-  response: Response,
+  context: ResponseContext,
   description: string,
   requestTimeoutMs: number,
 ): Promise<string> {
-  const controller = new AbortController();
-  return withTimeout(
-    response.text(),
-    requestTimeoutMs,
-    controller,
-    `${description} body`,
-  );
+  try {
+    return await withTimeout(
+      context.response.text(),
+      requestTimeoutMs,
+      context.controller,
+      `${description} body`,
+    );
+  } catch (error) {
+    await cancelResponseBody(context.response);
+    throw error;
+  } finally {
+    context.controller.abort();
+  }
 }
 
 async function readJsonResponse(
-  response: Response,
+  context: ResponseContext,
   description: string,
   requestTimeoutMs: number,
 ): Promise<unknown> {
-  const body = await readResponseText(response, description, requestTimeoutMs);
+  const body = await readResponseText(context, description, requestTimeoutMs);
   try {
     return JSON.parse(body) as unknown;
   } catch (error) {
@@ -240,7 +282,11 @@ async function verifyOnce(
     requestTimeoutMs,
   );
   assertApplicationRoot(
-    await readResponseText(rootResponse, "root response", requestTimeoutMs),
+    await readResponseText(
+      rootResponse,
+      "root response",
+      requestTimeoutMs,
+    ),
     "root response",
   );
 
@@ -306,29 +352,33 @@ async function verifyOnce(
       `resource ${key}`,
       requestTimeoutMs,
     );
-    await readJsonResponse(resourceResponse, `resource ${key}`, requestTimeoutMs);
+    await readJsonResponse(
+      resourceResponse,
+      `resource ${key}`,
+      requestTimeoutMs,
+    );
   }
 
   const deepLinkUrl = urlForBasePath(base, "comparar");
-  const deepLinkController = new AbortController();
-  const deepLinkResponse = await withTimeout(
-    request(deepLinkUrl, {
-      redirect: "error",
-      signal: deepLinkController.signal,
-    }),
-    requestTimeoutMs,
-    deepLinkController,
+  const deepLinkContext = await fetchResponse(
+    request,
+    deepLinkUrl,
     "/comparar",
+    requestTimeoutMs,
   );
-  assertResponseUrl(deepLinkResponse, deepLinkUrl, "/comparar");
-  if (deepLinkResponse.status !== 200 && deepLinkResponse.status !== 404) {
+  if (
+    deepLinkContext.response.status !== 200 &&
+    deepLinkContext.response.status !== 404
+  ) {
+    await cancelResponseBody(deepLinkContext.response);
+    deepLinkContext.controller.abort();
     throw new Error(
-      `Pages /comparar returned HTTP ${deepLinkResponse.status} at ${deepLinkUrl.pathname}.`,
+      `Pages /comparar returned HTTP ${deepLinkContext.response.status} at ${deepLinkUrl.pathname}.`,
     );
   }
   assertApplicationRoot(
     await readResponseText(
-      deepLinkResponse,
+      deepLinkContext,
       "/comparar fallback",
       requestTimeoutMs,
     ),
