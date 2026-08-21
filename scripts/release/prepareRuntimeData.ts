@@ -16,6 +16,7 @@ import {
   join,
   relative,
   resolve,
+  sep,
 } from "node:path";
 import { pathToFileURL } from "node:url";
 
@@ -72,12 +73,22 @@ async function assertDistinctPaths(
   const sourcePath = await realpath(resolve(source));
   const targetPath = resolve(target);
   const physicalTargetPath = await resolveExistingAncestor(targetPath);
-  const targetFromSource = relative(sourcePath, physicalTargetPath);
-  const sourceFromTarget = relative(physicalTargetPath, sourcePath);
+  const physicalTargetParent = await resolveExistingAncestor(
+    dirname(targetPath),
+  );
+  const isWithinOrSame = (root: string, candidate: string): boolean => {
+    const pathFromRoot = relative(root, candidate);
+    return (
+      pathFromRoot === "" ||
+      (!isAbsolute(pathFromRoot) &&
+        pathFromRoot !== ".." &&
+        !pathFromRoot.startsWith(`..${sep}`))
+    );
+  };
   if (
-    sourcePath === physicalTargetPath ||
-    (!targetFromSource.startsWith("..") && targetFromSource !== "") ||
-    (!sourceFromTarget.startsWith("..") && sourceFromTarget !== "")
+    isWithinOrSame(sourcePath, physicalTargetPath) ||
+    isWithinOrSame(physicalTargetPath, sourcePath) ||
+    isWithinOrSame(sourcePath, physicalTargetParent)
   ) {
     throw new Error("Runtime source and target directories must be disjoint.");
   }
@@ -298,6 +309,11 @@ async function activeSnapshotId(source: string): Promise<string> {
         );
       }
       const resourcePath = (resource as { resourcePath: string }).resourcePath;
+      if (!resourcePath.startsWith("/")) {
+        throw new Error(
+          `The runtime manifest resourceSnapshots.${key}.resourcePath is not a local resource path.`,
+        );
+      }
       const reference = snapshotReferenceFromString(
         resourcePath,
         "public/data/v1/manifest.json",

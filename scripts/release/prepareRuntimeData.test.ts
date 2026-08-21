@@ -359,6 +359,30 @@ describe("prepareRuntimeData", () => {
     ).rejects.toThrow("disjoint");
   });
 
+  it("rejects an existing target symlink whose physical parent is inside source", async () => {
+    if (process.platform === "win32") return;
+    const fixture = await createMinimalRuntimeFixture(
+      "/data/v1/snapshots/20260821144454118-a56e3eeaffa6/programs.json",
+    );
+    const outsideTarget = join(fixture.root, "outside-target");
+    const target = join(
+      fixture.source,
+      "v1",
+      "snapshots",
+      "runtime-target",
+    );
+    await mkdir(outsideTarget, { recursive: true });
+    await symlink(outsideTarget, target, "dir");
+
+    await expect(
+      prepareRuntimeData({
+        root: fixture.root,
+        source: fixture.source,
+        target,
+      }),
+    ).rejects.toThrow("disjoint");
+  });
+
   it("rejects symlinks in flat resources before copying", async () => {
     if (process.platform === "win32") return;
     const fixture = await createMinimalRuntimeFixture(
@@ -516,6 +540,28 @@ describe("prepareRuntimeData", () => {
         target: fixture.target,
       }),
     ).rejects.toThrow(/Malformed runtime snapshot resource path|resource path/);
+  });
+
+  it("rejects an absolute URL in a manifest resource path", async () => {
+    const fixture = await createMinimalRuntimeFixture(
+      "/data/v1/snapshots/20260821144454118-a56e3eeaffa6/programs.json",
+    );
+    await writeJson(join(fixture.source, "v1", "manifest.json"), {
+      snapshotId: fixture.active,
+      resourceSnapshots: {
+        programs: {
+          resourcePath: `https://example.invalid/data/v1/snapshots/${fixture.active}/programs.json`,
+        },
+      },
+    });
+
+    await expect(
+      prepareRuntimeData({
+        root: fixture.root,
+        source: fixture.source,
+        target: fixture.target,
+      }),
+    ).rejects.toThrow("manifest resourceSnapshots.programs.resourcePath");
   });
 
   it("rejects manifest resource snapshots that disagree with snapshotId", async () => {
