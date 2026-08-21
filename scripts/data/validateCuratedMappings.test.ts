@@ -714,6 +714,41 @@ const diskPrograms: TrainingProgram[] = [
     familyCode: "SAN",
     familyName: "Sanidad",
   },
+  {
+    programKey: "COM02E",
+    programTitle: "Redacción de contenidos digitales para marketing y ventas",
+    level: "specialization",
+    familyCode: "COM",
+    familyName: "Comercio y Marketing",
+  },
+  {
+    programKey: "ELE02B",
+    programTitle: "Instalaciones Electrotécnicas y Mecánica",
+    level: "basic",
+    familyCode: "ELE",
+    familyName: "Electricidad y Electrónica",
+  },
+  {
+    programKey: "IMA01M",
+    programTitle: "Instalaciones de Producción de Calor",
+    level: "intermediate",
+    familyCode: "IMA",
+    familyName: "Instalación y Mantenimiento",
+  },
+  {
+    programKey: "IMS01E",
+    programTitle: "Audiodescripción y subtitulación",
+    level: "specialization",
+    familyCode: "IMS",
+    familyName: "Imagen y Sonido",
+  },
+  {
+    programKey: "INA02M",
+    programTitle: "Aceites de Oliva y Vinos",
+    level: "intermediate",
+    familyCode: "INA",
+    familyName: "Industrias Alimentarias",
+  },
 ];
 
 const occupations = [
@@ -1290,6 +1325,14 @@ describe("curated occupation mappings", () => {
         "9512",
         "9530",
         "9543",
+        "1221",
+        "2651",
+        "2921",
+        "2923",
+        "7222",
+        "7705",
+        "7707",
+        "8193",
       ],
     );
     expect(
@@ -1307,6 +1350,7 @@ describe("curated occupation mappings", () => {
           SAN21: 2,
           HOT01M: 1,
           COM02M: 2,
+          COM02E: 2,
           EOC01M: 5,
           AGA03M: 2,
           FME02M: 4,
@@ -1349,6 +1393,7 @@ describe("curated occupation mappings", () => {
           SSC03S: 2,
           SSC03SD: 2,
           ELE02M: 1,
+          ELE02B: 3,
           SEA03S: 2,
           SSC05S: 1,
           IMP01B: 2,
@@ -1364,6 +1409,7 @@ describe("curated occupation mappings", () => {
           ADG01MD: 1,
           TMV02M: 1,
           IMA03M: 1,
+          IMA01M: 4,
           TMV03E: 1,
           QUI02M: 1,
           COM04S: 3,
@@ -1398,6 +1444,8 @@ describe("curated occupation mappings", () => {
           FME02B: 5,
           HOT05S: 1,
           INA02S: 3,
+          IMS01E: 2,
+          INA02M: 4,
           QUI01S: 2,
           SAN09S: 1,
           SAN09SD: 1,
@@ -1483,9 +1531,7 @@ describe("curated occupation mappings", () => {
       "occupation:cno11:9530",
       "occupation:cno11:9543",
     ]);
-    expect(occupationIdsFor("INA01S")).toEqual([
-      "occupation:cno11:7709",
-    ]);
+    expect(occupationIdsFor("INA01S")).toEqual(["occupation:cno11:7709"]);
     expect(occupationIdsFor("IMS03S")).toEqual([]);
 
     const coverage = buildMappingCoverage(diskPrograms, curated.links);
@@ -1497,6 +1543,44 @@ describe("curated occupation mappings", () => {
         coverageStatus: "uncovered",
       }),
     );
+  });
+
+  it("publishes exactly the reviewed next FP coverage keys", async () => {
+    const curated = await loadCuratedMappingsFromDisk(
+      process.cwd(),
+      diskPrograms,
+    );
+    const approved = loadApprovedMappings(curated);
+    const expectedKeys = [
+      "COM02E|1221",
+      "COM02E|2651",
+      "ELE02B|7510",
+      "ELE02B|7533",
+      "ELE02B|9700",
+      "IMA01M|7250",
+      "IMA01M|7221",
+      "IMA01M|7222",
+      "IMA01M|7294",
+      "IMS01E|2921",
+      "IMS01E|2923",
+      "INA02M|7705",
+      "INA02M|7707",
+      "INA02M|8193",
+      "INA02M|3510",
+    ].sort();
+    const actualKeys = approved.links
+      .filter((link) =>
+        ["COM02E", "ELE02B", "IMA01M", "IMS01E", "INA02M"].includes(
+          link.trainingProgramKey,
+        ),
+      )
+      .map(
+        (link) =>
+          `${link.trainingProgramKey}|${link.occupationId.replace("occupation:cno11:", "")}`,
+      )
+      .sort();
+
+    expect(actualKeys).toEqual(expectedKeys);
   });
 
   it("publishes only EOC01M aliases accepted by the official audit", async () => {

@@ -1143,5 +1143,93 @@
     "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
     "reviewedAt": "2026-08-21",
     "catalogVersion": "1.0.0"
+  },
+  {
+    "occupationId": "occupation:cno11:1221",
+    "preferredLabel": "Directores comerciales y de ventas",
+    "confirmationLabel": "Directores comerciales y de ventas",
+    "classificationSystem": "CNO-11",
+    "classificationCode": "1221",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+    "reviewedAt": "2026-08-21",
+    "catalogVersion": "1.0.0"
+  },
+  {
+    "occupationId": "occupation:cno11:2651",
+    "preferredLabel": "Profesionales de la publicidad y la comercialización",
+    "confirmationLabel": "Profesionales de la publicidad y la comercialización",
+    "classificationSystem": "CNO-11",
+    "classificationCode": "2651",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+    "reviewedAt": "2026-08-21",
+    "catalogVersion": "1.0.0"
+  },
+  {
+    "occupationId": "occupation:cno11:2921",
+    "preferredLabel": "Escritores",
+    "confirmationLabel": "Escritores",
+    "classificationSystem": "CNO-11",
+    "classificationCode": "2921",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+    "reviewedAt": "2026-08-21",
+    "catalogVersion": "1.0.0"
+  },
+  {
+    "occupationId": "occupation:cno11:2923",
+    "preferredLabel": "Filólogos, intérpretes y traductores",
+    "confirmationLabel": "Filólogos, intérpretes y traductores",
+    "classificationSystem": "CNO-11",
+    "classificationCode": "2923",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+    "reviewedAt": "2026-08-21",
+    "catalogVersion": "1.0.0"
+  },
+  {
+    "occupationId": "occupation:cno11:7222",
+    "preferredLabel": "Montadores-instaladores de gas en edificios",
+    "confirmationLabel": "Montadores-instaladores de gas en edificios",
+    "classificationSystem": "CNO-11",
+    "classificationCode": "7222",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+    "reviewedAt": "2026-08-21",
+    "catalogVersion": "1.0.0"
+  },
+  {
+    "occupationId": "occupation:cno11:7705",
+    "preferredLabel": "Trabajadores conserveros de frutas y hortalizas y trabajadores de la elaboración de bebidas no alcohólicas",
+    "confirmationLabel": "Trabajadores conserveros de frutas y hortalizas y trabajadores de la elaboración de bebidas no alcohólicas",
+    "classificationSystem": "CNO-11",
+    "classificationCode": "7705",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+    "reviewedAt": "2026-08-21",
+    "catalogVersion": "1.0.0"
+  },
+  {
+    "occupationId": "occupation:cno11:7707",
+    "preferredLabel": "Trabajadores de la elaboración del vino",
+    "confirmationLabel": "Trabajadores de la elaboración del vino",
+    "classificationSystem": "CNO-11",
+    "classificationCode": "7707",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+    "reviewedAt": "2026-08-21",
+    "catalogVersion": "1.0.0"
+  },
+  {
+    "occupationId": "occupation:cno11:8193",
+    "preferredLabel": "Operadores de máquinas de embalaje, embotellamiento y etiquetado",
+    "confirmationLabel": "Operadores de máquinas de embalaje, embotellamiento y etiquetado",
+    "classificationSystem": "CNO-11",
+    "classificationCode": "8193",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+    "reviewedAt": "2026-08-21",
+    "catalogVersion": "1.0.0"
   }
 ]
