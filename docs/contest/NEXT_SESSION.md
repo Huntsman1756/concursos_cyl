@@ -2,18 +2,19 @@
 
 ## Estado confirmado
 
-- Producto público verificado en `e1f6d22cfe3baa4824ac8e4f68ada6829a441968`.
-- Freeze fuente: `646a2faa497fa5b362202b7117431793f67f273c`.
-- Snapshot activo: `20260821081317938-ed24cccf3125`.
+- Producto público verificado en `84a88f433167a95d42322cd5218ec1f4801f7222`.
+- Freeze fuente: `c7d0ec0e3565b195b84fa603dabdd8a7e96bef74`.
+- Snapshot activo: `20260821093504689-b562e0e12b59`.
 - Ocho datasets JCyL visibles y 20 recursos inmutables en el manifiesto.
-- Cobertura: 59 cualificaciones, 72 claves de modalidad, 143 relaciones aprobadas y 21 alias.
+- Cobertura: 62 cualificaciones, 76 claves de modalidad, 152 relaciones aprobadas y 21 alias.
 - Ofertas alcanzadas: 39 de 1.055; la cifra es una unión acotada de IDs, no todo el mercado.
 - Directorio educativo: 1.741 registros y reconciliación exacta de los 229 centros FP por código.
 - La ficha de ciclo incorpora ingresos observados de EDUCAbase con referencia nacional y agregada de Castilla y León, sin presentarlos como predicción individual.
-- QA local completo: 752 pruebas aprobadas y 178 omitidas por condiciones de plataforma; 106 E2E aprobadas.
-- Matriz opcional preparada para Chromium, Firefox y WebKit sin encarecer el CI ordinario.
-- Workflow público: `32463399531`.
-- Diez capturas finales anónimas ligadas a `e1f6d22c` y validadas con Axe, red, consola, recursos externos y overflow.
+- QA local completo: 752 pruebas aprobadas y 178 omitidas por condiciones de plataforma; matriz E2E con 210 aprobadas y 2 omitidas.
+- La matriz cubre Chromium de escritorio y móvil, Firefox y WebKit.
+- Workflow público: `32469137629`.
+- Diez capturas finales anónimas ligadas a `84a88f4` y validadas con Axe, red, consola, recursos externos y overflow.
+- Cola oficial pendiente: 77 cualificaciones base; las siguientes prioridades son COM04S, FME01B y AFD02S.
 
 ## Orden de trabajo
 
