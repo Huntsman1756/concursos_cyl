@@ -16,6 +16,7 @@ const base = {
 } as const;
 
 const SECOND_PRIORITY_WAVE_KEYS = [
+  "AGA01S|5993",
   "QUI01E|3141",
   "SAN01S|3317",
   "SAN01SD|3317",
@@ -205,7 +206,7 @@ describe("mergeFrontierReviewedCoverage", () => {
     });
 
     expect(() => mergeFrontierReviewedCoverage([], reviewed)).toThrow(
-      /QUI01E\|3141/u,
+      /AGA01S\|5993/u,
     );
   });
 

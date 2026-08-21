@@ -26,7 +26,6 @@ const EXPECTED_KEYS = [
   "INA01M",
   "IMS01M",
   "HOT01E",
-  "AGA01S",
   "IFC01E",
   "IMS02S",
   "MSP34",
@@ -61,21 +60,21 @@ describe("fp-coverage-research-outcomes.json", () => {
     ).toThrow();
   });
 
-  it("contains exactly the sixteen expected baseProgramKey values", () => {
+  it("contains exactly the fifteen revalidated no-match baseProgramKey values", () => {
     const keys = document.outcomes.map(
       (entry: { baseProgramKey: string }) => entry.baseProgramKey,
     );
-    expect(keys).toHaveLength(16);
+    expect(keys).toHaveLength(15);
     expect(keys).toEqual([...EXPECTED_KEYS]);
   });
 
-  it("assigns three outcomes to 2026-08-13 and thirteen to 2026-08-14", () => {
+  it("assigns three outcomes to 2026-08-13 and twelve to 2026-08-14", () => {
     const dateMap = new Map<string, number>();
     for (const entry of document.outcomes) {
       dateMap.set(entry.reviewedAt, (dateMap.get(entry.reviewedAt) ?? 0) + 1);
     }
     expect(dateMap.get("2026-08-13")).toBe(3);
-    expect(dateMap.get("2026-08-14")).toBe(13);
+    expect(dateMap.get("2026-08-14")).toBe(12);
     expect(dateMap.size).toBe(2);
   });
 
@@ -83,6 +82,27 @@ describe("fp-coverage-research-outcomes.json", () => {
     for (const entry of document.outcomes) {
       expect(entry.occupationCatalogSha256).toBe(EXPECTED_HASH);
     }
+  });
+
+  it("binds the expanded catalog to explicit Frontier revalidation evidence", () => {
+    expect(document.catalogRevalidation).toEqual({
+      reviewedAt: "2026-08-21",
+      occupationCatalogSha256: EXPECTED_HASH,
+      evidencePath:
+        "analysis/fp_coverage_priority_20260821_wave2/no-match-catalog-revalidation.md",
+      addedOccupationCodes: [
+        "3141",
+        "3316",
+        "3317",
+        "5931",
+        "5932",
+        "5993",
+        "7403",
+      ],
+    });
+    expect(
+      existsSync(resolve(repoRoot, document.catalogRevalidation.evidencePath)),
+    ).toBe(true);
   });
 
   it("rejects duplicate baseProgramKey values", () => {

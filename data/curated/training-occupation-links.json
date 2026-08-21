@@ -320,6 +320,16 @@
     "mappingVersion": "1.0.0"
   },
   {
+    "trainingProgramKey": "AGA01S",
+    "occupationId": "occupation:cno11:5993",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/agraria/gestion-forestal-medio-natural.html",
+    "sourceQuote": "Agente forestal o similar.",
+    "reviewedAt": "2026-08-21",
+    "mappingVersion": "1.0.0"
+  },
+  {
     "trainingProgramKey": "AGA02M",
     "occupationId": "occupation:cno11:6110",
     "relationshipType": "official_output",

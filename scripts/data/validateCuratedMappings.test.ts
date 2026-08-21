@@ -603,6 +603,13 @@ const programs: TrainingProgram[] = [
 const diskPrograms: TrainingProgram[] = [
   ...programs,
   {
+    programKey: "AGA01S",
+    programTitle: "Gestión Forestal y del Medio Natural",
+    level: "higher",
+    familyCode: "AGA",
+    familyName: "Agraria",
+  },
+  {
     programKey: "AGA03S",
     programTitle: "Ganadería y Asistencia en Sanidad Animal",
     level: "higher",
@@ -1416,6 +1423,7 @@ describe("curated occupation mappings", () => {
           ELE03S: 1,
           ELE04S: 6,
           AGA01M: 6,
+          AGA01S: 1,
           AGA02M: 6,
           AGA03B: 4,
           INA01S: 1,
@@ -1664,6 +1672,7 @@ describe("curated occupation mappings", () => {
     ];
     const relationOccupationCodes = [...newOccupationCodes, "2640"];
     const waveProgramKeys = [
+      "AGA01S",
       "QUI01E",
       "SAN01S",
       "SAN01SD",
@@ -1673,6 +1682,13 @@ describe("curated occupation mappings", () => {
       "TMV03M",
     ];
     const expectedWaveEvidence = [
+      {
+        key: "AGA01S|5993",
+        relationshipType: "official_output",
+        sourceUrl:
+          "https://www.todofp.es/que-estudiar/familias-profesionales/agraria/gestion-forestal-medio-natural.html",
+        sourceQuote: "Agente forestal o similar.",
+      },
       {
         key: "QUI01E|3141",
         relationshipType: "reviewed_relationship",
@@ -1818,9 +1834,9 @@ describe("curated occupation mappings", () => {
       ),
     );
 
-    expect.soft(approved.links).toHaveLength(240);
-    expect.soft(reviewedBaseKeys.size).toBe(91);
-    expect.soft(approvedProgramKeys.size).toBe(109);
+    expect.soft(approved.links).toHaveLength(241);
+    expect.soft(reviewedBaseKeys.size).toBe(92);
+    expect.soft(approvedProgramKeys.size).toBe(110);
   });
 
   it("publishes only EOC01M aliases accepted by the official audit", async () => {

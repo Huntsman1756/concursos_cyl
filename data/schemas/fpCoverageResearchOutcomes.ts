@@ -16,6 +16,16 @@ export const FpCoverageResearchOutcomeEntrySchema = z
 export const FpCoverageResearchOutcomesSchema = z
   .object({
     schemaVersion: z.literal(1),
+    catalogRevalidation: z
+      .object({
+        reviewedAt: z.string().date(),
+        occupationCatalogSha256: z.string().regex(/^[a-f0-9]{64}$/u),
+        evidencePath: z.string().min(1),
+        addedOccupationCodes: z
+          .array(z.string().regex(/^\d{4}$/u))
+          .min(1),
+      })
+      .strict(),
     outcomes: z.array(FpCoverageResearchOutcomeEntrySchema).min(1),
   })
   .strict()

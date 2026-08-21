@@ -1,5 +1,11 @@
 {
   "schemaVersion": 1,
+  "catalogRevalidation": {
+    "reviewedAt": "2026-08-21",
+    "occupationCatalogSha256": "d4e9a93f270dba6dd8507762bdc5161978317d75e19fe7f2c0bf0a5ec72e5b95",
+    "evidencePath": "analysis/fp_coverage_priority_20260821_wave2/no-match-catalog-revalidation.md",
+    "addedOccupationCodes": ["3141", "3316", "3317", "5931", "5932", "5993", "7403"]
+  },
   "outcomes": [
     {
       "baseProgramKey": "SAN06S",
@@ -80,16 +86,6 @@
       "proposalPath": "analysis/fp_coverage_batch_parallel_3/proposals/HOT01E.md",
       "frontierReviewPath": "analysis/fp_coverage_batch_parallel_3/frontier-review.md",
       "note": "No publicable match found in the current approved occupation catalog for this FP program. Cooks and kitchen assistants do not directly represent master bakers, pastry makers, dough producers, confectioners, or sensory tasters."
-    },
-    {
-      "baseProgramKey": "AGA01S",
-      "status": "reviewed-no-publishable-match",
-      "reviewedAt": "2026-08-14",
-      "occupationCatalogSha256": "d4e9a93f270dba6dd8507762bdc5161978317d75e19fe7f2c0bf0a5ec72e5b95",
-      "sourcePath": "analysis/fp_coverage_batch_parallel_3/sources/AGA01S.txt",
-      "proposalPath": "analysis/fp_coverage_batch_parallel_3/proposals/AGA01S.md",
-      "frontierReviewPath": "analysis/fp_coverage_batch_parallel_3/frontier-review.md",
-      "note": "No publicable match found in the current approved occupation catalog for this FP program. The candidates either change an owner or coordinator role into an operative one or cover only an adjacent activity."
     },
     {
       "baseProgramKey": "IFC01E",
