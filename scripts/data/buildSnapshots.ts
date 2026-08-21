@@ -2151,10 +2151,24 @@ const FP_OFFER_SNAPSHOT_REFERENCE_PATHS = [
   ["analysis", "fp_offer_alias_candidates.json"],
   ["analysis", "fp_mention_offer_queue.json"],
 ] as const;
+const CONTEST_SNAPSHOT_REFERENCE_PATHS = [
+  ["docs", "contest", "coverage-freeze.json"],
+  ["docs", "contest", "release-evidence.json"],
+] as const;
 
 const MarginalAliasSnapshotReferenceSchema = z
   .object({
     snapshotId: z.string().regex(IMMUTABLE_SNAPSHOT_ID_PATTERN),
+  })
+  .passthrough();
+
+const ContestSnapshotReferenceSchema = z
+  .object({
+    manifest: z
+      .object({
+        snapshotId: z.string().regex(IMMUTABLE_SNAPSHOT_ID_PATTERN),
+      })
+      .passthrough(),
   })
   .passthrough();
 
@@ -2246,6 +2260,19 @@ async function offerAnalysisSnapshotIds(root: string): Promise<Set<string>> {
   return snapshotIds;
 }
 
+async function contestEvidenceSnapshotIds(root: string): Promise<Set<string>> {
+  const snapshotIds = new Set<string>();
+  for (const segments of CONTEST_SNAPSHOT_REFERENCE_PATHS) {
+    const path = resolve(root, ...segments);
+    if (!(await pathExists(path))) continue;
+    const artifact = ContestSnapshotReferenceSchema.parse(
+      JSON.parse(await readFile(path, "utf8")),
+    );
+    snapshotIds.add(artifact.manifest.snapshotId);
+  }
+  return snapshotIds;
+}
+
 async function terminalExpansionSnapshotIds(
   root: string,
 ): Promise<Set<string>> {
@@ -2302,6 +2329,7 @@ async function completedPilotSnapshotDistributionOptions(
     ...(await marginalAliasReviewSnapshotIds(root)),
     ...(await specificEvidenceReviewSnapshotIds(root)),
     ...(await offerAnalysisSnapshotIds(root)),
+    ...(await contestEvidenceSnapshotIds(root)),
     ...HISTORICAL_PINNED_SNAPSHOT_IDS,
     ...retainedSnapshotIds,
   ]);
@@ -2372,6 +2400,7 @@ async function enforceSnapshotRetention(
     ...(await marginalAliasReviewSnapshotIds(root)),
     ...(await specificEvidenceReviewSnapshotIds(root)),
     ...(await offerAnalysisSnapshotIds(root)),
+    ...(await contestEvidenceSnapshotIds(root)),
     ...HISTORICAL_PINNED_SNAPSHOT_IDS,
     ...immutableSnapshotNames
       .filter(

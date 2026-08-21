@@ -377,9 +377,9 @@
     "uncoveredPrograms": 1
   },
   {
-    "approvedMappings": 0,
-    "coverageNote": "Aún no hay una relación ocupacional aprobada; esto no significa que el ciclo no tenga salidas profesionales.",
-    "coverageStatus": "uncovered",
+    "approvedMappings": 2,
+    "coverageNote": "Incluye relaciones ocupacionales revisadas y citadas.",
+    "coverageStatus": "reviewed",
     "draftMappings": 0,
     "familyCode": "COM",
     "familyName": "Comercio y Marketing",
@@ -387,7 +387,7 @@
     "programTitle": "Redacción de contenidos digitales para marketing y ventas",
     "rejectedMappings": 0,
     "scope": "program",
-    "uncoveredPrograms": 1
+    "uncoveredPrograms": 0
   },
   {
     "approvedMappings": 2,
@@ -546,9 +546,9 @@
     "uncoveredPrograms": 0
   },
   {
-    "approvedMappings": 0,
-    "coverageNote": "Aún no hay una relación ocupacional aprobada; esto no significa que el ciclo no tenga salidas profesionales.",
-    "coverageStatus": "uncovered",
+    "approvedMappings": 3,
+    "coverageNote": "Incluye relaciones ocupacionales revisadas y citadas.",
+    "coverageStatus": "reviewed",
     "draftMappings": 0,
     "familyCode": "ELE",
     "familyName": "Electricidad y Electrónica",
@@ -556,7 +556,7 @@
     "programTitle": "Instalaciones Electrotécnicas y Mecánica",
     "rejectedMappings": 0,
     "scope": "program",
-    "uncoveredPrograms": 1
+    "uncoveredPrograms": 0
   },
   {
     "approvedMappings": 1,
@@ -1261,9 +1261,9 @@
     "uncoveredPrograms": 1
   },
   {
-    "approvedMappings": 0,
-    "coverageNote": "Aún no hay una relación ocupacional aprobada; esto no significa que el ciclo no tenga salidas profesionales.",
-    "coverageStatus": "uncovered",
+    "approvedMappings": 4,
+    "coverageNote": "Incluye relaciones ocupacionales revisadas y citadas.",
+    "coverageStatus": "reviewed",
     "draftMappings": 0,
     "familyCode": "IMA",
     "familyName": "Instalación y Mantenimiento",
@@ -1271,7 +1271,7 @@
     "programTitle": "Instalaciones de Producción de Calor",
     "rejectedMappings": 0,
     "scope": "program",
-    "uncoveredPrograms": 1
+    "uncoveredPrograms": 0
   },
   {
     "approvedMappings": 0,
@@ -1469,9 +1469,9 @@
     "uncoveredPrograms": 1
   },
   {
-    "approvedMappings": 0,
-    "coverageNote": "Aún no hay una relación ocupacional aprobada; esto no significa que el ciclo no tenga salidas profesionales.",
-    "coverageStatus": "uncovered",
+    "approvedMappings": 2,
+    "coverageNote": "Incluye relaciones ocupacionales revisadas y citadas.",
+    "coverageStatus": "reviewed",
     "draftMappings": 0,
     "familyCode": "IMS",
     "familyName": "Imagen y Sonido",
@@ -1479,7 +1479,7 @@
     "programTitle": "Audiodescripción y subtitulación",
     "rejectedMappings": 0,
     "scope": "program",
-    "uncoveredPrograms": 1
+    "uncoveredPrograms": 0
   },
   {
     "approvedMappings": 0,
@@ -1625,9 +1625,9 @@
     "uncoveredPrograms": 1
   },
   {
-    "approvedMappings": 0,
-    "coverageNote": "Aún no hay una relación ocupacional aprobada; esto no significa que el ciclo no tenga salidas profesionales.",
-    "coverageStatus": "uncovered",
+    "approvedMappings": 4,
+    "coverageNote": "Incluye relaciones ocupacionales revisadas y citadas.",
+    "coverageStatus": "reviewed",
     "draftMappings": 0,
     "familyCode": "INA",
     "familyName": "Industrias Alimentarias",
@@ -1635,7 +1635,7 @@
     "programTitle": "Aceites de Oliva y Vinos",
     "rejectedMappings": 0,
     "scope": "program",
-    "uncoveredPrograms": 1
+    "uncoveredPrograms": 0
   },
   {
     "approvedMappings": 3,
@@ -2475,7 +2475,7 @@
     "uncoveredPrograms": 3
   },
   {
-    "approvedMappings": 33,
+    "approvedMappings": 35,
     "coverageNote": "La cobertura mide relaciones revisadas del catálogo, no la existencia de salidas profesionales.",
     "draftMappings": 0,
     "familyCode": "COM",
@@ -2483,10 +2483,10 @@
     "programCount": 12,
     "rejectedMappings": 0,
     "scope": "family",
-    "uncoveredPrograms": 4
+    "uncoveredPrograms": 3
   },
   {
-    "approvedMappings": 16,
+    "approvedMappings": 19,
     "coverageNote": "La cobertura mide relaciones revisadas del catálogo, no la existencia de salidas profesionales.",
     "draftMappings": 0,
     "familyCode": "ELE",
@@ -2494,7 +2494,7 @@
     "programCount": 13,
     "rejectedMappings": 0,
     "scope": "family",
-    "uncoveredPrograms": 6
+    "uncoveredPrograms": 5
   },
   {
     "approvedMappings": 2,
@@ -2552,7 +2552,7 @@
     "uncoveredPrograms": 4
   },
   {
-    "approvedMappings": 3,
+    "approvedMappings": 7,
     "coverageNote": "La cobertura mide relaciones revisadas del catálogo, no la existencia de salidas profesionales.",
     "draftMappings": 0,
     "familyCode": "IMA",
@@ -2560,7 +2560,7 @@
     "programCount": 9,
     "rejectedMappings": 0,
     "scope": "family",
-    "uncoveredPrograms": 6
+    "uncoveredPrograms": 5
   },
   {
     "approvedMappings": 14,
@@ -2574,7 +2574,7 @@
     "uncoveredPrograms": 3
   },
   {
-    "approvedMappings": 0,
+    "approvedMappings": 2,
     "coverageNote": "La cobertura mide relaciones revisadas del catálogo, no la existencia de salidas profesionales.",
     "draftMappings": 0,
     "familyCode": "IMS",
@@ -2582,10 +2582,10 @@
     "programCount": 7,
     "rejectedMappings": 0,
     "scope": "family",
-    "uncoveredPrograms": 7
+    "uncoveredPrograms": 6
   },
   {
-    "approvedMappings": 4,
+    "approvedMappings": 8,
     "coverageNote": "La cobertura mide relaciones revisadas del catálogo, no la existencia de salidas profesionales.",
     "draftMappings": 0,
     "familyCode": "INA",
@@ -2593,7 +2593,7 @@
     "programCount": 8,
     "rejectedMappings": 0,
     "scope": "family",
-    "uncoveredPrograms": 6
+    "uncoveredPrograms": 5
   },
   {
     "approvedMappings": 5,

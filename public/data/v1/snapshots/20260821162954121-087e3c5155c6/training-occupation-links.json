@@ -601,6 +601,26 @@
   },
   {
     "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:1221",
+    "relationshipType": "reviewed_relationship",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-21",
+    "sourceQuote": "Directores de marketing digital, de programas de afiliación, de contenidos digitales, de proyectos digitales y de comercio electrónico.",
+    "sourceUrl": "https://www.boe.es/eli/es/rd/2024/02/06/144",
+    "trainingProgramKey": "COM02E"
+  },
+  {
+    "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:2651",
+    "relationshipType": "reviewed_relationship",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-21",
+    "sourceQuote": "Copywriter, Redactor publicitario digital y Redactor de contenidos para marketing y ventas.",
+    "sourceUrl": "https://www.boe.es/eli/es/rd/2024/02/06/144",
+    "trainingProgramKey": "COM02E"
+  },
+  {
+    "mappingVersion": "1.0.0",
     "occupationId": "occupation:cno11:5210",
     "relationshipType": "official_output",
     "reviewStatus": "approved",
@@ -818,6 +838,36 @@
     "sourceQuote": "Jefa / jefe de equipo de instaladores / instaladoras de baja tensión para edificios.",
     "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/electricidad-electronica/sistemas-electrotecnicos-automatizados.html",
     "trainingProgramKey": "ELE01S"
+  },
+  {
+    "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:7510",
+    "relationshipType": "reviewed_relationship",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-21",
+    "sourceQuote": "Operario de instalaciones eléctricas de baja tensión.",
+    "sourceUrl": "https://www.boe.es/eli/es/rd/2015/08/28/774",
+    "trainingProgramKey": "ELE02B"
+  },
+  {
+    "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:7533",
+    "relationshipType": "reviewed_relationship",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-21",
+    "sourceQuote": "Ayudante de montador de antenas receptoras de televisión y satélites.",
+    "sourceUrl": "https://www.boe.es/eli/es/rd/2015/08/28/774",
+    "trainingProgramKey": "ELE02B"
+  },
+  {
+    "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:9700",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-21",
+    "sourceQuote": "Peón de industrias manufactureras.",
+    "sourceUrl": "https://www.boe.es/eli/es/rd/2015/08/28/774",
+    "trainingProgramKey": "ELE02B"
   },
   {
     "mappingVersion": "1.0.0",
@@ -1531,6 +1581,46 @@
   },
   {
     "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:7221",
+    "relationshipType": "reviewed_relationship",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-21",
+    "sourceQuote": "Instalador-mantenedor de instalaciones de agua.",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/instalacion-mantenimiento/instalaciones-produccion-calor.html",
+    "trainingProgramKey": "IMA01M"
+  },
+  {
+    "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:7222",
+    "relationshipType": "reviewed_relationship",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-21",
+    "sourceQuote": "Instalador-mantenedor de instalaciones de gas y combustibles líquidos.",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/instalacion-mantenimiento/instalaciones-produccion-calor.html",
+    "trainingProgramKey": "IMA01M"
+  },
+  {
+    "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:7250",
+    "relationshipType": "reviewed_relationship",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-21",
+    "sourceQuote": "Instalador-mantenedor de equipos de producción de calor.",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/instalacion-mantenimiento/instalaciones-produccion-calor.html",
+    "trainingProgramKey": "IMA01M"
+  },
+  {
+    "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:7294",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-21",
+    "sourceQuote": "Instalador-mantenedor de instalaciones solares térmicas.",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/instalacion-mantenimiento/instalaciones-produccion-calor.html",
+    "trainingProgramKey": "IMA01M"
+  },
+  {
+    "mappingVersion": "1.0.0",
     "occupationId": "occupation:cno11:7250",
     "relationshipType": "official_output",
     "reviewStatus": "approved",
@@ -1701,6 +1791,26 @@
   },
   {
     "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:2921",
+    "relationshipType": "reviewed_relationship",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-21",
+    "sourceQuote": "Guionista de proyectos de audiodescripción y subtitulación de obras audiovisuales y espectáculos en vivo.",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/imagen-sonido/ce-audiodescripcion-subtitulacion.html",
+    "trainingProgramKey": "IMS01E"
+  },
+  {
+    "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:2923",
+    "relationshipType": "reviewed_relationship",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-21",
+    "sourceQuote": "Subtitulador de obras audiovisuales y espectáculos en vivo.",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/imagen-sonido/ce-audiodescripcion-subtitulacion.html",
+    "trainingProgramKey": "IMS01E"
+  },
+  {
+    "mappingVersion": "1.0.0",
     "occupationId": "occupation:cno11:7709",
     "relationshipType": "official_output",
     "reviewStatus": "approved",
@@ -1708,6 +1818,46 @@
     "sourceQuote": "Analista sensorial.",
     "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/industrias-alimentarias/vitivinicultura.html",
     "trainingProgramKey": "INA01S"
+  },
+  {
+    "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:3510",
+    "relationshipType": "reviewed_relationship",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-21",
+    "sourceQuote": "Comercial de aceites de oliva, vinos y otras bebidas.",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/industrias-alimentarias/aceites-oliva-vinos.html",
+    "trainingProgramKey": "INA02M"
+  },
+  {
+    "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:7705",
+    "relationshipType": "reviewed_relationship",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-21",
+    "sourceQuote": "Maestro de almazara.",
+    "sourceUrl": "https://www.boe.es/eli/es/rd/2008/11/03/1798",
+    "trainingProgramKey": "INA02M"
+  },
+  {
+    "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:7707",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-21",
+    "sourceQuote": "Bodeguero, elaborador de vinos, cavas, sidra y otras bebidas y derivados.",
+    "sourceUrl": "https://www.boe.es/eli/es/rd/2008/11/03/1798",
+    "trainingProgramKey": "INA02M"
+  },
+  {
+    "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:8193",
+    "relationshipType": "reviewed_relationship",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-21",
+    "sourceQuote": "Operador de sección de embotellado y/o envasado.",
+    "sourceUrl": "https://www.boe.es/eli/es/rd/2008/11/03/1798",
+    "trainingProgramKey": "INA02M"
   },
   {
     "mappingVersion": "1.0.0",

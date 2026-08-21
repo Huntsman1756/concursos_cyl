@@ -2617,7 +2617,37 @@ describe("buildSnapshots", { timeout: BUILD_SNAPSHOTS_TEST_TIMEOUT }, () => {
         "utf8",
       );
 
-      for (let day = 2; day <= 5; day += 1) {
+      for (let day = 5; day <= 8; day += 1) {
+        await buildSnapshots({
+          rootDirectory: root,
+          ...fixedOptions,
+          now: () => new Date(`2026-08-0${day}T10:00:00.000Z`),
+        });
+      }
+
+      await expect(access(initialSnapshot)).resolves.toBeUndefined();
+    },
+  );
+
+  it.each(["coverage-freeze.json", "release-evidence.json"])(
+    "retains the contest snapshot referenced by %s",
+    async (artifactName) => {
+      const root = await temporaryRoot();
+      await buildSnapshots({ rootDirectory: root, ...fixedOptions });
+      const initialSnapshot = dirname(
+        assetPath(
+          root,
+          (await readManifest(root)).resourceSnapshots.programs.resourcePath,
+        ),
+      );
+      await mkdir(join(root, "docs", "contest"), { recursive: true });
+      await writeFile(
+        join(root, "docs", "contest", artifactName),
+        JSON.stringify({ manifest: { snapshotId: basename(initialSnapshot) } }),
+        "utf8",
+      );
+
+      for (let day = 5; day <= 8; day += 1) {
         await buildSnapshots({
           rootDirectory: root,
           ...fixedOptions,
