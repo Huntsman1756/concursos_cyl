@@ -46,6 +46,21 @@ const reviewedPrograms = [
     title: "Electromecánica de Vehículos Automóviles",
     occupationCodes: ["7401"],
   },
+  {
+    programKey: "ELE04S",
+    title: "Automatización y Robótica Industrial",
+    occupationCodes: ["3123", "3124", "3129", "3139", "3209", "7521"],
+  },
+  {
+    programKey: "FME01M",
+    title: "Mecanizado",
+    occupationCodes: ["7322", "7323", "7324"],
+  },
+  {
+    programKey: "HOT04S",
+    title: "Dirección de Cocina",
+    occupationCodes: ["5110"],
+  },
 ] as const;
 
 for (const program of reviewedPrograms) {
