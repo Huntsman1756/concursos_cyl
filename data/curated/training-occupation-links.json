@@ -650,6 +650,106 @@
     "mappingVersion": "1.0.0"
   },
   {
+    "trainingProgramKey": "IFC01S",
+    "occupationId": "occupation:cno11:2721",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/informatica-comunicaciones/admin-sist-informaticos-red.html",
+    "sourceQuote": "Técnica / técnico en administración de base de datos.",
+    "reviewedAt": "2026-08-12",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "IFC01S",
+    "occupationId": "occupation:cno11:2722",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/informatica-comunicaciones/admin-sist-informaticos-red.html",
+    "sourceQuote": "Técnica / técnico en administración de sistemas.",
+    "reviewedAt": "2026-08-12",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "IFC01S",
+    "occupationId": "occupation:cno11:3812",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/informatica-comunicaciones/admin-sist-informaticos-red.html",
+    "sourceQuote": "Personal de apoyo y soporte técnico.",
+    "reviewedAt": "2026-08-12",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "IFC01S",
+    "occupationId": "occupation:cno11:3813",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/informatica-comunicaciones/admin-sist-informaticos-red.html",
+    "sourceQuote": "Técnica / técnico de redes.",
+    "reviewedAt": "2026-08-12",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "IFC01S",
+    "occupationId": "occupation:cno11:3814",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/informatica-comunicaciones/admin-sist-informaticos-red.html",
+    "sourceQuote": "Técnica / técnico en entornos web.",
+    "reviewedAt": "2026-08-12",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "IFC01SD",
+    "occupationId": "occupation:cno11:2721",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/informatica-comunicaciones/admin-sist-informaticos-red.html",
+    "sourceQuote": "Técnica / técnico en administración de base de datos.",
+    "reviewedAt": "2026-08-12",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "IFC01SD",
+    "occupationId": "occupation:cno11:2722",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/informatica-comunicaciones/admin-sist-informaticos-red.html",
+    "sourceQuote": "Técnica / técnico en administración de sistemas.",
+    "reviewedAt": "2026-08-12",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "IFC01SD",
+    "occupationId": "occupation:cno11:3812",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/informatica-comunicaciones/admin-sist-informaticos-red.html",
+    "sourceQuote": "Personal de apoyo y soporte técnico.",
+    "reviewedAt": "2026-08-12",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "IFC01SD",
+    "occupationId": "occupation:cno11:3813",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/informatica-comunicaciones/admin-sist-informaticos-red.html",
+    "sourceQuote": "Técnica / técnico de redes.",
+    "reviewedAt": "2026-08-12",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "IFC01SD",
+    "occupationId": "occupation:cno11:3814",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/informatica-comunicaciones/admin-sist-informaticos-red.html",
+    "sourceQuote": "Técnica / técnico en entornos web.",
+    "reviewedAt": "2026-08-12",
+    "mappingVersion": "1.0.0"
+  },
+  {
     "trainingProgramKey": "IFC02B",
     "occupationId": "occupation:cno11:7533",
     "relationshipType": "reviewed_relationship",
@@ -1046,6 +1146,46 @@
     "reviewStatus": "approved",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2007/10/29/1394",
     "sourceQuote": "Educador o educadora infantil en primer ciclo de educación infantil.",
+    "reviewedAt": "2026-08-12",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "SSC03S",
+    "occupationId": "occupation:cno11:2312",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/servicios-socioculturales-comunidad/integracion-social.html",
+    "sourceQuote": "Educador / educadora de educación especial.",
+    "reviewedAt": "2026-08-12",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "SSC03S",
+    "occupationId": "occupation:cno11:3713",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/servicios-socioculturales-comunidad/integracion-social.html",
+    "sourceQuote": "Técnica / técnico de integración social.",
+    "reviewedAt": "2026-08-12",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "SSC03SD",
+    "occupationId": "occupation:cno11:2312",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/servicios-socioculturales-comunidad/integracion-social.html",
+    "sourceQuote": "Educador / educadora de educación especial.",
+    "reviewedAt": "2026-08-12",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "SSC03SD",
+    "occupationId": "occupation:cno11:3713",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/servicios-socioculturales-comunidad/integracion-social.html",
+    "sourceQuote": "Técnica / técnico de integración social.",
     "reviewedAt": "2026-08-12",
     "mappingVersion": "1.0.0"
   },

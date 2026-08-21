@@ -68,6 +68,16 @@ export const ACCEPTED_RELATION_KEYS = [
   "HOT03S|4411",
   "HOT05S|3522",
   "IFC02B|7533",
+  "IFC01S|2721",
+  "IFC01S|2722",
+  "IFC01S|3812",
+  "IFC01S|3813",
+  "IFC01S|3814",
+  "IFC01SD|2721",
+  "IFC01SD|2722",
+  "IFC01SD|3812",
+  "IFC01SD|3813",
+  "IFC01SD|3814",
   "IFC02S|2713",
   "IFC02S|3820",
   "IFC02SD|2713",
@@ -98,11 +108,62 @@ export const ACCEPTED_RELATION_KEYS = [
   "SEA03S|3129",
   "SSC01S|2252",
   "SSC01SD|2252",
+  "SSC03S|2312",
+  "SSC03S|3713",
+  "SSC03SD|2312",
+  "SSC03SD|3713",
   "SSC05S|3713",
   "TMV01B|7401",
   "TMV02M|7401",
   "TMV03E|3405",
 ] as const;
+
+const TODO_FP_ASIR_URL =
+  "https://www.todofp.es/que-estudiar/familias-profesionales/informatica-comunicaciones/admin-sist-informaticos-red.html";
+const TODO_FP_INTEGRATION_URL =
+  "https://www.todofp.es/que-estudiar/familias-profesionales/servicios-socioculturales-comunidad/integracion-social.html";
+
+const CURRENT_SOURCE_OVERRIDES: Readonly<
+  Record<string, Pick<TrainingOccupationLink, "sourceUrl" | "sourceQuote">>
+> = {
+  "IFC01S|2721": {
+    sourceUrl: TODO_FP_ASIR_URL,
+    sourceQuote: "Técnica / técnico en administración de base de datos.",
+  },
+  "IFC01S|2722": {
+    sourceUrl: TODO_FP_ASIR_URL,
+    sourceQuote: "Técnica / técnico en administración de sistemas.",
+  },
+  "IFC01S|3812": {
+    sourceUrl: TODO_FP_ASIR_URL,
+    sourceQuote: "Personal de apoyo y soporte técnico.",
+  },
+  "IFC01S|3813": {
+    sourceUrl: TODO_FP_ASIR_URL,
+    sourceQuote: "Técnica / técnico de redes.",
+  },
+  "IFC01S|3814": {
+    sourceUrl: TODO_FP_ASIR_URL,
+    sourceQuote: "Técnica / técnico en entornos web.",
+  },
+  "SSC03S|2312": {
+    sourceUrl: TODO_FP_INTEGRATION_URL,
+    sourceQuote: "Educador / educadora de educación especial.",
+  },
+  "SSC03S|3713": {
+    sourceUrl: TODO_FP_INTEGRATION_URL,
+    sourceQuote: "Técnica / técnico de integración social.",
+  },
+};
+
+function currentSourceOverride(
+  key: string,
+): Pick<TrainingOccupationLink, "sourceUrl" | "sourceQuote"> | undefined {
+  const baseKey = key
+    .replace("IFC01SD|", "IFC01S|")
+    .replace("SSC03SD|", "SSC03S|");
+  return CURRENT_SOURCE_OVERRIDES[baseKey];
+}
 
 function relationKey(link: TrainingOccupationLink): string {
   return `${link.trainingProgramKey}|${link.occupationId.replace("occupation:cno11:", "")}`;
@@ -138,7 +199,10 @@ export function mergeFrontierReviewedCoverage(
       }
       continue;
     }
-    merged.set(key, candidates[0]);
+    merged.set(key, {
+      ...candidates[0],
+      ...currentSourceOverride(key),
+    });
   }
 
   return TrainingOccupationLinksSchema.parse([...merged.values()]).sort(

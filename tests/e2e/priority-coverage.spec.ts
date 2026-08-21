@@ -17,9 +17,19 @@ const reviewedPrograms = [
     occupationCodes: ["2713", "3820"],
   },
   {
+    programKey: "IFC01S",
+    title: "Administración de Sistemas Informáticos en Red",
+    occupationCodes: ["2721", "2722", "3812", "3813", "3814"],
+  },
+  {
     programKey: "SSC01S",
     title: "Educación Infantil",
     occupationCodes: ["2252"],
+  },
+  {
+    programKey: "SSC03S",
+    title: "Integración Social",
+    occupationCodes: ["2312", "3713"],
   },
   {
     programKey: "IMA03M",

@@ -37,6 +37,20 @@ describe("mergeFrontierReviewedCoverage", () => {
         left.localeCompare(right, "en"),
       ),
     );
+    expect(result).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          trainingProgramKey: "IFC01SD",
+          occupationId: "occupation:cno11:3813",
+          sourceQuote: "Técnica / técnico de redes.",
+        }),
+        expect.objectContaining({
+          trainingProgramKey: "SSC03S",
+          occupationId: "occupation:cno11:3713",
+          sourceQuote: "Técnica / técnico de integración social.",
+        }),
+      ]),
+    );
     expect(restoredKeys).toEqual(
       expect.arrayContaining([
         "ADG01B|4411",
