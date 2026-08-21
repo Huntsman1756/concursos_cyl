@@ -291,6 +291,76 @@
   },
   {
     "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:4121",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
+    "sourceQuote": "4121 Empleados de control de abastecimientos e inventario",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+    "trainingProgramKey": "COM01B"
+  },
+  {
+    "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:4123",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
+    "sourceQuote": "4123 Empleados de logística y transporte de pasajeros y mercancías",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+    "trainingProgramKey": "COM01B"
+  },
+  {
+    "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:5220",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
+    "sourceQuote": "5220 Vendedores en tiendas y almacenes",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+    "trainingProgramKey": "COM01B"
+  },
+  {
+    "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:5492",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
+    "sourceQuote": "5492 Promotores de venta",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+    "trainingProgramKey": "COM01B"
+  },
+  {
+    "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:5500",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
+    "sourceQuote": "5500 Cajeros y taquilleros (excepto bancos)",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+    "trainingProgramKey": "COM01B"
+  },
+  {
+    "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:8333",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
+    "sourceQuote": "8333 Operadores de carretillas elevadoras",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+    "trainingProgramKey": "COM01B"
+  },
+  {
+    "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:9820",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
+    "sourceQuote": "9820 Reponedores",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+    "trainingProgramKey": "COM01B"
+  },
+  {
+    "mappingVersion": "1.0.0",
     "occupationId": "occupation:cno11:1432",
     "relationshipType": "official_output",
     "reviewStatus": "approved",
@@ -641,6 +711,76 @@
   },
   {
     "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:7531",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
+    "sourceQuote": "7531 Técnicos de reparación de equipos electrónicos y de comunicaciones",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+    "trainingProgramKey": "ELE03S"
+  },
+  {
+    "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:3123",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-21",
+    "sourceQuote": "Técnico de puesta en marcha de sistemas de automatización industrial.",
+    "sourceUrl": "https://www.boe.es/eli/es/rd/2011/11/04/1581/dof/spa/pdf",
+    "trainingProgramKey": "ELE04S"
+  },
+  {
+    "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:3124",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-21",
+    "sourceQuote": "Diseñador de circuitos y sistemas integrados en automatización industrial.",
+    "sourceUrl": "https://www.boe.es/eli/es/rd/2011/11/04/1581/dof/spa/pdf",
+    "trainingProgramKey": "ELE04S"
+  },
+  {
+    "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:3129",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-21",
+    "sourceQuote": "Técnico en organización de mantenimiento de sistemas de automatización industrial.",
+    "sourceUrl": "https://www.boe.es/eli/es/rd/2011/11/04/1581/dof/spa/pdf",
+    "trainingProgramKey": "ELE04S"
+  },
+  {
+    "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:3139",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-21",
+    "sourceQuote": "Programador-controlador de robots industriales.",
+    "sourceUrl": "https://www.boe.es/eli/es/rd/2011/11/04/1581/dof/spa/pdf",
+    "trainingProgramKey": "ELE04S"
+  },
+  {
+    "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:3209",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-21",
+    "sourceQuote": "Jefe de equipo de supervisión de montaje de sistemas de automatización industrial.",
+    "sourceUrl": "https://www.boe.es/eli/es/rd/2011/11/04/1581/dof/spa/pdf",
+    "trainingProgramKey": "ELE04S"
+  },
+  {
+    "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:7521",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-21",
+    "sourceQuote": "Verificador de aparatos, cuadros y equipos eléctricos.",
+    "sourceUrl": "https://www.boe.es/eli/es/rd/2011/11/04/1581/dof/spa/pdf",
+    "trainingProgramKey": "ELE04S"
+  },
+  {
+    "mappingVersion": "1.0.0",
     "occupationId": "occupation:cno11:3123",
     "relationshipType": "official_output",
     "reviewStatus": "approved",
@@ -751,6 +891,36 @@
   },
   {
     "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:7322",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-21",
+    "sourceQuote": "Trabajadores de la fabricación de herramientas, mecánicos y ajustadores, modelistas matriceros y asimilados.",
+    "sourceUrl": "https://www.boe.es/eli/es/rd/2007/10/29/1398",
+    "trainingProgramKey": "FME01M"
+  },
+  {
+    "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:7323",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-21",
+    "sourceQuote": "Ajustador operario de máquinas herramientas.",
+    "sourceUrl": "https://www.boe.es/eli/es/rd/2007/10/29/1398",
+    "trainingProgramKey": "FME01M"
+  },
+  {
+    "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:7324",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-21",
+    "sourceQuote": "Pulidor de metales y afilador de herramientas.",
+    "sourceUrl": "https://www.boe.es/eli/es/rd/2007/10/29/1398",
+    "trainingProgramKey": "FME01M"
+  },
+  {
+    "mappingVersion": "1.0.0",
     "occupationId": "occupation:cno11:3126",
     "relationshipType": "official_output",
     "reviewStatus": "approved",
@@ -811,6 +981,46 @@
   },
   {
     "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:7132",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
+    "sourceQuote": "7132 Instaladores de cerramientos metálicos y carpinteros metálicos",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+    "trainingProgramKey": "FME02M"
+  },
+  {
+    "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:7312",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
+    "sourceQuote": "7312 Soldadores y oxicortadores",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+    "trainingProgramKey": "FME02M"
+  },
+  {
+    "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:7313",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
+    "sourceQuote": "7313 Chapistas y caldereros",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+    "trainingProgramKey": "FME02M"
+  },
+  {
+    "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:7314",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
+    "sourceQuote": "7314 Montadores de estructuras metálicas",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+    "trainingProgramKey": "FME02M"
+  },
+  {
+    "mappingVersion": "1.0.0",
     "occupationId": "occupation:cno11:7314",
     "relationshipType": "official_output",
     "reviewStatus": "approved",
@@ -818,6 +1028,16 @@
     "sourceQuote": "Montaje en construcciones metálicas.",
     "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/fabricacion-mecanica/construcciones-metalicas.html",
     "trainingProgramKey": "FME02S"
+  },
+  {
+    "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:3126",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-21",
+    "sourceQuote": "Técnica / técnico de desarrollo de productos y moldes",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/fabricacion-mecanica/diseno-fabricacion-mecanica.html",
+    "trainingProgramKey": "FME03S"
   },
   {
     "mappingVersion": "1.0.0",
@@ -871,6 +1091,46 @@
   },
   {
     "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:3510",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-21",
+    "sourceQuote": "Agente de viajes.",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/hosteleria-turismo/agencias-viajes-gestion-eventos.html",
+    "trainingProgramKey": "HOT02S"
+  },
+  {
+    "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:4123",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-21",
+    "sourceQuote": "Empleada / empleado del departamento de «booking» o reservas.",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/hosteleria-turismo/agencias-viajes-gestion-eventos.html",
+    "trainingProgramKey": "HOT02S"
+  },
+  {
+    "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:4411",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-21",
+    "sourceQuote": "Consultor / consultora de viajes.",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/hosteleria-turismo/agencias-viajes-gestion-eventos.html",
+    "trainingProgramKey": "HOT02S"
+  },
+  {
+    "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:5492",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-21",
+    "sourceQuote": "Promotor / promotora comercial de viajes y servicios turísticos.",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/hosteleria-turismo/agencias-viajes-gestion-eventos.html",
+    "trainingProgramKey": "HOT02S"
+  },
+  {
+    "mappingVersion": "1.0.0",
     "occupationId": "occupation:cno11:4123",
     "relationshipType": "reviewed_relationship",
     "reviewStatus": "approved",
@@ -888,6 +1148,16 @@
     "sourceQuote": "Informador turístico / informadora turística.",
     "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/hosteleria-turismo/guia-informacion-asistencias-turisticas.html",
     "trainingProgramKey": "HOT03S"
+  },
+  {
+    "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:5110",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-21",
+    "sourceQuote": "Cocinera / cocinero.",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/hosteleria-turismo/direccion-cocina.html",
+    "trainingProgramKey": "HOT04S"
   },
   {
     "mappingVersion": "1.0.0",
@@ -1101,6 +1371,16 @@
   },
   {
     "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:7250",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-11",
+    "sourceQuote": "7250 Mecánicos-instaladores de refrigeración y climatización",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+    "trainingProgramKey": "IMA02M"
+  },
+  {
+    "mappingVersion": "1.0.0",
     "occupationId": "occupation:cno11:8202",
     "relationshipType": "official_output",
     "reviewStatus": "approved",
@@ -1251,6 +1531,16 @@
   },
   {
     "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:5811",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-21",
+    "sourceQuote": "Peluquero/a especialista.",
+    "sourceUrl": "https://www.boe.es/diario_boe/txt.php?id=BOE-A-2011-19352",
+    "trainingProgramKey": "IMP02S"
+  },
+  {
+    "mappingVersion": "1.0.0",
     "occupationId": "occupation:cno11:3160",
     "relationshipType": "official_output",
     "reviewStatus": "approved",
@@ -1308,6 +1598,26 @@
     "sourceQuote": "Peón de la industria de la madera y del corcho.",
     "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/madera-mueble-corcho/fpb-carpinteria-mueble.html",
     "trainingProgramKey": "MAM01B"
+  },
+  {
+    "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:7812",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-09",
+    "sourceQuote": "Operador de máquinas fijas para fabricar productos de madera.",
+    "sourceUrl": "https://www.boe.es/eli/es/rd/1128/2010",
+    "trainingProgramKey": "MAM01M"
+  },
+  {
+    "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:8209",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-09",
+    "sourceQuote": "Montador-ensamblador de elementos de carpintería.",
+    "sourceUrl": "https://www.boe.es/eli/es/rd/1128/2010",
+    "trainingProgramKey": "MAM01M"
   },
   {
     "mappingVersion": "1.0.0",
@@ -1498,6 +1808,36 @@
     "sourceQuote": "Educador o educadora infantil en primer ciclo de educación infantil.",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2007/10/29/1394",
     "trainingProgramKey": "SSC01SD"
+  },
+  {
+    "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:3713",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-21",
+    "sourceQuote": "Dinamizador / dinamizadora comunitario.",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/servicios-socioculturales-comunidad/animacion-sociocultural-turistica.html",
+    "trainingProgramKey": "SSC02S"
+  },
+  {
+    "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:3724",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-21",
+    "sourceQuote": "Animador / animadora de veladas y espectáculos.",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/servicios-socioculturales-comunidad/animacion-sociocultural-turistica.html",
+    "trainingProgramKey": "SSC02S"
+  },
+  {
+    "mappingVersion": "1.0.0",
+    "occupationId": "occupation:cno11:4411",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-21",
+    "sourceQuote": "Informador / informadora juvenil.",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/servicios-socioculturales-comunidad/animacion-sociocultural-turistica.html",
+    "trainingProgramKey": "SSC02S"
   },
   {
     "mappingVersion": "1.0.0",

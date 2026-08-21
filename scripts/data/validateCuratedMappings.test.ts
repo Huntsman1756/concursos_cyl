@@ -336,6 +336,34 @@ const programs: TrainingProgram[] = [
     familyName: "Imagen Personal",
   },
   {
+    programKey: "FME03S",
+    programTitle: "Diseño en Fabricación Mecánica",
+    level: "higher",
+    familyCode: "FME",
+    familyName: "Fabricación Mecánica",
+  },
+  {
+    programKey: "HOT02S",
+    programTitle: "Agencias de Viajes y Gestión de Eventos",
+    level: "higher",
+    familyCode: "HOT",
+    familyName: "Hostelería y Turismo",
+  },
+  {
+    programKey: "IMS03S",
+    programTitle: "Producción de Audiovisuales y Espectáculos",
+    level: "higher",
+    familyCode: "IMS",
+    familyName: "Imagen y Sonido",
+  },
+  {
+    programKey: "SSC02S",
+    programTitle: "Animación Sociocultural y Turística",
+    level: "higher",
+    familyCode: "SSC",
+    familyName: "Servicios Socioculturales y a la Comunidad",
+  },
+  {
     programKey: "FME02M",
     programTitle: "Soldadura y Calderería",
     level: "intermediate",
@@ -1269,6 +1297,9 @@ describe("curated occupation mappings", () => {
           IMP02M: 2,
           IMP02MD: 2,
           IMP02S: 1,
+          FME03S: 1,
+          HOT02S: 4,
+          SSC02S: 3,
           ADG02S: 4,
           ADG02SD: 4,
           IFC01M: 3,
@@ -1371,6 +1402,44 @@ describe("curated occupation mappings", () => {
         programKey: "HOT01M",
         approvedMappings: 1,
         coverageStatus: "reviewed",
+      }),
+    );
+  });
+
+  it("publishes only the evidence-backed priority FP relations", async () => {
+    const curated = await loadCuratedMappingsFromDisk(
+      process.cwd(),
+      diskPrograms,
+    );
+    const approved = loadApprovedMappings(curated);
+    const occupationIdsFor = (programKey: string) =>
+      approved.links
+        .filter((link) => link.trainingProgramKey === programKey)
+        .map((link) => link.occupationId)
+        .sort();
+
+    expect(occupationIdsFor("IMP02S")).toEqual(["occupation:cno11:5811"]);
+    expect(occupationIdsFor("FME03S")).toEqual(["occupation:cno11:3126"]);
+    expect(occupationIdsFor("HOT02S")).toEqual([
+      "occupation:cno11:3510",
+      "occupation:cno11:4123",
+      "occupation:cno11:4411",
+      "occupation:cno11:5492",
+    ]);
+    expect(occupationIdsFor("SSC02S")).toEqual([
+      "occupation:cno11:3713",
+      "occupation:cno11:3724",
+      "occupation:cno11:4411",
+    ]);
+    expect(occupationIdsFor("IMS03S")).toEqual([]);
+
+    const coverage = buildMappingCoverage(diskPrograms, curated.links);
+    expect(coverage).toContainEqual(
+      expect.objectContaining({
+        scope: "program",
+        programKey: "IMS03S",
+        approvedMappings: 0,
+        coverageStatus: "uncovered",
       }),
     );
   });
