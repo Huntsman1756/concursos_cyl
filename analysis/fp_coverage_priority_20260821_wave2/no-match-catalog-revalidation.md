@@ -21,23 +21,23 @@ the relation published.
 
 The other fifteen outcomes remain no-match after explicit comparison:
 
-| Base | Official scope previously reviewed | Newly added codes checked | Result |
-| --- | --- | --- | --- |
-| `SAN06S` | Higiene bucodental | `3141`, `3316`, `3317`, `5931`, `5932`, `5993`, `7403` | Dental-prosthesis and audioprosthesis technicians are not dental hygienists; the other five codes are unrelated. |
-| `COM01S` | Marketing y Publicidad | all seven | None describes marketing, advertising, content or campaign work. |
-| `SAN01M` | Emergencias Sanitarias | all seven | Firefighters and forest-fire roles are not emergency medical technicians or patient transport. |
-| `SAN32` | Dietética | all seven | None describes dietetics, nutrition, food hygiene or health education. |
-| `EOC01S` | Proyectos de Edificación | all seven | None describes building drafting, BIM, cost control or technical project documentation. |
-| `INA01M` | Panadería, Repostería y Confitería | all seven | None describes bakery, pastry or confectionery production. |
-| `IMS01M` | Vídeo Disc-jockey y Sonido | all seven | None describes sound, microphone, DJ/VJ, lighting or retouching work. |
-| `HOT01E` | Panadería y bollería artesanales | all seven | None describes artisanal bakery, dough, pastry or sensory-tasting work. |
-| `IFC01E` | Ciberseguridad TI | all seven | None describes cybersecurity audit, consulting, analysis or testing. |
-| `IMS02S` | Realización audiovisual y espectáculos | all seven | None describes audiovisual direction, production or stage management. |
-| `MSP34` | Prevención de Riesgos Profesionales | all seven | Fire response is not occupational-risk prevention or preventive coordination; the remaining codes are unrelated. |
-| `IMS05S` | Iluminación, Captación y tratamiento de Imagen | all seven | None describes camera, photographic capture, lighting or image treatment. |
-| `TCP01M` | Confección y Moda | all seven | None describes tailoring, cutting, sewing or fashion production. |
-| `ELE05E` | Robótica Colaborativa | all seven | Machinery mechanics do not describe robotics programming, integration or supervision; the other codes are unrelated. |
-| `IMS03S` | Producción de Audiovisuales y Espectáculos | all seven | None describes audiovisual/event production; adjacent direction or technical codes remain excluded. |
+| Base     | Official scope previously reviewed             | Newly added codes checked                              | Result                                                                                                               |
+| -------- | ---------------------------------------------- | ------------------------------------------------------ | -------------------------------------------------------------------------------------------------------------------- |
+| `SAN06S` | Higiene bucodental                             | `3141`, `3316`, `3317`, `5931`, `5932`, `5993`, `7403` | Dental-prosthesis and audioprosthesis technicians are not dental hygienists; the other five codes are unrelated.     |
+| `COM01S` | Marketing y Publicidad                         | all seven                                              | None describes marketing, advertising, content or campaign work.                                                     |
+| `SAN01M` | Emergencias Sanitarias                         | all seven                                              | Firefighters and forest-fire roles are not emergency medical technicians or patient transport.                       |
+| `SAN32`  | Dietética                                      | all seven                                              | None describes dietetics, nutrition, food hygiene or health education.                                               |
+| `EOC01S` | Proyectos de Edificación                       | all seven                                              | None describes building drafting, BIM, cost control or technical project documentation.                              |
+| `INA01M` | Panadería, Repostería y Confitería             | all seven                                              | None describes bakery, pastry or confectionery production.                                                           |
+| `IMS01M` | Vídeo Disc-jockey y Sonido                     | all seven                                              | None describes sound, microphone, DJ/VJ, lighting or retouching work.                                                |
+| `HOT01E` | Panadería y bollería artesanales               | all seven                                              | None describes artisanal bakery, dough, pastry or sensory-tasting work.                                              |
+| `IFC01E` | Ciberseguridad TI                              | all seven                                              | None describes cybersecurity audit, consulting, analysis or testing.                                                 |
+| `IMS02S` | Realización audiovisual y espectáculos         | all seven                                              | None describes audiovisual direction, production or stage management.                                                |
+| `MSP34`  | Prevención de Riesgos Profesionales            | all seven                                              | Fire response is not occupational-risk prevention or preventive coordination; the remaining codes are unrelated.     |
+| `IMS05S` | Iluminación, Captación y tratamiento de Imagen | all seven                                              | None describes camera, photographic capture, lighting or image treatment.                                            |
+| `TCP01M` | Confección y Moda                              | all seven                                              | None describes tailoring, cutting, sewing or fashion production.                                                     |
+| `ELE05E` | Robótica Colaborativa                          | all seven                                              | Machinery mechanics do not describe robotics programming, integration or supervision; the other codes are unrelated. |
+| `IMS03S` | Producción de Audiovisuales y Espectáculos     | all seven                                              | None describes audiovisual/event production; adjacent direction or technical codes remain excluded.                  |
 
 ## Boundary
 
@@ -46,5 +46,4 @@ The other fifteen outcomes remain no-match after explicit comparison:
 - Preserve the original review dates on the fifteen unchanged outcomes; this
   document records only compatibility with the expanded catalog.
 - Regenerate the queue, immutable snapshot, freeze and rendered documents so
-  the public counts reflect 15 no-match bases rather than silently preserving
-  16.
+  the public counts reflect 15 no-match bases rather than silently preserving 16.

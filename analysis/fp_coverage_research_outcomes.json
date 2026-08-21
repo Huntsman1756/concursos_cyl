@@ -4,7 +4,15 @@
     "reviewedAt": "2026-08-21",
     "occupationCatalogSha256": "d4e9a93f270dba6dd8507762bdc5161978317d75e19fe7f2c0bf0a5ec72e5b95",
     "evidencePath": "analysis/fp_coverage_priority_20260821_wave2/no-match-catalog-revalidation.md",
-    "addedOccupationCodes": ["3141", "3316", "3317", "5931", "5932", "5993", "7403"]
+    "addedOccupationCodes": [
+      "3141",
+      "3316",
+      "3317",
+      "5931",
+      "5932",
+      "5993",
+      "7403"
+    ]
   },
   "outcomes": [
     {
