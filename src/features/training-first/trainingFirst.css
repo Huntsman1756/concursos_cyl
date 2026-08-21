@@ -40,14 +40,6 @@
   font-size: 0.875rem;
 }
 
-.training-outcome__compare {
-  flex: 0 0 auto;
-  color: var(--color-action-text);
-  font-size: 0.9rem;
-  font-weight: 750;
-  text-underline-offset: 0.2em;
-}
-
 .training-outcome__metrics {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -180,10 +172,6 @@
   .training-outcome__source {
     align-items: flex-start;
     flex-direction: column;
-  }
-
-  .training-outcome__compare {
-    font-size: 0.875rem;
   }
 
   .training-outcome__metrics,

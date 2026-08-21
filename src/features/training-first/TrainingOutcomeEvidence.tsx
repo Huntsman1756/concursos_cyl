@@ -1,4 +1,3 @@
-import { Link } from "react-router-dom";
 import type { TrainingProgram } from "../../../data/schemas/generated";
 import { trainingLevelLabel } from "../../domain/trainingPresentation";
 import {
@@ -73,9 +72,6 @@ export function TrainingOutcomeEvidence({
             completa. No es una predicción salarial personal.
           </p>
         </div>
-        <Link className="training-outcome__compare" to="/comparar">
-          Comparar estudios
-        </Link>
       </header>
 
       <div

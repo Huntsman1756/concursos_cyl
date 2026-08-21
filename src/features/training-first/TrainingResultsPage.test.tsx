@@ -275,9 +275,24 @@ describe("TrainingResultsPage", () => {
     const outcome = screen.getByRole("region", {
       name: "Ingresos observados tras titularse",
     });
+    const nextActions = screen.getByRole("navigation", {
+      name: "Siguientes pasos",
+    });
     expect(
-      within(outcome).getByRole("link", { name: "Comparar estudios" }),
+      within(nextActions).getByRole("link", { name: "Comparar ingresos" }),
     ).toHaveAttribute("href", "/comparar");
+    expect(
+      within(nextActions).getByRole("link", {
+        name: "Ver ocupaciones revisadas",
+      }),
+    ).toHaveAttribute("href", "#ocupaciones-revisadas");
+    expect(
+      within(nextActions).getByRole("link", {
+        name: "Ver centros y modalidades",
+      }),
+    ).toHaveAttribute("href", "/formacion/IFC03S");
+    expect(nextActions.querySelectorAll(".primary-button")).toHaveLength(1);
+    expect(document.getElementById("ocupaciones-revisadas")).toBeVisible();
     expect(
       within(outcome).getByRole("link", { name: /Fuente: EDUCAbase/u }),
     ).toHaveAttribute(
@@ -317,6 +332,20 @@ describe("TrainingResultsPage", () => {
         /Todavía no hay una relación revisada que permita buscar ofertas/u,
       ),
     ).toBeVisible();
+    const nextActions = screen.getByRole("navigation", {
+      name: "Siguientes pasos",
+    });
+    expect(
+      within(nextActions).getByRole("link", {
+        name: "Ver centros y modalidades",
+      }),
+    ).toHaveClass("primary-button");
+    expect(
+      within(nextActions).queryByRole("link", {
+        name: "Ver ocupaciones revisadas",
+      }),
+    ).not.toBeInTheDocument();
+    expect(nextActions.querySelectorAll(".primary-button")).toHaveLength(1);
   });
 
   it("shows literal TodoFP outputs with their official source", async () => {

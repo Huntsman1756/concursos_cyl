@@ -3,7 +3,9 @@ import { resolve } from "node:path";
 
 const root = process.cwd();
 const linksPath = resolve(root, "data/curated/training-occupation-links.json");
-const reviewedAt = "2026-08-21";
+const defaultReviewedAt = "2026-08-21";
+const ineCno11 =
+  "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf";
 const todoFpAutomocion =
   "https://www.todofp.es/que-estudiar/familias-profesionales/transporte-mantenimiento-vehiculos/automocion.html";
 const todoFpInformatica =
@@ -22,7 +24,13 @@ const boeMecanizado = "https://www.boe.es/eli/es/rd/2007/10/29/1398";
 const todoFpDireccionCocina =
   "https://www.todofp.es/que-estudiar/familias-profesionales/hosteleria-turismo/direccion-cocina.html";
 
-function relation(trainingProgramKey, code, sourceUrl, sourceQuote) {
+function relation(
+  trainingProgramKey,
+  code,
+  sourceUrl,
+  sourceQuote,
+  reviewedAt = defaultReviewedAt,
+) {
   return {
     trainingProgramKey,
     occupationId: `occupation:cno11:${code}`,
@@ -175,6 +183,105 @@ const reviewedRelations = [
     "Pulidor de metales y afilador de herramientas.",
   ),
   relation("HOT04S", "5110", todoFpDireccionCocina, "Cocinera / cocinero."),
+  relation(
+    "COM01B",
+    "4121",
+    ineCno11,
+    "4121 Empleados de control de abastecimientos e inventario",
+    "2026-08-11",
+  ),
+  relation(
+    "COM01B",
+    "4123",
+    ineCno11,
+    "4123 Empleados de logística y transporte de pasajeros y mercancías",
+    "2026-08-11",
+  ),
+  relation(
+    "COM01B",
+    "5220",
+    ineCno11,
+    "5220 Vendedores en tiendas y almacenes",
+    "2026-08-11",
+  ),
+  relation(
+    "COM01B",
+    "5492",
+    ineCno11,
+    "5492 Promotores de venta",
+    "2026-08-11",
+  ),
+  relation(
+    "COM01B",
+    "5500",
+    ineCno11,
+    "5500 Cajeros y taquilleros (excepto bancos)",
+    "2026-08-11",
+  ),
+  relation(
+    "COM01B",
+    "8333",
+    ineCno11,
+    "8333 Operadores de carretillas elevadoras",
+    "2026-08-11",
+  ),
+  relation("COM01B", "9820", ineCno11, "9820 Reponedores", "2026-08-11"),
+  relation(
+    "ELE03S",
+    "7531",
+    ineCno11,
+    "7531 Técnicos de reparación de equipos electrónicos y de comunicaciones",
+    "2026-08-11",
+  ),
+  relation(
+    "FME02M",
+    "7132",
+    ineCno11,
+    "7132 Instaladores de cerramientos metálicos y carpinteros metálicos",
+    "2026-08-11",
+  ),
+  relation(
+    "FME02M",
+    "7312",
+    ineCno11,
+    "7312 Soldadores y oxicortadores",
+    "2026-08-11",
+  ),
+  relation(
+    "FME02M",
+    "7313",
+    ineCno11,
+    "7313 Chapistas y caldereros",
+    "2026-08-11",
+  ),
+  relation(
+    "FME02M",
+    "7314",
+    ineCno11,
+    "7314 Montadores de estructuras metálicas",
+    "2026-08-11",
+  ),
+  relation(
+    "IMA02M",
+    "7250",
+    ineCno11,
+    "7250 Mecánicos-instaladores de refrigeración y climatización",
+    "2026-08-11",
+  ),
+  relation(
+    "MAM01M",
+    "7812",
+    "https://www.boe.es/eli/es/rd/1128/2010",
+    "Operador de máquinas fijas para fabricar productos de madera.",
+    "2026-08-09",
+  ),
+  relation(
+    "MAM01M",
+    "8209",
+    "https://www.boe.es/eli/es/rd/1128/2010",
+    "Montador-ensamblador de elementos de carpintería.",
+    "2026-08-09",
+  ),
 ];
 
 function keyOf(item) {
@@ -232,6 +339,33 @@ if (addedCount > 0) {
 
 await updateText("scripts/data/restoreFrontierReviewedCoverage.ts", [
   {
+    sentinel: '"COM01B|9820"',
+    anchor: '  "COM01M|9820",',
+    replacement:
+      '  "COM01M|9820",\n  "COM01B|4121",\n  "COM01B|4123",\n  "COM01B|5220",\n  "COM01B|5492",\n  "COM01B|5500",\n  "COM01B|8333",\n  "COM01B|9820",',
+  },
+  {
+    sentinel: '"ELE03S|7531"',
+    anchor: '  "ELE02S|7533",',
+    replacement: '  "ELE02S|7533",\n  "ELE03S|7531",',
+  },
+  {
+    sentinel: '"FME02M|7314"',
+    anchor: '  "FME02B|9700",',
+    replacement:
+      '  "FME02B|9700",\n  "FME02M|7132",\n  "FME02M|7312",\n  "FME02M|7313",\n  "FME02M|7314",',
+  },
+  {
+    sentinel: '"IMA02M|7250"',
+    anchor: '  "IMA03M|8202",',
+    replacement: '  "IMA02M|7250",\n  "IMA03M|8202",',
+  },
+  {
+    sentinel: '"MAM01M|8209"',
+    anchor: '  "MAM01B|9700",',
+    replacement: '  "MAM01B|9700",\n  "MAM01M|7812",\n  "MAM01M|8209",',
+  },
+  {
     sentinel: '"ELE04S|7521"',
     anchor: '  "ELE02S|7533",',
     replacement:
@@ -284,6 +418,34 @@ await updateText("scripts/data/restoreFrontierReviewedCoverage.ts", [
 ]);
 
 await updateText("scripts/data/restoreFrontierReviewedCoverage.test.ts", [
+  {
+    sentinel: '        "COM01B|9820",',
+    anchor: '        "COM01M|9820",',
+    replacement:
+      '        "COM01M|9820",\n        "COM01B|4121",\n        "COM01B|4123",\n        "COM01B|5220",\n        "COM01B|5492",\n        "COM01B|5500",\n        "COM01B|8333",\n        "COM01B|9820",',
+  },
+  {
+    sentinel: '        "ELE03S|7531",',
+    anchor: '        "ELE02M|7533",',
+    replacement: '        "ELE02M|7533",\n        "ELE03S|7531",',
+  },
+  {
+    sentinel: '        "FME02M|7314",',
+    anchor: '        "FME01B|9700",',
+    replacement:
+      '        "FME01B|9700",\n        "FME02M|7132",\n        "FME02M|7312",\n        "FME02M|7313",\n        "FME02M|7314",',
+  },
+  {
+    sentinel: '        "IMA02M|7250",',
+    anchor: '        "IMA03M|8202",',
+    replacement: '        "IMA02M|7250",\n        "IMA03M|8202",',
+  },
+  {
+    sentinel: '        "MAM01M|8209",',
+    anchor: '        "IMA03S|3126",',
+    replacement:
+      '        "IMA03S|3126",\n        "MAM01M|7812",\n        "MAM01M|8209",',
+  },
   {
     sentinel: '        "ELE04S|7521",',
     anchor: '        "ELE02M|7533",',

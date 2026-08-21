@@ -1,54 +1,12 @@
 {
-  "snapshotGeneratedAt": "2026-08-21T10:11:26.579Z",
-  "reviewedBaseCount": 68,
+  "snapshotGeneratedAt": "2026-08-21T11:18:03.121Z",
+  "reviewedBaseCount": 73,
   "completedNoMatchBaseCount": 15,
-  "pendingBaseCount": 71,
+  "pendingBaseCount": 66,
   "contract": "Training-offer signals prioritize official research only; they are not CNO evidence and never authorize publication.",
   "candidates": [
     {
       "rank": 1,
-      "baseProgramKey": "COM01B",
-      "programKeys": ["COM01B"],
-      "programTitle": "Servicios Comerciales",
-      "familyCode": "COM",
-      "familyName": "Comercio y Marketing",
-      "level": "basic",
-      "offeringCount": 11,
-      "provinceCount": 7,
-      "centerCount": 11,
-      "priorDraft": false,
-      "priorityOnly": true
-    },
-    {
-      "rank": 2,
-      "baseProgramKey": "ELE03S",
-      "programKeys": ["ELE03S"],
-      "programTitle": "Mantenimiento Electrónico",
-      "familyCode": "ELE",
-      "familyName": "Electricidad y Electrónica",
-      "level": "higher",
-      "offeringCount": 10,
-      "provinceCount": 7,
-      "centerCount": 10,
-      "priorDraft": false,
-      "priorityOnly": true
-    },
-    {
-      "rank": 3,
-      "baseProgramKey": "FME02M",
-      "programKeys": ["FME02M"],
-      "programTitle": "Soldadura y Calderería",
-      "familyCode": "FME",
-      "familyName": "Fabricación Mecánica",
-      "level": "intermediate",
-      "offeringCount": 9,
-      "provinceCount": 7,
-      "centerCount": 9,
-      "priorDraft": false,
-      "priorityOnly": true
-    },
-    {
-      "rank": 4,
       "baseProgramKey": "IMP02S",
       "programKeys": ["IMP02S", "IMP02SD"],
       "programTitle": "Estilismo y Dirección de Peluquería",
@@ -62,35 +20,7 @@
       "priorityOnly": true
     },
     {
-      "rank": 5,
-      "baseProgramKey": "IMA02M",
-      "programKeys": ["IMA02M"],
-      "programTitle": "Instalaciones Frigoríficas y de Climatización",
-      "familyCode": "IMA",
-      "familyName": "Instalación y Mantenimiento",
-      "level": "intermediate",
-      "offeringCount": 4,
-      "provinceCount": 4,
-      "centerCount": 4,
-      "priorDraft": false,
-      "priorityOnly": true
-    },
-    {
-      "rank": 6,
-      "baseProgramKey": "MAM01M",
-      "programKeys": ["MAM01M"],
-      "programTitle": "Carpintería y Mueble",
-      "familyCode": "MAM",
-      "familyName": "Madera, Mueble y Corcho",
-      "level": "intermediate",
-      "offeringCount": 4,
-      "provinceCount": 4,
-      "centerCount": 4,
-      "priorDraft": false,
-      "priorityOnly": true
-    },
-    {
-      "rank": 7,
+      "rank": 2,
       "baseProgramKey": "FME03S",
       "programKeys": ["FME03S"],
       "programTitle": "Diseño en Fabricación Mecánica",
@@ -104,7 +34,7 @@
       "priorityOnly": true
     },
     {
-      "rank": 8,
+      "rank": 3,
       "baseProgramKey": "HOT02S",
       "programKeys": ["HOT02S", "HOT02SD"],
       "programTitle": "Agencias de Viajes y Gestión de Eventos",
@@ -118,7 +48,7 @@
       "priorityOnly": true
     },
     {
-      "rank": 9,
+      "rank": 4,
       "baseProgramKey": "IMS03S",
       "programKeys": ["IMS03S"],
       "programTitle": "Producción de Audiovisuales y Espectáculos",
@@ -132,7 +62,7 @@
       "priorityOnly": true
     },
     {
-      "rank": 10,
+      "rank": 5,
       "baseProgramKey": "SSC02S",
       "programKeys": ["SSC02S"],
       "programTitle": "Animación Sociocultural y Turística",
@@ -146,7 +76,7 @@
       "priorityOnly": true
     },
     {
-      "rank": 11,
+      "rank": 6,
       "baseProgramKey": "INA01S",
       "programKeys": ["INA01S", "INA01SD"],
       "programTitle": "Vitivinicultura",
@@ -160,7 +90,7 @@
       "priorityOnly": true
     },
     {
-      "rank": 12,
+      "rank": 7,
       "baseProgramKey": "AGA01M",
       "programKeys": ["AGA01M"],
       "programTitle": "Producción Agroecológica",
@@ -174,7 +104,7 @@
       "priorityOnly": true
     },
     {
-      "rank": 13,
+      "rank": 8,
       "baseProgramKey": "AGA02M",
       "programKeys": ["AGA02M"],
       "programTitle": "Producción Agropecuaria",
@@ -188,7 +118,7 @@
       "priorityOnly": true
     },
     {
-      "rank": 14,
+      "rank": 9,
       "baseProgramKey": "AGA03B",
       "programKeys": ["AGA03B"],
       "programTitle": "Aprovechamientos Forestales",
@@ -202,7 +132,7 @@
       "priorityOnly": true
     },
     {
-      "rank": 15,
+      "rank": 10,
       "baseProgramKey": "COM02E",
       "programKeys": ["COM02E"],
       "programTitle": "Redacción de contenidos digitales para marketing y ventas",
@@ -216,7 +146,7 @@
       "priorityOnly": true
     },
     {
-      "rank": 16,
+      "rank": 11,
       "baseProgramKey": "ELE02B",
       "programKeys": ["ELE02B"],
       "programTitle": "Instalaciones Electrotécnicas y Mecánica",
@@ -230,7 +160,7 @@
       "priorityOnly": true
     },
     {
-      "rank": 17,
+      "rank": 12,
       "baseProgramKey": "IMA01M",
       "programKeys": ["IMA01M"],
       "programTitle": "Instalaciones de Producción de Calor",
@@ -244,7 +174,7 @@
       "priorityOnly": true
     },
     {
-      "rank": 18,
+      "rank": 13,
       "baseProgramKey": "IMS01E",
       "programKeys": ["IMS01E"],
       "programTitle": "Audiodescripción y subtitulación",
@@ -258,7 +188,7 @@
       "priorityOnly": true
     },
     {
-      "rank": 19,
+      "rank": 14,
       "baseProgramKey": "INA02M",
       "programKeys": ["INA02M"],
       "programTitle": "Aceites de Oliva y Vinos",
@@ -272,7 +202,7 @@
       "priorityOnly": true
     },
     {
-      "rank": 20,
+      "rank": 15,
       "baseProgramKey": "QUI01E",
       "programKeys": ["QUI01E"],
       "programTitle": "Cultivos celulares",
@@ -286,7 +216,7 @@
       "priorityOnly": true
     },
     {
-      "rank": 21,
+      "rank": 16,
       "baseProgramKey": "SAN01S",
       "programKeys": ["SAN01S", "SAN01SD"],
       "programTitle": "Audiología Protésica",
@@ -300,7 +230,7 @@
       "priorityOnly": true
     },
     {
-      "rank": 22,
+      "rank": 17,
       "baseProgramKey": "SAN02S",
       "programKeys": ["SAN02S"],
       "programTitle": "Prótesis Dentales",
@@ -314,7 +244,7 @@
       "priorityOnly": true
     },
     {
-      "rank": 23,
+      "rank": 18,
       "baseProgramKey": "SEA01M",
       "programKeys": ["SEA01M", "SEA01MD"],
       "programTitle": "Emergencias y Protección Civil",
@@ -328,7 +258,7 @@
       "priorityOnly": true
     },
     {
-      "rank": 24,
+      "rank": 19,
       "baseProgramKey": "TMV03M",
       "programKeys": ["TMV03M"],
       "programTitle": "Electromecánica de maquinaria",
@@ -342,7 +272,7 @@
       "priorityOnly": true
     },
     {
-      "rank": 25,
+      "rank": 20,
       "baseProgramKey": "IMS01S",
       "programKeys": ["IMS01S"],
       "programTitle": "Animaciones 3D, Juegos y Entornos Interactivos",
@@ -356,7 +286,7 @@
       "priorityOnly": true
     },
     {
-      "rank": 26,
+      "rank": 21,
       "baseProgramKey": "MAM02M",
       "programKeys": ["MAM02M"],
       "programTitle": "Instalación y Amueblamiento",
@@ -370,7 +300,7 @@
       "priorityOnly": true
     },
     {
-      "rank": 27,
+      "rank": 22,
       "baseProgramKey": "SSC06S",
       "programKeys": ["SSC06S", "SSC06SD"],
       "programTitle": "Formación para la movilidad segura y sostenible",
@@ -384,7 +314,7 @@
       "priorityOnly": true
     },
     {
-      "rank": 28,
+      "rank": 23,
       "baseProgramKey": "AGA02S",
       "programKeys": ["AGA02S"],
       "programTitle": "Paisajismo y Medio Rural",
@@ -398,7 +328,7 @@
       "priorityOnly": true
     },
     {
-      "rank": 29,
+      "rank": 24,
       "baseProgramKey": "AGA03M",
       "programKeys": ["AGA03M"],
       "programTitle": "Jardinería y Floristería",
@@ -412,7 +342,7 @@
       "priorityOnly": true
     },
     {
-      "rank": 30,
+      "rank": 25,
       "baseProgramKey": "COM01E",
       "programKeys": ["COM01E"],
       "programTitle": "Posicionamiento en buscadores (SEO/SEM) y comunicación en redes sociales",
@@ -426,7 +356,7 @@
       "priorityOnly": true
     },
     {
-      "rank": 31,
+      "rank": 26,
       "baseProgramKey": "ELE01E",
       "programKeys": ["ELE01E"],
       "programTitle": "Ciberseguridad en entornos de las tecnologías de la operación",
@@ -440,7 +370,7 @@
       "priorityOnly": true
     },
     {
-      "rank": 32,
+      "rank": 27,
       "baseProgramKey": "EOC01B",
       "programKeys": ["EOC01B"],
       "programTitle": "Reforma y Mantenimiento de Edificios",
@@ -454,7 +384,7 @@
       "priorityOnly": true
     },
     {
-      "rank": 33,
+      "rank": 28,
       "baseProgramKey": "EOC02M",
       "programKeys": ["EOC02M"],
       "programTitle": "Obras de Interior, Decoración y Rehabilitación",
@@ -468,7 +398,7 @@
       "priorityOnly": true
     },
     {
-      "rank": 34,
+      "rank": 29,
       "baseProgramKey": "FME01E",
       "programKeys": ["FME01E"],
       "programTitle": "Fabricación aditiva",
@@ -482,7 +412,7 @@
       "priorityOnly": true
     },
     {
-      "rank": 35,
+      "rank": 30,
       "baseProgramKey": "IFC03E",
       "programKeys": ["IFC03E"],
       "programTitle": "Inteligencia Artificial y Big Data",
@@ -496,7 +426,7 @@
       "priorityOnly": true
     },
     {
-      "rank": 36,
+      "rank": 31,
       "baseProgramKey": "IMA02S",
       "programKeys": ["IMA02S"],
       "programTitle": "Mantenimiento de Instalaciones Térmicas y de Fluidos",
@@ -510,7 +440,7 @@
       "priorityOnly": true
     },
     {
-      "rank": 37,
+      "rank": 32,
       "baseProgramKey": "IMS04S",
       "programKeys": ["IMS04S"],
       "programTitle": "Sonido para Audiovisuales y Espectáculos",
@@ -524,7 +454,7 @@
       "priorityOnly": true
     },
     {
-      "rank": 38,
+      "rank": 33,
       "baseProgramKey": "INA03M",
       "programKeys": ["INA03M"],
       "programTitle": "Elaboración de Productos Alimenticios",
@@ -538,7 +468,7 @@
       "priorityOnly": true
     },
     {
-      "rank": 39,
+      "rank": 34,
       "baseProgramKey": "MAM01S",
       "programKeys": ["MAM01S"],
       "programTitle": "Diseño y Amueblamiento",
@@ -552,7 +482,7 @@
       "priorityOnly": true
     },
     {
-      "rank": 40,
+      "rank": 35,
       "baseProgramKey": "QUI03S",
       "programKeys": ["QUI03S"],
       "programTitle": "Fabricación de Productos Farmacéuticos, Biotecnológicos y Afines",
@@ -566,7 +496,7 @@
       "priorityOnly": true
     },
     {
-      "rank": 41,
+      "rank": 36,
       "baseProgramKey": "SAN05S",
       "programKeys": ["SAN05S"],
       "programTitle": "Documentación y Administración Sanitarias",
@@ -580,7 +510,7 @@
       "priorityOnly": true
     },
     {
-      "rank": 42,
+      "rank": 37,
       "baseProgramKey": "TCP01S",
       "programKeys": ["TCP01S"],
       "programTitle": "Patronaje y Moda",
@@ -594,7 +524,7 @@
       "priorityOnly": true
     },
     {
-      "rank": 43,
+      "rank": 38,
       "baseProgramKey": "TMV02E",
       "programKeys": ["TMV02E"],
       "programTitle": "Mantenimiento de vehículos híbridos y eléctricos",
@@ -608,7 +538,7 @@
       "priorityOnly": true
     },
     {
-      "rank": 44,
+      "rank": 39,
       "baseProgramKey": "TMV05M",
       "programKeys": ["TMV05M"],
       "programTitle": "Mantenimiento de Material Rodante Ferroviario",
@@ -622,7 +552,7 @@
       "priorityOnly": true
     },
     {
-      "rank": 45,
+      "rank": 40,
       "baseProgramKey": "ARG01M",
       "programKeys": ["ARG01M"],
       "programTitle": "Preimpresión Digital",
@@ -636,7 +566,7 @@
       "priorityOnly": true
     },
     {
-      "rank": 46,
+      "rank": 41,
       "baseProgramKey": "SSC04S",
       "programKeys": ["SSC04S", "SSC04SD"],
       "programTitle": "Promoción de Igualdad de Género",
@@ -650,7 +580,7 @@
       "priorityOnly": true
     },
     {
-      "rank": 47,
+      "rank": 42,
       "baseProgramKey": "AFD01M",
       "programKeys": ["AFD01M"],
       "programTitle": "Actividades Ecuestres",
@@ -664,7 +594,7 @@
       "priorityOnly": true
     },
     {
-      "rank": 48,
+      "rank": 43,
       "baseProgramKey": "ARG01S",
       "programKeys": ["ARG01S"],
       "programTitle": "Diseño y Gestión de la Producción Gráfica",
@@ -678,7 +608,7 @@
       "priorityOnly": true
     },
     {
-      "rank": 49,
+      "rank": 44,
       "baseProgramKey": "ARG02S",
       "programKeys": ["ARG02S"],
       "programTitle": "Diseño y Edición de Publicaciones Impresas y Multimedia",
@@ -692,7 +622,7 @@
       "priorityOnly": true
     },
     {
-      "rank": 50,
+      "rank": 45,
       "baseProgramKey": "ELE04E",
       "programKeys": ["ELE04E"],
       "programTitle": "Instalación y mantenimiento de sistemas conectados a internet (IOT)",
@@ -706,7 +636,7 @@
       "priorityOnly": true
     },
     {
-      "rank": 51,
+      "rank": 46,
       "baseProgramKey": "ELE05S",
       "programKeys": ["ELE05S"],
       "programTitle": "Electromedicina Clínica",
@@ -720,7 +650,7 @@
       "priorityOnly": true
     },
     {
-      "rank": 52,
+      "rank": 47,
       "baseProgramKey": "ENA01S",
       "programKeys": ["ENA01S"],
       "programTitle": "Eficiencia Energética y Energía Solar Térmica",
@@ -734,7 +664,7 @@
       "priorityOnly": true
     },
     {
-      "rank": 53,
+      "rank": 48,
       "baseProgramKey": "ENA02S",
       "programKeys": ["ENA02S"],
       "programTitle": "Centrales Eléctricas",
@@ -748,7 +678,7 @@
       "priorityOnly": true
     },
     {
-      "rank": 54,
+      "rank": 49,
       "baseProgramKey": "ENA04S",
       "programKeys": ["ENA04S"],
       "programTitle": "Gestión del agua",
@@ -762,7 +692,7 @@
       "priorityOnly": true
     },
     {
-      "rank": 55,
+      "rank": 50,
       "baseProgramKey": "FME03M",
       "programKeys": ["FME03M"],
       "programTitle": "Conformado por Moldeo de Metales y Polímeros",
@@ -776,7 +706,7 @@
       "priorityOnly": true
     },
     {
-      "rank": 56,
+      "rank": 51,
       "baseProgramKey": "HOT02B",
       "programKeys": ["HOT02B"],
       "programTitle": "Alojamiento y Lavandería",
@@ -790,7 +720,7 @@
       "priorityOnly": true
     },
     {
-      "rank": 57,
+      "rank": 52,
       "baseProgramKey": "HOT03SD",
       "programKeys": ["HOT03SD"],
       "programTitle": "Guía, Información y Asistencia Turística",
@@ -804,7 +734,7 @@
       "priorityOnly": true
     },
     {
-      "rank": 58,
+      "rank": 53,
       "baseProgramKey": "HOT04SD",
       "programKeys": ["HOT04SD"],
       "programTitle": "Dirección de cocina",
@@ -818,7 +748,7 @@
       "priorityOnly": true
     },
     {
-      "rank": 59,
+      "rank": 54,
       "baseProgramKey": "IFC02E",
       "programKeys": ["IFC02E"],
       "programTitle": "Desarrollo de Videojuegos y Realidad Virtual",
@@ -832,7 +762,7 @@
       "priorityOnly": true
     },
     {
-      "rank": 60,
+      "rank": 55,
       "baseProgramKey": "IMA01E",
       "programKeys": ["IMA01E"],
       "programTitle": "Digitalización del Mantenimiento Industrial",
@@ -846,7 +776,7 @@
       "priorityOnly": true
     },
     {
-      "rank": 61,
+      "rank": 56,
       "baseProgramKey": "IMA02E",
       "programKeys": ["IMA02E"],
       "programTitle": "Fabricación inteligente",
@@ -860,7 +790,7 @@
       "priorityOnly": true
     },
     {
-      "rank": 62,
+      "rank": 57,
       "baseProgramKey": "IMA03E",
       "programKeys": ["IMA03E"],
       "programTitle": "Modelado de la información de la construcción (BIM)",
@@ -874,7 +804,7 @@
       "priorityOnly": true
     },
     {
-      "rank": 63,
+      "rank": 58,
       "baseProgramKey": "IMP03S",
       "programKeys": ["IMP03S"],
       "programTitle": "Asesoría de Imagen Personal y Corporativa",
@@ -888,7 +818,7 @@
       "priorityOnly": true
     },
     {
-      "rank": 64,
+      "rank": 59,
       "baseProgramKey": "IMP04S",
       "programKeys": ["IMP04S"],
       "programTitle": "Caracterización y Maquillaje Profesional",
@@ -902,7 +832,7 @@
       "priorityOnly": true
     },
     {
-      "rank": 65,
+      "rank": 60,
       "baseProgramKey": "INA01B",
       "programKeys": ["INA01B"],
       "programTitle": "Actividades de Panadería y Pastelería",
@@ -916,7 +846,7 @@
       "priorityOnly": true
     },
     {
-      "rank": 66,
+      "rank": 61,
       "baseProgramKey": "INA02B",
       "programKeys": ["INA02B"],
       "programTitle": "Industrias alimentarias",
@@ -930,7 +860,7 @@
       "priorityOnly": true
     },
     {
-      "rank": 67,
+      "rank": 62,
       "baseProgramKey": "QUI01M",
       "programKeys": ["QUI01M"],
       "programTitle": "Planta Química",
@@ -944,7 +874,7 @@
       "priorityOnly": true
     },
     {
-      "rank": 68,
+      "rank": 63,
       "baseProgramKey": "TCP02B",
       "programKeys": ["TCP02B"],
       "programTitle": "Tapicería y Cortinaje",
@@ -958,7 +888,7 @@
       "priorityOnly": true
     },
     {
-      "rank": 69,
+      "rank": 64,
       "baseProgramKey": "TMV02S",
       "programKeys": ["TMV02S"],
       "programTitle": "Mantenimiento Aeromecánico de Aviones con Motor de Turbina",
@@ -972,7 +902,7 @@
       "priorityOnly": true
     },
     {
-      "rank": 70,
+      "rank": 65,
       "baseProgramKey": "TMV04E",
       "programKeys": ["TMV04E"],
       "programTitle": "Aeronaves pilotadas de forma remota - Drones",
@@ -986,7 +916,7 @@
       "priorityOnly": true
     },
     {
-      "rank": 71,
+      "rank": 66,
       "baseProgramKey": "TMV04S",
       "programKeys": ["TMV04S"],
       "programTitle": "Mantenimiento Aeromecánico de Helicópteros con Motor de Turbina",

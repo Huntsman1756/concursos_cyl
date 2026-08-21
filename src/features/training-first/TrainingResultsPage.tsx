@@ -538,6 +538,31 @@ export function TrainingResultsPage() {
           La copia de ofertas no representa todo el mercado laboral.
         </p>
       </section>
+      <nav className="result-actions" aria-label="Siguientes pasos">
+        {resolvedOccupations.length > 0 ? (
+          <>
+            <a className="primary-button" href="#ocupaciones-revisadas">
+              Ver ocupaciones revisadas
+            </a>
+            <Link
+              className="secondary-button"
+              to={`/formacion/${encodeURIComponent(programKey)}`}
+            >
+              Ver centros y modalidades
+            </Link>
+          </>
+        ) : (
+          <Link
+            className="primary-button"
+            to={`/formacion/${encodeURIComponent(programKey)}`}
+          >
+            Ver centros y modalidades
+          </Link>
+        )}
+        <Link className="result-actions__tertiary" to="/comparar">
+          Comparar ingresos
+        </Link>
+      </nav>
       {stale && (
         <p className="stale-warning" role="status">
           No se han podido actualizar los datos. Mostramos la última copia
@@ -598,12 +623,6 @@ export function TrainingResultsPage() {
               })}
             </ul>
           )}
-          <Link
-            className="evidence-link"
-            to={`/formacion/${encodeURIComponent(programKey)}`}
-          >
-            Ver centros y modalidades
-          </Link>
         </div>
         <div className="regional-context">
           <div className="section-heading">
@@ -695,7 +714,7 @@ export function TrainingResultsPage() {
         )}
       </section>
       {resolvedOccupations.length > 0 && (
-        <section className="occupations-section">
+        <section id="ocupaciones-revisadas" className="occupations-section">
           <h2>Grupos de ocupación revisados para buscar ofertas</h2>
           <ul className="reviewed-occupation-list">
             {resolvedOccupations.map((occupation) => (

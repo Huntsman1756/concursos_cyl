@@ -534,7 +534,31 @@ a:focus-visible {
 }
 
 .decision-basis {
+  margin-bottom: var(--space-5);
+}
+
+.result-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-3);
   margin-bottom: var(--space-8);
+}
+
+.result-actions .primary-button,
+.result-actions .secondary-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.result-actions__tertiary {
+  color: var(--color-action-text);
+  font-weight: 750;
+  text-underline-offset: 0.2em;
+  white-space: nowrap;
 }
 
 .decision-basis__heading {
@@ -1409,6 +1433,15 @@ summary:focus-visible {
 
   .primary-button,
   .secondary-button {
+    width: 100%;
+  }
+
+  .result-actions {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  .result-actions__tertiary {
     width: 100%;
   }
 
