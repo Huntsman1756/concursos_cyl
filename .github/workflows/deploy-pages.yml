@@ -16,6 +16,7 @@ concurrency:
 jobs:
   verify-and-build:
     runs-on: ubuntu-latest
+    timeout-minutes: 45
     permissions:
       contents: read
     steps:
@@ -36,7 +37,7 @@ jobs:
       - run: npm run format:check
       - run: npm run lint
       - run: npm run test:release -- --testTimeout=60000
-      - run: npx playwright install --with-deps chromium
+      - run: npx --no-install playwright install --with-deps chromium
       - run: npm run test:e2e
       - name: Verify Caddy container headers and SPA fallback
         run: |
@@ -48,7 +49,7 @@ jobs:
         env:
           VITE_PUBLIC_BASE_PATH: /concursos_cyl/
       - name: Write deployment version metadata
-        run: npx tsx scripts/release/writeVersionMetadata.ts dist "${{ github.sha }}"
+        run: npx --no-install tsx scripts/release/writeVersionMetadata.ts dist "${{ github.sha }}"
       - run: npm run pages:prepare
       - uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5.0.0
         with:
