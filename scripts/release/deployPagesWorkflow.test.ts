@@ -96,6 +96,16 @@ describe("GitHub Pages deployment workflow", () => {
     expect(deployJob).toContain("if: github.event_name != 'pull_request'");
   });
 
+  it("serializes pushes and manual runs that target the same ref", async () => {
+    const workflow = await readFile(workflowPath, "utf8");
+    expect(workflow).toMatch(
+      /concurrency:\s+group: pages-\$\{\{ github\.ref \}\}/u,
+    );
+    expect(workflow).not.toContain(
+      "group: pages-${{ github.event_name }}-${{ github.ref }}",
+    );
+  });
+
   it("verifies Caddy headers against the running release container", async () => {
     const workflow = await readFile(workflowPath, "utf8");
     expect(workflow).toContain("docker build -t salida-cyl:ci .");

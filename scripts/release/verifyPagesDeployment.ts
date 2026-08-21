@@ -1,3 +1,5 @@
+import { createHash } from "node:crypto";
+import { readFile } from "node:fs/promises";
 import { resolve } from "node:path";
 import { pathToFileURL } from "node:url";
 import {
@@ -7,6 +9,8 @@ import {
 import { GENERATED_RESOURCE_KEYS } from "../../data/schemas/generatedResourceCatalog";
 
 const COMMIT_PATTERN = /^[0-9a-f]{40}$/u;
+const SHA256_PATTERN = /^[a-f0-9]{64}$/u;
+const MANIFEST_PATH = "/data/v1/manifest.json";
 const SNAPSHOT_RESOURCE_PATTERN =
   /^\/data\/v1\/snapshots\/([a-z0-9]+(?:-[a-z0-9]+)*)\/([a-z0-9]+(?:-[a-z0-9]+)*\.json)$/u;
 const APPLICATION_TITLE_PATTERN = /<title[^>]*>\s*SALIDA CyL\s*<\/title>/iu;
@@ -21,10 +25,12 @@ export type PagesFetch = (
   init?: RequestInit,
 ) => Promise<Response>;
 export type PagesDelay = (milliseconds: number) => Promise<void>;
+export type PagesDigestMap = Readonly<Record<string, string>>;
 
 export interface VerifyPagesDeploymentOptions {
   baseUrl: string;
   expectedCommit: string;
+  expectedDigests?: PagesDigestMap;
   fetchImpl?: PagesFetch;
   attempts?: number;
   retryDelayMs?: number;
@@ -73,6 +79,55 @@ function normalizeBaseUrl(value: string): URL {
 
 function urlForBasePath(base: URL, path: string): URL {
   return new URL(path.replace(/^\/+/, ""), base);
+}
+
+function sha256(bytes: Uint8Array): string {
+  return createHash("sha256").update(bytes).digest("hex");
+}
+
+function expectedDigestForPath(
+  expectedDigests: PagesDigestMap | undefined,
+  base: URL,
+  assetPath: string,
+): string | undefined {
+  if (expectedDigests === undefined) return undefined;
+  const normalizedPath = `/${assetPath.replace(/^\/+/, "")}`;
+  return (
+    expectedDigests[normalizedPath] ??
+    expectedDigests[urlForBasePath(base, normalizedPath).pathname]
+  );
+}
+
+function assertExpectedDigestConfigured(
+  expectedDigests: PagesDigestMap | undefined,
+  expectedDigest: string | undefined,
+  assetPath: string,
+): void {
+  if (expectedDigests === undefined) return;
+  if (expectedDigest === undefined) {
+    throw new Error(
+      `Pages checked-out digest is missing for ${assetPath}; refusing to verify an unpinned asset.`,
+    );
+  }
+  if (!SHA256_PATTERN.test(expectedDigest)) {
+    throw new Error(
+      `Pages checked-out digest for ${assetPath} is not a SHA-256 digest.`,
+    );
+  }
+}
+
+function assertExpectedDigest(
+  bytes: Uint8Array,
+  expectedDigest: string | undefined,
+  description: string,
+): void {
+  if (expectedDigest === undefined) return;
+  const actualDigest = sha256(bytes);
+  if (actualDigest !== expectedDigest) {
+    throw new Error(
+      `Pages ${description} digest mismatch; expected ${expectedDigest}, found ${actualDigest}.`,
+    );
+  }
 }
 
 async function withTimeout<T>(
@@ -200,6 +255,28 @@ function cancelResponseBody(response: Response): void {
   }
 }
 
+async function readResponseBytes(
+  context: ResponseContext,
+  description: string,
+  requestTimeoutMs: number,
+): Promise<Uint8Array> {
+  try {
+    const body = await withTimeout(
+      context.response.arrayBuffer(),
+      requestTimeoutMs,
+      context.controller,
+      `${description} body`,
+    );
+    return new Uint8Array(body);
+  } catch (error) {
+    context.controller.abort();
+    cancelResponseBody(context.response);
+    throw error;
+  } finally {
+    context.controller.abort();
+  }
+}
+
 async function readResponseText(
   context: ResponseContext,
   description: string,
@@ -225,8 +302,11 @@ async function readJsonResponse(
   context: ResponseContext,
   description: string,
   requestTimeoutMs: number,
+  expectedDigest?: string,
 ): Promise<unknown> {
-  const body = await readResponseText(context, description, requestTimeoutMs);
+  const bytes = await readResponseBytes(context, description, requestTimeoutMs);
+  assertExpectedDigest(bytes, expectedDigest, description);
+  const body = new TextDecoder().decode(bytes);
   try {
     return JSON.parse(body) as unknown;
   } catch (error) {
@@ -295,6 +375,7 @@ function parseManifest(value: unknown): PagesManifest {
 async function verifyOnce(
   base: URL,
   expectedCommit: string,
+  expectedDigests: PagesDigestMap | undefined,
   request: PagesFetch,
   requestTimeoutMs: number,
 ): Promise<void> {
@@ -354,8 +435,23 @@ async function verifyOnce(
     "manifest",
     requestTimeoutMs,
   );
+  const expectedManifestDigest = expectedDigestForPath(
+    expectedDigests,
+    base,
+    MANIFEST_PATH,
+  );
+  assertExpectedDigestConfigured(
+    expectedDigests,
+    expectedManifestDigest,
+    MANIFEST_PATH,
+  );
   const manifest = parseManifest(
-    await readJsonResponse(manifestResponse, "manifest", requestTimeoutMs),
+    await readJsonResponse(
+      manifestResponse,
+      "manifest",
+      requestTimeoutMs,
+      expectedManifestDigest,
+    ),
   );
 
   for (const [key, snapshot] of Object.entries(manifest.resourceSnapshots)) {
@@ -365,6 +461,16 @@ async function verifyOnce(
         `Pages manifest resource ${key} must remain same-origin.`,
       );
     }
+    const expectedResourceDigest = expectedDigestForPath(
+      expectedDigests,
+      base,
+      snapshot.resourcePath,
+    );
+    assertExpectedDigestConfigured(
+      expectedDigests,
+      expectedResourceDigest,
+      snapshot.resourcePath,
+    );
     const resourceResponse = await requiredResponse(
       request,
       resourceUrl,
@@ -375,6 +481,7 @@ async function verifyOnce(
       resourceResponse,
       `resource ${key}`,
       requestTimeoutMs,
+      expectedResourceDigest,
     );
   }
 
@@ -414,6 +521,7 @@ function defaultDelay(milliseconds: number): Promise<void> {
 export async function verifyPagesDeployment({
   baseUrl,
   expectedCommit,
+  expectedDigests,
   fetchImpl = fetch,
   attempts = MAX_VERIFICATION_ATTEMPTS,
   retryDelayMs = DEFAULT_RETRY_DELAY_MS,
@@ -446,7 +554,13 @@ export async function verifyPagesDeployment({
 
   for (let attempt = 1; attempt <= attempts; attempt += 1) {
     try {
-      await verifyOnce(base, expectedCommit, fetchImpl, requestTimeoutMs);
+      await verifyOnce(
+        base,
+        expectedCommit,
+        expectedDigests,
+        fetchImpl,
+        requestTimeoutMs,
+      );
       return;
     } catch (error) {
       lastError = error;
@@ -463,13 +577,62 @@ export async function verifyPagesDeployment({
   );
 }
 
+export async function computeExpectedPagesDigests(
+  publicDirectory = resolve("public"),
+): Promise<PagesDigestMap> {
+  const manifestFilePath = resolve(publicDirectory, "data/v1/manifest.json");
+  let manifestBytes: Buffer;
+  try {
+    manifestBytes = await readFile(manifestFilePath);
+  } catch (error) {
+    throw new Error(
+      `Could not read checked-out Pages manifest at ${manifestFilePath}.`,
+      { cause: error },
+    );
+  }
+
+  let manifestValue: unknown;
+  try {
+    manifestValue = JSON.parse(manifestBytes.toString("utf8")) as unknown;
+  } catch (error) {
+    throw new Error(
+      `Checked-out Pages manifest at ${manifestFilePath} is not valid JSON.`,
+      { cause: error },
+    );
+  }
+  const manifest = parseManifest(manifestValue);
+  const expectedDigests: Record<string, string> = {
+    [MANIFEST_PATH]: sha256(manifestBytes),
+  };
+
+  for (const snapshot of Object.values(manifest.resourceSnapshots)) {
+    const resourceFilePath = resolve(
+      publicDirectory,
+      `.${snapshot.resourcePath}`,
+    );
+    let resourceBytes: Buffer;
+    try {
+      resourceBytes = await readFile(resourceFilePath);
+    } catch (error) {
+      throw new Error(
+        `Could not read checked-out Pages resource at ${resourceFilePath}.`,
+        { cause: error },
+      );
+    }
+    expectedDigests[snapshot.resourcePath] = sha256(resourceBytes);
+  }
+
+  return expectedDigests;
+}
+
 async function main(): Promise<void> {
   const [baseUrl, expectedCommit] = process.argv.slice(2);
   if (baseUrl === undefined || expectedCommit === undefined) {
     throw new Error("Usage: npm run release:pages:verify -- <base-url> <sha>");
   }
 
-  await verifyPagesDeployment({ baseUrl, expectedCommit });
+  const expectedDigests = await computeExpectedPagesDigests();
+  await verifyPagesDeployment({ baseUrl, expectedCommit, expectedDigests });
   console.log(`Verified GitHub Pages deployment at ${baseUrl}.`);
 }
 

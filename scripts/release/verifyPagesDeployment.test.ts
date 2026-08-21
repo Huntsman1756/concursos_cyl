@@ -1,6 +1,10 @@
+import { createHash } from "node:crypto";
 import { readFileSync } from "node:fs";
 import { describe, expect, it, vi } from "vitest";
-import { verifyPagesDeployment } from "./verifyPagesDeployment";
+import {
+  computeExpectedPagesDigests,
+  verifyPagesDeployment,
+} from "./verifyPagesDeployment";
 
 type FetchImpl = (input: string | URL, init?: RequestInit) => Promise<Response>;
 
@@ -18,6 +22,25 @@ const manifest = JSON.parse(
 };
 const snapshotId =
   manifest.resourceSnapshots.programs!.resourcePath.split("/")[4]!;
+
+function sha256(value: string): string {
+  return createHash("sha256").update(value).digest("hex");
+}
+
+function expectedDigestsFor(
+  manifestBody = JSON.stringify(manifest),
+  resourceBody = "[]",
+): Record<string, string> {
+  return {
+    "/data/v1/manifest.json": sha256(manifestBody),
+    ...Object.fromEntries(
+      Object.values(manifest.resourceSnapshots).map(({ resourcePath }) => [
+        resourcePath,
+        sha256(resourceBody),
+      ]),
+    ),
+  };
+}
 
 function cloneManifest() {
   return JSON.parse(JSON.stringify(manifest)) as typeof manifest;
@@ -85,6 +108,7 @@ describe("verifyPagesDeployment", () => {
       verifyPagesDeployment({
         baseUrl,
         expectedCommit,
+        expectedDigests: expectedDigestsFor(),
         fetchImpl,
         attempts: 1,
         retryDelayMs: 0,
@@ -112,6 +136,18 @@ describe("verifyPagesDeployment", () => {
     expect(
       fetchImpl.mock.calls.every(([, init]) => init?.redirect === "error"),
     ).toBe(true);
+  });
+
+  it("computes checked-out digests using root-relative Pages asset paths", async () => {
+    const expectedDigests = await computeExpectedPagesDigests();
+    const manifestBytes = readFileSync("public/data/v1/manifest.json");
+
+    expect(expectedDigests["/data/v1/manifest.json"]).toBe(
+      createHash("sha256").update(manifestBytes).digest("hex"),
+    );
+    for (const snapshot of Object.values(manifest.resourceSnapshots)) {
+      expect(expectedDigests[snapshot.resourcePath]).toBe(snapshot.sha256);
+    }
   });
 
   it("rejects a version commit that differs from the expected commit", async () => {
@@ -250,6 +286,49 @@ describe("verifyPagesDeployment", () => {
         retryDelayMs: 0,
       }),
     ).rejects.toThrow(/resource.*JSON/iu);
+  });
+
+  it("rejects a structurally valid manifest that is not the checked-out artifact", async () => {
+    const mixedManifest = cloneManifest();
+    mixedManifest.generatedAt = "2026-08-21T19:23:20.000Z";
+    const mixedManifestBody = JSON.stringify(mixedManifest);
+    const fetchImpl = successfulFetch({
+      "/concursos_cyl/data/v1/manifest.json": responseFor("manifest.json", {
+        body: mixedManifestBody,
+      }),
+    });
+
+    await expect(
+      verifyPagesDeployment({
+        baseUrl,
+        expectedCommit,
+        expectedDigests: expectedDigestsFor(),
+        fetchImpl,
+        attempts: 1,
+        retryDelayMs: 0,
+      }),
+    ).rejects.toThrow(/manifest.*digest mismatch/iu);
+  });
+
+  it("rejects a structurally valid resource whose bytes are not checked out", async () => {
+    const mixedResourceBody = JSON.stringify([{ mixed: true }]);
+    const resourcePath = manifest.resourceSnapshots.programs!.resourcePath;
+    const fetchImpl = successfulFetch({
+      [`/concursos_cyl${resourcePath}`]: responseFor("programs.json", {
+        body: mixedResourceBody,
+      }),
+    });
+
+    await expect(
+      verifyPagesDeployment({
+        baseUrl,
+        expectedCommit,
+        expectedDigests: expectedDigestsFor(),
+        fetchImpl,
+        attempts: 1,
+        retryDelayMs: 0,
+      }),
+    ).rejects.toThrow(/resource programs.*digest mismatch/iu);
   });
 
   it("rejects a root response with the wrong application title", async () => {
