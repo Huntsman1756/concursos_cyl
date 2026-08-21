@@ -3,7 +3,7 @@
 ## Estado confirmado
 
 - Repositorio canónico: <https://github.com/Huntsman1756/concursos_cyl>.
-- `main` local y `origin/main`: `80b1a38495806c10e274e4567ef0e641ead0a996` (relevo y evidencia; no modifica el producto desplegado).
+- `main` local y `origin/main` están sincronizados; `80b1a38495806c10e274e4567ef0e641ead0a996` es el commit de evidencia anterior al relevo de máquina y no modifica el producto desplegado.
 - Producto público verificado en `90aba16a5bcef42ae6f966e9aaff9c53d82369aa`.
 - Commit fuente de cobertura: `ae63e89e47057de74b77009aa1d95e817a2d6fc7`; commit documental del freeze: `90aba16a5bcef42ae6f966e9aaff9c53d82369aa`.
 - Snapshot activo: `20260821120933391-9bd4488f9029`.
@@ -51,11 +51,12 @@ npm run contest:submission:check
 npm run dev
 ```
 
-Antes de editar, comprobar que `git rev-parse HEAD` devuelve
-`80b1a38495806c10e274e4567ef0e641ead0a996` y que `git status --short` no
-devuelve líneas. El VPS debe seguir publicando
+Antes de editar, comprobar que `git rev-parse HEAD` y
+`git rev-parse origin/main` devuelven el mismo hash y que
+`git status --short` no devuelve líneas. El VPS debe seguir publicando
 `90aba16a5bcef42ae6f966e9aaff9c53d82369aa` en `/version.json`; la diferencia
-es intencionada porque `80b1a38` contiene solo evidencia con `[skip ci]`.
+es intencionada porque los commits posteriores al producto contienen solo
+evidencia y relevo con `[skip ci]`.
 
 No se necesitan los worktrees, contratos NAN ni estados temporales de este
 ordenador. La configuración personal de OpenCode tampoco forma parte del
