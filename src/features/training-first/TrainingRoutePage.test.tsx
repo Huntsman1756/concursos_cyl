@@ -78,6 +78,19 @@ describe("TrainingRoutePage", () => {
         name: "Dónde estudiar Desarrollo de Aplicaciones Web",
       }),
     ).toBeVisible();
+    const manifest = currentManifestFixture();
+    expect(fetch).toHaveBeenCalledWith(
+      manifest.resourceSnapshots.programs.resourcePath,
+    );
+    expect(fetch).toHaveBeenCalledWith(
+      manifest.resourceSnapshots.centers.resourcePath,
+    );
+    expect(fetch).toHaveBeenCalledWith(
+      manifest.resourceSnapshots.trainingOfferings.resourcePath,
+    );
+    expect(fetch).not.toHaveBeenCalledWith(
+      manifest.resourceSnapshots.jobOffers.resourcePath,
+    );
     expect(screen.getByText("IES ALONSO DE MADRIGAL")).toBeVisible();
     expect(screen.getByText("Ávila · Presencial")).toBeVisible();
     expect(

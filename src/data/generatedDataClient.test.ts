@@ -6,9 +6,11 @@ import {
   EDUCABASE_INCOME_TABLE_IDS,
   EDUCABASE_INCOME_SOURCES,
 } from "../../scripts/data/educabaseIncomeSources";
+import { currentManifestFixture } from "../../tests/fixtures/generatedManifest";
 import { PublishedRequirementsResourceSchema } from "../domain/requirements";
 
 import {
+  loadFoundationResourceSubset,
   loadFoundationResources,
   loadGeneratedResource,
   loadManifest,
@@ -499,6 +501,70 @@ describe("generated data client", () => {
       trainingOfferings: [],
       jobOffers: [],
     });
+  });
+
+  it("loads only the requested foundation subset and identifies legacy payloads", async () => {
+    const manifest = LoadableGeneratedManifestSchema.parse({
+      ...currentManifestFixture(),
+      resourceSnapshots: {
+        programs: {
+          ...snapshot,
+          resourcePath: "/data/v1/snapshots/build-1/programs.json",
+        },
+        centers: {
+          ...snapshot,
+          resourcePath: "/data/v1/snapshots/build-1/centers.json",
+        },
+        trainingOfferings: {
+          ...snapshot,
+          resourcePath:
+            "/data/v1/snapshots/build-1/training-offerings.json",
+        },
+        jobOffers: {
+          ...snapshot,
+          resourcePath: "/data/v1/snapshots/build-1/job-offers.json",
+        },
+      },
+    });
+    const requestedPaths: string[] = [];
+    const assets: Record<string, unknown> = {
+      [manifest.resourceSnapshots.programs.resourcePath]:
+        foundationResourceValues.programs,
+      [manifest.resourceSnapshots.trainingOfferings.resourcePath]:
+        foundationResourceValues.trainingOfferings,
+    };
+    vi.stubGlobal(
+      "fetch",
+      vi.fn((input: string | URL | Request) => {
+        const path =
+          typeof input === "string"
+            ? input
+            : input instanceof URL
+              ? input.pathname
+              : new URL(input.url).pathname;
+        requestedPaths.push(path);
+        const payload = assets[path];
+        return new Response(JSON.stringify(payload), {
+          status: payload === undefined ? 404 : 200,
+          headers: { "Content-Type": "application/json" },
+        });
+      }),
+    );
+
+    await expect(
+      loadFoundationResourceSubset(manifest, [
+        "programs",
+        "trainingOfferings",
+      ]),
+    ).resolves.toEqual({
+      contract: "legacy",
+      programs: foundationResourceValues.programs,
+      trainingOfferings: foundationResourceValues.trainingOfferings,
+    });
+    expect(requestedPaths).toEqual([
+      manifest.resourceSnapshots.programs.resourcePath,
+      manifest.resourceSnapshots.trainingOfferings.resourcePath,
+    ]);
   });
 
   it("loads retained pre-hardening payloads behind a stale immutable manifest", async () => {

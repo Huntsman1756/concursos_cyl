@@ -197,6 +197,19 @@ describe("occupation-first results", () => {
     expect(
       await screen.findByRole("heading", { name: "Ocupación no encontrada" }),
     ).toBeVisible();
+    const manifest = currentManifestFixture();
+    expect(fetch).toHaveBeenCalledWith(
+      manifest.resourceSnapshots.programs.resourcePath,
+    );
+    expect(fetch).toHaveBeenCalledWith(
+      manifest.resourceSnapshots.trainingOfferings.resourcePath,
+    );
+    expect(fetch).not.toHaveBeenCalledWith(
+      manifest.resourceSnapshots.centers.resourcePath,
+    );
+    expect(fetch).not.toHaveBeenCalledWith(
+      manifest.resourceSnapshots.jobOffers.resourcePath,
+    );
     expect(
       screen.getByRole("link", { name: "Buscar otra ocupación" }),
     ).toHaveAttribute("href", "/desde-ocupacion");

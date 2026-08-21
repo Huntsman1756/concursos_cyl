@@ -8,7 +8,7 @@ import type {
   TrainingProgram,
 } from "../../../data/schemas/generated";
 import {
-  loadFoundationResources,
+  loadFoundationResourceSubset,
   loadManifest,
 } from "../../data/generatedDataClient";
 import { trainingLevelLabel } from "../../domain/trainingPresentation";
@@ -41,7 +41,13 @@ export function TrainingRoutePage() {
   useEffect(() => {
     let active = true;
     void loadManifest()
-      .then((manifest) => loadFoundationResources(manifest))
+      .then((manifest) =>
+        loadFoundationResourceSubset(manifest, [
+          "programs",
+          "centers",
+          "trainingOfferings",
+        ]),
+      )
       .then((resources) => {
         if (!active) return;
         const program = resources.programs.find(

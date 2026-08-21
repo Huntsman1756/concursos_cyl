@@ -4,7 +4,6 @@ import { useNavigate } from "react-router-dom";
 import type { Occupation } from "../../../data/schemas/curatedMappings";
 import {
   loadAuditedRelationships,
-  loadFoundationResources,
   loadManifest,
   loadOfficialOccupations,
   type LoadedAuditedRelationships,
@@ -27,8 +26,7 @@ export function OccupationSearchPage() {
     let active = true;
     void loadManifest()
       .then(async (manifest) => {
-        const [, relationships, officialOccupations] = await Promise.all([
-          loadFoundationResources(manifest),
+        const [relationships, officialOccupations] = await Promise.all([
           loadAuditedRelationships(manifest),
           loadOfficialOccupations(manifest),
         ]);

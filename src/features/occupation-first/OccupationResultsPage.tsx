@@ -7,11 +7,11 @@ import type {
 import type { Occupation } from "../../../data/schemas/curatedMappings";
 import {
   loadAuditedRelationships,
-  loadFoundationResources,
+  loadFoundationResourceSubset,
   loadManifest,
   loadOfficialOccupations,
   type LoadedAuditedRelationships,
-  type LoadedFoundationResources,
+  type LoadedFoundationResourceSubset,
 } from "../../data/generatedDataClient";
 import { loadApprovedMappings } from "../../domain/occupation";
 import { TrainingRouteCard } from "./TrainingRouteCard";
@@ -19,7 +19,9 @@ import { TrainingRouteCard } from "./TrainingRouteCard";
 interface ReadyState {
   status: "ready";
   manifest: LoadableGeneratedManifest;
-  foundation: LoadedFoundationResources;
+  foundation: LoadedFoundationResourceSubset<
+    "programs" | "trainingOfferings"
+  >;
   relationships: LoadedAuditedRelationships;
   officialOccupations: Occupation[];
 }
@@ -45,7 +47,10 @@ export function OccupationResultsPage() {
       .then(async (manifest) => {
         const [foundation, loadedRelationships, officialOccupations] =
           await Promise.all([
-            loadFoundationResources(manifest),
+            loadFoundationResourceSubset(manifest, [
+              "programs",
+              "trainingOfferings",
+            ]),
             loadAuditedRelationships(manifest),
             loadOfficialOccupations(manifest),
           ]);

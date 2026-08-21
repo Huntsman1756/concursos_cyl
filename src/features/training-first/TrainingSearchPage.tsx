@@ -4,7 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import type { TrainingProgram } from "../../../data/schemas/generated";
 import type { MappingCoverage } from "../../../data/schemas/curatedMappings";
 import {
-  loadFoundationResources,
+  loadFoundationResourceSubset,
   loadMappingCoverage,
   loadManifest,
 } from "../../data/generatedDataClient";
@@ -44,7 +44,7 @@ export function TrainingSearchPage() {
     let active = true;
     void loadManifest()
       .then(async (manifest) => ({
-        resources: await loadFoundationResources(manifest),
+        resources: await loadFoundationResourceSubset(manifest, ["programs"]),
         coverage: await loadMappingCoverage(manifest),
       }))
       .then(({ resources, coverage }) => {

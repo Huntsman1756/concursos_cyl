@@ -90,6 +90,32 @@ afterEach(() => {
 });
 
 describe("training-first search", () => {
+  it("loads only programs from the foundation for search", async () => {
+    installFoundationFetch();
+    render(
+      <MemoryRouter initialEntries={["/desde-fp"]}>
+        <AppRoutes />
+      </MemoryRouter>,
+    );
+
+    await screen.findByRole("combobox", {
+      name: "Ciclo de Formación Profesional",
+    });
+    const manifest = currentManifestFixture();
+    expect(fetch).toHaveBeenCalledWith(
+      manifest.resourceSnapshots.programs.resourcePath,
+    );
+    expect(fetch).not.toHaveBeenCalledWith(
+      manifest.resourceSnapshots.centers.resourcePath,
+    );
+    expect(fetch).not.toHaveBeenCalledWith(
+      manifest.resourceSnapshots.trainingOfferings.resourcePath,
+    );
+    expect(fetch).not.toHaveBeenCalledWith(
+      manifest.resourceSnapshots.jobOffers.resourcePath,
+    );
+  });
+
   it("shows reviewed and unavailable coverage before submitting an official program", async () => {
     installFoundationFetch([
       program,

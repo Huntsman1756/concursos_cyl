@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { Icon } from "../../components/Icon";
 import {
   loadAuditedRelationships,
-  loadFoundationResources,
+  loadFoundationResourceSubset,
   loadManifest,
   loadMappingCoverage,
   loadOfficialOccupations,
@@ -149,7 +149,7 @@ export function HomePage() {
       .then(async (manifest) => {
         const [foundation, relationships, officialOccupations] =
           await Promise.all([
-            loadFoundationResources(manifest),
+            loadFoundationResourceSubset(manifest, ["programs"]),
             loadAuditedRelationships(manifest),
             loadOfficialOccupations(manifest),
           ]);

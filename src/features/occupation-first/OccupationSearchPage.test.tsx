@@ -119,6 +119,19 @@ describe("occupation-first search", () => {
     );
 
     const input = await screen.findByRole("combobox", { name: /ocupación/i });
+    const manifest = currentManifestFixture();
+    expect(fetch).not.toHaveBeenCalledWith(
+      manifest.resourceSnapshots.programs.resourcePath,
+    );
+    expect(fetch).not.toHaveBeenCalledWith(
+      manifest.resourceSnapshots.centers.resourcePath,
+    );
+    expect(fetch).not.toHaveBeenCalledWith(
+      manifest.resourceSnapshots.trainingOfferings.resourcePath,
+    );
+    expect(fetch).not.toHaveBeenCalledWith(
+      manifest.resourceSnapshots.jobOffers.resourcePath,
+    );
     const submit = screen.getByRole("button", { name: "Ver rutas formativas" });
     await user.type(input, "desarrollador web");
 

@@ -24,6 +24,7 @@ import {
   GENERATED_FOUNDATION_RESOURCE_KEYS,
   isPermittedGeneratedAssetPath,
   legacyGeneratedResourcePath,
+  type GeneratedFoundationResourceKey,
 } from "../../data/schemas/generatedResourceCatalog";
 import {
   PublishedRequirementsResourceSchema,
@@ -445,6 +446,14 @@ export interface LoadedCurrentFoundationResources extends LoadedFoundationResour
 export type LoadedFoundationResources =
   LoadedLegacyFoundationResources | LoadedCurrentFoundationResources;
 
+export type FoundationResourceKey = GeneratedFoundationResourceKey;
+
+export type LoadedFoundationResourceSubset<
+  K extends FoundationResourceKey,
+> =
+  | Pick<LoadedCurrentFoundationResources, "contract" | K>
+  | Pick<LoadedLegacyFoundationResources, "contract" | K>;
+
 function manifestAddressedFoundationContract(
   manifest: LoadableGeneratedManifest,
 ): LoadedFoundationResources["contract"] {
@@ -480,6 +489,104 @@ const LegacyFoundationVariableResourcesSchema = z
     trainingOfferings: z.array(LegacyTrainingOfferingSchema),
   })
   .strict();
+
+function foundationResourceSchema(
+  contract: "current" | "legacy",
+  key: FoundationResourceKey,
+): z.ZodType {
+  switch (key) {
+    case "programs":
+      return z.array(TrainingProgramSchema);
+    case "centers":
+      return z.array(
+        contract === "current"
+          ? EducationCenterSchema
+          : LegacyEducationCenterSchema,
+      );
+    case "trainingOfferings":
+      return z.array(
+        contract === "current"
+          ? TrainingOfferingSchema
+          : LegacyTrainingOfferingSchema,
+      );
+    case "jobOffers":
+      return z.array(JobOfferSchema);
+  }
+}
+
+function parseFoundationResourceSubset(
+  keys: readonly FoundationResourceKey[],
+  resources: Record<FoundationResourceKey, unknown>,
+  contract: "current" | "legacy",
+):
+  | { success: true; data: Record<string, unknown> }
+  | { success: false; error: z.ZodError } {
+  const data: Record<string, unknown> = {};
+  for (const key of keys) {
+    const result = foundationResourceSchema(contract, key).safeParse(
+      resources[key],
+    );
+    if (!result.success) {
+      return result;
+    }
+    data[key] = result.data;
+  }
+  return { success: true, data };
+}
+
+/** Loads only the selected foundation resources as one tagged contract set. */
+export async function loadFoundationResourceSubset<
+  const K extends FoundationResourceKey,
+>(
+  manifest: LoadableGeneratedManifest,
+  keys: readonly K[],
+): Promise<LoadedFoundationResourceSubset<K>> {
+  const requestedKeys = [...new Set(keys)] as FoundationResourceKey[];
+  const loadedEntries = await Promise.all(
+    requestedKeys.map(async (key) => [
+      key,
+      await loadGeneratedResource(
+        manifest.resourceSnapshots[key].resourcePath,
+        z.unknown(),
+      ),
+    ] as const),
+  );
+  const resources = Object.fromEntries(loadedEntries) as Record<
+    FoundationResourceKey,
+    unknown
+  >;
+  const current = parseFoundationResourceSubset(
+    requestedKeys,
+    resources,
+    "current",
+  );
+  const legacy = parseFoundationResourceSubset(
+    requestedKeys,
+    resources,
+    "legacy",
+  );
+
+  let contract: "current" | "legacy";
+  let data: Record<string, unknown>;
+  if (current.success && legacy.success) {
+    contract = manifestAddressedFoundationContract(manifest);
+    data = contract === "current" ? current.data : legacy.data;
+  } else if (current.success) {
+    contract = "current";
+    data = current.data;
+  } else if (legacy.success) {
+    contract = "legacy";
+    data = legacy.data;
+  } else {
+    throw new GeneratedDataError(
+      "schema",
+      "Generated foundation resources do not share one supported contract.",
+      current.error,
+    );
+  }
+
+  return { contract, ...data } as LoadedFoundationResourceSubset<K>;
+}
 
 async function loadFoundationResourceSet(
   resourceSnapshots: LoadableGeneratedManifest["resourceSnapshots"],

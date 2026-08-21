@@ -185,6 +185,18 @@ describe("HomePage", () => {
     expect(
       await screen.findByLabelText("Título de Formación Profesional"),
     ).toBeVisible();
+    expect(fetch).toHaveBeenCalledWith(
+      manifest.resourceSnapshots.programs.resourcePath,
+    );
+    expect(fetch).not.toHaveBeenCalledWith(
+      manifest.resourceSnapshots.centers.resourcePath,
+    );
+    expect(fetch).not.toHaveBeenCalledWith(
+      manifest.resourceSnapshots.trainingOfferings.resourcePath,
+    );
+    expect(fetch).not.toHaveBeenCalledWith(
+      manifest.resourceSnapshots.jobOffers.resourcePath,
+    );
     expect(
       screen.queryByRole("combobox", { name: "Ocupación que te interesa" }),
     ).not.toBeInTheDocument();
