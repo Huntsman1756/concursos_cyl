@@ -78,6 +78,10 @@ outputs are not collapsed into accepted operator relations.
   occupations and twelve links; Task 3 owns queue, snapshot, and freeze
   regeneration.
 
-The pre-publication catalog is intentionally at 228 approved relations, 86
-reviewed base qualifications, and 102 modality keys. The tests freeze the
-post-publication totals at 240, 91, and 109 respectively.
+The pre-publication catalog was intentionally at 228 approved relations, 86
+reviewed base qualifications, and 102 modality keys. This wave originally
+published totals of 240, 91, and 109 respectively. The subsequent catalog
+revalidation documented in `no-match-catalog-revalidation.md` corrected
+`AGA01S|5993`; the current frozen totals are 241 approved relations, 92
+reviewed base qualifications, 110 modality keys, 15 no-match bases, and 47
+pending bases.
