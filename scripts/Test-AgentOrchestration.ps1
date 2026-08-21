@@ -266,6 +266,24 @@ try {
         Assert-Contains $r.Output 'mimo-v2.5' '2q: long-context profile selects Mimo'
         Assert-Contains $r.Output 'nan-long-context-code' '2q1: long-context profile selects its bounded agent'
 
+        $openRouter = New-ValidCodeContract -Objective 'openrouter-ox-route' -DryRun -TestMode
+        $openRouter.ModelProfile = 'experimental-ox'
+        $openRouter.ProviderRoute = 'openrouter'
+        $pre = Get-FileSnapshot
+        $r = Invoke-WorkerChild -WorkerParameters $openRouter
+        Assert-True ($r.ExitCode -eq 0) '2q1a: OpenRouter Ox DryRun exits 0'
+        Assert-Contains $r.Output 'openrouter/stealth/ox-alpha' '2q1b: OpenRouter route selects Ox Alpha'
+        Assert-Contains $r.Output 'openrouter-ox-code' '2q1c: OpenRouter route selects bounded agent'
+        $openRouterTelemetry = Get-Content -LiteralPath (Get-NewTelemetry -BeforeFiles $pre) -Raw | ConvertFrom-Json
+        Assert-Equal $openRouterTelemetry.launch.providerRoute 'openrouter' '2q1d: telemetry records OpenRouter route'
+        Assert-Equal $openRouterTelemetry.admission.capacity 1 '2q1e: OpenRouter starts with serial admission'
+
+        $invalidOx = New-ValidCodeContract -Objective 'openrouter-profile-mismatch' -DryRun -TestMode
+        $invalidOx.ModelProfile = 'experimental-ox'
+        $r = Invoke-WorkerDirect -WorkerParameters $invalidOx
+        Assert-True ($r.ExitCode -ne 0) '2q1f: Ox profile without OpenRouter fails closed'
+        Assert-Contains $r.Output 'requires ProviderRoute=openrouter' '2q1g: Ox mismatch is explicit'
+
         $gemmaCode = New-ValidCodeContract -Objective 'gemma-code-rejected' -DryRun -TestMode
         $gemmaCode.FallbackModels = @('nan/gemma4')
         $r = Invoke-WorkerDirect -WorkerParameters $gemmaCode

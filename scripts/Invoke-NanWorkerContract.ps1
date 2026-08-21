@@ -86,8 +86,16 @@ foreach ($allowedPath in @($contract.allowedPaths)) {
 
 $modelProfile = if ($contract.PSObject.Properties.Name -contains 'modelProfile') { [string]$contract.modelProfile } else { 'mechanical' }
 if ($modelProfile -match '(?i)glm5\.2') { throw "Model profile '$modelProfile' references unsupported glm5.2." }
-if (@('mechanical','reasoning','long-context') -notcontains $modelProfile) {
+if (@('mechanical','reasoning','long-context','experimental-ox') -notcontains $modelProfile) {
     throw "Model profile '$modelProfile' is not valid."
+}
+$providerRoute = if ($contract.PSObject.Properties.Name -contains 'providerRoute') { [string]$contract.providerRoute } else { 'nan' }
+if (@('nan','openrouter') -notcontains $providerRoute) { throw "Provider route '$providerRoute' is not valid." }
+if ($providerRoute -eq 'openrouter' -and $modelProfile -notin @('mechanical','experimental-ox')) {
+    throw 'OpenRouter contracts must use mechanical or experimental-ox.'
+}
+if ($providerRoute -eq 'nan' -and $modelProfile -eq 'experimental-ox') {
+    throw 'experimental-ox requires providerRoute=openrouter.'
 }
 $budgetProfile = if ($contract.PSObject.Properties.Name -contains 'budgetProfile') { [string]$contract.budgetProfile } else { 'small' }
 if (@('small','batch','research','extended') -notcontains $budgetProfile) {
@@ -107,6 +115,7 @@ $workerParameters = @{
     FallbackModels = @()
     BudgetProfile = $budgetProfile
     ModelProfile = $modelProfile
+    ProviderRoute = $providerRoute
     DuplicateWindowSeconds = 0
 }
 

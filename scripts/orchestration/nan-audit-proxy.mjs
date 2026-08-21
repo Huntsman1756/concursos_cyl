@@ -11,7 +11,15 @@ for (let index = 2; index < process.argv.length; index += 2) {
   args.set(process.argv[index], process.argv[index + 1]);
 }
 
-const upstream = new URL(args.get("--upstream") ?? "https://api.nan.builders");
+const provider = args.get("--provider") ?? "nan";
+const providerUpstreams = {
+  nan: "https://api.nan.builders",
+  openrouter: "https://openrouter.ai",
+};
+if (!(provider in providerUpstreams)) {
+  throw new Error("--provider must be nan or openrouter");
+}
+const upstream = new URL(args.get("--upstream") ?? providerUpstreams[provider]);
 const evidencePath = args.get("--evidence");
 const contractHash = args.get("--contract-hash");
 const repositoryId = args.get("--repository-id");
@@ -31,11 +39,8 @@ if (
 ) {
   throw new Error("The NAN audit proxy requires an HTTPS upstream");
 }
-if (
-  !allowHttpUpstream &&
-  (upstream.hostname !== "api.nan.builders" || upstream.pathname !== "/")
-) {
-  throw new Error("The production upstream must be https://api.nan.builders");
+if (!allowHttpUpstream && upstream.href !== providerUpstreams[provider] + "/") {
+  throw new Error(`The production upstream is invalid for ${provider}`);
 }
 if (
   !Number.isFinite(maxAttempts) ||
@@ -135,7 +140,12 @@ function safeRequestMetadata(body) {
 function disableQwenThinkingBody(body, method, pathname) {
   // Only POST /v1/chat/completions with valid JSON and the mechanical Qwen
   // model is transformed; every other body is returned byte-for-byte unchanged.
-  if (method !== "POST" || pathname !== "/v1/chat/completions") return body;
+  if (
+    provider !== "nan" ||
+    method !== "POST" ||
+    pathname !== "/v1/chat/completions"
+  )
+    return body;
   let parsed;
   try {
     parsed = JSON.parse(body.toString("utf8"));
@@ -272,6 +282,7 @@ const server = http.createServer(async (request, response) => {
       await writeEvidence({
         schemaVersion: 1,
         evidenceClass: "provider-observed",
+        provider,
         repositoryId,
         contractHash,
         requestId,
@@ -337,6 +348,7 @@ const server = http.createServer(async (request, response) => {
       await writeEvidence({
         schemaVersion: 1,
         evidenceClass: "provider-observed",
+        provider,
         repositoryId,
         contractHash,
         requestId,
@@ -394,6 +406,7 @@ const server = http.createServer(async (request, response) => {
     await writeEvidence({
       schemaVersion: 1,
       evidenceClass: "provider-observed",
+      provider,
       repositoryId,
       contractHash,
       requestId,

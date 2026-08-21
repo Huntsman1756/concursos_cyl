@@ -8,7 +8,8 @@ param(
     [ValidateSet('default','json')][string]$Format = 'json',
     [ValidateRange(1,3)][int]$MaxRetries = 1,
     [ValidateSet('small','batch','research','extended')][string]$BudgetProfile = 'small',
-    [ValidateSet('auto','mechanical','reasoning','long-context')][string]$ModelProfile = 'auto',
+    [ValidateSet('auto','mechanical','reasoning','long-context','experimental-ox')][string]$ModelProfile = 'auto',
+    [ValidateSet('nan','openrouter')][string]$ProviderRoute = 'nan',
     [int]$MaxObservedTokens = 0,
     [ValidateRange(1,20)][int]$MaxStepsWithoutMutation = 3,
     [ValidateRange(1,100)][int]$MaxToolUses = 16,
@@ -47,9 +48,9 @@ if (-not [string]::IsNullOrWhiteSpace($TelemetryOutputPath)) {
     $providerEvidenceDirectory = $telemetryParent
 }
 $providerEvidencePath = Join-Path $providerEvidenceDirectory "$runtimeId.provider.jsonl"
-$nanProxyProcess = $null
+$providerProxyProcess = $null
 $isolatedOpenCodeRoot = $null
-$expectedNanKeyFingerprint = $null
+$expectedProviderKeyFingerprint = $null
 
 function Write-TelemetryRecord {
     param([hashtable]$Value, [string]$TelemetryId)
@@ -232,7 +233,7 @@ function Protect-HarnessDiagnosticText {
     $protected = $Text -replace "`e\[[0-9;]*[A-Za-z]", ''
     $protected = $protected -replace '(?i)(authorization\s*:\s*bearer)\s+\S+', '$1 [REDACTED]'
     $protected = $protected -replace '(?i)\bsk-[a-z0-9_-]{8,}\b', '[REDACTED_API_KEY]'
-    $protected = $protected -replace '(?i)((?:NAN|OPENAI)_API_KEY\s*[=:]\s*)\S+', '$1[REDACTED]'
+    $protected = $protected -replace '(?i)((?:NAN|OPENAI|OPENROUTER)_API_KEY\s*[=:]\s*)\S+', '$1[REDACTED]'
     $protected = $protected.Trim()
     $truncated = $protected.Length -gt $MaxLength
     if ($truncated) { $protected = $protected.Substring($protected.Length - $MaxLength) }
@@ -289,19 +290,27 @@ $codeAgents = @{
     'nan/qwen3.6'          = 'nan-code'
     'nan/deepseek-v4-flash' = 'nan-reasoning-code'
     'nan/mimo-v2.5'        = 'nan-long-context-code'
+    'openrouter/stealth/ox-alpha' = 'openrouter-ox-code'
 }
-$primaryModel = switch ($ModelProfile) {
-    'reasoning' { 'nan/deepseek-v4-flash' }
-    'long-context' { 'nan/mimo-v2.5' }
-    default { if ($TaskType -eq 'code') { 'nan/qwen3.6' } else { 'nan/gemma4' } }
+$primaryModel = if ($ProviderRoute -eq 'openrouter') {
+    if ($TaskType -ne 'code') { throw 'OpenRouter is currently qualified only for code contracts.' }
+    if ($ModelProfile -notin @('auto','mechanical','experimental-ox')) { throw 'OpenRouter only accepts the experimental-ox mechanical profile.' }
+    'openrouter/stealth/ox-alpha'
+} else {
+    switch ($ModelProfile) {
+        'reasoning' { 'nan/deepseek-v4-flash' }
+        'long-context' { 'nan/mimo-v2.5' }
+        'experimental-ox' { throw 'experimental-ox requires ProviderRoute=openrouter.' }
+        default { if ($TaskType -eq 'code') { 'nan/qwen3.6' } else { 'nan/gemma4' } }
+    }
 }
 $primaryAgent = if ($TaskType -eq 'code') {
     $codeAgents[$primaryModel]
 } else { 'nan-bulletin' }
-$allowedNanModels = @('nan/qwen3.6','nan/gemma4','nan/deepseek-v4-flash','nan/mimo-v2.5')
+$allowedNanModels = if ($ProviderRoute -eq 'openrouter') { @('openrouter/stealth/ox-alpha') } else { @('nan/qwen3.6','nan/gemma4','nan/deepseek-v4-flash','nan/mimo-v2.5') }
 # Code fallbacks exclude Gemma. Read-only bulletin work may explicitly fall
 # back to any supported text model while retaining the nan-bulletin permissions.
-$fallbackPriority = if ($TaskType -eq 'code') {
+$fallbackPriority = if ($ProviderRoute -eq 'openrouter') { @() } elseif ($TaskType -eq 'code') {
     @('nan/mimo-v2.5','nan/deepseek-v4-flash','nan/qwen3.6')
 } else { @('nan/mimo-v2.5','nan/deepseek-v4-flash','nan/qwen3.6','nan/gemma4') }
 $forbiddenFallbacks = @($FallbackModels | Where-Object { $_ -match '(?i)(^|/)glm5\.2($|[-:])' })
@@ -359,7 +368,8 @@ function New-ValidationDiagnostic {
     }
 }
 
-function Get-NanCredentialRecord {
+function Get-ProviderCredentialRecord {
+    param([ValidateSet('nan','openrouter')][string]$Provider)
     $candidates = @(
         (Join-Path $env:USERPROFILE '.local\share\opencode\auth.json'),
         (Join-Path $env:LOCALAPPDATA 'opencode\auth.json')
@@ -368,17 +378,18 @@ function Get-NanCredentialRecord {
         if (-not (Test-Path -LiteralPath $candidate -PathType Leaf)) { continue }
         try {
             $auth = Get-Content -LiteralPath $candidate -Raw | ConvertFrom-Json
-            if ($auth.nan -and $auth.nan.type -eq 'api' -and -not [string]::IsNullOrWhiteSpace([string]$auth.nan.key)) {
-                return @{source=$candidate;record=$auth.nan}
+            $record = $auth.PSObject.Properties[$Provider].Value
+            if ($record -and $record.type -eq 'api' -and -not [string]::IsNullOrWhiteSpace([string]$record.key)) {
+                return @{source=$candidate;record=$record}
             }
         } catch {}
     }
-    throw 'A valid NAN credential was not found in the OpenCode credential stores.'
+    throw "A valid $Provider credential was not found in the OpenCode credential stores."
 }
 
 function Initialize-IsolatedOpenCodeState {
-    param([string]$RuntimeId)
-    $root = Join-Path ([System.IO.Path]::GetTempPath()) "castilla-nan-opencode-$RuntimeId"
+    param([string]$RuntimeId,[ValidateSet('nan','openrouter')][string]$Provider)
+    $root = Join-Path ([System.IO.Path]::GetTempPath()) "castilla-worker-opencode-$RuntimeId"
     $dataRoot = Join-Path $root 'data'
     $stateRoot = Join-Path $root 'state'
     $cacheRoot = Join-Path $root 'cache'
@@ -387,19 +398,21 @@ function Initialize-IsolatedOpenCodeState {
     foreach ($directory in @($authDirectory,$stateRoot,$cacheRoot,$configRoot)) {
         New-Item -ItemType Directory -Path $directory -Force | Out-Null
     }
-    $credential = Get-NanCredentialRecord
+    $credential = Get-ProviderCredentialRecord -Provider $Provider
     $credentialSha = [System.Security.Cryptography.SHA256]::Create()
     try {
         $credentialHash = -join ($credentialSha.ComputeHash([System.Text.Encoding]::UTF8.GetBytes([string]$credential.record.key)) | ForEach-Object { $_.ToString('x2') })
     } finally { $credentialSha.Dispose() }
-    $isolatedAuth = @{nan=$credential.record} | ConvertTo-Json -Depth 4
+    $isolatedAuthRecord = @{}
+    $isolatedAuthRecord[$Provider] = $credential.record
+    $isolatedAuth = $isolatedAuthRecord | ConvertTo-Json -Depth 4
     $authPath = Join-Path $authDirectory 'auth.json'
     [System.IO.File]::WriteAllText($authPath, $isolatedAuth, (New-Object System.Text.UTF8Encoding($false)))
     return @{root=$root;data=$dataRoot;state=$stateRoot;cache=$cacheRoot;config=$configRoot;credentialSource=$credential.source;keyFingerprint=$credentialHash.Substring(0,16)}
 }
 
-function Start-NanAuditProxy {
-    param([string]$EvidencePath,[string]$ContractHash,[string]$RepositoryId)
+function Start-ProviderAuditProxy {
+    param([string]$EvidencePath,[string]$ContractHash,[string]$RepositoryId,[ValidateSet('nan','openrouter')][string]$Provider)
     $node = (Get-Command node -ErrorAction Stop).Source
     $script = Join-Path $PSScriptRoot 'orchestration\nan-audit-proxy.mjs'
     if (-not (Test-Path -LiteralPath $script -PathType Leaf)) { throw 'NAN audit proxy script is missing.' }
@@ -407,7 +420,7 @@ function Start-NanAuditProxy {
     $start.FileName = $node
     $proxyArgs = @(
         $script,'--evidence',$EvidencePath,'--contract-hash',$ContractHash,
-        '--repository-id',$RepositoryId,'--max-attempts','3',
+        '--repository-id',$RepositoryId,'--provider',$Provider,'--max-attempts','3',
         '--base-delay-ms','1000','--max-delay-ms','30000'
     )
     $start.Arguments = (($proxyArgs | ForEach-Object { ConvertTo-NativeArgument -Argument $_ }) -join ' ')
@@ -431,18 +444,19 @@ function Start-NanAuditProxy {
         Stop-WorkerProcessTree -Process $process
         throw "NAN audit proxy failed to start: $diagnostic"
     }
-    return @{process=$process;baseUrl="http://127.0.0.1:$($ready.port)/v1"}
+    $providerPath = if ($Provider -eq 'openrouter') { '/api/v1' } else { '/v1' }
+    return @{process=$process;baseUrl="http://127.0.0.1:$($ready.port)$providerPath"}
 }
 
-function Stop-NanAuditRuntime {
-    if ($script:nanProxyProcess) {
-        Stop-WorkerProcessTree -Process $script:nanProxyProcess
-        $script:nanProxyProcess.Dispose()
-        $script:nanProxyProcess = $null
+function Stop-ProviderAuditRuntime {
+    if ($script:providerProxyProcess) {
+        Stop-WorkerProcessTree -Process $script:providerProxyProcess
+        $script:providerProxyProcess.Dispose()
+        $script:providerProxyProcess = $null
     }
     if ($script:isolatedOpenCodeRoot -and (Test-Path -LiteralPath $script:isolatedOpenCodeRoot -PathType Container)) {
         $resolvedRuntimeRoot = [System.IO.Path]::GetFullPath($script:isolatedOpenCodeRoot)
-        $expectedRuntimePrefix = [System.IO.Path]::GetFullPath((Join-Path ([System.IO.Path]::GetTempPath()) 'castilla-nan-opencode-'))
+        $expectedRuntimePrefix = [System.IO.Path]::GetFullPath((Join-Path ([System.IO.Path]::GetTempPath()) 'castilla-worker-opencode-'))
         if (-not $resolvedRuntimeRoot.StartsWith($expectedRuntimePrefix, [System.StringComparison]::OrdinalIgnoreCase)) {
             throw "Refusing to remove unexpected OpenCode runtime directory: $resolvedRuntimeRoot"
         }
@@ -556,8 +570,10 @@ function Invoke-OpenCodeBudgeted {
         $startInfo.EnvironmentVariables['XDG_STATE_HOME'] = $RunContext.state
         $startInfo.EnvironmentVariables['XDG_CACHE_HOME'] = $RunContext.cache
         $startInfo.EnvironmentVariables['XDG_CONFIG_HOME'] = $RunContext.config
+        $providerOverride = @{}
+        $providerOverride[$RunContext.provider] = @{options=@{baseURL=$RunContext.baseUrl}}
         $override = @{
-            provider=@{nan=@{options=@{baseURL=$RunContext.baseUrl}}}
+            provider=$providerOverride
             mcp=@{esdata=@{enabled=$false}}
         }
         if ($RunContext.taskType -eq 'bulletin') {
@@ -576,6 +592,7 @@ function Invoke-OpenCodeBudgeted {
                 'nan-code'=@{permission=$writeOnlyPermission}
                 'nan-reasoning-code'=@{permission=$writeOnlyPermission}
                 'nan-long-context-code'=@{permission=$writeOnlyPermission}
+                'openrouter-ox-code'=@{permission=$writeOnlyPermission}
             }
         }
         $override = $override | ConvertTo-Json -Depth 8 -Compress
@@ -654,7 +671,7 @@ $headSha = if ($TestMode -or $DryRun) { 'simulated' } else { (& git -C $repoRoot
 $contractMaterial = [ordered]@{
     taskType=$TaskType;objective=$Objective;allowedPaths=@($AllowedPath);inputPaths=@($InputPath)
     validationCommands=@($ValidationCommand);frontierPlan=$FrontierPlan;acceptanceCriteria=@($AcceptanceCriteria);headSha=$headSha
-    modelProfile=$ModelProfile;budgetProfile=$BudgetProfile;maxObservedTokens=$MaxObservedTokens
+    providerRoute=$ProviderRoute;modelProfile=$ModelProfile;budgetProfile=$BudgetProfile;maxObservedTokens=$MaxObservedTokens
     maxExecutionSeconds=$MaxExecutionSeconds;maxStepsWithoutMutation=$MaxStepsWithoutMutation
     maxToolUses=$MaxToolUses
     fallbackModels=@($FallbackModels)
@@ -664,8 +681,8 @@ $contractMaterial = [ordered]@{
 $contractHash = Compute-StringSha256 -InputString $contractMaterial
 $contractMutex = $null
 if (-not $TestMode -and -not $DryRun) {
-    $contractMutex = New-Object System.Threading.Mutex($false, "Local\NanWorker-$contractHash")
-    if (-not $contractMutex.WaitOne(0)) { throw "An identical NAN contract is already running: $contractHash" }
+    $contractMutex = New-Object System.Threading.Mutex($false, "Local\BoundedWorker-$contractHash")
+    if (-not $contractMutex.WaitOne(0)) { throw "An identical worker contract is already running: $contractHash" }
     if ($DuplicateWindowSeconds -gt 0) {
         $cutoff = [DateTime]::UtcNow.AddSeconds(-$DuplicateWindowSeconds)
         $duplicate = Get-ChildItem -LiteralPath $tdir -Filter '*.json' -ErrorAction SilentlyContinue |
@@ -673,7 +690,7 @@ if (-not $TestMode -and -not $DryRun) {
             ForEach-Object { try { Get-Content -LiteralPath $_.FullName -Raw | ConvertFrom-Json } catch {} } |
             Where-Object { $_.contract.hash -eq $contractHash } |
             Select-Object -First 1
-        if ($duplicate) { throw "An identical NAN contract ran within the last $DuplicateWindowSeconds seconds: $contractHash" }
+        if ($duplicate) { throw "An identical worker contract ran within the last $DuplicateWindowSeconds seconds: $contractHash" }
     }
 }
 
@@ -686,7 +703,8 @@ if ($DryRun) {
         $planSha = Compute-StringSha256 -InputString $FrontierPlan
         $fc = @{plannedBy=$PlannedBy;planHash=$planSha;acceptanceCriteriaCount=$AcceptanceCriteria.Count;reviewRequired=$true}
     }
-    $dryRunTelemetry = @{telemetryId=$tid;simulated=[bool]$true;taskType=$TaskType;selectedModel=$primaryModel;selectedAgent=$primaryAgent;attempts=@();changedPaths=@();contractViolation=$false;validationFailed=$false;validationMayWriteAllowedPaths=[bool]$ValidationMayWriteAllowedPaths;tokensUsage=@{input=0;output=0;reasoning=0;cacheRead=0;cacheWrite=0;total=0};success=$true;status='dry-run';frontierContract=$fc;contract=@{hash=$contractHash;headSha=$headSha;duplicateWindowSeconds=$DuplicateWindowSeconds};admission=@{profile=$AdmissionProfile;capacity=$(if ($AdmissionProfile -eq 'observed-serial') { 1 } else { 5 });timeoutSeconds=$AdmissionTimeoutSeconds;queueWaitMs=0;acquired=$false};launch=@{modelProfile=$ModelProfile;budgetProfile=$BudgetProfile;budgetSource=$budgetSource;maxObservedTokens=$effectiveMaxObservedTokens;maxExecutionSeconds=$MaxExecutionSeconds;maxStepsWithoutMutation=$MaxStepsWithoutMutation;maxToolUses=$MaxToolUses;createOnly=[bool]$CreateOnly}}
+    $dryRunCapacity = if ($ProviderRoute -eq 'openrouter' -or $AdmissionProfile -eq 'observed-serial') { 1 } else { 5 }
+    $dryRunTelemetry = @{telemetryId=$tid;simulated=[bool]$true;taskType=$TaskType;selectedModel=$primaryModel;selectedAgent=$primaryAgent;attempts=@();changedPaths=@();contractViolation=$false;validationFailed=$false;validationMayWriteAllowedPaths=[bool]$ValidationMayWriteAllowedPaths;tokensUsage=@{input=0;output=0;reasoning=0;cacheRead=0;cacheWrite=0;total=0};success=$true;status='dry-run';frontierContract=$fc;contract=@{hash=$contractHash;headSha=$headSha;duplicateWindowSeconds=$DuplicateWindowSeconds};admission=@{profile=$AdmissionProfile;capacity=$dryRunCapacity;timeoutSeconds=$AdmissionTimeoutSeconds;queueWaitMs=0;acquired=$false};launch=@{providerRoute=$ProviderRoute;modelProfile=$ModelProfile;budgetProfile=$BudgetProfile;budgetSource=$budgetSource;maxObservedTokens=$effectiveMaxObservedTokens;maxExecutionSeconds=$MaxExecutionSeconds;maxStepsWithoutMutation=$MaxStepsWithoutMutation;maxToolUses=$MaxToolUses;createOnly=[bool]$CreateOnly}}
     $writtenTelemetryPath = Write-TelemetryRecord -Value $dryRunTelemetry -TelemetryId $tid
     Write-Host "Telemetry: $writtenTelemetryPath" -ForegroundColor DarkGray
     exit 0
@@ -696,8 +714,8 @@ if ($DryRun) {
 $modelList = @()
 if (-not $DryRun -and -not $TestMode) {
     try {
-        $modelOutput = & opencode models nan 2>&1 | Out-String
-        $availableModels = @($modelOutput -split "`n" | ForEach-Object { $_.Trim() } | Where-Object { $_ -and $_ -match '^nan/' })
+        $modelOutput = & opencode models $ProviderRoute 2>&1 | Out-String
+        $availableModels = @($modelOutput -split "`n" | ForEach-Object { $_.Trim() } | Where-Object { $_ -and $_ -match "^$ProviderRoute/" })
         if ($availableModels -notcontains $primaryModel) {
             throw "Primary model $primaryModel is not available"
         }
@@ -723,8 +741,9 @@ $providerAdmissionMutex = $null
 $admissionAcquired = $false
 $admissionWaitMs = 0L
 if (-not $TestMode) {
-    $admissionCapacity = if ($AdmissionProfile -eq 'observed-serial') { 1 } else { 5 }
-    $admissionName = if ($env:OS -eq 'Windows_NT') { "Local\NanBuilders-Chat-Admission-v2-$admissionCapacity" } else { "NanBuilders-Chat-Admission-v2-$admissionCapacity" }
+    $admissionCapacity = if ($ProviderRoute -eq 'openrouter' -or $AdmissionProfile -eq 'observed-serial') { 1 } else { 5 }
+    $admissionToken = if ($ProviderRoute -eq 'openrouter') { 'OpenRouter-Ox' } else { 'NanBuilders-Chat' }
+    $admissionName = if ($env:OS -eq 'Windows_NT') { "Local\$admissionToken-Admission-v2-$admissionCapacity" } else { "$admissionToken-Admission-v2-$admissionCapacity" }
     $providerAdmissionMutex = New-Object System.Threading.Semaphore($admissionCapacity, $admissionCapacity, $admissionName)
     $admissionWatch = [System.Diagnostics.Stopwatch]::StartNew()
     try {
@@ -752,29 +771,29 @@ if (-not $TestMode) {
 $openCodeRunContext = $null
 if (-not $TestMode) {
     try {
-        $isolated = Initialize-IsolatedOpenCodeState -RuntimeId $runtimeId
+        $isolated = Initialize-IsolatedOpenCodeState -RuntimeId $runtimeId -Provider $ProviderRoute
         $isolatedOpenCodeRoot = $isolated.root
-        $expectedNanKeyFingerprint = $isolated.keyFingerprint
+        $expectedProviderKeyFingerprint = $isolated.keyFingerprint
         $repositoryRemote = (& git -C $repoRoot config --get remote.origin.url | Out-String).Trim()
         if ([string]::IsNullOrWhiteSpace($repositoryRemote)) { $repositoryRemote = $repoRoot }
         $repositoryId = Compute-StringSha256 -InputString $repositoryRemote
-        $proxy = Start-NanAuditProxy -EvidencePath $providerEvidencePath -ContractHash $contractHash -RepositoryId $repositoryId
-        $nanProxyProcess = $proxy.process
-        $openCodeRunContext = @{data=$isolated.data;state=$isolated.state;cache=$isolated.cache;config=$isolated.config;baseUrl=$proxy.baseUrl;taskType=$TaskType;createOnly=[bool]$CreateOnly}
-        $exitCleanup = @{runtimeRoot=$isolatedOpenCodeRoot;proxyPid=$nanProxyProcess.Id}
+        $proxy = Start-ProviderAuditProxy -EvidencePath $providerEvidencePath -ContractHash $contractHash -RepositoryId $repositoryId -Provider $ProviderRoute
+        $providerProxyProcess = $proxy.process
+        $openCodeRunContext = @{data=$isolated.data;state=$isolated.state;cache=$isolated.cache;config=$isolated.config;baseUrl=$proxy.baseUrl;provider=$ProviderRoute;taskType=$TaskType;createOnly=[bool]$CreateOnly}
+        $exitCleanup = @{runtimeRoot=$isolatedOpenCodeRoot;proxyPid=$providerProxyProcess.Id}
         Register-EngineEvent -SourceIdentifier PowerShell.Exiting -MessageData $exitCleanup -Action {
             $cleanup = $event.MessageData
             Stop-Process -Id $cleanup.proxyPid -Force -ErrorAction SilentlyContinue
             if ($cleanup.runtimeRoot -and (Test-Path -LiteralPath $cleanup.runtimeRoot -PathType Container)) {
                 $resolvedRuntimeRoot = [System.IO.Path]::GetFullPath($cleanup.runtimeRoot)
-                $expectedRuntimePrefix = [System.IO.Path]::GetFullPath((Join-Path ([System.IO.Path]::GetTempPath()) 'castilla-nan-opencode-'))
+                $expectedRuntimePrefix = [System.IO.Path]::GetFullPath((Join-Path ([System.IO.Path]::GetTempPath()) 'castilla-worker-opencode-'))
                 if ($resolvedRuntimeRoot.StartsWith($expectedRuntimePrefix, [System.StringComparison]::OrdinalIgnoreCase)) {
                     Remove-Item -LiteralPath $resolvedRuntimeRoot -Recurse -Force -ErrorAction SilentlyContinue
                 }
             }
         } | Out-Null
     } catch {
-        Stop-NanAuditRuntime
+        Stop-ProviderAuditRuntime
         if ($providerAdmissionMutex -and $admissionAcquired) { $providerAdmissionMutex.Release() | Out-Null; $providerAdmissionMutex.Dispose() }
         if ($contractMutex) { $contractMutex.ReleaseMutex(); $contractMutex.Dispose() }
         throw
@@ -881,7 +900,7 @@ $totalAttempts = 0
             try {
                 $liveResult = Invoke-OpenCodeBudgeted -Arguments $opts -TokenBudget $effectiveMaxObservedTokens -TimeoutSeconds $MaxExecutionSeconds -NoMutationStepLimit $MaxStepsWithoutMutation -ToolUseLimit $MaxToolUses -RunContext $openCodeRunContext
             } catch {
-                Stop-NanAuditRuntime
+                Stop-ProviderAuditRuntime
                 throw
             }
             $attempt.exitCode = $liveResult.exitCode
@@ -1080,7 +1099,7 @@ foreach ($a in $attempts) {
     }
 }
 
-if (-not $TestMode) { Stop-NanAuditRuntime }
+if (-not $TestMode) { Stop-ProviderAuditRuntime }
 $providerRecords = @()
 if (-not $TestMode -and (Test-Path -LiteralPath $providerEvidencePath -PathType Leaf)) {
     $providerRecords = @(Get-Content -LiteralPath $providerEvidencePath | Where-Object { $_.Trim() } | ForEach-Object {
@@ -1090,7 +1109,8 @@ if (-not $TestMode -and (Test-Path -LiteralPath $providerEvidencePath -PathType 
 $observedProviderRecords = @($providerRecords | Where-Object {
     $_.evidenceClass -eq 'provider-observed' -and
     $_.contractHash -eq $contractHash -and
-    $_.keyFingerprint -eq $expectedNanKeyFingerprint
+    $_.provider -eq $ProviderRoute -and
+    $_.keyFingerprint -eq $expectedProviderKeyFingerprint
 })
 $providerRetryRecords = @($observedProviderRecords | Where-Object {
     $_.retry -and $_.retry.retryable -eq $true -and $_.retry.terminal -eq $false
@@ -1117,11 +1137,11 @@ if ($lastProviderError.Count -gt 0) {
         elseif ($errorStatus -ge 500) { 'blocked-provider-unavailable' } `
         else { 'blocked-provider-request' }
 }
-$expectedProviderModel = if ($successResult) { ([string]$successResult.model -replace '^nan/','') } else { $null }
+$expectedProviderModel = if ($successResult) { ([string]$successResult.model -replace '^(nan|openrouter)/','') } else { $null }
 $verifiedProviderRecords = @($observedProviderRecords | Where-Object {
     [int]$_.response.status -ge 200 -and [int]$_.response.status -lt 300 -and
-    $_.request.path -in @('/v1/chat/completions','/v1/responses') -and
-    $_.response.id -match '^(chatcmpl|resp|cmpl)[_-]'
+    $_.request.path -in @('/v1/chat/completions','/v1/responses','/api/v1/chat/completions','/api/v1/responses') -and
+    $_.response.id -match '^[A-Za-z0-9][A-Za-z0-9._:-]{7,}$'
 })
 if ($expectedProviderModel) {
     $verifiedProviderRecords = @($verifiedProviderRecords | Where-Object {
@@ -1155,7 +1175,7 @@ $telemetry = @{
     contract=@{hash=$contractHash;headSha=$headSha;duplicateWindowSeconds=$DuplicateWindowSeconds}
     providerEvidence=@{verified=[bool]$providerEvidenceVerified;evidenceClass=$(if ($TestMode) { 'simulated' } elseif ($observedProviderRecords.Count -gt 0) { 'provider-observed' } else { 'insufficient-evidence' });recordCount=$verifiedProviderRecords.Count;observedRecordCount=$observedProviderRecords.Count;retryCount=$providerRetryRecords.Count;terminalErrorCount=$terminalProviderErrors.Count;terminalErrors=@($terminalProviderErrors | Select-Object -Last 5);providerReportedTokens=$providerReportedTokens;responseIdSetHash=$providerResponseSetHash;rawEvidenceFile=$(if ($TestMode) { $null } else { [System.IO.Path]::GetFileName($providerEvidencePath) })}
     admission=@{profile=$AdmissionProfile;capacity=$(if ($AdmissionProfile -eq 'observed-serial') { 1 } else { 5 });timeoutSeconds=$AdmissionTimeoutSeconds;queueWaitMs=$admissionWaitMs;acquired=[bool]$admissionAcquired}
-    launch=@{harness='opencode';protocol='native-jsonl-stream-1.18.x';pure=$true;auto=$false;directory=$repoRoot;modelProfile=$ModelProfile;budgetProfile=$BudgetProfile;budgetSource=$budgetSource;maxObservedTokens=$effectiveMaxObservedTokens;maxExecutionSeconds=$MaxExecutionSeconds;maxStepsWithoutMutation=$MaxStepsWithoutMutation;maxToolUses=$MaxToolUses;createOnly=[bool]$CreateOnly;validationMayWriteAllowedPaths=[bool]$ValidationMayWriteAllowedPaths}
+    launch=@{harness='opencode';protocol='native-jsonl-stream-1.18.x';pure=$true;auto=$false;directory=$repoRoot;providerRoute=$ProviderRoute;modelProfile=$ModelProfile;budgetProfile=$BudgetProfile;budgetSource=$budgetSource;maxObservedTokens=$effectiveMaxObservedTokens;maxExecutionSeconds=$MaxExecutionSeconds;maxStepsWithoutMutation=$MaxStepsWithoutMutation;maxToolUses=$MaxToolUses;createOnly=[bool]$CreateOnly;validationMayWriteAllowedPaths=[bool]$ValidationMayWriteAllowedPaths}
 }
 $writtenTelemetryPath = Write-TelemetryRecord -Value $telemetry -TelemetryId $tid
 Write-Host "Telemetry: $writtenTelemetryPath" -ForegroundColor DarkGray

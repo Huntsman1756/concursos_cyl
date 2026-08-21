@@ -177,10 +177,14 @@ $schemaVersion = if ($batch.PSObject.Properties.Name -contains 'schemaVersion') 
 if ($schemaVersion -ne 1) { throw "schemaVersion must be 1, got '$schemaVersion'." }
 
 # ── Validate modelProfile values ──
-$validModelProfiles = @('mechanical','reasoning','long-context')
+$validModelProfiles = @('mechanical','reasoning','long-context','experimental-ox')
 foreach ($story in $stories) {
     $mp = if ($story.PSObject.Properties.Name -contains 'modelProfile') { [string]$story.modelProfile } else { 'mechanical' }
+    $providerRoute = if ($story.PSObject.Properties.Name -contains 'providerRoute') { [string]$story.providerRoute } else { 'nan' }
     if ($mp -match '(?i)glm5\.2') { throw "Story '$($story.id)' model profile references unsupported glm5.2." }
+    if (@('nan','openrouter') -notcontains $providerRoute) { throw "Story '$($story.id)' providerRoute '$providerRoute' is not valid." }
+    if ($providerRoute -eq 'openrouter' -and $mp -notin @('mechanical','experimental-ox')) { throw "Story '$($story.id)' OpenRouter profile must be mechanical or experimental-ox." }
+    if ($providerRoute -eq 'nan' -and $mp -eq 'experimental-ox') { throw "Story '$($story.id)' experimental-ox requires providerRoute=openrouter." }
     if ($validModelProfiles -notcontains $mp) {
         throw "Story '$($story.id)' modelProfile '$mp' is not valid. Allowed: $($validModelProfiles -join ', ')."
     }
