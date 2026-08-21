@@ -1,27 +1,27 @@
-# Próxima sesión: publicar el lote AFD y continuar cobertura
+# Próxima sesión: continuar cobertura y cerrar candidatura
 
 ## Estado confirmado
 
-- Producto público anterior verificado en `b0cbf69b103610b4d371e215688f254c3aeeb207`.
-- Freeze candidato: `62bb32dd794dfb67f57899eb7861724273b4448f`.
-- Snapshot candidato: `20260821070248908-85affbaf7072`.
+- Producto público verificado en `d92334146ba806cea21a96191d33f647bfc7b398`.
+- Freeze fuente: `62bb32dd794dfb67f57899eb7861724273b4448f`.
+- Snapshot activo: `20260821070248908-85affbaf7072`.
 - Ocho datasets JCyL visibles y 20 recursos inmutables en el manifiesto.
-- Cobertura candidata: 56 cualificaciones, 69 claves de modalidad, 132 relaciones aprobadas y 21 alias.
+- Cobertura: 56 cualificaciones, 69 claves de modalidad, 132 relaciones aprobadas y 21 alias.
 - Ofertas alcanzadas: 39 de 1.055; la cifra es una unión acotada de IDs, no todo el mercado.
 - Directorio educativo: 1.741 registros y reconciliación exacta de los 229 centros FP por código.
 - La ficha de ciclo incorpora ingresos observados de EDUCAbase con referencia nacional y agregada de Castilla y León, sin presentarlos como predicción individual.
-- QA del lote: 346 pruebas de datos y 18 E2E focalizadas aprobadas; CI completo pendiente del PR.
+- QA final en CI: 750 pruebas aprobadas y 180 omitidas por condiciones de plataforma; 106 E2E aprobadas.
 - Matriz opcional preparada para Chromium, Firefox y WebKit sin encarecer el CI ordinario.
-- Último workflow público verificado: `32454915276`.
-- Las capturas del release anterior permanecen válidas para `b0cbf69b`; el lote candidato requiere recaptura tras desplegarse.
+- Workflow público verificado: `32458583923`.
+- Diez capturas finales anónimas ligadas a `d9233414` y validadas con Axe, red, consola, recursos externos y overflow.
 
 ## Orden de trabajo
 
-1. Publicar y verificar el snapshot candidato con 132 relaciones.
-2. Recapturar la evidencia visual contra el commit desplegado.
-3. Mantener la evaluación etiquetada de precisión/cobertura antes de ampliar el matching de ofertas.
-4. Continuar la cola con relaciones que dispongan de evidencia oficial suficiente.
-5. Completar identidad, consentimiento y aprobación humana antes del envío externo.
+1. Continuar la cola con relaciones que dispongan de evidencia oficial suficiente.
+2. Mantener la evaluación etiquetada de precisión/cobertura antes de ampliar el matching de ofertas.
+3. Repetir freeze, CI, despliegue y capturas después de cada lote aceptado.
+4. Completar identidad, consentimiento y adjuntos humanos.
+5. Obtener aprobación explícita antes del envío externo.
 
 ## Política de ejecución NAN
 
