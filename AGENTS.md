@@ -1,7 +1,17 @@
 # Contrato local de agentes
 
-Este repositorio usa un flujo inspirado en `agent-orchestration-starter`:
-OpenAI/Codex planifica y revisa; OpenCode ejecuta contratos acotados con NAN.
+## Regla operativa prioritaria
+
+La ejecución directa por Codex es el flujo predeterminado de este repositorio.
+NAN, OpenRouter y OpenCode son aceleradores opcionales, nunca dependencias ni
+puertas de entrada. Se permite como máximo un intento acotado por historia: si
+el worker no produce una edición útil, Codex continúa directamente y no abre un
+segundo contrato para el mismo objetivo. Esta regla prevalece sobre cualquier
+descripción histórica del orquestador que aparezca más abajo.
+
+El flujo inspirado en `agent-orchestration-starter` se conserva únicamente para
+los casos en que Codex decide delegar una implementación mecánica concreta:
+Codex planifica y revisa; el worker ejecuta el contrato acotado.
 
 La referencia del runtime es `v0.3.1`, commit
 `ae1640e2a7d6151bc6a331be62c6e196d7852c66`; la compatibilidad de procedencia
