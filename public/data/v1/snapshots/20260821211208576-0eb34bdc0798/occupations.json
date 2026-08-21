@@ -1,6 +1,17 @@
 [
   {
     "catalogVersion": "1.0.0",
+    "classificationCode": "1221",
+    "classificationSystem": "CNO-11",
+    "confirmationLabel": "Directores comerciales y de ventas",
+    "occupationId": "occupation:cno11:1221",
+    "preferredLabel": "Directores comerciales y de ventas",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-21",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf"
+  },
+  {
+    "catalogVersion": "1.0.0",
     "classificationCode": "1432",
     "classificationSystem": "CNO-11",
     "confirmationLabel": "Directores y gerentes de empresas de comercio al por menor",
@@ -45,6 +56,17 @@
   },
   {
     "catalogVersion": "1.0.0",
+    "classificationCode": "2651",
+    "classificationSystem": "CNO-11",
+    "confirmationLabel": "Profesionales de la publicidad y la comercialización",
+    "occupationId": "occupation:cno11:2651",
+    "preferredLabel": "Profesionales de la publicidad y la comercialización",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-21",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf"
+  },
+  {
+    "catalogVersion": "1.0.0",
     "classificationCode": "2713",
     "classificationSystem": "CNO-11",
     "confirmationLabel": "Programación y desarrollo web",
@@ -74,6 +96,28 @@
     "preferredLabel": "Administradores de sistemas y redes",
     "reviewStatus": "approved",
     "reviewedAt": "2026-08-12",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf"
+  },
+  {
+    "catalogVersion": "1.0.0",
+    "classificationCode": "2921",
+    "classificationSystem": "CNO-11",
+    "confirmationLabel": "Escritores",
+    "occupationId": "occupation:cno11:2921",
+    "preferredLabel": "Escritores",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-21",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf"
+  },
+  {
+    "catalogVersion": "1.0.0",
+    "classificationCode": "2923",
+    "classificationSystem": "CNO-11",
+    "confirmationLabel": "Filólogos, intérpretes y traductores",
+    "occupationId": "occupation:cno11:2923",
+    "preferredLabel": "Filólogos, intérpretes y traductores",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-21",
     "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf"
   },
   {
@@ -133,6 +177,17 @@
   },
   {
     "catalogVersion": "1.0.0",
+    "classificationCode": "3141",
+    "classificationSystem": "CNO-11",
+    "confirmationLabel": "Técnicos en ciencias biológicas (excepto en áreas sanitarias)",
+    "occupationId": "occupation:cno11:3141",
+    "preferredLabel": "Técnicos en ciencias biológicas (excepto en áreas sanitarias)",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-21",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf"
+  },
+  {
+    "catalogVersion": "1.0.0",
     "classificationCode": "3160",
     "classificationSystem": "CNO-11",
     "confirmationLabel": "Técnicos de control de calidad de las ciencias físicas, químicas y de las ingenierías",
@@ -162,6 +217,28 @@
     "preferredLabel": "Técnicos en laboratorio de diagnóstico clínico",
     "reviewStatus": "approved",
     "reviewedAt": "2026-08-12",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf"
+  },
+  {
+    "catalogVersion": "1.0.0",
+    "classificationCode": "3316",
+    "classificationSystem": "CNO-11",
+    "confirmationLabel": "Técnicos en prótesis dentales",
+    "occupationId": "occupation:cno11:3316",
+    "preferredLabel": "Técnicos en prótesis dentales",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-21",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf"
+  },
+  {
+    "catalogVersion": "1.0.0",
+    "classificationCode": "3317",
+    "classificationSystem": "CNO-11",
+    "confirmationLabel": "Técnicos en audioprótesis",
+    "occupationId": "occupation:cno11:3317",
+    "preferredLabel": "Técnicos en audioprótesis",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-21",
     "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf"
   },
   {
@@ -606,6 +683,28 @@
   },
   {
     "catalogVersion": "1.0.0",
+    "classificationCode": "5931",
+    "classificationSystem": "CNO-11",
+    "confirmationLabel": "Bomberos (excepto forestales)",
+    "occupationId": "occupation:cno11:5931",
+    "preferredLabel": "Bomberos (excepto forestales)",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-21",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf"
+  },
+  {
+    "catalogVersion": "1.0.0",
+    "classificationCode": "5932",
+    "classificationSystem": "CNO-11",
+    "confirmationLabel": "Bomberos forestales",
+    "occupationId": "occupation:cno11:5932",
+    "preferredLabel": "Bomberos forestales",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-21",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf"
+  },
+  {
+    "catalogVersion": "1.0.0",
     "classificationCode": "5992",
     "classificationSystem": "CNO-11",
     "confirmationLabel": "Bañistas-socorristas",
@@ -613,6 +712,17 @@
     "preferredLabel": "Bañistas-socorristas",
     "reviewStatus": "approved",
     "reviewedAt": "2026-08-12",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf"
+  },
+  {
+    "catalogVersion": "1.0.0",
+    "classificationCode": "5993",
+    "classificationSystem": "CNO-11",
+    "confirmationLabel": "Agentes forestales y medioambientales",
+    "occupationId": "occupation:cno11:5993",
+    "preferredLabel": "Agentes forestales y medioambientales",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-21",
     "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf"
   },
   {
@@ -723,6 +833,17 @@
     "preferredLabel": "Fontaneros",
     "reviewStatus": "approved",
     "reviewedAt": "2026-08-13",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf"
+  },
+  {
+    "catalogVersion": "1.0.0",
+    "classificationCode": "7222",
+    "classificationSystem": "CNO-11",
+    "confirmationLabel": "Montadores-instaladores de gas en edificios",
+    "occupationId": "occupation:cno11:7222",
+    "preferredLabel": "Montadores-instaladores de gas en edificios",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-21",
     "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf"
   },
   {
@@ -870,6 +991,17 @@
   },
   {
     "catalogVersion": "1.0.0",
+    "classificationCode": "7403",
+    "classificationSystem": "CNO-11",
+    "confirmationLabel": "Mecánicos y ajustadores de maquinaria agrícola e industrial",
+    "occupationId": "occupation:cno11:7403",
+    "preferredLabel": "Mecánicos y ajustadores de maquinaria agrícola e industrial",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-21",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf"
+  },
+  {
+    "catalogVersion": "1.0.0",
     "classificationCode": "7510",
     "classificationSystem": "CNO-11",
     "confirmationLabel": "Instalaciones eléctricas de construcción",
@@ -914,6 +1046,28 @@
   },
   {
     "catalogVersion": "1.0.0",
+    "classificationCode": "7705",
+    "classificationSystem": "CNO-11",
+    "confirmationLabel": "Trabajadores conserveros de frutas y hortalizas y trabajadores de la elaboración de bebidas no alcohólicas",
+    "occupationId": "occupation:cno11:7705",
+    "preferredLabel": "Trabajadores conserveros de frutas y hortalizas y trabajadores de la elaboración de bebidas no alcohólicas",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-21",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf"
+  },
+  {
+    "catalogVersion": "1.0.0",
+    "classificationCode": "7707",
+    "classificationSystem": "CNO-11",
+    "confirmationLabel": "Trabajadores de la elaboración del vino",
+    "occupationId": "occupation:cno11:7707",
+    "preferredLabel": "Trabajadores de la elaboración del vino",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-21",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf"
+  },
+  {
+    "catalogVersion": "1.0.0",
     "classificationCode": "7709",
     "classificationSystem": "CNO-11",
     "confirmationLabel": "Catadores y clasificadores de alimentos y bebidas",
@@ -932,6 +1086,17 @@
     "preferredLabel": "Ajustadores y operadores de máquinas para trabajar la madera",
     "reviewStatus": "approved",
     "reviewedAt": "2026-08-09",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf"
+  },
+  {
+    "catalogVersion": "1.0.0",
+    "classificationCode": "8193",
+    "classificationSystem": "CNO-11",
+    "confirmationLabel": "Operadores de máquinas de embalaje, embotellamiento y etiquetado",
+    "occupationId": "occupation:cno11:8193",
+    "preferredLabel": "Operadores de máquinas de embalaje, embotellamiento y etiquetado",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-21",
     "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf"
   },
   {

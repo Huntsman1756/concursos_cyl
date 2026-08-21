@@ -174,35 +174,6 @@
     ]
   },
   {
-    "offerId": "1285665587904",
-    "requirements": [
-      {
-        "category": "unclassified",
-        "id": "requirement:91e15e90c778e378a469056d584d79002dd7be188adf6da5e0120038667e7082",
-        "normalizedValue": null,
-        "parserRule": "unclassified.conservative_fallback",
-        "parserVersion": "1.0.0",
-        "sourceQuote": "Bachilller, Técnico/a o equivalente"
-      },
-      {
-        "category": "unclassified",
-        "id": "requirement:1173c78f3ab6facd5351a8a31cdc4bded7c5c70a120d3e51c24f97db0fd55e2b",
-        "normalizedValue": null,
-        "parserRule": "unclassified.conservative_fallback",
-        "parserVersion": "1.0.0",
-        "sourceQuote": "Plazo: 20 de agosto de 2026"
-      },
-      {
-        "category": "unclassified",
-        "id": "requirement:6a57f58abcb7e76b0721d9d2a452130ba50c9f12f4f745027a44aa1ec0cd7606",
-        "normalizedValue": null,
-        "parserRule": "unclassified.conservative_fallback",
-        "parserVersion": "1.0.0",
-        "sourceQuote": "Información obtenida de: Empleo público. BOCYL 16/07/2026; BOP Palencia 17/07/2026; BOE 23/07/2026"
-      }
-    ]
-  },
-  {
     "offerId": "1285671861408",
     "requirements": [
       {
@@ -917,6 +888,35 @@
         "parserRule": "unclassified.conservative_fallback",
         "parserVersion": "1.0.0",
         "sourceQuote": "Información obtenida de: Empleo público. BOCYL 30/07/2026, BOP Valladolid 03/08/2026; BOE 17/"
+      }
+    ]
+  },
+  {
+    "offerId": "1285672374024",
+    "requirements": [
+      {
+        "category": "unclassified",
+        "id": "requirement:e51eeac1900e0dd45a38f916df09f4362eea551af10f6ec8d049cb228c6b6f3d",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Bachiller, técnico o equivalente"
+      },
+      {
+        "category": "unclassified",
+        "id": "requirement:0f1c461e24cdf6947ed404eddf555f0b79121e986739d47c8740429e6370c5a4",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Plazo: 17 de septiembre de 2026"
+      },
+      {
+        "category": "unclassified",
+        "id": "requirement:d009768d2dc25bb866cbb320bc0123494cabdd0028703c3a07563f7320600c3d",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Información obtenida de: Empleo público. BOCYL 05/08/2026; BOE 20/08/2026"
       }
     ]
   },
@@ -1788,91 +1788,6 @@
         "parserRule": "unclassified.ambiguous_or_negated",
         "parserVersion": "1.0.0",
         "sourceQuote": ". Permiso de conducir y vehículo para desplazarse a municipios cercanos."
-      }
-    ]
-  },
-  {
-    "offerId": "1285670666974",
-    "requirements": [
-      {
-        "category": "unclassified",
-        "id": "requirement:f34b6b027901f755a7161bf6294c1c403ccf83333fb02dfe33fc27aeb48cd98b",
-        "normalizedValue": null,
-        "parserRule": "unclassified.conservative_fallback",
-        "parserVersion": "1.0.0",
-        "sourceQuote": "Bachillerato."
-      },
-      {
-        "category": "unclassified",
-        "id": "requirement:8c322936ef249c579bc7ebfe0dd5e879aef9fb9708e9b74692b10468aa3d25ab",
-        "normalizedValue": null,
-        "parserRule": "unclassified.ambiguous_or_negated",
-        "parserVersion": "1.0.0",
-        "sourceQuote": "Experiencia previa de al menos un año en posiciones de responsabilidad en retail (preferiblemente en belleza o moda)."
-      },
-      {
-        "category": "unclassified",
-        "id": "requirement:0b6e9c114dc8fee3277ef317479c8d364776c8c205959ef3fc475fbb94fce506",
-        "normalizedValue": null,
-        "parserRule": "unclassified.ambiguous_or_negated",
-        "parserVersion": "1.0.0",
-        "sourceQuote": "Español nivel nativo o bilinge."
-      },
-      {
-        "category": "unclassified",
-        "id": "requirement:d161324ac10ab368e58f6407cd9426ad117aa4be808f3f64f0d8430a743a6bb0",
-        "normalizedValue": null,
-        "parserRule": "unclassified.conservative_fallback",
-        "parserVersion": "1.0.0",
-        "sourceQuote": "Orientación a resultados y seguimiento de KPIs."
-      },
-      {
-        "category": "unclassified",
-        "id": "requirement:5e863913b7877faf8161fe8ff2353847d0d46293a1051ed409d964940d579c23",
-        "normalizedValue": null,
-        "parserRule": "unclassified.conservative_fallback",
-        "parserVersion": "1.0.0",
-        "sourceQuote": "Capacidad de liderazgo y desarrollo de equipos."
-      },
-      {
-        "category": "unclassified",
-        "id": "requirement:b049148962d1e243eab3c54e192f2c358daef2d8d207d65d846e779473cdbcac",
-        "normalizedValue": null,
-        "parserRule": "unclassified.conservative_fallback",
-        "parserVersion": "1.0.0",
-        "sourceQuote": "Perfil comercial con clara orientación al cliente."
-      },
-      {
-        "category": "unclassified",
-        "id": "requirement:198f77c0f6287db3e82c1acae5c21f9118b214acb24ef8e9527175bf754e4408",
-        "normalizedValue": null,
-        "parserRule": "unclassified.conservative_fallback",
-        "parserVersion": "1.0.0",
-        "sourceQuote": "Capacidad organizativa y resolución de problemas."
-      },
-      {
-        "category": "unclassified",
-        "id": "requirement:9d33223f52869e81189d2d93c31dba5a87307d07ee5576ed1ef1bdfdac942b42",
-        "normalizedValue": null,
-        "parserRule": "unclassified.conservative_fallback",
-        "parserVersion": "1.0.0",
-        "sourceQuote": "Actitud positiva, dinámica y proactiva."
-      },
-      {
-        "category": "unclassified",
-        "id": "requirement:987f962ec5e4fbc097f3ee8c8e01ac1e4c7bbc11572b026244ff9694b005c423",
-        "normalizedValue": null,
-        "parserRule": "unclassified.conservative_fallback",
-        "parserVersion": "1.0.0",
-        "sourceQuote": "Imagen cuidada y alineada con el mundo beauty."
-      },
-      {
-        "category": "unclassified",
-        "id": "requirement:03008780bdefcbd38e215ff93b2833f86845d971956486c5c3c426534503ef6b",
-        "normalizedValue": null,
-        "parserRule": "unclassified.ambiguous_or_negated",
-        "parserVersion": "1.0.0",
-        "sourceQuote": "Disponibilidad horaria (turnos rotativos, fines de semana y festivos)."
       }
     ]
   },
@@ -3150,6 +3065,27 @@
     ]
   },
   {
+    "offerId": "1285672382387",
+    "requirements": [
+      {
+        "category": "unclassified",
+        "id": "requirement:2193452e44638dddce61ea8e09979e69810e9dcf55727bd80232bf7ed1148b68",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
+        "parserVersion": "1.0.0",
+        "sourceQuote": ". Experiencia y conocimientos del oficio."
+      },
+      {
+        "category": "unclassified",
+        "id": "requirement:7c53091926d84ae8219a58a4be80749bdbcfdaa76ae72c6b82d68a35b39be52e",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
+        "parserVersion": "1.0.0",
+        "sourceQuote": ". Capacidad para organizar, coordinar y gestionar el taller."
+      }
+    ]
+  },
+  {
     "offerId": "1285627000996",
     "requirements": [
       {
@@ -3693,19 +3629,6 @@
     ]
   },
   {
-    "offerId": "1285672226572",
-    "requirements": [
-      {
-        "category": "unclassified",
-        "id": "requirement:4ce9aea6fbdbb38bc665b163c3fceaf77e7fe5d7bcdb7ca3df4378d8acc11963",
-        "normalizedValue": null,
-        "parserRule": "unclassified.ambiguous_or_negated",
-        "parserVersion": "1.0.0",
-        "sourceQuote": "Estar en posesión del FP de grado medio en cocina y gastronomia, o en su caso haber superado el periodo de prueba en la administración de la JCYL en la categoria de Cocinero/a con anterioridad a la entrada en vigor del actual convenio."
-      }
-    ]
-  },
-  {
     "offerId": "1285670667558",
     "requirements": [
       {
@@ -4080,63 +4003,31 @@
     ]
   },
   {
-    "offerId": "1285670666175",
+    "offerId": "1285672364865",
     "requirements": [
       {
         "category": "unclassified",
-        "id": "requirement:292f549f02a534cedacec4ffc42897abfc7ac6362ec104d2449100136b02cec3",
+        "id": "requirement:7a632b82dd9fd493fad9c156045a17d6fdc69cde5e0ff81a0a378c7c314fcfd1",
         "normalizedValue": null,
         "parserRule": "unclassified.conservative_fallback",
         "parserVersion": "1.0.0",
-        "sourceQuote": "Estudios mínimos: Formación Profesional Grado Superior. Formación Profesional en Administración y Finanzas, Gestión Administrativo/a o similar."
+        "sourceQuote": "Título de Bachiller, LOGSE, Bachiller Superior, Técnico de Grado Superior, Formación Profesional de Segundo Grado o equivalentes"
       },
       {
         "category": "unclassified",
-        "id": "requirement:37cc66e25ce96ddb19eb869b912a3d7c11c8e571429c559fc34085b3e8993c55",
-        "normalizedValue": null,
-        "parserRule": "unclassified.ambiguous_or_negated",
-        "parserVersion": "1.0.0",
-        "sourceQuote": "Experiencia al menos 2 años. previa en funciones de controller y administrativas, control de gestión o gestión documental."
-      },
-      {
-        "category": "unclassified",
-        "id": "requirement:6424991f84ed81379f93c5bbf3907114480662bbb6e61e03798f41f19ebe623d",
+        "id": "requirement:0d6d117592a66fc575b2b5bcfbad9f5f7d7a8a2b7437ec97e86efdaf69ec5519",
         "normalizedValue": null,
         "parserRule": "unclassified.conservative_fallback",
         "parserVersion": "1.0.0",
-        "sourceQuote": "Buen manejo del paquete Office."
+        "sourceQuote": "Plazo: 4 de septiembre de 2026"
       },
       {
         "category": "unclassified",
-        "id": "requirement:5ffdb409c465a07b917fa758bb6a28029841cb34f5428593524813a1821ed620",
+        "id": "requirement:58346f14b07204ea1f923ce019f4a8884121452c62f09ebeef42d2cdebd5148a",
         "normalizedValue": null,
         "parserRule": "unclassified.conservative_fallback",
         "parserVersion": "1.0.0",
-        "sourceQuote": "Conocimientos básicos o experiencia trabajando con sistemas ERP."
-      },
-      {
-        "category": "unclassified",
-        "id": "requirement:593b79743c98572720d8c1c5f4ec5d02a33ecbdb36e48514de44da0a027042fa",
-        "normalizedValue": null,
-        "parserRule": "unclassified.ambiguous_or_negated",
-        "parserVersion": "1.0.0",
-        "sourceQuote": "Nivel de inglés mínimo B2."
-      },
-      {
-        "category": "unclassified",
-        "id": "requirement:af70f14cfad799bc4ef3cd1ab7bd5dffa238c1b19d648f5bbabea78a075222b3",
-        "normalizedValue": null,
-        "parserRule": "unclassified.conservative_fallback",
-        "parserVersion": "1.0.0",
-        "sourceQuote": "Persona organizada, resolutiva, con carácter, capacidad de aprendizaje y orientación a la mejora continua."
-      },
-      {
-        "category": "unclassified",
-        "id": "requirement:05cb2dd45191e2e253211ebc45638a3b62bcbb077fb317e0e42cf90c61c589cc",
-        "normalizedValue": null,
-        "parserRule": "unclassified.conservative_fallback",
-        "parserVersion": "1.0.0",
-        "sourceQuote": "Residencia en Burgos o alrededores."
+        "sourceQuote": "Información obtenida de: Empleo público. Sede Electronica Ayto. de Soria"
       }
     ]
   },
@@ -5013,63 +4904,39 @@
     ]
   },
   {
-    "offerId": "1285670666346",
+    "offerId": "1285672386350",
     "requirements": [
       {
         "category": "unclassified",
-        "id": "requirement:69625abac385f0b1a2fef2c8d332de83410da9562ee922df932fd1003414d05b",
+        "id": "requirement:6216e4096dd4e08768f69eb4f77f60b831f990d5df09daaaf5660f8a7e052668",
         "normalizedValue": null,
         "parserRule": "unclassified.conservative_fallback",
         "parserVersion": "1.0.0",
-        "sourceQuote": "Educación Secundaria Obligatoria."
-      },
-      {
-        "category": "experience",
-        "id": "requirement:fd2d7e0cb8b1d18bbd9cffec2c312fc5e3880ee454d86eb6eba481d580a2c550",
-        "normalizedValue": 12,
-        "parserRule": "experience.years",
-        "parserVersion": "1.0.0",
-        "sourceQuote": "Experiencia mínima de al menos 1 año."
+        "sourceQuote": "Bachiller, FP superior o equivalente."
       },
       {
         "category": "unclassified",
-        "id": "requirement:a2d45316ef629ea2a2b689a592fe11afdca9538c69a58739a3073d495d2a8043",
+        "id": "requirement:e310603fb4e7bacedbfbe964cba3b495b5133ebd88aea7c77cc726d29e4fc0fa",
         "normalizedValue": null,
         "parserRule": "unclassified.conservative_fallback",
         "parserVersion": "1.0.0",
-        "sourceQuote": "Residencia en Burgos o alrededores."
+        "sourceQuote": "Plazo: 28 de agosto de 2026"
+      },
+      {
+        "category": "driving_license_or_vehicle",
+        "id": "requirement:87f4c8613d8a1ebd10ff8c53d5c023cead311c0f817634fb922072da2921f092",
+        "normalizedValue": "B",
+        "parserRule": "license.driving_b",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Observaciones: Permiso de conducir B"
       },
       {
         "category": "unclassified",
-        "id": "requirement:e043d019f8571a78222ceb6f6dbaadd9c205ca25f5130eedaff1b4e64ac57bc5",
+        "id": "requirement:1fb658ea6e266e8ee42ce2a303ea30961e8fbbf5ae8a4d8a366cee50272c80a5",
         "normalizedValue": null,
         "parserRule": "unclassified.conservative_fallback",
         "parserVersion": "1.0.0",
-        "sourceQuote": "Disponibilidad para formación remunerada a cargo de la empresa en Burgos."
-      },
-      {
-        "category": "unclassified",
-        "id": "requirement:5965a2cc9ebfecf08500af2691d7aefee0debd8a3b01eb01b9e4e516f002ebd5",
-        "normalizedValue": null,
-        "parserRule": "unclassified.conservative_fallback",
-        "parserVersion": "1.0.0",
-        "sourceQuote": "Experiencia en gestión de equipos y liderazgo."
-      },
-      {
-        "category": "unclassified",
-        "id": "requirement:c94ab1e6ac1b98eea504eb4c58c0a490f954c46560e70d877ad4f8c5a8d70356",
-        "normalizedValue": null,
-        "parserRule": "unclassified.conservative_fallback",
-        "parserVersion": "1.0.0",
-        "sourceQuote": "Experiencia indispensable en el sector de la distribución, valorándose positivamente en el ámbito de la alimentación."
-      },
-      {
-        "category": "unclassified",
-        "id": "requirement:8758ee34fec24b460e5cc14696c2aff2c050244f6aa65ae44068f6f380d0f924",
-        "normalizedValue": null,
-        "parserRule": "unclassified.conservative_fallback",
-        "parserVersion": "1.0.0",
-        "sourceQuote": "Orientación al cliente."
+        "sourceQuote": "Información obtenida de: Empleo público. Sede electrónica de Cabezón de Pisuerga"
       }
     ]
   },
@@ -5843,27 +5710,6 @@
     ]
   },
   {
-    "offerId": "1285638710151",
-    "requirements": [
-      {
-        "category": "unclassified",
-        "id": "requirement:60c878bb361942ed73e05b34ed1d544ef2928f12bc3d7fb405228289939a0c5e",
-        "normalizedValue": null,
-        "parserRule": "unclassified.conservative_fallback",
-        "parserVersion": "1.0.0",
-        "sourceQuote": "Diplomado o Grado en Enfermería."
-      },
-      {
-        "category": "unclassified",
-        "id": "requirement:d3db6ac670a194b3c10aadc259c259e77715c2262772e59fcab65c394328d33a",
-        "normalizedValue": null,
-        "parserRule": "unclassified.conservative_fallback",
-        "parserVersion": "1.0.0",
-        "sourceQuote": "Para más información acuda a Oficina Virtual"
-      }
-    ]
-  },
-  {
     "offerId": "1285647355591",
     "requirements": [
       {
@@ -6419,6 +6265,35 @@
         "parserRule": "unclassified.conservative_fallback",
         "parserVersion": "1.0.0",
         "sourceQuote": "In order to work in Ireland a non-EEA National must hold a valid employment permit."
+      }
+    ]
+  },
+  {
+    "offerId": "1285672476756",
+    "requirements": [
+      {
+        "category": "unclassified",
+        "id": "requirement:088c1c83664addd722f5df7011306cb9e504f4a3ecc139566d0016bd6cc8d986",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Bachiller o técnico o equivalente"
+      },
+      {
+        "category": "unclassified",
+        "id": "requirement:5cbb188fb19c1e1545c1b14e3572abac2fcb48aabca6f2ed3308216db0e30cc8",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Plazo: 9 de septiembre de 2026"
+      },
+      {
+        "category": "unclassified",
+        "id": "requirement:dbdaccb2917787de42fd66056dd7e3efa1ceb67cc7e4e2467526a6607d883269",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Información obtenida de: Empleo público. BOP de Zamora 19/08/2026"
       }
     ]
   },
@@ -7246,31 +7121,31 @@
     ]
   },
   {
-    "offerId": "1285669674533",
+    "offerId": "1285672358481",
     "requirements": [
       {
         "category": "unclassified",
-        "id": "requirement:293f969a06148793af2d49241e315f36dcd566d527b89792dc5083b65ca2d197",
+        "id": "requirement:236efe028d7223bed672d3fe6fdd6d88fef5b42cfe80e3678ef2adb7a2de30c0",
         "normalizedValue": null,
         "parserRule": "unclassified.conservative_fallback",
         "parserVersion": "1.0.0",
-        "sourceQuote": "Graduado en ESO, Graduado Escolar o equivalente"
+        "sourceQuote": "Específica de cada módulo en iniciación (ver las Bases)"
       },
       {
         "category": "unclassified",
-        "id": "requirement:58945cf8ba7d61ba3e9542f4dffad20623367f0dfedd48b2d2b7e3fbc217598a",
+        "id": "requirement:d85cafff650408f07c96e756390403dfb000cf65b4a1e64c2f8a60c93713f9a1",
         "normalizedValue": null,
         "parserRule": "unclassified.conservative_fallback",
         "parserVersion": "1.0.0",
-        "sourceQuote": "Plazo: 20 de agosto de 2026"
+        "sourceQuote": "Plazo: 1 de septiembre de 2026"
       },
       {
         "category": "unclassified",
-        "id": "requirement:ac59a2a0dc74b114db4e33cec3e27531575aa9621298808fceebc5cd59f4a90d",
+        "id": "requirement:83a97a3b1b218a1dd1a7b5ae647ae32baf98055399bc0759ffef7456afa1d115",
         "normalizedValue": null,
         "parserRule": "unclassified.conservative_fallback",
         "parserVersion": "1.0.0",
-        "sourceQuote": "Información obtenida de: Empleo público. BOP Burgos 07/08/2026"
+        "sourceQuote": "Información obtenida de: Empleo público. BOP de Segovia 10 de agosto 2026"
       }
     ]
   },
@@ -8387,11 +8262,24 @@
     ]
   },
   {
-    "offerId": "1285672227367",
+    "offerId": "1285672382452",
+    "requirements": [
+      {
+        "category": "driving_license_or_vehicle",
+        "id": "requirement:3b6d5be43f077a18230e752eaa96237e06a020092c277c053606522b34095f10",
+        "normalizedValue": "B",
+        "parserRule": "license.driving_b",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Permiso de conducir tipo B."
+      }
+    ]
+  },
+  {
+    "offerId": "1285672423318",
     "requirements": [
       {
         "category": "unclassified",
-        "id": "requirement:085e1b2e91e5aaa535a917544809590f4cee710e6ee6808c62f335f28c1daae4",
+        "id": "requirement:fc817c005ddbc19e5cef773abd33ba15eb6971e0cb7b30340db0f5cf8cf84001",
         "normalizedValue": null,
         "parserRule": "unclassified.ambiguous_or_negated",
         "parserVersion": "1.0.0",
@@ -8399,7 +8287,7 @@
       },
       {
         "category": "unclassified",
-        "id": "requirement:a4e4657a318541f3406e6fcd03ff55614b1f50c99d5b30e15114b6fc6c51c4e1",
+        "id": "requirement:5f6db391c0031c4b41b401c2e4d5a5acc964bbf2ab241553fedd25d187ecb513",
         "normalizedValue": null,
         "parserRule": "unclassified.conservative_fallback",
         "parserVersion": "1.0.0",
@@ -8475,27 +8363,6 @@
         "parserRule": "unclassified.ambiguous_or_negated",
         "parserVersion": "1.0.0",
         "sourceQuote": "Experiencia en limpieza de cristales, superficies, empleo de productos y maquinas para garantizar higienización, conservación y mantenimiento de superficies. Permiso de conducir y vehículo propio."
-      }
-    ]
-  },
-  {
-    "offerId": "1285670667086",
-    "requirements": [
-      {
-        "category": "unclassified",
-        "id": "requirement:f3c588c5c598fe51fd7af6b7322660f656f4c36f29c5c68429b7bedc41c6af50",
-        "normalizedValue": null,
-        "parserRule": "unclassified.conservative_fallback",
-        "parserVersion": "1.0.0",
-        "sourceQuote": "Estudios mínimos: Ciclo Formativo Grado Medio."
-      },
-      {
-        "category": "experience",
-        "id": "requirement:92518d0fb671d3fee451baf3449c8f7be2386c873ecd38ac19c8493f80fc54c4",
-        "normalizedValue": 24,
-        "parserRule": "experience.years",
-        "parserVersion": "1.0.0",
-        "sourceQuote": "Experiencia mínima: Al menos 2 años."
       }
     ]
   },
@@ -8608,6 +8475,27 @@
     ]
   },
   {
+    "offerId": "1285672366401",
+    "requirements": [
+      {
+        "category": "unclassified",
+        "id": "requirement:c80b4dd6f59b9bcd2c0e93cf05d48bb2921da3633a723e1e45c133ca52c9cdfc",
+        "normalizedValue": null,
+        "parserRule": "unclassified.ambiguous_or_negated",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Título Superior de Danza o Grado en Enseñanzas Artísticas Superiores de Danza o equivalente; Grado, Licenciatura o equivalente, siempre que acrediten formación específica en danza y bailes"
+      },
+      {
+        "category": "unclassified",
+        "id": "requirement:5af25c2e8b7c2470e33e492a8ad1e21b7129db8da0597a8e259ed71d3ac7b9e3",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Plazo: 31 de agosto de 2026"
+      }
+    ]
+  },
+  {
     "offerId": "1285671786539",
     "requirements": [
       {
@@ -8670,6 +8558,35 @@
         "parserRule": "unclassified.conservative_fallback",
         "parserVersion": "1.0.0",
         "sourceQuote": "Información obtenida de: Empleo público. https://penarandadebracamonte.sedelectronica.es/"
+      }
+    ]
+  },
+  {
+    "offerId": "1285672390751",
+    "requirements": [
+      {
+        "category": "unclassified",
+        "id": "requirement:5a28adf6592dc80ed977f10b454033d4828250b03b6470bc1522a8da92e80f75",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Grado Medio especialidad percusión o equivalente"
+      },
+      {
+        "category": "unclassified",
+        "id": "requirement:85803ed4888b4b9bff590d7d2e8950a7c85bf30a99b4d45f93e0d8f9965b8ee7",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Plazo: 3 de septiembre de 2026"
+      },
+      {
+        "category": "unclassified",
+        "id": "requirement:ce6a46e8fb30c85f9dbee702b3c3702006819ca5739b1eaf26a3932b0d2b0db6",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Información obtenida de: Empleo público. BOP Burgos 19/08/2026"
       }
     ]
   },
@@ -9018,83 +8935,6 @@
     ]
   },
   {
-    "offerId": "1285670667334",
-    "requirements": [
-      {
-        "category": "unclassified",
-        "id": "requirement:0e778c93eac73c9c71f397e73548c9aacf44926c15d7b9bc53882fc87852c3a5",
-        "normalizedValue": null,
-        "parserRule": "unclassified.conservative_fallback",
-        "parserVersion": "1.0.0",
-        "sourceQuote": "Bachillerato."
-      },
-      {
-        "category": "unclassified",
-        "id": "requirement:557cb254b0fa8e0692249ea841b0569c83ca197a767f7ac1cc13369b61e61c63",
-        "normalizedValue": null,
-        "parserRule": "unclassified.ambiguous_or_negated",
-        "parserVersion": "1.0.0",
-        "sourceQuote": "Experiencia previa de al menos un año gestionando equipos en retail (preferiblemente en sector belleza o moda)."
-      },
-      {
-        "category": "unclassified",
-        "id": "requirement:950e4b6c191303c98392ee6805a8dd71fea9e59beefad3d4c17cc15647664f0c",
-        "normalizedValue": null,
-        "parserRule": "unclassified.conservative_fallback",
-        "parserVersion": "1.0.0",
-        "sourceQuote": "Fuerte orientación a resultados y análisis de KPIs."
-      },
-      {
-        "category": "unclassified",
-        "id": "requirement:f6aca15c84f5703a65bb6676a7dafca3544d68c96def466a8201665fafd4f394",
-        "normalizedValue": null,
-        "parserRule": "unclassified.conservative_fallback",
-        "parserVersion": "1.0.0",
-        "sourceQuote": "Liderazgo inspirador y capacidad de desarrollo de talento."
-      },
-      {
-        "category": "unclassified",
-        "id": "requirement:378df69317969bff592b0ba503087f7813846a4c424a9b65138e1ac1e325adb8",
-        "normalizedValue": null,
-        "parserRule": "unclassified.conservative_fallback",
-        "parserVersion": "1.0.0",
-        "sourceQuote": "Perfil comercial con foco en cliente."
-      },
-      {
-        "category": "unclassified",
-        "id": "requirement:f2968bdc1151a714b01a9f47f94a435c26c8d2191893b7c7ff8110ae1a4793ab",
-        "normalizedValue": null,
-        "parserRule": "unclassified.conservative_fallback",
-        "parserVersion": "1.0.0",
-        "sourceQuote": "Alta capacidad organizativa y de toma de decisiones."
-      },
-      {
-        "category": "unclassified",
-        "id": "requirement:1f0f96692e65fca6f9d24547f6782f25d9e310f6647b830e409fc3676fdf1be7",
-        "normalizedValue": null,
-        "parserRule": "unclassified.conservative_fallback",
-        "parserVersion": "1.0.0",
-        "sourceQuote": "Actitud positiva, dinámica y resolutiva."
-      },
-      {
-        "category": "unclassified",
-        "id": "requirement:6c0c06a73adc7c6b969e5ed844091373ac379d4bd57391fb7e60f20bdbfae41d",
-        "normalizedValue": null,
-        "parserRule": "unclassified.conservative_fallback",
-        "parserVersion": "1.0.0",
-        "sourceQuote": "Imagen cuidada y alineada con el mundo beauty."
-      },
-      {
-        "category": "unclassified",
-        "id": "requirement:cf65abb646904988824ae7647a9a0cac46df0834312c4dde3b03394800284cd3",
-        "normalizedValue": null,
-        "parserRule": "unclassified.ambiguous_or_negated",
-        "parserVersion": "1.0.0",
-        "sourceQuote": "Disponibilidad horaria (turnos rotativos, fines de semana y festivos)."
-      }
-    ]
-  },
-  {
     "offerId": "1285668718820",
     "requirements": [
       {
@@ -9174,6 +9014,35 @@
     ]
   },
   {
+    "offerId": "1285672482274",
+    "requirements": [
+      {
+        "category": "unclassified",
+        "id": "requirement:60c959f0b8b021a183366ba87c9d36647bdcc4abee1ce13baaae8275260371e5",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Licenciado en Derecho, en Ciencias Políticas y de la administración, en Economía, en administración y Dirección de empresas, en Ciencias actuariales y Financieras, en Investigación y Técnicas de Mercado o de los títulos de Grado correspondientes"
+      },
+      {
+        "category": "unclassified",
+        "id": "requirement:3c143e4ecdcd28c1ea1ac99741e4108375738f49a7ed224280fb1bd58b6757b8",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Plazo: 9 de septiembre de 2026"
+      },
+      {
+        "category": "unclassified",
+        "id": "requirement:5a63ec1c21ca3ca96ceeea55988da46fddd3683afaa6141beda666f742b189a0",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Información obtenida de: Empleo público. BOP de Zamora 19/08/2026"
+      }
+    ]
+  },
+  {
     "offerId": "1285650693838",
     "requirements": [
       {
@@ -9244,6 +9113,35 @@
         "parserRule": "unclassified.conservative_fallback",
         "parserVersion": "1.0.0",
         "sourceQuote": "Coche propio."
+      }
+    ]
+  },
+  {
+    "offerId": "1285672343620",
+    "requirements": [
+      {
+        "category": "unclassified",
+        "id": "requirement:fcdb587f1a2fdc06084e3479b38ce9b0ab76e59528c1822c40b20da85bfa64b2",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Técnico en Educación Infantil o titulación equivalente. Titulación de Maestro/ o Grado en Educación infantil o equivalente"
+      },
+      {
+        "category": "unclassified",
+        "id": "requirement:b573404a1594b42214a440bee2dcb73db090753f46ef17bee43f483756702dc3",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Plazo: 26 de agosto de 2026"
+      },
+      {
+        "category": "unclassified",
+        "id": "requirement:6ada3deec36bc70a5e0fa499a9c32c25739fe1ffcd858ba244d5bcddabdee48f",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Información obtenida de: Empleo público. BOP de Segovia 19/08/2026"
       }
     ]
   },
@@ -9909,6 +9807,27 @@
     ]
   },
   {
+    "offerId": "1285672489514",
+    "requirements": [
+      {
+        "category": "unclassified",
+        "id": "requirement:30dd9535a281729312f919618e402fbfdf755c6e5a712a10c88c738d84944e9f",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Diplomatura, Ingeniería Técnica, Arquitectura Técnica, Grado universitario o equivalente"
+      },
+      {
+        "category": "unclassified",
+        "id": "requirement:6e5c5588800595909a65c77ceda0420f8caa0c1fea1ddad60aa9ebfe2c6e9003",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Plazo: 1 de septiembre de 2026"
+      }
+    ]
+  },
+  {
     "offerId": "1285668751255",
     "requirements": [
       {
@@ -9975,6 +9894,27 @@
     ]
   },
   {
+    "offerId": "1285672383461",
+    "requirements": [
+      {
+        "category": "unclassified",
+        "id": "requirement:2b3e38817b3fa4708304c29cba0e864b77360534f903654689b31c22eb291a1c",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Licenciado o Grado en Biología, Biotecnología o Química"
+      },
+      {
+        "category": "unclassified",
+        "id": "requirement:642483dbe360b106347c644dbf369ca3e7fa9dc5e13389fd6230d1f93d6da78c",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Plazo: 4 de septiembre de 2026"
+      }
+    ]
+  },
+  {
     "offerId": "1285672142664",
     "requirements": [
       {
@@ -9992,6 +9932,35 @@
         "parserRule": "unclassified.ambiguous_or_negated",
         "parserVersion": "1.0.0",
         "sourceQuote": "Se valorará formación adicional en salud mental, geriatría, contabilidad o dirección de centros sociales, así como cursos relacionados con igualdad."
+      }
+    ]
+  },
+  {
+    "offerId": "1285672473481",
+    "requirements": [
+      {
+        "category": "unclassified",
+        "id": "requirement:9b100ac6ca2dcff85f4f89ef733b4fa27ee04e74d93cb766564578b07ee13c27",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Título universitario de Diplomado/a o Graduado/a en Trabajo Social o equivalente"
+      },
+      {
+        "category": "unclassified",
+        "id": "requirement:875b4c31e0566b488e14171b2b78ffc1cae525f66d300c27640a69b457be1dec",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Plazo: 9 de septiembre de 2026"
+      },
+      {
+        "category": "unclassified",
+        "id": "requirement:87b93f00436935e43652fe6b2ef16b571b0a26fc8f91043bbc27364a3ee690d6",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Información obtenida de: Empleo público. BOP de Zamora 19/08/2026"
       }
     ]
   },
@@ -10121,6 +10090,35 @@
         "parserRule": "unclassified.conservative_fallback",
         "parserVersion": "1.0.0",
         "sourceQuote": "amplio conocimiento del oficio y los productos de Leroy Merlín."
+      }
+    ]
+  },
+  {
+    "offerId": "1285672467963",
+    "requirements": [
+      {
+        "category": "unclassified",
+        "id": "requirement:b8ca429ca21b550a52c863d357404387e48fb3bbbce593626de284e232a7f48c",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Título de Grado o Licenciatura en Veterinaria o equivalente."
+      },
+      {
+        "category": "unclassified",
+        "id": "requirement:d2c85f96c75935c8ea2e4ae01f1266e930a2ee5bb44e9f26687de8975210ab51",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Plazo: 9 de septiembre de 2026"
+      },
+      {
+        "category": "unclassified",
+        "id": "requirement:af5e2a74d5686effdb70ab1cc505c5da8be1edcc8f0b3b84c37d2fb7153fe69e",
+        "normalizedValue": null,
+        "parserRule": "unclassified.conservative_fallback",
+        "parserVersion": "1.0.0",
+        "sourceQuote": "Información obtenida de: Empleo público. BOP de Zamora 19/08/2026"
       }
     ]
   },
