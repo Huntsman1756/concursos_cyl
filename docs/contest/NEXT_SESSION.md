@@ -3,10 +3,10 @@
 ## Estado confirmado
 
 - Producto publicado y verificado en `dfa2a33d612c0f1d3a2cb5a4b7748e697da35c93`.
-- Freeze fuente: `d4082f97c5086dd8c74883aa1226db0b9d8567df`.
-- Snapshot activo: `20260820205536270-ce82eadd0fb9`.
+- Freeze fuente: `d50bca93b05da77696cf403e59047606d11515c9`.
+- Snapshot activo: `20260821054822692-00c61c822d41`.
 - Ocho datasets JCyL visibles y 20 recursos inmutables en el manifiesto.
-- Cobertura: 53 cualificaciones, 63 claves de modalidad, 110 relaciones aprobadas y 21 alias.
+- Cobertura: 55 cualificaciones, 67 claves de modalidad, 124 relaciones aprobadas y 21 alias.
 - Ofertas alcanzadas: 39 de 1.055; la cifra es una unión acotada de IDs, no todo el mercado.
 - Directorio educativo: 1.741 registros y reconciliación exacta de los 229 centros FP por código.
 - La ficha de ciclo incorpora ingresos observados de EDUCAbase con referencia nacional y agregada de Castilla y León, sin presentarlos como predicción individual.

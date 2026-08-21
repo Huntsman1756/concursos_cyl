@@ -21,11 +21,11 @@ describe("contest coverage freeze validator", () => {
 
     expect(freeze.freezeStatus).toBe("frozen");
     expect(freeze.sourceCommitSha).toBe(
-      "d4082f97c5086dd8c74883aa1226db0b9d8567df",
+      "d50bca93b05da77696cf403e59047606d11515c9",
     );
-    expect(freeze.coverage.distinctQualificationCount).toBe(53);
-    expect(freeze.coverage.modalityKeyCount).toBe(63);
-    expect(freeze.coverage.approvedRelationCount).toBe(110);
+    expect(freeze.coverage.distinctQualificationCount).toBe(55);
+    expect(freeze.coverage.modalityKeyCount).toBe(67);
+    expect(freeze.coverage.approvedRelationCount).toBe(124);
     expect(freeze.offers.matchedOfferCount).toBe(39);
     expect(freeze.offers.marginalOfferDeltas.unionOfferCount).toBe(0);
   }, 30_000);
