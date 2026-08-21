@@ -58,6 +58,7 @@ REMOTE_RELEASE="/srv/salida-cyl/releases/$RELEASE_ID"
 REMOTE_STAGING="/srv/salida-cyl/releases/.staging-$RELEASE_ID"
 REMOTE_CURRENT="/srv/salida-cyl/current"
 REMOTE_CURRENT_NEXT="/srv/salida-cyl/current.next"
+REMOTE_DEPLOY_LOCK="/srv/salida-cyl/.deploy-lock"
 PUBLIC_URL=${CADDY_SMOKE_BASE_URL:-https://salida-cyl.157-90-22-40.sslip.io}
 ARCHIVE=
 LIVE_OBSERVED_SHA=unknown
@@ -135,6 +136,7 @@ if ssh "$SSH_HOST" "set -eu
 archive_owned=1
 staging_owned=0
 current_next_owned=0
+deploy_lock_owned=0
 retention_inventory=
 retention_sorted=
 retention_candidates=
@@ -154,8 +156,16 @@ remote_cleanup() {
       rm -f -- "\$retention_file" || :
     fi
   done
+  if [ "\$deploy_lock_owned" -eq 1 ]; then
+    rmdir '$REMOTE_DEPLOY_LOCK' || :
+  fi
 }
 trap remote_cleanup EXIT
+if ! mkdir '$REMOTE_DEPLOY_LOCK'; then
+  echo 'Another VPS deployment is already active.' >&2
+  exit 1
+fi
+deploy_lock_owned=1
 if test -e '$REMOTE_RELEASE' || test -L '$REMOTE_RELEASE'; then
   echo 'Release already exists; refusing to mutate it.' >&2
   exit 1

@@ -72,7 +72,9 @@ preflight only checks authentication and does not change the remote host.
 The deployment script does a clean dependency install, builds locally, uploads
 one uniquely named archive per execution, switches the symlink atomically,
 retains the five newest releases, reloads Caddy and runs the same live SPA/header
-verifier used for the container. Retention inventory, sorting, selection and
+verifier used for the container. A remote deployment lock serializes activation
+and retention so concurrent runs cannot delete a release being activated.
+Retention inventory, sorting, selection and
 deletion are checked separately; any failure stops the deployment before Caddy
 is reloaded. The remote host therefore needs GNU `find`, `sort`, `tail`, `cut`
 and `mv`, in addition to Caddy and the documented SSH permissions. The script

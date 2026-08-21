@@ -141,6 +141,7 @@ function runRemotePayloadInIsolation(
   remotePayload: string,
   options: {
     existingCurrentNext?: "directory" | "symlink";
+    existingDeployLock?: boolean;
     existingFinal?: "directory" | "file" | "symlink";
     existingStaging?: boolean;
     findExit?: number;
@@ -156,10 +157,15 @@ function runRemotePayloadInIsolation(
   const finalRelease = join(releases, "round-1");
   const staging = join(releases, ".staging-round-1");
   const currentNext = join(sandbox, "srv", "salida-cyl", "current.next");
+  const deployLock = join(sandbox, "srv", "salida-cyl", ".deploy-lock");
   mkdirSync(fakeBin, { recursive: true });
   mkdirSync(releases, { recursive: true });
   mkdirSync(archiveDir, { recursive: true });
   writeFileSync(archive, "archive", "utf8");
+
+  if (options.existingDeployLock) {
+    mkdirSync(deployLock);
+  }
 
   if (options.existingStaging) {
     mkdirSync(staging);
@@ -196,10 +202,7 @@ function runRemotePayloadInIsolation(
     join(fakeBin, "systemctl"),
     '#!/bin/sh\nexit "${SYSTEMCTL_EXIT:-0}"\n',
   );
-  writeExecutable(
-    join(fakeBin, "find"),
-    '#!/bin/sh\nexit "${FIND_EXIT:-0}"\n',
-  );
+  writeExecutable(join(fakeBin, "find"), '#!/bin/sh\nexit "${FIND_EXIT:-0}"\n');
 
   const remappedPayload = remotePayload
     .replaceAll("/srv/salida-cyl", join(sandbox, "srv", "salida-cyl"))
@@ -217,6 +220,7 @@ function runRemotePayloadInIsolation(
   const state = {
     archiveExists: pathExists(archive),
     currentNextExists: pathExists(currentNext),
+    deployLockExists: pathExists(deployLock),
     finalExists: pathExists(finalRelease),
     stagingExists: pathExists(staging),
   };
@@ -278,9 +282,14 @@ describe("VPS deployment", () => {
     expect(deployScript).toContain("writeVersionMetadata.ts");
     expect(deployScript).toContain("mktemp");
     expect(deployScript).toMatch(/mktemp "[^"\n]*\.tar\.gz\.XXXXXX"/);
-    expect(deployScript).toContain('REMOTE_ARCHIVE="/tmp/$(basename "$ARCHIVE")"');
+    expect(deployScript).toContain(
+      'REMOTE_ARCHIVE="/tmp/$(basename "$ARCHIVE")"',
+    );
     expect(deployScript).toContain("trap cleanup EXIT");
     expect(deployScript).toContain("trap remote_cleanup EXIT");
+    expect(deployScript).toContain("deploy_lock_owned=0");
+    expect(deployScript).toContain("mkdir '$REMOTE_DEPLOY_LOCK'");
+    expect(deployScript).toContain("rmdir '$REMOTE_DEPLOY_LOCK'");
     expect(deployScript).toContain("scp");
     expect(deployScript).toContain("test -f");
     expect(deployScript).toContain("index.html");
@@ -491,6 +500,24 @@ describe("VPS deployment", () => {
       expect(failed.result.stderr).toContain(
         "Could not inventory releases for retention.",
       );
+    } finally {
+      rmSync(capture.sandbox, { force: true, recursive: true });
+    }
+  });
+
+  it("refuses concurrent activation while preserving the existing deploy lock", () => {
+    const capture = runWithDeploymentFakes({ preserveSandbox: true });
+    try {
+      const failed = runRemotePayloadInIsolation(capture.remotePayload, {
+        existingDeployLock: true,
+      });
+
+      expect(failed.result.status).not.toBe(0);
+      expect(failed.result.stderr).toContain(
+        "Another VPS deployment is already active.",
+      );
+      expect(failed.state.deployLockExists).toBe(true);
+      expect(failed.state.finalExists).toBe(false);
     } finally {
       rmSync(capture.sandbox, { force: true, recursive: true });
     }
