@@ -460,4 +460,84 @@ describe("prepareRuntimeData", () => {
     ).toBe(false);
     expect(shouldCopyRuntimeCandidate("v1\\programs.json")).toBe(true);
   });
+
+  it("resolves a multi-segment target after a physical source alias", async () => {
+    if (process.platform === "win32") return;
+    const root = await mkdtemp(join(tmpdir(), "salida-runtime-data-"));
+    const physicalRoot = join(root, "physical");
+    const source = join(physicalRoot, "two", "one");
+    const sourceAlias = join(root, "source-alias");
+    const target = join(sourceAlias, "one", "two");
+    const active = "20260821144454118-a56e3eeaffa6";
+
+    await writeJson(join(source, "v1", "manifest.json"), {
+      snapshotId: active,
+      resourceSnapshots: {},
+    });
+    await writeJson(
+      join(source, "v1", "snapshots", active, "programs.json"),
+      [],
+    );
+    await writeJson(join(root, "docs", "contest", "coverage-freeze.json"), {});
+    await writeJson(join(root, "docs", "contest", "release-evidence.json"), {});
+    await symlink(physicalRoot, sourceAlias, "dir");
+
+    await prepareRuntimeData({ root, source, target });
+
+    expect(await readdir(join(target, "v1", "snapshots"))).toEqual([active]);
+  });
+
+  it.each([
+    [
+      "query",
+      `/data/v1/snapshots/20260821144454118-a56e3eeaffa6/programs.json?download=1`,
+    ],
+    [
+      "traversal",
+      "/data/v1/snapshots/20260821144454118-a56e3eeaffa6/../programs.json",
+    ],
+    [
+      "encoded",
+      "%2Fdata%2Fv1%2Fsnapshots%2F20260821144454118-a56e3eeaffa6%2Fprograms.json",
+    ],
+  ])("rejects malformed manifest resource route: %s", async (_name, path) => {
+    const fixture = await createMinimalRuntimeFixture(
+      "/data/v1/snapshots/20260821144454118-a56e3eeaffa6/programs.json",
+    );
+    await writeJson(join(fixture.source, "v1", "manifest.json"), {
+      snapshotId: fixture.active,
+      resourceSnapshots: { programs: { resourcePath: path } },
+    });
+
+    await expect(
+      prepareRuntimeData({
+        root: fixture.root,
+        source: fixture.source,
+        target: fixture.target,
+      }),
+    ).rejects.toThrow(/Malformed runtime snapshot resource path|resource path/);
+  });
+
+  it("rejects manifest resource snapshots that disagree with snapshotId", async () => {
+    const fixture = await createMinimalRuntimeFixture(
+      "/data/v1/snapshots/20260821144454118-a56e3eeaffa6/programs.json",
+    );
+    await writeJson(join(fixture.source, "v1", "manifest.json"), {
+      snapshotId: fixture.active,
+      resourceSnapshots: {
+        programs: {
+          resourcePath:
+            "/data/v1/snapshots/20260821150000000-111111111111/programs.json",
+        },
+      },
+    });
+
+    await expect(
+      prepareRuntimeData({
+        root: fixture.root,
+        source: fixture.source,
+        target: fixture.target,
+      }),
+    ).rejects.toThrow("exactly one snapshot");
+  });
 });

@@ -54,7 +54,7 @@ async function resolveExistingAncestor(path: string): Promise<string> {
   while (true) {
     try {
       const physicalCandidate = await realpath(candidate);
-      return join(physicalCandidate, ...missingSegments.reverse());
+      return join(physicalCandidate, ...missingSegments);
     } catch (error) {
       if ((error as NodeJS.ErrnoException).code !== "ENOENT") throw error;
       const parent = dirname(candidate);
@@ -265,22 +265,50 @@ async function activeSnapshotId(source: string): Promise<string> {
     await readFile(join(source, "v1", "manifest.json"), "utf8"),
   ) as {
     snapshotId?: unknown;
-    resourceSnapshots?: Record<string, { resourcePath?: unknown }>;
+    resourceSnapshots?: unknown;
   };
-  const addressedIds = new Set(
-    Object.values(manifest.resourceSnapshots ?? {}).flatMap((resource) => {
-      if (typeof resource.resourcePath !== "string") return [];
-      const match = /\/data\/v1\/snapshots\/(\d{17}-[a-f0-9]{12})\//u.exec(
-        resource.resourcePath,
-      );
-      return match?.[1] ? [match[1]] : [];
-    }),
-  );
-  if (
-    typeof manifest.snapshotId === "string" &&
-    SNAPSHOT_ID_EXACT.test(manifest.snapshotId)
-  ) {
+  const addressedIds = new Set<string>();
+  if (manifest.snapshotId !== undefined) {
+    if (
+      typeof manifest.snapshotId !== "string" ||
+      !SNAPSHOT_ID_EXACT.test(manifest.snapshotId)
+    ) {
+      throw new Error("The runtime manifest snapshotId is invalid.");
+    }
     addressedIds.add(manifest.snapshotId);
+  }
+  if (manifest.resourceSnapshots !== undefined) {
+    if (
+      typeof manifest.resourceSnapshots !== "object" ||
+      manifest.resourceSnapshots === null ||
+      Array.isArray(manifest.resourceSnapshots)
+    ) {
+      throw new Error("The runtime manifest resourceSnapshots are invalid.");
+    }
+    for (const [key, resource] of Object.entries(manifest.resourceSnapshots)) {
+      if (
+        typeof resource !== "object" ||
+        resource === null ||
+        Array.isArray(resource) ||
+        typeof (resource as { resourcePath?: unknown }).resourcePath !==
+          "string"
+      ) {
+        throw new Error(
+          `The runtime manifest resourceSnapshots.${key}.resourcePath is invalid.`,
+        );
+      }
+      const resourcePath = (resource as { resourcePath: string }).resourcePath;
+      const reference = snapshotReferenceFromString(
+        resourcePath,
+        "public/data/v1/manifest.json",
+      );
+      if (!reference) {
+        throw new Error(
+          `The runtime manifest resourceSnapshots.${key}.resourcePath is invalid.`,
+        );
+      }
+      addressedIds.add(reference.snapshotId);
+    }
   }
   if (addressedIds.size !== 1) {
     throw new Error("The runtime manifest must address exactly one snapshot.");
