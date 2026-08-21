@@ -319,6 +319,14 @@ test("the skip link moves keyboard focus to the main content", async ({
   await expect(page.locator("main#main-content")).toBeFocused();
 });
 
+test("SPA navigation moves focus to the new page content", async ({ page }) => {
+  await page.goto("/");
+
+  await page.getByRole("link", { name: "Desde FP" }).click();
+  await expect(page).toHaveURL(/\/desde-fp$/u);
+  await expect(page.locator("main#main-content")).toBeFocused();
+});
+
 test("a validated stale legacy manifest keeps navigation and names the last update", async ({
   page,
 }) => {

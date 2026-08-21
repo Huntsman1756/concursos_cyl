@@ -128,7 +128,11 @@ export function TrainingSearchPage() {
         </section>
       )}
 
-      {status === "loading" && <p>Preparando los ciclos oficiales…</p>}
+      {status === "loading" && (
+        <p role="status" aria-live="polite">
+          Preparando los ciclos oficiales…
+        </p>
+      )}
       {status === "failed" && (
         <div className="status-panel" role="alert">
           <h2>No hemos podido cargar los ciclos</h2>

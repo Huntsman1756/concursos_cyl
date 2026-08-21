@@ -164,7 +164,12 @@ export function IncomeEvidenceCard({
 
               <details className="income-technical-detail">
                 <summary>Ver términos técnicos y tabla de datos</summary>
-                <div className="income-table-scroll" role="region" tabIndex={0}>
+                <div
+                  className="income-table-scroll"
+                  role="region"
+                  aria-label={`Tabla técnica: ${item.label}`}
+                  tabIndex={0}
+                >
                   <table>
                     <caption className="visually-hidden">
                       Datos técnicos: {item.label}

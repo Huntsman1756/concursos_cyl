@@ -410,7 +410,9 @@ describe("TrainingResultsPage", () => {
       </MemoryRouter>,
     );
 
-    const warning = await screen.findByRole("status");
+    const warning = await screen.findByText(
+      /No se han podido actualizar los datos\./u,
+    );
     expect(warning).toHaveTextContent(
       "No se han podido actualizar los datos. Mostramos la última copia disponible.",
     );

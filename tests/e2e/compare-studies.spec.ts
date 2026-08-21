@@ -124,3 +124,29 @@ test("keeps the comparison form keyboard reachable", async ({
   await page.keyboard.press("Enter");
   await expect(page.locator("#main-content")).toBeFocused();
 });
+
+test("exposes comparison progress and technical tables to assistive technology", async ({
+  page,
+}) => {
+  await page.goto("/comparar");
+
+  const form = page.getByRole("form", {
+    name: "Seleccionar datos de comparación",
+  });
+  await expect(form).toBeVisible();
+  await expect(form.locator('[aria-current="step"]')).toHaveText(/Nivel/u);
+
+  await page.getByText("Grado superior", { exact: true }).click();
+  await expect(form.locator('[aria-current="step"]')).toHaveText(/Ciclos/u);
+
+  await form.getByRole("checkbox").first().check();
+  await expect(form.locator('[aria-current="step"]')).toHaveText(/Cohorte/u);
+
+  await page
+    .getByText("Ver términos técnicos y tabla de datos", { exact: true })
+    .first()
+    .click();
+  await expect(
+    page.getByRole("region", { name: /Tabla técnica:/u }).first(),
+  ).toBeVisible();
+});

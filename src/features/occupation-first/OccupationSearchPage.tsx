@@ -80,7 +80,9 @@ export function OccupationSearchPage() {
         </p>
       </header>
       {state.status === "loading" && (
-        <p>Preparando las ocupaciones oficiales…</p>
+        <p role="status" aria-live="polite">
+          Preparando las ocupaciones oficiales…
+        </p>
       )}
       {state.status === "failed" && (
         <div className="status-panel" role="alert">
