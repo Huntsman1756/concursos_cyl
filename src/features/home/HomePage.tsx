@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Icon } from "../../components/Icon";
 import {
@@ -92,11 +92,20 @@ export function HomePage() {
   const [selectedProgram, setSelectedProgram] = useState("");
   const [confirmedOccupation, setConfirmedOccupation] =
     useState<Occupation | null>(null);
+  const manifestPromiseRef = useRef<ReturnType<typeof loadManifest> | null>(
+    null,
+  );
+  const getManifest = () => {
+    if (manifestPromiseRef.current === null) {
+      manifestPromiseRef.current = loadManifest();
+    }
+    return manifestPromiseRef.current;
+  };
 
   useEffect(() => {
     let isActive = true;
 
-    void loadManifest()
+    void getManifest()
       .then((manifest) => {
         if (!isActive) return;
 
@@ -145,7 +154,7 @@ export function HomePage() {
 
   useEffect(() => {
     let isActive = true;
-    void loadManifest()
+    void getManifest()
       .then(async (manifest) => {
         const [foundation, relationships, officialOccupations] =
           await Promise.all([

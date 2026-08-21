@@ -294,6 +294,33 @@ describe("HomePage", () => {
     ).toBeChecked();
   });
 
+  it("requests the manifest once per mount", async () => {
+    const manifest = currentManifestFixture();
+    const fetchMock = vi.fn((input: RequestInfo | URL) => {
+      const path = typeof input === "string" ? input : input.toString();
+      return Promise.resolve(
+        path === "/data/v1/manifest.json"
+          ? new Response(JSON.stringify(manifest), { status: 200 })
+          : new Response(null, { status: 404 }),
+      );
+    });
+    vi.stubGlobal("fetch", fetchMock);
+
+    render(
+      <MemoryRouter>
+        <HomePage />
+      </MemoryRouter>,
+    );
+
+    await waitFor(() =>
+      expect(
+        fetchMock.mock.calls.filter(
+          ([input]) => input === "/data/v1/manifest.json",
+        ),
+      ).toHaveLength(1),
+    );
+  });
+
   it("announces a pending manifest before rendering the validated update date", async () => {
     let resolveManifest!: (response: Response) => void;
     const manifestResponse = new Promise<Response>((resolve) => {
