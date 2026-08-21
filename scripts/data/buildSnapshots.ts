@@ -1395,23 +1395,15 @@ function sourceSnapshot(
 async function loadCheckedInSepeOccupationMarket(
   root: string,
 ): Promise<z.infer<typeof SepeOccupationMarketResourceSchema>> {
-  const relativePath = resolve(
-    "data",
-    "curated",
-    "sepe-occupation-market.json",
-  );
-  const candidatePaths = [resolve(root, relativePath)];
-  const workspacePath = resolve(process.cwd(), relativePath);
-  if (workspacePath !== candidatePaths[0]) candidatePaths.push(workspacePath);
-  for (const candidatePath of candidatePaths) {
-    if (await pathExists(candidatePath)) {
-      return SepeOccupationMarketResourceSchema.parse(
-        JSON.parse(await readFile(candidatePath, "utf8")),
-      );
-    }
+  const relativePath = "data/curated/sepe-occupation-market.json";
+  const candidatePath = resolve(root, relativePath);
+  if (await pathExists(candidatePath)) {
+    return SepeOccupationMarketResourceSchema.parse(
+      JSON.parse(await readFile(candidatePath, "utf8")),
+    );
   }
   throw new Error(
-    `Checked-in SEPE occupation market capture is missing: ${candidatePaths[0]}.`,
+    `Checked-in SEPE occupation market capture is missing: ${candidatePath}.`,
   );
 }
 

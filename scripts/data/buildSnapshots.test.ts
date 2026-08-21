@@ -45,6 +45,20 @@ async function temporaryRoot(): Promise<string> {
   const root = await mkdtemp(
     join(physicalTemporaryDirectory, "salida-cyl-task-6-"),
   );
+  const capturePath = join(
+    process.cwd(),
+    "data",
+    "curated",
+    "sepe-occupation-market.json",
+  );
+  const temporaryCapturePath = join(
+    root,
+    "data",
+    "curated",
+    "sepe-occupation-market.json",
+  );
+  await mkdir(dirname(temporaryCapturePath), { recursive: true });
+  await cp(capturePath, temporaryCapturePath);
   temporaryRoots.push(root);
   return root;
 }
@@ -486,6 +500,83 @@ const BUILD_SNAPSHOTS_TEST_TIMEOUT =
   process.env.CI === "true" ? 90_000 : 30_000;
 
 describe("buildSnapshots", { timeout: BUILD_SNAPSHOTS_TEST_TIMEOUT }, () => {
+  it("reads the SEPE capture from each requested root directory", async () => {
+    const firstRoot = await temporaryRoot();
+    const secondRoot = await temporaryRoot();
+    const capturePath = join(
+      process.cwd(),
+      "data",
+      "curated",
+      "sepe-occupation-market.json",
+    );
+    const capture = JSON.parse(await readFile(capturePath, "utf8")) as Array<{
+      cno: { label: string };
+      source: { retrievedAt: string };
+    }>;
+    const writeCapture = async (root: string, marker: string) => {
+      const localCapturePath = join(
+        root,
+        "data",
+        "curated",
+        "sepe-occupation-market.json",
+      );
+      await mkdir(dirname(localCapturePath), { recursive: true });
+      await writeFile(
+        localCapturePath,
+        JSON.stringify(
+          [
+            {
+              ...capture[0],
+              cno: {
+                ...capture[0].cno,
+                label: `${capture[0].cno.label} ${marker}`,
+              },
+              source: {
+                ...capture[0].source,
+                retrievedAt: "2026-08-22T10:00:00Z",
+              },
+            },
+          ],
+          null,
+          2,
+        ) + "\n",
+        "utf8",
+      );
+    };
+    await writeCapture(firstRoot, "first-root");
+    await writeCapture(secondRoot, "second-root");
+
+    await buildSnapshots({ rootDirectory: firstRoot, ...fixedOptions });
+    await buildSnapshots({ rootDirectory: secondRoot, ...fixedOptions });
+
+    const firstManifest = await readManifest(firstRoot);
+    const secondManifest = await readManifest(secondRoot);
+    const firstRecords = JSON.parse(
+      await readFile(
+        assetPath(
+          firstRoot,
+          firstManifest.resourceSnapshots.sepeOccupationMarket.resourcePath,
+        ),
+        "utf8",
+      ),
+    ) as Array<{ cno: { label: string } }>;
+    const secondRecords = JSON.parse(
+      await readFile(
+        assetPath(
+          secondRoot,
+          secondManifest.resourceSnapshots.sepeOccupationMarket.resourcePath,
+        ),
+        "utf8",
+      ),
+    ) as Array<{ cno: { label: string } }>;
+
+    expect(firstRecords[0]?.cno.label).toContain("first-root");
+    expect(secondRecords[0]?.cno.label).toContain("second-root");
+    expect(
+      firstManifest.resourceSnapshots.sepeOccupationMarket.sha256,
+    ).not.toBe(secondManifest.resourceSnapshots.sepeOccupationMarket.sha256);
+  });
+
   it("publishes the checked-in SEPE occupation market as an additive hashed resource", async () => {
     const root = await temporaryRoot();
 
