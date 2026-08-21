@@ -50,11 +50,13 @@ ediciones mecanicas acotadas mediante `openrouter-ox-code`. La credencial se
 obtiene exclusivamente del almacén de autenticación de OpenCode o del entorno;
 nunca se guarda en `opencode.json`, agentes, contratos ni telemetría.
 
-La declaración del modelo no autoriza todavía cambios de producto. Antes de
-admitirlo como worker debe superar, en un worktree desechable, descubrimiento del
-modelo, llamada 2xx con uso observado, herramientas de edición, respeto de rutas,
-validación independiente y una comparación A/B con Qwen. Hasta entonces su estado
-es `configured-unqualified`: no es fallback de NAN ni participa en lotes.
+El modelo superó el 21 de agosto de 2026 el shakedown supervisado en un worktree
+desechable: llamada OpenRouter 2xx con dos respuestas observadas, 10.333 tokens
+reportados por el proveedor, una única edición dentro de la ruta permitida,
+validación independiente con salida cero, limpieza del worktree y decisión
+Frontier `ACCEPT`. Su estado es `qualified-serial`: puede recibir contratos de
+producto explícitos, pero no es fallback automático de NAN y su admisión máxima
+permanece en un worker concurrente hasta completar una comparación A/B útil.
 
 Una vez cualificado, Codex podrá asignarle explícitamente contratos mecánicos de
 cinco pasos como máximo. Seguirá sin poder publicar, hacer commits, ampliar rutas

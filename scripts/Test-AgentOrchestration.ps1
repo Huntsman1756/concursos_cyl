@@ -1287,7 +1287,7 @@ try {
             Assert-True ($agentsText -match 'glm5\.2.*[Pp]rohibido') '20az: GLM5.2 marked as prohibited'
             Assert-True ($agentsText -match 'gemma4.*[Ss]olo lectura|Prohibido.*gemma4') '20ba: Gemma4 prohibition for code documented'
             Assert-True ($agentsText -match 'broker rechaza el parámetro') '20bb: Gemma code fallback is rejected before execution'
-            Assert-True ($agentsText -match 'configured-unqualified') '20bc: OpenRouter remains explicitly unqualified'
+            Assert-True ($agentsText -match 'qualified-serial') '20bc: OpenRouter qualification state is documented'
             Assert-True ($agentsText -match 'openrouter/stealth/ox-alpha') '20bd: OpenRouter candidate is documented'
         } else {
             Write-Host "  SKIP: AGENTS.md structural checks (file not at $agentsPath)" -ForegroundColor Yellow
