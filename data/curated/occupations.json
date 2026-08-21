@@ -1077,5 +1077,71 @@
     "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
     "reviewedAt": "2026-08-13",
     "catalogVersion": "1.0.0"
+  },
+  {
+    "occupationId": "occupation:cno11:6300",
+    "preferredLabel": "Trabajadores cualificados en actividades agropecuarias mixtas",
+    "confirmationLabel": "Trabajadores cualificados en actividades agropecuarias mixtas",
+    "classificationSystem": "CNO-11",
+    "classificationCode": "6300",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+    "reviewedAt": "2026-08-21",
+    "catalogVersion": "1.0.0"
+  },
+  {
+    "occupationId": "occupation:cno11:7709",
+    "preferredLabel": "Catadores y clasificadores de alimentos y bebidas",
+    "confirmationLabel": "Catadores y clasificadores de alimentos y bebidas",
+    "classificationSystem": "CNO-11",
+    "classificationCode": "7709",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+    "reviewedAt": "2026-08-21",
+    "catalogVersion": "1.0.0"
+  },
+  {
+    "occupationId": "occupation:cno11:9511",
+    "preferredLabel": "Peones agrícolas (excepto en huertas, invernaderos, viveros y jardines)",
+    "confirmationLabel": "Peones agrícolas (excepto en huertas, invernaderos, viveros y jardines)",
+    "classificationSystem": "CNO-11",
+    "classificationCode": "9511",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+    "reviewedAt": "2026-08-21",
+    "catalogVersion": "1.0.0"
+  },
+  {
+    "occupationId": "occupation:cno11:9512",
+    "preferredLabel": "Peones agrícolas en huertas, invernaderos, viveros y jardines",
+    "confirmationLabel": "Peones agrícolas en huertas, invernaderos, viveros y jardines",
+    "classificationSystem": "CNO-11",
+    "classificationCode": "9512",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+    "reviewedAt": "2026-08-21",
+    "catalogVersion": "1.0.0"
+  },
+  {
+    "occupationId": "occupation:cno11:9530",
+    "preferredLabel": "Peones agropecuarios",
+    "confirmationLabel": "Peones agropecuarios",
+    "classificationSystem": "CNO-11",
+    "classificationCode": "9530",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+    "reviewedAt": "2026-08-21",
+    "catalogVersion": "1.0.0"
+  },
+  {
+    "occupationId": "occupation:cno11:9543",
+    "preferredLabel": "Peones forestales y de la caza",
+    "confirmationLabel": "Peones forestales y de la caza",
+    "classificationSystem": "CNO-11",
+    "classificationCode": "9543",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+    "reviewedAt": "2026-08-21",
+    "catalogVersion": "1.0.0"
   }
 ]

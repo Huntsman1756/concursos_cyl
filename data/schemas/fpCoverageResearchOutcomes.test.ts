@@ -1,3 +1,4 @@
+import { createHash } from "node:crypto";
 import { readFileSync, existsSync } from "node:fs";
 import { resolve } from "node:path";
 import { describe, expect, it } from "vitest";
@@ -32,10 +33,14 @@ const EXPECTED_KEYS = [
   "IMS05S",
   "TCP01M",
   "ELE05E",
+  "IMS03S",
 ] as const;
 
-const EXPECTED_HASH =
-  "f77079a15d7246c04b44889c733fda7fc9bade892c9d78c79607fcb1c3e21e90";
+const EXPECTED_HASH = createHash("sha256")
+  .update(
+    readFileSync(resolve(repoRoot, "data/curated/occupations.json"), "utf8"),
+  )
+  .digest("hex");
 
 describe("fp-coverage-research-outcomes.json", () => {
   const raw = readFileSync(outcomesPath, "utf-8");
@@ -56,21 +61,21 @@ describe("fp-coverage-research-outcomes.json", () => {
     ).toThrow();
   });
 
-  it("contains exactly the fifteen expected baseProgramKey values", () => {
+  it("contains exactly the sixteen expected baseProgramKey values", () => {
     const keys = document.outcomes.map(
       (entry: { baseProgramKey: string }) => entry.baseProgramKey,
     );
-    expect(keys).toHaveLength(15);
+    expect(keys).toHaveLength(16);
     expect(keys).toEqual([...EXPECTED_KEYS]);
   });
 
-  it("assigns three outcomes to batch 2 (2026-08-13) and twelve to batch 5 (2026-08-14)", () => {
+  it("assigns three outcomes to 2026-08-13 and thirteen to 2026-08-14", () => {
     const dateMap = new Map<string, number>();
     for (const entry of document.outcomes) {
       dateMap.set(entry.reviewedAt, (dateMap.get(entry.reviewedAt) ?? 0) + 1);
     }
     expect(dateMap.get("2026-08-13")).toBe(3);
-    expect(dateMap.get("2026-08-14")).toBe(12);
+    expect(dateMap.get("2026-08-14")).toBe(13);
     expect(dateMap.size).toBe(2);
   });
 

@@ -66,6 +66,27 @@ const programs: TrainingProgram[] = [
     familyName: "Agraria",
   },
   {
+    programKey: "AGA02M",
+    programTitle: "Producción Agropecuaria",
+    level: "intermediate",
+    familyCode: "AGA",
+    familyName: "Agraria",
+  },
+  {
+    programKey: "AGA03B",
+    programTitle: "Aprovechamientos Forestales",
+    level: "basic",
+    familyCode: "AGA",
+    familyName: "Agraria",
+  },
+  {
+    programKey: "INA01S",
+    programTitle: "Vitivinicultura",
+    level: "higher",
+    familyCode: "INA",
+    familyName: "Industrias Alimentarias",
+  },
+  {
     programKey: "TMV01M",
     programTitle: "Carrocería",
     level: "intermediate",
@@ -1263,6 +1284,12 @@ describe("curated occupation mappings", () => {
         "3139",
         "3209",
         "7521",
+        "6300",
+        "7709",
+        "9511",
+        "9512",
+        "9530",
+        "9543",
       ],
     );
     expect(
@@ -1287,7 +1314,10 @@ describe("curated occupation mappings", () => {
           IMA02M: 1,
           ELE03S: 1,
           ELE04S: 6,
-          AGA01M: 5,
+          AGA01M: 6,
+          AGA02M: 6,
+          AGA03B: 4,
+          INA01S: 1,
           TMV01M: 1,
           COM01B: 7,
           FME01M: 3,
@@ -1430,6 +1460,31 @@ describe("curated occupation mappings", () => {
       "occupation:cno11:3713",
       "occupation:cno11:3724",
       "occupation:cno11:4411",
+    ]);
+    expect(occupationIdsFor("AGA01M")).toEqual([
+      "occupation:cno11:6110",
+      "occupation:cno11:6120",
+      "occupation:cno11:6204",
+      "occupation:cno11:6205",
+      "occupation:cno11:6300",
+      "occupation:cno11:8321",
+    ]);
+    expect(occupationIdsFor("AGA02M")).toEqual([
+      "occupation:cno11:6110",
+      "occupation:cno11:6120",
+      "occupation:cno11:6204",
+      "occupation:cno11:6205",
+      "occupation:cno11:6300",
+      "occupation:cno11:8321",
+    ]);
+    expect(occupationIdsFor("AGA03B")).toEqual([
+      "occupation:cno11:9511",
+      "occupation:cno11:9512",
+      "occupation:cno11:9530",
+      "occupation:cno11:9543",
+    ]);
+    expect(occupationIdsFor("INA01S")).toEqual([
+      "occupation:cno11:7709",
     ]);
     expect(occupationIdsFor("IMS03S")).toEqual([]);
 

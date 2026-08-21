@@ -1958,5 +1958,175 @@
     "sourceQuote": "Informador / informadora juvenil.",
     "reviewedAt": "2026-08-21",
     "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "AGA01M",
+    "occupationId": "occupation:cno11:6110",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.boe.es/eli/es/rd/2009/10/30/1633",
+    "sourceQuote": "Agricultor ecológico.",
+    "reviewedAt": "2026-08-21",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "AGA01M",
+    "occupationId": "occupation:cno11:6120",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.boe.es/eli/es/rd/2009/10/30/1633",
+    "sourceQuote": "Viverista ecológico.",
+    "reviewedAt": "2026-08-21",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "AGA01M",
+    "occupationId": "occupation:cno11:6204",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.boe.es/eli/es/rd/2009/10/30/1633",
+    "sourceQuote": "Apicultor ecológico.",
+    "reviewedAt": "2026-08-21",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "AGA01M",
+    "occupationId": "occupation:cno11:6205",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.boe.es/eli/es/rd/2009/10/30/1633",
+    "sourceQuote": "Avicultor ecológico.",
+    "reviewedAt": "2026-08-21",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "AGA01M",
+    "occupationId": "occupation:cno11:6300",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.boe.es/eli/es/rd/2009/10/30/1633",
+    "sourceQuote": "Trabajador cualificado por cuenta ajena en cultivos y ganadería ecológica.",
+    "reviewedAt": "2026-08-21",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "AGA01M",
+    "occupationId": "occupation:cno11:8321",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.boe.es/eli/es/rd/2009/10/30/1633",
+    "sourceQuote": "Operador de maquinaria agrícola y ganadera.",
+    "reviewedAt": "2026-08-21",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "AGA02M",
+    "occupationId": "occupation:cno11:6110",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.boe.es/eli/es/rd/2009/10/30/1634",
+    "sourceQuote": "Agricultor.",
+    "reviewedAt": "2026-08-21",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "AGA02M",
+    "occupationId": "occupation:cno11:6120",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.boe.es/eli/es/rd/2009/10/30/1634",
+    "sourceQuote": "Horticultor.",
+    "reviewedAt": "2026-08-21",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "AGA02M",
+    "occupationId": "occupation:cno11:6204",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.boe.es/eli/es/rd/2009/10/30/1634",
+    "sourceQuote": "Apicultor.",
+    "reviewedAt": "2026-08-21",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "AGA02M",
+    "occupationId": "occupation:cno11:6205",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.boe.es/eli/es/rd/2009/10/30/1634",
+    "sourceQuote": "Avicultor.",
+    "reviewedAt": "2026-08-21",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "AGA02M",
+    "occupationId": "occupation:cno11:6300",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.boe.es/eli/es/rd/2009/10/30/1634",
+    "sourceQuote": "Trabajador cualificado por cuenta ajena en cultivos y ganadería.",
+    "reviewedAt": "2026-08-21",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "AGA02M",
+    "occupationId": "occupation:cno11:8321",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.boe.es/eli/es/rd/2009/10/30/1634",
+    "sourceQuote": "Operador de maquinaria agrícola y ganadera.",
+    "reviewedAt": "2026-08-21",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "AGA03B",
+    "occupationId": "occupation:cno11:9511",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/agraria/aprovechamientos-forestales.html",
+    "sourceQuote": "Peón en cultivos herbáceos.",
+    "reviewedAt": "2026-08-21",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "AGA03B",
+    "occupationId": "occupation:cno11:9512",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/agraria/aprovechamientos-forestales.html",
+    "sourceQuote": "Peón de vivero.",
+    "reviewedAt": "2026-08-21",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "AGA03B",
+    "occupationId": "occupation:cno11:9530",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/agraria/aprovechamientos-forestales.html",
+    "sourceQuote": "Peón agropecuario.",
+    "reviewedAt": "2026-08-21",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "AGA03B",
+    "occupationId": "occupation:cno11:9543",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/agraria/aprovechamientos-forestales.html",
+    "sourceQuote": "Peón forestal.",
+    "reviewedAt": "2026-08-21",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "INA01S",
+    "occupationId": "occupation:cno11:7709",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/industrias-alimentarias/vitivinicultura.html",
+    "sourceQuote": "Analista sensorial.",
+    "reviewedAt": "2026-08-21",
+    "mappingVersion": "1.0.0"
   }
 ]
