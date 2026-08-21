@@ -8,7 +8,7 @@ import {
   type TrainingOccupationLink,
 } from "../../data/schemas/curatedMappings";
 
-const REVIEWED_SOURCE_COMMIT = "c3344cc6718a835f061190c20a9c38ee63834d1b";
+const REVIEWED_SOURCE_COMMIT = "59e07dbae05515d235c0bd76c7875dbfabe82f1c";
 const LINKS_PATH = "data/curated/training-occupation-links.json";
 
 export const ACCEPTED_RELATION_KEYS = [
@@ -38,6 +38,22 @@ export const ACCEPTED_RELATION_KEYS = [
   "AFD02SD|3723",
   "AGA01B|4121",
   "AGA01B|5220",
+  "AGA01M|6110",
+  "AGA01M|6120",
+  "AGA01M|6204",
+  "AGA01M|6205",
+  "AGA01M|6300",
+  "AGA01M|8321",
+  "AGA02M|6110",
+  "AGA02M|6120",
+  "AGA02M|6204",
+  "AGA02M|6205",
+  "AGA02M|6300",
+  "AGA02M|8321",
+  "AGA03B|9511",
+  "AGA03B|9512",
+  "AGA03B|9530",
+  "AGA03B|9543",
   "AGA03S|2640",
   "AGA04M|6120",
   "AGA04M|8321",
@@ -151,6 +167,7 @@ export const ACCEPTED_RELATION_KEYS = [
   "INA02S|3160",
   "INA02S|3209",
   "INA02S|3510",
+  "INA01S|7709",
   "MAM01B|7812",
   "MAM01B|8209",
   "MAM01B|9700",
