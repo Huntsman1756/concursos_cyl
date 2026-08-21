@@ -3,26 +3,25 @@
 ## Estado confirmado
 
 - Producto publicado y verificado en `dfa2a33d612c0f1d3a2cb5a4b7748e697da35c93`.
-- Freeze fuente: `647554e6cd71d650431da6e67c3c74d77d66fdb6`.
-- Snapshot activo: `20260820184643129-a5594cf94fc7`.
+- Freeze fuente: `d4082f97c5086dd8c74883aa1226db0b9d8567df`.
+- Snapshot activo: `20260820205536270-ce82eadd0fb9`.
 - Ocho datasets JCyL visibles y 20 recursos inmutables en el manifiesto.
-- Cobertura: 48 cualificaciones, 58 claves de modalidad, 105 relaciones aprobadas y 21 alias.
-- Ofertas alcanzadas: 39 de 1.026; la cifra es una unión acotada de IDs, no todo el mercado.
+- Cobertura: 53 cualificaciones, 63 claves de modalidad, 110 relaciones aprobadas y 21 alias.
+- Ofertas alcanzadas: 39 de 1.055; la cifra es una unión acotada de IDs, no todo el mercado.
 - Directorio educativo: 1.741 registros y reconciliación exacta de los 229 centros FP por código.
 - La ficha de ciclo incorpora ingresos observados de EDUCAbase con referencia nacional y agregada de Castilla y León, sin presentarlos como predicción individual.
-- QA final: 744 pruebas aprobadas y 180 omitidas por condiciones de plataforma; 100/100 E2E en escritorio y móvil.
+- QA final en CI: 749 pruebas aprobadas y 180 omitidas por condiciones de plataforma; 100/100 E2E en escritorio y móvil.
 - Matriz opcional preparada para Chromium, Firefox y WebKit sin encarecer el CI ordinario.
 - Workflow verificado: `32423643267`.
 - Diez capturas finales anónimas ligadas al commit desplegado y validadas con Axe, red, consola y overflow.
 
 ## Orden de trabajo
 
-1. Confirmar la convocatoria oficial vigente; el portal visible continúa mostrando la IX edición.
-2. Completar identidad, contacto, declaraciones, consentimiento y adjuntos humanos.
-3. Obtener aprobación explícita antes de cualquier envío externo.
-4. Construir una evaluación etiquetada de precisión/cobertura antes de ampliar el matching de ofertas.
-5. Priorizar nuevas relaciones para ciclos con evidencia oficial y utilidad laboral observada.
-6. Repetir freeze, capturas y release completo después de cualquier cambio posterior de producto o datos.
+1. Completar identidad, contacto, declaraciones, consentimiento y adjuntos humanos para el X Concurso.
+2. Obtener aprobación explícita antes de cualquier envío externo.
+3. Mantener la evaluación etiquetada de precisión/cobertura antes de ampliar el matching de ofertas.
+4. Priorizar nuevas relaciones para ciclos con evidencia oficial y utilidad laboral observada.
+5. Repetir freeze, capturas y release completo después de cualquier cambio posterior de producto o datos.
 
 ## Política de ejecución NAN
 

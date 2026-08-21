@@ -2,8 +2,10 @@
 
 ## Campos que debe completar una persona
 
-- Título oficial del concurso: **PENDIENTE — el portal oficial consultado sigue mostrando la IX edición; confirmar la convocatoria vigente antes de registrar**.
-- Categoría prevista: **Productos y Servicios — confirmar contra la convocatoria vigente**.
+- Convocatoria: [X Concurso de Datos Abiertos de Castilla y León](https://datosabiertos.jcyl.es/web/es/concurso-datos-abiertos/concurso-datos-abiertos.html).
+- Categoría: **Productos y Servicios**; primer premio: **2.500 €**.
+- Plazo de presentación: **del 22 de julio al 21 de septiembre de 2026**.
+- Presentación: [sede electrónica](https://www.tramitacastillayleon.jcyl.es/web/jcyl/AdministracionElectronica/es/Plantilla100Detalle/1251181050732/Premio/1285664800452/Propuesta).
 - Identidad de la persona solicitante: **PENDIENTE — no consta en el repositorio**.
 - Contacto: **PENDIENTE — no consta en el repositorio**.
 - Declaraciones, consentimiento y adjuntos exigidos: **PENDIENTE — revisar en el portal**.

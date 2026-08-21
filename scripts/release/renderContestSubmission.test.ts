@@ -1,3 +1,6 @@
+import { readFileSync } from "node:fs";
+import { resolve } from "node:path";
+
 import { beforeAll, describe, expect, it } from "vitest";
 
 import {
@@ -37,6 +40,18 @@ describe("contest submission renderer", () => {
     );
     expect(rendered["application-summary.md"]).toContain(
       "dataset derivado descargable en JSON y CSV",
+    );
+    expect(rendered["application-summary.md"]).toContain(
+      "X Concurso de Datos Abiertos de Castilla y León",
+    );
+    expect(rendered["submission-checklist.md"]).toContain(
+      "21 de septiembre de 2026",
+    );
+    expect(rendered["submission-checklist.md"]).toContain(
+      "primer premio: **2.500 €**",
+    );
+    expect(rendered["submission-checklist.md"]).not.toContain(
+      "sigue mostrando la IX edición",
     );
     expect(rendered["submission-checklist.md"]).toContain(
       "https://salida-cyl.157-90-22-40.sslip.io/",
@@ -177,5 +192,31 @@ describe("contest submission renderer", () => {
       expect(content).not.toContain("6 cualificaciones");
       expect(content).not.toMatch(/salario esperado|tasa de empleo/iu);
     }
+  });
+
+  it("keeps the jury memo aligned with the frozen coverage", () => {
+    const memo = readFileSync(
+      resolve(process.cwd(), "docs/contest/jury-memo.md"),
+      "utf8",
+    );
+    const offerCount =
+      freeze.manifest.resourceSnapshots.jobOffers.recordCount.toLocaleString(
+        "es-ES",
+        { useGrouping: "always" },
+      );
+
+    expect(memo).toContain(freeze.manifest.snapshotId);
+    expect(memo).toContain(
+      `${freeze.coverage.approvedRelationCount} relaciones FP-ocupación`,
+    );
+    expect(memo).toContain(
+      `${freeze.coverage.distinctQualificationCount} cualificaciones distintas`,
+    );
+    expect(memo).toContain(
+      `${freeze.coverage.modalityKeyCount} claves de modalidad`,
+    );
+    expect(memo).toContain(
+      `${freeze.offers.matchedOfferCount} ofertas alcanzadas pertenecen a una copia fechada de ${offerCount} ofertas`,
+    );
   });
 });
