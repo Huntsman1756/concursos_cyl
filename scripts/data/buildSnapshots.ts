@@ -58,6 +58,7 @@ import {
   DerivedFpOccupationGraphResourceSchema,
   OpenDataCatalogResourceSchema,
 } from "../../data/schemas/openData";
+import { SepeOccupationMarketResourceSchema } from "../../data/schemas/sepeOccupationMarket";
 import {
   EcylCourseSourceRecordSchema,
   EcylCoursesResourceSchema,
@@ -264,6 +265,10 @@ const RESOURCE_DEFINITIONS = {
   openDataCatalog: {
     ...GENERATED_RESOURCE_CATALOG.openDataCatalog,
     schema: OpenDataCatalogResourceSchema,
+  },
+  sepeOccupationMarket: {
+    ...GENERATED_RESOURCE_CATALOG.sepeOccupationMarket,
+    schema: SepeOccupationMarketResourceSchema,
   },
 } as const;
 
@@ -1387,6 +1392,29 @@ function sourceSnapshot(
   });
 }
 
+async function loadCheckedInSepeOccupationMarket(
+  root: string,
+): Promise<z.infer<typeof SepeOccupationMarketResourceSchema>> {
+  const relativePath = resolve(
+    "data",
+    "curated",
+    "sepe-occupation-market.json",
+  );
+  const candidatePaths = [resolve(root, relativePath)];
+  const workspacePath = resolve(process.cwd(), relativePath);
+  if (workspacePath !== candidatePaths[0]) candidatePaths.push(workspacePath);
+  for (const candidatePath of candidatePaths) {
+    if (await pathExists(candidatePath)) {
+      return SepeOccupationMarketResourceSchema.parse(
+        JSON.parse(await readFile(candidatePath, "utf8")),
+      );
+    }
+  }
+  throw new Error(
+    `Checked-in SEPE occupation market capture is missing: ${candidatePaths[0]}.`,
+  );
+}
+
 async function writeCandidate(
   root: string,
   staging: string,
@@ -1400,6 +1428,7 @@ async function writeCandidate(
   regionalContractRecords: readonly RegionalContractSourceRecord[],
   municipalityRecords: readonly MunicipalitySourceRecord[],
   educationCenterDirectoryRecords: readonly EducationCenterDirectorySourceRecord[],
+  sepeOccupationMarket: z.infer<typeof SepeOccupationMarketResourceSchema>,
   incomeBundle: EducabaseIncomeBundle,
   outcomeIndicators: z.infer<typeof OutcomeIndicatorsResourceSchema>,
   curatedMappings: ValidatedCuratedMappings,
@@ -1501,6 +1530,9 @@ async function writeCandidate(
     educationCenterDirectory: EducationCenterDirectoryResourceSchema.parse(
       normalizeEducationCenterDirectory(educationCenterDirectoryRecords),
     ),
+    sepeOccupationMarket: SepeOccupationMarketResourceSchema.parse(
+      sepeOccupationMarket,
+    ).sort((left, right) => left.cno.code.localeCompare(right.cno.code)),
     derivedFpOccupationGraph,
     openDataCatalog: OpenDataCatalogResourceSchema.parse([
       {
@@ -1598,9 +1630,15 @@ async function writeCandidate(
                                 "educationCenterDirectory"
                               ? SOURCE_CONFIG.educationCenterDirectory
                               : RESOURCE_DEFINITIONS[key].sourceKind ===
-                                  "derivedRelationships"
-                                ? derivedRelationshipSource
-                                : curatedRelationshipSource,
+                                  "sepeOccupationMarket"
+                                ? {
+                                    id: "sepe-occupation-market",
+                                    recordsUrl: "https://www.sepe.es/",
+                                  }
+                                : RESOURCE_DEFINITIONS[key].sourceKind ===
+                                    "derivedRelationships"
+                                  ? derivedRelationshipSource
+                                  : curatedRelationshipSource,
       fetchedAt,
       RESOURCE_DEFINITIONS[key].sourceKind === "offers"
         ? offerSourceSnapshot.sourceUpdatedAt
@@ -2666,6 +2704,8 @@ export async function buildSnapshots(
       const educationCenterDirectoryRecords = z
         .array(EducationCenterDirectorySourceRecordSchema)
         .parse(fetchedEducationCenterDirectoryRecords);
+      const sepeOccupationMarket =
+        await loadCheckedInSepeOccupationMarket(root);
       const outcomeIndicators = OutcomeIndicatorsResourceSchema.parse(
         normalizeIncomeOutcomes(incomeBundle.tables),
       );
@@ -2723,6 +2763,7 @@ export async function buildSnapshots(
         regionalContracts: regionalContractRecords,
         municipalities: municipalityRecords,
         educationCenterDirectory: educationCenterDirectoryRecords,
+        sepeOccupationMarket,
       });
       const snapshotId = `${fetchedAt.replace(/\D/gu, "").toLowerCase()}-${sourceHash.slice(0, 12)}`;
       const buildId = `${snapshotId}-${process.pid}`;
@@ -2740,6 +2781,7 @@ export async function buildSnapshots(
         regionalContractRecords,
         municipalityRecords,
         educationCenterDirectoryRecords,
+        sepeOccupationMarket,
         incomeBundle,
         outcomeIndicators,
         curatedMappings,

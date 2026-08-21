@@ -77,6 +77,10 @@ export const GENERATED_RESOURCE_CATALOG = {
     fileName: "open-data-catalog.json",
     sourceKind: "derivedRelationships",
   },
+  sepeOccupationMarket: {
+    fileName: "sepe-occupation-market.json",
+    sourceKind: "sepeOccupationMarket",
+  },
 } as const;
 
 export type GeneratedResourceKey = keyof typeof GENERATED_RESOURCE_CATALOG;

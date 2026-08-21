@@ -1,0 +1,152 @@
+[
+  {
+    "period": "2026-07",
+    "cno": {
+      "code": "2721",
+      "label": "Diseñadores y administradores de bases de datos"
+    },
+    "national": {
+      "registeredContracts": {
+        "total": 116,
+        "monthlyVariationPercent": -4.92,
+        "annualVariationPercent": -17.14,
+        "people": 115
+      },
+      "registeredUnemployment": {
+        "total": 2478,
+        "monthlyVariationPercent": 2.65,
+        "annualVariationPercent": 17.5
+      },
+      "contractCharacteristics": {
+        "lastTwelveMonthsTotal": 1352,
+        "indefinite": 91,
+        "fullTime": 106,
+        "rotationIndex": 1.01
+      }
+    },
+    "provinces": [
+      {
+        "province": "Ávila",
+        "registeredContracts": {
+          "total": 0,
+          "monthlyVariationPercent": 0,
+          "annualVariationPercent": 0
+        },
+        "registeredUnemployment": {
+          "total": 4,
+          "monthlyVariationPercent": 33.33,
+          "annualVariationPercent": -20
+        }
+      },
+      {
+        "province": "Burgos",
+        "registeredContracts": {
+          "total": 0,
+          "monthlyVariationPercent": 0,
+          "annualVariationPercent": 0
+        },
+        "registeredUnemployment": {
+          "total": 8,
+          "monthlyVariationPercent": 33.33,
+          "annualVariationPercent": 166.67
+        }
+      },
+      {
+        "province": "León",
+        "registeredContracts": {
+          "total": 1,
+          "monthlyVariationPercent": 0,
+          "annualVariationPercent": 0
+        },
+        "registeredUnemployment": {
+          "total": 14,
+          "monthlyVariationPercent": 0,
+          "annualVariationPercent": -6.67
+        }
+      },
+      {
+        "province": "Palencia",
+        "registeredContracts": {
+          "total": 0,
+          "monthlyVariationPercent": 0,
+          "annualVariationPercent": 0
+        },
+        "registeredUnemployment": {
+          "total": 2,
+          "monthlyVariationPercent": -33.33,
+          "annualVariationPercent": -66.67
+        }
+      },
+      {
+        "province": "Salamanca",
+        "registeredContracts": {
+          "total": 0,
+          "monthlyVariationPercent": 0,
+          "annualVariationPercent": -100
+        },
+        "registeredUnemployment": {
+          "total": 13,
+          "monthlyVariationPercent": -13.33,
+          "annualVariationPercent": 44.44
+        }
+      },
+      {
+        "province": "Segovia",
+        "registeredContracts": {
+          "total": 0,
+          "monthlyVariationPercent": 0,
+          "annualVariationPercent": 0
+        },
+        "registeredUnemployment": {
+          "total": 5,
+          "monthlyVariationPercent": 66.67,
+          "annualVariationPercent": 0
+        }
+      },
+      {
+        "province": "Soria",
+        "registeredContracts": {
+          "total": 0,
+          "monthlyVariationPercent": 0,
+          "annualVariationPercent": 0
+        },
+        "registeredUnemployment": {
+          "total": 0,
+          "monthlyVariationPercent": 0,
+          "annualVariationPercent": -100
+        }
+      },
+      {
+        "province": "Valladolid",
+        "registeredContracts": {
+          "total": 0,
+          "monthlyVariationPercent": 0,
+          "annualVariationPercent": -100
+        },
+        "registeredUnemployment": {
+          "total": 22,
+          "monthlyVariationPercent": 10,
+          "annualVariationPercent": 57.14
+        }
+      },
+      {
+        "province": "Zamora",
+        "registeredContracts": {
+          "total": 0,
+          "monthlyVariationPercent": 0,
+          "annualVariationPercent": 0
+        },
+        "registeredUnemployment": {
+          "total": 5,
+          "monthlyVariationPercent": -28.57,
+          "annualVariationPercent": 25
+        }
+      }
+    ],
+    "source": {
+      "url": "https://www.sepe.es/HomeSepe/es/que-es-observatorio/informacion-mt-por-ocupacion/informacion-mercado-trabajo-por-ocupacion~_mensuales_2026_07_2721-Dise-adores-y-administradores-de-bases-de-datos~.html",
+      "retrievedAt": "2026-08-22T09:30:00Z",
+      "attribution": "Elaborado por el Observatorio de las Ocupaciones del SEPE a partir de los datos del SISPE."
+    }
+  }
+]

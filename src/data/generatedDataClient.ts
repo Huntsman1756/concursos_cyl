@@ -70,6 +70,10 @@ import {
   EducationCenterDirectoryResourceSchema,
   type EducationCenterDirectoryRecord,
 } from "../../data/schemas/educationCenterDirectory";
+import {
+  SepeOccupationMarketResourceSchema,
+  type SepeOccupationMarket,
+} from "../../data/schemas/sepeOccupationMarket";
 
 export type GeneratedDataErrorCode = "network" | "schema" | "missing";
 
@@ -351,6 +355,21 @@ export function loadOutcomeIndicators(
   return loadGeneratedResource(
     snapshot.resourcePath,
     OutcomeIndicatorsResourceSchema,
+  );
+}
+
+/** Loads optional manifest-addressed SEPE occupation-market evidence. */
+export function loadSepeOccupationMarket(
+  manifest: LoadableGeneratedManifest,
+): Promise<SepeOccupationMarket[] | null> {
+  const resourceSnapshots =
+    manifest.resourceSnapshots as typeof manifest.resourceSnapshots &
+      Record<string, { resourcePath: string } | undefined>;
+  const snapshot = resourceSnapshots.sepeOccupationMarket;
+  if (snapshot === undefined) return Promise.resolve(null);
+  return loadGeneratedResource(
+    snapshot.resourcePath,
+    SepeOccupationMarketResourceSchema,
   );
 }
 

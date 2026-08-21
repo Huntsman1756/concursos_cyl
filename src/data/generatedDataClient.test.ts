@@ -3,6 +3,10 @@ import { z } from "zod";
 
 import { LoadableGeneratedManifestSchema } from "../../data/schemas/generated";
 import {
+  SEPE_CYL_PROVINCES,
+  SEPE_OCCUPATION_MARKET_ATTRIBUTION,
+} from "../../data/schemas/sepeOccupationMarket";
+import {
   EDUCABASE_INCOME_TABLE_IDS,
   EDUCABASE_INCOME_SOURCES,
 } from "../../scripts/data/educabaseIncomeSources";
@@ -16,6 +20,7 @@ import {
   loadManifest,
   loadOutcomeIndicators,
   loadPublishedRequirements,
+  loadSepeOccupationMarket,
   resolveGeneratedAssetPath,
 } from "./generatedDataClient";
 
@@ -81,6 +86,42 @@ const foundationResourceValues = {
   jobOffers: [foundationJobOffer],
 };
 
+const sepeResource = [
+  {
+    period: "2026-07",
+    cno: {
+      code: "2721",
+      label: "Diseñadores y administradores de bases de datos",
+    },
+    national: {
+      registeredContracts: {
+        total: 116,
+        people: 115,
+        monthlyVariationPercent: -4.92,
+        annualVariationPercent: -17.14,
+      },
+      registeredUnemployment: {
+        total: 2478,
+        monthlyVariationPercent: 2.65,
+        annualVariationPercent: 17.5,
+      },
+    },
+    provinces: SEPE_CYL_PROVINCES.map((province) => ({
+      province,
+      registeredContracts: {
+        total: 1,
+        monthlyVariationPercent: 0,
+        annualVariationPercent: 0,
+      },
+    })),
+    source: {
+      url: "https://www.sepe.es/HomeSepe/occupation/2721",
+      retrievedAt: "2026-08-22T09:30:00Z",
+      attribution: SEPE_OCCUPATION_MARKET_ATTRIBUTION,
+    },
+  },
+];
+
 function mockFetchJson(value: unknown, status = 200) {
   vi.stubGlobal(
     "fetch",
@@ -134,6 +175,77 @@ afterEach(() => {
 });
 
 describe("generated data client", () => {
+  it("returns null for retained manifests and validates an advertised SEPE resource", async () => {
+    const foundationManifest = LoadableGeneratedManifestSchema.parse({
+      schemaVersion: "1.0.0",
+      generatedAt: "2026-08-04T10:00:00.000Z",
+      qualityStatus: "passed",
+      qualityReport: {
+        counts: { programs: 1, centers: 1, offerings: 1, offers: 1 },
+        nullRates: {
+          centerAddress: 0,
+          centerPhone: 0,
+          centerEmail: 0,
+          centerWebsite: 0,
+          offerProvince: 0,
+          offerLocality: 0,
+          offerDescription: 0,
+        },
+      },
+      resourceSnapshots: {
+        programs: {
+          ...snapshot,
+          resourcePath: "/data/v1/snapshots/build-1/programs.json",
+        },
+        centers: {
+          ...snapshot,
+          resourcePath: "/data/v1/snapshots/build-1/centers.json",
+        },
+        trainingOfferings: {
+          ...snapshot,
+          resourcePath: "/data/v1/snapshots/build-1/training-offerings.json",
+        },
+        jobOffers: {
+          ...snapshot,
+          resourcePath: "/data/v1/snapshots/build-1/job-offers.json",
+        },
+      },
+    });
+    const fetchSpy = vi.fn();
+    vi.stubGlobal("fetch", fetchSpy);
+
+    await expect(loadSepeOccupationMarket(foundationManifest)).resolves.toBe(
+      null,
+    );
+    expect(fetchSpy).not.toHaveBeenCalled();
+
+    const resourcePath =
+      "/data/v1/snapshots/build-1/sepe-occupation-market.json";
+    const advertised = LoadableGeneratedManifestSchema.parse({
+      ...foundationManifest,
+      resourceSnapshots: {
+        ...foundationManifest.resourceSnapshots,
+        sepeOccupationMarket: {
+          ...snapshot,
+          sourceId: "sepe-occupation-market",
+          sourceUrl: "https://www.sepe.es/",
+          resourcePath,
+          recordCount: sepeResource.length,
+        },
+      },
+    });
+    mockGeneratedAssets({ [resourcePath]: sepeResource });
+
+    await expect(loadSepeOccupationMarket(advertised)).resolves.toEqual(
+      sepeResource,
+    );
+
+    mockGeneratedAssets({ [resourcePath]: [{ malformed: true }] });
+    await expect(loadSepeOccupationMarket(advertised)).rejects.toMatchObject({
+      code: "schema",
+    });
+  });
+
   it("treats outcome indicators as optional but validates an advertised resource", async () => {
     const manifest = LoadableGeneratedManifestSchema.parse({
       schemaVersion: "1.0.0",

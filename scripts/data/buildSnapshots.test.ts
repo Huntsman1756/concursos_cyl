@@ -486,6 +486,33 @@ const BUILD_SNAPSHOTS_TEST_TIMEOUT =
   process.env.CI === "true" ? 90_000 : 30_000;
 
 describe("buildSnapshots", { timeout: BUILD_SNAPSHOTS_TEST_TIMEOUT }, () => {
+  it("publishes the checked-in SEPE occupation market as an additive hashed resource", async () => {
+    const root = await temporaryRoot();
+
+    await buildSnapshots({ rootDirectory: root, ...fixedOptions });
+
+    const manifest = await readManifest(root);
+    const snapshot = manifest.resourceSnapshots.sepeOccupationMarket;
+    expect(snapshot).toMatchObject({
+      recordCount: 1,
+      sourceId: "sepe-occupation-market",
+      sourceUrl: "https://www.sepe.es/",
+    });
+    expect(snapshot.resourcePath).toMatch(
+      /\/snapshots\/[^/]+\/sepe-occupation-market\.json$/u,
+    );
+    const bytes = await readFile(assetPath(root, snapshot.resourcePath));
+    const records = JSON.parse(bytes.toString("utf8")) as unknown[];
+    expect(records).toHaveLength(snapshot.recordCount);
+    expect(createHash("sha256").update(bytes).digest("hex")).toBe(
+      snapshot.sha256,
+    );
+    expect(records[0]).toMatchObject({
+      period: "2026-07",
+      cno: { code: "2721" },
+    });
+  });
+
   it("publishes regional context resources with source provenance", async () => {
     const root = await temporaryRoot();
 
