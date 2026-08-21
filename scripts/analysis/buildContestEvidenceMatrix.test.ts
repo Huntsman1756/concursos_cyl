@@ -6,18 +6,18 @@ import {
 } from "./buildContestEvidenceMatrix";
 
 describe("contest evidence matrix", () => {
-  it("projects all 228 approved relations without omission or mutation", () => {
+  it("projects all 240 approved relations without omission or mutation", () => {
     const source = loadAuditedRelations().filter(
       (relation: { reviewStatus: string }) =>
         relation.reviewStatus === "approved",
     );
     const matrix = buildContestEvidenceMatrix();
 
-    expect(source).toHaveLength(228);
-    expect(matrix.relations).toHaveLength(228);
+    expect(source).toHaveLength(240);
+    expect(matrix.relations).toHaveLength(240);
     expect(
       new Set(matrix.relations.map((relation) => relation.relationKey)).size,
-    ).toBe(228);
+    ).toBe(240);
 
     for (const relation of matrix.relations) {
       const original = source.find(

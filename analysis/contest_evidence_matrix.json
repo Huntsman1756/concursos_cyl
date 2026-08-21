@@ -1,13 +1,13 @@
 {
   "schemaVersion": 1,
   "sourcePath": "data/curated/training-occupation-links.json",
-  "sourceCommitSha": "e035b22d8a2d1084dc785ed118635f76e40acf1c",
+  "sourceCommitSha": "1fb9f98c1f27dbde78f87afedcc60c50a3712d08",
   "auditCutoff": "2026-08-21T18:30:00+02:00",
-  "relationCount": 228,
+  "relationCount": 240,
   "commonFloorFailures": 0,
   "depthCounts": {
-    "relation_artifact_discovered": 151,
-    "program_artifact_discovered": 63,
+    "relation_artifact_discovered": 152,
+    "program_artifact_discovered": 74,
     "common_validator_only": 14
   },
   "limitations": [
@@ -5356,6 +5356,34 @@
       "frontierSufficiency": "pending_live_sample"
     },
     {
+      "relationKey": "QUI01E|occupation:cno11:3141",
+      "programKey": "QUI01E",
+      "occupationId": "occupation:cno11:3141",
+      "relationshipType": "reviewed_relationship",
+      "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/quimica/ce-cultivos-celulares.html",
+      "sourceQuote": "Experta / experto en cultivos celulares",
+      "reviewedAt": "2026-08-21",
+      "commonFloor": {
+        "officialSource": true,
+        "quotedEvidence": true,
+        "passes": true
+      },
+      "artifactDiscovery": {
+        "relationCooccurrencePaths": [
+          "analysis/fp_coverage_priority_20260821_wave2/proposals/QUI01E.md"
+        ],
+        "programMentionPaths": [
+          "analysis/fp_coverage_priority_20260821_wave2/batch-contract.json",
+          "analysis/fp_coverage_priority_20260821_wave2/frontier-review.md",
+          "analysis/fp_coverage_priority_20260821_wave2/README.md",
+          "analysis/fp_coverage_priority_20260821_wave2/sources/QUI01E.txt"
+        ],
+        "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
+      },
+      "evidenceDepth": "relation_artifact_discovered",
+      "frontierSufficiency": "pending_live_sample"
+    },
+    {
       "relationKey": "QUI01S|occupation:cno11:3129",
       "programKey": "QUI01S",
       "occupationId": "occupation:cno11:3129",
@@ -5445,6 +5473,60 @@
       "frontierSufficiency": "pending_live_sample"
     },
     {
+      "relationKey": "SAN01S|occupation:cno11:3317",
+      "programKey": "SAN01S",
+      "occupationId": "occupation:cno11:3317",
+      "relationshipType": "reviewed_relationship",
+      "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/sanidad/audiologia-protesica.html",
+      "sourceQuote": "Audioprotésica / audioprotésico.",
+      "reviewedAt": "2026-08-21",
+      "commonFloor": {
+        "officialSource": true,
+        "quotedEvidence": true,
+        "passes": true
+      },
+      "artifactDiscovery": {
+        "relationCooccurrencePaths": [],
+        "programMentionPaths": [
+          "analysis/fp_coverage_priority_20260821_wave2/batch-contract.json",
+          "analysis/fp_coverage_priority_20260821_wave2/frontier-review.md",
+          "analysis/fp_coverage_priority_20260821_wave2/proposals/SAN01S.md",
+          "analysis/fp_coverage_priority_20260821_wave2/README.md",
+          "analysis/fp_coverage_priority_20260821_wave2/sources/SAN01S.txt"
+        ],
+        "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
+      },
+      "evidenceDepth": "program_artifact_discovered",
+      "frontierSufficiency": "pending_live_sample"
+    },
+    {
+      "relationKey": "SAN01SD|occupation:cno11:3317",
+      "programKey": "SAN01SD",
+      "occupationId": "occupation:cno11:3317",
+      "relationshipType": "reviewed_relationship",
+      "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/sanidad/audiologia-protesica.html",
+      "sourceQuote": "Audioprotésica / audioprotésico.",
+      "reviewedAt": "2026-08-21",
+      "commonFloor": {
+        "officialSource": true,
+        "quotedEvidence": true,
+        "passes": true
+      },
+      "artifactDiscovery": {
+        "relationCooccurrencePaths": [],
+        "programMentionPaths": [
+          "analysis/fp_coverage_priority_20260821_wave2/batch-contract.json",
+          "analysis/fp_coverage_priority_20260821_wave2/frontier-review.md",
+          "analysis/fp_coverage_priority_20260821_wave2/proposals/SAN01S.md",
+          "analysis/fp_coverage_priority_20260821_wave2/README.md",
+          "analysis/fp_coverage_priority_20260821_wave2/sources/SAN01S.txt"
+        ],
+        "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
+      },
+      "evidenceDepth": "program_artifact_discovered",
+      "frontierSufficiency": "pending_live_sample"
+    },
+    {
       "relationKey": "SAN02M|occupation:cno11:5621",
       "programKey": "SAN02M",
       "occupationId": "occupation:cno11:5621",
@@ -5468,6 +5550,60 @@
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "relation_artifact_discovered",
+      "frontierSufficiency": "pending_live_sample"
+    },
+    {
+      "relationKey": "SAN02S|occupation:cno11:2640",
+      "programKey": "SAN02S",
+      "occupationId": "occupation:cno11:2640",
+      "relationshipType": "reviewed_relationship",
+      "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/sanidad/protesis-dentales.html",
+      "sourceQuote": "Comercial en la industria dental o depósitos dentales.",
+      "reviewedAt": "2026-08-21",
+      "commonFloor": {
+        "officialSource": true,
+        "quotedEvidence": true,
+        "passes": true
+      },
+      "artifactDiscovery": {
+        "relationCooccurrencePaths": [],
+        "programMentionPaths": [
+          "analysis/fp_coverage_priority_20260821_wave2/batch-contract.json",
+          "analysis/fp_coverage_priority_20260821_wave2/frontier-review.md",
+          "analysis/fp_coverage_priority_20260821_wave2/proposals/SAN02S.md",
+          "analysis/fp_coverage_priority_20260821_wave2/README.md",
+          "analysis/fp_coverage_priority_20260821_wave2/sources/SAN02S.txt"
+        ],
+        "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
+      },
+      "evidenceDepth": "program_artifact_discovered",
+      "frontierSufficiency": "pending_live_sample"
+    },
+    {
+      "relationKey": "SAN02S|occupation:cno11:3316",
+      "programKey": "SAN02S",
+      "occupationId": "occupation:cno11:3316",
+      "relationshipType": "official_output",
+      "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/sanidad/protesis-dentales.html",
+      "sourceQuote": "Técnica / técnico especialista en prótesis dental.",
+      "reviewedAt": "2026-08-21",
+      "commonFloor": {
+        "officialSource": true,
+        "quotedEvidence": true,
+        "passes": true
+      },
+      "artifactDiscovery": {
+        "relationCooccurrencePaths": [],
+        "programMentionPaths": [
+          "analysis/fp_coverage_priority_20260821_wave2/batch-contract.json",
+          "analysis/fp_coverage_priority_20260821_wave2/frontier-review.md",
+          "analysis/fp_coverage_priority_20260821_wave2/proposals/SAN02S.md",
+          "analysis/fp_coverage_priority_20260821_wave2/README.md",
+          "analysis/fp_coverage_priority_20260821_wave2/sources/SAN02S.txt"
+        ],
+        "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
+      },
+      "evidenceDepth": "program_artifact_discovered",
       "frontierSufficiency": "pending_live_sample"
     },
     {
@@ -5711,6 +5847,168 @@
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "relation_artifact_discovered",
+      "frontierSufficiency": "pending_live_sample"
+    },
+    {
+      "relationKey": "SEA01M|occupation:cno11:5931",
+      "programKey": "SEA01M",
+      "occupationId": "occupation:cno11:5931",
+      "relationshipType": "reviewed_relationship",
+      "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/seguridad-medio-ambiente/emergencias-proteccion-civil.html",
+      "sourceQuote": "Bombera / bombero de aeropuertos.",
+      "reviewedAt": "2026-08-21",
+      "commonFloor": {
+        "officialSource": true,
+        "quotedEvidence": true,
+        "passes": true
+      },
+      "artifactDiscovery": {
+        "relationCooccurrencePaths": [],
+        "programMentionPaths": [
+          "analysis/fp_coverage_priority_20260821_wave2/batch-contract.json",
+          "analysis/fp_coverage_priority_20260821_wave2/frontier-review.md",
+          "analysis/fp_coverage_priority_20260821_wave2/proposals/SEA01M.md",
+          "analysis/fp_coverage_priority_20260821_wave2/README.md",
+          "analysis/fp_coverage_priority_20260821_wave2/sources/SEA01M.txt"
+        ],
+        "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
+      },
+      "evidenceDepth": "program_artifact_discovered",
+      "frontierSufficiency": "pending_live_sample"
+    },
+    {
+      "relationKey": "SEA01M|occupation:cno11:5932",
+      "programKey": "SEA01M",
+      "occupationId": "occupation:cno11:5932",
+      "relationshipType": "reviewed_relationship",
+      "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/seguridad-medio-ambiente/emergencias-proteccion-civil.html",
+      "sourceQuote": "Bombera / bombero forestal.",
+      "reviewedAt": "2026-08-21",
+      "commonFloor": {
+        "officialSource": true,
+        "quotedEvidence": true,
+        "passes": true
+      },
+      "artifactDiscovery": {
+        "relationCooccurrencePaths": [],
+        "programMentionPaths": [
+          "analysis/fp_coverage_priority_20260821_wave2/batch-contract.json",
+          "analysis/fp_coverage_priority_20260821_wave2/frontier-review.md",
+          "analysis/fp_coverage_priority_20260821_wave2/proposals/SEA01M.md",
+          "analysis/fp_coverage_priority_20260821_wave2/README.md",
+          "analysis/fp_coverage_priority_20260821_wave2/sources/SEA01M.txt"
+        ],
+        "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
+      },
+      "evidenceDepth": "program_artifact_discovered",
+      "frontierSufficiency": "pending_live_sample"
+    },
+    {
+      "relationKey": "SEA01M|occupation:cno11:5993",
+      "programKey": "SEA01M",
+      "occupationId": "occupation:cno11:5993",
+      "relationshipType": "reviewed_relationship",
+      "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/seguridad-medio-ambiente/emergencias-proteccion-civil.html",
+      "sourceQuote": "Vigilante de incendios forestales.",
+      "reviewedAt": "2026-08-21",
+      "commonFloor": {
+        "officialSource": true,
+        "quotedEvidence": true,
+        "passes": true
+      },
+      "artifactDiscovery": {
+        "relationCooccurrencePaths": [],
+        "programMentionPaths": [
+          "analysis/fp_coverage_priority_20260821_wave2/batch-contract.json",
+          "analysis/fp_coverage_priority_20260821_wave2/frontier-review.md",
+          "analysis/fp_coverage_priority_20260821_wave2/proposals/SEA01M.md",
+          "analysis/fp_coverage_priority_20260821_wave2/README.md",
+          "analysis/fp_coverage_priority_20260821_wave2/sources/SEA01M.txt"
+        ],
+        "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
+      },
+      "evidenceDepth": "program_artifact_discovered",
+      "frontierSufficiency": "pending_live_sample"
+    },
+    {
+      "relationKey": "SEA01MD|occupation:cno11:5931",
+      "programKey": "SEA01MD",
+      "occupationId": "occupation:cno11:5931",
+      "relationshipType": "reviewed_relationship",
+      "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/seguridad-medio-ambiente/emergencias-proteccion-civil.html",
+      "sourceQuote": "Bombera / bombero de aeropuertos.",
+      "reviewedAt": "2026-08-21",
+      "commonFloor": {
+        "officialSource": true,
+        "quotedEvidence": true,
+        "passes": true
+      },
+      "artifactDiscovery": {
+        "relationCooccurrencePaths": [],
+        "programMentionPaths": [
+          "analysis/fp_coverage_priority_20260821_wave2/batch-contract.json",
+          "analysis/fp_coverage_priority_20260821_wave2/frontier-review.md",
+          "analysis/fp_coverage_priority_20260821_wave2/proposals/SEA01M.md",
+          "analysis/fp_coverage_priority_20260821_wave2/README.md",
+          "analysis/fp_coverage_priority_20260821_wave2/sources/SEA01M.txt"
+        ],
+        "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
+      },
+      "evidenceDepth": "program_artifact_discovered",
+      "frontierSufficiency": "pending_live_sample"
+    },
+    {
+      "relationKey": "SEA01MD|occupation:cno11:5932",
+      "programKey": "SEA01MD",
+      "occupationId": "occupation:cno11:5932",
+      "relationshipType": "reviewed_relationship",
+      "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/seguridad-medio-ambiente/emergencias-proteccion-civil.html",
+      "sourceQuote": "Bombera / bombero forestal.",
+      "reviewedAt": "2026-08-21",
+      "commonFloor": {
+        "officialSource": true,
+        "quotedEvidence": true,
+        "passes": true
+      },
+      "artifactDiscovery": {
+        "relationCooccurrencePaths": [],
+        "programMentionPaths": [
+          "analysis/fp_coverage_priority_20260821_wave2/batch-contract.json",
+          "analysis/fp_coverage_priority_20260821_wave2/frontier-review.md",
+          "analysis/fp_coverage_priority_20260821_wave2/proposals/SEA01M.md",
+          "analysis/fp_coverage_priority_20260821_wave2/README.md",
+          "analysis/fp_coverage_priority_20260821_wave2/sources/SEA01M.txt"
+        ],
+        "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
+      },
+      "evidenceDepth": "program_artifact_discovered",
+      "frontierSufficiency": "pending_live_sample"
+    },
+    {
+      "relationKey": "SEA01MD|occupation:cno11:5993",
+      "programKey": "SEA01MD",
+      "occupationId": "occupation:cno11:5993",
+      "relationshipType": "reviewed_relationship",
+      "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/seguridad-medio-ambiente/emergencias-proteccion-civil.html",
+      "sourceQuote": "Vigilante de incendios forestales.",
+      "reviewedAt": "2026-08-21",
+      "commonFloor": {
+        "officialSource": true,
+        "quotedEvidence": true,
+        "passes": true
+      },
+      "artifactDiscovery": {
+        "relationCooccurrencePaths": [],
+        "programMentionPaths": [
+          "analysis/fp_coverage_priority_20260821_wave2/batch-contract.json",
+          "analysis/fp_coverage_priority_20260821_wave2/frontier-review.md",
+          "analysis/fp_coverage_priority_20260821_wave2/proposals/SEA01M.md",
+          "analysis/fp_coverage_priority_20260821_wave2/README.md",
+          "analysis/fp_coverage_priority_20260821_wave2/sources/SEA01M.txt"
+        ],
+        "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
+      },
+      "evidenceDepth": "program_artifact_discovered",
       "frontierSufficiency": "pending_live_sample"
     },
     {
@@ -6293,6 +6591,33 @@
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "relation_artifact_discovered",
+      "frontierSufficiency": "pending_live_sample"
+    },
+    {
+      "relationKey": "TMV03M|occupation:cno11:7403",
+      "programKey": "TMV03M",
+      "occupationId": "occupation:cno11:7403",
+      "relationshipType": "reviewed_relationship",
+      "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/transporte-mantenimiento-vehiculos/electromecanica-maquinaria.html",
+      "sourceQuote": "Electromecánica / electromecánico de maquinaria agrícola.",
+      "reviewedAt": "2026-08-21",
+      "commonFloor": {
+        "officialSource": true,
+        "quotedEvidence": true,
+        "passes": true
+      },
+      "artifactDiscovery": {
+        "relationCooccurrencePaths": [],
+        "programMentionPaths": [
+          "analysis/fp_coverage_priority_20260821_wave2/batch-contract.json",
+          "analysis/fp_coverage_priority_20260821_wave2/frontier-review.md",
+          "analysis/fp_coverage_priority_20260821_wave2/proposals/TMV03M.md",
+          "analysis/fp_coverage_priority_20260821_wave2/README.md",
+          "analysis/fp_coverage_priority_20260821_wave2/sources/TMV03M.txt"
+        ],
+        "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
+      },
+      "evidenceDepth": "program_artifact_discovered",
       "frontierSufficiency": "pending_live_sample"
     }
   ]
