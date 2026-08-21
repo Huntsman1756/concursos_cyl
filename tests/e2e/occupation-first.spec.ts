@@ -58,6 +58,18 @@ test("the live occupation journey confirms a reviewed everyday alias and reaches
   await expect(option).toBeVisible();
 
   if (testInfo.project.name === "chromium-mobile") {
+    const listbox = await page.getByRole("listbox").boundingBox();
+    const submit = await page
+      .getByRole("button", { name: "Ver rutas formativas" })
+      .boundingBox();
+    expect(listbox).not.toBeNull();
+    expect(submit).not.toBeNull();
+    if (listbox && submit) {
+      expect(listbox.y + listbox.height).toBeLessThanOrEqual(submit.y);
+    }
+  }
+
+  if (testInfo.project.name === "chromium-mobile") {
     await option.tap();
   } else {
     await combobox.press("ArrowDown");

@@ -390,6 +390,24 @@ test("the complete Spanish home copy fits without horizontal overflow", async ({
   }));
   expect(overflow.body).toBeLessThanOrEqual(1);
   expect(overflow.document).toBeLessThanOrEqual(1);
+
+  if (testInfo.project.name === "chromium-mobile") {
+    const navigation = page.getByRole("navigation", { name: "Principal" });
+    const navigationOverflow = await navigation.evaluate(
+      (element) => element.scrollWidth - element.clientWidth,
+    );
+    expect(navigationOverflow).toBeLessThanOrEqual(1);
+
+    for (const link of await navigation.getByRole("link").all()) {
+      const box = await link.boundingBox();
+      expect(box?.height ?? 0).toBeGreaterThanOrEqual(40);
+    }
+
+    for (const link of await page.locator(".site-footer nav a").all()) {
+      const box = await link.boundingBox();
+      expect(box?.height ?? 0).toBeGreaterThanOrEqual(40);
+    }
+  }
 });
 
 test("reviewed programs and the single search module keep stable responsive geometry", async ({
