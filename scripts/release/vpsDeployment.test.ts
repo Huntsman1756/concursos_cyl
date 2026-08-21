@@ -1,6 +1,7 @@
 import { spawnSync } from "node:child_process";
 import {
   chmodSync,
+  lstatSync,
   mkdtempSync,
   mkdirSync,
   readFileSync,
@@ -18,6 +19,15 @@ const scriptPath = resolve(root, "scripts/release/deployVps.sh");
 function writeExecutable(path: string, contents: string): void {
   writeFileSync(path, contents, "utf8");
   chmodSync(path, 0o755);
+}
+
+function pathExists(path: string): boolean {
+  try {
+    lstatSync(path);
+    return true;
+  } catch {
+    return false;
+  }
 }
 
 function runWithValidationFakes(args: string[]) {
@@ -51,6 +61,7 @@ esac
 function runWithDeploymentFakes(options: {
   observedSha?: string;
   observedTarget?: string;
+  preserveSandbox?: boolean;
   scpExit?: number;
   sshExit?: number;
   sshMode?: "release-exists";
@@ -119,8 +130,93 @@ printf '{"schemaVersion":"1.0.0","commit":"%s"}\\n' "$3" > "$2/version.json"
     },
   });
   const sshCommand = readFileSync(sshCommandFile, "utf8");
+  const remotePayload = sshCommand.slice(sshCommand.indexOf("set -eu"));
+  if (!options.preserveSandbox) {
+    rmSync(sandbox, { force: true, recursive: true });
+  }
+  return { result, remotePayload, sandbox, sshCommand };
+}
+
+function runRemotePayloadInIsolation(
+  remotePayload: string,
+  options: {
+    existingCurrentNext?: "directory" | "symlink";
+    existingFinal?: "directory" | "file" | "symlink";
+    existingStaging?: boolean;
+    systemctlExit?: number;
+    tarExit?: number;
+  } = {},
+) {
+  const sandbox = mkdtempSync(join(tmpdir(), "cyl-vps-remote-"));
+  const fakeBin = join(sandbox, "bin");
+  const releases = join(sandbox, "srv", "salida-cyl", "releases");
+  const archiveDir = join(sandbox, "tmp");
+  const archive = join(archiveDir, "salida-cyl-round-1.tar.gz");
+  const finalRelease = join(releases, "round-1");
+  const staging = join(releases, ".staging-round-1");
+  const currentNext = join(sandbox, "srv", "salida-cyl", "current.next");
+  mkdirSync(fakeBin, { recursive: true });
+  mkdirSync(releases, { recursive: true });
+  mkdirSync(archiveDir, { recursive: true });
+  writeFileSync(archive, "archive", "utf8");
+
+  if (options.existingStaging) {
+    mkdirSync(staging);
+    writeFileSync(join(staging, "marker"), "keep", "utf8");
+  }
+  if (options.existingFinal === "directory") {
+    mkdirSync(finalRelease);
+    writeFileSync(join(finalRelease, "marker"), "keep", "utf8");
+  } else if (options.existingFinal === "file") {
+    writeFileSync(finalRelease, "keep", "utf8");
+  } else if (options.existingFinal === "symlink") {
+    writeFileSync(join(sandbox, "old-target"), "keep", "utf8");
+    writeFileSync(finalRelease, "dangling", "utf8");
+    rmSync(finalRelease);
+    spawnSync("ln", ["-s", join(sandbox, "old-target"), finalRelease]);
+  }
+  if (options.existingCurrentNext === "directory") {
+    mkdirSync(currentNext);
+    writeFileSync(join(currentNext, "marker"), "keep", "utf8");
+  } else if (options.existingCurrentNext === "symlink") {
+    spawnSync("ln", ["-s", join(sandbox, "old-target"), currentNext]);
+  }
+
+  writeExecutable(
+    join(fakeBin, "tar"),
+    '#!/bin/sh\nif [ "${TAR_EXIT:-0}" -ne 0 ]; then exit "$TAR_EXIT"; fi\ndestination=\nwhile [ "$#" -gt 0 ]; do\n  if [ "$1" = "-C" ]; then destination=$2; shift 2; else shift; fi\ndone\nmkdir -p "$destination"\nprintf index > "$destination/index.html"\nprintf version > "$destination/version.json"\n',
+  );
+  writeExecutable(join(fakeBin, "chown"), "#!/bin/sh\nexit 0\n");
+  writeExecutable(
+    join(fakeBin, "mv"),
+    '#!/bin/sh\nif [ "$1" = "-Tn" ]; then\n  if [ -e "$3" ] || [ -L "$3" ]; then exit 0; fi\n  /bin/mv "$2" "$3"\nelif [ "$1" = "-Tf" ]; then\n  /bin/rm -rf "$3" 2>/dev/null || :\n  /bin/mv "$2" "$3"\nelse\n  /bin/mv "$@"\nfi\n',
+  );
+  writeExecutable(
+    join(fakeBin, "systemctl"),
+    '#!/bin/sh\nexit "${SYSTEMCTL_EXIT:-0}"\n',
+  );
+  writeExecutable(join(fakeBin, "find"), "#!/bin/sh\nexit 0\n");
+
+  const remappedPayload = remotePayload
+    .replaceAll("/srv/salida-cyl", join(sandbox, "srv", "salida-cyl"))
+    .replaceAll("/tmp/salida-cyl-round-1.tar.gz", archive);
+  const result = spawnSync("sh", ["-c", remappedPayload], {
+    encoding: "utf8",
+    env: {
+      ...process.env,
+      PATH: `${fakeBin}:${process.env.PATH ?? ""}`,
+      SYSTEMCTL_EXIT: String(options.systemctlExit ?? 0),
+      TAR_EXIT: String(options.tarExit ?? 0),
+    },
+  });
+  const state = {
+    archiveExists: pathExists(archive),
+    currentNextExists: pathExists(currentNext),
+    finalExists: pathExists(finalRelease),
+    stagingExists: pathExists(staging),
+  };
   rmSync(sandbox, { force: true, recursive: true });
-  return { result, sshCommand };
+  return { result, state };
 }
 
 describe("VPS deployment", () => {
@@ -185,18 +281,19 @@ describe("VPS deployment", () => {
     expect(deployScript).toContain("version.json");
     expect(deployScript).toContain("mv -Tf");
     expect(deployScript).toContain("tail -n +6");
+    expect(deployScript).toContain("! -name '.staging-*'");
     expect(deployScript).toContain("systemctl reload caddy");
     expect(deployScript).toContain("CADDY_SMOKE_EXPECTED_COMMIT");
     expect(deployScript).toContain("npm run release:caddy:verify");
 
     const remoteCommands = [
-      "install -d",
+      "mkdir -m 0755",
       "tar -xzf",
       "chown -R",
       "test -f",
-      "mv -Tf '$REMOTE_STAGING' '$REMOTE_RELEASE'",
-      "ln -sfn",
-      "mv -Tf '/srv/salida-cyl/current.next' '/srv/salida-cyl/current'",
+      "mv -Tn '$REMOTE_STAGING' '$REMOTE_RELEASE'",
+      "ln -s",
+      "mv -Tf '$REMOTE_CURRENT_NEXT' '$REMOTE_CURRENT'",
       "rm -f '$REMOTE_ARCHIVE'",
       "tail -n +6",
       "systemctl reload caddy",
@@ -260,6 +357,9 @@ describe("VPS deployment", () => {
     expect(result.stderr).toContain("current activation state: unknown");
     expect(sshCommand).toContain("trap remote_cleanup EXIT");
     expect(sshCommand).toContain("rm -f -- '/tmp/salida-cyl-round-1.tar.gz'");
+    expect(sshCommand).toContain(
+      "salida-cyl-vps rm -f -- '/tmp/salida-cyl-round-1.tar.gz'",
+    );
   });
 
   it("reports the active release when live verification fails", () => {
@@ -320,5 +420,84 @@ describe("VPS deployment", () => {
     );
     expect(sshCommand).toContain("rm -f -- '/tmp/salida-cyl-round-1.tar.gz'");
     expect(sshCommand).not.toContain("REMOTE_STAGING");
+  });
+
+  it("preserves preexisting staging and current.next paths during remote failure", () => {
+    const capture = runWithDeploymentFakes({ preserveSandbox: true });
+    try {
+      const staging = runRemotePayloadInIsolation(capture.remotePayload, {
+        existingCurrentNext: "directory",
+        existingStaging: true,
+        tarExit: 41,
+      });
+
+      expect(staging.result.status).not.toBe(0);
+      expect(staging.state.stagingExists).toBe(true);
+      expect(staging.state.currentNextExists).toBe(true);
+      expect(staging.state.archiveExists).toBe(false);
+    } finally {
+      rmSync(capture.sandbox, { force: true, recursive: true });
+    }
+  });
+
+  it("removes owned staging and archive after extraction failure", () => {
+    const capture = runWithDeploymentFakes({ preserveSandbox: true });
+    try {
+      const failed = runRemotePayloadInIsolation(capture.remotePayload, {
+        tarExit: 41,
+      });
+
+      expect(failed.result.status).not.toBe(0);
+      expect(failed.state.stagingExists).toBe(false);
+      expect(failed.state.archiveExists).toBe(false);
+    } finally {
+      rmSync(capture.sandbox, { force: true, recursive: true });
+    }
+  });
+
+  it.each(["directory", "symlink"] as const)(
+    "preserves a preexisting current.next %s",
+    (existingCurrentNext) => {
+      const capture = runWithDeploymentFakes({ preserveSandbox: true });
+      try {
+        const failed = runRemotePayloadInIsolation(capture.remotePayload, {
+          existingCurrentNext,
+        });
+
+        expect(failed.result.status).not.toBe(0);
+        expect(failed.state.currentNextExists).toBe(true);
+      } finally {
+        rmSync(capture.sandbox, { force: true, recursive: true });
+      }
+    },
+  );
+
+  it.each(["directory", "file", "symlink"] as const)(
+    "refuses a preexisting final release without overwriting the %s",
+    (existingFinal) => {
+      const capture = runWithDeploymentFakes({ preserveSandbox: true });
+      try {
+        const final = runRemotePayloadInIsolation(capture.remotePayload, {
+          existingFinal,
+        });
+
+        expect(final.result.status).not.toBe(0);
+        expect(final.state.finalExists).toBe(true);
+        expect(final.state.stagingExists).toBe(false);
+      } finally {
+        rmSync(capture.sandbox, { force: true, recursive: true });
+      }
+    },
+  );
+
+  it("uses a no-clobber final rename before switching current", () => {
+    const capture = runWithDeploymentFakes({ preserveSandbox: true });
+    try {
+      expect(capture.remotePayload).toContain(
+        "mv -Tn '/srv/salida-cyl/releases/.staging-round-1' '/srv/salida-cyl/releases/round-1'",
+      );
+    } finally {
+      rmSync(capture.sandbox, { force: true, recursive: true });
+    }
   });
 });
