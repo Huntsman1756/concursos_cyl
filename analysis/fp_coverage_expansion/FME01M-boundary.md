@@ -2,9 +2,9 @@
 
 ## Decisión
 
-`deferred`. El BOE correcto es el Real Decreto 1398/2007 (BOE-A-2007-20203). Se corrige la URL BOE errónea a la URL completa `eli/es/rd/2007/10/29/1398`, y los siete outputs BOE se revisan exhaustivamente: seis outputs se aceptan como CNO 7322, 7323 y 7324 (tres ocupaciones), un output se rechaza como CNO 3139. No existe reconciliación demostrable: TodoFP no contiene el seed congelado "Mecánico de mecanizado" y el título genérico de TodoFP ("Técnico en Mecanizado") no equivale literalmente al seed del ranking. Por tanto, ninguna relación se publica; las aceptadas se retienen solo como auditoría.
+`approved` desde el 21 de agosto de 2026. El BOE correcto es el Real Decreto 1398/2007 (BOE-A-2007-20203). Sus siete outputs se revisaron exhaustivamente: seis sustentan los CNO 7322, 7323 y 7324; el output de operador de robots industriales permanece fuera porque no demuestra equivalencia exacta con CNO 3139.
 
-**No se publican** relaciones `approved` en `training-occupation-links` para FME01M. Se mantiene el rechazo 3139; no se crean aliases ni ofertas adicionales.
+La decisión `deferred` anterior queda superada. El seed preliminar "Mecánico de mecanizado" servía para priorizar investigación, no como requisito normativo de publicación. Las relaciones se publican por el inventario oficial del título y su clasificación CNO trazable, sin crear aliases ni ampliar ofertas.
 
 ## Fuentes revisadas
 
@@ -26,11 +26,11 @@
 
 ## Publicación
 
-- **Cero relaciones publicadas**: `publishedRelationKeys` vacío. Las tres relaciones aceptadas (7322, 7323, 7324) solo se conservan como evidencia de auditoría.
+- **3 relaciones publicadas**: CNO 7322, 7323 y 7324, con cita oficial en cada relación.
 - **1 relación rechazada**: `FME01M|occupation:cno11:3139` (Operador de robots industriales).
 - **Seed no reconciliado**: "Mecánico de mecanizado" no aparece en TodoFP; no existe `seedReconciliations`.
 - **Cero aliases** añadidos. Sin delta de ofertas ni recursos modificados fuera de las rutas permitidas.
 
-## Causa del cierre fail-closed
+## Límite conservado
 
-TodoFP presenta "Técnico en Mecanizado" pero no contiene el seed congelado "Mecánico de mecanizado" del ranking. El inventario exhaustivo del BOE-A-2007-20203 enumera siete salidas profesionales, ninguna de las cuales equivale literalmente al seed. Las fronteras CNO-11 (7322, 7323, 7324) son válidas como clasificación auditada pero no se publican hasta que exista reconciliación demostrable entre el seed y el inventario BOE.
+El seed "Mecánico de mecanizado" no se publica ni se usa como evidencia. La aplicación muestra únicamente las tres relaciones derivadas de salidas explícitas del BOE; CNO 3139 sigue excluido.

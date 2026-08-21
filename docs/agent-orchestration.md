@@ -1,5 +1,11 @@
 # Orquestación de Agentes (Codex → NAN)
 
+> Estado: opcional y no bloqueante desde el 21/08/2026. La política operativa
+> vigente está en `AGENTS.md`: Codex ejecuta directamente por defecto. Este
+> documento conserva el diseño y el runbook del supervisor para usos puntuales;
+> sus referencias históricas a «NAN-first obligatorio» ya no describen la ruta
+> normal del proyecto.
+
 ## Resumen
 
 Este repositorio implementa un flujo local de agentes inspirado en

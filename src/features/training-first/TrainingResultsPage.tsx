@@ -416,8 +416,13 @@ export function TrainingResultsPage() {
     <section className="training-page">
       <header className="training-page__header">
         <Link to="/desde-fp">Cambiar ciclo</Link>
-        <p className="training-page__eyebrow">
-          Salidas y ofertas relacionadas con
+        <p
+          className="training-page__eyebrow training-page__direction"
+          aria-label="Tu título de Formación Profesional conduce a ocupaciones con evidencia"
+        >
+          <span>Tu título de FP</span>
+          <span aria-hidden="true">→</span>
+          <span>Ocupaciones con evidencia</span>
         </p>
         <h1>{state.program.programTitle}</h1>
         <p>

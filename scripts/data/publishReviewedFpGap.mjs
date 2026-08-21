@@ -10,6 +10,17 @@ const todoFpInformatica =
   "https://www.todofp.es/que-estudiar/familias-profesionales/informatica-comunicaciones/informatica-comunicaciones.html";
 const todoFpPeluqueria =
   "https://www.todofp.es/que-estudiar/familias-profesionales/imagen-personal/peluqueria-cosmetica-capilar.html";
+const boeComercioInternacional =
+  "https://www.boe.es/boe/dias/2011/12/13/pdfs/BOE-A-2011-19439.pdf";
+const boeFabricacionMontaje =
+  "https://www.boe.es/boe/dias/2014/03/05/pdfs/BOE-A-2014-2360.pdf";
+const boeAcondicionamientoFisico =
+  "https://www.boe.es/boe/dias/2017/07/08/pdfs/BOE-A-2017-7981.pdf";
+const boeAutomatizacionRobotica =
+  "https://www.boe.es/eli/es/rd/2011/11/04/1581/dof/spa/pdf";
+const boeMecanizado = "https://www.boe.es/eli/es/rd/2007/10/29/1398";
+const todoFpDireccionCocina =
+  "https://www.todofp.es/que-estudiar/familias-profesionales/hosteleria-turismo/direccion-cocina.html";
 
 function relation(trainingProgramKey, code, sourceUrl, sourceQuote) {
   return {
@@ -64,6 +75,106 @@ const reviewedRelations = [
     "https://www.boe.es/eli/es/rd/2008/11/03/1796",
     "Recepcionista de vehículos.",
   ),
+  relation(
+    "AFD02S",
+    "3723",
+    boeAcondicionamientoFisico,
+    "Entrenador/a personal.",
+  ),
+  relation(
+    "AFD02SD",
+    "3723",
+    boeAcondicionamientoFisico,
+    "Entrenador/a personal.",
+  ),
+  relation(
+    "COM04S",
+    "3522",
+    boeComercioInternacional,
+    "Técnico en comercio exterior.",
+  ),
+  relation(
+    "COM04S",
+    "3523",
+    boeComercioInternacional,
+    "Consignatario de buques.",
+  ),
+  relation("COM04S", "4123", boeComercioInternacional, "Transitario."),
+  relation(
+    "COM04SD",
+    "3522",
+    boeComercioInternacional,
+    "Técnico en comercio exterior.",
+  ),
+  relation(
+    "COM04SD",
+    "3523",
+    boeComercioInternacional,
+    "Consignatario de buques.",
+  ),
+  relation("COM04SD", "4123", boeComercioInternacional, "Transitario."),
+  relation("FME01B", "7221", boeFabricacionMontaje, "Fontanero/a."),
+  relation(
+    "FME01B",
+    "9700",
+    boeFabricacionMontaje,
+    "Peones de industrias manufactureras.",
+  ),
+  relation(
+    "ELE04S",
+    "3123",
+    boeAutomatizacionRobotica,
+    "Técnico de puesta en marcha de sistemas de automatización industrial.",
+  ),
+  relation(
+    "ELE04S",
+    "3124",
+    boeAutomatizacionRobotica,
+    "Diseñador de circuitos y sistemas integrados en automatización industrial.",
+  ),
+  relation(
+    "ELE04S",
+    "3129",
+    boeAutomatizacionRobotica,
+    "Técnico en organización de mantenimiento de sistemas de automatización industrial.",
+  ),
+  relation(
+    "ELE04S",
+    "3139",
+    boeAutomatizacionRobotica,
+    "Programador-controlador de robots industriales.",
+  ),
+  relation(
+    "ELE04S",
+    "3209",
+    boeAutomatizacionRobotica,
+    "Jefe de equipo de supervisión de montaje de sistemas de automatización industrial.",
+  ),
+  relation(
+    "ELE04S",
+    "7521",
+    boeAutomatizacionRobotica,
+    "Verificador de aparatos, cuadros y equipos eléctricos.",
+  ),
+  relation(
+    "FME01M",
+    "7322",
+    boeMecanizado,
+    "Trabajadores de la fabricación de herramientas, mecánicos y ajustadores, modelistas matriceros y asimilados.",
+  ),
+  relation(
+    "FME01M",
+    "7323",
+    boeMecanizado,
+    "Ajustador operario de máquinas herramientas.",
+  ),
+  relation(
+    "FME01M",
+    "7324",
+    boeMecanizado,
+    "Pulidor de metales y afilador de herramientas.",
+  ),
+  relation("HOT04S", "5110", todoFpDireccionCocina, "Cocinera / cocinero."),
 ];
 
 function keyOf(item) {
@@ -92,21 +203,21 @@ async function updateText(relativePath, updates) {
 
 const links = JSON.parse(await readFile(linksPath, "utf8"));
 const existingByKey = new Map(links.map((item) => [keyOf(item), item]));
-let linksChanged = false;
+let addedCount = 0;
 for (const item of reviewedRelations) {
   const key = keyOf(item);
   const existing = existingByKey.get(key);
   if (existing === undefined) {
     links.push(item);
     existingByKey.set(key, item);
-    linksChanged = true;
+    addedCount += 1;
     continue;
   }
   if (JSON.stringify(existing) !== JSON.stringify(item)) {
     throw new Error(`Conflicting existing reviewed relation: ${key}`);
   }
 }
-if (linksChanged) {
+if (addedCount > 0) {
   links.sort((left, right) => {
     const byProgram = left.trainingProgramKey.localeCompare(
       right.trainingProgramKey,
@@ -120,6 +231,39 @@ if (linksChanged) {
 }
 
 await updateText("scripts/data/restoreFrontierReviewedCoverage.ts", [
+  {
+    sentinel: '"ELE04S|7521"',
+    anchor: '  "ELE02S|7533",',
+    replacement:
+      '  "ELE02S|7533",\n  "ELE04S|3123",\n  "ELE04S|3124",\n  "ELE04S|3129",\n  "ELE04S|3139",\n  "ELE04S|3209",\n  "ELE04S|7521",',
+  },
+  {
+    sentinel: '"FME01M|7324"',
+    anchor: '  "FME01B|9700",',
+    replacement:
+      '  "FME01B|9700",\n  "FME01M|7322",\n  "FME01M|7323",\n  "FME01M|7324",',
+  },
+  {
+    sentinel: '"HOT04S|5110"',
+    anchor: '  "HOT01S|3510",',
+    replacement: '  "HOT01S|3510",\n  "HOT04S|5110",',
+  },
+  {
+    sentinel: '"AFD02SD|3723"',
+    anchor: '  "AFD01SD|5992",',
+    replacement: '  "AFD01SD|5992",\n  "AFD02S|3723",\n  "AFD02SD|3723",',
+  },
+  {
+    sentinel: '"COM04SD|4123"',
+    anchor: '  "COM03S|5210",',
+    replacement:
+      '  "COM03S|5210",\n  "COM04S|3522",\n  "COM04S|3523",\n  "COM04S|4123",\n  "COM04SD|3522",\n  "COM04SD|3523",\n  "COM04SD|4123",',
+  },
+  {
+    sentinel: '"FME01B|9700"',
+    anchor: '  "FME02B|7312",',
+    replacement: '  "FME01B|7221",\n  "FME01B|9700",\n  "FME02B|7312",',
+  },
   {
     sentinel: '"IFC01B|7533"',
     anchor: '  "IFC02B|7533",',
@@ -140,6 +284,41 @@ await updateText("scripts/data/restoreFrontierReviewedCoverage.ts", [
 ]);
 
 await updateText("scripts/data/restoreFrontierReviewedCoverage.test.ts", [
+  {
+    sentinel: '        "ELE04S|7521",',
+    anchor: '        "ELE02M|7533",',
+    replacement:
+      '        "ELE02M|7533",\n        "ELE04S|3123",\n        "ELE04S|3124",\n        "ELE04S|3129",\n        "ELE04S|3139",\n        "ELE04S|3209",\n        "ELE04S|7521",',
+  },
+  {
+    sentinel: '        "FME01M|7324",',
+    anchor: '        "FME01B|9700",',
+    replacement:
+      '        "FME01B|9700",\n        "FME01M|7322",\n        "FME01M|7323",\n        "FME01M|7324",',
+  },
+  {
+    sentinel: '        "HOT04S|5110",',
+    anchor: '        "HOT01B|9310",',
+    replacement: '        "HOT01B|9310",\n        "HOT04S|5110",',
+  },
+  {
+    sentinel: '        "AFD02SD|3723",',
+    anchor: '        "ADG02SD|4223",',
+    replacement:
+      '        "ADG02SD|4223",\n        "AFD02S|3723",\n        "AFD02SD|3723",',
+  },
+  {
+    sentinel: '        "COM04SD|4123",',
+    anchor: '        "COM01M|9820",',
+    replacement:
+      '        "COM01M|9820",\n        "COM04S|3522",\n        "COM04S|3523",\n        "COM04S|4123",\n        "COM04SD|3522",\n        "COM04SD|3523",\n        "COM04SD|4123",',
+  },
+  {
+    sentinel: '        "FME01B|9700",',
+    anchor: '        "ELE02M|7533",',
+    replacement:
+      '        "ELE02M|7533",\n        "FME01B|7221",\n        "FME01B|9700",',
+  },
   {
     sentinel: '        "IFC01B|7533",',
     anchor: '        "IFC02S|2713",',
@@ -176,7 +355,7 @@ await updateText("scripts/data/validateCuratedMappings.test.ts", [
 ]);
 
 console.info(
-  linksChanged
-    ? `Published ${reviewedRelations.length} reviewed FP relations.`
+  addedCount > 0
+    ? `Published ${addedCount} reviewed FP relations.`
     : "Reviewed FP relation gap already published.",
 );

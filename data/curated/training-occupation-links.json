@@ -220,6 +220,26 @@
     "mappingVersion": "1.0.0"
   },
   {
+    "trainingProgramKey": "AFD02S",
+    "occupationId": "occupation:cno11:3723",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.boe.es/boe/dias/2017/07/08/pdfs/BOE-A-2017-7981.pdf",
+    "sourceQuote": "Entrenador/a personal.",
+    "reviewedAt": "2026-08-21",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "AFD02SD",
+    "occupationId": "occupation:cno11:3723",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.boe.es/boe/dias/2017/07/08/pdfs/BOE-A-2017-7981.pdf",
+    "sourceQuote": "Entrenador/a personal.",
+    "reviewedAt": "2026-08-21",
+    "mappingVersion": "1.0.0"
+  },
+  {
     "trainingProgramKey": "AGA01B",
     "occupationId": "occupation:cno11:4121",
     "relationshipType": "reviewed_relationship",
@@ -470,6 +490,66 @@
     "mappingVersion": "1.0.0"
   },
   {
+    "trainingProgramKey": "COM04S",
+    "occupationId": "occupation:cno11:3522",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.boe.es/boe/dias/2011/12/13/pdfs/BOE-A-2011-19439.pdf",
+    "sourceQuote": "Técnico en comercio exterior.",
+    "reviewedAt": "2026-08-21",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "COM04S",
+    "occupationId": "occupation:cno11:3523",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.boe.es/boe/dias/2011/12/13/pdfs/BOE-A-2011-19439.pdf",
+    "sourceQuote": "Consignatario de buques.",
+    "reviewedAt": "2026-08-21",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "COM04S",
+    "occupationId": "occupation:cno11:4123",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.boe.es/boe/dias/2011/12/13/pdfs/BOE-A-2011-19439.pdf",
+    "sourceQuote": "Transitario.",
+    "reviewedAt": "2026-08-21",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "COM04SD",
+    "occupationId": "occupation:cno11:3522",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.boe.es/boe/dias/2011/12/13/pdfs/BOE-A-2011-19439.pdf",
+    "sourceQuote": "Técnico en comercio exterior.",
+    "reviewedAt": "2026-08-21",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "COM04SD",
+    "occupationId": "occupation:cno11:3523",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.boe.es/boe/dias/2011/12/13/pdfs/BOE-A-2011-19439.pdf",
+    "sourceQuote": "Consignatario de buques.",
+    "reviewedAt": "2026-08-21",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "COM04SD",
+    "occupationId": "occupation:cno11:4123",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.boe.es/boe/dias/2011/12/13/pdfs/BOE-A-2011-19439.pdf",
+    "sourceQuote": "Transitario.",
+    "reviewedAt": "2026-08-21",
+    "mappingVersion": "1.0.0"
+  },
+  {
     "trainingProgramKey": "ELE01B",
     "occupationId": "occupation:cno11:7510",
     "relationshipType": "official_output",
@@ -560,6 +640,66 @@
     "mappingVersion": "1.0.0"
   },
   {
+    "trainingProgramKey": "ELE04S",
+    "occupationId": "occupation:cno11:3123",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.boe.es/eli/es/rd/2011/11/04/1581/dof/spa/pdf",
+    "sourceQuote": "Técnico de puesta en marcha de sistemas de automatización industrial.",
+    "reviewedAt": "2026-08-21",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "ELE04S",
+    "occupationId": "occupation:cno11:3124",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.boe.es/eli/es/rd/2011/11/04/1581/dof/spa/pdf",
+    "sourceQuote": "Diseñador de circuitos y sistemas integrados en automatización industrial.",
+    "reviewedAt": "2026-08-21",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "ELE04S",
+    "occupationId": "occupation:cno11:3129",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.boe.es/eli/es/rd/2011/11/04/1581/dof/spa/pdf",
+    "sourceQuote": "Técnico en organización de mantenimiento de sistemas de automatización industrial.",
+    "reviewedAt": "2026-08-21",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "ELE04S",
+    "occupationId": "occupation:cno11:3139",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.boe.es/eli/es/rd/2011/11/04/1581/dof/spa/pdf",
+    "sourceQuote": "Programador-controlador de robots industriales.",
+    "reviewedAt": "2026-08-21",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "ELE04S",
+    "occupationId": "occupation:cno11:3209",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.boe.es/eli/es/rd/2011/11/04/1581/dof/spa/pdf",
+    "sourceQuote": "Jefe de equipo de supervisión de montaje de sistemas de automatización industrial.",
+    "reviewedAt": "2026-08-21",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "ELE04S",
+    "occupationId": "occupation:cno11:7521",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.boe.es/eli/es/rd/2011/11/04/1581/dof/spa/pdf",
+    "sourceQuote": "Verificador de aparatos, cuadros y equipos eléctricos.",
+    "reviewedAt": "2026-08-21",
+    "mappingVersion": "1.0.0"
+  },
+  {
     "trainingProgramKey": "ENA03S",
     "occupationId": "occupation:cno11:3123",
     "relationshipType": "official_output",
@@ -647,6 +787,56 @@
     "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/edificacion-obra-civil/proyectos-obra-civil.html",
     "sourceQuote": "Delineante de obra civil.",
     "reviewedAt": "2026-08-14",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "FME01B",
+    "occupationId": "occupation:cno11:7221",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.boe.es/boe/dias/2014/03/05/pdfs/BOE-A-2014-2360.pdf",
+    "sourceQuote": "Fontanero/a.",
+    "reviewedAt": "2026-08-21",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "FME01B",
+    "occupationId": "occupation:cno11:9700",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.boe.es/boe/dias/2014/03/05/pdfs/BOE-A-2014-2360.pdf",
+    "sourceQuote": "Peones de industrias manufactureras.",
+    "reviewedAt": "2026-08-21",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "FME01M",
+    "occupationId": "occupation:cno11:7322",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.boe.es/eli/es/rd/2007/10/29/1398",
+    "sourceQuote": "Trabajadores de la fabricación de herramientas, mecánicos y ajustadores, modelistas matriceros y asimilados.",
+    "reviewedAt": "2026-08-21",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "FME01M",
+    "occupationId": "occupation:cno11:7323",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.boe.es/eli/es/rd/2007/10/29/1398",
+    "sourceQuote": "Ajustador operario de máquinas herramientas.",
+    "reviewedAt": "2026-08-21",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "FME01M",
+    "occupationId": "occupation:cno11:7324",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.boe.es/eli/es/rd/2007/10/29/1398",
+    "sourceQuote": "Pulidor de metales y afilador de herramientas.",
+    "reviewedAt": "2026-08-21",
     "mappingVersion": "1.0.0"
   },
   {
@@ -787,6 +977,16 @@
     "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/hosteleria-turismo/guia-informacion-asistencias-turisticas.html",
     "sourceQuote": "Informador turístico / informadora turística.",
     "reviewedAt": "2026-08-13",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "HOT04S",
+    "occupationId": "occupation:cno11:5110",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/hosteleria-turismo/direccion-cocina.html",
+    "sourceQuote": "Cocinera / cocinero.",
+    "reviewedAt": "2026-08-21",
     "mappingVersion": "1.0.0"
   },
   {

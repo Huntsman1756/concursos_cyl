@@ -365,6 +365,11 @@ describe("TrainingResultsPage", () => {
     expect(
       screen.getByText("Grado superior · Código oficial IFC03S"),
     ).toBeVisible();
+    expect(
+      screen.getByLabelText(
+        "Tu título de Formación Profesional conduce a ocupaciones con evidencia",
+      ),
+    ).toHaveTextContent("Tu título de FP→Ocupaciones con evidencia");
     expect(screen.queryByText(/no hay trabajo/iu)).not.toBeInTheDocument();
   });
 

@@ -89,12 +89,15 @@ consume tres pasos sin usar una herramienta de edición. Esta guardia evita
 repetir contexto caro en encargos que necesitan un contrato mejor acotado.
 El proxy auditable del repositorio desactiva el razonamiento extendido de Qwen para contratos mecanicos; DeepSeek mantiene razonamiento explicito.
 
-## Política NAN-first obligatoria
+## Política de ejecución directa
 
-Para código, tests, datos, artefactos de análisis y documentación, NAN-first
-es obligatorio: Codex planifica, decide, revisa, valida y publica; el worker
-NAN ejecuta la implementación sin que Codex escriba directamente ni tome
-control tras un fallo NAN.
+Codex implementa, prueba, revisa y publica directamente por defecto. NAN,
+OpenRouter y OpenCode quedan disponibles únicamente como aceleradores opcionales:
+nunca son una puerta de entrada, un requisito de procedencia ni un motivo para
+detener una historia. Si un worker no produce una edición útil en su primer
+intento acotado, Codex conserva el diagnóstico y continúa directamente sin más
+reintentos. Las decisiones de producto, arquitectura, evidencia y seguridad
+siguen reservadas a Codex.
 
 ## Flujo Frontier → worker → Frontier
 
@@ -124,8 +127,8 @@ Un `RETRY` relanza un worker con sesión nueva sobre el mismo SHA y con
 instrucciones reducidas; nunca permite que Codex implemente silenciosamente.
 Solo un intento listo y validado puede recibir `ACCEPT`.
 
-Cuando haya dos o más historias independientes, la entrada preferida y
-obligatoria es `Invoke-NanWorkerBatch.ps1`. Codex debe separar rutas exactas y
+Cuando se decida delegar dos o más historias independientes, la entrada opcional
+es `Invoke-NanWorkerBatch.ps1`. Codex debe separar rutas exactas y
 disjuntas. El broker usa uno por defecto para evitar presion sobre la API; una
 excepcion explicita puede lanzar hasta cinco contextos NAN frescos en worktrees
 detached distintos. Cada historia conserva contrato, parche, telemetría y hashes
@@ -215,9 +218,8 @@ un contrato no pueda explorar fuentes de otro ciclo.
 > de fallo; nunca queda `null` tras ejecutar validación (mock o real).
 
 El trabajador no puede publicar, hacer commits, ampliar sus rutas ni aprobar su
-propio resultado. Si falla, el supervisor puede adaptar una vez el contrato y
-reintentar con NAN; agotado el presupuesto termina en `ESCALATE`. Codex revisa
-pero no escribe directamente ni toma el control de la implementación. El objetivo
+propio resultado. Si falla, el supervisor puede terminar en `ESCALATE`, pero ese
+estado no bloquea la ejecución directa de Codex. El objetivo
 coherente usa contrato multiarchivo; historias independientes usan batch hasta cinco;
 microcontratos artificiales prohibidos. Este host Windows es
 `BOUNDED_LOCAL`, no aislamiento duro certificado. No se delegan secretos,
