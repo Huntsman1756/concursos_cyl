@@ -8,7 +8,7 @@ import {
   type TrainingOccupationLink,
 } from "../../data/schemas/curatedMappings";
 
-const REVIEWED_SOURCE_COMMIT = "19a7f81fcfe1a9e273b11e1a7ff18aa1fb9dbaef";
+const REVIEWED_SOURCE_COMMIT = "1fb9f98c1f27dbde78f87afedcc60c50a3712d08";
 const LINKS_PATH = "data/curated/training-occupation-links.json";
 
 export const ACCEPTED_RELATION_KEYS = [
