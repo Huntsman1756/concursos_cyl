@@ -365,12 +365,7 @@ describe("prepareRuntimeData", () => {
       "/data/v1/snapshots/20260821144454118-a56e3eeaffa6/programs.json",
     );
     const outsideTarget = join(fixture.root, "outside-target");
-    const target = join(
-      fixture.source,
-      "v1",
-      "snapshots",
-      "runtime-target",
-    );
+    const target = join(fixture.source, "v1", "snapshots", "runtime-target");
     await mkdir(outsideTarget, { recursive: true });
     await symlink(outsideTarget, target, "dir");
 

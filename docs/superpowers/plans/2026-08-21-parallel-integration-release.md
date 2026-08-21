@@ -23,9 +23,11 @@
 ### Task 1: Review and integrate track commits
 
 **Files:**
+
 - Review all files changed by the VPS, runtime/release, Home, and FP plans.
 
 **Interfaces:**
+
 - Consumes independently tested track commits.
 - Produces one clean integration branch with no overlapping unresolved edits.
 
@@ -37,9 +39,11 @@
 ### Task 2: Run the complete local release matrix
 
 **Files:**
+
 - No planned edits; failures create a scoped corrective commit.
 
 **Interfaces:**
+
 - Produces fresh local evidence for the exact integration HEAD.
 
 - [ ] Run `rtk npm run license:check`.
@@ -54,9 +58,11 @@
 ### Task 3: Publish GitHub and verify Pages
 
 **Files:**
+
 - No repository edits during publication.
 
 **Interfaces:**
+
 - Produces `origin/main`, branch backup, and Pages at the exact integration SHA.
 
 - [ ] Fetch origin and require `origin/main` to be an ancestor of HEAD.
@@ -67,9 +73,11 @@
 ### Task 4: Deploy and verify the VPS
 
 **Files:**
+
 - No repository edits during publication.
 
 **Interfaces:**
+
 - Consumes the authorized `salida-cyl-vps` SSH alias and final main SHA.
 - Produces VPS `current` at the same SHA.
 
@@ -81,11 +89,13 @@
 ### Task 5: Record observed handoff state
 
 **Files:**
+
 - Modify: `docs/contest/NEXT_SESSION.md`
 - Modify only from observed facts: `docs/contest/release-evidence.json`
 - Modify generated contest documents if their renderer consumes release evidence.
 
 **Interfaces:**
+
 - Produces current counts, snapshot, CI run, Pages/VPS observations, remaining 47-base queue, and explicit human blockers.
 
 - [ ] Add failing evidence-validation expectations for the new product SHA, snapshot, counts, and run before editing evidence.

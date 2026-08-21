@@ -23,10 +23,12 @@
 ### Task 1: Coalesce the Home manifest request
 
 **Files:**
+
 - Modify: `src/features/home/HomePage.tsx`
 - Modify: `src/features/home/HomePage.test.tsx`
 
 **Interfaces:**
+
 - Consumes: `loadManifest(): Promise<LoadableGeneratedManifest>`.
 - Produces: one no-store manifest request per Home mount while preserving independent state failures.
 
@@ -35,7 +37,11 @@
 Extend the main Home fixture test so its `fetch` mock records manifest requests and asserts:
 
 ```ts
-expect(fetchMock.mock.calls.filter(([input]) => String(input).endsWith("/data/v1/manifest.json"))).toHaveLength(1);
+expect(
+  fetchMock.mock.calls.filter(([input]) =>
+    String(input).endsWith("/data/v1/manifest.json"),
+  ),
+).toHaveLength(1);
 ```
 
 - [ ] **Step 2: Run the Home suite red**
@@ -66,10 +72,12 @@ rtk git commit -m "perf(home): coalesce manifest loading"
 ### Task 2: Narrow runtime snapshot retention
 
 **Files:**
+
 - Modify: `scripts/release/prepareRuntimeData.ts`
 - Modify: `scripts/release/prepareRuntimeData.test.ts`
 
 **Interfaces:**
+
 - Consumes: current manifest plus `docs/contest/coverage-freeze.json` and `docs/contest/release-evidence.json`.
 - Produces: `prepareRuntimeData(options): Promise<PreparedRuntimeData>` with a closed snapshot allowlist.
 
@@ -116,6 +124,7 @@ rtk git commit -m "perf(release): retain terminal evidence snapshots"
 ### Task 3: Verify the live Pages deployment
 
 **Files:**
+
 - Create: `scripts/release/verifyPagesDeployment.ts`
 - Create: `scripts/release/verifyPagesDeployment.test.ts`
 - Modify: `scripts/release/deployPagesWorkflow.test.ts`
@@ -123,6 +132,7 @@ rtk git commit -m "perf(release): retain terminal evidence snapshots"
 - Modify: `package.json`
 
 **Interfaces:**
+
 - Produces: `verifyPagesDeployment({ baseUrl, expectedCommit, fetchImpl, attempts, retryDelayMs }): Promise<void>`.
 - Produces CLI: `npm run release:pages:verify -- <base-url> <sha>`.
 

@@ -305,11 +305,7 @@ async function verifyOnce(
     requestTimeoutMs,
   );
   assertApplicationRoot(
-    await readResponseText(
-      rootResponse,
-      "root response",
-      requestTimeoutMs,
-    ),
+    await readResponseText(rootResponse, "root response", requestTimeoutMs),
     "root response",
   );
 

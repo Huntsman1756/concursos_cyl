@@ -2,10 +2,7 @@ import { readFileSync } from "node:fs";
 import { describe, expect, it, vi } from "vitest";
 import { verifyPagesDeployment } from "./verifyPagesDeployment";
 
-type FetchImpl = (
-  input: string | URL,
-  init?: RequestInit,
-) => Promise<Response>;
+type FetchImpl = (input: string | URL, init?: RequestInit) => Promise<Response>;
 
 const baseUrl = "https://example.github.io/concursos_cyl/";
 const expectedCommit = "a".repeat(40);
@@ -13,12 +10,14 @@ const manifest = JSON.parse(
   readFileSync("public/data/v1/manifest.json", "utf8"),
 ) as {
   schemaVersion: string;
-  resourceSnapshots: Record<string, { resourcePath: string; [key: string]: unknown }>;
+  resourceSnapshots: Record<
+    string,
+    { resourcePath: string; [key: string]: unknown }
+  >;
   [key: string]: unknown;
 };
-const snapshotId = manifest.resourceSnapshots.programs!.resourcePath.split(
-  "/",
-)[4]!;
+const snapshotId =
+  manifest.resourceSnapshots.programs!.resourcePath.split("/")[4]!;
 
 function cloneManifest() {
   return JSON.parse(JSON.stringify(manifest)) as typeof manifest;
@@ -92,8 +91,8 @@ describe("verifyPagesDeployment", () => {
       }),
     ).resolves.toBeUndefined();
 
-    const requestedPaths = fetchImpl.mock.calls.map(([input]) =>
-      new URL(input).pathname,
+    const requestedPaths = fetchImpl.mock.calls.map(
+      ([input]) => new URL(input).pathname,
     );
     expect(requestedPaths.slice(0, 3)).toEqual([
       "/concursos_cyl/",
@@ -110,9 +109,9 @@ describe("verifyPagesDeployment", () => {
       new Set(expectedResourcePaths),
     );
     expect(requestedPaths.at(-1)).toBe("/concursos_cyl/comparar");
-    expect(fetchImpl.mock.calls.every(([, init]) => init?.redirect === "error")).toBe(
-      true,
-    );
+    expect(
+      fetchImpl.mock.calls.every(([, init]) => init?.redirect === "error"),
+    ).toBe(true);
   });
 
   it("rejects a version commit that differs from the expected commit", async () => {
@@ -177,17 +176,26 @@ describe("verifyPagesDeployment", () => {
   });
 
   it.each([
-    ["wrong filename", (candidate: typeof manifest) => {
-      candidate.resourceSnapshots.programs!.resourcePath =
-        candidate.resourceSnapshots.jobOffers!.resourcePath;
-    }],
-    ["duplicate resource path", (candidate: typeof manifest) => {
-      candidate.resourceSnapshots.jobOffers!.resourcePath =
-        candidate.resourceSnapshots.programs!.resourcePath;
-    }],
-    ["invalid metadata", (candidate: typeof manifest) => {
-      candidate.resourceSnapshots.programs!.sha256 = "not-a-sha256";
-    }],
+    [
+      "wrong filename",
+      (candidate: typeof manifest) => {
+        candidate.resourceSnapshots.programs!.resourcePath =
+          candidate.resourceSnapshots.jobOffers!.resourcePath;
+      },
+    ],
+    [
+      "duplicate resource path",
+      (candidate: typeof manifest) => {
+        candidate.resourceSnapshots.jobOffers!.resourcePath =
+          candidate.resourceSnapshots.programs!.resourcePath;
+      },
+    ],
+    [
+      "invalid metadata",
+      (candidate: typeof manifest) => {
+        candidate.resourceSnapshots.programs!.sha256 = "not-a-sha256";
+      },
+    ],
   ] as const)("rejects a manifest with %s", async (_name, mutate) => {
     const invalidManifest = cloneManifest();
     mutate(invalidManifest);
