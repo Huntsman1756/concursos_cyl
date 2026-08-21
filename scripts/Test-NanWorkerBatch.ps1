@@ -551,6 +551,10 @@ try {
     $testName = 'Static: adapter rejects missing WorktreeRoot without fallback'
     Write-TestResult -Name $testName -Success ($adapterSrc -match 'no.*fallback.*worker.*allowed' -or $adapterSrc -match 'no.*fallback') -Detail ""
 
+    # 7. validation dependencies are available without copying them
+    $testName = 'Static: batch provisions ephemeral worktree dependencies'
+    Write-TestResult -Name $testName -Success ($batchSrc -match 'Initialize-BatchWorktreeDependencies' -and $batchSrc -match 'ItemType \$itemType') -Detail ""
+
     # ────────────────────────────────────────────────────────────────
     # Summary
     # ────────────────────────────────────────────────────────────────

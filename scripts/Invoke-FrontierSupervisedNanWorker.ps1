@@ -34,6 +34,15 @@ function Write-NewJson {
     try { $stream.Write($bytes, 0, $bytes.Length); $stream.Flush($true) } finally { $stream.Dispose() }
 }
 
+function Initialize-WorktreeDependencies {
+    param([string]$RepositoryRoot, [string]$WorktreeRoot)
+    $source = Join-Path $RepositoryRoot 'node_modules'
+    $target = Join-Path $WorktreeRoot 'node_modules'
+    if (-not (Test-Path -LiteralPath $source -PathType Container) -or (Test-Path -LiteralPath $target)) { return }
+    $itemType = if ($env:OS -eq 'Windows_NT') { 'Junction' } else { 'SymbolicLink' }
+    New-Item -ItemType $itemType -Path $target -Target $source -ErrorAction Stop | Out-Null
+}
+
 function Get-StaticQualitySummary {
     param([object]$AttemptEvidence)
     if (-not [bool]$AttemptEvidence.validationFailed) { return $null }
@@ -319,6 +328,7 @@ try {
                 & git -C $repoRoot worktree add --detach $attemptRoot $baseSha | Out-Null
                 if ($LASTEXITCODE -ne 0) { throw 'Unable to create isolated worker worktree.' }
                 $worktreeAdded = $true
+                Initialize-WorktreeDependencies -RepositoryRoot $repoRoot -WorktreeRoot $attemptRoot
             }
             $activePlan = (@($contract.frontierPlan) + @($repairInstructions)) -join "`nBounded repair: "
             $workerParameters = @{

@@ -48,6 +48,15 @@ function Remove-BatchWorktree {
     if ($LASTEXITCODE -ne 0) { throw "Unable to remove batch worktree: $resolvedPath" }
 }
 
+function Initialize-BatchWorktreeDependencies {
+    param([string]$RepositoryRoot, [string]$WorktreeRoot)
+    $source = Join-Path $RepositoryRoot 'node_modules'
+    $target = Join-Path $WorktreeRoot 'node_modules'
+    if (-not (Test-Path -LiteralPath $source -PathType Container) -or (Test-Path -LiteralPath $target)) { return }
+    $itemType = if ($env:OS -eq 'Windows_NT') { 'Junction' } else { 'SymbolicLink' }
+    New-Item -ItemType $itemType -Path $target -Target $source -ErrorAction Stop | Out-Null
+}
+
 function Test-PathsDisjoint {
     param([string[]]$PathsA, [string[]]$PathsB)
     $normA = @($PathsA | ForEach-Object { $_.Replace('\','/').TrimEnd('/') })
@@ -361,6 +370,7 @@ try {
                     if ($gitExitCode -ne 0) {
                         throw "Failed to create detached worktree at $jobWorktreePath`: $($gitOutput -join ' ')"
                     }
+                    Initialize-BatchWorktreeDependencies -RepositoryRoot $repoRoot -WorktreeRoot $jobWorktreePath
                 }
                 $job = Start-StoryJob -Index $idx -ContractPath $storyContractPaths[$idx] `
                     -StateDir $StateDirectory -Worktree $jobWorktreePath -TestModeOn $TestMode
