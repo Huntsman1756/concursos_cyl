@@ -1,0 +1,17 @@
+Program Key: QUI01E
+Program Title: Cultivos celulares
+Official Title: Curso de Especialización en Cultivos Celulares (Acceso GS)
+Family: QUI — Química
+Level: specialization
+Source System: TodoFP
+Source URL: https://www.todofp.es/que-estudiar/familias-profesionales/quimica/ce-cultivos-celulares.html
+
+The exact TodoFP output retained in data/curated/professional-profiles.json is:
+
+1. Experta / experto en cultivos celulares
+
+Classification sources retained for the CNO boundary:
+
+- BOE CNO-11: https://www.boe.es/eli/es/rd/2010/11/26/1591
+- INE CNO-11 explanatory notes: https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf
+- Registered official catalog record: data/curated/official-occupations.json, classificationCode 3141

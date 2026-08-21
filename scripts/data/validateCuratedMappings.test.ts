@@ -4,6 +4,7 @@ import { resolve } from "node:path";
 import { describe, expect, it } from "vitest";
 
 import type { TrainingProgram } from "../../data/schemas/generated";
+import { deriveBaseProgramKey } from "../analysis/buildFpCoverageResearchQueue";
 import { approvedSingleTokenAuditIdentities } from "../analysis/validateFpOneWordPublicationReview";
 import {
   buildOccupationIndex,
@@ -748,6 +749,55 @@ const diskPrograms: TrainingProgram[] = [
     level: "intermediate",
     familyCode: "INA",
     familyName: "Industrias Alimentarias",
+  },
+  {
+    programKey: "QUI01E",
+    programTitle: "Cultivos celulares",
+    level: "specialization",
+    familyCode: "QUI",
+    familyName: "Química",
+  },
+  {
+    programKey: "SAN01S",
+    programTitle: "Audiología Protésica",
+    level: "higher",
+    familyCode: "SAN",
+    familyName: "Sanidad",
+  },
+  {
+    programKey: "SAN01SD",
+    programTitle: "Audiología Protésica (distancia)",
+    level: "higher",
+    familyCode: "SAN",
+    familyName: "Sanidad",
+  },
+  {
+    programKey: "SAN02S",
+    programTitle: "Prótesis Dentales",
+    level: "higher",
+    familyCode: "SAN",
+    familyName: "Sanidad",
+  },
+  {
+    programKey: "SEA01M",
+    programTitle: "Emergencias y Protección Civil",
+    level: "intermediate",
+    familyCode: "SEA",
+    familyName: "Seguridad y Medio Ambiente",
+  },
+  {
+    programKey: "SEA01MD",
+    programTitle: "Emergencias y Protección Civil (distancia)",
+    level: "intermediate",
+    familyCode: "SEA",
+    familyName: "Seguridad y Medio Ambiente",
+  },
+  {
+    programKey: "TMV03M",
+    programTitle: "Electromecánica de maquinaria",
+    level: "intermediate",
+    familyCode: "TMV",
+    familyName: "Transporte y Mantenimiento de Vehículos",
   },
 ];
 
@@ -1581,6 +1631,106 @@ describe("curated occupation mappings", () => {
       .sort();
 
     expect(actualKeys).toEqual(expectedKeys);
+  });
+
+  it("defines exactly the second priority FP wave before curated publication", async () => {
+    const curated = await loadCuratedMappingsFromDisk(
+      process.cwd(),
+      diskPrograms,
+    );
+    const approved = loadApprovedMappings(curated);
+    const waveOccupationCodes = [
+      "3141",
+      "3316",
+      "3317",
+      "5931",
+      "5932",
+      "5993",
+      "7403",
+    ];
+    const waveProgramKeys = [
+      "QUI01E",
+      "SAN01S",
+      "SAN01SD",
+      "SAN02S",
+      "SEA01M",
+      "SEA01MD",
+      "TMV03M",
+    ];
+    const expectedWaveKeys = [
+      "QUI01E|3141",
+      "SAN01S|3317",
+      "SAN01SD|3317",
+      "SAN02S|3316",
+      "SAN02S|2640",
+      "SEA01M|5931",
+      "SEA01MD|5931",
+      "SEA01M|5932",
+      "SEA01MD|5932",
+      "SEA01M|5993",
+      "SEA01MD|5993",
+      "TMV03M|7403",
+    ].sort();
+
+    expect
+      .soft(
+        waveOccupationCodes.filter((code) =>
+          approved.occupations.some(
+            (occupation) => occupation.classificationCode === code,
+          ),
+        ),
+      )
+      .toEqual(waveOccupationCodes);
+
+    const actualWaveKeys = approved.links
+      .filter((link) => waveProgramKeys.includes(link.trainingProgramKey))
+      .map(
+        (link) =>
+          `${link.trainingProgramKey}|${link.occupationId.replace("occupation:cno11:", "")}`,
+      )
+      .sort();
+    expect.soft(actualWaveKeys).toEqual(expectedWaveKeys);
+
+    const waveOccupationIds = waveOccupationCodes.map(
+      (code) => `occupation:cno11:${code}`,
+    );
+    expect(
+      curated.aliases.filter((alias) =>
+        waveOccupationIds.includes(alias.occupationId),
+      ),
+    ).toEqual([]);
+
+    const snapshotPrograms = JSON.parse(
+      readFileSync(
+        resolve(
+          process.cwd(),
+          "public/data/v1/snapshots/20260821162954121-087e3c5155c6/programs.json",
+        ),
+        "utf8",
+      ),
+    ) as TrainingProgram[];
+    const programsByKey = new Map(
+      snapshotPrograms.map((program) => [program.programKey, program]),
+    );
+    const approvedProgramKeys = new Set(
+      approved.links.map((link) => link.trainingProgramKey),
+    );
+    const approvedPrograms = [...approvedProgramKeys].map((programKey) => {
+      const program = programsByKey.get(programKey);
+      if (program === undefined) {
+        throw new Error(`Missing snapshot program ${programKey}.`);
+      }
+      return program;
+    });
+    const reviewedBaseKeys = new Set(
+      approvedPrograms.map((program) =>
+        deriveBaseProgramKey(program, programsByKey),
+      ),
+    );
+
+    expect.soft(approved.links).toHaveLength(240);
+    expect.soft(reviewedBaseKeys.size).toBe(91);
+    expect.soft(approvedProgramKeys.size).toBe(109);
   });
 
   it("publishes only EOC01M aliases accepted by the official audit", async () => {

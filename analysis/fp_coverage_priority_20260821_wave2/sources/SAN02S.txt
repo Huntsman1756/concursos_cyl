@@ -1,0 +1,22 @@
+Program Key: SAN02S
+Program Title: Prótesis Dentales
+Official Title: Técnico Superior en Prótesis Dentales
+Family: SAN — Sanidad
+Level: higher
+Source System: TodoFP
+Source URL: https://www.todofp.es/que-estudiar/familias-profesionales/sanidad/protesis-dentales.html
+
+The exact TodoFP outputs retained in data/curated/professional-profiles.json
+are:
+
+1. Comercial en la industria dental o depósitos dentales.
+2. Responsable técnico de un laboratorio de prótesis dental.
+3. Responsable técnico en departamentos de investigación y desarrollo de productos en la industria dental.
+4. Técnica / técnico especialista en prótesis dental.
+5. Técnica / técnico superior en prótesis dentales.
+
+Classification sources retained for the CNO boundary:
+
+- BOE CNO-11: https://www.boe.es/eli/es/rd/2010/11/26/1591
+- INE CNO-11 explanatory notes: https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf
+- Registered official catalog records: data/curated/official-occupations.json, classificationCodes 3316 and 2640

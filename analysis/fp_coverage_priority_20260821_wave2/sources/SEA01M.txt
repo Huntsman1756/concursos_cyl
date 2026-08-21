@@ -1,0 +1,29 @@
+Program Keys: SEA01M, SEA01MD
+Program Title: Emergencias y Protección Civil
+Official Title: Técnico en Emergencias y Protección Civil
+Family: SEA — Seguridad y Medio Ambiente
+Level: intermediate
+Source System: TodoFP
+Source URL: https://www.todofp.es/que-estudiar/familias-profesionales/seguridad-medio-ambiente/emergencias-proteccion-civil.html
+
+The exact TodoFP outputs retained in data/curated/professional-profiles.json
+are the same for the base and distance modalities:
+
+1. Bombera / bombero de aeropuertos.
+2. Bombera / bombero de empresa privada.
+3. Bombera / bombero de otros servicios en entes públicos, entre otros.
+4. Bombera / bombero de servicios consorciados.
+5. Bombera / bombero de servicios de comunidad autónoma.
+6. Bombera / bombero de servicios mancomunados.
+7. Bombera / bombero de servicios municipales.
+8. Bombera / bombero de servicios provinciales.
+9. Bombera / bombero forestal.
+10. Capataz-Encargada / encargado de extinción de incendios forestales.
+11. Técnica / técnico en emergencias de las FF.AA.
+12. Vigilante de incendios forestales.
+
+Classification sources retained for the CNO boundary:
+
+- BOE CNO-11: https://www.boe.es/eli/es/rd/2010/11/26/1591
+- INE CNO-11 explanatory notes: https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf
+- Registered official catalog records: data/curated/official-occupations.json, classificationCodes 5931, 5932, and 5993

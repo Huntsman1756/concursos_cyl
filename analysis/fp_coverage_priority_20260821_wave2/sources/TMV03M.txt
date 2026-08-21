@@ -1,0 +1,27 @@
+Program Key: TMV03M
+Program Title: Electromecánica de maquinaria
+Official Title: Técnico en Electromecánica de Maquinaria
+Family: TMV — Transporte y Mantenimiento de Vehículos
+Level: intermediate
+Source System: TodoFP
+Source URL: https://www.todofp.es/que-estudiar/familias-profesionales/transporte-mantenimiento-vehiculos/electromecanica-maquinaria.html
+
+The exact TodoFP outputs retained in data/curated/professional-profiles.json
+are:
+
+1. Electromecánica / electromecánico ajustador de equipos de inyección Diésel.
+2. Electromecánica / electromecánico de maquinaria agrícola.
+3. Electromecánica / electromecánico de máquinas de edificación y obra civil.
+4. Electromecánica / electromecánico de máquinas de Industrias extractivas.
+5. Reparador / reparadora de accesorios.
+6. Reparador / reparadora de sistemas de dirección y suspensión.
+7. Reparador / reparadora de sistemas de transmisión y frenos.
+8. Reparador / reparadora de sistemas neumáticos e hidráulicos.
+9. Vendedor-distribuidor / verificadora-distribuidora de recambios y equipos de diagnosis.
+10. Verificador / verificadora de maquinaria agrícola e industrial.
+
+Classification sources retained for the CNO boundary:
+
+- BOE CNO-11: https://www.boe.es/eli/es/rd/2010/11/26/1591
+- INE CNO-11 explanatory notes: https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf
+- Registered official catalog record: data/curated/official-occupations.json, classificationCode 7403

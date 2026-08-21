@@ -1,0 +1,22 @@
+Program Keys: SAN01S, SAN01SD
+Program Title: Audiología Protésica
+Official Title: Técnico Superior en Audiología Protésica
+Family: SAN — Sanidad
+Level: higher
+Source System: TodoFP
+Source URL: https://www.todofp.es/que-estudiar/familias-profesionales/sanidad/audiologia-protesica.html
+
+The exact TodoFP outputs retained in data/curated/professional-profiles.json
+are the same for the base and distance modalities:
+
+1. Audiometrista.
+2. Audioprotésica / audioprotésico.
+3. Elaborador / elaboradora de moldes y protectores auditivos.
+4. Especialista audioprotesista.
+5. Técnica / técnico en medición de nivel sonoro.
+
+Classification sources retained for the CNO boundary:
+
+- BOE CNO-11: https://www.boe.es/eli/es/rd/2010/11/26/1591
+- INE CNO-11 explanatory notes: https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf
+- Registered official catalog record: data/curated/official-occupations.json, classificationCode 3317

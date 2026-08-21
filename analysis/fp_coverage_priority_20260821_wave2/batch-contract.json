@@ -1,0 +1,149 @@
+{
+  "schemaVersion": 1,
+  "waveId": "fp-coverage-priority-20260821-wave2",
+  "reviewedAt": "2026-08-21",
+  "objective": "Freeze primary TodoFP/CNO evidence for five priority FP bases and publish only the exact twelve accepted relation keys.",
+  "sourcePolicy": {
+    "programEvidence": "TodoFP professional-profile records and their official TodoFP URLs",
+    "classificationEvidence": ["BOE CNO-11", "INE CNO-11 explanatory notes"],
+    "forbiddenEvidence": [
+      "job offers",
+      "sector-only similarity",
+      "generic aliases",
+      "unreviewed management or military-emergency outputs"
+    ]
+  },
+  "acceptedOccupationCodes": [
+    "3141",
+    "3316",
+    "3317",
+    "5931",
+    "5932",
+    "5993",
+    "7403"
+  ],
+  "acceptedRelationKeys": [
+    "QUI01E|3141",
+    "SAN01S|3317",
+    "SAN01SD|3317",
+    "SAN02S|3316",
+    "SAN02S|2640",
+    "SEA01M|5931",
+    "SEA01MD|5931",
+    "SEA01M|5932",
+    "SEA01MD|5932",
+    "SEA01M|5993",
+    "SEA01MD|5993",
+    "TMV03M|7403"
+  ],
+  "rejectedAlternativeCodes": [
+    "3314",
+    "3124",
+    "3315",
+    "3510",
+    "5622",
+    "7401",
+    "3126",
+    "7521",
+    "8321"
+  ],
+  "stories": [
+    {
+      "id": "qui01e-review",
+      "programKey": "QUI01E",
+      "sourcePath": "analysis/fp_coverage_priority_20260821_wave2/sources/QUI01E.txt",
+      "proposalPath": "analysis/fp_coverage_priority_20260821_wave2/proposals/QUI01E.md",
+      "allowedPaths": [
+        "analysis/fp_coverage_priority_20260821_wave2/proposals/QUI01E.md"
+      ],
+      "frontierPlan": "Map cellular-culture laboratory work only to the biological-science technician boundary; reject clinical diagnostics and generic technical substitutes.",
+      "acceptanceCriteria": [
+        "preserve the exact TodoFP quote",
+        "use only an approved official CNO-11 identity",
+        "record rejected adjacent codes",
+        "do not create an alias"
+      ],
+      "validationCommands": [
+        "test -f analysis/fp_coverage_priority_20260821_wave2/proposals/QUI01E.md"
+      ]
+    },
+    {
+      "id": "san01s-review",
+      "programKey": "SAN01S",
+      "programKeys": ["SAN01S", "SAN01SD"],
+      "sourcePath": "analysis/fp_coverage_priority_20260821_wave2/sources/SAN01S.txt",
+      "proposalPath": "analysis/fp_coverage_priority_20260821_wave2/proposals/SAN01S.md",
+      "allowedPaths": [
+        "analysis/fp_coverage_priority_20260821_wave2/proposals/SAN01S.md"
+      ],
+      "frontierPlan": "Keep audioprosthetic work distinct from clinical laboratory, orthoprosthetic, electronics, and emergency-health occupations while applying the same reviewed relationship to the base and distance modalities.",
+      "acceptanceCriteria": [
+        "preserve the exact TodoFP quotes",
+        "publish only CNO-11 3317 for both modalities",
+        "record adjacent rejected codes",
+        "do not create an alias"
+      ],
+      "validationCommands": [
+        "test -f analysis/fp_coverage_priority_20260821_wave2/proposals/SAN01S.md"
+      ]
+    },
+    {
+      "id": "san02s-review",
+      "programKey": "SAN02S",
+      "sourcePath": "analysis/fp_coverage_priority_20260821_wave2/sources/SAN02S.txt",
+      "proposalPath": "analysis/fp_coverage_priority_20260821_wave2/proposals/SAN02S.md",
+      "allowedPaths": [
+        "analysis/fp_coverage_priority_20260821_wave2/proposals/SAN02S.md"
+      ],
+      "frontierPlan": "Treat the dental-prosthesis technician output as the one direct official output, and keep dental technical sales at 2640 instead of the generic commercial group.",
+      "acceptanceCriteria": [
+        "mark SAN02S|3316 as official_output",
+        "retain the exact dental sales quote for SAN02S|2640",
+        "reject generic commercial and adjacent dental codes",
+        "do not create an alias"
+      ],
+      "validationCommands": [
+        "test -f analysis/fp_coverage_priority_20260821_wave2/proposals/SAN02S.md"
+      ]
+    },
+    {
+      "id": "sea01m-review",
+      "programKey": "SEA01M",
+      "programKeys": ["SEA01M", "SEA01MD"],
+      "sourcePath": "analysis/fp_coverage_priority_20260821_wave2/sources/SEA01M.txt",
+      "proposalPath": "analysis/fp_coverage_priority_20260821_wave2/proposals/SEA01M.md",
+      "allowedPaths": [
+        "analysis/fp_coverage_priority_20260821_wave2/proposals/SEA01M.md"
+      ],
+      "frontierPlan": "Separate non-forest firefighting, forest firefighting, and forest/environmental patrol functions; keep military-emergency and capataz management outputs unpublished.",
+      "acceptanceCriteria": [
+        "publish 5931, 5932, and 5993 for both modalities",
+        "preserve exact TodoFP quotes",
+        "reject military-emergency and management alternatives",
+        "do not create an alias"
+      ],
+      "validationCommands": [
+        "test -f analysis/fp_coverage_priority_20260821_wave2/proposals/SEA01M.md"
+      ]
+    },
+    {
+      "id": "tmv03m-review",
+      "programKey": "TMV03M",
+      "sourcePath": "analysis/fp_coverage_priority_20260821_wave2/sources/TMV03M.txt",
+      "proposalPath": "analysis/fp_coverage_priority_20260821_wave2/proposals/TMV03M.md",
+      "allowedPaths": [
+        "analysis/fp_coverage_priority_20260821_wave2/proposals/TMV03M.md"
+      ],
+      "frontierPlan": "Use the agricultural/industrial machinery boundary for the electromechanical machinery outputs; reject vehicle, electrical-repair, generic-mechanical, and operator-only substitutes.",
+      "acceptanceCriteria": [
+        "publish only CNO-11 7403",
+        "preserve the exact TodoFP quote",
+        "record all generic machinery alternatives as rejected",
+        "do not create an alias"
+      ],
+      "validationCommands": [
+        "test -f analysis/fp_coverage_priority_20260821_wave2/proposals/TMV03M.md"
+      ]
+    }
+  ]
+}
