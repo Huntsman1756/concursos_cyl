@@ -2,7 +2,7 @@
 
 SALIDA CyL is an independent, open-source web application for exploring reviewed links between vocational training and occupations in Castilla y León. It also compares official annualized contribution-base evidence without merging incompatible national and regional scopes.
 
-The public interface is in Spanish. Code and technical documentation are in English. The application has no accounts, cookies, analytics, browser storage, runtime AI, or transmission of requirement answers.
+The public interface is in Spanish. Code and technical documentation are in English. The application has no accounts, cookies, analytics, runtime AI, or transmission of requirement answers. It stores only the non-sensitive search-mode preference in `localStorage`; selections, searches, comparison answers, and results are not persisted.
 
 ## Run locally
 

@@ -16,6 +16,14 @@ test("public resources expose open JCyL employment calls with provenance", async
   ).toHaveAttribute("href", /convocatorias-de-empleo-publico/u);
   await expect(page.getByText(/\d+ convocatorias?$/u)).toBeVisible();
 
+  await expect(page.getByText(/^40 de \d+ resultados$/u)).toBeVisible();
+  await page.getByRole("button", { name: "Mostrar más cursos" }).click();
+  await expect(page.getByText(/^80 de \d+ resultados$/u)).toBeVisible();
+
+  await expect(page.getByText(/^60 de \d+ resultados$/u)).toBeVisible();
+  await page.getByRole("button", { name: "Mostrar más certificados" }).click();
+  await expect(page.getByText(/^120 de \d+ resultados$/u)).toBeVisible();
+
   const axe = await new AxeBuilder({ page }).analyze();
   expect(axe.violations, JSON.stringify(axe.violations, null, 2)).toEqual([]);
 });

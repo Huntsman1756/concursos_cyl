@@ -80,7 +80,7 @@
     "text": "La URL que se presenta al concurso es la raíz pública del proyecto.",
     "status": "invariant",
     "evidenceType": "source_url",
-    "evidenceRef": "https://huntsman1756.github.io/concursos_cyl/",
+    "evidenceRef": "https://salida-cyl.157-90-22-40.sslip.io/",
     "allowedDocuments": ["application-summary.md", "submission-checklist.md"],
     "forbiddenParaphrases": ["enviar la ruta de una pantalla"]
   },

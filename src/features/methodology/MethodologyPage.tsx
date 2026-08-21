@@ -555,7 +555,11 @@ export function MethodologyPage() {
         </div>
       </details>
 
-      <section className="methodology-notes" aria-labelledby="reading-heading">
+      <section
+        id="limitaciones"
+        className="methodology-notes"
+        aria-labelledby="reading-heading"
+      >
         <h2 id="reading-heading">Cómo leer los resultados</h2>
         <p>
           El valor «..» de la fuente significa «no disponible o no

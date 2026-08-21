@@ -75,7 +75,7 @@ export function AppShell({ children }: AppShellProps) {
           <nav aria-label="Pie de página">
             <Link to="/datos-abiertos">Datos abiertos</Link>
             <Link to="/metodologia">Metodología</Link>
-            <Link to="/metodologia">Limitaciones</Link>
+            <Link to="/metodologia#limitaciones">Limitaciones</Link>
             <Link to="/para-organizaciones">Para organizaciones</Link>
             <Link to="/accesibilidad">Accesibilidad</Link>
           </nav>

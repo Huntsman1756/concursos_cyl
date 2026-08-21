@@ -25,6 +25,9 @@ type State =
       publicCallsUpdatedAt: string | null;
     };
 
+const COURSE_PAGE_SIZE = 40;
+const CERTIFICATE_PAGE_SIZE = 60;
+
 function normalized(value: string): string {
   return value
     .normalize("NFD")
@@ -51,6 +54,10 @@ export function EcylResourcesPage() {
   const [state, setState] = useState<State>({ status: "loading" });
   const [query, setQuery] = useState("");
   const [family, setFamily] = useState("");
+  const [courseLimit, setCourseLimit] = useState(COURSE_PAGE_SIZE);
+  const [certificateLimit, setCertificateLimit] = useState(
+    CERTIFICATE_PAGE_SIZE,
+  );
 
   useEffect(() => {
     let active = true;
@@ -101,28 +108,26 @@ export function EcylResourcesPage() {
     [state],
   );
   const term = normalized(query.trim());
-  const visibleCourses =
+  const matchingCourses =
     state.status === "ready"
-      ? state.courses
-          .filter((course) =>
+      ? state.courses.filter((course) =>
+          normalized(
+            [course.title, course.locality, course.subject].join(" "),
+          ).includes(term),
+        )
+      : [];
+  const visibleCourses = matchingCourses.slice(0, courseLimit);
+  const matchingCertificates =
+    state.status === "ready"
+      ? state.certificates.filter(
+          (certificate) =>
+            (family === "" || certificate.familyCode === family) &&
             normalized(
-              [course.title, course.locality, course.subject].join(" "),
+              `${certificate.code} ${certificate.title} ${certificate.familyCode}`,
             ).includes(term),
-          )
-          .slice(0, 40)
+        )
       : [];
-  const visibleCertificates =
-    state.status === "ready"
-      ? state.certificates
-          .filter(
-            (certificate) =>
-              (family === "" || certificate.familyCode === family) &&
-              normalized(
-                `${certificate.code} ${certificate.title} ${certificate.familyCode}`,
-              ).includes(term),
-          )
-          .slice(0, 60)
-      : [];
+  const visibleCertificates = matchingCertificates.slice(0, certificateLimit);
   const today = new Date().toISOString().slice(0, 10);
   const openPublicCalls =
     state.status === "ready"
@@ -151,7 +156,11 @@ export function EcylResourcesPage() {
           <input
             type="search"
             value={query}
-            onChange={(event) => setQuery(event.target.value)}
+            onChange={(event) => {
+              setQuery(event.target.value);
+              setCourseLimit(COURSE_PAGE_SIZE);
+              setCertificateLimit(CERTIFICATE_PAGE_SIZE);
+            }}
             placeholder="Ej.: administración, León o ADG"
           />
         </label>
@@ -159,7 +168,10 @@ export function EcylResourcesPage() {
           <span>Familia de certificados</span>
           <select
             value={family}
-            onChange={(event) => setFamily(event.target.value)}
+            onChange={(event) => {
+              setFamily(event.target.value);
+              setCertificateLimit(CERTIFICATE_PAGE_SIZE);
+            }}
           >
             <option value="">Todas las familias</option>
             {families.map((code) => (
@@ -251,7 +263,9 @@ export function EcylResourcesPage() {
             <section aria-labelledby="courses-heading">
               <div className="resources-section-heading">
                 <h2 id="courses-heading">Cursos del ECYL</h2>
-                <span>{visibleCourses.length} mostrados</span>
+                <span>
+                  {visibleCourses.length} de {matchingCourses.length} resultados
+                </span>
               </div>
               <p className="resources-section-help">
                 Revisa destinatarios, fechas y requisitos en la ficha oficial
@@ -286,6 +300,17 @@ export function EcylResourcesPage() {
                   </article>
                 ))}
               </div>
+              {visibleCourses.length < matchingCourses.length ? (
+                <button
+                  className="secondary-button"
+                  type="button"
+                  onClick={() =>
+                    setCourseLimit((current) => current + COURSE_PAGE_SIZE)
+                  }
+                >
+                  Mostrar más cursos
+                </button>
+              ) : null}
             </section>
 
             <section aria-labelledby="certificates-heading">
@@ -293,7 +318,10 @@ export function EcylResourcesPage() {
                 <h2 id="certificates-heading">
                   Certificados de profesionalidad
                 </h2>
-                <span>{visibleCertificates.length} mostrados</span>
+                <span>
+                  {visibleCertificates.length} de {matchingCertificates.length}{" "}
+                  resultados
+                </span>
               </div>
               <p className="resources-section-help">
                 La familia y el nivel proceden del catálogo oficial. No
@@ -325,6 +353,19 @@ export function EcylResourcesPage() {
                   </article>
                 ))}
               </div>
+              {visibleCertificates.length < matchingCertificates.length ? (
+                <button
+                  className="secondary-button"
+                  type="button"
+                  onClick={() =>
+                    setCertificateLimit(
+                      (current) => current + CERTIFICATE_PAGE_SIZE,
+                    )
+                  }
+                >
+                  Mostrar más certificados
+                </button>
+              ) : null}
             </section>
           </div>
         </>

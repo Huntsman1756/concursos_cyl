@@ -2,10 +2,16 @@
 
 The foundation files under `public/data/v1/` are transformations of official
 datasets published by the Junta de Castilla y León. The source catalog marks
-both datasets as `CC BY 4.0 ES`:
+the eight regional datasets used by the product as `CC BY 4.0 ES`:
 
 - [Oferta de estudios de Formación Profesional](https://analisis.datosabiertos.jcyl.es/explore/dataset/oferta-de-formacion-profesional/) — Junta de Castilla y León, licensed under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/deed.es_ES).
 - [Ofertas de Empleo](https://analisis.datosabiertos.jcyl.es/explore/dataset/ofertas-de-empleo/) — Junta de Castilla y León, licensed under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/deed.es_ES).
+- [Formación del ECYL](https://analisis.datosabiertos.jcyl.es/explore/dataset/formacion-del-ecyl/) — Junta de Castilla y León, licensed under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/deed.es_ES).
+- [Certificados de profesionalidad](https://analisis.datosabiertos.jcyl.es/explore/dataset/certificados-profesionalidad/) — Junta de Castilla y León, licensed under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/deed.es_ES).
+- [Convocatorias de Empleo Público](https://analisis.datosabiertos.jcyl.es/explore/dataset/convocatorias-de-empleo-publico/) — Junta de Castilla y León, licensed under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/deed.es_ES).
+- [Contratos realizados en las provincias de Castilla y León](https://analisis.datosabiertos.jcyl.es/explore/dataset/contratos-realizados-en-las-provincias-de-castilla-y-leon/) — Junta de Castilla y León, licensed under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/deed.es_ES).
+- [Registro de municipios de Castilla y León](https://analisis.datosabiertos.jcyl.es/explore/dataset/registro-de-municipios-de-castilla-y-leon/) — Junta de Castilla y León, licensed under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/deed.es_ES).
+- [Directorio de Centros Docentes](https://analisis.datosabiertos.jcyl.es/explore/dataset/directorio-de-centros-docentes/) — Junta de Castilla y León, licensed under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/deed.es_ES).
 
 The reviewed occupation resources also preserve attribution to their primary
 official sources:
