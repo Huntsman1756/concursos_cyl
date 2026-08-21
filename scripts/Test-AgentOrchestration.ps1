@@ -1207,8 +1207,22 @@ try {
             Assert-Equal $oc.autoupdate $false '20w: autoupdate is false'
             Assert-Equal $oc.subagent_depth 0 '20x: subagent_depth is 0'
             Assert-True (($oc.enabled_providers | Where-Object { $_ -eq 'nan' }).Count -eq 1) '20y: nan in enabled_providers'
+            Assert-True (($oc.enabled_providers | Where-Object { $_ -eq 'openrouter' }).Count -eq 1) '20y1: openrouter in enabled_providers'
+            Assert-True ($null -ne $oc.provider.openrouter) '20y2: openrouter provider declared'
+            Assert-True ($null -ne $oc.provider.openrouter.models.'stealth/ox-alpha') '20y3: ox-alpha model declared'
+            Assert-Equal $oc.provider.openrouter.models.'stealth/ox-alpha'.limit.context 1048576 '20y4: ox-alpha context limit is verified'
+            Assert-Equal $oc.provider.openrouter.models.'stealth/ox-alpha'.limit.output 131072 '20y5: ox-alpha output limit is verified'
             Assert-True ($oc.mcp.esdata.enabled -eq $false) '20z: MCP esdata is disabled'
             Assert-True ($null -ne $oc.watcher.ignore) '20aa: watcher ignore list is present (not null)'
+        }
+
+        $openRouterAgentPath = Join-Path $repoRoot '.opencode\agents\openrouter-ox-code.md'
+        Assert-True (Test-Path -LiteralPath $openRouterAgentPath) '20aa1: experimental OpenRouter agent exists'
+        if (Test-Path -LiteralPath $openRouterAgentPath) {
+            $openRouterAgentText = Get-Content -LiteralPath $openRouterAgentPath -Raw
+            Assert-True ($openRouterAgentText -match 'model:\s*openrouter/stealth/ox-alpha') '20aa2: OpenRouter agent selects ox-alpha'
+            Assert-True ($openRouterAgentText -match 'steps:\s*5') '20aa3: OpenRouter agent is capped at five steps'
+            Assert-True ($openRouterAgentText -match 'task:\s*deny') '20aa4: OpenRouter agent cannot spawn tasks'
         }
 
         # --- YAML structural checks ---
@@ -1254,6 +1268,8 @@ try {
             Assert-True ($agentsText -match 'glm5\.2.*[Pp]rohibido') '20az: GLM5.2 marked as prohibited'
             Assert-True ($agentsText -match 'gemma4.*[Ss]olo lectura|Prohibido.*gemma4') '20ba: Gemma4 prohibition for code documented'
             Assert-True ($agentsText -match 'broker rechaza el parámetro') '20bb: Gemma code fallback is rejected before execution'
+            Assert-True ($agentsText -match 'configured-unqualified') '20bc: OpenRouter remains explicitly unqualified'
+            Assert-True ($agentsText -match 'openrouter/stealth/ox-alpha') '20bd: OpenRouter candidate is documented'
         } else {
             Write-Host "  SKIP: AGENTS.md structural checks (file not at $agentsPath)" -ForegroundColor Yellow
         }

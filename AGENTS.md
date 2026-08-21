@@ -43,6 +43,24 @@ binding MCP ejecutable mientras falte un driver de host confiado.
 | `nan/mimo-v2.5`         | `nan-long-context-code` | Contexto largo (>100k tokens), varios archivos, contratos amplios.   |
 | `nan/gemma4`            | `nan-bulletin`          | **Solo lectura** de boletines convertidos a archivo local.           |
 
+## Proveedor OpenRouter experimental
+
+`openrouter/stealth/ox-alpha` queda declarado como candidato experimental para
+ediciones mecanicas acotadas mediante `openrouter-ox-code`. La credencial se
+obtiene exclusivamente del almacén de autenticación de OpenCode o del entorno;
+nunca se guarda en `opencode.json`, agentes, contratos ni telemetría.
+
+La declaración del modelo no autoriza todavía cambios de producto. Antes de
+admitirlo como worker debe superar, en un worktree desechable, descubrimiento del
+modelo, llamada 2xx con uso observado, herramientas de edición, respeto de rutas,
+validación independiente y una comparación A/B con Qwen. Hasta entonces su estado
+es `configured-unqualified`: no es fallback de NAN ni participa en lotes.
+
+Una vez cualificado, Codex podrá asignarle explícitamente contratos mecánicos de
+cinco pasos como máximo. Seguirá sin poder publicar, hacer commits, ampliar rutas
+ni aprobar su resultado, y deberá pasar por un supervisor con evidencia de
+proveedor equivalente a la exigida para NAN.
+
 La selección es explícita por perfil: `mechanical` usa Qwen, `reasoning` usa
 DeepSeek y `long-context` usa MiMo. No existe fallback automático: Codex debe
 autorizar cada fallback compatible en el contrato.
