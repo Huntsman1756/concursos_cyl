@@ -296,10 +296,13 @@ describe("HomePage", () => {
 
   it("requests the manifest once per mount", async () => {
     const manifest = currentManifestFixture();
-    const fetchMock = vi.fn((input: RequestInfo | URL) => {
+    const isManifestRequest = (input: RequestInfo | URL) => {
       const path = typeof input === "string" ? input : input.toString();
+      return path.endsWith("/data/v1/manifest.json");
+    };
+    const fetchMock = vi.fn((input: RequestInfo | URL) => {
       return Promise.resolve(
-        path === "/data/v1/manifest.json"
+        isManifestRequest(input)
           ? new Response(JSON.stringify(manifest), { status: 200 })
           : new Response(null, { status: 404 }),
       );
@@ -314,9 +317,7 @@ describe("HomePage", () => {
 
     await waitFor(() =>
       expect(
-        fetchMock.mock.calls.filter(
-          ([input]) => input === "/data/v1/manifest.json",
-        ),
+        fetchMock.mock.calls.filter(([input]) => isManifestRequest(input)),
       ).toHaveLength(1),
     );
   });
