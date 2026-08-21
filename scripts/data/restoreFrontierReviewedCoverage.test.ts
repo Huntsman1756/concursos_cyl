@@ -64,6 +64,14 @@ describe("mergeFrontierReviewedCoverage", () => {
         "ADG01MD|4113",
         "ADG02S|4111",
         "ADG02SD|4223",
+        "COM01M|1432",
+        "COM01M|3510",
+        "COM01M|4424",
+        "COM01M|5300",
+        "COM01M|5420",
+        "COM01M|5492",
+        "COM01M|5500",
+        "COM01M|9820",
         "IFC02S|2713",
         "IFC02SD|3820",
         "ELE01B|7510",
@@ -72,10 +80,14 @@ describe("mergeFrontierReviewedCoverage", () => {
         "SSC01S|2252",
         "SSC01SD|2252",
         "IMA03M|8202",
+        "IMA03S|3126",
+        "IMP01B|5811",
+        "IMP01B|5812",
         "TMV01B|7401",
         "TMV02M|7401",
       ]),
     );
+    expect(restoredKeys).not.toContain("COM01M|3522");
   });
 
   it("fails closed when the reviewed source does not contain every accepted key", () => {

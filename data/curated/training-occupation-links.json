@@ -270,6 +270,86 @@
     "mappingVersion": "1.0.0"
   },
   {
+    "trainingProgramKey": "COM01M",
+    "occupationId": "occupation:cno11:1432",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/comercio-marketing/actividades-comerciales.html",
+    "sourceQuote": "Gerente de pequeño comercio.",
+    "reviewedAt": "2026-08-12",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "COM01M",
+    "occupationId": "occupation:cno11:3510",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/comercio-marketing/actividades-comerciales.html",
+    "sourceQuote": "Representante comercial.",
+    "reviewedAt": "2026-08-12",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "COM01M",
+    "occupationId": "occupation:cno11:4424",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/comercio-marketing/actividades-comerciales.html",
+    "sourceQuote": "Teleoperador / teleoperadora (Call-Center).",
+    "reviewedAt": "2026-08-12",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "COM01M",
+    "occupationId": "occupation:cno11:5300",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/comercio-marketing/actividades-comerciales.html",
+    "sourceQuote": "Comerciante de tienda.",
+    "reviewedAt": "2026-08-12",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "COM01M",
+    "occupationId": "occupation:cno11:5420",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/comercio-marketing/actividades-comerciales.html",
+    "sourceQuote": "Televendedor / televendedora.",
+    "reviewedAt": "2026-08-12",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "COM01M",
+    "occupationId": "occupation:cno11:5492",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/comercio-marketing/actividades-comerciales.html",
+    "sourceQuote": "Promotor / promotora.",
+    "reviewedAt": "2026-08-12",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "COM01M",
+    "occupationId": "occupation:cno11:5500",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/comercio-marketing/actividades-comerciales.html",
+    "sourceQuote": "Cajera / cajero.",
+    "reviewedAt": "2026-08-12",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "COM01M",
+    "occupationId": "occupation:cno11:9820",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/comercio-marketing/actividades-comerciales.html",
+    "sourceQuote": "Reponedor / reponedora.",
+    "reviewedAt": "2026-08-12",
+    "mappingVersion": "1.0.0"
+  },
+  {
     "trainingProgramKey": "COM02M",
     "occupationId": "occupation:cno11:5210",
     "relationshipType": "official_output",
@@ -906,6 +986,36 @@
     "reviewStatus": "approved",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2011/11/04/1589",
     "sourceQuote": "Montador de equipos eléctricos.",
+    "reviewedAt": "2026-08-12",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "IMA03S",
+    "occupationId": "occupation:cno11:3126",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.boe.es/eli/es/rd/2011/11/04/1576",
+    "sourceQuote": "Técnico en planificación y programación de procesos de mantenimiento de instalaciones de maquinaria y equipo industrial.",
+    "reviewedAt": "2026-08-12",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "IMP01B",
+    "occupationId": "occupation:cno11:5811",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/imagen-personal/peluqueria-estetica.html",
+    "sourceQuote": "Auxiliar de peluquería.",
+    "reviewedAt": "2026-08-12",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "IMP01B",
+    "occupationId": "occupation:cno11:5812",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/imagen-personal/peluqueria-estetica.html",
+    "sourceQuote": "Ayudante de manicura y pedicura.",
     "reviewedAt": "2026-08-12",
     "mappingVersion": "1.0.0"
   },

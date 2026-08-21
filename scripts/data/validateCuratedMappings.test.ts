@@ -1286,7 +1286,7 @@ describe("curated occupation mappings", () => {
           TMV01S: 3,
           IMA03S: 1,
           IFC01B: 2,
-          COM01M: 9,
+          COM01M: 8,
           AFD01S: 4,
           AFD01SD: 4,
           SAN08S: 1,
