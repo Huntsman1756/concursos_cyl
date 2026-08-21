@@ -215,6 +215,7 @@ try {
         Assert-Equal $budgetProfileTelemetry.launch.budgetSource 'profile' '2f: telemetry records profile source'
         Assert-Equal $budgetProfileTelemetry.launch.maxObservedTokens 90000 '2g: batch profile resolves to 90000 tokens'
         Assert-Equal $budgetProfileTelemetry.launch.maxStepsWithoutMutation 3 '2g0: dry run records no-edit progress guard'
+        Assert-Equal $budgetProfileTelemetry.launch.maxToolUses 16 '2g0a: dry run records tool-use budget'
         Assert-Equal $budgetProfileTelemetry.admission.profile 'provider-limit' '2g1: dry run records provider-limit admission'
         Assert-Equal $budgetProfileTelemetry.admission.capacity 5 '2g2: dry run records five active NAN slots'
         Assert-Equal $budgetProfileTelemetry.admission.timeoutSeconds 7200 '2g3: dry run records admission timeout'
@@ -448,6 +449,14 @@ try {
         $noEditTelemetry = Get-Content -LiteralPath (Get-NewTelemetry -BeforeFiles $pre) -Raw | ConvertFrom-Json
         Assert-Equal $noEditTelemetry.status 'blocked-no-edit-progress' '7t: no-edit guard has explicit status'
         Assert-Equal $noEditTelemetry.attempts[0].terminationReason 'no-edit-progress' '7u: no-edit reason persists on attempt'
+
+        $toolBudgetPlan = @(@{exitCode = 1; changedPaths = @('scripts/output.txt'); validationExitCode = 0; terminationReason = 'tool-budget'; jsonl = ''}) | ConvertTo-Json -Compress
+        $pre = Get-FileSnapshot
+        $toolBudgetRun = Invoke-WorkerChild -WorkerParameters (New-ValidCodeContract -Objective 'tool-budget' -MaxRetries 1 -TestMode -MockPlan $toolBudgetPlan)
+        Assert-True ($toolBudgetRun.ExitCode -ne 0) '7v: excessive tool-use trajectory fails closed'
+        $toolBudgetTelemetry = Get-Content -LiteralPath (Get-NewTelemetry -BeforeFiles $pre) -Raw | ConvertFrom-Json
+        Assert-Equal $toolBudgetTelemetry.status 'blocked-tool-budget' '7w: tool-use guard has explicit status'
+        Assert-Equal $toolBudgetTelemetry.attempts[0].terminationReason 'tool-budget' '7x: tool-use reason persists on attempt'
     }
 
     # 8. No-change rejection

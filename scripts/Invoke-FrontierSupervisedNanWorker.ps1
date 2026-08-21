@@ -348,6 +348,9 @@ try {
             if ($contract.PSObject.Properties.Name -contains 'maxStepsWithoutMutation') {
                 $workerParameters.MaxStepsWithoutMutation = [int]$contract.maxStepsWithoutMutation
             }
+            if ($contract.PSObject.Properties.Name -contains 'maxToolUses') {
+                $workerParameters.MaxToolUses = [int]$contract.maxToolUses
+            }
             if ($contract.PSObject.Properties.Name -contains 'createOnly' -and [bool]$contract.createOnly) {
                 $workerParameters.CreateOnly = $true
             }
