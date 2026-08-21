@@ -3,6 +3,7 @@ description: Ejecuta contratos mecanicos acotados con Ox Alpha durante su cualif
 mode: primary
 model: openrouter/stealth/ox-alpha
 temperature: 0.2
+reasoningEffort: low
 steps: 5
 permission:
   "*": deny

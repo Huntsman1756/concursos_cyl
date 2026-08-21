@@ -1223,6 +1223,7 @@ try {
             Assert-True ($openRouterAgentText -match 'model:\s*openrouter/stealth/ox-alpha') '20aa2: OpenRouter agent selects ox-alpha'
             Assert-True ($openRouterAgentText -match 'steps:\s*5') '20aa3: OpenRouter agent is capped at five steps'
             Assert-True ($openRouterAgentText -match 'task:\s*deny') '20aa4: OpenRouter agent cannot spawn tasks'
+            Assert-True ($openRouterAgentText -match 'reasoningEffort:\s*low') '20aa5: OpenRouter agent uses low reasoning effort'
         }
 
         # --- YAML structural checks ---
