@@ -26,13 +26,13 @@ El núcleo es una relación bidireccional FP ↔ ocupación con evidencia trazab
 
 ## 5. Variedad de datasets del Portal de Datos Abiertos de la Junta de Castilla y León
 
-Los ocho conjuntos regionales tienen un uso visible en la interfaz y una copia normalizada dentro del snapshot `20260821192319967-d167e477a998`.
+Los ocho conjuntos regionales tienen un uso visible en la interfaz y una copia normalizada dentro del snapshot `20260821211208576-0eb34bdc0798`.
 
 | Dataset JCyL                       | Dónde se usa                                 | Registros usados | Fecha usada           | Licencia     |
 | ---------------------------------- | -------------------------------------------- | ---------------: | --------------------- | ------------ |
 | Oferta de estudios de FP           | Selectores, ciclos, centros y modalidades    |            1.294 | Copia del 21/08/2026  | CC BY 4.0 ES |
-| Ofertas de empleo                  | Ofertas relacionadas y requisitos publicados |            1.055 | Fuente del 19/08/2026 | CC BY 4.0 ES |
-| Formación del ECYL                 | Alternativas de formación complementaria     |              778 | Copia del 21/08/2026  | CC BY 4.0 ES |
+| Ofertas de empleo                  | Ofertas relacionadas y requisitos publicados |            1.058 | Fuente del 21/08/2026 | CC BY 4.0 ES |
+| Formación del ECYL                 | Alternativas de formación complementaria     |              791 | Copia del 21/08/2026  | CC BY 4.0 ES |
 | Certificados de profesionalidad    | Rutas formativas complementarias             |              583 | Copia del 21/08/2026  | CC BY 4.0 ES |
 | Convocatorias de Empleo Público    | Procesos públicos con plazo abierto          |              307 | Copia del 21/08/2026  | CC BY 4.0 ES |
 | Contratos realizados por provincia | Contexto laboral territorial en resultados   |            2.331 | Copia del 21/08/2026  | CC BY 4.0 ES |
@@ -51,8 +51,8 @@ La ingesta descarga las fuentes, valida esquemas y genera recursos inmutables ba
 
 ## Límites declarados
 
-- Las 240 relaciones FP-ocupación publicadas cubren 91 cualificaciones distintas y 109 claves de modalidad; son cobertura revisada, no el universo completo de relaciones posibles.
-- Las 39 ofertas alcanzadas pertenecen a una copia fechada de 1.055 ofertas; no representan todo el mercado laboral.
+- Las 241 relaciones FP-ocupación publicadas cubren 92 cualificaciones distintas y 110 claves de modalidad; son cobertura revisada, no el universo completo de relaciones posibles.
+- Las 38 ofertas alcanzadas pertenecen a una copia fechada de 1.058 ofertas; no representan todo el mercado laboral.
 - Los contratos provinciales aportan contexto territorial agregado, no demanda por ocupación.
 - La población municipal describe el lugar de estudio, no la residencia del alumnado.
 - Las coordenadas del Directorio sitúan los centros publicados; la visualización no calcula distancias ni tiempos de desplazamiento.

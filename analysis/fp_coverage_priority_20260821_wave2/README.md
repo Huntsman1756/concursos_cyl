@@ -62,11 +62,11 @@ proposal and in `frontier-review.md`.
 
 ## Expected data boundary after Task 2 and regeneration
 
-- 240 approved relation rows;
-- 91 reviewed base qualifications;
-- 109 reviewed modality keys;
-- 47 pending bases, 16 reviewed no-match bases, and 21 aliases after the
-  subsequent queue/freeze task;
+- 241 approved relation rows after the catalog revalidation;
+- 92 reviewed base qualifications;
+- 110 reviewed modality keys;
+- 47 pending bases, 15 reviewed no-match bases, and 21 aliases after the
+  subsequent queue/freeze task and `AGA01S|5993` correction;
 - immutable snapshot `20260821162954121-087e3c5155c6` remains unchanged.
 
 The red expectations in `scripts/data/validateCuratedMappings.test.ts` are
