@@ -13,18 +13,18 @@
 ## Campos técnicos
 
 - URL raíz a presentar: [https://salida-cyl.157-90-22-40.sslip.io/](https://salida-cyl.157-90-22-40.sslip.io/)
-- Commit fuente del freeze: `646a2faa497fa5b362202b7117431793f67f273c`.
-- Snapshot: `20260821081317938-ed24cccf3125`.
-- Commit desplegado: `e1f6d22cfe3baa4824ac8e4f68ada6829a441968`.
-- Run del workflow: `32463399531`.
-- Evidencia visual: **capturada y validada en `docs/contest/evidence-capture.json`**.
+- Commit fuente del freeze: `c7d0ec0e3565b195b84fa603dabdd8a7e96bef74`.
+- Snapshot: `20260821093504689-b562e0e12b59`.
+- Commit desplegado: **PENDIENTE DE DESPLIEGUE Y VERIFICACIÓN**.
+- Run del workflow: **PENDIENTE DE DESPLIEGUE Y VERIFICACIÓN**.
+- Evidencia visual: evidencia visual pendiente (no histórica).
 
 ## Gate final
 
-- [x] Ejecutar los gates de release y verificar la aplicación pública.
-- [x] Rellenar el commit desplegado y el run del workflow con datos observados.
-- [x] Revisar las capturas en contexto anónimo, sin datos personales ni credenciales.
-- [x] Confirmar que las cifras visibles siguen coincidiendo con `20260821081317938-ed24cccf3125`.
+- [ ] Ejecutar los gates de release y verificar la aplicación pública.
+- [ ] Rellenar el commit desplegado y el run del workflow con datos observados.
+- [ ] Revisar las capturas en contexto anónimo, sin datos personales ni credenciales.
+- [ ] Confirmar que las cifras visibles siguen coincidiendo con `20260821093504689-b562e0e12b59`. (evidencia visual pendiente)
 - [ ] Obtener aprobación humana explícita para la solicitud externa.
 
 **PENDIENTE DE APROBACIÓN HUMANA:** este repositorio no envía la solicitud al concurso ni decide los campos de identidad, contacto, declaraciones o consentimiento.

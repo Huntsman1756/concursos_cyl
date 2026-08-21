@@ -18,14 +18,14 @@ El grafo revisado se devuelve a la comunidad como dataset derivado descargable e
 
 ## Cobertura congelada
 
-- Instantánea publicada: `20260821081317938-ed24cccf3125`.
+- Instantánea publicada: `20260821093504689-b562e0e12b59`.
 - Grupos primarios CNO-11 consultables: **502**.
-- **59 cualificaciones distintas**.
-- Claves de modalidad públicas: **72** (ADG01B, ADG01M, ADG01MD, ADG01S, ADG02S, ADG02SD, AFD01S, AFD01SD, AFD02M, AGA01B, AGA03S, AGA04M, COM01M, COM02M, COM02S, COM02SD, COM03S, ELE01B, ELE01M, ELE01S, ELE02M, ELE02S, ENA03S, EOC01M, EOC02S, EOC02SD, FME01S, FME02B, FME02S, HOT01B, HOT01M, HOT01S, HOT02M, HOT03S, HOT05S, IFC01MD, IFC01S, IFC01SD, IFC02B, IFC02S, IFC02SD, IFC03S, IFC03SD, IMA03M, IMA03S, IMP01B, IMP01M, IMP01S, INA02S, MAM01B, QUI01S, QUI02M, SAN02M, SAN04S, SAN07S, SAN07SD, SAN08S, SAN08SD, SAN09S, SAN09SD, SAN21, SEA03S, SSC01M, SSC01S, SSC01SD, SSC03S, SSC03SD, SSC05S, TMV01B, TMV01M, TMV02M, TMV03E).
-- Relaciones ocupacionales aprobadas: **143**.
+- **62 cualificaciones distintas**.
+- Claves de modalidad públicas: **76** (ADG01B, ADG01M, ADG01MD, ADG01S, ADG02S, ADG02SD, AFD01S, AFD01SD, AFD02M, AGA01B, AGA03S, AGA04M, COM01M, COM02M, COM02S, COM02SD, COM03S, ELE01B, ELE01M, ELE01S, ELE02M, ELE02S, ENA03S, EOC01M, EOC02S, EOC02SD, FME01S, FME02B, FME02S, HOT01B, HOT01M, HOT01S, HOT02M, HOT03S, HOT05S, IFC01B, IFC01MD, IFC01S, IFC01SD, IFC02B, IFC02S, IFC02SD, IFC03S, IFC03SD, IMA03M, IMA03S, IMP01B, IMP01M, IMP01S, IMP02M, IMP02MD, INA02S, MAM01B, QUI01S, QUI02M, SAN02M, SAN04S, SAN07S, SAN07SD, SAN08S, SAN08SD, SAN09S, SAN09SD, SAN21, SEA03S, SSC01M, SSC01S, SSC01SD, SSC03S, SSC03SD, SSC05S, TMV01B, TMV01M, TMV01S, TMV02M, TMV03E).
+- Relaciones ocupacionales aprobadas: **152**.
 - Alias aprobados: **21**.
 - **39 de las 1.055 ofertas de la instantánea** quedan alcanzadas por relaciones publicadas (unión de IDs).
-- Relaciones revisadas sin oferta alcanzada: **140**.
+- Relaciones revisadas sin oferta alcanzada: **149**.
 - Programas diferidos por evidencia insuficiente: ninguno.
 
 Las claves de modalidad se informan aparte de las identidades de cualificación. Una relación revisada sin coincidencia no se convierte en una afirmación sobre la ausencia de oportunidades; un programa diferido permanece fuera de las afirmaciones revisadas.
