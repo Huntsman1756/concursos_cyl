@@ -4,7 +4,7 @@
 
 - Repositorio canónico: <https://github.com/Huntsman1756/concursos_cyl>.
 - `main` local y `origin/main` están sincronizados; `80b1a38495806c10e274e4567ef0e641ead0a996` es el commit de evidencia anterior al relevo de máquina y no modifica el producto desplegado.
-- Producto público verificado en `90aba16a5bcef42ae6f966e9aaff9c53d82369aa`.
+- Freeze de producto y capturas verificado en `90aba16a5bcef42ae6f966e9aaff9c53d82369aa`.
 - Commit fuente de cobertura: `ae63e89e47057de74b77009aa1d95e817a2d6fc7`; commit documental del freeze: `90aba16a5bcef42ae6f966e9aaff9c53d82369aa`.
 - Snapshot activo: `20260821120933391-9bd4488f9029`.
 - Ocho datasets JCyL visibles y 20 recursos inmutables en el manifiesto.
@@ -53,10 +53,11 @@ npm run dev
 
 Antes de editar, comprobar que `git rev-parse HEAD` y
 `git rev-parse origin/main` devuelven el mismo hash y que
-`git status --short` no devuelve líneas. El VPS debe seguir publicando
-`90aba16a5bcef42ae6f966e9aaff9c53d82369aa` en `/version.json`; la diferencia
-es intencionada porque los commits posteriores al producto contienen solo
-evidencia y relevo con `[skip ci]`.
+`git status --short` no devuelve líneas. El release operativo del VPS y GitHub
+Pages debe corresponder también a `origin/main`; se comprueba con
+`/version.json`. El hash `90aba16` se conserva en la evidencia como freeze de
+producto y capturas, aunque los commits posteriores solo documenten evidencia
+y relevo.
 
 No se necesitan los worktrees, contratos NAN ni estados temporales de este
 ordenador. La configuración personal de OpenCode tampoco forma parte del
