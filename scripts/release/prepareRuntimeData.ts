@@ -1,24 +1,17 @@
 import { randomUUID } from "node:crypto";
-import {
-  cp,
-  mkdir,
-  readFile,
-  readdir,
-  rename,
-  rm,
-  stat,
-} from "node:fs/promises";
+import { cp, mkdir, readFile, readdir, rename, rm } from "node:fs/promises";
 import { basename, dirname, join, relative, resolve } from "node:path";
 import { pathToFileURL } from "node:url";
 
-const SNAPSHOT_ID = /\b\d{17}-[a-f0-9]{12}\b/gu;
 const SNAPSHOT_ID_EXACT = /^\d{17}-[a-f0-9]{12}$/u;
-const EVIDENCE_DIRECTORIES = [
-  "analysis",
-  join("docs", "contest"),
-  join("data", "schemas"),
-];
-const TEXT_EVIDENCE_EXTENSION = /\.(?:json|md|ts|tsx|mjs|ipynb)$/u;
+const SNAPSHOT_RESOURCE_PATH =
+  /\/data\/v1\/snapshots\/(\d{17}-[a-f0-9]{12})\/([^/?#\s"'\\]+)/gu;
+const SNAPSHOT_PATH_WITHOUT_RESOURCE =
+  /\/data\/v1\/snapshots\/(\d{17}-[a-f0-9]{12})(?=(?:[?#\s"'\\]|\/(?:[?#\s"'\\]|$)|$))/gu;
+const TERMINAL_EVIDENCE_PATHS = [
+  "docs/contest/coverage-freeze.json",
+  "docs/contest/release-evidence.json",
+] as const;
 
 export interface PrepareRuntimeDataOptions {
   root: string;
@@ -44,35 +37,28 @@ function assertDistinctPaths(source: string, target: string): void {
   }
 }
 
-async function pathExists(path: string): Promise<boolean> {
-  try {
-    await stat(path);
-    return true;
-  } catch (error) {
-    if ((error as NodeJS.ErrnoException).code === "ENOENT") return false;
-    throw error;
-  }
-}
-
-async function evidenceFiles(directory: string): Promise<string[]> {
-  if (!(await pathExists(directory))) return [];
-  const files: string[] = [];
-  for (const entry of await readdir(directory, { withFileTypes: true })) {
-    const path = join(directory, entry.name);
-    if (entry.isDirectory()) files.push(...(await evidenceFiles(path)));
-    if (entry.isFile() && TEXT_EVIDENCE_EXTENSION.test(entry.name)) {
-      files.push(path);
-    }
-  }
-  return files;
-}
-
 async function referencedSnapshotIds(root: string): Promise<Set<string>> {
   const ids = new Set<string>();
-  for (const relativeDirectory of EVIDENCE_DIRECTORIES) {
-    for (const path of await evidenceFiles(resolve(root, relativeDirectory))) {
-      const content = await readFile(path, "utf8");
-      for (const match of content.matchAll(SNAPSHOT_ID)) ids.add(match[0]);
+  for (const relativePath of TERMINAL_EVIDENCE_PATHS) {
+    let content: string;
+    try {
+      content = await readFile(resolve(root, relativePath), "utf8");
+    } catch (error) {
+      if ((error as NodeJS.ErrnoException).code === "ENOENT") {
+        throw new Error(
+          `Required runtime evidence file is missing: ${relativePath}.`,
+          { cause: error },
+        );
+      }
+      throw error;
+    }
+    for (const match of content.matchAll(SNAPSHOT_RESOURCE_PATH)) {
+      ids.add(match[1]!);
+    }
+    for (const match of content.matchAll(SNAPSHOT_PATH_WITHOUT_RESOURCE)) {
+      throw new Error(
+        `Runtime evidence path is missing a resource filename: ${match[0]}.`,
+      );
     }
   }
   return ids;
@@ -129,6 +115,11 @@ export async function prepareRuntimeData({
   }
 
   const referenced = await referencedSnapshotIds(resolve(root));
+  for (const snapshotId of referenced) {
+    if (!availableSnapshotIds.has(snapshotId)) {
+      throw new Error(`Referenced runtime snapshot is missing: ${snapshotId}.`);
+    }
+  }
   const snapshotIds = [...availableSnapshotIds]
     .filter((snapshotId) => snapshotId === active || referenced.has(snapshotId))
     .sort();
