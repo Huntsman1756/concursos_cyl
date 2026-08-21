@@ -269,7 +269,9 @@ export function HomePage() {
                   />
                   <span>
                     <strong>Tengo un título de FP</strong>
-                    <small>Ver ocupaciones relacionadas.</small>
+                    <small>
+                      Dime en qué puedo trabajar con lo que ya he estudiado.
+                    </small>
                   </span>
                 </label>
                 <label
@@ -285,7 +287,7 @@ export function HomePage() {
                   />
                   <span>
                     <strong>Tengo un empleo en mente</strong>
-                    <small>Encontrar la FP adecuada.</small>
+                    <small>Dime qué FP me lleva hasta esa ocupación.</small>
                   </span>
                 </label>
               </div>

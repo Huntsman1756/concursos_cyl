@@ -413,6 +413,13 @@ const programs: TrainingProgram[] = [
     familyName: "Imagen Personal",
   },
   {
+    programKey: "IMP02MD",
+    programTitle: "Peluquería y Cosmética Capilar (distancia)",
+    level: "intermediate",
+    familyCode: "IMP",
+    familyName: "Imagen Personal",
+  },
+  {
     programKey: "ELE04S",
     programTitle: "Automatización y Robótica Industrial",
     level: "higher",
@@ -1260,6 +1267,7 @@ describe("curated occupation mappings", () => {
           SAN02M: 1,
           SAN04S: 1,
           IMP02M: 2,
+          IMP02MD: 2,
           IMP02S: 1,
           ADG02S: 4,
           ADG02SD: 4,

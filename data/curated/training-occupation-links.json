@@ -800,6 +800,26 @@
     "mappingVersion": "1.0.0"
   },
   {
+    "trainingProgramKey": "IFC01B",
+    "occupationId": "occupation:cno11:7533",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/informatica-comunicaciones/informatica-comunicaciones.html",
+    "sourceQuote": "Ayudante de instalador / instaladora de equipos y sistemas de comunicación.",
+    "reviewedAt": "2026-08-21",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "IFC01B",
+    "occupationId": "occupation:cno11:8202",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.boe.es/buscar/doc.php?id=BOE-A-2014-2360",
+    "sourceQuote": "Operador de ensamblado de equipos eléctricos y electrónicos.",
+    "reviewedAt": "2026-08-21",
+    "mappingVersion": "1.0.0"
+  },
+  {
     "trainingProgramKey": "IFC01MD",
     "occupationId": "occupation:cno11:3812",
     "relationshipType": "official_output",
@@ -1087,6 +1107,46 @@
     "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/imagen-personal/estetica-integral-bienestar.html",
     "sourceQuote": "Esteticista.",
     "reviewedAt": "2026-08-13",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "IMP02M",
+    "occupationId": "occupation:cno11:5811",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/imagen-personal/peluqueria-cosmetica-capilar.html",
+    "sourceQuote": "Peluquera / peluquero.",
+    "reviewedAt": "2026-08-21",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "IMP02M",
+    "occupationId": "occupation:cno11:5812",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/imagen-personal/peluqueria-cosmetica-capilar.html",
+    "sourceQuote": "Técnica / técnico en manicura.",
+    "reviewedAt": "2026-08-21",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "IMP02MD",
+    "occupationId": "occupation:cno11:5811",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/imagen-personal/peluqueria-cosmetica-capilar.html",
+    "sourceQuote": "Peluquera / peluquero.",
+    "reviewedAt": "2026-08-21",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "IMP02MD",
+    "occupationId": "occupation:cno11:5812",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/imagen-personal/peluqueria-cosmetica-capilar.html",
+    "sourceQuote": "Técnica / técnico en manicura.",
+    "reviewedAt": "2026-08-21",
     "mappingVersion": "1.0.0"
   },
   {
@@ -1407,6 +1467,36 @@
     "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
     "sourceQuote": "7232 Pintores en las industrias manufactureras",
     "reviewedAt": "2026-08-20",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "TMV01S",
+    "occupationId": "occupation:cno11:3160",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/transporte-mantenimiento-vehiculos/automocion.html",
+    "sourceQuote": "Encargada / encargado de ITV.",
+    "reviewedAt": "2026-08-21",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "TMV01S",
+    "occupationId": "occupation:cno11:3405",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/transporte-mantenimiento-vehiculos/automocion.html",
+    "sourceQuote": "Perita / perito tasador de vehículos.",
+    "reviewedAt": "2026-08-21",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "TMV01S",
+    "occupationId": "occupation:cno11:4412",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.boe.es/eli/es/rd/2008/11/03/1796",
+    "sourceQuote": "Recepcionista de vehículos.",
+    "reviewedAt": "2026-08-21",
     "mappingVersion": "1.0.0"
   },
   {

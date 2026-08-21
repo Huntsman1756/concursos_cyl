@@ -195,6 +195,14 @@ describe("HomePage", () => {
     ).toBeDisabled();
     expect(screen.getByText("Tu título de FP")).toBeVisible();
     expect(screen.getByText("Elige un título.")).toBeVisible();
+    expect(
+      screen.getByText(
+        "Dime en qué puedo trabajar con lo que ya he estudiado.",
+      ),
+    ).toBeVisible();
+    expect(
+      screen.getByText("Dime qué FP me lleva hasta esa ocupación."),
+    ).toBeVisible();
 
     const user = userEvent.setup();
     const fpMode = screen.getByRole("radio", {
