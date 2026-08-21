@@ -1,15 +1,18 @@
 {
   "schemaVersion": 1,
   "status": "deployed_verified",
-  "recordedAt": "2026-08-21T11:35:57Z",
+  "recordedAt": "2026-08-21T12:53:19Z",
   "expectedRootUrl": "https://salida-cyl.157-90-22-40.sslip.io/",
-  "coverageFreezeCommitSha": "56219dec861fa9693870edd02586df69db8e096e",
-  "publicationCommitSha": "56219dec861fa9693870edd02586df69db8e096e",
-  "localReviewHeadSha": "56219dec861fa9693870edd02586df69db8e096e",
-  "captureProductCommitSha": "56219dec861fa9693870edd02586df69db8e096e",
+  "auditHeadSha": "90aba16a5bcef42ae6f966e9aaff9c53d82369aa",
+  "coverageSourceCommitSha": "ae63e89e47057de74b77009aa1d95e817a2d6fc7",
+  "coverageFreezeDocumentCommitSha": "90aba16a5bcef42ae6f966e9aaff9c53d82369aa",
+  "coverageFreezeCommitSha": "90aba16a5bcef42ae6f966e9aaff9c53d82369aa",
+  "publicationCommitSha": "90aba16a5bcef42ae6f966e9aaff9c53d82369aa",
+  "localReviewHeadSha": "90aba16a5bcef42ae6f966e9aaff9c53d82369aa",
+  "captureProductCommitSha": "90aba16a5bcef42ae6f966e9aaff9c53d82369aa",
   "manifest": {
-    "snapshotId": "20260821111803121-ce75d7161084",
-    "sha256": "e76a8bf3cfe08ccf5f8289a4f966e8cbd8e70d2aac4fed848f1cbba7799f2401",
+    "snapshotId": "20260821120933391-9bd4488f9029",
+    "sha256": "1c3c4fa12ff0c4bacaadd2aac1c2ff5c52dd3f76508944a6334a7871c941c65d",
     "qualityStatus": "passed",
     "programs": 187,
     "centers": 229,
@@ -27,14 +30,14 @@
     },
     "evidenceManifest": {
       "status": "passed",
-      "captureCount": 10,
+      "captureCount": 13,
       "command": "npm exec -- tsx scripts/release/validateContestEvidenceManifest.ts",
-      "note": "Las 10 capturas se recapturaron desde la URL canónica con el commit desplegado 56219de y superaron los gates de estado visible, red, consola, recursos externos, overflow y Axe."
+      "note": "Las 13 capturas se recapturaron desde la URL canónica con el commit desplegado 90aba16 y superaron los gates de estado visible, red, consola, recursos externos, overflow y Axe."
     },
     "focusedVitest": {
       "status": "passed",
       "testFiles": 2,
-      "tests": 11
+      "tests": 14
     },
     "dataAndReleaseVitest": {
       "status": "passed",
@@ -43,19 +46,19 @@
     },
     "fullVitestCi": {
       "status": "passed",
-      "testFiles": 109,
-      "passedTestFiles": 86,
+      "testFiles": 110,
+      "passedTestFiles": 87,
       "skippedTestFiles": 23,
-      "tests": 930,
-      "passed": 750,
+      "tests": 936,
+      "passed": 756,
       "skipped": 180,
-      "durationSeconds": 232.04,
-      "command": "npm test",
-      "workflowRunId": "32477831352"
+      "durationSeconds": 276.07,
+      "command": "npm run test:release -- --testTimeout=60000",
+      "workflowRunId": "32483659589"
     },
     "playwright": {
       "status": "passed",
-      "tests": 112,
+      "tests": 124,
       "command": "npm run test:e2e:chromium"
     },
     "lint": {
@@ -104,11 +107,11 @@
   },
   "deployment": {
     "status": "verified",
-    "commitSha": "56219dec861fa9693870edd02586df69db8e096e",
-    "workflowRunId": "32477831352",
-    "workflowUrl": "https://github.com/Huntsman1756/concursos_cyl/actions/runs/32477831352",
+    "commitSha": "90aba16a5bcef42ae6f966e9aaff9c53d82369aa",
+    "workflowRunId": "32483659589",
+    "workflowUrl": "https://github.com/Huntsman1756/concursos_cyl/actions/runs/32483659589",
     "liveRootVerified": true,
-    "verifiedAt": "2026-08-21T11:35:57Z"
+    "verifiedAt": "2026-08-21T12:53:19Z"
   },
   "publicVerification": {
     "rootUrl": "https://salida-cyl.157-90-22-40.sslip.io/",
@@ -138,13 +141,13 @@
     },
     "manifest": {
       "httpStatus": 200,
-      "sha256": "e76a8bf3cfe08ccf5f8289a4f966e8cbd8e70d2aac4fed848f1cbba7799f2401",
+      "sha256": "1c3c4fa12ff0c4bacaadd2aac1c2ff5c52dd3f76508944a6334a7871c941c65d",
       "qualityStatus": "passed",
-      "snapshotGeneratedAt": "2026-08-21T11:18:03.121Z"
+      "snapshotGeneratedAt": "2026-08-21T12:09:33.391Z"
     },
     "outcomeIndicators": {
-      "logicalResourcePath": "/data/v1/snapshots/20260821111803121-ce75d7161084/outcome-indicators.json",
-      "resolvedUrl": "https://salida-cyl.157-90-22-40.sslip.io/data/v1/snapshots/20260821111803121-ce75d7161084/outcome-indicators.json",
+      "logicalResourcePath": "/data/v1/snapshots/20260821120933391-9bd4488f9029/outcome-indicators.json",
+      "resolvedUrl": "https://salida-cyl.157-90-22-40.sslip.io/data/v1/snapshots/20260821120933391-9bd4488f9029/outcome-indicators.json",
       "httpStatus": 200,
       "sha256": "4f2c6b73fc4171bb9daf21583712ab2ec99bcaa7d27b1f2fd0c070b9079ab3e2"
     },

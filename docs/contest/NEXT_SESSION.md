@@ -2,18 +2,18 @@
 
 ## Estado confirmado
 
-- Producto público verificado en `56219dec861fa9693870edd02586df69db8e096e`.
-- Freeze fuente: `22205db9a0cfd8ef5ed5fad6ef48ce8a1c38fa8d`.
-- Snapshot activo: `20260821111803121-ce75d7161084`.
+- Producto público verificado en `90aba16a5bcef42ae6f966e9aaff9c53d82369aa`.
+- Commit fuente de cobertura: `ae63e89e47057de74b77009aa1d95e817a2d6fc7`; commit documental del freeze: `90aba16a5bcef42ae6f966e9aaff9c53d82369aa`.
+- Snapshot activo: `20260821120933391-9bd4488f9029`.
 - Ocho datasets JCyL visibles y 20 recursos inmutables en el manifiesto.
-- Cobertura: 73 cualificaciones, 89 claves de modalidad, 187 relaciones aprobadas y 21 alias.
+- Cobertura: 77 cualificaciones, 93 claves de modalidad, 196 relaciones aprobadas y 21 alias.
 - Ofertas alcanzadas: 39 de 1.055; la cifra es una unión acotada de IDs, no todo el mercado.
 - Directorio educativo: 1.741 registros y reconciliación exacta de los 229 centros FP por código.
 - La ficha de ciclo incorpora ingresos observados de EDUCAbase con referencia nacional y agregada de Castilla y León, sin presentarlos como predicción individual.
-- QA público: 750 pruebas aprobadas y 180 omitidas por condiciones de plataforma; E2E Chromium con 112 recorridos aprobados en escritorio y móvil.
-- Workflow público: `32477831352`.
-- Diez capturas finales anónimas ligadas a `56219de` y validadas con Axe, red, consola, recursos externos y overflow.
-- Cola oficial pendiente: 66 cualificaciones base; las siguientes prioridades son IMP02S, FME03S, HOT02S, IMS03S y SSC02S.
+- QA local: 758 pruebas aprobadas y 178 omitidas por condiciones de plataforma. QA público: 756 aprobadas y 180 omitidas por plataforma; E2E Chromium con 124 recorridos aprobados en escritorio y móvil.
+- Workflow público: `32483659589`.
+- Trece capturas finales anónimas ligadas a `90aba16` y validadas con Axe, red, consola, recursos externos y overflow.
+- Cola oficial pendiente: 62 cualificaciones base; las siguientes prioridades son IMS03S, INA01S, AGA01M, AGA02M y AGA03B.
 
 ## Orden de trabajo
 
