@@ -54,7 +54,6 @@ if [ -n "$GIT_STATUS" ]; then
 fi
 
 DIST="$ROOT/dist"
-REMOTE_ARCHIVE="/tmp/salida-cyl-$RELEASE_ID.tar.gz"
 REMOTE_RELEASE="/srv/salida-cyl/releases/$RELEASE_ID"
 REMOTE_STAGING="/srv/salida-cyl/releases/.staging-$RELEASE_ID"
 REMOTE_CURRENT="/srv/salida-cyl/current"
@@ -121,6 +120,7 @@ fi
   "$COMMIT"
 
 ARCHIVE=$(mktemp "${TMPDIR:-/tmp}/salida-cyl-${RELEASE_ID}.tar.gz.XXXXXX")
+REMOTE_ARCHIVE="/tmp/$(basename "$ARCHIVE")"
 tar -czf "$ARCHIVE" -C "$DIST" .
 
 if scp "$ARCHIVE" "$SSH_HOST:$REMOTE_ARCHIVE"; then
@@ -135,6 +135,10 @@ if ssh "$SSH_HOST" "set -eu
 archive_owned=1
 staging_owned=0
 current_next_owned=0
+retention_inventory=
+retention_sorted=
+retention_candidates=
+retention_times=
 remote_cleanup() {
   if [ "\$current_next_owned" -eq 1 ] && test -L '$REMOTE_CURRENT_NEXT'; then
     rm -f -- '$REMOTE_CURRENT_NEXT' || :
@@ -145,6 +149,11 @@ remote_cleanup() {
   if [ "\$archive_owned" -eq 1 ]; then
     rm -f -- '$REMOTE_ARCHIVE' || :
   fi
+  for retention_file in "\$retention_inventory" "\$retention_sorted" "\$retention_candidates" "\$retention_times"; do
+    if [ -n "\$retention_file" ]; then
+      rm -f -- "\$retention_file" || :
+    fi
+  done
 }
 trap remote_cleanup EXIT
 if test -e '$REMOTE_RELEASE' || test -L '$REMOTE_RELEASE'; then
@@ -196,7 +205,37 @@ if ! rm -f '$REMOTE_ARCHIVE'; then
   exit 1
 fi
 archive_owned=0
-find '/srv/salida-cyl/releases' -mindepth 1 -maxdepth 1 -type d ! -name '.staging-*' -printf '%T@ %p\\n' | sort -nr | tail -n +6 | cut -d' ' -f2- | xargs -r rm -rf --
+retention_inventory=\$(mktemp '/tmp/salida-cyl-retention-inventory.XXXXXX')
+retention_sorted=\$(mktemp '/tmp/salida-cyl-retention-sorted.XXXXXX')
+retention_times=\$(mktemp '/tmp/salida-cyl-retention-times.XXXXXX')
+retention_candidates=\$(mktemp '/tmp/salida-cyl-retention-candidates.XXXXXX')
+if ! find '/srv/salida-cyl/releases' -mindepth 1 -maxdepth 1 -type d ! -name '.staging-*' -printf '%T@ %p\\n' > "\$retention_inventory"; then
+  echo 'Could not inventory releases for retention.' >&2
+  exit 1
+fi
+if ! sort -nr "\$retention_inventory" > "\$retention_sorted"; then
+  echo 'Could not sort releases for retention.' >&2
+  exit 1
+fi
+if ! tail -n +6 "\$retention_sorted" > "\$retention_times"; then
+  echo 'Could not select releases for retention.' >&2
+  exit 1
+fi
+if ! cut -d' ' -f2- "\$retention_times" > "\$retention_candidates"; then
+  echo 'Could not normalize retention candidates.' >&2
+  exit 1
+fi
+while IFS= read -r stale_release; do
+  [ -n "\$stale_release" ] || continue
+  case "\$stale_release" in
+    /srv/salida-cyl/releases/*) ;;
+    *) echo 'Unsafe release retention path.' >&2; exit 1;;
+  esac
+  if ! rm -rf -- "\$stale_release"; then
+    echo 'Could not remove an expired release.' >&2
+    exit 1
+  fi
+done < "\$retention_candidates"
 systemctl reload caddy"; then
   :
 else

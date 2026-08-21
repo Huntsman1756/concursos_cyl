@@ -70,9 +70,13 @@ The POSIX command accepts an optional release ID as its second argument. The
 preflight only checks authentication and does not change the remote host.
 
 The deployment script does a clean dependency install, builds locally, uploads
-one release archive, switches the symlink atomically, retains the five newest
-releases, reloads Caddy and runs the same live SPA/header verifier used for the
-container. It never copies repository metadata or credentials to the server.
+one uniquely named archive per execution, switches the symlink atomically,
+retains the five newest releases, reloads Caddy and runs the same live SPA/header
+verifier used for the container. Retention inventory, sorting, selection and
+deletion are checked separately; any failure stops the deployment before Caddy
+is reloaded. The remote host therefore needs GNU `find`, `sort`, `tail`, `cut`
+and `mv`, in addition to Caddy and the documented SSH permissions. The script
+never copies repository metadata or credentials to the server.
 
 ## Operational version identification
 

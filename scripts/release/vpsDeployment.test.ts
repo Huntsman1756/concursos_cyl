@@ -143,6 +143,7 @@ function runRemotePayloadInIsolation(
     existingCurrentNext?: "directory" | "symlink";
     existingFinal?: "directory" | "file" | "symlink";
     existingStaging?: boolean;
+    findExit?: number;
     systemctlExit?: number;
     tarExit?: number;
   } = {},
@@ -151,7 +152,7 @@ function runRemotePayloadInIsolation(
   const fakeBin = join(sandbox, "bin");
   const releases = join(sandbox, "srv", "salida-cyl", "releases");
   const archiveDir = join(sandbox, "tmp");
-  const archive = join(archiveDir, "salida-cyl-round-1.tar.gz");
+  const archive = join(archiveDir, "salida-cyl-round-1.tar.gz.testnonce");
   const finalRelease = join(releases, "round-1");
   const staging = join(releases, ".staging-round-1");
   const currentNext = join(sandbox, "srv", "salida-cyl", "current.next");
@@ -195,15 +196,19 @@ function runRemotePayloadInIsolation(
     join(fakeBin, "systemctl"),
     '#!/bin/sh\nexit "${SYSTEMCTL_EXIT:-0}"\n',
   );
-  writeExecutable(join(fakeBin, "find"), "#!/bin/sh\nexit 0\n");
+  writeExecutable(
+    join(fakeBin, "find"),
+    '#!/bin/sh\nexit "${FIND_EXIT:-0}"\n',
+  );
 
   const remappedPayload = remotePayload
     .replaceAll("/srv/salida-cyl", join(sandbox, "srv", "salida-cyl"))
-    .replaceAll("/tmp/salida-cyl-round-1.tar.gz", archive);
+    .replaceAll(/\/tmp\/salida-cyl-round-1\.tar\.gz\.[A-Za-z0-9]+/g, archive);
   const result = spawnSync("sh", ["-c", remappedPayload], {
     encoding: "utf8",
     env: {
       ...process.env,
+      FIND_EXIT: String(options.findExit ?? 0),
       PATH: `${fakeBin}:${process.env.PATH ?? ""}`,
       SYSTEMCTL_EXIT: String(options.systemctlExit ?? 0),
       TAR_EXIT: String(options.tarExit ?? 0),
@@ -273,6 +278,7 @@ describe("VPS deployment", () => {
     expect(deployScript).toContain("writeVersionMetadata.ts");
     expect(deployScript).toContain("mktemp");
     expect(deployScript).toMatch(/mktemp "[^"\n]*\.tar\.gz\.XXXXXX"/);
+    expect(deployScript).toContain('REMOTE_ARCHIVE="/tmp/$(basename "$ARCHIVE")"');
     expect(deployScript).toContain("trap cleanup EXIT");
     expect(deployScript).toContain("trap remote_cleanup EXIT");
     expect(deployScript).toContain("scp");
@@ -280,7 +286,9 @@ describe("VPS deployment", () => {
     expect(deployScript).toContain("index.html");
     expect(deployScript).toContain("version.json");
     expect(deployScript).toContain("mv -Tf");
-    expect(deployScript).toContain("tail -n +6");
+    expect(deployScript).toContain("retention_inventory=");
+    expect(deployScript).toContain("retention_candidates=");
+    expect(deployScript).not.toContain("tail -n +6 | cut");
     expect(deployScript).toContain("! -name '.staging-*'");
     expect(deployScript).toContain("systemctl reload caddy");
     expect(deployScript).toContain("CADDY_SMOKE_EXPECTED_COMMIT");
@@ -295,6 +303,7 @@ describe("VPS deployment", () => {
       "ln -s",
       "mv -Tf '$REMOTE_CURRENT_NEXT' '$REMOTE_CURRENT'",
       "rm -f '$REMOTE_ARCHIVE'",
+      "retention_inventory=\\$(mktemp",
       "tail -n +6",
       "systemctl reload caddy",
     ];
@@ -368,9 +377,11 @@ describe("VPS deployment", () => {
     expect(result.stderr).toContain("observed SHA: unknown");
     expect(result.stderr).toContain("current activation state: unknown");
     expect(sshCommand).toContain("trap remote_cleanup EXIT");
-    expect(sshCommand).toContain("rm -f -- '/tmp/salida-cyl-round-1.tar.gz'");
+    expect(sshCommand).toMatch(
+      /rm -f -- '\/tmp\/salida-cyl-round-1\.tar\.gz\.[A-Za-z0-9]+'/,
+    );
     expect(sshCommand).toContain(
-      "salida-cyl-vps rm -f -- '/tmp/salida-cyl-round-1.tar.gz'",
+      "salida-cyl-vps rm -f -- '/tmp/salida-cyl-round-1.tar.gz.",
     );
   });
 
@@ -406,13 +417,13 @@ describe("VPS deployment", () => {
       "test -e '/srv/salida-cyl/releases/round-1'",
     );
     const extraction = sshCommand.indexOf(
-      "tar -xzf '/tmp/salida-cyl-round-1.tar.gz'",
+      "tar -xzf '/tmp/salida-cyl-round-1.tar.gz.",
     );
     expect(releaseGuard).toBeGreaterThan(-1);
     expect(sshCommand).toContain("test -L '/srv/salida-cyl/releases/round-1'");
     expect(sshCommand).toContain("/srv/salida-cyl/releases/.staging-round-1");
     expect(sshCommand).toContain(
-      "tar -xzf '/tmp/salida-cyl-round-1.tar.gz' -C '/srv/salida-cyl/releases/.staging-round-1'",
+      " -C '/srv/salida-cyl/releases/.staging-round-1'",
     );
     expect(sshCommand).toContain(
       "test -e '/srv/salida-cyl/releases/.staging-round-1'",
@@ -430,7 +441,9 @@ describe("VPS deployment", () => {
     expect(result.stderr).toContain(
       "Archive upload failed for release round-1",
     );
-    expect(sshCommand).toContain("rm -f -- '/tmp/salida-cyl-round-1.tar.gz'");
+    expect(sshCommand).toMatch(
+      /rm -f -- '\/tmp\/salida-cyl-round-1\.tar\.gz\.[A-Za-z0-9]+'/,
+    );
     expect(sshCommand).not.toContain("REMOTE_STAGING");
   });
 
@@ -462,6 +475,22 @@ describe("VPS deployment", () => {
       expect(failed.result.status).not.toBe(0);
       expect(failed.state.stagingExists).toBe(false);
       expect(failed.state.archiveExists).toBe(false);
+    } finally {
+      rmSync(capture.sandbox, { force: true, recursive: true });
+    }
+  });
+
+  it("fails closed when release retention inventory cannot be produced", () => {
+    const capture = runWithDeploymentFakes({ preserveSandbox: true });
+    try {
+      const failed = runRemotePayloadInIsolation(capture.remotePayload, {
+        findExit: 42,
+      });
+
+      expect(failed.result.status).not.toBe(0);
+      expect(failed.result.stderr).toContain(
+        "Could not inventory releases for retention.",
+      );
     } finally {
       rmSync(capture.sandbox, { force: true, recursive: true });
     }
