@@ -16,6 +16,7 @@ import {
   assertContestFreezeWritePreflight,
   getDirtyContestFreezeSourcePaths,
   loadAndValidateContestFreeze,
+  migrateFreezeResourcePathToSnapshot,
   parseContestFreezeWriteSourceCommit,
   recomputeContestFreeze,
   validateContestFreeze,
@@ -42,6 +43,15 @@ describe("contest coverage freeze validator", () => {
         "a".repeat(40),
       ]),
     ).toBe("a".repeat(40));
+  });
+
+  it("seeds a newly added resource inside the existing freeze snapshot", () => {
+    expect(
+      migrateFreezeResourcePathToSnapshot(
+        "/data/v1/snapshots/new-snapshot/sepe-occupation-market.json",
+        "old-snapshot",
+      ),
+    ).toBe("/data/v1/snapshots/old-snapshot/sepe-occupation-market.json");
   });
 
   it("detects dirty freeze inputs in a hermetic Git repository", () => {

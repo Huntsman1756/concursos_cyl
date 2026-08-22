@@ -284,6 +284,22 @@ export function parseContestFreezeWriteSourceCommit(
   return sourceCommitSha;
 }
 
+export function migrateFreezeResourcePathToSnapshot(
+  resourcePath: string,
+  snapshotId: string,
+): string {
+  if (!/^[a-z0-9]+(?:-[a-z0-9]+)*$/u.test(snapshotId)) {
+    throw new Error("freeze snapshotId is unsafe");
+  }
+  const match = resourcePath.match(
+    /^\/data\/v1\/snapshots\/[a-z0-9]+(?:-[a-z0-9]+)*\/([^/]+)$/u,
+  );
+  if (match?.[1] === undefined) {
+    throw new Error("resourcePath does not identify an immutable snapshot");
+  }
+  return `/data/v1/snapshots/${snapshotId}/${match[1]}`;
+}
+
 function readJson(rootDir: string, relativePath: string): unknown {
   return JSON.parse(
     fs.readFileSync(path.resolve(rootDir, relativePath), "utf8"),
@@ -938,6 +954,10 @@ if (
       currentManifest.resourceSnapshots,
       "manifest.resourceSnapshots",
     );
+    const existingSnapshotId = stringValue(
+      existingManifest.snapshotId,
+      "coverage freeze manifest snapshotId",
+    );
     const migrationResourceSnapshots = Object.fromEntries(
       RESOURCE_KEYS.map((key) => {
         const current = record(
@@ -947,7 +967,13 @@ if (
         return [
           key,
           existingResourceSnapshots[key] ?? {
-            resourcePath: current.resourcePath,
+            resourcePath: migrateFreezeResourcePathToSnapshot(
+              stringValue(
+                current.resourcePath,
+                `manifest.resourceSnapshots.${key}.resourcePath`,
+              ),
+              existingSnapshotId,
+            ),
             sha256: current.sha256,
             recordCount: current.recordCount,
           },
