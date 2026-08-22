@@ -4,31 +4,27 @@
 
 - Repositorio canónico: <https://github.com/Huntsman1756/concursos_cyl>.
 - Rama de integración: `codex/parallel-continuation-wave-20260821`.
-- Límite fuente del freeze: `e41c5394d71c1324fe8a3e5d12a4a6f76793eaa2`.
-- Snapshot activo: `20260822021233066-9d8fa948959b`.
-- Cobertura: 104 cualificaciones base, 121 claves de modalidad, 248 relaciones aprobadas y 21 alias.
-- Cola oficial: 35 cualificaciones pendientes y 15 resultados sin publicación revalidados contra el catálogo actual.
-- La remediación retiró seis relaciones sin reemplazo y corrigió una cita; el grafo y el snapshot reflejan 248 relaciones.
-- El manifest conserva los recursos inmutables del snapshot. GitHub Pages, VPS
-  y 13 capturas se verificaron para el commit
-  `05407a0600f1d533d01e97757a98189f030ea6e0`.
+- Límite fuente del freeze: `dd34d0b79e5711477b5f425c951d2c650e038ea1`.
+- Snapshot activo: `20260822085631889-7bbe69380f6d`.
+- Cobertura: 113 cualificaciones base, 130 claves de modalidad, 264 relaciones aprobadas y 21 alias.
+- Cola oficial: 26 cualificaciones pendientes y 15 resultados sin publicación revalidados contra el catálogo actual.
+- El manifest conserva 21 recursos inmutables del snapshot, incluido SEPE con 116 registros canónicos.
+- La publicación final, el workflow y las capturas de este freeze aún están pendientes. La evidencia de despliegues anteriores se conserva solo como historial.
 - La muestra determinista vigente registra 15 PASS y 0 FAIL tras una segunda
   revisión independiente de la URL oficial y la cita registrada. Es una muestra
-  delimitada: las otras 233 relaciones no fueron muestreadas y no se afirma una
+  delimitada: las otras 249 relaciones no fueron muestreadas y no se afirma una
   auditoría exhaustiva.
 - No existe evidencia humana de adopción o piloto: el protocolo anónimo está preparado, pero no se generan resultados ni afirmaciones sin sesiones reales y consentimiento.
 
 ## Estado de publicación
 
-- GitHub Pages y el VPS publicaron el mismo commit `05407a0`; el workflow
-  `32548299249` terminó en verde y verificó Pages en vivo.
-- Las 13 capturas PNG se regeneraron desde el VPS publicado y pasaron la
-  validación automática y la inspección visual.
+- GitHub Pages y el VPS deben publicar el mismo commit P; todavía no se ha registrado ese commit ni su workflow.
+- Las capturas PNG deben regenerarse desde P y revisarse visualmente antes de registrar evidencia verificada.
 - La candidatura no se envía automáticamente. Identidad, declaraciones, consentimiento y envío oficial requieren autorización humana explícita separada.
 
 ## Orden de trabajo
 
-1. Completar la cola de 35 titulaciones con evidencia primaria; no convertir
+1. Completar la cola de 26 titulaciones con evidencia primaria; no convertir
    señales de oferta en evidencia CNO.
 2. Realizar el piloto anónimo con personas adultas y consentimiento antes de
    afirmar adopción.

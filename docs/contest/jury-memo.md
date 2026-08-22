@@ -10,7 +10,7 @@ SALIDA CyL conecta Formación Profesional y ocupaciones en los dos sentidos. Una
 
 El producto responde a dos preguntas concretas: «¿en qué puedo trabajar con mi FP?» y «¿qué FP me lleva a esta ocupación?». Permite consultar 187 ciclos oficiales y 502 grupos primarios CNO-11. La ficha reúne salidas oficiales, relaciones revisadas, ofertas de la instantánea, centros, modalidades y contexto territorial, y separa la evidencia formativa de la demanda laboral.
 
-La cobertura congelada contiene 104 cualificaciones distintas, 121 claves de modalidad y 248 relaciones FP-ocupación aprobadas. La cifra describe el conjunto revisado publicado, no el universo de relaciones posibles.
+La cobertura congelada contiene 113 cualificaciones distintas, 130 claves de modalidad y 264 relaciones FP-ocupación aprobadas. La cifra describe el conjunto revisado publicado, no el universo de relaciones posibles.
 
 La evidencia laboral específica del SEPE añade 116 de 116 grupos CNO consultados para `2026-07` (116 páginas publicadas y 0 respuestas explícitas de «sin documento»). Son contratos y paro registrado administrativos; la cobertura no equivale a vacantes, salario ni predicción individual.
 
@@ -32,7 +32,7 @@ La referencia pública localizada de 2022 documenta una aplicación web de ofert
 
 ## 5. Variedad de datasets del Portal de Datos Abiertos de la Junta
 
-Los ocho conjuntos regionales tienen un uso visible en la interfaz y una copia normalizada en el snapshot `20260822064449120-b76d60c84145`:
+Los ocho conjuntos regionales tienen un uso visible en la interfaz y una copia normalizada en el snapshot `20260822085631889-7bbe69380f6d`:
 
 | Dataset                            | Uso visible                                                         |
 | ---------------------------------- | ------------------------------------------------------------------- |
@@ -53,16 +53,16 @@ La portada pide primero el punto de partida y ofrece un único formulario princi
 
 ## 7. Calidad técnica
 
-La ingesta valida esquemas y genera recursos inmutables bajo `/data/v1/`. El manifest del snapshot publica recuentos, fechas, hashes SHA-256 y estado de calidad. El grafo derivado conserva fuente por relación y descargas JSON y CSV. Una actualización inválida no sustituye la copia válida anterior. El freeze queda ligado al commit `e41c5394d71c1324fe8a3e5d12a4a6f76793eaa2`; la muestra independiente vigente registra 15 PASS y 0 FAIL sobre 15 relaciones, mientras que las otras 233 quedan sin muestrear. El resultado no es una auditoría exhaustiva.
+La ingesta valida esquemas y genera recursos inmutables bajo `/data/v1/`. El manifest del snapshot publica recuentos, fechas, hashes SHA-256 y estado de calidad. El grafo derivado conserva fuente por relación y descargas JSON y CSV. Una actualización inválida no sustituye la copia válida anterior. El freeze queda ligado al commit `dd34d0b79e5711477b5f425c951d2c650e038ea1`; la muestra independiente vigente registra 15 PASS y 0 FAIL sobre 15 relaciones, mientras que las otras 249 quedan sin muestrear. El resultado no es una auditoría exhaustiva.
 
 ## Límites declarados
 
-- Las 248 relaciones cubren 104 cualificaciones y 121 modalidades; no representan todas las relaciones posibles.
+- Las 264 relaciones cubren 113 cualificaciones y 130 modalidades; no representan todas las relaciones posibles.
 - Las 38 ofertas alcanzadas pertenecen a una copia fechada de 1.058 ofertas y forman una unión de IDs; no representan todo el mercado laboral.
 - Los contratos provinciales aportan contexto agregado, no demanda por ocupación.
 - La población municipal describe el lugar de estudio, no la residencia del alumnado.
 - Las bases de cotización no predicen salario, empleo ni residencia.
-- El despliegue público y 13 capturas se verificaron para el commit `05407a0600f1d533d01e97757a98189f030ea6e0`. Cualquier afirmación de adopción o piloto sigue pendiente de evidencia humana.
+- La publicación y las capturas de este freeze siguen pendientes. Las capturas anteriores son históricas y no verifican la versión candidata. Cualquier afirmación de adopción o piloto sigue pendiente de evidencia humana.
 
 ## Acceso y verificabilidad
 

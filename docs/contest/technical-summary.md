@@ -1,15 +1,13 @@
 # Resumen técnico de evidencia
 
-- Límite fuente: `e41c5394d71c1324fe8a3e5d12a4a6f76793eaa2`.
-- Snapshot: `20260822021233066-9d8fa948959b`.
-- Cobertura: 104 cualificaciones, 121 claves de modalidad, 248 relaciones aprobadas y 21 alias.
-- Muestra determinista: 15 PASS y 0 FAIL en una segunda revisión independiente; 233 relaciones `not_sampled`.
+- Límite fuente: `dd34d0b79e5711477b5f425c951d2c650e038ea1`.
+- Snapshot: `20260822085631889-7bbe69380f6d`.
+- Cobertura: 113 cualificaciones, 130 claves de modalidad, 264 relaciones aprobadas y 21 alias.
+- Muestra determinista: 15 PASS y 0 FAIL en una segunda revisión independiente; 249 relaciones `not_sampled`.
 - Alcance de la muestra: delimitado y no exhaustivo. No convierte las 15 relaciones en una auditoría semántica completa del catálogo.
-- Matriz: las 15 relaciones seleccionadas están marcadas `sample_pass`; las 233 restantes, `not_sampled`.
-- E2E Chromium: 124/124 pruebas pasan después de ajustar COM01M a 7 grupos revisados.
-- Estado de release: GitHub Pages, VPS y 13 capturas están verificados para
-  `05407a0600f1d533d01e97757a98189f030ea6e0`; adopción, piloto y envío externo
-  permanecen pendientes de evidencia humana o autorización.
+- Matriz: las 15 relaciones seleccionadas están marcadas `sample_pass`; las 249 restantes, `not_sampled`.
+- Estado de release: publicación y capturas pendientes para el commit final. Las capturas anteriores son históricas y no verifican este freeze.
+- Límites humanos: adopción, piloto, identidad, consentimiento y envío externo permanecen pendientes de evidencia o autorización humana.
 
 La procedencia detallada de cada relación está en
 `analysis/contest_evidence_live_sample.json` y la matriz completa en
