@@ -1,7 +1,7 @@
 {
   "schemaVersion": "1.0.0",
   "sourcePath": "data/curated/training-occupation-links.json",
-  "sourceCommitSha": "7a9a05a2ddcb3a89173a645e7308d327763a4e17",
+  "sourceCommitSha": "9df3ff3be447f0492d303d8dcfbb6a47c57271c7",
   "population": 264,
   "sampleSize": 15,
   "seed": "f3813d12cff3876db8760975cf82b0ad47c5d3ea76983d809ef45891324bf21c",
@@ -11,7 +11,7 @@
   "status": "sample_audited",
   "independentlyAudited": true,
   "exhaustive": false,
-  "auditMethod": "Independent second-pass comparison of each selected relation with its recorded official source URL and exact quote at the ab534c7 boundary.",
+  "auditMethod": "Independent second-pass comparison of each selected relation with its recorded official source URL and exact quote at the sourceCommitSha boundary declared above.",
   "summary": {
     "pass": 15,
     "fail": 0,
