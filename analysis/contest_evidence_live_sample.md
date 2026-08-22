@@ -2,7 +2,7 @@
 
 ## Muestra vigente
 
-- Límite de datos: `94bad9123906efd0d582eb599b8c4d190004c91f`.
+- Límite de datos: `05f905397d22b217c4716c88a2406d802892fb6d`.
 - Población: 264 relaciones aprobadas en `data/curated/training-occupation-links.json`.
 - Tamaño: 15 relaciones seleccionadas de forma determinista.
 - Corte: 2026-08-22T12:08:22+02:00.
