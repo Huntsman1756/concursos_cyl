@@ -1,11 +1,13 @@
-import { useEffect, useMemo, useState } from "react";
-import { Link } from "react-router-dom";
+import { useEffect, useMemo, useRef, useState } from "react";
+import { Link, useSearchParams } from "react-router-dom";
 
+import type { TrainingProgram } from "../../../data/schemas/generated";
 import type {
   OutcomeCohortWindow,
   OutcomeTrainingLevel,
 } from "../../../data/schemas/outcomes";
 import {
+  loadFoundationResourceSubset,
   loadManifest,
   loadOutcomeIndicators,
 } from "../../data/generatedDataClient";
@@ -15,19 +17,48 @@ import {
   type IncomeComparison,
   type IncomeOutcomeIndex,
 } from "../../domain/outcomes";
+import { findTrainingOutcomeGroup } from "../../domain/trainingOutcomeMatching";
+import { ExternalLink } from "../../components/ExternalLink";
+import { PrintButton } from "../../components/PrintButton";
 import { useRouteReady } from "../../app/RouteReadyContext";
 import { IncomeComparisonForm } from "./IncomeComparisonForm";
 import { IncomeEvidenceCard } from "./IncomeEvidenceCard";
 import { formatOutcomeLabel } from "./outcomePresentation";
+import {
+  parseCompareSearch,
+  serializeCompareSelection,
+  type CompareSelection,
+} from "./compareSelection";
 import "./compareStudies.css";
 
 type PageState =
   | { status: "loading" }
   | { status: "unavailable" }
   | { status: "invalid" }
-  | { status: "ready"; index: IncomeOutcomeIndex; stale: boolean };
+  | {
+      status: "ready";
+      index: IncomeOutcomeIndex;
+      programs: readonly TrainingProgram[];
+      outcomeSource?: {
+        sourceUrl: string;
+        snapshotFetchedAt: string;
+      };
+      stale: boolean;
+    };
 
 const DEFAULT_COHORT = "2019-2020";
+const UNKNOWN_PROGRAM_NOTICE =
+  "No se ha encontrado el ciclo oficial solicitado. Puedes elegir un ciclo manualmente.";
+const AMBIGUOUS_PROGRAM_NOTICE =
+  "La dirección no identifica un único ciclo oficial. Elige un ciclo manualmente.";
+const UNSUPPORTED_PROGRAM_NOTICE =
+  "La comparación de ingresos solo está disponible para Grado Medio y Grado Superior. Elige un ciclo compatible.";
+const NO_OUTCOME_MATCH_NOTICE =
+  "No hay una relación de ingresos publicada para este ciclo. Puedes elegir un grupo oficial manualmente.";
+const FAMILY_MATCH_NOTICE =
+  "Solo hay una referencia de familia profesional para este ciclo; elige manualmente un grupo de ciclo para comparar.";
+const UNOBSERVED_PROGRAM_NOTICE =
+  "Este ciclo tiene una referencia publicada, pero no hay un año observado completo para preseleccionarlo. Elige la cohorte y el año manualmente.";
 
 function findWindow(
   index: IncomeOutcomeIndex,
@@ -46,8 +77,20 @@ function scopeHeading(trainingLevel: OutcomeTrainingLevel): string {
   } en Castilla y León`;
 }
 
+function formatSnapshotDate(value: string): string {
+  return new Intl.DateTimeFormat("es-ES", {
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+    timeZone: "UTC",
+  }).format(new Date(value));
+}
+
 /** Loads only manifest-addressed evidence and keeps both official scopes separate. */
 export function CompareStudiesPage() {
+  const [searchParams, setSearchParams] = useSearchParams();
+  const searchString = searchParams.toString();
+  const preserveLocalFormAfterClearRef = useRef(false);
   const [state, setState] = useState<PageState>({ status: "loading" });
   useRouteReady(state.status === "ready");
   const [trainingLevel, setTrainingLevel] =
@@ -57,14 +100,19 @@ export function CompareStudiesPage() {
   const [postGraduationYear, setPostGraduationYear] = useState<1 | 2 | 3 | 4>(
     4,
   );
+  const [notice, setNotice] = useState<string | null>(null);
 
+  /* eslint-disable react-hooks/set-state-in-effect -- URL state is an external source of truth. */
   useEffect(() => {
     const controller = new AbortController();
     const { signal } = controller;
     const options = { signal };
     void loadManifest(options)
       .then(async (manifest) => {
-        const records = await loadOutcomeIndicators(manifest, options);
+        const [records, foundation] = await Promise.all([
+          loadOutcomeIndicators(manifest, options),
+          loadFoundationResourceSubset(manifest, ["programs"], options),
+        ]);
         if (signal.aborted) return;
         if (records === null) {
           setState({ status: "unavailable" });
@@ -72,11 +120,28 @@ export function CompareStudiesPage() {
         }
         const outcomeSnapshot = (
           manifest.resourceSnapshots as typeof manifest.resourceSnapshots &
-            Record<string, { qualityStatus: "passed" | "stale" } | undefined>
+            Record<
+              string,
+              | {
+                  qualityStatus: "passed" | "stale";
+                  sourceUrl?: string;
+                  snapshotFetchedAt?: string;
+                }
+              | undefined
+            >
         ).outcomeIndicators;
         setState({
           status: "ready",
           index: indexIncomeOutcomes(records),
+          programs: foundation.programs,
+          outcomeSource:
+            outcomeSnapshot?.sourceUrl !== undefined &&
+            outcomeSnapshot.snapshotFetchedAt !== undefined
+              ? {
+                  sourceUrl: outcomeSnapshot.sourceUrl,
+                  snapshotFetchedAt: outcomeSnapshot.snapshotFetchedAt,
+                }
+              : undefined,
           stale:
             manifest.qualityStatus === "stale" ||
             outcomeSnapshot?.qualityStatus === "stale",
@@ -90,6 +155,111 @@ export function CompareStudiesPage() {
       controller.abort();
     };
   }, []);
+
+  useEffect(() => {
+    if (state.status !== "ready") return;
+
+    const parsed = parseCompareSearch(searchParams, state.index);
+    if (parsed.kind === "empty") {
+      if (preserveLocalFormAfterClearRef.current) {
+        preserveLocalFormAfterClearRef.current = false;
+        return;
+      }
+      setTrainingLevel(null);
+      setGroupKeys([]);
+      setCohort(DEFAULT_COHORT);
+      setPostGraduationYear(4);
+      setNotice(null);
+      return;
+    }
+    if (parsed.kind === "invalid") {
+      setTrainingLevel(null);
+      setGroupKeys([]);
+      setCohort(DEFAULT_COHORT);
+      setPostGraduationYear(4);
+      setNotice(parsed.message);
+      return;
+    }
+    if (parsed.kind === "selection") {
+      setTrainingLevel(parsed.selection.trainingLevel);
+      setGroupKeys(parsed.selection.groupKeys);
+      setCohort(parsed.selection.cohort);
+      setPostGraduationYear(parsed.selection.postGraduationYear);
+      setNotice(null);
+      return;
+    }
+
+    const matchingPrograms = state.programs.filter(
+      (program) => program.programKey === parsed.programKey,
+    );
+    if (matchingPrograms.length === 0) {
+      setTrainingLevel(null);
+      setGroupKeys([]);
+      setNotice(UNKNOWN_PROGRAM_NOTICE);
+      return;
+    }
+    if (matchingPrograms.length !== 1) {
+      setTrainingLevel(null);
+      setGroupKeys([]);
+      setNotice(AMBIGUOUS_PROGRAM_NOTICE);
+      return;
+    }
+
+    const program = matchingPrograms[0]!;
+    const outcomeGroupMatch = findTrainingOutcomeGroup(program, state.index);
+    if (program.level !== "intermediate" && program.level !== "higher") {
+      setTrainingLevel(null);
+      setGroupKeys([]);
+      setNotice(UNSUPPORTED_PROGRAM_NOTICE);
+      return;
+    }
+    if (outcomeGroupMatch === null) {
+      setTrainingLevel(program.level);
+      setGroupKeys([]);
+      setNotice(NO_OUTCOME_MATCH_NOTICE);
+      return;
+    }
+    if (outcomeGroupMatch.matchType !== "cycle") {
+      setTrainingLevel(outcomeGroupMatch.group.trainingLevel);
+      setGroupKeys([]);
+      setNotice(FAMILY_MATCH_NOTICE);
+      return;
+    }
+
+    const defaultWindow = findWindow(
+      state.index,
+      outcomeGroupMatch.group.trainingLevel,
+      DEFAULT_COHORT,
+    );
+    if (
+      defaultWindow === null ||
+      defaultWindow.maxObservedPostGraduationYear < 4
+    ) {
+      setTrainingLevel(outcomeGroupMatch.group.trainingLevel);
+      setGroupKeys([]);
+      setCohort(DEFAULT_COHORT);
+      setPostGraduationYear(4);
+      setNotice(UNOBSERVED_PROGRAM_NOTICE);
+      return;
+    }
+
+    const selection: CompareSelection = {
+      trainingLevel: outcomeGroupMatch.group.trainingLevel,
+      groupKeys: [outcomeGroupMatch.group.groupKey],
+      cohort: DEFAULT_COHORT,
+      postGraduationYear: 4,
+    };
+    setTrainingLevel(selection.trainingLevel);
+    setGroupKeys(selection.groupKeys);
+    setCohort(selection.cohort);
+    setPostGraduationYear(selection.postGraduationYear);
+    setNotice(null);
+    const canonical = serializeCompareSelection(selection);
+    if (canonical.toString() !== searchString) {
+      setSearchParams(canonical, { replace: true });
+    }
+  }, [searchParams, searchString, setSearchParams, state]);
+  /* eslint-enable react-hooks/set-state-in-effect */
 
   const groups = useMemo(() => {
     if (state.status !== "ready" || !trainingLevel) return [];
@@ -144,15 +314,86 @@ export function CompareStudiesPage() {
     isNotYetObserved,
   ]);
 
+  function clearQueryPreservingForm(): void {
+    preserveLocalFormAfterClearRef.current = true;
+    setSearchParams({}, { replace: true });
+  }
+
+  function replaceWithSelection(selection: CompareSelection | null): void {
+    if (selection === null || selection.groupKeys.length === 0) {
+      clearQueryPreservingForm();
+      return;
+    }
+    const params = serializeCompareSelection(selection);
+    if (params.toString() === "") {
+      clearQueryPreservingForm();
+      return;
+    }
+    setSearchParams(params, { replace: true });
+  }
+
   function chooseTrainingLevel(level: OutcomeTrainingLevel) {
     setTrainingLevel(level);
     setGroupKeys([]);
     setCohort(DEFAULT_COHORT);
     setPostGraduationYear(4);
+    setNotice(null);
+    clearQueryPreservingForm();
+  }
+
+  function chooseGroupKeys(nextGroupKeys: readonly string[]) {
+    setGroupKeys(nextGroupKeys);
+    setNotice(null);
+    if (nextGroupKeys.length === 0 || trainingLevel === null) {
+      replaceWithSelection(null);
+      return;
+    }
+    const window = findWindow(state.index, trainingLevel, cohort);
+    if (
+      window === null ||
+      postGraduationYear > window.maxObservedPostGraduationYear
+    ) {
+      clearQueryPreservingForm();
+      return;
+    }
+    replaceWithSelection({
+      trainingLevel,
+      groupKeys: nextGroupKeys as [string, ...string[]],
+      cohort,
+      postGraduationYear,
+    });
   }
 
   function chooseCohort(nextCohort: string) {
     setCohort(nextCohort);
+    setNotice(null);
+    if (trainingLevel === null || groupKeys.length === 0) return;
+    const window = findWindow(state.index, trainingLevel, nextCohort);
+    if (
+      window === null ||
+      postGraduationYear > window.maxObservedPostGraduationYear
+    ) {
+      clearQueryPreservingForm();
+      return;
+    }
+    replaceWithSelection({
+      trainingLevel,
+      groupKeys: groupKeys as [string, ...string[]],
+      cohort: nextCohort,
+      postGraduationYear,
+    });
+  }
+
+  function choosePostGraduationYear(year: 1 | 2 | 3 | 4) {
+    setPostGraduationYear(year);
+    setNotice(null);
+    if (trainingLevel === null || groupKeys.length === 0) return;
+    replaceWithSelection({
+      trainingLevel,
+      groupKeys: groupKeys as [string, ...string[]],
+      cohort,
+      postGraduationYear: year,
+    });
   }
 
   if (state.status === "loading") {
@@ -222,6 +463,12 @@ export function CompareStudiesPage() {
         </p>
       ) : null}
 
+      {notice !== null ? (
+        <p className="compare-notice" role="alert">
+          {notice}
+        </p>
+      ) : null}
+
       <IncomeComparisonForm
         trainingLevel={trainingLevel}
         groups={groups}
@@ -231,9 +478,9 @@ export function CompareStudiesPage() {
         cohortWindows={cohortWindows}
         postGraduationYear={postGraduationYear}
         onTrainingLevelChange={chooseTrainingLevel}
-        onGroupKeysChange={setGroupKeys}
+        onGroupKeysChange={chooseGroupKeys}
         onCohortChange={chooseCohort}
-        onPostGraduationYearChange={setPostGraduationYear}
+        onPostGraduationYearChange={choosePostGraduationYear}
       />
 
       {isNotYetObserved && groupKeys.length > 0 ? (
@@ -264,6 +511,9 @@ export function CompareStudiesPage() {
               personal.
             </p>
           </div>
+          <div className="compare-page__actions" data-print-hidden="true">
+            <PrintButton className="secondary-button" />
+          </div>
           <div className="income-evidence-grid">
             <IncomeEvidenceCard
               heading="Ingresos observados del ciclo o grupo en España"
@@ -283,6 +533,17 @@ export function CompareStudiesPage() {
             no publica ingresos por ciclo concreto en Castilla y León; solo
             ofrece una referencia conjunta para Grado Medio o Grado Superior.
           </p>
+          {state.outcomeSource !== undefined ? (
+            <footer className="income-results__source">
+              <span>
+                Copia del{" "}
+                {formatSnapshotDate(state.outcomeSource.snapshotFetchedAt)}.
+              </span>
+              <ExternalLink href={state.outcomeSource.sourceUrl}>
+                Fuente: EDUCAbase
+              </ExternalLink>
+            </footer>
+          ) : null}
         </section>
       ) : null}
     </section>

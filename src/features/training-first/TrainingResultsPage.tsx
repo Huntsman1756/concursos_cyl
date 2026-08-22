@@ -670,7 +670,10 @@ export function TrainingResultsPage() {
             Ver centros y modalidades
           </Link>
         )}
-        <Link className="result-actions__tertiary" to="/comparar">
+        <Link
+          className="result-actions__tertiary"
+          to={`/comparar?program=${encodeURIComponent(state.program.programKey)}`}
+        >
           Comparar ingresos
         </Link>
         <PrintButton className="secondary-button" />

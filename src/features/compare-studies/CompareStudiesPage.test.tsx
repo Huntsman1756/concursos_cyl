@@ -7,7 +7,7 @@ import {
 } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { readFileSync } from "node:fs";
-import { MemoryRouter } from "react-router-dom";
+import { MemoryRouter, useLocation, useNavigate } from "react-router-dom";
 import { afterEach, describe, expect, it, vi } from "vitest";
 
 import type { OutcomeIndicatorsResource } from "../../../data/schemas/outcomes";
@@ -18,6 +18,7 @@ const comparisonStyles = readFileSync(
 
 const generatedDataClient = vi.hoisted(() => ({
   loadManifest: vi.fn(),
+  loadFoundationResourceSubset: vi.fn(),
   loadOutcomeIndicators: vi.fn(),
   isGeneratedDataAbortError: vi.fn(
     (error: unknown) => error instanceof Error && error.name === "AbortError",
@@ -164,16 +165,36 @@ function incomeResource(): OutcomeIndicatorsResource {
 }
 
 function installData(
-  options: { stale?: boolean; outcome?: boolean; invalid?: boolean } = {},
+  options: {
+    stale?: boolean;
+    outcome?: boolean;
+    invalid?: boolean;
+    programs?: readonly {
+      programKey: string;
+      programTitle: string;
+      level: "basic" | "intermediate" | "higher" | "specialization";
+      familyCode: string;
+      familyName: string;
+    }[];
+  } = {},
 ) {
   const stale = options.stale ?? false;
   const manifest = {
     qualityStatus: stale ? "stale" : "passed",
     resourceSnapshots: {
-      outcomeIndicators: { qualityStatus: stale ? "stale" : "passed" },
+      outcomeIndicators: {
+        qualityStatus: stale ? "stale" : "passed",
+        sourceUrl: "https://estadisticas.educacion.gob.es/EducaJaxiPx/",
+        sourceUpdatedAt: "2026-07-31T00:00:00.000Z",
+        snapshotFetchedAt: "2026-08-04T10:00:00.000Z",
+      },
     },
   };
   generatedDataClient.loadManifest.mockResolvedValue(manifest);
+  generatedDataClient.loadFoundationResourceSubset.mockResolvedValue({
+    contract: "current",
+    programs: options.programs ?? [],
+  });
   if (options.invalid) {
     generatedDataClient.loadOutcomeIndicators.mockRejectedValue(
       new Error("invalid fixture"),
@@ -185,10 +206,33 @@ function installData(
   }
 }
 
-function renderPage() {
+function LocationProbe() {
+  const location = useLocation();
+  return (
+    <span aria-hidden="true" data-testid="location-search">
+      {location.search}
+    </span>
+  );
+}
+
+function BackProbe() {
+  const navigate = useNavigate();
+  return (
+    <button type="button" onClick={() => navigate(-1)}>
+      Atrás de prueba
+    </button>
+  );
+}
+
+function renderPage(
+  initialEntries: readonly string[] = ["/comparar"],
+  withBackProbe = false,
+) {
   return render(
-    <MemoryRouter>
+    <MemoryRouter initialEntries={initialEntries}>
       <CompareStudiesPage />
+      <LocationProbe />
+      {withBackProbe ? <BackProbe /> : null}
     </MemoryRouter>,
   );
 }
@@ -196,6 +240,7 @@ function renderPage() {
 afterEach(() => {
   cleanup();
   vi.unstubAllGlobals();
+  vi.restoreAllMocks();
   vi.clearAllMocks();
 });
 
@@ -286,7 +331,9 @@ describe("CompareStudiesPage", () => {
         /salario esperado|ganarás|afiliación|empleo e ingresos/iu,
       ),
     ).not.toBeInTheDocument();
-    expect(document.querySelector("svg, canvas")).toBeNull();
+    expect(
+      screen.getByRole("button", { name: "Imprimir esta orientación" }),
+    ).toBeVisible();
   });
 
   it("keeps unavailable, invalid, and stale evidence explicit", async () => {
@@ -498,5 +545,218 @@ describe("CompareStudiesPage", () => {
     expect(comparisonStyles).toMatch(/\.income-bar__track/u);
     expect(comparisonStyles).toMatch(/\.income-evidence-card table/u);
     expect(comparisonStyles).toMatch(/\.income-evidence-grid/u);
+  });
+
+  it("loads outcomes and only programs from the same manifest and signal", async () => {
+    installData();
+    renderPage();
+
+    await screen.findByRole("heading", { name: "Ingresos observados" });
+    const outcomeCall = generatedDataClient.loadOutcomeIndicators.mock
+      .calls[0] as [unknown, { signal: AbortSignal }];
+    const programsCall = generatedDataClient.loadFoundationResourceSubset.mock
+      .calls[0] as [unknown, readonly string[], { signal: AbortSignal }];
+    expect(programsCall[0]).toBe(outcomeCall[0]);
+    expect(programsCall[1]).toEqual(["programs"]);
+    expect(outcomeCall[1]).toBe(programsCall[2]);
+    expect(outcomeCall[1].signal).toBe(programsCall[2].signal);
+  });
+
+  it("restores a canonical selection from the URL and keeps its order", async () => {
+    installData();
+    const query = `level=higher&group=${groupKey(35)}&group=${groupKey(36)}&cohort=2019-2020&year=4`;
+    renderPage([`/comparar?${query}`]);
+
+    expect(await screen.findByText(/Cohorte 2019-2020 · año 4/u)).toBeVisible();
+    expect(screen.getByRole("radio", { name: "Grado superior" })).toBeChecked();
+    expect(
+      screen.getByRole("checkbox", { name: "Desarrollo de aplicaciones web" }),
+    ).toBeChecked();
+    expect(screen.getByTestId("location-search")).toHaveTextContent(query);
+  });
+
+  it("keeps the outcome source and snapshot date with both printed scopes", async () => {
+    installData();
+    renderPage([
+      `/comparar?level=higher&group=${groupKey(35)}&cohort=2019-2020&year=4`,
+    ]);
+
+    expect(
+      await screen.findByRole("link", { name: /Fuente: EDUCAbase/u }),
+    ).toHaveAttribute(
+      "href",
+      "https://estadisticas.educacion.gob.es/EducaJaxiPx/",
+    );
+    expect(screen.getByText("Copia del 4 de agosto de 2026.")).toBeVisible();
+  });
+
+  it("fails closed for invalid links without echoing arbitrary URL text", async () => {
+    installData();
+    const query =
+      "level=higher&group=secret-arbitrary-value&cohort=2019-2020&year=4";
+    renderPage([`/comparar?${query}`]);
+
+    const notice = await screen.findByRole("alert");
+    expect(notice).toHaveTextContent(
+      "Este enlace de comparación no es válido. Elige de nuevo los datos para continuar.",
+    );
+    expect(notice).not.toHaveTextContent("secret-arbitrary-value");
+    expect(
+      screen.queryByRole("region", { name: "Evidencia seleccionada" }),
+    ).not.toBeInTheDocument();
+    expect(screen.getByRole("radio", { name: "Grado medio" })).toBeVisible();
+  });
+
+  it("canonicalizes one exact cycle match from a program URL", async () => {
+    installData({
+      programs: [
+        {
+          programKey: "IFC03S",
+          programTitle: "Desarrollo de Aplicaciones Web",
+          level: "higher",
+          familyCode: "IFC",
+          familyName: "Informática y Comunicaciones",
+        },
+      ],
+    });
+    renderPage(["/comparar?program=IFC03S"]);
+
+    expect(await screen.findByText(/Cohorte 2019-2020 · año 4/u)).toBeVisible();
+    await waitFor(() =>
+      expect(screen.getByTestId("location-search")).toHaveTextContent(
+        `level=higher&group=${groupKey(35)}&cohort=2019-2020&year=4`,
+      ),
+    );
+    expect(screen.queryByRole("alert")).not.toBeInTheDocument();
+  });
+
+  it("keeps family-only, unknown, ambiguous, and unsupported program links manual", async () => {
+    installData({
+      programs: [
+        {
+          programKey: "FAMILY01",
+          programTitle: "Ciclo sin grupo propio",
+          level: "higher",
+          familyCode: "FAM",
+          familyName: "Grupo superior 2",
+        },
+        {
+          programKey: "DUPLICATE",
+          programTitle: "Uno",
+          level: "higher",
+          familyCode: "FAM",
+          familyName: "Ninguna",
+        },
+        {
+          programKey: "DUPLICATE",
+          programTitle: "Dos",
+          level: "higher",
+          familyCode: "FAM",
+          familyName: "Ninguna",
+        },
+        {
+          programKey: "BASIC01",
+          programTitle: "Ciclo básico",
+          level: "basic",
+          familyCode: "BAS",
+          familyName: "Ninguna",
+        },
+        {
+          programKey: "NOMATCH",
+          programTitle: "Ciclo sin resultado",
+          level: "higher",
+          familyCode: "NOM",
+          familyName: "Familia inexistente",
+        },
+      ],
+    });
+
+    const cases = [
+      ["FAMILY01", /referencia de familia profesional/u],
+      ["DUPLICATE", /no identifica un único ciclo oficial/u],
+      ["BASIC01", /solo está disponible para grado medio y grado superior/iu],
+      ["NOMATCH", /no hay una relación de ingresos publicada/iu],
+      ["UNKNOWN", /no se ha encontrado el ciclo oficial solicitado/iu],
+    ] as const;
+    for (const [programKey, message] of cases) {
+      cleanup();
+      renderPage([`/comparar?program=${programKey}`]);
+      expect(await screen.findByRole("alert")).toHaveTextContent(message);
+      expect(
+        screen.queryByRole("region", { name: "Evidencia seleccionada" }),
+      ).not.toBeInTheDocument();
+    }
+  });
+
+  it("replaces the canonical query on manual changes and keeps level-only state local", async () => {
+    installData();
+    const user = userEvent.setup();
+    renderPage();
+
+    await user.click(
+      await screen.findByRole("radio", { name: "Grado superior" }),
+    );
+    await user.click(
+      screen.getByRole("checkbox", { name: "Desarrollo de aplicaciones web" }),
+    );
+    expect(screen.getByTestId("location-search")).toHaveTextContent(
+      `level=higher&group=${groupKey(35)}&cohort=2019-2020&year=4`,
+    );
+    await user.click(
+      screen.getByRole("checkbox", { name: "Desarrollo de aplicaciones web" }),
+    );
+    expect(screen.getByTestId("location-search")).toHaveTextContent("");
+    expect(screen.getByRole("radio", { name: "Grado superior" })).toBeChecked();
+    expect(
+      screen.queryByRole("region", { name: "Evidencia seleccionada" }),
+    ).not.toBeInTheDocument();
+  });
+
+  it("uses router replacement so a manual selection does not add a history step", async () => {
+    installData();
+    const user = userEvent.setup();
+    renderPage(["/comparar?unexpected=1", "/comparar"], true);
+
+    await user.click(
+      await screen.findByRole("radio", { name: "Grado superior" }),
+    );
+    await user.click(
+      screen.getByRole("checkbox", { name: "Desarrollo de aplicaciones web" }),
+    );
+    await user.click(screen.getByRole("button", { name: "Atrás de prueba" }));
+
+    expect(await screen.findByRole("alert")).toHaveTextContent(
+      "Este enlace de comparación no es válido.",
+    );
+    expect(screen.getByTestId("location-search")).toHaveTextContent(
+      "?unexpected=1",
+    );
+  });
+
+  it("renders and invokes print only for a valid comparison", async () => {
+    installData();
+    const print = vi.fn();
+    vi.stubGlobal("print", print);
+    Object.defineProperty(window, "print", {
+      configurable: true,
+      value: print,
+    });
+    const user = userEvent.setup();
+    renderPage();
+
+    expect(
+      screen.queryByRole("button", { name: "Imprimir esta orientación" }),
+    ).not.toBeInTheDocument();
+    await user.click(
+      await screen.findByRole("radio", { name: "Grado superior" }),
+    );
+    await user.click(
+      screen.getByRole("checkbox", { name: "Desarrollo de aplicaciones web" }),
+    );
+    const printButton = screen.getByRole("button", {
+      name: "Imprimir esta orientación",
+    });
+    await user.click(printButton);
+    expect(print).toHaveBeenCalledTimes(1);
   });
 });

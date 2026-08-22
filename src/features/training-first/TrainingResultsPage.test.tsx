@@ -590,7 +590,7 @@ describe("TrainingResultsPage", () => {
     });
     expect(
       within(nextActions).getByRole("link", { name: "Comparar ingresos" }),
-    ).toHaveAttribute("href", "/comparar");
+    ).toHaveAttribute("href", "/comparar?program=IFC03S");
     expect(
       within(nextActions).getByRole("link", {
         name: "Ver ocupaciones revisadas",

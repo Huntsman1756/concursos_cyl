@@ -1,11 +1,15 @@
 import type { TrainingProgram } from "../../../data/schemas/generated";
 import type {
-  OutcomeGroup,
   OutcomeMeasure,
   OutcomeObservation,
   OutcomeTrainingLevel,
 } from "../../../data/schemas/outcomes";
 import type { IncomeOutcomeIndex } from "../../domain/outcomes";
+import {
+  findTrainingOutcomeGroup,
+  outcomeTrainingLevel,
+  type TrainingOutcomeGroupMatch,
+} from "../../domain/trainingOutcomeMatching";
 import {
   formatOutcomeLabel,
   OUTCOME_MEASURE_PRESENTATION,
@@ -31,11 +35,6 @@ export type TrainingOutcomeState =
   | { status: "unavailable" }
   | { status: "invalid" };
 
-export interface TrainingOutcomeGroupMatch {
-  group: OutcomeGroup;
-  matchType: "cycle" | "family";
-}
-
 export interface TrainingOutcomeObservationSet {
   mean: OutcomeObservation | undefined;
   lower: OutcomeObservation | undefined;
@@ -54,51 +53,6 @@ const OBSERVATION_MEASURES = {
   lower: "quintile_20_lower_boundary",
   upper: "quintile_80_lower_boundary",
 } as const satisfies Record<string, OutcomeMeasure>;
-
-function outcomeTrainingLevel(
-  level: TrainingProgram["level"],
-): OutcomeTrainingLevel | null {
-  if (level === "intermediate" || level === "higher") return level;
-  return null;
-}
-
-function normalizedMatchValue(value: string): string {
-  const withoutDiacritics = value
-    .normalize("NFD")
-    .replace(/\p{Diacritic}/gu, "");
-  return withoutDiacritics
-    .toLocaleLowerCase("es-ES")
-    .replace(/\s*\((?:a\s+)?distancia\)\s*$/u, "")
-    .replace(/\s+/gu, " ")
-    .trim();
-}
-
-export function findTrainingOutcomeGroup(
-  program: Pick<TrainingProgram, "programTitle" | "familyName" | "level">,
-  index: Pick<IncomeOutcomeIndex, "groupsByKey">,
-): TrainingOutcomeGroupMatch | null {
-  const trainingLevel = outcomeTrainingLevel(program.level);
-  if (trainingLevel === null) return null;
-
-  const groups = [...index.groupsByKey.values()].filter(
-    (group) => group.trainingLevel === trainingLevel,
-  );
-  const programTitle = normalizedMatchValue(program.programTitle);
-  const titleGroup = groups.find(
-    (group) => normalizedMatchValue(group.officialLabel) === programTitle,
-  );
-  if (titleGroup !== undefined) {
-    return { group: titleGroup, matchType: "cycle" };
-  }
-
-  const familyName = normalizedMatchValue(program.familyName);
-  const familyGroup = groups.find(
-    (group) => normalizedMatchValue(group.officialLabel) === familyName,
-  );
-  return familyGroup === undefined
-    ? null
-    : { group: familyGroup, matchType: "family" };
-}
 
 function observationSet(
   index: IncomeOutcomeIndex,
@@ -192,3 +146,5 @@ export function outcomeObservationLabel(
 }
 
 export { formatOutcomeLabel };
+export { findTrainingOutcomeGroup, outcomeTrainingLevel };
+export type { TrainingOutcomeGroupMatch };

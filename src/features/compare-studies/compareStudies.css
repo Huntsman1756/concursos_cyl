@@ -63,6 +63,20 @@
   background: var(--color-surface-warm);
 }
 
+.compare-notice {
+  margin: 0;
+  padding: var(--space-4) var(--space-5);
+  border-left: 4px solid var(--color-action);
+  color: var(--color-text);
+  background: var(--color-warning-surface);
+  line-height: 1.5;
+}
+
+.compare-page__actions {
+  display: flex;
+  justify-content: flex-start;
+}
+
 .field-hint {
   margin: 0;
   color: var(--color-text-muted);
@@ -433,6 +447,14 @@
   line-height: 1.55;
 }
 
+.income-results__source {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3) var(--space-5);
+  color: var(--color-text-muted);
+  font-size: 0.875rem;
+}
+
 .income-results__guide strong {
   color: var(--color-text);
 }
@@ -658,5 +680,24 @@
 
   .income-evidence-card tbody td:last-child {
     white-space: normal;
+  }
+}
+
+@media print {
+  .compare-page .income-comparison-form,
+  .compare-page .compare-page__actions {
+    display: none !important;
+  }
+
+  .compare-page .income-evidence-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .compare-page .income-evidence-card {
+    overflow: visible;
+  }
+
+  .compare-page .income-table-scroll {
+    overflow: visible;
   }
 }
