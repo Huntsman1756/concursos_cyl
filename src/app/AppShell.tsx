@@ -1,5 +1,6 @@
-import { useEffect, useRef, type ReactNode } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 import { Link, NavLink, useLocation } from "react-router-dom";
+import { Icon } from "../components/Icon";
 import { RouteReadyProvider } from "./RouteReady";
 import { titleForPathname } from "./routeTitles";
 import "../styles/global.css";
@@ -8,13 +9,100 @@ interface AppShellProps {
   children: ReactNode;
 }
 
+const DESKTOP_NAV_QUERY = "(min-width: 48rem)";
+
+interface PrimaryNavigationLinksProps {
+  onNavigate?: () => void;
+}
+
+function PrimaryNavigationLinks({ onNavigate }: PrimaryNavigationLinksProps) {
+  return (
+    <ul>
+      <li>
+        <NavLink to="/" end onClick={onNavigate}>
+          Inicio
+        </NavLink>
+      </li>
+      <li>
+        <NavLink to="/desde-fp" onClick={onNavigate}>
+          Desde FP
+        </NavLink>
+      </li>
+      <li>
+        <NavLink to="/desde-ocupacion" onClick={onNavigate}>
+          Desde ocupación
+        </NavLink>
+      </li>
+      <li>
+        <NavLink to="/comparar" onClick={onNavigate}>
+          Comparar estudios
+        </NavLink>
+      </li>
+      <li>
+        <NavLink to="/recursos" onClick={onNavigate}>
+          Más formación
+        </NavLink>
+      </li>
+      <li>
+        <NavLink to="/metodologia" onClick={onNavigate}>
+          Metodología
+        </NavLink>
+      </li>
+    </ul>
+  );
+}
+
 export function AppShell({ children }: AppShellProps) {
   const location = useLocation();
   const mainRef = useRef<HTMLElement | null>(null);
+  const menuButtonRef = useRef<HTMLButtonElement | null>(null);
+  const locationSignature = [
+    location.key,
+    location.pathname,
+    location.search,
+    location.hash,
+  ].join("|");
+  const previousLocationSignature = useRef(locationSignature);
+  const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
     document.title = titleForPathname(location.pathname);
   }, [location.pathname]);
+
+  useEffect(() => {
+    if (previousLocationSignature.current === locationSignature) return;
+    previousLocationSignature.current = locationSignature;
+
+    queueMicrotask(() => setMenuOpen(false));
+  }, [locationSignature]);
+
+  useEffect(() => {
+    const closeOnDesktopResize = () => {
+      const isDesktop =
+        typeof window.matchMedia === "function"
+          ? window.matchMedia(DESKTOP_NAV_QUERY).matches
+          : window.innerWidth >= 768;
+      if (isDesktop) setMenuOpen(false);
+    };
+
+    window.addEventListener("resize", closeOnDesktopResize);
+    return () => window.removeEventListener("resize", closeOnDesktopResize);
+  }, []);
+
+  useEffect(() => {
+    if (!menuOpen) return;
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key !== "Escape") return;
+
+      event.preventDefault();
+      setMenuOpen(false);
+      menuButtonRef.current?.focus();
+    };
+
+    document.addEventListener("keydown", handleKeyDown);
+    return () => document.removeEventListener("keydown", handleKeyDown);
+  }, [menuOpen]);
 
   return (
     <>
@@ -31,29 +119,29 @@ export function AppShell({ children }: AppShellProps) {
               FP y empleo con datos públicos
             </span>
           </div>
-          <nav className="site-nav" aria-label="Principal">
-            <ul>
-              <li>
-                <NavLink to="/" end>
-                  Inicio
-                </NavLink>
-              </li>
-              <li>
-                <NavLink to="/desde-fp">Desde FP</NavLink>
-              </li>
-              <li>
-                <NavLink to="/desde-ocupacion">Desde ocupación</NavLink>
-              </li>
-              <li>
-                <NavLink to="/comparar">Comparar estudios</NavLink>
-              </li>
-              <li>
-                <NavLink to="/recursos">Más formación</NavLink>
-              </li>
-              <li>
-                <NavLink to="/metodologia">Metodología</NavLink>
-              </li>
-            </ul>
+          <button
+            ref={menuButtonRef}
+            className="site-menu-button"
+            type="button"
+            aria-label={
+              menuOpen ? "Cerrar menú principal" : "Abrir menú principal"
+            }
+            aria-expanded={menuOpen}
+            aria-controls="mobile-primary-navigation"
+            onClick={() => setMenuOpen((open) => !open)}
+          >
+            <Icon name={menuOpen ? "x" : "menu"} size={22} />
+          </button>
+          <nav className="site-nav site-nav--desktop" aria-label="Principal">
+            <PrimaryNavigationLinks />
+          </nav>
+          <nav
+            className="site-nav site-nav--mobile"
+            id="mobile-primary-navigation"
+            aria-label="Principal móvil"
+            hidden={!menuOpen}
+          >
+            <PrimaryNavigationLinks onNavigate={() => setMenuOpen(false)} />
           </nav>
         </div>
       </header>

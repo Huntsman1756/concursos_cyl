@@ -9,10 +9,12 @@ import {
   Eye,
   FileCheck2,
   GraduationCap,
+  Menu,
   Printer,
   Search,
   ShieldCheck,
   UserRoundX,
+  X,
   type LucideIcon,
   type LucideProps,
 } from "lucide-react";
@@ -28,10 +30,12 @@ export type IconName =
   | "eye"
   | "file-check"
   | "graduation-cap"
+  | "menu"
   | "printer"
   | "search"
   | "shield-check"
-  | "user-round-x";
+  | "user-round-x"
+  | "x";
 
 const icons: Record<IconName, LucideIcon> = {
   "arrow-right": ArrowRight,
@@ -44,10 +48,12 @@ const icons: Record<IconName, LucideIcon> = {
   eye: Eye,
   "file-check": FileCheck2,
   "graduation-cap": GraduationCap,
+  menu: Menu,
   printer: Printer,
   search: Search,
   "shield-check": ShieldCheck,
   "user-round-x": UserRoundX,
+  x: X,
 };
 
 interface IconProps extends Omit<LucideProps, "name"> {
