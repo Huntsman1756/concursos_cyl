@@ -4,7 +4,7 @@
 
 - Repositorio canónico: <https://github.com/Huntsman1756/concursos_cyl>.
 - Rama de integración: `codex/parallel-continuation-wave-20260821`.
-- Límite fuente del freeze: `9df3ff3be447f0492d303d8dcfbb6a47c57271c7`.
+- Límite fuente del freeze: `94bad9123906efd0d582eb599b8c4d190004c91f`.
 - Snapshot activo: `20260822085631889-7bbe69380f6d`.
 - Cobertura: 113 cualificaciones base, 130 claves de modalidad, 264 relaciones aprobadas y 21 alias.
 - Cola oficial: 26 cualificaciones pendientes y 15 resultados sin publicación revalidados contra el catálogo actual.
