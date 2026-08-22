@@ -210,6 +210,11 @@ The release workflow will:
 8. Deploy the matching envelope plus the same core to Pages and VPS.
 9. Verify both endpoints against the expected shared and envelope identities.
 
+The source-tree hash is SHA-256 over the exact NUL-delimited bytes from
+`git ls-tree -r -z --full-tree <sourceCommitSha>`. The lockfile hash is SHA-256
+over the exact checked-out `package-lock.json` bytes. These algorithms are part
+of the attestation contract rather than implementation-defined labels.
+
 Evidence-only commits will run a separate validation workflow and will not
 create a candidate artifact or deployment. The publication workflow uses an
 explicit runtime-path allowlist and a manual candidate dispatch. A regression

@@ -644,6 +644,12 @@ export interface ReleaseAttestation {
 }
 ```
 
+Define `sourceTreeSha256` as SHA-256 over the exact raw bytes emitted by
+`git ls-tree -r -z --full-tree <sourceCommitSha>` from the detached source
+commit. Define `lockfileSha256` as SHA-256 over the exact checked-out
+`package-lock.json` bytes. Tests use raw `Buffer` values so NUL delimiters,
+non-ASCII paths and final-byte behavior cannot be changed by text decoding.
+
 Reject symlinks, non-regular entries, traversal, duplicate paths, unsorted inventory, wrong byte counts, and hash mismatches.
 
 Serialize both manifest types as UTF-8 JSON with recursively sorted object keys, no insignificant whitespace, and one trailing LF. Sort `files` by raw UTF-8 path bytes. `artifactSha256` is the SHA-256 of the exact serialized `ArtifactManifest`. `envelopeSha256` is the SHA-256 of the exact serialized `EnvelopeManifest`. Store the exact canonical artifact-manifest bytes at `metadata/artifact-manifest.json` in the release bundle and copy them unchanged to `artifact-manifest.json` at the root of both deployed packages. Canonically serialize `config/publication.json` into `metadata/publication.json` and bind its exact bytes through `ReleaseAttestation.publicationSha256`. These metadata files are intentionally outside both file inventories because the artifact manifest's own bytes define `artifactSha256`; the attestation and `version.json` bind the release digests.
@@ -1184,6 +1190,14 @@ Use `workflow_dispatch` inputs with strict SHA/release patterns. Validation rema
 - [ ] **Step 6: Implement safe VPS promotion and rollback**
 
 Stage by `releaseId`, verify the complete core and VPS envelope, refuse overwrite, atomically switch `current`, run public verification, and restore the previous symlink on failure. Cleanup targets only this invocation's staging/archive files.
+
+Preserve or strengthen the POSIX remote lock, nonce-scoped staging,
+no-clobber, bounded cleanup and path-prefix checks in both POSIX and PowerShell.
+Require non-interactive SSH options (`BatchMode=yes`, `IdentitiesOnly=yes`) and
+a caller-provided pinned `known_hosts` file; never disable host-key checking.
+Reject fixed/shared temporary archive names, existing release directories,
+unsafe retention targets and a post-switch verification failure. Retention is
+exactly the active `current` target plus the two most recent previous releases.
 
 - [ ] **Step 7: Verify GREEN and workflow formatting**
 
