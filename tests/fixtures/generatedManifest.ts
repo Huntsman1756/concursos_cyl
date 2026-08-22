@@ -39,6 +39,13 @@ export function currentManifestFixture({
         ...snapshot,
         resourcePath: "/data/v1/snapshots/build-1/job-offers.json",
       },
+      mappingCoverage: {
+        ...snapshot,
+        sourceId: "todofp-boe-reviewed-training-occupation-links",
+        sourceUrl:
+          "https://www.todofp.es/que-estudiar/familias-profesionales.html",
+        resourcePath: "/data/v1/snapshots/build-1/mapping-coverage.json",
+      },
     },
     qualityReport: {
       counts: { programs: 1, centers: 1, offerings: 1, offers: 1 },

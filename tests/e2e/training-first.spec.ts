@@ -84,6 +84,34 @@ test("live DAW results shows formacion link and approved occupation", async ({
     page.getByRole("heading", { name: "Qué sabemos de este título" }),
   ).toBeVisible();
   await expect(
+    page.getByRole("heading", {
+      name: "Base de cotización observada de titulados",
+    }),
+  ).toBeVisible();
+  await expect(
+    page.getByText("No es salario personal ni una predicción."),
+  ).toBeVisible();
+  await expect(
+    page.getByRole("heading", { name: "Contexto provincial" }),
+  ).toBeVisible();
+  await expect(
+    page.getByText(
+      "Contexto provincial — no específico de esta ocupación. Reúne contratos registrados de todas las ocupaciones.",
+    ),
+  ).toBeVisible();
+  const sectionNavigation = page.getByRole("navigation", {
+    name: "Secciones del resultado",
+  });
+  await expect(
+    sectionNavigation.getByRole("link", { name: "Dónde estudiar" }),
+  ).toHaveAttribute("href", "#donde-estudiar");
+  await expect(
+    sectionNavigation.getByRole("link", { name: "Contexto provincial" }),
+  ).toHaveAttribute("href", "#contexto-provincial");
+  await expect(
+    sectionNavigation.getByRole("link", { name: "Salidas profesionales" }),
+  ).toHaveAttribute("href", "#salidas-profesionales");
+  await expect(
     page.getByText(/no representa todo el mercado laboral/u),
   ).toBeVisible();
   await expect(

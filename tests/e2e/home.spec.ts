@@ -55,24 +55,29 @@ test("home exposes one chosen journey, navigation, freshness, and no automated a
   await expect(
     page.getByRole("button", { name: "Ver las salidas de este título" }),
   ).toHaveCount(1);
-  const jobOffersSnapshot = manifest.resourceSnapshots.jobOffers;
+  const mappingSnapshot = manifest.resourceSnapshots.mappingCoverage;
   const expectedDateTime =
-    jobOffersSnapshot.sourceUpdatedAt ?? jobOffersSnapshot.snapshotFetchedAt;
+    mappingSnapshot.sourceUpdatedAt ?? mappingSnapshot.snapshotFetchedAt;
   const freshness = page.getByRole("region", {
-    name: "Actualización de datos",
+    name: "Fecha de relaciones revisadas",
   });
   await expect(freshness.locator("time")).toHaveAttribute(
     "datetime",
     expectedDateTime,
   );
   await expect(freshness).toContainText(
-    new Intl.DateTimeFormat("es-ES", {
+    `Relaciones revisadas: copia del ${new Intl.DateTimeFormat("es-ES", {
       day: "2-digit",
       month: "2-digit",
       year: "numeric",
       timeZone: "UTC",
-    }).format(new Date(expectedDateTime)),
+    }).format(new Date(expectedDateTime))}`,
   );
+  await expect(
+    page.getByText(
+      "Ejemplos de ciclos con relaciones revisadas; no es el catálogo completo.",
+    ),
+  ).toBeVisible();
 
   const results = await new AxeBuilder({ page }).analyze();
   expect(
@@ -264,7 +269,7 @@ test("loading freshness is visible before a delayed current manifest prioritizes
 
   await page.goto("/");
   const freshness = page.getByRole("region", {
-    name: "Actualización de datos",
+    name: "Fecha de relaciones revisadas",
   });
   await expect(freshness).toHaveAttribute("aria-busy", "true");
   await expect(freshness.getByText("Comprobando fecha…")).toBeVisible();
@@ -275,7 +280,9 @@ test("loading freshness is visible before a delayed current manifest prioritizes
     "datetime",
     "2026-07-31T00:00:00.000Z",
   );
-  await expect(freshness).toContainText("Actualizado: 31/07/2026");
+  await expect(freshness).toContainText(
+    "Relaciones revisadas: copia del 31/07/2026",
+  );
 });
 
 test("a current manifest falls back to the fetched timestamp and formats its UTC date", async ({
@@ -293,13 +300,15 @@ test("a current manifest falls back to the fetched timestamp and formats its UTC
   await page.goto("/");
 
   const freshness = page.getByRole("region", {
-    name: "Actualización de datos",
+    name: "Fecha de relaciones revisadas",
   });
   await expect(freshness.locator("time")).toHaveAttribute(
     "datetime",
     fetchedAt,
   );
-  await expect(freshness).toContainText("Actualizado: 01/08/2026");
+  await expect(freshness).toContainText(
+    "Relaciones revisadas: copia del 01/08/2026",
+  );
 });
 
 test("the skip link moves keyboard focus to the main content", async ({
@@ -336,9 +345,11 @@ test("a validated stale legacy manifest keeps navigation and names the last upda
   await page.goto("/");
 
   const freshness = page.getByRole("region", {
-    name: "Actualización de datos",
+    name: "Fecha de relaciones revisadas",
   });
-  await expect(freshness).toContainText("Actualizado: 31/07/2026");
+  await expect(freshness).toContainText(
+    "Relaciones revisadas: copia del 31/07/2026",
+  );
   await expect(freshness.locator("time")).toHaveAttribute(
     "datetime",
     "2026-07-31T00:00:00.000Z",

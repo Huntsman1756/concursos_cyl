@@ -336,6 +336,33 @@ describe("occupation-first results", () => {
     expect(
       within(cards[1]).getByText("Curso de especialización · IFC03SD"),
     ).toBeVisible();
+    expect(screen.getByText(/Oferta FP JCyL: copia del/u)).toBeVisible();
+    expect(
+      screen.getAllByText(
+        "La salida aparece expresamente en el perfil profesional oficial del ciclo.",
+      ),
+    ).toHaveLength(1);
+    expect(
+      screen.getAllByText(
+        "La relación se apoya en competencias compartidas y ha sido revisada antes de publicarse.",
+      ),
+    ).toHaveLength(1);
+    expect(
+      screen.queryByText(/Datos formativos consultados/u),
+    ).not.toBeInTheDocument();
+    const sectionNavigation = screen.getByRole("navigation", {
+      name: "Secciones del resultado",
+    });
+    expect(
+      within(sectionNavigation).getByRole("link", {
+        name: "Mercado laboral",
+      }),
+    ).toHaveAttribute("href", "#mercado-laboral");
+    expect(
+      within(sectionNavigation).getByRole("link", {
+        name: "Rutas formativas",
+      }),
+    ).toHaveAttribute("href", "#rutas-formativas");
     expect(
       screen.queryByText(/mejor|puntuación|compatibilidad|%/i),
     ).not.toBeInTheDocument();

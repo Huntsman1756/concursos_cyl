@@ -13,8 +13,14 @@ import {
 
 function UnavailableOutcome({ children }: { children: string }) {
   return (
-    <section className="training-outcome training-outcome--unavailable">
-      <h2>Ingresos observados tras titularse</h2>
+    <section
+      id="base-cotizacion-observada"
+      className="training-outcome training-outcome--unavailable"
+      aria-labelledby="base-cotizacion-observada-heading"
+    >
+      <h2 id="base-cotizacion-observada-heading">
+        Base de cotización observada de titulados
+      </h2>
       <p>{children}</p>
     </section>
   );
@@ -51,7 +57,7 @@ export function TrainingOutcomeEvidence({
     );
   }
 
-  const headingId = `training-outcome-${program.programKey.toLowerCase()}`;
+  const headingId = "base-cotizacion-observada-heading";
   const nationalLabel = outcomeMetricLabel(view.groupMatch);
   const nationalName =
     view.groupMatch === null
@@ -63,14 +69,16 @@ export function TrainingOutcomeEvidence({
     : "Distribución publicada de la referencia regional";
 
   return (
-    <section className="training-outcome" aria-labelledby={headingId}>
+    <section
+      id="base-cotizacion-observada"
+      className="training-outcome"
+      aria-labelledby={headingId}
+    >
       <header className="training-outcome__header">
         <div>
-          <h2 id={headingId}>Ingresos observados tras titularse</h2>
-          <p>
-            Base de cotización anualizada · empleo por cuenta ajena a jornada
-            completa. No es una predicción salarial personal.
-          </p>
+          <h2 id={headingId}>Base de cotización observada de titulados</h2>
+          <p>Empleo por cuenta ajena a jornada completa.</p>
+          <p>No es salario personal ni una predicción.</p>
         </div>
       </header>
 

@@ -5,6 +5,7 @@ import type {
   SourceSnapshot,
 } from "../../../data/schemas/generated";
 import type { Occupation } from "../../../data/schemas/curatedMappings";
+import { ResultSectionNav } from "../../components/ResultSectionNav";
 import {
   loadAuditedRelationships,
   loadFoundationResourceSubset,
@@ -167,6 +168,18 @@ export function OccupationResultsPage() {
     orderedLinks[0]?.reviewedAt ??
     relationshipSnapshot?.sourceUpdatedAt ??
     relationshipSnapshot?.snapshotFetchedAt;
+  const sectionNavigationLinks = [
+    { href: "#mercado-laboral", label: "Mercado laboral" },
+    ...(orderedLinks.length === 0
+      ? []
+      : [{ href: "#rutas-formativas", label: "Rutas formativas" }]),
+  ];
+  const hasOfficialOutput = orderedLinks.some(
+    (link) => link.relationshipType === "official_output",
+  );
+  const hasReviewedRelationship = orderedLinks.some(
+    (link) => link.relationshipType === "reviewed_relationship",
+  );
 
   return (
     <section className="training-page occupation-result-page">
@@ -182,6 +195,7 @@ export function OccupationResultsPage() {
         Ocupación que quieres <span aria-hidden="true">→</span> FP que te lleva
         a ella
       </p>
+      <ResultSectionNav links={sectionNavigationLinks} />
       <section className="decision-basis" aria-labelledby="route-basis-title">
         <div className="decision-basis__heading">
           <p>Base para decidir</p>
@@ -266,10 +280,12 @@ export function OccupationResultsPage() {
           </div>
         </dl>
       </section>
-      <OccupationMarketEvidence
-        manifest={state.manifest}
-        cnoCode={occupation.classificationCode}
-      />
+      <div id="mercado-laboral">
+        <OccupationMarketEvidence
+          manifest={state.manifest}
+          cnoCode={occupation.classificationCode}
+        />
+      </div>
       <p className="coverage-note">
         Cobertura en revisión. Un resultado ausente no demuestra que no exista
         formación relacionada.
@@ -302,12 +318,29 @@ export function OccupationResultsPage() {
         </div>
       ) : (
         <section
+          id="rutas-formativas"
           className="occupation-routes"
           aria-labelledby="training-routes-heading"
         >
           <div className="section-heading">
             <h2 id="training-routes-heading">FP relacionadas</h2>
-            <span>Datos del {spanishDate(snapshotInstant)}</span>
+            <span>
+              Oferta FP JCyL: copia del {spanishDate(snapshotInstant)}
+            </span>
+          </div>
+          <div className="route-relationship-guides">
+            {hasOfficialOutput && (
+              <p>
+                La salida aparece expresamente en el perfil profesional oficial
+                del ciclo.
+              </p>
+            )}
+            {hasReviewedRelationship && (
+              <p>
+                La relación se apoya en competencias compartidas y ha sido
+                revisada antes de publicarse.
+              </p>
+            )}
           </div>
           <div className="training-route-list">
             {orderedLinks.map((link) => {
@@ -323,7 +356,6 @@ export function OccupationResultsPage() {
                   offerings={state.foundation.trainingOfferings.filter(
                     (offering) => offering.programKey === program.programKey,
                   )}
-                  snapshotDate={spanishDate(snapshotInstant)}
                 />
               );
             })}

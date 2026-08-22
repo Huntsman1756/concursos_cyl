@@ -257,7 +257,7 @@ describe("TrainingResultsPage", () => {
     },
   );
 
-  it("brings the validated income reference into the training decision page", async () => {
+  it("clarifies contribution-base scope and offers section navigation", async () => {
     await installActiveAliasPassFetch();
     render(
       <MemoryRouter initialEntries={["/desde-fp/IFC03S"]}>
@@ -267,14 +267,56 @@ describe("TrainingResultsPage", () => {
 
     expect(
       await screen.findByRole("heading", {
-        name: "Ingresos observados tras titularse",
+        name: "Base de cotización observada de titulados",
       }),
+    ).toBeVisible();
+    expect(
+      screen.getByText("No es salario personal ni una predicción."),
     ).toBeVisible();
     expect(screen.getByText("España · grupo del ciclo")).toBeVisible();
     expect(screen.getByText("Castilla y León · Grado superior")).toBeVisible();
+    expect(
+      screen.getByRole("heading", { name: "Contexto provincial" }),
+    ).toBeVisible();
+    expect(
+      screen.getByText(
+        "Contexto provincial — no específico de esta ocupación. Reúne contratos registrados de todas las ocupaciones.",
+      ),
+    ).toBeVisible();
     const outcome = screen.getByRole("region", {
-      name: "Ingresos observados tras titularse",
+      name: "Base de cotización observada de titulados",
     });
+    const sectionNavigation = screen.getByRole("navigation", {
+      name: "Secciones del resultado",
+    });
+    expect(
+      within(sectionNavigation).getByRole("link", {
+        name: "Base de cotización",
+      }),
+    ).toHaveAttribute("href", "#base-cotizacion-observada");
+    expect(
+      within(sectionNavigation).getByRole("link", { name: "Dónde estudiar" }),
+    ).toHaveAttribute("href", "#donde-estudiar");
+    expect(
+      within(sectionNavigation).getByRole("link", {
+        name: "Contexto provincial",
+      }),
+    ).toHaveAttribute("href", "#contexto-provincial");
+    expect(
+      within(sectionNavigation).getByRole("link", {
+        name: "Distribución de centros",
+      }),
+    ).toHaveAttribute("href", "#distribucion-centros");
+    expect(
+      within(sectionNavigation).getByRole("link", {
+        name: "Salidas profesionales",
+      }),
+    ).toHaveAttribute("href", "#salidas-profesionales");
+    expect(
+      within(sectionNavigation).getByRole("link", {
+        name: "Ocupaciones revisadas",
+      }),
+    ).toHaveAttribute("href", "#ocupaciones-revisadas");
     const nextActions = screen.getByRole("navigation", {
       name: "Siguientes pasos",
     });
@@ -561,7 +603,9 @@ describe("TrainingResultsPage", () => {
     });
     expect(estudioLink).toBeVisible();
     expect(estudioLink).toHaveAttribute("href", "/formacion/IFC03S");
-    const studyHeading = await screen.findByText("Dónde estudiar");
+    const studyHeading = await screen.findByRole("heading", {
+      name: "Dónde estudiar",
+    });
     expect(studyHeading).toBeVisible();
   });
 

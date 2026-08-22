@@ -171,6 +171,17 @@ describe("HomePage", () => {
         }),
       ).toBeVisible(),
     );
+    expect(
+      screen.getByRole("region", { name: "Fecha de relaciones revisadas" }),
+    ).toHaveTextContent("Relaciones revisadas: copia del 31/07/2026");
+    expect(
+      screen.queryByText("Actualizado: 31/07/2026"),
+    ).not.toBeInTheDocument();
+    expect(
+      screen.getByText(
+        "Ejemplos de ciclos con relaciones revisadas; no es el catálogo completo.",
+      ),
+    ).toBeVisible();
     expect(within(coveragePanel).getAllByRole("listitem")).toHaveLength(2);
     expect(coveragePanel).toHaveTextContent("Desarrollo de Aplicaciones WEB");
     expect(coveragePanel).toHaveTextContent(/EOC01M|HOT01M|SAN21|SSC01M/);
@@ -322,7 +333,7 @@ describe("HomePage", () => {
     );
   });
 
-  it("announces a pending manifest before rendering the validated update date", async () => {
+  it("announces a pending manifest before rendering the reviewed-relationship date", async () => {
     let resolveManifest!: (response: Response) => void;
     const manifestResponse = new Promise<Response>((resolve) => {
       resolveManifest = resolve;
@@ -339,7 +350,7 @@ describe("HomePage", () => {
     );
 
     const freshness = screen.getByRole("region", {
-      name: "Actualización de datos",
+      name: "Fecha de relaciones revisadas",
     });
     expect(freshness).toHaveAttribute("aria-busy", "true");
     expect(within(freshness).getByText("Comprobando fecha…")).toBeVisible();

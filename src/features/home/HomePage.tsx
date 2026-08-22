@@ -13,7 +13,10 @@ import type {
   Occupation,
   OccupationAlias,
 } from "../../../data/schemas/curatedMappings";
-import type { TrainingProgram } from "../../../data/schemas/generated";
+import type {
+  SourceSnapshot,
+  TrainingProgram,
+} from "../../../data/schemas/generated";
 import { loadApprovedMappings } from "../../domain/occupation";
 import { trainingLevelLabel } from "../../domain/trainingPresentation";
 import { OccupationCombobox } from "../occupation-first/OccupationCombobox";
@@ -23,6 +26,7 @@ type FreshnessState =
   | { status: "unavailable" }
   | {
       status: "ready";
+      sourceLabel: string;
       date: string;
       dateTime: string;
       stale: boolean;
@@ -109,11 +113,16 @@ export function HomePage() {
       .then((manifest) => {
         if (!isActive) return;
 
-        const offersSnapshot = manifest.resourceSnapshots.jobOffers;
+        const snapshots =
+          manifest.resourceSnapshots as typeof manifest.resourceSnapshots &
+            Partial<Record<"mappingCoverage", SourceSnapshot>>;
+        const mappingSnapshot =
+          snapshots.mappingCoverage ?? manifest.resourceSnapshots.jobOffers;
         const dateTime =
-          offersSnapshot.sourceUpdatedAt ?? offersSnapshot.snapshotFetchedAt;
+          mappingSnapshot.sourceUpdatedAt ?? mappingSnapshot.snapshotFetchedAt;
         setFreshness({
           status: "ready",
+          sourceLabel: "Relaciones revisadas",
           date: new Intl.DateTimeFormat("es-ES", {
             day: "2-digit",
             month: "2-digit",
@@ -123,7 +132,7 @@ export function HomePage() {
           dateTime,
           stale:
             manifest.qualityStatus === "stale" ||
-            offersSnapshot.qualityStatus === "stale",
+            mappingSnapshot.qualityStatus === "stale",
         });
 
         void loadMappingCoverage(manifest)
@@ -458,13 +467,13 @@ export function HomePage() {
               <span
                 className="data-freshness"
                 role="region"
-                aria-label="Actualización de datos"
+                aria-label="Fecha de relaciones revisadas"
                 aria-busy={freshness.status === "loading"}
               >
                 {freshness.status === "loading" ? "Comprobando fecha…" : null}
                 {freshness.status === "ready" ? (
                   <>
-                    Actualizado:{" "}
+                    {freshness.sourceLabel}: copia del{" "}
                     <time dateTime={freshness.dateTime}>{freshness.date}</time>
                   </>
                 ) : null}
@@ -508,6 +517,13 @@ export function HomePage() {
                   );
                 })}
               </ul>
+            ) : null}
+
+            {coverage.status === "ready" ? (
+              <p className="coverage-panel__scope">
+                Ejemplos de ciclos con relaciones revisadas; no es el catálogo
+                completo.
+              </p>
             ) : null}
 
             {freshness.status === "ready" && freshness.stale ? (

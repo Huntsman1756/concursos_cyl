@@ -14,7 +14,6 @@ interface TrainingRouteCardProps {
   link: TrainingOccupationLink;
   program: TrainingProgram;
   offerings: Offering[];
-  snapshotDate: string;
 }
 
 const modalityLabels: Record<Offering["modality"], string> = {
@@ -41,7 +40,6 @@ export function TrainingRouteCard({
   link,
   program,
   offerings,
-  snapshotDate,
 }: TrainingRouteCardProps) {
   const officialOutput = link.relationshipType === "official_output";
   const provinces = uniqueSorted(
@@ -62,11 +60,6 @@ export function TrainingRouteCard({
         </p>
       </header>
       <div className="training-route-card__body">
-        <p>
-          {officialOutput
-            ? "La salida aparece expresamente en el perfil profesional oficial del ciclo."
-            : "La relación se apoya en competencias compartidas y ha sido revisada antes de publicarse."}
-        </p>
         <EvidenceDisclosure
           quote={link.sourceQuote}
           sourceUrl={link.sourceUrl}
@@ -99,9 +92,6 @@ export function TrainingRouteCard({
               </dl>
             </>
           )}
-          <p className="data-freshness">
-            Datos formativos consultados el {snapshotDate}
-          </p>
         </div>
         <Link
           className="primary-button route-card-link"

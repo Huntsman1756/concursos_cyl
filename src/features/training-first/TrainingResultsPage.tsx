@@ -39,6 +39,7 @@ import {
   TerritorialDistribution,
   type TerritorialCenterPoint,
 } from "./TerritorialDistribution";
+import { ResultSectionNav } from "../../components/ResultSectionNav";
 import "./result-evidence.css";
 import { resolveApprovedOccupations } from "./resolveApprovedOccupations";
 import { TrainingOutcomeEvidence } from "./TrainingOutcomeEvidence";
@@ -402,6 +403,21 @@ export function TrainingResultsPage() {
     approvedLinks[0]?.reviewedAt ?? evidenceDate(relationshipsSnapshot);
   const offersEvidenceDate = evidenceDate(offersSnapshot);
   const offeringsEvidenceDate = evidenceDate(offeringsSnapshot);
+  const sectionNavigationLinks = [
+    { href: "#base-cotizacion-observada", label: "Base de cotización" },
+    { href: "#donde-estudiar", label: "Dónde estudiar" },
+    { href: "#contexto-provincial", label: "Contexto provincial" },
+    ...(educationCenterDirectorySnapshot === undefined
+      ? []
+      : [{ href: "#distribucion-centros", label: "Distribución de centros" }]),
+    { href: "#salidas-profesionales", label: "Salidas profesionales" },
+    ...(resolvedOccupations.length === 0
+      ? []
+      : [{ href: "#ocupaciones-revisadas", label: "Ocupaciones revisadas" }]),
+    ...(hasApprovedRelationship && orderedMatches.length > 0
+      ? [{ href: "#ofertas-relacionadas", label: "Ofertas relacionadas" }]
+      : []),
+  ];
 
   function applyUnpublishedRequirementFilter(
     action: Extract<
@@ -594,12 +610,13 @@ export function TrainingResultsPage() {
           </button>
         </div>
       )}
+      <ResultSectionNav links={sectionNavigationLinks} />
       <TrainingOutcomeEvidence
         program={state.program}
         outcome={state.outcome}
       />
       <section className="decision-evidence" aria-label="Evidencia territorial">
-        <div className="study-section">
+        <div id="donde-estudiar" className="study-section">
           <div className="section-heading">
             <h2>Dónde estudiar</h2>
             <span>
@@ -630,10 +647,10 @@ export function TrainingResultsPage() {
             </ul>
           )}
         </div>
-        <div className="regional-context">
+        <div id="contexto-provincial" className="regional-context">
           <div className="section-heading">
-            <h2>Contexto laboral</h2>
-            <span>Contratos provinciales</span>
+            <h2>Contexto provincial</h2>
+            <span>Contratos registrados</span>
           </div>
           {latestProvincialContracts.length === 0 ? (
             <p>Sin contexto provincial para los centros mostrados.</p>
@@ -667,21 +684,24 @@ export function TrainingResultsPage() {
             </a>
           )}
           <p className="evidence-limit">
-            Contexto de la provincia, no demanda de una ocupación concreta.
+            Contexto provincial — no específico de esta ocupación. Reúne
+            contratos registrados de todas las ocupaciones.
           </p>
         </div>
       </section>
       {educationCenterDirectorySnapshot !== undefined && (
-        <TerritorialDistribution
-          points={territorialCenterPoints}
-          sourceUrl={educationCenterDirectorySnapshot.sourceUrl}
-          academicYear={
-            state.regionalContext.educationCenterDirectory[0]?.academicYear ??
-            null
-          }
-        />
+        <div id="distribucion-centros">
+          <TerritorialDistribution
+            points={territorialCenterPoints}
+            sourceUrl={educationCenterDirectorySnapshot.sourceUrl}
+            academicYear={
+              state.regionalContext.educationCenterDirectory[0]?.academicYear ??
+              null
+            }
+          />
+        </div>
       )}
-      <section className="occupations-section">
+      <section id="salidas-profesionales" className="occupations-section">
         <h2>Salidas profesionales oficiales</h2>
         <p>
           TodoFP identifica estos perfiles para el título. Describen trabajos a
@@ -765,6 +785,7 @@ export function TrainingResultsPage() {
         </div>
       ) : (
         <section
+          id="ofertas-relacionadas"
           className="offer-results"
           aria-labelledby="offer-results-title"
         >

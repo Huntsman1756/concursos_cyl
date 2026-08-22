@@ -106,7 +106,7 @@ test.describe("contest readiness journeys", () => {
       page.getByRole("region", { name: "Cobertura revisada" }),
     ).toHaveAttribute("aria-busy", "false");
     await expect(
-      page.getByRole("region", { name: "Actualización de datos" }),
+      page.getByRole("region", { name: "Fecha de relaciones revisadas" }),
     ).toHaveAttribute("aria-busy", "false");
     await expectStableRoute(page, diagnostics);
   });
