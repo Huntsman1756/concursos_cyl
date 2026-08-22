@@ -1,12 +1,12 @@
 {
   "schemaVersion": 1,
   "status": "pending",
-  "recordedAt": "2026-08-22T10:10:02Z",
+  "recordedAt": "2026-08-22T11:05:34Z",
   "expectedRootUrl": "https://salida-cyl.157-90-22-40.sslip.io/",
   "auditHeadSha": null,
-  "coverageSourceCommitSha": "7a9a05a2ddcb3a89173a645e7308d327763a4e17",
-  "coverageFreezeDocumentCommitSha": "84d3654fd34b9d0575a6e461a58e0207ca2a1503",
-  "coverageFreezeCommitSha": "84d3654fd34b9d0575a6e461a58e0207ca2a1503",
+  "coverageSourceCommitSha": "9df3ff3be447f0492d303d8dcfbb6a47c57271c7",
+  "coverageFreezeDocumentCommitSha": "0c22664bd766cb2133a63ca62e91a4d964a6deeb",
+  "coverageFreezeCommitSha": "0c22664bd766cb2133a63ca62e91a4d964a6deeb",
   "publicationCommitSha": null,
   "localReviewHeadSha": null,
   "captureProductCommitSha": null,
@@ -21,46 +21,66 @@
   },
   "localGates": {
     "coverageFreeze": {
-      "status": "passed",
-      "command": "npm exec -- tsx scripts/release/validateContestFreeze.ts"
+      "status": "pending",
+      "command": "npm exec -- tsx scripts/release/validateContestFreeze.ts",
+      "checkedCommitSha": null,
+      "verifiedAt": null
     },
     "submissionPack": {
-      "status": "passed",
-      "command": "npm exec -- tsx scripts/release/renderContestSubmission.ts"
+      "status": "pending",
+      "command": "npm exec -- tsx scripts/release/renderContestSubmission.ts",
+      "checkedCommitSha": null,
+      "verifiedAt": null
     },
     "evidenceManifest": {
-      "status": "passed",
+      "status": "pending",
       "captureCount": 0,
       "command": "npm exec -- tsx scripts/release/validateContestEvidenceManifest.ts",
+      "checkedCommitSha": null,
+      "verifiedAt": null,
       "note": "Las capturas anteriores son históricas y no verifican todavía esta publicación."
     },
     "fullVitestCi": {
-      "status": "passed",
-      "command": "npm run test:release -- --testTimeout=60000"
+      "status": "pending",
+      "command": "npm run test:release -- --testTimeout=60000",
+      "checkedCommitSha": null,
+      "verifiedAt": null
     },
     "playwright": {
-      "status": "passed",
-      "command": "npm run test:e2e:chromium"
+      "status": "pending",
+      "command": "npm run test:e2e:chromium",
+      "checkedCommitSha": null,
+      "verifiedAt": null
     },
     "lint": {
-      "status": "passed",
-      "command": "npm run lint"
+      "status": "pending",
+      "command": "npm run lint",
+      "checkedCommitSha": null,
+      "verifiedAt": null
     },
     "build": {
-      "status": "passed",
-      "command": "npm run build"
+      "status": "pending",
+      "command": "npm run build",
+      "checkedCommitSha": null,
+      "verifiedAt": null
     },
     "license": {
-      "status": "passed",
-      "command": "npm run license:check"
+      "status": "pending",
+      "command": "npm run license:check",
+      "checkedCommitSha": null,
+      "verifiedAt": null
     },
     "prettier": {
-      "status": "passed",
-      "command": "npm run format:check"
+      "status": "pending",
+      "command": "npm run format:check",
+      "checkedCommitSha": null,
+      "verifiedAt": null
     },
     "gitDiffCheck": {
-      "status": "passed",
-      "command": "git diff --check"
+      "status": "pending",
+      "command": "git diff --check",
+      "checkedCommitSha": null,
+      "verifiedAt": null
     }
   },
   "deployment": {
