@@ -89,6 +89,8 @@ The release model will keep these fields distinct:
 - `manifestSha256`: SHA-256 of the exact public manifest bytes.
 - `artifactSha256`: SHA-256 of the canonical runtime file inventory described
   below.
+- `envelopeSha256`: deployment-specific digest for the small hosting wrapper
+  used by Pages or VPS.
 - `pagesWorkflowRunId`: successful Pages workflow that consumed the bundle.
 - `vpsReleaseId`: VPS release directory or deployment identifier.
 - `observedAt`: timestamp of the public verification.
@@ -99,23 +101,35 @@ records screenshots.
 
 ### Canonical artifact digest
 
-The build will generate `artifact-manifest.json` from every regular file under
-`dist`, except `version.json` and `artifact-manifest.json`. Each entry contains
-the POSIX relative path, byte length, and SHA-256 of the exact file bytes.
+Pages is hosted below `/concursos_cyl/` while the VPS is hosted below `/`, so
+their entry HTML cannot be byte-identical. The shared candidate is therefore a
+single compiled core plus a small deployment envelope. The core contains the
+compiled JavaScript, CSS, images, and data. An envelope contains `index.html`,
+the Pages `404.html` when needed, `version.json`, and deployment base metadata.
+
+The build will generate `artifact-manifest.json` from every regular core file,
+excluding `index.html`, `404.html`, `version.json`,
+`deployment-config.json`, and `artifact-manifest.json`. Each entry contains the
+POSIX relative path, byte length, and SHA-256 of the exact file bytes.
 Entries are sorted by UTF-8 path bytes. The file is serialized as UTF-8 JSON
 with sorted object keys, no insignificant whitespace, and one trailing LF.
 `artifactSha256` is the SHA-256 of those canonical manifest bytes.
 
-After the digest is known, the build writes `version.json` and places both
-identity files in the bundle. Excluding the two identity files prevents a
-self-referential hash while still binding every runtime payload file. A release
-attestation stored beside the CI artifact records the same digest.
+After the core digest is known, the packaging step creates the Pages and VPS
+envelopes from the same index template. Each envelope has a canonical manifest
+and `envelopeSha256`. `version.json` records the shared identity and the current
+envelope digest. Excluding envelope and identity files from the core prevents a
+self-referential hash while binding every shared runtime payload file. A release
+attestation stored beside the CI artifact records the core digest and both
+envelope digests.
 
-The Pages job verifies the inventory before upload. The VPS deployment verifies
-the inventory after extraction against the remote filesystem. Live verification
-fetches both identity files, checks their digest and critical resources, and
+The Pages job verifies its envelope and the core inventory before upload. The
+VPS deployment verifies its envelope and the same core inventory after
+extraction against the remote filesystem. Live verification fetches the
+identity files, checks the relevant envelope digest and critical resources, and
 ties them to the build attestation. Pages and VPS evidence must report the same
-`artifactSha256`.
+`artifactSha256`; each must report the expected deployment-specific
+`envelopeSha256`.
 
 ### Single deployment truth
 
@@ -132,7 +146,8 @@ attestation kept outside the repository. The submission renderer treats only
 
 The record contains `deployments.pages` and `deployments.vps`. Each deployment
 stores its configured URL, `releaseId`, `sourceCommitSha`, `artifactSha256`,
-`manifestSha256`, workflow run or VPS release ID, state, and `observedAt`.
+`envelopeSha256`, `manifestSha256`, workflow run or VPS release ID, state, and
+`observedAt`.
 Both must be verified. The capture manifest refers explicitly to
 `deployments.vps` as the canonical capture target.
 
@@ -173,11 +188,12 @@ The release workflow will:
 2. Run the complete release gates.
 3. Build runtime data and the application once.
 4. Write `version.json` with the approved release identity.
-5. Create a deterministic bundle and compute `artifactSha256`.
-6. Publish the bundle, canonical inventory, and attestation as the candidate
-   artifact.
-7. Deploy the same bundle to Pages and VPS.
-8. Verify both endpoints against the expected identity.
+5. Create the deterministic core and compute `artifactSha256`.
+6. Create and attest the Pages and VPS envelopes from that core.
+7. Publish the core, both envelopes, canonical inventories, and attestation as
+   one candidate release artifact.
+8. Deploy the matching envelope plus the same core to Pages and VPS.
+9. Verify both endpoints against the expected shared and envelope identities.
 
 Evidence-only commits will run a separate validation workflow and will not
 create a candidate artifact or deployment. The publication workflow uses an
@@ -357,7 +373,8 @@ work, or approve its own change.
 - Verified evidence with a different release, artifact digest, snapshot,
   manifest hash, workflow run, or URL fails deterministically.
 - Pages and VPS have separate verified deployment records and expose the same
-  `releaseId`, `sourceCommitSha`, `artifactSha256`, and `manifestSha256`.
+  `releaseId`, `sourceCommitSha`, `artifactSha256`, and `manifestSha256`, plus
+  their expected deployment-specific `envelopeSha256`.
 - Captures cannot be written against a public identity different from the
   expected release.
 - Evidence-only changes do not create a deployment or change the runtime
