@@ -14,19 +14,20 @@ const validClaim = {
   forbiddenParaphrases: ["garantiza empleo"],
 } as const;
 
-const claimContext: ContestClaimContext = {
-  coverageFreeze: {
-    manifest: { snapshotId: "snapshot-1" },
-    coverage: {
-      distinctQualificationCount: 3,
-      modalityKeys: ["A", "B"],
-      approvedRelationKeys: ["A|occupation:cno11:1111"],
-      approvedAliasKeys: ["albañil|occupation:cno11:7111"],
-      zeroReviewedRelationCount: 1,
-      deferredPrograms: ["C"],
-    },
-    offers: { matchedOfferCount: 2 },
+const coverageFreezeContext = {
+  manifest: { snapshotId: "snapshot-1" },
+  coverage: {
+    distinctQualificationCount: 3,
+    modalityKeys: ["A", "B"],
+    approvedRelationKeys: ["A|occupation:cno11:1111"],
+    approvedAliasKeys: ["albañil|occupation:cno11:7111"],
+    zeroReviewedRelationCount: 1,
+    deferredPrograms: ["C"],
   },
+  offers: { matchedOfferCount: 2 },
+};
+const claimContext: ContestClaimContext = {
+  coverageFreeze: coverageFreezeContext,
   releaseEvidence: {
     deployment: { commitSha: "a".repeat(40), workflowRunId: "123" },
     humanApproval: {
@@ -191,9 +192,9 @@ describe("contest claim validator", () => {
           claimContext: {
             ...claimContext,
             coverageFreeze: {
-              ...claimContext.coverageFreeze,
+              ...coverageFreezeContext,
               coverage: {
-                ...claimContext.coverageFreeze.coverage,
+                ...coverageFreezeContext.coverage,
                 distinctQualificationCount: "3",
               },
             },
@@ -216,9 +217,9 @@ describe("contest claim validator", () => {
           claimContext: {
             ...claimContext,
             coverageFreeze: {
-              ...claimContext.coverageFreeze,
+              ...coverageFreezeContext,
               coverage: {
-                ...claimContext.coverageFreeze.coverage,
+                ...coverageFreezeContext.coverage,
                 modalityKeys: undefined,
               },
             },
@@ -241,7 +242,7 @@ describe("contest claim validator", () => {
           claimContext: {
             ...claimContext,
             coverageFreeze: {
-              ...claimContext.coverageFreeze,
+              ...coverageFreezeContext,
               manifest: { snapshotId: 123 },
             },
           },

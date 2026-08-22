@@ -225,8 +225,16 @@ export function prepareContestFallback646(
       if (text === undefined)
         throw new Error(`Missing resource text for ${key}.`);
       const value = JSON.parse(text) as unknown;
-      if (!Array.isArray(value))
-        throw new Error(`${key} is not an array resource.`);
+      const recordCount = Array.isArray(value)
+        ? value.length
+        : key === "sepeOccupationMarket" &&
+            value !== null &&
+            typeof value === "object" &&
+            Array.isArray((value as JsonRecord).records)
+          ? ((value as JsonRecord).records as unknown[]).length
+          : undefined;
+      if (recordCount === undefined)
+        throw new Error(`${key} is not a supported resource envelope.`);
       const provenanceSpecification =
         key === "jobOffers" ? historicalResourceSnapshots[key] : specification;
       const filename = String(provenanceSpecification.resourcePath)
@@ -242,7 +250,7 @@ export function prepareContestFallback646(
         key,
         {
           ...provenanceSpecification,
-          recordCount: value.length,
+          recordCount,
           resourcePath: `/data/v1/snapshots/${snapshotId}/${filename}`,
           sha256: sha256(text),
         },

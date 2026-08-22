@@ -12,6 +12,15 @@ import { pathToFileURL } from "node:url";
 
 const AUDIT_CUTOFF = "2026-08-22T04:13:28+02:00";
 const CURATED_RELATIONS_PATH = "data/curated/training-occupation-links.json";
+const MATRIX_GENERATED_PATHS = new Set([
+  "analysis/contest_evidence_matrix.json",
+  "analysis/contest_evidence_matrix.md",
+  "analysis/contest_evidence_matrix_base.json",
+]);
+export const CONTEST_EVIDENCE_MATRIX_INPUT_PATHS = [
+  CURATED_RELATIONS_PATH,
+  "analysis",
+] as const;
 const TEXT_EXTENSIONS = new Set([".json", ".md", ".txt"]);
 const OFFICIAL_DOMAINS = [
   "boe.es",
@@ -70,6 +79,29 @@ function gitText(rootDirectory: string, args: string[]): string {
   }).trim();
 }
 
+export function getDirtyContestEvidenceMatrixInputPaths(
+  rootDirectory = resolve("."),
+): string[] {
+  const status = gitText(rootDirectory, [
+    "status",
+    "--porcelain=v1",
+    "--untracked-files=all",
+    "--",
+    ...CONTEST_EVIDENCE_MATRIX_INPUT_PATHS,
+  ]);
+  return status
+    .split(/\r?\n/u)
+    .map((line) => ({
+      raw: line,
+      changedPath: line.slice(3).split(" -> ").at(-1) ?? "",
+    }))
+    .filter(({ raw }) => raw.trim() !== "")
+    .filter(({ changedPath }) => {
+      return !MATRIX_GENERATED_PATHS.has(changedPath);
+    })
+    .map(({ raw }) => raw.trim());
+}
+
 /**
  * Resolves the immutable source boundary for the matrix. By default this is
  * the checked-out HEAD (the future S commit); callers may pass S explicitly
@@ -80,16 +112,10 @@ export function resolveContestEvidenceSourceCommit(
   rootDirectory = resolve("."),
   requestedSourceCommitSha?: string,
 ): string {
-  const dirty = gitText(rootDirectory, [
-    "status",
-    "--porcelain=v1",
-    "--untracked-files=all",
-    "--",
-    CURATED_RELATIONS_PATH,
-  ]);
-  if (dirty !== "") {
+  const dirty = getDirtyContestEvidenceMatrixInputPaths(rootDirectory);
+  if (dirty.length > 0) {
     throw new Error(
-      `Contest evidence source is dirty: ${CURATED_RELATIONS_PATH}. Commit the source before building the matrix.`,
+      `Contest evidence inputs are dirty: ${dirty.join("; ")}. Commit the source before building the matrix.`,
     );
   }
   const sourceCommitSha =

@@ -1,10 +1,22 @@
+import { execFileSync } from "node:child_process";
+import {
+  mkdtempSync,
+  mkdirSync,
+  readFileSync,
+  rmSync,
+  writeFileSync,
+} from "node:fs";
 import { readFile } from "node:fs/promises";
+import { tmpdir } from "node:os";
+import { join } from "node:path";
 
 import { describe, expect, it } from "vitest";
 
 import {
   assertContestFreezeWritePreflight,
+  getDirtyContestFreezeSourcePaths,
   loadAndValidateContestFreeze,
+  parseContestFreezeWriteSourceCommit,
   recomputeContestFreeze,
   validateContestFreeze,
   type ContestFreeze,
@@ -19,16 +31,61 @@ async function readFreeze(): Promise<Record<string, unknown>> {
 }
 
 describe("contest coverage freeze validator", () => {
-  it("rejects a dirty source tree before freeze write without altering the freeze file", async () => {
-    const before = await readFile("docs/contest/coverage-freeze.json", "utf8");
-
-    expect(() => assertContestFreezeWritePreflight(ROOT)).toThrow(
-      /dirty|source path|src\/data|src\/features/i,
+  it("requires an explicit source commit when freeze write is requested", () => {
+    expect(() => parseContestFreezeWriteSourceCommit(["--write"])).toThrow(
+      /--source-commit/i,
     );
+    expect(
+      parseContestFreezeWriteSourceCommit([
+        "--write",
+        "--source-commit",
+        "a".repeat(40),
+      ]),
+    ).toBe("a".repeat(40));
+  });
 
-    expect(await readFile("docs/contest/coverage-freeze.json", "utf8")).toBe(
-      before,
-    );
+  it("detects dirty freeze inputs in a hermetic Git repository", () => {
+    const root = mkdtempSync(join(tmpdir(), "contest-freeze-"));
+    try {
+      mkdirSync(join(root, "analysis"), { recursive: true });
+      mkdirSync(join(root, "data", "curated"), { recursive: true });
+      mkdirSync(join(root, "docs", "contest"), { recursive: true });
+      writeFileSync(
+        join(root, "analysis", "fp_coverage_expansion_results.json"),
+        "{}\n",
+        "utf8",
+      );
+      writeFileSync(
+        join(root, "data", "curated", "input.json"),
+        "{}\n",
+        "utf8",
+      );
+      const freezePath = join(root, "docs", "contest", "coverage-freeze.json");
+      writeFileSync(freezePath, '{"sentinel":true}\n', "utf8");
+      execFileSync("git", ["init", "-q"], { cwd: root });
+      execFileSync("git", ["config", "user.email", "test@example.invalid"], {
+        cwd: root,
+      });
+      execFileSync("git", ["config", "user.name", "Contest Test"], {
+        cwd: root,
+      });
+      execFileSync("git", ["add", "."], { cwd: root });
+      execFileSync("git", ["commit", "-qm", "fixture"], { cwd: root });
+      writeFileSync(
+        join(root, "analysis", "fp_coverage_expansion_results.json"),
+        '{"dirty":true}\n',
+        "utf8",
+      );
+
+      const dirty = getDirtyContestFreezeSourcePaths(root);
+      expect(dirty.some((entry) => entry.includes("analysis"))).toBe(true);
+      expect(() => assertContestFreezeWritePreflight(root)).toThrow(
+        /dirty|analysis/i,
+      );
+      expect(readFileSync(freezePath, "utf8")).toBe('{"sentinel":true}\n');
+    } finally {
+      rmSync(root, { recursive: true, force: true });
+    }
   });
 
   it("requires exactly 21 manifest resources and the canonical SEPE snapshot count", async () => {

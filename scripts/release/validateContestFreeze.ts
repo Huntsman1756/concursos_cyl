@@ -100,8 +100,13 @@ const EXPECTED_ROOT_URL = "https://salida-cyl.157-90-22-40.sslip.io/";
 export const EXPECTED_CONTEST_RESOURCE_COUNT = 21;
 export const EXPECTED_SEPE_RECORD_COUNT = 116;
 export const CONTEST_FREEZE_SOURCE_PATHS = [
+  "analysis/fp_coverage_expansion_results.json",
+  "data/catalogs",
   "data/curated",
+  "data/schemas",
   "public/data",
+  "scripts/analysis/validateFpOneWordPublicationReview.ts",
+  "scripts/data/validateCuratedMappings.ts",
   "src/data",
   "src/domain",
   "src/features",
@@ -255,6 +260,27 @@ export function assertContestFreezeWritePreflight(
       `Refusing coverage freeze --write while source paths are dirty: ${dirty.join("; ")}`,
     );
   }
+}
+
+export function parseContestFreezeWriteSourceCommit(
+  arguments_: readonly string[],
+): string {
+  const inline = arguments_.find((argument) =>
+    argument.startsWith("--source-commit="),
+  );
+  const index = arguments_.indexOf("--source-commit");
+  const sourceCommitSha =
+    inline?.slice("--source-commit=".length) ??
+    (index >= 0 ? arguments_[index + 1] : undefined);
+  if (sourceCommitSha === undefined) {
+    throw new Error(
+      "coverage freeze --write requires an explicit --source-commit S argument",
+    );
+  }
+  if (!/^[a-f0-9]{40}$/u.test(sourceCommitSha)) {
+    throw new Error("--source-commit must be a 40-character commit SHA");
+  }
+  return sourceCommitSha;
 }
 
 function readJson(rootDir: string, relativePath: string): unknown {
@@ -830,8 +856,13 @@ function assertSourceCommitBoundary(
         "--quiet",
         sourceCommitSha,
         "--",
+        "data/catalogs",
         "data/curated",
+        "data/schemas",
         "public/data",
+        "analysis/fp_coverage_expansion_results.json",
+        "scripts/analysis/validateFpOneWordPublicationReview.ts",
+        "scripts/data/validateCuratedMappings.ts",
         "src/domain",
         "src/data",
         "src/features",
@@ -875,6 +906,7 @@ if (
 ) {
   const rootDir = process.cwd();
   if (process.argv.includes("--write")) {
+    const sourceCommitSha = parseContestFreezeWriteSourceCommit(process.argv);
     assertContestFreezeWritePreflight(rootDir);
     const freezePath = path.resolve(
       rootDir,
@@ -924,10 +956,6 @@ if (
         resourceSnapshots: migrationResourceSnapshots,
       },
     });
-    const sourceCommitSha = execFileSync("git", ["rev-parse", "HEAD"], {
-      cwd: rootDir,
-      encoding: "utf8",
-    }).trim();
     const seededResourceSnapshots = Object.fromEntries(
       RESOURCE_KEYS.map((key) => {
         const specification = record(

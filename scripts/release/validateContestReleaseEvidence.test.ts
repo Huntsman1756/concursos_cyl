@@ -1,6 +1,12 @@
+import { execFileSync } from "node:child_process";
+import { mkdtempSync, rmSync, writeFileSync } from "node:fs";
+import { tmpdir } from "node:os";
+import { join } from "node:path";
+
 import { describe, expect, it } from "vitest";
 
 import {
+  assertContestReleaseGitChain,
   validateContestReleaseEvidence,
   type ContestReleaseEvidence,
   type ReleaseEvidenceValidationContext,
@@ -27,6 +33,10 @@ const context: ReleaseEvidenceValidationContext = {
       },
     },
   },
+  captures: [
+    { localCommitSha: PUBLICATION_SHA, deployedCommitSha: PUBLICATION_SHA },
+    { localCommitSha: PUBLICATION_SHA, deployedCommitSha: PUBLICATION_SHA },
+  ],
 };
 
 function validEvidence(): ContestReleaseEvidence {
@@ -186,13 +196,93 @@ describe("contest release evidence validator", () => {
     );
   });
 
-  it("classifies an older capture commit as historical and never as current", () => {
+  it("downgrades evidence with an older capture commit instead of asserting verified", () => {
     const evidence = validEvidence();
     evidence.captureProductCommitSha = "f".repeat(40);
 
     expect(validateContestReleaseEvidence(evidence, context)).toMatchObject({
       valid: true,
+      status: "pending",
       capturesAreCurrent: false,
     });
+  });
+
+  it("requires complete current capture provenance for verified evidence", () => {
+    const evidence = validEvidence();
+    evidence.captureProductCommitSha = null;
+
+    expect(validateContestReleaseEvidence(evidence, context)).toMatchObject({
+      status: "pending",
+      capturesAreCurrent: false,
+    });
+
+    const mismatch = validEvidence();
+    const captures = context.captures ?? [];
+    expect(
+      validateContestReleaseEvidence(mismatch, {
+        ...context,
+        captures: [
+          {
+            localCommitSha: "f".repeat(40),
+            deployedCommitSha: PUBLICATION_SHA,
+          },
+          ...captures.slice(1),
+        ],
+      }),
+    ).toMatchObject({ status: "pending", capturesAreCurrent: false });
+  });
+
+  it("validates the S-to-F-to-P-to-E Git chain", () => {
+    const root = mkdtempSync(join(tmpdir(), "contest-release-chain-"));
+    try {
+      execFileSync("git", ["init", "-q"], { cwd: root });
+      execFileSync("git", ["config", "user.email", "test@example.invalid"], {
+        cwd: root,
+      });
+      execFileSync("git", ["config", "user.name", "Contest Test"], {
+        cwd: root,
+      });
+      writeFileSync(join(root, "evidence.txt"), "S\n", "utf8");
+      execFileSync("git", ["add", "."], { cwd: root });
+      execFileSync("git", ["commit", "-qm", "S"], { cwd: root });
+      const source = execFileSync("git", ["rev-parse", "HEAD"], {
+        cwd: root,
+        encoding: "utf8",
+      }).trim();
+      execFileSync("git", ["commit", "--allow-empty", "-qm", "F"], {
+        cwd: root,
+      });
+      const freeze = execFileSync("git", ["rev-parse", "HEAD"], {
+        cwd: root,
+        encoding: "utf8",
+      }).trim();
+      execFileSync("git", ["commit", "--allow-empty", "-qm", "P"], {
+        cwd: root,
+      });
+      const publication = execFileSync("git", ["rev-parse", "HEAD"], {
+        cwd: root,
+        encoding: "utf8",
+      }).trim();
+      execFileSync("git", ["commit", "--allow-empty", "-qm", "E"], {
+        cwd: root,
+      });
+
+      expect(() =>
+        assertContestReleaseGitChain(root, {
+          sourceCommitSha: source,
+          freezeCommitSha: freeze,
+          publicationCommitSha: publication,
+        }),
+      ).not.toThrow();
+      expect(() =>
+        assertContestReleaseGitChain(root, {
+          sourceCommitSha: source,
+          freezeCommitSha: freeze,
+          publicationCommitSha: freeze,
+        }),
+      ).toThrow(/distinct|order|ancestor/i);
+    } finally {
+      rmSync(root, { recursive: true, force: true });
+    }
   });
 });

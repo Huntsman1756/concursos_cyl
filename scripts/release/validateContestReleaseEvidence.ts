@@ -1,5 +1,13 @@
+import { execFileSync } from "node:child_process";
 import fs from "node:fs";
 import path from "node:path";
+
+import { loadAndValidateContestClaims } from "./validateContestClaims";
+import {
+  validateContestEvidenceManifest,
+  type ContestEvidenceManifest,
+} from "./validateContestEvidenceManifest";
+import { loadAndValidateContestFreeze } from "./validateContestFreeze";
 
 const EXPECTED_ROOT_URL = "https://salida-cyl.157-90-22-40.sslip.io/";
 const SHA1 = /^[a-f0-9]{40}$/u;
@@ -95,6 +103,16 @@ export type ReleaseEvidenceValidationContext = {
   };
   expectedRootUrl?: string;
   captureCount?: number;
+  captures?: ReadonlyArray<{
+    localCommitSha?: string;
+    deployedCommitSha?: string | null;
+  }>;
+};
+
+export type ContestReleaseGitChain = {
+  sourceCommitSha: string;
+  freezeCommitSha: string;
+  publicationCommitSha: string | null;
 };
 
 export type ContestReleaseEvidenceValidation = {
@@ -178,6 +196,94 @@ function assertEqual(actual: unknown, expected: unknown, label: string): void {
   if (actual !== expected) {
     throw new Error(`${label} does not match the frozen source`);
   }
+}
+
+function assertCommitExists(rootDir: string, commitSha: string): void {
+  if (!SHA1.test(commitSha)) {
+    throw new Error(`Git chain contains an invalid commit SHA: ${commitSha}`);
+  }
+  try {
+    execFileSync("git", ["rev-parse", "--verify", `${commitSha}^{commit}`], {
+      cwd: rootDir,
+      stdio: "pipe",
+    });
+  } catch {
+    throw new Error(`Git chain commit does not exist: ${commitSha}`);
+  }
+}
+
+function assertAncestor(
+  rootDir: string,
+  ancestorSha: string,
+  descendantSha: string,
+): void {
+  try {
+    execFileSync(
+      "git",
+      ["merge-base", "--is-ancestor", ancestorSha, descendantSha],
+      { cwd: rootDir, stdio: "pipe" },
+    );
+  } catch {
+    throw new Error(
+      `Git chain order is invalid: ${ancestorSha} is not an ancestor of ${descendantSha}`,
+    );
+  }
+}
+
+export function assertContestReleaseGitChain(
+  rootDir: string,
+  chain: ContestReleaseGitChain,
+): void {
+  const evidenceCommitSha = execFileSync("git", ["rev-parse", "HEAD"], {
+    cwd: path.resolve(rootDir),
+    encoding: "utf8",
+  }).trim();
+  assertCommitExists(rootDir, chain.sourceCommitSha);
+  assertCommitExists(rootDir, chain.freezeCommitSha);
+  assertCommitExists(rootDir, evidenceCommitSha);
+  if (chain.sourceCommitSha === chain.freezeCommitSha) {
+    throw new Error("Git chain requires distinct S and F commits");
+  }
+  assertAncestor(rootDir, chain.sourceCommitSha, chain.freezeCommitSha);
+  if (chain.publicationCommitSha === null) {
+    assertAncestor(rootDir, chain.freezeCommitSha, evidenceCommitSha);
+    return;
+  }
+  assertCommitExists(rootDir, chain.publicationCommitSha);
+  if (
+    chain.publicationCommitSha === chain.sourceCommitSha ||
+    chain.publicationCommitSha === chain.freezeCommitSha ||
+    chain.publicationCommitSha === evidenceCommitSha
+  ) {
+    throw new Error("Git chain requires distinct F, P, and E commits");
+  }
+  assertAncestor(rootDir, chain.freezeCommitSha, chain.publicationCommitSha);
+  assertAncestor(rootDir, chain.publicationCommitSha, evidenceCommitSha);
+}
+
+function capturesMatchPublication(
+  context: ReleaseEvidenceValidationContext,
+  publicationSha: string | null,
+): boolean {
+  if (publicationSha === null || context.captures === undefined) return false;
+  if (
+    context.captureCount !== undefined &&
+    context.captures.length !== context.captureCount
+  ) {
+    return false;
+  }
+  return (
+    context.captures.length > 0 &&
+    context.captures.every(
+      (capture) =>
+        typeof capture.localCommitSha === "string" &&
+        SHA1.test(capture.localCommitSha) &&
+        capture.localCommitSha === publicationSha &&
+        typeof capture.deployedCommitSha === "string" &&
+        SHA1.test(capture.deployedCommitSha) &&
+        capture.deployedCommitSha === publicationSha,
+    )
+  );
 }
 
 function gate(
@@ -521,15 +627,17 @@ export function validateContestReleaseEvidence(
   ) {
     throw new Error("blockers must contain a human approval boundary");
   }
+  const capturesAreCurrent =
+    status === "verified" &&
+    rawCaptureSha !== null &&
+    publicationSha !== null &&
+    rawCaptureSha === publicationSha &&
+    capturesMatchPublication(context, publicationSha);
   return {
     valid: true,
     errors: [],
-    status,
-    capturesAreCurrent:
-      status === "verified" &&
-      rawCaptureSha !== null &&
-      publicationSha !== null &&
-      rawCaptureSha === publicationSha,
+    status: status === "verified" && !capturesAreCurrent ? "pending" : status,
+    capturesAreCurrent,
     humanApproval,
   };
 }
@@ -556,66 +664,51 @@ export function validateContestReleaseEvidenceFromRoot(
   rootDir = process.cwd(),
 ): ContestReleaseEvidenceValidation {
   const resolvedRoot = path.resolve(rootDir);
-  const freeze = JSON.parse(
+  const freeze = loadAndValidateContestFreeze(resolvedRoot);
+  const evidence = JSON.parse(
     fs.readFileSync(
-      path.join(resolvedRoot, "docs", "contest", "coverage-freeze.json"),
+      path.join(resolvedRoot, "docs", "contest", "release-evidence.json"),
       "utf8",
     ),
-  ) as {
-    sourceCommitSha?: unknown;
-    manifest?: {
-      snapshotId?: unknown;
-      sha256?: unknown;
-      resourceSnapshots?: Record<string, { recordCount?: unknown }>;
-    };
-  };
-  const sourceCommitSha = sha(
-    freeze.sourceCommitSha,
-    "coverageFreeze.sourceCommitSha",
+  ) as ContestReleaseEvidence;
+  const claims = loadAndValidateContestClaims(
+    path.join(resolvedRoot, "docs", "contest", "claim-ledger.json"),
   );
-  const manifest = freeze.manifest;
-  if (manifest === undefined)
-    throw new Error("coverageFreeze.manifest is required");
-  const snapshotId = nonEmptyString(
-    manifest.snapshotId,
-    "coverageFreeze.manifest.snapshotId",
-  );
-  const manifestSha = sha256(manifest.sha256, "coverageFreeze.manifest.sha256");
-  const resourceSnapshots = manifest.resourceSnapshots;
-  if (resourceSnapshots === undefined) {
-    throw new Error("coverageFreeze.manifest.resourceSnapshots is required");
-  }
-  if (Object.keys(resourceSnapshots).length !== 21) {
-    throw new Error(
-      "coverageFreeze.manifest.resourceSnapshots must contain exactly 21 resources",
-    );
-  }
-  if (resourceSnapshots.sepeOccupationMarket?.recordCount !== 116) {
-    throw new Error(
-      "coverageFreeze.manifest.resourceSnapshots.sepeOccupationMarket must contain 116 records",
-    );
-  }
+  const captureValue = JSON.parse(
+    fs.readFileSync(
+      path.join(resolvedRoot, "docs", "contest", "evidence-capture.json"),
+      "utf8",
+    ),
+  ) as unknown;
+  validateContestEvidenceManifest(captureValue, {
+    rootDir: resolvedRoot,
+    knownClaimIds: claims.map(({ claimId }) => claimId),
+    freezeRecordPresent: true,
+    requireProvenance: false,
+  });
+  const captures = captureValue as ContestEvidenceManifest;
   const context: ReleaseEvidenceValidationContext = {
     coverageFreeze: {
-      sourceCommitSha,
+      sourceCommitSha: freeze.sourceCommitSha,
       manifest: {
-        snapshotId,
-        sha256: manifestSha,
-        resourceSnapshots: Object.fromEntries(
-          Object.entries(resourceSnapshots).map(([key, resource]) => [
-            key,
-            {
-              recordCount: nonNegativeInteger(
-                resource.recordCount,
-                `coverageFreeze.${key}.recordCount`,
-              ),
-            },
-          ]),
-        ),
+        snapshotId: freeze.manifest.snapshotId,
+        sha256: freeze.manifest.sha256,
+        resourceSnapshots: freeze.manifest.resourceSnapshots,
       },
     },
+    captureCount: captures.captures.length,
+    captures: captures.captures.map((capture) => ({
+      localCommitSha: capture.localCommitSha,
+      deployedCommitSha: capture.deployedCommitSha,
+    })),
   };
-  return loadAndValidateContestReleaseEvidence(resolvedRoot, context);
+  const result = validateContestReleaseEvidence(evidence, context);
+  assertContestReleaseGitChain(resolvedRoot, {
+    sourceCommitSha: freeze.sourceCommitSha,
+    freezeCommitSha: evidence.coverageFreezeCommitSha,
+    publicationCommitSha: evidence.publicationCommitSha,
+  });
+  return result;
 }
 
 if (

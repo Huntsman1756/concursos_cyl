@@ -22,6 +22,10 @@ describe("verifyCaddyContainer (Metadata)", () => {
   it("passes on match", async () => {
     const csv = "\uFEFFprogram_key,program_title\n";
     const csvSha256 = createHash("sha256").update(csv).digest("hex");
+    const sepe = JSON.stringify({
+      records: Array.from({ length: 116 }, () => ({})),
+    });
+    const sepeSha256 = createHash("sha256").update(sepe).digest("hex");
     const request = vi.fn((input: string | URL) => {
       const path = new URL(input).pathname;
       if (path === "/version.json") {
@@ -46,6 +50,12 @@ describe("verifyCaddyContainer (Metadata)", () => {
                 resourcePath:
                   "/data/v1/snapshots/abc/derived-fp-occupation-graph.json",
                 recordCount: 0,
+              },
+              sepeOccupationMarket: {
+                resourcePath:
+                  "/data/v1/snapshots/abc/sepe-occupation-market.json",
+                recordCount: 116,
+                sha256: sepeSha256,
               },
               openDataCatalog: {
                 resourcePath: "/data/v1/snapshots/abc/open-data-catalog.json",
@@ -77,6 +87,13 @@ describe("verifyCaddyContainer (Metadata)", () => {
         path.endsWith("/derived-fp-occupation-graph.json")
       ) {
         return Promise.resolve(Response.json([]));
+      }
+      if (path.endsWith("/sepe-occupation-market.json")) {
+        return Promise.resolve(
+          new Response(sepe, {
+            headers: { "content-type": "application/json" },
+          }),
+        );
       }
       return Promise.resolve(
         new Response('<html><div id="root"></div></html>', {

@@ -14,6 +14,10 @@ const headers = {
 };
 const csvBytes = "\uFEFFprogram_key,program_title\n";
 const csvSha256 = createHash("sha256").update(csvBytes).digest("hex");
+const sepeBytes = JSON.stringify({
+  records: Array.from({ length: 116 }, () => ({})),
+});
+const sepeSha256 = createHash("sha256").update(sepeBytes).digest("hex");
 
 function validRequest(input: string | URL): Promise<Response> {
   const path = new URL(input).pathname;
@@ -32,7 +36,8 @@ function validRequest(input: string | URL): Promise<Response> {
           sepeOccupationMarket: {
             resourcePath:
               "/data/v1/snapshots/release/sepe-occupation-market.json",
-            recordCount: 0,
+            recordCount: 116,
+            sha256: sepeSha256,
           },
           openDataCatalog: {
             resourcePath: "/data/v1/snapshots/release/open-data-catalog.json",
@@ -69,7 +74,7 @@ function validRequest(input: string | URL): Promise<Response> {
   }
   if (path.endsWith("/sepe-occupation-market.json")) {
     return Promise.resolve(
-      new Response(JSON.stringify({ records: [] }), {
+      new Response(sepeBytes, {
         headers: { "content-type": "application/json" },
       }),
     );
@@ -128,6 +133,30 @@ describe("verifyCaddyContainer", () => {
     await expect(
       verifyCaddyContainer("http://127.0.0.1:8080", withoutSepe),
     ).rejects.toThrow(/SEPE|sepeOccupationMarket/i);
+  });
+
+  it("rejects an unsafe SEPE snapshot identifier", async () => {
+    const unsafe = (input: string | URL) => {
+      if (new URL(input).pathname !== "/data/v1/manifest.json") {
+        return validRequest(input);
+      }
+      return Promise.resolve(
+        Response.json({
+          resourceSnapshots: {
+            sepeOccupationMarket: {
+              resourcePath:
+                "/data/v1/snapshots/../release/sepe-occupation-market.json",
+              recordCount: 116,
+              sha256: sepeSha256,
+            },
+          },
+        }),
+      );
+    };
+
+    await expect(
+      verifyCaddyContainer("http://127.0.0.1:8080", unsafe),
+    ).rejects.toThrow(/SEPE|snapshot|resource/i);
   });
 
   it.each(["file:///srv", "//example.com", "http://user@example.com"])(

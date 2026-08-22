@@ -1,6 +1,7 @@
 import { createHash } from "node:crypto";
 
 type Request = (input: string | URL) => Promise<Response>;
+const EXPECTED_SEPE_RECORD_COUNT = 116;
 
 function requiredOrigin(baseUrl: string): URL {
   const errorMessage =
@@ -166,7 +167,7 @@ export async function verifyCaddyContainer(
   const manifest = (await manifestResponse.json()) as {
     resourceSnapshots?: Record<
       string,
-      { resourcePath?: unknown; recordCount?: unknown }
+      { resourcePath?: unknown; recordCount?: unknown; sha256?: unknown }
     >;
   };
   const resourcePath =
@@ -191,7 +192,10 @@ export async function verifyCaddyContainer(
   if (
     typeof sepeSnapshot?.resourcePath !== "string" ||
     typeof sepeSnapshot.recordCount !== "number" ||
-    !/^\/data\/v1\/snapshots\/[^/]+\/sepe-occupation-market\.json$/u.test(
+    sepeSnapshot.recordCount !== EXPECTED_SEPE_RECORD_COUNT ||
+    typeof sepeSnapshot.sha256 !== "string" ||
+    !/^[a-f0-9]{64}$/u.test(sepeSnapshot.sha256) ||
+    !/^\/data\/v1\/snapshots\/[a-z0-9]+(?:-[a-z0-9]+)*\/sepe-occupation-market\.json$/u.test(
       sepeSnapshot.resourcePath,
     )
   ) {
@@ -208,7 +212,17 @@ export async function verifyCaddyContainer(
     sepeUrl,
     "application/json",
   );
-  const sepe = (await sepeResponse.json()) as { records?: unknown };
+  const sepeBytes = Buffer.from(await sepeResponse.arrayBuffer());
+  const sepeHash = createHash("sha256").update(sepeBytes).digest("hex");
+  if (sepeHash !== sepeSnapshot.sha256) {
+    throw new Error("Caddy SEPE resource hash does not match the manifest.");
+  }
+  let sepe: { records?: unknown };
+  try {
+    sepe = JSON.parse(sepeBytes.toString("utf8")) as { records?: unknown };
+  } catch {
+    throw new Error("Caddy SEPE resource must be valid JSON.");
+  }
   if (!Array.isArray(sepe.records)) {
     throw new Error("Caddy SEPE resource must expose a records array.");
   }
