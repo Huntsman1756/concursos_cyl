@@ -1,13 +1,17 @@
 # Coverage freeze rebake — schema 2 — 2026-08-22
 
 El freeze se regeneró contra el límite exacto
-`15cd959529c5c223adff02eda124863a320fe0bf`, después de aplicar las
+`ff9e6197f926e462bea1a3e8ac6a57a23d3f825a`, último commit que cambió una
+dependencia real del cálculo de cobertura, después de aplicar las
 remediaciones de evidencia y regenerar el snapshot activo. Este SHA es la
 frontera inmutable de cobertura y datos candidato; no es la identidad de una
-compilación posterior. El rebake no modifica `data/curated`, `public/data` ni
-`src/domain`/`src/features`.
+compilación posterior. La frontera enlaza los inputs de config, análisis,
+catálogos, datos curados, esquemas, datos públicos y validación, además de
+`src/domain/offerMatching.ts` y `src/domain/requirements.ts`; las rutas UI,
+search y print quedan fuera.
 
-El documento usa `schemaVersion: "2.0.0"` y no contiene estado de publicación.
+El documento usa `schemaVersion: "2.0.0"` y no contiene estado de publicación,
+despliegue ni mutación live.
 Los valores heredados del documento schema 1 fueron descartados y todos los
 recursos, hashes, conteos, cobertura, ofertas e intentos se recomputaron desde
 el manifest público actual.

@@ -32,7 +32,9 @@ import {
 
 const ROOT = process.cwd();
 
-const APPROVED_SOURCE_COMMIT_SHA = "15cd959529c5c223adff02eda124863a320fe0bf";
+const APPROVED_SOURCE_COMMIT_SHA = "ff9e6197f926e462bea1a3e8ac6a57a23d3f825a";
+const PRIOR_SCHEMA_TWO_SOURCE_COMMIT_SHA =
+  "15cd959529c5c223adff02eda124863a320fe0bf";
 const LEGACY_SOURCE_COMMIT_SHA = "05f905397d22b217c4716c88a2406d802892fb6d";
 
 async function readFreeze(): Promise<Record<string, unknown>> {
@@ -155,6 +157,47 @@ describe("contest coverage freeze validator", () => {
       ]);
       expect(() => assertContestFreezeWritePreflight(root)).toThrow(
         /candidate-resource-allowlist|dirty/i,
+      );
+    } finally {
+      rmSync(root, { recursive: true, force: true });
+    }
+  });
+
+  it("ignores unrelated product paths but blocks dirty coverage dependencies", () => {
+    const root = mkdtempSync(join(tmpdir(), "contest-freeze-boundary-"));
+    try {
+      mkdirSync(join(root, "src", "domain"), { recursive: true });
+      mkdirSync(join(root, "src", "features"), { recursive: true });
+      writeFileSync(
+        join(root, "src", "domain", "requirements.ts"),
+        "export const requirement = true;\n",
+        "utf8",
+      );
+      const productPath = join(root, "src", "features", "ResultsPage.tsx");
+      writeFileSync(productPath, "export const product = false;\n", "utf8");
+      execFileSync("git", ["init", "-q"], { cwd: root });
+      execFileSync("git", ["config", "user.email", "test@example.invalid"], {
+        cwd: root,
+      });
+      execFileSync("git", ["config", "user.name", "Contest Test"], {
+        cwd: root,
+      });
+      execFileSync("git", ["add", "."], { cwd: root });
+      execFileSync("git", ["commit", "-qm", "fixture"], { cwd: root });
+
+      writeFileSync(productPath, "export const product = true;\n", "utf8");
+      expect(getDirtyContestFreezeSourcePaths(root)).toEqual([]);
+
+      writeFileSync(
+        join(root, "src", "domain", "requirements.ts"),
+        "export const requirement = false;\n",
+        "utf8",
+      );
+      expect(getDirtyContestFreezeSourcePaths(root)).toContain(
+        "M src/domain/requirements.ts",
+      );
+      expect(() => assertContestFreezeWritePreflight(root)).toThrow(
+        /requirements|dirty/i,
       );
     } finally {
       rmSync(root, { recursive: true, force: true });
@@ -300,14 +343,14 @@ describe("contest coverage freeze validator", () => {
     ).toThrow(/canonical.*strict|missing published CNO|not contain/iu);
   });
 
-  it("rejects the legacy coverage boundary", async () => {
+  it.each([
+    ["the prior schema-2", PRIOR_SCHEMA_TWO_SOURCE_COMMIT_SHA],
+    ["the legacy", LEGACY_SOURCE_COMMIT_SHA],
+  ])("rejects %s coverage boundary", async (_label, sourceCommitSha) => {
     const freeze = await readFreezeV2Shape();
     expect(() =>
-      validateContestFreeze(
-        { ...freeze, sourceCommitSha: LEGACY_SOURCE_COMMIT_SHA },
-        { rootDir: ROOT },
-      ),
-    ).toThrow(/05f9053|coverage boundary|sourceCommitSha|mutation/iu);
+      validateContestFreeze({ ...freeze, sourceCommitSha }, { rootDir: ROOT }),
+    ).toThrow(/15cd959|05f9053|coverage boundary|sourceCommitSha|mutation/iu);
   });
 
   it("seeds schema 2 exclusively from current public sources", async () => {

@@ -82,7 +82,7 @@ const CANONICAL_SNAPSHOT_ID = "20260822085631889-7bbe69380f6d";
 const CANONICAL_MANIFEST_SHA256 =
   "92afc80f2b839ed95def95bc90bdd3b6ad3a1363fb12904f7b109fafc92b2f18";
 export const CONTEST_FREEZE_SOURCE_COMMIT_SHA =
-  "15cd959529c5c223adff02eda124863a320fe0bf";
+  "ff9e6197f926e462bea1a3e8ac6a57a23d3f825a";
 
 const CANONICAL_RESOURCE_KEYS: readonly CandidateResourceKey[] = (() => {
   const keys: string[] = [...CANDIDATE_RESOURCE_KEYS];
@@ -108,9 +108,8 @@ export const CONTEST_FREEZE_SOURCE_PATHS = [
   "public/data",
   "scripts/analysis/validateFpOneWordPublicationReview.ts",
   "scripts/data/validateCuratedMappings.ts",
-  "src/data",
-  "src/domain",
-  "src/features",
+  "src/domain/offerMatching.ts",
+  "src/domain/requirements.ts",
 ] as const;
 
 type ResourceSnapshot = {
