@@ -105,6 +105,11 @@ function createFixture(): Fixture {
     )}\n`,
     "utf8",
   );
+  writeFileSync(
+    join(root, "analysis", "contest_evidence_matrix.json"),
+    "{}\n",
+    "utf8",
+  );
   execFileSync("git", ["add", "."], { cwd: root });
   execFileSync("git", ["commit", "-qm", "sample"], { cwd: root });
   return { root, sourceCommitSha, samplePath, relationCount: relations.length };
@@ -159,6 +164,23 @@ describe("contest evidence matrix", () => {
       expect(() => resolveContestEvidenceSourceCommit(fixture.root)).toThrow(
         /dirty|analysis/i,
       );
+    });
+  });
+
+  it("allows its tracked generated output to be dirty during a check", () => {
+    withFixture((fixture) => {
+      writeFileSync(
+        join(fixture.root, "analysis", "contest_evidence_matrix.json"),
+        '{"generated":true}\n',
+        "utf8",
+      );
+
+      expect(
+        resolveContestEvidenceSourceCommit(
+          fixture.root,
+          fixture.sourceCommitSha,
+        ),
+      ).toBe(fixture.sourceCommitSha);
     });
   });
 

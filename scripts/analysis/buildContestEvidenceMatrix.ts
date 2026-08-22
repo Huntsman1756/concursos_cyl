@@ -82,13 +82,21 @@ function gitText(rootDirectory: string, args: string[]): string {
 export function getDirtyContestEvidenceMatrixInputPaths(
   rootDirectory = resolve("."),
 ): string[] {
-  const status = gitText(rootDirectory, [
-    "status",
-    "--porcelain=v1",
-    "--untracked-files=all",
-    "--",
-    ...CONTEST_EVIDENCE_MATRIX_INPUT_PATHS,
-  ]);
+  const status = execFileSync(
+    "git",
+    [
+      "status",
+      "--porcelain=v1",
+      "--untracked-files=all",
+      "--",
+      ...CONTEST_EVIDENCE_MATRIX_INPUT_PATHS,
+    ],
+    {
+      cwd: rootDirectory,
+      encoding: "utf8",
+      maxBuffer: 16 * 1024 * 1024,
+    },
+  );
   return status
     .split(/\r?\n/u)
     .map((line) => ({
