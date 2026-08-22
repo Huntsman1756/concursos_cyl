@@ -241,16 +241,6 @@
   },
   {
     "trainingProgramKey": "AGA01B",
-    "occupationId": "occupation:cno11:4121",
-    "relationshipType": "reviewed_relationship",
-    "reviewStatus": "approved",
-    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/agraria/agrojardineria-composiciones-florales.html",
-    "sourceQuote": "Auxiliar de almacén de flores.",
-    "reviewedAt": "2026-08-13",
-    "mappingVersion": "1.0.0"
-  },
-  {
-    "trainingProgramKey": "AGA01B",
     "occupationId": "occupation:cno11:5220",
     "relationshipType": "reviewed_relationship",
     "reviewStatus": "approved",
@@ -576,16 +566,6 @@
     "reviewStatus": "approved",
     "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/comercio-marketing/actividades-comerciales.html",
     "sourceQuote": "Teleoperador / teleoperadora (Call-Center).",
-    "reviewedAt": "2026-08-12",
-    "mappingVersion": "1.0.0"
-  },
-  {
-    "trainingProgramKey": "COM01M",
-    "occupationId": "occupation:cno11:5300",
-    "relationshipType": "official_output",
-    "reviewStatus": "approved",
-    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/comercio-marketing/actividades-comerciales.html",
-    "sourceQuote": "Comerciante de tienda.",
     "reviewedAt": "2026-08-12",
     "mappingVersion": "1.0.0"
   },
@@ -1140,16 +1120,6 @@
     "mappingVersion": "1.0.0"
   },
   {
-    "trainingProgramKey": "EOC02SD",
-    "occupationId": "occupation:cno11:3129",
-    "relationshipType": "official_output",
-    "reviewStatus": "approved",
-    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/edificacion-obra-civil/proyectos-obra-civil.html",
-    "sourceQuote": "Delineante de obra civil.",
-    "reviewedAt": "2026-08-14",
-    "mappingVersion": "1.0.0"
-  },
-  {
     "trainingProgramKey": "FME01B",
     "occupationId": "occupation:cno11:7221",
     "relationshipType": "official_output",
@@ -1226,16 +1196,6 @@
     "reviewStatus": "approved",
     "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/fabricacion-mecanica/fabricacion-elementos-metalicos.html",
     "sourceQuote": "Auxiliar de oxicortador / oxicortadora a mano.",
-    "reviewedAt": "2026-08-14",
-    "mappingVersion": "1.0.0"
-  },
-  {
-    "trainingProgramKey": "FME02B",
-    "occupationId": "occupation:cno11:7314",
-    "relationshipType": "official_output",
-    "reviewStatus": "approved",
-    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/fabricacion-mecanica/fabricacion-elementos-metalicos.html",
-    "sourceQuote": "Auxiliar de montador / montadora de estructuras metálicas",
     "reviewedAt": "2026-08-14",
     "mappingVersion": "1.0.0"
   },
@@ -1786,16 +1746,6 @@
     "reviewStatus": "approved",
     "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/imagen-personal/estetica-belleza.html",
     "sourceQuote": "Técnica / técnico esteticista en centros de belleza y gabinetes de estética.",
-    "reviewedAt": "2026-08-13",
-    "mappingVersion": "1.0.0"
-  },
-  {
-    "trainingProgramKey": "IMP01S",
-    "occupationId": "occupation:cno11:2640",
-    "relationshipType": "reviewed_relationship",
-    "reviewStatus": "approved",
-    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/imagen-personal/estetica-integral-bienestar.html",
-    "sourceQuote": "Técnica / técnico comercial.",
     "reviewedAt": "2026-08-13",
     "mappingVersion": "1.0.0"
   },

@@ -47,6 +47,14 @@ const TASK_4_WAVE_KEYS = [
   "QUI01M|8131",
 ] as const;
 
+const CONTEST_EVIDENCE_REMEDIATION_KEYS = [
+  "FME02B|7314",
+  "EOC02SD|3129",
+  "IMP01S|2640",
+  "AGA01B|4121",
+  "COM01M|5300",
+] as const;
+
 describe("mergeFrontierReviewedCoverage", () => {
   it("restores the selected priority relations from a complete reviewed source", () => {
     const reviewed = ACCEPTED_RELATION_KEYS.map((key) => {
@@ -117,7 +125,6 @@ describe("mergeFrontierReviewedCoverage", () => {
         "COM01M|1432",
         "COM01M|3510",
         "COM01M|4424",
-        "COM01M|5300",
         "COM01M|5420",
         "COM01M|5492",
         "COM01M|5500",
@@ -262,6 +269,12 @@ describe("mergeFrontierReviewedCoverage", () => {
 
     expect(() => mergeFrontierReviewedCoverage([], reviewed)).toThrow(
       /MAM02M\|7812/u,
+    );
+  });
+
+  it("does not restore the known unsafe contest-evidence relationships", () => {
+    expect(ACCEPTED_RELATION_KEYS).not.toEqual(
+      expect.arrayContaining([...CONTEST_EVIDENCE_REMEDIATION_KEYS]),
     );
   });
 

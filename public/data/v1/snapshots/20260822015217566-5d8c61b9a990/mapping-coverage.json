@@ -156,7 +156,7 @@
     "uncoveredPrograms": 0
   },
   {
-    "approvedMappings": 2,
+    "approvedMappings": 1,
     "coverageNote": "Incluye relaciones ocupacionales revisadas y citadas.",
     "coverageStatus": "reviewed",
     "draftMappings": 0,
@@ -351,7 +351,7 @@
     "uncoveredPrograms": 1
   },
   {
-    "approvedMappings": 8,
+    "approvedMappings": 7,
     "coverageNote": "Incluye relaciones ocupacionales revisadas y citadas.",
     "coverageStatus": "reviewed",
     "draftMappings": 0,
@@ -780,9 +780,9 @@
     "uncoveredPrograms": 0
   },
   {
-    "approvedMappings": 1,
-    "coverageNote": "Incluye relaciones ocupacionales revisadas y citadas.",
-    "coverageStatus": "reviewed",
+    "approvedMappings": 0,
+    "coverageNote": "Aún no hay una relación ocupacional aprobada; esto no significa que el ciclo no tenga salidas profesionales.",
+    "coverageStatus": "uncovered",
     "draftMappings": 0,
     "familyCode": "EOC",
     "familyName": "Edificación y Obra Civil",
@@ -790,7 +790,7 @@
     "programTitle": "Proyectos de Obra Civil (distancia)",
     "rejectedMappings": 0,
     "scope": "program",
-    "uncoveredPrograms": 0
+    "uncoveredPrograms": 1
   },
   {
     "approvedMappings": 2,
@@ -845,7 +845,7 @@
     "uncoveredPrograms": 0
   },
   {
-    "approvedMappings": 5,
+    "approvedMappings": 4,
     "coverageNote": "Incluye relaciones ocupacionales revisadas y citadas.",
     "coverageStatus": "reviewed",
     "draftMappings": 0,
@@ -1378,7 +1378,7 @@
     "uncoveredPrograms": 0
   },
   {
-    "approvedMappings": 2,
+    "approvedMappings": 1,
     "coverageNote": "Incluye relaciones ocupacionales revisadas y citadas.",
     "coverageStatus": "reviewed",
     "draftMappings": 0,
@@ -2453,7 +2453,7 @@
     "uncoveredPrograms": 1
   },
   {
-    "approvedMappings": 23,
+    "approvedMappings": 22,
     "coverageNote": "La cobertura mide relaciones revisadas del catálogo, no la existencia de salidas profesionales.",
     "draftMappings": 0,
     "familyCode": "AGA",
@@ -2475,7 +2475,7 @@
     "uncoveredPrograms": 2
   },
   {
-    "approvedMappings": 35,
+    "approvedMappings": 34,
     "coverageNote": "La cobertura mide relaciones revisadas del catálogo, no la existencia de salidas profesionales.",
     "draftMappings": 0,
     "familyCode": "COM",
@@ -2508,7 +2508,7 @@
     "uncoveredPrograms": 1
   },
   {
-    "approvedMappings": 7,
+    "approvedMappings": 6,
     "coverageNote": "La cobertura mide relaciones revisadas del catálogo, no la existencia de salidas profesionales.",
     "draftMappings": 0,
     "familyCode": "EOC",
@@ -2516,10 +2516,10 @@
     "programCount": 7,
     "rejectedMappings": 0,
     "scope": "family",
-    "uncoveredPrograms": 4
+    "uncoveredPrograms": 5
   },
   {
-    "approvedMappings": 17,
+    "approvedMappings": 16,
     "coverageNote": "La cobertura mide relaciones revisadas del catálogo, no la existencia de salidas profesionales.",
     "draftMappings": 0,
     "familyCode": "FME",
@@ -2563,7 +2563,7 @@
     "uncoveredPrograms": 5
   },
   {
-    "approvedMappings": 14,
+    "approvedMappings": 13,
     "coverageNote": "La cobertura mide relaciones revisadas del catálogo, no la existencia de salidas profesionales.",
     "draftMappings": 0,
     "familyCode": "IMP",

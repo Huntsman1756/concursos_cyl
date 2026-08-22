@@ -1,6 +1,6 @@
 # Cola incremental de investigación FP–ocupación
 
-- Snapshot: 2026-08-22T00:36:28.598Z
+- Snapshot: 2026-08-22T01:52:17.566Z
 - Cualificaciones base revisadas: 104
 - Cualificaciones base sin coincidencia publicable (completadas): 15
 - Cualificaciones base pendientes: 35

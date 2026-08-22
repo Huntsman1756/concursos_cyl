@@ -1560,7 +1560,7 @@ describe("curated occupation mappings", () => {
           TMV01S: 3,
           IMA03S: 1,
           IFC01B: 2,
-          COM01M: 8,
+          COM01M: 7,
           AFD01S: 4,
           AFD01SD: 4,
           SAN08S: 1,
@@ -1590,18 +1590,17 @@ describe("curated occupation mappings", () => {
           ADG01S: 1,
           IMP01M: 5,
           HOT03S: 2,
-          AGA01B: 2,
+          AGA01B: 1,
           COM03S: 2,
           ELE02S: 4,
           HOT02M: 2,
-          IMP01S: 2,
+          IMP01S: 1,
           MAM01B: 3,
           AGA03S: 1,
           AGA04M: 2,
           EOC02S: 1,
-          EOC02SD: 1,
           ENA03S: 2,
-          FME02B: 5,
+          FME02B: 4,
           HOT05S: 1,
           INA02S: 3,
           IMS01E: 2,
@@ -1940,9 +1939,37 @@ describe("curated occupation mappings", () => {
       ),
     );
 
-    expect.soft(approved.links).toHaveLength(254);
+    expect.soft(approved.links).toHaveLength(249);
     expect.soft(reviewedBaseKeys.size).toBe(104);
-    expect.soft(approvedProgramKeys.size).toBe(122);
+    expect.soft(approvedProgramKeys.size).toBe(121);
+  });
+
+  it("does not publish the five remediated contest-evidence relationships", async () => {
+    const curated = await loadCuratedMappingsFromDisk(
+      process.cwd(),
+      diskPrograms,
+    );
+    const approved = loadApprovedMappings(curated);
+    const remediatedKeys = [
+      "FME02B|7314",
+      "EOC02SD|3129",
+      "IMP01S|2640",
+      "AGA01B|4121",
+      "COM01M|5300",
+    ];
+    const approvedKeys = new Set(
+      approved.links.map(
+        (link) =>
+          `${link.trainingProgramKey}|${link.occupationId.replace("occupation:cno11:", "")}`,
+      ),
+    );
+
+    expect(remediatedKeys.filter((key) => approvedKeys.has(key))).toEqual([]);
+    expect(approved.links).toHaveLength(249);
+    expect(approvedKeys.size).toBe(249);
+    expect(
+      new Set(approved.links.map((link) => link.trainingProgramKey)).size,
+    ).toBe(121);
   });
 
   it("publishes exactly the conservative Task 4 FP-to-CNO wave", async () => {
