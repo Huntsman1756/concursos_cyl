@@ -167,6 +167,40 @@ describe("controlled occupation search corpus", () => {
     expect(index.search("comun raro")[0]).toEqual(candidate(rareAlias));
   });
 
+  it("lets rare confirmation evidence outweigh common alias evidence per term", () => {
+    const commonAlias = makeOccupation(
+      "1071",
+      "Alfa raro",
+      "Confirmación alfa",
+    );
+    const rareConfirmation = makeOccupation(
+      "1072",
+      "Beta balance",
+      "Común raro",
+    );
+    const fillers = Array.from({ length: 8 }, (_, index) =>
+      makeOccupation(
+        String(1073 + index),
+        `Común de catálogo ${index}`,
+        `Confirmación de catálogo ${index}`,
+      ),
+    );
+    const index = buildOccupationIndex(
+      [commonAlias, rareConfirmation, ...fillers],
+      [
+        {
+          alias: "común",
+          occupationId: commonAlias.occupationId,
+          reviewStatus: "approved",
+          reviewedAt: "2026-08-04",
+          mappingVersion: "1.0.0",
+        },
+      ],
+    );
+
+    expect(index.search("comun raro")[0]).toEqual(candidate(rareConfirmation));
+  });
+
   it("uses stable label and id ordering for mathematically equal scores", () => {
     const beta = makeOccupation("1062", "Empate raro", "Confirmación beta");
     const alpha = makeOccupation("1061", "Empate raro", "Común raro");
@@ -193,6 +227,49 @@ describe("controlled occupation search corpus", () => {
     expect(index.search("comun raro")).toEqual([
       candidate(alpha),
       candidate(beta),
+    ]);
+  });
+
+  it("uses stable id ordering for an exact integer tie with distinct frequencies", () => {
+    const first = makeOccupation("1092", "Empate raro", "Confirmación primero");
+    const second = makeOccupation("1091", "Empate raro", "Común raro");
+    const commonOnly = Array.from({ length: 12 }, (_, index) =>
+      makeOccupation(
+        String(1100 + index),
+        `Común solamente ${index}`,
+        `Confirmación común ${index}`,
+      ),
+    );
+    const rareOnly = Array.from({ length: 13 }, (_, index) =>
+      makeOccupation(
+        String(1112 + index),
+        `Raro solamente ${index}`,
+        `Confirmación rara ${index}`,
+      ),
+    );
+    const both = Array.from({ length: 87 }, (_, index) =>
+      makeOccupation(
+        String(1125 + index),
+        `Común raro relleno ${index}`,
+        `Confirmación relleno ${index}`,
+      ),
+    );
+    const index = buildOccupationIndex(
+      [first, second, ...commonOnly, ...rareOnly, ...both],
+      [
+        {
+          alias: "común",
+          occupationId: first.occupationId,
+          reviewStatus: "approved",
+          reviewedAt: "2026-08-04",
+          mappingVersion: "1.0.0",
+        },
+      ],
+    );
+
+    expect(index.search("comun raro").slice(0, 2)).toEqual([
+      candidate(second),
+      candidate(first),
     ]);
   });
 

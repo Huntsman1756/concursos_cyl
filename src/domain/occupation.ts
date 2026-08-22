@@ -37,7 +37,7 @@ interface OccupationSearchDocument {
 
 const FIELD_PRIORITIES = [4, 3, 2] as const;
 const IDF_WEIGHT = 0.1;
-const SCORE_EPSILON = 1e-9;
+const IDF_SCALE = 1000;
 
 function normalizeSearchText(value: string): string {
   return value
@@ -87,13 +87,14 @@ function documentFrequency(
   );
 }
 
-function idfMultiplier(documentCount: number, frequency: number): number {
+function idfWeight(documentCount: number, frequency: number): number {
   // IDF multiplies each term's evidence priority, so rare terms really can
   // distinguish otherwise similar AND matches without overruling the policy.
-  // Searching is intentionally O(D × Q × T) over approved documents (D),
-  // query terms (Q), and field tokens (T).
+  // Quantizing to a fixed integer makes score ties deterministic. Searching is
+  // intentionally O(D × Q × T) over approved documents (D), query terms (Q),
+  // and field tokens (T).
   const idf = Math.log1p((documentCount - frequency + 0.5) / (frequency + 0.5));
-  return 1 + Math.min(0.75, idf * IDF_WEIGHT);
+  return IDF_SCALE + Math.round(Math.min(0.75, idf * IDF_WEIGHT) * IDF_SCALE);
 }
 
 export function loadApprovedMappings(
@@ -179,16 +180,17 @@ export function buildOccupationIndex(
             matchesEveryTerm = false;
             break;
           }
+          // Priority is per term, not global to the query: a rare confirmation
+          // term can outweigh a common alias term in an AND search. Both the
+          // weight and this accumulated score are integers at IDF_SCALE.
           score +=
-            priority * idfMultiplier(documents.length, frequencies[termIndex]);
+            priority * idfWeight(documents.length, frequencies[termIndex]);
         }
         if (matchesEveryTerm) scored.push({ document, score });
       }
 
       scored.sort((left, right) => {
-        if (Math.abs(left.score - right.score) > SCORE_EPSILON) {
-          return right.score - left.score;
-        }
+        if (left.score !== right.score) return right.score - left.score;
         const labelOrder = labelCollator.compare(
           left.document.candidate.preferredLabel,
           right.document.candidate.preferredLabel,
