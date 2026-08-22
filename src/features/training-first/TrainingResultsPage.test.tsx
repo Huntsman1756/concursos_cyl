@@ -403,6 +403,21 @@ describe("TrainingResultsPage", () => {
         name: "Ocupaciones revisadas",
       }),
     ).toHaveAttribute("href", "#ocupaciones-revisadas");
+    expect(document.getElementById("donde-estudiar")).toHaveAccessibleName(
+      "Dónde estudiar",
+    );
+    expect(document.getElementById("contexto-provincial")).toHaveAccessibleName(
+      "Contexto provincial",
+    );
+    expect(
+      document.getElementById("distribucion-centros"),
+    ).toHaveAccessibleName("Distribución de centros");
+    expect(
+      document.getElementById("salidas-profesionales"),
+    ).toHaveAccessibleName("Salidas profesionales oficiales");
+    expect(
+      document.getElementById("ocupaciones-revisadas"),
+    ).toHaveAccessibleName("Grupos de ocupación revisados para buscar ofertas");
     const nextActions = screen.getByRole("navigation", {
       name: "Siguientes pasos",
     });
@@ -722,7 +737,7 @@ describe("TrainingResultsPage", () => {
       name: "Programador web para servicios públicos",
     });
     await user.click(within(card).getByText("Ver evidencia y requisitos"));
-    const headings = Array.from(card.querySelectorAll(".evidence-step h3")).map(
+    const headings = Array.from(card.querySelectorAll(".evidence-step h4")).map(
       (heading) => heading.textContent,
     );
     expect(headings).toEqual([

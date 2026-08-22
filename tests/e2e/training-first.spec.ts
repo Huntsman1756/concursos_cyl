@@ -203,6 +203,23 @@ test("live DAW results shows formacion link and approved occupation", async ({
     name: "Distribución de centros",
   });
   await expect(distribution).toBeVisible();
+  const headingLayout = await distribution
+    .locator(".territorial-distribution__heading")
+    .evaluate((element) => {
+      const eyebrow = element.querySelector("p")?.getBoundingClientRect();
+      const title = element.querySelector("h2")?.getBoundingClientRect();
+      return {
+        aligned:
+          eyebrow !== undefined &&
+          title !== undefined &&
+          Math.abs(eyebrow.left - title.left) <= 1,
+        stacked:
+          eyebrow !== undefined &&
+          title !== undefined &&
+          title.top >= eyebrow.bottom,
+      };
+    });
+  expect(headingLayout).toEqual({ aligned: true, stacked: true });
   await expect(
     distribution.getByRole("table", { name: "Centros por provincia" }),
   ).toBeVisible();

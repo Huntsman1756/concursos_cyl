@@ -67,7 +67,7 @@ export function TrainingRouteCard({
           mappingVersion={link.mappingVersion}
         />
         <div className="route-availability">
-          <h3>Oferta formativa en Castilla y León</h3>
+          <h4>Oferta formativa en Castilla y León</h4>
           {offerings.length === 0 ? (
             <p>
               No hay centros publicados para este ciclo en esta instantánea.

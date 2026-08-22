@@ -27,13 +27,12 @@ export function RouteReadyProvider({
   const announce = useCallback(
     (message: string) => {
       if (announcedPathname.current === pathname) return;
-      const isInitialAnnouncement = announcedPathname.current === null;
       announcedPathname.current = pathname;
       setAnnouncement({ message, pathname });
       const activeElement = document.activeElement;
       if (
-        !isInitialAnnouncement &&
-        (activeElement === document.body || activeElement === mainRef.current)
+        activeElement === document.body ||
+        activeElement === mainRef.current
       ) {
         mainRef.current?.focus({ preventScroll: true });
       }

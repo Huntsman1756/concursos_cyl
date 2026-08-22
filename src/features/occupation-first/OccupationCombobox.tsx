@@ -128,7 +128,7 @@ export function OccupationCombobox({
         role="combobox"
         autoComplete="off"
         aria-autocomplete="list"
-        aria-expanded={hasListbox ? true : undefined}
+        aria-expanded={hasListbox}
         aria-controls={hasListbox ? listboxId : undefined}
         aria-describedby={`${inputId}-hint`}
         placeholder="Ej.: programación web"

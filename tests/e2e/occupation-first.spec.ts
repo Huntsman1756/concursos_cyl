@@ -143,7 +143,7 @@ test("occupation search and an unknown route make absence explicit", async ({
   ).not.toHaveAttribute("aria-controls");
   await expect(
     page.getByRole("combobox", { name: "¿En qué ocupación quieres trabajar?" }),
-  ).not.toHaveAttribute("aria-expanded");
+  ).toHaveAttribute("aria-expanded", "false");
 
   await page.goto("/desde-ocupacion/occupation%3Acno11%3A9999");
   await expect(

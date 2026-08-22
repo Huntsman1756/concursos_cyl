@@ -82,6 +82,10 @@ a:focus-visible {
   margin-inline: auto;
 }
 
+.page-content:focus {
+  outline: none;
+}
+
 .site-header__inner {
   display: flex;
   min-height: 5.5rem;
@@ -1074,7 +1078,7 @@ summary:focus-visible {
   border-top: 1px solid var(--color-border);
 }
 
-.evidence-step h3 {
+.evidence-step h4 {
   margin: 0 0 var(--space-3);
   color: var(--color-primary);
   font-size: 1.125rem;
@@ -1175,7 +1179,8 @@ summary:focus-visible {
 }
 
 .training-route-card h2,
-.training-route-card h3 {
+.training-route-card h3,
+.training-route-card h4 {
   margin: var(--space-2) 0;
   color: var(--color-primary);
   font-size: clamp(1.4rem, 4vw, 1.8rem);
@@ -1205,7 +1210,7 @@ summary:focus-visible {
   border-top: 1px solid var(--color-border);
 }
 
-.route-availability h3 {
+.route-availability h4 {
   margin: 0 0 var(--space-2);
   color: var(--color-primary);
   font-size: 1.05rem;

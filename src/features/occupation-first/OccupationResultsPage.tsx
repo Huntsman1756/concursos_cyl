@@ -290,7 +290,11 @@ export function OccupationResultsPage() {
           </div>
         </dl>
       </section>
-      <div id="mercado-laboral" tabIndex={-1}>
+      <div
+        id="mercado-laboral"
+        aria-labelledby="occupation-market-evidence-title"
+        tabIndex={-1}
+      >
         <OccupationMarketEvidence
           manifest={state.manifest}
           cnoCode={occupation.classificationCode}

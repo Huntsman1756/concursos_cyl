@@ -170,22 +170,6 @@ describe("App", () => {
     ).toBeVisible();
   });
 
-  it("does not move focus to the main region when the initial route becomes ready", async () => {
-    cleanup();
-    render(
-      <MemoryRouter initialEntries={["/accesibilidad"]}>
-        <App />
-      </MemoryRouter>,
-    );
-
-    expect(
-      await screen.findByRole("status", { name: "Contenido listo" }),
-    ).toBeVisible();
-    expect(
-      screen.getByRole("main", { name: "Contenido principal" }),
-    ).not.toHaveFocus();
-  });
-
   it("routes the comparison navigation to the income-only page", async () => {
     cleanup();
     render(

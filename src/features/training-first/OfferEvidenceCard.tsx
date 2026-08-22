@@ -76,7 +76,7 @@ export function OfferEvidenceCard(props: OfferEvidenceCardProps) {
       <details className="offer-card__evidence">
         <summary>Ver evidencia y requisitos</summary>
         <div className="evidence-step">
-          <h3>Por qué aparece</h3>
+          <h4>Por qué aparece</h4>
           <p>{relationshipCopy(props.match)}</p>
           <EvidenceDisclosure
             quote={link.sourceQuote}
@@ -86,7 +86,7 @@ export function OfferEvidenceCard(props: OfferEvidenceCardProps) {
           />
         </div>
         <div className="evidence-step">
-          <h3>Qué publica la vacante</h3>
+          <h4>Qué publica la vacante</h4>
           {props.match.requirements.length === 0 ? (
             <div className="requirement-state requirement-state--unpublished">
               <strong>Requisito no publicado</strong>
@@ -116,7 +116,7 @@ export function OfferEvidenceCard(props: OfferEvidenceCardProps) {
           )}
         </div>
         <div className="evidence-step">
-          <h3>Tu comprobación</h3>
+          <h4>Tu comprobación</h4>
           <div
             className={`evidence-state${props.evidenceState === "declared_explicit_gap" ? " evidence-state--gap" : ""}`}
           >
@@ -140,7 +140,7 @@ export function OfferEvidenceCard(props: OfferEvidenceCardProps) {
         </div>
       </details>
       <div className="evidence-step">
-        <h3>Siguiente acción</h3>
+        <h4>Siguiente acción</h4>
         <ActionPanel
           programs={props.programs}
           actions={props.actions}

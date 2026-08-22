@@ -86,6 +86,22 @@ test("home exposes one chosen journey, navigation, freshness, and no automated a
   ).toEqual([]);
 });
 
+test("the initial ready-state focus does not outline the whole page", async ({
+  page,
+}) => {
+  await page.goto("/");
+  await expect(
+    page.getByRole("status", { name: "Contenido listo" }),
+  ).toBeAttached();
+  const main = page.locator("main#main-content");
+  await expect(main).toBeFocused();
+  await expect
+    .poll(() =>
+      main.evaluate((element) => getComputedStyle(element).outlineStyle),
+    )
+    .toBe("none");
+});
+
 test("the keyboard focus indicator is visible and opaque", async ({ page }) => {
   await page.goto("/");
   const submit = page.getByRole("button", {

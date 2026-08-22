@@ -345,6 +345,12 @@ describe("occupation-first results", () => {
     expect(
       within(cards[1]).getByText("Curso de especialización · IFC03SD"),
     ).toBeVisible();
+    expect(
+      screen.getAllByRole("heading", {
+        level: 4,
+        name: "Oferta formativa en Castilla y León",
+      }),
+    ).toHaveLength(2);
     expect(screen.getByText(/Oferta FP JCyL: copia del/u)).toBeVisible();
     expect(
       screen.getAllByText(
@@ -372,6 +378,12 @@ describe("occupation-first results", () => {
         name: "Rutas formativas",
       }),
     ).toHaveAttribute("href", "#rutas-formativas");
+    expect(document.getElementById("mercado-laboral")).toHaveAccessibleName(
+      "Mercado laboral de esta ocupación",
+    );
+    expect(document.getElementById("rutas-formativas")).toHaveAccessibleName(
+      "FP relacionadas",
+    );
     expect(
       screen.queryByText(/mejor|puntuación|compatibilidad|%/i),
     ).not.toBeInTheDocument();

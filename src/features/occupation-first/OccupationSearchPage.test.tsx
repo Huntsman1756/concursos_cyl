@@ -192,7 +192,7 @@ describe("occupation-first search", () => {
     expect(
       screen.getByText("No encontramos una ocupación oficial con ese nombre."),
     ).toBeVisible();
-    expect(input).not.toHaveAttribute("aria-expanded");
+    expect(input).toHaveAttribute("aria-expanded", "false");
     expect(input).not.toHaveAttribute("aria-controls");
     expect(input).not.toHaveAttribute("aria-activedescendant");
     expect(screen.queryByRole("listbox")).not.toBeInTheDocument();

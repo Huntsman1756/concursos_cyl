@@ -694,9 +694,14 @@ export function TrainingResultsPage() {
         onRequestLoad={requestOutcome}
       />
       <section className="decision-evidence" aria-label="Evidencia territorial">
-        <div id="donde-estudiar" className="study-section" tabIndex={-1}>
+        <div
+          id="donde-estudiar"
+          className="study-section"
+          aria-labelledby="donde-estudiar-heading"
+          tabIndex={-1}
+        >
           <div className="section-heading">
-            <h2>Dónde estudiar</h2>
+            <h2 id="donde-estudiar-heading">Dónde estudiar</h2>
             <span>
               {studyCenters.length}{" "}
               {studyCenters.length === 1 ? "centro" : "centros"}
@@ -728,10 +733,11 @@ export function TrainingResultsPage() {
         <div
           id="contexto-provincial"
           className="regional-context"
+          aria-labelledby="contexto-provincial-heading"
           tabIndex={-1}
         >
           <div className="section-heading">
-            <h2>Contexto provincial</h2>
+            <h2 id="contexto-provincial-heading">Contexto provincial</h2>
             <span>Contratos registrados</span>
           </div>
           {latestProvincialContracts.length === 0 ? (
@@ -770,7 +776,11 @@ export function TrainingResultsPage() {
         </div>
       </section>
       {educationCenterDirectorySnapshot !== undefined && (
-        <div id="distribucion-centros" tabIndex={-1}>
+        <div
+          id="distribucion-centros"
+          aria-labelledby="territorial-distribution-title"
+          tabIndex={-1}
+        >
           <TerritorialDistribution
             centers={territorialCenters}
             sourceUrl={educationCenterDirectorySnapshot.sourceUrl}
@@ -788,9 +798,12 @@ export function TrainingResultsPage() {
       <section
         id="salidas-profesionales"
         className="occupations-section"
+        aria-labelledby="salidas-profesionales-heading"
         tabIndex={-1}
       >
-        <h2>Salidas profesionales oficiales</h2>
+        <h2 id="salidas-profesionales-heading">
+          Salidas profesionales oficiales
+        </h2>
         <p>
           TodoFP identifica estos perfiles para el título. Describen trabajos a
           los que prepara el ciclo; no significan que exista ahora una oferta
@@ -827,9 +840,12 @@ export function TrainingResultsPage() {
         <section
           id="ocupaciones-revisadas"
           className="occupations-section"
+          aria-labelledby="ocupaciones-revisadas-heading"
           tabIndex={-1}
         >
-          <h2>Grupos de ocupación revisados para buscar ofertas</h2>
+          <h2 id="ocupaciones-revisadas-heading">
+            Grupos de ocupación revisados para buscar ofertas
+          </h2>
           <ul className="reviewed-occupation-list">
             {resolvedOccupations.map((occupation) => (
               <li key={occupation.occupationId}>
