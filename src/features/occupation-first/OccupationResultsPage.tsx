@@ -14,6 +14,7 @@ import {
   type LoadedFoundationResourceSubset,
 } from "../../data/generatedDataClient";
 import { loadApprovedMappings } from "../../domain/occupation";
+import { OccupationMarketEvidence } from "./OccupationMarketEvidence";
 import { TrainingRouteCard } from "./TrainingRouteCard";
 
 interface ReadyState {
@@ -265,6 +266,10 @@ export function OccupationResultsPage() {
           </div>
         </dl>
       </section>
+      <OccupationMarketEvidence
+        manifest={state.manifest}
+        cnoCode={occupation.classificationCode}
+      />
       <p className="coverage-note">
         Cobertura en revisión. Un resultado ausente no demuestra que no exista
         formación relacionada.

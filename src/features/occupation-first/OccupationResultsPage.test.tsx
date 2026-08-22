@@ -2,6 +2,10 @@ import { cleanup, render, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { MemoryRouter } from "react-router-dom";
 import { afterEach, describe, expect, it, vi } from "vitest";
+import {
+  SEPE_CYL_PROVINCES,
+  SEPE_OCCUPATION_MARKET_ATTRIBUTION,
+} from "../../../data/schemas/sepeOccupationMarket";
 import { currentManifestFixture } from "../../../tests/fixtures/generatedManifest";
 import { AppRoutes } from "../../app/routes";
 
@@ -102,12 +106,59 @@ interface FetchOptions {
   occupations?: unknown[];
   relationshipLinks?: readonly unknown[];
   stale?: boolean;
+  sepeResource?: unknown[];
+  sepeStale?: boolean;
 }
+
+const sepeRecord = {
+  period: "2026-07",
+  cno: {
+    code: occupation.classificationCode,
+    label: occupation.preferredLabel,
+  },
+  national: {
+    registeredContracts: {
+      total: 116,
+      people: 115,
+      monthlyVariationPercent: -4.92,
+      annualVariationPercent: -17.14,
+    },
+    registeredUnemployment: {
+      total: 2478,
+      monthlyVariationPercent: 2.65,
+      annualVariationPercent: 17.5,
+    },
+  },
+  provinces: SEPE_CYL_PROVINCES.map((province, index) => ({
+    province,
+    registeredContracts: {
+      total: index === 0 ? 0 : index + 1,
+      monthlyVariationPercent: index === 0 ? 0 : 1.1,
+      annualVariationPercent: index === 0 ? 0 : 2.2,
+    },
+    ...(index === 1
+      ? {}
+      : {
+          registeredUnemployment: {
+            total: index + 10,
+            monthlyVariationPercent: 0,
+            annualVariationPercent: -1.5,
+          },
+        }),
+  })),
+  source: {
+    url: "https://www.sepe.es/HomeSepe/occupation/2713",
+    retrievedAt: "2026-08-22T09:30:00Z",
+    attribution: SEPE_OCCUPATION_MARKET_ATTRIBUTION,
+  },
+} as const;
 
 function installFetch({
   occupations = [occupation],
   relationshipLinks = links,
   stale = false,
+  sepeResource,
+  sepeStale = false,
 }: FetchOptions = {}): void {
   const base = currentManifestFixture({
     snapshotFetchedAt: "2026-08-05T07:52:50.485Z",
@@ -142,7 +193,8 @@ function installFetch({
         resourcePath:
           "/data/v1/snapshots/build-1/training-occupation-links.json",
       },
-    },
+    } as typeof base.resourceSnapshots &
+      Record<string, { resourcePath: string; [key: string]: unknown }>,
   };
   const offerings = [
     offering(programs[0], "A", "Ávila", "on_site"),
@@ -163,6 +215,18 @@ function installFetch({
       relationshipLinks,
     ],
   ]);
+  if (sepeResource !== undefined) {
+    const sepePath = "/data/v1/snapshots/build-1/sepe-occupation-market.json";
+    manifest.resourceSnapshots.sepeOccupationMarket = {
+      ...snapshot,
+      sourceId: "sepe-occupation-market",
+      sourceUrl: sepeRecord.source.url,
+      resourcePath: sepePath,
+      qualityStatus: sepeStale ? "stale" : "passed",
+      recordCount: sepeResource.length,
+    };
+    resources.set(sepePath, sepeResource);
+  }
   vi.stubGlobal(
     "fetch",
     vi.fn((input: RequestInfo | URL) => {
@@ -357,6 +421,131 @@ describe("occupation-first results", () => {
         /No se han podido actualizar los datos formativos/i,
       ),
     ).toBeVisible();
+  });
+
+  it("shows exact SEPE evidence before the reviewed FP routes", async () => {
+    installFetch({ sepeResource: [sepeRecord] });
+    render(
+      <MemoryRouter
+        initialEntries={[`/desde-ocupacion/${occupation.occupationId}`]}
+      >
+        <AppRoutes />
+      </MemoryRouter>,
+    );
+
+    const panel = await screen.findByRole("region", {
+      name: "Mercado laboral de esta ocupación",
+    });
+    expect(panel).toHaveTextContent(
+      "Registros oficiales del SEPE para CNO-11 2713",
+    );
+    await within(panel).findByText("julio de 2026");
+    expect(panel).toHaveTextContent("julio de 2026");
+    expect(panel).toHaveTextContent("Contratos registrados");
+    expect(panel).toHaveTextContent("116");
+    expect(panel).toHaveTextContent("Personas contratadas");
+    expect(panel).toHaveTextContent("115");
+    expect(panel).toHaveTextContent("Paro registrado");
+    expect(panel).toHaveTextContent("2478");
+    expect(panel).toHaveTextContent("−4,92 %");
+    expect(panel).toHaveTextContent("17,5 %");
+    expect(panel).toHaveTextContent("No publicado");
+    expect(
+      within(panel).getByRole("link", { name: /Fuente oficial SEPE/i }),
+    ).toHaveAttribute("href", sepeRecord.source.url);
+    const provinceTable = within(panel).getByRole("table");
+    expect(within(provinceTable).getAllByRole("row")).toHaveLength(10);
+    for (const province of SEPE_CYL_PROVINCES) {
+      expect(within(provinceTable).getByText(province)).toBeVisible();
+    }
+  });
+
+  it("keeps the FP route usable when SEPE loading fails", async () => {
+    installFetch({ sepeResource: [{ invalid: true }] });
+    render(
+      <MemoryRouter
+        initialEntries={[`/desde-ocupacion/${occupation.occupationId}`]}
+      >
+        <AppRoutes />
+      </MemoryRouter>,
+    );
+
+    expect(
+      await screen.findByText(
+        "No hemos podido cargar los datos del mercado laboral del SEPE.",
+      ),
+    ).toBeVisible();
+    expect(await screen.findAllByTestId("training-route-card")).toHaveLength(2);
+  });
+
+  it("renders SEPE evidence without a reviewed FP route and does not reload the manifest", async () => {
+    installFetch({ relationshipLinks: [], sepeResource: [sepeRecord] });
+    render(
+      <MemoryRouter
+        initialEntries={[`/desde-ocupacion/${occupation.occupationId}`]}
+      >
+        <AppRoutes />
+      </MemoryRouter>,
+    );
+
+    expect(
+      await screen.findByRole("region", {
+        name: "Mercado laboral de esta ocupación",
+      }),
+    ).toBeVisible();
+    expect(
+      screen.getByText(
+        "Aún no hay una ruta formativa revisada para esta ocupación.",
+      ),
+    ).toBeVisible();
+    const manifestRequests = vi
+      .mocked(fetch)
+      .mock.calls.filter(
+        ([request]) => String(request) === "/data/v1/manifest.json",
+      );
+    expect(manifestRequests).toHaveLength(1);
+    for (const [request, init] of vi.mocked(fetch).mock.calls) {
+      const method = request instanceof Request ? request.method : init?.method;
+      expect(method ?? "GET").toBe("GET");
+    }
+  });
+
+  it("explains an unavailable SEPE resource without blocking the result page", async () => {
+    installFetch();
+    render(
+      <MemoryRouter
+        initialEntries={[`/desde-ocupacion/${occupation.occupationId}`]}
+      >
+        <AppRoutes />
+      </MemoryRouter>,
+    );
+
+    expect(
+      await screen.findByText(
+        "El recurso de mercado laboral del SEPE no está disponible para esta copia de datos.",
+      ),
+    ).toBeVisible();
+    expect(await screen.findAllByTestId("training-route-card")).toHaveLength(2);
+  });
+
+  it("warns only about a stale SEPE resource", async () => {
+    installFetch({ sepeResource: [sepeRecord], sepeStale: true });
+    render(
+      <MemoryRouter
+        initialEntries={[`/desde-ocupacion/${occupation.occupationId}`]}
+      >
+        <AppRoutes />
+      </MemoryRouter>,
+    );
+
+    expect(
+      await screen.findByText(
+        "La copia del mercado laboral del SEPE puede estar desactualizada.",
+      ),
+    ).toBeVisible();
+    expect(
+      screen.queryByText(/datos formativos.*última copia/i),
+    ).not.toBeInTheDocument();
   });
 
   it("keeps results interaction to static reads without browser-state writes", async () => {
