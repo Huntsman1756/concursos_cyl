@@ -1,15 +1,15 @@
 {
   "schemaVersion": 1,
-  "status": "pending",
-  "recordedAt": "2026-08-22T11:18:56Z",
+  "status": "verified",
+  "recordedAt": "2026-08-22T11:45:15Z",
   "expectedRootUrl": "https://salida-cyl.157-90-22-40.sslip.io/",
-  "auditHeadSha": null,
+  "auditHeadSha": "f4ea4d2422adb5dc08e457e5d03a7debc3cea18a",
   "coverageSourceCommitSha": "05f905397d22b217c4716c88a2406d802892fb6d",
   "coverageFreezeDocumentCommitSha": "538182f89e91bb8025bfeef0a59e79957f131c23",
   "coverageFreezeCommitSha": "538182f89e91bb8025bfeef0a59e79957f131c23",
-  "publicationCommitSha": null,
-  "localReviewHeadSha": null,
-  "captureProductCommitSha": null,
+  "publicationCommitSha": "ae66d5bc8393dbb02818471ad7eb850e4d4367de",
+  "localReviewHeadSha": "f4ea4d2422adb5dc08e457e5d03a7debc3cea18a",
+  "captureProductCommitSha": "ae66d5bc8393dbb02818471ad7eb850e4d4367de",
   "manifest": {
     "snapshotId": "20260822085631889-7bbe69380f6d",
     "sha256": "92afc80f2b839ed95def95bc90bdd3b6ad3a1363fb12904f7b109fafc92b2f18",
@@ -21,82 +21,82 @@
   },
   "localGates": {
     "coverageFreeze": {
-      "status": "pending",
+      "status": "passed",
       "command": "npm exec -- tsx scripts/release/validateContestFreeze.ts",
-      "checkedCommitSha": null,
-      "verifiedAt": null
+      "checkedCommitSha": "ae66d5bc8393dbb02818471ad7eb850e4d4367de",
+      "verifiedAt": "2026-08-22T11:45:15Z"
     },
     "submissionPack": {
-      "status": "pending",
+      "status": "passed",
       "command": "npm exec -- tsx scripts/release/renderContestSubmission.ts",
-      "checkedCommitSha": null,
-      "verifiedAt": null
+      "checkedCommitSha": "ae66d5bc8393dbb02818471ad7eb850e4d4367de",
+      "verifiedAt": "2026-08-22T11:33:10Z"
     },
     "evidenceManifest": {
-      "status": "pending",
-      "captureCount": 0,
+      "status": "passed",
+      "captureCount": 13,
       "command": "npm exec -- tsx scripts/release/validateContestEvidenceManifest.ts",
-      "checkedCommitSha": null,
-      "verifiedAt": null,
-      "note": "Las capturas anteriores son históricas y no verifican todavía esta publicación."
+      "checkedCommitSha": "ae66d5bc8393dbb02818471ad7eb850e4d4367de",
+      "verifiedAt": "2026-08-22T11:45:15Z",
+      "note": "Las 13 capturas corresponden al commit de producto publicado y se conservaron en el commit de evidencia."
     },
     "fullVitestCi": {
-      "status": "pending",
+      "status": "passed",
       "command": "npm run test:release -- --testTimeout=60000",
-      "checkedCommitSha": null,
-      "verifiedAt": null
+      "checkedCommitSha": "ae66d5bc8393dbb02818471ad7eb850e4d4367de",
+      "verifiedAt": "2026-08-22T11:38:25Z"
     },
     "playwright": {
-      "status": "pending",
+      "status": "passed",
       "command": "npm run test:e2e:chromium",
-      "checkedCommitSha": null,
-      "verifiedAt": null
+      "checkedCommitSha": "ae66d5bc8393dbb02818471ad7eb850e4d4367de",
+      "verifiedAt": "2026-08-22T11:41:18Z"
     },
     "lint": {
-      "status": "pending",
+      "status": "passed",
       "command": "npm run lint",
-      "checkedCommitSha": null,
-      "verifiedAt": null
+      "checkedCommitSha": "ae66d5bc8393dbb02818471ad7eb850e4d4367de",
+      "verifiedAt": "2026-08-22T11:33:28Z"
     },
     "build": {
-      "status": "pending",
+      "status": "passed",
       "command": "npm run build",
-      "checkedCommitSha": null,
-      "verifiedAt": null
+      "checkedCommitSha": "ae66d5bc8393dbb02818471ad7eb850e4d4367de",
+      "verifiedAt": "2026-08-22T11:41:57Z"
     },
     "license": {
-      "status": "pending",
+      "status": "passed",
       "command": "npm run license:check",
-      "checkedCommitSha": null,
-      "verifiedAt": null
+      "checkedCommitSha": "ae66d5bc8393dbb02818471ad7eb850e4d4367de",
+      "verifiedAt": "2026-08-22T11:33:00Z"
     },
     "prettier": {
-      "status": "pending",
+      "status": "passed",
       "command": "npm run format:check",
-      "checkedCommitSha": null,
-      "verifiedAt": null
+      "checkedCommitSha": "ae66d5bc8393dbb02818471ad7eb850e4d4367de",
+      "verifiedAt": "2026-08-22T11:33:21Z"
     },
     "gitDiffCheck": {
-      "status": "pending",
+      "status": "passed",
       "command": "git diff --check",
-      "checkedCommitSha": null,
-      "verifiedAt": null
+      "checkedCommitSha": "ae66d5bc8393dbb02818471ad7eb850e4d4367de",
+      "verifiedAt": "2026-08-22T11:45:15Z"
     }
   },
   "deployment": {
-    "status": "pending",
-    "commitSha": null,
-    "workflowRunId": null,
-    "workflowUrl": null,
-    "liveRootVerified": false,
-    "verifiedAt": null
+    "status": "verified",
+    "commitSha": "ae66d5bc8393dbb02818471ad7eb850e4d4367de",
+    "workflowRunId": "32570552646",
+    "workflowUrl": "https://github.com/Huntsman1756/concursos_cyl/actions/runs/32570552646",
+    "liveRootVerified": true,
+    "verifiedAt": "2026-08-22T11:43:00Z"
   },
   "publicVerification": {
-    "status": "pending",
+    "status": "verified",
     "rootUrl": "https://salida-cyl.157-90-22-40.sslip.io/",
-    "rootHttpStatus": null,
-    "manifestSha256": null,
-    "verifiedAt": null
+    "rootHttpStatus": 200,
+    "manifestSha256": "92afc80f2b839ed95def95bc90bdd3b6ad3a1363fb12904f7b109fafc92b2f18",
+    "verifiedAt": "2026-08-22T11:43:00Z"
   },
   "humanApproval": {
     "finalApplicationTextApproved": false,

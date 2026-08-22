@@ -9,7 +9,12 @@
 - Cobertura: 113 cualificaciones base, 130 claves de modalidad, 264 relaciones aprobadas y 21 alias.
 - Cola oficial: 26 cualificaciones pendientes y 15 resultados sin publicación revalidados contra el catálogo actual.
 - El manifest conserva 21 recursos inmutables del snapshot, incluido SEPE con 116 registros canónicos.
-- La publicación final, el workflow y las capturas de este freeze aún están pendientes. La evidencia de despliegues anteriores se conserva solo como historial.
+- Commit de producto publicado: `ae66d5bc8393dbb02818471ad7eb850e4d4367de`.
+- GitHub Pages y el VPS publican ese mismo commit; el workflow
+  `32570552646` terminó completamente verde.
+- Las 13 capturas del producto publicado se conservaron en el commit de
+  evidencia `f4ea4d2422adb5dc08e457e5d03a7debc3cea18a` y el registro técnico está
+  verificado.
 - La muestra determinista vigente registra 15 PASS y 0 FAIL tras una segunda
   revisión independiente de la URL oficial y la cita registrada. Es una muestra
   delimitada: las otras 249 relaciones no fueron muestreadas y no se afirma una
@@ -18,8 +23,10 @@
 
 ## Estado de publicación
 
-- GitHub Pages y el VPS deben publicar el mismo commit P; todavía no se ha registrado ese commit ni su workflow.
-- Las capturas PNG deben regenerarse desde P y revisarse visualmente antes de registrar evidencia verificada.
+- GitHub Pages y el VPS publican el mismo commit P, registrado junto al
+  workflow y al hash del manifest en `release-evidence.json`.
+- Las capturas PNG se regeneraron desde P, pasaron los controles automáticos y
+  fueron revisadas visualmente antes de registrar la evidencia.
 - La candidatura no se envía automáticamente. Identidad, declaraciones, consentimiento y envío oficial requieren autorización humana explícita separada.
 
 ## Orden de trabajo
