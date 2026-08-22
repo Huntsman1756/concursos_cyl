@@ -23,3 +23,17 @@ The following five approved FP↔CNO-11 relationships are removed from the curat
 ## Verification
 
 The absence assertions are in `scripts/data/restoreFrontierReviewedCoverage.test.ts` and `scripts/data/validateCuratedMappings.test.ts`. The focused restoration and curated-mapping suites pass after the removals. The snapshot and manifest are regenerated only after the current unpublished snapshot is retired; historical snapshots remain byte-identical.
+
+## Final evidence remediation (round 5)
+
+The retained `ELE02B|9700` relationship now uses the exact official quote
+“Peones de industrias manufactureras.”. The retained `SSC01S|2252`
+relationship now uses the contiguous BOE phrase “Educador o educadora infantil
+en primer ciclo de educación infantil”.
+
+`HOT02S|3510` is removed from curated data and restoration coverage, without a
+replacement: “Agente de viajes” corresponds to CNO `4421`, not `3510`.
+The resulting publication contains 248 mappings; reviewed base coverage stays
+at 104 and program-key coverage at 121. The active snapshot is regenerated
+after retiring the prior unpublished snapshot; August 8/9 snapshots remain
+unchanged.

@@ -53,6 +53,7 @@ const CONTEST_EVIDENCE_REMEDIATION_KEYS = [
   "IMP01S|2640",
   "AGA01B|4121",
   "COM01M|5300",
+  "HOT02S|3510",
 ] as const;
 
 describe("mergeFrontierReviewedCoverage", () => {

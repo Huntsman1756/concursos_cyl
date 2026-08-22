@@ -988,7 +988,7 @@
     "uncoveredPrograms": 0
   },
   {
-    "approvedMappings": 4,
+    "approvedMappings": 3,
     "coverageNote": "Incluye relaciones ocupacionales revisadas y citadas.",
     "coverageStatus": "reviewed",
     "draftMappings": 0,
@@ -2530,7 +2530,7 @@
     "uncoveredPrograms": 2
   },
   {
-    "approvedMappings": 13,
+    "approvedMappings": 12,
     "coverageNote": "La cobertura mide relaciones revisadas del catálogo, no la existencia de salidas profesionales.",
     "draftMappings": 0,
     "familyCode": "HOT",

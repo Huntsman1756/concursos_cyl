@@ -875,7 +875,7 @@
     "relationshipType": "official_output",
     "reviewStatus": "approved",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2015/08/28/774",
-    "sourceQuote": "Peón de industrias manufactureras.",
+    "sourceQuote": "Peones de industrias manufactureras.",
     "reviewedAt": "2026-08-21",
     "mappingVersion": "1.0.0"
   },
@@ -1327,16 +1327,6 @@
     "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/hosteleria-turismo/servicios-restauracion.html",
     "sourceQuote": "Camarera / camarero de bar-cafetería o restaurante.",
     "reviewedAt": "2026-08-13",
-    "mappingVersion": "1.0.0"
-  },
-  {
-    "trainingProgramKey": "HOT02S",
-    "occupationId": "occupation:cno11:3510",
-    "relationshipType": "official_output",
-    "reviewStatus": "approved",
-    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/hosteleria-turismo/agencias-viajes-gestion-eventos.html",
-    "sourceQuote": "Agente de viajes.",
-    "reviewedAt": "2026-08-21",
     "mappingVersion": "1.0.0"
   },
   {
@@ -2275,7 +2265,7 @@
     "relationshipType": "official_output",
     "reviewStatus": "approved",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2007/10/29/1394",
-    "sourceQuote": "Educador o educadora infantil en primer ciclo de educación infantil.",
+    "sourceQuote": "Educador o educadora infantil en primer ciclo de educación infantil",
     "reviewedAt": "2026-08-12",
     "mappingVersion": "1.0.0"
   },

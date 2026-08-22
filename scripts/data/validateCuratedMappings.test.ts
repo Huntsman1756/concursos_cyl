@@ -1532,7 +1532,7 @@ describe("curated occupation mappings", () => {
           IMP02MD: 2,
           IMP02S: 1,
           FME03S: 1,
-          HOT02S: 4,
+          HOT02S: 3,
           SSC02S: 3,
           ADG02S: 4,
           ADG02SD: 4,
@@ -1676,7 +1676,6 @@ describe("curated occupation mappings", () => {
     expect(occupationIdsFor("IMP02S")).toEqual(["occupation:cno11:5811"]);
     expect(occupationIdsFor("FME03S")).toEqual(["occupation:cno11:3126"]);
     expect(occupationIdsFor("HOT02S")).toEqual([
-      "occupation:cno11:3510",
       "occupation:cno11:4123",
       "occupation:cno11:4411",
       "occupation:cno11:5492",
@@ -1948,7 +1947,7 @@ describe("curated occupation mappings", () => {
       ),
     );
 
-    expect.soft(approved.links).toHaveLength(249);
+    expect.soft(approved.links).toHaveLength(248);
     expect.soft(reviewedBaseKeys.size).toBe(104);
     expect.soft(approvedProgramKeys.size).toBe(121);
   });
@@ -1965,6 +1964,7 @@ describe("curated occupation mappings", () => {
       "IMP01S|2640",
       "AGA01B|4121",
       "COM01M|5300",
+      "HOT02S|3510",
     ];
     const approvedKeys = new Set(
       approved.links.map(
@@ -1974,11 +1974,42 @@ describe("curated occupation mappings", () => {
     );
 
     expect(remediatedKeys.filter((key) => approvedKeys.has(key))).toEqual([]);
-    expect(approved.links).toHaveLength(249);
-    expect(approvedKeys.size).toBe(249);
+    expect(approved.links).toHaveLength(248);
+    expect(approvedKeys.size).toBe(248);
     expect(
       new Set(approved.links.map((link) => link.trainingProgramKey)).size,
     ).toBe(121);
+  });
+
+  it("retains the corrected official evidence quotes", async () => {
+    const curated = await loadCuratedMappingsFromDisk(
+      process.cwd(),
+      diskPrograms,
+    );
+    const approved = loadApprovedMappings(curated);
+    const quoteFor = (key: string) => {
+      const [programKey, occupationCode] = key.split("|");
+      return approved.links.find(
+        (link) =>
+          link.trainingProgramKey === programKey &&
+          link.occupationId === `occupation:cno11:${occupationCode}`,
+      )?.sourceQuote;
+    };
+
+    expect(quoteFor("ELE02B|9700")).toBe(
+      "Peones de industrias manufactureras.",
+    );
+    expect(quoteFor("SSC01S|2252")).toBe(
+      "Educador o educadora infantil en primer ciclo de educación infantil",
+    );
+    expect(approved.links).not.toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          trainingProgramKey: "HOT02S",
+          occupationId: "occupation:cno11:3510",
+        }),
+      ]),
+    );
   });
 
   it("publishes exactly the conservative Task 4 FP-to-CNO wave", async () => {
