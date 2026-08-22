@@ -1,5 +1,10 @@
 import { decodeHTML } from "entities";
 
+import {
+  isCanonicalSepeOccupationMarketUrl,
+  SEPE_OCCUPATION_MARKET_RESOLVER_ENDPOINT,
+} from "../../data/schemas/sepeOccupationMarket";
+
 export { SEPE_OCCUPATION_MARKET_RESOLVER_ENDPOINT } from "../../data/schemas/sepeOccupationMarket";
 
 const OFFICIAL_ORIGIN = "https://www.sepe.es/";
@@ -61,23 +66,12 @@ function officialDetailUrl(
     return undefined;
   }
 
-  let pathname: string;
-  try {
-    pathname = decodeURIComponent(resolved.pathname);
-  } catch {
-    return undefined;
-  }
-  const marker = `_mensuales_${request.year}_${request.month}_${request.cnoCode}`;
-  const markerIndex = pathname.indexOf(marker);
-  if (markerIndex < 0) return undefined;
-  const afterMarker = pathname[markerIndex + marker.length];
-  if (
-    afterMarker !== undefined &&
-    !["-", "_", ".", "~", "/"].includes(afterMarker)
-  ) {
-    return undefined;
-  }
-  return resolved.href;
+  return isCanonicalSepeOccupationMarketUrl(resolved.href, {
+    cnoCode: request.cnoCode,
+    period: `${request.year}-${request.month}`,
+  })
+    ? resolved.href
+    : undefined;
 }
 
 function pageText(html: string): string {
@@ -101,8 +95,10 @@ export async function resolveSepeOccupationMarketPage(
   options: ResolveSepeOccupationMarketPageOptions,
 ): Promise<SepeOccupationMarketResolution> {
   const { year, month } = validateRequest(request);
-  if (options.endpoint.trim() === "") {
-    throw new Error("SEPE occupation market resolver endpoint is required.");
+  if (options.endpoint !== SEPE_OCCUPATION_MARKET_RESOLVER_ENDPOINT) {
+    throw new Error(
+      `SEPE occupation market resolver endpoint must be the official endpoint: ${SEPE_OCCUPATION_MARKET_RESOLVER_ENDPOINT}.`,
+    );
   }
   const body = new URLSearchParams({
     "list-mode": "detail",
@@ -139,7 +135,7 @@ export async function resolveSepeOccupationMarketPage(
   if (matchingUrls.length > 0) {
     return { status: "published", sourceUrl: matchingUrls[0] as string };
   }
-  if (hrefs.length === 0 && explicitlyReportsNoDocument(html)) {
+  if (explicitlyReportsNoDocument(html)) {
     return { status: "not-published", reason: "no-document" };
   }
   throw new Error(

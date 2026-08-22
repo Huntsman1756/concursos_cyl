@@ -6,11 +6,11 @@ const endpoint =
   "https://www.sepe.es/HomeSepe/que-es-observatorio/informacion-mt-por-ocupacion/main/04/content/resultados";
 
 const canonicalResultPath =
-  "/que-es-observatorio/informacion-mt-por-ocupacion/informacion-mercado-trabajo-por-ocupacion~_mensuales_2026_07_2252-Profesores-de-ensenanza-secundaria~.html";
+  "/HomeSepe/que-es-observatorio/informacion-mt-por-ocupacion/informacion-mercado-trabajo-por-ocupacion~_mensuales_2026_07_2252-T-cnicos-en-educaci-n-infantil~.html";
 
 describe("resolveSepeOccupationMarketPage", () => {
   it("posts the official fields and resolves an accent-mangled relative CNO link", async () => {
-    const body = `<a href="${canonicalResultPath}">CNO-11 2252: Profesores de enseñanza secundaria · Julio 2026</a>`;
+    const body = `<a href="${canonicalResultPath}">CNO-11 2252: Técnicos en educación infantil · Julio 2026</a>`;
     const resolution = await resolveSepeOccupationMarketPage(
       { cnoCode: "2252", period: "2026-07" },
       {
@@ -37,7 +37,7 @@ describe("resolveSepeOccupationMarketPage", () => {
 
   it("accepts the official Dise-adores URL and never derives a label slug", async () => {
     const resultPath =
-      "/que-es-observatorio/informacion-mt-por-ocupacion/informacion-mercado-trabajo-por-ocupacion~_mensuales_2026_07_2721-Dise-adores-y-administradores-de-bases-de-datos~.html";
+      "/HomeSepe/que-es-observatorio/informacion-mt-por-ocupacion/informacion-mercado-trabajo-por-ocupacion~_mensuales_2026_07_2721-Dise-adores-y-administradores-de-bases-de-datos~.html";
     const resolution = await resolveSepeOccupationMarketPage(
       { cnoCode: "2721", period: "2026-07" },
       {
@@ -64,6 +64,22 @@ describe("resolveSepeOccupationMarketPage", () => {
           fetchPage: async () =>
             new Response(
               '<div class="no-results">No se ha encontrado ningún documento para la consulta.</div>',
+              { status: 200 },
+            ),
+        },
+      ),
+    ).resolves.toEqual({ status: "not-published", reason: "no-document" });
+  });
+
+  it("recognises an explicit no-document marker alongside unrelated navigation anchors", async () => {
+    await expect(
+      resolveSepeOccupationMarketPage(
+        { cnoCode: "2252", period: "2026-07" },
+        {
+          endpoint,
+          fetchPage: async () =>
+            new Response(
+              '<nav><a href="/HomeSepe/">Inicio</a></nav><div>No se ha encontrado ningún documento para la consulta.</div>',
               { status: 200 },
             ),
         },
@@ -110,5 +126,18 @@ describe("resolveSepeOccupationMarketPage", () => {
         },
       ),
     ).rejects.toThrow(/429|HTTP/i);
+  });
+
+  it("rejects an arbitrary resolver endpoint before making a request", async () => {
+    const fetchPage = async () => {
+      throw new Error("request must not be made");
+    };
+
+    await expect(
+      resolveSepeOccupationMarketPage(
+        { cnoCode: "2252", period: "2026-07" },
+        { endpoint: "https://evil.example/resolver", fetchPage },
+      ),
+    ).rejects.toThrow(/endpoint|official|SEPE/i);
   });
 });

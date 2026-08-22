@@ -20,8 +20,41 @@ const Percentage = z.number().finite();
 const CnoCode = z.string().regex(/^\d{4}$/u);
 const Period = z.string().regex(/^\d{4}-(?:0[1-9]|1[0-2])$/u);
 
+const SEPE_OCCUPATION_MARKET_DETAIL_PATH =
+  /^\/HomeSepe\/que-es-observatorio\/informacion-mt-por-ocupacion\/informacion-mercado-trabajo-por-ocupacion~_mensuales_(\d{4})_(0[1-9]|1[0-2])_(\d{4})-[^/]+~\.html$/u;
+
 export const SEPE_OCCUPATION_MARKET_RESOLVER_ENDPOINT =
   "https://www.sepe.es/HomeSepe/que-es-observatorio/informacion-mt-por-ocupacion/main/04/content/resultados";
+
+export function isCanonicalSepeOccupationMarketUrl(
+  value: string,
+  expected?: { cnoCode: string; period: string },
+): boolean {
+  let parsed: URL;
+  try {
+    parsed = new URL(value);
+  } catch {
+    return false;
+  }
+  if (
+    parsed.protocol !== "https:" ||
+    parsed.hostname.toLocaleLowerCase("en-US") !== "www.sepe.es" ||
+    parsed.search !== "" ||
+    parsed.hash !== ""
+  ) {
+    return false;
+  }
+  let pathname: string;
+  try {
+    pathname = decodeURIComponent(parsed.pathname);
+  } catch {
+    return false;
+  }
+  const match = SEPE_OCCUPATION_MARKET_DETAIL_PATH.exec(pathname);
+  if (match === null || expected === undefined) return match !== null;
+  const [, year, month, cnoCode] = match;
+  return `${year}-${month}` === expected.period && cnoCode === expected.cnoCode;
+}
 
 export const SepeOccupationMetricSchema = z
   .object({
@@ -86,10 +119,7 @@ const SourceUrl = z
     try {
       const parsed = new URL(value);
       const hostname = parsed.hostname.toLocaleLowerCase("en-US");
-      return (
-        parsed.protocol === "https:" &&
-        (hostname === "sepe.es" || hostname.endsWith(".sepe.es"))
-      );
+      return parsed.protocol === "https:" && hostname === "www.sepe.es";
     } catch {
       return false;
     }

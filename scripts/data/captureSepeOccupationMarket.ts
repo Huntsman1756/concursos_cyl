@@ -4,6 +4,7 @@ import { dirname, isAbsolute, resolve } from "node:path";
 import { pathToFileURL } from "node:url";
 
 import {
+  isCanonicalSepeOccupationMarketUrl,
   SEPE_OCCUPATION_MARKET_RESOLVER_ENDPOINT,
   SepeOccupationMarketResourceSchema,
   type SepeOccupationMarket,
@@ -17,8 +18,6 @@ import {
 
 const PERIOD_PATTERN = /^\d{4}-(?:0[1-9]|1[0-2])$/u;
 const CNO_PATTERN = /^\d{4}$/u;
-const SEPE_MARKET_PAGE_BASE =
-  "https://www.sepe.es/HomeSepe/es/que-es-observatorio/informacion-mt-por-ocupacion/informacion-mercado-trabajo-por-ocupacion";
 
 export interface SepeOccupationMarketCatalogueEntry {
   code: string;
@@ -61,10 +60,6 @@ export interface CaptureSepeOccupationMarketOptions {
   }) => Promise<SepeOccupationMarketResolution>;
   resolverEndpoint?: string;
   retrievedAt?: string | (() => string);
-  sourceUrlFor?: (
-    occupation: SepeOccupationMarketCatalogueEntry,
-    period: string,
-  ) => string;
 }
 
 export type SepeOccupationMarketCaptureOptions =
@@ -106,20 +101,6 @@ function validatePeriod(period: string): void {
   }
 }
 
-function legacySourceUrl(
-  occupation: SepeOccupationMarketCatalogueEntry,
-  period: string,
-): string {
-  const [year, month] = period.split("-") as [string, string];
-  const slug = occupation.label
-    .replace(/ñ/giu, "-")
-    .normalize("NFD")
-    .replace(/\p{M}/gu, "")
-    .replace(/[^\p{Letter}\p{Number}]+/gu, "-")
-    .replace(/^-+|-+$/gu, "");
-  return `${SEPE_MARKET_PAGE_BASE}~_mensuales_${year}_${month}_${occupation.code}-${slug}~.html`;
-}
-
 function resolvedRetrievedAt(
   retrievedAt: CaptureSepeOccupationMarketOptions["retrievedAt"],
 ): string {
@@ -146,9 +127,14 @@ async function normalizeFetchedPage(
         `SEPE occupation market page unavailable for CNO ${context.occupation.code}: HTTP ${result.status}.`,
       );
     }
+    if (result.url !== "" && result.url !== context.sourceUrl) {
+      throw new Error(
+        `SEPE occupation market page redirected away from the resolver URL for CNO ${context.occupation.code}.`,
+      );
+    }
     return {
       html: await result.text(),
-      sourceUrl: result.url || context.sourceUrl,
+      sourceUrl: context.sourceUrl,
     };
   }
   if (result === null || typeof result !== "object") {
@@ -161,9 +147,17 @@ async function normalizeFetchedPage(
       `SEPE occupation market fetch returned malformed HTML for CNO ${context.occupation.code}.`,
     );
   }
+  if (
+    result.sourceUrl !== undefined &&
+    result.sourceUrl !== context.sourceUrl
+  ) {
+    throw new Error(
+      `SEPE occupation market fetch provenance does not match the resolver URL for CNO ${context.occupation.code}.`,
+    );
+  }
   return {
     html: result.html,
-    sourceUrl: result.sourceUrl ?? context.sourceUrl,
+    sourceUrl: context.sourceUrl,
     retrievedAt: result.retrievedAt,
   };
 }
@@ -219,20 +213,11 @@ export async function captureSepeOccupationMarket(
   const notPublishedCodes = new Set<string>();
   const resolvePage =
     options.resolvePage ??
-    (catalogue.length === 1
-      ? async ({ period }: { cnoCode: string; period: string }) => ({
-          status: "published" as const,
-          sourceUrl: (options.sourceUrlFor ?? legacySourceUrl)(
-            catalogue[0] as SepeOccupationMarketCatalogueEntry,
-            period,
-          ),
-        })
-      : (request: { cnoCode: string; period: string }) =>
-          resolveSepeOccupationMarketPage(request, {
-            endpoint:
-              options.resolverEndpoint ??
-              SEPE_OCCUPATION_MARKET_RESOLVER_ENDPOINT,
-          }));
+    ((request: { cnoCode: string; period: string }) =>
+      resolveSepeOccupationMarketPage(request, {
+        endpoint:
+          options.resolverEndpoint ?? SEPE_OCCUPATION_MARKET_RESOLVER_ENDPOINT,
+      }));
 
   let nextIndex = 0;
   const worker = async (): Promise<void> => {
@@ -260,6 +245,16 @@ export async function captureSepeOccupationMarket(
       }
 
       const sourceUrl = resolution.sourceUrl;
+      if (
+        !isCanonicalSepeOccupationMarketUrl(sourceUrl, {
+          cnoCode: occupation.code,
+          period: options.period,
+        })
+      ) {
+        throw new Error(
+          `SEPE occupation market resolver returned a noncanonical URL for CNO ${occupation.code}.`,
+        );
+      }
       let fetched: SepeOccupationMarketFetchResult;
       try {
         fetched = await options.fetchPage({

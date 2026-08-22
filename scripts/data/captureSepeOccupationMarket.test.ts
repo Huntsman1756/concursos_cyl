@@ -2,7 +2,7 @@ import { readFile, mkdtemp, rm, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 
-import { afterEach, describe, expect, it } from "vitest";
+import { afterEach, describe, expect, it, vi } from "vitest";
 
 import {
   captureSepeOccupationMarket,
@@ -15,7 +15,7 @@ const fixturePath = join(
   "tests/fixtures/sepe-occupation-market/cno-2721-2026-07.html",
 );
 const sourceUrl =
-  "https://www.sepe.es/HomeSepe/es/que-es-observatorio/informacion-mt-por-ocupacion/informacion-mercado-trabajo-por-ocupacion~_mensuales_2026_07_2721-Dise-adores-y-administradores-de-bases-de-datos~.html";
+  "https://www.sepe.es/HomeSepe/que-es-observatorio/informacion-mt-por-ocupacion/informacion-mercado-trabajo-por-ocupacion~_mensuales_2026_07_2721-Dise-adores-y-administradores-de-bases-de-datos~.html";
 const catalogue: SepeOccupationMarketCatalogueEntry[] = [
   {
     code: "2721",
@@ -25,6 +25,7 @@ const catalogue: SepeOccupationMarketCatalogueEntry[] = [
 const temporaryRoots: string[] = [];
 
 afterEach(async () => {
+  vi.unstubAllGlobals();
   await Promise.all(
     temporaryRoots.splice(0).map((root) => rm(root, { recursive: true })),
   );
@@ -35,6 +36,38 @@ async function fixture(): Promise<string> {
 }
 
 describe("captureSepeOccupationMarket", () => {
+  it("uses the official resolver for a single catalogue entry by default", async () => {
+    const root = await mkdtemp(join(tmpdir(), "salida-cyl-sepe-capture-"));
+    temporaryRoots.push(root);
+    const outputPath = join(root, "sepe-occupation-market.json");
+    const resolverUrl =
+      "https://www.sepe.es/HomeSepe/que-es-observatorio/informacion-mt-por-ocupacion/informacion-mercado-trabajo-por-ocupacion~_mensuales_2026_07_2252-T-cnicos-en-educaci-n-infantil~.html";
+    let resolverCalls = 0;
+    vi.stubGlobal(
+      "fetch",
+      vi.fn(async (input: string) => {
+        resolverCalls += 1;
+        expect(input).toBe(SEPE_OCCUPATION_MARKET_RESOLVER_ENDPOINT);
+        return new Response(
+          `<a href="${resolverUrl.replace("https://www.sepe.es", "")}">CNO-11 2252: Técnicos en educación infantil · Julio 2026</a>`,
+        );
+      }),
+    );
+
+    await captureSepeOccupationMarket({
+      period: "2026-07",
+      catalogue: [{ code: "2252", label: "Técnicos en educación infantil" }],
+      outputPath,
+      retrievedAt: "2026-08-22T09:30:00Z",
+      fetchPage: async ({ sourceUrl }) => ({
+        html: (await fixture()).replaceAll("CNO-2721", "CNO-2252"),
+        sourceUrl,
+      }),
+    });
+
+    expect(resolverCalls).toBe(1);
+  });
+
   it("writes a deterministic, period-complete capture through an injected fetcher", async () => {
     const root = await mkdtemp(join(tmpdir(), "salida-cyl-sepe-capture-"));
     temporaryRoots.push(root);
@@ -46,6 +79,7 @@ describe("captureSepeOccupationMarket", () => {
       catalogue,
       outputPath,
       retrievedAt: "2026-08-22T09:30:00Z",
+      resolvePage: async () => ({ status: "published", sourceUrl }),
       fetchPage: async ({ occupation, period }) => {
         expect(occupation.code).toBe("2721");
         expect(period).toBe("2026-07");
@@ -98,6 +132,13 @@ describe("captureSepeOccupationMarket", () => {
         ],
         outputPath,
         retrievedAt: "2026-08-22T09:30:00Z",
+        resolvePage: async ({ cnoCode }) => ({
+          status: "published",
+          sourceUrl:
+            cnoCode === "2721"
+              ? sourceUrl
+              : "https://www.sepe.es/HomeSepe/que-es-observatorio/informacion-mt-por-ocupacion/informacion-mercado-trabajo-por-ocupacion~_mensuales_2026_07_3812-T-cnicos-de-operaciones~.html",
+        }),
         fetchPage: async ({ occupation }) =>
           occupation.code === "2721"
             ? { html, sourceUrl }
@@ -121,7 +162,14 @@ describe("captureSepeOccupationMarket", () => {
         catalogue,
         outputPath,
         retrievedAt: "2026-08-22T09:30:00Z",
-        fetchPage: async () => ({ html: await fixture(), sourceUrl }),
+        resolvePage: async () => ({
+          status: "published",
+          sourceUrl: sourceUrl.replace("_2026_07_", "_2026_08_"),
+        }),
+        fetchPage: async ({ sourceUrl: resolvedUrl }) => ({
+          html: await fixture(),
+          sourceUrl: resolvedUrl,
+        }),
       }),
     ).rejects.toThrow(/period/i);
 
@@ -137,7 +185,7 @@ describe("captureSepeOccupationMarket", () => {
     const sourceUrls = new Map(
       codes.map((code) => [
         code,
-        `https://www.sepe.es/que-es-observatorio/informacion-mt-por-ocupacion/informacion-mercado-trabajo-por-ocupacion~_mensuales_2026_07_${code}-canonical~.html`,
+        `https://www.sepe.es/HomeSepe/que-es-observatorio/informacion-mt-por-ocupacion/informacion-mercado-trabajo-por-ocupacion~_mensuales_2026_07_${code}-canonical~.html`,
       ]),
     );
     let active = 0;
@@ -215,7 +263,7 @@ describe("captureSepeOccupationMarket", () => {
         resolvePage: async () => ({
           status: "published",
           sourceUrl:
-            "https://www.sepe.es/que-es-observatorio/informacion-mt-por-ocupacion/informacion-mercado-trabajo-por-ocupacion~_mensuales_2026_07_2721-canonical~.html",
+            "https://www.sepe.es/HomeSepe/que-es-observatorio/informacion-mt-por-ocupacion/informacion-mercado-trabajo-por-ocupacion~_mensuales_2026_07_2721-canonical~.html",
         }),
         fetchPage: async ({ sourceUrl }) => ({
           html: (await fixture()).replaceAll("CNO-2721", "CNO-3812"),
@@ -224,5 +272,58 @@ describe("captureSepeOccupationMarket", () => {
       }),
     ).rejects.toThrow(/CNO|mismatch/i);
     await expect(readFile(outputPath, "utf8")).resolves.toBe(previous);
+  });
+
+  it("rejects a noncanonical resolver URL before fetching its page", async () => {
+    const root = await mkdtemp(join(tmpdir(), "salida-cyl-sepe-capture-"));
+    temporaryRoots.push(root);
+    const outputPath = join(root, "sepe-occupation-market.json");
+    let fetchCalls = 0;
+
+    await expect(
+      captureSepeOccupationMarket({
+        period: "2026-07",
+        catalogue,
+        outputPath,
+        retrievedAt: "2026-08-22T09:30:00Z",
+        resolvePage: async () => ({
+          status: "published",
+          sourceUrl:
+            "https://observatorio.sepe.es/HomeSepe/que-es-observatorio/informacion-mt-por-ocupacion/informacion-mercado-trabajo-por-ocupacion~_mensuales_2026_07_2721-Dise-adores~.html",
+        }),
+        fetchPage: async () => {
+          fetchCalls += 1;
+          return { html: await fixture(), sourceUrl };
+        },
+      }),
+    ).rejects.toThrow(/canonical|SEPE|URL/i);
+    expect(fetchCalls).toBe(0);
+  });
+
+  it("rejects a redirected Response URL instead of replacing resolver provenance", async () => {
+    const root = await mkdtemp(join(tmpdir(), "salida-cyl-sepe-capture-"));
+    temporaryRoots.push(root);
+    const outputPath = join(root, "sepe-occupation-market.json");
+    const resolverUrl =
+      "https://www.sepe.es/HomeSepe/que-es-observatorio/informacion-mt-por-ocupacion/informacion-mercado-trabajo-por-ocupacion~_mensuales_2026_07_2721-Dise-adores-y-administradores-de-bases-de-datos~.html";
+    const redirected = new Response(await fixture());
+    Object.defineProperty(redirected, "url", {
+      value: "https://www.sepe.es/HomeSepe/redirected-document.html",
+      configurable: true,
+    });
+
+    await expect(
+      captureSepeOccupationMarket({
+        period: "2026-07",
+        catalogue,
+        outputPath,
+        retrievedAt: "2026-08-22T09:30:00Z",
+        resolvePage: async () => ({
+          status: "published",
+          sourceUrl: resolverUrl,
+        }),
+        fetchPage: async () => redirected,
+      }),
+    ).rejects.toThrow(/redirect|mismatch|provenance|source/i);
   });
 });

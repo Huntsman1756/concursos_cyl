@@ -8,6 +8,7 @@ import { format as formatPrettier } from "prettier";
 import { REVIEWED_PROGRAM_QUALIFICATION_LINKS } from "../../data/catalogs/reviewedProgramQualifications";
 import { REVIEWED_QUALIFICATIONS } from "../../data/catalogs/reviewedQualifications";
 import type { TrainingProgram } from "../../data/schemas/generated";
+import { adaptSepeOccupationMarketResource } from "../../data/schemas/sepeOccupationMarket";
 import { matchOffersForProgram } from "../../src/domain/offerMatching";
 import {
   validateCuratedMappings,
@@ -42,6 +43,7 @@ const RESOURCE_KEYS = [
   "provincialContracts",
   "publicEmploymentCalls",
   "publishedRequirements",
+  "sepeOccupationMarket",
   "trainingOccupationLinks",
   "trainingOfferings",
 ] as const;
@@ -640,12 +642,18 @@ function recomputeFreeze(
         "utf8",
       );
       const value = JSON.parse(text) as unknown;
+      const recordCount =
+        key === "sepeOccupationMarket"
+          ? adaptSepeOccupationMarketResource(value).records.length
+          : Array.isArray(value)
+            ? value.length
+            : -1;
       return [
         key,
         {
           resourcePath: specification.resourcePath,
           sha256: hashText(text),
-          recordCount: Array.isArray(value) ? value.length : -1,
+          recordCount,
         },
       ];
     }),

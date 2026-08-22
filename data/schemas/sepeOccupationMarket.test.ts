@@ -44,7 +44,7 @@ const validRecord = {
     },
   })),
   source: {
-    url: "https://www.sepe.es/HomeSepe/occupation/2721",
+    url: "https://www.sepe.es/HomeSepe/que-es-observatorio/informacion-mt-por-ocupacion/informacion-mercado-trabajo-por-ocupacion~_mensuales_2026_07_2721-Dise-adores-y-administradores-de-bases-de-datos~.html",
     retrievedAt: "2026-08-22T09:30:00Z",
     attribution: SEPE_OCCUPATION_MARKET_ATTRIBUTION,
   },
@@ -90,11 +90,23 @@ describe("SepeOccupationMarketSchema", () => {
           ...validRecord,
           source: {
             ...validRecord.source,
-            url: `${protocol}://www.sepe.es/HomeSepe/occupation/2721`,
+            url: `${protocol}://www.sepe.es/HomeSepe/que-es-observatorio/informacion-mt-por-ocupacion/informacion-mercado-trabajo-por-ocupacion~_mensuales_2026_07_2721-Dise-adores-y-administradores-de-bases-de-datos~.html`,
           },
         }),
       ).toThrow(/https|scheme|url/i);
     }
+    expect(() =>
+      SepeOccupationMarketSchema.parse({
+        ...validRecord,
+        source: {
+          ...validRecord.source,
+          url: validRecord.source.url.replace(
+            "www.sepe.es",
+            "observatorio.sepe.es",
+          ),
+        },
+      }),
+    ).toThrow(/https|host|SEPE|url/i);
   });
 
   it("rejects a duplicate or unknown Castilla y León province", () => {
