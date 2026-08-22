@@ -366,13 +366,16 @@ signature. Submission and identity fields remain human-only.
 The privacy copy will say that SALIDA stores no searches, answers, or results.
 It stores only the non-sensitive preferred search mode in `localStorage`.
 
-## Follow-up product specifications
+## Required pre-candidate product specification
 
 The searchable FP selector, province contract, printable orientation sheet,
-guided example, contextual links, metadata, footer, and methodology onboarding
-will each receive a separate specification or a deliberately grouped product
-specification after this release work. They are not acceptance criteria for this
-hardening change.
+guided example, contextual links, canonical metadata, and compact mobile
+navigation are specified in
+`docs/superpowers/specs/2026-08-22-contest-product-polish-design.md` and planned
+in `docs/superpowers/plans/2026-08-22-contest-product-polish.md`. That work is a
+hard checkpoint before Task 5 creates the definitive candidate bundle. Its UX
+acceptance criteria remain owned by the product specification rather than being
+silently folded into this release-hardening contract.
 
 Every accepted product change creates a new `sourceCommitSha`, artifact,
 deployment verification, and screenshot set. Product work cannot be merged into
@@ -401,12 +404,14 @@ work, or approve its own change.
    documents to remove deployment state; old schemas fail deterministically or
    migrate explicitly to pending evidence.
 3. Decouple runtime snapshot retention from contest evidence.
-4. Build and verify one immutable candidate artifact locally for both envelopes.
-5. Leave the new release evidence pending and prepare the exact publication and
+4. Complete and verify the approved product-polish plan on the release source
+   branch before freezing its identity.
+5. Build and verify one immutable candidate artifact locally for both envelopes.
+6. Leave the new release evidence pending and prepare the exact publication and
    recapture handoff; deployment requires separate authorization.
-6. Regenerate the submission package and verify the 1,000-word limit.
-7. Correct source, licence, privacy, and precedent documentation.
-8. Run unit, integration, end-to-end, accessibility, build, licence, format,
+7. Regenerate the submission package and verify the 1,000-word limit.
+8. Correct source, licence, privacy, and precedent documentation.
+9. Run unit, integration, end-to-end, accessibility, build, licence, format,
    and public-release verification.
 
 ## Acceptance criteria

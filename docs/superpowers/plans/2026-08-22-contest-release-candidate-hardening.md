@@ -587,6 +587,13 @@ rtk git commit -m "refactor(contest): migrate coverage freeze to schema 2"
 
 ### Task 5: Canonical core inventory, deployment envelopes, and candidate bundle
 
+**Hard precondition:** Complete and independently approve every task in
+`docs/superpowers/plans/2026-08-22-contest-product-polish.md` first. The product
+checkpoint must leave a clean worktree, a passing full automated/browser QA
+gate, the approved temporary canonical URL in `config/publication.json`, and no
+deployment or publication. Task 5 freezes the resulting product HEAD; it must
+not package an earlier source commit.
+
 **Files:**
 
 - Create: `scripts/release/artifactManifest.ts`
