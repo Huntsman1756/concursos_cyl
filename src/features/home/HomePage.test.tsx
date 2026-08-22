@@ -6,10 +6,51 @@ import {
   within,
 } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { MemoryRouter } from "react-router-dom";
+import { MemoryRouter, useLocation } from "react-router-dom";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { currentManifestFixture } from "../../../tests/fixtures/generatedManifest";
 import { HomePage } from "./HomePage";
+
+const program = {
+  programKey: "IFC03S",
+  programTitle: "Desarrollo de Aplicaciones Web",
+  level: "higher",
+  familyCode: "IFC",
+  familyName: "Informática y Comunicaciones",
+} as const;
+
+function responseFor(data: unknown): Response {
+  return new Response(JSON.stringify(data), {
+    status: 200,
+    headers: { "Content-Type": "application/json" },
+  });
+}
+
+function installHomeFetch(): void {
+  const manifest = currentManifestFixture();
+  const resources = new Map<string, unknown>([
+    ["/data/v1/manifest.json", manifest],
+    [manifest.resourceSnapshots.programs.resourcePath, [program]],
+    [manifest.resourceSnapshots.mappingCoverage.resourcePath, []],
+  ]);
+  vi.stubGlobal(
+    "fetch",
+    vi.fn((input: RequestInfo | URL) => {
+      const path = typeof input === "string" ? input : input.toString();
+      const payload = resources.get(path);
+      return Promise.resolve(
+        payload === undefined
+          ? new Response(null, { status: 404 })
+          : responseFor(payload),
+      );
+    }),
+  );
+}
+
+function LocationProbe() {
+  const location = useLocation();
+  return <output data-testid="location">{location.pathname}</output>;
+}
 
 afterEach(() => {
   cleanup();
@@ -18,6 +59,38 @@ afterEach(() => {
 });
 
 describe("HomePage", () => {
+  it("uses a searchable FP combobox and navigates only after official confirmation", async () => {
+    installHomeFetch();
+    const user = userEvent.setup();
+
+    render(
+      <MemoryRouter>
+        <HomePage />
+        <LocationProbe />
+      </MemoryRouter>,
+    );
+
+    const combobox = await screen.findByRole("combobox", {
+      name: /título de formación/i,
+    });
+    expect(combobox).toHaveAttribute("aria-autocomplete", "list");
+    expect(screen.queryAllByRole("option")).toHaveLength(0);
+
+    const submit = screen.getByRole("button", {
+      name: /ver las salidas de este título/i,
+    });
+    await user.type(combobox, "IFC03S");
+    expect(submit).toBeDisabled();
+
+    await user.keyboard("{ArrowDown}{Enter}");
+    expect(submit).toBeEnabled();
+
+    await user.click(submit);
+    expect(screen.getByTestId("location")).toHaveTextContent(
+      "/desde-fp/IFC03S",
+    );
+  });
+
   it("presents manifest-addressed reviewed coverage and excludes unsupported programs", async () => {
     const baseManifest = currentManifestFixture();
     const manifest = {

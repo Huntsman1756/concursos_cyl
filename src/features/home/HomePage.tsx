@@ -18,9 +18,13 @@ import type {
   TrainingProgram,
 } from "../../../data/schemas/generated";
 import { loadApprovedMappings } from "../../domain/occupation";
-import { trainingLevelLabel } from "../../domain/trainingPresentation";
+import {
+  featuredTrainingCoverage,
+  trainingLevelLabel,
+} from "../../domain/trainingPresentation";
 import { useRouteReady } from "../../app/RouteReadyContext";
 import { OccupationCombobox } from "../occupation-first/OccupationCombobox";
+import { TrainingCombobox } from "../training-first/TrainingCombobox";
 
 type FreshnessState =
   | { status: "loading" }
@@ -65,24 +69,6 @@ function initialSearchMode(): SearchMode {
   }
 }
 
-function featuredCoverage(
-  programs: Extract<MappingCoverage, { scope: "program" }>[],
-) {
-  const families = new Set<string>();
-  return [...programs]
-    .sort(
-      (left, right) =>
-        left.programTitle.localeCompare(right.programTitle, "es") ||
-        left.programKey.localeCompare(right.programKey),
-    )
-    .filter((program) => {
-      if (families.has(program.familyCode)) return false;
-      families.add(program.familyCode);
-      return true;
-    })
-    .slice(0, 3);
-}
-
 export function HomePage() {
   const navigate = useNavigate();
   const [freshness, setFreshness] = useState<FreshnessState>({
@@ -95,7 +81,8 @@ export function HomePage() {
     status: "loading",
   });
   const [searchMode, setSearchMode] = useState<SearchMode>(initialSearchMode);
-  const [selectedProgram, setSelectedProgram] = useState("");
+  const [selectedProgram, setSelectedProgram] =
+    useState<TrainingProgram | null>(null);
   const [confirmedOccupation, setConfirmedOccupation] =
     useState<Occupation | null>(null);
 
@@ -225,7 +212,9 @@ export function HomePage() {
 
   const featuredPrograms = useMemo(
     () =>
-      coverage.status === "ready" ? featuredCoverage(coverage.programs) : [],
+      coverage.status === "ready"
+        ? featuredTrainingCoverage(coverage.programs)
+        : [],
     [coverage],
   );
   const programsByKey = useMemo(
@@ -336,8 +325,8 @@ export function HomePage() {
                 className="search-entry__panel"
                 onSubmit={(event) => {
                   event.preventDefault();
-                  if (selectedProgram !== "") {
-                    navigate(`/desde-fp/${selectedProgram}`);
+                  if (selectedProgram !== null) {
+                    navigate(`/desde-fp/${selectedProgram.programKey}`);
                   }
                 }}
               >
@@ -348,29 +337,16 @@ export function HomePage() {
                 </p>
                 {searchData.status === "ready" ? (
                   <>
-                    <div className="search-entry__field">
-                      <label htmlFor="home-program">
-                        Título de Formación Profesional
-                      </label>
-                      <select
-                        id="home-program"
-                        value={selectedProgram}
-                        onChange={(event) =>
-                          setSelectedProgram(event.target.value)
-                        }
-                      >
-                        <option value="">Elige un título</option>
-                        {searchData.programs.map((program) => (
-                          <option
-                            key={program.programKey}
-                            value={program.programKey}
-                          >
-                            {program.programTitle} ({program.programKey})
-                          </option>
-                        ))}
-                      </select>
-                    </div>
-                    {selectedProgram === "" ? (
+                    <TrainingCombobox
+                      id="home-program"
+                      programs={searchData.programs}
+                      confirmedProgram={selectedProgram}
+                      onConfirm={setSelectedProgram}
+                      onClear={() => setSelectedProgram(null)}
+                      label="Título de Formación Profesional"
+                      hint="Escribe para buscar un ciclo oficial y confírmalo."
+                    />
+                    {selectedProgram === null ? (
                       <p className="search-entry__hint" id="program-required">
                         Elige un título.
                       </p>
@@ -378,9 +354,11 @@ export function HomePage() {
                     <button
                       className="search-entry__cta"
                       type="submit"
-                      disabled={selectedProgram === ""}
+                      disabled={selectedProgram === null}
                       aria-describedby={
-                        selectedProgram === "" ? "program-required" : undefined
+                        selectedProgram === null
+                          ? "program-required"
+                          : undefined
                       }
                     >
                       Ver las salidas de este título
