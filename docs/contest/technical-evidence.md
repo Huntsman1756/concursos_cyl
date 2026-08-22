@@ -5,7 +5,7 @@
 <!-- prettier-ignore -->
 | Campo | Valor |
 | --- | --- |
-| Commit fuente | `7a9a05a2ddcb3a89173a645e7308d327763a4e17` |
+| Commit fuente | `9df3ff3be447f0492d303d8dcfbb6a47c57271c7` |
 | Manifest | `public/data/v1/manifest.json` |
 | SHA-256 del manifest | `92afc80f2b839ed95def95bc90bdd3b6ad3a1363fb12904f7b109fafc92b2f18` |
 | Generado | 2026-08-22T08:56:31.889Z |
@@ -57,7 +57,7 @@ La cifra de ofertas es una unión de IDs de ofertas que pasan las reglas de matc
 
 ## Reproducibilidad
 
-Comandos ejecutados sobre el commit congelado:
+Comandos previstos para repetir las comprobaciones. Este documento no los da por ejecutados hasta que `release-evidence.json` quede verificado y ligado al commit de publicación:
 
 ```text
 npm run data:build
