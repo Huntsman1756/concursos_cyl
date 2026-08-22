@@ -792,6 +792,55 @@ describe("generated data client", () => {
     ]);
   });
 
+  it("keeps the FP discovery loader programs-only and forwards its abort signal", async () => {
+    const currentManifest = currentManifestFixture();
+    const programsPath =
+      currentManifest.resourceSnapshots.programs.resourcePath;
+    const requestedPaths: string[] = [];
+    const controller = new AbortController();
+    vi.stubGlobal(
+      "fetch",
+      vi.fn((input: string | URL | Request, init?: RequestInit) => {
+        const path =
+          typeof input === "string"
+            ? input
+            : input instanceof URL
+              ? input.pathname
+              : new URL(input.url).pathname;
+        requestedPaths.push(path);
+        expect(init?.signal).toBe(controller.signal);
+        return Promise.resolve(
+          new Response(JSON.stringify(foundationResourceValues.programs), {
+            status: 200,
+            headers: { "Content-Type": "application/json" },
+          }),
+        );
+      }),
+    );
+
+    const result = await loadFoundationResourceSubset(
+      currentManifest,
+      ["programs"],
+      { signal: controller.signal },
+    );
+
+    expect(result).toEqual({
+      contract: "current",
+      programs: foundationResourceValues.programs,
+    });
+    expect(requestedPaths).toEqual([programsPath]);
+    expect(
+      requestedPaths.some((path) =>
+        [
+          "centers.json",
+          "training-offerings.json",
+          "job-offers.json",
+          "outcome-indicators.json",
+        ].some((suffix) => path.endsWith(suffix)),
+      ),
+    ).toBe(false);
+  });
+
   it("loads retained pre-hardening payloads behind a stale immutable manifest", async () => {
     const paths = {
       programs: "/data/v1/snapshots/fixed-point/programs.json",

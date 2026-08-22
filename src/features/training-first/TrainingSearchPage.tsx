@@ -8,20 +8,13 @@ import {
   loadMappingCoverage,
   loadManifest,
 } from "../../data/generatedDataClient";
-import { trainingLevelLabel } from "../../domain/trainingPresentation";
+import {
+  featuredTrainingCoverage,
+  trainingLevelLabel,
+} from "../../domain/trainingPresentation";
+import { CYL_PROVINCES } from "../../domain/territory";
 import { useRouteReady } from "../../app/RouteReadyContext";
-
-const PROVINCES = [
-  "Ávila",
-  "Burgos",
-  "León",
-  "Palencia",
-  "Salamanca",
-  "Segovia",
-  "Soria",
-  "Valladolid",
-  "Zamora",
-] as const;
+import { TrainingCombobox } from "./TrainingCombobox";
 
 interface CatalogSummary {
   programCount: number;
@@ -31,11 +24,16 @@ interface CatalogSummary {
 export function TrainingSearchPage() {
   const navigate = useNavigate();
   const [programs, setPrograms] = useState<TrainingProgram[]>([]);
-  const [programKey, setProgramKey] = useState("");
+  const [confirmedProgram, setConfirmedProgram] =
+    useState<TrainingProgram | null>(null);
   const [coverage, setCoverage] = useState<MappingCoverage[]>([]);
   const [catalogSummary, setCatalogSummary] = useState<CatalogSummary | null>(
     null,
   );
+  const [levelFilter, setLevelFilter] = useState<TrainingProgram["level"] | "">(
+    "",
+  );
+  const [familyFilter, setFamilyFilter] = useState("");
   const [province, setProvince] = useState("");
   const [status, setStatus] = useState<"loading" | "ready" | "failed">(
     "loading",
@@ -78,27 +76,71 @@ export function TrainingSearchPage() {
     };
   }, []);
 
-  const sortedPrograms = useMemo(
+  const levelOptions = useMemo(
     () =>
-      [...programs].sort((left, right) =>
-        left.programTitle.localeCompare(right.programTitle, "es"),
+      [...new Set(programs.map((program) => program.level))].sort(
+        (left, right) =>
+          trainingLevelLabel(left).localeCompare(
+            trainingLevelLabel(right),
+            "es",
+          ),
       ),
     [programs],
   );
-  const validSelection = programs.some(
-    (program) => program.programKey === programKey,
+
+  const familyOptions = useMemo(() => {
+    const families = new Map<string, string>();
+    for (const program of programs) {
+      families.set(program.familyCode, program.familyName);
+    }
+    return [...families.entries()].sort(
+      ([leftCode, leftName], [rightCode, rightName]) =>
+        leftName.localeCompare(rightName, "es") ||
+        leftCode.localeCompare(rightCode),
+    );
+  }, [programs]);
+
+  const filteredPrograms = useMemo(
+    () =>
+      programs
+        .filter(
+          (program) =>
+            (levelFilter === "" || program.level === levelFilter) &&
+            (familyFilter === "" || program.familyCode === familyFilter),
+        )
+        .sort(
+          (left, right) =>
+            left.programTitle.localeCompare(right.programTitle, "es", {
+              sensitivity: "base",
+            }) || left.programKey.localeCompare(right.programKey),
+        ),
+    [familyFilter, levelFilter, programs],
   );
+
+  const guidedExamples = useMemo(() => {
+    const programsByKey = new Map(
+      programs.map((program) => [program.programKey, program]),
+    );
+    return featuredTrainingCoverage(coverage).flatMap((row) => {
+      const program = programsByKey.get(row.programKey);
+      return program === undefined ? [] : [{ row, program }];
+    });
+  }, [coverage, programs]);
+
   const selectedCoverage = coverage.find(
     (row): row is Extract<MappingCoverage, { scope: "program" }> =>
-      row.scope === "program" && row.programKey === programKey,
+      row.scope === "program" &&
+      row.programKey === confirmedProgram?.programKey,
   );
 
   function submit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    if (!validSelection) return;
+    if (confirmedProgram === null) return;
     const query =
       province === "" ? "" : `?province=${encodeURIComponent(province)}`;
-    navigate(`/desde-fp/${encodeURIComponent(programKey)}${query}`);
+    navigate(
+      `/desde-fp/${encodeURIComponent(confirmedProgram.programKey)}${query}`,
+    );
   }
 
   return (
@@ -156,55 +198,137 @@ export function TrainingSearchPage() {
         </div>
       )}
       {status === "ready" && (
-        <form className="training-search" onSubmit={submit}>
-          <div className="form-field">
-            <label htmlFor="training-program">
-              Ciclo de Formación Profesional
-            </label>
-            <select
-              id="training-program"
-              value={programKey}
-              onChange={(event) => setProgramKey(event.target.value)}
-            >
-              <option value="">Selecciona un ciclo</option>
-              {sortedPrograms.map((program) => (
-                <option key={program.programKey} value={program.programKey}>
-                  {program.programTitle} — {trainingLevelLabel(program.level)} ·{" "}
-                  {program.programKey}
-                </option>
-              ))}
-            </select>
-          </div>
-          {selectedCoverage !== undefined && (
-            <p role="status" aria-live="polite">
-              {selectedCoverage.coverageStatus === "reviewed"
-                ? `Relaciones revisadas con ${selectedCoverage.approvedMappings} grupos de ocupación.`
-                : "Salidas oficiales disponibles; todavía no hay una relación revisada para buscar ofertas."}
-            </p>
-          )}
-          <div className="form-field">
-            <label htmlFor="training-province">Provincia (opcional)</label>
-            <select
-              id="training-province"
-              value={province}
-              onChange={(event) => setProvince(event.target.value)}
-            >
-              <option value="">Toda Castilla y León</option>
-              {PROVINCES.map((item) => (
-                <option key={item} value={item}>
-                  {item}
-                </option>
-              ))}
-            </select>
-          </div>
-          <button
-            className="primary-button"
-            type="submit"
-            disabled={!validSelection}
+        <>
+          <section
+            className="training-guided-examples"
+            aria-label="Ejemplos guiados de ciclos"
           >
-            Ver salidas y ofertas
-          </button>
-        </form>
+            <h2>Empieza con un ciclo relacionado</h2>
+            <p>
+              Ejemplos de ciclos con relaciones revisadas; no es el catálogo
+              completo.
+            </p>
+            <ul>
+              {guidedExamples.map(({ row, program }) => (
+                <li key={program.programKey}>
+                  <Link
+                    to={`/desde-fp/${encodeURIComponent(program.programKey)}`}
+                  >
+                    {program.programTitle}
+                  </Link>
+                  <span>
+                    {trainingLevelLabel(program.level)} · {row.familyName}
+                  </span>
+                </li>
+              ))}
+            </ul>
+          </section>
+
+          <form className="training-search" onSubmit={submit}>
+            <div className="form-field">
+              <label htmlFor="training-level">Filtrar por nivel</label>
+              <select
+                id="training-level"
+                value={levelFilter}
+                onChange={(event) => {
+                  const nextLevel = event.target.value as
+                    TrainingProgram["level"] | "";
+                  setLevelFilter(nextLevel);
+                  if (
+                    confirmedProgram !== null &&
+                    nextLevel !== "" &&
+                    confirmedProgram.level !== nextLevel
+                  ) {
+                    setConfirmedProgram(null);
+                  }
+                }}
+              >
+                <option value="">Todos los niveles</option>
+                {levelOptions.map((level) => (
+                  <option key={level} value={level}>
+                    {trainingLevelLabel(level)}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            <div className="form-field">
+              <label htmlFor="training-family">
+                Filtrar por familia profesional
+              </label>
+              <select
+                id="training-family"
+                value={familyFilter}
+                onChange={(event) => {
+                  const nextFamily = event.target.value;
+                  setFamilyFilter(nextFamily);
+                  if (
+                    confirmedProgram !== null &&
+                    nextFamily !== "" &&
+                    confirmedProgram.familyCode !== nextFamily
+                  ) {
+                    setConfirmedProgram(null);
+                  }
+                }}
+              >
+                <option value="">Todas las familias profesionales</option>
+                {familyOptions.map(([familyCode, familyName]) => (
+                  <option key={familyCode} value={familyCode}>
+                    {familyName}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            <div className="form-field">
+              <TrainingCombobox
+                id="training-program"
+                programs={filteredPrograms}
+                confirmedProgram={confirmedProgram}
+                onConfirm={setConfirmedProgram}
+                onClear={() => setConfirmedProgram(null)}
+                label="Ciclo de Formación Profesional"
+                hint="Busca un ciclo oficial por nombre, familia, nivel o código."
+              />
+            </div>
+            {selectedCoverage !== undefined && (
+              <p role="status" aria-live="polite">
+                {selectedCoverage.coverageStatus === "reviewed"
+                  ? `Relaciones revisadas con ${selectedCoverage.approvedMappings} grupos de ocupación.`
+                  : "Salidas oficiales disponibles; todavía no hay una relación revisada para buscar ofertas."}
+              </p>
+            )}
+            <div className="form-field">
+              <label htmlFor="training-province">
+                Provincia para el contexto (opcional)
+              </label>
+              <p id="training-province-hint">
+                Se usa solo para mostrar contexto provincial; no filtra los
+                centros publicados.
+              </p>
+              <select
+                id="training-province"
+                aria-describedby="training-province-hint"
+                value={province}
+                onChange={(event) => setProvince(event.target.value)}
+              >
+                <option value="">Toda Castilla y León</option>
+                {CYL_PROVINCES.map((item) => (
+                  <option key={item} value={item}>
+                    {item}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <button
+              className="primary-button"
+              type="submit"
+              disabled={confirmedProgram === null}
+            >
+              Ver salidas y ofertas
+            </button>
+          </form>
+        </>
       )}
     </section>
   );

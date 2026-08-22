@@ -1,6 +1,6 @@
 import { cleanup, render, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { MemoryRouter } from "react-router-dom";
+import { MemoryRouter, useLocation } from "react-router-dom";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { currentManifestFixture } from "../../../tests/fixtures/generatedManifest";
 import { AppRoutes } from "../../app/routes";
@@ -13,6 +13,22 @@ const program = {
   familyName: "Informática y Comunicaciones",
 } as const;
 
+const administrationProgram = {
+  programKey: "ADG01S",
+  programTitle: "Administración y Finanzas",
+  level: "higher",
+  familyCode: "ADG",
+  familyName: "Administración y Gestión",
+} as const;
+
+const healthProgram = {
+  programKey: "SAN01M",
+  programTitle: "Cuidados Auxiliares de Enfermería",
+  level: "intermediate",
+  familyCode: "SAN",
+  familyName: "Sanidad",
+} as const;
+
 function responseFor(data: unknown): Response {
   return new Response(JSON.stringify(data), {
     status: 200,
@@ -20,7 +36,39 @@ function responseFor(data: unknown): Response {
   });
 }
 
-function installFoundationFetch(programs: unknown[] = [program]): void {
+const defaultCoverage = [
+  {
+    scope: "program",
+    programKey: "IFC03S",
+    programTitle: "Desarrollo de Aplicaciones Web",
+    familyCode: "IFC",
+    familyName: "Informática y Comunicaciones",
+    approvedMappings: 1,
+    draftMappings: 0,
+    rejectedMappings: 0,
+    uncoveredPrograms: 0,
+    coverageStatus: "reviewed",
+    coverageNote: "Revisada.",
+  },
+  {
+    scope: "program",
+    programKey: "COM01M",
+    programTitle: "Actividades Comerciales",
+    familyCode: "COM",
+    familyName: "Comercio y Marketing",
+    approvedMappings: 0,
+    draftMappings: 0,
+    rejectedMappings: 0,
+    uncoveredPrograms: 1,
+    coverageStatus: "uncovered",
+    coverageNote: "No disponible.",
+  },
+];
+
+function installFoundationFetch(
+  programs: unknown[] = [program],
+  coverage: unknown[] = defaultCoverage,
+): void {
   const baseManifest = currentManifestFixture();
   const manifest = {
     ...baseManifest,
@@ -38,37 +86,7 @@ function installFoundationFetch(programs: unknown[] = [program]): void {
     [manifest.resourceSnapshots.centers.resourcePath, []],
     [manifest.resourceSnapshots.trainingOfferings.resourcePath, []],
     [manifest.resourceSnapshots.jobOffers.resourcePath, []],
-    [
-      manifest.resourceSnapshots.mappingCoverage.resourcePath,
-      [
-        {
-          scope: "program",
-          programKey: "IFC03S",
-          programTitle: "Desarrollo de Aplicaciones Web",
-          familyCode: "IFC",
-          familyName: "Informática y Comunicaciones",
-          approvedMappings: 1,
-          draftMappings: 0,
-          rejectedMappings: 0,
-          uncoveredPrograms: 0,
-          coverageStatus: "reviewed",
-          coverageNote: "Revisada.",
-        },
-        {
-          scope: "program",
-          programKey: "COM01M",
-          programTitle: "Actividades Comerciales",
-          familyCode: "COM",
-          familyName: "Comercio y Marketing",
-          approvedMappings: 0,
-          draftMappings: 0,
-          rejectedMappings: 0,
-          uncoveredPrograms: 1,
-          coverageStatus: "uncovered",
-          coverageNote: "No disponible.",
-        },
-      ],
-    ],
+    [manifest.resourceSnapshots.mappingCoverage.resourcePath, coverage],
   ]);
   vi.stubGlobal(
     "fetch",
@@ -81,6 +99,16 @@ function installFoundationFetch(programs: unknown[] = [program]): void {
           : responseFor(payload),
       );
     }),
+  );
+}
+
+function LocationProbe() {
+  const location = useLocation();
+  return (
+    <output data-testid="location">
+      {location.pathname}
+      {location.search}
+    </output>
   );
 }
 
@@ -138,7 +166,8 @@ describe("training-first search", () => {
     const select = await screen.findByRole("combobox", {
       name: "Ciclo de Formación Profesional",
     });
-    await user.selectOptions(select, "COM01M");
+    await user.type(select, "COM01M");
+    await user.keyboard("{ArrowDown}{Enter}");
     const unavailableStatus = screen.getByText(
       /salidas oficiales disponibles.*todavía no hay una relación revisada para buscar ofertas/i,
     );
@@ -177,7 +206,7 @@ describe("training-first search", () => {
     expect(loading.closest("section")).toHaveAttribute("aria-busy", "true");
   });
 
-  it("keeps navigation disabled until an official program is selected", async () => {
+  it("keeps navigation disabled until an official program is confirmed", async () => {
     installFoundationFetch();
     const user = userEvent.setup();
 
@@ -196,7 +225,7 @@ describe("training-first search", () => {
       "aria-labelledby",
       "training-search-heading",
     );
-    const programSelect = screen.getByRole("combobox", {
+    const programCombobox = screen.getByRole("combobox", {
       name: "Ciclo de Formación Profesional",
     });
     const submit = screen.getByRole("button", {
@@ -204,8 +233,149 @@ describe("training-first search", () => {
     });
     expect(submit).toBeDisabled();
 
-    await user.selectOptions(programSelect, "IFC03S");
+    await user.type(programCombobox, "IFC03S");
+    expect(submit).toBeDisabled();
+    await user.keyboard("{ArrowDown}{Enter}");
     expect(submit).toBeEnabled();
+  });
+
+  it("filters the in-memory catalogue and clears a confirmation hidden by a filter", async () => {
+    installFoundationFetch([program, administrationProgram, healthProgram]);
+    const user = userEvent.setup();
+
+    render(
+      <MemoryRouter initialEntries={["/desde-fp"]}>
+        <AppRoutes />
+      </MemoryRouter>,
+    );
+
+    const levelFilter = await screen.findByRole("combobox", {
+      name: "Filtrar por nivel",
+    });
+    const familyFilter = screen.getByRole("combobox", {
+      name: "Filtrar por familia profesional",
+    });
+    const programCombobox = screen.getByRole("combobox", {
+      name: "Ciclo de Formación Profesional",
+    });
+    const submit = screen.getByRole("button", { name: /ver salidas/i });
+
+    await user.selectOptions(levelFilter, "higher");
+    await user.selectOptions(familyFilter, "IFC");
+    await user.type(programCombobox, "IFC03S");
+    await user.keyboard("{ArrowDown}{Enter}");
+    expect(submit).toBeEnabled();
+
+    await user.selectOptions(familyFilter, "ADG");
+    expect(submit).toBeDisabled();
+    expect(programCombobox).toHaveValue("");
+  });
+
+  it("confirms a filtered program and exposes exactly the reviewed guided examples in the catalogue", async () => {
+    installFoundationFetch(
+      [program, administrationProgram, healthProgram],
+      [
+        ...defaultCoverage.filter((row) => row.programKey !== "COM01M"),
+        {
+          scope: "program",
+          programKey: "ADG01S",
+          programTitle: "Administración y Finanzas",
+          familyCode: "ADG",
+          familyName: "Administración y Gestión",
+          approvedMappings: 1,
+          draftMappings: 0,
+          rejectedMappings: 0,
+          uncoveredPrograms: 0,
+          coverageStatus: "reviewed",
+          coverageNote: "Revisada.",
+        },
+        {
+          scope: "program",
+          programKey: "SAN01M",
+          programTitle: "Cuidados Auxiliares de Enfermería",
+          familyCode: "SAN",
+          familyName: "Sanidad",
+          approvedMappings: 1,
+          draftMappings: 0,
+          rejectedMappings: 0,
+          uncoveredPrograms: 0,
+          coverageStatus: "reviewed",
+          coverageNote: "Revisada.",
+        },
+        {
+          scope: "program",
+          programKey: "COM01M",
+          programTitle: "Zeta comercial no publicada",
+          familyCode: "COM",
+          familyName: "Comercio y Marketing",
+          approvedMappings: 1,
+          draftMappings: 0,
+          rejectedMappings: 0,
+          uncoveredPrograms: 0,
+          coverageStatus: "reviewed",
+          coverageNote: "Revisada.",
+        },
+      ],
+    );
+
+    render(
+      <MemoryRouter initialEntries={["/desde-fp"]}>
+        <AppRoutes />
+      </MemoryRouter>,
+    );
+
+    const examples = await screen.findByRole("region", {
+      name: "Ejemplos guiados de ciclos",
+    });
+    expect(examples).toHaveTextContent(
+      "Ejemplos de ciclos con relaciones revisadas; no es el catálogo completo.",
+    );
+    const guidedLinks = within(examples).getAllByRole("link");
+    expect(guidedLinks).toHaveLength(3);
+    expect(guidedLinks.map((link) => link.getAttribute("href"))).toEqual([
+      "/desde-fp/ADG01S",
+      "/desde-fp/SAN01M",
+      "/desde-fp/IFC03S",
+    ]);
+    expect(
+      within(examples).queryByRole("link", { name: /zeta comercial/i }),
+    ).not.toBeInTheDocument();
+  });
+
+  it("uses the exact province context copy and preserves the encoded route", async () => {
+    installFoundationFetch();
+    const user = userEvent.setup();
+
+    render(
+      <MemoryRouter initialEntries={["/desde-fp"]}>
+        <AppRoutes />
+        <LocationProbe />
+      </MemoryRouter>,
+    );
+
+    const programCombobox = await screen.findByRole("combobox", {
+      name: "Ciclo de Formación Profesional",
+    });
+    await user.type(programCombobox, "IFC03S");
+    await user.keyboard("{ArrowDown}{Enter}");
+    const province = screen.getByRole("combobox", {
+      name: "Provincia para el contexto (opcional)",
+    });
+    expect(province).toHaveAttribute(
+      "aria-describedby",
+      "training-province-hint",
+    );
+    expect(
+      screen.getByText(
+        "Se usa solo para mostrar contexto provincial; no filtra los centros publicados.",
+      ),
+    ).toHaveAttribute("id", "training-province-hint");
+    await user.selectOptions(province, "León");
+    await user.click(screen.getByRole("button", { name: /ver salidas/i }));
+
+    expect(screen.getByTestId("location")).toHaveTextContent(
+      "/desde-fp/IFC03S?province=Le%C3%B3n",
+    );
   });
 
   it("announces readiness once and moves focus to main after the catalog is ready", async () => {
@@ -237,15 +407,21 @@ describe("training-first search", () => {
       </MemoryRouter>,
     );
 
-    const select = await screen.findByRole("combobox", {
+    const user = userEvent.setup();
+    const combobox = await screen.findByRole("combobox", {
       name: "Ciclo de Formación Profesional",
     });
-    expect(select).toHaveTextContent(
-      "Desarrollo de Aplicaciones Web — Grado superior · IFC03S",
-    );
-    expect(select).toHaveTextContent(
-      "Desarrollo de Aplicaciones Web — Grado medio · IFC03M",
-    );
+    await user.type(combobox, "Desarrollo de Aplicaciones Web");
+    const options = within(screen.getByRole("listbox")).getAllByRole("option");
+    expect(options).toHaveLength(2);
+    expect(options.map((option) => option.textContent)).toEqual([
+      expect.stringContaining(
+        "Grado medio · Informática y Comunicaciones · IFC03M",
+      ),
+      expect.stringContaining(
+        "Grado superior · Informática y Comunicaciones · IFC03S",
+      ),
+    ]);
   });
 
   it("rejects an unknown program key with a useful path back", async () => {
