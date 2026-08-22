@@ -267,7 +267,8 @@ function renderSubmissionChecklist(
   let capturesReviewGate: string;
   let figuresConfirmationGate: string;
   if (deployment.status === "pending") {
-    visualEvidenceLine = "evidencia visual pendiente (no histórica).";
+    visualEvidenceLine =
+      "captura visual actual pendiente; las 13 capturas anteriores son históricas.";
     capturesReviewGate =
       "- [ ] Revisar las capturas en contexto anónimo, sin datos personales ni credenciales.";
     figuresConfirmationGate =

@@ -17,7 +17,7 @@
 - Snapshot: `20260822085631889-7bbe69380f6d`.
 - Commit desplegado: **PENDIENTE DE DESPLIEGUE Y VERIFICACIÓN**.
 - Run del workflow: **PENDIENTE DE DESPLIEGUE Y VERIFICACIÓN**.
-- Evidencia visual: evidencia visual pendiente (no histórica).
+- Evidencia visual: captura visual actual pendiente; las 13 capturas anteriores son históricas.
 
 ## Gate final
 

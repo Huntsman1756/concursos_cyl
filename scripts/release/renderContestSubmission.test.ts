@@ -149,11 +149,10 @@ describe("contest submission renderer", () => {
     };
     const rendered = renderContestSubmission(freeze, deployment);
 
-    // deployment pending => visual evidence pending (no histórica)
+    // deployment pending => current visual capture pending; prior captures historical
     expect(rendered["submission-checklist.md"]).toContain(
-      "evidencia visual pendiente (no histórica)",
+      "captura visual actual pendiente; las 13 capturas anteriores son históricas",
     );
-    expect(rendered["submission-checklist.md"]).not.toContain("históricas");
     // Checks sin marcar
     expect(rendered["submission-checklist.md"]).toContain(
       "- [ ] Revisar las capturas en contexto anónimo, sin datos personales ni credenciales.",

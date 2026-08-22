@@ -1,6 +1,7 @@
 # Resumen técnico de evidencia
 
-- Límite fuente: `05f905397d22b217c4716c88a2406d802892fb6d`.
+- Límite fuente: `ff9e6197f926e462bea1a3e8ac6a57a23d3f825a`.
+- Commit que contiene los bytes exactos del freeze: `80bc0f9d2def3f600f7701d8b20f0095cd241c71`.
 - Snapshot: `20260822085631889-7bbe69380f6d`.
 - Cobertura: 113 cualificaciones, 130 claves de modalidad, 264 relaciones aprobadas y 21 alias.
 - Muestra determinista: 15 PASS y 0 FAIL en una segunda revisión independiente; 249 relaciones `not_sampled`.
