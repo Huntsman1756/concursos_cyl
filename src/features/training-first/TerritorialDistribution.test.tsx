@@ -101,6 +101,7 @@ describe("TerritorialDistribution", () => {
       .closest("details");
     expect(details).not.toBeNull();
     expect(details).not.toHaveAttribute("open");
+    expect(details).toHaveAttribute("data-print-hidden", "true");
     expect(details).toHaveTextContent("CIFP Las Ferrerías");
     expect(details).not.toHaveTextContent("IES Río Duero");
     expect(details).toHaveTextContent(

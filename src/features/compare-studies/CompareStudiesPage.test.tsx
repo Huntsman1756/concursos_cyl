@@ -571,6 +571,33 @@ describe("CompareStudiesPage", () => {
     );
   });
 
+  it("compacts the comparison evidence and protects the printed handoff", () => {
+    expect(comparisonStyles).toMatch(
+      /\.compare-page \.income-results\s*\{[\s\S]*?gap: 0\.75rem;/u,
+    );
+    expect(comparisonStyles).toMatch(
+      /\.compare-page \.income-results__guide\s*\{[\s\S]*?gap: 0\.25rem;[\s\S]*?padding: 0\.625rem 0\.75rem;/u,
+    );
+    expect(comparisonStyles).toMatch(
+      /\.compare-page \.income-evidence-card__header\s*\{[\s\S]*?padding: 0\.75rem 1rem;/u,
+    );
+    expect(comparisonStyles).toMatch(
+      /\.compare-page \.income-series-list\s*\{[\s\S]*?gap: 0\.75rem;[\s\S]*?padding: 0\.75rem;/u,
+    );
+    expect(comparisonStyles).toMatch(
+      /\.compare-page \.income-series\s*\{[\s\S]*?padding: 0\.75rem;/u,
+    );
+    expect(comparisonStyles).toMatch(
+      /\.compare-page \.income-bars\s*\{[\s\S]*?gap: 0\.5rem;[\s\S]*?margin: 0\.75rem 0 0;/u,
+    );
+    expect(comparisonStyles).toMatch(
+      /\.compare-page \.income-technical-detail\s*\{[\s\S]*?display: none !important;/u,
+    );
+    expect(comparisonStyles).toMatch(
+      /\.compare-page \.income-limitation,[\s\S]*?\.compare-page \.income-results__source\s*\{[\s\S]*?break-inside: avoid;/u,
+    );
+  });
+
   it("loads outcomes and only programs from the same manifest and signal", async () => {
     installData();
     renderPage();

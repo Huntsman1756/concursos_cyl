@@ -700,4 +700,43 @@
   .compare-page .income-table-scroll {
     overflow: visible;
   }
+
+  .compare-page .income-results {
+    gap: 0.75rem;
+  }
+
+  .compare-page .income-results__guide {
+    gap: 0.25rem;
+    padding: 0.625rem 0.75rem;
+  }
+
+  .compare-page .income-evidence-card__header {
+    padding: 0.75rem 1rem;
+  }
+
+  .compare-page .income-series-list {
+    gap: 0.75rem;
+    padding: 0.75rem;
+  }
+
+  .compare-page .income-series {
+    padding: 0.75rem;
+  }
+
+  .compare-page .income-bars {
+    gap: 0.5rem;
+    margin: 0.75rem 0 0;
+  }
+
+  .compare-page .income-technical-detail {
+    display: none !important;
+  }
+
+  .compare-page .income-limitation,
+  .compare-page .income-results__source {
+    break-inside: avoid;
+    page-break-inside: avoid;
+    orphans: 3;
+    widows: 3;
+  }
 }

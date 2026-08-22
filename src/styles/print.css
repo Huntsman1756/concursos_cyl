@@ -18,9 +18,7 @@
     padding: 0;
   }
 
-  .print-avoid-break,
-  article,
-  .decision-basis {
+  .print-avoid-break {
     break-inside: avoid;
   }
 
@@ -34,12 +32,42 @@
     display: none !important;
   }
 
-  details:not([open]) > :not(summary) {
+  details > summary {
+    display: none !important;
+  }
+
+  details:not([open]):not([data-print-hidden="true"]) > :not(summary) {
     display: block !important;
   }
 
-  details > summary {
-    display: none !important;
+  .training-route-list {
+    display: block;
+  }
+
+  .training-route-card {
+    break-inside: avoid;
+    page-break-inside: avoid;
+    margin-block-end: var(--space-5);
+  }
+
+  .training-outcome {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .territorial-distribution__localities > li {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .occupation-result-page #mercado-laboral {
+    break-before: page;
+    page-break-before: always;
+  }
+
+  .occupation-result-page .occupation-market-evidence__section-label {
+    break-before: page;
+    page-break-before: always;
   }
 
   .decision-evidence,
@@ -55,11 +83,5 @@
   .training-outcome__distribution,
   .training-outcome__distribution dl {
     grid-template-columns: 1fr;
-  }
-
-  a[href^="http"]::after {
-    content: " (" attr(href) ")";
-    font-size: 0.75em;
-    overflow-wrap: anywhere;
   }
 }

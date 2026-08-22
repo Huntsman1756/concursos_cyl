@@ -1,4 +1,5 @@
 import { expect, test } from "@playwright/test";
+import { installDecisionFlowFixture } from "../fixtures/decisionFlowFixture";
 
 const RELEASE_PATHS = [
   "/",
@@ -91,4 +92,55 @@ test("the public candidate manifest retains canonical SEPE evidence", async ({
   expect(sepe.period).toBe("2026-07");
   expect(sepe.records).toHaveLength(116);
   expect(sepe.coverage.notPublishedCnoCodes).toHaveLength(0);
+});
+
+test("print media preserves closed evidence and hides coordinate details", async ({
+  page,
+}) => {
+  await installDecisionFlowFixture(page);
+  await page.goto("/desde-fp/IFC03S");
+
+  const card = page.getByRole("article", {
+    name: "Desarrollador web para servicios públicos",
+  });
+  await expect(card).toBeVisible();
+  await expect(
+    card.locator("details.offer-card__evidence"),
+  ).not.toHaveAttribute("open");
+
+  await page.emulateMedia({ media: "print" });
+
+  const evidenceHeading = card
+    .locator("details.offer-card__evidence .evidence-step h4")
+    .first();
+  await expect(evidenceHeading).toHaveText("Por qué aparece");
+  expect(
+    await evidenceHeading.evaluate(
+      (element) => element.getBoundingClientRect().height,
+    ),
+  ).toBeGreaterThan(0);
+
+  const evidenceSource = card.locator("details.offer-card__evidence a").first();
+  await expect(evidenceSource).toHaveAttribute("href");
+  expect(
+    await evidenceSource.evaluate(
+      (element) => element.getBoundingClientRect().height,
+    ),
+  ).toBeGreaterThan(0);
+
+  const coordinatesPage = await page.context().newPage();
+  await coordinatesPage.goto("/desde-fp/IFC03S");
+  await expect(
+    coordinatesPage.getByRole("heading", {
+      name: "Distribución de centros",
+    }),
+  ).toBeVisible();
+  await coordinatesPage.emulateMedia({ media: "print" });
+
+  const coordinates = coordinatesPage.locator(
+    'details.territorial-distribution__coordinates[data-print-hidden="true"]',
+  );
+  await expect(coordinates).toHaveCount(1);
+  await expect(coordinates).toHaveCSS("display", "none");
+  await coordinatesPage.close();
 });

@@ -146,7 +146,10 @@ export function TerritorialDistribution({
               </div>
             ))}
           </div>
-          <details className="territorial-distribution__coordinates">
+          <details
+            className="territorial-distribution__coordinates"
+            data-print-hidden="true"
+          >
             <summary>Ver coordenadas oficiales publicadas</summary>
             <p>
               Información técnica complementaria. No es un mapa y no calcula
