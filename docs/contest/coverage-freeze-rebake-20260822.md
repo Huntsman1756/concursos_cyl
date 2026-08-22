@@ -26,5 +26,7 @@ npm exec -- tsx scripts/release/validateContestFreeze.ts
 ```
 
 La suficiencia semántica de las relaciones sigue separada del suelo común del
-validador. La muestra independiente seleccionada sobre este límite permanece
-pendiente de revisión contra fuentes vivas.
+validador. La muestra determinista seleccionada sobre este límite registra 15
+PASS y 0 FAIL tras una segunda revisión independiente de la URL oficial y la
+cita registrada. Las otras 233 relaciones no fueron muestreadas, por lo que el
+resultado no es una auditoría exhaustiva.

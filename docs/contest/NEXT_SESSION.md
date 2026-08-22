@@ -10,7 +10,10 @@
 - Cola oficial: 35 cualificaciones pendientes y 15 resultados sin publicación revalidados contra el catálogo actual.
 - La remediación retiró seis relaciones sin reemplazo y corrigió una cita; el grafo y el snapshot reflejan 248 relaciones.
 - El manifest conserva los recursos inmutables del snapshot y el freeze mantiene despliegue `pending`.
-- La muestra independiente vigente de 15 relaciones está seleccionada, pero pendiente de comprobación contra fuentes vivas.
+- La muestra determinista vigente registra 15 PASS y 0 FAIL tras una segunda
+  revisión independiente de la URL oficial y la cita registrada. Es una muestra
+  delimitada: las otras 233 relaciones no fueron muestreadas y no se afirma una
+  auditoría exhaustiva.
 - No existe evidencia humana de adopción o piloto: el protocolo anónimo está preparado, pero no se generan resultados ni afirmaciones sin sesiones reales y consentimiento.
 
 ## Estado de publicación

@@ -12,5 +12,7 @@ como omitidas, pero no convierten `npm test` en una ejecución roja por exigir
 una publicación que fue revocada. No se cuentan como aprobadas ni se borran.
 
 La matriz y la muestra independiente separan el suelo del validador de la
-suficiencia semántica. La muestra vigente de 15 relaciones permanece pendiente
-de revisión contra fuentes vivas y no autoriza afirmaciones de cobertura total.
+suficiencia semántica. La muestra determinista vigente registra 15 PASS y 0
+FAIL tras una segunda revisión independiente de la URL oficial y la cita
+registrada. Las otras 233 relaciones quedan `not_sampled`; el resultado no
+autoriza afirmaciones de cobertura total.
