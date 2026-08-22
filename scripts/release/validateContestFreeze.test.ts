@@ -173,6 +173,8 @@ describe("contest coverage freeze validator", () => {
         "export const requirement = true;\n",
         "utf8",
       );
+      const matchingPath = join(root, "src", "domain", "offerMatching.ts");
+      writeFileSync(matchingPath, "export const matching = true;\n", "utf8");
       const productPath = join(root, "src", "features", "ResultsPage.tsx");
       writeFileSync(productPath, "export const product = false;\n", "utf8");
       execFileSync("git", ["init", "-q"], { cwd: root });
@@ -188,6 +190,15 @@ describe("contest coverage freeze validator", () => {
       writeFileSync(productPath, "export const product = true;\n", "utf8");
       expect(getDirtyContestFreezeSourcePaths(root)).toEqual([]);
 
+      writeFileSync(matchingPath, "export const matching = false;\n", "utf8");
+      expect(getDirtyContestFreezeSourcePaths(root)).toContain(
+        "M src/domain/offerMatching.ts",
+      );
+      expect(() => assertContestFreezeWritePreflight(root)).toThrow(
+        /offerMatching|dirty/i,
+      );
+
+      writeFileSync(matchingPath, "export const matching = true;\n", "utf8");
       writeFileSync(
         join(root, "src", "domain", "requirements.ts"),
         "export const requirement = false;\n",
