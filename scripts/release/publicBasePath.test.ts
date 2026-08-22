@@ -1,5 +1,12 @@
 import { describe, expect, it } from "vitest";
-import { normalizePublicBasePath } from "./publicBasePath";
+import { normalizePublicBasePath, readRuntimeBasePath } from "./publicBasePath";
+
+function documentWithBasePath(content?: string): Document {
+  const meta = content === undefined ? null : { content };
+  return {
+    querySelector: () => meta,
+  } as unknown as Document;
+}
 
 describe("normalizePublicBasePath", () => {
   it.each([
@@ -25,4 +32,24 @@ describe("normalizePublicBasePath", () => {
       /same-origin absolute path/iu,
     );
   });
+});
+
+describe("readRuntimeBasePath", () => {
+  it.each(["/", "/concursos_cyl/"])(
+    "reads the strict runtime base path %s",
+    (value) => {
+      expect(readRuntimeBasePath(documentWithBasePath(` ${value} `))).toBe(
+        value,
+      );
+    },
+  );
+
+  it.each([undefined, "", "/concursos_cyl", "/other/"])(
+    "rejects missing or invalid runtime base metadata %s",
+    (value) => {
+      expect(() => readRuntimeBasePath(documentWithBasePath(value))).toThrow(
+        /Missing or invalid SALIDA public base path metadata/u,
+      );
+    },
+  );
 });

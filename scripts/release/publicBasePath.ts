@@ -1,3 +1,5 @@
+/// <reference lib="dom" />
+
 /** Accepts only a same-origin absolute pathname and returns one trailing slash. */
 export function normalizePublicBasePath(value: string | undefined): string {
   const candidate = value?.trim() || "/";
@@ -15,4 +17,14 @@ export function normalizePublicBasePath(value: string | undefined): string {
     );
   }
   return candidate === "/" ? "/" : `${candidate.replace(/\/+$/u, "")}/`;
+}
+
+export function readRuntimeBasePath(document: Document): string {
+  const value = document
+    .querySelector<HTMLMetaElement>('meta[name="salida-public-base-path"]')
+    ?.content.trim();
+  if (value !== "/" && value !== "/concursos_cyl/") {
+    throw new Error("Missing or invalid SALIDA public base path metadata.");
+  }
+  return value;
 }
