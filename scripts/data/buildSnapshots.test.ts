@@ -17,6 +17,7 @@ import { basename, dirname, join, resolve, sep } from "node:path";
 
 import { afterEach, describe, expect, it, vi } from "vitest";
 
+import { adaptSepeOccupationMarketResource } from "../../data/schemas/sepeOccupationMarket";
 import {
   GeneratedManifestSchema,
   LoadableGeneratedManifestSchema,
@@ -58,13 +59,13 @@ async function temporaryRoot(): Promise<string> {
     "sepe-occupation-market.json",
   );
   await mkdir(dirname(temporaryCapturePath), { recursive: true });
-  const capture = JSON.parse(await readFile(capturePath, "utf8")) as Array<{
-    source: { retrievedAt: string };
-  }>;
+  const capture = adaptSepeOccupationMarketResource(
+    JSON.parse(await readFile(capturePath, "utf8")),
+  );
   await writeFile(
     temporaryCapturePath,
     JSON.stringify(
-      capture.map((record) => ({
+      capture.records.map((record) => ({
         ...record,
         source: {
           ...record.source,
@@ -526,10 +527,9 @@ describe("buildSnapshots", { timeout: BUILD_SNAPSHOTS_TEST_TIMEOUT }, () => {
       "curated",
       "sepe-occupation-market.json",
     );
-    const capture = JSON.parse(await readFile(capturePath, "utf8")) as Array<{
-      cno: { label: string };
-      source: { retrievedAt: string };
-    }>;
+    const capture = adaptSepeOccupationMarketResource(
+      JSON.parse(await readFile(capturePath, "utf8")),
+    );
     const writeCapture = async (root: string, marker: string) => {
       const localCapturePath = join(
         root,
@@ -541,19 +541,24 @@ describe("buildSnapshots", { timeout: BUILD_SNAPSHOTS_TEST_TIMEOUT }, () => {
       await writeFile(
         localCapturePath,
         JSON.stringify(
-          [
-            {
-              ...capture[0],
-              cno: {
-                ...capture[0].cno,
-                label: `${capture[0].cno.label} ${marker}`,
-              },
+          {
+            ...capture,
+            records: capture.records.map((record, index) => ({
+              ...record,
+              ...(index === 0
+                ? {
+                    cno: {
+                      ...record.cno,
+                      label: `${record.cno.label} ${marker}`,
+                    },
+                  }
+                : {}),
               source: {
-                ...capture[0].source,
+                ...record.source,
                 retrievedAt: "2026-08-03T10:00:00Z",
               },
-            },
-          ],
+            })),
+          },
           null,
           2,
         ) + "\n",
@@ -576,7 +581,7 @@ describe("buildSnapshots", { timeout: BUILD_SNAPSHOTS_TEST_TIMEOUT }, () => {
         ),
         "utf8",
       ),
-    ) as Array<{ cno: { label: string } }>;
+    ) as { records: Array<{ cno: { label: string } }> };
     const secondRecords = JSON.parse(
       await readFile(
         assetPath(
@@ -585,10 +590,10 @@ describe("buildSnapshots", { timeout: BUILD_SNAPSHOTS_TEST_TIMEOUT }, () => {
         ),
         "utf8",
       ),
-    ) as Array<{ cno: { label: string } }>;
+    ) as { records: Array<{ cno: { label: string } }> };
 
-    expect(firstRecords[0]?.cno.label).toContain("first-root");
-    expect(secondRecords[0]?.cno.label).toContain("second-root");
+    expect(firstRecords.records[0]?.cno.label).toContain("first-root");
+    expect(secondRecords.records[0]?.cno.label).toContain("second-root");
     expect(
       firstManifest.resourceSnapshots.sepeOccupationMarket.sha256,
     ).not.toBe(secondManifest.resourceSnapshots.sepeOccupationMarket.sha256);
@@ -602,7 +607,7 @@ describe("buildSnapshots", { timeout: BUILD_SNAPSHOTS_TEST_TIMEOUT }, () => {
     const manifest = await readManifest(root);
     const snapshot = manifest.resourceSnapshots.sepeOccupationMarket;
     expect(snapshot).toMatchObject({
-      recordCount: 1,
+      recordCount: 116,
       sourceId: "sepe-occupation-market",
       sourceUrl: "https://www.sepe.es/",
     });
@@ -610,14 +615,16 @@ describe("buildSnapshots", { timeout: BUILD_SNAPSHOTS_TEST_TIMEOUT }, () => {
       /\/snapshots\/[^/]+\/sepe-occupation-market\.json$/u,
     );
     const bytes = await readFile(assetPath(root, snapshot.resourcePath));
-    const records = JSON.parse(bytes.toString("utf8")) as unknown[];
-    expect(records).toHaveLength(snapshot.recordCount);
+    const resource = JSON.parse(bytes.toString("utf8")) as {
+      records: unknown[];
+    };
+    expect(resource.records).toHaveLength(snapshot.recordCount);
     expect(createHash("sha256").update(bytes).digest("hex")).toBe(
       snapshot.sha256,
     );
-    expect(records[0]).toMatchObject({
+    expect(resource.records[0]).toMatchObject({
       period: "2026-07",
-      cno: { code: "2721" },
+      cno: { code: "1221" },
     });
   });
 
@@ -629,25 +636,32 @@ describe("buildSnapshots", { timeout: BUILD_SNAPSHOTS_TEST_TIMEOUT }, () => {
       "curated",
       "sepe-occupation-market.json",
     );
-    const capture = JSON.parse(
-      await readFile(
-        join(process.cwd(), "data", "curated", "sepe-occupation-market.json"),
-        "utf8",
+    const capture = adaptSepeOccupationMarketResource(
+      JSON.parse(
+        await readFile(
+          join(process.cwd(), "data", "curated", "sepe-occupation-market.json"),
+          "utf8",
+        ),
       ),
-    ) as Array<{ source: { retrievedAt: string } }>;
+    );
     await mkdir(dirname(capturePath), { recursive: true });
     await writeFile(
       capturePath,
       JSON.stringify(
-        [
-          {
-            ...capture[0],
-            source: {
-              ...capture[0].source,
-              retrievedAt: "2026-08-04T10:00:00.001Z",
-            },
-          },
-        ],
+        {
+          ...capture,
+          records: capture.records.map((record, index) =>
+            index === 0
+              ? {
+                  ...record,
+                  source: {
+                    ...record.source,
+                    retrievedAt: "2026-08-04T10:00:00.001Z",
+                  },
+                }
+              : record,
+          ),
+        },
         null,
         2,
       ) + "\n",

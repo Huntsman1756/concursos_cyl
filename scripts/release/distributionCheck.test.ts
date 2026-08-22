@@ -65,9 +65,50 @@ describe("distribution check", () => {
     const { directory } = await createDistributionDirectory();
     try {
       await expect(collectDistribution(directory)).resolves.toMatchObject({
-        dataFiles: 5,
-        verifiedResources: 4,
+        dataFiles: 6,
+        verifiedResources: 5,
         duplicateGroups: 1,
+      });
+    } finally {
+      await rm(directory, { force: true, recursive: true });
+    }
+  });
+
+  it("counts the current SEPE resource envelope by its published records", async () => {
+    const { directory } = await createDistributionDirectory();
+    try {
+      const sepePath = join(
+        process.cwd(),
+        "data",
+        "curated",
+        "sepe-occupation-market.json",
+      );
+      const sepeBytes = await readFile(sepePath);
+      const sepeResource = JSON.parse(sepeBytes.toString("utf8")) as {
+        records: readonly unknown[];
+      };
+      const manifestPath = join(directory, "data", "v1", "manifest.json");
+      const manifest = JSON.parse(await readFile(manifestPath, "utf8")) as {
+        resourceSnapshots: Record<string, unknown>;
+      };
+      const resourcePath =
+        "/data/v1/snapshots/build-1/sepe-occupation-market.json";
+      manifest.resourceSnapshots.sepeOccupationMarket = {
+        qualityStatus: "passed",
+        recordCount: sepeResource.records.length,
+        resourcePath,
+        schemaVersion: "1.0.0",
+        sha256: createHash("sha256").update(sepeBytes).digest("hex"),
+        snapshotFetchedAt: "2026-08-22T06:44:49.120Z",
+        sourceId: "sepe-occupation-market",
+        sourceUpdatedAt: null,
+        sourceUrl: "https://www.sepe.es/",
+      };
+      await writeFile(manifestPath, JSON.stringify(manifest));
+      await writeFile(join(directory, resourcePath.slice(1)), sepeBytes);
+
+      await expect(collectDistribution(directory)).resolves.toMatchObject({
+        verifiedResources: 6,
       });
     } finally {
       await rm(directory, { force: true, recursive: true });

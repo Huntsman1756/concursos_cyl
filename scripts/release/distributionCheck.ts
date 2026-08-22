@@ -5,6 +5,7 @@ import { fileURLToPath } from "node:url";
 
 import { GeneratedManifestSchema } from "../../data/schemas/generated";
 import { isGenericImmutableGeneratedResourcePath } from "../../data/schemas/generatedResourceCatalog";
+import { adaptSepeOccupationMarketResource } from "../../data/schemas/sepeOccupationMarket";
 
 /** Release limits for generated public data copied into the deployable artifact. */
 export const DISTRIBUTION_BUDGET = {
@@ -163,9 +164,22 @@ async function verifyManifestResources(
         { cause: error },
       );
     }
-    if (!Array.isArray(value) || value.length !== snapshot.recordCount) {
+    let recordCount: number | "non-array";
+    if (key === "sepeOccupationMarket") {
+      try {
+        recordCount = adaptSepeOccupationMarketResource(value).records.length;
+      } catch (error) {
+        throw new Error(
+          `Manifest resource ${key} failed SEPE resource schema validation: ${snapshot.resourcePath}.`,
+          { cause: error },
+        );
+      }
+    } else {
+      recordCount = Array.isArray(value) ? value.length : "non-array";
+    }
+    if (recordCount !== snapshot.recordCount) {
       throw new Error(
-        `Manifest resource ${key} record count mismatch: expected ${snapshot.recordCount}, got ${Array.isArray(value) ? value.length : "non-array"}.`,
+        `Manifest resource ${key} record count mismatch: expected ${snapshot.recordCount}, got ${recordCount}.`,
       );
     }
 

@@ -466,8 +466,11 @@ describe("occupation-first results", () => {
     expect(panel).toHaveTextContent(
       "Registros oficiales del SEPE para CNO-11 2713",
     );
-    await within(panel).findByText("julio de 2026");
+    await within(panel).findAllByText("julio de 2026");
     expect(panel).toHaveTextContent("julio de 2026");
+    expect(panel).toHaveTextContent(
+      "Datos SEPE disponibles para 1 de 1 grupos CNO consultados.",
+    );
     expect(panel).toHaveTextContent("Contratos registrados");
     expect(panel).toHaveTextContent("116");
     expect(panel).toHaveTextContent("Personas contratadas");

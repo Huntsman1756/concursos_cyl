@@ -71,8 +71,11 @@ import {
   type EducationCenterDirectoryRecord,
 } from "../../data/schemas/educationCenterDirectory";
 import {
+  adaptSepeOccupationMarketResource,
+  SepeOccupationMarketRecordsSchema,
   SepeOccupationMarketResourceSchema,
   type SepeOccupationMarket,
+  type SepeOccupationMarketResource,
 } from "../../data/schemas/sepeOccupationMarket";
 
 export type GeneratedDataErrorCode = "network" | "schema" | "missing";
@@ -86,6 +89,11 @@ export class GeneratedDataError extends Error {
     this.code = code;
   }
 }
+
+const SepeOccupationMarketStoredResourceSchema = z.union([
+  SepeOccupationMarketResourceSchema,
+  SepeOccupationMarketRecordsSchema,
+]);
 
 function validatedGeneratedAssetPath(path: string): string {
   if (
@@ -358,19 +366,36 @@ export function loadOutcomeIndicators(
   );
 }
 
-/** Loads optional manifest-addressed SEPE occupation-market evidence. */
-export function loadSepeOccupationMarket(
+/** Loads optional manifest-addressed SEPE occupation-market evidence and coverage. */
+export async function loadSepeOccupationMarketResource(
   manifest: LoadableGeneratedManifest,
-): Promise<SepeOccupationMarket[] | null> {
+): Promise<SepeOccupationMarketResource | null> {
   const resourceSnapshots =
     manifest.resourceSnapshots as typeof manifest.resourceSnapshots &
       Record<string, { resourcePath: string } | undefined>;
   const snapshot = resourceSnapshots.sepeOccupationMarket;
   if (snapshot === undefined) return Promise.resolve(null);
-  return loadGeneratedResource(
+  const stored = await loadGeneratedResource(
     snapshot.resourcePath,
-    SepeOccupationMarketResourceSchema,
+    SepeOccupationMarketStoredResourceSchema,
   );
+  try {
+    return adaptSepeOccupationMarketResource(stored);
+  } catch (error) {
+    throw new GeneratedDataError(
+      "schema",
+      `Generated SEPE occupation market resource failed envelope validation: ${snapshot.resourcePath}.`,
+      error,
+    );
+  }
+}
+
+/** Loads SEPE records while retaining compatibility with records-only snapshots. */
+export async function loadSepeOccupationMarket(
+  manifest: LoadableGeneratedManifest,
+): Promise<SepeOccupationMarket[] | null> {
+  const resource = await loadSepeOccupationMarketResource(manifest);
+  return resource?.records ?? null;
 }
 
 /** Loads the manifest-addressed public coverage rows used for coverage copy. */

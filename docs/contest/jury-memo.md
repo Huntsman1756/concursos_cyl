@@ -12,6 +12,8 @@ El producto responde a dos preguntas concretas: «¿en qué puedo trabajar con m
 
 La cobertura congelada contiene 104 cualificaciones distintas, 121 claves de modalidad y 248 relaciones FP-ocupación aprobadas. La cifra describe el conjunto revisado publicado, no el universo de relaciones posibles.
 
+La evidencia laboral específica del SEPE añade 116 de 116 grupos CNO consultados para `2026-07` (116 páginas publicadas y 0 respuestas explícitas de «sin documento»). Son contratos y paro registrado administrativos; la cobertura no equivale a vacantes, salario ni predicción individual.
+
 ## 2. Valor económico
 
 SALIDA CyL reduce el tiempo necesario para localizar y contrastar información que suele estar repartida entre formación, empleo y estadísticas públicas. Permite comparar rutas formativas antes de invertir tiempo y dirige al centro, oferta o fuente oficial para continuar la decisión.
@@ -30,7 +32,7 @@ La referencia pública localizada de 2022 documenta una aplicación web de ofert
 
 ## 5. Variedad de datasets del Portal de Datos Abiertos de la Junta
 
-Los ocho conjuntos regionales tienen un uso visible en la interfaz y una copia normalizada en el snapshot `20260822021233066-9d8fa948959b`:
+Los ocho conjuntos regionales tienen un uso visible en la interfaz y una copia normalizada en el snapshot `20260822064449120-b76d60c84145`:
 
 | Dataset                            | Uso visible                                                         |
 | ---------------------------------- | ------------------------------------------------------------------- |

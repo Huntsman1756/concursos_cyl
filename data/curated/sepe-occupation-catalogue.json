@@ -1,0 +1,582 @@
+[
+  {
+    "classificationCode": "1221",
+    "preferredLabel": "Directores comerciales y de ventas",
+    "confirmationLabel": "Directores comerciales y de ventas"
+  },
+  {
+    "classificationCode": "1432",
+    "preferredLabel": "Directores y gerentes de empresas de comercio al por menor",
+    "confirmationLabel": "Directores y gerentes de empresas de comercio al por menor"
+  },
+  {
+    "classificationCode": "2252",
+    "preferredLabel": "Técnicos en educación infantil",
+    "confirmationLabel": "Educación infantil"
+  },
+  {
+    "classificationCode": "2312",
+    "preferredLabel": "Técnicos educadores de educación especial",
+    "confirmationLabel": "Educación especial"
+  },
+  {
+    "classificationCode": "2640",
+    "preferredLabel": "Profesionales de ventas técnicas y médicas (excepto las TIC)",
+    "confirmationLabel": "Profesionales de ventas técnicas y médicas (excepto las TIC)"
+  },
+  {
+    "classificationCode": "2651",
+    "preferredLabel": "Profesionales de la publicidad y la comercialización",
+    "confirmationLabel": "Profesionales de la publicidad y la comercialización"
+  },
+  {
+    "classificationCode": "2713",
+    "preferredLabel": "Analistas, programadores y diseñadores web y multimedia",
+    "confirmationLabel": "Programación y desarrollo web"
+  },
+  {
+    "classificationCode": "2721",
+    "preferredLabel": "Diseñadores y administradores de bases de datos",
+    "confirmationLabel": "Administración de bases de datos"
+  },
+  {
+    "classificationCode": "2722",
+    "preferredLabel": "Administradores de sistemas y redes",
+    "confirmationLabel": "Administración de sistemas y redes"
+  },
+  {
+    "classificationCode": "2921",
+    "preferredLabel": "Escritores",
+    "confirmationLabel": "Escritores"
+  },
+  {
+    "classificationCode": "2923",
+    "preferredLabel": "Filólogos, intérpretes y traductores",
+    "confirmationLabel": "Filólogos, intérpretes y traductores"
+  },
+  {
+    "classificationCode": "3123",
+    "preferredLabel": "Técnicos en electricidad",
+    "confirmationLabel": "Técnicos en electricidad"
+  },
+  {
+    "classificationCode": "3124",
+    "preferredLabel": "Técnicos en electrónica (excepto electromedicina)",
+    "confirmationLabel": "Técnicos en electrónica (excepto electromedicina)"
+  },
+  {
+    "classificationCode": "3125",
+    "preferredLabel": "Técnicos en electrónica, especialidad en electromedicina",
+    "confirmationLabel": "Técnicos en electrónica, especialidad en electromedicina"
+  },
+  {
+    "classificationCode": "3126",
+    "preferredLabel": "Técnicos en mecánica",
+    "confirmationLabel": "Técnicos en mecánica"
+  },
+  {
+    "classificationCode": "3129",
+    "preferredLabel": "Otros técnicos de las ciencias físicas, químicas, medioambientales y de las ingenierías",
+    "confirmationLabel": "Otros técnicos de las ciencias físicas, químicas, medioambientales y de las ingenierías"
+  },
+  {
+    "classificationCode": "3131",
+    "preferredLabel": "Técnicos en instalaciones de producción de energía",
+    "confirmationLabel": "Técnicos en instalaciones de producción de energía"
+  },
+  {
+    "classificationCode": "3132",
+    "preferredLabel": "Técnicos en instalaciones de tratamiento de residuos, de aguas y otros operadores en plantas similares",
+    "confirmationLabel": "Técnicos en instalaciones de tratamiento de residuos, de aguas y otros operadores en plantas similares"
+  },
+  {
+    "classificationCode": "3139",
+    "preferredLabel": "Técnicos en control de procesos no clasificados bajo otros epígrafes",
+    "confirmationLabel": "Técnicos en control de procesos no clasificados bajo otros epígrafes"
+  },
+  {
+    "classificationCode": "3141",
+    "preferredLabel": "Técnicos en ciencias biológicas (excepto en áreas sanitarias)",
+    "confirmationLabel": "Técnicos en ciencias biológicas (excepto en áreas sanitarias)"
+  },
+  {
+    "classificationCode": "3160",
+    "preferredLabel": "Técnicos de control de calidad de las ciencias físicas, químicas y de las ingenierías",
+    "confirmationLabel": "Técnicos de control de calidad de las ciencias físicas, químicas y de las ingenierías"
+  },
+  {
+    "classificationCode": "3209",
+    "preferredLabel": "Supervisores de otras industrias manufactureras",
+    "confirmationLabel": "Supervisores de otras industrias manufactureras"
+  },
+  {
+    "classificationCode": "3314",
+    "preferredLabel": "Técnicos en laboratorio de diagnóstico clínico",
+    "confirmationLabel": "Técnicos en laboratorio de diagnóstico clínico"
+  },
+  {
+    "classificationCode": "3316",
+    "preferredLabel": "Técnicos en prótesis dentales",
+    "confirmationLabel": "Técnicos en prótesis dentales"
+  },
+  {
+    "classificationCode": "3317",
+    "preferredLabel": "Técnicos en audioprótesis",
+    "confirmationLabel": "Técnicos en audioprótesis"
+  },
+  {
+    "classificationCode": "3405",
+    "preferredLabel": "Tasadores",
+    "confirmationLabel": "Tasadores"
+  },
+  {
+    "classificationCode": "3510",
+    "preferredLabel": "Agentes y representantes comerciales",
+    "confirmationLabel": "Representación comercial"
+  },
+  {
+    "classificationCode": "3522",
+    "preferredLabel": "Agentes de compras",
+    "confirmationLabel": "Gestión de existencias y almacén"
+  },
+  {
+    "classificationCode": "3523",
+    "preferredLabel": "Consignatarios",
+    "confirmationLabel": "Consignatarios"
+  },
+  {
+    "classificationCode": "3713",
+    "preferredLabel": "Profesionales de apoyo al trabajo y a la educación social",
+    "confirmationLabel": "Integración y apoyo social"
+  },
+  {
+    "classificationCode": "3714",
+    "preferredLabel": "Promotores de igualdad de oportunidades entre mujeres y hombres",
+    "confirmationLabel": "Promotores de igualdad de oportunidades entre mujeres y hombres"
+  },
+  {
+    "classificationCode": "3722",
+    "preferredLabel": "Entrenadores y árbitros de actividades deportivas",
+    "confirmationLabel": "Entrenadores y árbitros de actividades deportivas"
+  },
+  {
+    "classificationCode": "3723",
+    "preferredLabel": "Instructores de actividades deportivas",
+    "confirmationLabel": "Instructores de actividades deportivas"
+  },
+  {
+    "classificationCode": "3724",
+    "preferredLabel": "Monitores de actividades recreativas y de entretenimiento",
+    "confirmationLabel": "Monitores de actividades recreativas y de entretenimiento"
+  },
+  {
+    "classificationCode": "3811",
+    "preferredLabel": "Técnicos en operaciones de sistemas informáticos",
+    "confirmationLabel": "Operación de sistemas informáticos"
+  },
+  {
+    "classificationCode": "3812",
+    "preferredLabel": "Técnicos en asistencia al usuario de tecnologías de la información",
+    "confirmationLabel": "Soporte informático a usuarios"
+  },
+  {
+    "classificationCode": "3813",
+    "preferredLabel": "Técnicos en redes",
+    "confirmationLabel": "Operación y soporte de redes"
+  },
+  {
+    "classificationCode": "3814",
+    "preferredLabel": "Técnicos de la Web",
+    "confirmationLabel": "Operación y soporte web"
+  },
+  {
+    "classificationCode": "3820",
+    "preferredLabel": "Programadores informáticos",
+    "confirmationLabel": "Programación de aplicaciones y software"
+  },
+  {
+    "classificationCode": "4111",
+    "preferredLabel": "Empleados de contabilidad",
+    "confirmationLabel": "Administración contable"
+  },
+  {
+    "classificationCode": "4113",
+    "preferredLabel": "Empleados de oficina de servicios estadísticos, financieros y bancarios",
+    "confirmationLabel": "Administración financiera, bancaria y de seguros"
+  },
+  {
+    "classificationCode": "4121",
+    "preferredLabel": "Empleados de control de abastecimientos e inventario",
+    "confirmationLabel": "Control de abastecimientos e inventario"
+  },
+  {
+    "classificationCode": "4123",
+    "preferredLabel": "Empleados de logística y transporte de pasajeros y mercancías",
+    "confirmationLabel": "Empleados de logística y transporte de pasajeros y mercancías"
+  },
+  {
+    "classificationCode": "4223",
+    "preferredLabel": "Empleados de servicio de personal",
+    "confirmationLabel": "Administración de recursos humanos"
+  },
+  {
+    "classificationCode": "4411",
+    "preferredLabel": "Empleados de información al usuario",
+    "confirmationLabel": "Información y orientación al usuario"
+  },
+  {
+    "classificationCode": "4412",
+    "preferredLabel": "Recepcionistas (excepto de hoteles)",
+    "confirmationLabel": "Recepcionistas (excepto de hoteles)"
+  },
+  {
+    "classificationCode": "4424",
+    "preferredLabel": "Teleoperadores",
+    "confirmationLabel": "Atención telefónica remota"
+  },
+  {
+    "classificationCode": "5110",
+    "preferredLabel": "Cocineros asalariados",
+    "confirmationLabel": "Cocina profesional"
+  },
+  {
+    "classificationCode": "5120",
+    "preferredLabel": "Camareros asalariados",
+    "confirmationLabel": "Servicio de sala y barra"
+  },
+  {
+    "classificationCode": "5210",
+    "preferredLabel": "Jefes de sección de tiendas y almacenes",
+    "confirmationLabel": "Supervisión de secciones de tienda y almacén"
+  },
+  {
+    "classificationCode": "5220",
+    "preferredLabel": "Vendedores en tiendas y almacenes",
+    "confirmationLabel": "Venta en tienda y almacén"
+  },
+  {
+    "classificationCode": "5420",
+    "preferredLabel": "Operadores de telemarketing",
+    "confirmationLabel": "Venta comercial a distancia"
+  },
+  {
+    "classificationCode": "5492",
+    "preferredLabel": "Promotores de venta",
+    "confirmationLabel": "Promotores de venta"
+  },
+  {
+    "classificationCode": "5500",
+    "preferredLabel": "Cajeros y taquilleros (excepto bancos)",
+    "confirmationLabel": "Cobro en comercio"
+  },
+  {
+    "classificationCode": "5611",
+    "preferredLabel": "Auxiliares de enfermería hospitalaria",
+    "confirmationLabel": "Atención auxiliar de enfermería hospitalaria"
+  },
+  {
+    "classificationCode": "5612",
+    "preferredLabel": "Auxiliares de enfermería de atención primaria",
+    "confirmationLabel": "Atención auxiliar de enfermería primaria"
+  },
+  {
+    "classificationCode": "5621",
+    "preferredLabel": "Técnicos auxiliares de farmacia",
+    "confirmationLabel": "Asistencia técnica en farmacia"
+  },
+  {
+    "classificationCode": "5629",
+    "preferredLabel": "Trabajadores de los cuidados a las personas en servicios de salud no clasificados bajo otros epígrafes",
+    "confirmationLabel": "Apoyo sanitario no clasificado"
+  },
+  {
+    "classificationCode": "5710",
+    "preferredLabel": "Trabajadores de los cuidados personales a domicilio",
+    "confirmationLabel": "Cuidados personales a domicilio"
+  },
+  {
+    "classificationCode": "5811",
+    "preferredLabel": "Peluqueros",
+    "confirmationLabel": "Peluquería y cuidado del cabello"
+  },
+  {
+    "classificationCode": "5812",
+    "preferredLabel": "Especialistas en tratamientos de estética, bienestar y afines",
+    "confirmationLabel": "Tratamientos de estética y cuidado de uñas"
+  },
+  {
+    "classificationCode": "5894",
+    "preferredLabel": "Instructores de autoescuela",
+    "confirmationLabel": "Instructores de autoescuela"
+  },
+  {
+    "classificationCode": "5931",
+    "preferredLabel": "Bomberos (excepto forestales)",
+    "confirmationLabel": "Bomberos (excepto forestales)"
+  },
+  {
+    "classificationCode": "5932",
+    "preferredLabel": "Bomberos forestales",
+    "confirmationLabel": "Bomberos forestales"
+  },
+  {
+    "classificationCode": "5992",
+    "preferredLabel": "Bañistas-socorristas",
+    "confirmationLabel": "Bañistas-socorristas"
+  },
+  {
+    "classificationCode": "5993",
+    "preferredLabel": "Agentes forestales y medioambientales",
+    "confirmationLabel": "Agentes forestales y medioambientales"
+  },
+  {
+    "classificationCode": "6110",
+    "preferredLabel": "Trabajadores cualificados en actividades agrícolas (excepto en huertas, invernaderos, viveros y jardines)",
+    "confirmationLabel": "Trabajadores cualificados en actividades agrícolas (excepto en huertas, invernaderos, viveros y jardines)"
+  },
+  {
+    "classificationCode": "6120",
+    "preferredLabel": "Trabajadores cualificados en huertas, invernaderos, viveros y jardines",
+    "confirmationLabel": "Trabajos cualificados en huertas, jardines y viveros"
+  },
+  {
+    "classificationCode": "6204",
+    "preferredLabel": "Trabajadores cualificados en apicultura y sericicultura",
+    "confirmationLabel": "Trabajadores cualificados en apicultura y sericicultura"
+  },
+  {
+    "classificationCode": "6205",
+    "preferredLabel": "Trabajadores cualificados en la avicultura y la cunicultura",
+    "confirmationLabel": "Trabajadores cualificados en la avicultura y la cunicultura"
+  },
+  {
+    "classificationCode": "6300",
+    "preferredLabel": "Trabajadores cualificados en actividades agropecuarias mixtas",
+    "confirmationLabel": "Trabajadores cualificados en actividades agropecuarias mixtas"
+  },
+  {
+    "classificationCode": "7111",
+    "preferredLabel": "Encofradores y operarios de puesta en obra de hormigón",
+    "confirmationLabel": "Encofrados, ferralla y hormigón"
+  },
+  {
+    "classificationCode": "7121",
+    "preferredLabel": "Albañiles",
+    "confirmationLabel": "Albañilería y mampostería"
+  },
+  {
+    "classificationCode": "7132",
+    "preferredLabel": "Instaladores de cerramientos metálicos y carpinteros metálicos",
+    "confirmationLabel": "Carpintería metálica"
+  },
+  {
+    "classificationCode": "7193",
+    "preferredLabel": "Instaladores de sistemas de impermeabilización en edificios",
+    "confirmationLabel": "Impermeabilización de edificios"
+  },
+  {
+    "classificationCode": "7221",
+    "preferredLabel": "Fontaneros",
+    "confirmationLabel": "Fontaneros"
+  },
+  {
+    "classificationCode": "7222",
+    "preferredLabel": "Montadores-instaladores de gas en edificios",
+    "confirmationLabel": "Montadores-instaladores de gas en edificios"
+  },
+  {
+    "classificationCode": "7232",
+    "preferredLabel": "Pintores en las industrias manufactureras",
+    "confirmationLabel": "Pintores en las industrias manufactureras"
+  },
+  {
+    "classificationCode": "7240",
+    "preferredLabel": "Soladores, colocadores de parquet y afines",
+    "confirmationLabel": "Solados y alicatados"
+  },
+  {
+    "classificationCode": "7250",
+    "preferredLabel": "Mecánicos-instaladores de refrigeración y climatización",
+    "confirmationLabel": "Refrigeración y climatización"
+  },
+  {
+    "classificationCode": "7291",
+    "preferredLabel": "Montadores de cubiertas",
+    "confirmationLabel": "Montaje de cubiertas"
+  },
+  {
+    "classificationCode": "7294",
+    "preferredLabel": "Montadores-instaladores de placas de energía solar",
+    "confirmationLabel": "Montaje de instalaciones solares"
+  },
+  {
+    "classificationCode": "7312",
+    "preferredLabel": "Soldadores y oxicortadores",
+    "confirmationLabel": "Soldadura y oxicorte"
+  },
+  {
+    "classificationCode": "7313",
+    "preferredLabel": "Chapistas y caldereros",
+    "confirmationLabel": "Chapistería y calderería"
+  },
+  {
+    "classificationCode": "7314",
+    "preferredLabel": "Montadores de estructuras metálicas",
+    "confirmationLabel": "Montaje de estructuras metálicas"
+  },
+  {
+    "classificationCode": "7322",
+    "preferredLabel": "Trabajadores de la fabricación de herramientas, mecánico-ajustadores, modelistas, matriceros y afines",
+    "confirmationLabel": "Fabricación de herramientas y ajuste mecánico"
+  },
+  {
+    "classificationCode": "7323",
+    "preferredLabel": "Ajustadores y operadores de máquinas-herramienta",
+    "confirmationLabel": "Ajuste y operación de máquinas-herramienta"
+  },
+  {
+    "classificationCode": "7324",
+    "preferredLabel": "Pulidores de metales y afiladores de herramientas",
+    "confirmationLabel": "Pulido de metales y afilado de herramientas"
+  },
+  {
+    "classificationCode": "7401",
+    "preferredLabel": "Mecánicos y ajustadores de vehículos de motor",
+    "confirmationLabel": "Mecánica y ajuste de vehículos"
+  },
+  {
+    "classificationCode": "7403",
+    "preferredLabel": "Mecánicos y ajustadores de maquinaria agrícola e industrial",
+    "confirmationLabel": "Mecánicos y ajustadores de maquinaria agrícola e industrial"
+  },
+  {
+    "classificationCode": "7404",
+    "preferredLabel": "Mecánicos y ajustadores de maquinaria naval y ferroviaria",
+    "confirmationLabel": "Mecánicos y ajustadores de maquinaria naval y ferroviaria"
+  },
+  {
+    "classificationCode": "7510",
+    "preferredLabel": "Electricistas de la construcción y afines",
+    "confirmationLabel": "Instalaciones eléctricas de construcción"
+  },
+  {
+    "classificationCode": "7521",
+    "preferredLabel": "Mecánicos y reparadores de equipos eléctricos",
+    "confirmationLabel": "Mecánicos y reparadores de equipos eléctricos"
+  },
+  {
+    "classificationCode": "7531",
+    "preferredLabel": "Mecánicos y reparadores de equipos electrónicos",
+    "confirmationLabel": "Mecánicos y reparadores de equipos electrónicos"
+  },
+  {
+    "classificationCode": "7532",
+    "preferredLabel": "Instaladores y reparadores en electromedicina",
+    "confirmationLabel": "Instaladores y reparadores en electromedicina"
+  },
+  {
+    "classificationCode": "7533",
+    "preferredLabel": "Instaladores y reparadores en tecnologías de la información y las comunicaciones",
+    "confirmationLabel": "Instalación y reparación de telecomunicaciones"
+  },
+  {
+    "classificationCode": "7621",
+    "preferredLabel": "Trabajadores de procesos de preimpresión",
+    "confirmationLabel": "Trabajadores de procesos de preimpresión"
+  },
+  {
+    "classificationCode": "7705",
+    "preferredLabel": "Trabajadores conserveros de frutas y hortalizas y trabajadores de la elaboración de bebidas no alcohólicas",
+    "confirmationLabel": "Trabajadores conserveros de frutas y hortalizas y trabajadores de la elaboración de bebidas no alcohólicas"
+  },
+  {
+    "classificationCode": "7707",
+    "preferredLabel": "Trabajadores de la elaboración del vino",
+    "confirmationLabel": "Trabajadores de la elaboración del vino"
+  },
+  {
+    "classificationCode": "7709",
+    "preferredLabel": "Catadores y clasificadores de alimentos y bebidas",
+    "confirmationLabel": "Catadores y clasificadores de alimentos y bebidas"
+  },
+  {
+    "classificationCode": "7812",
+    "preferredLabel": "Ajustadores y operadores de máquinas para trabajar la madera",
+    "confirmationLabel": "Operación de máquinas para trabajar la madera"
+  },
+  {
+    "classificationCode": "7835",
+    "preferredLabel": "Tapiceros, colchoneros y afines",
+    "confirmationLabel": "Tapiceros, colchoneros y afines"
+  },
+  {
+    "classificationCode": "8131",
+    "preferredLabel": "Operadores en plantas industriales químicas",
+    "confirmationLabel": "Operadores en plantas industriales químicas"
+  },
+  {
+    "classificationCode": "8160",
+    "preferredLabel": "Operadores de máquinas para elaborar productos alimenticios, bebidas y tabaco",
+    "confirmationLabel": "Operadores de máquinas para elaborar productos alimenticios, bebidas y tabaco"
+  },
+  {
+    "classificationCode": "8193",
+    "preferredLabel": "Operadores de máquinas de embalaje, embotellamiento y etiquetado",
+    "confirmationLabel": "Operadores de máquinas de embalaje, embotellamiento y etiquetado"
+  },
+  {
+    "classificationCode": "8202",
+    "preferredLabel": "Ensambladores de equipos eléctricos y electrónicos",
+    "confirmationLabel": "Ensamblaje de equipos eléctricos y electrónicos"
+  },
+  {
+    "classificationCode": "8209",
+    "preferredLabel": "Montadores y ensambladores no clasificados en otros epígrafes",
+    "confirmationLabel": "Montaje y ensamblaje no clasificado"
+  },
+  {
+    "classificationCode": "8321",
+    "preferredLabel": "Operadores de maquinaria agrícola móvil",
+    "confirmationLabel": "Operadores de maquinaria agrícola móvil"
+  },
+  {
+    "classificationCode": "8333",
+    "preferredLabel": "Operadores de carretillas elevadoras",
+    "confirmationLabel": "Operadores de carretillas elevadoras"
+  },
+  {
+    "classificationCode": "9310",
+    "preferredLabel": "Ayudantes de cocina",
+    "confirmationLabel": "Ayuda de cocina"
+  },
+  {
+    "classificationCode": "9511",
+    "preferredLabel": "Peones agrícolas (excepto en huertas, invernaderos, viveros y jardines)",
+    "confirmationLabel": "Peones agrícolas (excepto en huertas, invernaderos, viveros y jardines)"
+  },
+  {
+    "classificationCode": "9512",
+    "preferredLabel": "Peones agrícolas en huertas, invernaderos, viveros y jardines",
+    "confirmationLabel": "Peones agrícolas en huertas, invernaderos, viveros y jardines"
+  },
+  {
+    "classificationCode": "9530",
+    "preferredLabel": "Peones agropecuarios",
+    "confirmationLabel": "Peones agropecuarios"
+  },
+  {
+    "classificationCode": "9543",
+    "preferredLabel": "Peones forestales y de la caza",
+    "confirmationLabel": "Peones forestales y de la caza"
+  },
+  {
+    "classificationCode": "9700",
+    "preferredLabel": "Peones de las industrias manufactureras",
+    "confirmationLabel": "Peones de las industrias manufactureras"
+  },
+  {
+    "classificationCode": "9820",
+    "preferredLabel": "Reponedores",
+    "confirmationLabel": "Reponedores"
+  }
+]

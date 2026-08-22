@@ -4,10 +4,16 @@ import { dirname, isAbsolute, resolve } from "node:path";
 import { pathToFileURL } from "node:url";
 
 import {
+  SEPE_OCCUPATION_MARKET_RESOLVER_ENDPOINT,
   SepeOccupationMarketResourceSchema,
   type SepeOccupationMarket,
+  type SepeOccupationMarketResource,
 } from "../../data/schemas/sepeOccupationMarket";
 import { parseSepeOccupationMarket } from "./parseSepeOccupationMarket";
+import {
+  resolveSepeOccupationMarketPage,
+  type SepeOccupationMarketResolution,
+} from "./resolveSepeOccupationMarketUrl";
 
 const PERIOD_PATTERN = /^\d{4}-(?:0[1-9]|1[0-2])$/u;
 const CNO_PATTERN = /^\d{4}$/u;
@@ -49,6 +55,11 @@ export interface CaptureSepeOccupationMarketOptions {
   fetchPage: (
     context: SepeOccupationMarketFetchContext,
   ) => Promise<SepeOccupationMarketFetchResult>;
+  resolvePage?: (request: {
+    cnoCode: string;
+    period: string;
+  }) => Promise<SepeOccupationMarketResolution>;
+  resolverEndpoint?: string;
   retrievedAt?: string | (() => string);
   sourceUrlFor?: (
     occupation: SepeOccupationMarketCatalogueEntry,
@@ -95,7 +106,7 @@ function validatePeriod(period: string): void {
   }
 }
 
-function defaultSourceUrl(
+function legacySourceUrl(
   occupation: SepeOccupationMarketCatalogueEntry,
   period: string,
 ): string {
@@ -159,10 +170,10 @@ async function normalizeFetchedPage(
 
 async function writeValidatedCandidate(
   outputPath: string,
-  records: readonly SepeOccupationMarket[],
+  resource: SepeOccupationMarketResource,
 ): Promise<void> {
   const temporaryPath = `${outputPath}.tmp-${process.pid}-${randomUUID()}`;
-  const contents = `${JSON.stringify(records, null, 2)}\n`;
+  const contents = `${JSON.stringify(resource, null, 2)}\n`;
   try {
     const handle = await open(temporaryPath, "wx");
     try {
@@ -204,71 +215,126 @@ export async function captureSepeOccupationMarket(
   }
 
   const retrieveAt = resolvedRetrievedAt(options.retrievedAt);
-  const sourceUrlFor = options.sourceUrlFor ?? defaultSourceUrl;
-  const records: SepeOccupationMarket[] = [];
-  for (const occupation of catalogue) {
-    const sourceUrl = sourceUrlFor(occupation, options.period);
-    let fetched: SepeOccupationMarketFetchResult;
-    try {
-      fetched = await options.fetchPage({
-        occupation,
-        period: options.period,
-        sourceUrl,
-      });
-    } catch (error) {
-      throw new Error(
-        `SEPE occupation market capture failed for CNO ${occupation.code}: ${error instanceof Error ? error.message : String(error)}`,
-        { cause: error },
-      );
-    }
-    let page: NormalizedPage;
-    try {
-      page = await normalizeFetchedPage(fetched, {
-        occupation,
-        period: options.period,
-        sourceUrl,
-      });
-    } catch (error) {
-      throw new Error(
-        `SEPE occupation market capture failed for CNO ${occupation.code}: ${error instanceof Error ? error.message : String(error)}`,
-        { cause: error },
-      );
-    }
-    try {
-      const record = parseSepeOccupationMarket(page.html, {
-        expectedCnoCode: occupation.code,
-        sourceUrl: page.sourceUrl,
-        retrievedAt: page.retrievedAt ?? retrieveAt,
-      });
-      if (record.period !== options.period) {
+  const recordsByCode = new Map<string, SepeOccupationMarket>();
+  const notPublishedCodes = new Set<string>();
+  const resolvePage =
+    options.resolvePage ??
+    (catalogue.length === 1
+      ? async ({ period }: { cnoCode: string; period: string }) => ({
+          status: "published" as const,
+          sourceUrl: (options.sourceUrlFor ?? legacySourceUrl)(
+            catalogue[0] as SepeOccupationMarketCatalogueEntry,
+            period,
+          ),
+        })
+      : (request: { cnoCode: string; period: string }) =>
+          resolveSepeOccupationMarketPage(request, {
+            endpoint:
+              options.resolverEndpoint ??
+              SEPE_OCCUPATION_MARKET_RESOLVER_ENDPOINT,
+          }));
+
+  let nextIndex = 0;
+  const worker = async (): Promise<void> => {
+    while (true) {
+      const index = nextIndex;
+      nextIndex += 1;
+      const occupation = catalogue[index];
+      if (occupation === undefined) return;
+
+      let resolution: SepeOccupationMarketResolution;
+      try {
+        resolution = await resolvePage({
+          cnoCode: occupation.code,
+          period: options.period,
+        });
+      } catch (error) {
         throw new Error(
-          `SEPE occupation market page period ${record.period} does not match requested period ${options.period}.`,
+          `SEPE occupation market capture failed resolving CNO ${occupation.code}: ${error instanceof Error ? error.message : String(error)}`,
+          { cause: error },
         );
       }
-      records.push(record);
-    } catch (error) {
-      throw new Error(
-        `SEPE occupation market capture failed for CNO ${occupation.code}: ${error instanceof Error ? error.message : String(error)}`,
-        { cause: error },
-      );
-    }
-  }
+      if (resolution.status === "not-published") {
+        notPublishedCodes.add(occupation.code);
+        continue;
+      }
 
-  records.sort((left, right) => left.cno.code.localeCompare(right.cno.code));
-  const validated = SepeOccupationMarketResourceSchema.parse(records);
-  const candidateCodes = new Set(validated.map((record) => record.cno.code));
-  const missingCodes = catalogue
+      const sourceUrl = resolution.sourceUrl;
+      let fetched: SepeOccupationMarketFetchResult;
+      try {
+        fetched = await options.fetchPage({
+          occupation,
+          period: options.period,
+          sourceUrl,
+        });
+      } catch (error) {
+        throw new Error(
+          `SEPE occupation market capture failed for CNO ${occupation.code}: ${error instanceof Error ? error.message : String(error)}`,
+          { cause: error },
+        );
+      }
+      let page: NormalizedPage;
+      try {
+        page = await normalizeFetchedPage(fetched, {
+          occupation,
+          period: options.period,
+          sourceUrl,
+        });
+      } catch (error) {
+        throw new Error(
+          `SEPE occupation market capture failed for CNO ${occupation.code}: ${error instanceof Error ? error.message : String(error)}`,
+          { cause: error },
+        );
+      }
+      try {
+        const record = parseSepeOccupationMarket(page.html, {
+          expectedCnoCode: occupation.code,
+          sourceUrl: page.sourceUrl,
+          retrievedAt: page.retrievedAt ?? retrieveAt,
+        });
+        if (record.period !== options.period) {
+          throw new Error(
+            `SEPE occupation market page period ${record.period} does not match requested period ${options.period}.`,
+          );
+        }
+        recordsByCode.set(record.cno.code, record);
+      } catch (error) {
+        throw new Error(
+          `SEPE occupation market capture failed for CNO ${occupation.code}: ${error instanceof Error ? error.message : String(error)}`,
+          { cause: error },
+        );
+      }
+    }
+  };
+  await Promise.all(
+    Array.from({ length: Math.min(4, catalogue.length) }, () => worker()),
+  );
+
+  const records = [...recordsByCode.values()].sort((left, right) =>
+    left.cno.code.localeCompare(right.cno.code),
+  );
+  const requestedCnoCodes = catalogue
     .map((occupation) => occupation.code)
-    .filter((code) => !candidateCodes.has(code));
-  if (missingCodes.length > 0) {
-    throw new Error(
-      `SEPE occupation market capture has incomplete CNO coverage: ${missingCodes.join(", ")}.`,
-    );
-  }
+    .sort();
+  const publishedCnoCodes = records.map((record) => record.cno.code);
+  const notPublishedCnoCodeList = [...notPublishedCodes].sort();
+  const validated = SepeOccupationMarketResourceSchema.parse({
+    schemaVersion: "1.1.0",
+    period: options.period,
+    records,
+    coverage: {
+      requestedCnoCodes,
+      publishedCnoCodes,
+      notPublishedCnoCodes: notPublishedCnoCodeList,
+      resolverEndpoint:
+        options.resolverEndpoint ?? SEPE_OCCUPATION_MARKET_RESOLVER_ENDPOINT,
+      capturedAt: retrieveAt,
+    },
+  });
 
   await mkdir(dirname(options.outputPath), { recursive: true });
   await writeValidatedCandidate(resolve(options.outputPath), validated);
-  return validated;
+  return validated.records;
 }
 
 interface CliArguments {

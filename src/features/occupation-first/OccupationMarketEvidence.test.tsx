@@ -109,6 +109,9 @@ describe("OccupationMarketEvidence", () => {
       name: "Mercado laboral de esta ocupación",
     });
     expect(panel).toHaveTextContent("julio de 2026");
+    expect(panel).toHaveTextContent(
+      "Datos SEPE disponibles para 1 de 1 grupos CNO consultados.",
+    );
     expect(panel).toHaveTextContent("116");
     expect(panel).toHaveTextContent("115");
     expect(panel).toHaveTextContent("2478");
@@ -137,11 +140,22 @@ describe("OccupationMarketEvidence", () => {
       />,
     );
 
+    const missing = await screen.findByText(
+      "Sin evidencia SEPE publicada para este CNO en el periodo consultado; no equivale a cero.",
+    );
+    expect(missing).toBeVisible();
+    expect(missing.parentElement).toHaveTextContent("julio de 2026");
+    expect(missing.parentElement).toHaveTextContent(
+      "Datos SEPE disponibles para 1 de 1 grupos CNO consultados.",
+    );
     expect(
-      await screen.findByText(
-        "No hay un registro SEPE publicado para CNO-11 2721.",
-      ),
-    ).toBeVisible();
+      within(missing.parentElement as HTMLElement).getByRole("link", {
+        name: /Fuente oficial SEPE/i,
+      }),
+    ).toHaveAttribute(
+      "href",
+      "https://www.sepe.es/HomeSepe/que-es-observatorio/informacion-mt-por-ocupacion/main/04/content/resultados",
+    );
     expect(screen.queryByText("2478")).not.toBeInTheDocument();
   });
 

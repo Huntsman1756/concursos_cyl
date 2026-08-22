@@ -21,6 +21,7 @@ import {
   loadOutcomeIndicators,
   loadPublishedRequirements,
   loadSepeOccupationMarket,
+  loadSepeOccupationMarketResource,
   resolveGeneratedAssetPath,
 } from "./generatedDataClient";
 
@@ -243,6 +244,85 @@ describe("generated data client", () => {
     mockGeneratedAssets({ [resourcePath]: [{ malformed: true }] });
     await expect(loadSepeOccupationMarket(advertised)).rejects.toMatchObject({
       code: "schema",
+    });
+  });
+
+  it("returns coverage metadata for the envelope and adapts a legacy array", async () => {
+    const foundationManifest = LoadableGeneratedManifestSchema.parse({
+      schemaVersion: "1.0.0",
+      generatedAt: "2026-08-04T10:00:00.000Z",
+      qualityStatus: "passed",
+      qualityReport: {
+        counts: { programs: 1, centers: 1, offerings: 1, offers: 1 },
+        nullRates: {
+          centerAddress: 0,
+          centerPhone: 0,
+          centerEmail: 0,
+          centerWebsite: 0,
+          offerProvince: 0,
+          offerLocality: 0,
+          offerDescription: 0,
+        },
+      },
+      resourceSnapshots: {
+        programs: {
+          ...snapshot,
+          resourcePath: "/data/v1/snapshots/build-1/programs.json",
+        },
+        centers: {
+          ...snapshot,
+          resourcePath: "/data/v1/snapshots/build-1/centers.json",
+        },
+        trainingOfferings: {
+          ...snapshot,
+          resourcePath: "/data/v1/snapshots/build-1/training-offerings.json",
+        },
+        jobOffers: {
+          ...snapshot,
+          resourcePath: "/data/v1/snapshots/build-1/job-offers.json",
+        },
+        sepeOccupationMarket: {
+          ...snapshot,
+          sourceId: "sepe-occupation-market",
+          sourceUrl: "https://www.sepe.es/",
+          resourcePath:
+            "/data/v1/snapshots/build-1/sepe-occupation-market.json",
+          recordCount: sepeResource.length,
+        },
+      },
+    });
+    const envelope = {
+      schemaVersion: "1.1.0",
+      period: "2026-07",
+      records: sepeResource,
+      coverage: {
+        requestedCnoCodes: ["2721"],
+        publishedCnoCodes: ["2721"],
+        notPublishedCnoCodes: [],
+        resolverEndpoint:
+          "https://www.sepe.es/HomeSepe/que-es-observatorio/informacion-mt-por-ocupacion/main/04/content/resultados",
+        capturedAt: "2026-08-22T09:30:00Z",
+      },
+    };
+    const path = "/data/v1/snapshots/build-1/sepe-occupation-market.json";
+    mockGeneratedAssets({ [path]: envelope });
+    await expect(
+      loadSepeOccupationMarketResource(foundationManifest),
+    ).resolves.toEqual(envelope);
+    await expect(loadSepeOccupationMarket(foundationManifest)).resolves.toEqual(
+      sepeResource,
+    );
+
+    mockGeneratedAssets({ [path]: sepeResource });
+    await expect(
+      loadSepeOccupationMarketResource(foundationManifest),
+    ).resolves.toMatchObject({
+      records: sepeResource,
+      coverage: {
+        requestedCnoCodes: ["2721"],
+        publishedCnoCodes: ["2721"],
+        notPublishedCnoCodes: [],
+      },
     });
   });
 

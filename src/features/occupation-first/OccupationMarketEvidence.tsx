@@ -3,8 +3,9 @@ import type { LoadableGeneratedManifest } from "../../../data/schemas/generated"
 import type {
   SepeOccupationMarket,
   SepeOccupationMetric,
+  SepeOccupationMarketResource,
 } from "../../../data/schemas/sepeOccupationMarket";
-import { loadSepeOccupationMarket } from "../../data/generatedDataClient";
+import { loadSepeOccupationMarketResource } from "../../data/generatedDataClient";
 import "./occupationMarketEvidence.css";
 
 export interface OccupationMarketEvidenceProps {
@@ -15,9 +16,13 @@ export interface OccupationMarketEvidenceProps {
 type EvidenceState =
   | { status: "loading" }
   | { status: "unavailable" }
-  | { status: "not-found" }
+  | { status: "not-found"; resource: SepeOccupationMarketResource }
   | { status: "error" }
-  | { status: "ready"; record: SepeOccupationMarket };
+  | {
+      status: "ready";
+      record: SepeOccupationMarket;
+      resource: SepeOccupationMarketResource;
+    };
 
 const numberFormatter = new Intl.NumberFormat("es-ES");
 const decimalFormatter = new Intl.NumberFormat("es-ES", {
@@ -130,6 +135,25 @@ function EvidenceSummary({ record }: { record: SepeOccupationMarket }) {
   );
 }
 
+function EvidenceCoverage({
+  resource,
+}: {
+  resource: SepeOccupationMarketResource;
+}) {
+  const { coverage } = resource;
+  return (
+    <div className="occupation-market-evidence__coverage">
+      <p>
+        Periodo consultado: <strong>{formatPeriod(resource.period)}</strong>.
+      </p>
+      <p>
+        Datos SEPE disponibles para {coverage.publishedCnoCodes.length} de{" "}
+        {coverage.requestedCnoCodes.length} grupos CNO consultados.
+      </p>
+    </div>
+  );
+}
+
 function ProvinceTable({ record }: { record: SepeOccupationMarket }) {
   return (
     <div className="occupation-market-evidence__table-wrap">
@@ -172,20 +196,20 @@ export function OccupationMarketEvidence({
 
   useEffect(() => {
     let active = true;
-    void loadSepeOccupationMarket(manifest)
-      .then((records) => {
+    void loadSepeOccupationMarketResource(manifest)
+      .then((resource) => {
         if (!active) return;
-        if (records === null) {
+        if (resource === null) {
           setState({ status: "unavailable" });
           return;
         }
-        const record = records.find(
+        const record = resource.records.find(
           (candidate) => candidate.cno.code === cnoCode,
         );
         setState(
           record === undefined
-            ? { status: "not-found" }
-            : { status: "ready", record },
+            ? { status: "not-found", resource }
+            : { status: "ready", record, resource },
         );
       })
       .catch(() => {
@@ -225,9 +249,23 @@ export function OccupationMarketEvidence({
         </p>
       )}
       {state.status === "not-found" && (
-        <p role="status" aria-live="polite">
-          No hay un registro SEPE publicado para CNO-11 {cnoCode}.
-        </p>
+        <>
+          <EvidenceCoverage resource={state.resource} />
+          <p role="status" aria-live="polite">
+            Sin evidencia SEPE publicada para este CNO en el periodo consultado;
+            no equivale a cero.
+          </p>
+          <p className="occupation-market-evidence__provenance">
+            <a
+              href={state.resource.coverage.resolverEndpoint}
+              target="_blank"
+              rel="noreferrer"
+            >
+              Fuente oficial SEPE
+              <span className="sr-only"> (abre en una pestaña nueva)</span>
+            </a>
+          </p>
+        </>
       )}
       {state.status === "error" && (
         <p role="alert">
@@ -241,6 +279,7 @@ export function OccupationMarketEvidence({
       )}
       {state.status === "ready" && (
         <>
+          <EvidenceCoverage resource={state.resource} />
           <EvidenceSummary record={state.record} />
           <p className="occupation-market-evidence__section-label">
             Distribución provincial

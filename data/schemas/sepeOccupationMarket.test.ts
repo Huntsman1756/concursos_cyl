@@ -4,6 +4,8 @@ import {
   SEPE_CYL_PROVINCES,
   SEPE_OCCUPATION_MARKET_ATTRIBUTION,
   SepeOccupationMarketSchema,
+  SepeOccupationMarketResourceSchema,
+  adaptSepeOccupationMarketResource,
 } from "./sepeOccupationMarket";
 
 const metric = {
@@ -126,5 +128,79 @@ describe("SepeOccupationMarketSchema", () => {
         cno: { ...validRecord.cno, code: "272" },
       }),
     ).toThrow(/cno/i);
+  });
+});
+
+describe("SepeOccupationMarketResourceSchema", () => {
+  const resource = {
+    schemaVersion: "1.1.0",
+    period: "2026-07",
+    records: [validRecord],
+    coverage: {
+      requestedCnoCodes: ["2721"],
+      publishedCnoCodes: ["2721"],
+      notPublishedCnoCodes: [],
+      resolverEndpoint:
+        "https://www.sepe.es/HomeSepe/que-es-observatorio/informacion-mt-por-ocupacion/main/04/content/resultados",
+      capturedAt: "2026-08-22T09:30:00Z",
+    },
+  };
+
+  it("accepts a strict versioned envelope and adapts historical arrays", () => {
+    expect(SepeOccupationMarketResourceSchema.parse(resource)).toEqual(
+      resource,
+    );
+    const adapted = adaptSepeOccupationMarketResource([validRecord]);
+    expect(adapted.records).toEqual([validRecord]);
+    expect(adapted.coverage).toMatchObject({
+      requestedCnoCodes: ["2721"],
+      publishedCnoCodes: ["2721"],
+      notPublishedCnoCodes: [],
+    });
+  });
+
+  it("requires sorted unique coverage and an exact published/missing union", () => {
+    expect(() =>
+      SepeOccupationMarketResourceSchema.parse({
+        ...resource,
+        coverage: {
+          ...resource.coverage,
+          requestedCnoCodes: ["2721", "2252", "2252"],
+          publishedCnoCodes: ["2721"],
+          notPublishedCnoCodes: ["2252"],
+        },
+      }),
+    ).toThrow(/sorted|unique|coverage|union/i);
+    expect(() =>
+      SepeOccupationMarketResourceSchema.parse({
+        ...resource,
+        coverage: {
+          ...resource.coverage,
+          requestedCnoCodes: ["2721"],
+          publishedCnoCodes: [],
+          notPublishedCnoCodes: ["2721"],
+        },
+      }),
+    ).toThrow(/record|published|coverage/i);
+  });
+
+  it("requires every record to match the envelope period and published codes", () => {
+    expect(() =>
+      SepeOccupationMarketResourceSchema.parse({
+        ...resource,
+        records: [{ ...validRecord, period: "2026-06" }],
+      }),
+    ).toThrow(/period/i);
+    expect(() =>
+      SepeOccupationMarketResourceSchema.parse({
+        ...resource,
+        coverage: {
+          ...resource.coverage,
+          requestedCnoCodes: ["2252"],
+          publishedCnoCodes: ["2252"],
+          notPublishedCnoCodes: [],
+        },
+      }),
+    ).toThrow(/published|CNO|coverage/i);
   });
 });

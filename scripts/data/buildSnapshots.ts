@@ -58,7 +58,11 @@ import {
   DerivedFpOccupationGraphResourceSchema,
   OpenDataCatalogResourceSchema,
 } from "../../data/schemas/openData";
-import { SepeOccupationMarketResourceSchema } from "../../data/schemas/sepeOccupationMarket";
+import {
+  adaptSepeOccupationMarketResource,
+  SepeOccupationMarketResourceSchema,
+  type SepeOccupationMarketResource,
+} from "../../data/schemas/sepeOccupationMarket";
 import {
   EcylCourseSourceRecordSchema,
   EcylCoursesResourceSchema,
@@ -1037,9 +1041,11 @@ async function validateSnapshotDirectory(
     const json = JSON.parse(await readFile(filePath, "utf8"));
     const definition = RESOURCE_DEFINITIONS[key as ResourceKey];
     const records =
-      definition === undefined
-        ? z.array(z.unknown()).parse(json)
-        : (definition.schema.parse(json) as unknown[]);
+      key === "sepeOccupationMarket"
+        ? adaptSepeOccupationMarketResource(json).records
+        : definition === undefined
+          ? z.array(z.unknown()).parse(json)
+          : (definition.schema.parse(json) as unknown[]);
     if (records.length !== snapshot.recordCount) {
       throw new Error(`Snapshot count mismatch for additive resource ${key}.`);
     }
@@ -1111,12 +1117,18 @@ async function validateFlatCandidateDirectory(
     const definition = RESOURCE_DEFINITIONS[key];
     const filePath = resolve(staging, definition.fileName);
     await assertPhysicalPath(root, filePath);
-    const records = definition.schema.parse(
-      JSON.parse(await readFile(filePath, "utf8")),
-    );
+    const json = JSON.parse(await readFile(filePath, "utf8"));
+    const records =
+      key === "sepeOccupationMarket"
+        ? adaptSepeOccupationMarketResource(json).records
+        : definition.schema.parse(json);
     const snapshot = manifest.resourceSnapshots[key];
+    const recordCount =
+      key === "sepeOccupationMarket"
+        ? (records as SepeOccupationMarketResource["records"]).length
+        : (records as readonly unknown[]).length;
     if (
-      records.length !== snapshot.recordCount ||
+      recordCount !== snapshot.recordCount ||
       (await hashFile(filePath)) !== snapshot.sha256
     ) {
       throw new Error(
@@ -1394,11 +1406,11 @@ function sourceSnapshot(
 
 async function loadCheckedInSepeOccupationMarket(
   root: string,
-): Promise<z.infer<typeof SepeOccupationMarketResourceSchema>> {
+): Promise<SepeOccupationMarketResource> {
   const relativePath = "data/curated/sepe-occupation-market.json";
   const candidatePath = resolve(root, relativePath);
   if (await pathExists(candidatePath)) {
-    return SepeOccupationMarketResourceSchema.parse(
+    return adaptSepeOccupationMarketResource(
       JSON.parse(await readFile(candidatePath, "utf8")),
     );
   }
@@ -1408,9 +1420,7 @@ async function loadCheckedInSepeOccupationMarket(
 }
 
 function assertSepeCaptureNotRetrievedAfterSnapshot(
-  records: ReadonlyArray<
-    z.infer<typeof SepeOccupationMarketResourceSchema>[number]
-  >,
+  records: SepeOccupationMarketResource["records"],
   snapshotTime: string,
 ): void {
   const snapshotTimestamp = Date.parse(snapshotTime);
@@ -1436,7 +1446,7 @@ async function writeCandidate(
   regionalContractRecords: readonly RegionalContractSourceRecord[],
   municipalityRecords: readonly MunicipalitySourceRecord[],
   educationCenterDirectoryRecords: readonly EducationCenterDirectorySourceRecord[],
-  sepeOccupationMarket: z.infer<typeof SepeOccupationMarketResourceSchema>,
+  sepeOccupationMarket: SepeOccupationMarketResource,
   incomeBundle: EducabaseIncomeBundle,
   outcomeIndicators: z.infer<typeof OutcomeIndicatorsResourceSchema>,
   curatedMappings: ValidatedCuratedMappings,
@@ -1538,9 +1548,8 @@ async function writeCandidate(
     educationCenterDirectory: EducationCenterDirectoryResourceSchema.parse(
       normalizeEducationCenterDirectory(educationCenterDirectoryRecords),
     ),
-    sepeOccupationMarket: SepeOccupationMarketResourceSchema.parse(
-      sepeOccupationMarket,
-    ).sort((left, right) => left.cno.code.localeCompare(right.cno.code)),
+    sepeOccupationMarket:
+      SepeOccupationMarketResourceSchema.parse(sepeOccupationMarket),
     derivedFpOccupationGraph,
     openDataCatalog: OpenDataCatalogResourceSchema.parse([
       {
@@ -1580,6 +1589,11 @@ async function writeCandidate(
     );
     resourceHashes[key] = await hashFile(filePath);
   }
+
+  const resourceRecordCount = (key: ResourceKey): number =>
+    key === "sepeOccupationMarket"
+      ? (candidate[key] as SepeOccupationMarketResource).records.length
+      : (candidate[key] as readonly unknown[]).length;
 
   const curatedOccupationSource = {
     id: "ine-cno11-reviewed-occupation-catalog",
@@ -1666,7 +1680,7 @@ async function writeCandidate(
     resourceSnapshots: Object.fromEntries(
       GENERATED_RESOURCE_KEYS.map((key) => [
         key,
-        resourceSnapshot(key, candidate[key].length),
+        resourceSnapshot(key, resourceRecordCount(key)),
       ]),
     ),
     qualityReport,
@@ -2715,7 +2729,7 @@ export async function buildSnapshots(
       const sepeOccupationMarket =
         await loadCheckedInSepeOccupationMarket(root);
       assertSepeCaptureNotRetrievedAfterSnapshot(
-        sepeOccupationMarket,
+        sepeOccupationMarket.records,
         fetchedAt,
       );
       const outcomeIndicators = OutcomeIndicatorsResourceSchema.parse(
