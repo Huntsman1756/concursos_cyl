@@ -13,7 +13,7 @@
 ## Campos técnicos
 
 - URL raíz a presentar: [https://salida-cyl.157-90-22-40.sslip.io/](https://salida-cyl.157-90-22-40.sslip.io/)
-- Commit fuente del freeze: `dd34d0b79e5711477b5f425c951d2c650e038ea1`.
+- Commit fuente del freeze: `7a9a05a2ddcb3a89173a645e7308d327763a4e17`.
 - Snapshot: `20260822085631889-7bbe69380f6d`.
 - Commit desplegado: **PENDIENTE DE DESPLIEGUE Y VERIFICACIÓN**.
 - Run del workflow: **PENDIENTE DE DESPLIEGUE Y VERIFICACIÓN**.

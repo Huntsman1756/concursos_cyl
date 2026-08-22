@@ -53,7 +53,7 @@ La portada pide primero el punto de partida y ofrece un único formulario princi
 
 ## 7. Calidad técnica
 
-La ingesta valida esquemas y genera recursos inmutables bajo `/data/v1/`. El manifest del snapshot publica recuentos, fechas, hashes SHA-256 y estado de calidad. El grafo derivado conserva fuente por relación y descargas JSON y CSV. Una actualización inválida no sustituye la copia válida anterior. El freeze queda ligado al commit `dd34d0b79e5711477b5f425c951d2c650e038ea1`; la muestra independiente vigente registra 15 PASS y 0 FAIL sobre 15 relaciones, mientras que las otras 249 quedan sin muestrear. El resultado no es una auditoría exhaustiva.
+La ingesta valida esquemas y genera recursos inmutables bajo `/data/v1/`. El manifest del snapshot publica recuentos, fechas, hashes SHA-256 y estado de calidad. El grafo derivado conserva fuente por relación y descargas JSON y CSV. Una actualización inválida no sustituye la copia válida anterior. El freeze queda ligado al commit `7a9a05a2ddcb3a89173a645e7308d327763a4e17`; la muestra independiente vigente registra 15 PASS y 0 FAIL sobre 15 relaciones, mientras que las otras 249 quedan sin muestrear. El resultado no es una auditoría exhaustiva.
 
 ## Límites declarados
 

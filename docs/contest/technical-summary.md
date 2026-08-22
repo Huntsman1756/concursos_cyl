@@ -1,6 +1,6 @@
 # Resumen técnico de evidencia
 
-- Límite fuente: `dd34d0b79e5711477b5f425c951d2c650e038ea1`.
+- Límite fuente: `7a9a05a2ddcb3a89173a645e7308d327763a4e17`.
 - Snapshot: `20260822085631889-7bbe69380f6d`.
 - Cobertura: 113 cualificaciones, 130 claves de modalidad, 264 relaciones aprobadas y 21 alias.
 - Muestra determinista: 15 PASS y 0 FAIL en una segunda revisión independiente; 249 relaciones `not_sampled`.
