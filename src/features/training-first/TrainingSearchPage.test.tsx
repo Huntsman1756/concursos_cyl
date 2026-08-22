@@ -104,15 +104,19 @@ describe("training-first search", () => {
     const manifest = currentManifestFixture();
     expect(fetch).toHaveBeenCalledWith(
       manifest.resourceSnapshots.programs.resourcePath,
+      expect.objectContaining({ signal: expect.any(AbortSignal) }),
     );
     expect(fetch).not.toHaveBeenCalledWith(
       manifest.resourceSnapshots.centers.resourcePath,
+      expect.anything(),
     );
     expect(fetch).not.toHaveBeenCalledWith(
       manifest.resourceSnapshots.trainingOfferings.resourcePath,
+      expect.anything(),
     );
     expect(fetch).not.toHaveBeenCalledWith(
       manifest.resourceSnapshots.jobOffers.resourcePath,
+      expect.anything(),
     );
   });
 

@@ -202,10 +202,12 @@ export function OccupationMarketEvidence({
     sepeSnapshot?.qualityStatus === "stale";
 
   useEffect(() => {
-    let active = true;
-    void loadSepeOccupationMarketResource(manifest)
+    const controller = new AbortController();
+    const { signal } = controller;
+    const options = { signal };
+    void loadSepeOccupationMarketResource(manifest, options)
       .then((resource) => {
-        if (!active) return;
+        if (signal.aborted) return;
         if (resource === null) {
           setState({ status: "unavailable" });
           return;
@@ -220,10 +222,11 @@ export function OccupationMarketEvidence({
         );
       })
       .catch(() => {
-        if (active) setState({ status: "error" });
+        if (signal.aborted) return;
+        setState({ status: "error" });
       });
     return () => {
-      active = false;
+      controller.abort();
     };
   }, [cnoCode, manifest]);
 

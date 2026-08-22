@@ -21,6 +21,7 @@ import {
   type LoadedAuditedRelationships,
   type LoadedFoundationResources,
   type LoadedRegionalContext,
+  type GeneratedDataLoadOptions,
 } from "../../data/generatedDataClient";
 import { indexIncomeOutcomes } from "../../domain/outcomes";
 import { deriveActions } from "../../domain/actionEngine";
@@ -124,9 +125,12 @@ function outcomeSnapshotOf(
 
 async function loadTrainingOutcomeState(
   manifest: LoadableGeneratedManifest,
+  options?: GeneratedDataLoadOptions,
 ): Promise<TrainingOutcomeState> {
-  const records: OutcomeIndicatorsResource | null =
-    await loadOutcomeIndicators(manifest);
+  const records: OutcomeIndicatorsResource | null = await loadOutcomeIndicators(
+    manifest,
+    options,
+  );
   if (records === null) return { status: "unavailable" };
 
   const snapshot = outcomeSnapshotOf(manifest);
@@ -155,16 +159,22 @@ export function TrainingResultsPage() {
   > | null>(null);
   const filterNoticeFocusRequestedRef = useRef(false);
   const filterNoticeRef = useRef<HTMLDivElement | null>(null);
+  const outcomeControllerRef = useRef<AbortController | null>(null);
   const session = useDecisionSession();
   const [state, setState] = useState<ResultsState>({ status: "loading" });
+  const readyForProgram =
+    state.status === "ready" && state.program.programKey === programKey;
 
-  useRouteReady(state.status === "ready");
+  useRouteReady(readyForProgram);
 
   useEffect(() => {
-    let active = true;
-    void loadManifest()
+    const controller = new AbortController();
+    const { signal } = controller;
+    const options = { signal };
+    void loadManifest(options)
       .then(async (manifest) => {
-        const foundation = await loadFoundationResources(manifest);
+        if (signal.aborted) return null;
+        const foundation = await loadFoundationResources(manifest, options);
         const program = foundation.programs.find(
           (candidate) => candidate.programKey === programKey,
         );
@@ -174,15 +184,11 @@ export function TrainingResultsPage() {
           relationships,
           professionalProfiles,
           regionalContext,
-          outcome,
         ] = await Promise.all([
-          loadPublishedRequirements(manifest),
-          loadAuditedRelationships(manifest),
-          loadProfessionalProfiles(manifest),
-          loadRegionalContext(manifest),
-          loadTrainingOutcomeState(manifest).catch(
-            (): TrainingOutcomeState => ({ status: "invalid" }),
-          ),
+          loadPublishedRequirements(manifest, options),
+          loadAuditedRelationships(manifest, options),
+          loadProfessionalProfiles(manifest, options),
+          loadRegionalContext(manifest, options),
         ]);
         const matches = matchOffersForProgram(programKey, {
           programs: foundation.programs,
@@ -207,19 +213,57 @@ export function TrainingResultsPage() {
           foundation,
           regionalContext,
           matches,
-          outcome,
+          outcome: { status: "not-requested" as const },
         };
       })
       .then((nextState) => {
-        if (active) setState(nextState);
+        if (nextState !== null && !signal.aborted) {
+          setState(nextState);
+        }
       })
       .catch(() => {
-        if (active) setState({ status: "failed" });
+        if (signal.aborted) return;
+        setState({ status: "failed" });
       });
-    return () => {
-      active = false;
-    };
+    return () => controller.abort();
   }, [programKey]);
+
+  useEffect(() => {
+    return () => outcomeControllerRef.current?.abort();
+  }, [programKey]);
+
+  const requestOutcome = () => {
+    if (state.status !== "ready" || state.program.programKey !== programKey) {
+      return;
+    }
+    outcomeControllerRef.current?.abort();
+    const controller = new AbortController();
+    outcomeControllerRef.current = controller;
+    setState((current) =>
+      current.status === "ready"
+        ? { ...current, outcome: { status: "loading" } }
+        : current,
+    );
+    void loadTrainingOutcomeState(state.manifest, { signal: controller.signal })
+      .then((outcome) => {
+        if (controller.signal.aborted) return;
+        setState((current) =>
+          current.status === "ready" &&
+          current.program.programKey === programKey
+            ? { ...current, outcome }
+            : current,
+        );
+      })
+      .catch(() => {
+        if (controller.signal.aborted) return;
+        setState((current) =>
+          current.status === "ready" &&
+          current.program.programKey === programKey
+            ? { ...current, outcome: { status: "invalid" } }
+            : current,
+        );
+      });
+  };
 
   const orderedMatches = useMemo(() => {
     if (state.status !== "ready") return [];
@@ -346,7 +390,10 @@ export function TrainingResultsPage() {
     );
   }, [state, studyCenters]);
 
-  if (state.status === "loading") {
+  if (
+    state.status === "loading" ||
+    (state.status === "ready" && !readyForProgram)
+  ) {
     return (
       <p role="status" aria-live="polite">
         Buscando ofertas relacionadas…
@@ -355,8 +402,14 @@ export function TrainingResultsPage() {
   }
   if (state.status === "failed") {
     return (
-      <section className="status-panel" role="alert">
-        <h1>No hemos podido cargar los resultados</h1>
+      <section
+        className="status-panel"
+        role="alert"
+        aria-labelledby="training-results-load-error-heading"
+      >
+        <h1 id="training-results-load-error-heading">
+          No hemos podido cargar los resultados
+        </h1>
         <p>Vuelve a intentarlo dentro de unos minutos.</p>
         <Link to="/desde-fp">Elegir otro ciclo</Link>
       </section>
@@ -364,17 +417,32 @@ export function TrainingResultsPage() {
   }
   if (state.status === "unknown") {
     return (
-      <section className="status-panel">
-        <h1>Ciclo no encontrado</h1>
+      <section
+        className="status-panel"
+        aria-labelledby="training-results-not-found-heading"
+      >
+        <h1 id="training-results-not-found-heading">Ciclo no encontrado</h1>
         <p>La dirección no corresponde a un ciclo oficial disponible.</p>
         <Link to="/desde-fp">Elegir otro ciclo</Link>
       </section>
     );
   }
 
+  const manifestOutcomeSnapshot = outcomeSnapshotOf(state.manifest);
+  const outcomeSource =
+    manifestOutcomeSnapshot === undefined
+      ? undefined
+      : {
+          sourceUrl: manifestOutcomeSnapshot.sourceUrl,
+          snapshotFetchedAt: manifestOutcomeSnapshot.snapshotFetchedAt,
+          stale:
+            state.manifest.qualityStatus === "stale" ||
+            manifestOutcomeSnapshot.qualityStatus === "stale",
+        };
   const stale =
     state.manifest.qualityStatus === "stale" ||
     state.manifest.resourceSnapshots.jobOffers.qualityStatus === "stale" ||
+    outcomeSource?.stale === true ||
     (state.outcome.status === "available" && state.outcome.snapshot.stale);
   const regionalContractsSource = (
     state.manifest
@@ -622,6 +690,8 @@ export function TrainingResultsPage() {
       <TrainingOutcomeEvidence
         program={state.program}
         outcome={state.outcome}
+        outcomeSource={outcomeSource}
+        onRequestLoad={requestOutcome}
       />
       <section className="decision-evidence" aria-label="Evidencia territorial">
         <div id="donde-estudiar" className="study-section" tabIndex={-1}>

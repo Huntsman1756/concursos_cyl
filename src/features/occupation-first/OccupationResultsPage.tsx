@@ -46,17 +46,20 @@ export function OccupationResultsPage() {
   useRouteReady(state.status === "ready");
 
   useEffect(() => {
-    let active = true;
-    void loadManifest()
+    const controller = new AbortController();
+    const { signal } = controller;
+    const options = { signal };
+    void loadManifest(options)
       .then(async (manifest) => {
         const [foundation, loadedRelationships, officialOccupations] =
           await Promise.all([
-            loadFoundationResourceSubset(manifest, [
-              "programs",
-              "trainingOfferings",
-            ]),
-            loadAuditedRelationships(manifest),
-            loadOfficialOccupations(manifest),
+            loadFoundationResourceSubset(
+              manifest,
+              ["programs", "trainingOfferings"],
+              options,
+            ),
+            loadAuditedRelationships(manifest, options),
+            loadOfficialOccupations(manifest, options),
           ]);
         return {
           status: "ready" as const,
@@ -67,13 +70,14 @@ export function OccupationResultsPage() {
         };
       })
       .then((nextState) => {
-        if (active) setState(nextState);
+        if (!signal.aborted) setState(nextState);
       })
       .catch(() => {
-        if (active) setState({ status: "failed" });
+        if (signal.aborted) return;
+        setState({ status: "failed" });
       });
     return () => {
-      active = false;
+      controller.abort();
     };
   }, []);
 

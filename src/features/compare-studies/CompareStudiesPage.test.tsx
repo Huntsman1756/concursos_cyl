@@ -1,4 +1,10 @@
-import { cleanup, render, screen, within } from "@testing-library/react";
+import {
+  cleanup,
+  render,
+  screen,
+  waitFor,
+  within,
+} from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { readFileSync } from "node:fs";
 import { MemoryRouter } from "react-router-dom";
@@ -13,6 +19,9 @@ const comparisonStyles = readFileSync(
 const generatedDataClient = vi.hoisted(() => ({
   loadManifest: vi.fn(),
   loadOutcomeIndicators: vi.fn(),
+  isGeneratedDataAbortError: vi.fn(
+    (error: unknown) => error instanceof Error && error.name === "AbortError",
+  ),
 }));
 
 vi.mock("../../data/generatedDataClient", () => generatedDataClient);
@@ -191,6 +200,27 @@ afterEach(() => {
 });
 
 describe("CompareStudiesPage", () => {
+  it("passes an abort signal and aborts the comparison request on unmount", async () => {
+    let resolveManifest!: (manifest: unknown) => void;
+    generatedDataClient.loadManifest.mockImplementation(
+      () =>
+        new Promise((resolve) => {
+          resolveManifest = resolve;
+        }),
+    );
+    const { unmount } = renderPage();
+    await waitFor(() =>
+      expect(generatedDataClient.loadManifest).toHaveBeenCalled(),
+    );
+    const options = generatedDataClient.loadManifest.mock.calls[0]?.[0] as {
+      signal?: AbortSignal;
+    };
+    expect(options.signal).toBeInstanceOf(AbortSignal);
+    unmount();
+    expect(options.signal).toHaveProperty("aborted", true);
+    resolveManifest({});
+  });
+
   it("selects one level first and presents up to three groups with shared evidence", async () => {
     installData();
     const user = userEvent.setup();

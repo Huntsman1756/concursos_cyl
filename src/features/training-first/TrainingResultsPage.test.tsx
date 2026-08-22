@@ -6,6 +6,7 @@ import {
   fireEvent,
   render,
   screen,
+  waitFor,
   within,
 } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
@@ -53,7 +54,13 @@ interface ActiveManifestFixture {
   resourceSnapshots: Record<string, { resourcePath: string }>;
 }
 
-async function installActiveAliasPassFetch(): Promise<void> {
+async function installActiveAliasPassFetch(
+  options: {
+    outcomeFailures?: number;
+    outcomePending?: boolean;
+    onOutcomeSignal?: (signal: AbortSignal | null | undefined) => void;
+  } = {},
+): Promise<void> {
   const manifest = JSON.parse(
     await readFile(
       resolve(process.cwd(), "public", "data", "v1", "manifest.json"),
@@ -81,13 +88,24 @@ async function installActiveAliasPassFetch(): Promise<void> {
       ),
     )),
   ]);
+  let outcomeFailuresRemaining = options.outcomeFailures ?? 0;
   vi.stubGlobal(
     "fetch",
-    vi.fn((input: RequestInfo | URL) => {
+    vi.fn((input: RequestInfo | URL, init?: RequestInit) => {
       const path = typeof input === "string" ? input : input.toString();
       const payload = resources.get(path);
       if (payload === undefined) {
         throw new Error(`Missing active generated-data fixture for ${path}.`);
+      }
+      if (path.endsWith("/outcome-indicators.json")) {
+        options.onOutcomeSignal?.(init?.signal);
+        if (options.outcomePending === true) {
+          return new Promise<Response>(() => undefined);
+        }
+        if (outcomeFailuresRemaining > 0) {
+          outcomeFailuresRemaining -= 1;
+          return Promise.resolve(new Response(null, { status: 500 }));
+        }
       }
       return Promise.resolve(responseFor(payload));
     }),
@@ -221,6 +239,45 @@ describe("TrainingResultsPage", () => {
     })(),
   };
 
+  it("labels the load-error status section with its heading", async () => {
+    vi.stubGlobal(
+      "fetch",
+      vi.fn(() => Promise.reject(new Error("offline"))),
+    );
+    render(
+      <MemoryRouter initialEntries={["/desde-fp/IFC03S"]}>
+        <AppRoutes />
+      </MemoryRouter>,
+    );
+
+    const alert = await screen.findByRole("alert");
+    expect(alert).toHaveAttribute(
+      "aria-labelledby",
+      "training-results-load-error-heading",
+    );
+    expect(
+      within(alert).getByRole("heading", {
+        name: "No hemos podido cargar los resultados",
+      }),
+    ).toHaveAttribute("id", "training-results-load-error-heading");
+  });
+
+  it("labels the unknown-program status section with its heading", async () => {
+    installResultsFetch();
+    render(
+      <MemoryRouter initialEntries={["/desde-fp/UNKNOWN"]}>
+        <AppRoutes />
+      </MemoryRouter>,
+    );
+
+    const section = await screen.findByText("Ciclo no encontrado");
+    expect(section.closest("section")).toHaveAttribute(
+      "aria-labelledby",
+      "training-results-not-found-heading",
+    );
+    expect(section).toHaveAttribute("id", "training-results-not-found-heading");
+  });
+
   it.each(["HOT01M", "EOC01M"])(
     "keeps the current bounded publication result for %s",
     async (programKey) => {
@@ -292,6 +349,12 @@ describe("TrainingResultsPage", () => {
         "Base de cotización anualizada · empleo por cuenta ajena a jornada completa.",
       ),
     ).toBeVisible();
+    await userEvent.setup().click(
+      screen.getByRole("button", {
+        name: "Cargar datos de ingresos observados",
+      }),
+    );
+    await screen.findByText("España · grupo del ciclo");
     expect(screen.getByText("España · grupo del ciclo")).toBeVisible();
     expect(screen.getByText("Castilla y León · Grado superior")).toBeVisible();
     expect(
@@ -368,6 +431,108 @@ describe("TrainingResultsPage", () => {
       "href",
       "https://estadisticas.educacion.gob.es/EducaJaxiPx/",
     );
+  });
+
+  it("does not load observed income until its accessible action is activated", async () => {
+    await installActiveAliasPassFetch();
+    render(
+      <MemoryRouter initialEntries={["/desde-fp/IFC03S"]}>
+        <AppRoutes />
+      </MemoryRouter>,
+    );
+
+    await screen.findByRole("heading", {
+      name: /Desarrollo de Aplicaciones Web/i,
+    });
+    const outcomePath = vi
+      .mocked(fetch)
+      .mock.calls.map(([input]) =>
+        typeof input === "string" ? input : input.toString(),
+      )
+      .find((input) => input.endsWith("/outcome-indicators.json"));
+    expect(outcomePath).toBeUndefined();
+    const loadButton = screen.getByRole("button", {
+      name: "Cargar datos de ingresos observados",
+    });
+    expect(loadButton).toBeVisible();
+    expect(
+      within(
+        screen.getByRole("region", {
+          name: "Base de cotización observada de titulados",
+        }),
+      ).getByRole("link", { name: /Fuente: EDUCAbase/u }),
+    ).toBeVisible();
+
+    const user = userEvent.setup();
+    await user.click(loadButton);
+    await screen.findByText("Fuente: EDUCAbase");
+    expect(
+      vi.mocked(fetch).mock.calls.filter(([input]) => {
+        const path = typeof input === "string" ? input : input.toString();
+        return path.endsWith("/outcome-indicators.json");
+      }),
+    ).toHaveLength(1);
+  });
+
+  it("keeps the outcome error state retryable after a failed explicit load", async () => {
+    await installActiveAliasPassFetch({ outcomeFailures: 1 });
+    render(
+      <MemoryRouter initialEntries={["/desde-fp/IFC03S"]}>
+        <AppRoutes />
+      </MemoryRouter>,
+    );
+
+    await screen.findByRole("heading", {
+      name: /Desarrollo de Aplicaciones Web/i,
+    });
+    const user = userEvent.setup();
+    await user.click(
+      screen.getByRole("button", {
+        name: "Cargar datos de ingresos observados",
+      }),
+    );
+    await screen.findByText(
+      "No se han podido validar los datos de ingresos observados.",
+    );
+    await user.click(
+      screen.getByRole("button", {
+        name: "Reintentar datos de ingresos observados",
+      }),
+    );
+    await screen.findByText("Fuente: EDUCAbase");
+    expect(
+      vi.mocked(fetch).mock.calls.filter(([input]) => {
+        const path = typeof input === "string" ? input : input.toString();
+        return path.endsWith("/outcome-indicators.json");
+      }),
+    ).toHaveLength(2);
+  });
+
+  it("aborts a pending explicit outcome request on unmount", async () => {
+    let outcomeSignal: AbortSignal | null | undefined;
+    await installActiveAliasPassFetch({
+      outcomePending: true,
+      onOutcomeSignal: (signal) => {
+        outcomeSignal = signal;
+      },
+    });
+    const { unmount } = render(
+      <MemoryRouter initialEntries={["/desde-fp/IFC03S"]}>
+        <AppRoutes />
+      </MemoryRouter>,
+    );
+
+    await screen.findByRole("heading", {
+      name: /Desarrollo de Aplicaciones Web/i,
+    });
+    await userEvent.setup().click(
+      screen.getByRole("button", {
+        name: "Cargar datos de ingresos observados",
+      }),
+    );
+    await waitFor(() => expect(outcomeSignal).toBeDefined());
+    unmount();
+    expect(outcomeSignal).toHaveProperty("aborted", true);
   });
 
   it("does not activate an unpublished-requirement filter from arbitrary URL parameters", async () => {

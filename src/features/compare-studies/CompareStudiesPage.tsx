@@ -59,11 +59,13 @@ export function CompareStudiesPage() {
   );
 
   useEffect(() => {
-    let active = true;
-    void loadManifest()
+    const controller = new AbortController();
+    const { signal } = controller;
+    const options = { signal };
+    void loadManifest(options)
       .then(async (manifest) => {
-        const records = await loadOutcomeIndicators(manifest);
-        if (!active) return;
+        const records = await loadOutcomeIndicators(manifest, options);
+        if (signal.aborted) return;
         if (records === null) {
           setState({ status: "unavailable" });
           return;
@@ -81,10 +83,11 @@ export function CompareStudiesPage() {
         });
       })
       .catch(() => {
-        if (active) setState({ status: "invalid" });
+        if (signal.aborted) return;
+        setState({ status: "invalid" });
       });
     return () => {
-      active = false;
+      controller.abort();
     };
   }, []);
 

@@ -21,6 +21,8 @@ export interface TrainingOutcomeSnapshot {
 }
 
 export type TrainingOutcomeState =
+  | { status: "not-requested" }
+  | { status: "loading" }
   | {
       status: "available";
       index: IncomeOutcomeIndex;

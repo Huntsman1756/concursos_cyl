@@ -63,13 +63,15 @@ export function EcylResourcesPage() {
   );
 
   useEffect(() => {
-    let active = true;
-    void loadManifest()
+    const controller = new AbortController();
+    const { signal } = controller;
+    const options = { signal };
+    void loadManifest(options)
       .then(async (manifest) => {
         const [courses, certificates, publicCalls] = await Promise.all([
-          loadEcylCourses(manifest),
-          loadProfessionalCertificates(manifest),
-          loadPublicEmploymentCalls(manifest),
+          loadEcylCourses(manifest, options),
+          loadProfessionalCertificates(manifest, options),
+          loadPublicEmploymentCalls(manifest, options),
         ]);
         const publicCallsSnapshot = (
           manifest.resourceSnapshots as typeof manifest.resourceSnapshots &
@@ -84,7 +86,7 @@ export function EcylResourcesPage() {
               >
             >
         ).publicEmploymentCalls;
-        if (active)
+        if (!signal.aborted)
           setState({
             status: "ready",
             courses,
@@ -97,9 +99,12 @@ export function EcylResourcesPage() {
               null,
           });
       })
-      .catch(() => active && setState({ status: "error" }));
+      .catch(() => {
+        if (signal.aborted) return;
+        setState({ status: "error" });
+      });
     return () => {
-      active = false;
+      controller.abort();
     };
   }, []);
 

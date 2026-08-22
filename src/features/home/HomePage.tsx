@@ -100,22 +100,26 @@ export function HomePage() {
     useState<Occupation | null>(null);
 
   useRouteReady(searchData.status === "ready");
-  const manifestPromiseRef = useRef<ReturnType<typeof loadManifest> | null>(
+  const manifestRef = useRef<Awaited<ReturnType<typeof loadManifest>> | null>(
     null,
   );
-  const getManifest = () => {
-    if (manifestPromiseRef.current === null) {
-      manifestPromiseRef.current = loadManifest();
-    }
-    return manifestPromiseRef.current;
-  };
 
   useEffect(() => {
-    let isActive = true;
+    const controller = new AbortController();
+    const { signal } = controller;
+    const options = { signal };
 
-    void getManifest()
-      .then((manifest) => {
-        if (!isActive) return;
+    const manifestPromise =
+      manifestRef.current === null
+        ? loadManifest(options).then((manifest) => {
+            if (!signal.aborted) manifestRef.current = manifest;
+            return manifest;
+          })
+        : Promise.resolve(manifestRef.current);
+
+    void manifestPromise
+      .then(async (manifest) => {
+        if (signal.aborted) return null;
 
         const snapshots =
           manifest.resourceSnapshots as typeof manifest.resourceSnapshots &
@@ -149,9 +153,9 @@ export function HomePage() {
             freshnessSnapshot.qualityStatus === "stale",
         });
 
-        void loadMappingCoverage(manifest)
+        void loadMappingCoverage(manifest, options)
           .then((rows) => {
-            if (!isActive) return;
+            if (signal.aborted) return;
             setCoverage({
               status: "ready",
               programs: rows.filter(
@@ -161,30 +165,29 @@ export function HomePage() {
             });
           })
           .catch(() => {
-            if (isActive) setCoverage({ status: "unavailable" });
+            if (signal.aborted) return;
+            setCoverage({ status: "unavailable" });
           });
-      })
-      .catch(() => {
-        if (!isActive) return;
-        setFreshness({ status: "unavailable" });
-        setCoverage({ status: "unavailable" });
-      });
 
-    return () => {
-      isActive = false;
-    };
-  }, []);
+        const foundation = await loadFoundationResourceSubset(
+          manifest,
+          ["programs"],
+          options,
+        );
+        if (signal.aborted) return null;
+        const programs = [...foundation.programs].sort(
+          (left, right) =>
+            left.programTitle.localeCompare(right.programTitle, "es") ||
+            left.programKey.localeCompare(right.programKey),
+        );
+        if (searchMode === "fp") {
+          return { aliases: [], occupations: [], programs };
+        }
 
-  useEffect(() => {
-    let isActive = true;
-    void getManifest()
-      .then(async (manifest) => {
-        const [foundation, relationships, officialOccupations] =
-          await Promise.all([
-            loadFoundationResourceSubset(manifest, ["programs"]),
-            loadAuditedRelationships(manifest),
-            loadOfficialOccupations(manifest),
-          ]);
+        const [relationships, officialOccupations] = await Promise.all([
+          loadAuditedRelationships(manifest, options),
+          loadOfficialOccupations(manifest, options),
+        ]);
         const approved = loadApprovedMappings(relationships);
         const reviewedById = new Map(
           approved.occupations.map((occupation) => [
@@ -200,23 +203,25 @@ export function HomePage() {
               reviewedById.get(occupation.occupationId)?.confirmationLabel ??
               occupation.confirmationLabel,
           })),
-          programs: [...foundation.programs].sort(
-            (left, right) =>
-              left.programTitle.localeCompare(right.programTitle, "es") ||
-              left.programKey.localeCompare(right.programKey),
-          ),
+          programs,
         };
       })
       .then((resources) => {
-        if (isActive) setSearchData({ status: "ready", ...resources });
+        if (resources !== null && !signal.aborted) {
+          setSearchData({ status: "ready", ...resources });
+        }
       })
       .catch(() => {
-        if (isActive) setSearchData({ status: "unavailable" });
+        if (signal.aborted) return;
+        if (manifestRef.current === null) {
+          setFreshness({ status: "unavailable" });
+          setCoverage({ status: "unavailable" });
+        }
+        setSearchData({ status: "unavailable" });
       });
-    return () => {
-      isActive = false;
-    };
-  }, []);
+
+    return () => controller.abort();
+  }, [searchMode]);
 
   const featuredPrograms = useMemo(
     () =>
@@ -234,6 +239,7 @@ export function HomePage() {
   );
 
   const selectSearchMode = (mode: SearchMode) => {
+    setSearchData({ status: "loading" });
     setSearchMode(mode);
     try {
       window.localStorage.setItem(SEARCH_MODE_STORAGE_KEY, mode);

@@ -130,15 +130,19 @@ describe("occupation-first search", () => {
     const manifest = currentManifestFixture();
     expect(fetch).not.toHaveBeenCalledWith(
       manifest.resourceSnapshots.programs.resourcePath,
+      expect.anything(),
     );
     expect(fetch).not.toHaveBeenCalledWith(
       manifest.resourceSnapshots.centers.resourcePath,
+      expect.anything(),
     );
     expect(fetch).not.toHaveBeenCalledWith(
       manifest.resourceSnapshots.trainingOfferings.resourcePath,
+      expect.anything(),
     );
     expect(fetch).not.toHaveBeenCalledWith(
       manifest.resourceSnapshots.jobOffers.resourcePath,
+      expect.anything(),
     );
     const submit = screen.getByRole("button", { name: "Ver rutas formativas" });
     await user.type(input, "desarrollador web");

@@ -198,15 +198,31 @@ describe("HomePage", () => {
     ).toBeVisible();
     expect(fetch).toHaveBeenCalledWith(
       manifest.resourceSnapshots.programs.resourcePath,
+      expect.objectContaining({ signal: expect.any(AbortSignal) }),
     );
     expect(fetch).not.toHaveBeenCalledWith(
       manifest.resourceSnapshots.centers.resourcePath,
+      expect.anything(),
     );
     expect(fetch).not.toHaveBeenCalledWith(
       manifest.resourceSnapshots.trainingOfferings.resourcePath,
+      expect.anything(),
     );
     expect(fetch).not.toHaveBeenCalledWith(
       manifest.resourceSnapshots.jobOffers.resourcePath,
+      expect.anything(),
+    );
+    expect(fetch).not.toHaveBeenCalledWith(
+      manifest.resourceSnapshots.occupationAliases.resourcePath,
+      expect.anything(),
+    );
+    expect(fetch).not.toHaveBeenCalledWith(
+      manifest.resourceSnapshots.trainingOccupationLinks.resourcePath,
+      expect.anything(),
+    );
+    expect(fetch).not.toHaveBeenCalledWith(
+      manifest.resourceSnapshots.occupations.resourcePath,
+      expect.anything(),
     );
     expect(
       screen.queryByRole("combobox", { name: "Ocupación que te interesa" }),
@@ -242,6 +258,20 @@ describe("HomePage", () => {
     expect(
       screen.getByRole("combobox", { name: "Ocupación que te interesa" }),
     ).toBeVisible();
+    await waitFor(() => {
+      expect(fetch).toHaveBeenCalledWith(
+        manifest.resourceSnapshots.occupationAliases.resourcePath,
+        expect.objectContaining({ signal: expect.any(AbortSignal) }),
+      );
+      expect(fetch).toHaveBeenCalledWith(
+        manifest.resourceSnapshots.trainingOccupationLinks.resourcePath,
+        expect.objectContaining({ signal: expect.any(AbortSignal) }),
+      );
+      expect(fetch).toHaveBeenCalledWith(
+        manifest.resourceSnapshots.occupations.resourcePath,
+        expect.objectContaining({ signal: expect.any(AbortSignal) }),
+      );
+    });
     expect(
       screen.getByRole("button", {
         name: "Ver cómo llegar a esta ocupación",
@@ -409,5 +439,35 @@ describe("HomePage", () => {
       within(freshness).queryByText("Comprobando fecha…"),
     ).not.toBeInTheDocument();
     expect(within(freshness).getByText("31/07/2026")).toBeVisible();
+  });
+
+  it("aborts pending generated-data work when Home unmounts", async () => {
+    const manifest = currentManifestFixture();
+    let programSignal: AbortSignal | undefined;
+    vi.stubGlobal(
+      "fetch",
+      vi.fn((input: RequestInfo | URL, init?: RequestInit) => {
+        const path = typeof input === "string" ? input : input.toString();
+        if (path.endsWith("/data/v1/manifest.json")) {
+          return Promise.resolve(
+            new Response(JSON.stringify(manifest), { status: 200 }),
+          );
+        }
+        if (path.endsWith(manifest.resourceSnapshots.programs.resourcePath)) {
+          programSignal = init?.signal ?? undefined;
+        }
+        return new Promise<Response>(() => undefined);
+      }),
+    );
+
+    const { unmount } = render(
+      <MemoryRouter>
+        <HomePage />
+      </MemoryRouter>,
+    );
+
+    await waitFor(() => expect(programSignal).toBeDefined());
+    unmount();
+    expect(programSignal).toHaveProperty("aborted", true);
   });
 });

@@ -44,14 +44,20 @@ export function TrainingSearchPage() {
   useRouteReady(status === "ready");
 
   useEffect(() => {
-    let active = true;
-    void loadManifest()
+    const controller = new AbortController();
+    const { signal } = controller;
+    const options = { signal };
+    void loadManifest(options)
       .then(async (manifest) => ({
-        resources: await loadFoundationResourceSubset(manifest, ["programs"]),
-        coverage: await loadMappingCoverage(manifest),
+        resources: await loadFoundationResourceSubset(
+          manifest,
+          ["programs"],
+          options,
+        ),
+        coverage: await loadMappingCoverage(manifest, options),
       }))
       .then(({ resources, coverage }) => {
-        if (!active) return;
+        if (signal.aborted) return;
         setPrograms(resources.programs);
         setCoverage(coverage);
         setCatalogSummary({
@@ -64,10 +70,11 @@ export function TrainingSearchPage() {
         setStatus("ready");
       })
       .catch(() => {
-        if (active) setStatus("failed");
+        if (signal.aborted) return;
+        setStatus("failed");
       });
     return () => {
-      active = false;
+      controller.abort();
     };
   }, []);
 

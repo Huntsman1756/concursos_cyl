@@ -43,17 +43,19 @@ export function TrainingRoutePage() {
   useRouteReady(state.status === "ready" || state.status === "unknown");
 
   useEffect(() => {
-    let active = true;
-    void loadManifest()
+    const controller = new AbortController();
+    const { signal } = controller;
+    const options = { signal };
+    void loadManifest(options)
       .then((manifest) =>
-        loadFoundationResourceSubset(manifest, [
-          "programs",
-          "centers",
-          "trainingOfferings",
-        ]),
+        loadFoundationResourceSubset(
+          manifest,
+          ["programs", "centers", "trainingOfferings"],
+          options,
+        ),
       )
       .then((resources) => {
-        if (!active) return;
+        if (signal.aborted) return;
         const program = resources.programs.find(
           (candidate) => candidate.programKey === programKey,
         );
@@ -71,10 +73,11 @@ export function TrainingRoutePage() {
         });
       })
       .catch(() => {
-        if (active) setState({ status: "failed" });
+        if (signal.aborted) return;
+        setState({ status: "failed" });
       });
     return () => {
-      active = false;
+      controller.abort();
     };
   }, [programKey]);
 

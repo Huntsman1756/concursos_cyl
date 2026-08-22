@@ -80,6 +80,10 @@ import {
 
 export type GeneratedDataErrorCode = "network" | "schema" | "missing";
 
+export interface GeneratedDataLoadOptions {
+  signal?: AbortSignal;
+}
+
 export class GeneratedDataError extends Error {
   readonly code: GeneratedDataErrorCode;
 
@@ -88,6 +92,21 @@ export class GeneratedDataError extends Error {
     this.name = "GeneratedDataError";
     this.code = code;
   }
+}
+
+export function isGeneratedDataAbortError(error: unknown): boolean {
+  return (
+    (typeof DOMException !== "undefined" &&
+      error instanceof DOMException &&
+      error.name === "AbortError") ||
+    (error instanceof Error && error.name === "AbortError")
+  );
+}
+
+function requestInitFor(
+  options: GeneratedDataLoadOptions | undefined,
+): RequestInit | undefined {
+  return options?.signal === undefined ? undefined : { signal: options.signal };
 }
 
 const SepeOccupationMarketStoredResourceSchema = z.union([
@@ -156,6 +175,7 @@ export async function loadGeneratedResource<T>(
         ? await fetch(assetPath)
         : await fetch(assetPath, requestInit);
   } catch (error) {
+    if (isGeneratedDataAbortError(error)) throw error;
     throw new GeneratedDataError(
       "network",
       `Could not fetch generated resource: ${assetPath}.`,
@@ -175,6 +195,7 @@ export async function loadGeneratedResource<T>(
   try {
     json = await response.json();
   } catch (error) {
+    if (isGeneratedDataAbortError(error)) throw error;
     throw new GeneratedDataError(
       "schema",
       `Generated resource is not valid JSON: ${assetPath}.`,
@@ -194,16 +215,21 @@ export async function loadGeneratedResource<T>(
   return result.data;
 }
 
-export function loadManifest(): Promise<LoadableGeneratedManifest> {
+export function loadManifest(
+  options?: GeneratedDataLoadOptions,
+): Promise<LoadableGeneratedManifest> {
   return loadGeneratedResource(
     "/data/v1/manifest.json",
     LoadableGeneratedManifestSchema,
-    { cache: "no-store" },
+    options?.signal === undefined
+      ? { cache: "no-store" }
+      : { cache: "no-store", signal: options.signal },
   );
 }
 
 export async function loadDerivedFpOccupationGraph(
   manifest: LoadableGeneratedManifest,
+  options?: GeneratedDataLoadOptions,
 ): Promise<DerivedFpOccupationRow[]> {
   const snapshot = (
     manifest.resourceSnapshots as typeof manifest.resourceSnapshots &
@@ -214,11 +240,13 @@ export async function loadDerivedFpOccupationGraph(
     : loadGeneratedResource(
         snapshot.resourcePath,
         DerivedFpOccupationGraphResourceSchema,
+        requestInitFor(options),
       );
 }
 
 export async function loadOpenDataCatalog(
   manifest: LoadableGeneratedManifest,
+  options?: GeneratedDataLoadOptions,
 ): Promise<OpenDataCatalogRecord[]> {
   const snapshot = (
     manifest.resourceSnapshots as typeof manifest.resourceSnapshots &
@@ -229,11 +257,13 @@ export async function loadOpenDataCatalog(
     : loadGeneratedResource(
         snapshot.resourcePath,
         OpenDataCatalogResourceSchema,
+        requestInitFor(options),
       );
 }
 
 export async function loadEcylCourses(
   manifest: LoadableGeneratedManifest,
+  options?: GeneratedDataLoadOptions,
 ): Promise<EcylCourse[]> {
   const snapshot = (
     manifest.resourceSnapshots as typeof manifest.resourceSnapshots &
@@ -241,11 +271,16 @@ export async function loadEcylCourses(
   ).ecylCourses;
   return snapshot === undefined
     ? []
-    : loadGeneratedResource(snapshot.resourcePath, EcylCoursesResourceSchema);
+    : loadGeneratedResource(
+        snapshot.resourcePath,
+        EcylCoursesResourceSchema,
+        requestInitFor(options),
+      );
 }
 
 export async function loadProfessionalCertificates(
   manifest: LoadableGeneratedManifest,
+  options?: GeneratedDataLoadOptions,
 ): Promise<ProfessionalCertificate[]> {
   const snapshot = (
     manifest.resourceSnapshots as typeof manifest.resourceSnapshots &
@@ -256,11 +291,13 @@ export async function loadProfessionalCertificates(
     : loadGeneratedResource(
         snapshot.resourcePath,
         ProfessionalCertificatesResourceSchema,
+        requestInitFor(options),
       );
 }
 
 export async function loadPublicEmploymentCalls(
   manifest: LoadableGeneratedManifest,
+  options?: GeneratedDataLoadOptions,
 ): Promise<PublicEmploymentCall[]> {
   const snapshot = (
     manifest.resourceSnapshots as typeof manifest.resourceSnapshots &
@@ -271,6 +308,7 @@ export async function loadPublicEmploymentCalls(
     : loadGeneratedResource(
         snapshot.resourcePath,
         PublicEmploymentCallsResourceSchema,
+        requestInitFor(options),
       );
 }
 
@@ -283,6 +321,7 @@ export interface LoadedRegionalContext {
 /** Loads optional JCyL territorial context; historical snapshots resolve empty. */
 export async function loadRegionalContext(
   manifest: LoadableGeneratedManifest,
+  options?: GeneratedDataLoadOptions,
 ): Promise<LoadedRegionalContext> {
   const snapshots =
     manifest.resourceSnapshots as typeof manifest.resourceSnapshots &
@@ -299,18 +338,21 @@ export async function loadRegionalContext(
         : loadGeneratedResource(
             snapshots.provincialContracts.resourcePath,
             ProvincialContractsResourceSchema,
+            requestInitFor(options),
           ),
       snapshots.municipalities === undefined
         ? Promise.resolve([])
         : loadGeneratedResource(
             snapshots.municipalities.resourcePath,
             MunicipalitiesResourceSchema,
+            requestInitFor(options),
           ),
       snapshots.educationCenterDirectory === undefined
         ? Promise.resolve([])
         : loadGeneratedResource(
             snapshots.educationCenterDirectory.resourcePath,
             EducationCenterDirectoryResourceSchema,
+            requestInitFor(options),
           ),
     ]);
   return { provincialContracts, municipalities, educationCenterDirectory };
@@ -322,6 +364,7 @@ export async function loadRegionalContext(
  */
 export function loadPublishedRequirements(
   manifest: LoadableGeneratedManifest,
+  options?: GeneratedDataLoadOptions,
 ): Promise<OfferPublishedRequirements[]> {
   const resourceSnapshots =
     manifest.resourceSnapshots as typeof manifest.resourceSnapshots &
@@ -332,12 +375,14 @@ export function loadPublishedRequirements(
   return loadGeneratedResource(
     snapshot.resourcePath,
     PublishedRequirementsResourceSchema,
+    requestInitFor(options),
   );
 }
 
 /** Loads literal TodoFP professional outputs; retained historical snapshots resolve empty. */
 export function loadProfessionalProfiles(
   manifest: LoadableGeneratedManifest,
+  options?: GeneratedDataLoadOptions,
 ): Promise<ProfessionalProfile[]> {
   const resourceSnapshots =
     manifest.resourceSnapshots as typeof manifest.resourceSnapshots &
@@ -348,12 +393,14 @@ export function loadProfessionalProfiles(
   return loadGeneratedResource(
     snapshot.resourcePath,
     ProfessionalProfilesResourceSchema,
+    requestInitFor(options),
   );
 }
 
 /** Loads optional verified income evidence; retained historical snapshots return null. */
 export function loadOutcomeIndicators(
   manifest: LoadableGeneratedManifest,
+  options?: GeneratedDataLoadOptions,
 ): Promise<OutcomeIndicatorsResource | null> {
   const resourceSnapshots =
     manifest.resourceSnapshots as typeof manifest.resourceSnapshots &
@@ -363,12 +410,14 @@ export function loadOutcomeIndicators(
   return loadGeneratedResource(
     snapshot.resourcePath,
     OutcomeIndicatorsResourceSchema,
+    requestInitFor(options),
   );
 }
 
 /** Loads optional manifest-addressed SEPE occupation-market evidence and coverage. */
 export async function loadSepeOccupationMarketResource(
   manifest: LoadableGeneratedManifest,
+  options?: GeneratedDataLoadOptions,
 ): Promise<SepeOccupationMarketResource | null> {
   const resourceSnapshots =
     manifest.resourceSnapshots as typeof manifest.resourceSnapshots &
@@ -378,6 +427,7 @@ export async function loadSepeOccupationMarketResource(
   const stored = await loadGeneratedResource(
     snapshot.resourcePath,
     SepeOccupationMarketStoredResourceSchema,
+    requestInitFor(options),
   );
   try {
     return adaptSepeOccupationMarketResource(stored);
@@ -393,14 +443,16 @@ export async function loadSepeOccupationMarketResource(
 /** Loads SEPE records while retaining compatibility with records-only snapshots. */
 export async function loadSepeOccupationMarket(
   manifest: LoadableGeneratedManifest,
+  options?: GeneratedDataLoadOptions,
 ): Promise<SepeOccupationMarket[] | null> {
-  const resource = await loadSepeOccupationMarketResource(manifest);
+  const resource = await loadSepeOccupationMarketResource(manifest, options);
   return resource?.records ?? null;
 }
 
 /** Loads the manifest-addressed public coverage rows used for coverage copy. */
 export async function loadMappingCoverage(
   manifest: LoadableGeneratedManifest,
+  options?: GeneratedDataLoadOptions,
 ): Promise<MappingCoverage[]> {
   const resourceSnapshots =
     manifest.resourceSnapshots as typeof manifest.resourceSnapshots &
@@ -416,6 +468,7 @@ export async function loadMappingCoverage(
   return loadGeneratedResource(
     snapshot.resourcePath,
     MappingCoverageResourceSchema,
+    requestInitFor(options),
   );
 }
 
@@ -427,20 +480,26 @@ export interface LoadedAuditedRelationships {
 
 export async function loadOfficialOccupations(
   manifest: LoadableGeneratedManifest,
+  options?: GeneratedDataLoadOptions,
 ): Promise<Occupation[]> {
   const snapshots =
     manifest.resourceSnapshots as typeof manifest.resourceSnapshots &
       Partial<Record<"officialOccupations", { resourcePath: string }>>;
   const official = snapshots.officialOccupations;
   if (official === undefined) {
-    return (await loadAuditedRelationships(manifest)).occupations;
+    return (await loadAuditedRelationships(manifest, options)).occupations;
   }
-  return loadGeneratedResource(official.resourcePath, OccupationsSchema);
+  return loadGeneratedResource(
+    official.resourcePath,
+    OccupationsSchema,
+    requestInitFor(options),
+  );
 }
 
 /** Loads only manifest-addressed, schema-validated relationship catalogs. */
 export async function loadAuditedRelationships(
   manifest: LoadableGeneratedManifest,
+  options?: GeneratedDataLoadOptions,
 ): Promise<LoadedAuditedRelationships> {
   const snapshots =
     manifest.resourceSnapshots as typeof manifest.resourceSnapshots &
@@ -459,9 +518,21 @@ export async function loadAuditedRelationships(
     );
   }
   const [loadedOccupations, loadedAliases, loadedLinks] = await Promise.all([
-    loadGeneratedResource(occupations.resourcePath, OccupationsSchema),
-    loadGeneratedResource(aliases.resourcePath, OccupationAliasesSchema),
-    loadGeneratedResource(links.resourcePath, TrainingOccupationLinksSchema),
+    loadGeneratedResource(
+      occupations.resourcePath,
+      OccupationsSchema,
+      requestInitFor(options),
+    ),
+    loadGeneratedResource(
+      aliases.resourcePath,
+      OccupationAliasesSchema,
+      requestInitFor(options),
+    ),
+    loadGeneratedResource(
+      links.resourcePath,
+      TrainingOccupationLinksSchema,
+      requestInitFor(options),
+    ),
   ]);
   return {
     occupations: loadedOccupations,
@@ -582,6 +653,7 @@ export async function loadFoundationResourceSubset<
 >(
   manifest: LoadableGeneratedManifest,
   keys: readonly K[],
+  options?: GeneratedDataLoadOptions,
 ): Promise<LoadedFoundationResourceSubset<K>> {
   const requestedKeys = [...new Set(keys)] as FoundationResourceKey[];
   const loadedEntries = await Promise.all(
@@ -592,6 +664,7 @@ export async function loadFoundationResourceSubset<
           await loadGeneratedResource(
             manifest.resourceSnapshots[key].resourcePath,
             z.unknown(),
+            requestInitFor(options),
           ),
         ] as const,
     ),
@@ -635,6 +708,7 @@ export async function loadFoundationResourceSubset<
 
 async function loadFoundationResourceSet(
   resourceSnapshots: LoadableGeneratedManifest["resourceSnapshots"],
+  options?: GeneratedDataLoadOptions,
 ): Promise<
   LoadedFoundationResourceBase & {
     centers: unknown[];
@@ -645,18 +719,22 @@ async function loadFoundationResourceSet(
     loadGeneratedResource(
       resourceSnapshots.programs.resourcePath,
       z.array(TrainingProgramSchema),
+      requestInitFor(options),
     ),
     loadGeneratedResource(
       resourceSnapshots.centers.resourcePath,
       z.array(z.unknown()),
+      requestInitFor(options),
     ),
     loadGeneratedResource(
       resourceSnapshots.trainingOfferings.resourcePath,
       z.array(z.unknown()),
+      requestInitFor(options),
     ),
     loadGeneratedResource(
       resourceSnapshots.jobOffers.resourcePath,
       z.array(JobOfferSchema),
+      requestInitFor(options),
     ),
   ]);
 
@@ -703,8 +781,9 @@ function validatedFoundationResourceSet(
 /** Loads all required v1 resources as one tagged current or legacy set. */
 export async function loadFoundationResources(
   manifest: LoadableGeneratedManifest,
+  options?: GeneratedDataLoadOptions,
 ): Promise<LoadedFoundationResources> {
   const { resourceSnapshots } = manifest;
-  const resources = await loadFoundationResourceSet(resourceSnapshots);
+  const resources = await loadFoundationResourceSet(resourceSnapshots, options);
   return validatedFoundationResourceSet(manifest, resources);
 }

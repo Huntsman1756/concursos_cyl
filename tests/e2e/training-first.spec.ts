@@ -15,6 +15,76 @@ async function tabTo(page: Page, target: Locator): Promise<void> {
   throw new Error("Expected the control to be reachable in page tab order.");
 }
 
+test("FP result data stays within the initial budget and loads outcomes on request", async ({
+  page,
+}) => {
+  const dataResponses: { path: string; bytes: number }[] = [];
+  page.on("response", (response) => {
+    const url = new URL(response.url());
+    if (!url.pathname.startsWith("/data/v1/")) return;
+    void response
+      .body()
+      .then((body) => {
+        dataResponses.push({ path: url.pathname, bytes: body.byteLength });
+      })
+      .catch(() => undefined);
+  });
+
+  const manifestResponsePromise = page.waitForResponse((response) =>
+    response.url().endsWith("/data/v1/manifest.json"),
+  );
+  await page.goto("/desde-fp/IFC03S");
+  const manifest = (await (await manifestResponsePromise).json()) as ReturnType<
+    typeof currentManifestFixture
+  >;
+  await expect(
+    page.getByRole("heading", { name: "Desarrollo de Aplicaciones Web" }),
+  ).toBeVisible();
+
+  const initialKeys = [
+    "programs",
+    "centers",
+    "trainingOfferings",
+    "jobOffers",
+    "publishedRequirements",
+    "occupations",
+    "occupationAliases",
+    "trainingOccupationLinks",
+    "professionalProfiles",
+    "provincialContracts",
+    "municipalities",
+    "educationCenterDirectory",
+  ] as const;
+  const expectedInitialPaths = [
+    "/data/v1/manifest.json",
+    ...initialKeys.map((key) => manifest.resourceSnapshots[key].resourcePath),
+  ].sort();
+  await expect.poll(() => dataResponses.length, { timeout: 15_000 }).toBe(13);
+  const initialResponses = [...dataResponses];
+  expect(initialResponses.map(({ path }) => path).sort()).toEqual(
+    expectedInitialPaths,
+  );
+  expect(new Set(initialResponses.map(({ path }) => path)).size).toBe(13);
+  expect(
+    initialResponses.reduce((total, response) => total + response.bytes, 0),
+  ).toBeLessThanOrEqual(7_000_000);
+  const outcomePath = manifest.resourceSnapshots.outcomeIndicators.resourcePath;
+  expect(dataResponses.filter(({ path }) => path === outcomePath)).toHaveLength(
+    0,
+  );
+
+  await page
+    .getByRole("button", { name: "Cargar datos de ingresos observados" })
+    .click();
+  await expect(page.getByText("Fuente: EDUCAbase")).toBeVisible();
+  await expect
+    .poll(
+      () => dataResponses.filter(({ path }) => path === outcomePath).length,
+      { timeout: 15_000 },
+    )
+    .toBe(1);
+});
+
 test("FP catalog loading is announced as a polite status", async ({ page }) => {
   let releaseManifest!: () => void;
   const manifestDelay = new Promise<void>((resolve) => {

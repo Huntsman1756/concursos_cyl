@@ -176,6 +176,43 @@ afterEach(() => {
 });
 
 describe("generated data client", () => {
+  it("forwards an optional signal while preserving the no-options fetch shape", async () => {
+    const manifest = currentManifestFixture();
+    const fetchSpy = vi.fn(() =>
+      Promise.resolve(
+        new Response(JSON.stringify(manifest), {
+          status: 200,
+          headers: { "Content-Type": "application/json" },
+        }),
+      ),
+    );
+    vi.stubGlobal("fetch", fetchSpy);
+
+    await loadManifest();
+    expect(fetchSpy).toHaveBeenLastCalledWith("/data/v1/manifest.json", {
+      cache: "no-store",
+    });
+
+    const controller = new AbortController();
+    await loadManifest({ signal: controller.signal });
+    expect(fetchSpy).toHaveBeenLastCalledWith("/data/v1/manifest.json", {
+      cache: "no-store",
+      signal: controller.signal,
+    });
+  });
+
+  it("does not wrap an AbortError as a generated network failure", async () => {
+    const abortError = new DOMException(
+      "The request was aborted.",
+      "AbortError",
+    );
+    vi.stubGlobal("fetch", vi.fn().mockRejectedValue(abortError));
+
+    await expect(
+      loadGeneratedResource("/data/v1/programs.json", z.array(z.string())),
+    ).rejects.toBe(abortError);
+  });
+
   it("returns null for retained manifests and validates an advertised SEPE resource", async () => {
     const foundationManifest = LoadableGeneratedManifestSchema.parse({
       schemaVersion: "1.0.0",

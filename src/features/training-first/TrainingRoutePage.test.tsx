@@ -81,15 +81,19 @@ describe("TrainingRoutePage", () => {
     const manifest = currentManifestFixture();
     expect(fetch).toHaveBeenCalledWith(
       manifest.resourceSnapshots.programs.resourcePath,
+      expect.objectContaining({ signal: expect.any(AbortSignal) }),
     );
     expect(fetch).toHaveBeenCalledWith(
       manifest.resourceSnapshots.centers.resourcePath,
+      expect.objectContaining({ signal: expect.any(AbortSignal) }),
     );
     expect(fetch).toHaveBeenCalledWith(
       manifest.resourceSnapshots.trainingOfferings.resourcePath,
+      expect.objectContaining({ signal: expect.any(AbortSignal) }),
     );
     expect(fetch).not.toHaveBeenCalledWith(
       manifest.resourceSnapshots.jobOffers.resourcePath,
+      expect.anything(),
     );
     expect(screen.getByText("IES ALONSO DE MADRIGAL")).toBeVisible();
     expect(screen.getByText("Ávila · Presencial")).toBeVisible();

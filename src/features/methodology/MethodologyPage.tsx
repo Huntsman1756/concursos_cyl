@@ -341,10 +341,12 @@ export function MethodologyPage() {
   );
 
   useEffect(() => {
-    let active = true;
-    void loadManifest()
+    const controller = new AbortController();
+    const { signal } = controller;
+    const options = { signal };
+    void loadManifest(options)
       .then((manifest) => {
-        if (!active) return;
+        if (signal.aborted) return;
         setManifestState({ status: "ready", manifest });
         const snapshot = incomeSnapshotFrom(manifest);
         setTrainingCatalog({
@@ -362,14 +364,13 @@ export function MethodologyPage() {
         );
       })
       .catch(() => {
-        if (active) {
-          setEvidence({ status: "unavailable" });
-          setTrainingCatalog({ status: "unavailable" });
-          setManifestState({ status: "unavailable" });
-        }
+        if (signal.aborted) return;
+        setEvidence({ status: "unavailable" });
+        setTrainingCatalog({ status: "unavailable" });
+        setManifestState({ status: "unavailable" });
       });
     return () => {
-      active = false;
+      controller.abort();
     };
   }, []);
 

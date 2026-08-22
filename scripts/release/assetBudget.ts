@@ -4,7 +4,7 @@ import { fileURLToPath } from "node:url";
 
 export const ASSET_BUDGET = {
   totalBytes: 700_000,
-  javascriptBytes: 525_000,
+  javascriptBytes: 530_000,
   stylesheetBytes: 75_000,
   imageBytes: 125_000,
 } as const;

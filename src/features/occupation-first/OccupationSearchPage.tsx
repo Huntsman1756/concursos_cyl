@@ -26,12 +26,14 @@ export function OccupationSearchPage() {
   useRouteReady(state.status === "ready");
 
   useEffect(() => {
-    let active = true;
-    void loadManifest()
+    const controller = new AbortController();
+    const { signal } = controller;
+    const options = { signal };
+    void loadManifest(options)
       .then(async (manifest) => {
         const [relationships, officialOccupations] = await Promise.all([
-          loadAuditedRelationships(manifest),
-          loadOfficialOccupations(manifest),
+          loadAuditedRelationships(manifest, options),
+          loadOfficialOccupations(manifest, options),
         ]);
         const approved = loadApprovedMappings(relationships);
         const reviewedById = new Map(
@@ -51,13 +53,14 @@ export function OccupationSearchPage() {
         };
       })
       .then((relationships) => {
-        if (active) setState({ status: "ready", ...relationships });
+        if (!signal.aborted) setState({ status: "ready", ...relationships });
       })
       .catch(() => {
-        if (active) setState({ status: "failed" });
+        if (signal.aborted) return;
+        setState({ status: "failed" });
       });
     return () => {
-      active = false;
+      controller.abort();
     };
   }, []);
 
