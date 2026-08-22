@@ -44,6 +44,23 @@ test("occupation results loading is announced as a polite status", async ({
   releaseManifest();
 });
 
+test("occupation results fit the 320px content floor", async ({ page }) => {
+  await page.setViewportSize({ width: 320, height: 800 });
+  await page.goto("/desde-ocupacion/occupation%3Acno11%3A2713");
+  await expect(
+    page.getByRole("heading", {
+      name: "Analistas, programadores y diseñadores web y multimedia",
+    }),
+  ).toBeVisible();
+
+  const overflow = await page.evaluate(
+    () =>
+      document.documentElement.scrollWidth -
+      document.documentElement.clientWidth,
+  );
+  expect(overflow).toBeLessThanOrEqual(1);
+});
+
 test("the live occupation journey confirms a reviewed everyday alias and reaches every reviewed development route", async ({
   page,
 }, testInfo) => {
