@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "waveId": "fp-coverage-priority-20260822-wave3",
   "reviewedAt": "2026-08-22",
-  "objective": "Freeze official TodoFP and CNO-11 evidence for nine priority FP bases and publish only the exact seventeen conservative reviewed relationships.",
+  "objective": "Freeze official TodoFP and CNO-11 evidence for nine priority FP bases: 16 published conservative reviewed relationships, one deferred candidate.",
   "previousCatalogSha256": "aef572d36bbb84b2eb5e426103c78e2241856f5b492770390f8c7240b2a0bb61",
   "newCatalogSha256": "0c3224887ccb75806a32186e671e8e1ea670e84e17b85b42e105f19e88751cef",
   "sourcePolicy": {

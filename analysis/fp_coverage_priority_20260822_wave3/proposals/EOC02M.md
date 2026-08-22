@@ -13,7 +13,7 @@ retained in the source artifact but not published as a CNO relation.
 
 ## Why `EOC02M|7211` is deferred
 
-The exact TodoFP output for the accepted relation is:
+The exact TodoFP output for the deferred candidate is:
 
 > Juntera / juntero de placa de yeso laminado.
 
@@ -54,4 +54,3 @@ establish the CNO supervisor group. `EOC02M|7212` is also rejected: the
 available output does not support the paste-and-mortar applicator boundary.
 `EOC02M|7211` remains deferred for the ambiguity above. No offer text, alias,
 or title-only inference is used.
-No offer text, alias, or title-only inference is used.
