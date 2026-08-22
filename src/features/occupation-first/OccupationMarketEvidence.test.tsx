@@ -117,12 +117,18 @@ describe("OccupationMarketEvidence", () => {
     expect(panel).toHaveTextContent("2478");
     expect(panel).toHaveTextContent("−4,92 %");
     expect(panel).toHaveTextContent("17,5 %");
+    expect(panel).toHaveTextContent(
+      "Personas contratadas (dato administrativo)",
+    );
+    expect(panel).toHaveTextContent(
+      "Conteo administrativo publicado por el SEPE; no es un censo de personas únicas ni una medida de vacantes o una predicción.",
+    );
     expect(
       within(panel).getByRole("link", { name: /Fuente oficial SEPE/i }),
     ).toHaveAttribute("target", "_blank");
     expect(
       within(panel).getByRole("link", { name: /Fuente oficial SEPE/i }),
-    ).toHaveAttribute("rel", "noreferrer");
+    ).toHaveAttribute("rel", "noopener noreferrer");
     expect(panel).toHaveTextContent(SEPE_OCCUPATION_MARKET_ATTRIBUTION);
     const table = within(panel).getByRole("table");
     expect(within(table).getAllByRole("row")).toHaveLength(10);

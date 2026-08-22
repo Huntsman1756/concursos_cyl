@@ -1,5 +1,7 @@
 import { useEffect, useRef, type ReactNode } from "react";
 import { Link, NavLink, useLocation } from "react-router-dom";
+import { RouteReadyProvider } from "./RouteReady";
+import { titleForPathname } from "./routeTitles";
 import "../styles/global.css";
 
 interface AppShellProps {
@@ -9,12 +11,9 @@ interface AppShellProps {
 export function AppShell({ children }: AppShellProps) {
   const location = useLocation();
   const mainRef = useRef<HTMLElement | null>(null);
-  const initialPathname = useRef(location.pathname);
 
   useEffect(() => {
-    if (initialPathname.current === location.pathname) return;
-    initialPathname.current = location.pathname;
-    mainRef.current?.focus({ preventScroll: true });
+    document.title = titleForPathname(location.pathname);
   }, [location.pathname]);
 
   return (
@@ -58,14 +57,17 @@ export function AppShell({ children }: AppShellProps) {
           </nav>
         </div>
       </header>
-      <main
-        ref={mainRef}
-        className="page-content"
-        id="main-content"
-        tabIndex={-1}
-      >
-        {children}
-      </main>
+      <RouteReadyProvider mainRef={mainRef}>
+        <main
+          ref={mainRef}
+          className="page-content"
+          id="main-content"
+          aria-label="Contenido principal"
+          tabIndex={-1}
+        >
+          {children}
+        </main>
+      </RouteReadyProvider>
       <footer className="site-footer">
         <div className="site-footer__inner">
           <div className="site-footer__identity">

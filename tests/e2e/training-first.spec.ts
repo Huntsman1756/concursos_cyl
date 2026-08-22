@@ -125,6 +125,7 @@ test("live DAW results shows formacion link and approved occupation", async ({
   await page.keyboard.press("Enter");
   await expect(page).toHaveURL(/\/desde-fp\/IFC03S#donde-estudiar$/u);
   await expect(page.locator("#donde-estudiar")).toBeVisible();
+  await expect(page.locator("#donde-estudiar")).toBeFocused();
   await expect(
     page.getByText(/no representa todo el mercado laboral/u),
   ).toBeVisible();
@@ -218,9 +219,12 @@ test("COM01M exposes seven reviewed groups without inventing current offers", as
   await page
     .getByRole("combobox", { name: "Ciclo de Formación Profesional" })
     .selectOption("COM01M");
-  await expect(page.getByRole("status")).toContainText(
-    "Relaciones revisadas con 7 grupos de ocupación.",
-  );
+  await expect(
+    page.getByText("Relaciones revisadas con 7 grupos de ocupación."),
+  ).toContainText("Relaciones revisadas con 7 grupos de ocupación.");
+  await expect(
+    page.getByText("Relaciones revisadas con 7 grupos de ocupación."),
+  ).toHaveAttribute("role", "status");
   await page.getByRole("button", { name: "Ver salidas y ofertas" }).click();
   await expect(page).toHaveURL(/\/desde-fp\/COM01M$/u);
   await expect(

@@ -1,7 +1,13 @@
 import { readFile } from "node:fs/promises";
 import { resolve } from "node:path";
 
-import { cleanup, render, screen, within } from "@testing-library/react";
+import {
+  cleanup,
+  fireEvent,
+  render,
+  screen,
+  within,
+} from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { MemoryRouter, useLocation } from "react-router-dom";
 import { afterEach, describe, expect, it, vi } from "vitest";
@@ -265,8 +271,16 @@ describe("TrainingResultsPage", () => {
       </MemoryRouter>,
     );
 
+    const pageHeading = await screen.findByRole("heading", {
+      name: /Desarrollo de Aplicaciones Web/i,
+    });
+    expect(pageHeading).toHaveAttribute("id", "training-results-heading");
+    expect(pageHeading.closest("section")).toHaveAttribute(
+      "aria-labelledby",
+      "training-results-heading",
+    );
     expect(
-      await screen.findByRole("heading", {
+      screen.getByRole("heading", {
         name: "Base de cotización observada de titulados",
       }),
     ).toBeVisible();
@@ -339,7 +353,15 @@ describe("TrainingResultsPage", () => {
       }),
     ).toHaveAttribute("href", "/formacion/IFC03S");
     expect(nextActions.querySelectorAll(".primary-button")).toHaveLength(1);
-    expect(document.getElementById("ocupaciones-revisadas")).toBeVisible();
+    const occupationsSection = document.getElementById("ocupaciones-revisadas");
+    expect(occupationsSection).toBeVisible();
+    expect(occupationsSection).toHaveAttribute("tabindex", "-1");
+    fireEvent.click(
+      within(nextActions).getByRole("link", {
+        name: "Ver ocupaciones revisadas",
+      }),
+    );
+    expect(occupationsSection).toHaveFocus();
     expect(
       within(outcome).getByRole("link", { name: /Fuente: EDUCAbase/u }),
     ).toHaveAttribute(
@@ -420,7 +442,7 @@ describe("TrainingResultsPage", () => {
     expect(await screen.findByText("Programador web.")).toBeVisible();
     expect(
       screen.getByRole("link", {
-        name: "Comprobar estas salidas en la ficha oficial de TodoFP",
+        name: /Comprobar estas salidas en la ficha oficial de TodoFP/u,
       }),
     ).toHaveAttribute("href", expect.stringContaining("todofp.es"));
   });
@@ -531,7 +553,7 @@ describe("TrainingResultsPage", () => {
       name: "Programador web para servicios públicos",
     });
     await user.click(within(card).getByText("Ver evidencia y requisitos"));
-    const headings = Array.from(card.querySelectorAll("h3")).map(
+    const headings = Array.from(card.querySelectorAll(".evidence-step h3")).map(
       (heading) => heading.textContent,
     );
     expect(headings).toEqual([
@@ -636,16 +658,16 @@ describe("TrainingResultsPage", () => {
       screen.getByText(/no representa todo el mercado laboral/u),
     ).toBeVisible();
     expect(
-      screen.getByRole("link", { name: "Fuente: TodoFP" }),
+      screen.getByRole("link", { name: /Fuente: TodoFP/u }),
     ).toHaveAttribute("href", expect.stringContaining("todofp.es"));
     expect(
-      screen.getByRole("link", { name: "Fuente: relación revisada" }),
+      screen.getByRole("link", { name: /Fuente: relación revisada/u }),
     ).toHaveAttribute("target", "_blank");
     expect(
-      screen.getByRole("link", { name: "Fuente: ofertas ECYL" }),
+      screen.getByRole("link", { name: /Fuente: ofertas ECYL/u }),
     ).toHaveAttribute("target", "_blank");
     expect(
-      screen.getByRole("link", { name: "Fuente: oferta FP JCyL" }),
+      screen.getByRole("link", { name: /Fuente: oferta FP JCyL/u }),
     ).toHaveAttribute("target", "_blank");
   });
 
@@ -831,11 +853,11 @@ describe("TrainingResultsPage", () => {
     });
     await user.click(filterButton);
 
-    expect(
-      await screen.findByText(
-        "Filtro activo: ofertas relacionadas que no publican este requisito exacto.",
-      ),
-    ).toBeVisible();
+    const filterNotice = await screen.findByRole("status", {
+      name: "Filtro activo: ofertas relacionadas que no publican este requisito exacto.",
+    });
+    expect(filterNotice).toBeVisible();
+    expect(filterNotice).toHaveFocus();
     expect(
       screen.queryByRole("article", {
         name: "Programador web con experiencia",
@@ -865,6 +887,7 @@ describe("TrainingResultsPage", () => {
       }),
     ).toBeVisible();
     expect(screen.queryByText(/Filtro activo/)).not.toBeInTheDocument();
+    expect(document.activeElement).not.toBe(filterNotice);
     expect(screen.getByLabelText("Dirección actual")).toHaveTextContent(
       "/desde-fp/IFC03S?province=León",
     );

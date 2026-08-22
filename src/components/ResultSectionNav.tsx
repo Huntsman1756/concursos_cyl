@@ -1,4 +1,5 @@
 import type { JSX } from "react";
+import { FragmentLink } from "./FragmentLink";
 
 export interface ResultSectionNavLink {
   href: string;
@@ -21,7 +22,7 @@ export function ResultSectionNav({
       <ul>
         {links.map((link) => (
           <li key={link.href}>
-            <a href={link.href}>{link.label}</a>
+            <FragmentLink href={link.href}>{link.label}</FragmentLink>
           </li>
         ))}
       </ul>

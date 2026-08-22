@@ -310,9 +310,14 @@ describe("occupation-first results", () => {
       </MemoryRouter>,
     );
 
-    expect(
-      await screen.findByRole("heading", { name: occupation.preferredLabel }),
-    ).toBeVisible();
+    const pageHeading = await screen.findByRole("heading", {
+      name: occupation.preferredLabel,
+    });
+    expect(pageHeading).toHaveAttribute("id", "occupation-results-heading");
+    expect(pageHeading.closest("section")).toHaveAttribute(
+      "aria-labelledby",
+      "occupation-results-heading",
+    );
     expect(screen.getByText(/Ocupación que quieres/)).toHaveTextContent(
       /FP que te lleva a ella/,
     );
@@ -424,13 +429,13 @@ describe("occupation-first results", () => {
       }),
     ).toBeVisible();
     expect(
-      screen.getByRole("link", { name: "Fuente: relación FP-ocupación" }),
+      screen.getByRole("link", { name: /Fuente: relación FP-ocupación/u }),
     ).toHaveAttribute("target", "_blank");
     expect(
-      screen.getByRole("link", { name: "Fuente: oferta FP JCyL" }),
+      screen.getByRole("link", { name: /Fuente: oferta FP JCyL/u }),
     ).toHaveAttribute("target", "_blank");
     expect(
-      screen.getByRole("link", { name: "Fuente: catálogo CNO-11" }),
+      screen.getByRole("link", { name: /Fuente: catálogo CNO-11/u }),
     ).toHaveAttribute("target", "_blank");
   });
 

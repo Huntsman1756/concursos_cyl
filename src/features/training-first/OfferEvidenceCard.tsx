@@ -70,7 +70,7 @@ export function OfferEvidenceCard(props: OfferEvidenceCardProps) {
             .filter(Boolean)
             .join(" · ")}
         </p>
-        <h2 id={headingId}>{props.offer.title}</h2>
+        <h3 id={headingId}>{props.offer.title}</h3>
         <p>{props.offer.sourceName}</p>
       </header>
       <details className="offer-card__evidence">

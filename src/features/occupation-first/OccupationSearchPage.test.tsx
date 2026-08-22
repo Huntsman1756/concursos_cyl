@@ -119,6 +119,14 @@ describe("occupation-first search", () => {
     );
 
     const input = await screen.findByRole("combobox", { name: /ocupación/i });
+    const heading = screen.getByRole("heading", {
+      name: "Consulta qué ciclos de FP están relacionados con una ocupación",
+    });
+    expect(heading).toHaveAttribute("id", "occupation-search-heading");
+    expect(heading.closest("section")).toHaveAttribute(
+      "aria-labelledby",
+      "occupation-search-heading",
+    );
     const manifest = currentManifestFixture();
     expect(fetch).not.toHaveBeenCalledWith(
       manifest.resourceSnapshots.programs.resourcePath,
@@ -180,6 +188,10 @@ describe("occupation-first search", () => {
     expect(
       screen.getByText("No encontramos una ocupación oficial con ese nombre."),
     ).toBeVisible();
+    expect(input).not.toHaveAttribute("aria-expanded");
+    expect(input).not.toHaveAttribute("aria-controls");
+    expect(input).not.toHaveAttribute("aria-activedescendant");
+    expect(screen.queryByRole("listbox")).not.toBeInTheDocument();
     expect(
       screen.queryByText(rejectedOccupation.preferredLabel),
     ).not.toBeInTheDocument();

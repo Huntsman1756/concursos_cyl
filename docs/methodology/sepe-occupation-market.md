@@ -9,10 +9,12 @@ la curaduría del proyecto. Se publicaron 116 registros y no hubo respuestas
 oficiales de «sin documento» en esta captura.
 
 El recurso no es un censo de vacantes. «Contratos registrados» son
-comunicaciones administrativas de contratos al SEPE; «paro registrado» son
-personas inscritas como demandantes en paro registrado. Las cifras nacionales
-y las nueve filas provinciales de Castilla y León describen esos registros en
-el periodo indicado. No permiten inferir salario, residencia, probabilidad de
+comunicaciones administrativas de contratos al SEPE; «personas contratadas» es
+el conteo administrativo publicado por el SEPE para ese corte y no un censo de
+personas únicas ni una medida de vacantes; «paro registrado» son personas
+inscritas como demandantes en paro registrado. Las cifras nacionales y las
+nueve filas provinciales de Castilla y León describen esos registros en el
+periodo indicado. No permiten inferir salario, residencia, probabilidad de
 empleo, demanda futura ni una recomendación individual.
 
 ## Resolución canónica

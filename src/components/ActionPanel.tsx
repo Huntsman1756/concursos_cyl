@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import type { TrainingProgram } from "../../data/schemas/generated";
+import { ExternalLink } from "./ExternalLink";
 import type {
   AddSessionCheckAction,
   ReliableAction,
@@ -53,17 +54,11 @@ export function ActionPanel({
           ) {
             return (
               <li key={key}>
-                <a
-                  className="action-link"
-                  href={action.href}
-                  target="_blank"
-                  rel="noreferrer"
-                >
+                <ExternalLink className="action-link" href={action.href}>
                   {action.label}
                   {action.actionType === "open_official_procedure" &&
                     `: ${action.title}`}
-                  <span className="sr-only"> (abre en una pestaña nueva)</span>
-                </a>
+                </ExternalLink>
               </li>
             );
           }

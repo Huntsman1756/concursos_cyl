@@ -2,6 +2,7 @@ import {
   buildTerritorialDistributionModel,
   type TerritorialCenterRecord,
 } from "./territorialDistributionModel";
+import { ExternalLink } from "../../components/ExternalLink";
 
 interface TerritorialDistributionProps {
   centers: readonly TerritorialCenterRecord[];
@@ -64,14 +65,12 @@ export function TerritorialDistribution({
           </time>
         </span>
       </div>
-      <a
+      <ExternalLink
         className="territorial-distribution__source"
         href={sourceUrl}
-        target="_blank"
-        rel="noreferrer"
       >
         Fuente: Directorio de Centros Docentes JCyL
-      </a>
+      </ExternalLink>
       {model.totalCenters === 0 ? (
         <p className="territorial-distribution__empty">
           No hay centros publicados para este ciclo en la copia actual.

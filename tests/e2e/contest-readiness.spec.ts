@@ -175,9 +175,12 @@ test.describe("contest readiness journeys", () => {
       name: "Ciclo de Formación Profesional",
     });
     await programSelect.selectOption("COM01M");
-    await expect(page.getByRole("status")).toContainText(
-      "Relaciones revisadas con 7 grupos de ocupación.",
-    );
+    await expect(
+      page.getByText("Relaciones revisadas con 7 grupos de ocupación."),
+    ).toContainText("Relaciones revisadas con 7 grupos de ocupación.");
+    await expect(
+      page.getByText("Relaciones revisadas con 7 grupos de ocupación."),
+    ).toHaveAttribute("role", "status");
     await page.getByRole("button", { name: "Ver salidas y ofertas" }).click();
     await expect(page).toHaveURL(/\/desde-fp\/COM01M$/u);
     await expect(

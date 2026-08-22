@@ -1,13 +1,19 @@
 import { Link } from "react-router-dom";
 
+import { useRouteReady } from "../../app/RouteReadyContext";
 import "./organizations.css";
 
 export function OrganizationsPage() {
+  useRouteReady(true);
+
   return (
-    <article className="organizations-page">
+    <article
+      className="organizations-page"
+      aria-labelledby="organizations-heading"
+    >
       <header className="support-page-intro">
         <p className="support-page-intro__eyebrow">Reutilización profesional</p>
-        <h1>Para centros y administraciones</h1>
+        <h1 id="organizations-heading">Para centros y administraciones</h1>
         <p>
           Una base común para orientar con evidencia, preparar sesiones y
           detectar dónde todavía faltan relaciones verificadas entre formación y

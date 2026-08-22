@@ -11,7 +11,9 @@ import {
   loadFoundationResourceSubset,
   loadManifest,
 } from "../../data/generatedDataClient";
+import { ExternalLink } from "../../components/ExternalLink";
 import { trainingLevelLabel } from "../../domain/trainingPresentation";
+import { useRouteReady } from "../../app/RouteReadyContext";
 
 type Center = EducationCenter | LegacyEducationCenter;
 type Offering = TrainingOffering | LegacyTrainingOffering;
@@ -37,6 +39,8 @@ const modalityLabels: Record<Offering["modality"], string> = {
 export function TrainingRoutePage() {
   const { programKey = "" } = useParams();
   const [state, setState] = useState<RouteState>({ status: "loading" });
+
+  useRouteReady(state.status === "ready" || state.status === "unknown");
 
   useEffect(() => {
     let active = true;
@@ -74,19 +78,33 @@ export function TrainingRoutePage() {
     };
   }, [programKey]);
 
-  if (state.status === "loading") return <p>Cargando centros oficiales…</p>;
+  if (state.status === "loading")
+    return (
+      <p role="status" aria-live="polite">
+        Cargando centros oficiales…
+      </p>
+    );
   if (state.status === "failed") {
     return (
-      <section className="status-panel" role="alert">
-        <h1>No hemos podido cargar la ruta formativa</h1>
+      <section
+        className="status-panel"
+        role="alert"
+        aria-labelledby="training-route-error-heading"
+      >
+        <h1 id="training-route-error-heading">
+          No hemos podido cargar la ruta formativa
+        </h1>
         <Link to="/desde-fp">Volver a los ciclos</Link>
       </section>
     );
   }
   if (state.status === "unknown") {
     return (
-      <section className="status-panel">
-        <h1>Ciclo no encontrado</h1>
+      <section
+        className="status-panel"
+        aria-labelledby="training-route-not-found-heading"
+      >
+        <h1 id="training-route-not-found-heading">Ciclo no encontrado</h1>
         <Link to="/desde-fp">Elegir otro ciclo</Link>
       </section>
     );
@@ -96,7 +114,7 @@ export function TrainingRoutePage() {
     state.centers.map((center) => [center.centerCode, center]),
   );
   return (
-    <section className="training-page">
+    <section className="training-page" aria-labelledby="training-route-heading">
       <header className="training-page__header">
         <Link to={`/desde-fp/${encodeURIComponent(state.program.programKey)}`}>
           Volver a salidas y ofertas
@@ -104,7 +122,9 @@ export function TrainingRoutePage() {
         <p className="training-page__eyebrow">
           Oferta oficial de FP en Castilla y León
         </p>
-        <h1>Dónde estudiar {state.program.programTitle}</h1>
+        <h1 id="training-route-heading">
+          Dónde estudiar {state.program.programTitle}
+        </h1>
         <p>
           {trainingLevelLabel(state.program.level)} · Código oficial{" "}
           {state.program.programKey}
@@ -138,10 +158,9 @@ export function TrainingRoutePage() {
                   <p>{center.address}</p>
                 )}
                 {center?.website !== null && center?.website !== undefined && (
-                  <a href={center.website} target="_blank" rel="noreferrer">
-                    Web del centro{" "}
-                    <span className="sr-only">(abre en una pestaña nueva)</span>
-                  </a>
+                  <ExternalLink href={center.website}>
+                    Web del centro
+                  </ExternalLink>
                 )}
               </li>
             );

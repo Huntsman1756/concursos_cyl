@@ -9,6 +9,7 @@ import {
   type LoadedAuditedRelationships,
 } from "../../data/generatedDataClient";
 import { loadApprovedMappings } from "../../domain/occupation";
+import { useRouteReady } from "../../app/RouteReadyContext";
 import { OccupationCombobox } from "./OccupationCombobox";
 
 type SearchState =
@@ -21,6 +22,8 @@ export function OccupationSearchPage() {
   const [state, setState] = useState<SearchState>({ status: "loading" });
   const [confirmedOccupation, setConfirmedOccupation] =
     useState<Occupation | null>(null);
+
+  useRouteReady(state.status === "ready");
 
   useEffect(() => {
     let active = true;
@@ -67,10 +70,16 @@ export function OccupationSearchPage() {
   }
 
   return (
-    <section className="training-page" aria-busy={state.status === "loading"}>
+    <section
+      className="training-page"
+      aria-busy={state.status === "loading"}
+      aria-labelledby="occupation-search-heading"
+    >
       <header className="training-page__header">
         <p className="training-page__eyebrow">Desde una ocupación</p>
-        <h1>Consulta qué ciclos de FP están relacionados con una ocupación</h1>
+        <h1 id="occupation-search-heading">
+          Consulta qué ciclos de FP están relacionados con una ocupación
+        </h1>
         <p>
           Escribe la ocupación como lo harías normalmente. Buscaremos en la
           Clasificación Nacional de Ocupaciones (CNO-11) y mostraremos solo las

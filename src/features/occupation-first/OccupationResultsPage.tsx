@@ -5,6 +5,7 @@ import type {
   SourceSnapshot,
 } from "../../../data/schemas/generated";
 import type { Occupation } from "../../../data/schemas/curatedMappings";
+import { ExternalLink } from "../../components/ExternalLink";
 import { ResultSectionNav } from "../../components/ResultSectionNav";
 import {
   loadAuditedRelationships,
@@ -15,6 +16,7 @@ import {
   type LoadedFoundationResourceSubset,
 } from "../../data/generatedDataClient";
 import { loadApprovedMappings } from "../../domain/occupation";
+import { useRouteReady } from "../../app/RouteReadyContext";
 import { OccupationMarketEvidence } from "./OccupationMarketEvidence";
 import { TrainingRouteCard } from "./TrainingRouteCard";
 
@@ -40,6 +42,8 @@ function spanishDate(value: string): string {
 export function OccupationResultsPage() {
   const { occupationId = "" } = useParams();
   const [state, setState] = useState<ResultsState>({ status: "loading" });
+
+  useRouteReady(state.status === "ready");
 
   useEffect(() => {
     let active = true;
@@ -106,8 +110,14 @@ export function OccupationResultsPage() {
   }
   if (state.status === "failed") {
     return (
-      <section className="status-panel" role="alert">
-        <h1>No hemos podido cargar las rutas formativas</h1>
+      <section
+        className="status-panel"
+        role="alert"
+        aria-labelledby="occupation-results-load-error-heading"
+      >
+        <h1 id="occupation-results-load-error-heading">
+          No hemos podido cargar las rutas formativas
+        </h1>
         <p>Vuelve a intentarlo dentro de unos minutos.</p>
         <Link to="/desde-ocupacion">Buscar otra ocupación</Link>
       </section>
@@ -119,8 +129,13 @@ export function OccupationResultsPage() {
   );
   if (occupation === undefined) {
     return (
-      <section className="status-panel">
-        <h1>Ocupación no encontrada</h1>
+      <section
+        className="status-panel"
+        aria-labelledby="occupation-results-not-found-heading"
+      >
+        <h1 id="occupation-results-not-found-heading">
+          Ocupación no encontrada
+        </h1>
         <p>La dirección no corresponde a una ocupación oficial CNO-11.</p>
         <Link to="/desde-ocupacion">Buscar otra ocupación</Link>
       </section>
@@ -182,13 +197,16 @@ export function OccupationResultsPage() {
   );
 
   return (
-    <section className="training-page occupation-result-page">
+    <section
+      className="training-page occupation-result-page"
+      aria-labelledby="occupation-results-heading"
+    >
       <header className="training-page__header">
         <Link to="/desde-ocupacion">Buscar otra ocupación</Link>
         <p className="training-page__eyebrow">
           Ocupación seleccionada del catálogo oficial
         </p>
-        <h1>{occupation.preferredLabel}</h1>
+        <h1 id="occupation-results-heading">{occupation.preferredLabel}</h1>
         <p>CNO-11 {occupation.classificationCode}</p>
       </header>
       <p className="decision-direction">
@@ -209,13 +227,9 @@ export function OccupationResultsPage() {
               <span className="result-summary__unit">rutas revisadas</span>
               <span className="result-summary__source">
                 {relationshipSourceUrl !== undefined && (
-                  <a
-                    href={relationshipSourceUrl}
-                    target="_blank"
-                    rel="noreferrer"
-                  >
+                  <ExternalLink href={relationshipSourceUrl}>
                     Fuente: relación FP-ocupación
-                  </a>
+                  </ExternalLink>
                 )}
                 {relationshipDate !== undefined && (
                   <time dateTime={relationshipDate}>
@@ -231,13 +245,9 @@ export function OccupationResultsPage() {
               <strong>{linkedCenters.size}</strong>
               <span className="result-summary__unit">centros publicados</span>
               <span className="result-summary__source">
-                <a
-                  href={trainingSnapshot.sourceUrl}
-                  target="_blank"
-                  rel="noreferrer"
-                >
+                <ExternalLink href={trainingSnapshot.sourceUrl}>
                   Fuente: oferta FP JCyL
-                </a>
+                </ExternalLink>
                 <time dateTime={snapshotInstant}>
                   Copia del {spanishDate(snapshotInstant)}
                 </time>
@@ -253,13 +263,9 @@ export function OccupationResultsPage() {
               </span>
               <span className="result-summary__source">
                 {occupationSourceUrl !== undefined && (
-                  <a
-                    href={occupationSourceUrl}
-                    target="_blank"
-                    rel="noreferrer"
-                  >
+                  <ExternalLink href={occupationSourceUrl}>
                     Fuente: catálogo CNO-11
-                  </a>
+                  </ExternalLink>
                 )}
                 {occupationSnapshot !== undefined && (
                   <time
@@ -280,7 +286,7 @@ export function OccupationResultsPage() {
           </div>
         </dl>
       </section>
-      <div id="mercado-laboral">
+      <div id="mercado-laboral" tabIndex={-1}>
         <OccupationMarketEvidence
           manifest={state.manifest}
           cnoCode={occupation.classificationCode}
@@ -321,6 +327,7 @@ export function OccupationResultsPage() {
           id="rutas-formativas"
           className="occupation-routes"
           aria-labelledby="training-routes-heading"
+          tabIndex={-1}
         >
           <div className="section-heading">
             <h2 id="training-routes-heading">FP relacionadas</h2>

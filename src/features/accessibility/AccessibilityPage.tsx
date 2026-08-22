@@ -1,16 +1,22 @@
 import { Link } from "react-router-dom";
 
+import { useRouteReady } from "../../app/RouteReadyContext";
 import "./accessibility.css";
 
 const ISSUES_URL =
   "https://github.com/Huntsman1756/concursos_cyl/issues/new?labels=accessibility";
 
 export function AccessibilityPage() {
+  useRouteReady(true);
+
   return (
-    <article className="accessibility-page">
+    <article
+      className="accessibility-page"
+      aria-labelledby="accessibility-heading"
+    >
       <header className="support-page-intro">
         <p className="support-page-intro__eyebrow">Compromiso verificable</p>
-        <h1>Accesibilidad</h1>
+        <h1 id="accessibility-heading">Accesibilidad</h1>
         <p>
           Queremos que cualquier persona pueda consultar SALIDA CyL con teclado,
           lector de pantalla o ampliación, en móvil y en escritorio. Nuestro

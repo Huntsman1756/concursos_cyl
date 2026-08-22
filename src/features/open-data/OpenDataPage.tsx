@@ -12,6 +12,7 @@ import {
   loadOpenDataCatalog,
   resolveGeneratedAssetPath,
 } from "../../data/generatedDataClient";
+import { useRouteReady } from "../../app/RouteReadyContext";
 import "./openData.css";
 
 type OpenDataState =
@@ -36,6 +37,8 @@ function formattedDate(value: string): string {
 
 export function OpenDataPage() {
   const [state, setState] = useState<OpenDataState>({ status: "loading" });
+
+  useRouteReady(state.status !== "loading" && state.status !== "failed");
 
   useEffect(() => {
     let active = true;
@@ -71,20 +74,30 @@ export function OpenDataPage() {
   }, [state]);
 
   if (state.status === "loading") {
-    return <p>Comprobando la publicación abierta…</p>;
+    return (
+      <p role="status" aria-live="polite">
+        Comprobando la publicación abierta…
+      </p>
+    );
   }
   if (state.status === "failed") {
     return (
-      <section className="status-panel" role="alert">
-        <h1>No hemos podido comprobar los datos abiertos</h1>
+      <section
+        className="status-panel"
+        role="alert"
+        aria-labelledby="open-data-error-heading"
+      >
+        <h1 id="open-data-error-heading">
+          No hemos podido comprobar los datos abiertos
+        </h1>
         <p>La aplicación sigue disponible. Prueba de nuevo más tarde.</p>
       </section>
     );
   }
   if (state.status === "historical") {
     return (
-      <section className="status-panel">
-        <h1>Datos abiertos de SALIDA CyL</h1>
+      <section className="status-panel" aria-labelledby="open-data-heading">
+        <h1 id="open-data-heading">Datos abiertos de SALIDA CyL</h1>
         <p>Esta copia histórica todavía no contiene el dataset derivado.</p>
         <Link to="/metodologia">Consultar metodología y fuentes</Link>
       </section>
@@ -101,10 +114,10 @@ export function OpenDataPage() {
   ).derivedFpOccupationGraph;
 
   return (
-    <article className="open-data-page">
+    <article className="open-data-page" aria-labelledby="open-data-heading">
       <header className="open-data-page__intro">
         <p className="open-data-page__eyebrow">Reutilización pública</p>
-        <h1>Datos abiertos de SALIDA CyL</h1>
+        <h1 id="open-data-heading">Datos abiertos de SALIDA CyL</h1>
         <p>
           Descarga las relaciones FP↔ocupación que utiliza el producto, con su
           clasificación CNO-11 y la fuente que respalda cada enlace.

@@ -9,6 +9,7 @@ import {
   loadManifest,
 } from "../../data/generatedDataClient";
 import { trainingLevelLabel } from "../../domain/trainingPresentation";
+import { useRouteReady } from "../../app/RouteReadyContext";
 
 const PROVINCES = [
   "Ávila",
@@ -39,6 +40,8 @@ export function TrainingSearchPage() {
   const [status, setStatus] = useState<"loading" | "ready" | "failed">(
     "loading",
   );
+
+  useRouteReady(status === "ready");
 
   useEffect(() => {
     let active = true;
@@ -92,10 +95,16 @@ export function TrainingSearchPage() {
   }
 
   return (
-    <section className="training-page" aria-busy={status === "loading"}>
+    <section
+      className="training-page"
+      aria-busy={status === "loading"}
+      aria-labelledby="training-search-heading"
+    >
       <header className="training-page__header">
         <p className="training-page__eyebrow">Desde tu formación</p>
-        <h1>Consulta salidas y ofertas relacionadas con tu FP</h1>
+        <h1 id="training-search-heading">
+          Consulta salidas y ofertas relacionadas con tu FP
+        </h1>
         <p>
           Elige tu ciclo oficial. Verás sus salidas publicadas por TodoFP y, por
           separado, las ocupaciones y ofertas que ya hemos podido relacionar con

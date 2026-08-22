@@ -15,6 +15,7 @@ import {
   type IncomeComparison,
   type IncomeOutcomeIndex,
 } from "../../domain/outcomes";
+import { useRouteReady } from "../../app/RouteReadyContext";
 import { IncomeComparisonForm } from "./IncomeComparisonForm";
 import { IncomeEvidenceCard } from "./IncomeEvidenceCard";
 import { formatOutcomeLabel } from "./outcomePresentation";
@@ -48,6 +49,7 @@ function scopeHeading(trainingLevel: OutcomeTrainingLevel): string {
 /** Loads only manifest-addressed evidence and keeps both official scopes separate. */
 export function CompareStudiesPage() {
   const [state, setState] = useState<PageState>({ status: "loading" });
+  useRouteReady(state.status === "ready");
   const [trainingLevel, setTrainingLevel] =
     useState<OutcomeTrainingLevel | null>(null);
   const [groupKeys, setGroupKeys] = useState<readonly string[]>([]);
@@ -152,16 +154,26 @@ export function CompareStudiesPage() {
 
   if (state.status === "loading") {
     return (
-      <section className="compare-page compare-page--status" aria-live="polite">
-        <h1>Ingresos observados</h1>
-        <p role="status">Cargando los datos de comparación…</p>
+      <section
+        className="compare-page compare-page--status"
+        aria-live="polite"
+        aria-labelledby="compare-heading"
+      >
+        <h1 id="compare-heading">Ingresos observados</h1>
+        <p role="status" aria-live="polite">
+          Cargando los datos de comparación…
+        </p>
       </section>
     );
   }
   if (state.status === "unavailable") {
     return (
-      <section className="compare-page compare-page--status" aria-live="polite">
-        <h1>Ingresos observados</h1>
+      <section
+        className="compare-page compare-page--status"
+        aria-live="polite"
+        aria-labelledby="compare-heading"
+      >
+        <h1 id="compare-heading">Ingresos observados</h1>
         <p>Los datos de comparación no están disponibles en esta versión.</p>
         <p>
           <Link to="/metodologia">Consultar la metodología y las fuentes</Link>
@@ -171,8 +183,12 @@ export function CompareStudiesPage() {
   }
   if (state.status === "invalid") {
     return (
-      <section className="compare-page compare-page--status" aria-live="polite">
-        <h1>Ingresos observados</h1>
+      <section
+        className="compare-page compare-page--status"
+        aria-live="polite"
+        aria-labelledby="compare-heading"
+      >
+        <h1 id="compare-heading">Ingresos observados</h1>
         <p>No se han podido cargar o validar los datos de comparación.</p>
         <p>Prueba de nuevo más tarde o consulta la metodología.</p>
       </section>

@@ -27,6 +27,11 @@ describe("RouteLoadBoundary", () => {
 
     const errorMsg = await screen.findByText(/Error al cargar el contenido/i);
     expect(errorMsg).toBeInTheDocument();
+    expect(
+      screen.getByRole("heading", {
+        name: "No hemos podido cargar esta página",
+      }),
+    ).toBeVisible();
 
     const retryButton = screen.getByRole("button", { name: /Reintentar/i });
     fireEvent.click(retryButton);

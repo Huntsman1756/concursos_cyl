@@ -11,6 +11,8 @@ import {
   loadProfessionalCertificates,
   loadPublicEmploymentCalls,
 } from "../../data/generatedDataClient";
+import { ExternalLink } from "../../components/ExternalLink";
+import { useRouteReady } from "../../app/RouteReadyContext";
 import "./ecylResources.css";
 
 type State =
@@ -52,6 +54,7 @@ function readableOfficialTitle(value: string): string {
 
 export function EcylResourcesPage() {
   const [state, setState] = useState<State>({ status: "loading" });
+  useRouteReady(state.status === "ready");
   const [query, setQuery] = useState("");
   const [family, setFamily] = useState("");
   const [courseLimit, setCourseLimit] = useState(COURSE_PAGE_SIZE);
@@ -184,7 +187,9 @@ export function EcylResourcesPage() {
       </div>
 
       {state.status === "loading" ? (
-        <p role="status">Cargando recursos…</p>
+        <p role="status" aria-live="polite">
+          Cargando recursos…
+        </p>
       ) : null}
       {state.status === "error" ? (
         <p role="alert">No se han podido cargar estos recursos.</p>
@@ -231,22 +236,18 @@ export function EcylResourcesPage() {
                     <p>
                       Plazo hasta el {displayDate(call.applicationDeadline)}
                     </p>
-                    <a href={call.officialUrl} target="_blank" rel="noreferrer">
+                    <ExternalLink href={call.officialUrl}>
                       Ver convocatoria oficial
-                    </a>
+                    </ExternalLink>
                   </article>
                 ))}
               </div>
             )}
             <footer className="public-calls__source">
               {state.publicCallsSourceUrl !== null && (
-                <a
-                  href={state.publicCallsSourceUrl}
-                  target="_blank"
-                  rel="noreferrer"
-                >
+                <ExternalLink href={state.publicCallsSourceUrl}>
                   Fuente: Convocatorias de Empleo Público JCyL
-                </a>
+                </ExternalLink>
               )}
               {state.publicCallsUpdatedAt !== null && (
                 <span>
@@ -290,13 +291,9 @@ export function EcylResourcesPage() {
                     {course.startDate ? (
                       <p>Inicio: {displayDate(course.startDate)}</p>
                     ) : null}
-                    <a
-                      href={course.officialUrl}
-                      target="_blank"
-                      rel="noreferrer"
-                    >
+                    <ExternalLink href={course.officialUrl}>
                       Ver ficha oficial
-                    </a>
+                    </ExternalLink>
                   </article>
                 ))}
               </div>
@@ -343,13 +340,9 @@ export function EcylResourcesPage() {
                         ? " · Teleformación completa"
                         : ""}
                     </p>
-                    <a
-                      href={certificate.programUrl}
-                      target="_blank"
-                      rel="noreferrer"
-                    >
+                    <ExternalLink href={certificate.programUrl}>
                       Consultar programa oficial
-                    </a>
+                    </ExternalLink>
                   </article>
                 ))}
               </div>

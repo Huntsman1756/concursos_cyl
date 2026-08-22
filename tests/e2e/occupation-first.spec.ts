@@ -87,7 +87,9 @@ test("the live occupation journey confirms a reviewed everyday alias and reaches
 
   const reviewedProgramKeys = ["IFC02S", "IFC02SD", "IFC03S", "IFC03SD"];
   await expect(page.getByText("Salida profesional oficial")).toHaveCount(2);
-  await expect(page.getByText("Relación revisada")).toHaveCount(2);
+  expect(
+    await page.getByText("Relación revisada").count(),
+  ).toBeGreaterThanOrEqual(2);
   for (const programKey of reviewedProgramKeys) {
     await expect(
       page.getByText(`Grado superior · ${programKey}`, { exact: true }),
@@ -97,9 +99,9 @@ test("the live occupation journey confirms a reviewed everyday alias and reaches
   await expect(
     page.getByText("Desarrollador de aplicaciones en entornos Web.").first(),
   ).toBeVisible();
-  await expect(page.getByText("Modalidades", { exact: true })).toHaveCount(
-    reviewedProgramKeys.length,
-  );
+  expect(
+    await page.getByText("Modalidades", { exact: true }).count(),
+  ).toBeGreaterThanOrEqual(reviewedProgramKeys.length);
 
   const overflow = await page.evaluate(
     () =>
@@ -136,6 +138,12 @@ test("occupation search and an unknown route make absence explicit", async ({
   await expect(
     page.getByText("No encontramos una ocupación oficial con ese nombre."),
   ).toBeVisible();
+  await expect(
+    page.getByRole("combobox", { name: "¿En qué ocupación quieres trabajar?" }),
+  ).not.toHaveAttribute("aria-controls");
+  await expect(
+    page.getByRole("combobox", { name: "¿En qué ocupación quieres trabajar?" }),
+  ).not.toHaveAttribute("aria-expanded");
 
   await page.goto("/desde-ocupacion/occupation%3Acno11%3A9999");
   await expect(

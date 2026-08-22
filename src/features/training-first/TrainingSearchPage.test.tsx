@@ -135,9 +135,11 @@ describe("training-first search", () => {
       name: "Ciclo de Formación Profesional",
     });
     await user.selectOptions(select, "COM01M");
-    expect(screen.getByRole("status")).toHaveTextContent(
+    const unavailableStatus = screen.getByText(
       /salidas oficiales disponibles.*todavía no hay una relación revisada para buscar ofertas/i,
     );
+    expect(unavailableStatus).toHaveAttribute("role", "status");
+    expect(unavailableStatus).toHaveAttribute("aria-live", "polite");
     const catalogScope = screen.getByRole("region", {
       name: "Alcance del catálogo de FP",
     });
@@ -181,11 +183,15 @@ describe("training-first search", () => {
       </MemoryRouter>,
     );
 
-    expect(
-      await screen.findByRole("heading", {
-        name: "Consulta salidas y ofertas relacionadas con tu FP",
-      }),
-    ).toBeVisible();
+    const heading = await screen.findByRole("heading", {
+      name: "Consulta salidas y ofertas relacionadas con tu FP",
+    });
+    expect(heading).toBeVisible();
+    expect(heading).toHaveAttribute("id", "training-search-heading");
+    expect(heading.closest("section")).toHaveAttribute(
+      "aria-labelledby",
+      "training-search-heading",
+    );
     const programSelect = screen.getByRole("combobox", {
       name: "Ciclo de Formación Profesional",
     });
@@ -196,6 +202,20 @@ describe("training-first search", () => {
 
     await user.selectOptions(programSelect, "IFC03S");
     expect(submit).toBeEnabled();
+  });
+
+  it("announces readiness once and moves focus to main after the catalog is ready", async () => {
+    installFoundationFetch();
+    render(
+      <MemoryRouter initialEntries={["/desde-fp"]}>
+        <AppRoutes />
+      </MemoryRouter>,
+    );
+
+    expect(
+      await screen.findByRole("status", { name: "Contenido listo" }),
+    ).toBeVisible();
+    expect(screen.getByRole("main")).toHaveFocus();
   });
 
   it("distinguishes homonymous official programs by level and key", async () => {

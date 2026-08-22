@@ -11,6 +11,7 @@ import {
   loadManifest,
   resolveGeneratedAssetPath,
 } from "../../data/generatedDataClient";
+import { useRouteReady } from "../../app/RouteReadyContext";
 import { SourceMethodCard } from "./SourceMethodCard";
 import "./methodology.css";
 
@@ -246,7 +247,11 @@ function RegionalDatasetInventory({ state }: { state: ManifestState }) {
 
 function Provenance({ state }: { state: EvidenceState }) {
   if (state.status === "loading") {
-    return <p>Comprobando la publicación utilizada…</p>;
+    return (
+      <p role="status" aria-live="polite">
+        Comprobando la publicación utilizada…
+      </p>
+    );
   }
   if (state.status === "unavailable") {
     return <p>No se ha podido comprobar la copia de datos publicada.</p>;
@@ -280,7 +285,11 @@ function Provenance({ state }: { state: EvidenceState }) {
 
 function TrainingCatalogProvenance({ state }: { state: TrainingCatalogState }) {
   if (state.status === "loading") {
-    return <p>Comprobando la copia del catálogo oficial…</p>;
+    return (
+      <p role="status" aria-live="polite">
+        Comprobando la copia del catálogo oficial…
+      </p>
+    );
   }
   if (state.status === "unavailable") {
     return <p>No se ha podido comprobar la copia del catálogo.</p>;
@@ -324,6 +333,12 @@ export function MethodologyPage() {
   const [manifestState, setManifestState] = useState<ManifestState>({
     status: "loading",
   });
+
+  useRouteReady(
+    evidence.status !== "loading" &&
+      trainingCatalog.status !== "loading" &&
+      manifestState.status !== "loading",
+  );
 
   useEffect(() => {
     let active = true;

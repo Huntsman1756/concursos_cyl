@@ -1,3 +1,5 @@
+import { ExternalLink } from "./ExternalLink";
+
 interface EvidenceDisclosureProps {
   quote: string;
   sourceUrl?: string;
@@ -51,10 +53,7 @@ export function EvidenceDisclosure({
           )}
         </div>
         {sourceUrl !== undefined && (
-          <a href={sourceUrl} target="_blank" rel="noreferrer">
-            {sourceLabel}{" "}
-            <span className="sr-only">(abre en una pestaña nueva)</span>
-          </a>
+          <ExternalLink href={sourceUrl}>{sourceLabel}</ExternalLink>
         )}
       </details>
     </div>

@@ -1056,7 +1056,8 @@ summary:focus-visible {
   opacity: 0.86;
 }
 
-.offer-card__header h2 {
+.offer-card__header h2,
+.offer-card__header h3 {
   margin: var(--space-2) 0;
   color: var(--color-primary);
   font-size: clamp(1.3rem, 3vw, 1.65rem);
@@ -1173,7 +1174,8 @@ summary:focus-visible {
   background: var(--color-surface-subtle);
 }
 
-.training-route-card h2 {
+.training-route-card h2,
+.training-route-card h3 {
   margin: var(--space-2) 0;
   color: var(--color-primary);
   font-size: clamp(1.4rem, 4vw, 1.8rem);

@@ -37,7 +37,11 @@ export class RouteLoadBoundary extends Component<
         <div
           role={this.props.fallbackRole || "alert"}
           className="route-load-error"
+          aria-labelledby="route-load-error-heading"
         >
+          <h1 id="route-load-error-heading">
+            No hemos podido cargar esta página
+          </h1>
           <p>Error al cargar el contenido. Por favor, intente de nuevo.</p>
           <button onClick={this.handleRetry} className="retry-button">
             Reintentar

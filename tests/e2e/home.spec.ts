@@ -86,6 +86,32 @@ test("home exposes one chosen journey, navigation, freshness, and no automated a
   ).toEqual([]);
 });
 
+test("the keyboard focus indicator is visible and opaque", async ({ page }) => {
+  await page.goto("/");
+  const submit = page.getByRole("button", {
+    name: "Ver las salidas de este título",
+  });
+  await page
+    .getByLabel("Título de Formación Profesional")
+    .selectOption("IFC03S");
+  await expect(submit).toBeEnabled();
+  for (let index = 0; index < 20; index += 1) {
+    if (
+      await submit.evaluate((element) => element === document.activeElement)
+    ) {
+      break;
+    }
+    await page.keyboard.press("Tab");
+  }
+  await expect(submit).toBeFocused();
+
+  await expect
+    .poll(() =>
+      submit.evaluate((element) => getComputedStyle(element).boxShadow),
+    )
+    .not.toBe("none");
+});
+
 test("the single search reaches both routes one mode at a time", async ({
   page,
 }) => {
@@ -328,12 +354,18 @@ test("the skip link moves keyboard focus to the main content", async ({
   await expect(page.locator("main#main-content")).toBeFocused();
 });
 
-test("SPA navigation moves focus to the new page content", async ({ page }) => {
+test("SPA navigation preserves the focused control while content becomes ready", async ({
+  page,
+}) => {
   await page.goto("/");
 
-  await page.getByRole("link", { name: "Desde FP" }).click();
+  const fpLink = page.getByRole("link", { name: "Desde FP" });
+  await fpLink.click();
   await expect(page).toHaveURL(/\/desde-fp$/u);
-  await expect(page.locator("main#main-content")).toBeFocused();
+  await expect(fpLink).toBeFocused();
+  await expect(
+    page.getByRole("status", { name: "Contenido listo" }),
+  ).toBeAttached();
 });
 
 test("a validated stale legacy manifest keeps navigation and names the last update", async ({

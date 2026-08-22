@@ -19,6 +19,7 @@ import type {
 } from "../../../data/schemas/generated";
 import { loadApprovedMappings } from "../../domain/occupation";
 import { trainingLevelLabel } from "../../domain/trainingPresentation";
+import { useRouteReady } from "../../app/RouteReadyContext";
 import { OccupationCombobox } from "../occupation-first/OccupationCombobox";
 
 type FreshnessState =
@@ -97,6 +98,8 @@ export function HomePage() {
   const [selectedProgram, setSelectedProgram] = useState("");
   const [confirmedOccupation, setConfirmedOccupation] =
     useState<Occupation | null>(null);
+
+  useRouteReady(searchData.status === "ready");
   const manifestPromiseRef = useRef<ReturnType<typeof loadManifest> | null>(
     null,
   );
@@ -240,7 +243,7 @@ export function HomePage() {
   };
 
   return (
-    <div className="home-page">
+    <div className="home-page" aria-labelledby="home-heading">
       <section className="home-hero" aria-labelledby="home-heading">
         <div className="home-hero__art" aria-hidden="true" />
         <div className="home-hero__copy">

@@ -4,6 +4,7 @@ import { Link, Route, Routes, useLocation } from "react-router-dom";
 import { HomePage } from "../features/home/HomePage";
 import { AppShell } from "./AppShell";
 import { RouteLoadBoundary, RouteLoadingFallback } from "./RouteLoadBoundary";
+import { useRouteReady } from "./RouteReadyContext";
 
 const CompareStudiesPage = lazy(() =>
   import("../features/compare-studies/CompareStudiesPage").then((module) => ({
@@ -67,9 +68,11 @@ interface DestinationPageProps {
 }
 
 function DestinationPage({ heading, outcome }: DestinationPageProps) {
+  useRouteReady(true);
+
   return (
-    <section className="home-hero">
-      <h1>{heading}</h1>
+    <section className="home-hero" aria-labelledby="destination-heading">
+      <h1 id="destination-heading">{heading}</h1>
       <p className="home-hero__intro">{outcome}</p>
       <p>
         <Link to="/">Volver al inicio</Link>

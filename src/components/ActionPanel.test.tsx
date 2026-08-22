@@ -136,11 +136,12 @@ describe("ActionPanel integration", () => {
       </MemoryRouter>,
     );
 
-    expect(
-      screen.getByRole("link", {
-        name: /Comprobar requisitos en la oferta.*abre en una pestaña nueva/,
-      }),
-    ).toHaveAttribute("href", jobOffer.originalUrl);
+    const externalLink = screen.getByRole("link", {
+      name: /Comprobar requisitos en la oferta.*abre en una pestaña nueva/,
+    });
+    expect(externalLink).toHaveAttribute("href", jobOffer.originalUrl);
+    expect(externalLink).toHaveAttribute("target", "_blank");
+    expect(externalLink).toHaveAttribute("rel", "noopener noreferrer");
     expect(
       screen.queryByRole("link", {
         name: /Abrir oferta original.*abre en una pestaña nueva/,

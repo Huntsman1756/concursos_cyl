@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Link, useParams, useSearchParams } from "react-router-dom";
 import { REVIEWED_PROGRAM_QUALIFICATION_LINKS } from "../../../data/catalogs/reviewedProgramQualifications";
 import { REVIEWED_QUALIFICATIONS } from "../../../data/catalogs/reviewedQualifications";
@@ -34,6 +34,9 @@ import type { ReliableAction } from "../../domain/actionEngine";
 import { ReliableActionSchema } from "../../domain/actionEngine";
 import { useDecisionSession } from "../../domain/session";
 import { trainingLevelLabel } from "../../domain/trainingPresentation";
+import { ExternalLink } from "../../components/ExternalLink";
+import { FragmentLink } from "../../components/FragmentLink";
+import { useRouteReady } from "../../app/RouteReadyContext";
 import { OfferEvidenceCard } from "./OfferEvidenceCard";
 import { TerritorialDistribution } from "./TerritorialDistribution";
 import {
@@ -150,8 +153,12 @@ export function TrainingResultsPage() {
     ReliableAction,
     { actionType: "explore_unpublished_requirement" }
   > | null>(null);
+  const filterNoticeFocusRequestedRef = useRef(false);
+  const filterNoticeRef = useRef<HTMLDivElement | null>(null);
   const session = useDecisionSession();
   const [state, setState] = useState<ResultsState>({ status: "loading" });
+
+  useRouteReady(state.status === "ready");
 
   useEffect(() => {
     let active = true;
@@ -227,6 +234,14 @@ export function TrainingResultsPage() {
       ),
     );
   }, [publicationFilter, session.answers, state]);
+
+  useEffect(() => {
+    if (!filterNoticeFocusRequestedRef.current || publicationFilter === null) {
+      return;
+    }
+    filterNoticeRef.current?.focus({ preventScroll: true });
+    filterNoticeFocusRequestedRef.current = false;
+  }, [publicationFilter]);
 
   const approvedLinks = useMemo(
     () =>
@@ -415,11 +430,25 @@ export function TrainingResultsPage() {
         "Issued action is not an unpublished-requirement filter.",
       );
     }
+    const originatingMatch = orderedMatches.find(
+      (match) => match.offerId === issuedAction.offerId,
+    );
+    const originatingCardIsRemoved =
+      originatingMatch !== undefined &&
+      originatingMatch.requirements.some(
+        (requirement) =>
+          requirement.category === issuedAction.filter.category &&
+          requirement.normalizedValue === issuedAction.filter.normalizedValue,
+      );
+    filterNoticeFocusRequestedRef.current = originatingCardIsRemoved;
     setPublicationFilter(action);
   }
 
   return (
-    <section className="training-page">
+    <section
+      className="training-page"
+      aria-labelledby="training-results-heading"
+    >
       <header className="training-page__header">
         <Link to="/desde-fp">Cambiar ciclo</Link>
         <p
@@ -430,7 +459,7 @@ export function TrainingResultsPage() {
           <span aria-hidden="true">→</span>
           <span>Ocupaciones con evidencia</span>
         </p>
-        <h1>{state.program.programTitle}</h1>
+        <h1 id="training-results-heading">{state.program.programTitle}</h1>
         <p>
           {trainingLevelLabel(state.program.level)} · Código oficial{" "}
           {state.program.programKey}
@@ -453,13 +482,9 @@ export function TrainingResultsPage() {
               <span className="result-summary__unit">perfiles oficiales</span>
               <span className="result-summary__source">
                 {officialProfiles[0] !== undefined && (
-                  <a
-                    href={officialProfiles[0].sourceUrl}
-                    target="_blank"
-                    rel="noreferrer"
-                  >
+                  <ExternalLink href={officialProfiles[0].sourceUrl}>
                     Fuente: TodoFP
-                  </a>
+                  </ExternalLink>
                 )}
                 {profilesEvidenceDate !== null && (
                   <time dateTime={profilesEvidenceDate}>
@@ -477,16 +502,14 @@ export function TrainingResultsPage() {
               <span className="result-summary__source">
                 {(approvedLinks[0] !== undefined ||
                   relationshipsSnapshot !== undefined) && (
-                  <a
+                  <ExternalLink
                     href={
                       approvedLinks[0]?.sourceUrl ??
                       relationshipsSnapshot?.sourceUrl
                     }
-                    target="_blank"
-                    rel="noreferrer"
                   >
                     Fuente: relación revisada
-                  </a>
+                  </ExternalLink>
                 )}
                 {relationshipEvidenceDate !== null && (
                   <time dateTime={relationshipEvidenceDate}>
@@ -503,13 +526,9 @@ export function TrainingResultsPage() {
               <strong>{orderedMatches.length}</strong>
               <span className="result-summary__unit">en la copia actual</span>
               <span className="result-summary__source">
-                <a
-                  href={offersSnapshot.sourceUrl}
-                  target="_blank"
-                  rel="noreferrer"
-                >
+                <ExternalLink href={offersSnapshot.sourceUrl}>
                   Fuente: ofertas ECYL
-                </a>
+                </ExternalLink>
                 {offersEvidenceDate !== null && (
                   <time dateTime={offersEvidenceDate}>
                     Copia del {shortDate(offersEvidenceDate)}
@@ -524,13 +543,9 @@ export function TrainingResultsPage() {
               <strong>{studyCenters.length}</strong>
               <span className="result-summary__unit">centros publicados</span>
               <span className="result-summary__source">
-                <a
-                  href={offeringsSnapshot.sourceUrl}
-                  target="_blank"
-                  rel="noreferrer"
-                >
+                <ExternalLink href={offeringsSnapshot.sourceUrl}>
                   Fuente: oferta FP JCyL
-                </a>
+                </ExternalLink>
                 {offeringsEvidenceDate !== null && (
                   <time dateTime={offeringsEvidenceDate}>
                     Copia del {shortDate(offeringsEvidenceDate)}
@@ -547,9 +562,12 @@ export function TrainingResultsPage() {
       <nav className="result-actions" aria-label="Siguientes pasos">
         {resolvedOccupations.length > 0 ? (
           <>
-            <a className="primary-button" href="#ocupaciones-revisadas">
+            <FragmentLink
+              className="primary-button"
+              href="#ocupaciones-revisadas"
+            >
               Ver ocupaciones revisadas
-            </a>
+            </FragmentLink>
             <Link
               className="secondary-button"
               to={`/formacion/${encodeURIComponent(programKey)}`}
@@ -576,7 +594,13 @@ export function TrainingResultsPage() {
         </p>
       )}
       {publicationFilter !== null && (
-        <div className="filter-notice" role="status">
+        <div
+          ref={filterNoticeRef}
+          className="filter-notice"
+          role="status"
+          aria-label="Filtro activo: ofertas relacionadas que no publican este requisito exacto."
+          tabIndex={-1}
+        >
           <p>
             Filtro activo: ofertas relacionadas que no publican este requisito
             exacto.
@@ -600,7 +624,7 @@ export function TrainingResultsPage() {
         outcome={state.outcome}
       />
       <section className="decision-evidence" aria-label="Evidencia territorial">
-        <div id="donde-estudiar" className="study-section">
+        <div id="donde-estudiar" className="study-section" tabIndex={-1}>
           <div className="section-heading">
             <h2>Dónde estudiar</h2>
             <span>
@@ -631,7 +655,11 @@ export function TrainingResultsPage() {
             </ul>
           )}
         </div>
-        <div id="contexto-provincial" className="regional-context">
+        <div
+          id="contexto-provincial"
+          className="regional-context"
+          tabIndex={-1}
+        >
           <div className="section-heading">
             <h2>Contexto provincial</h2>
             <span>Contratos registrados</span>
@@ -658,14 +686,12 @@ export function TrainingResultsPage() {
             </ul>
           )}
           {regionalContractsSource !== undefined && (
-            <a
+            <ExternalLink
               className="evidence-link"
               href={regionalContractsSource}
-              target="_blank"
-              rel="noreferrer"
             >
               Fuente: Datos Abiertos JCyL
-            </a>
+            </ExternalLink>
           )}
           <p className="evidence-limit">
             Contexto provincial — no específico de esta ocupación. Reúne
@@ -674,7 +700,7 @@ export function TrainingResultsPage() {
         </div>
       </section>
       {educationCenterDirectorySnapshot !== undefined && (
-        <div id="distribucion-centros">
+        <div id="distribucion-centros" tabIndex={-1}>
           <TerritorialDistribution
             centers={territorialCenters}
             sourceUrl={educationCenterDirectorySnapshot.sourceUrl}
@@ -689,7 +715,11 @@ export function TrainingResultsPage() {
           />
         </div>
       )}
-      <section id="salidas-profesionales" className="occupations-section">
+      <section
+        id="salidas-profesionales"
+        className="occupations-section"
+        tabIndex={-1}
+      >
         <h2>Salidas profesionales oficiales</h2>
         <p>
           TodoFP identifica estos perfiles para el título. Describen trabajos a
@@ -714,13 +744,9 @@ export function TrainingResultsPage() {
               </details>
             )}
             <p>
-              <a
-                href={officialProfiles[0]!.sourceUrl}
-                rel="noreferrer"
-                target="_blank"
-              >
+              <ExternalLink href={officialProfiles[0]!.sourceUrl}>
                 Comprobar estas salidas en la ficha oficial de TodoFP
-              </a>
+              </ExternalLink>
             </p>
           </>
         ) : (
@@ -728,7 +754,11 @@ export function TrainingResultsPage() {
         )}
       </section>
       {resolvedOccupations.length > 0 && (
-        <section id="ocupaciones-revisadas" className="occupations-section">
+        <section
+          id="ocupaciones-revisadas"
+          className="occupations-section"
+          tabIndex={-1}
+        >
           <h2>Grupos de ocupación revisados para buscar ofertas</h2>
           <ul className="reviewed-occupation-list">
             {resolvedOccupations.map((occupation) => (
@@ -776,6 +806,7 @@ export function TrainingResultsPage() {
           id="ofertas-relacionadas"
           className="offer-results"
           aria-labelledby="offer-results-title"
+          tabIndex={-1}
         >
           <div className="section-heading">
             <h2 id="offer-results-title">Ofertas relacionadas ahora</h2>

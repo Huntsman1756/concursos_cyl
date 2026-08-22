@@ -6,6 +6,7 @@ import type {
   SepeOccupationMarketResource,
 } from "../../../data/schemas/sepeOccupationMarket";
 import { loadSepeOccupationMarketResource } from "../../data/generatedDataClient";
+import { ExternalLink } from "../../components/ExternalLink";
 import "./occupationMarketEvidence.css";
 
 export interface OccupationMarketEvidenceProps {
@@ -113,8 +114,14 @@ function EvidenceSummary({ record }: { record: SepeOccupationMarket }) {
         </dd>
       </div>
       <div>
-        <dt>Personas contratadas</dt>
-        <dd>{formatNumber(contracts.people)}</dd>
+        <dt>Personas contratadas (dato administrativo)</dt>
+        <dd>
+          {formatNumber(contracts.people)}
+          <span className="occupation-market-evidence__definition">
+            Conteo administrativo publicado por el SEPE; no es un censo de
+            personas únicas ni una medida de vacantes o una predicción.
+          </span>
+        </dd>
       </div>
       <div>
         <dt>Paro registrado</dt>
@@ -234,8 +241,9 @@ export function OccupationMarketEvidence({
       </header>
       <p className="occupation-market-evidence__intro">
         Registros oficiales del SEPE para CNO-11 {cnoCode}. Incluyen contratos
-        registrados y paro registrado; no son vacantes, personas contratadas ni
-        una predicción individual.
+        registrados y paro registrado. Las personas contratadas son un conteo
+        administrativo publicado por el SEPE; no es un censo de personas únicas,
+        una medida de vacantes ni una predicción individual.
       </p>
       {state.status === "loading" && (
         <p role="status" aria-live="polite">
@@ -256,14 +264,9 @@ export function OccupationMarketEvidence({
             no equivale a cero.
           </p>
           <p className="occupation-market-evidence__provenance">
-            <a
-              href={state.resource.coverage.resolverEndpoint}
-              target="_blank"
-              rel="noreferrer"
-            >
+            <ExternalLink href={state.resource.coverage.resolverEndpoint}>
               Fuente oficial SEPE
-              <span className="sr-only"> (abre en una pestaña nueva)</span>
-            </a>
+            </ExternalLink>
           </p>
         </>
       )}
@@ -281,20 +284,15 @@ export function OccupationMarketEvidence({
         <>
           <EvidenceCoverage resource={state.resource} />
           <EvidenceSummary record={state.record} />
-          <p className="occupation-market-evidence__section-label">
+          <h3 className="occupation-market-evidence__section-label">
             Distribución provincial
-          </p>
+          </h3>
           <ProvinceTable record={state.record} />
           <div className="occupation-market-evidence__provenance">
             <p>
-              <a
-                href={state.record.source.url}
-                target="_blank"
-                rel="noreferrer"
-              >
+              <ExternalLink href={state.record.source.url}>
                 Fuente oficial SEPE
-                <span className="sr-only"> (abre en una pestaña nueva)</span>
-              </a>
+              </ExternalLink>
             </p>
             <p>{state.record.source.attribution}</p>
             <p>

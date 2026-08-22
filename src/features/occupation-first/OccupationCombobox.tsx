@@ -115,6 +115,7 @@ export function OccupationCombobox({
   }
 
   const showResults = open && query.trim() !== "";
+  const hasListbox = showResults && results.length > 0;
   return (
     <div className="occupation-combobox">
       <label htmlFor={inputId}>{label}</label>
@@ -127,12 +128,12 @@ export function OccupationCombobox({
         role="combobox"
         autoComplete="off"
         aria-autocomplete="list"
-        aria-expanded={showResults}
-        aria-controls={listboxId}
+        aria-expanded={hasListbox ? true : undefined}
+        aria-controls={hasListbox ? listboxId : undefined}
         aria-describedby={`${inputId}-hint`}
         placeholder="Ej.: programación web"
         aria-activedescendant={
-          showResults && activeIndex >= 0 && results[activeIndex] !== undefined
+          hasListbox && activeIndex >= 0 && results[activeIndex] !== undefined
             ? optionId(results[activeIndex].occupationId)
             : undefined
         }

@@ -54,7 +54,7 @@ export function TrainingRouteCard({
         <p className="relationship-label">
           {officialOutput ? "Salida profesional oficial" : "Relación revisada"}
         </p>
-        <h2>{program.programTitle}</h2>
+        <h3>{program.programTitle}</h3>
         <p>
           {trainingLevelLabel(program.level)} · {program.programKey}
         </p>

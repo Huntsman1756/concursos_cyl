@@ -1,4 +1,5 @@
 import type { TrainingProgram } from "../../../data/schemas/generated";
+import { ExternalLink } from "../../components/ExternalLink";
 import { trainingLevelLabel } from "../../domain/trainingPresentation";
 import {
   formatOutcomeLabel,
@@ -15,6 +16,7 @@ function UnavailableOutcome({ children }: { children: string }) {
   return (
     <section
       id="base-cotizacion-observada"
+      tabIndex={-1}
       className="training-outcome training-outcome--unavailable"
       aria-labelledby="base-cotizacion-observada-heading"
     >
@@ -71,6 +73,7 @@ export function TrainingOutcomeEvidence({
   return (
     <section
       id="base-cotizacion-observada"
+      tabIndex={-1}
       className="training-outcome"
       aria-labelledby={headingId}
     >
@@ -127,10 +130,9 @@ export function TrainingOutcomeEvidence({
           Cohorte {TRAINING_OUTCOME_COHORT}, año {TRAINING_OUTCOME_YEAR}. Copia
           del {formatOutcomeSnapshotDate(outcome.snapshot.snapshotFetchedAt)}.
         </span>
-        <a href={outcome.snapshot.sourceUrl} target="_blank" rel="noreferrer">
+        <ExternalLink href={outcome.snapshot.sourceUrl}>
           Fuente: EDUCAbase
-          <span className="sr-only"> (abre en una pestaña nueva)</span>
-        </a>
+        </ExternalLink>
       </footer>
     </section>
   );
