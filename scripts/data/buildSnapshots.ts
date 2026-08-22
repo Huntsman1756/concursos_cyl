@@ -32,8 +32,6 @@ import {
   OccupationsSchema,
   TrainingOccupationLinksSchema,
 } from "../../data/schemas/curatedMappings";
-import { FP_OFFICIAL_ALIAS_PASS_BASELINE_SNAPSHOT_ID } from "../../data/schemas/fpOfficialAliasPass";
-import { FP_ONE_WORD_PUBLICATION_REVIEW_SNAPSHOT } from "../../data/schemas/fpOneWordPublicationReview";
 import {
   EducationCenterDirectoryResourceSchema,
   EducationCenterDirectorySourceRecordSchema,
@@ -151,6 +149,7 @@ import {
   type SnapshotCounts,
 } from "./qualityGates";
 import { SOURCE_CONFIG } from "./sourceConfig";
+import { loadRuntimeSnapshotRetention } from "../release/runtimeSnapshotRetention";
 
 /** Read-only migration for snapshots published before the v1 compatibility fix. */
 const TransitionalJobOfferSchema = z
@@ -2208,188 +2207,6 @@ export const FP_COVERAGE_WAVE_3_VERSIONED_SNAPSHOT_IDS = [
   FP_COVERAGE_WAVE_3_EVIDENCE_SNAPSHOT_ID,
   "20260822082339635-2706ba4b5a53",
 ] as const;
-const HISTORICAL_PINNED_SNAPSHOT_IDS = [
-  FP_OFFICIAL_ALIAS_PASS_BASELINE_SNAPSHOT_ID,
-  FP_ONE_WORD_PUBLICATION_REVIEW_SNAPSHOT.snapshotId,
-  ...FP_COVERAGE_WAVE_3_VERSIONED_SNAPSHOT_IDS,
-] as const;
-const FP_COVERAGE_PILOT_RESULTS_PATH = [
-  "analysis",
-  "fp_coverage_pilot_results.json",
-] as const;
-const FP_COVERAGE_EXPANSION_DIRECTORY = [
-  "analysis",
-  "fp_coverage_expansion",
-] as const;
-const FP_MARGINAL_ALIAS_REVIEW_PATH = [
-  "analysis",
-  "fp_marginal_alias_review.json",
-] as const;
-const FP_SPECIFIC_EVIDENCE_REVIEW_PATH = [
-  "analysis",
-  "fp_specific_evidence_review.json",
-] as const;
-const FP_OFFER_SNAPSHOT_REFERENCE_PATHS = [
-  ["analysis", "fp_offer_alias_candidates.json"],
-  ["analysis", "fp_mention_offer_queue.json"],
-] as const;
-const CONTEST_SNAPSHOT_REFERENCE_PATHS = [
-  ["docs", "contest", "coverage-freeze.json"],
-  ["docs", "contest", "release-evidence.json"],
-] as const;
-
-const MarginalAliasSnapshotReferenceSchema = z
-  .object({
-    snapshotId: z.string().regex(IMMUTABLE_SNAPSHOT_ID_PATTERN),
-  })
-  .passthrough();
-
-const ContestSnapshotReferenceSchema = z
-  .object({
-    manifest: z
-      .object({
-        snapshotId: z.string().regex(IMMUTABLE_SNAPSHOT_ID_PATTERN),
-      })
-      .passthrough(),
-  })
-  .passthrough();
-
-const ExpansionSnapshotReferenceSchema = z.discriminatedUnion("state", [
-  z
-    .object({
-      state: z.enum(["completed", "deferred", "discarded"]),
-      snapshotId: z.string().regex(IMMUTABLE_SNAPSHOT_ID_PATTERN),
-    })
-    .passthrough(),
-  z
-    .object({
-      state: z.enum(["not_started", "in_progress"]),
-      snapshotId: z.string().regex(IMMUTABLE_SNAPSHOT_ID_PATTERN).optional(),
-    })
-    .passthrough(),
-]);
-
-const PilotSnapshotReferenceSchema = z
-  .object({
-    state: z.string(),
-    snapshotCoverage: z
-      .object({
-        status: z.literal("verified"),
-        snapshotId: z.string().regex(IMMUTABLE_SNAPSHOT_ID_PATTERN),
-      })
-      .passthrough()
-      .optional(),
-  })
-  .passthrough();
-
-const PilotSnapshotReferencesSchema = z
-  .object({
-    attempts: z.array(PilotSnapshotReferenceSchema),
-  })
-  .passthrough();
-
-async function completedPilotSnapshotIds(root: string): Promise<Set<string>> {
-  const path = resolve(root, ...FP_COVERAGE_PILOT_RESULTS_PATH);
-  if (!(await pathExists(path))) return new Set();
-
-  const results = PilotSnapshotReferencesSchema.parse(
-    JSON.parse(await readFile(path, "utf8")),
-  );
-  return new Set(
-    results.attempts.flatMap((attempt) =>
-      attempt.state === "completed" &&
-      attempt.snapshotCoverage?.status === "verified"
-        ? [attempt.snapshotCoverage.snapshotId]
-        : [],
-    ),
-  );
-}
-
-async function marginalAliasReviewSnapshotIds(
-  root: string,
-): Promise<Set<string>> {
-  const path = resolve(root, ...FP_MARGINAL_ALIAS_REVIEW_PATH);
-  if (!(await pathExists(path))) return new Set();
-
-  const review = MarginalAliasSnapshotReferenceSchema.parse(
-    JSON.parse(await readFile(path, "utf8")),
-  );
-  return new Set([review.snapshotId]);
-}
-
-async function specificEvidenceReviewSnapshotIds(
-  root: string,
-): Promise<Set<string>> {
-  const path = resolve(root, ...FP_SPECIFIC_EVIDENCE_REVIEW_PATH);
-  if (!(await pathExists(path))) return new Set();
-
-  const review = MarginalAliasSnapshotReferenceSchema.parse(
-    JSON.parse(await readFile(path, "utf8")),
-  );
-  return new Set([review.snapshotId]);
-}
-
-async function offerAnalysisSnapshotIds(root: string): Promise<Set<string>> {
-  const snapshotIds = new Set<string>();
-  for (const segments of FP_OFFER_SNAPSHOT_REFERENCE_PATHS) {
-    const path = resolve(root, ...segments);
-    if (!(await pathExists(path))) continue;
-    const artifact = MarginalAliasSnapshotReferenceSchema.parse(
-      JSON.parse(await readFile(path, "utf8")),
-    );
-    snapshotIds.add(artifact.snapshotId);
-  }
-  return snapshotIds;
-}
-
-async function contestEvidenceSnapshotIds(root: string): Promise<Set<string>> {
-  const snapshotIds = new Set<string>();
-  for (const segments of CONTEST_SNAPSHOT_REFERENCE_PATHS) {
-    const path = resolve(root, ...segments);
-    if (!(await pathExists(path))) continue;
-    const artifact = ContestSnapshotReferenceSchema.parse(
-      JSON.parse(await readFile(path, "utf8")),
-    );
-    snapshotIds.add(artifact.manifest.snapshotId);
-  }
-  return snapshotIds;
-}
-
-async function terminalExpansionSnapshotIds(
-  root: string,
-): Promise<Set<string>> {
-  const directory = resolve(root, ...FP_COVERAGE_EXPANSION_DIRECTORY);
-  if (!(await pathExists(directory))) return new Set();
-  await assertPhysicalPath(root, directory);
-
-  const entries = (await readdir(directory, { withFileTypes: true }))
-    .filter((entry) => entry.isFile() && entry.name.endsWith(".json"))
-    .toSorted((left, right) => compareCanonicalText(left.name, right.name));
-  const snapshotIds = new Set<string>();
-
-  for (const entry of entries) {
-    const path = resolve(directory, entry.name);
-    try {
-      await assertPhysicalPath(root, path);
-      const attempt = ExpansionSnapshotReferenceSchema.parse(
-        JSON.parse(await readFile(path, "utf8")),
-      );
-      if (
-        attempt.state === "completed" ||
-        attempt.state === "deferred" ||
-        attempt.state === "discarded"
-      ) {
-        snapshotIds.add(attempt.snapshotId);
-      }
-    } catch (error) {
-      throw new Error(`Invalid expansion file ${entry.name}.`, {
-        cause: error,
-      });
-    }
-  }
-
-  return snapshotIds;
-}
 
 async function completedPilotSnapshotDistributionOptions(
   root: string,
@@ -2399,29 +2216,21 @@ async function completedPilotSnapshotDistributionOptions(
   historicalSnapshotDirectories: string[];
 }> {
   const snapshotsRoot = resolve(target, "snapshots");
-  const retainedSnapshotIds = (await pathExists(snapshotsRoot))
-    ? (await readdir(snapshotsRoot, { withFileTypes: true }))
-        .filter(
-          (entry) =>
-            entry.isDirectory() &&
-            IMMUTABLE_SNAPSHOT_ID_PATTERN.test(entry.name),
-        )
-        .map((entry) => entry.name)
-    : [];
+  const retention = await loadRuntimeSnapshotRetention(root, snapshotsRoot);
+  const active = await loadPreviousSnapshot(root, target);
+  const activeSnapshotIds =
+    active === undefined
+      ? []
+      : [...manifestAddressedSnapshotDirectories(target, active.manifest)].map(
+          (directory) => basename(directory),
+        );
   const historicalSnapshotIds = new Set([
-    ...(await completedPilotSnapshotIds(root)),
-    ...(await terminalExpansionSnapshotIds(root)),
-    ...(await marginalAliasReviewSnapshotIds(root)),
-    ...(await specificEvidenceReviewSnapshotIds(root)),
-    ...(await offerAnalysisSnapshotIds(root)),
-    ...(await contestEvidenceSnapshotIds(root)),
-    ...HISTORICAL_PINNED_SNAPSHOT_IDS,
-    ...retainedSnapshotIds,
+    ...retention.snapshotIds,
+    ...activeSnapshotIds,
   ]);
   return {
-    // The Task 5 evidence snapshot is deliberately byte-preserved even after
-    // its superseded relation set is no longer current. It is excluded from
-    // revocation scanning while the release evidence retains the artifact.
+    // The Task 5 versioned snapshots remain outside revocation scanning while
+    // their immutable bytes are retained by the release configuration.
     ignoredDirectories: FP_COVERAGE_WAVE_3_VERSIONED_SNAPSHOT_IDS.map(
       (snapshotId) => resolve(target, "snapshots", snapshotId),
     ),
@@ -2475,6 +2284,7 @@ async function enforceSnapshotRetention(
     return;
   }
   await assertPhysicalPath(root, snapshotsRoot);
+  const retention = await loadRuntimeSnapshotRetention(root, snapshotsRoot);
   const immutableSnapshotNames = (
     await readdir(snapshotsRoot, { withFileTypes: true })
   )
@@ -2486,13 +2296,7 @@ async function enforceSnapshotRetention(
     .sort((left, right) => compareCanonicalText(right, left));
   const retained = new Set([
     currentSnapshotId,
-    ...(await completedPilotSnapshotIds(root)),
-    ...(await terminalExpansionSnapshotIds(root)),
-    ...(await marginalAliasReviewSnapshotIds(root)),
-    ...(await specificEvidenceReviewSnapshotIds(root)),
-    ...(await offerAnalysisSnapshotIds(root)),
-    ...(await contestEvidenceSnapshotIds(root)),
-    ...HISTORICAL_PINNED_SNAPSHOT_IDS,
+    ...retention.snapshotIds,
     ...immutableSnapshotNames
       .filter(
         (snapshotId) =>

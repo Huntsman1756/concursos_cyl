@@ -20,6 +20,8 @@ import {
 } from "node:path";
 import { pathToFileURL } from "node:url";
 
+import { loadRuntimeSnapshotRetention } from "./runtimeSnapshotRetention";
+
 const SNAPSHOT_ID_EXACT = /^\d{17}-[a-f0-9]{12}$/u;
 const SNAPSHOT_RESOURCE_PATH =
   /^\/data\/v1\/snapshots\/(\d{17}-[a-f0-9]{12})\/([^/?#\s"'\\]+)$/u;
@@ -29,15 +31,6 @@ const SNAPSHOT_PATH_MARKER = "/data/v1/snapshots/";
 const SNAPSHOT_PATH_MARKER_ENCODED =
   /(?:%2f|\/)data(?:%2f|\/)v1(?:%2f|\/)snapshots(?:%2f|\/)/iu;
 const SAFE_RESOURCE_FILENAME = /^[A-Za-z0-9][A-Za-z0-9._-]*$/u;
-const TERMINAL_EVIDENCE_PATHS = [
-  "docs/contest/coverage-freeze.json",
-  "docs/contest/release-evidence.json",
-] as const;
-
-interface SnapshotReference {
-  resourceName: string;
-  snapshotId: string;
-}
 
 export interface PrepareRuntimeDataOptions {
   root: string;
@@ -129,20 +122,20 @@ async function assertSafeTree(
 
 function snapshotReferenceFromString(
   value: string,
-  evidencePath: string,
-): SnapshotReference | undefined {
+  manifestPath: string,
+): { resourceName: string; snapshotId: string } | undefined {
   const hasEncodedMarker = SNAPSHOT_PATH_MARKER_ENCODED.test(value);
   if (!value.includes(SNAPSHOT_PATH_MARKER)) {
     if (hasEncodedMarker) {
       throw new Error(
-        `Malformed runtime snapshot resource path in ${evidencePath}: ${value}.`,
+        `Malformed runtime snapshot resource path in ${manifestPath}: ${value}.`,
       );
     }
     return undefined;
   }
   if (/(?:^|\/)\.\.?(?:\/|$)|\\|%2e|%2f|%5c/iu.test(value)) {
     throw new Error(
-      `Malformed runtime snapshot resource path in ${evidencePath}: ${value}.`,
+      `Malformed runtime snapshot resource path in ${manifestPath}: ${value}.`,
     );
   }
 
@@ -153,7 +146,7 @@ function snapshotReferenceFromString(
       url = new URL(value);
     } catch (error) {
       throw new Error(
-        `Malformed runtime snapshot resource path in ${evidencePath}: ${value}.`,
+        `Malformed runtime snapshot resource path in ${manifestPath}: ${value}.`,
         { cause: error },
       );
     }
@@ -167,7 +160,7 @@ function snapshotReferenceFromString(
       value.includes("#")
     ) {
       throw new Error(
-        `Malformed runtime snapshot resource path in ${evidencePath}: ${value}.`,
+        `Malformed runtime snapshot resource path in ${manifestPath}: ${value}.`,
       );
     }
     path = url.pathname;
@@ -175,74 +168,20 @@ function snapshotReferenceFromString(
 
   if (SNAPSHOT_PATH_WITHOUT_RESOURCE.test(path)) {
     throw new Error(
-      `Runtime evidence path is missing a resource filename: ${value}.`,
+      `Runtime manifest path is missing a resource filename: ${value}.`,
     );
   }
   const match = SNAPSHOT_RESOURCE_PATH.exec(path);
   if (!match || !SAFE_RESOURCE_FILENAME.test(match[2]!)) {
     throw new Error(
-      `Malformed runtime snapshot resource path in ${evidencePath}: ${value}.`,
+      `Malformed runtime snapshot resource path in ${manifestPath}: ${value}.`,
     );
   }
   return { resourceName: match[2]!, snapshotId: match[1]! };
 }
-
-function collectSnapshotReferences(
-  value: unknown,
-  evidencePath: string,
-  references: SnapshotReference[],
-): void {
-  if (typeof value === "string") {
-    const reference = snapshotReferenceFromString(value, evidencePath);
-    if (reference) references.push(reference);
-    return;
-  }
-  if (Array.isArray(value)) {
-    for (const item of value) {
-      collectSnapshotReferences(item, evidencePath, references);
-    }
-    return;
-  }
-  if (value !== null && typeof value === "object") {
-    for (const item of Object.values(value)) {
-      collectSnapshotReferences(item, evidencePath, references);
-    }
-  }
-}
-
-async function referencedSnapshotResources(
-  root: string,
-): Promise<SnapshotReference[]> {
-  const references: SnapshotReference[] = [];
-  for (const relativePath of TERMINAL_EVIDENCE_PATHS) {
-    let content: string;
-    try {
-      content = await readFile(resolve(root, relativePath), "utf8");
-    } catch (error) {
-      if ((error as NodeJS.ErrnoException).code === "ENOENT") {
-        throw new Error(
-          `Required runtime evidence file is missing: ${relativePath}.`,
-          { cause: error },
-        );
-      }
-      throw error;
-    }
-    let document: unknown;
-    try {
-      document = JSON.parse(content) as unknown;
-    } catch (error) {
-      throw new Error(`Invalid runtime evidence JSON: ${relativePath}.`, {
-        cause: error,
-      });
-    }
-    collectSnapshotReferences(document, relativePath, references);
-  }
-  return references;
-}
-
-async function assertReferencedResource(
+async function assertManifestResource(
   snapshotsSource: string,
-  reference: SnapshotReference,
+  reference: { resourceName: string; snapshotId: string },
 ): Promise<void> {
   const snapshotDirectory = resolve(snapshotsSource, reference.snapshotId);
   const resourcePath = resolve(snapshotDirectory, reference.resourceName);
@@ -275,9 +214,10 @@ async function assertReferencedResource(
   }
 }
 
-async function activeSnapshotId(
-  source: string,
-): Promise<{ references: SnapshotReference[]; snapshotId: string }> {
+async function activeSnapshotId(source: string): Promise<{
+  references: Array<{ resourceName: string; snapshotId: string }>;
+  snapshotId: string;
+}> {
   const manifest = JSON.parse(
     await readFile(join(source, "v1", "manifest.json"), "utf8"),
   ) as {
@@ -285,7 +225,7 @@ async function activeSnapshotId(
     resourceSnapshots?: unknown;
   };
   const addressedIds = new Set<string>();
-  const references: SnapshotReference[] = [];
+  const references: Array<{ resourceName: string; snapshotId: string }> = [];
   if (manifest.snapshotId !== undefined) {
     if (
       typeof manifest.snapshotId !== "string" ||
@@ -429,24 +369,28 @@ export async function prepareRuntimeData(
     throw new Error(`Active runtime snapshot is missing: ${active}.`);
   }
 
-  const referencedResources = await referencedSnapshotResources(resolve(root));
-  const allReferencedResources = [
-    ...activeManifestReferences,
-    ...referencedResources,
-  ];
   const referenced = new Set(
-    allReferencedResources.map((reference) => reference.snapshotId),
+    activeManifestReferences.map((reference) => reference.snapshotId),
   );
-  for (const reference of allReferencedResources) {
+  const retention = await loadRuntimeSnapshotRetention(
+    resolve(root),
+    snapshotsSource,
+  );
+  for (const reference of activeManifestReferences) {
     if (!availableSnapshotIds.has(reference.snapshotId)) {
       throw new Error(
         `Referenced runtime snapshot is missing: ${reference.snapshotId}.`,
       );
     }
-    await assertReferencedResource(snapshotsSource, reference);
+    await assertManifestResource(snapshotsSource, reference);
   }
   const snapshotIds = [...availableSnapshotIds]
-    .filter((snapshotId) => snapshotId === active || referenced.has(snapshotId))
+    .filter(
+      (snapshotId) =>
+        snapshotId === active ||
+        referenced.has(snapshotId) ||
+        retention.snapshotIds.includes(snapshotId),
+    )
     .sort();
   await assertSafeTree(sourcePath, "runtime source", resolve(snapshotsSource));
   for (const snapshotId of snapshotIds) {

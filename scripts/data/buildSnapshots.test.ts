@@ -42,6 +42,18 @@ import { assertPublicSnapshotDistribution } from "./validatePublicDistribution";
 
 const temporaryRoots: string[] = [];
 
+async function setRuntimeSnapshotRetention(
+  root: string,
+  snapshotIds: readonly string[],
+): Promise<void> {
+  await mkdir(join(root, "config"), { recursive: true });
+  await writeFile(
+    join(root, "config", "runtime-snapshot-retention.json"),
+    JSON.stringify({ schemaVersion: "1.0.0", snapshotIds }),
+    "utf8",
+  );
+}
+
 async function temporaryRoot(): Promise<string> {
   const physicalTemporaryDirectory = await realpath(tmpdir());
   const root = await mkdtemp(
@@ -78,6 +90,7 @@ async function temporaryRoot(): Promise<string> {
     ) + "\n",
     "utf8",
   );
+  await setRuntimeSnapshotRetention(root, []);
   temporaryRoots.push(root);
   return root;
 }
@@ -136,6 +149,9 @@ async function pinCompletedPilotSnapshot(
   root: string,
   snapshotResourcePath: string,
 ): Promise<void> {
+  await setRuntimeSnapshotRetention(root, [
+    snapshotResourcePath.split("/").at(-2)!,
+  ]);
   await mkdir(join(root, "analysis"), { recursive: true });
   await writeFile(
     join(root, "analysis", "fp_coverage_pilot_results.json"),
@@ -2689,6 +2705,9 @@ describe("buildSnapshots", { timeout: BUILD_SNAPSHOTS_TEST_TIMEOUT }, () => {
         (await readManifest(root)).resourceSnapshots.programs.resourcePath,
       );
       if (day === 1) {
+        await setRuntimeSnapshotRetention(root, [
+          snapshotPaths[0]!.split("/").at(-2)!,
+        ]);
         await mkdir(join(root, "analysis"), { recursive: true });
         await writeFile(
           join(root, "analysis", "fp_coverage_pilot_results.json"),
@@ -2747,6 +2766,9 @@ describe("buildSnapshots", { timeout: BUILD_SNAPSHOTS_TEST_TIMEOUT }, () => {
       FP_OFFICIAL_ALIAS_PASS_BASELINE_SNAPSHOT_ID,
     );
     await cp(initialSnapshot, pinnedBaseline, { recursive: true });
+    await setRuntimeSnapshotRetention(root, [
+      FP_OFFICIAL_ALIAS_PASS_BASELINE_SNAPSHOT_ID,
+    ]);
 
     for (let day = 2; day <= 5; day += 1) {
       await buildSnapshots({
@@ -2777,6 +2799,9 @@ describe("buildSnapshots", { timeout: BUILD_SNAPSHOTS_TEST_TIMEOUT }, () => {
       FP_ONE_WORD_PUBLICATION_REVIEW_SNAPSHOT.snapshotId,
     );
     await cp(initialSnapshot, pinnedSnapshot, { recursive: true });
+    await setRuntimeSnapshotRetention(root, [
+      FP_ONE_WORD_PUBLICATION_REVIEW_SNAPSHOT.snapshotId,
+    ]);
 
     for (let day = 2; day <= 5; day += 1) {
       await buildSnapshots({
@@ -2805,6 +2830,9 @@ describe("buildSnapshots", { timeout: BUILD_SNAPSHOTS_TEST_TIMEOUT }, () => {
     for (const pinnedSnapshot of pinnedSnapshots) {
       await cp(initialSnapshot, pinnedSnapshot, { recursive: true });
     }
+    await setRuntimeSnapshotRetention(root, [
+      ...FP_COVERAGE_WAVE_3_VERSIONED_SNAPSHOT_IDS,
+    ]);
     const pinnedOccupations = await readFile(
       join(pinnedSnapshots[0]!, "occupations.json"),
     );
@@ -2835,6 +2863,7 @@ describe("buildSnapshots", { timeout: BUILD_SNAPSHOTS_TEST_TIMEOUT }, () => {
       ),
     );
     const snapshotId = basename(initialSnapshot);
+    await setRuntimeSnapshotRetention(root, [snapshotId]);
     await mkdir(join(root, "analysis"), { recursive: true });
     await writeFile(
       join(root, "analysis", "fp_marginal_alias_review.json"),
@@ -2863,6 +2892,7 @@ describe("buildSnapshots", { timeout: BUILD_SNAPSHOTS_TEST_TIMEOUT }, () => {
       ),
     );
     const snapshotId = basename(initialSnapshot);
+    await setRuntimeSnapshotRetention(root, [snapshotId]);
     await mkdir(join(root, "analysis"), { recursive: true });
     await writeFile(
       join(root, "analysis", "fp_specific_evidence_review.json"),
@@ -2892,6 +2922,7 @@ describe("buildSnapshots", { timeout: BUILD_SNAPSHOTS_TEST_TIMEOUT }, () => {
           (await readManifest(root)).resourceSnapshots.programs.resourcePath,
         ),
       );
+      await setRuntimeSnapshotRetention(root, [basename(initialSnapshot)]);
       await mkdir(join(root, "analysis"), { recursive: true });
       await writeFile(
         join(root, "analysis", artifactName),
@@ -2922,6 +2953,7 @@ describe("buildSnapshots", { timeout: BUILD_SNAPSHOTS_TEST_TIMEOUT }, () => {
           (await readManifest(root)).resourceSnapshots.programs.resourcePath,
         ),
       );
+      await setRuntimeSnapshotRetention(root, [basename(initialSnapshot)]);
       await mkdir(join(root, "docs", "contest"), { recursive: true });
       await writeFile(
         join(root, "docs", "contest", artifactName),
@@ -3273,6 +3305,7 @@ describe("buildSnapshots", { timeout: BUILD_SNAPSHOTS_TEST_TIMEOUT }, () => {
     ).resourceSnapshots.programs.resourcePath
       .split("/")
       .at(-2)!;
+    await setRuntimeSnapshotRetention(root, [snapshotId]);
     const expansionDirectory = join(root, "analysis", "fp_coverage_expansion");
     await mkdir(expansionDirectory, { recursive: true });
     for (const [index, state] of [
@@ -3342,16 +3375,27 @@ describe("buildSnapshots", { timeout: BUILD_SNAPSHOTS_TEST_TIMEOUT }, () => {
       "invalid snapshot ID",
       JSON.stringify({ state: "completed", snapshotId: "not-a-snapshot" }),
     ],
-  ])("rejects an FP expansion with %s", async (_label, contents) => {
-    const root = await temporaryRoot();
-    const expansionDirectory = join(root, "analysis", "fp_coverage_expansion");
-    await mkdir(expansionDirectory, { recursive: true });
-    await writeFile(join(expansionDirectory, "INVALID.json"), contents, "utf8");
+  ])(
+    "ignores malformed FP expansion analysis with %s",
+    async (_label, contents) => {
+      const root = await temporaryRoot();
+      const expansionDirectory = join(
+        root,
+        "analysis",
+        "fp_coverage_expansion",
+      );
+      await mkdir(expansionDirectory, { recursive: true });
+      await writeFile(
+        join(expansionDirectory, "INVALID.json"),
+        contents,
+        "utf8",
+      );
 
-    await expect(
-      buildSnapshots({ rootDirectory: root, ...fixedOptions }),
-    ).rejects.toThrow(/Invalid expansion file INVALID\.json/u);
-  });
+      await expect(
+        buildSnapshots({ rootDirectory: root, ...fixedOptions }),
+      ).resolves.toBeUndefined();
+    },
+  );
 
   it("removes a crash orphan newer than the committed manifest on startup", async () => {
     const root = await temporaryRoot();

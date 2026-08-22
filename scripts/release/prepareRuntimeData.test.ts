@@ -24,7 +24,22 @@ async function writeJson(path: string, value: unknown): Promise<void> {
   await writeFile(path, `${JSON.stringify(value)}\n`, "utf8");
 }
 
-async function createMinimalRuntimeFixture(evidencePath: string) {
+async function writeRetentionConfig(
+  root: string,
+  snapshotIds: readonly string[] = [],
+): Promise<void> {
+  await writeJson(join(root, "config", "runtime-snapshot-retention.json"), {
+    schemaVersion: "1.0.0",
+    snapshotIds,
+  });
+  for (const snapshotId of snapshotIds) {
+    await mkdir(join(root, "public", "data", "v1", "snapshots", snapshotId), {
+      recursive: true,
+    });
+  }
+}
+
+async function createMinimalRuntimeFixture(manifestResourcePath?: string) {
   const root = await mkdtemp(join(tmpdir(), "salida-runtime-data-"));
   const source = join(root, "public", "data");
   const target = join(root, "dist", "data");
@@ -32,22 +47,20 @@ async function createMinimalRuntimeFixture(evidencePath: string) {
 
   await writeJson(join(source, "v1", "manifest.json"), {
     snapshotId: active,
-    resourceSnapshots: {},
+    resourceSnapshots:
+      manifestResourcePath === undefined
+        ? {}
+        : { programs: { resourcePath: manifestResourcePath } },
   });
   await writeJson(join(source, "v1", "programs.json"), []);
   await writeJson(join(source, "v1", "snapshots", active, "programs.json"), []);
-  await writeJson(join(root, "docs", "contest", "coverage-freeze.json"), {
-    resourcePath: evidencePath,
-  });
-  await writeJson(join(root, "docs", "contest", "release-evidence.json"), {
-    logicalResourcePath: `/data/v1/snapshots/${active}/programs.json`,
-  });
+  await writeRetentionConfig(root);
 
   return { active, root, source, target };
 }
 
 describe("prepareRuntimeData", () => {
-  it("retains terminal evidence snapshots and ignores bare IDs elsewhere", async () => {
+  it("retains configured snapshots and ignores bare IDs elsewhere", async () => {
     const root = await mkdtemp(join(tmpdir(), "salida-runtime-data-"));
     const source = join(root, "public", "data");
     const target = join(root, "dist", "data");
@@ -56,6 +69,8 @@ describe("prepareRuntimeData", () => {
     const releaseEvidence = "20260821160000000-222222222222";
     const bareAnalysisId = "20260101000000000-000000000000";
     const unreferenced = "20260821144337486-a56e3eeaffa6";
+
+    await writeRetentionConfig(root, [coverageFreeze]);
 
     await writeJson(join(source, "v1", "manifest.json"), {
       snapshotId: active,
@@ -114,15 +129,10 @@ describe("prepareRuntimeData", () => {
 
     const result = await prepareRuntimeData({ root, source, target });
 
-    expect(result.snapshotIds).toEqual([
-      active,
-      coverageFreeze,
-      releaseEvidence,
-    ]);
+    expect(result.snapshotIds).toEqual([active, coverageFreeze]);
     expect(await readdir(join(target, "v1", "snapshots"))).toEqual([
       active,
       coverageFreeze,
-      releaseEvidence,
     ]);
     expect(
       JSON.parse(await readFile(join(target, "v1", "programs.json"), "utf8")),
@@ -138,6 +148,8 @@ describe("prepareRuntimeData", () => {
     const target = join(root, "dist", "data");
     const active = "20260821144454118-a56e3eeaffa6";
 
+    await writeRetentionConfig(root);
+
     await writeJson(join(source, "v1", "manifest.json"), {
       snapshotId: active,
       resourceSnapshots: {},
@@ -146,8 +158,6 @@ describe("prepareRuntimeData", () => {
       join(source, "v1", "snapshots", active, "programs.json"),
       [],
     );
-    await writeJson(join(root, "docs", "contest", "coverage-freeze.json"), {});
-    await writeJson(join(root, "docs", "contest", "release-evidence.json"), {});
     await writeJson(join(target, "stale.json"), { stale: true });
 
     await prepareRuntimeData({ root, source, target });
@@ -216,36 +226,59 @@ describe("prepareRuntimeData", () => {
     ).toBe("[]\n");
   });
 
-  it("rejects a missing terminal evidence file", async () => {
+  it("ignores contest documents when selecting configured snapshots", async () => {
     const root = await mkdtemp(join(tmpdir(), "salida-runtime-data-"));
     const source = join(root, "public", "data");
     const target = join(root, "dist", "data");
     const active = "20260821144454118-a56e3eeaffa6";
+    const retained = "20260822082339635-2706ba4b5a53";
+    const evidenceA = "20260821120933391-9bd4488f9029";
+    const evidenceB = "20260821144454118-a56e3eeaffa6";
 
+    await writeRetentionConfig(root, [retained]);
     await writeJson(join(source, "v1", "manifest.json"), {
       snapshotId: active,
       resourceSnapshots: {},
     });
-    await writeJson(
-      join(source, "v1", "snapshots", active, "programs.json"),
-      [],
-    );
-    await writeJson(join(root, "docs", "contest", "coverage-freeze.json"), {
-      resourcePath: `/data/v1/snapshots/${active}/programs.json`,
+    await writeJson(join(source, "v1", "programs.json"), [{ id: "flat" }]);
+    for (const snapshotId of [active, retained, evidenceA, evidenceB]) {
+      await writeJson(
+        join(source, "v1", "snapshots", snapshotId, "programs.json"),
+        [{ id: snapshotId }],
+      );
+    }
+    await writeJson(join(root, "docs", "contest", "release-evidence.json"), {
+      manifest: { snapshotId: evidenceA },
     });
 
-    await expect(prepareRuntimeData({ root, source, target })).rejects.toThrow(
-      "docs/contest/release-evidence.json",
+    const before = await prepareRuntimeData({ root, source, target });
+    const beforeBytes = await readFile(
+      join(target, "v1", "programs.json"),
+      "utf8",
+    );
+    await writeJson(join(root, "docs", "contest", "release-evidence.json"), {
+      manifest: { snapshotId: evidenceB },
+    });
+    const after = await prepareRuntimeData({ root, source, target });
+
+    expect(before.snapshotIds).toEqual([active, retained]);
+    expect(after.snapshotIds).toEqual(before.snapshotIds);
+    expect(await readFile(join(target, "v1", "programs.json"), "utf8")).toBe(
+      beforeBytes,
     );
   });
 
-  it("rejects a terminal evidence snapshot that is unavailable", async () => {
+  it("rejects a configured snapshot directory that is unavailable", async () => {
     const root = await mkdtemp(join(tmpdir(), "salida-runtime-data-"));
     const source = join(root, "public", "data");
     const target = join(root, "dist", "data");
     const active = "20260821144454118-a56e3eeaffa6";
     const missing = "20260821150000000-111111111111";
 
+    await writeJson(join(root, "config", "runtime-snapshot-retention.json"), {
+      schemaVersion: "1.0.0",
+      snapshotIds: [missing],
+    });
     await writeJson(join(source, "v1", "manifest.json"), {
       snapshotId: active,
       resourceSnapshots: {},
@@ -254,68 +287,24 @@ describe("prepareRuntimeData", () => {
       join(source, "v1", "snapshots", active, "programs.json"),
       [],
     );
-    await writeJson(join(root, "docs", "contest", "coverage-freeze.json"), {
-      resourcePath: `/data/v1/snapshots/${missing}/programs.json`,
-    });
-    await writeJson(join(root, "docs", "contest", "release-evidence.json"), {
-      logicalResourcePath: `/data/v1/snapshots/${active}/programs.json`,
-    });
 
     await expect(prepareRuntimeData({ root, source, target })).rejects.toThrow(
-      `Referenced runtime snapshot is missing: ${missing}`,
+      missing,
     );
   });
 
-  it("rejects an evidence path without a resource filename", async () => {
-    const root = await mkdtemp(join(tmpdir(), "salida-runtime-data-"));
-    const source = join(root, "public", "data");
-    const target = join(root, "dist", "data");
-    const active = "20260821144454118-a56e3eeaffa6";
-
-    await writeJson(join(source, "v1", "manifest.json"), {
-      snapshotId: active,
-      resourceSnapshots: {},
-    });
-    await writeJson(
-      join(source, "v1", "snapshots", active, "programs.json"),
-      [],
+  it("rejects a manifest resource file that is missing", async () => {
+    const fixture = await createMinimalRuntimeFixture(
+      `/data/v1/snapshots/20260821144454118-a56e3eeaffa6/missing.json`,
     );
-    await writeJson(join(root, "docs", "contest", "coverage-freeze.json"), {
-      resourcePath: `/data/v1/snapshots/${active}`,
-    });
-    await writeJson(join(root, "docs", "contest", "release-evidence.json"), {
-      logicalResourcePath: `/data/v1/snapshots/${active}/programs.json`,
-    });
 
-    await expect(prepareRuntimeData({ root, source, target })).rejects.toThrow(
-      "missing a resource filename",
-    );
-  });
-
-  it("rejects a referenced resource file that is missing", async () => {
-    const root = await mkdtemp(join(tmpdir(), "salida-runtime-data-"));
-    const source = join(root, "public", "data");
-    const target = join(root, "dist", "data");
-    const active = "20260821144454118-a56e3eeaffa6";
-
-    await writeJson(join(source, "v1", "manifest.json"), {
-      snapshotId: active,
-      resourceSnapshots: {},
-    });
-    await writeJson(
-      join(source, "v1", "snapshots", active, "programs.json"),
-      [],
-    );
-    await writeJson(join(root, "docs", "contest", "coverage-freeze.json"), {
-      resourcePath: `/data/v1/snapshots/${active}/missing.json`,
-    });
-    await writeJson(join(root, "docs", "contest", "release-evidence.json"), {
-      logicalResourcePath: `/data/v1/snapshots/${active}/programs.json`,
-    });
-
-    await expect(prepareRuntimeData({ root, source, target })).rejects.toThrow(
-      "Referenced runtime resource is missing",
-    );
+    await expect(
+      prepareRuntimeData({
+        root: fixture.root,
+        source: fixture.source,
+        target: fixture.target,
+      }),
+    ).rejects.toThrow("Referenced runtime resource is missing");
   });
 
   it("rejects an active manifest resource file that is missing", async () => {
@@ -340,61 +329,6 @@ describe("prepareRuntimeData", () => {
     ).rejects.toThrow("Referenced runtime resource is missing");
   });
 
-  it("rejects malformed terminal evidence JSON", async () => {
-    const root = await mkdtemp(join(tmpdir(), "salida-runtime-data-"));
-    const source = join(root, "public", "data");
-    const target = join(root, "dist", "data");
-    const active = "20260821144454118-a56e3eeaffa6";
-
-    await writeJson(join(source, "v1", "manifest.json"), {
-      snapshotId: active,
-      resourceSnapshots: {},
-    });
-    await writeJson(
-      join(source, "v1", "snapshots", active, "programs.json"),
-      [],
-    );
-    await mkdir(join(root, "docs", "contest"), { recursive: true });
-    await writeFile(
-      join(root, "docs", "contest", "coverage-freeze.json"),
-      "{ malformed\n",
-      "utf8",
-    );
-    await writeJson(join(root, "docs", "contest", "release-evidence.json"), {
-      logicalResourcePath: `/data/v1/snapshots/${active}/programs.json`,
-    });
-
-    await expect(prepareRuntimeData({ root, source, target })).rejects.toThrow(
-      "Invalid runtime evidence JSON",
-    );
-  });
-
-  it("rejects malformed snapshot-like evidence paths", async () => {
-    const root = await mkdtemp(join(tmpdir(), "salida-runtime-data-"));
-    const source = join(root, "public", "data");
-    const target = join(root, "dist", "data");
-    const active = "20260821144454118-a56e3eeaffa6";
-
-    await writeJson(join(source, "v1", "manifest.json"), {
-      snapshotId: active,
-      resourceSnapshots: {},
-    });
-    await writeJson(
-      join(source, "v1", "snapshots", active, "programs.json"),
-      [],
-    );
-    await writeJson(join(root, "docs", "contest", "coverage-freeze.json"), {
-      resourcePath: "/data/v1/snapshots/not-a-snapshot/programs.json",
-    });
-    await writeJson(join(root, "docs", "contest", "release-evidence.json"), {
-      logicalResourcePath: `/data/v1/snapshots/${active}/programs.json`,
-    });
-
-    await expect(prepareRuntimeData({ root, source, target })).rejects.toThrow(
-      "Malformed runtime snapshot resource path",
-    );
-  });
-
   it.each([
     [
       "percent-encoded route",
@@ -417,7 +351,9 @@ describe("prepareRuntimeData", () => {
         source: fixture.source,
         target: fixture.target,
       }),
-    ).rejects.toThrow("Malformed runtime snapshot resource path");
+    ).rejects.toThrow(
+      /Malformed runtime snapshot resource path|not a local resource path/u,
+    );
   });
 
   it("rejects a target parent symlink that resolves into source", async () => {
@@ -590,6 +526,7 @@ describe("prepareRuntimeData", () => {
     const target = join(sourceAlias, "one", "two");
     const active = "20260821144454118-a56e3eeaffa6";
 
+    await writeRetentionConfig(root);
     await writeJson(join(source, "v1", "manifest.json"), {
       snapshotId: active,
       resourceSnapshots: {},
@@ -598,8 +535,6 @@ describe("prepareRuntimeData", () => {
       join(source, "v1", "snapshots", active, "programs.json"),
       [],
     );
-    await writeJson(join(root, "docs", "contest", "coverage-freeze.json"), {});
-    await writeJson(join(root, "docs", "contest", "release-evidence.json"), {});
     await symlink(physicalRoot, sourceAlias, "dir");
 
     await prepareRuntimeData({ root, source, target });
