@@ -13,7 +13,7 @@ Exact professional-profile outputs used by this wave:
 - `Ayudante de mantenimiento básico de edificios.`
 - `Ayudante de escayolista.`
 - `Ayudante de pintor / pintora.`
-- `Ayudante en pavimentación para urbanización.`
+- `Ayudante de solador / soladora.`
 - `Peón especializado.`
 
 Official CNO identities checked in `data/curated/official-occupations.json`:
@@ -24,6 +24,23 @@ Official CNO identities checked in `data/curated/official-occupations.json`:
 - `7231` — Pintores y empapeladores.
 - `7240` — Soladores, colocadores de parquet y afines.
 - `9602` — Peones de la construcción de edificios.
+
+These are assistant/adjacent outputs, so the data packet carries the following
+machine-readable boundary metadata on the corresponding links:
+
+```json
+{
+  "EOC01B|7121": {"roleLevel": "assistant", "fullOccupationQualification": false},
+  "EOC01B|7191": {"roleLevel": "assistant", "fullOccupationQualification": false},
+  "EOC01B|7211": {"roleLevel": "assistant", "fullOccupationQualification": false},
+  "EOC01B|7231": {"roleLevel": "assistant", "fullOccupationQualification": false},
+  "EOC01B|7240": {"roleLevel": "assistant", "fullOccupationQualification": false},
+  "EOC01B|9602": {"roleLevel": "adjacent", "fullOccupationQualification": false}
+}
+```
+
+The boundary prevents consumers from presenting an assistant or adjacent
+output as a full trade qualification. No UI-specific interpretation is needed.
 
 `EOC01B|7212` is explicitly rejected. No offer record or title-only inference
 is used.

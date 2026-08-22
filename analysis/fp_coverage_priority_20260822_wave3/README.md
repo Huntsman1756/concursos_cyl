@@ -18,6 +18,13 @@ and the [INE CNO-11 explanatory notes](https://www.ine.es/daco/daco42/clasificac
 Job offers, sector-only similarity, aliases, and title-only inference are not
 evidence for any row in this packet.
 
+The packet's three tightened boundaries are explicit: `FME01E|2482` uses the
+official quote `Experto en diseño de producto para impresión 3D.`;
+`EOC01B|7240` uses `Ayudante de solador / soladora.` and all six EOC01B
+assistant/peon rows carry machine-readable `functionalBoundary` metadata; and
+`EOC02M|7211` is supported by the exact INE/BOE functional excerpts in its
+source and proposal files, with 7199 and 7212 explicitly excluded.
+
 ## Exact accepted relation set
 
 All 17 rows use the conservative `reviewed_relationship` type. The output

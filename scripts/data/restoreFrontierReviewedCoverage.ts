@@ -544,6 +544,10 @@ export const TASK_5_WAVE_RELATIONSHIPS = [
     sourceQuote: "Ayudante de albañil.",
     reviewedAt: "2026-08-22",
     mappingVersion: "1.0.0",
+    functionalBoundary: {
+      roleLevel: "assistant",
+      fullOccupationQualification: false,
+    },
   },
   {
     trainingProgramKey: "EOC01B",
@@ -555,6 +559,10 @@ export const TASK_5_WAVE_RELATIONSHIPS = [
     sourceQuote: "Ayudante de mantenimiento básico de edificios.",
     reviewedAt: "2026-08-22",
     mappingVersion: "1.0.0",
+    functionalBoundary: {
+      roleLevel: "assistant",
+      fullOccupationQualification: false,
+    },
   },
   {
     trainingProgramKey: "EOC01B",
@@ -566,6 +574,10 @@ export const TASK_5_WAVE_RELATIONSHIPS = [
     sourceQuote: "Ayudante de escayolista.",
     reviewedAt: "2026-08-22",
     mappingVersion: "1.0.0",
+    functionalBoundary: {
+      roleLevel: "assistant",
+      fullOccupationQualification: false,
+    },
   },
   {
     trainingProgramKey: "EOC01B",
@@ -577,6 +589,10 @@ export const TASK_5_WAVE_RELATIONSHIPS = [
     sourceQuote: "Ayudante de pintor / pintora.",
     reviewedAt: "2026-08-22",
     mappingVersion: "1.0.0",
+    functionalBoundary: {
+      roleLevel: "assistant",
+      fullOccupationQualification: false,
+    },
   },
   {
     trainingProgramKey: "EOC01B",
@@ -585,9 +601,13 @@ export const TASK_5_WAVE_RELATIONSHIPS = [
     reviewStatus: "approved",
     sourceUrl:
       "https://www.todofp.es/que-estudiar/familias-profesionales/edificacion-obra-civil/reforma-mantenimiento-edificios.html",
-    sourceQuote: "Ayudante en pavimentación para urbanización.",
+    sourceQuote: "Ayudante de solador / soladora.",
     reviewedAt: "2026-08-22",
     mappingVersion: "1.0.0",
+    functionalBoundary: {
+      roleLevel: "assistant",
+      fullOccupationQualification: false,
+    },
   },
   {
     trainingProgramKey: "EOC01B",
@@ -599,6 +619,10 @@ export const TASK_5_WAVE_RELATIONSHIPS = [
     sourceQuote: "Peón especializado.",
     reviewedAt: "2026-08-22",
     mappingVersion: "1.0.0",
+    functionalBoundary: {
+      roleLevel: "adjacent",
+      fullOccupationQualification: false,
+    },
   },
   {
     trainingProgramKey: "EOC02M",
@@ -640,7 +664,7 @@ export const TASK_5_WAVE_RELATIONSHIPS = [
     reviewStatus: "approved",
     sourceUrl:
       "https://www.todofp.es/que-estudiar/familias-profesionales/fabricacion-mecanica/ce-fabricacion-aditiva.html",
-    sourceQuote: "Diseñador 3D por escaneado.",
+    sourceQuote: "Experto en diseño de producto para impresión 3D.",
     reviewedAt: "2026-08-22",
     mappingVersion: "1.0.0",
   },

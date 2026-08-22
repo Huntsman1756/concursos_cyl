@@ -1638,6 +1638,10 @@
     "cno11Code": "7121",
     "familyCode": "EOC",
     "familyName": "Edificación y Obra Civil",
+    "functionalBoundary": {
+      "fullOccupationQualification": false,
+      "roleLevel": "assistant"
+    },
     "mappingVersion": "1.0.0",
     "occupationId": "occupation:cno11:7121",
     "occupationLabel": "Albañiles",
@@ -1653,6 +1657,10 @@
     "cno11Code": "7191",
     "familyCode": "EOC",
     "familyName": "Edificación y Obra Civil",
+    "functionalBoundary": {
+      "fullOccupationQualification": false,
+      "roleLevel": "assistant"
+    },
     "mappingVersion": "1.0.0",
     "occupationId": "occupation:cno11:7191",
     "occupationLabel": "Mantenedores de edificios",
@@ -1668,6 +1676,10 @@
     "cno11Code": "7211",
     "familyCode": "EOC",
     "familyName": "Edificación y Obra Civil",
+    "functionalBoundary": {
+      "fullOccupationQualification": false,
+      "roleLevel": "assistant"
+    },
     "mappingVersion": "1.0.0",
     "occupationId": "occupation:cno11:7211",
     "occupationLabel": "Escayolistas",
@@ -1683,6 +1695,10 @@
     "cno11Code": "7231",
     "familyCode": "EOC",
     "familyName": "Edificación y Obra Civil",
+    "functionalBoundary": {
+      "fullOccupationQualification": false,
+      "roleLevel": "assistant"
+    },
     "mappingVersion": "1.0.0",
     "occupationId": "occupation:cno11:7231",
     "occupationLabel": "Pintores y empapeladores",
@@ -1698,6 +1714,10 @@
     "cno11Code": "7240",
     "familyCode": "EOC",
     "familyName": "Edificación y Obra Civil",
+    "functionalBoundary": {
+      "fullOccupationQualification": false,
+      "roleLevel": "assistant"
+    },
     "mappingVersion": "1.0.0",
     "occupationId": "occupation:cno11:7240",
     "occupationLabel": "Soladores, colocadores de parquet y afines",
@@ -1705,7 +1725,7 @@
     "programTitle": "Reforma y Mantenimiento de Edificios",
     "relationshipType": "reviewed_relationship",
     "reviewedAt": "2026-08-22",
-    "sourceQuote": "Ayudante en pavimentación para urbanización.",
+    "sourceQuote": "Ayudante de solador / soladora.",
     "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/edificacion-obra-civil/reforma-mantenimiento-edificios.html",
     "trainingLevel": "basic"
   },
@@ -1713,6 +1733,10 @@
     "cno11Code": "9602",
     "familyCode": "EOC",
     "familyName": "Edificación y Obra Civil",
+    "functionalBoundary": {
+      "fullOccupationQualification": false,
+      "roleLevel": "adjacent"
+    },
     "mappingVersion": "1.0.0",
     "occupationId": "occupation:cno11:9602",
     "occupationLabel": "Peones de la construcción de edificios",
@@ -1900,7 +1924,7 @@
     "programTitle": "Fabricación aditiva",
     "relationshipType": "reviewed_relationship",
     "reviewedAt": "2026-08-22",
-    "sourceQuote": "Diseñador 3D por escaneado.",
+    "sourceQuote": "Experto en diseño de producto para impresión 3D.",
     "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/fabricacion-mecanica/ce-fabricacion-aditiva.html",
     "trainingLevel": "specialization"
   },

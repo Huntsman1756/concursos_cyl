@@ -140,6 +140,7 @@
       "acceptanceCriteria": [
         "preserve exact TodoFP quotes",
         "publish 7121, 7191, 7211, 7231, 7240, and 9602 only",
+        "carry assistant/adjacent functionalBoundary metadata with fullOccupationQualification false",
         "reject EOC01B|7212",
         "do not create aliases"
       ]
@@ -156,6 +157,7 @@
       "acceptanceCriteria": [
         "preserve exact TodoFP quotes",
         "publish 7211, 7231, and 7240 only",
+        "distinguish 7211 from 7199 and 7212 using exact official INE/BOE functional excerpts",
         "reject EOC02M|3202 and EOC02M|7212",
         "do not create aliases"
       ]
@@ -168,7 +170,7 @@
       "allowedPaths": [
         "analysis/fp_coverage_priority_20260822_wave3/proposals/FME01E.md"
       ],
-      "frontierPlan": "Map the explicit 3D product-design output to CNO 2482 as a reviewed relation without turning additive manufacturing into a generic designer alias.",
+      "frontierPlan": "Map the exact official 3D product-design output to CNO 2482 as a reviewed relation without turning additive manufacturing into a generic designer alias.",
       "acceptanceCriteria": [
         "preserve exact TodoFP quote",
         "use approved CNO 2482 identity",

@@ -1,10 +1,10 @@
 [
   {
-    "csvResourcePath": "/data/v1/snapshots/20260822074315030-a6fc9479d93c/derived-fp-occupation-graph.csv",
-    "csvSha256": "8e381120a8ef849747b411305067b833b3b86e3de70e94c45b83a2704cde4ed0",
+    "csvResourcePath": "/data/v1/snapshots/20260822082339635-2706ba4b5a53/derived-fp-occupation-graph.csv",
+    "csvSha256": "6b723501dea72bf5e035fbb85b1075360d3337ffcca29bb3fb140e41caa175e0",
     "datasetId": "salida-cyl-fp-occupation-graph",
     "description": "Relaciones revisadas entre ciclos de Formación Profesional y grupos primarios CNO-11 con evidencia de procedencia.",
-    "generatedAt": "2026-08-22T07:43:15.030Z",
+    "generatedAt": "2026-08-22T08:23:39.635Z",
     "licenseName": "CC BY 4.0",
     "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
     "recordCount": 265,

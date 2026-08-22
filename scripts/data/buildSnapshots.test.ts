@@ -863,7 +863,7 @@ describe("buildSnapshots", { timeout: BUILD_SNAPSHOTS_TEST_TIMEOUT }, () => {
           ),
           "utf8",
         ),
-      ) as Array<Record<string, string>>;
+      ) as Array<Record<string, unknown>>;
     const occupations = await readResource("occupations");
     const aliases = await readResource("occupationAliases");
     const links = await readResource("trainingOccupationLinks");
@@ -875,7 +875,7 @@ describe("buildSnapshots", { timeout: BUILD_SNAPSHOTS_TEST_TIMEOUT }, () => {
       ["2482", "2484", "2729", "3831", "7191", "7211", "7231", "9602"].every(
         (code) =>
           occupations.some(
-            (occupation) => occupation.classificationCode === code,
+            (occupation) => String(occupation.classificationCode) === code,
           ),
       ),
     ).toBe(true);
@@ -883,11 +883,33 @@ describe("buildSnapshots", { timeout: BUILD_SNAPSHOTS_TEST_TIMEOUT }, () => {
       ["EOC01B|7212", "EOC02M|3202", "EOC02M|7212"].some((key) =>
         links.some(
           (link) =>
-            `${link.trainingProgramKey}|${link.occupationId.replace("occupation:cno11:", "")}` ===
+            `${String(link.trainingProgramKey)}|${String(link.occupationId).replace("occupation:cno11:", "")}` ===
             key,
         ),
       ),
     ).toBe(false);
+    expect(
+      links.find(
+        (link) =>
+          `${String(link.trainingProgramKey)}|${String(link.occupationId).replace("occupation:cno11:", "")}` ===
+          "EOC01B|7240",
+      ),
+    ).toMatchObject({
+      sourceQuote: "Ayudante de solador / soladora.",
+      functionalBoundary: {
+        roleLevel: "assistant",
+        fullOccupationQualification: false,
+      },
+    });
+    expect(
+      links.find(
+        (link) =>
+          `${String(link.trainingProgramKey)}|${String(link.occupationId).replace("occupation:cno11:", "")}` ===
+          "FME01E|2482",
+      ),
+    ).toMatchObject({
+      sourceQuote: "Experto en diseño de producto para impresión 3D.",
+    });
   });
 
   it("publishes the derived FP occupation graph in hashed JSON and CSV formats", async () => {

@@ -9,11 +9,12 @@ Official program: **Fabricación aditiva**.
 
 Exact professional-profile output used by this wave:
 
-- `Diseñador 3D por escaneado.`
+- `Experto en diseño de producto para impresión 3D.`
 
 Official CNO identity checked in `data/curated/official-occupations.json`:
 
 - `2482` — Diseñadores de productos y de prendas.
 
-This remains a reviewed functional relation. No offer record, alias, or
-title-only inference is used.
+This remains a reviewed functional relation: the official output explicitly
+names product design for 3D printing. No offer record, alias, or title-only
+inference is used.

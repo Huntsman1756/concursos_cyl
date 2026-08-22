@@ -19,5 +19,49 @@ Official CNO identities checked in `data/curated/official-occupations.json`:
 - `7231` — Pintores y empapeladores.
 - `7240` — Soladores, colocadores de parquet y afines.
 
+## Functional boundary for `EOC02M|7211`
+
+The relation is retained only as a reviewed functional boundary. The official
+TodoFP output is an exact profile output, not a claim that the complete
+qualification equals the complete CNO group:
+
+> Juntera / juntero de placa de yeso laminado.
+
+The official classification artifacts distinguish the selected CNO group from
+the two nearby construction groups:
+
+- BOE, Real Decreto 1591/2010, CNO-11 table:
+  `7211 — Escayolistas`; `7212 — Aplicadores de revestimientos de pasta y
+  mortero`; and `7199 — Otros trabajadores de las obras estructurales de
+  construcción no clasificados bajo otros epígrafes`.
+  Source: https://www.boe.es/eli/es/rd/2010/11/26/1591
+- INE, *CNO-11 Notas explicativas*, pp. 249–250:
+  `7211 Escayolistas` — `Los escayolistas instalan, mantienen y reparan
+  tabiques y enlucen muros y techos de edificios y los decoran con adornos o
+  revestimientos de escayola en interiores y exteriores de estructuras.` The
+  same entry lists the related occupation `Aplicadores de revestimientos de
+  pasta y mortero, 7212` as not included in that primary group.
+  Source: https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf
+- The adjacent `7212` entry is functionally different: `Los aplicadores de
+  revestimientos de pasta y mortero instalan, mantienen y reparan tabiques y
+  enlucen muros y techos de edificios y los decoran con adornos o
+  revestimientos de cemento y otros materiales similares en interiores y
+  exteriores de estructuras.` It names `Escayolistas, 7211` as a related
+  occupation not included in that primary group.
+- The broader `7199` entry is a structural-construction residual: `Este grupo
+  primario abarca a los trabajadores de las obras estructurales de construcción
+  no clasificados separadamente en el subgrupo principal 71, Trabajadores en
+  obras estructurales de construcción y afines.` Its listed tasks include
+  `construir, modificar y reparar armazones de madera y otras construcciones de
+  carpintería en un taller o en las obras de construcción`, which is not the
+  plasterboard-jointing function in the TodoFP output.
+
+This is the auditable decision boundary: the TodoFP output names the
+plasterboard-jointing function; INE assigns plaster and gypsum finishing to
+7211, explicitly separates 7212's cement/paste-and-mortar application, and
+defines 7199 as a residual structural-construction group. Therefore only
+`EOC02M|7211` is published from this functional evidence. No `7199` or `7212`
+relation is published, and neither was inferred from a title or an offer.
+
 `EOC02M|3202` and `EOC02M|7212` are explicitly rejected. No offer record or
 title-only inference is used.

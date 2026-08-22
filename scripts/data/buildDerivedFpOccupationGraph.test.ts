@@ -7,6 +7,59 @@ import {
 } from "./buildDerivedFpOccupationGraph";
 
 describe("derived FP occupation graph", () => {
+  it("preserves a conservative functional boundary for adjacent outputs", () => {
+    const rows = buildDerivedFpOccupationGraph(
+      [
+        {
+          programKey: "EOC01B",
+          programTitle: "Reforma y Mantenimiento de Edificios",
+          level: "basic",
+          familyCode: "EOC",
+          familyName: "Edificación y Obra Civil",
+        },
+      ],
+      [
+        {
+          occupationId: "occupation:cno11:7240",
+          preferredLabel: "Soladores, colocadores de parquet y afines",
+          confirmationLabel: "Soladores, colocadores de parquet y afines",
+          classificationSystem: "CNO-11",
+          classificationCode: "7240",
+          reviewStatus: "approved",
+          sourceUrl: "https://www.ine.es/",
+          reviewedAt: "2026-08-20",
+          catalogVersion: "1.0.0",
+        },
+      ],
+      [
+        {
+          trainingProgramKey: "EOC01B",
+          occupationId: "occupation:cno11:7240",
+          relationshipType: "reviewed_relationship",
+          reviewStatus: "approved",
+          sourceUrl: "https://www.todofp.es/",
+          sourceQuote: "Ayudante de solador / soladora.",
+          reviewedAt: "2026-08-20",
+          mappingVersion: "1.0.0",
+          functionalBoundary: {
+            roleLevel: "assistant",
+            fullOccupationQualification: false,
+          },
+        },
+      ],
+    );
+
+    expect(rows[0]).toMatchObject({
+      functionalBoundary: {
+        roleLevel: "assistant",
+        fullOccupationQualification: false,
+      },
+    });
+    expect(serializeDerivedFpOccupationGraphCsv(rows)).toContain(
+      "functional_boundary_role_level",
+    );
+  });
+
   it("enriches approved links and serializes a deterministic spreadsheet-safe CSV", () => {
     const rows = buildDerivedFpOccupationGraph(
       [

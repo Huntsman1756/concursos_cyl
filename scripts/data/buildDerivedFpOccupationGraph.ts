@@ -24,6 +24,8 @@ const CSV_COLUMNS = [
   "source_quote",
   "reviewed_at",
   "mapping_version",
+  "functional_boundary_role_level",
+  "functional_boundary_full_occupation_qualification",
 ] as const;
 
 function csvCell(value: string): string {
@@ -67,6 +69,7 @@ export function buildDerivedFpOccupationGraph(
             sourceQuote: link.sourceQuote,
             reviewedAt: link.reviewedAt,
             mappingVersion: link.mappingVersion,
+            functionalBoundary: link.functionalBoundary,
           },
         ];
       })
@@ -97,6 +100,10 @@ export function serializeDerivedFpOccupationGraphCsv(
       row.sourceQuote,
       row.reviewedAt,
       row.mappingVersion,
+      row.functionalBoundary?.roleLevel ?? "",
+      row.functionalBoundary === undefined
+        ? ""
+        : String(row.functionalBoundary.fullOccupationQualification),
     ]
       .map(csvCell)
       .join(","),

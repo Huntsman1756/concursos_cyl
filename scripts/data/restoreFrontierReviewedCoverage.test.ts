@@ -318,6 +318,28 @@ describe("mergeFrontierReviewedCoverage", () => {
           reviewStatus === "approved",
       ),
     ).toBe(true);
+    expect(
+      TASK_5_WAVE_RELATIONSHIPS.find(
+        ({ trainingProgramKey, occupationId }) =>
+          `${trainingProgramKey}|${occupationId.replace("occupation:cno11:", "")}` ===
+          "EOC01B|7240",
+      ),
+    ).toMatchObject({
+      sourceQuote: "Ayudante de solador / soladora.",
+      functionalBoundary: {
+        roleLevel: "assistant",
+        fullOccupationQualification: false,
+      },
+    });
+    expect(
+      TASK_5_WAVE_RELATIONSHIPS.find(
+        ({ trainingProgramKey, occupationId }) =>
+          `${trainingProgramKey}|${occupationId.replace("occupation:cno11:", "")}` ===
+          "FME01E|2482",
+      ),
+    ).toMatchObject({
+      sourceQuote: "Experto en diseño de producto para impresión 3D.",
+    });
     expect(ACCEPTED_RELATION_KEYS).not.toEqual(
       expect.arrayContaining(["EOC01B|7212", "EOC02M|3202", "EOC02M|7212"]),
     );

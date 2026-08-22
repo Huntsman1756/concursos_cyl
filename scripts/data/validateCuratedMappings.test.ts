@@ -2308,7 +2308,7 @@ describe("curated occupation mappings", () => {
         relationshipType: "reviewed_relationship",
         sourceUrl:
           "https://www.todofp.es/que-estudiar/familias-profesionales/edificacion-obra-civil/reforma-mantenimiento-edificios.html",
-        sourceQuote: "Ayudante en pavimentación para urbanización.",
+        sourceQuote: "Ayudante de solador / soladora.",
       },
       {
         key: "EOC01B|9602",
@@ -2344,7 +2344,7 @@ describe("curated occupation mappings", () => {
         relationshipType: "reviewed_relationship",
         sourceUrl:
           "https://www.todofp.es/que-estudiar/familias-profesionales/fabricacion-mecanica/ce-fabricacion-aditiva.html",
-        sourceQuote: "Diseñador 3D por escaneado.",
+        sourceQuote: "Experto en diseño de producto para impresión 3D.",
       },
       {
         key: "IMA02S|7250",
@@ -2383,6 +2383,51 @@ describe("curated occupation mappings", () => {
     expect(approved.occupations).toHaveLength(131);
     expect(curated.occupations).toHaveLength(138);
     expect(curated.aliases).toHaveLength(21);
+    const task5FunctionalBoundaries = Object.fromEntries(
+      curated.links
+        .filter((link) =>
+          [
+            "EOC01B|7121",
+            "EOC01B|7191",
+            "EOC01B|7211",
+            "EOC01B|7231",
+            "EOC01B|7240",
+            "EOC01B|9602",
+          ].includes(
+            `${link.trainingProgramKey}|${link.occupationId.replace("occupation:cno11:", "")}`,
+          ),
+        )
+        .map((link) => [
+          `${link.trainingProgramKey}|${link.occupationId.replace("occupation:cno11:", "")}`,
+          (link as { functionalBoundary?: unknown }).functionalBoundary,
+        ]),
+    );
+    expect(task5FunctionalBoundaries).toEqual({
+      "EOC01B|7121": {
+        roleLevel: "assistant",
+        fullOccupationQualification: false,
+      },
+      "EOC01B|7191": {
+        roleLevel: "assistant",
+        fullOccupationQualification: false,
+      },
+      "EOC01B|7211": {
+        roleLevel: "assistant",
+        fullOccupationQualification: false,
+      },
+      "EOC01B|7231": {
+        roleLevel: "assistant",
+        fullOccupationQualification: false,
+      },
+      "EOC01B|7240": {
+        roleLevel: "assistant",
+        fullOccupationQualification: false,
+      },
+      "EOC01B|9602": {
+        roleLevel: "adjacent",
+        fullOccupationQualification: false,
+      },
+    });
     expect(
       curated.occupations.filter((occupation) =>
         [

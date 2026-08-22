@@ -27,9 +27,9 @@ source excerpts under `analysis/fp_coverage_priority_20260822_wave3/sources/`.
 | `AGA02S` | `https://www.todofp.es/que-estudiar/familias-profesionales/agraria/paisajismo-medio-rural.html` | `AGA02S|6120` — `Encargada / encargado o capataz agrícola de huertas, viveros y jardines, en general.` |
 | `COM01E` | `https://www.todofp.es/que-estudiar/familias-profesionales/comercio-marketing/ce-posicionamiento-buscadores-comunicacion-rrss.html` | `COM01E|2651` — `Especialistas en captación y fidelización de clientes (Inbound Marketing Specialist).` |
 | `ELE01E` | `https://www.todofp.es/que-estudiar/familias-profesionales/electricidad-electronica/ce-ciberseguridad-tecnologias-operacion.html` | `ELE01E|2729` — `Analista de ciberseguridad en entornos de la operación.` |
-| `EOC01B` | `https://www.todofp.es/que-estudiar/familias-profesionales/edificacion-obra-civil/reforma-mantenimiento-edificios.html` | `EOC01B|7121` — `Ayudante de albañil.`; `EOC01B|7191` — `Ayudante de mantenimiento básico de edificios.`; `EOC01B|7211` — `Ayudante de escayolista.`; `EOC01B|7231` — `Ayudante de pintor / pintora.`; `EOC01B|7240` — `Ayudante en pavimentación para urbanización.`; `EOC01B|9602` — `Peón especializado.` |
+| `EOC01B` | `https://www.todofp.es/que-estudiar/familias-profesionales/edificacion-obra-civil/reforma-mantenimiento-edificios.html` | `EOC01B|7121` — `Ayudante de albañil.`; `EOC01B|7191` — `Ayudante de mantenimiento básico de edificios.`; `EOC01B|7211` — `Ayudante de escayolista.`; `EOC01B|7231` — `Ayudante de pintor / pintora.`; `EOC01B|7240` — `Ayudante de solador / soladora.`; `EOC01B|9602` — `Peón especializado.` |
 | `EOC02M` | `https://www.todofp.es/que-estudiar/familias-profesionales/edificacion-obra-civil/obras-interior-decoracion-rehabilitacion.html` | `EOC02M|7211` — `Juntera / juntero de placa de yeso laminado.`; `EOC02M|7231` — `Pintor / pintora de obra.`; `EOC02M|7240` — `Colocador / colocadora de pavimentos ligeros, en general.` |
-| `FME01E` | `https://www.todofp.es/que-estudiar/familias-profesionales/fabricacion-mecanica/ce-fabricacion-aditiva.html` | `FME01E|2482` — `Diseñador 3D por escaneado.` |
+| `FME01E` | `https://www.todofp.es/que-estudiar/familias-profesionales/fabricacion-mecanica/ce-fabricacion-aditiva.html` | `FME01E|2482` — `Experto en diseño de producto para impresión 3D.` |
 | `IMA02S` | `https://www.todofp.es/que-estudiar/familias-profesionales/instalacion-mantenimiento/mnto-inst-termicas-fluidos.html` | `IMA02S|7250` — `Frigorista.` |
 | `IMS04S` | `https://www.todofp.es/que-estudiar/familias-profesionales/imagen-sonido/sonido-audiovisuales-espectaculos.html` | `IMS04S|3831` — `Técnica / técnico de grabación de sonido en estudio.` |
 
@@ -88,9 +88,11 @@ coverage freeze or submission documents.
 | Distinct reviewed modality keys | 121 | 130 | +9 |
 | Evidence matrix relations | 248 | 265 | +17 |
 
-The generated immutable public snapshot is
-`public/data/v1/snapshots/20260822074315030-a6fc9479d93c/`, with active
-manifest snapshot ID `20260822074315030-a6fc9479d93c`. The matrix reports the
+The original generated immutable public snapshot was
+`public/data/v1/snapshots/20260822074315030-a6fc9479d93c/`. The follow-up
+regenerated active immutable public snapshot is
+`public/data/v1/snapshots/20260822082339635-2706ba4b5a53/`, with active
+manifest snapshot ID `20260822082339635-2706ba4b5a53`. The matrix reports the
 existing bounded independent sample as 15 PASS / 250 not sampled / non-
 exhaustive; its audit source remains the e41c boundary while the matrix
 population is the current 265 approved relations.
@@ -121,5 +123,89 @@ diff. The only handoff concerns are the pre-existing freeze/submission
 boundary failures recorded above and the bounded-sample provenance distinction;
 neither justifies changing the Task 5 source data or fabricating evidence.
 
-The final Git commit uses the requested subject:
-`feat: expand reviewed FP occupation coverage`.
+The original Task 5 source-data commit used the subject
+`feat: expand reviewed FP occupation coverage`. The follow-up fix commit is the
+commit reported with this follow-up section.
+
+## Follow-up review fixes — Luna Max
+
+The follow-up review required tighter evidence boundaries without changing the
+17 accepted keys or the derived coverage counts. A RED-first pass added
+assertions before implementation: 4 focused tests failed and 110 passed because
+the old FME01E/EOC01B quotes and missing functional-boundary metadata were still
+present. The GREEN implementation then:
+
+- replaced `FME01E|2482` with the exact official TodoFP output `Experto en
+  diseño de producto para impresión 3D.`;
+- replaced `EOC01B|7240` with `Ayudante de solador / soladora.`;
+- added strict machine-readable `functionalBoundary` metadata to all six
+  EOC01B assistant/peon rows (`assistant` for 7121/7191/7211/7231/7240,
+  `adjacent` for 9602, and `fullOccupationQualification: false` for all), and
+  propagated it through the derived graph JSON and CSV; and
+- added exact official INE/BOE excerpts and an auditable 7211-versus-7199/7212
+  rationale to the EOC02M evidence packet. The official sources are the BOE
+  CNO-11 table at
+  https://www.boe.es/eli/es/rd/2010/11/26/1591 and the INE CNO-11 explanatory
+  notes, pp. 249–250, at
+  https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf.
+
+The official EOC02M evidence is sufficient, so no accepted relation was
+deferred: 7211 remains the only plasterboard-jointing relation; 7199 and 7212
+remain unpublished. The exact before/after derived counts remain 265 links,
+131 approved/public occupations, 138 curated rows, 21 aliases, queue
+113/26/15, 130 distinct reviewed modality keys, and 265 matrix relations. The
+active immutable snapshot regenerated for this follow-up is
+`public/data/v1/snapshots/20260822082339635-2706ba4b5a53/`, with manifest active
+snapshot ID `20260822082339635-2706ba4b5a53`. The final fix commit SHA and
+subject are recorded in the handoff accompanying this report.
+
+### Follow-up changed files
+
+- `data/curated/training-occupation-links.json`;
+  `data/schemas/curatedMappings.ts`; and `data/schemas/openData.ts`.
+- `scripts/data/restoreFrontierReviewedCoverage.ts` and its test;
+  `scripts/data/validateCuratedMappings.test.ts`;
+  `scripts/data/buildDerivedFpOccupationGraph.ts` and its test; and
+  `scripts/data/buildSnapshots.test.ts`.
+- `analysis/fp_coverage_priority_20260822_wave3/` source/proposal evidence,
+  `README.md`, `frontier-review.md`, and `batch-contract.json`;
+  `analysis/contest_evidence_matrix.json`; and the research queue JSON/Markdown.
+- `public/data/v1/manifest.json`, the new immutable snapshot directory above,
+  and the stale pre-fix snapshot directory revoked by the canonical retention
+  and distribution checks.
+- This report at
+  `.superpowers/sdd/2026-08-22-territorial-evidence-release/task-5-report.md`.
+
+### Follow-up validation record
+
+The exact validation commands completed successfully after regeneration:
+
+- RED: the pre-implementation focused run failed 4 tests and passed 110;
+  after implementation the focused 6-file run passed 128/128.
+- `npm run analysis:fp:research-queue:check`: 8/8 tests passed.
+- `npx tsx scripts/analysis/buildContestEvidenceMatrix.ts --check`: passed.
+- `npm run lint`, `npm run format:check`, `npm run typecheck`, and
+  `npm run build`: passed. The build also passed runtime-data, asset-budget,
+  and distribution checks.
+- Full `npm test -- --reporter=dot`: 97 files passed, 23 skipped, and 2 files
+  failed; Vitest reported 950 tests passed, 187 skipped, and 1 failed. The two
+  failures are the known pre-freeze/submission boundary checks: the historical
+  contest freeze lacks `sepeOccupationMarket`, and the historical fallback
+  still expects that resource to be an array. They are outside this data and
+  evidence fix; the focused Task 5 suite remains fully green.
+- `git diff --check`: passed.
+
+The fix was based on parent/source HEAD `1aa691f` (`fix: close important
+accessibility findings`); the final fix commit SHA is supplied by the Git
+handoff because the report itself is included in that commit.
+
+### Explicit carry/display concern
+
+The conservative boundary is carried in the validated link schema and in both
+derived graph resources, so data consumers can read `roleLevel` and
+`fullOccupationQualification`. The current `TrainingResultsPage` still renders
+the CNO label without a boundary badge; this follow-up intentionally does not
+touch that UI route because Task 7 owns the display change. The six EOC01B rows
+are therefore retained in the data wave, with the UI carry/display follow-up
+explicitly required before a final release review. No Task 7 route is included
+in this commit.

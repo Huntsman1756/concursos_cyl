@@ -1090,6 +1090,10 @@
     "trainingProgramKey": "ENA04S"
   },
   {
+    "functionalBoundary": {
+      "fullOccupationQualification": false,
+      "roleLevel": "assistant"
+    },
     "mappingVersion": "1.0.0",
     "occupationId": "occupation:cno11:7121",
     "relationshipType": "reviewed_relationship",
@@ -1100,6 +1104,10 @@
     "trainingProgramKey": "EOC01B"
   },
   {
+    "functionalBoundary": {
+      "fullOccupationQualification": false,
+      "roleLevel": "assistant"
+    },
     "mappingVersion": "1.0.0",
     "occupationId": "occupation:cno11:7191",
     "relationshipType": "reviewed_relationship",
@@ -1110,6 +1118,10 @@
     "trainingProgramKey": "EOC01B"
   },
   {
+    "functionalBoundary": {
+      "fullOccupationQualification": false,
+      "roleLevel": "assistant"
+    },
     "mappingVersion": "1.0.0",
     "occupationId": "occupation:cno11:7211",
     "relationshipType": "reviewed_relationship",
@@ -1120,6 +1132,10 @@
     "trainingProgramKey": "EOC01B"
   },
   {
+    "functionalBoundary": {
+      "fullOccupationQualification": false,
+      "roleLevel": "assistant"
+    },
     "mappingVersion": "1.0.0",
     "occupationId": "occupation:cno11:7231",
     "relationshipType": "reviewed_relationship",
@@ -1130,16 +1146,24 @@
     "trainingProgramKey": "EOC01B"
   },
   {
+    "functionalBoundary": {
+      "fullOccupationQualification": false,
+      "roleLevel": "assistant"
+    },
     "mappingVersion": "1.0.0",
     "occupationId": "occupation:cno11:7240",
     "relationshipType": "reviewed_relationship",
     "reviewStatus": "approved",
     "reviewedAt": "2026-08-22",
-    "sourceQuote": "Ayudante en pavimentación para urbanización.",
+    "sourceQuote": "Ayudante de solador / soladora.",
     "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/edificacion-obra-civil/reforma-mantenimiento-edificios.html",
     "trainingProgramKey": "EOC01B"
   },
   {
+    "functionalBoundary": {
+      "fullOccupationQualification": false,
+      "roleLevel": "adjacent"
+    },
     "mappingVersion": "1.0.0",
     "occupationId": "occupation:cno11:9602",
     "relationshipType": "reviewed_relationship",
@@ -1265,7 +1289,7 @@
     "relationshipType": "reviewed_relationship",
     "reviewStatus": "approved",
     "reviewedAt": "2026-08-22",
-    "sourceQuote": "Diseñador 3D por escaneado.",
+    "sourceQuote": "Experto en diseño de producto para impresión 3D.",
     "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/fabricacion-mecanica/ce-fabricacion-aditiva.html",
     "trainingProgramKey": "FME01E"
   },

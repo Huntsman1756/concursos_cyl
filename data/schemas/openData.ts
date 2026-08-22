@@ -1,6 +1,7 @@
 import { z } from "zod";
 
 import { TrainingLevelSchema } from "./generated";
+import { FunctionalBoundarySchema } from "./curatedMappings";
 
 const Sha256Schema = z.string().regex(/^[a-f0-9]{64}$/u);
 const ImmutableCsvPathSchema = z
@@ -24,6 +25,7 @@ export const DerivedFpOccupationRowSchema = z
     sourceQuote: z.string().min(10).max(280),
     reviewedAt: z.string().date(),
     mappingVersion: z.string().regex(/^\d+\.\d+\.\d+$/u),
+    functionalBoundary: FunctionalBoundarySchema.optional(),
   })
   .strict();
 

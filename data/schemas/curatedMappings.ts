@@ -13,6 +13,13 @@ export const OccupationAliasMatchPolicySchema = z.literal(
   "approved_single_token",
 );
 
+export const FunctionalBoundarySchema = z
+  .object({
+    roleLevel: z.enum(["assistant", "adjacent"]),
+    fullOccupationQualification: z.literal(false),
+  })
+  .strict();
+
 function requireDraftReviewNote(
   record: {
     reviewStatus: z.infer<typeof ReviewStatusSchema>;
@@ -83,6 +90,7 @@ export const TrainingOccupationLinkSchema = z
       .max(280),
     reviewedAt: ReviewDateSchema,
     mappingVersion: SemanticVersionSchema,
+    functionalBoundary: FunctionalBoundarySchema.optional(),
     reviewNote: ReviewNoteSchema,
   })
   .strict()

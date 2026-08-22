@@ -23,12 +23,12 @@ is used.
 | `EOC01B  | 7191`                 | Mantenedores de edificios                                                                    | `Ayudante de mantenimiento básico de edificios.`                                        |
 | `EOC01B  | 7211`                 | Escayolistas                                                                                 | `Ayudante de escayolista.`                                                              |
 | `EOC01B  | 7231`                 | Pintores y empapeladores                                                                     | `Ayudante de pintor / pintora.`                                                         |
-| `EOC01B  | 7240`                 | Soladores, colocadores de parquet y afines                                                   | `Ayudante en pavimentación para urbanización.`                                          |
+| `EOC01B  | 7240`                 | Soladores, colocadores de parquet y afines                                                   | `Ayudante de solador / soladora.`                                                       |
 | `EOC01B  | 9602`                 | Peones de la construcción de edificios                                                       | `Peón especializado.`                                                                   |
 | `EOC02M  | 7211`                 | Escayolistas                                                                                 | `Juntera / juntero de placa de yeso laminado.`                                          |
 | `EOC02M  | 7231`                 | Pintores y empapeladores                                                                     | `Pintor / pintora de obra.`                                                             |
 | `EOC02M  | 7240`                 | Soladores, colocadores de parquet y afines                                                   | `Colocador / colocadora de pavimentos ligeros, en general.`                             |
-| `FME01E  | 2482`                 | Diseñadores de productos y de prendas                                                        | `Diseñador 3D por escaneado.`                                                           |
+| `FME01E  | 2482`                 | Diseñadores de productos y de prendas                                                        | `Experto en diseño de producto para impresión 3D.`                                      |
 | `IMA02S  | 7250`                 | Mecánicos-instaladores de refrigeración y climatización                                      | `Frigorista.`                                                                           |
 | `IMS04S  | 3831`                 | Técnicos de grabación audiovisual                                                            | `Técnica / técnico de grabación de sonido en estudio.`                                  |
 
@@ -62,6 +62,21 @@ links or restore allowlist:
   applicator boundary.
 
 No aliases are changed: the occupation alias file remains exactly 21 records.
+
+The EOC01B assistant/peon rows carry a machine-readable functional boundary:
+`roleLevel: "assistant"` and `fullOccupationQualification: false` for 7121,
+7191, 7211, 7231, and 7240; `roleLevel: "adjacent"` and
+`fullOccupationQualification: false` for 9602. This boundary is propagated to
+the derived graph so consumers cannot present an assistant or adjacent output
+as a full trade qualification.
+
+For `EOC02M|7211`, the exact TodoFP output `Juntera / juntero de placa de yeso
+laminado.` is checked against the official INE explanatory notes (pp. 249–250)
+and BOE CNO-11 table. INE defines 7211 escayolistas as installing and repairing
+partitions and plaster/gypsum finishes, explicitly separates 7212's
+cement/paste-and-mortar applicators, and defines 7199 as a residual structural-
+construction group. Those official functional excerpts support 7211 only;
+7199 and 7212 are not published.
 
 ## No-match and pending state
 
