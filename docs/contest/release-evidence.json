@@ -1,15 +1,15 @@
 {
   "schemaVersion": 1,
-  "status": "verified",
-  "recordedAt": "2026-08-22T11:45:15Z",
+  "status": "pending",
+  "recordedAt": "2026-08-22T19:35:21Z",
   "expectedRootUrl": "https://salida-cyl.157-90-22-40.sslip.io/",
-  "auditHeadSha": "f4ea4d2422adb5dc08e457e5d03a7debc3cea18a",
-  "coverageSourceCommitSha": "05f905397d22b217c4716c88a2406d802892fb6d",
-  "coverageFreezeDocumentCommitSha": "538182f89e91bb8025bfeef0a59e79957f131c23",
-  "coverageFreezeCommitSha": "538182f89e91bb8025bfeef0a59e79957f131c23",
-  "publicationCommitSha": "ae66d5bc8393dbb02818471ad7eb850e4d4367de",
-  "localReviewHeadSha": "f4ea4d2422adb5dc08e457e5d03a7debc3cea18a",
-  "captureProductCommitSha": "ae66d5bc8393dbb02818471ad7eb850e4d4367de",
+  "auditHeadSha": null,
+  "coverageSourceCommitSha": "ff9e6197f926e462bea1a3e8ac6a57a23d3f825a",
+  "coverageFreezeDocumentCommitSha": "80bc0f9d2def3f600f7701d8b20f0095cd241c71",
+  "coverageFreezeCommitSha": "80bc0f9d2def3f600f7701d8b20f0095cd241c71",
+  "publicationCommitSha": null,
+  "localReviewHeadSha": null,
+  "captureProductCommitSha": null,
   "manifest": {
     "snapshotId": "20260822085631889-7bbe69380f6d",
     "sha256": "92afc80f2b839ed95def95bc90bdd3b6ad3a1363fb12904f7b109fafc92b2f18",
@@ -21,82 +21,82 @@
   },
   "localGates": {
     "coverageFreeze": {
-      "status": "passed",
+      "status": "pending",
       "command": "npm exec -- tsx scripts/release/validateContestFreeze.ts",
-      "checkedCommitSha": "ae66d5bc8393dbb02818471ad7eb850e4d4367de",
-      "verifiedAt": "2026-08-22T11:45:15Z"
+      "checkedCommitSha": null,
+      "verifiedAt": null
     },
     "submissionPack": {
-      "status": "passed",
+      "status": "pending",
       "command": "npm exec -- tsx scripts/release/renderContestSubmission.ts",
-      "checkedCommitSha": "ae66d5bc8393dbb02818471ad7eb850e4d4367de",
-      "verifiedAt": "2026-08-22T11:33:10Z"
+      "checkedCommitSha": null,
+      "verifiedAt": null
     },
     "evidenceManifest": {
-      "status": "passed",
-      "captureCount": 13,
+      "status": "pending",
+      "captureCount": 0,
       "command": "npm exec -- tsx scripts/release/validateContestEvidenceManifest.ts",
-      "checkedCommitSha": "ae66d5bc8393dbb02818471ad7eb850e4d4367de",
-      "verifiedAt": "2026-08-22T11:45:15Z",
-      "note": "Las 13 capturas corresponden al commit de producto publicado y se conservaron en el commit de evidencia."
+      "checkedCommitSha": null,
+      "verifiedAt": null,
+      "note": "Las 13 capturas existentes son históricas del producto ae66d5bc8393dbb02818471ad7eb850e4d4367de; no son capturas del producto actual."
     },
     "fullVitestCi": {
-      "status": "passed",
+      "status": "pending",
       "command": "npm run test:release -- --testTimeout=60000",
-      "checkedCommitSha": "ae66d5bc8393dbb02818471ad7eb850e4d4367de",
-      "verifiedAt": "2026-08-22T11:38:25Z"
+      "checkedCommitSha": null,
+      "verifiedAt": null
     },
     "playwright": {
-      "status": "passed",
+      "status": "pending",
       "command": "npm run test:e2e:chromium",
-      "checkedCommitSha": "ae66d5bc8393dbb02818471ad7eb850e4d4367de",
-      "verifiedAt": "2026-08-22T11:41:18Z"
+      "checkedCommitSha": null,
+      "verifiedAt": null
     },
     "lint": {
-      "status": "passed",
+      "status": "pending",
       "command": "npm run lint",
-      "checkedCommitSha": "ae66d5bc8393dbb02818471ad7eb850e4d4367de",
-      "verifiedAt": "2026-08-22T11:33:28Z"
+      "checkedCommitSha": null,
+      "verifiedAt": null
     },
     "build": {
-      "status": "passed",
+      "status": "pending",
       "command": "npm run build",
-      "checkedCommitSha": "ae66d5bc8393dbb02818471ad7eb850e4d4367de",
-      "verifiedAt": "2026-08-22T11:41:57Z"
+      "checkedCommitSha": null,
+      "verifiedAt": null
     },
     "license": {
-      "status": "passed",
+      "status": "pending",
       "command": "npm run license:check",
-      "checkedCommitSha": "ae66d5bc8393dbb02818471ad7eb850e4d4367de",
-      "verifiedAt": "2026-08-22T11:33:00Z"
+      "checkedCommitSha": null,
+      "verifiedAt": null
     },
     "prettier": {
-      "status": "passed",
+      "status": "pending",
       "command": "npm run format:check",
-      "checkedCommitSha": "ae66d5bc8393dbb02818471ad7eb850e4d4367de",
-      "verifiedAt": "2026-08-22T11:33:21Z"
+      "checkedCommitSha": null,
+      "verifiedAt": null
     },
     "gitDiffCheck": {
-      "status": "passed",
+      "status": "pending",
       "command": "git diff --check",
-      "checkedCommitSha": "ae66d5bc8393dbb02818471ad7eb850e4d4367de",
-      "verifiedAt": "2026-08-22T11:45:15Z"
+      "checkedCommitSha": null,
+      "verifiedAt": null
     }
   },
   "deployment": {
-    "status": "verified",
-    "commitSha": "ae66d5bc8393dbb02818471ad7eb850e4d4367de",
-    "workflowRunId": "32570552646",
-    "workflowUrl": "https://github.com/Huntsman1756/concursos_cyl/actions/runs/32570552646",
-    "liveRootVerified": true,
-    "verifiedAt": "2026-08-22T11:43:00Z"
+    "status": "pending",
+    "commitSha": null,
+    "workflowRunId": null,
+    "workflowUrl": null,
+    "liveRootVerified": false,
+    "verifiedAt": null
   },
   "publicVerification": {
-    "status": "verified",
+    "status": "pending",
     "rootUrl": "https://salida-cyl.157-90-22-40.sslip.io/",
-    "rootHttpStatus": 200,
-    "manifestSha256": "92afc80f2b839ed95def95bc90bdd3b6ad3a1363fb12904f7b109fafc92b2f18",
-    "verifiedAt": "2026-08-22T11:43:00Z"
+    "rootHttpStatus": null,
+    "manifestSha256": null,
+    "verifiedAt": null
   },
   "humanApproval": {
     "finalApplicationTextApproved": false,
@@ -104,6 +104,7 @@
     "submissionAuthorized": false
   },
   "blockers": [
-    "La candidatura todavía requiere texto final, campos humanos y autorización explícita para el envío externo."
+    "La captura nativa final A4 y la captura del release actual siguen pendientes; las 13 capturas existentes son históricas del producto ae66d5bc8393dbb02818471ad7eb850e4d4367de y no prueban el producto actual.",
+    "La presentación al concurso requiere autorización humana explícita separada; submissionAuthorized permanece false."
   ]
 }
