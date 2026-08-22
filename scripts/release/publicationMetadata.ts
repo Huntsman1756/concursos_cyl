@@ -1,4 +1,5 @@
 import { loadPublicationConfig } from "./releaseIdentity.ts";
+import { normalizePublicBasePath } from "./publicBasePath.ts";
 
 const PUBLICATION_METADATA_MARKER = "<!-- salida-publication-metadata -->";
 const PUBLICATION_TITLE = "SALIDA CyL" as const;
@@ -11,11 +12,16 @@ export interface PublicationMetadata {
   title: "SALIDA CyL";
   description: string;
   socialImageUrl: string;
+  faviconUrl: string;
   themeColor: "#7f1734";
 }
 
-export function publicationMetadata(rootDir: string): PublicationMetadata {
+export function publicationMetadata(
+  rootDir: string,
+  publicBasePath = process.env.VITE_PUBLIC_BASE_PATH,
+): PublicationMetadata {
   const publication = loadPublicationConfig(rootDir);
+  const normalizedPublicBasePath = normalizePublicBasePath(publicBasePath);
 
   return {
     canonicalUrl: publication.canonicalRootUrl,
@@ -25,6 +31,7 @@ export function publicationMetadata(rootDir: string): PublicationMetadata {
       "salida-cyl-social.png",
       publication.canonicalRootUrl,
     ).toString(),
+    faviconUrl: `${normalizedPublicBasePath}salida-cyl-icon.png`,
     themeColor: PUBLICATION_THEME_COLOR,
   };
 }
@@ -53,6 +60,7 @@ function publicationHead(metadata: PublicationMetadata): string {
   const description = escapeAttribute(metadata.description);
   const canonicalUrl = escapeAttribute(metadata.canonicalUrl);
   const socialImageUrl = escapeAttribute(metadata.socialImageUrl);
+  const faviconUrl = escapeAttribute(metadata.faviconUrl);
   const themeColor = escapeAttribute(metadata.themeColor);
 
   return [
@@ -68,7 +76,7 @@ function publicationHead(metadata: PublicationMetadata): string {
     `<meta name="twitter:title" content="${title}">`,
     `<meta name="twitter:description" content="${description}">`,
     `<meta name="twitter:image" content="${socialImageUrl}">`,
-    `<link rel="icon" type="image/png" href="/salida-cyl-icon.png">`,
+    `<link rel="icon" type="image/png" href="${faviconUrl}">`,
     `<meta name="theme-color" content="${themeColor}">`,
   ].join("\n    ");
 }

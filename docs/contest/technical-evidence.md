@@ -74,7 +74,7 @@ npm run analysis:pilot:report:check
 npm exec -- tsx scripts/release/validateContestFreeze.ts
 ```
 
-La revisión independiente confirmó el manifest, sus 21 recursos, los conjuntos de relaciones y la ausencia de cambios en `data/curated`, `public/data`, `src/domain` y `src/features` desde el commit fuente.
+La revisión independiente confirmó el manifest, sus 21 recursos, los conjuntos de relaciones y la ausencia de cambios en las rutas de frontera congelada (`config/candidate-resource-allowlist.json`, `analysis/fp_coverage_expansion_results.json`, `analysis/fp_one_word_publication_reviews.json`, `data/catalogs`, `data/curated`, `data/schemas`, `public/data`, `scripts/analysis/validateFpOneWordPublicationReview.ts`, `scripts/data/validateCuratedMappings.ts`, `src/domain/offerMatching.ts`, `src/domain/requirements.ts`) desde el commit fuente. Las rutas de UI, búsqueda y print quedan fuera de esta frontera y no se presentan como parte del freeze.
 
 ## Despliegue
 

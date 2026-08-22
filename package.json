@@ -8,11 +8,12 @@
   },
   "scripts": {
     "dev": "vite",
-    "build": "tsc -b && vite build && npm run release:runtime-data && npm run qa:assets:check && npm run qa:distribution:check",
+    "build": "tsc -b && vite build && npm run release:runtime-data && npm run qa:assets:check && npm run qa:distribution:check && npm run release:candidate:verify",
     "preview": "vite preview",
     "pages:prepare": "tsx scripts/release/preparePagesFallback.ts",
     "release:pages:verify": "tsx scripts/release/verifyPagesDeployment.ts",
     "release:caddy:verify": "tsx scripts/release/verifyCaddyContainerCli.ts",
+    "release:candidate:verify": "tsx scripts/release/validateCandidateBoundary.ts --bundle-root dist",
     "release:runtime-data": "tsx scripts/release/prepareRuntimeData.ts",
     "test": "vitest run",
     "test:release": "vitest run",

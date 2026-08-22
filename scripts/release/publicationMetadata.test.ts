@@ -55,6 +55,7 @@ function metadataFixture(
     title: "SALIDA CyL",
     description: DESCRIPTION,
     socialImageUrl: `${CANONICAL_URL}salida-cyl-social.png`,
+    faviconUrl: "/salida-cyl-icon.png",
     themeColor: "#7f1734",
     ...overrides,
   };
@@ -68,8 +69,17 @@ describe("publication metadata", () => {
         title: "SALIDA CyL",
         description: DESCRIPTION,
         socialImageUrl: `${FIXTURE_CANONICAL_URL}salida-cyl-social.png`,
+        faviconUrl: "/salida-cyl-icon.png",
         themeColor: "#7f1734",
       });
+    });
+  });
+
+  it("keeps the favicon inside the configured Pages base path", async () => {
+    await withPublicationFixture(async (rootDir) => {
+      expect(publicationMetadata(rootDir, "/concursos_cyl/").faviconUrl).toBe(
+        "/concursos_cyl/salida-cyl-icon.png",
+      );
     });
   });
 

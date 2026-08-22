@@ -122,6 +122,15 @@ describe("GitHub Pages deployment workflow", () => {
     );
   });
 
+  it("connects candidate-boundary validation to the production build", async () => {
+    const pkg = await readFile(packageJsonPath, "utf8");
+    const parsed = JSON.parse(pkg) as { scripts?: Record<string, string> };
+    expect(parsed.scripts?.["release:candidate:verify"]).toBe(
+      "tsx scripts/release/validateCandidateBoundary.ts --bundle-root dist",
+    );
+    expect(parsed.scripts?.build).toContain("npm run release:candidate:verify");
+  });
+
   it("runs submission and format gates between npm ci and build steps", async () => {
     const workflow = await readFile(workflowPath, "utf8");
     const verifyJob = workflow.slice(

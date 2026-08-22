@@ -227,7 +227,7 @@ describe("candidate data boundary", () => {
 
   it("retains the canonical SEPE runtime evidence", async () => {
     await expect(
-      validateCandidateBoundary(await currentCandidateOptions()),
+      validateCandidateBoundary(await currentCandidateOptions(fixtureRoot)),
     ).resolves.toMatchObject({ resourceCount: 21, sepeRecordCount: 116 });
   }, 90_000);
 

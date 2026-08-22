@@ -6,6 +6,7 @@ import {
   validateContestClaims,
 } from "./validateContestClaims";
 import {
+  CONTEST_FREEZE_SOURCE_PATHS,
   loadAndValidateContestFreeze,
   type ContestFreeze,
 } from "./validateContestFreeze";
@@ -193,7 +194,7 @@ npm run analysis:pilot:report:check
 npm exec -- tsx scripts/release/validateContestFreeze.ts
 \`\`\`
 
-La revisión independiente confirmó el manifest, sus ${Object.keys(freeze.manifest.resourceSnapshots).length} recursos, los conjuntos de relaciones y la ausencia de cambios en \`data/curated\`, \`public/data\`, \`src/domain\` y \`src/features\` desde el commit fuente.
+La revisión independiente confirmó el manifest, sus ${Object.keys(freeze.manifest.resourceSnapshots).length} recursos, los conjuntos de relaciones y la ausencia de cambios en las rutas de frontera congelada (${CONTEST_FREEZE_SOURCE_PATHS.map((sourcePath) => `\`${sourcePath}\``).join(", ")}) desde el commit fuente. Las rutas de UI, búsqueda y print quedan fuera de esta frontera y no se presentan como parte del freeze.
 
 ## Despliegue
 

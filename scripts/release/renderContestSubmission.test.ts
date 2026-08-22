@@ -62,6 +62,12 @@ describe("contest submission renderer", () => {
     expect(rendered["technical-evidence.md"]).toContain(
       "no los da por ejecutados",
     );
+    expect(rendered["technical-evidence.md"]).toContain(
+      "rutas de UI, búsqueda y print quedan fuera de esta frontera",
+    );
+    expect(rendered["technical-evidence.md"]).not.toContain(
+      "ausencia de cambios en `data/curated`, `public/data`, `src/domain` y `src/features`",
+    );
     expect(rendered["technical-evidence.md"]).not.toContain(
       "Comandos ejecutados sobre el commit congelado",
     );
