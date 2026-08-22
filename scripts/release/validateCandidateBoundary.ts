@@ -1,6 +1,6 @@
 import { createHash } from "node:crypto";
-import { constants as fsConstants } from "node:fs";
-import { lstat, open, readFile, readdir, realpath } from "node:fs/promises";
+import { constants as fsConstants, type Dirent } from "node:fs";
+import { lstat, open, opendir, realpath } from "node:fs/promises";
 import { join, relative, resolve, sep } from "node:path";
 import { fileURLToPath } from "node:url";
 import { TextDecoder } from "node:util";
@@ -350,16 +350,20 @@ async function collectRegularFiles(
   }
 
   const files: string[] = [];
-  const entries = await readdir(absoluteDirectory, { withFileTypes: true });
-  for (const entry of entries.sort((left, right) =>
-    left.name.localeCompare(right.name, "en"),
-  )) {
+  const entries: Dirent[] = [];
+  const directory = await opendir(absoluteDirectory);
+  for await (const entry of directory) {
     state.entries += 1;
     if (state.entries > MAX_DIRECTORY_ENTRIES) {
       throw new Error(
         `${label} entries exceed the ${MAX_DIRECTORY_ENTRIES}-entry limit.`,
       );
     }
+    entries.push(entry);
+  }
+  for (const entry of entries.sort((left, right) =>
+    left.name.localeCompare(right.name, "en"),
+  )) {
     const entryPath = join(absoluteDirectory, entry.name);
     const entryStat = await assertPhysicalPath(rootDir, entryPath, label);
     if (entryStat.isDirectory()) {
@@ -785,6 +789,17 @@ function extractApplicableResourceEvidence(
   };
 }
 
+function assertCoverageFreezeResourceEvidence(
+  evidence: CandidateResourceEvidence | null,
+  label: string,
+): void {
+  if (evidence === null || evidence.resourceSnapshots.length !== 1) {
+    throw new Error(
+      `${label} must contain exactly one complete canonical resourceSnapshots map.`,
+    );
+  }
+}
+
 function assertEvidenceManifestIdentity(
   value: unknown,
   label: string,
@@ -862,6 +877,7 @@ function assertNoContradictoryOwnership(text: string, label: string): void {
     .map((clause) => clause.trim())
     .filter((clause) => clause !== "");
 
+  let anchoredSemicolon = false;
   for (const clause of clauses) {
     const references = [...clause.matchAll(/https?:\/\/[^\s<>()]+/giu)].map(
       (match) => match[0].replace(/[.,;]+$/u, ""),
@@ -871,7 +887,13 @@ function assertNoContradictoryOwnership(text: string, label: string): void {
     const hasAuditedUrl = references.some(
       (reference) => classifyCandidateReference(reference) !== "other",
     );
-    if (!hasSepeAnchor && !hasOccupationMarketAnchor && !hasAuditedUrl) {
+    const hasExplicitAnchor =
+      hasSepeAnchor || hasOccupationMarketAnchor || hasAuditedUrl;
+    const hasInheritedAnchor = anchoredSemicolon && !hasExplicitAnchor;
+    const hasAnchor = hasExplicitAnchor || hasInheritedAnchor;
+    const endsWithSemicolon = /;\s*$/u.test(clause);
+    if (!hasAnchor) {
+      anchoredSemicolon = false;
       continue;
     }
     const semanticClause = clause.replace(/https?:\/\/[^\s<>()]+/giu, " ");
@@ -881,7 +903,10 @@ function assertNoContradictoryOwnership(text: string, label: string): void {
       /(?:propiedad|propio|titularidad|licenc|relicenc|copyright|autor(?:ia)?|dataset|recurso|bajo\s+(?:la\s+)?licencia)/iu.test(
         semanticClause,
       );
-    if (!mentionsOwnershipTarget || !mentionsOwnership) continue;
+    if (!mentionsOwnershipTarget || !mentionsOwnership) {
+      anchoredSemicolon = endsWithSemicolon;
+      continue;
+    }
 
     const negativeClause =
       /(?:\bno\b|\bnunca\b|\bsin\b|\bnot\b|\bdoes\s+not\b|\bdoesn't\b).{0,120}?(?:licenc|propiedad|relicenc|cc\s*by|mit)/iu.exec(
@@ -898,6 +923,7 @@ function assertNoContradictoryOwnership(text: string, label: string): void {
         `Candidate boundary contains a contradictory JCyL/MIT ownership claim in ${label}.`,
       );
     }
+    anchoredSemicolon = endsWithSemicolon;
   }
 }
 
@@ -1214,6 +1240,9 @@ export async function validateCandidateBoundary(
         REQUIRED_EVIDENCE_DOCUMENTS.has(documentPath) ||
           resourceEvidence !== null,
       );
+      if (documentPath === "docs/contest/coverage-freeze.json") {
+        assertCoverageFreezeResourceEvidence(resourceEvidence, documentPath);
+      }
     } else {
       assertNoContradictoryOwnership(
         decodeUtf8(document.bytes, `Candidate document ${documentPath}`),
@@ -1234,17 +1263,25 @@ export async function validateCandidateBoundary(
   };
 }
 
-async function main(argv: readonly string[]): Promise<void> {
+export async function main(
+  argv: readonly string[],
+  rootDir = process.cwd(),
+): Promise<void> {
   const bundleRootIndex = argv.indexOf("--bundle-root");
   const bundleRoot =
     bundleRootIndex === -1 ? "dist" : (argv[bundleRootIndex + 1] ?? "");
   if (bundleRoot !== "dist") {
     throw new Error("Usage: validateCandidateBoundary.ts --bundle-root dist");
   }
-  const rootDir = process.cwd();
-  const manifest = JSON.parse(
-    await readFile(join(rootDir, "public/data/v1/manifest.json"), "utf8"),
-  ) as CandidateManifest;
+  const manifestFile = await readRegularFile(
+    rootDir,
+    DEFAULT_CANDIDATE_BOUNDARY_OPTIONS.manifestPath,
+    "Candidate manifest",
+  );
+  const manifest = parseCandidateManifest(
+    parseJson(manifestFile.bytes, "Candidate manifest"),
+    "Candidate manifest",
+  );
   const sepeResourcePath =
     manifest.resourceSnapshots.sepeOccupationMarket.resourcePath;
   const result = await validateCandidateBoundary({

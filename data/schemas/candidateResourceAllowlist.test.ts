@@ -101,6 +101,14 @@ describe("candidate resource allowlist", () => {
     ).toBe("publisher-owned");
   });
 
+  it("decodes certificate URL paths before classifying them", () => {
+    expect(
+      classifyCandidateReference(
+        "https://external.example/%63ertificados/curso",
+      ),
+    ).toBe("publisher-owned");
+  });
+
   it("asserts the canonical 116-record SEPE resource", async () => {
     const manifest = JSON.parse(
       await readFile("public/data/v1/manifest.json", "utf8"),

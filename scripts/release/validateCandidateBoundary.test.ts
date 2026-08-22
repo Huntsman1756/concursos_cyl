@@ -14,6 +14,7 @@ import { afterAll, afterEach, beforeAll, describe, expect, it } from "vitest";
 
 import { CANDIDATE_RESOURCE_KEYS } from "../../data/schemas/candidateResourceAllowlist";
 import {
+  main,
   validateCandidateBoundary,
   type CandidateBoundaryOptions,
 } from "./validateCandidateBoundary";
@@ -459,6 +460,25 @@ describe("candidate data boundary", () => {
     ).rejects.toThrow(/manifest.*required|evidence.*manifest|snapshotId/iu);
   }, 90_000);
 
+  it("requires coverage-freeze to carry the complete canonical resource map", async () => {
+    await updateFixtureJson(
+      fixtureRoot,
+      "docs/contest/coverage-freeze.json",
+      (freeze) => {
+        const document = asRecord(freeze, "coverage freeze");
+        const manifest = asRecord(
+          document.manifest,
+          "coverage freeze manifest",
+        );
+        delete manifest.resourceSnapshots;
+      },
+    );
+
+    await expect(
+      validateCandidateBoundary(await currentCandidateOptions(fixtureRoot)),
+    ).rejects.toThrow(/coverage-freeze.*resourceSnapshots|canonical.*map/iu);
+  }, 90_000);
+
   it.each(["snapshotId", "sha256"])(
     "rejects evidence manifests missing %s",
     async (field) => {
@@ -660,10 +680,34 @@ describe("candidate data boundary", () => {
     ).rejects.toThrow(/ownership|licen|JCyL|SEPE/iu);
   }, 90_000);
 
+  it("rejects an implicit affirmative claim after an anchored negative clause", async () => {
+    await writeFile(
+      join(fixtureRoot, "docs/contest/application-summary.md"),
+      "SEPE no se licencia como JCyL o MIT; es propiedad de la Junta bajo MIT.\n",
+      "utf8",
+    );
+
+    await expect(
+      validateCandidateBoundary(await currentCandidateOptions(fixtureRoot)),
+    ).rejects.toThrow(/ownership|licen|JCyL|SEPE/iu);
+  }, 90_000);
+
   it("audits publisher-owned certificate references for ownership claims", async () => {
     await writeFile(
       join(fixtureRoot, "docs/contest/application-summary.md"),
       "https://certificados.example/certificados/curso es un recurso propiedad de la Junta de Castilla y León y se distribuye bajo CC BY.\n",
+      "utf8",
+    );
+
+    await expect(
+      validateCandidateBoundary(await currentCandidateOptions(fixtureRoot)),
+    ).rejects.toThrow(/ownership|licen|publisher|certific/iu);
+  }, 90_000);
+
+  it("audits percent-encoded publisher-owned certificate references", async () => {
+    await writeFile(
+      join(fixtureRoot, "docs/contest/application-summary.md"),
+      "https://external.example/%63ertificados/curso es un recurso propiedad de la Junta de Castilla y León y se distribuye bajo CC BY.\n",
       "utf8",
     );
 
@@ -760,5 +804,26 @@ describe("candidate data boundary", () => {
     await expect(
       validateCandidateBoundary(await currentCandidateOptions(fixtureRoot)),
     ).rejects.toThrow(/duplicate.*json.*key|duplicate.*manifest/iu);
+  }, 90_000);
+
+  it("keeps the directory inventory bounded before sorting entries", async () => {
+    const validatorSource = await readFile(
+      join(ROOT, "scripts/release/validateCandidateBoundary.ts"),
+      "utf8",
+    );
+
+    expect(validatorSource).toContain("for await (const entry of directory)");
+    expect(validatorSource).not.toMatch(/\breaddir\(/u);
+  });
+
+  it("uses the safe bounded manifest reader in the direct CLI entrypoint", async () => {
+    await writeFile(
+      join(fixtureRoot, PUBLIC_MANIFEST),
+      Buffer.alloc(16 * 1024 * 1024 + 1, 0x20),
+    );
+
+    await expect(main([], fixtureRoot)).rejects.toThrow(
+      /16[\s_]*MiB|16777216|byte limit/iu,
+    );
   }, 90_000);
 });

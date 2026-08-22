@@ -2,9 +2,9 @@
 
 ## Estado
 
-`CORRECTIVE_CYCLE_2_WITH_GATES_NOTED`
+`CORRECTIVE_CYCLE_3_WITH_GATES_NOTED`
 
-No se declara aprobación: este es el segundo y último ciclo correctivo para
+No se declara aprobación: este informe registra el último ciclo correctivo para
 revisión del padre y de un tercer revisor.
 
 ## Base y alcance
@@ -85,3 +85,43 @@ directorio portables en esta primitive. El fichero final se lee por descriptor,
 se verifica regularidad/inode y se revalidan padres después; la sustitución de
 directorio durante esa ventana no puede eliminarse completamente sin una API
 de directorio segura del host.
+
+## Último ciclo correctivo P3
+
+Este apéndice registra el ciclo posterior sobre `HEAD` con los cuatro hallazgos
+P3 y el residual de lectura directa del CLI. No se declara aprobación.
+La base observada al iniciar este ciclo fue `1d49999`.
+
+- `coverage-freeze.json` ahora exige exactamente un mapa completo de
+  `resourceSnapshots` y lo compara por las 21 claves y sus triples. El
+  `release-evidence.json` mantiene deliberadamente su contrato actual de
+  identidad escalar (`manifest.snapshotId` + `manifest.sha256`); no se fabrica
+  un mapa duplicado allí. La validación del mapa propio de release evidence
+  permanece en el validador de evidencia de Task 7.
+- Las claims arrastran un anclaje SEPE a la cláusula siguiente separada por
+  punto y coma, pero solo hasta ese límite; por tanto falla `SEPE no se
+  licencia como JCyL o MIT; es propiedad de la Junta bajo MIT`.
+- `classifyCandidateReference` decodifica percent-encoding de `pathname` de
+  forma fail-closed antes de clasificar certificados y occupation-market.
+- El inventario de directorios usa `opendir`/iteración asíncrona, aplica el
+  límite de entradas antes de ordenar y no materializa el resultado de
+  `readdir`.
+- El entrypoint CLI lee el manifest con el mismo descriptor seguro, límite de
+  16 MiB, UTF-8 fatal y parseo estricto que el validador.
+
+### RED → GREEN y gates del ciclo P3
+
+RED observado antes del parche: 6 regresiones (mapa coverage ausente, claim
+implícita, clasificación de certificado codificado, walker materializante y
+lectura directa del CLI; la clasificación se cubrió tanto en allowlist como en
+boundary). GREEN focalizado: 2 archivos, 53 tests pasados.
+
+Gates ejecutados: la suite focalizada quedó en 53/53; la misma suite agregada
+quedó en 139/139 (los seis nuevos tests elevan la base previa de 133); el CLI
+salió 0 con `21 resources, 116 SEPE records`; typecheck, lint, format:check y
+diff-check salieron 0. Se mantiene la instrucción de no ejecutar build,
+`data:build` ni E2E en este ciclo.
+
+El diff de este ciclo queda acotado a los cuatro archivos de código/test
+permitidos más este informe ignorado; no se ha hecho staging ni commit todavía
+por coordinación con el índice compartido.

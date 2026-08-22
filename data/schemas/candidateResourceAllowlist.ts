@@ -192,7 +192,13 @@ export function classifyCandidateReference(
     return "other";
   }
 
-  const hostAndPath = `${parsed.hostname.toLocaleLowerCase("en-US")}${parsed.pathname.toLocaleLowerCase("en-US")}`;
+  let decodedPath: string;
+  try {
+    decodedPath = decodeURIComponent(parsed.pathname);
+  } catch {
+    return "other";
+  }
+  const hostAndPath = `${parsed.hostname.toLocaleLowerCase("en-US")}${decodedPath.toLocaleLowerCase("en-US")}`;
   const certificateReference =
     /(?:certificad|especialidad|cualific|titulaci[oó]n|formativ)/u.test(
       hostAndPath,
@@ -201,7 +207,7 @@ export function classifyCandidateReference(
   if (isSepeHost(parsed.hostname.toLocaleLowerCase("en-US"))) {
     return "complementary-classification-source";
   }
-  if (/occupation-market/u.test(parsed.pathname.toLocaleLowerCase("en-US"))) {
+  if (/occupation-market/u.test(decodedPath.toLocaleLowerCase("en-US"))) {
     return "other";
   }
   return "other";
