@@ -590,7 +590,7 @@ describe("CompareStudiesPage", () => {
     expect(comparisonStyles).toMatch(
       /\.compare-page \.income-bars\s*\{[\s\S]*?gap: 0\.5rem;[\s\S]*?margin: 0\.75rem 0 0;/u,
     );
-    expect(comparisonStyles).toMatch(
+    expect(comparisonStyles).not.toMatch(
       /\.compare-page \.income-technical-detail\s*\{[\s\S]*?display: none !important;/u,
     );
     expect(comparisonStyles).toMatch(

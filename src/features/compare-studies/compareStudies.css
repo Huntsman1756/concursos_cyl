@@ -728,10 +728,6 @@
     margin: 0.75rem 0 0;
   }
 
-  .compare-page .income-technical-detail {
-    display: none !important;
-  }
-
   .compare-page .income-limitation,
   .compare-page .income-results__source {
     break-inside: avoid;

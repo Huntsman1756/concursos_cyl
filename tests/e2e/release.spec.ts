@@ -135,6 +135,9 @@ test("print media preserves closed evidence and hides coordinate details", async
       name: "Distribución de centros",
     }),
   ).toBeVisible();
+  // Install the deterministic fixture after the published coordinate snapshot
+  // has loaded, so a deferred request cannot replace the checked DOM.
+  await installDecisionFlowFixture(coordinatesPage);
   await coordinatesPage.emulateMedia({ media: "print" });
 
   const coordinates = coordinatesPage.locator(
@@ -143,4 +146,41 @@ test("print media preserves closed evidence and hides coordinate details", async
   await expect(coordinates).toHaveCount(1);
   await expect(coordinates).toHaveCSS("display", "none");
   await coordinatesPage.close();
+
+  const comparisonPage = await page.context().newPage();
+  await comparisonPage.goto(
+    "/comparar?level=higher&group=income-group-db9adff8e25e2290&cohort=2019-2020&year=4",
+  );
+  await expect(
+    comparisonPage.getByRole("heading", {
+      name: "Ingresos observados del ciclo o grupo en España",
+    }),
+  ).toBeVisible();
+  await comparisonPage.emulateMedia({ media: "print" });
+
+  const technicalTable = comparisonPage
+    .locator("details.income-technical-detail table")
+    .first();
+  await expect(technicalTable).toContainText("Medida publicada");
+  expect(
+    await technicalTable.evaluate(
+      (element) => element.getBoundingClientRect().height,
+    ),
+  ).toBeGreaterThan(0);
+  await expect(comparisonPage.locator(".compare-page__caveat")).toHaveText(
+    "No es una predicción salarial personal.",
+  );
+  await expect(comparisonPage.locator(".income-limitation")).toContainText(
+    "Mostramos ambas referencias por separado",
+  );
+  const comparisonSource = comparisonPage.getByRole("link", {
+    name: "Fuente: EDUCAbase",
+  });
+  await expect(comparisonSource).toHaveAttribute("href");
+  expect(
+    await comparisonSource.evaluate(
+      (element) => element.getBoundingClientRect().height,
+    ),
+  ).toBeGreaterThan(0);
+  await comparisonPage.close();
 });
