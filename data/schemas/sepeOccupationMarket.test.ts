@@ -113,6 +113,14 @@ describe("SepeOccupationMarketSchema", () => {
     for (const sourceUrl of [
       validRecord.source.url.replace("_2721-", "_2252-"),
       validRecord.source.url.replace("_2026_07_", "_2026_06_"),
+      validRecord.source.url.replace(
+        "https://www.sepe.es/",
+        "https://user:password@www.sepe.es/",
+      ),
+      validRecord.source.url.replace(
+        "https://www.sepe.es/",
+        "https://www.sepe.es:444/",
+      ),
       "https://www.sepe.es/",
     ]) {
       expect(() =>

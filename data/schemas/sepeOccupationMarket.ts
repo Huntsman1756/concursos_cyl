@@ -39,6 +39,9 @@ export function isCanonicalSepeOccupationMarketUrl(
   if (
     parsed.protocol !== "https:" ||
     parsed.hostname.toLocaleLowerCase("en-US") !== "www.sepe.es" ||
+    parsed.port !== "" ||
+    parsed.username !== "" ||
+    parsed.password !== "" ||
     parsed.search !== "" ||
     parsed.hash !== ""
   ) {
