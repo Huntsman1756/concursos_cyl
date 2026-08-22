@@ -46,4 +46,6 @@
 4. Obtener aprobación humana explícita para el texto final, la URL y la
    presentación externa antes de cualquier envío.
 
-No hacer push, deploy ni envío al concurso desde esta sesión pendiente.
+Esta sesión sí autoriza el push a `main` y el despliegue de producción del
+commit revisado. No autoriza una captura probatoria, pasar la evidencia a
+`verified` ni el envío al concurso.
