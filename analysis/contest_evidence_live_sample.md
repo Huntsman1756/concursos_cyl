@@ -2,10 +2,10 @@
 
 ## Muestra vigente
 
-- Límite de datos: `721c5f2688a0049d0148fb8295a190eddbfbd8be`.
+- Límite de datos: `ab534c7f64b2ec10ae5f22ec843db46caf3b0ef4`.
 - Población: 264 relaciones aprobadas en `data/curated/training-occupation-links.json`.
 - Tamaño: 15 relaciones seleccionadas de forma determinista.
-- Corte: 2026-08-22T12:06:51+02:00.
+- Corte: 2026-08-22T12:08:22+02:00.
 - Semilla: `f3813d12cff3876db8760975cf82b0ad47c5d3ea76983d809ef45891324bf21c`.
 - Selección: ordenar `SHA-256(seed|relationKey)` y tomar las primeras 15 claves.
 - Resultado: **15 PASS / 0 FAIL** en una segunda revisión independiente de la URL y la cita oficial registrada para cada relación.
@@ -20,7 +20,7 @@ ratifica por sí solo la suficiencia semántica de todo el catálogo.
 
 La muestra anterior se extrajo sobre 220 claves, con corte 2026-08-19T18:00:00+02:00. Encontró 9 relaciones con cita y frontera semántica defendibles, 4 fallos de frontera CNO, 1 diferencia de nivel pendiente y 1 cita no literal. Esa auditoría no ratificó la propuesta 76/220.
 
-Sus hallazgos se usaron para retirar seis relaciones de la publicación y corregir una cita. No se trasladan como resultado vivo al límite `721c5f2`; el detalle histórico y las claves remediadas quedan en el JSON.
+Sus hallazgos se usaron para retirar seis relaciones de la publicación y corregir una cita. No se trasladan como resultado vivo al límite `ab534c7`; el detalle histórico y las claves remediadas quedan en el JSON.
 
 ## Decisión
 
