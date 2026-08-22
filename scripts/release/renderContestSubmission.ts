@@ -133,6 +133,10 @@ function renderTechnicalEvidence(
     deployment.status === "verified" && deployment.verifiedAt !== null
       ? `El release público se verificó con el commit ${deploymentCommit} y el run ${workflowRun} el ${deployment.verifiedAt}.`
       : "Estos dos campos no se inventan antes de ejecutar y verificar el release.";
+  const reproducibilityIntro =
+    deployment.status === "verified"
+      ? "Comandos ejecutados y ligados al commit de publicación en `release-evidence.json`:"
+      : "Comandos previstos para repetir las comprobaciones. Este documento no los da por ejecutados hasta que `release-evidence.json` quede verificado y ligado al commit de publicación:";
   return `# Evidencia técnica
 
 ## Freeze de cobertura
@@ -172,7 +176,7 @@ La cifra de ofertas es una unión de IDs de ofertas que pasan las reglas de matc
 
 ## Reproducibilidad
 
-Comandos ejecutados sobre el commit congelado:
+${reproducibilityIntro}
 
 \`\`\`text
 npm run data:build

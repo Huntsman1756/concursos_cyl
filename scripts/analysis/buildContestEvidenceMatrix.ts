@@ -175,6 +175,37 @@ export function resolveContestEvidenceSourceCommit(
   return sourceCommitSha;
 }
 
+export function resolveContestEvidenceCliSourceCommit(
+  rootDirectory: string,
+  requestedSourceCommitSha: string | undefined,
+  checkMode: boolean,
+): string | undefined {
+  if (requestedSourceCommitSha !== undefined || !checkMode) {
+    return requestedSourceCommitSha;
+  }
+  const matrixPath = resolve(
+    rootDirectory,
+    "analysis/contest_evidence_matrix.json",
+  );
+  if (!existsSync(matrixPath)) {
+    throw new Error(
+      "Contest evidence matrix output is missing; pass --source-commit to create it.",
+    );
+  }
+  const recorded = JSON.parse(readFileSync(matrixPath, "utf8")) as {
+    sourceCommitSha?: unknown;
+  };
+  if (
+    typeof recorded.sourceCommitSha !== "string" ||
+    !/^[a-f0-9]{40}$/u.test(recorded.sourceCommitSha)
+  ) {
+    throw new Error(
+      "Checked-in contest evidence matrix has no valid sourceCommitSha.",
+    );
+  }
+  return recorded.sourceCommitSha;
+}
+
 function sampleDigest(seed: string, relationKey: string): string {
   return createHash("sha256").update(`${seed}|${relationKey}`).digest("hex");
 }
@@ -483,12 +514,17 @@ function runCli(): void {
     argument.startsWith("--source-commit="),
   );
   const sourceCommitIndex = process.argv.indexOf("--source-commit");
-  const sourceCommitSha =
+  const requestedSourceCommitSha =
     sourceCommitArgument?.slice("--source-commit=".length) ??
     (sourceCommitIndex >= 0 ? process.argv[sourceCommitIndex + 1] : undefined);
-  if (sourceCommitIndex >= 0 && sourceCommitSha === undefined) {
+  if (sourceCommitIndex >= 0 && requestedSourceCommitSha === undefined) {
     throw new Error("--source-commit requires a commit SHA");
   }
+  const sourceCommitSha = resolveContestEvidenceCliSourceCommit(
+    rootDirectory,
+    requestedSourceCommitSha,
+    process.argv.includes("--check"),
+  );
   const matrix = buildContestEvidenceMatrix(rootDirectory, {
     sourceCommitSha,
   });

@@ -59,6 +59,12 @@ describe("contest submission renderer", () => {
     expect(rendered["submission-checklist.md"]).toContain(
       "PENDIENTE DE APROBACIÓN HUMANA",
     );
+    expect(rendered["technical-evidence.md"]).toContain(
+      "no los da por ejecutados",
+    );
+    expect(rendered["technical-evidence.md"]).not.toContain(
+      "Comandos ejecutados sobre el commit congelado",
+    );
   });
 
   it("renders verified deployment provenance and current capture checks", () => {
@@ -79,6 +85,9 @@ describe("contest submission renderer", () => {
     expect(rendered["technical-evidence.md"]).toContain("31338739210");
     expect(rendered["technical-evidence.md"]).not.toContain(
       "PENDIENTE DE DESPLIEGUE Y VERIFICACIÓN",
+    );
+    expect(rendered["technical-evidence.md"]).toContain(
+      "Comandos ejecutados y ligados al commit de publicación",
     );
     expect(rendered["submission-checklist.md"]).toContain(
       "- [x] Ejecutar los gates de release y verificar la aplicación pública.",

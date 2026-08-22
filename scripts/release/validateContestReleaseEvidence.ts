@@ -67,7 +67,14 @@ export type ContestReleaseEvidence = {
   };
   localGates: Record<
     (typeof GATE_KEYS)[number],
-    { status: "passed"; command: string; captureCount?: number; note?: string }
+    {
+      status: "pending" | "passed";
+      command: string;
+      checkedCommitSha: string | null;
+      verifiedAt: string | null;
+      captureCount?: number;
+      note?: string;
+    }
   >;
   deployment: {
     status: "pending" | "verified";
@@ -373,22 +380,51 @@ function capturesMatchPublication(
 function gate(
   value: unknown,
   label: string,
-): { status: "passed"; command: string; captureCount?: number; note?: string } {
+): ContestReleaseEvidence["localGates"][keyof ContestReleaseEvidence["localGates"]] {
   const parsed = exactKeys(
     value,
-    ["status", "command", "captureCount", "note"],
+    [
+      "status",
+      "command",
+      "checkedCommitSha",
+      "verifiedAt",
+      "captureCount",
+      "note",
+    ],
     label,
-    ["status", "command"],
+    ["status", "command", "checkedCommitSha", "verifiedAt"],
   );
-  if (parsed.status !== "passed")
-    throw new Error(`${label}.status must be passed`);
+  if (parsed.status !== "pending" && parsed.status !== "passed") {
+    throw new Error(`${label}.status must be pending or passed`);
+  }
   const command = nonEmptyString(parsed.command, `${label}.command`);
+  const checkedCommitSha = nullableSha(
+    parsed.checkedCommitSha,
+    `${label}.checkedCommitSha`,
+  );
+  const verifiedAt = nullableIsoUtc(parsed.verifiedAt, `${label}.verifiedAt`);
+  if (
+    parsed.status === "pending" &&
+    (checkedCommitSha !== null || verifiedAt !== null)
+  ) {
+    throw new Error(`${label} pending gate must not claim provenance`);
+  }
+  if (
+    parsed.status === "passed" &&
+    (checkedCommitSha === null || verifiedAt === null)
+  ) {
+    throw new Error(
+      `${label} passed gate requires checkedCommitSha and verifiedAt provenance`,
+    );
+  }
   if ("captureCount" in parsed) {
     nonNegativeInteger(parsed.captureCount, `${label}.captureCount`);
   }
   return {
-    status: "passed",
+    status: parsed.status,
     command,
+    checkedCommitSha,
+    verifiedAt,
     ...(parsed.captureCount === undefined
       ? {}
       : { captureCount: parsed.captureCount as number }),
@@ -549,6 +585,31 @@ export function validateContestReleaseEvidence(
   const parsedGates = Object.fromEntries(
     GATE_KEYS.map((key) => [key, gate(gates[key], `localGates.${key}`)]),
   ) as ContestReleaseEvidence["localGates"];
+  for (const [key, parsedGate] of Object.entries(parsedGates)) {
+    if (status === "pending") {
+      if (parsedGate.status !== "pending") {
+        throw new Error(
+          `localGates.${key} must remain pending before publication`,
+        );
+      }
+      continue;
+    }
+    if (
+      parsedGate.status !== "passed" ||
+      publicationSha === null ||
+      parsedGate.checkedCommitSha !== publicationSha ||
+      parsedGate.verifiedAt === null
+    ) {
+      throw new Error(
+        `localGates.${key} must be passed for the exact publication commit`,
+      );
+    }
+    if (Date.parse(parsedGate.verifiedAt) > Date.parse(recordedAt)) {
+      throw new Error(
+        `localGates.${key}.verifiedAt must not be later than recordedAt`,
+      );
+    }
+  }
   const captureCount = parsedGates.evidenceManifest.captureCount;
   if (captureCount === undefined) {
     throw new Error("localGates.evidenceManifest.captureCount is required");

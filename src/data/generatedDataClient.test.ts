@@ -116,7 +116,7 @@ const sepeResource = [
       },
     })),
     source: {
-      url: "https://www.sepe.es/HomeSepe/occupation/2721",
+      url: "https://www.sepe.es/HomeSepe/que-es-observatorio/informacion-mt-por-ocupacion/informacion-mercado-trabajo-por-ocupacion~_mensuales_2026_07_2721-Dise-adores-y-administradores-de-bases-de-datos~.html",
       retrievedAt: "2026-08-22T09:30:00Z",
       attribution: SEPE_OCCUPATION_MARKET_ATTRIBUTION,
     },

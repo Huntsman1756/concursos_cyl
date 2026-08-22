@@ -109,6 +109,21 @@ describe("SepeOccupationMarketSchema", () => {
     ).toThrow(/https|host|SEPE|url/i);
   });
 
+  it("requires the SEPE source URL to identify the record CNO and period", () => {
+    for (const sourceUrl of [
+      validRecord.source.url.replace("_2721-", "_2252-"),
+      validRecord.source.url.replace("_2026_07_", "_2026_06_"),
+      "https://www.sepe.es/",
+    ]) {
+      expect(() =>
+        SepeOccupationMarketSchema.parse({
+          ...validRecord,
+          source: { ...validRecord.source, url: sourceUrl },
+        }),
+      ).toThrow(/canonical|CNO|period|source URL/i);
+    }
+  });
+
   it("rejects a duplicate or unknown Castilla y León province", () => {
     const duplicate = validRecord.provinces.map((row, index) =>
       index === 1

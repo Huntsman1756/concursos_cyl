@@ -115,15 +115,10 @@ export const SepeOccupationProvinceSchema = z
 const SourceUrl = z
   .string()
   .url()
-  .refine((value) => {
-    try {
-      const parsed = new URL(value);
-      const hostname = parsed.hostname.toLocaleLowerCase("en-US");
-      return parsed.protocol === "https:" && hostname === "www.sepe.es";
-    } catch {
-      return false;
-    }
-  }, "Source URL must use HTTPS and be hosted by sepe.es.");
+  .refine(
+    (value) => isCanonicalSepeOccupationMarketUrl(value),
+    "Source URL must be a canonical HTTPS SEPE occupation-market detail URL.",
+  );
 
 export const SepeOccupationMarketSchema = z
   .object({
@@ -173,7 +168,22 @@ export const SepeOccupationMarketSchema = z
       })
       .strict(),
   })
-  .strict();
+  .strict()
+  .superRefine((record, context) => {
+    if (
+      !isCanonicalSepeOccupationMarketUrl(record.source.url, {
+        cnoCode: record.cno.code,
+        period: record.period,
+      })
+    ) {
+      context.addIssue({
+        code: "custom",
+        path: ["source", "url"],
+        message:
+          "Source URL must identify the same CNO code and period as the record.",
+      });
+    }
+  });
 
 export const SepeOccupationMarketRecordsSchema = z.array(
   SepeOccupationMarketSchema,

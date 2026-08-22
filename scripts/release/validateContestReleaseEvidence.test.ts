@@ -19,6 +19,7 @@ const PUBLICATION_SHA = "c".repeat(40);
 const EVIDENCE_SHA = "d".repeat(40);
 const MANIFEST_SHA = "e".repeat(64);
 const ROOT_URL = "https://salida-cyl.157-90-22-40.sslip.io/";
+const VERIFIED_AT = "2026-08-22T03:21:54Z";
 
 const context: ReleaseEvidenceValidationContext = {
   coverageFreeze: {
@@ -40,11 +41,29 @@ const context: ReleaseEvidenceValidationContext = {
   ],
 };
 
+function passedGate(command: string, captureCount?: number) {
+  return {
+    status: "passed" as const,
+    command,
+    checkedCommitSha: PUBLICATION_SHA,
+    verifiedAt: VERIFIED_AT,
+    ...(captureCount === undefined ? {} : { captureCount }),
+  };
+}
+
+function markLocalGatesPending(evidence: ContestReleaseEvidence): void {
+  for (const gate of Object.values(evidence.localGates)) {
+    gate.status = "pending";
+    gate.checkedCommitSha = null;
+    gate.verifiedAt = null;
+  }
+}
+
 function validEvidence(): ContestReleaseEvidence {
   return {
     schemaVersion: 1,
     status: "verified",
-    recordedAt: "2026-08-22T03:21:54Z",
+    recordedAt: VERIFIED_AT,
     expectedRootUrl: ROOT_URL,
     auditHeadSha: EVIDENCE_SHA,
     coverageSourceCommitSha: SOURCE_SHA,
@@ -63,20 +82,16 @@ function validEvidence(): ContestReleaseEvidence {
       offers: 1058,
     },
     localGates: {
-      coverageFreeze: { status: "passed", command: "freeze" },
-      submissionPack: { status: "passed", command: "submission" },
-      evidenceManifest: {
-        status: "passed",
-        captureCount: 2,
-        command: "evidence",
-      },
-      fullVitestCi: { status: "passed", command: "test" },
-      playwright: { status: "passed", command: "playwright" },
-      lint: { status: "passed", command: "lint" },
-      build: { status: "passed", command: "build" },
-      license: { status: "passed", command: "license" },
-      prettier: { status: "passed", command: "format" },
-      gitDiffCheck: { status: "passed", command: "diff" },
+      coverageFreeze: passedGate("freeze"),
+      submissionPack: passedGate("submission"),
+      evidenceManifest: passedGate("evidence", 2),
+      fullVitestCi: passedGate("test"),
+      playwright: passedGate("playwright"),
+      lint: passedGate("lint"),
+      build: passedGate("build"),
+      license: passedGate("license"),
+      prettier: passedGate("format"),
+      gitDiffCheck: passedGate("diff"),
     },
     deployment: {
       status: "verified",
@@ -118,6 +133,37 @@ describe("contest release evidence validator", () => {
     });
   });
 
+  it("rejects passed gates that have no publication-bound provenance", () => {
+    const legacy = validEvidence() as unknown as {
+      localGates: Record<string, Record<string, unknown>>;
+    };
+    delete legacy.localGates.coverageFreeze?.checkedCommitSha;
+    delete legacy.localGates.coverageFreeze?.verifiedAt;
+    expect(() => validateContestReleaseEvidence(legacy, context)).toThrow(
+      /gate|commit|provenance|verifiedAt/i,
+    );
+  });
+
+  it("rejects gates checked against another commit or after the evidence record", () => {
+    const wrongCommit = validEvidence();
+    wrongCommit.localGates.lint.checkedCommitSha = "f".repeat(40);
+    expect(() => validateContestReleaseEvidence(wrongCommit, context)).toThrow(
+      /gate|commit|publication/i,
+    );
+
+    const missingTimestamp = validEvidence();
+    missingTimestamp.localGates.build.verifiedAt = null;
+    expect(() =>
+      validateContestReleaseEvidence(missingTimestamp, context),
+    ).toThrow(/gate|verifiedAt|provenance/i);
+
+    const futureGate = validEvidence();
+    futureGate.localGates.playwright.verifiedAt = "2026-08-22T03:21:55Z";
+    expect(() => validateContestReleaseEvidence(futureGate, context)).toThrow(
+      /gate|verifiedAt|recordedAt/i,
+    );
+  });
+
   it("accepts a pending pre-publication record with frozen counts and no deployment assertions", () => {
     const pending = validEvidence();
     pending.status = "pending";
@@ -126,6 +172,7 @@ describe("contest release evidence validator", () => {
     pending.publicationCommitSha = null;
     pending.captureProductCommitSha = null;
     pending.localGates.evidenceManifest.captureCount = 0;
+    markLocalGatesPending(pending);
     pending.deployment = {
       status: "pending",
       commitSha: null,
@@ -157,6 +204,7 @@ describe("contest release evidence validator", () => {
     pending.publicationCommitSha = null;
     pending.captureProductCommitSha = null;
     pending.localGates.evidenceManifest.captureCount = 0;
+    markLocalGatesPending(pending);
     pending.deployment.status = "verified";
 
     expect(() => validateContestReleaseEvidence(pending, context)).toThrow(

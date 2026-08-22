@@ -8,12 +8,13 @@ import {
   writeFileSync,
 } from "node:fs";
 import { tmpdir } from "node:os";
-import { join } from "node:path";
+import { join, resolve } from "node:path";
 
 import { describe, expect, it } from "vitest";
 
 import {
   buildContestEvidenceMatrix,
+  resolveContestEvidenceCliSourceCommit,
   resolveContestEvidenceSourceCommit,
 } from "./buildContestEvidenceMatrix";
 
@@ -181,6 +182,66 @@ describe("contest evidence matrix", () => {
           fixture.sourceCommitSha,
         ),
       ).toBe(fixture.sourceCommitSha);
+    });
+  });
+
+  it("reuses the recorded source boundary for a check after documentation commits", () => {
+    withFixture((fixture) => {
+      writeFileSync(
+        join(fixture.root, "analysis", "contest_evidence_matrix.json"),
+        `${JSON.stringify({ sourceCommitSha: fixture.sourceCommitSha })}\n`,
+        "utf8",
+      );
+      execFileSync("git", ["add", "."], { cwd: fixture.root });
+      execFileSync("git", ["commit", "-qm", "generated matrix"], {
+        cwd: fixture.root,
+      });
+
+      expect(
+        resolveContestEvidenceCliSourceCommit(fixture.root, undefined, true),
+      ).toBe(fixture.sourceCommitSha);
+    });
+  });
+
+  it("checks committed outputs after a documentation-only commit and still rejects stale bytes", () => {
+    withFixture((fixture) => {
+      const scriptPath = resolve(
+        "scripts/analysis/buildContestEvidenceMatrix.ts",
+      );
+      const tsxPath = resolve("node_modules/.bin/tsx");
+      execFileSync(
+        tsxPath,
+        [scriptPath, "--source-commit", fixture.sourceCommitSha],
+        { cwd: fixture.root },
+      );
+      execFileSync("git", ["add", "."], { cwd: fixture.root });
+      execFileSync("git", ["commit", "-qm", "generated outputs"], {
+        cwd: fixture.root,
+      });
+      mkdirSync(join(fixture.root, "docs"), { recursive: true });
+      writeFileSync(join(fixture.root, "docs", "note.md"), "docs only\n");
+      execFileSync("git", ["add", "."], { cwd: fixture.root });
+      execFileSync("git", ["commit", "-qm", "documentation"], {
+        cwd: fixture.root,
+      });
+
+      expect(() =>
+        execFileSync(tsxPath, [scriptPath, "--check"], {
+          cwd: fixture.root,
+          stdio: "pipe",
+        }),
+      ).not.toThrow();
+
+      writeFileSync(
+        join(fixture.root, "analysis", "contest_evidence_matrix.md"),
+        "stale\n",
+      );
+      expect(() =>
+        execFileSync(tsxPath, [scriptPath, "--check"], {
+          cwd: fixture.root,
+          stdio: "pipe",
+        }),
+      ).toThrow();
     });
   });
 
