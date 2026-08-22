@@ -44,3 +44,51 @@ test("the manifest-addressed outcome artifact is public and same-origin", async 
     "application/json",
   );
 });
+
+test("the public candidate manifest retains canonical SEPE evidence", async ({
+  request,
+}) => {
+  const manifestResponse = await request.get("/data/v1/manifest.json");
+  expect(manifestResponse.ok()).toBe(true);
+  const manifest = (await manifestResponse.json()) as {
+    resourceSnapshots: Record<
+      string,
+      { recordCount: number; resourcePath: string }
+    >;
+  };
+  expect(Object.keys(manifest.resourceSnapshots).sort()).toEqual([
+    "centers",
+    "derivedFpOccupationGraph",
+    "ecylCourses",
+    "educationCenterDirectory",
+    "jobOffers",
+    "mappingCoverage",
+    "municipalities",
+    "occupationAliases",
+    "occupations",
+    "officialOccupations",
+    "openDataCatalog",
+    "outcomeIndicators",
+    "professionalCertificates",
+    "professionalProfiles",
+    "programs",
+    "provincialContracts",
+    "publicEmploymentCalls",
+    "publishedRequirements",
+    "sepeOccupationMarket",
+    "trainingOccupationLinks",
+    "trainingOfferings",
+  ]);
+  const sepeSnapshot = manifest.resourceSnapshots.sepeOccupationMarket;
+  expect(sepeSnapshot.recordCount).toBe(116);
+  const sepeResponse = await request.get(sepeSnapshot.resourcePath);
+  expect(sepeResponse.ok()).toBe(true);
+  const sepe = (await sepeResponse.json()) as {
+    period: string;
+    records: unknown[];
+    coverage: { notPublishedCnoCodes: unknown[] };
+  };
+  expect(sepe.period).toBe("2026-07");
+  expect(sepe.records).toHaveLength(116);
+  expect(sepe.coverage.notPublishedCnoCodes).toHaveLength(0);
+});

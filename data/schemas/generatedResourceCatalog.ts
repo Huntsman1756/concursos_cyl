@@ -93,6 +93,8 @@ export const GENERATED_FOUNDATION_RESOURCE_KEYS = Object.keys(
 
 export const GENERATED_RESOURCE_KEYS = Object.keys(
   GENERATED_RESOURCE_CATALOG,
+).sort((left, right) =>
+  left < right ? -1 : left > right ? 1 : 0,
 ) as GeneratedResourceKey[];
 
 export const GENERATED_RESOURCE_KEY_PATTERN = /^[a-z][a-zA-Z\d]*$/u;

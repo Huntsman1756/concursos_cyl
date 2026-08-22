@@ -6,6 +6,7 @@ import {
   GENERATED_RESOURCE_KEYS,
   immutableGeneratedResourcePath,
 } from "./generatedResourceCatalog";
+import { CANDIDATE_RESOURCE_KEYS } from "./candidateResourceAllowlist";
 
 describe("generated resource catalogue", () => {
   it("registers SEPE occupation market as an additive immutable resource", () => {
@@ -20,5 +21,9 @@ describe("generated resource catalogue", () => {
     expect(
       immutableGeneratedResourcePath("sepeOccupationMarket", "build-1"),
     ).toBe("/data/v1/snapshots/build-1/sepe-occupation-market.json");
+  });
+
+  it("keeps the generated catalogue aligned with the candidate allowlist", () => {
+    expect(GENERATED_RESOURCE_KEYS).toEqual([...CANDIDATE_RESOURCE_KEYS]);
   });
 });
