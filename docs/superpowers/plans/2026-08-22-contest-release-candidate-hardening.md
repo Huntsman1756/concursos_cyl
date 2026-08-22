@@ -615,6 +615,10 @@ not package an earlier source commit.
 - Modify: `src/data/generatedDataClient.ts`
 - Modify: `src/data/generatedDataClient.test.ts`
 - Modify: `package.json`
+- Preserve as publication inputs: `scripts/release/publicationMetadata.ts`
+- Preserve as publication tests: `scripts/release/publicationMetadata.test.ts`
+- Preserve as public assets: `public/salida-cyl-social.png`,
+  `public/salida-cyl-icon.png`, and `public/robots.txt`
 
 **Interfaces:**
 
@@ -734,6 +738,12 @@ and all newer fixtures while inserting the runtime-base argument.
 Prove byte equality for every core JS, CSS, dynamic chunk, image and data file,
 and exercise deep-route asset resolution under both bases. No compiled core
 byte may contain `/concursos_cyl/` or another deployment-specific prefix.
+
+The one-build/two-envelope producer must preserve the publication metadata
+renderer and its focused tests, both public PNGs, and the exact robots policy.
+Its acceptance checks must assert that both envelopes declare the configured VPS
+`canonicalRootUrl`, resolve `salida-cyl-social.png` from that URL, and retain
+byte-identical compiled core assets across Pages and VPS.
 
 The envelope manifest includes exactly `index.html`, `deployment-config.json`, and Pages `404.html` when present. It excludes `envelope-manifest.json`, `version.json`, and the copied public `artifact-manifest.json`. Create and hash that manifest first, then write `version.json` with the resulting `envelopeSha256`; this two-phase algorithm removes self-reference. The external `ReleaseAttestation` binds the shared identity and both envelope digests. Verification checks the core against public `artifact-manifest.json`, checks the envelope payload against its manifest, then checks the excluded `version.json` exactly against the attested deployment identity.
 

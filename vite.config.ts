@@ -1,6 +1,10 @@
 import { configDefaults, defineConfig } from "vitest/config";
 import react from "@vitejs/plugin-react";
 import { normalizePublicBasePath } from "./scripts/release/publicBasePath.ts";
+import {
+  publicationMetadata,
+  renderPublicationHead,
+} from "./scripts/release/publicationMetadata.ts";
 
 const SECURITY_HEADERS = {
   "Content-Security-Policy":
@@ -11,9 +15,16 @@ const SECURITY_HEADERS = {
   "X-Content-Type-Options": "nosniff",
 };
 
+const publicationMetadataPlugin = {
+  name: "salida-publication-metadata",
+  transformIndexHtml(html: string): string {
+    return renderPublicationHead(html, publicationMetadata(process.cwd()));
+  },
+};
+
 export default defineConfig({
   base: normalizePublicBasePath(process.env.VITE_PUBLIC_BASE_PATH),
-  plugins: [react()],
+  plugins: [react(), publicationMetadataPlugin],
   preview: { headers: SECURITY_HEADERS },
   test: {
     environment: "jsdom",
