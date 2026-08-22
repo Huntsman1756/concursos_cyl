@@ -50,4 +50,3 @@ Measured production assets:
 
 Propagate and render the Task 5 `functionalBoundary` assistant/adjacent label in
 the FP results UI before the final cross-task review.
-
