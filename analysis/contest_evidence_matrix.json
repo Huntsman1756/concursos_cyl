@@ -1,31 +1,31 @@
 {
   "schemaVersion": 1,
   "sourcePath": "data/curated/training-occupation-links.json",
-  "sourceCommitSha": "e41c5394d71c1324fe8a3e5d12a4a6f76793eaa2",
+  "sourceCommitSha": "ab534c7f64b2ec10ae5f22ec843db46caf3b0ef4",
   "auditCutoff": "2026-08-22T04:13:28+02:00",
-  "relationCount": 265,
+  "relationCount": 264,
   "commonFloorFailures": 0,
   "depthCounts": {
     "relation_artifact_discovered": 147,
-    "program_artifact_discovered": 118,
+    "program_artifact_discovered": 117,
     "common_validator_only": 0
   },
   "sampleSummary": {
     "sourcePath": "analysis/contest_evidence_live_sample.json",
-    "sourceCommitSha": "e41c5394d71c1324fe8a3e5d12a4a6f76793eaa2",
+    "sourceCommitSha": "ab534c7f64b2ec10ae5f22ec843db46caf3b0ef4",
     "auditedAt": "2026-08-22",
-    "population": 265,
+    "population": 264,
     "sampleSize": 15,
     "pass": 15,
     "fail": 0,
-    "notSampled": 250,
+    "notSampled": 249,
     "exhaustive": false,
-    "decision": "The deterministic 15-relation sample passed independently; the remaining 250 approved relations are not sampled here. This is not an exhaustive audit."
+    "decision": "The deterministic 15-relation sample passed independently; the remaining 249 approved relations are not sampled here. This is not an exhaustive audit."
   },
   "limitations": [
     "The common floor verifies repository fields and official-domain attribution, not the live source text.",
     "Artifact discovery is textual and must not be described as an exhaustive semantic audit.",
-    "The independent sample records 15 PASS and 0 FAIL; 250 approved relations remain not_sampled, so this is not an exhaustive audit."
+    "The independent sample records 15 PASS and 0 FAIL; 249 approved relations remain not_sampled, so this is not an exhaustive audit."
   ],
   "relations": [
     {
@@ -2402,7 +2402,7 @@
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "program_artifact_discovered",
-      "frontierSufficiency": "not_sampled"
+      "frontierSufficiency": "sample_pass"
     },
     {
       "relationKey": "ELE01M|occupation:cno11:7510",
@@ -3329,7 +3329,7 @@
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "relation_artifact_discovered",
-      "frontierSufficiency": "sample_pass"
+      "frontierSufficiency": "not_sampled"
     },
     {
       "relationKey": "EOC01M|occupation:cno11:7240",
@@ -3405,34 +3405,6 @@
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "relation_artifact_discovered",
-      "frontierSufficiency": "not_sampled"
-    },
-    {
-      "relationKey": "EOC02M|occupation:cno11:7211",
-      "programKey": "EOC02M",
-      "occupationId": "occupation:cno11:7211",
-      "relationshipType": "reviewed_relationship",
-      "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/edificacion-obra-civil/obras-interior-decoracion-rehabilitacion.html",
-      "sourceQuote": "Juntera / juntero de placa de yeso laminado.",
-      "reviewedAt": "2026-08-22",
-      "commonFloor": {
-        "officialSource": true,
-        "quotedEvidence": true,
-        "passes": true
-      },
-      "artifactDiscovery": {
-        "relationCooccurrencePaths": [],
-        "programMentionPaths": [
-          "analysis/fp_coverage_priority_20260822_wave3/batch-contract.json",
-          "analysis/fp_coverage_priority_20260822_wave3/frontier-review.md",
-          "analysis/fp_coverage_priority_20260822_wave3/no-match-catalog-revalidation.md",
-          "analysis/fp_coverage_priority_20260822_wave3/proposals/EOC02M.md",
-          "analysis/fp_coverage_priority_20260822_wave3/README.md",
-          "analysis/fp_coverage_priority_20260822_wave3/sources/EOC02M.txt"
-        ],
-        "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
-      },
-      "evidenceDepth": "program_artifact_discovered",
       "frontierSufficiency": "not_sampled"
     },
     {
@@ -5223,7 +5195,7 @@
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "relation_artifact_discovered",
-      "frontierSufficiency": "sample_pass"
+      "frontierSufficiency": "not_sampled"
     },
     {
       "relationKey": "IMP01M|occupation:cno11:5220",
@@ -5598,7 +5570,7 @@
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "program_artifact_discovered",
-      "frontierSufficiency": "not_sampled"
+      "frontierSufficiency": "sample_pass"
     },
     {
       "relationKey": "INA01S|occupation:cno11:7709",

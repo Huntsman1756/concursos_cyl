@@ -128,13 +128,17 @@ describe("contest coverage freeze validator", () => {
     ).toBe(116);
   }, 30_000);
 
-  it("reports the intentionally stale freeze artifact after the SEPE inventory expansion", async () => {
+  it("validates the final freeze after the SEPE inventory expansion", async () => {
     const freeze = await readFreeze();
+    const manifest = freeze.manifest as {
+      resourceSnapshots: Record<string, { recordCount: number }>;
+    };
 
-    expect(() => loadAndValidateContestFreeze(ROOT)).toThrow(
-      /21|sepeOccupationMarket|sourceCommitSha|ancestor/i,
+    expect(() => loadAndValidateContestFreeze(ROOT)).not.toThrow();
+    expect(Object.keys(manifest.resourceSnapshots)).toHaveLength(21);
+    expect(manifest.resourceSnapshots.sepeOccupationMarket?.recordCount).toBe(
+      116,
     );
-    expect(freeze.manifest).toBeDefined();
   }, 30_000);
 
   it("recomputes an envelope-backed SEPE snapshot by adapted record count", async () => {
