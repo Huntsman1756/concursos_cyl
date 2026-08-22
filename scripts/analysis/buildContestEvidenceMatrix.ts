@@ -9,9 +9,9 @@ import { execFileSync } from "node:child_process";
 import { extname, join, relative, resolve } from "node:path";
 import { pathToFileURL } from "node:url";
 
-const EXPECTED_APPROVED_RELATIONS = 241;
-const AUDIT_CUTOFF = "2026-08-21T18:30:00+02:00";
-const SOURCE_COMMIT_SHA = "b1d25a8a427a0f9949b9c9dea169478de640efdb";
+const EXPECTED_APPROVED_RELATIONS = 248;
+const AUDIT_CUTOFF = "2026-08-22T04:13:28+02:00";
+const SOURCE_COMMIT_SHA = "e41c5394d71c1324fe8a3e5d12a4a6f76793eaa2";
 const TEXT_EXTENSIONS = new Set([".json", ".md", ".txt"]);
 const OFFICIAL_DOMAINS = [
   "boe.es",

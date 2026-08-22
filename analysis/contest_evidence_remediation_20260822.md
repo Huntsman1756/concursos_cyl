@@ -1,39 +1,31 @@
-# Contest-evidence remediation — 2026-08-22
+# Remediación de evidencia del concurso — 2026-08-22
 
-## Decision
+## Límite revisado
 
-The following five approved FP↔CNO-11 relationships are removed from the curated publication and from the reproducible reviewed-coverage allow-list. No replacement, alias, fallback, or inferred relationship is added.
+La fuente de esta remediación es el commit `e41c5394d71c1324fe8a3e5d12a4a6f76793eaa2`. La publicación no añade relaciones por similitud ni sustituye una frontera CNO dudosa por otra inferida.
 
-| Key      | Published evidence | Remediation reason                                          |
-| -------- | ------------------ | ----------------------------------------------------------- |
-| `FME02B  | 7314`              | “Auxiliar de montador / montadora de estructuras metálicas” | The source output is auxiliary-level while CNO `7314` represents a qualified boundary; the evidence does not preserve the required responsibility level. |
-| `EOC02SD | 3129`              | “Delineante de obra civil.”                                 | A specific `3110` boundary exists for the technical drafting role; the generic `3129` mapping is not safe to retain.                                     |
-| `IMP01S  | 2640`              | “Técnica / técnico comercial.”                              | Generic commercial work does not establish the image-personal industry or medical-sector scope.                                                          |
-| `AGA01B  | 4121`              | “Auxiliar de almacén de flores.”                            | Warehouse assistance does not establish the administrative-task boundary represented by `4121`.                                                          |
-| `COM01M  | 5300`              | “Comerciante de tienda.”                                    | Retail commerce does not establish proprietor or store-manager responsibility.                                                                           |
+Se retiraron seis relaciones aprobadas sin reemplazo, alias ni fallback:
 
-## Invariants
+| Clave    | Evidencia publicada    | Motivo de remediación                                       |
+| -------- | ---------------------- | ----------------------------------------------------------- |
+| `FME02B  | occupation:cno11:7314` | «Auxiliar de montador / montadora de estructuras metálicas» | La salida oficial está en nivel auxiliar y CNO 7314 expresa una frontera cualificada; falta evidencia que preserve el nivel de responsabilidad. |
+| `EOC02SD | occupation:cno11:3129` | «Delineante de obra civil.»                                 | La frontera específica de delineación técnica queda en 3110; 3129 no es una sustitución segura.                                                 |
+| `IMP01S  | occupation:cno11:2640` | «Técnica / técnico comercial.»                              | La salida comercial genérica no demuestra el ámbito industrial, médico o farmacéutico de CNO 2640.                                              |
+| `AGA01B  | occupation:cno11:4121` | «Auxiliar de almacén de flores.»                            | La asistencia de almacén no demuestra las tareas administrativas de existencias de CNO 4121.                                                    |
+| `COM01M  | occupation:cno11:5300` | «Comerciante de tienda.»                                    | La etiqueta no demuestra la propiedad o gestión exigida por CNO 5300.                                                                           |
+| `HOT02S  | occupation:cno11:3510` | «Agente de viajes»                                          | La correspondencia correcta es CNO 4421; 3510 no conserva la ocupación publicada.                                                               |
 
-- The curated link count decreases from 254 to 249.
-- The number of programs with an approved link decreases from 122 to 121 because `EOC02SD` becomes uncovered; reviewed base coverage remains 104.
-- The five keys are absent from `data/curated/training-occupation-links.json`, `ACCEPTED_RELATION_KEYS`, the derived graph, and the regenerated snapshot.
-- The existing occupation catalog is unchanged. No new CNO code is inferred and no replacement mapping is published.
-- The research queue remains at 104 reviewed bases, 15 completed no-match bases, and 35 pending candidates.
+## Invariantes comprobadas
 
-## Verification
+- La publicación final contiene 248 relaciones aprobadas; el grafo derivado y el snapshot activo contienen la misma cifra.
+- La cobertura revisada abarca 104 cualificaciones base y 121 claves de modalidad; la cola conserva 104 bases revisadas, 15 resultados sin publicación y 35 bases pendientes.
+- Las seis claves retiradas están ausentes de los datos curados, del allow-list de restauración, del grafo derivado y del snapshot.
+- El catálogo de ocupaciones no se modifica para fabricar un reemplazo.
+- La relación `ELE02B|occupation:cno11:9700` conserva la cita oficial exacta «Peones de industrias manufactureras.».
+- La relación `SSC01S|occupation:cno11:2252` conserva ahora la frase BOE contigua «Educador o educadora infantil en primer ciclo de educación infantil».
 
-The absence assertions are in `scripts/data/restoreFrontierReviewedCoverage.test.ts` and `scripts/data/validateCuratedMappings.test.ts`. The focused restoration and curated-mapping suites pass after the removals. The snapshot and manifest are regenerated only after the current unpublished snapshot is retired; historical snapshots remain byte-identical.
+## Verificación
 
-## Final evidence remediation (round 5)
+Las aserciones de ausencia viven en las suites de restauración y validación de mappings. El snapshot y el manifest se regeneraron después de retirar el snapshot no publicado anterior; los snapshots históricos de agosto permanecen byte a byte sin cambios.
 
-The retained `ELE02B|9700` relationship now uses the exact official quote
-“Peones de industrias manufactureras.”. The retained `SSC01S|2252`
-relationship now uses the contiguous BOE phrase “Educador o educadora infantil
-en primer ciclo de educación infantil”.
-
-`HOT02S|3510` is removed from curated data and restoration coverage, without a
-replacement: “Agente de viajes” corresponds to CNO `4421`, not `3510`.
-The resulting publication contains 248 mappings; reviewed base coverage stays
-at 104 and program-key coverage at 121. The active snapshot is regenerated
-after retiring the prior unpublished snapshot; August 8/9 snapshots remain
-unchanged.
+La muestra independiente vigente se ha seleccionado sobre el límite `e41c539`, pero aún está pendiente de comprobación viva. Por eso la matriz separa el suelo común del validador de la suficiencia semántica y no presenta la coaparición textual como prueba suficiente.

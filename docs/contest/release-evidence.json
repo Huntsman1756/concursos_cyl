@@ -1,23 +1,23 @@
 {
   "schemaVersion": 1,
-  "status": "deployed_verified",
-  "recordedAt": "2026-08-21T12:53:19Z",
+  "status": "pending",
+  "recordedAt": "2026-08-22T04:13:28+02:00",
   "expectedRootUrl": "https://salida-cyl.157-90-22-40.sslip.io/",
-  "auditHeadSha": "90aba16a5bcef42ae6f966e9aaff9c53d82369aa",
-  "coverageSourceCommitSha": "ae63e89e47057de74b77009aa1d95e817a2d6fc7",
-  "coverageFreezeDocumentCommitSha": "90aba16a5bcef42ae6f966e9aaff9c53d82369aa",
-  "coverageFreezeCommitSha": "90aba16a5bcef42ae6f966e9aaff9c53d82369aa",
-  "publicationCommitSha": "90aba16a5bcef42ae6f966e9aaff9c53d82369aa",
-  "localReviewHeadSha": "90aba16a5bcef42ae6f966e9aaff9c53d82369aa",
-  "captureProductCommitSha": "90aba16a5bcef42ae6f966e9aaff9c53d82369aa",
+  "auditHeadSha": "e41c5394d71c1324fe8a3e5d12a4a6f76793eaa2",
+  "coverageSourceCommitSha": "e41c5394d71c1324fe8a3e5d12a4a6f76793eaa2",
+  "coverageFreezeDocumentCommitSha": null,
+  "coverageFreezeCommitSha": null,
+  "publicationCommitSha": null,
+  "localReviewHeadSha": "e41c5394d71c1324fe8a3e5d12a4a6f76793eaa2",
+  "captureProductCommitSha": null,
   "manifest": {
-    "snapshotId": "20260821120933391-9bd4488f9029",
-    "sha256": "1c3c4fa12ff0c4bacaadd2aac1c2ff5c52dd3f76508944a6334a7871c941c65d",
+    "snapshotId": "20260822021233066-9d8fa948959b",
+    "sha256": "ce47c7cf7011a3dcebddf2a3dac01c3e34ee175a18ac133211b5b5ca3fb3ba11",
     "qualityStatus": "passed",
     "programs": 187,
     "centers": 229,
     "offerings": 1294,
-    "offers": 1055
+    "offers": 1058
   },
   "localGates": {
     "coverageFreeze": {
@@ -32,33 +32,14 @@
       "status": "passed",
       "captureCount": 13,
       "command": "npm exec -- tsx scripts/release/validateContestEvidenceManifest.ts",
-      "note": "Las 13 capturas se recapturaron desde la URL canónica con el commit desplegado 90aba16 y superaron los gates de estado visible, red, consola, recursos externos, overflow y Axe."
-    },
-    "focusedVitest": {
-      "status": "passed",
-      "testFiles": 2,
-      "tests": 14
-    },
-    "dataAndReleaseVitest": {
-      "status": "passed",
-      "testFiles": 3,
-      "tests": 30
+      "note": "Las capturas PNG existentes pertenecen a un commit anterior; no se consideran evidencia actual del snapshot rebakeado."
     },
     "fullVitestCi": {
       "status": "passed",
-      "testFiles": 110,
-      "passedTestFiles": 87,
-      "skippedTestFiles": 23,
-      "tests": 936,
-      "passed": 756,
-      "skipped": 180,
-      "durationSeconds": 276.07,
-      "command": "npm run test:release -- --testTimeout=60000",
-      "workflowRunId": "32483659589"
+      "command": "npm run test:release -- --testTimeout=60000"
     },
     "playwright": {
-      "status": "passed",
-      "tests": 124,
+      "status": "failed",
       "command": "npm run test:e2e:chromium"
     },
     "lint": {
@@ -69,92 +50,33 @@
       "status": "passed",
       "command": "npm run build"
     },
-    "pagesBaseBuild": {
-      "status": "passed",
-      "basePath": "/concursos_cyl/",
-      "fallbackByteIdentical": true,
-      "assetsBasePrefixed": true
-    },
     "license": {
       "status": "passed",
       "command": "npm run license:check"
     },
     "prettier": {
       "status": "passed",
-      "command": "npm exec -- prettier --check ."
+      "command": "npm run format:check"
     },
     "gitDiffCheck": {
       "status": "passed",
       "command": "git diff --check"
-    },
-    "caddyContainerSmoke": {
-      "status": "passed",
-      "image": "salida-cyl:ci",
-      "checks": [
-        "security headers",
-        "SPA fallback",
-        "manifest content type",
-        "same-origin immutable outcome resource"
-      ],
-      "command": "CADDY_SMOKE_BASE_URL=http://127.0.0.1:18080 npm run release:caddy:verify"
-    },
-    "actionlint": {
-      "status": "passed",
-      "version": "1.7.12",
-      "checksumVerified": true,
-      "command": "actionlint .github/workflows/deploy-pages.yml"
     }
   },
   "deployment": {
-    "status": "verified",
-    "commitSha": "90aba16a5bcef42ae6f966e9aaff9c53d82369aa",
-    "workflowRunId": "32483659589",
-    "workflowUrl": "https://github.com/Huntsman1756/concursos_cyl/actions/runs/32483659589",
-    "liveRootVerified": true,
-    "verifiedAt": "2026-08-21T12:53:19Z"
+    "status": "pending",
+    "commitSha": null,
+    "workflowRunId": null,
+    "workflowUrl": null,
+    "liveRootVerified": false,
+    "verifiedAt": null
   },
   "publicVerification": {
+    "status": "pending",
     "rootUrl": "https://salida-cyl.157-90-22-40.sslip.io/",
-    "https": true,
-    "rootHttpStatus": 200,
-    "rootTitle": "SALIDA CyL",
-    "deepLinks": {
-      "httpStatus": 200,
-      "rendersAppThrough404Fallback": true,
-      "paths": [
-        "/comparar",
-        "/metodologia",
-        "/desde-fp/EOC01M",
-        "/desde-fp/COM01M",
-        "/desde-fp/IFC03S",
-        "/desde-fp/ADG02S",
-        "/desde-fp/IFC02S",
-        "/desde-fp/SSC01S",
-        "/desde-fp/ADG01M",
-        "/desde-fp/IMA03M",
-        "/desde-fp/IMA03S",
-        "/desde-fp/IMP01B",
-        "/desde-fp/TMV02M",
-        "/datos-abiertos",
-        "/accesibilidad"
-      ]
-    },
-    "manifest": {
-      "httpStatus": 200,
-      "sha256": "1c3c4fa12ff0c4bacaadd2aac1c2ff5c52dd3f76508944a6334a7871c941c65d",
-      "qualityStatus": "passed",
-      "snapshotGeneratedAt": "2026-08-21T12:09:33.391Z"
-    },
-    "outcomeIndicators": {
-      "logicalResourcePath": "/data/v1/snapshots/20260821120933391-9bd4488f9029/outcome-indicators.json",
-      "resolvedUrl": "https://salida-cyl.157-90-22-40.sslip.io/data/v1/snapshots/20260821120933391-9bd4488f9029/outcome-indicators.json",
-      "httpStatus": 200,
-      "sha256": "4f2c6b73fc4171bb9daf21583712ab2ec99bcaa7d27b1f2fd0c070b9079ab3e2"
-    },
-    "hostHeaders": {
-      "strictTransportSecurity": "max-age=31536000; includeSubDomains",
-      "contentSecurityPolicy": "default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'self'; frame-ancestors 'none'; form-action 'self'"
-    }
+    "rootHttpStatus": null,
+    "manifestSha256": null,
+    "verifiedAt": null
   },
   "humanApproval": {
     "finalApplicationTextApproved": false,
@@ -162,6 +84,10 @@
     "submissionAuthorized": false
   },
   "blockers": [
-    "Contest portal submission still requires the final application text, human-only fields, and immediate explicit submit authorization."
+    "Pages y VPS no se han desplegado ni verificado para el commit e41c5394d71c1324fe8a3e5d12a4a6f76793eaa2.",
+    "La evidencia visual existente es histórica respecto al snapshot actual y requiere recaptura tras un despliegue verificable.",
+    "La candidatura todavía requiere texto final, campos humanos y autorización explícita para el envío externo.",
+    "El E2E Chromium conserva cuatro fallos en COM01M: la suite espera 8 grupos revisados y el snapshot actual publica 7; no se modifica data/public/src en esta tarea.",
+    "El reporte de piloto no puede regenerarse porque COM01M figura diferido en sus resultados históricos y revisado en la cobertura pública actual."
   ]
 }

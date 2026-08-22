@@ -4,34 +4,31 @@
 
 - Repositorio canónico: <https://github.com/Huntsman1756/concursos_cyl>.
 - Rama de integración: `codex/parallel-continuation-wave-20260821`.
-- Commit fuente del freeze de cobertura: `c15abe83e9f1aacff6237c37644b9bb9025e7d89`.
-- Snapshot activo: `20260821211208576-0eb34bdc0798`.
-- Cobertura: 92 cualificaciones base, 110 claves de modalidad, 241 relaciones aprobadas y 21 alias.
-- Cola oficial: 47 cualificaciones pendientes y 15 resultados no-match revalidados contra el catálogo actual.
-- La revalidación añadió `AGA01S|5993` con evidencia oficial y dejó trazabilidad explícita de los otros 15 no-match.
-- Ocho datasets JCyL visibles y 20 recursos inmutables en el manifiesto.
-- El runtime conserva dos snapshots, comprueba todos los recursos del manifiesto y sustituye el staging con restauración segura ante fallo.
-- GitHub Pages verifica después del despliegue el SHA y los bytes exactos del manifiesto y de sus recursos.
-- El despliegue POSIX del VPS usa un archivo remoto exclusivo por ejecución, activación atómica y retención fail-closed.
-- QA local del candidato: 854 pruebas aprobadas y 180 omitidas por plataforma; build, freeze, formato y lint correctos; E2E Chromium con 124 recorridos aprobados en escritorio y móvil.
+- Límite fuente del freeze: `e41c5394d71c1324fe8a3e5d12a4a6f76793eaa2`.
+- Snapshot activo: `20260822021233066-9d8fa948959b`.
+- Cobertura: 104 cualificaciones base, 121 claves de modalidad, 248 relaciones aprobadas y 21 alias.
+- Cola oficial: 35 cualificaciones pendientes y 15 resultados sin publicación revalidados contra el catálogo actual.
+- La remediación retiró seis relaciones sin reemplazo y corrigió una cita; el grafo y el snapshot reflejan 248 relaciones.
+- El manifest conserva los recursos inmutables del snapshot y el freeze mantiene despliegue `pending`.
+- La muestra independiente vigente de 15 relaciones está seleccionada, pero pendiente de comprobación contra fuentes vivas.
 - No existe evidencia humana de adopción o piloto: el protocolo anónimo está preparado, pero no se generan resultados ni afirmaciones sin sesiones reales y consentimiento.
 
 ## Estado de publicación
 
-- `origin/main` y GitHub Pages deben comprobarse contra el SHA de la rama de integración después de promoverla.
-- El VPS sigue bloqueado desde este Mac hasta que el host autorice la clave dedicada `salida_cyl_vps_ed25519`; no debe declararse sincronizado mientras falle el preflight SSH.
-- El freeze mantiene el despliegue como `pending` hasta observar los hosts públicos correctos.
+- GitHub Pages y el VPS no se han desplegado ni verificado para el límite `e41c539`; `docs/contest/release-evidence.json` conserva ambos estados como pendientes.
+- Las capturas PNG existentes son históricas respecto al snapshot actual y deben recapturarse después de un despliegue verificable.
 - La candidatura no se envía automáticamente. Identidad, declaraciones, consentimiento y envío oficial requieren autorización humana explícita separada.
 
 ## Orden de trabajo
 
-1. Promover la rama de integración a `main` solo con avance fast-forward y lease sobre el SHA observado de `origin/main`.
-2. Esperar el workflow de Pages y verificar `version.json`, manifiesto y recursos contra el commit publicado.
-3. Autorizar la clave dedicada en el VPS, repetir el preflight read-only y ejecutar `deployVps.sh` únicamente si autentica.
-4. Registrar evidencia de despliegue observada y mantener cualquier host no sincronizado como pendiente.
-5. Continuar la cola de 47 titulaciones con evidencia primaria; no convertir señales de oferta en evidencia CNO.
-6. Realizar el piloto anónimo con personas adultas y consentimiento antes de afirmar adopción.
-7. Completar los campos humanos y obtener autorización explícita antes del envío externo.
+1. Ejecutar los gates locales sobre el árbol final y registrar sus resultados sin atribuirles verificación pública.
+2. Promover la rama solo con autorización explícita y avance fast-forward sobre el SHA observado de `origin/main`.
+3. Esperar el workflow de Pages y verificar `version.json`, manifest y recursos contra el commit publicado.
+4. Autorizar la clave dedicada del VPS, repetir el preflight read-only y ejecutar el despliegue únicamente si autentica.
+5. Recapturar la evidencia visual en contexto anónimo y revisar cada imagen contra el claim ledger y el freeze actual.
+6. Completar la cola de 35 titulaciones con evidencia primaria; no convertir señales de oferta en evidencia CNO.
+7. Realizar el piloto anónimo con personas adultas y consentimiento antes de afirmar adopción.
+8. Completar los campos humanos y obtener autorización explícita antes del envío externo.
 
 ## Arranque en otro ordenador
 

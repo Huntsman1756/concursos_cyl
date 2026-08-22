@@ -1,20 +1,23 @@
 # Muestra independiente de suficiencia probatoria
 
-Fecha de auditoría: 16 de agosto de 2026. Corte: 19 de agosto de 2026, 18:00 CEST.
+## Muestra vigente
 
-La muestra se eligió sin intervención del proceso que creó las relaciones. Sobre las 220 claves ordenadas, se calculó `SHA-256(seed|relationKey)`, se ordenaron los hashes en sentido ascendente y se tomaron las primeras 15. La semilla fue `f3813d12cff3876db8760975cf82b0ad47c5d3ea76983d809ef45891324bf21c`.
+- Límite de datos: `e41c5394d71c1324fe8a3e5d12a4a6f76793eaa2`.
+- Población: 248 relaciones aprobadas en `data/curated/training-occupation-links.json`.
+- Tamaño: 15 relaciones.
+- Corte: 2026-08-22T04:13:28+02:00.
+- Semilla: `f3813d12cff3876db8760975cf82b0ad47c5d3ea76983d809ef45891324bf21c`.
+- Selección: ordenar `SHA-256(seed|relationKey)` y tomar las primeras 15 claves.
+- Estado: pendiente de comprobación independiente contra fuentes vivas.
 
-## Resultado
+La selección actual no se presenta como una auditoría ya realizada. Las 15 claves y su estado `pending_live_sample` están en `analysis/contest_evidence_live_sample.json`. Hasta completar la revisión, la matriz conserva `frontierSufficiency: pending_live_sample` para las 248 relaciones.
 
-- 9 relaciones superaron la comprobación de cita viva y frontera semántica.
-- 4 no demostraron la frontera CNO afirmada: `EOC02SD|3129`, `IMP01S|2640`, `AGA01B|4121` y `COM01M|5300`.
-- 1 requiere justificar la diferencia de nivel entre “auxiliar” y el grupo profesional CNO: `FME02B|7314`.
-- 1 tiene correspondencia semántica defendible, pero la cita guardada no es literalmente exacta: `SSC01S|2252`.
+## Auditoría histórica
 
-La muestra no está limpia. Por tanto, el suelo común del validador —dominio oficial y cita no vacía— no basta para sostener la afirmación “nunca fuerza una correspondencia aproximada” en las 220 relaciones. La cobertura 76/220 no se ratifica para la candidatura.
+La muestra anterior se extrajo sobre 220 claves, con corte 2026-08-19T18:00:00+02:00. Encontró 9 relaciones con cita y frontera semántica defendibles, 4 fallos de frontera CNO, 1 diferencia de nivel pendiente y 1 cita no literal. Esa auditoría no ratificó la propuesta 76/220.
 
-## Decisión de publicación
+Sus hallazgos se usaron para retirar seis relaciones de la publicación y corregir una cita. No se trasladan como resultado vivo al límite `e41c539`; el detalle histórico y las claves remediadas quedan en el JSON.
 
-Se activa el fallback histórico defendible: 6 cualificaciones distintas, 7 claves de modalidad, 14 relaciones aprobadas, 21 alias y 46 ofertas coincidentes sobre el snapshot de 1.077 ofertas del 9 de agosto de 2026. La activación final exige dos commits: primero los datos y el snapshot reconstruido; después el rebake de `coverage-freeze.json` con el SHA del primer commit como frontera demostrable.
+## Decisión
 
-El detalle completo, incluida la clasificación de las 15 relaciones, está en `analysis/contest_evidence_live_sample.json`.
+La cobertura actual se describe con el freeze rebakeado y sus límites. La suficiencia semántica de las relaciones permanece pendiente hasta que la muestra vigente se revise de forma independiente. No se afirma despliegue, piloto, adopción ni envío de la candidatura.

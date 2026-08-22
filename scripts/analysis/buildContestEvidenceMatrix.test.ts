@@ -6,18 +6,21 @@ import {
 } from "./buildContestEvidenceMatrix";
 
 describe("contest evidence matrix", () => {
-  it("projects all 241 approved relations without omission or mutation", () => {
+  it("projects all 248 approved relations without omission or mutation", () => {
     const source = loadAuditedRelations().filter(
       (relation: { reviewStatus: string }) =>
         relation.reviewStatus === "approved",
     );
     const matrix = buildContestEvidenceMatrix();
 
-    expect(source).toHaveLength(241);
-    expect(matrix.relations).toHaveLength(241);
+    expect(source).toHaveLength(248);
+    expect(matrix.sourceCommitSha).toBe(
+      "e41c5394d71c1324fe8a3e5d12a4a6f76793eaa2",
+    );
+    expect(matrix.relations).toHaveLength(248);
     expect(
       new Set(matrix.relations.map((relation) => relation.relationKey)).size,
-    ).toBe(241);
+    ).toBe(248);
 
     for (const relation of matrix.relations) {
       const original = source.find(
