@@ -247,6 +247,15 @@ The capture manifest validator will require:
 - current capture time and the observed endpoint identity;
 - no personal data or credentials in the declared capture context.
 
+Schema 2 distinguishes `pending` from `captured`. A local, unpublished
+candidate uses `pending`: it records the expected attested VPS identity and the
+required capture definitions, but has `observedIdentity: null` and no screenshot
+hash or capture timestamp. Only the atomic live capture command may transition
+the manifest to `captured`, populate the observed public identity and hashes,
+and make the new screenshots eligible for verified release evidence. Existing
+legacy screenshots may remain as historical files, but they are not silently
+relabelled as evidence for the new candidate.
+
 Live verification must verify the referenced GitHub workflow's head SHA,
 successful conclusion, active Pages deployment, configured URLs, and source
 ancestry. Offline checks remain deterministic and validate recorded structure

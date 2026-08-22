@@ -784,19 +784,21 @@ failure. Rollback must reject symlinked existing targets before restoring them.
 ```ts
 export interface ContestEvidenceManifestV2 {
   schemaVersion: "2.0.0";
+  state: "pending" | "captured";
   freezeRequired: true;
   outputDirectory: "docs/contest/evidence";
-  observedIdentity: DeploymentEnvelopeIdentity & {
+  expectedIdentity: DeploymentEnvelopeIdentity;
+  observedIdentity: (DeploymentEnvelopeIdentity & {
     canonicalRootUrl: string;
     observedAt: string;
-  };
+  }) | null;
   captures: Array<{
     evidenceId: string;
     route: string;
     viewport: { width: number; height: number };
     outputFile: string;
-    sha256: string;
-    capturedAt: string;
+    sha256: string | null;
+    capturedAt: string | null;
     requiredVisible: RequiredVisible[];
     claimIds: string[];
     freezeRequired: boolean;
@@ -806,6 +808,13 @@ export interface ContestEvidenceManifestV2 {
 ```
 
 Preserve the existing capture contract for `freezeRequired`, `outputDirectory`, `requiredVisible`, `claimIds`, per-capture `freezeRequired`, and `redactionRule`. Remove only per-capture `localCommitSha` and `deployedCommitSha`; the single top-level observed identity replaces them.
+
+For the checked-in unpublished candidate, write `state: "pending"`, bind
+`expectedIdentity` to the Task 5 attestation, set `observedIdentity: null`, and
+set every new-candidate `sha256`/`capturedAt` to `null`. Preserve the existing 13
+capture definitions and legacy PNG files, but do not present their hashes or
+identity as evidence for the new candidate. Only a successful atomic live
+capture may write `state: "captured"` and non-null observed fields.
 
 Require strict UTC RFC 3339 timestamps ending in `Z`; reject equivalent
 `Date.parse` aliases such as `+00:00`. Validation must load and fully validate
@@ -822,9 +831,10 @@ rtk npm exec -- vitest run scripts/release/publicReleaseIdentity.test.ts scripts
 rtk npm run typecheck
 ```
 
-Expected: mismatch stops before any evidence write; one observed identity
-governs all captures; all public bytes are bounded and inventory-bound; root
-escape, symlink, partial manifest, timestamp alias, or hash mismatch fails.
+Expected: pending local evidence validates without claiming a capture; mismatch
+stops before any evidence write; one observed identity governs all captured
+items; all public bytes are bounded and inventory-bound; root escape, symlink,
+partial manifest, timestamp alias, or hash mismatch fails.
 
 - [ ] **Step 8: Commit Task 6**
 
@@ -935,8 +945,10 @@ All timestamps are strict UTC RFC 3339 values ending in `Z`. Normalize no Git
 path: reject any noncanonical spelling before applying the allowlist, and reject
 duplicates after validation. A `pending` record contains no verified deployment
 observation. Live verification calls the complete Task 6 capture validator from
-the repository root and then requires capture time to be at or after the
-canonical VPS deployment observation.
+the repository root, requires `state: "captured"`, and then requires capture
+time to be at or after the canonical VPS deployment observation. Offline
+pending validation accepts only the Task 6 `pending` shape and must not infer
+evidence from legacy PNG files.
 
 - [ ] **Step 5: Unify Pages and Caddy verification on public probes**
 
