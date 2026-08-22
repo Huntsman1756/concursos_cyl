@@ -688,7 +688,6 @@ export function TrainingResultsPage() {
           role="status"
           aria-label="Filtro activo: ofertas relacionadas que no publican este requisito exacto."
           tabIndex={-1}
-          data-print-hidden="true"
         >
           <p>
             Filtro activo: ofertas relacionadas que no publican este requisito
@@ -701,6 +700,7 @@ export function TrainingResultsPage() {
           <button
             className="secondary-button"
             type="button"
+            data-print-hidden="true"
             onClick={() => setPublicationFilter(null)}
           >
             Quitar filtro

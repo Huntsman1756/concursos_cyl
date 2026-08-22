@@ -1257,6 +1257,10 @@ describe("TrainingResultsPage", () => {
       name: "Filtro activo: ofertas relacionadas que no publican este requisito exacto.",
     });
     expect(filterNotice).toBeVisible();
+    expect(filterNotice).not.toHaveAttribute("data-print-hidden", "true");
+    expect(
+      within(filterNotice).getByRole("button", { name: "Quitar filtro" }),
+    ).toHaveAttribute("data-print-hidden", "true");
     expect(filterNotice).toHaveFocus();
     expect(
       screen.queryByRole("article", {

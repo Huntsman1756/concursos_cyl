@@ -26,7 +26,6 @@
 
   .result-actions,
   .result-section-nav,
-  .filter-notice,
   .primary-button,
   .secondary-button,
   .result-actions__tertiary,
@@ -35,7 +34,17 @@
     display: none !important;
   }
 
+  details:not([open]) > :not(summary) {
+    display: block !important;
+  }
+
+  details > summary {
+    display: none !important;
+  }
+
   .decision-evidence,
+  .occupation-result-page .result-summary,
+  .occupation-market-evidence__summary,
   .result-summary,
   .offer-list,
   .training-route-list,
