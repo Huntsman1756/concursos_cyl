@@ -37,6 +37,7 @@ interface OccupationSearchDocument {
 
 const FIELD_PRIORITIES = [4, 3, 2] as const;
 const IDF_WEIGHT = 0.1;
+const SCORE_EPSILON = 1e-9;
 
 function normalizeSearchText(value: string): string {
   return value
@@ -86,12 +87,13 @@ function documentFrequency(
   );
 }
 
-function idfContribution(documentCount: number, frequency: number): number {
-  // A small bounded IDF bonus distinguishes rare terms without overruling
-  // evidence priority. Searching is intentionally O(D × Q × T) over the
-  // approved occupation documents (D), query terms (Q), and field tokens (T).
+function idfMultiplier(documentCount: number, frequency: number): number {
+  // IDF multiplies each term's evidence priority, so rare terms really can
+  // distinguish otherwise similar AND matches without overruling the policy.
+  // Searching is intentionally O(D × Q × T) over approved documents (D),
+  // query terms (Q), and field tokens (T).
   const idf = Math.log1p((documentCount - frequency + 0.5) / (frequency + 0.5));
-  return Math.min(0.75, idf * IDF_WEIGHT);
+  return 1 + Math.min(0.75, idf * IDF_WEIGHT);
 }
 
 export function loadApprovedMappings(
@@ -178,14 +180,15 @@ export function buildOccupationIndex(
             break;
           }
           score +=
-            priority +
-            idfContribution(documents.length, frequencies[termIndex]);
+            priority * idfMultiplier(documents.length, frequencies[termIndex]);
         }
         if (matchesEveryTerm) scored.push({ document, score });
       }
 
       scored.sort((left, right) => {
-        if (left.score !== right.score) return right.score - left.score;
+        if (Math.abs(left.score - right.score) > SCORE_EPSILON) {
+          return right.score - left.score;
+        }
         const labelOrder = labelCollator.compare(
           left.document.candidate.preferredLabel,
           right.document.candidate.preferredLabel,
@@ -196,7 +199,9 @@ export function buildOccupationIndex(
         return leftId < rightId ? -1 : leftId > rightId ? 1 : 0;
       });
 
-      return scored.slice(0, 30).map(({ document }) => document.candidate);
+      return scored
+        .slice(0, 30)
+        .map(({ document }) => ({ ...document.candidate }));
     },
   };
 }

@@ -130,6 +130,81 @@ describe("controlled occupation search corpus", () => {
     ]);
   });
 
+  it("lets a rare term amplify its evidence priority", () => {
+    const rareAlias = makeOccupation("1051", "Beta común", "Confirmación beta");
+    const commonAlias = makeOccupation(
+      "1052",
+      "Alfa raro",
+      "Confirmación alfa",
+    );
+    const fillers = Array.from({ length: 8 }, (_, index) =>
+      makeOccupation(
+        String(1053 + index),
+        `Común de catálogo ${index}`,
+        `Confirmación de catálogo ${index}`,
+      ),
+    );
+    const index = buildOccupationIndex(
+      [rareAlias, commonAlias, ...fillers],
+      [
+        {
+          alias: "raro",
+          occupationId: rareAlias.occupationId,
+          reviewStatus: "approved",
+          reviewedAt: "2026-08-04",
+          mappingVersion: "1.0.0",
+        },
+        {
+          alias: "común",
+          occupationId: commonAlias.occupationId,
+          reviewStatus: "approved",
+          reviewedAt: "2026-08-04",
+          mappingVersion: "1.0.0",
+        },
+      ],
+    );
+
+    expect(index.search("comun raro")[0]).toEqual(candidate(rareAlias));
+  });
+
+  it("uses stable label and id ordering for mathematically equal scores", () => {
+    const beta = makeOccupation("1062", "Empate raro", "Confirmación beta");
+    const alpha = makeOccupation("1061", "Empate raro", "Común raro");
+    const fillers = Array.from({ length: 3 }, (_, index) =>
+      makeOccupation(
+        String(1063 + index),
+        `Relleno ${index}`,
+        `Confirmación relleno ${index}`,
+      ),
+    );
+    const index = buildOccupationIndex(
+      [beta, alpha, ...fillers],
+      [
+        {
+          alias: "común",
+          occupationId: beta.occupationId,
+          reviewStatus: "approved",
+          reviewedAt: "2026-08-04",
+          mappingVersion: "1.0.0",
+        },
+      ],
+    );
+
+    expect(index.search("comun raro")).toEqual([
+      candidate(alpha),
+      candidate(beta),
+    ]);
+  });
+
+  it("does not expose mutable index candidates", () => {
+    const index = buildOccupationIndex([occupation], aliases);
+    const result = index.search("programación");
+
+    result[0].preferredLabel = "Mutado";
+
+    expect(index.search("programación")).toEqual([candidate(occupation)]);
+  });
+
   it("uses Spanish label and occupation id as stable tie breakers", () => {
     const beta = makeOccupation("1102", "Beta común", "Confirmación beta");
     const alpha = makeOccupation("1101", "Alfa común", "Confirmación alfa");
