@@ -64,11 +64,46 @@ describe("distribution check", () => {
   it("verifies every manifest resource hash and record count", async () => {
     const { directory } = await createDistributionDirectory();
     try {
-      await expect(collectDistribution(directory)).resolves.toMatchObject({
+      const report = await collectDistribution(directory);
+      expect(report).toMatchObject({
         dataFiles: 6,
         verifiedResources: 5,
         duplicateGroups: 1,
       });
+      const manifestBytes = (
+        await readFile(join(directory, "data", "v1", "manifest.json"))
+      ).byteLength;
+      expect(report.verifiedResourceBytes).toBe(
+        report.dataBytes - manifestBytes,
+      );
+      expect(report.verifiedResourceBytes).toBeLessThan(report.dataBytes);
+    } finally {
+      await rm(directory, { force: true, recursive: true });
+    }
+  });
+
+  it("ignores unrelated root static files when reporting generated data", async () => {
+    const { directory } = await createDistributionDirectory();
+    try {
+      const baseline = await collectDistribution(directory);
+      await mkdir(join(directory, "assets"), { recursive: true });
+      await writeFile(
+        join(directory, "assets", "bundle.js"),
+        Buffer.alloc(4096),
+      );
+      await writeFile(join(directory, "index.html"), Buffer.alloc(2048));
+      await writeFile(join(directory, "robots.txt"), "User-agent: *\n");
+      await writeFile(
+        join(directory, "salida-cyl-social.png"),
+        Buffer.alloc(8192),
+      );
+      await writeFile(
+        join(directory, "salida-cyl-icon.png"),
+        Buffer.alloc(1024),
+      );
+
+      const withStaticFiles = await collectDistribution(directory);
+      expect(withStaticFiles).toEqual(baseline);
     } finally {
       await rm(directory, { force: true, recursive: true });
     }
