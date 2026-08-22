@@ -48,6 +48,15 @@ async function readFreezeV2Shape(): Promise<Record<string, unknown>> {
   return freeze;
 }
 
+function duplicateJsonKey(text: string, key: string): string {
+  const marker = `"${key}":`;
+  const index = text.indexOf(marker);
+  if (index < 0) throw new Error(`Missing JSON key fixture: ${key}`);
+  const lineStart = text.lastIndexOf("\n", index) + 1;
+  const indentation = text.slice(lineStart, index);
+  return `${text.slice(0, index)}"${key}": null,\n${indentation}${text.slice(index)}`;
+}
+
 describe("contest coverage freeze validator", () => {
   it("requires an explicit source commit when freeze write is requested", () => {
     expect(() => parseContestFreezeWriteSourceCommit(["--write"])).toThrow(
@@ -364,6 +373,122 @@ describe("contest coverage freeze validator", () => {
           "92afc80f2b839ed95def95bc90bdd3b6ad3a1363fb12904f7b109fafc92b2f18",
       });
       expect(JSON.stringify(written)).not.toContain("poisoned");
+    } finally {
+      rmSync(root, { recursive: true, force: true });
+    }
+  }, 30_000);
+
+  it("rejects duplicate keys through real freeze, manifest, resource, and write reads", async () => {
+    const root = mkdtempSync(join(tmpdir(), "contest-freeze-duplicate-"));
+    try {
+      const freezeRoot = join(root, "freeze");
+      const freezePath = join(
+        freezeRoot,
+        "docs",
+        "contest",
+        "coverage-freeze.json",
+      );
+      mkdirSync(join(freezeRoot, "docs", "contest"), { recursive: true });
+      writeFileSync(
+        freezePath,
+        duplicateJsonKey(
+          await readFile("docs/contest/coverage-freeze.json", "utf8"),
+          "schemaVersion",
+        ),
+        "utf8",
+      );
+      expect(() => loadAndValidateContestFreeze(freezeRoot)).toThrow(
+        /Duplicate JSON key.*schemaVersion/iu,
+      );
+
+      const manifestRoot = join(root, "manifest");
+      const manifestPath = join(
+        manifestRoot,
+        "public",
+        "data",
+        "v1",
+        "manifest.json",
+      );
+      mkdirSync(join(manifestRoot, "public", "data", "v1"), {
+        recursive: true,
+      });
+      writeFileSync(
+        manifestPath,
+        duplicateJsonKey(
+          await readFile("public/data/v1/manifest.json", "utf8"),
+          "generatedAt",
+        ),
+        "utf8",
+      );
+      expect(() =>
+        createFreshContestFreeze(manifestRoot, APPROVED_SOURCE_COMMIT_SHA),
+      ).toThrow(/Duplicate JSON key.*generatedAt/iu);
+
+      const resourceRoot = join(root, "resource");
+      const resourceManifestPath = join(
+        resourceRoot,
+        "public",
+        "data",
+        "v1",
+        "manifest.json",
+      );
+      const resourcePath = join(
+        resourceRoot,
+        "public",
+        "data",
+        "v1",
+        "snapshots",
+        "20260822085631889-7bbe69380f6d",
+        "centers.json",
+      );
+      mkdirSync(join(resourceRoot, "public", "data", "v1"), {
+        recursive: true,
+      });
+      mkdirSync(
+        join(
+          resourceRoot,
+          "public",
+          "data",
+          "v1",
+          "snapshots",
+          "20260822085631889-7bbe69380f6d",
+        ),
+        {
+          recursive: true,
+        },
+      );
+      writeFileSync(
+        resourceManifestPath,
+        await readFile("public/data/v1/manifest.json", "utf8"),
+        "utf8",
+      );
+      writeFileSync(
+        resourcePath,
+        duplicateJsonKey(
+          await readFile(
+            "public/data/v1/snapshots/20260822085631889-7bbe69380f6d/centers.json",
+            "utf8",
+          ),
+          "centerCode",
+        ),
+        "utf8",
+      );
+      expect(() =>
+        createFreshContestFreeze(resourceRoot, APPROVED_SOURCE_COMMIT_SHA),
+      ).toThrow(/Duplicate JSON key.*centerCode/iu);
+
+      const writePath = join(root, "write.json");
+      writeFileSync(
+        writePath,
+        duplicateJsonKey(
+          await readFile("docs/contest/coverage-freeze.json", "utf8"),
+          "schemaVersion",
+        ),
+        "utf8",
+      );
+      await expect(
+        writeContestFreeze(ROOT, APPROVED_SOURCE_COMMIT_SHA, writePath),
+      ).rejects.toThrow(/Duplicate JSON key.*schemaVersion/iu);
     } finally {
       rmSync(root, { recursive: true, force: true });
     }

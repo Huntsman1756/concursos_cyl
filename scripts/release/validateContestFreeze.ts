@@ -84,7 +84,13 @@ const CANONICAL_MANIFEST_SHA256 =
 export const CONTEST_FREEZE_SOURCE_COMMIT_SHA =
   "15cd959529c5c223adff02eda124863a320fe0bf";
 
-export const EXPECTED_CONTEST_RESOURCE_COUNT = CANDIDATE_RESOURCE_KEYS.length;
+const CANONICAL_RESOURCE_KEYS: readonly CandidateResourceKey[] = (() => {
+  const keys: string[] = [...CANDIDATE_RESOURCE_KEYS];
+  assertCandidateResourceSet(keys);
+  return keys;
+})();
+
+export const EXPECTED_CONTEST_RESOURCE_COUNT = CANONICAL_RESOURCE_KEYS.length;
 export const EXPECTED_SEPE_RECORD_COUNT = 116;
 
 /**
@@ -223,6 +229,126 @@ function hashText(text: string): string {
   return createHash("sha256").update(text).digest("hex");
 }
 
+function assertNoDuplicateJsonKeys(json: string): void {
+  let index = 0;
+
+  function skipWhitespace(): void {
+    while (/\s/u.test(json[index] ?? "")) index += 1;
+  }
+
+  function readString(): string {
+    if (json[index] !== '"') {
+      throw new Error(`Invalid JSON string at offset ${index}`);
+    }
+    const start = index;
+    index += 1;
+    while (index < json.length) {
+      const character = json[index];
+      index += 1;
+      if (character === "\\") {
+        index += 1;
+      } else if (character === '"') {
+        return JSON.parse(json.slice(start, index)) as string;
+      }
+    }
+    throw new Error("Unterminated JSON string");
+  }
+
+  function readValue(): void {
+    skipWhitespace();
+    const character = json[index];
+    if (character === "{") {
+      readObject();
+      return;
+    }
+    if (character === "[") {
+      readArray();
+      return;
+    }
+    if (character === '"') {
+      readString();
+      return;
+    }
+    const start = index;
+    while (index < json.length && !/[\s,\]}]/u.test(json[index] ?? "")) {
+      index += 1;
+    }
+    if (start === index) {
+      throw new Error(`Invalid JSON value at offset ${index}`);
+    }
+  }
+
+  function readObject(): void {
+    index += 1;
+    skipWhitespace();
+    const keys = new Set<string>();
+    if (json[index] === "}") {
+      index += 1;
+      return;
+    }
+    while (index < json.length) {
+      const key = readString();
+      if (keys.has(key)) throw new Error(`Duplicate JSON key: ${key}`);
+      keys.add(key);
+      skipWhitespace();
+      if (json[index] !== ":") {
+        throw new Error(`Invalid JSON object at offset ${index}`);
+      }
+      index += 1;
+      readValue();
+      skipWhitespace();
+      if (json[index] === "}") {
+        index += 1;
+        return;
+      }
+      if (json[index] !== ",") {
+        throw new Error(`Invalid JSON object separator at offset ${index}`);
+      }
+      index += 1;
+      skipWhitespace();
+    }
+    throw new Error("Unterminated JSON object");
+  }
+
+  function readArray(): void {
+    index += 1;
+    skipWhitespace();
+    if (json[index] === "]") {
+      index += 1;
+      return;
+    }
+    while (index < json.length) {
+      readValue();
+      skipWhitespace();
+      if (json[index] === "]") {
+        index += 1;
+        return;
+      }
+      if (json[index] !== ",") {
+        throw new Error(`Invalid JSON array separator at offset ${index}`);
+      }
+      index += 1;
+      skipWhitespace();
+    }
+    throw new Error("Unterminated JSON array");
+  }
+
+  readValue();
+  skipWhitespace();
+  if (index !== json.length) {
+    throw new Error(`Trailing JSON content at offset ${index}`);
+  }
+}
+
+function parseJsonText(text: string, label: string): unknown {
+  assertNoDuplicateJsonKeys(text);
+  try {
+    return JSON.parse(text) as unknown;
+  } catch (error) {
+    throw new Error(`${label} contains invalid JSON`, { cause: error });
+  }
+}
+
 function assertResourceKeyOrder(keys: readonly string[], label: string): void {
   try {
     assertCandidateResourceSet(keys);
@@ -232,7 +358,7 @@ function assertResourceKeyOrder(keys: readonly string[], label: string): void {
       { cause: error },
     );
   }
-  if (JSON.stringify(keys) !== JSON.stringify(CANDIDATE_RESOURCE_KEYS)) {
+  if (JSON.stringify(keys) !== JSON.stringify(CANONICAL_RESOURCE_KEYS)) {
     throw new Error(`${label} must use canonical candidate resource order`);
   }
 }
@@ -312,9 +438,8 @@ export function migrateFreezeResourcePathToSnapshot(
 }
 
 function readJson(rootDir: string, relativePath: string): unknown {
-  return JSON.parse(
-    fs.readFileSync(path.resolve(rootDir, relativePath), "utf8"),
-  ) as unknown;
+  const absolutePath = path.resolve(rootDir, relativePath);
+  return parseJsonText(fs.readFileSync(absolutePath, "utf8"), relativePath);
 }
 
 function relativeResourcePath(resourcePath: string): string {
@@ -361,7 +486,7 @@ function parseFreeze(value: unknown): ContestFreezeV2 {
     "manifest.resourceSnapshots candidate resource set",
   );
   const resourceSnapshotEntries = Object.fromEntries(
-    CANDIDATE_RESOURCE_KEYS.map((key) => {
+    CANONICAL_RESOURCE_KEYS.map((key) => {
       const snapshot = exactKeys(
         resourceSnapshotRecord[key],
         RESOURCE_SNAPSHOT_KEYS,
@@ -406,7 +531,7 @@ function parseFreeze(value: unknown): ContestFreezeV2 {
       integerValue(value, `manifest.qualityCounts.${key}`),
     ]),
   );
-  const snapshotIds = CANDIDATE_RESOURCE_KEYS.map(
+  const snapshotIds = CANONICAL_RESOURCE_KEYS.map(
     (key) =>
       resourceSnapshotEntries[key].resourcePath.match(
         /\/snapshots\/([a-z0-9]+(?:-[a-z0-9-]*[a-z0-9])?)\//u,
@@ -572,7 +697,10 @@ function readCurrentManifest(rootDir: string): {
     path.resolve(rootDir, CANONICAL_MANIFEST_PATH),
     "utf8",
   );
-  const value = record(JSON.parse(text) as unknown, "public manifest");
+  const value = record(
+    parseJsonText(text, "public manifest"),
+    "public manifest",
+  );
   if (value.schemaVersion !== "1.0.0") {
     throw new Error("public manifest schemaVersion must be 1.0.0");
   }
@@ -588,7 +716,7 @@ function readCurrentManifest(rootDir: string): {
     "public manifest.resourceSnapshots candidate resource set",
   );
   const parsedSnapshots = Object.fromEntries(
-    CANDIDATE_RESOURCE_KEYS.map((key) => {
+    CANONICAL_RESOURCE_KEYS.map((key) => {
       const snapshot = record(
         resourceSnapshotRecord[key],
         `public manifest.resourceSnapshots.${key}`,
@@ -621,7 +749,7 @@ function readCurrentManifest(rootDir: string): {
       ];
     }),
   ) as FreezeManifest["resourceSnapshots"];
-  const snapshotIds = CANDIDATE_RESOURCE_KEYS.map(
+  const snapshotIds = CANONICAL_RESOURCE_KEYS.map(
     (key) =>
       parsedSnapshots[key].resourcePath.match(
         /\/snapshots\/([a-z0-9]+(?:-[a-z0-9-]*[a-z0-9])?)\//u,
@@ -686,7 +814,7 @@ function readResourceSnapshot(
     path.resolve(rootDir, relativeResourcePath(specification.resourcePath)),
     "utf8",
   );
-  const value = JSON.parse(text) as unknown;
+  const value = parseJsonText(text, `public resource ${key}`);
   const recordCount =
     key === "sepeOccupationMarket"
       ? assertCanonicalSepeCandidateResource(value).records.length
@@ -715,7 +843,7 @@ function recomputeFreeze(
 ): ContestFreezeV2 {
   const current = readCurrentManifest(rootDir);
   const resources = new Map<CandidateResourceKey, unknown>();
-  for (const key of CANDIDATE_RESOURCE_KEYS) {
+  for (const key of CANONICAL_RESOURCE_KEYS) {
     resources.set(
       key,
       readResourceSnapshot(rootDir, current.manifest, key).value,
@@ -1026,7 +1154,7 @@ function assertManifestIdentity(
       "manifest.qualityCounts does not match the current public manifest",
     );
   }
-  for (const key of CANDIDATE_RESOURCE_KEYS) {
+  for (const key of CANONICAL_RESOURCE_KEYS) {
     const actualResource = actual.resourceSnapshots[key];
     const expectedResource = expected.resourceSnapshots[key];
     if (actualResource.resourcePath !== expectedResource.resourcePath) {
@@ -1088,7 +1216,7 @@ export async function writeContestFreeze(
   // This private marker read intentionally does not call the schema-2 parser;
   // legacy deployment, paths, hashes, counts and derived values are discarded.
   assertLegacyFreezeMarker(
-    JSON.parse(fs.readFileSync(freezePath, "utf8")) as unknown,
+    parseJsonText(fs.readFileSync(freezePath, "utf8"), "coverage freeze"),
   );
   const fresh = createFreshContestFreeze(rootDir, sourceCommitSha);
   const candidate = await formatPrettier(JSON.stringify(fresh), {
