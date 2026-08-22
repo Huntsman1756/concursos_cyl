@@ -165,7 +165,7 @@ export function TrainingResultsPage() {
   const readyForProgram =
     state.status === "ready" && state.program.programKey === programKey;
 
-  useRouteReady(readyForProgram);
+  useRouteReady(readyForProgram || state.status === "unknown");
 
   useEffect(() => {
     const controller = new AbortController();
@@ -841,17 +841,15 @@ export function TrainingResultsPage() {
                     <span>CNO-11 {occupation.classificationCode}</span>
                   )}
                   {occupation.functionalBoundary !== undefined && (
-                    <span className="reviewed-occupation-boundary">
+                    <span>
                       <strong>
                         Alcance:{" "}
                         {occupation.functionalBoundary.roleLevel === "assistant"
                           ? "puesto auxiliar"
                           : "ocupación afín"}
-                      </strong>
-                      <span>
-                        El título no acredita por sí solo toda la ocupación
-                        CNO-11.
-                      </span>
+                      </strong>{" "}
+                      El título no acredita por sí solo toda la ocupación
+                      CNO-11.
                     </span>
                   )}
                 </Link>

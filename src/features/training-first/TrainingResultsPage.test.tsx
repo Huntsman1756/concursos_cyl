@@ -276,6 +276,10 @@ describe("TrainingResultsPage", () => {
       "training-results-not-found-heading",
     );
     expect(section).toHaveAttribute("id", "training-results-not-found-heading");
+    expect(
+      await screen.findByRole("status", { name: "Contenido listo" }),
+    ).toBeVisible();
+    expect(screen.getByRole("main")).toHaveFocus();
   });
 
   it.each(["HOT01M", "EOC01M"])(
