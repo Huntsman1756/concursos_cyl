@@ -1,7 +1,7 @@
 # Coverage freeze rebake — 2026-08-22
 
 El freeze se regeneró contra el límite exacto
-`94bad9123906efd0d582eb599b8c4d190004c91f`, después de aplicar las
+`05f905397d22b217c4716c88a2406d802892fb6d`, después de aplicar las
 remediaciones de evidencia y regenerar el snapshot activo. El rebake no
 modifica `data/curated`, `public/data` ni `src/domain`/`src/features`.
 
