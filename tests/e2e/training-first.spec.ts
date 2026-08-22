@@ -15,6 +15,63 @@ async function tabTo(page: Page, target: Locator): Promise<void> {
   throw new Error("Expected the control to be reachable in page tab order.");
 }
 
+async function chooseTrainingProgram(page: Page, query: string): Promise<void> {
+  const combobox = page.getByRole("combobox", {
+    name: "Ciclo de Formación Profesional",
+  });
+  await combobox.fill(query);
+  const option = page.locator(`[role="option"][id$="-option-${query}"]`);
+  await expect(option).toBeVisible();
+  const expectedValue = (await option.locator("span").innerText()).trim();
+  await expect(option).toHaveAttribute("aria-selected", "false");
+  await combobox.press("ArrowDown");
+  await expect(option).toHaveAttribute("aria-selected", "true");
+  await combobox.press("Enter");
+  await expect(combobox).toHaveValue(expectedValue);
+  await expect(combobox).toHaveAttribute("aria-expanded", "false");
+}
+
+async function expectStrictAxe(page: Page): Promise<void> {
+  const { violations } = await new AxeBuilder({ page }).analyze();
+  expect(violations, JSON.stringify(violations, null, 2)).toEqual([]);
+}
+
+async function expectNoHorizontalOverflow(page: Page): Promise<void> {
+  const overflow = await page.evaluate(() => ({
+    body: document.body.scrollWidth - document.body.clientWidth,
+    document:
+      document.documentElement.scrollWidth -
+      document.documentElement.clientWidth,
+  }));
+  expect(overflow.body).toBeLessThanOrEqual(1);
+  expect(overflow.document).toBeLessThanOrEqual(1);
+}
+
+async function installPrintSpy(page: Page): Promise<void> {
+  await page.evaluate(() => {
+    type PrintWindow = Window & { __task8PrintCalls?: number };
+    const target = window as PrintWindow;
+    Object.defineProperty(target, "__task8PrintCalls", {
+      configurable: true,
+      value: 0,
+      writable: true,
+    });
+    Object.defineProperty(target, "print", {
+      configurable: true,
+      value: () => {
+        target.__task8PrintCalls = (target.__task8PrintCalls ?? 0) + 1;
+      },
+    });
+  });
+}
+
+async function printCallCount(page: Page): Promise<number> {
+  return page.evaluate(() => {
+    type PrintWindow = Window & { __task8PrintCalls?: number };
+    return (window as PrintWindow).__task8PrintCalls ?? 0;
+  });
+}
+
 test("FP result data stays within the initial budget and loads outcomes on request", async ({
   page,
 }) => {
@@ -40,6 +97,8 @@ test("FP result data stays within the initial budget and loads outcomes on reque
   await expect(
     page.getByRole("heading", { name: "Desarrollo de Aplicaciones Web" }),
   ).toBeVisible();
+  await expectNoHorizontalOverflow(page);
+  await page.waitForLoadState("networkidle");
 
   const initialKeys = [
     "programs",
@@ -77,12 +136,15 @@ test("FP result data stays within the initial budget and loads outcomes on reque
     .getByRole("button", { name: "Cargar datos de ingresos observados" })
     .click();
   await expect(page.getByText("Fuente: EDUCAbase")).toBeVisible();
+  await page.waitForLoadState("networkidle");
   await expect
     .poll(
       () => dataResponses.filter(({ path }) => path === outcomePath).length,
       { timeout: 15_000 },
     )
     .toBe(1);
+  await expectNoHorizontalOverflow(page);
+  await expectStrictAxe(page);
 });
 
 test("FP catalog loading is announced as a polite status", async ({ page }) => {
@@ -123,14 +185,130 @@ test("FP results loading is announced as a polite status", async ({ page }) => {
   releaseManifest();
 });
 
+test("FP search confirms official options and recovers from filters and zero state", async ({
+  page,
+}) => {
+  await page.goto("/desde-fp");
+
+  const combobox = page.getByRole("combobox", {
+    name: "Ciclo de Formación Profesional",
+  });
+  const submit = page.getByRole("button", { name: "Ver salidas y ofertas" });
+  await expect(submit).toBeDisabled();
+
+  await combobox.fill("texto inventado");
+  await expect(submit).toBeDisabled();
+  await expect(
+    page.getByText("No encontramos un ciclo oficial con ese nombre."),
+  ).toBeVisible();
+  await expect(
+    page.getByRole("button", { name: "Imprimir esta orientación" }),
+  ).toHaveCount(0);
+  await expectStrictAxe(page);
+
+  await chooseTrainingProgram(page, "IFC03S");
+  await expect(submit).toBeEnabled();
+  await expectStrictAxe(page);
+
+  await page.getByLabel("Filtrar por nivel").selectOption({
+    label: "Grado medio",
+  });
+  await expect(combobox).toHaveValue("");
+  await expect(submit).toBeDisabled();
+  await expectStrictAxe(page);
+
+  await page.getByLabel("Filtrar por nivel").selectOption({
+    label: "Todos los niveles",
+  });
+  await expect(combobox).toHaveValue("");
+  await expect(submit).toBeDisabled();
+  await expectStrictAxe(page);
+  await combobox.fill("zzzzzz");
+  await expect(submit).toBeDisabled();
+  await expect(
+    page.getByText("No encontramos un ciclo oficial con ese nombre."),
+  ).toBeVisible();
+  await expectStrictAxe(page);
+
+  await chooseTrainingProgram(page, "IFC03S");
+  await expect(submit).toBeEnabled();
+  await expectStrictAxe(page);
+});
+
+test("FP results preserve complete centers, province context, deferred outcomes, and one print call", async ({
+  page,
+}) => {
+  const requestedDataPaths: string[] = [];
+  page.on("request", (request) => {
+    const pathname = new URL(request.url()).pathname;
+    if (pathname.startsWith("/data/v1/")) {
+      requestedDataPaths.push(pathname);
+    }
+  });
+
+  const manifestResponsePromise = page.waitForResponse((response) =>
+    response.url().endsWith("/data/v1/manifest.json"),
+  );
+  await page.goto("/desde-fp");
+  const manifest = (await manifestResponsePromise.then((response) =>
+    response.json(),
+  )) as ReturnType<typeof currentManifestFixture>;
+  const outcomePath = new URL(
+    manifest.resourceSnapshots.outcomeIndicators.resourcePath,
+    page.url(),
+  ).pathname;
+  await chooseTrainingProgram(page, "IFC03S");
+  await page.getByLabel("Provincia para el contexto (opcional)").selectOption({
+    label: "León",
+  });
+  await page.getByRole("button", { name: "Ver salidas y ofertas" }).click();
+
+  await expect(page).toHaveURL(
+    "http://127.0.0.1:4173/desde-fp/IFC03S?province=Le%C3%B3n",
+  );
+  await expect(
+    page.getByRole("heading", { name: "Desarrollo de Aplicaciones Web" }),
+  ).toBeVisible();
+  await expect(
+    page.getByText("Contexto provincial elegido: León"),
+  ).toBeVisible();
+  await expectNoHorizontalOverflow(page);
+  expect(requestedDataPaths.filter((path) => path === outcomePath)).toEqual([]);
+
+  const compareLink = page.getByRole("link", { name: "Comparar ingresos" });
+  await expect(compareLink).toHaveAttribute("href", "/comparar?program=IFC03S");
+  await expect(
+    page.getByRole("button", { name: "Imprimir esta orientación" }),
+  ).toBeVisible();
+  await installPrintSpy(page);
+  await page.getByRole("button", { name: "Imprimir esta orientación" }).click();
+  await expect.poll(() => printCallCount(page)).toBe(1);
+
+  await expectStrictAxe(page);
+
+  const centersLink = page.getByRole("link", {
+    name: "Ver centros y modalidades",
+  });
+  await expect(centersLink).toHaveAttribute("href", "/formacion/IFC03S");
+  await centersLink.click();
+  await expect(page).toHaveURL(/\/formacion\/IFC03S$/u);
+  const centers = page.getByRole("list", {
+    name: "Centros que imparten el ciclo",
+  });
+  await expect(centers.getByRole("listitem")).toHaveCount(18);
+
+  await page.goBack();
+  await expect(page).toHaveURL(/\/desde-fp\/IFC03S\?province=Le%C3%B3n$/u);
+  await compareLink.click();
+  await expect(page).toHaveURL(/\/comparar\?program=IFC03S$/u);
+});
+
 test("live DAW results shows formacion link and approved occupation", async ({
   page,
 }, testInfo) => {
   await page.goto("/desde-fp");
 
-  await page
-    .getByLabel("Ciclo de Formación Profesional")
-    .selectOption("IFC03S");
+  await chooseTrainingProgram(page, "IFC03S");
   await page.getByRole("button", { name: "Ver salidas y ofertas" }).click();
 
   await expect(
@@ -149,6 +327,7 @@ test("live DAW results shows formacion link and approved occupation", async ({
   ).toBeVisible();
 
   await expect(page.getByText("CNO-11 2713")).toBeVisible();
+  await expectNoHorizontalOverflow(page);
 
   await expect(
     page.getByRole("heading", { name: "Qué sabemos de este título" }),
@@ -273,9 +452,7 @@ test("live DAW results name the dated zero-match snapshot without claiming there
     };
   };
 
-  await page
-    .getByLabel("Ciclo de Formación Profesional")
-    .selectOption("IFC03S");
+  await chooseTrainingProgram(page, "IFC03S");
   await page.getByRole("button", { name: "Ver salidas y ofertas" }).click();
   const snapshotDate = new Intl.DateTimeFormat("es-ES", {
     day: "numeric",
@@ -297,15 +474,15 @@ test("live DAW results name the dated zero-match snapshot without claiming there
   await expect(page.getByText(/no hay (empleo|trabajo|puestos)/iu)).toHaveCount(
     0,
   );
+  await expectNoHorizontalOverflow(page);
+  await expectStrictAxe(page);
 });
 
 test("COM01M exposes seven reviewed groups without inventing current offers", async ({
   page,
 }) => {
   await page.goto("/desde-fp");
-  await page
-    .getByRole("combobox", { name: "Ciclo de Formación Profesional" })
-    .selectOption("COM01M");
+  await chooseTrainingProgram(page, "COM01M");
   await expect(
     page.getByText("Relaciones revisadas con 7 grupos de ocupación."),
   ).toContainText("Relaciones revisadas con 7 grupos de ocupación.");
@@ -325,6 +502,8 @@ test("COM01M exposes seven reviewed groups without inventing current offers", as
   await expect(
     page.getByText(/No hay ofertas relacionadas en la copia de datos del/u),
   ).toBeVisible();
+  await expectNoHorizontalOverflow(page);
+  await expectStrictAxe(page);
 });
 
 test("the intercepted full DAW card makes a declared gap, action, filter, and evidence keyboard-accessible", async ({
@@ -332,9 +511,7 @@ test("the intercepted full DAW card makes a declared gap, action, filter, and ev
 }) => {
   await installDecisionFlowFixture(page);
   await page.goto("/desde-fp");
-  await page
-    .getByLabel("Ciclo de Formación Profesional")
-    .selectOption("IFC03S");
+  await chooseTrainingProgram(page, "IFC03S");
   await page.getByRole("button", { name: "Ver salidas y ofertas" }).click();
 
   const card = page.getByRole("article", {
@@ -406,12 +583,6 @@ test("the intercepted full DAW card makes a declared gap, action, filter, and ev
   await page.getByRole("button", { name: "Quitar filtro" }).click();
   await expect(page.getByText(/Filtro activo:/u)).toHaveCount(0);
 
-  const overflow = await page.evaluate(
-    () =>
-      document.documentElement.scrollWidth -
-      document.documentElement.clientWidth,
-  );
-  expect(overflow).toBeLessThanOrEqual(1);
-  const axe = await new AxeBuilder({ page }).analyze();
-  expect(axe.violations, JSON.stringify(axe.violations, null, 2)).toEqual([]);
+  await expectNoHorizontalOverflow(page);
+  await expectStrictAxe(page);
 });

@@ -1,6 +1,78 @@
 import AxeBuilder from "@axe-core/playwright";
-import { expect, test } from "@playwright/test";
+import { expect, test, type Locator, type Page } from "@playwright/test";
 import { currentManifestFixture } from "../fixtures/generatedManifest";
+
+async function chooseTrainingProgram(
+  page: Page,
+  label: string,
+  query: string,
+): Promise<void> {
+  const combobox = page.getByRole("combobox", { name: label });
+  await combobox.fill(query);
+  const option = page.locator(`[role="option"][id$="-option-${query}"]`);
+  await expect(option).toBeVisible();
+  const expectedValue = (await option.locator("span").innerText()).trim();
+  await expect(option).toHaveAttribute("aria-selected", "false");
+  await combobox.press("ArrowDown");
+  await expect(option).toHaveAttribute("aria-selected", "true");
+  await combobox.press("Enter");
+  await expect(combobox).toHaveValue(expectedValue);
+  await expect(combobox).toHaveAttribute("aria-expanded", "false");
+}
+
+async function expectStrictAxe(page: Page): Promise<void> {
+  const { violations } = await new AxeBuilder({ page }).analyze();
+  expect(violations, JSON.stringify(violations, null, 2)).toEqual([]);
+}
+
+async function expectNoHorizontalOverflow(page: Page): Promise<void> {
+  const overflow = await page.evaluate(() => ({
+    body: document.body.scrollWidth - document.body.clientWidth,
+    document:
+      document.documentElement.scrollWidth -
+      document.documentElement.clientWidth,
+  }));
+  expect(overflow.body).toBeLessThanOrEqual(1);
+  expect(overflow.document).toBeLessThanOrEqual(1);
+}
+
+async function expectHomeReadyForLayout(page: Page): Promise<void> {
+  await expect(
+    page.getByRole("region", { name: "Cobertura revisada" }),
+  ).toHaveAttribute("aria-busy", "false");
+  await expect(
+    page
+      .getByRole("list", { name: "Ciclos revisados destacados" })
+      .getByRole("listitem"),
+  ).toHaveCount(3);
+  const freshness = page.getByRole("region", {
+    name: "Fecha de relaciones revisadas",
+  });
+  await expect(freshness).toHaveAttribute("aria-busy", "false");
+  await expect(freshness.locator("time")).toBeVisible();
+  await expect(
+    page.getByRole("combobox", { name: "Título de Formación Profesional" }),
+  ).toBeVisible();
+  await expect(
+    page.getByRole("button", { name: "Ver las salidas de este título" }),
+  ).toHaveCount(1);
+}
+
+async function expectWithinViewport(
+  page: Page,
+  target: Locator,
+): Promise<void> {
+  await target.scrollIntoViewIfNeeded();
+  const viewport = page.viewportSize();
+  const box = await target.boundingBox();
+  expect(viewport).not.toBeNull();
+  expect(box).not.toBeNull();
+  if (viewport === null || box === null) return;
+  expect(box.x).toBeGreaterThanOrEqual(-1);
+  expect(box.y).toBeGreaterThanOrEqual(-1);
+  expect(box.x + box.width).toBeLessThanOrEqual(viewport.width + 1);
+  expect(box.y + box.height).toBeLessThanOrEqual(viewport.height + 1);
+}
 
 const legacySnapshot = {
   sourceId: "jcyl-employment-offers",
@@ -27,7 +99,7 @@ const staleLegacyManifest = {
 
 test("home exposes one chosen journey, navigation, freshness, and no automated accessibility violations", async ({
   page,
-}) => {
+}, testInfo) => {
   const manifestResponsePromise = page.waitForResponse((response) =>
     response.url().endsWith("/data/v1/manifest.json"),
   );
@@ -37,16 +109,26 @@ test("home exposes one chosen journey, navigation, freshness, and no automated a
     typeof currentManifestFixture
   >;
 
-  await expect(
-    page.getByRole("navigation", { name: "Principal" }).getByRole("link"),
-  ).toHaveText([
-    "Inicio",
-    "Desde FP",
-    "Desde ocupación",
-    "Comparar estudios",
-    "Más formación",
-    "Metodología",
-  ]);
+  if (testInfo.project.name === "chromium-mobile") {
+    await expect(
+      page.getByRole("button", { name: "Abrir menú principal" }),
+    ).toBeVisible();
+    await expect(page.locator("#mobile-primary-navigation")).toHaveAttribute(
+      "hidden",
+    );
+  } else {
+    await expect(page.locator(".site-nav--desktop")).toBeVisible();
+    await expect(
+      page.locator(".site-nav--desktop").getByRole("link"),
+    ).toHaveText([
+      "Inicio",
+      "Desde FP",
+      "Desde ocupación",
+      "Comparar estudios",
+      "Más formación",
+      "Metodología",
+    ]);
+  }
 
   const startingPoint = page.getByRole("group", {
     name: "¿Cuál es tu punto de partida?",
@@ -78,12 +160,13 @@ test("home exposes one chosen journey, navigation, freshness, and no automated a
       "Ejemplos de ciclos con relaciones revisadas; no es el catálogo completo.",
     ),
   ).toBeVisible();
-
-  const results = await new AxeBuilder({ page }).analyze();
-  expect(
-    results.violations,
-    JSON.stringify(results.violations, null, 2),
-  ).toEqual([]);
+  await expectWithinViewport(
+    page,
+    freshness.getByText(/Relaciones revisadas: copia del/u),
+  );
+  await expectWithinViewport(page, freshness.locator("time"));
+  await expectNoHorizontalOverflow(page);
+  await expectStrictAxe(page);
 });
 
 test("the initial ready-state focus does not outline the whole page", async ({
@@ -107,9 +190,11 @@ test("the keyboard focus indicator is visible and opaque", async ({ page }) => {
   const submit = page.getByRole("button", {
     name: "Ver las salidas de este título",
   });
-  await page
-    .getByLabel("Título de Formación Profesional")
-    .selectOption("IFC03S");
+  await chooseTrainingProgram(
+    page,
+    "Título de Formación Profesional",
+    "IFC03S",
+  );
   await expect(submit).toBeEnabled();
   for (let index = 0; index < 20; index += 1) {
     if (
@@ -126,6 +211,24 @@ test("the keyboard focus indicator is visible and opaque", async ({ page }) => {
       submit.evaluate((element) => getComputedStyle(element).boxShadow),
     )
     .not.toBe("none");
+  const focusStyle = await submit.evaluate((element) => {
+    const style = getComputedStyle(element);
+    const rect = element.getBoundingClientRect();
+    return {
+      boxShadow: style.boxShadow,
+      height: rect.height,
+      opacity: style.opacity,
+      visibility: style.visibility,
+      width: rect.width,
+    };
+  });
+  expect(focusStyle.boxShadow).not.toMatch(
+    /transparent|rgba?\([^)]*,\s*0(?:\.0+)?\s*\)/iu,
+  );
+  expect(focusStyle.width).toBeGreaterThan(0);
+  expect(focusStyle.height).toBeGreaterThan(0);
+  expect(focusStyle.opacity).not.toBe("0");
+  expect(focusStyle.visibility).not.toBe("hidden");
 });
 
 test("the single search reaches both routes one mode at a time", async ({
@@ -133,9 +236,11 @@ test("the single search reaches both routes one mode at a time", async ({
 }) => {
   await page.goto("/");
 
-  await page
-    .getByLabel("Título de Formación Profesional")
-    .selectOption("IFC03S");
+  await chooseTrainingProgram(
+    page,
+    "Título de Formación Profesional",
+    "IFC03S",
+  );
   await page
     .getByRole("button", { name: "Ver las salidas de este título" })
     .click();
@@ -145,18 +250,22 @@ test("the single search reaches both routes one mode at a time", async ({
       name: "Desarrollo de Aplicaciones Web",
     }),
   ).toBeVisible();
+  await expectStrictAxe(page);
 
   await page.getByRole("link", { name: "SALIDA CyL" }).click();
   await page.getByRole("radio", { name: /Tengo un empleo en mente/iu }).check();
+  await expectStrictAxe(page);
   const occupationSearch = page.getByRole("combobox", {
     name: "Ocupación que te interesa",
   });
   await occupationSearch.fill("Programación web");
+  await expectStrictAxe(page);
   await page
     .getByRole("option", {
       name: /Analistas, programadores y diseñadores web y multimedia/iu,
     })
     .click();
+  await expectStrictAxe(page);
   await page
     .getByRole("button", { name: "Ver cómo llegar a esta ocupación" })
     .click();
@@ -168,6 +277,39 @@ test("the single search reaches both routes one mode at a time", async ({
       name: /Analistas, programadores y diseñadores web y multimedia/iu,
     }),
   ).toBeVisible();
+  await expectStrictAxe(page);
+  await expectNoHorizontalOverflow(page);
+});
+
+test("home FP search requires official keyboard confirmation", async ({
+  page,
+}) => {
+  await page.goto("/");
+
+  const combobox = page.getByRole("combobox", {
+    name: "Título de Formación Profesional",
+  });
+  const submit = page.getByRole("button", {
+    name: "Ver las salidas de este título",
+  });
+
+  await combobox.fill("texto inventado");
+  await expect(submit).toBeDisabled();
+  await expect(
+    page.getByText("No encontramos un ciclo oficial con ese nombre."),
+  ).toBeVisible();
+  await expect(
+    page.getByRole("button", { name: "Imprimir esta orientación" }),
+  ).toHaveCount(0);
+  await expectStrictAxe(page);
+
+  await chooseTrainingProgram(
+    page,
+    "Título de Formación Profesional",
+    "IFC03S",
+  );
+  await expect(submit).toBeEnabled();
+  await expectStrictAxe(page);
 });
 
 test("the training-first journey keeps the live zero-match snapshot honest and accessible", async ({
@@ -187,7 +329,7 @@ test("the training-first journey keeps the live zero-match snapshot honest and a
   await expect(
     page.getByRole("button", { name: "Ver salidas y ofertas" }),
   ).toBeDisabled();
-  await programSelect.selectOption("IFC03S");
+  await chooseTrainingProgram(page, "Ciclo de Formación Profesional", "IFC03S");
   await page.getByRole("button", { name: "Ver salidas y ofertas" }).click();
 
   await expect(page).toHaveURL(/\/desde-fp\/IFC03S$/u);
@@ -210,17 +352,8 @@ test("the training-first journey keeps the live zero-match snapshot honest and a
   ).toBeVisible();
   await expect(page.getByText(/compatibilidad|porcentaje|%/iu)).toHaveCount(0);
 
-  const overflow = await page.evaluate(
-    () =>
-      document.documentElement.scrollWidth -
-      document.documentElement.clientWidth,
-  );
-  expect(overflow).toBeLessThanOrEqual(1);
-  const results = await new AxeBuilder({ page }).analyze();
-  expect(
-    results.violations,
-    JSON.stringify(results.violations, null, 2),
-  ).toEqual([]);
+  await expectNoHorizontalOverflow(page);
+  await expectStrictAxe(page);
 });
 
 test("the regulated training route uses official offerings and centers", async ({
@@ -244,17 +377,8 @@ test("the regulated training route uses official offerings and centers", async (
     centers.getByRole("link", { name: /Web del centro/ }).first(),
   ).toHaveAttribute("target", "_blank");
 
-  const overflow = await page.evaluate(
-    () =>
-      document.documentElement.scrollWidth -
-      document.documentElement.clientWidth,
-  );
-  expect(overflow).toBeLessThanOrEqual(1);
-  const results = await new AxeBuilder({ page }).analyze();
-  expect(
-    results.violations,
-    JSON.stringify(results.violations, null, 2),
-  ).toEqual([]);
+  await expectNoHorizontalOverflow(page);
+  await expectStrictAxe(page);
 });
 
 test("each remaining public route has distinct destination content", async ({
@@ -363,30 +487,61 @@ test("the skip link moves keyboard focus to the main content", async ({
   );
   await page.goto("/");
 
-  await page.keyboard.press("Tab");
+  await expect(
+    page.getByRole("status", { name: "Contenido listo" }),
+  ).toBeAttached();
+  const main = page.locator("main#main-content");
+  await expect(main).toBeFocused();
   const skipLink = page.getByRole("link", { name: "Saltar al contenido" });
+  await expect(skipLink).toHaveAttribute("href", "#main-content");
+  await skipLink.focus();
   await expect(skipLink).toBeFocused();
   await page.keyboard.press("Enter");
-  await expect(page.locator("main#main-content")).toBeFocused();
+  await expect(main).toBeFocused();
 });
 
 test("SPA navigation preserves the focused control while content becomes ready", async ({
   page,
-}) => {
+}, testInfo) => {
   await page.goto("/");
 
-  const fpLink = page.getByRole("link", { name: "Desde FP" });
-  await fpLink.click();
-  await expect(page).toHaveURL(/\/desde-fp$/u);
-  await expect(fpLink).toBeFocused();
+  if (testInfo.project.name === "chromium-mobile") {
+    await page.getByRole("button", { name: "Abrir menú principal" }).click();
+    const mobileLink = page
+      .locator("#mobile-primary-navigation")
+      .getByRole("link", { name: "Desde FP" });
+    await mobileLink.click();
+    await expect(page).toHaveURL(/\/desde-fp$/u);
+    await expect(page.locator("#mobile-primary-navigation")).toHaveAttribute(
+      "hidden",
+    );
+  } else {
+    const fpLink = page.locator(".site-nav--desktop").getByRole("link", {
+      name: "Desde FP",
+    });
+    await fpLink.click();
+    await expect(page).toHaveURL(/\/desde-fp$/u);
+  }
   await expect(
     page.getByRole("status", { name: "Contenido listo" }),
   ).toBeAttached();
+  if (testInfo.project.name === "chromium-mobile") {
+    await expect(page.locator("main#main-content")).toBeFocused();
+    await expect(
+      page.getByRole("button", { name: "Abrir menú principal" }),
+    ).not.toBeFocused();
+  } else {
+    await expect(
+      page.locator(".site-nav--desktop").getByRole("link", {
+        name: "Desde FP",
+      }),
+    ).toBeFocused();
+  }
 });
 
 test("a validated stale legacy manifest keeps navigation and names the last update", async ({
   page,
-}) => {
+}, testInfo) => {
   await page.route("**/data/v1/manifest.json", (route) =>
     route.fulfill({ json: staleLegacyManifest }),
   );
@@ -409,7 +564,18 @@ test("a validated stale legacy manifest keeps navigation and names the last upda
     page.getByText(/datos actuales|datos al día|ofertas actuales/iu),
   ).toHaveCount(0);
 
-  await page.getByRole("link", { name: "Comparar estudios" }).click();
+  if (testInfo.project.name === "chromium-mobile") {
+    await page.getByRole("button", { name: "Abrir menú principal" }).click();
+    await page
+      .locator("#mobile-primary-navigation")
+      .getByRole("link", { name: "Comparar estudios" })
+      .click();
+  } else {
+    await page
+      .locator(".site-nav--desktop")
+      .getByRole("link", { name: "Comparar estudios" })
+      .click();
+  }
   await expect(page).toHaveURL(/\/comparar$/u);
   await expect(
     page.getByRole("heading", { name: "Ingresos observados" }),
@@ -425,6 +591,7 @@ test("the complete Spanish home copy fits without horizontal overflow", async ({
   page,
 }, testInfo) => {
   await page.goto("/");
+  await expectHomeReadyForLayout(page);
 
   const viewport = page.viewportSize();
   expect(viewport).not.toBeNull();
@@ -451,21 +618,27 @@ test("the complete Spanish home copy fits without horizontal overflow", async ({
   expect(overflow.document).toBeLessThanOrEqual(1);
 
   if (testInfo.project.name === "chromium-mobile") {
-    const navigation = page.getByRole("navigation", { name: "Principal" });
-    const navigationOverflow = await navigation.evaluate(
-      (element) => element.scrollWidth - element.clientWidth,
+    await expect(page.locator("#mobile-primary-navigation")).toHaveAttribute(
+      "hidden",
     );
-    expect(navigationOverflow).toBeLessThanOrEqual(1);
-
-    for (const link of await navigation.getByRole("link").all()) {
-      const box = await link.boundingBox();
-      expect(box?.height ?? 0).toBeGreaterThanOrEqual(40);
-    }
-
-    for (const link of await page.locator(".site-footer nav a").all()) {
-      const box = await link.boundingBox();
-      expect(box?.height ?? 0).toBeGreaterThanOrEqual(40);
-    }
+    const mobileAnchors = page.locator("#mobile-primary-navigation a");
+    await expect(mobileAnchors).toHaveCount(6);
+    expect(
+      await mobileAnchors.evaluateAll((anchors) =>
+        anchors.every((anchor) => anchor.getClientRects().length === 0),
+      ),
+    ).toBe(true);
+    expect(
+      await page
+        .locator("#mobile-primary-navigation")
+        .evaluate((navigation) => navigation.contains(document.activeElement)),
+    ).toBe(false);
+    const menuButton = page.getByRole("button", {
+      name: "Abrir menú principal",
+    });
+    const menuButtonBox = await menuButton.boundingBox();
+    expect(menuButtonBox?.width ?? 0).toBeGreaterThanOrEqual(44);
+    expect(menuButtonBox?.height ?? 0).toBeGreaterThanOrEqual(44);
   }
 });
 
@@ -473,6 +646,7 @@ test("the home copy fits at the narrow mobile widths", async ({ page }) => {
   for (const width of [320, 360, 390]) {
     await page.setViewportSize({ width, height: 800 });
     await page.goto("/");
+    await expectHomeReadyForLayout(page);
     await expect(
       page.getByRole("heading", {
         name: /De tu FP a tu\s*siguiente paso/i,
@@ -497,6 +671,7 @@ test("reviewed programs and the single search module keep stable responsive geom
   page,
 }, testInfo) => {
   await page.goto("/");
+  await expectHomeReadyForLayout(page);
 
   const searchEntry = page.locator(".search-entry");
   const coverage = page.getByRole("region", { name: "Cobertura revisada" });
@@ -530,12 +705,7 @@ test("reviewed programs and the single search module keep stable responsive geom
     expect(searchPanel.width).toBeGreaterThan(280);
   }
 
-  const overflow = await page.evaluate(
-    () =>
-      document.documentElement.scrollWidth -
-      document.documentElement.clientWidth,
-  );
-  expect(overflow).toBeLessThanOrEqual(1);
+  await expectNoHorizontalOverflow(page);
 });
 
 test("the home coverage panel exposes only manifest-reviewed program keys", async ({
