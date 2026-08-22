@@ -1,7 +1,9 @@
 import { createHash } from "node:crypto";
-import { lstat, readFile, readdir } from "node:fs/promises";
+import { constants as fsConstants } from "node:fs";
+import { lstat, open, readFile, readdir, realpath } from "node:fs/promises";
 import { join, relative, resolve, sep } from "node:path";
 import { fileURLToPath } from "node:url";
+import { TextDecoder } from "node:util";
 
 import { GeneratedManifestSchema } from "../../data/schemas/generated";
 import {
@@ -71,8 +73,8 @@ type CandidateManifest = {
 };
 
 type CandidateResourceEvidence = {
-  resourceKeys: string[];
-  resourceSnapshots?: Record<string, ResourceSnapshot>;
+  resourceKeys?: string[];
+  resourceSnapshots: readonly Record<string, ResourceSnapshot>[];
 };
 
 const RESOURCE_SNAPSHOT_FIELDS = [
@@ -80,6 +82,20 @@ const RESOURCE_SNAPSHOT_FIELDS = [
   "sha256",
   "recordCount",
 ] as const;
+
+const MAX_CANDIDATE_FILE_BYTES = 16 * 1024 * 1024;
+const MAX_JSON_DEPTH = 64;
+const MAX_JSON_ENTRIES = 1_000_000;
+const MAX_DIRECTORY_DEPTH = 64;
+const MAX_DIRECTORY_ENTRIES = 100_000;
+const REQUIRED_EVIDENCE_DOCUMENTS = new Set([
+  "docs/contest/coverage-freeze.json",
+  "docs/contest/release-evidence.json",
+]);
+const EXPECTED_DOCUMENT_PATHS =
+  DEFAULT_CANDIDATE_BOUNDARY_OPTIONS.documentPaths;
+const EXPECTED_BUNDLE_ROOTS = DEFAULT_CANDIDATE_BOUNDARY_OPTIONS.bundleRoots;
+const UTF8_DECODER = new TextDecoder("utf-8", { fatal: true });
 
 class DuplicateJsonKeyError extends Error {
   constructor(readonly key: string) {
@@ -132,6 +148,42 @@ function assertInsideRoot(
   return absolute;
 }
 
+async function canonicalizeRoot(rootDir: string): Promise<string> {
+  const root = resolve(rootDir);
+  const rootStat = await lstat(root).catch((error: unknown) => {
+    throw new Error(`Candidate root is missing: ${rootDir}.`, {
+      cause: error,
+    });
+  });
+  if (rootStat.isSymbolicLink()) {
+    throw new Error(`Candidate root must not be a symlink: ${rootDir}.`);
+  }
+  if (!rootStat.isDirectory()) {
+    throw new Error(`Candidate root must be a directory: ${rootDir}.`);
+  }
+  return realpath(root);
+}
+
+function remapRootAlias(
+  lexicalRoot: string,
+  canonicalRoot: string,
+  candidatePath: string,
+): string {
+  if (!pathIsAbsolute(candidatePath) || candidatePath.startsWith("/data/")) {
+    return candidatePath;
+  }
+  const absoluteCandidate = resolve(candidatePath);
+  const fromLexicalRoot = relative(lexicalRoot, absoluteCandidate);
+  if (
+    fromLexicalRoot === ".." ||
+    fromLexicalRoot.startsWith(`..${sep}`) ||
+    pathIsAbsolute(fromLexicalRoot)
+  ) {
+    return candidatePath;
+  }
+  return join(canonicalRoot, fromLexicalRoot);
+}
+
 function resolveCandidatePath(
   rootDir: string,
   candidatePath: string,
@@ -152,12 +204,75 @@ async function readRegularFile(
   candidatePath: string,
   label: string,
 ): Promise<{ absolutePath: string; bytes: Buffer }> {
+  // Node exposes no openat-style directory handle here; the final lstat pass
+  // closes the observable file TOCTOU, while a simultaneous parent-directory
+  // replacement remains a residual race outside this primitive's control.
   const absolutePath = resolveCandidatePath(rootDir, candidatePath, label);
-  const stat = await assertPhysicalPath(rootDir, absolutePath, label);
-  if (!stat.isFile()) {
+  const pathStat = await assertPhysicalPath(rootDir, absolutePath, label);
+  if (!pathStat.isFile()) {
     throw new Error(`${label} must be a regular file: ${candidatePath}.`);
   }
-  return { absolutePath, bytes: await readFile(absolutePath) };
+  let handle;
+  try {
+    handle = await open(
+      absolutePath,
+      fsConstants.O_RDONLY | fsConstants.O_NOFOLLOW,
+    );
+    const openedStat = await handle.stat();
+    if (!openedStat.isFile()) {
+      throw new Error(`${label} must be a regular file: ${candidatePath}.`);
+    }
+    if (openedStat.size > MAX_CANDIDATE_FILE_BYTES) {
+      throw new Error(
+        `${label} exceeds the ${MAX_CANDIDATE_FILE_BYTES}-byte limit: ${candidatePath}.`,
+      );
+    }
+    if (!samePhysicalFile(pathStat, openedStat)) {
+      throw new Error(
+        `${label} changed while it was opened: ${candidatePath}.`,
+      );
+    }
+    const bytes = await handle.readFile();
+    if (bytes.byteLength > MAX_CANDIDATE_FILE_BYTES) {
+      throw new Error(
+        `${label} exceeds the ${MAX_CANDIDATE_FILE_BYTES}-byte limit: ${candidatePath}.`,
+      );
+    }
+    const finalPathStat = await assertPhysicalPath(
+      rootDir,
+      absolutePath,
+      label,
+    );
+    if (!samePhysicalFile(openedStat, finalPathStat)) {
+      throw new Error(`${label} changed while it was read: ${candidatePath}.`);
+    }
+    return { absolutePath, bytes };
+  } catch (error) {
+    if (isNoFollowError(error)) {
+      throw new Error(`${label} must not contain a symlink: ${absolutePath}.`, {
+        cause: error,
+      });
+    }
+    throw error;
+  } finally {
+    await handle?.close();
+  }
+}
+
+function samePhysicalFile(
+  left: { dev: number; ino: number },
+  right: { dev: number; ino: number },
+): boolean {
+  return left.dev === right.dev && left.ino === right.ino;
+}
+
+function isNoFollowError(error: unknown): boolean {
+  return (
+    error !== null &&
+    typeof error === "object" &&
+    "code" in error &&
+    (error as { code?: unknown }).code === "ELOOP"
+  );
 }
 
 async function assertPhysicalPath(
@@ -166,6 +281,17 @@ async function assertPhysicalPath(
   label: string,
 ) {
   const root = resolve(rootDir);
+  const rootStat = await lstat(root).catch((error: unknown) => {
+    throw new Error(`${label} candidate root is missing: ${root}.`, {
+      cause: error,
+    });
+  });
+  if (rootStat.isSymbolicLink()) {
+    throw new Error(`${label} candidate root must not be a symlink: ${root}.`);
+  }
+  if (!rootStat.isDirectory()) {
+    throw new Error(`${label} candidate root must be a directory: ${root}.`);
+  }
   const fromRoot = relative(root, absolutePath);
   if (
     fromRoot === ".." ||
@@ -200,7 +326,7 @@ async function assertPhysicalPath(
   }
 
   if (finalStat === undefined) {
-    finalStat = await lstat(root);
+    finalStat = rootStat;
   }
   return finalStat;
 }
@@ -209,7 +335,14 @@ async function collectRegularFiles(
   rootDir: string,
   directoryPath: string,
   label: string,
+  depth = 0,
+  state: { entries: number } = { entries: 0 },
 ): Promise<string[]> {
+  if (depth > MAX_DIRECTORY_DEPTH) {
+    throw new Error(
+      `${label} directory depth exceeds the ${MAX_DIRECTORY_DEPTH}-level limit.`,
+    );
+  }
   const absoluteDirectory = resolveCandidatePath(rootDir, directoryPath, label);
   const stat = await assertPhysicalPath(rootDir, absoluteDirectory, label);
   if (!stat.isDirectory()) {
@@ -221,10 +354,24 @@ async function collectRegularFiles(
   for (const entry of entries.sort((left, right) =>
     left.name.localeCompare(right.name, "en"),
   )) {
+    state.entries += 1;
+    if (state.entries > MAX_DIRECTORY_ENTRIES) {
+      throw new Error(
+        `${label} entries exceed the ${MAX_DIRECTORY_ENTRIES}-entry limit.`,
+      );
+    }
     const entryPath = join(absoluteDirectory, entry.name);
     const entryStat = await assertPhysicalPath(rootDir, entryPath, label);
     if (entryStat.isDirectory()) {
-      files.push(...(await collectRegularFiles(rootDir, entryPath, label)));
+      files.push(
+        ...(await collectRegularFiles(
+          rootDir,
+          entryPath,
+          label,
+          depth + 1,
+          state,
+        )),
+      );
     } else if (entryStat.isFile()) {
       files.push(entryPath);
     } else {
@@ -236,6 +383,30 @@ async function collectRegularFiles(
 
 function assertNoDuplicateJsonKeys(json: string): void {
   let index = 0;
+  let depth = 0;
+  let entries = 0;
+
+  function enterContainer(): void {
+    depth += 1;
+    if (depth > MAX_JSON_DEPTH) {
+      throw new Error(
+        `JSON nesting exceeds the ${MAX_JSON_DEPTH}-level limit.`,
+      );
+    }
+  }
+
+  function leaveContainer(): void {
+    depth -= 1;
+  }
+
+  function countEntry(): void {
+    entries += 1;
+    if (entries > MAX_JSON_ENTRIES) {
+      throw new Error(
+        `JSON entries exceed the ${MAX_JSON_ENTRIES}-entry limit.`,
+      );
+    }
+  }
 
   function skipWhitespace(): void {
     while (/\s/u.test(json[index] ?? "")) index += 1;
@@ -284,58 +455,78 @@ function assertNoDuplicateJsonKeys(json: string): void {
   }
 
   function readArray(): void {
+    enterContainer();
     index += 1;
     skipWhitespace();
     if (json[index] === "]") {
       index += 1;
+      leaveContainer();
       return;
     }
-    while (index < json.length) {
-      readValue();
-      skipWhitespace();
-      if (json[index] === "]") {
+    try {
+      while (index < json.length) {
+        countEntry();
+        readValue();
+        skipWhitespace();
+        if (json[index] === "]") {
+          index += 1;
+          return;
+        }
+        if (json[index] !== ",") {
+          throw new Error(
+            `Expected a JSON array separator at offset ${index}.`,
+          );
+        }
         index += 1;
-        return;
+        skipWhitespace();
       }
-      if (json[index] !== ",") {
-        throw new Error(`Expected a JSON array separator at offset ${index}.`);
-      }
-      index += 1;
-      skipWhitespace();
+      throw new Error("Unterminated JSON array.");
+    } finally {
+      leaveContainer();
     }
-    throw new Error("Unterminated JSON array.");
   }
 
   function readObject(): void {
+    enterContainer();
     index += 1;
     skipWhitespace();
     const keys = new Set<string>();
     if (json[index] === "}") {
       index += 1;
+      leaveContainer();
       return;
     }
-    while (index < json.length) {
-      const key = readString();
-      if (keys.has(key)) throw new DuplicateJsonKeyError(key);
-      keys.add(key);
-      skipWhitespace();
-      if (json[index] !== ":") {
-        throw new Error(`Expected a JSON object separator at offset ${index}.`);
-      }
-      index += 1;
-      readValue();
-      skipWhitespace();
-      if (json[index] === "}") {
+    try {
+      while (index < json.length) {
+        countEntry();
+        const key = readString();
+        if (keys.has(key)) throw new DuplicateJsonKeyError(key);
+        keys.add(key);
+        skipWhitespace();
+        if (json[index] !== ":") {
+          throw new Error(
+            `Expected a JSON object separator at offset ${index}.`,
+          );
+        }
         index += 1;
-        return;
+        readValue();
+        skipWhitespace();
+        if (json[index] === "}") {
+          index += 1;
+          return;
+        }
+        if (json[index] !== ",") {
+          throw new Error(
+            `Expected a JSON object separator at offset ${index}.`,
+          );
+        }
+        index += 1;
+        skipWhitespace();
       }
-      if (json[index] !== ",") {
-        throw new Error(`Expected a JSON object separator at offset ${index}.`);
-      }
-      index += 1;
-      skipWhitespace();
+      throw new Error("Unterminated JSON object.");
+    } finally {
+      leaveContainer();
     }
-    throw new Error("Unterminated JSON object.");
   }
 
   readValue();
@@ -345,8 +536,21 @@ function assertNoDuplicateJsonKeys(json: string): void {
   }
 }
 
+function decodeUtf8(bytes: Uint8Array, label: string): string {
+  if (bytes.byteLength > MAX_CANDIDATE_FILE_BYTES) {
+    throw new Error(
+      `${label} exceeds the ${MAX_CANDIDATE_FILE_BYTES}-byte limit.`,
+    );
+  }
+  try {
+    return UTF8_DECODER.decode(bytes);
+  } catch (error) {
+    throw new Error(`${label} must be valid UTF-8.`, { cause: error });
+  }
+}
+
 function parseJson(bytes: Uint8Array, label: string): unknown {
-  const json = Buffer.from(bytes).toString("utf8");
+  const json = decodeUtf8(bytes, label);
   let value: unknown;
   try {
     value = JSON.parse(json) as unknown;
@@ -361,9 +565,54 @@ function parseJson(bytes: Uint8Array, label: string): unknown {
         cause: error,
       });
     }
+    if (
+      error instanceof Error &&
+      /JSON (?:nesting|entries) exceeds/iu.test(error.message)
+    ) {
+      throw new Error(`${label} ${error.message}`, { cause: error });
+    }
     throw new Error(`${label} is not valid JSON.`, { cause: error });
   }
   return value;
+}
+
+function visitStringLeaves(
+  value: unknown,
+  label: string,
+  visit: (text: string) => void,
+): void {
+  const pending: Array<{ value: unknown; depth: number }> = [
+    { value, depth: 0 },
+  ];
+  let entries = 0;
+  while (pending.length > 0) {
+    const current = pending.pop();
+    if (current === undefined) continue;
+    if (typeof current.value === "string") {
+      visit(current.value);
+      continue;
+    }
+    if (current.value === null || typeof current.value !== "object") {
+      continue;
+    }
+    if (current.depth >= MAX_JSON_DEPTH) {
+      throw new Error(
+        `${label} parsed nesting exceeds the ${MAX_JSON_DEPTH}-level limit.`,
+      );
+    }
+    const values = Array.isArray(current.value)
+      ? current.value
+      : Object.values(current.value);
+    for (const child of values) {
+      entries += 1;
+      if (entries > MAX_JSON_ENTRIES) {
+        throw new Error(
+          `${label} parsed entries exceed the ${MAX_JSON_ENTRIES}-entry limit.`,
+        );
+      }
+      pending.push({ value: child, depth: current.depth + 1 });
+    }
+  }
 }
 
 function parseCandidateManifest(
@@ -494,18 +743,14 @@ function extractApplicableResourceEvidence(
 ): CandidateResourceEvidence | null {
   if (Array.isArray(value)) return null;
   const record = asRecord(value, label);
-  const candidates: CandidateResourceEvidence[] = [];
+  const keyCandidates: string[][] = [];
+  const snapshotCandidates: Array<Record<string, ResourceSnapshot>> = [];
   const addSnapshots = (snapshots: unknown, snapshotsLabel: string): void => {
     const parsed = parseResourceSnapshotMap(snapshots, snapshotsLabel);
-    candidates.push({
-      resourceKeys: Object.keys(parsed),
-      resourceSnapshots: parsed,
-    });
+    snapshotCandidates.push(parsed);
   };
   const addKeys = (keys: unknown, keysLabel: string): void => {
-    candidates.push({
-      resourceKeys: assertResourceKeysArray(keys, keysLabel),
-    });
+    keyCandidates.push(assertResourceKeysArray(keys, keysLabel));
   };
 
   if (hasOwn(record, "resourceSnapshots")) {
@@ -528,19 +773,16 @@ function extractApplicableResourceEvidence(
     }
   }
 
-  if (candidates.length === 0) return null;
-  const first = candidates[0];
-  for (const candidate of candidates.slice(1)) {
-    assertCandidateResourceSet(candidate.resourceKeys);
-    if (first.resourceSnapshots && candidate.resourceSnapshots) {
-      compareResourceSnapshots(
-        first.resourceSnapshots,
-        candidate.resourceSnapshots,
-        `${label} resource snapshots`,
-      );
-    }
+  if (keyCandidates.length === 0 && snapshotCandidates.length === 0) {
+    return null;
   }
-  return first;
+  if (keyCandidates.length > 1) {
+    throw new Error(`${label} contains multiple resourceKeys representations.`);
+  }
+  return {
+    resourceKeys: keyCandidates[0],
+    resourceSnapshots: snapshotCandidates,
+  };
 }
 
 function assertEvidenceManifestIdentity(
@@ -548,30 +790,37 @@ function assertEvidenceManifestIdentity(
   label: string,
   expectedSnapshotId: string,
   expectedSha256: string,
+  required: boolean,
 ): void {
-  if (Array.isArray(value)) return;
-  const record = asRecord(value, label);
-  if (!hasOwn(record, "manifest")) return;
-  const manifest = asRecord(record.manifest, `${label}.manifest`);
-  if (hasOwn(manifest, "snapshotId")) {
-    if (
-      typeof manifest.snapshotId !== "string" ||
-      manifest.snapshotId !== expectedSnapshotId
-    ) {
-      throw new Error(
-        `${label}.manifest.snapshotId does not match the public manifest.`,
-      );
+  if (Array.isArray(value)) {
+    if (required) {
+      throw new Error(`${label}.manifest is required for resource evidence.`);
     }
+    return;
   }
-  if (hasOwn(manifest, "sha256")) {
-    if (
-      typeof manifest.sha256 !== "string" ||
-      manifest.sha256 !== expectedSha256
-    ) {
-      throw new Error(
-        `${label}.manifest.sha256 does not match the public manifest bytes.`,
-      );
+  const record = asRecord(value, label);
+  if (!hasOwn(record, "manifest")) {
+    if (required) {
+      throw new Error(`${label}.manifest is required for resource evidence.`);
     }
+    return;
+  }
+  const manifest = asRecord(record.manifest, `${label}.manifest`);
+  if (
+    typeof manifest.snapshotId !== "string" ||
+    manifest.snapshotId !== expectedSnapshotId
+  ) {
+    throw new Error(
+      `${label}.manifest.snapshotId must match the public manifest.`,
+    );
+  }
+  if (
+    typeof manifest.sha256 !== "string" ||
+    manifest.sha256 !== expectedSha256
+  ) {
+    throw new Error(
+      `${label}.manifest.sha256 must match the public manifest bytes.`,
+    );
   }
 }
 
@@ -605,38 +854,46 @@ function normalizeClaimText(text: string): string {
 
 function assertNoContradictoryOwnership(text: string, label: string): void {
   const normalized = normalizeClaimText(text);
-  const sourceOffsets: number[] = [];
-  for (const match of normalized.matchAll(/\bsepe(?:occupationmarket)?\b/giu)) {
-    sourceOffsets.push(match.index ?? 0);
-  }
-  for (const match of normalized.matchAll(/https?:\/\/[^\s<>()]+/giu)) {
-    const reference = match[0].replace(/[.,;]+$/u, "");
-    if (
-      classifyCandidateReference(reference) ===
-      "complementary-classification-source"
-    ) {
-      sourceOffsets.push(match.index ?? 0);
-    }
-  }
+  const rawClauses = /(?:^|\n)\s*\|/u.test(text)
+    ? text.split(/\r?\n/u)
+    : normalized.split(/(?<=[.!?;])\s+/u);
+  const clauses = rawClauses
+    .map((clause) => normalizeClaimText(clause))
+    .map((clause) => clause.trim())
+    .filter((clause) => clause !== "");
 
-  for (const offset of sourceOffsets) {
-    const window = normalized.slice(
-      Math.max(0, offset - 220),
-      Math.min(normalized.length, offset + 320),
+  for (const clause of clauses) {
+    const references = [...clause.matchAll(/https?:\/\/[^\s<>()]+/giu)].map(
+      (match) => match[0].replace(/[.,;]+$/u, ""),
     );
+    const hasSepeAnchor = /\bsepe(?:occupationmarket)?\b/iu.test(clause);
+    const hasOccupationMarketAnchor = /occupation-market/iu.test(clause);
+    const hasAuditedUrl = references.some(
+      (reference) => classifyCandidateReference(reference) !== "other",
+    );
+    if (!hasSepeAnchor && !hasOccupationMarketAnchor && !hasAuditedUrl) {
+      continue;
+    }
+    const semanticClause = clause.replace(/https?:\/\/[^\s<>()]+/giu, " ");
     const mentionsOwnershipTarget =
-      /(?:junta|jcyl|castilla y leon|cc\s*by|mit)/iu.test(window);
+      /(?:junta|jcyl|castilla y leon|cc\s*by|mit)/iu.test(semanticClause);
     const mentionsOwnership =
       /(?:propiedad|propio|titularidad|licenc|relicenc|copyright|autor(?:ia)?|dataset|recurso|bajo\s+(?:la\s+)?licencia)/iu.test(
-        window,
+        semanticClause,
       );
     if (!mentionsOwnershipTarget || !mentionsOwnership) continue;
 
-    const isExplicitNegative =
-      /(?:\bno\b|\bnunca\b|\bsin\b|\bnot\b|\bdoes\s+not\b|\bdoesn't\b).{0,120}(?:licenc|propiedad|relicenc|cc\s*by|mit)/iu.test(
-        window,
+    const negativeClause =
+      /(?:\bno\b|\bnunca\b|\bsin\b|\bnot\b|\bdoes\s+not\b|\bdoesn't\b).{0,120}?(?:licenc|propiedad|relicenc|cc\s*by|mit)/iu.exec(
+        clause,
+      )?.[0] ?? "";
+    const remainingClause = semanticClause.replace(negativeClause, " ");
+    const hasAffirmativeRemainder =
+      /(?:junta|jcyl|castilla y leon|cc\s*by|mit)/iu.test(remainingClause) &&
+      /(?:propiedad|propio|titularidad|licenc|relicenc|copyright|autor(?:ia)?|dataset|recurso|bajo\s+(?:la\s+)?licencia)/iu.test(
+        remainingClause,
       );
-    if (!isExplicitNegative) {
+    if (negativeClause === "" || hasAffirmativeRemainder) {
       throw new Error(
         `Candidate boundary contains a contradictory JCyL/MIT ownership claim in ${label}.`,
       );
@@ -691,6 +948,75 @@ async function validateResourceSnapshots(
   return { sepeRecordCount };
 }
 
+function relativeFileSet(
+  rootDir: string,
+  dataRoot: string,
+  files: readonly string[],
+): Set<string> {
+  const absoluteDataRoot = resolveCandidatePath(rootDir, dataRoot, "data root");
+  return new Set(
+    files.map((file) => relative(absoluteDataRoot, file).split(sep).join("/")),
+  );
+}
+
+async function compareBundleDataTree(
+  rootDir: string,
+  bundleRoot: "dist",
+  sourceManifest: CandidateManifest,
+): Promise<void> {
+  const publicFiles = await collectRegularFiles(
+    rootDir,
+    "public/data/v1",
+    "Candidate public data",
+  );
+  const bundleFiles = await collectRegularFiles(
+    rootDir,
+    `${bundleRoot}/data/v1`,
+    "Candidate bundle data",
+  );
+  const publicPaths = relativeFileSet(rootDir, "public/data/v1", publicFiles);
+  const bundlePaths = relativeFileSet(
+    rootDir,
+    `${bundleRoot}/data/v1`,
+    bundleFiles,
+  );
+  const activeSnapshotId = manifestSnapshotId(
+    sourceManifest,
+    "Candidate manifest",
+  );
+  const activePrefix = `snapshots/${activeSnapshotId}/`;
+  const expectedPaths = new Set(
+    [...publicPaths].filter(
+      (path) => !path.startsWith("snapshots/") || path.startsWith(activePrefix),
+    ),
+  );
+  const missing = [...expectedPaths].filter((path) => !bundlePaths.has(path));
+  const extra = [...bundlePaths].filter((path) => !expectedPaths.has(path));
+  if (missing.length > 0 || extra.length > 0) {
+    throw new Error(
+      `Candidate bundle data must have the same resource set as public data; missing=${missing.join(",")}; extra=${extra.join(",")}.`,
+    );
+  }
+
+  for (const path of [...expectedPaths].sort()) {
+    const publicFile = await readRegularFile(
+      rootDir,
+      `public/data/v1/${path}`,
+      `Candidate public data ${path}`,
+    );
+    const bundleFile = await readRegularFile(
+      rootDir,
+      `${bundleRoot}/data/v1/${path}`,
+      `Candidate bundle data ${path}`,
+    );
+    if (!publicFile.bytes.equals(bundleFile.bytes)) {
+      throw new Error(
+        `Candidate bundle data ${path} differs from public data bytes or metadata.`,
+      );
+    }
+  }
+}
+
 async function validateBundle(
   rootDir: string,
   bundleRoot: "dist",
@@ -718,6 +1044,7 @@ async function validateBundle(
     parsedBundleManifest.resourceSnapshots,
     "Candidate bundle manifest",
   );
+  await compareBundleDataTree(rootDir, bundleRoot, sourceManifest);
   await validateResourceSnapshots(
     rootDir,
     parsedBundleManifest,
@@ -726,10 +1053,63 @@ async function validateBundle(
   );
 }
 
+function assertRuntimeOptions(
+  value: unknown,
+): asserts value is CandidateBoundaryOptions {
+  const options = asRecord(value, "Candidate boundary options");
+  const expectedKeys = [
+    "rootDir",
+    "manifestPath",
+    "sepeResourcePath",
+    "documentPaths",
+    "bundleRoots",
+  ].sort();
+  const actualKeys = Object.keys(options).sort();
+  if (JSON.stringify(actualKeys) !== JSON.stringify(expectedKeys)) {
+    throw new Error(
+      "Candidate boundary options must contain exactly rootDir, manifestPath, sepeResourcePath, documentPaths, and bundleRoots.",
+    );
+  }
+  if (typeof options.rootDir !== "string" || options.rootDir.trim() === "") {
+    throw new Error("Candidate boundary options rootDir is required.");
+  }
+  if (options.manifestPath !== "public/data/v1/manifest.json") {
+    throw new Error(
+      "Candidate boundary options manifestPath must be public/data/v1/manifest.json.",
+    );
+  }
+  if (
+    typeof options.sepeResourcePath !== "string" ||
+    options.sepeResourcePath.trim() === ""
+  ) {
+    throw new Error("Candidate boundary options sepeResourcePath is required.");
+  }
+  if (
+    !Array.isArray(options.documentPaths) ||
+    JSON.stringify(options.documentPaths) !==
+      JSON.stringify(EXPECTED_DOCUMENT_PATHS)
+  ) {
+    throw new Error(
+      "Candidate boundary options documentPaths must equal the required evidence document tuple.",
+    );
+  }
+  if (
+    !Array.isArray(options.bundleRoots) ||
+    JSON.stringify(options.bundleRoots) !==
+      JSON.stringify(EXPECTED_BUNDLE_ROOTS)
+  ) {
+    throw new Error(
+      "Candidate boundary options bundleRoots must equal [dist].",
+    );
+  }
+}
+
 export async function validateCandidateBoundary(
   options: CandidateBoundaryOptions,
 ): Promise<CandidateBoundaryValidation> {
-  const rootDir = resolve(options.rootDir);
+  assertRuntimeOptions(options);
+  const lexicalRoot = resolve(options.rootDir);
+  const rootDir = await canonicalizeRoot(lexicalRoot);
   const sourceManifestFile = await readRegularFile(
     rootDir,
     options.manifestPath,
@@ -754,9 +1134,30 @@ export async function validateCandidateBoundary(
     "Candidate manifest",
   );
   const sepeSnapshot = sourceManifest.resourceSnapshots.sepeOccupationMarket;
-  const requestedBytes = await readRegularFile(
+  const sepeResourcePath = remapRootAlias(
+    lexicalRoot,
     rootDir,
     options.sepeResourcePath,
+  );
+  const canonicalSepePath = manifestResourceFilePath(
+    rootDir,
+    sepeSnapshot.resourcePath,
+    "public",
+    "Candidate manifest sepeOccupationMarket",
+  );
+  const requestedSepePath = resolveCandidatePath(
+    rootDir,
+    sepeResourcePath,
+    "sepeResourcePath",
+  );
+  if (requestedSepePath !== canonicalSepePath) {
+    throw new Error(
+      "sepeResourcePath must resolve to the canonical public manifest resource path for sepeOccupationMarket.",
+    );
+  }
+  const requestedBytes = await readRegularFile(
+    rootDir,
+    sepeResourcePath,
     "sepeResourcePath",
   );
   const requestedValue = parseJson(requestedBytes.bytes, "sepeResourcePath");
@@ -773,24 +1174,35 @@ export async function validateCandidateBoundary(
       documentPath,
       "Candidate document",
     );
-    const text = document.bytes.toString("utf8");
-    assertNoContradictoryOwnership(text, documentPath);
     if (documentPath.endsWith(".json")) {
       const value = parseJson(
         document.bytes,
         `Candidate document ${documentPath}`,
+      );
+      visitStringLeaves(value, `Candidate document ${documentPath}`, (text) =>
+        assertNoContradictoryOwnership(text, documentPath),
       );
       const resourceEvidence = extractApplicableResourceEvidence(
         value,
         documentPath,
       );
       if (resourceEvidence !== null) {
-        assertCandidateResourceSet(resourceEvidence.resourceKeys);
-        if (resourceEvidence.resourceSnapshots) {
+        if (resourceEvidence.resourceKeys) {
+          assertCandidateResourceSet(resourceEvidence.resourceKeys);
+        }
+        for (const snapshots of resourceEvidence.resourceSnapshots) {
           compareResourceSnapshots(
             sourceManifest.resourceSnapshots,
-            resourceEvidence.resourceSnapshots,
+            snapshots,
             `Candidate document ${documentPath}`,
+          );
+        }
+        if (
+          resourceEvidence.resourceKeys &&
+          resourceEvidence.resourceSnapshots.length > 0
+        ) {
+          throw new Error(
+            `Candidate document ${documentPath} must not mix resourceKeys with resourceSnapshots representations.`,
           );
         }
       }
@@ -799,6 +1211,13 @@ export async function validateCandidateBoundary(
         `Candidate document ${documentPath}`,
         publicSnapshotId,
         publicManifestSha256,
+        REQUIRED_EVIDENCE_DOCUMENTS.has(documentPath) ||
+          resourceEvidence !== null,
+      );
+    } else {
+      assertNoContradictoryOwnership(
+        decodeUtf8(document.bytes, `Candidate document ${documentPath}`),
+        documentPath,
       );
     }
   }

@@ -8,6 +8,7 @@ import {
   assertCandidateResourceSet,
   assertCanonicalSepeCandidateResource,
   classifyCandidateReference,
+  type CandidateResourceKey,
 } from "./candidateResourceAllowlist";
 
 const EXPECTED_RESOURCE_KEYS = [
@@ -75,10 +76,21 @@ describe("candidate resource allowlist", () => {
     ).toBe("complementary-classification-source");
   });
 
-  it("classifies occupation-market URLs as complementary sources", () => {
+  it("requires occupation-market URLs to use an official host", () => {
     expect(
-      classifyCandidateReference("https://example.org/occupation-market/cno"),
+      classifyCandidateReference("https://www.sepe.es/occupation-market/cno"),
     ).toBe("complementary-classification-source");
+    expect(
+      classifyCandidateReference("https://evil.example/occupation-market/cno"),
+    ).toBe("other");
+  });
+
+  it("keeps CandidateResourceKey as a literal generated-key union", () => {
+    const canonicalKey: CandidateResourceKey = "sepeOccupationMarket";
+    // @ts-expect-error CandidateResourceKey must reject keys outside the catalog.
+    const invalidKey: CandidateResourceKey = "unexpected";
+    expect(canonicalKey).toBe("sepeOccupationMarket");
+    expect(invalidKey).toBe("unexpected");
   });
 
   it("keeps external certificate URLs publisher-owned", () => {

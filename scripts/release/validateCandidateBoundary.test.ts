@@ -73,6 +73,18 @@ async function currentCandidateOptions(
   };
 }
 
+function optionsPathFor(rootDir: string, key: "sepeOccupationMarket"): string {
+  if (key !== "sepeOccupationMarket") {
+    throw new Error(`Unsupported fixture key: ${key}`);
+  }
+  return join(
+    rootDir,
+    "public/data/v1/snapshots",
+    SNAPSHOT_ID,
+    "sepe-occupation-market.json",
+  );
+}
+
 async function copyCandidateFixture(): Promise<string> {
   const rootDir = await mkdtemp(join(tmpdir(), "candidate-boundary-"));
   const publicSnapshotPath = join(
@@ -177,6 +189,14 @@ describe("candidate data boundary", () => {
       recursive: true,
       force: true,
     });
+    await rm(join(fixtureRoot, "public/data/v1/alternate-manifest.json"), {
+      force: true,
+    });
+    await rm(join(fixtureRoot, "public/data/v1/copied-sepe.json"), {
+      force: true,
+    });
+    await rm(join(fixtureRoot, "dist/data/v1/extra.json"), { force: true });
+    await rm(join(fixtureRoot, "root-alias"), { force: true });
     if (snapshotTreeChanged) {
       await rm(join(fixtureRoot, "public/data/v1/snapshots", SNAPSHOT_ID), {
         recursive: true,
@@ -235,6 +255,57 @@ describe("candidate data boundary", () => {
     expect(result.resourceKeys).toEqual([...CANDIDATE_RESOURCE_KEYS]);
   }, 90_000);
 
+  it("rejects a symlinked candidate root", async () => {
+    const rootAlias = join(fixtureRoot, "root-alias");
+    await symlink(fixtureRoot, rootAlias, "dir");
+
+    await expect(
+      validateCandidateBoundary(await currentCandidateOptions(rootAlias)),
+    ).rejects.toThrow(/root.*symlink|symlink.*root|canonical.*root/iu);
+  }, 90_000);
+
+  it("rejects runtime options with empty document and bundle lists", async () => {
+    const options = await currentCandidateOptions(fixtureRoot);
+
+    await expect(
+      validateCandidateBoundary({
+        ...options,
+        documentPaths: [] as never,
+        bundleRoots: [] as never,
+      }),
+    ).rejects.toThrow(/documentPaths|bundleRoots|expected|options/iu);
+  }, 90_000);
+
+  it("rejects an alternate manifest path even when its bytes are valid", async () => {
+    await cp(
+      join(fixtureRoot, PUBLIC_MANIFEST),
+      join(fixtureRoot, "public/data/v1/alternate-manifest.json"),
+    );
+    const options = await currentCandidateOptions(fixtureRoot);
+
+    await expect(
+      validateCandidateBoundary({
+        ...options,
+        manifestPath: "public/data/v1/alternate-manifest.json",
+      }),
+    ).rejects.toThrow(/manifest.*path|options|canonical/iu);
+  }, 90_000);
+
+  it("rejects an alternate SEPE resource path with identical bytes", async () => {
+    await cp(
+      optionsPathFor(fixtureRoot, "sepeOccupationMarket"),
+      join(fixtureRoot, "public/data/v1/copied-sepe.json"),
+    );
+    const options = await currentCandidateOptions(fixtureRoot);
+
+    await expect(
+      validateCandidateBoundary({
+        ...options,
+        sepeResourcePath: join(fixtureRoot, "public/data/v1/copied-sepe.json"),
+      }),
+    ).rejects.toThrow(/SEPE.*path|sepeResourcePath|canonical|options/iu);
+  }, 90_000);
+
   it("rejects a bundle whose per-key snapshot triple is decoupled", async () => {
     const bundleManifest = await readFixtureJson(fixtureRoot, DIST_MANIFEST);
     const snapshots = publicResourceSnapshots(bundleManifest);
@@ -259,6 +330,29 @@ describe("candidate data boundary", () => {
     await expect(
       validateCandidateBoundary(await currentCandidateOptions(fixtureRoot)),
     ).rejects.toThrow(/bundle.*centers.*resourcePath|snapshot.*centers/iu);
+  }, 90_000);
+
+  it("rejects a bundle with divergent manifest metadata", async () => {
+    await updateFixtureJson(fixtureRoot, DIST_MANIFEST, (manifest) => {
+      const document = asRecord(manifest, "dist manifest");
+      document.generatedAt = "2026-08-22T09:00:00.000Z";
+    });
+
+    await expect(
+      validateCandidateBoundary(await currentCandidateOptions(fixtureRoot)),
+    ).rejects.toThrow(/bundle|identical|metadata|generatedAt/iu);
+  }, 90_000);
+
+  it("rejects a bundle with an extra data resource", async () => {
+    await writeFile(
+      join(fixtureRoot, "dist/data/v1/extra.json"),
+      "[]\n",
+      "utf8",
+    );
+
+    await expect(
+      validateCandidateBoundary(await currentCandidateOptions(fixtureRoot)),
+    ).rejects.toThrow(/bundle|extra|resource|identical/iu);
   }, 90_000);
 
   it.each([
@@ -349,6 +443,88 @@ describe("candidate data boundary", () => {
     await expect(
       validateCandidateBoundary(await currentCandidateOptions(fixtureRoot)),
     ).rejects.toThrow(/resourceKeys.*array|malformed/iu);
+  }, 90_000);
+
+  it("requires every evidence document to carry a complete manifest", async () => {
+    await updateFixtureJson(
+      fixtureRoot,
+      "docs/contest/coverage-freeze.json",
+      (freeze) => {
+        delete asRecord(freeze, "coverage freeze").manifest;
+      },
+    );
+
+    await expect(
+      validateCandidateBoundary(await currentCandidateOptions(fixtureRoot)),
+    ).rejects.toThrow(/manifest.*required|evidence.*manifest|snapshotId/iu);
+  }, 90_000);
+
+  it.each(["snapshotId", "sha256"])(
+    "rejects evidence manifests missing %s",
+    async (field) => {
+      await updateFixtureJson(
+        fixtureRoot,
+        "docs/contest/release-evidence.json",
+        (release) => {
+          const document = asRecord(release, "release evidence");
+          const manifest = asRecord(document.manifest, "release manifest");
+          delete manifest[field];
+        },
+      );
+
+      await expect(
+        validateCandidateBoundary(await currentCandidateOptions(fixtureRoot)),
+      ).rejects.toThrow(/manifest|snapshotId|sha256/iu);
+    },
+  );
+
+  it("does not accept resourceKeys as a keys-only evidence substitute", async () => {
+    await updateFixtureJson(
+      fixtureRoot,
+      "docs/contest/release-evidence.json",
+      (release) => {
+        const document = asRecord(release, "release evidence");
+        document.resourceKeys = [...CANDIDATE_RESOURCE_KEYS];
+        delete document.manifest;
+      },
+    );
+
+    await expect(
+      validateCandidateBoundary(await currentCandidateOptions(fixtureRoot)),
+    ).rejects.toThrow(/manifest.*required|keys-only|snapshotId/iu);
+  }, 90_000);
+
+  it("compares snapshots after keys and rejects mixed divergent representations", async () => {
+    const publicManifest = await readFixtureJson(fixtureRoot, PUBLIC_MANIFEST);
+    const snapshots = JSON.parse(
+      JSON.stringify(publicResourceSnapshots(publicManifest)),
+    ) as Record<string, unknown>;
+    const centers = asRecord(snapshots.centers, "centers snapshot");
+    centers.recordCount = 1;
+
+    await updateFixtureJson(
+      fixtureRoot,
+      "docs/contest/coverage-freeze.json",
+      (release) => {
+        const document = asRecord(release, "coverage freeze");
+        const originalManifest = asRecord(
+          document.manifest,
+          "coverage freeze manifest",
+        );
+        document.resourceKeys = [...CANDIDATE_RESOURCE_KEYS];
+        document.manifest = {
+          snapshotId: originalManifest.snapshotId,
+          sha256: originalManifest.sha256,
+          resourceSnapshots: snapshots,
+        };
+      },
+    );
+
+    await expect(
+      validateCandidateBoundary(await currentCandidateOptions(fixtureRoot)),
+    ).rejects.toThrow(
+      /coverage-freeze.*(?:centers|resourceKeys|resourceSnapshots)|recordCount|record count|mixed/iu,
+    );
   }, 90_000);
 
   it.each([
@@ -470,6 +646,108 @@ describe("candidate data boundary", () => {
     await expect(
       validateCandidateBoundary(await currentCandidateOptions(fixtureRoot)),
     ).resolves.toMatchObject({ resourceCount: 21, sepeRecordCount: 116 });
+  }, 90_000);
+
+  it("rejects a later affirmative ownership claim after a negative clause", async () => {
+    await writeFile(
+      join(fixtureRoot, "docs/contest/application-summary.md"),
+      "SEPE no se licencia como JCyL, CC BY o MIT. Después, SEPE es propiedad de la Junta de Castilla y León.\n",
+      "utf8",
+    );
+
+    await expect(
+      validateCandidateBoundary(await currentCandidateOptions(fixtureRoot)),
+    ).rejects.toThrow(/ownership|licen|JCyL|SEPE/iu);
+  }, 90_000);
+
+  it("audits publisher-owned certificate references for ownership claims", async () => {
+    await writeFile(
+      join(fixtureRoot, "docs/contest/application-summary.md"),
+      "https://certificados.example/certificados/curso es un recurso propiedad de la Junta de Castilla y León y se distribuye bajo CC BY.\n",
+      "utf8",
+    );
+
+    await expect(
+      validateCandidateBoundary(await currentCandidateOptions(fixtureRoot)),
+    ).rejects.toThrow(/ownership|licen|publisher|certific/iu);
+  }, 90_000);
+
+  it("audits the literal occupation-market anchor independently of URL classification", async () => {
+    await writeFile(
+      join(fixtureRoot, "docs/contest/application-summary.md"),
+      "https://evil.example/occupation-market/cno es propiedad de la Junta de Castilla y León y se distribuye bajo MIT.\n",
+      "utf8",
+    );
+
+    await expect(
+      validateCandidateBoundary(await currentCandidateOptions(fixtureRoot)),
+    ).rejects.toThrow(/ownership|occupation-market|licen|SEPE/iu);
+  }, 90_000);
+
+  it("rejects invalid UTF-8 in an evidence document", async () => {
+    await writeFile(
+      join(fixtureRoot, "docs/contest/application-summary.md"),
+      Buffer.from([0xc3, 0x28]),
+    );
+
+    await expect(
+      validateCandidateBoundary(await currentCandidateOptions(fixtureRoot)),
+    ).rejects.toThrow(/utf-?8|encoding|decode/iu);
+  }, 90_000);
+
+  it("detects ownership claims in escaped Unicode JSON string leaves", async () => {
+    const releasePath = join(fixtureRoot, "docs/contest/release-evidence.json");
+    const original = await readFile(releasePath, "utf8");
+    const escapedClaim =
+      '"claim":"\\u0053\\u0045\\u0050\\u0045 es propiedad de la Junta de Castilla y Le\\u00f3n y se distribuye bajo MIT",';
+    const withClaim = original.replace(
+      '"manifest":',
+      `${escapedClaim}\n  "manifest":`,
+    );
+    expect(withClaim).not.toBe(original);
+    await writeFile(releasePath, withClaim, "utf8");
+
+    await expect(
+      validateCandidateBoundary(await currentCandidateOptions(fixtureRoot)),
+    ).rejects.toThrow(/ownership|licen|SEPE|Junta/iu);
+  }, 90_000);
+
+  it("rejects JSON nesting beyond the parser limit", async () => {
+    let deeplyNested = "{}";
+    for (let depth = 0; depth < 80; depth += 1) {
+      deeplyNested = `[${deeplyNested}]`;
+    }
+    await writeFile(
+      join(fixtureRoot, "docs/contest/coverage-freeze.json"),
+      `${deeplyNested}\n`,
+      "utf8",
+    );
+
+    await expect(
+      validateCandidateBoundary(await currentCandidateOptions(fixtureRoot)),
+    ).rejects.toThrow(/depth|nesting|limit|entries/iu);
+  }, 90_000);
+
+  it("rejects trailing JSON garbage in an evidence document", async () => {
+    const releasePath = join(fixtureRoot, "docs/contest/release-evidence.json");
+    const original = await readFile(releasePath, "utf8");
+    await writeFile(releasePath, `${original}\ntrailing`, "utf8");
+
+    await expect(
+      validateCandidateBoundary(await currentCandidateOptions(fixtureRoot)),
+    ).rejects.toThrow(/json|trailing|parse/iu);
+  }, 90_000);
+
+  it("rejects escaped duplicate governing JSON keys, including surrogate text", async () => {
+    await writeFile(
+      join(fixtureRoot, "docs/contest/release-evidence.json"),
+      '{"manifest": {}, "\\u006d\\u0061\\u006e\\u0069\\u0066\\u0065\\u0073\\u0074": {}, "claim": "\\ud83d\\ude00"}\n',
+      "utf8",
+    );
+
+    await expect(
+      validateCandidateBoundary(await currentCandidateOptions(fixtureRoot)),
+    ).rejects.toThrow(/duplicate.*json.*key|duplicate.*manifest/iu);
   }, 90_000);
 
   it("rejects duplicate JSON keys in a governing evidence document", async () => {

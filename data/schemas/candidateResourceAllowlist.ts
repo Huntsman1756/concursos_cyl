@@ -3,6 +3,7 @@ import {
   SepeOccupationMarketResourceSchema,
   type SepeOccupationMarketResource,
 } from "./sepeOccupationMarket";
+import type { GeneratedResourceKey } from "./generatedResourceCatalog";
 
 const CANDIDATE_RESOURCE_COUNT = 21;
 const RESOURCE_KEY_PATTERN = /^[a-z][a-zA-Z\d]*$/u;
@@ -76,7 +77,7 @@ export const CANDIDATE_RESOURCE_KEYS = Object.freeze([
   ...parsedAllowlist.resourceKeys,
 ]);
 
-export type CandidateResourceKey = (typeof CANDIDATE_RESOURCE_KEYS)[number];
+export type CandidateResourceKey = GeneratedResourceKey;
 
 export function assertCandidateResourceSet(
   keys: readonly string[],
@@ -197,11 +198,11 @@ export function classifyCandidateReference(
       hostAndPath,
     );
   if (certificateReference) return "publisher-owned";
-  if (
-    isSepeHost(parsed.hostname.toLocaleLowerCase("en-US")) ||
-    /occupation-market/u.test(parsed.pathname.toLocaleLowerCase("en-US"))
-  ) {
+  if (isSepeHost(parsed.hostname.toLocaleLowerCase("en-US"))) {
     return "complementary-classification-source";
+  }
+  if (/occupation-market/u.test(parsed.pathname.toLocaleLowerCase("en-US"))) {
+    return "other";
   }
   return "other";
 }
