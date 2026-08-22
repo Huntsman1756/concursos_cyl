@@ -1,0 +1,18 @@
+# Official bounded excerpt — IMA02S
+
+Source record: `data/curated/professional-profiles.json` (`sourceSystem`: `TodoFP`).
+
+Official TodoFP URL:
+https://www.todofp.es/que-estudiar/familias-profesionales/instalacion-mantenimiento/mnto-inst-termicas-fluidos.html
+
+Official program: **Mantenimiento de Instalaciones Térmicas y de Fluidos**.
+
+Exact professional-profile output used by this wave:
+
+- `Frigorista.`
+
+Official CNO identity checked in `data/curated/official-occupations.json`:
+
+- `7250` — Mecánicos-instaladores de refrigeración y climatización.
+
+No offer record or title-only inference is used.

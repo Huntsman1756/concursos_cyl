@@ -1429,5 +1429,93 @@
     "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
     "reviewedAt": "2026-08-22",
     "catalogVersion": "1.0.0"
+  },
+  {
+    "occupationId": "occupation:cno11:2482",
+    "preferredLabel": "Diseñadores de productos y de prendas",
+    "confirmationLabel": "Diseñadores de productos y de prendas",
+    "classificationSystem": "CNO-11",
+    "classificationCode": "2482",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+    "reviewedAt": "2026-08-22",
+    "catalogVersion": "1.0.0"
+  },
+  {
+    "occupationId": "occupation:cno11:2484",
+    "preferredLabel": "Diseñadores gráficos y multimedia",
+    "confirmationLabel": "Diseñadores gráficos y multimedia",
+    "classificationSystem": "CNO-11",
+    "classificationCode": "2484",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+    "reviewedAt": "2026-08-22",
+    "catalogVersion": "1.0.0"
+  },
+  {
+    "occupationId": "occupation:cno11:2729",
+    "preferredLabel": "Especialistas en bases de datos y en redes informáticas no clasificados bajo otros epígrafes",
+    "confirmationLabel": "Especialistas en bases de datos y en redes informáticas no clasificados bajo otros epígrafes",
+    "classificationSystem": "CNO-11",
+    "classificationCode": "2729",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+    "reviewedAt": "2026-08-22",
+    "catalogVersion": "1.0.0"
+  },
+  {
+    "occupationId": "occupation:cno11:3831",
+    "preferredLabel": "Técnicos de grabación audiovisual",
+    "confirmationLabel": "Técnicos de grabación audiovisual",
+    "classificationSystem": "CNO-11",
+    "classificationCode": "3831",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+    "reviewedAt": "2026-08-22",
+    "catalogVersion": "1.0.0"
+  },
+  {
+    "occupationId": "occupation:cno11:7191",
+    "preferredLabel": "Mantenedores de edificios",
+    "confirmationLabel": "Mantenedores de edificios",
+    "classificationSystem": "CNO-11",
+    "classificationCode": "7191",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+    "reviewedAt": "2026-08-22",
+    "catalogVersion": "1.0.0"
+  },
+  {
+    "occupationId": "occupation:cno11:7211",
+    "preferredLabel": "Escayolistas",
+    "confirmationLabel": "Escayolistas",
+    "classificationSystem": "CNO-11",
+    "classificationCode": "7211",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+    "reviewedAt": "2026-08-22",
+    "catalogVersion": "1.0.0"
+  },
+  {
+    "occupationId": "occupation:cno11:7231",
+    "preferredLabel": "Pintores y empapeladores",
+    "confirmationLabel": "Pintores y empapeladores",
+    "classificationSystem": "CNO-11",
+    "classificationCode": "7231",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+    "reviewedAt": "2026-08-22",
+    "catalogVersion": "1.0.0"
+  },
+  {
+    "occupationId": "occupation:cno11:9602",
+    "preferredLabel": "Peones de la construcción de edificios",
+    "confirmationLabel": "Peones de la construcción de edificios",
+    "classificationSystem": "CNO-11",
+    "classificationCode": "9602",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+    "reviewedAt": "2026-08-22",
+    "catalogVersion": "1.0.0"
   }
 ]

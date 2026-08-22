@@ -1,0 +1,19 @@
+# Official bounded excerpt — COM01E
+
+Source record: `data/curated/professional-profiles.json` (`sourceSystem`: `TodoFP`).
+
+Official TodoFP URL:
+https://www.todofp.es/que-estudiar/familias-profesionales/comercio-marketing/ce-posicionamiento-buscadores-comunicacion-rrss.html
+
+Official program: **Posicionamiento en buscadores (SEO/SEM) y comunicación en redes sociales**.
+
+Exact professional-profile output used by this wave:
+
+- `Especialistas en captación y fidelización de clientes (Inbound Marketing Specialist).`
+
+Official CNO identity checked in `data/curated/official-occupations.json`:
+
+- `2651` — Profesionales de la publicidad y la comercialización.
+
+The relation remains reviewed rather than an exhaustive title equivalence. No
+offer record or title-only inference is used.

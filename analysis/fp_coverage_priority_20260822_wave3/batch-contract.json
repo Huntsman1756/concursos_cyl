@@ -1,0 +1,210 @@
+{
+  "schemaVersion": 1,
+  "waveId": "fp-coverage-priority-20260822-wave3",
+  "reviewedAt": "2026-08-22",
+  "objective": "Freeze official TodoFP and CNO-11 evidence for nine priority FP bases and publish only the exact seventeen conservative reviewed relationships.",
+  "previousCatalogSha256": "aef572d36bbb84b2eb5e426103c78e2241856f5b492770390f8c7240b2a0bb61",
+  "newCatalogSha256": "0c3224887ccb75806a32186e671e8e1ea670e84e17b85b42e105f19e88751cef",
+  "sourcePolicy": {
+    "programEvidence": "Official TodoFP professional-profile records and their registered official TodoFP URLs",
+    "classificationEvidence": ["BOE CNO-11", "INE CNO-11 explanatory notes"],
+    "forbiddenEvidence": [
+      "job offers",
+      "sector-only similarity",
+      "title-only inference",
+      "generic aliases",
+      "rejected CNO 3202 or 7212"
+    ]
+  },
+  "newOccupationCodes": [
+    "2482",
+    "2484",
+    "2729",
+    "3831",
+    "7191",
+    "7211",
+    "7231",
+    "9602"
+  ],
+  "acceptedRelationKeys": [
+    "IMS01S|2484",
+    "IMS01S|2713",
+    "AGA02S|6120",
+    "COM01E|2651",
+    "ELE01E|2729",
+    "EOC01B|7121",
+    "EOC01B|7191",
+    "EOC01B|7211",
+    "EOC01B|7231",
+    "EOC01B|7240",
+    "EOC01B|9602",
+    "EOC02M|7211",
+    "EOC02M|7231",
+    "EOC02M|7240",
+    "FME01E|2482",
+    "IMA02S|7250",
+    "IMS04S|3831"
+  ],
+  "excludedRelationKeys": ["EOC01B|7212", "EOC02M|3202", "EOC02M|7212"],
+  "relationshipTypes": {
+    "reviewed_relationship": [
+      "IMS01S|2484",
+      "IMS01S|2713",
+      "AGA02S|6120",
+      "COM01E|2651",
+      "ELE01E|2729",
+      "EOC01B|7121",
+      "EOC01B|7191",
+      "EOC01B|7211",
+      "EOC01B|7231",
+      "EOC01B|7240",
+      "EOC01B|9602",
+      "EOC02M|7211",
+      "EOC02M|7231",
+      "EOC02M|7240",
+      "FME01E|2482",
+      "IMA02S|7250",
+      "IMS04S|3831"
+    ]
+  },
+  "stories": [
+    {
+      "id": "ims01s-review",
+      "programKey": "IMS01S",
+      "sourcePath": "analysis/fp_coverage_priority_20260822_wave3/sources/IMS01S.txt",
+      "proposalPath": "analysis/fp_coverage_priority_20260822_wave3/proposals/IMS01S.md",
+      "allowedPaths": [
+        "analysis/fp_coverage_priority_20260822_wave3/proposals/IMS01S.md"
+      ],
+      "frontierPlan": "Keep multimedia design/development outputs separate from audiovisual production and use CNO 2484 and 2713 only as conservative reviewed functional boundaries.",
+      "acceptanceCriteria": [
+        "preserve exact TodoFP quotes",
+        "use only approved official CNO-11 identities",
+        "do not create aliases"
+      ]
+    },
+    {
+      "id": "aga02s-review",
+      "programKey": "AGA02S",
+      "sourcePath": "analysis/fp_coverage_priority_20260822_wave3/sources/AGA02S.txt",
+      "proposalPath": "analysis/fp_coverage_priority_20260822_wave3/proposals/AGA02S.md",
+      "allowedPaths": [
+        "analysis/fp_coverage_priority_20260822_wave3/proposals/AGA02S.md"
+      ],
+      "frontierPlan": "Use the official nursery/garden output for the CNO 6120 qualified horticulture boundary without broadening to management or generic agriculture.",
+      "acceptanceCriteria": [
+        "preserve exact TodoFP quote",
+        "use approved CNO 6120 identity",
+        "do not create aliases"
+      ]
+    },
+    {
+      "id": "com01e-review",
+      "programKey": "COM01E",
+      "sourcePath": "analysis/fp_coverage_priority_20260822_wave3/sources/COM01E.txt",
+      "proposalPath": "analysis/fp_coverage_priority_20260822_wave3/proposals/COM01E.md",
+      "allowedPaths": [
+        "analysis/fp_coverage_priority_20260822_wave3/proposals/COM01E.md"
+      ],
+      "frontierPlan": "Keep marketing-specialist work at the professional advertising and commercialisation boundary of CNO 2651; do not infer a director or generic sales mapping from the title.",
+      "acceptanceCriteria": [
+        "preserve exact TodoFP quote",
+        "use approved CNO 2651 identity",
+        "do not create aliases"
+      ]
+    },
+    {
+      "id": "ele01e-review",
+      "programKey": "ELE01E",
+      "sourcePath": "analysis/fp_coverage_priority_20260822_wave3/sources/ELE01E.txt",
+      "proposalPath": "analysis/fp_coverage_priority_20260822_wave3/proposals/ELE01E.md",
+      "allowedPaths": [
+        "analysis/fp_coverage_priority_20260822_wave3/proposals/ELE01E.md"
+      ],
+      "frontierPlan": "Use CNO 2729 only as a reviewed database/network specialist boundary for the official cybersecurity analyst output; do not substitute generic systems administration or web development.",
+      "acceptanceCriteria": [
+        "preserve exact TodoFP quote",
+        "use approved CNO 2729 identity",
+        "keep IFC03E pending"
+      ]
+    },
+    {
+      "id": "eoc01b-review",
+      "programKey": "EOC01B",
+      "sourcePath": "analysis/fp_coverage_priority_20260822_wave3/sources/EOC01B.txt",
+      "proposalPath": "analysis/fp_coverage_priority_20260822_wave3/proposals/EOC01B.md",
+      "allowedPaths": [
+        "analysis/fp_coverage_priority_20260822_wave3/proposals/EOC01B.md"
+      ],
+      "frontierPlan": "Publish only the six direct functional building-maintenance outputs and preserve the explicit rejection of CNO 7212.",
+      "acceptanceCriteria": [
+        "preserve exact TodoFP quotes",
+        "publish 7121, 7191, 7211, 7231, 7240, and 9602 only",
+        "reject EOC01B|7212",
+        "do not create aliases"
+      ]
+    },
+    {
+      "id": "eoc02m-review",
+      "programKey": "EOC02M",
+      "sourcePath": "analysis/fp_coverage_priority_20260822_wave3/sources/EOC02M.txt",
+      "proposalPath": "analysis/fp_coverage_priority_20260822_wave3/proposals/EOC02M.md",
+      "allowedPaths": [
+        "analysis/fp_coverage_priority_20260822_wave3/proposals/EOC02M.md"
+      ],
+      "frontierPlan": "Publish the plasterboard, painting, and pavement functional boundaries while rejecting supervisor CNO 3202 and revestimiento CNO 7212.",
+      "acceptanceCriteria": [
+        "preserve exact TodoFP quotes",
+        "publish 7211, 7231, and 7240 only",
+        "reject EOC02M|3202 and EOC02M|7212",
+        "do not create aliases"
+      ]
+    },
+    {
+      "id": "fme01e-review",
+      "programKey": "FME01E",
+      "sourcePath": "analysis/fp_coverage_priority_20260822_wave3/sources/FME01E.txt",
+      "proposalPath": "analysis/fp_coverage_priority_20260822_wave3/proposals/FME01E.md",
+      "allowedPaths": [
+        "analysis/fp_coverage_priority_20260822_wave3/proposals/FME01E.md"
+      ],
+      "frontierPlan": "Map the explicit 3D product-design output to CNO 2482 as a reviewed relation without turning additive manufacturing into a generic designer alias.",
+      "acceptanceCriteria": [
+        "preserve exact TodoFP quote",
+        "use approved CNO 2482 identity",
+        "do not create aliases"
+      ]
+    },
+    {
+      "id": "ima02s-review",
+      "programKey": "IMA02S",
+      "sourcePath": "analysis/fp_coverage_priority_20260822_wave3/sources/IMA02S.txt",
+      "proposalPath": "analysis/fp_coverage_priority_20260822_wave3/proposals/IMA02S.md",
+      "allowedPaths": [
+        "analysis/fp_coverage_priority_20260822_wave3/proposals/IMA02S.md"
+      ],
+      "frontierPlan": "Keep the frigorista output within the approved refrigeration and climatization CNO 7250 boundary and avoid generic installation substitutions.",
+      "acceptanceCriteria": [
+        "preserve exact TodoFP quote",
+        "use approved CNO 7250 identity",
+        "do not create aliases"
+      ]
+    },
+    {
+      "id": "ims04s-review",
+      "programKey": "IMS04S",
+      "sourcePath": "analysis/fp_coverage_priority_20260822_wave3/sources/IMS04S.txt",
+      "proposalPath": "analysis/fp_coverage_priority_20260822_wave3/proposals/IMS04S.md",
+      "allowedPaths": [
+        "analysis/fp_coverage_priority_20260822_wave3/proposals/IMS04S.md"
+      ],
+      "frontierPlan": "Use CNO 3831 for audiovisual sound-recording work as a reviewed relation and keep the broader production no-match IMS03S unchanged.",
+      "acceptanceCriteria": [
+        "preserve exact TodoFP quote",
+        "use approved CNO 3831 identity",
+        "revalidate IMS03S separately",
+        "do not create aliases"
+      ]
+    }
+  ]
+}

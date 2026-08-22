@@ -1,0 +1,19 @@
+# Official bounded excerpt — FME01E
+
+Source record: `data/curated/professional-profiles.json` (`sourceSystem`: `TodoFP`).
+
+Official TodoFP URL:
+https://www.todofp.es/que-estudiar/familias-profesionales/fabricacion-mecanica/ce-fabricacion-aditiva.html
+
+Official program: **Fabricación aditiva**.
+
+Exact professional-profile output used by this wave:
+
+- `Diseñador 3D por escaneado.`
+
+Official CNO identity checked in `data/curated/official-occupations.json`:
+
+- `2482` — Diseñadores de productos y de prendas.
+
+This remains a reviewed functional relation. No offer record, alias, or
+title-only inference is used.

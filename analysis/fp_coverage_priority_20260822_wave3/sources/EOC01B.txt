@@ -1,0 +1,29 @@
+# Official bounded excerpt — EOC01B
+
+Source record: `data/curated/professional-profiles.json` (`sourceSystem`: `TodoFP`).
+
+Official TodoFP URL:
+https://www.todofp.es/que-estudiar/familias-profesionales/edificacion-obra-civil/reforma-mantenimiento-edificios.html
+
+Official program: **Reforma y Mantenimiento de Edificios**.
+
+Exact professional-profile outputs used by this wave:
+
+- `Ayudante de albañil.`
+- `Ayudante de mantenimiento básico de edificios.`
+- `Ayudante de escayolista.`
+- `Ayudante de pintor / pintora.`
+- `Ayudante en pavimentación para urbanización.`
+- `Peón especializado.`
+
+Official CNO identities checked in `data/curated/official-occupations.json`:
+
+- `7121` — Albañiles.
+- `7191` — Mantenedores de edificios.
+- `7211` — Escayolistas.
+- `7231` — Pintores y empapeladores.
+- `7240` — Soladores, colocadores de parquet y afines.
+- `9602` — Peones de la construcción de edificios.
+
+`EOC01B|7212` is explicitly rejected. No offer record or title-only inference
+is used.

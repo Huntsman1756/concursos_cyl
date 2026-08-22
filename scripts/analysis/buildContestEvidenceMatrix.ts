@@ -10,7 +10,7 @@ import { execFileSync } from "node:child_process";
 import { extname, join, relative, resolve } from "node:path";
 import { pathToFileURL } from "node:url";
 
-const EXPECTED_APPROVED_RELATIONS = 248;
+const EXPECTED_APPROVED_RELATIONS = 265;
 const AUDIT_CUTOFF = "2026-08-22T04:13:28+02:00";
 const SOURCE_COMMIT_SHA = "e41c5394d71c1324fe8a3e5d12a4a6f76793eaa2";
 const TEXT_EXTENSIONS = new Set([".json", ".md", ".txt"]);
@@ -77,9 +77,24 @@ function loadIndependentSample(
       "utf8",
     ),
   ) as IndependentSampleDocument;
+  const sampleSource = JSON.parse(
+    execFileSync(
+      "git",
+      [
+        "-C",
+        rootDirectory,
+        "show",
+        `${sample.sourceCommitSha}:data/curated/training-occupation-links.json`,
+      ],
+      { encoding: "utf8", maxBuffer: 16 * 1024 * 1024 },
+    ),
+  ) as CuratedRelation[];
+  const samplePopulation = sampleSource.filter(
+    (relation) => relation.reviewStatus === "approved",
+  );
   if (
     sample.sourceCommitSha !== SOURCE_COMMIT_SHA ||
-    sample.population !== EXPECTED_APPROVED_RELATIONS ||
+    sample.population !== samplePopulation.length ||
     sample.sampleSize !== 15 ||
     sample.relations.length !== sample.sampleSize ||
     sample.independentlyAudited !== true ||
@@ -87,8 +102,7 @@ function loadIndependentSample(
     sample.summary.pass !== 15 ||
     sample.summary.fail !== 0 ||
     sample.summary.samplePass !== 15 ||
-    sample.summary.notSampled !==
-      EXPECTED_APPROVED_RELATIONS - sample.sampleSize ||
+    sample.summary.notSampled !== sample.population - sample.sampleSize ||
     sample.summary.exhaustive !== false
   ) {
     throw new Error(
@@ -102,7 +116,7 @@ function loadIndependentSample(
       relation,
     ]),
   );
-  const expectedKeys = approved
+  const expectedKeys = samplePopulation
     .map(
       (relation) => `${relation.trainingProgramKey}|${relation.occupationId}`,
     )
@@ -288,19 +302,18 @@ export function buildContestEvidenceMatrix(rootDirectory = resolve(".")) {
       sourcePath: "analysis/contest_evidence_live_sample.json",
       sourceCommitSha: sample.sourceCommitSha,
       auditedAt: sample.auditedAt,
-      population: sample.population,
+      population: approved.length,
       sampleSize: sample.sampleSize,
       pass: sample.summary.pass,
       fail: sample.summary.fail,
-      notSampled: sample.summary.notSampled,
+      notSampled: approved.length - sample.sampleSize,
       exhaustive: sample.exhaustive,
-      decision:
-        "The deterministic 15-relation sample passed independently; the remaining 233 approved relations are not sampled here. This is not an exhaustive audit.",
+      decision: `The deterministic 15-relation sample passed independently; the remaining ${approved.length - sample.sampleSize} approved relations are not sampled here. This is not an exhaustive audit.`,
     },
     limitations: [
       "The common floor verifies repository fields and official-domain attribution, not the live source text.",
       "Artifact discovery is textual and must not be described as an exhaustive semantic audit.",
-      "The independent sample records 15 PASS and 0 FAIL; 233 approved relations remain not_sampled, so this is not an exhaustive audit.",
+      `The independent sample records 15 PASS and 0 FAIL; ${approved.length - sample.sampleSize} approved relations remain not_sampled, so this is not an exhaustive audit.`,
     ],
     relations,
   };
@@ -310,15 +323,9 @@ export function loadAuditedRelations(
   rootDirectory = resolve("."),
 ): CuratedRelation[] {
   return JSON.parse(
-    execFileSync(
-      "git",
-      [
-        "-C",
-        rootDirectory,
-        "show",
-        `${SOURCE_COMMIT_SHA}:data/curated/training-occupation-links.json`,
-      ],
-      { encoding: "utf8", maxBuffer: 16 * 1024 * 1024 },
+    readFileSync(
+      resolve(rootDirectory, "data/curated/training-occupation-links.json"),
+      "utf8",
     ),
   ) as CuratedRelation[];
 }

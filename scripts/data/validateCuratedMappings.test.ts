@@ -890,6 +890,71 @@ const diskPrograms: TrainingProgram[] = [
     familyCode: "TMV",
     familyName: "Transporte y Mantenimiento de Vehículos",
   },
+  {
+    programKey: "IMS01S",
+    programTitle: "Animaciones 3D, Juegos y Entornos Interactivos",
+    level: "higher",
+    familyCode: "IMS",
+    familyName: "Imagen y Sonido",
+  },
+  {
+    programKey: "AGA02S",
+    programTitle: "Paisajismo y Medio Rural",
+    level: "higher",
+    familyCode: "AGA",
+    familyName: "Agraria",
+  },
+  {
+    programKey: "COM01E",
+    programTitle:
+      "Posicionamiento en buscadores (SEO/SEM) y comunicación en redes sociales",
+    level: "specialization",
+    familyCode: "COM",
+    familyName: "Comercio y Marketing",
+  },
+  {
+    programKey: "ELE01E",
+    programTitle:
+      "Ciberseguridad en entornos de las tecnologías de la operación",
+    level: "specialization",
+    familyCode: "ELE",
+    familyName: "Electricidad y Electrónica",
+  },
+  {
+    programKey: "EOC01B",
+    programTitle: "Reforma y Mantenimiento de Edificios",
+    level: "basic",
+    familyCode: "EOC",
+    familyName: "Edificación y Obra Civil",
+  },
+  {
+    programKey: "EOC02M",
+    programTitle: "Obras de Interior, Decoración y Rehabilitación",
+    level: "intermediate",
+    familyCode: "EOC",
+    familyName: "Edificación y Obra Civil",
+  },
+  {
+    programKey: "FME01E",
+    programTitle: "Fabricación aditiva",
+    level: "specialization",
+    familyCode: "FME",
+    familyName: "Fabricación Mecánica",
+  },
+  {
+    programKey: "IMA02S",
+    programTitle: "Mantenimiento de Instalaciones Térmicas y de Fluidos",
+    level: "higher",
+    familyCode: "IMA",
+    familyName: "Instalación y Mantenimiento",
+  },
+  {
+    programKey: "IMS04S",
+    programTitle: "Sonido para Audiovisuales y Espectáculos",
+    level: "higher",
+    familyCode: "IMS",
+    familyName: "Imagen y Sonido",
+  },
 ];
 
 const occupations = [
@@ -1492,6 +1557,14 @@ describe("curated occupation mappings", () => {
         "3132",
         "7835",
         "8131",
+        "2482",
+        "2484",
+        "2729",
+        "3831",
+        "7191",
+        "7211",
+        "7231",
+        "9602",
       ],
     );
     expect(
@@ -1520,10 +1593,12 @@ describe("curated occupation mappings", () => {
           AGA01M: 6,
           AGA01S: 1,
           AGA02M: 6,
+          AGA02S: 1,
           AGA03B: 4,
           INA01S: 1,
           TMV01M: 1,
           COM01B: 7,
+          COM01E: 1,
           FME01M: 3,
           MAM01M: 2,
           SAN02M: 1,
@@ -1546,6 +1621,7 @@ describe("curated occupation mappings", () => {
           ELE01MD: 3,
           ADG01B: 1,
           ELE01B: 1,
+          ELE01E: 1,
           IFC02S: 2,
           IFC02SD: 2,
           TMV01B: 1,
@@ -1570,6 +1646,7 @@ describe("curated occupation mappings", () => {
           TMV02M: 1,
           IMA03M: 1,
           IMA01M: 4,
+          IMA02S: 1,
           TMV03E: 1,
           QUI02M: 1,
           COM04S: 3,
@@ -1599,11 +1676,16 @@ describe("curated occupation mappings", () => {
           AGA03S: 1,
           AGA04M: 2,
           EOC02S: 1,
+          EOC01B: 6,
+          EOC02M: 3,
           ENA03S: 2,
           FME02B: 4,
+          FME01E: 1,
           HOT05S: 1,
           INA02S: 3,
           IMS01E: 2,
+          IMS01S: 2,
+          IMS04S: 1,
           INA02M: 4,
           QUI01S: 2,
           SAN09S: 1,
@@ -1947,9 +2029,9 @@ describe("curated occupation mappings", () => {
       ),
     );
 
-    expect.soft(approved.links).toHaveLength(248);
-    expect.soft(reviewedBaseKeys.size).toBe(104);
-    expect.soft(approvedProgramKeys.size).toBe(121);
+    expect.soft(approved.links).toHaveLength(265);
+    expect.soft(reviewedBaseKeys.size).toBe(113);
+    expect.soft(approvedProgramKeys.size).toBe(130);
   });
 
   it("does not publish the five remediated contest-evidence relationships", async () => {
@@ -1974,11 +2056,11 @@ describe("curated occupation mappings", () => {
     );
 
     expect(remediatedKeys.filter((key) => approvedKeys.has(key))).toEqual([]);
-    expect(approved.links).toHaveLength(248);
-    expect(approvedKeys.size).toBe(248);
+    expect(approved.links).toHaveLength(265);
+    expect(approvedKeys.size).toBe(265);
     expect(
       new Set(approved.links.map((link) => link.trainingProgramKey)).size,
-    ).toBe(121);
+    ).toBe(130);
   });
 
   it("retains the corrected official evidence quotes", async () => {
@@ -2121,7 +2203,7 @@ describe("curated occupation mappings", () => {
         ),
       });
     }
-    expect(approved.occupations).toHaveLength(123);
+    expect(approved.occupations).toHaveLength(131);
     expect(
       approved.occupations.filter((occupation) =>
         [
@@ -2145,6 +2227,190 @@ describe("curated occupation mappings", () => {
           link.trainingProgramKey === "AGA03M" &&
           link.occupationId === "occupation:cno11:5220",
       ),
+    ).toBe(false);
+  });
+
+  it("publishes exactly the reviewed Task 5 FP-to-CNO wave", async () => {
+    const curated = await loadCuratedMappingsFromDisk(
+      process.cwd(),
+      diskPrograms,
+    );
+    const approved = loadApprovedMappings(curated);
+    const expected = [
+      {
+        key: "IMS01S|2484",
+        relationshipType: "reviewed_relationship",
+        sourceUrl:
+          "https://www.todofp.es/que-estudiar/familias-profesionales/imagen-sonido/animaciones3d-juegos-entornos-interactivos.html",
+        sourceQuote: "Grafista digital.",
+      },
+      {
+        key: "IMS01S|2713",
+        relationshipType: "reviewed_relationship",
+        sourceUrl:
+          "https://www.todofp.es/que-estudiar/familias-profesionales/imagen-sonido/animaciones3d-juegos-entornos-interactivos.html",
+        sourceQuote:
+          "Desarrollador / desarrolladora de aplicaciones y productos audiovisuales multimedia.",
+      },
+      {
+        key: "AGA02S|6120",
+        relationshipType: "reviewed_relationship",
+        sourceUrl:
+          "https://www.todofp.es/que-estudiar/familias-profesionales/agraria/paisajismo-medio-rural.html",
+        sourceQuote:
+          "Encargada / encargado o capataz agrícola de huertas, viveros y jardines, en general.",
+      },
+      {
+        key: "COM01E|2651",
+        relationshipType: "reviewed_relationship",
+        sourceUrl:
+          "https://www.todofp.es/que-estudiar/familias-profesionales/comercio-marketing/ce-posicionamiento-buscadores-comunicacion-rrss.html",
+        sourceQuote:
+          "Especialistas en captación y fidelización de clientes (Inbound Marketing Specialist).",
+      },
+      {
+        key: "ELE01E|2729",
+        relationshipType: "reviewed_relationship",
+        sourceUrl:
+          "https://www.todofp.es/que-estudiar/familias-profesionales/electricidad-electronica/ce-ciberseguridad-tecnologias-operacion.html",
+        sourceQuote: "Analista de ciberseguridad en entornos de la operación.",
+      },
+      {
+        key: "EOC01B|7121",
+        relationshipType: "reviewed_relationship",
+        sourceUrl:
+          "https://www.todofp.es/que-estudiar/familias-profesionales/edificacion-obra-civil/reforma-mantenimiento-edificios.html",
+        sourceQuote: "Ayudante de albañil.",
+      },
+      {
+        key: "EOC01B|7191",
+        relationshipType: "reviewed_relationship",
+        sourceUrl:
+          "https://www.todofp.es/que-estudiar/familias-profesionales/edificacion-obra-civil/reforma-mantenimiento-edificios.html",
+        sourceQuote: "Ayudante de mantenimiento básico de edificios.",
+      },
+      {
+        key: "EOC01B|7211",
+        relationshipType: "reviewed_relationship",
+        sourceUrl:
+          "https://www.todofp.es/que-estudiar/familias-profesionales/edificacion-obra-civil/reforma-mantenimiento-edificios.html",
+        sourceQuote: "Ayudante de escayolista.",
+      },
+      {
+        key: "EOC01B|7231",
+        relationshipType: "reviewed_relationship",
+        sourceUrl:
+          "https://www.todofp.es/que-estudiar/familias-profesionales/edificacion-obra-civil/reforma-mantenimiento-edificios.html",
+        sourceQuote: "Ayudante de pintor / pintora.",
+      },
+      {
+        key: "EOC01B|7240",
+        relationshipType: "reviewed_relationship",
+        sourceUrl:
+          "https://www.todofp.es/que-estudiar/familias-profesionales/edificacion-obra-civil/reforma-mantenimiento-edificios.html",
+        sourceQuote: "Ayudante en pavimentación para urbanización.",
+      },
+      {
+        key: "EOC01B|9602",
+        relationshipType: "reviewed_relationship",
+        sourceUrl:
+          "https://www.todofp.es/que-estudiar/familias-profesionales/edificacion-obra-civil/reforma-mantenimiento-edificios.html",
+        sourceQuote: "Peón especializado.",
+      },
+      {
+        key: "EOC02M|7211",
+        relationshipType: "reviewed_relationship",
+        sourceUrl:
+          "https://www.todofp.es/que-estudiar/familias-profesionales/edificacion-obra-civil/obras-interior-decoracion-rehabilitacion.html",
+        sourceQuote: "Juntera / juntero de placa de yeso laminado.",
+      },
+      {
+        key: "EOC02M|7231",
+        relationshipType: "reviewed_relationship",
+        sourceUrl:
+          "https://www.todofp.es/que-estudiar/familias-profesionales/edificacion-obra-civil/obras-interior-decoracion-rehabilitacion.html",
+        sourceQuote: "Pintor / pintora de obra.",
+      },
+      {
+        key: "EOC02M|7240",
+        relationshipType: "reviewed_relationship",
+        sourceUrl:
+          "https://www.todofp.es/que-estudiar/familias-profesionales/edificacion-obra-civil/obras-interior-decoracion-rehabilitacion.html",
+        sourceQuote:
+          "Colocador / colocadora de pavimentos ligeros, en general.",
+      },
+      {
+        key: "FME01E|2482",
+        relationshipType: "reviewed_relationship",
+        sourceUrl:
+          "https://www.todofp.es/que-estudiar/familias-profesionales/fabricacion-mecanica/ce-fabricacion-aditiva.html",
+        sourceQuote: "Diseñador 3D por escaneado.",
+      },
+      {
+        key: "IMA02S|7250",
+        relationshipType: "reviewed_relationship",
+        sourceUrl:
+          "https://www.todofp.es/que-estudiar/familias-profesionales/instalacion-mantenimiento/mnto-inst-termicas-fluidos.html",
+        sourceQuote: "Frigorista.",
+      },
+      {
+        key: "IMS04S|3831",
+        relationshipType: "reviewed_relationship",
+        sourceUrl:
+          "https://www.todofp.es/que-estudiar/familias-profesionales/imagen-sonido/sonido-audiovisuales-espectaculos.html",
+        sourceQuote: "Técnica / técnico de grabación de sonido en estudio.",
+      },
+    ] as const;
+    const waveKeys = new Set<string>(expected.map(({ key }) => key));
+    const actual = approved.links
+      .filter((link) =>
+        waveKeys.has(
+          `${link.trainingProgramKey}|${link.occupationId.replace("occupation:cno11:", "")}`,
+        ),
+      )
+      .map((link) => ({
+        key: `${link.trainingProgramKey}|${link.occupationId.replace("occupation:cno11:", "")}`,
+        relationshipType: link.relationshipType,
+        sourceUrl: link.sourceUrl,
+        sourceQuote: link.sourceQuote,
+      }))
+      .sort((left, right) => left.key.localeCompare(right.key));
+
+    expect(actual).toEqual(
+      [...expected].sort((left, right) => left.key.localeCompare(right.key)),
+    );
+    expect(approved.links).toHaveLength(265);
+    expect(approved.occupations).toHaveLength(131);
+    expect(curated.occupations).toHaveLength(138);
+    expect(curated.aliases).toHaveLength(21);
+    expect(
+      curated.occupations.filter((occupation) =>
+        [
+          "2482",
+          "2484",
+          "2729",
+          "3831",
+          "7191",
+          "7211",
+          "7231",
+          "9602",
+        ].includes(occupation.classificationCode),
+      ),
+    ).toHaveLength(8);
+    expect(
+      ["EOC01B|7212", "EOC02M|3202", "EOC02M|7212"].some((key) =>
+        approved.links.some(
+          (link) =>
+            `${link.trainingProgramKey}|${link.occupationId.replace("occupation:cno11:", "")}` ===
+            key,
+        ),
+      ),
+    ).toBe(false);
+    expect(
+      approved.links.some((link) => link.trainingProgramKey === "IMS03S"),
+    ).toBe(false);
+    expect(
+      approved.links.some((link) => link.trainingProgramKey === "IFC03E"),
     ).toBe(false);
   });
 

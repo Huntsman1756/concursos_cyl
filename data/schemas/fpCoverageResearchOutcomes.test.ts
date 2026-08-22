@@ -16,6 +16,7 @@ const oldOutcomesPath = resolve(
   repoRoot,
   "data/curated/fp-coverage-research-outcomes.json",
 );
+const queuePath = resolve(repoRoot, "analysis/fp_coverage_research_queue.json");
 
 const EXPECTED_KEYS = [
   "SAN06S",
@@ -89,8 +90,16 @@ describe("fp-coverage-research-outcomes.json", () => {
       reviewedAt: "2026-08-22",
       occupationCatalogSha256: EXPECTED_HASH,
       evidencePath:
-        "analysis/fp_coverage_wave_20260822/no-match-catalog-revalidation.md",
+        "analysis/fp_coverage_priority_20260822_wave3/no-match-catalog-revalidation.md",
       addedOccupationCodes: [
+        "2482",
+        "2484",
+        "2729",
+        "3831",
+        "7191",
+        "7211",
+        "7231",
+        "9602",
         "5894",
         "8160",
         "7404",
@@ -106,6 +115,35 @@ describe("fp-coverage-research-outcomes.json", () => {
     });
     expect(
       existsSync(resolve(repoRoot, document.catalogRevalidation.evidencePath)),
+    ).toBe(true);
+  });
+
+  it("keeps IMS03S as the single no-match and IFC03E pending", () => {
+    const queue = JSON.parse(readFileSync(queuePath, "utf8")) as {
+      candidates: Array<{ baseProgramKey: string }>;
+    };
+    expect(
+      document.outcomes.filter(
+        (entry: { baseProgramKey: string }) =>
+          entry.baseProgramKey === "IMS03S",
+      ),
+    ).toHaveLength(1);
+    expect(
+      document.outcomes.find(
+        (entry: { baseProgramKey: string }) =>
+          entry.baseProgramKey === "IMS03S",
+      )?.status,
+    ).toBe("reviewed-no-publishable-match");
+    expect(
+      document.outcomes.some(
+        (entry: { baseProgramKey: string }) =>
+          entry.baseProgramKey === "IFC03E",
+      ),
+    ).toBe(false);
+    expect(
+      queue.candidates.some(
+        (candidate) => candidate.baseProgramKey === "IFC03E",
+      ),
     ).toBe(true);
   });
 

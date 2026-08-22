@@ -232,6 +232,23 @@ export const ACCEPTED_RELATION_KEYS = [
   "ENA04S|3132",
   "TCP02B|7835",
   "QUI01M|8131",
+  "IMS01S|2484",
+  "IMS01S|2713",
+  "AGA02S|6120",
+  "COM01E|2651",
+  "ELE01E|2729",
+  "EOC01B|7121",
+  "EOC01B|7191",
+  "EOC01B|7211",
+  "EOC01B|7231",
+  "EOC01B|7240",
+  "EOC01B|9602",
+  "EOC02M|7211",
+  "EOC02M|7231",
+  "EOC02M|7240",
+  "FME01E|2482",
+  "IMA02S|7250",
+  "IMS04S|3831",
 ] as const;
 
 const TODO_FP_ASIR_URL =
@@ -454,6 +471,203 @@ export const TASK_4_WAVE_RELATIONSHIPS = [
   },
 ] as const satisfies readonly TrainingOccupationLink[];
 
+/**
+ * Task 5's independently reviewed wave is kept alongside Task 4 so restoring
+ * from the historical reviewed commit remains deterministic after this wave.
+ */
+export const TASK_5_WAVE_RELATIONSHIPS = [
+  {
+    trainingProgramKey: "IMS01S",
+    occupationId: "occupation:cno11:2484",
+    relationshipType: "reviewed_relationship",
+    reviewStatus: "approved",
+    sourceUrl:
+      "https://www.todofp.es/que-estudiar/familias-profesionales/imagen-sonido/animaciones3d-juegos-entornos-interactivos.html",
+    sourceQuote: "Grafista digital.",
+    reviewedAt: "2026-08-22",
+    mappingVersion: "1.0.0",
+  },
+  {
+    trainingProgramKey: "IMS01S",
+    occupationId: "occupation:cno11:2713",
+    relationshipType: "reviewed_relationship",
+    reviewStatus: "approved",
+    sourceUrl:
+      "https://www.todofp.es/que-estudiar/familias-profesionales/imagen-sonido/animaciones3d-juegos-entornos-interactivos.html",
+    sourceQuote:
+      "Desarrollador / desarrolladora de aplicaciones y productos audiovisuales multimedia.",
+    reviewedAt: "2026-08-22",
+    mappingVersion: "1.0.0",
+  },
+  {
+    trainingProgramKey: "AGA02S",
+    occupationId: "occupation:cno11:6120",
+    relationshipType: "reviewed_relationship",
+    reviewStatus: "approved",
+    sourceUrl:
+      "https://www.todofp.es/que-estudiar/familias-profesionales/agraria/paisajismo-medio-rural.html",
+    sourceQuote:
+      "Encargada / encargado o capataz agrícola de huertas, viveros y jardines, en general.",
+    reviewedAt: "2026-08-22",
+    mappingVersion: "1.0.0",
+  },
+  {
+    trainingProgramKey: "COM01E",
+    occupationId: "occupation:cno11:2651",
+    relationshipType: "reviewed_relationship",
+    reviewStatus: "approved",
+    sourceUrl:
+      "https://www.todofp.es/que-estudiar/familias-profesionales/comercio-marketing/ce-posicionamiento-buscadores-comunicacion-rrss.html",
+    sourceQuote:
+      "Especialistas en captación y fidelización de clientes (Inbound Marketing Specialist).",
+    reviewedAt: "2026-08-22",
+    mappingVersion: "1.0.0",
+  },
+  {
+    trainingProgramKey: "ELE01E",
+    occupationId: "occupation:cno11:2729",
+    relationshipType: "reviewed_relationship",
+    reviewStatus: "approved",
+    sourceUrl:
+      "https://www.todofp.es/que-estudiar/familias-profesionales/electricidad-electronica/ce-ciberseguridad-tecnologias-operacion.html",
+    sourceQuote: "Analista de ciberseguridad en entornos de la operación.",
+    reviewedAt: "2026-08-22",
+    mappingVersion: "1.0.0",
+  },
+  {
+    trainingProgramKey: "EOC01B",
+    occupationId: "occupation:cno11:7121",
+    relationshipType: "reviewed_relationship",
+    reviewStatus: "approved",
+    sourceUrl:
+      "https://www.todofp.es/que-estudiar/familias-profesionales/edificacion-obra-civil/reforma-mantenimiento-edificios.html",
+    sourceQuote: "Ayudante de albañil.",
+    reviewedAt: "2026-08-22",
+    mappingVersion: "1.0.0",
+  },
+  {
+    trainingProgramKey: "EOC01B",
+    occupationId: "occupation:cno11:7191",
+    relationshipType: "reviewed_relationship",
+    reviewStatus: "approved",
+    sourceUrl:
+      "https://www.todofp.es/que-estudiar/familias-profesionales/edificacion-obra-civil/reforma-mantenimiento-edificios.html",
+    sourceQuote: "Ayudante de mantenimiento básico de edificios.",
+    reviewedAt: "2026-08-22",
+    mappingVersion: "1.0.0",
+  },
+  {
+    trainingProgramKey: "EOC01B",
+    occupationId: "occupation:cno11:7211",
+    relationshipType: "reviewed_relationship",
+    reviewStatus: "approved",
+    sourceUrl:
+      "https://www.todofp.es/que-estudiar/familias-profesionales/edificacion-obra-civil/reforma-mantenimiento-edificios.html",
+    sourceQuote: "Ayudante de escayolista.",
+    reviewedAt: "2026-08-22",
+    mappingVersion: "1.0.0",
+  },
+  {
+    trainingProgramKey: "EOC01B",
+    occupationId: "occupation:cno11:7231",
+    relationshipType: "reviewed_relationship",
+    reviewStatus: "approved",
+    sourceUrl:
+      "https://www.todofp.es/que-estudiar/familias-profesionales/edificacion-obra-civil/reforma-mantenimiento-edificios.html",
+    sourceQuote: "Ayudante de pintor / pintora.",
+    reviewedAt: "2026-08-22",
+    mappingVersion: "1.0.0",
+  },
+  {
+    trainingProgramKey: "EOC01B",
+    occupationId: "occupation:cno11:7240",
+    relationshipType: "reviewed_relationship",
+    reviewStatus: "approved",
+    sourceUrl:
+      "https://www.todofp.es/que-estudiar/familias-profesionales/edificacion-obra-civil/reforma-mantenimiento-edificios.html",
+    sourceQuote: "Ayudante en pavimentación para urbanización.",
+    reviewedAt: "2026-08-22",
+    mappingVersion: "1.0.0",
+  },
+  {
+    trainingProgramKey: "EOC01B",
+    occupationId: "occupation:cno11:9602",
+    relationshipType: "reviewed_relationship",
+    reviewStatus: "approved",
+    sourceUrl:
+      "https://www.todofp.es/que-estudiar/familias-profesionales/edificacion-obra-civil/reforma-mantenimiento-edificios.html",
+    sourceQuote: "Peón especializado.",
+    reviewedAt: "2026-08-22",
+    mappingVersion: "1.0.0",
+  },
+  {
+    trainingProgramKey: "EOC02M",
+    occupationId: "occupation:cno11:7211",
+    relationshipType: "reviewed_relationship",
+    reviewStatus: "approved",
+    sourceUrl:
+      "https://www.todofp.es/que-estudiar/familias-profesionales/edificacion-obra-civil/obras-interior-decoracion-rehabilitacion.html",
+    sourceQuote: "Juntera / juntero de placa de yeso laminado.",
+    reviewedAt: "2026-08-22",
+    mappingVersion: "1.0.0",
+  },
+  {
+    trainingProgramKey: "EOC02M",
+    occupationId: "occupation:cno11:7231",
+    relationshipType: "reviewed_relationship",
+    reviewStatus: "approved",
+    sourceUrl:
+      "https://www.todofp.es/que-estudiar/familias-profesionales/edificacion-obra-civil/obras-interior-decoracion-rehabilitacion.html",
+    sourceQuote: "Pintor / pintora de obra.",
+    reviewedAt: "2026-08-22",
+    mappingVersion: "1.0.0",
+  },
+  {
+    trainingProgramKey: "EOC02M",
+    occupationId: "occupation:cno11:7240",
+    relationshipType: "reviewed_relationship",
+    reviewStatus: "approved",
+    sourceUrl:
+      "https://www.todofp.es/que-estudiar/familias-profesionales/edificacion-obra-civil/obras-interior-decoracion-rehabilitacion.html",
+    sourceQuote: "Colocador / colocadora de pavimentos ligeros, en general.",
+    reviewedAt: "2026-08-22",
+    mappingVersion: "1.0.0",
+  },
+  {
+    trainingProgramKey: "FME01E",
+    occupationId: "occupation:cno11:2482",
+    relationshipType: "reviewed_relationship",
+    reviewStatus: "approved",
+    sourceUrl:
+      "https://www.todofp.es/que-estudiar/familias-profesionales/fabricacion-mecanica/ce-fabricacion-aditiva.html",
+    sourceQuote: "Diseñador 3D por escaneado.",
+    reviewedAt: "2026-08-22",
+    mappingVersion: "1.0.0",
+  },
+  {
+    trainingProgramKey: "IMA02S",
+    occupationId: "occupation:cno11:7250",
+    relationshipType: "reviewed_relationship",
+    reviewStatus: "approved",
+    sourceUrl:
+      "https://www.todofp.es/que-estudiar/familias-profesionales/instalacion-mantenimiento/mnto-inst-termicas-fluidos.html",
+    sourceQuote: "Frigorista.",
+    reviewedAt: "2026-08-22",
+    mappingVersion: "1.0.0",
+  },
+  {
+    trainingProgramKey: "IMS04S",
+    occupationId: "occupation:cno11:3831",
+    relationshipType: "reviewed_relationship",
+    reviewStatus: "approved",
+    sourceUrl:
+      "https://www.todofp.es/que-estudiar/familias-profesionales/imagen-sonido/sonido-audiovisuales-espectaculos.html",
+    sourceQuote: "Técnica / técnico de grabación de sonido en estudio.",
+    reviewedAt: "2026-08-22",
+    mappingVersion: "1.0.0",
+  },
+] as const satisfies readonly TrainingOccupationLink[];
+
 function currentSourceOverride(
   key: string,
 ): Pick<TrainingOccupationLink, "sourceUrl" | "sourceQuote"> | undefined {
@@ -529,7 +743,13 @@ function restore(rootDirectory: string): void {
       (relationship) => !reviewedKeys.has(relationKey(relationship)),
     ),
   ];
-  const merged = mergeFrontierReviewedCoverage(current, reviewedWithTask4Wave);
+  const reviewedWithTask5Wave = [
+    ...reviewedWithTask4Wave,
+    ...TASK_5_WAVE_RELATIONSHIPS.filter(
+      (relationship) => !reviewedKeys.has(relationKey(relationship)),
+    ),
+  ];
+  const merged = mergeFrontierReviewedCoverage(current, reviewedWithTask5Wave);
   writeFileSync(targetPath, `${JSON.stringify(merged, null, 2)}\n`, "utf8");
   console.log(
     `Restored ${merged.length} reviewed FP↔occupation relationships.`,

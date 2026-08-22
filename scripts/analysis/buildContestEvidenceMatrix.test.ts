@@ -6,21 +6,47 @@ import {
 } from "./buildContestEvidenceMatrix";
 
 describe("contest evidence matrix", () => {
-  it("projects all 248 approved relations without omission or mutation", () => {
+  it("projects all 265 approved relations without omission or mutation", () => {
     const source = loadAuditedRelations().filter(
       (relation: { reviewStatus: string }) =>
         relation.reviewStatus === "approved",
     );
     const matrix = buildContestEvidenceMatrix();
 
-    expect(source).toHaveLength(248);
+    expect(source).toHaveLength(265);
     expect(matrix.sourceCommitSha).toBe(
       "e41c5394d71c1324fe8a3e5d12a4a6f76793eaa2",
     );
-    expect(matrix.relations).toHaveLength(248);
+    expect(matrix.relations).toHaveLength(265);
     expect(
       new Set(matrix.relations.map((relation) => relation.relationKey)).size,
-    ).toBe(248);
+    ).toBe(265);
+
+    const expectedWaveKeys = [
+      "IMS01S|occupation:cno11:2484",
+      "IMS01S|occupation:cno11:2713",
+      "AGA02S|occupation:cno11:6120",
+      "COM01E|occupation:cno11:2651",
+      "ELE01E|occupation:cno11:2729",
+      "EOC01B|occupation:cno11:7121",
+      "EOC01B|occupation:cno11:7191",
+      "EOC01B|occupation:cno11:7211",
+      "EOC01B|occupation:cno11:7231",
+      "EOC01B|occupation:cno11:7240",
+      "EOC01B|occupation:cno11:9602",
+      "EOC02M|occupation:cno11:7211",
+      "EOC02M|occupation:cno11:7231",
+      "EOC02M|occupation:cno11:7240",
+      "FME01E|occupation:cno11:2482",
+      "IMA02S|occupation:cno11:7250",
+      "IMS04S|occupation:cno11:3831",
+    ];
+    expect(
+      expectedWaveKeys.filter(
+        (key) =>
+          !matrix.relations.some((relation) => relation.relationKey === key),
+      ),
+    ).toEqual([]);
 
     for (const relation of matrix.relations) {
       const original = source.find(
@@ -64,11 +90,11 @@ describe("contest evidence matrix", () => {
     const matrix = buildContestEvidenceMatrix();
 
     expect(matrix.sampleSummary).toMatchObject({
-      population: 248,
+      population: 265,
       sampleSize: 15,
       pass: 15,
       fail: 0,
-      notSampled: 233,
+      notSampled: 250,
       exhaustive: false,
     });
     expect(
@@ -80,6 +106,6 @@ describe("contest evidence matrix", () => {
       matrix.relations.filter(
         (relation) => relation.frontierSufficiency === "not_sampled",
       ),
-    ).toHaveLength(233);
+    ).toHaveLength(250);
   });
 });

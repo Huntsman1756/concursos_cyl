@@ -1,0 +1,18 @@
+# Official bounded excerpt — AGA02S
+
+Source record: `data/curated/professional-profiles.json` (`sourceSystem`: `TodoFP`).
+
+Official TodoFP URL:
+https://www.todofp.es/que-estudiar/familias-profesionales/agraria/paisajismo-medio-rural.html
+
+Official program: **Paisajismo y Medio Rural**.
+
+Exact professional-profile output used by this wave:
+
+- `Encargada / encargado o capataz agrícola de huertas, viveros y jardines, en general.`
+
+Official CNO identity checked in `data/curated/official-occupations.json`:
+
+- `6120` — Trabajadores cualificados en huertas, invernaderos, viveros y jardines.
+
+No offer record or title-only inference is used.

@@ -1,0 +1,20 @@
+# Official bounded excerpt — IMS01S
+
+Source record: `data/curated/professional-profiles.json` (`sourceSystem`: `TodoFP`).
+
+Official TodoFP URL:
+https://www.todofp.es/que-estudiar/familias-profesionales/imagen-sonido/animaciones3d-juegos-entornos-interactivos.html
+
+Official program: **Animaciones 3D, Juegos y Entornos Interactivos**.
+
+Exact professional-profile outputs used by this wave:
+
+- `Grafista digital.`
+- `Desarrollador / desarrolladora de aplicaciones y productos audiovisuales multimedia.`
+
+Official CNO identities checked in `data/curated/official-occupations.json`:
+
+- `2484` — Diseñadores gráficos y multimedia.
+- `2713` — Analistas, programadores y diseñadores Web y multimedia.
+
+No offer record or title-only inference is used.

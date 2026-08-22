@@ -1,0 +1,20 @@
+# Official bounded excerpt — ELE01E
+
+Source record: `data/curated/professional-profiles.json` (`sourceSystem`: `TodoFP`).
+
+Official TodoFP URL:
+https://www.todofp.es/que-estudiar/familias-profesionales/electricidad-electronica/ce-ciberseguridad-tecnologias-operacion.html
+
+Official program: **Ciberseguridad en entornos de las tecnologías de la operación**.
+
+Exact professional-profile output used by this wave:
+
+- `Analista de ciberseguridad en entornos de la operación.`
+
+Official CNO identity checked in `data/curated/official-occupations.json`:
+
+- `2729` — Especialistas en bases de datos y en redes informáticas no clasificados bajo otros epígrafes.
+
+This is a bounded reviewed relation; generic systems administration, web
+development, and the pending `IFC03E` program are not substituted. No offer
+record or title-only inference is used.

@@ -850,6 +850,46 @@ describe("buildSnapshots", { timeout: BUILD_SNAPSHOTS_TEST_TIMEOUT }, () => {
     ).toBe(true);
   });
 
+  it("publishes the Task 5 mapping counts and identities in the checked-in snapshot", async () => {
+    const manifest = await readManifest(process.cwd());
+    const readResource = async (
+      key: "occupations" | "occupationAliases" | "trainingOccupationLinks",
+    ) =>
+      JSON.parse(
+        await readFile(
+          assetPath(
+            process.cwd(),
+            manifest.resourceSnapshots[key].resourcePath,
+          ),
+          "utf8",
+        ),
+      ) as Array<Record<string, string>>;
+    const occupations = await readResource("occupations");
+    const aliases = await readResource("occupationAliases");
+    const links = await readResource("trainingOccupationLinks");
+
+    expect(occupations).toHaveLength(131);
+    expect(aliases).toHaveLength(21);
+    expect(links).toHaveLength(265);
+    expect(
+      ["2482", "2484", "2729", "3831", "7191", "7211", "7231", "9602"].every(
+        (code) =>
+          occupations.some(
+            (occupation) => occupation.classificationCode === code,
+          ),
+      ),
+    ).toBe(true);
+    expect(
+      ["EOC01B|7212", "EOC02M|3202", "EOC02M|7212"].some((key) =>
+        links.some(
+          (link) =>
+            `${link.trainingProgramKey}|${link.occupationId.replace("occupation:cno11:", "")}` ===
+            key,
+        ),
+      ),
+    ).toBe(false);
+  });
+
   it("publishes the derived FP occupation graph in hashed JSON and CSV formats", async () => {
     const root = await temporaryRoot();
 

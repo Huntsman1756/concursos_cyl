@@ -1,0 +1,19 @@
+# Official bounded excerpt — IMS04S
+
+Source record: `data/curated/professional-profiles.json` (`sourceSystem`: `TodoFP`).
+
+Official TodoFP URL:
+https://www.todofp.es/que-estudiar/familias-profesionales/imagen-sonido/sonido-audiovisuales-espectaculos.html
+
+Official program: **Sonido para Audiovisuales y Espectáculos**.
+
+Exact professional-profile output used by this wave:
+
+- `Técnica / técnico de grabación de sonido en estudio.`
+
+Official CNO identity checked in `data/curated/official-occupations.json`:
+
+- `3831` — Técnicos de grabación audiovisual.
+
+The relation is reviewed separately from the still-pending/no-match production
+decision for `IMS03S`. No offer record or title-only inference is used.

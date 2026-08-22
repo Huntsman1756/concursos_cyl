@@ -3,6 +3,7 @@ import { describe, expect, it } from "vitest";
 import type { TrainingOccupationLink } from "../../data/schemas/curatedMappings";
 import {
   ACCEPTED_RELATION_KEYS,
+  TASK_5_WAVE_RELATIONSHIPS,
   mergeFrontierReviewedCoverage,
 } from "./restoreFrontierReviewedCoverage";
 
@@ -54,6 +55,26 @@ const CONTEST_EVIDENCE_REMEDIATION_KEYS = [
   "AGA01B|4121",
   "COM01M|5300",
   "HOT02S|3510",
+] as const;
+
+const TASK_5_WAVE_KEYS = [
+  "IMS01S|2484",
+  "IMS01S|2713",
+  "AGA02S|6120",
+  "COM01E|2651",
+  "ELE01E|2729",
+  "EOC01B|7121",
+  "EOC01B|7191",
+  "EOC01B|7211",
+  "EOC01B|7231",
+  "EOC01B|7240",
+  "EOC01B|9602",
+  "EOC02M|7211",
+  "EOC02M|7231",
+  "EOC02M|7240",
+  "FME01E|2482",
+  "IMA02S|7250",
+  "IMS04S|3831",
 ] as const;
 
 describe("mergeFrontierReviewedCoverage", () => {
@@ -276,6 +297,29 @@ describe("mergeFrontierReviewedCoverage", () => {
   it("does not restore the known unsafe contest-evidence relationships", () => {
     expect(ACCEPTED_RELATION_KEYS).not.toEqual(
       expect.arrayContaining([...CONTEST_EVIDENCE_REMEDIATION_KEYS]),
+    );
+  });
+
+  it("restores exactly the Task 5 wave and excludes its rejected alternatives", () => {
+    expect(ACCEPTED_RELATION_KEYS).toEqual(
+      expect.arrayContaining([...TASK_5_WAVE_KEYS]),
+    );
+    expect(TASK_5_WAVE_RELATIONSHIPS).toHaveLength(TASK_5_WAVE_KEYS.length);
+    expect(
+      TASK_5_WAVE_RELATIONSHIPS.map(
+        ({ trainingProgramKey, occupationId }) =>
+          `${trainingProgramKey}|${occupationId.replace("occupation:cno11:", "")}`,
+      ).sort(),
+    ).toEqual([...TASK_5_WAVE_KEYS].sort());
+    expect(
+      TASK_5_WAVE_RELATIONSHIPS.every(
+        ({ relationshipType, reviewStatus }) =>
+          relationshipType === "reviewed_relationship" &&
+          reviewStatus === "approved",
+      ),
+    ).toBe(true);
+    expect(ACCEPTED_RELATION_KEYS).not.toEqual(
+      expect.arrayContaining(["EOC01B|7212", "EOC02M|3202", "EOC02M|7212"]),
     );
   });
 
