@@ -11,6 +11,7 @@ import { MemoryRouter, useLocation, useNavigate } from "react-router-dom";
 import { afterEach, describe, expect, it, vi } from "vitest";
 
 import type { OutcomeIndicatorsResource } from "../../../data/schemas/outcomes";
+import { indexIncomeOutcomes } from "../../domain/outcomes";
 const comparisonStyles = readFileSync(
   "src/features/compare-studies/compareStudies.css",
   "utf8",
@@ -27,7 +28,10 @@ const generatedDataClient = vi.hoisted(() => ({
 
 vi.mock("../../data/generatedDataClient", () => generatedDataClient);
 
-import { CompareStudiesPage } from "./CompareStudiesPage";
+import {
+  CompareStudiesPage,
+  resolveProgramSelection,
+} from "./CompareStudiesPage";
 
 const measureLabels = [
   "Media",
@@ -218,14 +222,19 @@ function LocationProbe() {
 function BackProbe() {
   const navigate = useNavigate();
   return (
-    <button type="button" onClick={() => navigate(-1)}>
-      Atrás de prueba
-    </button>
+    <>
+      <button type="button" onClick={() => navigate(-1)}>
+        Atrás de prueba
+      </button>
+      <button type="button" onClick={() => navigate(1)}>
+        Adelante de prueba
+      </button>
+    </>
   );
 }
 
 function renderPage(
-  initialEntries: readonly string[] = ["/comparar"],
+  initialEntries: string[] = ["/comparar"],
   withBackProbe = false,
 ) {
   return render(
@@ -547,6 +556,21 @@ describe("CompareStudiesPage", () => {
     expect(comparisonStyles).toMatch(/\.income-evidence-grid/u);
   });
 
+  it("keeps both evidence scopes and the print contract intact", () => {
+    expect(comparisonStyles).toMatch(
+      /\.compare-page \.income-comparison-form,\s*\.compare-page \.compare-page__actions[\s\S]*?display: none !important;/u,
+    );
+    expect(comparisonStyles).toMatch(
+      /\.compare-page \.income-evidence-grid[\s\S]*?grid-template-columns: 1fr;/u,
+    );
+    expect(comparisonStyles).toMatch(
+      /\.compare-page \.income-evidence-card[\s\S]*?overflow: visible;/u,
+    );
+    expect(comparisonStyles).toMatch(
+      /\.compare-page \.income-table-scroll[\s\S]*?overflow: visible;/u,
+    );
+  });
+
   it("loads outcomes and only programs from the same manifest and signal", async () => {
     installData();
     renderPage();
@@ -628,6 +652,34 @@ describe("CompareStudiesPage", () => {
       ),
     );
     expect(screen.queryByRole("alert")).not.toBeInTheDocument();
+  });
+
+  it("keeps an exact cycle manual when its default year 4 is unobserved", () => {
+    const index = indexIncomeOutcomes(incomeResource());
+    const windowsByLevelAndCohort = new Map(index.windowsByLevelAndCohort);
+    const defaultWindow = windowsByLevelAndCohort.get("higher\u00002019-2020");
+    expect(defaultWindow).toBeDefined();
+    windowsByLevelAndCohort.set("higher\u00002019-2020", {
+      ...defaultWindow!,
+      maxObservedPostGraduationYear: 3,
+    });
+
+    const resolution = resolveProgramSelection(
+      {
+        programKey: "IFC03S",
+        programTitle: "Desarrollo de Aplicaciones Web",
+        level: "higher",
+        familyCode: "IFC",
+        familyName: "Informática y Comunicaciones",
+      },
+      { ...index, windowsByLevelAndCohort },
+    );
+
+    expect(resolution.trainingLevel).toBe("higher");
+    expect(resolution.selection).toBeNull();
+    expect(resolution.notice).toContain(
+      "no hay un año observado completo para preseleccionarlo",
+    );
   });
 
   it("keeps family-only, unknown, ambiguous, and unsupported program links manual", async () => {
@@ -731,6 +783,43 @@ describe("CompareStudiesPage", () => {
     expect(screen.getByTestId("location-search")).toHaveTextContent(
       "?unexpected=1",
     );
+  });
+
+  it("reconstructs the empty form on Back and Forward after a controlled clear", async () => {
+    installData();
+    const user = userEvent.setup();
+    const query = `level=higher&group=${groupKey(35)}&cohort=2019-2020&year=4`;
+    renderPage(["/comparar", `/comparar?${query}`], true);
+
+    expect(await screen.findByText(/Cohorte 2019-2020 · año 4/u)).toBeVisible();
+    const group = screen.getByRole("checkbox", {
+      name: "Desarrollo de aplicaciones web",
+    });
+    expect(group).toBeChecked();
+
+    await user.click(group);
+    expect(screen.getByTestId("location-search")).toHaveTextContent("");
+    expect(screen.getByRole("radio", { name: "Grado superior" })).toBeChecked();
+
+    await user.click(screen.getByRole("button", { name: "Atrás de prueba" }));
+    await waitFor(() =>
+      expect(
+        screen.getByRole("radio", { name: "Grado superior" }),
+      ).not.toBeChecked(),
+    );
+    expect(
+      screen.getByText("Selecciona primero el nivel de formación."),
+    ).toBeVisible();
+
+    await user.click(
+      screen.getByRole("button", { name: "Adelante de prueba" }),
+    );
+    expect(
+      screen.getByRole("radio", { name: "Grado superior" }),
+    ).not.toBeChecked();
+    expect(
+      screen.getByText("Selecciona primero el nivel de formación."),
+    ).toBeVisible();
   });
 
   it("renders and invokes print only for a valid comparison", async () => {

@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from "react";
-import { Link, useSearchParams } from "react-router-dom";
+import { Link, useNavigationType, useSearchParams } from "react-router-dom";
 
 import type { TrainingProgram } from "../../../data/schemas/generated";
 import type {
@@ -60,6 +60,12 @@ const FAMILY_MATCH_NOTICE =
 const UNOBSERVED_PROGRAM_NOTICE =
   "Este ciclo tiene una referencia publicada, pero no hay un año observado completo para preseleccionarlo. Elige la cohorte y el año manualmente.";
 
+export interface ProgramSelectionResolution {
+  trainingLevel: OutcomeTrainingLevel | null;
+  selection: CompareSelection | null;
+  notice: string | null;
+}
+
 function findWindow(
   index: IncomeOutcomeIndex,
   trainingLevel: OutcomeTrainingLevel | null,
@@ -86,10 +92,69 @@ function formatSnapshotDate(value: string): string {
   }).format(new Date(value));
 }
 
+/** Resolves a program link without inventing an unobserved default selection. */
+// eslint-disable-next-line react-refresh/only-export-components -- pure resolver is colocated with this route to keep Task5 paths bounded.
+export function resolveProgramSelection(
+  program: TrainingProgram,
+  index: IncomeOutcomeIndex,
+): ProgramSelectionResolution {
+  if (program.level !== "intermediate" && program.level !== "higher") {
+    return {
+      trainingLevel: null,
+      selection: null,
+      notice: UNSUPPORTED_PROGRAM_NOTICE,
+    };
+  }
+
+  const outcomeGroupMatch = findTrainingOutcomeGroup(program, index);
+  if (outcomeGroupMatch === null) {
+    return {
+      trainingLevel: program.level,
+      selection: null,
+      notice: NO_OUTCOME_MATCH_NOTICE,
+    };
+  }
+  if (outcomeGroupMatch.matchType !== "cycle") {
+    return {
+      trainingLevel: outcomeGroupMatch.group.trainingLevel,
+      selection: null,
+      notice: FAMILY_MATCH_NOTICE,
+    };
+  }
+
+  const defaultWindow = findWindow(
+    index,
+    outcomeGroupMatch.group.trainingLevel,
+    DEFAULT_COHORT,
+  );
+  if (
+    defaultWindow === null ||
+    defaultWindow.maxObservedPostGraduationYear < 4
+  ) {
+    return {
+      trainingLevel: outcomeGroupMatch.group.trainingLevel,
+      selection: null,
+      notice: UNOBSERVED_PROGRAM_NOTICE,
+    };
+  }
+
+  return {
+    trainingLevel: outcomeGroupMatch.group.trainingLevel,
+    selection: {
+      trainingLevel: outcomeGroupMatch.group.trainingLevel,
+      groupKeys: [outcomeGroupMatch.group.groupKey],
+      cohort: DEFAULT_COHORT,
+      postGraduationYear: 4,
+    },
+    notice: null,
+  };
+}
+
 /** Loads only manifest-addressed evidence and keeps both official scopes separate. */
 export function CompareStudiesPage() {
   const [searchParams, setSearchParams] = useSearchParams();
   const searchString = searchParams.toString();
+  const navigationType = useNavigationType();
   const preserveLocalFormAfterClearRef = useRef(false);
   const [state, setState] = useState<PageState>({ status: "loading" });
   useRouteReady(state.status === "ready");
@@ -161,8 +226,10 @@ export function CompareStudiesPage() {
 
     const parsed = parseCompareSearch(searchParams, state.index);
     if (parsed.kind === "empty") {
-      if (preserveLocalFormAfterClearRef.current) {
-        preserveLocalFormAfterClearRef.current = false;
+      const preserveControlledClear =
+        preserveLocalFormAfterClearRef.current && navigationType === "REPLACE";
+      preserveLocalFormAfterClearRef.current = false;
+      if (preserveControlledClear) {
         return;
       }
       setTrainingLevel(null);
@@ -206,49 +273,19 @@ export function CompareStudiesPage() {
     }
 
     const program = matchingPrograms[0]!;
-    const outcomeGroupMatch = findTrainingOutcomeGroup(program, state.index);
-    if (program.level !== "intermediate" && program.level !== "higher") {
-      setTrainingLevel(null);
+    const resolution = resolveProgramSelection(program, state.index);
+    if (resolution.selection === null) {
+      setTrainingLevel(resolution.trainingLevel);
       setGroupKeys([]);
-      setNotice(UNSUPPORTED_PROGRAM_NOTICE);
-      return;
-    }
-    if (outcomeGroupMatch === null) {
-      setTrainingLevel(program.level);
-      setGroupKeys([]);
-      setNotice(NO_OUTCOME_MATCH_NOTICE);
-      return;
-    }
-    if (outcomeGroupMatch.matchType !== "cycle") {
-      setTrainingLevel(outcomeGroupMatch.group.trainingLevel);
-      setGroupKeys([]);
-      setNotice(FAMILY_MATCH_NOTICE);
+      if (resolution.notice === UNOBSERVED_PROGRAM_NOTICE) {
+        setCohort(DEFAULT_COHORT);
+        setPostGraduationYear(4);
+      }
+      setNotice(resolution.notice);
       return;
     }
 
-    const defaultWindow = findWindow(
-      state.index,
-      outcomeGroupMatch.group.trainingLevel,
-      DEFAULT_COHORT,
-    );
-    if (
-      defaultWindow === null ||
-      defaultWindow.maxObservedPostGraduationYear < 4
-    ) {
-      setTrainingLevel(outcomeGroupMatch.group.trainingLevel);
-      setGroupKeys([]);
-      setCohort(DEFAULT_COHORT);
-      setPostGraduationYear(4);
-      setNotice(UNOBSERVED_PROGRAM_NOTICE);
-      return;
-    }
-
-    const selection: CompareSelection = {
-      trainingLevel: outcomeGroupMatch.group.trainingLevel,
-      groupKeys: [outcomeGroupMatch.group.groupKey],
-      cohort: DEFAULT_COHORT,
-      postGraduationYear: 4,
-    };
+    const selection = resolution.selection;
     setTrainingLevel(selection.trainingLevel);
     setGroupKeys(selection.groupKeys);
     setCohort(selection.cohort);
@@ -258,7 +295,7 @@ export function CompareStudiesPage() {
     if (canonical.toString() !== searchString) {
       setSearchParams(canonical, { replace: true });
     }
-  }, [searchParams, searchString, setSearchParams, state]);
+  }, [navigationType, searchParams, searchString, setSearchParams, state]);
   /* eslint-enable react-hooks/set-state-in-effect */
 
   const groups = useMemo(() => {
@@ -315,6 +352,9 @@ export function CompareStudiesPage() {
   ]);
 
   function clearQueryPreservingForm(): void {
+    // The router may still notify subscribers when replacing an already-empty
+    // query. Keep the controlled-clear marker for that notification, while the
+    // URL effect only honors it for this component's REPLACE navigation.
     preserveLocalFormAfterClearRef.current = true;
     setSearchParams({}, { replace: true });
   }
@@ -344,7 +384,11 @@ export function CompareStudiesPage() {
   function chooseGroupKeys(nextGroupKeys: readonly string[]) {
     setGroupKeys(nextGroupKeys);
     setNotice(null);
-    if (nextGroupKeys.length === 0 || trainingLevel === null) {
+    if (
+      state.status !== "ready" ||
+      nextGroupKeys.length === 0 ||
+      trainingLevel === null
+    ) {
       replaceWithSelection(null);
       return;
     }
@@ -367,7 +411,13 @@ export function CompareStudiesPage() {
   function chooseCohort(nextCohort: string) {
     setCohort(nextCohort);
     setNotice(null);
-    if (trainingLevel === null || groupKeys.length === 0) return;
+    if (
+      state.status !== "ready" ||
+      trainingLevel === null ||
+      groupKeys.length === 0
+    ) {
+      return;
+    }
     const window = findWindow(state.index, trainingLevel, nextCohort);
     if (
       window === null ||
