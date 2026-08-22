@@ -281,6 +281,26 @@ describe("occupation-first results", () => {
     expect(
       screen.getByRole("link", { name: "Buscar otra ocupación" }),
     ).toHaveAttribute("href", "/desde-ocupacion");
+    expect(
+      screen.queryByRole("button", { name: "Imprimir esta orientación" }),
+    ).not.toBeInTheDocument();
+  });
+
+  it("shows one print control in the ready occupation result", async () => {
+    installFetch();
+    render(
+      <MemoryRouter
+        initialEntries={[`/desde-ocupacion/${occupation.occupationId}`]}
+      >
+        <AppRoutes />
+      </MemoryRouter>,
+    );
+
+    await screen.findByRole("heading", { name: occupation.preferredLabel });
+
+    expect(
+      screen.getAllByRole("button", { name: "Imprimir esta orientación" }),
+    ).toHaveLength(1);
   });
 
   it("explains when no reviewed training route is available", async () => {

@@ -9,6 +9,7 @@ import {
   Eye,
   FileCheck2,
   GraduationCap,
+  Printer,
   Search,
   ShieldCheck,
   UserRoundX,
@@ -27,6 +28,7 @@ export type IconName =
   | "eye"
   | "file-check"
   | "graduation-cap"
+  | "printer"
   | "search"
   | "shield-check"
   | "user-round-x";
@@ -42,6 +44,7 @@ const icons: Record<IconName, LucideIcon> = {
   eye: Eye,
   "file-check": FileCheck2,
   "graduation-cap": GraduationCap,
+  printer: Printer,
   search: Search,
   "shield-check": ShieldCheck,
   "user-round-x": UserRoundX,

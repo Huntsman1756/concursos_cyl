@@ -118,6 +118,9 @@ function installResultsFetch(
     offers?: unknown[];
     requirements?: unknown[];
     professionalProfiles?: unknown[];
+    centers?: unknown[];
+    trainingOfferings?: unknown[];
+    provincialContracts?: unknown[];
     stale?: boolean;
   } = {},
 ): void {
@@ -144,6 +147,16 @@ function installResultsFetch(
       ...baseSnapshot,
       resourcePath: "/data/v1/snapshots/build-1/professional-profiles.json",
     },
+    ...(options.provincialContracts === undefined
+      ? {}
+      : {
+          provincialContracts: {
+            ...baseSnapshot,
+            resourcePath:
+              "/data/v1/snapshots/build-1/provincial-contracts.json",
+            recordCount: options.provincialContracts.length,
+          },
+        }),
   } as const;
   const manifest = {
     ...baseManifest,
@@ -177,8 +190,11 @@ function installResultsFetch(
       manifest.resourceSnapshots.programs.resourcePath,
       [program, distanceProgram],
     ],
-    [manifest.resourceSnapshots.centers.resourcePath, []],
-    [manifest.resourceSnapshots.trainingOfferings.resourcePath, []],
+    [manifest.resourceSnapshots.centers.resourcePath, options.centers ?? []],
+    [
+      manifest.resourceSnapshots.trainingOfferings.resourcePath,
+      options.trainingOfferings ?? [],
+    ],
     [manifest.resourceSnapshots.jobOffers.resourcePath, options.offers ?? []],
     [extraSnapshots.occupations.resourcePath, fixtureOccupations],
     [extraSnapshots.occupationAliases.resourcePath, fixtureAliases],
@@ -203,6 +219,12 @@ function installResultsFetch(
       ],
     ],
   ]);
+  if (options.provincialContracts !== undefined) {
+    resources.set(
+      "/data/v1/snapshots/build-1/provincial-contracts.json",
+      options.provincialContracts,
+    );
+  }
   vi.stubGlobal(
     "fetch",
     vi.fn((input: RequestInfo | URL) => {
@@ -260,6 +282,9 @@ describe("TrainingResultsPage", () => {
         name: "No hemos podido cargar los resultados",
       }),
     ).toHaveAttribute("id", "training-results-load-error-heading");
+    expect(
+      screen.queryByRole("button", { name: "Imprimir esta orientación" }),
+    ).not.toBeInTheDocument();
   });
 
   it("labels the unknown-program status section with its heading", async () => {
@@ -280,6 +305,148 @@ describe("TrainingResultsPage", () => {
       await screen.findByRole("status", { name: "Contenido listo" }),
     ).toBeVisible();
     expect(screen.getByRole("main")).toHaveFocus();
+    expect(
+      screen.queryByRole("button", { name: "Imprimir esta orientación" }),
+    ).not.toBeInTheDocument();
+  });
+
+  it("shows one print control only for a ready FP result", async () => {
+    installResultsFetch();
+    render(
+      <MemoryRouter initialEntries={["/desde-fp/IFC03S"]}>
+        <AppRoutes />
+      </MemoryRouter>,
+    );
+
+    await screen.findByRole("heading", {
+      name: "Desarrollo de Aplicaciones Web",
+    });
+
+    expect(
+      screen.getAllByRole("button", { name: "Imprimir esta orientación" }),
+    ).toHaveLength(1);
+  });
+
+  it("keeps published centers complete while limiting only valid provincial context", async () => {
+    const centers = [
+      {
+        centerCode: "24000001",
+        centerName: "Centro León",
+        province: "León",
+        locality: "León",
+        address: null,
+        phone: null,
+        email: null,
+        website: null,
+        centerOwnership: "education",
+      },
+      {
+        centerCode: "09000001",
+        centerName: "Centro Burgos",
+        province: "Burgos",
+        locality: "Burgos",
+        address: null,
+        phone: null,
+        email: null,
+        website: null,
+        centerOwnership: "education",
+      },
+    ];
+    const trainingOfferings = centers.map((center) => ({
+      ...program,
+      offeringId: `${program.programKey}:${center.centerCode}:on_site:public:education`,
+      centerCode: center.centerCode,
+      centerName: center.centerName,
+      province: center.province,
+      locality: center.locality,
+      modality: "on_site",
+      teachingType: "public",
+      centerOwnership: "education",
+    }));
+    const provincialContracts = [
+      {
+        month: "2026-07-01T00:00:00.000Z",
+        provinceCode: "24",
+        provinceName: "León",
+        provinceAbbreviation: "LE",
+        totalContracts: 12,
+        permanentContracts: 5,
+        temporaryContracts: 7,
+        latitude: 42.6,
+        longitude: -5.57,
+      },
+      {
+        month: "2026-07-01T00:00:00.000Z",
+        provinceCode: "09",
+        provinceName: "Burgos",
+        provinceAbbreviation: "BU",
+        totalContracts: 21,
+        permanentContracts: 9,
+        temporaryContracts: 12,
+        latitude: 42.34,
+        longitude: -3.7,
+      },
+    ];
+    installResultsFetch({ centers, trainingOfferings, provincialContracts });
+    const view = render(
+      <MemoryRouter initialEntries={["/desde-fp/IFC03S?province=León"]}>
+        <AppRoutes />
+      </MemoryRouter>,
+    );
+
+    await screen.findByRole("heading", {
+      name: "Desarrollo de Aplicaciones Web",
+    });
+    expect(screen.getByText("Contexto provincial elegido: León")).toBeVisible();
+    expect(
+      screen.getByText(/la lista de centros publicados permanece completa/i),
+    ).toBeVisible();
+    const studySection = document.getElementById("donde-estudiar");
+    expect(studySection).not.toBeNull();
+    expect(studySection).toHaveTextContent("2 centros");
+    expect(studySection).toHaveTextContent("Centro León");
+    expect(studySection).toHaveTextContent("Centro Burgos");
+    const provincialSection = document.getElementById("contexto-provincial");
+    expect(provincialSection).not.toBeNull();
+    expect(provincialSection).toHaveTextContent("León");
+    expect(provincialSection).not.toHaveTextContent("Burgos");
+
+    view.unmount();
+    installResultsFetch({ centers, trainingOfferings, provincialContracts });
+    render(
+      <MemoryRouter initialEntries={["/desde-fp/IFC03S"]}>
+        <AppRoutes />
+      </MemoryRouter>,
+    );
+    await screen.findByRole("heading", {
+      name: "Desarrollo de Aplicaciones Web",
+    });
+    const unfilteredStudySection = document.getElementById("donde-estudiar");
+    expect(unfilteredStudySection).toHaveTextContent("2 centros");
+    expect(unfilteredStudySection).toHaveTextContent("Centro León");
+    expect(unfilteredStudySection).toHaveTextContent("Centro Burgos");
+  });
+
+  it("recovers from invalid or repeated provinces without echoing them", async () => {
+    installResultsFetch();
+    render(
+      <MemoryRouter
+        initialEntries={["/desde-fp/IFC03S?province=Madrid&province=León"]}
+      >
+        <AppRoutes />
+      </MemoryRouter>,
+    );
+
+    await screen.findByRole("heading", {
+      name: "Desarrollo de Aplicaciones Web",
+    });
+    expect(
+      screen.getByText(/no hemos podido reconocer la provincia indicada/i),
+    ).toBeVisible();
+    expect(
+      screen.queryByText("Contexto provincial elegido: León"),
+    ).not.toBeInTheDocument();
+    expect(screen.queryByText("Madrid")).not.toBeInTheDocument();
   });
 
   it.each(["HOT01M", "EOC01M"])(
@@ -1108,7 +1275,7 @@ describe("TrainingResultsPage", () => {
     expect(
       screen.getByText("Requisito no publicado").closest("div"),
     ).toHaveClass("requirement-state requirement-state--unpublished");
-    expect(screen.getByText("Zona elegida: León")).toBeVisible();
+    expect(screen.getByText("Contexto provincial elegido: León")).toBeVisible();
     expect(screen.getByLabelText("Dirección actual")).toHaveTextContent(
       "/desde-fp/IFC03S?province=León",
     );

@@ -37,6 +37,7 @@ import { useDecisionSession } from "../../domain/session";
 import { trainingLevelLabel } from "../../domain/trainingPresentation";
 import { ExternalLink } from "../../components/ExternalLink";
 import { FragmentLink } from "../../components/FragmentLink";
+import { PrintButton } from "../../components/PrintButton";
 import { useRouteReady } from "../../app/RouteReadyContext";
 import { OfferEvidenceCard } from "./OfferEvidenceCard";
 import { TerritorialDistribution } from "./TerritorialDistribution";
@@ -48,6 +49,7 @@ import { ResultSectionNav } from "../../components/ResultSectionNav";
 import "./result-evidence.css";
 import { resolveApprovedOccupations } from "./resolveApprovedOccupations";
 import { TrainingOutcomeEvidence } from "./TrainingOutcomeEvidence";
+import { parseCylProvince } from "../../domain/territory";
 import type {
   TrainingOutcomeSnapshot,
   TrainingOutcomeState,
@@ -152,7 +154,10 @@ async function loadTrainingOutcomeState(
 export function TrainingResultsPage() {
   const { programKey = "" } = useParams();
   const [searchParams] = useSearchParams();
-  const selectedProvince = searchParams.get("province");
+  const provinceSelection = parseCylProvince(searchParams.getAll("province"));
+  const selectedProvince =
+    provinceSelection.kind === "valid" ? provinceSelection.province : null;
+  const hasInvalidProvince = provinceSelection.kind === "invalid";
   const [publicationFilter, setPublicationFilter] = useState<Extract<
     ReliableAction,
     { actionType: "explore_unpublished_requirement" }
@@ -518,7 +523,9 @@ export function TrainingResultsPage() {
       aria-labelledby="training-results-heading"
     >
       <header className="training-page__header">
-        <Link to="/desde-fp">Cambiar ciclo</Link>
+        <Link to="/desde-fp" data-print-hidden="true">
+          Cambiar ciclo
+        </Link>
         <p
           className="training-page__eyebrow training-page__direction"
           aria-label="Tu título de Formación Profesional conduce a ocupaciones con evidencia"
@@ -532,8 +539,16 @@ export function TrainingResultsPage() {
           {trainingLevelLabel(state.program.level)} · Código oficial{" "}
           {state.program.programKey}
         </p>
-        {selectedProvince !== null && <p>Zona elegida: {selectedProvince}</p>}
+        {selectedProvince !== null && (
+          <p>Contexto provincial elegido: {selectedProvince}</p>
+        )}
       </header>
+      {hasInvalidProvince && (
+        <p className="status-panel" role="status">
+          No hemos podido reconocer la provincia indicada. Elige una provincia
+          oficial para consultar contexto provincial.
+        </p>
+      )}
       <section
         className="decision-basis"
         aria-labelledby="decision-basis-title"
@@ -627,7 +642,11 @@ export function TrainingResultsPage() {
           La copia de ofertas no representa todo el mercado laboral.
         </p>
       </section>
-      <nav className="result-actions" aria-label="Siguientes pasos">
+      <nav
+        className="result-actions"
+        aria-label="Siguientes pasos"
+        data-print-hidden="true"
+      >
         {resolvedOccupations.length > 0 ? (
           <>
             <FragmentLink
@@ -654,6 +673,7 @@ export function TrainingResultsPage() {
         <Link className="result-actions__tertiary" to="/comparar">
           Comparar ingresos
         </Link>
+        <PrintButton className="secondary-button" />
       </nav>
       {stale && (
         <p className="stale-warning" role="status">
@@ -668,6 +688,7 @@ export function TrainingResultsPage() {
           role="status"
           aria-label="Filtro activo: ofertas relacionadas que no publican este requisito exacto."
           tabIndex={-1}
+          data-print-hidden="true"
         >
           <p>
             Filtro activo: ofertas relacionadas que no publican este requisito
@@ -729,6 +750,10 @@ export function TrainingResultsPage() {
               })}
             </ul>
           )}
+          <p className="evidence-limit">
+            La lista de centros publicados permanece completa; la provincia solo
+            limita el contexto contractual y la orientación de adecuación.
+          </p>
         </div>
         <div
           id="contexto-provincial"
@@ -936,22 +961,23 @@ export function TrainingResultsPage() {
                 isSelectedProvinceSuitable: suitable,
               });
               return (
-                <OfferEvidenceCard
-                  key={match.offerId}
-                  programs={state.programs}
-                  offer={offer}
-                  match={match}
-                  evidenceState={evidenceState}
-                  answers={session.answers}
-                  actions={actions}
-                  checklist={session.checklist}
-                  onAnswer={session.answerRequirement}
-                  onAddChecklist={session.addChecklistItem}
-                  onRemoveChecklist={session.removeChecklistItem}
-                  onExploreUnpublishedRequirement={
-                    applyUnpublishedRequirementFilter
-                  }
-                />
+                <div className="print-avoid-break" key={match.offerId}>
+                  <OfferEvidenceCard
+                    programs={state.programs}
+                    offer={offer}
+                    match={match}
+                    evidenceState={evidenceState}
+                    answers={session.answers}
+                    actions={actions}
+                    checklist={session.checklist}
+                    onAnswer={session.answerRequirement}
+                    onAddChecklist={session.addChecklistItem}
+                    onRemoveChecklist={session.removeChecklistItem}
+                    onExploreUnpublishedRequirement={
+                      applyUnpublishedRequirementFilter
+                    }
+                  />
+                </div>
               );
             })}
           </div>

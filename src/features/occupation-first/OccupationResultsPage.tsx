@@ -6,6 +6,7 @@ import type {
 } from "../../../data/schemas/generated";
 import type { Occupation } from "../../../data/schemas/curatedMappings";
 import { ExternalLink } from "../../components/ExternalLink";
+import { PrintButton } from "../../components/PrintButton";
 import { ResultSectionNav } from "../../components/ResultSectionNav";
 import {
   loadAuditedRelationships,
@@ -206,7 +207,12 @@ export function OccupationResultsPage() {
       aria-labelledby="occupation-results-heading"
     >
       <header className="training-page__header">
-        <Link to="/desde-ocupacion">Buscar otra ocupación</Link>
+        <div className="result-actions" data-print-hidden="true">
+          <Link className="secondary-button" to="/desde-ocupacion">
+            Buscar otra ocupación
+          </Link>
+          <PrintButton className="secondary-button" />
+        </div>
         <p className="training-page__eyebrow">
           Ocupación seleccionada del catálogo oficial
         </p>

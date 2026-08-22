@@ -1,0 +1,56 @@
+@page {
+  size: A4 portrait;
+  margin: 14mm;
+}
+
+@media print {
+  .site-header,
+  .site-footer,
+  .skip-link,
+  .print-control,
+  [data-print-hidden="true"] {
+    display: none !important;
+  }
+
+  .page-content {
+    width: 100%;
+    max-width: none;
+    padding: 0;
+  }
+
+  .print-avoid-break,
+  article,
+  .decision-basis {
+    break-inside: avoid;
+  }
+
+  .result-actions,
+  .result-section-nav,
+  .filter-notice,
+  .primary-button,
+  .secondary-button,
+  .result-actions__tertiary,
+  form,
+  button {
+    display: none !important;
+  }
+
+  .decision-evidence,
+  .result-summary,
+  .offer-list,
+  .training-route-list,
+  .study-center-preview,
+  .professional-output-list,
+  .reviewed-occupation-list,
+  .training-outcome__metrics,
+  .training-outcome__distribution,
+  .training-outcome__distribution dl {
+    grid-template-columns: 1fr;
+  }
+
+  a[href^="http"]::after {
+    content: " (" attr(href) ")";
+    font-size: 0.75em;
+    overflow-wrap: anywhere;
+  }
+}
