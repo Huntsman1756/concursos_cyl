@@ -1,0 +1,71 @@
+{
+  "schemaVersion": 1,
+  "wave": "2026-08-22-conservative-fp-cno",
+  "previousCatalogSha256": "d4e9a93f270dba6dd8507762bdc5161978317d75e19fe7f2c0bf0a5ec72e5b95",
+  "authorizedRelationKeys": [
+    "MAM02M|7812",
+    "SSC06S|5894",
+    "AGA03M|6120",
+    "INA03M|8160",
+    "TMV05M|7404",
+    "ARG01M|7621",
+    "SSC04S|3714",
+    "ELE05S|3125",
+    "ELE05S|7532",
+    "ENA02S|3131",
+    "ENA04S|3132",
+    "TCP02B|7835",
+    "QUI01M|8131"
+  ],
+  "authorizedOccupationCodes": [
+    "5894",
+    "8160",
+    "7404",
+    "7621",
+    "3714",
+    "3125",
+    "7532",
+    "3131",
+    "3132",
+    "7835",
+    "8131"
+  ],
+  "relationshipTypes": {
+    "official_output": [
+      "INA03M|8160",
+      "SSC04S|3714",
+      "ELE05S|3125",
+      "ELE05S|7532",
+      "TCP02B|7835",
+      "QUI01M|8131"
+    ],
+    "reviewed_relationship": [
+      "MAM02M|7812",
+      "SSC06S|5894",
+      "AGA03M|6120",
+      "TMV05M|7404",
+      "ARG01M|7621",
+      "ENA02S|3131",
+      "ENA04S|3132"
+    ]
+  },
+  "expectedCounts": {
+    "occupations": 130,
+    "approvedOccupations": 123,
+    "relationships": 254,
+    "rawKeys": 122,
+    "reviewedBases": 104,
+    "pendingBases": 35,
+    "noMatchBases": 15
+  },
+  "previousCounts": {
+    "occupations": 119,
+    "approvedOccupations": 112,
+    "relationships": 241,
+    "rawKeys": 110,
+    "reviewedBases": 92,
+    "pendingBases": 47,
+    "noMatchBases": 15
+  },
+  "excludedRelationKeys": ["AGA03M|5220"]
+}

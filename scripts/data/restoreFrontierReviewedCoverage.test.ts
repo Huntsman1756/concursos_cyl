@@ -31,6 +31,22 @@ const SECOND_PRIORITY_WAVE_KEYS = [
   "TMV03M|7403",
 ] as const;
 
+const TASK_4_WAVE_KEYS = [
+  "MAM02M|7812",
+  "SSC06S|5894",
+  "AGA03M|6120",
+  "INA03M|8160",
+  "TMV05M|7404",
+  "ARG01M|7621",
+  "SSC04S|3714",
+  "ELE05S|3125",
+  "ELE05S|7532",
+  "ENA02S|3131",
+  "ENA04S|3132",
+  "TCP02B|7835",
+  "QUI01M|8131",
+] as const;
+
 describe("mergeFrontierReviewedCoverage", () => {
   it("restores the selected priority relations from a complete reviewed source", () => {
     const reviewed = ACCEPTED_RELATION_KEYS.map((key) => {
@@ -207,6 +223,45 @@ describe("mergeFrontierReviewedCoverage", () => {
 
     expect(() => mergeFrontierReviewedCoverage([], reviewed)).toThrow(
       /AGA01S\|5993/u,
+    );
+  });
+
+  it("restores exactly the Task 4 wave from a complete reviewed source", () => {
+    const reviewed = ACCEPTED_RELATION_KEYS.map((key) => {
+      const [trainingProgramKey, classificationCode] = key.split("|");
+      return {
+        ...base,
+        trainingProgramKey,
+        occupationId: `occupation:cno11:${classificationCode}`,
+      } satisfies TrainingOccupationLink;
+    });
+    const result = mergeFrontierReviewedCoverage([], reviewed);
+    const restoredKeys = result.map(
+      ({ trainingProgramKey, occupationId }) =>
+        `${trainingProgramKey}|${occupationId.replace("occupation:cno11:", "")}`,
+    );
+
+    expect(restoredKeys).toEqual(expect.arrayContaining([...TASK_4_WAVE_KEYS]));
+    expect(
+      TASK_4_WAVE_KEYS.filter((key) => !restoredKeys.includes(key)),
+    ).toEqual([]);
+    expect(restoredKeys).toHaveLength(ACCEPTED_RELATION_KEYS.length);
+  });
+
+  it("fails closed when a Task 4 relationship is absent from the reviewed source", () => {
+    const reviewed = ACCEPTED_RELATION_KEYS.filter(
+      (key) => key !== TASK_4_WAVE_KEYS[0],
+    ).map((key) => {
+      const [trainingProgramKey, classificationCode] = key.split("|");
+      return {
+        ...base,
+        trainingProgramKey,
+        occupationId: `occupation:cno11:${classificationCode}`,
+      } satisfies TrainingOccupationLink;
+    });
+
+    expect(() => mergeFrontierReviewedCoverage([], reviewed)).toThrow(
+      /MAM02M\|7812/u,
     );
   });
 

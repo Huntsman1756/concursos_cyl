@@ -1,0 +1,13 @@
+[
+  {
+    "csvResourcePath": "/data/v1/snapshots/20260822003628598-baee098784c1/derived-fp-occupation-graph.csv",
+    "csvSha256": "be5e7f3ef29c92d77cf11347816bc28e14594073c4ddc9c3daf3a3176ada8bb9",
+    "datasetId": "salida-cyl-fp-occupation-graph",
+    "description": "Relaciones revisadas entre ciclos de Formación Profesional y grupos primarios CNO-11 con evidencia de procedencia.",
+    "generatedAt": "2026-08-22T00:36:28.598Z",
+    "licenseName": "CC BY 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+    "recordCount": 254,
+    "title": "Grafo FP y ocupaciones de SALIDA CyL"
+  }
+]

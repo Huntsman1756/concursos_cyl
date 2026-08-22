@@ -86,18 +86,22 @@ describe("fp-coverage-research-outcomes.json", () => {
 
   it("binds the expanded catalog to explicit Frontier revalidation evidence", () => {
     expect(document.catalogRevalidation).toEqual({
-      reviewedAt: "2026-08-21",
+      reviewedAt: "2026-08-22",
       occupationCatalogSha256: EXPECTED_HASH,
       evidencePath:
-        "analysis/fp_coverage_priority_20260821_wave2/no-match-catalog-revalidation.md",
+        "analysis/fp_coverage_wave_20260822/no-match-catalog-revalidation.md",
       addedOccupationCodes: [
-        "3141",
-        "3316",
-        "3317",
-        "5931",
-        "5932",
-        "5993",
-        "7403",
+        "5894",
+        "8160",
+        "7404",
+        "7621",
+        "3714",
+        "3125",
+        "7532",
+        "3131",
+        "3132",
+        "7835",
+        "8131",
       ],
     });
     expect(

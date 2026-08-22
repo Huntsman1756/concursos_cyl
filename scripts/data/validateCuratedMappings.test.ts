@@ -603,6 +603,90 @@ const programs: TrainingProgram[] = [
 const diskPrograms: TrainingProgram[] = [
   ...programs,
   {
+    programKey: "MAM02M",
+    programTitle: "Instalación y Amueblamiento",
+    level: "intermediate",
+    familyCode: "MAM",
+    familyName: "Madera, Mueble y Corcho",
+  },
+  {
+    programKey: "SSC06S",
+    programTitle: "Formación para la movilidad segura y sostenible",
+    level: "higher",
+    familyCode: "SSC",
+    familyName: "Servicios Socioculturales y a la Comunidad",
+  },
+  {
+    programKey: "AGA03M",
+    programTitle: "Jardinería y Floristería",
+    level: "intermediate",
+    familyCode: "AGA",
+    familyName: "Agraria",
+  },
+  {
+    programKey: "INA03M",
+    programTitle: "Elaboración de Productos Alimenticios",
+    level: "intermediate",
+    familyCode: "INA",
+    familyName: "Industrias Alimentarias",
+  },
+  {
+    programKey: "TMV05M",
+    programTitle: "Mantenimiento de Material Rodante Ferroviario",
+    level: "intermediate",
+    familyCode: "TMV",
+    familyName: "Transporte y Mantenimiento de Vehículos",
+  },
+  {
+    programKey: "ARG01M",
+    programTitle: "Preimpresión Digital",
+    level: "intermediate",
+    familyCode: "ARG",
+    familyName: "Artes Gráficas",
+  },
+  {
+    programKey: "SSC04S",
+    programTitle: "Promoción de Igualdad de Género",
+    level: "higher",
+    familyCode: "SSC",
+    familyName: "Servicios Socioculturales y a la Comunidad",
+  },
+  {
+    programKey: "ELE05S",
+    programTitle: "Electromedicina Clínica",
+    level: "higher",
+    familyCode: "ELE",
+    familyName: "Electricidad y Electrónica",
+  },
+  {
+    programKey: "ENA02S",
+    programTitle: "Centrales Eléctricas",
+    level: "higher",
+    familyCode: "ENA",
+    familyName: "Energía y Agua",
+  },
+  {
+    programKey: "ENA04S",
+    programTitle: "Gestión del agua",
+    level: "higher",
+    familyCode: "ENA",
+    familyName: "Energía y Agua",
+  },
+  {
+    programKey: "TCP02B",
+    programTitle: "Tapicería y Cortinaje",
+    level: "basic",
+    familyCode: "TCP",
+    familyName: "Textil, Confección y Piel",
+  },
+  {
+    programKey: "QUI01M",
+    programTitle: "Planta Química",
+    level: "intermediate",
+    familyCode: "QUI",
+    familyName: "Química",
+  },
+  {
     programKey: "AGA01S",
     programTitle: "Gestión Forestal y del Medio Natural",
     level: "higher",
@@ -1397,6 +1481,17 @@ describe("curated occupation mappings", () => {
         "5932",
         "5993",
         "7403",
+        "5894",
+        "8160",
+        "7404",
+        "7621",
+        "3714",
+        "3125",
+        "7532",
+        "3131",
+        "3132",
+        "7835",
+        "8131",
       ],
     );
     expect(
@@ -1416,7 +1511,7 @@ describe("curated occupation mappings", () => {
           COM02M: 2,
           COM02E: 2,
           EOC01M: 5,
-          AGA03M: 2,
+          AGA03M: 1,
           FME02M: 4,
           FME02S: 1,
           IMA02M: 1,
@@ -1521,6 +1616,17 @@ describe("curated occupation mappings", () => {
           SEA01M: 3,
           SEA01MD: 3,
           TMV03M: 1,
+          MAM02M: 1,
+          SSC06S: 1,
+          INA03M: 1,
+          TMV05M: 1,
+          ARG01M: 1,
+          SSC04S: 1,
+          ELE05S: 2,
+          ENA02S: 1,
+          ENA04S: 1,
+          TCP02B: 1,
+          QUI01M: 1,
         }).filter(([programKey]) =>
           approved.links.some((link) => link.trainingProgramKey === programKey),
         ),
@@ -1834,9 +1940,145 @@ describe("curated occupation mappings", () => {
       ),
     );
 
-    expect.soft(approved.links).toHaveLength(241);
-    expect.soft(reviewedBaseKeys.size).toBe(92);
-    expect.soft(approvedProgramKeys.size).toBe(110);
+    expect.soft(approved.links).toHaveLength(254);
+    expect.soft(reviewedBaseKeys.size).toBe(104);
+    expect.soft(approvedProgramKeys.size).toBe(122);
+  });
+
+  it("publishes exactly the conservative Task 4 FP-to-CNO wave", async () => {
+    const curated = await loadCuratedMappingsFromDisk(
+      process.cwd(),
+      diskPrograms,
+    );
+    const approved = loadApprovedMappings(curated);
+    const expected = [
+      {
+        key: "MAM02M|7812",
+        relationshipType: "reviewed_relationship",
+        sourceQuote:
+          "Operador / operadora de máquinas fijas para fabricar productos de madera.",
+      },
+      {
+        key: "SSC06S|5894",
+        relationshipType: "reviewed_relationship",
+        sourceQuote: "Profesor de formación vial.",
+      },
+      {
+        key: "AGA03M|6120",
+        relationshipType: "reviewed_relationship",
+        sourceQuote: "Trabajador / trabajadora de huertas, viveros y jardines.",
+      },
+      {
+        key: "INA03M|8160",
+        relationshipType: "official_output",
+        sourceQuote:
+          "Operador / operadora de máquinas y equipos para el tratamiento y elaboración de productos alimentarios.",
+      },
+      {
+        key: "TMV05M|7404",
+        relationshipType: "reviewed_relationship",
+        sourceQuote:
+          "Técnica / técnico en mantenimiento de sistemas de tracción y motores.",
+      },
+      {
+        key: "ARG01M|7621",
+        relationshipType: "reviewed_relationship",
+        sourceQuote: "Técnica / técnico en preimpresión.",
+      },
+      {
+        key: "SSC04S|3714",
+        relationshipType: "official_output",
+        sourceQuote:
+          "Promotor / promotora para la igualdad efectiva de mujeres y hombres.",
+      },
+      {
+        key: "ELE05S|3125",
+        relationshipType: "official_output",
+        sourceQuote:
+          "Técnica / técnico en electrónica, especialidad en electromedicina.",
+      },
+      {
+        key: "ELE05S|7532",
+        relationshipType: "official_output",
+        sourceQuote:
+          "Instalador-reparador / instaladora-reparadora en electromedicina.",
+      },
+      {
+        key: "ENA02S|3131",
+        relationshipType: "reviewed_relationship",
+        sourceQuote:
+          "Técnica / técnico de operación y mantenimiento de centrales hidroeléctricas.",
+      },
+      {
+        key: "ENA04S|3132",
+        relationshipType: "reviewed_relationship",
+        sourceQuote:
+          "Operador / operadora de planta de tratamiento de agua de abastecimiento.",
+      },
+      {
+        key: "TCP02B|7835",
+        relationshipType: "official_output",
+        sourceQuote: "Tapicera / tapicero de muebles.",
+      },
+      {
+        key: "QUI01M|8131",
+        relationshipType: "official_output",
+        sourceQuote:
+          "Operador / operadora principal en instalaciones de tratamiento químico.",
+      },
+    ] as const;
+    const waveKeys = new Set(expected.map(({ key }) => key));
+    const actual = approved.links
+      .filter((link) =>
+        waveKeys.has(
+          `${link.trainingProgramKey}|${link.occupationId.replace("occupation:cno11:", "")}`,
+        ),
+      )
+      .map((link) => ({
+        key: `${link.trainingProgramKey}|${link.occupationId.replace("occupation:cno11:", "")}`,
+        relationshipType: link.relationshipType,
+        sourceUrl: link.sourceUrl,
+        sourceQuote: link.sourceQuote,
+      }))
+      .sort((left, right) => left.key.localeCompare(right.key));
+
+    expect(actual).toHaveLength(expected.length);
+    expect(actual.map(({ key }) => key)).toEqual(
+      expected.map(({ key }) => key).toSorted(),
+    );
+    for (const row of expected) {
+      expect(actual).toContainEqual({
+        ...row,
+        sourceUrl: expect.stringMatching(
+          /^https:\/\/(?:www\.)?(?:todofp|boe)\.es\//u,
+        ),
+      });
+    }
+    expect(approved.occupations).toHaveLength(123);
+    expect(
+      approved.occupations.filter((occupation) =>
+        [
+          "5894",
+          "8160",
+          "7404",
+          "7621",
+          "3714",
+          "3125",
+          "7532",
+          "3131",
+          "3132",
+          "7835",
+          "8131",
+        ].includes(occupation.classificationCode),
+      ),
+    ).toHaveLength(11);
+    expect(
+      approved.links.some(
+        (link) =>
+          link.trainingProgramKey === "AGA03M" &&
+          link.occupationId === "occupation:cno11:5220",
+      ),
+    ).toBe(false);
   });
 
   it("publishes only EOC01M aliases accepted by the official audit", async () => {

@@ -1308,5 +1308,126 @@
     "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
     "reviewedAt": "2026-08-21",
     "catalogVersion": "1.0.0"
+  },
+  {
+    "occupationId": "occupation:cno11:5894",
+    "preferredLabel": "Instructores de autoescuela",
+    "confirmationLabel": "Instructores de autoescuela",
+    "classificationSystem": "CNO-11",
+    "classificationCode": "5894",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+    "reviewedAt": "2026-08-22",
+    "catalogVersion": "1.0.0"
+  },
+  {
+    "occupationId": "occupation:cno11:8160",
+    "preferredLabel": "Operadores de máquinas para elaborar productos alimenticios, bebidas y tabaco",
+    "confirmationLabel": "Operadores de máquinas para elaborar productos alimenticios, bebidas y tabaco",
+    "classificationSystem": "CNO-11",
+    "classificationCode": "8160",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+    "reviewedAt": "2026-08-22",
+    "catalogVersion": "1.0.0"
+  },
+  {
+    "occupationId": "occupation:cno11:7404",
+    "preferredLabel": "Mecánicos y ajustadores de maquinaria naval y ferroviaria",
+    "confirmationLabel": "Mecánicos y ajustadores de maquinaria naval y ferroviaria",
+    "classificationSystem": "CNO-11",
+    "classificationCode": "7404",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+    "reviewedAt": "2026-08-22",
+    "catalogVersion": "1.0.0"
+  },
+  {
+    "occupationId": "occupation:cno11:7621",
+    "preferredLabel": "Trabajadores de procesos de preimpresión",
+    "confirmationLabel": "Trabajadores de procesos de preimpresión",
+    "classificationSystem": "CNO-11",
+    "classificationCode": "7621",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+    "reviewedAt": "2026-08-22",
+    "catalogVersion": "1.0.0"
+  },
+  {
+    "occupationId": "occupation:cno11:3714",
+    "preferredLabel": "Promotores de igualdad de oportunidades entre mujeres y hombres",
+    "confirmationLabel": "Promotores de igualdad de oportunidades entre mujeres y hombres",
+    "classificationSystem": "CNO-11",
+    "classificationCode": "3714",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+    "reviewedAt": "2026-08-22",
+    "catalogVersion": "1.0.0"
+  },
+  {
+    "occupationId": "occupation:cno11:3125",
+    "preferredLabel": "Técnicos en electrónica, especialidad en electromedicina",
+    "confirmationLabel": "Técnicos en electrónica, especialidad en electromedicina",
+    "classificationSystem": "CNO-11",
+    "classificationCode": "3125",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+    "reviewedAt": "2026-08-22",
+    "catalogVersion": "1.0.0"
+  },
+  {
+    "occupationId": "occupation:cno11:7532",
+    "preferredLabel": "Instaladores y reparadores en electromedicina",
+    "confirmationLabel": "Instaladores y reparadores en electromedicina",
+    "classificationSystem": "CNO-11",
+    "classificationCode": "7532",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+    "reviewedAt": "2026-08-22",
+    "catalogVersion": "1.0.0"
+  },
+  {
+    "occupationId": "occupation:cno11:3131",
+    "preferredLabel": "Técnicos en instalaciones de producción de energía",
+    "confirmationLabel": "Técnicos en instalaciones de producción de energía",
+    "classificationSystem": "CNO-11",
+    "classificationCode": "3131",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+    "reviewedAt": "2026-08-22",
+    "catalogVersion": "1.0.0"
+  },
+  {
+    "occupationId": "occupation:cno11:3132",
+    "preferredLabel": "Técnicos en instalaciones de tratamiento de residuos, de aguas y otros operadores en plantas similares",
+    "confirmationLabel": "Técnicos en instalaciones de tratamiento de residuos, de aguas y otros operadores en plantas similares",
+    "classificationSystem": "CNO-11",
+    "classificationCode": "3132",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+    "reviewedAt": "2026-08-22",
+    "catalogVersion": "1.0.0"
+  },
+  {
+    "occupationId": "occupation:cno11:7835",
+    "preferredLabel": "Tapiceros, colchoneros y afines",
+    "confirmationLabel": "Tapiceros, colchoneros y afines",
+    "classificationSystem": "CNO-11",
+    "classificationCode": "7835",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+    "reviewedAt": "2026-08-22",
+    "catalogVersion": "1.0.0"
+  },
+  {
+    "occupationId": "occupation:cno11:8131",
+    "preferredLabel": "Operadores en plantas industriales químicas",
+    "confirmationLabel": "Operadores en plantas industriales químicas",
+    "classificationSystem": "CNO-11",
+    "classificationCode": "8131",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+    "reviewedAt": "2026-08-22",
+    "catalogVersion": "1.0.0"
   }
 ]

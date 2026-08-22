@@ -224,6 +224,19 @@ export const ACCEPTED_RELATION_KEYS = [
   "SEA01M|5993",
   "SEA01MD|5993",
   "TMV03M|7403",
+  "MAM02M|7812",
+  "SSC06S|5894",
+  "AGA03M|6120",
+  "INA03M|8160",
+  "TMV05M|7404",
+  "ARG01M|7621",
+  "SSC04S|3714",
+  "ELE05S|3125",
+  "ELE05S|7532",
+  "ENA02S|3131",
+  "ENA04S|3132",
+  "TCP02B|7835",
+  "QUI01M|8131",
 ] as const;
 
 const TODO_FP_ASIR_URL =
@@ -285,6 +298,166 @@ const CURRENT_SOURCE_OVERRIDES: Readonly<
     sourceQuote: "Técnica / técnico de integración social.",
   },
 };
+
+/**
+ * Task 4's independently reviewed wave is kept in the restore primitive so
+ * restoring from the historical reviewed commit remains deterministic even
+ * though that commit predates this wave.
+ */
+export const TASK_4_WAVE_RELATIONSHIPS = [
+  {
+    trainingProgramKey: "MAM02M",
+    occupationId: "occupation:cno11:7812",
+    relationshipType: "reviewed_relationship",
+    reviewStatus: "approved",
+    sourceUrl:
+      "https://www.todofp.es/que-estudiar/familias-profesionales/madera-mueble-corcho/instalacion-amueblamiento.html",
+    sourceQuote:
+      "Operador / operadora de máquinas fijas para fabricar productos de madera.",
+    reviewedAt: "2026-08-22",
+    mappingVersion: "1.0.0",
+  },
+  {
+    trainingProgramKey: "SSC06S",
+    occupationId: "occupation:cno11:5894",
+    relationshipType: "reviewed_relationship",
+    reviewStatus: "approved",
+    sourceUrl:
+      "https://www.todofp.es/que-estudiar/familias-profesionales/servicios-socioculturales-comunidad/formacion-movilidad-segura-sostenible.html",
+    sourceQuote: "Profesor de formación vial.",
+    reviewedAt: "2026-08-22",
+    mappingVersion: "1.0.0",
+  },
+  {
+    trainingProgramKey: "AGA03M",
+    occupationId: "occupation:cno11:6120",
+    relationshipType: "reviewed_relationship",
+    reviewStatus: "approved",
+    sourceUrl:
+      "https://www.todofp.es/que-estudiar/familias-profesionales/agraria/jardineria-floristeria.html",
+    sourceQuote: "Trabajador / trabajadora de huertas, viveros y jardines.",
+    reviewedAt: "2026-08-22",
+    mappingVersion: "1.0.0",
+  },
+  {
+    trainingProgramKey: "INA03M",
+    occupationId: "occupation:cno11:8160",
+    relationshipType: "official_output",
+    reviewStatus: "approved",
+    sourceUrl:
+      "https://www.todofp.es/que-estudiar/familias-profesionales/industrias-alimentarias/elaboracion-productos-alimenticios.html",
+    sourceQuote:
+      "Operador / operadora de máquinas y equipos para el tratamiento y elaboración de productos alimentarios.",
+    reviewedAt: "2026-08-22",
+    mappingVersion: "1.0.0",
+  },
+  {
+    trainingProgramKey: "TMV05M",
+    occupationId: "occupation:cno11:7404",
+    relationshipType: "reviewed_relationship",
+    reviewStatus: "approved",
+    sourceUrl:
+      "https://www.todofp.es/que-estudiar/familias-profesionales/transporte-mantenimiento-vehiculos/mnto-material-rodante-ferroviario.html",
+    sourceQuote:
+      "Técnica / técnico en mantenimiento de sistemas de tracción y motores.",
+    reviewedAt: "2026-08-22",
+    mappingVersion: "1.0.0",
+  },
+  {
+    trainingProgramKey: "ARG01M",
+    occupationId: "occupation:cno11:7621",
+    relationshipType: "reviewed_relationship",
+    reviewStatus: "approved",
+    sourceUrl:
+      "https://www.todofp.es/que-estudiar/familias-profesionales/artes-graficas/preimpresion-digital.html",
+    sourceQuote: "Técnica / técnico en preimpresión.",
+    reviewedAt: "2026-08-22",
+    mappingVersion: "1.0.0",
+  },
+  {
+    trainingProgramKey: "SSC04S",
+    occupationId: "occupation:cno11:3714",
+    relationshipType: "official_output",
+    reviewStatus: "approved",
+    sourceUrl:
+      "https://www.todofp.es/que-estudiar/familias-profesionales/servicios-socioculturales-comunidad/promocion-igualdad-genero.html",
+    sourceQuote:
+      "Promotor / promotora para la igualdad efectiva de mujeres y hombres.",
+    reviewedAt: "2026-08-22",
+    mappingVersion: "1.0.0",
+  },
+  {
+    trainingProgramKey: "ELE05S",
+    occupationId: "occupation:cno11:3125",
+    relationshipType: "official_output",
+    reviewStatus: "approved",
+    sourceUrl:
+      "https://www.todofp.es/que-estudiar/familias-profesionales/electricidad-electronica/electromedicina-clinica.html",
+    sourceQuote:
+      "Técnica / técnico en electrónica, especialidad en electromedicina.",
+    reviewedAt: "2026-08-22",
+    mappingVersion: "1.0.0",
+  },
+  {
+    trainingProgramKey: "ELE05S",
+    occupationId: "occupation:cno11:7532",
+    relationshipType: "official_output",
+    reviewStatus: "approved",
+    sourceUrl:
+      "https://www.todofp.es/que-estudiar/familias-profesionales/electricidad-electronica/electromedicina-clinica.html",
+    sourceQuote:
+      "Instalador-reparador / instaladora-reparadora en electromedicina.",
+    reviewedAt: "2026-08-22",
+    mappingVersion: "1.0.0",
+  },
+  {
+    trainingProgramKey: "ENA02S",
+    occupationId: "occupation:cno11:3131",
+    relationshipType: "reviewed_relationship",
+    reviewStatus: "approved",
+    sourceUrl:
+      "https://www.todofp.es/que-estudiar/familias-profesionales/energia-agua/centrales-electricas.html",
+    sourceQuote:
+      "Técnica / técnico de operación y mantenimiento de centrales hidroeléctricas.",
+    reviewedAt: "2026-08-22",
+    mappingVersion: "1.0.0",
+  },
+  {
+    trainingProgramKey: "ENA04S",
+    occupationId: "occupation:cno11:3132",
+    relationshipType: "reviewed_relationship",
+    reviewStatus: "approved",
+    sourceUrl:
+      "https://www.todofp.es/que-estudiar/familias-profesionales/energia-agua/gestion-agua.html",
+    sourceQuote:
+      "Operador / operadora de planta de tratamiento de agua de abastecimiento.",
+    reviewedAt: "2026-08-22",
+    mappingVersion: "1.0.0",
+  },
+  {
+    trainingProgramKey: "TCP02B",
+    occupationId: "occupation:cno11:7835",
+    relationshipType: "official_output",
+    reviewStatus: "approved",
+    sourceUrl:
+      "https://www.todofp.es/que-estudiar/familias-profesionales/textil-confeccion-piel/tapiceria-cortinaje.html",
+    sourceQuote: "Tapicera / tapicero de muebles.",
+    reviewedAt: "2026-08-22",
+    mappingVersion: "1.0.0",
+  },
+  {
+    trainingProgramKey: "QUI01M",
+    occupationId: "occupation:cno11:8131",
+    relationshipType: "official_output",
+    reviewStatus: "approved",
+    sourceUrl:
+      "https://www.todofp.es/que-estudiar/familias-profesionales/quimica/planta-quimica.html",
+    sourceQuote:
+      "Operador / operadora principal en instalaciones de tratamiento químico.",
+    reviewedAt: "2026-08-22",
+    mappingVersion: "1.0.0",
+  },
+] as const satisfies readonly TrainingOccupationLink[];
 
 function currentSourceOverride(
   key: string,
@@ -353,7 +526,15 @@ function restore(rootDirectory: string): void {
       { encoding: "utf8", maxBuffer: 16 * 1024 * 1024 },
     ),
   ) as unknown;
-  const merged = mergeFrontierReviewedCoverage(current, reviewed);
+  const reviewedRelationships = TrainingOccupationLinksSchema.parse(reviewed);
+  const reviewedKeys = new Set(reviewedRelationships.map(relationKey));
+  const reviewedWithTask4Wave = [
+    ...reviewedRelationships,
+    ...TASK_4_WAVE_RELATIONSHIPS.filter(
+      (relationship) => !reviewedKeys.has(relationKey(relationship)),
+    ),
+  ];
+  const merged = mergeFrontierReviewedCoverage(current, reviewedWithTask4Wave);
   writeFileSync(targetPath, `${JSON.stringify(merged, null, 2)}\n`, "utf8");
   console.log(
     `Restored ${merged.length} reviewed FP↔occupation relationships.`,
