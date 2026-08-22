@@ -1,29 +1,29 @@
 {
   "schemaVersion": "1.0.0",
   "sourcePath": "data/curated/training-occupation-links.json",
-  "sourceCommitSha": "e41c5394d71c1324fe8a3e5d12a4a6f76793eaa2",
-  "population": 248,
+  "sourceCommitSha": "e4049fdb4ccaa8a1321d85896f4cb866e8f8144d",
+  "population": 264,
   "sampleSize": 15,
   "seed": "f3813d12cff3876db8760975cf82b0ad47c5d3ea76983d809ef45891324bf21c",
   "selectionAlgorithm": "Sort relation keys by SHA-256(seed + '|' + relationKey), ascending; take the first 15.",
-  "cutoff": "2026-08-22T04:13:28+02:00",
+  "cutoff": "2026-08-22T11:58:57+02:00",
   "auditedAt": "2026-08-22",
   "status": "sample_audited",
   "independentlyAudited": true,
   "exhaustive": false,
-  "auditMethod": "Independent second-pass comparison of each selected relation with its recorded official source URL and exact quote at the e41c539 boundary.",
+  "auditMethod": "Independent second-pass comparison of each selected relation with its recorded official source URL and exact quote at the e4049fd boundary.",
   "summary": {
     "pass": 15,
     "fail": 0,
     "samplePass": 15,
-    "notSampled": 233,
+    "notSampled": 249,
     "failSemanticBoundary": 0,
     "needsLevelReview": 0,
     "failExactQuoteOnly": 0,
     "pendingLiveSample": 0,
     "cleanSample": true,
     "exhaustive": false,
-    "decision": "All 15 deterministically selected relations passed the independent second-pass check. This bounded sample is not an exhaustive audit; the remaining 233 approved relations are not sampled here."
+    "decision": "All 15 deterministically selected relations passed the independent second-pass check. This bounded sample is not an exhaustive audit; the remaining 249 approved relations are not sampled here."
   },
   "relations": [
     {
@@ -73,6 +73,14 @@
       "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/fabricacion-mecanica/fabricacion-elementos-metalicos.html",
       "sourceQuote": "Peones y auxiliares de industrias metalúrgicas, de fabricación de productos metálicos y manufactureras.",
       "liveQuote": "Peones y auxiliares de industrias metalúrgicas, de fabricación de productos metálicos y manufactureras."
+    },
+    {
+      "relationKey": "ELE01E|occupation:cno11:2729",
+      "status": "sample_pass",
+      "auditStatus": "pass",
+      "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/electricidad-electronica/ce-ciberseguridad-tecnologias-operacion.html",
+      "sourceQuote": "Analista de ciberseguridad en entornos de la operación.",
+      "liveQuote": "Analista de ciberseguridad en entornos de la operación."
     },
     {
       "relationKey": "ARG01M|occupation:cno11:7621",
@@ -131,20 +139,12 @@
       "liveQuote": "Delegada / delegado comercial de productos hospitalarios y farmacéuticos."
     },
     {
-      "relationKey": "IMP01M|occupation:cno11:4412",
+      "relationKey": "IMS04S|occupation:cno11:3831",
       "status": "sample_pass",
       "auditStatus": "pass",
-      "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/imagen-personal/estetica-belleza.html",
-      "sourceQuote": "Recepcionista en empresas estéticas.",
-      "liveQuote": "Recepcionista en empresas estéticas."
-    },
-    {
-      "relationKey": "EOC01M|occupation:cno11:7193",
-      "status": "sample_pass",
-      "auditStatus": "pass",
-      "sourceUrl": "https://www.boe.es/eli/es/rd/2011/11/04/1575",
-      "sourceQuote": "– Instalador de sistemas de impermeabilización en edificios y obra civil.",
-      "liveQuote": "– Instalador de sistemas de impermeabilización en edificios y obra civil."
+      "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/imagen-sonido/sonido-audiovisuales-espectaculos.html",
+      "sourceQuote": "Técnica / técnico de grabación de sonido en estudio.",
+      "liveQuote": "Técnica / técnico de grabación de sonido en estudio."
     }
   ],
   "historicalAudit": {
