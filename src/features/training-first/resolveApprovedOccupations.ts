@@ -7,6 +7,7 @@ export interface ResolvedOccupation {
   occupationId: string;
   preferredLabel: string;
   classificationCode: string;
+  functionalBoundary?: TrainingOccupationLink["functionalBoundary"];
 }
 
 export function resolveApprovedOccupations(
@@ -35,6 +36,9 @@ export function resolveApprovedOccupations(
       occupationId: occupation.occupationId,
       preferredLabel: occupation.preferredLabel,
       classificationCode: occupation.classificationCode,
+      ...(link.functionalBoundary === undefined
+        ? {}
+        : { functionalBoundary: link.functionalBoundary }),
     });
   }
 

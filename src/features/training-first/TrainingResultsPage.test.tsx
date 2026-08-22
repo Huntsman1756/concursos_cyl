@@ -904,10 +904,22 @@ describe("TrainingResultsPage", () => {
         link.reviewStatus === "approved",
     ) as TrainingOccupationLink | undefined;
     expect(approvedLink).toBeDefined();
+    const boundedApprovedLink = {
+      ...approvedLink!,
+      functionalBoundary: {
+        roleLevel: "assistant",
+        fullOccupationQualification: false,
+      },
+    } as const satisfies TrainingOccupationLink;
 
     const result = resolveApprovedOccupations(
       "IFC03S",
-      [draftLink, approvedLink!, approvedLink!, fakeOccupationIdLink],
+      [
+        draftLink,
+        boundedApprovedLink,
+        boundedApprovedLink,
+        fakeOccupationIdLink,
+      ],
       occupations as Occupation[],
     );
 
@@ -917,8 +929,45 @@ describe("TrainingResultsPage", () => {
         preferredLabel:
           "Analistas, programadores y diseñadores web y multimedia",
         classificationCode: "2713",
+        functionalBoundary: {
+          roleLevel: "assistant",
+          fullOccupationQualification: false,
+        },
       },
     ]);
+  });
+
+  it("explains when an approved occupation link only covers an assistant role", async () => {
+    const approvedLink = trainingOccupationLinks.find(
+      (link) =>
+        link.trainingProgramKey === "IFC03S" &&
+        link.reviewStatus === "approved",
+    ) as TrainingOccupationLink | undefined;
+    expect(approvedLink).toBeDefined();
+    installResultsFetch({
+      links: [
+        {
+          ...approvedLink!,
+          functionalBoundary: {
+            roleLevel: "assistant",
+            fullOccupationQualification: false,
+          },
+        },
+      ],
+    });
+    render(
+      <MemoryRouter initialEntries={["/desde-fp/IFC03S"]}>
+        <AppRoutes />
+      </MemoryRouter>,
+    );
+
+    const occupationLink = await screen.findByRole("link", {
+      name: /Analistas, programadores y diseñadores web y multimedia/u,
+    });
+    expect(occupationLink).toHaveTextContent("Alcance: puesto auxiliar");
+    expect(occupationLink).toHaveTextContent(
+      "El título no acredita por sí solo toda la ocupación CNO-11.",
+    );
   });
 
   it("applies the intact unpublished-requirement action in memory and preserves province", async () => {

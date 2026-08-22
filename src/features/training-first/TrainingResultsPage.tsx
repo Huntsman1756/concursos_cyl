@@ -840,6 +840,20 @@ export function TrainingResultsPage() {
                   {occupation.classificationCode !== "" && (
                     <span>CNO-11 {occupation.classificationCode}</span>
                   )}
+                  {occupation.functionalBoundary !== undefined && (
+                    <span className="reviewed-occupation-boundary">
+                      <strong>
+                        Alcance:{" "}
+                        {occupation.functionalBoundary.roleLevel === "assistant"
+                          ? "puesto auxiliar"
+                          : "ocupación afín"}
+                      </strong>
+                      <span>
+                        El título no acredita por sí solo toda la ocupación
+                        CNO-11.
+                      </span>
+                    </span>
+                  )}
                 </Link>
               </li>
             ))}
