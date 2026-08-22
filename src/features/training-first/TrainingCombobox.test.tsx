@@ -27,6 +27,13 @@ const programs: readonly TrainingProgram[] = [
     familyName: "Informática y Comunicaciones",
   },
   {
+    programKey: "INA01M",
+    programTitle: "Cocina y Gastronomía",
+    level: "intermediate",
+    familyCode: "HOT",
+    familyName: "Hostelería y Turismo",
+  },
+  {
     programKey: "SAN01M",
     programTitle: "Cuidados Auxiliares de Enfermería",
     level: "intermediate",
@@ -42,21 +49,25 @@ const programs: readonly TrainingProgram[] = [
   },
 ];
 
+function comboboxProps(
+  overrides: Partial<React.ComponentProps<typeof TrainingCombobox>> = {},
+) {
+  return {
+    id: "training-program",
+    programs,
+    confirmedProgram: null,
+    onConfirm: vi.fn(),
+    onClear: vi.fn(),
+    label: "Ciclo oficial",
+    hint: "Busca un ciclo de Formación Profesional.",
+    ...overrides,
+  };
+}
+
 function renderCombobox(
   overrides: Partial<React.ComponentProps<typeof TrainingCombobox>> = {},
 ) {
-  return render(
-    <TrainingCombobox
-      id="training-program"
-      programs={programs}
-      confirmedProgram={null}
-      onConfirm={vi.fn()}
-      onClear={vi.fn()}
-      label="Ciclo oficial"
-      hint="Busca un ciclo de Formación Profesional."
-      {...overrides}
-    />,
-  );
+  return render(<TrainingCombobox {...comboboxProps(overrides)} />);
 }
 
 afterEach(() => {
@@ -104,6 +115,16 @@ describe("TrainingCombobox", () => {
     await user.clear(combobox);
     await user.type(combobox, "grado superior");
     expect(screen.getAllByRole("option")).toHaveLength(3);
+  });
+
+  it("searches by a family code that is absent from the program key", async () => {
+    const user = userEvent.setup();
+    renderCombobox();
+    const combobox = screen.getByRole("combobox", { name: "Ciclo oficial" });
+
+    await user.type(combobox, "hot");
+
+    expect(screen.getByRole("option")).toHaveTextContent("INA01M");
   });
 
   it("disambiguates duplicate titles with level, family, and key in each option", async () => {
@@ -189,6 +210,107 @@ describe("TrainingCombobox", () => {
     expect(onClear).toHaveBeenCalled();
   });
 
+  it("syncs an external A-to-null clear by resetting text and list state", async () => {
+    const programA = programs[0];
+    const onConfirm = vi.fn();
+    const onClear = vi.fn();
+    const user = userEvent.setup();
+    const view = renderCombobox({
+      confirmedProgram: programA,
+      onConfirm,
+      onClear,
+    });
+    const combobox = screen.getByRole("combobox", { name: "Ciclo oficial" });
+
+    await user.click(combobox);
+    await user.keyboard("{ArrowDown}");
+    expect(combobox).toHaveAttribute("aria-expanded", "true");
+    expect(combobox).toHaveAttribute("aria-activedescendant");
+
+    view.rerender(
+      <TrainingCombobox
+        {...comboboxProps({
+          confirmedProgram: null,
+          onConfirm,
+          onClear,
+        })}
+      />,
+    );
+
+    expect(combobox).toHaveValue("");
+    expect(combobox).toHaveAttribute("aria-expanded", "false");
+    expect(combobox).not.toHaveAttribute("aria-controls");
+    expect(combobox).not.toHaveAttribute("aria-activedescendant");
+    expect(screen.queryByRole("listbox")).not.toBeInTheDocument();
+  });
+
+  it("syncs an external A-to-B change by replacing text and closing stale results", async () => {
+    const programA = programs[0];
+    const programB = programs[1];
+    const onConfirm = vi.fn();
+    const onClear = vi.fn();
+    const user = userEvent.setup();
+    const view = renderCombobox({
+      confirmedProgram: programA,
+      onConfirm,
+      onClear,
+    });
+    const combobox = screen.getByRole("combobox", { name: "Ciclo oficial" });
+
+    await user.click(combobox);
+    await user.keyboard("{ArrowDown}");
+    expect(combobox).toHaveAttribute("aria-expanded", "true");
+
+    view.rerender(
+      <TrainingCombobox
+        {...comboboxProps({
+          confirmedProgram: programB,
+          onConfirm,
+          onClear,
+        })}
+      />,
+    );
+
+    expect(combobox).toHaveValue(programB.programTitle);
+    expect(combobox).toHaveAttribute("aria-expanded", "false");
+    expect(combobox).not.toHaveAttribute("aria-controls");
+    expect(combobox).not.toHaveAttribute("aria-activedescendant");
+    expect(screen.queryByRole("listbox")).not.toBeInTheDocument();
+  });
+
+  it("preserves a query when the parent reflects a clear caused by local editing", async () => {
+    const programA = programs[0];
+    const onConfirm = vi.fn();
+    const onClear = vi.fn();
+    const user = userEvent.setup();
+    const view = renderCombobox({
+      confirmedProgram: programA,
+      onConfirm,
+      onClear,
+    });
+    const combobox = screen.getByRole("combobox", { name: "Ciclo oficial" });
+
+    await user.clear(combobox);
+    await user.type(combobox, "ad");
+    expect(onClear).toHaveBeenCalledTimes(1);
+    expect(combobox).toHaveValue("ad");
+    expect(combobox).toHaveAttribute("aria-expanded", "true");
+
+    view.rerender(
+      <TrainingCombobox
+        {...comboboxProps({
+          confirmedProgram: null,
+          onConfirm,
+          onClear,
+        })}
+      />,
+    );
+
+    expect(combobox).toHaveValue("ad");
+    expect(combobox).toHaveAttribute("aria-expanded", "true");
+    expect(screen.getByRole("listbox")).toBeInTheDocument();
+  });
+
   it("keeps closed ARIA state accurate before searching", () => {
     renderCombobox();
 
@@ -209,5 +331,19 @@ describe("TrainingCombobox", () => {
     expect(within(listbox).getAllByRole("option")).toHaveLength(
       programs.length,
     );
+  });
+
+  it("keeps the result list in the combobox flow with touch-sized options", async () => {
+    const user = userEvent.setup();
+    renderCombobox();
+    const combobox = screen.getByRole("combobox", { name: "Ciclo oficial" });
+
+    await user.type(combobox, "grado");
+
+    const listbox = screen.getByRole("listbox");
+    const option = screen.getAllByRole("option")[0];
+    expect(listbox).toHaveClass("training-combobox__options");
+    expect(listbox.parentElement).toHaveClass("training-combobox");
+    expect(option).toHaveClass("training-combobox__option");
   });
 });

@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import type { KeyboardEvent } from "react";
 import type { TrainingProgram } from "../../../data/schemas/generated";
 import { trainingLevelLabel } from "../../domain/trainingPresentation";
@@ -33,6 +33,7 @@ function searchableText(program: TrainingProgram): string {
     [
       program.programTitle,
       program.familyName,
+      program.familyCode,
       program.programKey,
       trainingLevelLabel(program.level),
     ].join(" "),
@@ -54,6 +55,39 @@ export function TrainingCombobox({
   const [confirmedProgramKey, setConfirmedProgramKey] = useState<string | null>(
     confirmedProgram?.programKey ?? null,
   );
+  const previousConfirmedProgram = useRef({
+    programKey: confirmedProgram?.programKey ?? null,
+    programTitle: confirmedProgram?.programTitle ?? "",
+  });
+  const pendingLocalClearForKey = useRef<string | null>(null);
+
+  useEffect(() => {
+    const nextProgramKey = confirmedProgram?.programKey ?? null;
+    const nextProgramTitle = confirmedProgram?.programTitle ?? "";
+    const previous = previousConfirmedProgram.current;
+    if (
+      nextProgramKey === previous.programKey &&
+      nextProgramTitle === previous.programTitle
+    ) {
+      return;
+    }
+
+    previousConfirmedProgram.current = {
+      programKey: nextProgramKey,
+      programTitle: nextProgramTitle,
+    };
+    const preservesLocalQuery =
+      nextProgramKey === null &&
+      previous.programKey !== null &&
+      pendingLocalClearForKey.current === previous.programKey;
+    pendingLocalClearForKey.current = null;
+    setConfirmedProgramKey(nextProgramKey);
+    if (preservesLocalQuery) return;
+    setQuery(nextProgramTitle);
+    setOpen(false);
+    setActiveIndex(-1);
+  }, [confirmedProgram?.programKey, confirmedProgram?.programTitle]);
+
   const results = useMemo(() => {
     const search = normalized(query);
     if (search === "") return [];
@@ -74,6 +108,7 @@ export function TrainingCombobox({
   function selectProgram(program: TrainingProgram): void {
     setQuery(program.programTitle);
     setConfirmedProgramKey(program.programKey);
+    pendingLocalClearForKey.current = null;
     setOpen(false);
     setActiveIndex(-1);
     onConfirm(program);
@@ -131,6 +166,7 @@ export function TrainingCombobox({
         value={query}
         onChange={(event) => {
           if (confirmedProgramKey !== null && event.target.value !== query) {
+            pendingLocalClearForKey.current = confirmedProgramKey;
             onClear();
             setConfirmedProgramKey(null);
           }
