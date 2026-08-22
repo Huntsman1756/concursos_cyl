@@ -1,5 +1,3 @@
-import MiniSearch from "minisearch";
-
 import type {
   Occupation,
   OccupationAlias,
@@ -26,11 +24,19 @@ export interface OccupationSearchCandidate {
   confirmationLabel: string;
 }
 
-interface OccupationSearchDocument extends OccupationSearchCandidate {
-  aliases: string;
-  normalizedConfirmationLabel: string;
-  normalizedPreferredLabel: string;
+type SearchFieldTokens = readonly [
+  readonly string[],
+  readonly string[],
+  readonly string[],
+];
+
+interface OccupationSearchDocument {
+  candidate: OccupationSearchCandidate;
+  fields: SearchFieldTokens;
 }
+
+const FIELD_PRIORITIES = [4, 3, 2] as const;
+const IDF_WEIGHT = 0.1;
 
 function normalizeSearchText(value: string): string {
   return value
@@ -39,6 +45,53 @@ function normalizeSearchText(value: string): string {
     .toLocaleLowerCase("es-ES")
     .replace(/[^\p{Letter}\p{Number}]+/gu, " ")
     .trim();
+}
+
+function normalizedTokens(value: string): string[] {
+  const normalized = normalizeSearchText(value);
+  return normalized === "" ? [] : normalized.split(" ");
+}
+
+function uniqueTokens(values: readonly string[]): string[] {
+  return [...new Set(values)].sort();
+}
+
+function fieldMatchesTerm(field: readonly string[], term: string): boolean {
+  return field.some((token) => token.startsWith(term));
+}
+
+function matchingPriority(
+  fields: SearchFieldTokens,
+  term: string,
+): number | undefined {
+  // A term contributes once, using the highest-priority field when it appears
+  // in more than one field; this makes duplicate evidence deterministic.
+  for (let fieldIndex = 0; fieldIndex < fields.length; fieldIndex += 1) {
+    if (fieldMatchesTerm(fields[fieldIndex], term)) {
+      return FIELD_PRIORITIES[fieldIndex];
+    }
+  }
+  return undefined;
+}
+
+function documentFrequency(
+  documents: readonly OccupationSearchDocument[],
+  term: string,
+): number {
+  return documents.reduce(
+    (frequency, document) =>
+      frequency +
+      (document.fields.some((field) => fieldMatchesTerm(field, term)) ? 1 : 0),
+    0,
+  );
+}
+
+function idfContribution(documentCount: number, frequency: number): number {
+  // A small bounded IDF bonus distinguishes rare terms without overruling
+  // evidence priority. Searching is intentionally O(D × Q × T) over the
+  // approved occupation documents (D), query terms (Q), and field tokens (T).
+  const idf = Math.log1p((documentCount - frequency + 0.5) / (frequency + 0.5));
+  return Math.min(0.75, idf * IDF_WEIGHT);
 }
 
 export function loadApprovedMappings(
@@ -68,64 +121,82 @@ export function buildOccupationIndex(
   occupations: readonly Occupation[],
   aliases: readonly OccupationAlias[],
 ): { search: (query: string) => OccupationSearchCandidate[] } {
-  const approvedOccupations = occupations.filter(
-    (occupation) => occupation.reviewStatus === "approved",
-  );
   const aliasesByOccupation = new Map<string, string[]>();
   for (const alias of aliases) {
     if (alias.reviewStatus !== "approved") continue;
-    aliasesByOccupation.set(alias.occupationId, [
-      ...(aliasesByOccupation.get(alias.occupationId) ?? []),
-      alias.alias,
-    ]);
+    const occupationAliases = aliasesByOccupation.get(alias.occupationId);
+    if (occupationAliases === undefined) {
+      aliasesByOccupation.set(alias.occupationId, [alias.alias]);
+    } else {
+      occupationAliases.push(alias.alias);
+    }
   }
 
-  const documents: OccupationSearchDocument[] = approvedOccupations.map(
-    (occupation) => ({
-      occupationId: occupation.occupationId,
-      preferredLabel: occupation.preferredLabel,
-      confirmationLabel: occupation.confirmationLabel,
-      aliases: (aliasesByOccupation.get(occupation.occupationId) ?? [])
-        .map(normalizeSearchText)
-        .join(" "),
-      normalizedConfirmationLabel: normalizeSearchText(
-        occupation.confirmationLabel,
-      ),
-      normalizedPreferredLabel: normalizeSearchText(occupation.preferredLabel),
-    }),
-  );
-  const index = new MiniSearch<OccupationSearchDocument>({
-    idField: "occupationId",
-    fields: [
-      "normalizedPreferredLabel",
-      "normalizedConfirmationLabel",
-      "aliases",
-    ],
-    storeFields: ["occupationId", "preferredLabel", "confirmationLabel"],
-    processTerm: normalizeSearchText,
-  });
-  index.addAll(documents);
+  const documents: OccupationSearchDocument[] = occupations
+    .filter((occupation) => occupation.reviewStatus === "approved")
+    .map((occupation) => ({
+      candidate: {
+        occupationId: occupation.occupationId,
+        preferredLabel: occupation.preferredLabel,
+        confirmationLabel: occupation.confirmationLabel,
+      },
+      // Field order is an explicit evidence policy: aliases, confirmation,
+      // then official preferred label. Alias input order never affects scores.
+      fields: [
+        uniqueTokens(
+          (aliasesByOccupation.get(occupation.occupationId) ?? []).flatMap(
+            normalizedTokens,
+          ),
+        ),
+        uniqueTokens(normalizedTokens(occupation.confirmationLabel)),
+        uniqueTokens(normalizedTokens(occupation.preferredLabel)),
+      ],
+    }));
+
+  const labelCollator = new Intl.Collator("es-ES", { sensitivity: "base" });
 
   return {
     search(query) {
       const normalized = normalizeSearchText(query);
-      if (normalized.length === 0) return [];
-      return index
-        .search(normalized, {
-          boost: {
-            aliases: 4,
-            normalizedConfirmationLabel: 3,
-            normalizedPreferredLabel: 2,
-          },
-          combineWith: "AND",
-          prefix: true,
-        })
-        .slice(0, 30)
-        .map((result) => ({
-          occupationId: String(result.occupationId),
-          preferredLabel: String(result.preferredLabel),
-          confirmationLabel: String(result.confirmationLabel),
-        }));
+      if (normalized === "") return [];
+      const terms = [...new Set(normalized.split(" "))];
+      const frequencies = terms.map((term) =>
+        documentFrequency(documents, term),
+      );
+      const scored: Array<{
+        document: OccupationSearchDocument;
+        score: number;
+      }> = [];
+
+      for (const document of documents) {
+        let score = 0;
+        let matchesEveryTerm = true;
+        for (let termIndex = 0; termIndex < terms.length; termIndex += 1) {
+          const priority = matchingPriority(document.fields, terms[termIndex]);
+          if (priority === undefined) {
+            matchesEveryTerm = false;
+            break;
+          }
+          score +=
+            priority +
+            idfContribution(documents.length, frequencies[termIndex]);
+        }
+        if (matchesEveryTerm) scored.push({ document, score });
+      }
+
+      scored.sort((left, right) => {
+        if (left.score !== right.score) return right.score - left.score;
+        const labelOrder = labelCollator.compare(
+          left.document.candidate.preferredLabel,
+          right.document.candidate.preferredLabel,
+        );
+        if (labelOrder !== 0) return labelOrder;
+        const leftId = left.document.candidate.occupationId;
+        const rightId = right.document.candidate.occupationId;
+        return leftId < rightId ? -1 : leftId > rightId ? 1 : 0;
+      });
+
+      return scored.slice(0, 30).map(({ document }) => document.candidate);
     },
   };
 }
