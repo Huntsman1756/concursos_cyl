@@ -947,7 +947,7 @@ one `window.print()` call.
 
 Run:
 
-`rtk npm exec -- playwright test tests/e2e/home.spec.ts tests/e2e/training-first.spec.ts tests/e2e/compare-studies.spec.ts tests/e2e/contest-readiness.spec.ts --project=chromium`
+`rtk npm run test:e2e:chromium -- tests/e2e/home.spec.ts tests/e2e/training-first.spec.ts tests/e2e/compare-studies.spec.ts tests/e2e/contest-readiness.spec.ts`
 
 Expected before completing selector migration: at least one old native-select or
 new mobile/shareable-state assertion fails.
