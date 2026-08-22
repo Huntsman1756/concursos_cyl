@@ -60,7 +60,7 @@ La ingesta valida esquemas y genera recursos inmutables bajo `/data/v1/`. El man
 - Los contratos provinciales aportan contexto agregado, no demanda por ocupación.
 - La población municipal describe el lugar de estudio, no la residencia del alumnado.
 - Las bases de cotización no predicen salario, empleo ni residencia.
-- El despliegue público, la recaptura de evidencia y cualquier afirmación de adopción o piloto siguen pendientes.
+- El despliegue público y 13 capturas se verificaron para el commit `05407a0600f1d533d01e97757a98189f030ea6e0`. Cualquier afirmación de adopción o piloto sigue pendiente de evidencia humana.
 
 ## Acceso y verificabilidad
 

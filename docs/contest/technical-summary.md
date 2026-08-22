@@ -7,7 +7,9 @@
 - Alcance de la muestra: delimitado y no exhaustivo. No convierte las 15 relaciones en una auditoría semántica completa del catálogo.
 - Matriz: las 15 relaciones seleccionadas están marcadas `sample_pass`; las 233 restantes, `not_sampled`.
 - E2E Chromium: 124/124 pruebas pasan después de ajustar COM01M a 7 grupos revisados.
-- Estado de release: despliegue, recaptura visual, adopción, piloto y envío externo permanecen pendientes de verificación o autorización.
+- Estado de release: GitHub Pages, VPS y 13 capturas están verificados para
+  `05407a0600f1d533d01e97757a98189f030ea6e0`; adopción, piloto y envío externo
+  permanecen pendientes de evidencia humana o autorización.
 
 La procedencia detallada de cada relación está en
 `analysis/contest_evidence_live_sample.json` y la matriz completa en

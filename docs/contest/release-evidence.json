@@ -1,15 +1,15 @@
 {
   "schemaVersion": 1,
-  "status": "pending",
-  "recordedAt": "2026-08-22T04:13:28+02:00",
+  "status": "verified",
+  "recordedAt": "2026-08-22T03:21:54Z",
   "expectedRootUrl": "https://salida-cyl.157-90-22-40.sslip.io/",
-  "auditHeadSha": "e41c5394d71c1324fe8a3e5d12a4a6f76793eaa2",
+  "auditHeadSha": "05407a0600f1d533d01e97757a98189f030ea6e0",
   "coverageSourceCommitSha": "e41c5394d71c1324fe8a3e5d12a4a6f76793eaa2",
-  "coverageFreezeDocumentCommitSha": null,
-  "coverageFreezeCommitSha": null,
-  "publicationCommitSha": null,
-  "localReviewHeadSha": "e41c5394d71c1324fe8a3e5d12a4a6f76793eaa2",
-  "captureProductCommitSha": null,
+  "coverageFreezeDocumentCommitSha": "8a31ee53fb65d2c6cd5b657c537806f112a1b153",
+  "coverageFreezeCommitSha": "8a31ee53fb65d2c6cd5b657c537806f112a1b153",
+  "publicationCommitSha": "05407a0600f1d533d01e97757a98189f030ea6e0",
+  "localReviewHeadSha": "05407a0600f1d533d01e97757a98189f030ea6e0",
+  "captureProductCommitSha": "05407a0600f1d533d01e97757a98189f030ea6e0",
   "manifest": {
     "snapshotId": "20260822021233066-9d8fa948959b",
     "sha256": "ce47c7cf7011a3dcebddf2a3dac01c3e34ee175a18ac133211b5b5ca3fb3ba11",
@@ -32,7 +32,7 @@
       "status": "passed",
       "captureCount": 13,
       "command": "npm exec -- tsx scripts/release/validateContestEvidenceManifest.ts",
-      "note": "Las capturas PNG existentes pertenecen a un commit anterior; no se consideran evidencia actual del snapshot rebakeado."
+      "note": "Las 13 capturas se regeneraron desde el VPS verificado para el commit 05407a0600f1d533d01e97757a98189f030ea6e0 y se revisaron visualmente."
     },
     "fullVitestCi": {
       "status": "passed",
@@ -64,19 +64,19 @@
     }
   },
   "deployment": {
-    "status": "pending",
-    "commitSha": null,
-    "workflowRunId": null,
-    "workflowUrl": null,
-    "liveRootVerified": false,
-    "verifiedAt": null
+    "status": "verified",
+    "commitSha": "05407a0600f1d533d01e97757a98189f030ea6e0",
+    "workflowRunId": "32548299249",
+    "workflowUrl": "https://github.com/Huntsman1756/concursos_cyl/actions/runs/32548299249",
+    "liveRootVerified": true,
+    "verifiedAt": "2026-08-22T03:21:54Z"
   },
   "publicVerification": {
-    "status": "pending",
+    "status": "verified",
     "rootUrl": "https://salida-cyl.157-90-22-40.sslip.io/",
-    "rootHttpStatus": null,
-    "manifestSha256": null,
-    "verifiedAt": null
+    "rootHttpStatus": 200,
+    "manifestSha256": "ce47c7cf7011a3dcebddf2a3dac01c3e34ee175a18ac133211b5b5ca3fb3ba11",
+    "verifiedAt": "2026-08-22T03:21:54Z"
   },
   "humanApproval": {
     "finalApplicationTextApproved": false,
@@ -84,8 +84,6 @@
     "submissionAuthorized": false
   },
   "blockers": [
-    "Pages y VPS no se han desplegado ni verificado para el commit e41c5394d71c1324fe8a3e5d12a4a6f76793eaa2.",
-    "La evidencia visual existente es histórica respecto al snapshot actual y requiere recaptura tras un despliegue verificable.",
     "La candidatura todavía requiere texto final, campos humanos y autorización explícita para el envío externo."
   ]
 }

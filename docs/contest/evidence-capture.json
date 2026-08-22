@@ -22,10 +22,10 @@
         "published_snapshot"
       ],
       "outputFile": "docs/contest/evidence/home-desktop.png",
-      "sha256": "caa0c4daa284746fc97cffb98dc38bd6dcb4caf64726f33d5c14fea74bc8f01c",
-      "capturedAt": "2026-08-21T12:53:19.671Z",
-      "localCommitSha": "90aba16a5bcef42ae6f966e9aaff9c53d82369aa",
-      "deployedCommitSha": "90aba16a5bcef42ae6f966e9aaff9c53d82369aa",
+      "sha256": "61b63cd5a2b6fd19ead2ec13cfd2461eee8c7b0b2f3e1c53fc2b7a6eaa97c3a1",
+      "capturedAt": "2026-08-22T03:20:39.031Z",
+      "localCommitSha": "05407a0600f1d533d01e97757a98189f030ea6e0",
+      "deployedCommitSha": "05407a0600f1d533d01e97757a98189f030ea6e0",
       "freezeRequired": true,
       "redactionRule": "Use a fresh anonymous browser context; omit browser chrome, personal data, cookies, account identifiers, API keys, tokens, and local filesystem paths."
     },
@@ -55,10 +55,10 @@
         "approved_aliases"
       ],
       "outputFile": "docs/contest/evidence/fp-pre-search-reviewed.png",
-      "sha256": "ce90026515b2c7ac74824c35b5df461305fe878b182897f8fdc237619840af4f",
-      "capturedAt": "2026-08-21T12:53:19.671Z",
-      "localCommitSha": "90aba16a5bcef42ae6f966e9aaff9c53d82369aa",
-      "deployedCommitSha": "90aba16a5bcef42ae6f966e9aaff9c53d82369aa",
+      "sha256": "361e46ac7fe52ff91f2647abcd9b87f25c268a4a380078d9ecedfeed26ea93a6",
+      "capturedAt": "2026-08-22T03:20:39.031Z",
+      "localCommitSha": "05407a0600f1d533d01e97757a98189f030ea6e0",
+      "deployedCommitSha": "05407a0600f1d533d01e97757a98189f030ea6e0",
       "freezeRequired": true,
       "redactionRule": "Use a fresh anonymous browser context; omit browser chrome, personal data, cookies, account identifiers, API keys, tokens, and local filesystem paths."
     },
@@ -79,10 +79,10 @@
       ],
       "claimIds": ["approved_relations", "zero_reviewed_relations"],
       "outputFile": "docs/contest/evidence/fp-pre-search-reviewed-zero.png",
-      "sha256": "53333f9d12e7dec1f89ebbefb5636b1cba108a4df951fc2448dca851e6d60d2a",
-      "capturedAt": "2026-08-21T12:53:19.671Z",
-      "localCommitSha": "90aba16a5bcef42ae6f966e9aaff9c53d82369aa",
-      "deployedCommitSha": "90aba16a5bcef42ae6f966e9aaff9c53d82369aa",
+      "sha256": "5f4cd410d5848a07fcf0f8eabcafe7a4baaae85e0007f6cab1a8c8520399519a",
+      "capturedAt": "2026-08-22T03:20:39.031Z",
+      "localCommitSha": "05407a0600f1d533d01e97757a98189f030ea6e0",
+      "deployedCommitSha": "05407a0600f1d533d01e97757a98189f030ea6e0",
       "freezeRequired": true,
       "redactionRule": "Use a fresh anonymous browser context; omit browser chrome, personal data, cookies, account identifiers, API keys, tokens, and local filesystem paths."
     },
@@ -103,10 +103,10 @@
         "no_salary_prediction"
       ],
       "outputFile": "docs/contest/evidence/fp-matched-result.png",
-      "sha256": "6b490f5ce0e59044fe7acf07deb476e9b1bed8aeacdbf10b1838d909c6d1e8ae",
-      "capturedAt": "2026-08-21T12:53:19.671Z",
-      "localCommitSha": "90aba16a5bcef42ae6f966e9aaff9c53d82369aa",
-      "deployedCommitSha": "90aba16a5bcef42ae6f966e9aaff9c53d82369aa",
+      "sha256": "7088c1dde02c2fc9e8bf1c789c55c2e6f7f45638a13e78ff6d06840de80c5f9c",
+      "capturedAt": "2026-08-22T03:20:39.031Z",
+      "localCommitSha": "05407a0600f1d533d01e97757a98189f030ea6e0",
+      "deployedCommitSha": "05407a0600f1d533d01e97757a98189f030ea6e0",
       "freezeRequired": true,
       "redactionRule": "Use a fresh anonymous browser context; omit browser chrome, personal data, cookies, account identifiers, API keys, tokens, and local filesystem paths."
     },
@@ -128,10 +128,10 @@
       ],
       "claimIds": ["approved_relations", "zero_reviewed_relations"],
       "outputFile": "docs/contest/evidence/fp-reviewed-zero-result.png",
-      "sha256": "ce61e2fe9f09f2448e357512c2ff0c18ff20d11d738871dd90ea5f8932465a20",
-      "capturedAt": "2026-08-21T12:53:19.671Z",
-      "localCommitSha": "90aba16a5bcef42ae6f966e9aaff9c53d82369aa",
-      "deployedCommitSha": "90aba16a5bcef42ae6f966e9aaff9c53d82369aa",
+      "sha256": "6de60f02b7e5befcc766d0eae04fee2d6033f28b1a495e42d77393e0da1fe497",
+      "capturedAt": "2026-08-22T03:20:39.031Z",
+      "localCommitSha": "05407a0600f1d533d01e97757a98189f030ea6e0",
+      "deployedCommitSha": "05407a0600f1d533d01e97757a98189f030ea6e0",
       "freezeRequired": true,
       "redactionRule": "Use a fresh anonymous browser context; omit browser chrome, personal data, cookies, account identifiers, API keys, tokens, and local filesystem paths."
     },
@@ -159,10 +159,10 @@
         "no_salary_prediction"
       ],
       "outputFile": "docs/contest/evidence/comparison-dual-scopes.png",
-      "sha256": "92539484a54130e55f1547605ef8cfd696bbeda9db080a9230258bdd402d834d",
-      "capturedAt": "2026-08-21T12:53:19.671Z",
-      "localCommitSha": "90aba16a5bcef42ae6f966e9aaff9c53d82369aa",
-      "deployedCommitSha": "90aba16a5bcef42ae6f966e9aaff9c53d82369aa",
+      "sha256": "cde02a2d504cae25de9b60a1dacdd46dadc877bc3e5885639ab736d64a6b2be7",
+      "capturedAt": "2026-08-22T03:20:39.031Z",
+      "localCommitSha": "05407a0600f1d533d01e97757a98189f030ea6e0",
+      "deployedCommitSha": "05407a0600f1d533d01e97757a98189f030ea6e0",
       "freezeRequired": true,
       "redactionRule": "Use a fresh anonymous browser context; omit browser chrome, personal data, cookies, account identifiers, API keys, tokens, and local filesystem paths."
     },
@@ -184,10 +184,10 @@
       "outputFile": "docs/contest/evidence/occupation-matched-result.png",
       "freezeRequired": true,
       "redactionRule": "Use a fresh anonymous browser context; omit browser chrome, personal data, cookies, account identifiers, API keys, tokens, and local filesystem paths.",
-      "sha256": "7c5da6f4a0021a835f39a0a2e5e0895c7885d2c25922492fb065d5031102bb1c",
-      "capturedAt": "2026-08-21T12:53:19.671Z",
-      "localCommitSha": "90aba16a5bcef42ae6f966e9aaff9c53d82369aa",
-      "deployedCommitSha": "90aba16a5bcef42ae6f966e9aaff9c53d82369aa"
+      "sha256": "7df3d81d8dd79b8ad71d5309e6a7c13bdf0e2b1c083425ee8bd6b02f9fc30828",
+      "capturedAt": "2026-08-22T03:20:39.031Z",
+      "localCommitSha": "05407a0600f1d533d01e97757a98189f030ea6e0",
+      "deployedCommitSha": "05407a0600f1d533d01e97757a98189f030ea6e0"
     },
     {
       "evidenceId": "methodology-sources",
@@ -205,10 +205,10 @@
         "accessibility_intent"
       ],
       "outputFile": "docs/contest/evidence/methodology-sources.png",
-      "sha256": "7ceedb629c7976a95c2be006f157301ca6eaa761879f98bad366986df28d3e90",
-      "capturedAt": "2026-08-21T12:53:19.671Z",
-      "localCommitSha": "90aba16a5bcef42ae6f966e9aaff9c53d82369aa",
-      "deployedCommitSha": "90aba16a5bcef42ae6f966e9aaff9c53d82369aa",
+      "sha256": "e2260d4532a7ce1ca21324e9c62a0d2733757c305eb5e4f4273f03238f8ef34f",
+      "capturedAt": "2026-08-22T03:20:39.031Z",
+      "localCommitSha": "05407a0600f1d533d01e97757a98189f030ea6e0",
+      "deployedCommitSha": "05407a0600f1d533d01e97757a98189f030ea6e0",
       "freezeRequired": true,
       "redactionRule": "Use a fresh anonymous browser context; omit browser chrome, personal data, cookies, account identifiers, API keys, tokens, and local filesystem paths."
     },
@@ -234,10 +234,10 @@
       "outputFile": "docs/contest/evidence/open-data-release.png",
       "freezeRequired": true,
       "redactionRule": "Use a fresh anonymous browser context; omit browser chrome, personal data, cookies, account identifiers, API keys, tokens, and local filesystem paths.",
-      "sha256": "a634e40c4ed42bf290fcec6a3227057369df8a991a546ebaabff03b3b66b9aaf",
-      "capturedAt": "2026-08-21T12:53:19.671Z",
-      "localCommitSha": "90aba16a5bcef42ae6f966e9aaff9c53d82369aa",
-      "deployedCommitSha": "90aba16a5bcef42ae6f966e9aaff9c53d82369aa"
+      "sha256": "7251d19d6bb5e6f2c093f533015255385b4f1b0bfd1768982c51c58776d56b6e",
+      "capturedAt": "2026-08-22T03:20:39.031Z",
+      "localCommitSha": "05407a0600f1d533d01e97757a98189f030ea6e0",
+      "deployedCommitSha": "05407a0600f1d533d01e97757a98189f030ea6e0"
     },
     {
       "evidenceId": "accessibility-statement",
@@ -256,10 +256,10 @@
       "outputFile": "docs/contest/evidence/accessibility-statement.png",
       "freezeRequired": true,
       "redactionRule": "Use a fresh anonymous browser context; omit browser chrome, personal data, cookies, account identifiers, API keys, tokens, and local filesystem paths.",
-      "sha256": "fb00c7e117cb2ac0b0c79d9d43e8ca07bc1b9e3af067b93fbf2ebf98f23f4776",
-      "capturedAt": "2026-08-21T12:53:19.671Z",
-      "localCommitSha": "90aba16a5bcef42ae6f966e9aaff9c53d82369aa",
-      "deployedCommitSha": "90aba16a5bcef42ae6f966e9aaff9c53d82369aa"
+      "sha256": "1384587ccfa6effd81d9118a2ff00f01b0e643106732957e8e403d3aff3c9508",
+      "capturedAt": "2026-08-22T03:20:39.031Z",
+      "localCommitSha": "05407a0600f1d533d01e97757a98189f030ea6e0",
+      "deployedCommitSha": "05407a0600f1d533d01e97757a98189f030ea6e0"
     },
     {
       "evidenceId": "public-resources",
@@ -287,10 +287,10 @@
       "outputFile": "docs/contest/evidence/public-resources.png",
       "freezeRequired": true,
       "redactionRule": "Use a fresh anonymous browser context; omit browser chrome, personal data, cookies, account identifiers, API keys, tokens, and local filesystem paths.",
-      "sha256": "b02dce7ecf2cfff436e45cb68321247c2302f20f2ae202f7cf1e05ecd1c25ca4",
-      "capturedAt": "2026-08-21T12:53:19.671Z",
-      "localCommitSha": "90aba16a5bcef42ae6f966e9aaff9c53d82369aa",
-      "deployedCommitSha": "90aba16a5bcef42ae6f966e9aaff9c53d82369aa"
+      "sha256": "46406cb3f3ac4f2077037bc9eab2bdd41d481ce4526994118e925ee0d9431f6e",
+      "capturedAt": "2026-08-22T03:20:39.031Z",
+      "localCommitSha": "05407a0600f1d533d01e97757a98189f030ea6e0",
+      "deployedCommitSha": "05407a0600f1d533d01e97757a98189f030ea6e0"
     },
     {
       "evidenceId": "home-mobile",
@@ -310,10 +310,10 @@
         "published_snapshot"
       ],
       "outputFile": "docs/contest/evidence/home-mobile.png",
-      "sha256": "756e43403ae02dc6c6dcc0012f7f7e0dc0f9f869e9c8ec7381f805811254a65d",
-      "capturedAt": "2026-08-21T12:53:19.671Z",
-      "localCommitSha": "90aba16a5bcef42ae6f966e9aaff9c53d82369aa",
-      "deployedCommitSha": "90aba16a5bcef42ae6f966e9aaff9c53d82369aa",
+      "sha256": "17ec960d688d52bfee4c4bf26ecbea9bdb3aaccec456ee402b8f9b67c4750600",
+      "capturedAt": "2026-08-22T03:20:39.031Z",
+      "localCommitSha": "05407a0600f1d533d01e97757a98189f030ea6e0",
+      "deployedCommitSha": "05407a0600f1d533d01e97757a98189f030ea6e0",
       "freezeRequired": true,
       "redactionRule": "Use a fresh anonymous browser context; omit browser chrome, personal data, cookies, account identifiers, API keys, tokens, and local filesystem paths."
     },
@@ -334,10 +334,10 @@
         "privacy_no_persistence"
       ],
       "outputFile": "docs/contest/evidence/comparison-mobile.png",
-      "sha256": "9a381a3bbf8b5a8c6277bdc4087ebdc5a10783d270661c910d4a59134c423b9c",
-      "capturedAt": "2026-08-21T12:53:19.671Z",
-      "localCommitSha": "90aba16a5bcef42ae6f966e9aaff9c53d82369aa",
-      "deployedCommitSha": "90aba16a5bcef42ae6f966e9aaff9c53d82369aa",
+      "sha256": "a49af40b78fb40a16211c68dcf821a8a3ab6c795770b69e2a5fa33ea01fa9e1b",
+      "capturedAt": "2026-08-22T03:20:39.031Z",
+      "localCommitSha": "05407a0600f1d533d01e97757a98189f030ea6e0",
+      "deployedCommitSha": "05407a0600f1d533d01e97757a98189f030ea6e0",
       "freezeRequired": true,
       "redactionRule": "Use a fresh anonymous browser context; omit browser chrome, personal data, cookies, account identifiers, API keys, tokens, and local filesystem paths."
     }

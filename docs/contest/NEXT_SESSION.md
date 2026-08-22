@@ -9,7 +9,9 @@
 - Cobertura: 104 cualificaciones base, 121 claves de modalidad, 248 relaciones aprobadas y 21 alias.
 - Cola oficial: 35 cualificaciones pendientes y 15 resultados sin publicación revalidados contra el catálogo actual.
 - La remediación retiró seis relaciones sin reemplazo y corrigió una cita; el grafo y el snapshot reflejan 248 relaciones.
-- El manifest conserva los recursos inmutables del snapshot y el freeze mantiene despliegue `pending`.
+- El manifest conserva los recursos inmutables del snapshot. GitHub Pages, VPS
+  y 13 capturas se verificaron para el commit
+  `05407a0600f1d533d01e97757a98189f030ea6e0`.
 - La muestra determinista vigente registra 15 PASS y 0 FAIL tras una segunda
   revisión independiente de la URL oficial y la cita registrada. Es una muestra
   delimitada: las otras 233 relaciones no fueron muestreadas y no se afirma una
@@ -18,20 +20,20 @@
 
 ## Estado de publicación
 
-- GitHub Pages y el VPS no se han desplegado ni verificado para el límite `e41c539`; `docs/contest/release-evidence.json` conserva ambos estados como pendientes.
-- Las capturas PNG existentes son históricas respecto al snapshot actual y deben recapturarse después de un despliegue verificable.
+- GitHub Pages y el VPS publicaron el mismo commit `05407a0`; el workflow
+  `32548299249` terminó en verde y verificó Pages en vivo.
+- Las 13 capturas PNG se regeneraron desde el VPS publicado y pasaron la
+  validación automática y la inspección visual.
 - La candidatura no se envía automáticamente. Identidad, declaraciones, consentimiento y envío oficial requieren autorización humana explícita separada.
 
 ## Orden de trabajo
 
-1. Ejecutar los gates locales sobre el árbol final y registrar sus resultados sin atribuirles verificación pública.
-2. Promover la rama solo con autorización explícita y avance fast-forward sobre el SHA observado de `origin/main`.
-3. Esperar el workflow de Pages y verificar `version.json`, manifest y recursos contra el commit publicado.
-4. Autorizar la clave dedicada del VPS, repetir el preflight read-only y ejecutar el despliegue únicamente si autentica.
-5. Recapturar la evidencia visual en contexto anónimo y revisar cada imagen contra el claim ledger y el freeze actual.
-6. Completar la cola de 35 titulaciones con evidencia primaria; no convertir señales de oferta en evidencia CNO.
-7. Realizar el piloto anónimo con personas adultas y consentimiento antes de afirmar adopción.
-8. Completar los campos humanos y obtener autorización explícita antes del envío externo.
+1. Completar la cola de 35 titulaciones con evidencia primaria; no convertir
+   señales de oferta en evidencia CNO.
+2. Realizar el piloto anónimo con personas adultas y consentimiento antes de
+   afirmar adopción.
+3. Completar identidad, declaraciones y documentación humana.
+4. Obtener autorización explícita antes del envío externo.
 
 ## Arranque en otro ordenador
 
