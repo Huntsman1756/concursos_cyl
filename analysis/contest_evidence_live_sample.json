@@ -8,91 +8,143 @@
   "selectionAlgorithm": "Sort relation keys by SHA-256(seed + '|' + relationKey), ascending; take the first 15.",
   "cutoff": "2026-08-22T04:13:28+02:00",
   "auditedAt": "2026-08-22",
-  "status": "pending_live_sample",
+  "status": "sample_audited",
+  "independentlyAudited": true,
+  "exhaustive": false,
+  "auditMethod": "Independent second-pass comparison of each selected relation with its recorded official source URL and exact quote at the e41c539 boundary.",
   "summary": {
-    "pass": 0,
+    "pass": 15,
+    "fail": 0,
+    "samplePass": 15,
+    "notSampled": 233,
     "failSemanticBoundary": 0,
     "needsLevelReview": 0,
     "failExactQuoteOnly": 0,
-    "pendingLiveSample": 15,
-    "cleanSample": false,
-    "decision": "The e41c539 boundary has not received a new independent live-source sample. Do not ratify semantic sufficiency until all 15 selected relations are checked against current official sources."
+    "pendingLiveSample": 0,
+    "cleanSample": true,
+    "exhaustive": false,
+    "decision": "All 15 deterministically selected relations passed the independent second-pass check. This bounded sample is not an exhaustive audit; the remaining 233 approved relations are not sampled here."
   },
   "relations": [
     {
       "relationKey": "EOC01M|occupation:cno11:7121",
-      "status": "pending_live_sample",
-      "liveQuote": null
+      "status": "sample_pass",
+      "auditStatus": "pass",
+      "sourceUrl": "https://www.boe.es/eli/es/rd/2011/11/04/1575",
+      "sourceQuote": "– Albañil.",
+      "liveQuote": "– Albañil."
     },
     {
       "relationKey": "SAN02M|occupation:cno11:5621",
-      "status": "pending_live_sample",
-      "liveQuote": null
+      "status": "sample_pass",
+      "auditStatus": "pass",
+      "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/sanidad/farmacia-parafarmacia.html",
+      "sourceQuote": "Auxiliar de Farmacia.",
+      "liveQuote": "Auxiliar de Farmacia."
     },
     {
       "relationKey": "SAN08SD|occupation:cno11:2640",
-      "status": "pending_live_sample",
-      "liveQuote": null
+      "status": "sample_pass",
+      "auditStatus": "pass",
+      "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/sanidad/laboratorio-clinico-biomedico.html",
+      "sourceQuote": "Delegada / delegado comercial de productos hospitalarios y farmacéuticos.",
+      "liveQuote": "Delegada / delegado comercial de productos hospitalarios y farmacéuticos."
     },
     {
       "relationKey": "TMV01M|occupation:cno11:7232",
-      "status": "pending_live_sample",
-      "liveQuote": null
+      "status": "sample_pass",
+      "auditStatus": "pass",
+      "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+      "sourceQuote": "7232 Pintores en las industrias manufactureras",
+      "liveQuote": "7232 Pintores en las industrias manufactureras"
     },
     {
       "relationKey": "ELE02B|occupation:cno11:9700",
-      "status": "pending_live_sample",
-      "liveQuote": null
+      "status": "sample_pass",
+      "auditStatus": "pass",
+      "sourceUrl": "https://www.boe.es/eli/es/rd/2015/08/28/774",
+      "sourceQuote": "Peones de industrias manufactureras.",
+      "liveQuote": "Peones de industrias manufactureras."
     },
     {
       "relationKey": "FME02B|occupation:cno11:9700",
-      "status": "pending_live_sample",
-      "liveQuote": null
+      "status": "sample_pass",
+      "auditStatus": "pass",
+      "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/fabricacion-mecanica/fabricacion-elementos-metalicos.html",
+      "sourceQuote": "Peones y auxiliares de industrias metalúrgicas, de fabricación de productos metálicos y manufactureras.",
+      "liveQuote": "Peones y auxiliares de industrias metalúrgicas, de fabricación de productos metálicos y manufactureras."
     },
     {
       "relationKey": "ARG01M|occupation:cno11:7621",
-      "status": "pending_live_sample",
-      "liveQuote": null
+      "status": "sample_pass",
+      "auditStatus": "pass",
+      "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/artes-graficas/preimpresion-digital.html",
+      "sourceQuote": "Técnica / técnico en preimpresión.",
+      "liveQuote": "Técnica / técnico en preimpresión."
     },
     {
       "relationKey": "ELE01M|occupation:cno11:7510",
-      "status": "pending_live_sample",
-      "liveQuote": null
+      "status": "sample_pass",
+      "auditStatus": "pass",
+      "sourceUrl": "https://www.boe.es/eli/es/rd/2008/02/08/177",
+      "sourceQuote": "Electricista de construcción.",
+      "liveQuote": "Electricista de construcción."
     },
     {
       "relationKey": "SSC01S|occupation:cno11:2252",
-      "status": "pending_live_sample",
-      "liveQuote": null
+      "status": "sample_pass",
+      "auditStatus": "pass",
+      "sourceUrl": "https://www.boe.es/eli/es/rd/2007/10/29/1394",
+      "sourceQuote": "Educador o educadora infantil en primer ciclo de educación infantil",
+      "liveQuote": "Educador o educadora infantil en primer ciclo de educación infantil"
     },
     {
       "relationKey": "SSC04S|occupation:cno11:3714",
-      "status": "pending_live_sample",
-      "liveQuote": null
+      "status": "sample_pass",
+      "auditStatus": "pass",
+      "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/servicios-socioculturales-comunidad/promocion-igualdad-genero.html",
+      "sourceQuote": "Promotor / promotora para la igualdad efectiva de mujeres y hombres.",
+      "liveQuote": "Promotor / promotora para la igualdad efectiva de mujeres y hombres."
     },
     {
       "relationKey": "SSC01M|occupation:cno11:5629",
-      "status": "pending_live_sample",
-      "liveQuote": null
+      "status": "sample_pass",
+      "auditStatus": "pass",
+      "sourceUrl": "https://www.sepe.es/fr/SiteSepe/contenidos/COVID-19/documentos/documentacion-melilla/2021/201221-Resolucion-provisional--20-12-2021-firmada.pdf",
+      "sourceQuote": "Categoría: CUIDADORES DE PERSONAS CON DISCAPACIDAD (CNO 56291025) Titulación: FP grado medio en atención a personas en situación de dependencia",
+      "liveQuote": "Categoría: CUIDADORES DE PERSONAS CON DISCAPACIDAD (CNO 56291025) Titulación: FP grado medio en atención a personas en situación de dependencia"
     },
     {
       "relationKey": "IFC01MD|occupation:cno11:3812",
-      "status": "pending_live_sample",
-      "liveQuote": null
+      "status": "sample_pass",
+      "auditStatus": "pass",
+      "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/informatica-comunicaciones/sistemas-microniformaticos-redes.html",
+      "sourceQuote": "Técnica / técnico de soporte informático.",
+      "liveQuote": "Técnica / técnico de soporte informático."
     },
     {
       "relationKey": "SAN08S|occupation:cno11:2640",
-      "status": "pending_live_sample",
-      "liveQuote": null
+      "status": "sample_pass",
+      "auditStatus": "pass",
+      "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/sanidad/laboratorio-clinico-biomedico.html",
+      "sourceQuote": "Delegada / delegado comercial de productos hospitalarios y farmacéuticos.",
+      "liveQuote": "Delegada / delegado comercial de productos hospitalarios y farmacéuticos."
     },
     {
       "relationKey": "IMP01M|occupation:cno11:4412",
-      "status": "pending_live_sample",
-      "liveQuote": null
+      "status": "sample_pass",
+      "auditStatus": "pass",
+      "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/imagen-personal/estetica-belleza.html",
+      "sourceQuote": "Recepcionista en empresas estéticas.",
+      "liveQuote": "Recepcionista en empresas estéticas."
     },
     {
       "relationKey": "EOC01M|occupation:cno11:7193",
-      "status": "pending_live_sample",
-      "liveQuote": null
+      "status": "sample_pass",
+      "auditStatus": "pass",
+      "sourceUrl": "https://www.boe.es/eli/es/rd/2011/11/04/1575",
+      "sourceQuote": "– Instalador de sistemas de impermeabilización en edificios y obra civil.",
+      "liveQuote": "– Instalador de sistemas de impermeabilización en edificios y obra civil."
     }
   ],
   "historicalAudit": {

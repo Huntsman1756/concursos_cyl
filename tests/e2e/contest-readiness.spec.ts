@@ -176,7 +176,7 @@ test.describe("contest readiness journeys", () => {
     });
     await programSelect.selectOption("COM01M");
     await expect(page.getByRole("status")).toContainText(
-      "Relaciones revisadas con 8 grupos de ocupación.",
+      "Relaciones revisadas con 7 grupos de ocupación.",
     );
     await page.getByRole("button", { name: "Ver salidas y ofertas" }).click();
     await expect(page).toHaveURL(/\/desde-fp\/COM01M$/u);

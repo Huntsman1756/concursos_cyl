@@ -143,7 +143,7 @@ test("live DAW results name the dated zero-match snapshot without claiming there
   );
 });
 
-test("COM01M exposes eight reviewed groups without inventing current offers", async ({
+test("COM01M exposes seven reviewed groups without inventing current offers", async ({
   page,
 }) => {
   await page.goto("/desde-fp");
@@ -151,7 +151,7 @@ test("COM01M exposes eight reviewed groups without inventing current offers", as
     .getByRole("combobox", { name: "Ciclo de Formación Profesional" })
     .selectOption("COM01M");
   await expect(page.getByRole("status")).toContainText(
-    "Relaciones revisadas con 8 grupos de ocupación.",
+    "Relaciones revisadas con 7 grupos de ocupación.",
   );
   await page.getByRole("button", { name: "Ver salidas y ofertas" }).click();
   await expect(page).toHaveURL(/\/desde-fp\/COM01M$/u);

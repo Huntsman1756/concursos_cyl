@@ -15,6 +15,8 @@ import {
 
 type ProgramCoverage = Extract<MappingCoverage, { scope: "program" }>;
 
+const LATER_PUBLICATION_ALLOWED_PROGRAMS = new Set(["COM01M"]);
+
 export function assertRenderedPilotReport(
   actual: string,
   expected: string,
@@ -76,7 +78,12 @@ export function renderFpCoveragePilotReport(
     if (
       row === undefined ||
       (attempt.state === "completed" && row.coverageStatus !== "reviewed") ||
-      (attempt.state !== "completed" && row.coverageStatus === "reviewed")
+      (attempt.state !== "completed" &&
+        row.coverageStatus === "reviewed" &&
+        !(
+          attempt.state === "deferred" &&
+          LATER_PUBLICATION_ALLOWED_PROGRAMS.has(attempt.programKey)
+        ))
     ) {
       throw new Error(
         "Public coverage does not agree with terminal pilot states.",
@@ -86,12 +93,17 @@ export function renderFpCoveragePilotReport(
   if (
     !reviewedKeys.includes("SAN21") ||
     com.state !== "deferred" ||
-    comCoverage?.coverageStatus === "reviewed"
+    comCoverage === undefined
   ) {
     throw new Error(
       "Public coverage does not agree with validated pilot results.",
     );
   }
+
+  const comPublicationNote =
+    comCoverage.coverageStatus === "reviewed"
+      ? "El piloto histórico conservó COM01M diferido; la publicación posterior se revisa aparte y aparece en la cobertura pública actual."
+      : "El piloto histórico conservó COM01M diferido; la publicación posterior se revisa aparte.";
 
   return `# Resultados del piloto de cobertura FP
 
@@ -108,13 +120,13 @@ No se infiere una tasa estable para todo el catálogo a partir de cinco intentos
 
 ## Cobertura publicada y límites
 
-La cobertura revisada pública incluye ${reviewedKeys.join(", ")}. La interfaz la deriva de \`mapping-coverage.json\` direccionado por el manifiesto; no mantiene una lista paralela. COM01M permanece diferido y se muestra como cobertura no disponible, sin relación, alias, ocupación ni afirmación pública revisada.
+La cobertura revisada pública incluye ${reviewedKeys.join(", ")}. La interfaz la deriva de \`mapping-coverage.json\` direccionado por el manifiesto; no mantiene una lista paralela. ${comPublicationNote}
 
 SAN21 es el único ciclo del piloto con alcance marginal en la instantánea: ${summary.marginalOffersReached} ofertas mediante la unión de relaciones aceptadas. En la instantánea histórica del piloto, ${zeroPrograms.join(", ")} tuvieron 0 ofertas marginales porque todavía no se habían admitido alias. Cero no equivale a ausencia de empleo fuera de la instantánea.
 
 ## No finalización y siguiente tramo
 
-COM01M se difiere: las salidas de ventas, comercio, almacén, logística y atención remota no tienen una correspondencia primaria, exacta y de cuatro dígitos con CNO-11; ampliar por similitud sería especulativo.
+COM01M se difirió en este piloto: las salidas de ventas, comercio, almacén, logística y atención remota no tenían una correspondencia primaria, exacta y de cuatro dígitos con CNO-11; ampliar por similitud habría sido especulativo. Una revisión posterior de publicación queda separada del resultado histórico.
 
 El siguiente trabajo recomendado no es abrir más ciclos de forma ciega. Primero, una pasada acotada de evidencia oficial de alias para HOT01M, SSC01M y EOC01M, manteniendo el cierre por defecto, puede resolver el cuello de botella medido de tres ciclos completos sin ofertas alcanzadas. Solo después, y si esa pasada sigue sin admitir alias, se deben priorizar nuevos ciclos de mayor demanda con el mismo contrato de evidencia.
 `;

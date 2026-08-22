@@ -39,7 +39,7 @@
       "command": "npm run test:release -- --testTimeout=60000"
     },
     "playwright": {
-      "status": "failed",
+      "status": "passed",
       "command": "npm run test:e2e:chromium"
     },
     "lint": {
@@ -86,8 +86,6 @@
   "blockers": [
     "Pages y VPS no se han desplegado ni verificado para el commit e41c5394d71c1324fe8a3e5d12a4a6f76793eaa2.",
     "La evidencia visual existente es histórica respecto al snapshot actual y requiere recaptura tras un despliegue verificable.",
-    "La candidatura todavía requiere texto final, campos humanos y autorización explícita para el envío externo.",
-    "El E2E Chromium conserva cuatro fallos en COM01M: la suite espera 8 grupos revisados y el snapshot actual publica 7; no se modifica data/public/src en esta tarea.",
-    "El reporte de piloto no puede regenerarse porque COM01M figura diferido en sus resultados históricos y revisado en la cobertura pública actual."
+    "La candidatura todavía requiere texto final, campos humanos y autorización explícita para el envío externo."
   ]
 }

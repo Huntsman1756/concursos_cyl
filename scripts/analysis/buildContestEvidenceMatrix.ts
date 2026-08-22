@@ -1,3 +1,4 @@
+import { createHash } from "node:crypto";
 import {
   existsSync,
   readFileSync,
@@ -36,6 +37,107 @@ interface ArtifactText {
   text: string;
 }
 
+interface IndependentSampleRelation {
+  relationKey: string;
+  status: string;
+  auditStatus: string;
+  sourceUrl: string;
+  sourceQuote: string;
+}
+
+interface IndependentSampleDocument {
+  sourceCommitSha: string;
+  population: number;
+  sampleSize: number;
+  seed: string;
+  auditedAt: string;
+  independentlyAudited: boolean;
+  exhaustive: boolean;
+  summary: {
+    pass: number;
+    fail: number;
+    samplePass: number;
+    notSampled: number;
+    exhaustive: boolean;
+  };
+  relations: IndependentSampleRelation[];
+}
+
+function sampleDigest(seed: string, relationKey: string): string {
+  return createHash("sha256").update(`${seed}|${relationKey}`).digest("hex");
+}
+
+function loadIndependentSample(
+  rootDirectory: string,
+  approved: readonly CuratedRelation[],
+): IndependentSampleDocument {
+  const sample = JSON.parse(
+    readFileSync(
+      resolve(rootDirectory, "analysis/contest_evidence_live_sample.json"),
+      "utf8",
+    ),
+  ) as IndependentSampleDocument;
+  if (
+    sample.sourceCommitSha !== SOURCE_COMMIT_SHA ||
+    sample.population !== EXPECTED_APPROVED_RELATIONS ||
+    sample.sampleSize !== 15 ||
+    sample.relations.length !== sample.sampleSize ||
+    sample.independentlyAudited !== true ||
+    sample.exhaustive !== false ||
+    sample.summary.pass !== 15 ||
+    sample.summary.fail !== 0 ||
+    sample.summary.samplePass !== 15 ||
+    sample.summary.notSampled !==
+      EXPECTED_APPROVED_RELATIONS - sample.sampleSize ||
+    sample.summary.exhaustive !== false
+  ) {
+    throw new Error(
+      "Independent evidence sample must record 15 PASS, 0 FAIL, and a non-exhaustive audit.",
+    );
+  }
+
+  const approvedByKey = new Map(
+    approved.map((relation) => [
+      `${relation.trainingProgramKey}|${relation.occupationId}`,
+      relation,
+    ]),
+  );
+  const expectedKeys = approved
+    .map(
+      (relation) => `${relation.trainingProgramKey}|${relation.occupationId}`,
+    )
+    .sort((left, right) =>
+      sampleDigest(sample.seed, left).localeCompare(
+        sampleDigest(sample.seed, right),
+      ),
+    )
+    .slice(0, sample.sampleSize);
+  const actualKeys = sample.relations.map((relation) => relation.relationKey);
+  if (
+    new Set(actualKeys).size !== sample.sampleSize ||
+    JSON.stringify(actualKeys) !== JSON.stringify(expectedKeys)
+  ) {
+    throw new Error(
+      "Independent evidence sample does not match its deterministic selection.",
+    );
+  }
+  for (const relation of sample.relations) {
+    const source = approvedByKey.get(relation.relationKey);
+    if (
+      source === undefined ||
+      relation.status !== "sample_pass" ||
+      relation.auditStatus !== "pass" ||
+      relation.sourceUrl !== source.sourceUrl ||
+      relation.sourceQuote !== source.sourceQuote
+    ) {
+      throw new Error(
+        `Independent evidence sample does not match approved source data for ${relation.relationKey}.`,
+      );
+    }
+  }
+  return sample;
+}
+
 function isOfficialSource(sourceUrl: string): boolean {
   try {
     const hostname = new URL(sourceUrl).hostname.toLocaleLowerCase("en-US");
@@ -50,6 +152,7 @@ function isOfficialSource(sourceUrl: string): boolean {
 function collectArtifactTexts(rootDirectory: string): ArtifactText[] {
   const analysisDirectory = resolve(rootDirectory, "analysis");
   const excluded = new Set([
+    "contest_evidence_live_sample.json",
     "contest_evidence_matrix.json",
     "contest_evidence_matrix.md",
     "contest_evidence_matrix_base.json",
@@ -99,6 +202,11 @@ export function buildContestEvidenceMatrix(rootDirectory = resolve(".")) {
     throw new Error("Approved relation identities are not unique.");
   }
 
+  const sample = loadIndependentSample(rootDirectory, approved);
+  const sampleKeys = new Set(
+    sample.relations.map((relation) => relation.relationKey),
+  );
+
   const artifacts = collectArtifactTexts(rootDirectory);
   const relations = approved
     .map((relation) => {
@@ -145,7 +253,9 @@ export function buildContestEvidenceMatrix(rootDirectory = resolve(".")) {
             : programArtifacts.length > 0
               ? "program_artifact_discovered"
               : "common_validator_only",
-        frontierSufficiency: "pending_live_sample",
+        frontierSufficiency: sampleKeys.has(relationKey)
+          ? "sample_pass"
+          : "not_sampled",
       };
     })
     .sort((left, right) =>
@@ -174,10 +284,23 @@ export function buildContestEvidenceMatrix(rootDirectory = resolve(".")) {
     relationCount: relations.length,
     commonFloorFailures,
     depthCounts,
+    sampleSummary: {
+      sourcePath: "analysis/contest_evidence_live_sample.json",
+      sourceCommitSha: sample.sourceCommitSha,
+      auditedAt: sample.auditedAt,
+      population: sample.population,
+      sampleSize: sample.sampleSize,
+      pass: sample.summary.pass,
+      fail: sample.summary.fail,
+      notSampled: sample.summary.notSampled,
+      exhaustive: sample.exhaustive,
+      decision:
+        "The deterministic 15-relation sample passed independently; the remaining 233 approved relations are not sampled here. This is not an exhaustive audit.",
+    },
     limitations: [
       "The common floor verifies repository fields and official-domain attribution, not the live source text.",
       "Artifact discovery is textual and must not be described as an exhaustive semantic audit.",
-      "Final evidentiary sufficiency remains pending until Frontier completes the independent live sample.",
+      "The independent sample records 15 PASS and 0 FAIL; 233 approved relations remain not_sampled, so this is not an exhaustive audit.",
     ],
     relations,
   };
@@ -212,7 +335,8 @@ function renderMarkdown(
     `- Corte: ${matrix.auditCutoff}`,
     `- Relaciones aprobadas: ${matrix.relationCount}`,
     `- Fallos del suelo común: ${matrix.commonFloorFailures}`,
-    "- Veredicto de suficiencia: pendiente de muestra independiente contra fuentes vivas.",
+    `- Muestra independiente: ${matrix.sampleSummary.pass} PASS / ${matrix.sampleSummary.fail} FAIL / ${matrix.sampleSummary.notSampled} no muestreadas.`,
+    "- Alcance: auditoría independiente delimitada; no es exhaustiva.",
     "",
     "| Profundidad documental localizada | Relaciones |",
     "| --- | ---: |",

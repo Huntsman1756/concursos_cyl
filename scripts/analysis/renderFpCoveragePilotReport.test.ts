@@ -33,14 +33,20 @@ describe("renderFpCoveragePilotReport", () => {
     expect(() =>
       renderFpCoveragePilotReport(results, completedUnreviewed),
     ).toThrow(/terminal pilot states/i);
+  });
+
+  it("allows a later COM01M publication while preserving its historical deferral", async () => {
+    const results = await validateFpCoveragePilotResultsFile();
     const deferredReviewed = structuredClone(coverage) as MappingCoverage[];
     const comCoverage = deferredReviewed.find(
       (row) => row.scope === "program" && row.programKey === "COM01M",
     ) as Extract<MappingCoverage, { scope: "program" }>;
     comCoverage.coverageStatus = "reviewed";
-    expect(() =>
-      renderFpCoveragePilotReport(results, deferredReviewed),
-    ).toThrow(/terminal pilot states|Public coverage/i);
+    const report = renderFpCoveragePilotReport(results, deferredReviewed);
+    expect(report).toContain(
+      "El piloto histórico conservó COM01M diferido; la publicación posterior se revisa aparte",
+    );
+    expect(report).toContain("COM01M");
   });
   it("renders validated terminal counts, separate time measures, and the zero-match bottleneck", async () => {
     const results = await validateFpCoveragePilotResultsFile();
@@ -55,7 +61,9 @@ describe("renderFpCoveragePilotReport", () => {
     expect(report).toContain("HOT01M, SSC01M y EOC01M");
     expect(report).toContain("0 ofertas marginales");
     expect(report).toContain("En la instantánea histórica del piloto");
-    expect(report).toContain("COM01M permanece diferido");
+    expect(report).toContain(
+      "El piloto histórico conservó COM01M diferido; la publicación posterior se revisa aparte",
+    );
     expect(report).toContain(
       "excluye este endurecimiento integral posterior a la agregación, iniciado el 2026-08-08T21:17:46.2354891Z",
     );

@@ -6,14 +6,26 @@
   "relationCount": 248,
   "commonFloorFailures": 0,
   "depthCounts": {
-    "relation_artifact_discovered": 152,
-    "program_artifact_discovered": 86,
-    "common_validator_only": 10
+    "relation_artifact_discovered": 147,
+    "program_artifact_discovered": 101,
+    "common_validator_only": 0
+  },
+  "sampleSummary": {
+    "sourcePath": "analysis/contest_evidence_live_sample.json",
+    "sourceCommitSha": "e41c5394d71c1324fe8a3e5d12a4a6f76793eaa2",
+    "auditedAt": "2026-08-22",
+    "population": 248,
+    "sampleSize": 15,
+    "pass": 15,
+    "fail": 0,
+    "notSampled": 233,
+    "exhaustive": false,
+    "decision": "The deterministic 15-relation sample passed independently; the remaining 233 approved relations are not sampled here. This is not an exhaustive audit."
   },
   "limitations": [
     "The common floor verifies repository fields and official-domain attribution, not the live source text.",
     "Artifact discovery is textual and must not be described as an exhaustive semantic audit.",
-    "Final evidentiary sufficiency remains pending until Frontier completes the independent live sample."
+    "The independent sample records 15 PASS and 0 FAIL; 233 approved relations remain not_sampled, so this is not an exhaustive audit."
   ],
   "relations": [
     {
@@ -32,12 +44,13 @@
       "artifactDiscovery": {
         "relationCooccurrencePaths": [],
         "programMentionPaths": [
-          "analysis/fp_coverage_batch_4/ADG01B.md"
+          "analysis/fp_coverage_batch_4/ADG01B.md",
+          "analysis/fp_coverage_pilot_results.md"
         ],
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "program_artifact_discovered",
-      "frontierSufficiency": "pending_live_sample"
+      "frontierSufficiency": "not_sampled"
     },
     {
       "relationKey": "ADG01M|occupation:cno11:4113",
@@ -68,7 +81,7 @@
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "relation_artifact_discovered",
-      "frontierSufficiency": "pending_live_sample"
+      "frontierSufficiency": "not_sampled"
     },
     {
       "relationKey": "ADG01MD|occupation:cno11:4113",
@@ -92,7 +105,7 @@
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "program_artifact_discovered",
-      "frontierSufficiency": "pending_live_sample"
+      "frontierSufficiency": "not_sampled"
     },
     {
       "relationKey": "ADG01S|occupation:cno11:4223",
@@ -119,7 +132,7 @@
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "relation_artifact_discovered",
-      "frontierSufficiency": "pending_live_sample"
+      "frontierSufficiency": "not_sampled"
     },
     {
       "relationKey": "ADG02S|occupation:cno11:4111",
@@ -146,7 +159,7 @@
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "relation_artifact_discovered",
-      "frontierSufficiency": "pending_live_sample"
+      "frontierSufficiency": "not_sampled"
     },
     {
       "relationKey": "ADG02S|occupation:cno11:4113",
@@ -173,7 +186,7 @@
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "relation_artifact_discovered",
-      "frontierSufficiency": "pending_live_sample"
+      "frontierSufficiency": "not_sampled"
     },
     {
       "relationKey": "ADG02S|occupation:cno11:4123",
@@ -200,7 +213,7 @@
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "relation_artifact_discovered",
-      "frontierSufficiency": "pending_live_sample"
+      "frontierSufficiency": "not_sampled"
     },
     {
       "relationKey": "ADG02S|occupation:cno11:4223",
@@ -227,7 +240,7 @@
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "relation_artifact_discovered",
-      "frontierSufficiency": "pending_live_sample"
+      "frontierSufficiency": "not_sampled"
     },
     {
       "relationKey": "ADG02SD|occupation:cno11:4111",
@@ -254,7 +267,7 @@
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "relation_artifact_discovered",
-      "frontierSufficiency": "pending_live_sample"
+      "frontierSufficiency": "not_sampled"
     },
     {
       "relationKey": "ADG02SD|occupation:cno11:4113",
@@ -281,7 +294,7 @@
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "relation_artifact_discovered",
-      "frontierSufficiency": "pending_live_sample"
+      "frontierSufficiency": "not_sampled"
     },
     {
       "relationKey": "ADG02SD|occupation:cno11:4123",
@@ -308,7 +321,7 @@
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "relation_artifact_discovered",
-      "frontierSufficiency": "pending_live_sample"
+      "frontierSufficiency": "not_sampled"
     },
     {
       "relationKey": "ADG02SD|occupation:cno11:4223",
@@ -335,7 +348,7 @@
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "relation_artifact_discovered",
-      "frontierSufficiency": "pending_live_sample"
+      "frontierSufficiency": "not_sampled"
     },
     {
       "relationKey": "AFD01S|occupation:cno11:3722",
@@ -354,6 +367,7 @@
         "relationCooccurrencePaths": [],
         "programMentionPaths": [
           "analysis/fp_coverage_batch_5/README.md",
+          "analysis/fp_coverage_pilot_results.md",
           "analysis/fp_marginal_alias_impact.json",
           "analysis/fp_marginal_alias_impact.md",
           "analysis/fp_marginal_alias_review.json"
@@ -361,7 +375,7 @@
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "program_artifact_discovered",
-      "frontierSufficiency": "pending_live_sample"
+      "frontierSufficiency": "not_sampled"
     },
     {
       "relationKey": "AFD01S|occupation:cno11:3723",
@@ -380,6 +394,7 @@
         "relationCooccurrencePaths": [],
         "programMentionPaths": [
           "analysis/fp_coverage_batch_5/README.md",
+          "analysis/fp_coverage_pilot_results.md",
           "analysis/fp_marginal_alias_impact.json",
           "analysis/fp_marginal_alias_impact.md",
           "analysis/fp_marginal_alias_review.json"
@@ -387,7 +402,7 @@
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "program_artifact_discovered",
-      "frontierSufficiency": "pending_live_sample"
+      "frontierSufficiency": "not_sampled"
     },
     {
       "relationKey": "AFD01S|occupation:cno11:3724",
@@ -406,6 +421,7 @@
         "relationCooccurrencePaths": [],
         "programMentionPaths": [
           "analysis/fp_coverage_batch_5/README.md",
+          "analysis/fp_coverage_pilot_results.md",
           "analysis/fp_marginal_alias_impact.json",
           "analysis/fp_marginal_alias_impact.md",
           "analysis/fp_marginal_alias_review.json"
@@ -413,7 +429,7 @@
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "program_artifact_discovered",
-      "frontierSufficiency": "pending_live_sample"
+      "frontierSufficiency": "not_sampled"
     },
     {
       "relationKey": "AFD01S|occupation:cno11:5992",
@@ -434,13 +450,14 @@
         ],
         "programMentionPaths": [
           "analysis/fp_coverage_batch_5/README.md",
+          "analysis/fp_coverage_pilot_results.md",
           "analysis/fp_marginal_alias_impact.json",
           "analysis/fp_marginal_alias_impact.md"
         ],
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "relation_artifact_discovered",
-      "frontierSufficiency": "pending_live_sample"
+      "frontierSufficiency": "not_sampled"
     },
     {
       "relationKey": "AFD01SD|occupation:cno11:3722",
@@ -459,6 +476,7 @@
         "relationCooccurrencePaths": [],
         "programMentionPaths": [
           "analysis/fp_coverage_batch_5/README.md",
+          "analysis/fp_coverage_pilot_results.md",
           "analysis/fp_marginal_alias_impact.json",
           "analysis/fp_marginal_alias_impact.md",
           "analysis/fp_marginal_alias_review.json"
@@ -466,7 +484,7 @@
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "program_artifact_discovered",
-      "frontierSufficiency": "pending_live_sample"
+      "frontierSufficiency": "not_sampled"
     },
     {
       "relationKey": "AFD01SD|occupation:cno11:3723",
@@ -485,6 +503,7 @@
         "relationCooccurrencePaths": [],
         "programMentionPaths": [
           "analysis/fp_coverage_batch_5/README.md",
+          "analysis/fp_coverage_pilot_results.md",
           "analysis/fp_marginal_alias_impact.json",
           "analysis/fp_marginal_alias_impact.md",
           "analysis/fp_marginal_alias_review.json"
@@ -492,7 +511,7 @@
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "program_artifact_discovered",
-      "frontierSufficiency": "pending_live_sample"
+      "frontierSufficiency": "not_sampled"
     },
     {
       "relationKey": "AFD01SD|occupation:cno11:3724",
@@ -511,6 +530,7 @@
         "relationCooccurrencePaths": [],
         "programMentionPaths": [
           "analysis/fp_coverage_batch_5/README.md",
+          "analysis/fp_coverage_pilot_results.md",
           "analysis/fp_marginal_alias_impact.json",
           "analysis/fp_marginal_alias_impact.md",
           "analysis/fp_marginal_alias_review.json"
@@ -518,7 +538,7 @@
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "program_artifact_discovered",
-      "frontierSufficiency": "pending_live_sample"
+      "frontierSufficiency": "not_sampled"
     },
     {
       "relationKey": "AFD01SD|occupation:cno11:5992",
@@ -539,13 +559,14 @@
         ],
         "programMentionPaths": [
           "analysis/fp_coverage_batch_5/README.md",
+          "analysis/fp_coverage_pilot_results.md",
           "analysis/fp_marginal_alias_impact.json",
           "analysis/fp_marginal_alias_impact.md"
         ],
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "relation_artifact_discovered",
-      "frontierSufficiency": "pending_live_sample"
+      "frontierSufficiency": "not_sampled"
     },
     {
       "relationKey": "AFD02M|occupation:cno11:3723",
@@ -572,7 +593,7 @@
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "relation_artifact_discovered",
-      "frontierSufficiency": "pending_live_sample"
+      "frontierSufficiency": "not_sampled"
     },
     {
       "relationKey": "AFD02M|occupation:cno11:3724",
@@ -599,7 +620,7 @@
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "relation_artifact_discovered",
-      "frontierSufficiency": "pending_live_sample"
+      "frontierSufficiency": "not_sampled"
     },
     {
       "relationKey": "AFD02S|occupation:cno11:3723",
@@ -618,11 +639,13 @@
         "relationCooccurrencePaths": [
           "analysis/fp_coverage_expansion/AFD02S-sources.md"
         ],
-        "programMentionPaths": [],
+        "programMentionPaths": [
+          "analysis/fp_coverage_pilot_results.md"
+        ],
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "relation_artifact_discovered",
-      "frontierSufficiency": "pending_live_sample"
+      "frontierSufficiency": "not_sampled"
     },
     {
       "relationKey": "AFD02SD|occupation:cno11:3723",
@@ -641,11 +664,13 @@
         "relationCooccurrencePaths": [
           "analysis/fp_coverage_expansion/AFD02S-sources.md"
         ],
-        "programMentionPaths": [],
+        "programMentionPaths": [
+          "analysis/fp_coverage_pilot_results.md"
+        ],
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "relation_artifact_discovered",
-      "frontierSufficiency": "pending_live_sample"
+      "frontierSufficiency": "not_sampled"
     },
     {
       "relationKey": "AGA01B|occupation:cno11:5220",
@@ -665,7 +690,6 @@
           "analysis/fp_coverage_batch_parallel_2/proposals/AGA01B.md"
         ],
         "programMentionPaths": [
-          "analysis/contest_evidence_live_sample.json",
           "analysis/contest_evidence_remediation_20260822.md",
           "analysis/fp_coverage_batch_parallel_2/frontier-review.md",
           "analysis/fp_coverage_batch_parallel_2/README.md",
@@ -674,7 +698,7 @@
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "relation_artifact_discovered",
-      "frontierSufficiency": "pending_live_sample"
+      "frontierSufficiency": "not_sampled"
     },
     {
       "relationKey": "AGA01M|occupation:cno11:6110",
@@ -699,12 +723,13 @@
           "analysis/fp_coverage_expansion_candidates.md",
           "analysis/fp_coverage_expansion_results.md",
           "analysis/fp_coverage_expansion/AGA01M-sources.md",
+          "analysis/fp_coverage_pilot_results.md",
           "analysis/fp_coverage_priority_20260821/frontier-review.md"
         ],
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "relation_artifact_discovered",
-      "frontierSufficiency": "pending_live_sample"
+      "frontierSufficiency": "not_sampled"
     },
     {
       "relationKey": "AGA01M|occupation:cno11:6120",
@@ -729,12 +754,13 @@
           "analysis/fp_coverage_expansion_candidates.md",
           "analysis/fp_coverage_expansion_results.md",
           "analysis/fp_coverage_expansion/AGA01M-sources.md",
+          "analysis/fp_coverage_pilot_results.md",
           "analysis/fp_coverage_priority_20260821/frontier-review.md"
         ],
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "relation_artifact_discovered",
-      "frontierSufficiency": "pending_live_sample"
+      "frontierSufficiency": "not_sampled"
     },
     {
       "relationKey": "AGA01M|occupation:cno11:6204",
@@ -759,12 +785,13 @@
           "analysis/fp_coverage_expansion_candidates.md",
           "analysis/fp_coverage_expansion_results.md",
           "analysis/fp_coverage_expansion/AGA01M-sources.md",
+          "analysis/fp_coverage_pilot_results.md",
           "analysis/fp_coverage_priority_20260821/frontier-review.md"
         ],
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "relation_artifact_discovered",
-      "frontierSufficiency": "pending_live_sample"
+      "frontierSufficiency": "not_sampled"
     },
     {
       "relationKey": "AGA01M|occupation:cno11:6205",
@@ -789,12 +816,13 @@
           "analysis/fp_coverage_expansion_candidates.md",
           "analysis/fp_coverage_expansion_results.md",
           "analysis/fp_coverage_expansion/AGA01M-sources.md",
+          "analysis/fp_coverage_pilot_results.md",
           "analysis/fp_coverage_priority_20260821/frontier-review.md"
         ],
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "relation_artifact_discovered",
-      "frontierSufficiency": "pending_live_sample"
+      "frontierSufficiency": "not_sampled"
     },
     {
       "relationKey": "AGA01M|occupation:cno11:6300",
@@ -818,12 +846,13 @@
           "analysis/fp_coverage_expansion_results.md",
           "analysis/fp_coverage_expansion/AGA01M-sources.md",
           "analysis/fp_coverage_expansion/AGA01M.json",
+          "analysis/fp_coverage_pilot_results.md",
           "analysis/fp_coverage_priority_20260821/frontier-review.md"
         ],
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "program_artifact_discovered",
-      "frontierSufficiency": "pending_live_sample"
+      "frontierSufficiency": "not_sampled"
     },
     {
       "relationKey": "AGA01M|occupation:cno11:8321",
@@ -848,12 +877,13 @@
           "analysis/fp_coverage_expansion_candidates.md",
           "analysis/fp_coverage_expansion_results.md",
           "analysis/fp_coverage_expansion/AGA01M-sources.md",
+          "analysis/fp_coverage_pilot_results.md",
           "analysis/fp_coverage_priority_20260821/frontier-review.md"
         ],
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "relation_artifact_discovered",
-      "frontierSufficiency": "pending_live_sample"
+      "frontierSufficiency": "not_sampled"
     },
     {
       "relationKey": "AGA01S|occupation:cno11:5993",
@@ -875,6 +905,7 @@
           "analysis/fp_coverage_batch_parallel_3/frontier-review.md",
           "analysis/fp_coverage_batch_parallel_3/proposals/AGA01S.md",
           "analysis/fp_coverage_batch_parallel_3/README.md",
+          "analysis/fp_coverage_pilot_results.md",
           "analysis/fp_coverage_priority_20260821_wave2/frontier-review.md",
           "analysis/fp_coverage_priority_20260821_wave2/no-match-catalog-revalidation.md",
           "analysis/fp_coverage_priority_20260821_wave2/README.md",
@@ -883,7 +914,7 @@
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "program_artifact_discovered",
-      "frontierSufficiency": "pending_live_sample"
+      "frontierSufficiency": "not_sampled"
     },
     {
       "relationKey": "AGA02M|occupation:cno11:6110",
@@ -901,12 +932,13 @@
       "artifactDiscovery": {
         "relationCooccurrencePaths": [],
         "programMentionPaths": [
+          "analysis/fp_coverage_pilot_results.md",
           "analysis/fp_coverage_priority_20260821/frontier-review.md"
         ],
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "program_artifact_discovered",
-      "frontierSufficiency": "pending_live_sample"
+      "frontierSufficiency": "not_sampled"
     },
     {
       "relationKey": "AGA02M|occupation:cno11:6120",
@@ -924,12 +956,13 @@
       "artifactDiscovery": {
         "relationCooccurrencePaths": [],
         "programMentionPaths": [
+          "analysis/fp_coverage_pilot_results.md",
           "analysis/fp_coverage_priority_20260821/frontier-review.md"
         ],
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "program_artifact_discovered",
-      "frontierSufficiency": "pending_live_sample"
+      "frontierSufficiency": "not_sampled"
     },
     {
       "relationKey": "AGA02M|occupation:cno11:6204",
@@ -947,12 +980,13 @@
       "artifactDiscovery": {
         "relationCooccurrencePaths": [],
         "programMentionPaths": [
+          "analysis/fp_coverage_pilot_results.md",
           "analysis/fp_coverage_priority_20260821/frontier-review.md"
         ],
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "program_artifact_discovered",
-      "frontierSufficiency": "pending_live_sample"
+      "frontierSufficiency": "not_sampled"
     },
     {
       "relationKey": "AGA02M|occupation:cno11:6205",
@@ -970,12 +1004,13 @@
       "artifactDiscovery": {
         "relationCooccurrencePaths": [],
         "programMentionPaths": [
+          "analysis/fp_coverage_pilot_results.md",
           "analysis/fp_coverage_priority_20260821/frontier-review.md"
         ],
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "program_artifact_discovered",
-      "frontierSufficiency": "pending_live_sample"
+      "frontierSufficiency": "not_sampled"
     },
     {
       "relationKey": "AGA02M|occupation:cno11:6300",
@@ -993,12 +1028,13 @@
       "artifactDiscovery": {
         "relationCooccurrencePaths": [],
         "programMentionPaths": [
+          "analysis/fp_coverage_pilot_results.md",
           "analysis/fp_coverage_priority_20260821/frontier-review.md"
         ],
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "program_artifact_discovered",
-      "frontierSufficiency": "pending_live_sample"
+      "frontierSufficiency": "not_sampled"
     },
     {
       "relationKey": "AGA02M|occupation:cno11:8321",
@@ -1016,12 +1052,13 @@
       "artifactDiscovery": {
         "relationCooccurrencePaths": [],
         "programMentionPaths": [
+          "analysis/fp_coverage_pilot_results.md",
           "analysis/fp_coverage_priority_20260821/frontier-review.md"
         ],
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "program_artifact_discovered",
-      "frontierSufficiency": "pending_live_sample"
+      "frontierSufficiency": "not_sampled"
     },
     {
       "relationKey": "AGA03B|occupation:cno11:9511",
@@ -1039,12 +1076,13 @@
       "artifactDiscovery": {
         "relationCooccurrencePaths": [],
         "programMentionPaths": [
+          "analysis/fp_coverage_pilot_results.md",
           "analysis/fp_coverage_priority_20260821/frontier-review.md"
         ],
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "program_artifact_discovered",
-      "frontierSufficiency": "pending_live_sample"
+      "frontierSufficiency": "not_sampled"
     },
     {
       "relationKey": "AGA03B|occupation:cno11:9512",
@@ -1062,12 +1100,13 @@
       "artifactDiscovery": {
         "relationCooccurrencePaths": [],
         "programMentionPaths": [
+          "analysis/fp_coverage_pilot_results.md",
           "analysis/fp_coverage_priority_20260821/frontier-review.md"
         ],
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "program_artifact_discovered",
-      "frontierSufficiency": "pending_live_sample"
+      "frontierSufficiency": "not_sampled"
     },
     {
       "relationKey": "AGA03B|occupation:cno11:9530",
@@ -1085,12 +1124,13 @@
       "artifactDiscovery": {
         "relationCooccurrencePaths": [],
         "programMentionPaths": [
+          "analysis/fp_coverage_pilot_results.md",
           "analysis/fp_coverage_priority_20260821/frontier-review.md"
         ],
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "program_artifact_discovered",
-      "frontierSufficiency": "pending_live_sample"
+      "frontierSufficiency": "not_sampled"
     },
     {
       "relationKey": "AGA03B|occupation:cno11:9543",
@@ -1108,12 +1148,13 @@
       "artifactDiscovery": {
         "relationCooccurrencePaths": [],
         "programMentionPaths": [
+          "analysis/fp_coverage_pilot_results.md",
           "analysis/fp_coverage_priority_20260821/frontier-review.md"
         ],
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "program_artifact_discovered",
-      "frontierSufficiency": "pending_live_sample"
+      "frontierSufficiency": "not_sampled"
     },
     {
       "relationKey": "AGA03M|occupation:cno11:6120",
@@ -1138,6 +1179,7 @@
           "analysis/fp_coverage_expansion_candidates.md",
           "analysis/fp_coverage_expansion_results.md",
           "analysis/fp_coverage_expansion/AGA03M-boundary.md",
+          "analysis/fp_coverage_pilot_results.md",
           "analysis/fp_coverage_wave_20260822/batch-contract.json",
           "analysis/fp_coverage_wave_20260822/frontier-review.md",
           "analysis/fp_coverage_wave_20260822/sources.md"
@@ -1145,7 +1187,7 @@
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "relation_artifact_discovered",
-      "frontierSufficiency": "pending_live_sample"
+      "frontierSufficiency": "not_sampled"
     },
     {
       "relationKey": "AGA03S|occupation:cno11:2640",
@@ -1174,7 +1216,7 @@
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "relation_artifact_discovered",
-      "frontierSufficiency": "pending_live_sample"
+      "frontierSufficiency": "not_sampled"
     },
     {
       "relationKey": "AGA04M|occupation:cno11:6120",
@@ -1206,7 +1248,7 @@
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "relation_artifact_discovered",
-      "frontierSufficiency": "pending_live_sample"
+      "frontierSufficiency": "not_sampled"
     },
     {
       "relationKey": "AGA04M|occupation:cno11:8321",
@@ -1238,7 +1280,7 @@
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "relation_artifact_discovered",
-      "frontierSufficiency": "pending_live_sample"
+      "frontierSufficiency": "not_sampled"
     },
     {
       "relationKey": "ARG01M|occupation:cno11:7621",
@@ -1254,18 +1296,17 @@
         "passes": true
       },
       "artifactDiscovery": {
-        "relationCooccurrencePaths": [
-          "analysis/contest_evidence_live_sample.json"
-        ],
+        "relationCooccurrencePaths": [],
         "programMentionPaths": [
+          "analysis/fp_coverage_pilot_results.md",
           "analysis/fp_coverage_wave_20260822/batch-contract.json",
           "analysis/fp_coverage_wave_20260822/frontier-review.md",
           "analysis/fp_coverage_wave_20260822/sources.md"
         ],
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
-      "evidenceDepth": "relation_artifact_discovered",
-      "frontierSufficiency": "pending_live_sample"
+      "evidenceDepth": "program_artifact_discovered",
+      "frontierSufficiency": "sample_pass"
     },
     {
       "relationKey": "COM01B|occupation:cno11:4121",
@@ -1289,12 +1330,13 @@
           "analysis/fp_coverage_expansion_candidates.json",
           "analysis/fp_coverage_expansion_candidates.md",
           "analysis/fp_coverage_expansion_results.md",
-          "analysis/fp_coverage_expansion/COM01B-sources.md"
+          "analysis/fp_coverage_expansion/COM01B-sources.md",
+          "analysis/fp_coverage_pilot_results.md"
         ],
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "relation_artifact_discovered",
-      "frontierSufficiency": "pending_live_sample"
+      "frontierSufficiency": "not_sampled"
     },
     {
       "relationKey": "COM01B|occupation:cno11:4123",
@@ -1318,12 +1360,13 @@
           "analysis/fp_coverage_expansion_candidates.json",
           "analysis/fp_coverage_expansion_candidates.md",
           "analysis/fp_coverage_expansion_results.md",
-          "analysis/fp_coverage_expansion/COM01B-sources.md"
+          "analysis/fp_coverage_expansion/COM01B-sources.md",
+          "analysis/fp_coverage_pilot_results.md"
         ],
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "relation_artifact_discovered",
-      "frontierSufficiency": "pending_live_sample"
+      "frontierSufficiency": "not_sampled"
     },
     {
       "relationKey": "COM01B|occupation:cno11:5220",
@@ -1347,12 +1390,13 @@
         "programMentionPaths": [
           "analysis/fp_coverage_expansion_candidates.md",
           "analysis/fp_coverage_expansion_results.md",
-          "analysis/fp_coverage_expansion/COM01B-sources.md"
+          "analysis/fp_coverage_expansion/COM01B-sources.md",
+          "analysis/fp_coverage_pilot_results.md"
         ],
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "relation_artifact_discovered",
-      "frontierSufficiency": "pending_live_sample"
+      "frontierSufficiency": "not_sampled"
     },
     {
       "relationKey": "COM01B|occupation:cno11:5492",
@@ -1376,12 +1420,13 @@
           "analysis/fp_coverage_expansion_candidates.json",
           "analysis/fp_coverage_expansion_candidates.md",
           "analysis/fp_coverage_expansion_results.md",
-          "analysis/fp_coverage_expansion/COM01B-sources.md"
+          "analysis/fp_coverage_expansion/COM01B-sources.md",
+          "analysis/fp_coverage_pilot_results.md"
         ],
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "relation_artifact_discovered",
-      "frontierSufficiency": "pending_live_sample"
+      "frontierSufficiency": "not_sampled"
     },
     {
       "relationKey": "COM01B|occupation:cno11:5500",
@@ -1405,12 +1450,13 @@
           "analysis/fp_coverage_expansion_candidates.json",
           "analysis/fp_coverage_expansion_candidates.md",
           "analysis/fp_coverage_expansion_results.md",
-          "analysis/fp_coverage_expansion/COM01B-sources.md"
+          "analysis/fp_coverage_expansion/COM01B-sources.md",
+          "analysis/fp_coverage_pilot_results.md"
         ],
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "relation_artifact_discovered",
-      "frontierSufficiency": "pending_live_sample"
+      "frontierSufficiency": "not_sampled"
     },
     {
       "relationKey": "COM01B|occupation:cno11:8333",
@@ -1434,12 +1480,13 @@
           "analysis/fp_coverage_expansion_candidates.json",
           "analysis/fp_coverage_expansion_candidates.md",
           "analysis/fp_coverage_expansion_results.md",
-          "analysis/fp_coverage_expansion/COM01B-sources.md"
+          "analysis/fp_coverage_expansion/COM01B-sources.md",
+          "analysis/fp_coverage_pilot_results.md"
         ],
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "relation_artifact_discovered",
-      "frontierSufficiency": "pending_live_sample"
+      "frontierSufficiency": "not_sampled"
     },
     {
       "relationKey": "COM01B|occupation:cno11:9820",
@@ -1463,12 +1510,13 @@
           "analysis/fp_coverage_expansion_candidates.json",
           "analysis/fp_coverage_expansion_candidates.md",
           "analysis/fp_coverage_expansion_results.md",
-          "analysis/fp_coverage_expansion/COM01B-sources.md"
+          "analysis/fp_coverage_expansion/COM01B-sources.md",
+          "analysis/fp_coverage_pilot_results.md"
         ],
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "relation_artifact_discovered",
-      "frontierSufficiency": "pending_live_sample"
+      "frontierSufficiency": "not_sampled"
     },
     {
       "relationKey": "COM01M|occupation:cno11:1432",
@@ -1486,7 +1534,6 @@
       "artifactDiscovery": {
         "relationCooccurrencePaths": [],
         "programMentionPaths": [
-          "analysis/contest_evidence_live_sample.json",
           "analysis/contest_evidence_remediation_20260822.md",
           "analysis/ecyl_fp_family_pilot_ranking.md",
           "analysis/fp_coverage_batch_5/README.md",
@@ -1504,7 +1551,7 @@
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "program_artifact_discovered",
-      "frontierSufficiency": "pending_live_sample"
+      "frontierSufficiency": "not_sampled"
     },
     {
       "relationKey": "COM01M|occupation:cno11:3510",
@@ -1521,7 +1568,6 @@
       },
       "artifactDiscovery": {
         "relationCooccurrencePaths": [
-          "analysis/contest_evidence_live_sample.json",
           "analysis/contest_evidence_remediation_20260822.md",
           "analysis/fp_coverage_pilot_results.json"
         ],
@@ -1541,7 +1587,7 @@
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "relation_artifact_discovered",
-      "frontierSufficiency": "pending_live_sample"
+      "frontierSufficiency": "not_sampled"
     },
     {
       "relationKey": "COM01M|occupation:cno11:4424",
@@ -1564,7 +1610,6 @@
           "analysis/matching-evaluation/labels.json"
         ],
         "programMentionPaths": [
-          "analysis/contest_evidence_live_sample.json",
           "analysis/contest_evidence_remediation_20260822.md",
           "analysis/ecyl_fp_family_pilot_ranking.md",
           "analysis/fp_coverage_batch_5/README.md",
@@ -1578,7 +1623,7 @@
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "relation_artifact_discovered",
-      "frontierSufficiency": "pending_live_sample"
+      "frontierSufficiency": "not_sampled"
     },
     {
       "relationKey": "COM01M|occupation:cno11:5420",
@@ -1598,7 +1643,6 @@
           "analysis/fp_coverage_pilot_results.json"
         ],
         "programMentionPaths": [
-          "analysis/contest_evidence_live_sample.json",
           "analysis/contest_evidence_remediation_20260822.md",
           "analysis/ecyl_fp_family_pilot_ranking.md",
           "analysis/fp_coverage_batch_5/README.md",
@@ -1615,7 +1659,7 @@
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "relation_artifact_discovered",
-      "frontierSufficiency": "pending_live_sample"
+      "frontierSufficiency": "not_sampled"
     },
     {
       "relationKey": "COM01M|occupation:cno11:5492",
@@ -1633,7 +1677,6 @@
       "artifactDiscovery": {
         "relationCooccurrencePaths": [],
         "programMentionPaths": [
-          "analysis/contest_evidence_live_sample.json",
           "analysis/contest_evidence_remediation_20260822.md",
           "analysis/ecyl_fp_family_pilot_ranking.md",
           "analysis/fp_coverage_batch_5/README.md",
@@ -1651,7 +1694,7 @@
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "program_artifact_discovered",
-      "frontierSufficiency": "pending_live_sample"
+      "frontierSufficiency": "not_sampled"
     },
     {
       "relationKey": "COM01M|occupation:cno11:5500",
@@ -1671,7 +1714,6 @@
           "analysis/fp_coverage_pilot_results.json"
         ],
         "programMentionPaths": [
-          "analysis/contest_evidence_live_sample.json",
           "analysis/contest_evidence_remediation_20260822.md",
           "analysis/ecyl_fp_family_pilot_ranking.md",
           "analysis/fp_coverage_batch_5/README.md",
@@ -1688,7 +1730,7 @@
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "relation_artifact_discovered",
-      "frontierSufficiency": "pending_live_sample"
+      "frontierSufficiency": "not_sampled"
     },
     {
       "relationKey": "COM01M|occupation:cno11:9820",
@@ -1706,7 +1748,6 @@
       "artifactDiscovery": {
         "relationCooccurrencePaths": [],
         "programMentionPaths": [
-          "analysis/contest_evidence_live_sample.json",
           "analysis/contest_evidence_remediation_20260822.md",
           "analysis/ecyl_fp_family_pilot_ranking.md",
           "analysis/fp_coverage_batch_5/README.md",
@@ -1724,7 +1765,7 @@
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "program_artifact_discovered",
-      "frontierSufficiency": "pending_live_sample"
+      "frontierSufficiency": "not_sampled"
     },
     {
       "relationKey": "COM02E|occupation:cno11:1221",
@@ -1743,12 +1784,13 @@
         "relationCooccurrencePaths": [],
         "programMentionPaths": [
           "analysis/fp_coverage_next_20260821/frontier-review.md",
-          "analysis/fp_coverage_next_20260821/sources.md"
+          "analysis/fp_coverage_next_20260821/sources.md",
+          "analysis/fp_coverage_pilot_results.md"
         ],
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "program_artifact_discovered",
-      "frontierSufficiency": "pending_live_sample"
+      "frontierSufficiency": "not_sampled"
     },
     {
       "relationKey": "COM02E|occupation:cno11:2651",
@@ -1767,12 +1809,13 @@
         "relationCooccurrencePaths": [],
         "programMentionPaths": [
           "analysis/fp_coverage_next_20260821/frontier-review.md",
-          "analysis/fp_coverage_next_20260821/sources.md"
+          "analysis/fp_coverage_next_20260821/sources.md",
+          "analysis/fp_coverage_pilot_results.md"
         ],
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "program_artifact_discovered",
-      "frontierSufficiency": "pending_live_sample"
+      "frontierSufficiency": "not_sampled"
     },
     {
       "relationKey": "COM02M|occupation:cno11:5210",
@@ -1802,7 +1845,7 @@
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "relation_artifact_discovered",
-      "frontierSufficiency": "pending_live_sample"
+      "frontierSufficiency": "not_sampled"
     },
     {
       "relationKey": "COM02M|occupation:cno11:5220",
@@ -1832,7 +1875,7 @@
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "relation_artifact_discovered",
-      "frontierSufficiency": "pending_live_sample"
+      "frontierSufficiency": "not_sampled"
     },
     {
       "relationKey": "COM02S|occupation:cno11:3510",
@@ -1861,7 +1904,7 @@
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "relation_artifact_discovered",
-      "frontierSufficiency": "pending_live_sample"
+      "frontierSufficiency": "not_sampled"
     },
     {
       "relationKey": "COM02S|occupation:cno11:3523",
@@ -1890,7 +1933,7 @@
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "relation_artifact_discovered",
-      "frontierSufficiency": "pending_live_sample"
+      "frontierSufficiency": "not_sampled"
     },
     {
       "relationKey": "COM02S|occupation:cno11:4123",
@@ -1919,7 +1962,7 @@
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "relation_artifact_discovered",
-      "frontierSufficiency": "pending_live_sample"
+      "frontierSufficiency": "not_sampled"
     },
     {
       "relationKey": "COM02S|occupation:cno11:5210",
@@ -1948,7 +1991,7 @@
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "relation_artifact_discovered",
-      "frontierSufficiency": "pending_live_sample"
+      "frontierSufficiency": "not_sampled"
     },
     {
       "relationKey": "COM02SD|occupation:cno11:3510",
@@ -1974,7 +2017,7 @@
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "relation_artifact_discovered",
-      "frontierSufficiency": "pending_live_sample"
+      "frontierSufficiency": "not_sampled"
     },
     {
       "relationKey": "COM02SD|occupation:cno11:3523",
@@ -1999,7 +2042,7 @@
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "program_artifact_discovered",
-      "frontierSufficiency": "pending_live_sample"
+      "frontierSufficiency": "not_sampled"
     },
     {
       "relationKey": "COM02SD|occupation:cno11:4123",
@@ -2025,7 +2068,7 @@
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "relation_artifact_discovered",
-      "frontierSufficiency": "pending_live_sample"
+      "frontierSufficiency": "not_sampled"
     },
     {
       "relationKey": "COM02SD|occupation:cno11:5210",
@@ -2051,7 +2094,7 @@
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "relation_artifact_discovered",
-      "frontierSufficiency": "pending_live_sample"
+      "frontierSufficiency": "not_sampled"
     },
     {
       "relationKey": "COM03S|occupation:cno11:3510",
@@ -2080,7 +2123,7 @@
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "relation_artifact_discovered",
-      "frontierSufficiency": "pending_live_sample"
+      "frontierSufficiency": "not_sampled"
     },
     {
       "relationKey": "COM03S|occupation:cno11:5210",
@@ -2109,7 +2152,7 @@
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "relation_artifact_discovered",
-      "frontierSufficiency": "pending_live_sample"
+      "frontierSufficiency": "not_sampled"
     },
     {
       "relationKey": "COM04S|occupation:cno11:3522",
@@ -2128,11 +2171,13 @@
         "relationCooccurrencePaths": [
           "analysis/fp_coverage_expansion/COM04S-sources.md"
         ],
-        "programMentionPaths": [],
+        "programMentionPaths": [
+          "analysis/fp_coverage_pilot_results.md"
+        ],
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "relation_artifact_discovered",
-      "frontierSufficiency": "pending_live_sample"
+      "frontierSufficiency": "not_sampled"
     },
     {
       "relationKey": "COM04S|occupation:cno11:3523",
@@ -2151,11 +2196,13 @@
         "relationCooccurrencePaths": [
           "analysis/fp_coverage_expansion/COM04S-sources.md"
         ],
-        "programMentionPaths": [],
+        "programMentionPaths": [
+          "analysis/fp_coverage_pilot_results.md"
+        ],
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "relation_artifact_discovered",
-      "frontierSufficiency": "pending_live_sample"
+      "frontierSufficiency": "not_sampled"
     },
     {
       "relationKey": "COM04S|occupation:cno11:4123",
@@ -2174,11 +2221,13 @@
         "relationCooccurrencePaths": [
           "analysis/fp_coverage_expansion/COM04S-sources.md"
         ],
-        "programMentionPaths": [],
+        "programMentionPaths": [
+          "analysis/fp_coverage_pilot_results.md"
+        ],
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "relation_artifact_discovered",
-      "frontierSufficiency": "pending_live_sample"
+      "frontierSufficiency": "not_sampled"
     },
     {
       "relationKey": "COM04SD|occupation:cno11:3522",
@@ -2195,11 +2244,13 @@
       },
       "artifactDiscovery": {
         "relationCooccurrencePaths": [],
-        "programMentionPaths": [],
+        "programMentionPaths": [
+          "analysis/fp_coverage_pilot_results.md"
+        ],
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
-      "evidenceDepth": "common_validator_only",
-      "frontierSufficiency": "pending_live_sample"
+      "evidenceDepth": "program_artifact_discovered",
+      "frontierSufficiency": "not_sampled"
     },
     {
       "relationKey": "COM04SD|occupation:cno11:3523",
@@ -2216,11 +2267,13 @@
       },
       "artifactDiscovery": {
         "relationCooccurrencePaths": [],
-        "programMentionPaths": [],
+        "programMentionPaths": [
+          "analysis/fp_coverage_pilot_results.md"
+        ],
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
-      "evidenceDepth": "common_validator_only",
-      "frontierSufficiency": "pending_live_sample"
+      "evidenceDepth": "program_artifact_discovered",
+      "frontierSufficiency": "not_sampled"
     },
     {
       "relationKey": "COM04SD|occupation:cno11:4123",
@@ -2237,11 +2290,13 @@
       },
       "artifactDiscovery": {
         "relationCooccurrencePaths": [],
-        "programMentionPaths": [],
+        "programMentionPaths": [
+          "analysis/fp_coverage_pilot_results.md"
+        ],
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
-      "evidenceDepth": "common_validator_only",
-      "frontierSufficiency": "pending_live_sample"
+      "evidenceDepth": "program_artifact_discovered",
+      "frontierSufficiency": "not_sampled"
     },
     {
       "relationKey": "ELE01B|occupation:cno11:7510",
@@ -2260,11 +2315,13 @@
         "relationCooccurrencePaths": [
           "analysis/fp_coverage_batch_4/ELE01B.md"
         ],
-        "programMentionPaths": [],
+        "programMentionPaths": [
+          "analysis/fp_coverage_pilot_results.md"
+        ],
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "relation_artifact_discovered",
-      "frontierSufficiency": "pending_live_sample"
+      "frontierSufficiency": "not_sampled"
     },
     {
       "relationKey": "ELE01M|occupation:cno11:7510",
@@ -2281,7 +2338,6 @@
       },
       "artifactDiscovery": {
         "relationCooccurrencePaths": [
-          "analysis/contest_evidence_live_sample.json",
           "analysis/fp_coverage_batch_4/ELE01M.md",
           "analysis/fp_coverage_expansion_candidates.json",
           "analysis/fp_coverage_expansion_results.json",
@@ -2296,7 +2352,7 @@
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "relation_artifact_discovered",
-      "frontierSufficiency": "pending_live_sample"
+      "frontierSufficiency": "sample_pass"
     },
     {
       "relationKey": "ELE01S|occupation:cno11:3123",
@@ -2325,7 +2381,7 @@
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "relation_artifact_discovered",
-      "frontierSufficiency": "pending_live_sample"
+      "frontierSufficiency": "not_sampled"
     },
     {
       "relationKey": "ELE01S|occupation:cno11:7510",
@@ -2354,7 +2410,7 @@
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "relation_artifact_discovered",
-      "frontierSufficiency": "pending_live_sample"
+      "frontierSufficiency": "not_sampled"
     },
     {
       "relationKey": "ELE02B|occupation:cno11:7510",
@@ -2370,18 +2426,17 @@
         "passes": true
       },
       "artifactDiscovery": {
-        "relationCooccurrencePaths": [
-          "analysis/contest_evidence_live_sample.json"
-        ],
+        "relationCooccurrencePaths": [],
         "programMentionPaths": [
           "analysis/contest_evidence_remediation_20260822.md",
           "analysis/fp_coverage_next_20260821/frontier-review.md",
-          "analysis/fp_coverage_next_20260821/sources.md"
+          "analysis/fp_coverage_next_20260821/sources.md",
+          "analysis/fp_coverage_pilot_results.md"
         ],
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
-      "evidenceDepth": "relation_artifact_discovered",
-      "frontierSufficiency": "pending_live_sample"
+      "evidenceDepth": "program_artifact_discovered",
+      "frontierSufficiency": "not_sampled"
     },
     {
       "relationKey": "ELE02B|occupation:cno11:7533",
@@ -2399,15 +2454,15 @@
       "artifactDiscovery": {
         "relationCooccurrencePaths": [],
         "programMentionPaths": [
-          "analysis/contest_evidence_live_sample.json",
           "analysis/contest_evidence_remediation_20260822.md",
           "analysis/fp_coverage_next_20260821/frontier-review.md",
-          "analysis/fp_coverage_next_20260821/sources.md"
+          "analysis/fp_coverage_next_20260821/sources.md",
+          "analysis/fp_coverage_pilot_results.md"
         ],
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "program_artifact_discovered",
-      "frontierSufficiency": "pending_live_sample"
+      "frontierSufficiency": "not_sampled"
     },
     {
       "relationKey": "ELE02B|occupation:cno11:9700",
@@ -2424,17 +2479,17 @@
       },
       "artifactDiscovery": {
         "relationCooccurrencePaths": [
-          "analysis/contest_evidence_live_sample.json",
           "analysis/contest_evidence_remediation_20260822.md"
         ],
         "programMentionPaths": [
           "analysis/fp_coverage_next_20260821/frontier-review.md",
-          "analysis/fp_coverage_next_20260821/sources.md"
+          "analysis/fp_coverage_next_20260821/sources.md",
+          "analysis/fp_coverage_pilot_results.md"
         ],
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "relation_artifact_discovered",
-      "frontierSufficiency": "pending_live_sample"
+      "frontierSufficiency": "sample_pass"
     },
     {
       "relationKey": "ELE02M|occupation:cno11:7533",
@@ -2452,12 +2507,13 @@
       "artifactDiscovery": {
         "relationCooccurrencePaths": [],
         "programMentionPaths": [
-          "analysis/fp_coverage_batch_5/README.md"
+          "analysis/fp_coverage_batch_5/README.md",
+          "analysis/fp_coverage_pilot_results.md"
         ],
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "program_artifact_discovered",
-      "frontierSufficiency": "pending_live_sample"
+      "frontierSufficiency": "not_sampled"
     },
     {
       "relationKey": "ELE02S|occupation:cno11:3124",
@@ -2485,7 +2541,7 @@
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "program_artifact_discovered",
-      "frontierSufficiency": "pending_live_sample"
+      "frontierSufficiency": "not_sampled"
     },
     {
       "relationKey": "ELE02S|occupation:cno11:3811",
@@ -2514,7 +2570,7 @@
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "relation_artifact_discovered",
-      "frontierSufficiency": "pending_live_sample"
+      "frontierSufficiency": "not_sampled"
     },
     {
       "relationKey": "ELE02S|occupation:cno11:3813",
@@ -2542,7 +2598,7 @@
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "program_artifact_discovered",
-      "frontierSufficiency": "pending_live_sample"
+      "frontierSufficiency": "not_sampled"
     },
     {
       "relationKey": "ELE02S|occupation:cno11:7533",
@@ -2570,7 +2626,7 @@
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "program_artifact_discovered",
-      "frontierSufficiency": "pending_live_sample"
+      "frontierSufficiency": "not_sampled"
     },
     {
       "relationKey": "ELE03S|occupation:cno11:7531",
@@ -2594,12 +2650,13 @@
         "programMentionPaths": [
           "analysis/fp_coverage_expansion_candidates.md",
           "analysis/fp_coverage_expansion_results.md",
-          "analysis/fp_coverage_expansion/ELE03S-boundary.md"
+          "analysis/fp_coverage_expansion/ELE03S-boundary.md",
+          "analysis/fp_coverage_pilot_results.md"
         ],
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "relation_artifact_discovered",
-      "frontierSufficiency": "pending_live_sample"
+      "frontierSufficiency": "not_sampled"
     },
     {
       "relationKey": "ELE04S|occupation:cno11:3123",
@@ -2617,12 +2674,13 @@
       "artifactDiscovery": {
         "relationCooccurrencePaths": [],
         "programMentionPaths": [
-          "analysis/fp_coverage_expansion/ELE04S-sources.md"
+          "analysis/fp_coverage_expansion/ELE04S-sources.md",
+          "analysis/fp_coverage_pilot_results.md"
         ],
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "program_artifact_discovered",
-      "frontierSufficiency": "pending_live_sample"
+      "frontierSufficiency": "not_sampled"
     },
     {
       "relationKey": "ELE04S|occupation:cno11:3124",
@@ -2640,12 +2698,13 @@
       "artifactDiscovery": {
         "relationCooccurrencePaths": [],
         "programMentionPaths": [
-          "analysis/fp_coverage_expansion/ELE04S-sources.md"
+          "analysis/fp_coverage_expansion/ELE04S-sources.md",
+          "analysis/fp_coverage_pilot_results.md"
         ],
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "program_artifact_discovered",
-      "frontierSufficiency": "pending_live_sample"
+      "frontierSufficiency": "not_sampled"
     },
     {
       "relationKey": "ELE04S|occupation:cno11:3129",
@@ -2663,12 +2722,13 @@
       "artifactDiscovery": {
         "relationCooccurrencePaths": [],
         "programMentionPaths": [
-          "analysis/fp_coverage_expansion/ELE04S-sources.md"
+          "analysis/fp_coverage_expansion/ELE04S-sources.md",
+          "analysis/fp_coverage_pilot_results.md"
         ],
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "program_artifact_discovered",
-      "frontierSufficiency": "pending_live_sample"
+      "frontierSufficiency": "not_sampled"
     },
     {
       "relationKey": "ELE04S|occupation:cno11:3139",
@@ -2686,12 +2746,13 @@
       "artifactDiscovery": {
         "relationCooccurrencePaths": [],
         "programMentionPaths": [
-          "analysis/fp_coverage_expansion/ELE04S-sources.md"
+          "analysis/fp_coverage_expansion/ELE04S-sources.md",
+          "analysis/fp_coverage_pilot_results.md"
         ],
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "program_artifact_discovered",
-      "frontierSufficiency": "pending_live_sample"
+      "frontierSufficiency": "not_sampled"
     },
     {
       "relationKey": "ELE04S|occupation:cno11:3209",
@@ -2709,12 +2770,13 @@
       "artifactDiscovery": {
         "relationCooccurrencePaths": [],
         "programMentionPaths": [
-          "analysis/fp_coverage_expansion/ELE04S-sources.md"
+          "analysis/fp_coverage_expansion/ELE04S-sources.md",
+          "analysis/fp_coverage_pilot_results.md"
         ],
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "program_artifact_discovered",
-      "frontierSufficiency": "pending_live_sample"
+      "frontierSufficiency": "not_sampled"
     },
     {
       "relationKey": "ELE04S|occupation:cno11:7521",
@@ -2732,12 +2794,13 @@
       "artifactDiscovery": {
         "relationCooccurrencePaths": [],
         "programMentionPaths": [
-          "analysis/fp_coverage_expansion/ELE04S-sources.md"
+          "analysis/fp_coverage_expansion/ELE04S-sources.md",
+          "analysis/fp_coverage_pilot_results.md"
         ],
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "program_artifact_discovered",
-      "frontierSufficiency": "pending_live_sample"
+      "frontierSufficiency": "not_sampled"
     },
     {
       "relationKey": "ELE05S|occupation:cno11:3125",
@@ -2755,6 +2818,7 @@
       "artifactDiscovery": {
         "relationCooccurrencePaths": [],
         "programMentionPaths": [
+          "analysis/fp_coverage_pilot_results.md",
           "analysis/fp_coverage_wave_20260822/batch-contract.json",
           "analysis/fp_coverage_wave_20260822/frontier-review.md",
           "analysis/fp_coverage_wave_20260822/sources.md"
@@ -2762,7 +2826,7 @@
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "program_artifact_discovered",
-      "frontierSufficiency": "pending_live_sample"
+      "frontierSufficiency": "not_sampled"
     },
     {
       "relationKey": "ELE05S|occupation:cno11:7532",
@@ -2780,6 +2844,7 @@
       "artifactDiscovery": {
         "relationCooccurrencePaths": [],
         "programMentionPaths": [
+          "analysis/fp_coverage_pilot_results.md",
           "analysis/fp_coverage_wave_20260822/batch-contract.json",
           "analysis/fp_coverage_wave_20260822/frontier-review.md",
           "analysis/fp_coverage_wave_20260822/sources.md"
@@ -2787,7 +2852,7 @@
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "program_artifact_discovered",
-      "frontierSufficiency": "pending_live_sample"
+      "frontierSufficiency": "not_sampled"
     },
     {
       "relationKey": "ENA02S|occupation:cno11:3131",
@@ -2805,6 +2870,7 @@
       "artifactDiscovery": {
         "relationCooccurrencePaths": [],
         "programMentionPaths": [
+          "analysis/fp_coverage_pilot_results.md",
           "analysis/fp_coverage_wave_20260822/batch-contract.json",
           "analysis/fp_coverage_wave_20260822/frontier-review.md",
           "analysis/fp_coverage_wave_20260822/sources.md"
@@ -2812,7 +2878,7 @@
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "program_artifact_discovered",
-      "frontierSufficiency": "pending_live_sample"
+      "frontierSufficiency": "not_sampled"
     },
     {
       "relationKey": "ENA03S|occupation:cno11:3123",
@@ -2843,7 +2909,7 @@
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "relation_artifact_discovered",
-      "frontierSufficiency": "pending_live_sample"
+      "frontierSufficiency": "not_sampled"
     },
     {
       "relationKey": "ENA03S|occupation:cno11:7294",
@@ -2874,7 +2940,7 @@
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "relation_artifact_discovered",
-      "frontierSufficiency": "pending_live_sample"
+      "frontierSufficiency": "not_sampled"
     },
     {
       "relationKey": "ENA04S|occupation:cno11:3132",
@@ -2892,6 +2958,7 @@
       "artifactDiscovery": {
         "relationCooccurrencePaths": [],
         "programMentionPaths": [
+          "analysis/fp_coverage_pilot_results.md",
           "analysis/fp_coverage_wave_20260822/batch-contract.json",
           "analysis/fp_coverage_wave_20260822/frontier-review.md",
           "analysis/fp_coverage_wave_20260822/sources.md"
@@ -2899,7 +2966,7 @@
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "program_artifact_discovered",
-      "frontierSufficiency": "pending_live_sample"
+      "frontierSufficiency": "not_sampled"
     },
     {
       "relationKey": "EOC01M|occupation:cno11:7111",
@@ -2923,7 +2990,6 @@
           "analysis/matching-evaluation/labels.json"
         ],
         "programMentionPaths": [
-          "analysis/contest_evidence_live_sample.json",
           "analysis/ecyl_fp_family_pilot_ranking.md",
           "analysis/fp_coverage_expansion_results.json",
           "analysis/fp_coverage_pilot_results.md",
@@ -2938,7 +3004,7 @@
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "relation_artifact_discovered",
-      "frontierSufficiency": "pending_live_sample"
+      "frontierSufficiency": "not_sampled"
     },
     {
       "relationKey": "EOC01M|occupation:cno11:7121",
@@ -2955,7 +3021,6 @@
       },
       "artifactDiscovery": {
         "relationCooccurrencePaths": [
-          "analysis/contest_evidence_live_sample.json",
           "analysis/fp_coverage_pilot_results.json",
           "analysis/fp_marginal_alias_review.json",
           "analysis/fp_offer_alias_candidates.json",
@@ -2977,7 +3042,7 @@
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "relation_artifact_discovered",
-      "frontierSufficiency": "pending_live_sample"
+      "frontierSufficiency": "sample_pass"
     },
     {
       "relationKey": "EOC01M|occupation:cno11:7193",
@@ -2994,7 +3059,6 @@
       },
       "artifactDiscovery": {
         "relationCooccurrencePaths": [
-          "analysis/contest_evidence_live_sample.json",
           "analysis/fp_coverage_pilot_results.json",
           "analysis/fp_official_alias_pass/EOC01M.json"
         ],
@@ -3016,7 +3080,7 @@
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "relation_artifact_discovered",
-      "frontierSufficiency": "pending_live_sample"
+      "frontierSufficiency": "sample_pass"
     },
     {
       "relationKey": "EOC01M|occupation:cno11:7240",
@@ -3037,7 +3101,6 @@
           "analysis/fp_official_alias_pass/EOC01M.json"
         ],
         "programMentionPaths": [
-          "analysis/contest_evidence_live_sample.json",
           "analysis/ecyl_fp_family_pilot_ranking.md",
           "analysis/fp_coverage_expansion_results.json",
           "analysis/fp_coverage_expansion/README.md",
@@ -3055,7 +3118,7 @@
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "relation_artifact_discovered",
-      "frontierSufficiency": "pending_live_sample"
+      "frontierSufficiency": "not_sampled"
     },
     {
       "relationKey": "EOC01M|occupation:cno11:7291",
@@ -3076,7 +3139,6 @@
           "analysis/fp_official_alias_pass/EOC01M.json"
         ],
         "programMentionPaths": [
-          "analysis/contest_evidence_live_sample.json",
           "analysis/ecyl_fp_family_pilot_ranking.md",
           "analysis/fp_coverage_expansion_results.json",
           "analysis/fp_coverage_expansion/README.md",
@@ -3094,7 +3156,7 @@
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "relation_artifact_discovered",
-      "frontierSufficiency": "pending_live_sample"
+      "frontierSufficiency": "not_sampled"
     },
     {
       "relationKey": "EOC02S|occupation:cno11:3129",
@@ -3111,7 +3173,6 @@
       },
       "artifactDiscovery": {
         "relationCooccurrencePaths": [
-          "analysis/contest_evidence_live_sample.json",
           "analysis/contest_evidence_remediation_20260822.md",
           "analysis/fp_coverage_batch_parallel_5/proposals/EOC02S.md",
           "analysis/fp_coverage_batch_parallel_5/repair-contract.json",
@@ -3128,7 +3189,7 @@
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "relation_artifact_discovered",
-      "frontierSufficiency": "pending_live_sample"
+      "frontierSufficiency": "not_sampled"
     },
     {
       "relationKey": "FME01B|occupation:cno11:7221",
@@ -3147,11 +3208,13 @@
         "relationCooccurrencePaths": [
           "analysis/fp_coverage_expansion/FME01B-sources.md"
         ],
-        "programMentionPaths": [],
+        "programMentionPaths": [
+          "analysis/fp_coverage_pilot_results.md"
+        ],
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "relation_artifact_discovered",
-      "frontierSufficiency": "pending_live_sample"
+      "frontierSufficiency": "not_sampled"
     },
     {
       "relationKey": "FME01B|occupation:cno11:9700",
@@ -3170,11 +3233,13 @@
         "relationCooccurrencePaths": [
           "analysis/fp_coverage_expansion/FME01B-sources.md"
         ],
-        "programMentionPaths": [],
+        "programMentionPaths": [
+          "analysis/fp_coverage_pilot_results.md"
+        ],
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "relation_artifact_discovered",
-      "frontierSufficiency": "pending_live_sample"
+      "frontierSufficiency": "not_sampled"
     },
     {
       "relationKey": "FME01M|occupation:cno11:7322",
@@ -3198,12 +3263,13 @@
         "programMentionPaths": [
           "analysis/fp_coverage_expansion_candidates.md",
           "analysis/fp_coverage_expansion_results.md",
-          "analysis/fp_coverage_expansion/FME01M-boundary.md"
+          "analysis/fp_coverage_expansion/FME01M-boundary.md",
+          "analysis/fp_coverage_pilot_results.md"
         ],
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "relation_artifact_discovered",
-      "frontierSufficiency": "pending_live_sample"
+      "frontierSufficiency": "not_sampled"
     },
     {
       "relationKey": "FME01M|occupation:cno11:7323",
@@ -3227,12 +3293,13 @@
           "analysis/fp_coverage_expansion_candidates.json",
           "analysis/fp_coverage_expansion_candidates.md",
           "analysis/fp_coverage_expansion_results.md",
-          "analysis/fp_coverage_expansion/FME01M-boundary.md"
+          "analysis/fp_coverage_expansion/FME01M-boundary.md",
+          "analysis/fp_coverage_pilot_results.md"
         ],
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "relation_artifact_discovered",
-      "frontierSufficiency": "pending_live_sample"
+      "frontierSufficiency": "not_sampled"
     },
     {
       "relationKey": "FME01M|occupation:cno11:7324",
@@ -3256,12 +3323,13 @@
           "analysis/fp_coverage_expansion_candidates.json",
           "analysis/fp_coverage_expansion_candidates.md",
           "analysis/fp_coverage_expansion_results.md",
-          "analysis/fp_coverage_expansion/FME01M-boundary.md"
+          "analysis/fp_coverage_expansion/FME01M-boundary.md",
+          "analysis/fp_coverage_pilot_results.md"
         ],
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "relation_artifact_discovered",
-      "frontierSufficiency": "pending_live_sample"
+      "frontierSufficiency": "not_sampled"
     },
     {
       "relationKey": "FME01S|occupation:cno11:3126",
@@ -3292,7 +3360,7 @@
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "relation_artifact_discovered",
-      "frontierSufficiency": "pending_live_sample"
+      "frontierSufficiency": "not_sampled"
     },
     {
       "relationKey": "FME02B|occupation:cno11:7132",
@@ -3312,7 +3380,6 @@
           "analysis/fp_coverage_batch_parallel_4/proposals/FME02B.md"
         ],
         "programMentionPaths": [
-          "analysis/contest_evidence_live_sample.json",
           "analysis/contest_evidence_remediation_20260822.md",
           "analysis/fp_coverage_batch_parallel_4/batch-contract.json",
           "analysis/fp_coverage_batch_parallel_4/frontier-review.md",
@@ -3325,7 +3392,7 @@
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "relation_artifact_discovered",
-      "frontierSufficiency": "pending_live_sample"
+      "frontierSufficiency": "not_sampled"
     },
     {
       "relationKey": "FME02B|occupation:cno11:7312",
@@ -3345,7 +3412,6 @@
           "analysis/fp_coverage_batch_parallel_4/proposals/FME02B.md"
         ],
         "programMentionPaths": [
-          "analysis/contest_evidence_live_sample.json",
           "analysis/contest_evidence_remediation_20260822.md",
           "analysis/fp_coverage_batch_parallel_4/batch-contract.json",
           "analysis/fp_coverage_batch_parallel_4/frontier-review.md",
@@ -3358,7 +3424,7 @@
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "relation_artifact_discovered",
-      "frontierSufficiency": "pending_live_sample"
+      "frontierSufficiency": "not_sampled"
     },
     {
       "relationKey": "FME02B|occupation:cno11:8202",
@@ -3378,7 +3444,6 @@
           "analysis/fp_coverage_batch_parallel_4/proposals/FME02B.md"
         ],
         "programMentionPaths": [
-          "analysis/contest_evidence_live_sample.json",
           "analysis/contest_evidence_remediation_20260822.md",
           "analysis/fp_coverage_batch_parallel_4/batch-contract.json",
           "analysis/fp_coverage_batch_parallel_4/frontier-review.md",
@@ -3391,7 +3456,7 @@
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "relation_artifact_discovered",
-      "frontierSufficiency": "pending_live_sample"
+      "frontierSufficiency": "not_sampled"
     },
     {
       "relationKey": "FME02B|occupation:cno11:9700",
@@ -3408,7 +3473,6 @@
       },
       "artifactDiscovery": {
         "relationCooccurrencePaths": [
-          "analysis/contest_evidence_live_sample.json",
           "analysis/contest_evidence_remediation_20260822.md",
           "analysis/fp_coverage_batch_parallel_4/proposals/FME02B.md",
           "analysis/fp_offer_alias_candidates.json",
@@ -3424,7 +3488,7 @@
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "relation_artifact_discovered",
-      "frontierSufficiency": "pending_live_sample"
+      "frontierSufficiency": "sample_pass"
     },
     {
       "relationKey": "FME02M|occupation:cno11:7132",
@@ -3449,6 +3513,7 @@
           "analysis/fp_coverage_expansion_candidates.md",
           "analysis/fp_coverage_expansion_results.md",
           "analysis/fp_coverage_expansion/FME02M-sources.md",
+          "analysis/fp_coverage_pilot_results.md",
           "analysis/fp_marginal_alias_impact.json",
           "analysis/fp_marginal_alias_impact.md",
           "analysis/fp_marginal_alias_review.json"
@@ -3456,7 +3521,7 @@
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "relation_artifact_discovered",
-      "frontierSufficiency": "pending_live_sample"
+      "frontierSufficiency": "not_sampled"
     },
     {
       "relationKey": "FME02M|occupation:cno11:7312",
@@ -3482,13 +3547,14 @@
           "analysis/fp_coverage_expansion_candidates.md",
           "analysis/fp_coverage_expansion_results.md",
           "analysis/fp_coverage_expansion/FME02M-sources.md",
+          "analysis/fp_coverage_pilot_results.md",
           "analysis/fp_marginal_alias_impact.json",
           "analysis/fp_marginal_alias_impact.md"
         ],
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "relation_artifact_discovered",
-      "frontierSufficiency": "pending_live_sample"
+      "frontierSufficiency": "not_sampled"
     },
     {
       "relationKey": "FME02M|occupation:cno11:7313",
@@ -3514,13 +3580,14 @@
           "analysis/fp_coverage_expansion_candidates.md",
           "analysis/fp_coverage_expansion_results.md",
           "analysis/fp_coverage_expansion/FME02M-sources.md",
+          "analysis/fp_coverage_pilot_results.md",
           "analysis/fp_marginal_alias_impact.json",
           "analysis/fp_marginal_alias_impact.md"
         ],
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "relation_artifact_discovered",
-      "frontierSufficiency": "pending_live_sample"
+      "frontierSufficiency": "not_sampled"
     },
     {
       "relationKey": "FME02M|occupation:cno11:7314",
@@ -3545,6 +3612,7 @@
           "analysis/fp_coverage_expansion_candidates.md",
           "analysis/fp_coverage_expansion_results.md",
           "analysis/fp_coverage_expansion/FME02M-sources.md",
+          "analysis/fp_coverage_pilot_results.md",
           "analysis/fp_marginal_alias_impact.json",
           "analysis/fp_marginal_alias_impact.md",
           "analysis/fp_marginal_alias_review.json"
@@ -3552,7 +3620,7 @@
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "relation_artifact_discovered",
-      "frontierSufficiency": "pending_live_sample"
+      "frontierSufficiency": "not_sampled"
     },
     {
       "relationKey": "FME02S|occupation:cno11:7314",
@@ -3583,7 +3651,7 @@
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "relation_artifact_discovered",
-      "frontierSufficiency": "pending_live_sample"
+      "frontierSufficiency": "not_sampled"
     },
     {
       "relationKey": "FME03S|occupation:cno11:3126",
@@ -3600,11 +3668,13 @@
       },
       "artifactDiscovery": {
         "relationCooccurrencePaths": [],
-        "programMentionPaths": [],
+        "programMentionPaths": [
+          "analysis/fp_coverage_pilot_results.md"
+        ],
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
-      "evidenceDepth": "common_validator_only",
-      "frontierSufficiency": "pending_live_sample"
+      "evidenceDepth": "program_artifact_discovered",
+      "frontierSufficiency": "not_sampled"
     },
     {
       "relationKey": "HOT01B|occupation:cno11:9310",
@@ -3623,11 +3693,13 @@
         "relationCooccurrencePaths": [
           "analysis/fp_coverage_batch_4/HOT01B.md"
         ],
-        "programMentionPaths": [],
+        "programMentionPaths": [
+          "analysis/fp_coverage_pilot_results.md"
+        ],
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "relation_artifact_discovered",
-      "frontierSufficiency": "pending_live_sample"
+      "frontierSufficiency": "not_sampled"
     },
     {
       "relationKey": "HOT01M|occupation:cno11:5110",
@@ -3661,7 +3733,7 @@
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "relation_artifact_discovered",
-      "frontierSufficiency": "pending_live_sample"
+      "frontierSufficiency": "not_sampled"
     },
     {
       "relationKey": "HOT01S|occupation:cno11:3510",
@@ -3690,7 +3762,7 @@
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "relation_artifact_discovered",
-      "frontierSufficiency": "pending_live_sample"
+      "frontierSufficiency": "not_sampled"
     },
     {
       "relationKey": "HOT02M|occupation:cno11:4121",
@@ -3716,7 +3788,7 @@
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "program_artifact_discovered",
-      "frontierSufficiency": "pending_live_sample"
+      "frontierSufficiency": "not_sampled"
     },
     {
       "relationKey": "HOT02M|occupation:cno11:5120",
@@ -3742,7 +3814,7 @@
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "program_artifact_discovered",
-      "frontierSufficiency": "pending_live_sample"
+      "frontierSufficiency": "not_sampled"
     },
     {
       "relationKey": "HOT02S|occupation:cno11:4123",
@@ -3760,13 +3832,13 @@
       "artifactDiscovery": {
         "relationCooccurrencePaths": [],
         "programMentionPaths": [
-          "analysis/contest_evidence_live_sample.json",
-          "analysis/contest_evidence_remediation_20260822.md"
+          "analysis/contest_evidence_remediation_20260822.md",
+          "analysis/fp_coverage_pilot_results.md"
         ],
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "program_artifact_discovered",
-      "frontierSufficiency": "pending_live_sample"
+      "frontierSufficiency": "not_sampled"
     },
     {
       "relationKey": "HOT02S|occupation:cno11:4411",
@@ -3784,13 +3856,13 @@
       "artifactDiscovery": {
         "relationCooccurrencePaths": [],
         "programMentionPaths": [
-          "analysis/contest_evidence_live_sample.json",
-          "analysis/contest_evidence_remediation_20260822.md"
+          "analysis/contest_evidence_remediation_20260822.md",
+          "analysis/fp_coverage_pilot_results.md"
         ],
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "program_artifact_discovered",
-      "frontierSufficiency": "pending_live_sample"
+      "frontierSufficiency": "not_sampled"
     },
     {
       "relationKey": "HOT02S|occupation:cno11:5492",
@@ -3808,13 +3880,13 @@
       "artifactDiscovery": {
         "relationCooccurrencePaths": [],
         "programMentionPaths": [
-          "analysis/contest_evidence_live_sample.json",
-          "analysis/contest_evidence_remediation_20260822.md"
+          "analysis/contest_evidence_remediation_20260822.md",
+          "analysis/fp_coverage_pilot_results.md"
         ],
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "program_artifact_discovered",
-      "frontierSufficiency": "pending_live_sample"
+      "frontierSufficiency": "not_sampled"
     },
     {
       "relationKey": "HOT03S|occupation:cno11:4123",
@@ -3843,7 +3915,7 @@
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "relation_artifact_discovered",
-      "frontierSufficiency": "pending_live_sample"
+      "frontierSufficiency": "not_sampled"
     },
     {
       "relationKey": "HOT03S|occupation:cno11:4411",
@@ -3872,7 +3944,7 @@
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "relation_artifact_discovered",
-      "frontierSufficiency": "pending_live_sample"
+      "frontierSufficiency": "not_sampled"
     },
     {
       "relationKey": "HOT04S|occupation:cno11:5110",
@@ -3894,13 +3966,14 @@
         "programMentionPaths": [
           "analysis/fp_coverage_batch_parallel/frontier-review.md",
           "analysis/fp_coverage_batch_parallel/README.md",
+          "analysis/fp_coverage_pilot_results.md",
           "analysis/fp_coverage_research_queue.json",
           "analysis/fp_coverage_research_queue.md"
         ],
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "relation_artifact_discovered",
-      "frontierSufficiency": "pending_live_sample"
+      "frontierSufficiency": "not_sampled"
     },
     {
       "relationKey": "HOT05S|occupation:cno11:3522",
@@ -3929,7 +4002,7 @@
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "relation_artifact_discovered",
-      "frontierSufficiency": "pending_live_sample"
+      "frontierSufficiency": "not_sampled"
     },
     {
       "relationKey": "IFC01B|occupation:cno11:7533",
@@ -3947,12 +4020,13 @@
       "artifactDiscovery": {
         "relationCooccurrencePaths": [],
         "programMentionPaths": [
-          "analysis/fp_coverage_batch_5/README.md"
+          "analysis/fp_coverage_batch_5/README.md",
+          "analysis/fp_coverage_pilot_results.md"
         ],
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "program_artifact_discovered",
-      "frontierSufficiency": "pending_live_sample"
+      "frontierSufficiency": "not_sampled"
     },
     {
       "relationKey": "IFC01B|occupation:cno11:8202",
@@ -3970,12 +4044,13 @@
       "artifactDiscovery": {
         "relationCooccurrencePaths": [],
         "programMentionPaths": [
-          "analysis/fp_coverage_batch_5/README.md"
+          "analysis/fp_coverage_batch_5/README.md",
+          "analysis/fp_coverage_pilot_results.md"
         ],
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "program_artifact_discovered",
-      "frontierSufficiency": "pending_live_sample"
+      "frontierSufficiency": "not_sampled"
     },
     {
       "relationKey": "IFC01MD|occupation:cno11:3812",
@@ -3992,7 +4067,6 @@
       },
       "artifactDiscovery": {
         "relationCooccurrencePaths": [
-          "analysis/contest_evidence_live_sample.json",
           "analysis/fp_coverage_batch_3/IFC01M.md",
           "analysis/fp_marginal_alias_review.json",
           "analysis/fp_offer_alias_candidates.json",
@@ -4006,7 +4080,7 @@
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "relation_artifact_discovered",
-      "frontierSufficiency": "pending_live_sample"
+      "frontierSufficiency": "sample_pass"
     },
     {
       "relationKey": "IFC01S|occupation:cno11:2721",
@@ -4026,6 +4100,7 @@
           "analysis/fp_coverage_batch_4/IFC01S.md"
         ],
         "programMentionPaths": [
+          "analysis/fp_coverage_pilot_results.md",
           "analysis/fp_marginal_alias_impact.json",
           "analysis/fp_marginal_alias_impact.md",
           "analysis/fp_marginal_alias_review.json"
@@ -4033,7 +4108,7 @@
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "relation_artifact_discovered",
-      "frontierSufficiency": "pending_live_sample"
+      "frontierSufficiency": "not_sampled"
     },
     {
       "relationKey": "IFC01S|occupation:cno11:2722",
@@ -4053,6 +4128,7 @@
           "analysis/fp_coverage_batch_4/IFC01S.md"
         ],
         "programMentionPaths": [
+          "analysis/fp_coverage_pilot_results.md",
           "analysis/fp_marginal_alias_impact.json",
           "analysis/fp_marginal_alias_impact.md",
           "analysis/fp_marginal_alias_review.json"
@@ -4060,7 +4136,7 @@
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "relation_artifact_discovered",
-      "frontierSufficiency": "pending_live_sample"
+      "frontierSufficiency": "not_sampled"
     },
     {
       "relationKey": "IFC01S|occupation:cno11:3812",
@@ -4081,13 +4157,14 @@
           "analysis/fp_marginal_alias_review.json"
         ],
         "programMentionPaths": [
+          "analysis/fp_coverage_pilot_results.md",
           "analysis/fp_marginal_alias_impact.json",
           "analysis/fp_marginal_alias_impact.md"
         ],
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "relation_artifact_discovered",
-      "frontierSufficiency": "pending_live_sample"
+      "frontierSufficiency": "not_sampled"
     },
     {
       "relationKey": "IFC01S|occupation:cno11:3813",
@@ -4107,6 +4184,7 @@
           "analysis/fp_coverage_batch_4/IFC01S.md"
         ],
         "programMentionPaths": [
+          "analysis/fp_coverage_pilot_results.md",
           "analysis/fp_marginal_alias_impact.json",
           "analysis/fp_marginal_alias_impact.md",
           "analysis/fp_marginal_alias_review.json"
@@ -4114,7 +4192,7 @@
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "relation_artifact_discovered",
-      "frontierSufficiency": "pending_live_sample"
+      "frontierSufficiency": "not_sampled"
     },
     {
       "relationKey": "IFC01S|occupation:cno11:3814",
@@ -4134,6 +4212,7 @@
           "analysis/fp_coverage_batch_4/IFC01S.md"
         ],
         "programMentionPaths": [
+          "analysis/fp_coverage_pilot_results.md",
           "analysis/fp_marginal_alias_impact.json",
           "analysis/fp_marginal_alias_impact.md",
           "analysis/fp_marginal_alias_review.json"
@@ -4141,7 +4220,7 @@
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "relation_artifact_discovered",
-      "frontierSufficiency": "pending_live_sample"
+      "frontierSufficiency": "not_sampled"
     },
     {
       "relationKey": "IFC01SD|occupation:cno11:2721",
@@ -4161,6 +4240,7 @@
           "analysis/fp_coverage_batch_4/IFC01S.md"
         ],
         "programMentionPaths": [
+          "analysis/fp_coverage_pilot_results.md",
           "analysis/fp_marginal_alias_impact.json",
           "analysis/fp_marginal_alias_impact.md",
           "analysis/fp_marginal_alias_review.json"
@@ -4168,7 +4248,7 @@
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "relation_artifact_discovered",
-      "frontierSufficiency": "pending_live_sample"
+      "frontierSufficiency": "not_sampled"
     },
     {
       "relationKey": "IFC01SD|occupation:cno11:2722",
@@ -4188,6 +4268,7 @@
           "analysis/fp_coverage_batch_4/IFC01S.md"
         ],
         "programMentionPaths": [
+          "analysis/fp_coverage_pilot_results.md",
           "analysis/fp_marginal_alias_impact.json",
           "analysis/fp_marginal_alias_impact.md",
           "analysis/fp_marginal_alias_review.json"
@@ -4195,7 +4276,7 @@
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "relation_artifact_discovered",
-      "frontierSufficiency": "pending_live_sample"
+      "frontierSufficiency": "not_sampled"
     },
     {
       "relationKey": "IFC01SD|occupation:cno11:3812",
@@ -4216,13 +4297,14 @@
           "analysis/fp_marginal_alias_review.json"
         ],
         "programMentionPaths": [
+          "analysis/fp_coverage_pilot_results.md",
           "analysis/fp_marginal_alias_impact.json",
           "analysis/fp_marginal_alias_impact.md"
         ],
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "relation_artifact_discovered",
-      "frontierSufficiency": "pending_live_sample"
+      "frontierSufficiency": "not_sampled"
     },
     {
       "relationKey": "IFC01SD|occupation:cno11:3813",
@@ -4242,6 +4324,7 @@
           "analysis/fp_coverage_batch_4/IFC01S.md"
         ],
         "programMentionPaths": [
+          "analysis/fp_coverage_pilot_results.md",
           "analysis/fp_marginal_alias_impact.json",
           "analysis/fp_marginal_alias_impact.md",
           "analysis/fp_marginal_alias_review.json"
@@ -4249,7 +4332,7 @@
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "relation_artifact_discovered",
-      "frontierSufficiency": "pending_live_sample"
+      "frontierSufficiency": "not_sampled"
     },
     {
       "relationKey": "IFC01SD|occupation:cno11:3814",
@@ -4269,6 +4352,7 @@
           "analysis/fp_coverage_batch_4/IFC01S.md"
         ],
         "programMentionPaths": [
+          "analysis/fp_coverage_pilot_results.md",
           "analysis/fp_marginal_alias_impact.json",
           "analysis/fp_marginal_alias_impact.md",
           "analysis/fp_marginal_alias_review.json"
@@ -4276,7 +4360,7 @@
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "relation_artifact_discovered",
-      "frontierSufficiency": "pending_live_sample"
+      "frontierSufficiency": "not_sampled"
     },
     {
       "relationKey": "IFC02B|occupation:cno11:7533",
@@ -4303,7 +4387,7 @@
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "relation_artifact_discovered",
-      "frontierSufficiency": "pending_live_sample"
+      "frontierSufficiency": "not_sampled"
     },
     {
       "relationKey": "IFC02S|occupation:cno11:2713",
@@ -4328,7 +4412,7 @@
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "relation_artifact_discovered",
-      "frontierSufficiency": "pending_live_sample"
+      "frontierSufficiency": "not_sampled"
     },
     {
       "relationKey": "IFC02S|occupation:cno11:3820",
@@ -4353,7 +4437,7 @@
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "relation_artifact_discovered",
-      "frontierSufficiency": "pending_live_sample"
+      "frontierSufficiency": "not_sampled"
     },
     {
       "relationKey": "IFC02SD|occupation:cno11:2713",
@@ -4378,7 +4462,7 @@
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "relation_artifact_discovered",
-      "frontierSufficiency": "pending_live_sample"
+      "frontierSufficiency": "not_sampled"
     },
     {
       "relationKey": "IFC02SD|occupation:cno11:3820",
@@ -4403,7 +4487,7 @@
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "relation_artifact_discovered",
-      "frontierSufficiency": "pending_live_sample"
+      "frontierSufficiency": "not_sampled"
     },
     {
       "relationKey": "IFC03S|occupation:cno11:2713",
@@ -4428,7 +4512,7 @@
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "program_artifact_discovered",
-      "frontierSufficiency": "pending_live_sample"
+      "frontierSufficiency": "not_sampled"
     },
     {
       "relationKey": "IFC03SD|occupation:cno11:2713",
@@ -4452,7 +4536,7 @@
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "program_artifact_discovered",
-      "frontierSufficiency": "pending_live_sample"
+      "frontierSufficiency": "not_sampled"
     },
     {
       "relationKey": "IMA01M|occupation:cno11:7221",
@@ -4471,12 +4555,13 @@
         "relationCooccurrencePaths": [],
         "programMentionPaths": [
           "analysis/fp_coverage_next_20260821/frontier-review.md",
-          "analysis/fp_coverage_next_20260821/sources.md"
+          "analysis/fp_coverage_next_20260821/sources.md",
+          "analysis/fp_coverage_pilot_results.md"
         ],
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "program_artifact_discovered",
-      "frontierSufficiency": "pending_live_sample"
+      "frontierSufficiency": "not_sampled"
     },
     {
       "relationKey": "IMA01M|occupation:cno11:7222",
@@ -4495,12 +4580,13 @@
         "relationCooccurrencePaths": [],
         "programMentionPaths": [
           "analysis/fp_coverage_next_20260821/frontier-review.md",
-          "analysis/fp_coverage_next_20260821/sources.md"
+          "analysis/fp_coverage_next_20260821/sources.md",
+          "analysis/fp_coverage_pilot_results.md"
         ],
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "program_artifact_discovered",
-      "frontierSufficiency": "pending_live_sample"
+      "frontierSufficiency": "not_sampled"
     },
     {
       "relationKey": "IMA01M|occupation:cno11:7250",
@@ -4519,12 +4605,13 @@
         "relationCooccurrencePaths": [],
         "programMentionPaths": [
           "analysis/fp_coverage_next_20260821/frontier-review.md",
-          "analysis/fp_coverage_next_20260821/sources.md"
+          "analysis/fp_coverage_next_20260821/sources.md",
+          "analysis/fp_coverage_pilot_results.md"
         ],
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "program_artifact_discovered",
-      "frontierSufficiency": "pending_live_sample"
+      "frontierSufficiency": "not_sampled"
     },
     {
       "relationKey": "IMA01M|occupation:cno11:7294",
@@ -4543,12 +4630,13 @@
         "relationCooccurrencePaths": [],
         "programMentionPaths": [
           "analysis/fp_coverage_next_20260821/frontier-review.md",
-          "analysis/fp_coverage_next_20260821/sources.md"
+          "analysis/fp_coverage_next_20260821/sources.md",
+          "analysis/fp_coverage_pilot_results.md"
         ],
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "program_artifact_discovered",
-      "frontierSufficiency": "pending_live_sample"
+      "frontierSufficiency": "not_sampled"
     },
     {
       "relationKey": "IMA02M|occupation:cno11:7250",
@@ -4572,12 +4660,13 @@
           "analysis/fp_coverage_expansion_candidates.json",
           "analysis/fp_coverage_expansion_candidates.md",
           "analysis/fp_coverage_expansion_results.md",
-          "analysis/fp_coverage_expansion/IMA02M-sources.md"
+          "analysis/fp_coverage_expansion/IMA02M-sources.md",
+          "analysis/fp_coverage_pilot_results.md"
         ],
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "relation_artifact_discovered",
-      "frontierSufficiency": "pending_live_sample"
+      "frontierSufficiency": "not_sampled"
     },
     {
       "relationKey": "IMA03M|occupation:cno11:8202",
@@ -4608,7 +4697,7 @@
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "relation_artifact_discovered",
-      "frontierSufficiency": "pending_live_sample"
+      "frontierSufficiency": "not_sampled"
     },
     {
       "relationKey": "IMA03S|occupation:cno11:3126",
@@ -4628,12 +4717,13 @@
           "analysis/fp_marginal_alias_review.json"
         ],
         "programMentionPaths": [
-          "analysis/fp_coverage_batch_5/README.md"
+          "analysis/fp_coverage_batch_5/README.md",
+          "analysis/fp_coverage_pilot_results.md"
         ],
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "relation_artifact_discovered",
-      "frontierSufficiency": "pending_live_sample"
+      "frontierSufficiency": "not_sampled"
     },
     {
       "relationKey": "IMP01B|occupation:cno11:5811",
@@ -4654,13 +4744,14 @@
         ],
         "programMentionPaths": [
           "analysis/fp_coverage_batch_5/README.md",
+          "analysis/fp_coverage_pilot_results.md",
           "analysis/fp_marginal_alias_impact.json",
           "analysis/fp_marginal_alias_impact.md"
         ],
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "relation_artifact_discovered",
-      "frontierSufficiency": "pending_live_sample"
+      "frontierSufficiency": "not_sampled"
     },
     {
       "relationKey": "IMP01B|occupation:cno11:5812",
@@ -4679,6 +4770,7 @@
         "relationCooccurrencePaths": [],
         "programMentionPaths": [
           "analysis/fp_coverage_batch_5/README.md",
+          "analysis/fp_coverage_pilot_results.md",
           "analysis/fp_marginal_alias_impact.json",
           "analysis/fp_marginal_alias_impact.md",
           "analysis/fp_marginal_alias_review.json"
@@ -4686,7 +4778,7 @@
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "program_artifact_discovered",
-      "frontierSufficiency": "pending_live_sample"
+      "frontierSufficiency": "not_sampled"
     },
     {
       "relationKey": "IMP01M|occupation:cno11:3510",
@@ -4703,7 +4795,6 @@
       },
       "artifactDiscovery": {
         "relationCooccurrencePaths": [
-          "analysis/contest_evidence_live_sample.json",
           "analysis/fp_coverage_batch_parallel_2/proposals/IMP01M.md",
           "analysis/fp_offer_alias_candidates.json",
           "analysis/fp_offer_alias_candidates.md"
@@ -4716,7 +4807,7 @@
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "relation_artifact_discovered",
-      "frontierSufficiency": "pending_live_sample"
+      "frontierSufficiency": "not_sampled"
     },
     {
       "relationKey": "IMP01M|occupation:cno11:4412",
@@ -4733,7 +4824,6 @@
       },
       "artifactDiscovery": {
         "relationCooccurrencePaths": [
-          "analysis/contest_evidence_live_sample.json",
           "analysis/fp_coverage_batch_parallel_2/proposals/IMP01M.md"
         ],
         "programMentionPaths": [
@@ -4746,7 +4836,7 @@
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "relation_artifact_discovered",
-      "frontierSufficiency": "pending_live_sample"
+      "frontierSufficiency": "sample_pass"
     },
     {
       "relationKey": "IMP01M|occupation:cno11:5220",
@@ -4766,7 +4856,6 @@
           "analysis/fp_coverage_batch_parallel_2/proposals/IMP01M.md"
         ],
         "programMentionPaths": [
-          "analysis/contest_evidence_live_sample.json",
           "analysis/fp_coverage_batch_parallel_2/frontier-review.md",
           "analysis/fp_coverage_batch_parallel_2/README.md",
           "analysis/fp_coverage_pilot_results.md",
@@ -4776,7 +4865,7 @@
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "relation_artifact_discovered",
-      "frontierSufficiency": "pending_live_sample"
+      "frontierSufficiency": "not_sampled"
     },
     {
       "relationKey": "IMP01M|occupation:cno11:5492",
@@ -4796,7 +4885,6 @@
           "analysis/fp_coverage_batch_parallel_2/proposals/IMP01M.md"
         ],
         "programMentionPaths": [
-          "analysis/contest_evidence_live_sample.json",
           "analysis/fp_coverage_batch_parallel_2/frontier-review.md",
           "analysis/fp_coverage_batch_parallel_2/README.md",
           "analysis/fp_coverage_pilot_results.md",
@@ -4806,7 +4894,7 @@
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "relation_artifact_discovered",
-      "frontierSufficiency": "pending_live_sample"
+      "frontierSufficiency": "not_sampled"
     },
     {
       "relationKey": "IMP01M|occupation:cno11:5812",
@@ -4826,7 +4914,6 @@
           "analysis/fp_coverage_batch_parallel_2/proposals/IMP01M.md"
         ],
         "programMentionPaths": [
-          "analysis/contest_evidence_live_sample.json",
           "analysis/fp_coverage_batch_parallel_2/frontier-review.md",
           "analysis/fp_coverage_batch_parallel_2/README.md",
           "analysis/fp_coverage_pilot_results.md",
@@ -4836,7 +4923,7 @@
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "relation_artifact_discovered",
-      "frontierSufficiency": "pending_live_sample"
+      "frontierSufficiency": "not_sampled"
     },
     {
       "relationKey": "IMP01S|occupation:cno11:5812",
@@ -4854,7 +4941,6 @@
       "artifactDiscovery": {
         "relationCooccurrencePaths": [],
         "programMentionPaths": [
-          "analysis/contest_evidence_live_sample.json",
           "analysis/contest_evidence_remediation_20260822.md",
           "analysis/fp_coverage_batch_adaptive_3/frontier-review.md",
           "analysis/fp_coverage_batch_adaptive_3/nan-execution-summary.md",
@@ -4866,7 +4952,7 @@
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "program_artifact_discovered",
-      "frontierSufficiency": "pending_live_sample"
+      "frontierSufficiency": "not_sampled"
     },
     {
       "relationKey": "IMP02M|occupation:cno11:5811",
@@ -4887,13 +4973,14 @@
           "analysis/fp_marginal_alias_review.json"
         ],
         "programMentionPaths": [
+          "analysis/fp_coverage_pilot_results.md",
           "analysis/fp_marginal_alias_impact.json",
           "analysis/fp_marginal_alias_impact.md"
         ],
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "relation_artifact_discovered",
-      "frontierSufficiency": "pending_live_sample"
+      "frontierSufficiency": "not_sampled"
     },
     {
       "relationKey": "IMP02M|occupation:cno11:5812",
@@ -4913,6 +5000,7 @@
           "analysis/fp_coverage_batch_2/IMP02M.md"
         ],
         "programMentionPaths": [
+          "analysis/fp_coverage_pilot_results.md",
           "analysis/fp_marginal_alias_impact.json",
           "analysis/fp_marginal_alias_impact.md",
           "analysis/fp_marginal_alias_review.json"
@@ -4920,7 +5008,7 @@
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "relation_artifact_discovered",
-      "frontierSufficiency": "pending_live_sample"
+      "frontierSufficiency": "not_sampled"
     },
     {
       "relationKey": "IMP02MD|occupation:cno11:5811",
@@ -4937,11 +5025,13 @@
       },
       "artifactDiscovery": {
         "relationCooccurrencePaths": [],
-        "programMentionPaths": [],
+        "programMentionPaths": [
+          "analysis/fp_coverage_pilot_results.md"
+        ],
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
-      "evidenceDepth": "common_validator_only",
-      "frontierSufficiency": "pending_live_sample"
+      "evidenceDepth": "program_artifact_discovered",
+      "frontierSufficiency": "not_sampled"
     },
     {
       "relationKey": "IMP02MD|occupation:cno11:5812",
@@ -4958,11 +5048,13 @@
       },
       "artifactDiscovery": {
         "relationCooccurrencePaths": [],
-        "programMentionPaths": [],
+        "programMentionPaths": [
+          "analysis/fp_coverage_pilot_results.md"
+        ],
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
-      "evidenceDepth": "common_validator_only",
-      "frontierSufficiency": "pending_live_sample"
+      "evidenceDepth": "program_artifact_discovered",
+      "frontierSufficiency": "not_sampled"
     },
     {
       "relationKey": "IMP02S|occupation:cno11:5811",
@@ -4979,11 +5071,13 @@
       },
       "artifactDiscovery": {
         "relationCooccurrencePaths": [],
-        "programMentionPaths": [],
+        "programMentionPaths": [
+          "analysis/fp_coverage_pilot_results.md"
+        ],
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
-      "evidenceDepth": "common_validator_only",
-      "frontierSufficiency": "pending_live_sample"
+      "evidenceDepth": "program_artifact_discovered",
+      "frontierSufficiency": "not_sampled"
     },
     {
       "relationKey": "IMS01E|occupation:cno11:2921",
@@ -5002,12 +5096,13 @@
         "relationCooccurrencePaths": [],
         "programMentionPaths": [
           "analysis/fp_coverage_next_20260821/frontier-review.md",
-          "analysis/fp_coverage_next_20260821/sources.md"
+          "analysis/fp_coverage_next_20260821/sources.md",
+          "analysis/fp_coverage_pilot_results.md"
         ],
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "program_artifact_discovered",
-      "frontierSufficiency": "pending_live_sample"
+      "frontierSufficiency": "not_sampled"
     },
     {
       "relationKey": "IMS01E|occupation:cno11:2923",
@@ -5026,12 +5121,13 @@
         "relationCooccurrencePaths": [],
         "programMentionPaths": [
           "analysis/fp_coverage_next_20260821/frontier-review.md",
-          "analysis/fp_coverage_next_20260821/sources.md"
+          "analysis/fp_coverage_next_20260821/sources.md",
+          "analysis/fp_coverage_pilot_results.md"
         ],
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "program_artifact_discovered",
-      "frontierSufficiency": "pending_live_sample"
+      "frontierSufficiency": "not_sampled"
     },
     {
       "relationKey": "INA01S|occupation:cno11:7709",
@@ -5049,12 +5145,13 @@
       "artifactDiscovery": {
         "relationCooccurrencePaths": [],
         "programMentionPaths": [
+          "analysis/fp_coverage_pilot_results.md",
           "analysis/fp_coverage_priority_20260821/frontier-review.md"
         ],
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "program_artifact_discovered",
-      "frontierSufficiency": "pending_live_sample"
+      "frontierSufficiency": "not_sampled"
     },
     {
       "relationKey": "INA02M|occupation:cno11:3510",
@@ -5073,12 +5170,13 @@
         "relationCooccurrencePaths": [],
         "programMentionPaths": [
           "analysis/fp_coverage_next_20260821/frontier-review.md",
-          "analysis/fp_coverage_next_20260821/sources.md"
+          "analysis/fp_coverage_next_20260821/sources.md",
+          "analysis/fp_coverage_pilot_results.md"
         ],
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "program_artifact_discovered",
-      "frontierSufficiency": "pending_live_sample"
+      "frontierSufficiency": "not_sampled"
     },
     {
       "relationKey": "INA02M|occupation:cno11:7705",
@@ -5097,12 +5195,13 @@
         "relationCooccurrencePaths": [],
         "programMentionPaths": [
           "analysis/fp_coverage_next_20260821/frontier-review.md",
-          "analysis/fp_coverage_next_20260821/sources.md"
+          "analysis/fp_coverage_next_20260821/sources.md",
+          "analysis/fp_coverage_pilot_results.md"
         ],
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "program_artifact_discovered",
-      "frontierSufficiency": "pending_live_sample"
+      "frontierSufficiency": "not_sampled"
     },
     {
       "relationKey": "INA02M|occupation:cno11:7707",
@@ -5121,12 +5220,13 @@
         "relationCooccurrencePaths": [],
         "programMentionPaths": [
           "analysis/fp_coverage_next_20260821/frontier-review.md",
-          "analysis/fp_coverage_next_20260821/sources.md"
+          "analysis/fp_coverage_next_20260821/sources.md",
+          "analysis/fp_coverage_pilot_results.md"
         ],
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "program_artifact_discovered",
-      "frontierSufficiency": "pending_live_sample"
+      "frontierSufficiency": "not_sampled"
     },
     {
       "relationKey": "INA02M|occupation:cno11:8193",
@@ -5145,12 +5245,13 @@
         "relationCooccurrencePaths": [],
         "programMentionPaths": [
           "analysis/fp_coverage_next_20260821/frontier-review.md",
-          "analysis/fp_coverage_next_20260821/sources.md"
+          "analysis/fp_coverage_next_20260821/sources.md",
+          "analysis/fp_coverage_pilot_results.md"
         ],
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "program_artifact_discovered",
-      "frontierSufficiency": "pending_live_sample"
+      "frontierSufficiency": "not_sampled"
     },
     {
       "relationKey": "INA02S|occupation:cno11:3160",
@@ -5181,7 +5282,7 @@
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "relation_artifact_discovered",
-      "frontierSufficiency": "pending_live_sample"
+      "frontierSufficiency": "not_sampled"
     },
     {
       "relationKey": "INA02S|occupation:cno11:3209",
@@ -5212,7 +5313,7 @@
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "relation_artifact_discovered",
-      "frontierSufficiency": "pending_live_sample"
+      "frontierSufficiency": "not_sampled"
     },
     {
       "relationKey": "INA02S|occupation:cno11:3510",
@@ -5243,7 +5344,7 @@
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "relation_artifact_discovered",
-      "frontierSufficiency": "pending_live_sample"
+      "frontierSufficiency": "not_sampled"
     },
     {
       "relationKey": "INA03M|occupation:cno11:8160",
@@ -5261,6 +5362,7 @@
       "artifactDiscovery": {
         "relationCooccurrencePaths": [],
         "programMentionPaths": [
+          "analysis/fp_coverage_pilot_results.md",
           "analysis/fp_coverage_wave_20260822/batch-contract.json",
           "analysis/fp_coverage_wave_20260822/frontier-review.md",
           "analysis/fp_coverage_wave_20260822/sources.md"
@@ -5268,7 +5370,7 @@
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "program_artifact_discovered",
-      "frontierSufficiency": "pending_live_sample"
+      "frontierSufficiency": "not_sampled"
     },
     {
       "relationKey": "MAM01B|occupation:cno11:7812",
@@ -5296,7 +5398,7 @@
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "program_artifact_discovered",
-      "frontierSufficiency": "pending_live_sample"
+      "frontierSufficiency": "not_sampled"
     },
     {
       "relationKey": "MAM01B|occupation:cno11:8209",
@@ -5325,7 +5427,7 @@
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "relation_artifact_discovered",
-      "frontierSufficiency": "pending_live_sample"
+      "frontierSufficiency": "not_sampled"
     },
     {
       "relationKey": "MAM01B|occupation:cno11:9700",
@@ -5354,7 +5456,7 @@
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "relation_artifact_discovered",
-      "frontierSufficiency": "pending_live_sample"
+      "frontierSufficiency": "not_sampled"
     },
     {
       "relationKey": "MAM01M|occupation:cno11:7812",
@@ -5378,12 +5480,13 @@
           "analysis/fp_coverage_expansion_candidates.json",
           "analysis/fp_coverage_expansion_candidates.md",
           "analysis/fp_coverage_expansion_results.md",
-          "analysis/fp_coverage_expansion/MAM01M-boundary.md"
+          "analysis/fp_coverage_expansion/MAM01M-boundary.md",
+          "analysis/fp_coverage_pilot_results.md"
         ],
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "relation_artifact_discovered",
-      "frontierSufficiency": "pending_live_sample"
+      "frontierSufficiency": "not_sampled"
     },
     {
       "relationKey": "MAM01M|occupation:cno11:8209",
@@ -5407,12 +5510,13 @@
           "analysis/fp_coverage_expansion_candidates.json",
           "analysis/fp_coverage_expansion_candidates.md",
           "analysis/fp_coverage_expansion_results.md",
-          "analysis/fp_coverage_expansion/MAM01M-boundary.md"
+          "analysis/fp_coverage_expansion/MAM01M-boundary.md",
+          "analysis/fp_coverage_pilot_results.md"
         ],
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "relation_artifact_discovered",
-      "frontierSufficiency": "pending_live_sample"
+      "frontierSufficiency": "not_sampled"
     },
     {
       "relationKey": "MAM02M|occupation:cno11:7812",
@@ -5430,6 +5534,7 @@
       "artifactDiscovery": {
         "relationCooccurrencePaths": [],
         "programMentionPaths": [
+          "analysis/fp_coverage_pilot_results.md",
           "analysis/fp_coverage_wave_20260822/batch-contract.json",
           "analysis/fp_coverage_wave_20260822/frontier-review.md",
           "analysis/fp_coverage_wave_20260822/sources.md"
@@ -5437,7 +5542,7 @@
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "program_artifact_discovered",
-      "frontierSufficiency": "pending_live_sample"
+      "frontierSufficiency": "not_sampled"
     },
     {
       "relationKey": "QUI01E|occupation:cno11:3141",
@@ -5457,6 +5562,7 @@
           "analysis/fp_coverage_priority_20260821_wave2/proposals/QUI01E.md"
         ],
         "programMentionPaths": [
+          "analysis/fp_coverage_pilot_results.md",
           "analysis/fp_coverage_priority_20260821_wave2/batch-contract.json",
           "analysis/fp_coverage_priority_20260821_wave2/frontier-review.md",
           "analysis/fp_coverage_priority_20260821_wave2/README.md",
@@ -5465,7 +5571,7 @@
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "relation_artifact_discovered",
-      "frontierSufficiency": "pending_live_sample"
+      "frontierSufficiency": "not_sampled"
     },
     {
       "relationKey": "QUI01M|occupation:cno11:8131",
@@ -5483,6 +5589,7 @@
       "artifactDiscovery": {
         "relationCooccurrencePaths": [],
         "programMentionPaths": [
+          "analysis/fp_coverage_pilot_results.md",
           "analysis/fp_coverage_wave_20260822/batch-contract.json",
           "analysis/fp_coverage_wave_20260822/frontier-review.md",
           "analysis/fp_coverage_wave_20260822/sources.md"
@@ -5490,7 +5597,7 @@
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "program_artifact_discovered",
-      "frontierSufficiency": "pending_live_sample"
+      "frontierSufficiency": "not_sampled"
     },
     {
       "relationKey": "QUI01S|occupation:cno11:3129",
@@ -5519,7 +5626,7 @@
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "relation_artifact_discovered",
-      "frontierSufficiency": "pending_live_sample"
+      "frontierSufficiency": "not_sampled"
     },
     {
       "relationKey": "QUI01S|occupation:cno11:3160",
@@ -5548,7 +5655,7 @@
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "relation_artifact_discovered",
-      "frontierSufficiency": "pending_live_sample"
+      "frontierSufficiency": "not_sampled"
     },
     {
       "relationKey": "QUI02M|occupation:cno11:3160",
@@ -5579,7 +5686,7 @@
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "relation_artifact_discovered",
-      "frontierSufficiency": "pending_live_sample"
+      "frontierSufficiency": "not_sampled"
     },
     {
       "relationKey": "SAN01S|occupation:cno11:3317",
@@ -5597,6 +5704,7 @@
       "artifactDiscovery": {
         "relationCooccurrencePaths": [],
         "programMentionPaths": [
+          "analysis/fp_coverage_pilot_results.md",
           "analysis/fp_coverage_priority_20260821_wave2/batch-contract.json",
           "analysis/fp_coverage_priority_20260821_wave2/frontier-review.md",
           "analysis/fp_coverage_priority_20260821_wave2/proposals/SAN01S.md",
@@ -5606,7 +5714,7 @@
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "program_artifact_discovered",
-      "frontierSufficiency": "pending_live_sample"
+      "frontierSufficiency": "not_sampled"
     },
     {
       "relationKey": "SAN01SD|occupation:cno11:3317",
@@ -5624,6 +5732,7 @@
       "artifactDiscovery": {
         "relationCooccurrencePaths": [],
         "programMentionPaths": [
+          "analysis/fp_coverage_pilot_results.md",
           "analysis/fp_coverage_priority_20260821_wave2/batch-contract.json",
           "analysis/fp_coverage_priority_20260821_wave2/frontier-review.md",
           "analysis/fp_coverage_priority_20260821_wave2/proposals/SAN01S.md",
@@ -5633,7 +5742,7 @@
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "program_artifact_discovered",
-      "frontierSufficiency": "pending_live_sample"
+      "frontierSufficiency": "not_sampled"
     },
     {
       "relationKey": "SAN02M|occupation:cno11:5621",
@@ -5650,7 +5759,6 @@
       },
       "artifactDiscovery": {
         "relationCooccurrencePaths": [
-          "analysis/contest_evidence_live_sample.json",
           "analysis/fp_coverage_batch_2/SAN02M.md"
         ],
         "programMentionPaths": [
@@ -5659,7 +5767,7 @@
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "relation_artifact_discovered",
-      "frontierSufficiency": "pending_live_sample"
+      "frontierSufficiency": "sample_pass"
     },
     {
       "relationKey": "SAN02S|occupation:cno11:2640",
@@ -5677,6 +5785,7 @@
       "artifactDiscovery": {
         "relationCooccurrencePaths": [],
         "programMentionPaths": [
+          "analysis/fp_coverage_pilot_results.md",
           "analysis/fp_coverage_priority_20260821_wave2/batch-contract.json",
           "analysis/fp_coverage_priority_20260821_wave2/frontier-review.md",
           "analysis/fp_coverage_priority_20260821_wave2/proposals/SAN02S.md",
@@ -5686,7 +5795,7 @@
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "program_artifact_discovered",
-      "frontierSufficiency": "pending_live_sample"
+      "frontierSufficiency": "not_sampled"
     },
     {
       "relationKey": "SAN02S|occupation:cno11:3316",
@@ -5704,6 +5813,7 @@
       "artifactDiscovery": {
         "relationCooccurrencePaths": [],
         "programMentionPaths": [
+          "analysis/fp_coverage_pilot_results.md",
           "analysis/fp_coverage_priority_20260821_wave2/batch-contract.json",
           "analysis/fp_coverage_priority_20260821_wave2/frontier-review.md",
           "analysis/fp_coverage_priority_20260821_wave2/proposals/SAN02S.md",
@@ -5713,7 +5823,7 @@
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "program_artifact_discovered",
-      "frontierSufficiency": "pending_live_sample"
+      "frontierSufficiency": "not_sampled"
     },
     {
       "relationKey": "SAN04S|occupation:cno11:3314",
@@ -5742,7 +5852,7 @@
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "relation_artifact_discovered",
-      "frontierSufficiency": "pending_live_sample"
+      "frontierSufficiency": "not_sampled"
     },
     {
       "relationKey": "SAN07S|occupation:cno11:2640",
@@ -5769,7 +5879,7 @@
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "relation_artifact_discovered",
-      "frontierSufficiency": "pending_live_sample"
+      "frontierSufficiency": "not_sampled"
     },
     {
       "relationKey": "SAN07SD|occupation:cno11:2640",
@@ -5792,7 +5902,7 @@
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "program_artifact_discovered",
-      "frontierSufficiency": "pending_live_sample"
+      "frontierSufficiency": "not_sampled"
     },
     {
       "relationKey": "SAN08S|occupation:cno11:2640",
@@ -5808,17 +5918,15 @@
         "passes": true
       },
       "artifactDiscovery": {
-        "relationCooccurrencePaths": [
-          "analysis/contest_evidence_live_sample.json"
-        ],
+        "relationCooccurrencePaths": [],
         "programMentionPaths": [
           "analysis/fp_coverage_batch_5/README.md",
           "analysis/fp_coverage_pilot_results.md"
         ],
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
-      "evidenceDepth": "relation_artifact_discovered",
-      "frontierSufficiency": "pending_live_sample"
+      "evidenceDepth": "program_artifact_discovered",
+      "frontierSufficiency": "sample_pass"
     },
     {
       "relationKey": "SAN08SD|occupation:cno11:2640",
@@ -5834,17 +5942,15 @@
         "passes": true
       },
       "artifactDiscovery": {
-        "relationCooccurrencePaths": [
-          "analysis/contest_evidence_live_sample.json"
-        ],
+        "relationCooccurrencePaths": [],
         "programMentionPaths": [
           "analysis/fp_coverage_batch_5/README.md",
           "analysis/fp_coverage_pilot_results.md"
         ],
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
-      "evidenceDepth": "relation_artifact_discovered",
-      "frontierSufficiency": "pending_live_sample"
+      "evidenceDepth": "program_artifact_discovered",
+      "frontierSufficiency": "sample_pass"
     },
     {
       "relationKey": "SAN09S|occupation:cno11:2640",
@@ -5873,7 +5979,7 @@
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "relation_artifact_discovered",
-      "frontierSufficiency": "pending_live_sample"
+      "frontierSufficiency": "not_sampled"
     },
     {
       "relationKey": "SAN09SD|occupation:cno11:2640",
@@ -5896,7 +6002,7 @@
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "program_artifact_discovered",
-      "frontierSufficiency": "pending_live_sample"
+      "frontierSufficiency": "not_sampled"
     },
     {
       "relationKey": "SAN21|occupation:cno11:5611",
@@ -5926,7 +6032,7 @@
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "relation_artifact_discovered",
-      "frontierSufficiency": "pending_live_sample"
+      "frontierSufficiency": "not_sampled"
     },
     {
       "relationKey": "SAN21|occupation:cno11:5612",
@@ -5956,7 +6062,7 @@
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "relation_artifact_discovered",
-      "frontierSufficiency": "pending_live_sample"
+      "frontierSufficiency": "not_sampled"
     },
     {
       "relationKey": "SEA01M|occupation:cno11:5931",
@@ -5974,6 +6080,7 @@
       "artifactDiscovery": {
         "relationCooccurrencePaths": [],
         "programMentionPaths": [
+          "analysis/fp_coverage_pilot_results.md",
           "analysis/fp_coverage_priority_20260821_wave2/batch-contract.json",
           "analysis/fp_coverage_priority_20260821_wave2/frontier-review.md",
           "analysis/fp_coverage_priority_20260821_wave2/proposals/SEA01M.md",
@@ -5983,7 +6090,7 @@
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "program_artifact_discovered",
-      "frontierSufficiency": "pending_live_sample"
+      "frontierSufficiency": "not_sampled"
     },
     {
       "relationKey": "SEA01M|occupation:cno11:5932",
@@ -6001,6 +6108,7 @@
       "artifactDiscovery": {
         "relationCooccurrencePaths": [],
         "programMentionPaths": [
+          "analysis/fp_coverage_pilot_results.md",
           "analysis/fp_coverage_priority_20260821_wave2/batch-contract.json",
           "analysis/fp_coverage_priority_20260821_wave2/frontier-review.md",
           "analysis/fp_coverage_priority_20260821_wave2/proposals/SEA01M.md",
@@ -6010,7 +6118,7 @@
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "program_artifact_discovered",
-      "frontierSufficiency": "pending_live_sample"
+      "frontierSufficiency": "not_sampled"
     },
     {
       "relationKey": "SEA01M|occupation:cno11:5993",
@@ -6028,6 +6136,7 @@
       "artifactDiscovery": {
         "relationCooccurrencePaths": [],
         "programMentionPaths": [
+          "analysis/fp_coverage_pilot_results.md",
           "analysis/fp_coverage_priority_20260821_wave2/batch-contract.json",
           "analysis/fp_coverage_priority_20260821_wave2/frontier-review.md",
           "analysis/fp_coverage_priority_20260821_wave2/proposals/SEA01M.md",
@@ -6037,7 +6146,7 @@
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "program_artifact_discovered",
-      "frontierSufficiency": "pending_live_sample"
+      "frontierSufficiency": "not_sampled"
     },
     {
       "relationKey": "SEA01MD|occupation:cno11:5931",
@@ -6055,6 +6164,7 @@
       "artifactDiscovery": {
         "relationCooccurrencePaths": [],
         "programMentionPaths": [
+          "analysis/fp_coverage_pilot_results.md",
           "analysis/fp_coverage_priority_20260821_wave2/batch-contract.json",
           "analysis/fp_coverage_priority_20260821_wave2/frontier-review.md",
           "analysis/fp_coverage_priority_20260821_wave2/proposals/SEA01M.md",
@@ -6064,7 +6174,7 @@
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "program_artifact_discovered",
-      "frontierSufficiency": "pending_live_sample"
+      "frontierSufficiency": "not_sampled"
     },
     {
       "relationKey": "SEA01MD|occupation:cno11:5932",
@@ -6082,6 +6192,7 @@
       "artifactDiscovery": {
         "relationCooccurrencePaths": [],
         "programMentionPaths": [
+          "analysis/fp_coverage_pilot_results.md",
           "analysis/fp_coverage_priority_20260821_wave2/batch-contract.json",
           "analysis/fp_coverage_priority_20260821_wave2/frontier-review.md",
           "analysis/fp_coverage_priority_20260821_wave2/proposals/SEA01M.md",
@@ -6091,7 +6202,7 @@
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "program_artifact_discovered",
-      "frontierSufficiency": "pending_live_sample"
+      "frontierSufficiency": "not_sampled"
     },
     {
       "relationKey": "SEA01MD|occupation:cno11:5993",
@@ -6109,6 +6220,7 @@
       "artifactDiscovery": {
         "relationCooccurrencePaths": [],
         "programMentionPaths": [
+          "analysis/fp_coverage_pilot_results.md",
           "analysis/fp_coverage_priority_20260821_wave2/batch-contract.json",
           "analysis/fp_coverage_priority_20260821_wave2/frontier-review.md",
           "analysis/fp_coverage_priority_20260821_wave2/proposals/SEA01M.md",
@@ -6118,7 +6230,7 @@
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "program_artifact_discovered",
-      "frontierSufficiency": "pending_live_sample"
+      "frontierSufficiency": "not_sampled"
     },
     {
       "relationKey": "SEA03S|occupation:cno11:2640",
@@ -6150,7 +6262,7 @@
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "relation_artifact_discovered",
-      "frontierSufficiency": "pending_live_sample"
+      "frontierSufficiency": "not_sampled"
     },
     {
       "relationKey": "SEA03S|occupation:cno11:3129",
@@ -6182,7 +6294,7 @@
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "relation_artifact_discovered",
-      "frontierSufficiency": "pending_live_sample"
+      "frontierSufficiency": "not_sampled"
     },
     {
       "relationKey": "SSC01M|occupation:cno11:5629",
@@ -6199,7 +6311,6 @@
       },
       "artifactDiscovery": {
         "relationCooccurrencePaths": [
-          "analysis/contest_evidence_live_sample.json",
           "analysis/fp_coverage_pilot_results.json",
           "analysis/fp_official_alias_pass/SSC01M.json"
         ],
@@ -6215,7 +6326,7 @@
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "relation_artifact_discovered",
-      "frontierSufficiency": "pending_live_sample"
+      "frontierSufficiency": "sample_pass"
     },
     {
       "relationKey": "SSC01M|occupation:cno11:5710",
@@ -6238,7 +6349,6 @@
           "analysis/fp_official_alias_pass/SSC01M.json"
         ],
         "programMentionPaths": [
-          "analysis/contest_evidence_live_sample.json",
           "analysis/ecyl_fp_family_pilot_ranking.md",
           "analysis/fp_coverage_expansion_results.json",
           "analysis/fp_coverage_pilot_results.md",
@@ -6248,7 +6358,7 @@
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "relation_artifact_discovered",
-      "frontierSufficiency": "pending_live_sample"
+      "frontierSufficiency": "not_sampled"
     },
     {
       "relationKey": "SSC01S|occupation:cno11:2252",
@@ -6265,7 +6375,6 @@
       },
       "artifactDiscovery": {
         "relationCooccurrencePaths": [
-          "analysis/contest_evidence_live_sample.json",
           "analysis/contest_evidence_remediation_20260822.md",
           "analysis/fp_coverage_batch_3/SSC01S.md",
           "analysis/fp_offer_alias_candidates.json",
@@ -6277,7 +6386,7 @@
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "relation_artifact_discovered",
-      "frontierSufficiency": "pending_live_sample"
+      "frontierSufficiency": "sample_pass"
     },
     {
       "relationKey": "SSC01SD|occupation:cno11:2252",
@@ -6304,7 +6413,7 @@
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "relation_artifact_discovered",
-      "frontierSufficiency": "pending_live_sample"
+      "frontierSufficiency": "not_sampled"
     },
     {
       "relationKey": "SSC02S|occupation:cno11:3713",
@@ -6321,11 +6430,13 @@
       },
       "artifactDiscovery": {
         "relationCooccurrencePaths": [],
-        "programMentionPaths": [],
+        "programMentionPaths": [
+          "analysis/fp_coverage_pilot_results.md"
+        ],
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
-      "evidenceDepth": "common_validator_only",
-      "frontierSufficiency": "pending_live_sample"
+      "evidenceDepth": "program_artifact_discovered",
+      "frontierSufficiency": "not_sampled"
     },
     {
       "relationKey": "SSC02S|occupation:cno11:3724",
@@ -6342,11 +6453,13 @@
       },
       "artifactDiscovery": {
         "relationCooccurrencePaths": [],
-        "programMentionPaths": [],
+        "programMentionPaths": [
+          "analysis/fp_coverage_pilot_results.md"
+        ],
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
-      "evidenceDepth": "common_validator_only",
-      "frontierSufficiency": "pending_live_sample"
+      "evidenceDepth": "program_artifact_discovered",
+      "frontierSufficiency": "not_sampled"
     },
     {
       "relationKey": "SSC02S|occupation:cno11:4411",
@@ -6363,11 +6476,13 @@
       },
       "artifactDiscovery": {
         "relationCooccurrencePaths": [],
-        "programMentionPaths": [],
+        "programMentionPaths": [
+          "analysis/fp_coverage_pilot_results.md"
+        ],
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
-      "evidenceDepth": "common_validator_only",
-      "frontierSufficiency": "pending_live_sample"
+      "evidenceDepth": "program_artifact_discovered",
+      "frontierSufficiency": "not_sampled"
     },
     {
       "relationKey": "SSC03S|occupation:cno11:2312",
@@ -6387,6 +6502,7 @@
           "analysis/fp_coverage_batch_4/SSC03S.md"
         ],
         "programMentionPaths": [
+          "analysis/fp_coverage_pilot_results.md",
           "analysis/fp_marginal_alias_impact.json",
           "analysis/fp_marginal_alias_impact.md",
           "analysis/fp_marginal_alias_review.json"
@@ -6394,7 +6510,7 @@
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "relation_artifact_discovered",
-      "frontierSufficiency": "pending_live_sample"
+      "frontierSufficiency": "not_sampled"
     },
     {
       "relationKey": "SSC03S|occupation:cno11:3713",
@@ -6415,13 +6531,14 @@
           "analysis/fp_marginal_alias_review.json"
         ],
         "programMentionPaths": [
+          "analysis/fp_coverage_pilot_results.md",
           "analysis/fp_marginal_alias_impact.json",
           "analysis/fp_marginal_alias_impact.md"
         ],
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "relation_artifact_discovered",
-      "frontierSufficiency": "pending_live_sample"
+      "frontierSufficiency": "not_sampled"
     },
     {
       "relationKey": "SSC03SD|occupation:cno11:2312",
@@ -6441,6 +6558,7 @@
           "analysis/fp_coverage_batch_4/SSC03S.md"
         ],
         "programMentionPaths": [
+          "analysis/fp_coverage_pilot_results.md",
           "analysis/fp_marginal_alias_impact.json",
           "analysis/fp_marginal_alias_impact.md",
           "analysis/fp_marginal_alias_review.json"
@@ -6448,7 +6566,7 @@
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "relation_artifact_discovered",
-      "frontierSufficiency": "pending_live_sample"
+      "frontierSufficiency": "not_sampled"
     },
     {
       "relationKey": "SSC03SD|occupation:cno11:3713",
@@ -6469,13 +6587,14 @@
           "analysis/fp_marginal_alias_review.json"
         ],
         "programMentionPaths": [
+          "analysis/fp_coverage_pilot_results.md",
           "analysis/fp_marginal_alias_impact.json",
           "analysis/fp_marginal_alias_impact.md"
         ],
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "relation_artifact_discovered",
-      "frontierSufficiency": "pending_live_sample"
+      "frontierSufficiency": "not_sampled"
     },
     {
       "relationKey": "SSC04S|occupation:cno11:3714",
@@ -6491,18 +6610,17 @@
         "passes": true
       },
       "artifactDiscovery": {
-        "relationCooccurrencePaths": [
-          "analysis/contest_evidence_live_sample.json"
-        ],
+        "relationCooccurrencePaths": [],
         "programMentionPaths": [
+          "analysis/fp_coverage_pilot_results.md",
           "analysis/fp_coverage_wave_20260822/batch-contract.json",
           "analysis/fp_coverage_wave_20260822/frontier-review.md",
           "analysis/fp_coverage_wave_20260822/sources.md"
         ],
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
-      "evidenceDepth": "relation_artifact_discovered",
-      "frontierSufficiency": "pending_live_sample"
+      "evidenceDepth": "program_artifact_discovered",
+      "frontierSufficiency": "sample_pass"
     },
     {
       "relationKey": "SSC05S|occupation:cno11:3713",
@@ -6532,7 +6650,7 @@
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "relation_artifact_discovered",
-      "frontierSufficiency": "pending_live_sample"
+      "frontierSufficiency": "not_sampled"
     },
     {
       "relationKey": "SSC06S|occupation:cno11:5894",
@@ -6550,6 +6668,7 @@
       "artifactDiscovery": {
         "relationCooccurrencePaths": [],
         "programMentionPaths": [
+          "analysis/fp_coverage_pilot_results.md",
           "analysis/fp_coverage_wave_20260822/batch-contract.json",
           "analysis/fp_coverage_wave_20260822/frontier-review.md",
           "analysis/fp_coverage_wave_20260822/sources.md"
@@ -6557,7 +6676,7 @@
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "program_artifact_discovered",
-      "frontierSufficiency": "pending_live_sample"
+      "frontierSufficiency": "not_sampled"
     },
     {
       "relationKey": "TCP02B|occupation:cno11:7835",
@@ -6575,6 +6694,7 @@
       "artifactDiscovery": {
         "relationCooccurrencePaths": [],
         "programMentionPaths": [
+          "analysis/fp_coverage_pilot_results.md",
           "analysis/fp_coverage_wave_20260822/batch-contract.json",
           "analysis/fp_coverage_wave_20260822/frontier-review.md",
           "analysis/fp_coverage_wave_20260822/sources.md"
@@ -6582,7 +6702,7 @@
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "program_artifact_discovered",
-      "frontierSufficiency": "pending_live_sample"
+      "frontierSufficiency": "not_sampled"
     },
     {
       "relationKey": "TMV01B|occupation:cno11:7401",
@@ -6603,13 +6723,14 @@
           "analysis/fp_marginal_alias_review.json"
         ],
         "programMentionPaths": [
+          "analysis/fp_coverage_pilot_results.md",
           "analysis/fp_marginal_alias_impact.json",
           "analysis/fp_marginal_alias_impact.md"
         ],
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "relation_artifact_discovered",
-      "frontierSufficiency": "pending_live_sample"
+      "frontierSufficiency": "not_sampled"
     },
     {
       "relationKey": "TMV01M|occupation:cno11:7232",
@@ -6626,7 +6747,6 @@
       },
       "artifactDiscovery": {
         "relationCooccurrencePaths": [
-          "analysis/contest_evidence_live_sample.json",
           "analysis/fp_coverage_expansion_results.json",
           "analysis/fp_coverage_expansion/TMV01M.json"
         ],
@@ -6643,7 +6763,7 @@
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "relation_artifact_discovered",
-      "frontierSufficiency": "pending_live_sample"
+      "frontierSufficiency": "sample_pass"
     },
     {
       "relationKey": "TMV01S|occupation:cno11:3160",
@@ -6661,12 +6781,13 @@
       "artifactDiscovery": {
         "relationCooccurrencePaths": [],
         "programMentionPaths": [
-          "analysis/fp_coverage_batch_5/README.md"
+          "analysis/fp_coverage_batch_5/README.md",
+          "analysis/fp_coverage_pilot_results.md"
         ],
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "program_artifact_discovered",
-      "frontierSufficiency": "pending_live_sample"
+      "frontierSufficiency": "not_sampled"
     },
     {
       "relationKey": "TMV01S|occupation:cno11:3405",
@@ -6684,12 +6805,13 @@
       "artifactDiscovery": {
         "relationCooccurrencePaths": [],
         "programMentionPaths": [
-          "analysis/fp_coverage_batch_5/README.md"
+          "analysis/fp_coverage_batch_5/README.md",
+          "analysis/fp_coverage_pilot_results.md"
         ],
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "program_artifact_discovered",
-      "frontierSufficiency": "pending_live_sample"
+      "frontierSufficiency": "not_sampled"
     },
     {
       "relationKey": "TMV01S|occupation:cno11:4412",
@@ -6707,12 +6829,13 @@
       "artifactDiscovery": {
         "relationCooccurrencePaths": [],
         "programMentionPaths": [
-          "analysis/fp_coverage_batch_5/README.md"
+          "analysis/fp_coverage_batch_5/README.md",
+          "analysis/fp_coverage_pilot_results.md"
         ],
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "program_artifact_discovered",
-      "frontierSufficiency": "pending_live_sample"
+      "frontierSufficiency": "not_sampled"
     },
     {
       "relationKey": "TMV02M|occupation:cno11:7401",
@@ -6748,7 +6871,7 @@
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "relation_artifact_discovered",
-      "frontierSufficiency": "pending_live_sample"
+      "frontierSufficiency": "not_sampled"
     },
     {
       "relationKey": "TMV03E|occupation:cno11:3405",
@@ -6777,7 +6900,7 @@
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "relation_artifact_discovered",
-      "frontierSufficiency": "pending_live_sample"
+      "frontierSufficiency": "not_sampled"
     },
     {
       "relationKey": "TMV03M|occupation:cno11:7403",
@@ -6795,6 +6918,7 @@
       "artifactDiscovery": {
         "relationCooccurrencePaths": [],
         "programMentionPaths": [
+          "analysis/fp_coverage_pilot_results.md",
           "analysis/fp_coverage_priority_20260821_wave2/batch-contract.json",
           "analysis/fp_coverage_priority_20260821_wave2/frontier-review.md",
           "analysis/fp_coverage_priority_20260821_wave2/proposals/TMV03M.md",
@@ -6804,7 +6928,7 @@
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "program_artifact_discovered",
-      "frontierSufficiency": "pending_live_sample"
+      "frontierSufficiency": "not_sampled"
     },
     {
       "relationKey": "TMV05M|occupation:cno11:7404",
@@ -6822,6 +6946,7 @@
       "artifactDiscovery": {
         "relationCooccurrencePaths": [],
         "programMentionPaths": [
+          "analysis/fp_coverage_pilot_results.md",
           "analysis/fp_coverage_wave_20260822/batch-contract.json",
           "analysis/fp_coverage_wave_20260822/frontier-review.md",
           "analysis/fp_coverage_wave_20260822/sources.md"
@@ -6829,7 +6954,7 @@
         "limitation": "Textual co-occurrence locates review material; it does not by itself prove semantic sufficiency."
       },
       "evidenceDepth": "program_artifact_discovered",
-      "frontierSufficiency": "pending_live_sample"
+      "frontierSufficiency": "not_sampled"
     }
   ]
 }

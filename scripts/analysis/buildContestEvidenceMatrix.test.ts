@@ -50,11 +50,36 @@ describe("contest evidence matrix", () => {
       matrix.relations.every(
         (relation) =>
           relation.commonFloor.passes &&
-          relation.frontierSufficiency === "pending_live_sample" &&
+          ["sample_pass", "not_sampled"].includes(
+            relation.frontierSufficiency,
+          ) &&
           relation.artifactDiscovery.limitation.includes(
             "does not by itself prove",
           ),
       ),
     ).toBe(true);
+  });
+
+  it("records the deterministic independent sample without calling it exhaustive", () => {
+    const matrix = buildContestEvidenceMatrix();
+
+    expect(matrix.sampleSummary).toMatchObject({
+      population: 248,
+      sampleSize: 15,
+      pass: 15,
+      fail: 0,
+      notSampled: 233,
+      exhaustive: false,
+    });
+    expect(
+      matrix.relations.filter(
+        (relation) => relation.frontierSufficiency === "sample_pass",
+      ),
+    ).toHaveLength(15);
+    expect(
+      matrix.relations.filter(
+        (relation) => relation.frontierSufficiency === "not_sampled",
+      ),
+    ).toHaveLength(233);
   });
 });

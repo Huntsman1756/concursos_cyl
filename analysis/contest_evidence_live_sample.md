@@ -4,13 +4,17 @@
 
 - Límite de datos: `e41c5394d71c1324fe8a3e5d12a4a6f76793eaa2`.
 - Población: 248 relaciones aprobadas en `data/curated/training-occupation-links.json`.
-- Tamaño: 15 relaciones.
+- Tamaño: 15 relaciones seleccionadas de forma determinista.
 - Corte: 2026-08-22T04:13:28+02:00.
 - Semilla: `f3813d12cff3876db8760975cf82b0ad47c5d3ea76983d809ef45891324bf21c`.
 - Selección: ordenar `SHA-256(seed|relationKey)` y tomar las primeras 15 claves.
-- Estado: pendiente de comprobación independiente contra fuentes vivas.
+- Resultado: **15 PASS / 0 FAIL** en una segunda revisión independiente de la URL y la cita oficial registrada para cada relación.
+- Alcance: muestra delimitada, no auditoría exhaustiva. Las otras 233 relaciones quedan `not_sampled`.
 
-La selección actual no se presenta como una auditoría ya realizada. Las 15 claves y su estado `pending_live_sample` están en `analysis/contest_evidence_live_sample.json`. Hasta completar la revisión, la matriz conserva `frontierSufficiency: pending_live_sample` para las 248 relaciones.
+El detalle de las 15 relaciones y sus citas está en
+`analysis/contest_evidence_live_sample.json`. La matriz marca esas relaciones
+como `sample_pass` y las 233 restantes como `not_sampled`. El resultado no
+ratifica por sí solo la suficiencia semántica de todo el catálogo.
 
 ## Auditoría histórica
 
@@ -20,4 +24,4 @@ Sus hallazgos se usaron para retirar seis relaciones de la publicación y correg
 
 ## Decisión
 
-La cobertura actual se describe con el freeze rebakeado y sus límites. La suficiencia semántica de las relaciones permanece pendiente hasta que la muestra vigente se revise de forma independiente. No se afirma despliegue, piloto, adopción ni envío de la candidatura.
+La cobertura actual conserva el freeze rebakeado y la distinción entre la muestra aprobada y las relaciones no muestreadas. No se afirma que la muestra sea exhaustiva ni se usa para afirmar despliegue, adopción, piloto o envío de la candidatura.
