@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "sourcePath": "data/curated/training-occupation-links.json",
-  "sourceCommitSha": "94bad9123906efd0d582eb599b8c4d190004c91f",
+  "sourceCommitSha": "05f905397d22b217c4716c88a2406d802892fb6d",
   "auditCutoff": "2026-08-22T04:13:28+02:00",
   "relationCount": 264,
   "commonFloorFailures": 0,
@@ -12,7 +12,7 @@
   },
   "sampleSummary": {
     "sourcePath": "analysis/contest_evidence_live_sample.json",
-    "sourceCommitSha": "94bad9123906efd0d582eb599b8c4d190004c91f",
+    "sourceCommitSha": "05f905397d22b217c4716c88a2406d802892fb6d",
     "auditedAt": "2026-08-22",
     "population": 264,
     "sampleSize": 15,
