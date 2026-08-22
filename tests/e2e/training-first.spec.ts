@@ -55,7 +55,7 @@ test("FP results loading is announced as a polite status", async ({ page }) => {
 
 test("live DAW results shows formacion link and approved occupation", async ({
   page,
-}) => {
+}, testInfo) => {
   await page.goto("/desde-fp");
 
   await page
@@ -128,16 +128,42 @@ test("live DAW results shows formacion link and approved occupation", async ({
   await expect(
     page.getByText(/no representa todo el mercado laboral/u),
   ).toBeVisible();
+  const distribution = page.getByRole("region", {
+    name: "Distribución de centros",
+  });
+  await expect(distribution).toBeVisible();
   await expect(
-    page.getByRole("img", {
-      name: "Distribución territorial de los centros",
-    }),
+    distribution.getByRole("table", { name: "Centros por provincia" }),
   ).toBeVisible();
+  await expect(distribution.locator("svg")).toHaveCount(0);
   await expect(
-    page.getByRole("link", {
+    distribution.getByRole("link", {
       name: /Fuente: Directorio de Centros Docentes JCyL/,
     }),
   ).toBeVisible();
+  const coordinatesSummary = distribution.getByText(
+    "Ver coordenadas oficiales publicadas",
+    { exact: true },
+  );
+  await tabTo(page, coordinatesSummary);
+  await expect(coordinatesSummary).toBeFocused();
+  await page.keyboard.press("Enter");
+  await expect(
+    distribution.getByText(
+      "Información técnica complementaria. No es un mapa y no calcula distancias, rutas ni tiempos de desplazamiento.",
+      { exact: true },
+    ),
+  ).toBeVisible();
+  const axe = await new AxeBuilder({ page })
+    .include("#distribucion-centros")
+    .analyze();
+  expect(axe.violations, JSON.stringify(axe.violations, null, 2)).toEqual([]);
+  if (testInfo.project.name === "chromium-mobile") {
+    const overflow = await distribution.evaluate(
+      (element) => element.scrollWidth - element.clientWidth,
+    );
+    expect(overflow).toBeLessThanOrEqual(1);
+  }
 
   await expect(
     page.getByRole("link", {

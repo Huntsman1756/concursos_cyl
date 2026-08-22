@@ -174,6 +174,9 @@ describe("MethodologyPage", () => {
       "href",
       SOURCE_CONFIG.educationCenterDirectory.recordsUrl,
     );
+    expect(inventory).toHaveTextContent(
+      /Centros agrupados por provincia y localidad; coordenadas técnicas opcionales/i,
+    );
     expect(methodology).toHaveTextContent(
       /cruce administrativo.*registros educativos.*Seguridad Social/i,
     );

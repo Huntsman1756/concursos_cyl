@@ -35,10 +35,11 @@ import { ReliableActionSchema } from "../../domain/actionEngine";
 import { useDecisionSession } from "../../domain/session";
 import { trainingLevelLabel } from "../../domain/trainingPresentation";
 import { OfferEvidenceCard } from "./OfferEvidenceCard";
+import { TerritorialDistribution } from "./TerritorialDistribution";
 import {
-  TerritorialDistribution,
-  type TerritorialCenterPoint,
-} from "./TerritorialDistribution";
+  mergeTerritorialCenterCoordinates,
+  type TerritorialCenterRecord,
+} from "./territorialDistributionModel";
 import { ResultSectionNav } from "../../components/ResultSectionNav";
 import "./result-evidence.css";
 import { resolveApprovedOccupations } from "./resolveApprovedOccupations";
@@ -317,34 +318,17 @@ export function TrainingResultsPage() {
     );
   }, [state]);
 
-  const territorialCenterPoints = useMemo<TerritorialCenterPoint[]>(() => {
+  const territorialCenters = useMemo<TerritorialCenterRecord[]>(() => {
     if (state.status !== "ready") return [];
-    const directoryByCode = new Map(
-      state.regionalContext.educationCenterDirectory.map((entry) => [
-        entry.centerCode,
-        entry,
-      ]),
+    return mergeTerritorialCenterCoordinates(
+      studyCenters.map(({ centerCode, centerName, locality, province }) => ({
+        centerCode,
+        centerName,
+        locality,
+        province,
+      })),
+      state.regionalContext.educationCenterDirectory,
     );
-    return studyCenters.flatMap((center) => {
-      const directoryEntry = directoryByCode.get(center.centerCode);
-      if (
-        directoryEntry?.latitude === null ||
-        directoryEntry?.latitude === undefined ||
-        directoryEntry.longitude === null
-      ) {
-        return [];
-      }
-      return [
-        {
-          centerCode: center.centerCode,
-          centerName: center.centerName,
-          locality: center.locality,
-          province: center.province,
-          latitude: directoryEntry.latitude,
-          longitude: directoryEntry.longitude,
-        },
-      ];
-    });
   }, [state, studyCenters]);
 
   if (state.status === "loading") {
@@ -692,11 +676,15 @@ export function TrainingResultsPage() {
       {educationCenterDirectorySnapshot !== undefined && (
         <div id="distribucion-centros">
           <TerritorialDistribution
-            points={territorialCenterPoints}
+            centers={territorialCenters}
             sourceUrl={educationCenterDirectorySnapshot.sourceUrl}
             academicYear={
               state.regionalContext.educationCenterDirectory[0]?.academicYear ??
               null
+            }
+            sourceUpdatedAt={educationCenterDirectorySnapshot.sourceUpdatedAt}
+            snapshotFetchedAt={
+              educationCenterDirectorySnapshot.snapshotFetchedAt
             }
           />
         </div>

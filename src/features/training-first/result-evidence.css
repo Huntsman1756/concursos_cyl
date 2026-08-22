@@ -1,4 +1,20 @@
-.territorial-distribution figcaption p {
+.territorial-distribution {
+  margin: 0 0 var(--space-9);
+  padding-block: var(--space-6);
+  border-block: 1px solid var(--color-border);
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.territorial-distribution__heading {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: var(--space-5);
+  margin-bottom: var(--space-5);
+}
+
+.territorial-distribution__heading p {
   margin: 0 0 var(--space-1);
   color: var(--color-action-text);
   font-size: 0.78rem;
@@ -7,74 +23,184 @@
   text-transform: uppercase;
 }
 
-.territorial-distribution figcaption h2 {
+.territorial-distribution__heading h2 {
   margin: 0;
   font-size: clamp(1.35rem, 3vw, 1.8rem);
   line-height: 1.2;
 }
 
-.territorial-distribution {
-  margin: 0 0 var(--space-9);
-  padding-block: var(--space-6);
-  border-block: 1px solid var(--color-border);
-}
-
-.territorial-distribution figcaption {
+.territorial-distribution__meta {
   display: flex;
-  align-items: end;
-  justify-content: space-between;
-  gap: var(--space-5);
-  margin-bottom: var(--space-5);
-}
-
-.territorial-distribution figcaption > strong {
-  color: var(--color-primary);
-  font-size: 0.9rem;
-  white-space: nowrap;
-}
-
-.territorial-distribution__plot {
-  display: block;
-  width: 100%;
-  height: auto;
-  max-height: 25rem;
-}
-
-.territorial-distribution__plot rect {
-  fill: var(--color-surface);
-  stroke: var(--color-border);
-}
-
-.territorial-distribution__plot path {
-  fill: none;
-  stroke: var(--color-border);
-  stroke-dasharray: 3 7;
-}
-
-.territorial-distribution__plot circle {
-  fill: var(--color-action);
-  stroke: var(--color-surface);
-  stroke-width: 3;
-}
-
-.territorial-distribution__legend {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(18rem, 0.8fr);
-  gap: var(--space-3) var(--space-6);
-  margin-top: var(--space-4);
-}
-
-.territorial-distribution__legend p {
-  margin: 0;
+  flex-wrap: wrap;
+  gap: var(--space-2) var(--space-5);
+  margin-bottom: var(--space-3);
   color: var(--color-text-muted);
   font-size: 0.875rem;
 }
 
-.territorial-distribution__legend a {
-  grid-column: 1 / -1;
-  width: fit-content;
+.territorial-distribution__meta span {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.territorial-distribution__source {
+  display: inline-block;
+  width: 100%;
+  min-width: 0;
+  margin-bottom: var(--space-4);
   color: var(--color-action-text);
   font-weight: 750;
+  overflow-wrap: anywhere;
+}
+
+.territorial-distribution__summary {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin: 0 0 var(--space-4);
+  color: var(--color-primary);
+  font-size: 0.95rem;
+  font-weight: 750;
+}
+
+.territorial-distribution__summary span {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.territorial-distribution__empty {
+  margin: 0;
+  color: var(--color-text-muted);
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.territorial-distribution__table {
+  width: 100%;
+  min-width: 0;
+  margin: 0 0 var(--space-6);
+  border-collapse: collapse;
+  table-layout: fixed;
+  overflow-wrap: anywhere;
+}
+
+.territorial-distribution__table caption {
+  margin-bottom: var(--space-2);
+  color: var(--color-primary);
+  font-size: 1rem;
+  font-weight: 800;
+  text-align: left;
+}
+
+.territorial-distribution__table th,
+.territorial-distribution__table td {
+  min-width: 0;
+  padding: var(--space-3);
+  border-bottom: 1px solid var(--color-border);
+  text-align: left;
+  vertical-align: top;
+  overflow-wrap: anywhere;
+}
+
+.territorial-distribution__table th {
+  color: var(--color-primary);
+  font-weight: 800;
+}
+
+.territorial-distribution__groups {
+  width: 100%;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.territorial-distribution__groups h3 {
+  margin: 0 0 var(--space-4);
+  font-size: 1.1rem;
+}
+
+.territorial-distribution__province {
+  width: 100%;
+  min-width: 0;
+  margin-bottom: var(--space-5);
+  overflow-wrap: anywhere;
+}
+
+.territorial-distribution__province h4 {
+  margin: 0 0 var(--space-2);
+  color: var(--color-primary);
+  font-size: 1rem;
+}
+
+.territorial-distribution__localities,
+.territorial-distribution__localities ul {
+  width: 100%;
+  min-width: 0;
+  margin: 0;
+  padding-left: var(--space-5);
+  overflow-wrap: anywhere;
+}
+
+.territorial-distribution__localities > li {
+  margin-bottom: var(--space-3);
+}
+
+.territorial-distribution__localities strong {
+  display: block;
+  margin-bottom: var(--space-1);
+}
+
+.territorial-distribution__localities ul {
+  color: var(--color-text-muted);
+}
+
+.territorial-distribution__localities ul li {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2) var(--space-4);
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.territorial-distribution__localities small {
+  color: var(--color-text-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.territorial-distribution__coordinates {
+  width: 100%;
+  min-width: 0;
+  margin-top: var(--space-5);
+  padding: var(--space-4);
+  border: 1px solid var(--color-border);
+  overflow-wrap: anywhere;
+}
+
+.territorial-distribution__coordinates summary {
+  color: var(--color-action-text);
+  cursor: pointer;
+  font-weight: 800;
+}
+
+.territorial-distribution__coordinates p {
+  margin: var(--space-3) 0 0;
+  color: var(--color-text-muted);
+  font-size: 0.875rem;
+}
+
+.territorial-distribution__coordinates ul {
+  width: 100%;
+  min-width: 0;
+  margin: var(--space-3) 0 0;
+  padding-left: var(--space-5);
+  overflow-wrap: anywhere;
+}
+
+.territorial-distribution__coordinates li {
+  display: grid;
+  gap: var(--space-1);
+  min-width: 0;
+  margin-bottom: var(--space-2);
+  overflow-wrap: anywhere;
 }
 
 .decision-basis__scope {
@@ -84,8 +210,10 @@
 }
 
 @media (max-width: 36rem) {
-  .territorial-distribution__legend {
+  .territorial-distribution__meta {
+    display: grid;
     grid-template-columns: 1fr;
+    gap: var(--space-2);
   }
 
   .training-page .result-summary {
@@ -100,12 +228,8 @@
     border-top: 1px solid var(--color-border);
   }
 
-  .territorial-distribution figcaption {
+  .territorial-distribution__heading {
     display: grid;
     align-items: start;
-  }
-
-  .territorial-distribution figcaption > strong {
-    white-space: normal;
   }
 }

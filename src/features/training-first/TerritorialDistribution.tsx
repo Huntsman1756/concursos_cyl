@@ -1,122 +1,177 @@
-export interface TerritorialCenterPoint {
-  centerCode: string;
-  centerName: string;
-  locality: string;
-  province: string;
-  latitude: number;
-  longitude: number;
-}
+import {
+  buildTerritorialDistributionModel,
+  type TerritorialCenterRecord,
+} from "./territorialDistributionModel";
 
 interface TerritorialDistributionProps {
-  points: readonly TerritorialCenterPoint[];
+  centers: readonly TerritorialCenterRecord[];
   sourceUrl: string;
   academicYear: string | null;
+  sourceUpdatedAt: string | null;
+  snapshotFetchedAt: string;
 }
 
-const BOUNDS = {
-  minLongitude: -7.2,
-  maxLongitude: -1.7,
-  minLatitude: 39.7,
-  maxLatitude: 43.3,
-} as const;
+function formatDate(value: string): string {
+  return new Intl.DateTimeFormat("es-ES", {
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+    timeZone: "UTC",
+  }).format(new Date(value));
+}
 
-function position(point: TerritorialCenterPoint) {
-  const x =
-    32 +
-    ((Math.min(
-      BOUNDS.maxLongitude,
-      Math.max(BOUNDS.minLongitude, point.longitude),
-    ) -
-      BOUNDS.minLongitude) /
-      (BOUNDS.maxLongitude - BOUNDS.minLongitude)) *
-      696;
-  const y =
-    24 +
-    (1 -
-      (Math.min(
-        BOUNDS.maxLatitude,
-        Math.max(BOUNDS.minLatitude, point.latitude),
-      ) -
-        BOUNDS.minLatitude) /
-        (BOUNDS.maxLatitude - BOUNDS.minLatitude)) *
-      322;
-  return { x, y };
+function countLabel(value: number, singular: string, plural: string): string {
+  return value + " " + (value === 1 ? singular : plural);
 }
 
 export function TerritorialDistribution({
-  points,
+  centers,
   sourceUrl,
   academicYear,
+  sourceUpdatedAt,
+  snapshotFetchedAt,
 }: TerritorialDistributionProps) {
-  const provinces = [...new Set(points.map((point) => point.province))].sort(
-    (left, right) => left.localeCompare(right, "es"),
+  const model = buildTerritorialDistributionModel(centers);
+  const completeCenters = centers.filter(
+    (center) => center.latitude !== null && center.longitude !== null,
   );
 
-  if (points.length === 0) {
-    return (
-      <section className="territorial-distribution">
-        <h2>Distribución territorial</h2>
-        <p>
-          No hay coordenadas oficiales publicadas para los centros de este ciclo
-          en la copia actual.
-        </p>
-      </section>
-    );
-  }
-
   return (
-    <figure className="territorial-distribution">
-      <figcaption>
-        <div>
-          <p>Dónde se imparte</p>
-          <h2 id="territorial-title">
-            Distribución territorial de los centros
-          </h2>
-        </div>
-        <strong>
-          {points.length} {points.length === 1 ? "centro" : "centros"} ·{" "}
-          {provinces.length}{" "}
-          {provinces.length === 1 ? "provincia" : "provincias"}
-        </strong>
-      </figcaption>
-      <svg
-        className="territorial-distribution__plot"
-        viewBox="0 0 760 370"
-        role="img"
-        aria-labelledby="territorial-title"
-        aria-describedby="territorial-description"
-      >
-        <desc id="territorial-description">
-          Posición de los centros que imparten este título según las coordenadas
-          del Directorio de Centros Docentes de Castilla y León.
-        </desc>
-        <rect x="1" y="1" width="758" height="368" rx="14" />
-        <path d="M32 104H728M32 185H728M32 266H728" />
-        <path d="M206 24V346M380 24V346M554 24V346" />
-        {points.map((point) => {
-          const { x, y } = position(point);
-          return (
-            <circle key={point.centerCode} cx={x} cy={y} r="7">
-              <title>
-                {point.centerName}, {point.locality}, {point.province}
-              </title>
-            </circle>
-          );
-        })}
-      </svg>
-      <div className="territorial-distribution__legend">
-        <p>
-          Provincias: <strong>{provinces.join(", ")}</strong>
-        </p>
-        <p>
-          Cada punto usa la coordenada publicada del centro. Sirve para ver la
-          distribución, no para calcular distancias ni desplazamientos.
-        </p>
-        <a href={sourceUrl} target="_blank" rel="noreferrer">
-          Fuente: Directorio de Centros Docentes JCyL
-          {academicYear === null ? "" : ` · curso ${academicYear}`}
-        </a>
+    <section
+      className="territorial-distribution"
+      aria-labelledby="territorial-distribution-title"
+    >
+      <div className="territorial-distribution__heading">
+        <p>Dónde se imparte</p>
+        <h2 id="territorial-distribution-title">Distribución de centros</h2>
       </div>
-    </figure>
+      <div className="territorial-distribution__meta">
+        {academicYear !== null && <span>Curso académico: {academicYear}</span>}
+        <span>
+          Fuente actualizada:{" "}
+          {sourceUpdatedAt === null ? (
+            "no indicada"
+          ) : (
+            <time dateTime={sourceUpdatedAt}>
+              {formatDate(sourceUpdatedAt)}
+            </time>
+          )}
+        </span>
+        <span>
+          Copia consultada:{" "}
+          <time dateTime={snapshotFetchedAt}>
+            {formatDate(snapshotFetchedAt)}
+          </time>
+        </span>
+      </div>
+      <a
+        className="territorial-distribution__source"
+        href={sourceUrl}
+        target="_blank"
+        rel="noreferrer"
+      >
+        Fuente: Directorio de Centros Docentes JCyL
+      </a>
+      {model.totalCenters === 0 ? (
+        <p className="territorial-distribution__empty">
+          No hay centros publicados para este ciclo en la copia actual.
+        </p>
+      ) : (
+        <>
+          <p className="territorial-distribution__summary">
+            {countLabel(model.totalCenters, "centro", "centros")} en{" "}
+            {countLabel(model.provinces.length, "provincia", "provincias")} ·{" "}
+            <span>
+              {countLabel(
+                model.centersWithoutCoordinates,
+                "centro sin coordenadas oficiales",
+                "centros sin coordenadas oficiales",
+              )}
+            </span>
+          </p>
+          <table className="territorial-distribution__table">
+            <caption>Centros por provincia</caption>
+            <thead>
+              <tr>
+                <th scope="col">Provincia</th>
+                <th scope="col">Centros publicados</th>
+                <th scope="col">Coordenadas oficiales</th>
+              </tr>
+            </thead>
+            <tbody>
+              {model.provinces.map((province) => (
+                <tr key={province.province}>
+                  <th scope="row">{province.province}</th>
+                  <td>{province.centerCount}</td>
+                  <td>
+                    {province.centersWithCoordinates} completas ·{" "}
+                    {province.centersWithoutCoordinates} sin publicar
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+          <div className="territorial-distribution__groups">
+            <h3>Centros agrupados por localidad</h3>
+            {model.provinces.map((province) => (
+              <div
+                className="territorial-distribution__province"
+                key={province.province}
+              >
+                <h4>{province.province}</h4>
+                <ul
+                  aria-label={"Centros en " + province.province}
+                  className="territorial-distribution__localities"
+                >
+                  {province.localities.map((locality) => (
+                    <li key={locality.locality}>
+                      <strong>{locality.locality}</strong>
+                      <ul
+                        aria-label={
+                          "Centros en " +
+                          locality.locality +
+                          ", " +
+                          province.province
+                        }
+                      >
+                        {locality.centers.map((center) => (
+                          <li key={center.centerCode}>
+                            <span>{center.centerName}</span>
+                            <small>{center.centerCode}</small>
+                          </li>
+                        ))}
+                      </ul>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
+          <details className="territorial-distribution__coordinates">
+            <summary>Ver coordenadas oficiales publicadas</summary>
+            <p>
+              Información técnica complementaria. No es un mapa y no calcula
+              distancias, rutas ni tiempos de desplazamiento.
+            </p>
+            {completeCenters.length === 0 ? (
+              <p>No hay coordenadas oficiales completas en esta copia.</p>
+            ) : (
+              <ul>
+                {completeCenters.map((center) => (
+                  <li key={center.centerCode}>
+                    <span>
+                      {center.centerName} · {center.locality}, {center.province}
+                    </span>
+                    <small>
+                      Latitud {center.latitude}; longitud {center.longitude}
+                    </small>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </details>
+        </>
+      )}
+    </section>
   );
 }

@@ -104,7 +104,7 @@ const JCYL_DATASETS = [
   {
     key: "educationCenterDirectory",
     title: "Directorio de Centros Docentes",
-    use: "Coordenadas oficiales para la distribución territorial",
+    use: "Centros agrupados por provincia y localidad; coordenadas técnicas opcionales",
     sourceUrl: SOURCE_CONFIG.educationCenterDirectory.recordsUrl,
   },
 ] as const;

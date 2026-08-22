@@ -20,7 +20,7 @@ Las referencias de cotización de EDUCAbase se muestran con su ámbito estadíst
 
 ## 3. Valor público y social
 
-La orientación es pública, gratuita y usable sin registro, también desde un móvil. La aplicación muestra dónde estudiar, la distribución de centros, modalidades y contexto provincial para que una persona pueda comparar opciones en Castilla y León. Distingue el lugar del centro, la población municipal y los contratos provinciales de cualquier afirmación sobre la residencia, la demanda de una ocupación o el futuro laboral de una persona.
+La orientación es pública, gratuita y usable sin registro, también desde un móvil. La aplicación muestra dónde estudiar, los centros agrupados por provincia y localidad, las modalidades y el contexto provincial para que una persona pueda comparar opciones en Castilla y León. Los recuentos y listados se leen directamente de las copias publicadas; las coordenadas técnicas completas quedan como información opcional y no se presentan como un mapa ni como cálculo de desplazamientos. Distingue el lugar del centro, la población municipal y los contratos provinciales de cualquier afirmación sobre la residencia, la demanda de una ocupación o el futuro laboral de una persona.
 
 ## 4. Originalidad e innovación
 
@@ -32,16 +32,16 @@ La referencia pública localizada de 2022 documenta una aplicación web de ofert
 
 Los ocho conjuntos regionales tienen un uso visible en la interfaz y una copia normalizada en el snapshot `20260822021233066-9d8fa948959b`:
 
-| Dataset                            | Uso visible                                  |
-| ---------------------------------- | -------------------------------------------- |
-| Oferta de estudios de FP           | ciclos, centros y modalidades                |
-| Ofertas de empleo                  | ofertas relacionadas y requisitos publicados |
-| Formación del ECYL                 | alternativas formativas                      |
-| Certificados de profesionalidad    | rutas complementarias                        |
-| Convocatorias de Empleo Público    | procesos con plazo abierto                   |
-| Contratos realizados por provincia | contexto laboral agregado                    |
-| Registro de municipios             | población del lugar de estudio               |
-| Directorio de Centros Docentes     | distribución territorial                     |
+| Dataset                            | Uso visible                                                         |
+| ---------------------------------- | ------------------------------------------------------------------- |
+| Oferta de estudios de FP           | ciclos, centros y modalidades                                       |
+| Ofertas de empleo                  | ofertas relacionadas y requisitos publicados                        |
+| Formación del ECYL                 | alternativas formativas                                             |
+| Certificados de profesionalidad    | rutas complementarias                                               |
+| Convocatorias de Empleo Público    | procesos con plazo abierto                                          |
+| Contratos realizados por provincia | contexto laboral agregado                                           |
+| Registro de municipios             | población del lugar de estudio                                      |
+| Directorio de Centros Docentes     | listados por provincia y localidad; coordenadas técnicas opcionales |
 
 Se combinan con CNO-11, TodoFP, BOE, SEPE y las tablas de inserción de EDUCAbase. Cada fuente conserva su ámbito para impedir conclusiones que los datos no sostienen.
 
