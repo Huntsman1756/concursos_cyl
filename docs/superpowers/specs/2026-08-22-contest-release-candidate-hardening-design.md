@@ -113,6 +113,10 @@ The release model will keep these fields distinct:
 `version.json` will expose `releaseId`, `sourceCommitSha`, `snapshotId`,
 `manifestSha256`, `artifactSha256`, the deployment kind, and
 `envelopeSha256`. It will not claim the commit that later records screenshots.
+The definitive candidate is created after the Task 5 product/runtime commit;
+later evidence, validation and workflow-only commits reuse that exact
+attestation and product `sourceCommitSha`. They never rebuild identity from an
+evidence commit. A later product/runtime edit instead starts a new candidate.
 
 ### Canonical artifact digest
 
@@ -124,7 +128,8 @@ the Pages `404.html` when needed, `version.json`, and deployment base metadata.
 
 The build will generate `artifact-manifest.json` from every regular core file,
 excluding `index.html`, `404.html`, `version.json`,
-`deployment-config.json`, and `artifact-manifest.json`. Each entry contains the
+`deployment-config.json`, `artifact-manifest.json`, and
+`envelope-manifest.json`. Each entry contains the
 POSIX relative path, byte length, and SHA-256 of the exact file bytes.
 Entries are sorted by UTF-8 path bytes. The file is serialized as UTF-8 JSON
 with sorted object keys, no insignificant whitespace, and one trailing LF.
@@ -237,7 +242,8 @@ existing `releaseId`; rollback never rebuilds from HEAD.
 
 ## Evidence capture and validation
 
-Before writing a screenshot or capture record, the capture command will fetch
+Before writing a screenshot or capture record, the capture command hashes and
+validates the exact Task 5 release attestation, then fetches
 the canonical endpoint's `version.json` and manifest. It will compute the
 manifest hash from the received bytes and compare the result with the expected
 freeze and release identity.

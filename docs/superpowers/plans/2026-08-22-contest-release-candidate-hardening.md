@@ -488,8 +488,9 @@ rtk git commit -m "feat(candidate): enforce canonical 21-resource boundary"
 
 - Modify: `scripts/release/validateContestFreeze.ts`
 - Modify: `scripts/release/validateContestFreeze.test.ts`
+- Modify: `scripts/release/renderContestSubmission.gates.test.ts`
 - Modify: `docs/contest/coverage-freeze.json`
-- Create: `docs/contest/coverage-freeze-rebake-20260822.md`
+- Modify: `docs/contest/coverage-freeze-rebake-20260822.md`
 
 **Interfaces:**
 
@@ -536,7 +537,14 @@ Expected: FAIL because schema 1 and `deployment` are still required.
 
 - [ ] **Step 3: Implement and export `ContestFreezeV2`**
 
-Remove `DEPLOYMENT_KEYS`, `EXPECTED_ROOT_URL`, and the deployment field. Load candidate resource keys from Task 3 and compare exact sorted sets across the public manifest, freeze, and allowlist before recomputing coverage.
+Remove `DEPLOYMENT_KEYS`, `EXPECTED_ROOT_URL`, and the deployment field. Export
+`ContestFreezeV2` and retain `ContestFreeze` only as an alias for that same
+schema-2 shape so renderer consumers stay type-safe. Load candidate resource
+keys and the canonical SEPE assertion from Task 3. Compare canonical key order
+and each `resourcePath`, `sha256`, and `recordCount` across the public manifest,
+freeze, and allowlist. The normal parser rejects schema 1; `--write` seeds a
+fresh v2 object from the exact current public manifest and never parses or
+reuses legacy deployment, hashes, counts, coverage, offer, or attempt values.
 
 - [ ] **Step 4: Rebake the freeze from the current candidate manifest**
 
@@ -545,18 +553,24 @@ resource snapshots (including the 116-record SEPE resource), recomputed
 coverage, offers, and attempts. Preserve or improve the baseline of 264 approved
 relations, 113 distinct qualifications, 130 modality keys, 131 occupations, 21
 aliases, 3 matched relations, 261 zero-reviewed relations, and 38 matched
-offers. Record the committed Task 3 HEAD (which contains the candidate
-allowlist) as the new source boundary in the rebake note and freeze; the legacy
-`05f9053…` boundary is no longer sufficient. Do not add a deployment claim and
-do not reuse hashes from the stale branch.
+offers. Record the full, independently approved final Task 3 corrective SHA
+(which contains the candidate allowlist and boundary) as the new coverage/data
+source boundary in the rebake note and freeze; this is distinct from Task 5's
+runtime build identity. The legacy `05f9053…` boundary is no longer sufficient.
+Share one source-boundary path list and include
+`config/candidate-resource-allowlist.json`. Validate SEPE through
+`assertCanonicalSepeCandidateResource()`, not record count alone. Do not add a
+deployment claim or reuse hashes from the stale branch. Task 7 owns migration
+of the historical schema-1 release-evidence record; Task 4 must not falsify it.
 
 - [ ] **Step 5: Verify GREEN**
 
 Run:
 
 ```text
-rtk npm exec -- vitest run scripts/release/validateContestFreeze.test.ts
+rtk npm exec -- vitest run scripts/release/validateContestFreeze.test.ts scripts/release/renderContestSubmission.gates.test.ts
 rtk npm exec -- tsx scripts/release/validateContestFreeze.ts
+rtk npm exec -- tsx scripts/release/validateCandidateBoundary.ts --bundle-root dist
 rtk npm run typecheck
 ```
 
@@ -565,7 +579,7 @@ Expected: all commands exit `0`, and adding `deployment` or an extra resource fa
 - [ ] **Step 6: Commit Task 4**
 
 ```text
-rtk git add scripts/release/validateContestFreeze.ts scripts/release/validateContestFreeze.test.ts docs/contest/coverage-freeze.json docs/contest/coverage-freeze-rebake-20260822.md
+rtk git add scripts/release/validateContestFreeze.ts scripts/release/validateContestFreeze.test.ts scripts/release/renderContestSubmission.gates.test.ts docs/contest/coverage-freeze.json docs/contest/coverage-freeze-rebake-20260822.md
 rtk git commit -m "refactor(contest): migrate coverage freeze to schema 2"
 ```
 
@@ -584,7 +598,9 @@ rtk git commit -m "refactor(contest): migrate coverage freeze to schema 2"
 - Modify: `scripts/release/writeVersionMetadata.ts`
 - Modify: `scripts/release/writeVersionMetadata.test.ts`
 - Modify: `scripts/release/preparePagesFallback.ts`
-- Modify: `scripts/release/prepareContestFallback646.ts`
+- Create: `scripts/release/preparePagesFallback.test.ts`
+- Modify: `scripts/release/publicBasePath.ts`
+- Modify: `scripts/release/publicBasePath.test.ts`
 - Modify: `vite.config.ts`
 - Modify: `index.html`
 - Modify: `src/main.tsx`
@@ -596,7 +612,11 @@ rtk git commit -m "refactor(contest): migrate coverage freeze to schema 2"
 **Interfaces:**
 
 - Produces `ArtifactManifest`, `EnvelopeManifest`, `ReleaseAttestation`, `createCandidateBundle(options)`, and `verifyReleaseBundle(options)`.
-- Bundle output contains one shared core, `metadata/artifact-manifest.json`, a canonical `metadata/publication.json`, plus `envelopes/pages` and `envelopes/vps`.
+- Bundle output contains one shared `core/`, canonical metadata and attestation,
+  plus `envelopes/pages` and `envelopes/vps`. Each deployable package overlays
+  one envelope on the same core and exposes `version.json`,
+  `artifact-manifest.json`, `envelope-manifest.json`, and
+  `deployment-config.json` at its public root.
 
 - [ ] **Step 1: Write failing canonical inventory tests**
 
@@ -619,6 +639,7 @@ it.each([
   "version.json",
   "deployment-config.json",
   "artifact-manifest.json",
+  "envelope-manifest.json",
 ])("excludes deployment envelope file %s from the core", async (path) => {
   await fixture.write(path, path);
   expect(
@@ -629,7 +650,12 @@ it.each([
 
 - [ ] **Step 2: Write failing bundle tests**
 
-Assert that Pages and VPS packages have the same `artifactSha256`, different base metadata and `envelopeSha256`, exact identity fields in `version.json`, and no build input named `evidenceCommitSha`.
+Assert that Pages and VPS packages have the same `artifactSha256`, different
+base metadata and `envelopeSha256`, exact identity fields in `version.json`, and
+no build input named `evidenceCommitSha`. Require explicit `releaseId`, full
+`sourceCommitSha`, and strict UTC-Z `createdAt`; there is no timestamp, UUID,
+implicit HEAD, or evidence default. Two runs with identical inputs are
+byte-identical.
 
 - [ ] **Step 3: Run bundle tests and confirm RED**
 
@@ -669,16 +695,28 @@ commit. Define `lockfileSha256` as SHA-256 over the exact checked-out
 `package-lock.json` bytes. Tests use raw `Buffer` values so NUL delimiters,
 non-ASCII paths and final-byte behavior cannot be changed by text decoding.
 
-Reject symlinks, non-regular entries, traversal, duplicate paths, unsorted inventory, wrong byte counts, and hash mismatches.
+Core exclusions apply only to those exact root-relative names; a nested file
+with the same basename is not silently excluded. Reject symlinks in every
+component, junctions/reparse points, non-regular
+entries, absolute/drive/UNC/traversal/backslash/control/NUL/encoded aliases,
+duplicate canonical paths, invalid Unicode, unsorted inventories, wrong byte
+counts, and hash mismatches. Sort with `Buffer.compare`, not locale collation,
+and copy only already validated bytes through invocation-specific temporary
+output plus atomic rename.
 
 Serialize both manifest types as UTF-8 JSON with recursively sorted object keys, no insignificant whitespace, and one trailing LF. Sort `files` by raw UTF-8 path bytes. `artifactSha256` is the SHA-256 of the exact serialized `ArtifactManifest`. `envelopeSha256` is the SHA-256 of the exact serialized `EnvelopeManifest`. Store the exact canonical artifact-manifest bytes at `metadata/artifact-manifest.json` in the release bundle and copy them unchanged to `artifact-manifest.json` at the root of both deployed packages. Canonically serialize `config/publication.json` into `metadata/publication.json` and bind its exact bytes through `ReleaseAttestation.publicationSha256`. These metadata files are intentionally outside both file inventories because the artifact manifest's own bytes define `artifactSha256`; the attestation and `version.json` bind the release digests.
 
 - [ ] **Step 5: Package the two envelopes from one core**
 
-Generate Pages base metadata `/concursos_cyl/` and VPS base metadata `/`. Generate `index.html` from one template by replacing only asset URL prefix and the `salida-public-base-path` meta. Pages receives a byte-identical `404.html` copy of its final index.
+Generate strict Pages base metadata `/concursos_cyl/` and VPS base metadata
+`/`. Generate `index.html` from one template by replacing only owned asset URLs
+and the single `salida-public-base-path` meta. Reject missing, duplicate, or
+invalid runtime-base metadata. Pages receives a byte-identical `404.html` copy
+of its final index.
 
-Activate Task 1's runtime-base contract in the same commit: set Vite's shared
-core to relative assets; route basename and generated-data requests through
+Activate Task 1's runtime-base contract in the same commit: force one
+deployment-neutral build and reject `VITE_PUBLIC_BASE_PATH` as a build input;
+route basename and generated-data requests through
 `readRuntimeBasePath(document)`; and put
 `<meta name="salida-public-base-path" content="/" />` in source `index.html` so
 local dev, `vite preview`, and the VPS root boot without packaging. The Pages
@@ -686,11 +724,16 @@ envelope rewrites only that explicit value to `/concursos_cyl/`. Preserve the
 current generated-data client's SEPE adapters, abort handling, payload budgets,
 and all newer fixtures while inserting the runtime-base argument.
 
+Prove byte equality for every core JS, CSS, dynamic chunk, image and data file,
+and exercise deep-route asset resolution under both bases. No compiled core
+byte may contain `/concursos_cyl/` or another deployment-specific prefix.
+
 The envelope manifest includes exactly `index.html`, `deployment-config.json`, and Pages `404.html` when present. It excludes `envelope-manifest.json`, `version.json`, and the copied public `artifact-manifest.json`. Create and hash that manifest first, then write `version.json` with the resulting `envelopeSha256`; this two-phase algorithm removes self-reference. The external `ReleaseAttestation` binds the shared identity and both envelope digests. Verification checks the core against public `artifact-manifest.json`, checks the envelope payload against its manifest, then checks the excluded `version.json` exactly against the attested deployment identity.
 
 - [ ] **Step 6: Add package scripts and verify GREEN**
 
-Add:
+Add package-only commands over an already built and fully gated `dist`; the
+creator must not rebuild Vite or data. Add:
 
 ```json
 {
@@ -703,8 +746,9 @@ Run:
 
 ```text
 rtk npm exec -- vitest run scripts/release/artifactManifest.test.ts scripts/release/createCandidateBundle.test.ts scripts/release/writeVersionMetadata.test.ts scripts/release/verifyReleaseBundle.test.ts
-rtk npm exec -- vitest run scripts/release/publicBasePath.test.ts src/data/generatedDataClient.test.ts
+rtk npm exec -- vitest run scripts/release/publicBasePath.test.ts scripts/release/preparePagesFallback.test.ts src/data/generatedDataClient.test.ts
 rtk npm run build
+rtk npm exec -- tsx scripts/release/validateCandidateBoundary.ts --bundle-root dist
 rtk npm run typecheck
 ```
 
@@ -713,7 +757,7 @@ Expected: all commands exit `0`; both envelopes verify against one core digest.
 - [ ] **Step 7: Commit Task 5**
 
 ```text
-rtk git add scripts/release/artifactManifest.ts scripts/release/artifactManifest.test.ts scripts/release/createCandidateBundle.ts scripts/release/createCandidateBundle.test.ts scripts/release/verifyReleaseBundle.ts scripts/release/verifyReleaseBundle.test.ts scripts/release/writeVersionMetadata.ts scripts/release/writeVersionMetadata.test.ts scripts/release/preparePagesFallback.ts scripts/release/prepareContestFallback646.ts vite.config.ts index.html src/main.tsx src/vite-env.d.ts src/data/generatedDataClient.ts src/data/generatedDataClient.test.ts package.json package-lock.json
+rtk git add scripts/release/artifactManifest.ts scripts/release/artifactManifest.test.ts scripts/release/createCandidateBundle.ts scripts/release/createCandidateBundle.test.ts scripts/release/verifyReleaseBundle.ts scripts/release/verifyReleaseBundle.test.ts scripts/release/writeVersionMetadata.ts scripts/release/writeVersionMetadata.test.ts scripts/release/preparePagesFallback.ts scripts/release/preparePagesFallback.test.ts scripts/release/publicBasePath.ts scripts/release/publicBasePath.test.ts vite.config.ts index.html src/main.tsx src/vite-env.d.ts src/data/generatedDataClient.ts src/data/generatedDataClient.test.ts package.json
 rtk git commit -m "feat(release): build attested candidate core and envelopes"
 ```
 
@@ -736,6 +780,9 @@ rtk git commit -m "feat(release): build attested candidate core and envelopes"
 
 - Produces `PublicEndpointProbe`, `fetchPublicIdentity(baseUrl, fetchImpl)`, and evidence manifest schema `2.0.0`.
 - Capture consumes expected VPS envelope identity from Task 5 and publication config from Task 1.
+- Capture also binds the SHA-256 of Task 5's exact canonical attestation. Tasks
+  7 and 9 reuse that candidate; they do not rebuild identity from the Task 6
+  evidence/tooling commit.
 
 - [ ] **Step 1: Write failing public-probe tests**
 
@@ -786,7 +833,9 @@ Expected: FAIL because capture trusts `--commit` and has no observed identity.
 
 - [ ] **Step 4: Implement the bounded endpoint probe**
 
-Fetch configured `version.json`, `artifact-manifest.json`,
+Hash the supplied canonical Task 5 attestation and require its identity and VPS
+envelope digest to equal the checked-in expectation before any request. Fetch
+configured `version.json`, `artifact-manifest.json`,
 `envelope-manifest.json`, `deployment-config.json`, every attested core payload,
 `data/v1/manifest.json`, and every generated resource. Use an abortable timeout
 for both headers and streaming bodies and a bounded response-size ceiling (16
@@ -820,11 +869,13 @@ export interface ContestEvidenceManifestV2 {
   state: "pending" | "captured";
   freezeRequired: true;
   outputDirectory: "docs/contest/evidence";
+  attestationSha256: string;
   expectedIdentity: DeploymentEnvelopeIdentity;
   observedIdentity:
     | (DeploymentEnvelopeIdentity & {
         canonicalRootUrl: string;
         observedAt: string;
+        versionBytesSha256: string;
       })
     | null;
   captures: Array<{
@@ -845,7 +896,8 @@ export interface ContestEvidenceManifestV2 {
 Preserve the existing capture contract for `freezeRequired`, `outputDirectory`, `requiredVisible`, `claimIds`, per-capture `freezeRequired`, and `redactionRule`. Remove only per-capture `localCommitSha` and `deployedCommitSha`; the single top-level observed identity replaces them.
 
 For the checked-in unpublished candidate, write `state: "pending"`, bind
-`expectedIdentity` to the Task 5 attestation, set `observedIdentity: null`, and
+`expectedIdentity` and `attestationSha256` to the exact Task 5 candidate, set
+`observedIdentity: null`, and
 set every new-candidate `sha256`/`capturedAt` to `null`. Preserve the existing 13
 capture definitions and legacy PNG files, but do not present their hashes or
 identity as evidence for the new candidate. Only a successful atomic live
@@ -991,7 +1043,14 @@ Both verifiers consume expected envelope identities and compare public version, 
 
 - [ ] **Step 6: Write an explicit pending evidence record**
 
-Migrate the checked-in record to schema 2 with `state: "pending"`, `verificationMode: "offline"`, `evidenceCommitSha: null`, null deployment observations, and all human approvals false. Do not preserve the stale verified claim. At the start of Task 7, record the committed Task 6 HEAD as the explicit 40-hex variable `TASK6_SOURCE_SHA`, build the candidate with `--release-id contest-2026-rc1 --source-commit TASK6_SOURCE_SHA`, and take `releaseId`, `sourceCommitSha`, `snapshotId`, `manifestSha256`, and `artifactSha256` verbatim from the resulting Task 5 attestation; never derive them from the evidence file or current evidence commit.
+Migrate the checked-in record to schema 2 with `state: "pending"`,
+`verificationMode: "offline"`, `evidenceCommitSha: null`, null deployment
+observations, and all human approvals false. Do not preserve the stale verified
+claim. Load the exact Task 5 attestation already bound by Task 6 and take
+`releaseId`, `sourceCommitSha`, `snapshotId`, `manifestSha256`, and
+`artifactSha256` verbatim from it. Never rebuild a candidate from the Task 6 or
+Task 7 evidence/tooling SHA and never derive identity from the evidence file or
+current evidence commit.
 
 - [ ] **Step 7: Verify GREEN**
 
