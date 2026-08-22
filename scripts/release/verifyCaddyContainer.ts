@@ -187,6 +187,35 @@ export async function verifyCaddyContainer(
   }
   await requiredResponse(request, outcomeUrl, "application/json");
 
+  const sepeSnapshot = manifest.resourceSnapshots?.sepeOccupationMarket;
+  if (
+    typeof sepeSnapshot?.resourcePath !== "string" ||
+    typeof sepeSnapshot.recordCount !== "number" ||
+    !/^\/data\/v1\/snapshots\/[^/]+\/sepe-occupation-market\.json$/u.test(
+      sepeSnapshot.resourcePath,
+    )
+  ) {
+    throw new Error(
+      "Caddy manifest does not address the SEPE occupation-market resource.",
+    );
+  }
+  const sepeUrl = new URL(sepeSnapshot.resourcePath, base);
+  if (sepeUrl.origin !== base.origin) {
+    throw new Error("Caddy SEPE resource must remain same-origin.");
+  }
+  const sepeResponse = await requiredResponse(
+    request,
+    sepeUrl,
+    "application/json",
+  );
+  const sepe = (await sepeResponse.json()) as { records?: unknown };
+  if (!Array.isArray(sepe.records)) {
+    throw new Error("Caddy SEPE resource must expose a records array.");
+  }
+  if (sepe.records.length !== sepeSnapshot.recordCount) {
+    throw new Error("Caddy SEPE record count does not match the manifest.");
+  }
+
   const graphSnapshot = manifest.resourceSnapshots?.derivedFpOccupationGraph;
   const catalogSnapshot = manifest.resourceSnapshots?.openDataCatalog;
   if (

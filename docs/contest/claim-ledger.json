@@ -86,91 +86,91 @@
   },
   {
     "claimId": "published_snapshot",
-    "text": "La publicación usa la instantánea {manifest.snapshotId}.",
+    "text": "La publicación usa la instantánea {coverageFreeze.manifest.snapshotId}.",
     "status": "freeze_derived",
     "evidenceType": "manifest_field",
-    "evidenceRef": "manifest.snapshotId",
+    "evidenceRef": "coverageFreeze.manifest.snapshotId",
     "allowedDocuments": ["technical-evidence.md", "submission-checklist.md"],
     "forbiddenParaphrases": ["instantánea más reciente sin verificar"]
   },
   {
     "claimId": "distinct_qualifications",
-    "text": "La cobertura pública contiene {coverage.distinctQualifications} cualificaciones distintas.",
+    "text": "La cobertura pública contiene {coverageFreeze.coverage.distinctQualificationCount} cualificaciones distintas.",
     "status": "freeze_derived",
     "evidenceType": "manifest_field",
-    "evidenceRef": "coverage.distinctQualifications",
+    "evidenceRef": "coverageFreeze.coverage.distinctQualificationCount",
     "allowedDocuments": ["application-summary.md", "technical-evidence.md"],
     "forbiddenParaphrases": ["todas las cualificaciones"]
   },
   {
     "claimId": "public_modality_keys",
-    "text": "Las claves de modalidad públicas son {coverage.modalityKeys}.",
+    "text": "Las claves de modalidad públicas son {coverageFreeze.coverage.modalityKeys}.",
     "status": "freeze_derived",
     "evidenceType": "manifest_field",
-    "evidenceRef": "coverage.modalityKeys",
+    "evidenceRef": "coverageFreeze.coverage.modalityKeys",
     "allowedDocuments": ["technical-evidence.md", "limitations.md"],
     "forbiddenParaphrases": ["cada modalidad cuenta como titulación distinta"]
   },
   {
     "claimId": "approved_relations",
-    "text": "Las relaciones ocupacionales aprobadas publicadas son {coverage.approvedRelationKeys}.",
+    "text": "Las relaciones ocupacionales aprobadas publicadas son {coverageFreeze.coverage.approvedRelationKeys}.",
     "status": "freeze_derived",
     "evidenceType": "manifest_field",
-    "evidenceRef": "coverage.approvedRelationKeys",
+    "evidenceRef": "coverageFreeze.coverage.approvedRelationKeys",
     "allowedDocuments": ["application-summary.md", "technical-evidence.md"],
     "forbiddenParaphrases": ["relaciones inferidas por similitud"]
   },
   {
     "claimId": "approved_aliases",
-    "text": "Los alias aprobados publicados son {coverage.approvedAliasKeys}.",
+    "text": "Los alias aprobados publicados son {coverageFreeze.coverage.approvedAliasKeys}.",
     "status": "freeze_derived",
     "evidenceType": "manifest_field",
-    "evidenceRef": "coverage.approvedAliasKeys",
+    "evidenceRef": "coverageFreeze.coverage.approvedAliasKeys",
     "allowedDocuments": ["technical-evidence.md", "limitations.md"],
     "forbiddenParaphrases": ["alias automático sin revisión"]
   },
   {
     "claimId": "matched_offer_union",
-    "text": "La unión de ofertas alcanzadas por relaciones publicadas es {offers.matchedUnion}.",
+    "text": "La unión de ofertas alcanzadas por relaciones publicadas es {coverageFreeze.offers.matchedOfferCount}.",
     "status": "freeze_derived",
     "evidenceType": "manifest_field",
-    "evidenceRef": "offers.matchedUnion",
+    "evidenceRef": "coverageFreeze.offers.matchedOfferCount",
     "allowedDocuments": ["application-summary.md", "technical-evidence.md"],
     "forbiddenParaphrases": ["ofertas totales del mercado"]
   },
   {
     "claimId": "zero_reviewed_relations",
-    "text": "Las relaciones revisadas sin oferta alcanzada son {offers.zeroReviewedRelations}.",
+    "text": "Las relaciones revisadas sin oferta alcanzada son {coverageFreeze.coverage.zeroReviewedRelationCount}.",
     "status": "freeze_derived",
     "evidenceType": "manifest_field",
-    "evidenceRef": "offers.zeroReviewedRelations",
+    "evidenceRef": "coverageFreeze.coverage.zeroReviewedRelationCount",
     "allowedDocuments": ["application-summary.md", "limitations.md"],
     "forbiddenParaphrases": ["no existe empleo"]
   },
   {
     "claimId": "deferred_programs",
-    "text": "Los programas diferidos por evidencia insuficiente son {coverage.deferredPrograms}.",
+    "text": "Los programas diferidos por evidencia insuficiente son {coverageFreeze.coverage.deferredPrograms}.",
     "status": "freeze_derived",
     "evidenceType": "manifest_field",
-    "evidenceRef": "coverage.deferredPrograms",
+    "evidenceRef": "coverageFreeze.coverage.deferredPrograms",
     "allowedDocuments": ["application-summary.md", "limitations.md"],
     "forbiddenParaphrases": ["cobertura completa del catálogo"]
   },
   {
     "claimId": "deployment_provenance",
-    "text": "La versión desplegada se identifica con {deployment.commitSha} y {deployment.workflowRunId}.",
+    "text": "Cuando exista y se verifique una versión desplegada, se identificará con {releaseEvidence.deployment.commitSha} y {releaseEvidence.deployment.workflowRunId}.",
     "status": "freeze_derived",
     "evidenceType": "workflow_run",
-    "evidenceRef": "deployment.workflowRunId",
+    "evidenceRef": "releaseEvidence.deployment.workflowRunId",
     "allowedDocuments": ["technical-evidence.md", "submission-checklist.md"],
     "forbiddenParaphrases": ["despliegue verificado sin run"]
   },
   {
     "claimId": "human_submission_approval",
-    "text": "La solicitud externa se envía solo después de {human.finalApproval}.",
+    "text": "La solicitud externa se envía solo después de {releaseEvidence.humanApproval.submissionAuthorized}.",
     "status": "freeze_derived",
     "evidenceType": "human_confirmation",
-    "evidenceRef": "human.finalApproval",
+    "evidenceRef": "releaseEvidence.humanApproval.submissionAuthorized",
     "allowedDocuments": ["submission-checklist.md"],
     "forbiddenParaphrases": ["envío automático al concurso"]
   }

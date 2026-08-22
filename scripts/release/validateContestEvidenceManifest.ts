@@ -476,9 +476,9 @@ export function renderContestEvidenceChecklist(
     "- [x] Use a fresh anonymous browser context for every capture.",
     "- [x] Confirm the displayed route is the local or deployed root application, not a deep route submitted to the contest.",
     "- [x] Wait for loading to settle, then run the matching Axe, overflow, request, and console checks.",
-    "- [x] Inspect the original PNG for browser chrome, personal data, account state, cookies, tokens, local filesystem paths, clipping, and misleading empty states.",
+    "- [ ] Inspect the original PNG for browser chrome, personal data, account state, cookies, tokens, local filesystem paths, clipping, and misleading empty states.",
     "- [x] Record the coverage-freeze commit and local capture commit; record the deployed commit after live verification.",
-    "- [x] Have a reviewer compare each image with the claim ledger and the frozen data before committing evidence.",
+    "- [ ] Have a reviewer compare each image with the claim ledger and the frozen data before committing evidence.",
     "",
   ].join("\n");
 }

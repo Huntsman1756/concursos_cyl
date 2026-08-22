@@ -169,7 +169,10 @@ describe("contest evidence manifest validator", () => {
     expect(checklist).toContain("docs/contest/evidence/home-desktop.png");
     expect(checklist).toContain("Use a fresh anonymous browser context");
     expect(checklist).toContain(
-      "- [x] Record the coverage-freeze commit and local capture commit; record the deployed commit after live verification.",
+      "- [ ] Inspect the original PNG for browser chrome, personal data, account state, cookies, tokens, local filesystem paths, clipping, and misleading empty states.",
+    );
+    expect(checklist).toContain(
+      "- [ ] Have a reviewer compare each image with the claim ledger and the frozen data before committing evidence.",
     );
     expect(checklist.endsWith("\n")).toBe(true);
   });

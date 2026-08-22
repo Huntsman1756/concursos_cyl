@@ -97,6 +97,15 @@ const FREEZE_KEYS = [
   "deployment",
 ] as const;
 const EXPECTED_ROOT_URL = "https://salida-cyl.157-90-22-40.sslip.io/";
+export const EXPECTED_CONTEST_RESOURCE_COUNT = 21;
+export const EXPECTED_SEPE_RECORD_COUNT = 116;
+export const CONTEST_FREEZE_SOURCE_PATHS = [
+  "data/curated",
+  "public/data",
+  "src/data",
+  "src/domain",
+  "src/features",
+] as const;
 
 type ResourceKey = (typeof RESOURCE_KEYS)[number];
 
@@ -212,6 +221,42 @@ function hashText(text: string): string {
   return createHash("sha256").update(text).digest("hex");
 }
 
+export function getDirtyContestFreezeSourcePaths(
+  rootDir = process.cwd(),
+): string[] {
+  const status = execFileSync(
+    "git",
+    [
+      "status",
+      "--porcelain=v1",
+      "--untracked-files=all",
+      "--",
+      ...CONTEST_FREEZE_SOURCE_PATHS,
+    ],
+    { cwd: path.resolve(rootDir), encoding: "utf8" },
+  );
+  return status
+    .split(/\r?\n/u)
+    .map((line) => line.trim())
+    .filter(Boolean);
+}
+
+/**
+ * Must run before reading or replacing coverage-freeze.json for --write.
+ * The freeze describes a clean source boundary; a dirty source tree cannot
+ * produce a trustworthy replacement artifact.
+ */
+export function assertContestFreezeWritePreflight(
+  rootDir = process.cwd(),
+): void {
+  const dirty = getDirtyContestFreezeSourcePaths(rootDir);
+  if (dirty.length > 0) {
+    throw new Error(
+      `Refusing coverage freeze --write while source paths are dirty: ${dirty.join("; ")}`,
+    );
+  }
+}
+
 function readJson(rootDir: string, relativePath: string): unknown {
   return JSON.parse(
     fs.readFileSync(path.resolve(rootDir, relativePath), "utf8"),
@@ -239,8 +284,20 @@ function parseFreeze(value: unknown): ContestFreeze {
   }
 
   const manifest = exactKeys(root.manifest, MANIFEST_KEYS, "manifest");
-  const resourceSnapshots = exactKeys(
+  const resourceSnapshotRecord = record(
     manifest.resourceSnapshots,
+    "manifest.resourceSnapshots",
+  );
+  if (
+    Object.keys(resourceSnapshotRecord).length !==
+    EXPECTED_CONTEST_RESOURCE_COUNT
+  ) {
+    throw new Error(
+      `manifest.resourceSnapshots must contain exactly ${EXPECTED_CONTEST_RESOURCE_COUNT} resources`,
+    );
+  }
+  const resourceSnapshots = exactKeys(
+    resourceSnapshotRecord,
     RESOURCE_KEYS,
     "manifest.resourceSnapshots",
   );
@@ -648,6 +705,14 @@ function recomputeFreeze(
           : Array.isArray(value)
             ? value.length
             : -1;
+      if (
+        key === "sepeOccupationMarket" &&
+        recordCount !== EXPECTED_SEPE_RECORD_COUNT
+      ) {
+        throw new Error(
+          `SEPE occupation market must contain exactly ${EXPECTED_SEPE_RECORD_COUNT} records, found ${recordCount}.`,
+        );
+      }
       return [
         key,
         {
@@ -768,6 +833,7 @@ function assertSourceCommitBoundary(
         "data/curated",
         "public/data",
         "src/domain",
+        "src/data",
         "src/features",
       ],
       { cwd: rootDir, stdio: "pipe" },
@@ -809,6 +875,7 @@ if (
 ) {
   const rootDir = process.cwd();
   if (process.argv.includes("--write")) {
+    assertContestFreezeWritePreflight(rootDir);
     const freezePath = path.resolve(
       rootDir,
       "docs/contest/coverage-freeze.json",
@@ -887,11 +954,11 @@ if (
         resourceSnapshots: seededResourceSnapshots,
       },
     });
-    fs.writeFileSync(
-      freezePath,
-      await formatPrettier(JSON.stringify(recomputed), { parser: "json" }),
-    );
+    const candidate = await formatPrettier(JSON.stringify(recomputed), {
+      parser: "json",
+    });
     validateContestFreeze(recomputed, { rootDir });
+    fs.writeFileSync(freezePath, candidate);
     console.info(`Contest coverage freeze written from ${sourceCommitSha}.`);
   } else {
     loadAndValidateContestFreeze(rootDir);

@@ -9,6 +9,7 @@ import {
   loadAndValidateContestFreeze,
   type ContestFreeze,
 } from "./validateContestFreeze";
+import { validateContestReleaseEvidenceFromRoot } from "./validateContestReleaseEvidence";
 
 export type ContestSubmissionDocuments = {
   "application-summary.md": string;
@@ -273,11 +274,11 @@ function renderSubmissionChecklist(
     visualEvidenceLine =
       "**capturada y validada en `docs/contest/evidence-capture.json`**.";
     capturesReviewGate =
-      "- [x] Revisar las capturas en contexto anónimo, sin datos personales ni credenciales.";
+      "- [ ] Revisar las capturas en contexto anónimo, sin datos personales ni credenciales. (capturas actuales; revisión humana pendiente)";
     figuresConfirmationGate =
-      "- [x] Confirmar que las cifras visibles siguen coincidiendo con `" +
+      "- [ ] Confirmar que las cifras visibles siguen coincidiendo con `" +
       freeze.manifest.snapshotId +
-      "`.";
+      "`. (revisión humana pendiente)";
   } else {
     const captureLabel =
       deployment.captureCount !== null
@@ -356,6 +357,10 @@ function loadContestDeploymentEvidence(
   rootDir: string,
   freeze: ContestFreeze,
 ): ContestDeploymentEvidence {
+  const strictEvidence = validateContestReleaseEvidenceFromRoot(rootDir);
+  if (strictEvidence.status === "pending") {
+    return PENDING_DEPLOYMENT_EVIDENCE;
+  }
   const releaseEvidencePath = path.join(
     rootDir,
     "docs",

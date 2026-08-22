@@ -39,7 +39,97 @@ export type ContestClaim = {
 };
 
 type DocumentInput = { path: string; text: string };
-type ValidationOptions = { documents?: DocumentInput[] };
+const CLAIM_PATH_TYPES = {
+  "coverageFreeze.manifest.snapshotId": "string",
+  "coverageFreeze.coverage.distinctQualificationCount": "number",
+  "coverageFreeze.coverage.modalityKeys": "string[]",
+  "coverageFreeze.coverage.approvedRelationKeys": "string[]",
+  "coverageFreeze.coverage.approvedAliasKeys": "string[]",
+  "coverageFreeze.offers.matchedOfferCount": "number",
+  "coverageFreeze.coverage.zeroReviewedRelationCount": "number",
+  "coverageFreeze.coverage.deferredPrograms": "string[]",
+  "releaseEvidence.deployment.commitSha": "string|null",
+  "releaseEvidence.deployment.workflowRunId": "string|null",
+  "releaseEvidence.humanApproval.finalApplicationTextApproved": "boolean",
+  "releaseEvidence.humanApproval.submissionAuthorized": "boolean",
+} as const;
+
+type ContestClaimPath = keyof typeof CLAIM_PATH_TYPES;
+type ClaimPathType = (typeof CLAIM_PATH_TYPES)[ContestClaimPath];
+
+export type ContestClaimContext = {
+  coverageFreeze: unknown;
+  releaseEvidence: unknown;
+};
+
+type ValidationOptions = {
+  documents?: DocumentInput[];
+  claimContext?: ContestClaimContext;
+};
+
+function symbolicTokens(text: string): string[] {
+  return [...text.matchAll(/\{([^{}]+)\}/gu)].map((match) => match[1] ?? "");
+}
+
+function readClaimPath(
+  context: ContestClaimContext,
+  claimPath: ContestClaimPath,
+): unknown {
+  let current: unknown = context;
+  for (const segment of claimPath.split(".")) {
+    if (
+      current === null ||
+      typeof current !== "object" ||
+      !(segment in (current as Record<string, unknown>))
+    ) {
+      throw new Error(
+        `claim path is missing from typed namespace: ${claimPath}`,
+      );
+    }
+    current = (current as Record<string, unknown>)[segment];
+  }
+  return current;
+}
+
+function assertClaimPathType(
+  value: unknown,
+  expected: ClaimPathType,
+  claimPath: string,
+): void {
+  const valid =
+    expected === "string"
+      ? typeof value === "string" && value.trim() !== ""
+      : expected === "string|null"
+        ? value === null || (typeof value === "string" && value.trim() !== "")
+        : expected === "number"
+          ? typeof value === "number" && Number.isFinite(value)
+          : expected === "boolean"
+            ? typeof value === "boolean"
+            : Array.isArray(value) &&
+              value.every((item) => typeof item === "string");
+  if (!valid) {
+    throw new Error(
+      `claim path ${claimPath} has an incompatible type; expected ${expected}`,
+    );
+  }
+}
+
+function validateTypedClaimPath(
+  claimPath: string,
+  context: ContestClaimContext | undefined,
+): asserts claimPath is ContestClaimPath {
+  if (!(claimPath in CLAIM_PATH_TYPES)) {
+    throw new Error(`unknown claim path in typed namespace: ${claimPath}`);
+  }
+  if (context !== undefined) {
+    const value = readClaimPath(context, claimPath as ContestClaimPath);
+    assertClaimPathType(
+      value,
+      CLAIM_PATH_TYPES[claimPath as ContestClaimPath],
+      claimPath,
+    );
+  }
+}
 
 export function validateContestClaims(
   claims: unknown,
@@ -106,12 +196,40 @@ export function validateContestClaims(
     if (record.status === "freeze_derived") {
       if (/\b\d+(?:[.,]\d+)?\b/iu.test(record.text))
         throw new Error("provisional numeric text in freeze-derived claim");
-      if (!/\{[a-z][a-zA-Z0-9]*(?:\.[a-z][a-zA-Z0-9]*)+\}/u.test(record.text))
+      const tokens = symbolicTokens(record.text);
+      if (tokens.length === 0)
         throw new Error("freeze-derived claim must use a symbolic token");
+      for (const token of tokens) {
+        validateTypedClaimPath(token, options.claimContext);
+      }
       if (
         !/^[a-z][a-zA-Z0-9]*(?:\.[a-z][a-zA-Z0-9]*)+$/u.test(record.evidenceRef)
-      )
+      ) {
         throw new Error("freeze-derived evidenceRef must be symbolic");
+      }
+      validateTypedClaimPath(record.evidenceRef, options.claimContext);
+      if (!tokens.includes(record.evidenceRef)) {
+        throw new Error(
+          `freeze-derived claim text must include its evidenceRef token: ${record.evidenceRef}`,
+        );
+      }
+      const expectedRoot =
+        record.evidenceType === "manifest_field"
+          ? "coverageFreeze."
+          : record.evidenceType === "workflow_run"
+            ? "releaseEvidence.deployment."
+            : record.evidenceType === "human_confirmation"
+              ? "releaseEvidence.humanApproval."
+              : undefined;
+      if (
+        expectedRoot !== undefined &&
+        (tokens.some((token) => !token.startsWith(expectedRoot)) ||
+          !record.evidenceRef.startsWith(expectedRoot))
+      ) {
+        throw new Error(
+          `evidenceRef ${record.evidenceRef} is outside the ${expectedRoot} typed namespace`,
+        );
+      }
     }
     if (
       /salari[oa]\s+esperad|(?:tasa|indicador)\s+de\s+(?:empleo|afiliaci[oó]n)/iu.test(
@@ -166,6 +284,21 @@ export function validateContestClaimsFromRoot(rootDir = process.cwd()): void {
   const claims = loadAndValidateContestClaims(
     path.join(rootDir, "docs", "contest", "claim-ledger.json"),
   );
+  const claimContext: ContestClaimContext = {
+    coverageFreeze: JSON.parse(
+      fs.readFileSync(
+        path.join(rootDir, "docs", "contest", "coverage-freeze.json"),
+        "utf8",
+      ),
+    ) as unknown,
+    releaseEvidence: JSON.parse(
+      fs.readFileSync(
+        path.join(rootDir, "docs", "contest", "release-evidence.json"),
+        "utf8",
+      ),
+    ) as unknown,
+  };
+  validateContestClaims(claims, { claimContext });
   scanContestDocuments(rootDir, [
     "README.md",
     "docs/contest/source-ledger.md",

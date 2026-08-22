@@ -3,6 +3,7 @@ import { readFile } from "node:fs/promises";
 import { describe, expect, it } from "vitest";
 
 import {
+  assertContestFreezeWritePreflight,
   loadAndValidateContestFreeze,
   recomputeContestFreeze,
   validateContestFreeze,
@@ -18,11 +19,48 @@ async function readFreeze(): Promise<Record<string, unknown>> {
 }
 
 describe("contest coverage freeze validator", () => {
+  it("rejects a dirty source tree before freeze write without altering the freeze file", async () => {
+    const before = await readFile("docs/contest/coverage-freeze.json", "utf8");
+
+    expect(() => assertContestFreezeWritePreflight(ROOT)).toThrow(
+      /dirty|source path|src\/data|src\/features/i,
+    );
+
+    expect(await readFile("docs/contest/coverage-freeze.json", "utf8")).toBe(
+      before,
+    );
+  });
+
+  it("requires exactly 21 manifest resources and the canonical SEPE snapshot count", async () => {
+    const freeze = await readFreeze();
+    const manifest = freeze.manifest as Record<string, unknown>;
+    const resourceSnapshots = manifest.resourceSnapshots as Record<
+      string,
+      unknown
+    >;
+
+    const withoutSepe = { ...resourceSnapshots };
+    delete withoutSepe.sepeOccupationMarket;
+    expect(() =>
+      validateContestFreeze({
+        ...freeze,
+        manifest: { ...manifest, resourceSnapshots: withoutSepe },
+      }),
+    ).toThrow(/21|sepeOccupationMarket|missing/i);
+
+    const currentManifest = JSON.parse(
+      await readFile("public/data/v1/manifest.json", "utf8"),
+    ) as { resourceSnapshots: Record<string, { recordCount: number }> };
+    expect(
+      currentManifest.resourceSnapshots.sepeOccupationMarket.recordCount,
+    ).toBe(116);
+  }, 30_000);
+
   it("reports the intentionally stale freeze artifact after the SEPE inventory expansion", async () => {
     const freeze = await readFreeze();
 
     expect(() => loadAndValidateContestFreeze(ROOT)).toThrow(
-      /sepeOccupationMarket|sourceCommitSha|ancestor/i,
+      /21|sepeOccupationMarket|sourceCommitSha|ancestor/i,
     );
     expect(freeze.manifest).toBeDefined();
   }, 30_000);
@@ -88,7 +126,7 @@ describe("contest coverage freeze validator", () => {
         { ...freeze, sourceCommitSha: "0".repeat(40) },
         { rootDir: ROOT },
       ),
-    ).toThrow(/sourceCommitSha|commit|mutation|sepeOccupationMarket/i);
+    ).toThrow(/21|sourceCommitSha|commit|mutation|sepeOccupationMarket/i);
   }, 30_000);
 
   it("rejects inconsistent coverage counts and marginal deltas", async () => {
@@ -118,6 +156,6 @@ describe("contest coverage freeze validator", () => {
         },
         { rootDir: ROOT },
       ),
-    ).toThrow(/coverage|offer|recomput|marginal|sepeOccupationMarket/i);
+    ).toThrow(/21|coverage|offer|recomput|marginal|sepeOccupationMarket/i);
   }, 30_000);
 });

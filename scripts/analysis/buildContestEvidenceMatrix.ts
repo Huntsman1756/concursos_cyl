@@ -10,9 +10,8 @@ import { execFileSync } from "node:child_process";
 import { extname, join, relative, resolve } from "node:path";
 import { pathToFileURL } from "node:url";
 
-const EXPECTED_APPROVED_RELATIONS = 265;
 const AUDIT_CUTOFF = "2026-08-22T04:13:28+02:00";
-const SOURCE_COMMIT_SHA = "e41c5394d71c1324fe8a3e5d12a4a6f76793eaa2";
+const CURATED_RELATIONS_PATH = "data/curated/training-occupation-links.json";
 const TEXT_EXTENSIONS = new Set([".json", ".md", ".txt"]);
 const OFFICIAL_DOMAINS = [
   "boe.es",
@@ -63,6 +62,85 @@ interface IndependentSampleDocument {
   relations: IndependentSampleRelation[];
 }
 
+function gitText(rootDirectory: string, args: string[]): string {
+  return execFileSync("git", args, {
+    cwd: rootDirectory,
+    encoding: "utf8",
+    maxBuffer: 16 * 1024 * 1024,
+  }).trim();
+}
+
+/**
+ * Resolves the immutable source boundary for the matrix. By default this is
+ * the checked-out HEAD (the future S commit); callers may pass S explicitly
+ * when checking generated artifacts after a later documentation commit.
+ * A matrix must never silently pair a checked-in sample with a dirty source.
+ */
+export function resolveContestEvidenceSourceCommit(
+  rootDirectory = resolve("."),
+  requestedSourceCommitSha?: string,
+): string {
+  const dirty = gitText(rootDirectory, [
+    "status",
+    "--porcelain=v1",
+    "--untracked-files=all",
+    "--",
+    CURATED_RELATIONS_PATH,
+  ]);
+  if (dirty !== "") {
+    throw new Error(
+      `Contest evidence source is dirty: ${CURATED_RELATIONS_PATH}. Commit the source before building the matrix.`,
+    );
+  }
+  const sourceCommitSha =
+    requestedSourceCommitSha ?? gitText(rootDirectory, ["rev-parse", "HEAD"]);
+  if (!/^[a-f0-9]{40}$/u.test(sourceCommitSha)) {
+    throw new Error(
+      `Could not resolve a commit boundary for ${CURATED_RELATIONS_PATH}.`,
+    );
+  }
+  try {
+    gitText(rootDirectory, [
+      "rev-parse",
+      "--verify",
+      `${sourceCommitSha}^{commit}`,
+    ]);
+    gitText(rootDirectory, [
+      "show",
+      `${sourceCommitSha}:${CURATED_RELATIONS_PATH}`,
+    ]);
+  } catch {
+    throw new Error(
+      `Source commit ${sourceCommitSha} does not contain ${CURATED_RELATIONS_PATH}.`,
+    );
+  }
+  try {
+    execFileSync(
+      "git",
+      ["merge-base", "--is-ancestor", sourceCommitSha, "HEAD"],
+      { cwd: rootDirectory, stdio: "pipe" },
+    );
+  } catch {
+    throw new Error(
+      `Source commit ${sourceCommitSha} is not an ancestor of the current HEAD.`,
+    );
+  }
+  try {
+    gitText(rootDirectory, [
+      "diff",
+      "--quiet",
+      sourceCommitSha,
+      "--",
+      CURATED_RELATIONS_PATH,
+    ]);
+  } catch {
+    throw new Error(
+      `Contest evidence source changed after source commit ${sourceCommitSha}.`,
+    );
+  }
+  return sourceCommitSha;
+}
+
 function sampleDigest(seed: string, relationKey: string): string {
   return createHash("sha256").update(`${seed}|${relationKey}`).digest("hex");
 }
@@ -70,6 +148,7 @@ function sampleDigest(seed: string, relationKey: string): string {
 function loadIndependentSample(
   rootDirectory: string,
   approved: readonly CuratedRelation[],
+  sourceCommitSha: string,
 ): IndependentSampleDocument {
   const sample = JSON.parse(
     readFileSync(
@@ -93,8 +172,9 @@ function loadIndependentSample(
     (relation) => relation.reviewStatus === "approved",
   );
   if (
-    sample.sourceCommitSha !== SOURCE_COMMIT_SHA ||
+    sample.sourceCommitSha !== sourceCommitSha ||
     sample.population !== samplePopulation.length ||
+    sample.population !== approved.length ||
     sample.sampleSize !== 15 ||
     sample.relations.length !== sample.sampleSize ||
     sample.independentlyAudited !== true ||
@@ -197,26 +277,35 @@ function collectArtifactTexts(rootDirectory: string): ArtifactText[] {
     }));
 }
 
-export function buildContestEvidenceMatrix(rootDirectory = resolve(".")) {
+export type BuildContestEvidenceMatrixOptions = {
+  sourceCommitSha?: string;
+};
+
+export function buildContestEvidenceMatrix(
+  rootDirectory = resolve("."),
+  options: BuildContestEvidenceMatrixOptions = {},
+) {
+  const sourceCommitSha = resolveContestEvidenceSourceCommit(
+    rootDirectory,
+    options.sourceCommitSha,
+  );
   const source = loadAuditedRelations(rootDirectory);
   const approved = source.filter(
     (relation) => relation.reviewStatus === "approved",
   );
 
-  if (approved.length !== EXPECTED_APPROVED_RELATIONS) {
-    throw new Error(
-      `Expected exactly ${EXPECTED_APPROVED_RELATIONS} approved relations, found ${approved.length}.`,
-    );
-  }
-
   const relationKeys = approved.map(
     (relation) => `${relation.trainingProgramKey}|${relation.occupationId}`,
   );
-  if (new Set(relationKeys).size !== EXPECTED_APPROVED_RELATIONS) {
+  if (new Set(relationKeys).size !== approved.length) {
     throw new Error("Approved relation identities are not unique.");
   }
 
-  const sample = loadIndependentSample(rootDirectory, approved);
+  const sample = loadIndependentSample(
+    rootDirectory,
+    approved,
+    sourceCommitSha,
+  );
   const sampleKeys = new Set(
     sample.relations.map((relation) => relation.relationKey),
   );
@@ -293,7 +382,7 @@ export function buildContestEvidenceMatrix(rootDirectory = resolve(".")) {
   return {
     schemaVersion: 1,
     sourcePath: "data/curated/training-occupation-links.json",
-    sourceCommitSha: SOURCE_COMMIT_SHA,
+    sourceCommitSha,
     auditCutoff: AUDIT_CUTOFF,
     relationCount: relations.length,
     commonFloorFailures,
@@ -356,7 +445,19 @@ function renderMarkdown(
 
 function runCli(): void {
   const rootDirectory = resolve(".");
-  const matrix = buildContestEvidenceMatrix(rootDirectory);
+  const sourceCommitArgument = process.argv.find((argument) =>
+    argument.startsWith("--source-commit="),
+  );
+  const sourceCommitIndex = process.argv.indexOf("--source-commit");
+  const sourceCommitSha =
+    sourceCommitArgument?.slice("--source-commit=".length) ??
+    (sourceCommitIndex >= 0 ? process.argv[sourceCommitIndex + 1] : undefined);
+  if (sourceCommitIndex >= 0 && sourceCommitSha === undefined) {
+    throw new Error("--source-commit requires a commit SHA");
+  }
+  const matrix = buildContestEvidenceMatrix(rootDirectory, {
+    sourceCommitSha,
+  });
   const json = `${JSON.stringify(matrix, null, 2)}\n`;
   const markdown = renderMarkdown(matrix);
   const jsonPath = resolve(

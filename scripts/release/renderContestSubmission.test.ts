@@ -83,12 +83,12 @@ describe("contest submission renderer", () => {
     expect(rendered["submission-checklist.md"]).toContain(
       "- [x] Ejecutar los gates de release y verificar la aplicación pública.",
     );
-    // Capturas actuales: checks marcados
+    // Las capturas actuales siguen requiriendo inspección manual.
     expect(rendered["submission-checklist.md"]).toContain(
-      "- [x] Revisar las capturas en contexto anónimo, sin datos personales ni credenciales.",
+      "- [ ] Revisar las capturas en contexto anónimo, sin datos personales ni credenciales.",
     );
     expect(rendered["submission-checklist.md"]).toContain(
-      "- [x] Confirmar que las cifras visibles siguen coincidiendo",
+      "- [ ] Confirmar que las cifras visibles siguen coincidiendo",
     );
   });
 

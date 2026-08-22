@@ -1,5 +1,8 @@
 import { describe, expect, it } from "vitest";
-import { validateContestClaims } from "./validateContestClaims";
+import {
+  validateContestClaims,
+  type ContestClaimContext,
+} from "./validateContestClaims";
 
 const validClaim = {
   claimId: "problem-audience",
@@ -10,6 +13,29 @@ const validClaim = {
   allowedDocuments: ["application-summary.md"],
   forbiddenParaphrases: ["garantiza empleo"],
 } as const;
+
+const claimContext: ContestClaimContext = {
+  coverageFreeze: {
+    manifest: { snapshotId: "snapshot-1" },
+    coverage: {
+      distinctQualificationCount: 3,
+      modalityKeys: ["A", "B"],
+      approvedRelationKeys: ["A|occupation:cno11:1111"],
+      approvedAliasKeys: ["albañil|occupation:cno11:7111"],
+      zeroReviewedRelationCount: 1,
+      deferredPrograms: ["C"],
+    },
+    offers: { matchedOfferCount: 2 },
+  },
+  releaseEvidence: {
+    deployment: { commitSha: "a".repeat(40), workflowRunId: "123" },
+    humanApproval: {
+      finalApplicationTextApproved: false,
+      rootUrlApproved: false,
+      submissionAuthorized: false,
+    },
+  },
+};
 
 describe("contest claim validator", () => {
   it("accepts strict claims with source-bound evidence", () => {
@@ -64,7 +90,7 @@ describe("contest claim validator", () => {
     ).toThrow(/forbidden claim/iu);
   });
 
-  it("requires symbolic freeze evidence and safe document paths", () => {
+  it("accepts symbolic freeze evidence and rejects unsafe document paths", () => {
     expect(() =>
       validateContestClaims([
         {
@@ -72,11 +98,11 @@ describe("contest claim validator", () => {
           claimId: "freeze_missing_token",
           status: "freeze_derived",
           evidenceType: "manifest_field",
-          evidenceRef: "manifest.snapshotId",
-          text: "La instantánea está lista.",
+          evidenceRef: "coverageFreeze.manifest.snapshotId",
+          text: "La instantánea {coverageFreeze.manifest.snapshotId} está lista.",
         },
       ]),
-    ).toThrow(/symbolic token/iu);
+    ).not.toThrow();
     expect(() =>
       validateContestClaims([
         {
@@ -86,5 +112,141 @@ describe("contest claim validator", () => {
         },
       ]),
     ).toThrow(/allowedDocuments/iu);
+  });
+
+  it("resolves freeze-derived tokens against the typed coverageFreeze/releaseEvidence namespaces", () => {
+    expect(
+      validateContestClaims(
+        [
+          {
+            ...validClaim,
+            claimId: "freeze-snapshot",
+            status: "freeze_derived",
+            evidenceType: "manifest_field",
+            evidenceRef: "coverageFreeze.manifest.snapshotId",
+            text: "La instantánea publicada es {coverageFreeze.manifest.snapshotId}.",
+          },
+          {
+            ...validClaim,
+            claimId: "deployment-workflow",
+            status: "freeze_derived",
+            evidenceType: "workflow_run",
+            evidenceRef: "releaseEvidence.deployment.workflowRunId",
+            text: "La versión observada usa el run {releaseEvidence.deployment.workflowRunId}.",
+          },
+          {
+            ...validClaim,
+            claimId: "submission-authorization",
+            status: "freeze_derived",
+            evidenceType: "human_confirmation",
+            evidenceRef: "releaseEvidence.humanApproval.submissionAuthorized",
+            text: "El envío depende de {releaseEvidence.humanApproval.submissionAuthorized}.",
+          },
+        ],
+        { claimContext },
+      ),
+    ).toEqual({ valid: true, errors: [] });
+
+    expect(
+      (
+        claimContext.releaseEvidence as {
+          humanApproval: { submissionAuthorized: boolean };
+        }
+      ).humanApproval.submissionAuthorized,
+    ).toBe(false);
+  });
+
+  it("rejects unknown, missing, and mistyped claim paths", () => {
+    const base = {
+      ...validClaim,
+      status: "freeze_derived" as const,
+      evidenceType: "manifest_field" as const,
+    };
+
+    expect(() =>
+      validateContestClaims(
+        [
+          {
+            ...base,
+            claimId: "unknown-path",
+            evidenceRef: "coverageFreeze.manifest.snapshotId",
+            text: "Valor {coverageFreeze.manifest.snapshotId} y {coverageFreeze.manifest.notAField}.",
+          },
+        ],
+        { claimContext },
+      ),
+    ).toThrow(/unknown|path|namespace/i);
+
+    expect(() =>
+      validateContestClaims(
+        [
+          {
+            ...base,
+            claimId: "second-token-wrong-type",
+            evidenceRef: "coverageFreeze.manifest.snapshotId",
+            text: "Instantánea {coverageFreeze.manifest.snapshotId}; total {coverageFreeze.coverage.distinctQualificationCount}.",
+          },
+        ],
+        {
+          claimContext: {
+            ...claimContext,
+            coverageFreeze: {
+              ...claimContext.coverageFreeze,
+              coverage: {
+                ...claimContext.coverageFreeze.coverage,
+                distinctQualificationCount: "3",
+              },
+            },
+          },
+        },
+      ),
+    ).toThrow(/type|number|distinctQualificationCount/i);
+
+    expect(() =>
+      validateContestClaims(
+        [
+          {
+            ...base,
+            claimId: "missing-path",
+            evidenceRef: "coverageFreeze.coverage.modalityKeys",
+            text: "Modalidades {coverageFreeze.coverage.modalityKeys}.",
+          },
+        ],
+        {
+          claimContext: {
+            ...claimContext,
+            coverageFreeze: {
+              ...claimContext.coverageFreeze,
+              coverage: {
+                ...claimContext.coverageFreeze.coverage,
+                modalityKeys: undefined,
+              },
+            },
+          },
+        },
+      ),
+    ).toThrow(/missing|undefined|path/i);
+
+    expect(() =>
+      validateContestClaims(
+        [
+          {
+            ...base,
+            claimId: "mistyped-path",
+            evidenceRef: "coverageFreeze.manifest.snapshotId",
+            text: "Instantánea {coverageFreeze.manifest.snapshotId}.",
+          },
+        ],
+        {
+          claimContext: {
+            ...claimContext,
+            coverageFreeze: {
+              ...claimContext.coverageFreeze,
+              manifest: { snapshotId: 123 },
+            },
+          },
+        },
+      ),
+    ).toThrow(/type|string|snapshotId/i);
   });
 });

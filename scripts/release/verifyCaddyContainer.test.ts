@@ -29,6 +29,11 @@ function validRequest(input: string | URL): Promise<Response> {
               "/data/v1/snapshots/release/derived-fp-occupation-graph.json",
             recordCount: 0,
           },
+          sepeOccupationMarket: {
+            resourcePath:
+              "/data/v1/snapshots/release/sepe-occupation-market.json",
+            recordCount: 0,
+          },
           openDataCatalog: {
             resourcePath: "/data/v1/snapshots/release/open-data-catalog.json",
             recordCount: 1,
@@ -62,6 +67,13 @@ function validRequest(input: string | URL): Promise<Response> {
       new Response("[]", { headers: { "content-type": "application/json" } }),
     );
   }
+  if (path.endsWith("/sepe-occupation-market.json")) {
+    return Promise.resolve(
+      new Response(JSON.stringify({ records: [] }), {
+        headers: { "content-type": "application/json" },
+      }),
+    );
+  }
   return Promise.resolve(new Response('<div id="root"></div>', { headers }));
 }
 
@@ -85,6 +97,37 @@ describe("verifyCaddyContainer", () => {
     await expect(
       verifyCaddyContainer("http://127.0.0.1:8080", withoutCsp),
     ).rejects.toThrow(/Caddy Content-Security-Policy/iu);
+  });
+
+  it("requires the manifest-addressed SEPE resource on the VPS", async () => {
+    const withoutSepe = (input: string | URL) => {
+      if (new URL(input).pathname !== "/data/v1/manifest.json") {
+        return validRequest(input);
+      }
+      return Promise.resolve(
+        Response.json({
+          resourceSnapshots: {
+            outcomeIndicators: {
+              resourcePath:
+                "/data/v1/snapshots/release/outcome-indicators.json",
+            },
+            derivedFpOccupationGraph: {
+              resourcePath:
+                "/data/v1/snapshots/release/derived-fp-occupation-graph.json",
+              recordCount: 0,
+            },
+            openDataCatalog: {
+              resourcePath: "/data/v1/snapshots/release/open-data-catalog.json",
+              recordCount: 1,
+            },
+          },
+        }),
+      );
+    };
+
+    await expect(
+      verifyCaddyContainer("http://127.0.0.1:8080", withoutSepe),
+    ).rejects.toThrow(/SEPE|sepeOccupationMarket/i);
   });
 
   it.each(["file:///srv", "//example.com", "http://user@example.com"])(

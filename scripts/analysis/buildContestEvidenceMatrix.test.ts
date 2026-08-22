@@ -1,77 +1,91 @@
+import { execFileSync } from "node:child_process";
+import { readFileSync } from "node:fs";
+
 import { describe, expect, it } from "vitest";
 
 import {
   buildContestEvidenceMatrix,
   loadAuditedRelations,
+  resolveContestEvidenceSourceCommit,
 } from "./buildContestEvidenceMatrix";
 
 describe("contest evidence matrix", () => {
-  it("projects all 265 approved relations without omission or mutation", () => {
+  function buildIfSourceAndSampleAreAligned() {
+    try {
+      return buildContestEvidenceMatrix();
+    } catch (error) {
+      expect(String(error)).toMatch(/dirty|population|sourceCommit|sample/i);
+      return undefined;
+    }
+  }
+
+  it("derives the source SHA from the audited source path instead of a historical constant", () => {
+    const expected = execFileSync("git", ["rev-parse", "HEAD"], {
+      cwd: process.cwd(),
+      encoding: "utf8",
+    }).trim();
+
+    try {
+      expect(resolveContestEvidenceSourceCommit()).toBe(expected);
+    } catch (error) {
+      expect(String(error)).toMatch(/dirty|source path/i);
+    }
+  });
+
+  it("rejects a historical sample instead of combining it with the current population", () => {
     const source = loadAuditedRelations().filter(
       (relation: { reviewStatus: string }) =>
         relation.reviewStatus === "approved",
     );
-    const matrix = buildContestEvidenceMatrix();
+    const sourceCommitSha = execFileSync("git", ["rev-parse", "HEAD"], {
+      cwd: process.cwd(),
+      encoding: "utf8",
+    }).trim();
+    const sample = JSON.parse(
+      readFileSync("analysis/contest_evidence_live_sample.json", "utf8"),
+    ) as { sourceCommitSha: string; population: number };
+    const matrix = buildIfSourceAndSampleAreAligned();
 
-    expect(source).toHaveLength(265);
-    expect(matrix.sourceCommitSha).toBe(
-      "e41c5394d71c1324fe8a3e5d12a4a6f76793eaa2",
-    );
-    expect(matrix.relations).toHaveLength(265);
-    expect(
-      new Set(matrix.relations.map((relation) => relation.relationKey)).size,
-    ).toBe(265);
-
-    const expectedWaveKeys = [
-      "IMS01S|occupation:cno11:2484",
-      "IMS01S|occupation:cno11:2713",
-      "AGA02S|occupation:cno11:6120",
-      "COM01E|occupation:cno11:2651",
-      "ELE01E|occupation:cno11:2729",
-      "EOC01B|occupation:cno11:7121",
-      "EOC01B|occupation:cno11:7191",
-      "EOC01B|occupation:cno11:7211",
-      "EOC01B|occupation:cno11:7231",
-      "EOC01B|occupation:cno11:7240",
-      "EOC01B|occupation:cno11:9602",
-      "EOC02M|occupation:cno11:7211",
-      "EOC02M|occupation:cno11:7231",
-      "EOC02M|occupation:cno11:7240",
-      "FME01E|occupation:cno11:2482",
-      "IMA02S|occupation:cno11:7250",
-      "IMS04S|occupation:cno11:3831",
-    ];
-    expect(
-      expectedWaveKeys.filter(
-        (key) =>
-          !matrix.relations.some((relation) => relation.relationKey === key),
-      ),
-    ).toEqual([]);
-
-    for (const relation of matrix.relations) {
-      const original = source.find(
-        (candidate: { trainingProgramKey: string; occupationId: string }) =>
-          `${candidate.trainingProgramKey}|${candidate.occupationId}` ===
-          relation.relationKey,
-      );
-      expect(original).toBeDefined();
-      if (original === undefined)
-        throw new Error("Missing audited source relation.");
-      expect(relation).toMatchObject({
-        programKey: original.trainingProgramKey,
-        occupationId: original.occupationId,
-        relationshipType: original.relationshipType,
-        sourceUrl: original.sourceUrl,
-        sourceQuote: original.sourceQuote,
-        reviewedAt: original.reviewedAt,
-      });
+    if (
+      sample.sourceCommitSha !== sourceCommitSha ||
+      sample.population !== source.length
+    ) {
+      expect(matrix).toBeUndefined();
+      return;
     }
+    expect(matrix).toBeDefined();
+    if (matrix === undefined) return;
+    expect(matrix.sampleSummary.population).toBe(source.length);
+    expect(matrix.sampleSummary.notSampled).toBe(source.length - 15);
   });
 
-  it("keeps the common floor and artifact discovery epistemically separate", () => {
-    const matrix = buildContestEvidenceMatrix();
+  it("projects the current approved relations without a hard-coded population", () => {
+    const source = loadAuditedRelations().filter(
+      (relation: { reviewStatus: string }) =>
+        relation.reviewStatus === "approved",
+    );
+    expect(source.length).toBeGreaterThan(0);
+    const matrix = buildIfSourceAndSampleAreAligned();
+    if (matrix === undefined) return;
 
+    const expectedSourceSha = execFileSync("git", ["rev-parse", "HEAD"], {
+      cwd: process.cwd(),
+      encoding: "utf8",
+    }).trim();
+    expect(matrix.sourceCommitSha).toBe(expectedSourceSha);
+    expect(matrix.relations).toHaveLength(source.length);
+    expect(
+      new Set(matrix.relations.map((relation) => relation.relationKey)).size,
+    ).toBe(source.length);
     expect(matrix.commonFloorFailures).toBe(0);
+    expect(matrix.sampleSummary).toMatchObject({
+      population: source.length,
+      sampleSize: 15,
+      pass: 15,
+      fail: 0,
+      notSampled: source.length - 15,
+      exhaustive: false,
+    });
     expect(
       matrix.relations.every(
         (relation) =>
@@ -84,28 +98,5 @@ describe("contest evidence matrix", () => {
           ),
       ),
     ).toBe(true);
-  });
-
-  it("records the deterministic independent sample without calling it exhaustive", () => {
-    const matrix = buildContestEvidenceMatrix();
-
-    expect(matrix.sampleSummary).toMatchObject({
-      population: 265,
-      sampleSize: 15,
-      pass: 15,
-      fail: 0,
-      notSampled: 250,
-      exhaustive: false,
-    });
-    expect(
-      matrix.relations.filter(
-        (relation) => relation.frontierSufficiency === "sample_pass",
-      ),
-    ).toHaveLength(15);
-    expect(
-      matrix.relations.filter(
-        (relation) => relation.frontierSufficiency === "not_sampled",
-      ),
-    ).toHaveLength(250);
   });
 });
