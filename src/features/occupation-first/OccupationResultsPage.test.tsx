@@ -147,7 +147,7 @@ const sepeRecord = {
         }),
   })),
   source: {
-    url: "https://www.sepe.es/HomeSepe/occupation/2713",
+    url: "https://www.sepe.es/HomeSepe/que-es-observatorio/informacion-mt-por-ocupacion/informacion-mercado-trabajo-por-ocupacion~_mensuales_2026_07_2713-Analistas-programadores-y-disenadores-web~.html",
     retrievedAt: "2026-08-22T09:30:00Z",
     attribution: SEPE_OCCUPATION_MARKET_ATTRIBUTION,
   },
