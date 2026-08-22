@@ -56,6 +56,11 @@ describe("contest coverage freeze validator", () => {
         "utf8",
       );
       writeFileSync(
+        join(root, "analysis", "fp_one_word_publication_reviews.json"),
+        "{}\n",
+        "utf8",
+      );
+      writeFileSync(
         join(root, "data", "curated", "input.json"),
         "{}\n",
         "utf8",
@@ -72,7 +77,7 @@ describe("contest coverage freeze validator", () => {
       execFileSync("git", ["add", "."], { cwd: root });
       execFileSync("git", ["commit", "-qm", "fixture"], { cwd: root });
       writeFileSync(
-        join(root, "analysis", "fp_coverage_expansion_results.json"),
+        join(root, "analysis", "fp_one_word_publication_reviews.json"),
         '{"dirty":true}\n',
         "utf8",
       );

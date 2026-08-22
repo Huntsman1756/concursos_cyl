@@ -1,4 +1,11 @@
-import { readFileSync } from "node:fs";
+import {
+  mkdtempSync,
+  mkdirSync,
+  readFileSync,
+  rmSync,
+  writeFileSync,
+} from "node:fs";
+import { tmpdir } from "node:os";
 import { resolve } from "node:path";
 
 import { describe, expect, it } from "vitest";
@@ -1253,6 +1260,47 @@ describe("curated occupation mappings", () => {
     expect(() => approvedSingleTokenAuditIdentities(artifact)).toThrow(
       /row review|evidence drift/i,
     );
+  });
+
+  it("reads single-token audit evidence from the caller root", () => {
+    const root = mkdtempSync(resolve(tmpdir(), "curated-mappings-root-"));
+    try {
+      const artifact = JSON.parse(
+        readFileSync(
+          resolve(
+            process.cwd(),
+            "analysis/fp_one_word_publication_reviews.json",
+          ),
+          "utf8",
+        ),
+      );
+      const reviewedRow = artifact.rows.find(
+        (row: { form: string }) => row.form === "encofradores",
+      );
+      if (reviewedRow === undefined) throw new Error("Missing audit row.");
+      reviewedRow.requirementQuotes = ["Altered terminal evidence."];
+      mkdirSync(resolve(root, "analysis"), { recursive: true });
+      writeFileSync(
+        resolve(root, "analysis/fp_one_word_publication_reviews.json"),
+        `${JSON.stringify(artifact)}\n`,
+        "utf8",
+      );
+      const pinnedOfferRelativePath =
+        "public/data/v1/snapshots/20260809014318761-5b22c488ce4b/job-offers.json";
+      const pinnedOfferPath = resolve(pinnedOfferRelativePath);
+      const rootedPinnedOfferPath = resolve(root, pinnedOfferRelativePath);
+      mkdirSync(resolve(rootedPinnedOfferPath, ".."), { recursive: true });
+      writeFileSync(rootedPinnedOfferPath, readFileSync(pinnedOfferPath));
+
+      expect(() =>
+        validateCuratedMappings(
+          { programs, occupations, aliases, links },
+          { rootDirectory: root },
+        ),
+      ).toThrow(/row review|evidence drift/i);
+    } finally {
+      rmSync(root, { recursive: true, force: true });
+    }
   });
 
   it("fails closed when a rejected audit form is changed to accepted", () => {

@@ -101,6 +101,7 @@ export const EXPECTED_CONTEST_RESOURCE_COUNT = 21;
 export const EXPECTED_SEPE_RECORD_COUNT = 116;
 export const CONTEST_FREEZE_SOURCE_PATHS = [
   "analysis/fp_coverage_expansion_results.json",
+  "analysis/fp_one_word_publication_reviews.json",
   "data/catalogs",
   "data/curated",
   "data/schemas",
@@ -584,21 +585,24 @@ function recomputeFreeze(
     freeze.manifest,
     "programs",
   );
-  const curated = validateCuratedMappings({
-    programs,
-    occupations: readJson(
-      rootDir,
-      "data/curated/occupations.json",
-    ) as unknown[],
-    aliases: readJson(
-      rootDir,
-      "data/curated/occupation-aliases.json",
-    ) as unknown[],
-    links: readJson(
-      rootDir,
-      "data/curated/training-occupation-links.json",
-    ) as unknown[],
-  });
+  const curated = validateCuratedMappings(
+    {
+      programs,
+      occupations: readJson(
+        rootDir,
+        "data/curated/occupations.json",
+      ) as unknown[],
+      aliases: readJson(
+        rootDir,
+        "data/curated/occupation-aliases.json",
+      ) as unknown[],
+      links: readJson(
+        rootDir,
+        "data/curated/training-occupation-links.json",
+      ) as unknown[],
+    },
+    { rootDirectory: rootDir },
+  );
   const expansion = record(
     readJson(rootDir, "analysis/fp_coverage_expansion_results.json"),
     "expansion results",
@@ -861,6 +865,7 @@ function assertSourceCommitBoundary(
         "data/schemas",
         "public/data",
         "analysis/fp_coverage_expansion_results.json",
+        "analysis/fp_one_word_publication_reviews.json",
         "scripts/analysis/validateFpOneWordPublicationReview.ts",
         "scripts/data/validateCuratedMappings.ts",
         "src/domain",

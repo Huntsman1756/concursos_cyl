@@ -32,6 +32,10 @@ export interface ValidatedCuratedMappings {
   links: TrainingOccupationLink[];
 }
 
+export interface ValidateCuratedMappingsOptions {
+  rootDirectory?: string;
+}
+
 const DEFAULT_ROOT_DIRECTORY = resolve(import.meta.dirname, "../..");
 const STRICT_MULTIWORD_MATCH_POLICY = "strict_multiword";
 
@@ -92,6 +96,7 @@ function assertUnique(values: readonly string[], label: string): void {
 
 export function validateCuratedMappings(
   candidate: CuratedMappingCandidate,
+  options: ValidateCuratedMappingsOptions = {},
 ): ValidatedCuratedMappings {
   assertApprovedCitations(candidate.links);
   const occupations = OccupationsSchema.parse(candidate.occupations);
@@ -110,7 +115,9 @@ export function validateCuratedMappings(
   );
   const normalizedAliases = new Map<string, string>();
   const approvedSingleTokenIdentities = approvedSingleTokenAuditIdentities(
-    validateFpOneWordPublicationReview(DEFAULT_ROOT_DIRECTORY),
+    validateFpOneWordPublicationReview(
+      options.rootDirectory ?? DEFAULT_ROOT_DIRECTORY,
+    ),
   );
 
   for (const alias of aliases) {
@@ -314,10 +321,13 @@ export async function loadCuratedMappingsFromDisk(
     readJson(resolve(directory, "occupation-aliases.json")),
     readJson(resolve(directory, "training-occupation-links.json")),
   ]);
-  return validateCuratedMappings({
-    programs,
-    occupations: Array.isArray(occupations) ? occupations : [occupations],
-    aliases: Array.isArray(aliases) ? aliases : [aliases],
-    links: Array.isArray(links) ? links : [links],
-  });
+  return validateCuratedMappings(
+    {
+      programs,
+      occupations: Array.isArray(occupations) ? occupations : [occupations],
+      aliases: Array.isArray(aliases) ? aliases : [aliases],
+      links: Array.isArray(links) ? links : [links],
+    },
+    { rootDirectory },
+  );
 }

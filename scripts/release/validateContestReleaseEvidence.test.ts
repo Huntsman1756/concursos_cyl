@@ -1,11 +1,12 @@
 import { execFileSync } from "node:child_process";
-import { mkdtempSync, rmSync, writeFileSync } from "node:fs";
+import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 
 import { describe, expect, it } from "vitest";
 
 import {
+  assertContestReleaseEvidenceWorktreeClean,
   assertContestReleaseGitChain,
   validateContestReleaseEvidence,
   type ContestReleaseEvidence,
@@ -196,29 +197,26 @@ describe("contest release evidence validator", () => {
     );
   });
 
-  it("downgrades evidence with an older capture commit instead of asserting verified", () => {
+  it("rejects evidence marked verified when its capture commit is older", () => {
     const evidence = validEvidence();
     evidence.captureProductCommitSha = "f".repeat(40);
 
-    expect(validateContestReleaseEvidence(evidence, context)).toMatchObject({
-      valid: true,
-      status: "pending",
-      capturesAreCurrent: false,
-    });
+    expect(() => validateContestReleaseEvidence(evidence, context)).toThrow(
+      /verified|capture|publication/i,
+    );
   });
 
   it("requires complete current capture provenance for verified evidence", () => {
     const evidence = validEvidence();
     evidence.captureProductCommitSha = null;
 
-    expect(validateContestReleaseEvidence(evidence, context)).toMatchObject({
-      status: "pending",
-      capturesAreCurrent: false,
-    });
+    expect(() => validateContestReleaseEvidence(evidence, context)).toThrow(
+      /verified|capture|publication/i,
+    );
 
     const mismatch = validEvidence();
     const captures = context.captures ?? [];
-    expect(
+    expect(() =>
       validateContestReleaseEvidence(mismatch, {
         ...context,
         captures: [
@@ -229,7 +227,20 @@ describe("contest release evidence validator", () => {
           ...captures.slice(1),
         ],
       }),
-    ).toMatchObject({ status: "pending", capturesAreCurrent: false });
+    ).toThrow(/verified|capture|publication/i);
+
+    expect(() =>
+      validateContestReleaseEvidence(validEvidence(), {
+        ...context,
+        captures: [context.captures![0]!],
+      }),
+    ).toThrow(/capture|count|verified/i);
+
+    const splitAudit = validEvidence();
+    splitAudit.localReviewHeadSha = "f".repeat(40);
+    expect(() => validateContestReleaseEvidence(splitAudit, context)).toThrow(
+      /audit|review|commit/i,
+    );
   });
 
   it("validates the S-to-F-to-P-to-E Git chain", () => {
@@ -249,38 +260,73 @@ describe("contest release evidence validator", () => {
         cwd: root,
         encoding: "utf8",
       }).trim();
-      execFileSync("git", ["commit", "--allow-empty", "-qm", "F"], {
-        cwd: root,
+      mkdirSync(join(root, "docs", "contest", "evidence"), {
+        recursive: true,
       });
+      const freezePath = "docs/contest/coverage-freeze.json";
+      const evidenceManifestPath = "docs/contest/evidence-capture.json";
+      const capturePath = "docs/contest/evidence/home.png";
+      writeFileSync(join(root, freezePath), '{"freeze":"F"}\n', "utf8");
+      execFileSync("git", ["add", "."], { cwd: root });
+      execFileSync("git", ["commit", "-qm", "F"], { cwd: root });
       const freeze = execFileSync("git", ["rev-parse", "HEAD"], {
         cwd: root,
         encoding: "utf8",
       }).trim();
-      execFileSync("git", ["commit", "--allow-empty", "-qm", "P"], {
-        cwd: root,
-      });
+      writeFileSync(join(root, "publication.txt"), "P\n", "utf8");
+      execFileSync("git", ["add", "."], { cwd: root });
+      execFileSync("git", ["commit", "-qm", "P"], { cwd: root });
       const publication = execFileSync("git", ["rev-parse", "HEAD"], {
         cwd: root,
         encoding: "utf8",
       }).trim();
-      execFileSync("git", ["commit", "--allow-empty", "-qm", "E"], {
+      writeFileSync(join(root, evidenceManifestPath), '{"capture":"E"}\n');
+      writeFileSync(join(root, capturePath), "png-bytes");
+      execFileSync("git", ["add", "."], { cwd: root });
+      execFileSync("git", ["commit", "-qm", "E"], { cwd: root });
+      const evidence = execFileSync("git", ["rev-parse", "HEAD"], {
         cwd: root,
-      });
+        encoding: "utf8",
+      }).trim();
 
       expect(() =>
         assertContestReleaseGitChain(root, {
           sourceCommitSha: source,
           freezeCommitSha: freeze,
           publicationCommitSha: publication,
+          evidenceCommitSha: evidence,
+          freezePath,
+          evidencePaths: [evidenceManifestPath, capturePath],
         }),
+      ).not.toThrow();
+      expect(() =>
+        assertContestReleaseEvidenceWorktreeClean(root),
       ).not.toThrow();
       expect(() =>
         assertContestReleaseGitChain(root, {
           sourceCommitSha: source,
           freezeCommitSha: freeze,
           publicationCommitSha: freeze,
+          evidenceCommitSha: evidence,
+          freezePath,
+          evidencePaths: [evidenceManifestPath, capturePath],
         }),
       ).toThrow(/distinct|order|ancestor/i);
+
+      writeFileSync(join(root, freezePath), '{"freeze":"tampered"}\n');
+      expect(() =>
+        assertContestReleaseGitChain(root, {
+          sourceCommitSha: source,
+          freezeCommitSha: freeze,
+          publicationCommitSha: publication,
+          evidenceCommitSha: evidence,
+          freezePath,
+          evidencePaths: [evidenceManifestPath, capturePath],
+        }),
+      ).toThrow(/freeze|bytes|commit/i);
+      expect(() => assertContestReleaseEvidenceWorktreeClean(root)).toThrow(
+        /dirty|coverage-freeze/i,
+      );
     } finally {
       rmSync(root, { recursive: true, force: true });
     }

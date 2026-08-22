@@ -113,6 +113,9 @@ export type ContestReleaseGitChain = {
   sourceCommitSha: string;
   freezeCommitSha: string;
   publicationCommitSha: string | null;
+  evidenceCommitSha: string | null;
+  freezePath: string;
+  evidencePaths: readonly string[];
 };
 
 export type ContestReleaseEvidenceValidation = {
@@ -230,6 +233,63 @@ function assertAncestor(
   }
 }
 
+function assertSafeGitPath(relativePath: string, label: string): void {
+  if (
+    relativePath.trim() === "" ||
+    path.isAbsolute(relativePath) ||
+    relativePath.includes("\\") ||
+    relativePath.split("/").includes("..") ||
+    relativePath.startsWith("-")
+  ) {
+    throw new Error(`${label} must be a safe repository-relative POSIX path`);
+  }
+}
+
+function assertCommitContainsCurrentPaths(
+  rootDir: string,
+  commitSha: string,
+  paths: readonly string[],
+  label: string,
+): void {
+  if (paths.length === 0) return;
+  paths.forEach((relativePath) => assertSafeGitPath(relativePath, label));
+  try {
+    execFileSync("git", ["diff", "--quiet", commitSha, "--", ...paths], {
+      cwd: rootDir,
+      stdio: "pipe",
+    });
+  } catch {
+    throw new Error(`${label} bytes do not match commit ${commitSha}`);
+  }
+}
+
+const RELEASE_EVIDENCE_WORKTREE_PATHS = [
+  "docs/contest/coverage-freeze.json",
+  "docs/contest/release-evidence.json",
+  "docs/contest/evidence-capture.json",
+  "docs/contest/claim-ledger.json",
+  "docs/contest/evidence",
+] as const;
+
+export function assertContestReleaseEvidenceWorktreeClean(
+  rootDir = process.cwd(),
+): void {
+  const dirty = execFileSync(
+    "git",
+    [
+      "status",
+      "--porcelain=v1",
+      "--untracked-files=all",
+      "--",
+      ...RELEASE_EVIDENCE_WORKTREE_PATHS,
+    ],
+    { cwd: path.resolve(rootDir), encoding: "utf8" },
+  ).trim();
+  if (dirty !== "") {
+    throw new Error(`Contest release evidence paths are dirty: ${dirty}`);
+  }
+}
+
 export function assertContestReleaseGitChain(
   rootDir: string,
   chain: ContestReleaseGitChain,
@@ -245,27 +305,51 @@ export function assertContestReleaseGitChain(
     throw new Error("Git chain requires distinct S and F commits");
   }
   assertAncestor(rootDir, chain.sourceCommitSha, chain.freezeCommitSha);
+  assertCommitContainsCurrentPaths(
+    rootDir,
+    chain.freezeCommitSha,
+    [chain.freezePath],
+    "coverage freeze",
+  );
   if (chain.publicationCommitSha === null) {
+    if (chain.evidenceCommitSha !== null || chain.evidencePaths.length > 0) {
+      throw new Error(
+        "A pending Git chain must not claim an evidence commit or evidence paths",
+      );
+    }
     assertAncestor(rootDir, chain.freezeCommitSha, evidenceCommitSha);
     return;
   }
   assertCommitExists(rootDir, chain.publicationCommitSha);
+  if (chain.evidenceCommitSha === null) {
+    throw new Error("A published Git chain requires an evidence commit");
+  }
+  assertCommitExists(rootDir, chain.evidenceCommitSha);
   if (
     chain.publicationCommitSha === chain.sourceCommitSha ||
     chain.publicationCommitSha === chain.freezeCommitSha ||
-    chain.publicationCommitSha === evidenceCommitSha
+    chain.publicationCommitSha === chain.evidenceCommitSha
   ) {
     throw new Error("Git chain requires distinct F, P, and E commits");
   }
   assertAncestor(rootDir, chain.freezeCommitSha, chain.publicationCommitSha);
-  assertAncestor(rootDir, chain.publicationCommitSha, evidenceCommitSha);
+  assertAncestor(rootDir, chain.publicationCommitSha, chain.evidenceCommitSha);
+  assertAncestor(rootDir, chain.evidenceCommitSha, evidenceCommitSha);
+  assertCommitContainsCurrentPaths(
+    rootDir,
+    chain.evidenceCommitSha,
+    chain.evidencePaths,
+    "capture evidence",
+  );
 }
 
 function capturesMatchPublication(
   context: ReleaseEvidenceValidationContext,
   publicationSha: string | null,
+  declaredCaptureCount: number,
 ): boolean {
   if (publicationSha === null || context.captures === undefined) return false;
+  if (context.captures.length !== declaredCaptureCount) return false;
   if (
     context.captureCount !== undefined &&
     context.captures.length !== context.captureCount
@@ -399,6 +483,10 @@ export function validateContestReleaseEvidence(
   ) {
     throw new Error(
       "verified release evidence requires publication, audit, and local review commits",
+    );
+  } else if (auditHeadSha !== localReviewHeadSha) {
+    throw new Error(
+      "verified auditHeadSha and localReviewHeadSha must identify the same evidence commit",
     );
   }
 
@@ -632,11 +720,16 @@ export function validateContestReleaseEvidence(
     rawCaptureSha !== null &&
     publicationSha !== null &&
     rawCaptureSha === publicationSha &&
-    capturesMatchPublication(context, publicationSha);
+    capturesMatchPublication(context, publicationSha, captureCount);
+  if (status === "verified" && !capturesAreCurrent) {
+    throw new Error(
+      "verified release evidence requires complete captures for the exact publication commit",
+    );
+  }
   return {
     valid: true,
     errors: [],
-    status: status === "verified" && !capturesAreCurrent ? "pending" : status,
+    status,
     capturesAreCurrent,
     humanApproval,
   };
@@ -664,6 +757,7 @@ export function validateContestReleaseEvidenceFromRoot(
   rootDir = process.cwd(),
 ): ContestReleaseEvidenceValidation {
   const resolvedRoot = path.resolve(rootDir);
+  assertContestReleaseEvidenceWorktreeClean(resolvedRoot);
   const freeze = loadAndValidateContestFreeze(resolvedRoot);
   const evidence = JSON.parse(
     fs.readFileSync(
@@ -684,7 +778,7 @@ export function validateContestReleaseEvidenceFromRoot(
     rootDir: resolvedRoot,
     knownClaimIds: claims.map(({ claimId }) => claimId),
     freezeRecordPresent: true,
-    requireProvenance: false,
+    requireProvenance: true,
   });
   const captures = captureValue as ContestEvidenceManifest;
   const context: ReleaseEvidenceValidationContext = {
@@ -707,6 +801,16 @@ export function validateContestReleaseEvidenceFromRoot(
     sourceCommitSha: freeze.sourceCommitSha,
     freezeCommitSha: evidence.coverageFreezeCommitSha,
     publicationCommitSha: evidence.publicationCommitSha,
+    evidenceCommitSha:
+      evidence.status === "verified" ? evidence.auditHeadSha : null,
+    freezePath: "docs/contest/coverage-freeze.json",
+    evidencePaths:
+      evidence.status === "verified"
+        ? [
+            "docs/contest/evidence-capture.json",
+            ...captures.captures.map((capture) => capture.outputFile),
+          ]
+        : [],
   });
   return result;
 }
