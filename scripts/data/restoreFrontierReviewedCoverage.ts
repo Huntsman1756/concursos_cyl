@@ -243,7 +243,6 @@ export const ACCEPTED_RELATION_KEYS = [
   "EOC01B|7231",
   "EOC01B|7240",
   "EOC01B|9602",
-  "EOC02M|7211",
   "EOC02M|7231",
   "EOC02M|7240",
   "FME01E|2482",
@@ -623,17 +622,6 @@ export const TASK_5_WAVE_RELATIONSHIPS = [
       roleLevel: "adjacent",
       fullOccupationQualification: false,
     },
-  },
-  {
-    trainingProgramKey: "EOC02M",
-    occupationId: "occupation:cno11:7211",
-    relationshipType: "reviewed_relationship",
-    reviewStatus: "approved",
-    sourceUrl:
-      "https://www.todofp.es/que-estudiar/familias-profesionales/edificacion-obra-civil/obras-interior-decoracion-rehabilitacion.html",
-    sourceQuote: "Juntera / juntero de placa de yeso laminado.",
-    reviewedAt: "2026-08-22",
-    mappingVersion: "1.0.0",
   },
   {
     trainingProgramKey: "EOC02M",

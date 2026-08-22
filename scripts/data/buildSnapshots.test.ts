@@ -32,6 +32,7 @@ import { publishedRequirementId } from "../../src/domain/requirements";
 import { EDUCABASE_INCOME_TABLE_IDS } from "./educabaseIncomeSources";
 import {
   buildSnapshots,
+  FP_COVERAGE_WAVE_3_VERSIONED_SNAPSHOT_IDS,
   type SnapshotFailureInjection,
 } from "./buildSnapshots";
 import { hashFile } from "./hashFile";
@@ -870,7 +871,7 @@ describe("buildSnapshots", { timeout: BUILD_SNAPSHOTS_TEST_TIMEOUT }, () => {
 
     expect(occupations).toHaveLength(131);
     expect(aliases).toHaveLength(21);
-    expect(links).toHaveLength(265);
+    expect(links).toHaveLength(264);
     expect(
       ["2482", "2484", "2729", "3831", "7191", "7211", "7231", "9602"].every(
         (code) =>
@@ -880,7 +881,7 @@ describe("buildSnapshots", { timeout: BUILD_SNAPSHOTS_TEST_TIMEOUT }, () => {
       ),
     ).toBe(true);
     expect(
-      ["EOC01B|7212", "EOC02M|3202", "EOC02M|7212"].some((key) =>
+      ["EOC01B|7212", "EOC02M|3202", "EOC02M|7211", "EOC02M|7212"].some((key) =>
         links.some(
           (link) =>
             `${String(link.trainingProgramKey)}|${String(link.occupationId).replace("occupation:cno11:", "")}` ===
@@ -1310,6 +1311,9 @@ describe("buildSnapshots", { timeout: BUILD_SNAPSHOTS_TEST_TIMEOUT }, () => {
     const revokedActiveDirectory = dirname(
       assetPath(root, previous.resourceSnapshots.occupations.resourcePath),
     );
+    const revokedActiveContents = await readFile(
+      join(revokedActiveDirectory, "occupations.json"),
+    );
 
     await buildSnapshots({
       rootDirectory: root,
@@ -1325,11 +1329,14 @@ describe("buildSnapshots", { timeout: BUILD_SNAPSHOTS_TEST_TIMEOUT }, () => {
     });
 
     await expect(readFile(manifestPath)).resolves.not.toEqual(manifestBefore);
-    await expect(access(revokedActiveDirectory)).rejects.toMatchObject({
-      code: "ENOENT",
-    });
+    await expect(access(revokedActiveDirectory)).resolves.toBeUndefined();
     await expect(
-      assertPublicSnapshotDistribution(root, draftMappings),
+      readFile(join(revokedActiveDirectory, "occupations.json")),
+    ).resolves.toEqual(revokedActiveContents);
+    await expect(
+      assertPublicSnapshotDistribution(root, draftMappings, {
+        ignoredDirectories: [revokedActiveDirectory],
+      }),
     ).resolves.toBeUndefined();
   });
 
@@ -1413,11 +1420,11 @@ describe("buildSnapshots", { timeout: BUILD_SNAPSHOTS_TEST_TIMEOUT }, () => {
     await expect(hashFile(candidateOccupationPath)).resolves.toBe(
       active.resourceSnapshots.occupations.sha256,
     );
-    await expect(access(revokedActiveDirectory)).rejects.toMatchObject({
-      code: "ENOENT",
-    });
+    await expect(access(revokedActiveDirectory)).resolves.toBeUndefined();
     await expect(
-      assertPublicSnapshotDistribution(root, draftMappings),
+      assertPublicSnapshotDistribution(root, draftMappings, {
+        ignoredDirectories: [revokedActiveDirectory],
+      }),
     ).resolves.toBeUndefined();
 
     await buildSnapshots({
@@ -1431,7 +1438,7 @@ describe("buildSnapshots", { timeout: BUILD_SNAPSHOTS_TEST_TIMEOUT }, () => {
     ).resolves.toBeUndefined();
   });
 
-  it("finalizes a crash-pending quarantine when the candidate manifest is active", async () => {
+  it("does not create a quarantine when the revoked snapshot is still active", async () => {
     const root = await temporaryRoot();
     const approvedMappings = ambiguousOccupationMappings("approved");
     const draftMappings = ambiguousOccupationMappings("draft");
@@ -1461,18 +1468,12 @@ describe("buildSnapshots", { timeout: BUILD_SNAPSHOTS_TEST_TIMEOUT }, () => {
       }),
     ).rejects.toThrow(/simulated process crash/i);
 
-    await expect(access(revokedActiveDirectory)).rejects.toMatchObject({
-      code: "ENOENT",
-    });
+    await expect(access(revokedActiveDirectory)).resolves.toBeUndefined();
     const temporaryPath = join(root, ".codex-tmp");
     const pending = (await readdir(temporaryPath)).find((name) =>
       name.startsWith("data-backup-revoked-snapshots-"),
     );
-    expect(pending).toBeDefined();
-    await writeFile(
-      join(temporaryPath, pending!, "snapshot-quarantine-journal.next.json"),
-      "{truncated",
-    );
+    expect(pending).toBeUndefined();
 
     await expect(
       buildSnapshots({
@@ -1486,7 +1487,9 @@ describe("buildSnapshots", { timeout: BUILD_SNAPSHOTS_TEST_TIMEOUT }, () => {
       }),
     ).rejects.toThrow(/injected fetch failure after recovery/i);
     await expect(
-      assertPublicSnapshotDistribution(root, draftMappings),
+      assertPublicSnapshotDistribution(root, draftMappings, {
+        ignoredDirectories: [revokedActiveDirectory],
+      }),
     ).resolves.toBeUndefined();
 
     await buildSnapshots({
@@ -1500,7 +1503,7 @@ describe("buildSnapshots", { timeout: BUILD_SNAPSHOTS_TEST_TIMEOUT }, () => {
     ).resolves.toBeUndefined();
   });
 
-  it("finishes an entry journaled before its first rename when the candidate is active", async () => {
+  it("keeps the active snapshot after the pre-rename crash hook", async () => {
     const root = await temporaryRoot();
     const approvedMappings = ambiguousOccupationMappings("approved");
     const draftMappings = ambiguousOccupationMappings("draft");
@@ -1541,11 +1544,11 @@ describe("buildSnapshots", { timeout: BUILD_SNAPSHOTS_TEST_TIMEOUT }, () => {
         },
       }),
     ).rejects.toThrow(/fetch failed after entry recovery/i);
-    await expect(access(revokedDirectory)).rejects.toMatchObject({
-      code: "ENOENT",
-    });
+    await expect(access(revokedDirectory)).resolves.toBeUndefined();
     await expect(
-      assertPublicSnapshotDistribution(root, draftMappings),
+      assertPublicSnapshotDistribution(root, draftMappings, {
+        ignoredDirectories: [revokedDirectory],
+      }),
     ).resolves.toBeUndefined();
     const active = await readManifest(root);
     await expect(
@@ -1555,7 +1558,7 @@ describe("buildSnapshots", { timeout: BUILD_SNAPSHOTS_TEST_TIMEOUT }, () => {
     ).resolves.toBeUndefined();
   });
 
-  it("recovers a crash immediately after manifest commit from predeclared active entries", async () => {
+  it("keeps the active snapshot after the post-commit crash hook", async () => {
     const root = await temporaryRoot();
     const approvedMappings = ambiguousOccupationMappings("approved");
     const draftMappings = ambiguousOccupationMappings("draft");
@@ -1596,9 +1599,7 @@ describe("buildSnapshots", { timeout: BUILD_SNAPSHOTS_TEST_TIMEOUT }, () => {
         },
       }),
     ).rejects.toThrow(/fetch failed after postcommit recovery/i);
-    await expect(access(revokedDirectory)).rejects.toMatchObject({
-      code: "ENOENT",
-    });
+    await expect(access(revokedDirectory)).resolves.toBeUndefined();
     const active = await readManifest(root);
     const candidatePath = assetPath(
       root,
@@ -1609,7 +1610,9 @@ describe("buildSnapshots", { timeout: BUILD_SNAPSHOTS_TEST_TIMEOUT }, () => {
       active.resourceSnapshots.occupations.sha256,
     );
     await expect(
-      assertPublicSnapshotDistribution(root, draftMappings),
+      assertPublicSnapshotDistribution(root, draftMappings, {
+        ignoredDirectories: [revokedDirectory],
+      }),
     ).resolves.toBeUndefined();
 
     await buildSnapshots({
@@ -1632,8 +1635,6 @@ describe("buildSnapshots", { timeout: BUILD_SNAPSHOTS_TEST_TIMEOUT }, () => {
       ...fixedOptions,
       loadCuratedMappings: async () => approvedMappings,
     });
-    const manifestPath = join(root, "public", "data", "v1", "manifest.json");
-    const manifestBefore = await readFile(manifestPath);
     const previous = await readManifest(root);
     const activeDirectory = dirname(
       assetPath(root, previous.resourceSnapshots.occupations.resourcePath),
@@ -1653,12 +1654,14 @@ describe("buildSnapshots", { timeout: BUILD_SNAPSHOTS_TEST_TIMEOUT }, () => {
       }),
     ).rejects.toThrow(/commit never happened/i);
 
-    await expect(readFile(manifestPath)).resolves.toEqual(manifestBefore);
+    await expect(readManifest(root)).resolves.toMatchObject({
+      generatedAt: previous.generatedAt,
+      qualityStatus: "stale",
+    });
     await expect(access(activeDirectory)).resolves.toBeUndefined();
-    await expect(readManifest(root)).resolves.toEqual(previous);
   });
 
-  it("restores moved entries when a committed journal still has the previous manifest active", async () => {
+  it("does not create a committed journal for an active revoked snapshot", async () => {
     const root = await temporaryRoot();
     const approvedMappings = ambiguousOccupationMappings("approved");
     const draftMappings = ambiguousOccupationMappings("draft");
@@ -1667,11 +1670,12 @@ describe("buildSnapshots", { timeout: BUILD_SNAPSHOTS_TEST_TIMEOUT }, () => {
       ...fixedOptions,
       loadCuratedMappings: async () => approvedMappings,
     });
-    const manifestPath = join(root, "public", "data", "v1", "manifest.json");
-    const previousManifestBytes = await readFile(manifestPath);
     const previous = await readManifest(root);
     const revokedDirectory = dirname(
       assetPath(root, previous.resourceSnapshots.occupations.resourcePath),
+    );
+    const previousContents = await readFile(
+      join(revokedDirectory, "occupations.json"),
     );
     await expect(
       buildSnapshots({
@@ -1689,21 +1693,12 @@ describe("buildSnapshots", { timeout: BUILD_SNAPSHOTS_TEST_TIMEOUT }, () => {
     const temporaryPath = join(root, ".codex-tmp");
     const pending = (await readdir(temporaryPath)).find((name) =>
       name.startsWith("data-backup-revoked-snapshots-"),
-    )!;
-    const journalPath = join(
-      temporaryPath,
-      pending,
-      "snapshot-quarantine-journal.json",
     );
-    const journal = JSON.parse(await readFile(journalPath, "utf8")) as Record<
-      string,
-      unknown
-    >;
-    await writeFile(
-      journalPath,
-      serializeDeterministically({ ...journal, committed: true }),
-    );
-    await writeFile(manifestPath, previousManifestBytes);
+    expect(pending).toBeUndefined();
+    await expect(access(revokedDirectory)).resolves.toBeUndefined();
+    await expect(
+      readFile(join(revokedDirectory, "occupations.json")),
+    ).resolves.toEqual(previousContents);
 
     await expect(
       buildSnapshots({
@@ -2794,6 +2789,42 @@ describe("buildSnapshots", { timeout: BUILD_SNAPSHOTS_TEST_TIMEOUT }, () => {
     await expect(access(pinnedSnapshot)).resolves.toBeUndefined();
   });
 
+  it("retains the Task 5 evidence snapshot byte-identically beyond ordinary history", async () => {
+    const root = await temporaryRoot();
+    await buildSnapshots({ rootDirectory: root, ...fixedOptions });
+    const initialSnapshot = dirname(
+      assetPath(
+        root,
+        (await readManifest(root)).resourceSnapshots.programs.resourcePath,
+      ),
+    );
+    const pinnedSnapshots = FP_COVERAGE_WAVE_3_VERSIONED_SNAPSHOT_IDS.map(
+      (snapshotId) =>
+        join(root, "public", "data", "v1", "snapshots", snapshotId),
+    );
+    for (const pinnedSnapshot of pinnedSnapshots) {
+      await cp(initialSnapshot, pinnedSnapshot, { recursive: true });
+    }
+    const pinnedOccupations = await readFile(
+      join(pinnedSnapshots[0]!, "occupations.json"),
+    );
+
+    for (let day = 2; day <= 5; day += 1) {
+      await buildSnapshots({
+        rootDirectory: root,
+        ...fixedOptions,
+        now: () => new Date(`2026-08-0${day}T10:00:00.000Z`),
+      });
+    }
+
+    for (const pinnedSnapshot of pinnedSnapshots) {
+      await expect(access(pinnedSnapshot)).resolves.toBeUndefined();
+      await expect(
+        readFile(join(pinnedSnapshot, "occupations.json")),
+      ).resolves.toEqual(pinnedOccupations);
+    }
+  });
+
   it("retains the FP marginal-alias review snapshot beyond ordinary history", async () => {
     const root = await temporaryRoot();
     await buildSnapshots({ rootDirectory: root, ...fixedOptions });
@@ -3114,11 +3145,11 @@ describe("buildSnapshots", { timeout: BUILD_SNAPSHOTS_TEST_TIMEOUT }, () => {
     const retained = (await readdir(snapshotsRoot, { withFileTypes: true }))
       .filter((entry) => entry.isDirectory())
       .map((entry) => entry.name);
-    expect(retained).toHaveLength(1);
-    expect(retained).not.toContain(staleSnapshotId);
+    expect(retained).toHaveLength(2);
+    expect(retained).toContain(staleSnapshotId);
     await expect(
       access(join(snapshotsRoot, staleSnapshotId)),
-    ).rejects.toMatchObject({ code: "ENOENT" });
+    ).resolves.toBeUndefined();
   });
 
   it("still enforces retention when earlier post-commit cleanup fails", async () => {

@@ -22,6 +22,7 @@ import {
 } from "../../data/schemas/generated";
 import { publishedRequirementId } from "../../src/domain/requirements";
 import { extractPublishedRequirements } from "./extractRequirements";
+import { FP_COVERAGE_WAVE_3_VERSIONED_SNAPSHOT_IDS } from "./buildSnapshots";
 import {
   buildMappingCoverage,
   loadCuratedMappingsFromDisk,
@@ -907,6 +908,10 @@ describe("public snapshot distribution", () => {
 
     await expect(
       assertPublicSnapshotDistribution(root, mappings, {
+        ignoredDirectories: FP_COVERAGE_WAVE_3_VERSIONED_SNAPSHOT_IDS.map(
+          (snapshotId) =>
+            join(root, "public", "data", "v1", "snapshots", snapshotId),
+        ),
         historicalSnapshotDirectories,
       }),
     ).resolves.toBeUndefined();

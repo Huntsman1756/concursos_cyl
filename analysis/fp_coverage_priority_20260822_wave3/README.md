@@ -18,16 +18,17 @@ and the [INE CNO-11 explanatory notes](https://www.ine.es/daco/daco42/clasificac
 Job offers, sector-only similarity, aliases, and title-only inference are not
 evidence for any row in this packet.
 
-The packet's three tightened boundaries are explicit: `FME01E|2482` uses the
+The packet's tightened boundaries are explicit: `FME01E|2482` uses the
 official quote `Experto en diseño de producto para impresión 3D.`;
 `EOC01B|7240` uses `Ayudante de solador / soladora.` and all six EOC01B
 assistant/peon rows carry machine-readable `functionalBoundary` metadata; and
-`EOC02M|7211` is supported by the exact INE/BOE functional excerpts in its
-source and proposal files, with 7199 and 7212 explicitly excluded.
+`EOC02M|7211` is deferred because the official INE artifact places
+`Colocadores de prefabricados ligeros (pladur)` in 7199 while 7211 is
+escayola, with no authoritative crosswalk.
 
 ## Exact accepted relation set
 
-All 17 rows use the conservative `reviewed_relationship` type. The output
+All 16 published rows use the conservative `reviewed_relationship` type. The output
 quote is evidence for a reviewed functional relation, not an exhaustive
 equivalence between a TodoFP output and an entire CNO group.
 
@@ -43,7 +44,6 @@ EOC01B|7211
 EOC01B|7231
 EOC01B|7240
 EOC01B|9602
-EOC02M|7211
 EOC02M|7231
 EOC02M|7240
 FME01E|2482
@@ -57,8 +57,9 @@ occupation catalog; no alias is added.
 
 ## Explicit exclusions and state preservation
 
-The packet rejects `EOC01B|7212`, `EOC02M|3202`, and `EOC02M|7212`. CNO `3202`
-and `7212` remain rejected in the curated catalog. `IMS03S` remains the one
+The packet rejects `EOC01B|7212`, `EOC02M|3202`, and `EOC02M|7212`, and defers
+`EOC02M|7211` pending an authoritative crosswalk. CNO `3202` and `7212` remain
+rejected in the curated catalog. `IMS03S` remains the one
 existing `reviewed-no-publishable-match` outcome after revalidation against the
 new occupation-catalogue hash. `IFC03E` remains pending because the current
 outcome schema has no `insufficient` state; it is not added to the no-match
@@ -68,14 +69,20 @@ outcomes file.
 
 The canonical generators must derive these values from the source data:
 
-- approved links: `248 → 265`;
+- approved links: `248 → 264`;
 - approved/public occupations: `123 → 131`;
 - curated occupation rows: `130 → 138`;
 - aliases: unchanged at `21`;
 - research queue bases: `104 reviewed / 35 pending / 15 no-match` →
   `113 / 26 / 15`;
 - distinct reviewed modality keys: `121 → 130`;
-- evidence matrix relations: `248 → 265`.
+- evidence matrix relations: `248 → 264`.
+
+The pre-wave snapshot
+`20260822074315030-a6fc9479d93c` is retained as a byte-identical evidence
+artifact alongside the active replacement. The snapshot builder pins this ID
+until release evidence references the replacement; ordinary two-snapshot
+history cleanup must not rename or remove it.
 
 No coverage freeze or submission document is regenerated in this source-data
 commit.

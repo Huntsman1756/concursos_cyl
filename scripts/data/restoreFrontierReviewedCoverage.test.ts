@@ -69,7 +69,6 @@ const TASK_5_WAVE_KEYS = [
   "EOC01B|7231",
   "EOC01B|7240",
   "EOC01B|9602",
-  "EOC02M|7211",
   "EOC02M|7231",
   "EOC02M|7240",
   "FME01E|2482",
@@ -341,7 +340,12 @@ describe("mergeFrontierReviewedCoverage", () => {
       sourceQuote: "Experto en diseño de producto para impresión 3D.",
     });
     expect(ACCEPTED_RELATION_KEYS).not.toEqual(
-      expect.arrayContaining(["EOC01B|7212", "EOC02M|3202", "EOC02M|7212"]),
+      expect.arrayContaining([
+        "EOC01B|7212",
+        "EOC02M|3202",
+        "EOC02M|7211",
+        "EOC02M|7212",
+      ]),
     );
   });
 

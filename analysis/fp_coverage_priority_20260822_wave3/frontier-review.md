@@ -1,12 +1,12 @@
 # Frontier review — FP coverage priority wave 3
 
-**Reviewed:** 2026-08-22  
-**Scope:** nine queue bases and exactly 17 accepted relation keys  
+**Reviewed:** 2026-08-22
+**Scope:** nine queue bases and exactly 16 accepted relation keys
 **Evidence packet:** `analysis/fp_coverage_priority_20260822_wave3/`
 
 ## Decision
 
-The wave publishes exactly the 17 conservative `reviewed_relationship` rows
+The wave publishes exactly the 16 conservative `reviewed_relationship` rows
 listed below. Program evidence is the exact TodoFP output quote in the local
 official professional-profile record. CNO identity is the official registered
 identity checked against BOE/INE. No offer text, title-only inference, or alias
@@ -25,7 +25,6 @@ is used.
 | `EOC01B  | 7231`                 | Pintores y empapeladores                                                                     | `Ayudante de pintor / pintora.`                                                         |
 | `EOC01B  | 7240`                 | Soladores, colocadores de parquet y afines                                                   | `Ayudante de solador / soladora.`                                                       |
 | `EOC01B  | 9602`                 | Peones de la construcción de edificios                                                       | `Peón especializado.`                                                                   |
-| `EOC02M  | 7211`                 | Escayolistas                                                                                 | `Juntera / juntero de placa de yeso laminado.`                                          |
 | `EOC02M  | 7231`                 | Pintores y empapeladores                                                                     | `Pintor / pintora de obra.`                                                             |
 | `EOC02M  | 7240`                 | Soladores, colocadores de parquet y afines                                                   | `Colocador / colocadora de pavimentos ligeros, en general.`                             |
 | `FME01E  | 2482`                 | Diseñadores de productos y de prendas                                                        | `Experto en diseño de producto para impresión 3D.`                                      |
@@ -51,8 +50,8 @@ version `1.0.0`:
 
 ## Explicit exclusions
 
-The following relation keys are rejected and must not appear in the curated
-links or restore allowlist:
+The following relation keys are rejected or deferred and must not appear in the
+curated links or restore allowlist:
 
 - `EOC01B|7212` — no official output establishes paste-and-mortar applicator
   work; curated CNO `7212` remains rejected.
@@ -60,6 +59,11 @@ links or restore allowlist:
   rejected construction-supervisor CNO `3202`.
 - `EOC02M|7212` — the profile does not establish the paste-and-mortar
   applicator boundary.
+- `EOC02M|7211` — deferred. The exact TodoFP output says
+  `Juntera / juntero de placa de yeso laminado.`, while INE p. 249 explicitly
+  lists `Colocadores de prefabricados ligeros (pladur)` under 7199 and defines
+  7211 as escayolistas. No authoritative crosswalk resolves the boundary; no
+  7199 alternative is invented.
 
 No aliases are changed: the occupation alias file remains exactly 21 records.
 
@@ -70,13 +74,11 @@ The EOC01B assistant/peon rows carry a machine-readable functional boundary:
 the derived graph so consumers cannot present an assistant or adjacent output
 as a full trade qualification.
 
-For `EOC02M|7211`, the exact TodoFP output `Juntera / juntero de placa de yeso
-laminado.` is checked against the official INE explanatory notes (pp. 249–250)
-and BOE CNO-11 table. INE defines 7211 escayolistas as installing and repairing
-partitions and plaster/gypsum finishes, explicitly separates 7212's
-cement/paste-and-mortar applicators, and defines 7199 as a residual structural-
-construction group. Those official functional excerpts support 7211 only;
-7199 and 7212 are not published.
+The EOC02M plasterboard output is intentionally not mapped by material-word
+similarity: INE's exact 7199 example is `Colocadores de prefabricados ligeros
+(pladur)`, while 7211 is defined around escayola finishing. The official
+artifacts do not provide the crosswalk required to publish 7211 or a 7199
+alternative.
 
 ## No-match and pending state
 

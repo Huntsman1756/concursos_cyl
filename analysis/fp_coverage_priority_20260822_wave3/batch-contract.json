@@ -38,14 +38,18 @@
     "EOC01B|7231",
     "EOC01B|7240",
     "EOC01B|9602",
-    "EOC02M|7211",
     "EOC02M|7231",
     "EOC02M|7240",
     "FME01E|2482",
     "IMA02S|7250",
     "IMS04S|3831"
   ],
-  "excludedRelationKeys": ["EOC01B|7212", "EOC02M|3202", "EOC02M|7212"],
+  "excludedRelationKeys": [
+    "EOC01B|7212",
+    "EOC02M|3202",
+    "EOC02M|7211",
+    "EOC02M|7212"
+  ],
   "relationshipTypes": {
     "reviewed_relationship": [
       "IMS01S|2484",
@@ -59,7 +63,6 @@
       "EOC01B|7231",
       "EOC01B|7240",
       "EOC01B|9602",
-      "EOC02M|7211",
       "EOC02M|7231",
       "EOC02M|7240",
       "FME01E|2482",
@@ -153,11 +156,11 @@
       "allowedPaths": [
         "analysis/fp_coverage_priority_20260822_wave3/proposals/EOC02M.md"
       ],
-      "frontierPlan": "Publish the plasterboard, painting, and pavement functional boundaries while rejecting supervisor CNO 3202 and revestimiento CNO 7212.",
+      "frontierPlan": "Publish the painting and pavement boundaries; defer the ambiguous plasterboard output because INE places prefabricated-lightweight pladur placement in 7199 while 7211 is escayola, and reject supervisor CNO 3202 and revestimiento CNO 7212.",
       "acceptanceCriteria": [
         "preserve exact TodoFP quotes",
-        "publish 7211, 7231, and 7240 only",
-        "distinguish 7211 from 7199 and 7212 using exact official INE/BOE functional excerpts",
+        "publish 7231 and 7240 only",
+        "defer EOC02M|7211 because exact official INE/BOE excerpts do not provide an authoritative crosswalk from pladur jointing to 7199 or 7211",
         "reject EOC02M|3202 and EOC02M|7212",
         "do not create aliases"
       ]

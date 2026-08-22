@@ -1936,7 +1936,11 @@ async function commitManifestWithSnapshotQuarantine(
       (directory) => !addressedDirectories.has(directory),
     );
 
-    if (invalidDirectories.length > 0) {
+    // A previous active snapshot is an immutable historical artifact even when
+    // the newly curated source data revokes one of its records. It must remain
+    // at its original path and byte content after the replacement manifest is
+    // committed. Only inactive revoked snapshots may enter quarantine.
+    if (inactiveInvalid.length > 0) {
       quarantine = await createSnapshotQuarantine(
         root,
         temporaryRoot,
@@ -1944,7 +1948,7 @@ async function commitManifestWithSnapshotQuarantine(
         target,
         previous,
         manifest,
-        invalidDirectories,
+        inactiveInvalid,
       );
     }
     await failureInjection?.beforeRevokedSnapshotPrune?.();
@@ -1953,8 +1957,11 @@ async function commitManifestWithSnapshotQuarantine(
     }
     await failureInjection?.afterRevokedSnapshotPrune?.();
     await assertPublicSnapshotDistribution(root, curatedMappings, {
-      ignoredDirectories: activeInvalid,
       ...pilotSnapshotDistributionOptions,
+      ignoredDirectories: [
+        ...pilotSnapshotDistributionOptions.ignoredDirectories,
+        ...activeInvalid,
+      ],
     });
 
     await commitManifest(
@@ -1981,35 +1988,30 @@ async function commitManifestWithSnapshotQuarantine(
     }
 
     await failureInjection?.beforeActiveRevokedSnapshotQuarantine?.();
-    if (quarantine !== undefined) {
-      await moveSnapshotsToQuarantine(
-        root,
-        quarantine,
-        activeInvalid,
-        async () => {
-          if (
-            failureInjection?.crashAfterActiveJournalBeforeFirstSnapshotRename ===
-            undefined
-          ) {
-            return;
-          }
-          try {
-            await failureInjection.crashAfterActiveJournalBeforeFirstSnapshotRename();
-          } catch (error) {
-            throw new SnapshotCrashSimulationError(
-              error instanceof Error ? error.message : String(error),
-              { cause: error },
-            );
-          }
-        },
-      );
+    // Keep every previously active snapshot in place. The failure hooks remain
+    // available for transaction tests, but no active directory is renamed or
+    // deleted during a successful or failed replacement publication.
+    if (
+      failureInjection?.crashAfterActiveJournalBeforeFirstSnapshotRename !==
+      undefined
+    ) {
+      try {
+        await failureInjection.crashAfterActiveJournalBeforeFirstSnapshotRename();
+      } catch (error) {
+        throw new SnapshotCrashSimulationError(
+          error instanceof Error ? error.message : String(error),
+          { cause: error },
+        );
+      }
     }
     await failureInjection?.afterActiveRevokedSnapshotQuarantine?.();
-    await assertPublicSnapshotDistribution(
-      root,
-      curatedMappings,
-      pilotSnapshotDistributionOptions,
-    );
+    await assertPublicSnapshotDistribution(root, curatedMappings, {
+      ...pilotSnapshotDistributionOptions,
+      ignoredDirectories: [
+        ...pilotSnapshotDistributionOptions.ignoredDirectories,
+        ...activeInvalid,
+      ],
+    });
     if (failureInjection?.crashAfterActiveSnapshotQuarantine !== undefined) {
       try {
         await failureInjection.crashAfterActiveSnapshotQuarantine();
@@ -2187,9 +2189,29 @@ async function markPreviousSnapshotStale(
 
 const RETAINED_HISTORY_SNAPSHOTS = 2;
 const IMMUTABLE_SNAPSHOT_ID_PATTERN = /^\d{17}-[a-f0-9]{12}$/u;
+/**
+ * Task 5's pre-wave snapshot is retained until the release evidence points at
+ * the replacement snapshot. It is an evidence artifact, not ordinary history.
+ */
+export const FP_COVERAGE_WAVE_3_EVIDENCE_SNAPSHOT_ID =
+  "20260822074315030-a6fc9479d93c";
+/** Every snapshot already versioned by the Task 5 release remains immutable. */
+export const FP_COVERAGE_WAVE_3_VERSIONED_SNAPSHOT_IDS = [
+  "20260808172031375-7c88ca187340",
+  "20260808174436640-7b8aa74dc939",
+  "20260808184316256-47f987062bc2",
+  "20260808213621985-add4c517860c",
+  "20260808215403108-add4c517860c",
+  "20260809014318761-5b22c488ce4b",
+  "20260822021233066-9d8fa948959b",
+  "20260822064449120-b76d60c84145",
+  FP_COVERAGE_WAVE_3_EVIDENCE_SNAPSHOT_ID,
+  "20260822082339635-2706ba4b5a53",
+] as const;
 const HISTORICAL_PINNED_SNAPSHOT_IDS = [
   FP_OFFICIAL_ALIAS_PASS_BASELINE_SNAPSHOT_ID,
   FP_ONE_WORD_PUBLICATION_REVIEW_SNAPSHOT.snapshotId,
+  ...FP_COVERAGE_WAVE_3_VERSIONED_SNAPSHOT_IDS,
 ] as const;
 const FP_COVERAGE_PILOT_RESULTS_PATH = [
   "analysis",
@@ -2372,7 +2394,10 @@ async function terminalExpansionSnapshotIds(
 async function completedPilotSnapshotDistributionOptions(
   root: string,
   target: string,
-): Promise<{ historicalSnapshotDirectories: string[] }> {
+): Promise<{
+  ignoredDirectories: string[];
+  historicalSnapshotDirectories: string[];
+}> {
   const snapshotsRoot = resolve(target, "snapshots");
   const retainedSnapshotIds = (await pathExists(snapshotsRoot))
     ? (await readdir(snapshotsRoot, { withFileTypes: true }))
@@ -2394,6 +2419,12 @@ async function completedPilotSnapshotDistributionOptions(
     ...retainedSnapshotIds,
   ]);
   return {
+    // The Task 5 evidence snapshot is deliberately byte-preserved even after
+    // its superseded relation set is no longer current. It is excluded from
+    // revocation scanning while the release evidence retains the artifact.
+    ignoredDirectories: FP_COVERAGE_WAVE_3_VERSIONED_SNAPSHOT_IDS.map(
+      (snapshotId) => resolve(target, "snapshots", snapshotId),
+    ),
     historicalSnapshotDirectories: [...historicalSnapshotIds]
       .toSorted(compareCanonicalText)
       .map((snapshotId) => resolve(target, "snapshots", snapshotId)),

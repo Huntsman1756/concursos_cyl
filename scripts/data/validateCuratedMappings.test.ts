@@ -1677,7 +1677,7 @@ describe("curated occupation mappings", () => {
           AGA04M: 2,
           EOC02S: 1,
           EOC01B: 6,
-          EOC02M: 3,
+          EOC02M: 2,
           ENA03S: 2,
           FME02B: 4,
           FME01E: 1,
@@ -2029,9 +2029,24 @@ describe("curated occupation mappings", () => {
       ),
     );
 
-    expect.soft(approved.links).toHaveLength(265);
+    expect.soft(approved.links).toHaveLength(264);
     expect.soft(reviewedBaseKeys.size).toBe(113);
     expect.soft(approvedProgramKeys.size).toBe(130);
+  });
+
+  it("defers the ambiguous EOC02M plasterboard output", async () => {
+    const curated = await loadCuratedMappingsFromDisk(
+      process.cwd(),
+      diskPrograms,
+    );
+    const approved = loadApprovedMappings(curated);
+    expect(
+      approved.links.some(
+        (link) =>
+          link.trainingProgramKey === "EOC02M" &&
+          link.occupationId === "occupation:cno11:7211",
+      ),
+    ).toBe(false);
   });
 
   it("does not publish the five remediated contest-evidence relationships", async () => {
@@ -2056,8 +2071,8 @@ describe("curated occupation mappings", () => {
     );
 
     expect(remediatedKeys.filter((key) => approvedKeys.has(key))).toEqual([]);
-    expect(approved.links).toHaveLength(265);
-    expect(approvedKeys.size).toBe(265);
+    expect(approved.links).toHaveLength(264);
+    expect(approvedKeys.size).toBe(264);
     expect(
       new Set(approved.links.map((link) => link.trainingProgramKey)).size,
     ).toBe(130);
@@ -2318,13 +2333,6 @@ describe("curated occupation mappings", () => {
         sourceQuote: "Peón especializado.",
       },
       {
-        key: "EOC02M|7211",
-        relationshipType: "reviewed_relationship",
-        sourceUrl:
-          "https://www.todofp.es/que-estudiar/familias-profesionales/edificacion-obra-civil/obras-interior-decoracion-rehabilitacion.html",
-        sourceQuote: "Juntera / juntero de placa de yeso laminado.",
-      },
-      {
         key: "EOC02M|7231",
         relationshipType: "reviewed_relationship",
         sourceUrl:
@@ -2379,7 +2387,7 @@ describe("curated occupation mappings", () => {
     expect(actual).toEqual(
       [...expected].sort((left, right) => left.key.localeCompare(right.key)),
     );
-    expect(approved.links).toHaveLength(265);
+    expect(approved.links).toHaveLength(264);
     expect(approved.occupations).toHaveLength(131);
     expect(curated.occupations).toHaveLength(138);
     expect(curated.aliases).toHaveLength(21);
