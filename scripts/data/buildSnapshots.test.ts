@@ -58,7 +58,24 @@ async function temporaryRoot(): Promise<string> {
     "sepe-occupation-market.json",
   );
   await mkdir(dirname(temporaryCapturePath), { recursive: true });
-  await cp(capturePath, temporaryCapturePath);
+  const capture = JSON.parse(await readFile(capturePath, "utf8")) as Array<{
+    source: { retrievedAt: string };
+  }>;
+  await writeFile(
+    temporaryCapturePath,
+    JSON.stringify(
+      capture.map((record) => ({
+        ...record,
+        source: {
+          ...record.source,
+          retrievedAt: "2026-07-31T00:00:00.000Z",
+        },
+      })),
+      null,
+      2,
+    ) + "\n",
+    "utf8",
+  );
   temporaryRoots.push(root);
   return root;
 }
@@ -533,7 +550,7 @@ describe("buildSnapshots", { timeout: BUILD_SNAPSHOTS_TEST_TIMEOUT }, () => {
               },
               source: {
                 ...capture[0].source,
-                retrievedAt: "2026-08-22T10:00:00Z",
+                retrievedAt: "2026-08-03T10:00:00Z",
               },
             },
           ],
@@ -602,6 +619,46 @@ describe("buildSnapshots", { timeout: BUILD_SNAPSHOTS_TEST_TIMEOUT }, () => {
       period: "2026-07",
       cno: { code: "2721" },
     });
+  });
+
+  it("rejects a SEPE capture retrieved after the generated snapshot time", async () => {
+    const root = await temporaryRoot();
+    const capturePath = join(
+      root,
+      "data",
+      "curated",
+      "sepe-occupation-market.json",
+    );
+    const capture = JSON.parse(
+      await readFile(
+        join(process.cwd(), "data", "curated", "sepe-occupation-market.json"),
+        "utf8",
+      ),
+    ) as Array<{ source: { retrievedAt: string } }>;
+    await mkdir(dirname(capturePath), { recursive: true });
+    await writeFile(
+      capturePath,
+      JSON.stringify(
+        [
+          {
+            ...capture[0],
+            source: {
+              ...capture[0].source,
+              retrievedAt: "2026-08-04T10:00:00.001Z",
+            },
+          },
+        ],
+        null,
+        2,
+      ) + "\n",
+      "utf8",
+    );
+
+    await expect(
+      buildSnapshots({ rootDirectory: root, ...fixedOptions }),
+    ).rejects.toThrow(
+      "SEPE capture retrievedAt 2026-08-04T10:00:00.001Z is after snapshot time 2026-08-04T10:00:00.000Z.",
+    );
   });
 
   it("publishes regional context resources with source provenance", async () => {

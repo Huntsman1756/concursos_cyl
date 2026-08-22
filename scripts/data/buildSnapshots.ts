@@ -1407,6 +1407,22 @@ async function loadCheckedInSepeOccupationMarket(
   );
 }
 
+function assertSepeCaptureNotRetrievedAfterSnapshot(
+  records: ReadonlyArray<
+    z.infer<typeof SepeOccupationMarketResourceSchema>[number]
+  >,
+  snapshotTime: string,
+): void {
+  const snapshotTimestamp = Date.parse(snapshotTime);
+  for (const record of records) {
+    if (Date.parse(record.source.retrievedAt) > snapshotTimestamp) {
+      throw new Error(
+        `SEPE capture retrievedAt ${record.source.retrievedAt} is after snapshot time ${snapshotTime}.`,
+      );
+    }
+  }
+}
+
 async function writeCandidate(
   root: string,
   staging: string,
@@ -2698,6 +2714,10 @@ export async function buildSnapshots(
         .parse(fetchedEducationCenterDirectoryRecords);
       const sepeOccupationMarket =
         await loadCheckedInSepeOccupationMarket(root);
+      assertSepeCaptureNotRetrievedAfterSnapshot(
+        sepeOccupationMarket,
+        fetchedAt,
+      );
       const outcomeIndicators = OutcomeIndicatorsResourceSchema.parse(
         normalizeIncomeOutcomes(incomeBundle.tables),
       );
