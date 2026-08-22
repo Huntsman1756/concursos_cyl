@@ -1,7 +1,7 @@
 # Contest Release and Candidate Hardening Design
 
 **Date:** 2026-08-22  
-**Status:** Approved in chat; awaiting review of this written specification  
+**Status:** Approved in chat; rebased onto the current product baseline  
 **Canonical URL:** `https://salida-cyl.157-90-22-40.sslip.io/`  
 **Fallback URL:** `https://huntsman1756.github.io/concursos_cyl/`
 
@@ -9,11 +9,10 @@
 
 SALIDA CyL needs a candidate release whose public application, data freeze,
 deployment record, screenshots, and submission documents identify the same
-release. The public endpoints and primary snapshot are internally consistent,
-but the release evidence, freeze metadata, and resource inventory still
-disagree. The deployment record identifies commit `05407a0…` while the VPS and
-GitHub Pages serve `085faca…`. A documentation commit triggered a new build and
-changed `version.json` even though the product data did not change.
+release. The current public product is internally consistent under the legacy
+schema, but that schema still couples product commits, evidence commits, and
+deployment claims. A documentation-only push can therefore create a new build
+identity even when the product data did not change.
 
 This design fixes that release-identity loop, centralizes the provisional
 canonical URL, and tightens the contest evidence. Product improvements will use
@@ -21,14 +20,29 @@ separate specifications and candidate releases. This design does not submit the
 application, buy a domain, invent impact claims, or broaden the data scope to
 improve a headline count.
 
-## Current facts
+## Rebased baseline and current facts
 
 - The VPS is the provisional canonical URL. GitHub Pages is a fallback.
-- Both public endpoints served commit `085faca66dee67b9f2ca56aed11d32e0522eeb97`
-  and snapshot `20260822021233066-9d8fa948959b` during the audit.
-- The corresponding manifest SHA-256 was
-  `ce47c7cf7011a3dcebddf2a3dac01c3e34ee175a18ac133211b5b5ca3fb3ba11`.
-- `release-evidence.json` still identified deployment commit `05407a0…`.
+- This hardening work is rebased on `main` commit
+  `f78d4a258e589106eef3e974bcabd6f7e11ed936`. Earlier implementation commits
+  based on `085faca…` are design inputs only and must be ported and retested;
+  they are never cherry-picked blindly over the current product.
+- The public VPS serves product commit
+  `ae66d5bc8393dbb02818471ad7eb850e4d4367de` under the legacy release identity.
+- The authoritative candidate input snapshot is
+  `20260822085631889-7bbe69380f6d`; its manifest SHA-256 is
+  `92afc80f2b839ed95def95bc90bdd3b6ad3a1363fb12904f7b109fafc92b2f18`.
+- The manifest contains exactly 21 resources. `sepeOccupationMarket` is a
+  canonical 116-record complementary state-source resource with resource
+  SHA-256 `5adf3bfaff153b5d7739a58805284e8f3c88361804507e52ddbd195e0883e323`.
+- The current freeze records 264 approved relations, 113 distinct
+  qualifications, 130 qualification/modality keys, 131 occupations, 21
+  approved aliases, 3 matched relations, 261 zero-reviewed relations, and 38
+  matched offers. These are preservation floors for the schema migration.
+- The legacy `release-evidence.json` correctly records the previously verified
+  public product, but it is historical input. Migration to schema 2 starts the
+  new, unpublished candidate at `pending`; it does not transplant the old
+  `verified` state.
 - A push to `main` always runs the Pages deployment and writes `github.sha` to
   `version.json`, including evidence-only commits.
 - Runtime preparation reads contest evidence to decide which snapshots to keep,
@@ -37,8 +51,9 @@ improve a headline count.
 - Products and Services has seven equally weighted criteria: utility, economic
   value, public or social value, originality, dataset variety, ease and
   accessibility, and technical quality.
-- The remote product currently includes an experimental SEPE resource with one
-  record. It is not a JCyL dataset and will not be part of the candidate release.
+- SEPE remains a complementary state source and does not increase the count of
+  eight JCyL datasets. Its provenance and publisher terms must be represented
+  independently from the JCyL licence inventory.
 
 ## Design principles
 
@@ -50,7 +65,7 @@ improve a headline count.
 4. Read public identity from the endpoint before capturing screenshots.
 5. Keep evidence out of the runtime dependency graph.
 6. Make the canonical URL replaceable through one configuration value.
-7. Preserve useful experimental work without putting it in the candidate.
+7. Preserve the canonical SEPE evidence and reject stale experimental fixtures.
 8. Add product features only when they improve a contest criterion or a real
    user decision.
 
@@ -254,29 +269,33 @@ CNO-11, BOE, INE, TodoFP, EDUCAbase, and other state sources remain clearly
 labelled as complementary official sources. Their presence does not increase
 the JCyL dataset count.
 
-The one-record SEPE experiment will be excluded from the candidate artifact.
-Omitting `sepeOccupationMarket` from the manifest is insufficient: the candidate
-must also exclude the SEPE UI, loader, tests, claims, evidence references, and
-runtime resource. Its code and research may remain on a separate branch or
-behind a build-time boundary that cannot enter the candidate bundle.
+The current 116-record `sepeOccupationMarket` resource is part of the candidate.
+It is kept as a complementary official state source, never counted as a JCyL
+dataset. Its schema, 116 canonical CNO records, source authority, period,
+resource hash, provenance, product UI, and freeze entry must remain mutually
+consistent. A stale one-record fixture or a resource that cannot prove that
+canonical boundary is rejected.
 
-A candidate-resource allowlist will require the manifest, freeze, and release
-evidence to contain the same complete resource set. The validator rejects an
-extra resource, a missing resource, or any SEPE claim in the candidate.
+A candidate-resource allowlist will require the manifest, generated catalogue,
+freeze, release evidence, claims, and built application to agree on the same
+complete set of exactly 21 resource keys. The validator rejects an extra key, a
+missing key, a duplicate key, the absence of `sepeOccupationMarket`, a stale
+one-record SEPE payload, and SEPE metadata that contradicts the canonical
+source contract.
 
 The allowlist lives at `config/candidate-resource-allowlist.json`. The candidate
-build fails if `public/data/v1/manifest.json`, its generated resource catalogue,
-the freeze, UI bundle, rendered documents, or claims expose
-`sepeOccupationMarket` or the candidate-only SEPE market component. General
-classification citations to INE or SEPE that support reviewed mappings are not
-the excluded experiment and remain permitted with their original source terms.
+build validates that `public/data/v1/manifest.json`, its generated resource
+catalogue, the freeze, UI bundle, rendered documents, and claims retain the
+canonical SEPE resource without treating it as JCyL-owned or applying a JCyL or
+MIT licence to its content. General INE or SEPE classification citations that
+support reviewed mappings remain permitted with their original publisher terms.
 
 The eight JCyL catalogue records are licensed under the catalogue-declared CC BY
 4.0 ES terms. A licence inventory will record each dataset ID, `licenseName`,
 and `licenseUrl` at `config/jcyl-license-inventory.json`. The licence gate will
 validate that inventory against fixtures captured from the official metadata.
-External certificate links
-hosted by SEPE, and any BOE, INE, TodoFP, EDUCAbase, or SEPE content, retain
+External certificate links hosted by SEPE, the canonical occupation-market
+resource, and any BOE, INE, TodoFP, EDUCAbase, or other SEPE content retain
 their own publisher terms and are not relicensed by the project under MIT or CC
 BY. The 583-record JCyL professional-certificates dataset remains CC BY 4.0 ES;
 its external `programUrl` and `structureUrl` targets do not inherit that licence.
@@ -338,9 +357,10 @@ an already verified candidate without invalidating that candidate.
 
 ## Work isolation and integration
 
-The original checkout is not a safe implementation target because its index and
-working tree report hundreds of modifications from parallel work. All changes
-for this design will use isolated worktrees based on the current remote `main`.
+The original checkout continues to receive parallel work and is not the
+integration target for this effort. All changes for this design use the isolated
+`codex/contest-hardening-current` worktree based on remote `main` commit
+`f78d4a258e589106eef3e974bcabd6f7e11ed936`.
 
 Parallel agents may implement independent release-hardening tasks only with
 exact, disjoint allowed paths. Shared integration files such as `package.json`,
@@ -358,8 +378,9 @@ work, or approve its own change.
    documents to remove deployment state; old schemas fail deterministically or
    migrate explicitly to pending evidence.
 3. Decouple runtime snapshot retention from contest evidence.
-4. Build and deploy one immutable candidate artifact to both endpoints.
-5. Recapture and record evidence from the canonical VPS.
+4. Build and verify one immutable candidate artifact locally for both envelopes.
+5. Leave the new release evidence pending and prepare the exact publication and
+   recapture handoff; deployment requires separate authorization.
 6. Regenerate the submission package and verify the 1,000-word limit.
 7. Correct source, licence, privacy, and precedent documentation.
 8. Run unit, integration, end-to-end, accessibility, build, licence, format,
@@ -380,8 +401,12 @@ work, or approve its own change.
 - Evidence-only changes do not create a deployment or change the runtime
   artifact identity.
 - VPS and Pages serve the same candidate release identity and manifest.
-- The candidate excludes the one-record SEPE experiment and counts eight JCyL
-  datasets without reclassifying state sources.
+- The candidate preserves exactly 21 resources, including the canonical
+  116-record SEPE resource, while counting exactly eight JCyL datasets and never
+  reclassifying the state source.
+- The schema migration preserves or improves the current coverage floors: 264
+  approved relations, 113 qualifications, 130 modality keys, 131 occupations,
+  21 aliases, and 38 matched offers.
 - The memory is at most 1,000 words and covers all seven criteria.
 - Claim references resolve against real JSON fields.
 - The submission documents, freeze, release evidence, capture manifest, and
