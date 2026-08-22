@@ -154,4 +154,15 @@ describe("responsive shell CSS contract", () => {
       }
     }
   });
+
+  it("keeps guided example titles visually separate from their metadata", () => {
+    const guidedExampleItem = extractBlocks(
+      globalCss,
+      /\.training-guided-examples\s+li\s*\{/gu,
+    ).at(-1);
+
+    expect(guidedExampleItem).toBeDefined();
+    expect(declaration(guidedExampleItem, "display")).toBe("grid");
+    expect(declaration(guidedExampleItem, "gap")).toBe("var(--space-1)");
+  });
 });

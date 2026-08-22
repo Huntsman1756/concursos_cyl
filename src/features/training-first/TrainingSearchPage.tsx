@@ -294,7 +294,7 @@ export function TrainingSearchPage() {
             {selectedCoverage !== undefined && (
               <p role="status" aria-live="polite">
                 {selectedCoverage.coverageStatus === "reviewed"
-                  ? `Relaciones revisadas con ${selectedCoverage.approvedMappings} grupos de ocupación.`
+                  ? `Relaciones revisadas con ${selectedCoverage.approvedMappings} ${selectedCoverage.approvedMappings === 1 ? "grupo" : "grupos"} de ocupación.`
                   : "Salidas oficiales disponibles; todavía no hay una relación revisada para buscar ofertas."}
               </p>
             )}

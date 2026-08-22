@@ -189,6 +189,41 @@ describe("training-first search", () => {
       screen.getByRole("button", { name: "Ver salidas y ofertas" }),
     ).toBeEnabled();
   });
+
+  it.each([
+    [1, "Relaciones revisadas con 1 grupo de ocupación."],
+    [2, "Relaciones revisadas con 2 grupos de ocupación."],
+  ])(
+    "uses singular/plural coverage copy for %s reviewed occupation groups",
+    async (approvedMappings, expectedCopy) => {
+      installFoundationFetch(
+        [program],
+        [
+          {
+            ...defaultCoverage[0],
+            approvedMappings,
+          },
+        ],
+      );
+      const user = userEvent.setup();
+      render(
+        <MemoryRouter initialEntries={["/desde-fp"]}>
+          <AppRoutes />
+        </MemoryRouter>,
+      );
+
+      const programCombobox = await screen.findByRole("combobox", {
+        name: "Ciclo de Formación Profesional",
+      });
+      await user.type(programCombobox, "IFC03S");
+      await user.keyboard("{ArrowDown}{Enter}");
+
+      const status = await screen.findByText(expectedCopy);
+      expect(status).toBeVisible();
+      expect(status).toHaveAttribute("role", "status");
+    },
+  );
+
   it("announces loading while the official programs are pending", () => {
     vi.stubGlobal(
       "fetch",

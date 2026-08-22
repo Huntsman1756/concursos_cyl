@@ -876,6 +876,11 @@ a:focus-visible {
   text-underline-offset: 0.2em;
 }
 
+.training-guided-examples li {
+  display: grid;
+  gap: var(--space-1);
+}
+
 .training-search {
   display: grid;
   max-width: 42rem;
