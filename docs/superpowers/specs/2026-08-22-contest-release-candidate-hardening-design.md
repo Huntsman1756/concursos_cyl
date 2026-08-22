@@ -96,8 +96,8 @@ The release model will keep these fields distinct:
 - `observedAt`: timestamp of the public verification.
 
 `version.json` will expose `releaseId`, `sourceCommitSha`, `snapshotId`,
-`manifestSha256`, and `artifactSha256`. It will not claim the commit that later
-records screenshots.
+`manifestSha256`, `artifactSha256`, the deployment kind, and
+`envelopeSha256`. It will not claim the commit that later records screenshots.
 
 ### Canonical artifact digest
 
