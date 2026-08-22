@@ -5,6 +5,7 @@ import { describe, expect, it } from "vitest";
 import {
   loadPublicationConfig,
   parseDeploymentEnvelopeIdentity,
+  parsePublicationConfig,
   parseReleaseIdentity,
   type ReleaseIdentity,
 } from "./releaseIdentity";
@@ -32,6 +33,41 @@ describe("publication configuration", () => {
       canonicalRootUrl: "https://salida-cyl.157-90-22-40.sslip.io/",
       fallbackRootUrl: "https://huntsman1756.github.io/concursos_cyl/",
     });
+  });
+
+  it.each([
+    ["canonicalRootUrl", "http://salida-cyl.example/"],
+    ["canonicalRootUrl", "https://user:password@salida-cyl.example/"],
+    ["canonicalRootUrl", " https://salida-cyl.157-90-22-40.sslip.io/ "],
+    [
+      "fallbackRootUrl",
+      "https://huntsman1756.github.io/concursos_cyl/?source=qa",
+    ],
+    ["fallbackRootUrl", "https://huntsman1756.github.io/concursos_cyl/#qa"],
+    ["fallbackRootUrl", "not-a-url"],
+  ])(
+    "rejects invalid publication URL in %s to keep publication fail-closed",
+    (key, value) => {
+      expect(() =>
+        parsePublicationConfig({
+          schemaVersion: "1.0.0",
+          canonicalRootUrl: "https://salida-cyl.157-90-22-40.sslip.io/",
+          fallbackRootUrl: "https://huntsman1756.github.io/concursos_cyl/",
+          [key]: value,
+        }),
+      ).toThrow(/HTTPS URL without credentials, query, or fragment/u);
+    },
+  );
+
+  it("rejects extra publication config keys to preserve the exact envelope shape", () => {
+    expect(() =>
+      parsePublicationConfig({
+        schemaVersion: "1.0.0",
+        canonicalRootUrl: "https://salida-cyl.157-90-22-40.sslip.io/",
+        fallbackRootUrl: "https://huntsman1756.github.io/concursos_cyl/",
+        deployment: "pages",
+      }),
+    ).toThrow(/exact keys/u);
   });
 });
 
@@ -84,4 +120,36 @@ describe("release identity", () => {
       }),
     ).toThrow(/envelopeSha256/u);
   });
+
+  it.each(["github-pages", "PAGES", ""])(
+    "rejects invalid deployment %s instead of permitting an unknown target",
+    (deployment) => {
+      expect(() =>
+        parseDeploymentEnvelopeIdentity({
+          ...validIdentity(),
+          deployment,
+          envelopeSha256: "b".repeat(64),
+        }),
+      ).toThrow(/deployment must be "pages" or "vps"/u);
+    },
+  );
+
+  it.each([
+    "",
+    "b".repeat(63),
+    `${"b".repeat(63)}g`,
+    "B".repeat(64),
+    "b".repeat(65),
+  ])(
+    "rejects malformed envelopeSha256 %s rather than accepting an invalid digest",
+    (envelopeSha256) => {
+      expect(() =>
+        parseDeploymentEnvelopeIdentity({
+          ...validIdentity(),
+          deployment: "pages",
+          envelopeSha256,
+        }),
+      ).toThrow(/envelopeSha256.*64-hexadecimal digest/u);
+    },
+  );
 });

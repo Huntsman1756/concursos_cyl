@@ -4,7 +4,12 @@ import { normalizePublicBasePath, readRuntimeBasePath } from "./publicBasePath";
 function documentWithBasePath(content?: string): Document {
   const meta = content === undefined ? null : { content };
   return {
-    querySelector: () => meta,
+    querySelector: (selector: string) => {
+      if (selector !== 'meta[name="salida-public-base-path"]') {
+        throw new Error(`Unexpected runtime base path selector: ${selector}`);
+      }
+      return meta;
+    },
   } as unknown as Document;
 }
 
