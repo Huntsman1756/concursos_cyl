@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from "react";
-import type { KeyboardEvent } from "react";
+import type { JSX, KeyboardEvent } from "react";
 import type { TrainingProgram } from "../../../data/schemas/generated";
 import { trainingLevelLabel } from "../../domain/trainingPresentation";
 import "./TrainingCombobox.css";

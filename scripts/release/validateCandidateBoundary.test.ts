@@ -287,7 +287,7 @@ describe("candidate data boundary", () => {
     await expect(
       validateCandidateBoundary({
         ...options,
-        manifestPath: "public/data/v1/alternate-manifest.json",
+        manifestPath: "public/data/v1/alternate-manifest.json" as never,
       }),
     ).rejects.toThrow(/manifest.*path|options|canonical/iu);
   }, 90_000);

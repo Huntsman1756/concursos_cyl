@@ -1,19 +1,29 @@
 import candidateResourceAllowlist from "../../config/candidate-resource-allowlist.json";
 import {
+  GENERATED_RESOURCE_KEYS,
+  type GeneratedResourceKey,
+} from "./generatedResourceCatalog";
+import {
   SepeOccupationMarketResourceSchema,
   type SepeOccupationMarketResource,
 } from "./sepeOccupationMarket";
-import type { GeneratedResourceKey } from "./generatedResourceCatalog";
+
+export type CandidateResourceKey = GeneratedResourceKey;
 
 const CANDIDATE_RESOURCE_COUNT = 21;
 const RESOURCE_KEY_PATTERN = /^[a-z][a-zA-Z\d]*$/u;
 const CANONICAL_SEPE_PERIOD = "2026-07";
 const CANONICAL_SEPE_RECORD_COUNT = 116;
+const GENERATED_RESOURCE_KEY_SET = new Set<string>(GENERATED_RESOURCE_KEYS);
 
 type CandidateResourceAllowlistConfig = {
   schemaVersion: "1.0.0";
-  resourceKeys: readonly string[];
+  resourceKeys: readonly CandidateResourceKey[];
 };
+
+function isGeneratedResourceKey(value: string): value is CandidateResourceKey {
+  return GENERATED_RESOURCE_KEY_SET.has(value);
+}
 
 function compareKeys(left: string, right: string): number {
   return left < right ? -1 : left > right ? 1 : 0;
@@ -49,7 +59,14 @@ function parseCandidateResourceAllowlist(
   ) {
     throw new Error("Candidate resource allowlist resourceKeys are invalid.");
   }
-  const resourceKeys = record.resourceKeys as string[];
+  const resourceKeys = (record.resourceKeys as string[]).map((key) => {
+    if (!isGeneratedResourceKey(key)) {
+      throw new Error(
+        `Candidate resource allowlist contains unknown generated resource key: ${key}.`,
+      );
+    }
+    return key;
+  });
   if (resourceKeys.length !== CANDIDATE_RESOURCE_COUNT) {
     throw new Error(
       `Candidate resource allowlist must contain exactly ${CANDIDATE_RESOURCE_COUNT} keys.`,
@@ -73,11 +90,8 @@ const parsedAllowlist = parseCandidateResourceAllowlist(
   candidateResourceAllowlist,
 );
 
-export const CANDIDATE_RESOURCE_KEYS = Object.freeze([
-  ...parsedAllowlist.resourceKeys,
-]);
-
-export type CandidateResourceKey = GeneratedResourceKey;
+export const CANDIDATE_RESOURCE_KEYS: readonly CandidateResourceKey[] =
+  Object.freeze([...parsedAllowlist.resourceKeys]);
 
 export function assertCandidateResourceSet(
   keys: readonly string[],

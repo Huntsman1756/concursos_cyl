@@ -1,3 +1,5 @@
+import type { ReconciliationAnomaly } from "../../data/schemas/generated";
+
 interface CurrentManifestFixtureOptions {
   sourceUpdatedAt?: string | null;
   snapshotFetchedAt?: string;
@@ -58,6 +60,7 @@ export function currentManifestFixture({
         offerLocality: 0,
         offerDescription: 0,
       },
+      reconciliationAnomalies: [] as ReconciliationAnomaly[],
     },
   } as const;
 }
