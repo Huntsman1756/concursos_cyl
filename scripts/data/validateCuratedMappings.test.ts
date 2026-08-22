@@ -1911,11 +1911,20 @@ describe("curated occupation mappings", () => {
       ),
     ).toEqual([]);
 
+    const activeManifest = JSON.parse(
+      readFileSync(
+        resolve(process.cwd(), "public/data/v1/manifest.json"),
+        "utf8",
+      ),
+    ) as { resourceSnapshots: { programs: { resourcePath: string } } };
     const snapshotPrograms = JSON.parse(
       readFileSync(
         resolve(
           process.cwd(),
-          "public/data/v1/snapshots/20260821162954121-087e3c5155c6/programs.json",
+          "public",
+          ...activeManifest.resourceSnapshots.programs.resourcePath
+            .split("/")
+            .filter(Boolean),
         ),
         "utf8",
       ),
