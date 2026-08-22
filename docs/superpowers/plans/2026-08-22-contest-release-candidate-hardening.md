@@ -45,6 +45,7 @@
 ### Task 1: Publication configuration, release identity, and deployment envelopes
 
 **Files:**
+
 - Create: `config/publication.json`
 - Create: `scripts/release/releaseIdentity.ts`
 - Create: `scripts/release/releaseIdentity.test.ts`
@@ -52,6 +53,7 @@
 - Modify: `scripts/release/publicBasePath.test.ts`
 
 **Interfaces:**
+
 - Produces `PublicationConfig`, `ReleaseIdentity`, `DeploymentKind`, `DeploymentEnvelopeIdentity`, `loadPublicationConfig()`, `parseReleaseIdentity()`, `parseDeploymentEnvelopeIdentity()`, and `readRuntimeBasePath()`.
 - Later tasks consume these types without redefining hashes, URLs, release IDs, or base-path rules.
 
@@ -137,7 +139,7 @@ Use exact-key parsing, 40-hex and 64-hex validation, `releaseId` pattern `^[a-z0
 Implement and test strict reading of the runtime base from:
 
 ```html
-<meta name="salida-public-base-path" content="/">
+<meta name="salida-public-base-path" content="/" />
 ```
 
 Expose:
@@ -184,6 +186,7 @@ rtk git commit -m "feat(release): define candidate publication identity"
 ### Task 2: Runtime snapshot retention independent of contest evidence
 
 **Files:**
+
 - Create: `config/runtime-snapshot-retention.json`
 - Create: `scripts/release/runtimeSnapshotRetention.ts`
 - Create: `scripts/release/runtimeSnapshotRetention.test.ts`
@@ -193,6 +196,7 @@ rtk git commit -m "feat(release): define candidate publication identity"
 - Modify: `scripts/data/buildSnapshots.test.ts`
 
 **Interfaces:**
+
 - Produces `RuntimeSnapshotRetention`, `parseRuntimeSnapshotRetention(value)`, and `loadRuntimeSnapshotRetention(rootDir)`.
 - `prepareRuntimeData()` and snapshot cleanup consume only the active manifest and this configuration; they never read contest documents.
 
@@ -201,11 +205,13 @@ rtk git commit -m "feat(release): define candidate publication identity"
 ```ts
 it("ignores release evidence when selecting runtime snapshots", async () => {
   const before = await prepareFixture({
-    retention: ["20260822082339635-2706ba4b5a53"],
+    sourceRetention: ["20260822082339635-2706ba4b5a53"],
+    runtimeRetention: [],
     evidenceSnapshot: "20260821120933391-9bd4488f9029",
   });
   const after = await prepareFixture({
-    retention: ["20260822082339635-2706ba4b5a53"],
+    sourceRetention: ["20260822082339635-2706ba4b5a53"],
+    runtimeRetention: [],
     evidenceSnapshot: "20260821144454118-a56e3eeaffa6",
   });
   expect(after.snapshotIds).toEqual(before.snapshotIds);
@@ -216,10 +222,11 @@ it("rejects duplicate or unsorted retained snapshot IDs", () => {
   expect(() =>
     parseRuntimeSnapshotRetention({
       schemaVersion: "1.0.0",
-      snapshotIds: [
+      sourceSnapshotIds: [
         "20260822085631889-7bbe69380f6d",
         "20260822085631889-7bbe69380f6d",
       ],
+      runtimeSnapshotIds: [],
     }),
   ).toThrow(/sorted unique/u);
 });
@@ -236,7 +243,7 @@ Expected: FAIL because both build paths still scan `coverage-freeze.json` and `r
 ```json
 {
   "schemaVersion": "1.0.0",
-  "snapshotIds": [
+  "sourceSnapshotIds": [
     "20260808172031375-7c88ca187340",
     "20260808174436640-7b8aa74dc939",
     "20260808184316256-47f987062bc2",
@@ -247,27 +254,32 @@ Expected: FAIL because both build paths still scan `coverage-freeze.json` and `r
     "20260822064449120-b76d60c84145",
     "20260822074315030-a6fc9479d93c",
     "20260822082339635-2706ba4b5a53"
-  ]
+  ],
+  "runtimeSnapshotIds": []
 }
 ```
 
 ```ts
 export interface RuntimeSnapshotRetention {
   schemaVersion: "1.0.0";
-  snapshotIds: string[];
+  sourceSnapshotIds: string[];
+  runtimeSnapshotIds: string[];
 }
 ```
 
 Require snapshot pattern `^\d{17}-[a-f0-9]{12}$`, sorted unique values, and an
-existing snapshot directory for every configured ID. The active snapshot
+existing snapshot directory for every configured ID. Every runtime historical
+ID must also appear in `sourceSnapshotIds`. The active snapshot
 `20260822085631889-7bbe69380f6d` is retained automatically from the manifest and
-is intentionally not duplicated in this historical list.
+is intentionally not duplicated in either historical list. The ten historical
+snapshots remain source-retained; none is shipped in this candidate runtime.
 
 - [ ] **Step 4: Replace evidence scanning in both runtime paths**
 
 Remove `TERMINAL_EVIDENCE_PATHS`, `CONTEST_SNAPSHOT_REFERENCE_PATHS`, and
 recursive JSON-string extraction from contest documents. Preserve the active
-manifest snapshot automatically and union it with configured historical IDs.
+manifest snapshot automatically. Runtime preparation unions it only with
+`runtimeSnapshotIds`; source cleanup unions it with `sourceSnapshotIds`.
 In `buildSnapshots.ts`, retain the current
 `FP_COVERAGE_WAVE_3_VERSIONED_SNAPSHOT_IDS`, quarantine handling,
 `ignoredDirectories`, byte-identical preservation of active revoked snapshots,
@@ -299,6 +311,7 @@ rtk git commit -m "refactor(release): decouple runtime snapshot retention"
 ### Task 3: Exact 21-resource allowlist and canonical SEPE boundary
 
 **Files:**
+
 - Create: `config/candidate-resource-allowlist.json`
 - Create: `data/schemas/candidateResourceAllowlist.ts`
 - Create: `data/schemas/candidateResourceAllowlist.test.ts`
@@ -309,6 +322,7 @@ rtk git commit -m "refactor(release): decouple runtime snapshot retention"
 - Modify: `tests/e2e/release.spec.ts`
 
 **Interfaces:**
+
 - Produces `CandidateResourceKey`, `CANDIDATE_RESOURCE_KEYS`,
   `assertCandidateResourceSet()`, `assertCanonicalSepeCandidateResource()`,
   `classifyCandidateReference(url)`, and `validateCandidateBoundary(options)`.
@@ -359,16 +373,19 @@ it("allows reviewed mapping citations to sepe.es", () => {
 });
 
 it("rejects a stale one-record SEPE payload", async () => {
-  await expect(validateCandidateBoundary(candidateFixtureOptions({
-    sepeResource: FIXTURE_WITH_ONE_SEPE_RECORD,
-  }))).rejects.toThrow(
-    /canonical.*116|sepeOccupationMarket/iu,
-  );
+  await expect(
+    validateCandidateBoundary(
+      candidateFixtureOptions({
+        sepeResource: FIXTURE_WITH_ONE_SEPE_RECORD,
+      }),
+    ),
+  ).rejects.toThrow(/canonical.*116|sepeOccupationMarket/iu);
 });
 
 it("retains the canonical SEPE runtime evidence", async () => {
-  await expect(validateCandidateBoundary(currentCandidateOptions()))
-    .resolves.toMatchObject({ resourceCount: 21, sepeRecordCount: 116 });
+  await expect(
+    validateCandidateBoundary(currentCandidateOptions()),
+  ).resolves.toMatchObject({ resourceCount: 21, sepeRecordCount: 116 });
 });
 ```
 
@@ -468,12 +485,14 @@ rtk git commit -m "feat(candidate): enforce canonical 21-resource boundary"
 ### Task 4: Coverage freeze schema 2 and complete resource reconciliation
 
 **Files:**
+
 - Modify: `scripts/release/validateContestFreeze.ts`
 - Modify: `scripts/release/validateContestFreeze.test.ts`
 - Modify: `docs/contest/coverage-freeze.json`
 - Create: `docs/contest/coverage-freeze-rebake-20260822.md`
 
 **Interfaces:**
+
 - Produces `ContestFreezeV2` with `schemaVersion: "2.0.0"` and no deployment object.
 - Consumes `CANDIDATE_RESOURCE_KEYS` from Task 3.
 
@@ -487,9 +506,7 @@ it("rejects schema 1 freezes with a rebake message", async () => {
       { ...freeze, schemaVersion: "1.0.0" },
       { rootDir: ROOT },
     ),
-  ).toThrow(
-    "coverage freeze schema 1.0.0 must be rebaked as 2.0.0",
-  );
+  ).toThrow("coverage freeze schema 1.0.0 must be rebaked as 2.0.0");
 });
 
 it("rejects deployment state in schema 2", async () => {
@@ -557,6 +574,7 @@ rtk git commit -m "refactor(contest): migrate coverage freeze to schema 2"
 ### Task 5: Canonical core inventory, deployment envelopes, and candidate bundle
 
 **Files:**
+
 - Create: `scripts/release/artifactManifest.ts`
 - Create: `scripts/release/artifactManifest.test.ts`
 - Create: `scripts/release/createCandidateBundle.ts`
@@ -576,6 +594,7 @@ rtk git commit -m "refactor(contest): migrate coverage freeze to schema 2"
 - Modify: `package.json`
 
 **Interfaces:**
+
 - Produces `ArtifactManifest`, `EnvelopeManifest`, `ReleaseAttestation`, `createCandidateBundle(options)`, and `verifyReleaseBundle(options)`.
 - Bundle output contains one shared core, `metadata/artifact-manifest.json`, a canonical `metadata/publication.json`, plus `envelopes/pages` and `envelopes/vps`.
 
@@ -602,9 +621,9 @@ it.each([
   "artifact-manifest.json",
 ])("excludes deployment envelope file %s from the core", async (path) => {
   await fixture.write(path, path);
-  expect((await createArtifactManifest(fixture.path)).manifest.files).not.toContainEqual(
-    expect.objectContaining({ path }),
-  );
+  expect(
+    (await createArtifactManifest(fixture.path)).manifest.files,
+  ).not.toContainEqual(expect.objectContaining({ path }));
 });
 ```
 
@@ -703,6 +722,7 @@ rtk git commit -m "feat(release): build attested candidate core and envelopes"
 ### Task 6: Public identity probes and fail-before-write evidence capture
 
 **Files:**
+
 - Create: `scripts/release/publicReleaseIdentity.ts`
 - Create: `scripts/release/publicReleaseIdentity.test.ts`
 - Create: `scripts/release/captureContestEvidence.test.ts`
@@ -713,6 +733,7 @@ rtk git commit -m "feat(release): build attested candidate core and envelopes"
 - Modify: `docs/contest/evidence-capture.md`
 
 **Interfaces:**
+
 - Produces `PublicEndpointProbe`, `fetchPublicIdentity(baseUrl, fetchImpl)`, and evidence manifest schema `2.0.0`.
 - Capture consumes expected VPS envelope identity from Task 5 and publication config from Task 1.
 
@@ -723,10 +744,13 @@ it("hashes the exact manifest response bytes", async () => {
   const bytes = validCandidateManifestBytes({
     snapshotId: "20260822085631889-7bbe69380f6d",
   });
-  const probe = await fetchPublicIdentity(CANONICAL_URL, fixtureFetch({
-    version: validVpsIdentity(),
-    manifestBytes: bytes,
-  }));
+  const probe = await fetchPublicIdentity(
+    CANONICAL_URL,
+    fixtureFetch({
+      version: validVpsIdentity(),
+      manifestBytes: bytes,
+    }),
+  );
   expect(probe.manifestSha256).toBe(
     createHash("sha256").update(bytes).digest("hex"),
   );
@@ -734,10 +758,13 @@ it("hashes the exact manifest response bytes", async () => {
 
 it("rejects a version-manifest mismatch", async () => {
   await expect(
-    fetchPublicIdentity(CANONICAL_URL, fixtureFetch({
-      version: validVpsIdentity({ manifestSha256: "0".repeat(64) }),
-      manifestBytes: VALID_MANIFEST_BYTES,
-    })),
+    fetchPublicIdentity(
+      CANONICAL_URL,
+      fixtureFetch({
+        version: validVpsIdentity({ manifestSha256: "0".repeat(64) }),
+        manifestBytes: VALID_MANIFEST_BYTES,
+      }),
+    ),
   ).rejects.toThrow(/manifestSha256/u);
 });
 ```
@@ -794,10 +821,12 @@ export interface ContestEvidenceManifestV2 {
   freezeRequired: true;
   outputDirectory: "docs/contest/evidence";
   expectedIdentity: DeploymentEnvelopeIdentity;
-  observedIdentity: (DeploymentEnvelopeIdentity & {
-    canonicalRootUrl: string;
-    observedAt: string;
-  }) | null;
+  observedIdentity:
+    | (DeploymentEnvelopeIdentity & {
+        canonicalRootUrl: string;
+        observedAt: string;
+      })
+    | null;
   captures: Array<{
     evidenceId: string;
     route: string;
@@ -854,6 +883,7 @@ rtk git commit -m "fix(evidence): bind captures to observed public identity"
 ### Task 7: Release evidence schema 2 and live-only verification
 
 **Files:**
+
 - Create: `scripts/release/validateReleaseEvidence.ts`
 - Create: `scripts/release/validateReleaseEvidence.test.ts`
 - Modify: `scripts/release/verifyPagesDeployment.ts`
@@ -865,6 +895,7 @@ rtk git commit -m "fix(evidence): bind captures to observed public identity"
 - Modify: `docs/contest/release-evidence.json`
 
 **Interfaces:**
+
 - Produces `ContestReleaseEvidenceV2`, `DeploymentEvidence`, `GithubReleaseClient`, and `validateReleaseEvidence(evidence, options)`.
 - Offline mode validates structure and cross-file identity. Live mode additionally probes both endpoints and GitHub.
 
@@ -916,9 +947,7 @@ Expected: FAIL because the old evidence model has one deployment and silently de
 
 ```ts
 export type ReleaseEvidenceState =
-  | "pending"
-  | "structurally_valid"
-  | "verified";
+  "pending" | "structurally_valid" | "verified";
 
 export interface DeploymentEvidence {
   state: "pending" | "verified";
@@ -990,6 +1019,7 @@ rtk git commit -m "feat(release): require live verified deployment evidence"
 ### Task 8: Semantic claims, memory limit, licences, checklist, and renderer
 
 **Files:**
+
 - Create: `config/jcyl-license-inventory.json`
 - Create: `scripts/release/jsonPointer.ts`
 - Create: `scripts/release/jsonPointer.test.ts`
@@ -1016,6 +1046,7 @@ rtk git commit -m "feat(release): require live verified deployment evidence"
 - Modify: `package.json`
 
 **Interfaces:**
+
 - Produces RFC 6901 resolver, memory validation result, eight-entry JCyL licence inventory, semantic claim evidence, and checklist validator.
 - Renderer consumes validated freeze, release evidence, publication config, claims, licences, and memory result.
 
@@ -1023,8 +1054,9 @@ rtk git commit -m "feat(release): require live verified deployment evidence"
 
 ```ts
 it("resolves RFC 6901 escapes and array indexes", () => {
-  expect(resolveJsonPointer({ "a/b": { "~key": ["ok"] } }, "/a~1b/~0key/0"))
-    .toBe("ok");
+  expect(
+    resolveJsonPointer({ "a/b": { "~key": ["ok"] } }, "/a~1b/~0key/0"),
+  ).toBe("ok");
 });
 
 it.each(["manifest.snapshotId", "/__proto__/x", "/a/~2b"])(
@@ -1105,6 +1137,7 @@ rtk git commit -m "docs(contest): validate criteria claims licences and checklis
 ### Task 9: Candidate workflows, immutable VPS deployment, and rollback
 
 **Files:**
+
 - Modify: `.github/workflows/deploy-pages.yml`
 - Create: `.github/workflows/validate-contest-evidence.yml`
 - Create: `.github/workflows/rollback-release.yml`
@@ -1120,6 +1153,7 @@ rtk git commit -m "docs(contest): validate criteria claims licences and checklis
 - Modify: `docs/deployment.md`
 
 **Interfaces:**
+
 - Publication workflow accepts exact `sourceCommitSha` and `releaseId`, creates one candidate release artifact, deploys Pages first, and stages VPS from the attested core plus VPS envelope.
 - Evidence-only workflow never publishes.
 - Rollback accepts existing `releaseId` and workflow run ID and never rebuilds.
@@ -1223,6 +1257,7 @@ rtk git commit -m "feat(release): deploy and roll back attested candidates"
 ### Task 10: Full candidate integration and pending handoff
 
 **Files:**
+
 - Create: `scripts/release/releaseCandidate.integration.test.ts`
 - Create: `scripts/release/runtimeArtifactRegression.test.ts`
 - Modify: `tests/e2e/release.spec.ts`
@@ -1230,6 +1265,7 @@ rtk git commit -m "feat(release): deploy and roll back attested candidates"
 - Modify: `docs/contest/technical-summary.md`
 
 **Interfaces:**
+
 - Proves the complete local chain through an attested but unpublished candidate.
 - Leaves live evidence explicitly pending; publishing and recapture happen only after shared-branch integration and explicit external release execution.
 

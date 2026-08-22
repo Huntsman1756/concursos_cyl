@@ -188,10 +188,13 @@ types, focused tests, freeze JSON, claim ledger, and generated documents.
 The build will stop reading `release-evidence.json` to decide which snapshots
 belong in `dist`. Snapshot retention will come from
 `config/runtime-snapshot-retention.json`, validated by a dedicated schema and
-generated before release evidence exists. `scripts/release/prepareRuntimeData.ts`
-and the existing `release:runtime-data` command will consume only this runtime
-configuration and the source data tree. Changing contest prose or screenshots
-must not change the runtime artifact.
+generated before release evidence exists. The policy separates historical
+snapshots that must remain immutable in the source tree from the narrower set
+that is intentionally shipped in `dist`; the active manifest snapshot is
+implicit in both paths. `scripts/release/prepareRuntimeData.ts` and the existing
+`release:runtime-data` command consume only the runtime subset and the source
+data tree, while `buildSnapshots.ts` consumes the source-retention subset.
+Changing contest prose or screenshots must not change the runtime artifact.
 
 ### Candidate bundle
 
