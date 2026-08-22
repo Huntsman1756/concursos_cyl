@@ -92,6 +92,11 @@ test("live DAW results shows formacion link and approved occupation", async ({
     page.getByText("No es salario personal ni una predicción."),
   ).toBeVisible();
   await expect(
+    page.getByText(
+      "Base de cotización anualizada · empleo por cuenta ajena a jornada completa.",
+    ),
+  ).toBeVisible();
+  await expect(
     page.getByRole("heading", { name: "Contexto provincial" }),
   ).toBeVisible();
   await expect(
@@ -111,6 +116,15 @@ test("live DAW results shows formacion link and approved occupation", async ({
   await expect(
     sectionNavigation.getByRole("link", { name: "Salidas profesionales" }),
   ).toHaveAttribute("href", "#salidas-profesionales");
+
+  const studyLink = sectionNavigation.getByRole("link", {
+    name: "Dónde estudiar",
+  });
+  await tabTo(page, studyLink);
+  await expect(studyLink).toBeFocused();
+  await page.keyboard.press("Enter");
+  await expect(page).toHaveURL(/\/desde-fp\/IFC03S#donde-estudiar$/u);
+  await expect(page.locator("#donde-estudiar")).toBeVisible();
   await expect(
     page.getByText(/no representa todo el mercado laboral/u),
   ).toBeVisible();

@@ -27,6 +27,7 @@ type FreshnessState =
   | {
       status: "ready";
       sourceLabel: string;
+      ariaLabel: string;
       date: string;
       dateTime: string;
       stale: boolean;
@@ -116,13 +117,23 @@ export function HomePage() {
         const snapshots =
           manifest.resourceSnapshots as typeof manifest.resourceSnapshots &
             Partial<Record<"mappingCoverage", SourceSnapshot>>;
-        const mappingSnapshot =
-          snapshots.mappingCoverage ?? manifest.resourceSnapshots.jobOffers;
+        const mappingSnapshot = snapshots.mappingCoverage;
+        const freshnessSnapshot =
+          mappingSnapshot ?? manifest.resourceSnapshots.jobOffers;
+        const sourceLabel =
+          mappingSnapshot === undefined
+            ? "Ofertas laborales"
+            : "Relaciones revisadas";
         const dateTime =
-          mappingSnapshot.sourceUpdatedAt ?? mappingSnapshot.snapshotFetchedAt;
+          freshnessSnapshot.sourceUpdatedAt ??
+          freshnessSnapshot.snapshotFetchedAt;
         setFreshness({
           status: "ready",
-          sourceLabel: "Relaciones revisadas",
+          sourceLabel,
+          ariaLabel:
+            mappingSnapshot === undefined
+              ? "Fecha de ofertas laborales"
+              : "Fecha de relaciones revisadas",
           date: new Intl.DateTimeFormat("es-ES", {
             day: "2-digit",
             month: "2-digit",
@@ -132,7 +143,7 @@ export function HomePage() {
           dateTime,
           stale:
             manifest.qualityStatus === "stale" ||
-            mappingSnapshot.qualityStatus === "stale",
+            freshnessSnapshot.qualityStatus === "stale",
         });
 
         void loadMappingCoverage(manifest)
@@ -467,7 +478,11 @@ export function HomePage() {
               <span
                 className="data-freshness"
                 role="region"
-                aria-label="Fecha de relaciones revisadas"
+                aria-label={
+                  freshness.status === "ready"
+                    ? freshness.ariaLabel
+                    : "Fecha de relaciones revisadas"
+                }
                 aria-busy={freshness.status === "loading"}
               >
                 {freshness.status === "loading" ? "Comprobando fecha…" : null}

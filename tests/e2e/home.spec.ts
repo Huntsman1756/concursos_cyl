@@ -345,10 +345,10 @@ test("a validated stale legacy manifest keeps navigation and names the last upda
   await page.goto("/");
 
   const freshness = page.getByRole("region", {
-    name: "Fecha de relaciones revisadas",
+    name: "Fecha de ofertas laborales",
   });
   await expect(freshness).toContainText(
-    "Relaciones revisadas: copia del 31/07/2026",
+    "Ofertas laborales: copia del 31/07/2026",
   );
   await expect(freshness.locator("time")).toHaveAttribute(
     "datetime",
@@ -418,6 +418,30 @@ test("the complete Spanish home copy fits without horizontal overflow", async ({
       const box = await link.boundingBox();
       expect(box?.height ?? 0).toBeGreaterThanOrEqual(40);
     }
+  }
+});
+
+test("the home copy fits at the narrow mobile widths", async ({ page }) => {
+  for (const width of [320, 360, 390]) {
+    await page.setViewportSize({ width, height: 800 });
+    await page.goto("/");
+    await expect(
+      page.getByRole("heading", {
+        name: /De tu FP a tu\s*siguiente paso/i,
+      }),
+    ).toBeVisible();
+
+    const overflow = await page.evaluate(() => ({
+      body: document.body.scrollWidth - document.body.clientWidth,
+      document:
+        document.documentElement.scrollWidth -
+        document.documentElement.clientWidth,
+    }));
+    expect(overflow.body, `body overflow at ${width}px`).toBeLessThanOrEqual(1);
+    expect(
+      overflow.document,
+      `document overflow at ${width}px`,
+    ).toBeLessThanOrEqual(1);
   }
 });
 

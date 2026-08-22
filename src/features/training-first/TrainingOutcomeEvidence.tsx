@@ -77,7 +77,10 @@ export function TrainingOutcomeEvidence({
       <header className="training-outcome__header">
         <div>
           <h2 id={headingId}>Base de cotización observada de titulados</h2>
-          <p>Empleo por cuenta ajena a jornada completa.</p>
+          <p>
+            Base de cotización anualizada · empleo por cuenta ajena a jornada
+            completa.
+          </p>
           <p>No es salario personal ni una predicción.</p>
         </div>
       </header>

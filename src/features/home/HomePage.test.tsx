@@ -333,6 +333,46 @@ describe("HomePage", () => {
     );
   });
 
+  it("labels legacy freshness with the job-offer fallback scope", async () => {
+    const currentManifest = currentManifestFixture();
+    const legacyResourceSnapshots = Object.fromEntries(
+      Object.entries(currentManifest.resourceSnapshots).filter(
+        ([key]) => key !== "mappingCoverage",
+      ),
+    );
+    const legacyManifest = {
+      ...currentManifest,
+      resourceSnapshots: legacyResourceSnapshots,
+    };
+    vi.stubGlobal(
+      "fetch",
+      vi.fn((input: RequestInfo | URL) => {
+        const path = typeof input === "string" ? input : input.toString();
+        return Promise.resolve(
+          path.endsWith("/data/v1/manifest.json")
+            ? new Response(JSON.stringify(legacyManifest), { status: 200 })
+            : new Response(null, { status: 404 }),
+        );
+      }),
+    );
+
+    render(
+      <MemoryRouter>
+        <HomePage />
+      </MemoryRouter>,
+    );
+
+    const freshness = await screen.findByRole("region", {
+      name: "Fecha de ofertas laborales",
+    });
+    expect(freshness).toHaveTextContent(
+      "Ofertas laborales: copia del 31/07/2026",
+    );
+    expect(
+      screen.queryByText("Relaciones revisadas: copia del 31/07/2026"),
+    ).not.toBeInTheDocument();
+  });
+
   it("announces a pending manifest before rendering the reviewed-relationship date", async () => {
     let resolveManifest!: (response: Response) => void;
     const manifestResponse = new Promise<Response>((resolve) => {

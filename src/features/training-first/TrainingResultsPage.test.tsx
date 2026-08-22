@@ -273,6 +273,11 @@ describe("TrainingResultsPage", () => {
     expect(
       screen.getByText("No es salario personal ni una predicción."),
     ).toBeVisible();
+    expect(
+      screen.getByText(
+        "Base de cotización anualizada · empleo por cuenta ajena a jornada completa.",
+      ),
+    ).toBeVisible();
     expect(screen.getByText("España · grupo del ciclo")).toBeVisible();
     expect(screen.getByText("Castilla y León · Grado superior")).toBeVisible();
     expect(
