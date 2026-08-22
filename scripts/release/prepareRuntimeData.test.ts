@@ -26,13 +26,15 @@ async function writeJson(path: string, value: unknown): Promise<void> {
 
 async function writeRetentionConfig(
   root: string,
-  snapshotIds: readonly string[] = [],
+  sourceSnapshotIds: readonly string[] = [],
+  runtimeSnapshotIds: readonly string[] = [],
 ): Promise<void> {
   await writeJson(join(root, "config", "runtime-snapshot-retention.json"), {
     schemaVersion: "1.0.0",
-    snapshotIds,
+    sourceSnapshotIds,
+    runtimeSnapshotIds,
   });
-  for (const snapshotId of snapshotIds) {
+  for (const snapshotId of sourceSnapshotIds) {
     await mkdir(join(root, "public", "data", "v1", "snapshots", snapshotId), {
       recursive: true,
     });
@@ -129,11 +131,8 @@ describe("prepareRuntimeData", () => {
 
     const result = await prepareRuntimeData({ root, source, target });
 
-    expect(result.snapshotIds).toEqual([active, coverageFreeze]);
-    expect(await readdir(join(target, "v1", "snapshots"))).toEqual([
-      active,
-      coverageFreeze,
-    ]);
+    expect(result.snapshotIds).toEqual([active]);
+    expect(await readdir(join(target, "v1", "snapshots"))).toEqual([active]);
     expect(
       JSON.parse(await readFile(join(target, "v1", "programs.json"), "utf8")),
     ).toEqual([{ id: "flat" }]);
@@ -235,7 +234,7 @@ describe("prepareRuntimeData", () => {
     const evidenceA = "20260821120933391-9bd4488f9029";
     const evidenceB = "20260821144454118-a56e3eeaffa6";
 
-    await writeRetentionConfig(root, [retained]);
+    await writeRetentionConfig(root, [retained], [retained]);
     await writeJson(join(source, "v1", "manifest.json"), {
       snapshotId: active,
       resourceSnapshots: {},
@@ -277,7 +276,8 @@ describe("prepareRuntimeData", () => {
 
     await writeJson(join(root, "config", "runtime-snapshot-retention.json"), {
       schemaVersion: "1.0.0",
-      snapshotIds: [missing],
+      sourceSnapshotIds: [missing],
+      runtimeSnapshotIds: [],
     });
     await writeJson(join(source, "v1", "manifest.json"), {
       snapshotId: active,

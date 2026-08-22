@@ -389,7 +389,7 @@ export async function prepareRuntimeData(
       (snapshotId) =>
         snapshotId === active ||
         referenced.has(snapshotId) ||
-        retention.snapshotIds.includes(snapshotId),
+        retention.runtimeSnapshotIds.includes(snapshotId),
     )
     .sort();
   await assertSafeTree(sourcePath, "runtime source", resolve(snapshotsSource));

@@ -2225,7 +2225,7 @@ async function completedPilotSnapshotDistributionOptions(
           (directory) => basename(directory),
         );
   const historicalSnapshotIds = new Set([
-    ...retention.snapshotIds,
+    ...retention.sourceSnapshotIds,
     ...activeSnapshotIds,
   ]);
   return {
@@ -2296,7 +2296,7 @@ async function enforceSnapshotRetention(
     .sort((left, right) => compareCanonicalText(right, left));
   const retained = new Set([
     currentSnapshotId,
-    ...retention.snapshotIds,
+    ...retention.sourceSnapshotIds,
     ...immutableSnapshotNames
       .filter(
         (snapshotId) =>

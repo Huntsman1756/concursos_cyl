@@ -37,6 +37,7 @@ import {
 } from "./buildSnapshots";
 import { hashFile } from "./hashFile";
 import { loadEducabaseIncomeBundle } from "./loadEducabaseIncome";
+import { prepareRuntimeData } from "../release/prepareRuntimeData";
 import type { ValidatedCuratedMappings } from "./validateCuratedMappings";
 import { assertPublicSnapshotDistribution } from "./validatePublicDistribution";
 
@@ -44,12 +45,17 @@ const temporaryRoots: string[] = [];
 
 async function setRuntimeSnapshotRetention(
   root: string,
-  snapshotIds: readonly string[],
+  sourceSnapshotIds: readonly string[],
+  runtimeSnapshotIds: readonly string[] = [],
 ): Promise<void> {
   await mkdir(join(root, "config"), { recursive: true });
   await writeFile(
     join(root, "config", "runtime-snapshot-retention.json"),
-    JSON.stringify({ schemaVersion: "1.0.0", snapshotIds }),
+    JSON.stringify({
+      schemaVersion: "1.0.0",
+      sourceSnapshotIds,
+      runtimeSnapshotIds,
+    }),
     "utf8",
   );
 }
@@ -2687,6 +2693,51 @@ describe("buildSnapshots", { timeout: BUILD_SNAPSHOTS_TEST_TIMEOUT }, () => {
     await expect(readManifest(root)).resolves.toMatchObject({
       qualityStatus: "passed",
     });
+  });
+
+  it("keeps source-only history through cleanup but omits it from runtime data", async () => {
+    const root = await temporaryRoot();
+    await buildSnapshots({
+      rootDirectory: root,
+      ...fixedOptions,
+      now: () => new Date("2026-08-01T10:00:00.000Z"),
+    });
+    const sourceOnlySnapshotId = (
+      await readManifest(root)
+    ).resourceSnapshots.programs.resourcePath
+      .split("/")
+      .at(-2)!;
+    await setRuntimeSnapshotRetention(root, [sourceOnlySnapshotId]);
+
+    for (const day of [2, 3]) {
+      await buildSnapshots({
+        rootDirectory: root,
+        ...fixedOptions,
+        now: () => new Date(`2026-08-0${day}T10:00:00.000Z`),
+      });
+    }
+
+    const currentSnapshotId = (
+      await readManifest(root)
+    ).resourceSnapshots.programs.resourcePath
+      .split("/")
+      .at(-2)!;
+    const sourceSnapshotsRoot = join(root, "public", "data", "v1", "snapshots");
+    await expect(
+      access(join(sourceSnapshotsRoot, sourceOnlySnapshotId)),
+    ).resolves.toBeUndefined();
+
+    const prepared = await prepareRuntimeData({
+      root,
+      source: join(root, "public", "data"),
+      target: join(root, "dist", "data"),
+    });
+    expect(prepared.snapshotIds).toEqual([currentSnapshotId]);
+    await expect(
+      access(
+        join(root, "dist", "data", "v1", "snapshots", sourceOnlySnapshotId),
+      ),
+    ).rejects.toMatchObject({ code: "ENOENT" });
   });
 
   it("retains a completed pilot's referenced snapshot beyond ordinary history", async () => {

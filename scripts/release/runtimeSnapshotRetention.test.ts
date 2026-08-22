@@ -11,7 +11,7 @@ import {
 
 const temporaryRoots: string[] = [];
 
-const historicalSnapshotIds = [
+const sourceSnapshotIds = [
   "20260808172031375-7c88ca187340",
   "20260808174436640-7b8aa74dc939",
   "20260808184316256-47f987062bc2",
@@ -37,11 +37,13 @@ describe("runtime snapshot retention", () => {
     expect(
       parseRuntimeSnapshotRetention({
         schemaVersion: "1.0.0",
-        snapshotIds: historicalSnapshotIds,
+        sourceSnapshotIds,
+        runtimeSnapshotIds: [],
       }),
     ).toEqual({
       schemaVersion: "1.0.0",
-      snapshotIds: historicalSnapshotIds,
+      sourceSnapshotIds,
+      runtimeSnapshotIds: [],
     });
   });
 
@@ -49,17 +51,35 @@ describe("runtime snapshot retention", () => {
     expect(() =>
       parseRuntimeSnapshotRetention({
         schemaVersion: "1.0.0",
-        snapshotIds: [
+        sourceSnapshotIds: [
           "20260822085631889-7bbe69380f6d",
           "20260822085631889-7bbe69380f6d",
         ],
+        runtimeSnapshotIds: [],
       }),
     ).toThrow(/sorted unique/u);
 
     expect(() =>
       parseRuntimeSnapshotRetention({
         schemaVersion: "1.0.0",
-        snapshotIds: [...historicalSnapshotIds].reverse(),
+        sourceSnapshotIds: [...sourceSnapshotIds].reverse(),
+        runtimeSnapshotIds: [],
+      }),
+    ).toThrow(/sorted unique/u);
+
+    expect(() =>
+      parseRuntimeSnapshotRetention({
+        schemaVersion: "1.0.0",
+        sourceSnapshotIds,
+        runtimeSnapshotIds: [sourceSnapshotIds[0]!, sourceSnapshotIds[0]!],
+      }),
+    ).toThrow(/sorted unique/u);
+
+    expect(() =>
+      parseRuntimeSnapshotRetention({
+        schemaVersion: "1.0.0",
+        sourceSnapshotIds,
+        runtimeSnapshotIds: [...sourceSnapshotIds].reverse(),
       }),
     ).toThrow(/sorted unique/u);
   });
@@ -68,9 +88,19 @@ describe("runtime snapshot retention", () => {
     expect(() =>
       parseRuntimeSnapshotRetention({
         schemaVersion: "1.0.0",
-        snapshotIds: ["not-a-snapshot"],
+        sourceSnapshotIds: ["not-a-snapshot"],
+        runtimeSnapshotIds: [],
       }),
-    ).toThrow(/snapshotIds/u);
+    ).toThrow(/sourceSnapshotIds/u);
+  });
+
+  it("rejects the legacy single-list shape", () => {
+    expect(() =>
+      parseRuntimeSnapshotRetention({
+        schemaVersion: "1.0.0",
+        snapshotIds: [],
+      }),
+    ).toThrow(/exact keys/u);
   });
 
   it("loads the config only when every retained snapshot directory exists", async () => {
@@ -79,7 +109,7 @@ describe("runtime snapshot retention", () => {
     await mkdir(join(root, "public", "data", "v1", "snapshots"), {
       recursive: true,
     });
-    for (const snapshotId of historicalSnapshotIds) {
+    for (const snapshotId of sourceSnapshotIds) {
       await mkdir(join(root, "public", "data", "v1", "snapshots", snapshotId));
     }
     await mkdir(join(root, "config"), { recursive: true });
@@ -87,29 +117,34 @@ describe("runtime snapshot retention", () => {
       join(root, "config", "runtime-snapshot-retention.json"),
       JSON.stringify({
         schemaVersion: "1.0.0",
-        snapshotIds: historicalSnapshotIds,
+        sourceSnapshotIds,
+        runtimeSnapshotIds: [],
       }),
       "utf8",
     );
 
     expect(loadRuntimeSnapshotRetention(root)).toEqual({
       schemaVersion: "1.0.0",
-      snapshotIds: historicalSnapshotIds,
+      sourceSnapshotIds,
+      runtimeSnapshotIds: [],
     });
 
     await rm(
-      join(
-        root,
-        "public",
-        "data",
-        "v1",
-        "snapshots",
-        historicalSnapshotIds[0]!,
-      ),
+      join(root, "public", "data", "v1", "snapshots", sourceSnapshotIds[0]!),
       { recursive: true },
     );
     expect(() => loadRuntimeSnapshotRetention(root)).toThrow(
-      historicalSnapshotIds[0]!,
+      sourceSnapshotIds[0]!,
     );
+  });
+
+  it("rejects a runtime snapshot that is not source-retained", () => {
+    expect(() =>
+      parseRuntimeSnapshotRetention({
+        schemaVersion: "1.0.0",
+        sourceSnapshotIds,
+        runtimeSnapshotIds: ["20260822085631889-7bbe69380f6d"],
+      }),
+    ).toThrow(/sourceSnapshotIds/u);
   });
 });

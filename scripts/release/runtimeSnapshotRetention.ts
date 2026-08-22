@@ -9,12 +9,14 @@ const RETENTION_CONFIG_RELATIVE_PATH = [
 
 export interface RuntimeSnapshotRetention {
   schemaVersion: "1.0.0";
-  snapshotIds: string[];
+  sourceSnapshotIds: string[];
+  runtimeSnapshotIds: string[];
 }
 
 interface RuntimeSnapshotRetentionRecord {
   schemaVersion?: unknown;
-  snapshotIds?: unknown;
+  sourceSnapshotIds?: unknown;
+  runtimeSnapshotIds?: unknown;
 }
 
 function recordValue(value: unknown): RuntimeSnapshotRetentionRecord {
@@ -27,12 +29,13 @@ function recordValue(value: unknown): RuntimeSnapshotRetentionRecord {
 function assertExactKeys(value: RuntimeSnapshotRetentionRecord): void {
   const actualKeys = Object.keys(value).sort();
   if (
-    actualKeys.length !== 2 ||
-    actualKeys[0] !== "schemaVersion" ||
-    actualKeys[1] !== "snapshotIds"
+    actualKeys.length !== 3 ||
+    actualKeys[0] !== "runtimeSnapshotIds" ||
+    actualKeys[1] !== "schemaVersion" ||
+    actualKeys[2] !== "sourceSnapshotIds"
   ) {
     throw new Error(
-      "Runtime snapshot retention must contain exact keys: schemaVersion, snapshotIds.",
+      "Runtime snapshot retention must contain exact keys: schemaVersion, sourceSnapshotIds, runtimeSnapshotIds.",
     );
   }
 }
@@ -51,32 +54,53 @@ export function parseRuntimeSnapshotRetention(
       'Runtime snapshot retention.schemaVersion must be exactly "1.0.0".',
     );
   }
-  if (!Array.isArray(record.snapshotIds)) {
-    throw new Error("Runtime snapshot retention.snapshotIds must be an array.");
-  }
+  const parseSnapshotIds = (
+    field: "sourceSnapshotIds" | "runtimeSnapshotIds",
+  ) => {
+    const value = record[field];
+    if (!Array.isArray(value)) {
+      throw new Error(`Runtime snapshot retention.${field} must be an array.`);
+    }
 
-  const snapshotIds = record.snapshotIds.map((snapshotId, index) => {
+    const snapshotIds = value.map((snapshotId, index) => {
+      if (
+        typeof snapshotId !== "string" ||
+        !SNAPSHOT_ID_PATTERN.test(snapshotId)
+      ) {
+        throw new Error(
+          `Runtime snapshot retention.${field}[${index}] must match ${SNAPSHOT_ID_PATTERN.source}.`,
+        );
+      }
+      return snapshotId;
+    });
+    const sortedUnique = [...snapshotIds].sort(compareSnapshotIds);
     if (
-      typeof snapshotId !== "string" ||
-      !SNAPSHOT_ID_PATTERN.test(snapshotId)
+      new Set(snapshotIds).size !== snapshotIds.length ||
+      snapshotIds.some(
+        (snapshotId, index) => snapshotId !== sortedUnique[index],
+      )
     ) {
       throw new Error(
-        `Runtime snapshot retention.snapshotIds[${index}] must match ${SNAPSHOT_ID_PATTERN.source}.`,
+        `Runtime snapshot retention.${field} must be sorted unique values.`,
       );
     }
-    return snapshotId;
-  });
-  const sortedUnique = [...snapshotIds].sort(compareSnapshotIds);
+    return snapshotIds;
+  };
+
+  const sourceSnapshotIds = parseSnapshotIds("sourceSnapshotIds");
+  const runtimeSnapshotIds = parseSnapshotIds("runtimeSnapshotIds");
+  const sourceSnapshotIdSet = new Set(sourceSnapshotIds);
   if (
-    new Set(snapshotIds).size !== snapshotIds.length ||
-    snapshotIds.some((snapshotId, index) => snapshotId !== sortedUnique[index])
+    runtimeSnapshotIds.some(
+      (snapshotId) => !sourceSnapshotIdSet.has(snapshotId),
+    )
   ) {
     throw new Error(
-      "Runtime snapshot retention.snapshotIds must be sorted unique values.",
+      "Runtime snapshot retention.runtimeSnapshotIds must be a subset of sourceSnapshotIds.",
     );
   }
 
-  return { schemaVersion: "1.0.0", snapshotIds };
+  return { schemaVersion: "1.0.0", sourceSnapshotIds, runtimeSnapshotIds };
 }
 
 export function loadRuntimeSnapshotRetention(
@@ -98,7 +122,7 @@ export function loadRuntimeSnapshotRetention(
 
   const retention = parseRuntimeSnapshotRetention(parsed);
   const snapshotsRoot = resolve(snapshotsDirectory);
-  for (const snapshotId of retention.snapshotIds) {
+  for (const snapshotId of retention.sourceSnapshotIds) {
     const snapshotPath = join(snapshotsRoot, snapshotId);
     let snapshotStat;
     try {
