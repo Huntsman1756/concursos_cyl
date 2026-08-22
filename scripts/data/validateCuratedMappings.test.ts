@@ -2027,7 +2027,7 @@ describe("curated occupation mappings", () => {
           "Operador / operadora principal en instalaciones de tratamiento químico.",
       },
     ] as const;
-    const waveKeys = new Set(expected.map(({ key }) => key));
+    const waveKeys = new Set<string>(expected.map(({ key }) => key));
     const actual = approved.links
       .filter((link) =>
         waveKeys.has(
