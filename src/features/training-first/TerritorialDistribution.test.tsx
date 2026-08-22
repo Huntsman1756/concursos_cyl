@@ -124,6 +124,9 @@ describe("TerritorialDistribution", () => {
         "No hay centros publicados para este ciclo en la copia actual.",
       ),
     ).toBeVisible();
+    expect(
+      screen.getByText("Curso académico: no indicado", { exact: true }),
+    ).toBeVisible();
     expect(screen.queryByRole("table")).not.toBeInTheDocument();
   });
 });

@@ -46,7 +46,7 @@ export function TerritorialDistribution({
         <h2 id="territorial-distribution-title">Distribución de centros</h2>
       </div>
       <div className="territorial-distribution__meta">
-        {academicYear !== null && <span>Curso académico: {academicYear}</span>}
+        <span>Curso académico: {academicYear ?? "no indicado"}</span>
         <span>
           Fuente actualizada:{" "}
           {sourceUpdatedAt === null ? (
