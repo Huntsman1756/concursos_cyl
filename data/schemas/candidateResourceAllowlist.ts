@@ -197,7 +197,10 @@ export function classifyCandidateReference(
       hostAndPath,
     );
   if (certificateReference) return "publisher-owned";
-  if (isSepeHost(parsed.hostname.toLocaleLowerCase("en-US"))) {
+  if (
+    isSepeHost(parsed.hostname.toLocaleLowerCase("en-US")) ||
+    /occupation-market/u.test(parsed.pathname.toLocaleLowerCase("en-US"))
+  ) {
     return "complementary-classification-source";
   }
   return "other";

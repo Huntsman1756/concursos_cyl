@@ -75,6 +75,12 @@ describe("candidate resource allowlist", () => {
     ).toBe("complementary-classification-source");
   });
 
+  it("classifies occupation-market URLs as complementary sources", () => {
+    expect(
+      classifyCandidateReference("https://example.org/occupation-market/cno"),
+    ).toBe("complementary-classification-source");
+  });
+
   it("keeps external certificate URLs publisher-owned", () => {
     expect(
       classifyCandidateReference(
