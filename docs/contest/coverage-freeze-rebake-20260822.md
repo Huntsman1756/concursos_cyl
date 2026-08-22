@@ -1,9 +1,16 @@
-# Coverage freeze rebake — 2026-08-22
+# Coverage freeze rebake — schema 2 — 2026-08-22
 
 El freeze se regeneró contra el límite exacto
-`05f905397d22b217c4716c88a2406d802892fb6d`, después de aplicar las
-remediaciones de evidencia y regenerar el snapshot activo. El rebake no
-modifica `data/curated`, `public/data` ni `src/domain`/`src/features`.
+`15cd959529c5c223adff02eda124863a320fe0bf`, después de aplicar las
+remediaciones de evidencia y regenerar el snapshot activo. Este SHA es la
+frontera inmutable de cobertura y datos candidato; no es la identidad de una
+compilación posterior. El rebake no modifica `data/curated`, `public/data` ni
+`src/domain`/`src/features`.
+
+El documento usa `schemaVersion: "2.0.0"` y no contiene estado de publicación.
+Los valores heredados del documento schema 1 fueron descartados y todos los
+recursos, hashes, conteos, cobertura, ofertas e intentos se recomputaron desde
+el manifest público actual.
 
 ## Resultado
 
@@ -16,7 +23,6 @@ modifica `data/curated`, `public/data` ni `src/domain`/`src/features`.
 - Ofertas alcanzadas: 38 de 1.058, como unión de IDs
 - Relaciones revisadas sin oferta alcanzada: 261
 - Programas diferidos: 0
-- Despliegue: pendiente de observación pública
 
 ## Validación
 

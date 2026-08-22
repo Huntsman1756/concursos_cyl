@@ -6,7 +6,7 @@ import {
 } from "./renderContestSubmission";
 
 const freeze = {
-  schemaVersion: "1.0.0",
+  schemaVersion: "2.0.0",
   freezeStatus: "frozen",
   sourceCommitSha: "a".repeat(40),
   manifest: {
@@ -65,10 +65,6 @@ const freeze = {
     discarded: 0,
     terminal: 1,
     reserveUnattempted: 0,
-  },
-  deployment: {
-    expectedRootUrl: "https://salida-cyl.157-90-22-40.sslip.io/",
-    status: "pending",
   },
 } as never;
 

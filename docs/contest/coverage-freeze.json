@@ -1,7 +1,7 @@
 {
-  "schemaVersion": "1.0.0",
+  "schemaVersion": "2.0.0",
   "freezeStatus": "frozen",
-  "sourceCommitSha": "05f905397d22b217c4716c88a2406d802892fb6d",
+  "sourceCommitSha": "15cd959529c5c223adff02eda124863a320fe0bf",
   "manifest": {
     "path": "public/data/v1/manifest.json",
     "sha256": "92afc80f2b839ed95def95bc90bdd3b6ad3a1363fb12904f7b109fafc92b2f18",
@@ -50,11 +50,6 @@
         "sha256": "71ac22dfbcc5f95927fd17fa6b0a03bc77d39482fcad1640f9c6b08dec609f10",
         "recordCount": 2248
       },
-      "officialOccupations": {
-        "resourcePath": "/data/v1/snapshots/20260822085631889-7bbe69380f6d/official-occupations.json",
-        "sha256": "76fa213f97c98e5af0f9bf120323ba3abb32df78e797c381e5454cadc858f64b",
-        "recordCount": 502
-      },
       "occupationAliases": {
         "resourcePath": "/data/v1/snapshots/20260822085631889-7bbe69380f6d/occupation-aliases.json",
         "sha256": "4f37bc7c6ff4d76140c79d9e9245c7155ff5f77d5b3bc397796985e13c2fbe7c",
@@ -64,6 +59,11 @@
         "resourcePath": "/data/v1/snapshots/20260822085631889-7bbe69380f6d/occupations.json",
         "sha256": "4e82ab9810dc6681b0e79aa2cfe3b038985ee23eb36cdb5f4603b53961efae2e",
         "recordCount": 131
+      },
+      "officialOccupations": {
+        "resourcePath": "/data/v1/snapshots/20260822085631889-7bbe69380f6d/official-occupations.json",
+        "sha256": "76fa213f97c98e5af0f9bf120323ba3abb32df78e797c381e5454cadc858f64b",
+        "recordCount": 502
       },
       "openDataCatalog": {
         "resourcePath": "/data/v1/snapshots/20260822085631889-7bbe69380f6d/open-data-catalog.json",
@@ -1119,9 +1119,5 @@
     "discarded": 0,
     "terminal": 11,
     "reserveUnattempted": 0
-  },
-  "deployment": {
-    "expectedRootUrl": "https://salida-cyl.157-90-22-40.sslip.io/",
-    "status": "pending"
   }
 }

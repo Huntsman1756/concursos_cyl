@@ -7,8 +7,13 @@ import { format as formatPrettier } from "prettier";
 
 import { REVIEWED_PROGRAM_QUALIFICATION_LINKS } from "../../data/catalogs/reviewedProgramQualifications";
 import { REVIEWED_QUALIFICATIONS } from "../../data/catalogs/reviewedQualifications";
+import {
+  assertCanonicalSepeCandidateResource,
+  assertCandidateResourceSet,
+  CANDIDATE_RESOURCE_KEYS,
+  type CandidateResourceKey,
+} from "../../data/schemas/candidateResourceAllowlist";
 import type { TrainingProgram } from "../../data/schemas/generated";
-import { adaptSepeOccupationMarketResource } from "../../data/schemas/sepeOccupationMarket";
 import { matchOffersForProgram } from "../../src/domain/offerMatching";
 import {
   validateCuratedMappings,
@@ -23,29 +28,6 @@ const MANIFEST_KEYS = [
   "qualityStatus",
   "qualityCounts",
   "resourceSnapshots",
-] as const;
-const RESOURCE_KEYS = [
-  "centers",
-  "derivedFpOccupationGraph",
-  "ecylCourses",
-  "educationCenterDirectory",
-  "jobOffers",
-  "mappingCoverage",
-  "municipalities",
-  "officialOccupations",
-  "occupationAliases",
-  "occupations",
-  "openDataCatalog",
-  "outcomeIndicators",
-  "professionalCertificates",
-  "professionalProfiles",
-  "programs",
-  "provincialContracts",
-  "publicEmploymentCalls",
-  "publishedRequirements",
-  "sepeOccupationMarket",
-  "trainingOccupationLinks",
-  "trainingOfferings",
 ] as const;
 const RESOURCE_SNAPSHOT_KEYS = [
   "resourcePath",
@@ -85,7 +67,6 @@ const ATTEMPT_KEYS = [
   "terminal",
   "reserveUnattempted",
 ] as const;
-const DEPLOYMENT_KEYS = ["expectedRootUrl", "status"] as const;
 const FREEZE_KEYS = [
   "schemaVersion",
   "freezeStatus",
@@ -94,12 +75,25 @@ const FREEZE_KEYS = [
   "coverage",
   "offers",
   "attempts",
-  "deployment",
 ] as const;
-const EXPECTED_ROOT_URL = "https://salida-cyl.157-90-22-40.sslip.io/";
-export const EXPECTED_CONTEST_RESOURCE_COUNT = 21;
+
+const CANONICAL_MANIFEST_PATH = "public/data/v1/manifest.json";
+const CANONICAL_SNAPSHOT_ID = "20260822085631889-7bbe69380f6d";
+const CANONICAL_MANIFEST_SHA256 =
+  "92afc80f2b839ed95def95bc90bdd3b6ad3a1363fb12904f7b109fafc92b2f18";
+export const CONTEST_FREEZE_SOURCE_COMMIT_SHA =
+  "15cd959529c5c223adff02eda124863a320fe0bf";
+
+export const EXPECTED_CONTEST_RESOURCE_COUNT = CANDIDATE_RESOURCE_KEYS.length;
 export const EXPECTED_SEPE_RECORD_COUNT = 116;
+
+/**
+ * These paths define the immutable coverage/data boundary. Keep this list as
+ * the single source for both dirty-write preflight and source-commit diff
+ * verification.
+ */
 export const CONTEST_FREEZE_SOURCE_PATHS = [
+  "config/candidate-resource-allowlist.json",
   "analysis/fp_coverage_expansion_results.json",
   "analysis/fp_one_word_publication_reviews.json",
   "data/catalogs",
@@ -113,24 +107,27 @@ export const CONTEST_FREEZE_SOURCE_PATHS = [
   "src/features",
 ] as const;
 
-type ResourceKey = (typeof RESOURCE_KEYS)[number];
+type ResourceSnapshot = {
+  resourcePath: string;
+  sha256: string;
+  recordCount: number;
+};
 
-export type ContestFreeze = {
-  schemaVersion: "1.0.0";
+type FreezeManifest = {
+  path: string;
+  sha256: string;
+  generatedAt: string;
+  snapshotId: string;
+  qualityStatus: "passed";
+  qualityCounts: Record<string, number>;
+  resourceSnapshots: Record<CandidateResourceKey, ResourceSnapshot>;
+};
+
+export type ContestFreezeV2 = {
+  schemaVersion: "2.0.0";
   freezeStatus: "frozen";
   sourceCommitSha: string;
-  manifest: {
-    path: string;
-    sha256: string;
-    generatedAt: string;
-    snapshotId: string;
-    qualityStatus: "passed";
-    qualityCounts: Record<string, number>;
-    resourceSnapshots: Record<
-      ResourceKey,
-      { resourcePath: string; sha256: string; recordCount: number }
-    >;
-  };
+  manifest: FreezeManifest;
   coverage: {
     distinctQualificationKeys: string[];
     distinctQualificationCount: number;
@@ -163,11 +160,10 @@ export type ContestFreeze = {
     terminal: number;
     reserveUnattempted: number;
   };
-  deployment: {
-    expectedRootUrl: string;
-    status: "pending" | "verified";
-  };
 };
+
+/** Compatibility name retained for renderer consumers; this is schema 2 only. */
+export type ContestFreeze = ContestFreezeV2;
 
 type ValidationOptions = { rootDir?: string };
 
@@ -227,6 +223,20 @@ function hashText(text: string): string {
   return createHash("sha256").update(text).digest("hex");
 }
 
+function assertResourceKeyOrder(keys: readonly string[], label: string): void {
+  try {
+    assertCandidateResourceSet(keys);
+  } catch (error) {
+    throw new Error(
+      `${label} must match the candidate resource set: ${error instanceof Error ? error.message : String(error)}`,
+      { cause: error },
+    );
+  }
+  if (JSON.stringify(keys) !== JSON.stringify(CANDIDATE_RESOURCE_KEYS)) {
+    throw new Error(`${label} must use canonical candidate resource order`);
+  }
+}
+
 export function getDirtyContestFreezeSourcePaths(
   rootDir = process.cwd(),
 ): string[] {
@@ -284,6 +294,7 @@ export function parseContestFreezeWriteSourceCommit(
   return sourceCommitSha;
 }
 
+/** Retained as a narrow path utility for callers migrating old snapshots. */
 export function migrateFreezeResourcePathToSnapshot(
   resourcePath: string,
   snapshotId: string,
@@ -313,11 +324,25 @@ function relativeResourcePath(resourcePath: string): string {
   return path.posix.join("public", resourcePath.slice(1));
 }
 
-function parseFreeze(value: unknown): ContestFreeze {
-  const root = exactKeys(value, FREEZE_KEYS, "coverage freeze");
-  if (root.schemaVersion !== "1.0.0") {
-    throw new Error("coverage freeze schemaVersion must be 1.0.0");
+function assertResourcePath(value: string, label: string): void {
+  if (
+    !/^\/data\/v1\/snapshots\/[a-z0-9]+(?:-[a-z0-9]+)*\/[a-z0-9-]+\.json$/u.test(
+      value,
+    )
+  ) {
+    throw new Error(`${label} is not an immutable snapshot resource path`);
   }
+}
+
+function parseFreeze(value: unknown): ContestFreezeV2 {
+  const raw = record(value, "coverage freeze");
+  if (raw.schemaVersion === "1.0.0") {
+    throw new Error("coverage freeze schema 1.0.0 must be rebaked as 2.0.0");
+  }
+  if (raw.schemaVersion !== "2.0.0") {
+    throw new Error("coverage freeze schemaVersion must be 2.0.0");
+  }
+  const root = exactKeys(raw, FREEZE_KEYS, "coverage freeze");
   if (root.freezeStatus !== "frozen") {
     throw new Error("coverage freeze must have freezeStatus=frozen");
   }
@@ -331,23 +356,14 @@ function parseFreeze(value: unknown): ContestFreeze {
     manifest.resourceSnapshots,
     "manifest.resourceSnapshots",
   );
-  if (
-    Object.keys(resourceSnapshotRecord).length !==
-    EXPECTED_CONTEST_RESOURCE_COUNT
-  ) {
-    throw new Error(
-      `manifest.resourceSnapshots must contain exactly ${EXPECTED_CONTEST_RESOURCE_COUNT} resources`,
-    );
-  }
-  const resourceSnapshots = exactKeys(
-    resourceSnapshotRecord,
-    RESOURCE_KEYS,
-    "manifest.resourceSnapshots",
+  assertResourceKeyOrder(
+    Object.keys(resourceSnapshotRecord),
+    "manifest.resourceSnapshots candidate resource set",
   );
   const resourceSnapshotEntries = Object.fromEntries(
-    RESOURCE_KEYS.map((key) => {
+    CANDIDATE_RESOURCE_KEYS.map((key) => {
       const snapshot = exactKeys(
-        resourceSnapshots[key],
+        resourceSnapshotRecord[key],
         RESOURCE_SNAPSHOT_KEYS,
         `manifest.resourceSnapshots.${key}`,
       );
@@ -355,13 +371,10 @@ function parseFreeze(value: unknown): ContestFreeze {
         snapshot.resourcePath,
         `manifest.resourceSnapshots.${key}.resourcePath`,
       );
-      if (
-        !/^\/data\/v1\/snapshots\/[a-z0-9-]+\/[a-z-]+\.json$/u.test(
-          resourcePath,
-        )
-      ) {
-        throw new Error(`invalid resource path for ${key}`);
-      }
+      assertResourcePath(
+        resourcePath,
+        `manifest.resourceSnapshots.${key}.resourcePath`,
+      );
       const sha256 = stringValue(
         snapshot.sha256,
         `manifest.resourceSnapshots.${key}.sha256`,
@@ -381,7 +394,8 @@ function parseFreeze(value: unknown): ContestFreeze {
         },
       ];
     }),
-  ) as ContestFreeze["manifest"]["resourceSnapshots"];
+  ) as ContestFreezeV2["manifest"]["resourceSnapshots"];
+
   const qualityCounts = record(
     manifest.qualityCounts,
     "manifest.qualityCounts",
@@ -392,27 +406,25 @@ function parseFreeze(value: unknown): ContestFreeze {
       integerValue(value, `manifest.qualityCounts.${key}`),
     ]),
   );
-  const snapshotIds = RESOURCE_KEYS.map(
+  const snapshotIds = CANDIDATE_RESOURCE_KEYS.map(
     (key) =>
       resourceSnapshotEntries[key].resourcePath.match(
-        /\/snapshots\/([a-z0-9-]+)\//u,
+        /\/snapshots\/([a-z0-9]+(?:-[a-z0-9-]*[a-z0-9])?)\//u,
       )?.[1],
   );
   if (snapshotIds.some((value) => value === undefined)) {
     throw new Error("every resource must have a snapshot ID");
   }
-  if (
-    new Set(snapshotIds).size !== 1 ||
-    snapshotIds[0] !== manifest.snapshotId
-  ) {
+  const snapshotId = stringValue(manifest.snapshotId, "manifest.snapshotId");
+  if (new Set(snapshotIds).size !== 1 || snapshotIds[0] !== snapshotId) {
     throw new Error("manifest snapshotId must address every resource");
   }
 
-  const parsedManifest: ContestFreeze["manifest"] = {
+  const parsedManifest: FreezeManifest = {
     path: stringValue(manifest.path, "manifest.path"),
     sha256: stringValue(manifest.sha256, "manifest.sha256"),
     generatedAt: stringValue(manifest.generatedAt, "manifest.generatedAt"),
-    snapshotId: stringValue(manifest.snapshotId, "manifest.snapshotId"),
+    snapshotId,
     qualityStatus:
       manifest.qualityStatus === "passed"
         ? "passed"
@@ -424,7 +436,7 @@ function parseFreeze(value: unknown): ContestFreeze {
   };
 
   const coverage = exactKeys(root.coverage, COVERAGE_KEYS, "coverage");
-  const parsedCoverage = {
+  const parsedCoverage: ContestFreezeV2["coverage"] = {
     distinctQualificationKeys: stringArray(
       coverage.distinctQualificationKeys,
       "coverage.distinctQualificationKeys",
@@ -494,7 +506,7 @@ function parseFreeze(value: unknown): ContestFreeze {
       coverage.deferredProgramCount,
       "coverage.deferredProgramCount",
     ),
-  } satisfies ContestFreeze["coverage"];
+  };
 
   const offers = exactKeys(root.offers, OFFER_KEYS, "offers");
   const marginalOfferDeltas = exactKeys(
@@ -502,7 +514,7 @@ function parseFreeze(value: unknown): ContestFreeze {
     DELTA_KEYS,
     "offers.marginalOfferDeltas",
   );
-  const parsedOffers: ContestFreeze["offers"] = {
+  const parsedOffers: ContestFreezeV2["offers"] = {
     matchedOfferIds: stringArray(
       offers.matchedOfferIds,
       "offers.matchedOfferIds",
@@ -529,29 +541,16 @@ function parseFreeze(value: unknown): ContestFreeze {
       key,
       integerValue(attempts[key], `attempts.${key}`),
     ]),
-  ) as ContestFreeze["attempts"];
-
-  const deployment = exactKeys(root.deployment, DEPLOYMENT_KEYS, "deployment");
-  const deploymentStatus = deployment.status;
-  if (deploymentStatus !== "pending" && deploymentStatus !== "verified") {
-    throw new Error("deployment.status must be pending or verified");
-  }
+  ) as ContestFreezeV2["attempts"];
 
   return {
-    schemaVersion: "1.0.0",
+    schemaVersion: "2.0.0",
     freezeStatus: "frozen",
     sourceCommitSha,
     manifest: parsedManifest,
     coverage: parsedCoverage,
     offers: parsedOffers,
     attempts: parsedAttempts,
-    deployment: {
-      expectedRootUrl: stringValue(
-        deployment.expectedRootUrl,
-        "deployment.expectedRootUrl",
-      ),
-      status: deploymentStatus,
-    },
   };
 }
 
@@ -565,42 +564,164 @@ function assertEqual(actual: unknown, expected: unknown, label: string): void {
   }
 }
 
-function readResource<T>(
+function readCurrentManifest(rootDir: string): {
+  text: string;
+  manifest: FreezeManifest;
+} {
+  const text = fs.readFileSync(
+    path.resolve(rootDir, CANONICAL_MANIFEST_PATH),
+    "utf8",
+  );
+  const value = record(JSON.parse(text) as unknown, "public manifest");
+  if (value.schemaVersion !== "1.0.0") {
+    throw new Error("public manifest schemaVersion must be 1.0.0");
+  }
+  if (value.qualityStatus !== "passed") {
+    throw new Error("public manifest qualityStatus must be passed");
+  }
+  const resourceSnapshotRecord = record(
+    value.resourceSnapshots,
+    "public manifest.resourceSnapshots",
+  );
+  assertResourceKeyOrder(
+    Object.keys(resourceSnapshotRecord),
+    "public manifest.resourceSnapshots candidate resource set",
+  );
+  const parsedSnapshots = Object.fromEntries(
+    CANDIDATE_RESOURCE_KEYS.map((key) => {
+      const snapshot = record(
+        resourceSnapshotRecord[key],
+        `public manifest.resourceSnapshots.${key}`,
+      );
+      const resourcePath = stringValue(
+        snapshot.resourcePath,
+        `public manifest.resourceSnapshots.${key}.resourcePath`,
+      );
+      assertResourcePath(
+        resourcePath,
+        `public manifest.resourceSnapshots.${key}.resourcePath`,
+      );
+      const sha256 = stringValue(
+        snapshot.sha256,
+        `public manifest.resourceSnapshots.${key}.sha256`,
+      );
+      if (!/^[a-f0-9]{64}$/u.test(sha256)) {
+        throw new Error(`public manifest resource hash is invalid for ${key}`);
+      }
+      return [
+        key,
+        {
+          resourcePath,
+          sha256,
+          recordCount: integerValue(
+            snapshot.recordCount,
+            `public manifest.resourceSnapshots.${key}.recordCount`,
+          ),
+        },
+      ];
+    }),
+  ) as FreezeManifest["resourceSnapshots"];
+  const snapshotIds = CANDIDATE_RESOURCE_KEYS.map(
+    (key) =>
+      parsedSnapshots[key].resourcePath.match(
+        /\/snapshots\/([a-z0-9]+(?:-[a-z0-9-]*[a-z0-9])?)\//u,
+      )?.[1],
+  );
+  if (snapshotIds.some((value) => value === undefined)) {
+    throw new Error("public manifest resources must have a snapshot ID");
+  }
+  if (new Set(snapshotIds).size !== 1) {
+    throw new Error("public manifest resources must share one snapshot ID");
+  }
+  const snapshotId = snapshotIds[0];
+  if (snapshotId !== CANONICAL_SNAPSHOT_ID) {
+    throw new Error(
+      `public manifest snapshot must be ${CANONICAL_SNAPSHOT_ID}; got ${snapshotId}`,
+    );
+  }
+  const qualityReport = record(
+    value.qualityReport,
+    "public manifest.qualityReport",
+  );
+  const qualityCounts = record(
+    qualityReport.counts,
+    "public manifest.qualityReport.counts",
+  );
+  const parsedQualityCounts = Object.fromEntries(
+    Object.entries(qualityCounts).map(([key, count]) => [
+      key,
+      integerValue(count, `public manifest.qualityReport.counts.${key}`),
+    ]),
+  );
+  const manifestSha256 = hashText(text);
+  if (manifestSha256 !== CANONICAL_MANIFEST_SHA256) {
+    throw new Error(
+      `public manifest SHA-256 must be ${CANONICAL_MANIFEST_SHA256}; got ${manifestSha256}`,
+    );
+  }
+  return {
+    text,
+    manifest: {
+      path: CANONICAL_MANIFEST_PATH,
+      sha256: manifestSha256,
+      generatedAt: stringValue(
+        value.generatedAt,
+        "public manifest.generatedAt",
+      ),
+      snapshotId: stringValue(snapshotId, "public manifest.snapshotId"),
+      qualityStatus: "passed",
+      qualityCounts: parsedQualityCounts,
+      resourceSnapshots: parsedSnapshots,
+    },
+  };
+}
+
+function readResourceSnapshot(
   rootDir: string,
-  manifest: ContestFreeze["manifest"],
-  key: ResourceKey,
-): T {
-  return readJson(
-    rootDir,
-    relativeResourcePath(manifest.resourceSnapshots[key].resourcePath),
-  ) as T;
+  manifest: FreezeManifest,
+  key: CandidateResourceKey,
+): { value: unknown; text: string; recordCount: number } {
+  const specification = manifest.resourceSnapshots[key];
+  const text = fs.readFileSync(
+    path.resolve(rootDir, relativeResourcePath(specification.resourcePath)),
+    "utf8",
+  );
+  const value = JSON.parse(text) as unknown;
+  const recordCount =
+    key === "sepeOccupationMarket"
+      ? assertCanonicalSepeCandidateResource(value).records.length
+      : Array.isArray(value)
+        ? value.length
+        : (() => {
+            throw new Error(`public resource ${key} must be a JSON array`);
+          })();
+  const actualHash = hashText(text);
+  if (actualHash !== specification.sha256) {
+    throw new Error(
+      `public resource ${key} hash does not match public manifest.sha256`,
+    );
+  }
+  if (recordCount !== specification.recordCount) {
+    throw new Error(
+      `public resource ${key} recordCount does not match public manifest`,
+    );
+  }
+  return { value, text, recordCount };
 }
 
 function recomputeFreeze(
   rootDir: string,
-  freeze: ContestFreeze,
-): ContestFreeze {
-  const manifestText = fs.readFileSync(
-    path.resolve(rootDir, freeze.manifest.path),
-    "utf8",
-  );
-  const manifest = JSON.parse(manifestText) as Record<string, unknown>;
-  const qualityReport = record(
-    manifest.qualityReport,
-    "manifest.qualityReport",
-  );
-  const manifestQualityCounts = record(
-    qualityReport.counts,
-    "manifest.qualityReport.counts",
-  );
-  if (manifest.qualityStatus !== "passed") {
-    throw new Error("manifest qualityStatus must be passed");
+  freeze: ContestFreezeV2,
+): ContestFreezeV2 {
+  const current = readCurrentManifest(rootDir);
+  const resources = new Map<CandidateResourceKey, unknown>();
+  for (const key of CANDIDATE_RESOURCE_KEYS) {
+    resources.set(
+      key,
+      readResourceSnapshot(rootDir, current.manifest, key).value,
+    );
   }
-  const programs = readResource<TrainingProgram[]>(
-    rootDir,
-    freeze.manifest,
-    "programs",
-  );
+  const programs = resources.get("programs") as TrainingProgram[];
   const curated = validateCuratedMappings(
     {
       programs,
@@ -667,27 +788,17 @@ function recomputeFreeze(
     programs,
     qualifications: REVIEWED_QUALIFICATIONS,
     programQualificationLinks: REVIEWED_PROGRAM_QUALIFICATION_LINKS,
-    occupations: readResource<ValidatedCuratedMappings["occupations"]>(
-      rootDir,
-      freeze.manifest,
+    occupations: resources.get(
       "occupations",
-    ),
-    aliases: readResource<ValidatedCuratedMappings["aliases"]>(
-      rootDir,
-      freeze.manifest,
+    ) as ValidatedCuratedMappings["occupations"],
+    aliases: resources.get(
       "occupationAliases",
-    ),
-    links: readResource<ValidatedCuratedMappings["links"]>(
-      rootDir,
-      freeze.manifest,
+    ) as ValidatedCuratedMappings["aliases"],
+    links: resources.get(
       "trainingOccupationLinks",
-    ),
-    offers: readResource<never[]>(rootDir, freeze.manifest, "jobOffers"),
-    publishedRequirements: readResource<never[]>(
-      rootDir,
-      freeze.manifest,
-      "publishedRequirements",
-    ),
+    ) as ValidatedCuratedMappings["links"],
+    offers: resources.get("jobOffers") as never[],
+    publishedRequirements: resources.get("publishedRequirements") as never[],
     humanOverrides: [],
   };
   const matchedOfferIdsSet = new Set<string>();
@@ -737,62 +848,11 @@ function recomputeFreeze(
     "expansion offerDeltas.union",
   );
 
-  const resourceSnapshots = Object.fromEntries(
-    RESOURCE_KEYS.map((key) => {
-      const specification = freeze.manifest.resourceSnapshots[key];
-      const text = fs.readFileSync(
-        path.resolve(rootDir, relativeResourcePath(specification.resourcePath)),
-        "utf8",
-      );
-      const value = JSON.parse(text) as unknown;
-      const recordCount =
-        key === "sepeOccupationMarket"
-          ? adaptSepeOccupationMarketResource(value).records.length
-          : Array.isArray(value)
-            ? value.length
-            : -1;
-      if (
-        key === "sepeOccupationMarket" &&
-        recordCount !== EXPECTED_SEPE_RECORD_COUNT
-      ) {
-        throw new Error(
-          `SEPE occupation market must contain exactly ${EXPECTED_SEPE_RECORD_COUNT} records, found ${recordCount}.`,
-        );
-      }
-      return [
-        key,
-        {
-          resourcePath: specification.resourcePath,
-          sha256: hashText(text),
-          recordCount,
-        },
-      ];
-    }),
-  ) as ContestFreeze["manifest"]["resourceSnapshots"];
-  const snapshotId = resourceSnapshots.programs.resourcePath.match(
-    /\/snapshots\/([a-z0-9-]+)\//u,
-  )?.[1];
-  if (snapshotId === undefined)
-    throw new Error("program resource lacks snapshot ID");
-
   return {
-    schemaVersion: "1.0.0",
+    schemaVersion: "2.0.0",
     freezeStatus: "frozen",
     sourceCommitSha: freeze.sourceCommitSha,
-    manifest: {
-      path: freeze.manifest.path,
-      sha256: hashText(manifestText),
-      generatedAt: stringValue(manifest.generatedAt, "manifest.generatedAt"),
-      snapshotId,
-      qualityStatus: "passed",
-      qualityCounts: Object.fromEntries(
-        Object.entries(manifestQualityCounts).map(([key, value]) => [
-          key,
-          integerValue(value, `manifest.qualityReport.counts.${key}`),
-        ]),
-      ),
-      resourceSnapshots,
-    },
+    manifest: current.manifest,
     coverage: {
       distinctQualificationKeys,
       distinctQualificationCount: distinctQualificationKeys.length,
@@ -843,21 +903,70 @@ function recomputeFreeze(
         "expansion counts.reserveUnattempted",
       ),
     },
-    deployment: freeze.deployment,
   };
 }
 
 export function recomputeContestFreeze(
   rootDir: string,
   freeze: ContestFreeze,
-): ContestFreeze {
+): ContestFreezeV2 {
   return recomputeFreeze(path.resolve(rootDir), freeze);
+}
+
+export function createFreshContestFreeze(
+  rootDir: string,
+  sourceCommitSha: string,
+): ContestFreezeV2 {
+  const current = readCurrentManifest(path.resolve(rootDir));
+  return recomputeFreeze(path.resolve(rootDir), {
+    schemaVersion: "2.0.0",
+    freezeStatus: "frozen",
+    sourceCommitSha,
+    manifest: current.manifest,
+    coverage: {
+      distinctQualificationKeys: [],
+      distinctQualificationCount: 0,
+      modalityKeys: [],
+      modalityKeyCount: 0,
+      approvedRelationKeys: [],
+      approvedRelationCount: 0,
+      approvedAliasKeys: [],
+      approvedAliasCount: 0,
+      matchedProgramKeys: [],
+      matchedProgramCount: 0,
+      zeroReviewedProgramKeys: [],
+      zeroReviewedProgramCount: 0,
+      matchedRelationKeys: [],
+      matchedRelationCount: 0,
+      zeroReviewedRelationKeys: [],
+      zeroReviewedRelationCount: 0,
+      deferredPrograms: [],
+      deferredProgramCount: 0,
+    },
+    offers: {
+      matchedOfferIds: [],
+      matchedOfferCount: 0,
+      marginalOfferDeltas: { unionOfferIds: [], unionOfferCount: 0 },
+    },
+    attempts: {
+      completed: 0,
+      deferred: 0,
+      discarded: 0,
+      terminal: 0,
+      reserveUnattempted: 0,
+    },
+  });
 }
 
 function assertSourceCommitBoundary(
   rootDir: string,
   sourceCommitSha: string,
 ): void {
+  if (sourceCommitSha !== CONTEST_FREEZE_SOURCE_COMMIT_SHA) {
+    throw new Error(
+      `sourceCommitSha must equal the approved coverage boundary ${CONTEST_FREEZE_SOURCE_COMMIT_SHA}; legacy coverage boundary ${sourceCommitSha} is rejected`,
+    );
+  }
   try {
     execFileSync(
       "git",
@@ -876,17 +985,7 @@ function assertSourceCommitBoundary(
         "--quiet",
         sourceCommitSha,
         "--",
-        "data/catalogs",
-        "data/curated",
-        "data/schemas",
-        "public/data",
-        "analysis/fp_coverage_expansion_results.json",
-        "analysis/fp_one_word_publication_reviews.json",
-        "scripts/analysis/validateFpOneWordPublicationReview.ts",
-        "scripts/data/validateCuratedMappings.ts",
-        "src/domain",
-        "src/data",
-        "src/features",
+        ...CONTEST_FREEZE_SOURCE_PATHS,
       ],
       { cwd: rootDir, stdio: "pipe" },
     );
@@ -897,17 +996,66 @@ function assertSourceCommitBoundary(
   }
 }
 
+function assertManifestIdentity(
+  actual: FreezeManifest,
+  expected: FreezeManifest,
+): void {
+  if (actual.path !== expected.path) {
+    throw new Error("manifest.path does not match the current public manifest");
+  }
+  if (actual.sha256 !== expected.sha256) {
+    throw new Error(
+      "manifest.sha256 does not match the current public manifest",
+    );
+  }
+  if (actual.generatedAt !== expected.generatedAt) {
+    throw new Error(
+      "manifest.generatedAt does not match the current public manifest",
+    );
+  }
+  if (actual.snapshotId !== expected.snapshotId) {
+    throw new Error(
+      "manifest.snapshotId does not match the current public manifest",
+    );
+  }
+  if (
+    JSON.stringify(actual.qualityCounts) !==
+    JSON.stringify(expected.qualityCounts)
+  ) {
+    throw new Error(
+      "manifest.qualityCounts does not match the current public manifest",
+    );
+  }
+  for (const key of CANDIDATE_RESOURCE_KEYS) {
+    const actualResource = actual.resourceSnapshots[key];
+    const expectedResource = expected.resourceSnapshots[key];
+    if (actualResource.resourcePath !== expectedResource.resourcePath) {
+      throw new Error(
+        `manifest.resourceSnapshots.${key}.resourcePath does not match the current public manifest`,
+      );
+    }
+    if (actualResource.sha256 !== expectedResource.sha256) {
+      throw new Error(
+        `manifest.resourceSnapshots.${key}.sha256 does not match the current public manifest`,
+      );
+    }
+    if (actualResource.recordCount !== expectedResource.recordCount) {
+      throw new Error(
+        `manifest.resourceSnapshots.${key}.recordCount does not match the current public manifest`,
+      );
+    }
+  }
+}
+
 export function validateContestFreeze(
   value: unknown,
   options: ValidationOptions = {},
 ): { valid: true; errors: [] } {
   const rootDir = path.resolve(options.rootDir ?? process.cwd());
   const freeze = parseFreeze(value);
-  if (freeze.deployment.expectedRootUrl !== EXPECTED_ROOT_URL) {
-    throw new Error("deployment expectedRootUrl must be the public root URL");
-  }
   assertSourceCommitBoundary(rootDir, freeze.sourceCommitSha);
   const recomputed = recomputeFreeze(rootDir, freeze);
+  assertManifestIdentity(freeze.manifest, recomputed.manifest);
   assertEqual(recomputed, freeze, "coverage freeze");
   return { valid: true, errors: [] };
 }
@@ -922,102 +1070,41 @@ export function loadAndValidateContestFreeze(
   return freeze;
 }
 
+function assertLegacyFreezeMarker(value: unknown): void {
+  const root = record(value, "coverage freeze");
+  if (root.schemaVersion !== "1.0.0" && root.schemaVersion !== "2.0.0") {
+    throw new Error(
+      "coverage freeze --write requires a checked-in schema 1.0.0 legacy file or schema 2.0.0 file",
+    );
+  }
+}
+
+export async function writeContestFreeze(
+  rootDir: string,
+  sourceCommitSha: string,
+  freezePath = path.resolve(rootDir, "docs/contest/coverage-freeze.json"),
+): Promise<void> {
+  assertContestFreezeWritePreflight(rootDir);
+  // This private marker read intentionally does not call the schema-2 parser;
+  // legacy deployment, paths, hashes, counts and derived values are discarded.
+  assertLegacyFreezeMarker(
+    JSON.parse(fs.readFileSync(freezePath, "utf8")) as unknown,
+  );
+  const fresh = createFreshContestFreeze(rootDir, sourceCommitSha);
+  const candidate = await formatPrettier(JSON.stringify(fresh), {
+    parser: "json",
+  });
+  validateContestFreeze(fresh, { rootDir });
+  fs.writeFileSync(freezePath, candidate);
+}
+
 if (
   path.resolve(process.argv[1] ?? "") === path.resolve(import.meta.filename)
 ) {
   const rootDir = process.cwd();
   if (process.argv.includes("--write")) {
     const sourceCommitSha = parseContestFreezeWriteSourceCommit(process.argv);
-    assertContestFreezeWritePreflight(rootDir);
-    const freezePath = path.resolve(
-      rootDir,
-      "docs/contest/coverage-freeze.json",
-    );
-    const existingJson = record(
-      JSON.parse(fs.readFileSync(freezePath, "utf8")),
-      "coverage freeze",
-    );
-    const existingManifest = record(
-      existingJson.manifest,
-      "coverage freeze manifest",
-    );
-    const existingResourceSnapshots = record(
-      existingManifest.resourceSnapshots,
-      "coverage freeze resource snapshots",
-    );
-    const manifestPath = stringValue(
-      existingManifest.path,
-      "coverage freeze manifest path",
-    );
-    const currentManifest = record(readJson(rootDir, manifestPath), "manifest");
-    const currentResourceSnapshots = record(
-      currentManifest.resourceSnapshots,
-      "manifest.resourceSnapshots",
-    );
-    const existingSnapshotId = stringValue(
-      existingManifest.snapshotId,
-      "coverage freeze manifest snapshotId",
-    );
-    const migrationResourceSnapshots = Object.fromEntries(
-      RESOURCE_KEYS.map((key) => {
-        const current = record(
-          currentResourceSnapshots[key],
-          `manifest.resourceSnapshots.${key}`,
-        );
-        return [
-          key,
-          existingResourceSnapshots[key] ?? {
-            resourcePath: migrateFreezeResourcePathToSnapshot(
-              stringValue(
-                current.resourcePath,
-                `manifest.resourceSnapshots.${key}.resourcePath`,
-              ),
-              existingSnapshotId,
-            ),
-            sha256: current.sha256,
-            recordCount: current.recordCount,
-          },
-        ];
-      }),
-    );
-    const existing = parseFreeze({
-      ...existingJson,
-      manifest: {
-        ...existingManifest,
-        resourceSnapshots: migrationResourceSnapshots,
-      },
-    });
-    const seededResourceSnapshots = Object.fromEntries(
-      RESOURCE_KEYS.map((key) => {
-        const specification = record(
-          currentResourceSnapshots[key],
-          `manifest.resourceSnapshots.${key}`,
-        );
-        return [
-          key,
-          {
-            ...existing.manifest.resourceSnapshots[key],
-            resourcePath: stringValue(
-              specification.resourcePath,
-              `manifest.resourceSnapshots.${key}.resourcePath`,
-            ),
-          },
-        ];
-      }),
-    ) as ContestFreeze["manifest"]["resourceSnapshots"];
-    const recomputed = recomputeContestFreeze(rootDir, {
-      ...existing,
-      sourceCommitSha,
-      manifest: {
-        ...existing.manifest,
-        resourceSnapshots: seededResourceSnapshots,
-      },
-    });
-    const candidate = await formatPrettier(JSON.stringify(recomputed), {
-      parser: "json",
-    });
-    validateContestFreeze(recomputed, { rootDir });
-    fs.writeFileSync(freezePath, candidate);
+    await writeContestFreeze(rootDir, sourceCommitSha);
     console.info(`Contest coverage freeze written from ${sourceCommitSha}.`);
   } else {
     loadAndValidateContestFreeze(rootDir);
