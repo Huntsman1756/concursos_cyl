@@ -5,7 +5,7 @@
 <!-- prettier-ignore -->
 | Campo | Valor |
 | --- | --- |
-| Commit fuente | `05f905397d22b217c4716c88a2406d802892fb6d` |
+| Commit fuente | `ff9e6197f926e462bea1a3e8ac6a57a23d3f825a` |
 | Manifest | `public/data/v1/manifest.json` |
 | SHA-256 del manifest | `92afc80f2b839ed95def95bc90bdd3b6ad3a1363fb12904f7b109fafc92b2f18` |
 | Generado | 2026-08-22T08:56:31.889Z |
@@ -28,9 +28,9 @@
 | jobOffers | `/data/v1/snapshots/20260822085631889-7bbe69380f6d/job-offers.json` | 1058 | `decd3bcf879cd001ea4750bb2bdd5f1146c8a301dddab660e1810e23d07662a7` |
 | mappingCoverage | `/data/v1/snapshots/20260822085631889-7bbe69380f6d/mapping-coverage.json` | 209 | `754dfad7276b2aecd5b6770954ad3271eda7f9d6f2086cbb4f358b64884974ed` |
 | municipalities | `/data/v1/snapshots/20260822085631889-7bbe69380f6d/municipalities.json` | 2248 | `71ac22dfbcc5f95927fd17fa6b0a03bc77d39482fcad1640f9c6b08dec609f10` |
-| officialOccupations | `/data/v1/snapshots/20260822085631889-7bbe69380f6d/official-occupations.json` | 502 | `76fa213f97c98e5af0f9bf120323ba3abb32df78e797c381e5454cadc858f64b` |
 | occupationAliases | `/data/v1/snapshots/20260822085631889-7bbe69380f6d/occupation-aliases.json` | 21 | `4f37bc7c6ff4d76140c79d9e9245c7155ff5f77d5b3bc397796985e13c2fbe7c` |
 | occupations | `/data/v1/snapshots/20260822085631889-7bbe69380f6d/occupations.json` | 131 | `4e82ab9810dc6681b0e79aa2cfe3b038985ee23eb36cdb5f4603b53961efae2e` |
+| officialOccupations | `/data/v1/snapshots/20260822085631889-7bbe69380f6d/official-occupations.json` | 502 | `76fa213f97c98e5af0f9bf120323ba3abb32df78e797c381e5454cadc858f64b` |
 | openDataCatalog | `/data/v1/snapshots/20260822085631889-7bbe69380f6d/open-data-catalog.json` | 1 | `c4e2603e52ec8ac455f50c4f39edc90898baed2a9b0f9217df7a533b3b01bc22` |
 | outcomeIndicators | `/data/v1/snapshots/20260822085631889-7bbe69380f6d/outcome-indicators.json` | 22170 | `4f2c6b73fc4171bb9daf21583712ab2ec99bcaa7d27b1f2fd0c070b9079ab3e2` |
 | professionalCertificates | `/data/v1/snapshots/20260822085631889-7bbe69380f6d/professional-certificates.json` | 583 | `a66ebe6b4439dca39091b0f06d587bc326389d9f7e2ecfc7a8c88b5a8937a7cb` |
@@ -57,7 +57,7 @@ La cifra de ofertas es una unión de IDs de ofertas que pasan las reglas de matc
 
 ## Reproducibilidad
 
-Comandos ejecutados y ligados al commit de publicación en `release-evidence.json`:
+Comandos previstos para repetir las comprobaciones. Este documento no los da por ejecutados hasta que `release-evidence.json` quede verificado y ligado al commit de publicación:
 
 ```text
 npm run data:build
@@ -79,7 +79,7 @@ La revisión independiente confirmó el manifest, sus 21 recursos, los conjuntos
 ## Despliegue
 
 - URL raíz esperada: [https://salida-cyl.157-90-22-40.sslip.io/](https://salida-cyl.157-90-22-40.sslip.io/)
-- Commit desplegado: `ae66d5bc8393dbb02818471ad7eb850e4d4367de`.
-- Run del workflow: `32570552646`.
+- Commit desplegado: **PENDIENTE DE DESPLIEGUE Y VERIFICACIÓN**.
+- Run del workflow: **PENDIENTE DE DESPLIEGUE Y VERIFICACIÓN**.
 
-El release público se verificó con el commit `ae66d5bc8393dbb02818471ad7eb850e4d4367de` y el run `32570552646` el 2026-08-22T11:43:00Z.
+Estos dos campos no se inventan antes de ejecutar y verificar el release.

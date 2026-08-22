@@ -1,63 +1,49 @@
-# Próxima sesión: publicación y cierre de candidatura
+# Próxima sesión: release pendiente y autorización separada
 
-## Estado preparado
+## Estado actual
 
 - Repositorio canónico: <https://github.com/Huntsman1756/concursos_cyl>.
-- Rama de integración: `codex/parallel-continuation-wave-20260821`.
-- Límite fuente del freeze: `05f905397d22b217c4716c88a2406d802892fb6d`.
+- Rama de trabajo: `codex/contest-hardening-current`.
+- Fuente del freeze: `ff9e6197f926e462bea1a3e8ac6a57a23d3f825a`.
+- Commit que contiene los bytes exactos del freeze: `80bc0f9d2def3f600f7701d8b20f0095cd241c71`.
 - Snapshot activo: `20260822085631889-7bbe69380f6d`.
-- Cobertura: 113 cualificaciones base, 130 claves de modalidad, 264 relaciones aprobadas y 21 alias.
-- Cola oficial: 26 cualificaciones pendientes y 15 resultados sin publicación revalidados contra el catálogo actual.
-- El manifest conserva 21 recursos inmutables del snapshot, incluido SEPE con 116 registros canónicos.
-- Commit de producto publicado: `ae66d5bc8393dbb02818471ad7eb850e4d4367de`.
-- GitHub Pages y el VPS publican ese mismo commit; el workflow
-  `32570552646` terminó completamente verde.
-- Las 13 capturas del producto publicado se conservaron en el commit de
-  evidencia `f4ea4d2422adb5dc08e457e5d03a7debc3cea18a` y el registro técnico está
-  verificado.
-- La muestra determinista vigente registra 15 PASS y 0 FAIL tras una segunda
-  revisión independiente de la URL oficial y la cita registrada. Es una muestra
-  delimitada: las otras 249 relaciones no fueron muestreadas y no se afirma una
-  auditoría exhaustiva.
-- No existe evidencia humana de adopción o piloto: el protocolo anónimo está preparado, pero no se generan resultados ni afirmaciones sin sesiones reales y consentimiento.
+- Cobertura congelada: 113 cualificaciones base, 130 claves de modalidad,
+  264 relaciones aprobadas y 21 alias; 21 recursos inmutables y 116 registros
+  canónicos de SEPE.
+- La evidencia de release usa schema 1 y está en estado **pending**. Sus gates
+  locales, despliegue y verificación pública permanecen pendientes; los campos
+  de publicación, auditoría, revisión local y captura actual son `null`.
+- El commit de producto histórico `ae66d5bc8393dbb02818471ad7eb850e4d4367de`
+  no es el candidato actual. Las 13 capturas existentes son históricas de ese
+  producto y no constituyen captura del release actual.
+- La captura nativa final A4 sigue bloqueada por el Mac bloqueado. El registro
+  `A4-MACLOCK-20260822` es `ACCEPT-WITH-WAIVER` únicamente para este despliegue
+  de producción autorizado por la persona usuaria; no afirma verificación A4
+  nativa final.
 
-## Estado de publicación
+## URLs y límites de publicación
 
-- GitHub Pages y el VPS publican el mismo commit P, registrado junto al
-  workflow y al hash del manifest en `release-evidence.json`.
-- Las capturas PNG se regeneraron desde P, pasaron los controles automáticos y
-  fueron revisadas visualmente antes de registrar la evidencia.
-- La candidatura no se envía automáticamente. Identidad, declaraciones, consentimiento y envío oficial requieren autorización humana explícita separada.
+- URL canónica: <https://salida-cyl.157-90-22-40.sslip.io/>.
+- URL fallback de GitHub Pages: <https://huntsman1756.github.io/concursos_cyl/>.
+- La URL canónica es la destinada a la candidatura; la fallback sirve para
+  continuidad operativa y no sustituye la verificación pública pendiente.
+- No hay un `publicationCommitSha` actual que registrar mientras la evidencia
+  siga pendiente; no se debe inventar un SHA de publicación futura.
+- `finalApplicationTextApproved`, `rootUrlApproved` y
+  `submissionAuthorized` permanecen en `false`.
+- Identidad, declaraciones, consentimiento y envío externo requieren una
+  autorización humana explícita separada. El waiver A4 no autoriza la
+  presentación al concurso.
 
-## Orden de trabajo
+## Siguiente sesión autorizada
 
-1. Completar la cola de 26 titulaciones con evidencia primaria; no convertir
-   señales de oferta en evidencia CNO.
-2. Realizar el piloto anónimo con personas adultas y consentimiento antes de
-   afirmar adopción.
-3. Completar identidad, declaraciones y documentación humana.
-4. Obtener autorización explícita antes del envío externo.
+1. Ejecutar la captura nativa OS A4 en un Mac desbloqueado y revisar las rutas
+   de FP, ocupación y comparador.
+2. Repetir los gates de release contra el commit que se autorice y actualizar
+   la evidencia solo con datos observados.
+3. Verificar por separado la URL canónica y la fallback, conservando sus
+   identidades observadas.
+4. Obtener aprobación humana explícita para el texto final, la URL y la
+   presentación externa antes de cualquier envío.
 
-## Arranque en otro ordenador
-
-Requiere Git y Node.js 24. La fuente de verdad es `origin/main`:
-
-```powershell
-git clone https://github.com/Huntsman1756/concursos_cyl.git
-Set-Location concursos_cyl
-git switch main
-git pull --ff-only origin main
-npm ci
-npm run contest:submission:check
-npm run dev
-```
-
-Antes de editar, comprobar que `git rev-parse HEAD` y
-`git rev-parse origin/main` devuelven el mismo hash y que
-`git status --short` no devuelve líneas. GitHub Pages y el VPS se comprueban
-por separado mediante sus respectivos `version.json`; no se presume que un
-despliegue implica el otro.
-
-No se necesitan worktrees, contratos NAN ni estados temporales de este
-ordenador. Las credenciales y la evidencia privada permanecen fuera del
-repositorio.
+No hacer push, deploy ni envío al concurso desde esta sesión pendiente.

@@ -18,8 +18,8 @@ tests en `79f5939` y sus estados se volvieron a capturar.
 | ----------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Focused Task 8 E2E                        | `rtk npm run test:e2e:chromium -- tests/e2e/home.spec.ts tests/e2e/training-first.spec.ts tests/e2e/compare-studies.spec.ts tests/e2e/contest-readiness.spec.ts` | PASS final — **90/90 tests totales entre los dos proyectos Chromium** (`chromium-desktop` y `chromium-mobile`), no 90/90 por proyecto (37.8 s tras la revisión final)                                          |
 | Chromium E2E completo                     | `rtk npm run test:e2e:chromium`                                                                                                                                  | PASS final reproducido por el agente principal — **154/154 entre los dos proyectos Chromium** (1.0 min tras el ajuste visual)                                                                                  |
-| Unit suite                                | `rtk npm test`                                                                                                                                                   | PASS final — 114 archivos pasaron, 23 omitidos; 1.178 tests pasaron, 180 omitidos (127.78 s, ejecución completa sin contención)                                                                                |
-| Build, runtime data, asset y distribución | `rtk npm run build`                                                                                                                                              | PASS final — 21 recursos de manifest, presupuesto de assets 1,747,460/1,800,000 bytes raw en 31 archivos; distribución 21 recursos verificados, 28 archivos de datos, 22,494,862 bytes y cero bytes duplicados |
+| Unit suite                                | `rtk npm test`                                                                                                                                                   | PASS final — 115 archivos pasaron, 23 omitidos; 1.200 tests pasaron, 180 omitidos (ejecución completa sin contención)                                                                                          |
+| Build, runtime data, asset y distribución | `rtk npm run build`                                                                                                                                              | PASS final — 21 recursos de manifest, presupuesto de assets 1,748,297/1,800,000 bytes raw en 31 archivos; distribución 21 recursos verificados, 28 archivos de datos, 22,494,862 bytes y cero bytes duplicados |
 | Candidate boundary                        | `rtk npm exec -- tsx scripts/release/validateCandidateBoundary.ts --bundle-root dist`                                                                            | PASS final — 21 recursos, 116 registros SEPE                                                                                                                                                                   |
 | Licencias                                 | `rtk npm run license:check`                                                                                                                                      | PASS final — 363 entradas fijadas en `package-lock.json`                                                                                                                                                       |
 | Typecheck                                 | `rtk npm run typecheck`                                                                                                                                          | PASS final — exit 0                                                                                                                                                                                            |
@@ -160,22 +160,22 @@ solo renombrados por extensión.
       limitaciones; print CSS oculta header/footer, formularios, filtros, acciones,
       skip link y botón de impresión. Los E2E exigen exactamente una llamada a
       `window.print()` en cada resultado válido.
-- [ ] Previsualización nativa y capturas `a4-fp-result.png`,
-      `a4-occupation-result.png` y `a4-comparator.png`: **no realizadas**. Codex
-      IAB solo expone `pageAssets` en la pestaña y viewport de pantalla en el
-      navegador; no expone print preview, media `print`, PDF ni CDP. Usar otro
-      navegador o Playwright directo contradiría la elección de navegador y
-      requeriría autorización nueva.
+- [x] La emulación `print` del navegador, después del ajuste final de disclosures,
+      demuestra geometría no nula para el contenido cerrado de evidencia y
+      fuentes, mientras mantiene ocultos los detalles de coordenadas.
+- [ ] Captura nativa final del sistema operativo y capturas
+      `a4-fp-result.png`, `a4-occupation-result.png` y `a4-comparator.png`:
+      siguen bloqueadas por el Mac bloqueado.
+- [ ] Los PDF nativos de FP, comparador y ocupación son sondeos históricos de
+      paginación realizados antes de la corrección final de disclosures; no son
+      evidencia PASS final.
 
-**Waiver Frontier `A4-IAB-20260822`: ACCEPT-WITH-WAIVER únicamente para integrar
-la evidencia E2E/de pantalla y continuar auditorías locales que no formen un
-candidato de release.** La evidencia estática, DOM y de invocación reduce el
-riesgo, pero no certifica paginación real, cortes entre páginas ni legibilidad
-del render nativo. Antes de iniciar release-hardening Task 5, publicar, desplegar
-o presentar al concurso debe ejecutarse una previsualización A4 humana en un
-navegador autorizado y adjuntar las tres capturas; este waiver no autoriza esas
-acciones.
+**Waiver `A4-MACLOCK-20260822`: ACCEPT-WITH-WAIVER únicamente para este
+despliegue de producción autorizado por la persona usuaria.** La emulación de
+impresión, el DOM y la auditoría estática reducen el riesgo, pero no certifican
+la paginación nativa final, los cortes entre páginas ni la legibilidad del render
+del sistema operativo. Este waiver no autoriza la presentación al concurso ni
+afirma verificación A4 nativa final.
 
-La matriz de pantalla queda aprobada. El gate final de Task 8 permanece bloqueado
-exclusivamente por la previsualización A4 nativa; release-hardening Task 5 no está
-autorizado todavía.
+La matriz de pantalla queda aprobada; la captura nativa A4 final permanece
+pendiente por el bloqueo del Mac.
