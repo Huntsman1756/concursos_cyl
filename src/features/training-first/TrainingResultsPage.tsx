@@ -365,11 +365,9 @@ export function TrainingResultsPage() {
         latest.set(row.provinceCode, row);
       }
     }
-    return [...latest.values()]
-      .sort((left, right) =>
-        left.provinceName.localeCompare(right.provinceName, "es"),
-      )
-      .slice(0, 4);
+    return [...latest.values()].sort((left, right) =>
+      left.provinceName.localeCompare(right.provinceName, "es"),
+    );
   }, [selectedProvince, state, studyCenters]);
 
   const municipalityByLocation = useMemo(() => {
@@ -394,6 +392,9 @@ export function TrainingResultsPage() {
       state.regionalContext.educationCenterDirectory,
     );
   }, [state, studyCenters]);
+
+  const visibleStudyCenters = studyCenters.slice(0, 4);
+  const visibleProvincialContracts = latestProvincialContracts.slice(0, 4);
 
   if (
     state.status === "loading" ||
@@ -476,12 +477,6 @@ export function TrainingResultsPage() {
   const offersEvidenceDate = evidenceDate(offersSnapshot);
   const offeringsEvidenceDate = evidenceDate(offeringsSnapshot);
   const sectionNavigationLinks = [
-    { href: "#base-cotizacion-observada", label: "Base de cotización" },
-    { href: "#donde-estudiar", label: "Dónde estudiar" },
-    { href: "#contexto-provincial", label: "Contexto provincial" },
-    ...(educationCenterDirectorySnapshot === undefined
-      ? []
-      : [{ href: "#distribucion-centros", label: "Distribución de centros" }]),
     { href: "#salidas-profesionales", label: "Salidas profesionales" },
     ...(resolvedOccupations.length === 0
       ? []
@@ -489,6 +484,12 @@ export function TrainingResultsPage() {
     ...(hasApprovedRelationship && orderedMatches.length > 0
       ? [{ href: "#ofertas-relacionadas", label: "Ofertas relacionadas" }]
       : []),
+    { href: "#donde-estudiar", label: "Dónde estudiar" },
+    { href: "#base-cotizacion-observada", label: "Base de cotización" },
+    { href: "#contexto-provincial", label: "Contexto provincial" },
+    ...(educationCenterDirectorySnapshot === undefined
+      ? []
+      : [{ href: "#distribucion-centros", label: "Distribución de centros" }]),
   ];
 
   function applyUnpublishedRequirementFilter(
@@ -606,8 +607,10 @@ export function TrainingResultsPage() {
           <div>
             <dt>Ofertas relacionadas</dt>
             <dd>
-              <strong>{orderedMatches.length}</strong>
-              <span className="result-summary__unit">en la copia actual</span>
+              <strong>{orderedMatches.length}</strong>{" "}
+              <span className="result-summary__unit">
+                ofertas con correspondencia validada
+              </span>
               <span className="result-summary__source">
                 <ExternalLink href={offersSnapshot.sourceUrl}>
                   Fuente: ofertas ECYL
@@ -639,7 +642,9 @@ export function TrainingResultsPage() {
           </div>
         </dl>
         <p className="decision-basis__scope">
-          La copia de ofertas no representa todo el mercado laboral.
+          Solo mostramos relaciones revisadas para evitar coincidencias
+          incorrectas. La copia de ofertas no representa todo el mercado
+          laboral.
         </p>
       </section>
       <nav
@@ -711,13 +716,10 @@ export function TrainingResultsPage() {
         </div>
       )}
       <ResultSectionNav links={sectionNavigationLinks} />
-      <TrainingOutcomeEvidence
-        program={state.program}
-        outcome={state.outcome}
-        outcomeSource={outcomeSource}
-        onRequestLoad={requestOutcome}
-      />
-      <section className="decision-evidence" aria-label="Evidencia territorial">
+      <section
+        className="decision-evidence decision-evidence--primary"
+        aria-label="Dónde estudiar"
+      >
         <div
           id="donde-estudiar"
           className="study-section"
@@ -727,15 +729,15 @@ export function TrainingResultsPage() {
           <div className="section-heading">
             <h2 id="donde-estudiar-heading">Dónde estudiar</h2>
             <span>
-              {studyCenters.length}{" "}
-              {studyCenters.length === 1 ? "centro" : "centros"}
+              {visibleStudyCenters.length} de {studyCenters.length} centros
+              publicados
             </span>
           </div>
           {studyCenters.length === 0 ? (
             <p>No hay centros publicados para este ciclo en la copia actual.</p>
           ) : (
             <ul className="study-center-preview">
-              {studyCenters.slice(0, 4).map((center) => {
+              {visibleStudyCenters.map((center) => {
                 const population = municipalityByLocation.get(
                   `${normalizedLocation(center.locality)}|${normalizedLocation(center.province)}`,
                 );
@@ -754,75 +756,19 @@ export function TrainingResultsPage() {
             </ul>
           )}
           <p className="evidence-limit">
-            La lista de centros publicados permanece completa; la provincia solo
-            limita el contexto contractual y la orientación de adecuación.
+            La provincia solo limita el contexto contractual y la orientación de
+            adecuación; no filtra estos centros.
           </p>
-        </div>
-        <div
-          id="contexto-provincial"
-          className="regional-context"
-          aria-labelledby="contexto-provincial-heading"
-          tabIndex={-1}
-        >
-          <div className="section-heading">
-            <h2 id="contexto-provincial-heading">Contexto provincial</h2>
-            <span>Contratos registrados</span>
-          </div>
-          {latestProvincialContracts.length === 0 ? (
-            <p>Sin contexto provincial para los centros mostrados.</p>
-          ) : (
-            <ul className="contract-context-list">
-              {latestProvincialContracts.map((row) => (
-                <li key={row.provinceCode}>
-                  <span>{row.provinceName}</span>
-                  <strong>
-                    {new Intl.NumberFormat("es-ES").format(row.totalContracts)}
-                  </strong>
-                  <small>
-                    {new Intl.DateTimeFormat("es-ES", {
-                      month: "short",
-                      year: "numeric",
-                      timeZone: "UTC",
-                    }).format(new Date(row.month))}
-                  </small>
-                </li>
-              ))}
-            </ul>
-          )}
-          {regionalContractsSource !== undefined && (
-            <ExternalLink
+          {educationCenterDirectorySnapshot !== undefined && (
+            <FragmentLink
               className="evidence-link"
-              href={regionalContractsSource}
+              href="#distribucion-centros"
             >
-              Fuente: Datos Abiertos JCyL
-            </ExternalLink>
+              Ver la distribución completa
+            </FragmentLink>
           )}
-          <p className="evidence-limit">
-            Contexto provincial — no específico de esta ocupación. Reúne
-            contratos registrados de todas las ocupaciones.
-          </p>
         </div>
       </section>
-      {educationCenterDirectorySnapshot !== undefined && (
-        <div
-          id="distribucion-centros"
-          aria-labelledby="territorial-distribution-title"
-          tabIndex={-1}
-        >
-          <TerritorialDistribution
-            centers={territorialCenters}
-            sourceUrl={educationCenterDirectorySnapshot.sourceUrl}
-            academicYear={
-              state.regionalContext.educationCenterDirectory[0]?.academicYear ??
-              null
-            }
-            sourceUpdatedAt={educationCenterDirectorySnapshot.sourceUpdatedAt}
-            snapshotFetchedAt={
-              educationCenterDirectorySnapshot.snapshotFetchedAt
-            }
-          />
-        </div>
-      )}
       <section
         id="salidas-profesionales"
         className="occupations-section"
@@ -905,10 +851,12 @@ export function TrainingResultsPage() {
       {!hasApprovedRelationship ? (
         <div className="status-panel">
           <h2>Cómo buscar oportunidades ahora</h2>
+          <p>0 ofertas con correspondencia validada.</p>
           <p>
-            Las salidas oficiales están disponibles arriba. Todavía no hay una
-            relación revisada que permita buscar ofertas para este ciclo sin
-            mostrar coincidencias dudosas.
+            Solo mostramos relaciones revisadas para evitar coincidencias
+            incorrectas. Las salidas oficiales están disponibles arriba. Todavía
+            no hay una relación revisada que permita buscar ofertas para este
+            ciclo sin mostrar coincidencias dudosas.
           </p>
           <p>
             Usa los nombres oficiales como términos de búsqueda en los portales
@@ -919,8 +867,12 @@ export function TrainingResultsPage() {
         <div className="status-panel">
           <p>
             {publicationFilter === null
-              ? `No hay ofertas relacionadas en la copia de datos del ${snapshotDate(state.manifest)}.`
-              : "No hay ofertas relacionadas en esta copia de datos que omitan publicar este requisito exacto."}
+              ? `0 ofertas con correspondencia validada en la copia de datos del ${snapshotDate(state.manifest)}.`
+              : "0 ofertas con correspondencia validada en esta copia de datos que omitan publicar este requisito exacto."}
+          </p>
+          <p>
+            Solo mostramos relaciones revisadas para evitar coincidencias
+            incorrectas.
           </p>
           <p>
             Esto no significa que no existan ofertas fuera de esta copia de
@@ -986,6 +938,100 @@ export function TrainingResultsPage() {
           </div>
         </section>
       )}
+      <section
+        className="supporting-evidence"
+        aria-label="Evidencia complementaria"
+      >
+        <TrainingOutcomeEvidence
+          program={state.program}
+          outcome={state.outcome}
+          outcomeSource={outcomeSource}
+          onRequestLoad={requestOutcome}
+        />
+        <section
+          className="decision-evidence decision-evidence--supporting"
+          aria-label="Evidencia territorial"
+        >
+          <div
+            id="contexto-provincial"
+            className="regional-context"
+            aria-labelledby="contexto-provincial-heading"
+            tabIndex={-1}
+          >
+            <div className="section-heading">
+              <h2 id="contexto-provincial-heading">Contexto provincial</h2>
+              <span>
+                {visibleProvincialContracts.length} de{" "}
+                {latestProvincialContracts.length} provincias con contratos
+                registrados
+              </span>
+            </div>
+            {latestProvincialContracts.length === 0 ? (
+              <p>Sin contexto provincial para los centros mostrados.</p>
+            ) : (
+              <ul className="contract-context-list">
+                {visibleProvincialContracts.map((row) => (
+                  <li key={row.provinceCode}>
+                    <span>{row.provinceName}</span>
+                    <strong>
+                      {new Intl.NumberFormat("es-ES").format(
+                        row.totalContracts,
+                      )}
+                    </strong>
+                    <small>
+                      {new Intl.DateTimeFormat("es-ES", {
+                        month: "short",
+                        year: "numeric",
+                        timeZone: "UTC",
+                      }).format(new Date(row.month))}
+                    </small>
+                  </li>
+                ))}
+              </ul>
+            )}
+            {regionalContractsSource !== undefined && (
+              <ExternalLink
+                className="evidence-link"
+                href={regionalContractsSource}
+              >
+                Fuente: Datos Abiertos JCyL
+              </ExternalLink>
+            )}
+            {educationCenterDirectorySnapshot !== undefined && (
+              <FragmentLink
+                className="evidence-link"
+                href="#distribucion-centros"
+              >
+                Ver la distribución completa
+              </FragmentLink>
+            )}
+            <p className="evidence-limit">
+              Contexto provincial — no específico de esta ocupación. Reúne
+              contratos registrados de todas las ocupaciones.
+            </p>
+          </div>
+        </section>
+        {educationCenterDirectorySnapshot !== undefined && (
+          <div
+            id="distribucion-centros"
+            aria-labelledby="territorial-distribution-title"
+            tabIndex={-1}
+          >
+            <TerritorialDistribution
+              centers={territorialCenters}
+              sourceUrl={educationCenterDirectorySnapshot.sourceUrl}
+              academicYear={
+                state.regionalContext.educationCenterDirectory[0]
+                  ?.academicYear ?? null
+              }
+              sourceUpdatedAt={educationCenterDirectorySnapshot.sourceUpdatedAt}
+              snapshotFetchedAt={
+                educationCenterDirectorySnapshot.snapshotFetchedAt
+              }
+            />
+          </div>
+        )}
+      </section>
     </section>
   );
 }

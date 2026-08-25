@@ -6,6 +6,15 @@
   overflow-wrap: anywhere;
 }
 
+.supporting-evidence {
+  margin-top: var(--space-9);
+}
+
+.decision-evidence--primary,
+.decision-evidence--supporting {
+  grid-template-columns: minmax(0, 1fr);
+}
+
 .territorial-distribution__heading {
   display: grid;
   align-items: start;
