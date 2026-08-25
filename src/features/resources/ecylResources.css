@@ -132,6 +132,31 @@
   text-transform: uppercase;
   letter-spacing: 0.03em;
 }
+.resource-card__metadata {
+  display: grid;
+  gap: 0.35rem;
+  margin: 0.75rem 0 0;
+}
+.resource-card__metadata > div {
+  display: grid;
+  grid-template-columns: minmax(8rem, 0.4fr) minmax(0, 1fr);
+  gap: 0.75rem;
+}
+.resource-card__metadata dt {
+  color: #625d59;
+  font-weight: 650;
+}
+.resource-card__metadata dd {
+  margin: 0;
+  color: #514c48;
+}
+.resource-empty-state {
+  margin: 1rem 0 0;
+  padding: 1rem;
+  border: 1px dashed #b9b2ad;
+  border-radius: 12px;
+  color: #514c48;
+}
 @media (max-width: 800px) {
   .resources-page {
     padding: 1.5rem 1rem 3rem;
@@ -149,5 +174,9 @@
     padding-left: 0;
     border-top: 1px solid #ded8d3;
     border-left: 0;
+  }
+  .resource-card__metadata > div {
+    grid-template-columns: 1fr;
+    gap: 0.1rem;
   }
 }
