@@ -179,9 +179,7 @@ export function OccupationResultsPage() {
         SourceSnapshot & { resourcePath: string }
       >
     >;
-  const occupationSnapshot = resourceSnapshots.officialOccupations;
   const relationshipSnapshot = resourceSnapshots.trainingOccupationLinks;
-  const occupationSourceUrl = occupationSnapshot?.sourceUrl;
   const relationshipSourceUrl =
     orderedLinks[0]?.sourceUrl ?? relationshipSnapshot?.sourceUrl;
   const relationshipDate =
@@ -227,9 +225,12 @@ export function OccupationResultsPage() {
       <section className="decision-basis" aria-labelledby="route-basis-title">
         <div className="decision-basis__heading">
           <p>Base para decidir</p>
-          <h2 id="route-basis-title">Qué rutas hemos podido comprobar</h2>
+          <h2 id="route-basis-title">Disponibilidad de FP</h2>
         </div>
-        <dl className="result-summary" aria-label="Resumen de rutas formativas">
+        <dl
+          className="result-summary"
+          aria-label="Resumen de disponibilidad de FP"
+        >
           <div>
             <dt>FP relacionadas</dt>
             <dd>
@@ -269,28 +270,15 @@ export function OccupationResultsPage() {
             <dd>
               <strong>{linkedProvinces.size}</strong>
               <span className="result-summary__unit">
-                provincias con oferta
+                centros en provincias
               </span>
               <span className="result-summary__source">
-                {occupationSourceUrl !== undefined && (
-                  <ExternalLink href={occupationSourceUrl}>
-                    Fuente: catálogo CNO-11
-                  </ExternalLink>
-                )}
-                {occupationSnapshot !== undefined && (
-                  <time
-                    dateTime={
-                      occupationSnapshot.sourceUpdatedAt ??
-                      occupationSnapshot.snapshotFetchedAt
-                    }
-                  >
-                    Catálogo comprobado el{" "}
-                    {spanishDate(
-                      occupationSnapshot.sourceUpdatedAt ??
-                        occupationSnapshot.snapshotFetchedAt,
-                    )}
-                  </time>
-                )}
+                <ExternalLink href={trainingSnapshot.sourceUrl}>
+                  Fuente: oferta FP JCyL
+                </ExternalLink>
+                <time dateTime={snapshotInstant}>
+                  Copia del {spanishDate(snapshotInstant)}
+                </time>
               </span>
             </dd>
           </div>
