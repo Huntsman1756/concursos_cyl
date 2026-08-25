@@ -75,16 +75,30 @@ function installDiagnostics(page: Page, baseOrigin: string): Diagnostics {
   return diagnostics;
 }
 
+async function chooseTrainingProgram(
+  page: Page,
+  programKey: string,
+): Promise<void> {
+  const combobox = page.getByRole("combobox", {
+    name: "Ciclo de Formación Profesional",
+  });
+  await combobox.fill(programKey);
+  const option = page.locator(`[role="option"][id$="-option-${programKey}"]`);
+  await option.waitFor({ state: "visible" });
+  await combobox.press("ArrowDown");
+  await combobox.press("Enter");
+  assertCondition(
+    (await combobox.inputValue()).length > 0,
+    `Could not confirm training program ${programKey}`,
+  );
+}
+
 async function prepareCapture(page: Page, evidenceId: string): Promise<void> {
   if (evidenceId === "fp-pre-search-reviewed") {
-    await page
-      .getByLabel("Ciclo de Formación Profesional")
-      .selectOption("EOC01M");
+    await chooseTrainingProgram(page, "EOC01M");
   }
   if (evidenceId === "fp-pre-search-reviewed-zero") {
-    await page
-      .getByLabel("Ciclo de Formación Profesional")
-      .selectOption("AFD01M");
+    await chooseTrainingProgram(page, "AFD01M");
   }
   if (evidenceId === "comparison-dual-scopes") {
     await page.getByText("Grado superior", { exact: true }).click();

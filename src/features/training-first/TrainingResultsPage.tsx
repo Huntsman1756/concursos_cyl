@@ -764,7 +764,7 @@ export function TrainingResultsPage() {
               className="evidence-link"
               href="#distribucion-centros"
             >
-              Ver la distribución completa
+              Ver los {studyCenters.length} centros
             </FragmentLink>
           )}
         </div>
@@ -989,6 +989,35 @@ export function TrainingResultsPage() {
                 ))}
               </ul>
             )}
+            {latestProvincialContracts.length >
+              visibleProvincialContracts.length && (
+              <details className="contract-context-more">
+                <summary>
+                  Ver las {latestProvincialContracts.length} provincias
+                </summary>
+                <ul className="contract-context-list">
+                  {latestProvincialContracts
+                    .slice(visibleProvincialContracts.length)
+                    .map((row) => (
+                      <li key={row.provinceCode}>
+                        <span>{row.provinceName}</span>
+                        <strong>
+                          {new Intl.NumberFormat("es-ES").format(
+                            row.totalContracts,
+                          )}
+                        </strong>
+                        <small>
+                          {new Intl.DateTimeFormat("es-ES", {
+                            month: "short",
+                            year: "numeric",
+                            timeZone: "UTC",
+                          }).format(new Date(row.month))}
+                        </small>
+                      </li>
+                    ))}
+                </ul>
+              </details>
+            )}
             {regionalContractsSource !== undefined && (
               <ExternalLink
                 className="evidence-link"
@@ -1002,7 +1031,7 @@ export function TrainingResultsPage() {
                 className="evidence-link"
                 href="#distribucion-centros"
               >
-                Ver la distribución completa
+                Ver la distribución de centros
               </FragmentLink>
             )}
             <p className="evidence-limit">

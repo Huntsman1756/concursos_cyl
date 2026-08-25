@@ -777,6 +777,20 @@ a:focus-visible {
   color: var(--color-text-muted);
 }
 
+.contract-context-more {
+  margin-top: var(--space-4);
+}
+
+.contract-context-more summary {
+  color: var(--color-action-text);
+  cursor: pointer;
+  font-weight: 750;
+}
+
+.contract-context-more .contract-context-list {
+  margin-top: var(--space-3);
+}
+
 .evidence-limit {
   margin: var(--space-3) 0 0;
   line-height: 1.45;

@@ -638,7 +638,7 @@ describe("TrainingResultsPage", () => {
     ).toHaveLength(4);
     expect(
       within(studySection!).getByRole("link", {
-        name: "Ver la distribución completa",
+        name: "Ver los 18 centros",
       }),
     ).toHaveAttribute("href", "#distribucion-centros");
     expect(studyHeading).toBeVisible();
@@ -662,13 +662,20 @@ describe("TrainingResultsPage", () => {
       "4 de 9 provincias con contratos registrados",
     );
     expect(
-      regionalSection!.querySelectorAll(".contract-context-list > li"),
+      regionalSection!.querySelectorAll(":scope > .contract-context-list > li"),
     ).toHaveLength(4);
     expect(
       within(regionalSection!).getByRole("link", {
-        name: "Ver la distribución completa",
+        name: "Ver la distribución de centros",
       }),
     ).toHaveAttribute("href", "#distribucion-centros");
+    const provinceDisclosure = within(regionalSection!).getByText(
+      "Ver las 9 provincias",
+      { exact: true },
+    );
+    expect(provinceDisclosure.closest("details")).not.toHaveAttribute("open");
+    fireEvent.click(provinceDisclosure);
+    expect(regionalSection).toHaveTextContent("Zamora");
   });
 
   it("describes fail-closed zero employment results as validated relationships", async () => {
