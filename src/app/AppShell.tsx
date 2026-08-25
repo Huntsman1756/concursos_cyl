@@ -161,6 +161,10 @@ export function AppShell({ children }: AppShellProps) {
           <div className="site-footer__identity">
             <strong>SALIDA CyL</strong>
             <span>Proyecto independiente basado en datos públicos.</span>
+            <span>
+              Desarrollado para el X Concurso de Datos Abiertos de Castilla y
+              León en la categoría Productos y Servicios.
+            </span>
           </div>
           <nav aria-label="Pie de página">
             <Link to="/datos-abiertos">Datos abiertos</Link>
