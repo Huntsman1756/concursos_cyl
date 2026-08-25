@@ -16,10 +16,10 @@
 - Fallback verificada: [https://huntsman1756.github.io/concursos_cyl/](https://huntsman1756.github.io/concursos_cyl/)
 - Commit fuente del freeze: `ff9e6197f926e462bea1a3e8ac6a57a23d3f825a`.
 - Snapshot: `20260822085631889-7bbe69380f6d`.
-- Commit desplegado: `f55de804cc94b5d928484e846b933a9dea94b7d0`.
-- Run del workflow: `32597524256`.
-- Release: `v2026.08.22`.
-- `version.json` verificado: [respuesta pública](https://huntsman1756.github.io/concursos_cyl/version.json) con commit igual a `f55de804cc94b5d928484e846b933a9dea94b7d0`.
+- Commit desplegado: `7355bb1c05aecd7452ec82333652d5070927947e`.
+- Run del workflow: `32888564295`.
+- Release: `v2026.08.25-candidate`.
+- `version.json` verificado: [respuesta pública](https://huntsman1756.github.io/concursos_cyl/version.json) con commit igual a `7355bb1c05aecd7452ec82333652d5070927947e`.
 - Evidencia visual: captura visual actual pendiente; las 13 capturas anteriores son históricas.
 
 ## Evidencia visual y gate final
