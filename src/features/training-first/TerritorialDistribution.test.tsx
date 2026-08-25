@@ -53,6 +53,22 @@ describe("TerritorialDistribution", () => {
       within(region).getByRole("list", { name: "Centros en Valladolid" }),
     ).toHaveTextContent("IES Río Duero");
     expect(
+      within(region).getByRole("link", {
+        name: "Cómo llegar a CIFP Las Ferrerías",
+      }),
+    ).toHaveAttribute(
+      "href",
+      "https://www.google.com/maps/search/?api=1&query=CIFP%20Las%20Ferrer%C3%ADas%2C%20Arenas%20de%20San%20Pedro%2C%20%C3%81vila%2C%20Castilla%20y%20Le%C3%B3n",
+    );
+    expect(
+      within(region).getByRole("link", {
+        name: "Cómo llegar a IES Río Duero",
+      }),
+    ).toHaveAttribute(
+      "href",
+      "https://www.google.com/maps/search/?api=1&query=IES%20R%C3%ADo%20Duero%2C%20Valladolid%2C%20Valladolid%2C%20Castilla%20y%20Le%C3%B3n",
+    );
+    expect(
       within(region).getByText("1 centro sin coordenadas oficiales"),
     ).toBeVisible();
     expect(within(region).getByText(/Curso académico: 2025/u)).toBeVisible();

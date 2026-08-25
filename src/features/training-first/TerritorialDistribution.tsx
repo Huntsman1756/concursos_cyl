@@ -3,6 +3,7 @@ import {
   type TerritorialCenterRecord,
 } from "./territorialDistributionModel";
 import { ExternalLink } from "../../components/ExternalLink";
+import { buildGoogleMapsSearchUrl } from "../../domain/mapsUrl";
 
 interface TerritorialDistributionProps {
   centers: readonly TerritorialCenterRecord[];
@@ -133,12 +134,29 @@ export function TerritorialDistribution({
                           province.province
                         }
                       >
-                        {locality.centers.map((center) => (
-                          <li key={center.centerCode}>
-                            <span>{center.centerName}</span>
-                            <small>{center.centerCode}</small>
-                          </li>
-                        ))}
+                        {locality.centers.map((center) => {
+                          const mapsUrl = buildGoogleMapsSearchUrl([
+                            center.centerName,
+                            center.locality,
+                            center.province,
+                            "Castilla y León",
+                          ]);
+                          return (
+                            <li key={center.centerCode}>
+                              <span>{center.centerName}</span>
+                              <small>{center.centerCode}</small>
+                              {mapsUrl !== null && (
+                                <ExternalLink
+                                  className="territorial-distribution__map-link"
+                                  href={mapsUrl}
+                                  aria-label={`Cómo llegar a ${center.centerName}`}
+                                >
+                                  Cómo llegar
+                                </ExternalLink>
+                              )}
+                            </li>
+                          );
+                        })}
                       </ul>
                     </li>
                   ))}
