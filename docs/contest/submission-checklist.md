@@ -10,21 +10,29 @@
 - Contacto: **PENDIENTE — no consta en el repositorio**.
 - Declaraciones, consentimiento y adjuntos exigidos: **PENDIENTE — revisar en el portal**.
 
-## Campos técnicos
+## Campos técnicos verificados
 
-- URL raíz a presentar: [https://salida-cyl.157-90-22-40.sslip.io/](https://salida-cyl.157-90-22-40.sslip.io/)
+- URL raíz a presentar: <https://salida-cyl.157-90-22-40.sslip.io/>.
+- Fallback verificada: <https://huntsman1756.github.io/concursos_cyl/>.
 - Commit fuente del freeze: `ff9e6197f926e462bea1a3e8ac6a57a23d3f825a`.
 - Snapshot: `20260822085631889-7bbe69380f6d`.
-- Commit desplegado: **PENDIENTE DE DESPLIEGUE Y VERIFICACIÓN**.
-- Run del workflow: **PENDIENTE DE DESPLIEGUE Y VERIFICACIÓN**.
-- Evidencia visual: captura visual actual pendiente; las 13 capturas anteriores son históricas.
+- Commit desplegado: `f55de804cc94b5d928484e846b933a9dea94b7d0`.
+- Release: `v2026.08.22`.
+- Run del workflow: `32597524256`.
+- `version.json` verificado: [respuesta pública](https://huntsman1756.github.io/concursos_cyl/version.json) con `commit` igual a `f55de804cc94b5d928484e846b933a9dea94b7d0`.
 
-## Gate final
+## Evidencia visual y gate final
 
-- [ ] Ejecutar los gates de release y verificar la aplicación pública.
-- [ ] Rellenar el commit desplegado y el run del workflow con datos observados.
-- [ ] Revisar las capturas en contexto anónimo, sin datos personales ni credenciales.
-- [ ] Confirmar que las cifras visibles siguen coincidiendo con `20260822085631889-7bbe69380f6d`. (evidencia visual pendiente)
+- [ ] Ejecutar la captura nativa OS A4 en un Mac desbloqueado.
+- [ ] Revisar la aplicación pública del release actual en contexto anónimo,
+      incluyendo las rutas de FP, ocupación y comparador.
+- [ ] Conservar solo capturas actuales, sin datos personales ni credenciales;
+      las 13 capturas existentes son históricas.
+- [ ] Confirmar que las cifras visibles siguen coincidiendo con
+      `20260822085631889-7bbe69380f6d`.
 - [ ] Obtener aprobación humana explícita para la solicitud externa.
 
-**PENDIENTE DE APROBACIÓN HUMANA:** este repositorio no envía la solicitud al concurso ni decide los campos de identidad, contacto, declaraciones o consentimiento.
+La verificación técnica del release no autoriza el envío al concurso ni decide
+los campos de identidad, contacto, declaraciones o consentimiento. Cualquier
+cambio posterior debe seguir el flujo rama de trabajo → PR → checks →
+revisión/aprobación → merge a `main` → GitHub Pages.
