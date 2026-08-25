@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "status": "pending",
-  "recordedAt": "2026-08-22T19:35:21Z",
+  "recordedAt": "2026-08-25T04:35:12Z",
   "expectedRootUrl": "https://salida-cyl.157-90-22-40.sslip.io/",
   "auditHeadSha": null,
   "coverageSourceCommitSha": "ff9e6197f926e462bea1a3e8ac6a57a23d3f825a",
@@ -84,19 +84,24 @@
     }
   },
   "deployment": {
-    "status": "pending",
-    "commitSha": null,
-    "workflowRunId": null,
-    "workflowUrl": null,
-    "liveRootVerified": false,
-    "verifiedAt": null
+    "status": "verified",
+    "commitSha": "f55de804cc94b5d928484e846b933a9dea94b7d0",
+    "workflowRunId": "32597524256",
+    "workflowUrl": "https://github.com/Huntsman1756/concursos_cyl/actions/runs/32597524256",
+    "liveRootVerified": true,
+    "verifiedAt": "2026-08-25T04:35:12Z",
+    "releaseTag": "v2026.08.22",
+    "versionJsonUrl": "https://huntsman1756.github.io/concursos_cyl/version.json",
+    "versionJsonCommitSha": "f55de804cc94b5d928484e846b933a9dea94b7d0",
+    "versionJsonSchemaVersion": "1.0.0",
+    "versionJsonVerifiedAt": "2026-08-25T04:35:12Z"
   },
   "publicVerification": {
-    "status": "pending",
+    "status": "verified",
     "rootUrl": "https://salida-cyl.157-90-22-40.sslip.io/",
-    "rootHttpStatus": null,
-    "manifestSha256": null,
-    "verifiedAt": null
+    "rootHttpStatus": 200,
+    "manifestSha256": "92afc80f2b839ed95def95bc90bdd3b6ad3a1363fb12904f7b109fafc92b2f18",
+    "verifiedAt": "2026-08-25T04:35:12Z"
   },
   "humanApproval": {
     "finalApplicationTextApproved": false,

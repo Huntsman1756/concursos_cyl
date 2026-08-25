@@ -27,6 +27,12 @@ export type ContestDeploymentEvidence = {
   captureProductCommitSha: string | null;
   captureCount: number | null;
   capturesAreCurrent: boolean;
+  releaseGatesVerified?: boolean;
+  releaseTag?: string | null;
+  versionJsonUrl?: string | null;
+  versionJsonCommitSha?: string | null;
+  versionJsonSchemaVersion?: string | null;
+  versionJsonVerifiedAt?: string | null;
 };
 
 const PENDING_DEPLOYMENT_EVIDENCE: ContestDeploymentEvidence = {
@@ -37,6 +43,12 @@ const PENDING_DEPLOYMENT_EVIDENCE: ContestDeploymentEvidence = {
   captureProductCommitSha: null,
   captureCount: null,
   capturesAreCurrent: false,
+  releaseGatesVerified: false,
+  releaseTag: null,
+  versionJsonUrl: null,
+  versionJsonCommitSha: null,
+  versionJsonSchemaVersion: null,
+  versionJsonVerifiedAt: null,
 };
 
 const DOCUMENT_NAMES = [
@@ -135,9 +147,20 @@ function renderTechnicalEvidence(
       ? `El release público se verificó con el commit ${deploymentCommit} y el run ${workflowRun} el ${deployment.verifiedAt}.`
       : "Estos dos campos no se inventan antes de ejecutar y verificar el release.";
   const reproducibilityIntro =
-    deployment.status === "verified"
+    (deployment.releaseGatesVerified ?? deployment.status === "verified")
       ? "Comandos ejecutados y ligados al commit de publicación en `release-evidence.json`:"
       : "Comandos previstos para repetir las comprobaciones. Este documento no los da por ejecutados hasta que `release-evidence.json` quede verificado y ligado al commit de publicación:";
+  const releaseTraceability =
+    deployment.releaseTag === null || deployment.releaseTag === undefined
+      ? ""
+      : `\n- Release: \`${deployment.releaseTag}\`.`;
+  const versionJsonTraceability =
+    deployment.versionJsonUrl === null ||
+    deployment.versionJsonUrl === undefined ||
+    deployment.versionJsonCommitSha === null ||
+    deployment.versionJsonCommitSha === undefined
+      ? ""
+      : `\n- \`version.json\` observado: [respuesta pública](${deployment.versionJsonUrl}) con commit \`${deployment.versionJsonCommitSha}\`.\n`;
   return `# Evidencia técnica
 
 ## Freeze de cobertura
@@ -201,6 +224,7 @@ La revisión independiente confirmó el manifest, sus ${Object.keys(freeze.manif
 - URL raíz esperada: [${ROOT_URL}](${ROOT_URL})
 - Commit desplegado: ${deploymentCommit}.
 - Run del workflow: ${workflowRun}.
+${releaseTraceability}${versionJsonTraceability}
 
 ${deploymentNote}
 `;
@@ -256,13 +280,24 @@ function renderSubmissionChecklist(
       ? `\`${deployment.workflowRunId}\``
       : "**PENDIENTE DE DESPLIEGUE Y VERIFICACIÓN**";
   const releaseGate =
-    deployment.status === "verified"
+    (deployment.releaseGatesVerified ?? deployment.status === "verified")
       ? "- [x] Ejecutar los gates de release y verificar la aplicación pública."
       : "- [ ] Ejecutar los gates de release y verificar la aplicación pública.";
   const deploymentGate =
     deployment.status === "verified"
       ? "- [x] Rellenar el commit desplegado y el run del workflow con datos observados."
       : "- [ ] Rellenar el commit desplegado y el run del workflow con datos observados.";
+  const releaseTraceability =
+    deployment.releaseTag === null || deployment.releaseTag === undefined
+      ? ""
+      : `- Release: \`${deployment.releaseTag}\`.\n`;
+  const versionJsonTraceability =
+    deployment.versionJsonUrl === null ||
+    deployment.versionJsonUrl === undefined ||
+    deployment.versionJsonCommitSha === null ||
+    deployment.versionJsonCommitSha === undefined
+      ? ""
+      : `- \`version.json\` verificado: [respuesta pública](${deployment.versionJsonUrl}) con commit igual a \`${deployment.versionJsonCommitSha}\`.\n`;
 
   let visualEvidenceLine: string;
   let capturesReviewGate: string;
@@ -285,6 +320,18 @@ function renderSubmissionChecklist(
       "- [ ] Confirmar que las cifras visibles siguen coincidiendo con `" +
       freeze.manifest.snapshotId +
       "`. (revisión humana pendiente)";
+  } else if (
+    deployment.captureProductCommitSha === null &&
+    deployment.captureCount === 0
+  ) {
+    visualEvidenceLine =
+      "captura visual actual pendiente; las 13 capturas anteriores son históricas.";
+    capturesReviewGate =
+      "- [ ] Revisar las capturas en contexto anónimo, sin datos personales ni credenciales.";
+    figuresConfirmationGate =
+      "- [ ] Confirmar que las cifras visibles siguen coincidiendo con `" +
+      freeze.manifest.snapshotId +
+      "`. (evidencia visual pendiente)";
   } else {
     const captureLabel =
       deployment.captureCount !== null
@@ -333,7 +380,7 @@ function renderSubmissionChecklist(
 - Snapshot: \`${freeze.manifest.snapshotId}\`.
 - Commit desplegado: ${deploymentCommit}.
 - Run del workflow: ${workflowRun}.
-- Evidencia visual: ${visualEvidenceLine}
+${releaseTraceability}${versionJsonTraceability}- Evidencia visual: ${visualEvidenceLine}
 
 ## Gate final
 
@@ -364,9 +411,6 @@ function loadContestDeploymentEvidence(
   freeze: ContestFreeze,
 ): ContestDeploymentEvidence {
   const strictEvidence = validateContestReleaseEvidenceFromRoot(rootDir);
-  if (strictEvidence.status === "pending") {
-    return PENDING_DEPLOYMENT_EVIDENCE;
-  }
   const releaseEvidencePath = path.join(
     rootDir,
     "docs",
@@ -439,6 +483,12 @@ function loadContestDeploymentEvidence(
     captureProductCommitSha,
     captureCount,
     capturesAreCurrent,
+    releaseGatesVerified: strictEvidence.status === "verified",
+    releaseTag: deployment.releaseTag ?? null,
+    versionJsonUrl: deployment.versionJsonUrl ?? null,
+    versionJsonCommitSha: deployment.versionJsonCommitSha ?? null,
+    versionJsonSchemaVersion: deployment.versionJsonSchemaVersion ?? null,
+    versionJsonVerifiedAt: deployment.versionJsonVerifiedAt ?? null,
   };
   if (
     evidence.status === "verified" &&

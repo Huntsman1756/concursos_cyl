@@ -195,6 +195,46 @@ describe("contest submission renderer", () => {
     );
   });
 
+  it("renders verified publication separately from pending current captures", () => {
+    const deployment = {
+      status: "verified" as const,
+      commitSha: "f55de804cc94b5d928484e846b933a9dea94b7d0",
+      workflowRunId: "32597524256",
+      verifiedAt: "2026-08-25T04:35:12Z",
+      captureProductCommitSha: null,
+      captureCount: 0,
+      capturesAreCurrent: false,
+      releaseGatesVerified: false,
+      releaseTag: "v2026.08.22",
+      versionJsonUrl:
+        "https://huntsman1756.github.io/concursos_cyl/version.json",
+      versionJsonCommitSha: "f55de804cc94b5d928484e846b933a9dea94b7d0",
+    } as ContestDeploymentEvidence;
+    const rendered = renderContestSubmission(freeze, deployment);
+
+    expect(rendered["technical-evidence.md"]).toContain(
+      "f55de804cc94b5d928484e846b933a9dea94b7d0",
+    );
+    expect(rendered["technical-evidence.md"]).toContain(
+      "Comandos previstos para repetir las comprobaciones",
+    );
+    expect(rendered["submission-checklist.md"]).toContain(
+      "Release: `v2026.08.22`",
+    );
+    expect(rendered["submission-checklist.md"]).toContain(
+      "https://huntsman1756.github.io/concursos_cyl/version.json",
+    );
+    expect(rendered["submission-checklist.md"]).toContain(
+      "- [ ] Ejecutar los gates de release y verificar la aplicación pública.",
+    );
+    expect(rendered["submission-checklist.md"]).toContain(
+      "- [x] Rellenar el commit desplegado y el run del workflow con datos observados.",
+    );
+    expect(rendered["submission-checklist.md"]).toContain(
+      "captura visual actual pendiente; las 13 capturas anteriores son históricas",
+    );
+  });
+
   it("is byte-stable and rejects forbidden or stale claims", () => {
     const first = renderContestSubmission(freeze);
     const second = renderContestSubmission(freeze);

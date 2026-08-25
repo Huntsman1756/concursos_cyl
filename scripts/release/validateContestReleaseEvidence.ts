@@ -83,6 +83,11 @@ export type ContestReleaseEvidence = {
     workflowUrl: string | null;
     liveRootVerified: boolean;
     verifiedAt: string | null;
+    releaseTag?: string;
+    versionJsonUrl?: string;
+    versionJsonCommitSha?: string;
+    versionJsonSchemaVersion?: string;
+    versionJsonVerifiedAt?: string;
   };
   publicVerification: {
     status: "pending" | "verified";
@@ -177,6 +182,21 @@ function nullableSha(value: unknown, label: string): string | null {
 
 function nullableIsoUtc(value: unknown, label: string): string | null {
   if (value === null) return null;
+  return isoUtc(value, label);
+}
+
+function optionalString(value: unknown, label: string): string | null {
+  if (value === undefined || value === null) return null;
+  return nonEmptyString(value, label);
+}
+
+function optionalSha(value: unknown, label: string): string | null {
+  if (value === undefined || value === null) return null;
+  return sha(value, label);
+}
+
+function optionalIsoUtc(value: unknown, label: string): string | null {
+  if (value === undefined || value === null) return null;
   return isoUtc(value, label);
 }
 
@@ -635,8 +655,21 @@ export function validateContestReleaseEvidence(
       "workflowUrl",
       "liveRootVerified",
       "verifiedAt",
+      "releaseTag",
+      "versionJsonUrl",
+      "versionJsonCommitSha",
+      "versionJsonSchemaVersion",
+      "versionJsonVerifiedAt",
     ],
     "deployment",
+    [
+      "status",
+      "commitSha",
+      "workflowRunId",
+      "workflowUrl",
+      "liveRootVerified",
+      "verifiedAt",
+    ],
   );
   if (deployment.status !== "pending" && deployment.status !== "verified") {
     throw new Error("deployment.status must be pending or verified");
@@ -657,17 +690,79 @@ export function validateContestReleaseEvidence(
     deployment.verifiedAt,
     "deployment.verifiedAt",
   );
+  optionalString(deployment.releaseTag, "deployment.releaseTag");
+  const versionJsonUrl = optionalString(
+    deployment.versionJsonUrl,
+    "deployment.versionJsonUrl",
+  );
+  const versionJsonCommitSha = optionalSha(
+    deployment.versionJsonCommitSha,
+    "deployment.versionJsonCommitSha",
+  );
+  const versionJsonSchemaVersion = optionalString(
+    deployment.versionJsonSchemaVersion,
+    "deployment.versionJsonSchemaVersion",
+  );
+  const versionJsonVerifiedAt = optionalIsoUtc(
+    deployment.versionJsonVerifiedAt,
+    "deployment.versionJsonVerifiedAt",
+  );
+  if (versionJsonUrl !== null && !/^https:\/\//u.test(versionJsonUrl)) {
+    throw new Error("deployment.versionJsonUrl must be an HTTPS URL");
+  }
+  if (versionJsonCommitSha !== null && deploymentCommitSha !== null) {
+    assertEqual(
+      versionJsonCommitSha,
+      deploymentCommitSha,
+      "deployment.versionJsonCommitSha",
+    );
+  }
+  if (
+    versionJsonVerifiedAt !== null &&
+    (versionJsonUrl === null ||
+      versionJsonCommitSha === null ||
+      versionJsonSchemaVersion === null)
+  ) {
+    throw new Error("version.json verification metadata is incomplete");
+  }
+  if (
+    versionJsonVerifiedAt !== null &&
+    Date.parse(versionJsonVerifiedAt) > Date.parse(recordedAt)
+  ) {
+    throw new Error(
+      "deployment.versionJsonVerifiedAt must not be later than recordedAt",
+    );
+  }
   if (status === "pending") {
-    if (
-      deployment.status !== "pending" ||
-      deploymentCommitSha !== null ||
-      deploymentWorkflowRunId !== null ||
-      deploymentWorkflowUrl !== null ||
-      deployment.liveRootVerified !== false ||
-      deploymentVerifiedAt !== null
+    if (deployment.status === "pending") {
+      if (
+        deploymentCommitSha !== null ||
+        deploymentWorkflowRunId !== null ||
+        deploymentWorkflowUrl !== null ||
+        deployment.liveRootVerified !== false ||
+        deploymentVerifiedAt !== null
+      ) {
+        throw new Error(
+          "pending release evidence must not claim deployment or workflow verification",
+        );
+      }
+    } else if (
+      deploymentCommitSha === null ||
+      deploymentWorkflowRunId === null ||
+      deploymentWorkflowUrl === null ||
+      deploymentVerifiedAt === null ||
+      deployment.liveRootVerified !== true
+    ) {
+      throw new Error("verified deployment evidence is incomplete");
+    } else if (!/^\d+$/u.test(deploymentWorkflowRunId)) {
+      throw new Error("deployment.workflowRunId must be numeric");
+    } else if (
+      !/^https:\/\/github\.com\/[^/]+\/[^/]+\/actions\/runs\/\d+$/u.test(
+        deploymentWorkflowUrl,
+      )
     ) {
       throw new Error(
-        "pending release evidence must not claim deployment or workflow verification",
+        "deployment.workflowUrl must identify a GitHub Actions run",
       );
     }
   } else {
@@ -725,14 +820,27 @@ export function validateContestReleaseEvidence(
     "publicVerification.verifiedAt",
   );
   if (status === "pending") {
-    if (
-      publicVerification.status !== "pending" ||
-      publicVerification.rootHttpStatus !== null ||
-      publicManifestSha !== null ||
-      publicVerifiedAt !== null
+    if (publicVerification.status === "pending") {
+      if (
+        publicVerification.rootHttpStatus !== null ||
+        publicManifestSha !== null ||
+        publicVerifiedAt !== null
+      ) {
+        throw new Error(
+          "pending release evidence must not claim public verification",
+        );
+      }
+    } else if (
+      publicVerification.rootHttpStatus !== 200 ||
+      publicManifestSha === null ||
+      publicVerifiedAt === null
     ) {
-      throw new Error(
-        "pending release evidence must not claim public verification",
+      throw new Error("verified public verification evidence is incomplete");
+    } else {
+      assertEqual(
+        publicManifestSha,
+        manifest.sha256,
+        "publicVerification.manifestSha256",
       );
     }
   } else {
