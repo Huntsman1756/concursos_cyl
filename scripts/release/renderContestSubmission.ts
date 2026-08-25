@@ -27,6 +27,12 @@ export type ContestDeploymentEvidence = {
   captureProductCommitSha: string | null;
   captureCount: number | null;
   capturesAreCurrent: boolean;
+  releaseGatesVerified?: boolean;
+  releaseTag?: string | null;
+  versionJsonUrl?: string | null;
+  versionJsonCommitSha?: string | null;
+  versionJsonSchemaVersion?: string | null;
+  versionJsonVerifiedAt?: string | null;
 };
 
 const PENDING_DEPLOYMENT_EVIDENCE: ContestDeploymentEvidence = {
@@ -37,6 +43,12 @@ const PENDING_DEPLOYMENT_EVIDENCE: ContestDeploymentEvidence = {
   captureProductCommitSha: null,
   captureCount: null,
   capturesAreCurrent: false,
+  releaseGatesVerified: false,
+  releaseTag: null,
+  versionJsonUrl: null,
+  versionJsonCommitSha: null,
+  versionJsonSchemaVersion: null,
+  versionJsonVerifiedAt: null,
 };
 
 const DOCUMENT_NAMES = [
@@ -47,6 +59,7 @@ const DOCUMENT_NAMES = [
 ] as const;
 const OUTPUT_DIRECTORY = path.join("docs", "contest");
 const ROOT_URL = "https://salida-cyl.157-90-22-40.sslip.io/";
+const FALLBACK_URL = "https://huntsman1756.github.io/concursos_cyl/";
 const CONTEST_URL =
   "https://datosabiertos.jcyl.es/web/es/concurso-datos-abiertos/concurso-datos-abiertos.html";
 const REGISTRATION_URL =
@@ -135,9 +148,20 @@ function renderTechnicalEvidence(
       ? `El release público se verificó con el commit ${deploymentCommit} y el run ${workflowRun} el ${deployment.verifiedAt}.`
       : "Estos dos campos no se inventan antes de ejecutar y verificar el release.";
   const reproducibilityIntro =
-    deployment.status === "verified"
+    (deployment.releaseGatesVerified ?? deployment.status === "verified")
       ? "Comandos ejecutados y ligados al commit de publicación en `release-evidence.json`:"
       : "Comandos previstos para repetir las comprobaciones. Este documento no los da por ejecutados hasta que `release-evidence.json` quede verificado y ligado al commit de publicación:";
+  const releaseTraceability =
+    deployment.releaseTag === null || deployment.releaseTag === undefined
+      ? ""
+      : `\n- Release: \`${deployment.releaseTag}\`.`;
+  const versionJsonTraceability =
+    deployment.versionJsonUrl === null ||
+    deployment.versionJsonUrl === undefined ||
+    deployment.versionJsonCommitSha === null ||
+    deployment.versionJsonCommitSha === undefined
+      ? ""
+      : `\n- \`version.json\` observado: [respuesta pública](${deployment.versionJsonUrl}) con commit \`${deployment.versionJsonCommitSha}\`.`;
   return `# Evidencia técnica
 
 ## Freeze de cobertura
@@ -201,6 +225,7 @@ La revisión independiente confirmó el manifest, sus ${Object.keys(freeze.manif
 - URL raíz esperada: [${ROOT_URL}](${ROOT_URL})
 - Commit desplegado: ${deploymentCommit}.
 - Run del workflow: ${workflowRun}.
+${releaseTraceability}${versionJsonTraceability}
 
 ${deploymentNote}
 `;
@@ -256,13 +281,24 @@ function renderSubmissionChecklist(
       ? `\`${deployment.workflowRunId}\``
       : "**PENDIENTE DE DESPLIEGUE Y VERIFICACIÓN**";
   const releaseGate =
-    deployment.status === "verified"
+    (deployment.releaseGatesVerified ?? deployment.status === "verified")
       ? "- [x] Ejecutar los gates de release y verificar la aplicación pública."
       : "- [ ] Ejecutar los gates de release y verificar la aplicación pública.";
   const deploymentGate =
     deployment.status === "verified"
       ? "- [x] Rellenar el commit desplegado y el run del workflow con datos observados."
       : "- [ ] Rellenar el commit desplegado y el run del workflow con datos observados.";
+  const releaseTraceability =
+    deployment.releaseTag === null || deployment.releaseTag === undefined
+      ? ""
+      : `- Release: \`${deployment.releaseTag}\`.\n`;
+  const versionJsonTraceability =
+    deployment.versionJsonUrl === null ||
+    deployment.versionJsonUrl === undefined ||
+    deployment.versionJsonCommitSha === null ||
+    deployment.versionJsonCommitSha === undefined
+      ? ""
+      : `- \`version.json\` verificado: [respuesta pública](${deployment.versionJsonUrl}) con commit igual a \`${deployment.versionJsonCommitSha}\`.\n`;
 
   let visualEvidenceLine: string;
   let capturesReviewGate: string;
@@ -285,6 +321,18 @@ function renderSubmissionChecklist(
       "- [ ] Confirmar que las cifras visibles siguen coincidiendo con `" +
       freeze.manifest.snapshotId +
       "`. (revisión humana pendiente)";
+  } else if (
+    deployment.captureProductCommitSha === null &&
+    deployment.captureCount === 0
+  ) {
+    visualEvidenceLine =
+      "captura visual actual pendiente; las 13 capturas anteriores son históricas.";
+    capturesReviewGate =
+      "- [ ] Revisar las capturas en contexto anónimo, sin datos personales ni credenciales.";
+    figuresConfirmationGate =
+      "- [ ] Confirmar que las cifras visibles siguen coincidiendo con `" +
+      freeze.manifest.snapshotId +
+      "`. (evidencia visual pendiente)";
   } else {
     const captureLabel =
       deployment.captureCount !== null
@@ -329,14 +377,18 @@ function renderSubmissionChecklist(
 ## Campos técnicos
 
 - URL raíz a presentar: [${ROOT_URL}](${ROOT_URL})
+- Fallback verificada: [${FALLBACK_URL}](${FALLBACK_URL})
 - Commit fuente del freeze: \`${freeze.sourceCommitSha}\`.
 - Snapshot: \`${freeze.manifest.snapshotId}\`.
 - Commit desplegado: ${deploymentCommit}.
 - Run del workflow: ${workflowRun}.
-- Evidencia visual: ${visualEvidenceLine}
+${releaseTraceability}${versionJsonTraceability}- Evidencia visual: ${visualEvidenceLine}
 
-## Gate final
+## Evidencia visual y gate final
 
+- [ ] Ejecutar la captura nativa OS A4 en un Mac desbloqueado.
+- [ ] Revisar la aplicación pública del release actual en contexto anónimo, incluyendo las rutas de FP, ocupación y comparador.
+- [ ] Conservar solo capturas actuales, sin datos personales ni credenciales; las 13 capturas existentes son históricas.
 ${releaseGate}
 ${deploymentGate}
 ${capturesReviewGate}
@@ -344,6 +396,8 @@ ${figuresConfirmationGate}
 - [ ] Obtener aprobación humana explícita para la solicitud externa.
 
 **PENDIENTE DE APROBACIÓN HUMANA:** este repositorio no envía la solicitud al concurso ni decide los campos de identidad, contacto, declaraciones o consentimiento.
+
+Cualquier cambio posterior debe seguir el flujo rama de trabajo → PR → checks → revisión/aprobación → merge a \`main\` → GitHub Pages.
 `;
 }
 
@@ -364,9 +418,6 @@ function loadContestDeploymentEvidence(
   freeze: ContestFreeze,
 ): ContestDeploymentEvidence {
   const strictEvidence = validateContestReleaseEvidenceFromRoot(rootDir);
-  if (strictEvidence.status === "pending") {
-    return PENDING_DEPLOYMENT_EVIDENCE;
-  }
   const releaseEvidencePath = path.join(
     rootDir,
     "docs",
@@ -439,6 +490,12 @@ function loadContestDeploymentEvidence(
     captureProductCommitSha,
     captureCount,
     capturesAreCurrent,
+    releaseGatesVerified: strictEvidence.status === "verified",
+    releaseTag: deployment.releaseTag ?? null,
+    versionJsonUrl: deployment.versionJsonUrl ?? null,
+    versionJsonCommitSha: deployment.versionJsonCommitSha ?? null,
+    versionJsonSchemaVersion: deployment.versionJsonSchemaVersion ?? null,
+    versionJsonVerifiedAt: deployment.versionJsonVerifiedAt ?? null,
   };
   if (
     evidence.status === "verified" &&

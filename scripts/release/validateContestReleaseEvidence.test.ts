@@ -196,7 +196,7 @@ describe("contest release evidence validator", () => {
     });
   });
 
-  it("rejects pending evidence that mixes in verified deployment facts", () => {
+  it("rejects pending evidence with incomplete verified deployment facts", () => {
     const pending = validEvidence();
     pending.status = "pending";
     pending.auditHeadSha = null;
@@ -206,10 +206,82 @@ describe("contest release evidence validator", () => {
     pending.localGates.evidenceManifest.captureCount = 0;
     markLocalGatesPending(pending);
     pending.deployment.status = "verified";
+    pending.deployment.commitSha = null;
 
     expect(() => validateContestReleaseEvidence(pending, context)).toThrow(
       /pending|deployment|workflow/i,
     );
+  });
+
+  it("accepts verified deployment facts while current visual evidence remains pending", () => {
+    const pending = validEvidence();
+    pending.status = "pending";
+    pending.auditHeadSha = null;
+    pending.localReviewHeadSha = null;
+    pending.publicationCommitSha = null;
+    pending.captureProductCommitSha = null;
+    pending.localGates.evidenceManifest.captureCount = 0;
+    markLocalGatesPending(pending);
+    pending.deployment = {
+      status: "verified",
+      commitSha: PUBLICATION_SHA,
+      workflowRunId: "32597524256",
+      workflowUrl:
+        "https://github.com/Huntsman1756/concursos_cyl/actions/runs/32597524256",
+      liveRootVerified: true,
+      verifiedAt: VERIFIED_AT,
+    };
+    pending.publicVerification = {
+      status: "verified",
+      rootUrl: ROOT_URL,
+      rootHttpStatus: 200,
+      manifestSha256: MANIFEST_SHA,
+      verifiedAt: VERIFIED_AT,
+    };
+
+    expect(validateContestReleaseEvidence(pending, context)).toMatchObject({
+      valid: true,
+      status: "pending",
+      capturesAreCurrent: false,
+    });
+  });
+
+  it("accepts version.json traceability bound to the deployed commit", () => {
+    const pending = validEvidence();
+    pending.status = "pending";
+    pending.auditHeadSha = null;
+    pending.localReviewHeadSha = null;
+    pending.publicationCommitSha = null;
+    pending.captureProductCommitSha = null;
+    pending.localGates.evidenceManifest.captureCount = 0;
+    markLocalGatesPending(pending);
+    pending.deployment = {
+      status: "verified",
+      commitSha: PUBLICATION_SHA,
+      workflowRunId: "32597524256",
+      workflowUrl:
+        "https://github.com/Huntsman1756/concursos_cyl/actions/runs/32597524256",
+      liveRootVerified: true,
+      verifiedAt: VERIFIED_AT,
+      releaseTag: "v2026.08.22",
+      versionJsonUrl:
+        "https://huntsman1756.github.io/concursos_cyl/version.json",
+      versionJsonCommitSha: PUBLICATION_SHA,
+      versionJsonSchemaVersion: "1.0.0",
+      versionJsonVerifiedAt: VERIFIED_AT,
+    } as ContestReleaseEvidence["deployment"];
+    pending.publicVerification = {
+      status: "verified",
+      rootUrl: ROOT_URL,
+      rootHttpStatus: 200,
+      manifestSha256: MANIFEST_SHA,
+      verifiedAt: VERIFIED_AT,
+    };
+
+    expect(validateContestReleaseEvidence(pending, context)).toMatchObject({
+      valid: true,
+      status: "pending",
+    });
   });
 
   it.each([

@@ -79,7 +79,10 @@ La revisión independiente confirmó el manifest, sus 21 recursos, los conjuntos
 ## Despliegue
 
 - URL raíz esperada: [https://salida-cyl.157-90-22-40.sslip.io/](https://salida-cyl.157-90-22-40.sslip.io/)
-- Commit desplegado: **PENDIENTE DE DESPLIEGUE Y VERIFICACIÓN**.
-- Run del workflow: **PENDIENTE DE DESPLIEGUE Y VERIFICACIÓN**.
+- Commit desplegado: `7355bb1c05aecd7452ec82333652d5070927947e`.
+- Run del workflow: `32888564295`.
 
-Estos dos campos no se inventan antes de ejecutar y verificar el release.
+- Release: `v2026.08.25-candidate`.
+- `version.json` observado: [respuesta pública](https://huntsman1756.github.io/concursos_cyl/version.json) con commit `7355bb1c05aecd7452ec82333652d5070927947e`.
+
+El release público se verificó con el commit `7355bb1c05aecd7452ec82333652d5070927947e` y el run `32888564295` el 2026-08-25T19:34:35Z.
