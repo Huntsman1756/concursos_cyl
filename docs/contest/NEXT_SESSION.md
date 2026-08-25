@@ -17,16 +17,15 @@
   }
   ```
 
-- La URL canónica VPS (<https://salida-cyl.157-90-22-40.sslip.io/>) aún debe
-  actualizarse a esta revisión; no se considera evidencia de candidatura hasta
-  que su `version.json` coincida.
+- La misma revisión está publicada y verificada en la URL canónica VPS:
+  <https://salida-cyl.157-90-22-40.sslip.io/>.
 - Snapshot activo: `20260822085631889-7bbe69380f6d`.
 - Cobertura congelada: 113 cualificaciones base, 130 claves de modalidad,
   264 relaciones aprobadas y 21 alias; 21 recursos inmutables y 116 registros
   canónicos de SEPE.
-- La publicación técnica de GitHub Pages y su verificación pública están
-  cerradas para esta revisión. El despliegue VPS, la evidencia visual actual de
-  candidatura y la autorización humana para el envío externo siguen pendientes.
+- La publicación técnica, el despliegue VPS y la verificación pública están
+  cerradas para esta revisión. La evidencia visual actual de candidatura y la
+  autorización humana para el envío externo siguen pendientes.
 - Las 13 capturas existentes son históricas y no sustituyen una captura del
   release actual.
 
@@ -36,9 +35,8 @@
 - `publicationThroughRuntimeV4` permanece en `false`; no se anuncia una
   procedencia V4 firmada ni se habilita `REQUIRED`.
 - La URL canónica es la destinada a la candidatura; GitHub Pages conserva una
-  fallback operativa verificada para `7355bb1c05aecd7452ec82333652d5070927947e`.
-  Ambas identidades solo podrán considerarse alineadas después de publicar el
-  mismo commit en el VPS.
+  fallback operativa. Ambas identidades están verificadas para
+  `7355bb1c05aecd7452ec82333652d5070927947e`.
 - Cualquier cambio futuro sigue el flujo:
   `rama de trabajo → PR → checks → revisión/aprobación → merge a main → Pages`.
   Este documento no autoriza pushes directos a `main` ni cambios sobre el
