@@ -180,8 +180,13 @@ export function OccupationResultsPage() {
       >
     >;
   const occupationSnapshot = resourceSnapshots.officialOccupations;
+  const occupationSourceUrl =
+    occupationSnapshot?.sourceUrl ?? occupation.sourceUrl;
+  const occupationEvidenceDate =
+    occupationSnapshot?.sourceUpdatedAt ??
+    occupationSnapshot?.snapshotFetchedAt ??
+    occupation.reviewedAt;
   const relationshipSnapshot = resourceSnapshots.trainingOccupationLinks;
-  const occupationSourceUrl = occupationSnapshot?.sourceUrl;
   const relationshipSourceUrl =
     orderedLinks[0]?.sourceUrl ?? relationshipSnapshot?.sourceUrl;
   const relationshipDate =
@@ -218,6 +223,14 @@ export function OccupationResultsPage() {
         </p>
         <h1 id="occupation-results-heading">{occupation.preferredLabel}</h1>
         <p>CNO-11 {occupation.classificationCode}</p>
+        <p className="result-summary__source">
+          <ExternalLink href={occupationSourceUrl}>
+            Fuente: catálogo CNO-11 (BOE)
+          </ExternalLink>
+          <time dateTime={occupationEvidenceDate}>
+            Catálogo comprobado el {spanishDate(occupationEvidenceDate)}
+          </time>
+        </p>
       </header>
       <p className="decision-direction">
         Ocupación que quieres <span aria-hidden="true">→</span> FP que te lleva
@@ -227,9 +240,12 @@ export function OccupationResultsPage() {
       <section className="decision-basis" aria-labelledby="route-basis-title">
         <div className="decision-basis__heading">
           <p>Base para decidir</p>
-          <h2 id="route-basis-title">Qué rutas hemos podido comprobar</h2>
+          <h2 id="route-basis-title">Disponibilidad de FP</h2>
         </div>
-        <dl className="result-summary" aria-label="Resumen de rutas formativas">
+        <dl
+          className="result-summary"
+          aria-label="Resumen de disponibilidad de FP"
+        >
           <div>
             <dt>FP relacionadas</dt>
             <dd>
@@ -269,28 +285,15 @@ export function OccupationResultsPage() {
             <dd>
               <strong>{linkedProvinces.size}</strong>
               <span className="result-summary__unit">
-                provincias con oferta
+                centros en provincias
               </span>
               <span className="result-summary__source">
-                {occupationSourceUrl !== undefined && (
-                  <ExternalLink href={occupationSourceUrl}>
-                    Fuente: catálogo CNO-11
-                  </ExternalLink>
-                )}
-                {occupationSnapshot !== undefined && (
-                  <time
-                    dateTime={
-                      occupationSnapshot.sourceUpdatedAt ??
-                      occupationSnapshot.snapshotFetchedAt
-                    }
-                  >
-                    Catálogo comprobado el{" "}
-                    {spanishDate(
-                      occupationSnapshot.sourceUpdatedAt ??
-                        occupationSnapshot.snapshotFetchedAt,
-                    )}
-                  </time>
-                )}
+                <ExternalLink href={trainingSnapshot.sourceUrl}>
+                  Fuente: oferta FP JCyL
+                </ExternalLink>
+                <time dateTime={snapshotInstant}>
+                  Copia del {spanishDate(snapshotInstant)}
+                </time>
               </span>
             </dd>
           </div>

@@ -100,7 +100,9 @@ for (const { programKey, offerIds } of cases) {
     expect(manifestOffers).toEqual([...offerIds].sort());
     if (offerIds.length === 0) {
       await expect(
-        page.getByText(/No hay ofertas relacionadas en la copia de datos del/u),
+        page
+          .locator(".status-panel")
+          .getByText(/0 ofertas con correspondencia validada/u),
       ).toBeVisible();
       await expect(
         page.getByText(/no hay (empleo|trabajo|puestos)/iu),

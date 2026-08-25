@@ -128,6 +128,11 @@ describe("App", () => {
     expect(screen.getByRole("contentinfo")).toHaveTextContent(
       /Proyecto independiente basado en datos públicos/i,
     );
+    expect(
+      screen.getByText(
+        "Desarrollado para el X Concurso de Datos Abiertos de Castilla y León en la categoría Productos y Servicios.",
+      ),
+    ).toBeVisible();
   });
 
   it.each([

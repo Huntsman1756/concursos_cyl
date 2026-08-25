@@ -398,9 +398,7 @@ describe("TrainingResultsPage", () => {
       name: "Desarrollo de Aplicaciones Web",
     });
     expect(screen.getByText("Contexto provincial elegido: León")).toBeVisible();
-    expect(
-      screen.getByText(/la lista de centros publicados permanece completa/i),
-    ).toBeVisible();
+    expect(screen.getByText(/2 de 2 centros publicados/i)).toBeVisible();
     const studySection = document.getElementById("donde-estudiar");
     expect(studySection).not.toBeNull();
     expect(studySection).toHaveTextContent("2 centros");
@@ -474,9 +472,7 @@ describe("TrainingResultsPage", () => {
 
       if (expectedOffers.length === 0) {
         expect(
-          await screen.findByText(
-            /No hay ofertas relacionadas en la copia de datos del/u,
-          ),
+          await screen.findByText(/0 ofertas con correspondencia validada/u),
         ).toBeVisible();
         expect(screen.queryAllByRole("article")).toHaveLength(0);
       } else {
@@ -542,6 +538,10 @@ describe("TrainingResultsPage", () => {
     const sectionNavigation = screen.getByRole("navigation", {
       name: "Secciones del resultado",
     });
+    expect(sectionNavigation.querySelector("a")).toHaveAttribute(
+      "href",
+      "#donde-estudiar",
+    );
     expect(
       within(sectionNavigation).getByRole("link", {
         name: "Base de cotización",
@@ -617,6 +617,118 @@ describe("TrainingResultsPage", () => {
       "href",
       "https://estadisticas.educacion.gob.es/EducaJaxiPx/",
     );
+  });
+
+  it("labels the four-center preview against the complete distribution", async () => {
+    await installActiveAliasPassFetch();
+    render(
+      <MemoryRouter initialEntries={["/desde-fp/IFC03S"]}>
+        <AppRoutes />
+      </MemoryRouter>,
+    );
+
+    const studyHeading = await screen.findByRole("heading", {
+      name: "Dónde estudiar",
+    });
+    const studySection = document.getElementById("donde-estudiar");
+    expect(studySection).not.toBeNull();
+    expect(studySection).toHaveTextContent("4 de 18 centros publicados");
+    expect(
+      studySection!.querySelectorAll(".study-center-preview > li"),
+    ).toHaveLength(4);
+    expect(
+      within(studySection!).getByRole("link", {
+        name: "Ver la distribución completa",
+      }),
+    ).toHaveAttribute("href", "#distribucion-centros");
+    expect(studyHeading).toBeVisible();
+    expect(document.getElementById("distribucion-centros")).toHaveTextContent(
+      "18 centros en 9 provincias",
+    );
+  });
+
+  it("labels the four-province contract preview against the complete distribution", async () => {
+    await installActiveAliasPassFetch();
+    render(
+      <MemoryRouter initialEntries={["/desde-fp/IFC03S"]}>
+        <AppRoutes />
+      </MemoryRouter>,
+    );
+
+    await screen.findByRole("heading", { name: "Contexto provincial" });
+    const regionalSection = document.getElementById("contexto-provincial");
+    expect(regionalSection).not.toBeNull();
+    expect(regionalSection).toHaveTextContent(
+      "4 de 9 provincias con contratos registrados",
+    );
+    expect(
+      regionalSection!.querySelectorAll(".contract-context-list > li"),
+    ).toHaveLength(4);
+    expect(
+      within(regionalSection!).getByRole("link", {
+        name: "Ver la distribución completa",
+      }),
+    ).toHaveAttribute("href", "#distribucion-centros");
+  });
+
+  it("describes fail-closed zero employment results as validated relationships", async () => {
+    installResultsFetch({ links: [] });
+    render(
+      <MemoryRouter initialEntries={["/desde-fp/IFC03S"]}>
+        <AppRoutes />
+      </MemoryRouter>,
+    );
+
+    const emptyHeading = await screen.findByRole("heading", {
+      name: "Cómo buscar oportunidades ahora",
+    });
+    const emptyState = emptyHeading.closest(".status-panel");
+    expect(emptyState).not.toBeNull();
+    expect(emptyState).toHaveTextContent(
+      "0 ofertas con correspondencia validada",
+    );
+    expect(emptyState).toHaveTextContent(
+      "Solo mostramos relaciones revisadas para evitar coincidencias incorrectas.",
+    );
+    expect(document.querySelector(".decision-basis")).toHaveTextContent(
+      "0 ofertas con correspondencia validada",
+    );
+    expect(screen.queryAllByRole("article")).toHaveLength(0);
+  });
+
+  it("puts decision content before technical income evidence", async () => {
+    installResultsFetch();
+    render(
+      <MemoryRouter initialEntries={["/desde-fp/IFC03S"]}>
+        <AppRoutes />
+      </MemoryRouter>,
+    );
+
+    const outputsHeading = await screen.findByRole("heading", {
+      name: "Salidas profesionales oficiales",
+    });
+    const occupationHeading = screen.getByRole("heading", {
+      name: "Grupos de ocupación revisados para buscar ofertas",
+    });
+    const studyHeading = screen.getByRole("heading", {
+      name: "Dónde estudiar",
+    });
+    const outcomeHeading = screen.getByRole("heading", {
+      name: "Base de cotización observada de titulados",
+    });
+
+    expect(
+      outputsHeading.compareDocumentPosition(outcomeHeading) &
+        Node.DOCUMENT_POSITION_FOLLOWING,
+    ).toBeTruthy();
+    expect(
+      occupationHeading.compareDocumentPosition(outcomeHeading) &
+        Node.DOCUMENT_POSITION_FOLLOWING,
+    ).toBeTruthy();
+    expect(
+      studyHeading.compareDocumentPosition(outcomeHeading) &
+        Node.DOCUMENT_POSITION_FOLLOWING,
+    ).toBeTruthy();
   });
 
   it("does not load observed income until its accessible action is activated", async () => {
@@ -734,7 +846,7 @@ describe("TrainingResultsPage", () => {
     );
 
     await screen.findByText(
-      "No hay ofertas relacionadas en la copia de datos del 31 de julio de 2026.",
+      "0 ofertas con correspondencia validada en la copia de datos del 31 de julio de 2026.",
     );
     expect(screen.queryByText(/Filtro activo/)).not.toBeInTheDocument();
   });
@@ -808,7 +920,7 @@ describe("TrainingResultsPage", () => {
 
     expect(
       await screen.findByText(
-        "No hay ofertas relacionadas en la copia de datos del 31 de julio de 2026.",
+        "0 ofertas con correspondencia validada en la copia de datos del 31 de julio de 2026.",
       ),
     ).toBeVisible();
     expect(
@@ -837,7 +949,7 @@ describe("TrainingResultsPage", () => {
       "No se han podido actualizar los datos. Mostramos la última copia disponible.",
     );
     const emptyState = screen.getByText(
-      /No hay ofertas relacionadas en la copia de datos/,
+      /0 ofertas con correspondencia validada/,
     );
     expect(
       warning.compareDocumentPosition(emptyState) &
@@ -1052,9 +1164,7 @@ describe("TrainingResultsPage", () => {
     );
 
     expect(
-      await screen.findByText(
-        /No hay ofertas relacionadas en la copia de datos del/u,
-      ),
+      await screen.findByText(/0 ofertas con correspondencia validada/u),
     ).toBeVisible();
   });
 

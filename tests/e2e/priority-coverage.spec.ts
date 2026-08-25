@@ -76,7 +76,9 @@ for (const program of reviewedPrograms) {
       await expect(page.getByText(`CNO-11 ${code}`)).toBeVisible();
     }
     await expect(
-      page.getByText(/No hay ofertas relacionadas en la copia de datos del/u),
+      page
+        .locator(".status-panel")
+        .getByText(/0 ofertas con correspondencia validada/u),
     ).toBeVisible();
     await expect(
       page.getByText(/no hay (empleo|trabajo|puestos)/iu),

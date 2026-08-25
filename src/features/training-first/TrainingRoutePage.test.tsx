@@ -36,12 +36,14 @@ const offering = {
   teachingType: "public",
 } as const;
 
-function installFetch(): void {
+function installFetch({
+  address = center.address,
+}: { address?: string | null } = {}): void {
   const manifest = currentManifestFixture();
   const resources = new Map<string, unknown>([
     ["/data/v1/manifest.json", manifest],
     [manifest.resourceSnapshots.programs.resourcePath, [program]],
-    [manifest.resourceSnapshots.centers.resourcePath, [center]],
+    [manifest.resourceSnapshots.centers.resourcePath, [{ ...center, address }]],
     [manifest.resourceSnapshots.trainingOfferings.resourcePath, [offering]],
     [manifest.resourceSnapshots.jobOffers.resourcePath, []],
   ]);
@@ -97,8 +99,40 @@ describe("TrainingRoutePage", () => {
     );
     expect(screen.getByText("IES ALONSO DE MADRIGAL")).toBeVisible();
     expect(screen.getByText("Ávila · Presencial")).toBeVisible();
+    expect(screen.getByText(center.address)).toBeVisible();
+    const websiteLink = screen.getByRole("link", { name: /Web del centro/ });
+    expect(websiteLink).toHaveAttribute("href", center.website);
+    const mapsLink = screen.getByRole("link", { name: /Cómo llegar/ });
+    expect(mapsLink).toHaveAttribute(
+      "href",
+      "https://www.google.com/maps/search/?api=1&query=IES%20ALONSO%20DE%20MADRIGAL%2C%20C%2F%20Francisco%20de%20Vitoria%2C%20s%2Fn%2C%20%C3%81vila%2C%20%C3%81vila",
+    );
+    expect(mapsLink).toHaveAttribute("target", "_blank");
+    const actionSeparator = screen.getByText("·", {
+      selector: "span.center-card__action-separator",
+    });
+    expect(actionSeparator).toBeVisible();
+    expect(actionSeparator.previousElementSibling).toBe(websiteLink);
+    expect(actionSeparator.nextElementSibling).toBe(mapsLink);
+  });
+
+  it("keeps the Maps action usable when the official address is not published", async () => {
+    installFetch({ address: null });
+    render(
+      <MemoryRouter initialEntries={["/formacion/IFC03S"]}>
+        <AppRoutes />
+      </MemoryRouter>,
+    );
+
     expect(
-      screen.getByRole("link", { name: /Web del centro/ }),
-    ).toHaveAttribute("href", center.website);
+      await screen.findByRole("heading", {
+        name: "Dónde estudiar Desarrollo de Aplicaciones Web",
+      }),
+    ).toBeVisible();
+    expect(screen.queryByText(center.address)).not.toBeInTheDocument();
+    expect(screen.getByRole("link", { name: /Cómo llegar/ })).toHaveAttribute(
+      "href",
+      "https://www.google.com/maps/search/?api=1&query=IES%20ALONSO%20DE%20MADRIGAL%2C%20%C3%81vila%2C%20%C3%81vila",
+    );
   });
 });

@@ -16,7 +16,7 @@ const occupation = {
   classificationSystem: "CNO-11",
   classificationCode: "2713",
   reviewStatus: "approved",
-  sourceUrl: "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+  sourceUrl: "https://www.boe.es/eli/es/rd/2010/11/26/1591",
   reviewedAt: "2026-08-04",
   catalogVersion: "1.0.0",
 } as const;
@@ -182,6 +182,9 @@ function installFetch({
       },
       officialOccupations: {
         ...snapshot,
+        sourceId: "boe-cno11-complete-occupation-catalog",
+        sourceUrl: occupation.sourceUrl,
+        sourceUpdatedAt: null,
         resourcePath: "/data/v1/snapshots/build-1/official-occupations.json",
       },
       occupationAliases: {
@@ -342,13 +345,47 @@ describe("occupation-first results", () => {
       "aria-labelledby",
       "occupation-results-heading",
     );
+    const header = pageHeading.closest("header");
+    if (header === null) throw new Error("Expected the occupation header.");
+    expect(
+      within(header).getByRole("link", {
+        name: /Fuente: catálogo CNO-11/u,
+      }),
+    ).toHaveAttribute("href", occupation.sourceUrl);
+    expect(
+      within(header).getByText("Catálogo comprobado el 5 de agosto de 2026"),
+    ).toBeVisible();
     expect(screen.getByText(/Ocupación que quieres/)).toHaveTextContent(
       /FP que te lleva a ella/,
     );
-    const routeSummary = screen.getByLabelText("Resumen de rutas formativas");
+    const routeSummary = screen.getByLabelText(
+      "Resumen de disponibilidad de FP",
+    );
     expect(routeSummary).toHaveTextContent(/FP relacionadas2/);
     expect(routeSummary).toHaveTextContent(/Centros3/);
     expect(routeSummary).toHaveTextContent(/Provincias3/);
+    expect(within(routeSummary).getByText("centros publicados")).toBeVisible();
+    expect(
+      within(routeSummary).getByText("centros en provincias"),
+    ).toBeVisible();
+    expect(
+      within(routeSummary).queryByText("provincias con oferta"),
+    ).not.toBeInTheDocument();
+    const fpSourceLinks = within(routeSummary).getAllByRole("link", {
+      name: /Fuente: oferta FP JCyL/u,
+    });
+    expect(fpSourceLinks).toHaveLength(2);
+    for (const fpSourceLink of fpSourceLinks) {
+      expect(fpSourceLink).toHaveAttribute(
+        "href",
+        "https://analisis.datosabiertos.jcyl.es/records",
+      );
+    }
+    expect(
+      within(routeSummary).queryByRole("link", {
+        name: /Fuente: catálogo CNO-11/u,
+      }),
+    ).not.toBeInTheDocument();
     const cards = screen.getAllByTestId("training-route-card");
     expect(
       within(cards[0]).getByText("Salida profesional oficial"),
@@ -368,7 +405,7 @@ describe("occupation-first results", () => {
     expect(
       screen.getAllByRole("heading", {
         level: 4,
-        name: "Oferta formativa en Castilla y León",
+        name: "Centros formativos en Castilla y León",
       }),
     ).toHaveLength(2);
     expect(screen.getByText(/Oferta FP JCyL: copia del/u)).toBeVisible();
@@ -461,18 +498,60 @@ describe("occupation-first results", () => {
 
     expect(
       await screen.findByRole("heading", {
-        name: "Qué rutas hemos podido comprobar",
+        name: "Disponibilidad de FP",
       }),
     ).toBeVisible();
+    const routeSummary = screen.getByLabelText(
+      "Resumen de disponibilidad de FP",
+    );
     expect(
       screen.getByRole("link", { name: /Fuente: relación FP-ocupación/u }),
     ).toHaveAttribute("target", "_blank");
-    expect(
-      screen.getByRole("link", { name: /Fuente: oferta FP JCyL/u }),
-    ).toHaveAttribute("target", "_blank");
+    const fpSourceLinks = within(routeSummary).getAllByRole("link", {
+      name: /Fuente: oferta FP JCyL/u,
+    });
+    expect(fpSourceLinks).toHaveLength(2);
+    for (const fpSourceLink of fpSourceLinks) {
+      expect(fpSourceLink).toHaveAttribute("target", "_blank");
+    }
     expect(
       screen.getByRole("link", { name: /Fuente: catálogo CNO-11/u }),
-    ).toHaveAttribute("target", "_blank");
+    ).toHaveAttribute("href", occupation.sourceUrl);
+  });
+
+  it("separates FP availability from SEPE labour-market evidence", async () => {
+    installFetch({ sepeResource: [sepeRecord] });
+    render(
+      <MemoryRouter
+        initialEntries={[`/desde-ocupacion/${occupation.occupationId}`]}
+      >
+        <AppRoutes />
+      </MemoryRouter>,
+    );
+
+    expect(
+      await screen.findByRole("heading", {
+        level: 2,
+        name: "Disponibilidad de FP",
+      }),
+    ).toBeVisible();
+    expect(
+      screen.getByRole("heading", {
+        level: 2,
+        name: "Mercado laboral de esta ocupación",
+      }),
+    ).toBeVisible();
+
+    const marketEvidence = screen.getByRole("region", {
+      name: "Mercado laboral de esta ocupación",
+    });
+    expect(
+      await within(marketEvidence).findByRole("link", {
+        name: /Fuente oficial SEPE/u,
+      }),
+    ).toBeVisible();
+    expect(marketEvidence).toHaveTextContent("Contratos registrados");
+    expect(marketEvidence).toHaveTextContent("Paro registrado");
   });
 
   it("warns when the official training snapshot is stale", async () => {
