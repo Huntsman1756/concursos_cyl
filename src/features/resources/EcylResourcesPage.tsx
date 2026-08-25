@@ -95,8 +95,24 @@ function displayCourseDate(value: string | null): string {
   return displayDate(value) ?? MISSING_COURSE_METADATA;
 }
 
+function displayCourseDuration(value: number | null): string {
+  return value === null ? MISSING_COURSE_METADATA : `${value} h`;
+}
+
 function displayCourseAudience(audience: readonly string[]): string {
   return audience.length > 0 ? audience.join(", ") : MISSING_COURSE_METADATA;
+}
+
+function missingCourseSummary(course: EcylCourse): string | null {
+  const missing = [
+    course.startDate === null ? "fecha de inicio" : null,
+    course.applicationDeadline === null ? "plazo de inscripción" : null,
+    course.endDate === null ? "fecha de fin" : null,
+    course.requirements === null ? "requisitos" : null,
+  ].filter((label): label is string => label !== null);
+  return missing.length === 0
+    ? null
+    : `Datos no publicados: ${missing.join(", ")}.`;
 }
 
 export function EcylResourcesPage() {
@@ -340,66 +356,85 @@ export function EcylResourcesPage() {
                         Identificador ECYL: {course.id}
                       </p>
                       <h3>{readableOfficialTitle(course.title)}</h3>
-                      <dl className="resource-card__metadata">
-                        <div>
-                          <dt>Modalidad</dt>
-                          <dd>{displayCourseText(course.modality)}</dd>
-                        </div>
-                        <div>
-                          <dt>Localidad</dt>
-                          <dd>{displayCourseText(course.locality)}</dd>
-                        </div>
-                        <div>
-                          <dt>Plazo de inscripción</dt>
-                          <dd>
-                            {displayCourseDate(course.applicationDeadline)}
-                          </dd>
-                        </div>
-                        <div>
-                          <dt>Inicio</dt>
-                          <dd>{displayCourseDate(course.startDate)}</dd>
-                        </div>
-                        <div>
-                          <dt>Fin</dt>
-                          <dd>{displayCourseDate(course.endDate)}</dd>
-                        </div>
-                        <div>
-                          <dt>Duración</dt>
-                          <dd>
-                            {course.durationHours === null
-                              ? MISSING_COURSE_METADATA
-                              : `${course.durationHours} h`}
-                          </dd>
-                        </div>
-                        <div>
-                          <dt>Materia</dt>
-                          <dd>{displayCourseText(course.subject)}</dd>
-                        </div>
-                        <div>
-                          <dt>Destinatarios</dt>
-                          <dd>{displayCourseAudience(course.audience)}</dd>
-                        </div>
-                        <div>
-                          <dt>Requisitos</dt>
-                          <dd>{displayCourseText(course.requirements)}</dd>
-                        </div>
-                        <div>
-                          <dt>Inscripción</dt>
-                          <dd>{displayCourseText(course.registration)}</dd>
-                        </div>
-                        <div>
-                          <dt>Lugar</dt>
-                          <dd>{displayCourseText(course.venue)}</dd>
-                        </div>
-                        <div>
-                          <dt>Plazas</dt>
-                          <dd>
-                            {course.places === null
-                              ? MISSING_COURSE_METADATA
-                              : `${course.places} ${course.places === 1 ? "plaza" : "plazas"}`}
-                          </dd>
-                        </div>
-                      </dl>
+                      <p className="resource-card__summary">
+                        {displayCourseText(course.locality)} ·{" "}
+                        {displayCourseText(course.modality)}
+                      </p>
+                      <p className="resource-card__summary">
+                        {displayCourseText(course.subject)} ·{" "}
+                        {displayCourseDuration(course.durationHours)}
+                      </p>
+                      {course.startDate !== null && (
+                        <p className="resource-card__summary">
+                          Inicio: {displayCourseDate(course.startDate)}
+                        </p>
+                      )}
+                      {missingCourseSummary(course) !== null && (
+                        <p className="resource-card__missing">
+                          {missingCourseSummary(course)}
+                        </p>
+                      )}
+                      <details className="resource-card__details">
+                        <summary>Ver todos los datos publicados</summary>
+                        <dl className="resource-card__metadata">
+                          <div>
+                            <dt>Modalidad</dt>
+                            <dd>{displayCourseText(course.modality)}</dd>
+                          </div>
+                          <div>
+                            <dt>Localidad</dt>
+                            <dd>{displayCourseText(course.locality)}</dd>
+                          </div>
+                          <div>
+                            <dt>Plazo de inscripción</dt>
+                            <dd>
+                              {displayCourseDate(course.applicationDeadline)}
+                            </dd>
+                          </div>
+                          <div>
+                            <dt>Inicio</dt>
+                            <dd>{displayCourseDate(course.startDate)}</dd>
+                          </div>
+                          <div>
+                            <dt>Fin</dt>
+                            <dd>{displayCourseDate(course.endDate)}</dd>
+                          </div>
+                          <div>
+                            <dt>Duración</dt>
+                            <dd>
+                              {displayCourseDuration(course.durationHours)}
+                            </dd>
+                          </div>
+                          <div>
+                            <dt>Materia</dt>
+                            <dd>{displayCourseText(course.subject)}</dd>
+                          </div>
+                          <div>
+                            <dt>Destinatarios</dt>
+                            <dd>{displayCourseAudience(course.audience)}</dd>
+                          </div>
+                          <div>
+                            <dt>Requisitos</dt>
+                            <dd>{displayCourseText(course.requirements)}</dd>
+                          </div>
+                          <div>
+                            <dt>Inscripción</dt>
+                            <dd>{displayCourseText(course.registration)}</dd>
+                          </div>
+                          <div>
+                            <dt>Lugar</dt>
+                            <dd>{displayCourseText(course.venue)}</dd>
+                          </div>
+                          <div>
+                            <dt>Plazas</dt>
+                            <dd>
+                              {course.places === null
+                                ? MISSING_COURSE_METADATA
+                                : `${course.places} ${course.places === 1 ? "plaza" : "plazas"}`}
+                            </dd>
+                          </div>
+                        </dl>
+                      </details>
                       <ExternalLink href={course.officialUrl}>
                         Ver ficha oficial
                       </ExternalLink>

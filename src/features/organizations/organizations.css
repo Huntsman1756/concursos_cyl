@@ -1,4 +1,36 @@
-@import "../accessibility/accessibility.css";
+.organizations-page {
+  display: grid;
+  gap: var(--space-8);
+  max-width: 72rem;
+  margin: 0 auto;
+}
+
+.support-page-intro {
+  max-width: 52rem;
+}
+
+.support-page-intro__eyebrow,
+.organizations-audience__label {
+  margin: 0 0 var(--space-2);
+  color: var(--color-primary);
+  font-size: 0.82rem;
+  font-weight: 750;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.support-page-intro h1 {
+  margin: 0;
+  font-size: clamp(2.2rem, 5vw, 4rem);
+  line-height: 1.02;
+  text-wrap: balance;
+}
+
+.support-page-intro > p:last-child {
+  color: var(--color-text-muted);
+  font-size: 1.08rem;
+  line-height: 1.65;
+}
 
 .organizations-audiences {
   display: grid;

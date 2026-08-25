@@ -538,6 +538,10 @@ describe("TrainingResultsPage", () => {
     const sectionNavigation = screen.getByRole("navigation", {
       name: "Secciones del resultado",
     });
+    expect(sectionNavigation.querySelector("a")).toHaveAttribute(
+      "href",
+      "#donde-estudiar",
+    );
     expect(
       within(sectionNavigation).getByRole("link", {
         name: "Base de cotización",

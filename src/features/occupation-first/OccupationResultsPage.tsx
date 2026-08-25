@@ -179,6 +179,13 @@ export function OccupationResultsPage() {
         SourceSnapshot & { resourcePath: string }
       >
     >;
+  const occupationSnapshot = resourceSnapshots.officialOccupations;
+  const occupationSourceUrl =
+    occupationSnapshot?.sourceUrl ?? occupation.sourceUrl;
+  const occupationEvidenceDate =
+    occupationSnapshot?.sourceUpdatedAt ??
+    occupationSnapshot?.snapshotFetchedAt ??
+    occupation.reviewedAt;
   const relationshipSnapshot = resourceSnapshots.trainingOccupationLinks;
   const relationshipSourceUrl =
     orderedLinks[0]?.sourceUrl ?? relationshipSnapshot?.sourceUrl;
@@ -216,6 +223,14 @@ export function OccupationResultsPage() {
         </p>
         <h1 id="occupation-results-heading">{occupation.preferredLabel}</h1>
         <p>CNO-11 {occupation.classificationCode}</p>
+        <p className="result-summary__source">
+          <ExternalLink href={occupationSourceUrl}>
+            Fuente: catálogo CNO-11 (BOE)
+          </ExternalLink>
+          <time dateTime={occupationEvidenceDate}>
+            Catálogo comprobado el {spanishDate(occupationEvidenceDate)}
+          </time>
+        </p>
       </header>
       <p className="decision-direction">
         Ocupación que quieres <span aria-hidden="true">→</span> FP que te lleva

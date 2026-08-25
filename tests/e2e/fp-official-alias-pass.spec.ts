@@ -71,7 +71,9 @@ for (const program of results.programs) {
 
     if (fallbackOfferIds.length === 0) {
       await expect(
-        page.getByText(/No hay ofertas relacionadas en la copia de datos del/u),
+        page
+          .locator(".status-panel")
+          .getByText(/0 ofertas con correspondencia validada/u),
       ).toBeVisible();
     }
 

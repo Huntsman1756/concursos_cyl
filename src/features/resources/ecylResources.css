@@ -119,6 +119,13 @@
   margin: 0.35rem 0;
   color: #514c48;
 }
+.resource-card__summary,
+.resource-card__missing {
+  margin: 0.25rem 0;
+}
+.resource-card__missing {
+  font-size: 0.85rem;
+}
 .resource-card a {
   display: inline-block;
   margin-top: 0.55rem;
@@ -131,6 +138,17 @@
   font-weight: 750;
   text-transform: uppercase;
   letter-spacing: 0.03em;
+}
+.resource-card__details {
+  margin-top: 0.75rem;
+}
+.resource-card__details summary {
+  color: var(--color-primary);
+  font-weight: 700;
+  cursor: pointer;
+}
+.resource-card__details[open] summary {
+  margin-bottom: 0.75rem;
 }
 .resource-card__metadata {
   display: grid;

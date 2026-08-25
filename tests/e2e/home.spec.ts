@@ -347,7 +347,7 @@ test("the training-first journey keeps the live zero-match snapshot honest and a
   );
   await expect(
     page.getByText(
-      `No hay ofertas relacionadas en la copia de datos del ${expectedDate}.`,
+      `0 ofertas con correspondencia validada en la copia de datos del ${expectedDate}.`,
     ),
   ).toBeVisible();
   await expect(page.getByText(/compatibilidad|porcentaje|%/iu)).toHaveCount(0);

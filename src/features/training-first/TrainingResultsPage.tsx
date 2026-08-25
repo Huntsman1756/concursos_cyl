@@ -477,6 +477,7 @@ export function TrainingResultsPage() {
   const offersEvidenceDate = evidenceDate(offersSnapshot);
   const offeringsEvidenceDate = evidenceDate(offeringsSnapshot);
   const sectionNavigationLinks = [
+    { href: "#donde-estudiar", label: "Dónde estudiar" },
     { href: "#salidas-profesionales", label: "Salidas profesionales" },
     ...(resolvedOccupations.length === 0
       ? []
@@ -484,7 +485,6 @@ export function TrainingResultsPage() {
     ...(hasApprovedRelationship && orderedMatches.length > 0
       ? [{ href: "#ofertas-relacionadas", label: "Ofertas relacionadas" }]
       : []),
-    { href: "#donde-estudiar", label: "Dónde estudiar" },
     { href: "#base-cotizacion-observada", label: "Base de cotización" },
     { href: "#contexto-provincial", label: "Contexto provincial" },
     ...(educationCenterDirectorySnapshot === undefined

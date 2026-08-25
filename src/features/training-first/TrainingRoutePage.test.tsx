@@ -100,15 +100,20 @@ describe("TrainingRoutePage", () => {
     expect(screen.getByText("IES ALONSO DE MADRIGAL")).toBeVisible();
     expect(screen.getByText("Ávila · Presencial")).toBeVisible();
     expect(screen.getByText(center.address)).toBeVisible();
-    expect(
-      screen.getByRole("link", { name: /Web del centro/ }),
-    ).toHaveAttribute("href", center.website);
+    const websiteLink = screen.getByRole("link", { name: /Web del centro/ });
+    expect(websiteLink).toHaveAttribute("href", center.website);
     const mapsLink = screen.getByRole("link", { name: /Cómo llegar/ });
     expect(mapsLink).toHaveAttribute(
       "href",
       "https://www.google.com/maps/search/?api=1&query=IES%20ALONSO%20DE%20MADRIGAL%2C%20C%2F%20Francisco%20de%20Vitoria%2C%20s%2Fn%2C%20%C3%81vila%2C%20%C3%81vila",
     );
     expect(mapsLink).toHaveAttribute("target", "_blank");
+    const actionSeparator = screen.getByText("·", {
+      selector: "span.center-card__action-separator",
+    });
+    expect(actionSeparator).toBeVisible();
+    expect(actionSeparator.previousElementSibling).toBe(websiteLink);
+    expect(actionSeparator.nextElementSibling).toBe(mapsLink);
   });
 
   it("keeps the Maps action usable when the official address is not published", async () => {

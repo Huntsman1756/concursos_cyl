@@ -192,7 +192,27 @@ describe("EcylResourcesPage", () => {
     expect(screen.getByText("1 de 1 resultados")).toBeVisible();
   });
 
+  it("keeps course identity and primary published fields visible while details stay collapsed", async () => {
+    renderResources();
+
+    const heading = await screen.findByRole("heading", {
+      level: 3,
+      name: "Curso de prueba",
+    });
+    const card = heading.closest("article");
+    if (card === null) throw new Error("Expected the course card.");
+
+    expect(screen.getByText("Identificador ECYL: course-001")).toBeVisible();
+    expect(within(card).getByText("León · Presencial")).toBeVisible();
+    expect(within(card).getByText("Administración · 100 h")).toBeVisible();
+    const summary = within(card).getByText("Ver todos los datos publicados");
+    const details = summary.closest("details");
+    if (details === null) throw new Error("Expected a metadata disclosure.");
+    expect(details).not.toHaveAttribute("open");
+  });
+
   it("shows an explicit value for every missing course metadata field", async () => {
+    const user = userEvent.setup();
     renderResources({
       courses: [
         course({
@@ -221,6 +241,14 @@ describe("EcylResourcesPage", () => {
     const card = heading.closest("article");
     if (card === null) throw new Error("Expected the course card.");
 
+    const summary = within(card).getByText("Ver todos los datos publicados");
+    const details = summary.closest("details");
+    if (details === null) throw new Error("Expected a metadata disclosure.");
+    expect(details).not.toHaveAttribute("open");
+    expect(within(card).getByText(/Datos no publicados:/u)).toHaveTextContent(
+      "Datos no publicados: fecha de inicio, plazo de inscripción, fecha de fin, requisitos.",
+    );
+
     for (const label of [
       "Modalidad",
       "Localidad",
@@ -235,7 +263,7 @@ describe("EcylResourcesPage", () => {
       "Lugar",
       "Plazas",
     ]) {
-      const matchingRow = [...card.querySelectorAll("div")].find(
+      const matchingRow = [...details.querySelectorAll("div")].find(
         (candidate) => candidate.querySelector("dt")?.textContent === label,
       );
       if (matchingRow === undefined) {
@@ -243,6 +271,12 @@ describe("EcylResourcesPage", () => {
       }
       expect(matchingRow).toHaveTextContent("No publicado en la ficha");
     }
+
+    await user.click(summary);
+    expect(details).toHaveAttribute("open");
+    expect(
+      within(details).getAllByText("No publicado en la ficha"),
+    ).toHaveLength(12);
   });
 
   it("keeps duplicate course titles distinguishable with their stable identifiers and links", async () => {

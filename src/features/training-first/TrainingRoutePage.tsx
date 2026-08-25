@@ -168,9 +168,19 @@ export function TrainingRoutePage() {
                   <p>{center.address}</p>
                 )}
                 {center?.website !== null && center?.website !== undefined && (
-                  <ExternalLink href={center.website}>
-                    Web del centro
-                  </ExternalLink>
+                  <>
+                    <ExternalLink href={center.website}>
+                      Web del centro
+                    </ExternalLink>
+                    {mapsUrl !== null && (
+                      <span
+                        className="center-card__action-separator"
+                        aria-hidden="true"
+                      >
+                        {" · "}
+                      </span>
+                    )}
+                  </>
                 )}
                 {mapsUrl !== null && (
                   <ExternalLink href={mapsUrl}>Cómo llegar</ExternalLink>

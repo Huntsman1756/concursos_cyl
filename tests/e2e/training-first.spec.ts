@@ -468,7 +468,7 @@ test("live DAW results name the dated zero-match snapshot without claiming there
 
   await expect(
     page.getByText(
-      `No hay ofertas relacionadas en la copia de datos del ${snapshotDate}.`,
+      `0 ofertas con correspondencia validada en la copia de datos del ${snapshotDate}.`,
     ),
   ).toBeVisible();
   await expect(page.getByText(/no hay (empleo|trabajo|puestos)/iu)).toHaveCount(
@@ -500,7 +500,9 @@ test("COM01M exposes seven reviewed groups without inventing current offers", as
     }),
   ).toBeVisible();
   await expect(
-    page.getByText(/No hay ofertas relacionadas en la copia de datos del/u),
+    page
+      .locator(".status-panel")
+      .getByText(/0 ofertas con correspondencia validada/u),
   ).toBeVisible();
   await expectNoHorizontalOverflow(page);
   await expectStrictAxe(page);

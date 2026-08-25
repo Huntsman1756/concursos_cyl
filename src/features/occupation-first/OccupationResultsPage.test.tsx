@@ -16,7 +16,7 @@ const occupation = {
   classificationSystem: "CNO-11",
   classificationCode: "2713",
   reviewStatus: "approved",
-  sourceUrl: "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+  sourceUrl: "https://www.boe.es/eli/es/rd/2010/11/26/1591",
   reviewedAt: "2026-08-04",
   catalogVersion: "1.0.0",
 } as const;
@@ -182,6 +182,9 @@ function installFetch({
       },
       officialOccupations: {
         ...snapshot,
+        sourceId: "boe-cno11-complete-occupation-catalog",
+        sourceUrl: occupation.sourceUrl,
+        sourceUpdatedAt: null,
         resourcePath: "/data/v1/snapshots/build-1/official-occupations.json",
       },
       occupationAliases: {
@@ -342,6 +345,16 @@ describe("occupation-first results", () => {
       "aria-labelledby",
       "occupation-results-heading",
     );
+    const header = pageHeading.closest("header");
+    if (header === null) throw new Error("Expected the occupation header.");
+    expect(
+      within(header).getByRole("link", {
+        name: /Fuente: catálogo CNO-11/u,
+      }),
+    ).toHaveAttribute("href", occupation.sourceUrl);
+    expect(
+      within(header).getByText("Catálogo comprobado el 5 de agosto de 2026"),
+    ).toBeVisible();
     expect(screen.getByText(/Ocupación que quieres/)).toHaveTextContent(
       /FP que te lleva a ella/,
     );
@@ -357,6 +370,21 @@ describe("occupation-first results", () => {
     ).toBeVisible();
     expect(
       within(routeSummary).queryByText("provincias con oferta"),
+    ).not.toBeInTheDocument();
+    const fpSourceLinks = within(routeSummary).getAllByRole("link", {
+      name: /Fuente: oferta FP JCyL/u,
+    });
+    expect(fpSourceLinks).toHaveLength(2);
+    for (const fpSourceLink of fpSourceLinks) {
+      expect(fpSourceLink).toHaveAttribute(
+        "href",
+        "https://analisis.datosabiertos.jcyl.es/records",
+      );
+    }
+    expect(
+      within(routeSummary).queryByRole("link", {
+        name: /Fuente: catálogo CNO-11/u,
+      }),
     ).not.toBeInTheDocument();
     const cards = screen.getAllByTestId("training-route-card");
     expect(
@@ -487,8 +515,8 @@ describe("occupation-first results", () => {
       expect(fpSourceLink).toHaveAttribute("target", "_blank");
     }
     expect(
-      screen.queryByRole("link", { name: /Fuente: catálogo CNO-11/u }),
-    ).not.toBeInTheDocument();
+      screen.getByRole("link", { name: /Fuente: catálogo CNO-11/u }),
+    ).toHaveAttribute("href", occupation.sourceUrl);
   });
 
   it("separates FP availability from SEPE labour-market evidence", async () => {
