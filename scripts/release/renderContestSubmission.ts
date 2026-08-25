@@ -59,6 +59,7 @@ const DOCUMENT_NAMES = [
 ] as const;
 const OUTPUT_DIRECTORY = path.join("docs", "contest");
 const ROOT_URL = "https://salida-cyl.157-90-22-40.sslip.io/";
+const FALLBACK_URL = "https://huntsman1756.github.io/concursos_cyl/";
 const CONTEST_URL =
   "https://datosabiertos.jcyl.es/web/es/concurso-datos-abiertos/concurso-datos-abiertos.html";
 const REGISTRATION_URL =
@@ -376,14 +377,18 @@ function renderSubmissionChecklist(
 ## Campos técnicos
 
 - URL raíz a presentar: [${ROOT_URL}](${ROOT_URL})
+- Fallback verificada: [${FALLBACK_URL}](${FALLBACK_URL})
 - Commit fuente del freeze: \`${freeze.sourceCommitSha}\`.
 - Snapshot: \`${freeze.manifest.snapshotId}\`.
 - Commit desplegado: ${deploymentCommit}.
 - Run del workflow: ${workflowRun}.
 ${releaseTraceability}${versionJsonTraceability}- Evidencia visual: ${visualEvidenceLine}
 
-## Gate final
+## Evidencia visual y gate final
 
+- [ ] Ejecutar la captura nativa OS A4 en un Mac desbloqueado.
+- [ ] Revisar la aplicación pública del release actual en contexto anónimo, incluyendo las rutas de FP, ocupación y comparador.
+- [ ] Conservar solo capturas actuales, sin datos personales ni credenciales; las 13 capturas existentes son históricas.
 ${releaseGate}
 ${deploymentGate}
 ${capturesReviewGate}
@@ -391,6 +396,8 @@ ${figuresConfirmationGate}
 - [ ] Obtener aprobación humana explícita para la solicitud externa.
 
 **PENDIENTE DE APROBACIÓN HUMANA:** este repositorio no envía la solicitud al concurso ni decide los campos de identidad, contacto, declaraciones o consentimiento.
+
+Cualquier cambio posterior debe seguir el flujo rama de trabajo → PR → checks → revisión/aprobación → merge a \`main\` → GitHub Pages.
 `;
 }
 

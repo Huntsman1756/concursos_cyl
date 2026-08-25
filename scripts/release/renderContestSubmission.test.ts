@@ -222,6 +222,9 @@ describe("contest submission renderer", () => {
       "Release: `v2026.08.22`",
     );
     expect(rendered["submission-checklist.md"]).toContain(
+      "https://huntsman1756.github.io/concursos_cyl/",
+    );
+    expect(rendered["submission-checklist.md"]).toContain(
       "https://huntsman1756.github.io/concursos_cyl/version.json",
     );
     expect(rendered["submission-checklist.md"]).toContain(
@@ -232,6 +235,12 @@ describe("contest submission renderer", () => {
     );
     expect(rendered["submission-checklist.md"]).toContain(
       "captura visual actual pendiente; las 13 capturas anteriores son históricas",
+    );
+    expect(rendered["submission-checklist.md"]).toContain(
+      "Ejecutar la captura nativa OS A4 en un Mac desbloqueado",
+    );
+    expect(rendered["submission-checklist.md"]).toContain(
+      "rama de trabajo → PR → checks → revisión/aprobación → merge a `main` → GitHub Pages",
     );
   });
 
