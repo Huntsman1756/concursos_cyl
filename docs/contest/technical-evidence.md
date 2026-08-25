@@ -85,5 +85,4 @@ La revisión independiente confirmó el manifest, sus 21 recursos, los conjuntos
 - Release: `v2026.08.22`.
 - `version.json` observado: [respuesta pública](https://huntsman1756.github.io/concursos_cyl/version.json) con commit `f55de804cc94b5d928484e846b933a9dea94b7d0`.
 
-
 El release público se verificó con el commit `f55de804cc94b5d928484e846b933a9dea94b7d0` y el run `32597524256` el 2026-08-25T04:35:12Z.

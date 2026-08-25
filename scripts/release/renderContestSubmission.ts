@@ -161,7 +161,7 @@ function renderTechnicalEvidence(
     deployment.versionJsonCommitSha === null ||
     deployment.versionJsonCommitSha === undefined
       ? ""
-      : `\n- \`version.json\` observado: [respuesta pública](${deployment.versionJsonUrl}) con commit \`${deployment.versionJsonCommitSha}\`.\n`;
+      : `\n- \`version.json\` observado: [respuesta pública](${deployment.versionJsonUrl}) con commit \`${deployment.versionJsonCommitSha}\`.`;
   return `# Evidencia técnica
 
 ## Freeze de cobertura
