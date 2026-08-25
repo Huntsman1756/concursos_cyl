@@ -349,6 +349,8 @@ describe("occupation-first results", () => {
       "Resumen de disponibilidad de FP",
     );
     expect(routeSummary).toHaveTextContent(/FP relacionadas2/);
+    expect(routeSummary).toHaveTextContent(/Centros3/);
+    expect(routeSummary).toHaveTextContent(/Provincias3/);
     expect(within(routeSummary).getByText("centros publicados")).toBeVisible();
     expect(
       within(routeSummary).getByText("centros en provincias"),
