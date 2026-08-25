@@ -12,6 +12,7 @@ import {
   loadManifest,
 } from "../../data/generatedDataClient";
 import { ExternalLink } from "../../components/ExternalLink";
+import { buildGoogleMapsSearchUrl } from "../../domain/mapsUrl";
 import { trainingLevelLabel } from "../../domain/trainingPresentation";
 import { useRouteReady } from "../../app/RouteReadyContext";
 
@@ -148,6 +149,12 @@ export function TrainingRoutePage() {
               "centerName" in offering
                 ? offering.centerName
                 : (center?.centerName ?? offering.centerCode);
+            const mapsUrl = buildGoogleMapsSearchUrl([
+              centerName,
+              center?.address ?? "",
+              center?.locality ?? offering.locality,
+              center?.province ?? offering.province,
+            ]);
             return (
               <li
                 className="center-card"
@@ -164,6 +171,9 @@ export function TrainingRoutePage() {
                   <ExternalLink href={center.website}>
                     Web del centro
                   </ExternalLink>
+                )}
+                {mapsUrl !== null && (
+                  <ExternalLink href={mapsUrl}>Cómo llegar</ExternalLink>
                 )}
               </li>
             );
