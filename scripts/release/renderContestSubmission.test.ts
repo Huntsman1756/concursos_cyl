@@ -105,6 +105,12 @@ describe("contest submission renderer", () => {
     expect(rendered["submission-checklist.md"]).toContain(
       "- [ ] Confirmar que las cifras visibles siguen coincidiendo",
     );
+    expect(rendered["submission-checklist.md"]).toContain(
+      "el manifiesto contiene capturas actuales ligadas al commit de publicación",
+    );
+    expect(rendered["submission-checklist.md"]).not.toContain(
+      "las 13 capturas existentes son históricas",
+    );
   });
 
   it("marks captures as historical and leaves review gates unchecked when captureProductCommitSha differs", () => {

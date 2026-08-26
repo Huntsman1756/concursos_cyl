@@ -299,6 +299,9 @@ function renderSubmissionChecklist(
     deployment.versionJsonCommitSha === undefined
       ? ""
       : `- \`version.json\` verificado: [respuesta pública](${deployment.versionJsonUrl}) con commit igual a \`${deployment.versionJsonCommitSha}\`.\n`;
+  const captureInventoryLine = deployment.capturesAreCurrent
+    ? "el manifiesto contiene capturas actuales ligadas al commit de publicación."
+    : "las 13 capturas existentes son históricas.";
 
   let visualEvidenceLine: string;
   let capturesReviewGate: string;
@@ -388,7 +391,7 @@ ${releaseTraceability}${versionJsonTraceability}- Evidencia visual: ${visualEvid
 
 - [ ] Ejecutar la captura nativa OS A4 en un Mac desbloqueado.
 - [ ] Revisar la aplicación pública del release actual en contexto anónimo, incluyendo las rutas de FP, ocupación y comparador.
-- [ ] Conservar solo capturas actuales, sin datos personales ni credenciales; las 13 capturas existentes son históricas.
+- [ ] Conservar solo capturas actuales, sin datos personales ni credenciales; ${captureInventoryLine}
 ${releaseGate}
 ${deploymentGate}
 ${capturesReviewGate}
