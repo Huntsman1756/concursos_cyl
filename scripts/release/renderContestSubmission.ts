@@ -77,8 +77,7 @@ function renderTemporalReleaseStatus(
   candidatePlan: ContestCandidatePlan | undefined,
 ): string {
   if (candidatePlan === undefined) return "";
-  return `
-## Estado temporal de la candidatura
+  return `## Estado temporal de la candidatura
 
 - Baseline funcional verificada: commit \`${candidatePlan.baseline.commitSha}\`, release funcional de referencia \`${candidatePlan.baseline.releaseTag}\`.
 - Pages y VPS de la baseline: verificados con ese SHA; \`version.json\`: verificado y coincidente.
@@ -90,21 +89,18 @@ function renderTemporalReleaseStatus(
 - SHA final: **PENDIENTE HASTA EL MERGE**.
 - Pages/VPS finales: **PENDIENTES**.
 - \`version.json\` final: **PENDIENTE**.
-- A4 final sobre ese SHA: **PENDIENTE**.
-`;
+- A4 final sobre ese SHA: **PENDIENTE**.`;
 }
 
 function renderFinalCandidateChecklist(
   candidatePlan: ContestCandidatePlan | undefined,
 ): string {
   if (candidatePlan === undefined) return "";
-  return `
-## Release candidata final posterior al merge
+  return `## Release candidata final posterior al merge
 
 - [ ] Verificar Pages/VPS finales sobre el SHA real del merge.
 - [ ] Verificar \`version.json\` final tras la publicación de candidate.3.
-- [ ] Ejecutar A4 final sobre el SHA real de candidate.3.
-`;
+- [ ] Ejecutar A4 final sobre el SHA real de candidate.3.`;
 }
 
 function spanishInteger(value: number): string {
@@ -269,6 +265,7 @@ La revisión independiente confirmó el manifest, sus ${Object.keys(freeze.manif
 ${releaseTraceability}${versionJsonTraceability}
 
 ${deploymentNote}
+
 ${renderTemporalReleaseStatus(candidatePlan)}
 `;
 }
@@ -310,6 +307,7 @@ La representatividad de las tablas nacionales es la declarada por el Ministerio:
 Las rutas internas son recorridos de producto; la candidatura usa únicamente la raíz pública. La experiencia no requiere cuentas y no conserva selecciones, búsquedas, respuestas ni resultados. Solo recuerda en \`localStorage\` la preferencia no sensible del modo de búsqueda («desde FP» o «desde ocupación»). ${visualVerificationStatus}
 
 El objetivo de ampliar la cobertura está condicionado a evidencia: el freeze actual registra ${freeze.coverage.distinctQualificationCount} cualificaciones distintas y deja ${freeze.coverage.deferredProgramCount} programas diferidos. ${releaseStatus}
+
 ${renderTemporalReleaseStatus(candidatePlan)}
 `;
 }
@@ -422,7 +420,10 @@ function renderSubmissionChecklist(
       "`. (capturas históricas — recaptura pendiente)";
   }
 
-  const finalCandidateChecklist = renderFinalCandidateChecklist(candidatePlan);
+  const finalCandidateChecklist =
+    candidatePlan === undefined
+      ? ""
+      : `\n\n${renderFinalCandidateChecklist(candidatePlan)}`;
 
   return `# Checklist de presentación
 
@@ -458,8 +459,7 @@ ${releaseGate}
 ${deploymentGate}
 ${capturesReviewGate}
 ${figuresConfirmationGate}
-- [ ] Obtener aprobación humana explícita para la solicitud externa.
-${finalCandidateChecklist}
+- [ ] Obtener aprobación humana explícita para la solicitud externa.${finalCandidateChecklist}
 
 **PENDIENTE DE APROBACIÓN HUMANA:** este repositorio no envía la solicitud al concurso ni decide los campos de identidad, contacto, declaraciones o consentimiento.
 
