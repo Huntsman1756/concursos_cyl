@@ -116,6 +116,75 @@ describe("contest submission renderer", () => {
     );
   });
 
+  it("renders the verified baseline separately from the pending final candidate", () => {
+    const deployment = {
+      status: "verified",
+      commitSha: "5e4510ca230daaedf8e2a769d66781a2b319ef1b",
+      workflowRunId: "31338739210",
+      verifiedAt: "2026-08-09T22:21:22.5248634Z",
+      captureProductCommitSha: "5e4510ca230daaedf8e2a769d66781a2b319ef1b",
+      captureCount: 13,
+      capturesAreCurrent: true,
+      candidatePlan: {
+        baseline: {
+          status: "verified",
+          commitSha: "5e4510ca230daaedf8e2a769d66781a2b319ef1b",
+          releaseTag: "v2026.08.25-candidate.2",
+          pagesVpsStatus: "verified",
+          versionJsonStatus: "verified",
+          a4Status: "passed",
+          captureCount: 13,
+        },
+        documentaryBranch: "codex/final-candidature-coherence-20260826",
+        documentaryBaseHeadSha:
+          "25fc0f89097e107eb47c49b0a848ba822bc4cea1",
+        finalCandidate: {
+          status: "pending",
+          releaseTag: "v2026.08.26-candidate.3",
+          commitSha: null,
+          pagesVpsStatus: "pending",
+          versionJsonStatus: "pending",
+          a4Status: "pending",
+        },
+      },
+    } as ContestDeploymentEvidence;
+    const rendered = renderContestSubmission(freeze, deployment);
+
+    for (const name of [
+      "submission-checklist.md",
+      "technical-evidence.md",
+      "limitations.md",
+    ] as const) {
+      expect(rendered[name]).toContain("Baseline funcional verificada");
+      expect(rendered[name]).toContain("v2026.08.25-candidate.2");
+      expect(rendered[name]).toContain("Release candidata final: **PENDIENTE**");
+      expect(rendered[name]).toContain(
+        "Nombre previsto: `v2026.08.26-candidate.3`",
+      );
+      expect(rendered[name]).toContain(
+        "SHA final: **PENDIENTE HASTA EL MERGE**",
+      );
+      expect(rendered[name]).toContain("Pages/VPS finales: **PENDIENTES**");
+      expect(rendered[name]).toContain("`version.json` final: **PENDIENTE**");
+      expect(rendered[name]).toContain("A4 final sobre ese SHA: **PENDIENTE**");
+    }
+    expect(rendered["submission-checklist.md"]).toContain(
+      "Rama documental actual: `codex/final-candidature-coherence-20260826`",
+    );
+    expect(rendered["submission-checklist.md"]).toContain(
+      "HEAD documental de referencia antes de esta corrección: `25fc0f89097e107eb47c49b0a848ba822bc4cea1`",
+    );
+    expect(rendered["submission-checklist.md"]).toContain(
+      "- [ ] Verificar Pages/VPS finales sobre el SHA real del merge.",
+    );
+    expect(rendered["submission-checklist.md"]).toContain(
+      "- [ ] Ejecutar A4 final sobre el SHA real de candidate.3.",
+    );
+    expect(rendered["submission-checklist.md"]).not.toContain(
+      "Release candidata final: `v2026.08.25-candidate.2`",
+    );
+  });
+
   it("marks captures as historical and leaves review gates unchecked when captureProductCommitSha differs", () => {
     const deployment: ContestDeploymentEvidence = {
       status: "verified",
