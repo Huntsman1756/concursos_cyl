@@ -14,6 +14,20 @@ La representatividad de las tablas nacionales es la declarada por el Ministerio:
 
 ## Producto y release
 
-Las rutas internas son recorridos de producto; la candidatura usa únicamente la raíz pública. La experiencia no requiere cuentas y no conserva selecciones, búsquedas, respuestas ni resultados. Solo recuerda en `localStorage` la preferencia no sensible del modo de búsqueda («desde FP» o «desde ocupación»). La accesibilidad, el responsive y la semántica se deben confirmar de nuevo en la sesión de capturas finales.
+Las rutas internas son recorridos de producto; la candidatura usa únicamente la raíz pública. La experiencia no requiere cuentas y no conserva selecciones, búsquedas, respuestas ni resultados. Solo recuerda en `localStorage` la preferencia no sensible del modo de búsqueda («desde FP» o «desde ocupación»). La accesibilidad automatizada, el responsive y la semántica se comprobaron de nuevo durante la captura final.
 
-El objetivo de ampliar la cobertura está condicionado a evidencia: el freeze actual registra 113 cualificaciones distintas y deja 0 programas diferidos. El despliegue público está verificado para el commit `7355bb1c05aecd7452ec82333652d5070927947e`; la verificación de rutas y recursos queda registrada en `docs/contest/release-evidence.json`.
+El objetivo de ampliar la cobertura está condicionado a evidencia: el freeze actual registra 113 cualificaciones distintas y deja 0 programas diferidos. La baseline funcional está verificada para el commit `cab7a3b9dbdf8d2922506e9207242d537347d720`; la release candidata final posterior al merge permanece pendiente y la verificación de rutas y recursos queda registrada en `docs/contest/release-evidence.json`.
+
+## Estado temporal de la candidatura
+
+- Baseline funcional verificada: commit `cab7a3b9dbdf8d2922506e9207242d537347d720`, release funcional de referencia `v2026.08.25-candidate.2`.
+- Pages y VPS de la baseline: verificados con ese SHA; `version.json`: verificado y coincidente.
+- A4 de la baseline: 13/13 capturas PASS.
+- Rama documental actual: `codex/final-candidature-coherence-20260826`.
+- HEAD documental de referencia antes de esta corrección: `25fc0f89097e107eb47c49b0a848ba822bc4cea1`.
+- Release candidata final: **PENDIENTE**.
+- Nombre previsto: `v2026.08.26-candidate.3`.
+- SHA final: **PENDIENTE HASTA EL MERGE**.
+- Pages/VPS finales: **PENDIENTES**.
+- `version.json` final: **PENDIENTE**.
+- A4 final sobre ese SHA: **PENDIENTE**.

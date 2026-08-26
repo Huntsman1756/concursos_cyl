@@ -1,74 +1,51 @@
 # Memoria de candidatura: SALIDA CyL
 
-Candidatura al [X Concurso de Datos Abiertos de Castilla y León](https://datosabiertos.jcyl.es/web/es/concurso-datos-abiertos/concurso-datos-abiertos.html), categoría **Productos y Servicios**. Esta memoria responde por separado a los siete criterios de la categoría.
+Candidatura al [X Concurso de Datos Abiertos de Castilla y León](https://datosabiertos.jcyl.es/web/es/concurso-datos-abiertos/concurso-datos-abiertos.html), categoría **Productos y Servicios**.
 
 ## Resumen
 
-SALIDA CyL conecta Formación Profesional y ocupaciones en los dos sentidos. Una persona puede partir de un ciclo para consultar salidas y ofertas relacionadas, o partir de una ocupación para localizar la FP que conduce a ella. Cada relación publicada conserva fuente, fecha y límites. La consulta no requiere cuenta y el producto no crea perfiles.
+SALIDA CyL convierte datos públicos dispersos en una decisión formativa y laboral. Responde «¿en qué puedo trabajar con mi FP?» y «¿qué FP me lleva a esta ocupación?». La persona puede empezar en un ciclo o en una ocupación, consultar relaciones revisadas, contrastar ofertas de una instantánea y localizar centros, modalidades y contexto territorial. Cuando la evidencia no basta, la aplicación deja la relación pendiente y lo explica en lugar de inventarla.
+
+La baseline funcional verificada de esta memoria es el producto `cab7a3b9dbdf8d2922506e9207242d537347d720`, con la release funcional de referencia `v2026.08.25-candidate.2`. Pages y VPS devuelven ese mismo SHA en `version.json`. El paquete visual de la baseline está completo: 13/13 capturas recapturadas el 26 de agosto de 2026 desde un contexto anónimo y ligadas a ese commit.
+
+La candidatura final posterior al merge todavía no está publicada. Esta entrega documental se prepara en la rama `codex/final-candidature-coherence-20260826`, abierta desde el HEAD documental de referencia `25fc0f89097e107eb47c49b0a848ba822bc4cea1`. La release candidata final prevista es `v2026.08.26-candidate.3`; su SHA, Pages/VPS, `version.json` y A4 final quedan **PENDIENTES HASTA EL MERGE**.
 
 ## 1. Utilidad
 
-El producto responde a dos preguntas concretas: «¿en qué puedo trabajar con mi FP?» y «¿qué FP me lleva a esta ocupación?». Permite consultar 187 ciclos oficiales y 502 grupos primarios CNO-11. La ficha reúne salidas oficiales, relaciones revisadas, ofertas de la instantánea, centros, modalidades y contexto territorial, y separa la evidencia formativa de la demanda laboral.
+SALIDA CyL ordena una decisión que normalmente obliga a saltar entre FP, ocupaciones, empleo y centros. Permite consultar 187 ciclos oficiales y 502 grupos primarios CNO-11. La ficha separa salidas oficiales, relaciones FP-ocupación aprobadas, ofertas alcanzadas, centros y fuentes.
 
-La cobertura congelada contiene 113 cualificaciones distintas, 130 claves de modalidad y 264 relaciones FP-ocupación aprobadas. La cifra describe el conjunto revisado publicado, no el universo de relaciones posibles.
-
-La evidencia laboral específica del SEPE añade 116 de 116 grupos CNO consultados para `2026-07` (116 páginas publicadas y 0 respuestas explícitas de «sin documento»). Son contratos y paro registrado administrativos; la cobertura no equivale a vacantes, salario ni predicción individual.
+Dos recorridos muestran el valor en pocos segundos: [IFC02S, Desarrollo de Aplicaciones Multiplataforma](https://salida-cyl.157-90-22-40.sslip.io/desde-fp/IFC02S), lleva a la ocupación revisada CNO 3820; el recorrido inverso [Programadores informáticos, CNO 3820](https://salida-cyl.157-90-22-40.sslip.io/desde-ocupacion/occupation%3Acno11%3A3820) devuelve la FP relacionada. La cobertura congelada contiene 264 relaciones FP-ocupación, 113 cualificaciones distintas y 130 claves de modalidad. El SEPE aporta 116 de 116 páginas de ocupación consultadas para `2026-07`.
 
 ## 2. Valor económico
 
-SALIDA CyL reduce el tiempo necesario para localizar y contrastar información que suele estar repartida entre formación, empleo y estadísticas públicas. Permite comparar rutas formativas antes de invertir tiempo y dirige al centro, oferta o fuente oficial para continuar la decisión.
+El valor económico está en reducir el tiempo y la incertidumbre antes de elegir una matrícula, desplazamiento o ruta profesional. La aplicación reúne en una misma decisión la formación disponible, el vínculo ocupacional que ha pasado revisión, la oferta publicada que puede alcanzarse con seguridad y el centro donde continuar. Las referencias de EDUCAbase ayudan a comparar información oficial antes de invertir recursos, pero conservan su ámbito estadístico y no se presentan como resultado individual.
 
-Las referencias de cotización de EDUCAbase se muestran con su ámbito estadístico. No se convierten en salario esperado, probabilidad de empleo ni promesa individual. La sección «Para centros y administraciones» describe usos posibles sin atribuir acuerdos, ahorros o resultados que no estén medidos.
+Ese límite protege la decisión: SALIDA CyL no convierte una tabla agregada en una promesa de ingresos ni atribuye ahorros, contratación o impacto que todavía no hayan sido medidos.
 
 ## 3. Valor público y social
 
-La orientación es pública, gratuita y usable sin registro, también desde un móvil. La aplicación muestra dónde estudiar, los centros agrupados por provincia y localidad, las modalidades y el contexto provincial para que una persona pueda comparar opciones en Castilla y León. Los recuentos y listados se leen directamente de las copias publicadas; las coordenadas técnicas completas quedan como información opcional y no se presentan como un mapa ni como cálculo de desplazamientos. Distingue el lugar del centro, la población municipal y los contratos provinciales de cualquier afirmación sobre la residencia, la demanda de una ocupación o el futuro laboral de una persona.
+Es gratuito, no requiere cuenta y funciona en móvil y escritorio. Cualquier persona puede explorar opciones de Castilla y León, comparar centros por provincia y localidad y abrir las fuentes públicas. La aplicación no crea perfiles: no guarda búsquedas, respuestas ni resultados. Distingue el lugar del centro, la población municipal y los contratos provinciales para no convertir contexto territorial en una afirmación sobre la residencia o el futuro de una persona.
 
 ## 4. Originalidad e innovación
 
-El núcleo es una relación bidireccional FP ↔ ocupación con evidencia trazable, cobertura visible y descargas JSON y CSV bajo licencia abierta. Las relaciones no revisadas permanecen pendientes; el sistema no las completa por similitud ni con texto generado.
+La unidad de valor es un grafo bidireccional FP ↔ ocupación revisado relación por relación. Cada vínculo conserva fuente, fecha, estado y límites; los vínculos no revisados permanecen fuera de las afirmaciones. El sistema aplica un criterio fail-closed: una coincidencia débil no se publica por similitud ni por texto generado. El resultado se devuelve como datos abiertos derivados en JSON y CSV, con integridad verificable. La innovación está en convertir un catálogo disperso en una relación navegable y auditable, manteniendo visible la incertidumbre.
 
-La referencia pública localizada de 2022 documenta una aplicación web de oferta de FP. Ese registro no permite concluir que no existieran funcionalidades no documentadas. La comparación se limita a lo que consta públicamente: SALIDA CyL añade el recorrido bidireccional, la revisión por relación, el contexto de fuentes y un grafo derivado verificable.
+## 5. Variedad de datasets
 
-## 5. Variedad de datasets del Portal de Datos Abiertos de la Junta
-
-Los ocho conjuntos regionales tienen un uso visible en la interfaz y una copia normalizada en el snapshot `20260822085631889-7bbe69380f6d`:
-
-| Dataset                            | Uso visible                                                         |
-| ---------------------------------- | ------------------------------------------------------------------- |
-| Oferta de estudios de FP           | ciclos, centros y modalidades                                       |
-| Ofertas de empleo                  | ofertas relacionadas y requisitos publicados                        |
-| Formación del ECYL                 | alternativas formativas                                             |
-| Certificados de profesionalidad    | rutas complementarias                                               |
-| Convocatorias de Empleo Público    | procesos con plazo abierto                                          |
-| Contratos realizados por provincia | contexto laboral agregado                                           |
-| Registro de municipios             | población del lugar de estudio                                      |
-| Directorio de Centros Docentes     | listados por provincia y localidad; coordenadas técnicas opcionales |
-
-Se combinan con CNO-11, TodoFP, BOE, SEPE y las tablas de inserción de EDUCAbase. Cada fuente conserva su ámbito para impedir conclusiones que los datos no sostienen.
+Los ocho conjuntos regionales de la Junta tienen un uso visible: oferta de estudios de FP, ofertas de empleo, formación del ECYL, certificados de profesionalidad, convocatorias de empleo público, contratos por provincia, registro de municipios y directorio de centros docentes. Se combinan con CNO-11, TodoFP, BOE, SEPE y EDUCAbase. La metodología conserva el ámbito de cada fuente y la [página de datos abiertos](https://salida-cyl.157-90-22-40.sslip.io/datos-abiertos) permite descargar el grafo revisado.
 
 ## 6. Facilidad de uso y accesibilidad
 
-La portada pide primero el punto de partida y ofrece un único formulario principal. Los selectores funcionan con teclado, los estados sin resultados explican qué falta y los controles mantienen foco visible. Los recorridos principales comprueban escritorio y móvil, overflow, red, consola y Axe. La declaración de accesibilidad distingue estas comprobaciones de una certificación formal y conserva sus límites.
+La portada ofrece un único punto de partida y mantiene el recorrido principal corto. Los selectores funcionan con teclado, el foco es visible y los estados vacíos explican qué está disponible, qué falta revisar y qué acción puede realizarse. Los recorridos de escritorio y móvil comprobaron overflow, red, consola y Axe. El paquete de evidencia A4 contiene 13/13 capturas actuales, con hashes y provenance del mismo commit. La declaración de accesibilidad diferencia estas comprobaciones de una certificación formal.
 
 ## 7. Calidad técnica
 
-La ingesta valida esquemas y genera recursos inmutables bajo `/data/v1/`. El manifest del snapshot publica recuentos, fechas, hashes SHA-256 y estado de calidad. El grafo derivado conserva fuente por relación y descargas JSON y CSV. Una actualización inválida no sustituye la copia válida anterior. El freeze de cobertura queda ligado al commit fuente `ff9e6197f926e462bea1a3e8ac6a57a23d3f825a`; el commit `80bc0f9d2def3f600f7701d8b20f0095cd241c71` contiene los bytes exactos del freeze. La muestra independiente vigente registra 15 PASS y 0 FAIL sobre 15 relaciones, mientras que las otras 249 quedan sin muestrear. El resultado no es una auditoría exhaustiva.
+La publicación usa un snapshot inmutable: `20260822085631889-7bbe69380f6d`, manifest SHA-256 `92afc80f2b839ed95def95bc90bdd3b6ad3a1363fb12904f7b109fafc92b2f18`, 21 recursos, fechas, recuentos y hashes por recurso. Una actualización inválida no sustituye la copia válida. La revisión independiente registra 15 PASS y 0 FAIL sobre 15 relaciones, sin presentarse como auditoría exhaustiva. La referencia técnica incluye pruebas unitarias, 156 pruebas E2E Chromium, build, lint, licencia, formato y el run de Pages `32896247977`; Pages y VPS sirven el mismo manifest y el mismo commit.
 
-## Límites declarados
+## Recorrido para el jurado
 
-- Las 264 relaciones cubren 113 cualificaciones y 130 modalidades; no representan todas las relaciones posibles.
-- Las 38 ofertas alcanzadas pertenecen a una copia fechada de 1.058 ofertas y forman una unión de IDs; no representan todo el mercado laboral.
-- Los contratos provinciales aportan contexto agregado, no demanda por ocupación.
-- La población municipal describe el lugar de estudio, no la residencia del alumnado.
-- Las bases de cotización no predicen salario, empleo ni residencia.
-- La publicación y las capturas de este freeze siguen pendientes. Las capturas anteriores son históricas y no verifican el release estático actual pendiente; este no es un candidato attested de Tasks 5–10. Cualquier afirmación de adopción o piloto sigue pendiente de evidencia humana.
+1. Abrir [IFC02S](https://salida-cyl.157-90-22-40.sslip.io/desde-fp/IFC02S) y seguir una salida revisada.
+2. Abrir [CNO 3820](https://salida-cyl.157-90-22-40.sslip.io/desde-ocupacion/occupation%3Acno11%3A3820) para ver el recorrido inverso.
+3. Abrir [Datos abiertos](https://salida-cyl.157-90-22-40.sslip.io/datos-abiertos) y comprobar la descarga, las fuentes y la trazabilidad.
 
-## Acceso y verificabilidad
-
-- Producto público: <https://salida-cyl.157-90-22-40.sslip.io/>
-- Fuentes y metodología: <https://salida-cyl.157-90-22-40.sslip.io/metodologia>
-- Accesibilidad: <https://salida-cyl.157-90-22-40.sslip.io/accesibilidad>
-- Datos derivados: <https://salida-cyl.157-90-22-40.sslip.io/datos-abiertos>
-- Manifiesto: <https://salida-cyl.157-90-22-40.sslip.io/data/v1/manifest.json>
-- Evidencia técnica: [technical-evidence.md](technical-evidence.md)
+Las 38 ofertas alcanzadas pertenecen a una copia fechada de 1.058 ofertas y no representan todo el mercado. Los contratos provinciales son contexto agregado; las tablas de ingresos no predicen una situación individual; no se afirma adopción o impacto sin evidencia humana. La identidad, el consentimiento y la autorización de presentación permanecen fuera del repositorio y requieren aprobación humana explícita.

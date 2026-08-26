@@ -59,6 +59,63 @@ function markLocalGatesPending(evidence: ContestReleaseEvidence): void {
   }
 }
 
+type CandidatePlan = {
+  baseline: {
+    status: "verified";
+    commitSha: string;
+    releaseTag: string;
+    pagesVpsStatus: "verified";
+    versionJsonStatus: "verified";
+    a4Status: "passed";
+    captureCount: number;
+  };
+  documentaryBranch: string;
+  documentaryBaseHeadSha: string;
+  finalCandidate: {
+    status: "pending" | "verified";
+    releaseTag: string;
+    commitSha: string | null;
+    pagesVpsStatus: "pending" | "verified";
+    versionJsonStatus: "pending" | "verified";
+    a4Status: "pending" | "passed";
+  };
+};
+
+function evidenceWithCandidatePlan(): ContestReleaseEvidence & {
+  candidatePlan: CandidatePlan;
+} {
+  const evidence = validEvidence() as ContestReleaseEvidence & {
+    candidatePlan: CandidatePlan;
+  };
+  evidence.deployment.releaseTag = "v2026.08.22";
+  evidence.deployment.versionJsonUrl = "https://example.invalid/version.json";
+  evidence.deployment.versionJsonCommitSha = PUBLICATION_SHA;
+  evidence.deployment.versionJsonSchemaVersion = "1.0.0";
+  evidence.deployment.versionJsonVerifiedAt = VERIFIED_AT;
+  evidence.candidatePlan = {
+    baseline: {
+      status: "verified",
+      commitSha: PUBLICATION_SHA,
+      releaseTag: "v2026.08.22",
+      pagesVpsStatus: "verified",
+      versionJsonStatus: "verified",
+      a4Status: "passed",
+      captureCount: 2,
+    },
+    documentaryBranch: "codex/test-documentary-branch",
+    documentaryBaseHeadSha: EVIDENCE_SHA,
+    finalCandidate: {
+      status: "pending",
+      releaseTag: "v2026.08.26-candidate.3",
+      commitSha: null,
+      pagesVpsStatus: "pending",
+      versionJsonStatus: "pending",
+      a4Status: "pending",
+    },
+  };
+  return evidence;
+}
+
 function validEvidence(): ContestReleaseEvidence {
   return {
     schemaVersion: 1,
@@ -119,6 +176,37 @@ function validEvidence(): ContestReleaseEvidence {
 }
 
 describe("contest release evidence validator", () => {
+  it("validates a pending final-candidate plan without replacing verified baseline evidence", () => {
+    const evidence = evidenceWithCandidatePlan();
+
+    expect(validateContestReleaseEvidence(evidence, context)).toMatchObject({
+      valid: true,
+      status: "verified",
+    });
+
+    const mismatchedBaseline = evidenceWithCandidatePlan();
+    mismatchedBaseline.candidatePlan.baseline.commitSha = "f".repeat(40);
+    expect(() =>
+      validateContestReleaseEvidence(mismatchedBaseline, context),
+    ).toThrow(/candidatePlan|baseline|publication|commit/i);
+
+    const pendingFinal = evidenceWithCandidatePlan();
+    const claimedFinal = {
+      ...pendingFinal,
+      candidatePlan: {
+        ...pendingFinal.candidatePlan,
+        finalCandidate: {
+          ...pendingFinal.candidatePlan.finalCandidate,
+          status: "verified",
+          commitSha: PUBLICATION_SHA,
+        },
+      },
+    };
+    expect(() => validateContestReleaseEvidence(claimedFinal, context)).toThrow(
+      /candidatePlan|final|pending/i,
+    );
+  });
+
   it("accepts evidence whose frozen snapshot, counts, publication, deployment, and captures agree", () => {
     expect(
       validateContestReleaseEvidence(validEvidence(), context),

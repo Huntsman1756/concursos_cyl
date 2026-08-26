@@ -42,6 +42,7 @@ const ROOT_KEYS = [
   "publicVerification",
   "humanApproval",
   "blockers",
+  "candidatePlan",
 ] as const;
 
 export type ContestReleaseEvidence = {
@@ -102,7 +103,32 @@ export type ContestReleaseEvidence = {
     submissionAuthorized: boolean;
   };
   blockers: string[];
+  candidatePlan?: ContestCandidatePlan;
 };
+
+export type ContestCandidatePlan = {
+  baseline: {
+    status: "verified";
+    commitSha: string;
+    releaseTag: string;
+    pagesVpsStatus: "verified";
+    versionJsonStatus: "verified";
+    a4Status: "passed";
+    captureCount: number;
+  };
+  documentaryBranch: string;
+  documentaryBaseHeadSha: string;
+  finalCandidate: {
+    status: "pending";
+    releaseTag: string;
+    commitSha: null;
+    pagesVpsStatus: "pending";
+    versionJsonStatus: "pending";
+    a4Status: "pending";
+  };
+};
+
+export const EXPECTED_FINAL_RELEASE_TAG = "v2026.08.26-candidate.3";
 
 export type ReleaseEvidenceValidationContext = {
   coverageFreeze: {
@@ -220,6 +246,182 @@ function nonNegativeInteger(value: unknown, label: string): number {
     throw new Error(`${label} must be a non-negative integer`);
   }
   return value;
+}
+
+function validateCandidatePlan(
+  value: unknown,
+  publicationSha: string | null,
+  captureCount: number,
+  deployment: {
+    releaseTag: string | null;
+    liveRootVerified: unknown;
+    versionJsonCommitSha: string | null;
+    versionJsonVerifiedAt: string | null;
+  },
+): ContestCandidatePlan {
+  const plan = exactKeys(
+    value,
+    [
+      "baseline",
+      "documentaryBranch",
+      "documentaryBaseHeadSha",
+      "finalCandidate",
+    ],
+    "candidatePlan",
+  );
+  const baseline = exactKeys(
+    plan.baseline,
+    [
+      "status",
+      "commitSha",
+      "releaseTag",
+      "pagesVpsStatus",
+      "versionJsonStatus",
+      "a4Status",
+      "captureCount",
+    ],
+    "candidatePlan.baseline",
+  );
+  if (baseline.status !== "verified") {
+    throw new Error("candidatePlan.baseline.status must be verified");
+  }
+  if (baseline.pagesVpsStatus !== "verified") {
+    throw new Error("candidatePlan.baseline.pagesVpsStatus must be verified");
+  }
+  if (baseline.versionJsonStatus !== "verified") {
+    throw new Error(
+      "candidatePlan.baseline.versionJsonStatus must be verified",
+    );
+  }
+  if (baseline.a4Status !== "passed") {
+    throw new Error("candidatePlan.baseline.a4Status must be passed");
+  }
+  const baselineCommitSha = sha(
+    baseline.commitSha,
+    "candidatePlan.baseline.commitSha",
+  );
+  if (publicationSha === null) {
+    throw new Error(
+      "candidatePlan.baseline requires verified publication evidence",
+    );
+  }
+  assertEqual(
+    baselineCommitSha,
+    publicationSha,
+    "candidatePlan.baseline.commitSha",
+  );
+  const baselineReleaseTag = nonEmptyString(
+    baseline.releaseTag,
+    "candidatePlan.baseline.releaseTag",
+  );
+  if (deployment.releaseTag === null) {
+    throw new Error(
+      "candidatePlan.baseline requires an observed deployment release tag",
+    );
+  }
+  assertEqual(
+    baselineReleaseTag,
+    deployment.releaseTag,
+    "candidatePlan.baseline.releaseTag",
+  );
+  const baselineCaptureCount = nonNegativeInteger(
+    baseline.captureCount,
+    "candidatePlan.baseline.captureCount",
+  );
+  assertEqual(
+    baselineCaptureCount,
+    captureCount,
+    "candidatePlan.baseline.captureCount",
+  );
+  if (deployment.liveRootVerified !== true) {
+    throw new Error(
+      "candidatePlan.baseline.pagesVpsStatus requires verified deployment",
+    );
+  }
+  if (
+    deployment.versionJsonCommitSha !== baselineCommitSha ||
+    deployment.versionJsonVerifiedAt === null
+  ) {
+    throw new Error(
+      "candidatePlan.baseline.versionJsonStatus requires matching version.json evidence",
+    );
+  }
+
+  const documentaryBranch = nonEmptyString(
+    plan.documentaryBranch,
+    "candidatePlan.documentaryBranch",
+  );
+  const documentaryBaseHeadSha = sha(
+    plan.documentaryBaseHeadSha,
+    "candidatePlan.documentaryBaseHeadSha",
+  );
+
+  const finalCandidate = exactKeys(
+    plan.finalCandidate,
+    [
+      "status",
+      "releaseTag",
+      "commitSha",
+      "pagesVpsStatus",
+      "versionJsonStatus",
+      "a4Status",
+    ],
+    "candidatePlan.finalCandidate",
+  );
+  if (finalCandidate.status !== "pending") {
+    throw new Error("candidatePlan.finalCandidate.status must be pending");
+  }
+  const finalReleaseTag = nonEmptyString(
+    finalCandidate.releaseTag,
+    "candidatePlan.finalCandidate.releaseTag",
+  );
+  if (finalReleaseTag !== EXPECTED_FINAL_RELEASE_TAG) {
+    throw new Error(
+      `candidatePlan.finalCandidate.releaseTag must be ${EXPECTED_FINAL_RELEASE_TAG}`,
+    );
+  }
+  if (finalCandidate.commitSha !== null) {
+    throw new Error(
+      "candidatePlan.finalCandidate.commitSha must remain null until the merge",
+    );
+  }
+  if (finalCandidate.pagesVpsStatus !== "pending") {
+    throw new Error(
+      "candidatePlan.finalCandidate.pagesVpsStatus must remain pending",
+    );
+  }
+  if (finalCandidate.versionJsonStatus !== "pending") {
+    throw new Error(
+      "candidatePlan.finalCandidate.versionJsonStatus must remain pending",
+    );
+  }
+  if (finalCandidate.a4Status !== "pending") {
+    throw new Error(
+      "candidatePlan.finalCandidate.a4Status must remain pending",
+    );
+  }
+
+  return {
+    baseline: {
+      status: "verified",
+      commitSha: baselineCommitSha,
+      releaseTag: baselineReleaseTag,
+      pagesVpsStatus: "verified",
+      versionJsonStatus: "verified",
+      a4Status: "passed",
+      captureCount: baselineCaptureCount,
+    },
+    documentaryBranch,
+    documentaryBaseHeadSha,
+    finalCandidate: {
+      status: "pending",
+      releaseTag: finalReleaseTag,
+      commitSha: null,
+      pagesVpsStatus: "pending",
+      versionJsonStatus: "pending",
+      a4Status: "pending",
+    },
+  };
 }
 
 function assertEqual(actual: unknown, expected: unknown, label: string): void {
@@ -472,7 +674,12 @@ export function validateContestReleaseEvidence(
   value: unknown,
   context: ReleaseEvidenceValidationContext,
 ): ContestReleaseEvidenceValidation {
-  const root = exactKeys(value, ROOT_KEYS, "release evidence");
+  const root = exactKeys(
+    value,
+    ROOT_KEYS,
+    "release evidence",
+    ROOT_KEYS.filter((key) => key !== "candidatePlan"),
+  );
   if (root.schemaVersion !== 1)
     throw new Error("release evidence schemaVersion must be 1");
   const status = root.status;
@@ -690,7 +897,10 @@ export function validateContestReleaseEvidence(
     deployment.verifiedAt,
     "deployment.verifiedAt",
   );
-  optionalString(deployment.releaseTag, "deployment.releaseTag");
+  const deploymentReleaseTag = optionalString(
+    deployment.releaseTag,
+    "deployment.releaseTag",
+  );
   const versionJsonUrl = optionalString(
     deployment.versionJsonUrl,
     "deployment.versionJsonUrl",
@@ -790,6 +1000,15 @@ export function validateContestReleaseEvidence(
         "deployment.workflowUrl must identify a GitHub Actions run",
       );
     }
+  }
+
+  if (root.candidatePlan !== undefined) {
+    validateCandidatePlan(root.candidatePlan, publicationSha, captureCount, {
+      releaseTag: deploymentReleaseTag,
+      liveRootVerified: deployment.liveRootVerified,
+      versionJsonCommitSha,
+      versionJsonVerifiedAt,
+    });
   }
 
   const publicVerification = exactKeys(

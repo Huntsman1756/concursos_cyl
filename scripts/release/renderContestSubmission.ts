@@ -10,7 +10,10 @@ import {
   loadAndValidateContestFreeze,
   type ContestFreeze,
 } from "./validateContestFreeze";
-import { validateContestReleaseEvidenceFromRoot } from "./validateContestReleaseEvidence";
+import {
+  validateContestReleaseEvidenceFromRoot,
+  type ContestCandidatePlan,
+} from "./validateContestReleaseEvidence";
 
 export type ContestSubmissionDocuments = {
   "application-summary.md": string;
@@ -33,6 +36,7 @@ export type ContestDeploymentEvidence = {
   versionJsonCommitSha?: string | null;
   versionJsonSchemaVersion?: string | null;
   versionJsonVerifiedAt?: string | null;
+  candidatePlan?: ContestCandidatePlan;
 };
 
 const PENDING_DEPLOYMENT_EVIDENCE: ContestDeploymentEvidence = {
@@ -67,6 +71,36 @@ const REGISTRATION_URL =
 
 function list(values: readonly string[]): string {
   return values.join(", ");
+}
+
+function renderTemporalReleaseStatus(
+  candidatePlan: ContestCandidatePlan | undefined,
+): string {
+  if (candidatePlan === undefined) return "";
+  return `## Estado temporal de la candidatura
+
+- Baseline funcional verificada: commit \`${candidatePlan.baseline.commitSha}\`, release funcional de referencia \`${candidatePlan.baseline.releaseTag}\`.
+- Pages y VPS de la baseline: verificados con ese SHA; \`version.json\`: verificado y coincidente.
+- A4 de la baseline: ${candidatePlan.baseline.captureCount}/${candidatePlan.baseline.captureCount} capturas PASS.
+- Rama documental actual: \`${candidatePlan.documentaryBranch}\`.
+- HEAD documental de referencia antes de esta corrección: \`${candidatePlan.documentaryBaseHeadSha}\`.
+- Release candidata final: **PENDIENTE**.
+- Nombre previsto: \`${candidatePlan.finalCandidate.releaseTag}\`.
+- SHA final: **PENDIENTE HASTA EL MERGE**.
+- Pages/VPS finales: **PENDIENTES**.
+- \`version.json\` final: **PENDIENTE**.
+- A4 final sobre ese SHA: **PENDIENTE**.`;
+}
+
+function renderFinalCandidateChecklist(
+  candidatePlan: ContestCandidatePlan | undefined,
+): string {
+  if (candidatePlan === undefined) return "";
+  return `## Release candidata final posterior al merge
+
+- [ ] Verificar Pages/VPS finales sobre el SHA real del merge.
+- [ ] Verificar \`version.json\` final tras la publicación de candidate.3.
+- [ ] Ejecutar A4 final sobre el SHA real de candidate.3.`;
 }
 
 function spanishInteger(value: number): string {
@@ -135,6 +169,7 @@ function renderTechnicalEvidence(
   deployment: ContestDeploymentEvidence,
 ): string {
   const { coverage, offers, attempts } = freeze;
+  const candidatePlan = deployment.candidatePlan;
   const deploymentCommit =
     deployment.status === "verified" && deployment.commitSha !== null
       ? `\`${deployment.commitSha}\``
@@ -145,7 +180,9 @@ function renderTechnicalEvidence(
       : "**PENDIENTE DE DESPLIEGUE Y VERIFICACIÓN**";
   const deploymentNote =
     deployment.status === "verified" && deployment.verifiedAt !== null
-      ? `El release público se verificó con el commit ${deploymentCommit} y el run ${workflowRun} el ${deployment.verifiedAt}.`
+      ? candidatePlan === undefined
+        ? `El release público se verificó con el commit ${deploymentCommit} y el run ${workflowRun} el ${deployment.verifiedAt}.`
+        : `La baseline funcional publicada se verificó con el commit ${deploymentCommit} y el run ${workflowRun} el ${deployment.verifiedAt}.`
       : "Estos dos campos no se inventan antes de ejecutar y verificar el release.";
   const reproducibilityIntro =
     (deployment.releaseGatesVerified ?? deployment.status === "verified")
@@ -154,7 +191,7 @@ function renderTechnicalEvidence(
   const releaseTraceability =
     deployment.releaseTag === null || deployment.releaseTag === undefined
       ? ""
-      : `\n- Release: \`${deployment.releaseTag}\`.`;
+      : `\n- ${candidatePlan === undefined ? "Release" : "Release funcional de referencia"}: \`${deployment.releaseTag}\`.`;
   const versionJsonTraceability =
     deployment.versionJsonUrl === null ||
     deployment.versionJsonUrl === undefined ||
@@ -220,14 +257,16 @@ npm exec -- tsx scripts/release/validateContestFreeze.ts
 
 La revisión independiente confirmó el manifest, sus ${Object.keys(freeze.manifest.resourceSnapshots).length} recursos, los conjuntos de relaciones y la ausencia de cambios en las rutas de frontera congelada (${CONTEST_FREEZE_SOURCE_PATHS.map((sourcePath) => `\`${sourcePath}\``).join(", ")}) desde el commit fuente. Las rutas de UI, búsqueda y print quedan fuera de esta frontera y no se presentan como parte del freeze.
 
-## Despliegue
+## ${candidatePlan === undefined ? "Despliegue" : "Baseline funcional verificada"}
 
 - URL raíz esperada: [${ROOT_URL}](${ROOT_URL})
-- Commit desplegado: ${deploymentCommit}.
+- ${candidatePlan === undefined ? "Commit desplegado" : "Commit de baseline desplegado"}: ${deploymentCommit}.
 - Run del workflow: ${workflowRun}.
 ${releaseTraceability}${versionJsonTraceability}
 
 ${deploymentNote}
+
+${renderTemporalReleaseStatus(candidatePlan)}
 `;
 }
 
@@ -235,13 +274,16 @@ function renderLimitations(
   freeze: ContestFreeze,
   deployment: ContestDeploymentEvidence,
 ): string {
+  const candidatePlan = deployment.candidatePlan;
   const deferredCoverage =
     freeze.coverage.deferredProgramCount === 0
       ? "No hay programas diferidos en esta instantánea."
       : `Los programas diferidos (${list(freeze.coverage.deferredPrograms)}) no se presentan como cobertura revisada.`;
   const releaseStatus =
     deployment.status === "verified" && deployment.commitSha !== null
-      ? `El despliegue público está verificado para el commit \`${deployment.commitSha}\`; la verificación de rutas y recursos queda registrada en \`docs/contest/release-evidence.json\`.`
+      ? candidatePlan === undefined
+        ? `El despliegue público está verificado para el commit \`${deployment.commitSha}\`; la verificación de rutas y recursos queda registrada en \`docs/contest/release-evidence.json\`.`
+        : `La baseline funcional está verificada para el commit \`${deployment.commitSha}\`; la release candidata final posterior al merge permanece pendiente y la verificación de rutas y recursos queda registrada en \`docs/contest/release-evidence.json\`.`
       : "El despliegue y la verificación pública aún están pendientes y no forman parte de este documento como hechos consumados.";
   const visualVerificationStatus = deployment.capturesAreCurrent
     ? "La accesibilidad automatizada, el responsive y la semántica se comprobaron de nuevo durante la captura final."
@@ -265,6 +307,8 @@ La representatividad de las tablas nacionales es la declarada por el Ministerio:
 Las rutas internas son recorridos de producto; la candidatura usa únicamente la raíz pública. La experiencia no requiere cuentas y no conserva selecciones, búsquedas, respuestas ni resultados. Solo recuerda en \`localStorage\` la preferencia no sensible del modo de búsqueda («desde FP» o «desde ocupación»). ${visualVerificationStatus}
 
 El objetivo de ampliar la cobertura está condicionado a evidencia: el freeze actual registra ${freeze.coverage.distinctQualificationCount} cualificaciones distintas y deja ${freeze.coverage.deferredProgramCount} programas diferidos. ${releaseStatus}
+
+${renderTemporalReleaseStatus(candidatePlan)}
 `;
 }
 
@@ -272,6 +316,7 @@ function renderSubmissionChecklist(
   freeze: ContestFreeze,
   deployment: ContestDeploymentEvidence,
 ): string {
+  const candidatePlan = deployment.candidatePlan;
   const deploymentCommit =
     deployment.status === "verified" && deployment.commitSha !== null
       ? `\`${deployment.commitSha}\``
@@ -291,7 +336,7 @@ function renderSubmissionChecklist(
   const releaseTraceability =
     deployment.releaseTag === null || deployment.releaseTag === undefined
       ? ""
-      : `- Release: \`${deployment.releaseTag}\`.\n`;
+      : `- ${candidatePlan === undefined ? "Release" : "Release funcional de referencia"}: \`${deployment.releaseTag}\`.\n`;
   const versionJsonTraceability =
     deployment.versionJsonUrl === null ||
     deployment.versionJsonUrl === undefined ||
@@ -299,6 +344,19 @@ function renderSubmissionChecklist(
     deployment.versionJsonCommitSha === undefined
       ? ""
       : `- \`version.json\` verificado: [respuesta pública](${deployment.versionJsonUrl}) con commit igual a \`${deployment.versionJsonCommitSha}\`.\n`;
+  const captureInventoryLine = deployment.capturesAreCurrent
+    ? candidatePlan === undefined
+      ? "el manifiesto contiene capturas actuales ligadas al commit de publicación."
+      : "el manifiesto contiene las capturas actuales de la baseline, ligadas a su commit de publicación."
+    : "las 13 capturas existentes son históricas.";
+  const automatedCaptureGate =
+    deployment.capturesAreCurrent && deployment.captureCount !== null
+      ? `- [x] Captura automatizada A4${candidatePlan === undefined ? "" : " de la baseline"}: ${deployment.captureCount}/${deployment.captureCount} capturas actuales recapturadas y validadas en \`docs/contest/evidence-capture.json\`.`
+      : "- [ ] Captura automatizada A4: pendiente de recaptura y validación.";
+  const publicReviewLabel =
+    candidatePlan === undefined
+      ? "release actual"
+      : "baseline funcional observada";
 
   let visualEvidenceLine: string;
   let capturesReviewGate: string;
@@ -362,6 +420,11 @@ function renderSubmissionChecklist(
       "`. (capturas históricas — recaptura pendiente)";
   }
 
+  const finalCandidateChecklist =
+    candidatePlan === undefined
+      ? ""
+      : `\n\n${renderFinalCandidateChecklist(candidatePlan)}`;
+
   return `# Checklist de presentación
 
 ## Campos que debe completar una persona
@@ -374,26 +437,29 @@ function renderSubmissionChecklist(
 - Contacto: **PENDIENTE — no consta en el repositorio**.
 - Declaraciones, consentimiento y adjuntos exigidos: **PENDIENTE — revisar en el portal**.
 
-## Campos técnicos
+## ${candidatePlan === undefined ? "Campos técnicos" : "Baseline funcional verificada"}
 
 - URL raíz a presentar: [${ROOT_URL}](${ROOT_URL})
 - Fallback verificada: [${FALLBACK_URL}](${FALLBACK_URL})
 - Commit fuente del freeze: \`${freeze.sourceCommitSha}\`.
 - Snapshot: \`${freeze.manifest.snapshotId}\`.
-- Commit desplegado: ${deploymentCommit}.
+- ${candidatePlan === undefined ? "Commit desplegado" : "Commit de baseline desplegado"}: ${deploymentCommit}.
 - Run del workflow: ${workflowRun}.
 ${releaseTraceability}${versionJsonTraceability}- Evidencia visual: ${visualEvidenceLine}
 
+${renderTemporalReleaseStatus(candidatePlan)}
+
 ## Evidencia visual y gate final
 
+${automatedCaptureGate}
 - [ ] Ejecutar la captura nativa OS A4 en un Mac desbloqueado.
-- [ ] Revisar la aplicación pública del release actual en contexto anónimo, incluyendo las rutas de FP, ocupación y comparador.
-- [ ] Conservar solo capturas actuales, sin datos personales ni credenciales; las 13 capturas existentes son históricas.
+- [ ] Revisar la aplicación pública de la ${publicReviewLabel} en contexto anónimo, incluyendo las rutas de FP, ocupación y comparador.
+- [ ] Conservar solo capturas actuales, sin datos personales ni credenciales; ${captureInventoryLine}
 ${releaseGate}
 ${deploymentGate}
 ${capturesReviewGate}
 ${figuresConfirmationGate}
-- [ ] Obtener aprobación humana explícita para la solicitud externa.
+- [ ] Obtener aprobación humana explícita para la solicitud externa.${finalCandidateChecklist}
 
 **PENDIENTE DE APROBACIÓN HUMANA:** este repositorio no envía la solicitud al concurso ni decide los campos de identidad, contacto, declaraciones o consentimiento.
 
@@ -431,6 +497,7 @@ function loadContestDeploymentEvidence(
   const parsed = JSON.parse(fs.readFileSync(releaseEvidencePath, "utf8")) as {
     deployment?: Partial<ContestDeploymentEvidence>;
     captureProductCommitSha?: string;
+    candidatePlan?: ContestCandidatePlan;
     manifest?: { snapshotId?: unknown };
     localGates?: {
       evidenceManifest?: { captureCount?: unknown };
@@ -496,6 +563,7 @@ function loadContestDeploymentEvidence(
     versionJsonCommitSha: deployment.versionJsonCommitSha ?? null,
     versionJsonSchemaVersion: deployment.versionJsonSchemaVersion ?? null,
     versionJsonVerifiedAt: deployment.versionJsonVerifiedAt ?? null,
+    candidatePlan: parsed.candidatePlan,
   };
   if (
     evidence.status === "verified" &&

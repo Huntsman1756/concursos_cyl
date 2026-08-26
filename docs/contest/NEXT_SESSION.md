@@ -1,58 +1,44 @@
-# Próxima sesión: evidencia visual y autorización separada
+# Próxima sesión: cerrar candidate.3 sin reabrir `main`
 
-## Estado actual
+## Estado temporal inequívoco
 
 - Repositorio canónico: <https://github.com/Huntsman1756/concursos_cyl>.
-- Rama estable: `main`, protegida mediante PR, checks y revisión.
-- Referencia de candidatura preparada: `v2026.08.25-candidate`.
-- Commit publicado y servido por GitHub Pages: `7355bb1c05aecd7452ec82333652d5070927947e`.
-- Workflow de publicación verificado: `32888564295`.
-- Comprobación pública observada en
-  <https://huntsman1756.github.io/concursos_cyl/version.json>:
+- Baseline funcional verificada: commit `cab7a3b9dbdf8d2922506e9207242d537347d720`.
+- Release funcional de referencia: `v2026.08.25-candidate.2`.
+- Pages y VPS de la baseline están verificados con ese SHA; `version.json` coincide.
+- A4 de la baseline: **13/13 capturas PASS**, recapturadas el 2026-08-26 desde contexto anónimo.
+- Rama documental actual: `codex/final-candidature-coherence-20260826`.
+- HEAD documental de referencia al iniciar esta corrección: `25fc0f89097e107eb47c49b0a848ba822bc4cea1`.
+- Release candidata definitiva posterior al merge: **PENDIENTE**.
+- Nombre previsto: `v2026.08.26-candidate.3`.
+- SHA final: **PENDIENTE HASTA EL MERGE**.
+- Pages/VPS finales: **PENDIENTES**.
+- `version.json` final: **PENDIENTE**.
+- A4 final sobre ese SHA: **PENDIENTE**.
 
-  ```json
-  {
-    "schemaVersion": "1.0.0",
-    "commit": "7355bb1c05aecd7452ec82333652d5070927947e"
-  }
-  ```
+Candidate.2 es únicamente la baseline funcional observada. No se debe presentar como la release definitiva posterior al merge ni reutilizar su SHA, tag, run, `version.json` o capturas como evidencia de candidate.3.
 
-- La misma revisión está publicada y verificada en la URL canónica VPS:
-  <https://salida-cyl.157-90-22-40.sslip.io/>.
-- Snapshot activo: `20260822085631889-7bbe69380f6d`.
-- Cobertura congelada: 113 cualificaciones base, 130 claves de modalidad,
-  264 relaciones aprobadas y 21 alias; 21 recursos inmutables y 116 registros
-  canónicos de SEPE.
-- La publicación técnica, el despliegue VPS y la verificación pública están
-  cerradas para esta revisión. La evidencia visual actual de candidatura y la
-  autorización humana para el envío externo siguen pendientes.
-- Las 13 capturas existentes son históricas y no sustituyen una captura del
-  release actual.
+## Secuencia operativa obligatoria después de esta PR
 
-## Runtime y límites de publicación
+La PR #50 ya contiene el cierre documental. Con CI verde y la revisión aprobada:
 
-- Runtime V4 permanece en `BOUNDED_LOCAL` y `ANALYSIS_ONLY`.
-- `publicationThroughRuntimeV4` permanece en `false`; no se anuncia una
-  procedencia V4 firmada ni se habilita `REQUIRED`.
-- La URL canónica es la destinada a la candidatura; GitHub Pages conserva una
-  fallback operativa. Ambas identidades están verificadas para
-  `7355bb1c05aecd7452ec82333652d5070927947e`.
-- Cualquier cambio futuro sigue el flujo:
-  `rama de trabajo → PR → checks → revisión/aprobación → merge a main → Pages`.
-  Este documento no autoriza pushes directos a `main` ni cambios sobre el
-  release estable sin una nueva autorización.
+1. Fusionar la PR #50 a `main`.
+2. Obtener el SHA real resultante de `main`; no anticiparlo en esta rama.
+3. Esperar y verificar Pages y VPS sobre ese SHA real.
+4. Comprobar que el `version.json` servido coincide exactamente con ese SHA.
+5. Crear `v2026.08.26-candidate.3` exactamente sobre ese mismo SHA.
+6. Ejecutar el A4 final contra ese despliegue y registrar sus 13/13 resultados.
+7. Generar una atestación final con SHA, tag, URLs, workflow/run, resultado A4 y hashes de las capturas.
+8. Adjuntar la atestación y las capturas a los assets de la GitHub Release `v2026.08.26-candidate.3` y actualizar su descripción si fuese necesario.
+9. **No crear otro commit en `main` para registrar esas observaciones ni para sustituir los campos `PENDIENTE` de los documentos versionados.**
+10. Aplicar freeze absoluto de la candidatura.
+11. Obtener por separado la autorización humana para identidad, declaraciones, consentimiento y envío externo.
 
-## Siguiente sesión autorizada
+Los campos `PENDIENTE` de esta documentación versionada describen deliberadamente el estado pre-release. La evidencia observacional posterior al despliegue vive en la atestación y los assets de la GitHub Release candidate.3; los documentos de `main` no intentan autorreferenciar el SHA del commit que los contiene. Candidate.2 sigue siendo únicamente la baseline funcional verificada.
 
-1. Ejecutar la captura nativa OS A4 en un Mac desbloqueado y revisar las rutas
-   de FP, ocupación y comparador.
-2. Revisar la aplicación pública del release actual desde un contexto anónimo,
-   conservando únicamente evidencia visual sin datos personales ni credenciales.
-3. Confirmar que las cifras visibles siguen coincidiendo con el snapshot
-   `20260822085631889-7bbe69380f6d`.
-4. Obtener aprobación humana explícita para el texto final, la URL, la
-   identidad, las declaraciones, el consentimiento y la presentación externa.
+## Límites
 
-La verificación técnica del release no autoriza por sí sola la presentación al
-concurso ni decide los campos de identidad, contacto, declaraciones o
-consentimiento.
+- La documentación no cambia `src/`, datasets, matching, CSS, workflows ni comportamiento del producto.
+- Runtime V4 permanece en `BOUNDED_LOCAL` y `ANALYSIS_ONLY`; `publicationThroughRuntimeV4` permanece en `false`.
+- La candidatura usa la raíz VPS pública y GitHub Pages como fallback.
+- Este repositorio no envía la solicitud externa ni decide los campos de aprobación humana.

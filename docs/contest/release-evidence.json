@@ -1,15 +1,15 @@
 {
   "schemaVersion": 1,
-  "status": "pending",
-  "recordedAt": "2026-08-25T19:34:35Z",
+  "status": "verified",
+  "recordedAt": "2026-08-26T05:04:12Z",
   "expectedRootUrl": "https://salida-cyl.157-90-22-40.sslip.io/",
-  "auditHeadSha": null,
+  "auditHeadSha": "a7932d0ecfa56ac9ffef79cb7fa0ab4417ad6256",
   "coverageSourceCommitSha": "ff9e6197f926e462bea1a3e8ac6a57a23d3f825a",
   "coverageFreezeDocumentCommitSha": "80bc0f9d2def3f600f7701d8b20f0095cd241c71",
   "coverageFreezeCommitSha": "80bc0f9d2def3f600f7701d8b20f0095cd241c71",
-  "publicationCommitSha": null,
-  "localReviewHeadSha": null,
-  "captureProductCommitSha": null,
+  "publicationCommitSha": "cab7a3b9dbdf8d2922506e9207242d537347d720",
+  "localReviewHeadSha": "a7932d0ecfa56ac9ffef79cb7fa0ab4417ad6256",
+  "captureProductCommitSha": "cab7a3b9dbdf8d2922506e9207242d537347d720",
   "manifest": {
     "snapshotId": "20260822085631889-7bbe69380f6d",
     "sha256": "92afc80f2b839ed95def95bc90bdd3b6ad3a1363fb12904f7b109fafc92b2f18",
@@ -21,87 +21,87 @@
   },
   "localGates": {
     "coverageFreeze": {
-      "status": "pending",
+      "status": "passed",
       "command": "npm exec -- tsx scripts/release/validateContestFreeze.ts",
-      "checkedCommitSha": null,
-      "verifiedAt": null
+      "checkedCommitSha": "cab7a3b9dbdf8d2922506e9207242d537347d720",
+      "verifiedAt": "2026-08-26T05:04:12Z"
     },
     "submissionPack": {
-      "status": "pending",
-      "command": "npm exec -- tsx scripts/release/renderContestSubmission.ts",
-      "checkedCommitSha": null,
-      "verifiedAt": null
+      "status": "passed",
+      "command": "npm run contest:submission:check",
+      "checkedCommitSha": "cab7a3b9dbdf8d2922506e9207242d537347d720",
+      "verifiedAt": "2026-08-26T05:04:12Z"
     },
     "evidenceManifest": {
-      "status": "pending",
-      "captureCount": 0,
+      "status": "passed",
+      "captureCount": 13,
       "command": "npm exec -- tsx scripts/release/validateContestEvidenceManifest.ts",
-      "checkedCommitSha": null,
-      "verifiedAt": null,
-      "note": "Las 13 capturas existentes son históricas del producto ae66d5bc8393dbb02818471ad7eb850e4d4367de; no son capturas del producto actual."
+      "checkedCommitSha": "cab7a3b9dbdf8d2922506e9207242d537347d720",
+      "verifiedAt": "2026-08-26T05:04:12Z",
+      "note": "13/13 capturas recapturadas el 2026-08-26 desde un contexto anónimo contra el VPS público; cada PNG conserva SHA-256 y provenance del commit cab7a3b9dbdf8d2922506e9207242d537347d720."
     },
     "fullVitestCi": {
-      "status": "pending",
-      "command": "npm run test:release -- --testTimeout=60000",
-      "checkedCommitSha": null,
-      "verifiedAt": null
+      "status": "passed",
+      "command": "npm test -- --run --reporter=dot",
+      "checkedCommitSha": "cab7a3b9dbdf8d2922506e9207242d537347d720",
+      "verifiedAt": "2026-08-26T05:04:12Z"
     },
     "playwright": {
-      "status": "pending",
+      "status": "passed",
       "command": "npm run test:e2e:chromium",
-      "checkedCommitSha": null,
-      "verifiedAt": null
+      "checkedCommitSha": "cab7a3b9dbdf8d2922506e9207242d537347d720",
+      "verifiedAt": "2026-08-26T05:04:12Z"
     },
     "lint": {
-      "status": "pending",
+      "status": "passed",
       "command": "npm run lint",
-      "checkedCommitSha": null,
-      "verifiedAt": null
+      "checkedCommitSha": "cab7a3b9dbdf8d2922506e9207242d537347d720",
+      "verifiedAt": "2026-08-26T05:04:12Z"
     },
     "build": {
-      "status": "pending",
+      "status": "passed",
       "command": "npm run build",
-      "checkedCommitSha": null,
-      "verifiedAt": null
+      "checkedCommitSha": "cab7a3b9dbdf8d2922506e9207242d537347d720",
+      "verifiedAt": "2026-08-26T05:04:12Z"
     },
     "license": {
-      "status": "pending",
+      "status": "passed",
       "command": "npm run license:check",
-      "checkedCommitSha": null,
-      "verifiedAt": null
+      "checkedCommitSha": "cab7a3b9dbdf8d2922506e9207242d537347d720",
+      "verifiedAt": "2026-08-26T05:04:12Z"
     },
     "prettier": {
-      "status": "pending",
+      "status": "passed",
       "command": "npm run format:check",
-      "checkedCommitSha": null,
-      "verifiedAt": null
+      "checkedCommitSha": "cab7a3b9dbdf8d2922506e9207242d537347d720",
+      "verifiedAt": "2026-08-26T05:04:12Z"
     },
     "gitDiffCheck": {
-      "status": "pending",
+      "status": "passed",
       "command": "git diff --check",
-      "checkedCommitSha": null,
-      "verifiedAt": null
+      "checkedCommitSha": "cab7a3b9dbdf8d2922506e9207242d537347d720",
+      "verifiedAt": "2026-08-26T05:04:12Z"
     }
   },
   "deployment": {
     "status": "verified",
-    "commitSha": "7355bb1c05aecd7452ec82333652d5070927947e",
-    "workflowRunId": "32888564295",
-    "workflowUrl": "https://github.com/Huntsman1756/concursos_cyl/actions/runs/32888564295",
+    "commitSha": "cab7a3b9dbdf8d2922506e9207242d537347d720",
+    "workflowRunId": "32896247977",
+    "workflowUrl": "https://github.com/Huntsman1756/concursos_cyl/actions/runs/32896247977",
     "liveRootVerified": true,
-    "verifiedAt": "2026-08-25T19:34:35Z",
-    "releaseTag": "v2026.08.25-candidate",
+    "verifiedAt": "2026-08-26T05:04:12Z",
+    "releaseTag": "v2026.08.25-candidate.2",
     "versionJsonUrl": "https://huntsman1756.github.io/concursos_cyl/version.json",
-    "versionJsonCommitSha": "7355bb1c05aecd7452ec82333652d5070927947e",
+    "versionJsonCommitSha": "cab7a3b9dbdf8d2922506e9207242d537347d720",
     "versionJsonSchemaVersion": "1.0.0",
-    "versionJsonVerifiedAt": "2026-08-25T19:28:17Z"
+    "versionJsonVerifiedAt": "2026-08-26T05:04:12Z"
   },
   "publicVerification": {
     "status": "verified",
     "rootUrl": "https://salida-cyl.157-90-22-40.sslip.io/",
     "rootHttpStatus": 200,
     "manifestSha256": "92afc80f2b839ed95def95bc90bdd3b6ad3a1363fb12904f7b109fafc92b2f18",
-    "verifiedAt": "2026-08-25T19:34:35Z"
+    "verifiedAt": "2026-08-26T05:04:12Z"
   },
   "humanApproval": {
     "finalApplicationTextApproved": false,
@@ -109,7 +109,27 @@
     "submissionAuthorized": false
   },
   "blockers": [
-    "La captura nativa final A4 y la captura del release actual siguen pendientes; las 13 capturas existentes son históricas del producto ae66d5bc8393dbb02818471ad7eb850e4d4367de y no prueban el producto actual.",
-    "La presentación al concurso requiere autorización humana explícita separada; submissionAuthorized permanece false."
-  ]
+    "La presentación externa requiere autorización humana explícita para identidad, contacto, declaraciones, consentimiento y envío; submissionAuthorized permanece false."
+  ],
+  "candidatePlan": {
+    "baseline": {
+      "status": "verified",
+      "commitSha": "cab7a3b9dbdf8d2922506e9207242d537347d720",
+      "releaseTag": "v2026.08.25-candidate.2",
+      "pagesVpsStatus": "verified",
+      "versionJsonStatus": "verified",
+      "a4Status": "passed",
+      "captureCount": 13
+    },
+    "documentaryBranch": "codex/final-candidature-coherence-20260826",
+    "documentaryBaseHeadSha": "25fc0f89097e107eb47c49b0a848ba822bc4cea1",
+    "finalCandidate": {
+      "status": "pending",
+      "releaseTag": "v2026.08.26-candidate.3",
+      "commitSha": null,
+      "pagesVpsStatus": "pending",
+      "versionJsonStatus": "pending",
+      "a4Status": "pending"
+    }
+  }
 }

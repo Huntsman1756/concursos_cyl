@@ -57,7 +57,7 @@ La cifra de ofertas es una unión de IDs de ofertas que pasan las reglas de matc
 
 ## Reproducibilidad
 
-Comandos previstos para repetir las comprobaciones. Este documento no los da por ejecutados hasta que `release-evidence.json` quede verificado y ligado al commit de publicación:
+Comandos ejecutados y ligados al commit de publicación en `release-evidence.json`:
 
 ```text
 npm run data:build
@@ -76,13 +76,27 @@ npm exec -- tsx scripts/release/validateContestFreeze.ts
 
 La revisión independiente confirmó el manifest, sus 21 recursos, los conjuntos de relaciones y la ausencia de cambios en las rutas de frontera congelada (`config/candidate-resource-allowlist.json`, `analysis/fp_coverage_expansion_results.json`, `analysis/fp_one_word_publication_reviews.json`, `data/catalogs`, `data/curated`, `data/schemas`, `public/data`, `scripts/analysis/validateFpOneWordPublicationReview.ts`, `scripts/data/validateCuratedMappings.ts`, `src/domain/offerMatching.ts`, `src/domain/requirements.ts`) desde el commit fuente. Las rutas de UI, búsqueda y print quedan fuera de esta frontera y no se presentan como parte del freeze.
 
-## Despliegue
+## Baseline funcional verificada
 
 - URL raíz esperada: [https://salida-cyl.157-90-22-40.sslip.io/](https://salida-cyl.157-90-22-40.sslip.io/)
-- Commit desplegado: `7355bb1c05aecd7452ec82333652d5070927947e`.
-- Run del workflow: `32888564295`.
+- Commit de baseline desplegado: `cab7a3b9dbdf8d2922506e9207242d537347d720`.
+- Run del workflow: `32896247977`.
 
-- Release: `v2026.08.25-candidate`.
-- `version.json` observado: [respuesta pública](https://huntsman1756.github.io/concursos_cyl/version.json) con commit `7355bb1c05aecd7452ec82333652d5070927947e`.
+- Release funcional de referencia: `v2026.08.25-candidate.2`.
+- `version.json` observado: [respuesta pública](https://huntsman1756.github.io/concursos_cyl/version.json) con commit `cab7a3b9dbdf8d2922506e9207242d537347d720`.
 
-El release público se verificó con el commit `7355bb1c05aecd7452ec82333652d5070927947e` y el run `32888564295` el 2026-08-25T19:34:35Z.
+La baseline funcional publicada se verificó con el commit `cab7a3b9dbdf8d2922506e9207242d537347d720` y el run `32896247977` el 2026-08-26T05:04:12Z.
+
+## Estado temporal de la candidatura
+
+- Baseline funcional verificada: commit `cab7a3b9dbdf8d2922506e9207242d537347d720`, release funcional de referencia `v2026.08.25-candidate.2`.
+- Pages y VPS de la baseline: verificados con ese SHA; `version.json`: verificado y coincidente.
+- A4 de la baseline: 13/13 capturas PASS.
+- Rama documental actual: `codex/final-candidature-coherence-20260826`.
+- HEAD documental de referencia antes de esta corrección: `25fc0f89097e107eb47c49b0a848ba822bc4cea1`.
+- Release candidata final: **PENDIENTE**.
+- Nombre previsto: `v2026.08.26-candidate.3`.
+- SHA final: **PENDIENTE HASTA EL MERGE**.
+- Pages/VPS finales: **PENDIENTES**.
+- `version.json` final: **PENDIENTE**.
+- A4 final sobre ese SHA: **PENDIENTE**.
