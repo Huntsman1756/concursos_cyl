@@ -136,8 +136,7 @@ describe("contest submission renderer", () => {
           captureCount: 13,
         },
         documentaryBranch: "codex/final-candidature-coherence-20260826",
-        documentaryBaseHeadSha:
-          "25fc0f89097e107eb47c49b0a848ba822bc4cea1",
+        documentaryBaseHeadSha: "25fc0f89097e107eb47c49b0a848ba822bc4cea1",
         finalCandidate: {
           status: "pending",
           releaseTag: "v2026.08.26-candidate.3",
@@ -157,7 +156,9 @@ describe("contest submission renderer", () => {
     ] as const) {
       expect(rendered[name]).toContain("Baseline funcional verificada");
       expect(rendered[name]).toContain("v2026.08.25-candidate.2");
-      expect(rendered[name]).toContain("Release candidata final: **PENDIENTE**");
+      expect(rendered[name]).toContain(
+        "Release candidata final: **PENDIENTE**",
+      );
       expect(rendered[name]).toContain(
         "Nombre previsto: `v2026.08.26-candidate.3`",
       );

@@ -6,7 +6,9 @@ Candidatura al [X Concurso de Datos Abiertos de Castilla y León](https://datosa
 
 SALIDA CyL convierte datos públicos dispersos en una decisión formativa y laboral. Responde «¿en qué puedo trabajar con mi FP?» y «¿qué FP me lleva a esta ocupación?». La persona puede empezar en un ciclo o en una ocupación, consultar relaciones revisadas, contrastar ofertas de una instantánea y localizar centros, modalidades y contexto territorial. Cuando la evidencia no basta, la aplicación deja la relación pendiente y lo explica en lugar de inventarla.
 
-La referencia pública de esta memoria es el producto `cab7a3b9dbdf8d2922506e9207242d537347d720`, publicado como `v2026.08.25-candidate.2`. Pages y VPS devuelven ese mismo SHA en `version.json`. El paquete visual automatizado está completo: 13/13 capturas recapturadas el 26 de agosto de 2026 desde un contexto anónimo y ligadas a ese commit.
+La baseline funcional verificada de esta memoria es el producto `cab7a3b9dbdf8d2922506e9207242d537347d720`, con la release funcional de referencia `v2026.08.25-candidate.2`. Pages y VPS devuelven ese mismo SHA en `version.json`. El paquete visual de la baseline está completo: 13/13 capturas recapturadas el 26 de agosto de 2026 desde un contexto anónimo y ligadas a ese commit.
+
+La candidatura final posterior al merge todavía no está publicada. Esta entrega documental se prepara en la rama `codex/final-candidature-coherence-20260826`, abierta desde el HEAD documental de referencia `25fc0f89097e107eb47c49b0a848ba822bc4cea1`. La release candidata final prevista es `v2026.08.26-candidate.3`; su SHA, Pages/VPS, `version.json` y A4 final quedan **PENDIENTES HASTA EL MERGE**.
 
 ## 1. Utilidad
 

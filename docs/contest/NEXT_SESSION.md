@@ -1,56 +1,41 @@
-# Próxima sesión: última etiqueta y autorización separada
+# Próxima sesión: publicar la PR documental y cerrar la release
 
-## Estado cerrado de producto y evidencia
+## Estado temporal inequívoco
 
 - Repositorio canónico: <https://github.com/Huntsman1756/concursos_cyl>.
-- Rama estable: `main`, protegida mediante PR, checks y revisión.
-- Producto público verificado: `cab7a3b9dbdf8d2922506e9207242d537347d720`.
-- Release público actual: `v2026.08.25-candidate.2`.
-- Workflow de GitHub Pages: [`32896247977`](https://github.com/Huntsman1756/concursos_cyl/actions/runs/32896247977), completado correctamente.
-- `version.json` de Pages y VPS devuelve el mismo commit `cab7a3b9dbdf8d2922506e9207242d537347d720`.
-- Snapshot activo: `20260822085631889-7bbe69380f6d`.
-- Cobertura congelada: 113 cualificaciones base, 130 claves de modalidad,
-  264 relaciones aprobadas, 21 alias, 21 recursos inmutables y 116 registros
-  canónicos de SEPE.
-- El paquete de evidencia automatizada está completo: **13/13** capturas,
-  recapturadas el 2026-08-26 desde un contexto anónimo contra el VPS, con
-  SHA-256 y provenance del commit público. El registro está en
-  `docs/contest/evidence-capture.json` y la evidencia de release en
-  `docs/contest/release-evidence.json`.
-- La evidencia de release queda `verified` para la publicación
-  `cab7a3b9…` y conserva como `auditHeadSha` el commit de evidencia
-  `a7932d0ecfa56ac9ffef79cb7fa0ab4417ad6256`. La autorización humana para el
-  envío externo continúa deliberadamente en `false`.
+- Baseline funcional verificada: commit `cab7a3b9dbdf8d2922506e9207242d537347d720`.
+- Release funcional de referencia: `v2026.08.25-candidate.2`.
+- Pages y VPS de la baseline están verificados con ese SHA; `version.json` coincide.
+- A4 de la baseline: **13/13 capturas PASS**, recapturadas el 2026-08-26 desde contexto anónimo.
+- Rama documental actual: `codex/final-candidature-coherence-20260826`.
+- HEAD documental de referencia al iniciar esta corrección: `25fc0f89097e107eb47c49b0a848ba822bc4cea1`.
+- Release candidata definitiva posterior al merge: **PENDIENTE**.
+- Nombre previsto: `v2026.08.26-candidate.3`.
+- SHA final: **PENDIENTE HASTA EL MERGE**.
+- Pages/VPS finales: **PENDIENTES**.
+- `version.json` final: **PENDIENTE**.
+- A4 final sobre ese SHA: **PENDIENTE**.
 
-## Cierre de candidatura
+Candidate.2 es únicamente la baseline funcional observada. No se debe presentar como la release definitiva posterior al merge ni reutilizar su SHA, tag, run, `version.json` o capturas como evidencia de candidate.3.
 
-- La memoria de jurado responde por separado a los siete criterios y tiene
-  menos de 1.000 palabras.
-- El recorrido corto recomendado es: `IFC02S` → CNO 3820 → Datos abiertos.
-- La documentación se refiere a una única revisión pública: producto
-  `cab7a3b9…`, release `v2026.08.25-candidate.2`, Pages/VPS verificados y
-  evidencia visual 13/13.
-- La PR documental no cambia `src/`, datasets, matching, CSS, workflows ni
-  comportamiento del producto.
+## Secuencia operativa obligatoria
 
-## Última operación después del merge
+1. Hacer push de `codex/final-candidature-coherence-20260826`.
+2. Abrir la PR exclusivamente documental/release-evidence.
+3. Esperar CI y completar la revisión de la documentación y de las capturas.
+4. Fusionar la PR a `main` tras la aprobación correspondiente.
+5. Obtener el SHA real resultante de `main`; no anticiparlo en esta rama.
+6. Verificar la publicación de Pages y VPS y observar el `version.json` servido.
+7. Crear `v2026.08.26-candidate.3` sobre ese SHA real.
+8. Ejecutar y registrar el A4 final sobre ese SHA.
+9. Actualizar la evidencia observacional con el SHA, Pages/VPS, `version.json` y A4 reales; ejecutar los validadores y congelar la candidatura.
+10. Obtener por separado la autorización humana para identidad, declaraciones, consentimiento y envío externo.
 
-1. Fusionar la PR documental con checks y revisión de los PNG en contexto
-   anónimo.
-2. Crear la etiqueta `v2026.08.26-candidate.3` sobre el SHA exacto del merge.
-3. Dejar que Pages y VPS publiquen ese SHA y comprobar de nuevo ambos
-   `version.json`; no reutilizar el SHA o el run de `candidate.2` para esa
-   publicación.
-4. No añadir funcionalidad ni abrir otra ronda de rediseño.
+Tras el merge será necesaria una actualización observacional mínima para sustituir los campos `PENDIENTE` por los valores reales de candidate.3. No se debe inventar ese SHA antes del merge.
 
-La etiqueta `candidate.3` todavía no es una publicación observada en este
-checkout; no debe aparecer como release verificado hasta completar esos pasos.
+## Límites
 
-## Runtime y límites
-
-- Runtime V4 permanece en `BOUNDED_LOCAL` y `ANALYSIS_ONLY`.
-- `publicationThroughRuntimeV4` permanece en `false`; no se anuncia una
-  procedencia V4 firmada ni se habilita `REQUIRED`.
-- La candidatura usa la raíz VPS pública; GitHub Pages conserva la fallback.
-- Identidad, contacto, declaraciones, consentimiento y envío externo requieren
-  aprobación humana explícita. Este repositorio no envía la solicitud.
+- La documentación no cambia `src/`, datasets, matching, CSS, workflows ni comportamiento del producto.
+- Runtime V4 permanece en `BOUNDED_LOCAL` y `ANALYSIS_ONLY`; `publicationThroughRuntimeV4` permanece en `false`.
+- La candidatura usa la raíz VPS pública y GitHub Pages como fallback.
+- Este repositorio no envía la solicitud externa ni decide los campos de aprobación humana.

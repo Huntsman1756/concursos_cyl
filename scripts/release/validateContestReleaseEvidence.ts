@@ -261,7 +261,12 @@ function validateCandidatePlan(
 ): ContestCandidatePlan {
   const plan = exactKeys(
     value,
-    ["baseline", "documentaryBranch", "documentaryBaseHeadSha", "finalCandidate"],
+    [
+      "baseline",
+      "documentaryBranch",
+      "documentaryBaseHeadSha",
+      "finalCandidate",
+    ],
     "candidatePlan",
   );
   const baseline = exactKeys(
@@ -391,7 +396,9 @@ function validateCandidatePlan(
     );
   }
   if (finalCandidate.a4Status !== "pending") {
-    throw new Error("candidatePlan.finalCandidate.a4Status must remain pending");
+    throw new Error(
+      "candidatePlan.finalCandidate.a4Status must remain pending",
+    );
   }
 
   return {

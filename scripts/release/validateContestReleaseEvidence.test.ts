@@ -88,8 +88,7 @@ function evidenceWithCandidatePlan(): ContestReleaseEvidence & {
     candidatePlan: CandidatePlan;
   };
   evidence.deployment.releaseTag = "v2026.08.22";
-  evidence.deployment.versionJsonUrl =
-    "https://example.invalid/version.json";
+  evidence.deployment.versionJsonUrl = "https://example.invalid/version.json";
   evidence.deployment.versionJsonCommitSha = PUBLICATION_SHA;
   evidence.deployment.versionJsonSchemaVersion = "1.0.0";
   evidence.deployment.versionJsonVerifiedAt = VERIFIED_AT;
