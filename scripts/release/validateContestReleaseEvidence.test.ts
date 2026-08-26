@@ -190,9 +190,18 @@ describe("contest release evidence validator", () => {
       validateContestReleaseEvidence(mismatchedBaseline, context),
     ).toThrow(/candidatePlan|baseline|publication|commit/i);
 
-    const claimedFinal = evidenceWithCandidatePlan();
-    claimedFinal.candidatePlan.finalCandidate.status = "verified";
-    claimedFinal.candidatePlan.finalCandidate.commitSha = PUBLICATION_SHA;
+    const pendingFinal = evidenceWithCandidatePlan();
+    const claimedFinal = {
+      ...pendingFinal,
+      candidatePlan: {
+        ...pendingFinal.candidatePlan,
+        finalCandidate: {
+          ...pendingFinal.candidatePlan.finalCandidate,
+          status: "verified",
+          commitSha: PUBLICATION_SHA,
+        },
+      },
+    };
     expect(() => validateContestReleaseEvidence(claimedFinal, context)).toThrow(
       /candidatePlan|final|pending/i,
     );
