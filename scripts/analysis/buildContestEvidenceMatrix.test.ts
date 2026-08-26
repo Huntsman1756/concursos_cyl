@@ -208,12 +208,13 @@ describe("contest evidence matrix", () => {
       const scriptPath = resolve(
         "scripts/analysis/buildContestEvidenceMatrix.ts",
       );
-      const tsxPath = resolve("node_modules/.bin/tsx");
-      execFileSync(
-        tsxPath,
-        [scriptPath, "--source-commit", fixture.sourceCommitSha],
-        { cwd: fixture.root },
-      );
+      const tsxCli = resolve("node_modules/tsx/dist/cli.mjs");
+      const runTsx = (args: readonly string[]) =>
+        execFileSync(process.execPath, [tsxCli, ...args], {
+          cwd: fixture.root,
+          stdio: "pipe",
+        });
+      runTsx([scriptPath, "--source-commit", fixture.sourceCommitSha]);
       execFileSync("git", ["add", "."], { cwd: fixture.root });
       execFileSync("git", ["commit", "-qm", "generated outputs"], {
         cwd: fixture.root,
@@ -225,23 +226,13 @@ describe("contest evidence matrix", () => {
         cwd: fixture.root,
       });
 
-      expect(() =>
-        execFileSync(tsxPath, [scriptPath, "--check"], {
-          cwd: fixture.root,
-          stdio: "pipe",
-        }),
-      ).not.toThrow();
+      expect(() => runTsx([scriptPath, "--check"])).not.toThrow();
 
       writeFileSync(
         join(fixture.root, "analysis", "contest_evidence_matrix.md"),
         "stale\n",
       );
-      expect(() =>
-        execFileSync(tsxPath, [scriptPath, "--check"], {
-          cwd: fixture.root,
-          stdio: "pipe",
-        }),
-      ).toThrow();
+      expect(() => runTsx([scriptPath, "--check"])).toThrow();
     });
   });
 

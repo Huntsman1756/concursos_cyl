@@ -6,15 +6,91 @@ import {
   mkdirSync,
   readFileSync,
   rmSync,
+  statSync,
+  symlinkSync,
   writeFileSync,
 } from "node:fs";
 import { tmpdir } from "node:os";
-import { join, resolve } from "node:path";
+import { delimiter, dirname, join, resolve } from "node:path";
 
 import { describe, expect, it } from "vitest";
 
 const root = resolve(import.meta.dirname, "../..");
 const scriptPath = resolve(root, "scripts/release/deployVps.sh");
+
+/**
+ * Resolves a POSIX shell for the deployment harness. deployVps.sh is a POSIX
+ * deployment script, so its execution tests require a real POSIX shell; the
+ * static contract tests run everywhere. On Windows the shell is only present
+ * when Git for Windows (or another POSIX environment) is installed, so the
+ * harness resolves it explicitly instead of assuming `sh` is on PATH.
+ */
+function resolvePosixShell(): string | null {
+  const probe = spawnSync("sh", ["-c", "exit 0"], { stdio: "ignore" });
+  if (probe.error === undefined && probe.status === 0) return "sh";
+  if (process.platform !== "win32") return null;
+  const programFiles = process.env.ProgramFiles ?? "C:\\Program Files";
+  const programFilesX86 =
+    process.env["ProgramFiles(x86)"] ?? "C:\\Program Files (x86)";
+  const localAppData = process.env.LOCALAPPDATA;
+  const candidates = [
+    join(programFiles, "Git", "usr", "bin", "sh.exe"),
+    join(programFiles, "Git", "bin", "sh.exe"),
+    join(programFilesX86, "Git", "usr", "bin", "sh.exe"),
+    join(programFilesX86, "Git", "bin", "sh.exe"),
+    ...(localAppData === undefined
+      ? []
+      : [
+          join(localAppData, "Programs", "Git", "usr", "bin", "sh.exe"),
+          join(localAppData, "Programs", "Git", "bin", "sh.exe"),
+        ]),
+  ];
+  for (const candidate of candidates) {
+    if (pathExists(candidate)) return candidate;
+  }
+  return null;
+}
+
+const posixShell = resolvePosixShell();
+
+/**
+ * The fake scripts are POSIX sh. When the resolved shell comes from a Git for
+ * Windows installation, its coreutils live next to it and must stay on the
+ * child PATH (Git Bash auto-converts the Windows-style PATH it receives).
+ */
+function childPath(...extraDirs: readonly string[]): string {
+  const shellDirs =
+    posixShell !== null && posixShell !== "sh" ? [dirname(posixShell)] : [];
+  return [...extraDirs, ...shellDirs, process.env.PATH ?? ""]
+    .filter((entry) => entry !== "")
+    .join(delimiter);
+}
+
+/**
+ * Creates a portable symbolic link. Windows lacks the privileges to create a
+ * native file symlink in the test sandbox, so a directory target becomes a
+ * junction, which Git Bash still reports through `test -L`.
+ */
+function createSymlink(target: string, linkPath: string): void {
+  const targetIsDirectory = (() => {
+    try {
+      return statSync(target).isDirectory();
+    } catch {
+      return false;
+    }
+  })();
+  try {
+    symlinkSync(target, linkPath, targetIsDirectory ? "dir" : "file");
+    return;
+  } catch {
+    const result = spawnSync("ln", ["-s", target, linkPath], {
+      stdio: "ignore",
+    });
+    if (result.error !== undefined || result.status !== 0) {
+      throw new Error(`could not create test symlink ${linkPath}`);
+    }
+  }
+}
 
 function writeExecutable(path: string, contents: string): void {
   writeFileSync(path, contents, "utf8");
@@ -46,11 +122,11 @@ esac
   writeExecutable(join(fakeBin, "npm"), "#!/bin/sh\nexit 77\n");
 
   try {
-    return spawnSync("sh", [scriptPath, ...args], {
+    return spawnSync(posixShell ?? "sh", [scriptPath, ...args], {
       encoding: "utf8",
       env: {
         ...process.env,
-        PATH: `${fakeBin}:${process.env.PATH ?? ""}`,
+        PATH: childPath(fakeBin),
       },
     });
   } finally {
@@ -113,22 +189,26 @@ printf '{"schemaVersion":"1.0.0","commit":"%s"}\\n' "$3" > "$2/version.json"
     '#!/bin/sh\nprintf \'%s\\n\' "$*" >> "$SSH_COMMAND_FILE"\ncase "${SSH_MODE:-}" in\n  release-exists) exit 17;;\nesac\ncase "$*" in\n  *version.json*) printf \'%s\\n\' "${OBSERVED_SHA:-}";;\n  *readlink*) printf \'%s\\n\' "${OBSERVED_TARGET:-}";;\nesac\nexit "${SSH_EXIT:-0}"\n',
   );
 
-  const result = spawnSync("sh", [scriptPath, "salida-cyl-vps", "round-1"], {
-    encoding: "utf8",
-    env: {
-      ...process.env,
-      CADDY_VERIFY_EXIT: String(options.verifyExit ?? 0),
-      FIXTURE_ROOT: fixtureRoot,
-      PATH: `${fakeBin}:${process.env.PATH ?? ""}`,
-      OBSERVED_SHA: options.observedSha ?? "",
-      OBSERVED_TARGET: options.observedTarget ?? "",
-      SSH_COMMAND_FILE: sshCommandFile,
-      SSH_EXIT: String(options.sshExit ?? 0),
-      SSH_MODE: options.sshMode ?? "",
-      SCP_EXIT: String(options.scpExit ?? 0),
-      TRACE_FILE: traceFile,
+  const result = spawnSync(
+    posixShell ?? "sh",
+    [scriptPath, "salida-cyl-vps", "round-1"],
+    {
+      encoding: "utf8",
+      env: {
+        ...process.env,
+        CADDY_VERIFY_EXIT: String(options.verifyExit ?? 0),
+        FIXTURE_ROOT: fixtureRoot,
+        PATH: childPath(fakeBin),
+        OBSERVED_SHA: options.observedSha ?? "",
+        OBSERVED_TARGET: options.observedTarget ?? "",
+        SSH_COMMAND_FILE: sshCommandFile,
+        SSH_EXIT: String(options.sshExit ?? 0),
+        SSH_MODE: options.sshMode ?? "",
+        SCP_EXIT: String(options.scpExit ?? 0),
+        TRACE_FILE: traceFile,
+      },
     },
-  });
+  );
   const sshCommand = readFileSync(sshCommandFile, "utf8");
   const remotePayload = sshCommand.slice(sshCommand.indexOf("set -eu"));
   if (!options.preserveSandbox) {
@@ -180,13 +260,13 @@ function runRemotePayloadInIsolation(
     writeFileSync(join(sandbox, "old-target"), "keep", "utf8");
     writeFileSync(finalRelease, "dangling", "utf8");
     rmSync(finalRelease);
-    spawnSync("ln", ["-s", join(sandbox, "old-target"), finalRelease]);
+    createSymlink(join(sandbox, "old-target"), finalRelease);
   }
   if (options.existingCurrentNext === "directory") {
     mkdirSync(currentNext);
     writeFileSync(join(currentNext, "marker"), "keep", "utf8");
   } else if (options.existingCurrentNext === "symlink") {
-    spawnSync("ln", ["-s", join(sandbox, "old-target"), currentNext]);
+    createSymlink(join(sandbox, "old-target"), currentNext);
   }
 
   writeExecutable(
@@ -203,16 +283,20 @@ function runRemotePayloadInIsolation(
     '#!/bin/sh\nexit "${SYSTEMCTL_EXIT:-0}"\n',
   );
   writeExecutable(join(fakeBin, "find"), '#!/bin/sh\nexit "${FIND_EXIT:-0}"\n');
+  writeExecutable(
+    join(fakeBin, "ln"),
+    '#!/bin/sh\nif [ "$1" = "-s" ]; then\n  node -e "const fs=require(\'node:fs\');const t=process.argv[1];const l=process.argv[2];let isDir=false;try{isDir=fs.statSync(t).isDirectory()}catch{}fs.symlinkSync(t,l,isDir?\'dir\':\'file\')" "$2" "$3"\n  exit $?\nfi\nexit 1\n',
+  );
 
   const remappedPayload = remotePayload
     .replaceAll("/srv/salida-cyl", join(sandbox, "srv", "salida-cyl"))
     .replaceAll(/\/tmp\/salida-cyl-round-1\.tar\.gz\.[A-Za-z0-9]+/g, archive);
-  const result = spawnSync("sh", ["-c", remappedPayload], {
+  const result = spawnSync(posixShell ?? "sh", ["-c", remappedPayload], {
     encoding: "utf8",
     env: {
       ...process.env,
       FIND_EXIT: String(options.findExit ?? 0),
-      PATH: `${fakeBin}:${process.env.PATH ?? ""}`,
+      PATH: childPath(fakeBin),
       SYSTEMCTL_EXIT: String(options.systemctlExit ?? 0),
       TAR_EXIT: String(options.tarExit ?? 0),
     },
@@ -228,7 +312,7 @@ function runRemotePayloadInIsolation(
   return { result, state };
 }
 
-describe("VPS deployment", () => {
+describe("VPS deployment contract", () => {
   it("serves the root build with HTTPS, SPA fallback and hardened headers", () => {
     const caddyfile = readFileSync(
       resolve(root, "deploy/vps/Caddyfile"),
@@ -329,11 +413,15 @@ describe("VPS deployment", () => {
       previousIndex = index;
     }
   });
+});
 
+describe.skipIf(posixShell === null)("VPS deployment POSIX execution", () => {
   it("rejects an unsafe SSH host before attempting deployment", () => {
-    const result = spawnSync("sh", [scriptPath, "host with spaces"], {
-      encoding: "utf8",
-    });
+    const result = spawnSync(
+      posixShell ?? "sh",
+      [scriptPath, "host with spaces"],
+      { encoding: "utf8" },
+    );
 
     expect(result.status).toBe(1);
     expect(result.stderr).toContain("SSH host contains unsupported characters");
