@@ -110,5 +110,26 @@
   },
   "blockers": [
     "La presentación externa requiere autorización humana explícita para identidad, contacto, declaraciones, consentimiento y envío; submissionAuthorized permanece false."
-  ]
+  ],
+  "candidatePlan": {
+    "baseline": {
+      "status": "verified",
+      "commitSha": "cab7a3b9dbdf8d2922506e9207242d537347d720",
+      "releaseTag": "v2026.08.25-candidate.2",
+      "pagesVpsStatus": "verified",
+      "versionJsonStatus": "verified",
+      "a4Status": "passed",
+      "captureCount": 13
+    },
+    "documentaryBranch": "codex/final-candidature-coherence-20260826",
+    "documentaryBaseHeadSha": "25fc0f89097e107eb47c49b0a848ba822bc4cea1",
+    "finalCandidate": {
+      "status": "pending",
+      "releaseTag": "v2026.08.26-candidate.3",
+      "commitSha": null,
+      "pagesVpsStatus": "pending",
+      "versionJsonStatus": "pending",
+      "a4Status": "pending"
+    }
+  }
 }
