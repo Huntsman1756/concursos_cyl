@@ -14,6 +14,6 @@ La representatividad de las tablas nacionales es la declarada por el Ministerio:
 
 ## Producto y release
 
-Las rutas internas son recorridos de producto; la candidatura usa únicamente la raíz pública. La experiencia no requiere cuentas y no conserva selecciones, búsquedas, respuestas ni resultados. Solo recuerda en `localStorage` la preferencia no sensible del modo de búsqueda («desde FP» o «desde ocupación»). La accesibilidad, el responsive y la semántica se deben confirmar de nuevo en la sesión de capturas finales.
+Las rutas internas son recorridos de producto; la candidatura usa únicamente la raíz pública. La experiencia no requiere cuentas y no conserva selecciones, búsquedas, respuestas ni resultados. Solo recuerda en `localStorage` la preferencia no sensible del modo de búsqueda («desde FP» o «desde ocupación»). La accesibilidad automatizada, el responsive y la semántica se comprobaron de nuevo durante la captura final.
 
-El objetivo de ampliar la cobertura está condicionado a evidencia: el freeze actual registra 113 cualificaciones distintas y deja 0 programas diferidos. El despliegue público está verificado para el commit `7355bb1c05aecd7452ec82333652d5070927947e`; la verificación de rutas y recursos queda registrada en `docs/contest/release-evidence.json`.
+El objetivo de ampliar la cobertura está condicionado a evidencia: el freeze actual registra 113 cualificaciones distintas y deja 0 programas diferidos. El despliegue público está verificado para el commit `cab7a3b9dbdf8d2922506e9207242d537347d720`; la verificación de rutas y recursos queda registrada en `docs/contest/release-evidence.json`.

@@ -16,21 +16,22 @@
 - Fallback verificada: [https://huntsman1756.github.io/concursos_cyl/](https://huntsman1756.github.io/concursos_cyl/)
 - Commit fuente del freeze: `ff9e6197f926e462bea1a3e8ac6a57a23d3f825a`.
 - Snapshot: `20260822085631889-7bbe69380f6d`.
-- Commit desplegado: `7355bb1c05aecd7452ec82333652d5070927947e`.
-- Run del workflow: `32888564295`.
-- Release: `v2026.08.25-candidate`.
-- `version.json` verificado: [respuesta pública](https://huntsman1756.github.io/concursos_cyl/version.json) con commit igual a `7355bb1c05aecd7452ec82333652d5070927947e`.
-- Evidencia visual: captura visual actual pendiente; las 13 capturas anteriores son históricas.
+- Commit desplegado: `cab7a3b9dbdf8d2922506e9207242d537347d720`.
+- Run del workflow: `32896247977`.
+- Release: `v2026.08.25-candidate.2`.
+- `version.json` verificado: [respuesta pública](https://huntsman1756.github.io/concursos_cyl/version.json) con commit igual a `cab7a3b9dbdf8d2922506e9207242d537347d720`.
+- Evidencia visual: **capturada y validada en `docs/contest/evidence-capture.json`**.
 
 ## Evidencia visual y gate final
 
+- [x] Captura automatizada A4: 13/13 capturas actuales recapturadas y validadas en `docs/contest/evidence-capture.json`.
 - [ ] Ejecutar la captura nativa OS A4 en un Mac desbloqueado.
 - [ ] Revisar la aplicación pública del release actual en contexto anónimo, incluyendo las rutas de FP, ocupación y comparador.
-- [ ] Conservar solo capturas actuales, sin datos personales ni credenciales; las 13 capturas existentes son históricas.
-- [ ] Ejecutar los gates de release y verificar la aplicación pública.
+- [ ] Conservar solo capturas actuales, sin datos personales ni credenciales; el manifiesto contiene capturas actuales ligadas al commit de publicación.
+- [x] Ejecutar los gates de release y verificar la aplicación pública.
 - [x] Rellenar el commit desplegado y el run del workflow con datos observados.
-- [ ] Revisar las capturas en contexto anónimo, sin datos personales ni credenciales.
-- [ ] Confirmar que las cifras visibles siguen coincidiendo con `20260822085631889-7bbe69380f6d`. (evidencia visual pendiente)
+- [ ] Revisar las capturas en contexto anónimo, sin datos personales ni credenciales. (capturas actuales; revisión humana pendiente)
+- [ ] Confirmar que las cifras visibles siguen coincidiendo con `20260822085631889-7bbe69380f6d`. (revisión humana pendiente)
 - [ ] Obtener aprobación humana explícita para la solicitud externa.
 
 **PENDIENTE DE APROBACIÓN HUMANA:** este repositorio no envía la solicitud al concurso ni decide los campos de identidad, contacto, declaraciones o consentimiento.

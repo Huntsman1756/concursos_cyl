@@ -302,6 +302,10 @@ function renderSubmissionChecklist(
   const captureInventoryLine = deployment.capturesAreCurrent
     ? "el manifiesto contiene capturas actuales ligadas al commit de publicación."
     : "las 13 capturas existentes son históricas.";
+  const automatedCaptureGate =
+    deployment.capturesAreCurrent && deployment.captureCount !== null
+      ? `- [x] Captura automatizada A4: ${deployment.captureCount}/${deployment.captureCount} capturas actuales recapturadas y validadas en \`docs/contest/evidence-capture.json\`.`
+      : "- [ ] Captura automatizada A4: pendiente de recaptura y validación.";
 
   let visualEvidenceLine: string;
   let capturesReviewGate: string;
@@ -389,6 +393,7 @@ ${releaseTraceability}${versionJsonTraceability}- Evidencia visual: ${visualEvid
 
 ## Evidencia visual y gate final
 
+${automatedCaptureGate}
 - [ ] Ejecutar la captura nativa OS A4 en un Mac desbloqueado.
 - [ ] Revisar la aplicación pública del release actual en contexto anónimo, incluyendo las rutas de FP, ocupación y comparador.
 - [ ] Conservar solo capturas actuales, sin datos personales ni credenciales; ${captureInventoryLine}

@@ -111,6 +111,9 @@ describe("contest submission renderer", () => {
     expect(rendered["submission-checklist.md"]).not.toContain(
       "las 13 capturas existentes son históricas",
     );
+    expect(rendered["submission-checklist.md"]).toContain(
+      "- [x] Captura automatizada A4: 9/9 capturas actuales recapturadas y validadas",
+    );
   });
 
   it("marks captures as historical and leaves review gates unchecked when captureProductCommitSha differs", () => {

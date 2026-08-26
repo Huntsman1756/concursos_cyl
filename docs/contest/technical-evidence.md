@@ -57,7 +57,7 @@ La cifra de ofertas es una unión de IDs de ofertas que pasan las reglas de matc
 
 ## Reproducibilidad
 
-Comandos previstos para repetir las comprobaciones. Este documento no los da por ejecutados hasta que `release-evidence.json` quede verificado y ligado al commit de publicación:
+Comandos ejecutados y ligados al commit de publicación en `release-evidence.json`:
 
 ```text
 npm run data:build
@@ -79,10 +79,10 @@ La revisión independiente confirmó el manifest, sus 21 recursos, los conjuntos
 ## Despliegue
 
 - URL raíz esperada: [https://salida-cyl.157-90-22-40.sslip.io/](https://salida-cyl.157-90-22-40.sslip.io/)
-- Commit desplegado: `7355bb1c05aecd7452ec82333652d5070927947e`.
-- Run del workflow: `32888564295`.
+- Commit desplegado: `cab7a3b9dbdf8d2922506e9207242d537347d720`.
+- Run del workflow: `32896247977`.
 
-- Release: `v2026.08.25-candidate`.
-- `version.json` observado: [respuesta pública](https://huntsman1756.github.io/concursos_cyl/version.json) con commit `7355bb1c05aecd7452ec82333652d5070927947e`.
+- Release: `v2026.08.25-candidate.2`.
+- `version.json` observado: [respuesta pública](https://huntsman1756.github.io/concursos_cyl/version.json) con commit `cab7a3b9dbdf8d2922506e9207242d537347d720`.
 
-El release público se verificó con el commit `7355bb1c05aecd7452ec82333652d5070927947e` y el run `32888564295` el 2026-08-25T19:34:35Z.
+El release público se verificó con el commit `cab7a3b9dbdf8d2922506e9207242d537347d720` y el run `32896247977` el 2026-08-26T05:04:12Z.

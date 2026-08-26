@@ -7,7 +7,7 @@
 - Muestra determinista: 15 PASS y 0 FAIL en una segunda revisión independiente; 249 relaciones `not_sampled`.
 - Alcance de la muestra: delimitado y no exhaustivo. No convierte las 15 relaciones en una auditoría semántica completa del catálogo.
 - Matriz: las 15 relaciones seleccionadas están marcadas `sample_pass`; las 249 restantes, `not_sampled`.
-- Estado de release: publicación y capturas pendientes para el commit final. Las capturas anteriores son históricas y no verifican este freeze.
+- Estado de release: `v2026.08.25-candidate.2` está verificado para el commit `cab7a3b9dbdf8d2922506e9207242d537347d720`; Pages y VPS sirven ese mismo SHA y el paquete visual automatizado contiene 13/13 capturas actuales.
 - Límites humanos: adopción, piloto, identidad, consentimiento y envío externo permanecen pendientes de evidencia o autorización humana.
 
 La procedencia detallada de cada relación está en
