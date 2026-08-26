@@ -1,4 +1,4 @@
-# Próxima sesión: publicar la PR documental y cerrar la release
+# Próxima sesión: cerrar candidate.3 sin reabrir `main`
 
 ## Estado temporal inequívoco
 
@@ -18,20 +18,23 @@
 
 Candidate.2 es únicamente la baseline funcional observada. No se debe presentar como la release definitiva posterior al merge ni reutilizar su SHA, tag, run, `version.json` o capturas como evidencia de candidate.3.
 
-## Secuencia operativa obligatoria
+## Secuencia operativa obligatoria después de esta PR
 
-1. Hacer push de `codex/final-candidature-coherence-20260826`.
-2. Abrir la PR exclusivamente documental/release-evidence.
-3. Esperar CI y completar la revisión de la documentación y de las capturas.
-4. Fusionar la PR a `main` tras la aprobación correspondiente.
-5. Obtener el SHA real resultante de `main`; no anticiparlo en esta rama.
-6. Verificar la publicación de Pages y VPS y observar el `version.json` servido.
-7. Crear `v2026.08.26-candidate.3` sobre ese SHA real.
-8. Ejecutar y registrar el A4 final sobre ese SHA.
-9. Actualizar la evidencia observacional con el SHA, Pages/VPS, `version.json` y A4 reales; ejecutar los validadores y congelar la candidatura.
-10. Obtener por separado la autorización humana para identidad, declaraciones, consentimiento y envío externo.
+La PR #50 ya contiene el cierre documental. Con CI verde y la revisión aprobada:
 
-Tras el merge será necesaria una actualización observacional mínima para sustituir los campos `PENDIENTE` por los valores reales de candidate.3. No se debe inventar ese SHA antes del merge.
+1. Fusionar la PR #50 a `main`.
+2. Obtener el SHA real resultante de `main`; no anticiparlo en esta rama.
+3. Esperar y verificar Pages y VPS sobre ese SHA real.
+4. Comprobar que el `version.json` servido coincide exactamente con ese SHA.
+5. Crear `v2026.08.26-candidate.3` exactamente sobre ese mismo SHA.
+6. Ejecutar el A4 final contra ese despliegue y registrar sus 13/13 resultados.
+7. Generar una atestación final con SHA, tag, URLs, workflow/run, resultado A4 y hashes de las capturas.
+8. Adjuntar la atestación y las capturas a los assets de la GitHub Release `v2026.08.26-candidate.3` y actualizar su descripción si fuese necesario.
+9. **No crear otro commit en `main` para registrar esas observaciones ni para sustituir los campos `PENDIENTE` de los documentos versionados.**
+10. Aplicar freeze absoluto de la candidatura.
+11. Obtener por separado la autorización humana para identidad, declaraciones, consentimiento y envío externo.
+
+Los campos `PENDIENTE` de esta documentación versionada describen deliberadamente el estado pre-release. La evidencia observacional posterior al despliegue vive en la atestación y los assets de la GitHub Release candidate.3; los documentos de `main` no intentan autorreferenciar el SHA del commit que los contiene. Candidate.2 sigue siendo únicamente la baseline funcional verificada.
 
 ## Límites
 
