@@ -25,8 +25,6 @@
     "test:e2e:matrix": "tsx scripts/release/runPlaywright.ts --install chromium firefox webkit",
     "qa:assets:check": "tsx scripts/release/assetBudget.ts",
     "qa:distribution:check": "tsx scripts/release/distributionCheck.ts",
-    "orchestration:batch:test": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/Test-NanWorkerBatch.ps1",
-    "orchestration:test": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/Test-AgentOrchestration.ps1 && powershell -NoProfile -ExecutionPolicy Bypass -File scripts/Test-FrontierSupervisedNanWorker.ps1 && npm run orchestration:batch:test",
     "lint": "eslint .",
     "format:check": "prettier --check .",
     "typecheck": "tsc --noEmit",

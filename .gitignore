@@ -6,7 +6,6 @@ playwright-report/
 test-results/
 _codex_tmp/
 _codex_worktrees/
-.agent-runs/
 
 # Local environment
 .env
@@ -17,7 +16,31 @@ _codex_worktrees/
 .codex-tmp/
 .superpowers/
 .worktrees/
+.agent-orchestration/
+.agent-runs/
+.opencode/
+orchestration/
+profiles/
+policies/
+opencode.json
+AGENTS.md
 tmp/
+
+# Internal agent/orchestration tooling, docs and local analysis artifacts
+docs/agent-orchestration.md
+docs/nan-orchestration-runbook.md
+docs/plans/
+docs/superpowers/
+docs/evidence/nan-adaptive-admission-shakedown-2026-08-13.md
+docs/evidence/nan-provider-attribution-shakedown-2026-08-13.md
+docs/evidence/nan-shakedown-2026-08-13/
+scripts/orchestration/
+scripts/Invoke-*.ps1
+scripts/Test-*.ps1
+scripts/Test-Nan*.ps1
+scripts/fixtures/nan-edit-smoke.txt
+design-qa.md
+docs/contest/evidence/ci-green-20260816.log
 
 # Local accidental placeholder retained outside version control
 /=
