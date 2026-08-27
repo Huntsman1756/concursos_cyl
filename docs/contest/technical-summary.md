@@ -7,8 +7,8 @@
 - Muestra determinista: 15 PASS y 0 FAIL en una segunda revisión independiente; 249 relaciones `not_sampled`.
 - Alcance de la muestra: delimitado y no exhaustivo. No convierte las 15 relaciones en una auditoría semántica completa del catálogo.
 - Matriz: las 15 relaciones seleccionadas están marcadas `sample_pass`; las 249 restantes, `not_sampled`.
-- Baseline funcional verificada: `v2026.08.25-candidate.2` corresponde al commit `cab7a3b9dbdf8d2922506e9207242d537347d720`; Pages y VPS sirven ese mismo SHA y el paquete visual automatizado contiene 13/13 capturas actuales.
-- Release candidata definitiva posterior al merge: `v2026.08.26-candidate.3` **PENDIENTE**; su SHA, Pages/VPS, `version.json` y A4 final quedan **PENDIENTES HASTA EL MERGE**.
+- Baseline funcional verificada: `v2026.08.25-candidate.2` corresponde al commit `cab7a3b9dbdf8d2922506e9207242d537347d720`; Pages y VPS sirvieron ese mismo SHA cuando se verificó la baseline y el paquete visual automatizado contiene 13/13 capturas actuales.
+- Release candidata definitiva publicada: `v2026.08.26-candidate.3` en el commit `368c990b9be3cc3ba8cecb7f70acdd9d18593b51`; Pages y VPS sirven ese SHA en `version.json`, CI registró el run `32969467349` y el A4 final quedó registrado en los assets de la GitHub Release `v2026.08.26-candidate.3`.
 - Límites humanos: adopción, piloto, identidad, consentimiento y envío externo permanecen pendientes de evidencia o autorización humana.
 
 La procedencia detallada de cada relación está en

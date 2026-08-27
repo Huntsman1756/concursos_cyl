@@ -27,6 +27,8 @@ Generated public data is rebuilt only through `npm run data:build`. See [DATA_LI
 
 ## Publish
 
-GitHub Pages publishes the development branch at `https://huntsman1756.github.io/concursos_cyl/`. GitHub controls that host's response headers, so the deployed URL must be checked after every release. A reproducible Node 24 + Caddy 2 container provides the project's verified security-header policy; CI checks it with `npm run release:caddy:verify`. Operational details and verification commands are in [docs/deployment.md](docs/deployment.md).
+Every push to `main` runs the `Deploy GitHub Pages` workflow: license, contest proof, lint, unit and E2E tests, a Caddy header check and a production build all run on `ubuntu-latest`. Pull requests run the same verification without deploying.
+
+The primary deployment is the VPS at `https://salida-cyl.157-90-22-40.sslip.io/`, a root-based Caddy build with the project's verified security-header policy (checked by `npm run release:caddy:verify`). GitHub Pages at `https://huntsman1756.github.io/concursos_cyl/` is the fallback deployment; GitHub controls that host's response headers, so the deployed URL must be checked after every release. Both serve `version.json` with the deployed commit, and both must be verified after every deployment. Operational details and verification commands are in [docs/deployment.md](docs/deployment.md).
 
 Project code is MIT licensed. Source data retains the terms declared by each publisher.
