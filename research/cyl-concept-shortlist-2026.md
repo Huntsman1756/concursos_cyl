@@ -224,4 +224,4 @@ Solo entonces procede reducir de tres a uno.
 - [Catálogo oficial de datos abiertos JCyL](https://datosabiertos.jcyl.es/web/es/catalogo-datos/listado-conjuntos-datos.html)
 - [API/portal de análisis JCyL](https://analisis.datosabiertos.jcyl.es/)
 - [Ediciones anteriores del concurso](https://datosabiertos.jcyl.es/web/es/concurso-datos-abiertos/ediciones-anteriores.html)
-- [Corpus internacional de mecanismos](F:\castilla_leon_rev2\research\global-official-innovation-corpus.md)
+- [Corpus internacional de mecanismos](global-official-innovation-corpus.md)
