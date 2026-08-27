@@ -40,7 +40,6 @@ scripts/Test-*.ps1
 scripts/Test-Nan*.ps1
 scripts/fixtures/nan-edit-smoke.txt
 design-qa.md
-analysis/ecyl_fp_family_pilot_ranking.ipynb
 docs/contest/evidence/ci-green-20260816.log
 
 # Local accidental placeholder retained outside version control
