@@ -892,7 +892,7 @@ describe("buildSnapshots", { timeout: BUILD_SNAPSHOTS_TEST_TIMEOUT }, () => {
     const links = await readResource("trainingOccupationLinks");
 
     expect(occupations).toHaveLength(131);
-    expect(aliases).toHaveLength(21);
+    expect(aliases).toHaveLength(35);
     expect(links).toHaveLength(264);
     expect(
       ["2482", "2484", "2729", "3831", "7191", "7211", "7231", "9602"].every(

@@ -10,6 +10,7 @@ const reviewedPrograms = [
     programKey: "ADG02S",
     title: "Administración y Finanzas",
     occupationCodes: ["4111", "4113", "4123", "4223"],
+    expectedOfferCount: 2,
   },
   {
     programKey: "AFD01S",
@@ -45,6 +46,7 @@ const reviewedPrograms = [
     programKey: "TMV02M",
     title: "Electromecánica de Vehículos Automóviles",
     occupationCodes: ["7401"],
+    expectedOfferCount: 8,
   },
   {
     programKey: "ELE04S",
@@ -75,11 +77,17 @@ for (const program of reviewedPrograms) {
     for (const code of program.occupationCodes) {
       await expect(page.getByText(`CNO-11 ${code}`)).toBeVisible();
     }
-    await expect(
-      page
-        .locator(".status-panel")
-        .getByText(/0 ofertas con correspondencia validada/u),
-    ).toBeVisible();
+    const expectedOfferCount =
+      "expectedOfferCount" in program ? program.expectedOfferCount : 0;
+    if (expectedOfferCount === 0) {
+      await expect(
+        page
+          .locator(".status-panel")
+          .getByText(/0 ofertas con correspondencia validada/u),
+      ).toBeVisible();
+    } else {
+      await expect(page.getByRole("article")).toHaveCount(expectedOfferCount);
+    }
     await expect(
       page.getByText(/no hay (empleo|trabajo|puestos)/iu),
     ).toHaveCount(0);

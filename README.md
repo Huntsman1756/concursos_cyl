@@ -49,7 +49,7 @@ The reviewed FP↔occupation graph is returned to the community as a **derived o
 
 ## Quality
 
-- Published from an immutable snapshot (`20260822085631889-7bbe69380f6d`) with a per-resource SHA-256 manifest.
+- Published from an immutable snapshot (`20260822085631889-fc9bf2ba23f9`) with a per-resource SHA-256 manifest.
 - Reviewed relationships are conservative and fail-closed; a weak match is never published by similarity.
 - Unit, release and E2E tests, lint, license and format gates run in CI on every push to `main`.
 - Accessibility (Axe), privacy (no accounts, cookies, analytics or runtime AI) and reproducibility are automated.
@@ -58,7 +58,7 @@ The reviewed FP↔occupation graph is returned to the community as a **derived o
 ## Limitations
 
 - Offers are a **dated snapshot**, not the whole labor market; a reviewed relationship without a current offer match is shown honestly instead of hidden.
-- Coverage is limited to reviewed relationships: **38 of 1,058 offers** in the snapshot are reached by published relations, and only relations that can be justified are shown.
+- Coverage is limited to reviewed relationships: **133 of 1,058 offers** in the snapshot are reached by published relations, and only relations that can be justified are shown.
 - EDUCAbase references keep their statistical scope and are **never** presented as an individual salary, employment probability or guarantee.
 
 ## Concurso

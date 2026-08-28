@@ -478,7 +478,7 @@ test("live DAW results name the dated zero-match snapshot without claiming there
   await expectStrictAxe(page);
 });
 
-test("COM01M exposes seven reviewed groups without inventing current offers", async ({
+test("COM01M exposes seven reviewed groups with bounded current offers", async ({
   page,
 }) => {
   await page.goto("/desde-fp");
@@ -499,11 +499,7 @@ test("COM01M exposes seven reviewed groups without inventing current offers", as
       name: "Grupos de ocupación revisados para buscar ofertas",
     }),
   ).toBeVisible();
-  await expect(
-    page
-      .locator(".status-panel")
-      .getByText(/0 ofertas con correspondencia validada/u),
-  ).toBeVisible();
+  await expect(page.getByRole("article")).toHaveCount(7);
   await expectNoHorizontalOverflow(page);
   await expectStrictAxe(page);
 });
