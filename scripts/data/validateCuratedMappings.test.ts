@@ -2438,7 +2438,7 @@ describe("curated occupation mappings", () => {
     expect(approved.links).toHaveLength(264);
     expect(approved.occupations).toHaveLength(131);
     expect(curated.occupations).toHaveLength(138);
-    expect(curated.aliases).toHaveLength(21);
+    expect(curated.aliases).toHaveLength(35);
     const task5FunctionalBoundaries = Object.fromEntries(
       curated.links
         .filter((link) =>

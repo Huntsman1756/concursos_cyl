@@ -78,11 +78,11 @@ const FREEZE_KEYS = [
 ] as const;
 
 const CANONICAL_MANIFEST_PATH = "public/data/v1/manifest.json";
-const CANONICAL_SNAPSHOT_ID = "20260822085631889-7bbe69380f6d";
+const CANONICAL_SNAPSHOT_ID = "20260822085631889-fc9bf2ba23f9";
 const CANONICAL_MANIFEST_SHA256 =
-  "92afc80f2b839ed95def95bc90bdd3b6ad3a1363fb12904f7b109fafc92b2f18";
+  "b41189db5e116bb83f2ec07e865909e6114c31622324e5c5f0f268161f2381e1";
 export const CONTEST_FREEZE_SOURCE_COMMIT_SHA =
-  "ff9e6197f926e462bea1a3e8ac6a57a23d3f825a";
+  "032426013a88c35bad348f3c443dae7d9a1639a3";
 
 const CANONICAL_RESOURCE_KEYS: readonly CandidateResourceKey[] = (() => {
   const keys: string[] = [...CANDIDATE_RESOURCE_KEYS];

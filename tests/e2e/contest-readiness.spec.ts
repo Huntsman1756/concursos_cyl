@@ -521,7 +521,7 @@ test.describe("contest readiness journeys", () => {
     await expectStableRoute(page, diagnostics);
   });
 
-  test("shows COM01M reviewed coverage with an honest zero-offer state", async ({
+  test("shows COM01M reviewed coverage with bounded current matches", async ({
     page,
   }) => {
     const diagnostics = installRouteDiagnostics(page);
@@ -544,11 +544,7 @@ test.describe("contest readiness journeys", () => {
         name: "Grupos de ocupación revisados para buscar ofertas",
       }),
     ).toBeVisible();
-    await expect(
-      page
-        .locator(".status-panel")
-        .getByText(/0 ofertas con correspondencia validada/u),
-    ).toBeVisible();
+    await expect(page.getByRole("article")).toHaveCount(7);
     await expect(
       page.getByText(/no hay (empleo|trabajo|puestos)/iu),
     ).toHaveCount(0);

@@ -38,7 +38,7 @@ export const TRUTH_ARTIFACT_SHA256 =
   "d7fce4553804dfcd87ba2039c170f399746cc3b67a084791f59f67f5f00cfdf1";
 export const CURRENT_ALIASES_PATH = "data/curated/occupation-aliases.json";
 export const CURRENT_ALIASES_SHA256 =
-  "fbd4ca379e14c5152ee1620de5b4176d8102fc554c4e31139a98550d8855dd68";
+  "1e7792c6aafa87b8260b412e5df4953fad9e9c2726cd2b754f91c1c53b291f79";
 export const SNAPSHOT_OFFERS_SHA256 =
   "5c8ca9fde40e1fe8d58097ffd6f8823ff70f7de04abcab20d7e35c600b6ef5ba";
 
@@ -540,12 +540,19 @@ function buildBaselineMatches(
   const programQualificationLinks = REVIEWED_PROGRAM_QUALIFICATION_LINKS.filter(
     (link) => programKeys.has(link.programKey),
   );
+  const approvedHistoricalOccupationIds = new Set(
+    inputs.occupations
+      .filter(({ reviewStatus }) => reviewStatus === "approved")
+      .map(({ occupationId }) => occupationId),
+  );
   const data: OfferMatchingData = {
     programs: inputs.programs,
     qualifications: REVIEWED_QUALIFICATIONS,
     programQualificationLinks,
     occupations: inputs.occupations,
-    aliases: inputs.aliases,
+    aliases: inputs.aliases.filter((alias) =>
+      approvedHistoricalOccupationIds.has(alias.occupationId),
+    ),
     links: inputs.links,
     offers: inputs.offers,
     publishedRequirements: inputs.requirements,
@@ -627,7 +634,7 @@ function buildResults(
       "La verdad etiquetada es el audit existente de ofertas candidatas; este benchmark no crea etiquetas nuevas.",
       "La cobertura positiva conocida usa como denominador los positivos del audit cerrado y no es recall del mercado ni cobertura de todas las ofertas de Castilla y León.",
       "La lane shadow aplica matching léxico a la instantánea histórica y no modifica aliases, datos publicados ni la lógica pública.",
-      "La lane published_baseline reproduce el matcher publicado con aliases curados actuales sobre la instantánea histórica fijada.",
+      "La lane published_baseline reproduce el matcher publicado con los aliases curados actuales compatibles con las ocupaciones de la instantánea histórica fijada.",
       "Los resultados dependen de los hashes de la verdad, aliases y snapshot declarados en este artefacto.",
     ],
   });
@@ -798,7 +805,7 @@ export function assertEvaluationContract(
   );
   assertCondition(
     results.currentAliases.sha256 === CURRENT_ALIASES_SHA256 &&
-      results.currentAliases.recordCount === 21,
+      results.currentAliases.recordCount === 35,
     "Unexpected current aliases provenance.",
   );
   assertCondition(
