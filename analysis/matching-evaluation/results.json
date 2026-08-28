@@ -9,8 +9,8 @@
   "truthArtifactSha256": "d7fce4553804dfcd87ba2039c170f399746cc3b67a084791f59f67f5f00cfdf1",
   "currentAliases": {
     "path": "data/curated/occupation-aliases.json",
-    "sha256": "fbd4ca379e14c5152ee1620de5b4176d8102fc554c4e31139a98550d8855dd68",
-    "recordCount": 21
+    "sha256": "1e7792c6aafa87b8260b412e5df4953fad9e9c2726cd2b754f91c1c53b291f79",
+    "recordCount": 35
   },
   "labeledTruth": {
     "rowCount": 68,
@@ -377,7 +377,7 @@
     "La verdad etiquetada es el audit existente de ofertas candidatas; este benchmark no crea etiquetas nuevas.",
     "La cobertura positiva conocida usa como denominador los positivos del audit cerrado y no es recall del mercado ni cobertura de todas las ofertas de Castilla y León.",
     "La lane shadow aplica matching léxico a la instantánea histórica y no modifica aliases, datos publicados ni la lógica pública.",
-    "La lane published_baseline reproduce el matcher publicado con aliases curados actuales sobre la instantánea histórica fijada.",
+    "La lane published_baseline reproduce el matcher publicado con los aliases curados actuales compatibles con las ocupaciones de la instantánea histórica fijada.",
     "Los resultados dependen de los hashes de la verdad, aliases y snapshot declarados en este artefacto."
   ]
 }

@@ -37,7 +37,7 @@ const DOCUMENT_PATHS = [
 
 const PUBLIC_MANIFEST = "public/data/v1/manifest.json";
 const DIST_MANIFEST = "dist/data/v1/manifest.json";
-const SNAPSHOT_ID = "20260822085631889-7bbe69380f6d";
+const SNAPSHOT_ID = "20260822085631889-fc9bf2ba23f9";
 const RESTORED_FILES = [
   PUBLIC_MANIFEST,
   DIST_MANIFEST,

@@ -32,8 +32,7 @@ import {
 
 const ROOT = process.cwd();
 
-const APPROVED_SOURCE_COMMIT_SHA =
-  "032426013a88c35bad348f3c443dae7d9a1639a3";
+const APPROVED_SOURCE_COMMIT_SHA = "032426013a88c35bad348f3c443dae7d9a1639a3";
 const PRIOR_SCHEMA_TWO_SOURCE_COMMIT_SHA =
   "ff9e6197f926e462bea1a3e8ac6a57a23d3f825a";
 const LEGACY_SOURCE_COMMIT_SHA = "05f905397d22b217c4716c88a2406d802892fb6d";
@@ -723,7 +722,9 @@ it("asserts every canonical final fact in the checked-in fixture", async () => {
   expect(
     (freeze.coverage as Record<string, unknown>).zeroReviewedRelationCount,
   ).toBe(231);
-  expect((freeze.offers as Record<string, unknown>).matchedOfferCount).toBe(133);
+  expect((freeze.offers as Record<string, unknown>).matchedOfferCount).toBe(
+    133,
+  );
   expect(
     (freeze.coverage as Record<string, unknown>).deferredProgramCount,
   ).toBe(0);

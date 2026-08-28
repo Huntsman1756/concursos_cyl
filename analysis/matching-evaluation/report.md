@@ -37,7 +37,7 @@ La cobertura positiva conocida es 100.00% para shadow y 3.70% para published_bas
 - La verdad etiquetada es el audit existente de ofertas candidatas; este benchmark no crea etiquetas nuevas.
 - La cobertura positiva conocida usa como denominador los positivos del audit cerrado y no es recall del mercado ni cobertura de todas las ofertas de Castilla y León.
 - La lane shadow aplica matching léxico a la instantánea histórica y no modifica aliases, datos publicados ni la lógica pública.
-- La lane published_baseline reproduce el matcher publicado con aliases curados actuales sobre la instantánea histórica fijada.
+- La lane published_baseline reproduce el matcher publicado con los aliases curados actuales compatibles con las ocupaciones de la instantánea histórica fijada.
 - Los resultados dependen de los hashes de la verdad, aliases y snapshot declarados en este artefacto.
 
 ## Decisión

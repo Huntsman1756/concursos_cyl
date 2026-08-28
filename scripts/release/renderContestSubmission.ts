@@ -471,11 +471,20 @@ export function renderContestSubmission(
   freeze: ContestFreeze,
   deployment: ContestDeploymentEvidence = PENDING_DEPLOYMENT_EVIDENCE,
 ): ContestSubmissionDocuments {
+  const normalizeDocument = (content: string): string =>
+    `${content.replace(/\n{3,}/gu, "\n\n").replace(/\n+$/u, "")}\n`;
+
   return {
-    "application-summary.md": renderApplicationSummary(freeze),
-    "technical-evidence.md": renderTechnicalEvidence(freeze, deployment),
-    "limitations.md": renderLimitations(freeze, deployment),
-    "submission-checklist.md": renderSubmissionChecklist(freeze, deployment),
+    "application-summary.md": normalizeDocument(
+      renderApplicationSummary(freeze),
+    ),
+    "technical-evidence.md": normalizeDocument(
+      renderTechnicalEvidence(freeze, deployment),
+    ),
+    "limitations.md": normalizeDocument(renderLimitations(freeze, deployment)),
+    "submission-checklist.md": normalizeDocument(
+      renderSubmissionChecklist(freeze, deployment),
+    ),
   };
 }
 
