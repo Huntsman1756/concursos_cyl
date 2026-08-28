@@ -32,10 +32,14 @@ import {
 
 const ROOT = process.cwd();
 
-const APPROVED_SOURCE_COMMIT_SHA = "ff9e6197f926e462bea1a3e8ac6a57a23d3f825a";
+const APPROVED_SOURCE_COMMIT_SHA =
+  "032426013a88c35bad348f3c443dae7d9a1639a3";
 const PRIOR_SCHEMA_TWO_SOURCE_COMMIT_SHA =
-  "15cd959529c5c223adff02eda124863a320fe0bf";
+  "ff9e6197f926e462bea1a3e8ac6a57a23d3f825a";
 const LEGACY_SOURCE_COMMIT_SHA = "05f905397d22b217c4716c88a2406d802892fb6d";
+const CANONICAL_SNAPSHOT_ID = "20260822085631889-fc9bf2ba23f9";
+const CANONICAL_MANIFEST_SHA256 =
+  "b41189db5e116bb83f2ec07e865909e6114c31622324e5c5f0f268161f2381e1";
 
 async function readFreeze(): Promise<Record<string, unknown>> {
   return JSON.parse(
@@ -373,16 +377,14 @@ describe("contest coverage freeze validator", () => {
       ...CANDIDATE_RESOURCE_KEYS,
     ]);
     expect(fresh.manifest.path).toBe("public/data/v1/manifest.json");
-    expect(fresh.manifest.snapshotId).toBe("20260822085631889-7bbe69380f6d");
-    expect(fresh.manifest.sha256).toBe(
-      "92afc80f2b839ed95def95bc90bdd3b6ad3a1363fb12904f7b109fafc92b2f18",
-    );
+    expect(fresh.manifest.snapshotId).toBe(CANONICAL_SNAPSHOT_ID);
+    expect(fresh.manifest.sha256).toBe(CANONICAL_MANIFEST_SHA256);
     expect(fresh.coverage.approvedRelationCount).toBe(264);
     expect(fresh.coverage.distinctQualificationCount).toBe(113);
     expect(fresh.coverage.modalityKeyCount).toBe(130);
-    expect(fresh.coverage.matchedRelationCount).toBe(3);
-    expect(fresh.coverage.zeroReviewedRelationCount).toBe(261);
-    expect(fresh.offers.matchedOfferCount).toBe(38);
+    expect(fresh.coverage.matchedRelationCount).toBe(33);
+    expect(fresh.coverage.zeroReviewedRelationCount).toBe(231);
+    expect(fresh.offers.matchedOfferCount).toBe(133);
     expect(fresh.coverage.deferredProgramCount).toBe(0);
     expect(fresh.attempts).toEqual({
       completed: 11,
@@ -391,6 +393,14 @@ describe("contest coverage freeze validator", () => {
       terminal: 11,
       reserveUnattempted: 0,
     });
+  });
+
+  it("pins the Carril A canonical coverage identity", () => {
+    const fresh = createFreshContestFreeze(ROOT, APPROVED_SOURCE_COMMIT_SHA);
+
+    expect(fresh.sourceCommitSha).toBe(APPROVED_SOURCE_COMMIT_SHA);
+    expect(fresh.manifest.snapshotId).toBe(CANONICAL_SNAPSHOT_ID);
+    expect(fresh.manifest.sha256).toBe(CANONICAL_MANIFEST_SHA256);
   });
 
   it("writes a v2 candidate from current sources and discards poisoned v1 metadata", async () => {
@@ -423,8 +433,7 @@ describe("contest coverage freeze validator", () => {
       expect(written).not.toHaveProperty("deployment");
       expect(written.manifest).toMatchObject({
         path: "public/data/v1/manifest.json",
-        sha256:
-          "92afc80f2b839ed95def95bc90bdd3b6ad3a1363fb12904f7b109fafc92b2f18",
+        sha256: CANONICAL_MANIFEST_SHA256,
       });
       expect(JSON.stringify(written)).not.toContain("poisoned");
     } finally {
@@ -492,7 +501,7 @@ describe("contest coverage freeze validator", () => {
         "data",
         "v1",
         "snapshots",
-        "20260822085631889-7bbe69380f6d",
+        CANONICAL_SNAPSHOT_ID,
         "centers.json",
       );
       mkdirSync(join(resourceRoot, "public", "data", "v1"), {
@@ -505,7 +514,7 @@ describe("contest coverage freeze validator", () => {
           "data",
           "v1",
           "snapshots",
-          "20260822085631889-7bbe69380f6d",
+          CANONICAL_SNAPSHOT_ID,
         ),
         {
           recursive: true,
@@ -520,7 +529,7 @@ describe("contest coverage freeze validator", () => {
         resourcePath,
         duplicateJsonKey(
           await readFile(
-            "public/data/v1/snapshots/20260822085631889-7bbe69380f6d/centers.json",
+            `public/data/v1/snapshots/${CANONICAL_SNAPSHOT_ID}/centers.json`,
             "utf8",
           ),
           "centerCode",
@@ -690,8 +699,8 @@ it("asserts every canonical final fact in the checked-in fixture", async () => {
   const manifest = freeze.manifest as Record<string, unknown>;
   expect(manifest).toMatchObject({
     path: "public/data/v1/manifest.json",
-    snapshotId: "20260822085631889-7bbe69380f6d",
-    sha256: "92afc80f2b839ed95def95bc90bdd3b6ad3a1363fb12904f7b109fafc92b2f18",
+    snapshotId: CANONICAL_SNAPSHOT_ID,
+    sha256: CANONICAL_MANIFEST_SHA256,
   });
   expect(Object.keys(manifest.resourceSnapshots as object)).toEqual([
     ...CANDIDATE_RESOURCE_KEYS,
@@ -701,20 +710,20 @@ it("asserts every canonical final fact in the checked-in fixture", async () => {
     { recordCount: number }
   >;
   expect(resources.occupations.recordCount).toBe(131);
-  expect(resources.occupationAliases.recordCount).toBe(21);
+  expect(resources.occupationAliases.recordCount).toBe(35);
   expect(
     (freeze.coverage as Record<string, unknown>).approvedRelationCount,
   ).toBe(264);
   expect((freeze.coverage as Record<string, unknown>).approvedAliasCount).toBe(
-    21,
+    35,
   );
   expect(
     (freeze.coverage as Record<string, unknown>).matchedRelationCount,
-  ).toBe(3);
+  ).toBe(33);
   expect(
     (freeze.coverage as Record<string, unknown>).zeroReviewedRelationCount,
-  ).toBe(261);
-  expect((freeze.offers as Record<string, unknown>).matchedOfferCount).toBe(38);
+  ).toBe(231);
+  expect((freeze.offers as Record<string, unknown>).matchedOfferCount).toBe(133);
   expect(
     (freeze.coverage as Record<string, unknown>).deferredProgramCount,
   ).toBe(0);
