@@ -1,5 +1,7 @@
 # Resumen técnico de evidencia
 
+> NOTA HISTÓRICA. Este documento describe la revisión independiente de `v2026.08.26-candidate.3` (snapshot `20260822085631889-7bbe69380f6d`, 21 alias). La candidatura vigente es `v2026.08.28-candidate.5` — snapshot `20260822085631889-fc9bf2ba23f9`, manifest `b41189db5e116bb83f2ec07e865909e6114c31622324e5c5f0f268161f2381e1`, 35 alias, 264 relaciones, 133 de 1.058 ofertas alcanzadas. Los estados vigentes están en `release-evidence.json` y `submission-checklist.md`.
+
 - Límite fuente: `ff9e6197f926e462bea1a3e8ac6a57a23d3f825a`.
 - Commit que contiene los bytes exactos del freeze: `80bc0f9d2def3f600f7701d8b20f0095cd241c71`.
 - Snapshot: `20260822085631889-7bbe69380f6d`.
