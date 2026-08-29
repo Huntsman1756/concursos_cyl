@@ -45,7 +45,7 @@ Methodology and interpretation boundaries for each source are in [docs/methodolo
 
 ## Open data it produces
 
-The reviewed FP↔occupation graph is returned to the community as a **derived open dataset** — JSON and CSV — with source per relationship, open license and SHA-256 integrity, downloadable from the [open-data page](https://salida-cyl.157-90-22-40.sslip.io/datos-abiertos).
+The reviewed FP↔occupation graph is returned to the community as a **derived open dataset** — JSON and CSV — with source per relationship, the open license declared by its Junta sources (CC BY 4.0, attribution preserved) and SHA-256 integrity, downloadable from the [open-data page](https://salida-cyl.157-90-22-40.sslip.io/datos-abiertos).
 
 ## Quality
 
@@ -63,7 +63,7 @@ The reviewed FP↔occupation graph is returned to the community as a **derived o
 
 ## Concurso
 
-[X Concurso de Datos Abiertos de Castilla y León](https://datosabiertos.jcyl.es/web/es/concurso-datos-abiertos/concurso-datos-abiertos.html) — Productos y Servicios. Verifiable candidate release `v2026.08.27-candidate.4` at commit `a59a788a39bc8d300c66fee39ea2f2469f588112` (snapshot `20260822085631889-7bbe69380f6d`, manifest `92afc80f…`).
+[X Concurso de Datos Abiertos de Castilla y León](https://datosabiertos.jcyl.es/web/es/concurso-datos-abiertos/concurso-datos-abiertos.html) — Productos y Servicios. Verifiable candidate release `v2026.08.28-candidate.5` at certified HEAD `77b1ff1fd5c16dd01967828012b6a3989984e62e` (snapshot `20260822085631889-fc9bf2ba23f9`, manifest `b41189db5e116bb83f2ec07e865909e6114c31622324e5c5f0f268161f2381e1`). Published deployment: commit `753a3160cc3cc895b943ccd5c8d7c52129a6dc9f`, verified against `version.json` (workflow run `33189836718`); the 13/13 automated A4 captures are attached to that commit.
 
 - Application: <https://salida-cyl.157-90-22-40.sslip.io/>
 - Derived open data: <https://salida-cyl.157-90-22-40.sslip.io/datos-abiertos>
