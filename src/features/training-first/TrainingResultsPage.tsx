@@ -284,7 +284,7 @@ export function TrainingResultsPage() {
       ),
     );
   }, [publicationFilter, session.answers, state]);
-  const hasOrderedMatches = orderedMatches.length > 0;
+  const firstOrderedMatch = orderedMatches[0];
 
   useEffect(() => {
     if (!filterNoticeFocusRequestedRef.current || publicationFilter === null) {
@@ -306,7 +306,7 @@ export function TrainingResultsPage() {
     [state, programKey],
   );
 
-  const hasApprovedRelationship = approvedLinks.length > 0;
+  const firstApprovedLink = approvedLinks[0];
 
   const resolvedOccupations = useMemo(
     () =>
@@ -319,7 +319,7 @@ export function TrainingResultsPage() {
         : [],
     [programKey, state],
   );
-  const hasResolvedOccupations = resolvedOccupations.length > 0;
+  const firstResolvedOccupation = resolvedOccupations[0];
 
   const officialProfiles = useMemo(
     () =>
@@ -478,16 +478,16 @@ export function TrainingResultsPage() {
   const offersSnapshot = resourceSnapshots.jobOffers;
   const profilesEvidenceDate = evidenceDate(profilesSnapshot);
   const relationshipEvidenceDate =
-    approvedLinks[0]?.reviewedAt ?? evidenceDate(relationshipsSnapshot);
+    firstApprovedLink?.reviewedAt ?? evidenceDate(relationshipsSnapshot);
   const offersEvidenceDate = evidenceDate(offersSnapshot);
   const offeringsEvidenceDate = evidenceDate(offeringsSnapshot);
   const sectionNavigationLinks = [
     { href: "#donde-estudiar", label: "Dónde estudiar" },
     { href: "#salidas-profesionales", label: "Salidas profesionales" },
-    ...(!hasResolvedOccupations
+    ...(!firstResolvedOccupation
       ? []
       : [{ href: "#ocupaciones-revisadas", label: "Ocupaciones revisadas" }]),
-    ...(hasApprovedRelationship && hasOrderedMatches
+    ...(firstApprovedLink && firstOrderedMatch
       ? [{ href: "#ofertas-relacionadas", label: "Ofertas relacionadas" }]
       : []),
     { href: "#base-cotizacion-observada", label: "Base de cotización" },
@@ -589,11 +589,10 @@ export function TrainingResultsPage() {
               <strong>{resolvedOccupations.length}</strong>
               <span className="result-summary__unit">grupos revisados</span>
               <span className="result-summary__source">
-                {(approvedLinks[0] !== undefined ||
-                  relationshipsSnapshot !== undefined) && (
+                {(firstApprovedLink || relationshipsSnapshot !== undefined) && (
                   <ExternalLink
                     href={
-                      approvedLinks[0]?.sourceUrl ??
+                      firstApprovedLink?.sourceUrl ??
                       relationshipsSnapshot?.sourceUrl
                     }
                   >
@@ -602,7 +601,7 @@ export function TrainingResultsPage() {
                 )}
                 {relationshipEvidenceDate !== null && (
                   <time dateTime={relationshipEvidenceDate}>
-                    {approvedLinks[0] === undefined ? "Copia" : "Revisada"} del{" "}
+                    {!firstApprovedLink ? "Copia" : "Revisada"} del{" "}
                     {shortDate(relationshipEvidenceDate)}
                   </time>
                 )}
@@ -657,7 +656,7 @@ export function TrainingResultsPage() {
         aria-label="Siguientes pasos"
         data-print-hidden="true"
       >
-        {hasResolvedOccupations ? (
+        {firstResolvedOccupation ? (
           <>
             <FragmentLink
               className="primary-button"
@@ -680,18 +679,18 @@ export function TrainingResultsPage() {
             Ver centros y modalidades
           </Link>
         )}
-        {(!hasApprovedRelationship ||
+        {(!firstApprovedLink ||
           ("index" in state.outcome &&
             findTrainingOutcomeGroup(state.program, state.outcome.index)
               ?.matchType === "cycle")) && (
           <Link
             to={
-              hasApprovedRelationship
+              firstApprovedLink
                 ? `/comparar?program=${encodedProgramKey}`
                 : "/desde-fp"
             }
           >
-            {hasApprovedRelationship ? "Comparar ingresos" : "Buscar FP"}
+            {firstApprovedLink ? "Comparar ingresos" : "Buscar FP"}
           </Link>
         )}
         <PrintButton className="secondary-button" />
@@ -823,7 +822,7 @@ export function TrainingResultsPage() {
           <p>No se han podido cargar las salidas oficiales de este ciclo.</p>
         )}
       </section>
-      {hasResolvedOccupations && (
+      {firstResolvedOccupation && (
         <section
           id="ocupaciones-revisadas"
           className="occupations-section"
@@ -861,7 +860,7 @@ export function TrainingResultsPage() {
           </ul>
         </section>
       )}
-      {!hasApprovedRelationship ? (
+      {!firstApprovedLink ? (
         <div className="status-panel">
           <h2>Cómo buscar oportunidades ahora</h2>
           <p>0 ofertas con correspondencia validada.</p>
@@ -876,7 +875,7 @@ export function TrainingResultsPage() {
             de empleo y comprueba siempre los requisitos de cada oferta.
           </p>
         </div>
-      ) : !hasOrderedMatches ? (
+      ) : !firstOrderedMatch ? (
         <div className="status-panel">
           <p>
             {publicationFilter === null
