@@ -435,6 +435,39 @@ export function assertContestFreezeWritePreflight(
   }
 }
 
+function assertContestFreezeWriteSourceBoundary(
+  rootDir: string,
+  sourceCommitSha: string,
+): void {
+  try {
+    execFileSync(
+      "git",
+      ["rev-parse", "--verify", `${sourceCommitSha}^{commit}`],
+      { cwd: rootDir, stdio: "pipe" },
+    );
+    execFileSync(
+      "git",
+      ["merge-base", "--is-ancestor", sourceCommitSha, "HEAD"],
+      { cwd: rootDir, stdio: "pipe" },
+    );
+    execFileSync(
+      "git",
+      [
+        "diff",
+        "--quiet",
+        sourceCommitSha,
+        "--",
+        ...CONTEST_FREEZE_SOURCE_PATHS,
+      ],
+      { cwd: rootDir, stdio: "pipe" },
+    );
+  } catch {
+    throw new Error(
+      "Refusing coverage freeze --write while the source boundary differs from the approved commit",
+    );
+  }
+}
+
 export function parseContestFreezeWriteSourceCommit(
   arguments_: readonly string[],
 ): string {
@@ -1310,6 +1343,7 @@ export async function writeContestFreeze(
   freezePath = path.resolve(rootDir, "docs/contest/coverage-freeze.json"),
 ): Promise<void> {
   assertContestFreezeWritePreflight(rootDir);
+  assertContestFreezeWriteSourceBoundary(rootDir, sourceCommitSha);
   // This private marker read intentionally does not call the schema-2 parser;
   // legacy deployment, paths, hashes, counts and derived values are discarded.
   assertLegacyFreezeMarker(
