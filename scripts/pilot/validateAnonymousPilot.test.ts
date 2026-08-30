@@ -4,10 +4,16 @@ import { join } from "node:path";
 
 import { describe, expect, it } from "vitest";
 
-import { ANONYMOUS_PILOT_TASK_IDS } from "./anonymousPilotSchema";
+import {
+  ANONYMOUS_PILOT_NOT_RUN,
+  ANONYMOUS_PILOT_RELEASE,
+  ANONYMOUS_PILOT_TASK_IDS,
+  type AnonymousPilotAggregate,
+} from "./anonymousPilotSchema";
 import {
   validateAnonymousPilotAggregate,
   validateAnonymousPilotAggregateFile,
+  validateAnonymousPilotNotRun,
 } from "./validateAnonymousPilot";
 
 function taskResult(
@@ -27,20 +33,22 @@ function taskResult(
       over_10m: 0,
       not_recorded: 0,
     },
-    issueCounts: { minor: 0, major: 0, stop: 0 },
+    issueCounts: { P0: 0, P1: 0, P2: 0, P3: 0 },
   };
 }
 
-function aggregate(status: "draft" | "complete" | "blocked" = "draft") {
+function aggregate(
+  status: "draft" | "complete" | "blocked" = "draft",
+): AnonymousPilotAggregate {
   const sessions = status === "complete" ? 5 : 0;
   return {
-    schemaVersion: "1.0.0",
+    schemaVersion: "2.0.0",
     artifactKind: "anonymous_pilot_aggregate",
     status,
     blockerCodes: status === "blocked" ? ["missing_sample"] : [],
     protocol: {
-      protocolVersion: "1.0.0",
-      taskCatalogVersion: "1.0.0",
+      protocolVersion: "2.0.0",
+      taskCatalogVersion: "2.0.0",
       adultOnly: true,
       minorsIncluded: false,
       targetSessions: 5,
@@ -49,9 +57,9 @@ function aggregate(status: "draft" | "complete" | "blocked" = "draft") {
       taskScriptSha256: "b".repeat(64),
     },
     release: {
-      rootUrl: "https://salida-cyl.157-90-22-40.sslip.io/",
-      deployedCommitSha: "c".repeat(40),
-      snapshotId: "20260821144454118-a56e3eeaffa6",
+      rootUrl: ANONYMOUS_PILOT_RELEASE.rootUrl,
+      deployedCommitSha: ANONYMOUS_PILOT_RELEASE.deployedCommitSha,
+      snapshotId: ANONYMOUS_PILOT_RELEASE.snapshotId,
     },
     consentPolicy: {
       participation: "required_before_session",
@@ -91,6 +99,10 @@ function aggregate(status: "draft" | "complete" | "blocked" = "draft") {
 }
 
 describe("anonymous pilot aggregate", () => {
+  it("accepts the explicit not-run protocol state without an aggregate file", () => {
+    expect(validateAnonymousPilotNotRun()).toBe(ANONYMOUS_PILOT_NOT_RUN);
+  });
+
   it("accepts an empty draft and a reviewed complete aggregate", () => {
     expect(validateAnonymousPilotAggregate(aggregate()).status).toBe("draft");
     expect(
@@ -109,6 +121,12 @@ describe("anonymous pilot aggregate", () => {
     ).toThrow(/schema|unknown|unrecognized/i);
     expect(() =>
       validateAnonymousPilotAggregate({ ...aggregate(), sessions: [] }),
+    ).toThrow(/schema|unknown|unrecognized/i);
+    expect(() =>
+      validateAnonymousPilotAggregate({
+        ...aggregate(),
+        moderatorNotes: "free text",
+      }),
     ).toThrow(/schema|unknown|unrecognized/i);
   });
 
@@ -152,6 +170,49 @@ describe("anonymous pilot aggregate", () => {
     const badBand = aggregate("complete");
     badBand.taskResults[0]!.timeBands.under_5m = 4;
     expect(() => validateAnonymousPilotAggregate(badBand)).toThrow(/time/i);
+  });
+
+  it("requires closed issue codes and severity counts to agree", () => {
+    const candidate = aggregate();
+    candidate.issues = [
+      {
+        taskId: "T3_offer_to_requirement_action",
+        issueCode: "cannot_identify_next_official_action",
+        severity: "P2",
+        count: 1,
+        actionCode: "adjust_navigation",
+      },
+    ];
+    candidate.taskResults[2]!.issueCounts.P2 = 1;
+    expect(validateAnonymousPilotAggregate(candidate).issues).toHaveLength(1);
+
+    const unknownCode = aggregate() as Record<string, unknown>;
+    unknownCode.issues = [
+      {
+        taskId: "T3_offer_to_requirement_action",
+        issueCode: "participant_explanation",
+        severity: "P2",
+        count: 1,
+        actionCode: "none",
+      },
+    ];
+    expect(() => validateAnonymousPilotAggregate(unknownCode)).toThrow(
+      /schema|invalid|enum/i,
+    );
+
+    const mismatchedSeverity = aggregate();
+    mismatchedSeverity.issues = [
+      {
+        taskId: "T3_offer_to_requirement_action",
+        issueCode: "cannot_identify_next_official_action",
+        severity: "P1",
+        count: 1,
+        actionCode: "reopen_implementation",
+      },
+    ];
+    expect(() => validateAnonymousPilotAggregate(mismatchedSeverity)).toThrow(
+      /issue/i,
+    );
   });
 
   it("rejects missing, duplicate and unknown tasks", () => {
