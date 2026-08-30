@@ -17,6 +17,7 @@ export function titleForPathname(pathname: string): string {
     return withAppName("Desde ocupación");
   if (normalizedPath.startsWith("/desde-ocupacion/"))
     return withAppName("Resultados desde ocupación");
+  if (normalizedPath === "/desde-oferta") return withAppName("Desde oferta");
   if (normalizedPath === "/comparar") return withAppName("Comparar estudios");
   if (normalizedPath === "/recursos") return withAppName("Más formación");
   if (normalizedPath === "/datos-abiertos")

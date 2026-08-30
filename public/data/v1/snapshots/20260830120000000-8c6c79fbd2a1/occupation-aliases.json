@@ -1,0 +1,262 @@
+[
+  {
+    "alias": "agentes comerciales",
+    "occupationId": "occupation:cno11:3510",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-28",
+    "mappingVersion": "1.0.0",
+    "reviewNote": "Correspondencia oficial con CNO-11 3510; evidencia primaria INE CNO-11: https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf."
+  },
+  {
+    "alias": "asistentes domiciliarios",
+    "occupationId": "occupation:cno11:5710",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-28",
+    "mappingVersion": "1.0.0",
+    "reviewNote": "Correspondencia oficial con CNO-11 5710; evidencia primaria INE CNO-11: https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf."
+  },
+  {
+    "alias": "Auxiliares de ayuda a personas dependientes a domicilio",
+    "occupationId": "occupation:cno11:5710",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-09",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "alias": "auxiliares de enfermería de atención primaria",
+    "occupationId": "occupation:cno11:5612",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-08",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "alias": "auxiliares de enfermería de centros de atención primaria",
+    "occupationId": "occupation:cno11:5612",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-08",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "alias": "auxiliares de enfermería de consultorios médicos",
+    "occupationId": "occupation:cno11:5612",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-08",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "alias": "auxiliares de enfermería de geriatría",
+    "occupationId": "occupation:cno11:5611",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-08",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "alias": "auxiliares de enfermería de salud mental y toxicomanías",
+    "occupationId": "occupation:cno11:5611",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-08",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "alias": "auxiliares de enfermería hospitalaria",
+    "occupationId": "occupation:cno11:5611",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-08",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "alias": "cajeros de comercio",
+    "occupationId": "occupation:cno11:5500",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-28",
+    "mappingVersion": "1.0.0",
+    "reviewNote": "Correspondencia oficial con CNO-11 5500; evidencia primaria BOE: https://www.boe.es/eli/es/rd/2010/11/26/1591."
+  },
+  {
+    "alias": "camareros de sala o jefes de rango",
+    "occupationId": "occupation:cno11:5120",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-28",
+    "mappingVersion": "1.0.0",
+    "reviewNote": "Correspondencia oficial con CNO-11 5120; evidencia primaria BOE: https://www.boe.es/eli/es/rd/2010/11/26/1591."
+  },
+  {
+    "alias": "Cocineros asalariados",
+    "occupationId": "occupation:cno11:5110",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-09",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "alias": "Cocineros de comedor de empresa",
+    "occupationId": "occupation:cno11:5110",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-09",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "alias": "Cocineros en restaurantes",
+    "occupationId": "occupation:cno11:5110",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-09",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "alias": "Cocineros (no propietarios)",
+    "occupationId": "occupation:cno11:5110",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-09",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "alias": "desarrollador web",
+    "occupationId": "occupation:cno11:2713",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-04",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "alias": "empleados administrativos de contabilidad en general",
+    "occupationId": "occupation:cno11:4111",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-28",
+    "mappingVersion": "1.0.0",
+    "reviewNote": "Correspondencia oficial con CNO-11 4111; evidencia primaria INE CNO-11: https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf."
+  },
+  {
+    "alias": "encofradores",
+    "occupationId": "occupation:cno11:7111",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-09",
+    "mappingVersion": "1.0.0",
+    "matchPolicy": "approved_single_token"
+  },
+  {
+    "alias": "Impermeabilizadores de terrazas",
+    "occupationId": "occupation:cno11:7193",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-09",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "alias": "Instaladores de materiales de impermeabilización en edificios",
+    "occupationId": "occupation:cno11:7193",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-09",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "alias": "Instaladores de sistemas de impermeabilización en edificios",
+    "occupationId": "occupation:cno11:7193",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-09",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "alias": "jardineros en general",
+    "occupationId": "occupation:cno11:6120",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-28",
+    "mappingVersion": "1.0.0",
+    "reviewNote": "Correspondencia oficial con CNO-11 6120; evidencia primaria SEPE: https://www.sepe.es/HomeSepe/que-es-observatorio/informacion-mt-por-ocupacion/informacion-mercado-trabajo-por-ocupacion~_mensuales_2026_07_6120-Trabajadores-cualificados-en-huertas--invernaderos--viveros-y-jardines~.html."
+  },
+  {
+    "alias": "mantenedores de edificios",
+    "occupationId": "occupation:cno11:7191",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-28",
+    "mappingVersion": "1.0.0",
+    "reviewNote": "Correspondencia oficial con CNO-11 7191; evidencia primaria INE CNO-11: https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf."
+  },
+  {
+    "alias": "mecanicos-ajustadores de camiones y autobuses en general",
+    "occupationId": "occupation:cno11:7401",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-28",
+    "mappingVersion": "1.0.0",
+    "reviewNote": "Correspondencia oficial con CNO-11 7401; evidencia primaria BOE: https://www.boe.es/eli/es/rd/2010/11/26/1591."
+  },
+  {
+    "alias": "mecanicos de mantenimiento y reparacion de automocion en general",
+    "occupationId": "occupation:cno11:7401",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-28",
+    "mappingVersion": "1.0.0",
+    "reviewNote": "Correspondencia oficial con CNO-11 7401; evidencia primaria INE CNO-11: https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf."
+  },
+  {
+    "alias": "Pavimentadores a base de hormigón",
+    "occupationId": "occupation:cno11:7111",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-09",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "alias": "Pavimentadores con adoquines",
+    "occupationId": "occupation:cno11:7240",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-09",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "alias": "peluqueros unisex",
+    "occupationId": "occupation:cno11:5811",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-28",
+    "mappingVersion": "1.0.0",
+    "reviewNote": "Correspondencia oficial con CNO-11 5811; evidencia primaria BOE: https://www.boe.es/eli/es/rd/2010/11/26/1591."
+  },
+  {
+    "alias": "peones agropecuarios",
+    "occupationId": "occupation:cno11:9530",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-28",
+    "mappingVersion": "1.0.0",
+    "reviewNote": "Correspondencia oficial con CNO-11 9530; evidencia primaria INE CNO-11: https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf."
+  },
+  {
+    "alias": "peones de la construccion de edificios",
+    "occupationId": "occupation:cno11:9602",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-28",
+    "mappingVersion": "1.0.0",
+    "reviewNote": "Correspondencia oficial con CNO-11 9602; evidencia primaria INE CNO-11: https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf."
+  },
+  {
+    "alias": "pinches de cocina",
+    "occupationId": "occupation:cno11:9310",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-28",
+    "mappingVersion": "1.0.0",
+    "reviewNote": "Correspondencia oficial con CNO-11 9310; evidencia primaria SEPE: https://www.sepe.es/HomeSepe/que-es-observatorio/informacion-mt-por-ocupacion/informacion-mercado-trabajo-por-ocupacion~_mensuales_2026_07_9310-Ayudantes-de-cocina~.html."
+  },
+  {
+    "alias": "profesores de formacion vial",
+    "occupationId": "occupation:cno11:5894",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-28",
+    "mappingVersion": "1.0.0",
+    "reviewNote": "Correspondencia oficial con CNO-11 5894; evidencia primaria BOE: https://www.boe.es/eli/es/rd/2010/11/26/1591."
+  },
+  {
+    "alias": "programación web",
+    "occupationId": "occupation:cno11:2713",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-04",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "alias": "programador web",
+    "occupationId": "occupation:cno11:2713",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-04",
+    "mappingVersion": "1.0.0"
+  },
+  {
+    "alias": "técnicos auxiliares de clínica",
+    "occupationId": "occupation:cno11:5611",
+    "reviewStatus": "approved",
+    "reviewedAt": "2026-08-08",
+    "mappingVersion": "1.0.0"
+  }
+]

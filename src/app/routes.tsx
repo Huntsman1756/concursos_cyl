@@ -61,6 +61,11 @@ const TrainingSearchPage = lazy(() =>
     default: module.TrainingSearchPage,
   })),
 );
+const OfferExplorerPage = lazy(() =>
+  import("../features/offer-first/OfferExplorerPage").then((module) => ({
+    default: module.OfferExplorerPage,
+  })),
+);
 
 interface DestinationPageProps {
   heading: string;
@@ -104,6 +109,7 @@ export function AppRoutes() {
               path="/desde-ocupacion/:occupationId"
               element={<OccupationResultsPage />}
             />
+            <Route path="/desde-oferta" element={<OfferExplorerPage />} />
             <Route path="/comparar" element={<CompareStudiesPage />} />
             <Route path="/recursos" element={<EcylResourcesPage />} />
             <Route path="/datos-abiertos" element={<OpenDataPage />} />

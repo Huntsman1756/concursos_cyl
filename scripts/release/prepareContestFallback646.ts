@@ -155,6 +155,10 @@ export function prepareContestFallback646(
   const sourceTexts = new Map<string, string>();
   const sourceValues = new Map<string, unknown>();
   for (const [key, specification] of Object.entries(resourceSnapshots)) {
+    // The offer-evidence dataset is a candidate-only derived overlay. The
+    // contest fallback reconstructs the historical source boundary and must
+    // not copy that overlay into a 21-resource fallback snapshot.
+    if (key === "offerEvidence") continue;
     const sourcePath = resolve(
       rootDirectory,
       relativeResourcePath(String(specification.resourcePath)),
@@ -220,45 +224,52 @@ export function prepareContestFallback646(
   );
 
   const nextResourceSnapshots = Object.fromEntries(
-    Object.entries(resourceSnapshots).map(([key, specification]) => {
-      const text = sourceTexts.get(key);
-      if (text === undefined)
-        throw new Error(`Missing resource text for ${key}.`);
-      const value = JSON.parse(text) as unknown;
-      const recordCount = Array.isArray(value)
-        ? value.length
-        : key === "sepeOccupationMarket" &&
-            value !== null &&
-            typeof value === "object" &&
-            Array.isArray((value as JsonRecord).records)
-          ? ((value as JsonRecord).records as unknown[]).length
-          : undefined;
-      if (recordCount === undefined)
-        throw new Error(`${key} is not a supported resource envelope.`);
-      const provenanceSpecification =
-        key === "jobOffers" ? historicalResourceSnapshots[key] : specification;
-      const filename = String(provenanceSpecification.resourcePath)
-        .split("/")
-        .at(-1);
-      if (filename === undefined)
-        throw new Error(`Missing filename for ${key}.`);
-      if (write) {
-        mkdirSync(snapshotDirectory, { recursive: true });
-        writeFileSync(resolve(snapshotDirectory, filename), text, "utf8");
-      }
-      return [
-        key,
-        {
-          ...provenanceSpecification,
-          recordCount,
-          resourcePath: `/data/v1/snapshots/${snapshotId}/${filename}`,
-          sha256: sha256(text),
-        },
-      ];
-    }),
+    Object.entries(resourceSnapshots)
+      .filter(([key]) => key !== "offerEvidence")
+      .map(([key, specification]) => {
+        const text = sourceTexts.get(key);
+        if (text === undefined)
+          throw new Error(`Missing resource text for ${key}.`);
+        const value = JSON.parse(text) as unknown;
+        const recordCount = Array.isArray(value)
+          ? value.length
+          : key === "sepeOccupationMarket" &&
+              value !== null &&
+              typeof value === "object" &&
+              Array.isArray((value as JsonRecord).records)
+            ? ((value as JsonRecord).records as unknown[]).length
+            : undefined;
+        if (recordCount === undefined)
+          throw new Error(`${key} is not a supported resource envelope.`);
+        const provenanceSpecification =
+          key === "jobOffers"
+            ? historicalResourceSnapshots[key]
+            : specification;
+        const filename = String(provenanceSpecification.resourcePath)
+          .split("/")
+          .at(-1);
+        if (filename === undefined)
+          throw new Error(`Missing filename for ${key}.`);
+        if (write) {
+          mkdirSync(snapshotDirectory, { recursive: true });
+          writeFileSync(resolve(snapshotDirectory, filename), text, "utf8");
+        }
+        return [
+          key,
+          {
+            ...provenanceSpecification,
+            recordCount,
+            resourcePath: `/data/v1/snapshots/${snapshotId}/${filename}`,
+            sha256: sha256(text),
+          },
+        ] as const;
+      }),
   );
+  const manifestWithoutCandidateActivation = { ...manifest };
+  delete manifestWithoutCandidateActivation.snapshotId;
+  delete manifestWithoutCandidateActivation.activationProvenance;
   const nextManifest = {
-    ...manifest,
+    ...manifestWithoutCandidateActivation,
     generatedAt: historicalManifest.generatedAt,
     qualityReport: historicalManifest.qualityReport,
     resourceSnapshots: nextResourceSnapshots,

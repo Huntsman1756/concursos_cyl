@@ -37,7 +37,7 @@ const DOCUMENT_PATHS = [
 
 const PUBLIC_MANIFEST = "public/data/v1/manifest.json";
 const DIST_MANIFEST = "dist/data/v1/manifest.json";
-const SNAPSHOT_ID = "20260822085631889-fc9bf2ba23f9";
+const SNAPSHOT_ID = "20260830120000000-8c6c79fbd2a1";
 const RESTORED_FILES = [
   PUBLIC_MANIFEST,
   DIST_MANIFEST,
@@ -117,6 +117,16 @@ async function copyCandidateFixture(): Promise<string> {
     await mkdir(join(destination, ".."), { recursive: true });
     await cp(join(ROOT, documentPath), destination);
   }
+  await mkdir(join(rootDir, "config"), { recursive: true });
+  await writeFile(
+    join(rootDir, "config/runtime-snapshot-retention.json"),
+    `${JSON.stringify({
+      schemaVersion: "1.0.0",
+      sourceSnapshotIds: [SNAPSHOT_ID],
+      runtimeSnapshotIds: [],
+    })}\n`,
+    "utf8",
+  );
   return rootDir;
 }
 
@@ -228,7 +238,7 @@ describe("candidate data boundary", () => {
   it("retains the canonical SEPE runtime evidence", async () => {
     await expect(
       validateCandidateBoundary(await currentCandidateOptions(fixtureRoot)),
-    ).resolves.toMatchObject({ resourceCount: 21, sepeRecordCount: 116 });
+    ).resolves.toMatchObject({ resourceCount: 22, sepeRecordCount: 116 });
   }, 90_000);
 
   it("rejects a stale one-record SEPE payload", async () => {
@@ -665,7 +675,7 @@ describe("candidate data boundary", () => {
 
     await expect(
       validateCandidateBoundary(await currentCandidateOptions(fixtureRoot)),
-    ).resolves.toMatchObject({ resourceCount: 21, sepeRecordCount: 116 });
+    ).resolves.toMatchObject({ resourceCount: 22, sepeRecordCount: 116 });
   }, 90_000);
 
   it("rejects a later affirmative ownership claim after a negative clause", async () => {

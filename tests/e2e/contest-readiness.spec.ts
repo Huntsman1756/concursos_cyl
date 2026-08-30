@@ -330,7 +330,7 @@ test.describe("contest readiness journeys", () => {
     );
     await expect(mobileNavigation).toHaveAttribute("hidden");
     const mobileAnchors = mobileNavigation.locator("a");
-    await expect(mobileAnchors).toHaveCount(6);
+    await expect(mobileAnchors).toHaveCount(7);
     expect(
       await mobileAnchors.evaluateAll((anchors) =>
         anchors.every((anchor) => anchor.getClientRects().length === 0),

@@ -34,6 +34,11 @@ function PrimaryNavigationLinks({ onNavigate }: PrimaryNavigationLinksProps) {
         </NavLink>
       </li>
       <li>
+        <NavLink to="/desde-oferta" onClick={onNavigate}>
+          Desde oferta
+        </NavLink>
+      </li>
+      <li>
         <NavLink to="/comparar" onClick={onNavigate}>
           Comparar estudios
         </NavLink>

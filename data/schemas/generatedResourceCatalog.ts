@@ -81,6 +81,10 @@ export const GENERATED_RESOURCE_CATALOG = {
     fileName: "sepe-occupation-market.json",
     sourceKind: "sepeOccupationMarket",
   },
+  offerEvidence: {
+    fileName: "offer-evidence.json",
+    sourceKind: "derivedOfferEvidence",
+  },
 } as const;
 
 export type GeneratedResourceKey = keyof typeof GENERATED_RESOURCE_CATALOG;

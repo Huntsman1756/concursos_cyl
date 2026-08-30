@@ -21,6 +21,7 @@ import {
   type OutcomeIndicatorsResource,
 } from "../../data/schemas/outcomes";
 import {
+  GENERATED_RESOURCE_CATALOG,
   GENERATED_FOUNDATION_RESOURCE_KEYS,
   isPermittedGeneratedAssetPath,
   legacyGeneratedResourcePath,
@@ -30,6 +31,10 @@ import {
   PublishedRequirementsResourceSchema,
   type OfferPublishedRequirements,
 } from "../domain/requirements";
+import {
+  OfferEvidenceResourceSchema,
+  type OfferEvidenceResource,
+} from "../../data/schemas/offerEvidence";
 import {
   OccupationAliasesSchema,
   MappingCoverageResourceSchema,
@@ -377,6 +382,66 @@ export function loadPublishedRequirements(
     PublishedRequirementsResourceSchema,
     requestInitFor(options),
   );
+}
+
+/** Loads the candidate offer→requirement→next-action sidecar from its manifest entry. */
+export async function loadOfferEvidence(
+  manifest: LoadableGeneratedManifest,
+  options?: GeneratedDataLoadOptions,
+): Promise<OfferEvidenceResource> {
+  const resourceSnapshots =
+    manifest.resourceSnapshots as typeof manifest.resourceSnapshots &
+      Record<string, { resourcePath: string } | undefined>;
+  const snapshot = resourceSnapshots.offerEvidence;
+  if (snapshot === undefined) {
+    throw new GeneratedDataError(
+      "missing",
+      "Generated manifest does not advertise offer evidence.",
+    );
+  }
+
+  const resource = await loadGeneratedResource(
+    snapshot.resourcePath,
+    OfferEvidenceResourceSchema,
+    requestInitFor(options),
+  );
+  const baseOfferSnapshot = manifest.resourceSnapshots.jobOffers.resourcePath;
+  const baseMatch = /^\/data\/v1\/snapshots\/([^/]+)\//u.exec(
+    baseOfferSnapshot,
+  );
+  const activationProvenance =
+    "activationProvenance" in manifest
+      ? manifest.activationProvenance
+      : undefined;
+  const expectedBaseSnapshotId =
+    activationProvenance?.sourceSnapshotId ?? baseMatch?.[1];
+  if (
+    baseMatch === null ||
+    expectedBaseSnapshotId === undefined ||
+    resource.baseSnapshotId !== expectedBaseSnapshotId
+  ) {
+    throw new GeneratedDataError(
+      "schema",
+      "Offer evidence sidecar does not match the manifest offer snapshot.",
+    );
+  }
+  if (
+    resource.counts.offerCount !==
+    manifest.resourceSnapshots.jobOffers.recordCount
+  ) {
+    throw new GeneratedDataError(
+      "schema",
+      "Offer evidence sidecar does not match the manifest offer count.",
+    );
+  }
+  const expectedFileName = GENERATED_RESOURCE_CATALOG.offerEvidence.fileName;
+  if (!snapshot.resourcePath.endsWith(`/${expectedFileName}`)) {
+    throw new GeneratedDataError(
+      "schema",
+      "Offer evidence manifest entry does not use the canonical resource name.",
+    );
+  }
+  return resource;
 }
 
 /** Loads literal TodoFP professional outputs; retained historical snapshots resolve empty. */

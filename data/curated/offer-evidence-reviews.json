@@ -1,0 +1,31 @@
+{
+  "schemaVersion": "1.0.0",
+  "reviewVersion": "1.0.0",
+  "baseSnapshotId": "20260822085631889-fc9bf2ba23f9",
+  "reviews": [
+    {
+      "kind": "title_to_occupation",
+      "offerTitle": "PEONES FORESTALES",
+      "occupationId": "occupation:cno11:9543",
+      "programKey": "AGA03B",
+      "relationshipType": "official_output",
+      "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/agraria/aprovechamientos-forestales.html",
+      "sourceQuote": "Peón forestal.",
+      "reviewedAt": "2026-08-30",
+      "mappingVersion": "1.0.0",
+      "reviewNote": "Coincidencia exacta revisada entre la etiqueta de la oferta y la salida profesional oficial del ciclo."
+    },
+    {
+      "kind": "exact_requirement_to_program",
+      "offerIds": ["1285659376390", "1285671836252"],
+      "literalRequirement": "Técnico en Cocina y Gastronomía.",
+      "normalizedValue": "Técnico en Cocina y Gastronomía",
+      "programKey": "HOT01M",
+      "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/hosteleria-turismo/cocina-gastronomia.html",
+      "sourceQuote": "Técnico en Cocina y Gastronomía",
+      "reviewedAt": "2026-08-30",
+      "mappingVersion": "1.0.0",
+      "reviewNote": "El requisito literal publicado coincide con el título oficial del ciclo de grado medio en TodoFP."
+    }
+  ]
+}
