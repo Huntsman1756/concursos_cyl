@@ -563,7 +563,7 @@ a:focus-visible {
   white-space: nowrap;
 }
 
-.result-actions__tertiary {
+.result-actions a:last-of-type {
   color: var(--color-action-text);
   font-weight: 750;
   text-underline-offset: 0.2em;
@@ -1510,7 +1510,7 @@ summary:focus-visible {
     grid-template-columns: 1fr;
   }
 
-  .result-actions__tertiary {
+  .result-actions a:last-of-type {
     width: 100%;
   }
 
@@ -1580,6 +1580,11 @@ summary:focus-visible {
   color: var(--color-text-muted);
   font-size: clamp(1rem, 1.2vw, 1.08rem);
   line-height: 1.45;
+}
+
+.home-hero__copy p a {
+  color: var(--color-action);
+  font-weight: 750;
 }
 
 .home-workspace {

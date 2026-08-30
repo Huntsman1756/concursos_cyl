@@ -24,6 +24,7 @@ import {
   type GeneratedDataLoadOptions,
 } from "../../data/generatedDataClient";
 import { indexIncomeOutcomes } from "../../domain/outcomes";
+import { findTrainingOutcomeGroup } from "../../domain/trainingOutcomeMatching";
 import { deriveActions } from "../../domain/actionEngine";
 import { deriveEvidenceState, orderOfferMatches } from "../../domain/evidence";
 import {
@@ -283,6 +284,7 @@ export function TrainingResultsPage() {
       ),
     );
   }, [publicationFilter, session.answers, state]);
+  const hasOrderedMatches = orderedMatches.length > 0;
 
   useEffect(() => {
     if (!filterNoticeFocusRequestedRef.current || publicationFilter === null) {
@@ -317,6 +319,7 @@ export function TrainingResultsPage() {
         : [],
     [programKey, state],
   );
+  const hasResolvedOccupations = resolvedOccupations.length > 0;
 
   const officialProfiles = useMemo(
     () =>
@@ -434,6 +437,8 @@ export function TrainingResultsPage() {
     );
   }
 
+  const encodedProgramKey = encodeURIComponent(programKey);
+  const dataSnapshotDate = snapshotDate(state.manifest);
   const manifestOutcomeSnapshot = outcomeSnapshotOf(state.manifest);
   const outcomeSource =
     manifestOutcomeSnapshot === undefined
@@ -479,10 +484,10 @@ export function TrainingResultsPage() {
   const sectionNavigationLinks = [
     { href: "#donde-estudiar", label: "Dónde estudiar" },
     { href: "#salidas-profesionales", label: "Salidas profesionales" },
-    ...(resolvedOccupations.length === 0
+    ...(!hasResolvedOccupations
       ? []
       : [{ href: "#ocupaciones-revisadas", label: "Ocupaciones revisadas" }]),
-    ...(hasApprovedRelationship && orderedMatches.length > 0
+    ...(hasApprovedRelationship && hasOrderedMatches
       ? [{ href: "#ofertas-relacionadas", label: "Ofertas relacionadas" }]
       : []),
     { href: "#base-cotizacion-observada", label: "Base de cotización" },
@@ -652,7 +657,7 @@ export function TrainingResultsPage() {
         aria-label="Siguientes pasos"
         data-print-hidden="true"
       >
-        {resolvedOccupations.length > 0 ? (
+        {hasResolvedOccupations ? (
           <>
             <FragmentLink
               className="primary-button"
@@ -662,7 +667,7 @@ export function TrainingResultsPage() {
             </FragmentLink>
             <Link
               className="secondary-button"
-              to={`/formacion/${encodeURIComponent(programKey)}`}
+              to={`/formacion/${encodedProgramKey}`}
             >
               Ver centros y modalidades
             </Link>
@@ -670,17 +675,25 @@ export function TrainingResultsPage() {
         ) : (
           <Link
             className="primary-button"
-            to={`/formacion/${encodeURIComponent(programKey)}`}
+            to={`/formacion/${encodedProgramKey}`}
           >
             Ver centros y modalidades
           </Link>
         )}
-        <Link
-          className="result-actions__tertiary"
-          to={`/comparar?program=${encodeURIComponent(state.program.programKey)}`}
-        >
-          Comparar ingresos
-        </Link>
+        {(!hasApprovedRelationship ||
+          ("index" in state.outcome &&
+            findTrainingOutcomeGroup(state.program, state.outcome.index)
+              ?.matchType === "cycle")) && (
+          <Link
+            to={
+              hasApprovedRelationship
+                ? `/comparar?program=${encodedProgramKey}`
+                : "/desde-fp"
+            }
+          >
+            {hasApprovedRelationship ? "Comparar ingresos" : "Buscar FP"}
+          </Link>
+        )}
         <PrintButton className="secondary-button" />
       </nav>
       {stale && (
@@ -810,7 +823,7 @@ export function TrainingResultsPage() {
           <p>No se han podido cargar las salidas oficiales de este ciclo.</p>
         )}
       </section>
-      {resolvedOccupations.length > 0 && (
+      {hasResolvedOccupations && (
         <section
           id="ocupaciones-revisadas"
           className="occupations-section"
@@ -863,11 +876,11 @@ export function TrainingResultsPage() {
             de empleo y comprueba siempre los requisitos de cada oferta.
           </p>
         </div>
-      ) : orderedMatches.length === 0 ? (
+      ) : !hasOrderedMatches ? (
         <div className="status-panel">
           <p>
             {publicationFilter === null
-              ? `0 ofertas con correspondencia validada en la copia de datos del ${snapshotDate(state.manifest)}.`
+              ? `0 ofertas con correspondencia validada en la copia de datos del ${dataSnapshotDate}.`
               : "0 ofertas con correspondencia validada en esta copia de datos que omitan publicar este requisito exacto."}
           </p>
           <p>
@@ -888,7 +901,7 @@ export function TrainingResultsPage() {
         >
           <div className="section-heading">
             <h2 id="offer-results-title">Ofertas relacionadas ahora</h2>
-            <span>Copia del {snapshotDate(state.manifest)}</span>
+            <span>Copia del {dataSnapshotDate}</span>
           </div>
           <div className="offer-list">
             {orderedMatches.map((match) => {
