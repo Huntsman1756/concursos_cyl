@@ -275,6 +275,15 @@ test("FP results preserve complete centers, province context, deferred outcomes,
   await expectNoHorizontalOverflow(page);
   expect(requestedDataPaths.filter((path) => path === outcomePath)).toEqual([]);
 
+  await expect(
+    page.getByRole("link", { name: "Comparar ingresos" }),
+  ).not.toBeVisible();
+  await page
+    .getByRole("button", { name: "Cargar datos de ingresos observados" })
+    .click();
+  await expect(
+    page.getByText("Espa\u00f1a \u00b7 grupo del ciclo"),
+  ).toBeVisible();
   const compareLink = page.getByRole("link", { name: "Comparar ingresos" });
   await expect(compareLink).toHaveAttribute("href", "/comparar?program=IFC03S");
   await expect(
@@ -299,7 +308,16 @@ test("FP results preserve complete centers, province context, deferred outcomes,
 
   await page.goBack();
   await expect(page).toHaveURL(/\/desde-fp\/IFC03S\?province=Le%C3%B3n$/u);
-  await compareLink.click();
+  await page
+    .getByRole("button", { name: "Cargar datos de ingresos observados" })
+    .click();
+  await expect(
+    page.getByText("Espa\u00f1a \u00b7 grupo del ciclo"),
+  ).toBeVisible();
+  const reloadedCompareLink = page.getByRole("link", {
+    name: "Comparar ingresos",
+  });
+  await reloadedCompareLink.click();
   await expect(page).toHaveURL(/\/comparar\?program=IFC03S$/u);
 });
 

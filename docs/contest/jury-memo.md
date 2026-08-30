@@ -16,6 +16,8 @@ SALIDA CyL ordena una decisión que normalmente obliga a saltar entre FP, ocupac
 
 Dos recorridos muestran el valor en pocos segundos. Desde FP: [Cuidados Auxiliares de Enfermería (SAN21)](https://salida-cyl.157-90-22-40.sslip.io/desde-fp/SAN21) lleva a ocupaciones revisadas y a ofertas de la instantánea con correspondencia validada. Desde ocupación: [Auxiliares de enfermería hospitalaria (CNO 5611)](https://salida-cyl.157-90-22-40.sslip.io/desde-ocupacion/occupation%3Acno11%3A5611) devuelve la FP relacionada. La cobertura congelada contiene 264 relaciones FP-ocupación revisadas, 35 alias aprobados (denominaciones de ocupación verificadas que amplían la búsqueda sin inventar vínculos), 113 cualificaciones distintas y 130 claves de modalidad (identificadores oficiales del catálogo de FP). El SEPE aporta 116 de 116 páginas de ocupación consultadas para `2026-07`.
 
+Las ofertas relacionadas solo aparecen después de que la relación FP-ocupación correspondiente supera la revisión; no constituyen una búsqueda de empleo general, sino una copia fechada con correspondencia validada frente a la que cada persona comprueba los requisitos.
+
 ## 2. Valor económico
 
 El valor económico está en reducir el tiempo y la incertidumbre antes de elegir una matrícula, desplazamiento o ruta profesional: hoy contrastar una decisión exige saltar entre cuatro o más catálogos oficiales, y SALIDA CyL los reúne en una sola pantalla con cada dato fechado. Es gratuita, sin registro ni cuenta, lo que elimina barreras de entrada. Cada fuente lleva fecha y código, y el dataset derivado es descargable (JSON/CSV) con licencia CC BY 4.0 y verificación de integridad SHA-256, reutilizable por terceros sin pagar ni pedir permiso.

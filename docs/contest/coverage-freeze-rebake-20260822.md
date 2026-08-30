@@ -1,5 +1,10 @@
 # Coverage freeze rebake — schema 2 — 2026-08-22
 
+> **Nota histórica:** este documento es un registro histórico del rebake del
+> 2026-08-22. La referencia vigente para la candidatura es
+> `docs/contest/coverage-freeze.json`; las cifras de este documento no deben
+> usarse para la release actual.
+
 El freeze se regeneró contra el límite exacto
 `ff9e6197f926e462bea1a3e8ac6a57a23d3f825a`, último commit que cambió una
 dependencia real del cálculo de cobertura, después de aplicar las

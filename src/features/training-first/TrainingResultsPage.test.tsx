@@ -592,6 +592,9 @@ describe("TrainingResultsPage", () => {
       within(nextActions).getByRole("link", { name: "Comparar ingresos" }),
     ).toHaveAttribute("href", "/comparar?program=IFC03S");
     expect(
+      within(nextActions).queryByRole("link", { name: "Buscar FP" }),
+    ).not.toBeInTheDocument();
+    expect(
       within(nextActions).getByRole("link", {
         name: "Ver ocupaciones revisadas",
       }),
@@ -879,6 +882,12 @@ describe("TrainingResultsPage", () => {
         name: "Ver centros y modalidades",
       }),
     ).toHaveClass("primary-button");
+    expect(
+      within(nextActions).getByRole("link", { name: "Buscar FP" }),
+    ).toHaveAttribute("href", "/desde-fp");
+    expect(
+      within(nextActions).queryByRole("link", { name: "Comparar ingresos" }),
+    ).not.toBeInTheDocument();
     expect(
       within(nextActions).queryByRole("link", {
         name: "Ver ocupaciones revisadas",
@@ -1173,6 +1182,9 @@ describe("TrainingResultsPage", () => {
     expect(
       await screen.findByText(/0 ofertas con correspondencia validada/u),
     ).toBeVisible();
+    expect(
+      screen.queryByRole("link", { name: "Comparar ingresos" }),
+    ).not.toBeInTheDocument();
   });
 
   it("filters out draft links, duplicates and unresolvable occupations", () => {

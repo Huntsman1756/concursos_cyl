@@ -19,6 +19,14 @@ const program = {
   familyName: "Informática y Comunicaciones",
 } as const;
 
+const exampleProgram = {
+  programKey: "SAN21",
+  programTitle: "Cuidados Auxiliares de Enfermería",
+  level: "intermediate",
+  familyCode: "SAN",
+  familyName: "Sanidad",
+} as const;
+
 function responseFor(data: unknown): Response {
   return new Response(JSON.stringify(data), {
     status: 200,
@@ -30,7 +38,10 @@ function installHomeFetch(): void {
   const manifest = currentManifestFixture();
   const resources = new Map<string, unknown>([
     ["/data/v1/manifest.json", manifest],
-    [manifest.resourceSnapshots.programs.resourcePath, [program]],
+    [
+      manifest.resourceSnapshots.programs.resourcePath,
+      [program, exampleProgram],
+    ],
     [manifest.resourceSnapshots.mappingCoverage.resourcePath, []],
   ]);
   vi.stubGlobal(
@@ -75,6 +86,11 @@ describe("HomePage", () => {
     });
     expect(combobox).toHaveAttribute("aria-autocomplete", "list");
     expect(screen.queryAllByRole("option")).toHaveLength(0);
+    expect(
+      await screen.findByRole("link", {
+        name: "SAN21 — Cuidados Auxiliares de Enfermería",
+      }),
+    ).toHaveAttribute("href", "/desde-fp/SAN21");
 
     const submit = screen.getByRole("button", {
       name: /ver las salidas de este título/i,

@@ -249,7 +249,10 @@ export function HomePage() {
           </h1>
           <p>
             Conecta tu FP con ocupaciones y datos públicos, sin promesas de
-            empleo.
+            empleo. Ej.{" "}
+            <Link to="/desde-fp/SAN21">
+              SAN21 — {programsByKey.get("SAN21")?.programTitle}
+            </Link>
           </p>
         </div>
 
