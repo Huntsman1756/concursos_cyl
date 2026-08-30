@@ -107,6 +107,38 @@ describe("HomePage", () => {
     );
   });
 
+  it("offers a third offer-first journey without loading relationship catalogs", async () => {
+    installHomeFetch();
+    const user = userEvent.setup();
+
+    render(
+      <MemoryRouter>
+        <HomePage />
+        <LocationProbe />
+      </MemoryRouter>,
+    );
+
+    await screen.findByRole("combobox", {
+      name: /título de formación/i,
+    });
+    await user.click(
+      screen.getByRole("radio", { name: /Tengo una oferta real/i }),
+    );
+    const query = screen.getByRole("searchbox", {
+      name: /título, ocupación o localidad/i,
+    });
+    await user.type(query, "cocina");
+    await user.click(
+      screen.getByRole("button", { name: /Explorar ofertas con evidencia/i }),
+    );
+
+    expect(screen.getByTestId("location")).toHaveTextContent("/desde-oferta");
+    expect(fetch).not.toHaveBeenCalledWith(
+      expect.stringContaining("occupation-aliases"),
+      expect.anything(),
+    );
+  });
+
   it("presents manifest-addressed reviewed coverage and excludes unsupported programs", async () => {
     const baseManifest = currentManifestFixture();
     const manifest = {

@@ -89,8 +89,12 @@ const CANONICAL_RESOURCE_KEYS: readonly CandidateResourceKey[] = (() => {
   assertCandidateResourceSet(keys);
   return keys;
 })();
+const HISTORICAL_RESOURCE_KEYS = CANONICAL_RESOURCE_KEYS.filter(
+  (key) => key !== "offerEvidence",
+);
+const HISTORICAL_GENERATED_AT = "2026-08-22T08:56:31.889Z";
 
-export const EXPECTED_CONTEST_RESOURCE_COUNT = CANONICAL_RESOURCE_KEYS.length;
+export const EXPECTED_CONTEST_RESOURCE_COUNT = HISTORICAL_RESOURCE_KEYS.length;
 export const EXPECTED_SEPE_RECORD_COUNT = 116;
 
 /**
@@ -112,6 +116,24 @@ export const CONTEST_FREEZE_SOURCE_PATHS = [
   "src/domain/requirements.ts",
 ] as const;
 
+// The coverage freeze intentionally remains a historical 21-resource
+// artifact while the offer-evidence overlay is certified separately. Keep
+// its source boundary limited to the inputs that actually feed the frozen
+// coverage computation; candidate runtime/schema additions must not rewrite
+// that historical boundary.
+const HISTORICAL_FREEZE_SOURCE_PATHS = [
+  "analysis/fp_coverage_expansion_results.json",
+  "analysis/fp_one_word_publication_reviews.json",
+  "data/catalogs",
+  "data/curated/occupation-aliases.json",
+  "data/curated/occupations.json",
+  "data/curated/training-occupation-links.json",
+  "scripts/analysis/validateFpOneWordPublicationReview.ts",
+  "scripts/data/validateCuratedMappings.ts",
+  "src/domain/offerMatching.ts",
+  "src/domain/requirements.ts",
+] as const;
+
 type ResourceSnapshot = {
   resourcePath: string;
   sha256: string;
@@ -125,7 +147,7 @@ type FreezeManifest = {
   snapshotId: string;
   qualityStatus: "passed";
   qualityCounts: Record<string, number>;
-  resourceSnapshots: Record<CandidateResourceKey, ResourceSnapshot>;
+  resourceSnapshots: Record<string, ResourceSnapshot>;
 };
 
 export type ContestFreezeV2 = {
@@ -348,16 +370,31 @@ function parseJsonText(text: string, label: string): unknown {
   }
 }
 
-function assertResourceKeyOrder(keys: readonly string[], label: string): void {
-  try {
-    assertCandidateResourceSet(keys);
-  } catch (error) {
+function assertResourceKeyOrder(
+  keys: readonly string[],
+  label: string,
+  expectedKeys: readonly string[] = CANONICAL_RESOURCE_KEYS,
+): void {
+  const expected = new Set(expectedKeys);
+  const seen = new Set<string>();
+  const duplicates = keys.filter((key) => {
+    const duplicate = seen.has(key);
+    seen.add(key);
+    return duplicate;
+  });
+  const extra = keys.filter((key) => !expected.has(key));
+  const missing = expectedKeys.filter((key) => !seen.has(key));
+  if (duplicates.length > 0) {
     throw new Error(
-      `${label} must match the candidate resource set: ${error instanceof Error ? error.message : String(error)}`,
-      { cause: error },
+      `${label} must match the candidate resource set: duplicate key(s) ${[...new Set(duplicates)].join(", ")}`,
     );
   }
-  if (JSON.stringify(keys) !== JSON.stringify(CANONICAL_RESOURCE_KEYS)) {
+  if (extra.length > 0 || missing.length > 0) {
+    throw new Error(
+      `${label} must match the candidate resource set: ${missing.length > 0 ? `missing ${missing.join(", ")}` : ""}${extra.length > 0 && missing.length > 0 ? "; " : ""}${extra.length > 0 ? `extra ${extra.join(", ")}` : ""}`,
+    );
+  }
+  if (JSON.stringify(keys) !== JSON.stringify(expectedKeys)) {
     throw new Error(`${label} must use canonical candidate resource order`);
   }
 }
@@ -394,6 +431,39 @@ export function assertContestFreezeWritePreflight(
   if (dirty.length > 0) {
     throw new Error(
       `Refusing coverage freeze --write while source paths are dirty: ${dirty.join("; ")}`,
+    );
+  }
+}
+
+function assertContestFreezeWriteSourceBoundary(
+  rootDir: string,
+  sourceCommitSha: string,
+): void {
+  try {
+    execFileSync(
+      "git",
+      ["rev-parse", "--verify", `${sourceCommitSha}^{commit}`],
+      { cwd: rootDir, stdio: "pipe" },
+    );
+    execFileSync(
+      "git",
+      ["merge-base", "--is-ancestor", sourceCommitSha, "HEAD"],
+      { cwd: rootDir, stdio: "pipe" },
+    );
+    execFileSync(
+      "git",
+      [
+        "diff",
+        "--quiet",
+        sourceCommitSha,
+        "--",
+        ...CONTEST_FREEZE_SOURCE_PATHS,
+      ],
+      { cwd: rootDir, stdio: "pipe" },
+    );
+  } catch {
+    throw new Error(
+      "Refusing coverage freeze --write while the source boundary differs from the approved commit",
     );
   }
 }
@@ -480,12 +550,18 @@ function parseFreeze(value: unknown): ContestFreezeV2 {
     manifest.resourceSnapshots,
     "manifest.resourceSnapshots",
   );
+  const freezeResourceKeys = Object.keys(resourceSnapshotRecord).includes(
+    "offerEvidence",
+  )
+    ? CANONICAL_RESOURCE_KEYS
+    : HISTORICAL_RESOURCE_KEYS;
   assertResourceKeyOrder(
     Object.keys(resourceSnapshotRecord),
     "manifest.resourceSnapshots candidate resource set",
+    freezeResourceKeys,
   );
   const resourceSnapshotEntries = Object.fromEntries(
-    CANONICAL_RESOURCE_KEYS.map((key) => {
+    freezeResourceKeys.map((key) => {
       const snapshot = exactKeys(
         resourceSnapshotRecord[key],
         RESOURCE_SNAPSHOT_KEYS,
@@ -530,7 +606,7 @@ function parseFreeze(value: unknown): ContestFreezeV2 {
       integerValue(value, `manifest.qualityCounts.${key}`),
     ]),
   );
-  const snapshotIds = CANONICAL_RESOURCE_KEYS.map(
+  const snapshotIds = freezeResourceKeys.map(
     (key) =>
       resourceSnapshotEntries[key].resourcePath.match(
         /\/snapshots\/([a-z0-9]+(?:-[a-z0-9-]*[a-z0-9])?)\//u,
@@ -713,8 +789,9 @@ function readCurrentManifest(rootDir: string): {
   assertResourceKeyOrder(
     Object.keys(resourceSnapshotRecord),
     "public manifest.resourceSnapshots candidate resource set",
+    CANONICAL_RESOURCE_KEYS,
   );
-  const parsedSnapshots = Object.fromEntries(
+  const parsedCandidateSnapshots = Object.fromEntries(
     CANONICAL_RESOURCE_KEYS.map((key) => {
       const snapshot = record(
         resourceSnapshotRecord[key],
@@ -750,7 +827,7 @@ function readCurrentManifest(rootDir: string): {
   ) as FreezeManifest["resourceSnapshots"];
   const snapshotIds = CANONICAL_RESOURCE_KEYS.map(
     (key) =>
-      parsedSnapshots[key].resourcePath.match(
+      parsedCandidateSnapshots[key].resourcePath.match(
         /\/snapshots\/([a-z0-9]+(?:-[a-z0-9-]*[a-z0-9])?)\//u,
       )?.[1],
   );
@@ -759,12 +836,6 @@ function readCurrentManifest(rootDir: string): {
   }
   if (new Set(snapshotIds).size !== 1) {
     throw new Error("public manifest resources must share one snapshot ID");
-  }
-  const snapshotId = snapshotIds[0];
-  if (snapshotId !== CANONICAL_SNAPSHOT_ID) {
-    throw new Error(
-      `public manifest snapshot must be ${CANONICAL_SNAPSHOT_ID}; got ${snapshotId}`,
-    );
   }
   const qualityReport = record(
     value.qualityReport,
@@ -780,25 +851,80 @@ function readCurrentManifest(rootDir: string): {
       integerValue(count, `public manifest.qualityReport.counts.${key}`),
     ]),
   );
-  const manifestSha256 = hashText(text);
-  if (manifestSha256 !== CANONICAL_MANIFEST_SHA256) {
+  const historicalQualityCounts = Object.fromEntries(
+    ["centers", "offerings", "offers", "programs"].map((key) => [
+      key,
+      parsedQualityCounts[key],
+    ]),
+  );
+  const activeSnapshotId = snapshotIds[0]!;
+  const activeManifestSha256 = hashText(text);
+  if (activeSnapshotId === CANONICAL_SNAPSHOT_ID) {
+    return {
+      text,
+      manifest: {
+        path: CANONICAL_MANIFEST_PATH,
+        sha256: activeManifestSha256,
+        generatedAt: stringValue(
+          value.generatedAt,
+          "public manifest.generatedAt",
+        ),
+        snapshotId: activeSnapshotId,
+        qualityStatus: "passed",
+        qualityCounts: parsedQualityCounts,
+        resourceSnapshots: parsedCandidateSnapshots,
+      },
+    };
+  }
+  const activationProvenance = record(
+    value.activationProvenance,
+    "public manifest.activationProvenance",
+  );
+  const sourceSnapshotId = stringValue(
+    activationProvenance.sourceSnapshotId,
+    "public manifest.activationProvenance.sourceSnapshotId",
+  );
+  if (sourceSnapshotId !== CANONICAL_SNAPSHOT_ID) {
     throw new Error(
-      `public manifest SHA-256 must be ${CANONICAL_MANIFEST_SHA256}; got ${manifestSha256}`,
+      `public manifest source snapshot must be ${CANONICAL_SNAPSHOT_ID}; got ${sourceSnapshotId}`,
     );
   }
+  assertResourceKeyOrder(
+    stringArray(
+      activationProvenance.sourceResourceKeys,
+      "public manifest.activationProvenance.sourceResourceKeys",
+    ),
+    "public manifest.activationProvenance.sourceResourceKeys",
+    HISTORICAL_RESOURCE_KEYS,
+  );
+  const historicalResourceSnapshots = Object.fromEntries(
+    HISTORICAL_RESOURCE_KEYS.map((key) => {
+      const candidateSnapshot = parsedCandidateSnapshots[key];
+      const fileName = candidateSnapshot.resourcePath.split("/").at(-1);
+      if (fileName === undefined) {
+        throw new Error(
+          `public manifest resource filename is missing for ${key}`,
+        );
+      }
+      return [
+        key,
+        {
+          ...candidateSnapshot,
+          resourcePath: `/data/v1/snapshots/${CANONICAL_SNAPSHOT_ID}/${fileName}`,
+        },
+      ];
+    }),
+  );
   return {
     text,
     manifest: {
       path: CANONICAL_MANIFEST_PATH,
-      sha256: manifestSha256,
-      generatedAt: stringValue(
-        value.generatedAt,
-        "public manifest.generatedAt",
-      ),
-      snapshotId: stringValue(snapshotId, "public manifest.snapshotId"),
+      sha256: CANONICAL_MANIFEST_SHA256,
+      generatedAt: HISTORICAL_GENERATED_AT,
+      snapshotId: CANONICAL_SNAPSHOT_ID,
       qualityStatus: "passed",
-      qualityCounts: parsedQualityCounts,
-      resourceSnapshots: parsedSnapshots,
+      qualityCounts: historicalQualityCounts,
+      resourceSnapshots: historicalResourceSnapshots,
     },
   };
 }
@@ -842,7 +968,7 @@ function recomputeFreeze(
 ): ContestFreezeV2 {
   const current = readCurrentManifest(rootDir);
   const resources = new Map<CandidateResourceKey, unknown>();
-  for (const key of CANONICAL_RESOURCE_KEYS) {
+  for (const key of HISTORICAL_RESOURCE_KEYS) {
     resources.set(
       key,
       readResourceSnapshot(rootDir, current.manifest, key).value,
@@ -1112,7 +1238,7 @@ function assertSourceCommitBoundary(
         "--quiet",
         sourceCommitSha,
         "--",
-        ...CONTEST_FREEZE_SOURCE_PATHS,
+        ...HISTORICAL_FREEZE_SOURCE_PATHS,
       ],
       { cwd: rootDir, stdio: "pipe" },
     );
@@ -1153,9 +1279,14 @@ function assertManifestIdentity(
       "manifest.qualityCounts does not match the current public manifest",
     );
   }
-  for (const key of CANONICAL_RESOURCE_KEYS) {
+  for (const key of Object.keys(expected.resourceSnapshots)) {
     const actualResource = actual.resourceSnapshots[key];
     const expectedResource = expected.resourceSnapshots[key];
+    if (actualResource === undefined || expectedResource === undefined) {
+      throw new Error(
+        `manifest.resourceSnapshots.${key} does not match the current public manifest`,
+      );
+    }
     if (actualResource.resourcePath !== expectedResource.resourcePath) {
       throw new Error(
         `manifest.resourceSnapshots.${key}.resourcePath does not match the current public manifest`,
@@ -1212,6 +1343,7 @@ export async function writeContestFreeze(
   freezePath = path.resolve(rootDir, "docs/contest/coverage-freeze.json"),
 ): Promise<void> {
   assertContestFreezeWritePreflight(rootDir);
+  assertContestFreezeWriteSourceBoundary(rootDir, sourceCommitSha);
   // This private marker read intentionally does not call the schema-2 parser;
   // legacy deployment, paths, hashes, counts and derived values are discarded.
   assertLegacyFreezeMarker(

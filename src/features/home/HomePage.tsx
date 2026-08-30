@@ -56,14 +56,18 @@ type SearchDataState =
       programs: TrainingProgram[];
     };
 
-type SearchMode = "fp" | "occupation";
+type SearchMode = "fp" | "occupation" | "offer";
 
 const SEARCH_MODE_STORAGE_KEY = "salida-cyl:home-search-mode";
 
 function initialSearchMode(): SearchMode {
   try {
     const savedMode = window.localStorage.getItem(SEARCH_MODE_STORAGE_KEY);
-    return savedMode === "fp" || savedMode === "occupation" ? savedMode : "fp";
+    return savedMode === "fp" ||
+      savedMode === "occupation" ||
+      savedMode === "offer"
+      ? savedMode
+      : "fp";
   } catch {
     return "fp";
   }
@@ -85,6 +89,7 @@ export function HomePage() {
     useState<TrainingProgram | null>(null);
   const [confirmedOccupation, setConfirmedOccupation] =
     useState<Occupation | null>(null);
+  const [offerQuery, setOfferQuery] = useState("");
 
   useRouteReady(searchData.status === "ready");
   const manifestRef = useRef<Awaited<ReturnType<typeof loadManifest>> | null>(
@@ -167,7 +172,7 @@ export function HomePage() {
             left.programTitle.localeCompare(right.programTitle, "es") ||
             left.programKey.localeCompare(right.programKey),
         );
-        if (searchMode === "fp") {
+        if (searchMode === "fp" || searchMode === "offer") {
           return { aliases: [], occupations: [], programs };
         }
 
@@ -272,10 +277,14 @@ export function HomePage() {
                   return;
                 }
                 event.preventDefault();
+                const modes: SearchMode[] = ["fp", "occupation", "offer"];
+                const currentIndex = modes.indexOf(searchMode);
+                const direction =
+                  event.key === "ArrowLeft" || event.key === "ArrowUp" ? -1 : 1;
                 const nextMode =
-                  event.key === "ArrowLeft" || event.key === "ArrowUp"
-                    ? "fp"
-                    : "occupation";
+                  modes[
+                    (currentIndex + direction + modes.length) % modes.length
+                  ];
                 selectSearchMode(nextMode);
                 event.currentTarget
                   .querySelector<HTMLInputElement>(`input[value="${nextMode}"]`)
@@ -318,6 +327,24 @@ export function HomePage() {
                   <span>
                     <strong>Tengo un empleo en mente</strong>
                     <small>Dime qué FP me lleva hasta esa ocupación.</small>
+                  </span>
+                </label>
+                <label
+                  className="search-entry__mode"
+                  data-selected={searchMode === "offer"}
+                >
+                  <input
+                    type="radio"
+                    name="home-search-mode"
+                    value="offer"
+                    checked={searchMode === "offer"}
+                    onChange={() => selectSearchMode("offer")}
+                  />
+                  <span>
+                    <strong>Tengo una oferta real</strong>
+                    <small>
+                      Comprueba requisitos, relación y siguiente acción oficial.
+                    </small>
                   </span>
                 </label>
               </div>
@@ -382,7 +409,7 @@ export function HomePage() {
                   </>
                 )}
               </form>
-            ) : (
+            ) : searchMode === "occupation" ? (
               <form
                 className="search-entry__panel"
                 onSubmit={(event) => {
@@ -449,6 +476,41 @@ export function HomePage() {
                     ) : null}
                   </>
                 )}
+              </form>
+            ) : (
+              <form
+                className="search-entry__panel"
+                onSubmit={(event) => {
+                  event.preventDefault();
+                  const query = offerQuery.trim();
+                  navigate(
+                    query.length === 0
+                      ? "/desde-oferta"
+                      : `/desde-oferta?query=${encodeURIComponent(query)}`,
+                  );
+                }}
+              >
+                <p className="search-entry__direction">
+                  <span>Oferta que quieres comprobar</span>
+                  <Icon name="arrow-right" size={18} />
+                  <strong>Requisito · relación · siguiente acción</strong>
+                </p>
+                <label
+                  className="search-entry__field"
+                  htmlFor="home-offer-query"
+                >
+                  Título, ocupación o localidad
+                  <input
+                    id="home-offer-query"
+                    type="search"
+                    value={offerQuery}
+                    onChange={(event) => setOfferQuery(event.target.value)}
+                    placeholder="Ej.: cocina, cuidador, fisioterapeuta"
+                  />
+                </label>
+                <button className="search-entry__cta" type="submit">
+                  Explorar ofertas con evidencia
+                </button>
               </form>
             )}
           </section>

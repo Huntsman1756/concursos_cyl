@@ -124,6 +124,7 @@ test("home exposes one chosen journey, navigation, freshness, and no automated a
       "Inicio",
       "Desde FP",
       "Desde ocupación",
+      "Desde oferta",
       "Comparar estudios",
       "Más formación",
       "Metodología",
@@ -133,7 +134,7 @@ test("home exposes one chosen journey, navigation, freshness, and no automated a
   const startingPoint = page.getByRole("group", {
     name: "¿Cuál es tu punto de partida?",
   });
-  await expect(startingPoint.getByRole("radio")).toHaveCount(2);
+  await expect(startingPoint.getByRole("radio")).toHaveCount(3);
   await expect(
     page.getByRole("button", { name: "Ver las salidas de este título" }),
   ).toHaveCount(1);
@@ -622,7 +623,7 @@ test("the complete Spanish home copy fits without horizontal overflow", async ({
       "hidden",
     );
     const mobileAnchors = page.locator("#mobile-primary-navigation a");
-    await expect(mobileAnchors).toHaveCount(6);
+    await expect(mobileAnchors).toHaveCount(7);
     expect(
       await mobileAnchors.evaluateAll((anchors) =>
         anchors.every((anchor) => anchor.getClientRects().length === 0),
@@ -686,7 +687,7 @@ test("reviewed programs and the single search module keep stable responsive geom
   const modeChoices = page.getByRole("group", {
     name: "¿Cuál es tu punto de partida?",
   });
-  await expect(modeChoices.getByRole("radio")).toHaveCount(2);
+  await expect(modeChoices.getByRole("radio")).toHaveCount(3);
   expect(searchPanel).not.toBeNull();
   expect(coveragePanel).not.toBeNull();
 

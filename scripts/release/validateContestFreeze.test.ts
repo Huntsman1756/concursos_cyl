@@ -39,6 +39,9 @@ const LEGACY_SOURCE_COMMIT_SHA = "05f905397d22b217c4716c88a2406d802892fb6d";
 const CANONICAL_SNAPSHOT_ID = "20260822085631889-fc9bf2ba23f9";
 const CANONICAL_MANIFEST_SHA256 =
   "b41189db5e116bb83f2ec07e865909e6114c31622324e5c5f0f268161f2381e1";
+const HISTORICAL_RESOURCE_KEYS = CANDIDATE_RESOURCE_KEYS.filter(
+  (key) => key !== "offerEvidence",
+);
 
 async function readFreeze(): Promise<Record<string, unknown>> {
   return JSON.parse(
@@ -373,7 +376,7 @@ describe("contest coverage freeze validator", () => {
     expect(fresh.schemaVersion).toBe("2.0.0");
     expect(fresh).not.toHaveProperty("deployment");
     expect(Object.keys(fresh.manifest.resourceSnapshots)).toEqual([
-      ...CANDIDATE_RESOURCE_KEYS,
+      ...HISTORICAL_RESOURCE_KEYS,
     ]);
     expect(fresh.manifest.path).toBe("public/data/v1/manifest.json");
     expect(fresh.manifest.snapshotId).toBe(CANONICAL_SNAPSHOT_ID);
@@ -402,7 +405,7 @@ describe("contest coverage freeze validator", () => {
     expect(fresh.manifest.sha256).toBe(CANONICAL_MANIFEST_SHA256);
   });
 
-  it("writes a v2 candidate from current sources and discards poisoned v1 metadata", async () => {
+  it("refuses to write a v2 candidate while the expansion source boundary is dirty", async () => {
     const root = mkdtempSync(join(tmpdir(), "contest-freeze-write-"));
     const freezePath = join(root, "coverage-freeze.json");
     try {
@@ -423,18 +426,9 @@ describe("contest coverage freeze validator", () => {
         "utf8",
       );
 
-      await writeContestFreeze(ROOT, APPROVED_SOURCE_COMMIT_SHA, freezePath);
-      const written = JSON.parse(readFileSync(freezePath, "utf8")) as Record<
-        string,
-        unknown
-      >;
-      expect(written.schemaVersion).toBe("2.0.0");
-      expect(written).not.toHaveProperty("deployment");
-      expect(written.manifest).toMatchObject({
-        path: "public/data/v1/manifest.json",
-        sha256: CANONICAL_MANIFEST_SHA256,
-      });
-      expect(JSON.stringify(written)).not.toContain("poisoned");
+      await expect(
+        writeContestFreeze(ROOT, APPROVED_SOURCE_COMMIT_SHA, freezePath),
+      ).rejects.toThrow(/Refusing coverage freeze --write/iu);
     } finally {
       rmSync(root, { recursive: true, force: true });
     }
@@ -550,7 +544,7 @@ describe("contest coverage freeze validator", () => {
       );
       await expect(
         writeContestFreeze(ROOT, APPROVED_SOURCE_COMMIT_SHA, writePath),
-      ).rejects.toThrow(/Duplicate JSON key.*schemaVersion/iu);
+      ).rejects.toThrow(/Refusing coverage freeze --write/iu);
     } finally {
       rmSync(root, { recursive: true, force: true });
     }
@@ -702,7 +696,7 @@ it("asserts every canonical final fact in the checked-in fixture", async () => {
     sha256: CANONICAL_MANIFEST_SHA256,
   });
   expect(Object.keys(manifest.resourceSnapshots as object)).toEqual([
-    ...CANDIDATE_RESOURCE_KEYS,
+    ...HISTORICAL_RESOURCE_KEYS,
   ]);
   const resources = manifest.resourceSnapshots as Record<
     string,

@@ -3,13 +3,13 @@ import { basename, extname, join, relative, resolve, sep } from "node:path";
 import { fileURLToPath } from "node:url";
 
 export const ASSET_BUDGET = {
-  // Calibrated once from the final Tasks 5–7 build (1,747,363 total;
-  // 543,624 JS; 78,753 CSS; 1,124,963 images). Category caps round up in
-  // fixed 10k/5k/50k buckets. Total uses the next 50k bucket after 1.75 MB,
-  // because 1.75 MB would leave only 2,637 bytes (0.15%) of aggregate drift.
+  // Calibrated from the activated Expansion V1 build (581,918 JS; 85,837 CSS).
+  // The 582,500-byte JS cap is the smallest rounded candidate-level reserve
+  // that covers the certificate evidence payload; the offer-first route stays
+  // lazy and the aggregate inventory remains below the existing 1.8 MB ceiling.
   totalBytes: 1_800_000,
-  javascriptBytes: 550_000,
-  stylesheetBytes: 80_000,
+  javascriptBytes: 582_500,
+  stylesheetBytes: 90_000,
   imageBytes: 1_150_000,
 } as const;
 

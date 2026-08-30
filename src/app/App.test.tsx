@@ -16,6 +16,7 @@ const primaryNavigationLabels = [
   "Inicio",
   "Desde FP",
   "Desde ocupación",
+  "Desde oferta",
   "Comparar estudios",
   "Más formación",
   "Metodología",
@@ -58,7 +59,7 @@ function NavigationProbe() {
 }
 
 describe("App", () => {
-  it("presents both approved starting-point choices", () => {
+  it("presents the three approved starting-point choices", () => {
     render(
       <MemoryRouter>
         <App />
@@ -72,6 +73,9 @@ describe("App", () => {
     ).toBeChecked();
     expect(
       screen.getByRole("radio", { name: /Tengo un empleo en mente/u }),
+    ).not.toBeChecked();
+    expect(
+      screen.getByRole("radio", { name: /Tengo una oferta real/u }),
     ).not.toBeChecked();
   });
 
@@ -91,7 +95,7 @@ describe("App", () => {
       within(
         screen.getByRole("navigation", { name: "Principal" }),
       ).getAllByRole("link"),
-    ).toHaveLength(6);
+    ).toHaveLength(7);
     expect(screen.getByRole("link", { name: "Inicio" })).toHaveAttribute(
       "aria-current",
       "page",
@@ -145,6 +149,7 @@ describe("App", () => {
       "/desde-ocupacion/occupation%3Acno11%3A2713",
       "Resultados desde ocupación · SALIDA CyL",
     ],
+    ["/desde-oferta", "Desde oferta · SALIDA CyL"],
     ["/comparar", "Comparar estudios · SALIDA CyL"],
     ["/recursos", "Más formación · SALIDA CyL"],
     ["/datos-abiertos", "Datos abiertos · SALIDA CyL"],
@@ -277,7 +282,7 @@ describe("App", () => {
     ).toEqual(primaryNavigationLabels);
   });
 
-  it("opens the six-link mobile navigation and restores focus after Escape", async () => {
+  it("opens the seven-link mobile navigation and restores focus after Escape", async () => {
     cleanup();
     const user = userEvent.setup();
     render(

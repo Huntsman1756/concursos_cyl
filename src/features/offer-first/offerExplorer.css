@@ -1,0 +1,419 @@
+.offer-explorer {
+  width: min(100%, 76rem);
+  margin: 0 auto;
+  padding: 3.5rem 1.25rem 5rem;
+}
+
+.offer-explorer__intro {
+  max-width: 50rem;
+  margin-bottom: 2rem;
+}
+
+.offer-explorer__eyebrow {
+  margin: 0 0 0.4rem;
+  color: var(--color-accent, #d97706);
+  font-size: 0.76rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.offer-explorer__intro h1,
+.offer-explorer__results h2 {
+  margin: 0;
+}
+
+.offer-explorer__intro > p:not(.offer-explorer__eyebrow) {
+  font-size: 1.12rem;
+  line-height: 1.6;
+}
+
+.offer-explorer__limit,
+.offer-explorer__muted,
+.offer-explorer__normalized,
+.offer-explorer__evidence-meta,
+.offer-explorer__caveat,
+.offer-explorer__results-heading > p,
+.offer-explorer__legend > p {
+  color: var(--color-muted, #64748b);
+  font-size: 0.92rem;
+  line-height: 1.5;
+}
+
+.offer-explorer__search {
+  padding: 1.35rem;
+  border: 1px solid var(--color-border, #d8dee8);
+  border-radius: 1rem;
+  background: var(--color-surface, #fff);
+  box-shadow: 0 0.65rem 1.8rem rgb(24 39 75 / 7%);
+}
+
+.offer-explorer__search h2 {
+  margin: 0 0 1rem;
+}
+
+.offer-explorer__search label,
+.offer-explorer__filters label {
+  display: grid;
+  gap: 0.4rem;
+  color: var(--color-ink, #172033);
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+.offer-explorer__search-row {
+  display: flex;
+  gap: 0.65rem;
+  margin-top: 0.45rem;
+}
+
+.offer-explorer__search-row input,
+.offer-explorer__filters select {
+  min-height: 2.75rem;
+  padding: 0.65rem 0.75rem;
+  border: 1px solid var(--color-border, #cbd5e1);
+  border-radius: 0.55rem;
+  background: #fff;
+  color: var(--color-ink, #172033);
+  font: inherit;
+}
+
+.offer-explorer__search-row input {
+  flex: 1;
+}
+
+.offer-explorer__filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.offer-explorer__filters label {
+  min-width: min(100%, 15rem);
+}
+
+.offer-explorer__demos {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 0.8rem;
+  align-items: center;
+  margin-top: 1.25rem;
+  font-size: 0.9rem;
+}
+
+.offer-explorer__demos span {
+  font-weight: 800;
+}
+
+.offer-explorer__demos a {
+  color: var(--color-accent-strong, #9a3412);
+  font-weight: 700;
+}
+
+.offer-explorer__results {
+  margin-top: 3rem;
+}
+
+.offer-explorer__results-heading {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.offer-explorer__results-heading > p {
+  margin: 0;
+  text-align: right;
+}
+
+.offer-explorer__grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.offer-explorer-card {
+  min-width: 0;
+  padding: 1.15rem;
+  border: 1px solid var(--color-border, #d8dee8);
+  border-radius: 0.9rem;
+  background: var(--color-surface, #fff);
+}
+
+.offer-explorer-card__header > div {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.offer-explorer-card__header h2 {
+  margin: 0.75rem 0 0.45rem;
+  font-size: 1.15rem;
+  line-height: 1.25;
+}
+
+.offer-explorer-card__occupation {
+  margin: 0;
+  color: var(--color-muted, #64748b);
+  font-size: 0.88rem;
+  line-height: 1.45;
+}
+
+.offer-explorer__status,
+.offer-explorer__tag {
+  display: inline-flex;
+  align-items: center;
+  min-height: 1.55rem;
+  padding: 0.2rem 0.48rem;
+  border-radius: 999px;
+  background: #fff0dc;
+  color: #8a3d08;
+  font-size: 0.72rem;
+  font-weight: 800;
+}
+
+.offer-explorer__status--warning {
+  background: #fef3c7;
+  color: #854d0e;
+}
+
+.offer-explorer__tag {
+  background: #e8f0ff;
+  color: #1e3a8a;
+}
+
+.offer-explorer__tag--quiet {
+  background: #f1f5f9;
+  color: #475569;
+}
+
+.offer-explorer-card__facts {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.7rem;
+  margin: 1rem 0;
+  padding: 0.85rem 0;
+  border-top: 1px solid var(--color-border, #e2e8f0);
+  border-bottom: 1px solid var(--color-border, #e2e8f0);
+}
+
+.offer-explorer-card__facts div {
+  min-width: 0;
+}
+
+.offer-explorer-card__facts dt {
+  color: var(--color-muted, #64748b);
+  font-size: 0.72rem;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.offer-explorer-card__facts dd {
+  margin: 0.2rem 0 0;
+  font-size: 0.88rem;
+  line-height: 1.4;
+}
+
+.offer-explorer-card__source {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 0.45rem 1rem;
+  margin: 0;
+  font-size: 0.86rem;
+}
+
+.offer-explorer-card__source > a {
+  font-weight: 800;
+}
+
+.offer-explorer-card__source span {
+  color: var(--color-muted, #64748b);
+}
+
+.offer-explorer-card__details {
+  margin-top: 1rem;
+  border-top: 1px solid var(--color-border, #e2e8f0);
+}
+
+.offer-explorer-card__details summary {
+  padding: 0.9rem 0 0.2rem;
+  color: var(--color-accent-strong, #9a3412);
+  cursor: pointer;
+  font-weight: 800;
+}
+
+.offer-explorer-card__section {
+  margin-top: 1.35rem;
+}
+
+.offer-explorer-card__section h3 {
+  margin: 0 0 0.65rem;
+  font-size: 0.98rem;
+}
+
+.offer-explorer__requirements,
+.offer-explorer__relations,
+.offer-explorer__actions {
+  display: grid;
+  gap: 0.75rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.offer-explorer__requirements li,
+.offer-explorer__relations li,
+.offer-explorer__actions li {
+  padding: 0.75rem;
+  border-radius: 0.65rem;
+  background: #f8fafc;
+}
+
+.offer-explorer__literal {
+  margin: 0;
+  color: var(--color-ink, #172033);
+  font-size: 0.91rem;
+  line-height: 1.5;
+}
+
+.offer-explorer__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-top: 0.55rem;
+}
+
+.offer-explorer__normalized,
+.offer-explorer__evidence-meta {
+  margin: 0.5rem 0 0;
+}
+
+.offer-explorer__evidence-meta a {
+  color: inherit;
+  font-weight: 700;
+}
+
+.offer-explorer__boundary-note {
+  margin: 0.85rem 0 0;
+  padding: 0.75rem;
+  border-left: 3px solid #d97706;
+  background: #fff7ed;
+  font-size: 0.88rem;
+  line-height: 1.5;
+}
+
+.offer-explorer__actions li p {
+  margin: 0.35rem 0 0;
+  color: var(--color-muted, #64748b);
+  font-size: 0.84rem;
+  line-height: 1.45;
+}
+
+.offer-explorer__actions li .offer-explorer__caveat {
+  color: #854d0e;
+}
+
+.offer-explorer__certificate-evidence {
+  margin-top: 0.7rem;
+  padding: 0.7rem;
+  border-left: 3px solid #2563eb;
+  background: #eff6ff;
+  color: var(--color-ink, #172033);
+  font-size: 0.84rem;
+  line-height: 1.45;
+}
+
+.offer-explorer__certificate-evidence > p {
+  margin: 0;
+}
+
+.offer-explorer__certificate-evidence ul {
+  display: grid;
+  gap: 0.65rem;
+  margin: 0.55rem 0 0;
+  padding-left: 1.1rem;
+}
+
+.offer-explorer__certificate-evidence li p {
+  margin: 0.25rem 0 0;
+}
+
+.offer-explorer__action-link {
+  font-weight: 800;
+}
+
+.offer-explorer__pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.offer-explorer__empty {
+  padding: 1.5rem;
+  border: 1px dashed var(--color-border, #cbd5e1);
+  border-radius: 0.8rem;
+  color: var(--color-muted, #64748b);
+}
+
+.offer-explorer__legend {
+  max-width: 62rem;
+  margin-top: 3rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--color-border, #d8dee8);
+}
+
+.offer-explorer__legend h2 {
+  margin: 0;
+}
+
+.offer-explorer__legend ul {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.75rem 1.5rem;
+  margin: 1rem 0;
+  padding-left: 1.1rem;
+}
+
+.offer-explorer__legend li {
+  line-height: 1.5;
+}
+
+@media (max-width: 52rem) {
+  .offer-explorer__grid,
+  .offer-explorer__legend ul {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 35rem) {
+  .offer-explorer {
+    padding: 2.5rem 0.9rem 4rem;
+  }
+
+  .offer-explorer__search-row,
+  .offer-explorer__results-heading {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .offer-explorer__results-heading > p {
+    text-align: left;
+  }
+
+  .offer-explorer-card__facts {
+    grid-template-columns: 1fr;
+  }
+
+  .offer-explorer-card__source {
+    flex-direction: column;
+  }
+
+  .offer-explorer__pagination {
+    flex-wrap: wrap;
+  }
+}
