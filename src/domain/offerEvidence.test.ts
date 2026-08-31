@@ -102,7 +102,7 @@ describe("offer evidence domain", () => {
 
   it("exposes only the small user-facing taxonomy", () => {
     expect(offerEvidenceStatusLabel("reviewed_fp_relationship")).toBe(
-      "Relación FP revisada",
+      "Relación revisada",
     );
     expect(offerEvidenceCategoryLabel("unknown")).toBe("Sin clasificar");
     expect(OfferEvidenceResourceSchema.shape.records).toBeDefined();

@@ -7,11 +7,11 @@ import type {
 export const OFFER_EVIDENCE_STATUS_LABELS: Readonly<
   Record<OfferEvidenceStatus, string>
 > = {
-  reviewed_fp_relationship: "Relación FP revisada",
-  explicit_training_requirement: "Requisito formativo explícito",
-  university_or_regulatory_route: "Vía universitaria o regulada",
+  reviewed_fp_relationship: "Relación revisada",
+  explicit_training_requirement: "Requisito explícito",
+  university_or_regulatory_route: "Vía regulada",
   alternative_vocational_route: "Alternativa de cualificación",
-  ambiguous_requirement: "Requisito ambiguo o sin clasificar",
+  ambiguous_requirement: "No confirmado",
   no_reviewed_relationship: "Sin relación revisada",
 };
 

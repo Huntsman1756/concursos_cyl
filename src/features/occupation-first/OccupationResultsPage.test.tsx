@@ -355,9 +355,9 @@ describe("occupation-first results", () => {
     expect(
       within(header).getByText("Catálogo comprobado el 5 de agosto de 2026"),
     ).toBeVisible();
-    expect(screen.getByText(/Ocupación que quieres/)).toHaveTextContent(
-      /FP que te lleva a ella/,
-    );
+    expect(
+      screen.getByText(/FP con relación revisada/, { selector: "p" }),
+    ).toHaveTextContent(/Ocupación.*FP con relación revisada/);
     const routeSummary = screen.getByLabelText(
       "Resumen de disponibilidad de FP",
     );

@@ -13,7 +13,19 @@ test("offer-first connects literal cooking evidence to a reviewed FP route", asy
   const card = page
     .getByRole("article", { name: "COCINEROS, EN GENERAL" })
     .first();
-  await card.getByText("Ver requisitos, relación y siguiente acción").click();
+  await expect(card).toContainText("Técnico en Cocina y Gastronomía.");
+  await expect(card).toContainText("Relación revisada");
+  await expect(card).toContainText("Vigencia no confirmada.");
+  await expect(
+    card.getByRole("link", { name: /Abrir la oferta original/ }).first(),
+  ).toBeVisible();
+  await expect(
+    card.getByRole("heading", { name: "Lo que sabemos" }),
+  ).not.toBeVisible();
+  await card
+    .getByText("Ver requisito, evidencia y siguiente acción")
+    .press("Enter");
+  await expect(card.locator("details")).toHaveAttribute("open", "");
 
   await expect(card).toContainText("Técnico en Cocina y Gastronomía");
   await expect(card).toContainText("Clasificado en revisión");
@@ -36,32 +48,53 @@ test("offer-first keeps ambiguity and the university boundary explicit", async (
     .getByRole("article", {
       name: "CUIDADORES DE PERSONAS CON DISCAPACIDAD Y/O DEPENDENCIA, EN INSTITUCIONES",
     })
+    .filter({ hasText: "No confirmado" })
     .first();
+  await expect(caregiver).toContainText(
+    "Titulación: Técnico en Atención a Personas en Situación de Dependencia.",
+  );
+  await expect(caregiver).toContainText("No confirmado");
+  await expect(caregiver).toContainText("Vigencia no confirmada.");
+  await expect(
+    caregiver.getByRole("link", { name: /Abrir la oferta original/ }).first(),
+  ).toBeVisible();
+  await expect(
+    caregiver.getByRole("heading", { name: "Lo que sabemos" }),
+  ).not.toBeVisible();
   await caregiver
-    .getByText("Ver requisitos, relación y siguiente acción")
+    .getByText("Ver requisito, evidencia y siguiente acción")
     .click();
   await expect(caregiver).toContainText(
-    "No hemos podido extraer requisitos concretos de esta publicación",
+    "Texto de requisito sin clasificar; no adivinamos.",
   );
   await expect(caregiver).not.toContainText("Esta oferta exige");
 
   await page.goto("/desde-oferta?query=Grado%20en%20Fisioterapia");
   await page
     .getByRole("combobox", { name: "Estado de evidencia" })
-    .selectOption({ label: "Vía universitaria o regulada" });
+    .selectOption({ label: "Vía regulada" });
   await expect(
     page.getByRole("heading", { name: "2 de 1058 ofertas" }),
   ).toBeVisible();
   const physiotherapy = page
     .getByRole("article", { name: "FISIOTERAPEUTAS, EN GENERAL" })
     .first();
+  await expect(physiotherapy).toContainText("Grado en Fisioterapia.");
+  await expect(physiotherapy).toContainText("Vía regulada");
+  await expect(physiotherapy).toContainText("Vigencia no confirmada.");
+  await expect(
+    physiotherapy
+      .getByRole("link", { name: /Abrir la oferta original/ })
+      .first(),
+  ).toBeVisible();
+  await expect(
+    physiotherapy.getByRole("heading", { name: "Lo que sabemos" }),
+  ).not.toBeVisible();
   await physiotherapy
-    .getByText("Ver requisitos, relación y siguiente acción")
+    .getByText("Ver requisito, evidencia y siguiente acción")
     .click();
   await expect(physiotherapy).toContainText("U1");
-  await expect(physiotherapy).toContainText(
-    "La oferta publica literalmente este requisito universitario o regulado.",
-  );
+  await expect(physiotherapy).toContainText("Grado en Fisioterapia.");
   await expect(physiotherapy).not.toContainText("Esta oferta exige");
 });
 
@@ -76,7 +109,7 @@ test("offer-first distinguishes accepted and related official certificates", asy
     .first();
   await expect(accepted).toBeVisible();
   await accepted
-    .getByText("Ver requisitos, relación y siguiente acción")
+    .getByText("Ver requisito, evidencia y siguiente acción")
     .click();
   await expect(accepted).toContainText("SSCS0108");
   await expect(accepted).toContainText("Certificado citado por la oferta");
@@ -89,7 +122,7 @@ test("offer-first distinguishes accepted and related official certificates", asy
     })
     .first();
   await related
-    .getByText("Ver requisitos, relación y siguiente acción")
+    .getByText("Ver requisito, evidencia y siguiente acción")
     .click();
   await expect(related).toContainText("Certificado oficial relacionado");
   await expect(related).toContainText(

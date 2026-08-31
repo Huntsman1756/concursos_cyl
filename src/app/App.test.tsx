@@ -66,16 +66,16 @@ describe("App", () => {
       </MemoryRouter>,
     );
     expect(
-      screen.getByRole("region", { name: "¿Cuál es tu punto de partida?" }),
+      screen.getByRole("region", { name: "¿Desde dónde empiezas?" }),
     ).toBeVisible();
     expect(
       screen.getByRole("radio", { name: /Tengo un título de FP/u }),
     ).toBeChecked();
     expect(
-      screen.getByRole("radio", { name: /Tengo un empleo en mente/u }),
+      screen.getByRole("radio", { name: /Tengo una ocupación en mente/u }),
     ).not.toBeChecked();
     expect(
-      screen.getByRole("radio", { name: /Tengo una oferta real/u }),
+      screen.getByRole("radio", { name: /Estoy mirando una oferta/u }),
     ).not.toBeChecked();
   });
 

@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { type ReactNode, useEffect, useMemo, useState } from "react";
 import { Link, useSearchParams } from "react-router-dom";
 
 import type {
@@ -10,6 +10,7 @@ import {
   loadManifest,
   loadOfferEvidence,
 } from "../../data/generatedDataClient";
+import { Icon, type IconName } from "../../components/Icon";
 import {
   OFFER_EVIDENCE_CLASSIFICATION_LABELS,
   OFFER_EVIDENCE_STATUS_LABELS,
@@ -31,6 +32,14 @@ const STATUS_OPTIONS: Array<OfferEvidenceStatus | "all"> = [
   "ambiguous_requirement",
   "no_reviewed_relationship",
 ];
+const STATUS_HELP = [
+  "Cita y revisión.",
+  "Menciona formación; no implica relación FP.",
+  "U1/U2/U3: vía universitaria o regulada; el título no basta.",
+  "Certificados o acreditación: vías a investigar, no equivalencias.",
+  "Texto literal; no adivinamos.",
+  "Evidencia insuficiente.",
+] as const;
 
 type OfferExplorerState =
   | { status: "loading" }
@@ -41,15 +50,6 @@ function formattedDate(value: string): string {
   return new Intl.DateTimeFormat("es-ES", {
     day: "numeric",
     month: "long",
-    year: "numeric",
-    timeZone: "UTC",
-  }).format(new Date(value));
-}
-
-function formattedDateTime(value: string): string {
-  return new Intl.DateTimeFormat("es-ES", {
-    day: "2-digit",
-    month: "2-digit",
     year: "numeric",
     timeZone: "UTC",
   }).format(new Date(value));
@@ -66,6 +66,35 @@ function requirementStatusLabel(
   status: keyof typeof OFFER_EVIDENCE_CLASSIFICATION_LABELS,
 ): string {
   return OFFER_EVIDENCE_CLASSIFICATION_LABELS[status];
+}
+
+const NO_REQUIREMENTS_COPY = "No hay requisitos concretos extraídos.";
+const NO_RELATION_COPY =
+  "No hay relación FP revisada; no demuestra imposibilidad.";
+const LIMITATIONS_COPY =
+  "No inferimos equivalencias, acceso, colegiación ni empleabilidad desde esta copia.";
+
+function certificateLabel(
+  routeType: OfferEvidenceNextAction["certificateRouteType"],
+): string {
+  return routeType === "offer_explicitly_accepts"
+    ? "Certificado citado por la oferta"
+    : "Certificado oficial relacionado";
+}
+
+function EvidenceState({ status }: { status: OfferEvidenceStatus }) {
+  const icon: IconName =
+    status === "ambiguous_requirement"
+      ? "eye"
+      : status === "no_reviewed_relationship"
+        ? "x"
+        : "badge-check";
+  return (
+    <p className="offer-explorer__evidence-state">
+      <Icon name={icon} size={19} />
+      <strong>{offerEvidenceStatusLabel(status)}</strong>
+    </p>
+  );
 }
 
 function ActionLink({ action }: { action: OfferEvidenceNextAction }) {
@@ -89,33 +118,73 @@ function ActionLink({ action }: { action: OfferEvidenceNextAction }) {
   );
 }
 
-function RequirementEvidence({ record }: { record: OfferEvidenceRecord }) {
+function EvidenceItem({
+  icon,
+  className,
+  children,
+}: {
+  icon: IconName;
+  className?: string;
+  children: ReactNode;
+}) {
+  return (
+    <li className={className}>
+      <Icon name={icon} size={18} />
+      <div>{children}</div>
+    </li>
+  );
+}
+
+function RequirementEvidence({
+  record,
+  compact,
+}: {
+  record: OfferEvidenceRecord;
+  compact?: boolean;
+}) {
+  const requirement = record.requirements[0];
   return (
     <section
-      className="offer-explorer-card__section"
+      className="offer-explorer-card__requirement"
       aria-labelledby={`requirements-${record.offerId}`}
     >
-      <h3 id={`requirements-${record.offerId}`}>Qué publica la oferta</h3>
+      <div className="offer-explorer__section-heading">
+        <Icon name="file-check" size={20} />
+        <h3 id={`requirements-${record.offerId}`}>Requisito literal</h3>
+      </div>
       {record.requirements.length === 0 ? (
         <p className="offer-explorer__muted">
-          No hemos podido extraer requisitos concretos de esta publicación.
-          Compruébalos en la oferta original.
+          {NO_REQUIREMENTS_COPY}
+          {record.universityEvidence?.evidenceClass === "U1" ? (
+            <> U1: “{record.universityEvidence.sourceQuote}”</>
+          ) : null}
         </p>
+      ) : compact ? (
+        <>
+          <blockquote className="offer-explorer__literal">
+            “{requirement.literalRequirement}”
+          </blockquote>
+          {record.requirements.length > 1 ? (
+            <p className="offer-explorer__preview-note">
+              + {record.requirements.length - 1} requisitos más.
+            </p>
+          ) : null}
+        </>
       ) : (
         <ul className="offer-explorer__requirements">
           {record.requirements.map((requirement) => (
             <li key={requirement.requirementId}>
-              <p className="offer-explorer__literal">
+              <blockquote className="offer-explorer__literal">
                 “{requirement.literalRequirement}”
-              </p>
-              <div className="offer-explorer__tags">
-                <span className="offer-explorer__tag">
+              </blockquote>
+              <p className="offer-explorer__requirement-meta">
+                Tipo:{" "}
+                <strong>
                   {offerEvidenceCategoryLabel(requirement.normalizedCategory)}
-                </span>
-                <span className="offer-explorer__tag offer-explorer__tag--quiet">
-                  {requirementStatusLabel(requirement.classificationStatus)}
-                </span>
-              </div>
+                </strong>{" "}
+                · Lectura:{" "}
+                {requirementStatusLabel(requirement.classificationStatus)}
+              </p>
               {requirement.normalizedValue !== null ? (
                 <p className="offer-explorer__normalized">
                   Lectura normalizada:{" "}
@@ -123,20 +192,9 @@ function RequirementEvidence({ record }: { record: OfferEvidenceRecord }) {
                 </p>
               ) : (
                 <p className="offer-explorer__normalized">
-                  No se ha normalizado este texto; conservamos la cita literal.
+                  No se ha normalizado este texto.
                 </p>
               )}
-              <p className="offer-explorer__evidence-meta">
-                Fuente de la oferta: {formattedDateTime(requirement.sourceDate)}{" "}
-                ·{" "}
-                <a
-                  href={requirement.sourceUrl}
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  abrir publicación
-                </a>
-              </p>
             </li>
           ))}
         </ul>
@@ -145,78 +203,236 @@ function RequirementEvidence({ record }: { record: OfferEvidenceRecord }) {
   );
 }
 
-function RelationshipEvidence({ record }: { record: OfferEvidenceRecord }) {
+function universityEvidenceLabel(evidenceClass: "U1" | "U2" | "U3") {
+  return evidenceClass === "U1"
+    ? "Requisito literal"
+    : evidenceClass === "U2"
+      ? "Vía regulada"
+      : "Contexto oficial";
+}
+
+function KnownEvidence({ record }: { record: OfferEvidenceRecord }) {
+  const certificateAction = record.nextActions.find(
+    (action) => action.certificateEvidence !== undefined,
+  );
   return (
     <section
-      className="offer-explorer-card__section"
-      aria-labelledby={`relations-${record.offerId}`}
+      className="offer-explorer-card__section offer-explorer-card__known"
+      aria-labelledby={`known-${record.offerId}`}
     >
-      <h3 id={`relations-${record.offerId}`}>Relación y límites</h3>
-      {record.relations.length === 0 ? (
-        <p className="offer-explorer__muted">
-          No hay una relación FP revisada para esta oferta. La ausencia no
-          demuestra que la relación sea imposible.
-        </p>
-      ) : (
-        <ul className="offer-explorer__relations">
-          {record.relations.map((relation) => (
-            <li
-              key={`${relation.programKey}-${relation.occupationId}-${relation.matchRule}`}
-            >
-              <p>
-                <strong>{relation.programTitle}</strong> ·{" "}
-                {relation.occupationLabel}
-              </p>
-              <p className="offer-explorer__literal">
-                “{relation.sourceQuote}”
-              </p>
-              <p className="offer-explorer__evidence-meta">
-                Fuente oficial revisada el {formattedDate(relation.reviewedAt)}{" "}
-                ·{" "}
-                <a href={relation.sourceUrl} target="_blank" rel="noreferrer">
-                  ver evidencia
-                </a>
-              </p>
-            </li>
-          ))}
-        </ul>
-      )}
-      {record.universityEvidence !== null ? (
-        <div className="offer-explorer__boundary-note">
-          <p>
-            <strong>{record.universityEvidence.evidenceClass}</strong>{" "}
-            {record.universityEvidence.evidenceClass === "U1"
-              ? "La oferta publica literalmente este requisito universitario o regulado."
-              : record.universityEvidence.evidenceClass === "U2"
-                ? "Esta profesión está regulada y requiere comprobar la fuente oficial."
-                : "La fuente oficial revisada aporta contexto, pero no sustituye la comprobación del caso."}
-          </p>
-          <p className="offer-explorer__literal">
-            “{record.universityEvidence.sourceQuote}”
-          </p>
-          <p className="offer-explorer__evidence-meta">
-            Evidencia {record.universityEvidence.evidenceClass} ·{" "}
-            <a
-              href={record.universityEvidence.sourceUrl}
-              target="_blank"
-              rel="noreferrer"
-            >
-              abrir fuente oficial o publicación
-            </a>
-          </p>
-          <p>
-            No inferimos equivalencias, acceso, colegiación ni empleabilidad
-            desde esta copia.
-          </p>
+      <h3 id={`known-${record.offerId}`}>Lo que sabemos</h3>
+      <ul className="offer-explorer__known-list">
+        {record.relations.map((relation) => (
+          <EvidenceItem
+            key={
+              relation.programKey + relation.occupationId + relation.matchRule
+            }
+            icon="badge-check"
+          >
+            <strong>{relation.programTitle}</strong> ·{" "}
+            {relation.occupationLabel}
+            <small>
+              {OFFER_EVIDENCE_STATUS_LABELS.reviewed_fp_relationship}
+            </small>
+          </EvidenceItem>
+        ))}
+        {record.universityEvidence !== null ? (
+          <EvidenceItem
+            icon="shield-check"
+            className="offer-explorer__known-boundary"
+          >
+            <strong>
+              {record.universityEvidence.evidenceClass} ·{" "}
+              {universityEvidenceLabel(record.universityEvidence.evidenceClass)}
+            </strong>
+            <blockquote className="offer-explorer__literal">
+              “{record.universityEvidence.sourceQuote}”
+            </blockquote>
+          </EvidenceItem>
+        ) : null}
+        {certificateAction !== undefined ? (
+          <EvidenceItem key="known-certificate" icon="file-check">
+            <strong>
+              {certificateLabel(certificateAction.certificateRouteType)}
+            </strong>
+            {certificateAction.certificateEvidence?.map((certificate) => (
+              <span key={certificate.certificateCode}>
+                {certificate.certificateCode} · {certificate.certificateTitle}
+                <small>{certificate.relevance}</small>
+              </span>
+            ))}
+          </EvidenceItem>
+        ) : null}
+        {record.relations.length === 0 &&
+        record.universityEvidence === null &&
+        certificateAction === undefined ? (
+          <EvidenceItem icon="eye">
+            La oferta publica la ocupación{" "}
+            <strong>{record.occupationLabel}</strong>.
+          </EvidenceItem>
+        ) : null}
+      </ul>
+    </section>
+  );
+}
+
+function UnknownEvidence({ record }: { record: OfferEvidenceRecord }) {
+  const hasAccreditationAction = record.nextActions.some(
+    (action) => action.actionType === "accreditation_route",
+  );
+  const hasUnknowns =
+    record.requirements.length === 0 ||
+    record.hasAmbiguousRequirements ||
+    record.relations.length === 0 ||
+    record.universitySignal === "title_only_unverified" ||
+    hasAccreditationAction;
+
+  if (!hasUnknowns) return null;
+
+  return (
+    <section
+      className="offer-explorer-card__section offer-explorer-card__unknown"
+      aria-labelledby={`unknown-${record.offerId}`}
+    >
+      <h3 id={`unknown-${record.offerId}`}>Lo que no sabemos</h3>
+      <ul className="offer-explorer__unknown-list">
+        {record.requirements.length === 0 ? (
+          <EvidenceItem icon="eye">{NO_REQUIREMENTS_COPY}</EvidenceItem>
+        ) : null}
+        {record.hasAmbiguousRequirements ? (
+          <EvidenceItem icon="eye">
+            Texto de requisito sin clasificar; no adivinamos.
+          </EvidenceItem>
+        ) : null}
+        {record.relations.length === 0 ? (
+          <EvidenceItem icon="x">{NO_RELATION_COPY}</EvidenceItem>
+        ) : null}
+        {record.universitySignal === "title_only_unverified" ? (
+          <EvidenceItem icon="shield-check">
+            El título por sí solo no prueba una exigencia universitaria o
+            regulada.
+          </EvidenceItem>
+        ) : null}
+        {hasAccreditationAction ? (
+          <EvidenceItem icon="eye">
+            La elegibilidad para acreditación no está calculada.
+          </EvidenceItem>
+        ) : null}
+      </ul>
+    </section>
+  );
+}
+
+function ActionNotes({ action }: { action: OfferEvidenceNextAction }) {
+  const note = action.caveat
+    ? "Límite: " + action.caveat
+    : action.eligibilityStatus === "not_calculated"
+      ? "La elegibilidad para acreditación no está calculada."
+      : null;
+
+  if (!note) return null;
+
+  return <p className="offer-explorer__caveat">{note}</p>;
+}
+
+function NextAction({
+  record,
+  compact,
+}: {
+  record: OfferEvidenceRecord;
+  compact?: boolean;
+}) {
+  const primaryAction =
+    record.nextActions.find(
+      (action) => action.actionType === "open_original_offer",
+    ) ?? record.nextActions[0];
+  if (compact) {
+    return <ActionLink action={primaryAction} />;
+  }
+  const secondaryAction = record.nextActions.find(
+    (action) => action !== primaryAction && action.actionType !== "ecyl_office",
+  );
+
+  return (
+    <section
+      className="offer-explorer-card__section offer-explorer-card__next-action"
+      aria-labelledby={`actions-${record.offerId}`}
+    >
+      <h3 id={`actions-${record.offerId}`}>Siguiente acción</h3>
+      <p>{primaryAction.reason}</p>
+      <ActionLink action={primaryAction} />
+      <ActionNotes action={primaryAction} />
+      {secondaryAction ? (
+        <div className="offer-explorer__secondary-action">
+          <ActionLink action={secondaryAction} />
+          <p>{secondaryAction.reason}</p>
+          <ActionNotes action={secondaryAction} />
         </div>
-      ) : record.universitySignal === "title_only_unverified" ? (
-        <p className="offer-explorer__boundary-note">
-          El título de la oferta menciona una profesión universitaria o
-          regulada, pero el título por sí solo no es evidencia suficiente: no
-          mostramos una ruta universitaria ni afirmamos que la oferta exija una
-          titulación.
-        </p>
       ) : null}
+    </section>
+  );
+}
+
+function SupportingEvidence({ record }: { record: OfferEvidenceRecord }) {
+  const universitySource =
+    record.universityEvidence === null
+      ? []
+      : [
+          {
+            key: "university-evidence",
+            url: record.universityEvidence.sourceUrl,
+            linkLabel: "abrir fuente",
+          },
+        ];
+  const sources = [
+    {
+      key: "data-source",
+      url: record.sourceUrl,
+      linkLabel:
+        record.sourceName +
+        " · Empleador no publicado · Frescura " +
+        formattedDate(record.freshnessDate),
+    },
+    ...record.requirements.map((requirement) => ({
+      key: requirement.requirementId,
+      url: requirement.sourceUrl,
+      linkLabel: "abrir publicación",
+    })),
+    ...record.relations.map((relation) => ({
+      key: relation.programKey + relation.occupationId + relation.matchRule,
+      url: relation.sourceUrl,
+      linkLabel:
+        "ver evidencia oficial · " + formattedDate(relation.reviewedAt),
+    })),
+    ...universitySource,
+    ...record.nextActions.flatMap((action) =>
+      (action.certificateEvidence ?? []).map((certificate) => ({
+        key: certificate.certificateCode,
+        url: certificate.authoritativeSourceUrl,
+        linkLabel: "Abrir fuente oficial SEPE ↗",
+      })),
+    ),
+  ];
+
+  return (
+    <section
+      className="offer-explorer-card__section offer-explorer-card__supporting"
+      aria-labelledby={`supporting-${record.offerId}`}
+    >
+      <h3 id={`supporting-${record.offerId}`}>Fuentes y limitaciones</h3>
+      <p className="offer-explorer__muted">
+        Conservamos las fuentes y fechas que sostienen cada estado.{" "}
+        {LIMITATIONS_COPY}
+      </p>
+      <ul className="offer-explorer__supporting-list">
+        {sources.map((source) => (
+          <li key={source.key}>
+            <a href={source.url} target="_blank" rel="noreferrer">
+              {source.linkLabel}
+            </a>
+          </li>
+        ))}
+      </ul>
     </section>
   );
 }
@@ -226,20 +442,9 @@ function OfferCard({ record }: { record: OfferEvidenceRecord }) {
   return (
     <article className="offer-explorer-card" aria-labelledby={headingId}>
       <header className="offer-explorer-card__header">
-        <div>
-          <span className="offer-explorer__status">
-            {offerEvidenceStatusLabel(record.evidenceStatus)}
-          </span>
-          {record.hasAmbiguousRequirements ? (
-            <span className="offer-explorer__status offer-explorer__status--warning">
-              Tiene requisitos sin clasificar
-            </span>
-          ) : null}
-        </div>
         <h2 id={headingId}>{record.title}</h2>
         <p className="offer-explorer-card__occupation">
-          Etiqueta ocupacional publicada:{" "}
-          <strong>{record.occupationLabel}</strong>
+          Ocupación publicada: <strong>{record.occupationLabel}</strong>
         </p>
       </header>
 
@@ -249,109 +454,59 @@ function OfferCard({ record }: { record: OfferEvidenceRecord }) {
           <dd>{locationLabel(record)}</dd>
         </div>
         <div>
-          <dt>Fuente</dt>
-          <dd>{record.sourceName}</dd>
-        </div>
-        <div>
-          <dt>Empleador</dt>
-          <dd>No publicado en esta copia</dd>
-        </div>
-        <div>
           <dt>Publicada</dt>
           <dd>{formattedDate(record.publishedAt)}</dd>
         </div>
         <div>
-          <dt>Frescura de la fuente</dt>
-          <dd>{formattedDate(record.freshnessDate)}</dd>
+          <dt>Fuente</dt>
+          <dd>{record.sourceName}</dd>
         </div>
         <div>
-          <dt>Estado</dt>
-          <dd>Publicada en la instantánea base; no implica que siga abierta</dd>
+          <dt>Instantánea</dt>
+          <dd>Copia fechada</dd>
         </div>
       </dl>
 
       <p className="offer-explorer-card__source">
         <a href={record.originalUrl} target="_blank" rel="noreferrer">
-          Abrir la oferta original ↗
+          Abrir publicación original ↗
         </a>
+      </p>
+
+      <RequirementEvidence record={record} compact />
+
+      <EvidenceState status={record.evidenceStatus} />
+
+      <p className="offer-explorer-card__critical">
+        <Icon name="eye" size={18} />
         <span>
-          Fuente de datos: <a href={record.sourceUrl}>{record.sourceName}</a>
+          <strong>Vigencia no confirmada.</strong> Esta oferta aparece en una
+          copia fechada del{" "}
+          <time dateTime={record.freshnessDate}>
+            {formattedDate(record.freshnessDate)}
+          </time>
+          .
         </span>
       </p>
 
+      <NextAction record={record} compact />
+
       <details className="offer-explorer-card__details">
-        <summary>Ver requisitos, relación y siguiente acción</summary>
-        <RequirementEvidence record={record} />
-        <RelationshipEvidence record={record} />
-        <section
-          className="offer-explorer-card__section"
-          aria-labelledby={`actions-${record.offerId}`}
-        >
-          <h3 id={`actions-${record.offerId}`}>Siguiente acción</h3>
-          <ul className="offer-explorer__actions">
-            {record.nextActions.map((nextAction) => (
-              <li
-                key={`${nextAction.actionType}-${nextAction.href}-${nextAction.programKey ?? ""}`}
-              >
-                <ActionLink action={nextAction} />
-                <p>{nextAction.reason}</p>
-                {nextAction.caveat ? (
-                  <p className="offer-explorer__caveat">
-                    Límite: {nextAction.caveat}
-                  </p>
-                ) : null}
-                {nextAction.eligibilityStatus === "not_calculated" ? (
-                  <p className="offer-explorer__caveat">
-                    No calculamos tu elegibilidad con esta copia.
-                  </p>
-                ) : null}
-                {nextAction.certificateRouteType ? (
-                  <p className="offer-explorer__caveat">
-                    {nextAction.certificateRouteType ===
-                    "offer_explicitly_accepts"
-                      ? "La oferta acepta explícitamente un certificado; no equivale automáticamente a un título de FP."
-                      : "Es una alternativa relacionada con la ocupación; no equivale automáticamente a un título de FP."}
-                  </p>
-                ) : null}
-                {nextAction.certificateEvidence ? (
-                  <div className="offer-explorer__certificate-evidence">
-                    <p>
-                      <strong>
-                        {nextAction.certificateRouteType ===
-                        "offer_explicitly_accepts"
-                          ? "Certificado citado por la oferta"
-                          : "Certificado oficial relacionado"}
-                      </strong>
-                    </p>
-                    <ul>
-                      {nextAction.certificateEvidence.map((certificate) => (
-                        <li key={certificate.certificateCode}>
-                          <p>
-                            <strong>
-                              {certificate.certificateCode} ·{" "}
-                              {certificate.certificateTitle}
-                            </strong>
-                          </p>
-                          <p>Literal conservado: “{certificate.sourceQuote}”</p>
-                          <p>Relevancia: {certificate.relevance}</p>
-                          <p className="offer-explorer__evidence-meta">
-                            <a
-                              href={certificate.authoritativeSourceUrl}
-                              target="_blank"
-                              rel="noreferrer"
-                            >
-                              Abrir fuente oficial SEPE ↗
-                            </a>
-                          </p>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                ) : null}
-              </li>
-            ))}
-          </ul>
-        </section>
+        <summary>Ver requisito, evidencia y siguiente acción</summary>
+        <div className="offer-explorer-card__decision-flow">
+          <RequirementEvidence record={record} />
+          <section
+            className="offer-explorer-card__section offer-explorer-card__state"
+            aria-labelledby={`state-${record.offerId}`}
+          >
+            <h3 id={`state-${record.offerId}`}>Estado de la evidencia</h3>
+            <EvidenceState status={record.evidenceStatus} />
+          </section>
+          <KnownEvidence record={record} />
+          <UnknownEvidence record={record} />
+          <NextAction record={record} />
+          <SupportingEvidence record={record} />
+        </div>
       </details>
     </article>
   );
@@ -459,18 +614,12 @@ export function OfferExplorerPage() {
       aria-labelledby="offer-explorer-heading"
     >
       <header className="offer-explorer__intro">
-        <p className="offer-explorer__eyebrow">Tercera puerta de entrada</p>
+        <p className="offer-explorer__eyebrow">Desde una oferta</p>
         <h1 id="offer-explorer-heading">Tengo una oferta</h1>
-        <p>
-          Busca una oferta real y comprueba qué requisito publica, qué relación
-          está revisada y cuál es el siguiente paso oficial que sí podemos
-          sostener.
-        </p>
+        <p>Comprueba requisito, evidencia y siguiente acción.</p>
         <p className="offer-explorer__limit">
-          Trabajamos sobre una copia de{" "}
-          {state.records.length.toLocaleString("es-ES")} ofertas. No completamos
-          el empleador, no convertimos una etiqueta en una promesa y no llamamos
-          “abierta” a una oferta solo por aparecer aquí.
+          Copia fechada de {state.records.length.toLocaleString("es-ES")}{" "}
+          ofertas. La vigencia actual se comprueba en la publicación de origen.
         </p>
       </header>
 
@@ -478,7 +627,7 @@ export function OfferExplorerPage() {
         className="offer-explorer__search"
         aria-labelledby="offer-search-heading"
       >
-        <h2 id="offer-search-heading">Explorar ofertas</h2>
+        <h2 id="offer-search-heading">Buscar una oferta</h2>
         <form onSubmit={submitSearch}>
           <label htmlFor="offer-query">
             Título, ocupación, requisito o localidad
@@ -604,47 +753,26 @@ export function OfferExplorerPage() {
         ) : null}
       </section>
 
-      <section
-        className="offer-explorer__legend"
-        aria-labelledby="offer-legend-heading"
-      >
-        <h2 id="offer-legend-heading">Cómo leemos la evidencia</h2>
-        <ul>
-          <li>
-            <strong>Relación FP revisada:</strong> hay cita, fuente y revisión
-            de la relación.
-          </li>
-          <li>
-            <strong>Requisito formativo explícito:</strong> el texto publicado
-            menciona formación; no implica relación FP.
-          </li>
-          <li>
-            <strong>U1:</strong> la oferta publica literalmente un requisito;
-            <strong> U2:</strong> una fuente oficial establece la regulación;
-            <strong> U3:</strong> otra evidencia oficial revisada aporta
-            contexto. El título por sí solo no cuenta.
-          </li>
-          <li>
-            <strong>Alternativa de cualificación:</strong> mostramos
-            certificados o acreditación como vías a investigar, no como
-            equivalencias.
-          </li>
-          <li>
-            <strong>Requisito ambiguo o sin clasificar:</strong> conservamos el
-            texto literal y no adivinamos.
-          </li>
-          <li>
-            <strong>Sin relación revisada:</strong> no hay evidencia suficiente
-            publicada para afirmar una relación.
-          </li>
-        </ul>
-        <p>
-          El dataset candidato se generó el{" "}
-          {state.generatedAt ? formattedDate(state.generatedAt) : "—"}. Los
-          cursos ECYL no se presentan como recomendación automática cuando
-          faltan fechas y condiciones suficientes para comprobar vigencia.
-        </p>
-      </section>
+      <details className="offer-explorer__legend">
+        <summary>Cómo interpretamos estos estados</summary>
+        <div className="offer-explorer__legend-content">
+          <ul>
+            {STATUS_HELP.map((description, index) => {
+              const status = STATUS_OPTIONS[index + 1] as OfferEvidenceStatus;
+              return (
+                <li key={status}>
+                  <strong>{OFFER_EVIDENCE_STATUS_LABELS[status]}:</strong>{" "}
+                  {description}
+                </li>
+              );
+            })}
+          </ul>
+          <p>
+            El dataset candidato se generó el{" "}
+            {state.generatedAt ? formattedDate(state.generatedAt) : "—"}.
+          </p>
+        </div>
+      </details>
     </article>
   );
 }

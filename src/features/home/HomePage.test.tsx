@@ -87,13 +87,17 @@ describe("HomePage", () => {
     expect(combobox).toHaveAttribute("aria-autocomplete", "list");
     expect(screen.queryAllByRole("option")).toHaveLength(0);
     expect(
-      await screen.findByRole("link", {
-        name: "SAN21 — Cuidados Auxiliares de Enfermería",
+      screen.getByRole("heading", {
+        level: 1,
+        name: "Elige desde dónde empiezas.",
       }),
-    ).toHaveAttribute("href", "/desde-fp/SAN21");
+    ).toBeVisible();
+    expect(
+      screen.getByText("Datos públicos con fecha y fuente visibles."),
+    ).toBeVisible();
 
     const submit = screen.getByRole("button", {
-      name: /ver las salidas de este título/i,
+      name: /ver ocupaciones con relación revisada/i,
     });
     await user.type(combobox, "IFC03S");
     expect(submit).toBeDisabled();
@@ -122,15 +126,13 @@ describe("HomePage", () => {
       name: /título de formación/i,
     });
     await user.click(
-      screen.getByRole("radio", { name: /Tengo una oferta real/i }),
+      screen.getByRole("radio", { name: /Estoy mirando una oferta/i }),
     );
     const query = screen.getByRole("searchbox", {
       name: /título, ocupación o localidad/i,
     });
     await user.type(query, "cocina");
-    await user.click(
-      screen.getByRole("button", { name: /Explorar ofertas con evidencia/i }),
-    );
+    await user.click(screen.getByRole("button", { name: /Comprobar oferta/i }));
 
     expect(screen.getByTestId("location")).toHaveTextContent("/desde-oferta");
     expect(fetch).not.toHaveBeenCalledWith(
@@ -279,7 +281,7 @@ describe("HomePage", () => {
     expect(
       screen.getByRole("heading", {
         level: 1,
-        name: /De tu FP a tu\s*siguiente paso/i,
+        name: /Elige desde dónde empiezas/i,
       }),
     ).toBeVisible();
     const coveragePanel = screen.getByRole("region", {
@@ -350,18 +352,17 @@ describe("HomePage", () => {
     ).not.toBeInTheDocument();
     expect(
       screen.getByRole("button", {
-        name: "Ver las salidas de este título",
+        name: "Ver ocupaciones con relación revisada",
       }),
     ).toBeDisabled();
-    expect(screen.getByText("Tu título de FP")).toBeVisible();
+    expect(screen.getByText("Tengo un título de FP")).toBeVisible();
     expect(screen.getByText("Elige un título.")).toBeVisible();
     expect(
-      screen.getByText(
-        "Dime en qué puedo trabajar con lo que ya he estudiado.",
-      ),
+      screen.getByText("Ver ocupaciones con relación revisada."),
     ).toBeVisible();
+    expect(screen.getByText("Ver FP con relación revisada.")).toBeVisible();
     expect(
-      screen.getByText("Dime qué FP me lleva hasta esa ocupación."),
+      screen.getByText("Comprobar requisito, evidencia y siguiente acción."),
     ).toBeVisible();
 
     const user = userEvent.setup();
@@ -371,7 +372,7 @@ describe("HomePage", () => {
     fpMode.focus();
     await user.keyboard("{ArrowRight}");
     expect(
-      screen.getByRole("radio", { name: /Tengo un empleo en mente/i }),
+      screen.getByRole("radio", { name: /Tengo una ocupación en mente/i }),
     ).toHaveFocus();
     expect(
       screen.queryByLabelText("Título de Formación Profesional"),
@@ -395,13 +396,13 @@ describe("HomePage", () => {
     });
     expect(
       screen.getByRole("button", {
-        name: "Ver cómo llegar a esta ocupación",
+        name: "Ver FP con relación revisada",
       }),
     ).toBeDisabled();
     expect(screen.getByText("Elige una ocupación de la lista.")).toBeVisible();
     expect(
       screen.queryByRole("button", {
-        name: "Ver las salidas de este título",
+        name: "Ver ocupaciones con relación revisada",
       }),
     ).not.toBeInTheDocument();
     expect(window.localStorage.getItem("salida-cyl:home-search-mode")).toBe(
@@ -440,9 +441,11 @@ describe("HomePage", () => {
       </MemoryRouter>,
     );
     expect(
-      screen.getByRole("radio", { name: /Tengo un empleo en mente/i }),
+      screen.getByRole("radio", { name: /Tengo una ocupación en mente/i }),
     ).toBeChecked();
-    expect(screen.getByText("Ocupación que quieres")).toBeVisible();
+    expect(
+      screen.getByText("FP con relación revisada", { selector: "strong" }),
+    ).toBeVisible();
 
     unmount();
     window.localStorage.setItem("salida-cyl:home-search-mode", "invalid");
