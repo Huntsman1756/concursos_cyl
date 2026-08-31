@@ -213,7 +213,16 @@ test("answer, exact-absence filter, and checklist remain ephemeral and never lea
   privacyEvents.splice(0);
   domStorageMutations.splice(0);
   const interactionRequests: { method: string; url: string }[] = [];
-  const recordRequest = (request: { method(): string; url(): string }) => {
+  const recordRequest = (request: {
+    method(): string;
+    url(): string;
+    resourceType(): string;
+  }) => {
+    // Content-hashed static bundle names can contain synthetic values by chance;
+    // only document/data requests can serialize the in-memory decision state.
+    if (!new Set(["document", "fetch", "xhr"]).has(request.resourceType())) {
+      return;
+    }
     interactionRequests.push({ method: request.method(), url: request.url() });
   };
   page.on("request", recordRequest);
