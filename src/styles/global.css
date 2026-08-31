@@ -1988,13 +1988,18 @@ summary:focus-visible {
 }
 
 .coverage-panel__heading > .data-freshness {
+  min-width: 0;
+  max-width: 100%;
+  flex: 0 1 auto;
   display: inline-flex;
   align-items: center;
   gap: 0.3rem;
   margin: 0;
   color: var(--color-text-muted);
   font-size: 0.72rem;
-  white-space: nowrap;
+  overflow-wrap: anywhere;
+  white-space: normal;
+  text-align: right;
 }
 
 .coverage-panel__programs {
