@@ -245,20 +245,12 @@ export function HomePage() {
   return (
     <div className="home-page" aria-labelledby="home-heading">
       <section className="home-hero" aria-labelledby="home-heading">
-        <div className="home-hero__art" aria-hidden="true" />
         <div className="home-hero__copy">
-          <h1 id="home-heading">
-            De tu <span>FP</span> a tu
-            <br />
-            <span>siguiente paso</span>
-          </h1>
-          <p>
-            Conecta tu FP con ocupaciones y datos públicos, sin promesas de
-            empleo. Ej.{" "}
-            <Link to="/desde-fp/SAN21">
-              SAN21 — {programsByKey.get("SAN21")?.programTitle}
-            </Link>
+          <p className="home-hero__eyebrow">
+            Orientación con evidencia pública
           </p>
+          <h1 id="home-heading">Elige desde dónde empiezas.</h1>
+          <p>Datos públicos con fecha y fuente visibles.</p>
         </div>
 
         <div className="home-workspace">
@@ -291,9 +283,7 @@ export function HomePage() {
                   ?.focus();
               }}
             >
-              <legend id="search-entry-title">
-                ¿Cuál es tu punto de partida?
-              </legend>
+              <legend id="search-entry-title">¿Desde dónde empiezas?</legend>
               <div className="search-entry__mode-options">
                 <label
                   className="search-entry__mode"
@@ -306,12 +296,14 @@ export function HomePage() {
                     checked={searchMode === "fp"}
                     onChange={() => selectSearchMode("fp")}
                   />
+                  <span className="search-entry__route-mark" aria-hidden="true">
+                    FP
+                  </span>
                   <span>
                     <strong>Tengo un título de FP</strong>
-                    <small>
-                      Dime en qué puedo trabajar con lo que ya he estudiado.
-                    </small>
+                    <small>Ver ocupaciones con relación revisada.</small>
                   </span>
+                  <Icon name="arrow-right" size={19} />
                 </label>
                 <label
                   className="search-entry__mode"
@@ -324,10 +316,14 @@ export function HomePage() {
                     checked={searchMode === "occupation"}
                     onChange={() => selectSearchMode("occupation")}
                   />
-                  <span>
-                    <strong>Tengo un empleo en mente</strong>
-                    <small>Dime qué FP me lleva hasta esa ocupación.</small>
+                  <span className="search-entry__route-mark" aria-hidden="true">
+                    OC
                   </span>
+                  <span>
+                    <strong>Tengo una ocupación en mente</strong>
+                    <small>Ver FP con relación revisada.</small>
+                  </span>
+                  <Icon name="arrow-right" size={19} />
                 </label>
                 <label
                   className="search-entry__mode"
@@ -340,12 +336,16 @@ export function HomePage() {
                     checked={searchMode === "offer"}
                     onChange={() => selectSearchMode("offer")}
                   />
+                  <span className="search-entry__route-mark" aria-hidden="true">
+                    OF
+                  </span>
                   <span>
-                    <strong>Tengo una oferta real</strong>
+                    <strong>Estoy mirando una oferta</strong>
                     <small>
-                      Comprueba requisitos, relación y siguiente acción oficial.
+                      Comprobar requisito, evidencia y siguiente acción.
                     </small>
                   </span>
+                  <Icon name="arrow-right" size={19} />
                 </label>
               </div>
             </fieldset>
@@ -361,9 +361,9 @@ export function HomePage() {
                 }}
               >
                 <p className="search-entry__direction">
-                  <span>Tu título de FP</span>
+                  <span>FP</span>
                   <Icon name="arrow-right" size={18} />
-                  <strong>Ocupaciones con evidencia</strong>
+                  <strong>Ocupaciones con relación revisada</strong>
                 </p>
                 {searchData.status === "ready" ? (
                   <>
@@ -391,7 +391,7 @@ export function HomePage() {
                           : undefined
                       }
                     >
-                      Ver las salidas de este título
+                      Ver ocupaciones con relación revisada
                     </button>
                   </>
                 ) : (
@@ -422,9 +422,9 @@ export function HomePage() {
                 }}
               >
                 <p className="search-entry__direction">
-                  <span>Ocupación que quieres</span>
+                  <span>Ocupación</span>
                   <Icon name="arrow-right" size={18} />
-                  <strong>FP que te lleva a ella</strong>
+                  <strong>FP con relación revisada</strong>
                 </p>
                 {searchData.status === "ready" ? (
                   <>
@@ -456,7 +456,7 @@ export function HomePage() {
                           : undefined
                       }
                     >
-                      Ver cómo llegar a esta ocupación
+                      Ver FP con relación revisada
                     </button>
                   </>
                 ) : (
@@ -491,9 +491,9 @@ export function HomePage() {
                 }}
               >
                 <p className="search-entry__direction">
-                  <span>Oferta que quieres comprobar</span>
+                  <span>Oferta</span>
                   <Icon name="arrow-right" size={18} />
-                  <strong>Requisito · relación · siguiente acción</strong>
+                  <strong>Requisito · evidencia · siguiente acción</strong>
                 </p>
                 <label
                   className="search-entry__field"
@@ -509,7 +509,7 @@ export function HomePage() {
                   />
                 </label>
                 <button className="search-entry__cta" type="submit">
-                  Explorar ofertas con evidencia
+                  Comprobar oferta
                 </button>
               </form>
             )}
@@ -524,7 +524,7 @@ export function HomePage() {
           >
             <div className="coverage-panel__heading">
               <h2>
-                <Icon name="clock" size={19} />
+                <Icon name="badge-check" size={19} />
                 Cobertura revisada
               </h2>
               <span
@@ -540,6 +540,7 @@ export function HomePage() {
                 {freshness.status === "loading" ? "Comprobando fecha…" : null}
                 {freshness.status === "ready" ? (
                   <>
+                    <Icon name="calendar" size={15} />
                     {freshness.sourceLabel}: copia del{" "}
                     <time dateTime={freshness.dateTime}>{freshness.date}</time>
                   </>

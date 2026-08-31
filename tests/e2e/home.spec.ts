@@ -54,7 +54,9 @@ async function expectHomeReadyForLayout(page: Page): Promise<void> {
     page.getByRole("combobox", { name: "Título de Formación Profesional" }),
   ).toBeVisible();
   await expect(
-    page.getByRole("button", { name: "Ver las salidas de este título" }),
+    page.getByRole("button", {
+      name: "Ver ocupaciones con relación revisada",
+    }),
   ).toHaveCount(1);
 }
 
@@ -132,11 +134,13 @@ test("home exposes one chosen journey, navigation, freshness, and no automated a
   }
 
   const startingPoint = page.getByRole("group", {
-    name: "¿Cuál es tu punto de partida?",
+    name: "¿Desde dónde empiezas?",
   });
   await expect(startingPoint.getByRole("radio")).toHaveCount(3);
   await expect(
-    page.getByRole("button", { name: "Ver las salidas de este título" }),
+    page.getByRole("button", {
+      name: "Ver ocupaciones con relación revisada",
+    }),
   ).toHaveCount(1);
   const mappingSnapshot = manifest.resourceSnapshots.mappingCoverage;
   const expectedDateTime =
@@ -189,7 +193,7 @@ test("the initial ready-state focus does not outline the whole page", async ({
 test("the keyboard focus indicator is visible and opaque", async ({ page }) => {
   await page.goto("/");
   const submit = page.getByRole("button", {
-    name: "Ver las salidas de este título",
+    name: "Ver ocupaciones con relación revisada",
   });
   await chooseTrainingProgram(
     page,
@@ -243,7 +247,9 @@ test("the single search reaches both routes one mode at a time", async ({
     "IFC03S",
   );
   await page
-    .getByRole("button", { name: "Ver las salidas de este título" })
+    .getByRole("button", {
+      name: "Ver ocupaciones con relación revisada",
+    })
     .click();
   await expect(page).toHaveURL(/\/desde-fp\/IFC03S$/u);
   await expect(
@@ -254,7 +260,9 @@ test("the single search reaches both routes one mode at a time", async ({
   await expectStrictAxe(page);
 
   await page.getByRole("link", { name: "SALIDA CyL" }).click();
-  await page.getByRole("radio", { name: /Tengo un empleo en mente/iu }).check();
+  await page
+    .getByRole("radio", { name: /Tengo una ocupación en mente/iu })
+    .check();
   await expectStrictAxe(page);
   const occupationSearch = page.getByRole("combobox", {
     name: "Ocupación que te interesa",
@@ -268,7 +276,7 @@ test("the single search reaches both routes one mode at a time", async ({
     .click();
   await expectStrictAxe(page);
   await page
-    .getByRole("button", { name: "Ver cómo llegar a esta ocupación" })
+    .getByRole("button", { name: "Ver FP con relación revisada" })
     .click();
   await expect(page).toHaveURL(
     /\/desde-ocupacion\/occupation%3Acno11%3A2713$/u,
@@ -291,7 +299,7 @@ test("home FP search requires official keyboard confirmation", async ({
     name: "Título de Formación Profesional",
   });
   const submit = page.getByRole("button", {
-    name: "Ver las salidas de este título",
+    name: "Ver ocupaciones con relación revisada",
   });
 
   await combobox.fill("texto inventado");
@@ -602,7 +610,7 @@ test("the complete Spanish home copy fits without horizontal overflow", async ({
 
   await expect(
     page.getByRole("heading", {
-      name: /De tu FP a tu\s*siguiente paso/i,
+      name: /Elige desde dónde empiezas\./i,
     }),
   ).toBeVisible();
   await expect(
@@ -650,7 +658,7 @@ test("the home copy fits at the narrow mobile widths", async ({ page }) => {
     await expectHomeReadyForLayout(page);
     await expect(
       page.getByRole("heading", {
-        name: /De tu FP a tu\s*siguiente paso/i,
+        name: /Elige desde dónde empiezas\./i,
       }),
     ).toBeVisible();
 
@@ -685,7 +693,7 @@ test("reviewed programs and the single search module keep stable responsive geom
   const searchPanel = await searchEntry.boundingBox();
   const coveragePanel = await coverage.boundingBox();
   const modeChoices = page.getByRole("group", {
-    name: "¿Cuál es tu punto de partida?",
+    name: "¿Desde dónde empiezas?",
   });
   await expect(modeChoices.getByRole("radio")).toHaveCount(3);
   expect(searchPanel).not.toBeNull();
@@ -696,11 +704,11 @@ test("reviewed programs and the single search module keep stable responsive geom
   }
 
   if (testInfo.project.name === "chromium-desktop") {
-    expect(searchPanel.y).toBeLessThanOrEqual(coveragePanel.y);
-    expect(Math.abs(coveragePanel.x - searchPanel.x)).toBeLessThanOrEqual(1);
-    expect(
-      Math.abs(coveragePanel.width - searchPanel.width),
-    ).toBeLessThanOrEqual(1);
+    expect(Math.abs(searchPanel.y - coveragePanel.y)).toBeLessThanOrEqual(1);
+    expect(searchPanel.x).toBeLessThan(coveragePanel.x);
+    expect(searchPanel.x + searchPanel.width).toBeLessThanOrEqual(
+      coveragePanel.x + 1,
+    );
   } else {
     expect(searchPanel.y).toBeLessThanOrEqual(coveragePanel.y);
     expect(searchPanel.width).toBeGreaterThan(280);

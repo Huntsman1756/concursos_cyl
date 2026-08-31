@@ -3,7 +3,10 @@ import userEvent from "@testing-library/user-event";
 import { MemoryRouter } from "react-router-dom";
 import { afterEach, describe, expect, it, vi } from "vitest";
 
-import type { OfferEvidenceResource } from "../../../data/schemas/offerEvidence";
+import type {
+  OfferEvidenceRecord,
+  OfferEvidenceResource,
+} from "../../../data/schemas/offerEvidence";
 import { OfferExplorerPage } from "./OfferExplorerPage";
 
 const generatedDataClient = vi.hoisted(() => ({
@@ -165,6 +168,82 @@ const resource: OfferEvidenceResource = {
   ],
 };
 
+function withRecord(
+  overrides: Partial<OfferEvidenceRecord>,
+): OfferEvidenceRecord {
+  return { ...resource.records[0], ...overrides };
+}
+
+const caregiverRecord = withRecord({
+  offerId: "caregiver-offer",
+  title:
+    "CUIDADORES DE PERSONAS CON DISCAPACIDAD Y/O DEPENDENCIA, EN INSTITUCIONES",
+  occupationLabel:
+    "CUIDADORES DE PERSONAS CON DISCAPACIDAD Y/O DEPENDENCIA, EN INSTITUCIONES",
+  evidenceStatus: "ambiguous_requirement",
+  hasAmbiguousRequirements: true,
+  requirements: [
+    {
+      ...resource.records[0].requirements[0],
+      requirementId: `requirement:${"b".repeat(64)}`,
+      literalRequirement: "Experiencia en cuidados a personas dependientes.",
+      normalizedCategory: "unknown",
+      normalizedValue: null,
+      classificationStatus: "ambiguous",
+      parserRule: "ambiguous.requirement",
+    },
+  ],
+  relations: [],
+  nextActions: [
+    {
+      ...resource.records[0].nextActions[0],
+      href: "https://example.com/caregiver-offer",
+    },
+  ],
+});
+
+const physioU1Record: OfferEvidenceRecord = {
+  ...resource.records[1],
+  universitySignal: "literal_offer_requirement",
+  universityEvidenceClass: "U1",
+  universityEvidence: {
+    evidenceClass: "U1",
+    basis: "literal_offer_requirement",
+    sourceUrl: "https://example.com/physio-requirement",
+    sourceQuote: "Grado en Fisioterapia.",
+  },
+  nextActions: [resource.records[1].nextActions[0]],
+};
+
+const noReviewedRecord = withRecord({
+  offerId: "no-reviewed-offer",
+  title: "AYUDANTE DE COCINA",
+  occupationLabel: "AYUDANTE DE COCINA",
+  evidenceStatus: "no_reviewed_relationship",
+  hasAmbiguousRequirements: false,
+  requirements: [],
+  relations: [],
+  nextActions: [
+    {
+      ...resource.records[0].nextActions[0],
+      href: "https://example.com/no-reviewed-offer",
+    },
+  ],
+});
+
+function renderOfferRecords(records: OfferEvidenceRecord[]) {
+  generatedDataClient.loadManifest.mockResolvedValue({});
+  generatedDataClient.loadOfferEvidence.mockResolvedValue({
+    ...resource,
+    records,
+  });
+  render(
+    <MemoryRouter initialEntries={["/desde-oferta"]}>
+      <OfferExplorerPage />
+    </MemoryRouter>,
+  );
+}
+
 afterEach(() => {
   cleanup();
   vi.clearAllMocks();
@@ -187,21 +266,134 @@ describe("OfferExplorerPage", () => {
     expect(
       screen.getByRole("heading", { name: "1 de 2 ofertas" }),
     ).toBeVisible();
-    await userEvent
-      .setup()
-      .click(screen.getByText("Ver requisitos, relación y siguiente acción"));
     expect(
-      screen.getByText(/Título de Técnico en Cocina y Gastronomía/),
+      screen
+        .getAllByText(/Título de Técnico en Cocina y Gastronomía/)
+        .find((element) => !element.closest("details")),
     ).toBeVisible();
-    expect(screen.getByText("FP", { selector: "span" })).toBeVisible();
+    expect(
+      screen
+        .getAllByText("Relación revisada", { selector: "strong" })
+        .find((element) => !element.closest("details")),
+    ).toBeVisible();
+    const summary = screen.getByText(
+      "Ver requisito, evidencia y siguiente acción",
+    );
+    expect(summary.closest("details")).not.toHaveAttribute("open");
+    expect(screen.getByText("Vigencia no confirmada.")).toBeVisible();
+    expect(
+      screen
+        .getAllByRole("link", { name: /Abrir la oferta original/ })
+        .find((element) => !element.closest("details")),
+    ).toBeVisible();
+    expect(
+      screen.queryByRole("heading", { name: "Lo que sabemos" }),
+    ).not.toBeVisible();
+    await userEvent.setup().click(summary);
+    expect(
+      screen
+        .getAllByRole("heading", { name: "Requisito literal" })
+        .find((element) => element.closest("details")?.hasAttribute("open")),
+    ).toBeVisible();
+    expect(
+      screen.getByRole("heading", { name: "Estado de la evidencia" }),
+    ).toBeVisible();
+    expect(
+      screen.getByRole("heading", { name: "Lo que sabemos" }),
+    ).toBeVisible();
+    expect(
+      within(summary.closest("details") as HTMLElement).getByText(
+        /Título de Técnico en Cocina y Gastronomía/,
+      ),
+    ).toBeVisible();
+    expect(
+      screen.getAllByText("FP", { selector: "strong" }).length,
+    ).toBeGreaterThan(0);
     expect(
       screen.getByText("Cocina y Gastronomía", { selector: "strong" }),
     ).toBeVisible();
+    const studyLinks = screen.getAllByRole("link", {
+      name: /Ver dónde estudiar Cocina/,
+    });
+    expect(studyLinks).toHaveLength(1);
+    for (const studyLink of studyLinks) {
+      expect(studyLink).toHaveAttribute("href", "/formacion/HOT01M");
+    }
     expect(
-      screen.getByRole("link", { name: /Ver dónde estudiar Cocina/ }),
-    ).toHaveAttribute("href", "/formacion/HOT01M");
-    expect(screen.getByText("No publicado en esta copia")).toBeVisible();
+      screen.getByRole("heading", { name: "Siguiente acción" }),
+    ).toBeVisible();
+    expect(
+      screen.getByRole("heading", { name: "Fuentes y limitaciones" }),
+    ).toBeVisible();
+    expect(
+      screen.getByRole("link", { name: "abrir publicación" }),
+    ).toHaveAttribute("href", "https://example.com/cooking-offer");
+    expect(screen.getByText(/Empleador no publicado/)).toBeVisible();
   });
+
+  it.each([
+    {
+      name: "cocina revisada",
+      record: resource.records[0],
+      literal: "Título de Técnico en Cocina y Gastronomía.",
+      status: "Relación revisada",
+    },
+    {
+      name: "cuidador ambiguo",
+      record: caregiverRecord,
+      literal: "Experiencia en cuidados a personas dependientes.",
+      status: "No confirmado",
+    },
+    {
+      name: "fisioterapia U1",
+      record: physioU1Record,
+      literal: "Grado en Fisioterapia.",
+      status: "Vía regulada",
+    },
+    {
+      name: "sin relación revisada",
+      record: noReviewedRecord,
+      literal: "No hay requisitos concretos extraídos.",
+      status: "Sin relación revisada",
+    },
+  ])(
+    "exposes L1 decision signals before supporting detail for $name",
+    async ({ record, literal, status }) => {
+      renderOfferRecords([record]);
+
+      expect(
+        await screen.findByRole("heading", { name: "1 de 1 ofertas" }),
+      ).toBeVisible();
+      expect(
+        screen
+          .getAllByText(literal, { exact: false })
+          .find((element) => !element.closest("details")),
+      ).toBeVisible();
+      expect(
+        screen
+          .getAllByText(status, { selector: "strong" })
+          .find((element) => !element.closest("details")),
+      ).toBeVisible();
+      expect(screen.getByText("Vigencia no confirmada.")).toBeVisible();
+      expect(
+        screen
+          .getAllByRole("link", { name: /Abrir la oferta original/ })
+          .find((element) => !element.closest("details")),
+      ).toBeVisible();
+      const summary = screen.getByText(
+        "Ver requisito, evidencia y siguiente acción",
+      );
+      expect(summary.closest("details")).not.toHaveAttribute("open");
+      expect(
+        screen.queryByRole("heading", { name: "Lo que sabemos" }),
+      ).not.toBeVisible();
+
+      await userEvent.setup().click(summary);
+      expect(
+        screen.getByRole("heading", { name: "Fuentes y limitaciones" }),
+      ).toBeVisible();
+    },
+  );
 
   it("keeps the university boundary visible and lets people try another query", async () => {
     generatedDataClient.loadManifest.mockResolvedValue({});
@@ -224,22 +416,18 @@ describe("OfferExplorerPage", () => {
       name: "FISIOTERAPEUTAS",
     });
     await user.click(
-      within(card).getByText("Ver requisitos, relación y siguiente acción"),
+      within(card).getByText("Ver requisito, evidencia y siguiente acción"),
     );
     expect(
-      within(card).getByText("Vía universitaria o regulada", {
-        selector: "span",
-      }),
+      within(card).getByText(/U2 · Vía regulada/, { selector: "strong" }),
     ).toBeVisible();
     expect(
       within(card).getByText(
-        "No inferimos equivalencias, acceso, colegiación ni empleabilidad desde esta copia.",
+        /No inferimos equivalencias, acceso, colegiación ni empleabilidad desde esta copia\./,
       ),
     ).toBeVisible();
     expect(
-      within(card).getByText(
-        "Esta profesión está regulada y requiere comprobar la fuente oficial.",
-      ),
+      within(card).getByText(/profesión de fisioterapia está regulada/),
     ).toBeVisible();
     expect(within(card).queryByText(/Esta oferta exige/)).toBeNull();
   });

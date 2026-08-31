@@ -212,12 +212,6 @@ export function OccupationResultsPage() {
       aria-labelledby="occupation-results-heading"
     >
       <header className="training-page__header">
-        <div className="result-actions" data-print-hidden="true">
-          <Link className="secondary-button" to="/desde-ocupacion">
-            Buscar otra ocupación
-          </Link>
-          <PrintButton className="secondary-button" />
-        </div>
         <p className="training-page__eyebrow">
           Ocupación seleccionada del catálogo oficial
         </p>
@@ -231,10 +225,15 @@ export function OccupationResultsPage() {
             Catálogo comprobado el {spanishDate(occupationEvidenceDate)}
           </time>
         </p>
+        <div className="result-actions" data-print-hidden="true">
+          <Link className="secondary-button" to="/desde-ocupacion">
+            Buscar otra ocupación
+          </Link>
+          <PrintButton className="secondary-button" />
+        </div>
       </header>
       <p className="decision-direction">
-        Ocupación que quieres <span aria-hidden="true">→</span> FP que te lleva
-        a ella
+        Ocupación <span aria-hidden="true">→</span> FP con relación revisada
       </p>
       <ResultSectionNav links={sectionNavigationLinks} />
       <section className="decision-basis" aria-labelledby="route-basis-title">

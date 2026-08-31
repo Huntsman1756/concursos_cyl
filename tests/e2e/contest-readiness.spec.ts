@@ -189,7 +189,7 @@ test.describe("contest readiness journeys", () => {
     await expect(
       page.getByRole("heading", {
         level: 1,
-        name: /De tu FP a tu\s*siguiente paso/i,
+        name: /Elige desde dónde empiezas\./i,
       }),
     ).toBeVisible();
     if (testInfo.project.name === "chromium-mobile") {
@@ -214,7 +214,9 @@ test.describe("contest readiness journeys", () => {
       page.getByRole("combobox", { name: "Título de Formación Profesional" }),
     ).toBeVisible();
     await expect(
-      page.getByRole("button", { name: "Ver las salidas de este título" }),
+      page.getByRole("button", {
+        name: "Ver ocupaciones con relación revisada",
+      }),
     ).toHaveCount(1);
     await expectStableRoute(page, diagnostics);
   });
@@ -423,7 +425,7 @@ test.describe("contest readiness journeys", () => {
     await expect(
       page.getByRole("heading", {
         level: 1,
-        name: /De tu FP a tu\s*siguiente paso/i,
+        name: /Elige desde dónde empiezas\./i,
       }),
     ).toBeVisible();
     await expect(mobileNavigation).toHaveAttribute("hidden");
@@ -617,7 +619,9 @@ test.describe("contest readiness journeys", () => {
       "Título de Formación Profesional",
     );
     await page
-      .getByRole("button", { name: "Ver las salidas de este título" })
+      .getByRole("button", {
+        name: "Ver ocupaciones con relación revisada",
+      })
       .click();
     await expect(page).toHaveURL(/\/desde-fp\/COM01M$/u);
     if (testInfo.project.name === "chromium-mobile") {
