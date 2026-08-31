@@ -16,22 +16,16 @@ import {
   OFFER_EVIDENCE_STATUS_LABELS,
   filterOfferEvidenceRecords,
   offerEvidenceCategoryLabel,
-  offerEvidenceStatusLabel,
   sortOfferEvidenceRecords,
 } from "../../domain/offerEvidence";
 import { useRouteReady } from "../../app/RouteReadyContext";
 import "./offerExplorer.css";
 
 const PAGE_SIZE = 12;
-const STATUS_OPTIONS: Array<OfferEvidenceStatus | "all"> = [
+const STATUS_OPTIONS = [
   "all",
-  "reviewed_fp_relationship",
-  "explicit_training_requirement",
-  "university_or_regulatory_route",
-  "alternative_vocational_route",
-  "ambiguous_requirement",
-  "no_reviewed_relationship",
-];
+  ...Object.keys(OFFER_EVIDENCE_STATUS_LABELS),
+] as Array<OfferEvidenceStatus | "all">;
 const STATUS_HELP = [
   "Cita y revisión.",
   "Menciona formación; no implica relación FP.",
@@ -48,24 +42,9 @@ type OfferExplorerState =
 
 function formattedDate(value: string): string {
   return new Intl.DateTimeFormat("es-ES", {
-    day: "numeric",
-    month: "long",
-    year: "numeric",
+    dateStyle: "long",
     timeZone: "UTC",
   }).format(new Date(value));
-}
-
-function locationLabel(record: OfferEvidenceRecord): string {
-  return (
-    [record.locality, record.province].filter(Boolean).join(" · ") ||
-    "Ubicación no publicada"
-  );
-}
-
-function requirementStatusLabel(
-  status: keyof typeof OFFER_EVIDENCE_CLASSIFICATION_LABELS,
-): string {
-  return OFFER_EVIDENCE_CLASSIFICATION_LABELS[status];
 }
 
 const NO_REQUIREMENTS_COPY = "No hay requisitos concretos extraídos.";
@@ -73,14 +52,16 @@ const NO_RELATION_COPY =
   "No hay relación FP revisada; no demuestra imposibilidad.";
 const LIMITATIONS_COPY =
   "No inferimos equivalencias, acceso, colegiación ni empleabilidad desde esta copia.";
-
-function certificateLabel(
-  routeType: OfferEvidenceNextAction["certificateRouteType"],
-): string {
-  return routeType === "offer_explicitly_accepts"
-    ? "Certificado citado por la oferta"
-    : "Certificado oficial relacionado";
-}
+const SECTION_CLASS = "offer-explorer-card__section";
+const LITERAL_CLASS = "offer-explorer__literal";
+const ACTION_LINK_CLASS = "offer-explorer__action-link";
+const NORMALIZED_CLASS = "offer-explorer__normalized";
+const MUTED_CLASS = "offer-explorer__muted";
+const EYEBROW_CLASS = "offer-explorer__eyebrow";
+const EXTERNAL_LINK_PROPS = {
+  target: "_blank",
+  rel: "noreferrer",
+} as const;
 
 function EvidenceState({ status }: { status: OfferEvidenceStatus }) {
   const icon: IconName =
@@ -92,7 +73,7 @@ function EvidenceState({ status }: { status: OfferEvidenceStatus }) {
   return (
     <p className="offer-explorer__evidence-state">
       <Icon name={icon} size={19} />
-      <strong>{offerEvidenceStatusLabel(status)}</strong>
+      <strong>{OFFER_EVIDENCE_STATUS_LABELS[status]}</strong>
     </p>
   );
 }
@@ -100,17 +81,16 @@ function EvidenceState({ status }: { status: OfferEvidenceStatus }) {
 function ActionLink({ action }: { action: OfferEvidenceNextAction }) {
   if (action.targetKind === "internal") {
     return (
-      <Link className="offer-explorer__action-link" to={action.href}>
+      <Link className={ACTION_LINK_CLASS} to={action.href}>
         {action.label}
       </Link>
     );
   }
   return (
     <a
-      className="offer-explorer__action-link"
+      {...EXTERNAL_LINK_PROPS}
+      className={ACTION_LINK_CLASS}
       href={action.href}
-      target="_blank"
-      rel="noreferrer"
     >
       {action.label}
       <span aria-hidden="true"> ↗</span>
@@ -143,17 +123,18 @@ function RequirementEvidence({
   compact?: boolean;
 }) {
   const requirement = record.requirements[0];
+  const headingId = `requirements-${record.offerId}`;
   return (
     <section
       className="offer-explorer-card__requirement"
-      aria-labelledby={`requirements-${record.offerId}`}
+      aria-labelledby={headingId}
     >
       <div className="offer-explorer__section-heading">
         <Icon name="file-check" size={20} />
-        <h3 id={`requirements-${record.offerId}`}>Requisito literal</h3>
+        <h3 id={headingId}>Requisito literal</h3>
       </div>
       {record.requirements.length === 0 ? (
-        <p className="offer-explorer__muted">
+        <p className={MUTED_CLASS}>
           {NO_REQUIREMENTS_COPY}
           {record.universityEvidence?.evidenceClass === "U1" ? (
             <> U1: “{record.universityEvidence.sourceQuote}”</>
@@ -161,7 +142,7 @@ function RequirementEvidence({
         </p>
       ) : compact ? (
         <>
-          <blockquote className="offer-explorer__literal">
+          <blockquote className={LITERAL_CLASS}>
             “{requirement.literalRequirement}”
           </blockquote>
           {record.requirements.length > 1 ? (
@@ -174,7 +155,7 @@ function RequirementEvidence({
         <ul className="offer-explorer__requirements">
           {record.requirements.map((requirement) => (
             <li key={requirement.requirementId}>
-              <blockquote className="offer-explorer__literal">
+              <blockquote className={LITERAL_CLASS}>
                 “{requirement.literalRequirement}”
               </blockquote>
               <p className="offer-explorer__requirement-meta">
@@ -183,15 +164,19 @@ function RequirementEvidence({
                   {offerEvidenceCategoryLabel(requirement.normalizedCategory)}
                 </strong>{" "}
                 · Lectura:{" "}
-                {requirementStatusLabel(requirement.classificationStatus)}
+                {
+                  OFFER_EVIDENCE_CLASSIFICATION_LABELS[
+                    requirement.classificationStatus
+                  ]
+                }
               </p>
               {requirement.normalizedValue !== null ? (
-                <p className="offer-explorer__normalized">
+                <p className={NORMALIZED_CLASS}>
                   Lectura normalizada:{" "}
                   <strong>{String(requirement.normalizedValue)}</strong>
                 </p>
               ) : (
-                <p className="offer-explorer__normalized">
+                <p className={NORMALIZED_CLASS}>
                   No se ha normalizado este texto.
                 </p>
               )}
@@ -203,24 +188,17 @@ function RequirementEvidence({
   );
 }
 
-function universityEvidenceLabel(evidenceClass: "U1" | "U2" | "U3") {
-  return evidenceClass === "U1"
-    ? "Requisito literal"
-    : evidenceClass === "U2"
-      ? "Vía regulada"
-      : "Contexto oficial";
-}
-
 function KnownEvidence({ record }: { record: OfferEvidenceRecord }) {
   const certificateAction = record.nextActions.find(
     (action) => action.certificateEvidence !== undefined,
   );
+  const headingId = `known-${record.offerId}`;
   return (
     <section
-      className="offer-explorer-card__section offer-explorer-card__known"
-      aria-labelledby={`known-${record.offerId}`}
+      className={`${SECTION_CLASS} offer-explorer-card__known`}
+      aria-labelledby={headingId}
     >
-      <h3 id={`known-${record.offerId}`}>Lo que sabemos</h3>
+      <h3 id={headingId}>Lo que sabemos</h3>
       <ul className="offer-explorer__known-list">
         {record.relations.map((relation) => (
           <EvidenceItem
@@ -243,9 +221,13 @@ function KnownEvidence({ record }: { record: OfferEvidenceRecord }) {
           >
             <strong>
               {record.universityEvidence.evidenceClass} ·{" "}
-              {universityEvidenceLabel(record.universityEvidence.evidenceClass)}
+              {record.universityEvidence.evidenceClass === "U1"
+                ? "Requisito literal"
+                : record.universityEvidence.evidenceClass === "U2"
+                  ? "Vía regulada"
+                  : "Contexto oficial"}
             </strong>
-            <blockquote className="offer-explorer__literal">
+            <blockquote className={LITERAL_CLASS}>
               “{record.universityEvidence.sourceQuote}”
             </blockquote>
           </EvidenceItem>
@@ -253,7 +235,10 @@ function KnownEvidence({ record }: { record: OfferEvidenceRecord }) {
         {certificateAction !== undefined ? (
           <EvidenceItem key="known-certificate" icon="file-check">
             <strong>
-              {certificateLabel(certificateAction.certificateRouteType)}
+              {certificateAction.certificateRouteType ===
+              "offer_explicitly_accepts"
+                ? "Certificado citado por la oferta"
+                : "Certificado oficial relacionado"}
             </strong>
             {certificateAction.certificateEvidence?.map((certificate) => (
               <span key={certificate.certificateCode}>
@@ -288,13 +273,14 @@ function UnknownEvidence({ record }: { record: OfferEvidenceRecord }) {
     hasAccreditationAction;
 
   if (!hasUnknowns) return null;
+  const headingId = `unknown-${record.offerId}`;
 
   return (
     <section
-      className="offer-explorer-card__section offer-explorer-card__unknown"
-      aria-labelledby={`unknown-${record.offerId}`}
+      className={`${SECTION_CLASS} offer-explorer-card__unknown`}
+      aria-labelledby={headingId}
     >
-      <h3 id={`unknown-${record.offerId}`}>Lo que no sabemos</h3>
+      <h3 id={headingId}>Lo que no sabemos</h3>
       <ul className="offer-explorer__unknown-list">
         {record.requirements.length === 0 ? (
           <EvidenceItem icon="eye">{NO_REQUIREMENTS_COPY}</EvidenceItem>
@@ -352,13 +338,14 @@ function NextAction({
   const secondaryAction = record.nextActions.find(
     (action) => action !== primaryAction && action.actionType !== "ecyl_office",
   );
+  const headingId = `actions-${record.offerId}`;
 
   return (
     <section
-      className="offer-explorer-card__section offer-explorer-card__next-action"
-      aria-labelledby={`actions-${record.offerId}`}
+      className={`${SECTION_CLASS} offer-explorer-card__next-action`}
+      aria-labelledby={headingId}
     >
-      <h3 id={`actions-${record.offerId}`}>Siguiente acción</h3>
+      <h3 id={headingId}>Siguiente acción</h3>
       <p>{primaryAction.reason}</p>
       <ActionLink action={primaryAction} />
       <ActionNotes action={primaryAction} />
@@ -413,21 +400,22 @@ function SupportingEvidence({ record }: { record: OfferEvidenceRecord }) {
       })),
     ),
   ];
+  const headingId = `supporting-${record.offerId}`;
 
   return (
     <section
-      className="offer-explorer-card__section offer-explorer-card__supporting"
-      aria-labelledby={`supporting-${record.offerId}`}
+      className={`${SECTION_CLASS} offer-explorer-card__supporting`}
+      aria-labelledby={headingId}
     >
-      <h3 id={`supporting-${record.offerId}`}>Fuentes y limitaciones</h3>
-      <p className="offer-explorer__muted">
+      <h3 id={headingId}>Fuentes y limitaciones</h3>
+      <p className={MUTED_CLASS}>
         Conservamos las fuentes y fechas que sostienen cada estado.{" "}
         {LIMITATIONS_COPY}
       </p>
       <ul className="offer-explorer__supporting-list">
         {sources.map((source) => (
           <li key={source.key}>
-            <a href={source.url} target="_blank" rel="noreferrer">
+            <a {...EXTERNAL_LINK_PROPS} href={source.url}>
               {source.linkLabel}
             </a>
           </li>
@@ -439,6 +427,7 @@ function SupportingEvidence({ record }: { record: OfferEvidenceRecord }) {
 
 function OfferCard({ record }: { record: OfferEvidenceRecord }) {
   const headingId = `offer-heading-${record.offerId}`;
+  const stateHeadingId = `state-${record.offerId}`;
   return (
     <article className="offer-explorer-card" aria-labelledby={headingId}>
       <header className="offer-explorer-card__header">
@@ -451,7 +440,10 @@ function OfferCard({ record }: { record: OfferEvidenceRecord }) {
       <dl className="offer-explorer-card__facts">
         <div>
           <dt>Ubicación</dt>
-          <dd>{locationLabel(record)}</dd>
+          <dd>
+            {[record.locality, record.province].filter(Boolean).join(" · ") ||
+              "Ubicación no publicada"}
+          </dd>
         </div>
         <div>
           <dt>Publicada</dt>
@@ -468,7 +460,7 @@ function OfferCard({ record }: { record: OfferEvidenceRecord }) {
       </dl>
 
       <p className="offer-explorer-card__source">
-        <a href={record.originalUrl} target="_blank" rel="noreferrer">
+        <a {...EXTERNAL_LINK_PROPS} href={record.originalUrl}>
           Abrir publicación original ↗
         </a>
       </p>
@@ -496,10 +488,10 @@ function OfferCard({ record }: { record: OfferEvidenceRecord }) {
         <div className="offer-explorer-card__decision-flow">
           <RequirementEvidence record={record} />
           <section
-            className="offer-explorer-card__section offer-explorer-card__state"
-            aria-labelledby={`state-${record.offerId}`}
+            className={`${SECTION_CLASS} offer-explorer-card__state`}
+            aria-labelledby={stateHeadingId}
           >
-            <h3 id={`state-${record.offerId}`}>Estado de la evidencia</h3>
+            <h3 id={stateHeadingId}>Estado de la evidencia</h3>
             <EvidenceState status={record.evidenceStatus} />
           </section>
           <KnownEvidence record={record} />
@@ -614,7 +606,7 @@ export function OfferExplorerPage() {
       aria-labelledby="offer-explorer-heading"
     >
       <header className="offer-explorer__intro">
-        <p className="offer-explorer__eyebrow">Desde una oferta</p>
+        <p className={EYEBROW_CLASS}>Desde una oferta</p>
         <h1 id="offer-explorer-heading">Tengo una oferta</h1>
         <p>Comprueba requisito, evidencia y siguiente acción.</p>
         <p className="offer-explorer__limit">
@@ -705,7 +697,7 @@ export function OfferExplorerPage() {
       >
         <div className="offer-explorer__results-heading">
           <div>
-            <p className="offer-explorer__eyebrow">Resultado reproducible</p>
+            <p className={EYEBROW_CLASS}>Resultado reproducible</p>
             <h2 id="offer-results-heading">
               {filteredRecords.length.toLocaleString("es-ES")} de{" "}
               {state.records.length.toLocaleString("es-ES")} ofertas
