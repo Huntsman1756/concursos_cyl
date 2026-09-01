@@ -53,17 +53,6 @@
     ]
   },
   "resourceSnapshots": {
-    "programs": {
-      "sourceId": "jcyl-vocational-training-offer",
-      "sourceUrl": "https://analisis.datosabiertos.jcyl.es/api/explore/v2.1/catalog/datasets/oferta-de-formacion-profesional/records",
-      "sourceUpdatedAt": null,
-      "snapshotFetchedAt": "2026-08-22T08:56:31.889Z",
-      "schemaVersion": "1.0.0",
-      "recordCount": 187,
-      "sha256": "90df87b283b5ff003dda20c9c4f7eac52b903e611753d107d4b927bbc4e19b72",
-      "qualityStatus": "passed",
-      "resourcePath": "/data/v1/snapshots/20260830120000000-8c6c79fbd2a1/programs.json"
-    },
     "centers": {
       "sourceId": "jcyl-vocational-training-offer",
       "sourceUrl": "https://analisis.datosabiertos.jcyl.es/api/explore/v2.1/catalog/datasets/oferta-de-formacion-profesional/records",
@@ -74,28 +63,6 @@
       "sha256": "593b7780f6cb9511c02edb26a769e5e1f951624f6e4b923a8e34caacb230c87a",
       "qualityStatus": "passed",
       "resourcePath": "/data/v1/snapshots/20260830120000000-8c6c79fbd2a1/centers.json"
-    },
-    "trainingOfferings": {
-      "sourceId": "jcyl-vocational-training-offer",
-      "sourceUrl": "https://analisis.datosabiertos.jcyl.es/api/explore/v2.1/catalog/datasets/oferta-de-formacion-profesional/records",
-      "sourceUpdatedAt": null,
-      "snapshotFetchedAt": "2026-08-22T08:56:31.889Z",
-      "schemaVersion": "1.0.0",
-      "recordCount": 1294,
-      "sha256": "0948871f993a4f0a03ed42ccef060c4a395e0898dc230086f234345fee7e880a",
-      "qualityStatus": "passed",
-      "resourcePath": "/data/v1/snapshots/20260830120000000-8c6c79fbd2a1/training-offerings.json"
-    },
-    "jobOffers": {
-      "sourceId": "jcyl-employment-offers",
-      "sourceUrl": "https://analisis.datosabiertos.jcyl.es/api/explore/v2.1/catalog/datasets/ofertas-de-empleo/records",
-      "sourceUpdatedAt": "2026-08-20T00:00:00.000Z",
-      "snapshotFetchedAt": "2026-08-22T08:56:31.889Z",
-      "schemaVersion": "1.0.0",
-      "recordCount": 1058,
-      "sha256": "decd3bcf879cd001ea4750bb2bdd5f1146c8a301dddab660e1810e23d07662a7",
-      "qualityStatus": "passed",
-      "resourcePath": "/data/v1/snapshots/20260830120000000-8c6c79fbd2a1/job-offers.json"
     },
     "derivedFpOccupationGraph": {
       "sourceId": "salida-cyl-derived-fp-occupation-graph",
@@ -129,6 +96,17 @@
       "sha256": "2a35b80acb70651e94ce747af74989760d53c3ef02fa1cf080a27296317d1ecd",
       "qualityStatus": "passed",
       "resourcePath": "/data/v1/snapshots/20260830120000000-8c6c79fbd2a1/education-center-directory.json"
+    },
+    "jobOffers": {
+      "sourceId": "jcyl-employment-offers",
+      "sourceUrl": "https://analisis.datosabiertos.jcyl.es/api/explore/v2.1/catalog/datasets/ofertas-de-empleo/records",
+      "sourceUpdatedAt": "2026-08-20T00:00:00.000Z",
+      "snapshotFetchedAt": "2026-08-22T08:56:31.889Z",
+      "schemaVersion": "1.0.0",
+      "recordCount": 1058,
+      "sha256": "decd3bcf879cd001ea4750bb2bdd5f1146c8a301dddab660e1810e23d07662a7",
+      "qualityStatus": "passed",
+      "resourcePath": "/data/v1/snapshots/20260830120000000-8c6c79fbd2a1/job-offers.json"
     },
     "mappingCoverage": {
       "sourceId": "todofp-boe-reviewed-training-occupation-links",
@@ -330,6 +308,17 @@
       "qualityStatus": "passed",
       "resourcePath": "/data/v1/snapshots/20260830120000000-8c6c79fbd2a1/professional-profiles.json"
     },
+    "programs": {
+      "sourceId": "jcyl-vocational-training-offer",
+      "sourceUrl": "https://analisis.datosabiertos.jcyl.es/api/explore/v2.1/catalog/datasets/oferta-de-formacion-profesional/records",
+      "sourceUpdatedAt": null,
+      "snapshotFetchedAt": "2026-08-22T08:56:31.889Z",
+      "schemaVersion": "1.0.0",
+      "recordCount": 187,
+      "sha256": "90df87b283b5ff003dda20c9c4f7eac52b903e611753d107d4b927bbc4e19b72",
+      "qualityStatus": "passed",
+      "resourcePath": "/data/v1/snapshots/20260830120000000-8c6c79fbd2a1/programs.json"
+    },
     "provincialContracts": {
       "sourceId": "jcyl-provincial-employment-contracts",
       "sourceUrl": "https://analisis.datosabiertos.jcyl.es/api/explore/v2.1/catalog/datasets/contratos-realizados-en-las-provincias-de-castilla-y-leon/records?where=provincia%21%3D%27CYL%27",
@@ -384,6 +373,17 @@
       "sha256": "01b23ced0aadd865f33870b5e5136440eaff71de46e5e555e23c2c99fb03fd02",
       "qualityStatus": "passed",
       "resourcePath": "/data/v1/snapshots/20260830120000000-8c6c79fbd2a1/training-occupation-links.json"
+    },
+    "trainingOfferings": {
+      "sourceId": "jcyl-vocational-training-offer",
+      "sourceUrl": "https://analisis.datosabiertos.jcyl.es/api/explore/v2.1/catalog/datasets/oferta-de-formacion-profesional/records",
+      "sourceUpdatedAt": null,
+      "snapshotFetchedAt": "2026-08-22T08:56:31.889Z",
+      "schemaVersion": "1.0.0",
+      "recordCount": 1294,
+      "sha256": "0948871f993a4f0a03ed42ccef060c4a395e0898dc230086f234345fee7e880a",
+      "qualityStatus": "passed",
+      "resourcePath": "/data/v1/snapshots/20260830120000000-8c6c79fbd2a1/training-offerings.json"
     }
   },
   "qualityReport": {

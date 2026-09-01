@@ -11,6 +11,7 @@ research/**
 analysis/fp_official_alias_pass_results.json
 
 # Contest evidence and Runtime V4 activation use canonical hash-bound serialization.
+public/data/v1/manifest.json
 analysis/contest_evidence_matrix.json
 analysis/contest_evidence_matrix.md
 .agent-orchestration/activation-v4.json
