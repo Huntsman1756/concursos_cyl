@@ -98,13 +98,18 @@ test("home exposes three clear intents, navigation, freshness, and no automated 
     "datetime",
     expectedDateTime,
   );
+  const expectedDate = new Intl.DateTimeFormat("es-ES", {
+    day: "numeric",
+    month: "short",
+    year: "numeric",
+    timeZone: "UTC",
+  }).format(new Date(expectedDateTime));
+  const expectedDateKind =
+    mappingSnapshot.sourceUpdatedAt === null
+      ? "snapshot consultado el"
+      : "fuente actualizada el";
   await expect(freshness).toContainText(
-    `Relaciones revisadas: copia del ${new Intl.DateTimeFormat("es-ES", {
-      day: "2-digit",
-      month: "2-digit",
-      year: "numeric",
-      timeZone: "UTC",
-    }).format(new Date(expectedDateTime))}`,
+    `Relaciones revisadas · ${expectedDateKind} ${expectedDate}`,
   );
   await expect(page.locator(".example-line a")).toHaveCount(1);
   await expectNoHorizontalOverflow(page);
@@ -278,7 +283,7 @@ test("a stale legacy manifest keeps navigation and names the last update", async
     name: "Fecha de ofertas laborales",
   });
   await expect(freshness).toContainText(
-    "Ofertas laborales: copia del 31/07/2026",
+    "Ofertas laborales · fuente actualizada el 31 jul 2026",
   );
   await expect(freshness.locator("time")).toHaveAttribute(
     "datetime",
@@ -372,7 +377,7 @@ test("loading freshness is visible before a delayed current manifest prioritizes
     "2026-07-31T00:00:00.000Z",
   );
   await expect(freshness).toContainText(
-    "Relaciones revisadas: copia del 31/07/2026",
+    "Relaciones revisadas · fuente actualizada el 31 jul 2026",
   );
 });
 

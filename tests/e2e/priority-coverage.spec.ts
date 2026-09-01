@@ -80,19 +80,17 @@ for (const program of reviewedPrograms) {
     const expectedOfferCount =
       "expectedOfferCount" in program ? program.expectedOfferCount : 0;
     if (expectedOfferCount === 0) {
-      await expect(
-        page
-          .locator(".status-panel")
-          .getByText(/0 ofertas con correspondencia validada/u),
-      ).toBeVisible();
+      await expect(page.locator("#ofertas-relacionadas")).toHaveCount(0);
     } else {
-      await expect(page.getByRole("article")).toHaveCount(expectedOfferCount);
+      await expect(
+        page.locator("#ofertas-relacionadas").getByRole("article"),
+      ).toHaveCount(expectedOfferCount);
     }
     await expect(
       page.getByText(/no hay (empleo|trabajo|puestos)/iu),
     ).toHaveCount(0);
     await expect(
-      page.getByRole("link", { name: "Ver centros y modalidades" }),
+      page.locator(".centers-section__all"),
     ).toHaveAttribute("href", `/formacion/${program.programKey}`);
   });
 }

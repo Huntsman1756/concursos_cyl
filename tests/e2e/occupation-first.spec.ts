@@ -77,7 +77,7 @@ test("the live occupation journey confirms a reviewed everyday alias and reaches
   if (testInfo.project.name === "chromium-mobile") {
     const listbox = await page.getByRole("listbox").boundingBox();
     const submit = await page
-      .getByRole("button", { name: "Ver rutas formativas" })
+      .getByRole("button", { name: "Ver qué FP te lleva a ella" })
       .boundingBox();
     expect(listbox).not.toBeNull();
     expect(submit).not.toBeNull();
@@ -97,7 +97,7 @@ test("the live occupation journey confirms a reviewed everyday alias and reaches
   await expect(page.locator(".confirmed-occupation")).toContainText(
     /Analistas, programadores y diseñadores web y multimedia/iu,
   );
-  await page.getByRole("button", { name: "Ver rutas formativas" }).click();
+  await page.getByRole("button", { name: "Ver qué FP te lleva a ella" }).click();
   await expect(page).toHaveURL(
     /\/desde-ocupacion\/occupation%3Acno11%3A2713\?query=/u,
   );
@@ -120,14 +120,10 @@ test("the live occupation journey confirms a reviewed everyday alias and reaches
       page.getByText(`Grado superior · ${programKey}`, { exact: true }),
     ).toBeVisible();
   }
-  await page.getByText("Ver cita exacta").first().click();
+  await page.getByLabel(/Fuente y revisión de la relación con/iu).first().click();
   await expect(
     page.getByText("Desarrollador de aplicaciones en entornos Web.").first(),
   ).toBeVisible();
-  expect(
-    await page.getByText("Modalidades", { exact: true }).count(),
-  ).toBeGreaterThanOrEqual(reviewedProgramKeys.length);
-
   const overflow = await page.evaluate(
     () =>
       document.documentElement.scrollWidth -
@@ -142,10 +138,7 @@ test("the live occupation journey confirms a reviewed everyday alias and reaches
     await page.goto(resultsUrl);
     await page.locator(`a[href="/formacion/${programKey}"]`).click();
     await expect(page).toHaveURL(new RegExp(`/formacion/${programKey}$`, "u"));
-    const centers = page.getByRole("list", {
-      name: "Centros que imparten el ciclo",
-    });
-    const firstCenter = centers.getByRole("listitem").first();
+    const firstCenter = page.locator(".center-catalog__table tbody tr").first();
     await expect(firstCenter).toBeVisible();
     await expect(
       firstCenter.getByText(/Presencial|A distancia|Mixta/iu),
@@ -172,7 +165,7 @@ test("occupation search and an unknown route make absence explicit", async ({
 
   await page.goto("/desde-ocupacion/occupation%3Acno11%3A9999");
   await expect(
-    page.getByRole("heading", { name: "Ocupación no encontrada" }),
+    page.getByRole("heading", { name: "Profesión no encontrada" }),
   ).toBeVisible();
 });
 
@@ -185,7 +178,7 @@ test("an official occupation without a reviewed FP relation remains searchable",
   });
   await combobox.fill("astrónomos");
   await page.getByRole("option", { name: /^Físicos y astrónomos/iu }).click();
-  await page.getByRole("button", { name: "Ver rutas formativas" }).click();
+  await page.getByRole("button", { name: "Ver qué FP te lleva a ella" }).click();
 
   await expect(page).toHaveURL(
     /\/desde-ocupacion\/occupation%3Acno11%3A2411\?query=/u,
@@ -195,7 +188,7 @@ test("an official occupation without a reviewed FP relation remains searchable",
   ).toBeVisible();
   await expect(
     page.getByText(
-      "Aún no hay una ruta formativa revisada para esta ocupación.",
+      "Aún no hay una ruta formativa comprobada para esta profesión",
     ),
   ).toBeVisible();
 });

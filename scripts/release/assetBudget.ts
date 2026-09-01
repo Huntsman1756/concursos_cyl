@@ -3,14 +3,15 @@ import { basename, extname, join, relative, resolve, sep } from "node:path";
 import { fileURLToPath } from "node:url";
 
 export const ASSET_BUDGET = {
-  // Calibrated from the Expansion V1 build (1,782,458 total across the
-  // inventory; 572,059 JS; 85,436 CSS; 1,124,963 images). The prior Tasks 5–7
-  // build was 1,747,363 total (543,624 JS; 78,753 CSS). Category caps round up
-  // in fixed 10k/5k/50k buckets. Total uses the next 50k bucket after 1.75 MB,
-  // because 1.75 MB would leave only 2,637 bytes (0.15%) of aggregate drift.
+  // Calibrated from the canonical v3 candidate build (1,744,339 bytes across
+  // the static asset inventory; 582,697 JS; 129,224 CSS; 1,032,395 images).
+  // The candidate adds the visual-refresh shell and route-specific CSS, so
+  // the old Expansion V1 stylesheet cap was no longer representative.
+  // Category caps round up to fixed 10k/5k buckets and retain a small growth
+  // reserve; the aggregate cap remains 1.8 MB.
   totalBytes: 1_800_000,
-  javascriptBytes: 580_000,
-  stylesheetBytes: 90_000,
+  javascriptBytes: 590_000,
+  stylesheetBytes: 135_000,
   imageBytes: 1_150_000,
 } as const;
 

@@ -181,7 +181,7 @@
       "snapshotFetchedAt": "2026-08-22T08:56:31.889Z",
       "schemaVersion": "1.0.0",
       "recordCount": 1,
-      "sha256": "c86ae7e7becf1da122a4d3e93c971d5792ed203273f75881368b0eac2008db24",
+      "sha256": "76407cebe55367233221575ce1fdc46dd123917d57b35168ac7f4d6d7fdc6198",
       "qualityStatus": "passed",
       "resourcePath": "/data/v1/snapshots/20260830120000000-8c6c79fbd2a1/open-data-catalog.json"
     },

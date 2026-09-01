@@ -14,7 +14,7 @@
 
 - URL raíz a presentar: [https://salida-cyl.157-90-22-40.sslip.io/](https://salida-cyl.157-90-22-40.sslip.io/)
 - Fallback verificada: [https://huntsman1756.github.io/concursos_cyl/](https://huntsman1756.github.io/concursos_cyl/)
-- Commit fuente del freeze: `9bad066a1144e6055e087e2c6e64f371521bf10d`.
+- Commit fuente del freeze: `a0350acdfd6064b68dee30af80433d8564347da3`.
 - Snapshot: `20260830120000000-8c6c79fbd2a1`.
 - Commit desplegado: **PENDIENTE DE DESPLIEGUE Y VERIFICACIÓN**.
 - Run del workflow: **PENDIENTE DE DESPLIEGUE Y VERIFICACIÓN**.

@@ -154,7 +154,11 @@ export function prepareContestFallback646(
 
   const sourceTexts = new Map<string, string>();
   const sourceValues = new Map<string, unknown>();
-  for (const [key, specification] of Object.entries(resourceSnapshots)) {
+  for (const key of Object.keys(historicalResourceSnapshots)) {
+    const specification = resourceSnapshots[key];
+    if (specification === undefined) {
+      throw new Error(`Current manifest lacks historical resource ${key}.`);
+    }
     const sourcePath = resolve(
       rootDirectory,
       relativeResourcePath(String(specification.resourcePath)),
@@ -220,7 +224,7 @@ export function prepareContestFallback646(
   );
 
   const nextResourceSnapshots = Object.fromEntries(
-    Object.entries(resourceSnapshots).map(([key, specification]) => {
+    Object.entries(historicalResourceSnapshots).map(([key, specification]) => {
       const text = sourceTexts.get(key);
       if (text === undefined)
         throw new Error(`Missing resource text for ${key}.`);
@@ -235,11 +239,7 @@ export function prepareContestFallback646(
           : undefined;
       if (recordCount === undefined)
         throw new Error(`${key} is not a supported resource envelope.`);
-      const provenanceSpecification =
-        key === "jobOffers" ? historicalResourceSnapshots[key] : specification;
-      const filename = String(provenanceSpecification.resourcePath)
-        .split("/")
-        .at(-1);
+      const filename = String(specification.resourcePath).split("/").at(-1);
       if (filename === undefined)
         throw new Error(`Missing filename for ${key}.`);
       if (write) {
@@ -249,7 +249,7 @@ export function prepareContestFallback646(
       return [
         key,
         {
-          ...provenanceSpecification,
+          ...specification,
           recordCount,
           resourcePath: `/data/v1/snapshots/${snapshotId}/${filename}`,
           sha256: sha256(text),
@@ -259,10 +259,12 @@ export function prepareContestFallback646(
   );
   const nextManifest = {
     ...manifest,
+    snapshotId,
     generatedAt: historicalManifest.generatedAt,
     qualityReport: historicalManifest.qualityReport,
     resourceSnapshots: nextResourceSnapshots,
   };
+  delete (nextManifest as JsonRecord).activationProvenance;
 
   if (write) {
     writeFileSync(

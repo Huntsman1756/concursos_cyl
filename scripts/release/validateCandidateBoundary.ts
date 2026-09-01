@@ -15,6 +15,8 @@ import {
 } from "../../data/schemas/candidateResourceAllowlist";
 import { GENERATED_RESOURCE_KEYS } from "../../data/schemas/generatedResourceCatalog";
 import { OfferEvidenceResourceSchema } from "../../data/schemas/offerEvidence";
+import { OpenDataCatalogResourceSchema } from "../../data/schemas/openData";
+import { shouldCopyRuntimeCandidate } from "./prepareRuntimeData";
 
 export interface CandidateBoundaryOptions {
   rootDir: string;
@@ -972,6 +974,27 @@ async function validateResourceSnapshots(
         `${label} resource ${key} record count does not match its manifest snapshot.`,
       );
     }
+    if (key === "openDataCatalog") {
+      const [catalog] = OpenDataCatalogResourceSchema.parse(value);
+      if (catalog === undefined) {
+        throw new Error(`${label} open-data catalog is empty.`);
+      }
+      const csvFile = await readRegularFile(
+        rootDir,
+        manifestResourceFilePath(
+          rootDir,
+          catalog.csvResourcePath,
+          publicRoot,
+          `${label} open-data CSV`,
+        ),
+        `${label} open-data CSV`,
+      );
+      if (hashBytes(csvFile.bytes) !== catalog.csvSha256) {
+        throw new Error(
+          `${label} open-data CSV hash does not match its catalog.`,
+        );
+      }
+    }
     if (key === "sepeOccupationMarket") sepeRecordCount = recordCount;
   }
   return { sepeRecordCount };
@@ -1016,7 +1039,10 @@ async function compareBundleDataTree(
   const activePrefix = `snapshots/${activeSnapshotId}/`;
   const expectedPaths = new Set(
     [...publicPaths].filter(
-      (path) => !path.startsWith("snapshots/") || path.startsWith(activePrefix),
+      (path) =>
+        path.startsWith(activePrefix) ||
+        (!path.startsWith("snapshots/") &&
+          shouldCopyRuntimeCandidate(`v1/${path}`)),
     ),
   );
   const missing = [...expectedPaths].filter((path) => !bundlePaths.has(path));

@@ -351,7 +351,7 @@ describe("contest submission renderer", () => {
 
     expect(memo).toContain(freeze.manifest.snapshotId);
     expect(memo).toContain(
-      `${freeze.coverage.approvedRelationCount} relaciones FP-ocupación`,
+      `${freeze.coverage.approvedRelationCount} relaciones FP–ocupación`,
     );
     expect(memo).toContain(
       `${freeze.coverage.distinctQualificationCount} cualificaciones distintas`,

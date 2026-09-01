@@ -351,9 +351,12 @@ test.describe("contest readiness journeys", () => {
       name: "Fecha de relaciones revisadas",
     });
     await expect(freshness).toBeVisible();
+    await freshness.scrollIntoViewIfNeeded();
     await expectWithinViewport(
       page,
-      freshness.getByText(/Relaciones revisadas: copia del/u),
+      freshness.getByText(
+        /Relaciones revisadas.*(?:fuente actualizada|snapshot consultado) el/u,
+      ),
     );
     await expectWithinViewport(page, freshness.locator("time"));
     await expectNoHorizontalOverflow(page);
@@ -372,7 +375,7 @@ test.describe("contest readiness journeys", () => {
     );
     await expect(mobileNavigation).toBeVisible();
     await expect(
-      mobileNavigation.getByRole("link", { name: "Explorar" }),
+      mobileNavigation.getByRole("link", { name: "Explorar", exact: true }),
     ).toHaveAttribute("aria-current", "page");
     const menuButtonBox = await page
       .getByRole("button", { name: "Cerrar menú principal" })
@@ -474,7 +477,7 @@ test.describe("contest readiness journeys", () => {
     await expect(
       page.getByRole("heading", {
         level: 1,
-        name: "Consulta salidas y ofertas relacionadas con tu FP",
+        name: "¿En qué puedes trabajar con una FP?",
       }),
     ).toBeVisible();
     await expect(
@@ -527,19 +530,23 @@ test.describe("contest readiness journeys", () => {
 
     await chooseTrainingProgram(page, "COM01M");
     await expect(
-      page.getByText("Relaciones revisadas con 7 grupos de ocupación."),
-    ).toContainText("Relaciones revisadas con 7 grupos de ocupación.");
+      page.getByText("Profesiones comprobadas para este ciclo: 7."),
+    ).toContainText("Profesiones comprobadas para este ciclo: 7.");
     await expect(
-      page.getByText("Relaciones revisadas con 7 grupos de ocupación."),
+      page.getByText("Profesiones comprobadas para este ciclo: 7."),
     ).toHaveAttribute("role", "status");
     await page.getByRole("button", { name: "Ver salidas y ofertas" }).click();
     await expect(page).toHaveURL(/\/desde-fp\/COM01M\?query=/u);
     await expect(
-      page.getByRole("heading", { name: "Actividades Comerciales" }),
+      page.getByRole("heading", {
+        name: "Actividades Comerciales",
+        exact: true,
+      }),
     ).toBeVisible();
     await expect(
       page.getByRole("heading", {
-        name: "Grupos de ocupación revisados para buscar ofertas",
+        name: "Salidas relacionadas",
+        exact: true,
       }),
     ).toBeVisible();
     await expect(page.getByRole("article")).toHaveCount(7);

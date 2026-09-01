@@ -69,6 +69,7 @@ test("the public candidate manifest retains canonical SEPE evidence", async ({
     "occupations",
     "officialOccupations",
     "openDataCatalog",
+    "offerEvidence",
     "outcomeIndicators",
     "professionalCertificates",
     "professionalProfiles",
@@ -105,22 +106,24 @@ test("print media preserves closed evidence and hides coordinate details", async
   });
   await expect(card).toBeVisible();
   await expect(
-    card.locator("details.offer-card__evidence"),
+    card.locator("details.evidence-disclosure"),
   ).not.toHaveAttribute("open");
 
   await page.emulateMedia({ media: "print" });
 
   const evidenceHeading = card
-    .locator("details.offer-card__evidence .evidence-step h4")
+    .locator("details.evidence-disclosure .offer-row__traceability h4")
     .first();
-  await expect(evidenceHeading).toHaveText("Por qué aparece");
+  await expect(evidenceHeading).toHaveText("Por qué aparece esta oferta");
   expect(
     await evidenceHeading.evaluate(
       (element) => element.getBoundingClientRect().height,
     ),
   ).toBeGreaterThan(0);
 
-  const evidenceSource = card.locator("details.offer-card__evidence a").first();
+  const evidenceSource = card
+    .locator("details.evidence-disclosure a")
+    .first();
   await expect(evidenceSource).toHaveAttribute("href");
   expect(
     await evidenceSource.evaluate(
@@ -132,7 +135,7 @@ test("print media preserves closed evidence and hides coordinate details", async
   await coordinatesPage.goto("/desde-fp/IFC03S");
   await expect(
     coordinatesPage.getByRole("heading", {
-      name: "Distribución de centros",
+      name: "Distribución geográfica de los centros",
     }),
   ).toBeVisible();
   // Install the deterministic fixture after the published coordinate snapshot

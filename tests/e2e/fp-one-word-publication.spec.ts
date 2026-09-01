@@ -17,13 +17,12 @@ const publicationReviews = JSON.parse(
     { status: string; acceptedOfferIds: string[] }
   >;
 };
-const hotOfferIds = (["cocinero", "cocineros"] as const).flatMap((form) => {
+for (const form of ["cocinero", "cocineros"] as const) {
   const decision = publicationReviews.publicationDecision[form];
   if (decision === undefined || decision.status !== "rejected") {
     throw new Error(`Expected ${form} to be rejected.`);
   }
-  return [];
-});
+}
 const encofradoresDecision =
   publicationReviews.publicationDecision.encofradores;
 if (
@@ -41,11 +40,13 @@ const currentEoc01mOfferIds = [
   "1285668256621",
   "1285671523023",
 ];
+/** Current candidate IDs accepted from the literal published requirement review. */
+const currentHot01mOfferIds = ["1285659376390", "1285671836252"];
 
 const cases = [
   {
     programKey: "HOT01M",
-    offerIds: hotOfferIds,
+    offerIds: currentHot01mOfferIds,
   },
   {
     programKey: "EOC01M",
@@ -109,7 +110,9 @@ for (const { programKey, offerIds } of cases) {
       ).toHaveCount(0);
     } else {
       await expect(
-        page.getByRole("heading", { name: "ENCOFRADORES" }),
+        page.getByRole("heading", {
+          name: programKey === "HOT01M" ? "COCINEROS, EN GENERAL" : "ENCOFRADORES",
+        }),
       ).toHaveCount(offerIds.length);
     }
 

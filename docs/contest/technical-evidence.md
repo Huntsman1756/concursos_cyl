@@ -5,9 +5,9 @@
 <!-- prettier-ignore -->
 | Campo | Valor |
 | --- | --- |
-| Commit fuente | `9bad066a1144e6055e087e2c6e64f371521bf10d` |
+| Commit fuente | `a0350acdfd6064b68dee30af80433d8564347da3` |
 | Manifest | `public/data/v1/manifest.json` |
-| SHA-256 del manifest | `d5d877f3031fe0c6a590e321bd3a8d0e8cb2cc761a2d95434534ff76216b43ce` |
+| SHA-256 del manifest | `b791a11317704600fa3a86ba935a77253e0c4ca9e0432fbe2820727eaf914a0a` |
 | Generado | 2026-08-30T12:00:00.000Z |
 | Snapshot | `20260830120000000-8c6c79fbd2a1` |
 | Estado de calidad | passed |

@@ -20,7 +20,7 @@ import {
 } from "./validateContestFreeze";
 
 const EXPANDED_SOURCE_SHA = "a0350acdfd6064b68dee30af80433d8564347da3";
-const EXPANDED_FREEZE_COMMIT_SHA = "fa9598df89f24d3fdbf728a20c81cb7a7d6cf621";
+const EXPANDED_FREEZE_COMMIT_SHA = "b29358ae6c71597509f0671b5ff9ec7ed62ef6ca";
 const CAPTURE_COUNT = 0;
 const LEGACY_SOURCE_SHA = "ff9e6197f926e462bea1a3e8ac6a57a23d3f825a";
 const CANDIDATE_4_TAG = "v2026.08.27-candidate.4";

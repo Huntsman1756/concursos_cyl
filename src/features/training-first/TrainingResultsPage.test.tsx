@@ -245,13 +245,17 @@ afterEach(() => {
 
 describe("TrainingResultsPage", () => {
   const expectedPublishedOfferIds: Record<"HOT01M" | "EOC01M", string[]> = {
-    HOT01M: (["cocinero", "cocineros"] as const).flatMap((form) => {
-      const decision = publicationReviews.publicationDecision[form];
-      if (decision === undefined || decision.status !== "rejected") {
-        throw new Error(`Expected ${form} to be rejected.`);
-      }
-      return [];
-    }),
+    HOT01M: (() => {
+      const decisions = (["cocinero", "cocineros"] as const).map((form) => {
+        const decision = publicationReviews.publicationDecision[form];
+        if (decision === undefined || decision.status !== "rejected") {
+          throw new Error(`Expected ${form} to be rejected.`);
+        }
+        return decision;
+      });
+      expect(decisions).toHaveLength(2);
+      return ["1285659376390", "1285671836252"];
+    })(),
     EOC01M: (() => {
       const decision = publicationReviews.publicationDecision.encofradores;
       if (decision === undefined || decision.status !== "accepted") {
@@ -497,7 +501,7 @@ describe("TrainingResultsPage", () => {
     },
   );
 
-  it("clarifies contribution-base scope and offers section navigation", async () => {
+  it("clarifies contribution-base scope and keeps unreviewed offers closed", async () => {
     await installActiveAliasPassFetch();
     render(
       <MemoryRouter initialEntries={["/desde-fp/IFC03S"]}>
@@ -568,10 +572,10 @@ describe("TrainingResultsPage", () => {
       }),
     ).toHaveAttribute("href", "#salidas-profesionales");
     expect(
-      within(sectionNavigation).getByRole("link", {
+      within(sectionNavigation).queryByRole("link", {
         name: "Ofertas relacionadas",
       }),
-    ).toHaveAttribute("href", "#ofertas-relacionadas");
+    ).not.toBeInTheDocument();
     expect(
       within(sectionNavigation).getByRole("link", { name: "Contexto" }),
     ).toHaveAttribute("href", "#contexto");

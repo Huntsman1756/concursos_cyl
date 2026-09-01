@@ -17,7 +17,9 @@ SALIDA CyL convierte catálogos públicos separados en una ruta de decisión: `F
 
 ## Cifras congeladas
 
-El candidato usa el snapshot `20260830120000000-8c6c79fbd2a1`, manifest SHA-256 `d5d877f3031fe0c6a590e321bd3a8d0e8cb2cc761a2d95434534ff76216b43ce` y 22 recursos. Incluye 187 programas, 229 centros, 1.294 ofertas formativas, 1.058 ofertas laborales, 264 relaciones FP–ocupación aprobadas, 35 alias y 0 programas diferidos.
+El candidato usa el snapshot `20260830120000000-8c6c79fbd2a1`, manifest SHA-256 `b791a11317704600fa3a86ba935a77253e0c4ca9e0432fbe2820727eaf914a0a` y 22 recursos. Incluye 187 programas, 229 centros, 1.294 ofertas formativas, 1.058 ofertas laborales, 264 relaciones FP–ocupación aprobadas, 35 alias y 0 programas diferidos.
+
+La cobertura contiene 113 cualificaciones distintas y 130 claves de modalidad. 138 ofertas alcanzadas pertenecen a una copia fechada de 1.058 ofertas; es una unión de IDs, no una medida de todo el mercado.
 
 El recurso `offerEvidence` contiene 1.058 registros, 196 relaciones y 138 ofertas con relación FP revisada. Las 138 ofertas son una unión de IDs de esta copia fechada, no una medida de todo el mercado. Cinco IDs adicionales respecto del matcher base están justificados por dos revisiones curadas: `PEONES FORESTALES → CNO 9543 → AGA03B` y el requisito literal `Técnico en Cocina y Gastronomía → HOT01M`.
 

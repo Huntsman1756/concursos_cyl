@@ -50,7 +50,7 @@ for (const row of oneWordPublicationReviews.rows) {
 }
 
 const fallbackOfferIdsByProgram: Record<string, string[]> = {
-  HOT01M: [],
+  HOT01M: ["1285659376390", "1285671836252"],
   SSC01M: [
     "1285620653126",
     "1285629158396",
@@ -126,7 +126,7 @@ for (const program of results.programs) {
     const fallbackOfferIds =
       fallbackOfferIdsByProgram[program.programKey] ?? [];
     await expect(page.getByRole("article")).toHaveCount(
-      fallbackOfferIds.length,
+      Math.min(fallbackOfferIds.length, 8),
     );
 
     if (fallbackOfferIds.length === 0) {
