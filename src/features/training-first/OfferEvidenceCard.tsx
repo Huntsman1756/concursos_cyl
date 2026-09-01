@@ -3,7 +3,9 @@ import type {
   TrainingProgram,
 } from "../../../data/schemas/generated";
 import { ActionPanel } from "../../components/ActionPanel";
-import { EvidenceDisclosure } from "../../components/EvidenceDisclosure";
+import { ExternalLink } from "../../components/ExternalLink";
+import { Icon } from "../../components/Icon";
+import { InfoDisclosure } from "../../components/InfoDisclosure";
 import { RequirementRow } from "../../components/RequirementRow";
 import type { ReliableAction } from "../../domain/actionEngine";
 import type {
@@ -11,7 +13,7 @@ import type {
   SessionAnswerValue,
   SessionAnswers,
 } from "../../domain/evidence";
-import type { OfferMatch } from "../../domain/offerMatching";
+import type { OfferDisplayMatch } from "../../domain/offerMatching";
 import { publishedRequirementLabel } from "../../domain/requirementPresentation";
 import type { PublishedRequirement } from "../../domain/requirements";
 import type { DecisionSession } from "../../domain/session";
@@ -19,7 +21,7 @@ import type { DecisionSession } from "../../domain/session";
 export interface OfferEvidenceCardProps {
   programs: readonly TrainingProgram[];
   offer: JobOffer;
-  match: OfferMatch;
+  match: OfferDisplayMatch;
   evidenceState: EvidenceState;
   answers: SessionAnswers;
   actions: ReliableAction[];
@@ -38,14 +40,39 @@ export interface OfferEvidenceCardProps {
   ) => void;
 }
 
-function relationshipCopy(match: OfferMatch): string {
+function shortDate(value: string): string {
+  return new Intl.DateTimeFormat("es-ES", {
+    day: "numeric",
+    month: "short",
+    year: "numeric",
+    timeZone: "UTC",
+  }).format(new Date(value));
+}
+
+function locationLabel(offer: JobOffer): string | null {
+  const location = [offer.locality, offer.province]
+    .filter((value): value is string => value !== null)
+    .filter((value, index, values) => values.indexOf(value) === index)
+    .join(", ");
+  return location.length > 0 ? location : null;
+}
+
+function relationshipCopy(match: OfferDisplayMatch): string {
   switch (match.matchRule) {
     case "title_alias_exact":
-      return "El título coincide con una ocupación relacionada y revisada.";
+      return "El título de la oferta coincide con una profesión relacionada con este ciclo.";
     case "title_alias_phrase":
-      return "El título contiene una ocupación relacionada y revisada.";
+      return "El título de la oferta menciona una profesión relacionada con este ciclo.";
     case "published_qualification_exact":
-      return "La vacante publica una titulación vinculada de forma revisada a tu ciclo.";
+      return "La oferta pide una titulación vinculada a este ciclo.";
+    case "reviewed_title_alias_exact":
+      return "El t\u00edtulo de la oferta coincide con una salida profesional publicada y revisada para este ciclo.";
+    case "reviewed_title_alias_phrase":
+      return "El t\u00edtulo de la oferta menciona una salida profesional publicada y revisada para este ciclo.";
+    case "reviewed_published_qualification_exact":
+      return "La oferta pide una titulaci\u00f3n vinculada a este ciclo y la relaci\u00f3n est\u00e1 revisada.";
+    case "reviewed_exact_program_title":
+      return "El requisito publicado coincide literalmente con el t\u00edtulo oficial de este ciclo.";
     case "human_override":
       return "La relación entre la vacante y la ocupación fue confirmada en esta sesión.";
   }
@@ -53,81 +80,141 @@ function relationshipCopy(match: OfferMatch): string {
 
 function evidenceCopy(state: EvidenceState): string {
   if (state === "declared_explicit_gap")
-    return "Has indicado que no cumples este requisito.";
+    return "Has indicado que no cumples un requisito publicado.";
   if (state === "explicit_fit")
     return "Lo que has indicado coincide con los requisitos publicados.";
-  return "Hay una relación revisada entre el ciclo y la ocupación, pero debes comprobar los requisitos.";
+  return "Comprueba los requisitos antes de presentarte.";
+}
+
+function primaryRequirement(
+  requirement: PublishedRequirement,
+): requirement is Exclude<PublishedRequirement, { category: "unclassified" }> {
+  return requirement.category !== "unclassified";
+}
+
+function TraceabilityContent({
+  offer,
+  match,
+}: Pick<OfferEvidenceCardProps, "offer" | "match">) {
+  const link =
+    "sidecarEvidence" in match
+      ? match.sidecarEvidence
+      : match.linkEvidence.payload;
+
+  return (
+    <div className="offer-row__traceability">
+      <section>
+        <h4>Por qué aparece esta oferta</h4>
+        <p>{relationshipCopy(match)}</p>
+        <blockquote>{link.sourceQuote}</blockquote>
+        <p className="offer-row__traceability-meta">
+          <ExternalLink href={link.sourceUrl}>
+            Fuente de la relación
+          </ExternalLink>
+          <span>Revisada el {shortDate(link.reviewedAt)}</span>
+          <span>Versión: {link.mappingVersion}</span>
+        </p>
+        {link.reviewNote !== undefined && <p>{link.reviewNote}</p>}
+      </section>
+
+      <section>
+        <h4>Cómo se extrajeron los requisitos</h4>
+        {match.requirements.length === 0 ? (
+          <p>
+            No hemos podido extraer requisitos concretos. Compruébalos en la
+            oferta oficial.
+          </p>
+        ) : (
+          <ul className="offer-row__traceability-list">
+            {match.requirements.map((requirement) => (
+              <li key={requirement.id}>
+                <p>
+                  <strong>
+                    {requirement.category === "unclassified"
+                      ? "Texto pendiente de clasificación"
+                      : publishedRequirementLabel(requirement)}
+                  </strong>
+                </p>
+                <blockquote>{requirement.sourceQuote}</blockquote>
+                <p className="offer-row__traceability-meta">
+                  <ExternalLink href={offer.sourceSnapshot.sourceUrl}>
+                    Fuente de la oferta
+                  </ExternalLink>
+                  <span>
+                    Publicada el{" "}
+                    {shortDate(offer.sourceSnapshot.sourceUpdatedAt)}
+                  </span>
+                  <span>
+                    Regla: {requirement.parserRule} · v
+                    {requirement.parserVersion}
+                  </span>
+                </p>
+              </li>
+            ))}
+          </ul>
+        )}
+      </section>
+    </div>
+  );
 }
 
 export function OfferEvidenceCard(props: OfferEvidenceCardProps) {
   const headingId = `offer-${props.offer.id.replace(/[^a-z0-9]+/giu, "-")}`;
-  const link = props.match.linkEvidence.payload;
+  const location = locationLabel(props.offer);
+  const primaryRequirements =
+    props.match.requirements.filter(primaryRequirement);
+  const pendingRequirementCount =
+    props.match.requirements.length - primaryRequirements.length;
+  const secondaryActions = props.actions.filter(
+    (action) =>
+      action.actionType !== "open_original_offer" &&
+      action.actionType !== "verify_offer_requirements",
+  );
+  const hasSecondaryActions =
+    secondaryActions.length > 0 || props.checklist.length > 0;
   return (
-    <article className="offer-card" aria-labelledby={headingId}>
-      <header className="offer-card__header">
-        <p>
-          {[props.offer.locality, props.offer.province]
-            .filter(Boolean)
-            .join(" · ")}
-        </p>
-        <h3 id={headingId}>{props.offer.title}</h3>
-        <p>{props.offer.sourceName}</p>
-      </header>
-      <details className="offer-card__evidence">
-        <summary>Ver evidencia y requisitos</summary>
-        <div className="evidence-step">
-          <h4>Por qué aparece</h4>
-          <p>{relationshipCopy(props.match)}</p>
-          <EvidenceDisclosure
-            quote={link.sourceQuote}
-            sourceUrl={link.sourceUrl}
-            reviewedAt={link.reviewedAt}
-            mappingVersion={link.mappingVersion}
-          />
+    <article className="offer-row" aria-labelledby={headingId}>
+      <div className="offer-row__main">
+        <div className="offer-row__heading">
+          <h3 id={headingId}>{props.offer.title}</h3>
+          <p className="offer-row__meta">
+            {location !== null ? `${location} · ` : ""}
+            {props.offer.sourceName} · publicada{" "}
+            <time dateTime={props.offer.publishedAt}>
+              {shortDate(props.offer.publishedAt)}
+            </time>
+          </p>
         </div>
-        <div className="evidence-step">
-          <h4>Qué publica la vacante</h4>
-          {props.match.requirements.length === 0 ? (
-            <div className="requirement-state requirement-state--unpublished">
-              <strong>Requisito no publicado</strong>
-              <p>
-                No hemos podido extraer requisitos concretos del texto
-                publicado. Compruébalos en la oferta original.
-              </p>
-            </div>
-          ) : (
-            <ul className="requirement-list">
-              {props.match.requirements.map((requirement) => (
-                <li className="requirement-row" key={requirement.id}>
-                  <p className="requirement-row__label">
-                    {publishedRequirementLabel(requirement)}
-                  </p>
-                  <EvidenceDisclosure
-                    quote={requirement.sourceQuote}
-                    sourceUrl={props.offer.sourceSnapshot.sourceUrl}
-                    sourceLabel="Abrir fuente de la vacante"
-                    sourceDate={props.offer.sourceSnapshot.sourceUpdatedAt}
-                    parserRule={requirement.parserRule}
-                    parserVersion={requirement.parserVersion}
-                  />
-                </li>
-              ))}
-            </ul>
-          )}
-        </div>
-        <div className="evidence-step">
-          <h4>Tu comprobación</h4>
-          <div
-            className={`evidence-state${props.evidenceState === "declared_explicit_gap" ? " evidence-state--gap" : ""}`}
+        <div className="offer-row__actions">
+          <ExternalLink
+            className="offer-row__cta"
+            href={props.offer.originalUrl}
           >
-            {props.evidenceState === "declared_explicit_gap" && (
-              <strong>Requisito no cumplido</strong>
-            )}
-            <p aria-live="polite">{evidenceCopy(props.evidenceState)}</p>
-          </div>
-          {props.match.requirements.length > 0 && (
+            Ver oferta oficial
+            <Icon name="external-link" size={16} />
+          </ExternalLink>
+          <InfoDisclosure
+            label={`De dónde sale esta información (${props.offer.title})`}
+          >
+            <TraceabilityContent offer={props.offer} match={props.match} />
+          </InfoDisclosure>
+        </div>
+      </div>
+
+      <details className="offer-row__more">
+        <summary>
+          Requisitos: ¿los cumples?
+          {pendingRequirementCount > 0 && (
+            <span className="offer-row__pending">
+              {" "}
+              · {pendingRequirementCount} sin clasificar
+            </span>
+          )}
+        </summary>
+        {primaryRequirements.length > 0 ? (
+          <>
             <ul className="requirement-list">
-              {props.match.requirements.map((requirement) => (
+              {primaryRequirements.map((requirement) => (
                 <RequirementRow
                   key={requirement.id}
                   requirement={requirement}
@@ -136,22 +223,35 @@ export function OfferEvidenceCard(props: OfferEvidenceCardProps) {
                 />
               ))}
             </ul>
-          )}
-        </div>
+            <p
+              className={`offer-row__fit-status${props.evidenceState === "declared_explicit_gap" ? " offer-row__fit-status--gap" : ""}`}
+              aria-live="polite"
+            >
+              {evidenceCopy(props.evidenceState)}
+            </p>
+          </>
+        ) : (
+          <p>
+            Esta oferta no publica requisitos que podamos resumir todavía.
+            Revisa el texto completo en la oferta oficial.
+          </p>
+        )}
+        {hasSecondaryActions && (
+          <div className="offer-row__secondary-actions">
+            <ActionPanel
+              programs={props.programs}
+              actions={secondaryActions}
+              checklist={props.checklist}
+              onAddChecklist={props.onAddChecklist}
+              onRemoveChecklist={props.onRemoveChecklist}
+              onExploreUnpublishedRequirement={
+                props.onExploreUnpublishedRequirement
+              }
+              hideOfferAccessActions
+            />
+          </div>
+        )}
       </details>
-      <div className="evidence-step">
-        <h4>Siguiente acción</h4>
-        <ActionPanel
-          programs={props.programs}
-          actions={props.actions}
-          checklist={props.checklist}
-          onAddChecklist={props.onAddChecklist}
-          onRemoveChecklist={props.onRemoveChecklist}
-          onExploreUnpublishedRequirement={
-            props.onExploreUnpublishedRequirement
-          }
-        />
-      </div>
     </article>
   );
 }

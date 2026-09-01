@@ -51,14 +51,19 @@ const TrainingResultsPage = lazy(() =>
     default: module.TrainingResultsPage,
   })),
 );
-const TrainingRoutePage = lazy(() =>
-  import("../features/training-first/TrainingRoutePage").then((module) => ({
-    default: module.TrainingRoutePage,
-  })),
-);
 const TrainingSearchPage = lazy(() =>
   import("../features/training-first/TrainingSearchPage").then((module) => ({
     default: module.TrainingSearchPage,
+  })),
+);
+const OfferExplorerPage = lazy(() =>
+  import("../features/offer-first/OfferExplorerPage").then((module) => ({
+    default: module.OfferExplorerPage,
+  })),
+);
+const CentersExplorerPage = lazy(() =>
+  import("../features/centers/CentersExplorerPage").then((module) => ({
+    default: module.CentersExplorerPage,
   })),
 );
 
@@ -96,13 +101,30 @@ export function AppRoutes() {
               element={<TrainingResultsPage />}
             />
             <Route
-              path="/formacion/:programKey"
-              element={<TrainingRoutePage />}
+              path="/desde-fp/:programKey/ofertas"
+              element={<OfferExplorerPage scope="program" />}
             />
+            <Route
+              path="/formacion/:programKey"
+              element={<CentersExplorerPage />}
+            />
+            <Route
+              path="/donde-estudiar/:programKey"
+              element={<CentersExplorerPage />}
+            />
+            <Route path="/donde-estudiar" element={<CentersExplorerPage />} />
             <Route path="/desde-ocupacion" element={<OccupationSearchPage />} />
             <Route
               path="/desde-ocupacion/:occupationId"
               element={<OccupationResultsPage />}
+            />
+            <Route
+              path="/desde-ocupacion/:occupationId/ofertas"
+              element={<OfferExplorerPage scope="occupation" />}
+            />
+            <Route
+              path="/desde-oferta"
+              element={<OfferExplorerPage scope="global" />}
             />
             <Route path="/comparar" element={<CompareStudiesPage />} />
             <Route path="/recursos" element={<EcylResourcesPage />} />

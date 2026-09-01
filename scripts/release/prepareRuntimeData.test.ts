@@ -133,9 +133,9 @@ describe("prepareRuntimeData", () => {
 
     expect(result.snapshotIds).toEqual([active]);
     expect(await readdir(join(target, "v1", "snapshots"))).toEqual([active]);
-    expect(
-      JSON.parse(await readFile(join(target, "v1", "programs.json"), "utf8")),
-    ).toEqual([{ id: "flat" }]);
+    await expect(
+      readFile(join(target, "v1", "programs.json"), "utf8"),
+    ).rejects.toMatchObject({ code: "ENOENT" });
     expect(await readFile(join(target, "v1", "README.md"), "utf8")).toBe(
       "contract\n",
     );
@@ -251,10 +251,9 @@ describe("prepareRuntimeData", () => {
     });
 
     const before = await prepareRuntimeData({ root, source, target });
-    const beforeBytes = await readFile(
-      join(target, "v1", "programs.json"),
-      "utf8",
-    );
+    await expect(
+      readFile(join(target, "v1", "programs.json"), "utf8"),
+    ).rejects.toMatchObject({ code: "ENOENT" });
     await writeJson(join(root, "docs", "contest", "release-evidence.json"), {
       manifest: { snapshotId: evidenceB },
     });
@@ -262,9 +261,9 @@ describe("prepareRuntimeData", () => {
 
     expect(before.snapshotIds).toEqual([active, retained]);
     expect(after.snapshotIds).toEqual(before.snapshotIds);
-    expect(await readFile(join(target, "v1", "programs.json"), "utf8")).toBe(
-      beforeBytes,
-    );
+    await expect(
+      readFile(join(target, "v1", "programs.json"), "utf8"),
+    ).rejects.toMatchObject({ code: "ENOENT" });
   });
 
   it("rejects a configured snapshot directory that is unavailable", async () => {
@@ -514,7 +513,9 @@ describe("prepareRuntimeData", () => {
     expect(
       shouldCopyRuntimeCandidate("v1\\snapshots\\active\\programs.json"),
     ).toBe(false);
-    expect(shouldCopyRuntimeCandidate("v1\\programs.json")).toBe(true);
+    expect(shouldCopyRuntimeCandidate("v1\\programs.json")).toBe(false);
+    expect(shouldCopyRuntimeCandidate("v1/job-offers.json")).toBe(false);
+    expect(shouldCopyRuntimeCandidate("v1/manifest.json")).toBe(true);
   });
 
   it("resolves a multi-segment target after a physical source alias", async () => {

@@ -12,13 +12,23 @@ import { Link, MemoryRouter, useLocation, useNavigate } from "react-router-dom";
 import { App } from "./App";
 import { AppShell } from "./AppShell";
 
+const desktopNavigationLabels = [
+  "Explorar",
+  "Ofertas",
+  "Dónde estudiar",
+  "Datos y método",
+];
+
 const primaryNavigationLabels = [
-  "Inicio",
-  "Desde FP",
-  "Desde ocupación",
-  "Comparar estudios",
-  "Más formación",
-  "Metodología",
+  ...desktopNavigationLabels,
+  "Explorar FP",
+  "Buscar profesión",
+  "Comparar ingresos",
+  "Formación complementaria",
+  "Datos abiertos",
+  "Método y límites",
+  "Para organizaciones",
+  "Accesibilidad",
 ];
 
 function getMobileNavigation() {
@@ -58,21 +68,29 @@ function NavigationProbe() {
 }
 
 describe("App", () => {
-  it("presents both approved starting-point choices", () => {
+  it("presents the three starting-point journeys", () => {
     render(
       <MemoryRouter>
         <App />
       </MemoryRouter>,
     );
     expect(
-      screen.getByRole("region", { name: "¿Cuál es tu punto de partida?" }),
+      screen.getByRole("heading", {
+        level: 1,
+        name: "Explora formación, profesiones y oportunidades en Castilla y León.",
+      }),
     ).toBeVisible();
     expect(
-      screen.getByRole("radio", { name: /Tengo un título de FP/u }),
-    ).toBeChecked();
+      screen.getByRole("button", {
+        name: /Tengo una FP y quiero saber mis salidas/u,
+      }),
+    ).toHaveAttribute("aria-expanded", "true");
     expect(
-      screen.getByRole("radio", { name: /Tengo un empleo en mente/u }),
-    ).not.toBeChecked();
+      screen.getByRole("button", { name: /Quiero dedicarme a una profesión/u }),
+    ).toHaveAttribute("aria-expanded", "false");
+    expect(
+      screen.getByRole("button", { name: /He visto una oferta/u }),
+    ).toHaveAttribute("aria-expanded", "false");
   });
 
   it("uses the compact product shell and identifies the project independently", () => {
@@ -87,70 +105,46 @@ describe("App", () => {
 
     expect(screen.getByRole("link", { name: "SALIDA CyL" })).toBeVisible();
     expect(screen.getByText("FP y empleo con datos públicos")).toBeVisible();
+    const principalNavigation = screen.getByRole("navigation", {
+      name: "Principal",
+    });
     expect(
-      within(
-        screen.getByRole("navigation", { name: "Principal" }),
-      ).getAllByRole("link"),
-    ).toHaveLength(6);
-    expect(screen.getByRole("link", { name: "Inicio" })).toHaveAttribute(
-      "aria-current",
-      "page",
-    );
-    expect(
-      screen.getByRole("link", { name: "Comparar estudios" }),
-    ).toHaveAttribute("href", "/comparar");
-    expect(screen.getByRole("link", { name: "Más formación" })).toHaveAttribute(
-      "href",
-      "/recursos",
-    );
-    expect(
-      within(screen.getByRole("navigation", { name: "Principal" })).getByRole(
-        "link",
-        { name: "Metodología" },
+      [...principalNavigation.querySelectorAll(":scope > ul > li > a")].map(
+        (link) => link.textContent,
       ),
-    ).toHaveAttribute("href", "/metodologia");
+    ).toEqual(desktopNavigationLabels);
+    expect(
+      within(principalNavigation).getByRole("link", { name: "Explorar" }),
+    ).toHaveAttribute("aria-current", "page");
+    expect(within(principalNavigation).getByText("Más")).toBeVisible();
     expect(
       screen.queryByRole("link", { name: "Datos verificables" }),
     ).not.toBeInTheDocument();
-    expect(
-      screen.getByRole("link", { name: "Datos abiertos" }),
-    ).toHaveAttribute("href", "/datos-abiertos");
-    expect(
-      screen.getByRole("link", { name: "Para organizaciones" }),
-    ).toHaveAttribute("href", "/para-organizaciones");
-    expect(screen.getByRole("link", { name: "Accesibilidad" })).toHaveAttribute(
-      "href",
-      "/accesibilidad",
-    );
     expect(
       screen.getByRole("main", { name: "Contenido principal" }),
     ).toBeVisible();
     expect(screen.getByRole("contentinfo")).toHaveTextContent(
       /Proyecto independiente basado en datos públicos/i,
     );
-    expect(
-      screen.getByText(
-        "Desarrollado para el X Concurso de Datos Abiertos de Castilla y León en la categoría Productos y Servicios.",
-      ),
-    ).toBeVisible();
   });
 
   it.each([
     ["/", "Inicio · SALIDA CyL"],
-    ["/desde-fp", "Desde FP · SALIDA CyL"],
-    ["/desde-fp/IFC03S", "Resultados desde FP · SALIDA CyL"],
+    ["/desde-fp", "Explorar FP · SALIDA CyL"],
+    ["/desde-fp/IFC03S", "Ficha de FP · SALIDA CyL"],
     ["/formacion/IFC03S", "Dónde estudiar · SALIDA CyL"],
-    ["/desde-ocupacion", "Desde ocupación · SALIDA CyL"],
+    ["/desde-oferta", "Ofertas de empleo · SALIDA CyL"],
+    ["/desde-ocupacion", "Buscar ocupación · SALIDA CyL"],
     [
       "/desde-ocupacion/occupation%3Acno11%3A2713",
-      "Resultados desde ocupación · SALIDA CyL",
+      "Ficha de profesión · SALIDA CyL",
     ],
-    ["/comparar", "Comparar estudios · SALIDA CyL"],
-    ["/recursos", "Más formación · SALIDA CyL"],
+    ["/comparar", "Comparar ingresos · SALIDA CyL"],
+    ["/recursos", "Formación complementaria · SALIDA CyL"],
     ["/datos-abiertos", "Datos abiertos · SALIDA CyL"],
     ["/accesibilidad", "Accesibilidad · SALIDA CyL"],
     ["/para-organizaciones", "Para organizaciones · SALIDA CyL"],
-    ["/metodologia", "Metodología y fuentes · SALIDA CyL"],
+    ["/metodologia", "Método y límites · SALIDA CyL"],
     ["/no-existe", "Página no encontrada · SALIDA CyL"],
   ])("sets a route-specific document title for %s", (pathname, title) => {
     cleanup();
@@ -182,7 +176,7 @@ describe("App", () => {
       }),
     );
 
-    expect(document.title).toBe("Metodología y fuentes · SALIDA CyL");
+    expect(document.title).toBe("Método y límites · SALIDA CyL");
   });
 
   it("announces static routes and repeats the announcement after returning", async () => {
@@ -277,7 +271,7 @@ describe("App", () => {
     ).toEqual(primaryNavigationLabels);
   });
 
-  it("opens the six-link mobile navigation and restores focus after Escape", async () => {
+  it("opens the mobile navigation and restores focus after Escape", async () => {
     cleanup();
     const user = userEvent.setup();
     render(
@@ -306,7 +300,7 @@ describe("App", () => {
         .map((link) => link.textContent),
     ).toEqual(primaryNavigationLabels);
     expect(
-      within(mobileNavigation).getByRole("link", { name: "Inicio" }),
+      within(mobileNavigation).getByRole("link", { name: "Explorar" }),
     ).toHaveAttribute("aria-current", "page");
 
     await user.keyboard("{Escape}");
@@ -338,7 +332,7 @@ describe("App", () => {
     await user.click(
       within(
         screen.getByRole("navigation", { name: "Principal móvil" }),
-      ).getByRole("link", { name: "Metodología" }),
+      ).getByRole("link", { name: "Método y límites" }),
     );
 
     expect(focusSpy).not.toHaveBeenCalled();

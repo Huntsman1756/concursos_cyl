@@ -1,13 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
+import type { FormEvent, JSX } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { Icon } from "../../components/Icon";
-import {
-  loadAuditedRelationships,
-  loadFoundationResourceSubset,
-  loadManifest,
-  loadMappingCoverage,
-  loadOfficialOccupations,
-} from "../../data/generatedDataClient";
+
 import type {
   MappingCoverage,
   Occupation,
@@ -17,14 +11,25 @@ import type {
   SourceSnapshot,
   TrainingProgram,
 } from "../../../data/schemas/generated";
-import { loadApprovedMappings } from "../../domain/occupation";
 import {
-  featuredTrainingCoverage,
-  trainingLevelLabel,
-} from "../../domain/trainingPresentation";
+  loadAuditedRelationships,
+  loadFoundationResourceSubset,
+  loadManifest,
+  loadMappingCoverage,
+} from "../../data/generatedDataClient";
 import { useRouteReady } from "../../app/RouteReadyContext";
+import {
+  globalOffersPath,
+  occupationDetailPath,
+  trainingDetailPath,
+} from "../../app/routePaths";
+import { loadApprovedMappings } from "../../domain/occupation";
+import { featuredTrainingCoverage } from "../../domain/trainingPresentation";
 import { OccupationCombobox } from "../occupation-first/OccupationCombobox";
 import { TrainingCombobox } from "../training-first/TrainingCombobox";
+import "./home.css";
+
+type HomeSearchMode = "training" | "occupation" | "offer";
 
 type FreshnessState =
   | { status: "loading" }
@@ -35,15 +40,8 @@ type FreshnessState =
       ariaLabel: string;
       date: string;
       dateTime: string;
+      dateKind: "source" | "snapshot";
       stale: boolean;
-    };
-
-type CoverageState =
-  | { status: "loading" }
-  | { status: "unavailable" }
-  | {
-      status: "ready";
-      programs: Extract<MappingCoverage, { scope: "program" }>[];
     };
 
 type SearchDataState =
@@ -51,45 +49,88 @@ type SearchDataState =
   | { status: "unavailable" }
   | {
       status: "ready";
-      aliases: OccupationAlias[];
-      occupations: Occupation[];
       programs: TrainingProgram[];
+      occupations: Occupation[];
+      aliases: OccupationAlias[];
     };
 
-type SearchMode = "fp" | "occupation";
+interface CatalogCounts {
+  programs: number;
+  offers: number;
+}
 
-const SEARCH_MODE_STORAGE_KEY = "salida-cyl:home-search-mode";
+const TASKS: Array<{
+  mode: HomeSearchMode;
+  number: string;
+  title: string;
+  description: string;
+  label: string;
+  action: string;
+}> = [
+  {
+    mode: "training",
+    number: "01",
+    title: "Tengo una FP y quiero saber mis salidas",
+    description:
+      "Busca el ciclo para ver profesiones, ofertas y centros relacionados.",
+    label: "Busca tu ciclo",
+    action: "Buscar ciclo",
+  },
+  {
+    mode: "occupation",
+    number: "02",
+    title: "Quiero dedicarme a una profesión",
+    description:
+      "Busca una profesión y comprueba qué formación y ofertas aparecen.",
+    label: "Busca una profesión",
+    action: "Buscar profesión",
+  },
+  {
+    mode: "offer",
+    number: "03",
+    title: "He visto una oferta y quiero entenderla",
+    description: "Busca por puesto, localidad o código de ocupación.",
+    label: "Busca una oferta",
+    action: "Buscar oferta",
+  },
+];
 
-function initialSearchMode(): SearchMode {
-  try {
-    const savedMode = window.localStorage.getItem(SEARCH_MODE_STORAGE_KEY);
-    return savedMode === "fp" || savedMode === "occupation" ? savedMode : "fp";
-  } catch {
-    return "fp";
-  }
+function formatDate(value: string): string {
+  return new Intl.DateTimeFormat("es-ES", {
+    day: "numeric",
+    month: "short",
+    year: "numeric",
+    timeZone: "UTC",
+  }).format(new Date(value));
 }
 
 export function HomePage() {
   const navigate = useNavigate();
-  const [freshness, setFreshness] = useState<FreshnessState>({
-    status: "loading",
-  });
-  const [coverage, setCoverage] = useState<CoverageState>({
-    status: "loading",
-  });
-  const [searchData, setSearchData] = useState<SearchDataState>({
-    status: "loading",
-  });
-  const [searchMode, setSearchMode] = useState<SearchMode>(initialSearchMode);
-  const [selectedProgram, setSelectedProgram] =
+  const [searchMode, setSearchMode] = useState<HomeSearchMode>("training");
+  const [confirmedProgram, setConfirmedProgram] =
     useState<TrainingProgram | null>(null);
   const [confirmedOccupation, setConfirmedOccupation] =
     useState<Occupation | null>(null);
-
-  useRouteReady(searchData.status === "ready");
+  const [offerQuery, setOfferQuery] = useState("");
+  const [formError, setFormError] = useState("");
+  const [freshness, setFreshness] = useState<FreshnessState>({
+    status: "loading",
+  });
+  const [catalogCounts, setCatalogCounts] = useState<CatalogCounts | null>(
+    null,
+  );
+  const [featuredProgram, setFeaturedProgram] = useState<{
+    programKey: string;
+    programTitle: string;
+  } | null>(null);
+  const [searchData, setSearchData] = useState<SearchDataState>({
+    status: "loading",
+  });
   const manifestRef = useRef<Awaited<ReturnType<typeof loadManifest>> | null>(
     null,
   );
+
+  useRouteReady(searchData.status !== "loading");
 
   useEffect(() => {
     const controller = new AbortController();
@@ -121,6 +162,7 @@ export function HomePage() {
         const dateTime =
           freshnessSnapshot.sourceUpdatedAt ??
           freshnessSnapshot.snapshotFetchedAt;
+
         setFreshness({
           status: "ready",
           sourceLabel,
@@ -128,69 +170,53 @@ export function HomePage() {
             mappingSnapshot === undefined
               ? "Fecha de ofertas laborales"
               : "Fecha de relaciones revisadas",
-          date: new Intl.DateTimeFormat("es-ES", {
-            day: "2-digit",
-            month: "2-digit",
-            year: "numeric",
-            timeZone: "UTC",
-          }).format(new Date(dateTime)),
+          date: formatDate(dateTime),
           dateTime,
+          dateKind:
+            freshnessSnapshot.sourceUpdatedAt === null ? "snapshot" : "source",
           stale:
             manifest.qualityStatus === "stale" ||
             freshnessSnapshot.qualityStatus === "stale",
         });
 
-        void loadMappingCoverage(manifest, options)
-          .then((rows) => {
-            if (signal.aborted) return;
-            setCoverage({
-              status: "ready",
-              programs: rows.filter(
-                (row): row is Extract<MappingCoverage, { scope: "program" }> =>
-                  row.scope === "program" && row.coverageStatus === "reviewed",
-              ),
-            });
-          })
-          .catch(() => {
-            if (signal.aborted) return;
-            setCoverage({ status: "unavailable" });
-          });
-
-        const foundation = await loadFoundationResourceSubset(
-          manifest,
-          ["programs"],
-          options,
-        );
+        const [foundation, coverage] = await Promise.all([
+          loadFoundationResourceSubset(manifest, ["programs"], options),
+          mappingSnapshot === undefined
+            ? Promise.resolve<MappingCoverage[]>([])
+            : loadMappingCoverage(manifest, options),
+        ]);
         if (signal.aborted) return null;
-        const programs = [...foundation.programs].sort(
-          (left, right) =>
-            left.programTitle.localeCompare(right.programTitle, "es") ||
-            left.programKey.localeCompare(right.programKey),
-        );
-        if (searchMode === "fp") {
-          return { aliases: [], occupations: [], programs };
+
+        setCatalogCounts({
+          programs: foundation.programs.length,
+          offers: manifest.resourceSnapshots.jobOffers.recordCount,
+        });
+
+        if (mappingSnapshot !== undefined) {
+          const featured = featuredTrainingCoverage(
+            coverage.filter(
+              (row): row is Extract<MappingCoverage, { scope: "program" }> =>
+                row.scope === "program" && row.coverageStatus === "reviewed",
+            ),
+          );
+          const first = featured[0];
+          if (first !== undefined) {
+            setFeaturedProgram({
+              programKey: first.programKey,
+              programTitle: first.programTitle,
+            });
+          }
         }
 
-        const [relationships, officialOccupations] = await Promise.all([
-          loadAuditedRelationships(manifest, options),
-          loadOfficialOccupations(manifest, options),
-        ]);
+        const relationships = await loadAuditedRelationships(manifest, options);
+        if (signal.aborted) return null;
         const approved = loadApprovedMappings(relationships);
-        const reviewedById = new Map(
-          approved.occupations.map((occupation) => [
-            occupation.occupationId,
-            occupation,
-          ]),
-        );
         return {
+          programs: [...foundation.programs].sort((left, right) =>
+            left.programTitle.localeCompare(right.programTitle, "es"),
+          ),
+          occupations: approved.occupations,
           aliases: approved.aliases,
-          occupations: officialOccupations.map((occupation) => ({
-            ...occupation,
-            confirmationLabel:
-              reviewedById.get(occupation.occupationId)?.confirmationLabel ??
-              occupation.confirmationLabel,
-          })),
-          programs,
         };
       })
       .then((resources) => {
@@ -202,368 +228,274 @@ export function HomePage() {
         if (signal.aborted) return;
         if (manifestRef.current === null) {
           setFreshness({ status: "unavailable" });
-          setCoverage({ status: "unavailable" });
         }
         setSearchData({ status: "unavailable" });
       });
 
     return () => controller.abort();
-  }, [searchMode]);
+  }, []);
 
-  const featuredPrograms = useMemo(
-    () =>
-      coverage.status === "ready"
-        ? featuredTrainingCoverage(coverage.programs)
-        : [],
-    [coverage],
-  );
-  const programsByKey = useMemo(
-    () =>
-      new Map(
-        searchData.status === "ready"
-          ? searchData.programs.map((program) => [program.programKey, program])
-          : [],
-      ),
-    [searchData],
-  );
+  const featuredExample = useMemo(() => {
+    if (featuredProgram === null || searchData.status !== "ready") return null;
+    return searchData.programs.some(
+      (program) => program.programKey === featuredProgram.programKey,
+    )
+      ? featuredProgram
+      : null;
+  }, [featuredProgram, searchData]);
 
-  const selectSearchMode = (mode: SearchMode) => {
-    setSearchData({ status: "loading" });
+  function chooseSearchMode(mode: HomeSearchMode): void {
     setSearchMode(mode);
-    try {
-      window.localStorage.setItem(SEARCH_MODE_STORAGE_KEY, mode);
-    } catch {
-      // The choice still works for this visit when storage is unavailable.
+    setConfirmedProgram(null);
+    setConfirmedOccupation(null);
+    setOfferQuery("");
+    setFormError("");
+  }
+
+  function submitSearch(
+    mode: HomeSearchMode,
+    event: FormEvent<HTMLFormElement>,
+  ): void {
+    event.preventDefault();
+    setFormError("");
+
+    if (mode === "training") {
+      if (confirmedProgram === null) {
+        setFormError("Selecciona un ciclo oficial para continuar.");
+        return;
+      }
+      navigate(
+        trainingDetailPath(
+          confirmedProgram.programKey,
+          confirmedProgram.programTitle,
+        ),
+      );
+      return;
     }
-  };
+    if (mode === "occupation") {
+      if (confirmedOccupation === null) {
+        setFormError("Selecciona una profesión oficial para continuar.");
+        return;
+      }
+      navigate(
+        occupationDetailPath(
+          confirmedOccupation.occupationId,
+          confirmedOccupation.preferredLabel,
+        ),
+      );
+      return;
+    }
+    const query = offerQuery.trim();
+    if (query === "") {
+      setFormError("Escribe algo para buscar entre las ofertas.");
+      return;
+    }
+    navigate(globalOffersPath({ query }));
+  }
+
+  function renderTaskForm(task: (typeof TASKS)[number]): JSX.Element | null {
+    if (searchMode !== task.mode) return null;
+
+    return (
+      <form
+        className="inline-task-form"
+        onSubmit={(event) => submitSearch(task.mode, event)}
+        aria-label={task.label}
+      >
+        {task.mode === "training" && searchData.status === "ready" && (
+          <TrainingCombobox
+            id="home-training-search"
+            programs={searchData.programs}
+            confirmedProgram={confirmedProgram}
+            onConfirm={(program) => {
+              setConfirmedProgram(program);
+              setFormError("");
+            }}
+            onClear={() => setConfirmedProgram(null)}
+            label={task.label}
+            hint="Selecciona un ciclo oficial por nombre, familia, nivel o código."
+          />
+        )}
+        {task.mode === "occupation" && searchData.status === "ready" && (
+          <OccupationCombobox
+            occupations={searchData.occupations}
+            aliases={searchData.aliases}
+            confirmedOccupation={confirmedOccupation}
+            onConfirm={(occupation) => {
+              setConfirmedOccupation(occupation);
+              setFormError("");
+            }}
+            onClear={() => setConfirmedOccupation(null)}
+            label={task.label}
+            hint="Selecciona una ocupación oficial para ver sus relaciones comprobadas."
+          />
+        )}
+        {task.mode === "offer" && (
+          <div className="inline-task-form__field">
+            <label htmlFor="home-offer-search">{task.label}</label>
+            <input
+              id="home-offer-search"
+              name="query"
+              type="search"
+              value={offerQuery}
+              onChange={(event) => {
+                setOfferQuery(event.target.value);
+                setFormError("");
+              }}
+              placeholder="Ej.: puesto, localidad o código"
+            />
+          </div>
+        )}
+        {(task.mode === "training" || task.mode === "occupation") &&
+          searchData.status === "loading" && (
+            <p className="home-search__status" role="status" aria-live="polite">
+              Cargando el catálogo oficial…
+            </p>
+          )}
+        {(task.mode === "training" || task.mode === "occupation") &&
+          searchData.status === "unavailable" && (
+            <p className="home-search__status" role="alert">
+              El buscador no está disponible ahora mismo.{" "}
+              <Link
+                to={task.mode === "training" ? "/desde-fp" : "/desde-ocupacion"}
+              >
+                Abrir buscador completo
+              </Link>
+            </p>
+          )}
+        <button className="inline-task-form__submit" type="submit">
+          {task.action} <span aria-hidden="true">→</span>
+        </button>
+        <p className="form-message" role="status" aria-live="polite">
+          {formError}
+        </p>
+        {task.mode === "training" && featuredExample !== null && (
+          <p className="example-line">
+            <span>Ejemplo:</span>{" "}
+            <Link to={trainingDetailPath(featuredExample.programKey)}>
+              {featuredExample.programTitle}
+            </Link>
+          </p>
+        )}
+      </form>
+    );
+  }
 
   return (
     <div className="home-page" aria-labelledby="home-heading">
       <section className="home-hero" aria-labelledby="home-heading">
-        <div className="home-hero__art" aria-hidden="true" />
-        <div className="home-hero__copy">
-          <h1 id="home-heading">
-            De tu <span>FP</span> a tu
-            <br />
-            <span>siguiente paso</span>
-          </h1>
-          <p>
-            Conecta tu FP con ocupaciones y datos públicos, sin promesas de
-            empleo.
-          </p>
-        </div>
-
-        <div className="home-workspace">
-          <section
-            className="search-entry"
-            aria-labelledby="search-entry-title"
-          >
-            <fieldset
-              className="search-entry__modes"
-              onKeyDown={(event) => {
-                if (
-                  !["ArrowLeft", "ArrowRight", "ArrowUp", "ArrowDown"].includes(
-                    event.key,
-                  )
-                ) {
-                  return;
-                }
-                event.preventDefault();
-                const nextMode =
-                  event.key === "ArrowLeft" || event.key === "ArrowUp"
-                    ? "fp"
-                    : "occupation";
-                selectSearchMode(nextMode);
-                event.currentTarget
-                  .querySelector<HTMLInputElement>(`input[value="${nextMode}"]`)
-                  ?.focus();
-              }}
-            >
-              <legend id="search-entry-title">
-                ¿Cuál es tu punto de partida?
-              </legend>
-              <div className="search-entry__mode-options">
-                <label
-                  className="search-entry__mode"
-                  data-selected={searchMode === "fp"}
-                >
-                  <input
-                    type="radio"
-                    name="home-search-mode"
-                    value="fp"
-                    checked={searchMode === "fp"}
-                    onChange={() => selectSearchMode("fp")}
-                  />
-                  <span>
-                    <strong>Tengo un título de FP</strong>
-                    <small>
-                      Dime en qué puedo trabajar con lo que ya he estudiado.
-                    </small>
-                  </span>
-                </label>
-                <label
-                  className="search-entry__mode"
-                  data-selected={searchMode === "occupation"}
-                >
-                  <input
-                    type="radio"
-                    name="home-search-mode"
-                    value="occupation"
-                    checked={searchMode === "occupation"}
-                    onChange={() => selectSearchMode("occupation")}
-                  />
-                  <span>
-                    <strong>Tengo un empleo en mente</strong>
-                    <small>Dime qué FP me lleva hasta esa ocupación.</small>
-                  </span>
-                </label>
-              </div>
-            </fieldset>
-
-            {searchMode === "fp" ? (
-              <form
-                className="search-entry__panel"
-                onSubmit={(event) => {
-                  event.preventDefault();
-                  if (selectedProgram !== null) {
-                    navigate(`/desde-fp/${selectedProgram.programKey}`);
-                  }
-                }}
-              >
-                <p className="search-entry__direction">
-                  <span>Tu título de FP</span>
-                  <Icon name="arrow-right" size={18} />
-                  <strong>Ocupaciones con evidencia</strong>
-                </p>
-                {searchData.status === "ready" ? (
-                  <>
-                    <TrainingCombobox
-                      id="home-program"
-                      programs={searchData.programs}
-                      confirmedProgram={selectedProgram}
-                      onConfirm={setSelectedProgram}
-                      onClear={() => setSelectedProgram(null)}
-                      label="Título de Formación Profesional"
-                      hint="Escribe para buscar un ciclo oficial y confírmalo."
-                    />
-                    {selectedProgram === null ? (
-                      <p className="search-entry__hint" id="program-required">
-                        Elige un título.
-                      </p>
-                    ) : null}
-                    <button
-                      className="search-entry__cta"
-                      type="submit"
-                      disabled={selectedProgram === null}
-                      aria-describedby={
-                        selectedProgram === null
-                          ? "program-required"
-                          : undefined
-                      }
-                    >
-                      Ver las salidas de este título
-                    </button>
-                  </>
-                ) : (
-                  <>
-                    <p className="form-message" role="status">
-                      {searchData.status === "loading"
-                        ? "Cargando el catálogo oficial de FP…"
-                        : "El selector no está disponible ahora mismo."}
-                    </p>
-                    {searchData.status === "unavailable" ? (
-                      <Link className="search-entry__fallback" to="/desde-fp">
-                        Abrir buscador de FP
-                      </Link>
-                    ) : null}
-                  </>
-                )}
-              </form>
-            ) : (
-              <form
-                className="search-entry__panel"
-                onSubmit={(event) => {
-                  event.preventDefault();
-                  if (confirmedOccupation !== null) {
-                    navigate(
-                      `/desde-ocupacion/${encodeURIComponent(confirmedOccupation.occupationId)}`,
-                    );
-                  }
-                }}
-              >
-                <p className="search-entry__direction">
-                  <span>Ocupación que quieres</span>
-                  <Icon name="arrow-right" size={18} />
-                  <strong>FP que te lleva a ella</strong>
-                </p>
-                {searchData.status === "ready" ? (
-                  <>
-                    <OccupationCombobox
-                      occupations={searchData.occupations}
-                      aliases={searchData.aliases}
-                      confirmedOccupation={confirmedOccupation}
-                      onConfirm={setConfirmedOccupation}
-                      onClear={() => setConfirmedOccupation(null)}
-                      label="Ocupación que te interesa"
-                      hint="Escribe y elige una ocupación."
-                      showConfirmation={false}
-                    />
-                    {confirmedOccupation === null ? (
-                      <p
-                        className="search-entry__hint"
-                        id="occupation-required"
-                      >
-                        Elige una ocupación de la lista.
-                      </p>
-                    ) : null}
-                    <button
-                      className="search-entry__cta"
-                      type="submit"
-                      disabled={confirmedOccupation === null}
-                      aria-describedby={
-                        confirmedOccupation === null
-                          ? "occupation-required"
-                          : undefined
-                      }
-                    >
-                      Ver cómo llegar a esta ocupación
-                    </button>
-                  </>
-                ) : (
-                  <>
-                    <p className="form-message" role="status">
-                      {searchData.status === "loading"
-                        ? "Cargando el catálogo oficial de ocupaciones…"
-                        : "El buscador no está disponible ahora mismo."}
-                    </p>
-                    {searchData.status === "unavailable" ? (
-                      <Link
-                        className="search-entry__fallback"
-                        to="/desde-ocupacion"
-                      >
-                        Abrir buscador de ocupaciones
-                      </Link>
-                    ) : null}
-                  </>
-                )}
-              </form>
-            )}
-          </section>
-
-          <aside
-            className="coverage-panel"
-            aria-label="Cobertura revisada"
+        <div className="home-page__meta">
+          <span className="home-page__eyebrow">Orientación profesional</span>
+          <span
+            className="home-page__freshness"
             role="region"
-            aria-live="polite"
-            aria-busy={coverage.status === "loading"}
+            aria-label={
+              freshness.status === "ready"
+                ? freshness.ariaLabel
+                : "Fecha de relaciones revisadas"
+            }
+            aria-busy={freshness.status === "loading"}
           >
-            <div className="coverage-panel__heading">
-              <h2>
-                <Icon name="clock" size={19} />
-                Cobertura revisada
-              </h2>
-              <span
-                className="data-freshness"
-                role="region"
-                aria-label={
-                  freshness.status === "ready"
-                    ? freshness.ariaLabel
-                    : "Fecha de relaciones revisadas"
-                }
-                aria-busy={freshness.status === "loading"}
-              >
-                {freshness.status === "loading" ? "Comprobando fecha…" : null}
-                {freshness.status === "ready" ? (
-                  <>
-                    {freshness.sourceLabel}: copia del{" "}
-                    <time dateTime={freshness.dateTime}>{freshness.date}</time>
-                  </>
-                ) : null}
-                {freshness.status === "unavailable"
-                  ? "Fecha no disponible"
-                  : null}
-              </span>
-            </div>
-
-            {coverage.status === "loading" ? (
-              <p className="coverage-panel__message">
-                Comprobando la cobertura revisada…
-              </p>
-            ) : null}
-            {coverage.status === "unavailable" ? (
-              <p className="coverage-panel__message">
-                No se ha podido comprobar la cobertura revisada.
-              </p>
-            ) : null}
-            {coverage.status === "ready" ? (
-              <ul
-                className="coverage-panel__programs"
-                aria-label="Ciclos revisados destacados"
-              >
-                {featuredPrograms.map((program) => {
-                  const catalogProgram = programsByKey.get(program.programKey);
-                  return (
-                    <li key={program.programKey}>
-                      <Link to={`/desde-fp/${program.programKey}`}>
-                        <span>
-                          <strong>{program.programTitle}</strong>
-                          <small>
-                            {catalogProgram === undefined
-                              ? program.programKey
-                              : trainingLevelLabel(catalogProgram.level)}
-                          </small>
-                        </span>
-                        <Icon name="arrow-right" size={17} />
-                      </Link>
-                    </li>
-                  );
-                })}
-              </ul>
-            ) : null}
-
-            {coverage.status === "ready" ? (
-              <p className="coverage-panel__scope">
-                Ejemplos de ciclos con relaciones revisadas; no es el catálogo
-                completo.
-              </p>
-            ) : null}
-
-            {freshness.status === "ready" && freshness.stale ? (
-              <p className="data-freshness__warning">
-                Mostramos la última copia disponible.
-              </p>
-            ) : null}
-            <Link className="coverage-panel__link" to="/metodologia">
-              Ver toda la cobertura <Icon name="arrow-right" size={16} />
-            </Link>
-          </aside>
-        </div>
-      </section>
-
-      <section className="trust-strip" aria-label="Compromisos del proyecto">
-        <div>
-          <strong>Fuentes públicas</strong>
-        </div>
-        <div>
-          <strong>Relaciones revisadas</strong>
-        </div>
-        <div>
-          <strong>Sin cuentas ni cookies</strong>
-        </div>
-        <Link to="/metodologia">
-          <strong>Método y límites</strong>
-        </Link>
-      </section>
-
-      <nav className="compare-access" aria-label="Otras herramientas">
-        <Link to="/comparar">
-          <span>
-            <strong>Comparar ingresos</strong>
-            <small>Por ciclo y territorio.</small>
+            {freshness.status === "loading" && "Comprobando fecha…"}
+            {freshness.status === "ready" && (
+              <>
+                {freshness.sourceLabel} ·{" "}
+                {freshness.dateKind === "source"
+                  ? "fuente actualizada el"
+                  : "snapshot consultado el"}{" "}
+                <time dateTime={freshness.dateTime}>{freshness.date}</time>
+              </>
+            )}
+            {freshness.status === "unavailable" && "Fecha no disponible"}
           </span>
-          <Icon name="arrow-right" size={18} />
-        </Link>
-      </nav>
+        </div>
+
+        <div className="home-flow">
+          <div className="home-intro">
+            <h1 id="home-heading">
+              Explora formación, profesiones y oportunidades en Castilla y León.
+            </h1>
+            <p className="lede">
+              Conecta lo que sabes hacer con estudios, ocupaciones y ofertas
+              publicadas para decidir tu siguiente paso.
+            </p>
+          </div>
+
+          <div
+            className="task-list"
+            aria-label="Elige tu punto de partida"
+            role="group"
+          >
+            <p className="section-label">¿Qué quieres hacer?</p>
+            {TASKS.map((task) => {
+              const active = searchMode === task.mode;
+              return (
+                <div
+                  className={"task-option" + (active ? " is-active" : "")}
+                  key={task.mode}
+                >
+                  <button
+                    className={"task-row" + (active ? " is-active" : "")}
+                    type="button"
+                    aria-expanded={active}
+                    aria-controls={"home-task-panel-" + task.mode}
+                    onClick={() => chooseSearchMode(task.mode)}
+                  >
+                    <span className="task-number">{task.number}</span>
+                    <span className="task-copy">
+                      <strong>{task.title}</strong>
+                      <small>{task.description}</small>
+                    </span>
+                    <span className="task-arrow" aria-hidden="true">
+                      {active ? "↓" : "→"}
+                    </span>
+                  </button>
+                  <div id={"home-task-panel-" + task.mode} hidden={!active}>
+                    {renderTaskForm(task)}
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+
+          <Link className="text-link home-offers-link" to={globalOffersPath()}>
+            Ver todas las ofertas de la copia actual{" "}
+            <span aria-hidden="true">→</span>
+          </Link>
+        </div>
+
+        <div className="proof-rail" aria-label="Cobertura del producto">
+          <div className="proof-item">
+            <strong>
+              {catalogCounts === null
+                ? "…"
+                : catalogCounts.programs.toLocaleString("es-ES")}
+            </strong>
+            <span>ciclos en la copia actual</span>
+          </div>
+          <div className="proof-item">
+            <strong>
+              {catalogCounts === null
+                ? "…"
+                : catalogCounts.offers.toLocaleString("es-ES")}
+            </strong>
+            <span>ofertas en la copia actual</span>
+          </div>
+        </div>
+
+        <div className="method-line">
+          <span>
+            Relaciones construidas a partir de fuentes públicas y revisadas
+            antes de publicarse.
+            {freshness.status === "ready" && freshness.stale
+              ? " Mostramos la última copia disponible."
+              : ""}
+          </span>
+          <Link className="text-link" to="/metodologia">
+            Cómo funciona <span aria-hidden="true">→</span>
+          </Link>
+        </div>
+      </section>
     </div>
   );
 }

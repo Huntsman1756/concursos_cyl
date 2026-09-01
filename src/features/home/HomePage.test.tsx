@@ -19,20 +19,71 @@ const program = {
   familyName: "Informática y Comunicaciones",
 } as const;
 
-function responseFor(data: unknown): Response {
-  return new Response(JSON.stringify(data), {
-    status: 200,
-    headers: { "Content-Type": "application/json" },
-  });
+const occupation = {
+  occupationId: "occupation:cno11:2713",
+  preferredLabel: "Analistas, programadores y diseñadores web y multimedia",
+  confirmationLabel: "Programación y desarrollo web",
+  classificationSystem: "CNO-11",
+  classificationCode: "2713",
+  reviewStatus: "approved",
+  sourceUrl: "https://www.boe.es/eli/es/rd/2010/11/26/1591",
+  reviewedAt: "2026-08-11",
+  catalogVersion: "2.0.0",
+} as const;
+
+function relationshipAwareManifest() {
+  const base = currentManifestFixture();
+  const snapshot = base.resourceSnapshots.programs;
+  return {
+    ...base,
+    resourceSnapshots: {
+      ...base.resourceSnapshots,
+      occupations: {
+        ...snapshot,
+        resourcePath: "/data/v1/snapshots/build-1/occupations.json",
+      },
+      occupationAliases: {
+        ...snapshot,
+        resourcePath: "/data/v1/snapshots/build-1/occupation-aliases.json",
+      },
+      trainingOccupationLinks: {
+        ...snapshot,
+        resourcePath:
+          "/data/v1/snapshots/build-1/training-occupation-links.json",
+      },
+    },
+  };
 }
 
-function installHomeFetch(): void {
-  const manifest = currentManifestFixture();
+function installHomeFetch({
+  manifest = relationshipAwareManifest(),
+  coverage = [] as unknown[],
+  programs = [program],
+  occupations = [occupation],
+  aliases = [],
+  links = [],
+}: {
+  manifest?: { resourceSnapshots: Record<string, { resourcePath: string }> };
+  coverage?: unknown[];
+  programs?: unknown[];
+  occupations?: unknown[];
+  aliases?: unknown[];
+  links?: unknown[];
+} = {}) {
   const resources = new Map<string, unknown>([
     ["/data/v1/manifest.json", manifest],
-    [manifest.resourceSnapshots.programs.resourcePath, [program]],
-    [manifest.resourceSnapshots.mappingCoverage.resourcePath, []],
+    [manifest.resourceSnapshots.programs.resourcePath, programs],
+    [manifest.resourceSnapshots.occupations.resourcePath, occupations],
+    [manifest.resourceSnapshots.occupationAliases.resourcePath, aliases],
+    [manifest.resourceSnapshots.trainingOccupationLinks.resourcePath, links],
   ]);
+  const snapshots = manifest.resourceSnapshots as Record<
+    string,
+    { resourcePath: string }
+  >;
+  if (snapshots.mappingCoverage?.resourcePath !== undefined) {
+    resources.set(snapshots.mappingCoverage.resourcePath, coverage);
+  }
   vi.stubGlobal(
     "fetch",
     vi.fn((input: RequestInfo | URL) => {
@@ -41,7 +92,10 @@ function installHomeFetch(): void {
       return Promise.resolve(
         payload === undefined
           ? new Response(null, { status: 404 })
-          : responseFor(payload),
+          : new Response(JSON.stringify(payload), {
+              status: 200,
+              headers: { "Content-Type": "application/json" },
+            }),
       );
     }),
   );
@@ -49,7 +103,12 @@ function installHomeFetch(): void {
 
 function LocationProbe() {
   const location = useLocation();
-  return <output data-testid="location">{location.pathname}</output>;
+  return (
+    <output data-testid="location">
+      {location.pathname}
+      {location.search}
+    </output>
+  );
 }
 
 afterEach(() => {
@@ -59,7 +118,7 @@ afterEach(() => {
 });
 
 describe("HomePage", () => {
-  it("uses a searchable FP combobox and navigates only after official confirmation", async () => {
+  it("starts with FP and navigates after choosing an official cycle", async () => {
     installHomeFetch();
     const user = userEvent.setup();
 
@@ -70,358 +129,101 @@ describe("HomePage", () => {
       </MemoryRouter>,
     );
 
+    expect(
+      screen.getByRole("button", {
+        name: /Tengo una FP y quiero saber mis salidas/u,
+      }),
+    ).toHaveAttribute("aria-expanded", "true");
     const combobox = await screen.findByRole("combobox", {
-      name: /título de formación/i,
+      name: "Busca tu ciclo",
     });
     expect(combobox).toHaveAttribute("aria-autocomplete", "list");
-    expect(screen.queryAllByRole("option")).toHaveLength(0);
 
-    const submit = screen.getByRole("button", {
-      name: /ver las salidas de este título/i,
-    });
     await user.type(combobox, "IFC03S");
-    expect(submit).toBeDisabled();
-
-    await user.keyboard("{ArrowDown}{Enter}");
-    expect(submit).toBeEnabled();
-
-    await user.click(submit);
+    const option = await screen.findByRole("option", {
+      name: /Desarrollo de Aplicaciones Web/u,
+    });
+    await user.click(option);
+    await user.click(screen.getByRole("button", { name: "Buscar ciclo" }));
     expect(screen.getByTestId("location")).toHaveTextContent(
-      "/desde-fp/IFC03S",
+      "/desde-fp/IFC03S?query=Desarrollo+de+Aplicaciones+Web",
     );
   });
 
-  it("presents manifest-addressed reviewed coverage and excludes unsupported programs", async () => {
-    const baseManifest = currentManifestFixture();
-    const manifest = {
-      ...baseManifest,
-      resourceSnapshots: {
-        ...baseManifest.resourceSnapshots,
-        mappingCoverage: {
-          ...baseManifest.resourceSnapshots.programs,
-          resourcePath: "/data/v1/snapshots/build-1/mapping-coverage.json",
-        },
-        occupations: {
-          ...baseManifest.resourceSnapshots.programs,
-          resourcePath: "/data/v1/snapshots/build-1/occupations.json",
-        },
-        occupationAliases: {
-          ...baseManifest.resourceSnapshots.programs,
-          resourcePath: "/data/v1/snapshots/build-1/occupation-aliases.json",
-        },
-        trainingOccupationLinks: {
-          ...baseManifest.resourceSnapshots.programs,
-          resourcePath:
-            "/data/v1/snapshots/build-1/training-occupation-links.json",
-        },
-      },
-    };
-    const coverage = [
-      {
-        scope: "program",
-        programKey: "IFC03S",
-        programTitle: "Desarrollo de Aplicaciones WEB",
-        familyCode: "IFC",
-        familyName: "Informática y Comunicaciones",
-        approvedMappings: 1,
-        draftMappings: 0,
-        rejectedMappings: 0,
-        uncoveredPrograms: 0,
-        coverageStatus: "reviewed",
-        coverageNote: "Incluye relaciones ocupacionales revisadas y citadas.",
-      },
-      {
-        scope: "program",
-        programKey: "IFC03SD",
-        programTitle: "Desarrollo de Aplicaciones WEB (distancia)",
-        familyCode: "IFC",
-        familyName: "Informática y Comunicaciones",
-        approvedMappings: 1,
-        draftMappings: 0,
-        rejectedMappings: 0,
-        uncoveredPrograms: 0,
-        coverageStatus: "reviewed",
-        coverageNote: "Incluye relaciones ocupacionales revisadas y citadas.",
-      },
-      ...["SAN21", "HOT01M", "SSC01M", "EOC01M"].map((programKey) => ({
-        scope: "program" as const,
-        programKey,
-        programTitle: programKey,
-        familyCode: "PILOT",
-        familyName: "Pilot",
-        approvedMappings: 1,
-        draftMappings: 0,
-        rejectedMappings: 0,
-        uncoveredPrograms: 0,
-        coverageStatus: "reviewed" as const,
-        coverageNote: "Incluye relaciones ocupacionales revisadas y citadas.",
-      })),
-      {
-        scope: "program",
-        programKey: "COM01M",
-        programTitle: "Actividades Comerciales",
-        familyCode: "COM",
-        familyName: "Comercio y Marketing",
-        approvedMappings: 0,
-        draftMappings: 0,
-        rejectedMappings: 0,
-        uncoveredPrograms: 1,
-        coverageStatus: "uncovered",
-        coverageNote: "Aún no hay una relación ocupacional aprobada.",
-      },
-    ];
-    const program = {
-      programKey: "IFC03S",
-      programTitle: "Desarrollo de Aplicaciones Web",
-      level: "higher",
-      familyCode: "IFC",
-      familyName: "Informática y Comunicaciones",
-    };
-    const occupation = {
-      occupationId: "occupation:cno11:2713",
-      preferredLabel: "Analistas, programadores y diseñadores web y multimedia",
-      confirmationLabel: "Programación y desarrollo web",
-      classificationSystem: "CNO-11",
-      classificationCode: "2713",
-      reviewStatus: "approved",
-      sourceUrl: "https://www.boe.es/eli/es/rd/2010/11/26/1591",
-      reviewedAt: "2026-08-11",
-      catalogVersion: "2.0.0",
-    };
-    vi.stubGlobal(
-      "fetch",
-      vi.fn((input: RequestInfo | URL) => {
-        const path = typeof input === "string" ? input : input.toString();
-        const payload =
-          path === "/data/v1/manifest.json"
-            ? manifest
-            : path === manifest.resourceSnapshots.mappingCoverage.resourcePath
-              ? coverage
-              : path === manifest.resourceSnapshots.programs.resourcePath
-                ? [program]
-                : path === manifest.resourceSnapshots.centers.resourcePath ||
-                    path ===
-                      manifest.resourceSnapshots.trainingOfferings
-                        .resourcePath ||
-                    path ===
-                      manifest.resourceSnapshots.jobOffers.resourcePath ||
-                    path ===
-                      manifest.resourceSnapshots.occupationAliases
-                        .resourcePath ||
-                    path ===
-                      manifest.resourceSnapshots.trainingOccupationLinks
-                        .resourcePath
-                  ? []
-                  : path === manifest.resourceSnapshots.occupations.resourcePath
-                    ? [occupation]
-                    : undefined;
-        return Promise.resolve(
-          payload === undefined
-            ? new Response(null, { status: 404 })
-            : new Response(JSON.stringify(payload), { status: 200 }),
-        );
-      }),
-    );
+  it("reaches the occupation route from the profession journey", async () => {
+    installHomeFetch();
+    const user = userEvent.setup();
+
     render(
       <MemoryRouter>
         <HomePage />
+        <LocationProbe />
       </MemoryRouter>,
     );
 
-    expect(
-      screen.getByRole("heading", {
-        level: 1,
-        name: /De tu FP a tu\s*siguiente paso/i,
-      }),
-    ).toBeVisible();
-    const coveragePanel = screen.getByRole("region", {
-      name: "Cobertura revisada",
-    });
-    await waitFor(() =>
-      expect(
-        within(coveragePanel).getByRole("list", {
-          name: "Ciclos revisados destacados",
-        }),
-      ).toBeVisible(),
+    await user.click(
+      screen.getByRole("button", { name: /Quiero dedicarme a una profesión/u }),
     );
-    expect(
-      screen.getByRole("region", { name: "Fecha de relaciones revisadas" }),
-    ).toHaveTextContent("Relaciones revisadas: copia del 31/07/2026");
-    expect(
-      screen.queryByText("Actualizado: 31/07/2026"),
-    ).not.toBeInTheDocument();
-    expect(
-      screen.getByText(
-        "Ejemplos de ciclos con relaciones revisadas; no es el catálogo completo.",
-      ),
-    ).toBeVisible();
-    expect(within(coveragePanel).getAllByRole("listitem")).toHaveLength(2);
-    expect(coveragePanel).toHaveTextContent("Desarrollo de Aplicaciones WEB");
-    expect(coveragePanel).toHaveTextContent(/EOC01M|HOT01M|SAN21|SSC01M/);
-    expect(coveragePanel).not.toHaveTextContent("IFC03SD");
-    expect(coveragePanel).not.toHaveTextContent("COM01M");
-    expect(screen.queryByText(/Administración/i)).not.toBeInTheDocument();
-    expect(screen.queryByText(/educación infantil/i)).not.toBeInTheDocument();
-    expect(screen.queryByText(/soldadura/i)).not.toBeInTheDocument();
-    expect(
-      screen.queryByText(/Junta de Castilla y León/i),
-    ).not.toBeInTheDocument();
-    expect(
-      await screen.findByLabelText("Título de Formación Profesional"),
-    ).toBeVisible();
+    const combobox = await screen.findByRole("combobox", {
+      name: "Busca una profesión",
+    });
+    await user.type(combobox, "programación web");
+    const option = await screen.findByRole("option", {
+      name: /Analistas, programadores y diseñadores web y multimedia/u,
+    });
+    await user.click(option);
+    await user.click(screen.getByRole("button", { name: "Buscar profesión" }));
+    expect(screen.getByTestId("location")).toHaveTextContent(
+      "/desde-ocupacion/occupation%3Acno11%3A2713?query=Analistas%2C+programadores+y+dise%C3%B1adores+web+y+multimedia",
+    );
     expect(fetch).toHaveBeenCalledWith(
-      manifest.resourceSnapshots.programs.resourcePath,
+      "/data/v1/snapshots/build-1/occupations.json",
       expect.objectContaining({ signal: expect.any(AbortSignal) }),
     );
-    expect(fetch).not.toHaveBeenCalledWith(
-      manifest.resourceSnapshots.centers.resourcePath,
-      expect.anything(),
-    );
-    expect(fetch).not.toHaveBeenCalledWith(
-      manifest.resourceSnapshots.trainingOfferings.resourcePath,
-      expect.anything(),
-    );
-    expect(fetch).not.toHaveBeenCalledWith(
-      manifest.resourceSnapshots.jobOffers.resourcePath,
-      expect.anything(),
-    );
-    expect(fetch).not.toHaveBeenCalledWith(
-      manifest.resourceSnapshots.occupationAliases.resourcePath,
-      expect.anything(),
-    );
-    expect(fetch).not.toHaveBeenCalledWith(
-      manifest.resourceSnapshots.trainingOccupationLinks.resourcePath,
-      expect.anything(),
-    );
-    expect(fetch).not.toHaveBeenCalledWith(
-      manifest.resourceSnapshots.occupations.resourcePath,
-      expect.anything(),
-    );
-    expect(
-      screen.queryByRole("combobox", { name: "Ocupación que te interesa" }),
-    ).not.toBeInTheDocument();
-    expect(
-      screen.getByRole("button", {
-        name: "Ver las salidas de este título",
-      }),
-    ).toBeDisabled();
-    expect(screen.getByText("Tu título de FP")).toBeVisible();
-    expect(screen.getByText("Elige un título.")).toBeVisible();
-    expect(
-      screen.getByText(
-        "Dime en qué puedo trabajar con lo que ya he estudiado.",
-      ),
-    ).toBeVisible();
-    expect(
-      screen.getByText("Dime qué FP me lleva hasta esa ocupación."),
-    ).toBeVisible();
+  });
 
+  it("uses free text to reach the offer explorer", async () => {
+    installHomeFetch();
     const user = userEvent.setup();
-    const fpMode = screen.getByRole("radio", {
-      name: /Tengo un título de FP/i,
-    });
-    fpMode.focus();
-    await user.keyboard("{ArrowRight}");
-    expect(
-      screen.getByRole("radio", { name: /Tengo un empleo en mente/i }),
-    ).toHaveFocus();
-    expect(
-      screen.queryByLabelText("Título de Formación Profesional"),
-    ).not.toBeInTheDocument();
-    expect(
-      screen.getByRole("combobox", { name: "Ocupación que te interesa" }),
-    ).toBeVisible();
-    await waitFor(() => {
-      expect(fetch).toHaveBeenCalledWith(
-        manifest.resourceSnapshots.occupationAliases.resourcePath,
-        expect.objectContaining({ signal: expect.any(AbortSignal) }),
-      );
-      expect(fetch).toHaveBeenCalledWith(
-        manifest.resourceSnapshots.trainingOccupationLinks.resourcePath,
-        expect.objectContaining({ signal: expect.any(AbortSignal) }),
-      );
-      expect(fetch).toHaveBeenCalledWith(
-        manifest.resourceSnapshots.occupations.resourcePath,
-        expect.objectContaining({ signal: expect.any(AbortSignal) }),
-      );
-    });
-    expect(
-      screen.getByRole("button", {
-        name: "Ver cómo llegar a esta ocupación",
-      }),
-    ).toBeDisabled();
-    expect(screen.getByText("Elige una ocupación de la lista.")).toBeVisible();
-    expect(
-      screen.queryByRole("button", {
-        name: "Ver las salidas de este título",
-      }),
-    ).not.toBeInTheDocument();
-    expect(window.localStorage.getItem("salida-cyl:home-search-mode")).toBe(
-      "occupation",
-    );
-    expect(
-      screen.getByRole("link", { name: "Método y límites" }),
-    ).toHaveAttribute("href", "/metodologia");
-    const commitments = screen.getByRole("region", {
-      name: "Compromisos del proyecto",
-    });
-    expect(commitments).toHaveTextContent(
-      "Fuentes públicasRelaciones revisadasSin cuentas ni cookiesMétodo y límites",
-    );
-    expect(
-      screen.getByRole("link", { name: /Comparar ingresos/u }),
-    ).toHaveAttribute("href", "/comparar");
-    expect(
-      screen.queryByRole("link", { name: /Buscar por tu título/u }),
-    ).not.toBeInTheDocument();
-    expect(commitments).not.toHaveTextContent(
-      /Datos de administraciones|Vínculos publicados|Sin registro/i,
-    );
-  });
 
-  it("restores a valid saved search mode and ignores invalid values", () => {
-    window.localStorage.setItem("salida-cyl:home-search-mode", "occupation");
-    vi.stubGlobal(
-      "fetch",
-      vi.fn(() => new Promise<Response>(() => undefined)),
-    );
-
-    const { unmount } = render(
-      <MemoryRouter>
-        <HomePage />
-      </MemoryRouter>,
-    );
-    expect(
-      screen.getByRole("radio", { name: /Tengo un empleo en mente/i }),
-    ).toBeChecked();
-    expect(screen.getByText("Ocupación que quieres")).toBeVisible();
-
-    unmount();
-    window.localStorage.setItem("salida-cyl:home-search-mode", "invalid");
     render(
       <MemoryRouter>
         <HomePage />
+        <LocationProbe />
       </MemoryRouter>,
     );
-    expect(
-      screen.getByRole("radio", { name: /Tengo un título de FP/i }),
-    ).toBeChecked();
+
+    await user.click(
+      screen.getByRole("button", { name: /He visto una oferta/u }),
+    );
+    const query = await screen.findByRole("searchbox", {
+      name: "Busca una oferta",
+    });
+    await user.type(query, "cocina");
+    await user.click(screen.getByRole("button", { name: "Buscar oferta" }));
+    expect(screen.getByTestId("location")).toHaveTextContent(
+      "/desde-oferta?query=cocina",
+    );
   });
 
-  it("requests the manifest once per mount", async () => {
-    const manifest = currentManifestFixture();
-    const isManifestRequest = (input: RequestInfo | URL) => {
-      const path = typeof input === "string" ? input : input.toString();
-      return path.endsWith("/data/v1/manifest.json");
-    };
-    const fetchMock = vi.fn((input: RequestInfo | URL) => {
-      return Promise.resolve(
-        isManifestRequest(input)
-          ? new Response(JSON.stringify(manifest), { status: 200 })
-          : new Response(null, { status: 404 }),
-      );
+  it("presents the reviewed-relationship freshness and a real example link", async () => {
+    installHomeFetch({
+      coverage: [
+        {
+          scope: "program",
+          programKey: "IFC03S",
+          programTitle: "Desarrollo de Aplicaciones WEB",
+          familyCode: "IFC",
+          familyName: "Informática y Comunicaciones",
+          approvedMappings: 1,
+          draftMappings: 0,
+          rejectedMappings: 0,
+          uncoveredPrograms: 0,
+          coverageStatus: "reviewed",
+          coverageNote: "Incluye relaciones ocupacionales revisadas y citadas.",
+        },
+      ],
     });
-    vi.stubGlobal("fetch", fetchMock);
 
     render(
       <MemoryRouter>
@@ -429,35 +231,37 @@ describe("HomePage", () => {
       </MemoryRouter>,
     );
 
-    await waitFor(() =>
-      expect(
-        fetchMock.mock.calls.filter(([input]) => isManifestRequest(input)),
-      ).toHaveLength(1),
+    expect(
+      await screen.findByRole("region", {
+        name: "Fecha de relaciones revisadas",
+      }),
+    ).toHaveTextContent(
+      "Relaciones revisadas · fuente actualizada el 31 jul 2026",
     );
+    expect(
+      await screen.findByRole("link", {
+        name: "Desarrollo de Aplicaciones WEB",
+      }),
+    ).toHaveAttribute("href", "/desde-fp/IFC03S");
+    expect(screen.getByText("Ejemplo:")).toBeVisible();
+    expect(
+      screen.queryByRole("link", { name: "Auxiliares de enfermería" }),
+    ).not.toBeInTheDocument();
+    expect(screen.queryByText("Puedes probar con")).not.toBeInTheDocument();
   });
 
   it("labels legacy freshness with the job-offer fallback scope", async () => {
-    const currentManifest = currentManifestFixture();
+    const baseManifest = relationshipAwareManifest();
     const legacyResourceSnapshots = Object.fromEntries(
-      Object.entries(currentManifest.resourceSnapshots).filter(
+      Object.entries(baseManifest.resourceSnapshots).filter(
         ([key]) => key !== "mappingCoverage",
       ),
     );
     const legacyManifest = {
-      ...currentManifest,
+      ...baseManifest,
       resourceSnapshots: legacyResourceSnapshots,
     };
-    vi.stubGlobal(
-      "fetch",
-      vi.fn((input: RequestInfo | URL) => {
-        const path = typeof input === "string" ? input : input.toString();
-        return Promise.resolve(
-          path.endsWith("/data/v1/manifest.json")
-            ? new Response(JSON.stringify(legacyManifest), { status: 200 })
-            : new Response(null, { status: 404 }),
-        );
-      }),
-    );
+    installHomeFetch({ manifest: legacyManifest });
 
     render(
       <MemoryRouter>
@@ -469,7 +273,7 @@ describe("HomePage", () => {
       name: "Fecha de ofertas laborales",
     });
     expect(freshness).toHaveTextContent(
-      "Ofertas laborales: copia del 31/07/2026",
+      "Ofertas laborales · fuente actualizada el 31 jul 2026",
     );
     expect(
       screen.queryByText("Relaciones revisadas: copia del 31/07/2026"),
@@ -499,7 +303,7 @@ describe("HomePage", () => {
     expect(within(freshness).getByText("Comprobando fecha…")).toBeVisible();
 
     resolveManifest(
-      new Response(JSON.stringify(currentManifestFixture()), {
+      new Response(JSON.stringify(relationshipAwareManifest()), {
         status: 200,
         headers: { "Content-Type": "application/json" },
       }),
@@ -511,11 +315,38 @@ describe("HomePage", () => {
     expect(
       within(freshness).queryByText("Comprobando fecha…"),
     ).not.toBeInTheDocument();
-    expect(within(freshness).getByText("31/07/2026")).toBeVisible();
+  });
+
+  it("requests the manifest once per mount", async () => {
+    const manifest = relationshipAwareManifest();
+    const isManifestRequest = (input: RequestInfo | URL) => {
+      const path = typeof input === "string" ? input : input.toString();
+      return path.endsWith("/data/v1/manifest.json");
+    };
+    const fetchMock = vi.fn((input: RequestInfo | URL) => {
+      return Promise.resolve(
+        isManifestRequest(input)
+          ? new Response(JSON.stringify(manifest), { status: 200 })
+          : new Response(null, { status: 404 }),
+      );
+    });
+    vi.stubGlobal("fetch", fetchMock);
+
+    render(
+      <MemoryRouter>
+        <HomePage />
+      </MemoryRouter>,
+    );
+
+    await waitFor(() =>
+      expect(
+        fetchMock.mock.calls.filter(([input]) => isManifestRequest(input)),
+      ).toHaveLength(1),
+    );
   });
 
   it("aborts pending generated-data work when Home unmounts", async () => {
-    const manifest = currentManifestFixture();
+    const manifest = relationshipAwareManifest();
     let programSignal: AbortSignal | undefined;
     vi.stubGlobal(
       "fetch",

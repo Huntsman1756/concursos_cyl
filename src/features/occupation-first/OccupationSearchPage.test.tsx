@@ -120,7 +120,7 @@ describe("occupation-first search", () => {
 
     const input = await screen.findByRole("combobox", { name: /ocupación/i });
     const heading = screen.getByRole("heading", {
-      name: "Consulta qué ciclos de FP están relacionados con una ocupación",
+      name: "¿Qué FP te lleva a una profesión?",
     });
     expect(heading).toHaveAttribute("id", "occupation-search-heading");
     expect(heading.closest("section")).toHaveAttribute(
@@ -144,7 +144,9 @@ describe("occupation-first search", () => {
       manifest.resourceSnapshots.jobOffers.resourcePath,
       expect.anything(),
     );
-    const submit = screen.getByRole("button", { name: "Ver rutas formativas" });
+    const submit = screen.getByRole("button", {
+      name: "Ver qué FP te lleva a ella",
+    });
     await user.type(input, "desarrollador web");
 
     const option = screen.getByRole("option", {
@@ -173,7 +175,7 @@ describe("occupation-first search", () => {
     expect(screen.getByText("1 ocupación oficial encontrada")).toBeVisible();
     await user.keyboard("{ArrowDown}{Enter}");
     expect(
-      screen.getByRole("button", { name: "Ver rutas formativas" }),
+      screen.getByRole("button", { name: "Ver qué FP te lleva a ella" }),
     ).toBeEnabled();
   });
 
@@ -220,7 +222,7 @@ describe("occupation-first search", () => {
       screen.queryByText(/Ocupación seleccionada/i),
     ).not.toBeInTheDocument();
     expect(
-      screen.getByRole("button", { name: "Ver rutas formativas" }),
+      screen.getByRole("button", { name: "Ver qué FP te lleva a ella" }),
     ).toBeDisabled();
     expect(
       screen.getByText("No encontramos una ocupación oficial con ese nombre."),
@@ -245,7 +247,7 @@ describe("occupation-first search", () => {
       screen.queryByText(/Ocupación seleccionada/i),
     ).not.toBeInTheDocument();
     expect(
-      screen.getByRole("button", { name: "Ver rutas formativas" }),
+      screen.getByRole("button", { name: "Ver qué FP te lleva a ella" }),
     ).toBeDisabled();
     expect(input).toHaveValue("");
   });

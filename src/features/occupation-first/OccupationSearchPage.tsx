@@ -10,6 +10,8 @@ import {
 } from "../../data/generatedDataClient";
 import { loadApprovedMappings } from "../../domain/occupation";
 import { useRouteReady } from "../../app/RouteReadyContext";
+import { occupationDetailPath } from "../../app/routePaths";
+import { Breadcrumbs } from "../../components/Breadcrumbs";
 import { OccupationCombobox } from "./OccupationCombobox";
 
 type SearchState =
@@ -68,25 +70,29 @@ export function OccupationSearchPage() {
     event.preventDefault();
     if (confirmedOccupation === null) return;
     navigate(
-      `/desde-ocupacion/${encodeURIComponent(confirmedOccupation.occupationId)}`,
+      occupationDetailPath(
+        confirmedOccupation.occupationId,
+        confirmedOccupation.preferredLabel,
+      ),
     );
   }
 
   return (
     <section
-      className="training-page"
+      className="training-page search-page occupation-search-page"
       aria-busy={state.status === "loading"}
       aria-labelledby="occupation-search-heading"
     >
+      <Breadcrumbs
+        items={[{ label: "Inicio", to: "/" }, { label: "Buscar profesión" }]}
+      />
       <header className="training-page__header">
-        <p className="training-page__eyebrow">Desde una ocupación</p>
         <h1 id="occupation-search-heading">
-          Consulta qué ciclos de FP están relacionados con una ocupación
+          ¿Qué FP te lleva a una profesión?
         </h1>
-        <p>
-          Escribe la ocupación como lo harías normalmente. Buscaremos en la
-          Clasificación Nacional de Ocupaciones (CNO-11) y mostraremos solo las
-          relaciones con FP que ya están revisadas.
+        <p className="training-page__intro">
+          Escribe una profesión y verás los ciclos con una relación comprobada
+          con ella, y los centros donde estudiarlos.
         </p>
       </header>
       {state.status === "loading" && (
@@ -101,7 +107,14 @@ export function OccupationSearchPage() {
         </div>
       )}
       {state.status === "ready" && (
-        <form className="training-search" onSubmit={submit}>
+        <form className="training-search search-card" onSubmit={submit}>
+          <div className="search-card__intro">
+            <h2>Busca en el catálogo oficial de profesiones</h2>
+            <p>
+              También puedes escribir un nombre coloquial: solo verás las
+              relaciones comprobadas.
+            </p>
+          </div>
           <OccupationCombobox
             occupations={state.occupations}
             aliases={state.aliases}
@@ -114,12 +127,12 @@ export function OccupationSearchPage() {
             type="submit"
             disabled={confirmedOccupation === null}
           >
-            Ver rutas formativas
+            Ver qué FP te lleva a ella
           </button>
           <p className="coverage-note">
             El catálogo incluye {state.occupations.length} grupos oficiales de
-            ocupación. Que una ocupación aparezca no implica que su relación con
-            un ciclo FP esté validada todavía.
+            ocupación. Que una ocupación aparezca no significa que su relación
+            con un ciclo FP esté comprobada todavía.
           </p>
         </form>
       )}

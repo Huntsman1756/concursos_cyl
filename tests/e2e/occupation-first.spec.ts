@@ -99,13 +99,21 @@ test("the live occupation journey confirms a reviewed everyday alias and reaches
   );
   await page.getByRole("button", { name: "Ver rutas formativas" }).click();
   await expect(page).toHaveURL(
-    /\/desde-ocupacion\/occupation%3Acno11%3A2713$/u,
+    /\/desde-ocupacion\/occupation%3Acno11%3A2713\?query=/u,
   );
 
   const reviewedProgramKeys = ["IFC02S", "IFC02SD", "IFC03S", "IFC03SD"];
-  await expect(page.getByText("Salida profesional oficial")).toHaveCount(2);
+  await expect(
+    page.getByText(
+      "El perfil oficial del ciclo incluye esta salida profesional.",
+    ),
+  ).toHaveCount(2);
   expect(
-    await page.getByText("Relación revisada").count(),
+    await page
+      .getByText(
+        "Relación comprobada por competencias compartidas antes de publicarse.",
+      )
+      .count(),
   ).toBeGreaterThanOrEqual(2);
   for (const programKey of reviewedProgramKeys) {
     await expect(
@@ -180,7 +188,7 @@ test("an official occupation without a reviewed FP relation remains searchable",
   await page.getByRole("button", { name: "Ver rutas formativas" }).click();
 
   await expect(page).toHaveURL(
-    /\/desde-ocupacion\/occupation%3Acno11%3A2411$/u,
+    /\/desde-ocupacion\/occupation%3Acno11%3A2411\?query=/u,
   );
   await expect(
     page.getByRole("heading", { name: "Físicos y astrónomos" }),

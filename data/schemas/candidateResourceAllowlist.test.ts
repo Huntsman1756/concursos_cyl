@@ -21,6 +21,7 @@ const EXPECTED_RESOURCE_KEYS = [
   "municipalities",
   "occupationAliases",
   "occupations",
+  "offerEvidence",
   "officialOccupations",
   "openDataCatalog",
   "outcomeIndicators",
@@ -36,7 +37,7 @@ const EXPECTED_RESOURCE_KEYS = [
 ] as const;
 
 describe("candidate resource allowlist", () => {
-  it("loads the exact sorted 21-resource candidate set", async () => {
+  it("loads the exact sorted 22-resource candidate set", async () => {
     const config = JSON.parse(
       await readFile("config/candidate-resource-allowlist.json", "utf8"),
     ) as { schemaVersion: string; resourceKeys: string[] };

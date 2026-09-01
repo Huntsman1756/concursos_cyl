@@ -95,7 +95,7 @@ test("FP result data stays within the initial budget and loads outcomes on reque
     typeof currentManifestFixture
   >;
   await expect(
-    page.getByRole("heading", { name: "Desarrollo de Aplicaciones Web" }),
+    page.getByRole("heading", { name: /Desarrollo de Aplicaciones Web/iu }),
   ).toBeVisible();
   await expectNoHorizontalOverflow(page);
   await page.waitForLoadState("networkidle");
@@ -258,16 +258,20 @@ test("FP results preserve complete centers, province context, deferred outcomes,
     page.url(),
   ).pathname;
   await chooseTrainingProgram(page, "IFC03S");
+  await page
+    .locator("summary")
+    .filter({ hasText: "Filtrar catálogo y contexto" })
+    .click();
   await page.getByLabel("Provincia para el contexto (opcional)").selectOption({
     label: "León",
   });
   await page.getByRole("button", { name: "Ver salidas y ofertas" }).click();
 
   await expect(page).toHaveURL(
-    "http://127.0.0.1:4173/desde-fp/IFC03S?province=Le%C3%B3n",
+    "http://127.0.0.1:4173/desde-fp/IFC03S?query=Desarrollo+de+Aplicaciones+Web&province=Le%C3%B3n",
   );
   await expect(
-    page.getByRole("heading", { name: "Desarrollo de Aplicaciones Web" }),
+    page.getByRole("heading", { name: /Desarrollo de Aplicaciones Web/iu }),
   ).toBeVisible();
   await expect(
     page.getByText("Contexto provincial elegido: León"),
@@ -287,18 +291,17 @@ test("FP results preserve complete centers, province context, deferred outcomes,
   await expectStrictAxe(page);
 
   const centersLink = page.getByRole("link", {
-    name: "Ver centros y modalidades",
+    name: /^Ver los \d+ centros con direcciones y web/u,
   });
   await expect(centersLink).toHaveAttribute("href", "/formacion/IFC03S");
   await centersLink.click();
   await expect(page).toHaveURL(/\/formacion\/IFC03S$/u);
-  const centers = page.getByRole("list", {
-    name: "Centros que imparten el ciclo",
-  });
-  await expect(centers.getByRole("listitem")).toHaveCount(18);
+  await expect(page.locator(".center-card")).toHaveCount(18);
 
   await page.goBack();
-  await expect(page).toHaveURL(/\/desde-fp\/IFC03S\?province=Le%C3%B3n$/u);
+  await expect(page).toHaveURL(
+    /\/desde-fp\/IFC03S\?query=Desarrollo\+de\+Aplicaciones\+Web&province=Le%C3%B3n$/u,
+  );
   await compareLink.click();
   await expect(page).toHaveURL(/\/comparar\?program=IFC03S$/u);
 });
@@ -313,12 +316,12 @@ test("live DAW results shows formacion link and approved occupation", async ({
 
   await expect(
     page.getByRole("link", {
-      name: "Ver centros y modalidades",
+      name: /^Ver los \d+ centros con direcciones y web/u,
     }),
   ).toBeVisible();
   await expect(
     page.getByRole("link", {
-      name: "Ver centros y modalidades",
+      name: /^Ver los \d+ centros con direcciones y web/u,
     }),
   ).toHaveAttribute("href", "/formacion/IFC03S");
 
@@ -490,7 +493,7 @@ test("COM01M exposes seven reviewed groups with bounded current offers", async (
     page.getByText("Relaciones revisadas con 7 grupos de ocupación."),
   ).toHaveAttribute("role", "status");
   await page.getByRole("button", { name: "Ver salidas y ofertas" }).click();
-  await expect(page).toHaveURL(/\/desde-fp\/COM01M$/u);
+  await expect(page).toHaveURL(/\/desde-fp\/COM01M\?query=/u);
   await expect(
     page.getByRole("heading", { name: "Actividades Comerciales" }),
   ).toBeVisible();
@@ -517,9 +520,9 @@ test("the intercepted full DAW card makes a declared gap, action, filter, and ev
   });
   await expect(card).toBeVisible();
 
-  const evidenceDisclosure = card.getByText("Ver evidencia y requisitos", {
-    exact: true,
-  });
+  const evidenceDisclosure = card.locator(
+    'summary[aria-label="De dónde sale esta información (Desarrollador web para servicios públicos)"]',
+  );
   await tabTo(page, evidenceDisclosure);
   await expect(evidenceDisclosure).toBeFocused();
   await page.keyboard.press("Enter");
@@ -528,26 +531,28 @@ test("the intercepted full DAW card makes a declared gap, action, filter, and ev
     card.getByRole("heading", { name: "Por qué aparece" }),
   ).toBeVisible();
   await expect(
-    card.getByRole("heading", { name: "Qué publica la vacante" }),
-  ).toBeVisible();
-  await expect(
-    card.getByRole("heading", { name: "Tu comprobación" }),
-  ).toBeVisible();
-  await expect(
-    card.getByRole("heading", { name: "Siguiente acción" }),
+    card.getByRole("heading", { name: "Cómo se extrajeron los requisitos" }),
   ).toBeVisible();
 
-  const mappingDisclosure = card
-    .getByText("Ver cita exacta", { exact: true })
-    .first();
-  await tabTo(page, mappingDisclosure);
-  await expect(mappingDisclosure).toBeFocused();
-  await page.keyboard.press("Enter");
   await expect(
     card.getByText("Desarrollador de aplicaciones en entornos Web.", {
       exact: true,
     }),
   ).toBeVisible();
+
+  const requirementDisclosure = card
+    .locator("summary")
+    .filter({ hasText: "Requisitos: ¿los cumples?" });
+  if (
+    !(await card
+      .getByRole("radio", { name: /^Lo tengo:/u })
+      .first()
+      .isVisible()
+      .catch(() => false))
+  ) {
+    await requirementDisclosure.click();
+  }
+  await expect(requirementDisclosure).toBeVisible();
 
   const firstExperienceAnswer = card.getByRole("radio", {
     name: `Lo tengo: ${syntheticQuotes.experienceQuote}`,
@@ -572,7 +577,7 @@ test("the intercepted full DAW card makes a declared gap, action, filter, and ev
   await page.keyboard.press("Enter");
   await expect(
     page.getByText(
-      "Filtro activo: ofertas relacionadas que no publican este requisito exacto.",
+      "Filtro activo: ofertas que no publican ese requisito exacto.",
     ),
   ).toBeVisible();
   await expect(

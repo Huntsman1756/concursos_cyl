@@ -12,6 +12,7 @@ import {
   resolveGeneratedAssetPath,
 } from "../../data/generatedDataClient";
 import { useRouteReady } from "../../app/RouteReadyContext";
+import { Breadcrumbs } from "../../components/Breadcrumbs";
 import { SourceMethodCard } from "./SourceMethodCard";
 import "./methodology.css";
 
@@ -377,6 +378,12 @@ export function MethodologyPage() {
   const provenance = <Provenance state={evidence} />;
   return (
     <section className="methodology-page" aria-labelledby="methodology-heading">
+      <Breadcrumbs
+        items={[
+          { label: "Inicio", to: "/" },
+          { label: "Metodología y fuentes" },
+        ]}
+      />
       <header className="methodology-page__intro">
         <p className="methodology-page__eyebrow">Transparencia de los datos</p>
         <h1 id="methodology-heading">Metodología y fuentes</h1>
@@ -497,8 +504,8 @@ export function MethodologyPage() {
           <section>
             <h3>Qué no permite afirmar</h3>
             <p>
-              TodoFP aporta salidas profesionales literales para los 187 ciclos
-              del catálogo. Las mostramos como perfiles formativos oficiales,
+              TodoFP aporta salidas profesionales literales para los ciclos del
+              catálogo. Las mostramos como perfiles formativos oficiales,
               separadas de las relaciones revisadas con ocupaciones y de las
               ofertas actuales. Solo buscamos ofertas cuando esa relación está
               revisada. Si falta, significa «relación no revisada», no «sin

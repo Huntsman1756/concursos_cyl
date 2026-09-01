@@ -10,7 +10,7 @@ import {
 
 export type CandidateResourceKey = GeneratedResourceKey;
 
-const CANDIDATE_RESOURCE_COUNT = 21;
+const CANDIDATE_RESOURCE_COUNT = 22;
 const RESOURCE_KEY_PATTERN = /^[a-z][a-zA-Z\d]*$/u;
 const CANONICAL_SEPE_PERIOD = "2026-07";
 const CANONICAL_SEPE_RECORD_COUNT = 116;

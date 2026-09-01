@@ -4,6 +4,7 @@ import { Icon } from "../components/Icon";
 import { RouteReadyProvider } from "./RouteReady";
 import { titleForPathname } from "./routeTitles";
 import "../styles/global.css";
+import "../styles/visualRefresh.css";
 
 interface AppShellProps {
   children: ReactNode;
@@ -13,40 +14,81 @@ const DESKTOP_NAV_QUERY = "(min-width: 48rem)";
 
 interface PrimaryNavigationLinksProps {
   onNavigate?: () => void;
+  mobile?: boolean;
 }
 
-function PrimaryNavigationLinks({ onNavigate }: PrimaryNavigationLinksProps) {
+function PrimaryNavigationLinks({
+  onNavigate,
+  mobile = false,
+}: PrimaryNavigationLinksProps) {
   return (
     <ul>
       <li>
         <NavLink to="/" end onClick={onNavigate}>
-          Inicio
+          Explorar
         </NavLink>
       </li>
       <li>
-        <NavLink to="/desde-fp" onClick={onNavigate}>
-          Desde FP
+        <NavLink to="/desde-oferta" onClick={onNavigate}>
+          Ofertas
         </NavLink>
       </li>
       <li>
-        <NavLink to="/desde-ocupacion" onClick={onNavigate}>
-          Desde ocupación
-        </NavLink>
-      </li>
-      <li>
-        <NavLink to="/comparar" onClick={onNavigate}>
-          Comparar estudios
-        </NavLink>
-      </li>
-      <li>
-        <NavLink to="/recursos" onClick={onNavigate}>
-          Más formación
+        <NavLink to="/donde-estudiar" onClick={onNavigate}>
+          Dónde estudiar
         </NavLink>
       </li>
       <li>
         <NavLink to="/metodologia" onClick={onNavigate}>
-          Metodología
+          Datos y método
         </NavLink>
+      </li>
+      <li>
+        <details open={mobile} className="site-nav__more">
+          <summary>Más</summary>
+          <ul>
+            <li>
+              <NavLink to="/desde-fp" onClick={onNavigate}>
+                Explorar FP
+              </NavLink>
+            </li>
+            <li>
+              <NavLink to="/desde-ocupacion" onClick={onNavigate}>
+                Buscar profesión
+              </NavLink>
+            </li>
+            <li>
+              <NavLink to="/comparar" onClick={onNavigate}>
+                Comparar ingresos
+              </NavLink>
+            </li>
+            <li>
+              <NavLink to="/recursos" onClick={onNavigate}>
+                Formación complementaria
+              </NavLink>
+            </li>
+            <li>
+              <NavLink to="/datos-abiertos" onClick={onNavigate}>
+                Datos abiertos
+              </NavLink>
+            </li>
+            <li>
+              <NavLink to="/metodologia" onClick={onNavigate}>
+                Método y límites
+              </NavLink>
+            </li>
+            <li>
+              <NavLink to="/para-organizaciones" onClick={onNavigate}>
+                Para organizaciones
+              </NavLink>
+            </li>
+            <li>
+              <NavLink to="/accesibilidad" onClick={onNavigate}>
+                Accesibilidad
+              </NavLink>
+            </li>
+          </ul>
+        </details>
       </li>
     </ul>
   );
@@ -141,7 +183,10 @@ export function AppShell({ children }: AppShellProps) {
             aria-label="Principal móvil"
             hidden={!menuOpen}
           >
-            <PrimaryNavigationLinks onNavigate={() => setMenuOpen(false)} />
+            <PrimaryNavigationLinks
+              mobile
+              onNavigate={() => setMenuOpen(false)}
+            />
           </nav>
         </div>
       </header>
@@ -160,20 +205,25 @@ export function AppShell({ children }: AppShellProps) {
         <div className="site-footer__inner">
           <div className="site-footer__identity">
             <strong>SALIDA CyL</strong>
-            <span>Proyecto independiente basado en datos públicos.</span>
             <span>
-              Desarrollado para el X Concurso de Datos Abiertos de Castilla y
-              León en la categoría Productos y Servicios.
+              Proyecto independiente basado en datos públicos de Castilla y
+              León, para el X Concurso de Datos Abiertos.
             </span>
           </div>
           <nav aria-label="Pie de página">
+            <Link to="/">Explorar</Link>
+            <Link to="/desde-fp">Explorar FP</Link>
+            <Link to="/desde-ocupacion">Buscar profesión</Link>
+            <Link to="/desde-oferta">Ofertas</Link>
+            <Link to="/donde-estudiar">Dónde estudiar</Link>
+            <Link to="/comparar">Comparar ingresos</Link>
+            <Link to="/recursos">Formación complementaria</Link>
             <Link to="/datos-abiertos">Datos abiertos</Link>
-            <Link to="/metodologia">Metodología</Link>
+            <Link to="/metodologia">Método y límites</Link>
             <Link to="/metodologia#limitaciones">Limitaciones</Link>
             <Link to="/para-organizaciones">Para organizaciones</Link>
             <Link to="/accesibilidad">Accesibilidad</Link>
           </nav>
-          <p>Datos públicos estatales y de Castilla y León</p>
         </div>
       </footer>
     </>

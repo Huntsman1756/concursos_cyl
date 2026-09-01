@@ -7,8 +7,10 @@ import {
   Clock3,
   Database,
   Eye,
+  ExternalLink as ExternalLinkIcon,
   FileCheck2,
   GraduationCap,
+  Info,
   Menu,
   Printer,
   Search,
@@ -28,8 +30,10 @@ export type IconName =
   | "clock"
   | "database"
   | "eye"
+  | "external-link"
   | "file-check"
   | "graduation-cap"
+  | "info"
   | "menu"
   | "printer"
   | "search"
@@ -46,8 +50,10 @@ const icons: Record<IconName, LucideIcon> = {
   clock: Clock3,
   database: Database,
   eye: Eye,
+  "external-link": ExternalLinkIcon,
   "file-check": FileCheck2,
   "graduation-cap": GraduationCap,
+  info: Info,
   menu: Menu,
   printer: Printer,
   search: Search,

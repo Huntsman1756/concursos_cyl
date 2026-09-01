@@ -103,6 +103,7 @@ import {
   TrainingSourceRecordSchema,
   type TrainingSourceRecord,
 } from "../../data/schemas/trainingSource";
+import { OfferEvidenceResourceSchema } from "../../data/schemas/offerEvidence";
 import { loadApprovedMappings } from "../../src/domain/occupation";
 import { PublishedRequirementsResourceSchema } from "../../src/domain/requirements";
 import { fetchAllRecords } from "./fetchAllRecords";
@@ -275,7 +276,14 @@ const RESOURCE_DEFINITIONS = {
   },
 } as const;
 
-type ResourceKey = GeneratedResourceKey;
+// Offer evidence is an activation-time derived overlay. It is validated and
+// retained by this module, but it is not produced by the source snapshot
+// builder itself.
+const SNAPSHOT_BUILDER_RESOURCE_KEYS = GENERATED_RESOURCE_KEYS.filter(
+  (key) => key !== "offerEvidence",
+);
+
+type ResourceKey = Exclude<GeneratedResourceKey, "offerEvidence">;
 
 interface PreviousSnapshot {
   manifest: LoadableGeneratedManifest;
@@ -1038,13 +1046,18 @@ async function validateSnapshotDirectory(
     const filePath = resourceFileInSnapshot(directory, snapshot.resourcePath);
     await assertPhysicalPath(root, filePath);
     const json = JSON.parse(await readFile(filePath, "utf8"));
-    const definition = RESOURCE_DEFINITIONS[key as ResourceKey];
+    const definition =
+      key === "offerEvidence"
+        ? undefined
+        : RESOURCE_DEFINITIONS[key as ResourceKey];
     const records =
-      key === "sepeOccupationMarket"
-        ? adaptSepeOccupationMarketResource(json).records
-        : definition === undefined
-          ? z.array(z.unknown()).parse(json)
-          : (definition.schema.parse(json) as unknown[]);
+      key === "offerEvidence"
+        ? OfferEvidenceResourceSchema.parse(json).records
+        : key === "sepeOccupationMarket"
+          ? adaptSepeOccupationMarketResource(json).records
+          : definition === undefined
+            ? z.array(z.unknown()).parse(json)
+            : (definition.schema.parse(json) as unknown[]);
     if (records.length !== snapshot.recordCount) {
       throw new Error(`Snapshot count mismatch for additive resource ${key}.`);
     }
@@ -1112,7 +1125,7 @@ async function validateFlatCandidateDirectory(
   staging: string,
   manifest: GeneratedManifest,
 ): Promise<void> {
-  for (const key of GENERATED_RESOURCE_KEYS) {
+  for (const key of SNAPSHOT_BUILDER_RESOURCE_KEYS) {
     const definition = RESOURCE_DEFINITIONS[key];
     const filePath = resolve(staging, definition.fileName);
     await assertPhysicalPath(root, filePath);
@@ -1578,7 +1591,7 @@ async function writeCandidate(
     derivedGraphCsv,
   );
   const resourceHashes = {} as Record<ResourceKey, string>;
-  for (const key of GENERATED_RESOURCE_KEYS) {
+  for (const key of SNAPSHOT_BUILDER_RESOURCE_KEYS) {
     const definition = RESOURCE_DEFINITIONS[key];
     const filePath = resolve(staging, definition.fileName);
     await safeWriteFile(
@@ -1677,7 +1690,7 @@ async function writeCandidate(
     generatedAt: fetchedAt,
     qualityStatus: "passed",
     resourceSnapshots: Object.fromEntries(
-      GENERATED_RESOURCE_KEYS.map((key) => [
+      SNAPSHOT_BUILDER_RESOURCE_KEYS.map((key) => [
         key,
         resourceSnapshot(key, resourceRecordCount(key)),
       ]),

@@ -12,7 +12,7 @@
   width: 100%;
   min-height: 3rem;
   padding: var(--space-3);
-  border: 1px solid var(--color-text-muted);
+  border: 1px solid var(--color-border-strong);
   border-radius: var(--radius-sm);
   color: var(--color-text);
   background: var(--color-surface);
@@ -20,6 +20,7 @@
 }
 
 .training-combobox input:focus-visible {
+  border-color: var(--color-primary);
   outline: none;
   box-shadow: var(--focus-ring);
 }
@@ -31,16 +32,20 @@
 }
 
 .training-combobox__options {
-  position: static;
-  max-height: min(18rem, calc(100vh - 10rem));
-  max-height: min(18rem, calc(100dvh - 10rem));
-  margin: var(--space-1) 0 0;
+  position: absolute;
+  z-index: 10;
+  top: 100%;
+  right: 0;
+  left: 0;
+  max-height: min(22rem, calc(100vh - 10rem));
+  max-height: min(22rem, calc(100dvh - 10rem));
+  margin: 0;
   padding: var(--space-2);
   overflow-y: auto;
   border: 1px solid var(--color-border);
   border-radius: var(--radius-sm);
   background: var(--color-surface);
-  box-shadow: var(--shadow-subtle);
+  box-shadow: var(--shadow-popover);
   list-style: none;
 }
 
@@ -54,8 +59,8 @@
 }
 
 .training-combobox__option[aria-selected="true"] {
-  color: var(--color-surface);
-  background: var(--color-primary);
+  color: var(--color-text);
+  background: var(--color-primary-soft);
 }
 
 .training-combobox__option small {
@@ -63,14 +68,7 @@
   font-size: 0.8rem;
 }
 
-.training-combobox__option[aria-selected="true"] small {
-  color: inherit;
-  opacity: 0.86;
-}
-
 .training-combobox__announcement {
-  position: absolute;
-  width: 1px;
   height: 1px;
   padding: 0;
   overflow: hidden;

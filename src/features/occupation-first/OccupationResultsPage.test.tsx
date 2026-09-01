@@ -262,7 +262,7 @@ describe("occupation-first results", () => {
       </MemoryRouter>,
     );
     expect(
-      await screen.findByRole("heading", { name: "Ocupación no encontrada" }),
+      await screen.findByRole("heading", { name: "Profesión no encontrada" }),
     ).toBeVisible();
     const manifest = currentManifestFixture();
     expect(fetch).toHaveBeenCalledWith(
@@ -282,7 +282,7 @@ describe("occupation-first results", () => {
       expect.anything(),
     );
     expect(
-      screen.getByRole("link", { name: "Buscar otra ocupación" }),
+      screen.getByRole("link", { name: "Buscar otra profesión" }),
     ).toHaveAttribute("href", "/desde-ocupacion");
     expect(
       screen.queryByRole("button", { name: "Imprimir esta orientación" }),
@@ -317,7 +317,7 @@ describe("occupation-first results", () => {
     );
     expect(
       await screen.findByText(
-        "Aún no hay una ruta formativa revisada para esta ocupación.",
+        "Aún no hay una ruta formativa comprobada para esta profesión",
       ),
     ).toBeVisible();
     expect(
@@ -347,78 +347,38 @@ describe("occupation-first results", () => {
     );
     const header = pageHeading.closest("header");
     if (header === null) throw new Error("Expected the occupation header.");
+    await userEvent
+      .setup()
+      .click(within(header).getByText("Fuente de esta profesión"));
     expect(
       within(header).getByRole("link", {
-        name: /Fuente: catálogo CNO-11/u,
+        name: /^Ver fuente oficial/u,
       }),
     ).toHaveAttribute("href", occupation.sourceUrl);
-    expect(
-      within(header).getByText("Catálogo comprobado el 5 de agosto de 2026"),
-    ).toBeVisible();
-    expect(screen.getByText(/Ocupación que quieres/)).toHaveTextContent(
-      /FP que te lleva a ella/,
+    expect(header).toHaveTextContent(
+      "Catálogo comprobado el 4 de agosto de 2026.",
     );
-    const routeSummary = screen.getByLabelText(
-      "Resumen de disponibilidad de FP",
-    );
-    expect(routeSummary).toHaveTextContent(/FP relacionadas2/);
-    expect(routeSummary).toHaveTextContent(/Centros3/);
-    expect(routeSummary).toHaveTextContent(/Provincias3/);
-    expect(within(routeSummary).getByText("centros publicados")).toBeVisible();
-    expect(
-      within(routeSummary).getByText("centros en provincias"),
-    ).toBeVisible();
-    expect(
-      within(routeSummary).queryByText("provincias con oferta"),
-    ).not.toBeInTheDocument();
-    const fpSourceLinks = within(routeSummary).getAllByRole("link", {
-      name: /Fuente: oferta FP JCyL/u,
-    });
-    expect(fpSourceLinks).toHaveLength(2);
-    for (const fpSourceLink of fpSourceLinks) {
-      expect(fpSourceLink).toHaveAttribute(
-        "href",
-        "https://analisis.datosabiertos.jcyl.es/records",
-      );
-    }
-    expect(
-      within(routeSummary).queryByRole("link", {
-        name: /Fuente: catálogo CNO-11/u,
-      }),
-    ).not.toBeInTheDocument();
     const cards = screen.getAllByTestId("training-route-card");
     expect(
-      within(cards[0]).getByText("Salida profesional oficial"),
-    ).toBeVisible();
-    expect(within(cards[1]).getByText("Relación revisada")).toBeVisible();
-    expect(
-      within(cards[0]).getByText("2 opciones de centro y modalidad publicadas"),
-    ).toBeVisible();
-    expect(within(cards[0]).getByText("Ávila y Valladolid")).toBeVisible();
-    expect(
-      within(cards[0]).getByText("A distancia y Presencial"),
-    ).toBeVisible();
-    expect(within(cards[0]).getByText("Grado superior · IFC03S")).toBeVisible();
-    expect(
-      within(cards[1]).getByText("Curso de especialización · IFC03SD"),
-    ).toBeVisible();
-    expect(
-      screen.getAllByRole("heading", {
-        level: 4,
-        name: "Centros formativos en Castilla y León",
-      }),
-    ).toHaveLength(2);
-    expect(screen.getByText(/Oferta FP JCyL: copia del/u)).toBeVisible();
-    expect(
-      screen.getAllByText(
-        "La salida aparece expresamente en el perfil profesional oficial del ciclo.",
+      within(cards[0]).getByText(
+        "El perfil oficial del ciclo incluye esta salida profesional.",
       ),
-    ).toHaveLength(1);
+    ).toBeVisible();
     expect(
-      screen.getAllByText(
-        "La relación se apoya en competencias compartidas y ha sido revisada antes de publicarse.",
+      within(cards[1]).getByText(
+        "Relación comprobada por competencias compartidas antes de publicarse.",
       ),
-    ).toHaveLength(1);
+    ).toBeVisible();
+    expect(
+      within(cards[0]).getByText("2 centros · Ávila, Valladolid"),
+    ).toBeVisible();
+    expect(cards[0]).toHaveTextContent("Grado superior");
+    expect(cards[0]).toHaveTextContent("IFC03S");
+    expect(cards[1]).toHaveTextContent("Curso de especialización");
+    expect(cards[1]).toHaveTextContent("IFC03SD");
+    expect(
+      screen.getByText(/Oferta formativa · snapshot consultado el/u),
+    ).toBeVisible();
     expect(
       screen.queryByText(/Datos formativos consultados/u),
     ).not.toBeInTheDocument();
@@ -432,14 +392,14 @@ describe("occupation-first results", () => {
     ).toHaveAttribute("href", "#mercado-laboral");
     expect(
       within(sectionNavigation).getByRole("link", {
-        name: "Rutas formativas",
+        name: "FP relacionadas",
       }),
     ).toHaveAttribute("href", "#rutas-formativas");
     expect(document.getElementById("mercado-laboral")).toHaveAccessibleName(
       "Mercado laboral de esta ocupación",
     );
     expect(document.getElementById("rutas-formativas")).toHaveAccessibleName(
-      "FP relacionadas",
+      "FP que te llevan a esta profesión",
     );
     expect(
       screen.queryByText(/mejor|puntuación|compatibilidad|%/i),
@@ -464,7 +424,11 @@ describe("occupation-first results", () => {
       </MemoryRouter>,
     );
     const cards = await screen.findAllByTestId("training-route-card");
-    await user.click(within(cards[0]).getByText("Ver cita exacta"));
+    await user.click(
+      within(cards[0]).getByLabelText(
+        "Fuente y revisión de la relación con Desarrollo de Aplicaciones Web",
+      ),
+    );
     expect(
       within(cards[0]).getByText(
         "Desarrollador de aplicaciones en entornos Web.",
@@ -498,24 +462,22 @@ describe("occupation-first results", () => {
 
     expect(
       await screen.findByRole("heading", {
-        name: "Disponibilidad de FP",
+        name: "FP que te llevan a esta profesión",
       }),
     ).toBeVisible();
-    const routeSummary = screen.getByLabelText(
-      "Resumen de disponibilidad de FP",
+    const header = screen
+      .getByRole("heading", {
+        name: occupation.preferredLabel,
+      })
+      .closest("header");
+    expect(header).not.toBeNull();
+    const professionSource = within(header!).getByText(
+      "Fuente de esta profesión",
     );
+    expect(professionSource.closest("details")).not.toBeNull();
+    await userEvent.setup().click(professionSource);
     expect(
-      screen.getByRole("link", { name: /Fuente: relación FP-ocupación/u }),
-    ).toHaveAttribute("target", "_blank");
-    const fpSourceLinks = within(routeSummary).getAllByRole("link", {
-      name: /Fuente: oferta FP JCyL/u,
-    });
-    expect(fpSourceLinks).toHaveLength(2);
-    for (const fpSourceLink of fpSourceLinks) {
-      expect(fpSourceLink).toHaveAttribute("target", "_blank");
-    }
-    expect(
-      screen.getByRole("link", { name: /Fuente: catálogo CNO-11/u }),
+      within(header!).getByRole("link", { name: /Ver fuente oficial/u }),
     ).toHaveAttribute("href", occupation.sourceUrl);
   });
 
@@ -532,7 +494,7 @@ describe("occupation-first results", () => {
     expect(
       await screen.findByRole("heading", {
         level: 2,
-        name: "Disponibilidad de FP",
+        name: "FP que te llevan a esta profesión",
       }),
     ).toBeVisible();
     expect(
@@ -603,6 +565,9 @@ describe("occupation-first results", () => {
     expect(
       within(panel).getByRole("link", { name: /Fuente oficial SEPE/i }),
     ).toHaveAttribute("href", sepeRecord.source.url);
+    await userEvent
+      .setup()
+      .click(within(panel).getByText("Ver contratos y paro por provincia"));
     const provinceTable = within(panel).getByRole("table");
     expect(within(provinceTable).getAllByRole("row")).toHaveLength(10);
     for (const province of SEPE_CYL_PROVINCES) {
@@ -645,7 +610,7 @@ describe("occupation-first results", () => {
     ).toBeVisible();
     expect(
       screen.getByText(
-        "Aún no hay una ruta formativa revisada para esta ocupación.",
+        "Aún no hay una ruta formativa comprobada para esta profesión",
       ),
     ).toBeVisible();
     const manifestRequests = vi
@@ -724,7 +689,11 @@ describe("occupation-first results", () => {
       </MemoryRouter>,
     );
     await screen.findByRole("heading", { name: occupation.preferredLabel });
-    await user.click(screen.getAllByText("Ver cita exacta")[0]);
+    await user.click(
+      screen.getAllByLabelText(
+        "Fuente y revisión de la relación con Desarrollo de Aplicaciones Web",
+      )[0],
+    );
     for (const storageWriteSpy of storageWriteSpies) {
       expect(storageWriteSpy).not.toHaveBeenCalled();
     }

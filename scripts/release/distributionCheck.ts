@@ -5,6 +5,7 @@ import { fileURLToPath } from "node:url";
 
 import { GeneratedManifestSchema } from "../../data/schemas/generated";
 import { isGenericImmutableGeneratedResourcePath } from "../../data/schemas/generatedResourceCatalog";
+import { OfferEvidenceResourceSchema } from "../../data/schemas/offerEvidence";
 import { adaptSepeOccupationMarketResource } from "../../data/schemas/sepeOccupationMarket";
 
 /** Release limits for generated public data copied into the deployable artifact. */
@@ -171,6 +172,15 @@ async function verifyManifestResources(
       } catch (error) {
         throw new Error(
           `Manifest resource ${key} failed SEPE resource schema validation: ${snapshot.resourcePath}.`,
+          { cause: error },
+        );
+      }
+    } else if (key === "offerEvidence") {
+      try {
+        recordCount = OfferEvidenceResourceSchema.parse(value).records.length;
+      } catch (error) {
+        throw new Error(
+          `Manifest resource ${key} failed offer evidence schema validation: ${snapshot.resourcePath}.`,
           { cause: error },
         );
       }

@@ -14,6 +14,12 @@ export default tseslint.config(
       ".worktrees",
       "_codex_tmp",
       "_codex_worktrees",
+      ".orca-local",
+      "analysis/carril_a_20260827",
+      "scripts/analysis/carril*.ts",
+      "scripts/analysis/ds_*.ts",
+      "prototypes",
+      "playwright.dev.config.ts",
     ],
   },
   {

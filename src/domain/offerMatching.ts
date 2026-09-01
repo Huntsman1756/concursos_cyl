@@ -26,6 +26,7 @@ import {
   type RelationshipType,
   type TrainingOccupationLink,
 } from "../../data/schemas/curatedMappings";
+import { OfferEvidenceRelationSchema } from "../../data/schemas/offerEvidence";
 import {
   JobOfferSchema,
   TrainingProgramSchema,
@@ -492,6 +493,53 @@ export const OfferMatchSchema = z
     }
   });
 
+const OfferEvidenceDisplayMatchRuleSchema = z.enum([
+  "reviewed_title_alias_exact",
+  "reviewed_title_alias_phrase",
+  "reviewed_published_qualification_exact",
+  "reviewed_exact_program_title",
+]);
+
+/** Runtime presentation shape for a relation already approved in offerEvidence. */
+export const OfferEvidenceDisplayMatchSchema = z
+  .object({
+    offerId: z.string().min(1),
+    occupationId: z.string().regex(/^occupation:cno11:\d{4}$/u),
+    programKey: z.string().min(1),
+    publishedAt: z.string().datetime(),
+    relationshipType: z.enum(["official_output", "reviewed_relationship"]),
+    requirements: z.array(PublishedRequirementSchema),
+    matchRule: OfferEvidenceDisplayMatchRuleSchema,
+    sidecarEvidence: OfferEvidenceRelationSchema,
+  })
+  .strict()
+  .superRefine((match, context) => {
+    if (
+      match.sidecarEvidence.programKey !== match.programKey ||
+      match.sidecarEvidence.occupationId !== match.occupationId ||
+      match.sidecarEvidence.relationshipType !== match.relationshipType
+    ) {
+      context.addIssue({
+        code: "custom",
+        path: ["sidecarEvidence"],
+        message:
+          "Offer evidence must identify the displayed approved relationship.",
+      });
+    }
+    if (match.sidecarEvidence.matchRule !== match.matchRule) {
+      context.addIssue({
+        code: "custom",
+        path: ["matchRule"],
+        message: "Offer evidence match rule must match its relation evidence.",
+      });
+    }
+  });
+
+export const OfferDisplayMatchSchema = z.union([
+  OfferMatchSchema,
+  OfferEvidenceDisplayMatchSchema,
+]);
+
 export const OfferMatchesSchema = z
   .array(OfferMatchSchema)
   .superRefine((matches, context) => {
@@ -509,6 +557,10 @@ export const OfferMatchesSchema = z
   });
 
 export type OfferMatch = z.infer<typeof OfferMatchSchema>;
+export type OfferEvidenceDisplayMatch = z.infer<
+  typeof OfferEvidenceDisplayMatchSchema
+>;
+export type OfferDisplayMatch = z.infer<typeof OfferDisplayMatchSchema>;
 
 const OfferMatchingDataSchema = z
   .object({

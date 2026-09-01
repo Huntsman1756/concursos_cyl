@@ -1,4 +1,10 @@
-import { cleanup, render, screen, within } from "@testing-library/react";
+import {
+  cleanup,
+  fireEvent,
+  render,
+  screen,
+  within,
+} from "@testing-library/react";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { LoadableGeneratedManifestSchema } from "../../../data/schemas/generated";
 import {
@@ -117,11 +123,9 @@ describe("OccupationMarketEvidence", () => {
     expect(panel).toHaveTextContent("2478");
     expect(panel).toHaveTextContent("−4,92 %");
     expect(panel).toHaveTextContent("17,5 %");
+    expect(panel).toHaveTextContent("Personas contratadas");
     expect(panel).toHaveTextContent(
-      "Personas contratadas (dato administrativo)",
-    );
-    expect(panel).toHaveTextContent(
-      "Conteo administrativo publicado por el SEPE; no es un censo de personas únicas ni una medida de vacantes o una predicción.",
+      "Conteo administrativo del SEPE: no es un censo de personas únicas ni una previsión.",
     );
     expect(
       within(panel).getByRole("link", { name: /Fuente oficial SEPE/i }),
@@ -130,6 +134,9 @@ describe("OccupationMarketEvidence", () => {
       within(panel).getByRole("link", { name: /Fuente oficial SEPE/i }),
     ).toHaveAttribute("rel", "noopener noreferrer");
     expect(panel).toHaveTextContent(SEPE_OCCUPATION_MARKET_ATTRIBUTION);
+    fireEvent.click(
+      within(panel).getByText("Ver contratos y paro por provincia"),
+    );
     const table = within(panel).getByRole("table");
     expect(within(table).getAllByRole("row")).toHaveLength(10);
     for (const province of SEPE_CYL_PROVINCES) {

@@ -1,8 +1,10 @@
 import { z } from "zod";
 
 import {
+  GENERATED_RESOURCE_KEY_PATTERN,
   GENERATED_RESOURCE_CATALOG,
   GENERATED_FOUNDATION_RESOURCE_KEYS,
+  GENERATED_SNAPSHOT_ID_PATTERN,
   generatedResourceFileNameForKey,
   isImmutableGeneratedResourceFilePath,
   isGenericImmutableGeneratedResourcePath,
@@ -282,6 +284,95 @@ export const GeneratedResourceSnapshotsSchema = z
     }
   });
 
+const GeneratedManifestActivationProvenanceSchema = z
+  .object({
+    schemaVersion: z.literal("1.0.0"),
+    kind: z.literal("immutable_candidate"),
+    candidateSnapshotId: z.string().regex(GENERATED_SNAPSHOT_ID_PATTERN),
+    sourceSnapshotId: z.string().regex(GENERATED_SNAPSHOT_ID_PATTERN),
+    sourceManifestSha256: z.string().regex(/^[a-f0-9]{64}$/u),
+    sourceResourceKeys: z
+      .array(z.string().regex(GENERATED_RESOURCE_KEY_PATTERN))
+      .min(1),
+    derivedResourceKeys: z
+      .array(z.string().regex(GENERATED_RESOURCE_KEY_PATTERN))
+      .min(1),
+    derivedResourceDependencies: z
+      .array(
+        z
+          .object({
+            resourceKey: z.string().regex(GENERATED_RESOURCE_KEY_PATTERN),
+            sourceSnapshotId: z.string().regex(GENERATED_SNAPSHOT_ID_PATTERN),
+            sourceResourceKeys: z
+              .array(z.string().regex(GENERATED_RESOURCE_KEY_PATTERN))
+              .min(1),
+          })
+          .strict(),
+      )
+      .min(1),
+  })
+  .strict()
+  .superRefine((provenance, context) => {
+    if (provenance.candidateSnapshotId === provenance.sourceSnapshotId) {
+      context.addIssue({
+        code: "custom",
+        path: ["sourceSnapshotId"],
+        message: "Candidate and source snapshots must be different.",
+      });
+    }
+    const allKeys = [
+      ...provenance.sourceResourceKeys,
+      ...provenance.derivedResourceKeys,
+    ];
+    if (new Set(allKeys).size !== allKeys.length) {
+      context.addIssue({
+        code: "custom",
+        path: ["derivedResourceKeys"],
+        message: "Source and derived resource keys must be disjoint.",
+      });
+    }
+    const derivedDependencies = new Set(
+      provenance.derivedResourceDependencies.map(
+        ({ resourceKey }) => resourceKey,
+      ),
+    );
+    if (
+      derivedDependencies.size !==
+        provenance.derivedResourceDependencies.length ||
+      provenance.derivedResourceKeys.some(
+        (key) => !derivedDependencies.has(key),
+      )
+    ) {
+      context.addIssue({
+        code: "custom",
+        path: ["derivedResourceDependencies"],
+        message: "Every derived resource must declare one dependency entry.",
+      });
+    }
+    for (const [index, dependency] of provenance.derivedResourceDependencies.entries()) {
+      if (dependency.sourceSnapshotId !== provenance.sourceSnapshotId) {
+        context.addIssue({
+          code: "custom",
+          path: ["derivedResourceDependencies", index, "sourceSnapshotId"],
+          message:
+            "Derived resource dependencies must use the manifest source snapshot.",
+        });
+      }
+      if (
+        dependency.sourceResourceKeys.some(
+          (key) => !provenance.sourceResourceKeys.includes(key),
+        )
+      ) {
+        context.addIssue({
+          code: "custom",
+          path: ["derivedResourceDependencies", index, "sourceResourceKeys"],
+          message:
+            "Derived dependencies must reference declared source resources.",
+        });
+      }
+    }
+  });
+
 export const ReconciliationCandidateSchema = z
   .object({
     value: z.string().nullable(),
@@ -338,10 +429,53 @@ export const GeneratedManifestSchema = z
     schemaVersion: z.literal("1.0.0"),
     generatedAt: z.string().datetime(),
     qualityStatus: z.enum(["passed", "stale"]),
+    snapshotId: z.string().regex(GENERATED_SNAPSHOT_ID_PATTERN).optional(),
+    activationProvenance:
+      GeneratedManifestActivationProvenanceSchema.optional(),
     resourceSnapshots: GeneratedResourceSnapshotsSchema,
     qualityReport: GeneratedQualityReportSchema,
   })
-  .strict();
+  .strict()
+  .superRefine((manifest, context) => {
+    const provenance = manifest.activationProvenance;
+    if (provenance === undefined) return;
+    if (manifest.snapshotId !== provenance.candidateSnapshotId) {
+      context.addIssue({
+        code: "custom",
+        path: ["snapshotId"],
+        message:
+          "Manifest snapshotId must match candidate activation provenance.",
+      });
+    }
+    const resourceKeys = Object.keys(manifest.resourceSnapshots);
+    const declaredKeys = [
+      ...provenance.sourceResourceKeys,
+      ...provenance.derivedResourceKeys,
+    ];
+    if (
+      resourceKeys.length !== declaredKeys.length ||
+      resourceKeys.some((key) => !declaredKeys.includes(key))
+    ) {
+      context.addIssue({
+        code: "custom",
+        path: ["activationProvenance"],
+        message:
+          "Activation provenance must partition every manifest resource.",
+      });
+    }
+    for (const key of resourceKeys) {
+      const resourcePath = manifest.resourceSnapshots[key]!.resourcePath;
+      const match = /^\/data\/v1\/snapshots\/([^/]+)\//u.exec(resourcePath);
+      if (match?.[1] !== provenance.candidateSnapshotId) {
+        context.addIssue({
+          code: "custom",
+          path: ["resourceSnapshots", key, "resourcePath"],
+          message:
+            "Activated candidate resources must use candidateSnapshotId.",
+        });
+      }
+    }
+  });
 
 const LegacyGeneratedManifestSchema = z
   .object({
@@ -409,6 +543,9 @@ export type GeneratedResourceSnapshots = z.infer<
 export type ReconciliationAnomaly = z.infer<typeof ReconciliationAnomalySchema>;
 export type GeneratedQualityReport = z.infer<
   typeof GeneratedQualityReportSchema
+>;
+export type GeneratedManifestActivationProvenance = z.infer<
+  typeof GeneratedManifestActivationProvenanceSchema
 >;
 export type JobOffer = z.infer<typeof JobOfferSchema>;
 export type GeneratedManifest = z.infer<typeof GeneratedManifestSchema>;

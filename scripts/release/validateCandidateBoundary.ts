@@ -14,6 +14,7 @@ import {
   type CandidateResourceKey,
 } from "../../data/schemas/candidateResourceAllowlist";
 import { GENERATED_RESOURCE_KEYS } from "../../data/schemas/generatedResourceCatalog";
+import { OfferEvidenceResourceSchema } from "../../data/schemas/offerEvidence";
 
 export interface CandidateBoundaryOptions {
   rootDir: string;
@@ -961,9 +962,11 @@ async function validateResourceSnapshots(
     const recordCount =
       key === "sepeOccupationMarket"
         ? assertCanonicalSepeCandidateResource(value).records.length
-        : Array.isArray(value)
-          ? value.length
-          : -1;
+        : key === "offerEvidence"
+          ? OfferEvidenceResourceSchema.parse(value).records.length
+          : Array.isArray(value)
+            ? value.length
+            : -1;
     if (recordCount !== snapshot.recordCount) {
       throw new Error(
         `${label} resource ${key} record count does not match its manifest snapshot.`,

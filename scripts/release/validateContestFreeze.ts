@@ -14,6 +14,7 @@ import {
   type CandidateResourceKey,
 } from "../../data/schemas/candidateResourceAllowlist";
 import type { TrainingProgram } from "../../data/schemas/generated";
+import { OfferEvidenceResourceSchema } from "../../data/schemas/offerEvidence";
 import { matchOffersForProgram } from "../../src/domain/offerMatching";
 import {
   validateCuratedMappings,
@@ -78,9 +79,6 @@ const FREEZE_KEYS = [
 ] as const;
 
 const CANONICAL_MANIFEST_PATH = "public/data/v1/manifest.json";
-const CANONICAL_SNAPSHOT_ID = "20260822085631889-fc9bf2ba23f9";
-const CANONICAL_MANIFEST_SHA256 =
-  "b41189db5e116bb83f2ec07e865909e6114c31622324e5c5f0f268161f2381e1";
 export const CONTEST_FREEZE_SOURCE_COMMIT_SHA =
   "032426013a88c35bad348f3c443dae7d9a1639a3";
 
@@ -710,10 +708,14 @@ function readCurrentManifest(rootDir: string): {
     value.resourceSnapshots,
     "public manifest.resourceSnapshots",
   );
-  assertResourceKeyOrder(
-    Object.keys(resourceSnapshotRecord),
-    "public manifest.resourceSnapshots candidate resource set",
-  );
+  try {
+    assertCandidateResourceSet(Object.keys(resourceSnapshotRecord));
+  } catch (error) {
+    throw new Error(
+      `public manifest.resourceSnapshots must match the candidate resource set: ${error instanceof Error ? error.message : String(error)}`,
+      { cause: error },
+    );
+  }
   const parsedSnapshots = Object.fromEntries(
     CANONICAL_RESOURCE_KEYS.map((key) => {
       const snapshot = record(
@@ -761,11 +763,6 @@ function readCurrentManifest(rootDir: string): {
     throw new Error("public manifest resources must share one snapshot ID");
   }
   const snapshotId = snapshotIds[0];
-  if (snapshotId !== CANONICAL_SNAPSHOT_ID) {
-    throw new Error(
-      `public manifest snapshot must be ${CANONICAL_SNAPSHOT_ID}; got ${snapshotId}`,
-    );
-  }
   const qualityReport = record(
     value.qualityReport,
     "public manifest.qualityReport",
@@ -781,11 +778,6 @@ function readCurrentManifest(rootDir: string): {
     ]),
   );
   const manifestSha256 = hashText(text);
-  if (manifestSha256 !== CANONICAL_MANIFEST_SHA256) {
-    throw new Error(
-      `public manifest SHA-256 must be ${CANONICAL_MANIFEST_SHA256}; got ${manifestSha256}`,
-    );
-  }
   return {
     text,
     manifest: {
@@ -817,11 +809,13 @@ function readResourceSnapshot(
   const recordCount =
     key === "sepeOccupationMarket"
       ? assertCanonicalSepeCandidateResource(value).records.length
-      : Array.isArray(value)
-        ? value.length
-        : (() => {
-            throw new Error(`public resource ${key} must be a JSON array`);
-          })();
+      : key === "offerEvidence"
+        ? OfferEvidenceResourceSchema.parse(value).records.length
+        : Array.isArray(value)
+          ? value.length
+          : (() => {
+              throw new Error(`public resource ${key} must be a JSON array`);
+            })();
   const actualHash = hashText(text);
   if (actualHash !== specification.sha256) {
     throw new Error(
@@ -928,22 +922,84 @@ function recomputeFreeze(
     publishedRequirements: resources.get("publishedRequirements") as never[],
     humanOverrides: [],
   };
-  const matchedOfferIdsSet = new Set<string>();
-  const matchedRelationKeysSet = new Set<string>();
-  const matchedProgramKeys: string[] = [];
-  for (const program of programs) {
-    const matches = matchOffersForProgram(program.programKey, data);
-    if (matches.length === 0) continue;
-    matchedProgramKeys.push(program.programKey);
-    for (const match of matches) {
-      matchedOfferIdsSet.add(match.offerId);
-      matchedRelationKeysSet.add(`${program.programKey}|${match.occupationId}`);
+  const offerEvidence = OfferEvidenceResourceSchema.parse(
+    resources.get("offerEvidence"),
+  );
+  const sidecarOfferIdsSet = new Set<string>();
+  const sidecarRelationKeysSet = new Set<string>();
+  const sidecarProgramKeysSet = new Set<string>();
+  for (const record of offerEvidence.records) {
+    if (record.relations.length === 0) continue;
+    sidecarOfferIdsSet.add(record.offerId);
+    for (const relation of record.relations) {
+      const relationKey = `${relation.programKey}|${relation.occupationId}`;
+      if (!approvedRelationKeys.includes(relationKey)) {
+        throw new Error(
+          `Offer evidence contains an unapproved relation: ${relationKey}.`,
+        );
+      }
+      sidecarRelationKeysSet.add(relationKey);
+      sidecarProgramKeysSet.add(relation.programKey);
     }
   }
-  const matchedOfferIds = sortedUnique([...matchedOfferIdsSet]);
-  const matchedRelationKeys = sortedUnique([...matchedRelationKeysSet]);
+  const baselineOfferIdsSet = new Set<string>();
+  for (const program of programs) {
+    const matches = matchOffersForProgram(program.programKey, data);
+    for (const match of matches) {
+      const relationKey = `${program.programKey}|${match.occupationId}`;
+      const record = offerEvidence.records.find(
+        ({ offerId }) => offerId === match.offerId,
+      );
+      if (
+        record === undefined ||
+        !record.relations.some(
+          (relation) =>
+            `${relation.programKey}|${relation.occupationId}` === relationKey,
+        )
+      ) {
+        throw new Error(
+          `Offer evidence does not preserve the runtime matcher relation: ${match.offerId}/${relationKey}.`,
+        );
+      }
+      baselineOfferIdsSet.add(match.offerId);
+    }
+  }
+  if (
+    !Number.isInteger(offerEvidence.counts.offersWithReviewedFpRelationship)
+  ) {
+    throw new Error("Offer evidence reviewed-offer count is invalid.");
+  }
+  if (
+    offerEvidence.counts.offersWithReviewedFpRelationship !==
+    sidecarOfferIdsSet.size
+  ) {
+    throw new Error(
+      "Offer evidence reviewed-offer count does not match its relations.",
+    );
+  }
+  if (
+    offerEvidence.counts.reviewedRelationCount !==
+    offerEvidence.records.reduce(
+      (count, record) => count + record.relations.length,
+      0,
+    )
+  ) {
+    throw new Error(
+      "Offer evidence relation count does not match its records.",
+    );
+  }
+  for (const offerId of baselineOfferIdsSet) {
+    if (!sidecarOfferIdsSet.has(offerId)) {
+      throw new Error(
+        `Offer evidence does not preserve the runtime matcher offer: ${offerId}.`,
+      );
+    }
+  }
+  const matchedOfferIds = sortedUnique([...sidecarOfferIdsSet]);
+  const matchedRelationKeys = sortedUnique([...sidecarRelationKeysSet]);
+  const matchedProgramKeys = sortedUnique([...sidecarProgramKeysSet]);
   const zeroReviewedRelationKeys = approvedRelationKeys.filter(
-    (key) => !matchedRelationKeysSet.has(key),
+    (key) => !sidecarRelationKeysSet.has(key),
   );
   const reviewedProgramKeys = sortedUnique(
     approvedRelationKeys.map((key) => key.split("|", 1)[0]),

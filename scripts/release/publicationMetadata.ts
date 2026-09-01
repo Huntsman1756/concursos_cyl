@@ -5,7 +5,7 @@ const PUBLICATION_METADATA_MARKER = "<!-- salida-publication-metadata -->";
 const PUBLICATION_TITLE = "SALIDA CyL" as const;
 const PUBLICATION_DESCRIPTION =
   "Explora relaciones revisadas entre formación profesional y ocupaciones en Castilla y León con datos abiertos.";
-const PUBLICATION_THEME_COLOR = "#7f1734" as const;
+const PUBLICATION_THEME_COLOR = "#102a43" as const;
 
 export interface PublicationMetadata {
   canonicalUrl: string;
@@ -13,7 +13,7 @@ export interface PublicationMetadata {
   description: string;
   socialImageUrl: string;
   faviconUrl: string;
-  themeColor: "#7f1734";
+  themeColor: "#102a43";
 }
 
 export function publicationMetadata(

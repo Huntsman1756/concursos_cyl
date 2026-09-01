@@ -69,11 +69,11 @@ describe("asset budget", () => {
     expect(DEFAULT_ASSET_DIRECTORY).toBe("dist");
   });
 
-  it("keeps deliberately rounded caps for the measured final static build", () => {
+  it("keeps deliberately rounded caps for the measured Expansion V1 build", () => {
     expect(ASSET_BUDGET).toEqual({
       totalBytes: 1_800_000,
-      javascriptBytes: 550_000,
-      stylesheetBytes: 80_000,
+      javascriptBytes: 580_000,
+      stylesheetBytes: 90_000,
       imageBytes: 1_150_000,
     });
   });

@@ -14,6 +14,8 @@ La referencia funcional certificada anterior es `v2026.08.27-candidate.4`, commi
 
 SALIDA CyL ordena una decisión que normalmente obliga a saltar entre FP, ocupaciones, empleo y centros. Permite consultar 187 ciclos oficiales y 502 grupos primarios CNO-11. La ficha separa salidas oficiales, relaciones FP-ocupación aprobadas, ofertas alcanzadas, centros y fuentes.
 
+Las ofertas relacionadas solo aparecen cuando la relación FP-ocupación ha pasado revisión; no se presentan como un buscador laboral general.
+
 Dos recorridos muestran el valor en pocos segundos. Desde FP: [Cuidados Auxiliares de Enfermería (SAN21)](https://salida-cyl.157-90-22-40.sslip.io/desde-fp/SAN21) lleva a ocupaciones revisadas y a ofertas de la instantánea con correspondencia validada. Desde ocupación: [Auxiliares de enfermería hospitalaria (CNO 5611)](https://salida-cyl.157-90-22-40.sslip.io/desde-ocupacion/occupation%3Acno11%3A5611) devuelve la FP relacionada. La cobertura congelada contiene 264 relaciones FP-ocupación, 35 alias aprobados, 113 cualificaciones distintas y 130 claves de modalidad. El SEPE aporta 116 de 116 páginas de ocupación consultadas para `2026-07`.
 
 ## 2. Valor económico

@@ -7,6 +7,7 @@ import type {
   SessionChecklistItem,
 } from "../domain/actionEngine";
 import { trainingLevelLabel } from "../domain/trainingPresentation";
+import { contextualCentersPath } from "../app/routePaths";
 
 type ExploreUnpublishedRequirementAction = Extract<
   ReliableAction,
@@ -22,6 +23,7 @@ interface ActionPanelProps {
   onExploreUnpublishedRequirement: (
     action: ExploreUnpublishedRequirementAction,
   ) => void;
+  hideOfferAccessActions?: boolean;
 }
 
 export function ActionPanel({
@@ -31,16 +33,27 @@ export function ActionPanel({
   onAddChecklist,
   onRemoveChecklist,
   onExploreUnpublishedRequirement,
+  hideOfferAccessActions = false,
 }: ActionPanelProps) {
-  const visibleActions = actions.filter(
-    (action) =>
+  const visibleActions = actions.filter((action) => {
+    if (
+      hideOfferAccessActions &&
+      (action.actionType === "open_original_offer" ||
+        action.actionType === "verify_offer_requirements")
+    ) {
+      return false;
+    }
+    return (
       action.actionType !== "open_original_offer" ||
       !actions.some(
         (candidate) =>
           candidate.actionType === "verify_offer_requirements" &&
           candidate.href === action.href,
-      ),
-  );
+      )
+    );
+  });
+
+  if (visibleActions.length === 0 && checklist.length === 0) return null;
 
   return (
     <div className="action-panel">
@@ -80,7 +93,7 @@ export function ActionPanel({
                       <li key={routeProgramKey}>
                         <Link
                           className="action-link"
-                          to={`/formacion/${encodeURIComponent(routeProgramKey)}`}
+                          to={contextualCentersPath(routeProgramKey)}
                         >
                           {program.programTitle},{" "}
                           {trainingLevelLabel(program.level)},{" "}

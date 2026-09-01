@@ -1,19 +1,21 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Link, useParams, useSearchParams } from "react-router-dom";
-import { REVIEWED_PROGRAM_QUALIFICATION_LINKS } from "../../../data/catalogs/reviewedProgramQualifications";
-import { REVIEWED_QUALIFICATIONS } from "../../../data/catalogs/reviewedQualifications";
 import type {
   JobOffer,
   LoadableGeneratedManifest,
   SourceSnapshot,
   TrainingProgram,
 } from "../../../data/schemas/generated";
+import type { OfferEvidenceResource } from "../../../data/schemas/offerEvidence";
+import { REVIEWED_PROGRAM_QUALIFICATION_LINKS } from "../../../data/catalogs/reviewedProgramQualifications";
+import { REVIEWED_QUALIFICATIONS } from "../../../data/catalogs/reviewedQualifications";
 import type { OutcomeIndicatorsResource } from "../../../data/schemas/outcomes";
 import type { ProfessionalProfile } from "../../../data/schemas/professionalProfiles";
 import {
   loadAuditedRelationships,
   loadFoundationResources,
   loadManifest,
+  loadOfferEvidence,
   loadOutcomeIndicators,
   loadProfessionalProfiles,
   loadPublishedRequirements,
@@ -26,19 +28,26 @@ import {
 import { indexIncomeOutcomes } from "../../domain/outcomes";
 import { deriveActions } from "../../domain/actionEngine";
 import { deriveEvidenceState, orderOfferMatches } from "../../domain/evidence";
+import { createOfferEvidenceMatch } from "../../domain/offerEvidence";
 import {
   matchOffersForProgram,
-  type OfferMatch,
+  type OfferDisplayMatch,
 } from "../../domain/offerMatching";
 import type { OfferPublishedRequirements } from "../../domain/requirements";
 import type { ReliableAction } from "../../domain/actionEngine";
 import { ReliableActionSchema } from "../../domain/actionEngine";
 import { useDecisionSession } from "../../domain/session";
 import { trainingLevelLabel } from "../../domain/trainingPresentation";
+import { Breadcrumbs } from "../../components/Breadcrumbs";
 import { ExternalLink } from "../../components/ExternalLink";
-import { FragmentLink } from "../../components/FragmentLink";
+import { InfoDisclosure } from "../../components/InfoDisclosure";
 import { PrintButton } from "../../components/PrintButton";
 import { useRouteReady } from "../../app/RouteReadyContext";
+import {
+  contextualCentersPath,
+  occupationDetailPath,
+  trainingOffersPath,
+} from "../../app/routePaths";
 import { OfferEvidenceCard } from "./OfferEvidenceCard";
 import { TerritorialDistribution } from "./TerritorialDistribution";
 import {
@@ -67,7 +76,8 @@ interface ReadyResults {
   professionalProfiles: ProfessionalProfile[];
   foundation: LoadedFoundationResources;
   regionalContext: LoadedRegionalContext;
-  matches: OfferMatch[];
+  matches: OfferDisplayMatch[];
+  offerEvidence: OfferEvidenceResource | null;
   outcome: TrainingOutcomeState;
 }
 
@@ -76,6 +86,8 @@ type ResultsState =
   | { status: "failed" }
   | { status: "unknown" }
   | ReadyResults;
+
+const INITIAL_VISIBLE_OFFERS = 8;
 
 function snapshotDate(manifest: LoadableGeneratedManifest): string {
   const snapshot = manifest.resourceSnapshots.jobOffers;
@@ -86,11 +98,6 @@ function snapshotDate(manifest: LoadableGeneratedManifest): string {
     year: "numeric",
     timeZone: "UTC",
   }).format(new Date(instant));
-}
-
-function evidenceDate(snapshot: SourceSnapshot | undefined): string | null {
-  if (snapshot === undefined) return null;
-  return snapshot.sourceUpdatedAt ?? snapshot.snapshotFetchedAt;
 }
 
 function shortDate(value: string): string {
@@ -162,6 +169,9 @@ export function TrainingResultsPage() {
     ReliableAction,
     { actionType: "explore_unpublished_requirement" }
   > | null>(null);
+  const [visibleOfferCounts, setVisibleOfferCounts] = useState<
+    Record<string, number>
+  >({});
   const filterNoticeFocusRequestedRef = useRef(false);
   const filterNoticeRef = useRef<HTMLDivElement | null>(null);
   const outcomeControllerRef = useRef<AbortController | null>(null);
@@ -184,6 +194,13 @@ export function TrainingResultsPage() {
           (candidate) => candidate.programKey === programKey,
         );
         if (program === undefined) return { status: "unknown" as const };
+        const resourceSnapshots =
+          manifest.resourceSnapshots as typeof manifest.resourceSnapshots &
+            Record<"offerEvidence", { resourcePath: string } | undefined>;
+        const offerEvidence =
+          resourceSnapshots.offerEvidence === undefined
+            ? null
+            : await loadOfferEvidence(manifest, options);
         const [
           requirements,
           relationships,
@@ -195,17 +212,27 @@ export function TrainingResultsPage() {
           loadProfessionalProfiles(manifest, options),
           loadRegionalContext(manifest, options),
         ]);
-        const matches = matchOffersForProgram(programKey, {
-          programs: foundation.programs,
-          qualifications: REVIEWED_QUALIFICATIONS,
-          programQualificationLinks: REVIEWED_PROGRAM_QUALIFICATION_LINKS,
-          occupations: relationships.occupations,
-          aliases: relationships.aliases,
-          links: relationships.links,
-          offers: foundation.jobOffers,
-          publishedRequirements: requirements,
-          humanOverrides: [],
-        });
+        const matches =
+          offerEvidence === null
+            ? matchOffersForProgram(programKey, {
+                programs: foundation.programs,
+                qualifications: REVIEWED_QUALIFICATIONS,
+                programQualificationLinks: REVIEWED_PROGRAM_QUALIFICATION_LINKS,
+                occupations: relationships.occupations,
+                aliases: relationships.aliases,
+                links: relationships.links,
+                offers: foundation.jobOffers,
+                publishedRequirements: requirements,
+                humanOverrides: [],
+              })
+            : offerEvidence.records.flatMap((record) => {
+                const relation = record.relations.find(
+                  (candidate) => candidate.programKey === programKey,
+                );
+                return relation === undefined
+                  ? []
+                  : [createOfferEvidenceMatch(record, relation, requirements)];
+              });
         return {
           status: "ready" as const,
           program,
@@ -218,6 +245,7 @@ export function TrainingResultsPage() {
           foundation,
           regionalContext,
           matches,
+          offerEvidence,
           outcome: { status: "not-requested" as const },
         };
       })
@@ -304,7 +332,15 @@ export function TrainingResultsPage() {
     [state, programKey],
   );
 
-  const hasApprovedRelationship = approvedLinks.length > 0;
+  const hasOfferEvidenceRelationship =
+    state.status === "ready" &&
+    (state.offerEvidence === null
+      ? state.matches.length > 0
+      : state.offerEvidence.records.some((record) =>
+          record.relations.some(
+            (relation) => relation.programKey === programKey,
+          ),
+        ));
 
   const resolvedOccupations = useMemo(
     () =>
@@ -345,6 +381,16 @@ export function TrainingResultsPage() {
       );
   }, [programKey, state]);
 
+  const centersByProvince = useMemo(() => {
+    const groups = new Map<string, typeof studyCenters>();
+    for (const center of studyCenters) {
+      const existing = groups.get(center.province);
+      if (existing === undefined) groups.set(center.province, [center]);
+      else existing.push(center);
+    }
+    return [...groups.entries()];
+  }, [studyCenters]);
+
   const latestProvincialContracts = useMemo(() => {
     if (state.status !== "ready") return [];
     const relevantProvinces = new Set(
@@ -370,16 +416,6 @@ export function TrainingResultsPage() {
     );
   }, [selectedProvince, state, studyCenters]);
 
-  const municipalityByLocation = useMemo(() => {
-    if (state.status !== "ready") return new Map<string, number>();
-    return new Map(
-      state.regionalContext.municipalities.map((municipality) => [
-        `${normalizedLocation(municipality.municipalityName)}|${normalizedLocation(municipality.provinceName)}`,
-        municipality.population,
-      ]),
-    );
-  }, [state]);
-
   const territorialCenters = useMemo<TerritorialCenterRecord[]>(() => {
     if (state.status !== "ready") return [];
     return mergeTerritorialCenterCoordinates(
@@ -392,9 +428,6 @@ export function TrainingResultsPage() {
       state.regionalContext.educationCenterDirectory,
     );
   }, [state, studyCenters]);
-
-  const visibleStudyCenters = studyCenters.slice(0, 4);
-  const visibleProvincialContracts = latestProvincialContracts.slice(0, 4);
 
   if (
     state.status === "loading" ||
@@ -471,26 +504,27 @@ export function TrainingResultsPage() {
   const educationCenterDirectorySnapshot =
     resourceSnapshots.educationCenterDirectory;
   const offersSnapshot = resourceSnapshots.jobOffers;
-  const profilesEvidenceDate = evidenceDate(profilesSnapshot);
+  const profilesEvidenceDate =
+    profilesSnapshot?.sourceUpdatedAt ?? profilesSnapshot?.snapshotFetchedAt;
   const relationshipEvidenceDate =
-    approvedLinks[0]?.reviewedAt ?? evidenceDate(relationshipsSnapshot);
-  const offersEvidenceDate = evidenceDate(offersSnapshot);
-  const offeringsEvidenceDate = evidenceDate(offeringsSnapshot);
+    approvedLinks[0]?.reviewedAt ??
+    relationshipsSnapshot?.sourceUpdatedAt ??
+    relationshipsSnapshot?.snapshotFetchedAt;
+  const offersEvidenceDate =
+    offersSnapshot.sourceUpdatedAt ?? offersSnapshot.snapshotFetchedAt;
+  const offeringsEvidenceDate =
+    offeringsSnapshot.sourceUpdatedAt ?? offeringsSnapshot.snapshotFetchedAt;
   const sectionNavigationLinks = [
-    { href: "#donde-estudiar", label: "Dónde estudiar" },
-    { href: "#salidas-profesionales", label: "Salidas profesionales" },
-    ...(resolvedOccupations.length === 0
-      ? []
-      : [{ href: "#ocupaciones-revisadas", label: "Ocupaciones revisadas" }]),
-    ...(hasApprovedRelationship && orderedMatches.length > 0
+    { href: "#salidas-profesionales", label: "Salidas relacionadas" },
+    ...(hasOfferEvidenceRelationship
       ? [{ href: "#ofertas-relacionadas", label: "Ofertas relacionadas" }]
       : []),
-    { href: "#base-cotizacion-observada", label: "Base de cotización" },
-    { href: "#contexto-provincial", label: "Contexto provincial" },
-    ...(educationCenterDirectorySnapshot === undefined
-      ? []
-      : [{ href: "#distribucion-centros", label: "Distribución de centros" }]),
+    { href: "#donde-estudiar", label: "Dónde estudiar" },
+    { href: "#contexto", label: "Contexto" },
   ];
+  const visibleOfferCount =
+    visibleOfferCounts[programKey] ?? INITIAL_VISIBLE_OFFERS;
+  const visibleMatches = orderedMatches.slice(0, visibleOfferCount);
 
   function applyUnpublishedRequirementFilter(
     action: Extract<
@@ -520,29 +554,135 @@ export function TrainingResultsPage() {
 
   return (
     <section
-      className="training-page"
+      className="training-page decision-result-page training-result-page"
       aria-labelledby="training-results-heading"
     >
-      <header className="training-page__header">
-        <Link to="/desde-fp" data-print-hidden="true">
-          Cambiar ciclo
-        </Link>
-        <p
-          className="training-page__eyebrow training-page__direction"
-          aria-label="Tu título de Formación Profesional conduce a ocupaciones con evidencia"
-        >
-          <span>Tu título de FP</span>
-          <span aria-hidden="true">→</span>
-          <span>Ocupaciones con evidencia</span>
-        </p>
-        <h1 id="training-results-heading">{state.program.programTitle}</h1>
-        <p>
-          {trainingLevelLabel(state.program.level)} · Código oficial{" "}
-          {state.program.programKey}
-        </p>
+      <Breadcrumbs
+        items={[
+          { label: "Inicio", to: "/" },
+          { label: "Explorar FP", to: "/desde-fp" },
+          { label: state.program.programTitle },
+        ]}
+      />
+      <header className="training-page__header result-header">
+        <div className="result-header__top">
+          <div className="result-header__main">
+            <Link
+              to="/desde-fp"
+              className="training-page__back"
+              data-print-hidden="true"
+            >
+              Cambiar de ciclo
+            </Link>
+            <h1 id="training-results-heading">{state.program.programTitle}</h1>
+            <p className="training-page__meta">
+              {trainingLevelLabel(state.program.level)}
+              <span className="training-page__code">
+                {" "}
+                · código oficial {state.program.programKey}
+              </span>
+            </p>
+            <p className="training-page__lead">
+              Desde este ciclo puedes explorar profesiones, ofertas relacionadas
+              y centros donde seguir formándote.
+            </p>
+          </div>
+          <div className="training-page__tools" data-print-hidden="true">
+            <PrintButton className="secondary-button" />
+          </div>
+        </div>
         {selectedProvince !== null && (
-          <p>Contexto provincial elegido: {selectedProvince}</p>
+          <p className="training-page__meta">
+            Contexto provincial elegido: {selectedProvince}
+          </p>
         )}
+        <div className="training-page__summary result-summary">
+          <span>
+            <strong>{resolvedOccupations.length}</strong>{" "}
+            {resolvedOccupations.length === 1
+              ? "profesión en la que puedes trabajar"
+              : "profesiones en las que puedes trabajar"}
+          </span>
+          <span>
+            <strong>{orderedMatches.length}</strong>{" "}
+            {orderedMatches.length === 1 ? "oferta" : "ofertas"} en la copia del{" "}
+            {shortDate(offersEvidenceDate)}
+          </span>
+          <span>
+            <strong>{studyCenters.length}</strong>{" "}
+            {studyCenters.length === 1
+              ? "centro donde estudiar"
+              : "centros donde estudiar"}
+          </span>
+          <InfoDisclosure label="De dónde sale cada cifra">
+            <ul className="summary-sources">
+              <li>
+                Profesiones: relación FP-ocupación revisada.{" "}
+                {(approvedLinks[0] !== undefined ||
+                  relationshipsSnapshot !== undefined) && (
+                  <ExternalLink
+                    href={
+                      approvedLinks[0]?.sourceUrl ??
+                      relationshipsSnapshot?.sourceUrl ??
+                      ""
+                    }
+                  >
+                    Ver fuente
+                  </ExternalLink>
+                )}
+                {relationshipEvidenceDate !== undefined && (
+                  <span>
+                    {" "}
+                    Revisada el {shortDate(relationshipEvidenceDate)}.
+                  </span>
+                )}
+              </li>
+              <li>
+                Ofertas de empleo: fuente actualizada el{" "}
+                {shortDate(offersEvidenceDate)}. Catálogo de ofertas de la
+                Junta.{" "}
+                {state.offerEvidence !== null && (
+                  <>
+                    Evidencia de relaciones generada el{" "}
+                    {shortDate(state.offerEvidence.generatedAt)}.{" "}
+                  </>
+                )}
+                <ExternalLink href={offersSnapshot.sourceUrl}>
+                  Ver fuente
+                </ExternalLink>
+              </li>
+              <li>
+                Centros: oferta de formación profesional publicada.{" "}
+                <ExternalLink href={offeringsSnapshot.sourceUrl}>
+                  Ver fuente
+                </ExternalLink>{" "}
+                {offeringsEvidenceDate !== undefined && (
+                  <span>
+                    Snapshot consultado el {shortDate(offeringsEvidenceDate)}.
+                  </span>
+                )}
+              </li>
+              <li>
+                Salidas oficiales del ciclo: perfiles profesionales de TodoFP.{" "}
+                {officialProfiles[0] !== undefined && (
+                  <ExternalLink href={officialProfiles[0].sourceUrl}>
+                    Ver fuente
+                  </ExternalLink>
+                )}
+                {profilesEvidenceDate !== undefined && (
+                  <span>
+                    {" "}
+                    Snapshot consultado el {shortDate(profilesEvidenceDate)}.
+                  </span>
+                )}
+              </li>
+            </ul>
+            <p>
+              Las ofertas proceden de una copia fechada y no representan todo el
+              mercado laboral.
+            </p>
+          </InfoDisclosure>
+        </div>
       </header>
       {hasInvalidProvince && (
         <p className="status-panel" role="status">
@@ -550,139 +690,6 @@ export function TrainingResultsPage() {
           oficial para consultar contexto provincial.
         </p>
       )}
-      <section
-        className="decision-basis"
-        aria-labelledby="decision-basis-title"
-      >
-        <div className="decision-basis__heading">
-          <p>Base para decidir</p>
-          <h2 id="decision-basis-title">Qué sabemos de este título</h2>
-        </div>
-        <dl className="result-summary" aria-label="Resumen con fuentes">
-          <div>
-            <dt>Salidas profesionales</dt>
-            <dd>
-              <strong>{officialProfiles.length}</strong>
-              <span className="result-summary__unit">perfiles oficiales</span>
-              <span className="result-summary__source">
-                {officialProfiles[0] !== undefined && (
-                  <ExternalLink href={officialProfiles[0].sourceUrl}>
-                    Fuente: TodoFP
-                  </ExternalLink>
-                )}
-                {profilesEvidenceDate !== null && (
-                  <time dateTime={profilesEvidenceDate}>
-                    Copia del {shortDate(profilesEvidenceDate)}
-                  </time>
-                )}
-              </span>
-            </dd>
-          </div>
-          <div>
-            <dt>Ocupaciones vinculadas</dt>
-            <dd>
-              <strong>{resolvedOccupations.length}</strong>
-              <span className="result-summary__unit">grupos revisados</span>
-              <span className="result-summary__source">
-                {(approvedLinks[0] !== undefined ||
-                  relationshipsSnapshot !== undefined) && (
-                  <ExternalLink
-                    href={
-                      approvedLinks[0]?.sourceUrl ??
-                      relationshipsSnapshot?.sourceUrl
-                    }
-                  >
-                    Fuente: relación revisada
-                  </ExternalLink>
-                )}
-                {relationshipEvidenceDate !== null && (
-                  <time dateTime={relationshipEvidenceDate}>
-                    {approvedLinks[0] === undefined ? "Copia" : "Revisada"} del{" "}
-                    {shortDate(relationshipEvidenceDate)}
-                  </time>
-                )}
-              </span>
-            </dd>
-          </div>
-          <div>
-            <dt>Ofertas relacionadas</dt>
-            <dd>
-              <strong>{orderedMatches.length}</strong>{" "}
-              <span className="result-summary__unit">
-                ofertas con correspondencia validada
-              </span>
-              <span className="result-summary__source">
-                <ExternalLink href={offersSnapshot.sourceUrl}>
-                  Fuente: ofertas ECYL
-                </ExternalLink>
-                {offersEvidenceDate !== null && (
-                  <time dateTime={offersEvidenceDate}>
-                    Copia del {shortDate(offersEvidenceDate)}
-                  </time>
-                )}
-              </span>
-            </dd>
-          </div>
-          <div>
-            <dt>Dónde estudiarlo</dt>
-            <dd>
-              <strong>{studyCenters.length}</strong>
-              <span className="result-summary__unit">centros publicados</span>
-              <span className="result-summary__source">
-                <ExternalLink href={offeringsSnapshot.sourceUrl}>
-                  Fuente: oferta FP JCyL
-                </ExternalLink>
-                {offeringsEvidenceDate !== null && (
-                  <time dateTime={offeringsEvidenceDate}>
-                    Copia del {shortDate(offeringsEvidenceDate)}
-                  </time>
-                )}
-              </span>
-            </dd>
-          </div>
-        </dl>
-        <p className="decision-basis__scope">
-          Solo mostramos relaciones revisadas para evitar coincidencias
-          incorrectas. La copia de ofertas no representa todo el mercado
-          laboral.
-        </p>
-      </section>
-      <nav
-        className="result-actions"
-        aria-label="Siguientes pasos"
-        data-print-hidden="true"
-      >
-        {resolvedOccupations.length > 0 ? (
-          <>
-            <FragmentLink
-              className="primary-button"
-              href="#ocupaciones-revisadas"
-            >
-              Ver ocupaciones revisadas
-            </FragmentLink>
-            <Link
-              className="secondary-button"
-              to={`/formacion/${encodeURIComponent(programKey)}`}
-            >
-              Ver centros y modalidades
-            </Link>
-          </>
-        ) : (
-          <Link
-            className="primary-button"
-            to={`/formacion/${encodeURIComponent(programKey)}`}
-          >
-            Ver centros y modalidades
-          </Link>
-        )}
-        <Link
-          className="result-actions__tertiary"
-          to={`/comparar?program=${encodeURIComponent(state.program.programKey)}`}
-        >
-          Comparar ingresos
-        </Link>
-        <PrintButton className="secondary-button" />
-      </nav>
       {stale && (
         <p className="stale-warning" role="status">
           No se han podido actualizar los datos. Mostramos la última copia
@@ -697,10 +704,7 @@ export function TrainingResultsPage() {
           aria-label="Filtro activo: ofertas relacionadas que no publican este requisito exacto."
           tabIndex={-1}
         >
-          <p>
-            Filtro activo: ofertas relacionadas que no publican este requisito
-            exacto.
-          </p>
+          <p>Filtro activo: ofertas que no publican ese requisito exacto.</p>
           <p>
             La ausencia en el texto publicado no demuestra que el requisito no
             exista.
@@ -717,74 +721,51 @@ export function TrainingResultsPage() {
       )}
       <ResultSectionNav links={sectionNavigationLinks} />
       <section
-        className="decision-evidence decision-evidence--primary"
-        aria-label="Dónde estudiar"
-      >
-        <div
-          id="donde-estudiar"
-          className="study-section"
-          aria-labelledby="donde-estudiar-heading"
-          tabIndex={-1}
-        >
-          <div className="section-heading">
-            <h2 id="donde-estudiar-heading">Dónde estudiar</h2>
-            <span>
-              {visibleStudyCenters.length} de {studyCenters.length} centros
-              publicados
-            </span>
-          </div>
-          {studyCenters.length === 0 ? (
-            <p>No hay centros publicados para este ciclo en la copia actual.</p>
-          ) : (
-            <ul className="study-center-preview">
-              {visibleStudyCenters.map((center) => {
-                const population = municipalityByLocation.get(
-                  `${normalizedLocation(center.locality)}|${normalizedLocation(center.province)}`,
-                );
-                return (
-                  <li key={center.centerCode}>
-                    <strong>{center.centerName}</strong>
-                    <span>
-                      {center.locality}, {center.province}
-                      {population === undefined
-                        ? ""
-                        : ` · ${new Intl.NumberFormat("es-ES").format(population)} habitantes`}
-                    </span>
-                  </li>
-                );
-              })}
-            </ul>
-          )}
-          <p className="evidence-limit">
-            La provincia solo limita el contexto contractual y la orientación de
-            adecuación; no filtra estos centros.
-          </p>
-          {educationCenterDirectorySnapshot !== undefined && (
-            <FragmentLink
-              className="evidence-link"
-              href="#distribucion-centros"
-            >
-              Ver los {studyCenters.length} centros
-            </FragmentLink>
-          )}
-        </div>
-      </section>
-      <section
         id="salidas-profesionales"
-        className="occupations-section"
+        className="outcomes-section"
         aria-labelledby="salidas-profesionales-heading"
         tabIndex={-1}
       >
-        <h2 id="salidas-profesionales-heading">
-          Salidas profesionales oficiales
-        </h2>
-        <p>
-          TodoFP identifica estos perfiles para el título. Describen trabajos a
-          los que prepara el ciclo; no significan que exista ahora una oferta
-          concreta en esta copia de datos.
-        </p>
+        <h2 id="salidas-profesionales-heading">Salidas relacionadas</h2>
+        {resolvedOccupations.length > 0 ? (
+          <ul className="occupation-links">
+            {resolvedOccupations.map((occupation) => (
+              <li key={occupation.occupationId}>
+                <Link to={occupationDetailPath(occupation.occupationId)}>
+                  <strong>{occupation.preferredLabel}</strong>
+                  <small>
+                    {occupation.relationshipType === "official_output"
+                      ? "Salida profesional publicada en el perfil oficial del ciclo."
+                      : "Relación profesional documentada en fuentes revisadas."}
+                  </small>
+                  {occupation.functionalBoundary !== undefined && (
+                    <small>
+                      {occupation.functionalBoundary.roleLevel === "assistant"
+                        ? "Alcance: puesto auxiliar. El título no acredita por sí solo toda la ocupación CNO-11."
+                        : "Ocupación afín: el título no acredita por sí solo toda la profesión."}
+                    </small>
+                  )}
+                  <span className="occupation-links__code">
+                    CNO-11 {occupation.classificationCode}
+                  </span>
+                  <span className="occupation-links__cta">
+                    Ver esta profesión <span aria-hidden="true">→</span>
+                  </span>
+                </Link>
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <p className="outcomes-section__empty">
+            Todavía no hemos podido comprobar en fuentes oficiales qué
+            profesiones se corresponden con este ciclo, así que no mostramos
+            ofertas para él. Puedes usar los nombres de abajo como términos de
+            búsqueda en portales de empleo.
+          </p>
+        )}
         {officialProfiles.length > 0 ? (
           <>
+            <h3>Salidas que publica el perfil oficial del ciclo</h3>
             <ul className="professional-output-list">
               {officialProfiles.slice(0, 6).map((profile) => (
                 <li key={profile.profileId}>{profile.outputLabel}</li>
@@ -800,9 +781,9 @@ export function TrainingResultsPage() {
                 </ul>
               </details>
             )}
-            <p>
+            <p className="outcomes-section__source">
               <ExternalLink href={officialProfiles[0]!.sourceUrl}>
-                Comprobar estas salidas en la ficha oficial de TodoFP
+                Comprobar en la ficha oficial de TodoFP
               </ExternalLink>
             </p>
           </>
@@ -810,76 +791,7 @@ export function TrainingResultsPage() {
           <p>No se han podido cargar las salidas oficiales de este ciclo.</p>
         )}
       </section>
-      {resolvedOccupations.length > 0 && (
-        <section
-          id="ocupaciones-revisadas"
-          className="occupations-section"
-          aria-labelledby="ocupaciones-revisadas-heading"
-          tabIndex={-1}
-        >
-          <h2 id="ocupaciones-revisadas-heading">
-            Grupos de ocupación revisados para buscar ofertas
-          </h2>
-          <ul className="reviewed-occupation-list">
-            {resolvedOccupations.map((occupation) => (
-              <li key={occupation.occupationId}>
-                <Link
-                  to={`/desde-ocupacion/${encodeURIComponent(occupation.occupationId)}`}
-                >
-                  <strong>{occupation.preferredLabel}</strong>
-                  {occupation.classificationCode !== "" && (
-                    <span>CNO-11 {occupation.classificationCode}</span>
-                  )}
-                  {occupation.functionalBoundary !== undefined && (
-                    <span>
-                      <strong>
-                        Alcance:{" "}
-                        {occupation.functionalBoundary.roleLevel === "assistant"
-                          ? "puesto auxiliar"
-                          : "ocupación afín"}
-                      </strong>{" "}
-                      El título no acredita por sí solo toda la ocupación
-                      CNO-11.
-                    </span>
-                  )}
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </section>
-      )}
-      {!hasApprovedRelationship ? (
-        <div className="status-panel">
-          <h2>Cómo buscar oportunidades ahora</h2>
-          <p>0 ofertas con correspondencia validada.</p>
-          <p>
-            Solo mostramos relaciones revisadas para evitar coincidencias
-            incorrectas. Las salidas oficiales están disponibles arriba. Todavía
-            no hay una relación revisada que permita buscar ofertas para este
-            ciclo sin mostrar coincidencias dudosas.
-          </p>
-          <p>
-            Usa los nombres oficiales como términos de búsqueda en los portales
-            de empleo y comprueba siempre los requisitos de cada oferta.
-          </p>
-        </div>
-      ) : orderedMatches.length === 0 ? (
-        <div className="status-panel">
-          <p>
-            {publicationFilter === null
-              ? `0 ofertas con correspondencia validada en la copia de datos del ${snapshotDate(state.manifest)}.`
-              : "0 ofertas con correspondencia validada en esta copia de datos que omitan publicar este requisito exacto."}
-          </p>
-          <p>
-            Solo mostramos relaciones revisadas para evitar coincidencias
-            incorrectas.
-          </p>
-          <p>
-            Esto no significa que no existan ofertas fuera de esta copia de
-            datos.
-          </p>
-        </div>
-      ) : (
+      {hasOfferEvidenceRelationship && (
         <section
           id="ofertas-relacionadas"
           className="offer-results"
@@ -887,165 +799,209 @@ export function TrainingResultsPage() {
           tabIndex={-1}
         >
           <div className="section-heading">
-            <h2 id="offer-results-title">Ofertas relacionadas ahora</h2>
-            <span>Copia del {snapshotDate(state.manifest)}</span>
+            <h2 id="offer-results-title">
+              Ofertas relacionadas con {state.program.programTitle}
+            </h2>
+            <span className="offer-results__heading-actions">
+              <span>
+                Ofertas de empleo · fecha usada {snapshotDate(state.manifest)}
+              </span>
+              <Link to={trainingOffersPath(programKey)}>
+                Abrir listado de ofertas <span aria-hidden="true">→</span>
+              </Link>
+            </span>
           </div>
-          <div className="offer-list">
-            {orderedMatches.map((match) => {
-              const offer = state.offers.find(({ id }) => id === match.offerId);
-              if (offer === undefined) return null;
-              const evidenceState = deriveEvidenceState(match, session.answers);
-              const remoteOrHybrid = match.requirements.some(
-                (requirement) =>
-                  requirement.category === "mobility_or_work_mode" &&
-                  (requirement.normalizedValue === "remote" ||
-                    requirement.normalizedValue === "hybrid"),
-              );
-              const suitable =
-                selectedProvince === null
-                  ? null
-                  : remoteOrHybrid ||
-                    normalizedLocation(offer.province) ===
-                      normalizedLocation(selectedProvince);
-              const actions = deriveActions({
-                offer,
-                evidenceState,
-                requirements: match.requirements,
-                answers: session.answers,
-                selectedProvince,
-                isSelectedProvinceSuitable: suitable,
-              });
-              return (
-                <div className="print-avoid-break" key={match.offerId}>
-                  <OfferEvidenceCard
-                    programs={state.programs}
-                    offer={offer}
-                    match={match}
-                    evidenceState={evidenceState}
-                    answers={session.answers}
-                    actions={actions}
-                    checklist={session.checklist}
-                    onAnswer={session.answerRequirement}
-                    onAddChecklist={session.addChecklistItem}
-                    onRemoveChecklist={session.removeChecklistItem}
-                    onExploreUnpublishedRequirement={
-                      applyUnpublishedRequirementFilter
-                    }
-                  />
-                </div>
-              );
-            })}
-          </div>
+          {orderedMatches.length === 0 ? (
+            <div className="status-panel">
+              <p>
+                {publicationFilter === null
+                  ? `0 ofertas con correspondencia validada en la copia de datos del ${shortDate(offersEvidenceDate)}.`
+                  : "Ninguna oferta de esta copia omite publicar justo ese requisito."}
+              </p>
+              <p>
+                No significa que no exista empleo en este sector: solo mostramos
+                la copia fechada de ofertas públicas, no el mercado completo.
+              </p>
+            </div>
+          ) : (
+            <>
+              <div className="offer-list">
+                {visibleMatches.map((match) => {
+                  const offer = state.offers.find(
+                    ({ id }) => id === match.offerId,
+                  );
+                  if (offer === undefined) return null;
+                  const evidenceState = deriveEvidenceState(
+                    match,
+                    session.answers,
+                  );
+                  const remoteOrHybrid = match.requirements.some(
+                    (requirement) =>
+                      requirement.category === "mobility_or_work_mode" &&
+                      (requirement.normalizedValue === "remote" ||
+                        requirement.normalizedValue === "hybrid"),
+                  );
+                  const suitable =
+                    selectedProvince === null
+                      ? null
+                      : remoteOrHybrid ||
+                        normalizedLocation(offer.province) ===
+                          normalizedLocation(selectedProvince);
+                  const actions = deriveActions({
+                    offer,
+                    evidenceState,
+                    requirements: match.requirements,
+                    answers: session.answers,
+                    selectedProvince,
+                    isSelectedProvinceSuitable: suitable,
+                  });
+                  return (
+                    <div className="print-avoid-break" key={match.offerId}>
+                      <OfferEvidenceCard
+                        programs={state.programs}
+                        offer={offer}
+                        match={match}
+                        evidenceState={evidenceState}
+                        answers={session.answers}
+                        actions={actions}
+                        checklist={session.checklist}
+                        onAnswer={session.answerRequirement}
+                        onAddChecklist={session.addChecklistItem}
+                        onRemoveChecklist={session.removeChecklistItem}
+                        onExploreUnpublishedRequirement={
+                          applyUnpublishedRequirementFilter
+                        }
+                      />
+                    </div>
+                  );
+                })}
+              </div>
+              {orderedMatches.length > visibleMatches.length ? (
+                <button
+                  className="secondary-button offer-results__more"
+                  type="button"
+                  onClick={() =>
+                    setVisibleOfferCounts((counts) => ({
+                      ...counts,
+                      [programKey]: Math.min(
+                        orderedMatches.length,
+                        (counts[programKey] ?? INITIAL_VISIBLE_OFFERS) + 12,
+                      ),
+                    }))
+                  }
+                >
+                  Mostrar más ofertas (quedan{" "}
+                  {orderedMatches.length - visibleMatches.length})
+                </button>
+              ) : null}
+            </>
+          )}
         </section>
       )}
       <section
-        className="supporting-evidence"
-        aria-label="Evidencia complementaria"
+        id="donde-estudiar"
+        className="centers-section"
+        aria-labelledby="donde-estudiar-heading"
+        tabIndex={-1}
       >
+        <div className="section-heading">
+          <h2 id="donde-estudiar-heading">Dónde estudiar</h2>
+          <span>
+            <Link
+              to={contextualCentersPath(programKey)}
+              className="centers-section__all"
+            >
+              Ver los {studyCenters.length} centros con direcciones y web
+            </Link>
+          </span>
+        </div>
+        {studyCenters.length === 0 ? (
+          <p>
+            No hay centros publicados para este ciclo en la copia actual. Esto
+            no significa que no se imparta: comprueba la oferta vigente en la
+            fuente oficial.
+          </p>
+        ) : (
+          <ul className="province-groups">
+            {centersByProvince.map(([province, centers]) => (
+              <li key={province}>
+                <strong>{province}</strong>
+                <span>
+                  {centers.length} {centers.length === 1 ? "centro" : "centros"}{" "}
+                  ·{" "}
+                  {new Intl.ListFormat("es-ES", {
+                    style: "narrow",
+                    type: "conjunction",
+                  }).format(centers.map((center) => center.locality))}
+                </span>
+              </li>
+            ))}
+          </ul>
+        )}
+      </section>
+      <section id="contexto" className="context-section" tabIndex={-1}>
+        <div className="section-heading">
+          <h2 id="contexto-heading">Contexto laboral e ingresos</h2>
+        </div>
+        <p className="context-section__note">
+          Datos agregados de referencia: no predicen tu situación personal ni
+          miden el mercado completo.
+        </p>
         <TrainingOutcomeEvidence
           program={state.program}
           outcome={state.outcome}
           outcomeSource={outcomeSource}
           onRequestLoad={requestOutcome}
         />
-        <section
-          className="decision-evidence decision-evidence--supporting"
-          aria-label="Evidencia territorial"
+        <Link
+          className="context-section__compare"
+          to={`/comparar?program=${encodeURIComponent(state.program.programKey)}`}
         >
-          <div
-            id="contexto-provincial"
-            className="regional-context"
-            aria-labelledby="contexto-provincial-heading"
-            tabIndex={-1}
-          >
-            <div className="section-heading">
-              <h2 id="contexto-provincial-heading">Contexto provincial</h2>
-              <span>
-                {visibleProvincialContracts.length} de{" "}
-                {latestProvincialContracts.length} provincias con contratos
-                registrados
-              </span>
-            </div>
-            {latestProvincialContracts.length === 0 ? (
-              <p>Sin contexto provincial para los centros mostrados.</p>
-            ) : (
-              <ul className="contract-context-list">
-                {visibleProvincialContracts.map((row) => (
-                  <li key={row.provinceCode}>
-                    <span>{row.provinceName}</span>
-                    <strong>
-                      {new Intl.NumberFormat("es-ES").format(
-                        row.totalContracts,
-                      )}
-                    </strong>
-                    <small>
-                      {new Intl.DateTimeFormat("es-ES", {
-                        month: "short",
-                        year: "numeric",
-                        timeZone: "UTC",
-                      }).format(new Date(row.month))}
-                    </small>
-                  </li>
-                ))}
-              </ul>
-            )}
-            {latestProvincialContracts.length >
-              visibleProvincialContracts.length && (
-              <details className="contract-context-more">
-                <summary>
-                  Ver las {latestProvincialContracts.length} provincias
-                </summary>
-                <ul className="contract-context-list">
-                  {latestProvincialContracts
-                    .slice(visibleProvincialContracts.length)
-                    .map((row) => (
-                      <li key={row.provinceCode}>
-                        <span>{row.provinceName}</span>
-                        <strong>
-                          {new Intl.NumberFormat("es-ES").format(
-                            row.totalContracts,
-                          )}
-                        </strong>
-                        <small>
-                          {new Intl.DateTimeFormat("es-ES", {
-                            month: "short",
-                            year: "numeric",
-                            timeZone: "UTC",
-                          }).format(new Date(row.month))}
-                        </small>
-                      </li>
-                    ))}
-                </ul>
-              </details>
-            )}
-            {regionalContractsSource !== undefined && (
-              <ExternalLink
-                className="evidence-link"
-                href={regionalContractsSource}
-              >
-                Fuente: Datos Abiertos JCyL
-              </ExternalLink>
-            )}
-            {educationCenterDirectorySnapshot !== undefined && (
-              <FragmentLink
-                className="evidence-link"
-                href="#distribucion-centros"
-              >
-                Ver la distribución de centros
-              </FragmentLink>
-            )}
-            <p className="evidence-limit">
-              Contexto provincial — no específico de esta ocupación. Reúne
-              contratos registrados de todas las ocupaciones.
-            </p>
-          </div>
-        </section>
+          Comparar ingresos observados de este ciclo
+        </Link>
+        <details className="context-section__contracts">
+          <summary id="contexto-provincial">
+            Contratos registrados por provincia (contexto general)
+          </summary>
+          {latestProvincialContracts.length === 0 ? (
+            <p>Sin contexto provincial para los centros mostrados.</p>
+          ) : (
+            <ul className="contract-context-list">
+              {latestProvincialContracts.map((row) => (
+                <li key={row.provinceCode}>
+                  <span>{row.provinceName}</span>
+                  <strong>
+                    {new Intl.NumberFormat("es-ES").format(row.totalContracts)}
+                  </strong>
+                  <small>
+                    {new Intl.DateTimeFormat("es-ES", {
+                      month: "short",
+                      year: "numeric",
+                      timeZone: "UTC",
+                    }).format(new Date(row.month))}
+                  </small>
+                </li>
+              ))}
+            </ul>
+          )}
+          {regionalContractsSource !== undefined && (
+            <ExternalLink
+              className="evidence-link"
+              href={regionalContractsSource}
+            >
+              Fuente: Datos Abiertos JCyL
+            </ExternalLink>
+          )}
+          <p className="evidence-limit">
+            Reúne contratos de todas las ocupaciones de la provincia: no es una
+            probabilidad de contratación para este ciclo.
+          </p>
+        </details>
         {educationCenterDirectorySnapshot !== undefined && (
-          <div
-            id="distribucion-centros"
-            aria-labelledby="territorial-distribution-title"
-            tabIndex={-1}
-          >
+          <details className="context-section__map">
+            <summary id="distribucion-centros">
+              Distribución geográfica de los centros
+            </summary>
             <TerritorialDistribution
               centers={territorialCenters}
               sourceUrl={educationCenterDirectorySnapshot.sourceUrl}
@@ -1058,7 +1014,7 @@ export function TrainingResultsPage() {
                 educationCenterDirectorySnapshot.snapshotFetchedAt
               }
             />
-          </div>
+          </details>
         )}
       </section>
     </section>

@@ -115,6 +115,14 @@ export function OpenDataPage() {
         { resourcePath: string; sha256: string }
       >
   ).derivedFpOccupationGraph;
+  const offerEvidenceSnapshot = (
+    state.manifest
+      .resourceSnapshots as typeof state.manifest.resourceSnapshots &
+      Record<
+        "offerEvidence",
+        { resourcePath: string; recordCount: number } | undefined
+      >
+  ).offerEvidence;
 
   return (
     <article className="open-data-page" aria-labelledby="open-data-heading">
@@ -193,6 +201,43 @@ export function OpenDataPage() {
           </div>
         </dl>
       </section>
+
+      {offerEvidenceSnapshot === undefined ? null : (
+        <section
+        className="open-data-release"
+        aria-labelledby="offer-evidence-title"
+        >
+        <div className="open-data-release__heading">
+          <div>
+            <p>Dataset candidato de expansión</p>
+            <h2 id="offer-evidence-title">
+              Ofertas: requisito, relación y acción
+            </h2>
+          </div>
+          <p>
+            Base inmutable: {" "}
+            {state.manifest.resourceSnapshots.jobOffers.recordCount} ofertas
+          </p>
+        </div>
+        <p>
+          Incluye la cita literal, una categoría conservadora, el estado de
+          evidencia, la relación FP solo cuando está revisada y un siguiente
+          paso con fuente. No contiene empleadores privados ni predicciones.
+        </p>
+        <div className="open-data-release__downloads">
+          <a
+            className="primary-button"
+            href={resolveGeneratedAssetPath(offerEvidenceSnapshot.resourcePath)}
+            download
+          >
+            Descargar dataset JSON
+          </a>
+          <Link className="secondary-button" to="/desde-oferta">
+            Explorar las ofertas
+          </Link>
+        </div>
+        </section>
+      )}
 
       <section className="open-data-page__scope" aria-labelledby="scope-title">
         <h2 id="scope-title">Qué contiene</h2>

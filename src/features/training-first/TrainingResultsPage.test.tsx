@@ -398,13 +398,19 @@ describe("TrainingResultsPage", () => {
       name: "Desarrollo de Aplicaciones Web",
     });
     expect(screen.getByText("Contexto provincial elegido: León")).toBeVisible();
-    expect(screen.getByText(/2 de 2 centros publicados/i)).toBeVisible();
+    expect(
+      screen.getByRole("link", {
+        name: "Ver los 2 centros con direcciones y web",
+      }),
+    ).toBeVisible();
     const studySection = document.getElementById("donde-estudiar");
     expect(studySection).not.toBeNull();
     expect(studySection).toHaveTextContent("2 centros");
-    expect(studySection).toHaveTextContent("Centro León");
-    expect(studySection).toHaveTextContent("Centro Burgos");
-    const provincialSection = document.getElementById("contexto-provincial");
+    expect(studySection).toHaveTextContent("León");
+    expect(studySection).toHaveTextContent("Burgos");
+    const provincialSection = document
+      .getElementById("contexto-provincial")
+      ?.closest("details");
     expect(provincialSection).not.toBeNull();
     expect(provincialSection).toHaveTextContent("León");
     expect(provincialSection).not.toHaveTextContent("Burgos");
@@ -421,8 +427,8 @@ describe("TrainingResultsPage", () => {
     });
     const unfilteredStudySection = document.getElementById("donde-estudiar");
     expect(unfilteredStudySection).toHaveTextContent("2 centros");
-    expect(unfilteredStudySection).toHaveTextContent("Centro León");
-    expect(unfilteredStudySection).toHaveTextContent("Centro Burgos");
+    expect(unfilteredStudySection).toHaveTextContent("León");
+    expect(unfilteredStudySection).toHaveTextContent("Burgos");
   });
 
   it("recovers from invalid or repeated provinces without echoing them", async () => {
@@ -471,9 +477,13 @@ describe("TrainingResultsPage", () => {
       );
 
       if (expectedOffers.length === 0) {
+        await screen.findByRole("link", { name: "Cambiar de ciclo" });
         expect(
-          await screen.findByText(/0 ofertas con correspondencia validada/u),
-        ).toBeVisible();
+          document.querySelector(".training-page__summary"),
+        ).not.toBeNull();
+        expect(
+          document.querySelector(".training-page__summary"),
+        ).toHaveTextContent(/0 ofertas/u);
         expect(screen.queryAllByRole("article")).toHaveLength(0);
       } else {
         const articles = await screen.findAllByRole("article");
@@ -496,6 +506,7 @@ describe("TrainingResultsPage", () => {
     );
 
     const pageHeading = await screen.findByRole("heading", {
+      level: 1,
       name: /Desarrollo de Aplicaciones Web/i,
     });
     expect(pageHeading).toHaveAttribute("id", "training-results-heading");
@@ -525,11 +536,17 @@ describe("TrainingResultsPage", () => {
     expect(screen.getByText("España · grupo del ciclo")).toBeVisible();
     expect(screen.getByText("Castilla y León · Grado superior")).toBeVisible();
     expect(
-      screen.getByRole("heading", { name: "Contexto provincial" }),
+      screen.getByText(
+        "Contratos registrados por provincia (contexto general)",
+      ),
     ).toBeVisible();
+    const provincialDisclosure = screen.getByText(
+      "Contratos registrados por provincia (contexto general)",
+    );
+    fireEvent.click(provincialDisclosure);
     expect(
       screen.getByText(
-        "Contexto provincial — no específico de esta ocupación. Reúne contratos registrados de todas las ocupaciones.",
+        /Reúne contratos de todas las ocupaciones de la provincia/u,
       ),
     ).toBeVisible();
     const outcome = screen.getByRole("region", {
@@ -540,77 +557,36 @@ describe("TrainingResultsPage", () => {
     });
     expect(sectionNavigation.querySelector("a")).toHaveAttribute(
       "href",
-      "#donde-estudiar",
+      "#salidas-profesionales",
     );
-    expect(
-      within(sectionNavigation).getByRole("link", {
-        name: "Base de cotización",
-      }),
-    ).toHaveAttribute("href", "#base-cotizacion-observada");
     expect(
       within(sectionNavigation).getByRole("link", { name: "Dónde estudiar" }),
     ).toHaveAttribute("href", "#donde-estudiar");
     expect(
       within(sectionNavigation).getByRole("link", {
-        name: "Contexto provincial",
-      }),
-    ).toHaveAttribute("href", "#contexto-provincial");
-    expect(
-      within(sectionNavigation).getByRole("link", {
-        name: "Distribución de centros",
-      }),
-    ).toHaveAttribute("href", "#distribucion-centros");
-    expect(
-      within(sectionNavigation).getByRole("link", {
-        name: "Salidas profesionales",
+        name: "Salidas relacionadas",
       }),
     ).toHaveAttribute("href", "#salidas-profesionales");
     expect(
       within(sectionNavigation).getByRole("link", {
-        name: "Ocupaciones revisadas",
+        name: "Ofertas relacionadas",
       }),
-    ).toHaveAttribute("href", "#ocupaciones-revisadas");
+    ).toHaveAttribute("href", "#ofertas-relacionadas");
+    expect(
+      within(sectionNavigation).getByRole("link", { name: "Contexto" }),
+    ).toHaveAttribute("href", "#contexto");
     expect(document.getElementById("donde-estudiar")).toHaveAccessibleName(
       "Dónde estudiar",
     );
     expect(document.getElementById("contexto-provincial")).toHaveAccessibleName(
-      "Contexto provincial",
+      "Contratos registrados por provincia (contexto general)",
     );
     expect(
       document.getElementById("distribucion-centros"),
-    ).toHaveAccessibleName("Distribución de centros");
+    ).toHaveAccessibleName("Distribución geográfica de los centros");
     expect(
       document.getElementById("salidas-profesionales"),
-    ).toHaveAccessibleName("Salidas profesionales oficiales");
-    expect(
-      document.getElementById("ocupaciones-revisadas"),
-    ).toHaveAccessibleName("Grupos de ocupación revisados para buscar ofertas");
-    const nextActions = screen.getByRole("navigation", {
-      name: "Siguientes pasos",
-    });
-    expect(
-      within(nextActions).getByRole("link", { name: "Comparar ingresos" }),
-    ).toHaveAttribute("href", "/comparar?program=IFC03S");
-    expect(
-      within(nextActions).getByRole("link", {
-        name: "Ver ocupaciones revisadas",
-      }),
-    ).toHaveAttribute("href", "#ocupaciones-revisadas");
-    expect(
-      within(nextActions).getByRole("link", {
-        name: "Ver centros y modalidades",
-      }),
-    ).toHaveAttribute("href", "/formacion/IFC03S");
-    expect(nextActions.querySelectorAll(".primary-button")).toHaveLength(1);
-    const occupationsSection = document.getElementById("ocupaciones-revisadas");
-    expect(occupationsSection).toBeVisible();
-    expect(occupationsSection).toHaveAttribute("tabindex", "-1");
-    fireEvent.click(
-      within(nextActions).getByRole("link", {
-        name: "Ver ocupaciones revisadas",
-      }),
-    );
-    expect(occupationsSection).toHaveFocus();
+    ).toHaveAccessibleName("Salidas relacionadas");
     expect(
       within(outcome).getByRole("link", { name: /Fuente: EDUCAbase/u }),
     ).toHaveAttribute(
@@ -632,19 +608,15 @@ describe("TrainingResultsPage", () => {
     });
     const studySection = document.getElementById("donde-estudiar");
     expect(studySection).not.toBeNull();
-    expect(studySection).toHaveTextContent("4 de 18 centros publicados");
-    expect(
-      studySection!.querySelectorAll(".study-center-preview > li"),
-    ).toHaveLength(4);
     expect(
       within(studySection!).getByRole("link", {
-        name: "Ver los 18 centros",
+        name: /Ver los \d+ centros con direcciones y web/u,
       }),
-    ).toHaveAttribute("href", "#distribucion-centros");
+    ).toHaveAttribute("href", "/formacion/IFC03S");
     expect(studyHeading).toBeVisible();
-    expect(document.getElementById("distribucion-centros")).toHaveTextContent(
-      "18 centros en 9 provincias",
-    );
+    expect(
+      screen.getByText("Distribución geográfica de los centros"),
+    ).toBeVisible();
   });
 
   it("labels the four-province contract preview against the complete distribution", async () => {
@@ -655,27 +627,14 @@ describe("TrainingResultsPage", () => {
       </MemoryRouter>,
     );
 
-    await screen.findByRole("heading", { name: "Contexto provincial" });
-    const regionalSection = document.getElementById("contexto-provincial");
-    expect(regionalSection).not.toBeNull();
-    expect(regionalSection).toHaveTextContent(
-      "4 de 9 provincias con contratos registrados",
+    const regionalSummary = await screen.findByText(
+      "Contratos registrados por provincia (contexto general)",
     );
-    expect(
-      regionalSection!.querySelectorAll(":scope > .contract-context-list > li"),
-    ).toHaveLength(4);
-    expect(
-      within(regionalSection!).getByRole("link", {
-        name: "Ver la distribución de centros",
-      }),
-    ).toHaveAttribute("href", "#distribucion-centros");
-    const provinceDisclosure = within(regionalSection!).getByText(
-      "Ver las 9 provincias",
-      { exact: true },
-    );
-    expect(provinceDisclosure.closest("details")).not.toHaveAttribute("open");
-    fireEvent.click(provinceDisclosure);
-    expect(regionalSection).toHaveTextContent("Zamora");
+    const regionalDetails = regionalSummary.closest("details");
+    expect(regionalDetails).not.toBeNull();
+    expect(regionalDetails).not.toHaveAttribute("open");
+    fireEvent.click(regionalSummary);
+    expect(regionalDetails).toHaveAttribute("open");
   });
 
   it("describes fail-closed zero employment results as validated relationships", async () => {
@@ -686,20 +645,13 @@ describe("TrainingResultsPage", () => {
       </MemoryRouter>,
     );
 
-    const emptyHeading = await screen.findByRole("heading", {
-      name: "Cómo buscar oportunidades ahora",
-    });
-    const emptyState = emptyHeading.closest(".status-panel");
-    expect(emptyState).not.toBeNull();
-    expect(emptyState).toHaveTextContent(
-      "0 ofertas con correspondencia validada",
+    const emptyState = await screen.findByText(
+      /Todavía no hemos podido comprobar en fuentes oficiales/u,
     );
-    expect(emptyState).toHaveTextContent(
-      "Solo mostramos relaciones revisadas para evitar coincidencias incorrectas.",
-    );
-    expect(document.querySelector(".decision-basis")).toHaveTextContent(
-      "0 ofertas con correspondencia validada",
-    );
+    expect(emptyState).toHaveTextContent("no mostramos ofertas para él");
+    expect(
+      screen.queryByRole("region", { name: "Ofertas relacionadas" }),
+    ).not.toBeInTheDocument();
     expect(screen.queryAllByRole("article")).toHaveLength(0);
   });
 
@@ -712,10 +664,10 @@ describe("TrainingResultsPage", () => {
     );
 
     const outputsHeading = await screen.findByRole("heading", {
-      name: "Salidas profesionales oficiales",
+      name: "Salidas que publica el perfil oficial del ciclo",
     });
     const occupationHeading = screen.getByRole("heading", {
-      name: "Grupos de ocupación revisados para buscar ofertas",
+      name: "Salidas relacionadas",
     });
     const studyHeading = screen.getByRole("heading", {
       name: "Dónde estudiar",
@@ -747,6 +699,7 @@ describe("TrainingResultsPage", () => {
     );
 
     await screen.findByRole("heading", {
+      level: 1,
       name: /Desarrollo de Aplicaciones Web/i,
     });
     const outcomePath = vi
@@ -788,6 +741,7 @@ describe("TrainingResultsPage", () => {
     );
 
     await screen.findByRole("heading", {
+      level: 1,
       name: /Desarrollo de Aplicaciones Web/i,
     });
     const user = userEvent.setup();
@@ -828,6 +782,7 @@ describe("TrainingResultsPage", () => {
     );
 
     await screen.findByRole("heading", {
+      level: 1,
       name: /Desarrollo de Aplicaciones Web/i,
     });
     await userEvent.setup().click(
@@ -852,8 +807,9 @@ describe("TrainingResultsPage", () => {
       </MemoryRouter>,
     );
 
-    await screen.findByText(
-      "0 ofertas con correspondencia validada en la copia de datos del 31 de julio de 2026.",
+    const resultSummary = await screen.findByText("De dónde sale cada cifra");
+    expect(resultSummary.closest(".training-page__summary")).toHaveTextContent(
+      /0 ofertas/u,
     );
     expect(screen.queryByText(/Filtro activo/)).not.toBeInTheDocument();
   });
@@ -868,23 +824,14 @@ describe("TrainingResultsPage", () => {
 
     expect(
       await screen.findByText(
-        /Todavía no hay una relación revisada que permita buscar ofertas/u,
+        /Todavía no hemos podido comprobar en fuentes oficiales/u,
       ),
     ).toBeVisible();
-    const nextActions = screen.getByRole("navigation", {
-      name: "Siguientes pasos",
-    });
     expect(
-      within(nextActions).getByRole("link", {
-        name: "Ver centros y modalidades",
+      screen.getByRole("link", {
+        name: "Ver los 0 centros con direcciones y web",
       }),
-    ).toHaveClass("primary-button");
-    expect(
-      within(nextActions).queryByRole("link", {
-        name: "Ver ocupaciones revisadas",
-      }),
-    ).not.toBeInTheDocument();
-    expect(nextActions.querySelectorAll(".primary-button")).toHaveLength(1);
+    ).toHaveAttribute("href", "/formacion/IFC03S");
   });
 
   it("shows literal TodoFP outputs with their official source", async () => {
@@ -912,7 +859,7 @@ describe("TrainingResultsPage", () => {
     expect(await screen.findByText("Programador web.")).toBeVisible();
     expect(
       screen.getByRole("link", {
-        name: /Comprobar estas salidas en la ficha oficial de TodoFP/u,
+        name: /Comprobar en la ficha oficial de TodoFP/u,
       }),
     ).toHaveAttribute("href", expect.stringContaining("todofp.es"));
   });
@@ -925,19 +872,24 @@ describe("TrainingResultsPage", () => {
       </MemoryRouter>,
     );
 
+    const resultSummary = await screen.findByText("De dónde sale cada cifra");
+    expect(resultSummary.closest(".training-page__summary")).toHaveTextContent(
+      /0 ofertas/u,
+    );
     expect(
-      await screen.findByText(
-        "0 ofertas con correspondencia validada en la copia de datos del 31 de julio de 2026.",
-      ),
-    ).toBeVisible();
+      screen.getByRole("link", {
+        name: "Comparar ingresos observados de este ciclo",
+      }),
+    ).toHaveAttribute("href", "/comparar?program=IFC03S");
+    expect(document.querySelector(".training-page__meta")).toHaveTextContent(
+      /Grado superior/u,
+    );
+    expect(document.querySelector(".training-page__code")).toHaveTextContent(
+      /código oficial IFC03S/u,
+    );
     expect(
-      screen.getByText("Grado superior · Código oficial IFC03S"),
-    ).toBeVisible();
-    expect(
-      screen.getByLabelText(
-        "Tu título de Formación Profesional conduce a ocupaciones con evidencia",
-      ),
-    ).toHaveTextContent("Tu título de FP→Ocupaciones con evidencia");
+      document.querySelector(".training-page__summary .info-disclosure"),
+    ).not.toBeNull();
     expect(screen.queryByText(/no hay trabajo/iu)).not.toBeInTheDocument();
   });
 
@@ -955,11 +907,15 @@ describe("TrainingResultsPage", () => {
     expect(warning).toHaveTextContent(
       "No se han podido actualizar los datos. Mostramos la última copia disponible.",
     );
-    const emptyState = screen.getByText(
-      /0 ofertas con correspondencia validada/,
+    const emptyState = document.querySelector<HTMLElement>(
+      ".training-page__summary",
     );
+    if (emptyState === null) {
+      throw new Error("Expected the results summary to be rendered");
+    }
+    expect(emptyState).toHaveTextContent(/0 ofertas/u);
     expect(
-      warning.compareDocumentPosition(emptyState) &
+      emptyState.compareDocumentPosition(warning) &
         Node.DOCUMENT_POSITION_FOLLOWING,
     ).toBeTruthy();
   });
@@ -1022,53 +978,40 @@ describe("TrainingResultsPage", () => {
     const card = await screen.findByRole("article", {
       name: "Programador web para servicios públicos",
     });
-    await user.click(within(card).getByText("Ver evidencia y requisitos"));
-    const headings = Array.from(card.querySelectorAll(".evidence-step h4")).map(
-      (heading) => heading.textContent,
+    expect(card.querySelector(".offer-row__match")).toBeNull();
+    expect(card.querySelector(".offer-row__requirement-chips")).toBeNull();
+    expect(
+      within(card).queryByText(/Ver otras FP para esta profesión/u),
+    ).not.toBeInTheDocument();
+    await user.click(
+      within(card).getByText("Requisitos: ¿los cumples?", { exact: false }),
     );
+    expect(
+      within(card).getByRole("link", { name: /Ver oferta oficial/ }),
+    ).toHaveAttribute("href", offer.originalUrl);
+    const infoDisclosure = within(card).getByLabelText(
+      "De dónde sale esta información (Programador web para servicios públicos)",
+    );
+    await user.click(infoDisclosure);
+    const headings = Array.from(
+      card.querySelectorAll(".offer-row__traceability section h4"),
+    ).map((heading) => heading.textContent);
     expect(headings).toEqual([
-      "Por qué aparece",
-      "Qué publica la vacante",
-      "Tu comprobación",
-      "Siguiente acción",
+      "Por qué aparece esta oferta",
+      "Cómo se extrajeron los requisitos",
     ]);
-    const disclosures = screen.getAllByText("Ver cita exacta");
-    const mappingDisclosure = disclosures[0].closest("details");
-    const requirementDisclosure = disclosures[1].closest("details");
-    expect(mappingDisclosure).not.toBeNull();
-    expect(requirementDisclosure).not.toBeNull();
-    expect(screen.getByText(sourceQuote)).toBeVisible();
-    await user.click(disclosures[0]);
     expect(
-      within(mappingDisclosure!).getByText(
-        "Revisión de la relación: 4 de agosto de 2026",
-      ),
+      within(card).getByText(sourceQuote, { selector: "blockquote" }),
     ).toBeVisible();
+    expect(within(card).getByText("Versión: 1.0.0")).toBeVisible();
     expect(
-      within(mappingDisclosure!).getByText("Versión de la relación: 1.0.0"),
-    ).toBeVisible();
-    await user.click(disclosures[1]);
-    expect(screen.getByText(sourceQuote)).toBeVisible();
-    expect(
-      within(requirementDisclosure!).getByRole("link", {
-        name: /Abrir fuente de la vacante/,
+      within(card).getByRole("link", {
+        name: /Fuente de la oferta/,
       }),
     ).toHaveAttribute("href", offer.sourceSnapshot.sourceUrl);
-    expect(
-      within(requirementDisclosure!).getByText(
-        "Fecha de la fuente: 31 de julio de 2026",
-      ),
-    ).toBeVisible();
-    expect(
-      within(requirementDisclosure!).getByText(
-        "Regla técnica de extracción: license.driving_b",
-      ),
-    ).toBeVisible();
-    expect(
-      within(requirementDisclosure!).getByText(
-        "Versión de la extracción: 1.0.0",
-      ),
-    ).toBeVisible();
+    expect(within(card).getByText(/Publicada el/)).toBeVisible();
+    expect(within(card).getByText(/Regla: license\.driving_b/u)).toBeVisible();
+    expect(within(card).getByText(/Versión: 1\.0\.0/u)).toBeVisible();
 
     await user.click(
       screen.getByRole("radio", {
@@ -1078,10 +1021,14 @@ describe("TrainingResultsPage", () => {
     expect(
       await screen.findByRole("link", { name: /Consultar trámite oficial/ }),
     ).toHaveAttribute("target", "_blank");
-    expect(screen.getByText("Requisito no cumplido")).toBeVisible();
-    expect(
-      screen.getByText("Requisito no cumplido").closest("div"),
-    ).toHaveClass("evidence-state evidence-state--gap");
+    const gapStatus = screen.getByText(
+      "Has indicado que no cumples un requisito publicado.",
+    );
+    expect(gapStatus).toBeVisible();
+    expect(gapStatus).toHaveClass(
+      "offer-row__fit-status",
+      "offer-row__fit-status--gap",
+    );
     expect(
       screen.queryByText(/compatibilidad|porcentaje|%/iu),
     ).not.toBeInTheDocument();
@@ -1096,7 +1043,7 @@ describe("TrainingResultsPage", () => {
     );
 
     const estudioLink = await screen.findByRole("link", {
-      name: "Ver centros y modalidades",
+      name: "Ver los 0 centros con direcciones y web",
     });
     expect(estudioLink).toBeVisible();
     expect(estudioLink).toHaveAttribute("href", "/formacion/IFC03S");
@@ -1114,31 +1061,28 @@ describe("TrainingResultsPage", () => {
       </MemoryRouter>,
     );
 
+    const summary = await screen.findByText("De dónde sale cada cifra");
+    expect(summary).toBeVisible();
+    fireEvent.click(summary);
+    const summaryDetails = summary.closest("details");
+    expect(summaryDetails).not.toBeNull();
+    expect(summaryDetails).toHaveAttribute("open");
     expect(
-      await screen.findByRole("heading", {
-        name: "Qué sabemos de este título",
-      }),
+      within(summaryDetails!).getByText(
+        /no representan todo el mercado laboral/u,
+      ),
     ).toBeVisible();
-    expect(
-      screen.queryByRole("heading", {
-        name: "Del título a la evidencia disponible",
-      }),
-    ).not.toBeInTheDocument();
-    expect(
-      screen.getByText(/no representa todo el mercado laboral/u),
-    ).toBeVisible();
-    expect(
-      screen.getByRole("link", { name: /Fuente: TodoFP/u }),
-    ).toHaveAttribute("href", expect.stringContaining("todofp.es"));
-    expect(
-      screen.getByRole("link", { name: /Fuente: relación revisada/u }),
-    ).toHaveAttribute("target", "_blank");
-    expect(
-      screen.getByRole("link", { name: /Fuente: ofertas ECYL/u }),
-    ).toHaveAttribute("target", "_blank");
-    expect(
-      screen.getByRole("link", { name: /Fuente: oferta FP JCyL/u }),
-    ).toHaveAttribute("target", "_blank");
+    const sourceLinks = within(summaryDetails!).getAllByRole("link", {
+      name: /^Ver fuente/u,
+    });
+    expect(sourceLinks).toHaveLength(4);
+    expect(sourceLinks.map((link) => link.getAttribute("href"))).toEqual(
+      expect.arrayContaining([
+        expect.stringContaining("todofp.es"),
+        expect.stringContaining("boe.es"),
+        expect.stringContaining("analisis.datosabiertos.jcyl.es"),
+      ]),
+    );
   });
 
   it("shows approved occupation and zero match message when no offers exist", async () => {
@@ -1150,7 +1094,7 @@ describe("TrainingResultsPage", () => {
     );
 
     const estudioLink = await screen.findByRole("link", {
-      name: "Ver centros y modalidades",
+      name: "Ver los 0 centros con direcciones y web",
     });
     expect(estudioLink).toHaveAttribute("href", "/formacion/IFC03S");
 
@@ -1170,9 +1114,10 @@ describe("TrainingResultsPage", () => {
       "/desde-ocupacion/occupation%3Acno11%3A2713",
     );
 
-    expect(
-      await screen.findByText(/0 ofertas con correspondencia validada/u),
-    ).toBeVisible();
+    const resultSummary = await screen.findByText("De dónde sale cada cifra");
+    expect(resultSummary.closest(".training-page__summary")).toHaveTextContent(
+      /0 ofertas/u,
+    );
   });
 
   it("filters out draft links, duplicates and unresolvable occupations", () => {
@@ -1232,6 +1177,7 @@ describe("TrainingResultsPage", () => {
         preferredLabel:
           "Analistas, programadores y diseñadores web y multimedia",
         classificationCode: "2713",
+        relationshipType: "official_output",
         functionalBoundary: {
           roleLevel: "assistant",
           fullOccupationQualification: false,
@@ -1356,12 +1302,9 @@ describe("TrainingResultsPage", () => {
     const firstOffer = await screen.findByRole("article", {
       name: "Programador web con experiencia",
     });
-    await user.click(
-      within(firstOffer).getByText("Ver evidencia y requisitos"),
-    );
 
     await user.click(
-      await screen.findByRole("radio", {
+      within(firstOffer).getByRole("radio", {
         name: `No lo tengo: ${sourceQuote}`,
       }),
     );
@@ -1392,15 +1335,15 @@ describe("TrainingResultsPage", () => {
     expect(
       screen.getByRole("article", { name: "Programador web junior" }),
     ).toBeVisible();
-    await user.click(
-      within(
-        screen.getByRole("article", { name: "Programador web junior" }),
-      ).getByText("Ver evidencia y requisitos"),
-    );
-    expect(screen.getByText("Requisito no publicado")).toBeVisible();
+    const juniorCard = screen.getByRole("article", {
+      name: "Programador web junior",
+    });
     expect(
-      screen.getByText("Requisito no publicado").closest("div"),
-    ).toHaveClass("requirement-state requirement-state--unpublished");
+      within(juniorCard).getByRole("link", { name: /Ver oferta oficial/ }),
+    ).toBeVisible();
+    expect(
+      within(juniorCard).queryByText("Requisito no publicado"),
+    ).not.toBeInTheDocument();
     expect(screen.getByText("Contexto provincial elegido: León")).toBeVisible();
     expect(screen.getByLabelText("Dirección actual")).toHaveTextContent(
       "/desde-fp/IFC03S?province=León",

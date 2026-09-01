@@ -189,7 +189,7 @@ test.describe("contest readiness journeys", () => {
     await expect(
       page.getByRole("heading", {
         level: 1,
-        name: /De tu FP a tu\s*siguiente paso/i,
+        name: /Explora formación, profesiones y oportunidades en Castilla y León\./i,
       }),
     ).toBeVisible();
     if (testInfo.project.name === "chromium-mobile") {
@@ -200,22 +200,18 @@ test.describe("contest readiness journeys", () => {
       await expect(page.locator(".site-nav--desktop")).toBeVisible();
     }
     await expect(
-      page.getByRole("region", { name: "Cobertura revisada" }),
-    ).toHaveAttribute("aria-busy", "false");
-    await expect(
       page.getByRole("region", { name: "Fecha de relaciones revisadas" }),
     ).toHaveAttribute("aria-busy", "false");
     await expect(
-      page
-        .getByRole("list", { name: "Ciclos revisados destacados" })
-        .getByRole("listitem"),
-    ).toHaveCount(3);
-    await expect(
-      page.getByRole("combobox", { name: "Título de Formación Profesional" }),
+      page.getByRole("group", { name: "Elige tu punto de partida" }),
     ).toBeVisible();
     await expect(
-      page.getByRole("button", { name: "Ver las salidas de este título" }),
+      page.getByRole("combobox", { name: "Busca tu ciclo" }),
+    ).toBeVisible();
+    await expect(
+      page.getByRole("button", { name: "Buscar ciclo" }),
     ).toHaveCount(1);
+    await expect(page.locator(".example-line a")).toHaveCount(1);
     await expectStableRoute(page, diagnostics);
   });
 
@@ -280,7 +276,7 @@ test.describe("contest readiness journeys", () => {
     );
     await expect(page.locator('meta[name="theme-color"]')).toHaveAttribute(
       "content",
-      "#7f1734",
+      "#102a43",
     );
 
     const [faviconResponse, socialResponse, robotsResponse] = await Promise.all(
@@ -330,7 +326,7 @@ test.describe("contest readiness journeys", () => {
     );
     await expect(mobileNavigation).toHaveAttribute("hidden");
     const mobileAnchors = mobileNavigation.locator("a");
-    await expect(mobileAnchors).toHaveCount(6);
+    await expect(mobileAnchors).toHaveCount(12);
     expect(
       await mobileAnchors.evaluateAll((anchors) =>
         anchors.every((anchor) => anchor.getClientRects().length === 0),
@@ -376,7 +372,7 @@ test.describe("contest readiness journeys", () => {
     );
     await expect(mobileNavigation).toBeVisible();
     await expect(
-      mobileNavigation.getByRole("link", { name: "Inicio" }),
+      mobileNavigation.getByRole("link", { name: "Explorar" }),
     ).toHaveAttribute("aria-current", "page");
     const menuButtonBox = await page
       .getByRole("button", { name: "Cerrar menú principal" })
@@ -403,7 +399,9 @@ test.describe("contest readiness journeys", () => {
     await expectCriticalAxe(page);
 
     await menuButton.click();
-    await mobileNavigation.getByRole("link", { name: "Metodología" }).click();
+    await mobileNavigation
+      .getByRole("link", { name: "Método y límites" })
+      .click();
     await expect(page).toHaveURL(/\/metodologia$/u);
     await expect(mobileNavigation).toHaveAttribute("hidden");
     await expect(
@@ -423,7 +421,7 @@ test.describe("contest readiness journeys", () => {
     await expect(
       page.getByRole("heading", {
         level: 1,
-        name: /De tu FP a tu\s*siguiente paso/i,
+        name: /Explora formación, profesiones y oportunidades en Castilla y León\./i,
       }),
     ).toBeVisible();
     await expect(mobileNavigation).toHaveAttribute("hidden");
@@ -535,7 +533,7 @@ test.describe("contest readiness journeys", () => {
       page.getByText("Relaciones revisadas con 7 grupos de ocupación."),
     ).toHaveAttribute("role", "status");
     await page.getByRole("button", { name: "Ver salidas y ofertas" }).click();
-    await expect(page).toHaveURL(/\/desde-fp\/COM01M$/u);
+    await expect(page).toHaveURL(/\/desde-fp\/COM01M\?query=/u);
     await expect(
       page.getByRole("heading", { name: "Actividades Comerciales" }),
     ).toBeVisible();
@@ -611,25 +609,20 @@ test.describe("contest readiness journeys", () => {
   }, testInfo) => {
     const diagnostics = installRouteDiagnostics(page);
     await page.goto("/");
-    await chooseTrainingProgram(
-      page,
-      "COM01M",
-      "Título de Formación Profesional",
-    );
-    await page
-      .getByRole("button", { name: "Ver las salidas de este título" })
-      .click();
-    await expect(page).toHaveURL(/\/desde-fp\/COM01M$/u);
+    await chooseTrainingProgram(page, "COM01M", "Busca tu ciclo");
+    await page.getByRole("button", { name: "Buscar ciclo" }).click();
+    await expect(page).toHaveURL(/\/desde-fp\/COM01M\?query=/u);
     if (testInfo.project.name === "chromium-mobile") {
       await page.getByRole("button", { name: "Abrir menú principal" }).click();
       await page
         .locator("#mobile-primary-navigation")
-        .getByRole("link", { name: "Comparar estudios" })
+        .getByRole("link", { name: "Comparar ingresos" })
         .click();
     } else {
-      await page
-        .locator(".site-nav--desktop")
-        .getByRole("link", { name: "Comparar estudios" })
+      const desktopMore = page.locator(".site-nav--desktop .site-nav__more");
+      await desktopMore.getByText("Más", { exact: true }).click();
+      await desktopMore
+        .getByRole("link", { name: "Comparar ingresos" })
         .click();
     }
     await expect(page).toHaveURL(/\/comparar$/u);
