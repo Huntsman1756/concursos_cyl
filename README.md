@@ -2,7 +2,7 @@
 
 **Explore reviewed, traceable links between vocational training and occupations in Castilla y León — with public evidence.**
 
-SALIDA CyL is an independent, open-source web application for the [X Concurso de Datos Abiertos de Castilla y León](https://datosabiertos.jcyl.es/web/es/concurso-datos-abiertos/concurso-datos-abiertos.html) (Products and Services category). It answers a question that scattered public data make hard to follow:
+SALIDA CyL is an independent, open-source web application for the [X Concurso de Datos Abiertos de Castilla y León](https://datosabiertos.jcyl.es/web/es/concurso-datos-abiertos/concurso-datos-abiertos.html) (Products and Services category). Final technical candidate: `v2026.09.01-candidate.7` (product SHA `9a4820875b2eac78698704c335e011166f2b82f4`). It answers a question that scattered public data make hard to follow:
 
 > _What professional outlets does a given vocational training (FP) actually lead to, what training leads to a given occupation, and what public evidence supports it — in both directions._
 

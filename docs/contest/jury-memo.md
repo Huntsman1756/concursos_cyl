@@ -1,6 +1,6 @@
 # Memoria de candidatura: SALIDA CyL
 
-Candidatura al [X Concurso de Datos Abiertos de Castilla y León](https://datosabiertos.jcyl.es/web/es/concurso-datos-abiertos/concurso-datos-abiertos.html), categoría **Productos y Servicios**.
+Candidatura al [X Concurso de Datos Abiertos de Castilla y León](https://datosabiertos.jcyl.es/web/es/concurso-datos-abiertos/concurso-datos-abiertos.html), categoría **Productos y Servicios**. Candidato técnico final: `v2026.09.01-candidate.7`, producto `9a4820875b2eac78698704c335e011166f2b82f4` (los SHA de producto anteriores, como `d210f9d`, quedan como HISTORICAL/SUPERSEDED).
 
 ## Qué resuelve
 

@@ -75,42 +75,11 @@ function installDiagnostics(page: Page, baseOrigin: string): Diagnostics {
   return diagnostics;
 }
 
-async function chooseTrainingProgram(
-  page: Page,
-  programKey: string,
-): Promise<void> {
-  const combobox = page.getByRole("combobox", {
-    name: "Ciclo de Formación Profesional",
-  });
-  await combobox.fill(programKey);
-  const option = page.locator(`[role="option"][id$="-option-${programKey}"]`);
-  await option.waitFor({ state: "visible" });
-  await combobox.press("ArrowDown");
-  await combobox.press("Enter");
-  assertCondition(
-    (await combobox.inputValue()).length > 0,
-    `Could not confirm training program ${programKey}`,
-  );
-}
-
 async function prepareCapture(page: Page, evidenceId: string): Promise<void> {
-  if (evidenceId === "fp-pre-search-reviewed") {
-    await chooseTrainingProgram(page, "EOC01M");
-  }
-  if (evidenceId === "fp-pre-search-reviewed-zero") {
-    await chooseTrainingProgram(page, "AFD01M");
-  }
   if (evidenceId === "comparison-dual-scopes") {
-    await page.getByText("Grado superior", { exact: true }).click();
-    await page
-      .getByLabel("Filtrar ciclos o grupos")
-      .fill("Administración y finanzas");
-    await page.getByText("Administración y finanzas", { exact: true }).click();
-    await page.getByLabel("3. Cohorte de titulación").selectOption("2022-2023");
-    await page
-      .getByRole("group", { name: "4. Año tras titularse" })
-      .getByText("2", { exact: true })
-      .click();
+    await page.getByRole("radio", { name: /Grado superior/u }).check({
+      force: true,
+    });
   }
 }
 
@@ -171,24 +140,6 @@ async function assertCaptureQuality(
 }
 
 async function positionCapture(page: Page, evidenceId: string): Promise<void> {
-  if (evidenceId === "fp-reviewed-zero-result") {
-    const zeroResultMessage = page
-      .getByRole("heading", {
-        name: "Grupos de ocupación revisados para buscar ofertas",
-      })
-      .first();
-    await zeroResultMessage.evaluate((element) =>
-      element.scrollIntoView({ block: "center" }),
-    );
-  }
-  if (evidenceId === "comparison-dual-scopes") {
-    await page
-      .getByRole("heading", {
-        name: "Ingresos observados del ciclo o grupo en España",
-      })
-      .scrollIntoViewIfNeeded();
-    await page.evaluate(() => window.scrollBy(0, -260));
-  }
   if (evidenceId === "methodology-sources") {
     await page
       .getByRole("heading", { name: "8 datasets de la Junta" })

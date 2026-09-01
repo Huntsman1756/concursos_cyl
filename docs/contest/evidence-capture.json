@@ -11,7 +11,7 @@
         {
           "kind": "role",
           "role": "heading",
-          "name": "De tu FP a tu siguiente paso"
+          "name": "Explora formación, profesiones y oportunidades en Castilla y León."
         },
         { "kind": "text", "value": "Relaciones revisadas" }
       ],
@@ -22,10 +22,10 @@
         "published_snapshot"
       ],
       "outputFile": "docs/contest/evidence/home-desktop.png",
-      "sha256": "8683e44285cb9239a772f8badb6cadb60d0045f6944b6cf3e4ee3352b81c6a29",
-      "capturedAt": "2026-08-28T17:43:37.598Z",
-      "localCommitSha": "753a3160cc3cc895b943ccd5c8d7c52129a6dc9f",
-      "deployedCommitSha": "753a3160cc3cc895b943ccd5c8d7c52129a6dc9f",
+      "sha256": "8b0ddd4a244d0640723df502dbf4da44beb5f85897ee2c96c7a978f7261d2a75",
+      "capturedAt": "2026-09-01T18:13:59.210Z",
+      "localCommitSha": "9a4820875b2eac78698704c335e011166f2b82f4",
+      "deployedCommitSha": "9a4820875b2eac78698704c335e011166f2b82f4",
       "freezeRequired": true,
       "redactionRule": "Use a fresh anonymous browser context; omit browser chrome, personal data, cookies, account identifiers, API keys, tokens, and local filesystem paths."
     },
@@ -37,52 +37,42 @@
         {
           "kind": "role",
           "role": "heading",
-          "name": "Consulta salidas y ofertas relacionadas con tu FP"
+          "name": "¿En qué puedes trabajar con una FP?"
         },
         {
           "kind": "role",
           "role": "combobox",
           "name": "Ciclo de Formación Profesional"
         },
-        {
-          "kind": "text",
-          "value": "Relaciones revisadas con 5 grupos de ocupación."
-        }
+        { "kind": "text", "value": "Empieza con un ciclo relacionado" }
       ],
       "claimIds": [
         "public_modality_keys",
-        "approved_relations",
-        "approved_aliases"
+        "accessibility_intent",
+        "published_snapshot"
       ],
       "outputFile": "docs/contest/evidence/fp-pre-search-reviewed.png",
-      "sha256": "4f598bbfd2d33e716e882b1dc036d130074f26f504482b4fe97810b4d0212b05",
-      "capturedAt": "2026-08-28T17:43:37.598Z",
-      "localCommitSha": "753a3160cc3cc895b943ccd5c8d7c52129a6dc9f",
-      "deployedCommitSha": "753a3160cc3cc895b943ccd5c8d7c52129a6dc9f",
+      "sha256": "78964b8eddb401cdcca8b32433e3801ad83592045eaf2f53f3e140932f180df0",
+      "capturedAt": "2026-09-01T18:13:59.210Z",
+      "localCommitSha": "9a4820875b2eac78698704c335e011166f2b82f4",
+      "deployedCommitSha": "9a4820875b2eac78698704c335e011166f2b82f4",
       "freezeRequired": true,
       "redactionRule": "Use a fresh anonymous browser context; omit browser chrome, personal data, cookies, account identifiers, API keys, tokens, and local filesystem paths."
     },
     {
       "evidenceId": "fp-pre-search-reviewed-zero",
-      "route": "/desde-fp",
+      "route": "/desde-fp/AFD01M",
       "viewport": { "width": 1440, "height": 900 },
       "requiredVisible": [
-        {
-          "kind": "role",
-          "role": "combobox",
-          "name": "Ciclo de Formación Profesional"
-        },
-        {
-          "kind": "text",
-          "value": "Salidas oficiales disponibles; todavía no hay una relación revisada para buscar ofertas."
-        }
+        { "kind": "role", "role": "heading", "name": "Actividades Ecuestres" },
+        { "kind": "text", "value": "Todavía no hemos podido comprobar" }
       ],
-      "claimIds": ["approved_relations", "zero_reviewed_relations"],
+      "claimIds": ["zero_reviewed_relations", "official_source_boundaries"],
       "outputFile": "docs/contest/evidence/fp-pre-search-reviewed-zero.png",
-      "sha256": "e87ca3acb841d990b80477c60f01abd66c2086a39cc0c092e1f7b778465ab980",
-      "capturedAt": "2026-08-28T17:43:37.598Z",
-      "localCommitSha": "753a3160cc3cc895b943ccd5c8d7c52129a6dc9f",
-      "deployedCommitSha": "753a3160cc3cc895b943ccd5c8d7c52129a6dc9f",
+      "sha256": "b8014d1db019a0567ee33edc12feb0dc253f27233ef17fd6c95e6017e5f7ef8e",
+      "capturedAt": "2026-09-01T18:13:59.210Z",
+      "localCommitSha": "9a4820875b2eac78698704c335e011166f2b82f4",
+      "deployedCommitSha": "9a4820875b2eac78698704c335e011166f2b82f4",
       "freezeRequired": true,
       "redactionRule": "Use a fresh anonymous browser context; omit browser chrome, personal data, cookies, account identifiers, API keys, tokens, and local filesystem paths."
     },
@@ -92,21 +82,25 @@
       "viewport": { "width": 1440, "height": 900 },
       "requiredVisible": [
         { "kind": "role", "role": "heading", "name": "Construcción" },
-        { "kind": "text", "value": "Código oficial EOC01M" },
-        { "kind": "text", "value": "Tu título de FP" },
-        { "kind": "text", "value": "Ocupaciones con evidencia" }
+        { "kind": "role", "role": "heading", "name": "Salidas relacionadas" },
+        {
+          "kind": "role",
+          "role": "heading",
+          "name": "Ofertas relacionadas con Construcción"
+        },
+        { "kind": "role", "role": "heading", "name": "Dónde estudiar" }
       ],
       "claimIds": [
         "approved_relations",
         "approved_aliases",
-        "matched_offer_union",
-        "no_salary_prediction"
+        "public_modality_keys",
+        "published_snapshot"
       ],
       "outputFile": "docs/contest/evidence/fp-matched-result.png",
-      "sha256": "9e06c34fbead56b4466cfa7c388347bec770ed083206c191bd0bfadbd1103745",
-      "capturedAt": "2026-08-28T17:43:37.598Z",
-      "localCommitSha": "753a3160cc3cc895b943ccd5c8d7c52129a6dc9f",
-      "deployedCommitSha": "753a3160cc3cc895b943ccd5c8d7c52129a6dc9f",
+      "sha256": "af958aeb18eed193d92d39844961f55f3bbb532b09614d4978eca449a1f4944a",
+      "capturedAt": "2026-09-01T18:13:59.210Z",
+      "localCommitSha": "9a4820875b2eac78698704c335e011166f2b82f4",
+      "deployedCommitSha": "9a4820875b2eac78698704c335e011166f2b82f4",
       "freezeRequired": true,
       "redactionRule": "Use a fresh anonymous browser context; omit browser chrome, personal data, cookies, account identifiers, API keys, tokens, and local filesystem paths."
     },
@@ -120,18 +114,23 @@
           "role": "heading",
           "name": "Actividades Comerciales"
         },
+        { "kind": "role", "role": "heading", "name": "Salidas relacionadas" },
         {
           "kind": "role",
           "role": "heading",
-          "name": "Grupos de ocupación revisados para buscar ofertas"
+          "name": "Ofertas relacionadas con Actividades Comerciales"
         }
       ],
-      "claimIds": ["approved_relations", "zero_reviewed_relations"],
+      "claimIds": [
+        "approved_relations",
+        "matched_offer_union",
+        "no_salary_prediction"
+      ],
       "outputFile": "docs/contest/evidence/fp-reviewed-zero-result.png",
-      "sha256": "7142cb204a0592a55b2065d938931e31ee792a8dd5c6db64704b7e0d8e243722",
-      "capturedAt": "2026-08-28T17:43:37.598Z",
-      "localCommitSha": "753a3160cc3cc895b943ccd5c8d7c52129a6dc9f",
-      "deployedCommitSha": "753a3160cc3cc895b943ccd5c8d7c52129a6dc9f",
+      "sha256": "c0ea7f5a1ed033e9f782532b04e06cffde54f75e5c2a6645902f0e1e7d4442de",
+      "capturedAt": "2026-09-01T18:13:59.210Z",
+      "localCommitSha": "9a4820875b2eac78698704c335e011166f2b82f4",
+      "deployedCommitSha": "9a4820875b2eac78698704c335e011166f2b82f4",
       "freezeRequired": true,
       "redactionRule": "Use a fresh anonymous browser context; omit browser chrome, personal data, cookies, account identifiers, API keys, tokens, and local filesystem paths."
     },
@@ -140,17 +139,9 @@
       "route": "/comparar",
       "viewport": { "width": 1440, "height": 900 },
       "requiredVisible": [
-        {
-          "kind": "role",
-          "role": "heading",
-          "name": "Ingresos observados del ciclo o grupo en España"
-        },
-        {
-          "kind": "role",
-          "role": "heading",
-          "name": "Referencia de titulados de Grado Superior en Castilla y León"
-        },
-        { "kind": "text", "value": "Mostramos ambas referencias por separado" }
+        { "kind": "role", "role": "heading", "name": "Ingresos observados" },
+        { "kind": "text", "value": "Grado superior" },
+        { "kind": "text", "value": "Grado medio" }
       ],
       "claimIds": [
         "income_source_scope",
@@ -159,10 +150,10 @@
         "no_salary_prediction"
       ],
       "outputFile": "docs/contest/evidence/comparison-dual-scopes.png",
-      "sha256": "4ad4952a9e4866028b0a067e35160e97d987378749c05798d82d44f54ea201a4",
-      "capturedAt": "2026-08-28T17:43:37.598Z",
-      "localCommitSha": "753a3160cc3cc895b943ccd5c8d7c52129a6dc9f",
-      "deployedCommitSha": "753a3160cc3cc895b943ccd5c8d7c52129a6dc9f",
+      "sha256": "c5ece6e8db2b4112e438d6c8727cc03c55ba88baeaef62bb2713de47bc87a7b1",
+      "capturedAt": "2026-09-01T18:13:59.210Z",
+      "localCommitSha": "9a4820875b2eac78698704c335e011166f2b82f4",
+      "deployedCommitSha": "9a4820875b2eac78698704c335e011166f2b82f4",
       "freezeRequired": true,
       "redactionRule": "Use a fresh anonymous browser context; omit browser chrome, personal data, cookies, account identifiers, API keys, tokens, and local filesystem paths."
     },
@@ -172,8 +163,11 @@
       "viewport": { "width": 1440, "height": 900 },
       "requiredVisible": [
         { "kind": "role", "role": "heading", "name": "Albañiles" },
-        { "kind": "text", "value": "Ocupación que quieres" },
-        { "kind": "role", "role": "heading", "name": "FP relacionadas" },
+        {
+          "kind": "role",
+          "role": "heading",
+          "name": "FP que te llevan a esta profesión"
+        },
         { "kind": "text", "value": "Ver dónde estudiarlo" }
       ],
       "claimIds": [
@@ -184,10 +178,10 @@
       "outputFile": "docs/contest/evidence/occupation-matched-result.png",
       "freezeRequired": true,
       "redactionRule": "Use a fresh anonymous browser context; omit browser chrome, personal data, cookies, account identifiers, API keys, tokens, and local filesystem paths.",
-      "sha256": "e540153d7d291e705a7cdb56108355fef71e171eccd709f0eb2a73a748fd5932",
-      "capturedAt": "2026-08-28T17:43:37.598Z",
-      "localCommitSha": "753a3160cc3cc895b943ccd5c8d7c52129a6dc9f",
-      "deployedCommitSha": "753a3160cc3cc895b943ccd5c8d7c52129a6dc9f"
+      "sha256": "1aba43278c9cb6bf2f63bfe3bd80c4aa1e75335ed091fb0e5958a4d89ce83f98",
+      "capturedAt": "2026-09-01T18:13:59.210Z",
+      "localCommitSha": "9a4820875b2eac78698704c335e011166f2b82f4",
+      "deployedCommitSha": "9a4820875b2eac78698704c335e011166f2b82f4"
     },
     {
       "evidenceId": "methodology-sources",
@@ -205,10 +199,10 @@
         "accessibility_intent"
       ],
       "outputFile": "docs/contest/evidence/methodology-sources.png",
-      "sha256": "5d1e4317f33a637437f864a36a7f314c7629c53f4a34261e4a47598192e565fe",
-      "capturedAt": "2026-08-28T17:43:37.598Z",
-      "localCommitSha": "753a3160cc3cc895b943ccd5c8d7c52129a6dc9f",
-      "deployedCommitSha": "753a3160cc3cc895b943ccd5c8d7c52129a6dc9f",
+      "sha256": "7beddf9e4edf3a43c2459e8f8a8279b14f30c51ad276f2c32930961e0c0b7d45",
+      "capturedAt": "2026-09-01T18:13:59.210Z",
+      "localCommitSha": "9a4820875b2eac78698704c335e011166f2b82f4",
+      "deployedCommitSha": "9a4820875b2eac78698704c335e011166f2b82f4",
       "freezeRequired": true,
       "redactionRule": "Use a fresh anonymous browser context; omit browser chrome, personal data, cookies, account identifiers, API keys, tokens, and local filesystem paths."
     },
@@ -234,10 +228,10 @@
       "outputFile": "docs/contest/evidence/open-data-release.png",
       "freezeRequired": true,
       "redactionRule": "Use a fresh anonymous browser context; omit browser chrome, personal data, cookies, account identifiers, API keys, tokens, and local filesystem paths.",
-      "sha256": "b690de1d1d8fdf53ddee8e99de9e4abc75d2c4920c5bcef74bf4b8fb174941ee",
-      "capturedAt": "2026-08-28T17:43:37.598Z",
-      "localCommitSha": "753a3160cc3cc895b943ccd5c8d7c52129a6dc9f",
-      "deployedCommitSha": "753a3160cc3cc895b943ccd5c8d7c52129a6dc9f"
+      "sha256": "c23a1eab49ef175e993a8bbef200f590d820f2e63cfbd2bec4b62c1b8f1057eb",
+      "capturedAt": "2026-09-01T18:13:59.210Z",
+      "localCommitSha": "9a4820875b2eac78698704c335e011166f2b82f4",
+      "deployedCommitSha": "9a4820875b2eac78698704c335e011166f2b82f4"
     },
     {
       "evidenceId": "accessibility-statement",
@@ -256,10 +250,10 @@
       "outputFile": "docs/contest/evidence/accessibility-statement.png",
       "freezeRequired": true,
       "redactionRule": "Use a fresh anonymous browser context; omit browser chrome, personal data, cookies, account identifiers, API keys, tokens, and local filesystem paths.",
-      "sha256": "fb00c7e117cb2ac0b0c79d9d43e8ca07bc1b9e3af067b93fbf2ebf98f23f4776",
-      "capturedAt": "2026-08-28T17:43:37.598Z",
-      "localCommitSha": "753a3160cc3cc895b943ccd5c8d7c52129a6dc9f",
-      "deployedCommitSha": "753a3160cc3cc895b943ccd5c8d7c52129a6dc9f"
+      "sha256": "a58c268b8cf7302a0930a7a7db839cf1f9e14513f66fa219b4160423d64c123b",
+      "capturedAt": "2026-09-01T18:13:59.210Z",
+      "localCommitSha": "9a4820875b2eac78698704c335e011166f2b82f4",
+      "deployedCommitSha": "9a4820875b2eac78698704c335e011166f2b82f4"
     },
     {
       "evidenceId": "public-resources",
@@ -287,10 +281,10 @@
       "outputFile": "docs/contest/evidence/public-resources.png",
       "freezeRequired": true,
       "redactionRule": "Use a fresh anonymous browser context; omit browser chrome, personal data, cookies, account identifiers, API keys, tokens, and local filesystem paths.",
-      "sha256": "6f2dad2cf30086d2052d13347e62ba0b3cd72b37a1db276b241dfa469d88cdac",
-      "capturedAt": "2026-08-28T17:43:37.598Z",
-      "localCommitSha": "753a3160cc3cc895b943ccd5c8d7c52129a6dc9f",
-      "deployedCommitSha": "753a3160cc3cc895b943ccd5c8d7c52129a6dc9f"
+      "sha256": "10c3bc8784c8b31e7b4de3ce503688dae01d786639a119a5c5e136b8d298c3c3",
+      "capturedAt": "2026-09-01T18:13:59.210Z",
+      "localCommitSha": "9a4820875b2eac78698704c335e011166f2b82f4",
+      "deployedCommitSha": "9a4820875b2eac78698704c335e011166f2b82f4"
     },
     {
       "evidenceId": "home-mobile",
@@ -300,7 +294,7 @@
         {
           "kind": "role",
           "role": "heading",
-          "name": "De tu FP a tu siguiente paso"
+          "name": "Explora formación, profesiones y oportunidades en Castilla y León."
         },
         { "kind": "text", "value": "Relaciones revisadas" }
       ],
@@ -310,10 +304,10 @@
         "published_snapshot"
       ],
       "outputFile": "docs/contest/evidence/home-mobile.png",
-      "sha256": "85569f9ead904782283606b3227cec9de4e093ef3734a6fd2800f2542e0f94da",
-      "capturedAt": "2026-08-28T17:43:37.598Z",
-      "localCommitSha": "753a3160cc3cc895b943ccd5c8d7c52129a6dc9f",
-      "deployedCommitSha": "753a3160cc3cc895b943ccd5c8d7c52129a6dc9f",
+      "sha256": "503aa4a9b5164061407d9c8e69f1ce4ca0a9735d6b395990e353886a2aaf332a",
+      "capturedAt": "2026-09-01T18:13:59.210Z",
+      "localCommitSha": "9a4820875b2eac78698704c335e011166f2b82f4",
+      "deployedCommitSha": "9a4820875b2eac78698704c335e011166f2b82f4",
       "freezeRequired": true,
       "redactionRule": "Use a fresh anonymous browser context; omit browser chrome, personal data, cookies, account identifiers, API keys, tokens, and local filesystem paths."
     },
@@ -334,12 +328,218 @@
         "privacy_no_persistence"
       ],
       "outputFile": "docs/contest/evidence/comparison-mobile.png",
-      "sha256": "9c395f7a3e2856fd60d6b94a0d046c19507464603466af6296316b0161b47aca",
-      "capturedAt": "2026-08-28T17:43:37.598Z",
-      "localCommitSha": "753a3160cc3cc895b943ccd5c8d7c52129a6dc9f",
-      "deployedCommitSha": "753a3160cc3cc895b943ccd5c8d7c52129a6dc9f",
+      "sha256": "e54c152d02f0f68b8e6f578d297e3f9e502468a7bb1964005fa9839d60dc7ce6",
+      "capturedAt": "2026-09-01T18:13:59.210Z",
+      "localCommitSha": "9a4820875b2eac78698704c335e011166f2b82f4",
+      "deployedCommitSha": "9a4820875b2eac78698704c335e011166f2b82f4",
       "freezeRequired": true,
       "redactionRule": "Use a fresh anonymous browser context; omit browser chrome, personal data, cookies, account identifiers, API keys, tokens, and local filesystem paths."
+    },
+    {
+      "evidenceId": "centers-global-page1",
+      "route": "/donde-estudiar",
+      "viewport": { "width": 1440, "height": 900 },
+      "requiredVisible": [
+        {
+          "kind": "role",
+          "role": "heading",
+          "name": "1–50 de 1293 opciones formativas"
+        },
+        { "kind": "text", "value": "229 centros representados" },
+        { "kind": "text", "value": "Página 1 de 26" }
+      ],
+      "claimIds": [
+        "public_modality_keys",
+        "published_snapshot",
+        "accessibility_intent",
+        "official_source_boundaries"
+      ],
+      "outputFile": "docs/contest/evidence/centers-global-page1.png",
+      "freezeRequired": true,
+      "redactionRule": "Use a fresh anonymous browser context; omit browser chrome, personal data, cookies, account identifiers, API keys, tokens, and local filesystem paths.",
+      "sha256": "249cc039db385fc00c74dec5a8aa0e56af3fa673934368e3a25231465cc1dc0a",
+      "capturedAt": "2026-09-01T18:13:59.210Z",
+      "localCommitSha": "9a4820875b2eac78698704c335e011166f2b82f4",
+      "deployedCommitSha": "9a4820875b2eac78698704c335e011166f2b82f4"
+    },
+    {
+      "evidenceId": "centers-global-pagination-mobile",
+      "route": "/donde-estudiar",
+      "viewport": { "width": 360, "height": 800 },
+      "requiredVisible": [
+        {
+          "kind": "role",
+          "role": "heading",
+          "name": "1–50 de 1293 opciones formativas"
+        },
+        { "kind": "text", "value": "229 centros representados" },
+        { "kind": "text", "value": "Página 1 de 26" }
+      ],
+      "claimIds": [
+        "public_modality_keys",
+        "published_snapshot",
+        "accessibility_intent"
+      ],
+      "outputFile": "docs/contest/evidence/centers-global-pagination-mobile.png",
+      "freezeRequired": true,
+      "redactionRule": "Use a fresh anonymous browser context; omit browser chrome, personal data, cookies, account identifiers, API keys, tokens, and local filesystem paths.",
+      "sha256": "eac9af96e9d2c2a90c385e62cc9a296c27929d8c0e12187cbb0517d282e6b551",
+      "capturedAt": "2026-09-01T18:13:59.210Z",
+      "localCommitSha": "9a4820875b2eac78698704c335e011166f2b82f4",
+      "deployedCommitSha": "9a4820875b2eac78698704c335e011166f2b82f4"
+    },
+    {
+      "evidenceId": "centers-contextual-ina02m",
+      "route": "/donde-estudiar/INA02M",
+      "viewport": { "width": 1440, "height": 900 },
+      "requiredVisible": [
+        {
+          "kind": "role",
+          "role": "heading",
+          "name": "Dónde estudiar Aceites de Oliva y Vinos"
+        },
+        { "kind": "role", "role": "heading", "name": "3 centros publicados" }
+      ],
+      "claimIds": [
+        "approved_relations",
+        "published_snapshot",
+        "public_modality_keys"
+      ],
+      "outputFile": "docs/contest/evidence/centers-contextual-ina02m.png",
+      "freezeRequired": true,
+      "redactionRule": "Use a fresh anonymous browser context; omit browser chrome, personal data, cookies, account identifiers, API keys, tokens, and local filesystem paths.",
+      "sha256": "226b3af783eef240d770e1bbac9eeb002e6bcbc5f4d5db18ad2fb6e1ffe87d5f",
+      "capturedAt": "2026-09-01T18:13:59.210Z",
+      "localCommitSha": "9a4820875b2eac78698704c335e011166f2b82f4",
+      "deployedCommitSha": "9a4820875b2eac78698704c335e011166f2b82f4"
+    },
+    {
+      "evidenceId": "offers-global-page1",
+      "route": "/desde-oferta",
+      "viewport": { "width": 1440, "height": 900 },
+      "requiredVisible": [
+        { "kind": "role", "role": "heading", "name": "1–12 de 1058 ofertas" },
+        { "kind": "text", "value": "Página 1 de 89" }
+      ],
+      "claimIds": [
+        "matched_offer_union",
+        "published_snapshot",
+        "no_salary_prediction"
+      ],
+      "outputFile": "docs/contest/evidence/offers-global-page1.png",
+      "freezeRequired": true,
+      "redactionRule": "Use a fresh anonymous browser context; omit browser chrome, personal data, cookies, account identifiers, API keys, tokens, and local filesystem paths.",
+      "sha256": "076dc73a4d64942626a08870bc81efcda13143e22b011cf839a0bcfde67e9a80",
+      "capturedAt": "2026-09-01T18:13:59.210Z",
+      "localCommitSha": "9a4820875b2eac78698704c335e011166f2b82f4",
+      "deployedCommitSha": "9a4820875b2eac78698704c335e011166f2b82f4"
+    },
+    {
+      "evidenceId": "offers-program-ina02m",
+      "route": "/desde-fp/INA02M/ofertas",
+      "viewport": { "width": 1440, "height": 900 },
+      "requiredVisible": [
+        {
+          "kind": "role",
+          "role": "heading",
+          "name": "Ofertas relacionadas con Aceites de Oliva y Vinos"
+        },
+        { "kind": "text", "value": "4 ofertas" }
+      ],
+      "claimIds": [
+        "matched_offer_union",
+        "approved_relations",
+        "no_salary_prediction"
+      ],
+      "outputFile": "docs/contest/evidence/offers-program-ina02m.png",
+      "freezeRequired": true,
+      "redactionRule": "Use a fresh anonymous browser context; omit browser chrome, personal data, cookies, account identifiers, API keys, tokens, and local filesystem paths.",
+      "sha256": "242db0de4f89cf01c4c9ade4c41c9b22fef394c9d1d142e4b8d889f35eaf1690",
+      "capturedAt": "2026-09-01T18:13:59.210Z",
+      "localCommitSha": "9a4820875b2eac78698704c335e011166f2b82f4",
+      "deployedCommitSha": "9a4820875b2eac78698704c335e011166f2b82f4"
+    },
+    {
+      "evidenceId": "offers-program-san21",
+      "route": "/desde-fp/SAN21/ofertas",
+      "viewport": { "width": 1440, "height": 900 },
+      "requiredVisible": [
+        {
+          "kind": "role",
+          "role": "heading",
+          "name": "Ofertas relacionadas con Cuidados Auxiliares de Enfermería"
+        },
+        { "kind": "text", "value": "35 ofertas" }
+      ],
+      "claimIds": [
+        "matched_offer_union",
+        "approved_relations",
+        "no_salary_prediction"
+      ],
+      "outputFile": "docs/contest/evidence/offers-program-san21.png",
+      "freezeRequired": true,
+      "redactionRule": "Use a fresh anonymous browser context; omit browser chrome, personal data, cookies, account identifiers, API keys, tokens, and local filesystem paths.",
+      "sha256": "50fc499dcdcf99eee9db2f658331dda851391822a200f90ff2f8ee168ba2330b",
+      "capturedAt": "2026-09-01T18:13:59.210Z",
+      "localCommitSha": "9a4820875b2eac78698704c335e011166f2b82f4",
+      "deployedCommitSha": "9a4820875b2eac78698704c335e011166f2b82f4"
+    },
+    {
+      "evidenceId": "offers-occupation-cno5611",
+      "route": "/desde-ocupacion/occupation%3Acno11%3A5611/ofertas",
+      "viewport": { "width": 1440, "height": 900 },
+      "requiredVisible": [
+        {
+          "kind": "role",
+          "role": "heading",
+          "name": "Ofertas relacionadas con Auxiliares de enfermería hospitalaria"
+        },
+        { "kind": "text", "value": "34 ofertas" }
+      ],
+      "claimIds": [
+        "matched_offer_union",
+        "approved_relations",
+        "no_salary_prediction"
+      ],
+      "outputFile": "docs/contest/evidence/offers-occupation-cno5611.png",
+      "freezeRequired": true,
+      "redactionRule": "Use a fresh anonymous browser context; omit browser chrome, personal data, cookies, account identifiers, API keys, tokens, and local filesystem paths.",
+      "sha256": "0eb24a4ed2806d711eca7a6642216422ebfe3630e6ba72b508daebae5a5c667d",
+      "capturedAt": "2026-09-01T18:13:59.210Z",
+      "localCommitSha": "9a4820875b2eac78698704c335e011166f2b82f4",
+      "deployedCommitSha": "9a4820875b2eac78698704c335e011166f2b82f4"
+    },
+    {
+      "evidenceId": "offers-occupation-cno7111",
+      "route": "/desde-ocupacion/occupation%3Acno11%3A7111/ofertas",
+      "viewport": { "width": 1440, "height": 900 },
+      "requiredVisible": [{ "kind": "text", "value": "3 ofertas" }],
+      "claimIds": [
+        "matched_offer_union",
+        "approved_relations",
+        "no_salary_prediction"
+      ],
+      "outputFile": "docs/contest/evidence/offers-occupation-cno7111.png",
+      "freezeRequired": true,
+      "redactionRule": "Use a fresh anonymous browser context; omit browser chrome, personal data, cookies, account identifiers, API keys, tokens, and local filesystem paths.",
+      "sha256": "cb8ab9eb03403edd108cb76e3aaee3ed742f0352b5037583ade118960d35bc5a",
+      "capturedAt": "2026-09-01T18:13:59.210Z",
+      "localCommitSha": "9a4820875b2eac78698704c335e011166f2b82f4",
+      "deployedCommitSha": "9a4820875b2eac78698704c335e011166f2b82f4"
+    },
+    {
+      "evidenceId": "offers-occupation-cno3820",
+      "route": "/desde-ocupacion/occupation%3Acno11%3A3820/ofertas",
+      "viewport": { "width": 1440, "height": 900 },
+      "requiredVisible": [{ "kind": "text", "value": "0 ofertas" }],
+      "claimIds": ["zero_reviewed_relations", "official_source_boundaries"],
+      "outputFile": "docs/contest/evidence/offers-occupation-cno3820.png",
+      "freezeRequired": true,
+      "redactionRule": "Use a fresh anonymous browser context; omit browser chrome, personal data, cookies, account identifiers, API keys, tokens, and local filesystem paths.",
+      "sha256": "4436e271e52ef406fb1091b7732af3441665e3ac11348ae3a2a057e2331ac73f",
+      "capturedAt": "2026-09-01T18:13:59.210Z",
+      "localCommitSha": "9a4820875b2eac78698704c335e011166f2b82f4",
+      "deployedCommitSha": "9a4820875b2eac78698704c335e011166f2b82f4"
     }
   ]
 }
