@@ -58,7 +58,7 @@ La cifra de ofertas es una unión de IDs de ofertas que pasan las reglas de matc
 
 ## Reproducibilidad
 
-Comandos previstos para repetir las comprobaciones. Este documento no los da por ejecutados hasta que `release-evidence.json` quede verificado y ligado al commit de publicación:
+Comandos ejecutados y ligados al commit de publicación en `release-evidence.json`:
 
 ```text
 npm run data:build
@@ -80,7 +80,10 @@ La revisión independiente confirmó el manifest, sus 22 recursos, los conjuntos
 ## Despliegue
 
 - URL raíz esperada: [https://salida-cyl.157-90-22-40.sslip.io/](https://salida-cyl.157-90-22-40.sslip.io/)
-- Commit desplegado: **PENDIENTE DE DESPLIEGUE Y VERIFICACIÓN**.
-- Run del workflow: **PENDIENTE DE DESPLIEGUE Y VERIFICACIÓN**.
+- Commit desplegado: `9a4820875b2eac78698704c335e011166f2b82f4`.
+- Run del workflow: `33538765480`.
 
-Estos dos campos no se inventan antes de ejecutar y verificar el release.
+- Release: `v2026.09.01-candidate.7`.
+- `version.json` observado: [respuesta pública](https://salida-cyl.157-90-22-40.sslip.io/version.json) con commit `9a4820875b2eac78698704c335e011166f2b82f4`.
+
+El release público se verificó con el commit `9a4820875b2eac78698704c335e011166f2b82f4` y el run `33538765480` el 2026-09-01T17:49:00Z.

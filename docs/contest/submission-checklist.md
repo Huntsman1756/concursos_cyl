@@ -16,20 +16,22 @@
 - Fallback verificada: [https://huntsman1756.github.io/concursos_cyl/](https://huntsman1756.github.io/concursos_cyl/)
 - Commit fuente del freeze: `36659e6a2e127630e72b14b8641504d5dbea7a9e`.
 - Snapshot: `20260830120000000-8c6c79fbd2a1`.
-- Commit desplegado: **PENDIENTE DE DESPLIEGUE Y VERIFICACIÓN**.
-- Run del workflow: **PENDIENTE DE DESPLIEGUE Y VERIFICACIÓN**.
-- Evidencia visual: captura visual actual pendiente; las 13 capturas anteriores son históricas.
+- Commit desplegado: `9a4820875b2eac78698704c335e011166f2b82f4`.
+- Run del workflow: `33538765480`.
+- Release: `v2026.09.01-candidate.7`.
+- `version.json` verificado: [respuesta pública](https://salida-cyl.157-90-22-40.sslip.io/version.json) con commit igual a `9a4820875b2eac78698704c335e011166f2b82f4`.
+- Evidencia visual: **capturada y validada en `docs/contest/evidence-capture.json`**.
 
 ## Evidencia visual y gate final
 
-- [ ] Captura automatizada A4: pendiente de recaptura y validación.
+- [x] Captura automatizada A4: 22/22 capturas actuales recapturadas y validadas en `docs/contest/evidence-capture.json`.
 - [ ] Ejecutar la captura nativa OS A4 en un Mac desbloqueado.
 - [ ] Revisar la aplicación pública de la release actual en contexto anónimo, incluyendo las rutas de FP, ocupación y comparador.
-- [ ] Conservar solo capturas actuales, sin datos personales ni credenciales; las 13 capturas existentes son históricas.
-- [ ] Ejecutar los gates de release y verificar la aplicación pública.
-- [ ] Rellenar el commit desplegado y el run del workflow con datos observados.
-- [ ] Revisar las capturas en contexto anónimo, sin datos personales ni credenciales.
-- [ ] Confirmar que las cifras visibles siguen coincidiendo con `20260830120000000-8c6c79fbd2a1`. (evidencia visual pendiente)
+- [ ] Conservar solo capturas actuales, sin datos personales ni credenciales; el manifiesto contiene capturas actuales ligadas al commit de publicación.
+- [x] Ejecutar los gates de release y verificar la aplicación pública.
+- [x] Rellenar el commit desplegado y el run del workflow con datos observados.
+- [ ] Revisar las capturas en contexto anónimo, sin datos personales ni credenciales. (capturas actuales; revisión humana pendiente)
+- [ ] Confirmar que las cifras visibles siguen coincidiendo con `20260830120000000-8c6c79fbd2a1`. (revisión humana pendiente)
 - [ ] Obtener aprobación humana explícita para la solicitud externa.
 
 **PENDIENTE DE APROBACIÓN HUMANA:** este repositorio no envía la solicitud al concurso ni decide los campos de identidad, contacto, declaraciones o consentimiento.
