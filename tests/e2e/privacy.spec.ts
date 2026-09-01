@@ -1,4 +1,4 @@
-import { expect, test, type Page } from "@playwright/test";
+import { expect, test, type Locator, type Page } from "@playwright/test";
 import {
   installDecisionFlowFixture,
   syntheticQuotes,
@@ -68,6 +68,13 @@ async function expectNoPrivacyEvents(
   }, barrier);
   expect(privacyEvents).toEqual([barrier]);
   privacyEvents.splice(0);
+}
+
+async function openRequirements(card: Locator): Promise<void> {
+  const requirements = card.locator("details.offer-row__more");
+  if ((await requirements.getAttribute("open")) === null) {
+    await requirements.locator(":scope > summary").click();
+  }
 }
 
 function expectNoSerializedRequestState(url: string): void {
@@ -218,7 +225,7 @@ test("answer, exact-absence filter, and checklist remain ephemeral and never lea
   };
   page.on("request", recordRequest);
 
-  await card.getByLabel(/De dónde sale esta información/iu).click();
+  await openRequirements(card);
 
   await card
     .getByRole("radio", {
@@ -235,7 +242,7 @@ test("answer, exact-absence filter, and checklist remain ephemeral and never lea
   await page.getByRole("button", { name: "Quitar filtro" }).click();
   await expectPrivateLocation(page);
 
-  await card.getByLabel(/De dónde sale esta información/iu).click();
+  await openRequirements(card);
 
   await card
     .getByRole("radio", {
@@ -267,7 +274,7 @@ test("answer, exact-absence filter, and checklist remain ephemeral and never lea
 
   await page.reload();
   await expect(card).toBeVisible();
-  await card.getByLabel(/De dónde sale esta información/iu).click();
+  await openRequirements(card);
   await expect(
     card.getByRole("radio", {
       name: `No lo tengo: ${syntheticQuotes.experienceQuote}`,

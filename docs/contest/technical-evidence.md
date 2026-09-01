@@ -5,9 +5,9 @@
 <!-- prettier-ignore -->
 | Campo | Valor |
 | --- | --- |
-| Commit fuente | `a0350acdfd6064b68dee30af80433d8564347da3` |
+| Commit fuente | `36659e6a2e127630e72b14b8641504d5dbea7a9e` |
 | Manifest | `public/data/v1/manifest.json` |
-| SHA-256 del manifest | `b791a11317704600fa3a86ba935a77253e0c4ca9e0432fbe2820727eaf914a0a` |
+| SHA-256 del manifest | `e70a1853ac0f2cf5d25e6192776f88b400aca1536a58380044a8aa1ebc2794df` |
 | Generado | 2026-08-30T12:00:00.000Z |
 | Snapshot | `20260830120000000-8c6c79fbd2a1` |
 | Estado de calidad | passed |
@@ -32,7 +32,7 @@
 | occupations | `/data/v1/snapshots/20260830120000000-8c6c79fbd2a1/occupations.json` | 131 | `4e82ab9810dc6681b0e79aa2cfe3b038985ee23eb36cdb5f4603b53961efae2e` |
 | offerEvidence | `/data/v1/snapshots/20260830120000000-8c6c79fbd2a1/offer-evidence.json` | 1058 | `80dd7ccb917c75015bf38492cc5baf4bed6ee20a3a4043e3a981a9a6d38c17d4` |
 | officialOccupations | `/data/v1/snapshots/20260830120000000-8c6c79fbd2a1/official-occupations.json` | 502 | `76fa213f97c98e5af0f9bf120323ba3abb32df78e797c381e5454cadc858f64b` |
-| openDataCatalog | `/data/v1/snapshots/20260830120000000-8c6c79fbd2a1/open-data-catalog.json` | 1 | `c86ae7e7becf1da122a4d3e93c971d5792ed203273f75881368b0eac2008db24` |
+| openDataCatalog | `/data/v1/snapshots/20260830120000000-8c6c79fbd2a1/open-data-catalog.json` | 1 | `76407cebe55367233221575ce1fdc46dd123917d57b35168ac7f4d6d7fdc6198` |
 | outcomeIndicators | `/data/v1/snapshots/20260830120000000-8c6c79fbd2a1/outcome-indicators.json` | 22170 | `4f2c6b73fc4171bb9daf21583712ab2ec99bcaa7d27b1f2fd0c070b9079ab3e2` |
 | professionalCertificates | `/data/v1/snapshots/20260830120000000-8c6c79fbd2a1/professional-certificates.json` | 583 | `a66ebe6b4439dca39091b0f06d587bc326389d9f7e2ecfc7a8c88b5a8937a7cb` |
 | professionalProfiles | `/data/v1/snapshots/20260830120000000-8c6c79fbd2a1/professional-profiles.json` | 1728 | `2794228570e734a5dca0f8d594a199a67b9b732d7f54ffd56abe3af22f66d22b` |

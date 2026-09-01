@@ -19,8 +19,8 @@ import {
   type ContestFreeze,
 } from "./validateContestFreeze";
 
-const EXPANDED_SOURCE_SHA = "a0350acdfd6064b68dee30af80433d8564347da3";
-const EXPANDED_FREEZE_COMMIT_SHA = "b29358ae6c71597509f0671b5ff9ec7ed62ef6ca";
+const EXPANDED_SOURCE_SHA = "36659e6a2e127630e72b14b8641504d5dbea7a9e";
+const EXPANDED_FREEZE_COMMIT_SHA = "064d10ed5f48df9e8deec3322f38be7372de5b01";
 const CAPTURE_COUNT = 0;
 const LEGACY_SOURCE_SHA = "ff9e6197f926e462bea1a3e8ac6a57a23d3f825a";
 const CANDIDATE_4_TAG = "v2026.08.27-candidate.4";

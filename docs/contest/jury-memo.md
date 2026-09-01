@@ -17,7 +17,7 @@ SALIDA CyL convierte catálogos públicos separados en una ruta de decisión: `F
 
 ## Cifras congeladas
 
-El candidato usa el snapshot `20260830120000000-8c6c79fbd2a1`, manifest SHA-256 `b791a11317704600fa3a86ba935a77253e0c4ca9e0432fbe2820727eaf914a0a` y 22 recursos. Incluye 187 programas, 229 centros, 1.294 ofertas formativas, 1.058 ofertas laborales, 264 relaciones FP–ocupación aprobadas, 35 alias y 0 programas diferidos.
+El candidato usa el snapshot `20260830120000000-8c6c79fbd2a1`, manifest SHA-256 `e70a1853ac0f2cf5d25e6192776f88b400aca1536a58380044a8aa1ebc2794df` y 22 recursos. Incluye 187 programas, 229 centros, 1.294 ofertas formativas, 1.058 ofertas laborales, 264 relaciones FP–ocupación aprobadas, 35 alias y 0 programas diferidos.
 
 La cobertura contiene 113 cualificaciones distintas y 130 claves de modalidad. 138 ofertas alcanzadas pertenecen a una copia fechada de 1.058 ofertas; es una unión de IDs, no una medida de todo el mercado.
 

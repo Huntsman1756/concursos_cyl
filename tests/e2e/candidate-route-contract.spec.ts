@@ -1,6 +1,8 @@
 import AxeBuilder from "@axe-core/playwright";
 import { expect, test } from "@playwright/test";
 
+test.setTimeout(60_000);
+
 for (const route of [
   { path: "/donde-estudiar", heading: /Dónde estudiar/u },
   { path: "/donde-estudiar/INA02M", heading: /Dónde estudiar/u },

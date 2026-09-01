@@ -72,7 +72,7 @@ for (const program of reviewedPrograms) {
     await page.goto(`/desde-fp/${program.programKey}`);
 
     await expect(
-      page.getByRole("heading", { name: program.title }),
+      page.getByRole("heading", { name: program.title, exact: true }),
     ).toBeVisible();
     for (const code of program.occupationCodes) {
       await expect(page.getByText(`CNO-11 ${code}`)).toBeVisible();
@@ -89,8 +89,9 @@ for (const program of reviewedPrograms) {
     await expect(
       page.getByText(/no hay (empleo|trabajo|puestos)/iu),
     ).toHaveCount(0);
-    await expect(
-      page.locator(".centers-section__all"),
-    ).toHaveAttribute("href", `/formacion/${program.programKey}`);
+    await expect(page.locator(".centers-section__all")).toHaveAttribute(
+      "href",
+      `/formacion/${program.programKey}`,
+    );
   });
 }

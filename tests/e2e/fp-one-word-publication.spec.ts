@@ -111,7 +111,8 @@ for (const { programKey, offerIds } of cases) {
     } else {
       await expect(
         page.getByRole("heading", {
-          name: programKey === "HOT01M" ? "COCINEROS, EN GENERAL" : "ENCOFRADORES",
+          name:
+            programKey === "HOT01M" ? "COCINEROS, EN GENERAL" : "ENCOFRADORES",
         }),
       ).toHaveCount(offerIds.length);
     }

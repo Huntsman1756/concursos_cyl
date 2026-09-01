@@ -67,9 +67,9 @@ test("the public candidate manifest retains canonical SEPE evidence", async ({
     "municipalities",
     "occupationAliases",
     "occupations",
+    "offerEvidence",
     "officialOccupations",
     "openDataCatalog",
-    "offerEvidence",
     "outcomeIndicators",
     "professionalCertificates",
     "professionalProfiles",
@@ -105,14 +105,14 @@ test("print media preserves closed evidence and hides coordinate details", async
     name: "Desarrollador web para servicios públicos",
   });
   await expect(card).toBeVisible();
-  await expect(
-    card.locator("details.evidence-disclosure"),
-  ).not.toHaveAttribute("open");
+  await expect(card.locator("details.info-disclosure")).not.toHaveAttribute(
+    "open",
+  );
 
   await page.emulateMedia({ media: "print" });
 
   const evidenceHeading = card
-    .locator("details.evidence-disclosure .offer-row__traceability h4")
+    .locator("details.info-disclosure .offer-row__traceability h4")
     .first();
   await expect(evidenceHeading).toHaveText("Por qué aparece esta oferta");
   expect(
@@ -121,9 +121,7 @@ test("print media preserves closed evidence and hides coordinate details", async
     ),
   ).toBeGreaterThan(0);
 
-  const evidenceSource = card
-    .locator("details.evidence-disclosure a")
-    .first();
+  const evidenceSource = card.locator("details.info-disclosure a").first();
   await expect(evidenceSource).toHaveAttribute("href");
   expect(
     await evidenceSource.evaluate(
@@ -133,9 +131,12 @@ test("print media preserves closed evidence and hides coordinate details", async
 
   const coordinatesPage = await page.context().newPage();
   await coordinatesPage.goto("/desde-fp/IFC03S");
+  await coordinatesPage
+    .getByText("Distribución geográfica de los centros", { exact: true })
+    .click();
   await expect(
     coordinatesPage.getByRole("heading", {
-      name: "Distribución geográfica de los centros",
+      name: "Distribución de centros",
     }),
   ).toBeVisible();
   // Install the deterministic fixture after the published coordinate snapshot

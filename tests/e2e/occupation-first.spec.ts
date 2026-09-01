@@ -97,7 +97,9 @@ test("the live occupation journey confirms a reviewed everyday alias and reaches
   await expect(page.locator(".confirmed-occupation")).toContainText(
     /Analistas, programadores y diseñadores web y multimedia/iu,
   );
-  await page.getByRole("button", { name: "Ver qué FP te lleva a ella" }).click();
+  await page
+    .getByRole("button", { name: "Ver qué FP te lleva a ella" })
+    .click();
   await expect(page).toHaveURL(
     /\/desde-ocupacion\/occupation%3Acno11%3A2713\?query=/u,
   );
@@ -120,7 +122,10 @@ test("the live occupation journey confirms a reviewed everyday alias and reaches
       page.getByText(`Grado superior · ${programKey}`, { exact: true }),
     ).toBeVisible();
   }
-  await page.getByLabel(/Fuente y revisión de la relación con/iu).first().click();
+  await page
+    .getByLabel(/Fuente y revisión de la relación con/iu)
+    .first()
+    .click();
   await expect(
     page.getByText("Desarrollador de aplicaciones en entornos Web.").first(),
   ).toBeVisible();
@@ -178,7 +183,9 @@ test("an official occupation without a reviewed FP relation remains searchable",
   });
   await combobox.fill("astrónomos");
   await page.getByRole("option", { name: /^Físicos y astrónomos/iu }).click();
-  await page.getByRole("button", { name: "Ver qué FP te lleva a ella" }).click();
+  await page
+    .getByRole("button", { name: "Ver qué FP te lleva a ella" })
+    .click();
 
   await expect(page).toHaveURL(
     /\/desde-ocupacion\/occupation%3Acno11%3A2411\?query=/u,
