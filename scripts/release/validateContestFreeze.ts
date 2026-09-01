@@ -80,7 +80,7 @@ const FREEZE_KEYS = [
 
 const CANONICAL_MANIFEST_PATH = "public/data/v1/manifest.json";
 export const CONTEST_FREEZE_SOURCE_COMMIT_SHA =
-  "032426013a88c35bad348f3c443dae7d9a1639a3";
+  "9bad066a1144e6055e087e2c6e64f371521bf10d";
 
 const CANONICAL_RESOURCE_KEYS: readonly CandidateResourceKey[] = (() => {
   const keys: string[] = [...CANDIDATE_RESOURCE_KEYS];
