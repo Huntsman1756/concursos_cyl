@@ -41,10 +41,10 @@ jobs:
       - run: npm run test:e2e
       - name: Verify Caddy container headers and SPA fallback
         run: |
-          docker build -t salida-cyl:ci .
+          docker build --build-arg RELEASE_COMMIT="${{ github.sha }}" -t salida-cyl:ci .
           docker run -d --name salida-cyl-ci -p 18080:8080 salida-cyl:ci
           trap 'docker rm -f salida-cyl-ci' EXIT
-          CADDY_SMOKE_BASE_URL=http://127.0.0.1:18080 npm run release:caddy:verify
+          CADDY_SMOKE_BASE_URL=http://127.0.0.1:18080 CADDY_SMOKE_EXPECTED_COMMIT="${{ github.sha }}" npm run release:caddy:verify
       - run: npm run build
         env:
           VITE_PUBLIC_BASE_PATH: /concursos_cyl/

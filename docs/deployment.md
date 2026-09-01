@@ -20,9 +20,9 @@ The Pages host controls response headers; Vite Preview and the container policy 
 Build and run the reproducible static image:
 
 ```sh
-docker build -t salida-cyl:local .
+docker build --build-arg RELEASE_COMMIT="$(git rev-parse HEAD)" -t salida-cyl:local .
 docker run -d --rm --name salida-cyl-smoke -p 8080:8080 salida-cyl:local
-CADDY_SMOKE_BASE_URL=http://127.0.0.1:8080 npm run release:caddy:verify
+CADDY_SMOKE_BASE_URL=http://127.0.0.1:8080 CADDY_SMOKE_EXPECTED_COMMIT="$(git rev-parse HEAD)" npm run release:caddy:verify
 docker stop salida-cyl-smoke
 ```
 
