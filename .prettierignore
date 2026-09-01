@@ -1,6 +1,9 @@
 # Immutable hash-addressed generated payloads; formatting would invalidate their manifests.
 public/data/v1/snapshots/**
 
+# Generator-owned inventory serialization (scripts/assets/generate-editorial-images.mjs).
+scripts/assets/editorial-images.inventory.json
+
 # Legacy generated offer payload retained outside the snapshot tree.
 public/data/v1/job-offers.json
 
