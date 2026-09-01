@@ -62,7 +62,8 @@ Ritmo alternado blanco/papel cálido; sin cajas anidadas.
 training`, position 66% 36%) / apilado mobile (imagen 4:3→16:9). H2 + lede +
   CTA primario "Buscar dónde estudiar" → `/donde-estudiar`. Chip punteado
   CAPTION: "Propuesta de rediseño · … · PROPOSED_FILTERS" — obligatorio
-  mientras los filtros (provincia, modalidad, titularidad, nivel, familia) no
+  mientras los filtros (provincia, modalidad, titularidad —teachingType:
+  pública/concertada/privada—, nivel, familia) no
   existan en producción.
 - **Method/Trust**: H2 "Sabes de dónde sale cada relación." + 1 párrafo +
   acciones (secundario "Ver metodología" → `/metodologia`; acción de texto

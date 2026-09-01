@@ -51,11 +51,11 @@ anticuada, exceso de gris, exceso de cajas.
 
 ### 1.2 Decisión: **Public Sans, autohospedada**
 
-| Candidata       | Veredicto   | Razón                                                                                                                                                |
-| --------------- | ----------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Public Sans** | **ELEGIDA** | Diseñada para interfaces de gobierno (USWDS); neutra, legible, sin aire "startup"; SIL OFL; woff2 por peso ~40–45 KB; se subconjunta bien al español |
-| Inter           | Descartada  | Buena fuente, pero es la fuente por defecto del "look generado con IA/SaaS" que se quiere evitar, y hoy está declarada sin distribuirse              |
-| System UI       | Reserva     | Solo como fallback del stack; inconsistente entre plataformas                                                                                        |
+| Candidata       | Veredicto   | Razón                                                                                                                                                                                                                                                                                  |
+| --------------- | ----------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Public Sans** | **ELEGIDA** | Diseñada para interfaces de gobierno (USWDS); neutra, legible, sin aire "startup"; SIL OFL; woff2 por peso ~40–45 KB; se subconjunta bien al español                                                                                                                                   |
+| Inter           | Descartada  | Buena fuente, pero era el "look por defecto" (IA/SaaS) que se quiere evitar; además el frontend anterior la declaraba en `font-family` sin `@font-face` ni paquete que garantizase su uso, por lo que podía caer a `system-ui`. La descarta el rediseño por identidad, no por licencia |
+| System UI       | Reserva     | Solo como fallback del stack; inconsistente entre plataformas                                                                                                                                                                                                                          |
 
 Contrato de distribución:
 
@@ -372,12 +372,23 @@ máxima por página: 1 hero/intro + 3 task cards (solo Home) o 1 intro.
 
 ## 12. Patrón de filtros (crítico en Dónde estudiar)
 
-Datos verificados en esta fase (esquemas `public/data/v1`):
-`centers.province` ✓ · `trainingOfferings.modality` (Presencial/A distancia/
-Mixta/No publicada) ✓ · `centers.centerOwnership` (Centro educativo/municipal/
-privado/agrario) ✓ · `programs.level` ✓ · `programs.familyName/familyCode` ✓.
+Datos verificados en esta fase (esquemas `public/data/v1` + snapshot
+activo): `centers.province` ✓ · `trainingOfferings.modality`
+(Presencial/A distancia/Mixta/No publicada) ✓ ·
+`trainingOfferings.teachingType` (Pública/Concertada/Privada) ✓ ·
+`centers.centerOwnership` (Centro educativo/municipal/agrario/privado) ✓ ·
+`programs.level` ✓ · `programs.familyName/familyCode` ✓.
 Hoy solo están implementados provincia+busca; **el diseño prevé los cinco**,
 pero su implementación real queda condicionada a los datos de cada página.
+
+**Semántica obligatoria (dos conceptos distintos, nunca mezclar):**
+
+- **"Titularidad"** = `teachingType` → Pública / Concertada / Privada.
+  Es la condición del centro como proveedor de la enseñanza.
+- **"Tipo de centro"** = `centerOwnership` → Centro educativo / municipal /
+  agrario / privado. Es la naturaleza del centro. Si se expone, va como
+  filtro adicional o metadata secundaria bajo el nombre del centro —
+  **nunca** con la etiqueta "Titularidad".
 
 **Desktop (≥1080) — FilterBar horizontal:**
 
@@ -402,10 +413,12 @@ Comprender siempre: qué estoy filtrando (chips etiquetados), cuántos quedan
 ## 13. Patrón de resultados
 
 **Desktop — ResultList tabla/lista semántica** (no una tabla comprimida):
-columnas centro: Centro · Localidad · Ciclo · Modalidad · Titularidad ·
-Acciones. Hairlines entre filas (sin cebra), header LABEL/600 con fondo
-SURFACE_ALT. Enlaces en el nombre; acciones: "Ver ciclo" + "Web del centro"
-(solo si existe).
+columnas centro: Centro · Localidad · Ciclo · Modalidad · Titularidad
+(teachingType: Pública/Concertada/Privada) · Acciones. Sin columna propia de
+"Tipo de centro": `centerOwnership` aparece como metadata secundaria bajo el
+nombre del centro (p. ej. "CIFP X · Centro educativo"). Hairlines entre filas
+(sin cebra), header LABEL/600 con fondo SURFACE_ALT. Enlaces en el nombre;
+acciones: "Ver ciclo" + "Web del centro" (solo si existe) + "Cómo llegar".
 
 **Mobile — ResultCard apilada**: meta CAPTION (Localidad · Provincia) →
 título H3 (centro/ciclo) → SMALL atributos "Presencial · Pública · Grado

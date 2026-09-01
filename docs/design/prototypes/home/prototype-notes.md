@@ -43,8 +43,11 @@
    `offer-evidence.json` — `evidenceStatus: reviewed_fp_relationship` — y
    `centers.json`). En implementación se calculan del runtime, nunca fijados.
 4. **PROPOSED_FILTERS**: el teaser de centros marca en un chip punteado que
-   los filtros ampliados (provincia, modalidad, titularidad, nivel, familia)
-   son propuesta del rediseño (hoy solo existen provincia + búsqueda).
+   los filtros ampliados (provincia, modalidad, titularidad —teachingType:
+   pública/concertada/privada—, nivel, familia) son propuesta del rediseño
+   (hoy solo existen provincia + búsqueda). "Tipo de centro"
+   (centerOwnership) es un concepto distinto y opcional; nunca se etiqueta
+   como "Titularidad".
 5. **Ejemplo real verificado** (no inventado): ADG02S Administración y
    Finanzas ↔ CNO-11 4111 Empleados de contabilidad, `official_output`,
    `reviewed_title_alias_exact`, revisada 12/08/2026, fuente TodoFP con quote

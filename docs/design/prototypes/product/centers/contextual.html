@@ -1,0 +1,425 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>
+      Dónde estudiar Administración y Finanzas — SALIDA CyL · prototipo
+    </title>
+    <link rel="stylesheet" href="../product.css" />
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Saltar al contenido principal</a>
+
+    <header class="header">
+      <div class="container header-bar">
+        <a class="wordmark" href="/">SALIDA <span class="cyl">CyL</span></a>
+        <nav class="header-secondary" aria-label="Enlaces secundarios">
+          <a href="/datos-abiertos">Datos abiertos</a>
+          <a href="/metodologia">Metodología</a>
+          <a href="/accesibilidad">Accesibilidad</a>
+        </nav>
+        <button
+          class="menu-button"
+          type="button"
+          aria-expanded="false"
+          aria-controls="mobile-menu"
+          id="menu-button"
+        >
+          <svg
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            aria-hidden="true"
+          >
+            <line x1="4" x2="20" y1="6" y2="6" />
+            <line x1="4" x2="20" y1="12" y2="12" />
+            <line x1="4" x2="20" y1="18" y2="18" />
+          </svg>
+          Menú
+        </button>
+      </div>
+      <nav class="global-nav" aria-label="Navegación principal">
+        <div class="container">
+          <ul class="global-nav-list">
+            <li><a class="global-nav-link" href="/desde-fp">Explorar</a></li>
+            <li><a class="global-nav-link" href="/desde-oferta">Ofertas</a></li>
+            <li>
+              <a
+                class="global-nav-link"
+                href="/donde-estudiar"
+                aria-current="page"
+                >Dónde estudiar</a
+              >
+            </li>
+          </ul>
+        </div>
+      </nav>
+      <div class="mobile-menu" id="mobile-menu" hidden>
+        <ul class="mobile-menu-list">
+          <li><a href="/desde-fp">Explorar</a></li>
+          <li><a href="/desde-oferta">Ofertas</a></li>
+          <li><a href="/donde-estudiar">Dónde estudiar</a></li>
+        </ul>
+        <div class="mobile-menu-secondary">
+          <a href="/datos-abiertos">Datos abiertos</a>
+          <a href="/metodologia">Metodología</a>
+          <a href="/accesibilidad">Accesibilidad</a>
+        </div>
+      </div>
+    </header>
+
+    <main id="main">
+      <div class="container">
+        <nav class="breadcrumbs" aria-label="Miga de pan">
+          <ol>
+            <li><a href="/">Inicio</a></li>
+            <li><a href="/desde-fp">Desde tu FP</a></li>
+            <li><a href="/desde-fp/ADG02S">Administración y Finanzas</a></li>
+            <li><span aria-current="page">Dónde estudiar</span></li>
+          </ol>
+        </nav>
+
+        <header class="page-header">
+          <div class="ctx-banner">
+            <span class="ctx-kind">Estás viendo</span>
+            <span class="ctx-target"
+              >Centros que publican Administración y Finanzas (ADG02S)</span
+            >
+            <a class="ctx-back link-action" href="/desde-fp/ADG02S"
+              >Volver a la ficha del ciclo</a
+            >
+          </div>
+          <h1 class="h1" style="margin-top: var(--space-4)">
+            Dónde estudiar Administración y Finanzas
+          </h1>
+          <p class="page-subcopy">
+            Los 45 centros que publican este ciclo en la copia actual, en las 9
+            provincias. Sin información de matrícula ni plazas: eso depende de
+            cada centro.
+          </p>
+        </header>
+
+        <section aria-label="Filtros y centros del ciclo">
+          <button
+            class="sheet-button"
+            type="button"
+            data-sheet-button
+            aria-expanded="false"
+            aria-controls="filters"
+          >
+            Filtros
+            <svg
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+            >
+              <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3" />
+            </svg>
+          </button>
+          <form
+            class="filter-bar"
+            id="filters"
+            data-sheet
+            action="/donde-estudiar/ADG02S"
+            method="get"
+          >
+            <div class="filter-field">
+              <label for="prov">Provincia</label>
+              <select id="prov" name="province">
+                <option>Todas</option>
+                <option>Ávila (4)</option>
+                <option>Burgos (7)</option>
+                <option>León (9)</option>
+                <option>Palencia (3)</option>
+                <option>Salamanca (7)</option>
+                <option>Segovia (2)</option>
+                <option>Soria (1)</option>
+                <option>Valladolid (10)</option>
+                <option>Zamora (2)</option>
+              </select>
+            </div>
+            <div class="filter-field">
+              <label for="mod">Modalidad</label>
+              <select id="mod" name="modality">
+                <option>Todas</option>
+                <option>Presencial</option>
+              </select>
+            </div>
+            <div class="filter-field">
+              <label for="tit">Titularidad</label>
+              <select id="tit" name="titularidad">
+                <option>Todas</option>
+                <option>Pública</option>
+                <option>Concertada</option>
+                <option>Privada</option>
+              </select>
+            </div>
+            <div class="filter-sheet-actions">
+              <button class="button button--primary" type="submit">
+                Aplicar
+              </button>
+              <a class="button button--secondary" href="/donde-estudiar/ADG02S"
+                >Quitar todo</a
+              >
+            </div>
+          </form>
+
+          <div class="result-meta">
+            <p class="result-count" style="margin: 0">
+              1–45 de 45 opciones formativas
+            </p>
+            <p class="caption" style="margin: 0">45 centros · 9 provincias</p>
+            <a
+              class="link-action"
+              href="/donde-estudiar/ADG02S"
+              style="min-height: auto; font-size: var(--text-small)"
+              >Quitar filtros</a
+            >
+          </div>
+
+          <div class="table-scroll">
+            <table class="result-table">
+              <thead>
+                <tr>
+                  <th scope="col">Centro</th>
+                  <th scope="col">Localidad</th>
+                  <th scope="col">Modalidad</th>
+                  <th scope="col">Titularidad</th>
+                  <th scope="col">Acciones</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>
+                    <strong><a href="#">IES Eulogio Florentino Sanz</a></strong
+                    ><span class="cell-sub">Centro educativo</span>
+                  </td>
+                  <td>Arévalo · Ávila</td>
+                  <td>Presencial</td>
+                  <td>Pública</td>
+                  <td>
+                    <div class="table-actions">
+                      <a href="#">Cómo llegar</a>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <strong><a href="#">IES Alonso de Madrigal</a></strong
+                    ><span class="cell-sub">Centro educativo</span>
+                  </td>
+                  <td>Ávila · Ávila</td>
+                  <td>Presencial</td>
+                  <td>Pública</td>
+                  <td>
+                    <div class="table-actions"><a href="#">Cómo llegar</a></div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <strong><a href="#">IES Sierra del Valle</a></strong
+                    ><span class="cell-sub">Centro educativo</span>
+                  </td>
+                  <td>La Adrada · Ávila</td>
+                  <td>Presencial</td>
+                  <td>Pública</td>
+                  <td>
+                    <div class="table-actions"><a href="#">Cómo llegar</a></div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <strong><a href="#">CIFP Las Ferrerías</a></strong
+                    ><span class="cell-sub">Centro educativo</span>
+                  </td>
+                  <td>Arenas de San Pedro · Ávila</td>
+                  <td>Presencial</td>
+                  <td>Pública</td>
+                  <td>
+                    <div class="table-actions"><a href="#">Cómo llegar</a></div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <strong
+                      ><a href="#"
+                        >Ntra. Sra. de la Merced y San Francisco Javier</a
+                      ></strong
+                    ><span class="cell-sub">Centro privado</span>
+                  </td>
+                  <td>Burgos · Burgos</td>
+                  <td>Presencial</td>
+                  <td>Concertada</td>
+                  <td>
+                    <div class="table-actions">
+                      <a href="#">Web del centro</a>
+                      <a href="#">Cómo llegar</a>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <strong><a href="#">María Madre-Politecnos</a></strong
+                    ><span class="cell-sub">Centro privado</span>
+                  </td>
+                  <td>Burgos · Burgos</td>
+                  <td>Presencial</td>
+                  <td>Concertada</td>
+                  <td>
+                    <div class="table-actions">
+                      <a href="#">Web del centro</a>
+                      <a href="#">Cómo llegar</a>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <strong
+                      ><a href="#"
+                        >CIFP Instituto Técnico Industrial de Miranda</a
+                      ></strong
+                    ><span class="cell-sub">Centro privado</span>
+                  </td>
+                  <td>Miranda de Ebro · Burgos</td>
+                  <td>Presencial</td>
+                  <td>Concertada</td>
+                  <td>
+                    <div class="table-actions">
+                      <a href="#">Web del centro</a>
+                      <a href="#">Cómo llegar</a>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <ul class="rcard-list">
+            <li>
+              <article class="rcard">
+                <div class="rcard-field">
+                  <p class="rcard-label">Centro</p>
+                  <p class="rcard-value">
+                    <strong>IES Eulogio Florentino Sanz</strong>
+                  </p>
+                  <p class="rcard-sub">Centro educativo</p>
+                </div>
+                <div class="rcard-field">
+                  <p class="rcard-label">Localidad</p>
+                  <p class="rcard-value">Arévalo · Ávila</p>
+                </div>
+                <div class="rcard-field">
+                  <p class="rcard-label">Modalidad</p>
+                  <p class="rcard-value">Presencial</p>
+                </div>
+                <div class="rcard-field">
+                  <p class="rcard-label">Titularidad</p>
+                  <p class="rcard-value">Pública</p>
+                </div>
+                <div class="rcard-actions">
+                  <a class="link-action" href="#" style="min-height: auto"
+                    >Cómo llegar</a
+                  >
+                </div>
+              </article>
+            </li>
+            <li>
+              <article class="rcard">
+                <div class="rcard-field">
+                  <p class="rcard-label">Centro</p>
+                  <p class="rcard-value">
+                    <strong
+                      >Ntra. Sra. de la Merced y San Francisco Javier</strong
+                    >
+                  </p>
+                  <p class="rcard-sub">Centro privado</p>
+                </div>
+                <div class="rcard-field">
+                  <p class="rcard-label">Localidad</p>
+                  <p class="rcard-value">Burgos · Burgos</p>
+                </div>
+                <div class="rcard-field">
+                  <p class="rcard-label">Modalidad</p>
+                  <p class="rcard-value">Presencial</p>
+                </div>
+                <div class="rcard-field">
+                  <p class="rcard-label">Titularidad</p>
+                  <p class="rcard-value">Concertada</p>
+                </div>
+                <div class="rcard-actions">
+                  <a class="link-action" href="#" style="min-height: auto"
+                    >Web del centro</a
+                  >
+                  <a class="link-action" href="#" style="min-height: auto"
+                    >Cómo llegar</a
+                  >
+                </div>
+              </article>
+            </li>
+          </ul>
+
+          <p class="caption" style="margin-top: var(--space-4)">
+            Los 45 resultados caben en una sola página: no hay paginación
+            global. “Web del centro” aparece solo cuando la fuente publica URL;
+            su verificación externa está pendiente de auditoría.
+          </p>
+        </section>
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="container">
+        <div class="footer-grid">
+          <div>
+            <h2 class="footer-group-title">Explorar</h2>
+            <ul class="footer-group-list">
+              <li><a href="/desde-fp">Desde tu FP</a></li>
+              <li><a href="/desde-ocupacion">Desde una profesión</a></li>
+              <li><a href="/desde-oferta">Desde una oferta</a></li>
+              <li><a href="/donde-estudiar">Dónde estudiar</a></li>
+            </ul>
+          </div>
+          <div>
+            <h2 class="footer-group-title">Datos y método</h2>
+            <ul class="footer-group-list">
+              <li><a href="/metodologia">Metodología</a></li>
+              <li><a href="/datos-abiertos">Datos abiertos</a></li>
+              <li><a href="/comparar">Comparar estudios</a></li>
+              <li><a href="/recursos">Recursos ECYL</a></li>
+            </ul>
+          </div>
+          <div>
+            <h2 class="footer-group-title">Información</h2>
+            <ul class="footer-group-list">
+              <li><a href="/accesibilidad">Accesibilidad</a></li>
+              <li><a href="/para-organizaciones">Para organizaciones</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <p class="caption">
+            SALIDA CyL — orientación profesional con datos públicos de Castilla
+            y León.
+          </p>
+          <p class="caption">
+            Prototipo estático del rediseño (no es el producto en producción).
+          </p>
+        </div>
+      </div>
+    </footer>
+
+    <script src="../product.js"></script>
+  </body>
+</html>
