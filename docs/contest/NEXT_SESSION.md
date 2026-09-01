@@ -1,5 +1,7 @@
 # Registro de cierre: candidate.3 publicada sin reabrir `main`
 
+> HISTÓRICO / ARCHIVED: este registro describe una release anterior. No es la identidad del candidato local actual; consulta `coverage-freeze.json` y `release-evidence.json`.
+
 ## Estado final
 
 - Repositorio canónico: <https://github.com/Huntsman1756/concursos_cyl>.

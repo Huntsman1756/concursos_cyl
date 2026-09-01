@@ -19,11 +19,9 @@ import {
   type ContestFreeze,
 } from "./validateContestFreeze";
 
-const EXPANDED_SOURCE_SHA = "032426013a88c35bad348f3c443dae7d9a1639a3";
-const EXPANDED_FREEZE_COMMIT_SHA = "2bdb27ef82e3c8a9d844023b73f3242deeb8937e";
-const PUBLICATION_COMMIT_SHA = "753a3160cc3cc895b943ccd5c8d7c52129a6dc9f";
-const EVIDENCE_COMMIT_SHA = "9d8b1f7bf0e144fab869821e9f12db34392ee520";
-const CAPTURE_COUNT = 13;
+const EXPANDED_SOURCE_SHA = "158e1649d4bcd49a1b79c279b906ddb4b7bfe098";
+const EXPANDED_FREEZE_COMMIT_SHA = "fa9598df89f24d3fdbf728a20c81cb7a7d6cf621";
+const CAPTURE_COUNT = 0;
 const LEGACY_SOURCE_SHA = "ff9e6197f926e462bea1a3e8ac6a57a23d3f825a";
 const CANDIDATE_4_TAG = "v2026.08.27-candidate.4";
 const CANDIDATE_4_COMMIT = "a59a788a39bc8d300c66fee39ea2f2469f588112";
@@ -75,23 +73,21 @@ function checkedInPointer(): ContestReleaseEvidence {
   ) as ContestReleaseEvidence;
 }
 
-function verifiedDeploymentEvidence(): ContestDeploymentEvidence {
-  const pointer = checkedInPointer();
+function pendingDeploymentEvidence(): ContestDeploymentEvidence {
   return {
-    status: "verified",
-    commitSha: pointer.publicationCommitSha,
-    workflowRunId: pointer.deployment.workflowRunId,
-    verifiedAt: pointer.deployment.verifiedAt,
-    captureProductCommitSha: pointer.captureProductCommitSha,
-    captureCount: pointer.localGates.evidenceManifest.captureCount ?? null,
-    capturesAreCurrent: true,
-    releaseGatesVerified: true,
-    releaseTag: pointer.deployment.releaseTag ?? null,
-    versionJsonUrl: pointer.deployment.versionJsonUrl ?? null,
-    versionJsonCommitSha: pointer.deployment.versionJsonCommitSha ?? null,
-    versionJsonSchemaVersion:
-      pointer.deployment.versionJsonSchemaVersion ?? null,
-    versionJsonVerifiedAt: pointer.deployment.versionJsonVerifiedAt ?? null,
+    status: "pending",
+    commitSha: null,
+    workflowRunId: null,
+    verifiedAt: null,
+    captureProductCommitSha: null,
+    captureCount: 0,
+    capturesAreCurrent: false,
+    releaseGatesVerified: false,
+    releaseTag: null,
+    versionJsonUrl: null,
+    versionJsonCommitSha: null,
+    versionJsonSchemaVersion: null,
+    versionJsonVerifiedAt: null,
   };
 }
 
@@ -108,25 +104,11 @@ describe("contest promotion provenance matrix", () => {
 
   beforeAll(() => {
     freeze = loadAndValidateContestFreeze();
-    captureManifest = JSON.parse(
-      readFileSync(
-        resolve(process.cwd(), "docs", "contest", "evidence-capture.json"),
-        "utf8",
-      ),
-    ) as {
-      captures: Array<{
-        outputFile: string;
-        localCommitSha?: string;
-        deployedCommitSha?: string | null;
-      }>;
-    };
+    captureManifest = { captures: [] };
     context = {
       ...freezeContext(freeze),
-      captureCount: captureManifest.captures.length,
-      captures: captureManifest.captures.map((capture) => ({
-        localCommitSha: capture.localCommitSha,
-        deployedCommitSha: capture.deployedCommitSha,
-      })),
+      captureCount: 0,
+      captures: [],
     };
   }, 240_000);
 
@@ -179,13 +161,13 @@ describe("contest promotion provenance matrix", () => {
     );
   });
 
-  it("binds the checked-in pointer to the expanded freeze as a verified record", () => {
+  it("binds the checked-in pointer to the expanded freeze as a pending record", () => {
     const pointer = checkedInPointer();
 
     expect(validateContestReleaseEvidence(pointer, context)).toMatchObject({
       valid: true,
-      status: "verified",
-      capturesAreCurrent: true,
+      status: "pending",
+      capturesAreCurrent: false,
     });
 
     expect(freeze.sourceCommitSha).toBe(EXPANDED_SOURCE_SHA);
@@ -209,44 +191,37 @@ describe("contest promotion provenance matrix", () => {
       freeze.manifest.resourceSnapshots.jobOffers.recordCount,
     );
 
-    expect(pointer.publicationCommitSha).toBe(PUBLICATION_COMMIT_SHA);
-    expect(pointer.captureProductCommitSha).toBe(PUBLICATION_COMMIT_SHA);
-    expect(pointer.auditHeadSha).toBe(EVIDENCE_COMMIT_SHA);
-    expect(pointer.localReviewHeadSha).toBe(EVIDENCE_COMMIT_SHA);
+    expect(pointer.publicationCommitSha).toBeNull();
+    expect(pointer.captureProductCommitSha).toBeNull();
+    expect(pointer.auditHeadSha).toBeNull();
+    expect(pointer.localReviewHeadSha).toBeNull();
     for (const [key, gateValue] of Object.entries(pointer.localGates)) {
-      expect(gateValue.status).toBe("passed");
-      expect(gateValue.checkedCommitSha).toBe(PUBLICATION_COMMIT_SHA);
-      expect(gateValue.verifiedAt).not.toBeNull();
-      expect(Date.parse(gateValue.verifiedAt ?? "")).toBeLessThanOrEqual(
-        Date.parse(pointer.recordedAt),
-      );
+      expect(gateValue.status).toBe("pending");
+      expect(gateValue.checkedCommitSha).toBeNull();
+      expect(gateValue.verifiedAt).toBeNull();
       expect(key.length).toBeGreaterThan(0);
     }
     expect(pointer.localGates.evidenceManifest.captureCount).toBe(
       CAPTURE_COUNT,
     );
-    expect(pointer.localGates.evidenceManifest.note).toContain(
-      PUBLICATION_COMMIT_SHA,
-    );
-    expect(pointer.localGates.evidenceManifest.note).toMatch(/an[óo]nim/iu);
+    expect(pointer.localGates.evidenceManifest).not.toHaveProperty("note");
     expect(pointer.deployment).toMatchObject({
-      status: "verified",
-      commitSha: PUBLICATION_COMMIT_SHA,
-      workflowRunId: "33189836718",
-      workflowUrl:
-        "https://github.com/Huntsman1756/concursos_cyl/actions/runs/33189836718",
-      liveRootVerified: true,
-      verifiedAt: expect.any(String),
-      versionJsonCommitSha: PUBLICATION_COMMIT_SHA,
-      versionJsonSchemaVersion: "1.0.0",
+      status: "pending",
+      commitSha: null,
+      workflowRunId: null,
+      workflowUrl: null,
+      liveRootVerified: false,
+      verifiedAt: null,
+      versionJsonCommitSha: null,
+      versionJsonSchemaVersion: null,
     });
     expect(pointer.deployment.releaseTag ?? null).toBeNull();
     expect(pointer.publicVerification).toMatchObject({
-      status: "verified",
+      status: "pending",
       rootUrl: pointer.expectedRootUrl,
-      rootHttpStatus: 200,
-      manifestSha256: pointer.manifest.sha256,
-      verifiedAt: pointer.deployment.verifiedAt,
+      rootHttpStatus: null,
+      manifestSha256: null,
+      verifiedAt: null,
     });
     expect(pointer.humanApproval).toEqual({
       finalApplicationTextApproved: false,
@@ -257,23 +232,20 @@ describe("contest promotion provenance matrix", () => {
     expect(pointer.candidatePlan).toBeUndefined();
   });
 
-  it("keeps the verified F-to-P-to-E git chain valid for the expanded freeze", () => {
+  it("keeps the pending S-to-F git chain valid for the expanded freeze", () => {
     const pointer = checkedInPointer();
-    expect(pointer.publicationCommitSha).toBe(PUBLICATION_COMMIT_SHA);
-    expect(pointer.auditHeadSha).toBe(EVIDENCE_COMMIT_SHA);
+    expect(pointer.publicationCommitSha).toBeNull();
+    expect(pointer.auditHeadSha).toBeNull();
     expect(captureManifest.captures).toHaveLength(CAPTURE_COUNT);
 
     expect(() =>
       assertContestReleaseGitChain(process.cwd(), {
         sourceCommitSha: freeze.sourceCommitSha,
         freezeCommitSha: pointer.coverageFreezeCommitSha,
-        publicationCommitSha: pointer.publicationCommitSha,
-        evidenceCommitSha: pointer.auditHeadSha,
+        publicationCommitSha: null,
+        evidenceCommitSha: null,
         freezePath: FREEZE_PATH,
-        evidencePaths: [
-          "docs/contest/evidence-capture.json",
-          ...captureManifest.captures.map((capture) => capture.outputFile),
-        ],
+        evidencePaths: [],
       }),
     ).not.toThrow();
   });
@@ -282,7 +254,7 @@ describe("contest promotion provenance matrix", () => {
     const pointer = checkedInPointer();
     expect(validateContestReleaseEvidence(pointer, context)).toMatchObject({
       valid: true,
-      status: "verified",
+      status: "pending",
     });
 
     const legacyFreeze = JSON.parse(JSON.stringify(freeze)) as ContestFreeze;
@@ -296,7 +268,7 @@ describe("contest promotion provenance matrix", () => {
     const pointer = checkedInPointer();
     expect(validateContestReleaseEvidence(pointer, context)).toMatchObject({
       valid: true,
-      status: "verified",
+      status: "pending",
     });
 
     const tamperedContext: ReleaseEvidenceValidationContext = {
@@ -318,7 +290,7 @@ describe("contest promotion provenance matrix", () => {
     const pointer = checkedInPointer();
     expect(validateContestReleaseEvidence(pointer, context)).toMatchObject({
       valid: true,
-      status: "verified",
+      status: "pending",
     });
 
     const tamperedContext: ReleaseEvidenceValidationContext = {
@@ -339,7 +311,7 @@ describe("contest promotion provenance matrix", () => {
   it("renders the checked-in documents from the expanded freeze without stale candidate claims", () => {
     const documents = renderContestSubmission(
       freeze,
-      verifiedDeploymentEvidence(),
+      pendingDeploymentEvidence(),
     );
 
     for (const [name, content] of Object.entries(documents)) {
@@ -354,25 +326,19 @@ describe("contest promotion provenance matrix", () => {
       `${freeze.offers.matchedOfferCount} de las 1.058 ofertas de la instantánea`,
     );
     expect(documents["technical-evidence.md"]).toContain(
-      `El release público se verificó con el commit \`${PUBLICATION_COMMIT_SHA}\` y el run \`33189836718\` el `,
+      `Snapshot | \`${freeze.manifest.snapshotId}\``,
     );
     expect(documents["technical-evidence.md"]).toContain(
-      "Comandos ejecutados y ligados al commit de publicación en `release-evidence.json`:",
+      "Estos dos campos no se inventan antes de ejecutar y verificar el release.",
     );
-    expect(documents["technical-evidence.md"]).not.toContain(
+    expect(documents["technical-evidence.md"]).toContain(
       "PENDIENTE DE DESPLIEGUE Y VERIFICACIÓN",
     );
     expect(documents["submission-checklist.md"]).toContain(
-      "el manifiesto contiene capturas actuales ligadas al commit de publicación.",
+      "- [ ] Ejecutar los gates de release y verificar la aplicación pública.",
     );
     expect(documents["submission-checklist.md"]).toContain(
-      `- [x] Captura automatizada A4: ${CAPTURE_COUNT}/${CAPTURE_COUNT} capturas actuales recapturadas y validadas en \`docs/contest/evidence-capture.json\`.`,
-    );
-    expect(documents["submission-checklist.md"]).toContain(
-      "- [ ] Ejecutar la captura nativa OS A4 en un Mac desbloqueado.",
-    );
-    expect(documents["submission-checklist.md"]).toContain(
-      "PENDIENTE DE APROBACIÓN HUMANA",
+      "- [ ] Captura automatizada A4: pendiente de recaptura y validación.",
     );
     for (const content of Object.values(documents)) {
       expect(content).not.toContain(CANDIDATE_4_SNAPSHOT_ID);

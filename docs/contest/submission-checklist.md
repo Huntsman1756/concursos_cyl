@@ -14,23 +14,22 @@
 
 - URL raíz a presentar: [https://salida-cyl.157-90-22-40.sslip.io/](https://salida-cyl.157-90-22-40.sslip.io/)
 - Fallback verificada: [https://huntsman1756.github.io/concursos_cyl/](https://huntsman1756.github.io/concursos_cyl/)
-- Commit fuente del freeze: `032426013a88c35bad348f3c443dae7d9a1639a3`.
-- Snapshot: `20260822085631889-fc9bf2ba23f9`.
-- Commit desplegado: `753a3160cc3cc895b943ccd5c8d7c52129a6dc9f`.
-- Run del workflow: `33189836718`.
-- `version.json` verificado: [respuesta pública](https://salida-cyl.157-90-22-40.sslip.io/version.json) con commit igual a `753a3160cc3cc895b943ccd5c8d7c52129a6dc9f`.
-- Evidencia visual: **capturada y validada en `docs/contest/evidence-capture.json`**.
+- Commit fuente del freeze: `9bad066a1144e6055e087e2c6e64f371521bf10d`.
+- Snapshot: `20260830120000000-8c6c79fbd2a1`.
+- Commit desplegado: **PENDIENTE DE DESPLIEGUE Y VERIFICACIÓN**.
+- Run del workflow: **PENDIENTE DE DESPLIEGUE Y VERIFICACIÓN**.
+- Evidencia visual: captura visual actual pendiente; las 13 capturas anteriores son históricas.
 
 ## Evidencia visual y gate final
 
-- [x] Captura automatizada A4: 13/13 capturas actuales recapturadas y validadas en `docs/contest/evidence-capture.json`.
+- [ ] Captura automatizada A4: pendiente de recaptura y validación.
 - [ ] Ejecutar la captura nativa OS A4 en un Mac desbloqueado.
 - [ ] Revisar la aplicación pública de la release actual en contexto anónimo, incluyendo las rutas de FP, ocupación y comparador.
-- [ ] Conservar solo capturas actuales, sin datos personales ni credenciales; el manifiesto contiene capturas actuales ligadas al commit de publicación.
-- [x] Ejecutar los gates de release y verificar la aplicación pública.
-- [x] Rellenar el commit desplegado y el run del workflow con datos observados.
-- [ ] Revisar las capturas en contexto anónimo, sin datos personales ni credenciales. (capturas actuales; revisión humana pendiente)
-- [ ] Confirmar que las cifras visibles siguen coincidiendo con `20260822085631889-fc9bf2ba23f9`. (revisión humana pendiente)
+- [ ] Conservar solo capturas actuales, sin datos personales ni credenciales; las 13 capturas existentes son históricas.
+- [ ] Ejecutar los gates de release y verificar la aplicación pública.
+- [ ] Rellenar el commit desplegado y el run del workflow con datos observados.
+- [ ] Revisar las capturas en contexto anónimo, sin datos personales ni credenciales.
+- [ ] Confirmar que las cifras visibles siguen coincidiendo con `20260830120000000-8c6c79fbd2a1`. (evidencia visual pendiente)
 - [ ] Obtener aprobación humana explícita para la solicitud externa.
 
 **PENDIENTE DE APROBACIÓN HUMANA:** este repositorio no envía la solicitud al concurso ni decide los campos de identidad, contacto, declaraciones o consentimiento.

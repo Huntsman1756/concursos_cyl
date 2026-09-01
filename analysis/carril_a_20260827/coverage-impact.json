@@ -1,0 +1,750 @@
+{
+  "snapshotId": "20260822085631889-7bbe69380f6d",
+  "safeAliases": [
+    {
+      "alias": "asistentes domiciliarios",
+      "occupationId": "occupation:cno11:5710",
+      "reviewNote": "Carril A audit: CNO-94 5113 'Asistentes domiciliarios' -> CNO-11 5710 (1:1) per INE correspondence"
+    },
+    {
+      "alias": "peones de la construcción de edificios",
+      "occupationId": "occupation:cno11:9602",
+      "reviewNote": "Carril A audit: identical official title CNO-94 9602 and CNO-11 9602 (INE correspondence)"
+    },
+    {
+      "alias": "peones forestales",
+      "occupationId": "occupation:cno11:9543",
+      "reviewNote": "Carril A audit: CNO-94 9440 'Peones forestales' -> CNO-11 9543 (1:1) per INE correspondence"
+    },
+    {
+      "alias": "peones agropecuarios",
+      "occupationId": "occupation:cno11:9530",
+      "reviewNote": "Carril A audit: CNO-94 9430 'Peones agropecuarios' -> CNO-11 9530 (1:1); identical CNO-11 official title"
+    },
+    {
+      "alias": "mantenedores de edificios",
+      "occupationId": "occupation:cno11:7191",
+      "reviewNote": "Carril A audit: identical official title CNO-11 7191 (RD 1591/2010 / INE nomenclature)"
+    }
+  ],
+  "baseline": {
+    "matchedOffers": 38,
+    "matchedPercent": 3.59,
+    "relationsWithOffers": 3,
+    "programsWithOffers": 2,
+    "familiesWithOffers": 2,
+    "distinctCno": 3,
+    "provinces": [
+      "Burgos",
+      "León",
+      "Palencia",
+      "Salamanca",
+      "Segovia",
+      "Soria",
+      "Valladolid",
+      "Zamora",
+      "Ávila"
+    ]
+  },
+  "safeTotal": {
+    "matchedOffers": 105,
+    "matchedPercent": 9.92,
+    "relationsWithOffers": 8,
+    "programsWithOffers": 5,
+    "familiesWithOffers": 4,
+    "distinctCno": 8,
+    "provinces": [
+      "Burgos",
+      "León",
+      "Palencia",
+      "Salamanca",
+      "Segovia",
+      "Soria",
+      "Valladolid",
+      "Zamora",
+      "Ávila"
+    ]
+  },
+  "newOfferCount": 67,
+  "newOfferIds": [
+    "1285620653126",
+    "1285629158396",
+    "1285631739680",
+    "1285637975976",
+    "1285640948901",
+    "1285643274420",
+    "1285646840496",
+    "1285647687060",
+    "1285651638453",
+    "1285654004126",
+    "1285656209312",
+    "1285658994748",
+    "1285660030053",
+    "1285660489054",
+    "1285660519315",
+    "1285661179988",
+    "1285661241095",
+    "1285662467522",
+    "1285662467588",
+    "1285663192909",
+    "1285663193331",
+    "1285664934729",
+    "1285664976346",
+    "1285665099048",
+    "1285665756044",
+    "1285665756072",
+    "1285666004800",
+    "1285666076349",
+    "1285666076377",
+    "1285666076442",
+    "1285666137989",
+    "1285666138609",
+    "1285666442663",
+    "1285667211360",
+    "1285667211388",
+    "1285667891829",
+    "1285668051299",
+    "1285668535907",
+    "1285668877533",
+    "1285669240479",
+    "1285669240896",
+    "1285669341353",
+    "1285669380182",
+    "1285669380247",
+    "1285669484226",
+    "1285670055297",
+    "1285670055466",
+    "1285670082044",
+    "1285670314991",
+    "1285670583569",
+    "1285670583597",
+    "1285670802553",
+    "1285671046460",
+    "1285671206652",
+    "1285671248506",
+    "1285671557433",
+    "1285671867754",
+    "1285671920706",
+    "1285671921353",
+    "1285672104200",
+    "1285672131085",
+    "1285672164768",
+    "1285672205408",
+    "1285672244571",
+    "1285672244599",
+    "1285672481412",
+    "1285672532223"
+  ],
+  "matchesByAlias": [
+    {
+      "alias": "peones agropecuarios",
+      "offers": 1,
+      "provinces": [
+        "Zamora"
+      ],
+      "sample": [
+        {
+          "id": "1285666138609",
+          "title": "PEONES AGROPECUARIOS",
+          "province": "Zamora",
+          "programs": [
+            "AGA03B"
+          ]
+        }
+      ]
+    },
+    {
+      "alias": "peones forestales",
+      "offers": 3,
+      "provinces": [
+        "León"
+      ],
+      "sample": [
+        {
+          "id": "1285668535907",
+          "title": "PEONES FORESTALES",
+          "province": "León",
+          "programs": [
+            "AGA03B"
+          ]
+        },
+        {
+          "id": "1285669240896",
+          "title": "PEONES FORESTALES",
+          "province": "León",
+          "programs": [
+            "AGA03B"
+          ]
+        },
+        {
+          "id": "1285671921353",
+          "title": "PEONES FORESTALES",
+          "province": "León",
+          "programs": [
+            "AGA03B"
+          ]
+        }
+      ]
+    },
+    {
+      "alias": "peones de la construcción de edificios",
+      "offers": 3,
+      "provinces": [
+        "León",
+        "Zamora"
+      ],
+      "sample": [
+        {
+          "id": "1285663193331",
+          "title": "PEONES DE LA CONSTRUCCIÓN DE EDIFICIOS",
+          "province": "Zamora",
+          "programs": [
+            "EOC01B"
+          ]
+        },
+        {
+          "id": "1285669341353",
+          "title": "PEONES DE LA CONSTRUCCIÓN DE EDIFICIOS",
+          "province": "León",
+          "programs": [
+            "EOC01B"
+          ]
+        },
+        {
+          "id": "1285672532223",
+          "title": "PEONES DE LA CONSTRUCCIÓN DE EDIFICIOS",
+          "province": "León",
+          "programs": [
+            "EOC01B"
+          ]
+        }
+      ]
+    },
+    {
+      "alias": "mantenedores de edificios",
+      "offers": 1,
+      "provinces": [
+        "León"
+      ],
+      "sample": [
+        {
+          "id": "1285669240479",
+          "title": "MANTENEDORES DE EDIFICIOS",
+          "province": "León",
+          "programs": [
+            "EOC01B"
+          ]
+        }
+      ]
+    },
+    {
+      "alias": "asistentes domiciliarios",
+      "offers": 59,
+      "provinces": [
+        "Burgos",
+        "León",
+        "Palencia",
+        "Segovia",
+        "Soria",
+        "Valladolid",
+        "Zamora"
+      ],
+      "sample": [
+        {
+          "id": "1285620653126",
+          "title": "ASISTENTES DOMICILIARIOS",
+          "province": "Zamora",
+          "programs": [
+            "SSC01M"
+          ]
+        },
+        {
+          "id": "1285629158396",
+          "title": "ASISTENTES DOMICILIARIOS",
+          "province": "Zamora",
+          "programs": [
+            "SSC01M"
+          ]
+        },
+        {
+          "id": "1285631739680",
+          "title": "ASISTENTES DOMICILIARIOS",
+          "province": "Zamora",
+          "programs": [
+            "SSC01M"
+          ]
+        },
+        {
+          "id": "1285637975976",
+          "title": "ASISTENTES DOMICILIARIOS",
+          "province": "Zamora",
+          "programs": [
+            "SSC01M"
+          ]
+        },
+        {
+          "id": "1285640948901",
+          "title": "ASISTENTES DOMICILIARIOS",
+          "province": "León",
+          "programs": [
+            "SSC01M"
+          ]
+        },
+        {
+          "id": "1285643274420",
+          "title": "ASISTENTES DOMICILIARIOS",
+          "province": "Burgos",
+          "programs": [
+            "SSC01M"
+          ]
+        },
+        {
+          "id": "1285646840496",
+          "title": "ASISTENTES DOMICILIARIOS",
+          "province": "León",
+          "programs": [
+            "SSC01M"
+          ]
+        },
+        {
+          "id": "1285647687060",
+          "title": "ASISTENTES DOMICILIARIOS",
+          "province": "Zamora",
+          "programs": [
+            "SSC01M"
+          ]
+        },
+        {
+          "id": "1285651638453",
+          "title": "ASISTENTES DOMICILIARIOS",
+          "province": "León",
+          "programs": [
+            "SSC01M"
+          ]
+        },
+        {
+          "id": "1285654004126",
+          "title": "ASISTENTES DOMICILIARIOS",
+          "province": "Zamora",
+          "programs": [
+            "SSC01M"
+          ]
+        },
+        {
+          "id": "1285656209312",
+          "title": "ASISTENTES DOMICILIARIOS",
+          "province": "Zamora",
+          "programs": [
+            "SSC01M"
+          ]
+        },
+        {
+          "id": "1285658994748",
+          "title": "ASISTENTES DOMICILIARIOS",
+          "province": "Zamora",
+          "programs": [
+            "SSC01M"
+          ]
+        },
+        {
+          "id": "1285660030053",
+          "title": "ASISTENTES DOMICILIARIOS",
+          "province": "León",
+          "programs": [
+            "SSC01M"
+          ]
+        },
+        {
+          "id": "1285660489054",
+          "title": "ASISTENTES DOMICILIARIOS",
+          "province": "Zamora",
+          "programs": [
+            "SSC01M"
+          ]
+        },
+        {
+          "id": "1285660519315",
+          "title": "ASISTENTES DOMICILIARIOS",
+          "province": "Burgos",
+          "programs": [
+            "SSC01M"
+          ]
+        },
+        {
+          "id": "1285661179988",
+          "title": "ASISTENTES DOMICILIARIOS",
+          "province": "León",
+          "programs": [
+            "SSC01M"
+          ]
+        },
+        {
+          "id": "1285661241095",
+          "title": "ASISTENTES DOMICILIARIOS",
+          "province": "León",
+          "programs": [
+            "SSC01M"
+          ]
+        },
+        {
+          "id": "1285662467522",
+          "title": "ASISTENTES DOMICILIARIOS",
+          "province": "Zamora",
+          "programs": [
+            "SSC01M"
+          ]
+        },
+        {
+          "id": "1285662467588",
+          "title": "ASISTENTES DOMICILIARIOS",
+          "province": "Zamora",
+          "programs": [
+            "SSC01M"
+          ]
+        },
+        {
+          "id": "1285663192909",
+          "title": "ASISTENTES DOMICILIARIOS",
+          "province": "León",
+          "programs": [
+            "SSC01M"
+          ]
+        },
+        {
+          "id": "1285664934729",
+          "title": "ASISTENTES DOMICILIARIOS",
+          "province": "Zamora",
+          "programs": [
+            "SSC01M"
+          ]
+        },
+        {
+          "id": "1285664976346",
+          "title": "ASISTENTES DOMICILIARIOS",
+          "province": "Zamora",
+          "programs": [
+            "SSC01M"
+          ]
+        },
+        {
+          "id": "1285665099048",
+          "title": "ASISTENTES DOMICILIARIOS",
+          "province": "Palencia",
+          "programs": [
+            "SSC01M"
+          ]
+        },
+        {
+          "id": "1285665756044",
+          "title": "ASISTENTES DOMICILIARIOS",
+          "province": "Zamora",
+          "programs": [
+            "SSC01M"
+          ]
+        },
+        {
+          "id": "1285665756072",
+          "title": "ASISTENTES DOMICILIARIOS",
+          "province": "Zamora",
+          "programs": [
+            "SSC01M"
+          ]
+        },
+        {
+          "id": "1285666004800",
+          "title": "ASISTENTES DOMICILIARIOS",
+          "province": "Zamora",
+          "programs": [
+            "SSC01M"
+          ]
+        },
+        {
+          "id": "1285666076349",
+          "title": "ASISTENTES DOMICILIARIOS",
+          "province": "Burgos",
+          "programs": [
+            "SSC01M"
+          ]
+        },
+        {
+          "id": "1285666076377",
+          "title": "ASISTENTES DOMICILIARIOS",
+          "province": "Burgos",
+          "programs": [
+            "SSC01M"
+          ]
+        },
+        {
+          "id": "1285666076442",
+          "title": "ASISTENTES DOMICILIARIOS",
+          "province": "Zamora",
+          "programs": [
+            "SSC01M"
+          ]
+        },
+        {
+          "id": "1285666137989",
+          "title": "ASISTENTES DOMICILIARIOS",
+          "province": "Zamora",
+          "programs": [
+            "SSC01M"
+          ]
+        },
+        {
+          "id": "1285666442663",
+          "title": "ASISTENTES DOMICILIARIOS",
+          "province": "Zamora",
+          "programs": [
+            "SSC01M"
+          ]
+        },
+        {
+          "id": "1285667211360",
+          "title": "ASISTENTES DOMICILIARIOS",
+          "province": "Zamora",
+          "programs": [
+            "SSC01M"
+          ]
+        },
+        {
+          "id": "1285667211388",
+          "title": "ASISTENTES DOMICILIARIOS",
+          "province": "Zamora",
+          "programs": [
+            "SSC01M"
+          ]
+        },
+        {
+          "id": "1285667891829",
+          "title": "ASISTENTES DOMICILIARIOS",
+          "province": "Zamora",
+          "programs": [
+            "SSC01M"
+          ]
+        },
+        {
+          "id": "1285668051299",
+          "title": "ASISTENTES DOMICILIARIOS",
+          "province": "Zamora",
+          "programs": [
+            "SSC01M"
+          ]
+        },
+        {
+          "id": "1285668877533",
+          "title": "ASISTENTES DOMICILIARIOS",
+          "province": "Burgos",
+          "programs": [
+            "SSC01M"
+          ]
+        },
+        {
+          "id": "1285669380182",
+          "title": "ASISTENTES DOMICILIARIOS",
+          "province": "Zamora",
+          "programs": [
+            "SSC01M"
+          ]
+        },
+        {
+          "id": "1285669380247",
+          "title": "ASISTENTES DOMICILIARIOS",
+          "province": "Zamora",
+          "programs": [
+            "SSC01M"
+          ]
+        },
+        {
+          "id": "1285669484226",
+          "title": "ASISTENTES DOMICILIARIOS",
+          "province": "Palencia",
+          "programs": [
+            "SSC01M"
+          ]
+        },
+        {
+          "id": "1285670055297",
+          "title": "ASISTENTES DOMICILIARIOS",
+          "province": "León",
+          "programs": [
+            "SSC01M"
+          ]
+        },
+        {
+          "id": "1285670055466",
+          "title": "ASISTENTES DOMICILIARIOS",
+          "province": "León",
+          "programs": [
+            "SSC01M"
+          ]
+        },
+        {
+          "id": "1285670082044",
+          "title": "ASISTENTES DOMICILIARIOS",
+          "province": "León",
+          "programs": [
+            "SSC01M"
+          ]
+        },
+        {
+          "id": "1285670314991",
+          "title": "ASISTENTES DOMICILIARIOS",
+          "province": "Zamora",
+          "programs": [
+            "SSC01M"
+          ]
+        },
+        {
+          "id": "1285670583569",
+          "title": "ASISTENTES DOMICILIARIOS",
+          "province": "León",
+          "programs": [
+            "SSC01M"
+          ]
+        },
+        {
+          "id": "1285670583597",
+          "title": "ASISTENTES DOMICILIARIOS",
+          "province": "Zamora",
+          "programs": [
+            "SSC01M"
+          ]
+        },
+        {
+          "id": "1285670802553",
+          "title": "ASISTENTES DOMICILIARIOS",
+          "province": "Burgos",
+          "programs": [
+            "SSC01M"
+          ]
+        },
+        {
+          "id": "1285671046460",
+          "title": "ASISTENTES DOMICILIARIOS",
+          "province": "Soria",
+          "programs": [
+            "SSC01M"
+          ]
+        },
+        {
+          "id": "1285671206652",
+          "title": "ASISTENTES DOMICILIARIOS",
+          "province": "Segovia",
+          "programs": [
+            "SSC01M"
+          ]
+        },
+        {
+          "id": "1285671248506",
+          "title": "ASISTENTES DOMICILIARIOS",
+          "province": "Palencia",
+          "programs": [
+            "SSC01M"
+          ]
+        },
+        {
+          "id": "1285671557433",
+          "title": "ASISTENTES DOMICILIARIOS",
+          "province": "Segovia",
+          "programs": [
+            "SSC01M"
+          ]
+        },
+        {
+          "id": "1285671867754",
+          "title": "ASISTENTES DOMICILIARIOS",
+          "province": "Burgos",
+          "programs": [
+            "SSC01M"
+          ]
+        },
+        {
+          "id": "1285671920706",
+          "title": "ASISTENTES DOMICILIARIOS",
+          "province": "Palencia",
+          "programs": [
+            "SSC01M"
+          ]
+        },
+        {
+          "id": "1285672104200",
+          "title": "ASISTENTES DOMICILIARIOS",
+          "province": "Palencia",
+          "programs": [
+            "SSC01M"
+          ]
+        },
+        {
+          "id": "1285672131085",
+          "title": "ASISTENTES DOMICILIARIOS",
+          "province": "Valladolid",
+          "programs": [
+            "SSC01M"
+          ]
+        },
+        {
+          "id": "1285672164768",
+          "title": "ASISTENTES DOMICILIARIOS",
+          "province": "Valladolid",
+          "programs": [
+            "SSC01M"
+          ]
+        },
+        {
+          "id": "1285672205408",
+          "title": "ASISTENTES DOMICILIARIOS",
+          "province": "Burgos",
+          "programs": [
+            "SSC01M"
+          ]
+        },
+        {
+          "id": "1285672244571",
+          "title": "ASISTENTES DOMICILIARIOS",
+          "province": "Burgos",
+          "programs": [
+            "SSC01M"
+          ]
+        },
+        {
+          "id": "1285672244599",
+          "title": "ASISTENTES DOMICILIARIOS",
+          "province": "León",
+          "programs": [
+            "SSC01M"
+          ]
+        },
+        {
+          "id": "1285672481412",
+          "title": "ASISTENTES DOMICILIARIOS",
+          "province": "Burgos",
+          "programs": [
+            "SSC01M"
+          ]
+        }
+      ]
+    }
+  ],
+  "families": {
+    "EOC": {
+      "baselineProgramsWithOffers": 1,
+      "safeProgramsWithOffers": 2,
+      "safeOffers": 7
+    },
+    "SAN": {
+      "baselineProgramsWithOffers": 1,
+      "safeProgramsWithOffers": 1,
+      "safeOffers": 35
+    },
+    "AGA": {
+      "baselineProgramsWithOffers": 0,
+      "safeProgramsWithOffers": 1,
+      "safeOffers": 4
+    },
+    "SSC": {
+      "baselineProgramsWithOffers": 0,
+      "safeProgramsWithOffers": 1,
+      "safeOffers": 59
+    }
+  }
+}

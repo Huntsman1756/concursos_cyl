@@ -109,7 +109,10 @@ export async function activateOfferEvidenceCandidate(): Promise<GeneratedManifes
     if (
       descriptor === undefined ||
       descriptor.resourcePath !==
-        immutableGeneratedResourcePath("offerEvidence", CANDIDATE_SNAPSHOT_ID) ||
+        immutableGeneratedResourcePath(
+          "offerEvidence",
+          CANDIDATE_SNAPSHOT_ID,
+        ) ||
       descriptor.recordCount !== sidecar.records.length
     ) {
       throw new Error(

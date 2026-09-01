@@ -1,0 +1,348 @@
+{
+  "snapshotId": "20260822085631889-7bbe69380f6d",
+  "uncoveredCount": 57,
+  "rows": [
+    {
+      "programKey": "AFD01M",
+      "familyCode": "AFD",
+      "profileOutputs": 18,
+      "officialTitleExactHits": []
+    },
+    {
+      "programKey": "AGA01SD",
+      "familyCode": "AGA",
+      "profileOutputs": 13,
+      "officialTitleExactHits": []
+    },
+    {
+      "programKey": "ARG01S",
+      "familyCode": "ARG",
+      "profileOutputs": 10,
+      "officialTitleExactHits": []
+    },
+    {
+      "programKey": "ARG02S",
+      "familyCode": "ARG",
+      "profileOutputs": 9,
+      "officialTitleExactHits": []
+    },
+    {
+      "programKey": "COM01S",
+      "familyCode": "COM",
+      "profileOutputs": 12,
+      "officialTitleExactHits": []
+    },
+    {
+      "programKey": "COM03SD",
+      "familyCode": "COM",
+      "profileOutputs": 11,
+      "officialTitleExactHits": []
+    },
+    {
+      "programKey": "ELE01MD",
+      "familyCode": "ELE",
+      "profileOutputs": 9,
+      "officialTitleExactHits": []
+    },
+    {
+      "programKey": "ELE04E",
+      "familyCode": "ELE",
+      "profileOutputs": 7,
+      "officialTitleExactHits": []
+    },
+    {
+      "programKey": "ELE05E",
+      "familyCode": "ELE",
+      "profileOutputs": 6,
+      "officialTitleExactHits": []
+    },
+    {
+      "programKey": "ENA01S",
+      "familyCode": "ENA",
+      "profileOutputs": 6,
+      "officialTitleExactHits": []
+    },
+    {
+      "programKey": "EOC01S",
+      "familyCode": "EOC",
+      "profileOutputs": 11,
+      "officialTitleExactHits": []
+    },
+    {
+      "programKey": "EOC01SD",
+      "familyCode": "EOC",
+      "profileOutputs": 11,
+      "officialTitleExactHits": []
+    },
+    {
+      "programKey": "EOC02SD",
+      "familyCode": "EOC",
+      "profileOutputs": 16,
+      "officialTitleExactHits": []
+    },
+    {
+      "programKey": "FME03M",
+      "familyCode": "FME",
+      "profileOutputs": 14,
+      "officialTitleExactHits": []
+    },
+    {
+      "programKey": "HOT01E",
+      "familyCode": "HOT",
+      "profileOutputs": 5,
+      "officialTitleExactHits": []
+    },
+    {
+      "programKey": "HOT02B",
+      "familyCode": "HOT",
+      "profileOutputs": 6,
+      "officialTitleExactHits": []
+    },
+    {
+      "programKey": "HOT02SD",
+      "familyCode": "HOT",
+      "profileOutputs": 8,
+      "officialTitleExactHits": []
+    },
+    {
+      "programKey": "HOT03SD",
+      "familyCode": "HOT",
+      "profileOutputs": 13,
+      "officialTitleExactHits": []
+    },
+    {
+      "programKey": "HOT04SD",
+      "familyCode": "HOT",
+      "profileOutputs": 9,
+      "officialTitleExactHits": []
+    },
+    {
+      "programKey": "IFC01E",
+      "familyCode": "IFC",
+      "profileOutputs": 4,
+      "officialTitleExactHits": []
+    },
+    {
+      "programKey": "IFC01M",
+      "familyCode": "IFC",
+      "profileOutputs": 7,
+      "officialTitleExactHits": []
+    },
+    {
+      "programKey": "IFC02E",
+      "familyCode": "IFC",
+      "profileOutputs": 7,
+      "officialTitleExactHits": []
+    },
+    {
+      "programKey": "IFC03E",
+      "familyCode": "IFC",
+      "profileOutputs": 4,
+      "officialTitleExactHits": []
+    },
+    {
+      "programKey": "IMA01E",
+      "familyCode": "IMA",
+      "profileOutputs": 3,
+      "officialTitleExactHits": []
+    },
+    {
+      "programKey": "IMA02E",
+      "familyCode": "IMA",
+      "profileOutputs": 1,
+      "officialTitleExactHits": []
+    },
+    {
+      "programKey": "IMA03E",
+      "familyCode": "IMA",
+      "profileOutputs": 4,
+      "officialTitleExactHits": []
+    },
+    {
+      "programKey": "IMP02SD",
+      "familyCode": "IMP",
+      "profileOutputs": 14,
+      "officialTitleExactHits": []
+    },
+    {
+      "programKey": "IMP03S",
+      "familyCode": "IMP",
+      "profileOutputs": 14,
+      "officialTitleExactHits": []
+    },
+    {
+      "programKey": "IMP04S",
+      "familyCode": "IMP",
+      "profileOutputs": 11,
+      "officialTitleExactHits": []
+    },
+    {
+      "programKey": "IMS01M",
+      "familyCode": "IMS",
+      "profileOutputs": 10,
+      "officialTitleExactHits": []
+    },
+    {
+      "programKey": "IMS02S",
+      "familyCode": "IMS",
+      "profileOutputs": 9,
+      "officialTitleExactHits": []
+    },
+    {
+      "programKey": "IMS03S",
+      "familyCode": "IMS",
+      "profileOutputs": 9,
+      "officialTitleExactHits": []
+    },
+    {
+      "programKey": "IMS05S",
+      "familyCode": "IMS",
+      "profileOutputs": 13,
+      "officialTitleExactHits": []
+    },
+    {
+      "programKey": "INA01B",
+      "familyCode": "INA",
+      "profileOutputs": 12,
+      "officialTitleExactHits": []
+    },
+    {
+      "programKey": "INA01M",
+      "familyCode": "INA",
+      "profileOutputs": 10,
+      "officialTitleExactHits": []
+    },
+    {
+      "programKey": "INA01SD",
+      "familyCode": "INA",
+      "profileOutputs": 7,
+      "officialTitleExactHits": []
+    },
+    {
+      "programKey": "INA02B",
+      "familyCode": "INA",
+      "profileOutputs": 11,
+      "officialTitleExactHits": []
+    },
+    {
+      "programKey": "MAM01S",
+      "familyCode": "MAM",
+      "profileOutputs": 10,
+      "officialTitleExactHits": []
+    },
+    {
+      "programKey": "MSP34",
+      "familyCode": "IMA",
+      "profileOutputs": 4,
+      "officialTitleExactHits": []
+    },
+    {
+      "programKey": "QUI03S",
+      "familyCode": "QUI",
+      "profileOutputs": 13,
+      "officialTitleExactHits": []
+    },
+    {
+      "programKey": "SAN01M",
+      "familyCode": "SAN",
+      "profileOutputs": 4,
+      "officialTitleExactHits": []
+    },
+    {
+      "programKey": "SAN01MD",
+      "familyCode": "SAN",
+      "profileOutputs": 4,
+      "officialTitleExactHits": []
+    },
+    {
+      "programKey": "SAN02MD",
+      "familyCode": "SAN",
+      "profileOutputs": 5,
+      "officialTitleExactHits": []
+    },
+    {
+      "programKey": "SAN05S",
+      "familyCode": "SAN",
+      "profileOutputs": 10,
+      "officialTitleExactHits": []
+    },
+    {
+      "programKey": "SAN06S",
+      "familyCode": "SAN",
+      "profileOutputs": 4,
+      "officialTitleExactHits": []
+    },
+    {
+      "programKey": "SAN06SD",
+      "familyCode": "SAN",
+      "profileOutputs": 4,
+      "officialTitleExactHits": []
+    },
+    {
+      "programKey": "SAN21D",
+      "familyCode": "SAN",
+      "profileOutputs": 3,
+      "officialTitleExactHits": []
+    },
+    {
+      "programKey": "SAN32",
+      "familyCode": "SAN",
+      "profileOutputs": 7,
+      "officialTitleExactHits": []
+    },
+    {
+      "programKey": "SSC01MD",
+      "familyCode": "SSC",
+      "profileOutputs": 9,
+      "officialTitleExactHits": []
+    },
+    {
+      "programKey": "SSC04SD",
+      "familyCode": "SSC",
+      "profileOutputs": 3,
+      "officialTitleExactHits": []
+    },
+    {
+      "programKey": "SSC06SD",
+      "familyCode": "SSC",
+      "profileOutputs": 10,
+      "officialTitleExactHits": []
+    },
+    {
+      "programKey": "TCP01M",
+      "familyCode": "TCP",
+      "profileOutputs": 10,
+      "officialTitleExactHits": []
+    },
+    {
+      "programKey": "TCP01S",
+      "familyCode": "TCP",
+      "profileOutputs": 17,
+      "officialTitleExactHits": []
+    },
+    {
+      "programKey": "TMV02E",
+      "familyCode": "TMV",
+      "profileOutputs": 10,
+      "officialTitleExactHits": []
+    },
+    {
+      "programKey": "TMV02S",
+      "familyCode": "TMV",
+      "profileOutputs": 8,
+      "officialTitleExactHits": []
+    },
+    {
+      "programKey": "TMV04E",
+      "familyCode": "TMV",
+      "profileOutputs": 6,
+      "officialTitleExactHits": []
+    },
+    {
+      "programKey": "TMV04S",
+      "familyCode": "TMV",
+      "profileOutputs": 9,
+      "officialTitleExactHits": []
+    }
+  ]
+}

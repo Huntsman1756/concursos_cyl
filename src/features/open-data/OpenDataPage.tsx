@@ -204,38 +204,40 @@ export function OpenDataPage() {
 
       {offerEvidenceSnapshot === undefined ? null : (
         <section
-        className="open-data-release"
-        aria-labelledby="offer-evidence-title"
+          className="open-data-release"
+          aria-labelledby="offer-evidence-title"
         >
-        <div className="open-data-release__heading">
-          <div>
-            <p>Dataset candidato de expansión</p>
-            <h2 id="offer-evidence-title">
-              Ofertas: requisito, relación y acción
-            </h2>
+          <div className="open-data-release__heading">
+            <div>
+              <p>Dataset candidato de expansión</p>
+              <h2 id="offer-evidence-title">
+                Ofertas: requisito, relación y acción
+              </h2>
+            </div>
+            <p>
+              Base inmutable:{" "}
+              {state.manifest.resourceSnapshots.jobOffers.recordCount} ofertas
+            </p>
           </div>
           <p>
-            Base inmutable: {" "}
-            {state.manifest.resourceSnapshots.jobOffers.recordCount} ofertas
+            Incluye la cita literal, una categoría conservadora, el estado de
+            evidencia, la relación FP solo cuando está revisada y un siguiente
+            paso con fuente. No contiene empleadores privados ni predicciones.
           </p>
-        </div>
-        <p>
-          Incluye la cita literal, una categoría conservadora, el estado de
-          evidencia, la relación FP solo cuando está revisada y un siguiente
-          paso con fuente. No contiene empleadores privados ni predicciones.
-        </p>
-        <div className="open-data-release__downloads">
-          <a
-            className="primary-button"
-            href={resolveGeneratedAssetPath(offerEvidenceSnapshot.resourcePath)}
-            download
-          >
-            Descargar dataset JSON
-          </a>
-          <Link className="secondary-button" to="/desde-oferta">
-            Explorar las ofertas
-          </Link>
-        </div>
+          <div className="open-data-release__downloads">
+            <a
+              className="primary-button"
+              href={resolveGeneratedAssetPath(
+                offerEvidenceSnapshot.resourcePath,
+              )}
+              download
+            >
+              Descargar dataset JSON
+            </a>
+            <Link className="secondary-button" to="/desde-oferta">
+              Explorar las ofertas
+            </Link>
+          </div>
         </section>
       )}
 

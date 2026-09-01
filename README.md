@@ -49,7 +49,7 @@ The reviewed FP↔occupation graph is returned to the community as a **derived o
 
 ## Quality
 
-- Published from an immutable snapshot (`20260822085631889-fc9bf2ba23f9`) with a per-resource SHA-256 manifest.
+- The local release candidate is pinned to snapshot `20260830120000000-8c6c79fbd2a1` with a 22-resource SHA-256 manifest. The derived `offerEvidence` resource is activated in that same manifest.
 - Reviewed relationships are conservative and fail-closed; a weak match is never published by similarity.
 - Unit, release and E2E tests, lint, license and format gates run in CI on every push to `main`.
 - Accessibility (Axe), privacy (no accounts, cookies, analytics or runtime AI) and reproducibility are automated.
@@ -58,12 +58,12 @@ The reviewed FP↔occupation graph is returned to the community as a **derived o
 ## Limitations
 
 - Offers are a **dated snapshot**, not the whole labor market; a reviewed relationship without a current offer match is shown honestly instead of hidden.
-- Coverage is limited to reviewed relationships: **133 of 1,058 offers** in the snapshot are reached by published relations, and only relations that can be justified are shown.
+- Coverage is limited to reviewed relationships: **138 of 1,058 offers** in the snapshot are reached by published relations, and only relations that can be justified are shown. The five-ID delta is backed by two explicit curated reviews.
 - EDUCAbase references keep their statistical scope and are **never** presented as an individual salary, employment probability or guarantee.
 
 ## Concurso
 
-[X Concurso de Datos Abiertos de Castilla y León](https://datosabiertos.jcyl.es/web/es/concurso-datos-abiertos/concurso-datos-abiertos.html) — Productos y Servicios. Verifiable candidate release `v2026.08.27-candidate.4` at commit `a59a788a39bc8d300c66fee39ea2f2469f588112` (snapshot `20260822085631889-7bbe69380f6d`, manifest `92afc80f…`).
+[X Concurso de Datos Abiertos de Castilla y León](https://datosabiertos.jcyl.es/web/es/concurso-datos-abiertos/concurso-datos-abiertos.html) — Productos y Servicios. The current candidate is local and remains pending human authorization, public deployment and capture; its identity is recorded in [docs/contest/release-evidence.json](docs/contest/release-evidence.json).
 
 - Application: <https://salida-cyl.157-90-22-40.sslip.io/>
 - Derived open data: <https://salida-cyl.157-90-22-40.sslip.io/datos-abiertos>
@@ -95,6 +95,6 @@ Generated public data is rebuilt only through `npm run data:build`. See [DATA_LI
 
 Every push to `main` runs the `Deploy GitHub Pages` workflow: license, contest proof, lint, unit and E2E tests, a Caddy header check and a production build all run on `ubuntu-latest`. Pull requests run the same verification without deploying.
 
-The primary deployment is the VPS at <https://salida-cyl.157-90-22-40.sslip.io/>; GitHub Pages at <https://huntsman1756.github.io/concursos_cyl/> is the fallback. Both serve `version.json` with the deployed commit, and both are verified after every deployment. Operational details are in [docs/deployment.md](docs/deployment.md).
+The intended public root is the VPS at <https://salida-cyl.157-90-22-40.sslip.io/>; GitHub Pages at <https://huntsman1756.github.io/concursos_cyl/> is the fallback. The current candidate has not been deployed or verified publicly. Operational details are in [docs/deployment.md](docs/deployment.md).
 
 Project code is MIT licensed. Source data retains the terms declared by each publisher.

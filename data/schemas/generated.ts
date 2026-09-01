@@ -349,7 +349,10 @@ const GeneratedManifestActivationProvenanceSchema = z
         message: "Every derived resource must declare one dependency entry.",
       });
     }
-    for (const [index, dependency] of provenance.derivedResourceDependencies.entries()) {
+    for (const [
+      index,
+      dependency,
+    ] of provenance.derivedResourceDependencies.entries()) {
       if (dependency.sourceSnapshotId !== provenance.sourceSnapshotId) {
         context.addIssue({
           code: "custom",

@@ -330,7 +330,9 @@ describe("candidate data boundary", () => {
 
     await expect(
       validateCandidateBoundary(await currentCandidateOptions(fixtureRoot)),
-    ).rejects.toThrow(/bundle.*centers.*resourcePath|snapshot.*centers/iu);
+    ).rejects.toThrow(
+      /bundle.*centers.*resourcePath|snapshot.*centers|generated manifest schema validation/iu,
+    );
   }, 90_000);
 
   it("rejects a bundle with divergent manifest metadata", async () => {

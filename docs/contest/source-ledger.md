@@ -1,5 +1,7 @@
 # Contest source ledger
 
+The current candidate is local. The public root below is the intended submission URL, not evidence that this candidate has been deployed; public verification remains `pending` in `release-evidence.json`.
+
 This ledger keeps source evidence separate from claims about the application. URLs below are copied from the repository source contracts and methodology, not inferred from a search result.
 
 | Evidence boundary                           | Official source                                                                                                                                                             | Repository contract                                                                          |
