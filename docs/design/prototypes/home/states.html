@@ -1,0 +1,445 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SALIDA CyL � prototipo · estados de interacción</title>
+    <link rel="stylesheet" href="prototype.css" />
+    <style>
+      /* Gallery-only helpers: force states for documentation purposes. */
+      .demo-grid {
+        display: grid;
+        gap: var(--space-4);
+        margin: 0;
+        padding: 0;
+        list-style: none;
+      }
+      .demo-row {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: var(--space-4);
+        padding: var(--space-4);
+        border: 1px dashed var(--color-border);
+        border-radius: var(--radius-medium);
+      }
+      .demo-label {
+        flex: none;
+        width: 12rem;
+        color: var(--color-text-muted);
+        font-size: var(--text-caption);
+        font-weight: var(--text-label-weight);
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+      }
+      .force-hover {
+        background: var(--color-primary-soft) !important;
+        color: var(--color-primary-strong) !important;
+      }
+      .force-hover-primary {
+        background: var(--color-primary-strong) !important;
+      }
+      .force-focus {
+        outline: none;
+        border-radius: var(--radius-small);
+        box-shadow: var(--focus-ring) !important;
+      }
+      .force-focus-search {
+        border-color: var(--color-focus) !important;
+        box-shadow: var(--focus-ring);
+      }
+      .force-error {
+        border-color: var(--color-error) !important;
+        box-shadow: 0 0 0 1px var(--color-error);
+      }
+      .chip {
+        display: inline-flex;
+        align-items: center;
+        gap: var(--space-2);
+        min-height: 2.5rem;
+        padding: 0 var(--space-2) 0 var(--space-3);
+        border-radius: var(--radius-small);
+        background: var(--color-primary-soft);
+        color: var(--color-text);
+        font-size: var(--text-label);
+        font-weight: var(--text-label-weight);
+      }
+      .chip button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 2.5rem;
+        height: 2.5rem;
+        border: 0;
+        border-radius: var(--radius-small);
+        background: none;
+        color: var(--color-text-muted);
+        cursor: pointer;
+      }
+      .chip button:hover {
+        color: var(--color-error);
+      }
+    </style>
+  </head>
+  <body>
+    <main class="container section">
+      <p class="eyebrow">Galería de estados · solo documentación</p>
+      <h1 class="h1">Estados de interacción</h1>
+      <p class="lede">
+        Referencia visual para implementación: los estados forzados usan clases
+        de demostración; los estados reales viven en el CSS del prototipo.
+      </p>
+
+      <section aria-labelledby="s-selector">
+        <h2 class="h2" id="s-selector" style="margin-top: var(--space-6)">
+          Task selector (tabs del hero)
+        </h2>
+        <ul class="demo-grid">
+          <li class="demo-row">
+            <span class="demo-label">default / selected</span>
+            <ul class="task-selector-list" style="max-width: 34rem">
+              <li role="presentation">
+                <button class="task-tab" type="button" aria-selected="true">
+                  Tengo una FP
+                </button>
+              </li>
+              <li role="presentation">
+                <button class="task-tab" type="button" aria-selected="false">
+                  Busco una profesión
+                </button>
+              </li>
+              <li role="presentation">
+                <button class="task-tab" type="button" aria-selected="false">
+                  Estoy mirando una oferta
+                </button>
+              </li>
+            </ul>
+          </li>
+          <li class="demo-row">
+            <span class="demo-label">hover (no seleccionada)</span>
+            <ul class="task-selector-list" style="max-width: 34rem">
+              <li role="presentation">
+                <button class="task-tab" type="button" aria-selected="true">
+                  Tengo una FP
+                </button>
+              </li>
+              <li role="presentation">
+                <button
+                  class="task-tab force-hover"
+                  type="button"
+                  aria-selected="false"
+                >
+                  Busco una profesión
+                </button>
+              </li>
+              <li role="presentation">
+                <button class="task-tab" type="button" aria-selected="false">
+                  Estoy mirando una oferta
+                </button>
+              </li>
+            </ul>
+          </li>
+          <li class="demo-row">
+            <span class="demo-label">focus visible</span>
+            <ul class="task-selector-list" style="max-width: 34rem">
+              <li role="presentation">
+                <button class="task-tab" type="button" aria-selected="true">
+                  Tengo una FP
+                </button>
+              </li>
+              <li role="presentation">
+                <button
+                  class="task-tab force-focus"
+                  type="button"
+                  aria-selected="false"
+                >
+                  Busco una profesión
+                </button>
+              </li>
+              <li role="presentation">
+                <button class="task-tab" type="button" aria-selected="false">
+                  Estoy mirando una oferta
+                </button>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </section>
+
+      <section aria-labelledby="s-search">
+        <h2 class="h2" id="s-search" style="margin-top: var(--space-6)">
+          SearchField
+        </h2>
+        <ul class="demo-grid">
+          <li class="demo-row">
+            <span class="demo-label">default</span>
+            <div style="flex: 1; max-width: 30rem">
+              <label class="field-label" for="st-1">Buscar tu ciclo</label>
+              <input
+                class="search-input"
+                id="st-1"
+                type="search"
+                placeholder="Ej.: Administración y Finanzas"
+              />
+            </div>
+          </li>
+          <li class="demo-row">
+            <span class="demo-label">focus</span>
+            <div style="flex: 1; max-width: 30rem">
+              <label class="field-label" for="st-2">Buscar tu ciclo</label>
+              <input
+                class="search-input force-focus-search"
+                id="st-2"
+                type="search"
+                value="Administración"
+              />
+            </div>
+          </li>
+          <li class="demo-row">
+            <span class="demo-label">error</span>
+            <div style="flex: 1; max-width: 30rem">
+              <label class="field-label" for="st-3">Buscar tu ciclo</label>
+              <input class="search-input force-error" id="st-3" type="search" />
+              <p
+                class="search-hint"
+                style="color: var(--color-error)"
+                id="st-3-error"
+              >
+                Escribe al menos dos letras del ciclo.
+              </p>
+            </div>
+          </li>
+          <li class="demo-row">
+            <span class="demo-label">disabled</span>
+            <div style="flex: 1; max-width: 30rem">
+              <label class="field-label" for="st-4">Buscar tu ciclo</label>
+              <input
+                class="search-input"
+                id="st-4"
+                type="search"
+                disabled
+                placeholder="Cargando catálogo⬦"
+                style="
+                  background: var(--color-surface-alt);
+                  border-color: var(--color-border);
+                  color: var(--color-text-muted);
+                  cursor: not-allowed;
+                "
+              />
+            </div>
+          </li>
+        </ul>
+      </section>
+
+      <section aria-labelledby="s-buttons">
+        <h2 class="h2" id="s-buttons" style="margin-top: var(--space-6)">
+          Botones (altura de control 44px)
+        </h2>
+        <ul class="demo-grid">
+          <li class="demo-row">
+            <span class="demo-label">primario</span>
+            <button class="button button--primary" type="button">
+              Ver mis salidas
+            </button>
+            <button
+              class="button button--primary force-hover-primary"
+              type="button"
+            >
+              hover
+            </button>
+            <button class="button button--primary force-focus" type="button">
+              focus
+            </button>
+            <button class="button button--primary" type="button" disabled>
+              disabled
+            </button>
+          </li>
+          <li class="demo-row">
+            <span class="demo-label">secundario</span>
+            <button class="button button--secondary" type="button">
+              Ver metodología
+            </button>
+            <button class="button button--secondary force-focus" type="button">
+              focus
+            </button>
+          </li>
+          <li class="demo-row">
+            <span class="demo-label">acción de texto</span>
+            <a class="link-action" href="#s-buttons">
+              Ver salidas de mi FP
+              <svg
+                class="icon"
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                aria-hidden="true"
+              >
+                <path d="M5 12h14" />
+                <path d="m12 5 7 7-7 7" />
+              </svg>
+            </a>
+          </li>
+        </ul>
+      </section>
+
+      <section aria-labelledby="s-nav">
+        <h2 class="h2" id="s-nav" style="margin-top: var(--space-6)">
+          Navegación
+        </h2>
+        <ul class="demo-grid">
+          <li class="demo-row">
+            <span class="demo-label">default / hover / active / focus</span>
+            <nav aria-label="Demostración de navegación">
+              <ul class="global-nav-list" style="display: flex">
+                <li>
+                  <a class="global-nav-link" href="#s-nav">Explorar</a>
+                </li>
+                <li>
+                  <a
+                    class="global-nav-link force-hover"
+                    style="
+                      text-decoration: underline;
+                      text-decoration-thickness: 2px;
+                      text-underline-offset: 6px;
+                    "
+                    href="#s-nav"
+                    >Ofertas</a
+                  >
+                </li>
+                <li>
+                  <a class="global-nav-link" aria-current="page" href="#s-nav"
+                    >Dónde estudiar</a
+                  >
+                </li>
+                <li>
+                  <a class="global-nav-link force-focus" href="#s-nav"
+                    >Metodología</a
+                  >
+                </li>
+              </ul>
+            </nav>
+          </li>
+        </ul>
+      </section>
+
+      <section aria-labelledby="s-chips">
+        <h2 class="h2" id="s-chips" style="margin-top: var(--space-6)">
+          Filtros activos (patrón Dónde estudiar)
+        </h2>
+        <ul class="demo-grid">
+          <li class="demo-row">
+            <span class="demo-label">chips + contador</span>
+            <span class="chip">
+              Provincia: León
+              <button
+                type="button"
+                aria-label="Quitar filtro: Provincia � León"
+              >
+                <svg
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  aria-hidden="true"
+                >
+                  <path d="M18 6 6 18" />
+                  <path d="m6 6 12 12" />
+                </svg>
+              </button>
+            </span>
+            <span class="chip">
+              Modalidad: Presencial
+              <button
+                type="button"
+                aria-label="Quitar filtro: Modalidad � Presencial"
+              >
+                <svg
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  aria-hidden="true"
+                >
+                  <path d="M18 6 6 18" />
+                  <path d="m6 6 12 12" />
+                </svg>
+              </button>
+            </span>
+            <span class="small" style="color: var(--color-text-muted)"
+              >34 ciclos · Quitar filtros</span
+            >
+          </li>
+        </ul>
+      </section>
+
+      <section aria-labelledby="s-info">
+        <h2 class="h2" id="s-info" style="margin-top: var(--space-6)">
+          InfoButton (glifo 16px · target 44px)
+        </h2>
+        <ul class="demo-grid">
+          <li class="demo-row">
+            <span class="demo-label">default / focus</span>
+            <span class="small">Ofertas con relación revisada</span>
+            <span class="info-wrap">
+              <button class="info-button" type="button" style="margin: 0">
+                <svg
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  aria-hidden="true"
+                >
+                  <circle cx="12" cy="12" r="10" />
+                  <path d="M12 16v-4" />
+                  <path d="M12 8h.01" />
+                </svg>
+                <span class="sr-only">Qué es una relación revisada</span>
+              </button>
+            </span>
+            <span class="info-wrap">
+              <button
+                class="info-button force-focus"
+                type="button"
+                style="margin: 0"
+              >
+                <svg
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  aria-hidden="true"
+                >
+                  <circle cx="12" cy="12" r="10" />
+                  <path d="M12 16v-4" />
+                  <path d="M12 8h.01" />
+                </svg>
+                <span class="sr-only">Qué es una relación revisada</span>
+              </button>
+            </span>
+          </li>
+        </ul>
+      </section>
+    </main>
+  </body>
+</html>
