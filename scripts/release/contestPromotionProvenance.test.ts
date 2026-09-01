@@ -19,7 +19,7 @@ import {
   type ContestFreeze,
 } from "./validateContestFreeze";
 
-const EXPANDED_SOURCE_SHA = "158e1649d4bcd49a1b79c279b906ddb4b7bfe098";
+const EXPANDED_SOURCE_SHA = "a0350acdfd6064b68dee30af80433d8564347da3";
 const EXPANDED_FREEZE_COMMIT_SHA = "fa9598df89f24d3fdbf728a20c81cb7a7d6cf621";
 const CAPTURE_COUNT = 0;
 const LEGACY_SOURCE_SHA = "ff9e6197f926e462bea1a3e8ac6a57a23d3f825a";
