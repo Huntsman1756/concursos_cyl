@@ -1,7 +1,5 @@
 # Contest evidence capture checklist
 
-> HISTÓRICO / SUPERSEDED: las capturas y el checklist pertenecen a la release pública anterior. No se cuentan como evidencia del candidato local actual; la nueva captura queda pendiente de despliegue y autorización.
-
 This checklist is rendered from `docs/contest/evidence-capture.json`. Capture only the listed routes and viewports after the coverage freeze. Do not submit the application from this checklist.
 
 <!-- prettier-ignore -->
