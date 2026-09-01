@@ -1,5 +1,12 @@
-import { cleanup, render, screen } from "@testing-library/react";
-import { MemoryRouter } from "react-router-dom";
+import {
+  cleanup,
+  render,
+  screen,
+  waitFor,
+  within,
+} from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
+import { MemoryRouter, useLocation } from "react-router-dom";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { currentManifestFixture } from "../../../tests/fixtures/generatedManifest";
 import { AppRoutes } from "../../app/routes";
@@ -41,11 +48,13 @@ function installFetch({
   programOverride = program,
   offerings = [offering],
   centerOverride = {},
+  centers,
 }: {
   address?: string | null;
   programOverride?: Record<string, unknown>;
   offerings?: readonly Record<string, unknown>[];
   centerOverride?: Record<string, unknown>;
+  centers?: readonly Record<string, unknown>[];
 } = {}): void {
   const manifest = currentManifestFixture();
   const centerRecord = {
@@ -56,7 +65,10 @@ function installFetch({
   const resources = new Map<string, unknown>([
     ["/data/v1/manifest.json", manifest],
     [manifest.resourceSnapshots.programs.resourcePath, [programOverride]],
-    [manifest.resourceSnapshots.centers.resourcePath, [centerRecord]],
+    [
+      manifest.resourceSnapshots.centers.resourcePath,
+      centers ?? [centerRecord],
+    ],
     [manifest.resourceSnapshots.trainingOfferings.resourcePath, offerings],
     [manifest.resourceSnapshots.jobOffers.resourcePath, []],
   ]);
@@ -74,12 +86,115 @@ function installFetch({
   );
 }
 
+function LocationEcho() {
+  const location = useLocation();
+  return <output aria-label="Ubicación actual">{location.search}</output>;
+}
+
+function centerCatalogRecords(count: number): {
+  centers: Array<Record<string, unknown>>;
+  offerings: Array<Record<string, unknown>>;
+} {
+  const centers = Array.from({ length: count }, (_, index) => {
+    const centerCode = String(index + 1).padStart(8, "0");
+    return {
+      ...center,
+      centerCode,
+      centerName: `Centro de prueba ${String(index + 1).padStart(2, "0")}`,
+    };
+  });
+  return {
+    centers,
+    offerings: centers.map((candidate, index) => ({
+      ...offering,
+      centerCode: candidate.centerCode,
+      centerName: candidate.centerName,
+      offeringId: `IFC03S:${String(index + 1).padStart(8, "0")}:on_site:public:education`,
+    })),
+  };
+}
+
 afterEach(() => {
   cleanup();
   vi.unstubAllGlobals();
 });
 
 describe("TrainingRoutePage", () => {
+  it("paginates only the global center catalog and preserves URL state", async () => {
+    const records = centerCatalogRecords(55);
+    installFetch(records);
+    const user = userEvent.setup();
+
+    render(
+      <MemoryRouter initialEntries={["/donde-estudiar"]}>
+        <AppRoutes />
+        <LocationEcho />
+      </MemoryRouter>,
+    );
+
+    expect(
+      await screen.findByRole("heading", {
+        name: "1–50 de 55 opciones formativas",
+      }),
+    ).toBeVisible();
+    const pagination = screen.getByRole("navigation", {
+      name: "Paginación de opciones formativas",
+    });
+    expect(pagination).toHaveAttribute("aria-controls", "center-results-table");
+    expect(within(screen.getByRole("table")).getAllByRole("row")).toHaveLength(
+      51,
+    );
+    expect(
+      screen.getByRole("button", { name: "Página anterior" }),
+    ).toBeDisabled();
+
+    await user.click(screen.getByRole("button", { name: "Página siguiente" }));
+
+    expect(
+      screen.getByRole("heading", {
+        name: "51–55 de 55 opciones formativas",
+      }),
+    ).toBeVisible();
+    expect(within(screen.getByRole("table")).getAllByRole("row")).toHaveLength(
+      6,
+    );
+    expect(
+      screen.getByRole("button", { name: "Página siguiente" }),
+    ).toBeDisabled();
+    expect(screen.getByLabelText("Ubicación actual")).toHaveTextContent(
+      "?page=2",
+    );
+  });
+
+  it("keeps small contextual center results unpaginated", async () => {
+    const records = centerCatalogRecords(12);
+    installFetch(records);
+
+    render(
+      <MemoryRouter initialEntries={["/donde-estudiar/IFC03S?page=2"]}>
+        <AppRoutes />
+        <LocationEcho />
+      </MemoryRouter>,
+    );
+
+    expect(
+      await screen.findByRole("heading", { name: "12 centros publicados" }),
+    ).toBeVisible();
+    expect(within(screen.getByRole("table")).getAllByRole("row")).toHaveLength(
+      13,
+    );
+    expect(
+      screen.queryByRole("navigation", {
+        name: "Paginación de opciones formativas",
+      }),
+    ).not.toBeInTheDocument();
+    await waitFor(() => {
+      expect(screen.getByLabelText("Ubicación actual")).toHaveTextContent(
+        /^$/u,
+      );
+    });
+  });
+
   it("shows the official regulated offering and its center", async () => {
     installFetch();
     render(

@@ -28,6 +28,8 @@ type Foundation = LoadedFoundationResourceSubset<
   "programs" | "centers" | "trainingOfferings"
 >;
 
+const GLOBAL_PAGE_SIZE = 50;
+
 type PageState =
   | { status: "loading" }
   | { status: "failed" }
@@ -225,6 +227,10 @@ export function CentersExplorerPage(): JSX.Element {
   const [state, setState] = useState<PageState>({ status: "loading" });
   const queryParam = searchParams.get("query") ?? "";
   const provinceParam = searchParams.get("province") ?? "all";
+  const pageParam = Number.parseInt(searchParams.get("page") ?? "1", 10);
+  const requestedPage =
+    Number.isFinite(pageParam) && pageParam > 0 ? pageParam : 1;
+  const paginationEnabled = programKey === undefined;
 
   useRouteReady(state.status !== "loading");
 
@@ -290,6 +296,39 @@ export function CentersExplorerPage(): JSX.Element {
         (query.length === 0 || centerSearchText(row).includes(query)),
     );
   }, [provinceParam, queryParam, rows]);
+  const pageCount = paginationEnabled
+    ? Math.max(1, Math.ceil(filteredRows.length / GLOBAL_PAGE_SIZE))
+    : 1;
+  const currentPage = paginationEnabled
+    ? Math.min(requestedPage, pageCount)
+    : 1;
+  const visibleRows = paginationEnabled
+    ? filteredRows.slice(
+        (currentPage - 1) * GLOBAL_PAGE_SIZE,
+        currentPage * GLOBAL_PAGE_SIZE,
+      )
+    : filteredRows;
+  useEffect(() => {
+    if (state.status !== "ready") return;
+    const canonicalPage =
+      paginationEnabled && currentPage > 1 ? String(currentPage) : null;
+    if (searchParams.get("page") === canonicalPage) return;
+    const next = new URLSearchParams(searchParams);
+    if (canonicalPage === null) next.delete("page");
+    else next.set("page", canonicalPage);
+    setSearchParams(next, { replace: true });
+  }, [
+    currentPage,
+    paginationEnabled,
+    searchParams,
+    setSearchParams,
+    state.status,
+  ]);
+  const firstVisibleResult =
+    filteredRows.length === 0 ? 0 : (currentPage - 1) * GLOBAL_PAGE_SIZE + 1;
+  const lastVisibleResult = paginationEnabled
+    ? Math.min(currentPage * GLOBAL_PAGE_SIZE, filteredRows.length)
+    : filteredRows.length;
   const centerCount = new Set(filteredRows.map((row) => row.center.centerCode))
     .size;
   const hasFilters = queryParam.trim() !== "" || provinceParam !== "all";
@@ -419,6 +458,7 @@ export function CentersExplorerPage(): JSX.Element {
               const next = new URLSearchParams(searchParams);
               if (event.target.value === "all") next.delete("province");
               else next.set("province", event.target.value);
+              next.delete("page");
               setSearchParams(next);
             }}
           >
@@ -453,7 +493,7 @@ export function CentersExplorerPage(): JSX.Element {
             <h2 id="centers-results-heading">
               {contextual
                 ? `${centerCount} ${centerCount === 1 ? "centro publicado" : "centros publicados"}`
-                : `${filteredRows.length} opciones formativas`}
+                : `${firstVisibleResult}–${lastVisibleResult} de ${filteredRows.length} opciones formativas`}
             </h2>
             {!contextual && <span>{centerCount} centros representados</span>}
           </div>
@@ -477,9 +517,12 @@ export function CentersExplorerPage(): JSX.Element {
           </div>
         ) : (
           <div className="center-catalog__table-wrap">
-            <table className="center-catalog__table">
+            <table className="center-catalog__table" id="center-results-table">
               <caption className="sr-only">
                 Centros y ciclos de formación disponibles
+                {paginationEnabled && pageCount > 1
+                  ? `. Página ${currentPage} de ${pageCount}`
+                  : ""}
               </caption>
               <thead>
                 <tr>
@@ -491,13 +534,52 @@ export function CentersExplorerPage(): JSX.Element {
                 </tr>
               </thead>
               <tbody>
-                {filteredRows.map((row) => (
+                {visibleRows.map((row) => (
                   <CenterRow key={row.key} row={row} />
                 ))}
               </tbody>
             </table>
           </div>
         )}
+        {paginationEnabled && pageCount > 1 ? (
+          <nav
+            className="center-catalog__pagination"
+            aria-label="Paginación de opciones formativas"
+            aria-controls="center-results-table"
+          >
+            <button
+              className="secondary-button"
+              type="button"
+              aria-label="Página anterior"
+              disabled={currentPage === 1}
+              onClick={() => {
+                const next = new URLSearchParams(searchParams);
+                const previousPage = Math.max(1, currentPage - 1);
+                if (previousPage === 1) next.delete("page");
+                else next.set("page", String(previousPage));
+                setSearchParams(next);
+              }}
+            >
+              Anterior
+            </button>
+            <span aria-live="polite">
+              Página {currentPage} de {pageCount}
+            </span>
+            <button
+              className="secondary-button"
+              type="button"
+              aria-label="Página siguiente"
+              disabled={currentPage === pageCount}
+              onClick={() => {
+                const next = new URLSearchParams(searchParams);
+                next.set("page", String(Math.min(pageCount, currentPage + 1)));
+                setSearchParams(next);
+              }}
+            >
+              Siguiente
+            </button>
+          </nav>
+        ) : null}
       </section>
       <p className="catalog-page__note">
         Mostramos solo centros y modalidades publicados en la copia indicada.

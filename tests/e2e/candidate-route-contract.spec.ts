@@ -23,6 +23,27 @@ for (const route of [
       page.getByRole("heading", { level: 1, name: route.heading }),
     ).toBeVisible();
 
+    if (route.path === "/donde-estudiar") {
+      await expect(page.locator(".center-catalog__table tbody tr")).toHaveCount(
+        50,
+      );
+      await expect(
+        page.getByRole("navigation", {
+          name: "Paginación de opciones formativas",
+        }),
+      ).toBeVisible();
+    }
+    if (route.path === "/donde-estudiar/INA02M") {
+      await expect(page.locator(".center-catalog__table tbody tr")).toHaveCount(
+        3,
+      );
+      await expect(
+        page.getByRole("navigation", {
+          name: "Paginación de opciones formativas",
+        }),
+      ).toHaveCount(0);
+    }
+
     const overflow = await page.evaluate(() => ({
       body: document.body.scrollWidth - document.body.clientWidth,
       document:

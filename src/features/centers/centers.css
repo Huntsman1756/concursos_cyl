@@ -208,6 +208,15 @@
   font-weight: 700;
 }
 
+.center-catalog__pagination {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-4);
+  margin-top: var(--space-5);
+}
+
 .catalog-page__note {
   max-width: 75ch;
   margin: var(--space-5) 0 0;
