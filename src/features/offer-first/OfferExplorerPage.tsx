@@ -740,19 +740,68 @@ export function OfferExplorerPage({
         </div>
         {visibleRecords.length === 0 ? (
           <div className="offer-explorer__empty" role="status">
-            <h3>No hay coincidencias</h3>
-            <p>
-              Prueba con otras palabras, revisa la ortografía o quita algún
-              filtro. La copia de ofertas no representa todo el mercado laboral.
-            </p>
-            {hasActiveFilters && (
-              <button
-                className="secondary-button"
-                type="button"
-                onClick={clearFilters}
-              >
-                Quitar filtros
-              </button>
+            {context.kind === "global" || hasActiveFilters ? (
+              <>
+                <h3>No hay coincidencias</h3>
+                <p>
+                  Prueba con otras palabras, revisa la ortografía o quita algún
+                  filtro. La copia de ofertas no representa todo el mercado
+                  laboral.
+                </p>
+                {hasActiveFilters && (
+                  <button
+                    className="secondary-button"
+                    type="button"
+                    onClick={clearFilters}
+                  >
+                    Quitar filtros
+                  </button>
+                )}
+              </>
+            ) : (
+              // Fail-closed zero state (screen contract §7): a reviewed empty
+              // is a valid answer. Never "no existen ofertas".
+              <>
+                <h3>
+                  Todavía no hemos podido comprobar ofertas relacionadas en esta
+                  copia.
+                </h3>
+                <div className="empty-grid">
+                  <div>
+                    <h3>Qué significa</h3>
+                    <p>
+                      Ninguna oferta de esta copia tiene una relación revisada
+                      con esta{" "}
+                      {context.kind === "occupation" ? "profesión" : "FP"}.
+                    </p>
+                  </div>
+                  <div>
+                    <h3>Qué NO significa</h3>
+                    <p>
+                      No significa que no exista la oportunidad: la ausencia de
+                      relación no prueba imposibilidad.
+                    </p>
+                  </div>
+                  <div>
+                    <h3>Qué puedes hacer</h3>
+                    <p>
+                      Explora el catálogo completo o consulta la metodología
+                      para entender el criterio de revisión.
+                    </p>
+                  </div>
+                </div>
+                <div className="method-actions">
+                  <Link
+                    className="button button--secondary"
+                    to={globalOffersPath()}
+                  >
+                    Explorar todas las ofertas
+                  </Link>
+                  <Link className="link-action" to="/metodologia">
+                    Consultar metodología
+                  </Link>
+                </div>
+              </>
             )}
           </div>
         ) : (
