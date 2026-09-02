@@ -79,7 +79,7 @@ test("home exposes three clear intents, navigation, freshness, and no automated 
 
   await expect(
     page.getByRole("heading", {
-      name: "Explora formación, profesiones y oportunidades en Castilla y León.",
+      name: "Tu FP, tus salidas profesionales y dónde dar el siguiente paso.",
     }),
   ).toBeVisible();
   const combobox = page.getByRole("combobox", {
@@ -128,7 +128,7 @@ test("the three-intent home reaches FP and occupation routes after official conf
   const fpOption = page.locator('[role="option"][id$="-option-IFC03S"]');
   await expect(fpOption).toBeVisible();
   await fpOption.click();
-  await page.getByRole("button", { name: "Buscar ciclo" }).click();
+  await page.getByRole("button", { name: "Ver mis salidas" }).click();
   await expect(page).toHaveURL(/\/desde-fp\/IFC03S\?query=/u);
   await expect(
     page.getByRole("heading", { name: /Desarrollo de Aplicaciones Web/iu }),
@@ -136,9 +136,7 @@ test("the three-intent home reaches FP and occupation routes after official conf
   await expectStrictAxe(page);
 
   await page.getByRole("link", { name: "SALIDA CyL" }).click();
-  await page
-    .getByRole("button", { name: "Quiero dedicarme a una profesión" })
-    .click();
+  await page.getByRole("button", { name: "Busco una profesión" }).click();
   const universityCombobox = page.getByRole("combobox", {
     name: "Busca una profesión",
   });
@@ -179,7 +177,7 @@ test("home search requires an official option selection and never free-routes", 
   await page.keyboard.press("ArrowDown");
   await expect(combobox).toHaveAttribute("aria-activedescendant", /.+/u);
   await page.keyboard.press("Enter");
-  await page.getByRole("button", { name: "Buscar ciclo" }).click();
+  await page.getByRole("button", { name: "Ver mis salidas" }).click();
   await expect(page).toHaveURL(/\/desde-fp\/IFC03S\?query=/u);
 });
 
@@ -239,7 +237,7 @@ test("the complete Spanish home copy fits without horizontal overflow", async ({
 
   if (testInfo.project.name === "chromium-mobile") {
     const menuButton = page.getByRole("button", {
-      name: "Abrir menú principal",
+      name: "Menú",
     });
     const box = await menuButton.boundingBox();
     expect(box?.width ?? 0).toBeGreaterThanOrEqual(44);
@@ -254,7 +252,7 @@ test("the home copy fits at the narrow mobile widths", async ({ page }) => {
     await expectHomeReadyForLayout(page);
     await expect(
       page.getByRole("heading", {
-        name: "Explora formación, profesiones y oportunidades en Castilla y León.",
+        name: "Tu FP, tus salidas profesionales y dónde dar el siguiente paso.",
       }),
     ).toBeVisible();
     const overflow = await page.evaluate(() => ({
@@ -297,15 +295,16 @@ test("a stale legacy manifest keeps navigation and names the last update", async
   ).toHaveCount(0);
 
   if (testInfo.project.name === "chromium-mobile") {
-    await page.getByRole("button", { name: "Abrir menú principal" }).click();
+    await page.getByRole("button", { name: "Menú" }).click();
     await page
-      .locator("#mobile-primary-navigation")
-      .getByRole("link", { name: "Comparar ingresos" })
+      .locator("#mobile-menu")
+      .getByRole("link", { name: "Comparar estudios" })
       .click();
   } else {
-    const desktopMore = page.locator(".site-nav--desktop .site-nav__more");
-    await desktopMore.getByText("Más", { exact: true }).click();
-    await desktopMore.getByRole("link", { name: "Comparar ingresos" }).click();
+    await page
+      .locator(".global-nav-list")
+      .getByRole("link", { name: "Comparar estudios" })
+      .click();
   }
   await expect(page).toHaveURL(/\/comparar$/u);
 });
@@ -333,16 +332,16 @@ test("SPA navigation preserves the focused control while content becomes ready",
 }, testInfo) => {
   await page.goto("/");
   if (testInfo.project.name === "chromium-mobile") {
-    await page.getByRole("button", { name: "Abrir menú principal" }).click();
+    await page.getByRole("button", { name: "Menú" }).click();
     const mobileLink = page
-      .locator("#mobile-primary-navigation")
-      .getByRole("link", { name: "Explorar FP" });
+      .locator("#mobile-menu")
+      .getByRole("link", { name: "Explorar" });
     await mobileLink.click();
     await expect(page).toHaveURL(/\/desde-fp$/u);
   } else {
-    const desktopMore = page.locator(".site-nav--desktop .site-nav__more");
-    await desktopMore.getByText("Más", { exact: true }).click();
-    const fpLink = desktopMore.getByRole("link", { name: "Explorar FP" });
+    const fpLink = page
+      .locator(".global-nav-list")
+      .getByRole("link", { name: "Explorar" });
     await fpLink.click();
     await expect(page).toHaveURL(/\/desde-fp$/u);
   }

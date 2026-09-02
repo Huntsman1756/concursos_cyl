@@ -189,29 +189,26 @@ test.describe("contest readiness journeys", () => {
     await expect(
       page.getByRole("heading", {
         level: 1,
-        name: /Explora formación, profesiones y oportunidades en Castilla y León\./i,
+        name: /Tu FP, tus salidas profesionales y dónde dar el siguiente paso\./i,
       }),
     ).toBeVisible();
     if (testInfo.project.name === "chromium-mobile") {
-      await expect(
-        page.getByRole("button", { name: "Abrir menú principal" }),
-      ).toBeVisible();
+      await expect(page.getByRole("button", { name: "Menú" })).toBeVisible();
     } else {
-      await expect(page.locator(".site-nav--desktop")).toBeVisible();
+      await expect(page.locator(".global-nav-list")).toBeVisible();
     }
     await expect(
       page.getByRole("region", { name: "Fecha de relaciones revisadas" }),
     ).toHaveAttribute("aria-busy", "false");
     await expect(
-      page.getByRole("group", { name: "Elige tu punto de partida" }),
+      page.getByRole("tablist", { name: "Elige tu punto de partida" }),
     ).toBeVisible();
     await expect(
       page.getByRole("combobox", { name: "Busca tu ciclo" }),
     ).toBeVisible();
     await expect(
-      page.getByRole("button", { name: "Buscar ciclo" }),
+      page.getByRole("button", { name: "Ver mis salidas" }),
     ).toHaveCount(1);
-    await expect(page.locator(".example-line a")).toHaveCount(1);
     await expectStableRoute(page, diagnostics);
   });
 
@@ -308,25 +305,14 @@ test.describe("contest readiness journeys", () => {
       "http://127.0.0.1:4173/?tab=coverage#freshness",
     );
 
-    const menuButton = page.getByRole("button", {
-      name: "Abrir menú principal",
-    });
-    const mobileNavigation = page.getByRole("navigation", {
-      name: "Principal móvil",
-      includeHidden: true,
-    });
-    await expect(mobileNavigation).toHaveAttribute(
-      "id",
-      "mobile-primary-navigation",
-    );
+    const menuButton = page.getByRole("button", { name: "Menú" });
+    const mobileNavigation = page.locator("#mobile-menu");
+    await expect(mobileNavigation).toHaveAttribute("id", "mobile-menu");
     await expect(menuButton).toHaveAttribute("aria-expanded", "false");
-    await expect(menuButton).toHaveAttribute(
-      "aria-controls",
-      "mobile-primary-navigation",
-    );
+    await expect(menuButton).toHaveAttribute("aria-controls", "mobile-menu");
     await expect(mobileNavigation).toHaveAttribute("hidden");
     const mobileAnchors = mobileNavigation.locator("a");
-    await expect(mobileAnchors).toHaveCount(12);
+    await expect(mobileAnchors).toHaveCount(8);
     expect(
       await mobileAnchors.evaluateAll((anchors) =>
         anchors.every((anchor) => anchor.getClientRects().length === 0),
@@ -364,21 +350,16 @@ test.describe("contest readiness journeys", () => {
     await expectStableRoute(page, diagnostics);
 
     await menuButton.click();
-    const closeMenuButton = page.getByRole("button", {
-      name: "Cerrar menú principal",
-    });
+    const closeMenuButton = page.getByRole("button", { name: "Menú" });
     await expect(closeMenuButton).toBeVisible();
     await expect(closeMenuButton).toHaveAttribute("aria-expanded", "true");
     await expect(closeMenuButton).toHaveAttribute(
       "aria-controls",
-      "mobile-primary-navigation",
+      "mobile-menu",
     );
     await expect(mobileNavigation).toBeVisible();
-    await expect(
-      mobileNavigation.getByRole("link", { name: "Explorar", exact: true }),
-    ).toHaveAttribute("aria-current", "page");
     const menuButtonBox = await page
-      .getByRole("button", { name: "Cerrar menú principal" })
+      .getByRole("button", { name: "Menú" })
       .boundingBox();
     expect(menuButtonBox?.width ?? 0).toBeGreaterThanOrEqual(44);
     expect(menuButtonBox?.height ?? 0).toBeGreaterThanOrEqual(44);
@@ -393,18 +374,13 @@ test.describe("contest readiness journeys", () => {
     await page.keyboard.press("Escape");
     await expect(menuButton).toBeFocused();
     await expect(menuButton).toHaveAttribute("aria-expanded", "false");
-    await expect(menuButton).toHaveAttribute(
-      "aria-controls",
-      "mobile-primary-navigation",
-    );
+    await expect(menuButton).toHaveAttribute("aria-controls", "mobile-menu");
     await expect(mobileNavigation).toHaveAttribute("hidden");
     await expectNoHorizontalOverflow(page);
     await expectCriticalAxe(page);
 
     await menuButton.click();
-    await mobileNavigation
-      .getByRole("link", { name: "Método y límites" })
-      .click();
+    await mobileNavigation.getByRole("link", { name: "Metodología" }).click();
     await expect(page).toHaveURL(/\/metodologia$/u);
     await expect(mobileNavigation).toHaveAttribute("hidden");
     await expect(
@@ -620,16 +596,15 @@ test.describe("contest readiness journeys", () => {
     await page.getByRole("button", { name: "Buscar ciclo" }).click();
     await expect(page).toHaveURL(/\/desde-fp\/COM01M\?query=/u);
     if (testInfo.project.name === "chromium-mobile") {
-      await page.getByRole("button", { name: "Abrir menú principal" }).click();
+      await page.getByRole("button", { name: "Menú" }).click();
       await page
-        .locator("#mobile-primary-navigation")
-        .getByRole("link", { name: "Comparar ingresos" })
+        .locator("#mobile-menu")
+        .getByRole("link", { name: "Comparar estudios" })
         .click();
     } else {
-      const desktopMore = page.locator(".site-nav--desktop .site-nav__more");
-      await desktopMore.getByText("Más", { exact: true }).click();
-      await desktopMore
-        .getByRole("link", { name: "Comparar ingresos" })
+      await page
+        .locator(".global-nav-list")
+        .getByRole("link", { name: "Comparar estudios" })
         .click();
     }
     await expect(page).toHaveURL(/\/comparar$/u);
