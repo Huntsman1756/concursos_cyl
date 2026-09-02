@@ -25,14 +25,13 @@ export function titleForPathname(pathname: string): string {
     return withAppName("Ficha de profesión");
   if (normalizedPath === "/desde-oferta")
     return withAppName("Ofertas de empleo");
-  if (normalizedPath === "/comparar") return withAppName("Comparar ingresos");
-  if (normalizedPath === "/recursos")
-    return withAppName("Formación complementaria");
+  if (normalizedPath === "/comparar") return withAppName("Comparar estudios");
+  if (normalizedPath === "/recursos") return withAppName("Más formación");
   if (normalizedPath === "/datos-abiertos")
     return withAppName("Datos abiertos");
   if (normalizedPath === "/accesibilidad") return withAppName("Accesibilidad");
   if (normalizedPath === "/para-organizaciones")
     return withAppName("Para organizaciones");
-  if (normalizedPath === "/metodologia") return withAppName("Método y límites");
+  if (normalizedPath === "/metodologia") return withAppName("Metodología");
   return withAppName("Página no encontrada");
 }

@@ -16,25 +16,20 @@ const desktopNavigationLabels = [
   "Explorar",
   "Ofertas",
   "Dónde estudiar",
-  "Datos y método",
+  "Comparar estudios",
 ];
 
-const primaryNavigationLabels = [
-  ...desktopNavigationLabels,
-  "Explorar FP",
-  "Buscar profesión",
-  "Comparar ingresos",
-  "Formación complementaria",
+const secondaryNavigationLabels = [
+  "Más formación",
   "Datos abiertos",
-  "Método y límites",
-  "Para organizaciones",
+  "Metodología",
   "Accesibilidad",
 ];
 
 function getMobileNavigation() {
-  const navigation = document.getElementById("mobile-primary-navigation");
+  const navigation = document.getElementById("mobile-menu");
   if (!(navigation instanceof HTMLElement)) {
-    throw new Error("Expected the mobile primary navigation to be rendered.");
+    throw new Error("Expected the mobile menu to be rendered.");
   }
   return navigation;
 }
@@ -93,7 +88,7 @@ describe("App", () => {
     ).toHaveAttribute("aria-expanded", "false");
   });
 
-  it("uses the compact product shell and identifies the project independently", () => {
+  it("uses the SALIDA shell and identifies the project independently", () => {
     cleanup();
     render(
       <MemoryRouter initialEntries={["/"]}>
@@ -104,19 +99,28 @@ describe("App", () => {
     );
 
     expect(screen.getByRole("link", { name: "SALIDA CyL" })).toBeVisible();
-    expect(screen.getByText("FP y empleo con datos públicos")).toBeVisible();
     const principalNavigation = screen.getByRole("navigation", {
-      name: "Principal",
+      name: "Navegación principal",
     });
     expect(
-      [...principalNavigation.querySelectorAll(":scope > ul > li > a")].map(
-        (link) => link.textContent,
-      ),
+      [
+        ...principalNavigation.querySelectorAll(
+          ":scope > .container > ul > li > a",
+        ),
+      ].map((link) => link.textContent),
     ).toEqual(desktopNavigationLabels);
+    // On Home no primary destination is active: Explorar points at /desde-fp.
     expect(
       within(principalNavigation).getByRole("link", { name: "Explorar" }),
-    ).toHaveAttribute("aria-current", "page");
-    expect(within(principalNavigation).getByText("Más")).toBeVisible();
+    ).not.toHaveAttribute("aria-current");
+    const secondaryNavigation = screen.getByRole("navigation", {
+      name: "Enlaces secundarios",
+    });
+    expect(
+      [...secondaryNavigation.querySelectorAll(":scope > a")].map(
+        (link) => link.textContent,
+      ),
+    ).toEqual(secondaryNavigationLabels);
     expect(
       screen.queryByRole("link", { name: "Datos verificables" }),
     ).not.toBeInTheDocument();
@@ -124,7 +128,7 @@ describe("App", () => {
       screen.getByRole("main", { name: "Contenido principal" }),
     ).toBeVisible();
     expect(screen.getByRole("contentinfo")).toHaveTextContent(
-      /Proyecto independiente basado en datos públicos/i,
+      /orientación profesional con datos públicos/i,
     );
   });
 
@@ -139,12 +143,12 @@ describe("App", () => {
       "/desde-ocupacion/occupation%3Acno11%3A2713",
       "Ficha de profesión · SALIDA CyL",
     ],
-    ["/comparar", "Comparar ingresos · SALIDA CyL"],
-    ["/recursos", "Formación complementaria · SALIDA CyL"],
+    ["/comparar", "Comparar estudios · SALIDA CyL"],
+    ["/recursos", "Más formación · SALIDA CyL"],
     ["/datos-abiertos", "Datos abiertos · SALIDA CyL"],
     ["/accesibilidad", "Accesibilidad · SALIDA CyL"],
     ["/para-organizaciones", "Para organizaciones · SALIDA CyL"],
-    ["/metodologia", "Método y límites · SALIDA CyL"],
+    ["/metodologia", "Metodología · SALIDA CyL"],
     ["/no-existe", "Página no encontrada · SALIDA CyL"],
   ])("sets a route-specific document title for %s", (pathname, title) => {
     cleanup();
@@ -176,7 +180,7 @@ describe("App", () => {
       }),
     );
 
-    expect(document.title).toBe("Método y límites · SALIDA CyL");
+    expect(document.title).toBe("Metodología · SALIDA CyL");
   });
 
   it("announces static routes and repeats the announcement after returning", async () => {
@@ -238,7 +242,7 @@ describe("App", () => {
     expect(screen.queryByText(/Empleo e ingresos/u)).not.toBeInTheDocument();
   });
 
-  it("renders the closed mobile disclosure with the exact primary destinations", () => {
+  it("renders the closed mobile disclosure with the exact destinations", () => {
     cleanup();
     render(
       <MemoryRouter initialEntries={["/"]}>
@@ -248,27 +252,22 @@ describe("App", () => {
       </MemoryRouter>,
     );
 
-    const button = screen.getByRole("button", {
-      name: "Abrir menú principal",
-    });
+    const button = screen.getByRole("button", { name: "Menú" });
     const mobileNavigation = getMobileNavigation();
     const desktopNavigation = screen.getByRole("navigation", {
-      name: "Principal",
+      name: "Navegación principal",
     });
 
     expect(button).toHaveAttribute("type", "button");
     expect(button).toHaveAttribute("aria-expanded", "false");
-    expect(button).toHaveAttribute(
-      "aria-controls",
-      "mobile-primary-navigation",
-    );
+    expect(button).toHaveAttribute("aria-controls", "mobile-menu");
     expect(mobileNavigation).toHaveAttribute("hidden");
     expect(within(mobileNavigation).queryAllByRole("link")).toHaveLength(0);
     expect(
       within(desktopNavigation)
         .getAllByRole("link")
         .map((link) => link.textContent),
-    ).toEqual(primaryNavigationLabels);
+    ).toEqual(desktopNavigationLabels);
   });
 
   it("opens the mobile navigation and restores focus after Escape", async () => {
@@ -282,31 +281,22 @@ describe("App", () => {
       </MemoryRouter>,
     );
 
-    const button = screen.getByRole("button", {
-      name: "Abrir menú principal",
-    });
+    const button = screen.getByRole("button", { name: "Menú" });
     await user.click(button);
     const focusSpy = vi.spyOn(button, "focus");
 
-    const mobileNavigation = screen.getByRole("navigation", {
-      name: "Principal móvil",
-    });
-    expect(button).toHaveAccessibleName("Cerrar menú principal");
+    const mobileNavigation = getMobileNavigation();
     expect(button).toHaveAttribute("aria-expanded", "true");
     expect(mobileNavigation).not.toHaveAttribute("hidden");
     expect(
       within(mobileNavigation)
         .getAllByRole("link")
         .map((link) => link.textContent),
-    ).toEqual(primaryNavigationLabels);
-    expect(
-      within(mobileNavigation).getByRole("link", { name: "Explorar" }),
-    ).toHaveAttribute("aria-current", "page");
+    ).toEqual([...desktopNavigationLabels, ...secondaryNavigationLabels]);
 
     await user.keyboard("{Escape}");
 
     expect(focusSpy).toHaveBeenCalledTimes(1);
-    expect(button).toHaveAccessibleName("Abrir menú principal");
     expect(button).toHaveAttribute("aria-expanded", "false");
     expect(mobileNavigation).toHaveAttribute("hidden");
     expect(button).toHaveFocus();
@@ -323,22 +313,19 @@ describe("App", () => {
       </MemoryRouter>,
     );
 
-    const button = screen.getByRole("button", {
-      name: "Abrir menú principal",
-    });
+    const button = screen.getByRole("button", { name: "Menú" });
     await user.click(button);
     const focusSpy = vi.spyOn(button, "focus");
 
     await user.click(
-      within(
-        screen.getByRole("navigation", { name: "Principal móvil" }),
-      ).getByRole("link", { name: "Método y límites" }),
+      within(getMobileNavigation()).getByRole("link", { name: "Metodología" }),
     );
 
     expect(focusSpy).not.toHaveBeenCalled();
-    expect(
-      screen.getByRole("button", { name: "Abrir menú principal" }),
-    ).toHaveAttribute("aria-expanded", "false");
+    expect(screen.getByRole("button", { name: "Menú" })).toHaveAttribute(
+      "aria-expanded",
+      "false",
+    );
     expect(getMobileNavigation()).toHaveAttribute("hidden");
     expect(document.activeElement).not.toBe(button);
   });
@@ -363,7 +350,7 @@ describe("App", () => {
     };
     const expectMenuClosedWithFocusOn = (trigger: HTMLElement) => {
       const disclosure = screen.getByRole("button", {
-        name: "Abrir menú principal",
+        name: "Menú",
       });
       expect(disclosure).toHaveAttribute("aria-expanded", "false");
       expect(getMobileNavigation()).toHaveAttribute("hidden");
@@ -371,12 +358,11 @@ describe("App", () => {
       expect(document.activeElement).not.toBe(disclosure);
     };
     const openMenu = async () => {
-      await user.click(
-        screen.getByRole("button", { name: "Abrir menú principal" }),
+      await user.click(screen.getByRole("button", { name: "Menú" }));
+      expect(screen.getByRole("button", { name: "Menú" })).toHaveAttribute(
+        "aria-expanded",
+        "true",
       );
-      expect(
-        screen.getByRole("button", { name: "Cerrar menú principal" }),
-      ).toHaveAttribute("aria-expanded", "true");
     };
     const pathnameButton = screen.getByRole("button", {
       name: "Cambiar pathname",
@@ -431,7 +417,7 @@ describe("App", () => {
     );
 
     const button = screen.getByRole("button", {
-      name: "Abrir menú principal",
+      name: "Menú",
     });
     expect(
       addEventListenerSpy.mock.calls.filter(([type]) => type === "keydown"),
@@ -484,7 +470,7 @@ describe("App", () => {
       );
 
       const button = screen.getByRole("button", {
-        name: "Abrir menú principal",
+        name: "Menú",
       });
       await user.click(button);
       expect(button).toHaveAttribute("aria-expanded", "true");
