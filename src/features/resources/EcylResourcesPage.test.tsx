@@ -94,6 +94,25 @@ function certificate(): ProfessionalCertificate {
   };
 }
 
+function publicCall(overrides: Record<string, unknown> = {}) {
+  return {
+    id: "call-001",
+    title: "Convocatoria de prueba",
+    organization: "Junta de Castilla y León",
+    places: 10,
+    municipality: "Valladolid",
+    applicationStart: "2026-07-28",
+    applicationDeadline: "2026-08-24",
+    requirements: null,
+    deadlineCopy: null,
+    accessType: "open",
+    applicationUrl: null,
+    officialUrl: "https://empleo.jcyl.es/convocatoria",
+    sourceUpdatedAt: null,
+    ...overrides,
+  };
+}
+
 function requestPath(input: RequestInfo | URL): string {
   if (typeof input === "string") return input;
   if (input instanceof URL) return input.pathname;
@@ -110,20 +129,27 @@ function responseFor(value: unknown): Response {
 function renderResources({
   courses = [course()],
   certificates = [certificate()],
+  publicCalls = [] as Array<Record<string, unknown>>,
+  holdManifest = false,
 }: {
   courses?: EcylCourse[];
   certificates?: ProfessionalCertificate[];
+  publicCalls?: Array<Record<string, unknown>>;
+  holdManifest?: boolean;
 } = {}) {
   const manifest = resourceManifest();
   const assets = new Map<string, unknown>([
     ["/data/v1/manifest.json", manifest],
     [`${SNAPSHOT_PREFIX}/ecyl-courses.json`, courses],
     [`${SNAPSHOT_PREFIX}/professional-certificates.json`, certificates],
-    [`${SNAPSHOT_PREFIX}/public-employment-calls.json`, []],
+    [`${SNAPSHOT_PREFIX}/public-employment-calls.json`, publicCalls],
   ]);
   vi.stubGlobal(
     "fetch",
     vi.fn((input: RequestInfo | URL) => {
+      if (holdManifest) {
+        return new Promise<Response>(() => undefined);
+      }
       const value = assets.get(requestPath(input));
       return Promise.resolve(
         value === undefined
@@ -146,6 +172,77 @@ afterEach(() => {
 });
 
 describe("EcylResourcesPage", () => {
+  it("never renders a public-calls count while data is still loading", () => {
+    renderResources({ holdManifest: true });
+
+    expect(screen.getByRole("status")).toHaveTextContent("Cargando recursos…");
+    expect(
+      screen.queryByRole("heading", {
+        name: "Empleo público abierto ahora",
+      }),
+    ).not.toBeInTheDocument();
+    expect(screen.queryByText(/convocatorias?$/u)).not.toBeInTheDocument();
+    expect(screen.queryByText("0 convocatorias")).not.toBeInTheDocument();
+  });
+
+  it("shows an honest zero only after the runtime derivation returns zero", async () => {
+    renderResources({
+      publicCalls: [publicCall({ applicationDeadline: "2026-08-03" })],
+    });
+
+    await screen.findByRole("heading", {
+      name: "Empleo público abierto ahora",
+    });
+    expect(screen.getByText("0 convocatorias")).toBeVisible();
+    expect(
+      screen.getByText(
+        "Ninguna convocatoria de esta copia tiene hoy el plazo de solicitud abierto. Los plazos publicados en la copia ya han cerrado o todavía no empiezan; comprueba la fuente oficial por si se han publicado procesos nuevos.",
+      ),
+    ).toBeVisible();
+  });
+
+  it("uses the copy reference date for the contractual open-call total", async () => {
+    renderResources({
+      publicCalls: [
+        publicCall({ id: "call-001" }),
+        publicCall({ id: "call-002" }),
+        publicCall({ id: "call-003" }),
+        publicCall({ id: "call-004" }),
+      ],
+    });
+
+    await screen.findByRole("heading", {
+      name: "Empleo público abierto ahora",
+    });
+    expect(screen.getByText("4 convocatorias")).toBeVisible();
+  });
+
+  it("renders open calls with their deadline and source provenance", async () => {
+    renderResources({
+      publicCalls: [
+        {
+          id: "1285666453332",
+          title: "ATS/DUE (2023/24/25)",
+          organization: "Sanidad",
+          places: 363,
+          municipality: "Valladolid",
+          applicationStart: "2026-07-28",
+          applicationDeadline: "2026-12-31",
+          requirements: null,
+          deadlineCopy: null,
+          accessType: "open",
+          applicationUrl: null,
+          officialUrl: "https://empleo.jcyl.es/convocatoria-1",
+          sourceUpdatedAt: null,
+        },
+      ],
+    });
+
+    await screen.findByRole("heading", { name: "Ats/due (2023/24/25)" });
+    expect(screen.getByText("1 convocatoria")).toBeVisible();
+    expect(screen.getByText(/Plazo hasta el/u)).toBeVisible();
+  });
+
   it("presents the certificate family as an official code and readable label", async () => {
     renderResources();
 
@@ -175,6 +272,7 @@ describe("EcylResourcesPage", () => {
     const search = await screen.findByRole("searchbox", {
       name: "Buscar por nombre, localidad o código",
     });
+    expect(search).toHaveAttribute("placeholder", "Nombre o código");
     await user.type(search, "course-002");
 
     expect(

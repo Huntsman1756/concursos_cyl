@@ -1,9 +1,48 @@
 import AxeBuilder from "@axe-core/playwright";
 import { expect, test } from "@playwright/test";
 
-test("public resources expose open JCyL employment calls with provenance", async ({
+test("public resources expose the runtime open-call truth with provenance", async ({
   page,
+  request,
 }) => {
+  const manifestResponse = await request.get("/data/v1/manifest.json");
+  expect(manifestResponse.ok()).toBe(true);
+  const manifest = (await manifestResponse.json()) as {
+    resourceSnapshots: {
+      publicEmploymentCalls: {
+        recordCount: number;
+        resourcePath: string;
+        snapshotFetchedAt: string;
+      };
+    };
+  };
+  const descriptor = manifest.resourceSnapshots.publicEmploymentCalls;
+  expect(descriptor.recordCount).toBe(307);
+  const callsResponse = await request.get(descriptor.resourcePath);
+  expect(callsResponse.ok()).toBe(true);
+  const calls = (await callsResponse.json()) as Array<{
+    id: string;
+    accessType: string;
+    applicationStart: string | null;
+    applicationDeadline: string | null;
+  }>;
+  const referenceDate = descriptor.snapshotFetchedAt.slice(0, 10);
+  const openCalls = calls.filter(
+    (call) =>
+      call.accessType === "open" &&
+      call.applicationDeadline !== null &&
+      call.applicationDeadline >= referenceDate &&
+      (call.applicationStart === null ||
+        call.applicationStart <= referenceDate),
+  );
+  expect(calls).toHaveLength(307);
+  expect(openCalls.map(({ id }) => id)).toEqual([
+    "1285666453332",
+    "1285666480084",
+    "1285666447460",
+    "1285666500281",
+  ]);
+
   await page.goto("/recursos");
 
   await expect(
@@ -14,7 +53,9 @@ test("public resources expose open JCyL employment calls with provenance", async
       name: "Fuente: Convocatorias de Empleo Público JCyL",
     }),
   ).toHaveAttribute("href", /convocatorias-de-empleo-publico/u);
-  await expect(page.getByText(/\d+ convocatorias?$/u)).toBeVisible();
+  await expect(
+    page.getByText("4 convocatorias", { exact: true }),
+  ).toBeVisible();
 
   await expect(page.getByText(/^40 de \d+ resultados$/u)).toBeVisible();
   await page.getByRole("button", { name: "Mostrar más cursos" }).click();

@@ -13,6 +13,7 @@ import {
 } from "../../data/generatedDataClient";
 import { ExternalLink } from "../../components/ExternalLink";
 import { useRouteReady } from "../../app/RouteReadyContext";
+import { selectOpenPublicCalls } from "./openPublicCalls";
 import "./ecylResources.css";
 
 type State =
@@ -25,6 +26,7 @@ type State =
       publicCalls: PublicEmploymentCall[];
       publicCallsSourceUrl: string | null;
       publicCallsUpdatedAt: string | null;
+      publicCallsReferenceDate: string;
     };
 
 const COURSE_PAGE_SIZE = 40;
@@ -149,6 +151,9 @@ export function EcylResourcesPage() {
               >
             >
         ).publicEmploymentCalls;
+        if (publicCallsSnapshot === undefined) {
+          throw new Error("Public employment calls snapshot is missing.");
+        }
         if (!signal.aborted)
           setState({
             status: "ready",
@@ -160,6 +165,10 @@ export function EcylResourcesPage() {
               publicCallsSnapshot?.sourceUpdatedAt ??
               publicCallsSnapshot?.snapshotFetchedAt ??
               null,
+            // This is a historical copy. "Open" must be evaluated at the
+            // copy's reference date, not against the browser's wall clock.
+            publicCallsReferenceDate:
+              publicCallsSnapshot.snapshotFetchedAt.slice(0, 10),
           });
       })
       .catch(() => {
@@ -201,15 +210,9 @@ export function EcylResourcesPage() {
         )
       : [];
   const visibleCertificates = matchingCertificates.slice(0, certificateLimit);
-  const today = new Date().toISOString().slice(0, 10);
   const openPublicCalls =
     state.status === "ready"
-      ? state.publicCalls.filter(
-          (call) =>
-            call.applicationDeadline !== null &&
-            call.applicationDeadline >= today &&
-            (call.applicationStart === null || call.applicationStart <= today),
-        )
+      ? selectOpenPublicCalls(state.publicCalls, state.publicCallsReferenceDate)
       : [];
 
   return (
@@ -236,7 +239,7 @@ export function EcylResourcesPage() {
               setCourseLimit(COURSE_PAGE_SIZE);
               setCertificateLimit(CERTIFICATE_PAGE_SIZE);
             }}
-            placeholder="Ej.: administración, León o ADG"
+            placeholder="Nombre o código"
           />
         </label>
         <label>
@@ -282,11 +285,16 @@ export function EcylResourcesPage() {
               </span>
             </div>
             <p className="resources-section-help">
-              Procesos con plazo publicado todavía abierto. Comprueba siempre
-              los requisitos completos antes de presentar la solicitud.
+              Procesos con plazo publicado abierto en esta copia. Comprueba
+              siempre los requisitos completos antes de presentar la solicitud.
             </p>
             {openPublicCalls.length === 0 ? (
-              <p>No hay convocatorias con plazo abierto en la copia actual.</p>
+              <p className="resource-empty-state">
+                Ninguna convocatoria de esta copia tiene hoy el plazo de
+                solicitud abierto. Los plazos publicados en la copia ya han
+                cerrado o todavía no empiezan; comprueba la fuente oficial por
+                si se han publicado procesos nuevos.
+              </p>
             ) : (
               <div className="public-call-list">
                 {openPublicCalls.map((call) => (
