@@ -1,9 +1,12 @@
 import { useEffect, useMemo, useRef, useState } from "react";
-import type { FormEvent, JSX } from "react";
+import type {
+  FormEvent,
+  JSX,
+  KeyboardEvent as ReactKeyboardEvent,
+} from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 import type {
-  MappingCoverage,
   Occupation,
   OccupationAlias,
 } from "../../../data/schemas/curatedMappings";
@@ -15,7 +18,7 @@ import {
   loadAuditedRelationships,
   loadFoundationResourceSubset,
   loadManifest,
-  loadMappingCoverage,
+  loadOfferEvidence,
 } from "../../data/generatedDataClient";
 import { useRouteReady } from "../../app/RouteReadyContext";
 import {
@@ -24,10 +27,11 @@ import {
   trainingDetailPath,
 } from "../../app/routePaths";
 import { loadApprovedMappings } from "../../domain/occupation";
-import { featuredTrainingCoverage } from "../../domain/trainingPresentation";
+import { buildApprovedExample } from "../../domain/approvedExample";
+import { EditorialImage } from "../../components/EditorialImage";
+import { InfoButton } from "../../components/InfoButton";
 import { OccupationCombobox } from "../occupation-first/OccupationCombobox";
 import { TrainingCombobox } from "../training-first/TrainingCombobox";
-import "./home.css";
 
 type HomeSearchMode = "training" | "occupation" | "offer";
 
@@ -54,44 +58,42 @@ type SearchDataState =
       aliases: OccupationAlias[];
     };
 
-interface CatalogCounts {
-  programs: number;
-  offers: number;
-}
+type ExampleOfferState =
+  | { status: "loading" }
+  | { status: "unavailable" }
+  | { status: "ready"; title: string; meta: string; reviewedOffers: number };
 
-const TASKS: Array<{
+const TASK_TABS: Array<{
   mode: HomeSearchMode;
-  number: string;
-  title: string;
-  description: string;
+  id: string;
+  tab: string;
   label: string;
+  hint: string;
   action: string;
 }> = [
   {
     mode: "training",
-    number: "01",
-    title: "Tengo una FP y quiero saber mis salidas",
-    description:
-      "Busca el ciclo para ver profesiones, ofertas y centros relacionados.",
+    id: "fp",
+    tab: "Tengo una FP",
     label: "Busca tu ciclo",
-    action: "Buscar ciclo",
+    hint: "Por nombre, familia profesional o código del ciclo.",
+    action: "Ver mis salidas",
   },
   {
     mode: "occupation",
-    number: "02",
-    title: "Quiero dedicarme a una profesión",
-    description:
-      "Busca una profesión y comprueba qué formación y ofertas aparecen.",
+    id: "occupation",
+    tab: "Busco una profesión",
     label: "Busca una profesión",
+    hint: "Por nombre de ocupación (CNO-11).",
     action: "Buscar profesión",
   },
   {
     mode: "offer",
-    number: "03",
-    title: "He visto una oferta y quiero entenderla",
-    description: "Busca por puesto, localidad o código de ocupación.",
-    label: "Busca una oferta",
-    action: "Buscar oferta",
+    id: "offer",
+    tab: "Estoy mirando una oferta",
+    label: "Pega el título de la oferta",
+    hint: "Copia el puesto tal y como aparece en la oferta.",
+    action: "Analizar la oferta",
   },
 ];
 
@@ -116,19 +118,30 @@ export function HomePage() {
   const [freshness, setFreshness] = useState<FreshnessState>({
     status: "loading",
   });
-  const [catalogCounts, setCatalogCounts] = useState<CatalogCounts | null>(
-    null,
-  );
-  const [featuredProgram, setFeaturedProgram] = useState<{
-    programKey: string;
-    programTitle: string;
-  } | null>(null);
+  const [proof, setProof] = useState<{
+    programs: number | null;
+    centers: number | null;
+    reviewedOffers: number | null;
+    generatedAt: string | null;
+  }>({
+    programs: null,
+    centers: null,
+    reviewedOffers: null,
+    generatedAt: null,
+  });
   const [searchData, setSearchData] = useState<SearchDataState>({
+    status: "loading",
+  });
+  const [example, setExample] = useState<Awaited<
+    ReturnType<typeof buildApprovedExample>
+  > | null>(null);
+  const [exampleOffer, setExampleOffer] = useState<ExampleOfferState>({
     status: "loading",
   });
   const manifestRef = useRef<Awaited<ReturnType<typeof loadManifest>> | null>(
     null,
   );
+  const [manifestReady, setManifestReady] = useState(false);
 
   useRouteReady(searchData.status !== "loading");
 
@@ -140,7 +153,10 @@ export function HomePage() {
     const manifestPromise =
       manifestRef.current === null
         ? loadManifest(options).then((manifest) => {
-            if (!signal.aborted) manifestRef.current = manifest;
+            if (!signal.aborted) {
+              manifestRef.current = manifest;
+              setManifestReady(true);
+            }
             return manifest;
           })
         : Promise.resolve(manifestRef.current);
@@ -179,38 +195,34 @@ export function HomePage() {
             freshnessSnapshot.qualityStatus === "stale",
         });
 
-        const [foundation, coverage] = await Promise.all([
-          loadFoundationResourceSubset(manifest, ["programs"], options),
-          mappingSnapshot === undefined
-            ? Promise.resolve<MappingCoverage[]>([])
-            : loadMappingCoverage(manifest, options),
-        ]);
+        const foundation = await loadFoundationResourceSubset(
+          manifest,
+          ["programs", "centers", "trainingOfferings"],
+          options,
+        );
         if (signal.aborted) return null;
 
-        setCatalogCounts({
+        setProof((current) => ({
+          ...current,
           programs: foundation.programs.length,
-          offers: manifest.resourceSnapshots.jobOffers.recordCount,
-        });
-
-        if (mappingSnapshot !== undefined) {
-          const featured = featuredTrainingCoverage(
-            coverage.filter(
-              (row): row is Extract<MappingCoverage, { scope: "program" }> =>
-                row.scope === "program" && row.coverageStatus === "reviewed",
-            ),
-          );
-          const first = featured[0];
-          if (first !== undefined) {
-            setFeaturedProgram({
-              programKey: first.programKey,
-              programTitle: first.programTitle,
-            });
-          }
-        }
+          centers: foundation.centers.length,
+          generatedAt: manifest.generatedAt,
+        }));
 
         const relationships = await loadAuditedRelationships(manifest, options);
         if (signal.aborted) return null;
         const approved = loadApprovedMappings(relationships);
+
+        setExample(
+          buildApprovedExample({
+            programs: foundation.programs,
+            links: relationships.links,
+            occupations: approved.occupations,
+            offerings: foundation.trainingOfferings,
+            centers: foundation.centers,
+          }),
+        );
+
         return {
           programs: [...foundation.programs].sort((left, right) =>
             left.programTitle.localeCompare(right.programTitle, "es"),
@@ -235,14 +247,64 @@ export function HomePage() {
     return () => controller.abort();
   }, []);
 
-  const featuredExample = useMemo(() => {
-    if (featuredProgram === null || searchData.status !== "ready") return null;
-    return searchData.programs.some(
-      (program) => program.programKey === featuredProgram.programKey,
-    )
-      ? featuredProgram
-      : null;
-  }, [featuredProgram, searchData]);
+  // The reviewed-offer proof stat (and the example offer) come from the
+  // offer-evidence sidecar. It is the heaviest resource of the app, so the
+  // value fills in after first paint instead of blocking the hero.
+  useEffect(() => {
+    if (!manifestReady || manifestRef.current === null) return;
+    const controller = new AbortController();
+    const { signal } = controller;
+    const idle = window.setTimeout(() => {
+      void loadOfferEvidence(manifestRef.current!, { signal })
+        .then((evidence) => {
+          if (signal.aborted) return;
+          setProof((current) => ({
+            ...current,
+            reviewedOffers: evidence.counts.offersWithReviewedFpRelationship,
+          }));
+          const exampleOfferRecord =
+            evidence.records.find(
+              (record) =>
+                (record.relations ?? []).some(
+                  (relation) => relation.programKey === "ADG02S",
+                ) && record.offerId === "1285665634571",
+            ) ??
+            evidence.records.find((record) =>
+              (record.relations ?? []).some(
+                (relation) => relation.programKey === "ADG02S",
+              ),
+            );
+          setExampleOffer(
+            exampleOfferRecord === undefined
+              ? { status: "unavailable" }
+              : {
+                  status: "ready",
+                  title: exampleOfferRecord.title,
+                  meta: `${exampleOfferRecord.province} · ${exampleOfferRecord.sourceName} · copia fechada ${formatDate(
+                    exampleOfferRecord.publishedAt,
+                  )}`,
+                  reviewedOffers:
+                    evidence.counts.offersWithReviewedFpRelationship,
+                },
+          );
+        })
+        .catch(() => {
+          if (!signal.aborted) setExampleOffer({ status: "unavailable" });
+        });
+    }, 0);
+
+    return () => {
+      window.clearTimeout(idle);
+      controller.abort();
+    };
+  }, [manifestReady]);
+
+  const exampleProvincesLabel = useMemo(() => {
+    if (example === null) return "";
+    return example.topProvinces
+      .map((entry) => `${entry.province} ${entry.centers}`)
+      .join(" · ");
+  }, [example]);
 
   function chooseSearchMode(mode: HomeSearchMode): void {
     setSearchMode(mode);
@@ -250,6 +312,36 @@ export function HomePage() {
     setConfirmedOccupation(null);
     setOfferQuery("");
     setFormError("");
+  }
+
+  function onTaskTabKeyDown(
+    event: ReactKeyboardEvent<HTMLButtonElement>,
+  ): void {
+    const currentIndex = TASK_TABS.findIndex((tab) => tab.mode === searchMode);
+    let nextIndex: number;
+    switch (event.key) {
+      case "ArrowRight":
+      case "ArrowDown":
+        nextIndex = (currentIndex + 1) % TASK_TABS.length;
+        break;
+      case "ArrowLeft":
+      case "ArrowUp":
+        nextIndex = (currentIndex - 1 + TASK_TABS.length) % TASK_TABS.length;
+        break;
+      case "Home":
+        nextIndex = 0;
+        break;
+      case "End":
+        nextIndex = TASK_TABS.length - 1;
+        break;
+      default:
+        return;
+    }
+    event.preventDefault();
+    chooseSearchMode(TASK_TABS[nextIndex]!.mode);
+    window.requestAnimationFrame(() => {
+      document.getElementById(`home-tab-${TASK_TABS[nextIndex]!.id}`)?.focus();
+    });
   }
 
   function submitSearch(
@@ -293,207 +385,484 @@ export function HomePage() {
     navigate(globalOffersPath({ query }));
   }
 
-  function renderTaskForm(task: (typeof TASKS)[number]): JSX.Element | null {
-    if (searchMode !== task.mode) return null;
-
+  function renderTaskPanel(task: (typeof TASK_TABS)[number]): JSX.Element {
     return (
-      <form
-        className="inline-task-form"
-        onSubmit={(event) => submitSearch(task.mode, event)}
-        aria-label={task.label}
+      <div
+        className="hero-search"
+        id={`home-panel-${task.id}`}
+        role="tabpanel"
+        aria-labelledby={`home-tab-${task.id}`}
+        hidden={searchMode !== task.mode}
       >
-        {task.mode === "training" && searchData.status === "ready" && (
-          <TrainingCombobox
-            id="home-training-search"
-            programs={searchData.programs}
-            confirmedProgram={confirmedProgram}
-            onConfirm={(program) => {
-              setConfirmedProgram(program);
-              setFormError("");
-            }}
-            onClear={() => setConfirmedProgram(null)}
-            label={task.label}
-            hint="Selecciona un ciclo oficial por nombre, familia, nivel o código."
-          />
-        )}
-        {task.mode === "occupation" && searchData.status === "ready" && (
-          <OccupationCombobox
-            occupations={searchData.occupations}
-            aliases={searchData.aliases}
-            confirmedOccupation={confirmedOccupation}
-            onConfirm={(occupation) => {
-              setConfirmedOccupation(occupation);
-              setFormError("");
-            }}
-            onClear={() => setConfirmedOccupation(null)}
-            label={task.label}
-            hint="Selecciona una ocupación oficial para ver sus relaciones comprobadas."
-          />
-        )}
-        {task.mode === "offer" && (
-          <div className="inline-task-form__field">
-            <label htmlFor="home-offer-search">{task.label}</label>
-            <input
-              id="home-offer-search"
-              name="query"
-              type="search"
-              value={offerQuery}
-              onChange={(event) => {
-                setOfferQuery(event.target.value);
+        <form
+          onSubmit={(event) => submitSearch(task.mode, event)}
+          aria-label={task.label}
+        >
+          {task.mode === "training" && searchData.status === "ready" && (
+            <TrainingCombobox
+              id="home-training-search"
+              programs={searchData.programs}
+              confirmedProgram={confirmedProgram}
+              onConfirm={(program) => {
+                setConfirmedProgram(program);
                 setFormError("");
               }}
-              placeholder="Ej.: puesto, localidad o código"
+              onClear={() => setConfirmedProgram(null)}
+              label={task.label}
+              hint={task.hint}
             />
-          </div>
-        )}
-        {(task.mode === "training" || task.mode === "occupation") &&
-          searchData.status === "loading" && (
-            <p className="home-search__status" role="status" aria-live="polite">
-              Cargando el catálogo oficial…
-            </p>
           )}
-        {(task.mode === "training" || task.mode === "occupation") &&
-          searchData.status === "unavailable" && (
-            <p className="home-search__status" role="alert">
-              El buscador no está disponible ahora mismo.{" "}
-              <Link
-                to={task.mode === "training" ? "/desde-fp" : "/desde-ocupacion"}
-              >
-                Abrir buscador completo
-              </Link>
-            </p>
+          {task.mode === "occupation" && searchData.status === "ready" && (
+            <OccupationCombobox
+              occupations={searchData.occupations}
+              aliases={searchData.aliases}
+              confirmedOccupation={confirmedOccupation}
+              onConfirm={(occupation) => {
+                setConfirmedOccupation(occupation);
+                setFormError("");
+              }}
+              onClear={() => setConfirmedOccupation(null)}
+              label={task.label}
+              hint={task.hint}
+            />
           )}
-        <button className="inline-task-form__submit" type="submit">
-          {task.action} <span aria-hidden="true">→</span>
-        </button>
-        <p className="form-message" role="status" aria-live="polite">
-          {formError}
-        </p>
-        {task.mode === "training" && featuredExample !== null && (
-          <p className="example-line">
-            <span>Ejemplo:</span>{" "}
-            <Link to={trainingDetailPath(featuredExample.programKey)}>
-              {featuredExample.programTitle}
-            </Link>
+          {task.mode === "offer" && (
+            <>
+              <label className="field-label" htmlFor="home-offer-search">
+                {task.label}
+              </label>
+              <div className="search-row">
+                <input
+                  className="search-input"
+                  id="home-offer-search"
+                  name="query"
+                  type="search"
+                  value={offerQuery}
+                  onChange={(event) => {
+                    setOfferQuery(event.target.value);
+                    setFormError("");
+                  }}
+                  placeholder="Ej.: Empleado administrativo de contabilidad"
+                />
+                <button className="button button--primary" type="submit">
+                  {task.action}
+                </button>
+              </div>
+            </>
+          )}
+          {(task.mode === "training" || task.mode === "occupation") &&
+            searchData.status === "loading" && (
+              <p className="search-hint" role="status" aria-live="polite">
+                Cargando el catálogo oficial…
+              </p>
+            )}
+          {(task.mode === "training" || task.mode === "occupation") &&
+            searchData.status === "unavailable" && (
+              <p className="search-hint" role="alert">
+                El buscador no está disponible ahora mismo.{" "}
+                <Link
+                  to={
+                    task.mode === "training" ? "/desde-fp" : "/desde-ocupacion"
+                  }
+                >
+                  Abrir buscador completo
+                </Link>
+              </p>
+            )}
+          {task.mode !== "offer" && searchData.status === "ready" && (
+            <div className="search-row" style={{ marginTop: "var(--space-3)" }}>
+              <button className="button button--primary" type="submit">
+                {task.action}
+              </button>
+            </div>
+          )}
+          <p className="search-hint" role="status" aria-live="polite">
+            {formError}
           </p>
-        )}
-      </form>
+          <p className="search-hint">{task.hint}</p>
+        </form>
+      </div>
     );
   }
 
   return (
-    <div className="home-page" aria-labelledby="home-heading">
-      <section className="home-hero" aria-labelledby="home-heading">
-        <div className="home-page__meta">
-          <span className="home-page__eyebrow">Orientación profesional</span>
-          <span
-            className="home-page__freshness"
-            role="region"
-            aria-label={
-              freshness.status === "ready"
-                ? freshness.ariaLabel
-                : "Fecha de relaciones revisadas"
-            }
-            aria-busy={freshness.status === "loading"}
-          >
-            {freshness.status === "loading" && "Comprobando fecha…"}
-            {freshness.status === "ready" && (
-              <>
-                {freshness.sourceLabel} ·{" "}
-                {freshness.dateKind === "source"
-                  ? "fuente actualizada el"
-                  : "snapshot consultado el"}{" "}
-                <time dateTime={freshness.dateTime}>{freshness.date}</time>
-              </>
-            )}
-            {freshness.status === "unavailable" && "Fecha no disponible"}
-          </span>
-        </div>
-
-        <div className="home-flow">
-          <div className="home-intro">
-            <h1 id="home-heading">
-              Explora formación, profesiones y oportunidades en Castilla y León.
+    <div className="home-page">
+      <section className="hero" aria-labelledby="hero-title">
+        <div className="container hero-grid">
+          <div>
+            <p className="eyebrow">
+              Orientación profesional con datos públicos
+            </p>
+            <h1 className="display" id="hero-title">
+              Tu FP, tus salidas profesionales y dónde dar el siguiente paso.
             </h1>
             <p className="lede">
-              Conecta lo que sabes hacer con estudios, ocupaciones y ofertas
-              publicadas para decidir tu siguiente paso.
+              Descubre qué profesiones están relacionadas con tu ciclo, qué
+              ofertas hay en Castilla y León y dónde puedes estudiar cada
+              formación.
+            </p>
+            <p className="trust-line">
+              Relaciones revisadas
+              <span className="dot" aria-hidden="true">
+                ·
+              </span>{" "}
+              Fuentes públicas
+              <span className="dot" aria-hidden="true">
+                ·
+              </span>{" "}
+              Datos con fecha
+            </p>
+
+            <div className="task-selector">
+              <ul
+                className="task-selector-list"
+                role="tablist"
+                aria-label="Elige tu punto de partida"
+              >
+                {TASK_TABS.map((task) => {
+                  const active = searchMode === task.mode;
+                  return (
+                    <li role="presentation" key={task.mode}>
+                      <button
+                        className="task-tab"
+                        id={`home-tab-${task.id}`}
+                        role="tab"
+                        aria-selected={active}
+                        aria-controls={`home-panel-${task.id}`}
+                        tabIndex={active ? 0 : -1}
+                        type="button"
+                        onClick={() => chooseSearchMode(task.mode)}
+                        onKeyDown={onTaskTabKeyDown}
+                      >
+                        {task.tab}
+                      </button>
+                    </li>
+                  );
+                })}
+              </ul>
+              {TASK_TABS.map((task) => (
+                <div key={task.mode}>{renderTaskPanel(task)}</div>
+              ))}
+            </div>
+          </div>
+
+          <div className="hero-stage">
+            <EditorialImage
+              asset="hero-career-guidance"
+              variants={[640, 960, 1280, 1536]}
+              alt="Joven explorando opciones de formación profesional en un taller técnico."
+              width={1536}
+              height={1024}
+              sizes="(min-width: 1080px) 45vw, calc(100vw - 2 * var(--grid-gutter))"
+              priority
+            />
+          </div>
+        </div>
+      </section>
+
+      <section className="section" aria-labelledby="paths-title">
+        <div className="container">
+          <div className="section-head">
+            <h2 className="h2" id="paths-title">
+              Empieza desde donde estás
+            </h2>
+          </div>
+          <div className="paths-grid">
+            <article className="path">
+              <div className="path-media">
+                <EditorialImage
+                  asset="path-training"
+                  variants={[640, 960]}
+                  alt="Estudiante de FP consultando su plan de formación en una tableta dentro de un taller."
+                  width={640}
+                  height={480}
+                  sizes="(min-width: 768px) 33vw, calc(100vw - 2 * var(--grid-gutter))"
+                />
+              </div>
+              <p className="path-number">01</p>
+              <h3 className="h3">Tengo una FP</h3>
+              <p className="path-description">
+                Descubre profesiones, ofertas y centros relacionados con tu
+                ciclo.
+              </p>
+              <div className="path-actions">
+                <Link className="link-action" to="/desde-fp">
+                  Ver salidas de mi FP →
+                </Link>
+              </div>
+            </article>
+            <article className="path">
+              <div className="path-media">
+                <EditorialImage
+                  asset="path-occupation"
+                  variants={[640, 960]}
+                  alt="Dos estudiantes conversando con un formador sobre su futura profesión en un taller de mecanizado."
+                  width={640}
+                  height={480}
+                  sizes="(min-width: 768px) 33vw, calc(100vw - 2 * var(--grid-gutter))"
+                />
+              </div>
+              <p className="path-number">02</p>
+              <h3 className="h3">Quiero dedicarme a una profesión</h3>
+              <p className="path-description">
+                Comprueba qué ciclos tienen una relación revisada con esa
+                ocupación.
+              </p>
+              <div className="path-actions">
+                <Link className="link-action" to="/desde-ocupacion">
+                  Buscar una profesión →
+                </Link>
+              </div>
+            </article>
+            <article className="path">
+              <div className="path-media">
+                <EditorialImage
+                  asset="path-offer"
+                  variants={[640, 960]}
+                  alt="Persona anotando los requisitos de una oferta de empleo junto a su portátil."
+                  width={640}
+                  height={480}
+                  sizes="(min-width: 768px) 33vw, calc(100vw - 2 * var(--grid-gutter))"
+                />
+              </div>
+              <p className="path-number">03</p>
+              <h3 className="h3">He visto una oferta</h3>
+              <p className="path-description">
+                Entiende sus requisitos y comprueba si aparece relacionada con
+                una FP.
+              </p>
+              <div className="path-actions">
+                <Link className="link-action" to={globalOffersPath()}>
+                  Analizar una oferta →
+                </Link>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section className="section section--alt" aria-labelledby="proof-title">
+        <div className="container">
+          <h2 className="sr-only" id="proof-title">
+            Datos del catálogo
+          </h2>
+          <div
+            className="proof-rail"
+            role="region"
+            aria-label="Datos del catálogo en la copia actual"
+          >
+            <div className="proof-stat">
+              <p className="proof-stat-value">
+                {proof.programs === null
+                  ? "…"
+                  : proof.programs.toLocaleString("es-ES")}
+              </p>
+              <p className="proof-stat-label">ciclos oficiales</p>
+            </div>
+            <div className="proof-stat">
+              <p className="proof-stat-value">
+                {proof.reviewedOffers === null
+                  ? "…"
+                  : proof.reviewedOffers.toLocaleString("es-ES")}
+              </p>
+              <p className="proof-stat-label">
+                ofertas con relación FP revisada
+              </p>
+            </div>
+            <div className="proof-stat">
+              <p className="proof-stat-value">
+                {proof.centers === null
+                  ? "…"
+                  : proof.centers.toLocaleString("es-ES")}
+              </p>
+              <p className="proof-stat-label">centros</p>
+            </div>
+            <div className="proof-note">
+              <p className="small" style={{ margin: 0 }}>
+                Fuentes públicas y trazabilidad
+                <InfoButton label="Qué es una relación revisada">
+                  Una relación revisada enlaza un ciclo con una ocupación y se
+                  ha verificado contra su fuente oficial (TodoFP, BOE) con fecha
+                  de revisión publicada.
+                </InfoButton>
+              </p>
+            </div>
+          </div>
+          {freshness.status !== "unavailable" && (
+            <p
+              className="caption"
+              style={{ marginTop: "var(--space-5)" }}
+              role="region"
+              aria-label={
+                freshness.status === "ready"
+                  ? freshness.ariaLabel
+                  : "Fecha de relaciones revisadas"
+              }
+              aria-busy={freshness.status === "loading"}
+            >
+              {freshness.status === "loading" && "Comprobando fecha…"}
+              {freshness.status === "ready" && (
+                <>
+                  {freshness.sourceLabel} ·{" "}
+                  {freshness.dateKind === "source"
+                    ? "fuente actualizada el"
+                    : "snapshot consultado el"}{" "}
+                  <time dateTime={freshness.dateTime}>{freshness.date}</time>
+                </>
+              )}
+            </p>
+          )}
+          {proof.generatedAt !== null && (
+            <p className="caption" style={{ marginTop: "var(--space-2)" }}>
+              Valores calculados de la copia activa del{" "}
+              {formatDate(proof.generatedAt)} en el arranque de la página.
+            </p>
+          )}
+        </div>
+      </section>
+
+      {example !== null && (
+        <section className="section" aria-labelledby="example-title">
+          <div className="container">
+            <div className="section-head">
+              <h2 className="h2" id="example-title">
+                Comprueba cómo funciona
+              </h2>
+              <p className="lede">
+                Un caso real del catálogo, de principio a fin, con su evidencia.
+              </p>
+            </div>
+            <ol className="example-flow">
+              <li className="example-step">
+                <span className="example-step-icon" aria-hidden="true">
+                  🎓
+                </span>
+                <div>
+                  <p className="example-step-kind">Formación profesional</p>
+                  <h3 className="h3">{example.programTitle}</h3>
+                  <p className="meta">
+                    {example.levelLabel} · Familia {example.familyName}
+                  </p>
+                </div>
+              </li>
+              <li className="example-step">
+                <span className="example-step-icon" aria-hidden="true">
+                  💼
+                </span>
+                <div>
+                  <p className="example-step-kind">Profesiones relacionadas</p>
+                  <h3 className="h3">{example.occupations[0]?.label}</h3>
+                  <p className="meta">
+                    {example.occupations.length > 1
+                      ? `+ ${example.occupations.length - 1} profesiones más · `
+                      : ""}
+                    Relación oficial revisada{" "}
+                    {example.occupations[0]?.reviewedAt} ·{" "}
+                    {example.occupations[0]?.sourceLabel}
+                  </p>
+                </div>
+              </li>
+              {exampleOffer.status === "ready" && (
+                <li className="example-step">
+                  <span className="example-step-icon" aria-hidden="true">
+                    📍
+                  </span>
+                  <div>
+                    <p className="example-step-kind">Oferta actual</p>
+                    <h3 className="h3">{exampleOffer.title}</h3>
+                    <p className="meta">{exampleOffer.meta}</p>
+                  </div>
+                </li>
+              )}
+              <li className="example-step">
+                <span className="example-step-icon" aria-hidden="true">
+                  🏫
+                </span>
+                <div>
+                  <p className="example-step-kind">Dónde estudiarla</p>
+                  <h3 className="h3">
+                    {example.centersCount} centros publican este ciclo
+                  </h3>
+                  <p className="meta">
+                    En {example.provincesCount} provincias
+                    {exampleProvincesLabel !== "" &&
+                      ` · ${exampleProvincesLabel}`}
+                  </p>
+                </div>
+              </li>
+            </ol>
+            <div className="example-cta">
+              <Link
+                className="button button--secondary"
+                to={trainingDetailPath(example.programKey)}
+              >
+                Ver el ejemplo completo
+              </Link>
+            </div>
+          </div>
+        </section>
+      )}
+
+      <section className="section section--alt" aria-labelledby="centers-title">
+        <div className="container teaser">
+          <div className="teaser-media">
+            <EditorialImage
+              asset="centers-vocational-training"
+              variants={[640, 960, 1280]}
+              alt="Estudiantes de un ciclo de FP montando un prototipo electrónico en un aula-taller."
+              width={1280}
+              height={720}
+              sizes="(min-width: 1080px) 42vw, calc(100vw - 2 * var(--grid-gutter))"
+            />
+          </div>
+          <div>
+            <h2 className="h2" id="centers-title">
+              ¿Buscas dónde estudiar?
+            </h2>
+            <p className="lede">
+              Consulta los centros que publican cada ciclo y filtra por
+              provincia, modalidad y tipo de centro.
+            </p>
+            <div className="method-actions">
+              <Link className="button button--primary" to="/donde-estudiar">
+                Buscar dónde estudiar
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="section" aria-labelledby="method-title">
+        <div className="container">
+          <div className="section-head" style={{ maxWidth: "44rem" }}>
+            <h2 className="h2" id="method-title">
+              Sabes de dónde sale cada relación.
+            </h2>
+            <p className="lede">
+              SALIDA combina fuentes públicas de formación y empleo y solo
+              publica relaciones que han superado sus criterios de revisión.
             </p>
           </div>
-
-          <div
-            className="task-list"
-            aria-label="Elige tu punto de partida"
-            role="group"
-          >
-            <p className="section-label">¿Qué quieres hacer?</p>
-            {TASKS.map((task) => {
-              const active = searchMode === task.mode;
-              return (
-                <div
-                  className={"task-option" + (active ? " is-active" : "")}
-                  key={task.mode}
-                >
-                  <button
-                    className={"task-row" + (active ? " is-active" : "")}
-                    type="button"
-                    aria-expanded={active}
-                    aria-controls={"home-task-panel-" + task.mode}
-                    onClick={() => chooseSearchMode(task.mode)}
-                  >
-                    <span className="task-number">{task.number}</span>
-                    <span className="task-copy">
-                      <strong>{task.title}</strong>
-                      <small>{task.description}</small>
-                    </span>
-                    <span className="task-arrow" aria-hidden="true">
-                      {active ? "↓" : "→"}
-                    </span>
-                  </button>
-                  <div id={"home-task-panel-" + task.mode} hidden={!active}>
-                    {renderTaskForm(task)}
-                  </div>
-                </div>
-              );
-            })}
+          <div className="method-actions" style={{ marginTop: 0 }}>
+            <Link className="button button--secondary" to="/metodologia">
+              Ver metodología
+            </Link>
+            <Link className="link-action" to="/datos-abiertos">
+              Explorar los datos abiertos →
+            </Link>
           </div>
-
-          <Link className="text-link home-offers-link" to={globalOffersPath()}>
-            Ver todas las ofertas de la copia actual{" "}
-            <span aria-hidden="true">→</span>
-          </Link>
-        </div>
-
-        <div className="proof-rail" aria-label="Cobertura del producto">
-          <div className="proof-item">
-            <strong>
-              {catalogCounts === null
-                ? "…"
-                : catalogCounts.programs.toLocaleString("es-ES")}
-            </strong>
-            <span>ciclos en la copia actual</span>
+          <div className="method-disclosure">
+            <p className="caption">
+              Las imágenes editoriales son generadas mediante IA y no
+              representan personas, empresas, ofertas ni centros reales.
+            </p>
+            {freshness.status === "ready" && (
+              <p className="caption" style={{ marginTop: "var(--space-2)" }}>
+                Fuentes: Junta de Castilla y León (ECYL), SEPE, TodoFP y BOE ·
+                copia de ofertas {freshness.date}.
+              </p>
+            )}
           </div>
-          <div className="proof-item">
-            <strong>
-              {catalogCounts === null
-                ? "…"
-                : catalogCounts.offers.toLocaleString("es-ES")}
-            </strong>
-            <span>ofertas en la copia actual</span>
-          </div>
-        </div>
-
-        <div className="method-line">
-          <span>
-            Relaciones construidas a partir de fuentes públicas y revisadas
-            antes de publicarse.
-            {freshness.status === "ready" && freshness.stale
-              ? " Mostramos la última copia disponible."
-              : ""}
-          </span>
-          <Link className="text-link" to="/metodologia">
-            Cómo funciona <span aria-hidden="true">→</span>
-          </Link>
         </div>
       </section>
     </div>

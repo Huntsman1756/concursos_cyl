@@ -827,6 +827,7 @@ select:focus-visible,
 }
 
 .info-popover {
+  display: block;
   position: absolute;
   z-index: 10;
   bottom: calc(100% + var(--space-2));
