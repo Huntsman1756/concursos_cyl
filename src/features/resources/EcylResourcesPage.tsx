@@ -216,7 +216,9 @@ export function EcylResourcesPage() {
     <section className="resources-page" aria-labelledby="resources-heading">
       <header className="resources-page__intro">
         <p className="resources-page__eyebrow">Recursos de Castilla y León</p>
-        <h1 id="resources-heading">Formación para seguir avanzando</h1>
+        <h1 className="h1" id="resources-heading">
+          Formación para seguir avanzando
+        </h1>
         <p>
           Consulta formación complementaria y convocatorias públicas abiertas.
           Cada opción conserva su alcance y su fuente oficial.

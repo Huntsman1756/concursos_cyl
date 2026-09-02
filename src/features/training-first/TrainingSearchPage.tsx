@@ -181,7 +181,7 @@ export function TrainingSearchPage() {
         items={[{ label: "Inicio", to: "/" }, { label: "Explorar FP" }]}
       />
       <header className="training-page__header">
-        <h1 id="training-search-heading">
+        <h1 className="h1" id="training-search-heading">
           ¿En qué puedes trabajar con una FP?
         </h1>
         <p className="training-page__intro">

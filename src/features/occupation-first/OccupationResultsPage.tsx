@@ -120,7 +120,7 @@ export function OccupationResultsPage() {
         role="alert"
         aria-labelledby="occupation-results-load-error-heading"
       >
-        <h1 id="occupation-results-load-error-heading">
+        <h1 className="h1" id="occupation-results-load-error-heading">
           No hemos podido cargar las rutas formativas
         </h1>
         <p>Vuelve a intentarlo dentro de unos minutos.</p>
@@ -138,7 +138,7 @@ export function OccupationResultsPage() {
         className="status-panel"
         aria-labelledby="occupation-results-not-found-heading"
       >
-        <h1 id="occupation-results-not-found-heading">
+        <h1 className="h1" id="occupation-results-not-found-heading">
           Profesión no encontrada
         </h1>
         <p>La dirección no corresponde a una profesión oficial (CNO-11).</p>
@@ -184,7 +184,9 @@ export function OccupationResultsPage() {
         >
           Buscar otra profesión
         </Link>
-        <h1 id="occupation-results-heading">{occupation.preferredLabel}</h1>
+        <h1 className="h1" id="occupation-results-heading">
+          {occupation.preferredLabel}
+        </h1>
         <div className="training-page__meta">
           <span className="training-page__code">
             CNO-11 {occupation.classificationCode}
@@ -227,7 +229,7 @@ export function OccupationResultsPage() {
       )}
       {orderedLinks.length === 0 ? (
         <div className="status-panel">
-          <h1 id="occupation-results-heading">
+          <h1 className="h1" id="occupation-results-heading">
             Aún no hay una ruta formativa comprobada para esta profesión
           </h1>
           <p>

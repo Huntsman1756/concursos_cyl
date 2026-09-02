@@ -453,7 +453,9 @@ export function CompareStudiesPage() {
         aria-live="polite"
         aria-labelledby="compare-heading"
       >
-        <h1 id="compare-heading">Ingresos observados</h1>
+        <h1 className="h1" id="compare-heading">
+          Ingresos observados
+        </h1>
         <p role="status" aria-live="polite">
           Cargando los datos de comparación…
         </p>
@@ -467,7 +469,9 @@ export function CompareStudiesPage() {
         aria-live="polite"
         aria-labelledby="compare-heading"
       >
-        <h1 id="compare-heading">Ingresos observados</h1>
+        <h1 className="h1" id="compare-heading">
+          Ingresos observados
+        </h1>
         <p>Los datos de comparación no están disponibles en esta versión.</p>
         <p>
           <Link to="/metodologia">Consultar la metodología y las fuentes</Link>
@@ -482,7 +486,9 @@ export function CompareStudiesPage() {
         aria-live="polite"
         aria-labelledby="compare-heading"
       >
-        <h1 id="compare-heading">Ingresos observados</h1>
+        <h1 className="h1" id="compare-heading">
+          Ingresos observados
+        </h1>
         <p>No se han podido cargar o validar los datos de comparación.</p>
         <p>Prueba de nuevo más tarde o consulta la metodología.</p>
       </section>
@@ -496,7 +502,9 @@ export function CompareStudiesPage() {
     <section className="compare-page" aria-labelledby="compare-heading">
       <header className="compare-page__intro">
         <p className="compare-page__eyebrow">Comparar estudios</p>
-        <h1 id="compare-heading">Ingresos observados</h1>
+        <h1 className="h1" id="compare-heading">
+          Ingresos observados
+        </h1>
         <p>
           Compara la base de cotización anualizada publicada de hasta tres
           ciclos, usando la misma cohorte y el mismo año.

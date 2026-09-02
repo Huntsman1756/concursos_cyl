@@ -386,7 +386,9 @@ export function MethodologyPage() {
       />
       <header className="methodology-page__intro">
         <p className="methodology-page__eyebrow">Transparencia de los datos</p>
-        <h1 id="methodology-heading">Metodología y fuentes</h1>
+        <h1 className="h1" id="methodology-heading">
+          Metodología y fuentes
+        </h1>
         <p>
           Explicamos qué aporta cada fuente, cuándo la consultamos y qué no
           permite concluir.

@@ -491,6 +491,18 @@ export function OfferExplorerPage({
     [contextualRecords],
   );
 
+  // Unit contract (analysis/prototype-data-integrity.md §2): the reviewed
+  // count is unique OFFERS with ≥1 reviewed relation — never the number of
+  // relations (196 relations ≠ 138 offers in the frozen snapshot).
+  const reviewedOfferCount = useMemo(
+    () =>
+      state.status === "ready"
+        ? state.records.filter((record) => (record.relations ?? []).length > 0)
+            .length
+        : 0,
+    [state],
+  );
+
   const filteredRecords = useMemo(
     () =>
       sortOfferEvidenceRecords(
@@ -622,13 +634,18 @@ export function OfferExplorerPage({
       aria-labelledby="offer-explorer-heading"
     >
       <Breadcrumbs items={breadcrumbItems(context)} />
-      <header className="offer-explorer__intro">
-        <div className="offer-explorer__eyebrow">
+      <header className="page-header offer-explorer__intro">
+        <p className="eyebrow offer-explorer__eyebrow">
           {isGlobal ? "Oportunidades publicadas" : "Contexto documentado"}
-        </div>
-        <h1 id="offer-explorer-heading">{heading}</h1>
-        <p>{contextDescription(context)}</p>
-        <p className="offer-explorer__freshness">
+        </p>
+        <h1 className="h1" id="offer-explorer-heading">
+          {heading}
+        </h1>
+        <p className="page-subcopy">{contextDescription(context)}</p>
+        <p
+          className="caption offer-explorer__freshness"
+          style={{ marginTop: "var(--space-2)" }}
+        >
           Ofertas de empleo · snapshot de evidencia del{" "}
           <time dateTime={state.generatedAt}>
             {formattedDate(state.generatedAt)}
@@ -637,12 +654,14 @@ export function OfferExplorerPage({
       </header>
 
       <form
-        className="offer-explorer__search"
+        className="filter-bar offer-explorer__search"
         onSubmit={submitSearch}
         aria-label="Buscar ofertas"
       >
-        <label htmlFor="offer-query">
-          Título, ocupación, requisito o localidad
+        <div className="filter-field filter-grow">
+          <label htmlFor="offer-query">
+            Título, ocupación, requisito o localidad
+          </label>
           <input
             id="offer-query"
             key={queryParam}
@@ -651,9 +670,11 @@ export function OfferExplorerPage({
             defaultValue={queryParam}
             placeholder="Ej.: puesto, localidad o código"
           />
-        </label>
-        <label htmlFor="offer-province">
-          <span>Provincia</span>
+        </div>
+        <div className="filter-field">
+          <label htmlFor="offer-province">
+            <span>Provincia</span>
+          </label>
           <select
             id="offer-province"
             value={province}
@@ -666,9 +687,11 @@ export function OfferExplorerPage({
               </option>
             ))}
           </select>
-        </label>
-        <label htmlFor="offer-status">
-          <span>Relación con la formación</span>
+        </div>
+        <div className="filter-field">
+          <label htmlFor="offer-status">
+            <span>Relación con la formación</span>
+          </label>
           <select
             id="offer-status"
             value={status}
@@ -680,10 +703,12 @@ export function OfferExplorerPage({
               </option>
             ))}
           </select>
-        </label>
-        <button className="primary-button" type="submit">
-          Buscar
-        </button>
+        </div>
+        <div className="filter-field">
+          <button className="button button--primary" type="submit">
+            Buscar
+          </button>
+        </div>
         {hasActiveFilters && (
           <button
             className="offer-explorer__clear"
@@ -700,9 +725,18 @@ export function OfferExplorerPage({
         aria-labelledby="offer-results-heading"
         aria-live="polite"
       >
-        <div className="offer-explorer__count">
-          <h2 id="offer-results-heading">{resultsSummary}</h2>
-          <span>· más recientes primero</span>
+        <div className="result-meta offer-explorer__count">
+          <h2 className="result-count" id="offer-results-heading">
+            {resultsSummary}
+          </h2>
+          {isGlobal && (
+            <p className="caption" style={{ margin: 0 }}>
+              {reviewedOfferCount.toLocaleString("es-ES")} con FP relacionada en
+              esta copia (ofertas únicas con relación revisada) · más recientes
+              primero
+            </p>
+          )}
+          {!isGlobal && <span>· más recientes primero</span>}
         </div>
         {visibleRecords.length === 0 ? (
           <div className="offer-explorer__empty" role="status">

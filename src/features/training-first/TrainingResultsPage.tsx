@@ -564,7 +564,7 @@ export function TrainingResultsPage() {
           { label: state.program.programTitle },
         ]}
       />
-      <header className="training-page__header result-header">
+      <header className="training-page__header result-header page-header">
         <div className="result-header__top">
           <div className="result-header__main">
             <Link
@@ -574,7 +574,9 @@ export function TrainingResultsPage() {
             >
               Cambiar de ciclo
             </Link>
-            <h1 id="training-results-heading">{state.program.programTitle}</h1>
+            <h1 className="h1" id="training-results-heading">
+              {state.program.programTitle}
+            </h1>
             <p className="training-page__meta">
               {trainingLevelLabel(state.program.level)}
               <span className="training-page__code">
@@ -582,7 +584,7 @@ export function TrainingResultsPage() {
                 · código oficial {state.program.programKey}
               </span>
             </p>
-            <p className="training-page__lead">
+            <p className="training-page__lead page-subcopy">
               Desde este ciclo puedes explorar profesiones, ofertas relacionadas
               y centros donde seguir formándote.
             </p>

@@ -90,7 +90,7 @@ export function OpenDataPage() {
         role="alert"
         aria-labelledby="open-data-error-heading"
       >
-        <h1 id="open-data-error-heading">
+        <h1 className="h1" id="open-data-error-heading">
           No hemos podido comprobar los datos abiertos
         </h1>
         <p>La aplicación sigue disponible. Prueba de nuevo más tarde.</p>
@@ -100,7 +100,9 @@ export function OpenDataPage() {
   if (state.status === "historical") {
     return (
       <section className="status-panel" aria-labelledby="open-data-heading">
-        <h1 id="open-data-heading">Datos abiertos de SALIDA CyL</h1>
+        <h1 className="h1" id="open-data-heading">
+          Datos abiertos de SALIDA CyL
+        </h1>
         <p>Esta copia histórica todavía no contiene el dataset derivado.</p>
         <Link to="/metodologia">Consultar metodología y fuentes</Link>
       </section>
@@ -128,7 +130,9 @@ export function OpenDataPage() {
     <article className="open-data-page" aria-labelledby="open-data-heading">
       <header className="open-data-page__intro">
         <p className="open-data-page__eyebrow">Reutilización pública</p>
-        <h1 id="open-data-heading">Datos abiertos de SALIDA CyL</h1>
+        <h1 className="h1" id="open-data-heading">
+          Datos abiertos de SALIDA CyL
+        </h1>
         <p>
           Descarga las relaciones FP↔ocupación que utiliza el producto, con su
           clasificación CNO-11 y la fuente que respalda cada enlace.

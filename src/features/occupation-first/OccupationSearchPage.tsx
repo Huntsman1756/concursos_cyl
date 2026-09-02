@@ -87,7 +87,7 @@ export function OccupationSearchPage() {
         items={[{ label: "Inicio", to: "/" }, { label: "Buscar profesión" }]}
       />
       <header className="training-page__header">
-        <h1 id="occupation-search-heading">
+        <h1 className="h1" id="occupation-search-heading">
           ¿Qué FP te lleva a una profesión?
         </h1>
         <p className="training-page__intro">
