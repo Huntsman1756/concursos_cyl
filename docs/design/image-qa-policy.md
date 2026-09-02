@@ -18,17 +18,17 @@ solo por familia.
 Revisar cada variante aprobada (mínimo la de mayor anchura por formato) contra
 estos nueve puntos:
 
-| #   | Punto                | Qué buscar                                                                                          |
-| --- | -------------------- | --------------------------------------------------------------------------------------------------- |
-| 1   | **Hands**            | Manos con número de dedos correcto, uñas y nudillos coherentes, sin fusión con objetos.             |
-| 2   | **Fingers**          | Dedos sin alargamientos, gemelos, ausencias o poses imposibles (el fallo IA más frecuente).         |
-| 3   | **Faces**            | Rasgos simétricos, ojos/orejas/bocas correctos, sin fundidos con el fondo ni expresiones deformes.  |
-| 4   | **Screens**          | Pantallas y tabletas con contenido plausible, sin texto ilegible duplicado ni UI fantasma.          |
-| 5   | **Background text**  | Ningún texto ilegible o pseudo-alfabeto en carteles, cuadernos, paquetería o pantallas del fondo.   |
-| 6   | **Logos**            | Sin marcas reales reconocibles ni logos "casi reales" de fabricantes o instituciones.               |
-| 7   | **Tools**            | Herramientas con geometría y función coherentes (no taladros con dos empuñaduras, llaves fundidas). |
-| 8   | **Reflections**      | Reflejos en mesas, pantallas y metales coherentes con la escena (sin sujetos duplicados imposibles).|
-| 9   | **Geometry**         | Perspective, líneas y solapamientos coherentes; bordes de mesas, estanterías y suelos estables.     |
+| #   | Punto               | Qué buscar                                                                                           |
+| --- | ------------------- | ---------------------------------------------------------------------------------------------------- |
+| 1   | **Hands**           | Manos con número de dedos correcto, uñas y nudillos coherentes, sin fusión con objetos.              |
+| 2   | **Fingers**         | Dedos sin alargamientos, gemelos, ausencias o poses imposibles (el fallo IA más frecuente).          |
+| 3   | **Faces**           | Rasgos simétricos, ojos/orejas/bocas correctos, sin fundidos con el fondo ni expresiones deformes.   |
+| 4   | **Screens**         | Pantallas y tabletas con contenido plausible, sin texto ilegible duplicado ni UI fantasma.           |
+| 5   | **Background text** | Ningún texto ilegible o pseudo-alfabeto en carteles, cuadernos, paquetería o pantallas del fondo.    |
+| 6   | **Logos**           | Sin marcas reales reconocibles ni logos "casi reales" de fabricantes o instituciones.                |
+| 7   | **Tools**           | Herramientas con geometría y función coherentes (no taladros con dos empuñaduras, llaves fundidas).  |
+| 8   | **Reflections**     | Reflejos en mesas, pantallas y metales coherentes con la escena (sin sujetos duplicados imposibles). |
+| 9   | **Geometry**        | Perspective, líneas y solapamientos coherentes; bordes de mesas, estanterías y suelos estables.      |
 
 Veredictos posibles por variante: `APPROVED` · `APPROVED_WITH_CROP` (el
 artefacto queda fuera del recorte seguro y del `mobileCrop` band declarado en

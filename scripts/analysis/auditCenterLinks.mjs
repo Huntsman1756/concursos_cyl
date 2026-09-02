@@ -61,12 +61,53 @@ function norm(s) {
 }
 
 const GENERIC_TOKENS = new Set([
-  "ies", "cifp", "cp", "colegio", "centro", "ntra", "sra", "san", "santa",
-  "sto", "sta", "santo", "de", "del", "la", "el", "los", "las", "y", "e",
-  "sl", "sa", "slu", "scp", "fundacion", "s", "l", "ii", "iii", "es",
-  "educacion", "formacion", "instituto", "escuela", "seminario", "nm", "ns",
-  "cc", "sscc", "virgen", "cristo", "cristo", "sagrado", "corazon", "maria",
-  "san jose", "santa maria",
+  "ies",
+  "cifp",
+  "cp",
+  "colegio",
+  "centro",
+  "ntra",
+  "sra",
+  "san",
+  "santa",
+  "sto",
+  "sta",
+  "santo",
+  "de",
+  "del",
+  "la",
+  "el",
+  "los",
+  "las",
+  "y",
+  "e",
+  "sl",
+  "sa",
+  "slu",
+  "scp",
+  "fundacion",
+  "s",
+  "l",
+  "ii",
+  "iii",
+  "es",
+  "educacion",
+  "formacion",
+  "instituto",
+  "escuela",
+  "seminario",
+  "nm",
+  "ns",
+  "cc",
+  "sscc",
+  "virgen",
+  "cristo",
+  "cristo",
+  "sagrado",
+  "corazon",
+  "maria",
+  "san jose",
+  "santa maria",
 ]);
 
 function distinctiveTokens(centerName) {
@@ -76,16 +117,34 @@ function distinctiveTokens(centerName) {
 }
 
 const PARKED_MARKERS = [
-  "dominio en venta", "domain for sale", "buy this domain",
-  "compra este dominio", "está en venta", "parking crew", "sedo parking",
-  "domain parking", "parked domain", "future home of", "sitio en construccion",
+  "dominio en venta",
+  "domain for sale",
+  "buy this domain",
+  "compra este dominio",
+  "está en venta",
+  "parking crew",
+  "sedo parking",
+  "domain parking",
+  "parked domain",
+  "future home of",
+  "sitio en construccion",
 ];
 
 // obvious content hijack / unrelated-domain markers (checked in title first)
 const SPAM_TITLE_MARKERS = [
-  "casino", "apuestas", "apostar", "slots", "viagra", "cialis",
-  "criptomoneda", "cripto moneda", "cripto ", "bitcoin",
-  "prestamos rapidos", "préstamos rápidos", "comprar seguidores",
+  "casino",
+  "apuestas",
+  "apostar",
+  "slots",
+  "viagra",
+  "cialis",
+  "criptomoneda",
+  "cripto moneda",
+  "cripto ",
+  "bitcoin",
+  "prestamos rapidos",
+  "préstamos rápidos",
+  "comprar seguidores",
   "cosmética para ayudarte",
 ];
 
@@ -139,7 +198,14 @@ async function probe(initialUrl) {
       };
     }
   } catch (e) {
-    return { status, chain, finalUrl: url, html: "", errorKind: classifyError(e, initialUrl), live: false };
+    return {
+      status,
+      chain,
+      finalUrl: url,
+      html: "",
+      errorKind: classifyError(e, initialUrl),
+      live: false,
+    };
   }
 }
 
@@ -147,15 +213,26 @@ function classifyError(e, scheme) {
   const code = String(e?.cause?.code ?? e?.code ?? "");
   const message = String(e?.message ?? e ?? "");
   if (e?.name === "AbortError" || message.includes("aborted")) return "TIMEOUT";
-  if (["ENOTFOUND", "EAI_AGAIN", "EAI_NONAME"].includes(code)) return "DNS_FAILURE";
+  if (["ENOTFOUND", "EAI_AGAIN", "EAI_NONAME"].includes(code))
+    return "DNS_FAILURE";
   if (
     code.includes("CERT") ||
-    ["UNABLE_TO_VERIFY_LEAF_SIGNATURE", "DEPTH_ZERO_SELF_SIGNED_CERT", "ERR_TLS_CERT_ALTNAME_INVALID", "EXPIRED_CERTIFICATE", "EPROTO"].includes(code)
+    [
+      "UNABLE_TO_VERIFY_LEAF_SIGNATURE",
+      "DEPTH_ZERO_SELF_SIGNED_CERT",
+      "ERR_TLS_CERT_ALTNAME_INVALID",
+      "EXPIRED_CERTIFICATE",
+      "EPROTO",
+    ].includes(code)
   ) {
     return "TLS_FAILURE";
   }
-  if (["ECONNREFUSED", "ECONNRESET", "EHOSTUNREACH", "ENETUNREACH"].includes(code)) return "BROKEN_HTTP";
-  if (message.includes("fetch failed")) return scheme === "https:" ? "TLS_FAILURE" : "BROKEN_HTTP";
+  if (
+    ["ECONNREFUSED", "ECONNRESET", "EHOSTUNREACH", "ENETUNREACH"].includes(code)
+  )
+    return "BROKEN_HTTP";
+  if (message.includes("fetch failed"))
+    return scheme === "https:" ? "TLS_FAILURE" : "BROKEN_HTTP";
   return "UNVERIFIED";
 }
 
@@ -176,7 +253,12 @@ function extractMeta(html) {
   const h1Re = /<h1[^>]*>([\s\S]{0,400}?)<\/h1>/giu;
   let m;
   while ((m = h1Re.exec(html)) && h1s.length < 5) {
-    h1s.push(m[1].replace(/<[^>]*>/g, " ").replace(/\s+/g, " ").trim());
+    h1s.push(
+      m[1]
+        .replace(/<[^>]*>/g, " ")
+        .replace(/\s+/g, " ")
+        .trim(),
+    );
   }
   return { title, h1: h1s[0] ?? null };
 }
@@ -191,7 +273,9 @@ async function mapLimit(items, limit, fn) {
       results[i] = await fn(items[i], i);
     }
   }
-  await Promise.all(Array.from({ length: Math.min(limit, items.length) }, worker));
+  await Promise.all(
+    Array.from({ length: Math.min(limit, items.length) }, worker),
+  );
   return results;
 }
 
@@ -236,7 +320,8 @@ const urlResults = await mapLimit(
         const upgraded = url.replace(/^http:\/\//iu, "https://");
         const p = await probe(upgraded);
         httpsAvailable = p.errorKind == null && p.live === true;
-        tlsStatus = p.errorKind ?? (httpsAvailable ? "ok" : "http_status_" + p.status);
+        tlsStatus =
+          p.errorKind ?? (httpsAvailable ? "ok" : "http_status_" + p.status);
       } catch {
         httpsAvailable = false;
         tlsStatus = "failed";
@@ -246,7 +331,9 @@ const urlResults = await mapLimit(
       tlsStatus = main.errorKind == null ? "ok" : main.errorKind;
     }
     if (
-      ["SOURCE_PUBLISHED_LIVE", "SOURCE_PUBLISHED_REDIRECTED"].includes(classification) &&
+      ["SOURCE_PUBLISHED_LIVE", "SOURCE_PUBLISHED_REDIRECTED"].includes(
+        classification,
+      ) &&
       scheme === "http:" &&
       httpsAvailable === false
     ) {
@@ -329,7 +416,10 @@ for (const c of withWebsite) {
     classification: res?.classification ?? "UNVERIFIED",
     documentTitle: res?.documentTitle ?? null,
     h1: res?.h1 ?? null,
-    sharedWith: withWebsite.filter((x) => x.website === url).map((x) => x.centerCode).filter((code) => code !== c.centerCode),
+    sharedWith: withWebsite
+      .filter((x) => x.website === url)
+      .map((x) => x.centerCode)
+      .filter((code) => code !== c.centerCode),
   };
   // identity
   let level = "IDENTITY_NOT_CONFIRMED";
@@ -340,21 +430,49 @@ for (const c of withWebsite) {
     const hostN = norm(res.finalHost ?? "");
     const bodyN = res.pageTextSample ?? "";
     const localityN = norm(c.locality ?? "");
-    const ownTokenHit = tokens.some((t) => titleN.includes(t) || h1N.includes(t) || hostN.includes(t) || bodyN.includes(t));
-    const full = nameMatches(c.centerName, res.documentTitle, res.h1, res.finalHost, bodyN);
+    const ownTokenHit = tokens.some(
+      (t) =>
+        titleN.includes(t) ||
+        h1N.includes(t) ||
+        hostN.includes(t) ||
+        bodyN.includes(t),
+    );
+    const full = nameMatches(
+      c.centerName,
+      res.documentTitle,
+      res.h1,
+      res.finalHost,
+      bodyN,
+    );
     const allTokens =
       tokens.length > 0 &&
-      tokens.every((t) => titleN.includes(t) || h1N.includes(t) || hostN.includes(t) || bodyN.includes(t));
+      tokens.every(
+        (t) =>
+          titleN.includes(t) ||
+          h1N.includes(t) ||
+          hostN.includes(t) ||
+          bodyN.includes(t),
+      );
     const localityHit =
       localityN.length >= 4 &&
-      (titleN.includes(localityN) || h1N.includes(localityN) || bodyN.includes(localityN));
-    const spamHit = SPAM_TITLE_MARKERS.some((m) => (res.documentTitle ?? "").toLowerCase().includes(m));
+      (titleN.includes(localityN) ||
+        h1N.includes(localityN) ||
+        bodyN.includes(localityN));
+    const spamHit = SPAM_TITLE_MARKERS.some((m) =>
+      (res.documentTitle ?? "").toLowerCase().includes(m),
+    );
     // mismatch requires: NO own-name evidence AND another center's full distinctive name present
     const otherMatch = otherNames.find(
       (o) =>
         o.code !== c.centerCode &&
         o.tokens.length >= 2 &&
-        o.tokens.every((t) => titleN.includes(t) || h1N.includes(t) || hostN.includes(t) || bodyN.includes(t)),
+        o.tokens.every(
+          (t) =>
+            titleN.includes(t) ||
+            h1N.includes(t) ||
+            hostN.includes(t) ||
+            bodyN.includes(t),
+        ),
     );
     if (spamHit) {
       level = "IDENTITY_MISMATCH";
@@ -378,8 +496,16 @@ for (const c of withWebsite) {
     row.classification = "CONTENT_MISMATCH";
   }
   row.safeWebsiteCta =
-    ["SOURCE_PUBLISHED_LIVE", "SOURCE_PUBLISHED_REDIRECTED", "SOURCE_PUBLISHED_HTTP_ONLY"].includes(row.classification) &&
-    ["IDENTITY_CONFIRMED", "IDENTITY_PLAUSIBLE", "IDENTITY_NOT_CONFIRMED"].includes(level);
+    [
+      "SOURCE_PUBLISHED_LIVE",
+      "SOURCE_PUBLISHED_REDIRECTED",
+      "SOURCE_PUBLISHED_HTTP_ONLY",
+    ].includes(row.classification) &&
+    [
+      "IDENTITY_CONFIRMED",
+      "IDENTITY_PLAUSIBLE",
+      "IDENTITY_NOT_CONFIRMED",
+    ].includes(level);
   row.ctaLabel = !row.safeWebsiteCta
     ? null
     : level === "IDENTITY_NOT_CONFIRMED"
@@ -408,7 +534,10 @@ const summary = {
   snapshotId,
   TOTAL_CENTERS: centers.length,
   WITH_WEBSITE_SOURCE_FIELD: withWebsite.length,
-  WITHOUT_WEBSITE: withoutWebsite.map((c) => ({ centerCode: c.centerCode, centerName: c.centerName })),
+  WITHOUT_WEBSITE: withoutWebsite.map((c) => ({
+    centerCode: c.centerCode,
+    centerName: c.centerName,
+  })),
   counts: {
     LIVE: classificationCounts.SOURCE_PUBLISHED_LIVE ?? 0,
     REDIRECTED: classificationCounts.SOURCE_PUBLISHED_REDIRECTED ?? 0,
@@ -429,14 +558,18 @@ const summary = {
   },
   CENTERS_WITH_SAFE_WEBSITE_CTA: rows.filter((r) => r.safeWebsiteCta).length,
   policy: {
-    network: "1 petición inicial por URL publicada; redirects manuales (máx 5); 1 sonda HTTPS extra para http://; timeout 15 s; 0 reintentos; sin crawling; sin bypass de robots/WAF/CAPTCHA/auth.",
+    network:
+      "1 petición inicial por URL publicada; redirects manuales (máx 5); 1 sonda HTTPS extra para http://; timeout 15 s; 0 reintentos; sin crawling; sin bypass de robots/WAF/CAPTCHA/auth.",
     cta: {
       live_or_redirected_identity_ok: "«Web del centro»",
       identity_not_confirmed: "«Web publicada en la fuente»",
-      broken_dns_tls_timeout_parked_mismatch: "sin CTA web (se mantiene «Cómo llegar»)",
-      httpOnly: "se muestra tal cual la fuente lo publica; prohibido elevar a https o reescribir silenciosamente",
+      broken_dns_tls_timeout_parked_mismatch:
+        "sin CTA web (se mantiene «Cómo llegar»)",
+      httpOnly:
+        "se muestra tal cual la fuente lo publica; prohibido elevar a https o reescribir silenciosamente",
     },
-    howToArrive: "«Cómo llegar» se mantiene para todos los centros (centerName + localidad/provincia permiten construir el destino sin inventar datos).",
+    howToArrive:
+      "«Cómo llegar» se mantiene para todos los centros (centerName + localidad/provincia permiten construir el destino sin inventar datos).",
   },
 };
 
@@ -454,8 +587,12 @@ md.push("# Centers link audit — SALIDA CyL");
 md.push("");
 md.push(`- Auditado: ${summary.auditedAt} (UTC)`);
 md.push(`- Snapshot activo: \`${snapshotId}\``);
-md.push(`- Universo: ${summary.TOTAL_CENTERS} centros · ${summary.WITH_WEBSITE_SOURCE_FIELD} con \`website\` en la fuente · ${summary.WITHOUT_WEBSITE.length} sin web`);
-md.push(`- Política de red: 1 petición inicial por URL · redirects ≤ 5 · timeout 15 s · 0 reintentos · sin crawling · sin bypass de robots/WAF/CAPTCHA/auth`);
+md.push(
+  `- Universo: ${summary.TOTAL_CENTERS} centros · ${summary.WITH_WEBSITE_SOURCE_FIELD} con \`website\` en la fuente · ${summary.WITHOUT_WEBSITE.length} sin web`,
+);
+md.push(
+  `- Política de red: 1 petición inicial por URL · redirects ≤ 5 · timeout 15 s · 0 reintentos · sin crawling · sin bypass de robots/WAF/CAPTCHA/auth`,
+);
 md.push("");
 md.push("## Link health");
 md.push("");
@@ -467,29 +604,47 @@ md.push("## Identidad (dimensión separada del link health)");
 md.push("");
 md.push("| Nivel | Centros |");
 md.push("| --- | --- |");
-for (const [k, v] of Object.entries(summary.identityCounts)) md.push(`| ${k} | ${v} |`);
+for (const [k, v] of Object.entries(summary.identityCounts))
+  md.push(`| ${k} | ${v} |`);
 md.push("");
 md.push(`## CTA seguro`);
 md.push("");
-md.push(`**CENTERS_WITH_SAFE_WEBSITE_CTA = ${summary.CENTERS_WITH_SAFE_WEBSITE_CTA}**`);
+md.push(
+  `**CENTERS_WITH_SAFE_WEBSITE_CTA = ${summary.CENTERS_WITH_SAFE_WEBSITE_CTA}**`,
+);
 md.push("");
-md.push("- LIVE/REDIRECTED/HTTP_ONLY + identidad confirmada o plausible → «Web del centro».");
-md.push("- LIVE/REDIRECTED + identidad no confirmada → «Web publicada en la fuente».");
-md.push("- BROKEN_HTTP / DNS_FAILURE / TLS_FAILURE / TIMEOUT / DOMAIN_PARKED / IDENTITY_MISMATCH → sin CTA web. «Cómo llegar» se mantiene (se construye con nombre + localidad + provincia publicados).");
-md.push("- HTTP-only: la URL se muestra tal como la publica la fuente; prohibido elevar a HTTPS silenciosamente.");
+md.push(
+  "- LIVE/REDIRECTED/HTTP_ONLY + identidad confirmada o plausible → «Web del centro».",
+);
+md.push(
+  "- LIVE/REDIRECTED + identidad no confirmada → «Web publicada en la fuente».",
+);
+md.push(
+  "- BROKEN_HTTP / DNS_FAILURE / TLS_FAILURE / TIMEOUT / DOMAIN_PARKED / IDENTITY_MISMATCH → sin CTA web. «Cómo llegar» se mantiene (se construye con nombre + localidad + provincia publicados).",
+);
+md.push(
+  "- HTTP-only: la URL se muestra tal como la publica la fuente; prohibido elevar a HTTPS silenciosamente.",
+);
 md.push("");
 md.push("## Detalle por centro");
 md.push("");
-md.push("| Centro | Provincia | URL publicada | Estado | HTTPS | Identidad | CTA |");
+md.push(
+  "| Centro | Provincia | URL publicada | Estado | HTTPS | Identidad | CTA |",
+);
 md.push("| --- | --- | --- | --- | --- | --- | --- |");
 for (const r of rows) {
-  const chain = r.redirectChain.length ? " →" + r.redirectChain.length + " redirects" : "";
+  const chain = r.redirectChain.length
+    ? " →" + r.redirectChain.length + " redirects"
+    : "";
   md.push(
     `| ${r.centerName} (${r.centerCode}) | ${r.province} | \`${r.sourceUrl}\` | ${r.classification}${chain} | ${r.httpsAvailable === null ? "n/a" : r.httpsAvailable ? "sí" : "no"} | ${r.identity.level}${r.identity.matchedIn ? " (" + r.identity.matchedIn + ")" : ""} | ${r.ctaLabel ?? "—"} |`,
   );
 }
 md.push("");
-writeFileSync(join(ROOT, "analysis", "centers-link-audit.md"), md.join("\n") + "\n");
+writeFileSync(
+  join(ROOT, "analysis", "centers-link-audit.md"),
+  md.join("\n") + "\n",
+);
 
 console.log("written analysis/centers-link-audit.json + .md");
 console.log(JSON.stringify(summary.counts));

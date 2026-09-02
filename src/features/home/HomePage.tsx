@@ -479,7 +479,6 @@ export function HomePage() {
           <p className="search-hint" role="status" aria-live="polite">
             {formError}
           </p>
-          <p className="search-hint">{task.hint}</p>
         </form>
       </div>
     );

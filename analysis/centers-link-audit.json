@@ -6743,9 +6743,7 @@
       "classification": "SOURCE_PUBLISHED_REDIRECTED",
       "documentTitle": "Sanitio Formación| Centro de Formación Sanitaria y Grados FP",
       "h1": "Formación Profesional sanitaria oficial de Recoletas Salud",
-      "sharedWith": [
-        "09012667"
-      ],
+      "sharedWith": ["09012667"],
       "identity": {
         "level": "IDENTITY_CONFIRMED",
         "matchedIn": "title/h1/body/hostname"
@@ -6776,9 +6774,7 @@
       "classification": "SOURCE_PUBLISHED_REDIRECTED",
       "documentTitle": "Sanitio Formación| Centro de Formación Sanitaria y Grados FP",
       "h1": "Formación Profesional sanitaria oficial de Recoletas Salud",
-      "sharedWith": [
-        "47012089"
-      ],
+      "sharedWith": ["47012089"],
       "identity": {
         "level": "IDENTITY_PLAUSIBLE",
         "matchedIn": "token de marca del centro"

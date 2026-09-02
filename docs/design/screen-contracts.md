@@ -280,7 +280,7 @@ en todas las páginas. Lo único que crece es la zona de descripción/evidencia.
   selección → "Cómo leer los cortes" (EvidenceCallout) → dos paneles de
   evidencia (España / Castilla y León) con cut-rows (media + cortes, barras
   tabulares) → `<details>` con tabla técnica → limitación → fuente EDUCAbase
-  + fecha de copia.
+  - fecha de copia.
 - **Density**: media (entre ficha y Home). Sin fotografía.
 - **Empty/unavailable**: "Los datos de comparación no están disponibles en
   esta versión." + link metodología.
@@ -323,25 +323,25 @@ tabla; ninguna URL se elimina ni renombra.
 Rutas productivas congeladas (fuente: `src/app/routes.tsx` +
 `docs/contest/production-v3-route-contract.md`):
 
-| Ruta                                       | Página                                   | Notas                                                        |
-| ------------------------------------------ | ---------------------------------------- | ------------------------------------------------------------ |
-| `/`                                        | Home                                     |                                                              |
-| `/desde-fp`                                | Buscador de FP                           |                                                              |
-| `/desde-fp/:programKey`                    | Ficha FP                                 | `programKey` con formato actual (`ADG02S`, `SAN21`…)         |
-| `/desde-fp/:programKey/ofertas`            | Ofertas contextuales de un ciclo         |                                                              |
-| `/desde-ocupacion`                         | Buscador de profesiones                  |                                                              |
-| `/desde-ocupacion/:occupationId`           | Ficha de profesión                       | `occupationId` = `occupation:cno11:XXXX` (ver auditoría)     |
-| `/desde-ocupacion/:occupationId/ofertas`   | Ofertas contextuales de una profesión    |                                                              |
-| `/desde-oferta`                            | Ofertas globales                         |                                                              |
-| `/donde-estudiar`                          | Explorador de centros                    |                                                              |
-| `/donde-estudiar/:programKey`              | Centros contextuales de un ciclo         |                                                              |
-| `/comparar`                                | Comparar estudios (ingresos observados)  | Label nuevo; URL intacta                                     |
-| `/recursos`                                | Más formación (recursos ECYL)            | Label nuevo; URL intacta                                     |
-| `/datos-abiertos`                          | Datos abiertos                           |                                                              |
-| `/metodologia`                             | Metodología                              |                                                              |
-| `/accesibilidad`                           | Accesibilidad                            |                                                              |
-| `/para-organizaciones`                     | Para organizaciones                      |                                                              |
-| `/formacion/:programKey`                   | Alias compatible de centros contextuales | Congelado por enlaces públicos existentes                    |
+| Ruta                                     | Página                                   | Notas                                                    |
+| ---------------------------------------- | ---------------------------------------- | -------------------------------------------------------- |
+| `/`                                      | Home                                     |                                                          |
+| `/desde-fp`                              | Buscador de FP                           |                                                          |
+| `/desde-fp/:programKey`                  | Ficha FP                                 | `programKey` con formato actual (`ADG02S`, `SAN21`…)     |
+| `/desde-fp/:programKey/ofertas`          | Ofertas contextuales de un ciclo         |                                                          |
+| `/desde-ocupacion`                       | Buscador de profesiones                  |                                                          |
+| `/desde-ocupacion/:occupationId`         | Ficha de profesión                       | `occupationId` = `occupation:cno11:XXXX` (ver auditoría) |
+| `/desde-ocupacion/:occupationId/ofertas` | Ofertas contextuales de una profesión    |                                                          |
+| `/desde-oferta`                          | Ofertas globales                         |                                                          |
+| `/donde-estudiar`                        | Explorador de centros                    |                                                          |
+| `/donde-estudiar/:programKey`            | Centros contextuales de un ciclo         |                                                          |
+| `/comparar`                              | Comparar estudios (ingresos observados)  | Label nuevo; URL intacta                                 |
+| `/recursos`                              | Más formación (recursos ECYL)            | Label nuevo; URL intacta                                 |
+| `/datos-abiertos`                        | Datos abiertos                           |                                                          |
+| `/metodologia`                           | Metodología                              |                                                          |
+| `/accesibilidad`                         | Accesibilidad                            |                                                          |
+| `/para-organizaciones`                   | Para organizaciones                      |                                                          |
+| `/formacion/:programKey`                 | Alias compatible de centros contextuales | Congelado por enlaces públicos existentes                |
 
 Reglas derivadas:
 
@@ -359,14 +359,14 @@ Esta lista es la base contractual de los futuros E2E de compatibilidad de
 rutas; cada fila debe convertirse en un test E2E que navegue la URL y
 compruebe contenido estable:
 
-| #   | URL exacta del memo                                     | Tipo     | Debe seguir respondiendo con                                |
-| --- | ------------------------------------------------------- | -------- | ----------------------------------------------------------- |
-| 1   | `/desde-fp/SAN21`                                       | interna  | Ficha del ciclo SAN21 con relaciones revisadas y ofertas    |
-| 2   | `/desde-ocupacion/occupation%3Acno11%3A5611`            | interna  | Ficha de la profesión 5611 (recorrido inverso)              |
-| 3   | `/desde-ocupacion/occupation%3Acno11%3A7111`            | interna  | Ficha 7111 con sus ofertas revisadas (cobertura positiva)   |
-| 4   | `/desde-ocupacion/occupation%3Acno11%3A3820`            | interna  | Ficha 3820 en fail-closed (sin ofertas inventadas)          |
-| 5   | `/desde-oferta`                                         | interna  | Explorador global de ofertas                                |
-| 6   | `/datos-abiertos`                                       | interna  | Catálogo de descarga + manifest                             |
+| #   | URL exacta del memo                          | Tipo    | Debe seguir respondiendo con                              |
+| --- | -------------------------------------------- | ------- | --------------------------------------------------------- |
+| 1   | `/desde-fp/SAN21`                            | interna | Ficha del ciclo SAN21 con relaciones revisadas y ofertas  |
+| 2   | `/desde-ocupacion/occupation%3Acno11%3A5611` | interna | Ficha de la profesión 5611 (recorrido inverso)            |
+| 3   | `/desde-ocupacion/occupation%3Acno11%3A7111` | interna | Ficha 7111 con sus ofertas revisadas (cobertura positiva) |
+| 4   | `/desde-ocupacion/occupation%3Acno11%3A3820` | interna | Ficha 3820 en fail-closed (sin ofertas inventadas)        |
+| 5   | `/desde-oferta`                              | interna | Explorador global de ofertas                              |
+| 6   | `/datos-abiertos`                            | interna | Catálogo de descarga + manifest                           |
 
 Notas contractuales:
 
@@ -430,19 +430,19 @@ Fuente vinculante: `analysis/prototype-data-integrity.md` +
 
 Totales correctos por recurso (UNIDAD explícita):
 
-| Dato | Valor | Unidad |
-| --- | --- | --- |
-| Ofertas globales `/desde-oferta` | **1058** (12/página → 89 páginas; última “1057–1058 de 1058”) | oferta única `offerId` |
-| Ofertas con relación FP revisada | **138** | oferta única con ≥1 relación revisada |
-| Relaciones oferta↔FP (documentación interna) | **196** | relación oferta→(ciclo, ocupación); NUNCA se muestra como número de ofertas |
-| Opciones formativas `/donde-estudiar` | **1293** | fila única `centerCode:programKey` |
-| Centros representados | **229** | centro `centerCode` |
-| Raw offerings (nivel recurso) | 1294 | registro fuente JCyL |
-| Ciclos | **187** | `programKey` |
-| Relaciones FP↔ocupación (grafo) | **264** | relación `programKey↔occupationId` |
-| Cursos ECYL / certificados | **791 / 583** | curso / certificado |
-| Convocatorias abiertas (copia 22/08) | **4** | convocatoria |
-| Recursos publicados (open data) | **22** | recurso del manifest |
+| Dato                                         | Valor                                                         | Unidad                                                                      |
+| -------------------------------------------- | ------------------------------------------------------------- | --------------------------------------------------------------------------- |
+| Ofertas globales `/desde-oferta`             | **1058** (12/página → 89 páginas; última “1057–1058 de 1058”) | oferta única `offerId`                                                      |
+| Ofertas con relación FP revisada             | **138**                                                       | oferta única con ≥1 relación revisada                                       |
+| Relaciones oferta↔FP (documentación interna) | **196**                                                       | relación oferta→(ciclo, ocupación); NUNCA se muestra como número de ofertas |
+| Opciones formativas `/donde-estudiar`        | **1293**                                                      | fila única `centerCode:programKey`                                          |
+| Centros representados                        | **229**                                                       | centro `centerCode`                                                         |
+| Raw offerings (nivel recurso)                | 1294                                                          | registro fuente JCyL                                                        |
+| Ciclos                                       | **187**                                                       | `programKey`                                                                |
+| Relaciones FP↔ocupación (grafo)              | **264**                                                       | relación `programKey↔occupationId`                                          |
+| Cursos ECYL / certificados                   | **791 / 583**                                                 | curso / certificado                                                         |
+| Convocatorias abiertas (copia 22/08)         | **4**                                                         | convocatoria                                                                |
+| Recursos publicados (open data)              | **22**                                                        | recurso del manifest                                                        |
 
 Errores de prototipo corregidos en esta fase (lección contractual):
 
