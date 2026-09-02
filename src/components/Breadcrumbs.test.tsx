@@ -79,7 +79,7 @@ describe("Breadcrumbs", () => {
     );
     const separatorRules = ruleBodies.flatMap((css) =>
       [...css.matchAll(/\.breadcrumbs[^{}]*\{([^}]*)\}/gu)]
-        .filter((rule) => /content:\s*"\/"/u.test(rule[1]))
+        .filter((rule) => /content:\s*"›"/u.test(rule[1]))
         .map((rule) => rule[0]),
     );
     expect(separatorRules).toHaveLength(1);

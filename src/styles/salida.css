@@ -117,7 +117,7 @@ select:focus-visible,
   color: var(--color-accent);
   font-size: var(--text-label);
   font-weight: var(--text-label-weight);
-  letter-spacing: 0.04em;
+  letter-spacing: 0.03em;
   text-transform: uppercase;
 }
 
@@ -136,6 +136,7 @@ select:focus-visible,
   font-weight: var(--text-h1-weight);
   line-height: var(--text-h1-line-height);
   letter-spacing: var(--text-h1-tracking);
+  text-wrap: balance;
 }
 
 .h2 {
@@ -144,6 +145,7 @@ select:focus-visible,
   font-weight: var(--text-h2-weight);
   line-height: var(--text-h2-line-height);
   letter-spacing: var(--text-h2-tracking);
+  text-wrap: balance;
 }
 
 .h3 {
@@ -151,6 +153,7 @@ select:focus-visible,
   font-size: var(--text-h3);
   font-weight: var(--text-h3-weight);
   line-height: var(--text-h3-line-height);
+  text-wrap: balance;
 }
 
 .lede {
@@ -212,6 +215,16 @@ select:focus-visible,
   color: var(--color-text-muted);
   font-size: var(--text-body);
   line-height: var(--text-body-line-height);
+}
+
+@media (max-width: 767px) {
+  .section {
+    padding-block: var(--space-7);
+  }
+
+  .section-head {
+    margin-bottom: var(--space-5);
+  }
 }
 
 /* ------------------------------------------------------------ header */
@@ -665,26 +678,29 @@ select:focus-visible,
 
 .paths-grid {
   display: grid;
-  gap: var(--space-6);
+  gap: var(--space-5);
 }
 
 @media (min-width: 768px) {
   .paths-grid {
     grid-template-columns: repeat(3, 1fr);
-    gap: var(--space-5);
   }
 }
 
 .path {
   display: flex;
   flex-direction: column;
+  min-width: 0;
+  overflow: hidden;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-medium);
+  background: var(--color-surface);
 }
 
 .path-media {
   aspect-ratio: var(--editorial-ratio-card);
-  border-radius: var(--radius-medium);
+  border-radius: 0;
   overflow: hidden;
-  margin-bottom: var(--space-4);
 }
 
 .path-media img {
@@ -694,10 +710,19 @@ select:focus-visible,
 }
 
 .path-number {
+  margin: 0;
   color: var(--color-accent);
   font-size: var(--text-label);
   font-weight: var(--text-label-weight);
-  letter-spacing: 0.04em;
+  letter-spacing: 0.03em;
+}
+
+.path-body {
+  display: flex;
+  min-width: 0;
+  flex: 1;
+  flex-direction: column;
+  padding: var(--space-4);
 }
 
 .path .h3 {
@@ -716,7 +741,7 @@ select:focus-visible,
   align-items: center;
   min-height: var(--control-height);
   margin-top: auto; /* actions pinned to a shared baseline (DESIGN.md §7) */
-  padding-top: var(--space-4);
+  padding-top: var(--space-3);
 }
 
 .link-action {
@@ -1052,8 +1077,8 @@ select:focus-visible,
 
 /* The single generated separator for breadcrumbs lives in visualRefresh.css
    (.breadcrumbs li + li::before). Do not add a second separator here: two
-   generated rules used to render "/ /" between levels and orphaned bars when
-   the trail wrapped on narrow screens. */
+   generated rules used to render duplicate separators when the trail wrapped
+   on narrow screens. */
 
 .breadcrumbs a {
   color: var(--color-text-muted);

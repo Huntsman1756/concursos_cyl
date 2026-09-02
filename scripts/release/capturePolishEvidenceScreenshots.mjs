@@ -89,6 +89,24 @@ async function waitForRouteEvidence(page, path) {
   }
 }
 
+async function primeLazyImages(page) {
+  await page.evaluate(async () => {
+    const step = Math.max(window.innerHeight - 96, 1);
+    const maxY = Math.max(
+      document.documentElement.scrollHeight - window.innerHeight,
+      0,
+    );
+
+    for (let y = 0; y <= maxY; y += step) {
+      window.scrollTo(0, y);
+      await new Promise((resolve) => setTimeout(resolve, 40));
+    }
+
+    window.scrollTo(0, 0);
+  });
+  await page.waitForTimeout(120);
+}
+
 const server = spawn(
   "npx",
   ["vite", "preview", "--host", "127.0.0.1", "--port", String(PORT)],
@@ -109,6 +127,7 @@ try {
     await page.goto(`${BASE}${path}`);
     await page.evaluate(() => document.fonts.ready);
     await waitForRouteEvidence(page, path);
+    await primeLazyImages(page);
     await page.waitForTimeout(600);
     await page.screenshot({ path: join(OUT, `${name}.png`), fullPage: true });
     captured.add(name);

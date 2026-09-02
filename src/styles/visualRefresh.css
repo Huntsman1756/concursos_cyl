@@ -159,7 +159,7 @@ summary:focus-visible {
 .breadcrumbs li + li::before {
   flex: 0 0 auto;
   color: var(--color-border-strong);
-  content: "/";
+  content: "›";
 }
 
 .breadcrumbs a {
@@ -426,6 +426,56 @@ summary:focus-visible {
   color: var(--color-primary-strong);
   text-decoration: underline;
   text-underline-offset: 0.18em;
+}
+
+/* Occupation masthead: keep the evidence controls present but subordinate. */
+
+.occupation-result-page .training-page__header h1 {
+  font-size: clamp(1.875rem, 5.5vw, 3.25rem);
+  line-height: 1.08;
+  letter-spacing: -0.035em;
+}
+
+.occupation-result-page .training-page__meta {
+  gap: var(--space-2);
+}
+
+.occupation-result-page .training-page__meta .info-disclosure {
+  margin-left: 0.25rem;
+}
+
+.occupation-result-page .training-page__tools {
+  margin-top: var(--space-4);
+}
+
+.occupation-result-page .training-page__tools .secondary-button {
+  width: auto;
+  min-height: 2.5rem;
+  padding: 0.5rem 0.75rem;
+  border-color: var(--color-border-strong);
+  color: var(--color-action-text);
+  font-size: var(--text-small);
+  font-weight: 600;
+}
+
+.occupation-result-page .result-section-nav {
+  margin-bottom: var(--space-5);
+}
+
+.occupation-result-page .result-section-nav a {
+  min-height: var(--control-height);
+  align-items: center;
+  padding: var(--space-3) 0.25rem;
+  border: 0;
+  border-bottom: 2px solid transparent;
+  border-radius: 0;
+  background: transparent;
+  font-weight: 600;
+}
+
+.occupation-result-page .result-section-nav a:hover {
+  border-bottom-color: var(--color-primary);
+  text-decoration: none;
 }
 
 .outcomes-section,

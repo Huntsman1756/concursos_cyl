@@ -578,16 +578,18 @@ export function HomePage() {
                   sizes="(min-width: 768px) 33vw, calc(100vw - 2 * var(--grid-gutter))"
                 />
               </div>
-              <p className="path-number">01</p>
-              <h3 className="h3">Tengo una FP</h3>
-              <p className="path-description">
-                Descubre profesiones, ofertas y centros relacionados con tu
-                ciclo.
-              </p>
-              <div className="path-actions">
-                <Link className="link-action" to="/desde-fp">
-                  Ver salidas de mi FP →
-                </Link>
+              <div className="path-body">
+                <p className="path-number">01</p>
+                <h3 className="h3">Tengo una FP</h3>
+                <p className="path-description">
+                  Descubre profesiones, ofertas y centros relacionados con tu
+                  ciclo.
+                </p>
+                <div className="path-actions">
+                  <Link className="link-action" to="/desde-fp">
+                    Ver salidas de mi FP →
+                  </Link>
+                </div>
               </div>
             </article>
             <article className="path">
@@ -601,16 +603,18 @@ export function HomePage() {
                   sizes="(min-width: 768px) 33vw, calc(100vw - 2 * var(--grid-gutter))"
                 />
               </div>
-              <p className="path-number">02</p>
-              <h3 className="h3">Quiero dedicarme a una profesión</h3>
-              <p className="path-description">
-                Comprueba qué ciclos tienen una relación revisada con esa
-                ocupación.
-              </p>
-              <div className="path-actions">
-                <Link className="link-action" to="/desde-ocupacion">
-                  Buscar una profesión →
-                </Link>
+              <div className="path-body">
+                <p className="path-number">02</p>
+                <h3 className="h3">Quiero dedicarme a una profesión</h3>
+                <p className="path-description">
+                  Comprueba qué ciclos tienen una relación revisada con esa
+                  ocupación.
+                </p>
+                <div className="path-actions">
+                  <Link className="link-action" to="/desde-ocupacion">
+                    Buscar una profesión →
+                  </Link>
+                </div>
               </div>
             </article>
             <article className="path">
@@ -624,16 +628,18 @@ export function HomePage() {
                   sizes="(min-width: 768px) 33vw, calc(100vw - 2 * var(--grid-gutter))"
                 />
               </div>
-              <p className="path-number">03</p>
-              <h3 className="h3">He visto una oferta</h3>
-              <p className="path-description">
-                Entiende sus requisitos y comprueba si aparece relacionada con
-                una FP.
-              </p>
-              <div className="path-actions">
-                <Link className="link-action" to={globalOffersPath()}>
-                  Analizar una oferta →
-                </Link>
+              <div className="path-body">
+                <p className="path-number">03</p>
+                <h3 className="h3">He visto una oferta</h3>
+                <p className="path-description">
+                  Entiende sus requisitos y comprueba si aparece relacionada con
+                  una FP.
+                </p>
+                <div className="path-actions">
+                  <Link className="link-action" to={globalOffersPath()}>
+                    Analizar una oferta →
+                  </Link>
+                </div>
               </div>
             </article>
           </div>
