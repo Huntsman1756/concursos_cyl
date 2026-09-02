@@ -179,6 +179,11 @@
   .resources-page {
     padding: 1.5rem 1rem 3rem;
   }
+  .resources-section-heading {
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    gap: 0.15rem 0.75rem;
+  }
   .resources-filters,
   .resources-columns,
   .public-call-list {

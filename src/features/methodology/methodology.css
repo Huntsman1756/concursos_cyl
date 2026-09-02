@@ -26,6 +26,20 @@
   font-size: 1.0625rem;
 }
 
+.methodology-ai-disclosure {
+  max-width: 58rem;
+  padding: var(--space-3) var(--space-4);
+  border-left: 0.3rem solid var(--color-gold);
+  border-radius: var(--radius-sm);
+  color: var(--color-text);
+  background: var(--color-warning-surface);
+}
+
+.methodology-ai-disclosure p {
+  margin: 0;
+  line-height: 1.5;
+}
+
 .regional-dataset-inventory {
   overflow: hidden;
   border: 1px solid var(--color-border);

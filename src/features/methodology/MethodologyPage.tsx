@@ -395,6 +395,16 @@ export function MethodologyPage() {
         </p>
       </header>
 
+      <aside
+        className="methodology-ai-disclosure"
+        aria-label="Uso de imágenes editoriales"
+      >
+        <p>
+          Las imágenes editoriales son generadas mediante IA y no representan
+          personas, empresas, ofertas ni centros reales.
+        </p>
+      </aside>
+
       <RegionalDatasetInventory state={manifestState} />
 
       <div className="source-method-grid">

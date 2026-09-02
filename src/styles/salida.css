@@ -1050,11 +1050,10 @@ select:focus-visible,
   line-height: var(--text-caption-line-height);
 }
 
-.breadcrumbs li + li::before {
-  content: "/";
-  margin-right: var(--space-1);
-  color: var(--color-border-strong);
-}
+/* The single generated separator for breadcrumbs lives in visualRefresh.css
+   (.breadcrumbs li + li::before). Do not add a second separator here: two
+   generated rules used to render "/ /" between levels and orphaned bars when
+   the trail wrapped on narrow screens. */
 
 .breadcrumbs a {
   color: var(--color-text-muted);

@@ -195,6 +195,9 @@ describe("MethodologyPage", () => {
     expect(methodology).toHaveTextContent(
       /algunos ciclos.*grupos oficiales.*familia profesional/i,
     );
+    expect(methodology).toHaveTextContent(
+      "Las imágenes editoriales son generadas mediante IA y no representan personas, empresas, ofertas ni centros reales.",
+    );
 
     for (const tableId of [
       "famprof_2_08",

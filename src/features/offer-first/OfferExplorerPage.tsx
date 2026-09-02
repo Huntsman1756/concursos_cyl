@@ -336,14 +336,24 @@ function contextLabel(context: OfferContext): string {
   return "Ofertas de empleo";
 }
 
-function contextDescription(context: OfferContext): string {
+function contextIntro(context: OfferContext): string {
   if (context.kind === "program") {
-    return "Ofertas de la copia actual cuya relación con este ciclo está documentada. Comprueba siempre la vigencia y los requisitos en la publicación oficial. La relación orienta la búsqueda; no implica contratación ni equivalencia profesional.";
+    return "Ofertas de la copia actual cuya relación con este ciclo está documentada.";
   }
   if (context.kind === "occupation") {
-    return "Ofertas de la copia actual relacionadas con esta profesión mediante relaciones revisadas. No representan todo el mercado laboral. La relación orienta la búsqueda; no implica contratación ni equivalencia profesional.";
+    return "Ofertas de la copia actual relacionadas con esta profesión mediante relaciones revisadas.";
   }
-  return "Copia de ofertas publicadas por la Junta de Castilla y León. Cuando una oferta tiene una formación relacionada comprobada, te lo indicamos. Comprueba siempre la vigencia y los requisitos en la oferta oficial. La relación orienta la búsqueda; no implica contratación ni equivalencia profesional.";
+  return "Copia de ofertas publicadas por la Junta de Castilla y León. Cuando una oferta tiene una formación relacionada comprobada, te lo indicamos.";
+}
+
+function contextScopeNote(context: OfferContext): string {
+  if (context.kind === "program") {
+    return "Comprueba siempre la vigencia y los requisitos en la publicación oficial. La relación orienta la búsqueda; no implica contratación ni equivalencia profesional.";
+  }
+  if (context.kind === "occupation") {
+    return "No representan todo el mercado laboral. La relación orienta la búsqueda; no implica contratación ni equivalencia profesional.";
+  }
+  return "Comprueba siempre la vigencia y los requisitos en la oferta oficial. La relación orienta la búsqueda; no implica contratación ni equivalencia profesional.";
 }
 
 export function OfferExplorerPage({
@@ -641,7 +651,7 @@ export function OfferExplorerPage({
         <h1 className="h1" id="offer-explorer-heading">
           {heading}
         </h1>
-        <p className="page-subcopy">{contextDescription(context)}</p>
+        <p className="page-subcopy">{contextIntro(context)}</p>
         <p
           className="caption offer-explorer__freshness"
           style={{ marginTop: "var(--space-2)" }}
@@ -719,6 +729,13 @@ export function OfferExplorerPage({
           </button>
         )}
       </form>
+
+      <aside
+        className="offer-explorer__scope-note"
+        aria-label="Alcance de esta copia"
+      >
+        <p>{contextScopeNote(context)}</p>
+      </aside>
 
       <section
         className="offer-explorer__results"
