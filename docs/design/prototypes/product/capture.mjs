@@ -87,6 +87,8 @@ const targets = [
   ["zero-fail-closed", "zero/index.html", [1440, 390]],
   ["open-data", "open-data/index.html", [1440]],
   ["methodology", "methodology/index.html", [1440]],
+  ["compare-studies", "compare/index.html", [1440, 390]],
+  ["resources", "resources/index.html", [1440, 390]],
 ];
 
 for (const [name, pagePath, widths] of targets) {
@@ -97,24 +99,30 @@ for (const [name, pagePath, widths] of targets) {
   }
 }
 
-// Contact sheet: seven families side by side to verify "one product" feel.
+// Contact sheet: HOME + every interior family side by side to verify
+// "mismo producto, distinta densidad" — shared masthead/grid/type/surfaces,
+// denser content units in FP / Occupation / Offers, airier Home.
 const sheetHtml = `<!doctype html>
 <html lang="es"><head><meta charset="utf-8"><title>Contact sheet</title>
 <style>
 body{margin:24px;background:#1c2b31;font-family:sans-serif}
 h1{color:#fff;font-size:16px;font-weight:600}
-.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+h2{color:#c9d3d8;font-size:13px;font-weight:400}
+.grid{display:grid;grid-template-columns:repeat(5,1fr);gap:16px}
 figure{margin:0}
 figcaption{color:#f7f5f1;font-size:12px;padding:6px 2px}
 img{width:100%;height:auto;border:1px solid #56666d;background:#fff}
 </style></head><body>
-<h1>SALIDA CyL — ¿siete pantallas del mismo producto?</h1>
+<h1>SALIDA CyL — ¿un mismo producto, distinta densidad?</h1>
+<h2>Masthead, grid, eyebrow, breadcrumb, botones y superficies compartidos · FP/Occupation/Offers más densos que Home</h2>
 <div class="grid">
-<figure><img src="../home/screenshots/FULL_PAGE_DESKTOP.png"><figcaption>HOME</figcaption></figure>
-<figure><img src="screenshots/fp-detail-1440.png"><figcaption>FP DETAIL</figcaption></figure>
-<figure><img src="screenshots/occupation-detail-1440.png"><figcaption>OCCUPATION</figcaption></figure>
-<figure><img src="screenshots/offers-global-1440.png"><figcaption>OFFERS</figcaption></figure>
+<figure><img src="../home/screenshots/FULL_PAGE_DESKTOP.png"><figcaption>HOME (más aireada)</figcaption></figure>
+<figure><img src="screenshots/fp-detail-1440.png"><figcaption>FP DETAIL (denso)</figcaption></figure>
+<figure><img src="screenshots/occupation-detail-1440.png"><figcaption>OCCUPATION (denso)</figcaption></figure>
+<figure><img src="screenshots/offers-global-1440.png"><figcaption>OFFERS (denso)</figcaption></figure>
 <figure><img src="screenshots/centers-explorer-1440.png"><figcaption>CENTERS</figcaption></figure>
+<figure><img src="screenshots/compare-studies-1440.png"><figcaption>COMPARE STUDIES (/comparar)</figcaption></figure>
+<figure><img src="screenshots/resources-1440.png"><figcaption>MORE TRAINING (/recursos)</figcaption></figure>
 <figure><img src="screenshots/zero-fail-closed-1440.png"><figcaption>ZERO STATE</figcaption></figure>
 <figure><img src="screenshots/open-data-1440.png"><figcaption>OPEN DATA</figcaption></figure>
 <figure><img src="screenshots/methodology-1440.png"><figcaption>METHODOLOGY</figcaption></figure>

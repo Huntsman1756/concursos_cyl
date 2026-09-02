@@ -1,0 +1,510 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Comparar estudios (ingresos observados) — SALIDA CyL · prototipo</title>
+    <link rel="stylesheet" href="../product.css" />
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Saltar al contenido principal</a>
+
+    <header class="header">
+      <div class="container header-bar">
+        <a class="wordmark" href="/">SALIDA <span class="cyl">CyL</span></a>
+        <nav class="header-secondary" aria-label="Enlaces secundarios">
+          <a href="/recursos">Más formación</a>
+          <a href="/datos-abiertos">Datos abiertos</a>
+          <a href="/metodologia">Metodología</a>
+          <a href="/accesibilidad">Accesibilidad</a>
+        </nav>
+        <button
+          class="menu-button"
+          type="button"
+          aria-expanded="false"
+          aria-controls="mobile-menu"
+          id="menu-button"
+        >
+          <svg
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            aria-hidden="true"
+          >
+            <line x1="4" x2="20" y1="6" y2="6" />
+            <line x1="4" x2="20" y1="12" y2="12" />
+            <line x1="4" x2="20" y1="18" y2="18" />
+          </svg>
+          Menú
+        </button>
+      </div>
+      <nav class="global-nav" aria-label="Navegación principal">
+        <div class="container">
+          <ul class="global-nav-list">
+            <li>
+              <a class="global-nav-link" href="/desde-fp">Explorar</a>
+            </li>
+            <li><a class="global-nav-link" href="/desde-oferta">Ofertas</a></li>
+            <li>
+              <a class="global-nav-link" href="/donde-estudiar"
+                >Dónde estudiar</a
+              >
+            </li>
+            <li>
+              <a
+                class="global-nav-link"
+                href="/comparar"
+                aria-current="page"
+                >Comparar estudios</a
+              >
+            </li>
+          </ul>
+        </div>
+      </nav>
+      <div class="mobile-menu" id="mobile-menu" hidden>
+        <ul class="mobile-menu-list">
+          <li><a href="/desde-fp">Explorar</a></li>
+          <li><a href="/desde-oferta">Ofertas</a></li>
+          <li><a href="/donde-estudiar">Dónde estudiar</a></li>
+          <li><a href="/comparar">Comparar estudios</a></li>
+        </ul>
+        <div class="mobile-menu-secondary">
+          <a href="/recursos">Más formación</a>
+          <a href="/datos-abiertos">Datos abiertos</a>
+          <a href="/metodologia">Metodología</a>
+          <a href="/accesibilidad">Accesibilidad</a>
+        </div>
+      </div>
+    </header>
+
+    <main id="main">
+      <div class="container">
+        <nav class="breadcrumbs" aria-label="Miga de pan">
+          <ol>
+            <li><a href="/">Inicio</a></li>
+            <li><span aria-current="page">Comparar estudios</span></li>
+          </ol>
+        </nav>
+
+        <header class="page-header">
+          <p class="eyebrow">Comparar estudios</p>
+          <h1 class="h1">Ingresos observados</h1>
+          <p class="page-subcopy">
+            Compara la base de cotización anualizada publicada de hasta tres
+            ciclos, usando la misma cohorte y el mismo año.
+          </p>
+          <div class="page-actions">
+            <a class="link-action" href="/metodologia"
+              >Consultar la metodología y las fuentes</a
+            >
+          </div>
+        </header>
+      </div>
+
+      <section
+        class="section"
+        aria-labelledby="form-title"
+        style="padding-block: 0 var(--stack-section)"
+      >
+        <div class="container">
+          <div class="notice notice--warning" role="note">
+            <strong style="font-weight: 600">Datos agregados.</strong>
+            <span>
+              Los cortes describen la distribución publicada del grupo de
+              titulados. No es un salario individual y no es una predicción
+              salarial personal.
+            </span>
+          </div>
+
+          <form class="compare-form" aria-labelledby="form-title">
+            <h2 class="sr-only" id="form-title">Selección de la comparación</h2>
+            <div class="filter-bar" style="border-bottom: 0">
+              <div class="filter-field">
+                <label for="compare-level">Nivel</label>
+                <select id="compare-level">
+                  <option selected>Grado Superior</option>
+                  <option>Grado Medio</option>
+                </select>
+              </div>
+              <div class="filter-field filter-grow">
+                <label for="compare-group">Ciclo o grupo oficial</label>
+                <select id="compare-group">
+                  <option selected>
+                    Administración de Sistemas Informáticos en Red (IFC03S)
+                  </option>
+                  <option>Guía, información y asistencias turísticas</option>
+                  <option>Sistemas de telecomunicaciones e informáticos</option>
+                </select>
+              </div>
+              <div class="filter-field">
+                <label for="compare-cohort">Cohorte</label>
+                <select id="compare-cohort">
+                  <option selected>2019-2020</option>
+                  <option>2018-2019</option>
+                </select>
+              </div>
+              <div class="filter-field">
+                <label for="compare-year">Año tras titularse</label>
+                <select id="compare-year">
+                  <option>1</option>
+                  <option>2</option>
+                  <option>3</option>
+                  <option selected>4</option>
+                </select>
+              </div>
+              <button class="button button--primary" type="submit">
+                Comparar
+              </button>
+            </div>
+            <p class="search-hint">
+              La selección se guarda en la URL (?level=&amp;group=&amp;cohort=&amp;year=)
+              para poder compartirla.
+            </p>
+          </form>
+
+          <section
+            class="income-results"
+            aria-label="Evidencia seleccionada"
+            style="margin-top: var(--space-6)"
+          >
+            <p class="result-meta" style="padding-top: 0">
+              <span class="result-count">
+                Cohorte 2019-2020 · año 4 tras titularse
+              </span>
+            </p>
+
+            <div class="evidence-callout" role="note">
+              <strong style="font-weight: 600">Cómo leer los cortes.</strong>
+              <span>
+                “Corte del 20 %” significa que el 20 % de los titulados queda
+                por debajo de ese importe. Los cortes del 40 %, 60 % y 80 % se
+                leen del mismo modo. No son salarios mínimos ni una predicción
+                personal.
+              </span>
+            </div>
+
+            <div class="evidence-grid">
+              <section class="evidence-panel" aria-labelledby="spain-title">
+                <p class="evidence-scope">
+                  España · Jornada completa · Base de cotización anualizada
+                </p>
+                <h2 class="h2" id="spain-title">
+                  Ingresos observados del ciclo o grupo en España
+                </h2>
+                <ul class="cut-list" aria-label="Distribución: Administración de Sistemas Informáticos en Red">
+                  <li class="cut-row">
+                    <div class="cut-head">
+                      <span>Media anual</span>
+                      <strong>25.423 €</strong>
+                    </div>
+                    <div class="cut-bar" aria-hidden="true">
+                      <span class="cut-fill cut-fill--mean" style="width: 81%"></span>
+                    </div>
+                    <p class="caption">Base media anualizada publicada.</p>
+                  </li>
+                  <li class="cut-row">
+                    <div class="cut-head">
+                      <span>Corte del 20 %</span>
+                      <strong>18.872 €</strong>
+                    </div>
+                    <div class="cut-bar" aria-hidden="true">
+                      <span class="cut-fill" style="width: 60%"></span>
+                    </div>
+                    <p class="caption">
+                      El 20 % de los titulados queda por debajo de este importe.
+                    </p>
+                  </li>
+                  <li class="cut-row">
+                    <div class="cut-head">
+                      <span>Corte del 40 %</span>
+                      <strong>22.000 €</strong>
+                    </div>
+                    <div class="cut-bar" aria-hidden="true">
+                      <span class="cut-fill" style="width: 70%"></span>
+                    </div>
+                    <p class="caption">Lectura equivalente al corte del 20 %.</p>
+                  </li>
+                  <li class="cut-row">
+                    <div class="cut-head">
+                      <span>Corte del 60 %</span>
+                      <strong>25.537 €</strong>
+                    </div>
+                    <div class="cut-bar" aria-hidden="true">
+                      <span class="cut-fill" style="width: 81%"></span>
+                    </div>
+                    <p class="caption">Lectura equivalente al corte del 20 %.</p>
+                  </li>
+                  <li class="cut-row">
+                    <div class="cut-head">
+                      <span>Corte del 80 %</span>
+                      <strong>31.400 €</strong>
+                    </div>
+                    <div class="cut-bar" aria-hidden="true">
+                      <span class="cut-fill" style="width: 100%"></span>
+                    </div>
+                    <p class="caption">Lectura equivalente al corte del 20 %.</p>
+                  </li>
+                </ul>
+                <div class="details-tertiary">
+                  <details>
+                    <summary>Ver términos técnicos y tabla de datos</summary>
+                    <div class="table-scroll">
+                      <table class="result-table">
+                        <caption class="sr-only">
+                          Datos técnicos: ciclo o grupo en España
+                        </caption>
+                        <thead>
+                          <tr>
+                            <th scope="col">Medida publicada</th>
+                            <th scope="col">Base anualizada</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <th scope="row">Media anual (mean)</th>
+                            <td>25.423 €</td>
+                          </tr>
+                          <tr>
+                            <th scope="row">
+                              Corte del 20 % (quintile_20_lower_boundary)
+                            </th>
+                            <td>18.872 €</td>
+                          </tr>
+                          <tr>
+                            <th scope="row">
+                              Corte del 40 % (quintile_40_lower_boundary)
+                            </th>
+                            <td>22.000 €</td>
+                          </tr>
+                          <tr>
+                            <th scope="row">
+                              Corte del 60 % (quintile_60_lower_boundary)
+                            </th>
+                            <td>25.537 €</td>
+                          </tr>
+                          <tr>
+                            <th scope="row">
+                              Corte del 80 % (quintile_80_lower_boundary)
+                            </th>
+                            <td>31.400 €</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </details>
+                </div>
+              </section>
+
+              <section class="evidence-panel" aria-labelledby="cyl-title">
+                <p class="evidence-scope">
+                  Castilla y León · Jornada completa · Base de cotización
+                  anualizada
+                </p>
+                <h2 class="h2" id="cyl-title">
+                  Referencia de titulados de grado superior en Castilla y León
+                </h2>
+                <p class="caption" style="margin-top: var(--space-2)">
+                  La comunidad se refiere al centro donde se obtuvo la
+                  titulación, no al lugar de residencia o de trabajo.
+                </p>
+                <ul class="cut-list" aria-label="Distribución: referencia de grado superior en Castilla y León">
+                  <li class="cut-row">
+                    <div class="cut-head">
+                      <span>Media anual</span>
+                      <strong>21.069 €</strong>
+                    </div>
+                    <div class="cut-bar" aria-hidden="true">
+                      <span class="cut-fill cut-fill--mean" style="width: 67%"></span>
+                    </div>
+                    <p class="caption">Base media anualizada publicada.</p>
+                  </li>
+                  <li class="cut-row">
+                    <div class="cut-head">
+                      <span>Corte del 20 %</span>
+                      <strong>16.614 €</strong>
+                    </div>
+                    <div class="cut-bar" aria-hidden="true">
+                      <span class="cut-fill" style="width: 53%"></span>
+                    </div>
+                    <p class="caption">
+                      El 20 % de los titulados queda por debajo de este importe.
+                    </p>
+                  </li>
+                  <li class="cut-row">
+                    <div class="cut-head">
+                      <span>Corte del 40 %</span>
+                      <strong>18.968 €</strong>
+                    </div>
+                    <div class="cut-bar" aria-hidden="true">
+                      <span class="cut-fill" style="width: 60%"></span>
+                    </div>
+                    <p class="caption">Lectura equivalente al corte del 20 %.</p>
+                  </li>
+                  <li class="cut-row">
+                    <div class="cut-head">
+                      <span>Corte del 60 %</span>
+                      <strong>21.467 €</strong>
+                    </div>
+                    <div class="cut-bar" aria-hidden="true">
+                      <span class="cut-fill" style="width: 68%"></span>
+                    </div>
+                    <p class="caption">Lectura equivalente al corte del 20 %.</p>
+                  </li>
+                  <li class="cut-row">
+                    <div class="cut-head">
+                      <span>Corte del 80 %</span>
+                      <strong>24.934 €</strong>
+                    </div>
+                    <div class="cut-bar" aria-hidden="true">
+                      <span class="cut-fill" style="width: 79%"></span>
+                    </div>
+                    <p class="caption">Lectura equivalente al corte del 20 %.</p>
+                  </li>
+                </ul>
+                <div class="details-tertiary">
+                  <details>
+                    <summary>Ver términos técnicos y tabla de datos</summary>
+                    <div class="table-scroll">
+                      <table class="result-table">
+                        <caption class="sr-only">
+                          Datos técnicos: referencia de grado superior en
+                          Castilla y León
+                        </caption>
+                        <thead>
+                          <tr>
+                            <th scope="col">Medida publicada</th>
+                            <th scope="col">Base anualizada</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <th scope="row">Media anual (mean)</th>
+                            <td>21.069 €</td>
+                          </tr>
+                          <tr>
+                            <th scope="row">
+                              Corte del 20 % (quintile_20_lower_boundary)
+                            </th>
+                            <td>16.614 €</td>
+                          </tr>
+                          <tr>
+                            <th scope="row">
+                              Corte del 40 % (quintile_40_lower_boundary)
+                            </th>
+                            <td>18.968 €</td>
+                          </tr>
+                          <tr>
+                            <th scope="row">
+                              Corte del 60 % (quintile_60_lower_boundary)
+                            </th>
+                            <td>21.467 €</td>
+                          </tr>
+                          <tr>
+                            <th scope="row">
+                              Corte del 80 % (quintile_80_lower_boundary)
+                            </th>
+                            <td>24.934 €</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </details>
+                </div>
+              </section>
+            </div>
+
+            <p class="small" style="max-width: 44rem">
+              Mostramos ambas referencias por separado porque la fuente
+              consultada no publica ingresos por ciclo concreto en Castilla y
+              León; solo ofrece una referencia conjunta para Grado Medio o
+              Grado Superior.
+            </p>
+
+            <footer class="income-source">
+              <span class="small">
+                Copia del 22 de agosto de 2026 · calidad verificada
+                (qualityStatus passed).
+              </span>
+              <a
+                class="link-action"
+                href="https://estadisticas.educacion.gob.es/EducaJaxiPx/"
+                rel="noopener"
+              >
+                Fuente: EDUCAbase
+                <svg
+                  class="icon"
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  aria-hidden="true"
+                >
+                  <path d="M15 3h6v6" />
+                  <path d="M10 14 21 3" />
+                  <path
+                    d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"
+                  />
+                </svg>
+              </a>
+            </footer>
+          </section>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="container">
+        <div class="footer-grid">
+          <div>
+            <h2 class="footer-group-title">Explorar</h2>
+            <ul class="footer-group-list">
+              <li><a href="/desde-fp">Desde tu FP</a></li>
+              <li><a href="/desde-ocupacion">Desde una profesión</a></li>
+              <li><a href="/desde-oferta">Desde una oferta</a></li>
+              <li><a href="/donde-estudiar">Dónde estudiar</a></li>
+            </ul>
+          </div>
+          <div>
+            <h2 class="footer-group-title">Datos y método</h2>
+            <ul class="footer-group-list">
+              <li><a href="/metodologia">Metodología</a></li>
+              <li><a href="/datos-abiertos">Datos abiertos</a></li>
+              <li><a href="/comparar">Comparar estudios</a></li>
+              <li><a href="/recursos">Más formación</a></li>
+            </ul>
+          </div>
+          <div>
+            <h2 class="footer-group-title">Información</h2>
+            <ul class="footer-group-list">
+              <li><a href="/accesibilidad">Accesibilidad</a></li>
+              <li><a href="/para-organizaciones">Para organizaciones</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <p class="caption">
+            SALIDA CyL — orientación profesional con datos públicos de Castilla
+            y León.
+          </p>
+          <p class="caption">
+            Prototipo estático del rediseño (no es el producto en producción).
+          </p>
+          <p class="caption">
+            Imágenes editoriales generadas mediante IA.
+          </p>
+        </div>
+      </div>
+    </footer>
+
+    <script src="../product.js"></script>
+  </body>
+</html>

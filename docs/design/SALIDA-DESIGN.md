@@ -185,7 +185,11 @@ aquí se define el qué, no el código.
 **GlobalHeader** — 64/56px, superficie blanca, hairline inferior. Anatomía:
 identidad SALIDA (wordmark + "Castilla y León", enlace a Home) · navegación
 principal (desktop) · acción de accesibilidad/buscador (opcional) · menú móvil.
-Sin mega-menús; el nav primario son las tres rutas + Centros + Método.
+Sin mega-menús; el nav primario son las cuatro rutas de tarea: Explorar,
+Ofertas, Dónde estudiar, Comparar estudios; los secundarios (Más formación,
+Datos abiertos, Metodología, Accesibilidad) viven en la fila superior del
+header. Mobile expone todos. Etiqueta ≠ ruta: los labels evolucionan, las
+URLs no (ROUTE_COMPATIBILITY_CONTRACT en `screen-contracts.md`).
 
 **GlobalNav** — desktop: horizontal bajo el header, LABEL/600; ítem activo:
 subrayado de 3px PRIMARY (no color de fondo). Mobile: botón "Menú" → panel a
@@ -196,8 +200,9 @@ real (Home / Dónde estudiar / …). Colapsa a "…" en >3 niveles en mobile.
 
 **Footer** — 3 zonas: (1) identidad + tesis en una línea; (2) enlaces
 Método/Accesibilidad/Fuentes/Acerca de; (3) CAPTION con procedencia de datos
-(JCyL, SEPE, BOE…) + fecha de copia + disclosure IA. Fondo SURFACE_ALT, sin
-columnas excesivas.
+(JCyL, SEPE, BOE…) + fecha de copia + línea discreta de disclosure IA
+("Imágenes editoriales generadas mediante IA."; el texto completo vive en
+Metodología). Fondo SURFACE_ALT, sin columnas excesivas.
 
 ### 6.2 Home y rutas
 
@@ -575,3 +580,57 @@ OpenDesign ejecuta este contrato sin inventar dirección:
   (7) disclosure IA en Método/Footer; (8) ninguna imagen nueva fuera de las
   cinco familias aprobadas.
 - Cualquier desviación = propuesta de cambio de contrato, no decisión local.
+
+---
+
+## 21. PageMasthead — lenguaje estructural compartido (Home ↔ interiores)
+
+Las páginas interiores no son "otro diseño": comparten con la Home el mismo
+esqueleto estructural y lo que cambia es la **densidad**, nunca el lenguaje.
+Esto es "mismo producto, distinta densidad", no "todas las páginas
+idénticas".
+
+### Anatomía compartida (todas las rutas)
+
+```
+GlobalHeader + GlobalNav          ← idénticos en todas las páginas
+Breadcrumbs                       ← CAPTION, "/", aria-current
+┴ hairline (implícita por el ritmo)
+EYEBROW (LABEL, uppercase, trigo) ← mismo tratamiento en todas las páginas
+H1                                 ← clamp 28→32, 700; code-chip cuando exista
+subcopy (BODY_LARGE, muted)        ← 1–2 frases, max-width 40rem
+actions                            ← 1 primaria + secundarias, 44px, gap 12
+[DataStat band]                    ← cuando exista: proof-rail sobre SURFACE_ALT
+...secciones (SectionHeader: H2 + lede)...
+Footer                             ← idéntico + línea discreta de IA
+```
+
+- **Mismo grid**: `container` 1240px, gutter 16/24; sin excepciones por
+  página.
+- **Mismas superficies cálidas**: SURFACE (blanco) y SURFACE_ALT (papel
+  cálido) alternando por sección; las bandas DataStat viven siempre sobre
+  SURFACE_ALT.
+- **Mismo SectionHeader**: `section-head` = H2 + lede opcional; las secciones
+  densas (tablas/listas) pueden usar lede en BODY (no BODY_LARGE).
+- **Mismo ritmo vertical**: secciones separadas por `--stack-section`; título
+  ↔ contenido por `--stack-related`; el heading de sección nunca se pega al
+  contenido.
+
+### Relación H1 / subcopy / actions (contrato)
+
+El H1 responde a la pregunta de la página; la subcopy declara alcance (qué es
+y qué no es); las acciones apuntan a la siguiente tarea real. Ese orden
+(eyebrow → H1 → subcopy → actions) es fijo: ninguna página lo reordena. La
+Home usa la variante DISPLAY del mismo patrón (promesa en vez de título de
+tarea); FP/Occupation/Offers/Comparar/Más formación usan H1.
+
+### Densidad (regla)
+
+- **Home**: extremo aéreo — hero editorial, task cards, máx. 1 imagen intro
+  por página interior cuando aplique.
+- **FP, Occupation, Offers** (y Comparar/Más formación): MÁS densos — filas,
+  tablas, previews, filtros y contadores por viewport. Su densidad crece con
+  **unidades de contenido**, no con fotografía.
+- **Prohibido**: añadir imágenes a fichas para "igualar" la Home; reducir el
+  ritmo vertical de Home para "igualar" las fichas. La fotografía en
+  interiores sigue el contrato de §10 (máx. 1 intro; nunca por resultado).

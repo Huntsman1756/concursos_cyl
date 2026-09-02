@@ -23,11 +23,15 @@ Ritmo alternado blanco/papel cálido; sin cajas anidadas.
 ## 2. Anatomía por componente
 
 - **Header 64px** (56 mobile): wordmark `SALIDA CyL` (700, 20px, "CyL" en
-  PRIMARY) · secundarios derecha (SMALL, muted): Datos abiertos · Metodología ·
-  Accesibilidad. Mobile: botón "Menú" (44px) → panel con foco gestionado,
-  Esc cierra y devuelve foco. **GlobalNav** fila bajo header: Explorar ·
-  Ofertas · Dónde estudiar; LABEL/600, targets 44px; activo = subrayado 3px
-  PRIMARY; en Home ningún ítem lleva `aria-current`.
+  PRIMARY) · secundarios derecha (SMALL, muted): Más formación · Datos
+  abiertos · Metodología · Accesibilidad. Mobile: botón "Menú" (44px) → panel
+  con foco gestionado, Esc cierra y devuelve foco. **GlobalNav** fila bajo
+  header: Explorar · Ofertas · Dónde estudiar · Comparar estudios; LABEL/600,
+  targets 44px; activo = subrayado 3px PRIMARY; en Home ningún ítem lleva
+  `aria-current`. Mobile expone TODOS los ítems (4 primarios + 4
+  secundarios). Labels y rutas: label ≠ ruta — `/comparar` se llama
+  "Comparar estudios" y `/recursos` "Más formación", pero ninguna URL cambia
+  (ROUTE_COMPATIBILITY_CONTRACT en `screen-contracts.md`).
 - **Hero desktop**: grid 55/45. Izquierda: eyebrow trigo (LABEL uppercase) →
   DISPLAY (≤3 líneas) → párrafo único BODY_LARGE → trust line (SMALL muted,
   separadores trigo) → task selector (tablist 3 opciones, 44px, seleccionada =
@@ -68,9 +72,13 @@ training`, position 66% 36%) / apilado mobile (imagen 4:3→16:9). H2 + lede +
 - **Method/Trust**: H2 "Sabes de dónde sale cada relación." + 1 párrafo +
   acciones (secundario "Ver metodología" → `/metodologia`; acción de texto
   "Explorar los datos abiertos" → `/datos-abiertos`) + disclosure IA en
-  CAPTION (sin jerarquía superior a la del contenido).
-- **Footer**: SURFACE_ALT, 3 grupos (Explorar / Datos y método / Información)
-  - barra inferior CAPTION con identidad y estado del prototipo.
+  CAPTION con el texto completo ("Las imágenes editoriales son generadas
+  mediante IA y no representan personas, empresas, ofertas ni centros
+  reales."), sin jerarquía superior a la del contenido.
+- **Footer**: SURFACE_ALT, 3 grupos (Explorar / Datos y método / Información;
+  en "Datos y método": Metodología · Datos abiertos · Comparar estudios ·
+  Más formación) — barra inferior CAPTION con identidad, estado del prototipo
+  y la línea discreta **"Imágenes editoriales generadas mediante IA."**.
 
 ## 3. Interacción
 

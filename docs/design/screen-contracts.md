@@ -9,9 +9,26 @@ inventar dirección nueva.
 
 Convenciones globales:
 
-- NAV = global en todas las pantallas (Explorar / Ofertas / Dónde estudiar +
-  secundarios). El CONTEXTO se expresa con breadcrumb + banner de página, nunca
-  cambiando el menú.
+- NAV = global en todas las pantallas. Primario (desktop): **Explorar ·
+  Ofertas · Dónde estudiar · Comparar estudios**. Secundarios (fila superior):
+  **Más formación · Datos abiertos · Metodología · Accesibilidad**. Mobile
+  expone TODOS (4 primarios + 4 secundarios) en el panel de menú. El CONTEXTO
+  se expresa con breadcrumb + masthead de página, nunca cambiando el menú.
+  **Etiqueta ≠ ruta**: los labels pueden evolucionar ("Comparar ingresos" →
+  "Comparar estudios", "Formación complementaria" → "Más formación"); las
+  rutas NO cambian (ver ROUTE_COMPATIBILITY_CONTRACT).
+- **PageMasthead compartido (Home ↔ interiores)**: mismo lenguaje estructural
+  en todas las páginas — breadcrumb (CAPTION, separador "/", `aria-current`)
+  → eyebrow (LABEL uppercase trigo) → H1 → subcopy BODY_LARGE muted →
+  acciones (1 primaria + secundarias, 44px) → banda DataStat cuando exista
+  (fila `proof-rail` con superficie SURFACE_ALT). Mismo grid (`container`
+  1240px), mismas superficies cálidas (SURFACE / SURFACE_ALT), mismo
+  SectionHeader (H2 + lede en `section-head`), mismo ritmo vertical
+  (`--stack-section` entre secciones). **"Mismo producto, distinta densidad"**:
+  FP, Occupation y Offers son MÁS densos que Home (filas/tablas/preview por
+  viewport); Home es el extremo aéreo (hero editorial + task cards). Nunca se
+  añade fotografía a las fichas para "igualar" la Home: la densidad crece con
+  unidades de contenido, no con imágenes.
 - Semántica de centros: **Titularidad** = `teachingType`
   (Pública/Concertada/Privada) · **Tipo de centro** = `centerOwnership`
   (Centro educativo/municipal/agrario/privado, solo metadata secundaria o
@@ -24,6 +41,11 @@ Convenciones globales:
   “sin relación comprobada en esta copia”.
 - Todos los contadores y números provienen del snapshot activo
   (RUNTIME_DERIVED_IN_IMPLEMENTATION); prohibido fijarlos a mano.
+- **Disclosure IA**: texto completo solo en Metodología ("Las imágenes
+  editoriales son generadas mediante IA y no representan personas, empresas,
+  ofertas ni centros reales."); el Footer lleva la línea discreta "Imágenes
+  editoriales generadas mediante IA." en todas las páginas. Prohibido badges
+  sobre imágenes y captions duplicados por página.
 
 ---
 
@@ -207,8 +229,171 @@ altura de fila por contenido, padding 12/16), rcards (campos en el mismo
 orden), stat bands (números H2 tabulares en la misma línea base), botones 44px
 en todas las páginas. Lo único que crece es la zona de descripción/evidencia.
 
+## 10. `/comparar` — COMPARE STUDIES (prototipada: `prototypes/product/compare/`)
+
+- **Purpose**: comparar ingresos observados publicados (EDUCAbase) entre
+  ciclos/grupos, conservando todos los avisos del producto existente. La ruta
+  y el comportamiento existen en producción; solo cambia el label de
+  navegación ("Comparar estudios") y la piel visual.
+- **Primary question**: "¿Qué ingresos observados publicados tiene este ciclo
+  frente a otros, con la misma cohorte y el mismo año?"
+- **Preserved semantics (NO negociable)**:
+  - datos de **EDUCAbase** (`outcome-indicators`, sourceUrl
+    `estadisticas.educacion.gob.es/EducaJaxiPx/`) con fecha de copia y
+    `qualityStatus`;
+  - **percentiles/cortes existentes**: media + cortes del 20/40/60/80 %
+    (`quintile_*_lower_boundary`), mostrados como importes y con explicación
+    "Cómo leer los cortes"; si los cortes no superan la comprobación de
+    coherencia, solo se muestra la media;
+  - **avisos de agregación**: "Datos agregados… no es un salario individual";
+  - **no salario individual**; **no predicción** ("No es una predicción
+    salarial personal.");
+  - referencia España (ciclo/grupo) separada de la referencia Castilla y León
+    (nivel de titulación) + limitación explicada;
+  - estado en la URL (`level`, `group`, `cohort`, `year`).
+- **Section order**: breadcrumbs → PageMasthead (eyebrow "Comparar estudios",
+  H1 "Ingresos observados", subcopy, link metodología) → notice warning de
+  agregación → formulario (Nivel · Ciclo/grupo · Cohorte · Año) → summary de
+  selección → "Cómo leer los cortes" (EvidenceCallout) → dos paneles de
+  evidencia (España / Castilla y León) con cut-rows (media + cortes, barras
+  tabulares) → `<details>` con tabla técnica → limitación → fuente EDUCAbase
+  + fecha de copia.
+- **Density**: media (entre ficha y Home). Sin fotografía.
+- **Empty/unavailable**: "Los datos de comparación no están disponibles en
+  esta versión." + link metodología.
+
+## 11. `/recursos` — MORE TRAINING (prototipada: `prototypes/product/resources/`)
+
+- **Purpose**: formación complementaria (cursos ECYL, certificados de
+  profesionalidad) y empleo público abierto, conservando datos y
+  comportamiento existentes. Label de navegación: "Más formación".
+- **Primary question**: "¿Qué formación complementaria y convocatorias
+  públicas hay ahora, con su fuente oficial?"
+- **Preserved semantics (NO negociable)**:
+  - tres bloques: **Empleo público abierto ahora** (solo plazo abierto en la
+    copia), **Cursos del ECYL** (page size 40 + "Mostrar más") y
+    **Certificados de profesionalidad** (page size 60 + "Mostrar más");
+  - búsqueda por nombre/localidad/código + filtro familia profesional
+    (catálogo oficial);
+  - metadatos faltantes como "No publicado en la ficha" / "Datos no
+    publicados: …" (nunca inventados);
+  - certificados: "La familia y el nivel proceden del catálogo oficial. No
+    atribuimos equivalencias con títulos de FP.";
+  - enlaces a `officialUrl` / `programUrl` reales; fuente + fecha de copia.
+- **Section order**: breadcrumbs → PageMasthead (eyebrow "Recursos de
+  Castilla y León", H1 "Más formación") → banda DataStat (cursos /
+  certificados / convocatorias abiertas de la copia) → FilterBar (buscar +
+  familia) → Empleo público abierto ahora (offer-rows con badge de tipo de
+  acceso, plazo) → Cursos del ECYL (resource-rows con `<details>` de metadatos
+  completos) → Certificados de profesionalidad → EvidenceCallout de fuentes.
+- **Density**: alta (listas densas), como Offers/Centers. Sin fotografía.
+
+---
+
+## ROUTE_COMPATIBILITY_CONTRACT
+
+**Las rutas productivas existentes permanecen idénticas.** El rediseño cambia
+labels, jerarquía y presentación; **nunca URLs**. Cambiar el label de
+navegación NO autoriza cambiar una URL. Cualquier nueva URL se añade a esta
+tabla; ninguna URL se elimina ni renombra.
+
+Rutas productivas congeladas (fuente: `src/app/routes.tsx` +
+`docs/contest/production-v3-route-contract.md`):
+
+| Ruta                                       | Página                                   | Notas                                                        |
+| ------------------------------------------ | ---------------------------------------- | ------------------------------------------------------------ |
+| `/`                                        | Home                                     |                                                              |
+| `/desde-fp`                                | Buscador de FP                           |                                                              |
+| `/desde-fp/:programKey`                    | Ficha FP                                 | `programKey` con formato actual (`ADG02S`, `SAN21`…)         |
+| `/desde-fp/:programKey/ofertas`            | Ofertas contextuales de un ciclo         |                                                              |
+| `/desde-ocupacion`                         | Buscador de profesiones                  |                                                              |
+| `/desde-ocupacion/:occupationId`           | Ficha de profesión                       | `occupationId` = `occupation:cno11:XXXX` (ver auditoría)     |
+| `/desde-ocupacion/:occupationId/ofertas`   | Ofertas contextuales de una profesión    |                                                              |
+| `/desde-oferta`                            | Ofertas globales                         |                                                              |
+| `/donde-estudiar`                          | Explorador de centros                    |                                                              |
+| `/donde-estudiar/:programKey`              | Centros contextuales de un ciclo         |                                                              |
+| `/comparar`                                | Comparar estudios (ingresos observados)  | Label nuevo; URL intacta                                     |
+| `/recursos`                                | Más formación (recursos ECYL)            | Label nuevo; URL intacta                                     |
+| `/datos-abiertos`                          | Datos abiertos                           |                                                              |
+| `/metodologia`                             | Metodología                              |                                                              |
+| `/accesibilidad`                           | Accesibilidad                            |                                                              |
+| `/para-organizaciones`                     | Para organizaciones                      |                                                              |
+| `/formacion/:programKey`                   | Alias compatible de centros contextuales | Congelado por enlaces públicos existentes                    |
+
+Reglas derivadas:
+
+1. Los estados de vista serializables (`query`, `province`, `status`,
+   `level`, `family`, `page` y en `/comparar` `level/group/cohort/year/program`)
+   se mantienen en la URL y sobreviven a recarga/atrás/adelante.
+2. Un cambio de label en navegación/footer/breadcrumbs debe reflejarse en E2E
+   como aserción de URL, no de texto.
+3. Queda prohibido introducir rutas paralelas ("rediseño" vs "legacy").
+
+## JURY_MEMO_URL_AUDIT
+
+URLs exactas presentes en `docs/contest/jury-memo.md` (auditoría 02/09/2026).
+Esta lista es la base contractual de los futuros E2E de compatibilidad de
+rutas; cada fila debe convertirse en un test E2E que navegue la URL y
+compruebe contenido estable:
+
+| #   | URL exacta del memo                                     | Tipo     | Debe seguir respondiendo con                                |
+| --- | ------------------------------------------------------- | -------- | ----------------------------------------------------------- |
+| 1   | `/desde-fp/SAN21`                                       | interna  | Ficha del ciclo SAN21 con relaciones revisadas y ofertas    |
+| 2   | `/desde-ocupacion/occupation%3Acno11%3A5611`            | interna  | Ficha de la profesión 5611 (recorrido inverso)              |
+| 3   | `/desde-ocupacion/occupation%3Acno11%3A7111`            | interna  | Ficha 7111 con sus ofertas revisadas (cobertura positiva)   |
+| 4   | `/desde-ocupacion/occupation%3Acno11%3A3820`            | interna  | Ficha 3820 en fail-closed (sin ofertas inventadas)          |
+| 5   | `/desde-oferta`                                         | interna  | Explorador global de ofertas                                |
+| 6   | `/datos-abiertos`                                       | interna  | Catálogo de descarga + manifest                             |
+
+Notas contractuales:
+
+- El memo codifica `occupationId` con **percent-encoding** (`%3A` por `:`).
+  Los E2E deben usar la forma codificada exacta del memo: un cambio de
+  codificación rompe enlaces públicos.
+- La URL externa del concurso
+  (`https://datosabiertos.jcyl.es/web/es/concurso-datos-abiertos/concurso-datos-abiertos.html`)
+  es referencia externa del memo, no una ruta del producto: queda fuera del
+  contrato de rutas, pero se registra aquí por completitud.
+- Estado: **PENDIENTE E2E**. Ningún E2E de rutas existe todavía; esta lista
+  debe materializarse como spec E2E antes del release.
+
+## ACCESSIBILITY_EVIDENCE_POLICY
+
+**La evidencia Axe/keyboard de candidate.7 NO demuestra la accesibilidad del
+rediseño.** Los informes de accesibilidad previos (gate local de candidate.7,
+capturas de auditoría anteriores) quedan invalidados como prueba del nuevo
+producto: describen otro DOM. No se reutilizarán resultados anteriores como
+evidencia del rediseño, ni total ni parcialmente.
+
+El producto rediseñado deberá ejecutar de nuevo, desde cero, sobre el DOM
+real de implementación:
+
+1. **Axe** (0 violations objetivo documentado por página/ruta).
+2. **Keyboard** (recorrido completo por teclado en cada flujo crítico).
+3. **Focus** (anillo visible, orden de tabulación lógico, foco retornado tras
+   cerrar overlays).
+4. **Menu** (panel móvil: apertura, foco atrapado, Esc cierra y devuelve el
+   foco al trigger).
+5. **Task selector** (tabs ARIA de la Home: roving tabindex, flechas
+   ←/→, un solo panel visible).
+6. **Dialogs/sheets** (paneles de filtros móviles y modales: Semántica,
+   foco, cierre).
+7. **InfoButton** (glifo 16 / target 44, Esc/click-fuera, retorno de foco).
+8. **Filters** (chips activos, quitar filtros, contadores accesibles).
+9. **Responsive 320** (sin scroll horizontal en todas las rutas).
+10. **Zoom** (200 % usable en las rutas críticas).
+11. **Reduced motion** (`prefers-reduced-motion` desactiva transiciones).
+
+Estado actual: **NO EJECUTADA para el rediseño** (los prototipos estáticos son
+evidencia de diseño, no de accesibilidad). Ningún gate de accesibilidad del
+rediseño puede marcarse verde hasta completar esta lista.
+
 ## Contact sheet
 
-`screenshots/PRODUCT-CONTACT-SHEET.png` — HOME + 7 pantallas juntas como
-prueba de producto único (header, grid, tipo, color, spacing, botones,
-densidad).
+`screenshots/PRODUCT-CONTACT-SHEET.png` — HOME + 9 familias de pantallas
+juntas como prueba de "mismo producto, distinta densidad" (header, grid,
+PageMasthead, tipo, color, spacing, botones compartidos; FP / Occupation /
+Offers más densas que Home). Regenerada tras la congelación de navegación y
+con las pantallas nuevas `/comparar` y `/recursos`.
+
+---

@@ -6,6 +6,72 @@ Sources: live inspection of nationalcareers.service.gov.uk (fetched during this
 phase) and established knowledge of the cited systems (GOV.UK Frontend,
 DSFR, USWDS, France Travail 2024 rebrand, TodoFP, Jobs and Skills Australia).
 
+## REFERENCE_POLICY (binding — corrects earlier ambiguity)
+
+This section is normative for the implementation. The comparison table above is
+observation; the rules below are what SALIDA may and may not do.
+
+### DSFR (Système de design de l'État, France)
+
+**NOT reusable. NOT a copyable visual source.**
+
+- Its licence and scope restrict usage to **services of the French State**
+  (sites de l'État and `.gouv.fr`). SALIDA is not a French State service and
+  does not operate under that framework.
+- Allowed: **conceptual observation of patterns only** (how DSFR sequences
+  header/utility, media ratios, state colors) as documented research input.
+- Forbidden:
+  - importing any DSFR **component** (code, HTML/CSS, Web Components);
+  - importing DSFR **tokens** (colors, spacing, type scale — including
+    Marianne and the state palette);
+  - copying DSFR **branding** (bloc-marque, Marianne block, république
+    branding, déclinaisons);
+  - importing any DSFR **asset** (fonts, icons, pictograms, illustrations).
+
+DSFR stays in this document as a **study reference**, never as an
+implementation source.
+
+### GOV.UK (Design System + Frontend)
+
+**Practical referent** (study AND compliant reuse) for:
+
+- **forms** (label/hint/error anatomy, progressive disclosure);
+- **errors** (error summary, inline validation patterns);
+- **tables** (numeric right-alignment, captions, scope, hover states);
+- **content hierarchy** (one thing per page, task headings, plain language);
+- **accessibility** (focus states, target sizes, WCAG 2.1 AA discipline).
+
+Its Frontend code is **MIT-licensed**: it may be studied and reused in
+conformity with the licence. Even so, SALIDA's default is its own
+implementation per `SALIDA-DESIGN.md`; copy specific interaction rules, not
+wholesale bundles.
+
+### USWDS (U.S. Web Design System)
+
+**Practical referent** (study AND compliant reuse) for:
+
+- **Public Sans** (the chosen SALIDA typeface; OFL, designed for government
+  UIs — already self-hosted in the prototypes);
+- **tokens** philosophy (role-based naming, closed scales);
+- **spacing** (4px base grid, semantic aliases);
+- **accessibility** (508-derived practices, focus discipline);
+- **form/filter patterns** (visible state, remove-all, result counts).
+
+### Installation rule
+
+Do **not** automatically install `govuk-frontend`, `@uswds/uswds` or any DSFR
+package. SALIDA is a **React** product. Preferred stack, in order:
+
+1. current project components;
+2. semantic HTML;
+3. **Radix** (already installed) where it contributes accessible behavior
+   (dialogs/popovers/tabs) — styled with SALIDA tokens;
+4. own implementation conforming to `SALIDA-DESIGN.md`.
+
+No new framework or CSS system enters the bundle without a written
+demonstration of net benefit (accessibility, size, maintenance) approved as a
+contract change.
+
 ## Comparison table
 
 | Dimension       | National Careers Service (UK)                                                                                                                                           | Jobs and Skills Australia                                                               | France Travail / MétierScope                                                         | TodoFP / SoyFP                                                                                      | GOV.UK                                                                  | DSFR                                                                        | USWDS                                                                     |

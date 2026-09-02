@@ -123,15 +123,24 @@ Decide per composition during implementation; default to the alt above.
 
 ## AI disclosure (global, not per-image)
 
-No badge is placed on top of the photographs. A single discreet note lives in
-the **Metodología / Acerca de** surface (exact placement decided during
-implementation):
+No badge is placed on top of the photographs. Two disclosure surfaces, by
+contract:
 
-> Las imágenes editoriales son ilustraciones generadas mediante IA y no
-> representan centros, empresas, ofertas ni personas reales.
+1. **Metodología** (full text, canonical):
+
+   > Las imágenes editoriales son generadas mediante IA y no representan
+   > personas, empresas, ofertas ni centros reales.
+
+2. **Footer** (discreet line, every page):
+
+   > Imágenes editoriales generadas mediante IA.
 
 Never present an editorial illustration as a photograph of a catalog center,
 company, offer or person.
+
+QA of these assets is governed by `docs/design/image-qa-policy.md` (full-
+resolution inspection checklist; no asset with evident artifacts is approved;
+sectorial diversity of the current set must be reviewed before release).
 
 ## Asset-budget status (Phase 1 boundary)
 
