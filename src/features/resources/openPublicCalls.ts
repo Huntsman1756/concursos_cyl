@@ -1,7 +1,7 @@
 /**
  * Truthful "open now" derivation: a call is open for applications when the
- * published window covers `today` (runtime clock). Fail-closed: unknown
- * deadlines are never counted as open.
+ * published window covers the supplied snapshot reference date. Fail-closed:
+ * unknown deadlines are never counted as open.
  */
 export function selectOpenPublicCalls<
   T extends {
