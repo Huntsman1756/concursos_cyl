@@ -91,7 +91,18 @@ const targets = [
   ["resources", "resources/index.html", [1440, 390]],
 ];
 
-for (const [name, pagePath, widths] of targets) {
+// Optional filter: node capture.mjs offers-global compare-studies …
+const onlyNames = process.argv.slice(2);
+const selected = onlyNames.length
+  ? targets.filter(([name]) => onlyNames.includes(name))
+  : targets;
+if (selected.length !== onlyNames.length) {
+  const known = new Set(targets.map(([name]) => name));
+  const unknown = onlyNames.filter((n) => !known.has(n));
+  throw new Error(`Unknown capture target(s): ${unknown.join(", ")}`);
+}
+
+for (const [name, pagePath, widths] of selected) {
   for (const width of widths) {
     const height =
       width >= 1440 ? 900 : width >= 768 ? 1024 : width >= 390 ? 844 : 720;

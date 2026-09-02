@@ -124,11 +124,16 @@ Convenciones globales:
 - **Section order**: breadcrumbs → header (eyebrow copia fechada, H1 Ofertas,
   subcopy con declaración de no-agencia) → filtros: Buscar + Provincia +
   Relación FP (solo opciones con dato real: “Solo con FP relacionada”; nada
-  inventado) → result-meta SIEMPRE visible (“1–12 de 1033 ofertas · 138 con
-  FP relacionada”) → lista (puesto, localidad · fuente · fecha, badge solo si
-  relación comprobada; sin badge = sin afirmación) → paginación (12/página) →
-  caption fail-closed.
-- **Data**: offer-evidence completo; page size 12 (contrato actual).
+  inventado) → result-meta SIEMPRE visible (“1–12 de 1058 ofertas · 138 con
+  FP relacionada”; UNIDAD: oferta única `offerId`) → lista (puesto, localidad ·
+  fuente · fecha, badge solo si relación comprobada; sin badge = sin
+  afirmación) → paginación (12/página → 89 páginas; última “1057–1058 de
+  1058”) → caption fail-closed.
+- **Data**: offer-evidence completo (1058 registros = manifest
+  `jobOffers.recordCount`); page size 12 (contrato actual). PROHIBIDO usar el
+  recurso raíz legacy `/data/v1/job-offers.json` (1033, excluido del runtime
+  por `LEGACY_RUNTIME_ROOT_FILES`); el total se lee del snapshot activo
+  direccionado por el manifest.
 - **Responsive**: misma lista; filtros en sheet móvil.
 - **Empty state**: búsqueda sin resultados → EmptyState estándar (“Sin
   resultados para estos filtros” + quitar filtros).
@@ -143,22 +148,40 @@ Convenciones globales:
   intro (16:9 desktop / 4:3 móvil; nunca entre resultados) → H1 “Dónde
   estudiar” + una frase (oferta publicada en la copia actual; sin promesas de
   matrícula/plazas) → filtros: Buscar · Provincia · Modalidad
-  (`trainingOfferings.modality`) · Titularidad (`teachingType`) · “Más
-  filtros” (Nivel · Familia · Tipo de centro=`centerOwnership`) → result count
-  visible “1–50 de 1293 opciones formativas · 229 centros representados” +
-  chips activos + Quitar filtros → tabla desktop (Centro[+tipo de centro como
-  sub-línea] · Localidad · Ciclo·Nivel · Modalidad · Titularidad · Acciones:
-  Ver ciclo / Cómo llegar / Web del centro si existe) → ResultCards móvil
-  (CENTRO / Localidad / CICLO+nivel / MODALIDAD / TITULARIDAD / acciones) →
-  paginación 50/página → caption de URLs pendientes de auditoría y modalidad
-  no publicada.
-- **Data**: offerings (1293) join centers (229) + programs; snapshot trae
-  teachingType/centerOwnership.
+  (`trainingOfferings.modality` agregado en `modalities[]`) · Titularidad
+  (`teachingType` agregado en `teachingTypes[]`) · “Más filtros” (Nivel =
+  `program.level` · Familia = `program.familyCode` · Tipo de centro =
+  `centerOwnership`) → result count visible “1–50 de 1293 opciones formativas ·
+  229 centros representados” + chips activos + Quitar filtros → tabla desktop
+  (Centro[+tipo de centro como sub-línea] · Localidad · Ciclo·Nivel ·
+  Modalidad · Titularidad · Acciones: Ver ciclo / Cómo llegar / Web del centro
+  si existe) → ResultCards móvil (CENTRO / Localidad / CICLO+nivel /
+  MODALIDAD / TITULARIDAD / acciones) → paginación 50/página → caption de
+  procedencia de URLs y modalidad no publicada.
+- **Data**: 1294 raw offerings (1293 únicos tras join centers (229) +
+  programs (187)); **UNIDAD contractual = fila única
+  `centerCode:programKey` (“opción formativa”)**. Semántica completa de
+  filtros y facet counts: `analysis/catalog-filter-semantics.md` (vinculante).
+- **FACET multivalor**: una fila puede pertenecer a varias facetas
+  (modalities[] / teachingTypes[]); se cuenta filas, no offerings raw; la suma
+  de facetas no tiene por qué igualar el total de filas.
 - **UNKNOWN modality**: en resultados “Modalidad no publicada”; opción de
   filtro “Sin modalidad publicada” solo si existe en la copia (hoy 0 —
-  omitida).
-- **Center links**: “Web del centro” (si dataset publica URL) y “Cómo llegar”
-  (mapa). PROHIBIDO “Web oficial verificada” hasta auditoría.
+  omitida). Prohibido “Desconocida”.
+- **Center links (política CTA, resultado de auditoría
+  `analysis/centers-link-audit.md`, 02/09/2026)**:
+  - LIVE/REDIRECTED/HTTP_ONLY + identidad CONFIRMED o PLAUSIBLE → “Web del
+    centro” (href tal como lo publica la fuente; `rel="noopener"`).
+  - LIVE/REDIRECTED + identidad NOT_CONFIRMED → “Web publicada en la fuente”.
+  - BROKEN_HTTP / DNS_FAILURE / TLS_FAILURE / TIMEOUT / DOMAIN_PARKED /
+    CONTENT_MISMATCH / IDENTITY_MISMATCH → SIN CTA web (201 de 228 centros con
+    web tienen CTA seguro; 27 sin CTA; 3 dominios secuestrados excluidos).
+  - HTTP-only: mostrar la URL tal cual la publica la fuente; PROHIBIDO elevar
+    a https silenciosamente.
+  - “Cómo llegar” se mantiene siempre (nombre + localidad/provincia
+    publicados, sin datos inventados).
+  - PROHIBIDO “Web oficial verificada”. La verificación es evidencia de
+    auditoría fechada, no garantía continua.
 - **Responsive**: 1440 tabla; <768 rcards (nunca tabla comprimida); filtros en
   sheet ≤70vh con Aplicar/Quitar; count fuera del sheet.
 - **Empty state**: EmptyState + “Quitar filtros”.
@@ -171,7 +194,7 @@ Convenciones globales:
   [ciclo]” + subcopy (nº centros/provincias, sin matrícula) → filtros
   contextuales SOLO (Provincia · Modalidad · Titularidad; nunca
   familia/ciclo) → count “1–45 de 45” → tabla/rcards → nota (sin paginación
-  si cabe en una página; URLs pendientes de auditoría).
+  si cabe en una página; misma política de CTA web que §5).
 - **Data**: offerings filtrados por programKey.
 - **Responsive/Empty/Provenance**: como explorer.
 
@@ -395,5 +418,53 @@ juntas como prueba de "mismo producto, distinta densidad" (header, grid,
 PageMasthead, tipo, color, spacing, botones compartidos; FP / Occupation /
 Offers más densas que Home). Regenerada tras la congelación de navegación y
 con las pantallas nuevas `/comparar` y `/recursos`.
+
+---
+
+## DATA_INTEGRITY_CONTRACT (auditoría pre-implementación 02/09/2026)
+
+Fuente vinculante: `analysis/prototype-data-integrity.md` +
+`analysis/catalog-filter-semantics.md` + `analysis/centers-link-audit.md`
+(scripts reproducibles en `scripts/analysis/`). Snapshot activo
+`20260830120000000-8c6c79fbd2a1`.
+
+Totales correctos por recurso (UNIDAD explícita):
+
+| Dato | Valor | Unidad |
+| --- | --- | --- |
+| Ofertas globales `/desde-oferta` | **1058** (12/página → 89 páginas; última “1057–1058 de 1058”) | oferta única `offerId` |
+| Ofertas con relación FP revisada | **138** | oferta única con ≥1 relación revisada |
+| Relaciones oferta↔FP (documentación interna) | **196** | relación oferta→(ciclo, ocupación); NUNCA se muestra como número de ofertas |
+| Opciones formativas `/donde-estudiar` | **1293** | fila única `centerCode:programKey` |
+| Centros representados | **229** | centro `centerCode` |
+| Raw offerings (nivel recurso) | 1294 | registro fuente JCyL |
+| Ciclos | **187** | `programKey` |
+| Relaciones FP↔ocupación (grafo) | **264** | relación `programKey↔occupationId` |
+| Cursos ECYL / certificados | **791 / 583** | curso / certificado |
+| Convocatorias abiertas (copia 22/08) | **4** | convocatoria |
+| Recursos publicados (open data) | **22** | recurso del manifest |
+
+Errores de prototipo corregidos en esta fase (lección contractual):
+
+1. `1033` ofertas — lectura del recurso raíz legacy (`/data/v1/job-offers.json`,
+   excluido del runtime); prohibido usar ficheros raíz legacy como fuente.
+2. Enlaces `/formacion/AGL01M` — ciclo inexistente; todo `programKey` de un
+   enlace debe existir en `programs.json`.
+3. Panel CyL de `/comparar` con valores de Grado Medio bajo título de grado
+   superior — cada panel declara su nivel/tabla fuente y no se mezclan.
+
+APPROVED_EXAMPLES_POLICY: los ejemplos editoriales que demuestren una relación
+FP↔ocupación deben usar exclusivamente relaciones aprobadas/publicadas.
+Lista contractual para tests de implementación (`APPROVED_EXAMPLE_IDS`):
+
+- `home:example-adg02s` — ADG02S ↔ CNO 4111 (official_output, revisada
+  12/08/2026) + 45 centros en 9 provincias.
+- `offer:1285665634571` — oferta real Zamora 23/07/2026 con relación revisada.
+- `offer:1285672565954` — oferta real Palencia 20/08/2026 con relación revisada.
+- `occupation:cno11:5611↔SAN21` — 34 ofertas y 34 centros reales.
+
+Cualquier otro ejemplo numérico debe verificar contra snapshot antes de
+publicarse (RUNTIME_DERIVED_IN_IMPLEMENTATION) y no puede aparentar una
+relación revisada que no exista.
 
 ---
