@@ -708,6 +708,7 @@ export function HomePage() {
                     ? "fuente actualizada el"
                     : "snapshot consultado el"}{" "}
                   <time dateTime={freshness.dateTime}>{freshness.date}</time>
+                  {freshness.stale && " Mostramos la última copia disponible."}
                 </>
               )}
             </p>

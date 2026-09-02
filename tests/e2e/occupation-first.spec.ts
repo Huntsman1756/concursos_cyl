@@ -143,11 +143,23 @@ test("the live occupation journey confirms a reviewed everyday alias and reaches
     await page.goto(resultsUrl);
     await page.locator(`a[href="/formacion/${programKey}"]`).click();
     await expect(page).toHaveURL(new RegExp(`/formacion/${programKey}$`, "u"));
-    const firstCenter = page.locator(".center-catalog__table tbody tr").first();
-    await expect(firstCenter).toBeVisible();
-    await expect(
-      firstCenter.getByText(/Presencial|A distancia|Mixta/iu),
-    ).toBeVisible();
+    // Desktop shows the semantic table; mobile shows ResultCards (never a
+    // horizontally squeezed table).
+    const firstCenterRow = page
+      .locator("#center-results-table tbody tr")
+      .first();
+    const firstCenterCard = page.locator(".rcard").first();
+    if (testInfo.project.name === "chromium-mobile") {
+      await expect(firstCenterCard).toBeVisible();
+      await expect(
+        firstCenterCard.getByText(/Presencial|A distancia|Mixta/iu),
+      ).toBeVisible();
+    } else {
+      await expect(firstCenterRow).toBeVisible();
+      await expect(
+        firstCenterRow.getByText(/Presencial|A distancia|Mixta/iu),
+      ).toBeVisible();
+    }
   }
 });
 

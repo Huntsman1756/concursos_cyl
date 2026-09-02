@@ -304,7 +304,7 @@ test("FP results preserve complete centers, province context, deferred outcomes,
   await expect(centersLink).toHaveAttribute("href", "/formacion/IFC03S");
   await centersLink.click();
   await expect(page).toHaveURL(/\/formacion\/IFC03S$/u);
-  await expect(page.locator(".center-catalog__table tbody tr")).toHaveCount(18);
+  await expect(page.locator("#center-results-table tbody tr")).toHaveCount(18);
 
   await page.goBack();
   await expect(page).toHaveURL(

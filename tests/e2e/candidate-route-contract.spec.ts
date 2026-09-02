@@ -24,7 +24,7 @@ for (const route of [
     ).toBeVisible();
 
     if (route.path === "/donde-estudiar") {
-      await expect(page.locator(".center-catalog__table tbody tr")).toHaveCount(
+      await expect(page.locator("#center-results-table tbody tr")).toHaveCount(
         50,
       );
       await expect(
@@ -34,7 +34,7 @@ for (const route of [
       ).toBeVisible();
     }
     if (route.path === "/donde-estudiar/INA02M") {
-      await expect(page.locator(".center-catalog__table tbody tr")).toHaveCount(
+      await expect(page.locator("#center-results-table tbody tr")).toHaveCount(
         3,
       );
       await expect(

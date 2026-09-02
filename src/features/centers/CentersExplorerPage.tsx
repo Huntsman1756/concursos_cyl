@@ -323,7 +323,11 @@ export function CentersExplorerPage(): JSX.Element {
             offerings: state.foundation.trainingOfferings,
             centers: state.foundation.centers,
             programs: state.foundation.programs,
-          })
+          }).filter(
+            (row) =>
+              state.program === null ||
+              row.programKey === state.program.programKey,
+          )
         : [],
     [state],
   );

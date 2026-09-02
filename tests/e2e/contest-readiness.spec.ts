@@ -400,7 +400,7 @@ test.describe("contest readiness journeys", () => {
     await expect(
       page.getByRole("heading", {
         level: 1,
-        name: /Explora formación, profesiones y oportunidades en Castilla y León\./i,
+        name: /Tu FP, tus salidas profesionales y dónde dar el siguiente paso\./i,
       }),
     ).toBeVisible();
     await expect(mobileNavigation).toHaveAttribute("hidden");
@@ -593,7 +593,7 @@ test.describe("contest readiness journeys", () => {
     const diagnostics = installRouteDiagnostics(page);
     await page.goto("/");
     await chooseTrainingProgram(page, "COM01M", "Busca tu ciclo");
-    await page.getByRole("button", { name: "Buscar ciclo" }).click();
+    await page.getByRole("button", { name: "Ver mis salidas" }).click();
     await expect(page).toHaveURL(/\/desde-fp\/COM01M\?query=/u);
     if (testInfo.project.name === "chromium-mobile") {
       await page.getByRole("button", { name: "Menú" }).click();

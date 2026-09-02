@@ -39,7 +39,7 @@ async function expectHomeReadyForLayout(page: Page): Promise<void> {
   });
   await expect(freshness).toHaveAttribute("aria-busy", "false");
   await expect(freshness.locator("time")).toBeVisible();
-  await expect(page.locator(".example-line a")).toHaveCount(1);
+  await expect(page.locator(".example-cta a")).toHaveCount(1);
 }
 
 const legacySnapshot = {
@@ -111,7 +111,7 @@ test("home exposes three clear intents, navigation, freshness, and no automated 
   await expect(freshness).toContainText(
     `Relaciones revisadas · ${expectedDateKind} ${expectedDate}`,
   );
-  await expect(page.locator(".example-line a")).toHaveCount(1);
+  await expect(page.locator(".example-cta a")).toHaveCount(1);
   await expectNoHorizontalOverflow(page);
   await expectStrictAxe(page);
 });
@@ -136,7 +136,7 @@ test("the three-intent home reaches FP and occupation routes after official conf
   await expectStrictAxe(page);
 
   await page.getByRole("link", { name: "SALIDA CyL" }).click();
-  await page.getByRole("button", { name: "Busco una profesión" }).click();
+  await page.getByRole("tab", { name: "Busco una profesión" }).click();
   const universityCombobox = page.getByRole("combobox", {
     name: "Busca una profesión",
   });
