@@ -26,12 +26,6 @@
  * are flagged for promotion into the token file at implementation.
  */
 
-@media (min-width: 768px) {
-  :root {
-    --grid-gutter: var(--space-5); /* 24px from tablet up (DESIGN.md §3) */
-  }
-}
-
 /* ---------------------------------------------------------------- base */
 
 *,
@@ -112,19 +106,20 @@ select:focus-visible,
 
 /* ------------------------------------------------------------ type roles */
 
-.eyebrow {
+.eyebrow,
+.page-eyebrow {
   margin: 0;
-  color: var(--color-accent);
-  font-size: var(--text-label);
-  font-weight: var(--text-label-weight);
-  letter-spacing: 0.03em;
+  color: var(--color-primary);
+  font-size: var(--type-eyebrow);
+  font-weight: var(--type-eyebrow-weight);
+  letter-spacing: var(--text-label-tracking);
   text-transform: uppercase;
 }
 
 .display {
   margin: var(--stack-related) 0 0;
-  font-size: var(--text-display);
-  font-weight: var(--text-display-weight);
+  font-size: var(--type-display-home);
+  font-weight: var(--type-display-home-weight);
   line-height: var(--text-display-line-height);
   letter-spacing: var(--text-display-tracking);
   text-wrap: balance;
@@ -132,8 +127,8 @@ select:focus-visible,
 
 .h1 {
   margin: var(--stack-related) 0 0;
-  font-size: var(--text-h1);
-  font-weight: var(--text-h1-weight);
+  font-size: var(--type-page-title);
+  font-weight: var(--type-page-title-weight);
   line-height: var(--text-h1-line-height);
   letter-spacing: var(--text-h1-tracking);
   text-wrap: balance;
@@ -150,8 +145,8 @@ select:focus-visible,
 
 .h3 {
   margin: 0;
-  font-size: var(--text-h3);
-  font-weight: var(--text-h3-weight);
+  font-size: var(--type-card-title);
+  font-weight: var(--type-card-title-weight);
   line-height: var(--text-h3-line-height);
   text-wrap: balance;
 }
@@ -159,7 +154,7 @@ select:focus-visible,
 .lede {
   margin: var(--stack-block) 0 0;
   max-width: 36rem;
-  font-size: var(--text-body-large);
+  font-size: var(--type-body);
   line-height: var(--text-body-large-line-height);
 }
 
@@ -193,9 +188,10 @@ select:focus-visible,
 /* ------------------------------------------------------------ layout */
 
 .container {
+  width: min(calc(100% - (2 * var(--page-gutter))), var(--content-max));
   max-width: var(--content-max);
   margin-inline: auto;
-  padding-inline: var(--grid-gutter);
+  padding-inline: 0;
 }
 
 .section {
@@ -292,6 +288,10 @@ select:focus-visible,
 }
 
 @media (min-width: 768px) {
+  :root {
+    --grid-gutter: var(--space-5);
+  }
+
   .menu-button {
     display: none;
   }
@@ -693,7 +693,7 @@ select:focus-visible,
   min-width: 0;
   overflow: hidden;
   border: 1px solid var(--color-border);
-  border-radius: var(--radius-medium);
+  border-radius: var(--radius-card);
   background: var(--color-surface);
 }
 
@@ -722,7 +722,7 @@ select:focus-visible,
   min-width: 0;
   flex: 1;
   flex-direction: column;
-  padding: var(--space-4);
+  padding: var(--panel-padding-sm);
 }
 
 .path .h3 {
@@ -1758,12 +1758,156 @@ select:focus-visible,
   border-top: 1px solid var(--color-border);
 }
 
-/* ==========================================================================
-   Responsive gutter promotion (DESIGN.md §3): 24px from tablet up.
-   ========================================================================== */
+/* ===================================================== normalized primitives */
 
-@media (min-width: 768px) {
-  :root {
-    --grid-gutter: var(--space-5);
-  }
+/* The main canvas owns the page gutter. A container inside it must not add a
+   second inset; header and footer containers still use the viewport gutter. */
+.page-content {
+  width: min(calc(100% - (2 * var(--page-gutter))), var(--content-max));
+}
+
+.page-content .container {
+  width: 100%;
+  max-width: none;
+  padding-inline: 0;
+}
+
+.page-content > .training-page,
+.page-content > .search-page,
+.page-content > .offer-explorer,
+.page-content > .compare-page,
+.page-content > .resources-page,
+.page-content > .open-data-page,
+.page-content > .methodology-page,
+.page-content > .catalog-page {
+  width: 100%;
+  max-width: none;
+  margin-inline: 0;
+}
+
+.page-masthead {
+  max-width: var(--reading-max);
+  margin-bottom: var(--space-5);
+  padding: 0;
+}
+
+.page-content > .offer-explorer,
+.page-content > .compare-page,
+.page-content > .resources-page,
+.page-content > .open-data-page,
+.page-content > .methodology-page,
+.page-content > .catalog-page > .container {
+  display: grid;
+  gap: var(--space-6);
+}
+
+.page-content > .offer-explorer > .breadcrumbs,
+.page-content > .methodology-page > .breadcrumbs,
+.page-content > .catalog-page > .container > .breadcrumbs {
+  margin-bottom: 0;
+  padding-block: 0;
+}
+
+.page-content > .offer-explorer > .page-masthead,
+.page-content > .compare-page > .page-masthead,
+.page-content > .resources-page > .page-masthead,
+.page-content > .open-data-page > .page-masthead,
+.page-content > .methodology-page > .page-masthead,
+.page-content > .catalog-page > .container > .page-masthead {
+  margin-bottom: 0;
+}
+
+.page-masthead .h1 {
+  display: block;
+  margin: 0;
+  color: var(--color-text);
+  font-size: var(--type-page-title);
+  font-weight: var(--type-page-title-weight);
+  line-height: var(--text-h1-line-height);
+  letter-spacing: var(--text-h1-tracking);
+  text-wrap: balance;
+}
+
+.page-masthead .page-lede {
+  max-width: var(--reading-max);
+  margin: var(--space-3) 0 0;
+  color: var(--color-text-muted);
+  font-size: var(--type-body);
+  font-weight: var(--type-body-weight);
+  line-height: var(--text-body-large-line-height);
+}
+
+.page-content button,
+.page-content input:not([type="radio"]):not([type="checkbox"]),
+.page-content select,
+.page-content textarea {
+  font-family: var(--font-sans);
+}
+
+.page-content button,
+.page-content input:not([type="radio"]):not([type="checkbox"]),
+.page-content select,
+.page-content textarea {
+  font-size: var(--type-control);
+  line-height: var(--text-button-line-height);
+}
+
+.page-content button,
+.page-content input:not([type="radio"]):not([type="checkbox"]),
+.page-content select {
+  min-height: var(--control-height);
+  border-radius: var(--radius-control);
+}
+
+.page-content .button,
+.page-content .primary-button,
+.page-content .secondary-button {
+  min-height: var(--control-height);
+  padding: var(--inset-control);
+  border-radius: var(--radius-control);
+  font-size: var(--type-control);
+  font-weight: var(--type-control-weight);
+}
+
+.page-content .status-panel,
+.page-content .stale-warning,
+.page-content .filter-notice {
+  padding: var(--panel-padding-md);
+  border-radius: var(--radius-panel);
+}
+
+.page-content .rcard {
+  padding: var(--panel-padding-sm);
+  border-radius: var(--radius-card);
+}
+
+.page-content .result-section-nav a {
+  position: relative;
+  min-height: var(--control-height);
+  align-items: center;
+  padding: var(--space-3) var(--space-2);
+  border: 0;
+  border-bottom: 3px solid transparent;
+  border-radius: var(--radius-control);
+  color: var(--color-text-muted);
+  background: transparent;
+  font-size: var(--type-control);
+  font-weight: var(--type-control-weight);
+}
+
+.page-content .result-section-nav a:hover {
+  color: var(--color-primary-strong);
+  background: var(--color-primary-soft);
+  text-decoration: none;
+}
+
+.page-content .result-section-nav a[aria-current="location"] {
+  border-bottom-color: var(--color-primary);
+  color: var(--color-primary-strong);
+  font-weight: 700;
+}
+
+.page-content .result-section-nav a:focus-visible {
+  outline: none;
+  box-shadow: var(--focus-ring);
 }
