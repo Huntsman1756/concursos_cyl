@@ -134,7 +134,9 @@ Convenciones globales:
   recurso raíz legacy `/data/v1/job-offers.json` (1033, excluido del runtime
   por `LEGACY_RUNTIME_ROOT_FILES`); el total se lee del snapshot activo
   direccionado por el manifest.
-- **Responsive**: misma lista; filtros en sheet móvil.
+- **Responsive**: misma lista; filtros directos en móvil (tres controles:
+  buscar, provincia, relación con la formación — caben y son utilizables sin
+  progressive disclosure; ver FILTER_CONSISTENCY_POLICY).
 - **Empty state**: búsqueda sin resultados → EmptyState estándar (“Sin
   resultados para estos filtros” + quitar filtros).
 - **Provenance**: fuente y fecha por fila; criterio fail-closed explicado al
@@ -310,6 +312,24 @@ en todas las páginas. Lo único que crece es la zona de descripción/evidencia.
   acceso, plazo) → Cursos del ECYL (resource-rows con `<details>` de metadatos
   completos) → Certificados de profesionalidad → EvidenceCallout de fuentes.
 - **Density**: alta (listas densas), como Offers/Centers. Sin fotografía.
+
+## FILTER_CONSISTENCY_POLICY
+
+La diferencia de mecanismo de filtros entre CENTERS y OFFERS en móvil es una
+decisión deliberada basada en complejidad/densidad, no un accidente histórico:
+
+- **CENTERS → filtros colapsables en móvil** (progressive disclosure): 7
+  facetas (buscar, provincia, modalidad, titularidad, nivel, familia, tipo de
+  centro). Desplegarlas todas de golpe empujaría los resultados fuera de la
+  primera pantalla en 320/390.
+- **OFFERS → filtros directos en móvil**: 3 controles principales (buscar,
+  provincia, relación con la formación). Caben en columna y son utilizables
+  sin ocultarlos; ocultarlos añadiría un paso sin beneficio.
+
+No es obligatorio que todas las listas usen el mismo mecanismo; lo que es
+obligatorio es que la decisión se base en el número y densidad de los
+controles, y que los disclaimers contractuales de cada pantalla permanezcan
+visibles.
 
 ---
 

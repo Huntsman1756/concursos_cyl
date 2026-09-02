@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-02T15:42:12.349Z",
+  "generatedAt": "2026-09-02T18:37:10.016Z",
   "snapshotId": "20260830120000000-8c6c79fbd2a1",
   "manifest": {
     "snapshotId": "20260830120000000-8c6c79fbd2a1",
@@ -109,13 +109,8 @@
         "programTitle": "Guía en el medio natural y de tiempo libre",
         "province": "Valladolid",
         "locality": "Valladolid",
-        "modalities": [
-          "on_site"
-        ],
-        "teachingTypes": [
-          "concerted",
-          "private"
-        ],
+        "modalities": ["on_site"],
+        "teachingTypes": ["concerted", "private"],
         "records": [
           {
             "offeringId": "AFD02M:47011115:on_site:concerted:private",
@@ -305,14 +300,8 @@
         "prototypeValue": 2,
         "match": true,
         "detail": {
-          "offerIds": [
-            "1285665634571",
-            "1285672565954"
-          ],
-          "provinces": [
-            "Zamora",
-            "Palencia"
-          ],
+          "offerIds": ["1285665634571", "1285672565954"],
+          "provinces": ["Zamora", "Palencia"],
           "publishedAt": [
             "2026-07-23T00:00:00.000Z",
             "2026-08-20T00:00:00.000Z"
@@ -358,9 +347,7 @@
         "derivation": "programKeys distintos en graph para occupation:cno11:5611",
         "prototypeValue": 1,
         "match": true,
-        "detail": [
-          "SAN21"
-        ]
+        "detail": ["SAN21"]
       },
       {
         "screen": "OCCUPATION DETAIL (CNO 5611)",
@@ -391,10 +378,7 @@
         "derivation": "programKeys distintos en graph para occupation:cno11:3820",
         "prototypeValue": 2,
         "match": true,
-        "detail": [
-          "IFC02S",
-          "IFC02SD"
-        ]
+        "detail": ["IFC02S", "IFC02SD"]
       },
       {
         "screen": "ZERO STATE (CNO 3820)",
@@ -689,9 +673,7 @@
         "description": "Relación CNO 5611 ↔ SAN21 (Auxiliares de enfermería hospitalaria ↔ Cuidados Auxiliares de Enfermería) + 34 ofertas + 34 centros",
         "classification": "REVIEWED_RELATION_CONFIRMED",
         "evidence": {
-          "programs": [
-            "SAN21"
-          ],
+          "programs": ["SAN21"],
           "sampleOffers": [
             {
               "id": "1285619684957",
@@ -850,12 +832,8 @@
               "locality": "Arenas de San Pedro",
               "province": "Ávila",
               "programKey": "AFD02S",
-              "modalities": [
-                "on_site"
-              ],
-              "teachingTypes": [
-                "public"
-              ],
+              "modalities": ["on_site"],
+              "teachingTypes": ["public"],
               "ownership": "education"
             },
             {
@@ -864,12 +842,8 @@
               "locality": "Arenas de San Pedro",
               "province": "Ávila",
               "programKey": "ADG02S",
-              "modalities": [
-                "on_site"
-              ],
-              "teachingTypes": [
-                "public"
-              ],
+              "modalities": ["on_site"],
+              "teachingTypes": ["public"],
               "ownership": "education"
             },
             {
@@ -878,12 +852,8 @@
               "locality": "Arenas de San Pedro",
               "province": "Ávila",
               "programKey": "SAN21",
-              "modalities": [
-                "on_site"
-              ],
-              "teachingTypes": [
-                "public"
-              ],
+              "modalities": ["on_site"],
+              "teachingTypes": ["public"],
               "ownership": "education"
             },
             {
@@ -892,12 +862,8 @@
               "locality": "Arenas de San Pedro",
               "province": "Ávila",
               "programKey": "ELE01B",
-              "modalities": [
-                "on_site"
-              ],
-              "teachingTypes": [
-                "public"
-              ],
+              "modalities": ["on_site"],
+              "teachingTypes": ["public"],
               "ownership": "education"
             },
             {
@@ -906,12 +872,8 @@
               "locality": "Arenas de San Pedro",
               "province": "Ávila",
               "programKey": "ADG01M",
-              "modalities": [
-                "on_site"
-              ],
-              "teachingTypes": [
-                "public"
-              ],
+              "modalities": ["on_site"],
+              "teachingTypes": ["public"],
               "ownership": "education"
             },
             {
@@ -920,12 +882,8 @@
               "locality": "Arenas de San Pedro",
               "province": "Ávila",
               "programKey": "SAN06S",
-              "modalities": [
-                "on_site"
-              ],
-              "teachingTypes": [
-                "public"
-              ],
+              "modalities": ["on_site"],
+              "teachingTypes": ["public"],
               "ownership": "education"
             },
             {
@@ -934,12 +892,8 @@
               "locality": "Arenas de San Pedro",
               "province": "Ávila",
               "programKey": "IMP01B",
-              "modalities": [
-                "on_site"
-              ],
-              "teachingTypes": [
-                "public"
-              ],
+              "modalities": ["on_site"],
+              "teachingTypes": ["public"],
               "ownership": "education"
             },
             {
@@ -948,12 +902,8 @@
               "locality": "Arenas de San Pedro",
               "province": "Ávila",
               "programKey": "IMS01M",
-              "modalities": [
-                "on_site"
-              ],
-              "teachingTypes": [
-                "public"
-              ],
+              "modalities": ["on_site"],
+              "teachingTypes": ["public"],
               "ownership": "education"
             },
             {
@@ -962,12 +912,8 @@
               "locality": "Arévalo",
               "province": "Ávila",
               "programKey": "TMV01S",
-              "modalities": [
-                "on_site"
-              ],
-              "teachingTypes": [
-                "public"
-              ],
+              "modalities": ["on_site"],
+              "teachingTypes": ["public"],
               "ownership": "education"
             },
             {
@@ -976,12 +922,8 @@
               "locality": "Arévalo",
               "province": "Ávila",
               "programKey": "TMV01M",
-              "modalities": [
-                "on_site"
-              ],
-              "teachingTypes": [
-                "public"
-              ],
+              "modalities": ["on_site"],
+              "teachingTypes": ["public"],
               "ownership": "education"
             }
           ]
@@ -997,78 +939,50 @@
             "name": "IES Eulogio Florentino Sanz",
             "found": true,
             "key": "05000427:ADG02S",
-            "modalities": [
-              "on_site"
-            ],
-            "teachingTypes": [
-              "public"
-            ]
+            "modalities": ["on_site"],
+            "teachingTypes": ["public"]
           },
           {
             "name": "IES Alonso de Madrigal",
             "found": true,
             "key": "05000701:ADG02S",
-            "modalities": [
-              "on_site"
-            ],
-            "teachingTypes": [
-              "public"
-            ]
+            "modalities": ["on_site"],
+            "teachingTypes": ["public"]
           },
           {
             "name": "IES Sierra del Valle",
             "found": true,
             "key": "05005425:ADG02S",
-            "modalities": [
-              "on_site"
-            ],
-            "teachingTypes": [
-              "public"
-            ]
+            "modalities": ["on_site"],
+            "teachingTypes": ["public"]
           },
           {
             "name": "CIFP Las Ferrerías",
             "found": true,
             "key": "05009923:ADG02S",
-            "modalities": [
-              "on_site"
-            ],
-            "teachingTypes": [
-              "public"
-            ]
+            "modalities": ["on_site"],
+            "teachingTypes": ["public"]
           },
           {
             "name": "Ntra. Sra. de la Merced y San Francisco Javier",
             "found": true,
             "key": "09001372:ADG02S",
-            "modalities": [
-              "on_site"
-            ],
-            "teachingTypes": [
-              "concerted"
-            ]
+            "modalities": ["on_site"],
+            "teachingTypes": ["concerted"]
           },
           {
             "name": "María Madre-Politecnos",
             "found": true,
             "key": "09001581:ADG02S",
-            "modalities": [
-              "on_site"
-            ],
-            "teachingTypes": [
-              "concerted"
-            ]
+            "modalities": ["on_site"],
+            "teachingTypes": ["concerted"]
           },
           {
             "name": "CIFP Instituto Técnico Industrial de Miranda",
             "found": true,
             "key": "09004099:ADG02S",
-            "modalities": [
-              "on_site"
-            ],
-            "teachingTypes": [
-              "concerted"
-            ]
+            "modalities": ["on_site"],
+            "teachingTypes": ["concerted"]
           }
         ]
       },
@@ -1218,120 +1132,80 @@
           {
             "key": "09012072:INA02M",
             "found": true,
-            "modalities": [
-              "on_site"
-            ],
-            "teachingTypes": [
-              "concerted"
-            ],
+            "modalities": ["on_site"],
+            "teachingTypes": ["concerted"],
             "ownership": "private",
             "attributesMatch": true
           },
           {
             "key": "24017965:INA02M",
             "found": true,
-            "modalities": [
-              "on_site"
-            ],
-            "teachingTypes": [
-              "concerted"
-            ],
+            "modalities": ["on_site"],
+            "teachingTypes": ["concerted"],
             "ownership": "private",
             "attributesMatch": true
           },
           {
             "key": "47000609:INA02M",
             "found": true,
-            "modalities": [
-              "on_site"
-            ],
-            "teachingTypes": [
-              "public"
-            ],
+            "modalities": ["on_site"],
+            "teachingTypes": ["public"],
             "ownership": "agriculture",
             "attributesMatch": true
           },
           {
             "key": "05009698:AFD02S",
             "found": true,
-            "modalities": [
-              "on_site"
-            ],
-            "teachingTypes": [
-              "public"
-            ],
+            "modalities": ["on_site"],
+            "teachingTypes": ["public"],
             "ownership": "education",
             "attributesMatch": true
           },
           {
             "key": "09001670:AFD02S",
             "found": true,
-            "modalities": [
-              "on_site"
-            ],
-            "teachingTypes": [
-              "public"
-            ],
+            "modalities": ["on_site"],
+            "teachingTypes": ["public"],
             "ownership": "education",
             "attributesMatch": true
           },
           {
             "key": "24006049:AFD02S",
             "found": true,
-            "modalities": [
-              "on_site"
-            ],
-            "teachingTypes": [
-              "public"
-            ],
+            "modalities": ["on_site"],
+            "teachingTypes": ["public"],
             "ownership": "education",
             "attributesMatch": true
           },
           {
             "key": "37006014:AFD02S",
             "found": true,
-            "modalities": [
-              "on_site"
-            ],
-            "teachingTypes": [
-              "public"
-            ],
+            "modalities": ["on_site"],
+            "teachingTypes": ["public"],
             "ownership": "education",
             "attributesMatch": true
           },
           {
             "key": "37013985:AFD02S",
             "found": true,
-            "modalities": [
-              "on_site"
-            ],
-            "teachingTypes": [
-              "private"
-            ],
+            "modalities": ["on_site"],
+            "teachingTypes": ["private"],
             "ownership": "private",
             "attributesMatch": true
           },
           {
             "key": "47004135:AFD02S",
             "found": true,
-            "modalities": [
-              "on_site"
-            ],
-            "teachingTypes": [
-              "private"
-            ],
+            "modalities": ["on_site"],
+            "teachingTypes": ["private"],
             "ownership": "private",
             "attributesMatch": true
           },
           {
             "key": "47011115:AFD02SD",
             "found": true,
-            "modalities": [
-              "distance"
-            ],
-            "teachingTypes": [
-              "private"
-            ],
+            "modalities": ["distance"],
+            "teachingTypes": ["private"],
             "ownership": "private",
             "attributesMatch": true
           }
