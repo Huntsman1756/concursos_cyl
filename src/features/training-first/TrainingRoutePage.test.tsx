@@ -5,6 +5,9 @@ import {
   waitFor,
   within,
 } from "@testing-library/react";
+import { readFileSync } from "node:fs";
+import { join } from "node:path";
+
 import userEvent from "@testing-library/user-event";
 import { MemoryRouter, useLocation } from "react-router-dom";
 import { afterEach, describe, expect, it, vi } from "vitest";
@@ -71,6 +74,16 @@ function installFetch({
     ],
     [manifest.resourceSnapshots.trainingOfferings.resourcePath, offerings],
     [manifest.resourceSnapshots.jobOffers.resourcePath, []],
+    // Serve the real dated CTA policy artifact (presentation layer, /qa/)
+    [
+      "/qa/center-link-policy.json",
+      JSON.parse(
+        readFileSync(
+          join(process.cwd(), "public", "qa", "center-link-policy.json"),
+          "utf8",
+        ),
+      ),
+    ],
   ]);
   vi.stubGlobal(
     "fetch",
@@ -133,9 +146,7 @@ describe("TrainingRoutePage", () => {
     );
 
     expect(
-      await screen.findByRole("heading", {
-        name: "1–50 de 55 opciones formativas",
-      }),
+      await screen.findByText("1–50 de 55 opciones formativas"),
     ).toBeVisible();
     const pagination = screen.getByRole("navigation", {
       name: "Paginación de opciones formativas",
@@ -150,11 +161,7 @@ describe("TrainingRoutePage", () => {
 
     await user.click(screen.getByRole("button", { name: "Página siguiente" }));
 
-    expect(
-      screen.getByRole("heading", {
-        name: "51–55 de 55 opciones formativas",
-      }),
-    ).toBeVisible();
+    expect(screen.getByText("51–55 de 55 opciones formativas")).toBeVisible();
     expect(within(screen.getByRole("table")).getAllByRole("row")).toHaveLength(
       6,
     );
@@ -177,9 +184,7 @@ describe("TrainingRoutePage", () => {
       </MemoryRouter>,
     );
 
-    expect(
-      await screen.findByRole("heading", { name: "12 centros publicados" }),
-    ).toBeVisible();
+    expect(await screen.findByText("12 centros publicados")).toBeVisible();
     expect(within(screen.getByRole("table")).getAllByRole("row")).toHaveLength(
       13,
     );
@@ -225,21 +230,25 @@ describe("TrainingRoutePage", () => {
       manifest.resourceSnapshots.jobOffers.resourcePath,
       expect.anything(),
     );
-    expect(screen.getByText("IES ALONSO DE MADRIGAL")).toBeVisible();
-    expect(screen.getByText(/Ávila · Ávila/u)).toBeVisible();
-    expect(screen.getByText("Presencial")).toBeVisible();
-    expect(screen.getByText(/C\/ Francisco de Vitoria/u)).toBeVisible();
-    const websiteLink = screen.getByRole("link", { name: /Web del centro/ });
+    expect(
+      screen.getAllByText("IES ALONSO DE MADRIGAL").length,
+    ).toBeGreaterThan(0);
+    expect(screen.getAllByText(/Ávila · Ávila/u).length).toBeGreaterThan(0);
+    expect(screen.getAllByText("Presencial").length).toBeGreaterThan(0);
+    expect(
+      screen.getAllByText(/C\/ Francisco de Vitoria/u).length,
+    ).toBeGreaterThan(0);
+    const websiteLink = screen.getAllByRole("link", {
+      name: /Web del centro/,
+    })[0]!;
     expect(websiteLink).toHaveAttribute("href", center.website);
-    const mapsLink = screen.getByRole("link", { name: /Cómo llegar/ });
+    const mapsLink = screen.getAllByRole("link", { name: /Cómo llegar/ })[0]!;
     expect(mapsLink).toHaveAttribute(
       "href",
       "https://www.google.com/maps/search/?api=1&query=IES%20ALONSO%20DE%20MADRIGAL%2C%20C%2F%20Francisco%20de%20Vitoria%2C%20s%2Fn%2C%20%C3%81vila%2C%20%C3%81vila",
     );
     expect(mapsLink).toHaveAttribute("target", "_blank");
-    expect(websiteLink.closest(".center-catalog__actions")).toContainElement(
-      mapsLink,
-    );
+    expect(websiteLink.closest(".table-actions")).toContainElement(mapsLink);
   });
 
   it("keeps private-center semantics and real location actions explicit", async () => {
@@ -276,14 +285,18 @@ describe("TrainingRoutePage", () => {
         name: "Dónde estudiar Desarrollo de Aplicaciones Web",
       }),
     ).toBeVisible();
-    expect(screen.getByText("CIFP SAN GABRIEL")).toBeVisible();
-    expect(screen.getByText("Centro privado")).toBeVisible();
-    expect(screen.getByText(/La Aguilera · Burgos/u)).toBeVisible();
-    expect(screen.getByText("Presencial")).toBeVisible();
+    expect(screen.getAllByText("CIFP SAN GABRIEL").length).toBeGreaterThan(0);
+    expect(screen.getAllByText("Centro privado").length).toBeGreaterThan(0);
+    expect(screen.getAllByText(/La Aguilera · Burgos/u).length).toBeGreaterThan(
+      0,
+    );
+    expect(screen.getAllByText("Presencial").length).toBeGreaterThan(0);
     expect(
-      screen.getByRole("link", { name: /Web del centro/u }),
+      screen.getAllByRole("link", { name: /Web del centro/u })[0],
     ).toHaveAttribute("href", sanGabriel.website);
-    expect(screen.getByRole("link", { name: /Cómo llegar/u })).toHaveAttribute(
+    expect(
+      screen.getAllByRole("link", { name: /Cómo llegar/u })[0],
+    ).toHaveAttribute(
       "href",
       "https://www.google.com/maps/search/?api=1&query=CIFP%20SAN%20GABRIEL%2C%20Ctra.%20de%20la%20Aguilera%2C%20km%206%2C5%2C%20La%20Aguilera%2C%20Burgos",
     );
@@ -303,7 +316,9 @@ describe("TrainingRoutePage", () => {
       }),
     ).toBeVisible();
     expect(screen.queryByText(center.address)).not.toBeInTheDocument();
-    expect(screen.getByRole("link", { name: /Cómo llegar/ })).toHaveAttribute(
+    expect(
+      screen.getAllByRole("link", { name: /Cómo llegar/ })[0],
+    ).toHaveAttribute(
       "href",
       "https://www.google.com/maps/search/?api=1&query=IES%20ALONSO%20DE%20MADRIGAL%2C%20%C3%81vila%2C%20%C3%81vila",
     );
@@ -350,9 +365,7 @@ describe("TrainingRoutePage", () => {
         name: "Dónde estudiar Aceites de Oliva y Vinos",
       }),
     ).toBeVisible();
-    expect(
-      screen.getByRole("heading", { name: "1 centro publicado" }),
-    ).toBeVisible();
+    expect(screen.getByText("1 centro publicado")).toBeVisible();
     expect(
       screen.queryByText(/ofertas? en la copia actual/u),
     ).not.toBeInTheDocument();

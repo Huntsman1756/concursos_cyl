@@ -72,20 +72,21 @@ describe("App", () => {
     expect(
       screen.getByRole("heading", {
         level: 1,
-        name: "Explora formación, profesiones y oportunidades en Castilla y León.",
+        name: "Tu FP, tus salidas profesionales y dónde dar el siguiente paso.",
       }),
     ).toBeVisible();
+    const tablist = screen.getByRole("tablist", {
+      name: "Elige tu punto de partida",
+    });
     expect(
-      screen.getByRole("button", {
-        name: /Tengo una FP y quiero saber mis salidas/u,
-      }),
-    ).toHaveAttribute("aria-expanded", "true");
+      within(tablist).getByRole("tab", { name: "Tengo una FP" }),
+    ).toHaveAttribute("aria-selected", "true");
     expect(
-      screen.getByRole("button", { name: /Quiero dedicarme a una profesión/u }),
-    ).toHaveAttribute("aria-expanded", "false");
+      within(tablist).getByRole("tab", { name: "Busco una profesión" }),
+    ).toHaveAttribute("aria-selected", "false");
     expect(
-      screen.getByRole("button", { name: /He visto una oferta/u }),
-    ).toHaveAttribute("aria-expanded", "false");
+      within(tablist).getByRole("tab", { name: "Estoy mirando una oferta" }),
+    ).toHaveAttribute("aria-selected", "false");
   });
 
   it("uses the SALIDA shell and identifies the project independently", () => {

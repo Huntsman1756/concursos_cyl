@@ -2,13 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import type { FormEvent, JSX } from "react";
 import { Link, useParams, useSearchParams } from "react-router-dom";
 
-import type {
-  EducationCenter,
-  LegacyEducationCenter,
-  LegacyTrainingOffering,
-  TrainingOffering,
-  TrainingProgram,
-} from "../../../data/schemas/generated";
+import type { TrainingProgram } from "../../../data/schemas/generated";
 import { Breadcrumbs } from "../../components/Breadcrumbs";
 import { ExternalLink } from "../../components/ExternalLink";
 import { useRouteReady } from "../../app/RouteReadyContext";
@@ -19,16 +13,37 @@ import {
 } from "../../data/generatedDataClient";
 import { globalCentersPath, trainingDetailPath } from "../../app/routePaths";
 import { buildGoogleMapsSearchUrl } from "../../domain/mapsUrl";
-import { trainingLevelLabel } from "../../domain/trainingPresentation";
+import {
+  buildCenterCatalogRows,
+  facetCountsFor,
+  filterCenterRows,
+  CENTER_FILTER_LABELS,
+  type CenterCatalogFilters,
+  type CenterCatalogRow,
+} from "../../domain/centerCatalog";
+import {
+  centerWebsiteCtaFor,
+  loadCenterLinkPolicy,
+} from "../../domain/centerLinkPolicy";
 import "./centers.css";
 
-type Center = EducationCenter | LegacyEducationCenter;
-type Offering = TrainingOffering | LegacyTrainingOffering;
 type Foundation = LoadedFoundationResourceSubset<
   "programs" | "centers" | "trainingOfferings"
 >;
 
 const GLOBAL_PAGE_SIZE = 50;
+
+const FILTER_PARAMS = [
+  "query",
+  "province",
+  "modality",
+  "titularidad",
+  "level",
+  "family",
+  "ownership",
+] as const;
+
+type FilterParam = (typeof FILTER_PARAMS)[number];
 
 type PageState =
   | { status: "loading" }
@@ -41,39 +56,6 @@ type PageState =
       program: TrainingProgram | null;
     };
 
-interface CenterCatalogRow {
-  key: string;
-  center: Center;
-  program: TrainingProgram;
-  modalities: string[];
-  teachingTypes: string[];
-}
-
-const modalityLabels: Record<Offering["modality"], string> = {
-  on_site: "Presencial",
-  distance: "A distancia",
-  mixed: "Mixta",
-  unknown: "Modalidad no publicada",
-};
-
-const teachingTypeLabels: Record<
-  Extract<Offering, TrainingOffering>["teachingType"],
-  string
-> = {
-  public: "Pública",
-  concerted: "Concertada",
-  private: "Privada",
-};
-
-function normalized(value: string): string {
-  return value
-    .normalize("NFD")
-    .replace(/\p{Diacritic}/gu, "")
-    .toLocaleLowerCase("es-ES")
-    .replace(/[^\p{Letter}\p{Number}]+/gu, " ")
-    .trim();
-}
-
 function formatDate(value: string): string {
   return new Intl.DateTimeFormat("es-ES", {
     day: "numeric",
@@ -83,141 +65,185 @@ function formatDate(value: string): string {
   }).format(new Date(value));
 }
 
-function centerSearchText(row: CenterCatalogRow): string {
-  return normalized(
-    [
-      row.center.centerName,
-      row.center.locality,
-      row.center.province,
-      row.center.address ?? "",
-      row.program.programTitle,
-      row.program.programKey,
-      row.program.familyName,
-      row.program.familyCode,
-    ].join(" "),
-  );
+function filtersFromParams(
+  searchParams: URLSearchParams,
+): CenterCatalogFilters {
+  const read = (key: FilterParam) => searchParams.get(key) ?? "";
+  return {
+    query: read("query"),
+    province: read("province"),
+    modalidad: read("modality"),
+    titularidad: read("titularidad"),
+    nivel: read("level"),
+    familia: read("family"),
+    ownership: read("ownership"),
+  };
 }
 
-function centerOwnershipLabel(center: Center): string {
-  if (!("centerOwnership" in center)) return "Centro de formación";
-  switch (center.centerOwnership) {
-    case "agriculture":
-      return "Centro de formación agraria";
-    case "municipality":
-      return "Centro municipal";
-    case "education":
-      return "Centro educativo";
-    case "private":
-      return "Centro privado";
-  }
-}
-
-function rowsForFoundation(
-  foundation: Foundation,
-  program: TrainingProgram | null,
-): CenterCatalogRow[] {
-  const centersByCode = new Map(
-    foundation.centers.map((center) => [center.centerCode, center]),
-  );
-  const programsByKey = new Map(
-    foundation.programs.map((candidate) => [candidate.programKey, candidate]),
-  );
-  const rows = new Map<string, CenterCatalogRow>();
-
-  for (const offering of foundation.trainingOfferings as Offering[]) {
-    if (program !== null && offering.programKey !== program.programKey) {
-      continue;
-    }
-    const center = centersByCode.get(offering.centerCode);
-    const rowProgram = programsByKey.get(offering.programKey);
-    if (center === undefined || rowProgram === undefined) continue;
-
-    const key = `${center.centerCode}:${rowProgram.programKey}`;
-    const existing = rows.get(key);
-    const modality = modalityLabels[offering.modality];
-    const teachingType =
-      "teachingType" in offering
-        ? teachingTypeLabels[offering.teachingType]
-        : null;
-
-    if (existing === undefined) {
-      rows.set(key, {
-        key,
-        center,
-        program: rowProgram,
-        modalities: [modality],
-        teachingTypes: teachingType === null ? [] : [teachingType],
-      });
-      continue;
-    }
-    if (!existing.modalities.includes(modality)) {
-      existing.modalities.push(modality);
-    }
-    if (
-      teachingType !== null &&
-      !existing.teachingTypes.includes(teachingType)
-    ) {
-      existing.teachingTypes.push(teachingType);
-    }
-  }
-
-  return [...rows.values()].sort(
-    (left, right) =>
-      left.center.province.localeCompare(right.center.province, "es") ||
-      left.center.locality.localeCompare(right.center.locality, "es") ||
-      left.center.centerName.localeCompare(right.center.centerName, "es") ||
-      left.program.programTitle.localeCompare(right.program.programTitle, "es"),
-  );
-}
-
-function CenterRow({ row }: { row: CenterCatalogRow }): JSX.Element {
+function CenterRow({
+  row,
+  policy,
+}: {
+  row: CenterCatalogRow;
+  policy: Awaited<ReturnType<typeof loadCenterLinkPolicy>>;
+}): JSX.Element {
   const mapUrl = buildGoogleMapsSearchUrl([
-    row.center.centerName,
-    row.center.address ?? "",
-    row.center.locality,
-    row.center.province,
+    row.centerName,
+    row.centerAddress ?? "",
+    row.locality,
+    row.province,
   ]);
+  const cta = centerWebsiteCtaFor(policy, row.centerCode);
   return (
-    <tr>
-      <th scope="row" data-label="Centro">
-        <span className="center-catalog__name">{row.center.centerName}</span>
-        <span className="center-catalog__ownership">
-          {centerOwnershipLabel(row.center)}
+    <>
+      <th scope="row">
+        <strong>{row.centerName}</strong>
+        <span className="cell-sub">
+          {row.centerOwnership === null
+            ? "Centro de formación"
+            : CENTER_FILTER_LABELS.ownership[row.centerOwnership]}
         </span>
       </th>
-      <td data-label="Localidad">
-        {row.center.locality} · {row.center.province}
-        {row.center.address !== null && row.center.address !== undefined && (
-          <span className="center-catalog__address">{row.center.address}</span>
+      <td>
+        {row.locality} · {row.province}
+        {row.centerAddress !== null && (
+          <span className="cell-sub">{row.centerAddress}</span>
         )}
       </td>
-      <td data-label="Ciclo">
-        <Link to={trainingDetailPath(row.program.programKey)}>
-          {row.program.programTitle}
-        </Link>
-        <span className="center-catalog__program-meta">
-          {trainingLevelLabel(row.program.level)} · {row.program.programKey}
+      <td>
+        <Link to={trainingDetailPath(row.programKey)}>{row.programTitle}</Link>
+        <span className="cell-sub">
+          {CENTER_FILTER_LABELS.level[row.level]} · {row.programKey}
         </span>
       </td>
-      <td data-label="Modalidad">
-        <span className="center-catalog__mode">
-          {row.modalities.join(" · ")}
-        </span>
+      <td>
+        {row.modalities
+          .map((modality) =>
+            modality === "unknown"
+              ? CENTER_FILTER_LABELS.unpublishedModality
+              : CENTER_FILTER_LABELS.modality[modality],
+          )
+          .join(" · ")}
         {row.teachingTypes.length > 0 && (
-          <span className="center-catalog__ownership">
-            {row.teachingTypes.join(" · ")}
+          <span className="cell-sub">
+            {row.teachingTypes
+              .map((type) => CENTER_FILTER_LABELS.teachingType[type])
+              .join(" · ")}
           </span>
         )}
       </td>
-      <td data-label="Acciones" className="center-catalog__actions">
-        {row.center.website !== null && row.center.website !== undefined && (
-          <ExternalLink href={row.center.website}>Web del centro</ExternalLink>
-        )}
-        {mapUrl !== null && (
-          <ExternalLink href={mapUrl}>Cómo llegar</ExternalLink>
-        )}
+      <td className="center-titularidad-cell">
+        {row.teachingTypes.length === 0
+          ? "—"
+          : row.teachingTypes
+              .map((type) => CENTER_FILTER_LABELS.teachingType[type])
+              .join(" · ")}
       </td>
-    </tr>
+      <td>
+        <div className="table-actions">
+          {cta !== null && row.centerWebsite !== null && (
+            <ExternalLink
+              href={row.centerWebsite}
+              className="table-action-link"
+            >
+              {cta}
+            </ExternalLink>
+          )}
+          {mapUrl !== null && (
+            <ExternalLink href={mapUrl} className="table-action-link">
+              Cómo llegar
+            </ExternalLink>
+          )}
+        </div>
+      </td>
+    </>
+  );
+}
+
+function CenterResultCard({
+  row,
+  policy,
+}: {
+  row: CenterCatalogRow;
+  policy: Awaited<ReturnType<typeof loadCenterLinkPolicy>>;
+}): JSX.Element {
+  const mapUrl = buildGoogleMapsSearchUrl([
+    row.centerName,
+    row.centerAddress ?? "",
+    row.locality,
+    row.province,
+  ]);
+  const cta = centerWebsiteCtaFor(policy, row.centerCode);
+  return (
+    <li>
+      <article className="rcard">
+        <div className="rcard-field">
+          <p className="rcard-label">Centro</p>
+          <p className="rcard-value">
+            <strong>{row.centerName}</strong>
+          </p>
+          <p className="rcard-sub">
+            {row.centerOwnership === null
+              ? "Centro de formación"
+              : CENTER_FILTER_LABELS.ownership[row.centerOwnership]}
+          </p>
+        </div>
+        <div className="rcard-field">
+          <p className="rcard-label">Localidad</p>
+          <p className="rcard-value">
+            {row.locality} · {row.province}
+          </p>
+        </div>
+        <div className="rcard-field">
+          <p className="rcard-label">Ciclo</p>
+          <p className="rcard-value">{row.programTitle}</p>
+          <p className="rcard-sub">{CENTER_FILTER_LABELS.level[row.level]}</p>
+        </div>
+        <div className="rcard-field">
+          <p className="rcard-label">Modalidad</p>
+          <p className="rcard-value">
+            {row.modalities
+              .map((modality) =>
+                modality === "unknown"
+                  ? CENTER_FILTER_LABELS.unpublishedModality
+                  : CENTER_FILTER_LABELS.modality[modality],
+              )
+              .join(" · ")}
+          </p>
+        </div>
+        <div className="rcard-field">
+          <p className="rcard-label">Titularidad</p>
+          <p className="rcard-value">
+            {row.teachingTypes.length === 0
+              ? "—"
+              : row.teachingTypes
+                  .map((type) => CENTER_FILTER_LABELS.teachingType[type])
+                  .join(" · ")}
+          </p>
+        </div>
+        <div className="rcard-actions">
+          <Link
+            className="table-action-link"
+            to={trainingDetailPath(row.programKey)}
+          >
+            Ver ciclo
+          </Link>
+          {cta !== null && row.centerWebsite !== null && (
+            <ExternalLink
+              href={row.centerWebsite}
+              className="table-action-link"
+            >
+              {cta}
+            </ExternalLink>
+          )}
+          {mapUrl !== null && (
+            <ExternalLink href={mapUrl} className="table-action-link">
+              Cómo llegar
+            </ExternalLink>
+          )}
+        </div>
+      </article>
+    </li>
   );
 }
 
@@ -225,8 +251,10 @@ export function CentersExplorerPage(): JSX.Element {
   const { programKey } = useParams();
   const [searchParams, setSearchParams] = useSearchParams();
   const [state, setState] = useState<PageState>({ status: "loading" });
-  const queryParam = searchParams.get("query") ?? "";
-  const provinceParam = searchParams.get("province") ?? "all";
+  const [linkPolicy, setLinkPolicy] = useState<Awaited<
+    ReturnType<typeof loadCenterLinkPolicy>
+  > | null>(null);
+  const [sheetOpen, setSheetOpen] = useState(false);
   const pageParam = Number.parseInt(searchParams.get("page") ?? "1", 10);
   const requestedPage =
     Number.isFinite(pageParam) && pageParam > 0 ? pageParam : 1;
@@ -274,28 +302,63 @@ export function CentersExplorerPage(): JSX.Element {
     return () => controller.abort();
   }, [programKey]);
 
+  // Dated QA overlay for the website CTA. Fail-safe: absent/malformed
+  // artifact ⇒ no website CTA anywhere (never the pre-audit behaviour).
+  useEffect(() => {
+    const controller = new AbortController();
+    void loadCenterLinkPolicy({ signal: controller.signal })
+      .then((policy) => {
+        if (!controller.signal.aborted) setLinkPolicy(policy);
+      })
+      .catch(() => {
+        if (!controller.signal.aborted) setLinkPolicy(null);
+      });
+    return () => controller.abort();
+  }, []);
+
   const rows = useMemo(
     () =>
       state.status === "ready"
-        ? rowsForFoundation(state.foundation, state.program)
+        ? buildCenterCatalogRows({
+            offerings: state.foundation.trainingOfferings,
+            centers: state.foundation.centers,
+            programs: state.foundation.programs,
+          })
         : [],
     [state],
   );
+
+  const filters = useMemo(
+    () => filtersFromParams(searchParams),
+    [searchParams],
+  );
+  const filteredRows = useMemo(
+    () => filterCenterRows(rows, filters),
+    [filters, rows],
+  );
+
+  const facetCounts = useMemo(
+    () => facetCountsFor(rows, filters),
+    [filters, rows],
+  );
+
   const provinces = useMemo(
     () =>
-      [...new Set(rows.map((row) => row.center.province))].sort((left, right) =>
+      [...new Set(rows.map((row) => row.province))].sort((left, right) =>
         left.localeCompare(right, "es"),
       ),
     [rows],
   );
-  const filteredRows = useMemo(() => {
-    const query = normalized(queryParam);
-    return rows.filter(
-      (row) =>
-        (provinceParam === "all" || row.center.province === provinceParam) &&
-        (query.length === 0 || centerSearchText(row).includes(query)),
-    );
-  }, [provinceParam, queryParam, rows]);
+  const families = useMemo(
+    () =>
+      [
+        ...new Map(
+          rows.map((row) => [row.familyCode, row.familyName]),
+        ).entries(),
+      ].sort((left, right) => left[0].localeCompare(right[0], "es")),
+    [rows],
+  );
+
   const pageCount = paginationEnabled
     ? Math.max(1, Math.ceil(filteredRows.length / GLOBAL_PAGE_SIZE))
     : 1;
@@ -308,6 +371,7 @@ export function CentersExplorerPage(): JSX.Element {
         currentPage * GLOBAL_PAGE_SIZE,
       )
     : filteredRows;
+
   useEffect(() => {
     if (state.status !== "ready") return;
     const canonicalPage =
@@ -324,24 +388,31 @@ export function CentersExplorerPage(): JSX.Element {
     setSearchParams,
     state.status,
   ]);
+
   const firstVisibleResult =
     filteredRows.length === 0 ? 0 : (currentPage - 1) * GLOBAL_PAGE_SIZE + 1;
   const lastVisibleResult = paginationEnabled
     ? Math.min(currentPage * GLOBAL_PAGE_SIZE, filteredRows.length)
     : filteredRows.length;
-  const centerCount = new Set(filteredRows.map((row) => row.center.centerCode))
-    .size;
-  const hasFilters = queryParam.trim() !== "" || provinceParam !== "all";
+  const centerCount = new Set(filteredRows.map((row) => row.centerCode)).size;
+  const provinceCount = new Set(filteredRows.map((row) => row.province)).size;
+  const activeFilterKeys = FILTER_PARAMS.filter(
+    (key) => (searchParams.get(key) ?? "") !== "",
+  );
+  const hasFilters = activeFilterKeys.length > 0;
+
+  function updateFilter(key: FilterParam, value: string): void {
+    const next = new URLSearchParams(searchParams);
+    if (value === "") next.delete(key);
+    else next.set(key, value);
+    next.delete("page"); // filter changes reset pagination (page = 1)
+    setSearchParams(next);
+  }
 
   function submitSearch(event: FormEvent<HTMLFormElement>): void {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
-    const query = String(formData.get("query") ?? "").trim();
-    const province = String(formData.get("province") ?? "all");
-    const next = new URLSearchParams();
-    if (query !== "") next.set("query", query);
-    if (province !== "all") next.set("province", province);
-    setSearchParams(next);
+    updateFilter("query", String(formData.get("query") ?? "").trim());
   }
 
   function clearFilters(): void {
@@ -350,34 +421,43 @@ export function CentersExplorerPage(): JSX.Element {
 
   if (state.status === "loading") {
     return (
-      <p role="status" aria-live="polite">
-        Cargando la oferta formativa…
-      </p>
+      <div className="container page-header">
+        <p role="status" aria-live="polite">
+          Cargando la oferta formativa…
+        </p>
+      </div>
     );
   }
   if (state.status === "failed") {
     return (
-      <section
-        className="status-panel"
-        role="alert"
-        aria-labelledby="centers-error-heading"
-      >
-        <h1 id="centers-error-heading">No hemos podido cargar los centros</h1>
-        <p>Vuelve a intentarlo dentro de unos minutos.</p>
-        <Link to="/">Volver a explorar</Link>
-      </section>
+      <div className="container page-header">
+        <section role="alert" aria-labelledby="centers-error-heading">
+          <h1 id="centers-error-heading" className="h1">
+            No hemos podido cargar los centros
+          </h1>
+          <p className="lede">Vuelve a intentarlo dentro de unos minutos.</p>
+          <Link className="link-action" to="/">
+            Volver a explorar
+          </Link>
+        </section>
+      </div>
     );
   }
   if (state.status === "unknown") {
     return (
-      <section
-        className="status-panel"
-        aria-labelledby="centers-not-found-heading"
-      >
-        <h1 id="centers-not-found-heading">Ciclo no encontrado</h1>
-        <p>La dirección no corresponde a un ciclo oficial disponible.</p>
-        <Link to="/">Volver a explorar</Link>
-      </section>
+      <div className="container page-header">
+        <section aria-labelledby="centers-not-found-heading">
+          <h1 id="centers-not-found-heading" className="h1">
+            Ciclo no encontrado
+          </h1>
+          <p className="lede">
+            La dirección no corresponde a un ciclo oficial disponible.
+          </p>
+          <Link className="link-action" to="/">
+            Volver a explorar
+          </Link>
+        </section>
+      </div>
     );
   }
 
@@ -387,168 +467,297 @@ export function CentersExplorerPage(): JSX.Element {
     ? `Dónde estudiar ${contextualProgram.programTitle}`
     : "Dónde estudiar";
 
+  const modalityOptions = Object.entries(CENTER_FILTER_LABELS.modality).filter(
+    ([value]) =>
+      value === "on_site" ||
+      value === "distance" ||
+      value === "mixed" ||
+      (facetCounts.modalities[value] ?? 0) > 0,
+  );
+
   return (
-    <section
-      className="catalog-page centers-catalog"
-      aria-labelledby="centers-heading"
-    >
-      <Breadcrumbs
-        items={
-          contextual
-            ? [
-                { label: "Inicio", to: "/" },
-                {
-                  label: contextualProgram.programTitle,
-                  to: trainingDetailPath(contextualProgram.programKey),
-                },
-                { label: "Dónde estudiar" },
-              ]
-            : [
-                { label: "Inicio", to: "/" },
-                { label: "Dónde estudiar", to: globalCentersPath() },
-              ]
-        }
-      />
-      <header className="catalog-page__header">
-        <div className="catalog-page__meta">
-          <span className="catalog-page__eyebrow">
+    <div className="catalog-page">
+      <div className="container">
+        <Breadcrumbs
+          items={
+            contextual
+              ? [
+                  { label: "Inicio", to: "/" },
+                  {
+                    label: contextualProgram.programTitle,
+                    to: trainingDetailPath(contextualProgram.programKey),
+                  },
+                  { label: "Dónde estudiar" },
+                ]
+              : [
+                  { label: "Inicio", to: "/" },
+                  { label: "Dónde estudiar", to: globalCentersPath() },
+                ]
+          }
+        />
+        <header className="page-header">
+          <p className="eyebrow">
+            {contextual ? "Centros del ciclo" : "Formación en Castilla y León"}
+          </p>
+          <h1 className="h1" id="centers-heading">
+            {heading}
+          </h1>
+          <p className="page-subcopy">
             {contextual
-              ? "Formación relacionada"
-              : "Formación en Castilla y León"}
-          </span>
-          <span className="catalog-page__freshness">
+              ? `Los centros que publican este ciclo en la copia actual. Comprueba la oferta y las fechas en la fuente oficial.`
+              : "Busca ciclos y centros de formación publicados en Castilla y León. La oferta puede cambiar según la convocatoria."}
+          </p>
+          <p className="caption" style={{ marginTop: "var(--space-2)" }}>
             Oferta formativa · snapshot del {formatDate(state.generatedAt)}
-          </span>
-        </div>
-        <h1 id="centers-heading">{heading}</h1>
-        <p>
-          {contextual
-            ? "Estos son los centros que publican este ciclo en la copia actual. Comprueba la oferta y las fechas en la fuente oficial."
-            : "Busca ciclos y centros de formación publicados en Castilla y León. La oferta puede cambiar según la convocatoria."}
-        </p>
-      </header>
+          </p>
+        </header>
 
-      <form
-        className="catalog-search"
-        onSubmit={submitSearch}
-        aria-label="Buscar dónde estudiar"
-      >
-        <label htmlFor="centers-query">
-          {contextual
-            ? "Centro o localidad"
-            : "Ciclo, familia, centro o localidad"}
-          <input
-            id="centers-query"
-            key={queryParam}
-            name="query"
-            type="search"
-            defaultValue={queryParam}
-            placeholder={
-              contextual ? "Ej.: nombre del centro" : "Ej.: ciclo o centro"
-            }
-          />
-        </label>
-        <label htmlFor="centers-province">
-          Provincia
-          <select
-            id="centers-province"
-            name="province"
-            value={provinceParam}
-            onChange={(event) => {
-              const next = new URLSearchParams(searchParams);
-              if (event.target.value === "all") next.delete("province");
-              else next.set("province", event.target.value);
-              next.delete("page");
-              setSearchParams(next);
-            }}
-          >
-            <option value="all">Todas las provincias</option>
-            {provinces.map((province) => (
-              <option value={province} key={province}>
-                {province}
-              </option>
-            ))}
-          </select>
-        </label>
-        <button className="primary-button" type="submit">
-          Buscar
+        <button
+          className="sheet-button"
+          type="button"
+          aria-expanded={sheetOpen}
+          aria-controls="centers-filters"
+          onClick={() => setSheetOpen((open) => !open)}
+        >
+          Filtros
         </button>
-        {hasFilters && (
-          <button
-            className="catalog-search__clear"
-            type="button"
-            onClick={clearFilters}
-          >
-            Limpiar filtros
-          </button>
-        )}
-      </form>
 
-      <section
-        className="catalog-results"
-        aria-labelledby="centers-results-heading"
-      >
-        <div className="catalog-results__toolbar">
-          <div>
-            <h2 id="centers-results-heading">
-              {contextual
-                ? `${centerCount} ${centerCount === 1 ? "centro publicado" : "centros publicados"}`
-                : `${firstVisibleResult}–${lastVisibleResult} de ${filteredRows.length} opciones formativas`}
-            </h2>
-            {!contextual && <span>{centerCount} centros representados</span>}
+        <form
+          className={"filter-sheet" + (sheetOpen ? " is-open" : "")}
+          id="centers-filters"
+          onSubmit={submitSearch}
+          aria-label="Filtrar dónde estudiar"
+        >
+          <div className="filter-bar">
+            <div className="filter-field filter-grow">
+              <label htmlFor="centers-query">
+                {contextual ? "Buscar centro" : "Buscar centro o ciclo"}
+              </label>
+              <input
+                id="centers-query"
+                name="query"
+                type="search"
+                key={filters.query}
+                defaultValue={filters.query}
+                placeholder="Ej.: CIFP, Administración y Finanzas"
+              />
+            </div>
+            <div className="filter-field">
+              <label htmlFor="centers-province">Provincia</label>
+              <select
+                id="centers-province"
+                value={filters.province}
+                onChange={(event) =>
+                  updateFilter("province", event.target.value)
+                }
+              >
+                <option value="">Todas</option>
+                {provinces.map((province) => (
+                  <option value={province} key={province}>
+                    {province}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div className="filter-field">
+              <label htmlFor="centers-modality">Modalidad</label>
+              <select
+                id="centers-modality"
+                value={filters.modalidad}
+                onChange={(event) =>
+                  updateFilter("modality", event.target.value)
+                }
+              >
+                <option value="">Todas</option>
+                {modalityOptions.map(([value, label]) => (
+                  <option value={value} key={value}>
+                    {label}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div className="filter-field">
+              <label htmlFor="centers-titularidad">Titularidad</label>
+              <select
+                id="centers-titularidad"
+                value={filters.titularidad}
+                onChange={(event) =>
+                  updateFilter("titularidad", event.target.value)
+                }
+              >
+                <option value="">Todas</option>
+                {Object.entries(CENTER_FILTER_LABELS.teachingType).map(
+                  ([value, label]) => (
+                    <option value={value} key={value}>
+                      {label}
+                    </option>
+                  ),
+                )}
+              </select>
+            </div>
+            {!contextual && (
+              <div className="filter-field">
+                <label htmlFor="centers-level">Nivel</label>
+                <select
+                  id="centers-level"
+                  value={filters.nivel}
+                  onChange={(event) =>
+                    updateFilter("level", event.target.value)
+                  }
+                >
+                  <option value="">Todos</option>
+                  {Object.entries(CENTER_FILTER_LABELS.level).map(
+                    ([value, label]) => (
+                      <option value={value} key={value}>
+                        {label}
+                      </option>
+                    ),
+                  )}
+                </select>
+              </div>
+            )}
+            {!contextual && (
+              <div className="filter-field">
+                <label htmlFor="centers-family">Familia profesional</label>
+                <select
+                  id="centers-family"
+                  value={filters.familia}
+                  onChange={(event) =>
+                    updateFilter("family", event.target.value)
+                  }
+                >
+                  <option value="">Todas</option>
+                  {families.map(([code, name]) => (
+                    <option value={code} key={code}>
+                      {code} — {name}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            )}
+            {!contextual && (
+              <div className="filter-field">
+                <label htmlFor="centers-ownership">Tipo de centro</label>
+                <select
+                  id="centers-ownership"
+                  value={filters.ownership}
+                  onChange={(event) =>
+                    updateFilter("ownership", event.target.value)
+                  }
+                >
+                  <option value="">Todos</option>
+                  {Object.entries(CENTER_FILTER_LABELS.ownership).map(
+                    ([value, label]) => (
+                      <option value={value} key={value}>
+                        {label}
+                      </option>
+                    ),
+                  )}
+                </select>
+              </div>
+            )}
+            <div className="filter-field">
+              <button className="button button--primary" type="submit">
+                Aplicar
+              </button>
+            </div>
           </div>
+        </form>
+
+        <div className="result-meta">
+          <p className="result-count" style={{ margin: 0 }}>
+            {contextual
+              ? `${centerCount} ${centerCount === 1 ? "centro publicado" : "centros publicados"}`
+              : `${firstVisibleResult}–${lastVisibleResult} de ${filteredRows.length} opciones formativas`}
+          </p>
+          <p className="caption" style={{ margin: 0 }}>
+            {contextual
+              ? `${filteredRows.length} opciones formativas · ${provinceCount} provincias`
+              : `${centerCount} centros representados`}
+          </p>
+          {hasFilters && (
+            <button
+              className="link-action"
+              type="button"
+              style={{ minHeight: "auto", fontSize: "var(--text-small)" }}
+              onClick={clearFilters}
+            >
+              Quitar filtros
+            </button>
+          )}
         </div>
+
         {filteredRows.length === 0 ? (
-          <div className="status-panel" role="status">
-            <h2>No hay coincidencias</h2>
-            <p>
+          <div className="empty-state">
+            <h2 className="empty-title">No hay coincidencias</h2>
+            <p className="lede">
               Prueba con otra búsqueda o quita algún filtro. La ausencia en esta
               copia no demuestra que no exista oferta.
             </p>
             {hasFilters && (
-              <button
-                className="secondary-button"
-                type="button"
-                onClick={clearFilters}
-              >
-                Quitar filtros
-              </button>
+              <div className="method-actions">
+                <button
+                  className="button button--secondary"
+                  type="button"
+                  onClick={clearFilters}
+                >
+                  Quitar filtros
+                </button>
+              </div>
             )}
           </div>
         ) : (
-          <div className="center-catalog__table-wrap">
-            <table className="center-catalog__table" id="center-results-table">
-              <caption className="sr-only">
-                Centros y ciclos de formación disponibles
-                {paginationEnabled && pageCount > 1
-                  ? `. Página ${currentPage} de ${pageCount}`
-                  : ""}
-              </caption>
-              <thead>
-                <tr>
-                  <th scope="col">Centro</th>
-                  <th scope="col">Localidad</th>
-                  <th scope="col">Ciclo</th>
-                  <th scope="col">Modalidad</th>
-                  <th scope="col">Acciones</th>
-                </tr>
-              </thead>
-              <tbody>
-                {visibleRows.map((row) => (
-                  <CenterRow key={row.key} row={row} />
-                ))}
-              </tbody>
-            </table>
-          </div>
+          <>
+            <div className="table-scroll">
+              <table className="result-table" id="center-results-table">
+                <caption className="sr-only">
+                  Centros y ciclos de formación disponibles
+                  {paginationEnabled && pageCount > 1
+                    ? `. Página ${currentPage} de ${pageCount}`
+                    : ""}
+                </caption>
+                <thead>
+                  <tr>
+                    <th scope="col">Centro</th>
+                    <th scope="col">Localidad</th>
+                    <th scope="col">Ciclo</th>
+                    <th scope="col">Modalidad</th>
+                    <th scope="col">Titularidad</th>
+                    <th scope="col">Acciones</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {visibleRows.map((row) => (
+                    <tr key={row.rowKey}>
+                      <CenterRow row={row} policy={linkPolicy} />
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+            <ul className="rcard-list">
+              {visibleRows.map((row) => (
+                <CenterResultCard
+                  key={row.rowKey}
+                  row={row}
+                  policy={linkPolicy}
+                />
+              ))}
+            </ul>
+          </>
         )}
+
         {paginationEnabled && pageCount > 1 ? (
           <nav
-            className="center-catalog__pagination"
+            className="pagination"
             aria-label="Paginación de opciones formativas"
             aria-controls="center-results-table"
           >
             <button
-              className="secondary-button"
+              className={
+                "button button--secondary" +
+                (currentPage === 1 ? " button--disabled" : "")
+              }
               type="button"
               aria-label="Página anterior"
               disabled={currentPage === 1}
@@ -562,11 +771,11 @@ export function CentersExplorerPage(): JSX.Element {
             >
               Anterior
             </button>
-            <span aria-live="polite">
-              Página {currentPage} de {pageCount}
+            <span className="range" aria-live="polite">
+              {firstVisibleResult}–{lastVisibleResult} de {filteredRows.length}
             </span>
             <button
-              className="secondary-button"
+              className="button button--secondary"
               type="button"
               aria-label="Página siguiente"
               disabled={currentPage === pageCount}
@@ -580,11 +789,17 @@ export function CentersExplorerPage(): JSX.Element {
             </button>
           </nav>
         ) : null}
-      </section>
-      <p className="catalog-page__note">
-        Mostramos solo centros y modalidades publicados en la copia indicada.
-        Verifica fechas, admisión y condiciones en la web del centro.
-      </p>
-    </section>
+
+        <p className="caption">
+          Las URLs de los centros se muestran tal como las publica la fuente; el
+          CTA solo aparece con disponibilidad e identidad verificadas en la
+          auditoría de enlaces
+          {linkPolicy !== null &&
+            ` del ${formatDate(linkPolicy.auditedAt.slice(0, 10))}`}
+          . Si un centro no publica modalidad, aparece como “Modalidad no
+          publicada”.
+        </p>
+      </div>
+    </div>
   );
 }
