@@ -12,6 +12,10 @@ research/**
 
 # Deterministic writer owns the canonical serialization for this audit artifact.
 analysis/fp_official_alias_pass_results.json
+analysis/design-system-normalization-before.json
+analysis/design-system-normalization-before.md
+analysis/design-system-normalization-after.json
+analysis/design-system-normalization-after.md
 
 # Contest evidence and Runtime V4 activation use canonical hash-bound serialization.
 public/data/v1/manifest.json
