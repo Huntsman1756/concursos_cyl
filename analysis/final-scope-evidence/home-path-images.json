@@ -1,0 +1,181 @@
+{
+  "capture": {
+    "source": "Vite production preview",
+    "baseUrl": "http://127.0.0.1:4219",
+    "viewports": {
+      "mobile": "390x844",
+      "desktop": "1440x900"
+    }
+  },
+  "homePaths": {
+    "expectedCount": 3,
+    "loadedCount": 3,
+    "paths": [
+      {
+        "expectedAsset": "path-training",
+        "pathNumber": "01",
+        "title": "Tengo una FP",
+        "picturePresent": true,
+        "imgPresent": true,
+        "currentSrc": "http://127.0.0.1:4219/images/editorial/path-training-640.avif",
+        "naturalWidth": 390,
+        "naturalHeight": 292,
+        "complete": true,
+        "alt": "Estudiante de FP consultando su plan de formación en una tableta dentro de un taller.",
+        "selectedFormat": "AVIF",
+        "visibleBoundingBox": {
+          "x": 17,
+          "y": 1436.078125,
+          "width": 356,
+          "height": 267
+        },
+        "opacity": "1",
+        "display": "block",
+        "visibility": "visible",
+        "httpStatus": 200,
+        "httpContentType": "image/avif",
+        "loadedSuccessfully": true,
+        "desktop": {
+          "expectedAsset": "path-training",
+          "pathNumber": "01",
+          "title": "Tengo una FP",
+          "picturePresent": true,
+          "imgPresent": true,
+          "currentSrc": "http://127.0.0.1:4219/images/editorial/path-training-640.avif",
+          "naturalWidth": 475,
+          "naturalHeight": 356,
+          "complete": true,
+          "alt": "Estudiante de FP consultando su plan de formación en una tableta dentro de un taller.",
+          "selectedFormat": "AVIF",
+          "visibleBoundingBox": {
+            "x": 101,
+            "y": 1066.03125,
+            "width": 395.328125,
+            "height": 296.484375
+          },
+          "opacity": "1",
+          "display": "block",
+          "visibility": "visible",
+          "httpStatus": 200,
+          "httpContentType": "image/avif",
+          "loadedSuccessfully": true
+        }
+      },
+      {
+        "expectedAsset": "path-occupation",
+        "pathNumber": "02",
+        "title": "Quiero dedicarme a una profesión",
+        "picturePresent": true,
+        "imgPresent": true,
+        "currentSrc": "http://127.0.0.1:4219/images/editorial/path-occupation-640.avif",
+        "naturalWidth": 390,
+        "naturalHeight": 292,
+        "complete": true,
+        "alt": "Dos estudiantes conversando con un formador sobre su futura profesión en un taller de mecanizado.",
+        "selectedFormat": "AVIF",
+        "visibleBoundingBox": {
+          "x": 17,
+          "y": 1917,
+          "width": 356,
+          "height": 267
+        },
+        "opacity": "1",
+        "display": "block",
+        "visibility": "visible",
+        "httpStatus": 200,
+        "httpContentType": "image/avif",
+        "loadedSuccessfully": true,
+        "desktop": {
+          "expectedAsset": "path-occupation",
+          "pathNumber": "02",
+          "title": "Quiero dedicarme a una profesión",
+          "picturePresent": true,
+          "imgPresent": true,
+          "currentSrc": "http://127.0.0.1:4219/images/editorial/path-occupation-640.avif",
+          "naturalWidth": 475,
+          "naturalHeight": 356,
+          "complete": true,
+          "alt": "Dos estudiantes conversando con un formador sobre su futura profesión en un taller de mecanizado.",
+          "selectedFormat": "AVIF",
+          "visibleBoundingBox": {
+            "x": 522.328125,
+            "y": 1066.03125,
+            "width": 395.328125,
+            "height": 296.484375
+          },
+          "opacity": "1",
+          "display": "block",
+          "visibility": "visible",
+          "httpStatus": 200,
+          "httpContentType": "image/avif",
+          "loadedSuccessfully": true
+        }
+      },
+      {
+        "expectedAsset": "path-offer",
+        "pathNumber": "03",
+        "title": "He visto una oferta",
+        "picturePresent": true,
+        "imgPresent": true,
+        "currentSrc": "http://127.0.0.1:4219/images/editorial/path-offer-640.avif",
+        "naturalWidth": 390,
+        "naturalHeight": 292,
+        "complete": true,
+        "alt": "Persona anotando los requisitos de una oferta de empleo junto a su portátil.",
+        "selectedFormat": "AVIF",
+        "visibleBoundingBox": {
+          "x": 17,
+          "y": 2397.921875,
+          "width": 356,
+          "height": 267
+        },
+        "opacity": "1",
+        "display": "block",
+        "visibility": "visible",
+        "httpStatus": 200,
+        "httpContentType": "image/avif",
+        "loadedSuccessfully": true,
+        "desktop": {
+          "expectedAsset": "path-offer",
+          "pathNumber": "03",
+          "title": "He visto una oferta",
+          "picturePresent": true,
+          "imgPresent": true,
+          "currentSrc": "http://127.0.0.1:4219/images/editorial/path-offer-640.avif",
+          "naturalWidth": 475,
+          "naturalHeight": 356,
+          "complete": true,
+          "alt": "Persona anotando los requisitos de una oferta de empleo junto a su portátil.",
+          "selectedFormat": "AVIF",
+          "visibleBoundingBox": {
+            "x": 943.65625,
+            "y": 1066.03125,
+            "width": 395.34375,
+            "height": 296.5
+          },
+          "opacity": "1",
+          "display": "block",
+          "visibility": "visible",
+          "httpStatus": 200,
+          "httpContentType": "image/avif",
+          "loadedSuccessfully": true
+        }
+      }
+    ],
+    "networkFailedRequests": [],
+    "screenshots": ["home-paths-390-full.png", "home-paths-1440.png"]
+  },
+  "openData": {
+    "labelSource": "src/features/open-data/OpenDataPage.tsx:143-159",
+    "runtimeText": [
+      "Relaciones",
+      "Ciclos en el grafo",
+      "Ocupaciones CNO-11 en el grafo",
+      "Familias profesionales",
+      "Licencia",
+      "Integridad JSON",
+      "Integridad CSV"
+    ],
+    "screenshots": ["open-data-metrics-1440.png"]
+  }
+}

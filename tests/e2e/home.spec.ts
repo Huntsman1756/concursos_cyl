@@ -18,6 +18,90 @@ async function expectNoHorizontalOverflow(page: Page): Promise<void> {
   expect(overflow.document).toBeLessThanOrEqual(1);
 }
 
+type HomePathImageDiagnostic = {
+  currentSrc: string;
+  naturalWidth: number;
+  naturalHeight: number;
+  complete: boolean;
+  alt: string;
+  display: string;
+  visibility: string;
+  opacity: string;
+  box: { width: number; height: number };
+  picturePresent: boolean;
+  imagePresent: boolean;
+};
+
+const HOME_PATH_ASSETS = [
+  "path-training",
+  "path-occupation",
+  "path-offer",
+] as const;
+
+async function expectHomePathImages(
+  page: Page,
+  imageResponses: Map<string, number>,
+): Promise<void> {
+  const paths = page.locator(".paths-grid .path");
+  await expect(paths).toHaveCount(HOME_PATH_ASSETS.length);
+  await page.locator(".paths-grid").scrollIntoViewIfNeeded();
+  await page.evaluate(async () => {
+    const step = Math.max(window.innerHeight - 64, 1);
+    const maxY = Math.max(
+      document.documentElement.scrollHeight - window.innerHeight,
+      0,
+    );
+    for (let y = 0; y <= maxY; y += step) {
+      window.scrollTo(0, y);
+      await new Promise((resolve) => setTimeout(resolve, 50));
+    }
+    window.scrollTo(0, 0);
+  });
+
+  const diagnostics: HomePathImageDiagnostic[] = await paths.evaluateAll(
+    (cards) =>
+      cards.map((card) => {
+        const picture = card.querySelector("picture");
+        const image = card.querySelector("img");
+        const style = image === null ? null : getComputedStyle(image);
+        const box = image?.getBoundingClientRect();
+        return {
+          currentSrc: image?.currentSrc ?? "",
+          naturalWidth: image?.naturalWidth ?? 0,
+          naturalHeight: image?.naturalHeight ?? 0,
+          complete: image?.complete ?? false,
+          alt: image?.alt ?? "",
+          display: style?.display ?? "",
+          visibility: style?.visibility ?? "",
+          opacity: style?.opacity ?? "",
+          box: { width: box?.width ?? 0, height: box?.height ?? 0 },
+          picturePresent: picture !== null,
+          imagePresent: image !== null,
+        };
+      }),
+  );
+
+  expect(diagnostics).toHaveLength(HOME_PATH_ASSETS.length);
+  diagnostics.forEach((diagnostic, index) => {
+    const asset = HOME_PATH_ASSETS[index];
+    expect(diagnostic.picturePresent).toBe(true);
+    expect(diagnostic.imagePresent).toBe(true);
+    expect(diagnostic.currentSrc).toMatch(
+      new RegExp(`/images/editorial/${asset}-\\d+\\.(?:avif|webp)$`, "u"),
+    );
+    expect(imageResponses.get(diagnostic.currentSrc)).toBe(200);
+    expect(diagnostic.naturalWidth).toBeGreaterThan(0);
+    expect(diagnostic.naturalHeight).toBeGreaterThan(0);
+    expect(diagnostic.complete).toBe(true);
+    expect(diagnostic.alt.trim()).not.toBe("");
+    expect(diagnostic.display).not.toBe("none");
+    expect(diagnostic.visibility).not.toBe("hidden");
+    expect(Number(diagnostic.opacity)).toBeGreaterThan(0);
+    expect(diagnostic.box.width).toBeGreaterThan(0);
+    expect(diagnostic.box.height).toBeGreaterThan(0);
+  });
+}
+
 async function chooseFirstResult(page: Page, query: string): Promise<Locator> {
   const combobox = page.getByRole("combobox", {
     name: "Busca tu ciclo",
@@ -68,6 +152,16 @@ const staleLegacyManifest = {
 test("home exposes three clear intents, navigation, freshness, and no automated accessibility violations", async ({
   page,
 }) => {
+  const imageResponses = new Map<string, number>();
+  page.on("response", (response) => {
+    if (
+      /\/images\/editorial\/path-(?:training|occupation|offer)-\d+\.(?:avif|webp)$/u.test(
+        response.url(),
+      )
+    ) {
+      imageResponses.set(response.url(), response.status());
+    }
+  });
   const manifestResponsePromise = page.waitForResponse((response) =>
     response.url().endsWith("/data/v1/manifest.json"),
   );
@@ -112,6 +206,7 @@ test("home exposes three clear intents, navigation, freshness, and no automated 
     `Relaciones revisadas · ${expectedDateKind} ${expectedDate}`,
   );
   await expect(page.locator(".example-cta a")).toHaveCount(1);
+  await expectHomePathImages(page, imageResponses);
   await expectNoHorizontalOverflow(page);
   await expectStrictAxe(page);
 });

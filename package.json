@@ -12,6 +12,8 @@
     "qa:design-system:audit": "node scripts/release/auditDesignSystemNormalization.mjs",
     "qa:design-system:invariants": "node scripts/release/assertDesignSystemNormalization.mjs",
     "qa:design-system:capture": "node scripts/release/captureDesignSystemNormalizationScreenshots.mjs",
+    "qa:final-scope:offer-data": "tsx scripts/release/auditOfferEvidenceScope.ts",
+    "qa:final-scope:capture": "node scripts/release/captureFinalScopeEvidence.mjs",
     "preview": "vite preview",
     "pages:prepare": "tsx scripts/release/preparePagesFallback.ts",
     "release:pages:verify": "tsx scripts/release/verifyPagesDeployment.ts",
