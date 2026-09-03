@@ -104,7 +104,8 @@ No hay cambios en datos canónicos, rutas, assets editoriales aprobados ni artef
 
 ## COMMITS
 
-Los cambios de esta ronda se dejan en commits locales después de esta auditoría; no se hará push.
+`bbe6c775b7b4081b225372103e7dbd6ea16d96bf` — `chore(qa): close final scope evidence`.
+El informe se actualiza a continuación en un segundo commit local de documentación; no se hará push.
 
 ## REMAINING_BLOCKERS
 
