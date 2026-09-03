@@ -10,6 +10,7 @@ import { Breadcrumbs } from "../../components/Breadcrumbs";
 import { ExternalLink } from "../../components/ExternalLink";
 import { Icon } from "../../components/Icon";
 import { InfoDisclosure } from "../../components/InfoDisclosure";
+import { PageEyebrow } from "../../components/PageEyebrow";
 import { useRouteReady } from "../../app/RouteReadyContext";
 import {
   globalOffersPath,
@@ -644,14 +645,14 @@ export function OfferExplorerPage({
       aria-labelledby="offer-explorer-heading"
     >
       <Breadcrumbs items={breadcrumbItems(context)} />
-      <header className="page-header offer-explorer__intro">
-        <p className="eyebrow offer-explorer__eyebrow">
+      <header className="page-header page-masthead offer-explorer__intro">
+        <PageEyebrow>
           {isGlobal ? "Oportunidades publicadas" : "Contexto documentado"}
-        </p>
+        </PageEyebrow>
         <h1 className="h1" id="offer-explorer-heading">
           {heading}
         </h1>
-        <p className="page-subcopy">{contextIntro(context)}</p>
+        <p className="page-subcopy page-lede">{contextIntro(context)}</p>
         <p
           className="caption offer-explorer__freshness"
           style={{ marginTop: "var(--space-2)" }}

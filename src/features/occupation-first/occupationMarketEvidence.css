@@ -14,7 +14,7 @@
   margin: 0 0 var(--space-1);
   color: var(--color-primary);
   font-size: 0.78rem;
-  font-weight: 800;
+  font-weight: var(--type-eyebrow-weight);
   letter-spacing: 0.08em;
   text-transform: uppercase;
 }
@@ -81,7 +81,7 @@
 .occupation-market-evidence__summary dd strong {
   color: var(--color-primary);
   font-size: clamp(1.45rem, 3vw, 2rem);
-  font-weight: 800;
+  font-weight: 700;
 }
 
 .occupation-market-evidence__definition {
@@ -106,7 +106,7 @@
   margin: var(--space-6) 0 var(--space-3);
   color: var(--color-primary);
   font-size: 0.78rem;
-  font-weight: 800;
+  font-weight: var(--type-eyebrow-weight);
   letter-spacing: 0.08em;
   text-transform: uppercase;
 }
@@ -167,7 +167,7 @@
 
 .occupation-market-evidence__provenance a {
   color: var(--color-action-text);
-  font-weight: 750;
+  font-weight: 600;
 }
 
 @media (max-width: 47.999rem) {

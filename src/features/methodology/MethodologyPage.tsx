@@ -13,6 +13,7 @@ import {
 } from "../../data/generatedDataClient";
 import { useRouteReady } from "../../app/RouteReadyContext";
 import { Breadcrumbs } from "../../components/Breadcrumbs";
+import { PageEyebrow } from "../../components/PageEyebrow";
 import { SourceMethodCard } from "./SourceMethodCard";
 import "./methodology.css";
 
@@ -180,7 +181,7 @@ function RegionalDatasetInventory({ state }: { state: ManifestState }) {
     >
       <div className="regional-dataset-inventory__heading">
         <div>
-          <p className="methodology-page__eyebrow">Datos regionales en uso</p>
+          <PageEyebrow>Datos regionales en uso</PageEyebrow>
           <h2 id="regional-datasets-heading">
             {JCYL_DATASETS.length} datasets de la Junta
           </h2>
@@ -384,12 +385,12 @@ export function MethodologyPage() {
           { label: "Metodología y fuentes" },
         ]}
       />
-      <header className="methodology-page__intro">
-        <p className="methodology-page__eyebrow">Transparencia de los datos</p>
+      <header className="page-masthead methodology-page__intro">
+        <PageEyebrow>Transparencia de los datos</PageEyebrow>
         <h1 className="h1" id="methodology-heading">
           Metodología y fuentes
         </h1>
-        <p>
+        <p className="page-lede">
           Explicamos qué aporta cada fuente, cuándo la consultamos y qué no
           permite concluir.
         </p>
@@ -409,6 +410,7 @@ export function MethodologyPage() {
 
       <div className="source-method-grid">
         <SourceMethodCard
+          className="methodology-statistics-card"
           title="Referencia por ciclo o grupo en España"
           contributes={
             <p>
@@ -428,6 +430,7 @@ export function MethodologyPage() {
           tables={tableLinks(NATIONAL_TABLES)}
         />
         <SourceMethodCard
+          className="methodology-statistics-card"
           title="Referencia por nivel en Castilla y León"
           contributes={
             <p>
@@ -445,7 +448,7 @@ export function MethodologyPage() {
           provenance={provenance}
           tables={tableLinks(REGIONAL_TABLES)}
         />
-        <article className="source-method-card">
+        <article className="source-method-card methodology-complementary-card">
           <h2>Formación complementaria de Castilla y León</h2>
           <section>
             <h3>Qué aporta</h3>
@@ -541,7 +544,7 @@ export function MethodologyPage() {
             </p>
           </section>
         </article>
-        <article className="source-method-card">
+        <article className="source-method-card methodology-derived-card">
           <h2>Dataset derivado abierto</h2>
           <section>
             <h3>Qué aporta</h3>

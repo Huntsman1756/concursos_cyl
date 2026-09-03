@@ -10,6 +10,7 @@ interface SourceTableLink {
 
 interface SourceMethodCardProps {
   title: string;
+  className?: string;
   contributes: ReactNode;
   limitations: ReactNode;
   provenance: ReactNode;
@@ -19,6 +20,7 @@ interface SourceMethodCardProps {
 /** Keeps one official statistical scope and its limitations together. */
 export function SourceMethodCard({
   title,
+  className,
   contributes,
   limitations,
   provenance,
@@ -26,7 +28,10 @@ export function SourceMethodCard({
 }: SourceMethodCardProps) {
   const headingId = `source-${tables[0]?.tableId ?? "unknown"}`;
   return (
-    <article className="source-method-card" aria-labelledby={headingId}>
+    <article
+      className={["source-method-card", className].filter(Boolean).join(" ")}
+      aria-labelledby={headingId}
+    >
       <h2 id={headingId}>{title}</h2>
 
       <section>

@@ -12,6 +12,7 @@ import {
   loadPublicEmploymentCalls,
 } from "../../data/generatedDataClient";
 import { ExternalLink } from "../../components/ExternalLink";
+import { PageEyebrow } from "../../components/PageEyebrow";
 import { useRouteReady } from "../../app/RouteReadyContext";
 import { selectOpenPublicCalls } from "./openPublicCalls";
 import "./ecylResources.css";
@@ -217,12 +218,12 @@ export function EcylResourcesPage() {
 
   return (
     <section className="resources-page" aria-labelledby="resources-heading">
-      <header className="resources-page__intro">
-        <p className="resources-page__eyebrow">Recursos de Castilla y León</p>
+      <header className="page-masthead resources-page__intro">
+        <PageEyebrow>Recursos de Castilla y León</PageEyebrow>
         <h1 className="h1" id="resources-heading">
           Formación para seguir avanzando
         </h1>
-        <p>
+        <p className="page-lede">
           Consulta formación complementaria y convocatorias públicas abiertas.
           Cada opción conserva su alcance y su fuente oficial.
         </p>

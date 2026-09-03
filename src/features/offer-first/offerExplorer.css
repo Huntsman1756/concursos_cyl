@@ -1,31 +1,26 @@
 .offer-explorer {
-  width: min(100%, var(--content-max));
-  margin-inline: auto;
-  padding-block: var(--space-4) clamp(3rem, 7vw, 6rem);
+  display: grid;
+  width: 100%;
+  max-width: none;
+  margin-inline: 0;
+  gap: var(--space-6);
+  padding-block: 0 var(--space-10);
 }
 
 .offer-explorer__intro {
-  max-width: 50rem;
-  margin-bottom: clamp(1.75rem, 4vw, 3rem);
+  max-width: var(--reading-max);
 }
 
 .offer-explorer__intro h1 {
-  max-width: 52rem;
-  margin: var(--space-2) 0 var(--space-4);
-  color: var(--color-text);
-  font-size: clamp(2rem, 5.5vw, 4rem);
-  font-weight: 760;
-  letter-spacing: -0.04em;
-  line-height: 1;
-  text-wrap: balance;
+  max-width: var(--reading-max);
 }
 
-.offer-explorer__intro > p {
-  max-width: 44rem;
-  margin: 0;
+.offer-explorer__intro > .page-lede {
+  max-width: var(--reading-max);
+  margin: var(--space-3) 0 0;
   color: var(--color-text-muted);
-  font-size: var(--text-md);
-  line-height: 1.55;
+  font-size: var(--type-body);
+  line-height: var(--text-body-large-line-height);
 }
 
 .offer-explorer__intro .offer-explorer__freshness {
@@ -42,8 +37,9 @@
     auto auto;
   gap: var(--space-3);
   align-items: end;
-  padding: var(--space-5);
-  border-block: 1px solid var(--color-border-strong);
+  padding: var(--panel-padding-md);
+  border: 1px solid var(--color-border-strong);
+  border-radius: var(--radius-panel);
   background: var(--color-surface-subtle);
 }
 
@@ -53,16 +49,16 @@
   min-width: 0;
   color: var(--color-text);
   font-size: var(--text-sm);
-  font-weight: 750;
+  font-weight: var(--text-label-weight);
 }
 
 .offer-explorer__search input,
 .offer-explorer__search select {
   width: 100%;
-  min-height: 2.9rem;
-  padding: 0.65rem 0.75rem;
+  min-height: var(--control-height);
+  padding: var(--inset-control);
   border: 1px solid var(--color-border-strong);
-  border-radius: var(--radius-sm);
+  border-radius: var(--radius-control);
   color: var(--color-text);
   background: var(--color-surface);
   font: inherit;
@@ -77,32 +73,33 @@
 
 .offer-explorer__search .primary-button,
 .offer-explorer__clear {
-  min-height: 2.9rem;
+  min-height: var(--control-height);
   white-space: nowrap;
 }
 
 .offer-explorer__clear {
-  padding: 0.65rem 0.75rem;
+  padding: var(--inset-control);
   border: 0;
   color: var(--color-action-text);
   background: transparent;
   font: inherit;
-  font-size: var(--text-sm);
-  font-weight: 750;
+  font-size: var(--type-control);
+  font-weight: var(--type-control-weight);
   text-decoration: underline;
   text-underline-offset: 0.18em;
   cursor: pointer;
 }
 
 .offer-explorer__results {
-  margin-top: clamp(2rem, 5vw, 3.5rem);
+  margin-top: 0;
 }
 
 .offer-explorer__scope-note {
   max-width: 50rem;
-  margin: var(--space-3) 0 0;
+  margin: 0;
   padding: var(--space-3) var(--space-4);
   border-left: 3px solid var(--color-gold);
+  border-radius: var(--radius-panel);
   color: var(--color-text-muted);
   background: var(--color-warning-surface);
   font-size: var(--text-sm);
@@ -124,7 +121,8 @@
 .offer-explorer__count h2 {
   margin: 0;
   color: var(--color-text);
-  font-size: clamp(1.25rem, 2.4vw, 1.7rem);
+  font-size: var(--type-section-title);
+  line-height: var(--text-h2-line-height);
 }
 
 .offer-explorer__count > span {
@@ -140,7 +138,7 @@
 
 .offer-row {
   min-width: 0;
-  padding: var(--space-5) 0;
+  padding: var(--panel-padding-md) 0;
   border-bottom: 1px solid var(--color-border);
 }
 
@@ -157,8 +155,9 @@
 
 .offer-row__title {
   margin: 0;
-  font-size: clamp(1.05rem, 2vw, 1.35rem);
-  line-height: 1.25;
+  font-size: var(--type-card-title);
+  font-weight: var(--type-card-title-weight);
+  line-height: var(--text-h3-line-height);
 }
 
 .offer-row__title a {
@@ -190,7 +189,7 @@
 
 .offer-row__relations-summary > span {
   color: var(--color-primary-strong);
-  font-weight: 750;
+  font-weight: 700;
 }
 
 .offer-row__relations-summary ul {
@@ -210,7 +209,7 @@
 
 .offer-row__relations-summary a {
   color: var(--color-action-text);
-  font-weight: 750;
+  font-weight: 700;
   text-underline-offset: 0.18em;
 }
 
@@ -228,13 +227,13 @@
   align-items: center;
   justify-content: center;
   gap: var(--space-2);
-  padding: 0.65rem 0.9rem;
+  padding: var(--inset-control);
   border: 1px solid var(--color-primary);
-  border-radius: var(--radius-sm);
+  border-radius: var(--radius-control);
   color: var(--color-surface);
   background: var(--color-primary);
   font-size: var(--text-sm);
-  font-weight: 800;
+  font-weight: 700;
   text-decoration: none;
   white-space: nowrap;
 }
@@ -273,7 +272,7 @@
 .offer-row__metadata dt {
   color: var(--color-text-muted);
   font-size: var(--text-xs);
-  font-weight: 750;
+  font-weight: 600;
 }
 
 .offer-row__metadata dd {
@@ -324,7 +323,7 @@
 
 .offer-row__evidence-meta a {
   color: var(--color-action-text);
-  font-weight: 750;
+  font-weight: 700;
 }
 
 .offer-explorer__muted,
@@ -391,10 +390,6 @@
     margin-bottom: clamp(1rem, 3vw, 1.5rem);
   }
 
-  .offer-explorer__intro h1 {
-    margin: var(--space-2) 0 var(--space-3);
-  }
-
   .offer-explorer__intro .offer-explorer__freshness {
     margin-top: var(--space-2);
   }
@@ -433,10 +428,6 @@
 }
 
 @media (max-width: 35rem) {
-  .offer-explorer__intro h1 {
-    font-size: clamp(2rem, 12vw, 3rem);
-  }
-
   .offer-row__metadata {
     grid-template-columns: 1fr;
   }

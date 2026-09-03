@@ -68,7 +68,7 @@
 .training-outcome__metric p {
   color: var(--color-action-text);
   font-size: 0.78rem;
-  font-weight: 750;
+  font-weight: var(--type-eyebrow-weight);
 }
 
 .training-outcome__metric strong {
@@ -119,7 +119,7 @@
 .training-outcome__distribution dd {
   margin: var(--space-1) 0 0;
   color: var(--color-text);
-  font-weight: 750;
+  font-weight: 700;
 }
 
 .training-outcome__note {

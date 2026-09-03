@@ -19,6 +19,7 @@ import {
 } from "../../domain/outcomes";
 import { findTrainingOutcomeGroup } from "../../domain/trainingOutcomeMatching";
 import { ExternalLink } from "../../components/ExternalLink";
+import { PageEyebrow } from "../../components/PageEyebrow";
 import { PrintButton } from "../../components/PrintButton";
 import { useRouteReady } from "../../app/RouteReadyContext";
 import { IncomeComparisonForm } from "./IncomeComparisonForm";
@@ -500,12 +501,12 @@ export function CompareStudiesPage() {
   );
   return (
     <section className="compare-page" aria-labelledby="compare-heading">
-      <header className="compare-page__intro">
-        <p className="compare-page__eyebrow">Comparar estudios</p>
+      <header className="page-masthead compare-page__intro">
+        <PageEyebrow>Comparar estudios</PageEyebrow>
         <h1 className="h1" id="compare-heading">
           Ingresos observados
         </h1>
-        <p>
+        <p className="page-lede">
           Compara la base de cotización anualizada publicada de hasta tres
           ciclos, usando la misma cohorte y el mismo año.
         </p>

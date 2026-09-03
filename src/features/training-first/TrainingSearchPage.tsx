@@ -180,11 +180,11 @@ export function TrainingSearchPage() {
       <Breadcrumbs
         items={[{ label: "Inicio", to: "/" }, { label: "Explorar FP" }]}
       />
-      <header className="training-page__header">
+      <header className="training-page__header page-masthead">
         <h1 className="h1" id="training-search-heading">
           ¿En qué puedes trabajar con una FP?
         </h1>
-        <p className="training-page__intro">
+        <p className="training-page__intro page-lede">
           Elige un ciclo oficial y verás las profesiones relacionadas con él,
           las ofertas de la copia actual y los centros donde estudiarlo.
         </p>

@@ -30,6 +30,7 @@ import { loadApprovedMappings } from "../../domain/occupation";
 import { buildApprovedExample } from "../../domain/approvedExample";
 import { EditorialImage } from "../../components/EditorialImage";
 import { InfoButton } from "../../components/InfoButton";
+import { PageEyebrow } from "../../components/PageEyebrow";
 import { OccupationCombobox } from "../occupation-first/OccupationCombobox";
 import { TrainingCombobox } from "../training-first/TrainingCombobox";
 
@@ -489,9 +490,9 @@ export function HomePage() {
       <section className="hero" aria-labelledby="hero-title">
         <div className="container hero-grid">
           <div>
-            <p className="eyebrow">
+            <PageEyebrow>
               Orientación profesional con datos públicos
-            </p>
+            </PageEyebrow>
             <h1 className="display" id="hero-title">
               Tu FP, tus salidas profesionales y dónde dar el siguiente paso.
             </h1>

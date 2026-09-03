@@ -13,6 +13,7 @@ import {
   resolveGeneratedAssetPath,
 } from "../../data/generatedDataClient";
 import { useRouteReady } from "../../app/RouteReadyContext";
+import { PageEyebrow } from "../../components/PageEyebrow";
 import "./openData.css";
 
 type OpenDataState =
@@ -128,12 +129,12 @@ export function OpenDataPage() {
 
   return (
     <article className="open-data-page" aria-labelledby="open-data-heading">
-      <header className="open-data-page__intro">
-        <p className="open-data-page__eyebrow">Reutilización pública</p>
+      <header className="page-masthead open-data-page__intro">
+        <PageEyebrow>Reutilización pública</PageEyebrow>
         <h1 className="h1" id="open-data-heading">
           Datos abiertos de SALIDA CyL
         </h1>
-        <p>
+        <p className="page-lede">
           Descarga las relaciones FP↔ocupación que utiliza el producto, con su
           clasificación CNO-11 y la fuente que respalda cada enlace.
         </p>
@@ -154,11 +155,11 @@ export function OpenDataPage() {
             <dd>{state.rows.length}</dd>
           </div>
           <div>
-            <dt>Ciclos</dt>
+            <dt>Ciclos en el grafo</dt>
             <dd>{summary?.programs}</dd>
           </div>
           <div>
-            <dt>Ocupaciones CNO-11</dt>
+            <dt>Ocupaciones CNO-11 en el grafo</dt>
             <dd>{summary?.occupations}</dd>
           </div>
           <div>

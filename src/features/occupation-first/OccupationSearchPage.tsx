@@ -86,11 +86,11 @@ export function OccupationSearchPage() {
       <Breadcrumbs
         items={[{ label: "Inicio", to: "/" }, { label: "Buscar profesión" }]}
       />
-      <header className="training-page__header">
+      <header className="training-page__header page-masthead">
         <h1 className="h1" id="occupation-search-heading">
           ¿Qué FP te lleva a una profesión?
         </h1>
-        <p className="training-page__intro">
+        <p className="training-page__intro page-lede">
           Escribe una profesión y verás los ciclos con una relación comprobada
           con ella, y los centros donde estudiarlos.
         </p>

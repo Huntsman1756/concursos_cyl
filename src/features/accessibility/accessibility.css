@@ -16,7 +16,7 @@
   margin: 0 0 var(--space-2);
   color: var(--color-primary);
   font-size: 0.82rem;
-  font-weight: 750;
+  font-weight: var(--type-eyebrow-weight);
   letter-spacing: 0.08em;
   text-transform: uppercase;
 }
@@ -69,7 +69,7 @@
 }
 
 .accessibility-measures dt {
-  font-weight: 750;
+  font-weight: 600;
 }
 
 .accessibility-measures dd {

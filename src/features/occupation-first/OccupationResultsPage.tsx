@@ -176,7 +176,7 @@ export function OccupationResultsPage() {
           { label: occupation.preferredLabel },
         ]}
       />
-      <header className="training-page__header">
+      <header className="training-page__header page-masthead">
         <Link
           to="/desde-ocupacion"
           className="training-page__back"

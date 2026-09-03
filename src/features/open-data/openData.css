@@ -1,8 +1,9 @@
 .open-data-page {
   display: grid;
+  width: 100%;
   gap: var(--space-8);
-  max-width: 72rem;
-  margin: 0 auto;
+  max-width: none;
+  margin: 0;
 }
 
 .open-data-page__intro {
@@ -13,21 +14,20 @@
 .open-data-release__heading > div > p {
   margin: 0 0 var(--space-2);
   color: var(--color-primary);
-  font-size: 0.82rem;
-  font-weight: 750;
-  letter-spacing: 0.08em;
+  font-size: var(--type-eyebrow);
+  font-weight: var(--type-eyebrow-weight);
+  letter-spacing: var(--text-label-tracking);
   text-transform: uppercase;
 }
 
-.open-data-page__intro h1,
 .open-data-release__heading h2 {
   margin-top: 0;
 }
 
-.open-data-page__intro > p:last-child {
+.open-data-page__intro > .page-lede {
   color: var(--color-text-muted);
-  font-size: 1.08rem;
-  line-height: 1.6;
+  font-size: var(--type-body);
+  line-height: var(--text-body-large-line-height);
 }
 
 .open-data-release {
@@ -72,7 +72,7 @@
 
 .open-data-release dd {
   margin: var(--space-1) 0 0;
-  font-weight: 720;
+  font-weight: 700;
 }
 
 .open-data-release__metrics dd {

@@ -5,6 +5,7 @@ import { Link, useParams, useSearchParams } from "react-router-dom";
 import type { TrainingProgram } from "../../../data/schemas/generated";
 import { Breadcrumbs } from "../../components/Breadcrumbs";
 import { ExternalLink } from "../../components/ExternalLink";
+import { PageEyebrow } from "../../components/PageEyebrow";
 import { useRouteReady } from "../../app/RouteReadyContext";
 import {
   loadFoundationResourceSubset,
@@ -499,14 +500,14 @@ export function CentersExplorerPage(): JSX.Element {
                 ]
           }
         />
-        <header className="page-header">
-          <p className="eyebrow">
+        <header className="page-header page-masthead">
+          <PageEyebrow>
             {contextual ? "Centros del ciclo" : "Formación en Castilla y León"}
-          </p>
+          </PageEyebrow>
           <h1 className="h1" id="centers-heading">
             {heading}
           </h1>
-          <p className="page-subcopy">
+          <p className="page-subcopy page-lede">
             {contextual
               ? `Los centros que publican este ciclo en la copia actual. Comprueba la oferta y las fechas en la fuente oficial.`
               : "Busca ciclos y centros de formación publicados en Castilla y León. La oferta puede cambiar según la convocatoria."}
