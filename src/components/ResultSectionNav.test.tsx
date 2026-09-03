@@ -29,6 +29,27 @@ describe("ResultSectionNav", () => {
     );
   });
 
+  it("exposes one active location and updates it on fragment selection", () => {
+    render(
+      <ResultSectionNav
+        links={[
+          { href: "#resumen", label: "Resumen" },
+          { href: "#centros", label: "Centros" },
+        ]}
+      />,
+    );
+
+    const summary = screen.getByRole("link", { name: "Resumen" });
+    const centers = screen.getByRole("link", { name: "Centros" });
+    expect(summary).toHaveAttribute("aria-current", "location");
+    expect(centers).not.toHaveAttribute("aria-current");
+
+    fireEvent.click(centers);
+
+    expect(summary).not.toHaveAttribute("aria-current");
+    expect(centers).toHaveAttribute("aria-current", "location");
+  });
+
   it("keeps native fragment navigation and focuses the destination without scrolling", () => {
     render(
       <>
