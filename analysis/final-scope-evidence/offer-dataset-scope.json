@@ -165,14 +165,17 @@
   "canonicalOrDerived": "DERIVED",
   "containsPrivateEmployers": "NO",
   "containsPredictions": "NO",
-  "publicMethodologyCoverage": "ABSENT",
+  "publicSurface": "REMOVED_FROM_OPEN_DATA_SURFACE",
+  "runtimeRole": "RUNTIME_DERIVED_RESOURCE",
+  "standalonePublicationStatus": "NOT_PUBLISHED_AS_STANDALONE_REUSABLE_DATASET",
+  "publicMethodologyCoverage": "PRESENT",
   "classificationCode": "D",
-  "classification": "INSUFFICIENTLY_DOCUMENTED",
+  "classification": "INSUFFICIENTLY_DOCUMENTED_FOR_STANDALONE_PUBLICATION",
   "classificationBasis": [
     "Purpose, provenance, snapshot, schema, hashes and tests are present.",
     "The derived resource has no explicit license/reuse declaration in its own manifest/catalog entry.",
-    "The public Methodology page does not describe this derived sidecar, its 1,058-row scope, or its limits.",
-    "The public label 'Dataset candidato de expansión' is internal language, not a citizen-facing release name."
+    "The public Methodology page now documents the runtime role and the non-standalone publication status in one proportional note.",
+    "Standalone publication remains insufficiently documented until the derived resource's reuse terms are closed at the same level as the published datasets."
   ],
-  "candidate8Decision": "REMOVE_PUBLIC_SURFACE_FROM_OPEN_DATA_KEEP_ARTIFACTS_AND_DATA"
+  "candidate8Decision": "REMOVED_FROM_OPEN_DATA_SURFACE_KEEP_RUNTIME_RESOURCE"
 }

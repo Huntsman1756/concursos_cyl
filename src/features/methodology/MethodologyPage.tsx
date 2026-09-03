@@ -408,6 +408,21 @@ export function MethodologyPage() {
 
       <RegionalDatasetInventory state={manifestState} />
 
+      <aside aria-label="Alcance del recurso de ofertas">
+        <p>
+          SALIDA genera <code>offerEvidence</code>, un recurso derivado de
+          evidencia sobre la copia de ofertas, para relacionarlas con requisitos
+          y relaciones FP revisadas. Las páginas de ofertas utilizan este
+          recurso para mostrar ese contexto. En esta candidatura no se presenta
+          como un dataset reutilizable independiente. Que no aparezca en la
+          sección «Datos abiertos» no significa que las relaciones se calculen
+          de forma opaca ni que el recurso haya sido eliminado. Su publicación
+          independiente queda fuera del alcance mientras su documentación y
+          licencia de reutilización no estén cerradas al mismo nivel que los
+          demás datasets publicados.
+        </p>
+      </aside>
+
       <div className="source-method-grid">
         <SourceMethodCard
           className="methodology-statistics-card"

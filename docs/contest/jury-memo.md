@@ -13,7 +13,8 @@ SALIDA CyL convierte catálogos públicos separados en una ruta de decisión: `F
 - Cobertura positiva: `/desde-ocupacion/occupation%3Acno11%3A7111` conserva sus ofertas revisadas.
 - Límite honesto: `/desde-ocupacion/occupation%3Acno11%3A3820` no fabrica ofertas cuando no hay evidencia en la instantánea.
 - Desde oferta: `/desde-oferta` conserva requisito literal, tipo de evidencia, relación revisada y siguiente acción oficial.
-- Datos reutilizables: `/datos-abiertos` enlaza el grafo y el recurso derivado con su manifest.
+- Datos reutilizables: `/datos-abiertos` enlaza el grafo FP↔CNO-11 y los recursos publicados con su manifest.
+- Nota técnica: Las páginas de ofertas utilizan un recurso derivado de evidencia generado sobre el snapshot. Se conserva como recurso runtime trazable, pero no se publica en esta candidatura como dataset reutilizable independiente.
 
 ## Cifras congeladas
 

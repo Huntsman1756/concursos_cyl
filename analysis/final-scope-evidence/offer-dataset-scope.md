@@ -14,12 +14,15 @@
 - CANONICAL_OR_DERIVED: DERIVED
 - CONTAINS_PRIVATE_EMPLOYERS: NO
 - CONTAINS_PREDICTIONS: NO
-- CLASSIFICATION: D. INSUFFICIENTLY_DOCUMENTED
-- METHODOLOGY_COVERAGE: ABSENT
+- OFFER_DATASET_PUBLIC_SURFACE: REMOVED_FROM_OPEN_DATA_SURFACE
+- OFFER_DATASET_RUNTIME_ROLE: RUNTIME_DERIVED_RESOURCE
+- OFFER_DATASET_STANDALONE_PUBLICATION_STATUS: NOT_PUBLISHED_AS_STANDALONE_REUSABLE_DATASET
+- CLASSIFICATION: D. INSUFFICIENTLY_DOCUMENTED_FOR_STANDALONE_PUBLICATION
+- METHODOLOGY_COVERAGE: PRESENT
 - TESTS: schema, generator, domain, loader, boundary, distribution and offer-first E2E coverage are present.
 
 ## Decision
 
-**INSUFFICIENTLY_DOCUMENTED** for a public Open Data release at candidate.8.
+**D. INSUFFICIENTLY_DOCUMENTED_FOR_STANDALONE_PUBLICATION**.
 
-The artifact is technically reproducible and hash-checked, but the public surface does not yet provide the explicit license/reuse statement and Methodology scope required to call it release-ready. Remove only the conditional offer-evidence section from the public Open Data page for candidate.8. Keep the immutable JSON, manifest resource and internal generator/data artifacts; do not alter the data or canonical source snapshots.
+The artifact is technically reproducible and hash-checked. The public Methodology now explains its derived runtime role and makes clear that it is not published as a standalone reusable dataset. The independent publication remains out of scope until its reuse terms are documented at the same level as the published datasets. Keep the immutable JSON, manifest resource and generators/data artifacts; do not alter the data or canonical source snapshots.

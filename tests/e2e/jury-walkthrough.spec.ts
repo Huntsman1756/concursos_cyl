@@ -47,7 +47,10 @@ const JURY_MEMO_URLS = [
     url: "/datos-abiertos",
     heading: /Datos abiertos/u,
     mustContain: [],
-    mustNotContain: [],
+    mustNotContain: [
+      /Dataset candidato de expansión/iu,
+      /Ofertas: requisito, relación y acción/iu,
+    ],
   },
 ];
 

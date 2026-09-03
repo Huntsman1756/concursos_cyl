@@ -85,7 +85,7 @@ async function main(): Promise<void> {
     "utf8",
   );
   const methodologyMentionsOfferEvidence =
-    /offerEvidence|Dataset candidato de expansión|Ofertas: requisito, relación y acción/u.test(
+    /offerEvidence|recurso derivado de evidencia|páginas de ofertas|dataset reutilizable independiente|publicación independiente/iu.test(
       methodology,
     );
 
@@ -159,19 +159,21 @@ async function main(): Promise<void> {
     canonicalOrDerived: "DERIVED",
     containsPrivateEmployers: containsPrivateEmployers ? "YES" : "NO",
     containsPredictions: containsPredictiveFields ? "YES" : "NO",
+    publicSurface: "REMOVED_FROM_OPEN_DATA_SURFACE",
+    runtimeRole: "RUNTIME_DERIVED_RESOURCE",
+    standalonePublicationStatus: "NOT_PUBLISHED_AS_STANDALONE_REUSABLE_DATASET",
     publicMethodologyCoverage: methodologyMentionsOfferEvidence
       ? "PRESENT"
       : "ABSENT",
     classificationCode: "D",
-    classification: "INSUFFICIENTLY_DOCUMENTED",
+    classification: "INSUFFICIENTLY_DOCUMENTED_FOR_STANDALONE_PUBLICATION",
     classificationBasis: [
       "Purpose, provenance, snapshot, schema, hashes and tests are present.",
       "The derived resource has no explicit license/reuse declaration in its own manifest/catalog entry.",
-      "The public Methodology page does not describe this derived sidecar, its 1,058-row scope, or its limits.",
-      "The public label 'Dataset candidato de expansión' is internal language, not a citizen-facing release name.",
+      "The public Methodology page now documents the runtime role and the non-standalone publication status in one proportional note.",
+      "Standalone publication remains insufficiently documented until the derived resource's reuse terms are closed at the same level as the published datasets.",
     ],
-    candidate8Decision:
-      "REMOVE_PUBLIC_SURFACE_FROM_OPEN_DATA_KEEP_ARTIFACTS_AND_DATA",
+    candidate8Decision: "REMOVED_FROM_OPEN_DATA_SURFACE_KEEP_RUNTIME_RESOURCE",
   };
 
   await mkdir(outputRoot, { recursive: true });
@@ -200,15 +202,18 @@ async function main(): Promise<void> {
 - CANONICAL_OR_DERIVED: ${report.canonicalOrDerived}
 - CONTAINS_PRIVATE_EMPLOYERS: ${report.containsPrivateEmployers}
 - CONTAINS_PREDICTIONS: ${report.containsPredictions}
+- OFFER_DATASET_PUBLIC_SURFACE: ${report.publicSurface}
+- OFFER_DATASET_RUNTIME_ROLE: ${report.runtimeRole}
+- OFFER_DATASET_STANDALONE_PUBLICATION_STATUS: ${report.standalonePublicationStatus}
 - CLASSIFICATION: ${report.classificationCode}. ${report.classification}
 - METHODOLOGY_COVERAGE: ${report.publicMethodologyCoverage}
 - TESTS: schema, generator, domain, loader, boundary, distribution and offer-first E2E coverage are present.
 
 ## Decision
 
-**INSUFFICIENTLY_DOCUMENTED** for a public Open Data release at candidate.8.
+**D. INSUFFICIENTLY_DOCUMENTED_FOR_STANDALONE_PUBLICATION**.
 
-The artifact is technically reproducible and hash-checked, but the public surface does not yet provide the explicit license/reuse statement and Methodology scope required to call it release-ready. Remove only the conditional offer-evidence section from the public Open Data page for candidate.8. Keep the immutable JSON, manifest resource and internal generator/data artifacts; do not alter the data or canonical source snapshots.
+The artifact is technically reproducible and hash-checked. The public Methodology now explains its derived runtime role and makes clear that it is not published as a standalone reusable dataset. The independent publication remains out of scope until its reuse terms are documented at the same level as the published datasets. Keep the immutable JSON, manifest resource and generators/data artifacts; do not alter the data or canonical source snapshots.
 `,
     "utf8",
   );
