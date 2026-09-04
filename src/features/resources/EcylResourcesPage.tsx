@@ -498,7 +498,7 @@ export function EcylResourcesPage() {
                 {visibleCertificates.length === 0 ? (
                   <p className="resource-empty-state">
                     {term === "" && family === ""
-                      ? "No hay certificados publicados en la copia actual."
+                      ? "No hay certificados publicados en la copia activa."
                       : "No hay certificados que coincidan con tu búsqueda o familia. Prueba con otros filtros."}
                   </p>
                 ) : (

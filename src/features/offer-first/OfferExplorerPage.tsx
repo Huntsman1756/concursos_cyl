@@ -636,7 +636,7 @@ export function OfferExplorerPage({
         </h1>
         <p>
           La dirección no corresponde a un elemento oficial disponible en la
-          copia actual.
+          copia activa.
         </p>
         <Link
           to={

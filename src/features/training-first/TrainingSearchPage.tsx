@@ -187,7 +187,7 @@ export function TrainingSearchPage() {
         </h1>
         <p className="training-page__intro page-lede">
           Elige un ciclo oficial y verás las profesiones relacionadas con él,
-          las ofertas de la copia actual y los centros donde estudiarlo.
+          las ofertas de la copia activa y los centros donde estudiarlo.
         </p>
       </header>
 

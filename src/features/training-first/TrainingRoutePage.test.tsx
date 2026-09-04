@@ -381,7 +381,7 @@ describe("TrainingRoutePage", () => {
     ).toBeVisible();
     expect(screen.getByText("1 centro publicado")).toBeVisible();
     expect(
-      screen.queryByText(/ofertas? en la copia actual/u),
+      screen.queryByText(/ofertas? en la copia activa/u),
     ).not.toBeInTheDocument();
     expect(screen.getByText(/Oferta formativa · copia del/u)).toBeVisible();
   });

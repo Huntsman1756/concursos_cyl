@@ -920,7 +920,7 @@ export function TrainingResultsPage() {
         </div>
         {studyCenters.length === 0 ? (
           <p>
-            No hay centros publicados para este ciclo en la copia actual. Esto
+            No hay centros publicados para este ciclo en la copia activa. Esto
             no significa que no se imparta: comprueba la oferta vigente en la
             fuente oficial.
           </p>
