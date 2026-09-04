@@ -32,6 +32,7 @@ export type ContestDeploymentEvidence = {
   capturesAreCurrent: boolean;
   releaseGatesVerified?: boolean;
   releaseTag?: string | null;
+  deploymentMethod?: "workflow" | "script" | null;
   versionJsonUrl?: string | null;
   versionJsonCommitSha?: string | null;
   versionJsonSchemaVersion?: string | null;
@@ -177,11 +178,17 @@ function renderTechnicalEvidence(
   const workflowRun =
     deployment.status === "verified" && deployment.workflowRunId !== null
       ? `\`${deployment.workflowRunId}\``
-      : "**PENDIENTE DE DESPLIEGUE Y VERIFICACIÓN**";
+      : deployment.status === "verified" &&
+          deployment.deploymentMethod === "script"
+        ? "no aplica (despliegue por script VPS, sin GitHub Actions)"
+        : "**PENDIENTE DE DESPLIEGUE Y VERIFICACIÓN**";
   const deploymentNote =
     deployment.status === "verified" && deployment.verifiedAt !== null
       ? candidatePlan === undefined
-        ? `El release público se verificó con el commit ${deploymentCommit} y el run ${workflowRun} el ${deployment.verifiedAt}.`
+        ? deployment.workflowRunId === null &&
+          deployment.deploymentMethod === "script"
+          ? `El release público se verificó con el commit ${deploymentCommit} el ${deployment.verifiedAt}; el despliegue se ejecutó con el script de release del VPS y el \`version.json\` público declara ese mismo commit.`
+          : `El release público se verificó con el commit ${deploymentCommit} y el run ${workflowRun} el ${deployment.verifiedAt}.`
         : `La baseline funcional publicada se verificó con el commit ${deploymentCommit} y el run ${workflowRun} el ${deployment.verifiedAt}.`
       : "Estos dos campos no se inventan antes de ejecutar y verificar el release.";
   const reproducibilityIntro =
@@ -262,7 +269,7 @@ La revisión independiente confirmó el manifest, sus ${Object.keys(freeze.manif
 - URL raíz esperada: [${ROOT_URL}](${ROOT_URL})
 - ${candidatePlan === undefined ? "Commit desplegado" : "Commit de baseline desplegado"}: ${deploymentCommit}.
 - Run del workflow: ${workflowRun}.
-${releaseTraceability}${versionJsonTraceability}
+${releaseTraceability}${versionJsonTraceability}- Identidad del producto: el commit desplegado registrado arriba es el commit de producto; los commits posteriores de documentación de candidatura no lo sustituyen ni reescriben \`version.json\`.
 
 ${deploymentNote}
 
@@ -324,15 +331,21 @@ function renderSubmissionChecklist(
   const workflowRun =
     deployment.status === "verified" && deployment.workflowRunId !== null
       ? `\`${deployment.workflowRunId}\``
-      : "**PENDIENTE DE DESPLIEGUE Y VERIFICACIÓN**";
+      : deployment.status === "verified" &&
+          deployment.deploymentMethod === "script"
+        ? "no aplica (despliegue por script VPS, sin GitHub Actions)"
+        : "**PENDIENTE DE DESPLIEGUE Y VERIFICACIÓN**";
+  const deploymentGate =
+    deployment.status === "verified"
+      ? deployment.workflowRunId === null &&
+        deployment.deploymentMethod === "script"
+        ? "- [x] Registrar el commit desplegado y la verificación pública observados (despliegue por script VPS, sin run de GitHub Actions)."
+        : "- [x] Rellenar el commit desplegado y el run del workflow con datos observados."
+      : "- [ ] Rellenar el commit desplegado y el run del workflow con datos observados.";
   const releaseGate =
     (deployment.releaseGatesVerified ?? deployment.status === "verified")
       ? "- [x] Ejecutar los gates de release y verificar la aplicación pública."
       : "- [ ] Ejecutar los gates de release y verificar la aplicación pública.";
-  const deploymentGate =
-    deployment.status === "verified"
-      ? "- [x] Rellenar el commit desplegado y el run del workflow con datos observados."
-      : "- [ ] Rellenar el commit desplegado y el run del workflow con datos observados.";
   const releaseTraceability =
     deployment.releaseTag === null || deployment.releaseTag === undefined
       ? ""
@@ -445,7 +458,9 @@ function renderSubmissionChecklist(
 - Snapshot: \`${freeze.manifest.snapshotId}\`.
 - ${candidatePlan === undefined ? "Commit desplegado" : "Commit de baseline desplegado"}: ${deploymentCommit}.
 - Run del workflow: ${workflowRun}.
-${releaseTraceability}${versionJsonTraceability}- Evidencia visual: ${visualEvidenceLine}
+${releaseTraceability}${versionJsonTraceability}- Identidad del producto: el commit desplegado registrado arriba es el commit de producto; esta documentación de candidatura vive en una rama documental posterior y no forma parte del commit desplegado.
+
+- Evidencia visual: ${visualEvidenceLine}
 
 ${renderTemporalReleaseStatus(candidatePlan)}
 
@@ -504,9 +519,14 @@ function loadContestDeploymentEvidence(
   }
 
   const parsed = JSON.parse(fs.readFileSync(releaseEvidencePath, "utf8")) as {
+    schemaVersion?: number;
     deployment?: Partial<ContestDeploymentEvidence>;
     captureProductCommitSha?: string;
     candidatePlan?: ContestCandidatePlan;
+    releaseDisposition?: {
+      occurred?: boolean;
+      method?: "workflow" | "script";
+    };
     manifest?: { snapshotId?: unknown };
     localGates?: {
       evidenceManifest?: { captureCount?: unknown };
@@ -519,6 +539,10 @@ function loadContestDeploymentEvidence(
   ) {
     throw new Error("release-evidence.json has an invalid deployment record");
   }
+  const scriptDeployment =
+    parsed.schemaVersion === 2 &&
+    parsed.releaseDisposition?.occurred === true &&
+    parsed.releaseDisposition.method === "script";
 
   // Read captureCount from localGates.evidenceManifest.captureCount
   let captureCount: number | null = null;
@@ -568,6 +592,7 @@ function loadContestDeploymentEvidence(
     capturesAreCurrent,
     releaseGatesVerified: strictEvidence.status === "verified",
     releaseTag: deployment.releaseTag ?? null,
+    deploymentMethod: scriptDeployment ? "script" : null,
     versionJsonUrl: deployment.versionJsonUrl ?? null,
     versionJsonCommitSha: deployment.versionJsonCommitSha ?? null,
     versionJsonSchemaVersion: deployment.versionJsonSchemaVersion ?? null,
@@ -578,13 +603,15 @@ function loadContestDeploymentEvidence(
     evidence.status === "verified" &&
     (evidence.commitSha === null ||
       !/^[a-f0-9]{40}$/u.test(evidence.commitSha) ||
-      evidence.workflowRunId === null ||
-      evidence.verifiedAt === null)
+      evidence.verifiedAt === null ||
+      (!scriptDeployment && evidence.workflowRunId === null))
   ) {
     throw new Error("verified deployment evidence is incomplete");
   }
   return evidence;
 }
+
+export { loadContestDeploymentEvidence };
 
 export function validateRenderedContestSubmission(
   documents: ContestSubmissionDocuments,

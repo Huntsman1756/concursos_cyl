@@ -43,10 +43,28 @@ const ROOT_KEYS = [
   "humanApproval",
   "blockers",
   "candidatePlan",
+  "releaseDisposition",
 ] as const;
 
+const HUMAN_GATE_KEYS = [
+  "identityRecorded",
+  "contactRecorded",
+  "declarationsRecorded",
+  "consentRecorded",
+  "finalApplicationTextApproved",
+  "externalSubmissionExecuted",
+] as const;
+
+export type ContestReleaseDisposition = {
+  occurred: boolean;
+  method: "workflow" | "script";
+  methodNote?: string;
+  tagObjectSha?: string;
+  humanGate: Record<(typeof HUMAN_GATE_KEYS)[number], boolean>;
+};
+
 export type ContestReleaseEvidence = {
-  schemaVersion: 1;
+  schemaVersion: 1 | 2;
   status: "pending" | "verified";
   recordedAt: string;
   expectedRootUrl: string;
@@ -104,6 +122,7 @@ export type ContestReleaseEvidence = {
   };
   blockers: string[];
   candidatePlan?: ContestCandidatePlan;
+  releaseDisposition?: ContestReleaseDisposition;
 };
 
 export type ContestCandidatePlan = {
@@ -154,6 +173,7 @@ export type ContestReleaseGitChain = {
   evidenceCommitSha: string | null;
   freezePath: string;
   evidencePaths: readonly string[];
+  publishedWithoutEvidenceCommit?: boolean;
 };
 
 export type ContestReleaseEvidenceValidation = {
@@ -246,6 +266,71 @@ function nonNegativeInteger(value: unknown, label: string): number {
     throw new Error(`${label} must be a non-negative integer`);
   }
   return value;
+}
+
+function validateReleaseDisposition(
+  value: unknown,
+  schemaVersion: 1 | 2,
+  status: "pending" | "verified",
+): ContestReleaseDisposition | undefined {
+  if (value === undefined) {
+    if (schemaVersion === 2) {
+      throw new Error(
+        "release evidence schemaVersion 2 requires releaseDisposition",
+      );
+    }
+    return undefined;
+  }
+  if (schemaVersion === 1) {
+    throw new Error("releaseDisposition requires schemaVersion 2");
+  }
+  const parsed = exactKeys(
+    value,
+    ["occurred", "method", "methodNote", "tagObjectSha", "humanGate"],
+    "releaseDisposition",
+    ["occurred", "method", "humanGate"],
+  );
+  if (typeof parsed.occurred !== "boolean") {
+    throw new Error("releaseDisposition.occurred must be boolean");
+  }
+  if (parsed.occurred !== (status === "verified")) {
+    throw new Error(
+      "releaseDisposition.occurred must match the release evidence status",
+    );
+  }
+  if (parsed.method !== "workflow" && parsed.method !== "script") {
+    throw new Error("releaseDisposition.method must be workflow or script");
+  }
+  const tagObjectSha =
+    parsed.tagObjectSha === undefined
+      ? undefined
+      : sha(parsed.tagObjectSha, "releaseDisposition.tagObjectSha");
+  const humanGate = exactKeys(
+    parsed.humanGate,
+    HUMAN_GATE_KEYS,
+    "releaseDisposition.humanGate",
+  );
+  for (const key of HUMAN_GATE_KEYS) {
+    if (humanGate[key] !== false) {
+      throw new Error(`releaseDisposition.humanGate.${key} must remain false`);
+    }
+  }
+  return {
+    occurred: parsed.occurred,
+    method: parsed.method,
+    ...(parsed.methodNote === undefined
+      ? {}
+      : {
+          methodNote: nonEmptyString(
+            parsed.methodNote,
+            "releaseDisposition.methodNote",
+          ),
+        }),
+    ...(tagObjectSha === undefined ? {} : { tagObjectSha }),
+    humanGate: Object.fromEntries(
+      HUMAN_GATE_KEYS.map((key) => [key, false]),
+    ) as ContestReleaseDisposition["humanGate"],
+  };
 }
 
 function validateCandidatePlan(
@@ -550,18 +635,28 @@ export function assertContestReleaseGitChain(
     return;
   }
   assertCommitExists(rootDir, chain.publicationCommitSha);
-  if (chain.evidenceCommitSha === null) {
-    throw new Error("A published Git chain requires an evidence commit");
-  }
-  assertCommitExists(rootDir, chain.evidenceCommitSha);
   if (
     chain.publicationCommitSha === chain.sourceCommitSha ||
-    chain.publicationCommitSha === chain.freezeCommitSha ||
-    chain.publicationCommitSha === chain.evidenceCommitSha
+    chain.publicationCommitSha === chain.freezeCommitSha
   ) {
-    throw new Error("Git chain requires distinct F, P, and E commits");
+    throw new Error("Git chain requires distinct S, F, and P commits");
   }
   assertAncestor(rootDir, chain.freezeCommitSha, chain.publicationCommitSha);
+  if (chain.evidenceCommitSha === null) {
+    if (chain.publishedWithoutEvidenceCommit !== true) {
+      throw new Error("A published Git chain requires an evidence commit");
+    }
+    if (chain.evidencePaths.length > 0) {
+      throw new Error(
+        "A published Git chain without an evidence commit must not claim evidence paths",
+      );
+    }
+    return;
+  }
+  assertCommitExists(rootDir, chain.evidenceCommitSha);
+  if (chain.publicationCommitSha === chain.evidenceCommitSha) {
+    throw new Error("Git chain requires distinct F, P, and E commits");
+  }
   assertAncestor(rootDir, chain.publicationCommitSha, chain.evidenceCommitSha);
   assertAncestor(rootDir, chain.evidenceCommitSha, evidenceCommitSha);
   assertCommitContainsCurrentPaths(
@@ -678,10 +773,19 @@ export function validateContestReleaseEvidence(
     value,
     ROOT_KEYS,
     "release evidence",
-    ROOT_KEYS.filter((key) => key !== "candidatePlan"),
+    ROOT_KEYS.filter(
+      (key) => key !== "candidatePlan" && key !== "releaseDisposition",
+    ),
   );
-  if (root.schemaVersion !== 1)
-    throw new Error("release evidence schemaVersion must be 1");
+  if (root.schemaVersion !== 1 && root.schemaVersion !== 2) {
+    throw new Error("release evidence schemaVersion must be 1 or 2");
+  }
+  const schemaVersion: 1 | 2 = root.schemaVersion;
+  const disposition = validateReleaseDisposition(
+    root.releaseDisposition,
+    schemaVersion,
+    root.status,
+  );
   const status = root.status;
   if (status !== "pending" && status !== "verified")
     throw new Error("release evidence status must be pending or verified");
@@ -737,6 +841,17 @@ export function validateContestReleaseEvidence(
     ) {
       throw new Error(
         "pending release evidence must not claim a publication or evidence commit",
+      );
+    }
+  } else if (schemaVersion === 2) {
+    if (publicationSha === null) {
+      throw new Error(
+        "verified release evidence requires a publication commit",
+      );
+    }
+    if (auditHeadSha !== null || localReviewHeadSha !== null) {
+      throw new Error(
+        "schemaVersion 2 release evidence must not claim an evidence commit",
       );
     }
   } else if (
@@ -976,28 +1091,37 @@ export function validateContestReleaseEvidence(
       );
     }
   } else {
+    const workflowRequired = disposition?.method !== "script";
     if (
       deployment.status !== "verified" ||
       publicationSha === null ||
       deploymentCommitSha === null ||
-      deploymentWorkflowRunId === null ||
-      deploymentWorkflowUrl === null ||
       deploymentVerifiedAt === null ||
-      deployment.liveRootVerified !== true
+      deployment.liveRootVerified !== true ||
+      (workflowRequired &&
+        (deploymentWorkflowRunId === null || deploymentWorkflowUrl === null)) ||
+      (!workflowRequired &&
+        (deploymentWorkflowRunId !== null || deploymentWorkflowUrl !== null))
     ) {
       throw new Error("verified deployment evidence is incomplete");
     }
     assertEqual(deploymentCommitSha, publicationSha, "deployment.commitSha");
-    if (!/^\d+$/u.test(deploymentWorkflowRunId)) {
+    if (workflowRequired && !/^\d+$/u.test(deploymentWorkflowRunId)) {
       throw new Error("deployment.workflowRunId must be numeric");
     }
     if (
+      workflowRequired &&
       !/^https:\/\/github\.com\/[^/]+\/[^/]+\/actions\/runs\/\d+$/u.test(
         deploymentWorkflowUrl,
       )
     ) {
       throw new Error(
         "deployment.workflowUrl must identify a GitHub Actions run",
+      );
+    }
+    if (disposition?.occurred === true && deploymentReleaseTag === null) {
+      throw new Error(
+        "verified release evidence requires deployment.releaseTag",
       );
     }
   }
@@ -1185,20 +1309,26 @@ export function validateContestReleaseEvidenceFromRoot(
     })),
   };
   const result = validateContestReleaseEvidence(evidence, context);
+  const schemaVersionTwo = evidence.schemaVersion === 2;
+  const chainPublished =
+    evidence.status === "verified" && evidence.publicationCommitSha !== null;
   assertContestReleaseGitChain(resolvedRoot, {
     sourceCommitSha: freeze.sourceCommitSha,
     freezeCommitSha: evidence.coverageFreezeCommitSha,
     publicationCommitSha: evidence.publicationCommitSha,
     evidenceCommitSha:
-      evidence.status === "verified" ? evidence.auditHeadSha : null,
+      evidence.status === "verified" && !schemaVersionTwo
+        ? evidence.auditHeadSha
+        : null,
     freezePath: "docs/contest/coverage-freeze.json",
     evidencePaths:
-      evidence.status === "verified"
+      evidence.status === "verified" && !schemaVersionTwo
         ? [
             "docs/contest/evidence-capture.json",
             ...captures.captures.map((capture) => capture.outputFile),
           ]
         : [],
+    publishedWithoutEvidenceCommit: schemaVersionTwo && chainPublished,
   });
   return result;
 }

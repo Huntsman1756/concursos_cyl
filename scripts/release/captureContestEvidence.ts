@@ -174,7 +174,7 @@ async function positionCapture(page: Page, evidenceId: string): Promise<void> {
   if (evidenceId === "fp-reviewed-zero-result") {
     const zeroResultMessage = page
       .getByRole("heading", {
-        name: "Grupos de ocupación revisados para buscar ofertas",
+        name: "Salidas que publica el perfil oficial del ciclo",
       })
       .first();
     await zeroResultMessage.evaluate((element) =>

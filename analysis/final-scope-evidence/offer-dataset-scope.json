@@ -124,9 +124,7 @@
     "reviewCatalogSha256": "0f7e913c70e7f1e66686bb0837a617667130d0dfa6e17aed647d74fb825b7127",
     "manifestSourceSnapshotId": "20260822085631889-fc9bf2ba23f9",
     "activationKind": "immutable_candidate",
-    "derivedResourceKeys": [
-      "offerEvidence"
-    ]
+    "derivedResourceKeys": ["offerEvidence"]
   },
   "hash": {
     "actualSha256": "80dd7ccb917c75015bf38492cc5baf4bed6ee20a3a4043e3a981a9a6d38c17d4",

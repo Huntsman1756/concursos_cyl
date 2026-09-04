@@ -1,15 +1,15 @@
 {
-  "schemaVersion": 1,
-  "status": "pending",
-  "recordedAt": "2026-09-01T06:05:47.931Z",
+  "schemaVersion": 2,
+  "status": "verified",
+  "recordedAt": "2026-09-04T12:15:00.000Z",
   "expectedRootUrl": "https://salida-cyl.157-90-22-40.sslip.io/",
   "auditHeadSha": null,
   "coverageSourceCommitSha": "36659e6a2e127630e72b14b8641504d5dbea7a9e",
   "coverageFreezeDocumentCommitSha": "064d10ed5f48df9e8deec3322f38be7372de5b01",
   "coverageFreezeCommitSha": "064d10ed5f48df9e8deec3322f38be7372de5b01",
-  "publicationCommitSha": null,
+  "publicationCommitSha": "4b67443c4cb1b29347eef38d751eb4f8d02cb2a9",
   "localReviewHeadSha": null,
-  "captureProductCommitSha": null,
+  "captureProductCommitSha": "4b67443c4cb1b29347eef38d751eb4f8d02cb2a9",
   "manifest": {
     "snapshotId": "20260830120000000-8c6c79fbd2a1",
     "sha256": "e70a1853ac0f2cf5d25e6192776f88b400aca1536a58380044a8aa1ebc2794df",
@@ -19,88 +19,111 @@
     "offerings": 1294,
     "offers": 1058
   },
+  "releaseDisposition": {
+    "occurred": true,
+    "method": "script",
+    "methodNote": "El candidato se publicó con el tag anotado v2026.09.04-candidate.10, la GitHub Release correspondiente y un despliegue VPS ejecutado con scripts/release/deployVps.ps1; el despliegue no usa GitHub Actions, por lo que no existe run de workflow.",
+    "tagObjectSha": "ac5d9a8a961c4566c5bee65a565739c8176c0760",
+    "humanGate": {
+      "identityRecorded": false,
+      "contactRecorded": false,
+      "declarationsRecorded": false,
+      "consentRecorded": false,
+      "finalApplicationTextApproved": false,
+      "externalSubmissionExecuted": false
+    }
+  },
   "localGates": {
     "coverageFreeze": {
-      "status": "pending",
+      "status": "passed",
       "command": "npm exec -- tsx scripts/release/validateContestFreeze.ts",
-      "checkedCommitSha": null,
-      "verifiedAt": null
+      "checkedCommitSha": "4b67443c4cb1b29347eef38d751eb4f8d02cb2a9",
+      "verifiedAt": "2026-09-04T11:42:14.532Z",
+      "note": "Ejecutado en Windows sobre el árbol del commit de publicación; el freeze de cobertura no cambió en el empaquetado documental."
     },
     "submissionPack": {
-      "status": "pending",
+      "status": "passed",
       "command": "npm run contest:submission:check",
-      "checkedCommitSha": null,
-      "verifiedAt": null
+      "checkedCommitSha": "4b67443c4cb1b29347eef38d751eb4f8d02cb2a9",
+      "verifiedAt": "2026-09-04T11:42:20.335Z",
+      "note": "Ejecutado sobre el commit de producto y repetido sobre el árbol de empaquetado documental tras regenerar los documentos."
     },
     "evidenceManifest": {
-      "status": "pending",
+      "status": "passed",
       "command": "npm exec -- tsx scripts/release/validateContestEvidenceManifest.ts",
-      "checkedCommitSha": null,
-      "verifiedAt": null,
-      "captureCount": 0
+      "checkedCommitSha": "4b67443c4cb1b29347eef38d751eb4f8d02cb2a9",
+      "verifiedAt": "2026-09-04T12:12:49.105Z",
+      "captureCount": 13,
+      "note": "Las 13 capturas se regeneraron contra el sitio público desplegado (commit 4b67443c) con contexto anónimo, Axe, overflow y diagnóstico de red/consola."
     },
     "fullVitestCi": {
-      "status": "pending",
+      "status": "passed",
       "command": "npm test -- --run --reporter=dot",
-      "checkedCommitSha": null,
-      "verifiedAt": null
+      "checkedCommitSha": "4b67443c4cb1b29347eef38d751eb4f8d02cb2a9",
+      "verifiedAt": "2026-09-04T11:40:35.000Z",
+      "note": "1330 pruebas superadas, 178 omitidas, 0 fallidas; hora de fin observada por el operador."
     },
     "playwright": {
-      "status": "pending",
+      "status": "passed",
       "command": "npm run test:e2e:chromium",
-      "checkedCommitSha": null,
-      "verifiedAt": null
+      "checkedCommitSha": "4b67443c4cb1b29347eef38d751eb4f8d02cb2a9",
+      "verifiedAt": "2026-09-04T11:41:38.000Z",
+      "note": "207 pruebas Chromium superadas, 1 omitida, 0 fallidas; hora de fin observada por el operador."
     },
     "lint": {
-      "status": "pending",
+      "status": "passed",
       "command": "npm run lint",
-      "checkedCommitSha": null,
-      "verifiedAt": null
+      "checkedCommitSha": "4b67443c4cb1b29347eef38d751eb4f8d02cb2a9",
+      "verifiedAt": "2026-09-04T12:14:04.078Z",
+      "note": "El primer pase (11:34 UTC) falló por un cambio de maquinaria de evidencia en esta rama; corregido y vuelto a ejecutar con éxito."
     },
     "build": {
-      "status": "pending",
+      "status": "passed",
       "command": "npm run build",
-      "checkedCommitSha": null,
-      "verifiedAt": null
+      "checkedCommitSha": "4b67443c4cb1b29347eef38d751eb4f8d02cb2a9",
+      "verifiedAt": "2026-09-04T11:36:30.000Z",
+      "note": "Incluye release:candidate:verify (22 recursos, 116 registros SEPE); hora de fin observada por el operador."
     },
     "license": {
-      "status": "pending",
+      "status": "passed",
       "command": "npm run license:check",
-      "checkedCommitSha": null,
-      "verifiedAt": null
+      "checkedCommitSha": "4b67443c4cb1b29347eef38d751eb4f8d02cb2a9",
+      "verifiedAt": "2026-09-04T11:34:30.000Z",
+      "note": "363 entradas de paquetes dentro de la política; hora de fin observada por el operador."
     },
     "prettier": {
-      "status": "pending",
+      "status": "passed",
       "command": "npm run format:check",
-      "checkedCommitSha": null,
-      "verifiedAt": null
+      "checkedCommitSha": "4b67443c4cb1b29347eef38d751eb4f8d02cb2a9",
+      "verifiedAt": "2026-09-04T12:13:41.952Z",
+      "note": "El árbol del commit de producto tenía un defecto de formato en analysis/final-scope-evidence/offer-dataset-scope.json; se aplicó una corrección solo de formato en la rama documental y la comprobación se volvió a ejecutar con éxito."
     },
     "gitDiffCheck": {
-      "status": "pending",
+      "status": "passed",
       "command": "git diff --check",
-      "checkedCommitSha": null,
-      "verifiedAt": null
+      "checkedCommitSha": "4b67443c4cb1b29347eef38d751eb4f8d02cb2a9",
+      "verifiedAt": "2026-09-04T12:13:01.492Z"
     }
   },
   "deployment": {
-    "status": "pending",
-    "commitSha": null,
+    "status": "verified",
+    "commitSha": "4b67443c4cb1b29347eef38d751eb4f8d02cb2a9",
     "workflowRunId": null,
     "workflowUrl": null,
-    "liveRootVerified": false,
-    "verifiedAt": null,
-    "releaseTag": null,
-    "versionJsonUrl": null,
-    "versionJsonCommitSha": null,
-    "versionJsonSchemaVersion": null,
-    "versionJsonVerifiedAt": null
+    "liveRootVerified": true,
+    "verifiedAt": "2026-09-04T11:57:29.320Z",
+    "releaseTag": "v2026.09.04-candidate.10",
+    "versionJsonUrl": "https://salida-cyl.157-90-22-40.sslip.io/version.json",
+    "versionJsonCommitSha": "4b67443c4cb1b29347eef38d751eb4f8d02cb2a9",
+    "versionJsonSchemaVersion": "1.0.0",
+    "versionJsonVerifiedAt": "2026-09-04T11:57:29.320Z"
   },
   "publicVerification": {
-    "status": "pending",
+    "status": "verified",
     "rootUrl": "https://salida-cyl.157-90-22-40.sslip.io/",
-    "rootHttpStatus": null,
-    "manifestSha256": null,
-    "verifiedAt": null
+    "rootHttpStatus": 200,
+    "manifestSha256": "e70a1853ac0f2cf5d25e6192776f88b400aca1536a58380044a8aa1ebc2794df",
+    "verifiedAt": "2026-09-04T11:57:29.320Z"
   },
   "humanApproval": {
     "finalApplicationTextApproved": false,
@@ -108,6 +131,7 @@
     "submissionAuthorized": false
   },
   "blockers": [
-    "La publicacion y el envio requieren autorizacion humana explicita; no se ha ejecutado deployment ni captura publica del candidato local."
+    "El envío externo a la sede electrónica de la Junta sigue requiriendo autorización y ejecución humana: identidad, contacto, declaraciones, consentimiento y presentación.",
+    "La captura nativa OS A4 en macOS desbloqueado y la revisión humana de las 13 capturas actuales permanecen pendientes y no se dan por hechas."
   ]
 }
