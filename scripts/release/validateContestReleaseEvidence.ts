@@ -91,6 +91,7 @@ export type ContestReleaseEvidence = {
       command: string;
       checkedCommitSha: string | null;
       verifiedAt: string | null;
+      executionCommitSha?: string;
       captureCount?: number;
       note?: string;
     }
@@ -146,8 +147,6 @@ export type ContestCandidatePlan = {
     a4Status: "pending";
   };
 };
-
-export const EXPECTED_FINAL_RELEASE_TAG = "v2026.08.26-candidate.3";
 
 export type ReleaseEvidenceValidationContext = {
   coverageFreeze: {
@@ -460,9 +459,9 @@ function validateCandidatePlan(
     finalCandidate.releaseTag,
     "candidatePlan.finalCandidate.releaseTag",
   );
-  if (finalReleaseTag !== EXPECTED_FINAL_RELEASE_TAG) {
+  if (finalReleaseTag === baselineReleaseTag) {
     throw new Error(
-      `candidatePlan.finalCandidate.releaseTag must be ${EXPECTED_FINAL_RELEASE_TAG}`,
+      "candidatePlan.finalCandidate.releaseTag must differ from the baseline release tag",
     );
   }
   if (finalCandidate.commitSha !== null) {
@@ -705,6 +704,7 @@ function gate(
       "command",
       "checkedCommitSha",
       "verifiedAt",
+      "executionCommitSha",
       "captureCount",
       "note",
     ],
@@ -720,6 +720,10 @@ function gate(
     `${label}.checkedCommitSha`,
   );
   const verifiedAt = nullableIsoUtc(parsed.verifiedAt, `${label}.verifiedAt`);
+  const executionCommitSha =
+    parsed.executionCommitSha === undefined
+      ? undefined
+      : sha(parsed.executionCommitSha, `${label}.executionCommitSha`);
   if (
     parsed.status === "pending" &&
     (checkedCommitSha !== null || verifiedAt !== null)
@@ -742,6 +746,7 @@ function gate(
     command,
     checkedCommitSha,
     verifiedAt,
+    ...(executionCommitSha === undefined ? {} : { executionCommitSha }),
     ...(parsed.captureCount === undefined
       ? {}
       : { captureCount: parsed.captureCount as number }),
@@ -1309,6 +1314,12 @@ export function validateContestReleaseEvidenceFromRoot(
     })),
   };
   const result = validateContestReleaseEvidence(evidence, context);
+  for (const [gateKey, gateValue] of Object.entries(evidence.localGates)) {
+    if (gateValue.executionCommitSha !== undefined) {
+      assertCommitExists(resolvedRoot, gateValue.executionCommitSha);
+    }
+    void gateKey;
+  }
   const schemaVersionTwo = evidence.schemaVersion === 2;
   const chainPublished =
     evidence.status === "verified" && evidence.publicationCommitSha !== null;
