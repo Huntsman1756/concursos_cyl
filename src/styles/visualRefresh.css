@@ -402,6 +402,7 @@ summary:focus-visible {
    the same page, rendered as a labelled link list — deliberately NOT tabs. */
 .result-section-nav {
   min-width: 0;
+  max-width: 42rem;
   margin: 0 0 var(--space-5);
   padding: var(--space-3) var(--space-4);
   border: 1px solid var(--color-border);
