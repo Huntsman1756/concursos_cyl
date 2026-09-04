@@ -106,8 +106,6 @@ export function IncomeComparisonForm({
       renderedKeys.has(group.groupKey) || selectedGroups.has(group.groupKey),
   );
   const hiddenCount = visibleGroups.groups.length - visibleEntries.length;
-  const currentStep =
-    trainingLevel === null ? 1 : selectedGroupKeys.length === 0 ? 2 : 3;
 
   function toggleGroup(groupKey: string, checked: boolean) {
     if (checked) {
@@ -123,39 +121,10 @@ export function IncomeComparisonForm({
       className="income-comparison-form"
       aria-label="Seleccionar datos de comparación"
     >
-      <ol className="comparison-steps" aria-label="Pasos de la comparación">
-        <li
-          className={trainingLevel ? "is-complete" : "is-current"}
-          aria-current={currentStep === 1 ? "step" : undefined}
-        >
-          <span>1</span>
-          <strong>Nivel</strong>
-        </li>
-        <li
-          className={
-            !trainingLevel
-              ? "is-pending"
-              : selectedGroupKeys.length > 0
-                ? "is-complete"
-                : "is-current"
-          }
-          aria-current={currentStep === 2 ? "step" : undefined}
-        >
-          <span>2</span>
-          <strong>Ciclos</strong>
-        </li>
-        <li
-          className={trainingLevel ? "is-available" : "is-pending"}
-          aria-current={currentStep === 3 ? "step" : undefined}
-        >
-          <span>3</span>
-          <strong>Cohorte</strong>
-        </li>
-        <li className={trainingLevel ? "is-available" : "is-pending"}>
-          <span>4</span>
-          <strong>Año</strong>
-        </li>
-      </ol>
+      {/* Progress lives in the numbered section headers below (1. Nivel de
+         formación … 4. Año tras titularse). A circle stepper was removed
+         because all remaining controls are visible at once, so numbered
+         headers describe the form without promising a wizard. */}
       <fieldset className="income-form-fieldset">
         <legend>1. Nivel de formación</legend>
         <div className="income-level-options">

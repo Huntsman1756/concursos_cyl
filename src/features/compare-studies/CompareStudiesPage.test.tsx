@@ -295,9 +295,12 @@ describe("CompareStudiesPage", () => {
     expect(
       screen.getByRole("heading", { level: 1, name: "Ingresos observados" }),
     ).toBeVisible();
-    expect(
-      screen.getByRole("list", { name: "Pasos de la comparación" }),
-    ).toHaveTextContent("1Nivel2Ciclos3Cohorte4Año");
+    // Progress is communicated by the numbered section headers, not by a
+    // circle stepper: all remaining controls are visible at once.
+    expect(screen.getByText("1. Nivel de formación")).toBeVisible();
+    expect(screen.getByText("2. Ciclos o grupos oficiales")).toBeVisible();
+    expect(screen.getByText("3. Cohorte de titulación")).toBeVisible();
+    expect(screen.getByText("4. Año tras titularse")).toBeVisible();
     expect(
       screen.getByText("No es una predicción salarial personal."),
     ).toBeVisible();
