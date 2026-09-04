@@ -1,6 +1,8 @@
 # SALIDA CyL — candidato unificado de `Desde oferta`
 
-Fecha de datos: 30 de agosto de 2026. Esta nota describe el candidato local integrado; no es una autorización de release.
+> HISTÓRICO / ARCHIVED: esta nota describe el estado de los datos del 30 de agosto de 2026, antes de la release. La identidad del candidato publicado es `v2026.09.04-candidate.10` (commit `4b67443c4cb1b29347eef38d751eb4f8d02cb2a9`); la batería de release quedó ejecutada y ligada a ese commit en `release-evidence.json`.
+
+Fecha de datos: 30 de agosto de 2026. Esta nota describe el candidato local integrado de esa fecha; no constituye por sí misma una autorización de release.
 
 ## Producto
 
