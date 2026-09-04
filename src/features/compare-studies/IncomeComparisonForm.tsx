@@ -74,7 +74,12 @@ export function IncomeComparisonForm({
     );
     const matchesQuery = (group: OutcomeGroup) =>
       queryTokens.every((token) =>
-        normalizedSearchTerm(group.officialLabel).includes(token),
+        // Search over the display-corrected label so citizens find groups by
+        // the correctly spelled term (e.g. "radioterapia", not the source
+        // typo "radioterampia").
+        normalizedSearchTerm(formatOutcomeLabel(group.officialLabel)).includes(
+          token,
+        ),
       );
     const matches = groups.filter(
       (group) => !selectedGroups.has(group.groupKey) && matchesQuery(group),
