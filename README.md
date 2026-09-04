@@ -49,7 +49,7 @@ The reviewed FP↔occupation graph is returned to the community as a **derived o
 
 ## Quality
 
-- The local release candidate is pinned to snapshot `20260830120000000-8c6c79fbd2a1` with a 22-resource SHA-256 manifest. The derived `offerEvidence` resource is activated in that same manifest.
+- The release candidate `v2026.09.04-candidate.10` (commit `4b67443c4cb1b29347eef38d751eb4f8d02cb2a9`) is pinned to snapshot `20260830120000000-8c6c79fbd2a1` with a 22-resource SHA-256 manifest. The derived `offerEvidence` resource is activated in that same manifest.
 - Reviewed relationships are conservative and fail-closed; a weak match is never published by similarity.
 - Unit, release and E2E tests, lint, license and format gates run in CI on every push to `main`.
 - Accessibility (Axe), privacy (no accounts, cookies, analytics or runtime AI) and reproducibility are automated.
@@ -63,7 +63,7 @@ The reviewed FP↔occupation graph is returned to the community as a **derived o
 
 ## Concurso
 
-[X Concurso de Datos Abiertos de Castilla y León](https://datosabiertos.jcyl.es/web/es/concurso-datos-abiertos/concurso-datos-abiertos.html) — Productos y Servicios. The current candidate is local and remains pending human authorization, public deployment and capture; its identity is recorded in [docs/contest/release-evidence.json](docs/contest/release-evidence.json).
+[X Concurso de Datos Abiertos de Castilla y León](https://datosabiertos.jcyl.es/web/es/concurso-datos-abiertos/concurso-datos-abiertos.html) — Productos y Servicios. The released candidate `v2026.09.04-candidate.10` is deployed and verified at the public root; external submission still requires explicit human authorization, and its observed evidence is recorded in [docs/contest/release-evidence.json](docs/contest/release-evidence.json).
 
 - Application: <https://salida-cyl.157-90-22-40.sslip.io/>
 - Derived open data: <https://salida-cyl.157-90-22-40.sslip.io/datos-abiertos>

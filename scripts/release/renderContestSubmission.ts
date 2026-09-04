@@ -269,7 +269,8 @@ La revisión independiente confirmó el manifest, sus ${Object.keys(freeze.manif
 - URL raíz esperada: [${ROOT_URL}](${ROOT_URL})
 - ${candidatePlan === undefined ? "Commit desplegado" : "Commit de baseline desplegado"}: ${deploymentCommit}.
 - Run del workflow: ${workflowRun}.
-${releaseTraceability}${versionJsonTraceability}- Identidad del producto: el commit desplegado registrado arriba es el commit de producto; los commits posteriores de documentación de candidatura no lo sustituyen ni reescriben \`version.json\`.
+${releaseTraceability}${versionJsonTraceability}
+- Identidad del producto: el commit desplegado registrado arriba es el commit de producto; los commits posteriores de documentación de candidatura no lo sustituyen ni reescriben \`version.json\`.
 
 ${deploymentNote}
 

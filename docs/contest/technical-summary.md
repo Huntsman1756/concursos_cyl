@@ -2,11 +2,12 @@
 
 ## Candidato actual
 
-- Estado: candidato local unificado; sin push, tag, release, deploy ni envío externo.
-- Commit fuente de la frontera de datos: `9bad066a1144e6055e087e2c6e64f371521bf10d`.
-- Commit documental del freeze: `fa9598df89f24d3fdbf728a20c81cb7a7d6cf621`.
+- Producto publicado: `v2026.09.04-candidate.10`, tag anotado `ac5d9a8a961c4566c5bee65a565739c8176c0760` sobre el commit `4b67443c4cb1b29347eef38d751eb4f8d02cb2a9`, con GitHub Release pública.
+- Despliegue público verificado en la raíz VPS: `version.json` y manifest observados coinciden con ese commit. El despliegue se ejecutó con el script VPS (`scripts/release/deployVps.ps1`), sin run de GitHub Actions.
+- Commit fuente de la frontera de datos: `36659e6a2e127630e72b14b8641504d5dbea7a9e`.
+- Commit documental del freeze: `064d10ed5f48df9e8deec3322f38be7372de5b01`.
 - Snapshot: `20260830120000000-8c6c79fbd2a1`.
-- SHA-256 del manifest: `d5d877f3031fe0c6a590e321bd3a8d0e8cb2cc761a2d95434534ff76216b43ce`.
+- SHA-256 del manifest: `e70a1853ac0f2cf5d25e6192776f88b400aca1536a58380044a8aa1ebc2794df`.
 - Inventario: 22 recursos; 187 programas, 229 centros, 1.294 ofertas formativas y 1.058 ofertas laborales.
 
 ## Resultado de datos
@@ -17,9 +18,9 @@ La cobertura es deliberadamente fail-closed: una relación no revisada, una cate
 
 ## Evidencia y reproducibilidad
 
-La fuente de verdad es [`public/data/v1/manifest.json`](../../public/data/v1/manifest.json), el snapshot referenciado y [`coverage-freeze.json`](coverage-freeze.json). La validación de esquema, hashes, allowlist, relaciones aprobadas, runtime y bundle forma parte de los gates locales. La evidencia visual existente de la release pública anterior queda histórica y no se cuenta como captura del candidato actual.
+La fuente de verdad es [`public/data/v1/manifest.json`](../../public/data/v1/manifest.json), el snapshot referenciado y [`coverage-freeze.json`](coverage-freeze.json). La validación de esquema, hashes, allowlist, relaciones aprobadas, runtime y bundle forma parte de los gates locales. Las 13 capturas de `docs/contest/evidence-capture.json` se regeneraron contra el sitio desplegado del candidato actual y quedan ligadas a su commit de publicación.
 
-Los resultados de la ejecución de readiness se entregan junto con este estado documental. `release-evidence.json` permanece en `pending` hasta que una persona autorice publicación y se capture el candidato desplegado en un contexto anónimo.
+Los resultados de los gates ejecutados sobre el commit de producto, el despliegue por script VPS y la verificación pública están registrados en `release-evidence.json` (schemaVersion 2, estado `verified`). Los campos de aprobación humana siguen en falso hasta que una persona autorice el envío externo.
 
 ## Límites humanos
 

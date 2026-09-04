@@ -58,7 +58,7 @@ La cifra de ofertas es una unión de IDs de ofertas que pasan las reglas de matc
 
 ## Reproducibilidad
 
-Comandos previstos para repetir las comprobaciones. Este documento no los da por ejecutados hasta que `release-evidence.json` quede verificado y ligado al commit de publicación:
+Comandos ejecutados y ligados al commit de publicación en `release-evidence.json`:
 
 ```text
 npm run data:build
@@ -80,7 +80,11 @@ La revisión independiente confirmó el manifest, sus 22 recursos, los conjuntos
 ## Despliegue
 
 - URL raíz esperada: [https://salida-cyl.157-90-22-40.sslip.io/](https://salida-cyl.157-90-22-40.sslip.io/)
-- Commit desplegado: **PENDIENTE DE DESPLIEGUE Y VERIFICACIÓN**.
-- Run del workflow: **PENDIENTE DE DESPLIEGUE Y VERIFICACIÓN**.
+- Commit desplegado: `4b67443c4cb1b29347eef38d751eb4f8d02cb2a9`.
+- Run del workflow: no aplica (despliegue por script VPS, sin GitHub Actions).
 
-Estos dos campos no se inventan antes de ejecutar y verificar el release.
+- Release: `v2026.09.04-candidate.10`.
+- `version.json` observado: [respuesta pública](https://salida-cyl.157-90-22-40.sslip.io/version.json) con commit `4b67443c4cb1b29347eef38d751eb4f8d02cb2a9`.
+- Identidad del producto: el commit desplegado registrado arriba es el commit de producto; los commits posteriores de documentación de candidatura no lo sustituyen ni reescriben `version.json`.
+
+El release público se verificó con el commit `4b67443c4cb1b29347eef38d751eb4f8d02cb2a9` el 2026-09-04T11:57:29.320Z; el despliegue se ejecutó con el script de release del VPS y el `version.json` público declara ese mismo commit.

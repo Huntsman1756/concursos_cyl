@@ -28,8 +28,10 @@ El recurso `offerEvidence` contiene 1.058 registros, 196 relaciones y 138 oferta
 
 La aplicación mantiene fail-closed la frontera entre evidencia y conjetura. No afirma equivalencias universitarias o profesionales, empleabilidad, salario individual, completitud del mercado ni impacto medido. EDUCAbase conserva su alcance estadístico; el contexto provincial no se convierte en una predicción personal.
 
-La interfaz es responsive, navegable por teclado y sin persistencia de búsquedas o resultados. La validación de accesibilidad, overflow, red y consola se ejecuta como gate local; la captura pública anterior no se presenta como evidencia del candidato actual.
+La interfaz es responsive, navegable por teclado y sin persistencia de búsquedas o resultados. La validación de accesibilidad, overflow, red y consola se ejecuta como gate local y se repitió durante la recaptura de las 13 capturas actuales incluidas en `docs/contest/evidence-capture.json`; la captura nativa OS A4 y la revisión visual humana siguen siendo pasos pendientes y no se presentan como hechos.
 
-## Estado de autorización
+## Estado del candidato
 
-El candidato está en estado local técnico y documental. No tiene tag, release, deployment ni verificación pública nueva. `docs/contest/release-evidence.json` está deliberadamente en `pending`; la aprobación de identidad, contacto, declaraciones, consentimiento, URL y envío queda en manos humanas.
+La candidatura se construye sobre el producto publicado `v2026.09.04-candidate.10`: tag anotado sobre el commit `4b67443c4cb1b29347eef38d751eb4f8d02cb2a9`, con GitHub Release pública y despliegue verificado en la raíz pública, donde `version.json` declara ese mismo commit. La evidencia observada (gates, despliegue, verificación pública y capturas) está registrada en `docs/contest/release-evidence.json`.
+
+Los commits posteriores que empaquetan esta documentación no alteran el producto desplegado. La identidad de la persona solicitante, el contacto, las declaraciones, el consentimiento y el envío real a la sede electrónica siguen siendo pasos humanos pendientes; este repositorio no los ejecuta.
