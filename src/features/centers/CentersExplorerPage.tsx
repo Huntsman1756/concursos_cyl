@@ -128,13 +128,6 @@ function CenterRow({
               : CENTER_FILTER_LABELS.modality[modality],
           )
           .join(" · ")}
-        {row.teachingTypes.length > 0 && (
-          <span className="cell-sub">
-            {row.teachingTypes
-              .map((type) => CENTER_FILTER_LABELS.teachingType[type])
-              .join(" · ")}
-          </span>
-        )}
       </td>
       <td className="center-titularidad-cell">
         {row.teachingTypes.length === 0

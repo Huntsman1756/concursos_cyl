@@ -69,9 +69,6 @@ export function IncomeComparisonForm({
   const normalizedQuery = normalizedSearchTerm(filterQuery);
   const queryTokens = normalizedQuery.split(/\s+/u).filter(Boolean);
   const visibleGroups = useMemo(() => {
-    const selected = groups.filter((group) =>
-      selectedGroups.has(group.groupKey),
-    );
     const matchesQuery = (group: OutcomeGroup) =>
       queryTokens.every((token) =>
         // Search over the display-corrected label so citizens find groups by
@@ -81,12 +78,16 @@ export function IncomeComparisonForm({
           token,
         ),
       );
-    const matches = groups.filter(
-      (group) => !selectedGroups.has(group.groupKey) && matchesQuery(group),
+    // Selection must never reorder the list: groups stay in their original
+    // order; a selected group stays visible even if it does not match the
+    // current filter.
+    const groupsInOrder = groups.filter(
+      (group) => selectedGroups.has(group.groupKey) || matchesQuery(group),
     );
+    const matchedCount = groups.filter(matchesQuery).length;
     return {
-      groups: [...selected, ...matches],
-      matchingCount: selected.filter(matchesQuery).length + matches.length,
+      groups: groupsInOrder,
+      matchingCount: matchedCount,
     };
   }, [groups, queryTokens, selectedGroups]);
   const currentStep =
@@ -184,7 +185,12 @@ export function IncomeComparisonForm({
                 ? "1 resultado disponible."
                 : `${visibleGroups.matchingCount} resultados disponibles.`}
             </p>
-            <div className="income-group-options">
+            <div
+              className="income-group-options"
+              tabIndex={0}
+              role="group"
+              aria-label="Lista de ciclos y grupos oficiales con desplazamiento"
+            >
               {visibleGroups.groups.map((group) => {
                 const checked = selectedGroups.has(group.groupKey);
                 return (

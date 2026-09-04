@@ -22,12 +22,17 @@
 }
 
 .methodology-ai-disclosure {
-  max-width: 58rem;
+  max-width: var(--reading-max);
   padding: var(--space-3) var(--space-4);
   border-left: 0.3rem solid var(--color-gold);
   border-radius: var(--radius-sm);
   color: var(--color-text);
   background: var(--color-warning-surface);
+}
+
+/* Long prose reads comfortably at ~65-75 characters per line. */
+.methodology-page > aside:not(.methodology-ai-disclosure) {
+  max-width: var(--reading-max);
 }
 
 .methodology-ai-disclosure p {

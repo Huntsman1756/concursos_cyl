@@ -13,7 +13,9 @@ export function OrganizationsPage() {
     >
       <header className="support-page-intro">
         <p className="support-page-intro__eyebrow">Reutilización profesional</p>
-        <h1 id="organizations-heading">Para centros y administraciones</h1>
+        <h1 className="h1" id="organizations-heading">
+          Para centros y administraciones
+        </h1>
         <p>
           Una base común para orientar con evidencia, preparar sesiones y
           detectar dónde todavía faltan relaciones verificadas entre formación y

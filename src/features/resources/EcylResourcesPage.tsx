@@ -14,6 +14,11 @@ import {
 import { ExternalLink } from "../../components/ExternalLink";
 import { PageEyebrow } from "../../components/PageEyebrow";
 import { useRouteReady } from "../../app/RouteReadyContext";
+import {
+  longDateFromCalendarDay,
+  readableOfficialTitle,
+} from "../../domain/displayFormat";
+import { todayCalendarDay } from "../../domain/currentDate";
 import { selectOpenPublicCalls } from "./openPublicCalls";
 import "./ecylResources.css";
 
@@ -71,18 +76,7 @@ function normalized(value: string): string {
 }
 
 function displayDate(value: string | null): string | null {
-  if (value === null) return null;
-  return new Intl.DateTimeFormat("es-ES", { dateStyle: "medium" }).format(
-    new Date(`${value}T00:00:00Z`),
-  );
-}
-
-function readableOfficialTitle(value: string): string {
-  if (value !== value.toLocaleUpperCase("es-ES")) return value;
-  const lower = value.toLocaleLowerCase("es-ES");
-  return lower.replace(/\p{Letter}/u, (letter) =>
-    letter.toLocaleUpperCase("es-ES"),
-  );
+  return longDateFromCalendarDay(value);
 }
 
 function readableFamilyCode(code: string): string {
@@ -278,7 +272,7 @@ export function EcylResourcesPage() {
           >
             <div className="resources-section-heading">
               <h2 id="public-calls-heading">
-                Empleo público abierto al{" "}
+                Convocatorias que figuraban abiertas en la copia del{" "}
                 {state.publicCallsReferenceDate !== null
                   ? displayDate(state.publicCallsReferenceDate)
                   : ""}
@@ -291,11 +285,10 @@ export function EcylResourcesPage() {
               </span>
             </div>
             <p className="resources-section-help">
-              Clasificadas con los plazos publicados en esta copia: aparece una
+              «Abiertas» se refiere al día de la copia, no a hoy: aparece una
               convocatoria si su plazo de solicitud cubría la fecha de la copia.
-              El plazo puede haber cambiado desde entonces; comprueba siempre el
-              estado actual y los requisitos completos en la convocatoria
-              oficial.
+              Comprueba siempre el estado actual y los requisitos completos en
+              la convocatoria oficial.
             </p>
             {openPublicCalls.length === 0 ? (
               <p className="resource-empty-state">
@@ -306,30 +299,37 @@ export function EcylResourcesPage() {
               </p>
             ) : (
               <div className="public-call-list">
-                {openPublicCalls.map((call) => (
-                  <article className="public-call" key={call.id}>
-                    <p className="resource-card__code">
-                      {call.accessType === "open"
-                        ? "Turno libre"
-                        : call.accessType === "internal"
-                          ? "Promoción interna"
-                          : "Consulta el tipo de acceso"}
-                    </p>
-                    <h3>{readableOfficialTitle(call.title)}</h3>
-                    <p>
-                      {call.places === null
-                        ? "Plazas no publicadas"
-                        : `${call.places} ${call.places === 1 ? "plaza" : "plazas"}`}
-                      {call.municipality ? ` · ${call.municipality}` : ""}
-                    </p>
-                    <p>
-                      Plazo hasta el {displayDate(call.applicationDeadline)}
-                    </p>
-                    <ExternalLink href={call.officialUrl}>
-                      Ver convocatoria oficial
-                    </ExternalLink>
-                  </article>
-                ))}
+                {openPublicCalls.map((call) => {
+                  const deadlinePassed =
+                    call.applicationDeadline !== null &&
+                    call.applicationDeadline < todayCalendarDay();
+                  return (
+                    <article className="public-call" key={call.id}>
+                      <p className="resource-card__code">
+                        {call.accessType === "open"
+                          ? "Turno libre"
+                          : call.accessType === "internal"
+                            ? "Promoción interna"
+                            : "Consulta el tipo de acceso"}
+                      </p>
+                      <h3>{readableOfficialTitle(call.title)}</h3>
+                      <p>
+                        {call.places === null
+                          ? "Plazas no publicadas"
+                          : `${call.places} ${call.places === 1 ? "plaza" : "plazas"}`}
+                        {call.municipality ? ` · ${call.municipality}` : ""}
+                      </p>
+                      <p>
+                        {deadlinePassed
+                          ? `El plazo publicado ya pasó: cerró el ${displayDate(call.applicationDeadline)}.`
+                          : `Plazo hasta el ${displayDate(call.applicationDeadline)}`}
+                      </p>
+                      <ExternalLink href={call.officialUrl}>
+                        Ver convocatoria oficial
+                      </ExternalLink>
+                    </article>
+                  );
+                })}
               </div>
             )}
             <footer className="public-calls__source">
@@ -339,12 +339,7 @@ export function EcylResourcesPage() {
                 </ExternalLink>
               )}
               {state.publicCallsUpdatedAt !== null && (
-                <span>
-                  Copia del{" "}
-                  {new Intl.DateTimeFormat("es-ES", {
-                    dateStyle: "medium",
-                  }).format(new Date(state.publicCallsUpdatedAt))}
-                </span>
+                <span>Copia del {displayDate(state.publicCallsUpdatedAt)}</span>
               )}
             </footer>
           </section>

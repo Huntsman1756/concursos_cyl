@@ -372,9 +372,9 @@ describe("occupation-first results", () => {
     expect(
       within(cards[0]).getByText("2 centros · Ávila, Valladolid"),
     ).toBeVisible();
-    expect(cards[0]).toHaveTextContent("Grado superior");
+    expect(cards[0]).toHaveTextContent("grado superior");
     expect(cards[0]).toHaveTextContent("IFC03S");
-    expect(cards[1]).toHaveTextContent("Curso de especialización");
+    expect(cards[1]).toHaveTextContent("curso de especialización");
     expect(cards[1]).toHaveTextContent("IFC03SD");
     expect(
       screen.getByText(/Oferta formativa · copia consultada el/u),

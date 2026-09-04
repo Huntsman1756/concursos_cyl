@@ -786,6 +786,18 @@ select:focus-visible,
   transform: translateX(2px);
 }
 
+/* Quiet, caption-scale link used inside metadata lines. */
+.link-quiet {
+  color: var(--color-primary);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
+
+.link-quiet:hover {
+  color: var(--color-primary-strong);
+}
+
 /* ------------------------------------------------------------- proof rail */
 
 .proof-rail {
@@ -888,11 +900,15 @@ select:focus-visible,
 
 .info-popover {
   display: block;
-  position: absolute;
+  position: fixed;
   z-index: 10;
-  bottom: calc(100% + var(--space-2));
-  left: 0;
-  width: min(20rem, 80vw);
+  /* Exact coordinates are computed by InfoButton so the popover always sits
+     inside the viewport and never grows the document scroll width. */
+  left: var(--space-2);
+  top: 0;
+  width: min(20rem, calc(100vw - 2 * var(--space-2)));
+  max-height: calc(100vh - 2 * var(--space-2));
+  overflow-y: auto;
   padding: var(--space-3) var(--space-4);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-small);

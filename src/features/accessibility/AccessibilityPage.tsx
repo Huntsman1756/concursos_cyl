@@ -16,7 +16,9 @@ export function AccessibilityPage() {
     >
       <header className="support-page-intro">
         <p className="support-page-intro__eyebrow">Compromiso verificable</p>
-        <h1 id="accessibility-heading">Accesibilidad</h1>
+        <h1 className="h1" id="accessibility-heading">
+          Accesibilidad
+        </h1>
         <p>
           Queremos que cualquier persona pueda consultar SALIDA CyL con teclado,
           lector de pantalla o ampliación, en móvil y en escritorio. Nuestro

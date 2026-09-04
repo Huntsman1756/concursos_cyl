@@ -30,6 +30,7 @@ import {
   sortOfferEvidenceRecords,
 } from "../../domain/offerEvidence";
 import { formatProgramTitle } from "../../domain/trainingPresentation";
+import { longDate } from "../../domain/displayFormat";
 import "./offerExplorer.css";
 
 const PAGE_SIZE = 12;
@@ -82,21 +83,11 @@ type OfferExplorerState =
     };
 
 function formattedDate(value: string): string {
-  return new Intl.DateTimeFormat("es-ES", {
-    day: "numeric",
-    month: "long",
-    year: "numeric",
-    timeZone: "UTC",
-  }).format(new Date(value));
+  return longDate(value);
 }
 
 function shortDate(value: string): string {
-  return new Intl.DateTimeFormat("es-ES", {
-    day: "numeric",
-    month: "short",
-    year: "numeric",
-    timeZone: "UTC",
-  }).format(new Date(value));
+  return longDate(value);
 }
 
 function locationLabel(record: OfferEvidenceRecord): string | null {
@@ -692,7 +683,11 @@ export function OfferExplorerPage({
           · evidencia generada el{" "}
           <time dateTime={state.generatedAt}>
             {formattedDate(state.generatedAt)}
-          </time>
+          </time>{" "}
+          ·{" "}
+          <Link to="/metodologia" className="link-quiet">
+            Cómo se comprueba
+          </Link>
         </p>
       </header>
 

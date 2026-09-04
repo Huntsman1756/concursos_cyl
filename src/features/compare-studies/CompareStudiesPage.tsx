@@ -590,7 +590,7 @@ export function CompareStudiesPage() {
           <p className="income-limitation">
             Mostramos ambas referencias por separado porque la fuente consultada
             no publica ingresos por ciclo concreto en Castilla y León; solo
-            ofrece una referencia conjunta para Grado Medio o Grado Superior.
+            ofrece una referencia conjunta para grado medio o grado superior.
           </p>
           {state.outcomeSource !== undefined ? (
             <footer className="income-results__source">

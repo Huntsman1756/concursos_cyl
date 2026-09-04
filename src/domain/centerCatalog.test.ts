@@ -243,11 +243,11 @@ describe("center catalog facet counts", () => {
       "Centro de formación agraria",
     );
     expect(CENTER_FILTER_LABELS.ownership.private).toBe("Centro privado");
-    expect(CENTER_FILTER_LABELS.level.basic).toBe("Grado Básico");
-    expect(CENTER_FILTER_LABELS.level.intermediate).toBe("Grado Medio");
-    expect(CENTER_FILTER_LABELS.level.higher).toBe("Grado Superior");
+    expect(CENTER_FILTER_LABELS.level.basic).toBe("grado básico");
+    expect(CENTER_FILTER_LABELS.level.intermediate).toBe("grado medio");
+    expect(CENTER_FILTER_LABELS.level.higher).toBe("grado superior");
     expect(CENTER_FILTER_LABELS.level.specialization).toBe(
-      "Curso de especialización",
+      "curso de especialización",
     );
     expect(CENTER_FILTER_LABELS.unpublishedModality).toBe(
       "Modalidad no publicada",

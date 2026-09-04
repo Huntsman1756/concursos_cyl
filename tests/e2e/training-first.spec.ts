@@ -216,7 +216,7 @@ test("FP search confirms official options and recovers from filters and zero sta
     .filter({ hasText: "Filtrar catálogo y contexto" })
     .click();
   await page.getByLabel("Nivel").selectOption({
-    label: "Grado medio",
+    label: "grado medio",
   });
   await expect(combobox).toHaveValue("");
   await expect(submit).toBeDisabled();
@@ -479,7 +479,7 @@ test("live DAW results name the dated zero-match snapshot without claiming there
   await page.getByRole("button", { name: "Ver salidas y ofertas" }).click();
   const snapshotDate = new Intl.DateTimeFormat("es-ES", {
     day: "numeric",
-    month: "short",
+    month: "long",
     year: "numeric",
     timeZone: "UTC",
   }).format(
@@ -490,7 +490,7 @@ test("live DAW results name the dated zero-match snapshot without claiming there
   );
 
   await expect(page.locator(".result-summary")).toContainText(
-    `0 ofertas en la copia del ${snapshotDate}`,
+    `0 ofertas · fuente del ${snapshotDate}`,
   );
   await expect(
     page.getByRole("heading", {

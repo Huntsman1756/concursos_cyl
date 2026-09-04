@@ -7,7 +7,7 @@
 }
 
 .support-page-intro {
-  max-width: 52rem;
+  max-width: var(--reading-max);
 }
 
 .support-page-intro__eyebrow,
@@ -21,10 +21,15 @@
   text-transform: uppercase;
 }
 
+/* Interior pages share one desktop H1 scale (see .page-masthead .h1). */
 .support-page-intro h1 {
+  display: block;
   margin: 0;
-  font-size: clamp(2.2rem, 5vw, 4rem);
-  line-height: 1.02;
+  color: var(--color-text);
+  font-size: var(--type-page-title);
+  font-weight: var(--type-page-title-weight);
+  line-height: var(--text-h1-line-height);
+  letter-spacing: var(--text-h1-tracking);
   text-wrap: balance;
 }
 

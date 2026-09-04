@@ -26,6 +26,7 @@ import {
   type GeneratedDataLoadOptions,
 } from "../../data/generatedDataClient";
 import { indexIncomeOutcomes } from "../../domain/outcomes";
+import { longDate, monthYearLabel } from "../../domain/displayFormat";
 import { deriveActions } from "../../domain/actionEngine";
 import { deriveEvidenceState, orderOfferMatches } from "../../domain/evidence";
 import { createOfferEvidenceMatch } from "../../domain/offerEvidence";
@@ -104,12 +105,7 @@ function snapshotDate(manifest: LoadableGeneratedManifest): string {
 }
 
 function shortDate(value: string): string {
-  return new Intl.DateTimeFormat("es-ES", {
-    day: "numeric",
-    month: "short",
-    year: "numeric",
-    timeZone: "UTC",
-  }).format(new Date(value));
+  return longDate(value);
 }
 
 function normalizedLocation(value: string | null | undefined): string {
@@ -980,13 +976,7 @@ export function TrainingResultsPage() {
                   <strong>
                     {new Intl.NumberFormat("es-ES").format(row.totalContracts)}
                   </strong>
-                  <small>
-                    {new Intl.DateTimeFormat("es-ES", {
-                      month: "short",
-                      year: "numeric",
-                      timeZone: "UTC",
-                    }).format(new Date(row.month))}
-                  </small>
+                  <small>{monthYearLabel(row.month)}</small>
                 </li>
               ))}
             </ul>

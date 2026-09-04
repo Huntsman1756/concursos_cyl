@@ -194,7 +194,7 @@ test("home exposes three clear intents, navigation, freshness, and no automated 
   );
   const expectedDate = new Intl.DateTimeFormat("es-ES", {
     day: "numeric",
-    month: "short",
+    month: "long",
     year: "numeric",
     timeZone: "UTC",
   }).format(new Date(expectedDateTime));
@@ -425,7 +425,7 @@ test("a stale legacy manifest keeps navigation and names the last update", async
     name: "Fecha de ofertas laborales",
   });
   await expect(freshness).toContainText(
-    "Ofertas laborales · fuente actualizada el 31 jul 2026",
+    "Ofertas laborales · fuente actualizada el 31 de julio de 2026",
   );
   await expect(freshness.locator("time")).toHaveAttribute(
     "datetime",
@@ -520,7 +520,7 @@ test("loading freshness is visible before a delayed current manifest prioritizes
     "2026-07-31T00:00:00.000Z",
   );
   await expect(freshness).toContainText(
-    "Relaciones revisadas · fuente actualizada el 31 jul 2026",
+    "Relaciones revisadas · fuente actualizada el 31 de julio de 2026",
   );
 });
 

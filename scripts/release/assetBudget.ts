@@ -12,6 +12,9 @@ export const ASSET_BUDGET = {
   //    the approved prototype style layer ported 1:1 into the runtime).
   //    155,123 measured after the UX-audit closure pass (stable hero panel
   //    grid, per-stat proof dates, offer-card action column) → 156k bucket.
+  //    156,544 measured after the 2026-09-04 Chrome-audit candidate pass
+  //    (viewport-collision popover rules, compare scroll-region boundary,
+  //    filter spacing rhythm, reading-measure constraints) -> 158k bucket.
   //    fonts 100,912 measured (Public Sans latin 400/600/700 woff2 + OFL).
   // B. EDITORIAL DISTRIBUTION — every AVIF/WebP variant of the editorial
   //    photography (1,568,030 measured under images/editorial/). srcset
@@ -25,7 +28,7 @@ export const ASSET_BUDGET = {
   // root social/icon PNGs (1,032,395 measured — optimization follow-up).
   totalBytes: 3_600_000,
   javascriptBytes: 620_000,
-  stylesheetBytes: 156_000,
+  stylesheetBytes: 158_000,
   fontBytes: 110_000,
   editorialImageBytes: 1_700_000,
   initialTransferBytes: 950_000,

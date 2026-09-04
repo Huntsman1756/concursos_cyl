@@ -320,7 +320,7 @@ describe("CompareStudiesPage", () => {
     ).toBeVisible();
     expect(
       screen.getByText(
-        "Mostramos ambas referencias por separado porque la fuente consultada no publica ingresos por ciclo concreto en Castilla y León; solo ofrece una referencia conjunta para Grado Medio o Grado Superior.",
+        "Mostramos ambas referencias por separado porque la fuente consultada no publica ingresos por ciclo concreto en Castilla y León; solo ofrece una referencia conjunta para grado medio o grado superior.",
       ),
     ).toBeVisible();
     expect(screen.getAllByText(/Base de cotización anualizada/u)).toHaveLength(
@@ -455,6 +455,27 @@ describe("CompareStudiesPage", () => {
     expect(
       screen.queryByRole("region", { name: "Evidencia seleccionada" }),
     ).not.toBeInTheDocument();
+  });
+
+  it("keeps the list order stable when a group is selected", async () => {
+    installData();
+    const user = userEvent.setup();
+    renderPage();
+
+    await user.click(await screen.findByRole("radio", { name: "Grado medio" }));
+
+    const orderBefore = screen
+      .getAllByRole("checkbox")
+      .map((checkbox) => checkbox.closest("label")?.textContent ?? "");
+    expect(orderBefore.length).toBeGreaterThan(1);
+
+    await user.click(screen.getByRole("checkbox", { name: "Grupo medio 1" }));
+
+    const orderAfter = screen
+      .getAllByRole("checkbox")
+      .map((checkbox) => checkbox.closest("label")?.textContent ?? "");
+    // Selecting a group must not move it to the front of the list.
+    expect(orderAfter).toEqual(orderBefore);
   });
 
   it("filters official groups without hiding a selected group or ignoring diacritics", async () => {

@@ -451,10 +451,10 @@ describe("training-first search", () => {
     expect(options).toHaveLength(2);
     expect(options.map((option) => option.textContent)).toEqual([
       expect.stringContaining(
-        "Grado medio · Informática y Comunicaciones · IFC03M",
+        "grado medio · Informática y Comunicaciones · IFC03M",
       ),
       expect.stringContaining(
-        "Grado superior · Informática y Comunicaciones · IFC03S",
+        "grado superior · Informática y Comunicaciones · IFC03S",
       ),
     ]);
   });

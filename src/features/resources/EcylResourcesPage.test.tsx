@@ -8,6 +8,7 @@ import type {
   ProfessionalCertificate,
 } from "../../../data/schemas/ecylResources";
 import { currentManifestFixture } from "../../../tests/fixtures/generatedManifest";
+import { setTodayForTests } from "../../domain/currentDate";
 import { EcylResourcesPage } from "./EcylResourcesPage";
 
 const SNAPSHOT_PREFIX = "/data/v1/snapshots/build-1";
@@ -178,7 +179,7 @@ describe("EcylResourcesPage", () => {
     expect(screen.getByRole("status")).toHaveTextContent("Cargando recursos…");
     expect(
       screen.queryByRole("heading", {
-        name: /Empleo público abierto al /u,
+        name: /Convocatorias que figuraban abiertas en la copia del /u,
       }),
     ).not.toBeInTheDocument();
     expect(screen.queryByText(/convocatorias?$/u)).not.toBeInTheDocument();
@@ -191,7 +192,7 @@ describe("EcylResourcesPage", () => {
     });
 
     await screen.findByRole("heading", {
-      name: /Empleo público abierto al /u,
+      name: /Convocatorias que figuraban abiertas en la copia del /u,
     });
     expect(screen.getByText("0 convocatorias")).toBeVisible();
     expect(
@@ -212,7 +213,7 @@ describe("EcylResourcesPage", () => {
     });
 
     await screen.findByRole("heading", {
-      name: /Empleo público abierto al /u,
+      name: /Convocatorias que figuraban abiertas en la copia del /u,
     });
     expect(screen.getByText("4 convocatorias")).toBeVisible();
   });
@@ -238,9 +239,55 @@ describe("EcylResourcesPage", () => {
       ],
     });
 
-    await screen.findByRole("heading", { name: "Ats/due (2023/24/25)" });
+    await screen.findByRole("heading", { name: "ATS/DUE (2023/24/25)" });
     expect(screen.getByText("1 convocatoria")).toBeVisible();
     expect(screen.getByText(/Plazo hasta el/u)).toBeVisible();
+  });
+
+  it("marks a call whose published deadline already passed before today", async () => {
+    setTodayForTests("2026-09-04");
+    try {
+      renderResources({
+        publicCalls: [
+          publicCall({
+            id: "call-closed",
+            applicationDeadline: "2026-08-24",
+          }),
+        ],
+      });
+
+      await screen.findByRole("heading", {
+        name: /Convocatorias que figuraban abiertas en la copia del /u,
+      });
+      expect(
+        screen.getByText(
+          "El plazo publicado ya pasó: cerró el 24 de agosto de 2026.",
+        ),
+      ).toBeVisible();
+    } finally {
+      setTodayForTests(null);
+    }
+  });
+
+  it("treats the deadline day itself as not yet passed", async () => {
+    setTodayForTests("2026-08-24");
+    try {
+      renderResources({
+        publicCalls: [
+          publicCall({
+            id: "call-boundary",
+            applicationDeadline: "2026-08-24",
+          }),
+        ],
+      });
+
+      await screen.findByRole("heading", {
+        name: /Convocatorias que figuraban abiertas en la copia del /u,
+      });
+      expect(screen.getByText(/Plazo hasta el/u)).toBeVisible();
+    } finally {
+      setTodayForTests(null);
+    }
   });
 
   it("presents the certificate family as an official code and readable label", async () => {

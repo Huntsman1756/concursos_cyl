@@ -65,7 +65,7 @@ describe("approved example contract", () => {
     expect(example?.provincesCount).toBe(2);
     expect(example?.topProvinces[0]).toEqual({ province: "Ávila", centers: 1 });
     expect(example?.occupations[0]?.label).toBe("Empleados de contabilidad");
-    expect(example?.levelLabel).toBe("Grado superior");
+    expect(example?.levelLabel).toBe("grado superior");
   });
 
   it("fails closed when the reviewed relationship is absent", () => {

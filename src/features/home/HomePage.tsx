@@ -27,6 +27,7 @@ import {
   trainingDetailPath,
 } from "../../app/routePaths";
 import { loadApprovedMappings } from "../../domain/occupation";
+import { longDate } from "../../domain/displayFormat";
 import { buildApprovedExample } from "../../domain/approvedExample";
 import { formatProgramTitle } from "../../domain/trainingPresentation";
 import { EditorialImage } from "../../components/EditorialImage";
@@ -101,12 +102,7 @@ const TASK_TABS: Array<{
 ];
 
 function formatDate(value: string): string {
-  return new Intl.DateTimeFormat("es-ES", {
-    day: "numeric",
-    month: "short",
-    year: "numeric",
-    timeZone: "UTC",
-  }).format(new Date(value));
+  return longDate(value);
 }
 
 export function HomePage() {
@@ -513,17 +509,7 @@ export function HomePage() {
               ofertas hay en Castilla y León y dónde puedes estudiar cada
               formación.
             </p>
-            <p className="trust-line">
-              Relaciones revisadas
-              <span className="dot" aria-hidden="true">
-                ·
-              </span>{" "}
-              Fuentes públicas
-              <span className="dot" aria-hidden="true">
-                ·
-              </span>{" "}
-              Datos con fecha
-            </p>
+            <p className="trust-line">Datos oficiales, revisados y con fecha</p>
 
             <div className="task-selector">
               <ul
@@ -662,12 +648,12 @@ export function HomePage() {
       <section className="section section--alt" aria-labelledby="proof-title">
         <div className="container">
           <h2 className="sr-only" id="proof-title">
-            Datos del catálogo
+            Datos y actualización
           </h2>
           <div
             className="proof-rail"
             role="region"
-            aria-label="Datos del catálogo en la copia actual"
+            aria-label="Datos y actualización de la copia activa"
           >
             <div className="proof-stat">
               <p className="proof-stat-value">
@@ -732,7 +718,7 @@ export function HomePage() {
             </div>
             <div className="proof-note">
               <p className="small" style={{ margin: 0 }}>
-                Fuentes públicas y trazabilidad
+                Cada cifra indica la fecha de su propia fuente.
                 <InfoButton label="Qué es una relación revisada">
                   Una relación revisada enlaza un ciclo con una ocupación y se
                   ha verificado contra su fuente oficial (TodoFP, BOE) con fecha
@@ -893,7 +879,7 @@ export function HomePage() {
         <div className="container">
           <div className="section-head" style={{ maxWidth: "44rem" }}>
             <h2 className="h2" id="method-title">
-              Sabes de dónde sale cada relación.
+              Cada dato, con su origen y su fecha.
             </h2>
             <p className="lede">
               SALIDA combina fuentes públicas de formación y empleo y solo

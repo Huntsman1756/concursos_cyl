@@ -26,7 +26,7 @@ describe("TrainingOutcomeEvidence", () => {
 
     expect(
       screen.getByText(
-        "La fuente solo publica referencias para Grado Medio y Grado Superior.",
+        "La fuente solo publica referencias para grado medio y grado superior.",
       ),
     ).toBeVisible();
     expect(

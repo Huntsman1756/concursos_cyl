@@ -128,11 +128,12 @@ const sepeResource = [
 function mockFetchJson(value: unknown, status = 200) {
   vi.stubGlobal(
     "fetch",
-    vi.fn().mockResolvedValue(
-      new Response(JSON.stringify(value), {
-        status,
-        headers: { "Content-Type": "application/json" },
-      }),
+    vi.fn(
+      () =>
+        new Response(JSON.stringify(value), {
+          status,
+          headers: { "Content-Type": "application/json" },
+        }),
     ),
   );
 }
@@ -1023,7 +1024,7 @@ describe("generated data client", () => {
     await expect(
       loadGeneratedResource(path, z.array(z.string())),
     ).resolves.toEqual(["IFC03S"]);
-    expect(fetch).toHaveBeenCalledWith(path);
+    expect(fetch).toHaveBeenCalledWith(path, { cache: "default" });
   });
 
   it("accepts a future manifest-addressed kebab-case resource path", async () => {
@@ -1033,7 +1034,69 @@ describe("generated data client", () => {
     await expect(
       loadGeneratedResource(path, z.array(z.string())),
     ).resolves.toEqual(["desarrollador web"]);
-    expect(fetch).toHaveBeenCalledWith(path);
+    expect(fetch).toHaveBeenCalledWith(path, { cache: "default" });
+  });
+
+  it("retries once bypassing the HTTP cache when a cached payload fails the contract", async () => {
+    const path = "/data/v1/snapshots/build-1/programs.json";
+    const fetchMock = vi
+      .fn()
+      .mockImplementationOnce(
+        () =>
+          new Response("<!doctype html>", {
+            status: 200,
+            headers: { "Content-Type": "text/html" },
+          }),
+      )
+      .mockImplementationOnce(
+        () =>
+          new Response(JSON.stringify(["IFC03S"]), {
+            status: 200,
+            headers: { "Content-Type": "application/json" },
+          }),
+      );
+    vi.stubGlobal("fetch", fetchMock);
+
+    await expect(
+      loadGeneratedResource(path, z.array(z.string())),
+    ).resolves.toEqual(["IFC03S"]);
+    expect(fetchMock).toHaveBeenCalledTimes(2);
+    expect(fetchMock.mock.calls[0]).toEqual([path, { cache: "default" }]);
+    expect(fetchMock.mock.calls[1]).toEqual([path, { cache: "no-store" }]);
+  });
+
+  it("fails closed when the bypassing retry also fails the contract", async () => {
+    const path = "/data/v1/snapshots/build-1/programs.json";
+    const fetchMock = vi.fn(
+      () =>
+        new Response("<!doctype html>", {
+          status: 200,
+          headers: { "Content-Type": "text/html" },
+        }),
+    );
+    vi.stubGlobal("fetch", fetchMock);
+
+    await expect(
+      loadGeneratedResource(path, z.array(z.string())),
+    ).rejects.toMatchObject({ code: "schema" });
+    expect(fetchMock).toHaveBeenCalledTimes(2);
+  });
+
+  it("does not bypass the cache when the caller already requested no-store", async () => {
+    const path = "/data/v1/snapshots/build-1/programs.json";
+    const fetchMock = vi.fn(
+      () =>
+        new Response("<!doctype html>", {
+          status: 200,
+          headers: { "Content-Type": "text/html" },
+        }),
+    );
+    vi.stubGlobal("fetch", fetchMock);
+
+    await expect(
+      loadGeneratedResource(path, z.array(z.string()), { cache: "no-store" }),
+    ).rejects.toMatchObject({ code: "schema" });
+    expect(fetchMock).toHaveBeenCalledTimes(1);
   });
 
   it("throws the network code for failed requests and HTTP errors", async () => {

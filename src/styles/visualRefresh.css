@@ -954,6 +954,13 @@ summary:focus-visible {
   gap: var(--space-4);
 }
 
+/* Consistent vertical rhythm between deployed filter groups so labels never
+   crowd the previous control (e.g. "Familia profesional"). Margins are used
+   because Chrome does not gap direct children of a grid <details>. */
+.training-search__filters[open] .form-field + .form-field {
+  margin-top: var(--space-4);
+}
+
 .training-catalog-note {
   max-width: 64rem;
   margin-top: var(--space-8);

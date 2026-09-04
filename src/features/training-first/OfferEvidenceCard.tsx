@@ -7,6 +7,7 @@ import { ExternalLink } from "../../components/ExternalLink";
 import { Icon } from "../../components/Icon";
 import { InfoDisclosure } from "../../components/InfoDisclosure";
 import { RequirementRow } from "../../components/RequirementRow";
+import { longDate } from "../../domain/displayFormat";
 import type { ReliableAction } from "../../domain/actionEngine";
 import type {
   EvidenceState,
@@ -41,12 +42,7 @@ export interface OfferEvidenceCardProps {
 }
 
 function shortDate(value: string): string {
-  return new Intl.DateTimeFormat("es-ES", {
-    day: "numeric",
-    month: "short",
-    year: "numeric",
-    timeZone: "UTC",
-  }).format(new Date(value));
+  return longDate(value);
 }
 
 function locationLabel(offer: JobOffer): string | null {

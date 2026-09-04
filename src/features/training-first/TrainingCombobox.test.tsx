@@ -138,7 +138,7 @@ describe("TrainingCombobox", () => {
     expect(options[0]).toHaveTextContent("Cuidados Auxiliares de Enfermería");
     expect(options[0]).toHaveTextContent("Sanidad");
     expect(options[0]).toHaveTextContent("SAN01M");
-    expect(options[1]).toHaveTextContent("Grado superior");
+    expect(options[1]).toHaveTextContent("grado superior");
     expect(options[1]).toHaveTextContent("SAN01S");
   });
 

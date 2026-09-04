@@ -358,6 +358,19 @@ describe("App", () => {
       expect(document.activeElement).toBe(trigger);
       expect(document.activeElement).not.toBe(disclosure);
     };
+    // Navigating to a different pathname moves focus to the main landmark so
+    // keyboard users are never left on a control from the previous page.
+    const expectMenuClosedWithFocusOnMain = () => {
+      const disclosure = screen.getByRole("button", {
+        name: "Menú",
+      });
+      expect(disclosure).toHaveAttribute("aria-expanded", "false");
+      expect(getMobileNavigation()).toHaveAttribute("hidden");
+      expect(document.activeElement).toBe(
+        screen.getByRole("main", { name: "Contenido principal" }),
+      );
+      expect(document.activeElement).not.toBe(disclosure);
+    };
     const openMenu = async () => {
       await user.click(screen.getByRole("button", { name: "Menú" }));
       expect(screen.getByRole("button", { name: "Menú" })).toHaveAttribute(
@@ -377,12 +390,13 @@ describe("App", () => {
 
     await openMenu();
     await user.click(pathnameButton);
-    await waitFor(() => expectMenuClosedWithFocusOn(pathnameButton));
+    await waitFor(() => expectMenuClosedWithFocusOnMain());
     expectLocation("/metodologia", "", "");
 
     await openMenu();
     await user.click(queryButton);
-    await waitFor(() => expectMenuClosedWithFocusOn(queryButton));
+    // /metodologia -> /?tab=coverage is a pathname change: focus moves to main.
+    await waitFor(() => expectMenuClosedWithFocusOnMain());
     expectLocation("/", "?tab=coverage", "");
 
     await openMenu();

@@ -293,4 +293,85 @@ export async function verifyCaddyContainer(
   if (csvHash !== catalog.csvSha256) {
     throw new Error("Caddy open-data CSV hash does not match the catalog.");
   }
+
+  // The offer-evidence sidecar is the resource behind the offers route and the
+  // home reviewed-offer counter; a missing or HTML-served copy fails citizens
+  // fail-closed while all other resources stay healthy, so it is verified
+  // explicitly at deployment time.
+  const evidenceSnapshot = manifest.resourceSnapshots?.offerEvidence;
+  if (
+    typeof evidenceSnapshot?.resourcePath !== "string" ||
+    typeof evidenceSnapshot.sha256 !== "string" ||
+    typeof evidenceSnapshot.recordCount !== "number" ||
+    !/^\/data\/v1\/snapshots\/[^/]+\/offer-evidence\.json$/u.test(
+      evidenceSnapshot.resourcePath,
+    )
+  ) {
+    throw new Error("Caddy manifest does not address the offer evidence.");
+  }
+  const evidenceUrl = new URL(evidenceSnapshot.resourcePath, base);
+  if (evidenceUrl.origin !== base.origin) {
+    throw new Error("Caddy offer evidence must remain same-origin.");
+  }
+  const evidenceResponse = await requiredResponse(
+    request,
+    evidenceUrl,
+    "application/json",
+  );
+  const evidenceBytes = Buffer.from(await evidenceResponse.arrayBuffer());
+  const evidenceHash = createHash("sha256").update(evidenceBytes).digest("hex");
+  if (evidenceHash !== evidenceSnapshot.sha256) {
+    throw new Error("Caddy offer evidence hash does not match the manifest.");
+  }
+  let evidence: { records?: unknown; counts?: { offerCount?: unknown } };
+  try {
+    evidence = JSON.parse(evidenceBytes.toString("utf8")) as {
+      records?: unknown;
+      counts?: { offerCount?: unknown };
+    };
+  } catch {
+    throw new Error("Caddy offer evidence must be valid JSON.");
+  }
+  if (!Array.isArray(evidence.records)) {
+    throw new Error("Caddy offer evidence must expose a records array.");
+  }
+  if (
+    evidence.records.length !== evidenceSnapshot.recordCount ||
+    evidence.counts?.offerCount !== evidenceSnapshot.recordCount
+  ) {
+    throw new Error("Caddy offer evidence count does not match the manifest.");
+  }
+
+  // Guard the poisoning failure mode directly: a missing data resource must
+  // answer 404 (never the SPA shell with 200 + text/html), and it must not be
+  // cached.
+  const missingDataUrl = new URL(
+    "/data/v1/qa-cache-guard-does-not-exist.json",
+    base,
+  );
+  const missingDataResponse = await request(missingDataUrl);
+  if (missingDataResponse.status !== 404) {
+    throw new Error(
+      `Missing data resources must return 404, received HTTP ${missingDataResponse.status}.`,
+    );
+  }
+  if (
+    (missingDataResponse.headers.get("content-type") ?? "").includes(
+      "text/html",
+    )
+  ) {
+    throw new Error(
+      "Missing data resources must not be served as HTML (SPA fallback leaked into /data/*).",
+    );
+  }
+  const missingDataCacheControl =
+    missingDataResponse.headers.get("cache-control");
+  if (
+    missingDataCacheControl === null ||
+    /immutable|max-age\s*=\s*[1-9]/u.test(missingDataCacheControl)
+  ) {
+    throw new Error(
+      "Missing data resources must not be cached (expected no-store).",
+    );
+  }
 }

@@ -538,7 +538,7 @@ describe("TrainingResultsPage", () => {
     );
     await screen.findByText("España · grupo del ciclo");
     expect(screen.getByText("España · grupo del ciclo")).toBeVisible();
-    expect(screen.getByText("Castilla y León · Grado superior")).toBeVisible();
+    expect(screen.getByText("Castilla y León · grado superior")).toBeVisible();
     expect(
       screen.getByText(
         "Contratos registrados por provincia (contexto general)",
@@ -886,7 +886,7 @@ describe("TrainingResultsPage", () => {
       }),
     ).toHaveAttribute("href", "/comparar?program=IFC03S");
     expect(document.querySelector(".training-page__meta")).toHaveTextContent(
-      /Grado superior/u,
+      /grado superior/u,
     );
     expect(document.querySelector(".training-page__code")).toHaveTextContent(
       /código oficial IFC03S/u,

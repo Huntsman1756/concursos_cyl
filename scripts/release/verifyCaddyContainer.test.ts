@@ -18,6 +18,11 @@ const sepeBytes = JSON.stringify({
   records: Array.from({ length: 116 }, () => ({})),
 });
 const sepeSha256 = createHash("sha256").update(sepeBytes).digest("hex");
+const evidenceBytes = JSON.stringify({
+  records: [{ offerId: "1" }, { offerId: "2" }],
+  counts: { offerCount: 2 },
+});
+const evidenceSha256 = createHash("sha256").update(evidenceBytes).digest("hex");
 
 function validRequest(input: string | URL): Promise<Response> {
   const path = new URL(input).pathname;
@@ -43,7 +48,27 @@ function validRequest(input: string | URL): Promise<Response> {
             resourcePath: "/data/v1/snapshots/release/open-data-catalog.json",
             recordCount: 1,
           },
+          offerEvidence: {
+            resourcePath: "/data/v1/snapshots/release/offer-evidence.json",
+            recordCount: 2,
+            sha256: evidenceSha256,
+          },
         },
+      }),
+    );
+  }
+  if (path.endsWith("/offer-evidence.json")) {
+    return Promise.resolve(
+      new Response(evidenceBytes, {
+        headers: { "content-type": "application/json" },
+      }),
+    );
+  }
+  if (path.includes("qa-cache-guard-does-not-exist")) {
+    return Promise.resolve(
+      new Response("not found", {
+        status: 404,
+        headers: { "content-type": "text/plain", "cache-control": "no-store" },
       }),
     );
   }
@@ -157,6 +182,48 @@ describe("verifyCaddyContainer", () => {
     await expect(
       verifyCaddyContainer("http://127.0.0.1:8080", unsafe),
     ).rejects.toThrow(/SEPE|snapshot|resource/i);
+  });
+
+  it("rejects a missing data resource served as the SPA shell", async () => {
+    const htmlFallback = (input: string | URL) => {
+      if (new URL(input).pathname.includes("qa-cache-guard-does-not-exist")) {
+        return Promise.resolve(
+          new Response('<!doctype html><div id="root"></div>', {
+            status: 200,
+            headers: {
+              "content-type": "text/html; charset=utf-8",
+              "cache-control": "public, max-age=31536000, immutable",
+            },
+          }),
+        );
+      }
+      return validRequest(input);
+    };
+
+    await expect(
+      verifyCaddyContainer("http://127.0.0.1:8080", htmlFallback),
+    ).rejects.toThrow(/404|HTML/iu);
+  });
+
+  it("rejects a missing data resource served with long-lived caching", async () => {
+    const cached404 = (input: string | URL) => {
+      if (new URL(input).pathname.includes("qa-cache-guard-does-not-exist")) {
+        return Promise.resolve(
+          new Response("not found", {
+            status: 404,
+            headers: {
+              "content-type": "text/plain",
+              "cache-control": "public, max-age=31536000, immutable",
+            },
+          }),
+        );
+      }
+      return validRequest(input);
+    };
+
+    await expect(
+      verifyCaddyContainer("http://127.0.0.1:8080", cached404),
+    ).rejects.toThrow(/cach/iu);
   });
 
   it.each(["file:///srv", "//example.com", "http://user@example.com"])(

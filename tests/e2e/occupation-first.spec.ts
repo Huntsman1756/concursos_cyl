@@ -119,7 +119,7 @@ test("the live occupation journey confirms a reviewed everyday alias and reaches
   ).toBeGreaterThanOrEqual(2);
   for (const programKey of reviewedProgramKeys) {
     await expect(
-      page.getByText(`Grado superior · ${programKey}`, { exact: true }),
+      page.getByText(`grado superior · ${programKey}`, { exact: true }),
     ).toBeVisible();
   }
   await page

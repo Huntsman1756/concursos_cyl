@@ -12,6 +12,7 @@ import {
   resolveGeneratedAssetPath,
 } from "../../data/generatedDataClient";
 import { useRouteReady } from "../../app/RouteReadyContext";
+import { longDate } from "../../domain/displayFormat";
 import { Breadcrumbs } from "../../components/Breadcrumbs";
 import { PageEyebrow } from "../../components/PageEyebrow";
 import { SourceMethodCard } from "./SourceMethodCard";
@@ -151,8 +152,8 @@ function tableLinks(tableIds: readonly EducabaseIncomeTableId[]) {
       tableId,
       label:
         source.trainingLevel === "intermediate"
-          ? "Grado Medio"
-          : "Grado Superior",
+          ? "grado medio"
+          : "grado superior",
       catalogUrl: source.catalogUrl,
       csvUrl: source.csvUrl,
       pxUrl: source.pxUrl,
@@ -161,12 +162,7 @@ function tableLinks(tableIds: readonly EducabaseIncomeTableId[]) {
 }
 
 function formattedDate(timestamp: string): string {
-  return new Intl.DateTimeFormat("es-ES", {
-    day: "numeric",
-    month: "long",
-    year: "numeric",
-    timeZone: "UTC",
-  }).format(new Date(timestamp));
+  return longDate(timestamp);
 }
 
 function countLabel(count: number, singular: string, plural: string): string {
@@ -413,19 +409,14 @@ export function MethodologyPage() {
 
       <RegionalDatasetInventory state={manifestState} />
 
-      <aside aria-label="Alcance del recurso de ofertas">
+      <aside aria-label="Alcance del recurso de evidencia de ofertas">
         <p>
-          Además de las fuentes oficiales, SALIDA genera un recurso propio de
-          evidencia sobre las ofertas (<code>offerEvidence</code>): a partir de
-          la copia de ofertas, extrae sus requisitos publicados y los relaciona
-          con relaciones FP revisadas. Las páginas de ofertas utilizan ese
-          recurso para mostrar ese contexto. Por ahora no se publica como un
-          dataset reutilizable independiente. Que no aparezca en la sección
-          «Datos abiertos» no significa que las relaciones se calculen de forma
-          opaca ni que el recurso haya sido eliminado. Su publicación
-          independiente queda fuera de alcance mientras su documentación y
-          licencia de reutilización no estén cerradas al mismo nivel que los
-          demás datasets publicados.
+          Además de las fuentes oficiales, elaboramos un recurso propio de
+          evidencia sobre las ofertas: extrae los requisitos que cada
+          convocatoria publica y los relaciona con ciclos de FP revisados, y es
+          lo que usan las páginas de ofertas. No se ofrece todavía como descarga
+          independiente; su definición técnica completa está documentada en el
+          repositorio abierto del proyecto.
         </p>
       </aside>
 
@@ -455,8 +446,8 @@ export function MethodologyPage() {
           title="Referencia por nivel en Castilla y León"
           contributes={
             <p>
-              La misma base de cotización, agrupada para todo Grado Medio o todo
-              Grado Superior en Castilla y León. La comunidad corresponde al
+              La misma base de cotización, agrupada para todo grado medio o todo
+              grado superior en Castilla y León. La comunidad corresponde al
               centro donde se obtuvo la titulación.
             </p>
           }

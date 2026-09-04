@@ -47,13 +47,19 @@ test("public resources expose the runtime open-call truth with provenance", asyn
 
   const expectedCallsHeading = await page.evaluate((copyDate) => {
     const formatted = new Intl.DateTimeFormat("es-ES", {
-      dateStyle: "medium",
+      day: "numeric",
+      month: "long",
+      year: "numeric",
+      timeZone: "UTC",
     }).format(new Date(`${copyDate}T00:00:00Z`));
-    return `Empleo público abierto al ${formatted}`;
+    return `Convocatorias que figuraban abiertas en la copia del ${formatted}`;
   }, referenceDate);
   await expect(
     page.getByRole("heading", { name: expectedCallsHeading }),
   ).toBeVisible();
+  await expect(
+    page.getByRole("heading", { name: /Empleo público abierto al/u }),
+  ).toHaveCount(0);
   await expect(
     page.getByRole("link", {
       name: "Fuente: Convocatorias de Empleo Público JCyL",

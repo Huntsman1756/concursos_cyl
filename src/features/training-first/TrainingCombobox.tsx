@@ -86,7 +86,7 @@ export function TrainingCombobox({
     pendingLocalClearForKey.current = null;
     setConfirmedProgramKey(nextProgramKey);
     if (preservesLocalQuery) return;
-    setQuery(nextProgramTitle);
+    setQuery(formatProgramTitle(nextProgramTitle));
     setOpen(false);
     setActiveIndex(-1);
   }, [confirmedProgram?.programKey, confirmedProgram?.programTitle]);
@@ -109,7 +109,7 @@ export function TrainingCombobox({
   }
 
   function selectProgram(program: TrainingProgram): void {
-    setQuery(program.programTitle);
+    setQuery(formatProgramTitle(program.programTitle));
     setConfirmedProgramKey(program.programKey);
     pendingLocalClearForKey.current = null;
     setOpen(false);

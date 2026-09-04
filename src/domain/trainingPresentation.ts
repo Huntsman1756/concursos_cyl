@@ -1,12 +1,6 @@
 import type { TrainingProgram } from "../../data/schemas/generated";
 import type { MappingCoverage } from "../../data/schemas/curatedMappings";
-
-const levelLabels: Record<TrainingProgram["level"], string> = {
-  basic: "Grado básico",
-  intermediate: "Grado medio",
-  higher: "Grado superior",
-  specialization: "Curso de especialización",
-};
+import { formatEducationalLevel } from "./displayFormat";
 
 /**
  * Display corrections for known typos in the published catalog titles. The
@@ -16,6 +10,8 @@ const levelLabels: Record<TrainingProgram["level"], string> = {
 const PROGRAM_TITLE_CORRECTIONS: ReadonlyArray<readonly [RegExp, string]> = [
   [/\bhibridos\b/giu, "híbridos"],
   [/\bWEB\b/gu, "Web"],
+  [/\bGuia\b/gu, "Guía"],
+  [/\bfloristeria\b/giu, "floristería"],
 ];
 
 export function formatProgramTitle(value: string): string {
@@ -25,8 +21,9 @@ export function formatProgramTitle(value: string): string {
   );
 }
 
+/** Citizen-facing educational level in sentence-style casing. */
 export function trainingLevelLabel(level: TrainingProgram["level"]): string {
-  return levelLabels[level];
+  return formatEducationalLevel(level);
 }
 
 export function featuredTrainingCoverage(

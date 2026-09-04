@@ -411,7 +411,7 @@ describe("HomePage proof rail (runtime derived)", () => {
     );
 
     const rail = await screen.findByRole("region", {
-      name: "Datos del catálogo en la copia actual",
+      name: "Datos y actualización de la copia activa",
     });
     expect(within(rail).getByText("ciclos oficiales")).toBeVisible();
     await waitFor(() =>
@@ -430,9 +430,9 @@ describe("HomePage proof rail (runtime derived)", () => {
       ),
     );
     expect(within(rail).getByText(/evidencia generada el/u)).toBeVisible();
-    expect(within(rail).getAllByText("4 ago 2026")).toHaveLength(3);
+    expect(within(rail).getAllByText("4 de agosto de 2026")).toHaveLength(3);
     expect(
-      screen.getByText(/Copia activa generada el 4 ago 2026/u),
+      screen.getByText(/Copia activa generada el 4 de agosto de 2026/u),
     ).toBeVisible();
     expect(
       screen.getByText(/cada cifra indica la fecha de su propia fuente/u),
@@ -486,7 +486,7 @@ describe("HomePage proof rail (runtime derived)", () => {
     );
 
     const rail = screen.getByRole("region", {
-      name: "Datos del catálogo en la copia actual",
+      name: "Datos y actualización de la copia activa",
     });
     expect(within(rail).getAllByText("…")).toHaveLength(3);
     resolveEvidence(
@@ -580,7 +580,7 @@ describe("HomePage freshness and lifecycle", () => {
         name: "Fecha de relaciones revisadas",
       }),
     ).toHaveTextContent(
-      "Relaciones revisadas · fuente actualizada el 31 jul 2026",
+      "Relaciones revisadas · fuente actualizada el 31 de julio de 2026",
     );
   });
 
@@ -607,7 +607,7 @@ describe("HomePage freshness and lifecycle", () => {
       name: "Fecha de ofertas laborales",
     });
     expect(freshness).toHaveTextContent(
-      "Ofertas laborales · fuente actualizada el 31 jul 2026",
+      "Ofertas laborales · fuente actualizada el 31 de julio de 2026",
     );
   });
 

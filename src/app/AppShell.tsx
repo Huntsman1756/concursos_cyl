@@ -3,6 +3,7 @@ import { Link, NavLink, useLocation } from "react-router-dom";
 
 import { RouteReadyProvider } from "./RouteReady";
 import { titleForPathname } from "./routeTitles";
+import { useRouteScrollFocus } from "./useRouteScrollFocus";
 import "../styles/global.css";
 import "../styles/visualRefresh.css";
 import "../styles/salida.css";
@@ -76,6 +77,8 @@ export function AppShell({ children }: AppShellProps) {
   ].join("|");
   const previousLocationSignature = useRef(locationSignature);
   const [menuOpen, setMenuOpen] = useState(false);
+
+  useRouteScrollFocus(mainRef);
 
   useEffect(() => {
     document.title = titleForPathname(location.pathname);
