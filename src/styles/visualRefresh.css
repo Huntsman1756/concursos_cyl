@@ -398,9 +398,8 @@ summary:focus-visible {
   font-size: var(--text-sm);
 }
 
-/* In-page section navigation ("En esta página"). Deliberately NOT styled as
-   tabs: these are anchor links that scroll the same page, so they render as
-   a compact labelled link list with an in-view marker, not tab panels. */
+/* In-page section navigation ("En esta página"): anchor links that scroll
+   the same page, rendered as a labelled link list — deliberately NOT tabs. */
 .result-section-nav {
   min-width: 0;
   margin: 0 0 var(--space-5);
@@ -768,9 +767,9 @@ summary:focus-visible {
   cursor: pointer;
 }
 
-/* Related-training result card. A restrained card (hairline border, paper
-   surface) instead of a table-like bordered row: information first, then a
-   compact action column with availability, CTA and evidence disclosure. */
+/* Related-training result card: a restrained card (hairline border, paper
+   surface) instead of a table-like row — info first, then availability, CTA
+   and evidence disclosure. */
 .route-card {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(13rem, auto);
@@ -868,10 +867,6 @@ summary:focus-visible {
 
 /* Text-triggered evidence disclosure inside route cards: a quiet pill that
    reads as "there is a source behind this", not as a floating info icon. */
-.route-card .evidence-disclosure {
-  margin-top: var(--space-1);
-}
-
 .route-card .info-disclosure > summary {
   min-height: 2.25rem;
 }
@@ -915,11 +910,7 @@ summary:focus-visible {
 }
 
 @media (max-width: 47.999rem) {
-  .info-disclosure--text-trigger > summary {
-    white-space: normal;
-    text-align: left;
-  }
-
+  .info-disclosure--text-trigger > summary,
   .info-disclosure__trigger-text {
     white-space: normal;
   }

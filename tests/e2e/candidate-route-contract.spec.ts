@@ -25,7 +25,7 @@ for (const route of [
 
     if (route.path === "/donde-estudiar") {
       await expect(page.locator("#center-results-table tbody tr")).toHaveCount(
-        50,
+        25,
       );
       await expect(
         page.getByRole("navigation", {

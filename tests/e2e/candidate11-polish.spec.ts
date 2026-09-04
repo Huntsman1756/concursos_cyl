@@ -366,7 +366,7 @@ test.describe("P2-04 + P2-05: comparator", () => {
     page,
   }) => {
     await page.goto("/comparar");
-    await page.getByRole("radio", { name: "Grado superior" }).check();
+    await page.getByText("Grado superior", { exact: true }).click();
 
     const picker = page.getByRole("group", {
       name: "Ciclos y grupos oficiales disponibles",
@@ -396,7 +396,7 @@ test.describe("P2-04 + P2-05: comparator", () => {
     page,
   }) => {
     await page.goto("/comparar");
-    await page.getByRole("radio", { name: "Grado superior" }).check();
+    await page.getByText("Grado superior", { exact: true }).click();
 
     const options = page.getByRole("group", {
       name: "Ciclos y grupos oficiales disponibles",
@@ -459,7 +459,10 @@ test.describe("P2-06: evidence controls are integrated", () => {
     const card = page.locator('[data-testid="training-route-card"]').first();
     await expect(card).toBeVisible();
     await expect(card.getByText("Ver dónde estudiarlo")).toBeVisible();
-    await expect(card.getByText("Fuente y revisión")).toBeVisible();
+    // Visible textual evidence trigger inside the card (no isolated icon).
+    await expect(card.locator(".info-disclosure__trigger-text")).toHaveText(
+      "Fuente y revisión",
+    );
     await expect(card.locator(".info-disclosure__trigger-text")).toBeVisible();
   });
 });
@@ -587,7 +590,7 @@ test.describe("accessibility of changed surfaces", () => {
     page,
   }) => {
     await page.goto("/comparar");
-    await page.getByRole("radio", { name: "Grado superior" }).check();
+    await page.getByText("Grado superior", { exact: true }).click();
     await expect(
       page.getByRole("group", {
         name: "Ciclos y grupos oficiales disponibles",

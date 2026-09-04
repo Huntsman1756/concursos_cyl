@@ -174,8 +174,7 @@ select:focus-visible,
 
 /* Route-level loading pattern: preserves the rough geometry of the page that
    will replace it. One pulsing surface (disabled under reduced motion), a
-   visible status line and aria-busy semantics. Decorative blocks are
-   aria-hidden; no shimmer element per block. */
+   visible status line and aria-busy semantics. */
 .route-loading {
   padding-block: var(--space-7);
 }
@@ -277,8 +276,8 @@ select:focus-visible,
 /* ------------------------------------------------- fragment destinations */
 
 /* Anchor targets focused programmatically after a fragment jump are scroll
-   feedback, not interactive controls: no giant outline around the section.
-   Keyboard flow continues inside the section via its real links. */
+   feedback, not interactive controls: no giant section outline. Keyboard
+   flow continues inside the section via its real links. */
 .page-content [tabindex="-1"]:focus {
   outline: none;
 }
@@ -570,9 +569,8 @@ select:focus-visible,
 }
 
 /* task selector (tabs semantics) — one enclosing segmented surface, not
-   three contiguous buttons: tinted track, inset segments, white active pill
-   with a primary indicator. Active state is geometry + color, never color
-   alone; focus-visible ring is independent from selection. */
+   three contiguous buttons: tinted track, white active pill with a primary
+   indicator (geometry + color, never color alone). */
 
 .task-selector {
   margin: var(--space-6) 0 0;
@@ -808,20 +806,12 @@ select:focus-visible,
 
 @media (min-width: 1080px) {
   .hero-stage {
-    /* Stable explicit geometry, decoupled from the neighbouring form panel:
-       selecting a profession or changing tabs must never stretch the photo.
-       4/5 matches the long-established rendered proportion of this stage. */
+    /* Fixed geometry decoupled from the form panel: selection and tab
+       changes never stretch the photo. 4/5 matches the established
+       rendered proportion of this stage. */
     align-self: start;
     aspect-ratio: 4 / 5;
     border-radius: 0;
-    overflow: hidden;
-  }
-
-  .hero-stage::before {
-    content: "";
-    position: absolute;
-    inset: 0 0 0 0;
-    border-radius: var(--radius-medium);
     overflow: hidden;
   }
 
