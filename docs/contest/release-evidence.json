@@ -1,7 +1,7 @@
 {
   "schemaVersion": 2,
   "status": "verified",
-  "recordedAt": "2026-09-04T12:15:00.000Z",
+  "recordedAt": "2026-09-04T14:55:00.000Z",
   "expectedRootUrl": "https://salida-cyl.157-90-22-40.sslip.io/",
   "auditHeadSha": null,
   "coverageSourceCommitSha": "36659e6a2e127630e72b14b8641504d5dbea7a9e",
@@ -22,7 +22,7 @@
   "releaseDisposition": {
     "occurred": true,
     "method": "script",
-    "methodNote": "El candidato se publicó con el tag anotado v2026.09.04-candidate.10, la GitHub Release correspondiente y un despliegue VPS ejecutado con scripts/release/deployVps.ps1; el despliegue no usa GitHub Actions, por lo que no existe run de workflow.",
+    "methodNote": "El candidato se publicó con el tag anotado v2026.09.04-candidate.10, la GitHub Release correspondiente y un despliegue VPS ejecutado con scripts/release/deployVps.ps1; el despliegue no usa GitHub Actions, por lo que no existe run de workflow. En cada gate, checkedCommitSha identifica el commit de producto certificado y executionCommitSha identifica el árbol confirmado exacto desde el que se ejecutó el comando; los gates de producto se ejecutaron sobre el checkout limpio de 4b67443c y los gates documentales se repitieron sobre el árbol documental c25e75bf107316f6ed0cf05a58f2ca56515be7a1, cuyo único sucesor de empaquetado es este registro.",
     "tagObjectSha": "ac5d9a8a961c4566c5bee65a565739c8176c0760",
     "humanGate": {
       "identityRecorded": false,
@@ -39,70 +39,80 @@
       "command": "npm exec -- tsx scripts/release/validateContestFreeze.ts",
       "checkedCommitSha": "4b67443c4cb1b29347eef38d751eb4f8d02cb2a9",
       "verifiedAt": "2026-09-04T11:42:14.532Z",
-      "note": "Ejecutado en Windows sobre el árbol del commit de publicación; el freeze de cobertura no cambió en el empaquetado documental."
+      "executionCommitSha": "4b67443c4cb1b29347eef38d751eb4f8d02cb2a9",
+      "note": "Ejecutado sobre el checkout limpio del commit de producto; el freeze de cobertura no cambió en el empaquetado documental."
     },
     "submissionPack": {
       "status": "passed",
       "command": "npm run contest:submission:check",
       "checkedCommitSha": "4b67443c4cb1b29347eef38d751eb4f8d02cb2a9",
-      "verifiedAt": "2026-09-04T11:42:20.335Z",
-      "note": "Ejecutado sobre el commit de producto y repetido sobre el árbol de empaquetado documental tras regenerar los documentos."
+      "verifiedAt": "2026-09-04T14:47:33.193Z",
+      "executionCommitSha": "c25e75bf107316f6ed0cf05a58f2ca56515be7a1",
+      "note": "Certifica el commit de producto; ejecutado sobre el árbol documental que contiene los documentos regenerados."
     },
     "evidenceManifest": {
       "status": "passed",
       "command": "npm exec -- tsx scripts/release/validateContestEvidenceManifest.ts",
       "checkedCommitSha": "4b67443c4cb1b29347eef38d751eb4f8d02cb2a9",
-      "verifiedAt": "2026-09-04T12:12:49.105Z",
+      "verifiedAt": "2026-09-04T14:47:33.981Z",
+      "executionCommitSha": "c25e75bf107316f6ed0cf05a58f2ca56515be7a1",
       "captureCount": 13,
-      "note": "Las 13 capturas se regeneraron contra el sitio público desplegado (commit 4b67443c) con contexto anónimo, Axe, overflow y diagnóstico de red/consola."
+      "note": "Las 13 capturas están vinculadas al commit de producto desplegado (localCommitSha y deployedCommitSha) y se validaron sobre el árbol documental con Axe, overflow y diagnóstico de red/consola."
     },
     "fullVitestCi": {
       "status": "passed",
       "command": "npm test -- --run --reporter=dot",
       "checkedCommitSha": "4b67443c4cb1b29347eef38d751eb4f8d02cb2a9",
-      "verifiedAt": "2026-09-04T11:40:35.000Z",
-      "note": "1330 pruebas superadas, 178 omitidas, 0 fallidas; hora de fin observada por el operador."
+      "verifiedAt": "2026-09-04T14:52:23.191Z",
+      "executionCommitSha": "c25e75bf107316f6ed0cf05a58f2ca56515be7a1",
+      "note": "Salida observada: 133 archivos de pruebas superados y 22 omitidos; 1330 pruebas superadas, 178 omitidas y 0 fallidas."
     },
     "playwright": {
       "status": "passed",
       "command": "npm run test:e2e:chromium",
       "checkedCommitSha": "4b67443c4cb1b29347eef38d751eb4f8d02cb2a9",
       "verifiedAt": "2026-09-04T11:41:38.000Z",
-      "note": "207 pruebas Chromium superadas, 1 omitida, 0 fallidas; hora de fin observada por el operador."
+      "executionCommitSha": "4b67443c4cb1b29347eef38d751eb4f8d02cb2a9",
+      "note": "207 pruebas Chromium superadas, 1 omitida, 0 fallidas, sobre el checkout limpio del commit de producto; hora de fin observada por el operador."
     },
     "lint": {
       "status": "passed",
       "command": "npm run lint",
       "checkedCommitSha": "4b67443c4cb1b29347eef38d751eb4f8d02cb2a9",
-      "verifiedAt": "2026-09-04T12:14:04.078Z",
-      "note": "El primer pase (11:34 UTC) falló por un cambio de maquinaria de evidencia en esta rama; corregido y vuelto a ejecutar con éxito."
+      "verifiedAt": "2026-09-04T14:47:40.337Z",
+      "executionCommitSha": "c25e75bf107316f6ed0cf05a58f2ca56515be7a1",
+      "note": "El primer pase (11:34 UTC) falló por un cambio de maquinaria de evidencia en esta rama; corregido y vuelto a ejecutar con éxito sobre el árbol documental."
     },
     "build": {
       "status": "passed",
       "command": "npm run build",
       "checkedCommitSha": "4b67443c4cb1b29347eef38d751eb4f8d02cb2a9",
       "verifiedAt": "2026-09-04T11:36:30.000Z",
-      "note": "Incluye release:candidate:verify (22 recursos, 116 registros SEPE); hora de fin observada por el operador."
+      "executionCommitSha": "4b67443c4cb1b29347eef38d751eb4f8d02cb2a9",
+      "note": "Incluye release:candidate:verify (22 recursos, 116 registros SEPE), sobre el checkout limpio del commit de producto; hora de fin observada por el operador."
     },
     "license": {
       "status": "passed",
       "command": "npm run license:check",
       "checkedCommitSha": "4b67443c4cb1b29347eef38d751eb4f8d02cb2a9",
       "verifiedAt": "2026-09-04T11:34:30.000Z",
-      "note": "363 entradas de paquetes dentro de la política; hora de fin observada por el operador."
+      "executionCommitSha": "4b67443c4cb1b29347eef38d751eb4f8d02cb2a9",
+      "note": "363 entradas de paquetes dentro de la política, sobre el checkout limpio del commit de producto; hora de fin observada por el operador."
     },
     "prettier": {
       "status": "passed",
       "command": "npm run format:check",
       "checkedCommitSha": "4b67443c4cb1b29347eef38d751eb4f8d02cb2a9",
-      "verifiedAt": "2026-09-04T12:13:41.952Z",
-      "note": "El árbol del commit de producto tenía un defecto de formato en analysis/final-scope-evidence/offer-dataset-scope.json; se aplicó una corrección solo de formato en la rama documental y la comprobación se volvió a ejecutar con éxito."
+      "verifiedAt": "2026-09-04T14:47:48.011Z",
+      "executionCommitSha": "c25e75bf107316f6ed0cf05a58f2ca56515be7a1",
+      "note": "El commit de producto tenía un defecto de formato en analysis/final-scope-evidence/offer-dataset-scope.json; la corrección solo de formato vive en la rama documental y el PASS registrado corresponde al árbol documental, no al árbol de producto."
     },
     "gitDiffCheck": {
       "status": "passed",
       "command": "git diff --check",
       "checkedCommitSha": "4b67443c4cb1b29347eef38d751eb4f8d02cb2a9",
-      "verifiedAt": "2026-09-04T12:13:01.492Z"
+      "verifiedAt": "2026-09-04T14:47:48.075Z",
+      "executionCommitSha": "c25e75bf107316f6ed0cf05a58f2ca56515be7a1"
     }
   },
   "deployment": {
