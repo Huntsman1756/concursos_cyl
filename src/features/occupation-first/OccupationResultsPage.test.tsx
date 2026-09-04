@@ -370,7 +370,7 @@ describe("occupation-first results", () => {
       ),
     ).toBeVisible();
     expect(
-      within(cards[0]).getByText("2 centros · Ávila, Valladolid"),
+      within(cards[0]).getByText("2 centros · 2 provincias"),
     ).toBeVisible();
     expect(cards[0]).toHaveTextContent("grado superior");
     expect(cards[0]).toHaveTextContent("IFC03S");
@@ -383,7 +383,7 @@ describe("occupation-first results", () => {
       screen.queryByText(/Datos formativos consultados/u),
     ).not.toBeInTheDocument();
     const sectionNavigation = screen.getByRole("navigation", {
-      name: "Secciones del resultado",
+      name: "Secciones de esta página",
     });
     expect(
       within(sectionNavigation).getByRole("link", {

@@ -36,36 +36,37 @@ export function TrainingRouteCard({
     offerings.map((offering) => offering.province),
   );
   const centerCodes = new Set(offerings.map((offering) => offering.centerCode));
+  const programTitle = formatProgramTitle(program.programTitle);
   return (
     <article
-      className="route-row"
+      className="route-card"
       data-testid="training-route-card"
-      aria-label={formatProgramTitle(program.programTitle)}
+      aria-label={programTitle}
     >
-      <div className="route-row__main">
-        <h3>
+      <div className="route-card__info">
+        <h3 className="route-card__title">
           <Link to={`/desde-fp/${encodeURIComponent(program.programKey)}`}>
-            {formatProgramTitle(program.programTitle)}
+            {programTitle}
           </Link>
         </h3>
-        <p className="route-row__meta">
+        <p className="route-card__meta">
           {trainingLevelLabel(program.level)}
-          <span className="route-row__code"> · {program.programKey}</span>
+          <span className="route-card__code"> · {program.programKey}</span>
         </p>
-        <p className="route-row__relationship">
+        <p className="route-card__relationship">
           {officialOutput
             ? "El perfil oficial del ciclo incluye esta salida profesional."
             : "Relación comprobada por competencias compartidas antes de publicarse."}
         </p>
       </div>
-      <div className="route-row__actions">
-        <p className="route-row__availability">
+      <div className="route-card__side">
+        <p className="route-card__availability">
           {centerCodes.size === 0
             ? "Sin centros publicados en esta copia"
-            : `${centerCodes.size} ${centerCodes.size === 1 ? "centro" : "centros"} · ${provinces.join(", ")}`}
+            : `${centerCodes.size} ${centerCodes.size === 1 ? "centro" : "centros"} · ${provinces.length} ${provinces.length === 1 ? "provincia" : "provincias"}`}
         </p>
         <Link
-          className="route-row__cta"
+          className="route-card__cta"
           to={contextualCentersPath(program.programKey)}
         >
           Ver dónde estudiarlo
@@ -76,6 +77,7 @@ export function TrainingRouteCard({
           reviewedAt={link.reviewedAt}
           mappingVersion={link.mappingVersion}
           label={`Fuente y revisión de la relación con ${program.programTitle}`}
+          trigger="Fuente y revisión"
         />
       </div>
     </article>

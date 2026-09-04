@@ -371,7 +371,7 @@ test("live DAW results shows formacion link and approved occupation", async ({
     }),
   ).toBeVisible();
   const sectionNavigation = page.getByRole("navigation", {
-    name: "Secciones del resultado",
+    name: "Secciones de esta página",
   });
   await expect(
     sectionNavigation.getByRole("link", { name: "Dónde estudiar" }),

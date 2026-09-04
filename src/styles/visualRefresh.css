@@ -398,45 +398,76 @@ summary:focus-visible {
   font-size: var(--text-sm);
 }
 
+/* In-page section navigation ("En esta página"). Deliberately NOT styled as
+   tabs: these are anchor links that scroll the same page, so they render as
+   a compact labelled link list with an in-view marker, not tab panels. */
 .result-section-nav {
-  margin: 0 0 clamp(2rem, 5vw, 3.5rem);
-  border-bottom: 1px solid var(--color-border);
+  min-width: 0;
+  margin: 0 0 var(--space-5);
+  padding: var(--space-3) var(--space-4);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-medium);
+  background: var(--color-surface-alt);
+}
+
+.result-section-nav__label {
+  margin: 0;
+  color: var(--color-text-muted);
+  font-size: var(--text-label);
+  font-weight: var(--text-label-weight);
+  letter-spacing: 0.02em;
 }
 
 .result-section-nav ul {
   display: flex;
+  min-width: 0;
   flex-wrap: wrap;
-  gap: 0 var(--space-5);
-  margin: 0;
+  gap: var(--space-1) var(--space-4);
+  margin: var(--space-1) 0 0;
   padding: 0;
   list-style: none;
 }
 
+.result-section-nav li {
+  display: flex;
+  min-width: 0;
+}
+
 .result-section-nav a {
   display: inline-flex;
-  min-height: var(--control-height);
+  min-height: 2.5rem;
   align-items: center;
-  padding: var(--space-3) var(--space-2);
+  max-width: 100%;
+  padding: var(--space-1) var(--space-2);
+  margin-inline: calc(var(--space-2) * -1);
   border: 0;
-  border-radius: var(--radius-control);
-  color: var(--color-text-muted);
+  border-radius: var(--radius-small);
+  color: var(--color-action-text);
   background: transparent;
-  font-size: var(--type-control);
-  font-weight: var(--type-control-weight);
-  text-decoration: none;
+  font-size: var(--text-small);
+  font-weight: 600;
+  overflow-wrap: anywhere;
+  text-decoration: underline;
+  text-decoration-color: transparent;
+  text-underline-offset: 0.2em;
+  transition: text-decoration-color var(--motion-fast) var(--ease-out);
 }
 
 /* In-page section links, not tabs: underline the section currently in view. */
 .result-section-nav a[aria-current="location"] {
   color: var(--color-primary-strong);
   font-weight: 700;
-  text-decoration: underline;
-  text-underline-offset: 0.2em;
+  text-decoration-color: currentcolor;
 }
 
 .result-section-nav a:hover {
   color: var(--color-primary-strong);
-  text-decoration: none;
+  text-decoration-color: currentcolor;
+}
+
+.result-section-nav a:focus-visible {
+  outline: none;
+  box-shadow: var(--focus-ring);
 }
 
 /* Occupation masthead: keep the evidence controls present but subordinate. */
@@ -471,22 +502,6 @@ summary:focus-visible {
 
 .occupation-result-page .result-section-nav {
   margin-bottom: var(--space-5);
-}
-
-.occupation-result-page .result-section-nav a {
-  min-height: var(--control-height);
-  align-items: center;
-  padding-inline: var(--space-2);
-  border: 0;
-  border-bottom: 2px solid transparent;
-  border-radius: 0;
-  background: transparent;
-  font-weight: 600;
-}
-
-.occupation-result-page .result-section-nav a:hover {
-  border-bottom-color: var(--color-primary);
-  text-decoration: none;
 }
 
 .outcomes-section,
@@ -604,11 +619,15 @@ summary:focus-visible {
 .training-route-list {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 0;
 }
 
 .offer-list {
+  gap: 0;
   border-top: 1px solid var(--color-border-strong);
+}
+
+.training-route-list {
+  gap: var(--space-4);
 }
 
 .training-result-page .offer-row {
@@ -646,8 +665,7 @@ summary:focus-visible {
   font-size: var(--text-sm);
 }
 
-.training-result-page .offer-row__actions,
-.training-result-page .route-row__actions {
+.training-result-page .offer-row__actions {
   display: flex;
   flex-wrap: wrap;
   justify-content: flex-end;
@@ -655,8 +673,7 @@ summary:focus-visible {
   align-items: center;
 }
 
-.training-result-page .offer-row__cta,
-.training-result-page .route-row__cta {
+.training-result-page .offer-row__cta {
   display: inline-flex;
   min-height: 2.75rem;
   align-items: center;
@@ -669,13 +686,6 @@ summary:focus-visible {
   font-size: var(--text-sm);
   font-weight: 700;
   text-decoration: none;
-}
-
-.training-result-page .route-row__cta {
-  color: var(--color-action-text);
-  font-size: var(--text-sm);
-  font-weight: 700;
-  text-underline-offset: 0.18em;
 }
 
 .training-result-page .offer-row__more {
@@ -758,44 +768,112 @@ summary:focus-visible {
   cursor: pointer;
 }
 
-.route-row {
+/* Related-training result card. A restrained card (hairline border, paper
+   surface) instead of a table-like bordered row: information first, then a
+   compact action column with availability, CTA and evidence disclosure. */
+.route-card {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
-  gap: var(--space-6);
+  grid-template-columns: minmax(0, 1fr) minmax(13rem, auto);
+  gap: var(--space-3) var(--space-6);
   align-items: start;
-  padding: var(--space-5) 0;
-  border-bottom: 1px solid var(--color-border);
-  border-radius: 0;
-  background: transparent;
-  box-shadow: none;
+  padding: var(--space-5);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-card);
+  background: var(--color-surface);
 }
 
-.route-row__main h3 {
+.route-card__info {
+  min-width: 0;
+}
+
+.route-card__title {
   margin: 0;
   font-size: var(--text-md);
+  line-height: 1.35;
 }
 
-.route-row__main h3 a {
+.route-card__title a {
   color: var(--color-text);
   text-decoration: underline;
+  text-decoration-thickness: 1px;
   text-underline-offset: 0.16em;
 }
 
-.route-row__meta,
-.route-row__relationship,
-.route-row__availability {
-  margin: var(--space-2) 0 0;
+.route-card__title a:hover {
+  color: var(--color-action-text);
+  text-decoration-thickness: 2px;
+}
+
+.route-card__meta {
+  margin: var(--space-1) 0 0;
   color: var(--color-text-muted);
-  font-size: var(--text-sm);
+  font-size: var(--text-small);
   line-height: 1.45;
 }
 
-.route-row__actions {
-  align-items: flex-end;
+.route-card__code {
+  color: var(--color-text-muted);
 }
 
-.route-row__cta {
+.route-card__relationship {
+  margin: var(--space-2) 0 0;
+  color: var(--color-text-muted);
+  font-size: var(--text-small);
+  line-height: 1.5;
+  max-width: var(--reading-max);
+}
+
+.route-card__side {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-2);
+  min-width: 0;
+}
+
+.route-card__availability {
+  margin: 0;
+  color: var(--color-text-muted);
+  font-size: var(--text-small);
+  line-height: 1.45;
+}
+
+.route-card__cta {
+  display: inline-flex;
+  min-height: 2.75rem;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  padding: 0.5rem 1rem;
+  border: 1px solid var(--color-primary);
+  border-radius: var(--radius-small);
+  background: var(--color-primary);
+  color: var(--color-surface);
+  font-size: var(--text-small);
+  font-weight: var(--text-label-weight);
+  text-decoration: none;
   white-space: nowrap;
+}
+
+.route-card__cta:hover {
+  border-color: var(--color-primary-strong);
+  background: var(--color-primary-strong);
+  color: var(--color-surface);
+}
+
+.route-card__cta:focus-visible {
+  outline: none;
+  box-shadow: var(--focus-ring);
+}
+
+/* Text-triggered evidence disclosure inside route cards: a quiet pill that
+   reads as "there is a source behind this", not as a floating info icon. */
+.route-card .evidence-disclosure {
+  margin-top: var(--space-1);
+}
+
+.route-card .info-disclosure > summary {
+  min-height: 2.25rem;
 }
 
 .info-disclosure {
@@ -819,6 +897,32 @@ summary:focus-visible {
   background: var(--color-surface);
   cursor: pointer;
   list-style: none;
+}
+
+/* Text-trigger variant: icon plus a short visible label ("Fuente y revisión").
+   Keeps the popover behaviour while making the control discoverable without
+   relying on a lone icon. */
+.info-disclosure--text-trigger > summary {
+  width: auto;
+  gap: var(--space-1);
+  padding: 0 var(--space-3);
+  font-size: var(--text-small);
+  font-weight: 600;
+}
+
+.info-disclosure__trigger-text {
+  white-space: nowrap;
+}
+
+@media (max-width: 47.999rem) {
+  .info-disclosure--text-trigger > summary {
+    white-space: normal;
+    text-align: left;
+  }
+
+  .info-disclosure__trigger-text {
+    white-space: normal;
+  }
 }
 
 .info-disclosure > summary::-webkit-details-marker,
@@ -1082,8 +1186,22 @@ summary:focus-visible {
   .training-page__summary,
   .result-summary,
   .training-result-page .offer-row__main,
-  .route-row {
+  .route-card {
     grid-template-columns: 1fr;
+  }
+
+  /* Route card stacks on mobile: info first, then availability, CTA and
+     evidence in one coherent column — no detached icon-only rows. */
+  .route-card {
+    padding: var(--space-4);
+  }
+
+  .route-card__side {
+    align-items: stretch;
+  }
+
+  .route-card__cta {
+    width: 100%;
   }
 
   .result-header__top {
@@ -1110,14 +1228,12 @@ summary:focus-visible {
     grid-row: auto;
   }
 
-  .training-result-page .offer-row__actions,
-  .route-row__actions {
+  .training-result-page .offer-row__actions {
     justify-content: flex-start;
     align-items: flex-start;
   }
 
-  .training-result-page .offer-row__cta,
-  .route-row__cta {
+  .training-result-page .offer-row__cta {
     width: 100%;
     justify-content: center;
   }

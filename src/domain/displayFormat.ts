@@ -107,6 +107,27 @@ export function capitalizeFirst(text: string): string {
   return text[0]!.toLocaleUpperCase("es-ES") + text.slice(1);
 }
 
+/**
+ * Citizen-facing occupation labels follow the sentence-style capitalization
+ * already used by the curated catalog ("diseñadores web y multimedia"). The
+ * official CNO-11 catalog occasionally capitalizes the generic common noun
+ * ("Web"); the correction is presentation-only: canonical data and search
+ * matching keep the raw official value.
+ */
+export function formatOccupationLabel(value: string): string {
+  return value.replace(/\bWeb\b/gu, "web");
+}
+
+/**
+ * Display form for offer titles inherited from source datasets. ALL-CAPS
+ * source titles become readable without destroying acronyms (ATS/DUE, FP,
+ * HTML…) or official abbreviations ("Ayto."); mixed-case titles are returned
+ * untouched. Raw literals are preserved for provenance and matching.
+ */
+export function formatOfferTitle(value: string): string {
+  return readableOfficialTitle(value);
+}
+
 const OFFICIAL_TITLE_STOPWORDS = new Set([
   "de",
   "del",
@@ -127,7 +148,19 @@ const OFFICIAL_TITLE_STOPWORDS = new Set([
 ]);
 
 /** Known acronyms that must survive title-casing of ALL-CAPS source titles. */
-const OFFICIAL_TITLE_ACRONYMS = new Set(["ats", "due", "sepe", "fp", "ssk"]);
+const OFFICIAL_TITLE_ACRONYMS = new Set([
+  "ats",
+  "due",
+  "sepe",
+  "fp",
+  "ssk",
+  "html",
+  "css",
+  "sql",
+  "xml",
+  "cno",
+  "boe",
+]);
 
 /**
  * Title-cases an ALL-CAPS official title without destroying acronyms:

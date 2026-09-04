@@ -167,4 +167,22 @@ describe("useRouteScrollFocus", () => {
       vi.unstubAllGlobals();
     }
   });
+
+  it("jumps to a hash target that only appears after the route data resolves", async () => {
+    const scrollIntoViewSpy = vi.fn();
+    // Direct load of a hashed URL: the fragment target does not exist yet.
+    setup("/inicio#datos");
+    await new Promise((resolve) => window.requestAnimationFrame(resolve));
+    const anchor = document.createElement("section");
+    anchor.id = "datos";
+    document.body.appendChild(anchor);
+    anchor.scrollIntoView = scrollIntoViewSpy;
+    await waitFor(
+      () => {
+        expect(scrollIntoViewSpy).toHaveBeenCalled();
+      },
+      { timeout: 3000 },
+    );
+    anchor.remove();
+  });
 });

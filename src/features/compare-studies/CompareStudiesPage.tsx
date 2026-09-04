@@ -19,6 +19,7 @@ import {
 } from "../../domain/outcomes";
 import { findTrainingOutcomeGroup } from "../../domain/trainingOutcomeMatching";
 import { ExternalLink } from "../../components/ExternalLink";
+import { LoadingSkeleton } from "../../components/LoadingSkeleton";
 import { PageEyebrow } from "../../components/PageEyebrow";
 import { PrintButton } from "../../components/PrintButton";
 import { useRouteReady } from "../../app/RouteReadyContext";
@@ -450,16 +451,17 @@ export function CompareStudiesPage() {
   if (state.status === "loading") {
     return (
       <section
-        className="compare-page compare-page--status"
-        aria-live="polite"
+        className="compare-page compare-page--status container"
+        aria-busy="true"
         aria-labelledby="compare-heading"
       >
         <h1 className="h1" id="compare-heading">
           Ingresos observados
         </h1>
-        <p role="status" aria-live="polite">
-          Cargando los datos de comparación…
-        </p>
+        <LoadingSkeleton
+          status="Cargando los datos de comparación…"
+          layout="page"
+        />
       </section>
     );
   }

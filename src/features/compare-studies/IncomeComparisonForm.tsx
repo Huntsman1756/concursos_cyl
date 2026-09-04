@@ -7,6 +7,11 @@ import type {
 } from "../../../data/schemas/outcomes";
 import { formatOutcomeLabel } from "./outcomePresentation";
 
+/** Initially visible cycle options before "Mostrar más" (page-flow list,
+    never an inner scroll area). */
+const GROUP_VISIBLE_STEP = 8;
+const GROUP_VISIBLE_INITIAL = 8;
+
 export interface IncomeComparisonFormProps {
   trainingLevel: OutcomeTrainingLevel | null;
   groups: readonly OutcomeGroup[];
@@ -61,6 +66,7 @@ export function IncomeComparisonForm({
   onPostGraduationYearChange,
 }: IncomeComparisonFormProps) {
   const [filterQuery, setFilterQuery] = useState("");
+  const [visibleLimit, setVisibleLimit] = useState(GROUP_VISIBLE_INITIAL);
   const selectedGroups = useMemo(
     () => new Set(selectedGroupKeys),
     [selectedGroupKeys],
@@ -90,6 +96,16 @@ export function IncomeComparisonForm({
       matchingCount: matchedCount,
     };
   }, [groups, queryTokens, selectedGroups]);
+  // Progressive disclosure instead of a nested scroll area: a limited number
+  // of options participate in normal page flow; selected groups are always
+  // rendered regardless of the current limit.
+  const allRendered = visibleGroups.groups.slice(0, visibleLimit);
+  const renderedKeys = new Set(allRendered.map((group) => group.groupKey));
+  const visibleEntries = visibleGroups.groups.filter(
+    (group) =>
+      renderedKeys.has(group.groupKey) || selectedGroups.has(group.groupKey),
+  );
+  const hiddenCount = visibleGroups.groups.length - visibleEntries.length;
   const currentStep =
     trainingLevel === null ? 1 : selectedGroupKeys.length === 0 ? 2 : 3;
 
@@ -176,7 +192,10 @@ export function IncomeComparisonForm({
               <input
                 type="search"
                 value={filterQuery}
-                onChange={(event) => setFilterQuery(event.target.value)}
+                onChange={(event) => {
+                  setFilterQuery(event.target.value);
+                  setVisibleLimit(GROUP_VISIBLE_INITIAL);
+                }}
                 placeholder="Escribe parte del nombre"
               />
             </label>
@@ -187,11 +206,10 @@ export function IncomeComparisonForm({
             </p>
             <div
               className="income-group-options"
-              tabIndex={0}
               role="group"
-              aria-label="Lista de ciclos y grupos oficiales con desplazamiento"
+              aria-label="Ciclos y grupos oficiales disponibles"
             >
-              {visibleGroups.groups.map((group) => {
+              {visibleEntries.map((group) => {
                 const checked = selectedGroups.has(group.groupKey);
                 return (
                   <label className="income-check" key={group.groupKey}>
@@ -213,6 +231,30 @@ export function IncomeComparisonForm({
                 </p>
               ) : null}
             </div>
+            {(hiddenCount > 0 || visibleLimit > GROUP_VISIBLE_INITIAL) && (
+              <div className="income-group-toggle">
+                {hiddenCount > 0 && (
+                  <button
+                    className="secondary-button"
+                    type="button"
+                    onClick={() =>
+                      setVisibleLimit((limit) => limit + GROUP_VISIBLE_STEP)
+                    }
+                  >
+                    Mostrar más ({hiddenCount})
+                  </button>
+                )}
+                {visibleLimit > GROUP_VISIBLE_INITIAL && (
+                  <button
+                    className="link-action"
+                    type="button"
+                    onClick={() => setVisibleLimit(GROUP_VISIBLE_INITIAL)}
+                  >
+                    Ver menos
+                  </button>
+                )}
+              </div>
+            )}
           </fieldset>
 
           <div className="income-form-grid">

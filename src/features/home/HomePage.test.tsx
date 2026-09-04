@@ -435,10 +435,9 @@ describe("HomePage proof rail (runtime derived)", () => {
       screen.getByText(/Copia activa generada el 4 de agosto de 2026/u),
     ).toBeVisible();
     expect(
-      screen.getByText(/cada cifra indica la fecha de su propia fuente/u),
+      screen.getByText(/cada cifra indica la fecha de su propia fuente/iu),
     ).toBeVisible();
   });
-
   it("marks the reviewed-offer stat as busy while the evidence loads", async () => {
     const manifest = relationshipAwareManifest();
     let resolveEvidence!: (response: Response) => void;

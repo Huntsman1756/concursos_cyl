@@ -10,6 +10,7 @@ import { Breadcrumbs } from "../../components/Breadcrumbs";
 import { ExternalLink } from "../../components/ExternalLink";
 import { Icon } from "../../components/Icon";
 import { InfoDisclosure } from "../../components/InfoDisclosure";
+import { LoadingSkeleton } from "../../components/LoadingSkeleton";
 import { PageEyebrow } from "../../components/PageEyebrow";
 import { useRouteReady } from "../../app/RouteReadyContext";
 import {
@@ -30,10 +31,14 @@ import {
   sortOfferEvidenceRecords,
 } from "../../domain/offerEvidence";
 import { formatProgramTitle } from "../../domain/trainingPresentation";
-import { longDate } from "../../domain/displayFormat";
+import {
+  formatOfferTitle,
+  formatOccupationLabel,
+  longDate,
+} from "../../domain/displayFormat";
 import "./offerExplorer.css";
 
-const PAGE_SIZE = 12;
+const PAGE_SIZE = 10;
 
 const STATUS_OPTIONS: Array<OfferEvidenceStatus | "all"> = [
   "all",
@@ -268,7 +273,7 @@ function OfferRow({
       <div className="offer-row__body">
         <div className="offer-row__content">
           <h3 className="offer-row__title">
-            <span>{record.title}</span>
+            <span>{formatOfferTitle(record.title)}</span>
           </h3>
           <p className="offer-row__meta">
             {location !== null ? `${location} · ` : ""}
@@ -287,7 +292,10 @@ function OfferRow({
             Ver oferta oficial
             <Icon name="external-link" size={16} />
           </ExternalLink>
-          <InfoDisclosure label={`Ver trazabilidad de ${record.title}`}>
+          <InfoDisclosure
+            label={`Fuente y revisión de ${record.title}`}
+            trigger="Fuente y revisión"
+          >
             <TraceabilityContent record={record} />
           </InfoDisclosure>
         </div>
@@ -331,10 +339,10 @@ function contextLabel(context: OfferContext): string {
 
 function contextIntro(context: OfferContext): string {
   if (context.kind === "program") {
-    return "Ofertas de la copia actual cuya relación con este ciclo está documentada.";
+    return "Ofertas de la copia activa cuya relación con este ciclo está documentada.";
   }
   if (context.kind === "occupation") {
-    return "Ofertas de la copia actual relacionadas con esta profesión mediante relaciones revisadas.";
+    return "Ofertas de la copia activa relacionadas con esta profesión mediante relaciones revisadas.";
   }
   return "Copia de ofertas publicadas por la Junta de Castilla y León. Cuando una oferta tiene una formación relacionada comprobada, te lo indicamos.";
 }
@@ -452,7 +460,7 @@ export function OfferExplorerPage({
             context: {
               kind: "occupation" as const,
               occupationId: occupation.occupationId,
-              occupationLabel: occupation.preferredLabel,
+              occupationLabel: formatOccupationLabel(occupation.preferredLabel),
               classificationCode: occupation.classificationCode,
             },
           };
@@ -593,9 +601,9 @@ export function OfferExplorerPage({
 
   if (state.status === "loading") {
     return (
-      <p role="status" aria-live="polite">
-        Cargando las ofertas…
-      </p>
+      <section className="container offer-explorer" aria-busy="true">
+        <LoadingSkeleton status="Cargando las ofertas…" layout="results" />
+      </section>
     );
   }
   if (state.status === "failed") {

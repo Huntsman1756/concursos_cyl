@@ -5,6 +5,7 @@ import { Link, useParams, useSearchParams } from "react-router-dom";
 import type { TrainingProgram } from "../../../data/schemas/generated";
 import { Breadcrumbs } from "../../components/Breadcrumbs";
 import { ExternalLink } from "../../components/ExternalLink";
+import { LoadingSkeleton } from "../../components/LoadingSkeleton";
 import { PageEyebrow } from "../../components/PageEyebrow";
 import { useRouteReady } from "../../app/RouteReadyContext";
 import {
@@ -33,7 +34,7 @@ type Foundation = LoadedFoundationResourceSubset<
   "programs" | "centers" | "trainingOfferings"
 >;
 
-const GLOBAL_PAGE_SIZE = 50;
+const GLOBAL_PAGE_SIZE = 25;
 
 const FILTER_PARAMS = [
   "query",
@@ -422,10 +423,11 @@ export function CentersExplorerPage(): JSX.Element {
 
   if (state.status === "loading") {
     return (
-      <div className="container page-header">
-        <p role="status" aria-live="polite">
-          Cargando la oferta formativa…
-        </p>
+      <div className="container catalog-page" aria-busy="true">
+        <LoadingSkeleton
+          status="Cargando la oferta formativa…"
+          layout="table"
+        />
       </div>
     );
   }
@@ -505,7 +507,7 @@ export function CentersExplorerPage(): JSX.Element {
           </h1>
           <p className="page-subcopy page-lede">
             {contextual
-              ? `Los centros que publican este ciclo en la copia actual. Comprueba la oferta y las fechas en la fuente oficial.`
+              ? `Los centros que publican este ciclo en la copia activa. Comprueba la oferta y las fechas en la fuente oficial.`
               : "Busca ciclos y centros de formación publicados en Castilla y León. La oferta puede cambiar según la convocatoria."}
           </p>
           <p className="caption" style={{ marginTop: "var(--space-2)" }}>

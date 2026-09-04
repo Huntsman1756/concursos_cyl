@@ -274,21 +274,25 @@
   box-shadow: var(--focus-ring);
 }
 
+/* Option list participates in normal page flow: no inner max-height, no
+   nested scrollbar. A "Mostrar más" control discloses further matches. */
 .income-group-options {
   display: grid;
   gap: var(--space-2);
   max-width: 46rem;
-  max-height: 20rem;
   padding: var(--space-2);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-sm);
   background: var(--color-surface-subtle, var(--color-surface));
-  overflow-y: auto;
 }
 
-.income-group-options:focus-visible {
-  outline: none;
-  box-shadow: var(--focus-ring);
+.income-group-toggle {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  align-items: center;
+  max-width: 46rem;
+  margin-top: var(--space-3);
 }
 
 .income-check {
@@ -645,10 +649,6 @@
   .income-level-options,
   .income-form-grid {
     grid-template-columns: 1fr;
-  }
-
-  .income-group-options {
-    max-height: 18rem;
   }
 
   .income-series-list,

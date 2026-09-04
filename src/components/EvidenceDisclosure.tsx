@@ -9,6 +9,8 @@ interface EvidenceDisclosureProps {
   reviewedAt?: string;
   mappingVersion?: string;
   label?: string;
+  /** Visible trigger text ("Fuente y revisión"); icon-only when omitted. */
+  trigger?: string;
 }
 
 function spanishDate(value: string): string {
@@ -28,9 +30,14 @@ export function EvidenceDisclosure({
   reviewedAt,
   mappingVersion,
   label = "Ver información de origen y revisión",
+  trigger,
 }: EvidenceDisclosureProps) {
   return (
-    <InfoDisclosure className="evidence-disclosure" label={label}>
+    <InfoDisclosure
+      className="evidence-disclosure"
+      label={label}
+      trigger={trigger}
+    >
       <div className="evidence-disclosure__body">
         <blockquote className="evidence-disclosure__quote">{quote}</blockquote>
         <div className="evidence-metadata">

@@ -557,7 +557,7 @@ describe("TrainingResultsPage", () => {
       name: "Base de cotización observada de titulados",
     });
     const sectionNavigation = screen.getByRole("navigation", {
-      name: "Secciones del resultado",
+      name: "Secciones de esta página",
     });
     expect(sectionNavigation.querySelector("a")).toHaveAttribute(
       "href",

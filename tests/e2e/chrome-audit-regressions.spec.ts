@@ -40,7 +40,7 @@ test.describe("2026-09-04 Chrome audit regressions", () => {
     await expect(
       page.getByText("No hemos podido abrir las ofertas"),
     ).toHaveCount(0);
-    await expect(page.getByText(/1–12 de .* ofertas/u)).toBeVisible();
+    await expect(page.getByText(/1–10 de .* ofertas/u)).toBeVisible();
 
     // Reload must not degrade into the fail-closed surface.
     await page.reload();
@@ -167,11 +167,11 @@ test.describe("2026-09-04 Chrome audit regressions", () => {
   }) => {
     await page.setViewportSize({ width: 1252, height: 800 });
     await page.goto("/desde-oferta?query=cuidador");
-    await expect(page.getByText(/1–12 de /u)).toBeVisible();
+    await expect(page.getByText(/1–10 de /u)).toBeVisible();
     await page.evaluate(() => window.scrollTo(0, 400));
     await page.waitForTimeout(150);
     await page.getByLabel("Provincia").selectOption({ label: "Burgos" });
-    await expect(page.getByText(/1–12 de /u)).toBeVisible();
+    await expect(page.getByText(/1–10 de /u)).toBeVisible();
     await page.waitForTimeout(150);
     expect(await page.evaluate(() => window.scrollY)).toBeGreaterThanOrEqual(
       300,

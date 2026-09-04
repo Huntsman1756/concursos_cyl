@@ -11,6 +11,10 @@
   max-width: var(--reading-max);
 }
 
+.resources-page__copy-date {
+  margin-top: var(--space-2);
+}
+
 .resources-page__intro h1 {
   max-width: var(--reading-max);
 }

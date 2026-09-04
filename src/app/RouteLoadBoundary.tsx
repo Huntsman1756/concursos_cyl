@@ -1,5 +1,7 @@
 import { Component, type ReactNode } from "react";
 
+import { LoadingSkeleton } from "../components/LoadingSkeleton";
+
 interface RouteLoadBoundaryProps {
   children: ReactNode;
   onRetry?: () => void;
@@ -56,8 +58,12 @@ export class RouteLoadBoundary extends Component<
 
 export function RouteLoadingFallback() {
   return (
-    <div role="status" aria-live="polite" className="loading-fallback">
-      Cargando...
+    <div className="container route-loading">
+      <LoadingSkeleton
+        status="Cargando la página…"
+        layout="page"
+        className="route-loading__skeleton"
+      />
     </div>
   );
 }

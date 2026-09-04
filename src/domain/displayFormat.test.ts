@@ -3,6 +3,8 @@ import { describe, expect, it } from "vitest";
 import {
   capitalizeFirst,
   formatEducationalLevel,
+  formatOfferTitle,
+  formatOccupationLabel,
   longDate,
   longDateFromCalendarDay,
   parseDateValue,
@@ -105,5 +107,53 @@ describe("capitalizeFirst", () => {
   it("uppercases only the first letter", () => {
     expect(capitalizeFirst("grado medio")).toBe("Grado medio");
     expect(capitalizeFirst("")).toBe("");
+  });
+});
+
+describe("formatOccupationLabel", () => {
+  it("normalizes the generic common noun Web to sentence-style lowercase", () => {
+    // Official CNO-11 catalog literal (data/curated/official-occupations.json)
+    // capitalizes "Web"; the curated catalog and the selector use "web".
+    expect(
+      formatOccupationLabel(
+        "Analistas, programadores y diseñadores Web y multimedia",
+      ),
+    ).toBe("Analistas, programadores y diseñadores web y multimedia");
+  });
+
+  it("leaves already sentence-style labels untouched", () => {
+    expect(
+      formatOccupationLabel(
+        "Analistas, programadores y diseñadores web y multimedia",
+      ),
+    ).toBe("Analistas, programadores y diseñadores web y multimedia");
+  });
+
+  it("does not rewrite words that merely contain web", () => {
+    expect(formatOccupationLabel("Técnico en webmastering")).toBe(
+      "Técnico en webmastering",
+    );
+  });
+});
+
+describe("formatOfferTitle", () => {
+  it("reduces ALL-CAPS source titles to a readable display form", () => {
+    expect(formatOfferTitle("PEÓN DE ALMACÉN")).toBe("Peón de Almacén");
+  });
+
+  it("preserves real acronyms and official abbreviations", () => {
+    expect(formatOfferTitle("AYTO. DE BURGOS: ATS/DUE")).toBe(
+      "Ayto. de Burgos: ATS/DUE",
+    );
+    expect(formatOfferTitle("PROGRAMADOR HTML CSS SQL")).toBe(
+      "Programador HTML CSS SQL",
+    );
+    expect(formatOfferTitle("TÉCNICO FP DIGITALIZACIÓN")).toContain("FP");
+  });
+
+  it("leaves mixed-case titles untouched", () => {
+    expect(formatOfferTitle("Empleado administrativo de contabilidad")).toBe(
+      "Empleado administrativo de contabilidad",
+    );
   });
 });

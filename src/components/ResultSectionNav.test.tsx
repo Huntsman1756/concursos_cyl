@@ -16,9 +16,10 @@ describe("ResultSectionNav", () => {
     );
 
     const navigation = screen.getByRole("navigation", {
-      name: "Secciones del resultado",
+      name: "Secciones de esta página",
     });
     expect(navigation).toBeVisible();
+    expect(screen.getByText("En esta página", { selector: "p" })).toBeVisible();
     expect(screen.getByRole("link", { name: "Resumen" })).toHaveAttribute(
       "href",
       "#resumen",
@@ -29,7 +30,7 @@ describe("ResultSectionNav", () => {
     );
   });
 
-  it("exposes one active location and updates it on fragment selection", () => {
+  it("does not present a fake selected tab before navigation happens", () => {
     render(
       <ResultSectionNav
         links={[
@@ -41,12 +42,13 @@ describe("ResultSectionNav", () => {
 
     const summary = screen.getByRole("link", { name: "Resumen" });
     const centers = screen.getByRole("link", { name: "Centros" });
-    expect(summary).toHaveAttribute("aria-current", "location");
+    // Section links are not tabs: nothing is marked as the current location
+    // until the reader reaches that section.
+    expect(summary).not.toHaveAttribute("aria-current");
     expect(centers).not.toHaveAttribute("aria-current");
 
     fireEvent.click(centers);
 
-    expect(summary).not.toHaveAttribute("aria-current");
     expect(centers).toHaveAttribute("aria-current", "location");
   });
 
@@ -83,4 +85,24 @@ describe("ResultSectionNav", () => {
       expect(container).toBeEmptyDOMElement();
     },
   );
+
+  it("is never represented as a tablist", () => {
+    const { container } = render(
+      <ResultSectionNav
+        links={[
+          { href: "#resumen", label: "Resumen" },
+          { href: "#centros", label: "Centros" },
+        ]}
+      />,
+    );
+
+    expect(screen.queryByRole("tablist")).not.toBeInTheDocument();
+    expect(screen.queryByRole("tab")).not.toBeInTheDocument();
+    expect(container.querySelector("[role='tabpanel']")).toBeNull();
+    // In-page jump affordance: fragment hrefs, not panel switching.
+    expect(screen.getByRole("link", { name: "Centros" })).toHaveAttribute(
+      "href",
+      "#centros",
+    );
+  });
 });

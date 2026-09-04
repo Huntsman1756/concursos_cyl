@@ -146,18 +146,30 @@ describe("TrainingRoutePage", () => {
     );
 
     expect(
-      await screen.findByText("1–50 de 55 combinaciones de centro y ciclo"),
+      await screen.findByText("1–25 de 55 combinaciones de centro y ciclo"),
     ).toBeVisible();
     const pagination = screen.getByRole("navigation", {
       name: "Paginación de opciones formativas",
     });
     expect(pagination).toHaveAttribute("aria-controls", "center-results-table");
     expect(within(screen.getByRole("table")).getAllByRole("row")).toHaveLength(
-      51,
+      26,
     );
     expect(
       screen.getByRole("button", { name: "Página anterior" }),
     ).toBeDisabled();
+
+    await user.click(screen.getByRole("button", { name: "Página siguiente" }));
+
+    expect(
+      screen.getByText("26–50 de 55 combinaciones de centro y ciclo"),
+    ).toBeVisible();
+    expect(within(screen.getByRole("table")).getAllByRole("row")).toHaveLength(
+      26,
+    );
+    expect(screen.getByLabelText("Ubicación actual")).toHaveTextContent(
+      "?page=2",
+    );
 
     await user.click(screen.getByRole("button", { name: "Página siguiente" }));
 
@@ -171,7 +183,7 @@ describe("TrainingRoutePage", () => {
       screen.getByRole("button", { name: "Página siguiente" }),
     ).toBeDisabled();
     expect(screen.getByLabelText("Ubicación actual")).toHaveTextContent(
-      "?page=2",
+      "?page=3",
     );
   });
 

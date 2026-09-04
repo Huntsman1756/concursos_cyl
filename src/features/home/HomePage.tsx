@@ -754,9 +754,7 @@ export function HomePage() {
           )}
           {proof.generatedAt !== null && (
             <p className="caption" style={{ marginTop: "var(--space-2)" }}>
-              Valores calculados en el arranque de la página. Copia activa
-              generada el {formatDate(proof.generatedAt)}; cada cifra indica la
-              fecha de su propia fuente.
+              Copia activa generada el {formatDate(proof.generatedAt)}.
             </p>
           )}
         </div>
@@ -770,7 +768,7 @@ export function HomePage() {
                 Comprueba cómo funciona
               </h2>
               <p className="lede">
-                Un caso real del catálogo, de principio a fin, con su evidencia.
+                Un caso real del catálogo, de principio a fin.
               </p>
             </div>
             <ol className="example-flow">
@@ -811,7 +809,9 @@ export function HomePage() {
                     <Icon name="map-pin" size={20} />
                   </span>
                   <div>
-                    <p className="example-step-kind">Oferta actual</p>
+                    <p className="example-step-kind">
+                      Oferta de la copia consultada
+                    </p>
                     <h3 className="h3">{exampleOffer.title}</h3>
                     <p className="meta">{exampleOffer.meta}</p>
                   </div>

@@ -4,6 +4,7 @@ import type { LoadableGeneratedManifest } from "../../../data/schemas/generated"
 import type { Occupation } from "../../../data/schemas/curatedMappings";
 import { ExternalLink } from "../../components/ExternalLink";
 import { InfoDisclosure } from "../../components/InfoDisclosure";
+import { LoadingSkeleton } from "../../components/LoadingSkeleton";
 import { PrintButton } from "../../components/PrintButton";
 import { ResultSectionNav } from "../../components/ResultSectionNav";
 import {
@@ -15,6 +16,7 @@ import {
   type LoadedFoundationResourceSubset,
 } from "../../data/generatedDataClient";
 import { loadApprovedMappings } from "../../domain/occupation";
+import { formatOccupationLabel } from "../../domain/displayFormat";
 import { useRouteReady } from "../../app/RouteReadyContext";
 import { occupationOffersPath } from "../../app/routePaths";
 import { Breadcrumbs } from "../../components/Breadcrumbs";
@@ -108,9 +110,15 @@ export function OccupationResultsPage() {
 
   if (state.status === "loading") {
     return (
-      <p role="status" aria-live="polite">
-        Preparando las rutas revisadas…
-      </p>
+      <section
+        className="container training-page occupation-result-page"
+        aria-busy="true"
+      >
+        <LoadingSkeleton
+          status="Preparando las rutas revisadas…"
+          layout="detail"
+        />
+      </section>
     );
   }
   if (state.status === "failed") {
@@ -146,6 +154,7 @@ export function OccupationResultsPage() {
       </section>
     );
   }
+  const occupationLabel = formatOccupationLabel(occupation.preferredLabel);
 
   const missingPrograms = orderedLinks.filter(
     (link) =>
@@ -173,7 +182,7 @@ export function OccupationResultsPage() {
         items={[
           { label: "Inicio", to: "/" },
           { label: "Buscar profesión", to: "/desde-ocupacion" },
-          { label: occupation.preferredLabel },
+          { label: occupationLabel },
         ]}
       />
       <header className="training-page__header page-masthead">
@@ -185,7 +194,7 @@ export function OccupationResultsPage() {
           Buscar otra profesión
         </Link>
         <h1 className="h1" id="occupation-results-heading">
-          {occupation.preferredLabel}
+          {occupationLabel}
         </h1>
         <div className="training-page__meta">
           <span className="training-page__code">
@@ -240,7 +249,7 @@ export function OccupationResultsPage() {
           <p>
             Puedes buscar{" "}
             <Link to="/desde-oferta">
-              ofertas relacionadas en la copia actual
+              ofertas relacionadas en la copia activa
             </Link>{" "}
             o <Link to="/desde-ocupacion">probar con otra profesión</Link>.
           </p>

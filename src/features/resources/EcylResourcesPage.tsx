@@ -12,6 +12,7 @@ import {
   loadPublicEmploymentCalls,
 } from "../../data/generatedDataClient";
 import { ExternalLink } from "../../components/ExternalLink";
+import { LoadingSkeleton } from "../../components/LoadingSkeleton";
 import { PageEyebrow } from "../../components/PageEyebrow";
 import { useRouteReady } from "../../app/RouteReadyContext";
 import {
@@ -218,9 +219,19 @@ export function EcylResourcesPage() {
           Formación para seguir avanzando
         </h1>
         <p className="page-lede">
-          Consulta formación complementaria y convocatorias públicas abiertas.
-          Cada opción conserva su alcance y su fuente oficial.
+          Consulta formación complementaria y convocatorias que figuraban
+          abiertas en la copia consultada. Cada opción conserva su alcance y su
+          fuente oficial.
         </p>
+        {state.status === "ready" && state.publicCallsUpdatedAt !== null && (
+          <p className="caption resources-page__copy-date">
+            Copia de datos del{" "}
+            <time dateTime={state.publicCallsUpdatedAt}>
+              {displayDate(state.publicCallsUpdatedAt.slice(0, 10))}
+            </time>
+            . Comprueba el estado actual en cada fuente oficial.
+          </p>
+        )}
       </header>
 
       <div className="resources-filters">
@@ -257,9 +268,9 @@ export function EcylResourcesPage() {
       </div>
 
       {state.status === "loading" ? (
-        <p role="status" aria-live="polite">
-          Cargando recursos…
-        </p>
+        <div aria-busy="true">
+          <LoadingSkeleton status="Cargando recursos…" layout="page" />
+        </div>
       ) : null}
       {state.status === "error" ? (
         <p role="alert">No se han podido cargar estos recursos.</p>
@@ -360,7 +371,7 @@ export function EcylResourcesPage() {
                 {visibleCourses.length === 0 ? (
                   <p className="resource-empty-state">
                     {term === ""
-                      ? "No hay cursos publicados en la copia actual."
+                      ? "No hay cursos publicados en la copia activa."
                       : "No hay cursos que coincidan con tu búsqueda. Prueba con otro término, localidad o identificador."}
                   </p>
                 ) : (

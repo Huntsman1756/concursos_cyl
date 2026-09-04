@@ -190,7 +190,7 @@ describe("OfferExplorerPage", () => {
       .setup()
       .click(
         within(card).getByLabelText(
-          "Ver trazabilidad de COCINEROS, EN GENERAL",
+          "Fuente y revisión de COCINEROS, EN GENERAL",
         ),
       );
     expect(
@@ -277,7 +277,7 @@ describe("OfferExplorerPage", () => {
       within(card).getByRole("link", { name: /Ver oferta oficial/ }),
     ).toHaveAttribute("href", "https://example.com/physio-offer");
     await user.click(
-      within(card).getByLabelText("Ver trazabilidad de FISIOTERAPEUTAS"),
+      within(card).getByLabelText("Fuente y revisión de FISIOTERAPEUTAS"),
     );
     expect(
       within(card).getByText("Vía universitaria o regulada"),
@@ -433,9 +433,9 @@ describe("OfferExplorerPage", () => {
     );
 
     expect(
-      await screen.findByRole("heading", { name: "13–24 de 26 ofertas" }),
+      await screen.findByRole("heading", { name: "11–20 de 26 ofertas" }),
     ).toBeVisible();
-    expect(screen.getAllByRole("article")).toHaveLength(12);
+    expect(screen.getAllByRole("article")).toHaveLength(10);
     expect(
       screen.getByRole("navigation", { name: "Paginación de ofertas" }),
     ).toHaveAttribute("aria-controls", "offer-results-list");
@@ -452,9 +452,9 @@ describe("OfferExplorerPage", () => {
     await user.click(screen.getByRole("button", { name: "Página siguiente" }));
 
     expect(
-      screen.getByRole("heading", { name: "25–26 de 26 ofertas" }),
+      screen.getByRole("heading", { name: "21–26 de 26 ofertas" }),
     ).toBeVisible();
-    expect(screen.getAllByRole("article")).toHaveLength(2);
+    expect(screen.getAllByRole("article")).toHaveLength(6);
     expect(
       screen.getByRole("button", { name: "Página anterior" }),
     ).toBeEnabled();

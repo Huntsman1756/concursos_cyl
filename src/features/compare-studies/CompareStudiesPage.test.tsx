@@ -285,6 +285,10 @@ describe("CompareStudiesPage", () => {
     ).toBeVisible();
     await user.click(await screen.findByRole("radio", { name: "Grado medio" }));
     await user.click(screen.getByRole("checkbox", { name: "Grupo medio 1" }));
+    // The picker participates in normal page flow: further options arrive via
+    // progressive disclosure, not an inner scrollbar.
+    await user.click(screen.getByRole("button", { name: /Mostrar más/u }));
+    await user.click(screen.getByRole("button", { name: /Mostrar más/u }));
     await user.click(screen.getByRole("checkbox", { name: "Grupo medio 2" }));
     await user.click(screen.getByRole("checkbox", { name: "Grupo medio 3" }));
 
@@ -366,9 +370,7 @@ describe("CompareStudiesPage", () => {
     cleanup();
     installData({ stale: true });
     renderPage();
-    expect(await screen.findByRole("status")).toHaveTextContent(
-      /última copia disponible/i,
-    );
+    expect(await screen.findByText(/última copia disponible/iu)).toBeVisible();
   });
 
   it("disables years outside the selected observation window", async () => {

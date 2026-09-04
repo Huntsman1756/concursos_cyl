@@ -1,6 +1,6 @@
 import { describe, it, expect, vi } from "vitest";
 import { render, screen, fireEvent } from "@testing-library/react";
-import { RouteLoadBoundary } from "./RouteLoadBoundary";
+import { RouteLoadBoundary, RouteLoadingFallback } from "./RouteLoadBoundary";
 
 describe("RouteLoadBoundary", () => {
   it("renders children when there is no error", () => {
@@ -69,5 +69,22 @@ describe("RouteLoadBoundary", () => {
     const errorContainer = await screen.findByRole("status");
     expect(errorContainer).toBeInTheDocument();
     unmount();
+  });
+
+  it("renders a structured loading scaffold instead of a bare page", () => {
+    render(<RouteLoadingFallback />);
+
+    // Accessible status semantics live on the visible status line.
+    const status = screen.getByRole("status");
+    expect(status).toHaveTextContent("Cargando la página…");
+    expect(status).toHaveAttribute("aria-live", "polite");
+    // The scaffold region is marked busy and represents the final layout.
+    const scaffold = document.querySelector('[data-loading="true"]');
+    expect(scaffold).not.toBeNull();
+    expect(scaffold).toHaveAttribute("aria-busy", "true");
+    // Decorative surface, hidden from assistive tech; stable minimum height.
+    const surface = scaffold!.querySelector(".loading-skeleton__surface");
+    expect(surface).not.toBeNull();
+    expect(surface).toHaveAttribute("aria-hidden", "true");
   });
 });
