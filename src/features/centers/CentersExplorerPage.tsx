@@ -14,6 +14,7 @@ import {
 } from "../../data/generatedDataClient";
 import { globalCentersPath, trainingDetailPath } from "../../app/routePaths";
 import { buildGoogleMapsSearchUrl } from "../../domain/mapsUrl";
+import { formatProgramTitle } from "../../domain/trainingPresentation";
 import {
   buildCenterCatalogRows,
   facetCountsFor,
@@ -112,7 +113,9 @@ function CenterRow({
         )}
       </td>
       <td>
-        <Link to={trainingDetailPath(row.programKey)}>{row.programTitle}</Link>
+        <Link to={trainingDetailPath(row.programKey)}>
+          {formatProgramTitle(row.programTitle)}
+        </Link>
         <span className="cell-sub">
           {CENTER_FILTER_LABELS.level[row.level]} · {row.programKey}
         </span>
@@ -197,7 +200,7 @@ function CenterResultCard({
         </div>
         <div className="rcard-field">
           <p className="rcard-label">Ciclo</p>
-          <p className="rcard-value">{row.programTitle}</p>
+          <p className="rcard-value">{formatProgramTitle(row.programTitle)}</p>
           <p className="rcard-sub">{CENTER_FILTER_LABELS.level[row.level]}</p>
         </div>
         <div className="rcard-field">
@@ -469,7 +472,7 @@ export function CentersExplorerPage(): JSX.Element {
   const contextualProgram = state.program;
   const contextual = contextualProgram !== null;
   const heading = contextual
-    ? `Dónde estudiar ${contextualProgram.programTitle}`
+    ? `Dónde estudiar ${formatProgramTitle(contextualProgram.programTitle)}`
     : "Dónde estudiar";
 
   const modalityOptions = Object.entries(CENTER_FILTER_LABELS.modality).filter(
@@ -513,7 +516,7 @@ export function CentersExplorerPage(): JSX.Element {
               : "Busca ciclos y centros de formación publicados en Castilla y León. La oferta puede cambiar según la convocatoria."}
           </p>
           <p className="caption" style={{ marginTop: "var(--space-2)" }}>
-            Oferta formativa · snapshot del {formatDate(state.generatedAt)}
+            Oferta formativa · copia del {formatDate(state.generatedAt)}
           </p>
         </header>
 
@@ -525,6 +528,7 @@ export function CentersExplorerPage(): JSX.Element {
           onClick={() => setSheetOpen((open) => !open)}
         >
           Filtros
+          {hasFilters ? ` (${activeFilterKeys.length})` : ""}
         </button>
 
         <form
@@ -673,12 +677,12 @@ export function CentersExplorerPage(): JSX.Element {
           <p className="result-count" style={{ margin: 0 }}>
             {contextual
               ? `${centerCount} ${centerCount === 1 ? "centro publicado" : "centros publicados"}`
-              : `${firstVisibleResult}–${lastVisibleResult} de ${filteredRows.length} opciones formativas`}
+              : `${firstVisibleResult}–${lastVisibleResult} de ${filteredRows.length} ${filteredRows.length === 1 ? "combinación de centro y ciclo" : "combinaciones de centro y ciclo"}`}
           </p>
           <p className="caption" style={{ margin: 0 }}>
             {contextual
-              ? `${filteredRows.length} opciones formativas · ${provinceCount} provincias`
-              : `${centerCount} centros representados`}
+              ? `${filteredRows.length} ${filteredRows.length === 1 ? "combinación de centro y ciclo" : "combinaciones de centro y ciclo"} · ${provinceCount} provincias`
+              : `${centerCount} centros representados · ${state.foundation.trainingOfferings.length} opciones de centro y modalidad en la copia`}
           </p>
           {hasFilters && (
             <button
@@ -699,17 +703,6 @@ export function CentersExplorerPage(): JSX.Element {
               Prueba con otra búsqueda o quita algún filtro. La ausencia en esta
               copia no demuestra que no exista oferta.
             </p>
-            {hasFilters && (
-              <div className="method-actions">
-                <button
-                  className="button button--secondary"
-                  type="button"
-                  onClick={clearFilters}
-                >
-                  Quitar filtros
-                </button>
-              </div>
-            )}
           </div>
         ) : (
           <>

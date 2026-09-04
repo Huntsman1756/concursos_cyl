@@ -8,6 +8,23 @@ const levelLabels: Record<TrainingProgram["level"], string> = {
   specialization: "Curso de especialización",
 };
 
+/**
+ * Display corrections for known typos in the published catalog titles. The
+ * canonical source value stays untouched for matching and routes; only the
+ * presented text is corrected.
+ */
+const PROGRAM_TITLE_CORRECTIONS: ReadonlyArray<readonly [RegExp, string]> = [
+  [/\bhibridos\b/giu, "híbridos"],
+  [/\bWEB\b/gu, "Web"],
+];
+
+export function formatProgramTitle(value: string): string {
+  return PROGRAM_TITLE_CORRECTIONS.reduce(
+    (text, [pattern, replacement]) => text.replace(pattern, replacement),
+    value,
+  );
+}
+
 export function trainingLevelLabel(level: TrainingProgram["level"]): string {
   return levelLabels[level];
 }

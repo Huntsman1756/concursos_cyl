@@ -45,8 +45,14 @@ test("public resources expose the runtime open-call truth with provenance", asyn
 
   await page.goto("/recursos");
 
+  const expectedCallsHeading = await page.evaluate((copyDate) => {
+    const formatted = new Intl.DateTimeFormat("es-ES", {
+      dateStyle: "medium",
+    }).format(new Date(`${copyDate}T00:00:00Z`));
+    return `Empleo público abierto al ${formatted}`;
+  }, referenceDate);
   await expect(
-    page.getByRole("heading", { name: "Empleo público abierto ahora" }),
+    page.getByRole("heading", { name: expectedCallsHeading }),
   ).toBeVisible();
   await expect(
     page.getByRole("link", {

@@ -8,8 +8,6 @@ interface EvidenceDisclosureProps {
   sourceDate?: string;
   reviewedAt?: string;
   mappingVersion?: string;
-  parserRule?: string;
-  parserVersion?: string;
   label?: string;
 }
 
@@ -29,8 +27,6 @@ export function EvidenceDisclosure({
   sourceDate,
   reviewedAt,
   mappingVersion,
-  parserRule,
-  parserVersion,
   label = "Ver información de origen y revisión",
 }: EvidenceDisclosureProps) {
   return (
@@ -46,12 +42,6 @@ export function EvidenceDisclosure({
           )}
           {mappingVersion !== undefined && (
             <p>Versión de la relación: {mappingVersion}</p>
-          )}
-          {parserRule !== undefined && (
-            <p>Regla técnica de extracción: {parserRule}</p>
-          )}
-          {parserVersion !== undefined && (
-            <p>Versión de la extracción: {parserVersion}</p>
           )}
         </div>
         {sourceUrl !== undefined && (

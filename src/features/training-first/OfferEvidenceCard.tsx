@@ -144,10 +144,6 @@ function TraceabilityContent({
                     Publicada el{" "}
                     {shortDate(offer.sourceSnapshot.sourceUpdatedAt)}
                   </span>
-                  <span>
-                    Regla: {requirement.parserRule} · v
-                    {requirement.parserVersion}
-                  </span>
                 </p>
               </li>
             ))}

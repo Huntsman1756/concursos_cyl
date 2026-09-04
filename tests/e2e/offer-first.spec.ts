@@ -41,6 +41,32 @@ test("offer-first connects literal cooking evidence to a reviewed FP route", asy
   ).toBeVisible();
 });
 
+test("offer card actions share one stable axis across results on desktop", async ({
+  page,
+}, testInfo) => {
+  test.skip(
+    testInfo.project.name === "chromium-mobile",
+    "Mobile stacks content above actions by design.",
+  );
+  await page.setViewportSize({ width: 1267, height: 1044 });
+  await page.goto("/desde-oferta");
+  await expect(
+    page.getByRole("heading", { name: /de \d+ ofertas?/u }),
+  ).toBeVisible();
+  await page.locator(".offer-row").first().waitFor();
+
+  const rightEdges = await page.evaluate(() =>
+    Array.from(document.querySelectorAll(".offer-row .offer-row__actions"))
+      .slice(0, 12)
+      .map((actions) => {
+        const box = actions.getBoundingClientRect();
+        return Math.round(box.x + box.width);
+      }),
+  );
+  expect(rightEdges.length).toBeGreaterThanOrEqual(2);
+  expect(new Set(rightEdges).size).toBe(1);
+});
+
 test("offer-first keeps ambiguity and the university boundary explicit", async ({
   page,
 }) => {

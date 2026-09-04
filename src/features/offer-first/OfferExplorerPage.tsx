@@ -29,6 +29,7 @@ import {
   offerEvidenceCategoryLabel,
   sortOfferEvidenceRecords,
 } from "../../domain/offerEvidence";
+import { formatProgramTitle } from "../../domain/trainingPresentation";
 import "./offerExplorer.css";
 
 const PAGE_SIZE = 12;
@@ -76,6 +77,7 @@ type OfferExplorerState =
       status: "ready";
       records: OfferEvidenceRecord[];
       generatedAt: string;
+      offersSourceDate: string | null;
       context: OfferContext;
     };
 
@@ -179,7 +181,6 @@ function TraceabilityContent({ record }: { record: OfferEvidenceRecord }) {
                   <span>
                     Publicada el {formattedDate(requirement.sourceDate)}
                   </span>
-                  <span>Regla: {requirement.parserRule}</span>
                 </p>
               </li>
             ))}
@@ -201,7 +202,7 @@ function TraceabilityContent({ record }: { record: OfferEvidenceRecord }) {
                 key={`${relation.programKey}-${relation.occupationId}-${relation.matchRule}`}
               >
                 <p>
-                  <strong>{relation.programTitle}</strong> ·{" "}
+                  <strong>{formatProgramTitle(relation.programTitle)}</strong> ·{" "}
                   {relation.occupationLabel}
                 </p>
                 <blockquote>{relation.sourceQuote}</blockquote>
@@ -253,7 +254,7 @@ function RelatedTrainingLinks({
         {relations.map((relation) => (
           <li key={`${relation.programKey}-${relation.occupationId}`}>
             <Link to={trainingDetailPath(relation.programKey)}>
-              {relation.programTitle}
+              {formatProgramTitle(relation.programTitle)}
             </Link>
           </li>
         ))}
@@ -316,7 +317,7 @@ function breadcrumbItems(context: OfferContext) {
     { label: "Ofertas de empleo", to: globalOffersPath() },
     context.kind === "program"
       ? {
-          label: context.programTitle,
+          label: formatProgramTitle(context.programTitle),
           to: trainingDetailPath(context.programKey),
         }
       : {
@@ -329,7 +330,7 @@ function breadcrumbItems(context: OfferContext) {
 
 function contextLabel(context: OfferContext): string {
   if (context.kind === "program") {
-    return `Ofertas relacionadas con ${context.programTitle}`;
+    return `Ofertas relacionadas con ${formatProgramTitle(context.programTitle)}`;
   }
   if (context.kind === "occupation") {
     return `Ofertas relacionadas con ${context.occupationLabel}`;
@@ -384,6 +385,24 @@ export function OfferExplorerPage({
     void loadManifest(options)
       .then(async (manifest) => {
         const evidencePromise = loadOfferEvidence(manifest, options);
+        const jobOffersSnapshot = (
+          manifest as {
+            resourceSnapshots?: Partial<
+              Record<
+                "jobOffers",
+                {
+                  sourceUpdatedAt: string | null;
+                  snapshotFetchedAt: string;
+                }
+              >
+            >;
+          }
+        ).resourceSnapshots?.jobOffers;
+        const offersSourceDate =
+          jobOffersSnapshot === undefined
+            ? null
+            : (jobOffersSnapshot.sourceUpdatedAt ??
+              jobOffersSnapshot.snapshotFetchedAt);
         if (scope === "program") {
           if (programKey === undefined) {
             return {
@@ -407,6 +426,7 @@ export function OfferExplorerPage({
           return {
             kind: "ready" as const,
             resource,
+            offersSourceDate,
             context: {
               kind: "program" as const,
               programKey: program.programKey,
@@ -437,6 +457,7 @@ export function OfferExplorerPage({
           return {
             kind: "ready" as const,
             resource,
+            offersSourceDate,
             context: {
               kind: "occupation" as const,
               occupationId: occupation.occupationId,
@@ -448,6 +469,7 @@ export function OfferExplorerPage({
         return {
           kind: "ready" as const,
           resource: await evidencePromise,
+          offersSourceDate,
           context: { kind: "global" as const },
         };
       })
@@ -461,6 +483,7 @@ export function OfferExplorerPage({
           status: "ready",
           records: result.resource.records,
           generatedAt: result.resource.generatedAt,
+          offersSourceDate: result.offersSourceDate,
           context: result.context,
         });
       })
@@ -657,7 +680,16 @@ export function OfferExplorerPage({
           className="caption offer-explorer__freshness"
           style={{ marginTop: "var(--space-2)" }}
         >
-          Ofertas de empleo · snapshot de evidencia del{" "}
+          Ofertas de empleo
+          {state.offersSourceDate !== null && (
+            <>
+              {" · fuente actualizada el "}
+              <time dateTime={state.offersSourceDate}>
+                {formattedDate(state.offersSourceDate)}
+              </time>
+            </>
+          )}{" "}
+          · evidencia generada el{" "}
           <time dateTime={state.generatedAt}>
             {formattedDate(state.generatedAt)}
           </time>

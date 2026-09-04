@@ -257,7 +257,7 @@ export function OccupationResultsPage() {
               FP que te llevan a esta profesión
             </h2>
             <span>
-              Oferta formativa · snapshot consultado el{" "}
+              Oferta formativa · copia consultada el{" "}
               {spanishDate(snapshotInstant)}
             </span>
           </div>

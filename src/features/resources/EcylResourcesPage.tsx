@@ -277,7 +277,12 @@ export function EcylResourcesPage() {
             aria-labelledby="public-calls-heading"
           >
             <div className="resources-section-heading">
-              <h2 id="public-calls-heading">Empleo público abierto ahora</h2>
+              <h2 id="public-calls-heading">
+                Empleo público abierto al{" "}
+                {state.publicCallsReferenceDate !== null
+                  ? displayDate(state.publicCallsReferenceDate)
+                  : ""}
+              </h2>
               <span>
                 {openPublicCalls.length}{" "}
                 {openPublicCalls.length === 1
@@ -286,14 +291,17 @@ export function EcylResourcesPage() {
               </span>
             </div>
             <p className="resources-section-help">
-              Procesos con plazo publicado abierto en esta copia. Comprueba
-              siempre los requisitos completos antes de presentar la solicitud.
+              Clasificadas con los plazos publicados en esta copia: aparece una
+              convocatoria si su plazo de solicitud cubría la fecha de la copia.
+              El plazo puede haber cambiado desde entonces; comprueba siempre el
+              estado actual y los requisitos completos en la convocatoria
+              oficial.
             </p>
             {openPublicCalls.length === 0 ? (
               <p className="resource-empty-state">
-                Ninguna convocatoria de esta copia tiene hoy el plazo de
-                solicitud abierto. Los plazos publicados en la copia ya han
-                cerrado o todavía no empiezan; comprueba la fuente oficial por
+                Ninguna convocatoria de esta copia tiene el plazo de solicitud
+                abierto a la fecha de la copia. Los plazos publicados ya habían
+                cerrado o todavía no empezaban; comprueba la fuente oficial por
                 si se han publicado procesos nuevos.
               </p>
             ) : (

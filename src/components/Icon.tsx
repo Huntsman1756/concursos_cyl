@@ -11,8 +11,10 @@ import {
   FileCheck2,
   GraduationCap,
   Info,
+  MapPin,
   Menu,
   Printer,
+  School,
   Search,
   ShieldCheck,
   UserRoundX,
@@ -34,8 +36,10 @@ export type IconName =
   | "file-check"
   | "graduation-cap"
   | "info"
+  | "map-pin"
   | "menu"
   | "printer"
+  | "school"
   | "search"
   | "shield-check"
   | "user-round-x"
@@ -54,8 +58,10 @@ const icons: Record<IconName, LucideIcon> = {
   "file-check": FileCheck2,
   "graduation-cap": GraduationCap,
   info: Info,
+  "map-pin": MapPin,
   menu: Menu,
   printer: Printer,
+  school: School,
   search: Search,
   "shield-check": ShieldCheck,
   "user-round-x": UserRoundX,

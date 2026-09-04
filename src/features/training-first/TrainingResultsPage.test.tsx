@@ -1014,7 +1014,10 @@ describe("TrainingResultsPage", () => {
       }),
     ).toHaveAttribute("href", offer.sourceSnapshot.sourceUrl);
     expect(within(card).getByText(/Publicada el/)).toBeVisible();
-    expect(within(card).getByText(/Regla: license\.driving_b/u)).toBeVisible();
+    expect(within(card).queryByText(/Regla:/u)).not.toBeInTheDocument();
+    expect(
+      within(card).queryByText(/license\.driving_b/u),
+    ).not.toBeInTheDocument();
     expect(within(card).getByText(/Versión: 1\.0\.0/u)).toBeVisible();
 
     await user.click(

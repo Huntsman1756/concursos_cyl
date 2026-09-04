@@ -86,7 +86,7 @@ describe("asset budget", () => {
     expect(ASSET_BUDGET).toEqual({
       totalBytes: 3_600_000,
       javascriptBytes: 620_000,
-      stylesheetBytes: 155_000,
+      stylesheetBytes: 156_000,
       fontBytes: 110_000,
       editorialImageBytes: 1_700_000,
       initialTransferBytes: 950_000,

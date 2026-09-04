@@ -6,7 +6,10 @@ import type {
   ReliableAction,
   SessionChecklistItem,
 } from "../domain/actionEngine";
-import { trainingLevelLabel } from "../domain/trainingPresentation";
+import {
+  formatProgramTitle,
+  trainingLevelLabel,
+} from "../domain/trainingPresentation";
 import { contextualCentersPath } from "../app/routePaths";
 
 type ExploreUnpublishedRequirementAction = Extract<
@@ -95,7 +98,7 @@ export function ActionPanel({
                           className="action-link"
                           to={contextualCentersPath(routeProgramKey)}
                         >
-                          {program.programTitle},{" "}
+                          {formatProgramTitle(program.programTitle)},{" "}
                           {trainingLevelLabel(program.level)},{" "}
                           {program.programKey}
                         </Link>

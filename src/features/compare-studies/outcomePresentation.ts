@@ -50,12 +50,31 @@ export const OUTCOME_MEASURE_PRESENTATION: Readonly<
   },
 };
 
-/** Normalizes source casing for display without changing the source value. */
+/**
+ * Word-level display corrections for known defects in the Educabase source
+ * labels. The canonical snapshot value is never mutated; only the text we
+ * present is corrected, so matching and URLs keep using the raw value.
+ */
+const OUTCOME_ORTHOGRAPHY_CORRECTIONS: ReadonlyArray<
+  readonly [RegExp, string]
+> = [
+  [/\bcitodiagnostico\b/gu, "citodiagnóstico"],
+  [/\bclinico\b/gu, "clínico"],
+  [/\bfarmaceuticos\b/gu, "farmacéuticos"],
+  [/\bfarmaceutico\b/gu, "farmacéutico"],
+  [/\bradioterampia\b/gu, "radioterapia"],
+];
+
+/** Normalizes source casing and orthography for display, not the source value. */
 export function formatOutcomeLabel(value: string): string {
   const trimmed = value.trim().replace(/\s+/gu, " ");
   if (trimmed === "") return trimmed;
   const lower = trimmed.toLocaleLowerCase("es-ES");
-  const sentence = `${lower[0].toLocaleUpperCase("es-ES")}${lower.slice(1)}`;
+  const corrected = OUTCOME_ORTHOGRAPHY_CORRECTIONS.reduce(
+    (text, [pattern, replacement]) => text.replace(pattern, replacement),
+    lower,
+  );
+  const sentence = `${corrected[0].toLocaleUpperCase("es-ES")}${corrected.slice(1)}`;
   return sentence.replace(/\b(?:logse|fp|bim)\b/giu, (match) =>
     match.toLocaleUpperCase("es-ES"),
   );

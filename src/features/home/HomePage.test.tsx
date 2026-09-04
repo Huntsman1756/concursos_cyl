@@ -422,6 +422,21 @@ describe("HomePage proof rail (runtime derived)", () => {
     expect(within(rail).getByText("centros")).toBeVisible();
     // every value comes from the fixture runtime, never a hardcoded 187/138/229
     await waitFor(() => expect(within(rail).getAllByText("1")).toHaveLength(3));
+    // audit closure: each counter exposes its own dataset date instead of one
+    // global "copia activa" date that reads as the data date.
+    await waitFor(() =>
+      expect(within(rail).getAllByText(/fuente consultada el/u)).toHaveLength(
+        2,
+      ),
+    );
+    expect(within(rail).getByText(/evidencia generada el/u)).toBeVisible();
+    expect(within(rail).getAllByText("4 ago 2026")).toHaveLength(3);
+    expect(
+      screen.getByText(/Copia activa generada el 4 ago 2026/u),
+    ).toBeVisible();
+    expect(
+      screen.getByText(/cada cifra indica la fecha de su propia fuente/u),
+    ).toBeVisible();
   });
 
   it("marks the reviewed-offer stat as busy while the evidence loads", async () => {

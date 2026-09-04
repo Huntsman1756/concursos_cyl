@@ -7,7 +7,10 @@ import type {
 import type { TrainingOccupationLink } from "../../../data/schemas/curatedMappings";
 import { EvidenceDisclosure } from "../../components/EvidenceDisclosure";
 import { contextualCentersPath } from "../../app/routePaths";
-import { trainingLevelLabel } from "../../domain/trainingPresentation";
+import {
+  formatProgramTitle,
+  trainingLevelLabel,
+} from "../../domain/trainingPresentation";
 
 type Offering = LegacyTrainingOffering | TrainingOffering;
 
@@ -37,12 +40,12 @@ export function TrainingRouteCard({
     <article
       className="route-row"
       data-testid="training-route-card"
-      aria-label={program.programTitle}
+      aria-label={formatProgramTitle(program.programTitle)}
     >
       <div className="route-row__main">
         <h3>
           <Link to={`/desde-fp/${encodeURIComponent(program.programKey)}`}>
-            {program.programTitle}
+            {formatProgramTitle(program.programTitle)}
           </Link>
         </h3>
         <p className="route-row__meta">

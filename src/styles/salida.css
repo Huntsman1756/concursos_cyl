@@ -513,6 +513,23 @@ select:focus-visible,
 
 /* hero search panel */
 
+/* All intent panels share one grid cell so the panel block keeps the height
+   of the tallest panel. Switching tabs therefore never resizes the hero
+   image or moves the content below it; inactive panels stay in the layout
+   but are hidden from pointer, keyboard and assistive technology. */
+.task-panels {
+  display: grid;
+}
+
+.task-panels .hero-search {
+  grid-area: 1 / 1;
+  min-width: 0;
+}
+
+.hero-search[aria-hidden="true"] {
+  visibility: hidden;
+}
+
 .hero-search {
   margin-top: var(--space-3);
   padding: var(--space-4);
@@ -812,6 +829,12 @@ select:focus-visible,
   font-size: var(--text-small);
 }
 
+.proof-stat-date {
+  margin-top: var(--space-1);
+  color: var(--color-text-muted);
+  font-size: var(--text-caption);
+}
+
 .proof-note {
   align-self: center;
   padding-left: var(--space-4);
@@ -849,6 +872,18 @@ select:focus-visible,
 
 .info-button:hover {
   color: var(--color-primary-strong);
+}
+
+/* Open state must stay clearly perceptible on keyboard and touch. */
+.info-button[aria-expanded="true"] {
+  border-radius: 999px;
+  color: var(--color-surface);
+  background: var(--color-primary);
+}
+
+.info-button[aria-expanded="true"]:hover {
+  color: var(--color-surface);
+  background: var(--color-primary-strong);
 }
 
 .info-popover {
@@ -1171,8 +1206,10 @@ select:focus-visible,
   list-style: none;
 }
 
-.relation-row,
-.offer-row {
+/* Legacy relation-row list pattern. The modern .offer-row card defines its
+   own block layout (offerExplorer.css / visualRefresh.css) and must not be a
+   wrapping flex container: its inner content/action grid needs the full row. */
+.relation-row {
   display: flex;
   flex-wrap: wrap;
   align-items: baseline;
@@ -1181,8 +1218,7 @@ select:focus-visible,
   border-top: 1px solid var(--color-border);
 }
 
-.relation-list > li:first-child .relation-row,
-.offer-list > li:first-child .offer-row {
+.relation-list > li:first-child .relation-row {
   border-top: 0;
 }
 
@@ -1899,6 +1935,13 @@ select:focus-visible,
   color: var(--color-primary-strong);
   background: var(--color-primary-soft);
   text-decoration: none;
+}
+
+/* In-page section links, not tabs: mark the section currently in view. */
+.page-content .result-section-nav a[aria-current="location"] {
+  color: var(--color-primary-strong);
+  border-bottom-color: var(--color-primary);
+  font-weight: 700;
 }
 
 .page-content .result-section-nav a[aria-current="location"] {

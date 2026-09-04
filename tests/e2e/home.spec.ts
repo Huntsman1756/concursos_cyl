@@ -200,7 +200,7 @@ test("home exposes three clear intents, navigation, freshness, and no automated 
   }).format(new Date(expectedDateTime));
   const expectedDateKind =
     mappingSnapshot.sourceUpdatedAt === null
-      ? "snapshot consultado el"
+      ? "copia consultada el"
       : "fuente actualizada el";
   await expect(freshness).toContainText(
     `Relaciones revisadas · ${expectedDateKind} ${expectedDate}`,
@@ -313,6 +313,55 @@ test("the keyboard focus indicator is visible and opaque on the search control",
       combobox.evaluate((element) => getComputedStyle(element).boxShadow),
     )
     .not.toBe("none");
+});
+
+test("switching home intent tabs keeps the hero image and following content stable", async ({
+  page,
+}, testInfo) => {
+  const isDesktop = testInfo.project.name !== "chromium-mobile";
+  await page.setViewportSize(
+    isDesktop ? { width: 1267, height: 1044 } : { width: 390, height: 844 },
+  );
+  await page.goto("/");
+  await expectHomeReadyForLayout(page);
+  await page.evaluate(() => document.fonts.ready);
+
+  const heroImage = page.locator(".hero-stage img");
+
+  const measurements: Array<{
+    imageWidth: number;
+    imageHeight: number;
+    sectionTop: number;
+  }> = [];
+  for (const tabName of [
+    "Tengo una FP",
+    "Busco una profesión",
+    "Estoy mirando una oferta",
+  ]) {
+    await page.getByRole("tab", { name: tabName }).click();
+    await expect(heroImage).toBeVisible();
+    const measurement = await page.evaluate(() => {
+      const image = document.querySelector<HTMLElement>(".hero-stage img");
+      const section = document.querySelector<HTMLElement>(
+        '[aria-labelledby="paths-title"]',
+      );
+      const imageBox = image?.getBoundingClientRect();
+      const sectionBox = section?.getBoundingClientRect();
+      return {
+        imageWidth: Math.round(imageBox?.width ?? 0),
+        imageHeight: Math.round(imageBox?.height ?? 0),
+        sectionTop: Math.round((sectionBox?.top ?? 0) + window.scrollY),
+      };
+    });
+    expect(measurement.imageWidth).toBeGreaterThan(0);
+    expect(measurement.imageHeight).toBeGreaterThan(0);
+    measurements.push(measurement);
+  }
+
+  expect(
+    new Set(measurements.map((m) => `${m.imageWidth}x${m.imageHeight}`)).size,
+  ).toBe(1);
+  expect(new Set(measurements.map((m) => m.sectionTop)).size).toBe(1);
 });
 
 test("the complete Spanish home copy fits without horizontal overflow", async ({

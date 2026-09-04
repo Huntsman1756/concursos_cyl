@@ -146,7 +146,7 @@ describe("TrainingRoutePage", () => {
     );
 
     expect(
-      await screen.findByText("1–50 de 55 opciones formativas"),
+      await screen.findByText("1–50 de 55 combinaciones de centro y ciclo"),
     ).toBeVisible();
     const pagination = screen.getByRole("navigation", {
       name: "Paginación de opciones formativas",
@@ -161,7 +161,9 @@ describe("TrainingRoutePage", () => {
 
     await user.click(screen.getByRole("button", { name: "Página siguiente" }));
 
-    expect(screen.getByText("51–55 de 55 opciones formativas")).toBeVisible();
+    expect(
+      screen.getByText("51–55 de 55 combinaciones de centro y ciclo"),
+    ).toBeVisible();
     expect(within(screen.getByRole("table")).getAllByRole("row")).toHaveLength(
       6,
     );
@@ -369,6 +371,6 @@ describe("TrainingRoutePage", () => {
     expect(
       screen.queryByText(/ofertas? en la copia actual/u),
     ).not.toBeInTheDocument();
-    expect(screen.getByText(/Oferta formativa · snapshot del/u)).toBeVisible();
+    expect(screen.getByText(/Oferta formativa · copia del/u)).toBeVisible();
   });
 });

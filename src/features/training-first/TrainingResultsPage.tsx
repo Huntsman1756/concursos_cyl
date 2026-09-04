@@ -37,7 +37,10 @@ import type { OfferPublishedRequirements } from "../../domain/requirements";
 import type { ReliableAction } from "../../domain/actionEngine";
 import { ReliableActionSchema } from "../../domain/actionEngine";
 import { useDecisionSession } from "../../domain/session";
-import { trainingLevelLabel } from "../../domain/trainingPresentation";
+import {
+  formatProgramTitle,
+  trainingLevelLabel,
+} from "../../domain/trainingPresentation";
 import { Breadcrumbs } from "../../components/Breadcrumbs";
 import { ExternalLink } from "../../components/ExternalLink";
 import { InfoDisclosure } from "../../components/InfoDisclosure";
@@ -561,7 +564,7 @@ export function TrainingResultsPage() {
         items={[
           { label: "Inicio", to: "/" },
           { label: "Explorar FP", to: "/desde-fp" },
-          { label: state.program.programTitle },
+          { label: formatProgramTitle(state.program.programTitle) },
         ]}
       />
       <header className="training-page__header result-header page-header page-masthead">
@@ -575,7 +578,7 @@ export function TrainingResultsPage() {
               Cambiar de ciclo
             </Link>
             <h1 className="h1" id="training-results-heading">
-              {state.program.programTitle}
+              {formatProgramTitle(state.program.programTitle)}
             </h1>
             <p className="training-page__meta">
               {trainingLevelLabel(state.program.level)}
@@ -607,7 +610,7 @@ export function TrainingResultsPage() {
           </span>
           <span>
             <strong>{orderedMatches.length}</strong>{" "}
-            {orderedMatches.length === 1 ? "oferta" : "ofertas"} en la copia del{" "}
+            {orderedMatches.length === 1 ? "oferta" : "ofertas"} · fuente del{" "}
             {shortDate(offersEvidenceDate)}
           </span>
           <span>
@@ -802,11 +805,13 @@ export function TrainingResultsPage() {
         >
           <div className="section-heading">
             <h2 id="offer-results-title">
-              Ofertas relacionadas con {state.program.programTitle}
+              Ofertas relacionadas con{" "}
+              {formatProgramTitle(state.program.programTitle)}
             </h2>
             <span className="offer-results__heading-actions">
               <span>
-                Ofertas de empleo · fecha usada {snapshotDate(state.manifest)}
+                Ofertas de empleo · fuente actualizada el{" "}
+                {snapshotDate(state.manifest)}
               </span>
               <Link to={trainingOffersPath(programKey)}>
                 Abrir listado de ofertas <span aria-hidden="true">→</span>
@@ -817,7 +822,7 @@ export function TrainingResultsPage() {
             <div className="status-panel">
               <p>
                 {publicationFilter === null
-                  ? `0 ofertas con correspondencia validada en la copia de datos del ${shortDate(offersEvidenceDate)}.`
+                  ? `0 ofertas con correspondencia validada en la fuente del ${shortDate(offersEvidenceDate)}.`
                   : "Ninguna oferta de esta copia omite publicar justo ese requisito."}
               </p>
               <p>

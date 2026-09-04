@@ -311,6 +311,11 @@ function TrainingCatalogProvenance({ state }: { state: TrainingCatalogState }) {
         .
       </p>
       <p>
+        El buscador «Dónde estudiar» agrupa en una sola fila las opciones que
+        comparten centro y ciclo; su contador cuenta combinaciones de centro y
+        ciclo, por eso puede ser menor que el de opciones de centro y modalidad.
+      </p>
+      <p>
         Identificador técnico del catálogo (SHA-256):{" "}
         <code>{state.snapshot.sha256.slice(0, 12)}…</code>
       </p>
@@ -410,14 +415,15 @@ export function MethodologyPage() {
 
       <aside aria-label="Alcance del recurso de ofertas">
         <p>
-          SALIDA genera <code>offerEvidence</code>, un recurso derivado de
-          evidencia sobre la copia de ofertas, para relacionarlas con requisitos
-          y relaciones FP revisadas. Las páginas de ofertas utilizan este
-          recurso para mostrar ese contexto. En esta candidatura no se presenta
-          como un dataset reutilizable independiente. Que no aparezca en la
-          sección «Datos abiertos» no significa que las relaciones se calculen
-          de forma opaca ni que el recurso haya sido eliminado. Su publicación
-          independiente queda fuera del alcance mientras su documentación y
+          Además de las fuentes oficiales, SALIDA genera un recurso propio de
+          evidencia sobre las ofertas (<code>offerEvidence</code>): a partir de
+          la copia de ofertas, extrae sus requisitos publicados y los relaciona
+          con relaciones FP revisadas. Las páginas de ofertas utilizan ese
+          recurso para mostrar ese contexto. Por ahora no se publica como un
+          dataset reutilizable independiente. Que no aparezca en la sección
+          «Datos abiertos» no significa que las relaciones se calculen de forma
+          opaca ni que el recurso haya sido eliminado. Su publicación
+          independiente queda fuera de alcance mientras su documentación y
           licencia de reutilización no estén cerradas al mismo nivel que los
           demás datasets publicados.
         </p>

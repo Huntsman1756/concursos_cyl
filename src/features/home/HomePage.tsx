@@ -28,7 +28,9 @@ import {
 } from "../../app/routePaths";
 import { loadApprovedMappings } from "../../domain/occupation";
 import { buildApprovedExample } from "../../domain/approvedExample";
+import { formatProgramTitle } from "../../domain/trainingPresentation";
 import { EditorialImage } from "../../components/EditorialImage";
+import { Icon } from "../../components/Icon";
 import { InfoButton } from "../../components/InfoButton";
 import { PageEyebrow } from "../../components/PageEyebrow";
 import { OccupationCombobox } from "../occupation-first/OccupationCombobox";
@@ -124,11 +126,17 @@ export function HomePage() {
     centers: number | null;
     reviewedOffers: number | null;
     generatedAt: string | null;
+    programsDate: string | null;
+    centersDate: string | null;
+    reviewedOffersDate: string | null;
   }>({
     programs: null,
     centers: null,
     reviewedOffers: null,
     generatedAt: null,
+    programsDate: null,
+    centersDate: null,
+    reviewedOffersDate: null,
   });
   const [searchData, setSearchData] = useState<SearchDataState>({
     status: "loading",
@@ -207,6 +215,8 @@ export function HomePage() {
           ...current,
           programs: foundation.programs.length,
           centers: foundation.centers.length,
+          programsDate: manifest.resourceSnapshots.programs.snapshotFetchedAt,
+          centersDate: manifest.resourceSnapshots.centers.snapshotFetchedAt,
           generatedAt: manifest.generatedAt,
         }));
 
@@ -262,6 +272,7 @@ export function HomePage() {
           setProof((current) => ({
             ...current,
             reviewedOffers: evidence.counts.offersWithReviewedFpRelationship,
+            reviewedOffersDate: evidence.generatedAt,
           }));
           const exampleOfferRecord =
             evidence.records.find(
@@ -281,7 +292,7 @@ export function HomePage() {
               : {
                   status: "ready",
                   title: exampleOfferRecord.title,
-                  meta: `${exampleOfferRecord.province} · ${exampleOfferRecord.sourceName} · copia fechada ${formatDate(
+                  meta: `${exampleOfferRecord.province} · ${exampleOfferRecord.sourceName} · publicada el ${formatDate(
                     exampleOfferRecord.publishedAt,
                   )}`,
                   reviewedOffers:
@@ -389,11 +400,12 @@ export function HomePage() {
   function renderTaskPanel(task: (typeof TASK_TABS)[number]): JSX.Element {
     return (
       <div
+        key={task.id}
         className="hero-search"
         id={`home-panel-${task.id}`}
         role="tabpanel"
         aria-labelledby={`home-tab-${task.id}`}
-        hidden={searchMode !== task.mode}
+        aria-hidden={searchMode !== task.mode}
       >
         <form
           onSubmit={(event) => submitSearch(task.mode, event)}
@@ -540,9 +552,9 @@ export function HomePage() {
                   );
                 })}
               </ul>
-              {TASK_TABS.map((task) => (
-                <div key={task.mode}>{renderTaskPanel(task)}</div>
-              ))}
+              <div className="task-panels">
+                {TASK_TABS.map((task) => renderTaskPanel(task))}
+              </div>
             </div>
           </div>
 
@@ -664,6 +676,17 @@ export function HomePage() {
                   : proof.programs.toLocaleString("es-ES")}
               </p>
               <p className="proof-stat-label">ciclos oficiales</p>
+              <p className="proof-stat-date">
+                {proof.programsDate === null ? "comprobando fecha…" : null}
+                {proof.programsDate !== null && (
+                  <>
+                    fuente consultada el{" "}
+                    <time dateTime={proof.programsDate}>
+                      {formatDate(proof.programsDate)}
+                    </time>
+                  </>
+                )}
+              </p>
             </div>
             <div className="proof-stat">
               <p className="proof-stat-value">
@@ -674,6 +697,19 @@ export function HomePage() {
               <p className="proof-stat-label">
                 ofertas con relación FP revisada
               </p>
+              <p className="proof-stat-date">
+                {proof.reviewedOffersDate === null
+                  ? "comprobando fecha…"
+                  : null}
+                {proof.reviewedOffersDate !== null && (
+                  <>
+                    evidencia generada el{" "}
+                    <time dateTime={proof.reviewedOffersDate}>
+                      {formatDate(proof.reviewedOffersDate)}
+                    </time>
+                  </>
+                )}
+              </p>
             </div>
             <div className="proof-stat">
               <p className="proof-stat-value">
@@ -682,6 +718,17 @@ export function HomePage() {
                   : proof.centers.toLocaleString("es-ES")}
               </p>
               <p className="proof-stat-label">centros</p>
+              <p className="proof-stat-date">
+                {proof.centersDate === null ? "comprobando fecha…" : null}
+                {proof.centersDate !== null && (
+                  <>
+                    fuente consultada el{" "}
+                    <time dateTime={proof.centersDate}>
+                      {formatDate(proof.centersDate)}
+                    </time>
+                  </>
+                )}
+              </p>
             </div>
             <div className="proof-note">
               <p className="small" style={{ margin: 0 }}>
@@ -712,7 +759,7 @@ export function HomePage() {
                   {freshness.sourceLabel} ·{" "}
                   {freshness.dateKind === "source"
                     ? "fuente actualizada el"
-                    : "snapshot consultado el"}{" "}
+                    : "copia consultada el"}{" "}
                   <time dateTime={freshness.dateTime}>{freshness.date}</time>
                   {freshness.stale && " Mostramos la última copia disponible."}
                 </>
@@ -721,8 +768,9 @@ export function HomePage() {
           )}
           {proof.generatedAt !== null && (
             <p className="caption" style={{ marginTop: "var(--space-2)" }}>
-              Valores calculados de la copia activa del{" "}
-              {formatDate(proof.generatedAt)} en el arranque de la página.
+              Valores calculados en el arranque de la página. Copia activa
+              generada el {formatDate(proof.generatedAt)}; cada cifra indica la
+              fecha de su propia fuente.
             </p>
           )}
         </div>
@@ -742,11 +790,13 @@ export function HomePage() {
             <ol className="example-flow">
               <li className="example-step">
                 <span className="example-step-icon" aria-hidden="true">
-                  🎓
+                  <Icon name="graduation-cap" size={20} />
                 </span>
                 <div>
                   <p className="example-step-kind">Formación profesional</p>
-                  <h3 className="h3">{example.programTitle}</h3>
+                  <h3 className="h3">
+                    {formatProgramTitle(example.programTitle)}
+                  </h3>
                   <p className="meta">
                     {example.levelLabel} · Familia {example.familyName}
                   </p>
@@ -754,7 +804,7 @@ export function HomePage() {
               </li>
               <li className="example-step">
                 <span className="example-step-icon" aria-hidden="true">
-                  💼
+                  <Icon name="briefcase" size={20} />
                 </span>
                 <div>
                   <p className="example-step-kind">Profesiones relacionadas</p>
@@ -772,7 +822,7 @@ export function HomePage() {
               {exampleOffer.status === "ready" && (
                 <li className="example-step">
                   <span className="example-step-icon" aria-hidden="true">
-                    📍
+                    <Icon name="map-pin" size={20} />
                   </span>
                   <div>
                     <p className="example-step-kind">Oferta actual</p>
@@ -783,7 +833,7 @@ export function HomePage() {
               )}
               <li className="example-step">
                 <span className="example-step-icon" aria-hidden="true">
-                  🏫
+                  <Icon name="school" size={20} />
                 </span>
                 <div>
                   <p className="example-step-kind">Dónde estudiarla</p>
@@ -865,8 +915,8 @@ export function HomePage() {
             </p>
             {freshness.status === "ready" && (
               <p className="caption" style={{ marginTop: "var(--space-2)" }}>
-                Fuentes: Junta de Castilla y León (ECYL), SEPE, TodoFP y BOE ·
-                copia de ofertas {freshness.date}.
+                Fuentes: Junta de Castilla y León (ECYL), SEPE, TodoFP y BOE ·{" "}
+                {freshness.sourceLabel}: copia del {freshness.date}.
               </p>
             )}
           </div>

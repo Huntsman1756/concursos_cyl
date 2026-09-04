@@ -417,11 +417,21 @@ summary:focus-visible {
   min-height: var(--control-height);
   align-items: center;
   padding: var(--space-3) var(--space-2);
+  border: 0;
   border-radius: var(--radius-control);
   color: var(--color-text-muted);
+  background: transparent;
   font-size: var(--type-control);
   font-weight: var(--type-control-weight);
   text-decoration: none;
+}
+
+/* In-page section links, not tabs: underline the section currently in view. */
+.result-section-nav a[aria-current="location"] {
+  color: var(--color-primary-strong);
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
 }
 
 .result-section-nav a:hover {
@@ -822,6 +832,13 @@ summary:focus-visible {
   background: var(--color-primary-soft);
 }
 
+/* Open state must stay clearly perceptible on keyboard and touch. */
+.info-disclosure[open] > summary {
+  border-color: var(--color-primary);
+  color: var(--color-surface);
+  background: var(--color-primary);
+}
+
 .info-disclosure__content {
   position: absolute;
   z-index: 30;
@@ -861,7 +878,7 @@ summary:focus-visible {
 
 .search-card,
 .training-search {
-  max-width: 52rem;
+  max-width: 64rem;
   padding: clamp(var(--space-5), 4vw, var(--space-8));
   border-block: 1px solid var(--color-border-strong);
   background: var(--color-surface-subtle);
@@ -884,7 +901,7 @@ summary:focus-visible {
 }
 
 .training-guided-examples {
-  max-width: 52rem;
+  max-width: 64rem;
   margin-bottom: var(--space-8);
 }
 
@@ -938,7 +955,7 @@ summary:focus-visible {
 }
 
 .training-catalog-note {
-  max-width: 52rem;
+  max-width: 64rem;
   margin-top: var(--space-8);
   padding: var(--space-5);
   border-left: 3px solid var(--color-gold);

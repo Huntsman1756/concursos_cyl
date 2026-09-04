@@ -170,6 +170,7 @@ describe("OfferExplorerPage", () => {
     expect(
       screen.getByRole("heading", { name: "1–1 de 1 oferta" }),
     ).toBeVisible();
+    expect(screen.getByText(/evidencia generada el/u)).toBeVisible();
     expect(
       screen.getAllByText(/La relación orienta la búsqueda/u),
     ).toHaveLength(1);
@@ -195,6 +196,8 @@ describe("OfferExplorerPage", () => {
     expect(
       screen.getByText(/Título de Técnico en Cocina y Gastronomía/),
     ).toBeVisible();
+    expect(screen.queryByText(/unclassified\./u)).not.toBeInTheDocument();
+    expect(screen.queryByText(/Regla:/u)).not.toBeInTheDocument();
     expect(
       screen.getByText("Técnico en Cocina y Gastronomía", {
         exact: true,
@@ -220,6 +223,33 @@ describe("OfferExplorerPage", () => {
     expect(
       screen.queryByText("Ver requisitos, relación y siguiente acción"),
     ).not.toBeInTheDocument();
+  });
+
+  it("labels the offers source date next to the evidence generation date", async () => {
+    generatedDataClient.loadManifest.mockResolvedValue({
+      resourceSnapshots: {
+        jobOffers: {
+          sourceUpdatedAt: "2026-08-20T00:00:00.000Z",
+          snapshotFetchedAt: "2026-08-22T08:56:31.889Z",
+        },
+      },
+    });
+    generatedDataClient.loadOfferEvidence.mockResolvedValue(resource);
+
+    const { container } = render(
+      <MemoryRouter initialEntries={["/desde-oferta"]}>
+        <OfferExplorerPage />
+      </MemoryRouter>,
+    );
+
+    await screen.findByRole("heading", { name: "Ofertas de empleo" });
+    const freshness = container.querySelector(".offer-explorer__freshness");
+    expect(freshness?.textContent).toContain(
+      "fuente actualizada el 20 de agosto de 2026",
+    );
+    expect(freshness?.textContent).toContain(
+      "evidencia generada el 30 de agosto de 2026",
+    );
   });
 
   it("keeps the university boundary visible and lets people try another query", async () => {

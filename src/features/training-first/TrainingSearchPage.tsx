@@ -10,6 +10,7 @@ import {
 } from "../../data/generatedDataClient";
 import {
   featuredTrainingCoverage,
+  formatProgramTitle,
   trainingLevelLabel,
 } from "../../domain/trainingPresentation";
 import { CYL_PROVINCES } from "../../domain/territory";
@@ -218,7 +219,7 @@ export function TrainingSearchPage() {
                   <Link
                     to={`/desde-fp/${encodeURIComponent(program.programKey)}`}
                   >
-                    {program.programTitle}
+                    {formatProgramTitle(program.programTitle)}
                   </Link>
                   <span>
                     {trainingLevelLabel(program.level)} · {row.familyName}

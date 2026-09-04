@@ -178,7 +178,7 @@ describe("EcylResourcesPage", () => {
     expect(screen.getByRole("status")).toHaveTextContent("Cargando recursos…");
     expect(
       screen.queryByRole("heading", {
-        name: "Empleo público abierto ahora",
+        name: /Empleo público abierto al /u,
       }),
     ).not.toBeInTheDocument();
     expect(screen.queryByText(/convocatorias?$/u)).not.toBeInTheDocument();
@@ -191,12 +191,12 @@ describe("EcylResourcesPage", () => {
     });
 
     await screen.findByRole("heading", {
-      name: "Empleo público abierto ahora",
+      name: /Empleo público abierto al /u,
     });
     expect(screen.getByText("0 convocatorias")).toBeVisible();
     expect(
       screen.getByText(
-        "Ninguna convocatoria de esta copia tiene hoy el plazo de solicitud abierto. Los plazos publicados en la copia ya han cerrado o todavía no empiezan; comprueba la fuente oficial por si se han publicado procesos nuevos.",
+        "Ninguna convocatoria de esta copia tiene el plazo de solicitud abierto a la fecha de la copia. Los plazos publicados ya habían cerrado o todavía no empezaban; comprueba la fuente oficial por si se han publicado procesos nuevos.",
       ),
     ).toBeVisible();
   });
@@ -212,7 +212,7 @@ describe("EcylResourcesPage", () => {
     });
 
     await screen.findByRole("heading", {
-      name: "Empleo público abierto ahora",
+      name: /Empleo público abierto al /u,
     });
     expect(screen.getByText("4 convocatorias")).toBeVisible();
   });

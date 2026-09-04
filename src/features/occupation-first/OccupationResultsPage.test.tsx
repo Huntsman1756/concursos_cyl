@@ -377,7 +377,7 @@ describe("occupation-first results", () => {
     expect(cards[1]).toHaveTextContent("Curso de especialización");
     expect(cards[1]).toHaveTextContent("IFC03SD");
     expect(
-      screen.getByText(/Oferta formativa · snapshot consultado el/u),
+      screen.getByText(/Oferta formativa · copia consultada el/u),
     ).toBeVisible();
     expect(
       screen.queryByText(/Datos formativos consultados/u),

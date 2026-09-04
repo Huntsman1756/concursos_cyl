@@ -341,7 +341,7 @@ test.describe("contest readiness journeys", () => {
     await expectWithinViewport(
       page,
       freshness.getByText(
-        /Relaciones revisadas.*(?:fuente actualizada|snapshot consultado) el/u,
+        /Relaciones revisadas.*(?:fuente actualizada|copia consultada) el/u,
       ),
     );
     await expectWithinViewport(page, freshness.locator("time"));
