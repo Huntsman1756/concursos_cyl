@@ -105,7 +105,8 @@ export function OrganizationsPage() {
         <p>
           El producto ayuda a preparar decisiones, pero no sustituye la atención
           de un orientador ni acredita acceso a una ocupación. Una relación
-          ausente significa que aún no está revisada, no que sea imposible.
+          ausente indica que esta copia no la documenta; no permite concluir que
+          exista ni que sea imposible.
         </p>
         <Link to="/metodologia">Ver fuentes, método y limitaciones</Link>
       </section>

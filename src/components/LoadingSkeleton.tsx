@@ -6,7 +6,7 @@ import type { JSX } from "react";
  * page. One pulsing surface (reduced-motion safe), a visible status line and
  * aria-busy semantics; decorative blocks are hidden from assistive tech.
  */
-export type LoadingSkeletonLayout = "page" | "results" | "detail" | "table";
+export type LoadingSkeletonLayout = "page" | "results" | "detail" | "catalog";
 
 interface LoadingSkeletonProps {
   /** Visible + announced loading text ("Cargando las ofertas…"). */
@@ -62,25 +62,18 @@ function DetailBlocks(): JSX.Element {
   );
 }
 
-function TableBlocks(): JSX.Element {
-  return (
-    <>
-      <span className="loading-skeleton__block loading-skeleton__block--eyebrow" />
-      <span className="loading-skeleton__block loading-skeleton__block--display" />
-      <span className="loading-skeleton__block loading-skeleton__block--line is-mid" />
-      <span className="loading-skeleton__block loading-skeleton__block--filter" />
-      <span className="loading-skeleton__block loading-skeleton__block--table" />
-      <span className="loading-skeleton__block loading-skeleton__block--table" />
-    </>
-  );
-}
-
 export function LoadingSkeleton({
   status,
   layout,
   className,
 }: LoadingSkeletonProps): JSX.Element {
-  const classNames = ["loading-skeleton", className].filter(Boolean).join(" ");
+  const classNames = [
+    "loading-skeleton",
+    layout === "catalog" && "loading-skeleton--catalog",
+    className,
+  ]
+    .filter(Boolean)
+    .join(" ");
   return (
     <div className={classNames} aria-busy="true" data-loading="true">
       <p className="loading-skeleton__status" role="status" aria-live="polite">
@@ -88,9 +81,8 @@ export function LoadingSkeleton({
       </p>
       <div className="loading-skeleton__surface" aria-hidden="true">
         {layout === "page" && <PageBlocks />}
-        {layout === "results" && <ResultsBlocks />}
+        {(layout === "results" || layout === "catalog") && <ResultsBlocks />}
         {layout === "detail" && <DetailBlocks />}
-        {layout === "table" && <TableBlocks />}
       </div>
     </div>
   );

@@ -220,7 +220,7 @@ export function TrainingSearchPage() {
               <p role="status" aria-live="polite">
                 {selectedCoverage.coverageStatus === "reviewed"
                   ? `Profesiones comprobadas para este ciclo: ${selectedCoverage.approvedMappings}.`
-                  : "Verás sus salidas oficiales; todavía no hay una relación comprobada para buscar ofertas."}
+                  : "Verás sus salidas oficiales; esta copia no contiene una relación comprobada para buscar ofertas."}
               </p>
             )}
             <details className="training-search__filters">

@@ -650,7 +650,7 @@ describe("TrainingResultsPage", () => {
     );
 
     const emptyState = await screen.findByText(
-      /Todavía no hemos podido comprobar en fuentes oficiales/u,
+      /Esta copia no contiene relaciones revisadas entre este ciclo/u,
     );
     expect(emptyState).toHaveTextContent("no mostramos ofertas para él");
     expect(
@@ -828,7 +828,7 @@ describe("TrainingResultsPage", () => {
 
     expect(
       await screen.findByText(
-        /Todavía no hemos podido comprobar en fuentes oficiales/u,
+        /Esta copia no contiene relaciones revisadas entre este ciclo/u,
       ),
     ).toBeVisible();
     expect(

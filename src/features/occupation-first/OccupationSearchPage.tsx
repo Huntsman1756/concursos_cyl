@@ -129,7 +129,7 @@ export function OccupationSearchPage() {
           <p className="coverage-note">
             El catálogo incluye {state.occupations.length} grupos oficiales de
             ocupación. Que una ocupación aparezca no significa que su relación
-            con un ciclo FP esté comprobada todavía.
+            con un ciclo FP esté comprobada.
           </p>
         </form>
       )}

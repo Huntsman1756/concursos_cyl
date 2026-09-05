@@ -246,7 +246,7 @@ export function EcylResourcesPage() {
 
       <div className="resources-filters">
         <label>
-          <span>Buscar por nombre, localidad o código</span>
+          <span>Buscar en cursos y certificados</span>
           <input
             type="search"
             value={query}
@@ -255,11 +255,12 @@ export function EcylResourcesPage() {
               setCourseLimit(COURSE_PAGE_SIZE);
               setCertificateLimit(CERTIFICATE_PAGE_SIZE);
             }}
-            placeholder="Nombre o código"
+            placeholder="Nombre, localidad o código"
+            aria-describedby="resources-search-scope"
           />
         </label>
         <label>
-          <span>Familia profesional</span>
+          <span>Familia de los certificados</span>
           <select
             value={family}
             onChange={(event) => {
@@ -276,6 +277,11 @@ export function EcylResourcesPage() {
           </select>
         </label>
       </div>
+
+      <p className="resources-section-help" id="resources-search-scope">
+        La búsqueda se aplica a cursos y certificados. La familia solo filtra
+        certificados. Las convocatorias se muestran sin estos filtros.
+      </p>
 
       {state.status === "loading" ? (
         <div aria-busy="true">

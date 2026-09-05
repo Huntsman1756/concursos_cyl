@@ -317,14 +317,17 @@ describe("occupation-first results", () => {
     );
     expect(
       await screen.findByText(
-        "Aún no hay una ruta formativa comprobada para esta profesión",
+        "Esta copia no contiene relaciones FP revisadas para esta profesión.",
       ),
     ).toBeVisible();
     expect(
-      screen.getByText(
-        /Esto no significa que no exista formación relacionada/i,
-      ),
+      screen.getByText(/La ausencia en esta copia no determina qué formación/i),
     ).toBeVisible();
+    expect(
+      screen.getByText(
+        "Esta copia no contiene relaciones FP revisadas para esta profesión.",
+      ).parentElement?.textContent,
+    ).not.toMatch(/pendiente|todavía|aún/iu);
   });
 
   it("orders explained routes without scores and shows real offering coverage", async () => {
@@ -610,7 +613,7 @@ describe("occupation-first results", () => {
     ).toBeVisible();
     expect(
       screen.getByText(
-        "Aún no hay una ruta formativa comprobada para esta profesión",
+        "Esta copia no contiene relaciones FP revisadas para esta profesión.",
       ),
     ).toBeVisible();
     const manifestRequests = vi

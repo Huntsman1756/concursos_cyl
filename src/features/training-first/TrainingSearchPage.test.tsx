@@ -169,7 +169,7 @@ describe("training-first search", () => {
     await user.type(select, "COM01M");
     await user.keyboard("{ArrowDown}{Enter}");
     const unavailableStatus = screen.getByText(
-      /Verás sus salidas oficiales;.*todavía no hay una relación comprobada para buscar ofertas/i,
+      /Verás sus salidas oficiales;.*esta copia no contiene una relación comprobada para buscar ofertas/i,
     );
     expect(unavailableStatus).toHaveAttribute("role", "status");
     expect(unavailableStatus).toHaveAttribute("aria-live", "polite");

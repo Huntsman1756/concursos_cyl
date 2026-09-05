@@ -207,7 +207,7 @@ test("an official occupation without a reviewed FP relation remains searchable",
   ).toBeVisible();
   await expect(
     page.getByText(
-      "Aún no hay una ruta formativa comprobada para esta profesión",
+      "Esta copia no contiene relaciones FP revisadas para esta profesión.",
     ),
   ).toBeVisible();
 });

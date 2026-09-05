@@ -606,8 +606,8 @@ export function OfferExplorerPage({
 
   if (state.status === "loading") {
     return (
-      <section className="container offer-explorer" aria-busy="true">
-        <LoadingSkeleton status="Cargando las ofertas…" layout="results" />
+      <section className="container catalog-loading" aria-busy="true">
+        <LoadingSkeleton status="Cargando las ofertas…" layout="catalog" />
       </section>
     );
   }
@@ -790,11 +790,13 @@ export function OfferExplorerPage({
           {isGlobal && (
             <p className="caption" style={{ margin: 0 }}>
               {reviewedOfferCount.toLocaleString("es-ES")} con FP relacionada en
-              esta copia (ofertas únicas con relación revisada) · más recientes
-              primero
+              esta copia (ofertas únicas con relación revisada)
+              {visibleRecords.length > 0 && " · más recientes primero"}
             </p>
           )}
-          {!isGlobal && <span>· más recientes primero</span>}
+          {!isGlobal && visibleRecords.length > 0 && (
+            <span>· más recientes primero</span>
+          )}
         </div>
         {visibleRecords.length === 0 ? (
           <div className="offer-explorer__empty" role="status">

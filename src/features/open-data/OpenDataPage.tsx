@@ -205,8 +205,9 @@ export function OpenDataPage() {
           familia profesional, tipo de relación, cita, URL y fecha de revisión.
         </p>
         <p>
-          Solo se publican relaciones revisadas. La ausencia de una relación no
-          significa que sea imposible: señala que todavía no está validada.
+          Solo se publican relaciones revisadas. La ausencia de una relación
+          indica que esta copia no la documenta; no permite concluir que exista
+          ni que sea imposible.
         </p>
         <p>
           <Link to="/metodologia">Ver fuentes, proceso y limitaciones</Link>

@@ -258,8 +258,25 @@ select:focus-visible,
   height: 3.5rem;
 }
 
-.loading-skeleton__block--table {
-  height: 4.5rem;
+/* List routes replace both their lazy-route and data-loading skeletons with
+   multiple screens of results. Fill the first viewport with structured rows
+   in both phases, so the footer is not briefly presented as loaded content.
+   This geometry exists only while loading, never on results/empty/error UI. */
+.catalog-loading {
+  padding-block: var(--space-5);
+}
+
+.loading-skeleton--catalog .loading-skeleton__surface {
+  min-block-size: 100svh;
+}
+
+.loading-skeleton--catalog .loading-skeleton__rows {
+  flex: 1;
+  grid-template-rows: repeat(3, minmax(4.5rem, 1fr));
+}
+
+.loading-skeleton--catalog .loading-skeleton__block--row {
+  height: auto;
   border-radius: var(--radius-medium);
 }
 

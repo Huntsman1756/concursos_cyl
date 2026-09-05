@@ -37,7 +37,7 @@ test("resource lists expand independently and reset when searching", async ({
     .click();
   await expect(certificates.getByRole("article")).toHaveCount(16);
   const search = page.getByRole("searchbox", {
-    name: "Buscar por nombre, localidad o código",
+    name: "Buscar en cursos y certificados",
   });
   await search.fill("sin coincidencias xyz");
   await expect(courses.getByRole("article")).toHaveCount(0);

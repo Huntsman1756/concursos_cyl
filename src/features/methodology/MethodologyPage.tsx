@@ -568,8 +568,9 @@ export function MethodologyPage() {
           <section>
             <h3>Qué no permite afirmar</h3>
             <p>
-              Solo contiene relaciones revisadas. Una ausencia expresa cobertura
-              pendiente, no incompatibilidad entre un ciclo y una ocupación.
+              Solo contiene relaciones revisadas. Una ausencia indica que esta
+              copia no documenta esa relación; no permite concluir
+              compatibilidad ni incompatibilidad entre un ciclo y una ocupación.
             </p>
           </section>
           <section>

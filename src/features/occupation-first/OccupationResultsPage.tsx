@@ -242,12 +242,13 @@ export function OccupationResultsPage() {
       {orderedLinks.length === 0 ? (
         <div className="status-panel">
           <h1 className="h1" id="occupation-results-heading">
-            Aún no hay una ruta formativa comprobada para esta profesión
+            Esta copia no contiene relaciones FP revisadas para esta profesión.
           </h1>
           <p>
-            Esto no significa que no exista formación relacionada: solo
-            publicamos relaciones verificadas en fuentes oficiales, y esta aún
-            está pendiente.
+            SALIDA solo muestra relaciones que ha podido verificar en fuentes
+            oficiales. La ausencia en esta copia no determina qué formación
+            permite acceder a una profesión ni acredita habilitación
+            profesional.
           </p>
           <p>
             Puedes buscar{" "}

@@ -1,6 +1,7 @@
 import { describe, it, expect, vi } from "vitest";
 import { render, screen, fireEvent } from "@testing-library/react";
 import { RouteLoadBoundary, RouteLoadingFallback } from "./RouteLoadBoundary";
+import { MemoryRouter } from "react-router-dom";
 
 describe("RouteLoadBoundary", () => {
   it("renders children when there is no error", () => {
@@ -72,7 +73,11 @@ describe("RouteLoadBoundary", () => {
   });
 
   it("renders a structured loading scaffold instead of a bare page", () => {
-    render(<RouteLoadingFallback />);
+    render(
+      <MemoryRouter>
+        <RouteLoadingFallback />
+      </MemoryRouter>,
+    );
 
     // Accessible status semantics live on the visible status line.
     const status = screen.getByRole("status");

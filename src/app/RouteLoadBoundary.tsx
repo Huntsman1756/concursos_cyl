@@ -1,4 +1,5 @@
 import { Component, type ReactNode } from "react";
+import { useLocation } from "react-router-dom";
 
 import { LoadingSkeleton } from "../components/LoadingSkeleton";
 
@@ -57,11 +58,20 @@ export class RouteLoadBoundary extends Component<
 }
 
 export function RouteLoadingFallback() {
+  const { pathname } = useLocation();
+  const catalog =
+    pathname === "/desde-oferta" ||
+    /^\/donde-estudiar(?:\/|$)/u.test(pathname) ||
+    /^\/desde-(?:fp|ocupacion)\/[^/]+\/ofertas$/u.test(pathname);
   return (
-    <div className="container route-loading">
+    <div
+      className={
+        catalog ? "container catalog-loading" : "container route-loading"
+      }
+    >
       <LoadingSkeleton
         status="Cargando la página…"
-        layout="page"
+        layout={catalog ? "catalog" : "page"}
         className="route-loading__skeleton"
       />
     </div>

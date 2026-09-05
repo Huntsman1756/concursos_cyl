@@ -424,10 +424,10 @@ export function CentersExplorerPage(): JSX.Element {
 
   if (state.status === "loading") {
     return (
-      <div className="container catalog-page" aria-busy="true">
+      <div className="container catalog-loading" aria-busy="true">
         <LoadingSkeleton
           status="Cargando la oferta formativa…"
-          layout="table"
+          layout="catalog"
         />
       </div>
     );
