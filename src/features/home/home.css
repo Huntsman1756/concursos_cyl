@@ -1,0 +1,20 @@
+/* Supporting explanations: the hero remains the Home entry selector. */
+.home-page .path {
+  overflow: visible;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+}
+
+.home-page .path-media {
+  width: min(100%, 10rem);
+  border-radius: var(--radius-card);
+}
+
+.home-page .path-body {
+  padding: var(--space-3) 0 0;
+}
+
+.home-page .path-actions .link-action {
+  font-weight: 400;
+}

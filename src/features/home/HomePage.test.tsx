@@ -265,6 +265,57 @@ afterEach(() => {
 });
 
 describe("HomePage task selector", () => {
+  it("explains outcomes below the selector while preserving the three route links", async () => {
+    installHomeFetch();
+    render(
+      <MemoryRouter>
+        <HomePage />
+      </MemoryRouter>,
+    );
+
+    const explanation = screen.getByRole("region", {
+      name: "Qué puedes entender con SALIDA",
+    });
+    expect(
+      within(explanation).getAllByRole("heading", { level: 3 }),
+    ).toHaveLength(3);
+    for (const [name, href] of [
+      ["Salidas de FP", "/desde-fp"],
+      ["Profesiones y formación", "/desde-ocupacion"],
+      ["Requisitos de ofertas", "/desde-oferta"],
+    ]) {
+      expect(within(explanation).getByRole("link", { name })).toHaveAttribute(
+        "href",
+        href,
+      );
+    }
+    expect(within(explanation).queryByRole("tablist")).not.toBeInTheDocument();
+    expect(within(explanation).queryByRole("button")).not.toBeInTheDocument();
+    expect(
+      screen.getByRole("tablist", { name: "Elige tu punto de partida" }),
+    ).toBeVisible();
+    const transparency = screen.getByRole("region", {
+      name: "Sobre los datos",
+    });
+    expect(
+      within(transparency).getByRole("link", { name: "Ver metodología" }),
+    ).toHaveAttribute("href", "/metodologia");
+    expect(
+      within(transparency).getByRole("link", { name: /datos abiertos/u }),
+    ).toHaveAttribute("href", "/datos-abiertos");
+    expect(
+      within(transparency).getByText(
+        /Junta de Castilla y León \(ECYL\), SEPE, TodoFP y BOE/u,
+      ),
+    ).toBeVisible();
+    expect(
+      within(transparency).getByText(
+        /no representan personas, empresas, ofertas ni centros reales/u,
+      ),
+    ).toBeVisible();
+    await screen.findByRole("combobox", { name: "Busca tu ciclo" });
+  });
+
   it("starts on the FP tab and navigates after choosing an official cycle", async () => {
     installHomeFetch();
     const user = userEvent.setup();
@@ -435,7 +486,7 @@ describe("HomePage proof rail (runtime derived)", () => {
       screen.getByText(/Copia activa generada el 4 de agosto de 2026/u),
     ).toBeVisible();
     expect(
-      screen.getByText(/cada cifra indica la fecha de su propia fuente/iu),
+      screen.getByText("Relaciones entre ciclos y profesiones"),
     ).toBeVisible();
   });
   it("marks the reviewed-offer stat as busy while the evidence loads", async () => {

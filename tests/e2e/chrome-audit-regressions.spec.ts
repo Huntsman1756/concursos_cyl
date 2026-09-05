@@ -208,7 +208,7 @@ test.describe("2026-09-04 Chrome audit regressions", () => {
     // harness performs no actionability scrolling.
     await page.evaluate(() => window.scrollTo(0, 900));
     await page.waitForTimeout(250);
-    const link = page.getByRole("link", { name: "Buscar una profesión →" });
+    const link = page.getByRole("link", { name: "Profesiones y formación" });
     await link.dispatchEvent("click");
     await expect(
       page.getByRole("heading", {

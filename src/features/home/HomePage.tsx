@@ -36,6 +36,7 @@ import { InfoButton } from "../../components/InfoButton";
 import { PageEyebrow } from "../../components/PageEyebrow";
 import { OccupationCombobox } from "../occupation-first/OccupationCombobox";
 import { TrainingCombobox } from "../training-first/TrainingCombobox";
+import "./home.css";
 
 type HomeSearchMode = "training" | "occupation" | "offer";
 
@@ -562,7 +563,7 @@ export function HomePage() {
         <div className="container">
           <div className="section-head">
             <h2 className="h2" id="paths-title">
-              Empieza desde donde estás
+              Qué puedes entender con SALIDA
             </h2>
           </div>
           <div className="paths-grid">
@@ -578,15 +579,14 @@ export function HomePage() {
                 />
               </div>
               <div className="path-body">
-                <p className="path-number">01</p>
-                <h3 className="h3">Tengo una FP</h3>
+                <h3 className="h3">Las salidas de tu ciclo</h3>
                 <p className="path-description">
                   Descubre profesiones, ofertas y centros relacionados con tu
                   ciclo.
                 </p>
                 <div className="path-actions">
                   <Link className="link-action" to="/desde-fp">
-                    Ver salidas de mi FP →
+                    Salidas de FP
                   </Link>
                 </div>
               </div>
@@ -603,15 +603,14 @@ export function HomePage() {
                 />
               </div>
               <div className="path-body">
-                <p className="path-number">02</p>
-                <h3 className="h3">Quiero dedicarme a una profesión</h3>
+                <h3 className="h3">La formación para una profesión</h3>
                 <p className="path-description">
                   Comprueba qué ciclos tienen una relación revisada con esa
                   ocupación.
                 </p>
                 <div className="path-actions">
                   <Link className="link-action" to="/desde-ocupacion">
-                    Buscar una profesión →
+                    Profesiones y formación
                   </Link>
                 </div>
               </div>
@@ -628,15 +627,14 @@ export function HomePage() {
                 />
               </div>
               <div className="path-body">
-                <p className="path-number">03</p>
-                <h3 className="h3">He visto una oferta</h3>
+                <h3 className="h3">Los requisitos de una oferta</h3>
                 <p className="path-description">
                   Entiende sus requisitos y comprueba si aparece relacionada con
                   una FP.
                 </p>
                 <div className="path-actions">
                   <Link className="link-action" to={globalOffersPath()}>
-                    Analizar una oferta →
+                    Requisitos de ofertas
                   </Link>
                 </div>
               </div>
@@ -718,7 +716,7 @@ export function HomePage() {
             </div>
             <div className="proof-note">
               <p className="small" style={{ margin: 0 }}>
-                Cada cifra indica la fecha de su propia fuente.
+                Relaciones entre ciclos y profesiones
                 <InfoButton label="Qué es una relación revisada">
                   Una relación revisada enlaza un ciclo con una ocupación y se
                   ha verificado contra su fuente oficial (TodoFP, BOE) con fecha
@@ -878,16 +876,15 @@ export function HomePage() {
       <section className="section" aria-labelledby="method-title">
         <div className="container">
           <div className="section-head" style={{ maxWidth: "44rem" }}>
-            <h2 className="h2" id="method-title">
-              Cada dato, con su origen y su fecha.
+            <h2 className="h3" id="method-title">
+              Sobre los datos
             </h2>
-            <p className="lede">
-              SALIDA combina fuentes públicas de formación y empleo y solo
-              publica relaciones que han superado sus criterios de revisión.
+            <p className="small">
+              Datos de la Junta de Castilla y León (ECYL), SEPE, TodoFP y BOE.
             </p>
           </div>
           <div className="method-actions" style={{ marginTop: 0 }}>
-            <Link className="button button--secondary" to="/metodologia">
+            <Link className="link-action" to="/metodologia">
               Ver metodología
             </Link>
             <Link className="link-action" to="/datos-abiertos">
@@ -899,12 +896,6 @@ export function HomePage() {
               Las imágenes editoriales son generadas mediante IA y no
               representan personas, empresas, ofertas ni centros reales.
             </p>
-            {freshness.status === "ready" && (
-              <p className="caption" style={{ marginTop: "var(--space-2)" }}>
-                Fuentes: Junta de Castilla y León (ECYL), SEPE, TodoFP y BOE ·{" "}
-                {freshness.sourceLabel}: copia del {freshness.date}.
-              </p>
-            )}
           </div>
         </div>
       </section>
