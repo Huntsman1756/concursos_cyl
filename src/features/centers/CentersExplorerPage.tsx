@@ -56,6 +56,7 @@ type PageState =
       status: "ready";
       foundation: Foundation;
       generatedAt: string;
+      sourceUrl: string;
       program: TrainingProgram | null;
     };
 
@@ -174,7 +175,7 @@ function CenterResultCard({
   const cta = centerWebsiteCtaFor(policy, row.centerCode);
   return (
     <li>
-      <article className="rcard">
+      <article className="rcard center-result-card">
         <div className="rcard-field">
           <p className="rcard-label">Centro</p>
           <p className="rcard-value">
@@ -287,6 +288,7 @@ export function CentersExplorerPage(): JSX.Element {
         setState({
           status: "ready",
           foundation,
+          sourceUrl: manifest.resourceSnapshots.trainingOfferings.sourceUrl,
           generatedAt:
             manifest.resourceSnapshots.trainingOfferings.sourceUpdatedAt ??
             manifest.resourceSnapshots.trainingOfferings.snapshotFetchedAt,
@@ -411,6 +413,18 @@ export function CentersExplorerPage(): JSX.Element {
     setSearchParams(next);
   }
 
+  function goToPage(page: number): void {
+    const next = new URLSearchParams(searchParams);
+    if (page <= 1) next.delete("page");
+    else next.set("page", String(page));
+    setSearchParams(next);
+    window.requestAnimationFrame(() => {
+      const results = document.getElementById("center-results-summary");
+      results?.scrollIntoView?.({ block: "start", behavior: "instant" });
+      results?.focus({ preventScroll: true });
+    });
+  }
+
   function submitSearch(event: FormEvent<HTMLFormElement>): void {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
@@ -513,6 +527,22 @@ export function CentersExplorerPage(): JSX.Element {
           <p className="caption" style={{ marginTop: "var(--space-2)" }}>
             Oferta formativa · copia del {formatDate(state.generatedAt)}
           </p>
+          <details className="centers-source-review">
+            <summary>Fuente y revisión</summary>
+            <p>
+              <ExternalLink href={state.sourceUrl}>
+                Oferta de Formación Profesional de la Junta de Castilla y León
+              </ExternalLink>
+              . Copia consultada el {formatDate(state.generatedAt)}. Cada
+              resultado combina un centro y un ciclo; un mismo centro puede
+              aparecer varias veces. Las modalidades de una misma combinación se
+              agrupan.
+            </p>
+            <p>
+              Comprueba la oferta vigente en la web del centro antes de
+              solicitar plaza.
+            </p>
+          </details>
         </header>
 
         <button
@@ -668,7 +698,7 @@ export function CentersExplorerPage(): JSX.Element {
           </div>
         </form>
 
-        <div className="result-meta">
+        <div className="result-meta" id="center-results-summary" tabIndex={-1}>
           <p className="result-count" style={{ margin: 0 }}>
             {contextual
               ? `${centerCount} ${centerCount === 1 ? "centro publicado" : "centros publicados"}`
@@ -754,13 +784,7 @@ export function CentersExplorerPage(): JSX.Element {
               type="button"
               aria-label="Página anterior"
               disabled={currentPage === 1}
-              onClick={() => {
-                const next = new URLSearchParams(searchParams);
-                const previousPage = Math.max(1, currentPage - 1);
-                if (previousPage === 1) next.delete("page");
-                else next.set("page", String(previousPage));
-                setSearchParams(next);
-              }}
+              onClick={() => goToPage(Math.max(1, currentPage - 1))}
             >
               Anterior
             </button>
@@ -772,11 +796,7 @@ export function CentersExplorerPage(): JSX.Element {
               type="button"
               aria-label="Página siguiente"
               disabled={currentPage === pageCount}
-              onClick={() => {
-                const next = new URLSearchParams(searchParams);
-                next.set("page", String(Math.min(pageCount, currentPage + 1)));
-                setSearchParams(next);
-              }}
+              onClick={() => goToPage(Math.min(pageCount, currentPage + 1))}
             >
               Siguiente
             </button>
@@ -784,9 +804,8 @@ export function CentersExplorerPage(): JSX.Element {
         ) : null}
 
         <p className="caption">
-          Las URLs de los centros se muestran tal como las publica la fuente; el
-          CTA solo aparece con disponibilidad e identidad verificadas en la
-          auditoría de enlaces
+          Los enlaces de los centros proceden de la fuente oficial y se
+          comprobaron en la revisión de enlaces
           {linkPolicy !== null &&
             ` del ${formatDate(linkPolicy.auditedAt.slice(0, 10))}`}
           . Si un centro no publica modalidad, aparece como “Modalidad no

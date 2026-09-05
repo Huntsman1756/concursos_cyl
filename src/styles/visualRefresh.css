@@ -430,14 +430,16 @@ summary:focus-visible {
 
 .result-section-nav li {
   display: flex;
+  flex: 0 0 auto;
   min-width: 0;
+  max-width: 100%;
 }
 
 .result-section-nav a {
   display: inline-flex;
   min-height: 2.5rem;
   align-items: center;
-  max-width: 100%;
+  max-width: none;
   padding: var(--space-1) var(--space-2);
   margin-inline: calc(var(--space-2) * -1);
   border: 0;
@@ -998,7 +1000,7 @@ summary:focus-visible {
 
 .training-guided-examples {
   max-width: 64rem;
-  margin-bottom: var(--space-8);
+  margin-block: var(--space-6) var(--space-8);
 }
 
 .training-guided-examples > p {

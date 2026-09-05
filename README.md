@@ -95,6 +95,6 @@ Generated public data is rebuilt only through `npm run data:build`. See [DATA_LI
 
 Every push to `main` runs the `Deploy GitHub Pages` workflow: license, contest proof, lint, unit and E2E tests, a Caddy header check and a production build all run on `ubuntu-latest`. Pull requests run the same verification without deploying.
 
-The intended public root is the VPS at <https://salida-cyl.157-90-22-40.sslip.io/>; GitHub Pages at <https://huntsman1756.github.io/concursos_cyl/> is the fallback. The current candidate has not been deployed or verified publicly. Operational details are in [docs/deployment.md](docs/deployment.md).
+The public application is available at <https://salida-cyl.157-90-22-40.sslip.io/>; GitHub Pages at <https://huntsman1756.github.io/concursos_cyl/> is the fallback. Availability of that URL does not certify the current working tree: candidate-specific deployment and gate evidence is recorded in [docs/contest/release-evidence.json](docs/contest/release-evidence.json). Operational details are in [docs/deployment.md](docs/deployment.md).
 
 Project code is MIT licensed. Source data retains the terms declared by each publisher.

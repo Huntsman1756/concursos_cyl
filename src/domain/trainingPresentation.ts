@@ -30,16 +30,28 @@ export function featuredTrainingCoverage(
   rows: readonly MappingCoverage[],
 ): Extract<MappingCoverage, { scope: "program" }>[] {
   const families = new Set<string>();
+  // Demonstrations of different pathways, not a ranking of employability.
+  // A preferred example is eligible only while its published relations exist.
+  const examples = ["ADG02S", "SSC01M", "IFC03S"];
+  const exampleRank = (key: string) => {
+    const index = examples.indexOf(key);
+    return index === -1 ? examples.length : index;
+  };
   return rows
     .filter(
       (row): row is Extract<MappingCoverage, { scope: "program" }> =>
-        row.scope === "program" && row.coverageStatus === "reviewed",
+        row.scope === "program" &&
+        row.coverageStatus === "reviewed" &&
+        row.approvedMappings > 0,
     )
     .sort(
       (left, right) =>
+        exampleRank(left.programKey) - exampleRank(right.programKey) ||
+        right.approvedMappings - left.approvedMappings ||
         left.programTitle.localeCompare(right.programTitle, "es", {
           sensitivity: "base",
-        }) || left.programKey.localeCompare(right.programKey),
+        }) ||
+        left.programKey.localeCompare(right.programKey),
     )
     .filter((row) => {
       if (families.has(row.familyCode)) return false;

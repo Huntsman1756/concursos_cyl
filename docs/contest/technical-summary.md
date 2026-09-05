@@ -3,10 +3,10 @@
 ## Candidato actual
 
 - Estado: candidato local unificado; sin push, tag, release, deploy ni envío externo.
-- Commit fuente de la frontera de datos: `9bad066a1144e6055e087e2c6e64f371521bf10d`.
-- Commit documental del freeze: `fa9598df89f24d3fdbf728a20c81cb7a7d6cf621`.
+- Commit fuente de la frontera de datos: `36659e6a2e127630e72b14b8641504d5dbea7a9e`.
+- Commit documental del freeze: `064d10ed5f48df9e8deec3322f38be7372de5b01`.
 - Snapshot: `20260830120000000-8c6c79fbd2a1`.
-- SHA-256 del manifest: `d5d877f3031fe0c6a590e321bd3a8d0e8cb2cc761a2d95434534ff76216b43ce`.
+- SHA-256 del manifest: `e70a1853ac0f2cf5d25e6192776f88b400aca1536a58380044a8aa1ebc2794df`.
 - Inventario: 22 recursos; 187 programas, 229 centros, 1.294 ofertas formativas y 1.058 ofertas laborales.
 
 ## Resultado de datos

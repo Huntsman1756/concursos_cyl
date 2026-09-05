@@ -368,9 +368,9 @@ describe("training-first search", () => {
     const guidedLinks = within(examples).getAllByRole("link");
     expect(guidedLinks).toHaveLength(3);
     expect(guidedLinks.map((link) => link.getAttribute("href"))).toEqual([
+      "/desde-fp/IFC03S",
       "/desde-fp/ADG01S",
       "/desde-fp/SAN01M",
-      "/desde-fp/IFC03S",
     ]);
     expect(
       within(examples).queryByRole("link", { name: /zeta comercial/i }),

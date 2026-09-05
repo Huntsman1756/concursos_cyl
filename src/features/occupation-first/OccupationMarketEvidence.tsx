@@ -125,6 +125,10 @@ function EvidenceCoverage({
   return (
     <div className="occupation-market-evidence__coverage">
       <p>
+        Ámbito de las cifras: <strong>España</strong>. El desglose de Castilla y
+        León está disponible por provincia.
+      </p>
+      <p>
         Periodo consultado: <strong>{formatPeriod(resource.period)}</strong>.
       </p>
       <p>

@@ -27,7 +27,7 @@ import {
   trainingDetailPath,
 } from "../../app/routePaths";
 import { loadApprovedMappings } from "../../domain/occupation";
-import { longDate } from "../../domain/displayFormat";
+import { formatOfferTitle, longDate } from "../../domain/displayFormat";
 import { buildApprovedExample } from "../../domain/approvedExample";
 import { formatProgramTitle } from "../../domain/trainingPresentation";
 import { EditorialImage } from "../../components/EditorialImage";
@@ -98,7 +98,7 @@ const TASK_TABS: Array<{
     tab: "Estoy mirando una oferta",
     label: "Pega el título de la oferta",
     hint: "Copia el puesto tal y como aparece en la oferta.",
-    action: "Analizar la oferta",
+    action: "Buscar esta oferta",
   },
 ];
 
@@ -526,6 +526,7 @@ export function HomePage() {
                         className="task-tab"
                         id={`home-tab-${task.id}`}
                         role="tab"
+                        aria-label={task.tab}
                         aria-selected={active}
                         aria-controls={`home-panel-${task.id}`}
                         tabIndex={active ? 0 : -1}
@@ -533,7 +534,14 @@ export function HomePage() {
                         onClick={() => chooseSearchMode(task.mode)}
                         onKeyDown={onTaskTabKeyDown}
                       >
-                        {task.tab}
+                        <span className="task-tab__full">{task.tab}</span>
+                        <span className="task-tab__compact" aria-hidden="true">
+                          {task.mode === "training"
+                            ? "Mi FP"
+                            : task.mode === "occupation"
+                              ? "Profesión"
+                              : "Ofertas"}
+                        </span>
                       </button>
                     </li>
                   );
@@ -810,7 +818,9 @@ export function HomePage() {
                     <p className="example-step-kind">
                       Oferta de la copia consultada
                     </p>
-                    <h3 className="h3">{exampleOffer.title}</h3>
+                    <h3 className="h3">
+                      {formatOfferTitle(exampleOffer.title)}
+                    </h3>
                     <p className="meta">{exampleOffer.meta}</p>
                   </div>
                 </li>

@@ -204,31 +204,6 @@ export function TrainingSearchPage() {
       )}
       {status === "ready" && (
         <>
-          <section
-            className="training-guided-examples"
-            aria-label="Ejemplos guiados de ciclos"
-          >
-            <h2>Empieza con un ciclo relacionado</h2>
-            <p>
-              Ejemplos de ciclos con relaciones revisadas; no es el catálogo
-              completo.
-            </p>
-            <ul>
-              {guidedExamples.map(({ row, program }) => (
-                <li key={program.programKey}>
-                  <Link
-                    to={`/desde-fp/${encodeURIComponent(program.programKey)}`}
-                  >
-                    {formatProgramTitle(program.programTitle)}
-                  </Link>
-                  <span>
-                    {trainingLevelLabel(program.level)} · {row.familyName}
-                  </span>
-                </li>
-              ))}
-            </ul>
-          </section>
-
           <form className="training-search" onSubmit={submit}>
             <div className="form-field">
               <TrainingCombobox
@@ -336,6 +311,35 @@ export function TrainingSearchPage() {
               Ver salidas y ofertas
             </button>
           </form>
+          <section
+            className="training-guided-examples"
+            aria-label="Ejemplos guiados de ciclos"
+          >
+            <h2>Empieza con un ciclo relacionado</h2>
+            <p>
+              Ejemplos de ciclos con relaciones revisadas; no es el catálogo
+              completo.
+            </p>
+            <ul>
+              {guidedExamples.map(({ row, program }) => (
+                <li key={program.programKey}>
+                  <Link
+                    to={`/desde-fp/${encodeURIComponent(program.programKey)}`}
+                  >
+                    {formatProgramTitle(program.programTitle)}
+                  </Link>
+                  <span>
+                    {trainingLevelLabel(program.level)} · {row.familyName}
+                    {" · "}
+                    {row.approvedMappings}{" "}
+                    {row.approvedMappings === 1
+                      ? "relación profesional revisada"
+                      : "relaciones profesionales revisadas"}
+                  </span>
+                </li>
+              ))}
+            </ul>
+          </section>
           <section
             className="training-catalog-note"
             aria-label="Alcance del catálogo de FP"

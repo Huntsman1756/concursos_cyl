@@ -597,6 +597,11 @@ export function OfferExplorerPage({
     if (nextPage <= 1) next.delete("page");
     else next.set("page", String(nextPage));
     setSearchParams(next);
+    window.requestAnimationFrame(() => {
+      const results = document.getElementById("offer-results-heading");
+      results?.scrollIntoView?.({ block: "start", behavior: "instant" });
+      results?.focus({ preventScroll: true });
+    });
   }
 
   if (state.status === "loading") {
@@ -779,7 +784,7 @@ export function OfferExplorerPage({
         aria-live="polite"
       >
         <div className="result-meta offer-explorer__count">
-          <h2 className="result-count" id="offer-results-heading">
+          <h2 className="result-count" id="offer-results-heading" tabIndex={-1}>
             {resultsSummary}
           </h2>
           {isGlobal && (

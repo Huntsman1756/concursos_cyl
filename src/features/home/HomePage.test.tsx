@@ -443,7 +443,7 @@ describe("HomePage task selector", () => {
     });
     await user.type(query, "cocina");
     await user.click(
-      screen.getByRole("button", { name: "Analizar la oferta" }),
+      screen.getByRole("button", { name: "Buscar esta oferta" }),
     );
     expect(screen.getByTestId("location")).toHaveTextContent(
       "/desde-oferta?query=cocina",
@@ -574,7 +574,7 @@ describe("HomePage real example (approved only)", () => {
     ).toBeVisible();
     expect(
       await within(section).findByText(
-        "EMPLEADOS ADMINISTRATIVOS DE CONTABILIDAD, EN GENERAL",
+        "Empleados Administrativos de Contabilidad, en General",
       ),
     ).toBeVisible();
     expect(

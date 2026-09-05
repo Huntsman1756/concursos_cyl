@@ -304,7 +304,7 @@ La representatividad de las tablas nacionales es la declarada por el Ministerio:
 
 ## Producto y release
 
-Las rutas internas son recorridos de producto; la candidatura usa únicamente la raíz pública. La experiencia no requiere cuentas y no conserva selecciones, búsquedas, respuestas ni resultados. Solo recuerda en \`localStorage\` la preferencia no sensible del modo de búsqueda («desde FP» o «desde ocupación»). ${visualVerificationStatus}
+Las rutas internas son recorridos de producto; la candidatura usa únicamente la raíz pública. La experiencia no requiere cuentas y no conserva selecciones, búsquedas, respuestas ni resultados. No guarda preferencias en almacenamiento local. Los filtros y términos presentes en la URL pueden quedar en el historial del navegador. ${visualVerificationStatus}
 
 El objetivo de ampliar la cobertura está condicionado a evidencia: el freeze actual registra ${freeze.coverage.distinctQualificationCount} cualificaciones distintas y deja ${freeze.coverage.deferredProgramCount} programas diferidos. ${releaseStatus}
 

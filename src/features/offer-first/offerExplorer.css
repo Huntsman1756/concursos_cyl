@@ -132,13 +132,12 @@
 
 .offer-explorer__list {
   display: grid;
-  gap: 0;
-  border-top: 1px solid var(--color-border-strong);
+  gap: var(--space-3);
 }
 
 .offer-row {
   min-width: 0;
-  padding: var(--panel-padding-md) 0;
+  padding: var(--panel-padding-md);
   border-bottom: 1px solid var(--color-border);
 }
 
