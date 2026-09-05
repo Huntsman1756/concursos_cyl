@@ -1,5 +1,6 @@
 import { cleanup, render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import { useEffect } from "react";
 import { MemoryRouter, Route, Routes, useNavigate } from "react-router-dom";
 import { afterEach, describe, expect, it, vi } from "vitest";
 
@@ -33,7 +34,20 @@ function NavButtons() {
   );
 }
 
-function setup(initialPath = "/inicio") {
+function ShortDestination() {
+  useEffect(() => {
+    // Model the scroll clamp emitted after a shorter route has painted.
+    Object.defineProperty(window, "scrollY", {
+      configurable: true,
+      writable: true,
+      value: 322,
+    });
+    window.dispatchEvent(new Event("scroll"));
+  }, []);
+  return <h1>Organizaciones</h1>;
+}
+
+function setup(initialPath = "/inicio", simulateScrollClamp = false) {
   const mainRef: React.RefObject<HTMLElement | null> = {
     current: document.createElement("main"),
   };
@@ -46,7 +60,12 @@ function setup(initialPath = "/inicio") {
       <Routes>
         <Route path="/inicio" element={<h1>Inicio</h1>} />
         <Route path="/desde-ocupacion" element={<h1>Desde una profesión</h1>} />
-        <Route path="/para-organizaciones" element={<h1>Organizaciones</h1>} />
+        <Route
+          path="/para-organizaciones"
+          element={
+            simulateScrollClamp ? <ShortDestination /> : <h1>Organizaciones</h1>
+          }
+        />
       </Routes>
     </MemoryRouter>,
   );
@@ -109,7 +128,7 @@ describe("useRouteScrollFocus", () => {
     }
   });
 
-  it("restores the saved scroll offset on Back/Forward (POP) navigation", async () => {
+  it("restores the previous offset even when the shorter destination emits a scroll clamp", async () => {
     const scrollToSpy = vi.fn();
     vi.stubGlobal("scrollTo", scrollToSpy);
     const scrollYDescriptor = Object.getOwnPropertyDescriptor(
@@ -122,7 +141,7 @@ describe("useRouteScrollFocus", () => {
       value: 500,
     });
     try {
-      setup("/inicio");
+      setup("/inicio", true);
       // The user scrolls home; the scroll event records the offset for the
       // current history entry.
       window.dispatchEvent(new Event("scroll"));

@@ -114,6 +114,9 @@ test.describe("2026-09-04 Chrome audit regressions", () => {
   }) => {
     await page.setViewportSize({ width: 1252, height: 800 });
     await page.goto("/");
+    await expect(
+      page.getByRole("combobox", { name: "Busca tu ciclo" }),
+    ).toBeVisible();
     await page.evaluate(() =>
       window.scrollTo(0, document.body.scrollHeight / 2),
     );
@@ -204,10 +207,14 @@ test.describe("2026-09-04 Chrome audit regressions", () => {
   }) => {
     await page.setViewportSize({ width: 1252, height: 800 });
     await page.goto("/");
+    await expect(
+      page.getByRole("combobox", { name: "Busca tu ciclo" }),
+    ).toBeVisible();
     // Scroll to a known offset and navigate via a DOM click event so the
     // harness performs no actionability scrolling.
     await page.evaluate(() => window.scrollTo(0, 900));
     await page.waitForTimeout(250);
+    expect(await page.evaluate(() => window.scrollY)).toBe(900);
     const link = page.getByRole("link", { name: "Profesiones y formación" });
     await link.dispatchEvent("click");
     await expect(
