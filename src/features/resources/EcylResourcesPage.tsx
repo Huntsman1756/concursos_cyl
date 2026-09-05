@@ -36,8 +36,8 @@ type State =
       publicCallsReferenceDate: string;
     };
 
-const COURSE_PAGE_SIZE = 40;
-const CERTIFICATE_PAGE_SIZE = 60;
+const COURSE_PAGE_SIZE = 8;
+const CERTIFICATE_PAGE_SIZE = 8;
 const MISSING_COURSE_METADATA = "No publicado en la ficha";
 
 const PROFESSIONAL_FAMILY_LABELS: Readonly<Record<string, string>> = {

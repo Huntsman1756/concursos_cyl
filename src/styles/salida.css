@@ -316,6 +316,7 @@ select:focus-visible,
 }
 
 .section--alt {
+  padding-inline: var(--page-gutter);
   background: var(--color-surface-alt);
 }
 
@@ -941,12 +942,12 @@ select:focus-visible,
   display: grid;
   grid-template-columns: 1fr;
   gap: var(--space-5);
+  text-align: center;
 }
 
 @media (min-width: 768px) {
   .proof-rail {
-    grid-template-columns: repeat(3, 1fr) 1.4fr;
-    gap: 0;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 }
 
@@ -961,7 +962,6 @@ select:focus-visible,
 
   .proof-stat:first-child {
     border-left: 0;
-    padding-left: 0;
   }
 }
 
@@ -972,30 +972,25 @@ select:focus-visible,
   font-variant-numeric: tabular-nums;
 }
 
-.proof-stat-label {
+.proof-stat-label,
+.proof-stat-date {
   margin-top: var(--space-1);
   color: var(--color-text-muted);
   font-size: var(--text-small);
 }
 
 .proof-stat-date {
-  margin-top: var(--space-1);
-  color: var(--color-text-muted);
-  font-size: var(--text-small);
   line-height: var(--text-small-line-height);
 }
 
 .proof-note {
-  align-self: center;
-  padding-left: var(--space-4);
-  border-left: 1px solid var(--color-border);
+  grid-column: 1 / -1;
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--color-border);
 }
 
-@media (max-width: 767px) {
-  .proof-note {
-    border-left: 0;
-    padding-left: 0;
-  }
+.proof-rail ~ .caption {
+  text-align: center;
 }
 
 /* info button + popover */
@@ -1063,23 +1058,18 @@ select:focus-visible,
 /* ----------------------------------------------------------- real example */
 
 .example-flow {
-  position: relative;
   display: grid;
-  gap: 0;
-  max-width: 44rem;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 28rem), 1fr));
+  column-gap: var(--space-7);
   margin: 0;
   padding: 0;
   list-style: none;
 }
 
 .example-step {
-  position: relative;
   display: flex;
   gap: var(--space-4);
   padding-block: var(--space-4);
-}
-
-.example-step + .example-step {
   border-top: 1px solid var(--color-border);
 }
 
@@ -1604,8 +1594,8 @@ select:focus-visible,
 }
 
 .table-actions {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  justify-items: start;
   gap: var(--space-2);
 }
 

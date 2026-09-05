@@ -34,7 +34,7 @@ type Foundation = LoadedFoundationResourceSubset<
   "programs" | "centers" | "trainingOfferings"
 >;
 
-const GLOBAL_PAGE_SIZE = 25;
+const PAGE_SIZE = 25;
 
 const FILTER_PARAMS = [
   "query",
@@ -257,7 +257,6 @@ export function CentersExplorerPage(): JSX.Element {
   const pageParam = Number.parseInt(searchParams.get("page") ?? "1", 10);
   const requestedPage =
     Number.isFinite(pageParam) && pageParam > 0 ? pageParam : 1;
-  const paginationEnabled = programKey === undefined;
 
   useRouteReady(state.status !== "loading");
 
@@ -363,41 +362,29 @@ export function CentersExplorerPage(): JSX.Element {
     [rows],
   );
 
-  const pageCount = paginationEnabled
-    ? Math.max(1, Math.ceil(filteredRows.length / GLOBAL_PAGE_SIZE))
-    : 1;
-  const currentPage = paginationEnabled
-    ? Math.min(requestedPage, pageCount)
-    : 1;
-  const visibleRows = paginationEnabled
-    ? filteredRows.slice(
-        (currentPage - 1) * GLOBAL_PAGE_SIZE,
-        currentPage * GLOBAL_PAGE_SIZE,
-      )
-    : filteredRows;
+  const pageCount = Math.max(1, Math.ceil(filteredRows.length / PAGE_SIZE));
+  const currentPage = Math.min(requestedPage, pageCount);
+  const visibleRows = filteredRows.slice(
+    (currentPage - 1) * PAGE_SIZE,
+    currentPage * PAGE_SIZE,
+  );
 
   useEffect(() => {
     if (state.status !== "ready") return;
-    const canonicalPage =
-      paginationEnabled && currentPage > 1 ? String(currentPage) : null;
+    const canonicalPage = currentPage > 1 ? String(currentPage) : null;
     if (searchParams.get("page") === canonicalPage) return;
     const next = new URLSearchParams(searchParams);
     if (canonicalPage === null) next.delete("page");
     else next.set("page", canonicalPage);
     setSearchParams(next, { replace: true });
-  }, [
-    currentPage,
-    paginationEnabled,
-    searchParams,
-    setSearchParams,
-    state.status,
-  ]);
+  }, [currentPage, searchParams, setSearchParams, state.status]);
 
   const firstVisibleResult =
-    filteredRows.length === 0 ? 0 : (currentPage - 1) * GLOBAL_PAGE_SIZE + 1;
-  const lastVisibleResult = paginationEnabled
-    ? Math.min(currentPage * GLOBAL_PAGE_SIZE, filteredRows.length)
-    : filteredRows.length;
+    filteredRows.length === 0 ? 0 : (currentPage - 1) * PAGE_SIZE + 1;
+  const lastVisibleResult = Math.min(
+    currentPage * PAGE_SIZE,
+    filteredRows.length,
+  );
   const centerCount = new Set(filteredRows.map((row) => row.centerCode)).size;
   const provinceCount = new Set(filteredRows.map((row) => row.province)).size;
   const activeFilterKeys = FILTER_PARAMS.filter(
@@ -735,7 +722,7 @@ export function CentersExplorerPage(): JSX.Element {
               <table className="result-table" id="center-results-table">
                 <caption className="sr-only">
                   Centros y ciclos de formación disponibles
-                  {paginationEnabled && pageCount > 1
+                  {pageCount > 1
                     ? `. Página ${currentPage} de ${pageCount}`
                     : ""}
                 </caption>
@@ -770,7 +757,7 @@ export function CentersExplorerPage(): JSX.Element {
           </>
         )}
 
-        {paginationEnabled && pageCount > 1 ? (
+        {pageCount > 1 ? (
           <nav
             className="pagination"
             aria-label="Paginación de opciones formativas"

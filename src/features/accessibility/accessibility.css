@@ -1,13 +1,15 @@
 .accessibility-page,
 .organizations-page {
   display: grid;
-  gap: var(--space-8);
-  max-width: 72rem;
+  gap: var(--space-6);
+  max-width: 64rem;
   margin: 0 auto;
 }
 
 .support-page-intro {
   max-width: var(--reading-max);
+  margin-inline: auto;
+  text-align: center;
 }
 
 .support-page-intro__eyebrow,
@@ -42,7 +44,7 @@
 .accessibility-status {
   display: grid;
   grid-template-columns: minmax(15rem, 0.9fr) minmax(0, 1.5fr);
-  gap: var(--space-8);
+  gap: var(--space-5);
   padding-block: var(--space-6);
   border-block: 1px solid var(--color-border);
 }

@@ -96,7 +96,10 @@ export function IncomeEvidenceCard({
   );
 
   return (
-    <section className="income-evidence-card" aria-labelledby={headingId}>
+    <section
+      className={`income-evidence-card income-evidence-card--${groupLabels ? "comparison" : "reference"}`}
+      aria-labelledby={headingId}
+    >
       <header className="income-evidence-card__header">
         <p className="income-evidence-card__scope">{scopeLabel}</p>
         <h2 id={headingId}>{heading}</h2>
@@ -171,7 +174,7 @@ export function IncomeEvidenceCard({
                   tabIndex={0}
                 >
                   <table>
-                    <caption className="visually-hidden">
+                    <caption className="sr-only">
                       Datos técnicos: {item.label}
                     </caption>
                     <thead>

@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 
 import { useRouteReady } from "../../app/RouteReadyContext";
+import "../accessibility/accessibility.css";
 import "./organizations.css";
 
 export function OrganizationsPage() {

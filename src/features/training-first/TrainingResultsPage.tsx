@@ -615,7 +615,10 @@ export function TrainingResultsPage() {
               ? "centro donde estudiar"
               : "centros donde estudiar"}
           </span>
-          <InfoDisclosure label="De dónde sale cada cifra">
+          <InfoDisclosure
+            label="De dónde sale cada cifra"
+            trigger="Fuente y revisión"
+          >
             <ul className="summary-sources">
               <li>
                 Profesiones: relación FP-ocupación revisada.{" "}
@@ -935,7 +938,9 @@ export function TrainingResultsPage() {
                   {new Intl.ListFormat("es-ES", {
                     style: "narrow",
                     type: "conjunction",
-                  }).format(centers.map((center) => center.locality))}
+                  }).format([
+                    ...new Set(centers.map((center) => center.locality)),
+                  ])}
                 </span>
               </li>
             ))}
