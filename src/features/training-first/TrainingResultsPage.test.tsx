@@ -994,7 +994,7 @@ describe("TrainingResultsPage", () => {
       within(card).getByRole("link", { name: /Ver oferta oficial/ }),
     ).toHaveAttribute("href", offer.originalUrl);
     const infoDisclosure = within(card).getByLabelText(
-      "De dónde sale esta información (Programador web para servicios públicos)",
+      "Fuente y revisión de esta oferta (Programador web para servicios públicos)",
     );
     await user.click(infoDisclosure);
     const headings = Array.from(

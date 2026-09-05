@@ -73,6 +73,20 @@ test("public resources expose the runtime open-call truth with provenance", asyn
   const certificates = page.getByRole("region", {
     name: "Certificados de profesionalidad",
   });
+  const sectionNav = page.getByRole("navigation", {
+    name: "Secciones de esta página",
+  });
+  for (const [label, id] of [
+    ["Certificados", "certificates-heading"],
+    ["Cursos ECYL", "courses-heading"],
+    ["Convocatorias", "public-calls-heading"],
+  ]) {
+    await sectionNav.getByRole("link", { name: label, exact: true }).click();
+    await expect(page.locator(`#${id}`)).toBeFocused();
+    await expect(page).toHaveURL(new RegExp(`#${id}$`));
+  }
+  await expect(courses).toBeVisible();
+  await expect(certificates).toBeVisible();
   await expect(courses.getByText(/^8 de \d+ resultados$/u)).toBeVisible();
   await page.getByRole("button", { name: "Mostrar más cursos" }).click();
   await expect(courses.getByText(/^16 de \d+ resultados$/u)).toBeVisible();

@@ -348,8 +348,16 @@ describe("EcylResourcesPage", () => {
     if (card === null) throw new Error("Expected the course card.");
 
     expect(screen.getByText("Identificador ECYL: course-001")).toBeVisible();
-    expect(within(card).getByText("León · Presencial")).toBeVisible();
-    expect(within(card).getByText("Administración · 100 h")).toBeVisible();
+    for (const [label, value] of [
+      ["Localidad", "León"],
+      ["Modalidad", "Presencial"],
+      ["Materia", "Administración"],
+      ["Duración", "100 h"],
+    ]) {
+      const row = within(card).getAllByText(label)[0].closest("div");
+      expect(row).toHaveTextContent(value);
+      expect(row).toBeVisible();
+    }
     const summary = within(card).getByText("Ver todos los datos publicados");
     const details = summary.closest("details");
     if (details === null) throw new Error("Expected a metadata disclosure.");
@@ -393,6 +401,11 @@ describe("EcylResourcesPage", () => {
     expect(within(card).getByText(/Datos no publicados:/u)).toHaveTextContent(
       "Datos no publicados: fecha de inicio, plazo de inscripción, fecha de fin, requisitos.",
     );
+    for (const label of ["Localidad", "Modalidad", "Duración", "Materia"]) {
+      const row = within(card).getAllByText(label)[0].closest("div");
+      expect(row).toHaveTextContent("No publicada");
+      expect(row).toBeVisible();
+    }
 
     for (const label of [
       "Modalidad",

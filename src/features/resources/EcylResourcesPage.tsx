@@ -12,6 +12,7 @@ import {
   loadPublicEmploymentCalls,
 } from "../../data/generatedDataClient";
 import { ExternalLink } from "../../components/ExternalLink";
+import { ResultSectionNav } from "../../components/ResultSectionNav";
 import { LoadingSkeleton } from "../../components/LoadingSkeleton";
 import { PageEyebrow } from "../../components/PageEyebrow";
 import { useRouteReady } from "../../app/RouteReadyContext";
@@ -39,6 +40,11 @@ type State =
 const COURSE_PAGE_SIZE = 8;
 const CERTIFICATE_PAGE_SIZE = 8;
 const MISSING_COURSE_METADATA = "No publicado en la ficha";
+const RESOURCE_SECTIONS = [
+  { href: "#public-calls-heading", label: "Convocatorias" },
+  { href: "#courses-heading", label: "Cursos ECYL" },
+  { href: "#certificates-heading", label: "Certificados" },
+] as const;
 
 const PROFESSIONAL_FAMILY_LABELS: Readonly<Record<string, string>> = {
   ADG: "Administración y Gestión",
@@ -234,6 +240,10 @@ export function EcylResourcesPage() {
         )}
       </header>
 
+      {state.status === "ready" && (
+        <ResultSectionNav links={RESOURCE_SECTIONS} />
+      )}
+
       <div className="resources-filters">
         <label>
           <span>Buscar por nombre, localidad o código</span>
@@ -282,7 +292,7 @@ export function EcylResourcesPage() {
             aria-labelledby="public-calls-heading"
           >
             <div className="resources-section-heading">
-              <h2 id="public-calls-heading">
+              <h2 id="public-calls-heading" tabIndex={-1}>
                 Convocatorias que figuraban abiertas en la copia del{" "}
                 {state.publicCallsReferenceDate !== null
                   ? displayDate(state.publicCallsReferenceDate)
@@ -358,7 +368,9 @@ export function EcylResourcesPage() {
           <div className="resources-columns">
             <section aria-labelledby="courses-heading">
               <div className="resources-section-heading">
-                <h2 id="courses-heading">Cursos del ECYL</h2>
+                <h2 id="courses-heading" tabIndex={-1}>
+                  Cursos del ECYL
+                </h2>
                 <span>
                   {visibleCourses.length} de {matchingCourses.length} resultados
                 </span>
@@ -377,18 +389,30 @@ export function EcylResourcesPage() {
                 ) : (
                   visibleCourses.map((course) => (
                     <article className="resource-card" key={course.id}>
-                      <p className="resource-card__code">
-                        Identificador ECYL: {course.id}
-                      </p>
                       <h3>{readableOfficialTitle(course.title)}</h3>
-                      <p className="resource-card__summary">
-                        {displayCourseText(course.locality)} ·{" "}
-                        {displayCourseText(course.modality)}
-                      </p>
-                      <p className="resource-card__summary">
-                        {displayCourseText(course.subject)} ·{" "}
-                        {displayCourseDuration(course.durationHours)}
-                      </p>
+                      <dl className="resource-card__metadata resource-card__facts">
+                        <div>
+                          <dt>Localidad</dt>
+                          <dd>{course.locality ?? "No publicada"}</dd>
+                        </div>
+                        <div>
+                          <dt>Modalidad</dt>
+                          <dd>{course.modality ?? "No publicada"}</dd>
+                        </div>
+                        <div>
+                          <dt>Duración</dt>
+                          <dd>
+                            {course.durationHours === null
+                              ? "No publicada"
+                              : displayCourseDuration(course.durationHours)}
+                          </dd>
+                        </div>
+                        <div>
+                          <dt>Materia</dt>
+                          <dd>{course.subject ?? "No publicada"}</dd>
+                        </div>
+                      </dl>
+                      <p className="caption">Identificador ECYL: {course.id}</p>
                       {course.startDate !== null && (
                         <p className="resource-card__summary">
                           Inicio: {displayCourseDate(course.startDate)}
@@ -482,7 +506,7 @@ export function EcylResourcesPage() {
 
             <section aria-labelledby="certificates-heading">
               <div className="resources-section-heading">
-                <h2 id="certificates-heading">
+                <h2 id="certificates-heading" tabIndex={-1}>
                   Certificados de profesionalidad
                 </h2>
                 <span>

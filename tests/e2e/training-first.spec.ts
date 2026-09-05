@@ -548,7 +548,7 @@ test("the intercepted full DAW card makes a declared gap, action, filter, and ev
   await expect(card).toBeVisible();
 
   const evidenceDisclosure = card.locator(
-    'summary[aria-label="De dónde sale esta información (Desarrollador web para servicios públicos)"]',
+    'summary[aria-label="Fuente y revisión de esta oferta (Desarrollador web para servicios públicos)"]',
   );
   await tabTo(page, evidenceDisclosure);
   await expect(evidenceDisclosure).toBeFocused();

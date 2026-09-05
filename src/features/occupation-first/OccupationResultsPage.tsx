@@ -200,7 +200,10 @@ export function OccupationResultsPage() {
           <span className="training-page__code">
             CNO-11 {occupation.classificationCode}
           </span>
-          <InfoDisclosure label="Fuente de esta profesión">
+          <InfoDisclosure
+            label="Fuente y revisión de esta profesión"
+            trigger="Fuente y revisión"
+          >
             <p>Denominación oficial del catálogo CNO-11 (BOE, RD 1591/2010).</p>
             <ExternalLink href={occupation.sourceUrl}>
               Ver fuente oficial

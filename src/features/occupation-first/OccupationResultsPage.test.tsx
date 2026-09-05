@@ -349,7 +349,7 @@ describe("occupation-first results", () => {
     if (header === null) throw new Error("Expected the occupation header.");
     await userEvent
       .setup()
-      .click(within(header).getByText("Fuente de esta profesión"));
+      .click(within(header).getByText("Fuente y revisión de esta profesión"));
     expect(
       within(header).getByRole("link", {
         name: /^Ver fuente oficial/u,
@@ -472,7 +472,7 @@ describe("occupation-first results", () => {
       .closest("header");
     expect(header).not.toBeNull();
     const professionSource = within(header!).getByText(
-      "Fuente de esta profesión",
+      "Fuente y revisión de esta profesión",
     );
     expect(professionSource.closest("details")).not.toBeNull();
     await userEvent.setup().click(professionSource);

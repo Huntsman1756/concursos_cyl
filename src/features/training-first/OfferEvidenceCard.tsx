@@ -186,7 +186,8 @@ export function OfferEvidenceCard(props: OfferEvidenceCardProps) {
             <Icon name="external-link" size={16} />
           </ExternalLink>
           <InfoDisclosure
-            label={`De dónde sale esta información (${props.offer.title})`}
+            label={`Fuente y revisión de esta oferta (${props.offer.title})`}
+            trigger="Fuente y revisión"
           >
             <TraceabilityContent offer={props.offer} match={props.match} />
           </InfoDisclosure>

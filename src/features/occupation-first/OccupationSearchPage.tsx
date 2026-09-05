@@ -108,13 +108,6 @@ export function OccupationSearchPage() {
       )}
       {state.status === "ready" && (
         <form className="training-search search-card" onSubmit={submit}>
-          <div className="search-card__intro">
-            <h2>Busca en el catálogo oficial de profesiones</h2>
-            <p>
-              También puedes escribir un nombre coloquial: solo verás las
-              relaciones comprobadas.
-            </p>
-          </div>
           <OccupationCombobox
             occupations={state.occupations}
             aliases={state.aliases}
@@ -122,6 +115,10 @@ export function OccupationSearchPage() {
             onConfirm={setConfirmedOccupation}
             onClear={() => setConfirmedOccupation(null)}
           />
+          <p className="coverage-note">
+            Ejemplos: programación web, asistentes domiciliarios o agentes
+            comerciales.
+          </p>
           <button
             className="primary-button"
             type="submit"
