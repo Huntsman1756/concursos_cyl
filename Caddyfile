@@ -12,6 +12,22 @@
 		Referrer-Policy "strict-origin-when-cross-origin"
 		X-Content-Type-Options "nosniff"
 	}
-	try_files {path} /index.html
-	file_server
+
+	# Data resources must never fall back to the SPA shell: a missing snapshot
+	# file served as index.html (HTTP 200, text/html) under a year-long
+	# immutable cache policy poisons browsers permanently. Missing data files
+	# are plain 404s, stripped of cacheability by handle_errors.
+	handle /data/* {
+		file_server
+	}
+
+	handle {
+		try_files {path} /index.html
+		file_server
+	}
+
+	handle_errors {
+		header Cache-Control "no-store"
+		respond "Recurso no encontrado" 404
+	}
 }
