@@ -23,6 +23,7 @@ export type ContestSubmissionDocuments = {
 };
 
 export type ContestDeploymentEvidence = {
+  method?: "manual-vps";
   status: "pending" | "verified";
   commitSha: string | null;
   workflowRunId: string | null;
@@ -126,7 +127,7 @@ function renderApplicationSummary(freeze: ContestFreeze): string {
 
 ## Convocatoria
 
-Candidatura al [X Concurso de Datos Abiertos de Castilla y León](${CONTEST_URL}), categoría **Productos y Servicios**. El plazo oficial finaliza el **21 de septiembre de 2026** y la presentación se realiza mediante la [sede electrónica](${REGISTRATION_URL}).
+Candidatura al [X Concurso de Datos Abiertos de Castilla y León](${CONTEST_URL}), categoría **Productos y Servicios**. El expediente recoge el **21 de septiembre de 2026** como fecha de cierre, pendiente de comprobación final en el formulario oficial y la presentación se realiza mediante la [sede electrónica](${REGISTRATION_URL}).
 
 ## Problema y audiencia
 
@@ -175,19 +176,23 @@ function renderTechnicalEvidence(
       ? `\`${deployment.commitSha}\``
       : "**PENDIENTE DE DESPLIEGUE Y VERIFICACIÓN**";
   const workflowRun =
-    deployment.status === "verified" && deployment.workflowRunId !== null
-      ? `\`${deployment.workflowRunId}\``
-      : "**PENDIENTE DE DESPLIEGUE Y VERIFICACIÓN**";
+    deployment.method === "manual-vps"
+      ? "No aplica: despliegue manual VPS; véase [evidencia C15](release-c15.md)"
+      : deployment.status === "verified" && deployment.workflowRunId !== null
+        ? `\`${deployment.workflowRunId}\``
+        : "**PENDIENTE DE DESPLIEGUE Y VERIFICACIÓN**";
   const deploymentNote =
-    deployment.status === "verified" && deployment.verifiedAt !== null
-      ? candidatePlan === undefined
-        ? `El release público se verificó con el commit ${deploymentCommit} y el run ${workflowRun} el ${deployment.verifiedAt}.`
-        : `La baseline funcional publicada se verificó con el commit ${deploymentCommit} y el run ${workflowRun} el ${deployment.verifiedAt}.`
-      : "Estos dos campos no se inventan antes de ejecutar y verificar el release.";
+    deployment.method === "manual-vps"
+      ? `La publicación manual VPS del commit ${deploymentCommit} se verificó el ${deployment.verifiedAt}. Véase [release-c15.md](release-c15.md).`
+      : deployment.status === "verified" && deployment.verifiedAt !== null
+        ? candidatePlan === undefined
+          ? `El release público se verificó con el commit ${deploymentCommit} y el método de publicación ${workflowRun} el ${deployment.verifiedAt}.`
+          : `La baseline funcional publicada se verificó con el commit ${deploymentCommit} y el método de publicación ${workflowRun} el ${deployment.verifiedAt}.`
+        : "Estos dos campos no se inventan antes de ejecutar y verificar el release.";
   const reproducibilityIntro =
     (deployment.releaseGatesVerified ?? deployment.status === "verified")
       ? "Comandos ejecutados y ligados al commit de publicación en `release-evidence.json`:"
-      : "Comandos previstos para repetir las comprobaciones. Este documento no los da por ejecutados hasta que `release-evidence.json` quede verificado y ligado al commit de publicación:";
+      : "Catálogo de comandos de reproducción; no es una transcripción de una ejecución completa. Los comandos y resultados efectivamente ejecutados sobre C15 están diferenciados en [release-c15.md](release-c15.md). La captura de datos se ejecuta aparte; para reproducir C15 se usa su instantánea congelada:";
   const releaseTraceability =
     deployment.releaseTag === null || deployment.releaseTag === undefined
       ? ""
@@ -241,7 +246,6 @@ La cifra de ofertas es una unión de IDs de ofertas que pasan las reglas de matc
 ${reproducibilityIntro}
 
 \`\`\`text
-npm run data:build
 npm test -- --run
 npm run test:e2e -- --workers=2
 npm run lint
@@ -255,7 +259,7 @@ npm run analysis:pilot:report:check
 npm exec -- tsx scripts/release/validateContestFreeze.ts
 \`\`\`
 
-La revisión independiente confirmó el manifest, sus ${Object.keys(freeze.manifest.resourceSnapshots).length} recursos, los conjuntos de relaciones y la ausencia de cambios en las rutas de frontera congelada (${CONTEST_FREEZE_SOURCE_PATHS.map((sourcePath) => `\`${sourcePath}\``).join(", ")}) desde el commit fuente. Las rutas de UI, búsqueda y print quedan fuera de esta frontera y no se presentan como parte del freeze.
+La validación estructural comprueba el manifest, sus ${Object.keys(freeze.manifest.resourceSnapshots).length} recursos, los conjuntos de relaciones y la ausencia de cambios en las rutas de frontera congelada (${CONTEST_FREEZE_SOURCE_PATHS.map((sourcePath) => `\`${sourcePath}\``).join(", ")}) desde el commit fuente. Las rutas de UI, búsqueda y print quedan fuera de esta frontera y no se presentan como parte del freeze.
 
 ## ${candidatePlan === undefined ? "Despliegue" : "Baseline funcional verificada"}
 
@@ -265,6 +269,8 @@ La revisión independiente confirmó el manifest, sus ${Object.keys(freeze.manif
 ${releaseTraceability}${versionJsonTraceability}
 
 ${deploymentNote}
+
+${deployment.method === "manual-vps" ? "## Evidencia pública C15 y pendientes\n\nC15 está publicado y verificado. [Release C15](release-c15.md) conserva los resultados reales y capturas públicas. El inventario A4 anterior es histórico. El estado pendiente del gate conjunto no equivale a ausencia de despliegue. NVDA y el piloto real siguen pendientes. No se ha enviado la candidatura." : ""}
 
 ${renderTemporalReleaseStatus(candidatePlan)}
 `;
@@ -308,6 +314,8 @@ Las rutas internas son recorridos de producto; la candidatura usa únicamente la
 
 El objetivo de ampliar la cobertura está condicionado a evidencia: el freeze actual registra ${freeze.coverage.distinctQualificationCount} cualificaciones distintas y deja ${freeze.coverage.deferredProgramCount} programas diferidos. ${releaseStatus}
 
+${deployment.method === "manual-vps" ? "## Evidencia pública C15 y pendientes\n\nC15 está publicado y verificado. [Release C15](release-c15.md) conserva los resultados reales y capturas públicas. El inventario A4 anterior es histórico. El estado pendiente del gate conjunto no equivale a ausencia de despliegue. NVDA y el piloto real siguen pendientes. No se ha enviado la candidatura." : ""}
+
 ${renderTemporalReleaseStatus(candidatePlan)}
 `;
 }
@@ -322,16 +330,18 @@ function renderSubmissionChecklist(
       ? `\`${deployment.commitSha}\``
       : "**PENDIENTE DE DESPLIEGUE Y VERIFICACIÓN**";
   const workflowRun =
-    deployment.status === "verified" && deployment.workflowRunId !== null
-      ? `\`${deployment.workflowRunId}\``
-      : "**PENDIENTE DE DESPLIEGUE Y VERIFICACIÓN**";
+    deployment.method === "manual-vps"
+      ? "No aplica: despliegue manual VPS; véase [evidencia C15](release-c15.md)"
+      : deployment.status === "verified" && deployment.workflowRunId !== null
+        ? `\`${deployment.workflowRunId}\``
+        : "**PENDIENTE DE DESPLIEGUE Y VERIFICACIÓN**";
   const releaseGate =
     (deployment.releaseGatesVerified ?? deployment.status === "verified")
       ? "- [x] Ejecutar los gates de release y verificar la aplicación pública."
-      : "- [ ] Ejecutar los gates de release y verificar la aplicación pública.";
+      : "- [ ] Cerrar el gate documental conjunto; comprobar el alcance de pruebas ya ejecutadas en la evidencia de la release.";
   const deploymentGate =
     deployment.status === "verified"
-      ? "- [x] Rellenar el commit desplegado y el run del workflow con datos observados."
+      ? "- [x] Registrar el commit publicado y su método de despliegue con datos observados."
       : "- [ ] Rellenar el commit desplegado y el run del workflow con datos observados.";
   const releaseTraceability =
     deployment.releaseTag === null || deployment.releaseTag === undefined
@@ -350,9 +360,11 @@ function renderSubmissionChecklist(
       : "el manifiesto contiene las capturas actuales de la baseline, ligadas a su commit de publicación."
     : "las 13 capturas existentes son históricas.";
   const automatedCaptureGate =
-    deployment.capturesAreCurrent && deployment.captureCount !== null
-      ? `- [x] Captura automatizada A4${candidatePlan === undefined ? "" : " de la baseline"}: ${deployment.captureCount}/${deployment.captureCount} capturas actuales recapturadas y validadas en \`docs/contest/evidence-capture.json\`.`
-      : "- [ ] Captura automatizada A4: pendiente de recaptura y validación.";
+    deployment.method === "manual-vps"
+      ? "- [x] Incorporar las capturas públicas y el registro de comprobación C15; el inventario A4 anterior se conserva como histórico."
+      : deployment.capturesAreCurrent && deployment.captureCount !== null
+        ? `- [x] Captura automatizada A4${candidatePlan === undefined ? "" : " de la baseline"}: ${deployment.captureCount}/${deployment.captureCount} capturas actuales recapturadas y validadas en \`docs/contest/evidence-capture.json\`.`
+        : "- [ ] Captura automatizada A4: pendiente de recaptura y validación.";
   const publicReviewLabel =
     candidatePlan === undefined
       ? "release actual"
@@ -363,7 +375,7 @@ function renderSubmissionChecklist(
   let figuresConfirmationGate: string;
   if (deployment.status === "pending") {
     visualEvidenceLine =
-      "captura visual actual pendiente; las 13 capturas anteriores son históricas.";
+      "El inventario A4 conserva 13 capturas históricas; se conserva como archivo. Para C15, consultar las capturas públicas y su alcance en [release-c15.md](release-c15.md).";
     capturesReviewGate =
       "- [ ] Revisar las capturas en contexto anónimo, sin datos personales ni credenciales.";
     figuresConfirmationGate =
@@ -384,7 +396,7 @@ function renderSubmissionChecklist(
     deployment.captureCount === 0
   ) {
     visualEvidenceLine =
-      "captura visual actual pendiente; las 13 capturas anteriores son históricas.";
+      "El inventario A4 conserva 13 capturas históricas; se conserva como archivo. Para C15, consultar las capturas públicas y su alcance en [release-c15.md](release-c15.md).";
     capturesReviewGate =
       "- [ ] Revisar las capturas en contexto anónimo, sin datos personales ni credenciales.";
     figuresConfirmationGate =
@@ -431,7 +443,7 @@ function renderSubmissionChecklist(
 
 - Convocatoria: [X Concurso de Datos Abiertos de Castilla y León](${CONTEST_URL}).
 - Categoría: **Productos y Servicios**; primer premio: **2.500 €**.
-- Plazo de presentación: **del 22 de julio al 21 de septiembre de 2026**.
+- Plazo recogido en el expediente: **del 22 de julio al 21 de septiembre de 2026**; confirmar en la sede antes del envío. Véase [estado administrativo](closing-status.md).
 - Presentación: [sede electrónica](${REGISTRATION_URL}).
 - Identidad de la persona solicitante: **PENDIENTE — no consta en el repositorio**.
 - Contacto: **PENDIENTE — no consta en el repositorio**.
@@ -440,30 +452,32 @@ function renderSubmissionChecklist(
 ## ${candidatePlan === undefined ? "Campos técnicos" : "Baseline funcional verificada"}
 
 - URL raíz a presentar: [${ROOT_URL}](${ROOT_URL})
-- Fallback verificada: [${FALLBACK_URL}](${FALLBACK_URL})
+- URL histórica de fallback (C15 no verificada allí): [${FALLBACK_URL}](${FALLBACK_URL})
 - Commit fuente del freeze: \`${freeze.sourceCommitSha}\`.
 - Snapshot: \`${freeze.manifest.snapshotId}\`.
 - ${candidatePlan === undefined ? "Commit desplegado" : "Commit de baseline desplegado"}: ${deploymentCommit}.
 - Run del workflow: ${workflowRun}.
 ${releaseTraceability}${versionJsonTraceability}- Evidencia visual: ${visualEvidenceLine}
 
+${deployment.method === "manual-vps" ? "## Evidencia pública C15 y pendientes\n\nC15 está publicado y verificado. [Release C15](release-c15.md) conserva los resultados reales y capturas públicas. El inventario A4 anterior es histórico. El estado pendiente del gate conjunto no equivale a ausencia de despliegue. NVDA y el piloto real siguen pendientes. No se ha enviado la candidatura." : ""}
+
 ${renderTemporalReleaseStatus(candidatePlan)}
 
 ## Evidencia visual y gate final
 
 ${automatedCaptureGate}
-- [ ] Ejecutar la captura nativa OS A4 en un Mac desbloqueado.
-- [ ] Revisar la aplicación pública de la ${publicReviewLabel} en contexto anónimo, incluyendo las rutas de FP, ocupación y comparador.
-- [ ] Conservar solo capturas actuales, sin datos personales ni credenciales; ${captureInventoryLine}
+- [ ] Completar la revisión humana de accesibilidad; NVDA aplazado a petición del titular. No se declara conformidad WCAG.
+${deployment.method === "manual-vps" ? "- [x] Comprobar automáticamente las rutas públicas de FP, ocupación y comparador; alcance y límites en release-c15.md." : `- [ ] Revisar la aplicación pública de la ${publicReviewLabel} en contexto anónimo, incluyendo las rutas de FP, ocupación y comparador.`}
+${deployment.method === "manual-vps" ? "- [x] Separar capturas públicas C15 del inventario histórico; falta inspección humana final de la selección." : `- [ ] Conservar solo capturas actuales, sin datos personales ni credenciales; ${captureInventoryLine}`}
 ${releaseGate}
 ${deploymentGate}
 ${capturesReviewGate}
-${figuresConfirmationGate}
+${deployment.method === "manual-vps" ? "- [ ] Confirmar humanamente las cifras de las capturas elegidas antes de la entrega; los hashes públicos ya están verificados." : figuresConfirmationGate}
 - [ ] Obtener aprobación humana explícita para la solicitud externa.${finalCandidateChecklist}
 
 **PENDIENTE DE APROBACIÓN HUMANA:** este repositorio no envía la solicitud al concurso ni decide los campos de identidad, contacto, declaraciones o consentimiento.
 
-Cualquier cambio posterior debe seguir el flujo rama de trabajo → PR → checks → revisión/aprobación → merge a \`main\` → GitHub Pages.
+Los cambios de producto requieren validación sobre un SHA exacto y verificación del despliegue elegido. Una actualización documental no modifica por sí sola la versión pública.
 `;
 }
 
@@ -560,6 +574,7 @@ function loadContestDeploymentEvidence(
     deploymentCommit === captureProductCommitSha;
   const evidence: ContestDeploymentEvidence = {
     status: effectiveStatus,
+    method: deployment.method,
     commitSha: deploymentCommit,
     workflowRunId: deployment.workflowRunId ?? null,
     verifiedAt: deployment.verifiedAt ?? null,
@@ -578,7 +593,7 @@ function loadContestDeploymentEvidence(
     evidence.status === "verified" &&
     (evidence.commitSha === null ||
       !/^[a-f0-9]{40}$/u.test(evidence.commitSha) ||
-      evidence.workflowRunId === null ||
+      (evidence.workflowRunId === null && evidence.method !== "manual-vps") ||
       evidence.verifiedAt === null)
   ) {
     throw new Error("verified deployment evidence is incomplete");

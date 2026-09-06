@@ -2,7 +2,7 @@
 
 ## Convocatoria
 
-Candidatura al [X Concurso de Datos Abiertos de Castilla y León](https://datosabiertos.jcyl.es/web/es/concurso-datos-abiertos/concurso-datos-abiertos.html), categoría **Productos y Servicios**. El plazo oficial finaliza el **21 de septiembre de 2026** y la presentación se realiza mediante la [sede electrónica](https://www.tramitacastillayleon.jcyl.es/web/jcyl/AdministracionElectronica/es/Plantilla100Detalle/1251181050732/Premio/1285664800452/Propuesta).
+Candidatura al [X Concurso de Datos Abiertos de Castilla y León](https://datosabiertos.jcyl.es/web/es/concurso-datos-abiertos/concurso-datos-abiertos.html), categoría **Productos y Servicios**. El expediente recoge el **21 de septiembre de 2026** como fecha de cierre, pendiente de comprobación final en el formulario oficial y la presentación se realiza mediante la [sede electrónica](https://www.tramitacastillayleon.jcyl.es/web/jcyl/AdministracionElectronica/es/Plantilla100Detalle/1251181050732/Premio/1285664800452/Propuesta).
 
 ## Problema y audiencia
 

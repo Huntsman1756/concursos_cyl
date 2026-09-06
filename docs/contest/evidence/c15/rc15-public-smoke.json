@@ -1,0 +1,1531 @@
+{
+  "expected": "02d6805e5cb661f3289ade47ad2364b26fd346f8",
+  "base": "https://salida-cyl.157-90-22-40.sslip.io",
+  "startedAt": "2026-09-06T09:07:46.216Z",
+  "artifact": [
+    {
+      "path": "assets/accessibility-DeJZ2LOw.css",
+      "sha256": "fe65e411e98cc9f45fede73099f885474542abfd7cbf7069c4d2df00ea4791b3",
+      "match": true
+    },
+    {
+      "path": "assets/AccessibilityPage-BQTPOfgY.js",
+      "sha256": "cc6695402dc2b31f7814724e71f7a57aae888372eb6802e70017136470e9becf",
+      "match": true
+    },
+    {
+      "path": "assets/Breadcrumbs-DjdNTNHM.js",
+      "sha256": "3b2ca5dec0eb5a9b4d3ec9de172602bcca9bc663a1688fba92a233c687fb8ebb",
+      "match": true
+    },
+    {
+      "path": "assets/CentersExplorerPage-BcMz5JuI.css",
+      "sha256": "17f07f1736ad014b53681c04f1b0b96b848db646f920ccf8c389a677b59a0ca9",
+      "match": true
+    },
+    {
+      "path": "assets/CentersExplorerPage-Bsbk1Txy.js",
+      "sha256": "5c8cb560329e2ff7221aaf4322ceecbdeb8d78decb1938606a3ddbd2cc926057",
+      "match": true
+    },
+    {
+      "path": "assets/CompareStudiesPage-Bfwk_aHD.js",
+      "sha256": "e2bc66fc4ce80bcf4e13533c6ea1387eea1a14a3a05ab0e9ebc591e2e77c2614",
+      "match": true
+    },
+    {
+      "path": "assets/CompareStudiesPage-CEBA4h3m.css",
+      "sha256": "732b8fded8b703ae68533cbf3eec8f1a67e574c5447d314b7394f6e494b88fa8",
+      "match": true
+    },
+    {
+      "path": "assets/displayFormat-tXBex4OA.js",
+      "sha256": "e2470d972af863b0cd26c09ee25a9e27f9bca27dc546dfddfef7b91069fc026b",
+      "match": true
+    },
+    {
+      "path": "assets/EcylResourcesPage-BlDb8xTX.css",
+      "sha256": "ba8c5ac4e3eb175289edecc1afbfd777b4ec970431f812cd9e070cb7fe10b831",
+      "match": true
+    },
+    {
+      "path": "assets/EcylResourcesPage-m299ZbxO.js",
+      "sha256": "c9a6666660653372d0b3e2619660e37add2af73cd60effc3949040a62e5c577a",
+      "match": true
+    },
+    {
+      "path": "assets/ExternalLink-DvHOWT7o.js",
+      "sha256": "45e4df52698bd6acd20d227776afbb82c81fbe7f1c5809ecb3cf39ba5407c6b9",
+      "match": true
+    },
+    {
+      "path": "assets/FragmentLink-RWQ9VHRn.js",
+      "sha256": "41b8a7927d54cf3147ac57cc94b64561cc0dec6b3df60443d7d49e1f9a088437",
+      "match": true
+    },
+    {
+      "path": "assets/index-B94Ke-Km.css",
+      "sha256": "23343bab23eb9678c9e9d04c7330497013632672e243ea2f4ae9c64d94bda9b3",
+      "match": true
+    },
+    {
+      "path": "assets/index-CZI_qqHC.js",
+      "sha256": "2b51e1aed6103468bdf9e634216744564d4b1d8d465777304ac71eb2c51e37fb",
+      "match": true
+    },
+    {
+      "path": "assets/InfoDisclosure-DZtnK1Qg.js",
+      "sha256": "b9cf24541ffa887cdf56d1294251b84bc7b07afc25a88bd01dda7063f7d93248",
+      "match": true
+    },
+    {
+      "path": "assets/mapsUrl-BPPtpu0I.js",
+      "sha256": "220241c3773af0f2950f47e39cdb454d8c51adcea49fb7045d0e269ce26becbd",
+      "match": true
+    },
+    {
+      "path": "assets/MethodologyPage-BErpkU1o.css",
+      "sha256": "81fca6a3d47b462c9af372c28b99ea19dc94f28a4d109d920f344609fa7d1079",
+      "match": true
+    },
+    {
+      "path": "assets/MethodologyPage-Caj_Z677.js",
+      "sha256": "5d10e15748b9a60db2eeaa4acf46ff83679f92b90814ca2ceb8e206886863739",
+      "match": true
+    },
+    {
+      "path": "assets/OccupationResultsPage-_jNulxqd.js",
+      "sha256": "145da0484a9aea53fbe192067f14af989ef5cb683b0079331e7775547280f5f2",
+      "match": true
+    },
+    {
+      "path": "assets/OccupationResultsPage-dW6BWCQF.css",
+      "sha256": "bc1f479d517a042820cd73c99ab38e4c60e21f58eb4217e4c6b8ea32014c0d0b",
+      "match": true
+    },
+    {
+      "path": "assets/OccupationSearchPage-BaDcI4TP.js",
+      "sha256": "e7904af15171d9abd265386412cae08387101da51f4adf2ae7ee878034d53fd9",
+      "match": true
+    },
+    {
+      "path": "assets/offerEvidence-BY14DEok.js",
+      "sha256": "aeea861161d04ea68c4ed22714355ed8c1c5e96fd909eeaf6bdf2d6af0f4a140",
+      "match": true
+    },
+    {
+      "path": "assets/OfferExplorerPage-BN25mSFn.js",
+      "sha256": "1b670c86ca88f09732ee1ec127043677e920109fc16990560299deb3cf4c4555",
+      "match": true
+    },
+    {
+      "path": "assets/OfferExplorerPage-Dn6YU2C8.css",
+      "sha256": "b7cdd7e0061706ee07de94aae95eca4ebe6377f422e72989eabfb9751bdad85f",
+      "match": true
+    },
+    {
+      "path": "assets/OpenDataPage-BMZoESYf.css",
+      "sha256": "02ca2bc97602e0a90aace1c6279bde00ef315fca408e1cc5c8119bde340709b5",
+      "match": true
+    },
+    {
+      "path": "assets/OpenDataPage-CyvqYXG6.js",
+      "sha256": "bab09f7c035cea2de9a1a8461bc223bcc28b2b15b138b5d60ea699e564758f18",
+      "match": true
+    },
+    {
+      "path": "assets/OrganizationsPage-B6d_MVmf.js",
+      "sha256": "8a870c72a73d6d9495ad4d3236f1b16b28425182a5288d27db15749a4fc523a4",
+      "match": true
+    },
+    {
+      "path": "assets/OrganizationsPage-D8aeB4wr.css",
+      "sha256": "ac1e2bb2742eb47ccad4aa682b2ed7a406201ad0ae058e021a5e55187b090df2",
+      "match": true
+    },
+    {
+      "path": "assets/outcomePresentation-Bj07RS7e.js",
+      "sha256": "f25a0378ee939e676680e2019ec250eb584cc465557090379e3581db0eebfe5f",
+      "match": true
+    },
+    {
+      "path": "assets/PrintButton-DRcVql8i.css",
+      "sha256": "e5a464f68dd63611b74c1bc7962a23cd967ce59daa9fade3cd8ac1668fd1d9eb",
+      "match": true
+    },
+    {
+      "path": "assets/PrintButton-s4GE55JE.js",
+      "sha256": "9443ad8ca04601630d1584d81600cf762b1bb25e808c3d4c8744d346271e11bb",
+      "match": true
+    },
+    {
+      "path": "assets/ResultSectionNav-DiV_iteN.js",
+      "sha256": "10bc0ed07aeedb7ab2cdf94cdc896d663af617957d43876d4802e9dce4a143c0",
+      "match": true
+    },
+    {
+      "path": "assets/territory-utJ2zVko.js",
+      "sha256": "e3d32bdd886001266bb7b09615e0d61521b044c7b19abc799a9c676f2e74a7b0",
+      "match": true
+    },
+    {
+      "path": "assets/TrainingResultsPage-C__WX6yD.js",
+      "sha256": "15c31653a4fdb807dcced507fbc1e125d667b40dc965cef6fbf3692a5728a677",
+      "match": true
+    },
+    {
+      "path": "assets/TrainingResultsPage-SV9azbis.css",
+      "sha256": "c1c9797c271ea27b9d99fcfd2f3e9bac41b7c41497f5f89cdb16a59f68b3970d",
+      "match": true
+    },
+    {
+      "path": "assets/TrainingSearchPage-DcLB3CrN.js",
+      "sha256": "752bfecfd69eeb87b854b4bf2d6922d961ff5dcfe329b39361657c4757f49d3c",
+      "match": true
+    },
+    {
+      "path": "data/v1/manifest.json",
+      "sha256": "e70a1853ac0f2cf5d25e6192776f88b400aca1536a58380044a8aa1ebc2794df",
+      "match": true
+    },
+    {
+      "path": "data/v1/README.md",
+      "sha256": "f1cde4ec90d9e7b6725ce162d2ad2072bf93686c279c3e4995e0051ab8bdc6f3",
+      "match": true
+    },
+    {
+      "path": "data/v1/snapshots/20260830120000000-8c6c79fbd2a1/centers.json",
+      "sha256": "593b7780f6cb9511c02edb26a769e5e1f951624f6e4b923a8e34caacb230c87a",
+      "match": true
+    },
+    {
+      "path": "data/v1/snapshots/20260830120000000-8c6c79fbd2a1/derived-fp-occupation-graph.csv",
+      "sha256": "88f7b7373827adad97197b00923a564fd15641615ffb2bfe7d0e2d8f0b0205a5",
+      "match": true
+    },
+    {
+      "path": "data/v1/snapshots/20260830120000000-8c6c79fbd2a1/derived-fp-occupation-graph.json",
+      "sha256": "c413635530ff511c5129c4d6b423aaea9d5a9bc99782ecc92380cd3ca12793f8",
+      "match": true
+    },
+    {
+      "path": "data/v1/snapshots/20260830120000000-8c6c79fbd2a1/ecyl-courses.json",
+      "sha256": "12aac1394e3fb277eb54c1698e991c39c3f3635b5a596887108db7de39f4f2c1",
+      "match": true
+    },
+    {
+      "path": "data/v1/snapshots/20260830120000000-8c6c79fbd2a1/education-center-directory.json",
+      "sha256": "2a35b80acb70651e94ce747af74989760d53c3ef02fa1cf080a27296317d1ecd",
+      "match": true
+    },
+    {
+      "path": "data/v1/snapshots/20260830120000000-8c6c79fbd2a1/job-offers.json",
+      "sha256": "decd3bcf879cd001ea4750bb2bdd5f1146c8a301dddab660e1810e23d07662a7",
+      "match": true
+    },
+    {
+      "path": "data/v1/snapshots/20260830120000000-8c6c79fbd2a1/mapping-coverage.json",
+      "sha256": "754dfad7276b2aecd5b6770954ad3271eda7f9d6f2086cbb4f358b64884974ed",
+      "match": true
+    },
+    {
+      "path": "data/v1/snapshots/20260830120000000-8c6c79fbd2a1/municipalities.json",
+      "sha256": "71ac22dfbcc5f95927fd17fa6b0a03bc77d39482fcad1640f9c6b08dec609f10",
+      "match": true
+    },
+    {
+      "path": "data/v1/snapshots/20260830120000000-8c6c79fbd2a1/occupation-aliases.json",
+      "sha256": "ea21e47968691b02a39025272596fc3e947e89351c49b0c5b8d3c02296d2d9af",
+      "match": true
+    },
+    {
+      "path": "data/v1/snapshots/20260830120000000-8c6c79fbd2a1/occupations.json",
+      "sha256": "4e82ab9810dc6681b0e79aa2cfe3b038985ee23eb36cdb5f4603b53961efae2e",
+      "match": true
+    },
+    {
+      "path": "data/v1/snapshots/20260830120000000-8c6c79fbd2a1/offer-evidence.json",
+      "sha256": "80dd7ccb917c75015bf38492cc5baf4bed6ee20a3a4043e3a981a9a6d38c17d4",
+      "match": true
+    },
+    {
+      "path": "data/v1/snapshots/20260830120000000-8c6c79fbd2a1/official-occupations.json",
+      "sha256": "76fa213f97c98e5af0f9bf120323ba3abb32df78e797c381e5454cadc858f64b",
+      "match": true
+    },
+    {
+      "path": "data/v1/snapshots/20260830120000000-8c6c79fbd2a1/open-data-catalog.json",
+      "sha256": "76407cebe55367233221575ce1fdc46dd123917d57b35168ac7f4d6d7fdc6198",
+      "match": true
+    },
+    {
+      "path": "data/v1/snapshots/20260830120000000-8c6c79fbd2a1/outcome-indicators.json",
+      "sha256": "4f2c6b73fc4171bb9daf21583712ab2ec99bcaa7d27b1f2fd0c070b9079ab3e2",
+      "match": true
+    },
+    {
+      "path": "data/v1/snapshots/20260830120000000-8c6c79fbd2a1/professional-certificates.json",
+      "sha256": "a66ebe6b4439dca39091b0f06d587bc326389d9f7e2ecfc7a8c88b5a8937a7cb",
+      "match": true
+    },
+    {
+      "path": "data/v1/snapshots/20260830120000000-8c6c79fbd2a1/professional-profiles.json",
+      "sha256": "2794228570e734a5dca0f8d594a199a67b9b732d7f54ffd56abe3af22f66d22b",
+      "match": true
+    },
+    {
+      "path": "data/v1/snapshots/20260830120000000-8c6c79fbd2a1/programs.json",
+      "sha256": "90df87b283b5ff003dda20c9c4f7eac52b903e611753d107d4b927bbc4e19b72",
+      "match": true
+    },
+    {
+      "path": "data/v1/snapshots/20260830120000000-8c6c79fbd2a1/provincial-contracts.json",
+      "sha256": "a6b9ddf9886dcb0638dbce19afe791253503988b509fc7fcb200f44d7c33002b",
+      "match": true
+    },
+    {
+      "path": "data/v1/snapshots/20260830120000000-8c6c79fbd2a1/public-employment-calls.json",
+      "sha256": "a19e35112afb00f328d44b637a23886baea77d2e08f91861f0b13fe1f7448bc7",
+      "match": true
+    },
+    {
+      "path": "data/v1/snapshots/20260830120000000-8c6c79fbd2a1/published-requirements.json",
+      "sha256": "2f48dd0b6ffec650f7f8af35145e894d39bc45e900c9e85d515c34fcd5b975ac",
+      "match": true
+    },
+    {
+      "path": "data/v1/snapshots/20260830120000000-8c6c79fbd2a1/sepe-occupation-market.json",
+      "sha256": "5adf3bfaff153b5d7739a58805284e8f3c88361804507e52ddbd195e0883e323",
+      "match": true
+    },
+    {
+      "path": "data/v1/snapshots/20260830120000000-8c6c79fbd2a1/training-occupation-links.json",
+      "sha256": "01b23ced0aadd865f33870b5e5136440eaff71de46e5e555e23c2c99fb03fd02",
+      "match": true
+    },
+    {
+      "path": "data/v1/snapshots/20260830120000000-8c6c79fbd2a1/training-offerings.json",
+      "sha256": "0948871f993a4f0a03ed42ccef060c4a395e0898dc230086f234345fee7e880a",
+      "match": true
+    },
+    {
+      "path": "fonts/OFL.txt",
+      "sha256": "157a9e77f7580246e97c769490e2e977ae94399f9d30f4556015c41fe8c28bac",
+      "match": true
+    },
+    {
+      "path": "fonts/public-sans-latin-400.woff2",
+      "sha256": "f3931c3c3ec5301043634ac8f39bcfa7b30d29181864f2fd0c3e6796feacc471",
+      "match": true
+    },
+    {
+      "path": "fonts/public-sans-latin-600.woff2",
+      "sha256": "f99ffc265cc790e0f058a9f430a465c88996008327abb0f8561cb713add40d73",
+      "match": true
+    },
+    {
+      "path": "fonts/public-sans-latin-700.woff2",
+      "sha256": "908322301d5d82f217d2819708c41e097528276b9e7296e0f7388c3a4e320c8c",
+      "match": true
+    },
+    {
+      "path": "images/editorial/centers-vocational-training-1280.avif",
+      "sha256": "61668d65de0d76f9013f60567ddd852c5abed3321f3c499f6424e678c3a2b4c6",
+      "match": true
+    },
+    {
+      "path": "images/editorial/centers-vocational-training-1280.webp",
+      "sha256": "f968cb3d849a3a12b5d40c390c2827d73015654465a4729b6bb1854b9bef2037",
+      "match": true
+    },
+    {
+      "path": "images/editorial/centers-vocational-training-1600.avif",
+      "sha256": "a93608a8301c4988661091ec6e4491d902ce65a4fc22d1d800b8edd299552270",
+      "match": true
+    },
+    {
+      "path": "images/editorial/centers-vocational-training-1600.webp",
+      "sha256": "106c8616be8a1affe3d89d08bde0b43df9c80c93fb7155773c1132c55b96231d",
+      "match": true
+    },
+    {
+      "path": "images/editorial/centers-vocational-training-640.avif",
+      "sha256": "ccbeaa4cd88e587d0d013f8a27cc38c77f9f607285194fdedfa954d6670f94c5",
+      "match": true
+    },
+    {
+      "path": "images/editorial/centers-vocational-training-640.webp",
+      "sha256": "0d8877d83da59be4a29671dcb89d98550a5edd4a185cd439f8361c43cca23186",
+      "match": true
+    },
+    {
+      "path": "images/editorial/centers-vocational-training-960.avif",
+      "sha256": "cde75a5129e6e19f9a2c0298d59fe768493fa033e453a275f96252e5002056cc",
+      "match": true
+    },
+    {
+      "path": "images/editorial/centers-vocational-training-960.webp",
+      "sha256": "1ffbd1c54c08382b7be15f8846f71beca929cde131cc84c5ec9ffc9d12afe751",
+      "match": true
+    },
+    {
+      "path": "images/editorial/hero-career-guidance-1280.avif",
+      "sha256": "fe628441d60c658dd210b7d66f0999e4c6285c3739c10d739cbb51ae58bd55ba",
+      "match": true
+    },
+    {
+      "path": "images/editorial/hero-career-guidance-1280.webp",
+      "sha256": "d1709144cbce4e33fcf27df21996f0e531cffa2df463d2c843d7f152f71c74f1",
+      "match": true
+    },
+    {
+      "path": "images/editorial/hero-career-guidance-1536.avif",
+      "sha256": "d51f656c492aded87be51ef980046cffa6e679398bfca33e9e07f37ff5f8f425",
+      "match": true
+    },
+    {
+      "path": "images/editorial/hero-career-guidance-1536.webp",
+      "sha256": "e81325f5e0f476abe14788918ba26017f2e875426599f0bbb31e7498243872d3",
+      "match": true
+    },
+    {
+      "path": "images/editorial/hero-career-guidance-640.avif",
+      "sha256": "c19b3cb914ce56db08e792e331311b471aa4827668297ac4fd79c26a74a08895",
+      "match": true
+    },
+    {
+      "path": "images/editorial/hero-career-guidance-640.webp",
+      "sha256": "a3b2f865bcceac20b9b98f637a30e494f082119e05e0d22ce6dcd93dc73f7f67",
+      "match": true
+    },
+    {
+      "path": "images/editorial/hero-career-guidance-960.avif",
+      "sha256": "c7f37e72fe127221e297e4c9a59fef901375e56c01318ca8b91011007feaa022",
+      "match": true
+    },
+    {
+      "path": "images/editorial/hero-career-guidance-960.webp",
+      "sha256": "6a4c6ed3aca5b99822a79ccd898f6456f873eea181f66ae7bfcd4deff7e1e0cb",
+      "match": true
+    },
+    {
+      "path": "images/editorial/path-occupation-1280.avif",
+      "sha256": "ad2891384cd69a573e95d30d51d832e17180b165004a06ddade6ecd63ebabb84",
+      "match": true
+    },
+    {
+      "path": "images/editorial/path-occupation-1280.webp",
+      "sha256": "e2f0f47496b3761b2ad711e5a990b91a12e1162e82e8b63fa7a1962591f7915f",
+      "match": true
+    },
+    {
+      "path": "images/editorial/path-occupation-640.avif",
+      "sha256": "188c14929b762ea45c335b199520240fcbf3d99ec76f9245fe3ea9485bc533fc",
+      "match": true
+    },
+    {
+      "path": "images/editorial/path-occupation-640.webp",
+      "sha256": "ea123c0f0afccbafcfe96a93b6ff7c5d229e5b5f2cb82d134eb966471a968c42",
+      "match": true
+    },
+    {
+      "path": "images/editorial/path-occupation-960.avif",
+      "sha256": "7c501a819226397c910cd32951b5f73e0694d4995fd6f194c9b8240d88355656",
+      "match": true
+    },
+    {
+      "path": "images/editorial/path-occupation-960.webp",
+      "sha256": "d01c5a307bc3c5ac10d8b2ae981b368a2755e898202c814f7b22acae15d7597a",
+      "match": true
+    },
+    {
+      "path": "images/editorial/path-offer-1280.avif",
+      "sha256": "5f816516a8b3b648c97e8f38c487da4b8b9aa911cb80281e96092abfecd4aa6b",
+      "match": true
+    },
+    {
+      "path": "images/editorial/path-offer-1280.webp",
+      "sha256": "a61fdc83965d4f20658ca7060eaa64c01660cfed41855c1dc6a0af9102aa331a",
+      "match": true
+    },
+    {
+      "path": "images/editorial/path-offer-640.avif",
+      "sha256": "63674a6785e9af6696b8784e7b9eada22c1752c1ab91191fbc17bde4ffcd8288",
+      "match": true
+    },
+    {
+      "path": "images/editorial/path-offer-640.webp",
+      "sha256": "7aad443252b466daef2f687806c0caaaa28c00f527eaddf36f0b186d3a699732",
+      "match": true
+    },
+    {
+      "path": "images/editorial/path-offer-960.avif",
+      "sha256": "ce830a269fffd3e98a3726759bb063a8f97bc48eb71e96c9773d2c7efc0636ab",
+      "match": true
+    },
+    {
+      "path": "images/editorial/path-offer-960.webp",
+      "sha256": "58fa62f415d108e605b3edf5b24530a01c48b7e57c5e2bc67de90f94fec14005",
+      "match": true
+    },
+    {
+      "path": "images/editorial/path-training-1280.avif",
+      "sha256": "23b788b4e2d675b2ea0b229cee81947951de1a79f208dfe4d9233a9adff00bcf",
+      "match": true
+    },
+    {
+      "path": "images/editorial/path-training-1280.webp",
+      "sha256": "ac66fcbe8718d465e894c00d55c56a97e128829521bcbc5855ad34772b1b9188",
+      "match": true
+    },
+    {
+      "path": "images/editorial/path-training-640.avif",
+      "sha256": "f6f47d1b65bb4c4642c1b22976c209d633c0ad05b49b272f75e4753b7d76492f",
+      "match": true
+    },
+    {
+      "path": "images/editorial/path-training-640.webp",
+      "sha256": "3f7df8647d79f04de85f4d3aca337e4c4f2c8a4ffece116afd53d62457747e86",
+      "match": true
+    },
+    {
+      "path": "images/editorial/path-training-960.avif",
+      "sha256": "a7d5fc941c928ba758ccbe74fb5c262c2181f0e29f4ac49901f132b8fb109a0d",
+      "match": true
+    },
+    {
+      "path": "images/editorial/path-training-960.webp",
+      "sha256": "e91a7d16775bec98d303d5b645ed44b5a0250b53b6d192ddf2d9794f855d1554",
+      "match": true
+    },
+    {
+      "path": "index.html",
+      "sha256": "805a83507c27dd81df483eec3e893c0193f916d9541509788769bf582f5ce0f2",
+      "match": true
+    },
+    {
+      "path": "qa/center-link-policy.json",
+      "sha256": "2d718245d3a974d5bb7631e7fecfe0d59ce1896ae544eef2151e798e0247889e",
+      "match": true
+    },
+    {
+      "path": "robots.txt",
+      "sha256": "16ceb5ee3e0dc13aa9adf31a3ebbe45a1d965b8c2b9f72eaf84e5911e140ed95",
+      "match": true
+    },
+    {
+      "path": "salida-cyl-icon.png",
+      "sha256": "81b4d7a4ee96abb7ea12fea4392d9cc2958111afb10724eea8dd6ad9ebbeb084",
+      "match": true
+    },
+    {
+      "path": "salida-cyl-social.png",
+      "sha256": "4dc6a6148397b57105a58058695bc0a4ae67534d7617493f4a837b14ab711e81",
+      "match": true
+    },
+    {
+      "path": "version.json",
+      "sha256": "e97ad65fbd9eff662d16e5503926bf8f5a296bc5f5a1b8ae30ff12e597a68681",
+      "match": true
+    }
+  ],
+  "checks": [
+    {
+      "browserName": "chromium",
+      "width": 320,
+      "path": "/",
+      "heading": "Tu FP, tus salidas profesionales y dónde dar el siguiente paso.",
+      "overflow": 0,
+      "diagnostics": [],
+      "accessibility": {
+        "label": "chromium/320/home",
+        "violations": [],
+        "incomplete": [
+          {
+            "id": "color-contrast",
+            "impact": "serious",
+            "nodes": 1
+          }
+        ],
+        "passes": 48
+      }
+    },
+    {
+      "browserName": "chromium",
+      "width": 320,
+      "path": "/desde-fp",
+      "heading": "¿En qué puedes trabajar con una FP?",
+      "overflow": 0,
+      "diagnostics": [],
+      "accessibility": {
+        "label": "chromium/320/fp",
+        "violations": [],
+        "incomplete": [],
+        "passes": 43
+      }
+    },
+    {
+      "browserName": "chromium",
+      "width": 320,
+      "path": "/desde-ocupacion/occupation%3Acno11%3A2713",
+      "heading": "Analistas, programadores y diseñadores web y multimedia",
+      "overflow": 0,
+      "diagnostics": [],
+      "accessibility": {
+        "label": "chromium/320/occupation",
+        "violations": [],
+        "incomplete": [
+          {
+            "id": "aria-prohibited-attr",
+            "impact": "serious",
+            "nodes": 1
+          },
+          {
+            "id": "color-contrast",
+            "impact": "serious",
+            "nodes": 1
+          }
+        ],
+        "passes": 41
+      }
+    },
+    {
+      "browserName": "chromium",
+      "width": 320,
+      "path": "/comparar",
+      "heading": "Ingresos observados",
+      "overflow": 0,
+      "diagnostics": [],
+      "accessibility": {
+        "label": "chromium/320/comparison",
+        "violations": [],
+        "incomplete": [],
+        "passes": 41
+      }
+    },
+    {
+      "browserName": "chromium",
+      "width": 320,
+      "path": "/recursos",
+      "heading": "Formación para seguir avanzando",
+      "overflow": 0,
+      "diagnostics": [],
+      "accessibility": {
+        "label": "chromium/320/resources",
+        "violations": [],
+        "incomplete": [],
+        "passes": 45
+      }
+    },
+    {
+      "browserName": "chromium",
+      "width": 320,
+      "path": "/desde-oferta",
+      "heading": "Ofertas de empleo",
+      "overflow": 0,
+      "diagnostics": [],
+      "accessibility": {
+        "label": "chromium/320/offers",
+        "violations": [],
+        "incomplete": [],
+        "passes": 45
+      }
+    },
+    {
+      "browserName": "chromium",
+      "width": 320,
+      "path": "/donde-estudiar",
+      "heading": "Dónde estudiar",
+      "overflow": 0,
+      "diagnostics": [],
+      "accessibility": {
+        "label": "chromium/320/centers",
+        "violations": [],
+        "incomplete": [],
+        "passes": 40
+      }
+    },
+    {
+      "browserName": "chromium",
+      "width": 320,
+      "path": "/desde-fp/ADG02S",
+      "heading": "Administración y Finanzas",
+      "overflow": 0,
+      "diagnostics": [],
+      "accessibility": {
+        "label": "chromium/320/training-result",
+        "violations": [],
+        "incomplete": [
+          {
+            "id": "color-contrast",
+            "impact": "serious",
+            "nodes": 5
+          }
+        ],
+        "passes": 39
+      }
+    },
+    {
+      "browserName": "chromium",
+      "width": 320,
+      "path": "/donde-estudiar/ADG02S",
+      "heading": "Dónde estudiar Administración y Finanzas",
+      "overflow": 0,
+      "diagnostics": [],
+      "accessibility": {
+        "label": "chromium/320/training-centers",
+        "violations": [],
+        "incomplete": [],
+        "passes": 40
+      }
+    },
+    {
+      "browserName": "chromium",
+      "width": 320,
+      "path": "/para-organizaciones",
+      "heading": "Para centros y administraciones",
+      "overflow": 0,
+      "diagnostics": [],
+      "accessibility": {
+        "label": "chromium/320/organizations",
+        "violations": [],
+        "incomplete": [],
+        "passes": 38
+      }
+    },
+    {
+      "browserName": "chromium",
+      "width": 320,
+      "path": "/accesibilidad",
+      "heading": "Accesibilidad",
+      "overflow": 0,
+      "diagnostics": [],
+      "accessibility": {
+        "label": "chromium/320/accessibility",
+        "violations": [],
+        "incomplete": [],
+        "passes": 40
+      }
+    },
+    {
+      "browserName": "chromium",
+      "width": 360,
+      "path": "/",
+      "heading": "Tu FP, tus salidas profesionales y dónde dar el siguiente paso.",
+      "overflow": 0,
+      "diagnostics": [],
+      "accessibility": {
+        "label": "chromium/360/home",
+        "violations": [],
+        "incomplete": [],
+        "passes": 48
+      }
+    },
+    {
+      "browserName": "chromium",
+      "width": 360,
+      "path": "/desde-fp",
+      "heading": "¿En qué puedes trabajar con una FP?",
+      "overflow": 0,
+      "diagnostics": [],
+      "accessibility": {
+        "label": "chromium/360/fp",
+        "violations": [],
+        "incomplete": [],
+        "passes": 43
+      }
+    },
+    {
+      "browserName": "chromium",
+      "width": 360,
+      "path": "/desde-ocupacion/occupation%3Acno11%3A2713",
+      "heading": "Analistas, programadores y diseñadores web y multimedia",
+      "overflow": 0,
+      "diagnostics": [],
+      "accessibility": {
+        "label": "chromium/360/occupation",
+        "violations": [],
+        "incomplete": [
+          {
+            "id": "aria-prohibited-attr",
+            "impact": "serious",
+            "nodes": 1
+          },
+          {
+            "id": "color-contrast",
+            "impact": "serious",
+            "nodes": 1
+          }
+        ],
+        "passes": 41
+      }
+    },
+    {
+      "browserName": "chromium",
+      "width": 360,
+      "path": "/comparar",
+      "heading": "Ingresos observados",
+      "overflow": 0,
+      "diagnostics": [],
+      "accessibility": {
+        "label": "chromium/360/comparison",
+        "violations": [],
+        "incomplete": [],
+        "passes": 41
+      }
+    },
+    {
+      "browserName": "chromium",
+      "width": 360,
+      "path": "/recursos",
+      "heading": "Formación para seguir avanzando",
+      "overflow": 0,
+      "diagnostics": [],
+      "accessibility": {
+        "label": "chromium/360/resources",
+        "violations": [],
+        "incomplete": [],
+        "passes": 45
+      }
+    },
+    {
+      "browserName": "chromium",
+      "width": 360,
+      "path": "/desde-oferta",
+      "heading": "Ofertas de empleo",
+      "overflow": 0,
+      "diagnostics": [],
+      "accessibility": {
+        "label": "chromium/360/offers",
+        "violations": [],
+        "incomplete": [],
+        "passes": 45
+      }
+    },
+    {
+      "browserName": "chromium",
+      "width": 360,
+      "path": "/donde-estudiar",
+      "heading": "Dónde estudiar",
+      "overflow": 0,
+      "diagnostics": [],
+      "accessibility": {
+        "label": "chromium/360/centers",
+        "violations": [],
+        "incomplete": [],
+        "passes": 40
+      }
+    },
+    {
+      "browserName": "chromium",
+      "width": 360,
+      "path": "/desde-fp/ADG02S",
+      "heading": "Administración y Finanzas",
+      "overflow": 0,
+      "diagnostics": [],
+      "accessibility": {
+        "label": "chromium/360/training-result",
+        "violations": [],
+        "incomplete": [
+          {
+            "id": "color-contrast",
+            "impact": "serious",
+            "nodes": 5
+          }
+        ],
+        "passes": 39
+      }
+    },
+    {
+      "browserName": "chromium",
+      "width": 360,
+      "path": "/donde-estudiar/ADG02S",
+      "heading": "Dónde estudiar Administración y Finanzas",
+      "overflow": 0,
+      "diagnostics": [],
+      "accessibility": {
+        "label": "chromium/360/training-centers",
+        "violations": [],
+        "incomplete": [],
+        "passes": 40
+      }
+    },
+    {
+      "browserName": "chromium",
+      "width": 360,
+      "path": "/para-organizaciones",
+      "heading": "Para centros y administraciones",
+      "overflow": 0,
+      "diagnostics": [],
+      "accessibility": {
+        "label": "chromium/360/organizations",
+        "violations": [],
+        "incomplete": [],
+        "passes": 38
+      }
+    },
+    {
+      "browserName": "chromium",
+      "width": 360,
+      "path": "/accesibilidad",
+      "heading": "Accesibilidad",
+      "overflow": 0,
+      "diagnostics": [],
+      "accessibility": {
+        "label": "chromium/360/accessibility",
+        "violations": [],
+        "incomplete": [],
+        "passes": 40
+      }
+    },
+    {
+      "browserName": "chromium",
+      "width": 390,
+      "path": "/",
+      "heading": "Tu FP, tus salidas profesionales y dónde dar el siguiente paso.",
+      "overflow": 0,
+      "diagnostics": [],
+      "accessibility": {
+        "label": "chromium/390/home",
+        "violations": [],
+        "incomplete": [],
+        "passes": 48
+      },
+      "screenshot": "public/home-390.png"
+    },
+    {
+      "browserName": "chromium",
+      "width": 390,
+      "path": "/desde-fp",
+      "heading": "¿En qué puedes trabajar con una FP?",
+      "overflow": 0,
+      "diagnostics": [],
+      "accessibility": {
+        "label": "chromium/390/fp",
+        "violations": [],
+        "incomplete": [],
+        "passes": 43
+      },
+      "screenshot": "public/fp-390.png"
+    },
+    {
+      "browserName": "chromium",
+      "width": 390,
+      "path": "/desde-ocupacion/occupation%3Acno11%3A2713",
+      "heading": "Analistas, programadores y diseñadores web y multimedia",
+      "overflow": 0,
+      "diagnostics": [],
+      "accessibility": {
+        "label": "chromium/390/occupation",
+        "violations": [],
+        "incomplete": [
+          {
+            "id": "aria-prohibited-attr",
+            "impact": "serious",
+            "nodes": 1
+          },
+          {
+            "id": "color-contrast",
+            "impact": "serious",
+            "nodes": 1
+          }
+        ],
+        "passes": 41
+      },
+      "screenshot": "public/occupation-390.png"
+    },
+    {
+      "browserName": "chromium",
+      "width": 390,
+      "path": "/comparar",
+      "heading": "Ingresos observados",
+      "overflow": 0,
+      "diagnostics": [],
+      "accessibility": {
+        "label": "chromium/390/comparison",
+        "violations": [],
+        "incomplete": [],
+        "passes": 41
+      },
+      "screenshot": "public/comparison-390.png"
+    },
+    {
+      "browserName": "chromium",
+      "width": 390,
+      "path": "/recursos",
+      "heading": "Formación para seguir avanzando",
+      "overflow": 0,
+      "diagnostics": [],
+      "accessibility": {
+        "label": "chromium/390/resources",
+        "violations": [],
+        "incomplete": [],
+        "passes": 45
+      },
+      "screenshot": "public/resources-390.png"
+    },
+    {
+      "browserName": "chromium",
+      "width": 390,
+      "path": "/desde-oferta",
+      "heading": "Ofertas de empleo",
+      "overflow": 0,
+      "diagnostics": [],
+      "accessibility": {
+        "label": "chromium/390/offers",
+        "violations": [],
+        "incomplete": [],
+        "passes": 45
+      },
+      "screenshot": "public/offers-390.png"
+    },
+    {
+      "browserName": "chromium",
+      "width": 390,
+      "path": "/donde-estudiar",
+      "heading": "Dónde estudiar",
+      "overflow": 0,
+      "diagnostics": [],
+      "accessibility": {
+        "label": "chromium/390/centers",
+        "violations": [],
+        "incomplete": [],
+        "passes": 40
+      },
+      "screenshot": "public/centers-390.png"
+    },
+    {
+      "browserName": "chromium",
+      "width": 390,
+      "path": "/desde-fp/ADG02S",
+      "heading": "Administración y Finanzas",
+      "overflow": 0,
+      "diagnostics": [],
+      "accessibility": {
+        "label": "chromium/390/training-result",
+        "violations": [],
+        "incomplete": [
+          {
+            "id": "color-contrast",
+            "impact": "serious",
+            "nodes": 5
+          }
+        ],
+        "passes": 39
+      },
+      "screenshot": "public/training-result-390.png"
+    },
+    {
+      "browserName": "chromium",
+      "width": 390,
+      "path": "/donde-estudiar/ADG02S",
+      "heading": "Dónde estudiar Administración y Finanzas",
+      "overflow": 0,
+      "diagnostics": [],
+      "accessibility": {
+        "label": "chromium/390/training-centers",
+        "violations": [],
+        "incomplete": [],
+        "passes": 40
+      },
+      "screenshot": "public/training-centers-390.png"
+    },
+    {
+      "browserName": "chromium",
+      "width": 390,
+      "path": "/para-organizaciones",
+      "heading": "Para centros y administraciones",
+      "overflow": 0,
+      "diagnostics": [],
+      "accessibility": {
+        "label": "chromium/390/organizations",
+        "violations": [],
+        "incomplete": [],
+        "passes": 38
+      },
+      "screenshot": "public/organizations-390.png"
+    },
+    {
+      "browserName": "chromium",
+      "width": 390,
+      "path": "/accesibilidad",
+      "heading": "Accesibilidad",
+      "overflow": 0,
+      "diagnostics": [],
+      "accessibility": {
+        "label": "chromium/390/accessibility",
+        "violations": [],
+        "incomplete": [],
+        "passes": 40
+      },
+      "screenshot": "public/accessibility-390.png"
+    },
+    {
+      "browserName": "chromium",
+      "width": 1280,
+      "path": "/",
+      "heading": "Tu FP, tus salidas profesionales y dónde dar el siguiente paso.",
+      "overflow": 0,
+      "diagnostics": [],
+      "accessibility": {
+        "label": "chromium/1280/home",
+        "violations": [],
+        "incomplete": [],
+        "passes": 48
+      },
+      "screenshot": "public/home-1280.png"
+    },
+    {
+      "browserName": "chromium",
+      "width": 1280,
+      "path": "/desde-fp",
+      "heading": "¿En qué puedes trabajar con una FP?",
+      "overflow": 0,
+      "diagnostics": [],
+      "accessibility": {
+        "label": "chromium/1280/fp",
+        "violations": [],
+        "incomplete": [],
+        "passes": 43
+      },
+      "screenshot": "public/fp-1280.png"
+    },
+    {
+      "browserName": "chromium",
+      "width": 1280,
+      "path": "/desde-ocupacion/occupation%3Acno11%3A2713",
+      "heading": "Analistas, programadores y diseñadores web y multimedia",
+      "overflow": 0,
+      "diagnostics": [],
+      "accessibility": {
+        "label": "chromium/1280/occupation",
+        "violations": [],
+        "incomplete": [
+          {
+            "id": "aria-prohibited-attr",
+            "impact": "serious",
+            "nodes": 1
+          },
+          {
+            "id": "color-contrast",
+            "impact": "serious",
+            "nodes": 1
+          }
+        ],
+        "passes": 41
+      },
+      "screenshot": "public/occupation-1280.png"
+    },
+    {
+      "browserName": "chromium",
+      "width": 1280,
+      "path": "/comparar",
+      "heading": "Ingresos observados",
+      "overflow": 0,
+      "diagnostics": [],
+      "accessibility": {
+        "label": "chromium/1280/comparison",
+        "violations": [],
+        "incomplete": [],
+        "passes": 40
+      },
+      "screenshot": "public/comparison-1280.png"
+    },
+    {
+      "browserName": "chromium",
+      "width": 1280,
+      "path": "/recursos",
+      "heading": "Formación para seguir avanzando",
+      "overflow": 0,
+      "diagnostics": [],
+      "accessibility": {
+        "label": "chromium/1280/resources",
+        "violations": [],
+        "incomplete": [],
+        "passes": 45
+      },
+      "screenshot": "public/resources-1280.png"
+    },
+    {
+      "browserName": "chromium",
+      "width": 1280,
+      "path": "/desde-oferta",
+      "heading": "Ofertas de empleo",
+      "overflow": 0,
+      "diagnostics": [],
+      "accessibility": {
+        "label": "chromium/1280/offers",
+        "violations": [],
+        "incomplete": [],
+        "passes": 45
+      },
+      "screenshot": "public/offers-1280.png"
+    },
+    {
+      "browserName": "chromium",
+      "width": 1280,
+      "path": "/donde-estudiar",
+      "heading": "Dónde estudiar",
+      "overflow": 0,
+      "diagnostics": [],
+      "accessibility": {
+        "label": "chromium/1280/centers",
+        "violations": [],
+        "incomplete": [],
+        "passes": 49
+      },
+      "screenshot": "public/centers-1280.png"
+    },
+    {
+      "browserName": "chromium",
+      "width": 1280,
+      "path": "/desde-fp/ADG02S",
+      "heading": "Administración y Finanzas",
+      "overflow": 0,
+      "diagnostics": [],
+      "accessibility": {
+        "label": "chromium/1280/training-result",
+        "violations": [],
+        "incomplete": [
+          {
+            "id": "color-contrast",
+            "impact": "serious",
+            "nodes": 5
+          }
+        ],
+        "passes": 39
+      },
+      "screenshot": "public/training-result-1280.png"
+    },
+    {
+      "browserName": "chromium",
+      "width": 1280,
+      "path": "/donde-estudiar/ADG02S",
+      "heading": "Dónde estudiar Administración y Finanzas",
+      "overflow": 0,
+      "diagnostics": [],
+      "accessibility": {
+        "label": "chromium/1280/training-centers",
+        "violations": [],
+        "incomplete": [],
+        "passes": 49
+      },
+      "screenshot": "public/training-centers-1280.png"
+    },
+    {
+      "browserName": "chromium",
+      "width": 1280,
+      "path": "/para-organizaciones",
+      "heading": "Para centros y administraciones",
+      "overflow": 0,
+      "diagnostics": [],
+      "accessibility": {
+        "label": "chromium/1280/organizations",
+        "violations": [],
+        "incomplete": [],
+        "passes": 36
+      },
+      "screenshot": "public/organizations-1280.png"
+    },
+    {
+      "browserName": "chromium",
+      "width": 1280,
+      "path": "/accesibilidad",
+      "heading": "Accesibilidad",
+      "overflow": 0,
+      "diagnostics": [],
+      "accessibility": {
+        "label": "chromium/1280/accessibility",
+        "violations": [],
+        "incomplete": [],
+        "passes": 38
+      },
+      "screenshot": "public/accessibility-1280.png"
+    }
+  ],
+  "states": [
+    {
+      "name": "c15-source-320",
+      "bounds": {
+        "x": 112.4375,
+        "y": 415.3125,
+        "width": 159.234375,
+        "height": 288.046875
+      },
+      "axe": {
+        "label": "c15-source-320",
+        "violations": [],
+        "incomplete": [
+          {
+            "id": "aria-prohibited-attr",
+            "impact": "serious",
+            "nodes": 1
+          },
+          {
+            "id": "color-contrast",
+            "impact": "serious",
+            "nodes": 8
+          }
+        ],
+        "passes": 41
+      }
+    },
+    {
+      "name": "c15-source-360",
+      "bounds": {
+        "x": 112.4375,
+        "y": 415.3125,
+        "width": 159.234375,
+        "height": 288.046875
+      },
+      "axe": {
+        "label": "c15-source-360",
+        "violations": [],
+        "incomplete": [
+          {
+            "id": "aria-prohibited-attr",
+            "impact": "serious",
+            "nodes": 1
+          },
+          {
+            "id": "color-contrast",
+            "impact": "serious",
+            "nodes": 8
+          }
+        ],
+        "passes": 41
+      }
+    },
+    {
+      "name": "c15-source-390",
+      "bounds": {
+        "x": 112.4375,
+        "y": 366.9375,
+        "width": 159.234375,
+        "height": 288.046875
+      },
+      "axe": {
+        "label": "c15-source-390",
+        "violations": [],
+        "incomplete": [
+          {
+            "id": "aria-prohibited-attr",
+            "impact": "serious",
+            "nodes": 1
+          },
+          {
+            "id": "color-contrast",
+            "impact": "serious",
+            "nodes": 8
+          }
+        ],
+        "passes": 41
+      }
+    },
+    {
+      "name": "home-intent-0",
+      "axe": {
+        "label": "home-intent-0",
+        "violations": [],
+        "incomplete": [],
+        "passes": 48
+      }
+    },
+    {
+      "name": "home-intent-1",
+      "axe": {
+        "label": "home-intent-1",
+        "violations": [],
+        "incomplete": [],
+        "passes": 48
+      }
+    },
+    {
+      "name": "home-intent-2",
+      "axe": {
+        "label": "home-intent-2",
+        "violations": [],
+        "incomplete": [],
+        "passes": 47
+      }
+    },
+    {
+      "name": "comparison-selected",
+      "before": 8,
+      "after": 16,
+      "series": 3,
+      "axe": {
+        "label": "comparison-selected",
+        "violations": [],
+        "incomplete": [],
+        "passes": 44
+      }
+    },
+    {
+      "name": "offer-pagination",
+      "url": "https://salida-cyl.157-90-22-40.sslip.io/desde-oferta?page=2",
+      "focus": "offer-results-heading",
+      "top": 80.359375,
+      "axe": {
+        "label": "offers-page2",
+        "violations": [],
+        "incomplete": [],
+        "passes": 45
+      }
+    },
+    {
+      "name": "centers-source-open",
+      "axe": {
+        "label": "centers-source-open",
+        "violations": [],
+        "incomplete": [],
+        "passes": 41
+      }
+    },
+    {
+      "name": "center-pagination",
+      "url": "https://salida-cyl.157-90-22-40.sslip.io/donde-estudiar?page=2",
+      "focus": "center-results-summary",
+      "top": 79.734375,
+      "axe": {
+        "label": "centers-page2",
+        "violations": [],
+        "incomplete": [],
+        "passes": 41
+      }
+    },
+    {
+      "name": "contextual-center-pagination",
+      "axe": {
+        "label": "contextual-centers-page2",
+        "violations": [],
+        "incomplete": [],
+        "passes": 40
+      }
+    },
+    {
+      "name": "resource-expansion",
+      "axe": {
+        "label": "resource-expansion",
+        "violations": [],
+        "incomplete": [],
+        "passes": 45
+      }
+    },
+    {
+      "name": "c14-no-fp",
+      "axe": {
+        "label": "c14-no-fp",
+        "violations": [],
+        "incomplete": [
+          {
+            "id": "aria-prohibited-attr",
+            "impact": "serious",
+            "nodes": 1
+          },
+          {
+            "id": "color-contrast",
+            "impact": "serious",
+            "nodes": 1
+          }
+        ],
+        "passes": 39
+      }
+    },
+    {
+      "name": "c14-empty-offers",
+      "axe": {
+        "label": "c14-empty-offers",
+        "violations": [],
+        "incomplete": [],
+        "passes": 44
+      }
+    },
+    {
+      "name": "c14-resource-filters",
+      "axe": {
+        "label": "c14-resource-filters",
+        "violations": [],
+        "incomplete": [],
+        "passes": 42
+      }
+    },
+    {
+      "name": "c15-global-offers-empty",
+      "axe": {
+        "label": "c15-global-offers-empty",
+        "violations": [],
+        "incomplete": [],
+        "passes": 44
+      }
+    },
+    {
+      "name": "c15-centers-empty",
+      "axe": {
+        "label": "c15-centers-empty",
+        "violations": [],
+        "incomplete": [],
+        "passes": 40
+      }
+    },
+    {
+      "name": "occupation-market",
+      "url": "https://salida-cyl.157-90-22-40.sslip.io/desde-ocupacion/occupation%3Acno11%3A2713#mercado-laboral",
+      "axe": {
+        "label": "market",
+        "violations": [],
+        "incomplete": [
+          {
+            "id": "aria-prohibited-attr",
+            "impact": "serious",
+            "nodes": 1
+          },
+          {
+            "id": "color-contrast",
+            "impact": "serious",
+            "nodes": 1
+          }
+        ],
+        "passes": 41
+      }
+    },
+    {
+      "name": "c15-source-1280",
+      "bounds": {
+        "x": 120.4375,
+        "y": 370.65625,
+        "width": 528,
+        "height": 124.28125
+      },
+      "axe": {
+        "label": "c15-source-1280",
+        "violations": [],
+        "incomplete": [
+          {
+            "id": "aria-prohibited-attr",
+            "impact": "serious",
+            "nodes": 1
+          },
+          {
+            "id": "color-contrast",
+            "impact": "serious",
+            "nodes": 2
+          }
+        ],
+        "passes": 41
+      }
+    }
+  ],
+  "errors": [],
+  "resumedFrom": null,
+  "versionBefore": {
+    "schemaVersion": "1.0.0",
+    "commit": "02d6805e5cb661f3289ade47ad2364b26fd346f8"
+  },
+  "versionAfter": {
+    "schemaVersion": "1.0.0",
+    "commit": "02d6805e5cb661f3289ade47ad2364b26fd346f8"
+  },
+  "status": "passed",
+  "finishedAt": "2026-09-06T09:09:34.881Z"
+}

@@ -176,6 +176,50 @@ function validEvidence(): ContestReleaseEvidence {
 }
 
 describe("contest release evidence validator", () => {
+  it("records a manual VPS publication without claiming a workflow or completed final gates", () => {
+    const evidence = validEvidence();
+    evidence.status = "pending";
+    evidence.auditHeadSha = null;
+    evidence.localReviewHeadSha = null;
+    evidence.captureProductCommitSha = null;
+    evidence.localGates.evidenceManifest.captureCount = 0;
+    markLocalGatesPending(evidence);
+    Object.assign(evidence.deployment, {
+      method: "manual-vps",
+      workflowRunId: null,
+      workflowUrl: null,
+      receiptPath: "docs/contest/evidence/c15/rc15-public-smoke.json",
+      receiptSha256: "f".repeat(64),
+      versionJsonUrl: ROOT_URL + "version.json",
+      versionJsonCommitSha: PUBLICATION_SHA,
+      versionJsonSchemaVersion: "1.0.0",
+      versionJsonVerifiedAt: VERIFIED_AT,
+    });
+    expect(validateContestReleaseEvidence(evidence, context)).toMatchObject({
+      status: "pending",
+      capturesAreCurrent: false,
+    });
+    const mismatch = structuredClone(evidence);
+    mismatch.publicationCommitSha = SOURCE_SHA;
+    expect(() => validateContestReleaseEvidence(mismatch, context)).toThrow(
+      /publicationCommitSha/,
+    );
+    const inventedRun = structuredClone(evidence);
+    inventedRun.deployment.workflowRunId = "123";
+    expect(() => validateContestReleaseEvidence(inventedRun, context)).toThrow(
+      /no invented workflow/,
+    );
+    const unsafePath = structuredClone(evidence);
+    unsafePath.deployment.receiptPath = "../receipt.json";
+    expect(() => validateContestReleaseEvidence(unsafePath, context)).toThrow(
+      /contained/,
+    );
+    const noHash = structuredClone(evidence);
+    delete noHash.deployment.receiptSha256;
+    expect(() => validateContestReleaseEvidence(noHash, context)).toThrow(
+      /receiptSha256/,
+    );
+  });
   it("validates a pending final-candidate plan without replacing verified baseline evidence", () => {
     const evidence = evidenceWithCandidatePlan();
 

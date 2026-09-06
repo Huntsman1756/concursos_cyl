@@ -2,7 +2,7 @@
 
 ## Candidato actual
 
-- Estado: candidato local unificado; sin push, tag, release, deploy ni envío externo.
+- Estado: C15 publicado en VPS, commit `02d6805e5cb661f3289ade47ad2364b26fd346f8`; candidatura no enviada. [Registro completo](release-c15.md).
 - Commit fuente de la frontera de datos: `36659e6a2e127630e72b14b8641504d5dbea7a9e`.
 - Commit documental del freeze: `064d10ed5f48df9e8deec3322f38be7372de5b01`.
 - Snapshot: `20260830120000000-8c6c79fbd2a1`.
@@ -17,9 +17,9 @@ La cobertura es deliberadamente fail-closed: una relación no revisada, una cate
 
 ## Evidencia y reproducibilidad
 
-La fuente de verdad es [`public/data/v1/manifest.json`](../../public/data/v1/manifest.json), el snapshot referenciado y [`coverage-freeze.json`](coverage-freeze.json). La validación de esquema, hashes, allowlist, relaciones aprobadas, runtime y bundle forma parte de los gates locales. La evidencia visual existente de la release pública anterior queda histórica y no se cuenta como captura del candidato actual.
+La fuente de verdad es [`public/data/v1/manifest.json`](../../public/data/v1/manifest.json), el snapshot referenciado y [`coverage-freeze.json`](coverage-freeze.json). La validación de esquema, hashes, allowlist, relaciones aprobadas, runtime y bundle forma parte de los gates locales. El inventario A4 anterior es histórico. Las capturas públicas C15 y los resultados efectivos están en [release-c15.md](release-c15.md).
 
-Los resultados de la ejecución de readiness se entregan junto con este estado documental. `release-evidence.json` permanece en `pending` hasta que una persona autorice publicación y se capture el candidato desplegado en un contexto anónimo.
+`release-evidence.json` registra deployment y publicVerification como verified. El estado raíz pending pertenece al gate conjunto del esquema v1, no al despliegue. C15: 1.351 unitarias PASS (178 omitidas), 130 E2E de regresión PASS (2 omitidas), 105/105 hashes públicos, 44 comprobaciones de páginas y 19 estados interactivos. NVDA y piloto siguen pendientes; hay comprobaciones Axe incomplete.
 
 ## Límites humanos
 

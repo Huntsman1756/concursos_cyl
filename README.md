@@ -63,7 +63,7 @@ The reviewed FP↔occupation graph is returned to the community as a **derived o
 
 ## Concurso
 
-[X Concurso de Datos Abiertos de Castilla y León](https://datosabiertos.jcyl.es/web/es/concurso-datos-abiertos/concurso-datos-abiertos.html) — Productos y Servicios. The current candidate is local and remains pending human authorization, public deployment and capture; its identity is recorded in [docs/contest/release-evidence.json](docs/contest/release-evidence.json).
+[X Concurso de Datos Abiertos de Castilla y León](https://datosabiertos.jcyl.es/web/es/concurso-datos-abiertos/concurso-datos-abiertos.html) — Productos y Servicios. C15 is publicly deployed at commit `02d6805e5cb661f3289ade47ad2364b26fd346f8`. [Release evidence](docs/contest/release-c15.md) records its actual validation and limitations. [Submission status](docs/contest/closing-status.md) separates completed technical work from the pending pilot, human accessibility review and application authorization.
 
 - Application: <https://salida-cyl.157-90-22-40.sslip.io/>
 - Derived open data: <https://salida-cyl.157-90-22-40.sslip.io/datos-abiertos>

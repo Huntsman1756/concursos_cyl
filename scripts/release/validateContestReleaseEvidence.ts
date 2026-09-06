@@ -1,4 +1,5 @@
 import { execFileSync } from "node:child_process";
+import { createHash } from "node:crypto";
 import fs from "node:fs";
 import path from "node:path";
 
@@ -78,6 +79,9 @@ export type ContestReleaseEvidence = {
     }
   >;
   deployment: {
+    method?: "manual-vps";
+    receiptPath?: string;
+    receiptSha256?: string;
     status: "pending" | "verified";
     commitSha: string | null;
     workflowRunId: string | null;
@@ -731,7 +735,8 @@ export function validateContestReleaseEvidence(
   );
   if (status === "pending") {
     if (
-      publicationSha !== null ||
+      (publicationSha !== null &&
+        record(root.deployment, "deployment").method !== "manual-vps") ||
       auditHeadSha !== null ||
       localReviewHeadSha !== null
     ) {
@@ -867,6 +872,9 @@ export function validateContestReleaseEvidence(
       "versionJsonCommitSha",
       "versionJsonSchemaVersion",
       "versionJsonVerifiedAt",
+      "method",
+      "receiptPath",
+      "receiptSha256",
     ],
     "deployment",
     [
@@ -943,7 +951,43 @@ export function validateContestReleaseEvidence(
       "deployment.versionJsonVerifiedAt must not be later than recordedAt",
     );
   }
-  if (status === "pending") {
+  const manualVps = deployment.method === "manual-vps";
+  if (deployment.method !== undefined && !manualVps) {
+    throw new Error("deployment.method must be manual-vps when provided");
+  }
+  if (manualVps) {
+    if (
+      deployment.status !== "verified" ||
+      deployment.liveRootVerified !== true ||
+      deploymentCommitSha === null ||
+      deploymentVerifiedAt === null ||
+      versionJsonCommitSha !== deploymentCommitSha ||
+      versionJsonVerifiedAt === null ||
+      deploymentWorkflowRunId !== null ||
+      deploymentWorkflowUrl !== null
+    ) {
+      throw new Error(
+        "manual VPS deployment requires verified identity and no invented workflow",
+      );
+    }
+    assertEqual(
+      publicationSha,
+      deploymentCommitSha,
+      "manual VPS publicationCommitSha",
+    );
+    const receiptPath = nonEmptyString(
+      deployment.receiptPath,
+      "deployment.receiptPath",
+    );
+    if (
+      !/^docs\/contest\/evidence\/c\d+\/[a-z0-9-]+\.json$/u.test(receiptPath)
+    ) {
+      throw new Error(
+        "manual VPS receipt must be a contained candidate evidence JSON path",
+      );
+    }
+    sha256(deployment.receiptSha256, "deployment.receiptSha256");
+  } else if (status === "pending") {
     if (deployment.status === "pending") {
       if (
         deploymentCommitSha !== null ||
@@ -1038,6 +1082,16 @@ export function validateContestReleaseEvidence(
     publicVerification.verifiedAt,
     "publicVerification.verifiedAt",
   );
+  if (
+    manualVps &&
+    (publicVerification.status !== "verified" ||
+      publicVerifiedAt !== deploymentVerifiedAt ||
+      Date.parse(deploymentVerifiedAt!) > Date.parse(recordedAt))
+  ) {
+    throw new Error(
+      "manual VPS requires matching public verification timestamps",
+    );
+  }
   if (status === "pending") {
     if (publicVerification.status === "pending") {
       if (
@@ -1185,12 +1239,47 @@ export function validateContestReleaseEvidenceFromRoot(
     })),
   };
   const result = validateContestReleaseEvidence(evidence, context);
+  if (evidence.deployment.method === "manual-vps") {
+    const receiptBytes = fs.readFileSync(
+      path.join(resolvedRoot, evidence.deployment.receiptPath!),
+    );
+    assertEqual(
+      createHash("sha256").update(receiptBytes).digest("hex"),
+      evidence.deployment.receiptSha256,
+      "manual VPS receipt hash",
+    );
+    const receipt = JSON.parse(receiptBytes.toString("utf8"));
+    if (
+      receipt.status !== "passed" ||
+      receipt.expected !== evidence.publicationCommitSha ||
+      receipt.versionBefore?.commit !== evidence.publicationCommitSha ||
+      receipt.versionAfter?.commit !== evidence.publicationCommitSha ||
+      receipt.base !== evidence.expectedRootUrl.replace(/\/$/u, "") ||
+      receipt.finishedAt !== evidence.deployment.verifiedAt ||
+      !Array.isArray(receipt.errors) ||
+      receipt.errors.length !== 0 ||
+      !Array.isArray(receipt.artifact) ||
+      receipt.artifact.length === 0 ||
+      receipt.artifact.some((file: { match: boolean }) => file.match !== true)
+    ) {
+      throw new Error(
+        "manual VPS receipt does not verify the declared publication",
+      );
+    }
+  }
   assertContestReleaseGitChain(resolvedRoot, {
     sourceCommitSha: freeze.sourceCommitSha,
     freezeCommitSha: evidence.coverageFreezeCommitSha,
     publicationCommitSha: evidence.publicationCommitSha,
     evidenceCommitSha:
-      evidence.status === "verified" ? evidence.auditHeadSha : null,
+      evidence.status === "verified"
+        ? evidence.auditHeadSha
+        : evidence.deployment.method === "manual-vps"
+          ? execFileSync("git", ["rev-parse", "HEAD"], {
+              cwd: resolvedRoot,
+              encoding: "utf8",
+            }).trim()
+          : null,
     freezePath: "docs/contest/coverage-freeze.json",
     evidencePaths:
       evidence.status === "verified"
@@ -1198,7 +1287,9 @@ export function validateContestReleaseEvidenceFromRoot(
             "docs/contest/evidence-capture.json",
             ...captures.captures.map((capture) => capture.outputFile),
           ]
-        : [],
+        : evidence.deployment.method === "manual-vps"
+          ? [evidence.deployment.receiptPath!]
+          : [],
   });
   return result;
 }

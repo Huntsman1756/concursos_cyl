@@ -16,4 +16,8 @@ La representatividad de las tablas nacionales es la declarada por el Ministerio:
 
 Las rutas internas son recorridos de producto; la candidatura usa únicamente la raíz pública. La experiencia no requiere cuentas y no conserva selecciones, búsquedas, respuestas ni resultados. No guarda preferencias en almacenamiento local. Los filtros y términos presentes en la URL pueden quedar en el historial del navegador. La accesibilidad, el responsive y la semántica se deben confirmar de nuevo en la sesión de capturas finales.
 
-El objetivo de ampliar la cobertura está condicionado a evidencia: el freeze actual registra 113 cualificaciones distintas y deja 0 programas diferidos. El despliegue y la verificación pública aún están pendientes y no forman parte de este documento como hechos consumados.
+El objetivo de ampliar la cobertura está condicionado a evidencia: el freeze actual registra 113 cualificaciones distintas y deja 0 programas diferidos. El despliegue público está verificado para el commit `02d6805e5cb661f3289ade47ad2364b26fd346f8`; la verificación de rutas y recursos queda registrada en `docs/contest/release-evidence.json`.
+
+## Evidencia pública C15 y pendientes
+
+C15 está publicado y verificado. [Release C15](release-c15.md) conserva los resultados reales y capturas públicas. El inventario A4 anterior es histórico. El estado pendiente del gate conjunto no equivale a ausencia de despliegue. NVDA y el piloto real siguen pendientes. No se ha enviado la candidatura.

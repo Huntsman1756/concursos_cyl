@@ -1,5 +1,7 @@
 # Contest evidence capture checklist
 
+> Provenance notice: the checks below apply only to the commit and date recorded for each capture. They do not establish verification of the current release. For C15 evidence and the distinction from this older inventory, see [release-c15.md](release-c15.md).
+
 This checklist is rendered from `docs/contest/evidence-capture.json`. Capture only the listed routes and viewports after the coverage freeze. Do not submit the application from this checklist.
 
 <!-- prettier-ignore -->

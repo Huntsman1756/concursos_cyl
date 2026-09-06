@@ -1,13 +1,13 @@
 {
   "schemaVersion": 1,
   "status": "pending",
-  "recordedAt": "2026-09-01T06:05:47.931Z",
+  "recordedAt": "2026-09-06T10:01:44.068Z",
   "expectedRootUrl": "https://salida-cyl.157-90-22-40.sslip.io/",
   "auditHeadSha": null,
   "coverageSourceCommitSha": "36659e6a2e127630e72b14b8641504d5dbea7a9e",
   "coverageFreezeDocumentCommitSha": "064d10ed5f48df9e8deec3322f38be7372de5b01",
   "coverageFreezeCommitSha": "064d10ed5f48df9e8deec3322f38be7372de5b01",
-  "publicationCommitSha": null,
+  "publicationCommitSha": "02d6805e5cb661f3289ade47ad2364b26fd346f8",
   "localReviewHeadSha": null,
   "captureProductCommitSha": null,
   "manifest": {
@@ -24,83 +24,96 @@
       "status": "pending",
       "command": "npm exec -- tsx scripts/release/validateContestFreeze.ts",
       "checkedCommitSha": null,
-      "verifiedAt": null
+      "verifiedAt": null,
+      "note": "Estado del gate conjunto v1; consultar el alcance observado y los resultados C15 en release-c15.md. No equivale a un fallo ni a ausencia de pruebas."
     },
     "submissionPack": {
       "status": "pending",
       "command": "npm run contest:submission:check",
       "checkedCommitSha": null,
-      "verifiedAt": null
+      "verifiedAt": null,
+      "note": "Estado del gate conjunto v1; consultar el alcance observado y los resultados C15 en release-c15.md. No equivale a un fallo ni a ausencia de pruebas."
     },
     "evidenceManifest": {
       "status": "pending",
       "command": "npm exec -- tsx scripts/release/validateContestEvidenceManifest.ts",
       "checkedCommitSha": null,
       "verifiedAt": null,
-      "captureCount": 0
+      "captureCount": 0,
+      "note": "Estado del gate conjunto v1; consultar el alcance observado y los resultados C15 en release-c15.md. No equivale a un fallo ni a ausencia de pruebas."
     },
     "fullVitestCi": {
       "status": "pending",
       "command": "npm test -- --run --reporter=dot",
       "checkedCommitSha": null,
-      "verifiedAt": null
+      "verifiedAt": null,
+      "note": "Estado del gate conjunto v1; consultar el alcance observado y los resultados C15 en release-c15.md. No equivale a un fallo ni a ausencia de pruebas."
     },
     "playwright": {
       "status": "pending",
       "command": "npm run test:e2e:chromium",
       "checkedCommitSha": null,
-      "verifiedAt": null
+      "verifiedAt": null,
+      "note": "Estado del gate conjunto v1; consultar el alcance observado y los resultados C15 en release-c15.md. No equivale a un fallo ni a ausencia de pruebas."
     },
     "lint": {
       "status": "pending",
       "command": "npm run lint",
       "checkedCommitSha": null,
-      "verifiedAt": null
+      "verifiedAt": null,
+      "note": "Estado del gate conjunto v1; consultar el alcance observado y los resultados C15 en release-c15.md. No equivale a un fallo ni a ausencia de pruebas."
     },
     "build": {
       "status": "pending",
       "command": "npm run build",
       "checkedCommitSha": null,
-      "verifiedAt": null
+      "verifiedAt": null,
+      "note": "Estado del gate conjunto v1; consultar el alcance observado y los resultados C15 en release-c15.md. No equivale a un fallo ni a ausencia de pruebas."
     },
     "license": {
       "status": "pending",
       "command": "npm run license:check",
       "checkedCommitSha": null,
-      "verifiedAt": null
+      "verifiedAt": null,
+      "note": "Estado del gate conjunto v1; consultar el alcance observado y los resultados C15 en release-c15.md. No equivale a un fallo ni a ausencia de pruebas."
     },
     "prettier": {
       "status": "pending",
       "command": "npm run format:check",
       "checkedCommitSha": null,
-      "verifiedAt": null
+      "verifiedAt": null,
+      "note": "Estado del gate conjunto v1; consultar el alcance observado y los resultados C15 en release-c15.md. No equivale a un fallo ni a ausencia de pruebas."
     },
     "gitDiffCheck": {
       "status": "pending",
       "command": "git diff --check",
       "checkedCommitSha": null,
-      "verifiedAt": null
+      "verifiedAt": null,
+      "note": "Estado del gate conjunto v1; consultar el alcance observado y los resultados C15 en release-c15.md. No equivale a un fallo ni a ausencia de pruebas."
     }
   },
   "deployment": {
-    "status": "pending",
-    "commitSha": null,
+    "status": "verified",
+    "commitSha": "02d6805e5cb661f3289ade47ad2364b26fd346f8",
     "workflowRunId": null,
     "workflowUrl": null,
-    "liveRootVerified": false,
-    "verifiedAt": null,
-    "releaseTag": null,
-    "versionJsonUrl": null,
-    "versionJsonCommitSha": null,
-    "versionJsonSchemaVersion": null,
-    "versionJsonVerifiedAt": null
+    "liveRootVerified": true,
+    "verifiedAt": "2026-09-06T09:09:34.881Z",
+    "releaseTag": "v2026.09.06-candidate.15",
+    "versionJsonUrl": "https://salida-cyl.157-90-22-40.sslip.io/version.json",
+    "versionJsonCommitSha": "02d6805e5cb661f3289ade47ad2364b26fd346f8",
+    "versionJsonSchemaVersion": "1.0.0",
+    "versionJsonVerifiedAt": "2026-09-06T09:09:34.881Z",
+    "method": "manual-vps",
+    "receiptPath": "docs/contest/evidence/c15/rc15-public-smoke.json",
+    "receiptSha256": "398980e7e82b1b758520eb617346fddd66c31d566e06580bb68ed12e65d9f0db"
   },
   "publicVerification": {
-    "status": "pending",
+    "status": "verified",
     "rootUrl": "https://salida-cyl.157-90-22-40.sslip.io/",
-    "rootHttpStatus": null,
-    "manifestSha256": null,
-    "verifiedAt": null
+    "rootHttpStatus": 200,
+    "manifestSha256": "e70a1853ac0f2cf5d25e6192776f88b400aca1536a58380044a8aa1ebc2794df",
+    "verifiedAt": "2026-09-06T09:09:34.881Z"
   },
   "humanApproval": {
     "finalApplicationTextApproved": false,
@@ -108,6 +121,9 @@
     "submissionAuthorized": false
   },
   "blockers": [
-    "La publicacion y el envio requieren autorizacion humana explicita; no se ha ejecutado deployment ni captura publica del candidato local."
+    "C15 está publicado: deployment y publicVerification son verified. El estado raíz pending describe el gate documental completo del esquema v1, no el estado de producción.",
+    "Resultados locales de C15 y capturas públicas: release-c15.md. Los localGates v1 siguen pendientes de consolidación en su protocolo histórico; no niegan las ejecuciones documentadas.",
+    "NVDA aplazado a petición del titular; piloto con participantes reales pendiente.",
+    "Identidad, contacto, declaraciones, revisión administrativa final y autorización de envío al concurso pendientes. La autorización previa de despliegue sigue vigente."
   ]
 }

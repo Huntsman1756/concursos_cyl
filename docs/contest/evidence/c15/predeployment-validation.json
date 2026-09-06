@@ -1,0 +1,36 @@
+{
+  "commit": "02d6805e5cb661f3289ade47ad2364b26fd346f8",
+  "baseline": "c3d8fe2f37d18edf35e51c5b661cdee1b5fcd401",
+  "e2eDirected": {
+    "startTime": "2026-09-06T06:14:38.009Z",
+    "duration": 72974.927,
+    "expected": 24,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "visualChecks": 28,
+  "visualErrors": [],
+  "assets": {
+    "javascriptBytes": 619994,
+    "budgetsChanged": false,
+    "stylesheetBytes": 157957
+  },
+  "dataChanged": false,
+  "nvdaRun": false,
+  "deployment": "not performed",
+  "fullUnitStatus": "passed",
+  "fullUnit": {
+    "passed": 1351,
+    "skipped": 178,
+    "failed": 0
+  },
+  "e2eRegression": {
+    "startTime": "2026-09-06T06:27:10.413Z",
+    "duration": 263065.5,
+    "expected": 130,
+    "skipped": 2,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

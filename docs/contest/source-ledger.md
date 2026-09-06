@@ -1,6 +1,6 @@
 # Contest source ledger
 
-The current candidate is local. The public root below is the intended submission URL, not evidence that this candidate has been deployed; public verification remains `pending` in `release-evidence.json`.
+C15 is publicly deployed at `02d6805e5cb661f3289ade47ad2364b26fd346f8`. [Release evidence](release-c15.md) identifies the public build. Source provenance below is separate from deployment verification and from final submission approval.
 
 This ledger keeps source evidence separate from claims about the application. URLs below are copied from the repository source contracts and methodology, not inferred from a search result.
 

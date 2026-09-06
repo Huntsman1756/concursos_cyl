@@ -58,10 +58,9 @@ La cifra de ofertas es una unión de IDs de ofertas que pasan las reglas de matc
 
 ## Reproducibilidad
 
-Comandos previstos para repetir las comprobaciones. Este documento no los da por ejecutados hasta que `release-evidence.json` quede verificado y ligado al commit de publicación:
+Catálogo de comandos de reproducción; no es una transcripción de una ejecución completa. Los comandos y resultados efectivamente ejecutados sobre C15 están diferenciados en [release-c15.md](release-c15.md). La captura de datos se ejecuta aparte; para reproducir C15 se usa su instantánea congelada:
 
 ```text
-npm run data:build
 npm test -- --run
 npm run test:e2e -- --workers=2
 npm run lint
@@ -75,12 +74,19 @@ npm run analysis:pilot:report:check
 npm exec -- tsx scripts/release/validateContestFreeze.ts
 ```
 
-La revisión independiente confirmó el manifest, sus 22 recursos, los conjuntos de relaciones y la ausencia de cambios en las rutas de frontera congelada (`config/candidate-resource-allowlist.json`, `analysis/fp_coverage_expansion_results.json`, `analysis/fp_one_word_publication_reviews.json`, `data/catalogs`, `data/curated`, `data/schemas`, `public/data`, `scripts/analysis/validateFpOneWordPublicationReview.ts`, `scripts/data/validateCuratedMappings.ts`, `src/domain/offerMatching.ts`, `src/domain/requirements.ts`) desde el commit fuente. Las rutas de UI, búsqueda y print quedan fuera de esta frontera y no se presentan como parte del freeze.
+La validación estructural comprueba el manifest, sus 22 recursos, los conjuntos de relaciones y la ausencia de cambios en las rutas de frontera congelada (`config/candidate-resource-allowlist.json`, `analysis/fp_coverage_expansion_results.json`, `analysis/fp_one_word_publication_reviews.json`, `data/catalogs`, `data/curated`, `data/schemas`, `public/data`, `scripts/analysis/validateFpOneWordPublicationReview.ts`, `scripts/data/validateCuratedMappings.ts`, `src/domain/offerMatching.ts`, `src/domain/requirements.ts`) desde el commit fuente. Las rutas de UI, búsqueda y print quedan fuera de esta frontera y no se presentan como parte del freeze.
 
 ## Despliegue
 
 - URL raíz esperada: [https://salida-cyl.157-90-22-40.sslip.io/](https://salida-cyl.157-90-22-40.sslip.io/)
-- Commit desplegado: **PENDIENTE DE DESPLIEGUE Y VERIFICACIÓN**.
-- Run del workflow: **PENDIENTE DE DESPLIEGUE Y VERIFICACIÓN**.
+- Commit desplegado: `02d6805e5cb661f3289ade47ad2364b26fd346f8`.
+- Run del workflow: No aplica: despliegue manual VPS; véase [evidencia C15](release-c15.md).
 
-Estos dos campos no se inventan antes de ejecutar y verificar el release.
+- Release: `v2026.09.06-candidate.15`.
+- `version.json` observado: [respuesta pública](https://salida-cyl.157-90-22-40.sslip.io/version.json) con commit `02d6805e5cb661f3289ade47ad2364b26fd346f8`.
+
+La publicación manual VPS del commit `02d6805e5cb661f3289ade47ad2364b26fd346f8` se verificó el 2026-09-06T09:09:34.881Z. Véase [release-c15.md](release-c15.md).
+
+## Evidencia pública C15 y pendientes
+
+C15 está publicado y verificado. [Release C15](release-c15.md) conserva los resultados reales y capturas públicas. El inventario A4 anterior es histórico. El estado pendiente del gate conjunto no equivale a ausencia de despliegue. NVDA y el piloto real siguen pendientes. No se ha enviado la candidatura.

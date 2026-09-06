@@ -1,0 +1,152 @@
+{
+  "schemaVersion": "1.0.0",
+  "artifactKind": "anonymous_pilot_aggregate",
+  "status": "draft",
+  "blockerCodes": [],
+  "protocol": {
+    "protocolVersion": "1.0.0",
+    "taskCatalogVersion": "1.0.0",
+    "adultOnly": true,
+    "minorsIncluded": false,
+    "targetSessions": 5,
+    "minimumByRole": {
+      "learner": 1,
+      "counsellor": 1
+    },
+    "protocolSha256": "deb4a53f730e372410dc020d9e7d5b4cec2bd77574e87a2c3d0a28b4307a71f2",
+    "taskScriptSha256": "2431592de49f940cf1f23b7d3a84fa829b0d0466411bbeef559a677bf3a23771"
+  },
+  "release": {
+    "rootUrl": "https://salida-cyl.157-90-22-40.sslip.io/",
+    "deployedCommitSha": "02d6805e5cb661f3289ade47ad2364b26fd346f8",
+    "snapshotId": "20260830120000000-8c6c79fbd2a1"
+  },
+  "consentPolicy": {
+    "participation": "required_before_session",
+    "recording": "none",
+    "publicQuotes": "none",
+    "publicMedia": "none",
+    "rawConsentStorage": "outside_repository"
+  },
+  "sample": {
+    "totalSessions": 0,
+    "consentedSessions": 0,
+    "withdrawnSessions": 0,
+    "analyzableSessions": 0,
+    "byRole": {
+      "learner": 0,
+      "counsellor": 0
+    }
+  },
+  "taskResults": [
+    {
+      "taskId": "T1_fp_to_occupation",
+      "attempted": 0,
+      "completed": 0,
+      "blocked": 0,
+      "abandoned": 0,
+      "misinterpretations": 0,
+      "timeBands": {
+        "under_5m": 0,
+        "5_to_10m": 0,
+        "over_10m": 0,
+        "not_recorded": 0
+      },
+      "issueCounts": {
+        "minor": 0,
+        "major": 0,
+        "stop": 0
+      }
+    },
+    {
+      "taskId": "T2_honest_zero_or_deferred",
+      "attempted": 0,
+      "completed": 0,
+      "blocked": 0,
+      "abandoned": 0,
+      "misinterpretations": 0,
+      "timeBands": {
+        "under_5m": 0,
+        "5_to_10m": 0,
+        "over_10m": 0,
+        "not_recorded": 0
+      },
+      "issueCounts": {
+        "minor": 0,
+        "major": 0,
+        "stop": 0
+      }
+    },
+    {
+      "taskId": "T3_occupation_to_fp",
+      "attempted": 0,
+      "completed": 0,
+      "blocked": 0,
+      "abandoned": 0,
+      "misinterpretations": 0,
+      "timeBands": {
+        "under_5m": 0,
+        "5_to_10m": 0,
+        "over_10m": 0,
+        "not_recorded": 0
+      },
+      "issueCounts": {
+        "minor": 0,
+        "major": 0,
+        "stop": 0
+      }
+    },
+    {
+      "taskId": "T4_compare_scopes",
+      "attempted": 0,
+      "completed": 0,
+      "blocked": 0,
+      "abandoned": 0,
+      "misinterpretations": 0,
+      "timeBands": {
+        "under_5m": 0,
+        "5_to_10m": 0,
+        "over_10m": 0,
+        "not_recorded": 0
+      },
+      "issueCounts": {
+        "minor": 0,
+        "major": 0,
+        "stop": 0
+      }
+    },
+    {
+      "taskId": "T5_sources_and_limits",
+      "attempted": 0,
+      "completed": 0,
+      "blocked": 0,
+      "abandoned": 0,
+      "misinterpretations": 0,
+      "timeBands": {
+        "under_5m": 0,
+        "5_to_10m": 0,
+        "over_10m": 0,
+        "not_recorded": 0
+      },
+      "issueCounts": {
+        "minor": 0,
+        "major": 0,
+        "stop": 0
+      }
+    }
+  ],
+  "issues": [],
+  "privacy": {
+    "aggregateOnly": true,
+    "aggregateContainsPii": false,
+    "rawMaterialsInRepository": false,
+    "retentionDays": 30
+  },
+  "verification": {
+    "humanReview": "pending",
+    "protocolApproved": false,
+    "consentApproved": false,
+    "noPiiReview": "pending",
+    "reviewedAt": null
+  }
+}

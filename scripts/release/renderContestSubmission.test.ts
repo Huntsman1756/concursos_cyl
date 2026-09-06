@@ -60,7 +60,7 @@ describe("contest submission renderer", () => {
       "PENDIENTE DE APROBACIÓN HUMANA",
     );
     expect(rendered["technical-evidence.md"]).toContain(
-      "no los da por ejecutados",
+      "no es una transcripción de una ejecución completa",
     );
     expect(rendered["technical-evidence.md"]).toContain(
       "rutas de UI, búsqueda y print quedan fuera de esta frontera",
@@ -113,6 +113,38 @@ describe("contest submission renderer", () => {
     );
     expect(rendered["submission-checklist.md"]).toContain(
       "- [x] Captura automatizada A4: 9/9 capturas actuales recapturadas y validadas",
+    );
+  });
+
+  it("distinguishes a manual public release from the incomplete final submission", () => {
+    const rendered = renderContestSubmission(freeze, {
+      status: "verified",
+      method: "manual-vps",
+      commitSha: "02d6805e5cb661f3289ade47ad2364b26fd346f8",
+      workflowRunId: null,
+      verifiedAt: "2026-09-06T09:09:34.881Z",
+      captureProductCommitSha: null,
+      captureCount: 0,
+      capturesAreCurrent: false,
+      releaseGatesVerified: false,
+    });
+    expect(rendered["technical-evidence.md"]).toContain(
+      "No aplica: despliegue manual VPS",
+    );
+    expect(rendered["technical-evidence.md"]).not.toContain(
+      "PENDIENTE DE DESPLIEGUE Y VERIFICACIÓN",
+    );
+    expect(rendered["submission-checklist.md"]).toContain(
+      "NVDA y el piloto real siguen pendientes",
+    );
+    expect(rendered["submission-checklist.md"]).toContain(
+      "No se ha enviado la candidatura",
+    );
+    expect(rendered["submission-checklist.md"]).not.toContain(
+      "Mac desbloqueado",
+    );
+    expect(rendered["technical-evidence.md"]).not.toContain(
+      "Comandos ejecutados y ligados",
     );
   });
 
@@ -236,7 +268,7 @@ describe("contest submission renderer", () => {
 
     // deployment pending => current visual capture pending; prior captures historical
     expect(rendered["submission-checklist.md"]).toContain(
-      "captura visual actual pendiente; las 13 capturas anteriores son históricas",
+      "El inventario A4 conserva 13 capturas históricas",
     );
     // Checks sin marcar
     expect(rendered["submission-checklist.md"]).toContain(
@@ -251,7 +283,7 @@ describe("contest submission renderer", () => {
     );
     // Release gate sin marcar
     expect(rendered["submission-checklist.md"]).toContain(
-      "- [ ] Ejecutar los gates de release y verificar la aplicación pública.",
+      "- [ ] Cerrar el gate documental conjunto; comprobar el alcance de pruebas ya ejecutadas en la evidencia de la release.",
     );
   });
 
@@ -295,7 +327,7 @@ describe("contest submission renderer", () => {
       "f55de804cc94b5d928484e846b933a9dea94b7d0",
     );
     expect(rendered["technical-evidence.md"]).toContain(
-      "Comandos previstos para repetir las comprobaciones",
+      "Catálogo de comandos de reproducción",
     );
     expect(rendered["submission-checklist.md"]).toContain(
       "Release: `v2026.08.22`",
@@ -307,19 +339,19 @@ describe("contest submission renderer", () => {
       "https://huntsman1756.github.io/concursos_cyl/version.json",
     );
     expect(rendered["submission-checklist.md"]).toContain(
-      "- [ ] Ejecutar los gates de release y verificar la aplicación pública.",
+      "- [ ] Cerrar el gate documental conjunto; comprobar el alcance de pruebas ya ejecutadas en la evidencia de la release.",
     );
     expect(rendered["submission-checklist.md"]).toContain(
-      "- [x] Rellenar el commit desplegado y el run del workflow con datos observados.",
+      "- [x] Registrar el commit publicado y su método de despliegue con datos observados.",
     );
     expect(rendered["submission-checklist.md"]).toContain(
-      "captura visual actual pendiente; las 13 capturas anteriores son históricas",
+      "El inventario A4 conserva 13 capturas históricas",
     );
     expect(rendered["submission-checklist.md"]).toContain(
-      "Ejecutar la captura nativa OS A4 en un Mac desbloqueado",
+      "Completar la revisión humana de accesibilidad",
     );
     expect(rendered["submission-checklist.md"]).toContain(
-      "rama de trabajo → PR → checks → revisión/aprobación → merge a `main` → GitHub Pages",
+      "Una actualización documental no modifica por sí sola la versión pública.",
     );
   });
 
