@@ -565,6 +565,15 @@
   }
 }
 
+@media (max-width: 47.999rem) {
+  .income-selection {
+    position: sticky;
+    top: 0.5rem;
+    z-index: 5;
+    background: var(--color-surface);
+  }
+}
+
 @media print {
   .compare-page .income-comparison-form,
   .compare-page .compare-page__actions {

@@ -377,8 +377,8 @@ export function EcylResourcesPage() {
                 <h2 id="courses-heading" tabIndex={-1}>
                   Cursos del ECYL
                 </h2>
-                <span>
-                  {visibleCourses.length} de {matchingCourses.length} resultados
+                <span role="status" aria-atomic="true">
+                  {`Cursos: ${visibleCourses.length} de ${matchingCourses.length}`}
                 </span>
               </div>
               <p className="resources-section-help">
@@ -515,9 +515,8 @@ export function EcylResourcesPage() {
                 <h2 id="certificates-heading" tabIndex={-1}>
                   Certificados de profesionalidad
                 </h2>
-                <span>
-                  {visibleCertificates.length} de {matchingCertificates.length}{" "}
-                  resultados
+                <span role="status" aria-atomic="true">
+                  {`Certificados: ${visibleCertificates.length} de ${matchingCertificates.length}`}
                 </span>
               </div>
               <p className="resources-section-help">

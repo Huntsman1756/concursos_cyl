@@ -686,7 +686,12 @@ export function CentersExplorerPage(): JSX.Element {
         </form>
 
         <div className="result-meta" id="center-results-summary" tabIndex={-1}>
-          <p className="result-count" style={{ margin: 0 }}>
+          <p
+            className="result-count"
+            style={{ margin: 0 }}
+            role="status"
+            aria-atomic="true"
+          >
             {contextual
               ? `${centerCount} ${centerCount === 1 ? "centro publicado" : "centros publicados"}`
               : `${firstVisibleResult}–${lastVisibleResult} de ${filteredRows.length} ${filteredRows.length === 1 ? "combinación de centro y ciclo" : "combinaciones de centro y ciclo"}`}
@@ -694,7 +699,7 @@ export function CentersExplorerPage(): JSX.Element {
           <p className="caption" style={{ margin: 0 }}>
             {contextual
               ? `${filteredRows.length} ${filteredRows.length === 1 ? "combinación de centro y ciclo" : "combinaciones de centro y ciclo"} · ${provinceCount} provincias`
-              : `${centerCount} centros representados · ${state.foundation.trainingOfferings.length} opciones de centro y modalidad en la copia`}
+              : `${centerCount} centros representados en estos resultados`}
           </p>
           {hasFilters && (
             <button

@@ -381,7 +381,7 @@ describe("EcylResourcesPage", () => {
         name: "Curso que no coincide",
       }),
     ).not.toBeInTheDocument();
-    expect(screen.getByText("1 de 1 resultados")).toBeVisible();
+    expect(screen.getByText("Cursos: 1 de 1")).toBeVisible();
   });
 
   it("keeps course identity and primary published fields visible while details stay collapsed", async () => {

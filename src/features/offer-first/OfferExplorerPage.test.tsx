@@ -314,6 +314,34 @@ describe("OfferExplorerPage", () => {
     ).not.toBeInTheDocument();
   });
 
+  it("keeps coverage counts scoped to filtered offers and announces an empty result", async () => {
+    generatedDataClient.loadManifest.mockResolvedValue({});
+    generatedDataClient.loadOfferEvidence.mockResolvedValue(resource);
+    const user = userEvent.setup();
+    render(
+      <MemoryRouter initialEntries={["/desde-oferta?query=fisioterapeutas"]}>
+        <OfferExplorerPage />
+      </MemoryRouter>,
+    );
+    await screen.findByRole("heading", { name: "1–1 de 1 oferta" });
+    expect(
+      screen.getByText(/0 con FP relacionada en estos resultados/u),
+    ).toBeVisible();
+    const query = screen.getByRole("searchbox");
+    await user.clear(query);
+    await user.type(query, "zzzinexistente");
+    await user.click(screen.getByRole("button", { name: "Buscar" }));
+    const summary = await screen.findByRole("heading", {
+      name: "0–0 de 0 ofertas",
+    });
+    expect(summary).toHaveAttribute("aria-live", "polite");
+    expect(summary).toHaveAttribute("aria-atomic", "true");
+    expect(
+      screen.queryByText(/con FP relacionada en/u),
+    ).not.toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "Buscar" })).toHaveFocus();
+  });
+
   it("filters the evidence by the selected FP instead of showing the global catalogue", async () => {
     generatedDataClient.loadManifest.mockResolvedValue({});
     generatedDataClient.loadOfferEvidence.mockResolvedValue(resource);

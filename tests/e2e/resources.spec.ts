@@ -87,13 +87,17 @@ test("public resources expose the runtime open-call truth with provenance", asyn
   }
   await expect(courses).toBeVisible();
   await expect(certificates).toBeVisible();
-  await expect(courses.getByText(/^8 de \d+ resultados$/u)).toBeVisible();
+  await expect(courses.getByText(/^Cursos: 8 de \d+$/u)).toBeVisible();
   await page.getByRole("button", { name: "Mostrar más cursos" }).click();
-  await expect(courses.getByText(/^16 de \d+ resultados$/u)).toBeVisible();
+  await expect(courses.getByText(/^Cursos: 16 de \d+$/u)).toBeVisible();
 
-  await expect(certificates.getByText(/^8 de \d+ resultados$/u)).toBeVisible();
+  await expect(
+    certificates.getByText(/^Certificados: 8 de \d+$/u),
+  ).toBeVisible();
   await page.getByRole("button", { name: "Mostrar más certificados" }).click();
-  await expect(certificates.getByText(/^16 de \d+ resultados$/u)).toBeVisible();
+  await expect(
+    certificates.getByText(/^Certificados: 16 de \d+$/u),
+  ).toBeVisible();
 
   const axe = await new AxeBuilder({ page }).analyze();
   expect(axe.violations, JSON.stringify(axe.violations, null, 2)).toEqual([]);

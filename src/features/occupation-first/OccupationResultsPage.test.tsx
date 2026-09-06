@@ -328,6 +328,16 @@ describe("occupation-first results", () => {
         "Esta copia no contiene relaciones FP revisadas para esta profesión.",
       ).parentElement?.textContent,
     ).not.toMatch(/pendiente|todavía|aún/iu);
+    expect(screen.getAllByRole("heading", { level: 1 })).toHaveLength(1);
+    expect(
+      document.querySelectorAll("#occupation-results-heading"),
+    ).toHaveLength(1);
+    expect(
+      screen.getByRole("heading", {
+        level: 2,
+        name: "Esta copia no contiene relaciones FP revisadas para esta profesión.",
+      }),
+    ).toBeVisible();
   });
 
   it("orders explained routes without scores and shows real offering coverage", async () => {

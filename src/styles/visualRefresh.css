@@ -496,6 +496,11 @@ summary:focus-visible {
   margin-left: 0.25rem;
 }
 
+.occupation-result-page .training-page__meta .info-disclosure__content {
+  left: 0;
+  right: auto;
+}
+
 .occupation-result-page .training-page__tools {
   margin-top: var(--space-4);
 }

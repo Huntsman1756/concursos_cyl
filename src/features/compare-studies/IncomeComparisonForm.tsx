@@ -1,4 +1,5 @@
 import { useMemo, useState } from "react";
+import { FragmentLink } from "../../components/FragmentLink";
 
 import type {
   OutcomeCohortWindow,
@@ -20,6 +21,7 @@ export interface IncomeComparisonFormProps {
   cohortWindow: OutcomeCohortWindow | null;
   cohortWindows: readonly OutcomeCohortWindow[];
   postGraduationYear: 1 | 2 | 3 | 4;
+  hasResult?: boolean;
   onTrainingLevelChange: (level: OutcomeTrainingLevel) => void;
   onGroupKeysChange: (groupKeys: readonly string[]) => void;
   onCohortChange: (cohort: string) => void;
@@ -60,6 +62,7 @@ export function IncomeComparisonForm({
   cohortWindow,
   cohortWindows,
   postGraduationYear,
+  hasResult,
   onTrainingLevelChange,
   onGroupKeysChange,
   onCohortChange,
@@ -151,11 +154,6 @@ export function IncomeComparisonForm({
         <>
           <fieldset className="income-form-fieldset">
             <legend>2. Ciclos o grupos oficiales</legend>
-            <p className="field-hint" aria-live="polite">
-              {selectedGroupKeys.length === 0
-                ? "Selecciona entre uno y tres."
-                : `${selectedGroupKeys.length} de 3 seleccionados.`}
-            </p>
             <label className="income-filter-field">
               <span>Filtrar ciclos o grupos oficiales</span>
               <input
@@ -173,6 +171,18 @@ export function IncomeComparisonForm({
                 ? "1 resultado disponible."
                 : `${visibleGroups.matchingCount} resultados disponibles.`}
             </p>
+            <div className="result-meta income-selection">
+              <p className="field-hint" aria-live="polite" aria-atomic="true">
+                {selectedGroupKeys.length === 0
+                  ? "Selecciona entre uno y tres."
+                  : `${selectedGroupKeys.length} de 3 seleccionados.`}
+              </p>
+              {hasResult && (
+                <FragmentLink href="#comparacion" className="secondary-button">
+                  Ver comparación
+                </FragmentLink>
+              )}
+            </div>
             <div
               className="income-group-options"
               role="group"

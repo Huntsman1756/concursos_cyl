@@ -241,9 +241,9 @@ export function OccupationResultsPage() {
       )}
       {orderedLinks.length === 0 ? (
         <div className="status-panel">
-          <h1 className="h1" id="occupation-results-heading">
+          <h2>
             Esta copia no contiene relaciones FP revisadas para esta profesión.
-          </h1>
+          </h2>
           <p>
             SALIDA solo muestra relaciones que ha podido verificar en fuentes
             oficiales. La ausencia en esta copia no determina qué formación

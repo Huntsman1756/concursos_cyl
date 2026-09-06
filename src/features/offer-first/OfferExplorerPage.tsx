@@ -524,18 +524,6 @@ export function OfferExplorerPage({
     [contextualRecords],
   );
 
-  // Unit contract (analysis/prototype-data-integrity.md §2): the reviewed
-  // count is unique OFFERS with ≥1 reviewed relation — never the number of
-  // relations (196 relations ≠ 138 offers in the frozen snapshot).
-  const reviewedOfferCount = useMemo(
-    () =>
-      state.status === "ready"
-        ? state.records.filter((record) => (record.relations ?? []).length > 0)
-            .length
-        : 0,
-    [state],
-  );
-
   const filteredRecords = useMemo(
     () =>
       sortOfferEvidenceRecords(
@@ -549,6 +537,10 @@ export function OfferExplorerPage({
   );
 
   const pageCount = Math.max(1, Math.ceil(filteredRecords.length / PAGE_SIZE));
+  // Count unique offers in the filtered result, not relations or page rows.
+  const reviewedOfferCount = filteredRecords.filter(
+    (record) => record.relations.length > 0,
+  ).length;
   const currentPage = Math.min(requestedPage, pageCount);
   const visibleRecords = filteredRecords.slice(
     (currentPage - 1) * PAGE_SIZE,
@@ -781,25 +773,27 @@ export function OfferExplorerPage({
       <section
         className="offer-explorer__results"
         aria-labelledby="offer-results-heading"
-        aria-live="polite"
       >
         <div className="result-meta offer-explorer__count">
-          <h2 className="result-count" id="offer-results-heading" tabIndex={-1}>
+          <h2
+            className="result-count"
+            id="offer-results-heading"
+            tabIndex={-1}
+            aria-live="polite"
+            aria-atomic="true"
+          >
             {resultsSummary}
           </h2>
-          {isGlobal && (
+          {visibleRecords.length > 0 && (
             <p className="caption" style={{ margin: 0 }}>
-              {reviewedOfferCount.toLocaleString("es-ES")} con FP relacionada en
-              esta copia (ofertas únicas con relación revisada)
-              {visibleRecords.length > 0 && " · más recientes primero"}
+              {isGlobal &&
+                `${reviewedOfferCount.toLocaleString("es-ES")} con FP relacionada en estos resultados · `}
+              más recientes primero
             </p>
-          )}
-          {!isGlobal && visibleRecords.length > 0 && (
-            <span>· más recientes primero</span>
           )}
         </div>
         {visibleRecords.length === 0 ? (
-          <div className="offer-explorer__empty" role="status">
+          <div className="offer-explorer__empty">
             {context.kind === "global" || hasActiveFilters ? (
               <>
                 <h3>No hay coincidencias</h3>

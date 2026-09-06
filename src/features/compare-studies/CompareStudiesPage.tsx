@@ -538,6 +538,7 @@ export function CompareStudiesPage() {
         cohortWindow={cohortWindow}
         cohortWindows={cohortWindows}
         postGraduationYear={postGraduationYear}
+        hasResult={comparison !== null}
         onTrainingLevelChange={chooseTrainingLevel}
         onGroupKeysChange={chooseGroupKeys}
         onCohortChange={chooseCohort}
@@ -553,6 +554,8 @@ export function CompareStudiesPage() {
       {comparison ? (
         <section
           className="income-results"
+          id="comparacion"
+          tabIndex={-1}
           aria-live="polite"
           aria-label="Evidencia seleccionada"
         >
