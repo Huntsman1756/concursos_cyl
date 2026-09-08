@@ -1,15 +1,15 @@
 {
-  "schemaVersion": 1,
-  "status": "pending",
-  "recordedAt": "2026-09-08T11:49:36.413Z",
+  "schemaVersion": 2,
+  "status": "verified",
+  "recordedAt": "2026-09-08T12:16:25.054Z",
   "expectedRootUrl": "https://salida-cyl.157-90-22-40.sslip.io/",
   "auditHeadSha": null,
   "coverageSourceCommitSha": "136a08859f387427b74605bdcf8c19ea9584aebc",
   "coverageFreezeDocumentCommitSha": "0dd6f14315a2949776f77d38a1ed9f3dd97d9885",
   "coverageFreezeCommitSha": "0dd6f14315a2949776f77d38a1ed9f3dd97d9885",
-  "publicationCommitSha": null,
+  "publicationCommitSha": "4a76e5962d1628c4dbcaa4cb6a2b3922d906dd36",
   "localReviewHeadSha": null,
-  "captureProductCommitSha": null,
+  "captureProductCommitSha": "4a76e5962d1628c4dbcaa4cb6a2b3922d906dd36",
   "manifest": {
     "snapshotId": "20260908044344059-f92da75832e9",
     "sha256": "93010bd8973e244b2687ae6c625e84d0fd2b85d76d4126c2473faf1cb342742e",
@@ -21,86 +21,101 @@
   },
   "localGates": {
     "coverageFreeze": {
-      "status": "pending",
+      "status": "passed",
       "command": "npm exec -- tsx scripts/release/validateContestFreeze.ts",
-      "checkedCommitSha": null,
-      "verifiedAt": null
+      "checkedCommitSha": "4a76e5962d1628c4dbcaa4cb6a2b3922d906dd36",
+      "verifiedAt": "2026-09-08T12:16:25.054Z",
+      "executionCommitSha": "a209bbc43e2d9320846c3316597e7d0fb3d5337b",
+      "note": "Control sobre el árbol anterior al ajuste exclusivo del adaptador PowerShell; las fuentes, licencias y el código de aplicación no cambiaron."
     },
     "submissionPack": {
-      "status": "pending",
+      "status": "passed",
       "command": "npm run contest:submission:check",
-      "checkedCommitSha": null,
-      "verifiedAt": null
+      "checkedCommitSha": "4a76e5962d1628c4dbcaa4cb6a2b3922d906dd36",
+      "verifiedAt": "2026-09-08T12:16:25.054Z",
+      "executionCommitSha": "a14823c6e1d47db31dc36e7582e8afd19524ea93"
     },
     "evidenceManifest": {
-      "status": "pending",
+      "status": "passed",
       "command": "npm exec -- tsx scripts/release/validateContestEvidenceManifest.ts",
-      "checkedCommitSha": null,
-      "verifiedAt": null,
-      "captureCount": 0
+      "checkedCommitSha": "4a76e5962d1628c4dbcaa4cb6a2b3922d906dd36",
+      "verifiedAt": "2026-09-08T12:16:25.054Z",
+      "captureCount": 13,
+      "executionCommitSha": "a14823c6e1d47db31dc36e7582e8afd19524ea93"
     },
     "fullVitestCi": {
-      "status": "pending",
+      "status": "passed",
       "command": "npm test -- --run --reporter=dot",
-      "checkedCommitSha": null,
-      "verifiedAt": null
+      "checkedCommitSha": "4a76e5962d1628c4dbcaa4cb6a2b3922d906dd36",
+      "verifiedAt": "2026-09-08T12:16:25.054Z",
+      "executionCommitSha": "a209bbc43e2d9320846c3316597e7d0fb3d5337b",
+      "note": "137 archivos superados, 22 omitidos; 1367 pruebas superadas, 178 omitidas. Ejecución en a209bbc; P solo cambia la exclusión de conversión MSYS de una variable del adaptador de despliegue. Las 28 pruebas de despliegue se repitieron en P y la publicación limpia pasó."
     },
     "playwright": {
-      "status": "pending",
+      "status": "passed",
       "command": "npm run test:e2e:chromium -- --workers=4; npx tsx scripts/release/runPlaywright.ts firefox webkit tests/e2e/training-first.spec.ts tests/e2e/offer-first.spec.ts tests/e2e/support-pages.spec.ts --workers=2",
-      "checkedCommitSha": null,
-      "verifiedAt": null
+      "checkedCommitSha": "4a76e5962d1628c4dbcaa4cb6a2b3922d906dd36",
+      "verifiedAt": "2026-09-08T12:16:25.054Z",
+      "executionCommitSha": "a209bbc43e2d9320846c3316597e7d0fb3d5337b",
+      "note": "Chromium: 296 superadas y 6 omitidas, ejecución iniciada en aff7d30; Firefox/WebKit: 32 superadas en a209bbc. La aplicación publicada conserva ese mismo código; los cambios posteriores son metadatos del paquete y el adaptador de despliegue. Cero fallidas en las ejecuciones finales."
     },
     "lint": {
-      "status": "pending",
+      "status": "passed",
       "command": "npm run lint",
-      "checkedCommitSha": null,
-      "verifiedAt": null
+      "checkedCommitSha": "4a76e5962d1628c4dbcaa4cb6a2b3922d906dd36",
+      "verifiedAt": "2026-09-08T12:16:25.054Z",
+      "executionCommitSha": "a209bbc43e2d9320846c3316597e7d0fb3d5337b",
+      "note": "Control sobre el árbol anterior al ajuste exclusivo del adaptador PowerShell; las fuentes, licencias y el código de aplicación no cambiaron."
     },
     "build": {
-      "status": "pending",
+      "status": "passed",
       "command": "npm run build",
-      "checkedCommitSha": null,
-      "verifiedAt": null
+      "checkedCommitSha": "4a76e5962d1628c4dbcaa4cb6a2b3922d906dd36",
+      "verifiedAt": "2026-09-08T12:16:25.054Z",
+      "executionCommitSha": "4a76e5962d1628c4dbcaa4cb6a2b3922d906dd36"
     },
     "license": {
-      "status": "pending",
+      "status": "passed",
       "command": "npm run license:check",
-      "checkedCommitSha": null,
-      "verifiedAt": null
+      "checkedCommitSha": "4a76e5962d1628c4dbcaa4cb6a2b3922d906dd36",
+      "verifiedAt": "2026-09-08T12:16:25.054Z",
+      "executionCommitSha": "a209bbc43e2d9320846c3316597e7d0fb3d5337b",
+      "note": "Control sobre el árbol anterior al ajuste exclusivo del adaptador PowerShell; las fuentes, licencias y el código de aplicación no cambiaron."
     },
     "prettier": {
-      "status": "pending",
+      "status": "passed",
       "command": "npm run format:check",
-      "checkedCommitSha": null,
-      "verifiedAt": null
+      "checkedCommitSha": "4a76e5962d1628c4dbcaa4cb6a2b3922d906dd36",
+      "verifiedAt": "2026-09-08T12:16:25.054Z",
+      "executionCommitSha": "a14823c6e1d47db31dc36e7582e8afd19524ea93"
     },
     "gitDiffCheck": {
-      "status": "pending",
+      "status": "passed",
       "command": "git diff --check",
-      "checkedCommitSha": null,
-      "verifiedAt": null
+      "checkedCommitSha": "4a76e5962d1628c4dbcaa4cb6a2b3922d906dd36",
+      "verifiedAt": "2026-09-08T12:16:25.054Z",
+      "executionCommitSha": "a14823c6e1d47db31dc36e7582e8afd19524ea93"
     }
   },
   "deployment": {
-    "status": "pending",
-    "commitSha": null,
+    "status": "verified",
+    "commitSha": "4a76e5962d1628c4dbcaa4cb6a2b3922d906dd36",
     "workflowRunId": null,
     "workflowUrl": null,
-    "liveRootVerified": false,
-    "verifiedAt": null,
-    "releaseTag": null,
-    "versionJsonUrl": null,
-    "versionJsonCommitSha": null,
-    "versionJsonSchemaVersion": null,
-    "versionJsonVerifiedAt": null
+    "liveRootVerified": true,
+    "verifiedAt": "2026-09-08T12:16:25.054Z",
+    "releaseTag": "v2026.09.08-candidate.19",
+    "versionJsonUrl": "https://salida-cyl.157-90-22-40.sslip.io/version.json",
+    "versionJsonCommitSha": "4a76e5962d1628c4dbcaa4cb6a2b3922d906dd36",
+    "versionJsonSchemaVersion": "1.0.0",
+    "versionJsonVerifiedAt": "2026-09-08T12:16:25.054Z"
   },
   "publicVerification": {
-    "status": "pending",
+    "status": "verified",
     "rootUrl": "https://salida-cyl.157-90-22-40.sslip.io/",
-    "rootHttpStatus": null,
-    "manifestSha256": null,
-    "verifiedAt": null
+    "rootHttpStatus": 200,
+    "manifestSha256": "93010bd8973e244b2687ae6c625e84d0fd2b85d76d4126c2473faf1cb342742e",
+    "verifiedAt": "2026-09-08T12:16:25.054Z"
   },
   "humanApproval": {
     "finalApplicationTextApproved": false,
@@ -108,6 +123,21 @@
     "submissionAuthorized": false
   },
   "blockers": [
-    "Candidato 18 en comprobación antes del piloto. No se ha ejecutado el piloto ni la solicitud oficial; faltan datos personales y declaraciones para la presentación."
-  ]
+    "La solicitud oficial necesita identidad, contacto y declaraciones sobre premios previos. No se ha ejecutado el envÃ­o externo.",
+    "El dominio propio requiere concretar nombre, cuenta y presupuesto. No bloquea la disponibilidad del VPS verificado."
+  ],
+  "releaseDisposition": {
+    "occurred": true,
+    "method": "script",
+    "methodNote": "VPS publicado desde P mediante deployVps.ps1, que delega en deployVps.sh con bloqueo, staging y retención comprobada. Verificación pública de versión y cabeceras superada. executionCommitSha registra el árbol de ejecución de cada control; las notas identifican controles reutilizados sobre código de aplicación idéntico. Las capturas se renovaron contra P y el paquete documental se revalida tras su regeneración. Pages se verifica por separado. No se realizó piloto humano ni envío oficial.",
+    "tagObjectSha": "734eaefa8b5e0ee038120e4bb34323ca137dc78b",
+    "humanGate": {
+      "identityRecorded": false,
+      "contactRecorded": false,
+      "declarationsRecorded": false,
+      "consentRecorded": false,
+      "finalApplicationTextApproved": false,
+      "externalSubmissionExecuted": false
+    }
+  }
 }
