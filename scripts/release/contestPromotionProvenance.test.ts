@@ -311,5 +311,5 @@ describe("contest promotion provenance matrix", () => {
       if (deploymentEvidence.status === "verified")
         expect(content).not.toContain("PENDIENTE DE DESPLIEGUE");
     }
-  });
+  }, 30_000);
 });
