@@ -565,10 +565,8 @@ export function MethodologyPage() {
               CSV, con la fuente, cita y fecha de revisión de cada relación.
             </p>
             <p>
-              La revisión utiliza Qwen3.6 y Gemma4. Contrastamos sus respuestas
-              con salidas oficiales de FP y funciones y exclusiones CNO-11. El
-              acuerdo entre modelos no acredita una relación ni sustituye la
-              orientación profesional.
+              Qwen3.6 y Gemma4 ayudan a revisar fuentes FP y CNO-11. Su acuerdo
+              no valida relaciones ni sustituye la orientación profesional.
             </p>
             <p>
               El{" "}
@@ -583,9 +581,8 @@ export function MethodologyPage() {
           <section>
             <h3>Qué no permite afirmar</h3>
             <p>
-              Solo contiene relaciones revisadas. Una ausencia indica que esta
-              copia no documenta esa relación; no permite concluir
-              compatibilidad ni incompatibilidad entre un ciclo y una ocupación.
+              Una relación ausente no demuestra compatibilidad ni
+              incompatibilidad.
             </p>
           </section>
           <section>
@@ -603,20 +600,16 @@ export function MethodologyPage() {
         <summary>Población y alcance de la estadística</summary>
         <div>
           <p>
-            El cruce administrativo enlaza registros educativos con datos de la
-            Seguridad Social. Cohorte significa el curso académico en el que se
-            obtuvo la titulación; periodo indica los años posteriores a la
-            graduación.
+            El cruce enlaza educación y Seguridad Social. La cohorte es el curso
+            de titulación; el periodo, los años posteriores.
           </p>
           <p>
-            Solo se muestran ciclos o grupos con información representativa. Las
-            personas por cuenta propia y con jornada parcial quedan fuera de la
-            población cubierta por estas tablas.
+            Estas tablas excluyen el trabajo autónomo y a jornada parcial. Solo
+            muestran ciclos o grupos con información representativa.
           </p>
           <p>
-            Algunos ciclos se publican juntos como grupos oficiales dentro de
-            una familia profesional. Conservamos esa etiqueta agregada y no la
-            atribuimos a un ciclo individual.
+            Conservamos los grupos oficiales de ciclos: sus resultados no se
+            atribuyen a un ciclo individual.
           </p>
         </div>
       </details>

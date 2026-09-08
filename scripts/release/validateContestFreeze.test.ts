@@ -719,10 +719,10 @@ it("asserts every canonical final fact in the checked-in fixture", async () => {
   );
   expect(
     (freeze.coverage as Record<string, unknown>).matchedRelationCount,
-  ).toBe(45);
+  ).toBe(42);
   expect(
     (freeze.coverage as Record<string, unknown>).zeroReviewedRelationCount,
-  ).toBe(275);
+  ).toBe(278);
   expect((freeze.offers as Record<string, unknown>).matchedOfferCount).toBe(
     301,
   );

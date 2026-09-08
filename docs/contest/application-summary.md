@@ -18,13 +18,13 @@ El grafo revisado se devuelve a la comunidad como dataset derivado descargable e
 
 ## Cobertura congelada
 
-- Instantánea publicada: `20260908152239149-2a613b74a192`.
+- Instantánea publicada: `20260908155911229-c72920ec4fed`.
 - Grupos primarios CNO-11 consultables: **502**.
 - **185 de 187 claves de programa** tienen alguna relación aprobada (98,9 %). Incluyen modalidades; no son titulaciones distintas.
 - Relaciones ocupacionales aprobadas: **320**.
 - Alias aprobados: **35**.
-- **307 de las 1.032 ofertas de la instantánea** quedan alcanzadas por relaciones publicadas (unión de IDs).
-- Relaciones revisadas sin oferta alcanzada: **275**.
+- **301 de las 1.032 ofertas de la instantánea** quedan alcanzadas por relaciones publicadas (unión de IDs).
+- Relaciones revisadas sin oferta alcanzada: **278**.
 - Programas diferidos por evidencia insuficiente: IMA01E, IMA02E.
 
 Las cifras describen cobertura de datos, no impacto medido ni todo el mercado laboral. Una relación revisada sin coincidencia no significa ausencia de oportunidades. Las fechas de descarga, publicación y generación se distinguen en [la revisión de fuentes](verification-20260908.md). El inventario completo de claves permanece en [la evidencia técnica](technical-evidence.md).
