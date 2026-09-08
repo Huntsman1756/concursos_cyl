@@ -144,7 +144,6 @@ El grafo revisado se devuelve a la comunidad como dataset derivado descargable e
 
 - Instantánea publicada: \`${freeze.manifest.snapshotId}\`.
 - Grupos primarios CNO-11 consultables: **${freeze.manifest.resourceSnapshots.officialOccupations.recordCount}**.
-- **${coverage.distinctQualificationCount} cualificaciones distintas**.
 - **${coverage.modalityKeyCount} de ${freeze.manifest.resourceSnapshots.programs.recordCount} claves de programa** tienen alguna relación aprobada (${((coverage.modalityKeyCount / freeze.manifest.resourceSnapshots.programs.recordCount) * 100).toLocaleString("es-ES", { minimumFractionDigits: 1, maximumFractionDigits: 1 })} %). Incluyen modalidades; no son titulaciones distintas.
 - Relaciones ocupacionales aprobadas: **${coverage.approvedRelationCount}**.
 - Alias aprobados: **${coverage.approvedAliasCount}**.
@@ -232,7 +231,7 @@ ${resourceRows(freeze)}
 
 ## Recomputación de cobertura
 
-- ${coverage.distinctQualificationCount} cualificaciones distintas: \`${list(coverage.distinctQualificationKeys)}\`.
+- ${coverage.distinctQualificationCount} agrupaciones por clave y denominación (no acreditación de títulos distintos): \`${list(coverage.distinctQualificationKeys)}\`.
 - ${coverage.modalityKeyCount} claves de modalidad: \`${list(coverage.modalityKeys)}\`.
 - ${coverage.approvedRelationCount} relaciones aprobadas y ${coverage.approvedAliasCount} alias aprobados.
 - ${coverage.matchedProgramCount} programas con coincidencias y ${coverage.zeroReviewedProgramCount} programas revisados sin coincidencias.
@@ -313,7 +312,7 @@ La representatividad de las tablas nacionales es la declarada por el Ministerio:
 
 Las rutas internas son recorridos de producto; la candidatura usa únicamente la raíz pública. La experiencia no requiere cuentas y no conserva selecciones, búsquedas, respuestas ni resultados. No guarda preferencias en almacenamiento local. Los filtros y términos presentes en la URL pueden quedar en el historial del navegador. ${visualVerificationStatus}
 
-El objetivo de ampliar la cobertura está condicionado a evidencia: el freeze actual registra ${freeze.coverage.distinctQualificationCount} cualificaciones distintas y deja ${freeze.coverage.deferredProgramCount} programas diferidos. ${releaseStatus}
+El objetivo de ampliar la cobertura está condicionado a evidencia: el freeze actual registra ${freeze.coverage.modalityKeyCount} claves de programa con relación revisada y deja ${freeze.coverage.deferredProgramCount} programas diferidos. ${releaseStatus}
 
 ${renderTemporalReleaseStatus(candidatePlan)}
 `;

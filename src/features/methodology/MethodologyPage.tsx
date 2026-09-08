@@ -564,6 +564,20 @@ export function MethodologyPage() {
               Publicamos el grafo FP↔CNO-11 que utiliza la aplicación en JSON y
               CSV, con la fuente, cita y fecha de revisión de cada relación.
             </p>
+            <p>
+              La revisión utiliza Qwen3.6 y Gemma4 como apoyo. Sus respuestas se
+              contrastan con las salidas oficiales de FP y las funciones y
+              exclusiones de la CNO-11. La coincidencia entre modelos no
+              acredita por sí sola una relación ni sustituye la orientación
+              profesional.
+            </p>
+            <p>
+              Algunas ofertas se conectan mediante su denominación completa
+              exacta en el catálogo SISPE del SEPE. Compartir un grupo CNO no
+              autoriza a relacionar todas sus especialidades. Estas conexiones
+              no significan que la oferta exija ese título ni que quien lo tenga
+              cumpla todos sus requisitos.
+            </p>
           </section>
           <section>
             <h3>Qué no permite afirmar</h3>

@@ -9,6 +9,7 @@ import {
 } from "node:fs";
 import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
+import { createRequire } from "node:module";
 
 import { describe, expect, it } from "vitest";
 
@@ -208,7 +209,7 @@ describe("contest evidence matrix", () => {
       const scriptPath = resolve(
         "scripts/analysis/buildContestEvidenceMatrix.ts",
       );
-      const tsxCli = resolve("node_modules/tsx/dist/cli.mjs");
+      const tsxCli = createRequire(import.meta.url).resolve("tsx/cli");
       const runTsx = (args: readonly string[]) =>
         execFileSync(process.execPath, [tsxCli, ...args], {
           cwd: fixture.root,

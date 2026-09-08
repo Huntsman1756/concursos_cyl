@@ -16,9 +16,11 @@ Por ejemplo, la ficha de [Cuidados Auxiliares de Enfermería](https://salida-cyl
 
 ## Alcance y límites
 
-El catálogo contiene **187 claves de programa, incluidas modalidades**. **130 tienen al menos una relación ocupacional aprobada (69,5 %)** y corresponden a **113 cualificaciones distintas**. El grafo publica 264 relaciones revisadas.
+Estas cifras corresponden al candidato ampliado del 8 de septiembre, pendiente de publicación. La web mantiene candidate.19 hasta completar los controles. La [auditoría con Qwen y Gemma](analysis/nan-review/README.md) documenta las fuentes, correcciones y límites.
 
-**128 de las 1.032 ofertas de la instantánea (12,4 %) tienen una relación FP revisada.** Son ofertas distintas, no número de vínculos ni porcentaje de todo el mercado laboral. Una formación sin oferta relacionada no significa que carezca de oportunidades.
+El catálogo contiene **187 claves de programa, incluidas modalidades**. **185 tienen al menos una relación ocupacional aprobada (98,9 %)**. El grafo del candidato contiene 320 relaciones revisadas. Las modalidades no se presentan como titulaciones distintas.
+
+**307 de las 1.032 ofertas de la instantánea (29,7 %) tienen una relación FP revisada.** Son ofertas distintas, no número de vínculos ni porcentaje de todo el mercado laboral. Una formación sin oferta relacionada no significa que carezca de oportunidades.
 
 Las ocho fuentes JCyL se descargaron el **8 de septiembre de 2026**; las fechas de publicación de las ofertas llegan hasta el **4 de septiembre**. El recurso derivado de evidencia se generó el **8 de septiembre**. Las revisiones TodoFP, SEPE y EDUCAbase conservan sus propias fechas y no se presentan como actualizadas por esta descarga. Regenerar ese recurso no actualiza las fuentes. La vigencia de cada oferta debe comprobarse en su enlace oficial. Véase la [revisión de fuentes y despliegue](docs/contest/verification-20260908.md).
 
