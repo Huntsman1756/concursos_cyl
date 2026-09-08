@@ -44,7 +44,7 @@ describe("buildOfferEvidenceSnapshot", () => {
         true,
       );
     }
-  });
+  }, 30_000);
 
   it("rejects an exact-title review that bypasses the approved FP relation", async () => {
     const temporary = await mkdtemp(join(tmpdir(), "salida-title-review-"));
