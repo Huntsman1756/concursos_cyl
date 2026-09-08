@@ -17,9 +17,7 @@
     },
     {
       "kind": "exact_requirement_to_program",
-      "offerIds": [
-        "1285671836252"
-      ],
+      "offerIds": ["1285671836252"],
       "literalRequirement": "Técnico en Cocina y Gastronomía.",
       "normalizedValue": "Técnico en Cocina y Gastronomía",
       "programKey": "HOT01M",
