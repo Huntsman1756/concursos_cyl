@@ -1,0 +1,15 @@
+{
+  "checkedAt": "2026-09-08T12:11:47.876Z",
+  "status": "HUMAN_PILOT_NOT_RUN",
+  "technicalPreflight": "passed",
+  "target": {
+    "rootUrl": "https://salida-cyl.157-90-22-40.sslip.io/",
+    "deployedCommitSha": "4a76e5962d1628c4dbcaa4cb6a2b3922d906dd36",
+    "snapshotId": "20260908044344059-f92da75832e9"
+  },
+  "protocolHashes": {
+    "anonymous-protocol.md": "56fdc3b23903f6ebc73dc4d68e019602ac88f564a99c810b5ff158eeeddf0dc9",
+    "anonymous-task-script.md": "dc882982a6270320bc1b33cf65f143c9bf4e6e229627da040084954f32af6bcb"
+  },
+  "humanSessionsExecuted": false
+}

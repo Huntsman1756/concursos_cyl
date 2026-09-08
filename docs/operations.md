@@ -6,7 +6,7 @@ Responsable operativo: la persona mantenedora del repositorio público. No se of
 
 `npm run ops:check` comprueba VPS y Pages: portada, versión, manifiesto, memoria y una imagen editorial. Valida tipos de contenido para que una página HTML de error no cuente como datos disponibles. El resultado distingue los dos commits; una versión de Pages puede incluir documentación posterior al producto VPS.
 
-El seguimiento del hilo de Codex comprueba periódicamente estas URL y avisa ante una incidencia confirmada o recuperación. Depende de que el entorno de automatización esté disponible; no equivale a un monitor externo con disponibilidad garantizada. La CI de GitHub aporta una comprobación externa después de cada publicación. El enlace alternativo está visible en el README.
+El seguimiento del hilo de Codex comprueba cada seis horas estas URL y avisa ante una incidencia confirmada o recuperación. Depende de que el entorno de automatización esté disponible; no equivale a un monitor externo con disponibilidad garantizada. La CI de GitHub aporta una comprobación externa después de cada publicación. El enlace alternativo está visible en el README.
 
 Ante un fallo, repetir la comprobación; distinguir un bloqueo de la red de prueba de una caída del servicio. Si falla solo el VPS, usar el respaldo mientras se investiga. Si los dos manifiestos difieren fuera de una ventana de publicación, revisar versiones antes de promover nuevos datos. No regenerar datos automáticamente para ocultar una incidencia.
 
@@ -24,7 +24,7 @@ GitHub Pages se reconstruye mediante el workflow del repositorio. La aplicación
 
 ## Registros técnicos
 
-La configuración propuesta del sitio elimina el objeto de petición, cabeceras de respuesta e identificador de usuario de los logs de acceso, conservando estado, duración y tamaño. Usa un archivo de hasta 10 MiB y hasta cinco rotaciones, con antigüedad configurada de 14 días para los archivos rotados. La limpieza de rotaciones se realiza al rotar; no se afirma un borrado diario exacto. La verificación de aplicación de esta configuración queda en el informe de cierre.
+La configuración activada el 8 de septiembre de 2026 elimina el objeto de petición, cabeceras de respuesta e identificador de usuario de los logs de acceso, conservando estado, duración y tamaño. Usa un archivo de hasta 10 MiB y hasta cinco rotaciones, con antigüedad configurada de 14 días para los archivos rotados. La limpieza de rotaciones se realiza al rotar; no se afirma un borrado diario exacto. Se verificó con una petición sintética: el registro no contiene petición, IP, URL ni cabeceras. La huella de configuración y el alcance constan en el [informe previo al piloto](contest/prepilot-verification-20260908.md).
 
 Los registros históricos existentes no se borran durante esta mejora ni se cambia la política global de journald de otros servicios. La aplicación no añade analítica ni registra las observaciones del piloto en el servidor.
 

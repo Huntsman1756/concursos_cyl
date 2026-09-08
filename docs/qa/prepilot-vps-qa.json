@@ -1,0 +1,120 @@
+{
+  "checkedAt": "2026-09-08T12:12:12.126Z",
+  "base": "https://salida-cyl.157-90-22-40.sslip.io/",
+  "commit": "4a76e5962d1628c4dbcaa4cb6a2b3922d906dd36",
+  "resources": [
+    {
+      "name": "candidatura.html",
+      "status": 200,
+      "sha256": "a71d4f850a9c8767325ef8f3c4ebcfd3773dde70d432cc0eda0571d155eff3f2"
+    },
+    {
+      "name": "candidatura.css",
+      "status": 200,
+      "sha256": "7f229469dde5dc1d630334a741d0fd5f3e9fd34b99b0d11978b95bcbc3dc14c1"
+    },
+    {
+      "name": "candidatura.pdf",
+      "status": 200,
+      "sha256": "e9b2a1ec78bf8643e7f8b27b79f35f28abc5d12d0b7a066d376118890737e88a"
+    }
+  ],
+  "checks": [
+    {
+      "route": "",
+      "width": 1280,
+      "overflow": 0,
+      "images": [
+        {
+          "src": "https://salida-cyl.157-90-22-40.sslip.io/images/editorial/hero-career-guidance-640.avif",
+          "width": 576
+        },
+        {
+          "src": "https://salida-cyl.157-90-22-40.sslip.io/images/editorial/path-training-640.avif",
+          "width": 422
+        },
+        {
+          "src": "https://salida-cyl.157-90-22-40.sslip.io/images/editorial/path-occupation-640.avif",
+          "width": 422
+        },
+        {
+          "src": "https://salida-cyl.157-90-22-40.sslip.io/images/editorial/path-offer-640.avif",
+          "width": 422
+        },
+        {
+          "src": "https://salida-cyl.157-90-22-40.sslip.io/images/editorial/centers-vocational-training-640.avif",
+          "width": 537
+        }
+      ],
+      "canonical": "https://salida-cyl.157-90-22-40.sslip.io/",
+      "axeViolations": 0,
+      "pageErrors": []
+    },
+    {
+      "route": "desde-fp/ADG02S",
+      "width": 1280,
+      "overflow": 0,
+      "images": [],
+      "canonical": "https://salida-cyl.157-90-22-40.sslip.io/desde-fp/ADG02S",
+      "axeViolations": 0,
+      "pageErrors": []
+    },
+    {
+      "route": "candidatura.html",
+      "width": 1280,
+      "overflow": 0,
+      "images": [],
+      "canonical": "https://salida-cyl.157-90-22-40.sslip.io/candidatura.html",
+      "axeViolations": 0,
+      "pageErrors": []
+    },
+    {
+      "route": "",
+      "width": 360,
+      "overflow": 0,
+      "images": [
+        {
+          "src": "https://salida-cyl.157-90-22-40.sslip.io/images/editorial/hero-career-guidance-640.avif",
+          "width": 328
+        },
+        {
+          "src": "https://salida-cyl.157-90-22-40.sslip.io/images/editorial/path-training-640.avif",
+          "width": 328
+        },
+        {
+          "src": "https://salida-cyl.157-90-22-40.sslip.io/images/editorial/path-occupation-640.avif",
+          "width": 328
+        },
+        {
+          "src": "https://salida-cyl.157-90-22-40.sslip.io/images/editorial/path-offer-640.avif",
+          "width": 328
+        },
+        {
+          "src": "https://salida-cyl.157-90-22-40.sslip.io/images/editorial/centers-vocational-training-640.avif",
+          "width": 328
+        }
+      ],
+      "canonical": "https://salida-cyl.157-90-22-40.sslip.io/",
+      "axeViolations": 0,
+      "pageErrors": []
+    },
+    {
+      "route": "desde-fp/ADG02S",
+      "width": 360,
+      "overflow": 0,
+      "images": [],
+      "canonical": "https://salida-cyl.157-90-22-40.sslip.io/desde-fp/ADG02S",
+      "axeViolations": 0,
+      "pageErrors": []
+    },
+    {
+      "route": "candidatura.html",
+      "width": 360,
+      "overflow": 0,
+      "images": [],
+      "canonical": "https://salida-cyl.157-90-22-40.sslip.io/candidatura.html",
+      "axeViolations": 0,
+      "pageErrors": []
+    }
+  ]
+}
