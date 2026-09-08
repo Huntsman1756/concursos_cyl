@@ -7,8 +7,14 @@ import {
 import { currentManifestFixture } from "../fixtures/generatedManifest";
 
 async function tabTo(page: Page, target: Locator): Promise<void> {
+  // WebKit without full keyboard access uses Option+Tab to include links.
+  // https://bugs.webkit.org/show_bug.cgi?id=199671
+  const key =
+    page.context().browser()?.browserType().name() === "webkit"
+      ? "Alt+Tab"
+      : "Tab";
   for (let steps = 0; steps < 80; steps += 1) {
-    await page.keyboard.press("Tab");
+    await page.keyboard.press(key);
     if (await target.evaluate((node) => document.activeElement === node))
       return;
   }
