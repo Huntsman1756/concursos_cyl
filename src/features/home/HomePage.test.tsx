@@ -385,14 +385,15 @@ describe("HomePage task selector", () => {
     expect(fpTab).toHaveAttribute("aria-selected", "false");
     expect(fpTab).toHaveAttribute("tabindex", "-1");
     expect(occupationTab).toHaveAttribute("tabindex", "0");
-    expect(occupationTab).toHaveFocus();
+    await waitFor(() => expect(occupationTab).toHaveFocus());
 
     await user.keyboard("{ArrowRight}");
     expect(offerTab).toHaveAttribute("aria-selected", "true");
+    await waitFor(() => expect(offerTab).toHaveFocus());
 
     await user.keyboard("{Home}");
     await waitFor(() => expect(fpTab).toHaveAttribute("aria-selected", "true"));
-    expect(fpTab).toHaveFocus();
+    await waitFor(() => expect(fpTab).toHaveFocus());
   });
 
   it("reaches the occupation route from the profession journey", async () => {
