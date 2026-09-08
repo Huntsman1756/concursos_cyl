@@ -17,12 +17,16 @@ if (-not (Test-Path -LiteralPath $bashExecutable)) {
 }
 $deploymentScript = (Join-Path $PSScriptRoot "deployVps.sh").Replace("\", "/")
 $oldSmokeUrl = $env:CADDY_SMOKE_BASE_URL
+$oldEnvironmentExclusions = $env:MSYS2_ENV_CONV_EXCL
 try {
   $env:CADDY_SMOKE_BASE_URL = $PublicUrl
+  # This is a URL path, not a filesystem path for MSYS to translate.
+  $env:MSYS2_ENV_CONV_EXCL = (@($oldEnvironmentExclusions, "VITE_PUBLIC_BASE_PATH") | Where-Object { $_ }) -join ";"
   & $bashExecutable $deploymentScript $SshHost $ReleaseId
   if ($LASTEXITCODE -ne 0) {
     throw "VPS deployment failed with exit code $LASTEXITCODE. Review the observed remote state above."
   }
 } finally {
   $env:CADDY_SMOKE_BASE_URL = $oldSmokeUrl
+  $env:MSYS2_ENV_CONV_EXCL = $oldEnvironmentExclusions
 }
