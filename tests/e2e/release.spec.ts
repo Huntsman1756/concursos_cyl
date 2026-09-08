@@ -5,6 +5,7 @@ const RELEASE_PATHS = [
   "/",
   "/desde-fp",
   "/desde-ocupacion",
+  "/desde-oferta",
   "/comparar",
   "/datos-abiertos",
   "/accesibilidad",
@@ -93,6 +94,16 @@ test("the public candidate manifest retains canonical SEPE evidence", async ({
   expect(sepe.period).toBe("2026-07");
   expect(sepe.records).toHaveLength(116);
   expect(sepe.coverage.notPublishedCnoCodes).toHaveLength(0);
+
+  const offerEvidenceSnapshot = manifest.resourceSnapshots.offerEvidence;
+  expect(offerEvidenceSnapshot.recordCount).toBe(1032);
+  const offerEvidenceResponse = await request.get(
+    offerEvidenceSnapshot.resourcePath,
+  );
+  expect(offerEvidenceResponse.ok()).toBe(true);
+  expect(offerEvidenceResponse.headers()["content-type"]).toContain(
+    "application/json",
+  );
 });
 
 test("print media preserves closed evidence and hides coordinate details", async ({

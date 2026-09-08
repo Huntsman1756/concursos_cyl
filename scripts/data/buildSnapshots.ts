@@ -1602,7 +1602,9 @@ async function writeCandidate(
     resourceHashes[key] = await hashFile(filePath);
   }
 
-  const resourceRecordCount = (key: ResourceKey): number =>
+  const resourceRecordCount = (
+    key: (typeof SNAPSHOT_BUILDER_RESOURCE_KEYS)[number],
+  ): number =>
     key === "sepeOccupationMarket"
       ? (candidate[key] as SepeOccupationMarketResource).records.length
       : (candidate[key] as readonly unknown[]).length;
@@ -1630,7 +1632,10 @@ async function writeCandidate(
     id: "salida-cyl-derived-fp-occupation-graph",
     recordsUrl: "https://github.com/Huntsman1756/concursos_cyl",
   };
-  const resourceSnapshot = (key: ResourceKey, count: number) => ({
+  const resourceSnapshot = (
+    key: (typeof SNAPSHOT_BUILDER_RESOURCE_KEYS)[number],
+    count: number,
+  ) => ({
     ...sourceSnapshot(
       RESOURCE_DEFINITIONS[key].sourceKind === "training"
         ? SOURCE_CONFIG.training

@@ -59,6 +59,7 @@
     "analysis:fp:matching-evaluation:write": "tsx scripts/analysis/evaluateFpOfferMatching.ts --write",
     "analysis:fp:matching-evaluation:check": "npm test -- scripts/analysis/evaluateFpOfferMatching.test.ts",
     "pilot:anonymous:test": "vitest run scripts/pilot/validateAnonymousPilot.test.ts",
+    "pilot:anonymous:validate:not-run": "tsx scripts/pilot/validateAnonymousPilot.ts --not-run",
     "pilot:anonymous:validate": "tsx scripts/pilot/validateAnonymousPilot.ts --input analysis/pilot/anonymous/results-aggregate.json --require-complete"
   },
   "keywords": [

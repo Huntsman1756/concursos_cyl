@@ -1,14 +1,49 @@
 import { z } from "zod";
 
+export const ANONYMOUS_PILOT_SCHEMA_VERSION = "2.0.0" as const;
+export const ANONYMOUS_PILOT_PROTOCOL_VERSION = "2.0.0" as const;
+export const ANONYMOUS_PILOT_TASK_CATALOG_VERSION = "2.0.0" as const;
+export const ANONYMOUS_PILOT_NOT_RUN = "HUMAN_PILOT_NOT_RUN" as const;
+
+export const ANONYMOUS_PILOT_RELEASE = {
+  rootUrl: "https://huntsman1756.github.io/concursos_cyl/",
+  deployedCommitSha: "886bbf433df7db1e99acf78786286ceee8bc1a06",
+  snapshotId: "20260830120000000-8c6c79fbd2a1",
+} as const;
+
 export const ANONYMOUS_PILOT_TASK_IDS = [
   "T1_fp_to_occupation",
-  "T2_honest_zero_or_deferred",
-  "T3_occupation_to_fp",
-  "T4_compare_scopes",
-  "T5_sources_and_limits",
+  "T2_occupation_to_fp",
+  "T3_offer_to_requirement_action",
+  "T4_uncertainty_boundary",
+  "T5_sources_limits",
 ] as const;
 
 export const AnonymousPilotTaskIdSchema = z.enum(ANONYMOUS_PILOT_TASK_IDS);
+
+export const ANONYMOUS_PILOT_ISSUE_CODES = [
+  "cannot_find_offer_first_entry",
+  "cannot_distinguish_offer_title_requirement",
+  "interprets_snapshot_as_currently_open_guarantee",
+  "interprets_reviewed_fp_relationship_as_equivalence",
+  "interprets_university_boundary_incorrectly",
+  "interprets_certificate_alternative_as_fp_equivalence",
+  "interprets_accreditation_as_confirmed_eligibility",
+  "cannot_identify_next_official_action",
+  "cannot_find_original_source",
+  "cannot_identify_uncertainty",
+] as const;
+
+export const AnonymousPilotIssueCodeSchema = z.enum(
+  ANONYMOUS_PILOT_ISSUE_CODES,
+);
+
+export const AnonymousPilotSeveritySchema = z.enum([
+  "P0",
+  "P1",
+  "P2",
+  "P3",
+] as const);
 
 export const AnonymousPilotBlockerCodeSchema = z.enum([
   "no_authorization",
@@ -40,7 +75,12 @@ const TaskResultSchema = z
       })
       .strict(),
     issueCounts: z
-      .object({ minor: CountSchema, major: CountSchema, stop: CountSchema })
+      .object({
+        P0: CountSchema,
+        P1: CountSchema,
+        P2: CountSchema,
+        P3: CountSchema,
+      })
       .strict(),
   })
   .strict();
@@ -48,16 +88,8 @@ const TaskResultSchema = z
 const IssueSchema = z
   .object({
     taskId: AnonymousPilotTaskIdSchema,
-    category: z.enum([
-      "navigation",
-      "label_comprehension",
-      "scope_confusion",
-      "accessibility",
-      "loading_or_error",
-      "privacy_concern",
-      "other",
-    ]),
-    severity: z.enum(["minor", "major", "stop"]),
+    issueCode: AnonymousPilotIssueCodeSchema,
+    severity: AnonymousPilotSeveritySchema,
     count: z.number().int().positive(),
     actionCode: z.enum([
       "none",
@@ -66,20 +98,25 @@ const IssueSchema = z
       "add_limit_disclosure",
       "run_accessibility_review",
       "investigate_bug",
+      "reopen_implementation",
     ]),
   })
   .strict();
 
+export const AnonymousPilotProtocolStateSchema = z.literal(
+  ANONYMOUS_PILOT_NOT_RUN,
+);
+
 export const AnonymousPilotAggregateSchema = z
   .object({
-    schemaVersion: z.literal("1.0.0"),
+    schemaVersion: z.literal(ANONYMOUS_PILOT_SCHEMA_VERSION),
     artifactKind: z.literal("anonymous_pilot_aggregate"),
     status: z.enum(["draft", "complete", "blocked"]),
     blockerCodes: z.array(AnonymousPilotBlockerCodeSchema),
     protocol: z
       .object({
-        protocolVersion: z.literal("1.0.0"),
-        taskCatalogVersion: z.literal("1.0.0"),
+        protocolVersion: z.literal(ANONYMOUS_PILOT_PROTOCOL_VERSION),
+        taskCatalogVersion: z.literal(ANONYMOUS_PILOT_TASK_CATALOG_VERSION),
         adultOnly: z.literal(true),
         minorsIncluded: z.literal(false),
         targetSessions: z.literal(5),
@@ -92,9 +129,9 @@ export const AnonymousPilotAggregateSchema = z
       .strict(),
     release: z
       .object({
-        rootUrl: z.literal("https://salida-cyl.157-90-22-40.sslip.io/"),
-        deployedCommitSha: z.string().regex(/^[a-f0-9]{40}$/u),
-        snapshotId: z.string().regex(/^\d{17}-[a-f0-9]{12}$/u),
+        rootUrl: z.literal(ANONYMOUS_PILOT_RELEASE.rootUrl),
+        deployedCommitSha: z.literal(ANONYMOUS_PILOT_RELEASE.deployedCommitSha),
+        snapshotId: z.literal(ANONYMOUS_PILOT_RELEASE.snapshotId),
       })
       .strict(),
     consentPolicy: z

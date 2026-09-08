@@ -1,7 +1,8 @@
-# Plantilla de consentimiento anónimo (sin firma)
+# Plantilla de consentimiento anónimo V2 (sin firma)
 
-Esta plantilla se lee o se muestra antes de una sesión. Es unsigned: no se
-rellena, firma, fotografía ni guarda una copia en el repositorio.
+Versión del protocolo: `2.0.0`. Esta plantilla se lee o se muestra antes de
+una sesión. Es unsigned: no se rellena, firma, fotografía ni guarda una copia
+en el repositorio.
 
 ## Información para la persona
 
@@ -11,10 +12,11 @@ retirar tu consentimiento en cualquier momento, sin explicar el motivo.
 
 - Solo pueden participar personas adultas de 18 años o más.
 - No habrá grabación de audio, vídeo, pantalla ni cámara.
-- No pediremos nombre, correo, teléfono, dirección, identificadores ni CV.
+- No pediremos nombre, correo, teléfono, dirección, identificadores,
+  empleador, centro ni CV.
 - No guardaremos respuestas textuales ni citas. El registro será
-  `aggregate-only`: únicamente conteos de inicios, finalizaciones y bloqueos
-  de las cinco tareas.
+  `aggregate-only`: únicamente conteos de intentos, finalizaciones, bloqueos,
+  abandonos y códigos cerrados de las cinco tareas.
 - No se crea un perfil de participante ni se almacena una cookie de piloto.
 
 ## Confirmación verbal

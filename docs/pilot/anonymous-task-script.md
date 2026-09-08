@@ -1,47 +1,65 @@
-# Guion de tareas del piloto anónimo
+# Guion canónico de tareas del piloto anónimo V2
 
-Las cinco tareas se leen en este orden y con el mismo texto a todas las
-personas. El moderador no indica qué control deben usar ni registra respuestas
-textuales.
+Versión del protocolo: `2.0.0`  
+Versión del catálogo de tareas: `2.0.0`  
+Estado actual: `HUMAN_PILOT_NOT_RUN`
 
-## T1 — De FP a ocupación (`T1_fp_to_occupation`)
+Las cinco tareas se leen en este orden y con exactamente el mismo texto a
+todas las personas. El moderador no indica qué control, filtro, ruta o enlace
+debe usar. Las tareas prueban comprensión exploratoria; no son una prueba de
+conocimientos ni de empleabilidad.
+
+## T1 — FP → ocupación (`T1_fp_to_occupation`)
 
 «Partiendo de la portada, elige un título de FP y encuentra una ocupación
 relacionada que tenga evidencia revisada.»
 
-Se completa al abrir una salida revisada del título elegido.
+Se completa al abrir una relación ocupacional revisada desde el título de FP
+elegido.
 
-## T2 — Resultado honesto (`T2_honest_zero_or_deferred`)
+## T2 — Ocupación → FP (`T2_occupation_to_fp`)
 
-«Busca un título o filtro que no ofrezca un resultado inmediato y explica qué
-te permite hacer la página a continuación.»
+«Busca una ocupación y encuentra una FP que tenga una relación revisada con
+ella.»
 
-Se completa cuando la persona identifica correctamente un estado sin
-resultados, diferido o limitado, sin interpretar que garantiza empleo.
+Se completa al abrir una relación de FP revisada desde una ocupación oficial.
+La tarea solo comprueba que la relación esté revisada; no afirma una conexión
+causal, un derecho profesional ni un resultado laboral.
 
-## T3 — De ocupación a FP (`T3_occupation_to_fp`)
+## T3 — Oferta → requisito → siguiente acción (`T3_offer_to_requirement_action`)
 
-«Busca una ocupación y encuentra una FP que pueda llevarte hacia ella.»
+«Busca una oferta de empleo y averigua qué requisito publica y qué opción
+oficial te permite consultar SALIDA a continuación.»
 
-Se completa al abrir una relación revisada desde una ocupación oficial.
+La tarea se completa solo si la persona identifica al menos un requisito
+literal, o reconoce correctamente que está sin resolver, y además identifica
+una acción siguiente respaldada, o reconoce correctamente que no hay una
+acción específica respaldada. No se exige encontrar una FP concreta.
 
-## T4 — Comparar alcances (`T4_compare_scopes`)
+## T4 — Incertidumbre y límite (`T4_uncertainty_boundary`)
 
-«Abre la comparación de ingresos, cambia el alcance y distingue qué territorio
-y periodo se están comparando.»
+«Encuentra un caso en el que SALIDA no pueda afirmar una relación formativa
+directa y explica qué límite muestra.»
 
-Se completa cuando la persona diferencia los alcances mostrados.
+Se completa al reconocer correctamente un requisito ambiguo, una ausencia de
+relación FP revisada, un límite universitario/regulado o un requisito
+desconocido. La ausencia de relación no significa que no exista empleo o
+formación, que no se pueda solicitar el puesto ni que la demanda sea cero.
 
-## T5 — Fuentes y límites (`T5_sources_and_limits`)
+## T5 — Fuentes y límites (`T5_sources_limits`)
 
-«Encuentra de dónde proceden los datos y una limitación importante del
-proyecto.»
+«Encuentra de dónde proceden los datos de una oferta o relación y una
+limitación importante de SALIDA.»
 
-Se completa al localizar una fuente pública y una limitación declarada.
+Se completa al localizar una fuente pública u oficial y una limitación
+declarada, como la fecha de la instantánea, el posible cierre de una oferta,
+el carácter revisado pero no exhaustivo de las relaciones FP, un dato que
+permanece desconocido o el carácter no individual de los datos salariales.
 
 ## Registro permitido
 
-Para cada tarea solo se agregan conteos de intento, finalización, bloqueo,
+Por cada tarea solo se agregan conteos de intento, finalización, bloqueo,
 abandono, malinterpretación, banda de tiempo e incidencias mediante códigos
-cerrados. No se guardan frases, citas, nombres, centros, ubicaciones, capturas,
-transcripciones ni filas por sesión.
+cerrados definidos en el protocolo. No se guardan respuestas textuales,
+frases, citas, nombres, centros, ubicaciones, capturas, transcripciones,
+audio, vídeo ni filas por sesión.

@@ -4,8 +4,10 @@ import { pathToFileURL } from "node:url";
 import { z } from "zod";
 
 import {
+  ANONYMOUS_PILOT_NOT_RUN,
   ANONYMOUS_PILOT_TASK_IDS,
   AnonymousPilotAggregateSchema,
+  AnonymousPilotProtocolStateSchema,
   type AnonymousPilotAggregate,
 } from "./anonymousPilotSchema";
 
@@ -105,7 +107,7 @@ function assertInvariants(
         `Anonymous pilot time bands are inconsistent (${task.taskId}).`,
       );
     }
-    for (const severity of ["minor", "major", "stop"] as const) {
+    for (const severity of ["P0", "P1", "P2", "P3"] as const) {
       const issueTotal = value.issues
         .filter(
           (issue) =>
@@ -174,6 +176,10 @@ export function validateAnonymousPilotAggregate(
   return parsed.data;
 }
 
+export function validateAnonymousPilotNotRun(): typeof ANONYMOUS_PILOT_NOT_RUN {
+  return AnonymousPilotProtocolStateSchema.parse(ANONYMOUS_PILOT_NOT_RUN);
+}
+
 export async function validateAnonymousPilotAggregateFile(
   inputPath: string,
   options: AnonymousPilotValidationOptions = {},
@@ -194,36 +200,51 @@ export async function validateAnonymousPilotAggregateFile(
 }
 
 function cliOptions(arguments_: readonly string[]): {
-  inputPath: string;
+  inputPath?: string;
   requireComplete: boolean;
+  notRun: boolean;
 } {
   let inputPath: string | undefined;
   let requireComplete = false;
+  let notRun = false;
   for (let index = 0; index < arguments_.length; index += 1) {
     const argument = arguments_[index];
     if (argument === "--require-complete") {
       requireComplete = true;
+    } else if (argument === "--not-run") {
+      notRun = true;
     } else if (argument === "--input" && arguments_[index + 1]) {
       inputPath = resolve(arguments_[index + 1]!);
       index += 1;
     } else {
       throw new Error(
-        "Usage: validateAnonymousPilot --input <path> [--require-complete]",
+        "Usage: validateAnonymousPilot --input <path> [--require-complete] | --not-run",
       );
     }
   }
-  if (!inputPath) {
+  if (notRun && (inputPath || requireComplete)) {
     throw new Error(
-      "Usage: validateAnonymousPilot --input <path> [--require-complete]",
+      "Usage: validateAnonymousPilot --input <path> [--require-complete] | --not-run",
     );
   }
-  return { inputPath, requireComplete };
+  if (!inputPath && !notRun) {
+    throw new Error(
+      "Usage: validateAnonymousPilot --input <path> [--require-complete] | --not-run",
+    );
+  }
+  return { inputPath, requireComplete, notRun };
 }
 
 async function main(): Promise<void> {
   const options = cliOptions(process.argv.slice(2));
+  if (options.notRun) {
+    console.log(
+      `Anonymous pilot protocol state is valid (${validateAnonymousPilotNotRun()}).`,
+    );
+    return;
+  }
   const aggregate = await validateAnonymousPilotAggregateFile(
-    options.inputPath,
+    options.inputPath!,
     { requireComplete: options.requireComplete },
   );
   console.log(`Anonymous pilot aggregate is valid (${aggregate.status}).`);
