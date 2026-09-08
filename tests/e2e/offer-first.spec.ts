@@ -93,7 +93,9 @@ test("offer-first keeps ambiguity and the university boundary explicit", async (
     )
     .click();
   await expect(caregiver).toContainText("Correspondencia con formación");
-  await expect(caregiver).toContainText("No hay una relación FP comprobada");
+  await expect(caregiver).toContainText(
+    "No hemos podido extraer requisitos concretos",
+  );
   await expect(caregiver).not.toContainText("Esta oferta exige");
 
   await page.goto("/desde-oferta?query=Grado%20en%20Fisioterapia");
@@ -156,7 +158,7 @@ test("offer-first keeps certificate evidence conservative and traceable", async 
       "Fuente y revisión de CUIDADORES DE PERSONAS CON DISCAPACIDAD Y/O DEPENDENCIA, EN INSTITUCIONES",
     )
     .click();
-  await expect(related).toContainText("Piden un certificado o cualificación");
+  await expect(related).toContainText("Con FP relacionada");
   await expect(related).toContainText(
     "Certificado de profesionalidad en atención sociosanitaria a personas dependientes en instituciones sociales",
   );
