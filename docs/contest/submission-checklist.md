@@ -13,7 +13,7 @@
 ## Campos técnicos
 
 - URL raíz a presentar: [https://salida-cyl.157-90-22-40.sslip.io/](https://salida-cyl.157-90-22-40.sslip.io/)
-- GitHub Pages está deshabilitado; no se ofrece como respaldo público.
+- El estado del respaldo GitHub Pages se registra por separado en [verification-20260908.md](verification-20260908.md).
 - Commit fuente del freeze: `136a08859f387427b74605bdcf8c19ea9584aebc`.
 - Snapshot: `20260908044344059-f92da75832e9`.
 - Commit desplegado: **PENDIENTE DE DESPLIEGUE Y VERIFICACIÓN**.
