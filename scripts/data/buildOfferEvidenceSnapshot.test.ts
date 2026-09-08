@@ -4,7 +4,10 @@ import { buildOfferEvidenceResource } from "./buildOfferEvidenceSnapshot";
 
 describe("buildOfferEvidenceSnapshot", () => {
   it("rebuilds the complete candidate without widening reviewed coverage", async () => {
-    const resource = await buildOfferEvidenceResource();
+    const resource = await buildOfferEvidenceResource({
+      manifestPath: "docs/contest/manifest-20260830-historical.json",
+      reviewCatalogPath: "data/curated/offer-evidence-reviews-20260830.json",
+    });
 
     expect(resource.baseSnapshotId).toBe("20260822085631889-fc9bf2ba23f9");
     expect(resource.records).toHaveLength(1058);

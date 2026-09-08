@@ -204,7 +204,7 @@ export const OfferEvidenceCountsSchema = z
 export const OfferEvidenceResourceSchema = z
   .object({
     schemaVersion: z.literal("1.0.0"),
-    snapshotId: z.literal(OFFER_EVIDENCE_SNAPSHOT_ID),
+    snapshotId: z.string().regex(/^\d{17}-[a-f0-9]{12}$/u),
     baseSnapshotId: NonBlankStringSchema,
     generatedAt: IsoDateTimeSchema,
     reviewVersion: SemanticVersionSchema,

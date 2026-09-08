@@ -80,19 +80,26 @@ function readJson(path: string): Promise<unknown> {
   return readFile(path, "utf8").then((value) => JSON.parse(value) as unknown);
 }
 
-function resourcePath(manifest: Manifest, key: string): string {
+function resourcePath(
+  manifest: Manifest,
+  key: string,
+  rootDirectory = ".",
+): string {
   const snapshot = manifest.resourceSnapshots[key];
   if (snapshot === undefined)
     throw new Error(`Missing manifest resource: ${key}.`);
-  return resolve("public", snapshot.resourcePath.slice(1));
+  return resolve(rootDirectory, "public", snapshot.resourcePath.slice(1));
 }
 
 async function readResource<T>(
   manifest: Manifest,
   key: string,
   schema: z.ZodType<T>,
+  rootDirectory = ".",
 ): Promise<T> {
-  return schema.parse(await readJson(resourcePath(manifest, key)));
+  return schema.parse(
+    await readJson(resourcePath(manifest, key, rootDirectory)),
+  );
 }
 
 function sha256Json(value: unknown): string {
@@ -628,15 +635,29 @@ function buildRelations(
   return byOffer;
 }
 
-export async function buildOfferEvidenceResource(): Promise<
-  z.infer<typeof OfferEvidenceResourceSchema>
-> {
-  const rawManifest = await readJson(MANIFEST_PATH);
+export async function buildOfferEvidenceResource(
+  options: {
+    rootDirectory?: string;
+    snapshotId?: string;
+    generatedAt?: string;
+    reviewCatalogPath?: string;
+    manifestPath?: string;
+  } = {},
+): Promise<z.infer<typeof OfferEvidenceResourceSchema>> {
+  const rootDirectory = options.rootDirectory ?? ".";
+  const rawManifest = await readJson(
+    options.manifestPath ??
+      (options.rootDirectory === undefined
+        ? MANIFEST_PATH
+        : resolve(rootDirectory, "public/data/v1/manifest.json")),
+  );
   const manifest = IsoManifestSchema.parse(
     LoadableGeneratedManifestSchema.parse(rawManifest),
   );
   const baseId = baseSnapshotId(manifest);
-  const rawReviewCatalog = await readJson(REVIEW_CATALOG_PATH);
+  const rawReviewCatalog = await readJson(
+    options.reviewCatalogPath ?? REVIEW_CATALOG_PATH,
+  );
   const reviewCatalog =
     OfferEvidenceReviewCatalogSchema.parse(rawReviewCatalog);
   if (reviewCatalog.baseSnapshotId !== baseId) {
@@ -647,25 +668,43 @@ export async function buildOfferEvidenceResource(): Promise<
 
   const [offers, publishedRequirements, programs, occupations, aliases, links] =
     await Promise.all([
-      readResource(manifest, "jobOffers", z.array(JobOfferSchema)),
+      readResource(
+        manifest,
+        "jobOffers",
+        z.array(JobOfferSchema),
+        rootDirectory,
+      ),
       readResource(
         manifest,
         "publishedRequirements",
         PublishedRequirementsResourceSchema,
+        rootDirectory,
       ),
-      readResource(manifest, "programs", z.array(TrainingProgramSchema)),
-      readResource(manifest, "occupations", OccupationsSchema),
-      readResource(manifest, "occupationAliases", OccupationAliasesSchema),
+      readResource(
+        manifest,
+        "programs",
+        z.array(TrainingProgramSchema),
+        rootDirectory,
+      ),
+      readResource(manifest, "occupations", OccupationsSchema, rootDirectory),
+      readResource(
+        manifest,
+        "occupationAliases",
+        OccupationAliasesSchema,
+        rootDirectory,
+      ),
       readResource(
         manifest,
         "trainingOccupationLinks",
         TrainingOccupationLinksSchema,
+        rootDirectory,
       ),
     ]);
   const professionalProfiles = await readResource(
     manifest,
     "professionalProfiles",
     ProfessionalProfilesResourceSchema,
+    rootDirectory,
   );
   if (professionalProfiles.length === 0)
     throw new Error("TodoFP profiles are missing.");
@@ -736,9 +775,15 @@ export async function buildOfferEvidenceResource(): Promise<
   ].map((key) => sourceSnapshot(manifest, key));
   const resource = {
     schemaVersion: "1.0.0" as const,
-    snapshotId: OFFER_EVIDENCE_SNAPSHOT_ID,
+    snapshotId:
+      options.snapshotId ??
+      (rawManifest as { snapshotId?: string }).snapshotId ??
+      OFFER_EVIDENCE_SNAPSHOT_ID,
     baseSnapshotId: baseId,
-    generatedAt: GENERATED_AT,
+    generatedAt:
+      options.generatedAt ??
+      (rawManifest as { generatedAt?: string }).generatedAt ??
+      GENERATED_AT,
     reviewVersion: reviewCatalog.reviewVersion,
     sourceSnapshots,
     counts: {

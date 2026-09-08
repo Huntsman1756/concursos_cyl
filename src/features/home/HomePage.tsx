@@ -667,7 +667,7 @@ export function HomePage() {
                   ? "…"
                   : proof.programs.toLocaleString("es-ES")}
               </p>
-              <p className="proof-stat-label">ciclos oficiales</p>
+              <p className="proof-stat-label">programas y modalidades</p>
               <p className="proof-stat-date">
                 {proof.programsDate === null ? "comprobando fecha…" : null}
                 {proof.programsDate !== null && (

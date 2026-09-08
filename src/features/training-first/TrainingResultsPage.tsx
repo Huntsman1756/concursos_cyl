@@ -642,7 +642,7 @@ export function TrainingResultsPage() {
                 )}
               </li>
               <li>
-                Ofertas de empleo: fuente actualizada el{" "}
+                Ofertas de empleo: publicaciones hasta el{" "}
                 {shortDate(offersEvidenceDate)}. Catálogo de ofertas de la
                 Junta.{" "}
                 {state.offerEvidence !== null && (
@@ -809,7 +809,7 @@ export function TrainingResultsPage() {
             </h2>
             <span className="offer-results__heading-actions">
               <span>
-                Ofertas de empleo · fuente actualizada el{" "}
+                Ofertas de empleo · publicaciones hasta el{" "}
                 {snapshotDate(state.manifest)}
               </span>
               <Link to={trainingOffersPath(programKey)}>

@@ -679,7 +679,7 @@ export function OfferExplorerPage({
           Ofertas de empleo
           {state.offersSourceDate !== null && (
             <>
-              {" · fuente actualizada el "}
+              {" · publicaciones hasta el "}
               <time dateTime={state.offersSourceDate}>
                 {formattedDate(state.offersSourceDate)}
               </time>
