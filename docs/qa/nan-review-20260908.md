@@ -24,7 +24,10 @@ con mantenimiento automovilístico genérico. También retira seis ofertas de pe
 de construcción cuya única relación dependía de ese mecanismo. La relación FP-CNO
 sigue consultable; una oferta requiere evidencia específica.
 
-Se mantiene el presupuesto inicial de datos de 10.000.000 bytes y el de JavaScript.
+Se mantiene el presupuesto inicial de datos de 10.000.000 bytes. JavaScript conserva
+el límite de 623.000 bytes en la raíz; el respaldo `/concursos_cyl/` admite una
+reserva explícita de 100 bytes por sus rutas más largas (623.026 bytes medidos).
+La reserva no amplía el límite total ni el de transferencia inicial.
 Las notas SISPE comparten la referencia en Metodología para evitar repetir la URL
 completa en cada evidencia. La carga inicial suma 9.980.220 bytes y cumple el límite en Chromium, Firefox y WebKit. EDUCAbase se carga
 al solicitarlo; solo la instantánea activa se distribuye en el sitio.
@@ -42,3 +45,5 @@ como pilotaje ni como certificación profesional de orientación.
 Pruebas de los recorridos modificados: 73 superadas en Chromium (una omitida por viewport) y 32 en Firefox/WebKit. La batería Chromium completa pasó 296 pruebas (seis omitidas). La batería de código pasó 1.371 pruebas con dos tiempos agotados; la repetición de los dos archivos de integración pasó las 82 pruebas.
 
 Publicación: candidate.20, commit `3973301d8e4f3b83cf913c354efb357fda69101a`. Verificación pública de Caddy, versión y manifiesto superada; 13 capturas renovadas. Se comprobaron seis recorridos/anchos públicos, sin errores de página ni infracciones Axe detectadas; HTML/CSS/PDF coinciden con los archivos revisados. El preflight del piloto coincide con esta versión y mantiene `HUMAN_PILOT_NOT_RUN`.
+
+Rendimiento móvil de laboratorio (tres ejecuciones): mediana LCP 2.072 ms, CLS 0,0463 y 458.035 bytes transferidos en el recorrido medido. La referencia anterior dio 2.020 ms y 453.370 bytes. Son mediciones aproximadas con limitación de CPU/red; no acreditan mejora estadística ni Core Web Vitals de usuarios reales.
