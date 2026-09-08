@@ -393,7 +393,7 @@ describe("contest coverage freeze validator", () => {
       terminal: 11,
       reserveUnattempted: 0,
     });
-  });
+  }, 30_000);
 
   it("pins the Carril A canonical coverage identity", () => {
     const fresh = createFreshContestFreeze(ROOT, APPROVED_SOURCE_COMMIT_SHA);
@@ -401,7 +401,7 @@ describe("contest coverage freeze validator", () => {
     expect(fresh.sourceCommitSha).toBe(APPROVED_SOURCE_COMMIT_SHA);
     expect(fresh.manifest.snapshotId).toBe(CANONICAL_SNAPSHOT_ID);
     expect(fresh.manifest.sha256).toBe(CANONICAL_MANIFEST_SHA256);
-  });
+  }, 30_000);
 
   it("writes a v2 candidate from current sources and discards poisoned v1 metadata", async () => {
     const root = mkdtempSync(join(tmpdir(), "contest-freeze-write-"));

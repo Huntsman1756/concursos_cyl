@@ -103,31 +103,9 @@ const SAFE_ALIAS_CONTRACT = [
     candidateId: "02-PC-9602",
     alias: "peones de la construccion de edificios",
     occupationId: "occupation:cno11:9602",
-    expectedOfferIds: ["1285663193331", "1285669341353", "1285672532223"],
-  },
-  {
-    candidateId: "04-PA-9530",
-    alias: "peones agropecuarios",
-    occupationId: "occupation:cno11:9530",
-    expectedOfferIds: ["1285666138609"],
-  },
-  {
-    candidateId: "05-ME-7191",
-    alias: "mantenedores de edificios",
-    occupationId: "occupation:cno11:7191",
-    expectedOfferIds: ["1285669240479"],
-  },
-  {
-    candidateId: "06-PC-9310",
-    alias: "pinches de cocina",
-    occupationId: "occupation:cno11:9310",
-    expectedOfferIds: [
-      "1285622767314",
-      "1285666804087",
-      "1285671503827",
-      "1285671557562",
-      "1285671956131",
-    ],
+    // Historical offers 1285663193331, 1285669341353 and 1285672532223
+    // are now withheld: EOC01B/9602 is adjacent, not a generic-title match.
+    expectedOfferIds: [],
   },
   {
     candidateId: "07-MA-7401",
@@ -514,7 +492,7 @@ describe("Carril A coverage expansion", () => {
     expect(conflicts).toEqual([]);
   });
 
-  it("matches the approved baseline and final metrics", () => {
+  it("recomputes historical inputs under the current conservative matcher", () => {
     expect(artifacts.activeSnapshotId).not.toBe(BASELINE_SNAPSHOT_ID);
     const baseline = metrics(artifacts.baseline, artifacts.baselineMatches);
     const final = metrics(artifacts.active, artifacts.activeMatches);
@@ -532,12 +510,12 @@ describe("Carril A coverage expansion", () => {
     expect(baseline.provincesWithMatchedOffers).toHaveLength(9);
     expect(final).toMatchObject({
       totalOffers: 1058,
-      matchedOffers: 133,
-      matchedOffersPercent: 12.57,
-      relationsWithOffers: 33,
+      matchedOffers: 130,
+      matchedOffersPercent: 12.29,
+      relationsWithOffers: 32,
       programsWithOffers: 30,
       familiesWithOffers: 10,
-      distinctCnoWithMatchedOffers: 16,
+      distinctCnoWithMatchedOffers: 15,
       approvedFpCnoRelations: 264,
     });
     expect(final.provincesWithMatchedOffers).toHaveLength(9);

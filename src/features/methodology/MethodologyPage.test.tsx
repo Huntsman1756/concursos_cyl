@@ -178,22 +178,18 @@ describe("MethodologyPage", () => {
       /Centros agrupados por provincia y localidad; coordenadas técnicas opcionales/i,
     );
     expect(methodology).toHaveTextContent(
-      /cruce administrativo.*registros educativos.*Seguridad Social/i,
+      /cruce.*educación.*Seguridad Social/i,
     );
-    expect(methodology).toHaveTextContent(
-      /cohorte.*curso académico.*titulación/i,
-    );
-    expect(methodology).toHaveTextContent(
-      /periodo.*años posteriores a la graduación/i,
-    );
+    expect(methodology).toHaveTextContent(/cohorte.*curso.*titulación/i);
+    expect(methodology).toHaveTextContent(/periodo.*años posteriores/i);
     expect(methodology).toHaveTextContent(
       /solo.*ciclos o grupos.*información representativa/i,
     );
     expect(methodology).toHaveTextContent(
-      /cuenta propia.*jornada parcial.*quedan fuera/i,
+      /excluyen.*trabajo autónomo.*jornada parcial/i,
     );
     expect(methodology).toHaveTextContent(
-      /algunos ciclos.*grupos oficiales.*familia profesional/i,
+      /grupos oficiales de ciclos.*no se atribuyen a un ciclo individual/i,
     );
     expect(methodology).toHaveTextContent(
       "Las imágenes editoriales son generadas mediante IA y no representan personas, empresas, ofertas ni centros reales.",
