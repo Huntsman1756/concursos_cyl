@@ -31,6 +31,8 @@ jobs:
         with:
           python-version: "3.12"
       - run: python -m pip install --disable-pip-version-check --no-input "jupyter==1.1.1" "pandas==3.0.2"
+      - name: Verify offline model-review safeguards
+        run: python -B -m unittest discover -s scripts/analysis -p test_nan_evidence_review.py
       - run: npm ci
       - run: npm run license:check
       - run: npm run contest:submission:check
