@@ -1,3 +1,5 @@
+import { existsSync } from "node:fs";
+import { resolve } from "node:path";
 import { expect, test, type Locator, type Page } from "@playwright/test";
 import {
   installDecisionFlowFixture,
@@ -92,8 +94,13 @@ function expectNoSerializedRequestState(url: string): void {
       expect(decodedPath).not.toContain(answerValue);
     }
   }
+  // A build hash can incidentally contain a short value such as "12".
+  // Exempt only an exact file present in this build, never an arbitrary asset URL.
+  const knownBuildAsset =
+    /^\/assets\/[^/]+$/u.test(decodedPath) &&
+    existsSync(resolve("dist", `.${decodedPath}`));
   for (const normalizedValue of syntheticRequirementValues) {
-    expect(decodedPath).not.toContain(normalizedValue);
+    if (!knownBuildAsset) expect(decodedPath).not.toContain(normalizedValue);
     expect(decodedQueryAndHash).not.toContain(normalizedValue);
   }
 }
