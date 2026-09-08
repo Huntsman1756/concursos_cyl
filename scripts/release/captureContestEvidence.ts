@@ -178,7 +178,7 @@ async function positionCapture(page: Page, evidenceId: string): Promise<void> {
       })
       .first();
     await zeroResultMessage.evaluate((element) =>
-      element.scrollIntoView({ block: "center" }),
+      element.scrollIntoView({ block: "center", behavior: "instant" }),
     );
   }
   if (evidenceId === "comparison-dual-scopes") {
@@ -186,14 +186,22 @@ async function positionCapture(page: Page, evidenceId: string): Promise<void> {
       .getByRole("heading", {
         name: "Ingresos observados del ciclo o grupo en España",
       })
-      .scrollIntoViewIfNeeded();
-    await page.evaluate(() => window.scrollBy(0, -260));
+      .evaluate((element) =>
+        element.scrollIntoView({ block: "start", behavior: "instant" }),
+      );
+    await page.evaluate(() =>
+      window.scrollBy({ top: -40, behavior: "instant" }),
+    );
   }
   if (evidenceId === "methodology-sources") {
     await page
       .getByRole("heading", { name: "8 datasets de la Junta" })
-      .scrollIntoViewIfNeeded();
-    await page.evaluate(() => window.scrollBy(0, -120));
+      .evaluate((element) =>
+        element.scrollIntoView({ block: "start", behavior: "instant" }),
+      );
+    await page.evaluate(() =>
+      window.scrollBy({ top: -120, behavior: "instant" }),
+    );
   }
 }
 
@@ -232,6 +240,7 @@ async function main(): Promise<void> {
         viewport: capture.viewport,
         locale: "es-ES",
         colorScheme: "light",
+        reducedMotion: "reduce",
       });
       const page = await context.newPage();
       const diagnostics = installDiagnostics(page, new URL(baseUrl).origin);

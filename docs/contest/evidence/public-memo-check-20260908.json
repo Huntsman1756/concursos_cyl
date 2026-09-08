@@ -1,0 +1,41 @@
+{
+  "checkedAt": "2026-09-08T05:47:22.189Z",
+  "resources": [
+    {
+      "name": "candidatura.html",
+      "status": 200,
+      "contentType": "text/html; charset=utf-8",
+      "sha256": "d7ddf9bb04cf5c622f48bfc3a4f98f7db30d76b5a1263ca383ae77921431dd9c"
+    },
+    {
+      "name": "candidatura.css",
+      "status": 200,
+      "contentType": "text/css; charset=utf-8",
+      "sha256": "3906604a28843d3a122e9f39a644bffc98344a470bd109757750edecf5f74c97"
+    },
+    {
+      "name": "candidatura.pdf",
+      "status": 200,
+      "contentType": "application/pdf",
+      "sha256": "666bd201007006af15b637e9f22d492ec7f6789c63a898ccf6e55ad5d49f2b83"
+    }
+  ],
+  "checks": [
+    {
+      "width": 1280,
+      "overflow": 0,
+      "titleColor": "rgb(18, 78, 70)",
+      "hasPdf": true,
+      "consoleErrors": [],
+      "axeViolations": 0
+    },
+    {
+      "width": 360,
+      "overflow": 0,
+      "titleColor": "rgb(18, 78, 70)",
+      "hasPdf": true,
+      "consoleErrors": [],
+      "axeViolations": 0
+    }
+  ]
+}

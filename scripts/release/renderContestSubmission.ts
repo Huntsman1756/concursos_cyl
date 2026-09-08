@@ -261,7 +261,7 @@ npm run analysis:pilot:report:check
 npm exec -- tsx scripts/release/validateContestFreeze.ts
 \`\`\`
 
-La revisión independiente confirmó el manifest, sus ${Object.keys(freeze.manifest.resourceSnapshots).length} recursos, los conjuntos de relaciones y la ausencia de cambios en las rutas de frontera congelada (${CONTEST_FREEZE_SOURCE_PATHS.map((sourcePath) => `\`${sourcePath}\``).join(", ")}) desde el commit fuente. Las rutas de UI, búsqueda y print quedan fuera de esta frontera y no se presentan como parte del freeze.
+La recomputación automatizada confirmó el manifest, sus ${Object.keys(freeze.manifest.resourceSnapshots).length} recursos, los conjuntos de relaciones y la ausencia de cambios en las rutas de frontera congelada (${CONTEST_FREEZE_SOURCE_PATHS.map((sourcePath) => `\`${sourcePath}\``).join(", ")}) desde el commit fuente. Las rutas de UI, búsqueda y print quedan fuera de esta frontera y no se presentan como parte del freeze.
 
 ## ${candidatePlan === undefined ? "Despliegue" : "Baseline funcional verificada"}
 
@@ -453,7 +453,7 @@ function renderSubmissionChecklist(
 ## ${candidatePlan === undefined ? "Campos técnicos" : "Baseline funcional verificada"}
 
 - URL raíz a presentar: [${ROOT_URL}](${ROOT_URL})
-- GitHub Pages está deshabilitado; no se ofrece como respaldo público.
+- El estado del respaldo GitHub Pages se registra por separado en [verification-20260908.md](verification-20260908.md).
 - Commit fuente del freeze: \`${freeze.sourceCommitSha}\`.
 - Snapshot: \`${freeze.manifest.snapshotId}\`.
 - ${candidatePlan === undefined ? "Commit desplegado" : "Commit de baseline desplegado"}: ${deploymentCommit}.
