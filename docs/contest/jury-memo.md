@@ -6,7 +6,7 @@ Acceso público: https://salida-cyl.157-90-22-40.sslip.io/
 
 ## Qué resuelve
 
-Elegir una FP exige conectar información dispersa: qué se estudia, qué ocupaciones se relacionan con el título, dónde se imparte y qué ofertas permiten explorar esas opciones. SALIDA CyL reúne esas consultas en una aplicación pública y gratuita, con fuentes identificadas y límites visibles.
+Para quien elige una FP, su familia o quien le orienta, la decisión exige conectar información dispersa: qué se estudia, qué ocupaciones se relacionan con el título, dónde se imparte y qué ofertas permiten explorar esas opciones. SALIDA CyL reúne esas consultas en una aplicación pública y gratuita, con fuentes identificadas y límites visibles.
 
 Una persona interesada en Cuidados Auxiliares de Enfermería puede abrir la ficha del estudio, explorar sus ocupaciones relacionadas, consultar centros y revisar las ofertas vinculadas de una instantánea fechada. También puede comenzar por una profesión o una oferta. Los enlaces oficiales permiten contrastar la información antes de decidir una matrícula o candidatura.
 
@@ -20,11 +20,11 @@ El acceso ciudadano es gratuito. Una vía potencial de negocio consiste en ofrec
 
 ## Valor público y social
 
-Facilita el acceso a información sobre formación y empleo en Castilla y León sin registro. Los centros y filtros territoriales ayudan a explorar opciones por ubicación. Cada relación conserva su procedencia y los vacíos de evidencia se muestran expresamente. El beneficio social es potencial: no se afirma haber reducido desempleo o despoblación ni haber demostrado impacto mediante un estudio de usuarios.
+Facilita el acceso a información sobre formación y empleo en Castilla y León sin registro. Los centros y filtros territoriales permiten ver qué se puede estudiar y dónde, incluidos los territorios con menos oferta. Cada relación conserva su procedencia y los vacíos de evidencia se muestran expresamente. El beneficio social es potencial: no se afirma haber reducido desempleo o despoblación ni haber demostrado impacto mediante un estudio de usuarios.
 
 ## Originalidad y mejora respecto a consultas separadas
 
-La aportación es conectar formación, ocupaciones y ofertas mediante relaciones revisadas y consultables en ambos sentidos. No se presentan coincidencias por semejanza como equivalencias acreditadas. Cuando no hay oferta relacionada, la formación permanece visible y el límite se explica. Esta distinción permite comprobar por qué aparece un resultado y evita interpretar una ausencia como falta de oportunidades.
+La aportación es conectar formación, ocupaciones y ofertas mediante relaciones revisadas y consultables en ambos sentidos. Cada resultado permite consultar por qué aparece y qué fuente lo respalda. No se presentan coincidencias por semejanza como equivalencias acreditadas. Cuando no hay oferta relacionada, la formación permanece visible y el límite se explica. Esta distinción permite comprobar por qué aparece un resultado y evita interpretar una ausencia como falta de oportunidades.
 
 ## Variedad de datos
 
@@ -39,5 +39,7 @@ La aplicación ofrece entradas por formación, profesión y oferta, búsquedas y
 El candidato contiene 320 relaciones aprobadas: 185 de las 187 claves de programa tienen alguna relación revisada (98,9 %). Las modalidades se cuentan por separado; no son 185 titulaciones diferentes. Dos programas siguen pendientes de evidencia precisa.
 
 301 de las 1.032 ofertas de la instantánea tienen relación FP revisada (29,2 %). Se cuentan ofertas distintas; no representan todo el mercado laboral. Las fuentes JCyL se descargaron el 8 de septiembre de 2026; las ofertas incluyen publicaciones hasta el 4 de septiembre. El recurso derivado se generó el 8 de septiembre. Las revisiones nacionales conservan sus fechas originales. La vigencia se contrasta en la fuente oficial.
+
+La revisión documental está asistida por IA, con comprobación adicional del agente coordinador, también de IA, frente a fuentes oficiales. El acuerdo entre modelos no basta para aprobar una relación: se exige evidencia documental y se comprueban exclusiones y límites.
 
 El proyecto dispone de pruebas de datos e interfaz, control de licencias y verificación de integridad de recursos. La metodología, el inventario de fuentes y los datos descargables están accesibles desde la aplicación. La evidencia técnica detallada se conserva en el repositorio para su comprobación.

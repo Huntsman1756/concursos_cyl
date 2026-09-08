@@ -112,19 +112,18 @@ test("FP result data stays within the initial budget and loads outcomes on reque
     "trainingOccupationLinks",
     "professionalProfiles",
     "provincialContracts",
-    "municipalities",
     "educationCenterDirectory",
   ] as const;
   const expectedInitialPaths = [
     "/data/v1/manifest.json",
     ...initialKeys.map((key) => manifest.resourceSnapshots[key].resourcePath),
   ].sort();
-  await expect.poll(() => dataResponses.length, { timeout: 15_000 }).toBe(14);
+  await expect.poll(() => dataResponses.length, { timeout: 15_000 }).toBe(13);
   const initialResponses = [...dataResponses];
   expect(initialResponses.map(({ path }) => path).sort()).toEqual(
     expectedInitialPaths,
   );
-  expect(new Set(initialResponses.map(({ path }) => path)).size).toBe(14);
+  expect(new Set(initialResponses.map(({ path }) => path)).size).toBe(13);
   expect(
     initialResponses.reduce((total, response) => total + response.bytes, 0),
   ).toBeLessThanOrEqual(10_000_000);
@@ -431,18 +430,13 @@ test("live DAW results shows formacion link and approved occupation", async ({
       name: /Fuente: Directorio de Centros Docentes JCyL/,
     }),
   ).toBeVisible();
-  const coordinatesSummary = distribution.getByText(
-    "Ver coordenadas oficiales publicadas",
-    { exact: true },
-  );
-  await tabTo(page, coordinatesSummary);
-  await expect(coordinatesSummary).toBeFocused();
-  await page.keyboard.press("Enter");
   await expect(
-    distribution.getByText(
-      "Información técnica complementaria. No es un mapa y no calcula distancias, rutas ni tiempos de desplazamiento.",
-      { exact: true },
-    ),
+    distribution.getByText("Ver coordenadas oficiales publicadas", {
+      exact: true,
+    }),
+  ).toHaveCount(0);
+  await expect(
+    distribution.getByText(/Código oficial del centro:/u).first(),
   ).toBeVisible();
   const axe = await new AxeBuilder({ page })
     .include("#distribucion-centros")

@@ -84,7 +84,7 @@ describe("TerritorialDistribution", () => {
     expect(container.querySelector("svg")).toBeNull();
   });
 
-  it("renders the technical coordinate disclosure separately from the distribution", () => {
+  it("labels center identifiers and offers directions without exposing raw coordinates", () => {
     render(
       <TerritorialDistribution
         centers={[
@@ -112,17 +112,15 @@ describe("TerritorialDistribution", () => {
       />,
     );
 
-    const details = screen
-      .getByText("Ver coordenadas oficiales publicadas", { exact: true })
-      .closest("details");
-    expect(details).not.toBeNull();
-    expect(details).not.toHaveAttribute("open");
-    expect(details).toHaveAttribute("data-print-hidden", "true");
-    expect(details).toHaveTextContent("CIFP Las Ferrerías");
-    expect(details).not.toHaveTextContent("IES Río Duero");
-    expect(details).toHaveTextContent(
-      "Información técnica complementaria. No es un mapa y no calcula distancias, rutas ni tiempos de desplazamiento.",
-    );
+    expect(
+      screen.queryByText("Ver coordenadas oficiales publicadas"),
+    ).not.toBeInTheDocument();
+    expect(
+      screen.getByText("Código oficial del centro: 05009923"),
+    ).toBeVisible();
+    expect(
+      screen.getByRole("link", { name: "Cómo llegar a CIFP Las Ferrerías" }),
+    ).toBeVisible();
   });
 
   it("explains when the current cycle has no published centers", () => {

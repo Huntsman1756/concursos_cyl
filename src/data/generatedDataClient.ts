@@ -356,7 +356,7 @@ export interface LoadedRegionalContext {
 /** Loads optional JCyL territorial context; historical snapshots resolve empty. */
 export async function loadRegionalContext(
   manifest: LoadableGeneratedManifest,
-  options?: GeneratedDataLoadOptions,
+  options?: GeneratedDataLoadOptions & { includeMunicipalities?: boolean },
 ): Promise<LoadedRegionalContext> {
   const snapshots =
     manifest.resourceSnapshots as typeof manifest.resourceSnapshots &
@@ -375,6 +375,7 @@ export async function loadRegionalContext(
             ProvincialContractsResourceSchema,
             requestInitFor(options),
           ),
+      options?.includeMunicipalities === false ||
       snapshots.municipalities === undefined
         ? Promise.resolve([])
         : loadGeneratedResource(

@@ -158,8 +158,7 @@ test("print media preserves closed evidence and hides coordinate details", async
   const coordinates = coordinatesPage.locator(
     'details.territorial-distribution__coordinates[data-print-hidden="true"]',
   );
-  await expect(coordinates).toHaveCount(1);
-  await expect(coordinates).toHaveCSS("display", "none");
+  await expect(coordinates).toHaveCount(0);
   await coordinatesPage.close();
 
   const comparisonPage = await page.context().newPage();

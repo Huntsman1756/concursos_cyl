@@ -209,7 +209,10 @@ export function TrainingResultsPage() {
           loadPublishedRequirements(manifest, options),
           loadAuditedRelationships(manifest, options),
           loadProfessionalProfiles(manifest, options),
-          loadRegionalContext(manifest, options),
+          loadRegionalContext(manifest, {
+            ...options,
+            includeMunicipalities: false,
+          }),
         ]);
         const matches =
           offerEvidence === null
@@ -589,6 +592,12 @@ export function TrainingResultsPage() {
             </p>
           </div>
           <div className="training-page__tools" data-print-hidden="true">
+            <Link
+              className="secondary-button"
+              to={`/comparar?program=${encodeURIComponent(state.program.programKey)}`}
+            >
+              Ver ingresos observados en España
+            </Link>
             <PrintButton className="secondary-button" />
           </div>
         </div>

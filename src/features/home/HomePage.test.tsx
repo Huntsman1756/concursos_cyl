@@ -275,7 +275,7 @@ describe("HomePage task selector", () => {
     );
 
     const explanation = screen.getByRole("region", {
-      name: "Qué puedes entender con SALIDA",
+      name: "Qué puedes entender con SALIDA CyL",
     });
     expect(
       within(explanation).getAllByRole("heading", { level: 3 }),
@@ -310,10 +310,8 @@ describe("HomePage task selector", () => {
       ),
     ).toBeVisible();
     expect(
-      within(transparency).getByText(
-        /no representan personas, empresas, ofertas ni centros reales/u,
-      ),
-    ).toBeVisible();
+      within(transparency).queryByText(/Imágenes editoriales/u),
+    ).not.toBeInTheDocument();
     await screen.findByRole("combobox", { name: "Busca tu ciclo" });
   });
 

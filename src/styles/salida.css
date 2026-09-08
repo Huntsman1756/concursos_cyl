@@ -1023,8 +1023,7 @@ select:focus-visible,
   justify-content: center;
   min-width: var(--control-height);
   min-height: var(--control-height);
-  margin: calc(var(--control-height) / -2 + 0.5rem) 0
-    calc(var(--control-height) / -2 + 0.5rem) calc(var(--space-1) * -1 - 12px);
+  margin: 0;
   padding: 0;
   border: 0;
   background: none;
@@ -1049,6 +1048,7 @@ select:focus-visible,
 }
 
 .info-popover {
+  color: var(--color-text);
   display: block;
   position: fixed;
   z-index: 10;
@@ -2080,4 +2080,36 @@ select:focus-visible,
 .page-content .rcard {
   padding: var(--panel-padding-sm);
   border-radius: var(--radius-card);
+}
+
+/* Keep the identity informative without adding decorative image weight. */
+.wordmark {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+.wordmark__descriptor {
+  font-size: var(--text-small);
+  font-weight: 400;
+  color: var(--color-text-muted);
+}
+@media (max-width: 639px) {
+  .wordmark__descriptor {
+    max-width: 13rem;
+    font-size: 0.7rem;
+  }
+}
+/* Preserve contrast after opening official links and while holding a click. */
+a.offer-row__official:is(:visited, :focus, :active, :hover),
+a.offer-row__cta:is(:visited, :focus, :active, :hover),
+.training-result-page a.offer-row__cta:is(:visited, :focus, :active, :hover) {
+  color: var(--color-surface);
+  background: var(--color-primary-strong);
+}
+
+.proof-note > p {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
 }

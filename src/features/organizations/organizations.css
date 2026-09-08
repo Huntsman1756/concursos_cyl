@@ -1,3 +1,11 @@
+.organizations-page {
+  display: grid;
+  gap: var(--space-8);
+}
+.organizations-audience__label {
+  color: var(--color-primary);
+  font-weight: 700;
+}
 .organizations-audiences {
   display: grid;
   border-block: 1px solid var(--color-border);
@@ -5,11 +13,8 @@
 
 .organizations-audiences article {
   display: grid;
-  grid-template-columns: minmax(9rem, 0.45fr) minmax(16rem, 1fr) minmax(
-      0,
-      1.2fr
-    );
-  gap: var(--space-6);
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-3);
   padding-block: var(--space-5);
   border-bottom: 1px solid var(--color-border);
 }

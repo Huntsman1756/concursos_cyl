@@ -54,3 +54,13 @@
     margin-top: var(--space-4);
   }
 }
+
+.home-page .hero-search form {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+.home-page .home-search-action {
+  margin-top: auto;
+  padding-top: var(--space-3);
+}

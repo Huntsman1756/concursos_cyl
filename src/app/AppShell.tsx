@@ -126,8 +126,13 @@ export function AppShell({ children }: AppShellProps) {
       </a>
       <header className="header">
         <div className="container header-bar">
-          <Link className="wordmark" to="/">
-            SALIDA <span className="cyl">CyL</span>
+          <Link className="wordmark" to="/" aria-label="SALIDA CyL">
+            <span>
+              SALIDA <span className="cyl">CyL</span>
+            </span>
+            <span className="wordmark__descriptor">
+              Formación y empleo · Castilla y León
+            </span>
           </Link>
           <nav className="header-secondary" aria-label="Enlaces secundarios">
             {SECONDARY_LINKS.map((link) => (
@@ -246,6 +251,11 @@ export function AppShell({ children }: AppShellProps) {
                   <Link to="/para-organizaciones">Para organizaciones</Link>
                 </li>
                 <li>
+                  <a href="https://github.com/Huntsman1756/concursos_cyl">
+                    Código y documentación en GitHub
+                  </a>
+                </li>
+                <li>
                   <a href={`${import.meta.env.BASE_URL}candidatura.html`}>
                     Candidatura al X Concurso de Datos Abiertos de Castilla y
                     León · 2026
@@ -260,7 +270,8 @@ export function AppShell({ children }: AppShellProps) {
               Castilla y León.
             </p>
             <p className="caption">
-              Imágenes editoriales generadas mediante IA.
+              Imágenes editoriales generadas mediante IA; no representan
+              personas ni centros reales.
             </p>
           </div>
         </div>
