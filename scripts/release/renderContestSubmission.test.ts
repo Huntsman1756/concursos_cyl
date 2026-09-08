@@ -33,7 +33,7 @@ describe("contest submission renderer", () => {
       freeze.manifest.snapshotId,
     );
     expect(rendered["application-summary.md"]).toContain(
-      `${freeze.coverage.distinctQualificationCount} cualificaciones distintas`,
+      `${freeze.coverage.modalityKeyCount} de ${freeze.manifest.resourceSnapshots.programs.recordCount} claves de programa`,
     );
     expect(rendered["application-summary.md"]).toContain(
       `${freeze.offers.matchedOfferCount} de las ${freeze.manifest.resourceSnapshots.jobOffers.recordCount.toLocaleString("es-ES", { useGrouping: "always" })} ofertas de la instantánea`,
@@ -354,9 +354,7 @@ describe("contest submission renderer", () => {
     expect(memo).toContain(
       `${freeze.coverage.approvedRelationCount} relaciones aprobadas`,
     );
-    expect(memo).toContain(
-      `${freeze.coverage.distinctQualificationCount} cualificaciones distintas`,
-    );
+    expect(memo).not.toContain("cualificaciones distintas");
     expect(memo).toContain(
       `${freeze.coverage.modalityKeyCount} de las ${freeze.manifest.resourceSnapshots.programs.recordCount} claves de programa`,
     );

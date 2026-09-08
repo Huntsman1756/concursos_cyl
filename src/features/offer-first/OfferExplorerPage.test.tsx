@@ -154,6 +154,36 @@ afterEach(() => {
 });
 
 describe("OfferExplorerPage", () => {
+  it("shows one training link while preserving two independent pieces of evidence", async () => {
+    const duplicated = structuredClone(resource);
+    duplicated.records[0].relations.push({
+      ...duplicated.records[0].relations[0],
+      matchRule: "reviewed_title_alias_exact",
+    });
+    duplicated.counts.reviewedRelationCount = 2;
+    generatedDataClient.loadManifest.mockResolvedValue({});
+    generatedDataClient.loadOfferEvidence.mockResolvedValue(duplicated);
+    render(
+      <MemoryRouter>
+        <OfferExplorerPage />
+      </MemoryRouter>,
+    );
+    const card = await screen.findByRole("article", {
+      name: "COCINEROS, EN GENERAL",
+    });
+    expect(
+      within(card).getAllByRole("link", { name: "Cocina y Gastronomía" }),
+    ).toHaveLength(1);
+    await userEvent
+      .setup()
+      .click(
+        within(card).getByLabelText(
+          "Fuente y revisión de COCINEROS, EN GENERAL",
+        ),
+      );
+    expect(card.querySelectorAll(".offer-row__relations > li")).toHaveLength(2);
+  });
+
   it("connects a literal requirement to a reviewed FP relation and action", async () => {
     generatedDataClient.loadManifest.mockResolvedValue({});
     generatedDataClient.loadOfferEvidence.mockResolvedValue(resource);

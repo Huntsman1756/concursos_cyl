@@ -83,6 +83,20 @@ function assertApprovedCitations(links: readonly unknown[]): void {
         "Approved mapping requires a primary official source URL and exact quote of at least 10 characters.",
       );
     }
+    if (
+      link.reviewStatus === "approved" &&
+      typeof link.sourceUrl === "string"
+    ) {
+      const source = new URL(link.sourceUrl);
+      if (
+        source.pathname.endsWith("/cno11_notas.pdf") ||
+        /^\/eli\/es\/rd\/2010\/11\/26\/1591(?:\/|$)/u.test(source.pathname)
+      ) {
+        throw new Error(
+          "Approved FP mapping requires evidence about the training programme; the CNO classification alone is not relationship evidence.",
+        );
+      }
+    }
   }
 }
 

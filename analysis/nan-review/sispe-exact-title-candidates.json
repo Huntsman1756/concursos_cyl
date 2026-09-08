@@ -1,0 +1,2477 @@
+{
+  "status": "exact-label-candidates-awaiting-review",
+  "publicationApproved": false,
+  "sourceUrl": "https://www.sepe.es/ca/SiteSepe/contenidos/empresas/contratos_trabajo/comunicar_contratacion/pdf/ocupaciones.pdf",
+  "sourceSha256": "b8d7c02e849ff0133ee01e9e04c183218824b265ad9dadc90113834ed100cddd",
+  "sourceEdition": "2018 catalogue; retrieval is not an update date",
+  "extractedRows": 2222,
+  "candidates": [
+    {
+      "offerTitle": "TERAPEUTAS OCUPACIONALES",
+      "offerCount": 72,
+      "cnoCode": "2156",
+      "catalogueRows": [
+        {
+          "code": "21561012",
+          "label": "TERAPEUTAS OCUPACIONALES",
+          "page": 7
+        }
+      ],
+      "relatedProgrammeKeys": [],
+      "publicationApproved": false
+    },
+    {
+      "offerTitle": "ENFERMEROS DE CUIDADOS GENERALES",
+      "offerCount": 61,
+      "cnoCode": "2121",
+      "catalogueRows": [
+        {
+          "code": "21211010",
+          "label": "ENFERMEROS DE CUIDADOS GENERALES",
+          "page": 6
+        }
+      ],
+      "relatedProgrammeKeys": [],
+      "publicationApproved": false
+    },
+    {
+      "offerTitle": "FISIOTERAPEUTAS, EN GENERAL",
+      "offerCount": 56,
+      "cnoCode": "2152",
+      "catalogueRows": [
+        {
+          "code": "21521010",
+          "label": "FISIOTERAPEUTAS, EN GENERAL",
+          "page": 7
+        }
+      ],
+      "relatedProgrammeKeys": [],
+      "publicationApproved": false
+    },
+    {
+      "offerTitle": "CUIDADORES DE PERSONAS CON DISCAPACIDAD Y/O DEPENDENCIA, EN INSTITUCIONES",
+      "offerCount": 54,
+      "cnoCode": "5629",
+      "catalogueRows": [
+        {
+          "code": "56291025",
+          "label": "CUIDADORES DE PERSONAS CON DISCAPACIDAD Y/O DEPENDENCIA, EN INSTITUCIONES",
+          "page": 40
+        }
+      ],
+      "relatedProgrammeKeys": ["SSC01M", "SSC01MD"],
+      "publicationApproved": false
+    },
+    {
+      "offerTitle": "ASISTENTES DOMICILIARIOS",
+      "offerCount": 53,
+      "cnoCode": "5710",
+      "catalogueRows": [
+        {
+          "code": "57101013",
+          "label": "ASISTENTES DOMICILIARIOS",
+          "page": 40
+        }
+      ],
+      "relatedProgrammeKeys": ["SSC01M", "SSC01MD"],
+      "publicationApproved": false
+    },
+    {
+      "offerTitle": "COCINEROS, EN GENERAL",
+      "offerCount": 49,
+      "cnoCode": "5110",
+      "catalogueRows": [
+        {
+          "code": "51101026",
+          "label": "COCINEROS, EN GENERAL",
+          "page": 37
+        }
+      ],
+      "relatedProgrammeKeys": ["HOT01M", "HOT04S", "HOT04SD"],
+      "publicationApproved": false
+    },
+    {
+      "offerTitle": "MÉDICOS, MEDICINA GENERAL",
+      "offerCount": 40,
+      "cnoCode": "2111",
+      "catalogueRows": [
+        {
+          "code": "21111020",
+          "label": "MÉDICOS, MEDICINA GENERAL",
+          "page": 5
+        }
+      ],
+      "relatedProgrammeKeys": [],
+      "publicationApproved": false
+    },
+    {
+      "offerTitle": "AUXILIARES DE ENFERMERÍA DE GERIATRÍA",
+      "offerCount": 38,
+      "cnoCode": "5611",
+      "catalogueRows": [
+        {
+          "code": "56111022",
+          "label": "AUXILIARES DE ENFERMERÍA DE GERIATRÍA",
+          "page": 40
+        }
+      ],
+      "relatedProgrammeKeys": ["SAN21", "SAN21D"],
+      "publicationApproved": false
+    },
+    {
+      "offerTitle": "AUXILIARES DE ENFERMERÍA",
+      "offerCount": 32,
+      "cnoCode": "5611",
+      "catalogueRows": [
+        {
+          "code": "56111013",
+          "label": "AUXILIARES DE ENFERMERÍA",
+          "page": 40
+        }
+      ],
+      "relatedProgrammeKeys": ["SAN21", "SAN21D"],
+      "publicationApproved": false
+    },
+    {
+      "offerTitle": "PERSONAL DE LIMPIEZA O LIMPIADORES EN GENERAL",
+      "offerCount": 28,
+      "cnoCode": "9210",
+      "catalogueRows": [
+        {
+          "code": "92101050",
+          "label": "PERSONAL DE LIMPIEZA O LIMPIADORES EN GENERAL",
+          "page": 78
+        }
+      ],
+      "relatedProgrammeKeys": ["HOT02B"],
+      "publicationApproved": false
+    },
+    {
+      "offerTitle": "CONDUCTORES DE CAMIÓN, EN GENERAL",
+      "offerCount": 25,
+      "cnoCode": "8432",
+      "catalogueRows": [
+        {
+          "code": "84321042",
+          "label": "CONDUCTORES DE CAMIÓN, EN GENERAL",
+          "page": 78
+        }
+      ],
+      "relatedProgrammeKeys": [],
+      "publicationApproved": false
+    },
+    {
+      "offerTitle": "ALBAÑILES",
+      "offerCount": 17,
+      "cnoCode": "7121",
+      "catalogueRows": [
+        {
+          "code": "71211015",
+          "label": "ALBAÑILES",
+          "page": 46
+        }
+      ],
+      "relatedProgrammeKeys": ["EOC01B", "EOC01M"],
+      "publicationApproved": false
+    },
+    {
+      "offerTitle": "CAMAREROS, EN GENERAL",
+      "offerCount": 17,
+      "cnoCode": "5120",
+      "catalogueRows": [
+        {
+          "code": "51201049",
+          "label": "CAMAREROS, EN GENERAL",
+          "page": 37
+        }
+      ],
+      "relatedProgrammeKeys": ["HOT02M"],
+      "publicationApproved": false
+    },
+    {
+      "offerTitle": "ENFERMEROS ESPECIALISTAS EN ENFERMERÍA GERIÁTRICA",
+      "offerCount": 8,
+      "cnoCode": "2122",
+      "catalogueRows": [
+        {
+          "code": "21221051",
+          "label": "ENFERMEROS ESPECIALISTAS EN ENFERMERÍA GERIÁTRICA",
+          "page": 6
+        }
+      ],
+      "relatedProgrammeKeys": [],
+      "publicationApproved": false
+    },
+    {
+      "offerTitle": "MOZOS DE CARGA Y DESCARGA, ALMACÉN Y/O MERCADO DE ABASTOS",
+      "offerCount": 8,
+      "cnoCode": "9811",
+      "catalogueRows": [
+        {
+          "code": "98111024",
+          "label": "MOZOS DE CARGA Y DESCARGA, ALMACÉN Y/O MERCADO DE ABASTOS",
+          "page": 81
+        }
+      ],
+      "relatedProgrammeKeys": [],
+      "publicationApproved": false
+    },
+    {
+      "offerTitle": "TRABAJADORES SOCIALES",
+      "offerCount": 8,
+      "cnoCode": "2824",
+      "catalogueRows": [
+        {
+          "code": "28241065",
+          "label": "TRABAJADORES SOCIALES",
+          "page": 18
+        }
+      ],
+      "relatedProgrammeKeys": [],
+      "publicationApproved": false
+    },
+    {
+      "offerTitle": "ASISTENTES, ACOMPAÑANTES DE PERSONAS",
+      "offerCount": 6,
+      "cnoCode": "5891",
+      "catalogueRows": [
+        {
+          "code": "58911011",
+          "label": "ASISTENTES, ACOMPAÑANTES DE PERSONAS",
+          "page": 42
+        }
+      ],
+      "relatedProgrammeKeys": [],
+      "publicationApproved": false
+    },
+    {
+      "offerTitle": "DIRECTORES DE SERVICIOS SOCIALES PARA PERSONAS MAYORES",
+      "offerCount": 6,
+      "cnoCode": "1324",
+      "catalogueRows": [
+        {
+          "code": "13241016",
+          "label": "DIRECTORES DE SERVICIOS SOCIALES PARA PERSONAS MAYORES",
+          "page": 3
+        }
+      ],
+      "relatedProgrammeKeys": [],
+      "publicationApproved": false
+    },
+    {
+      "offerTitle": "EMPLEADOS ADMINISTRATIVOS, EN GENERAL",
+      "offerCount": 6,
+      "cnoCode": "4309",
+      "catalogueRows": [
+        {
+          "code": "43091029",
+          "label": "EMPLEADOS ADMINISTRATIVOS, EN GENERAL",
+          "page": 35
+        }
+      ],
+      "relatedProgrammeKeys": [],
+      "publicationApproved": false
+    },
+    {
+      "offerTitle": "PELUQUEROS UNISEX",
+      "offerCount": 6,
+      "cnoCode": "5811",
+      "catalogueRows": [
+        {
+          "code": "58111037",
+          "label": "PELUQUEROS UNISEX",
+          "page": 41
+        }
+      ],
+      "relatedProgrammeKeys": [
+        "IMP01B",
+        "IMP02M",
+        "IMP02MD",
+        "IMP02S",
+        "IMP02SD"
+      ],
+      "publicationApproved": false
+    },
+    {
+      "offerTitle": "PEONES AGRÍCOLAS, EN GENERAL",
+      "offerCount": 6,
+      "cnoCode": "9511",
+      "catalogueRows": [
+        {
+          "code": "95111016",
+          "label": "PEONES AGRÍCOLAS, EN GENERAL",
+          "page": 79
+        }
+      ],
+      "relatedProgrammeKeys": ["AGA03B"],
+      "publicationApproved": false
+    },
+    {
+      "offerTitle": "PEONES DE LA CONSTRUCCIÓN DE EDIFICIOS",
+      "offerCount": 6,
+      "cnoCode": "9602",
+      "catalogueRows": [
+        {
+          "code": "96021013",
+          "label": "PEONES DE LA CONSTRUCCIÓN DE EDIFICIOS",
+          "page": 80
+        }
+      ],
+      "relatedProgrammeKeys": ["EOC01B"],
+      "publicationApproved": false
+    },
+    {
+      "offerTitle": "PEONES GANADEROS, EN GENERAL",
+      "offerCount": 6,
+      "cnoCode": "9520",
+      "catalogueRows": [
+        {
+          "code": "95201021",
+          "label": "PEONES GANADEROS, EN GENERAL",
+          "page": 80
+        }
+      ],
+      "relatedProgrammeKeys": [],
+      "publicationApproved": false
+    },
+    {
+      "offerTitle": "CHAPISTAS-PINTORES DE VEHÍCULOS",
+      "offerCount": 5,
+      "cnoCode": "7313",
+      "catalogueRows": [
+        {
+          "code": "73131063",
+          "label": "CHAPISTAS-PINTORES DE VEHÍCULOS",
+          "page": 49
+        }
+      ],
+      "relatedProgrammeKeys": ["FME02M"],
+      "publicationApproved": false
+    },
+    {
+      "offerTitle": "PEONES DE LA INDUSTRIA DE LA ALIMENTACIÓN, BEBIDAS Y TABACO",
+      "offerCount": 5,
+      "cnoCode": "9700",
+      "catalogueRows": [
+        {
+          "code": "97001056",
+          "label": "PEONES DE LA INDUSTRIA DE LA ALIMENTACIÓN, BEBIDAS Y TABACO",
+          "page": 80
+        }
+      ],
+      "relatedProgrammeKeys": ["ELE02B", "FME01B", "FME02B", "MAM01B"],
+      "publicationApproved": false
+    },
+    {
+      "offerTitle": "ANIMADORES SOCIOCULTURALES",
+      "offerCount": 4,
+      "cnoCode": "3715",
+      "catalogueRows": [
+        {
+          "code": "37151038",
+          "label": "ANIMADORES SOCIOCULTURALES",
+          "page": 31
+        }
+      ],
+      "relatedProgrammeKeys": [],
+      "publicationApproved": false
+    },
+    {
+      "offerTitle": "CAJEROS DE COMERCIO",
+      "offerCount": 4,
+      "cnoCode": "5500",
+      "catalogueRows": [
+        {
+          "code": "55001018",
+          "label": "CAJEROS DE COMERCIO",
+          "page": 40
+        }
+      ],
+      "relatedProgrammeKeys": ["COM01B", "COM01M"],
+      "publicationApproved": false
+    },
+    {
+      "offerTitle": "ELECTROMECÁNICOS DE MANTENIMIENTO INDUSTRIAL (MANTENIMIENTO Y REPARACIÓN GENERAL)",
+      "offerCount": 4,
+      "cnoCode": "7403",
+      "catalogueRows": [
+        {
+          "code": "74031012",
+          "label": "ELECTROMECÁNICOS DE MANTENIMIENTO INDUSTRIAL (MANTENIMIENTO Y REPARACIÓN GENERAL)",
+          "page": 51
+        }
+      ],
+      "relatedProgrammeKeys": ["TMV03M"],
+      "publicationApproved": false
+    },
+    {
+      "offerTitle": "ENCARGADOS DE OBRA CIVIL, EN GENERAL",
+      "offerCount": 4,
+      "cnoCode": "3202",
+      "catalogueRows": [
+        {
+          "code": "32021017",
+          "label": "ENCARGADOS DE OBRA CIVIL, EN GENERAL",
+          "page": 26
+        }
+      ],
+      "relatedProgrammeKeys": [],
+      "publicationApproved": false
+    },
+    {
+      "offerTitle": "MECÁNICOS DE MANTENIMIENTO Y REPARACIÓN DE AUTOMOCIÓN, EN GENERAL",
+      "offerCount": 4,
+      "cnoCode": "7401",
+      "catalogueRows": [
+        {
+          "code": "74011034",
+          "label": "MECÁNICOS DE MANTENIMIENTO Y REPARACIÓN DE AUTOMOCIÓN, EN GENERAL",
+          "page": 51
+        }
+      ],
+      "relatedProgrammeKeys": ["TMV01B", "TMV02E", "TMV02M"],
+      "publicationApproved": false
+    },
+    {
+      "offerTitle": "MONTADORES DE GRANDES ESTRUCTURAS METÁLICAS, EN GENERAL",
+      "offerCount": 4,
+      "cnoCode": "7314",
+      "catalogueRows": [
+        {
+          "code": "73141020",
+          "label": "MONTADORES DE GRANDES ESTRUCTURAS METÁLICAS, EN GENERAL",
+          "page": 49
+        }
+      ],
+      "relatedProgrammeKeys": ["FME02M", "FME02S"],
+      "publicationApproved": false
+    },
+    {
+      "offerTitle": "BODEGUEROS VINÍCOLA",
+      "offerCount": 3,
+      "cnoCode": "7707",
+      "catalogueRows": [
+        {
+          "code": "77071013",
+          "label": "BODEGUEROS VINÍCOLA",
+          "page": 58
+        }
+      ],
+      "relatedProgrammeKeys": ["INA02M"],
+      "publicationApproved": false
+    },
+    {
+      "offerTitle": "CONDUCTORES DE CAMIÓN CON REMOLQUE Y/O DE TRACTOCAMIÓN",
+      "offerCount": 3,
+      "cnoCode": "8432",
+      "catalogueRows": [
+        {
+          "code": "84321015",
+          "label": "CONDUCTORES DE CAMIÓN CON REMOLQUE Y/O DE TRACTOCAMIÓN",
+          "page": 78
+        }
+      ],
+      "relatedProgrammeKeys": [],
+      "publicationApproved": false
+    },
+    {
+      "offerTitle": "CONDUCTORES DE FURGONETA, HASTA 3,5 T.",
+      "offerCount": 3,
+      "cnoCode": "8412",
+      "catalogueRows": [
+        {
+          "code": "84121035",
+          "label": "CONDUCTORES DE FURGONETA, HASTA 3,5 T.",
+          "page": 77
+        }
+      ],
+      "relatedProgrammeKeys": [],
+      "publicationApproved": false
+    },
+    {
+      "offerTitle": "CONDUCTORES-OPERADORES DE EXCAVADORA (MOVIMIENTO DE TIERRAS)",
+      "offerCount": 3,
+      "cnoCode": "8331",
+      "catalogueRows": [
+        {
+          "code": "83311044",
+          "label": "CONDUCTORES-OPERADORES DE EXCAVADORA (MOVIMIENTO DE TIERRAS)",
+          "page": 76
+        }
+      ],
+      "relatedProgrammeKeys": [],
+      "publicationApproved": false
+    },
+    {
+      "offerTitle": "CONDUCTORES-OPERADORES DE RETROEXCAVADORA (MOVIMIENTO DE TIERRAS)",
+      "offerCount": 3,
+      "cnoCode": "8331",
+      "catalogueRows": [
+        {
+          "code": "83311174",
+          "label": "CONDUCTORES-OPERADORES DE RETROEXCAVADORA (MOVIMIENTO DE TIERRAS)",
+          "page": 76
+        }
+      ],
+      "relatedProgrammeKeys": [],
+      "publicationApproved": false
+    },
+    {
+      "offerTitle": "DEPENDIENTES DE RECAMBIOS Y ACCESORIOS DE AUTOMÓVIL",
+      "offerCount": 3,
+      "cnoCode": "5220",
+      "catalogueRows": [
+        {
+          "code": "52201295",
+          "label": "DEPENDIENTES DE RECAMBIOS Y ACCESORIOS DE AUTOMÓVIL",
+          "page": 39
+        }
+      ],
+      "relatedProgrammeKeys": ["AGA01B", "COM01B", "COM02M", "IMP01M"],
+      "publicationApproved": false
+    },
+    {
+      "offerTitle": "ENCOFRADORES",
+      "offerCount": 3,
+      "cnoCode": "7111",
+      "catalogueRows": [
+        {
+          "code": "71111014",
+          "label": "ENCOFRADORES",
+          "page": 46
+        }
+      ],
+      "relatedProgrammeKeys": ["EOC01M"],
+      "publicationApproved": false
+    },
+    {
+      "offerTitle": "INSTALADORES ELECTRICISTAS, EN GENERAL",
+      "offerCount": 3,
+      "cnoCode": "7510",
+      "catalogueRows": [
+        {
+          "code": "75101033",
+          "label": "INSTALADORES ELECTRICISTAS, EN GENERAL",
+          "page": 52
+        }
+      ],
+      "relatedProgrammeKeys": [
+        "ELE01B",
+        "ELE01M",
+        "ELE01MD",
+        "ELE01S",
+        "ELE02B"
+      ],
+      "publicationApproved": false
+    },
+    {
+      "offerTitle": "MÉDICOS ESPECIALISTAS EN GERIATRÍA",
+      "offerCount": 3,
+      "cnoCode": "2112",
+      "catalogueRows": [
+        {
+          "code": "21121229",
+          "label": "MÉDICOS ESPECIALISTAS EN GERIATRÍA",
+          "page": 5
+        }
+      ],
+      "relatedProgrammeKeys": [],
+      "publicationApproved": false
+    },
+    {
+      "offerTitle": "TÉCNICOS EN PREVENCIÓN Y CONTROL DE PLAGAS",
+      "offerCount": 3,
+      "cnoCode": "3326",
+      "catalogueRows": [
+        {
+          "code": "33261029",
+          "label": "TÉCNICOS EN PREVENCIÓN Y CONTROL DE PLAGAS",
+          "page": 28
+        }
+      ],
+      "relatedProgrammeKeys": ["MSP34"],
+      "publicationApproved": false
+    },
+    {
+      "offerTitle": "AZAFATOS O AUXILIARES DE INFORMACIÓN",
+      "offerCount": 2,
+      "cnoCode": "4412",
+      "catalogueRows": [
+        {
+          "code": "44121011",
+          "label": "AZAFATOS O AUXILIARES DE INFORMACIÓN",
+          "page": 36
+        }
+      ],
+      "relatedProgrammeKeys": ["IMP01M", "TMV01S"],
+      "publicationApproved": false
+    },
+    {
+      "offerTitle": "CARPINTEROS EN GENERAL",
+      "offerCount": 2,
+      "cnoCode": "7131",
+      "catalogueRows": [
+        {
+          "code": "71311049",
+          "label": "CARPINTEROS EN GENERAL",
+          "page": 46
+        }
+      ],
+      "relatedProgrammeKeys": [],
+      "publicationApproved": false
+    },
+    {
+      "offerTitle": "CONDUCTORES DE AUTOBÚS, EN GENERAL",
+      "offerCount": 2,
+      "cnoCode": "8420",
+      "catalogueRows": [
+        {
+          "code": "84201043",
+          "label": "CONDUCTORES DE AUTOBÚS, EN GENERAL",
+          "page": 77
+        }
+      ],
+      "relatedProgrammeKeys": [],
+      "publicationApproved": false
+    },
+    {
+      "offerTitle": "CONDUCTORES-OPERADORES DE GRÚA TORRE",
+      "offerCount": 2,
+      "cnoCode": "8332",
+      "catalogueRows": [
+        {
+          "code": "83321041",
+          "label": "CONDUCTORES-OPERADORES DE GRÚA TORRE",
+          "page": 76
+        }
+      ],
+      "relatedProgrammeKeys": [],
+      "publicationApproved": false
+    },
+    {
+      "offerTitle": "CONDUCTORES-OPERADORES DE HORMIGONERA MÓVIL",
+      "offerCount": 2,
+      "cnoCode": "8331",
+      "catalogueRows": [
+        {
+          "code": "83311066",
+          "label": "CONDUCTORES-OPERADORES DE HORMIGONERA MÓVIL",
+          "page": 76
+        }
+      ],
+      "relatedProgrammeKeys": [],
+      "publicationApproved": false
+    },
+    {
+      "offerTitle": "DEPENDIENTES DE CARNICERÍA Y/O CHARCUTERÍA",
+      "offerCount": 2,
+      "cnoCode": "5220",
+      "catalogueRows": [
+        {
+          "code": "52201068",
+          "label": "DEPENDIENTES DE CARNICERÍA Y/O CHARCUTERÍA",
+          "page": 38
+        }
+      ],
+      "relatedProgrammeKeys": ["AGA01B", "COM01B", "COM02M", "IMP01M"],
+      "publicationApproved": false
+    },
+    {
+      "offerTitle": "DIRECTORES DE ORGANIZACIONES DE INTERÉS SOCIAL",
+      "offerCount": 2,
+      "cnoCode": "1113",
+      "catalogueRows": [
+        {
+          "code": "11131018",
+          "label": "DIRECTORES DE ORGANIZACIONES DE INTERÉS SOCIAL",
+          "page": 1
+        }
+      ],
+      "relatedProgrammeKeys": [],
+      "publicationApproved": false
+    },
+    {
+      "offerTitle": "FONTANEROS",
+      "offerCount": 2,
+      "cnoCode": "7221",
+      "catalogueRows": [
+        {
+          "code": "72211012",
+          "label": "FONTANEROS",
+          "page": 47
+        }
+      ],
+      "relatedProgrammeKeys": ["FME01B", "IMA01M"],
+      "publicationApproved": false
+    },
+    {
+      "offerTitle": "JEFES DE COCINA (HOSTELERÍA)",
+      "offerCount": 2,
+      "cnoCode": "3734",
+      "catalogueRows": [
+        {
+          "code": "37341015",
+          "label": "JEFES DE COCINA (HOSTELERÍA)",
+          "page": 32
+        }
+      ],
+      "relatedProgrammeKeys": ["HOT04SD"],
+      "publicationApproved": false
+    },
+    {
+      "offerTitle": "LIMPIADORES EN INSTITUCIONES SANITARIAS",
+      "offerCount": 2,
+      "cnoCode": "9210",
+      "catalogueRows": [
+        {
+          "code": "92101038",
+          "label": "LIMPIADORES EN INSTITUCIONES SANITARIAS",
+          "page": 78
+        }
+      ],
+      "relatedProgrammeKeys": ["HOT02B"],
+      "publicationApproved": false
+    },
+    {
+      "offerTitle": "MANTENEDORES DE EDIFICIOS",
+      "offerCount": 2,
+      "cnoCode": "7191",
+      "catalogueRows": [
+        {
+          "code": "71911012",
+          "label": "MANTENEDORES DE EDIFICIOS",
+          "page": 46
+        }
+      ],
+      "relatedProgrammeKeys": ["EOC01B"],
+      "publicationApproved": false
+    },
+    {
+      "offerTitle": "MONITORES DE EDUCACIÓN Y TIEMPO LIBRE",
+      "offerCount": 2,
+      "cnoCode": "3724",
+      "catalogueRows": [
+        {
+          "code": "37241034",
+          "label": "MONITORES DE EDUCACIÓN Y TIEMPO LIBRE",
+          "page": 32
+        }
+      ],
+      "relatedProgrammeKeys": ["AFD01S", "AFD01SD", "AFD02M", "SSC02S"],
+      "publicationApproved": false
+    },
+    {
+      "offerTitle": "MONTADORES DE MUEBLES DE MADERA O SIMILARES",
+      "offerCount": 2,
+      "cnoCode": "8209",
+      "catalogueRows": [
+        {
+          "code": "82091077",
+          "label": "MONTADORES DE MUEBLES DE MADERA O SIMILARES",
+          "page": 75
+        }
+      ],
+      "relatedProgrammeKeys": ["MAM01B", "MAM01M"],
+      "publicationApproved": false
+    },
+    {
+      "offerTitle": "PEONES DE EXTERIOR DE MINAS, CANTERAS Y/O POZOS DE PETRÓLEO",
+      "offerCount": 2,
+      "cnoCode": "9603",
+      "catalogueRows": [
+        {
+          "code": "96031016",
+          "label": "PEONES DE EXTERIOR DE MINAS, CANTERAS Y/O POZOS DE PETRÓLEO",
+          "page": 80
+        }
+      ],
+      "relatedProgrammeKeys": [],
+      "publicationApproved": false
+    },
+    {
+      "offerTitle": "PEONES DE LA INDUSTRIA MANUFACTURERA, EN GENERAL",
+      "offerCount": 2,
+      "cnoCode": "9700",
+      "catalogueRows": [
+        {
+          "code": "97001104",
+          "label": "PEONES DE LA INDUSTRIA MANUFACTURERA, EN GENERAL",
+          "page": 80
+        }
+      ],
+      "relatedProgrammeKeys": ["ELE02B", "FME01B", "FME02B", "MAM01B"],
+      "publicationApproved": false
+    },
+    {
+      "offerTitle": "PEONES DE OBRAS PUBLICAS, EN GENERAL",
+      "offerCount": 2,
+      "cnoCode": "9601",
+      "catalogueRows": [
+        {
+          "code": "96011029",
+          "label": "PEONES DE OBRAS PUBLICAS, EN GENERAL",
+          "page": 80
+        }
+      ],
+      "relatedProgrammeKeys": [],
+      "publicationApproved": false
+    },
+    {
+      "offerTitle": "PINTORES-DECORADORES DE RÓTULOS",
+      "offerCount": 2,
+      "cnoCode": "7616",
+      "catalogueRows": [
+        {
+          "code": "76161043",
+          "label": "PINTORES-DECORADORES DE RÓTULOS",
+          "page": 55
+        }
+      ],
+      "relatedProgrammeKeys": [],
+      "publicationApproved": false
+    },
+    {
+      "offerTitle": "PROFESORES DE FORMACIÓN VIAL",
+      "offerCount": 2,
+      "cnoCode": "5894",
+      "catalogueRows": [
+        {
+          "code": "58941029",
+          "label": "PROFESORES DE FORMACIÓN VIAL",
+          "page": 42
+        }
+      ],
+      "relatedProgrammeKeys": ["SSC06S", "SSC06SD"],
+      "publicationApproved": false
+    },
+    {
+      "offerTitle": "PROFESORES DE IDIOMAS, EN GENERAL",
+      "offerCount": 2,
+      "cnoCode": "2322",
+      "catalogueRows": [
+        {
+          "code": "23221019",
+          "label": "PROFESORES DE IDIOMAS, EN GENERAL",
+          "page": 10
+        }
+      ],
+      "relatedProgrammeKeys": [],
+      "publicationApproved": false
+    },
+    {
+      "offerTitle": "SOLDADORES POR ARCO ELÉCTRICO, EN GENERAL",
+      "offerCount": 2,
+      "cnoCode": "7312",
+      "catalogueRows": [
+        {
+          "code": "73121118",
+          "label": "SOLDADORES POR ARCO ELÉCTRICO, EN GENERAL",
+          "page": 49
+        }
+      ],
+      "relatedProgrammeKeys": ["FME02B", "FME02M"],
+      "publicationApproved": false
+    },
+    {
+      "offerTitle": "TÉCNICOS EN ORGANIZACIÓN DE MANTENIMIENTO INDUSTRIAL",
+      "offerCount": 2,
+      "cnoCode": "3129",
+      "catalogueRows": [
+        {
+          "code": "31291198",
+          "label": "TÉCNICOS EN ORGANIZACIÓN DE MANTENIMIENTO INDUSTRIAL",
+          "page": 23
+        }
+      ],
+      "relatedProgrammeKeys": ["ELE04S", "ELE05E", "SEA03S"],
+      "publicationApproved": false
+    },
+    {
+      "offerTitle": "AGENTES COMERCIALES",
+      "offerCount": 1,
+      "cnoCode": "3510",
+      "catalogueRows": [
+        {
+          "code": "35101019",
+          "label": "AGENTES COMERCIALES",
+          "page": 29
+        }
+      ],
+      "relatedProgrammeKeys": [
+        "COM01M",
+        "COM02S",
+        "COM02SD",
+        "COM03S",
+        "COM03SD",
+        "HOT01S",
+        "IMP01M",
+        "INA02M",
+        "INA02S",
+        "TMV04E"
+      ],
+      "publicationApproved": false
+    },
+    {
+      "offerTitle": "AGENTES COMERCIALES INMOBILIARIO",
+      "offerCount": 1,
+      "cnoCode": "3534",
+      "catalogueRows": [
+        {
+          "code": "35341028",
+          "label": "AGENTES COMERCIALES INMOBILIARIO",
+          "page": 30
+        }
+      ],
+      "relatedProgrammeKeys": [],
+      "publicationApproved": false
+    },
+    {
+      "offerTitle": "AGENTES DE MANIOBRAS FERROVIARIAS, EN GENERAL",
+      "offerCount": 1,
+      "cnoCode": "8312",
+      "catalogueRows": [
+        {
+          "code": "83121014",
+          "label": "AGENTES DE MANIOBRAS FERROVIARIAS, EN GENERAL",
+          "page": 75
+        }
+      ],
+      "relatedProgrammeKeys": [],
+      "publicationApproved": false
+    },
+    {
+      "offerTitle": "AGENTES DE SEGUROS",
+      "offerCount": 1,
+      "cnoCode": "3521",
+      "catalogueRows": [
+        {
+          "code": "35211011",
+          "label": "AGENTES DE SEGUROS",
+          "page": 29
+        }
+      ],
+      "relatedProgrammeKeys": [],
+      "publicationApproved": false
+    },
+    {
+      "offerTitle": "ALBAÑILES CARAVISTEROS",
+      "offerCount": 1,
+      "cnoCode": "7121",
+      "catalogueRows": [
+        {
+          "code": "71211026",
+          "label": "ALBAÑILES CARAVISTEROS",
+          "page": 46
+        }
+      ],
+      "relatedProgrammeKeys": ["EOC01B", "EOC01M"],
+      "publicationApproved": false
+    },
+    {
+      "offerTitle": "ALMACENEROS DE INDUSTRIAS ALIMENTARIAS",
+      "offerCount": 1,
+      "cnoCode": "4121",
+      "catalogueRows": [
+        {
+          "code": "41211034",
+          "label": "ALMACENEROS DE INDUSTRIAS ALIMENTARIAS",
+          "page": 34
+        }
+      ],
+      "relatedProgrammeKeys": ["COM01B", "HOT02M"],
+      "publicationApproved": false
+    },
+    {
+      "offerTitle": "ANIMADORES COMUNITARIOS, EN GENERAL",
+      "offerCount": 1,
+      "cnoCode": "3715",
+      "catalogueRows": [
+        {
+          "code": "37151010",
+          "label": "ANIMADORES COMUNITARIOS, EN GENERAL",
+          "page": 31
+        }
+      ],
+      "relatedProgrammeKeys": [],
+      "publicationApproved": false
+    },
+    {
+      "offerTitle": "AUXILIARES DE ENFERMERÍA DE ATENCIÓN PRIMARIA Y/O CONSULTORIO MÉDICOS, EN GENERAL",
+      "offerCount": 1,
+      "cnoCode": "5612",
+      "catalogueRows": [
+        {
+          "code": "56121016",
+          "label": "AUXILIARES DE ENFERMERÍA DE ATENCIÓN PRIMARIA Y/O CONSULTORIO MÉDICOS, EN GENERAL",
+          "page": 40
+        }
+      ],
+      "relatedProgrammeKeys": ["SAN21", "SAN21D"],
+      "publicationApproved": false
+    },
+    {
+      "offerTitle": "BÁRMANES",
+      "offerCount": 1,
+      "cnoCode": "5120",
+      "catalogueRows": [
+        {
+          "code": "51201016",
+          "label": "BÁRMANES",
+          "page": 37
+        }
+      ],
+      "relatedProgrammeKeys": ["HOT02M"],
+      "publicationApproved": false
+    },
+    {
+      "offerTitle": "CAMAREROS DE BARRA Y/O DEPENDIENTES DE CAFETERÍA",
+      "offerCount": 1,
+      "cnoCode": "5120",
+      "catalogueRows": [
+        {
+          "code": "51201027",
+          "label": "CAMAREROS DE BARRA Y/O DEPENDIENTES DE CAFETERÍA",
+          "page": 37
+        }
+      ],
+      "relatedProgrammeKeys": ["HOT02M"],
+      "publicationApproved": false
+    },
+    {
+      "offerTitle": "CAMAREROS DE PISO (HOSTELERÍA)",
+      "offerCount": 1,
+      "cnoCode": "9210",
+      "catalogueRows": [
+        {
+          "code": "92101027",
+          "label": "CAMAREROS DE PISO (HOSTELERÍA)",
+          "page": 78
+        }
+      ],
+      "relatedProgrammeKeys": ["HOT02B"],
+      "publicationApproved": false
+    },
+    {
+      "offerTitle": "CAMAREROS DE SALA O JEFES DE RANGO",
+      "offerCount": 1,
+      "cnoCode": "5120",
+      "catalogueRows": [
+        {
+          "code": "51201038",
+          "label": "CAMAREROS DE SALA O JEFES DE RANGO",
+          "page": 37
+        }
+      ],
+      "relatedProgrammeKeys": ["HOT02M"],
+      "publicationApproved": false
+    },
+    {
+      "offerTitle": "CARPINTEROS DE ALUMINIO, METÁLICO Y PVC",
+      "offerCount": 1,
+      "cnoCode": "7132",
+      "catalogueRows": [
+        {
+          "code": "71321013",
+          "label": "CARPINTEROS DE ALUMINIO, METÁLICO Y PVC",
+          "page": 46
+        }
+      ],
+      "relatedProgrammeKeys": ["FME02B", "FME02M"],
+      "publicationApproved": false
+    },
+    {
+      "offerTitle": "CARPINTEROS-EBANISTAS ARTESANOS",
+      "offerCount": 1,
+      "cnoCode": "7820",
+      "catalogueRows": [
+        {
+          "code": "78201013",
+          "label": "CARPINTEROS-EBANISTAS ARTESANOS",
+          "page": 59
+        }
+      ],
+      "relatedProgrammeKeys": [],
+      "publicationApproved": false
+    },
+    {
+      "offerTitle": "CHAPISTAS INDUSTRIALES",
+      "offerCount": 1,
+      "cnoCode": "7313",
+      "catalogueRows": [
+        {
+          "code": "73131054",
+          "label": "CHAPISTAS INDUSTRIALES",
+          "page": 49
+        }
+      ],
+      "relatedProgrammeKeys": ["FME02M"],
+      "publicationApproved": false
+    },
+    {
+      "offerTitle": "CONDUCTORES DE AUTOBÚS INTERURBANO",
+      "offerCount": 1,
+      "cnoCode": "8420",
+      "catalogueRows": [
+        {
+          "code": "84201021",
+          "label": "CONDUCTORES DE AUTOBÚS INTERURBANO",
+          "page": 77
+        }
+      ],
+      "relatedProgrammeKeys": [],
+      "publicationApproved": false
+    },
+    {
+      "offerTitle": "CONDUCTORES PROFESIONALES DE AUTOMÓVIL",
+      "offerCount": 1,
+      "cnoCode": "8412",
+      "catalogueRows": [
+        {
+          "code": "84121044",
+          "label": "CONDUCTORES PROFESIONALES DE AUTOMÓVIL",
+          "page": 77
+        }
+      ],
+      "relatedProgrammeKeys": [],
+      "publicationApproved": false
+    },
+    {
+      "offerTitle": "CONDUCTORES-OPERADORES DE CARRETILLA ELEVADORA, EN GENERAL",
+      "offerCount": 1,
+      "cnoCode": "8333",
+      "catalogueRows": [
+        {
+          "code": "83331015",
+          "label": "CONDUCTORES-OPERADORES DE CARRETILLA ELEVADORA, EN GENERAL",
+          "page": 77
+        }
+      ],
+      "relatedProgrammeKeys": ["COM01B"],
+      "publicationApproved": false
+    },
+    {
+      "offerTitle": "CONDUCTORES-OPERADORES DE PALA CARGADORA (MOVIMIENTO DE TIERRAS)",
+      "offerCount": 1,
+      "cnoCode": "8331",
+      "catalogueRows": [
+        {
+          "code": "83311163",
+          "label": "CONDUCTORES-OPERADORES DE PALA CARGADORA (MOVIMIENTO DE TIERRAS)",
+          "page": 76
+        }
+      ],
+      "relatedProgrammeKeys": [],
+      "publicationApproved": false
+    },
+    {
+      "offerTitle": "CONDUCTORES-REPARTIDORES EN MOTOCICLETA, CICLOMOTOR Y/O MOTOCARRO, EXCEPTO MENSAJERÍA",
+      "offerCount": 1,
+      "cnoCode": "8440",
+      "catalogueRows": [
+        {
+          "code": "84401012",
+          "label": "CONDUCTORES-REPARTIDORES EN MOTOCICLETA, CICLOMOTOR Y/O MOTOCARRO, EXCEPTO MENSAJERÍA",
+          "page": 78
+        }
+      ],
+      "relatedProgrammeKeys": [],
+      "publicationApproved": false
+    },
+    {
+      "offerTitle": "CUIDADORES-ACOMPAÑANTES DE AUTOBÚS ESCOLAR",
+      "offerCount": 1,
+      "cnoCode": "5721",
+      "catalogueRows": [
+        {
+          "code": "57211024",
+          "label": "CUIDADORES-ACOMPAÑANTES DE AUTOBÚS ESCOLAR",
+          "page": 40
+        }
+      ],
+      "relatedProgrammeKeys": [],
+      "publicationApproved": false
+    },
+    {
+      "offerTitle": "DELEGADOS COMERCIALES, EN GENERAL",
+      "offerCount": 1,
+      "cnoCode": "3510",
+      "catalogueRows": [
+        {
+          "code": "35101028",
+          "label": "DELEGADOS COMERCIALES, EN GENERAL",
+          "page": 29
+        }
+      ],
+      "relatedProgrammeKeys": [
+        "COM01M",
+        "COM02S",
+        "COM02SD",
+        "COM03S",
+        "COM03SD",
+        "HOT01S",
+        "IMP01M",
+        "INA02M",
+        "INA02S",
+        "TMV04E"
+      ],
+      "publicationApproved": false
+    },
+    {
+      "offerTitle": "DEPENDIENTES DE ARTÍCULOS DE FERRETERÍA",
+      "offerCount": 1,
+      "cnoCode": "5220",
+      "catalogueRows": [
+        {
+          "code": "52201024",
+          "label": "DEPENDIENTES DE ARTÍCULOS DE FERRETERÍA",
+          "page": 38
+        }
+      ],
+      "relatedProgrammeKeys": ["AGA01B", "COM01B", "COM02M", "IMP01M"],
+      "publicationApproved": false
+    },
+    {
+      "offerTitle": "DEPENDIENTES DE ARTÍCULOS DE FOTOGRAFÍA, CINE Y VÍDEO",
+      "offerCount": 1,
+      "cnoCode": "5220",
+      "catalogueRows": [
+        {
+          "code": "52201035",
+          "label": "DEPENDIENTES DE ARTÍCULOS DE FOTOGRAFÍA, CINE Y VÍDEO",
+          "page": 38
+        }
+      ],
+      "relatedProgrammeKeys": ["AGA01B", "COM01B", "COM02M", "IMP01M"],
+      "publicationApproved": false
+    },
+    {
+      "offerTitle": "DEPENDIENTES DE COMERCIO, EN GENERAL",
+      "offerCount": 1,
+      "cnoCode": "5220",
+      "catalogueRows": [
+        {
+          "code": "52201079",
+          "label": "DEPENDIENTES DE COMERCIO, EN GENERAL",
+          "page": 38
+        }
+      ],
+      "relatedProgrammeKeys": ["AGA01B", "COM01B", "COM02M", "IMP01M"],
+      "publicationApproved": false
+    },
+    {
+      "offerTitle": "DEPENDIENTES DE PESCADERÍA",
+      "offerCount": 1,
+      "cnoCode": "5220",
+      "catalogueRows": [
+        {
+          "code": "52201262",
+          "label": "DEPENDIENTES DE PESCADERÍA",
+          "page": 39
+        }
+      ],
+      "relatedProgrammeKeys": ["AGA01B", "COM01B", "COM02M", "IMP01M"],
+      "publicationApproved": false
+    },
+    {
+      "offerTitle": "DEPENDIENTES DE RELOJERÍA Y JOYERÍA",
+      "offerCount": 1,
+      "cnoCode": "5220",
+      "catalogueRows": [
+        {
+          "code": "52201307",
+          "label": "DEPENDIENTES DE RELOJERÍA Y JOYERÍA",
+          "page": 39
+        }
+      ],
+      "relatedProgrammeKeys": ["AGA01B", "COM01B", "COM02M", "IMP01M"],
+      "publicationApproved": false
+    },
+    {
+      "offerTitle": "DIRECTORES DE DEPARTAMENTO DE DISEÑO",
+      "offerCount": 1,
+      "cnoCode": "1219",
+      "catalogueRows": [
+        {
+          "code": "12191037",
+          "label": "DIRECTORES DE DEPARTAMENTO DE DISEÑO",
+          "page": 1
+        }
+      ],
+      "relatedProgrammeKeys": [],
+      "publicationApproved": false
+    },
+    {
+      "offerTitle": "DIRECTORES DE DEPARTAMENTO DE OPERACIONES EN EMPRESAS DE SERVICIOS PERSONALES, DE LIMPIEZA Y SIMILARES, EN GENERAL",
+      "offerCount": 1,
+      "cnoCode": "1509",
+      "catalogueRows": [
+        {
+          "code": "15091037",
+          "label": "DIRECTORES DE DEPARTAMENTO DE OPERACIONES EN EMPRESAS DE SERVICIOS PERSONALES, DE LIMPIEZA Y SIMILARES, EN GENERAL",
+          "page": 5
+        }
+      ],
+      "relatedProgrammeKeys": [],
+      "publicationApproved": false
+    },
+    {
+      "offerTitle": "EDUCADORES DE MENORES",
+      "offerCount": 1,
+      "cnoCode": "2824",
+      "catalogueRows": [
+        {
+          "code": "28241047",
+          "label": "EDUCADORES DE MENORES",
+          "page": 18
+        }
+      ],
+      "relatedProgrammeKeys": [],
+      "publicationApproved": false
+    },
+    {
+      "offerTitle": "EDUCADORES SOCIALES",
+      "offerCount": 1,
+      "cnoCode": "2824",
+      "catalogueRows": [
+        {
+          "code": "28241056",
+          "label": "EDUCADORES SOCIALES",
+          "page": 18
+        }
+      ],
+      "relatedProgrammeKeys": [],
+      "publicationApproved": false
+    },
+    {
+      "offerTitle": "ELECTRICISTAS Y/O ELECTRÓNICOS DE AUTOMOCIÓN, EN GENERAL",
+      "offerCount": 1,
+      "cnoCode": "7521",
+      "catalogueRows": [
+        {
+          "code": "75211091",
+          "label": "ELECTRICISTAS Y/O ELECTRÓNICOS DE AUTOMOCIÓN, EN GENERAL",
+          "page": 52
+        }
+      ],
+      "relatedProgrammeKeys": ["ELE04S"],
+      "publicationApproved": false
+    },
+    {
+      "offerTitle": "EMPLEADOS ADMINISTRATIVOS DE CONTABILIDAD, EN GENERAL",
+      "offerCount": 1,
+      "cnoCode": "4111",
+      "catalogueRows": [
+        {
+          "code": "41111011",
+          "label": "EMPLEADOS ADMINISTRATIVOS DE CONTABILIDAD, EN GENERAL",
+          "page": 34
+        }
+      ],
+      "relatedProgrammeKeys": ["ADG02S", "ADG02SD"],
+      "publicationApproved": false
+    },
+    {
+      "offerTitle": "EMPLEADOS DE HOGAR",
+      "offerCount": 1,
+      "cnoCode": "9100",
+      "catalogueRows": [
+        {
+          "code": "91001018",
+          "label": "EMPLEADOS DE HOGAR",
+          "page": 78
+        }
+      ],
+      "relatedProgrammeKeys": [],
+      "publicationApproved": false
+    },
+    {
+      "offerTitle": "EMPLEADOS DE SERVICIOS FUNERARIOS EN GENERAL",
+      "offerCount": 1,
+      "cnoCode": "5892",
+      "catalogueRows": [
+        {
+          "code": "58921023",
+          "label": "EMPLEADOS DE SERVICIOS FUNERARIOS EN GENERAL",
+          "page": 42
+        }
+      ],
+      "relatedProgrammeKeys": [],
+      "publicationApproved": false
+    },
+    {
+      "offerTitle": "ENCARGADOS DE INDUSTRIAS ALIMENTARIAS",
+      "offerCount": 1,
+      "cnoCode": "3203",
+      "catalogueRows": [
+        {
+          "code": "32031010",
+          "label": "ENCARGADOS DE INDUSTRIAS ALIMENTARIAS",
+          "page": 26
+        }
+      ],
+      "relatedProgrammeKeys": ["INA02S"],
+      "publicationApproved": false
+    },
+    {
+      "offerTitle": "ENCARGADOS DE OBRA DE EDIFICACIÓN, EN GENERAL",
+      "offerCount": 1,
+      "cnoCode": "3202",
+      "catalogueRows": [
+        {
+          "code": "32021026",
+          "label": "ENCARGADOS DE OBRA DE EDIFICACIÓN, EN GENERAL",
+          "page": 26
+        }
+      ],
+      "relatedProgrammeKeys": [],
+      "publicationApproved": false
+    },
+    {
+      "offerTitle": "ENCARGADOS DE TALLER DE MAQUINARIA INDUSTRIAL, EN GENERAL",
+      "offerCount": 1,
+      "cnoCode": "7403",
+      "catalogueRows": [
+        {
+          "code": "74031049",
+          "label": "ENCARGADOS DE TALLER DE MAQUINARIA INDUSTRIAL, EN GENERAL",
+          "page": 51
+        }
+      ],
+      "relatedProgrammeKeys": ["TMV03M"],
+      "publicationApproved": false
+    },
+    {
+      "offerTitle": "ENCARGADOS O CAPATACES FORESTALES",
+      "offerCount": 1,
+      "cnoCode": "6410",
+      "catalogueRows": [
+        {
+          "code": "64101022",
+          "label": "ENCARGADOS O CAPATACES FORESTALES",
+          "page": 45
+        }
+      ],
+      "relatedProgrammeKeys": [],
+      "publicationApproved": false
+    },
+    {
+      "offerTitle": "ENLUCIDORES-YESISTAS",
+      "offerCount": 1,
+      "cnoCode": "7212",
+      "catalogueRows": [
+        {
+          "code": "72121021",
+          "label": "ENLUCIDORES-YESISTAS",
+          "page": 47
+        }
+      ],
+      "relatedProgrammeKeys": [],
+      "publicationApproved": false
+    },
+    {
+      "offerTitle": "ENTRENADORES DEPORTIVOS",
+      "offerCount": 1,
+      "cnoCode": "3722",
+      "catalogueRows": [
+        {
+          "code": "37221029",
+          "label": "ENTRENADORES DEPORTIVOS",
+          "page": 32
+        }
+      ],
+      "relatedProgrammeKeys": ["AFD01S", "AFD01SD"],
+      "publicationApproved": false
+    },
+    {
+      "offerTitle": "ESQUILADORES",
+      "offerCount": 1,
+      "cnoCode": "6202",
+      "catalogueRows": [
+        {
+          "code": "62021014",
+          "label": "ESQUILADORES",
+          "page": 44
+        }
+      ],
+      "relatedProgrammeKeys": [],
+      "publicationApproved": false
+    },
+    {
+      "offerTitle": "ESTETICISTAS",
+      "offerCount": 1,
+      "cnoCode": "5812",
+      "catalogueRows": [
+        {
+          "code": "58121030",
+          "label": "ESTETICISTAS",
+          "page": 41
+        }
+      ],
+      "relatedProgrammeKeys": [
+        "IMP01B",
+        "IMP01M",
+        "IMP01S",
+        "IMP02M",
+        "IMP02MD",
+        "IMP04S"
+      ],
+      "publicationApproved": false
+    },
+    {
+      "offerTitle": "EXPENDEDORES DE COMBUSTIBLE",
+      "offerCount": 1,
+      "cnoCode": "5430",
+      "catalogueRows": [
+        {
+          "code": "54301012",
+          "label": "EXPENDEDORES DE COMBUSTIBLE",
+          "page": 39
+        }
+      ],
+      "relatedProgrammeKeys": [],
+      "publicationApproved": false
+    },
+    {
+      "offerTitle": "FORMADORES DE FORMACIÓN NO REGLADA",
+      "offerCount": 1,
+      "cnoCode": "2329",
+      "catalogueRows": [
+        {
+          "code": "23291010",
+          "label": "FORMADORES DE FORMACIÓN NO REGLADA",
+          "page": 10
+        }
+      ],
+      "relatedProgrammeKeys": [],
+      "publicationApproved": false
+    },
+    {
+      "offerTitle": "GOBERNANTES (HOSTELERÍA)",
+      "offerCount": 1,
+      "cnoCode": "5831",
+      "catalogueRows": [
+        {
+          "code": "58311035",
+          "label": "GOBERNANTES (HOSTELERÍA)",
+          "page": 41
+        }
+      ],
+      "relatedProgrammeKeys": ["HOT01S"],
+      "publicationApproved": false
+    },
+    {
+      "offerTitle": "INGENIEROS EN MECÁNICA AERONÁUTICA",
+      "offerCount": 1,
+      "cnoCode": "2434",
+      "catalogueRows": [
+        {
+          "code": "24341017",
+          "label": "INGENIEROS EN MECÁNICA AERONÁUTICA",
+          "page": 12
+        }
+      ],
+      "relatedProgrammeKeys": [],
+      "publicationApproved": false
+    },
+    {
+      "offerTitle": "INGENIEROS EN MECÁNICA, EN GENERAL",
+      "offerCount": 1,
+      "cnoCode": "2433",
+      "catalogueRows": [
+        {
+          "code": "24331041",
+          "label": "INGENIEROS EN MECÁNICA, EN GENERAL",
+          "page": 12
+        }
+      ],
+      "relatedProgrammeKeys": [],
+      "publicationApproved": false
+    },
+    {
+      "offerTitle": "INJERTADORES Y/O PODADORES",
+      "offerCount": 1,
+      "cnoCode": "6110",
+      "catalogueRows": [
+        {
+          "code": "61101027",
+          "label": "INJERTADORES Y/O PODADORES",
+          "page": 43
+        }
+      ],
+      "relatedProgrammeKeys": ["AGA01M", "AGA02M"],
+      "publicationApproved": false
+    },
+    {
+      "offerTitle": "JARDINEROS, EN GENERAL",
+      "offerCount": 1,
+      "cnoCode": "6120",
+      "catalogueRows": [
+        {
+          "code": "61201028",
+          "label": "JARDINEROS, EN GENERAL",
+          "page": 44
+        }
+      ],
+      "relatedProgrammeKeys": [
+        "AGA01M",
+        "AGA02M",
+        "AGA02S",
+        "AGA03M",
+        "AGA04M"
+      ],
+      "publicationApproved": false
+    },
+    {
+      "offerTitle": "LAVACOCHES, A MANO",
+      "offerCount": 1,
+      "cnoCode": "9222",
+      "catalogueRows": [
+        {
+          "code": "92221011",
+          "label": "LAVACOCHES, A MANO",
+          "page": 78
+        }
+      ],
+      "relatedProgrammeKeys": [],
+      "publicationApproved": false
+    },
+    {
+      "offerTitle": "LOGOPEDAS",
+      "offerCount": 1,
+      "cnoCode": "2154",
+      "catalogueRows": [
+        {
+          "code": "21541016",
+          "label": "LOGOPEDAS",
+          "page": 7
+        }
+      ],
+      "relatedProgrammeKeys": [],
+      "publicationApproved": false
+    },
+    {
+      "offerTitle": "MAESTROS DE EDUCACIÓN INFANTIL",
+      "offerCount": 1,
+      "cnoCode": "2251",
+      "catalogueRows": [
+        {
+          "code": "22511010",
+          "label": "MAESTROS DE EDUCACIÓN INFANTIL",
+          "page": 9
+        }
+      ],
+      "relatedProgrammeKeys": [],
+      "publicationApproved": false
+    },
+    {
+      "offerTitle": "MATARIFES-CARNICEROS, EN GENERAL",
+      "offerCount": 1,
+      "cnoCode": "7701",
+      "catalogueRows": [
+        {
+          "code": "77011051",
+          "label": "MATARIFES-CARNICEROS, EN GENERAL",
+          "page": 57
+        }
+      ],
+      "relatedProgrammeKeys": [],
+      "publicationApproved": false
+    },
+    {
+      "offerTitle": "MECÁNICOS DE MANTENIMIENTO INDUSTRIAL",
+      "offerCount": 1,
+      "cnoCode": "7403",
+      "catalogueRows": [
+        {
+          "code": "74031142",
+          "label": "MECÁNICOS DE MANTENIMIENTO INDUSTRIAL",
+          "page": 52
+        }
+      ],
+      "relatedProgrammeKeys": ["TMV03M"],
+      "publicationApproved": false
+    },
+    {
+      "offerTitle": "MECÁNICOS REPARADORES DE MAQUINARIA AGRÍCOLA, EN GENERAL",
+      "offerCount": 1,
+      "cnoCode": "7403",
+      "catalogueRows": [
+        {
+          "code": "74031160",
+          "label": "MECÁNICOS REPARADORES DE MAQUINARIA AGRÍCOLA, EN GENERAL",
+          "page": 52
+        }
+      ],
+      "relatedProgrammeKeys": ["TMV03M"],
+      "publicationApproved": false
+    },
+    {
+      "offerTitle": "MECÁNICOS REPARADORES DE MAQUINARIA DE CONSTRUCCIÓN, MOVIMIENTO DE TIERRAS Y/O MINERÍA",
+      "offerCount": 1,
+      "cnoCode": "7403",
+      "catalogueRows": [
+        {
+          "code": "74031179",
+          "label": "MECÁNICOS REPARADORES DE MAQUINARIA DE CONSTRUCCIÓN, MOVIMIENTO DE TIERRAS Y/O MINERÍA",
+          "page": 52
+        }
+      ],
+      "relatedProgrammeKeys": ["TMV03M"],
+      "publicationApproved": false
+    },
+    {
+      "offerTitle": "MECÁNICOS-AJUSTADORES DE CAMIONES Y AUTOBUSES, EN GENERAL",
+      "offerCount": 1,
+      "cnoCode": "7401",
+      "catalogueRows": [
+        {
+          "code": "74011043",
+          "label": "MECÁNICOS-AJUSTADORES DE CAMIONES Y AUTOBUSES, EN GENERAL",
+          "page": 51
+        }
+      ],
+      "relatedProgrammeKeys": ["TMV01B", "TMV02E", "TMV02M"],
+      "publicationApproved": false
+    },
+    {
+      "offerTitle": "MECÁNICOS-AJUSTADORES DE MAQUINARIA AGRÍCOLA, EN GENERAL",
+      "offerCount": 1,
+      "cnoCode": "7403",
+      "catalogueRows": [
+        {
+          "code": "74031245",
+          "label": "MECÁNICOS-AJUSTADORES DE MAQUINARIA AGRÍCOLA, EN GENERAL",
+          "page": 52
+        }
+      ],
+      "relatedProgrammeKeys": ["TMV03M"],
+      "publicationApproved": false
+    },
+    {
+      "offerTitle": "MONITORES SOCIO-CULTURALES",
+      "offerCount": 1,
+      "cnoCode": "3724",
+      "catalogueRows": [
+        {
+          "code": "37241043",
+          "label": "MONITORES SOCIO-CULTURALES",
+          "page": 32
+        }
+      ],
+      "relatedProgrammeKeys": ["AFD01S", "AFD01SD", "AFD02M", "SSC02S"],
+      "publicationApproved": false
+    },
+    {
+      "offerTitle": "MONITORES Y/O ANIMADORES DEPORTIVOS",
+      "offerCount": 1,
+      "cnoCode": "3723",
+      "catalogueRows": [
+        {
+          "code": "37231077",
+          "label": "MONITORES Y/O ANIMADORES DEPORTIVOS",
+          "page": 32
+        }
+      ],
+      "relatedProgrammeKeys": ["AFD01S", "AFD01SD", "AFD02S", "AFD02SD"],
+      "publicationApproved": false
+    },
+    {
+      "offerTitle": "MONTADORES DE PLACAS DE ENERGÍA SOLAR",
+      "offerCount": 1,
+      "cnoCode": "7294",
+      "catalogueRows": [
+        {
+          "code": "72941032",
+          "label": "MONTADORES DE PLACAS DE ENERGÍA SOLAR",
+          "page": 48
+        }
+      ],
+      "relatedProgrammeKeys": ["ENA01S", "ENA03S", "IMA01M"],
+      "publicationApproved": false
+    },
+    {
+      "offerTitle": "MONTADORES-INSTALADORES DE ASCENSORES",
+      "offerCount": 1,
+      "cnoCode": "7315",
+      "catalogueRows": [
+        {
+          "code": "73151032",
+          "label": "MONTADORES-INSTALADORES DE ASCENSORES",
+          "page": 49
+        }
+      ],
+      "relatedProgrammeKeys": [],
+      "publicationApproved": false
+    },
+    {
+      "offerTitle": "OPERADORES DE HORNOS DE PANADERÍA Y REPOSTERÍA INDUSTRIAL",
+      "offerCount": 1,
+      "cnoCode": "8160",
+      "catalogueRows": [
+        {
+          "code": "81601035",
+          "label": "OPERADORES DE HORNOS DE PANADERÍA Y REPOSTERÍA INDUSTRIAL",
+          "page": 71
+        }
+      ],
+      "relatedProgrammeKeys": ["INA02B", "INA03M"],
+      "publicationApproved": false
+    },
+    {
+      "offerTitle": "OPERADORES DE MÁQUINA ASERRADORA (FABRICACIÓN ARTÍCULOS DE CORCHO)",
+      "offerCount": 1,
+      "cnoCode": "7812",
+      "catalogueRows": [
+        {
+          "code": "78121029",
+          "label": "OPERADORES DE MÁQUINA ASERRADORA (FABRICACIÓN ARTÍCULOS DE CORCHO)",
+          "page": 58
+        }
+      ],
+      "relatedProgrammeKeys": ["MAM01B", "MAM01M", "MAM02M"],
+      "publicationApproved": false
+    },
+    {
+      "offerTitle": "OPERADORES DE MÁQUINAS PARA ELABORAR QUESO Y SIMILARES",
+      "offerCount": 1,
+      "cnoCode": "8160",
+      "catalogueRows": [
+        {
+          "code": "81601325",
+          "label": "OPERADORES DE MÁQUINAS PARA ELABORAR QUESO Y SIMILARES",
+          "page": 72
+        }
+      ],
+      "relatedProgrammeKeys": ["INA02B", "INA03M"],
+      "publicationApproved": false
+    },
+    {
+      "offerTitle": "OPERADORES DE PLANTA DE TRATAMIENTO Y DEPURACIÓN DE AGUA, EN GENERAL",
+      "offerCount": 1,
+      "cnoCode": "3132",
+      "catalogueRows": [
+        {
+          "code": "31321075",
+          "label": "OPERADORES DE PLANTA DE TRATAMIENTO Y DEPURACIÓN DE AGUA, EN GENERAL",
+          "page": 24
+        }
+      ],
+      "relatedProgrammeKeys": ["ENA04S"],
+      "publicationApproved": false
+    },
+    {
+      "offerTitle": "OTROS PROFESIONALES DE LAS TERAPIAS ALTERNATIVAS",
+      "offerCount": 1,
+      "cnoCode": "3339",
+      "catalogueRows": [
+        {
+          "code": "33391018",
+          "label": "OTROS PROFESIONALES DE LAS TERAPIAS ALTERNATIVAS",
+          "page": 29
+        }
+      ],
+      "relatedProgrammeKeys": [],
+      "publicationApproved": false
+    },
+    {
+      "offerTitle": "PANADEROS",
+      "offerCount": 1,
+      "cnoCode": "7703",
+      "catalogueRows": [
+        {
+          "code": "77031039",
+          "label": "PANADEROS",
+          "page": 57
+        }
+      ],
+      "relatedProgrammeKeys": ["HOT01E", "INA01B", "INA01M"],
+      "publicationApproved": false
+    },
+    {
+      "offerTitle": "PASTELEROS",
+      "offerCount": 1,
+      "cnoCode": "7703",
+      "catalogueRows": [
+        {
+          "code": "77031048",
+          "label": "PASTELEROS",
+          "page": 57
+        }
+      ],
+      "relatedProgrammeKeys": ["HOT01E", "INA01B", "INA01M"],
+      "publicationApproved": false
+    },
+    {
+      "offerTitle": "PELUQUEROS DE CABALLEROS",
+      "offerCount": 1,
+      "cnoCode": "5811",
+      "catalogueRows": [
+        {
+          "code": "58111019",
+          "label": "PELUQUEROS DE CABALLEROS",
+          "page": 41
+        }
+      ],
+      "relatedProgrammeKeys": [
+        "IMP01B",
+        "IMP02M",
+        "IMP02MD",
+        "IMP02S",
+        "IMP02SD"
+      ],
+      "publicationApproved": false
+    },
+    {
+      "offerTitle": "PELUQUEROS DE SEÑORAS",
+      "offerCount": 1,
+      "cnoCode": "5811",
+      "catalogueRows": [
+        {
+          "code": "58111028",
+          "label": "PELUQUEROS DE SEÑORAS",
+          "page": 41
+        }
+      ],
+      "relatedProgrammeKeys": [
+        "IMP01B",
+        "IMP02M",
+        "IMP02MD",
+        "IMP02S",
+        "IMP02SD"
+      ],
+      "publicationApproved": false
+    },
+    {
+      "offerTitle": "PEONES DE LA INDUSTRIA DE LA MADERA Y DEL CORCHO",
+      "offerCount": 1,
+      "cnoCode": "9700",
+      "catalogueRows": [
+        {
+          "code": "97001065",
+          "label": "PEONES DE LA INDUSTRIA DE LA MADERA Y DEL CORCHO",
+          "page": 80
+        }
+      ],
+      "relatedProgrammeKeys": ["ELE02B", "FME01B", "FME02B", "MAM01B"],
+      "publicationApproved": false
+    },
+    {
+      "offerTitle": "PEONES FORESTALES",
+      "offerCount": 1,
+      "cnoCode": "9543",
+      "catalogueRows": [
+        {
+          "code": "95431028",
+          "label": "PEONES FORESTALES",
+          "page": 80
+        }
+      ],
+      "relatedProgrammeKeys": ["AGA03B"],
+      "publicationApproved": false
+    },
+    {
+      "offerTitle": "PINCHES DE COCINA",
+      "offerCount": 1,
+      "cnoCode": "9310",
+      "catalogueRows": [
+        {
+          "code": "93101024",
+          "label": "PINCHES DE COCINA",
+          "page": 78
+        }
+      ],
+      "relatedProgrammeKeys": ["HOT01B"],
+      "publicationApproved": false
+    },
+    {
+      "offerTitle": "PINTORES DE ESTRUCTURAS METÁLICAS Y CASCOS DE BUQUES",
+      "offerCount": 1,
+      "cnoCode": "7232",
+      "catalogueRows": [
+        {
+          "code": "72321043",
+          "label": "PINTORES DE ESTRUCTURAS METÁLICAS Y CASCOS DE BUQUES",
+          "page": 47
+        }
+      ],
+      "relatedProgrammeKeys": ["TMV01M"],
+      "publicationApproved": false
+    },
+    {
+      "offerTitle": "PINTORES Y/O EMPAPELADORES",
+      "offerCount": 1,
+      "cnoCode": "7231",
+      "catalogueRows": [
+        {
+          "code": "72311035",
+          "label": "PINTORES Y/O EMPAPELADORES",
+          "page": 47
+        }
+      ],
+      "relatedProgrammeKeys": ["EOC01B", "EOC02M"],
+      "publicationApproved": false
+    },
+    {
+      "offerTitle": "PODÓLOGOS",
+      "offerCount": 1,
+      "cnoCode": "2157",
+      "catalogueRows": [
+        {
+          "code": "21571015",
+          "label": "PODÓLOGOS",
+          "page": 7
+        }
+      ],
+      "relatedProgrammeKeys": [],
+      "publicationApproved": false
+    },
+    {
+      "offerTitle": "PREPARADORES DE PIZZA",
+      "offerCount": 1,
+      "cnoCode": "9320",
+      "catalogueRows": [
+        {
+          "code": "93201014",
+          "label": "PREPARADORES DE PIZZA",
+          "page": 78
+        }
+      ],
+      "relatedProgrammeKeys": [],
+      "publicationApproved": false
+    },
+    {
+      "offerTitle": "PROFESORES DEL ÁREA DE FÍSICA Y QUÍMICA (ENSEÑANZA SECUNDARIA)",
+      "offerCount": 1,
+      "cnoCode": "2230",
+      "catalogueRows": [
+        {
+          "code": "22301163",
+          "label": "PROFESORES DEL ÁREA DE FÍSICA Y QUÍMICA (ENSEÑANZA SECUNDARIA)",
+          "page": 9
+        }
+      ],
+      "relatedProgrammeKeys": [],
+      "publicationApproved": false
+    },
+    {
+      "offerTitle": "PROFESORES TÉCNICOS DE FORMACIÓN PROFESIONAL (IMAGEN Y SONIDO)",
+      "offerCount": 1,
+      "cnoCode": "2220",
+      "catalogueRows": [
+        {
+          "code": "22201140",
+          "label": "PROFESORES TÉCNICOS DE FORMACIÓN PROFESIONAL (IMAGEN Y SONIDO)",
+          "page": 8
+        }
+      ],
+      "relatedProgrammeKeys": [],
+      "publicationApproved": false
+    },
+    {
+      "offerTitle": "PROFESORES TÉCNICOS DE FORMACIÓN PROFESIONAL (SANIDAD)",
+      "offerCount": 1,
+      "cnoCode": "2220",
+      "catalogueRows": [
+        {
+          "code": "22201184",
+          "label": "PROFESORES TÉCNICOS DE FORMACIÓN PROFESIONAL (SANIDAD)",
+          "page": 8
+        }
+      ],
+      "relatedProgrammeKeys": [],
+      "publicationApproved": false
+    },
+    {
+      "offerTitle": "PROFESORES TÉCNICOS DE FORMACIÓN PROFESIONAL, EN GENERAL",
+      "offerCount": 1,
+      "cnoCode": "2220",
+      "catalogueRows": [
+        {
+          "code": "22201234",
+          "label": "PROFESORES TÉCNICOS DE FORMACIÓN PROFESIONAL, EN GENERAL",
+          "page": 8
+        }
+      ],
+      "relatedProgrammeKeys": [],
+      "publicationApproved": false
+    },
+    {
+      "offerTitle": "PROTÉSICOS DENTALES",
+      "offerCount": 1,
+      "cnoCode": "3316",
+      "catalogueRows": [
+        {
+          "code": "33161020",
+          "label": "PROTÉSICOS DENTALES",
+          "page": 28
+        }
+      ],
+      "relatedProgrammeKeys": ["SAN02S"],
+      "publicationApproved": false
+    },
+    {
+      "offerTitle": "PSICÓLOGOS, EN GENERAL",
+      "offerCount": 1,
+      "cnoCode": "2823",
+      "catalogueRows": [
+        {
+          "code": "28231035",
+          "label": "PSICÓLOGOS, EN GENERAL",
+          "page": 17
+        }
+      ],
+      "relatedProgrammeKeys": [],
+      "publicationApproved": false
+    },
+    {
+      "offerTitle": "QUIROPRÁCTICOS",
+      "offerCount": 1,
+      "cnoCode": "3329",
+      "catalogueRows": [
+        {
+          "code": "33291028",
+          "label": "QUIROPRÁCTICOS",
+          "page": 29
+        }
+      ],
+      "relatedProgrammeKeys": [],
+      "publicationApproved": false
+    },
+    {
+      "offerTitle": "RECEPCIONISTAS DE HOTEL",
+      "offerCount": 1,
+      "cnoCode": "4422",
+      "catalogueRows": [
+        {
+          "code": "44221010",
+          "label": "RECEPCIONISTAS DE HOTEL",
+          "page": 36
+        }
+      ],
+      "relatedProgrammeKeys": [],
+      "publicationApproved": false
+    },
+    {
+      "offerTitle": "SOLADORES-ALICATADORES, EN GENERAL",
+      "offerCount": 1,
+      "cnoCode": "7240",
+      "catalogueRows": [
+        {
+          "code": "72401073",
+          "label": "SOLADORES-ALICATADORES, EN GENERAL",
+          "page": 48
+        }
+      ],
+      "relatedProgrammeKeys": ["EOC01B", "EOC01M", "EOC02M"],
+      "publicationApproved": false
+    },
+    {
+      "offerTitle": "SOLDADORES ALUMINOTERMICOS",
+      "offerCount": 1,
+      "cnoCode": "7312",
+      "catalogueRows": [
+        {
+          "code": "73121042",
+          "label": "SOLDADORES ALUMINOTERMICOS",
+          "page": 49
+        }
+      ],
+      "relatedProgrammeKeys": ["FME02B", "FME02M"],
+      "publicationApproved": false
+    },
+    {
+      "offerTitle": "SOLDADORES POR MIG-MAG",
+      "offerCount": 1,
+      "cnoCode": "7312",
+      "catalogueRows": [
+        {
+          "code": "73121127",
+          "label": "SOLDADORES POR MIG-MAG",
+          "page": 49
+        }
+      ],
+      "relatedProgrammeKeys": ["FME02B", "FME02M"],
+      "publicationApproved": false
+    },
+    {
+      "offerTitle": "TÉCNICOS ADMINISTRATIVOS, EN GENERAL",
+      "offerCount": 1,
+      "cnoCode": "3613",
+      "catalogueRows": [
+        {
+          "code": "36131039",
+          "label": "TÉCNICOS ADMINISTRATIVOS, EN GENERAL",
+          "page": 30
+        }
+      ],
+      "relatedProgrammeKeys": [],
+      "publicationApproved": false
+    },
+    {
+      "offerTitle": "TÉCNICOS COMERCIALES EN ENTIDAD FINANCIERA",
+      "offerCount": 1,
+      "cnoCode": "3401",
+      "catalogueRows": [
+        {
+          "code": "34011010",
+          "label": "TÉCNICOS COMERCIALES EN ENTIDAD FINANCIERA",
+          "page": 29
+        }
+      ],
+      "relatedProgrammeKeys": [],
+      "publicationApproved": false
+    },
+    {
+      "offerTitle": "TÉCNICOS DE MANTENIMIENTO MECÁNICO",
+      "offerCount": 1,
+      "cnoCode": "3126",
+      "catalogueRows": [
+        {
+          "code": "31261032",
+          "label": "TÉCNICOS DE MANTENIMIENTO MECÁNICO",
+          "page": 22
+        }
+      ],
+      "relatedProgrammeKeys": ["FME01S", "FME03S", "IMA03S"],
+      "publicationApproved": false
+    },
+    {
+      "offerTitle": "TÉCNICOS EN COMPOSICIÓN Y/O FOTOCOMPOSICIÓN (INDUSTRIAS GRÁFICAS)",
+      "offerCount": 1,
+      "cnoCode": "3129",
+      "catalogueRows": [
+        {
+          "code": "31291107",
+          "label": "TÉCNICOS EN COMPOSICIÓN Y/O FOTOCOMPOSICIÓN (INDUSTRIAS GRÁFICAS)",
+          "page": 22
+        }
+      ],
+      "relatedProgrammeKeys": ["ELE04S", "ELE05E", "SEA03S"],
+      "publicationApproved": false
+    },
+    {
+      "offerTitle": "TÉCNICOS EN CONTROL DE CALIDAD, EN GENERAL",
+      "offerCount": 1,
+      "cnoCode": "3160",
+      "catalogueRows": [
+        {
+          "code": "31601159",
+          "label": "TÉCNICOS EN CONTROL DE CALIDAD, EN GENERAL",
+          "page": 26
+        }
+      ],
+      "relatedProgrammeKeys": ["INA02S", "QUI01S", "QUI02M", "TMV01S"],
+      "publicationApproved": false
+    },
+    {
+      "offerTitle": "TÉCNICOS EN CONTROL Y VIGILANCIA DE OBRAS, EN GENERAL",
+      "offerCount": 1,
+      "cnoCode": "3122",
+      "catalogueRows": [
+        {
+          "code": "31221074",
+          "label": "TÉCNICOS EN CONTROL Y VIGILANCIA DE OBRAS, EN GENERAL",
+          "page": 21
+        }
+      ],
+      "relatedProgrammeKeys": [],
+      "publicationApproved": false
+    },
+    {
+      "offerTitle": "TÉCNICOS EN EDUCACIÓN INFANTIL",
+      "offerCount": 1,
+      "cnoCode": "2252",
+      "catalogueRows": [
+        {
+          "code": "22521013",
+          "label": "TÉCNICOS EN EDUCACIÓN INFANTIL",
+          "page": 9
+        }
+      ],
+      "relatedProgrammeKeys": ["SSC01S", "SSC01SD"],
+      "publicationApproved": false
+    },
+    {
+      "offerTitle": "TÉCNICOS EN GESTIÓN DE STOCKS Y/O ALMACÉN",
+      "offerCount": 1,
+      "cnoCode": "3522",
+      "catalogueRows": [
+        {
+          "code": "35221032",
+          "label": "TÉCNICOS EN GESTIÓN DE STOCKS Y/O ALMACÉN",
+          "page": 30
+        }
+      ],
+      "relatedProgrammeKeys": ["HOT05S"],
+      "publicationApproved": false
+    },
+    {
+      "offerTitle": "TÉCNICOS EN IMPRESIÓN, EN GENERAL (INDUSTRIAS GRÁFICAS)",
+      "offerCount": 1,
+      "cnoCode": "3129",
+      "catalogueRows": [
+        {
+          "code": "31291170",
+          "label": "TÉCNICOS EN IMPRESIÓN, EN GENERAL (INDUSTRIAS GRÁFICAS)",
+          "page": 23
+        }
+      ],
+      "relatedProgrammeKeys": ["ELE04S", "ELE05E", "SEA03S"],
+      "publicationApproved": false
+    },
+    {
+      "offerTitle": "TÉCNICOS EN INTEGRACIÓN SOCIAL",
+      "offerCount": 1,
+      "cnoCode": "3713",
+      "catalogueRows": [
+        {
+          "code": "37131069",
+          "label": "TÉCNICOS EN INTEGRACIÓN SOCIAL",
+          "page": 31
+        }
+      ],
+      "relatedProgrammeKeys": ["SSC02S", "SSC03S", "SSC03SD", "SSC05S"],
+      "publicationApproved": false
+    },
+    {
+      "offerTitle": "TÉCNICOS EN INYECCIONES (CONSTRUCCIÓN)",
+      "offerCount": 1,
+      "cnoCode": "3122",
+      "catalogueRows": [
+        {
+          "code": "31221106",
+          "label": "TÉCNICOS EN INYECCIONES (CONSTRUCCIÓN)",
+          "page": 21
+        }
+      ],
+      "relatedProgrammeKeys": [],
+      "publicationApproved": false
+    },
+    {
+      "offerTitle": "TÉCNICOS EN MECÁNICA DE AUTOMOCIÓN",
+      "offerCount": 1,
+      "cnoCode": "3126",
+      "catalogueRows": [
+        {
+          "code": "31261069",
+          "label": "TÉCNICOS EN MECÁNICA DE AUTOMOCIÓN",
+          "page": 22
+        }
+      ],
+      "relatedProgrammeKeys": ["FME01S", "FME03S", "IMA03S"],
+      "publicationApproved": false
+    },
+    {
+      "offerTitle": "TÉCNICOS EN PUBLICIDAD Y/O RELACIONES PÚBLICAS",
+      "offerCount": 1,
+      "cnoCode": "2651",
+      "catalogueRows": [
+        {
+          "code": "26511049",
+          "label": "TÉCNICOS EN PUBLICIDAD Y/O RELACIONES PÚBLICAS",
+          "page": 16
+        }
+      ],
+      "relatedProgrammeKeys": ["COM01E", "COM01S", "COM02E"],
+      "publicationApproved": false
+    },
+    {
+      "offerTitle": "TÉCNICOS EN TELECOMUNICACIONES",
+      "offerCount": 1,
+      "cnoCode": "3833",
+      "catalogueRows": [
+        {
+          "code": "38331033",
+          "label": "TÉCNICOS EN TELECOMUNICACIONES",
+          "page": 34
+        }
+      ],
+      "relatedProgrammeKeys": [],
+      "publicationApproved": false
+    },
+    {
+      "offerTitle": "TÉCNICOS SUPERIORES EN RECURSOS HUMANOS, EN GENERAL",
+      "offerCount": 1,
+      "cnoCode": "2624",
+      "catalogueRows": [
+        {
+          "code": "26241050",
+          "label": "TÉCNICOS SUPERIORES EN RECURSOS HUMANOS, EN GENERAL",
+          "page": 16
+        }
+      ],
+      "relatedProgrammeKeys": [],
+      "publicationApproved": false
+    },
+    {
+      "offerTitle": "TRABAJADORES AGROPECUARIOS",
+      "offerCount": 1,
+      "cnoCode": "6300",
+      "catalogueRows": [
+        {
+          "code": "63001011",
+          "label": "TRABAJADORES AGROPECUARIOS",
+          "page": 45
+        }
+      ],
+      "relatedProgrammeKeys": ["AGA01M", "AGA02M"],
+      "publicationApproved": false
+    },
+    {
+      "offerTitle": "TRABAJADORES DE GANADO OVINO Y CAPRINO",
+      "offerCount": 1,
+      "cnoCode": "6202",
+      "catalogueRows": [
+        {
+          "code": "62021032",
+          "label": "TRABAJADORES DE GANADO OVINO Y CAPRINO",
+          "page": 44
+        }
+      ],
+      "relatedProgrammeKeys": [],
+      "publicationApproved": false
+    },
+    {
+      "offerTitle": "TRABAJADORES DE GANADO VACUNO, EN GENERAL",
+      "offerCount": 1,
+      "cnoCode": "6201",
+      "catalogueRows": [
+        {
+          "code": "62011011",
+          "label": "TRABAJADORES DE GANADO VACUNO, EN GENERAL",
+          "page": 44
+        }
+      ],
+      "relatedProgrammeKeys": [],
+      "publicationApproved": false
+    },
+    {
+      "offerTitle": "TRABAJADORES DE LA ELABORACIÓN DE PRODUCTOS LÁCTEOS",
+      "offerCount": 1,
+      "cnoCode": "7704",
+      "catalogueRows": [
+        {
+          "code": "77041032",
+          "label": "TRABAJADORES DE LA ELABORACIÓN DE PRODUCTOS LÁCTEOS",
+          "page": 57
+        }
+      ],
+      "relatedProgrammeKeys": [],
+      "publicationApproved": false
+    },
+    {
+      "offerTitle": "VIGILANTES DE COMEDOR ESCOLAR",
+      "offerCount": 1,
+      "cnoCode": "5721",
+      "catalogueRows": [
+        {
+          "code": "57211033",
+          "label": "VIGILANTES DE COMEDOR ESCOLAR",
+          "page": 40
+        }
+      ],
+      "relatedProgrammeKeys": [],
+      "publicationApproved": false
+    }
+  ]
+}

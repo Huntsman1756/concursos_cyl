@@ -1,4 +1,3 @@
-import { createHash } from "node:crypto";
 import { readFileSync, existsSync } from "node:fs";
 import { resolve } from "node:path";
 import { describe, expect, it } from "vitest";
@@ -36,11 +35,10 @@ const EXPECTED_KEYS = [
   "IMS03S",
 ] as const;
 
-const EXPECTED_HASH = createHash("sha256")
-  .update(
-    readFileSync(resolve(repoRoot, "data/curated/occupations.json"), "utf8"),
-  )
-  .digest("hex");
+// Historical decisions stay bound to their reviewed catalogue, never re-dated
+// merely because the current catalogue grows.
+const EXPECTED_HASH =
+  "0c3224887ccb75806a32186e671e8e1ea670e84e17b85b42e105f19e88751cef";
 
 describe("fp-coverage-research-outcomes.json", () => {
   const raw = readFileSync(outcomesPath, "utf-8");
@@ -79,7 +77,7 @@ describe("fp-coverage-research-outcomes.json", () => {
     expect(dateMap.size).toBe(2);
   });
 
-  it("uses the approved occupations catalog SHA-256 for every entry", () => {
+  it("preserves the historical reviewed catalogue SHA-256 for every entry", () => {
     for (const entry of document.outcomes) {
       expect(entry.occupationCatalogSha256).toBe(EXPECTED_HASH);
     }
@@ -118,33 +116,28 @@ describe("fp-coverage-research-outcomes.json", () => {
     ).toBe(true);
   });
 
-  it("keeps IMS03S as the single no-match and IFC03E pending", () => {
-    const queue = JSON.parse(readFileSync(queuePath, "utf8")) as {
-      candidates: Array<{ baseProgramKey: string }>;
-    };
-    expect(
-      document.outcomes.filter(
-        (entry: { baseProgramKey: string }) =>
-          entry.baseProgramKey === "IMS03S",
+  it("supersedes historical no-match decisions with approved relations and leaves two precise research gaps", () => {
+    const queue = JSON.parse(readFileSync(queuePath, "utf8"));
+    const links = JSON.parse(
+      readFileSync(
+        resolve(repoRoot, "data/curated/training-occupation-links.json"),
+        "utf8",
       ),
-    ).toHaveLength(1);
+    ) as Array<{ trainingProgramKey: string; reviewStatus: string }>;
+    for (const key of EXPECTED_KEYS) {
+      expect(
+        links.some(
+          (link) =>
+            link.trainingProgramKey === key && link.reviewStatus === "approved",
+        ),
+      ).toBe(true);
+    }
     expect(
-      document.outcomes.find(
-        (entry: { baseProgramKey: string }) =>
-          entry.baseProgramKey === "IMS03S",
-      )?.status,
-    ).toBe("reviewed-no-publishable-match");
-    expect(
-      document.outcomes.some(
-        (entry: { baseProgramKey: string }) =>
-          entry.baseProgramKey === "IFC03E",
+      queue.candidates.map(
+        (candidate: { baseProgramKey: string }) => candidate.baseProgramKey,
       ),
-    ).toBe(false);
-    expect(
-      queue.candidates.some(
-        (candidate) => candidate.baseProgramKey === "IFC03E",
-      ),
-    ).toBe(true);
+    ).toEqual(["IMA01E", "IMA02E"]);
+    expect(queue.completedNoMatchBaseCount).toBe(0);
   });
 
   it("rejects duplicate baseProgramKey values", () => {

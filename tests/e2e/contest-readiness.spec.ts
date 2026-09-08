@@ -536,10 +536,10 @@ test.describe("contest readiness journeys", () => {
 
     await chooseTrainingProgram(page, "COM01M");
     await expect(
-      page.getByText("Profesiones comprobadas para este ciclo: 7."),
-    ).toContainText("Profesiones comprobadas para este ciclo: 7.");
+      page.getByText("Profesiones comprobadas para este ciclo: 6."),
+    ).toContainText("Profesiones comprobadas para este ciclo: 6.");
     await expect(
-      page.getByText("Profesiones comprobadas para este ciclo: 7."),
+      page.getByText("Profesiones comprobadas para este ciclo: 6."),
     ).toHaveAttribute("role", "status");
     await page.getByRole("button", { name: "Ver salidas y ofertas" }).click();
     await expect(page).toHaveURL(/\/desde-fp\/COM01M\?query=/u);

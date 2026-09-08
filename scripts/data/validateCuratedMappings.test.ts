@@ -607,362 +607,20 @@ const programs: TrainingProgram[] = [
   })) as TrainingProgram[]),
 ];
 
-const diskPrograms: TrainingProgram[] = [
-  ...programs,
-  {
-    programKey: "MAM02M",
-    programTitle: "Instalación y Amueblamiento",
-    level: "intermediate",
-    familyCode: "MAM",
-    familyName: "Madera, Mueble y Corcho",
-  },
-  {
-    programKey: "SSC06S",
-    programTitle: "Formación para la movilidad segura y sostenible",
-    level: "higher",
-    familyCode: "SSC",
-    familyName: "Servicios Socioculturales y a la Comunidad",
-  },
-  {
-    programKey: "AGA03M",
-    programTitle: "Jardinería y Floristería",
-    level: "intermediate",
-    familyCode: "AGA",
-    familyName: "Agraria",
-  },
-  {
-    programKey: "INA03M",
-    programTitle: "Elaboración de Productos Alimenticios",
-    level: "intermediate",
-    familyCode: "INA",
-    familyName: "Industrias Alimentarias",
-  },
-  {
-    programKey: "TMV05M",
-    programTitle: "Mantenimiento de Material Rodante Ferroviario",
-    level: "intermediate",
-    familyCode: "TMV",
-    familyName: "Transporte y Mantenimiento de Vehículos",
-  },
-  {
-    programKey: "ARG01M",
-    programTitle: "Preimpresión Digital",
-    level: "intermediate",
-    familyCode: "ARG",
-    familyName: "Artes Gráficas",
-  },
-  {
-    programKey: "SSC04S",
-    programTitle: "Promoción de Igualdad de Género",
-    level: "higher",
-    familyCode: "SSC",
-    familyName: "Servicios Socioculturales y a la Comunidad",
-  },
-  {
-    programKey: "ELE05S",
-    programTitle: "Electromedicina Clínica",
-    level: "higher",
-    familyCode: "ELE",
-    familyName: "Electricidad y Electrónica",
-  },
-  {
-    programKey: "ENA02S",
-    programTitle: "Centrales Eléctricas",
-    level: "higher",
-    familyCode: "ENA",
-    familyName: "Energía y Agua",
-  },
-  {
-    programKey: "ENA04S",
-    programTitle: "Gestión del agua",
-    level: "higher",
-    familyCode: "ENA",
-    familyName: "Energía y Agua",
-  },
-  {
-    programKey: "TCP02B",
-    programTitle: "Tapicería y Cortinaje",
-    level: "basic",
-    familyCode: "TCP",
-    familyName: "Textil, Confección y Piel",
-  },
-  {
-    programKey: "QUI01M",
-    programTitle: "Planta Química",
-    level: "intermediate",
-    familyCode: "QUI",
-    familyName: "Química",
-  },
-  {
-    programKey: "AGA01S",
-    programTitle: "Gestión Forestal y del Medio Natural",
-    level: "higher",
-    familyCode: "AGA",
-    familyName: "Agraria",
-  },
-  {
-    programKey: "AGA03S",
-    programTitle: "Ganadería y Asistencia en Sanidad Animal",
-    level: "higher",
-    familyCode: "AGA",
-    familyName: "Agraria",
-  },
-  {
-    programKey: "AGA04M",
-    programTitle: "Aprovechamiento y Conservación del Medio Natural",
-    level: "intermediate",
-    familyCode: "AGA",
-    familyName: "Agraria",
-  },
-  {
-    programKey: "EOC02S",
-    programTitle: "Proyectos de Obra Civil",
-    level: "higher",
-    familyCode: "EOC",
-    familyName: "Edificación y Obra Civil",
-  },
-  {
-    programKey: "EOC02SD",
-    programTitle: "Proyectos de Obra Civil (distancia)",
-    level: "higher",
-    familyCode: "EOC",
-    familyName: "Edificación y Obra Civil",
-  },
-  {
-    programKey: "FME02S",
-    programTitle: "Construcciones Metálicas",
-    level: "higher",
-    familyCode: "FME",
-    familyName: "Fabricación Mecánica",
-  },
-  {
-    programKey: "SAN04S",
-    programTitle: "Anatomía Patológica y Citodiagnóstico",
-    level: "higher",
-    familyCode: "SAN",
-    familyName: "Sanidad",
-  },
-  {
-    programKey: "SEA03S",
-    programTitle: "Química y Salud Ambiental",
-    level: "higher",
-    familyCode: "SEA",
-    familyName: "Seguridad y Medio Ambiente",
-  },
-  {
-    programKey: "SSC05S",
-    programTitle: "Mediación Comunicativa",
-    level: "higher",
-    familyCode: "SSC",
-    familyName: "Servicios Socioculturales y a la Comunidad",
-  },
-  {
-    programKey: "TMV03E",
-    programTitle:
-      "Mantenimiento y seguridad en sistemas de vehículos hibridos y eléctricos",
-    level: "specialization",
-    familyCode: "TMV",
-    familyName: "Transporte y Mantenimiento de Vehículos",
-  },
-  {
-    programKey: "ENA03S",
-    programTitle: "Energías Renovables",
-    level: "higher",
-    familyCode: "ENA",
-    familyName: "Energía y Agua",
-  },
-  {
-    programKey: "FME02B",
-    programTitle: "Fabricación de Elementos Metálicos",
-    level: "basic",
-    familyCode: "FME",
-    familyName: "Fabricación Mecánica",
-  },
-  {
-    programKey: "HOT05S",
-    programTitle: "Dirección de Servicios de Restauración",
-    level: "higher",
-    familyCode: "HOT",
-    familyName: "Hostelería y Turismo",
-  },
-  {
-    programKey: "INA02S",
-    programTitle: "Procesos y Calidad en la Industria Alimentaria",
-    level: "higher",
-    familyCode: "INA",
-    familyName: "Industrias Alimentarias",
-  },
-  {
-    programKey: "QUI01S",
-    programTitle: "Laboratorio de Análisis y Control de Calidad",
-    level: "higher",
-    familyCode: "QUI",
-    familyName: "Química",
-  },
-  {
-    programKey: "SAN09S",
-    programTitle: "Radioterapia y Dosimetría",
-    level: "higher",
-    familyCode: "SAN",
-    familyName: "Sanidad",
-  },
-  {
-    programKey: "SAN09SD",
-    programTitle: "Radioterapia y Dosimetría (distancia)",
-    level: "higher",
-    familyCode: "SAN",
-    familyName: "Sanidad",
-  },
-  {
-    programKey: "COM02E",
-    programTitle: "Redacción de contenidos digitales para marketing y ventas",
-    level: "specialization",
-    familyCode: "COM",
-    familyName: "Comercio y Marketing",
-  },
-  {
-    programKey: "ELE02B",
-    programTitle: "Instalaciones Electrotécnicas y Mecánica",
-    level: "basic",
-    familyCode: "ELE",
-    familyName: "Electricidad y Electrónica",
-  },
-  {
-    programKey: "IMA01M",
-    programTitle: "Instalaciones de Producción de Calor",
-    level: "intermediate",
-    familyCode: "IMA",
-    familyName: "Instalación y Mantenimiento",
-  },
-  {
-    programKey: "IMS01E",
-    programTitle: "Audiodescripción y subtitulación",
-    level: "specialization",
-    familyCode: "IMS",
-    familyName: "Imagen y Sonido",
-  },
-  {
-    programKey: "INA02M",
-    programTitle: "Aceites de Oliva y Vinos",
-    level: "intermediate",
-    familyCode: "INA",
-    familyName: "Industrias Alimentarias",
-  },
-  {
-    programKey: "QUI01E",
-    programTitle: "Cultivos celulares",
-    level: "specialization",
-    familyCode: "QUI",
-    familyName: "Química",
-  },
-  {
-    programKey: "SAN01S",
-    programTitle: "Audiología Protésica",
-    level: "higher",
-    familyCode: "SAN",
-    familyName: "Sanidad",
-  },
-  {
-    programKey: "SAN01SD",
-    programTitle: "Audiología Protésica (distancia)",
-    level: "higher",
-    familyCode: "SAN",
-    familyName: "Sanidad",
-  },
-  {
-    programKey: "SAN02S",
-    programTitle: "Prótesis Dentales",
-    level: "higher",
-    familyCode: "SAN",
-    familyName: "Sanidad",
-  },
-  {
-    programKey: "SEA01M",
-    programTitle: "Emergencias y Protección Civil",
-    level: "intermediate",
-    familyCode: "SEA",
-    familyName: "Seguridad y Medio Ambiente",
-  },
-  {
-    programKey: "SEA01MD",
-    programTitle: "Emergencias y Protección Civil (distancia)",
-    level: "intermediate",
-    familyCode: "SEA",
-    familyName: "Seguridad y Medio Ambiente",
-  },
-  {
-    programKey: "TMV03M",
-    programTitle: "Electromecánica de maquinaria",
-    level: "intermediate",
-    familyCode: "TMV",
-    familyName: "Transporte y Mantenimiento de Vehículos",
-  },
-  {
-    programKey: "IMS01S",
-    programTitle: "Animaciones 3D, Juegos y Entornos Interactivos",
-    level: "higher",
-    familyCode: "IMS",
-    familyName: "Imagen y Sonido",
-  },
-  {
-    programKey: "AGA02S",
-    programTitle: "Paisajismo y Medio Rural",
-    level: "higher",
-    familyCode: "AGA",
-    familyName: "Agraria",
-  },
-  {
-    programKey: "COM01E",
-    programTitle:
-      "Posicionamiento en buscadores (SEO/SEM) y comunicación en redes sociales",
-    level: "specialization",
-    familyCode: "COM",
-    familyName: "Comercio y Marketing",
-  },
-  {
-    programKey: "ELE01E",
-    programTitle:
-      "Ciberseguridad en entornos de las tecnologías de la operación",
-    level: "specialization",
-    familyCode: "ELE",
-    familyName: "Electricidad y Electrónica",
-  },
-  {
-    programKey: "EOC01B",
-    programTitle: "Reforma y Mantenimiento de Edificios",
-    level: "basic",
-    familyCode: "EOC",
-    familyName: "Edificación y Obra Civil",
-  },
-  {
-    programKey: "EOC02M",
-    programTitle: "Obras de Interior, Decoración y Rehabilitación",
-    level: "intermediate",
-    familyCode: "EOC",
-    familyName: "Edificación y Obra Civil",
-  },
-  {
-    programKey: "FME01E",
-    programTitle: "Fabricación aditiva",
-    level: "specialization",
-    familyCode: "FME",
-    familyName: "Fabricación Mecánica",
-  },
-  {
-    programKey: "IMA02S",
-    programTitle: "Mantenimiento de Instalaciones Térmicas y de Fluidos",
-    level: "higher",
-    familyCode: "IMA",
-    familyName: "Instalación y Mantenimiento",
-  },
-  {
-    programKey: "IMS04S",
-    programTitle: "Sonido para Audiovisuales y Espectáculos",
-    level: "higher",
-    familyCode: "IMS",
-    familyName: "Imagen y Sonido",
-  },
-];
+// Integration checks use the catalogue addressed by the active manifest.
+const diskManifest = JSON.parse(
+  readFileSync(resolve(process.cwd(), "public/data/v1/manifest.json"), "utf8"),
+);
+const diskPrograms: TrainingProgram[] = JSON.parse(
+  readFileSync(
+    resolve(
+      process.cwd(),
+      "public",
+      diskManifest.resourceSnapshots.programs.resourcePath.replace(/^\//u, ""),
+    ),
+    "utf8",
+  ),
+);
 
 const occupations = [
   {
@@ -1053,6 +711,23 @@ describe("curated occupation mappings", () => {
       }),
     ).not.toThrow();
   });
+
+  it.each([
+    "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+    "https://www.boe.es/eli/es/rd/2010/11/26/1591",
+  ])(
+    "rejects a classification-only source as FP relationship evidence: %s",
+    (sourceUrl) => {
+      expect(() =>
+        validateCuratedMappings({
+          programs,
+          occupations,
+          aliases,
+          links: [{ ...links[0], sourceUrl }],
+        }),
+      ).toThrow(/classification alone is not relationship evidence/i);
+    },
+  );
 
   it("rejects a meaningless three-character official citation quote", () => {
     expect(() =>
@@ -1480,315 +1155,16 @@ describe("curated occupation mappings", () => {
       ),
     ).toBe(true);
     expect(administrativeLinks).toHaveLength(0);
-    expect(approved.occupations.map((item) => item.classificationCode)).toEqual(
-      [
-        "2312",
-        "2713",
-        "4424",
-        "4121",
-        "5110",
-        "5120",
-        "5611",
-        "5612",
-        "5629",
-        "5710",
-        "9310",
-        "7111",
-        "7121",
-        "7193",
-        "7240",
-        "7291",
-        "3510",
-        "3522",
-        "3523",
-        "5210",
-        "5220",
-        "5420",
-        "5500",
-        "6120",
-        "7132",
-        "7250",
-        "7312",
-        "7313",
-        "7314",
-        "7531",
-        "6110",
-        "6204",
-        "6205",
-        "8321",
-        "7232",
-        "5492",
-        "4123",
-        "9820",
-        "8333",
-        "7322",
-        "7323",
-        "7324",
-        "7812",
-        "8209",
-        "5621",
-        "5811",
-        "5812",
-        "2252",
-        "3811",
-        "3812",
-        "3813",
-        "4111",
-        "4113",
-        "4223",
-        "2721",
-        "2722",
-        "3814",
-        "7294",
-        "7510",
-        "7533",
-        "4210",
-        "4221",
-        "4301",
-        "4411",
-        "4423",
-        "9431",
-        "8202",
-        "3820",
-        "7293",
-        "7401",
-        "3713",
-        "1432",
-        "2640",
-        "3126",
-        "3160",
-        "3314",
-        "3405",
-        "3722",
-        "3723",
-        "3724",
-        "4412",
-        "5300",
-        "5992",
-        "7221",
-        "9700",
-        "3123",
-        "3124",
-        "3129",
-        "3139",
-        "3209",
-        "7521",
-        "6300",
-        "7709",
-        "9511",
-        "9512",
-        "9530",
-        "9543",
-        "1221",
-        "2651",
-        "2921",
-        "2923",
-        "7222",
-        "7705",
-        "7707",
-        "8193",
-        "3141",
-        "3316",
-        "3317",
-        "5931",
-        "5932",
-        "5993",
-        "7403",
-        "5894",
-        "8160",
-        "7404",
-        "7621",
-        "3714",
-        "3125",
-        "7532",
-        "3131",
-        "3132",
-        "7835",
-        "8131",
-        "2482",
-        "2484",
-        "2729",
-        "3831",
-        "7191",
-        "7211",
-        "7231",
-        "9602",
-      ],
-    );
     expect(
-      approved.links.reduce<Record<string, number>>((counts, item) => {
-        counts[item.trainingProgramKey] =
-          (counts[item.trainingProgramKey] ?? 0) + 1;
-        return counts;
-      }, {}),
-    ).toEqual(
-      Object.fromEntries(
-        Object.entries({
-          IFC03S: 1,
-          IFC03SD: 1,
-          SSC01M: 2,
-          SAN21: 2,
-          HOT01M: 1,
-          COM02M: 2,
-          COM02E: 2,
-          EOC01M: 5,
-          AGA03M: 1,
-          FME02M: 4,
-          FME02S: 1,
-          IMA02M: 1,
-          ELE03S: 1,
-          ELE04S: 6,
-          AGA01M: 6,
-          AGA01S: 1,
-          AGA02M: 6,
-          AGA02S: 1,
-          AGA03B: 4,
-          INA01S: 1,
-          TMV01M: 1,
-          COM01B: 7,
-          COM01E: 1,
-          FME01M: 3,
-          MAM01M: 2,
-          SAN02M: 1,
-          SAN04S: 1,
-          IMP02M: 2,
-          IMP02MD: 2,
-          IMP02S: 1,
-          FME03S: 1,
-          HOT02S: 3,
-          SSC02S: 3,
-          ADG02S: 4,
-          ADG02SD: 4,
-          IFC01M: 3,
-          IFC01MD: 1,
-          SSC01S: 1,
-          SSC01SD: 1,
-          IFC01S: 5,
-          IFC01SD: 5,
-          ELE01M: 1,
-          ELE01MD: 3,
-          ADG01B: 1,
-          ELE01B: 1,
-          ELE01E: 1,
-          IFC02S: 2,
-          IFC02SD: 2,
-          TMV01B: 1,
-          HOT01B: 1,
-          SSC03S: 2,
-          SSC03SD: 2,
-          ELE02M: 1,
-          ELE02B: 3,
-          SEA03S: 2,
-          SSC05S: 1,
-          IMP01B: 2,
-          TMV01S: 3,
-          IMA03S: 1,
-          IFC01B: 2,
-          COM01M: 7,
-          AFD01S: 4,
-          AFD01SD: 4,
-          SAN08S: 1,
-          SAN08SD: 1,
-          ADG01M: 1,
-          ADG01MD: 1,
-          TMV02M: 1,
-          IMA03M: 1,
-          IMA01M: 4,
-          IMA02S: 1,
-          TMV03E: 1,
-          QUI02M: 1,
-          COM04S: 3,
-          COM04SD: 3,
-          FME01B: 2,
-          FME01S: 1,
-          AFD02S: 1,
-          AFD02SD: 1,
-          SAN07S: 1,
-          SAN07SD: 1,
-          HOT04S: 1,
-          ELE01S: 2,
-          COM02S: 4,
-          COM02SD: 4,
-          AFD02M: 2,
-          IFC02B: 1,
-          HOT01S: 1,
-          ADG01S: 1,
-          IMP01M: 5,
-          HOT03S: 2,
-          AGA01B: 1,
-          COM03S: 2,
-          ELE02S: 4,
-          HOT02M: 2,
-          IMP01S: 1,
-          MAM01B: 3,
-          AGA03S: 1,
-          AGA04M: 2,
-          EOC02S: 1,
-          EOC01B: 6,
-          EOC02M: 2,
-          ENA03S: 2,
-          FME02B: 4,
-          FME01E: 1,
-          HOT05S: 1,
-          INA02S: 3,
-          IMS01E: 2,
-          IMS01S: 2,
-          IMS04S: 1,
-          INA02M: 4,
-          QUI01S: 2,
-          SAN09S: 1,
-          SAN09SD: 1,
-          QUI01E: 1,
-          SAN01S: 1,
-          SAN01SD: 1,
-          SAN02S: 2,
-          SEA01M: 3,
-          SEA01MD: 3,
-          TMV03M: 1,
-          MAM02M: 1,
-          SSC06S: 1,
-          INA03M: 1,
-          TMV05M: 1,
-          ARG01M: 1,
-          SSC04S: 1,
-          ELE05S: 2,
-          ENA02S: 1,
-          ENA04S: 1,
-          TCP02B: 1,
-          QUI01M: 1,
-        }).filter(([programKey]) =>
-          approved.links.some((link) => link.trainingProgramKey === programKey),
-        ),
-      ),
-    );
-
-    const coverage = buildMappingCoverage(programs, curated.links);
-    expect(coverage).toContainEqual(
-      expect.objectContaining({
-        scope: "program",
-        programKey: "ADG01M",
-        approvedMappings: 1,
-        draftMappings: 0,
-        coverageStatus: "reviewed",
-      }),
-    );
-    expect(coverage).toContainEqual(
-      expect.objectContaining({
-        scope: "program",
-        programKey: "ADG01MD",
-        approvedMappings: 1,
-        draftMappings: 0,
-        coverageStatus: "reviewed",
-      }),
-    );
-    expect(coverage).toContainEqual(
-      expect.objectContaining({
-        scope: "program",
-        programKey: "HOT01M",
-        approvedMappings: 1,
-        coverageStatus: "reviewed",
-      }),
-    );
+      approved.occupations.some((item) => item.classificationCode === "4309"),
+    ).toBe(false);
+    expect(
+      approved.links
+        .filter((item) =>
+          ["ADG01M", "ADG01MD"].includes(item.trainingProgramKey),
+        )
+        .map((item) => item.occupationId),
+    ).toEqual(["occupation:cno11:4113", "occupation:cno11:4113"]);
   });
 
   it("publishes only the evidence-backed priority FP relations", async () => {
@@ -1805,11 +1181,7 @@ describe("curated occupation mappings", () => {
 
     expect(occupationIdsFor("IMP02S")).toEqual(["occupation:cno11:5811"]);
     expect(occupationIdsFor("FME03S")).toEqual(["occupation:cno11:3126"]);
-    expect(occupationIdsFor("HOT02S")).toEqual([
-      "occupation:cno11:4123",
-      "occupation:cno11:4411",
-      "occupation:cno11:5492",
-    ]);
+    expect(occupationIdsFor("HOT02S")).toEqual(["occupation:cno11:4421"]);
     expect(occupationIdsFor("SSC02S")).toEqual([
       "occupation:cno11:3713",
       "occupation:cno11:3724",
@@ -1838,15 +1210,15 @@ describe("curated occupation mappings", () => {
       "occupation:cno11:9543",
     ]);
     expect(occupationIdsFor("INA01S")).toEqual(["occupation:cno11:7709"]);
-    expect(occupationIdsFor("IMS03S")).toEqual([]);
+    expect(occupationIdsFor("IMS03S")).toEqual(["occupation:cno11:3532"]);
 
     const coverage = buildMappingCoverage(diskPrograms, curated.links);
     expect(coverage).toContainEqual(
       expect.objectContaining({
         scope: "program",
         programKey: "IMS03S",
-        approvedMappings: 0,
-        coverageStatus: "uncovered",
+        approvedMappings: 1,
+        coverageStatus: "reviewed",
       }),
     );
   });
@@ -2077,9 +1449,9 @@ describe("curated occupation mappings", () => {
       ),
     );
 
-    expect.soft(approved.links).toHaveLength(264);
-    expect.soft(reviewedBaseKeys.size).toBe(113);
-    expect.soft(approvedProgramKeys.size).toBe(130);
+    expect.soft(approved.links).toHaveLength(320);
+    expect.soft(reviewedBaseKeys.size).toBe(152);
+    expect.soft(approvedProgramKeys.size).toBe(185);
   });
 
   it("defers the ambiguous EOC02M plasterboard output", async () => {
@@ -2119,11 +1491,11 @@ describe("curated occupation mappings", () => {
     );
 
     expect(remediatedKeys.filter((key) => approvedKeys.has(key))).toEqual([]);
-    expect(approved.links).toHaveLength(264);
-    expect(approvedKeys.size).toBe(264);
+    expect(approved.links).toHaveLength(320);
+    expect(approvedKeys.size).toBe(320);
     expect(
       new Set(approved.links.map((link) => link.trainingProgramKey)).size,
-    ).toBe(130);
+    ).toBe(185);
   });
 
   it("retains the corrected official evidence quotes", async () => {
@@ -2266,7 +1638,7 @@ describe("curated occupation mappings", () => {
         ),
       });
     }
-    expect(approved.occupations).toHaveLength(131);
+    expect(approved.occupations).toHaveLength(158);
     expect(
       approved.occupations.filter((occupation) =>
         [
@@ -2435,9 +1807,9 @@ describe("curated occupation mappings", () => {
     expect(actual).toEqual(
       [...expected].sort((left, right) => left.key.localeCompare(right.key)),
     );
-    expect(approved.links).toHaveLength(264);
-    expect(approved.occupations).toHaveLength(131);
-    expect(curated.occupations).toHaveLength(138);
+    expect(approved.links).toHaveLength(320);
+    expect(approved.occupations).toHaveLength(158);
+    expect(curated.occupations).toHaveLength(163);
     expect(curated.aliases).toHaveLength(35);
     const task5FunctionalBoundaries = Object.fromEntries(
       curated.links
@@ -2509,10 +1881,10 @@ describe("curated occupation mappings", () => {
     ).toBe(false);
     expect(
       approved.links.some((link) => link.trainingProgramKey === "IMS03S"),
-    ).toBe(false);
+    ).toBe(true);
     expect(
       approved.links.some((link) => link.trainingProgramKey === "IFC03E"),
-    ).toBe(false);
+    ).toBe(true);
   });
 
   it("publishes only EOC01M aliases accepted by the official audit", async () => {

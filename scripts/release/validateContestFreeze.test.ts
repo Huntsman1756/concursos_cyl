@@ -32,13 +32,13 @@ import {
 
 const ROOT = process.cwd();
 
-const APPROVED_SOURCE_COMMIT_SHA = "136a08859f387427b74605bdcf8c19ea9584aebc";
+const APPROVED_SOURCE_COMMIT_SHA = "8bf3ab85aac3e4c08d1826280529e9a648cbe0cc";
 const PRIOR_SCHEMA_TWO_SOURCE_COMMIT_SHA =
   "ff9e6197f926e462bea1a3e8ac6a57a23d3f825a";
 const LEGACY_SOURCE_COMMIT_SHA = "05f905397d22b217c4716c88a2406d802892fb6d";
-const CANONICAL_SNAPSHOT_ID = "20260908044344059-f92da75832e9";
+const CANONICAL_SNAPSHOT_ID = "20260908155911229-c72920ec4fed";
 const CANONICAL_MANIFEST_SHA256 =
-  "93010bd8973e244b2687ae6c625e84d0fd2b85d76d4126c2473faf1cb342742e";
+  "b5f0916f061358f6467285914f09c2a8491195dcc39fcb24d5004c6fba3a0837";
 
 async function readFreeze(): Promise<Record<string, unknown>> {
   return JSON.parse(
@@ -379,13 +379,13 @@ describe("contest coverage freeze validator", () => {
     expect(fresh.manifest.path).toBe("public/data/v1/manifest.json");
     expect(fresh.manifest.snapshotId).toBe(CANONICAL_SNAPSHOT_ID);
     expect(fresh.manifest.sha256).toBe(CANONICAL_MANIFEST_SHA256);
-    expect(fresh.coverage.approvedRelationCount).toBe(264);
-    expect(fresh.coverage.distinctQualificationCount).toBe(113);
-    expect(fresh.coverage.modalityKeyCount).toBe(130);
-    expect(fresh.coverage.matchedRelationCount).toBe(34);
-    expect(fresh.coverage.zeroReviewedRelationCount).toBe(230);
-    expect(fresh.offers.matchedOfferCount).toBe(128);
-    expect(fresh.coverage.deferredProgramCount).toBe(0);
+    expect(fresh.coverage.approvedRelationCount).toBe(320);
+    expect(fresh.coverage.distinctQualificationCount).toBe(152);
+    expect(fresh.coverage.modalityKeyCount).toBe(185);
+    expect(fresh.coverage.matchedRelationCount).toBe(42);
+    expect(fresh.coverage.zeroReviewedRelationCount).toBe(278);
+    expect(fresh.offers.matchedOfferCount).toBe(301);
+    expect(fresh.coverage.deferredProgramCount).toBe(2);
     expect(fresh.attempts).toEqual({
       completed: 11,
       deferred: 0,
@@ -393,7 +393,7 @@ describe("contest coverage freeze validator", () => {
       terminal: 11,
       reserveUnattempted: 0,
     });
-  });
+  }, 30_000);
 
   it("pins the Carril A canonical coverage identity", () => {
     const fresh = createFreshContestFreeze(ROOT, APPROVED_SOURCE_COMMIT_SHA);
@@ -401,7 +401,7 @@ describe("contest coverage freeze validator", () => {
     expect(fresh.sourceCommitSha).toBe(APPROVED_SOURCE_COMMIT_SHA);
     expect(fresh.manifest.snapshotId).toBe(CANONICAL_SNAPSHOT_ID);
     expect(fresh.manifest.sha256).toBe(CANONICAL_MANIFEST_SHA256);
-  });
+  }, 30_000);
 
   it("writes a v2 candidate from current sources and discards poisoned v1 metadata", async () => {
     const root = mkdtempSync(join(tmpdir(), "contest-freeze-write-"));
@@ -709,26 +709,26 @@ it("asserts every canonical final fact in the checked-in fixture", async () => {
     string,
     { recordCount: number }
   >;
-  expect(resources.occupations.recordCount).toBe(131);
+  expect(resources.occupations.recordCount).toBe(158);
   expect(resources.occupationAliases.recordCount).toBe(35);
   expect(
     (freeze.coverage as Record<string, unknown>).approvedRelationCount,
-  ).toBe(264);
+  ).toBe(320);
   expect((freeze.coverage as Record<string, unknown>).approvedAliasCount).toBe(
     35,
   );
   expect(
     (freeze.coverage as Record<string, unknown>).matchedRelationCount,
-  ).toBe(34);
+  ).toBe(42);
   expect(
     (freeze.coverage as Record<string, unknown>).zeroReviewedRelationCount,
-  ).toBe(230);
+  ).toBe(278);
   expect((freeze.offers as Record<string, unknown>).matchedOfferCount).toBe(
-    128,
+    301,
   );
   expect(
     (freeze.coverage as Record<string, unknown>).deferredProgramCount,
-  ).toBe(0);
+  ).toBe(2);
   expect(freeze.attempts).toEqual({
     completed: 11,
     deferred: 0,

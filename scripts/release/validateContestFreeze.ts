@@ -81,7 +81,7 @@ const FREEZE_KEYS = [
 
 const CANONICAL_MANIFEST_PATH = "public/data/v1/manifest.json";
 export const CONTEST_FREEZE_SOURCE_COMMIT_SHA =
-  "136a08859f387427b74605bdcf8c19ea9584aebc";
+  "8bf3ab85aac3e4c08d1826280529e9a648cbe0cc";
 
 const CANONICAL_RESOURCE_KEYS: readonly CandidateResourceKey[] = (() => {
   const keys: string[] = [...CANDIDATE_RESOURCE_KEYS];
@@ -1012,8 +1012,11 @@ function recomputeFreeze(
   const candidates = expansion.candidates;
   if (!Array.isArray(candidates))
     throw new Error("expansion candidates must be an array");
-  const deferredPrograms = sortedUnique(
-    candidates
+  const deferredPrograms = sortedUnique([
+    ...programs
+      .filter((program) => !modalityKeys.includes(program.programKey))
+      .map((program) => program.programKey),
+    ...candidates
       .filter(
         (candidate) =>
           record(candidate, "expansion candidate").state === "deferred",
@@ -1024,7 +1027,7 @@ function recomputeFreeze(
           "candidate.programKey",
         ),
       ),
-  );
+  ]);
   const expansionCounts = record(expansion.counts, "expansion counts");
   const offerDeltas = record(expansion.offerDeltas, "expansion offerDeltas");
   const unionOfferIds = stringArray(

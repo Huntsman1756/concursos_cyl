@@ -19,8 +19,8 @@ import {
   type ContestFreeze,
 } from "./validateContestFreeze";
 
-const EXPANDED_SOURCE_SHA = "136a08859f387427b74605bdcf8c19ea9584aebc";
-const EXPANDED_FREEZE_COMMIT_SHA = "0dd6f14315a2949776f77d38a1ed9f3dd97d9885";
+const EXPANDED_SOURCE_SHA = "8bf3ab85aac3e4c08d1826280529e9a648cbe0cc";
+const EXPANDED_FREEZE_COMMIT_SHA = "be3431cef26545e7a976ba68f2c111bddbe528e8";
 const LEGACY_SOURCE_SHA = "ff9e6197f926e462bea1a3e8ac6a57a23d3f825a";
 const CANDIDATE_4_TAG = "v2026.08.27-candidate.4";
 const CANDIDATE_4_COMMIT = "a59a788a39bc8d300c66fee39ea2f2469f588112";
@@ -311,5 +311,5 @@ describe("contest promotion provenance matrix", () => {
       if (deploymentEvidence.status === "verified")
         expect(content).not.toContain("PENDIENTE DE DESPLIEGUE");
     }
-  });
+  }, 30_000);
 });

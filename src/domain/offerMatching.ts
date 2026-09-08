@@ -81,6 +81,12 @@ export function trainingLinkEvidenceIdentity(
     link.reviewedAt,
     link.mappingVersion,
     optionalField(link.reviewNote),
+    ...(link.functionalBoundary === undefined
+      ? []
+      : [
+          link.functionalBoundary.roleLevel,
+          String(link.functionalBoundary.fullOccupationQualification),
+        ]),
   ]);
 }
 
@@ -385,6 +391,13 @@ export const OfferMatchSchema = z
       match.matchRule === "title_alias_exact" ||
       match.matchRule === "title_alias_phrase"
     ) {
+      if (trainingLink.functionalBoundary?.roleLevel === "adjacent") {
+        context.addIssue({
+          code: "custom",
+          path: ["linkEvidence"],
+          message: "Adjacent relations require specific offer evidence.",
+        });
+      }
       const expectedTitle = normalizedText(match.titleEvidence.offerTitle);
       const expectedAlias = normalizedText(match.aliasEvidence.payload.alias);
       const expectedIdentity = titleMatchEvidenceIdentity({
@@ -909,6 +922,10 @@ function candidatesForOffer(
       }
     }
 
+    // A broad CNO alias does not establish a specialist's sector or function.
+    // Explicit qualification evidence and separately reviewed overrides above
+    // remain usable; the occupational relation itself stays in the catalogue.
+    if (link.functionalBoundary?.roleLevel === "adjacent") continue;
     const alias = bestAlias(
       normalizedText(offer.title),
       aliases.filter(({ occupationId }) => occupationId === link.occupationId),

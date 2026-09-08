@@ -49,8 +49,25 @@ for (const row of oneWordPublicationReviews.rows) {
   }
 }
 
+const activeManifest = JSON.parse(
+  await readFile(
+    new URL("../../public/data/v1/manifest.json", import.meta.url),
+    "utf8",
+  ),
+);
+const activeOffers = JSON.parse(
+  await readFile(
+    new URL(
+      `../../public${activeManifest.resourceSnapshots.jobOffers.resourcePath}`,
+      import.meta.url,
+    ),
+    "utf8",
+  ),
+) as Array<{ id: string; title: string }>;
 const fallbackOfferIdsByProgram: Record<string, string[]> = {
-  HOT01M: ["1285671836252"],
+  HOT01M: activeOffers
+    .filter((offer) => offer.title === "COCINEROS, EN GENERAL")
+    .map((offer) => offer.id),
   SSC01M: [
     "1285620653126",
     "1285629158396",

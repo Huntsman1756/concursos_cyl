@@ -1,13 +1,13 @@
 {
   "schemaVersion": 1,
-  "pdfWords": 688,
+  "pdfWords": 692,
   "pdfPages": 2,
   "sha256": {
-    "docs/contest/jury-memo.md": "8851471db7c4c557a395c7ef1de3fb99d198eda3b2abebad17507b0c7a5b30ab",
+    "docs/contest/jury-memo.md": "d862e8f415f85812999d4c1db2b776f382c04f1d696bac681ead18ed0332c6e4",
     "scripts/release/renderJuryMemoPdf.py": "97ea0d64db33efe64fd81165dbe47fb1964854056a420b6f4fbf3d2031ebd2de",
     "config/publication.json": "143340642530d51c67b8befa2d2fbec464d1051ad80d83a762b13cd8be84f0cb",
-    "public/candidatura.html": "a71d4f850a9c8767325ef8f3c4ebcfd3773dde70d432cc0eda0571d155eff3f2",
+    "public/candidatura.html": "ced7934849942146df23a2c7c1b20ff5b703d3a8be4d9d867ee9401fe33e3729",
     "public/candidatura.css": "7f229469dde5dc1d630334a741d0fd5f3e9fd34b99b0d11978b95bcbc3dc14c1",
-    "public/candidatura.pdf": "e9b2a1ec78bf8643e7f8b27b79f35f28abc5d12d0b7a066d376118890737e88a"
+    "public/candidatura.pdf": "59eeb3604235241aaa796cf49bf279c5065c1cedd087cf2797c188926d89642a"
   }
 }

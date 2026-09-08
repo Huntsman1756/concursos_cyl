@@ -98,7 +98,7 @@ async function prepareCapture(page: Page, evidenceId: string): Promise<void> {
     await chooseTrainingProgram(page, "EOC01M");
   }
   if (evidenceId === "fp-pre-search-reviewed-zero") {
-    await chooseTrainingProgram(page, "AFD01M");
+    await chooseTrainingProgram(page, "IMA01E");
   }
   if (evidenceId === "comparison-dual-scopes") {
     await page.getByText("Grado superior", { exact: true }).click();

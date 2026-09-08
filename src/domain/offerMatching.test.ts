@@ -169,6 +169,29 @@ function data(
   };
 }
 
+it("does not extend an adjacent specialist relation through a generic occupation alias", () => {
+  const input = data([offer("specialist", "Desarrollador web")]);
+  const adjacent = {
+    ...links[0],
+    functionalBoundary: {
+      roleLevel: "adjacent" as const,
+      fullOccupationQualification: false as const,
+    },
+  };
+  input.links = [adjacent];
+  expect(matchOffersForProgram("IFC03S", input)).toEqual([]);
+  expect(trainingLinkEvidenceIdentity(adjacent)).not.toBe(
+    trainingLinkEvidenceIdentity(links[0]),
+  );
+  const requirement = qualificationRequirement("specialist");
+  input.publishedRequirements = [
+    { offerId: "specialist", requirements: [requirement] },
+  ];
+  expect(matchOffersForProgram("IFC03S", input)[0]?.matchRule).toBe(
+    "published_qualification_exact",
+  );
+});
+
 describe("reviewed program qualification links", () => {
   it("links reviewed live qualifications to their programs with primary evidence", () => {
     expect(REVIEWED_PROGRAM_QUALIFICATION_LINKS).toEqual([

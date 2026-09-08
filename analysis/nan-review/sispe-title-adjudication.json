@@ -1,0 +1,112 @@
+{
+  "status": "curated-rules-awaiting-snapshot-validation",
+  "publicationApproved": false,
+  "sourceUrl": "https://www.sepe.es/ca/SiteSepe/contenidos/empresas/contratos_trabajo/comunicar_contratacion/pdf/ocupaciones.pdf",
+  "sourceSha256": "b8d7c02e849ff0133ee01e9e04c183218824b265ad9dadc90113834ed100cddd",
+  "sourceEdition": "2018",
+  "retrievedAt": "2026-09-08",
+  "reviewer": "AI coordinator using primary catalogue and reviewed FP relations",
+  "accepted": [
+    {
+      "offerTitle": "CUIDADORES DE PERSONAS CON DISCAPACIDAD Y/O DEPENDENCIA, EN INSTITUCIONES",
+      "programKeys": ["SSC01M", "SSC01MD"],
+      "classificationEvidence": {
+        "offerTitle": "CUIDADORES DE PERSONAS CON DISCAPACIDAD Y/O DEPENDENCIA, EN INSTITUCIONES",
+        "offerCount": 54,
+        "cnoCode": "5629",
+        "catalogueRows": [
+          {
+            "code": "56291025",
+            "label": "CUIDADORES DE PERSONAS CON DISCAPACIDAD Y/O DEPENDENCIA, EN INSTITUCIONES",
+            "page": 40
+          }
+        ],
+        "relatedProgrammeKeys": ["SSC01M", "SSC01MD"],
+        "publicationApproved": false
+      },
+      "decision": "accepted-exact-title-only",
+      "limits": "No substring/fuzzy matching; no automatic join to every FP relation sharing this CNO group. No eligibility guarantee."
+    },
+    {
+      "offerTitle": "COCINEROS, EN GENERAL",
+      "programKeys": ["HOT01M"],
+      "classificationEvidence": {
+        "offerTitle": "COCINEROS, EN GENERAL",
+        "offerCount": 49,
+        "cnoCode": "5110",
+        "catalogueRows": [
+          {
+            "code": "51101026",
+            "label": "COCINEROS, EN GENERAL",
+            "page": 37
+          }
+        ],
+        "relatedProgrammeKeys": ["HOT01M", "HOT04S", "HOT04SD"],
+        "publicationApproved": false
+      },
+      "decision": "accepted-exact-title-only",
+      "limits": "No substring/fuzzy matching; no automatic join to every FP relation sharing this CNO group. No eligibility guarantee."
+    },
+    {
+      "offerTitle": "AUXILIARES DE ENFERMERÍA",
+      "programKeys": ["SAN21", "SAN21D"],
+      "classificationEvidence": {
+        "offerTitle": "AUXILIARES DE ENFERMERÍA",
+        "offerCount": 32,
+        "cnoCode": "5611",
+        "catalogueRows": [
+          {
+            "code": "56111013",
+            "label": "AUXILIARES DE ENFERMERÍA",
+            "page": 40
+          }
+        ],
+        "relatedProgrammeKeys": ["SAN21", "SAN21D"],
+        "publicationApproved": false
+      },
+      "decision": "accepted-exact-title-only",
+      "limits": "No substring/fuzzy matching; no automatic join to every FP relation sharing this CNO group. No eligibility guarantee."
+    },
+    {
+      "offerTitle": "PERSONAL DE LIMPIEZA O LIMPIADORES EN GENERAL",
+      "programKeys": ["HOT02B"],
+      "classificationEvidence": {
+        "offerTitle": "PERSONAL DE LIMPIEZA O LIMPIADORES EN GENERAL",
+        "offerCount": 28,
+        "cnoCode": "9210",
+        "catalogueRows": [
+          {
+            "code": "92101050",
+            "label": "PERSONAL DE LIMPIEZA O LIMPIADORES EN GENERAL",
+            "page": 78
+          }
+        ],
+        "relatedProgrammeKeys": ["HOT02B"],
+        "publicationApproved": false
+      },
+      "decision": "accepted-exact-title-only",
+      "limits": "No substring/fuzzy matching; no automatic join to every FP relation sharing this CNO group. No eligibility guarantee."
+    },
+    {
+      "offerTitle": "CAMAREROS, EN GENERAL",
+      "programKeys": ["HOT02M"],
+      "classificationEvidence": {
+        "offerTitle": "CAMAREROS, EN GENERAL",
+        "offerCount": 17,
+        "cnoCode": "5120",
+        "catalogueRows": [
+          {
+            "code": "51201049",
+            "label": "CAMAREROS, EN GENERAL",
+            "page": 37
+          }
+        ],
+        "relatedProgrammeKeys": ["HOT02M"],
+        "publicationApproved": false
+      },
+      "decision": "accepted-exact-title-only",
+      "limits": "No substring/fuzzy matching; no automatic join to every FP relation sharing this CNO group. No eligibility guarantee."
+    }
+  ],
+  "remainingCandidates": "Not approved by inference; same CNO can contain unrelated specialities."
+}

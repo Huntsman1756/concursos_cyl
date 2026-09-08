@@ -1,0 +1,1201 @@
+{
+  "status": "proposals-not-published",
+  "proposals": [
+    {
+      "id": "mapping-012",
+      "before": {
+        "trainingProgramKey": "AFD01S",
+        "occupationId": "occupation:cno11:3722",
+        "relationshipType": "official_output",
+        "reviewStatus": "approved",
+        "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/actividades-fisicas-deportivas/ensenanza-animacion-sociodeportiva.html",
+        "sourceQuote": "Cronometrador / cronometradora, juez / jueza y árbitra / árbitro de competiciones deportivas no oficiales.",
+        "reviewedAt": "2026-08-12",
+        "mappingVersion": "1.0.0"
+      },
+      "proposed": {
+        "trainingProgramKey": "AFD01S",
+        "occupationId": "occupation:cno11:3722",
+        "relationshipType": "official_output",
+        "reviewStatus": "approved",
+        "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/actividades-fisicas-deportivas/ensenanza-animacion-sociodeportiva.html",
+        "sourceQuote": "Cronometrador / cronometradora, juez / jueza y árbitra / árbitro de competiciones deportivas no oficiales",
+        "reviewedAt": "2026-08-12",
+        "mappingVersion": "1.0.0"
+      },
+      "replacementQuoteVerifiedInRetrievedSource": true,
+      "sourceSha256": "d08dbbe8870c2cf733f18e6da438d68a0c06d46906243e5474dbcfbb7a916eb5",
+      "publicationApproved": false,
+      "reason": "Reparación de referencia o cita literal; pendiente de revisión semántica completa."
+    },
+    {
+      "id": "mapping-013",
+      "before": {
+        "trainingProgramKey": "AFD01S",
+        "occupationId": "occupation:cno11:3723",
+        "relationshipType": "official_output",
+        "reviewStatus": "approved",
+        "sourceUrl": "https://www.boe.es/eli/es/rd/2017/06/23/653",
+        "sourceQuote": "Profesor/a de actividades físico-deportivas.",
+        "reviewedAt": "2026-08-12",
+        "mappingVersion": "1.0.0"
+      },
+      "proposed": {
+        "trainingProgramKey": "AFD01S",
+        "occupationId": "occupation:cno11:3723",
+        "relationshipType": "official_output",
+        "reviewStatus": "approved",
+        "sourceUrl": "https://www.boe.es/eli/es/rd/2017/06/23/653",
+        "sourceQuote": "Profesor/a de actividades físico-deportivas (natación, atletismo, baloncesto, voleibol, tenis y pádel, entre otros).",
+        "reviewedAt": "2026-08-12",
+        "mappingVersion": "1.0.0"
+      },
+      "replacementQuoteVerifiedInRetrievedSource": true,
+      "sourceSha256": "33952cae6785649db22cf312456326330e0a4124473e184d67922fe6e66e0ad4",
+      "publicationApproved": false,
+      "reason": "Reparación de referencia o cita literal; pendiente de revisión semántica completa."
+    },
+    {
+      "id": "mapping-016",
+      "before": {
+        "trainingProgramKey": "AFD01SD",
+        "occupationId": "occupation:cno11:3722",
+        "relationshipType": "official_output",
+        "reviewStatus": "approved",
+        "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/actividades-fisicas-deportivas/ensenanza-animacion-sociodeportiva.html",
+        "sourceQuote": "Cronometrador / cronometradora, juez / jueza y árbitra / árbitro de competiciones deportivas no oficiales.",
+        "reviewedAt": "2026-08-12",
+        "mappingVersion": "1.0.0"
+      },
+      "proposed": {
+        "trainingProgramKey": "AFD01SD",
+        "occupationId": "occupation:cno11:3722",
+        "relationshipType": "official_output",
+        "reviewStatus": "approved",
+        "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/actividades-fisicas-deportivas/ensenanza-animacion-sociodeportiva.html",
+        "sourceQuote": "Cronometrador / cronometradora, juez / jueza y árbitra / árbitro de competiciones deportivas no oficiales",
+        "reviewedAt": "2026-08-12",
+        "mappingVersion": "1.0.0"
+      },
+      "replacementQuoteVerifiedInRetrievedSource": true,
+      "sourceSha256": "d08dbbe8870c2cf733f18e6da438d68a0c06d46906243e5474dbcfbb7a916eb5",
+      "publicationApproved": false,
+      "reason": "Reparación de referencia o cita literal; pendiente de revisión semántica completa."
+    },
+    {
+      "id": "mapping-017",
+      "before": {
+        "trainingProgramKey": "AFD01SD",
+        "occupationId": "occupation:cno11:3723",
+        "relationshipType": "official_output",
+        "reviewStatus": "approved",
+        "sourceUrl": "https://www.boe.es/eli/es/rd/2017/06/23/653",
+        "sourceQuote": "Profesor/a de actividades físico-deportivas.",
+        "reviewedAt": "2026-08-12",
+        "mappingVersion": "1.0.0"
+      },
+      "proposed": {
+        "trainingProgramKey": "AFD01SD",
+        "occupationId": "occupation:cno11:3723",
+        "relationshipType": "official_output",
+        "reviewStatus": "approved",
+        "sourceUrl": "https://www.boe.es/eli/es/rd/2017/06/23/653",
+        "sourceQuote": "Profesor/a de actividades físico-deportivas (natación, atletismo, baloncesto, voleibol, tenis y pádel, entre otros).",
+        "reviewedAt": "2026-08-12",
+        "mappingVersion": "1.0.0"
+      },
+      "replacementQuoteVerifiedInRetrievedSource": true,
+      "sourceSha256": "33952cae6785649db22cf312456326330e0a4124473e184d67922fe6e66e0ad4",
+      "publicationApproved": false,
+      "reason": "Reparación de referencia o cita literal; pendiente de revisión semántica completa."
+    },
+    {
+      "id": "mapping-047",
+      "before": {
+        "trainingProgramKey": "COM01B",
+        "occupationId": "occupation:cno11:4121",
+        "relationshipType": "official_output",
+        "reviewStatus": "approved",
+        "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+        "sourceQuote": "4121 Empleados de control de abastecimientos e inventario",
+        "reviewedAt": "2026-08-11",
+        "mappingVersion": "1.0.0"
+      },
+      "proposed": {
+        "trainingProgramKey": "COM01B",
+        "occupationId": "occupation:cno11:4121",
+        "relationshipType": "reviewed_relationship",
+        "reviewStatus": "approved",
+        "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/comercio-marketing/servicios-comerciales.html",
+        "sourceQuote": "Realizar recuentos e inventarios periódicos de mercancías y/o productos, registrando la información en documentos de control y en aplicaciones informáticas para el control de existencias.",
+        "reviewedAt": "2026-08-11",
+        "mappingVersion": "1.0.0"
+      },
+      "replacementQuoteVerifiedInRetrievedSource": true,
+      "sourceSha256": "284c961ae61b1151657600a0205189c5507b410b079ba50a5262c15f1dcbb231",
+      "publicationApproved": false,
+      "reason": "Reparación de referencia o cita literal; pendiente de revisión semántica completa."
+    },
+    {
+      "id": "mapping-048",
+      "before": {
+        "trainingProgramKey": "COM01B",
+        "occupationId": "occupation:cno11:4123",
+        "relationshipType": "official_output",
+        "reviewStatus": "approved",
+        "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+        "sourceQuote": "4123 Empleados de logística y transporte de pasajeros y mercancías",
+        "reviewedAt": "2026-08-11",
+        "mappingVersion": "1.0.0"
+      },
+      "proposed": {
+        "trainingProgramKey": "COM01B",
+        "occupationId": "occupation:cno11:4123",
+        "relationshipType": "official_output",
+        "reviewStatus": "approved",
+        "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/comercio-marketing/servicios-comerciales.html",
+        "sourceQuote": "Operaria / operario de logística.",
+        "reviewedAt": "2026-08-11",
+        "mappingVersion": "1.0.0"
+      },
+      "replacementQuoteVerifiedInRetrievedSource": true,
+      "sourceSha256": "284c961ae61b1151657600a0205189c5507b410b079ba50a5262c15f1dcbb231",
+      "publicationApproved": false,
+      "reason": "Sustituye una cita circular del catálogo CNO por una fuente oficial de FP; clasificación pendiente de revisión semántica."
+    },
+    {
+      "id": "mapping-049",
+      "before": {
+        "trainingProgramKey": "COM01B",
+        "occupationId": "occupation:cno11:5220",
+        "relationshipType": "official_output",
+        "reviewStatus": "approved",
+        "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+        "sourceQuote": "5220 Vendedores en tiendas y almacenes",
+        "reviewedAt": "2026-08-11",
+        "mappingVersion": "1.0.0"
+      },
+      "proposed": {
+        "trainingProgramKey": "COM01B",
+        "occupationId": "occupation:cno11:5220",
+        "relationshipType": "official_output",
+        "reviewStatus": "approved",
+        "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/comercio-marketing/servicios-comerciales.html",
+        "sourceQuote": "Auxiliar de dependiente de comercio.",
+        "reviewedAt": "2026-08-11",
+        "mappingVersion": "1.0.0",
+        "functionalBoundary": {
+          "roleLevel": "assistant",
+          "fullOccupationQualification": false
+        }
+      },
+      "replacementQuoteVerifiedInRetrievedSource": true,
+      "sourceSha256": "284c961ae61b1151657600a0205189c5507b410b079ba50a5262c15f1dcbb231",
+      "publicationApproved": false,
+      "reason": "Sustituye una cita circular del catálogo CNO por una fuente oficial de FP; clasificación pendiente de revisión semántica."
+    },
+    {
+      "id": "mapping-050",
+      "before": {
+        "trainingProgramKey": "COM01B",
+        "occupationId": "occupation:cno11:5492",
+        "relationshipType": "official_output",
+        "reviewStatus": "approved",
+        "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+        "sourceQuote": "5492 Promotores de venta",
+        "reviewedAt": "2026-08-11",
+        "mappingVersion": "1.0.0"
+      },
+      "proposed": {
+        "trainingProgramKey": "COM01B",
+        "occupationId": "occupation:cno11:5492",
+        "relationshipType": "official_output",
+        "reviewStatus": "approved",
+        "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/comercio-marketing/servicios-comerciales.html",
+        "sourceQuote": "Auxiliar de promoción de ventas.",
+        "reviewedAt": "2026-08-11",
+        "mappingVersion": "1.0.0",
+        "functionalBoundary": {
+          "roleLevel": "assistant",
+          "fullOccupationQualification": false
+        }
+      },
+      "replacementQuoteVerifiedInRetrievedSource": true,
+      "sourceSha256": "284c961ae61b1151657600a0205189c5507b410b079ba50a5262c15f1dcbb231",
+      "publicationApproved": false,
+      "reason": "Sustituye una cita circular del catálogo CNO por una fuente oficial de FP; clasificación pendiente de revisión semántica."
+    },
+    {
+      "id": "mapping-051",
+      "before": {
+        "trainingProgramKey": "COM01B",
+        "occupationId": "occupation:cno11:5500",
+        "relationshipType": "official_output",
+        "reviewStatus": "approved",
+        "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+        "sourceQuote": "5500 Cajeros y taquilleros (excepto bancos)",
+        "reviewedAt": "2026-08-11",
+        "mappingVersion": "1.0.0"
+      },
+      "proposed": {
+        "trainingProgramKey": "COM01B",
+        "occupationId": "occupation:cno11:5500",
+        "relationshipType": "official_output",
+        "reviewStatus": "approved",
+        "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/comercio-marketing/servicios-comerciales.html",
+        "sourceQuote": "Operador / operadora de cobro o Cajera / cajero.",
+        "reviewedAt": "2026-08-11",
+        "mappingVersion": "1.0.0"
+      },
+      "replacementQuoteVerifiedInRetrievedSource": true,
+      "sourceSha256": "284c961ae61b1151657600a0205189c5507b410b079ba50a5262c15f1dcbb231",
+      "publicationApproved": false,
+      "reason": "Sustituye una cita circular del catálogo CNO por una fuente oficial de FP; clasificación pendiente de revisión semántica."
+    },
+    {
+      "id": "mapping-052",
+      "before": {
+        "trainingProgramKey": "COM01B",
+        "occupationId": "occupation:cno11:8333",
+        "relationshipType": "official_output",
+        "reviewStatus": "approved",
+        "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+        "sourceQuote": "8333 Operadores de carretillas elevadoras",
+        "reviewedAt": "2026-08-11",
+        "mappingVersion": "1.0.0"
+      },
+      "proposed": {
+        "trainingProgramKey": "COM01B",
+        "occupationId": "occupation:cno11:8333",
+        "relationshipType": "official_output",
+        "reviewStatus": "approved",
+        "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/comercio-marketing/servicios-comerciales.html",
+        "sourceQuote": "Carretillera / carretillero de recepción y expedición.",
+        "reviewedAt": "2026-08-11",
+        "mappingVersion": "1.0.0"
+      },
+      "replacementQuoteVerifiedInRetrievedSource": true,
+      "sourceSha256": "284c961ae61b1151657600a0205189c5507b410b079ba50a5262c15f1dcbb231",
+      "publicationApproved": false,
+      "reason": "Sustituye una cita circular del catálogo CNO por una fuente oficial de FP; clasificación pendiente de revisión semántica."
+    },
+    {
+      "id": "mapping-053",
+      "before": {
+        "trainingProgramKey": "COM01B",
+        "occupationId": "occupation:cno11:9820",
+        "relationshipType": "official_output",
+        "reviewStatus": "approved",
+        "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+        "sourceQuote": "9820 Reponedores",
+        "reviewedAt": "2026-08-11",
+        "mappingVersion": "1.0.0"
+      },
+      "proposed": {
+        "trainingProgramKey": "COM01B",
+        "occupationId": "occupation:cno11:9820",
+        "relationshipType": "official_output",
+        "reviewStatus": "approved",
+        "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/comercio-marketing/servicios-comerciales.html",
+        "sourceQuote": "Empleada / empleado de reposición.",
+        "reviewedAt": "2026-08-11",
+        "mappingVersion": "1.0.0"
+      },
+      "replacementQuoteVerifiedInRetrievedSource": true,
+      "sourceSha256": "284c961ae61b1151657600a0205189c5507b410b079ba50a5262c15f1dcbb231",
+      "publicationApproved": false,
+      "reason": "Sustituye una cita circular del catálogo CNO por una fuente oficial de FP; clasificación pendiente de revisión semántica."
+    },
+    {
+      "id": "mapping-056",
+      "before": {
+        "trainingProgramKey": "COM01M",
+        "occupationId": "occupation:cno11:4424",
+        "relationshipType": "official_output",
+        "reviewStatus": "approved",
+        "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/comercio-marketing/actividades-comerciales.html",
+        "sourceQuote": "Teleoperador / teleoperadora (Call-Center).",
+        "reviewedAt": "2026-08-12",
+        "mappingVersion": "1.0.0"
+      },
+      "proposed": {
+        "trainingProgramKey": "COM01M",
+        "occupationId": "occupation:cno11:4424",
+        "relationshipType": "official_output",
+        "reviewStatus": "approved",
+        "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/comercio-marketing/actividades-comerciales.html",
+        "sourceQuote": "Teleoperador / teleoperadora (Call - Center).",
+        "reviewedAt": "2026-08-12",
+        "mappingVersion": "1.0.0"
+      },
+      "replacementQuoteVerifiedInRetrievedSource": true,
+      "sourceSha256": "02bf907810473a1094caf88ef32fdb33ca64effed1fde5410d4bde23ca2ca082",
+      "publicationApproved": false,
+      "reason": "Reparación de referencia o cita literal; pendiente de revisión semántica completa."
+    },
+    {
+      "id": "mapping-059",
+      "before": {
+        "trainingProgramKey": "COM01M",
+        "occupationId": "occupation:cno11:5500",
+        "relationshipType": "official_output",
+        "reviewStatus": "approved",
+        "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/comercio-marketing/actividades-comerciales.html",
+        "sourceQuote": "Cajera / cajero.",
+        "reviewedAt": "2026-08-12",
+        "mappingVersion": "1.0.0"
+      },
+      "proposed": {
+        "trainingProgramKey": "COM01M",
+        "occupationId": "occupation:cno11:5500",
+        "relationshipType": "official_output",
+        "reviewStatus": "approved",
+        "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/comercio-marketing/actividades-comerciales.html",
+        "sourceQuote": "Cajera / cajero",
+        "reviewedAt": "2026-08-12",
+        "mappingVersion": "1.0.0"
+      },
+      "replacementQuoteVerifiedInRetrievedSource": true,
+      "sourceSha256": "02bf907810473a1094caf88ef32fdb33ca64effed1fde5410d4bde23ca2ca082",
+      "publicationApproved": false,
+      "reason": "Reparación de referencia o cita literal; pendiente de revisión semántica completa."
+    },
+    {
+      "id": "mapping-060",
+      "before": {
+        "trainingProgramKey": "COM01M",
+        "occupationId": "occupation:cno11:9820",
+        "relationshipType": "official_output",
+        "reviewStatus": "approved",
+        "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/comercio-marketing/actividades-comerciales.html",
+        "sourceQuote": "Reponedor / reponedora.",
+        "reviewedAt": "2026-08-12",
+        "mappingVersion": "1.0.0"
+      },
+      "proposed": {
+        "trainingProgramKey": "COM01M",
+        "occupationId": "occupation:cno11:9820",
+        "relationshipType": "official_output",
+        "reviewStatus": "approved",
+        "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/comercio-marketing/actividades-comerciales.html",
+        "sourceQuote": "reponedor / reponedora.",
+        "reviewedAt": "2026-09-08",
+        "mappingVersion": "1.1.0"
+      },
+      "replacementQuoteVerifiedInRetrievedSource": true,
+      "sourceSha256": "02bf907810473a1094caf88ef32fdb33ca64effed1fde5410d4bde23ca2ca082",
+      "publicationApproved": false,
+      "reason": "Conserva la minúscula literal tras el punto y coma de la fuente oficial."
+    },
+    {
+      "id": "mapping-061",
+      "before": {
+        "trainingProgramKey": "COM02E",
+        "occupationId": "occupation:cno11:1221",
+        "relationshipType": "reviewed_relationship",
+        "reviewStatus": "approved",
+        "sourceUrl": "https://www.boe.es/eli/es/rd/2024/02/06/144",
+        "sourceQuote": "Directores de marketing digital, de programas de afiliación, de contenidos digitales, de proyectos digitales y de comercio electrónico.",
+        "reviewedAt": "2026-08-21",
+        "mappingVersion": "1.0.0"
+      },
+      "proposed": {
+        "trainingProgramKey": "COM02E",
+        "occupationId": "occupation:cno11:1221",
+        "relationshipType": "reviewed_relationship",
+        "reviewStatus": "approved",
+        "sourceUrl": "https://www.boe.es/eli/es/rd/2024/02/06/144",
+        "sourceQuote": "Directores de marketing digital ( Digital Strategist ).",
+        "reviewedAt": "2026-08-21",
+        "mappingVersion": "1.0.0"
+      },
+      "replacementQuoteVerifiedInRetrievedSource": true,
+      "sourceSha256": "ad10ec2011f69d7ae844732e4617c0712be6f74b16e4f41e342603e85376e827",
+      "publicationApproved": false,
+      "reason": "Reparación de referencia o cita literal; pendiente de revisión semántica completa."
+    },
+    {
+      "id": "mapping-062",
+      "before": {
+        "trainingProgramKey": "COM02E",
+        "occupationId": "occupation:cno11:2651",
+        "relationshipType": "reviewed_relationship",
+        "reviewStatus": "approved",
+        "sourceUrl": "https://www.boe.es/eli/es/rd/2024/02/06/144",
+        "sourceQuote": "Copywriter, Redactor publicitario digital y Redactor de contenidos para marketing y ventas.",
+        "reviewedAt": "2026-08-21",
+        "mappingVersion": "1.0.0"
+      },
+      "proposed": {
+        "trainingProgramKey": "COM02E",
+        "occupationId": "occupation:cno11:2651",
+        "relationshipType": "reviewed_relationship",
+        "reviewStatus": "approved",
+        "sourceUrl": "https://www.boe.es/eli/es/rd/2024/02/06/144",
+        "sourceQuote": "Redactores de textos publicitarios ( Copywriter ).",
+        "reviewedAt": "2026-08-21",
+        "mappingVersion": "1.0.0"
+      },
+      "replacementQuoteVerifiedInRetrievedSource": true,
+      "sourceSha256": "ad10ec2011f69d7ae844732e4617c0712be6f74b16e4f41e342603e85376e827",
+      "publicationApproved": false,
+      "reason": "Reparación de referencia o cita literal; pendiente de revisión semántica completa."
+    },
+    {
+      "id": "mapping-063",
+      "before": {
+        "trainingProgramKey": "COM02M",
+        "occupationId": "occupation:cno11:5210",
+        "relationshipType": "official_output",
+        "reviewStatus": "approved",
+        "sourceUrl": "https://www.boe.es/eli/es/rd/189/2018",
+        "sourceQuote": "Responsable/encargado de sección/sala/departamento de tienda de alimentación.",
+        "reviewedAt": "2026-08-09",
+        "mappingVersion": "1.0.0"
+      },
+      "proposed": {
+        "trainingProgramKey": "COM02M",
+        "occupationId": "occupation:cno11:5210",
+        "relationshipType": "official_output",
+        "reviewStatus": "approved",
+        "sourceUrl": "https://www.boe.es/eli/es/rd/2018/04/06/189",
+        "sourceQuote": "Responsable/encargado de sección/sala/departamento de tienda de alimentación.",
+        "reviewedAt": "2026-08-09",
+        "mappingVersion": "1.0.0"
+      },
+      "replacementQuoteVerifiedInRetrievedSource": true,
+      "sourceSha256": "54133993c9090cadaae949d68900ebaf9861e8740be596b9df0d2ca23a70ff0a",
+      "publicationApproved": false,
+      "reason": "Reparación de referencia o cita literal; pendiente de revisión semántica completa."
+    },
+    {
+      "id": "mapping-064",
+      "before": {
+        "trainingProgramKey": "COM02M",
+        "occupationId": "occupation:cno11:5220",
+        "relationshipType": "official_output",
+        "reviewStatus": "approved",
+        "sourceUrl": "https://www.boe.es/eli/es/rd/189/2018",
+        "sourceQuote": "Vendedor/a de productos alimentarios.",
+        "reviewedAt": "2026-08-09",
+        "mappingVersion": "1.0.0"
+      },
+      "proposed": {
+        "trainingProgramKey": "COM02M",
+        "occupationId": "occupation:cno11:5220",
+        "relationshipType": "official_output",
+        "reviewStatus": "approved",
+        "sourceUrl": "https://www.boe.es/eli/es/rd/2018/04/06/189",
+        "sourceQuote": "Vendedor/a de productos alimentarios.",
+        "reviewedAt": "2026-08-09",
+        "mappingVersion": "1.0.0"
+      },
+      "replacementQuoteVerifiedInRetrievedSource": true,
+      "sourceSha256": "54133993c9090cadaae949d68900ebaf9861e8740be596b9df0d2ca23a70ff0a",
+      "publicationApproved": false,
+      "reason": "Reparación de referencia o cita literal; pendiente de revisión semántica completa."
+    },
+    {
+      "id": "mapping-085",
+      "before": {
+        "trainingProgramKey": "ELE02B",
+        "occupationId": "occupation:cno11:7510",
+        "relationshipType": "reviewed_relationship",
+        "reviewStatus": "approved",
+        "sourceUrl": "https://www.boe.es/eli/es/rd/2015/08/28/774",
+        "sourceQuote": "Operario de instalaciones eléctricas de baja tensión.",
+        "reviewedAt": "2026-08-21",
+        "mappingVersion": "1.0.0"
+      },
+      "proposed": {
+        "trainingProgramKey": "ELE02B",
+        "occupationId": "occupation:cno11:7510",
+        "relationshipType": "reviewed_relationship",
+        "reviewStatus": "approved",
+        "sourceUrl": "https://www.boe.es/eli/es/rd/2015/08/28/774",
+        "sourceQuote": "Operario/a de instalaciones eléctricas de baja tensión.",
+        "reviewedAt": "2026-08-21",
+        "mappingVersion": "1.0.0"
+      },
+      "replacementQuoteVerifiedInRetrievedSource": true,
+      "sourceSha256": "23a0ede3564f295459b5b6ffa6236610242afaf0bcb1d67165fe8f5d85620e0c",
+      "publicationApproved": false,
+      "reason": "Reparación de referencia o cita literal; pendiente de revisión semántica completa."
+    },
+    {
+      "id": "mapping-086",
+      "before": {
+        "trainingProgramKey": "ELE02B",
+        "occupationId": "occupation:cno11:7533",
+        "relationshipType": "reviewed_relationship",
+        "reviewStatus": "approved",
+        "sourceUrl": "https://www.boe.es/eli/es/rd/2015/08/28/774",
+        "sourceQuote": "Ayudante de montador de antenas receptoras de televisión y satélites.",
+        "reviewedAt": "2026-08-21",
+        "mappingVersion": "1.0.0"
+      },
+      "proposed": {
+        "trainingProgramKey": "ELE02B",
+        "occupationId": "occupation:cno11:7533",
+        "relationshipType": "reviewed_relationship",
+        "reviewStatus": "approved",
+        "sourceUrl": "https://www.boe.es/eli/es/rd/2015/08/28/774",
+        "sourceQuote": "Ayudante/a de montador/a de antenas receptoras/ televisión satélites.",
+        "reviewedAt": "2026-08-21",
+        "mappingVersion": "1.0.0"
+      },
+      "replacementQuoteVerifiedInRetrievedSource": true,
+      "sourceSha256": "23a0ede3564f295459b5b6ffa6236610242afaf0bcb1d67165fe8f5d85620e0c",
+      "publicationApproved": false,
+      "reason": "Reparación de referencia o cita literal; pendiente de revisión semántica completa."
+    },
+    {
+      "id": "mapping-093",
+      "before": {
+        "trainingProgramKey": "ELE03S",
+        "occupationId": "occupation:cno11:7531",
+        "relationshipType": "official_output",
+        "reviewStatus": "approved",
+        "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+        "sourceQuote": "7531 Técnicos de reparación de equipos electrónicos y de comunicaciones",
+        "reviewedAt": "2026-08-11",
+        "mappingVersion": "1.0.0"
+      },
+      "proposed": {
+        "trainingProgramKey": "ELE03S",
+        "occupationId": "occupation:cno11:7531",
+        "relationshipType": "official_output",
+        "reviewStatus": "approved",
+        "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/electricidad-electronica/mantenimiento-electronico.html",
+        "sourceQuote": "Técnica / técnico en reparación y mantenimiento de equipos profesionales de audio, de video y de equipos industriales",
+        "reviewedAt": "2026-08-11",
+        "mappingVersion": "1.0.0"
+      },
+      "replacementQuoteVerifiedInRetrievedSource": true,
+      "sourceSha256": "d8c0c58938ce7cc219b8afd597d29621ff418219675aa55c55228d305d7ef492",
+      "publicationApproved": false,
+      "reason": "Reparación de referencia o cita literal; pendiente de revisión semántica completa."
+    },
+    {
+      "id": "mapping-122",
+      "before": {
+        "trainingProgramKey": "FME02M",
+        "occupationId": "occupation:cno11:7132",
+        "relationshipType": "official_output",
+        "reviewStatus": "approved",
+        "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+        "sourceQuote": "7132 Instaladores de cerramientos metálicos y carpinteros metálicos",
+        "reviewedAt": "2026-08-11",
+        "mappingVersion": "1.0.0"
+      },
+      "proposed": {
+        "trainingProgramKey": "FME02M",
+        "occupationId": "occupation:cno11:7132",
+        "relationshipType": "official_output",
+        "reviewStatus": "approved",
+        "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/fabricacion-mecanica/soldadura-caldereria.html",
+        "sourceQuote": "Carpintera / carpintero metálico.",
+        "reviewedAt": "2026-08-11",
+        "mappingVersion": "1.0.0"
+      },
+      "replacementQuoteVerifiedInRetrievedSource": true,
+      "sourceSha256": "d5f983c9f4350c1f0d04b8eca65a1aa650dd97364f0927e42797cfe4cfaeb7c3",
+      "publicationApproved": false,
+      "reason": "Sustituye una cita circular del catálogo CNO por una fuente oficial de FP; clasificación pendiente de revisión semántica."
+    },
+    {
+      "id": "mapping-123",
+      "before": {
+        "trainingProgramKey": "FME02M",
+        "occupationId": "occupation:cno11:7312",
+        "relationshipType": "official_output",
+        "reviewStatus": "approved",
+        "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+        "sourceQuote": "7312 Soldadores y oxicortadores",
+        "reviewedAt": "2026-08-11",
+        "mappingVersion": "1.0.0"
+      },
+      "proposed": {
+        "trainingProgramKey": "FME02M",
+        "occupationId": "occupation:cno11:7312",
+        "relationshipType": "official_output",
+        "reviewStatus": "approved",
+        "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/fabricacion-mecanica/soldadura-caldereria.html",
+        "sourceQuote": "Soldador / soldadora y oxicortador / oxicortadora.",
+        "reviewedAt": "2026-08-11",
+        "mappingVersion": "1.0.0"
+      },
+      "replacementQuoteVerifiedInRetrievedSource": true,
+      "sourceSha256": "d5f983c9f4350c1f0d04b8eca65a1aa650dd97364f0927e42797cfe4cfaeb7c3",
+      "publicationApproved": false,
+      "reason": "Sustituye una cita circular del catálogo CNO por una fuente oficial de FP; clasificación pendiente de revisión semántica."
+    },
+    {
+      "id": "mapping-124",
+      "before": {
+        "trainingProgramKey": "FME02M",
+        "occupationId": "occupation:cno11:7313",
+        "relationshipType": "official_output",
+        "reviewStatus": "approved",
+        "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+        "sourceQuote": "7313 Chapistas y caldereros",
+        "reviewedAt": "2026-08-11",
+        "mappingVersion": "1.0.0"
+      },
+      "proposed": {
+        "trainingProgramKey": "FME02M",
+        "occupationId": "occupation:cno11:7313",
+        "relationshipType": "official_output",
+        "reviewStatus": "approved",
+        "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/fabricacion-mecanica/soldadura-caldereria.html",
+        "sourceQuote": "Chapista y calderera / calderero.",
+        "reviewedAt": "2026-08-11",
+        "mappingVersion": "1.0.0"
+      },
+      "replacementQuoteVerifiedInRetrievedSource": true,
+      "sourceSha256": "d5f983c9f4350c1f0d04b8eca65a1aa650dd97364f0927e42797cfe4cfaeb7c3",
+      "publicationApproved": false,
+      "reason": "Sustituye una cita circular del catálogo CNO por una fuente oficial de FP; clasificación pendiente de revisión semántica."
+    },
+    {
+      "id": "mapping-125",
+      "before": {
+        "trainingProgramKey": "FME02M",
+        "occupationId": "occupation:cno11:7314",
+        "relationshipType": "official_output",
+        "reviewStatus": "approved",
+        "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+        "sourceQuote": "7314 Montadores de estructuras metálicas",
+        "reviewedAt": "2026-08-11",
+        "mappingVersion": "1.0.0"
+      },
+      "proposed": {
+        "trainingProgramKey": "FME02M",
+        "occupationId": "occupation:cno11:7314",
+        "relationshipType": "official_output",
+        "reviewStatus": "approved",
+        "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/fabricacion-mecanica/soldadura-caldereria.html",
+        "sourceQuote": "Montador / montadora de estructuras metálicas.",
+        "reviewedAt": "2026-08-11",
+        "mappingVersion": "1.0.0"
+      },
+      "replacementQuoteVerifiedInRetrievedSource": true,
+      "sourceSha256": "d5f983c9f4350c1f0d04b8eca65a1aa650dd97364f0927e42797cfe4cfaeb7c3",
+      "publicationApproved": false,
+      "reason": "Sustituye una cita circular del catálogo CNO por una fuente oficial de FP; clasificación pendiente de revisión semántica."
+    },
+    {
+      "id": "mapping-129",
+      "before": {
+        "trainingProgramKey": "HOT01M",
+        "occupationId": "occupation:cno11:5110",
+        "relationshipType": "official_output",
+        "reviewStatus": "approved",
+        "sourceUrl": "https://todofp.es/dam/jcr%3A63392ee9-4d38-449b-a196-d0efb714b364/n-tcocinagastronomiaes-pdf.pdf",
+        "sourceQuote": "Las ocupaciones y puestos de trabajo más relevantes son los siguientes: Cocinero.",
+        "reviewedAt": "2026-08-08",
+        "mappingVersion": "1.0.0"
+      },
+      "proposed": {
+        "trainingProgramKey": "HOT01M",
+        "occupationId": "occupation:cno11:5110",
+        "relationshipType": "official_output",
+        "reviewStatus": "approved",
+        "sourceUrl": "https://todofp.es/dam/jcr%3A63392ee9-4d38-449b-a196-d0efb714b364/n-tcocinagastronomiaes-pdf.pdf",
+        "sourceQuote": "• Cocinero.",
+        "reviewedAt": "2026-08-08",
+        "mappingVersion": "1.0.0"
+      },
+      "replacementQuoteVerifiedInRetrievedSource": true,
+      "sourceSha256": "adcd56c3e974e0adf945d22b94e845590ec8516f1179279d3227ede88f9efffa",
+      "publicationApproved": false,
+      "reason": "Reparación de referencia o cita literal; pendiente de revisión semántica completa."
+    },
+    {
+      "id": "mapping-155",
+      "before": {
+        "trainingProgramKey": "IFC02S",
+        "occupationId": "occupation:cno11:3820",
+        "relationshipType": "reviewed_relationship",
+        "reviewStatus": "approved",
+        "sourceUrl": "https://www.boe.es/eli/es/rd/2010/05/21/450",
+        "sourceQuote": "Desarrollar aplicaciones de propósito general.",
+        "reviewedAt": "2026-08-12",
+        "mappingVersion": "1.0.0"
+      },
+      "proposed": {
+        "trainingProgramKey": "IFC02S",
+        "occupationId": "occupation:cno11:3820",
+        "relationshipType": "reviewed_relationship",
+        "reviewStatus": "approved",
+        "sourceUrl": "https://www.boe.es/eli/es/rd/2010/04/16/450",
+        "sourceQuote": "Desarrollar aplicaciones de propósito general.",
+        "reviewedAt": "2026-08-12",
+        "mappingVersion": "1.0.0"
+      },
+      "replacementQuoteVerifiedInRetrievedSource": true,
+      "sourceSha256": "e12980df7f6d707d8aa7d75b27aea5f8d76725e5321b3c20a81c96ad6cc20c30",
+      "publicationApproved": false,
+      "reason": "Reparación de referencia o cita literal; pendiente de revisión semántica completa."
+    },
+    {
+      "id": "mapping-157",
+      "before": {
+        "trainingProgramKey": "IFC02SD",
+        "occupationId": "occupation:cno11:3820",
+        "relationshipType": "reviewed_relationship",
+        "reviewStatus": "approved",
+        "sourceUrl": "https://www.boe.es/eli/es/rd/2010/05/21/450",
+        "sourceQuote": "Desarrollar aplicaciones de propósito general.",
+        "reviewedAt": "2026-08-12",
+        "mappingVersion": "1.0.0"
+      },
+      "proposed": {
+        "trainingProgramKey": "IFC02SD",
+        "occupationId": "occupation:cno11:3820",
+        "relationshipType": "reviewed_relationship",
+        "reviewStatus": "approved",
+        "sourceUrl": "https://www.boe.es/eli/es/rd/2010/04/16/450",
+        "sourceQuote": "Desarrollar aplicaciones de propósito general.",
+        "reviewedAt": "2026-08-12",
+        "mappingVersion": "1.0.0"
+      },
+      "replacementQuoteVerifiedInRetrievedSource": true,
+      "sourceSha256": "e12980df7f6d707d8aa7d75b27aea5f8d76725e5321b3c20a81c96ad6cc20c30",
+      "publicationApproved": false,
+      "reason": "Reparación de referencia o cita literal; pendiente de revisión semántica completa."
+    },
+    {
+      "id": "mapping-160",
+      "before": {
+        "trainingProgramKey": "IMA01M",
+        "occupationId": "occupation:cno11:7221",
+        "relationshipType": "reviewed_relationship",
+        "reviewStatus": "approved",
+        "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/instalacion-mantenimiento/instalaciones-produccion-calor.html",
+        "sourceQuote": "Instalador-mantenedor de instalaciones de agua.",
+        "reviewedAt": "2026-08-21",
+        "mappingVersion": "1.0.0"
+      },
+      "proposed": {
+        "trainingProgramKey": "IMA01M",
+        "occupationId": "occupation:cno11:7221",
+        "relationshipType": "reviewed_relationship",
+        "reviewStatus": "approved",
+        "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/instalacion-mantenimiento/instalaciones-produccion-calor.html",
+        "sourceQuote": "Instalador-mantenedor / instaladora-mantenedora de instalaciones de agua.",
+        "reviewedAt": "2026-08-21",
+        "mappingVersion": "1.0.0"
+      },
+      "replacementQuoteVerifiedInRetrievedSource": true,
+      "sourceSha256": "a717a3def8ec05a3bc186c6ade3f8812f30ee815a21793fa8fd4a7a23e75fdf5",
+      "publicationApproved": false,
+      "reason": "Reparación de referencia o cita literal; pendiente de revisión semántica completa."
+    },
+    {
+      "id": "mapping-161",
+      "before": {
+        "trainingProgramKey": "IMA01M",
+        "occupationId": "occupation:cno11:7222",
+        "relationshipType": "reviewed_relationship",
+        "reviewStatus": "approved",
+        "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/instalacion-mantenimiento/instalaciones-produccion-calor.html",
+        "sourceQuote": "Instalador-mantenedor de instalaciones de gas y combustibles líquidos.",
+        "reviewedAt": "2026-08-21",
+        "mappingVersion": "1.0.0"
+      },
+      "proposed": {
+        "trainingProgramKey": "IMA01M",
+        "occupationId": "occupation:cno11:7222",
+        "relationshipType": "reviewed_relationship",
+        "reviewStatus": "approved",
+        "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/instalacion-mantenimiento/instalaciones-produccion-calor.html",
+        "sourceQuote": "Instalador-mantenedor / instaladora-mantenedora de instalaciones de gas y combustibles líquidos",
+        "reviewedAt": "2026-08-21",
+        "mappingVersion": "1.0.0"
+      },
+      "replacementQuoteVerifiedInRetrievedSource": true,
+      "sourceSha256": "a717a3def8ec05a3bc186c6ade3f8812f30ee815a21793fa8fd4a7a23e75fdf5",
+      "publicationApproved": false,
+      "reason": "Reparación de referencia o cita literal; pendiente de revisión semántica completa."
+    },
+    {
+      "id": "mapping-162",
+      "before": {
+        "trainingProgramKey": "IMA01M",
+        "occupationId": "occupation:cno11:7250",
+        "relationshipType": "reviewed_relationship",
+        "reviewStatus": "approved",
+        "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/instalacion-mantenimiento/instalaciones-produccion-calor.html",
+        "sourceQuote": "Instalador-mantenedor de equipos de producción de calor.",
+        "reviewedAt": "2026-08-21",
+        "mappingVersion": "1.0.0"
+      },
+      "proposed": {
+        "trainingProgramKey": "IMA01M",
+        "occupationId": "occupation:cno11:7250",
+        "relationshipType": "reviewed_relationship",
+        "reviewStatus": "approved",
+        "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/instalacion-mantenimiento/instalaciones-produccion-calor.html",
+        "sourceQuote": "Instalador-mantenedor / instaladora-mantenedora de equipos de producción de calor.",
+        "reviewedAt": "2026-08-21",
+        "mappingVersion": "1.0.0"
+      },
+      "replacementQuoteVerifiedInRetrievedSource": true,
+      "sourceSha256": "a717a3def8ec05a3bc186c6ade3f8812f30ee815a21793fa8fd4a7a23e75fdf5",
+      "publicationApproved": false,
+      "reason": "Reparación de referencia o cita literal; pendiente de revisión semántica completa."
+    },
+    {
+      "id": "mapping-163",
+      "before": {
+        "trainingProgramKey": "IMA01M",
+        "occupationId": "occupation:cno11:7294",
+        "relationshipType": "official_output",
+        "reviewStatus": "approved",
+        "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/instalacion-mantenimiento/instalaciones-produccion-calor.html",
+        "sourceQuote": "Instalador-mantenedor de instalaciones solares térmicas.",
+        "reviewedAt": "2026-08-21",
+        "mappingVersion": "1.0.0"
+      },
+      "proposed": {
+        "trainingProgramKey": "IMA01M",
+        "occupationId": "occupation:cno11:7294",
+        "relationshipType": "official_output",
+        "reviewStatus": "approved",
+        "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/instalacion-mantenimiento/instalaciones-produccion-calor.html",
+        "sourceQuote": "Instalador-mantenedor / instaladora-mantenedora de instalaciones solares térmicas.",
+        "reviewedAt": "2026-08-21",
+        "mappingVersion": "1.0.0"
+      },
+      "replacementQuoteVerifiedInRetrievedSource": true,
+      "sourceSha256": "a717a3def8ec05a3bc186c6ade3f8812f30ee815a21793fa8fd4a7a23e75fdf5",
+      "publicationApproved": false,
+      "reason": "Reparación de referencia o cita literal; pendiente de revisión semántica completa."
+    },
+    {
+      "id": "mapping-164",
+      "before": {
+        "trainingProgramKey": "IMA02M",
+        "occupationId": "occupation:cno11:7250",
+        "relationshipType": "official_output",
+        "reviewStatus": "approved",
+        "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+        "sourceQuote": "7250 Mecánicos-instaladores de refrigeración y climatización",
+        "reviewedAt": "2026-08-11",
+        "mappingVersion": "1.0.0"
+      },
+      "proposed": {
+        "trainingProgramKey": "IMA02M",
+        "occupationId": "occupation:cno11:7250",
+        "relationshipType": "official_output",
+        "reviewStatus": "approved",
+        "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/instalacion-mantenimiento/instalaciones-frigorificas-climatizacion.html",
+        "sourceQuote": "Instalador / instaladora frigorista en instalaciones comerciales.",
+        "reviewedAt": "2026-08-11",
+        "mappingVersion": "1.0.0"
+      },
+      "replacementQuoteVerifiedInRetrievedSource": true,
+      "sourceSha256": "af4efec4cc0ba2e83c9e8c4aa7dd8eca368bd10b7914f4e05dff182008ccd4aa",
+      "publicationApproved": false,
+      "reason": "Sustituye una cita circular del catálogo CNO por una fuente oficial de FP; clasificación pendiente de revisión semántica."
+    },
+    {
+      "id": "mapping-180",
+      "before": {
+        "trainingProgramKey": "IMS01E",
+        "occupationId": "occupation:cno11:2921",
+        "relationshipType": "reviewed_relationship",
+        "reviewStatus": "approved",
+        "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/imagen-sonido/ce-audiodescripcion-subtitulacion.html",
+        "sourceQuote": "Guionista de proyectos de audiodescripción y subtitulación de obras audiovisuales y espectáculos en vivo.",
+        "reviewedAt": "2026-08-21",
+        "mappingVersion": "1.0.0"
+      },
+      "proposed": {
+        "trainingProgramKey": "IMS01E",
+        "occupationId": "occupation:cno11:2921",
+        "relationshipType": "reviewed_relationship",
+        "reviewStatus": "approved",
+        "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/imagen-sonido/ce-audiodescripcion-subtitulacion.html",
+        "sourceQuote": "Guionista de proyectos de audiodescripción de obras audiovisuales y espectáculos en vivo y eventos.",
+        "reviewedAt": "2026-08-21",
+        "mappingVersion": "1.0.0"
+      },
+      "replacementQuoteVerifiedInRetrievedSource": true,
+      "sourceSha256": "28605809258b8068a23c06ad6dff6f7c5b320b07b27a861abc186f2fff538886",
+      "publicationApproved": false,
+      "reason": "Reparación de referencia o cita literal; pendiente de revisión semántica completa."
+    },
+    {
+      "id": "mapping-181",
+      "before": {
+        "trainingProgramKey": "IMS01E",
+        "occupationId": "occupation:cno11:2923",
+        "relationshipType": "reviewed_relationship",
+        "reviewStatus": "approved",
+        "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/imagen-sonido/ce-audiodescripcion-subtitulacion.html",
+        "sourceQuote": "Subtitulador de obras audiovisuales y espectáculos en vivo.",
+        "reviewedAt": "2026-08-21",
+        "mappingVersion": "1.0.0"
+      },
+      "proposed": {
+        "trainingProgramKey": "IMS01E",
+        "occupationId": "occupation:cno11:2923",
+        "relationshipType": "reviewed_relationship",
+        "reviewStatus": "approved",
+        "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/imagen-sonido/ce-audiodescripcion-subtitulacion.html",
+        "sourceQuote": "Subtitulador / subtituladora de obras audiovisuales y espectáculos en vivo y eventos.",
+        "reviewedAt": "2026-08-21",
+        "mappingVersion": "1.0.0"
+      },
+      "replacementQuoteVerifiedInRetrievedSource": true,
+      "sourceSha256": "28605809258b8068a23c06ad6dff6f7c5b320b07b27a861abc186f2fff538886",
+      "publicationApproved": false,
+      "reason": "Reparación de referencia o cita literal; pendiente de revisión semántica completa."
+    },
+    {
+      "id": "mapping-183",
+      "before": {
+        "trainingProgramKey": "INA02M",
+        "occupationId": "occupation:cno11:3510",
+        "relationshipType": "reviewed_relationship",
+        "reviewStatus": "approved",
+        "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/industrias-alimentarias/aceites-oliva-vinos.html",
+        "sourceQuote": "Comercial de aceites de oliva, vinos y otras bebidas.",
+        "reviewedAt": "2026-08-21",
+        "mappingVersion": "1.0.0"
+      },
+      "proposed": {
+        "trainingProgramKey": "INA02M",
+        "occupationId": "occupation:cno11:3510",
+        "relationshipType": "reviewed_relationship",
+        "reviewStatus": "approved",
+        "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/industrias-alimentarias/aceites-oliva-vinos.html",
+        "sourceQuote": "Comercial de almazaras y bodegas.",
+        "reviewedAt": "2026-08-21",
+        "mappingVersion": "1.0.0"
+      },
+      "replacementQuoteVerifiedInRetrievedSource": true,
+      "sourceSha256": "aab4f2006142b96694459b6cc173a2d3c9f9ea9ec21a1086662520da449769dd",
+      "publicationApproved": false,
+      "reason": "Reparación de referencia o cita literal; pendiente de revisión semántica completa."
+    },
+    {
+      "id": "mapping-184",
+      "before": {
+        "trainingProgramKey": "INA02M",
+        "occupationId": "occupation:cno11:7705",
+        "relationshipType": "reviewed_relationship",
+        "reviewStatus": "approved",
+        "sourceUrl": "https://www.boe.es/eli/es/rd/2008/11/03/1798",
+        "sourceQuote": "Maestro de almazara.",
+        "reviewedAt": "2026-08-21",
+        "mappingVersion": "1.0.0"
+      },
+      "proposed": {
+        "trainingProgramKey": "INA02M",
+        "occupationId": "occupation:cno11:7705",
+        "relationshipType": "reviewed_relationship",
+        "reviewStatus": "approved",
+        "sourceUrl": "https://www.boe.es/eli/es/rd/2008/11/03/1798",
+        "sourceQuote": "Maestro de almazara, extractora y refinado de aceites de oliva.",
+        "reviewedAt": "2026-08-21",
+        "mappingVersion": "1.0.0"
+      },
+      "replacementQuoteVerifiedInRetrievedSource": true,
+      "sourceSha256": "17f3f4affb2d8f0d6c7b845569e98c69da21f17e33c2610a9cf0c3de8b564718",
+      "publicationApproved": false,
+      "reason": "Reparación de referencia o cita literal; pendiente de revisión semántica completa."
+    },
+    {
+      "id": "mapping-194",
+      "before": {
+        "trainingProgramKey": "MAM01M",
+        "occupationId": "occupation:cno11:7812",
+        "relationshipType": "official_output",
+        "reviewStatus": "approved",
+        "sourceUrl": "https://www.boe.es/eli/es/rd/1128/2010",
+        "sourceQuote": "Operador de máquinas fijas para fabricar productos de madera.",
+        "reviewedAt": "2026-08-09",
+        "mappingVersion": "1.0.0"
+      },
+      "proposed": {
+        "trainingProgramKey": "MAM01M",
+        "occupationId": "occupation:cno11:7812",
+        "relationshipType": "official_output",
+        "reviewStatus": "approved",
+        "sourceUrl": "https://www.boe.es/eli/es/rd/2010/09/10/1128",
+        "sourceQuote": "Operador de máquinas fijas para fabricar productos de madera.",
+        "reviewedAt": "2026-08-09",
+        "mappingVersion": "1.0.0"
+      },
+      "replacementQuoteVerifiedInRetrievedSource": true,
+      "sourceSha256": "cdc75c771133edcd10548506666cac2baafef5b6817d5d5b17598a7056eb9108",
+      "publicationApproved": false,
+      "reason": "Reparación de referencia o cita literal; pendiente de revisión semántica completa."
+    },
+    {
+      "id": "mapping-195",
+      "before": {
+        "trainingProgramKey": "MAM01M",
+        "occupationId": "occupation:cno11:8209",
+        "relationshipType": "official_output",
+        "reviewStatus": "approved",
+        "sourceUrl": "https://www.boe.es/eli/es/rd/1128/2010",
+        "sourceQuote": "Montador-ensamblador de elementos de carpintería.",
+        "reviewedAt": "2026-08-09",
+        "mappingVersion": "1.0.0"
+      },
+      "proposed": {
+        "trainingProgramKey": "MAM01M",
+        "occupationId": "occupation:cno11:8209",
+        "relationshipType": "official_output",
+        "reviewStatus": "approved",
+        "sourceUrl": "https://www.boe.es/eli/es/rd/2010/09/10/1128",
+        "sourceQuote": "Montador-ensamblador de elementos de carpintería.",
+        "reviewedAt": "2026-08-09",
+        "mappingVersion": "1.0.0"
+      },
+      "replacementQuoteVerifiedInRetrievedSource": true,
+      "sourceSha256": "cdc75c771133edcd10548506666cac2baafef5b6817d5d5b17598a7056eb9108",
+      "publicationApproved": false,
+      "reason": "Reparación de referencia o cita literal; pendiente de revisión semántica completa."
+    },
+    {
+      "id": "mapping-208",
+      "before": {
+        "trainingProgramKey": "SAN07S",
+        "occupationId": "occupation:cno11:2640",
+        "relationshipType": "official_output",
+        "reviewStatus": "approved",
+        "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/sanidad/imagen-diagnostico-medicina-nuclear.html",
+        "sourceQuote": "Delegada / delegado comercial de productos hospitalarios y farmacéuticos.",
+        "reviewedAt": "2026-08-13",
+        "mappingVersion": "1.0.0"
+      },
+      "proposed": {
+        "trainingProgramKey": "SAN07S",
+        "occupationId": "occupation:cno11:2640",
+        "relationshipType": "official_output",
+        "reviewStatus": "approved",
+        "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/sanidad/imagen-diagnostico-medicina-nuclear.html",
+        "sourceQuote": "Delegada / delegado comercial de productos hospitalarios y farmacéuticos",
+        "reviewedAt": "2026-08-13",
+        "mappingVersion": "1.0.0"
+      },
+      "replacementQuoteVerifiedInRetrievedSource": true,
+      "sourceSha256": "95e40ff0e3e2fd8f0d3b1b72e271ed284d83fc1959b5b638aa1a6281f6e3154d",
+      "publicationApproved": false,
+      "reason": "Reparación de referencia o cita literal; pendiente de revisión semántica completa."
+    },
+    {
+      "id": "mapping-209",
+      "before": {
+        "trainingProgramKey": "SAN07SD",
+        "occupationId": "occupation:cno11:2640",
+        "relationshipType": "official_output",
+        "reviewStatus": "approved",
+        "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/sanidad/imagen-diagnostico-medicina-nuclear.html",
+        "sourceQuote": "Delegada / delegado comercial de productos hospitalarios y farmacéuticos.",
+        "reviewedAt": "2026-08-13",
+        "mappingVersion": "1.0.0"
+      },
+      "proposed": {
+        "trainingProgramKey": "SAN07SD",
+        "occupationId": "occupation:cno11:2640",
+        "relationshipType": "official_output",
+        "reviewStatus": "approved",
+        "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/sanidad/imagen-diagnostico-medicina-nuclear.html",
+        "sourceQuote": "Delegada / delegado comercial de productos hospitalarios y farmacéuticos",
+        "reviewedAt": "2026-08-13",
+        "mappingVersion": "1.0.0"
+      },
+      "replacementQuoteVerifiedInRetrievedSource": true,
+      "sourceSha256": "95e40ff0e3e2fd8f0d3b1b72e271ed284d83fc1959b5b638aa1a6281f6e3154d",
+      "publicationApproved": false,
+      "reason": "Reparación de referencia o cita literal; pendiente de revisión semántica completa."
+    },
+    {
+      "id": "mapping-227",
+      "before": {
+        "trainingProgramKey": "SSC01SD",
+        "occupationId": "occupation:cno11:2252",
+        "relationshipType": "official_output",
+        "reviewStatus": "approved",
+        "sourceUrl": "https://www.boe.es/eli/es/rd/2007/10/29/1394",
+        "sourceQuote": "Educador o educadora infantil en primer ciclo de educación infantil.",
+        "reviewedAt": "2026-08-12",
+        "mappingVersion": "1.0.0"
+      },
+      "proposed": {
+        "trainingProgramKey": "SSC01SD",
+        "occupationId": "occupation:cno11:2252",
+        "relationshipType": "official_output",
+        "reviewStatus": "approved",
+        "sourceUrl": "https://www.boe.es/eli/es/rd/2007/10/29/1394",
+        "sourceQuote": "Educador o educadora infantil en primer ciclo de educación infantil, siempre bajo la supervisión de un maestro o maestra",
+        "reviewedAt": "2026-08-12",
+        "mappingVersion": "1.0.0"
+      },
+      "replacementQuoteVerifiedInRetrievedSource": true,
+      "sourceSha256": "7f1d954b2b791f7236af6b27f284abff3d8e54ace55a11f9c64c1e28eeaa502c",
+      "publicationApproved": false,
+      "reason": "Reparación de referencia o cita literal; pendiente de revisión semántica completa."
+    },
+    {
+      "id": "mapping-240",
+      "before": {
+        "trainingProgramKey": "TMV01M",
+        "occupationId": "occupation:cno11:7232",
+        "relationshipType": "official_output",
+        "reviewStatus": "approved",
+        "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+        "sourceQuote": "7232 Pintores en las industrias manufactureras",
+        "reviewedAt": "2026-08-20",
+        "mappingVersion": "1.0.0"
+      },
+      "proposed": {
+        "trainingProgramKey": "TMV01M",
+        "occupationId": "occupation:cno11:7232",
+        "relationshipType": "official_output",
+        "reviewStatus": "approved",
+        "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/transporte-mantenimiento-vehiculos/carroceria.html",
+        "sourceQuote": "Pintor / pintora de carrocería de automóviles, vehículos pesados, tractores, maquinaria agrícola, de industrias extractivas, de construcción y obras públicas y material ferroviario.",
+        "reviewedAt": "2026-08-20",
+        "mappingVersion": "1.0.0"
+      },
+      "replacementQuoteVerifiedInRetrievedSource": true,
+      "sourceSha256": "16f8dfe45fb1fcf0549194ace4691c529111f480c1e9b63c4fd4dc93127ebe06",
+      "publicationApproved": false,
+      "reason": "Sustituye una cita circular del catálogo CNO por una fuente oficial de FP; clasificación pendiente de revisión semántica."
+    },
+    {
+      "id": "mapping-244",
+      "before": {
+        "trainingProgramKey": "TMV02M",
+        "occupationId": "occupation:cno11:7401",
+        "relationshipType": "official_output",
+        "reviewStatus": "approved",
+        "sourceUrl": "https://www.boe.es/eli/es/rd/2010/03/19/453",
+        "sourceQuote": "Mecánico de automóviles.",
+        "reviewedAt": "2026-08-12",
+        "mappingVersion": "1.0.0"
+      },
+      "proposed": {
+        "trainingProgramKey": "TMV02M",
+        "occupationId": "occupation:cno11:7401",
+        "relationshipType": "official_output",
+        "reviewStatus": "approved",
+        "sourceUrl": "https://www.boe.es/eli/es/rd/2010/04/16/453",
+        "sourceQuote": "Mecánico de automóviles.",
+        "reviewedAt": "2026-08-12",
+        "mappingVersion": "1.0.0"
+      },
+      "replacementQuoteVerifiedInRetrievedSource": true,
+      "sourceSha256": "c1826376a0b03507b2d3c2766b9ed2cce9f055f9d91d6553dd35af1270543594",
+      "publicationApproved": false,
+      "reason": "Reparación de referencia o cita literal; pendiente de revisión semántica completa."
+    }
+  ]
+}

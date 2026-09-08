@@ -4,7 +4,7 @@
 
 La publicación trabaja con un snapshot direccionado por manifest. Las cifras describen los registros publicados por las fuentes oficiales en esa captura; una relación revisada sin coincidencias no se interpreta como ausencia del mercado laboral.
 
-Las relaciones formación–ocupación se publican solo cuando la evidencia oficial y la revisión del catálogo sostienen el vínculo exacto. No hay programas diferidos en esta instantánea. Los alias son formas auditadas del catálogo, no ampliaciones automáticas por similitud.
+Las relaciones formación–ocupación se publican solo cuando la evidencia oficial y la revisión del catálogo sostienen el vínculo exacto. Los programas diferidos (IMA01E, IMA02E) no se presentan como cobertura revisada. Los alias son formas auditadas del catálogo, no ampliaciones automáticas por similitud.
 
 ## Ingresos de titulados
 
@@ -16,4 +16,4 @@ La representatividad de las tablas nacionales es la declarada por el Ministerio:
 
 Las rutas internas son recorridos de producto; la candidatura usa únicamente la raíz pública. La experiencia no requiere cuentas y no conserva selecciones, búsquedas, respuestas ni resultados. No guarda preferencias en almacenamiento local. Los filtros y términos presentes en la URL pueden quedar en el historial del navegador. La accesibilidad automatizada, el responsive y la semántica se comprobaron de nuevo durante la captura final.
 
-El objetivo de ampliar la cobertura está condicionado a evidencia: el freeze actual registra 113 cualificaciones distintas y deja 0 programas diferidos. El despliegue público está verificado para el commit `4a76e5962d1628c4dbcaa4cb6a2b3922d906dd36`; la verificación de rutas y recursos queda registrada en `docs/contest/release-evidence.json`.
+El objetivo de ampliar la cobertura está condicionado a evidencia: el freeze actual registra 185 claves de programa con relación revisada y deja 2 programas diferidos. El despliegue público está verificado para el commit `3973301d8e4f3b83cf913c354efb357fda69101a`; la verificación de rutas y recursos queda registrada en `docs/contest/release-evidence.json`.

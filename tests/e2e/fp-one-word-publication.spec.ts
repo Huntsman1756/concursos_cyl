@@ -40,8 +40,26 @@ const currentEoc01mOfferIds = [
   "1285673429524",
   "1285674513041",
 ];
-/** Current candidate IDs accepted from the literal published requirement review. */
-const currentHot01mOfferIds = ["1285671836252"];
+// Full-title SISPE review is independent of the rejected one-word aliases.
+const currentManifest = JSON.parse(
+  await readFile(
+    new URL("../../public/data/v1/manifest.json", import.meta.url),
+    "utf8",
+  ),
+);
+const currentOffers = JSON.parse(
+  await readFile(
+    new URL(
+      `../../public${currentManifest.resourceSnapshots.jobOffers.resourcePath}`,
+      import.meta.url,
+    ),
+    "utf8",
+  ),
+) as Array<{ id: string; title: string }>;
+const currentHot01mOfferIds = currentOffers
+  .filter((offer) => offer.title === "COCINEROS, EN GENERAL")
+  .map((offer) => offer.id);
+expect(currentHot01mOfferIds).toHaveLength(49);
 
 const cases = [
   {
@@ -59,7 +77,15 @@ for (const { programKey, offerIds } of cases) {
     page,
   }) => {
     await page.goto(`/desde-fp/${programKey}`);
-
+    await expect(page.getByRole("article").first()).toBeVisible();
+    const more = page.getByRole("button", { name: /Mostrar más ofertas/u });
+    for (let batch = 0; batch < 10 && (await more.isVisible()); batch += 1) {
+      const previousCount = await page.getByRole("article").count();
+      await more.click();
+      await expect
+        .poll(() => page.getByRole("article").count())
+        .toBeGreaterThan(previousCount);
+    }
     await expect(page.getByRole("article")).toHaveCount(offerIds.length);
     const renderedArticleIds = await page
       .getByRole("article")

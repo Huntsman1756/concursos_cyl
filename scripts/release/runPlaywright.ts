@@ -1,10 +1,14 @@
 import { spawnSync } from "node:child_process";
 import { fileURLToPath } from "node:url";
-import { resolve } from "node:path";
+import { dirname, resolve } from "node:path";
+import { createRequire } from "node:module";
 
 import { E2E_BROWSERS, type E2EBrowser } from "./playwrightProjects";
 
-const PLAYWRIGHT_CLI = resolve("node_modules/playwright/cli.js");
+const PLAYWRIGHT_CLI = resolve(
+  dirname(createRequire(import.meta.url).resolve("playwright/package.json")),
+  "cli.js",
+);
 
 export type PlaywrightRunnerOptions = {
   install: boolean;

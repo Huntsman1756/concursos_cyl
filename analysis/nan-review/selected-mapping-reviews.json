@@ -1,0 +1,1881 @@
+{
+  "generatedAt": "2026-09-08T14:57:16.256922+00:00",
+  "status": "review-complete-awaiting-adjudication",
+  "publicationApproved": false,
+  "caseCount": 49,
+  "completedReviewCount": 98,
+  "workerVerdictsNotAccuracyMetrics": {
+    "supported": 95,
+    "unsupported": 1,
+    "uncertain": 2
+  },
+  "failures": [],
+  "cases": [
+    {
+      "id": "mapping-000",
+      "mapping": {
+        "trainingProgramKey": "IFC03E",
+        "occupationId": "occupation:cno11:3820",
+        "relationshipType": "reviewed_relationship",
+        "reviewStatus": "draft",
+        "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/informatica-comunicaciones/ce-inteligencia-artificial-bigdata.html",
+        "sourceQuote": "Programador de sistemas expertos.",
+        "reviewedAt": "2026-09-08",
+        "mappingVersion": "1.1.0",
+        "reviewNote": "Propuesta con cita oficial comprobada; pendiente de contraste de notas CNO y adjudicación final."
+      },
+      "packetSha256": "5488d91fb26db2b2711a3316c874f8fb92d9ada27d3c6f74a0b3a76bfd1bb14f",
+      "reviews": {
+        "qwen": {
+          "id": "mapping-000",
+          "verdict": "supported",
+          "reason": "La cita oficial (\"Programador de sistemas expertos.\") describe una actividad de programación de software que encaja directamente en el grupo primario 3820, el cual incluye programadores de aplicaciones y software. No existen exclusiones ni límites funcionales que invaliden la relación.",
+          "evidenceQuote": "Programador de sistemas expertos.",
+          "flags": [],
+          "quoteFoundInFpExcerpt": true,
+          "quoteFoundInCnoNotes": false
+        },
+        "gemma": {
+          "id": "mapping-000",
+          "verdict": "supported",
+          "reason": "La salida profesional 'Programador de sistemas expertos' del programa de formación está contenida dentro del grupo de ocupación CNO 3820 (Programadores informáticos), el cual incluye tareas de redactar y mantener código de programa.",
+          "evidenceQuote": "Programador de sistemas expertos.",
+          "flags": [],
+          "quoteFoundInFpExcerpt": true,
+          "quoteFoundInCnoNotes": false
+        }
+      },
+      "twoReviewsComplete": true,
+      "modelsAgree": true,
+      "publicationApproved": false
+    },
+    {
+      "id": "mapping-001",
+      "mapping": {
+        "trainingProgramKey": "MAM01S",
+        "occupationId": "occupation:cno11:3110",
+        "relationshipType": "reviewed_relationship",
+        "reviewStatus": "draft",
+        "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/madera-mueble-corcho/diseno-amueblamiento.html",
+        "sourceQuote": "Dibujante proyectista de muebles.",
+        "reviewedAt": "2026-09-08",
+        "mappingVersion": "1.1.0",
+        "reviewNote": "Propuesta con cita oficial comprobada; pendiente de contraste de notas CNO y adjudicación final."
+      },
+      "packetSha256": "5488d91fb26db2b2711a3316c874f8fb92d9ada27d3c6f74a0b3a76bfd1bb14f",
+      "reviews": {
+        "qwen": {
+          "id": "mapping-001",
+          "verdict": "supported",
+          "reason": "El perfil de salida (\"Dibujante proyectista de muebles.\") se alinea funcionalmente con las tareas del CNO 3110, que incluyen la preparación de dibujos y planos técnicos partiendo de especificaciones para fabricación. La relación es defensible según el texto proporcionado.",
+          "evidenceQuote": "Dibujante proyectista de muebles.",
+          "flags": [],
+          "quoteFoundInFpExcerpt": true,
+          "quoteFoundInCnoNotes": false
+        },
+        "gemma": {
+          "id": "mapping-001",
+          "verdict": "supported",
+          "reason": "El perfil profesional 'Dibujante proyectista de muebles' se relaciona con la ocupación CNO 3110 (Delineantes y dibujantes técnicos), que incluye la preparación de dibujos de taller y el uso de dibujo asistido por ordenador para representaciones digitales.",
+          "evidenceQuote": "Dibujante proyectista de muebles.",
+          "flags": [],
+          "quoteFoundInFpExcerpt": true,
+          "quoteFoundInCnoNotes": false
+        }
+      },
+      "twoReviewsComplete": true,
+      "modelsAgree": true,
+      "publicationApproved": false
+    },
+    {
+      "id": "mapping-002",
+      "mapping": {
+        "trainingProgramKey": "QUI03S",
+        "occupationId": "occupation:cno11:3204",
+        "relationshipType": "reviewed_relationship",
+        "reviewStatus": "draft",
+        "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/quimica/fab-prod-farmaceuticos-biotec-afines.html",
+        "sourceQuote": "Supervisor / supervisora de área de acondicionado.",
+        "reviewedAt": "2026-09-08",
+        "mappingVersion": "1.1.0",
+        "reviewNote": "Propuesta con cita oficial comprobada; pendiente de contraste de notas CNO y adjudicación final."
+      },
+      "packetSha256": "5488d91fb26db2b2711a3316c874f8fb92d9ada27d3c6f74a0b3a76bfd1bb14f",
+      "reviews": {
+        "qwen": {
+          "id": "mapping-002",
+          "verdict": "supported",
+          "reason": "La salida profesional (\"Supervisor / supervisora de área de acondicionado.\") corresponde a la función de supervisión y coordinación de operadores en plantas de producción química y farmacéutica, cubierta explícitamente por el CNO 3204. No se detectan exclusiones.",
+          "evidenceQuote": "Supervisor / supervisora de área de acondicionado.",
+          "flags": [],
+          "quoteFoundInFpExcerpt": true,
+          "quoteFoundInCnoNotes": false
+        },
+        "gemma": {
+          "id": "mapping-002",
+          "verdict": "supported",
+          "reason": "El perfil 'Supervisor / supervisora de área de acondicionado' se corresponde con el grupo CNO 3204 (Supervisores de industrias química y farmacéutica), el cual incluye la dirección de las actividades de los operadores y la supervisión de tareas en plantas industriales químicas.",
+          "evidenceQuote": "Supervisor / supervisora de área de acondicionado.",
+          "flags": [],
+          "quoteFoundInFpExcerpt": true,
+          "quoteFoundInCnoNotes": false
+        }
+      },
+      "twoReviewsComplete": true,
+      "modelsAgree": true,
+      "publicationApproved": false
+    },
+    {
+      "id": "mapping-003",
+      "mapping": {
+        "trainingProgramKey": "SAN05S",
+        "occupationId": "occupation:cno11:3322",
+        "relationshipType": "reviewed_relationship",
+        "reviewStatus": "draft",
+        "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/sanidad/documentacion-administracion-sanitarias.html",
+        "sourceQuote": "Técnica / técnico superior en documentación sanitaria.",
+        "reviewedAt": "2026-09-08",
+        "mappingVersion": "1.1.0",
+        "reviewNote": "Propuesta con cita oficial comprobada; pendiente de contraste de notas CNO y adjudicación final."
+      },
+      "packetSha256": "5488d91fb26db2b2711a3316c874f8fb92d9ada27d3c6f74a0b3a76bfd1bb14f",
+      "reviews": {
+        "qwen": {
+          "id": "mapping-003",
+          "verdict": "supported",
+          "reason": "Existe una correspondencia exacta entre el perfil de salida (\"Técnica / técnico superior en documentación sanitaria.\") y la denominación del grupo CNO 3322. Las tareas de codificación, archivo y gestión de historias clínicas coinciden con las definiciones oficiales.",
+          "evidenceQuote": "Técnica / técnico superior en documentación sanitaria.",
+          "flags": [],
+          "quoteFoundInFpExcerpt": true,
+          "quoteFoundInCnoNotes": false
+        },
+        "gemma": {
+          "id": "mapping-003",
+          "verdict": "supported",
+          "reason": "La salida profesional 'Técnica / técnico superior en documentación sanitaria' coincide directamente con el nombre y la descripción de la ocupación CNO 3322 (Técnicos superiores en documentación sanitaria).",
+          "evidenceQuote": "Técnica / técnico superior en documentación sanitaria.",
+          "flags": [],
+          "quoteFoundInFpExcerpt": true,
+          "quoteFoundInCnoNotes": false
+        }
+      },
+      "twoReviewsComplete": true,
+      "modelsAgree": true,
+      "publicationApproved": false
+    },
+    {
+      "id": "mapping-004",
+      "mapping": {
+        "trainingProgramKey": "TCP01S",
+        "occupationId": "occupation:cno11:7832",
+        "relationshipType": "reviewed_relationship",
+        "reviewStatus": "draft",
+        "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/textil-confeccion-piel/patronaje-moda.html",
+        "sourceQuote": "Modelista-patronista de prendas de vestir.",
+        "reviewedAt": "2026-09-08",
+        "mappingVersion": "1.1.0",
+        "reviewNote": "Propuesta con cita oficial comprobada; pendiente de contraste de notas CNO y adjudicación final."
+      },
+      "packetSha256": "5488d91fb26db2b2711a3316c874f8fb92d9ada27d3c6f74a0b3a76bfd1bb14f",
+      "reviews": {
+        "qwen": {
+          "id": "mapping-004",
+          "verdict": "supported",
+          "reason": "El perfil (\"Modelista-patronista de prendas de vestir.\") se identifica literalmente en el CNO 7832, que incluye a \"Patronistas de prendas de vestir\" y describe las tareas de creación de patrones para la producción textil. La relación es directa y verificada.",
+          "evidenceQuote": "Modelista-patronista de prendas de vestir.",
+          "flags": [],
+          "quoteFoundInFpExcerpt": true,
+          "quoteFoundInCnoNotes": false
+        },
+        "gemma": {
+          "id": "mapping-004",
+          "verdict": "supported",
+          "reason": "El perfil 'Modelista-patronista de prendas de vestir' es una de las ocupaciones incluidas explícitamente en el grupo primario CNO 7832 (Patronistas para productos en textil y piel).",
+          "evidenceQuote": "Modelista-patronista de prendas de vestir.",
+          "flags": [],
+          "quoteFoundInFpExcerpt": true,
+          "quoteFoundInCnoNotes": false
+        }
+      },
+      "twoReviewsComplete": true,
+      "modelsAgree": true,
+      "publicationApproved": false
+    },
+    {
+      "id": "mapping-005",
+      "mapping": {
+        "trainingProgramKey": "TMV02E",
+        "occupationId": "occupation:cno11:7401",
+        "relationshipType": "reviewed_relationship",
+        "reviewStatus": "draft",
+        "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/transporte-mantenimiento-vehiculos/ce-mantenimiento-vehiculos-electricos-hibridos.html",
+        "sourceQuote": "Técnico de mantenimiento de vehículos eléctricos.",
+        "reviewedAt": "2026-09-08",
+        "mappingVersion": "1.1.0",
+        "reviewNote": "Propuesta con cita oficial comprobada; pendiente de contraste de notas CNO y adjudicación final."
+      },
+      "packetSha256": "5488d91fb26db2b2711a3316c874f8fb92d9ada27d3c6f74a0b3a76bfd1bb14f",
+      "reviews": {
+        "qwen": {
+          "id": "mapping-005",
+          "verdict": "supported",
+          "reason": "La salida profesional (\"Técnico de mantenimiento de vehículos eléctricos.\") se alinea con las funciones de instalación, mantenimiento y reparación de componentes de vehículos de motor descritas en el CNO 7401. La especialización en sistemas eléctricos es funcionalmente coherente con el mantenimiento automotriz sin infringir límites ocupacionales.",
+          "evidenceQuote": "Técnico de mantenimiento de vehículos eléctricos.",
+          "flags": [],
+          "quoteFoundInFpExcerpt": true,
+          "quoteFoundInCnoNotes": false
+        },
+        "gemma": {
+          "id": "mapping-005",
+          "verdict": "supported",
+          "reason": "El perfil 'Técnico de mantenimiento de vehículos eléctricos' se encuadra en la ocupación CNO 7401 (Mecánicos y ajustadores de vehículos de motor), la cual incluye tareas de diagnóstico, reparación y mantenimiento de motores y equipos de vehículos de motor.",
+          "evidenceQuote": "Técnico de mantenimiento de vehículos eléctricos.",
+          "flags": [],
+          "quoteFoundInFpExcerpt": true,
+          "quoteFoundInCnoNotes": false
+        }
+      },
+      "twoReviewsComplete": true,
+      "modelsAgree": true,
+      "publicationApproved": false
+    },
+    {
+      "id": "mapping-006",
+      "mapping": {
+        "trainingProgramKey": "AFD01M",
+        "occupationId": "occupation:cno11:6209",
+        "relationshipType": "reviewed_relationship",
+        "reviewStatus": "draft",
+        "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/actividades-fisicas-deportivas/actividades-ecuestres.html",
+        "sourceQuote": "Trabajador / trabajadora de la cría de caballos.",
+        "reviewedAt": "2026-09-08",
+        "mappingVersion": "1.1.0",
+        "reviewNote": "Propuesta con cita oficial comprobada; pendiente de contraste de notas CNO y adjudicación final."
+      },
+      "packetSha256": "5f9332524c78d375f089b6f6b12f04013f74c0f67c10b1b52ade6ea97d19afbf",
+      "reviews": {
+        "qwen": {
+          "id": "mapping-006",
+          "verdict": "supported",
+          "reason": "La evidencia del programa (todofp.es) cita explícitamente 'Trabajador / trabajadora de la cría de caballos' como salida profesional. La nota CNO para el código 6209 incluye explícitamente a los 'Criadores de ganado equino' dentro de las ocupaciones del grupo primario. Existe una correspondencia directa y verificada entre el perfil de FP y la ocupación CNO.",
+          "evidenceQuote": "Trabajador / trabajadora de la cría de caballos.",
+          "flags": [],
+          "quoteFoundInFpExcerpt": true,
+          "quoteFoundInCnoNotes": false
+        },
+        "gemma": {
+          "id": "mapping-006",
+          "verdict": "supported",
+          "reason": "La salida profesional 'Trabajador / trabajadora de la cría de caballos' del programa coincide directamente con el ejemplo de ocupación 'Criadores de ganado equino' incluido en el grupo primario CNO 6209.",
+          "evidenceQuote": "Trabajador / trabajadora de la cría de caballos.",
+          "flags": [],
+          "quoteFoundInFpExcerpt": true,
+          "quoteFoundInCnoNotes": false
+        }
+      },
+      "twoReviewsComplete": true,
+      "modelsAgree": true,
+      "publicationApproved": false
+    },
+    {
+      "id": "mapping-007",
+      "mapping": {
+        "trainingProgramKey": "ARG01S",
+        "occupationId": "occupation:cno11:2484",
+        "relationshipType": "reviewed_relationship",
+        "reviewStatus": "draft",
+        "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/artes-graficas/diseno-gestion-produccion-grafica.html",
+        "sourceQuote": "Diseñador gráfico / diseñadora gráfica.",
+        "reviewedAt": "2026-09-08",
+        "mappingVersion": "1.1.0",
+        "reviewNote": "Propuesta con cita oficial comprobada; pendiente de contraste de notas CNO y adjudicación final."
+      },
+      "packetSha256": "5f9332524c78d375f089b6f6b12f04013f74c0f67c10b1b52ade6ea97d19afbf",
+      "reviews": {
+        "qwen": {
+          "id": "mapping-007",
+          "verdict": "supported",
+          "reason": "La evidencia del programa cita 'Diseñador gráfico / diseñadora gráfica' como salida profesional. La nota CNO para el código 2484 ('Diseñadores gráficos y multimedia') incluye explícitamente a 'Diseñadores gráficos' en la lista de ejemplos de ocupaciones del grupo primario. La relación está respaldada por fuentes primarias oficiales.",
+          "evidenceQuote": "Diseñador gráfico / diseñadora gráfica.",
+          "flags": [],
+          "quoteFoundInFpExcerpt": true,
+          "quoteFoundInCnoNotes": false
+        },
+        "gemma": {
+          "id": "mapping-007",
+          "verdict": "supported",
+          "reason": "El perfil profesional 'Diseñador gráfico / diseñadora gráfica' del programa está explícitamente listado como un ejemplo de ocupación dentro del grupo primario CNO 2484.",
+          "evidenceQuote": "Diseñador gráfico / diseñadora gráfica.",
+          "flags": [],
+          "quoteFoundInFpExcerpt": true,
+          "quoteFoundInCnoNotes": false
+        }
+      },
+      "twoReviewsComplete": true,
+      "modelsAgree": true,
+      "publicationApproved": false
+    },
+    {
+      "id": "mapping-008",
+      "mapping": {
+        "trainingProgramKey": "ARG02S",
+        "occupationId": "occupation:cno11:2484",
+        "relationshipType": "reviewed_relationship",
+        "reviewStatus": "draft",
+        "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/artes-graficas/diseno-edicion-public-impresas-multimedia.html",
+        "sourceQuote": "Diseñador gráfico / diseñadora gráfica.",
+        "reviewedAt": "2026-09-08",
+        "mappingVersion": "1.1.0",
+        "reviewNote": "Propuesta con cita oficial comprobada; pendiente de contraste de notas CNO y adjudicación final."
+      },
+      "packetSha256": "5f9332524c78d375f089b6f6b12f04013f74c0f67c10b1b52ade6ea97d19afbf",
+      "reviews": {
+        "qwen": {
+          "id": "mapping-008",
+          "verdict": "supported",
+          "reason": "La evidencia del programa cita 'Diseñador gráfico / diseñadora gráfica' como salida profesional. La nota CNO para el código 2484 incluye explícitamente a 'Diseñadores gráficos' en las ocupaciones del grupo primario. La correspondencia es directa y verificada.",
+          "evidenceQuote": "Diseñador gráfico / diseñadora gráfica.",
+          "flags": [],
+          "quoteFoundInFpExcerpt": true,
+          "quoteFoundInCnoNotes": false
+        },
+        "gemma": {
+          "id": "mapping-008",
+          "verdict": "supported",
+          "reason": "El perfil profesional 'Diseñador gráfico / diseñadora gráfica' del programa se corresponde con el ejemplo de ocupación 'Diseñadores gráficos' del grupo primario CNO 2484.",
+          "evidenceQuote": "Diseñador gráfico / diseñadora gráfica.",
+          "flags": [],
+          "quoteFoundInFpExcerpt": true,
+          "quoteFoundInCnoNotes": false
+        }
+      },
+      "twoReviewsComplete": true,
+      "modelsAgree": true,
+      "publicationApproved": false
+    },
+    {
+      "id": "mapping-009",
+      "mapping": {
+        "trainingProgramKey": "ELE04E",
+        "occupationId": "occupation:cno11:3813",
+        "relationshipType": "reviewed_relationship",
+        "reviewStatus": "draft",
+        "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/electricidad-electronica/ce-instalacion-mto-sitemas-conectados-internet.html",
+        "sourceQuote": "Técnicos/Técnicas en redes.",
+        "reviewedAt": "2026-09-08",
+        "mappingVersion": "1.1.0",
+        "reviewNote": "Propuesta con cita oficial comprobada; pendiente de contraste de notas CNO y adjudicación final."
+      },
+      "packetSha256": "5f9332524c78d375f089b6f6b12f04013f74c0f67c10b1b52ade6ea97d19afbf",
+      "reviews": {
+        "qwen": {
+          "id": "mapping-009",
+          "verdict": "supported",
+          "reason": "La evidencia del programa cita 'Técnicos/Técnicas en redes' como salida profesional. La nota CNO para el código 3813 tiene el título 'Técnicos en redes' e incluye 'Técnicos en redes informáticas' como ejemplo de ocupación. La coincidencia nominal y funcional es exacta.",
+          "evidenceQuote": "Técnicos/Técnicas en redes.",
+          "flags": [],
+          "quoteFoundInFpExcerpt": true,
+          "quoteFoundInCnoNotes": false
+        },
+        "gemma": {
+          "id": "mapping-009",
+          "verdict": "supported",
+          "reason": "La salida profesional 'Técnicos/Técnicas en redes' del programa coincide con la descripción y el nombre del grupo primario CNO 3813.",
+          "evidenceQuote": "Técnicos/Técnicas en redes.",
+          "flags": [],
+          "quoteFoundInFpExcerpt": true,
+          "quoteFoundInCnoNotes": false
+        }
+      },
+      "twoReviewsComplete": true,
+      "modelsAgree": true,
+      "publicationApproved": false
+    },
+    {
+      "id": "mapping-010",
+      "mapping": {
+        "trainingProgramKey": "ENA01S",
+        "occupationId": "occupation:cno11:7294",
+        "relationshipType": "reviewed_relationship",
+        "reviewStatus": "draft",
+        "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/energia-agua/eficiencia-energetica-solar-termica.html",
+        "sourceQuote": "Responsable de montaje y mantenimiento de instalaciones solares térmicas.",
+        "reviewedAt": "2026-09-08",
+        "mappingVersion": "1.1.0",
+        "reviewNote": "Propuesta con cita oficial comprobada; pendiente de contraste de notas CNO y adjudicación final."
+      },
+      "packetSha256": "5f9332524c78d375f089b6f6b12f04013f74c0f67c10b1b52ade6ea97d19afbf",
+      "reviews": {
+        "qwen": {
+          "id": "mapping-010",
+          "verdict": "supported",
+          "reason": "La evidencia del programa cita 'Responsable de montaje y mantenimiento de instalaciones solares térmicas'. La nota CNO para el código 7294 ('Montadores-instaladores de placas de energía solar') incluye explícitamente a 'Montadores de instalaciones solares térmicas' y 'Reparadores-mantenedores de instalaciones solares térmicas' como ocupaciones del grupo primario. El perfil de FP cubre las tareas de montaje y mantenimiento descritas en la CNO.",
+          "evidenceQuote": "Responsable de montaje y mantenimiento de instalaciones solares térmicas.",
+          "flags": [],
+          "quoteFoundInFpExcerpt": true,
+          "quoteFoundInCnoNotes": false
+        },
+        "gemma": {
+          "id": "mapping-010",
+          "verdict": "supported",
+          "reason": "La salida profesional 'Responsable de montaje y mantenimiento de instalaciones solares térmicas' coincide con las tareas y ejemplos de ocupación del grupo CNO 7294, que incluye específicamente el mantenimiento y montaje de instalaciones solares térmicas.",
+          "evidenceQuote": "Responsable de montaje y mantenimiento de instalaciones solares térmicas.",
+          "flags": [],
+          "quoteFoundInFpExcerpt": true,
+          "quoteFoundInCnoNotes": false
+        }
+      },
+      "twoReviewsComplete": true,
+      "modelsAgree": true,
+      "publicationApproved": false
+    },
+    {
+      "id": "mapping-011",
+      "mapping": {
+        "trainingProgramKey": "FME03M",
+        "occupationId": "occupation:cno11:8141",
+        "relationshipType": "reviewed_relationship",
+        "reviewStatus": "draft",
+        "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/fabricacion-mecanica/conformado-moldeo-metales-polimeros.html",
+        "sourceQuote": "Operador / operadora de máquina moldeadora-vulcanizadora de caucho.",
+        "reviewedAt": "2026-09-08",
+        "mappingVersion": "1.1.0",
+        "reviewNote": "Propuesta con cita oficial comprobada; pendiente de contraste de notas CNO y adjudicación final."
+      },
+      "packetSha256": "5f9332524c78d375f089b6f6b12f04013f74c0f67c10b1b52ade6ea97d19afbf",
+      "reviews": {
+        "qwen": {
+          "id": "mapping-011",
+          "verdict": "supported",
+          "reason": "La evidencia del programa cita 'Operador / operadora de máquina moldeadora-vulcanizadora de caucho'. La nota CNO para el código 8141 incluye explícitamente a 'Operadores de maquina de vulcanización de neumáticos' y 'Operadores de maquina moldeadora' (implícito en la descripción de vulcanización y moldeo) como ocupaciones del grupo primario. La tarea específica de moldeo-vulcanización de caucho está cubierta por la definición de la ocupación CNO.",
+          "evidenceQuote": "Operador / operadora de máquina moldeadora-vulcanizadora de caucho.",
+          "flags": [],
+          "quoteFoundInFpExcerpt": true,
+          "quoteFoundInCnoNotes": false
+        },
+        "gemma": {
+          "id": "mapping-011",
+          "verdict": "supported",
+          "reason": "El perfil profesional 'Operador / operadora de máquina moldeadora-vulcanizadora de caucho' coincide con la descripción de tareas del grupo CNO 8141, que incluye operar máquinas para moldear mediante vulcanización.",
+          "evidenceQuote": "Operador / operadora de máquina moldeadora-vulcanizadora de caucho.",
+          "flags": [],
+          "quoteFoundInFpExcerpt": true,
+          "quoteFoundInCnoNotes": false
+        }
+      },
+      "twoReviewsComplete": true,
+      "modelsAgree": true,
+      "publicationApproved": false
+    },
+    {
+      "id": "mapping-012",
+      "mapping": {
+        "trainingProgramKey": "HOT02B",
+        "occupationId": "occupation:cno11:9210",
+        "relationshipType": "reviewed_relationship",
+        "reviewStatus": "draft",
+        "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/hosteleria-turismo/alojamiento-lavanderia.html",
+        "sourceQuote": "Camarera / camarero de pisos, en establecimientos de alojamiento turístico sea cual sea su tipología, modalidad o categoría.",
+        "reviewedAt": "2026-09-08",
+        "mappingVersion": "1.1.0",
+        "reviewNote": "Propuesta con cita oficial comprobada; pendiente de contraste de notas CNO y adjudicación final."
+      },
+      "packetSha256": "b53dda15de1e8db6a90ca95232c21fbe97f15f7010878ee082a29dd825bfc7c1",
+      "reviews": {
+        "qwen": {
+          "id": "mapping-012",
+          "verdict": "unsupported",
+          "reason": "El perfil citado ('Camarera / camarero de pisos') corresponde a funciones de servicio y atención en alojamientos, no a limpieza. El código CNO 9210 se restringe a personal de limpieza, por lo que la evidencia no sustenta el vínculo funcional propuesto.",
+          "evidenceQuote": "Camarera / camarero de pisos, en establecimientos de alojamiento turístico sea cual sea su tipología, modalidad o categoría.",
+          "flags": ["mismatch_cargo_vs_cno"],
+          "quoteFoundInFpExcerpt": true,
+          "quoteFoundInCnoNotes": false
+        },
+        "gemma": {
+          "id": "mapping-012",
+          "verdict": "supported",
+          "reason": "La salida profesional 'Camarera / camarero de pisos' del programa coincide directamente con las tareas de la ocupación CNO 9210, que incluye 'hacer camas, limpiar cuartos de baño y suministrar toallas, jabón y artículos afines'.",
+          "evidenceQuote": "Camarera / camarero de pisos, en establecimientos de alojamiento turístico sea cual sea su tipología, modalidad o categoría.",
+          "flags": [],
+          "quoteFoundInFpExcerpt": true,
+          "quoteFoundInCnoNotes": false
+        }
+      },
+      "twoReviewsComplete": true,
+      "modelsAgree": false,
+      "publicationApproved": false
+    },
+    {
+      "id": "mapping-013",
+      "mapping": {
+        "trainingProgramKey": "HOT03SD",
+        "occupationId": "occupation:cno11:5825",
+        "relationshipType": "reviewed_relationship",
+        "reviewStatus": "draft",
+        "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/hosteleria-turismo/guia-informacion-asistencias-turisticas.html",
+        "sourceQuote": "Guía local.",
+        "reviewedAt": "2026-09-08",
+        "mappingVersion": "1.1.0",
+        "reviewNote": "Propuesta con cita oficial comprobada; pendiente de contraste de notas CNO y adjudicación final."
+      },
+      "packetSha256": "b53dda15de1e8db6a90ca95232c21fbe97f15f7010878ee082a29dd825bfc7c1",
+      "reviews": {
+        "qwen": {
+          "id": "mapping-013",
+          "verdict": "supported",
+          "reason": "La cita oficial 'Guía local.' coincide directamente con el ejemplo 'Guías local de turismo' dentro de la definición CNO 5825, estableciendo una relación funcional defensible.",
+          "evidenceQuote": "Guía local.",
+          "flags": [],
+          "quoteFoundInFpExcerpt": true,
+          "quoteFoundInCnoNotes": false
+        },
+        "gemma": {
+          "id": "mapping-013",
+          "verdict": "supported",
+          "reason": "El programa ofrece la salida profesional 'Guía local', la cual está explícitamente listada como un ejemplo de ocupación incluida en el grupo primario 5825 de la CNO.",
+          "evidenceQuote": "Guía local.",
+          "flags": [],
+          "quoteFoundInFpExcerpt": true,
+          "quoteFoundInCnoNotes": false
+        }
+      },
+      "twoReviewsComplete": true,
+      "modelsAgree": true,
+      "publicationApproved": false
+    },
+    {
+      "id": "mapping-014",
+      "mapping": {
+        "trainingProgramKey": "HOT04SD",
+        "occupationId": "occupation:cno11:3734",
+        "relationshipType": "reviewed_relationship",
+        "reviewStatus": "draft",
+        "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/hosteleria-turismo/direccion-cocina.html",
+        "sourceQuote": "Jefa / jefe de cocina.",
+        "reviewedAt": "2026-09-08",
+        "mappingVersion": "1.1.0",
+        "reviewNote": "Propuesta con cita oficial comprobada; pendiente de contraste de notas CNO y adjudicación final."
+      },
+      "packetSha256": "b53dda15de1e8db6a90ca95232c21fbe97f15f7010878ee082a29dd825bfc7c1",
+      "reviews": {
+        "qwen": {
+          "id": "mapping-014",
+          "verdict": "supported",
+          "reason": "El título 'Jefa / jefe de cocina.' aparece explícitamente listado como ejemplo dentro del grupo primario 3734 (Chefs), validando la relación ocupacional.",
+          "evidenceQuote": "Jefa / jefe de cocina.",
+          "flags": [],
+          "quoteFoundInFpExcerpt": true,
+          "quoteFoundInCnoNotes": false
+        },
+        "gemma": {
+          "id": "mapping-014",
+          "verdict": "supported",
+          "reason": "La salida profesional 'Jefa / jefe de cocina' del programa se corresponde con el ejemplo de ocupación 'Jefes de cocina' incluido en el grupo primario 3734 de la CNO.",
+          "evidenceQuote": "Jefa / jefe de cocina.",
+          "flags": [],
+          "quoteFoundInFpExcerpt": true,
+          "quoteFoundInCnoNotes": false
+        }
+      },
+      "twoReviewsComplete": true,
+      "modelsAgree": true,
+      "publicationApproved": false
+    },
+    {
+      "id": "mapping-015",
+      "mapping": {
+        "trainingProgramKey": "IFC02E",
+        "occupationId": "occupation:cno11:2713",
+        "relationshipType": "reviewed_relationship",
+        "reviewStatus": "draft",
+        "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/informatica-comunicaciones/ce-desarrollo-videojuegos-realidad-virtual.html",
+        "sourceQuote": "Programador de videojuegos (Game Developer).",
+        "reviewedAt": "2026-09-08",
+        "mappingVersion": "1.1.0",
+        "reviewNote": "La nota CNO 3820 excluye explícitamente programadores de juegos de ordenador y remite a 2713; pendiente de adjudicación final."
+      },
+      "packetSha256": "b53dda15de1e8db6a90ca95232c21fbe97f15f7010878ee082a29dd825bfc7c1",
+      "reviews": {
+        "qwen": {
+          "id": "mapping-015",
+          "verdict": "supported",
+          "reason": "La función 'Programador de videojuegos' se alinea con el ejemplo 'Programadores de juegos de ordenador' del CNO 2713. La nota de revisión confirma que la exclusión de 3820 remite a este código, reforzando la relación.",
+          "evidenceQuote": "Programador de videojuegos (Game Developer).",
+          "flags": [],
+          "quoteFoundInFpExcerpt": true,
+          "quoteFoundInCnoNotes": false
+        },
+        "gemma": {
+          "id": "mapping-015",
+          "verdict": "supported",
+          "reason": "La salida profesional 'Programador de videojuegos (Game Developer)' del programa coincide con el ejemplo de ocupación 'Programadores de juegos de ordenador' incluido en el grupo primario 2713 de la CNO.",
+          "evidenceQuote": "Programador de videojuegos (Game Developer).",
+          "flags": [],
+          "quoteFoundInFpExcerpt": true,
+          "quoteFoundInCnoNotes": false
+        }
+      },
+      "twoReviewsComplete": true,
+      "modelsAgree": true,
+      "publicationApproved": false
+    },
+    {
+      "id": "mapping-016",
+      "mapping": {
+        "trainingProgramKey": "IMA03E",
+        "occupationId": "occupation:cno11:3110",
+        "relationshipType": "reviewed_relationship",
+        "reviewStatus": "draft",
+        "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/instalacion-mantenimiento/ce-modelado-informacion-construccion.html",
+        "sourceQuote": "Modelador BIM.",
+        "reviewedAt": "2026-09-08",
+        "mappingVersion": "1.1.0",
+        "reviewNote": "Propuesta con cita oficial comprobada; pendiente de contraste de notas CNO y adjudicación final."
+      },
+      "packetSha256": "b53dda15de1e8db6a90ca95232c21fbe97f15f7010878ee082a29dd825bfc7c1",
+      "reviews": {
+        "qwen": {
+          "id": "mapping-016",
+          "verdict": "supported",
+          "reason": "La actividad de 'Modelador BIM' implica la generación y gestión de representaciones técnicas digitales, encuadrada funcionalmente en CNO 3110 (Delineantes y dibujantes técnicos), que abarca el uso de herramientas de dibujo asistido y modelado técnico.",
+          "evidenceQuote": "Modelador BIM.",
+          "flags": ["specialized_role_alignment"],
+          "quoteFoundInFpExcerpt": true,
+          "quoteFoundInCnoNotes": false
+        },
+        "gemma": {
+          "id": "mapping-016",
+          "verdict": "uncertain",
+          "reason": "Aunque el programa forma en 'Modelador BIM', la evidencia de la CNO para el código 3110 se centra en la preparación de dibujos, planos e ilustraciones técnicas (delineantes y dibujantes), sin mencionar explícitamente la metodología BIM o modelado de información para la construcción. No se puede establecer la relación con la información suministrada.",
+          "evidenceQuote": "",
+          "flags": ["no explicit mention of BIM in occupation evidence"],
+          "quoteFoundInFpExcerpt": false,
+          "quoteFoundInCnoNotes": false
+        }
+      },
+      "twoReviewsComplete": true,
+      "modelsAgree": false,
+      "publicationApproved": false
+    },
+    {
+      "id": "mapping-017",
+      "mapping": {
+        "trainingProgramKey": "IMP03S",
+        "occupationId": "occupation:cno11:2652",
+        "relationshipType": "reviewed_relationship",
+        "reviewStatus": "draft",
+        "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/imagen-personal/asesoria-imagen-personal-corporativa.html",
+        "sourceQuote": "Técnica / técnico especialista en gabinetes de relaciones públicas.",
+        "reviewedAt": "2026-09-08",
+        "mappingVersion": "1.1.0",
+        "reviewNote": "Propuesta con cita oficial comprobada; pendiente de contraste de notas CNO y adjudicación final."
+      },
+      "packetSha256": "b53dda15de1e8db6a90ca95232c21fbe97f15f7010878ee082a29dd825bfc7c1",
+      "reviews": {
+        "qwen": {
+          "id": "mapping-017",
+          "verdict": "supported",
+          "reason": "El perfil 'Técnica / técnico especialista en gabinetes de relaciones públicas.' remite directamente a la denominación ocupacional CNO 2652, compartiendo competencias en comunicación estratégica y gestión de imagen corporativa.",
+          "evidenceQuote": "Técnica / técnico especialista en gabinetes de relaciones públicas.",
+          "flags": [],
+          "quoteFoundInFpExcerpt": true,
+          "quoteFoundInCnoNotes": false
+        },
+        "gemma": {
+          "id": "mapping-017",
+          "verdict": "supported",
+          "reason": "La salida profesional 'Técnica / técnico especialista en gabinetes de relaciones públicas' del programa es compatible con las funciones de planificación y organización de estrategias de comunicación y eventos descritas en la ocupación 2652.",
+          "evidenceQuote": "Técnica / técnico especialista en gabinetes de relaciones públicas.",
+          "flags": [],
+          "quoteFoundInFpExcerpt": true,
+          "quoteFoundInCnoNotes": false
+        }
+      },
+      "twoReviewsComplete": true,
+      "modelsAgree": true,
+      "publicationApproved": false
+    },
+    {
+      "id": "mapping-018",
+      "mapping": {
+        "trainingProgramKey": "IMP04S",
+        "occupationId": "occupation:cno11:5812",
+        "relationshipType": "reviewed_relationship",
+        "reviewStatus": "draft",
+        "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/imagen-personal/caracterizacion-maquillaje-profesional.html",
+        "sourceQuote": "Maquillador / maquilladora para medios audiovisuales y actividades y actuaciones escénicas.",
+        "reviewedAt": "2026-09-08",
+        "mappingVersion": "1.1.0",
+        "reviewNote": "Propuesta con cita oficial comprobada; pendiente de contraste de notas CNO y adjudicación final."
+      },
+      "packetSha256": "d2f2fe1e4d9906b82ccd5d569cd02462cd660aa9aaa95bc0afce538bd0f3285a",
+      "reviews": {
+        "qwen": {
+          "id": "mapping-018",
+          "verdict": "supported",
+          "reason": "El programa de grado superior forma especialistas en caracterización y maquillaje. La cita oficial menciona Maquillador / maquilladora para medios audiovisuales y actividades y actuaciones escénicas, que coincide con la descripción del CNO 5812 (maquillar a los clientes... a los actores y otros artistas) y está explícitamente listado como ocupación incluida (Maquilladores).",
+          "evidenceQuote": "Maquillador / maquilladora para medios audiovisuales y actividades y actuaciones escénicas.",
+          "flags": [],
+          "quoteFoundInFpExcerpt": true,
+          "quoteFoundInCnoNotes": false
+        },
+        "gemma": {
+          "id": "mapping-018",
+          "verdict": "supported",
+          "reason": "La formación profesional de Grado Superior en Caracterización y Maquillaje Profesional incluye la salida profesional de 'Maquillador / maquilladora para medios audiovisuales y actuaciones escénicas', lo cual coincide con la descripción de la ocupación CNO 5812, que incluye expresamente a los 'Maquilladores' y la tarea de maquillar a actores y artistas.",
+          "evidenceQuote": "Maquillador / maquilladora para medios audiovisuales y actividades y actuaciones escénicas.",
+          "flags": [],
+          "quoteFoundInFpExcerpt": true,
+          "quoteFoundInCnoNotes": false
+        }
+      },
+      "twoReviewsComplete": true,
+      "modelsAgree": true,
+      "publicationApproved": false
+    },
+    {
+      "id": "mapping-019",
+      "mapping": {
+        "trainingProgramKey": "INA01B",
+        "occupationId": "occupation:cno11:7703",
+        "relationshipType": "reviewed_relationship",
+        "reviewStatus": "draft",
+        "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/industrias-alimentarias/actividades-panaderia-pasteleria.html",
+        "sourceQuote": "Auxiliar de panadería y bollería.",
+        "reviewedAt": "2026-09-08",
+        "mappingVersion": "1.1.0",
+        "reviewNote": "Propuesta con cita oficial comprobada; pendiente de contraste de notas CNO y adjudicación final.",
+        "functionalBoundary": {
+          "roleLevel": "assistant",
+          "fullOccupationQualification": false
+        }
+      },
+      "packetSha256": "d2f2fe1e4d9906b82ccd5d569cd02462cd660aa9aaa95bc0afce538bd0f3285a",
+      "reviews": {
+        "qwen": {
+          "id": "mapping-019",
+          "verdict": "supported",
+          "reason": "El título es de nivel básico y declara explícitamente un límite funcional de nivel auxiliar. Aunque el CNO 7703 describe panaderos y pasteleros sin mención de auxiliares, la relación es defensible al situarse dentro del mismo sector productivo y la frontera funcional queda correctamente delimitada en los metadatos del mapeo.",
+          "evidenceQuote": "Auxiliar de panadería y bollería.",
+          "flags": ["assistant_level_boundary"],
+          "quoteFoundInFpExcerpt": true,
+          "quoteFoundInCnoNotes": false
+        },
+        "gemma": {
+          "id": "mapping-019",
+          "verdict": "supported",
+          "reason": "El programa de FP Básica define perfiles como 'Auxiliar de panadería y bollería', lo cual establece una relación de asistencia/auxiliar. Dado que la ocupación CNO 7703 (Panaderos, pasteleros y confiteros) es la ocupación principal, la función de auxiliar se entiende como una relación de apoyo dentro del mismo ámbito profesional.",
+          "evidenceQuote": "Trabajar como: Auxiliar de panadería y bollería.",
+          "flags": ["relación de nivel asistente"],
+          "quoteFoundInFpExcerpt": true,
+          "quoteFoundInCnoNotes": false
+        }
+      },
+      "twoReviewsComplete": true,
+      "modelsAgree": true,
+      "publicationApproved": false
+    },
+    {
+      "id": "mapping-020",
+      "mapping": {
+        "trainingProgramKey": "INA02B",
+        "occupationId": "occupation:cno11:8160",
+        "relationshipType": "reviewed_relationship",
+        "reviewStatus": "draft",
+        "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/industrias-alimentarias/industrias-alimentarias.html",
+        "sourceQuote": "Operador / operadora de máquinas para elaborar y envasar productos alimentarios.",
+        "reviewedAt": "2026-09-08",
+        "mappingVersion": "1.1.0",
+        "reviewNote": "Propuesta con cita oficial comprobada; pendiente de contraste de notas CNO y adjudicación final."
+      },
+      "packetSha256": "d2f2fe1e4d9906b82ccd5d569cd02462cd660aa9aaa95bc0afce538bd0f3285a",
+      "reviews": {
+        "qwen": {
+          "id": "mapping-020",
+          "verdict": "supported",
+          "reason": "La cita oficial describe la operación de máquinas para elaborar y envasar productos alimentarios. El grupo CNO 8160 incluye explícitamente a los operadores de máquinas para la elaboración de productos alimenticios, bebidas y tabaco, con tareas que abarcan el accionamiento y atención de equipos de mezclado, hornos y líneas de producción. La correspondencia es directa.",
+          "evidenceQuote": "Operador / operadora de máquinas para elaborar y envasar productos alimentarios.",
+          "flags": [],
+          "quoteFoundInFpExcerpt": true,
+          "quoteFoundInCnoNotes": false
+        },
+        "gemma": {
+          "id": "mapping-020",
+          "verdict": "supported",
+          "reason": "El programa de FP Básica incluye el perfil 'Operador / operadora de máquinas para elaborar y envasar productos alimentarios', el cual coincide directamente con el título de la ocupación CNO 8160 (Operadores de máquinas para elaborar productos alimenticios, bebidas y tabaco).",
+          "evidenceQuote": "Operador / operadora de máquinas para elaborar y envasar productos alimentarios.",
+          "flags": [],
+          "quoteFoundInFpExcerpt": true,
+          "quoteFoundInCnoNotes": false
+        }
+      },
+      "twoReviewsComplete": true,
+      "modelsAgree": true,
+      "publicationApproved": false
+    },
+    {
+      "id": "mapping-021",
+      "mapping": {
+        "trainingProgramKey": "TMV02S",
+        "occupationId": "occupation:cno11:7402",
+        "relationshipType": "reviewed_relationship",
+        "reviewStatus": "draft",
+        "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/transporte-mantenimiento-vehiculos/mtmo-aeromecanica-aviones-motor-turbina.html",
+        "sourceQuote": "Técnica / técnico de mantenimiento aeromecánico de motores de turbina.",
+        "reviewedAt": "2026-09-08",
+        "mappingVersion": "1.1.0",
+        "reviewNote": "Propuesta con cita oficial comprobada; pendiente de contraste de notas CNO y adjudicación final."
+      },
+      "packetSha256": "d2f2fe1e4d9906b82ccd5d569cd02462cd660aa9aaa95bc0afce538bd0f3285a",
+      "reviews": {
+        "qwen": {
+          "id": "mapping-021",
+          "verdict": "supported",
+          "reason": "El programa de grado superior forma técnicos en mantenimiento aeromecánico de motores de turbina para aviones. El CNO 7402 engloba a mecánicos y ajustadores de motores de avión, e incluye explícitamente en sus ejemplos a Técnicos de mantenimiento de aviones (motores), Mecánicos de motores a reacción y Mecánicos de helicópteros, validando la correspondencia ocupacional sin exclusiones.",
+          "evidenceQuote": "Técnica / técnico de mantenimiento aeromecánico de motores de turbina.",
+          "flags": [],
+          "quoteFoundInFpExcerpt": true,
+          "quoteFoundInCnoNotes": false
+        },
+        "gemma": {
+          "id": "mapping-021",
+          "verdict": "supported",
+          "reason": "La formación de Grado Superior en Mantenimiento Aeromecánico de Aviones con Motor de Turbina incluye la salida 'Técnica / técnico de mantenimiento aeromecánico de motores de turbina', la cual está contenida en la descripción de la ocupación CNO 7402, que abarca mecánicos y ajustadores de motores de avión.",
+          "evidenceQuote": "Técnica / técnico de mantenimiento aeromecánico de motores de turbina.",
+          "flags": [],
+          "quoteFoundInFpExcerpt": true,
+          "quoteFoundInCnoNotes": false
+        }
+      },
+      "twoReviewsComplete": true,
+      "modelsAgree": true,
+      "publicationApproved": false
+    },
+    {
+      "id": "mapping-022",
+      "mapping": {
+        "trainingProgramKey": "TMV04E",
+        "occupationId": "occupation:cno11:3510",
+        "relationshipType": "reviewed_relationship",
+        "reviewStatus": "draft",
+        "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/transporte-mantenimiento-vehiculos/ce-aeronaves-drones.html",
+        "sourceQuote": "Comercial de venta y asesoramiento sobre drones.",
+        "reviewedAt": "2026-09-08",
+        "mappingVersion": "1.1.0",
+        "reviewNote": "Propuesta con cita oficial comprobada; pendiente de contraste de notas CNO y adjudicación final."
+      },
+      "packetSha256": "d2f2fe1e4d9906b82ccd5d569cd02462cd660aa9aaa95bc0afce538bd0f3285a",
+      "reviews": {
+        "qwen": {
+          "id": "mapping-022",
+          "verdict": "supported",
+          "reason": "El curso de especialización lista explícitamente Comercial de venta y asesoramiento sobre drones como perfil profesional. Esta salida se corresponde con la definición del CNO 3510 para agentes y representantes comerciales que venden equipos y proporcionan información específica sobre los mismos. La relación es defensible al basarse en un perfil oficial del programa.",
+          "evidenceQuote": "Comercial de venta y asesoramiento sobre drones.",
+          "flags": [],
+          "quoteFoundInFpExcerpt": true,
+          "quoteFoundInCnoNotes": false
+        },
+        "gemma": {
+          "id": "mapping-022",
+          "verdict": "supported",
+          "reason": "El curso de especialización en Drones establece como salida profesional 'Comercial de venta y asesoramiento sobre drones', lo que guarda relación con la ocupación CNO 3510 (Agentes y representantes comerciales), que incluye la tarea de proporcionar información sobre productos y servicios.",
+          "evidenceQuote": "Comercial de venta y asesoramiento sobre drones.",
+          "flags": [],
+          "quoteFoundInFpExcerpt": true,
+          "quoteFoundInCnoNotes": false
+        }
+      },
+      "twoReviewsComplete": true,
+      "modelsAgree": true,
+      "publicationApproved": false
+    },
+    {
+      "id": "mapping-023",
+      "mapping": {
+        "trainingProgramKey": "TMV04S",
+        "occupationId": "occupation:cno11:7402",
+        "relationshipType": "reviewed_relationship",
+        "reviewStatus": "draft",
+        "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/transporte-mantenimiento-vehiculos/mtmo-aeromecanico-helicopteros-motor-turbina.html",
+        "sourceQuote": "Técnica / técnico de mantenimiento aeromecánico de motores de turbina.",
+        "reviewedAt": "2026-09-08",
+        "mappingVersion": "1.1.0",
+        "reviewNote": "Propuesta con cita oficial comprobada; pendiente de contraste de notas CNO y adjudicación final."
+      },
+      "packetSha256": "d2f2fe1e4d9906b82ccd5d569cd02462cd660aa9aaa95bc0afce538bd0f3285a",
+      "reviews": {
+        "qwen": {
+          "id": "mapping-023",
+          "verdict": "supported",
+          "reason": "El programa de grado superior forma técnicos en mantenimiento aeromecánico de helicópteros con motor de turbina. El CNO 7402 incluye explícitamente Mecánicos de helicópteros dentro de sus ejemplos de ocupaciones primarias, junto con técnicos de mantenimiento y mecánicos de motores a reacción, estableciendo una relación ocupacional clara y verificada.",
+          "evidenceQuote": "Técnica / técnico de mantenimiento aeromecánico de motores de turbina.",
+          "flags": [],
+          "quoteFoundInFpExcerpt": true,
+          "quoteFoundInCnoNotes": false
+        },
+        "gemma": {
+          "id": "mapping-023",
+          "verdict": "supported",
+          "reason": "El programa de Grado Superior para mantenimiento de helicópteros incluye la salida 'Técnica / técnico de mantenimiento aeromecánico de motores de turbina', lo cual es compatible con la ocupación CNO 7402, que incluye explícitamente a los 'Mecánicos de helicópteros'.",
+          "evidenceQuote": "Técnica / técnico de mantenimiento aeromecánico de motores de turbina.",
+          "flags": [],
+          "quoteFoundInFpExcerpt": true,
+          "quoteFoundInCnoNotes": false
+        }
+      },
+      "twoReviewsComplete": true,
+      "modelsAgree": true,
+      "publicationApproved": false
+    },
+    {
+      "id": "mapping-024",
+      "mapping": {
+        "trainingProgramKey": "SAN06S",
+        "occupationId": "occupation:cno11:3321",
+        "relationshipType": "reviewed_relationship",
+        "reviewStatus": "draft",
+        "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/sanidad/higiente-bucodental.html",
+        "sourceQuote": "Técnica / técnico superior en Higiene Bucodental.",
+        "reviewedAt": "2026-09-08",
+        "mappingVersion": "1.1.0",
+        "reviewNote": "Propuesta con cita oficial comprobada; pendiente de contraste de notas CNO y adjudicación final."
+      },
+      "packetSha256": "e6422b703457ecbb67c83bccf85a4f036bb11d3887bbd0e1b961f66a0e8772d4",
+      "reviews": {
+        "qwen": {
+          "id": "mapping-024",
+          "verdict": "supported",
+          "reason": "El título oficial del ciclo formativo Grado Superior en Higiene Bucodental coincide directamente con el ejemplo de ocupación principal del grupo primario CNO 3321. La fuente oficial indica explícitamente esa salida profesional y las notas del CNO describen funciones equivalentes (cuidados dentales básicos, prevención, apoyo a dentistas). La relación está respaldada por las citas textuales y la correspondencia funcional.",
+          "evidenceQuote": "Trabajar como: Técnica / técnico superior en Higiene Bucodental.",
+          "flags": [],
+          "quoteFoundInFpExcerpt": true,
+          "quoteFoundInCnoNotes": false
+        },
+        "gemma": {
+          "id": "mapping-024",
+          "verdict": "supported",
+          "reason": "La formación de Técnico Superior en Higiene Bucodental tiene una relación directa con la ocupación de Técnicos superiores en higiene bucodental (CNO 3321), coincidiendo tanto en el título como en las funciones de prevención y asistencia dental.",
+          "evidenceQuote": "Técnica / técnico superior en Higiene Bucodental. ... Técnicos superiores en higiene bucodental Los técnicos superiores en higiene bucodental prestan servicios básicos de cuidados dentales para la prevención y el tratamiento de enfermedades y desórdenes de los dientes y boca, de acuerdo con planes y procedimientos establecidos por los dentistas u otros profesionales de la salud.",
+          "flags": [],
+          "quoteFoundInFpExcerpt": false,
+          "quoteFoundInCnoNotes": false
+        }
+      },
+      "twoReviewsComplete": true,
+      "modelsAgree": true,
+      "publicationApproved": false
+    },
+    {
+      "id": "mapping-025",
+      "mapping": {
+        "trainingProgramKey": "COM01S",
+        "occupationId": "occupation:cno11:2651",
+        "relationshipType": "reviewed_relationship",
+        "reviewStatus": "draft",
+        "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/comercio-marketing/marketing-publicidad.html",
+        "sourceQuote": "Técnica / técnico en Publicidad.",
+        "reviewedAt": "2026-09-08",
+        "mappingVersion": "1.1.0",
+        "reviewNote": "Propuesta con cita oficial comprobada; pendiente de contraste de notas CNO y adjudicación final."
+      },
+      "packetSha256": "e6422b703457ecbb67c83bccf85a4f036bb11d3887bbd0e1b961f66a0e8772d4",
+      "reviews": {
+        "qwen": {
+          "id": "mapping-025",
+          "verdict": "supported",
+          "reason": "El programa de Grado Superior en Marketing y Publicidad prepara para funciones de planificación, ejecución de campañas y estudio de mercados, que se corresponden con las tareas descritas en el CNO 2651. Aunque la fuente cita Técnica/técnico en Publicidad y el CNO enumera Especialistas en publicidad, ambos pertenecen a la categoría profesional de nivel 4 y comparten el núcleo funcional de publicidad y comercialización. La relación es funcionalmente válida y respaldada por el programa formativo.",
+          "evidenceQuote": "Trabajar como: Asistente del Jefe / jefa de producto. Técnica / técnico de Marketing. Técnica / técnico en Publicidad.",
+          "flags": [],
+          "quoteFoundInFpExcerpt": true,
+          "quoteFoundInCnoNotes": false
+        },
+        "gemma": {
+          "id": "mapping-025",
+          "verdict": "supported",
+          "reason": "El programa de Marketing y Publicidad incluye la salida profesional de 'Técnica / técnico en Publicidad', lo cual se integra en el grupo de Profesionales de la publicidad y la comercialización (CNO 2651) que elaboran estrategias y campañas de publicidad.",
+          "evidenceQuote": "Técnica / técnico en Publicidad. ... 2651 Profesionales de la publicidad y la comercialización Los profesionales de la publicidad y la comercialización elaboran y coordinan estrategias y campañas de publicidad",
+          "flags": [],
+          "quoteFoundInFpExcerpt": false,
+          "quoteFoundInCnoNotes": false
+        }
+      },
+      "twoReviewsComplete": true,
+      "modelsAgree": true,
+      "publicationApproved": false
+    },
+    {
+      "id": "mapping-026",
+      "mapping": {
+        "trainingProgramKey": "SAN01M",
+        "occupationId": "occupation:cno11:5622",
+        "relationshipType": "reviewed_relationship",
+        "reviewStatus": "draft",
+        "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/sanidad/emergencias-sanitarias.html",
+        "sourceQuote": "Emergencias Sanitarias.",
+        "reviewedAt": "2026-09-08",
+        "mappingVersion": "1.1.0",
+        "reviewNote": "Propuesta con cita oficial comprobada; pendiente de contraste de notas CNO y adjudicación final."
+      },
+      "packetSha256": "e6422b703457ecbb67c83bccf85a4f036bb11d3887bbd0e1b961f66a0e8772d4",
+      "reviews": {
+        "qwen": {
+          "id": "mapping-026",
+          "verdict": "supported",
+          "reason": "El título de Técnico en Emergencias Sanitarias (Grado Medio) se corresponde directamente con el grupo primario CNO 5622. La fuente describe competencias idénticas a las del CNO: asistencia médica de urgencia antes y durante el traslado, soporte vital básico y apoyo a personal de enfermería y medicina. La clasificación funcional y los ejemplos del CNO incluyen explícitamente a este técnico.",
+          "evidenceQuote": "Aplicar técnicas de soporte vital básico ventilatorio y circulatorio en situación de compromiso y de atención básica inicial en otras situaciones de emergencia.",
+          "flags": [],
+          "quoteFoundInFpExcerpt": true,
+          "quoteFoundInCnoNotes": false
+        },
+        "gemma": {
+          "id": "mapping-026",
+          "verdict": "supported",
+          "reason": "El perfil de Técnico en Emergencias Sanitarias está vinculado a la ocupación de Técnicos de emergencias sanitarias (CNO 5622), compartiendo funciones de atención y traslado de pacientes en situaciones de emergencia.",
+          "evidenceQuote": "Técnico en Emergencias Sanitarias. ... 5622 Técnicos de emergencias sanitarias Los técnicos de emergencias sanitarias prestan cuidados médicos de urgencias a pacientes que se encuentran heridos, enfermos, débiles o que presentan otra indisposición física o mental, antes y durante el traslado a instalaciones médicas.",
+          "flags": [],
+          "quoteFoundInFpExcerpt": false,
+          "quoteFoundInCnoNotes": false
+        }
+      },
+      "twoReviewsComplete": true,
+      "modelsAgree": true,
+      "publicationApproved": false
+    },
+    {
+      "id": "mapping-027",
+      "mapping": {
+        "trainingProgramKey": "SAN32",
+        "occupationId": "occupation:cno11:3323",
+        "relationshipType": "reviewed_relationship",
+        "reviewStatus": "draft",
+        "sourceUrl": "https://www.todofp.es/que-estudiar/logse/sanidad/dietetica.html",
+        "sourceQuote": "Técnico en Dietética y Nutrición.",
+        "reviewedAt": "2026-09-08",
+        "mappingVersion": "1.1.0",
+        "reviewNote": "Propuesta con cita oficial comprobada; pendiente de contraste de notas CNO y adjudicación final."
+      },
+      "packetSha256": "e6422b703457ecbb67c83bccf85a4f036bb11d3887bbd0e1b961f66a0e8772d4",
+      "reviews": {
+        "qwen": {
+          "id": "mapping-027",
+          "verdict": "supported",
+          "reason": "Existe una correspondencia literal y funcional entre el programa formativo y el CNO 3323. El título oficial del ciclo y las salidas profesionales mencionadas coinciden con el ejemplo primario del CNO. Además, las competencias descritas en la fuente se reproducen íntegramente en la descripción de tareas del CNO, confirmando la relación occupational.",
+          "evidenceQuote": "Técnico en Dietética y Nutrición.",
+          "flags": [],
+          "quoteFoundInFpExcerpt": true,
+          "quoteFoundInCnoNotes": false
+        },
+        "gemma": {
+          "id": "mapping-027",
+          "verdict": "supported",
+          "reason": "Existe una correspondencia directa entre el Técnico en Dietética y Nutrición y la ocupación de Técnicos superiores en dietética (CNO 3323), compartiendo las tareas de elaboración y supervisión de dietas y promoción de la salud alimentaria.",
+          "evidenceQuote": "Técnico en Dietética y Nutrición. ... 3323 Técnicos superiores en dietética Los técnicos superiores en dietética elaboran dietas adaptadas a personas o a colectivos, analizando sus comportamientos alimentarios y sus necesidades nutricionales.",
+          "flags": [],
+          "quoteFoundInFpExcerpt": false,
+          "quoteFoundInCnoNotes": false
+        }
+      },
+      "twoReviewsComplete": true,
+      "modelsAgree": true,
+      "publicationApproved": false
+    },
+    {
+      "id": "mapping-028",
+      "mapping": {
+        "trainingProgramKey": "EOC01S",
+        "occupationId": "occupation:cno11:3110",
+        "relationshipType": "reviewed_relationship",
+        "reviewStatus": "draft",
+        "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/edificacion-obra-civil/proyectos-edificacion.html",
+        "sourceQuote": "Delineante proyectista de edificación.",
+        "reviewedAt": "2026-09-08",
+        "mappingVersion": "1.1.0",
+        "reviewNote": "Propuesta con cita oficial comprobada; pendiente de contraste de notas CNO y adjudicación final."
+      },
+      "packetSha256": "e6422b703457ecbb67c83bccf85a4f036bb11d3887bbd0e1b961f66a0e8772d4",
+      "reviews": {
+        "qwen": {
+          "id": "mapping-028",
+          "verdict": "supported",
+          "reason": "La formación en Proyectos de Edificación de grado superior prepara para la elaboración de documentación gráfica y planos técnicos utilizando software de diseño asistido, tal como indica la fuente. Estas competencias se alinean directamente con las tareas del CNO 3110, que incluye el uso de CAD para representar proyectos de construcción y trabajar bajo instrucciones de proyectistas. El ejemplo Delineante proyectista de edificación encaja funcionalmente en este grupo primario.",
+          "evidenceQuote": "Delineante proyectista de edificación.",
+          "flags": [],
+          "quoteFoundInFpExcerpt": true,
+          "quoteFoundInCnoNotes": false
+        },
+        "gemma": {
+          "id": "mapping-028",
+          "verdict": "supported",
+          "reason": "El programa de Proyectos de Edificación permite trabajar como 'Delineante proyectista de edificación', lo cual es una función compatible con la ocupación de Delineantes y dibujantes técnicos (CNO 3110) encargados de preparar dibujos y planos.",
+          "evidenceQuote": "Delineante proyectista de edificación. ... 3110 Delineantes y dibujantes técnicos Los delineantes y dibujantes técnicos preparan dibujos, planos e ilustraciones técnicas partiendo de croquis, mediciones y otros datos",
+          "flags": [],
+          "quoteFoundInFpExcerpt": false,
+          "quoteFoundInCnoNotes": false
+        }
+      },
+      "twoReviewsComplete": true,
+      "modelsAgree": true,
+      "publicationApproved": false
+    },
+    {
+      "id": "mapping-029",
+      "mapping": {
+        "trainingProgramKey": "INA01M",
+        "occupationId": "occupation:cno11:7703",
+        "relationshipType": "reviewed_relationship",
+        "reviewStatus": "draft",
+        "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/industrias-alimentarias/panaderia-reposteria-confiteria.html",
+        "sourceQuote": "Panadera / panadero.",
+        "reviewedAt": "2026-09-08",
+        "mappingVersion": "1.1.0",
+        "reviewNote": "Propuesta con cita oficial comprobada; pendiente de contraste de notas CNO y adjudicación final."
+      },
+      "packetSha256": "e6422b703457ecbb67c83bccf85a4f036bb11d3887bbd0e1b961f66a0e8772d4",
+      "reviews": {
+        "qwen": {
+          "id": "mapping-029",
+          "verdict": "supported",
+          "reason": "El ciclo formativo de Panadería, Repostería y Confitería se corresponde de manera exacta con el grupo primario CNO 7703. Tanto la fuente oficial como las notas del CNO enumeran las mismas salidas profesionales y tareas (elaboración de pan, pasteles, dulces y control de calidad de materias primas). La relación occupational está plenamente respaldada por el texto proporcionado.",
+          "evidenceQuote": "Panadera / panadero.",
+          "flags": [],
+          "quoteFoundInFpExcerpt": true,
+          "quoteFoundInCnoNotes": false
+        },
+        "gemma": {
+          "id": "mapping-029",
+          "verdict": "supported",
+          "reason": "El perfil de Panadera / panadero del programa de Panadería, Repostería y Confitería se corresponde con la ocupación de Panaderos, pasteleros y confiteros (CNO 7703) que elaboran diversos productos a base de harina y dulces.",
+          "evidenceQuote": "Panadera / panadero. ... 7703 Panaderos, pasteleros y confiteros Los panaderos, pasteleros y confiteros elaboran diversas clases de pan, pasteles y otros productos a base de harina, así como chocolates y dulces.",
+          "flags": [],
+          "quoteFoundInFpExcerpt": false,
+          "quoteFoundInCnoNotes": false
+        }
+      },
+      "twoReviewsComplete": true,
+      "modelsAgree": true,
+      "publicationApproved": false
+    },
+    {
+      "id": "mapping-030",
+      "mapping": {
+        "trainingProgramKey": "IMS01M",
+        "occupationId": "occupation:cno11:3831",
+        "relationshipType": "reviewed_relationship",
+        "reviewStatus": "draft",
+        "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/imagen-sonido/video-discjockey-sonido.html",
+        "sourceQuote": "Microfonista de cine y vídeo.",
+        "reviewedAt": "2026-09-08",
+        "mappingVersion": "1.1.0",
+        "reviewNote": "Propuesta con cita oficial comprobada; pendiente de contraste de notas CNO y adjudicación final."
+      },
+      "packetSha256": "6c8d37a6cb5afb4618c6e6ad80240198493d8610b3fa9cc9bd6612b0497c5331",
+      "reviews": {
+        "qwen": {
+          "id": "mapping-030",
+          "verdict": "supported",
+          "reason": "La cita oficial del programa confirma \"Microfonista de cine y vídeo\" como salida profesional, lo cual se alinea funcionalmente con las tareas de grabación y control de sonido descritas en el grupo primario CNO 3831.",
+          "evidenceQuote": "Microfonista de cine y vídeo.",
+          "flags": [],
+          "quoteFoundInFpExcerpt": true,
+          "quoteFoundInCnoNotes": false
+        },
+        "gemma": {
+          "id": "mapping-030",
+          "verdict": "supported",
+          "reason": "La salida profesional 'Microfonista de cine y vídeo' se relaciona con el grupo CNO 3831 (Técnicos de grabación audiovisual), que incluye explícitamente a 'Técnicos de grabación de sonido'.",
+          "evidenceQuote": "Microfonista de cine y vídeo.",
+          "flags": [],
+          "quoteFoundInFpExcerpt": true,
+          "quoteFoundInCnoNotes": false
+        }
+      },
+      "twoReviewsComplete": true,
+      "modelsAgree": true,
+      "publicationApproved": false
+    },
+    {
+      "id": "mapping-031",
+      "mapping": {
+        "trainingProgramKey": "HOT01E",
+        "occupationId": "occupation:cno11:7703",
+        "relationshipType": "reviewed_relationship",
+        "reviewStatus": "draft",
+        "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/hosteleria-turismo/ce-panaderia-bolleria-artesanal.html",
+        "sourceQuote": "Maestro Panadero",
+        "reviewedAt": "2026-09-08",
+        "mappingVersion": "1.1.0",
+        "reviewNote": "Propuesta con cita oficial comprobada; pendiente de contraste de notas CNO y adjudicación final."
+      },
+      "packetSha256": "6c8d37a6cb5afb4618c6e6ad80240198493d8610b3fa9cc9bd6612b0497c5331",
+      "reviews": {
+        "qwen": {
+          "id": "mapping-031",
+          "verdict": "supported",
+          "reason": "El programa de especialización identifica a \"Maestro Panadero\" como perfil profesional, estableciendo una relación directa con la etiqueta y los ejemplos del grupo primario CNO 7703.",
+          "evidenceQuote": "Maestro Panadero",
+          "flags": [],
+          "quoteFoundInFpExcerpt": true,
+          "quoteFoundInCnoNotes": false
+        },
+        "gemma": {
+          "id": "mapping-031",
+          "verdict": "supported",
+          "reason": "El perfil profesional 'Maestro Panadero' está contenido en el grupo CNO 7703 (Panaderos, pasteleros y confiteros), que se dedica a la elaboración de productos a base de harina.",
+          "evidenceQuote": "Maestro Panadero",
+          "flags": [],
+          "quoteFoundInFpExcerpt": true,
+          "quoteFoundInCnoNotes": false
+        }
+      },
+      "twoReviewsComplete": true,
+      "modelsAgree": true,
+      "publicationApproved": false
+    },
+    {
+      "id": "mapping-032",
+      "mapping": {
+        "trainingProgramKey": "IFC01E",
+        "occupationId": "occupation:cno11:2729",
+        "relationshipType": "reviewed_relationship",
+        "reviewStatus": "draft",
+        "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/informatica-comunicaciones/ce-ciberseguridad-entornos-tecnologias-informacion.html",
+        "sourceQuote": "Experto/a en ciberseguridad.",
+        "reviewedAt": "2026-09-08",
+        "mappingVersion": "1.1.0",
+        "reviewNote": "Propuesta con cita oficial comprobada; pendiente de contraste de notas CNO y adjudicación final."
+      },
+      "packetSha256": "6c8d37a6cb5afb4618c6e6ad80240198493d8610b3fa9cc9bd6612b0497c5331",
+      "reviews": {
+        "qwen": {
+          "id": "mapping-032",
+          "verdict": "supported",
+          "reason": "La clasificación CNO 2729 incluye expresamente a los especialistas en seguridad de las TIC. La salida \"Experto/a en ciberseguridad\" del programa confirma la relación ocupacional.",
+          "evidenceQuote": "Experto/a en ciberseguridad.",
+          "flags": [],
+          "quoteFoundInFpExcerpt": true,
+          "quoteFoundInCnoNotes": false
+        },
+        "gemma": {
+          "id": "mapping-032",
+          "verdict": "supported",
+          "reason": "El perfil 'Experto/a en ciberseguridad' se alinea con el grupo CNO 2729, el cual incluye explícitamente a los 'especialistas en seguridad en tecnologías de la información y comunicaciones'.",
+          "evidenceQuote": "Experto/a en ciberseguridad.",
+          "flags": [],
+          "quoteFoundInFpExcerpt": true,
+          "quoteFoundInCnoNotes": false
+        }
+      },
+      "twoReviewsComplete": true,
+      "modelsAgree": true,
+      "publicationApproved": false
+    },
+    {
+      "id": "mapping-033",
+      "mapping": {
+        "trainingProgramKey": "IMS02S",
+        "occupationId": "occupation:cno11:3831",
+        "relationshipType": "reviewed_relationship",
+        "reviewStatus": "draft",
+        "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/imagen-sonido/realizacion-proy-audiovisuales-espectaculos.html",
+        "sourceQuote": "Montador / montadora de cine.",
+        "reviewedAt": "2026-09-08",
+        "mappingVersion": "1.1.0",
+        "reviewNote": "Propuesta con cita oficial comprobada; pendiente de contraste de notas CNO y adjudicación final."
+      },
+      "packetSha256": "6c8d37a6cb5afb4618c6e6ad80240198493d8610b3fa9cc9bd6612b0497c5331",
+      "reviews": {
+        "qwen": {
+          "id": "mapping-033",
+          "verdict": "supported",
+          "reason": "El programa enumera \"Montador / montadora de cine\" y \"Editor-montador\" como salidas, correspondiendo directamente con el ejemplo \"Montadores de video\" incluido en el grupo primario CNO 3831.",
+          "evidenceQuote": "Montador / montadora de cine.",
+          "flags": [],
+          "quoteFoundInFpExcerpt": true,
+          "quoteFoundInCnoNotes": false
+        },
+        "gemma": {
+          "id": "mapping-033",
+          "verdict": "supported",
+          "reason": "La salida 'Montador / montadora de cine' tiene una relación directa con el grupo CNO 3831, que incluye entre sus ocupaciones ejemplos como 'Montadores de video'.",
+          "evidenceQuote": "Montador / montadora de cine.",
+          "flags": [],
+          "quoteFoundInFpExcerpt": true,
+          "quoteFoundInCnoNotes": false
+        }
+      },
+      "twoReviewsComplete": true,
+      "modelsAgree": true,
+      "publicationApproved": false
+    },
+    {
+      "id": "mapping-034",
+      "mapping": {
+        "trainingProgramKey": "MSP34",
+        "occupationId": "occupation:cno11:3326",
+        "relationshipType": "reviewed_relationship",
+        "reviewStatus": "draft",
+        "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/seguridad-medio-ambiente/prevencion-riesgos-profesionales.html",
+        "sourceQuote": "Técnico/a de prevención de nivel intermedio.",
+        "reviewedAt": "2026-09-08",
+        "mappingVersion": "1.1.0",
+        "reviewNote": "Propuesta con cita oficial comprobada; pendiente de contraste de notas CNO y adjudicación final."
+      },
+      "packetSha256": "6c8d37a6cb5afb4618c6e6ad80240198493d8610b3fa9cc9bd6612b0497c5331",
+      "reviews": {
+        "qwen": {
+          "id": "mapping-034",
+          "verdict": "supported",
+          "reason": "La salida profesional \"Técnico/a de prevención de nivel intermedio\" se identifica con la denominación del grupo primario CNO 3326, que incluye a los técnicos en prevención de riesgos laborales.",
+          "evidenceQuote": "Técnico/a de prevención de nivel intermedio.",
+          "flags": [],
+          "quoteFoundInFpExcerpt": true,
+          "quoteFoundInCnoNotes": false
+        },
+        "gemma": {
+          "id": "mapping-034",
+          "verdict": "supported",
+          "reason": "El perfil 'Técnico/a de prevención de nivel intermedio' es compatible con el grupo CNO 3326, que incluye específicamente a los 'Técnicos en prevención de riesgos laborales'.",
+          "evidenceQuote": "Técnico/a de prevención de nivel intermedio.",
+          "flags": [],
+          "quoteFoundInFpExcerpt": true,
+          "quoteFoundInCnoNotes": false
+        }
+      },
+      "twoReviewsComplete": true,
+      "modelsAgree": true,
+      "publicationApproved": false
+    },
+    {
+      "id": "mapping-035",
+      "mapping": {
+        "trainingProgramKey": "IMS05S",
+        "occupationId": "occupation:cno11:3731",
+        "relationshipType": "reviewed_relationship",
+        "reviewStatus": "draft",
+        "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/imagen-sonido/iluminacion-captacion-tratamiento-imagen.html",
+        "sourceQuote": "Fotógrafa / fotógrafo.",
+        "reviewedAt": "2026-09-08",
+        "mappingVersion": "1.1.0",
+        "reviewNote": "Propuesta con cita oficial comprobada; pendiente de contraste de notas CNO y adjudicación final."
+      },
+      "packetSha256": "6c8d37a6cb5afb4618c6e6ad80240198493d8610b3fa9cc9bd6612b0497c5331",
+      "reviews": {
+        "qwen": {
+          "id": "mapping-035",
+          "verdict": "supported",
+          "reason": "El programa lista explícitamente \"Fotógrafa / fotógrafo\" como perfil de inserción, coincidiendo con la etiqueta del grupo primario CNO 3731.",
+          "evidenceQuote": "Fotógrafa / fotógrafo.",
+          "flags": [],
+          "quoteFoundInFpExcerpt": true,
+          "quoteFoundInCnoNotes": false
+        },
+        "gemma": {
+          "id": "mapping-035",
+          "verdict": "supported",
+          "reason": "La salida profesional 'Fotógrafa / fotógrafo' pertenece directamente al grupo CNO 3731 (Fotógrafos).",
+          "evidenceQuote": "Fotógrafa / fotógrafo.",
+          "flags": [],
+          "quoteFoundInFpExcerpt": true,
+          "quoteFoundInCnoNotes": false
+        }
+      },
+      "twoReviewsComplete": true,
+      "modelsAgree": true,
+      "publicationApproved": false
+    },
+    {
+      "id": "mapping-036",
+      "mapping": {
+        "trainingProgramKey": "TCP01M",
+        "occupationId": "occupation:cno11:8153",
+        "relationshipType": "reviewed_relationship",
+        "reviewStatus": "draft",
+        "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/textil-confeccion-piel/confeccion-moda.html",
+        "sourceQuote": "Operador / operadora de máquinas industriales de coser y bordar.",
+        "reviewedAt": "2026-09-08",
+        "mappingVersion": "1.1.0",
+        "reviewNote": "Propuesta con cita oficial comprobada; pendiente de contraste de notas CNO y adjudicación final."
+      },
+      "packetSha256": "43fc0f43c10245ad8571640241a49c61a8a52475797feaf36b82d78a27dbe974",
+      "reviews": {
+        "qwen": {
+          "id": "mapping-036",
+          "verdict": "supported",
+          "reason": "La cita del programa formativo coincide literalmente con el título profesional del grupo ocupacional CNO 8153. Las tareas descritas en la nota CNO (accionar máquinas de coser para confeccionar, arreglar o adornar prendas de vestir en tela, tejido, piel o cuero) se corresponden directamente con las competencias del ciclo Técnico en Confección y Moda. Existe una relación ocupacional defensible sin excepciones ni límites funcionales no declarados.",
+          "evidenceQuote": "Operador / operadora de máquinas industriales de coser y bordar.",
+          "flags": [],
+          "quoteFoundInFpExcerpt": true,
+          "quoteFoundInCnoNotes": false
+        },
+        "gemma": {
+          "id": "mapping-036",
+          "verdict": "supported",
+          "reason": "La salida profesional 'Operador / operadora de máquinas industriales de coser y bordar' del programa coincide exactamente con uno de los ejemplos de ocupaciones incluidos en el grupo primario CNO 8153.",
+          "evidenceQuote": "Ejemplos de ocupaciones incluidas en este grupo primario - Operadores de máquinas industriales de coser - Operadores de máquinas industrial de bordar",
+          "flags": [],
+          "quoteFoundInFpExcerpt": false,
+          "quoteFoundInCnoNotes": true
+        }
+      },
+      "twoReviewsComplete": true,
+      "modelsAgree": true,
+      "publicationApproved": false
+    },
+    {
+      "id": "mapping-037",
+      "mapping": {
+        "trainingProgramKey": "ELE05E",
+        "occupationId": "occupation:cno11:3129",
+        "relationshipType": "reviewed_relationship",
+        "reviewStatus": "draft",
+        "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/electricidad-electronica/ce-robotica-colaborativa.html",
+        "sourceQuote": "Técnico de puesta en marcha de sistemas de robótica colaborativa.",
+        "reviewedAt": "2026-09-08",
+        "mappingVersion": "1.1.0",
+        "reviewNote": "Propuesta con cita oficial comprobada; pendiente de contraste de notas CNO y adjudicación final."
+      },
+      "packetSha256": "43fc0f43c10245ad8571640241a49c61a8a52475797feaf36b82d78a27dbe974",
+      "reviews": {
+        "qwen": {
+          "id": "mapping-037",
+          "verdict": "supported",
+          "reason": "El programa de especialización forma técnicos en puesta en marcha, montaje y mantenimiento de sistemas de robótica colaborativa. La nota CNO para el grupo 3129 incluye expresamente a los 'Técnicos en robótica' y describe tareas de ensayo y proyecto de equipos de robótica, así como apoyo a ingenieros en estos dispositivos. La relación es directa y se ajusta a la definición ocupacional del grupo primario.",
+          "evidenceQuote": "Técnico de puesta en marcha de sistemas de robótica colaborativa.",
+          "flags": [],
+          "quoteFoundInFpExcerpt": true,
+          "quoteFoundInCnoNotes": false
+        },
+        "gemma": {
+          "id": "mapping-037",
+          "verdict": "supported",
+          "reason": "La salida profesional 'Técnico de puesta en marcha de sistemas de robótica colaborativa' se relaciona con el grupo CNO 3129, el cual incluye explícitamente a los 'Técnicos en robótica' y menciona la tarea de ayudar a los ingenieros en el ensayo y proyecto de equipos de robótica.",
+          "evidenceQuote": "Ejemplos de ocupaciones incluidas en este grupo primario - ... - Técnicos en robótica",
+          "flags": [],
+          "quoteFoundInFpExcerpt": false,
+          "quoteFoundInCnoNotes": false
+        }
+      },
+      "twoReviewsComplete": true,
+      "modelsAgree": true,
+      "publicationApproved": false
+    },
+    {
+      "id": "mapping-038",
+      "mapping": {
+        "trainingProgramKey": "IMS03S",
+        "occupationId": "occupation:cno11:3532",
+        "relationshipType": "reviewed_relationship",
+        "reviewStatus": "draft",
+        "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/imagen-sonido/produccion-audiovisuales-espectaculos.html",
+        "sourceQuote": "Jefa / jefe de producción de espectáculos en vivo y eventos.",
+        "reviewedAt": "2026-09-08",
+        "mappingVersion": "1.1.0",
+        "reviewNote": "Propuesta con cita oficial comprobada; pendiente de contraste de notas CNO y adjudicación final."
+      },
+      "packetSha256": "43fc0f43c10245ad8571640241a49c61a8a52475797feaf36b82d78a27dbe974",
+      "reviews": {
+        "qwen": {
+          "id": "mapping-038",
+          "verdict": "supported",
+          "reason": "El programa cita explícitamente 'Jefa / jefe de producción de espectáculos en vivo y eventos' como salida profesional. Las competencias descritas (planificación de proyectos, gestión de recursos humanos y técnicos, organización logística y audiovisual) coinciden con las funciones del grupo CNO 3532, que abarca a los organizadores de eventos y conferencias, incluyendo la coordinación de equipamiento audiovisual y servicios logísticos. La relación es defensible.",
+          "evidenceQuote": "Jefa / jefe de producción de espectáculos en vivo y eventos.",
+          "flags": [],
+          "quoteFoundInFpExcerpt": true,
+          "quoteFoundInCnoNotes": false
+        },
+        "gemma": {
+          "id": "mapping-038",
+          "verdict": "uncertain",
+          "reason": "La salida profesional 'Jefa / jefe de producción de espectáculos en vivo y eventos' no se menciona explícitamente en la descripción del grupo CNO 3532, que se centra en la organización de conferencias, eventos, banquetes y seminarios, sin establecer una relación directa con la producción de espectáculos audiovisuales o eventos en vivo.",
+          "evidenceQuote": "",
+          "flags": [],
+          "quoteFoundInFpExcerpt": false,
+          "quoteFoundInCnoNotes": false
+        }
+      },
+      "twoReviewsComplete": true,
+      "modelsAgree": false,
+      "publicationApproved": false
+    },
+    {
+      "id": "mapping-039",
+      "mapping": {
+        "trainingProgramKey": "SAN07S",
+        "occupationId": "occupation:cno11:3312",
+        "relationshipType": "reviewed_relationship",
+        "reviewStatus": "draft",
+        "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/sanidad/imagen-diagnostico-medicina-nuclear.html",
+        "sourceQuote": "Técnica / técnico superior en imagen para el diagnóstico.",
+        "reviewedAt": "2026-09-08",
+        "mappingVersion": "1.1.0",
+        "reviewNote": "Salida profesional principal o específica omitida en la cobertura anterior; pendiente de adjudicación final con notas CNO."
+      },
+      "packetSha256": "43fc0f43c10245ad8571640241a49c61a8a52475797feaf36b82d78a27dbe974",
+      "reviews": {
+        "qwen": {
+          "id": "mapping-039",
+          "verdict": "supported",
+          "reason": "Existe una coincidencia literal entre la salida profesional del programa y la denominación del grupo CNO 3312. Las materias del ciclo (obtención de imágenes con rayos X, resonancia magnética y medicina nuclear) se ajustan exactamente a las tareas definidas en las notas CNO para técnicos en imagen para el diagnóstico, quienes operan equipos radiográficos y de procesamiento informático bajo supervisión.",
+          "evidenceQuote": "Técnica / técnico superior en imagen para el diagnóstico.",
+          "flags": [],
+          "quoteFoundInFpExcerpt": true,
+          "quoteFoundInCnoNotes": false
+        },
+        "gemma": {
+          "id": "mapping-039",
+          "verdict": "supported",
+          "reason": "La salida profesional 'Técnica / técnico superior en imagen para el diagnóstico' es un ejemplo explícito de ocupación incluida en el grupo primario CNO 3312.",
+          "evidenceQuote": "Ejemplos de ocupaciones incluidas en este grupo primario - Técnicos superiores en imagen para el diagnóstico",
+          "flags": [],
+          "quoteFoundInFpExcerpt": false,
+          "quoteFoundInCnoNotes": true
+        }
+      },
+      "twoReviewsComplete": true,
+      "modelsAgree": true,
+      "publicationApproved": false
+    },
+    {
+      "id": "mapping-040",
+      "mapping": {
+        "trainingProgramKey": "SAN08S",
+        "occupationId": "occupation:cno11:3314",
+        "relationshipType": "reviewed_relationship",
+        "reviewStatus": "draft",
+        "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/sanidad/laboratorio-clinico-biomedico.html",
+        "sourceQuote": "Técnica / técnico superior en laboratorio de diagnóstico clínico.",
+        "reviewedAt": "2026-09-08",
+        "mappingVersion": "1.1.0",
+        "reviewNote": "Salida profesional principal o específica omitida en la cobertura anterior; pendiente de adjudicación final con notas CNO."
+      },
+      "packetSha256": "43fc0f43c10245ad8571640241a49c61a8a52475797feaf36b82d78a27dbe974",
+      "reviews": {
+        "qwen": {
+          "id": "mapping-040",
+          "verdict": "supported",
+          "reason": "La cita del programa coincide exactamente con el título del grupo primario CNO 3314. Las competencias formativas (obtención y conservación de muestras biológicas, aplicación de técnicas preanalíticas, evaluación de resultados analíticos y uso de aplicaciones informáticas) se corresponden íntegramente con las tareas descritas en la nota CNO para técnicos en laboratorio de diagnóstico clínico.",
+          "evidenceQuote": "Técnica / técnico superior en laboratorio de diagnóstico clínico.",
+          "flags": [],
+          "quoteFoundInFpExcerpt": true,
+          "quoteFoundInCnoNotes": false
+        },
+        "gemma": {
+          "id": "mapping-040",
+          "verdict": "supported",
+          "reason": "La salida profesional 'Técnica / técnico superior en laboratorio de diagnóstico clínico' se corresponde con la descripción del grupo CNO 3314, que incluye específicamente a los 'Técnicos en laboratorio de diagnóstico clínico'.",
+          "evidenceQuote": "Ejemplos de ocupaciones incluidas en este grupo primario - ... - Técnicos en laboratorio de diagnóstico clínico",
+          "flags": [],
+          "quoteFoundInFpExcerpt": false,
+          "quoteFoundInCnoNotes": false
+        }
+      },
+      "twoReviewsComplete": true,
+      "modelsAgree": true,
+      "publicationApproved": false
+    },
+    {
+      "id": "mapping-041",
+      "mapping": {
+        "trainingProgramKey": "SAN09S",
+        "occupationId": "occupation:cno11:3311",
+        "relationshipType": "reviewed_relationship",
+        "reviewStatus": "draft",
+        "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/sanidad/radioterapia-dosimetria.html",
+        "sourceQuote": "Técnica / técnico superior en radioterapia.",
+        "reviewedAt": "2026-09-08",
+        "mappingVersion": "1.1.0",
+        "reviewNote": "Salida profesional principal o específica omitida en la cobertura anterior; pendiente de adjudicación final con notas CNO."
+      },
+      "packetSha256": "43fc0f43c10245ad8571640241a49c61a8a52475797feaf36b82d78a27dbe974",
+      "reviews": {
+        "qwen": {
+          "id": "mapping-041",
+          "verdict": "supported",
+          "reason": "El programa formativo cita literalmente 'Técnica / técnico superior en radioterapia', denominación que coincide con el grupo CNO 3311. Las competencias del ciclo (dosimetría física y clínica, teleterapia, braquiterapia, simulación y protección radiológica) se corresponden con las funciones descritas en las notas CNO para técnicos en radioterapia, quienes aplican tratamientos con radiaciones ionizantes bajo prescripción médica y supervisión.",
+          "evidenceQuote": "Técnica / técnico superior en radioterapia.",
+          "flags": [],
+          "quoteFoundInFpExcerpt": true,
+          "quoteFoundInCnoNotes": false
+        },
+        "gemma": {
+          "id": "mapping-041",
+          "verdict": "supported",
+          "reason": "La salida profesional 'Técnica / técnico superior en radioterapia' es un ejemplo de ocupación incluida en el grupo primario CNO 3311.",
+          "evidenceQuote": "Ejemplos de ocupaciones incluidas en este grupo primario - Técnicos superiores en radioterapia - Técnicos especialistas en radioterapia",
+          "flags": [],
+          "quoteFoundInFpExcerpt": false,
+          "quoteFoundInCnoNotes": true
+        }
+      },
+      "twoReviewsComplete": true,
+      "modelsAgree": true,
+      "publicationApproved": false
+    },
+    {
+      "id": "mapping-042",
+      "mapping": {
+        "trainingProgramKey": "HOT01S",
+        "occupationId": "occupation:cno11:5831",
+        "relationshipType": "reviewed_relationship",
+        "reviewStatus": "draft",
+        "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/hosteleria-turismo/gestion-alojamientos-turisticos.html",
+        "sourceQuote": "Gobernanta o encargada / encargado general del servicio de pisos y limpieza.",
+        "reviewedAt": "2026-09-08",
+        "mappingVersion": "1.1.0",
+        "reviewNote": "Salida profesional principal o específica omitida en la cobertura anterior; pendiente de adjudicación final con notas CNO."
+      },
+      "packetSha256": "581615d8379bdb2de00403e378720ca8891f2d5dff41dc5e811cde8d25dc14f1",
+      "reviews": {
+        "qwen": {
+          "id": "mapping-042",
+          "verdict": "supported",
+          "reason": "La mención explícita en el programa como salida profesional a «Gobernanta o encargada general del servicio de pisos y limpieza» coincide funcional y nominalmente con la inclusión de «Gobernantes de hostelería» y las tareas supervisora y de organización de limpieza descritas en el CNO 5831. La evidencia primaria sustenta la relación ocupacional sin necesidad de inferir requisitos adicionales.",
+          "evidenceQuote": "Gobernanta o encargada / encargado general del servicio de pisos y limpieza.",
+          "flags": [],
+          "quoteFoundInFpExcerpt": true,
+          "quoteFoundInCnoNotes": false
+        },
+        "gemma": {
+          "id": "mapping-042",
+          "verdict": "supported",
+          "reason": "La salida profesional «Gobernanta o encargada / encargado general del servicio de pisos y limpieza» se corresponde directamente con los ejemplos de ocupaciones incluidas en el grupo primario 5831: «Gobernantes de hostelería».",
+          "evidenceQuote": "Gobernanta o encargada / encargado general del servicio de pisos y limpieza.",
+          "flags": [],
+          "quoteFoundInFpExcerpt": true,
+          "quoteFoundInCnoNotes": false
+        }
+      },
+      "twoReviewsComplete": true,
+      "modelsAgree": true,
+      "publicationApproved": false
+    },
+    {
+      "id": "mapping-043",
+      "mapping": {
+        "trainingProgramKey": "EOC02S",
+        "occupationId": "occupation:cno11:3110",
+        "relationshipType": "reviewed_relationship",
+        "reviewStatus": "draft",
+        "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/edificacion-obra-civil/proyectos-obra-civil.html",
+        "sourceQuote": "Delineante de obra civil.",
+        "reviewedAt": "2026-09-08",
+        "mappingVersion": "1.1.0",
+        "reviewNote": "Corrección propuesta de clasificación: contraste con el epígrafe específico del catálogo oficial completo."
+      },
+      "packetSha256": "581615d8379bdb2de00403e378720ca8891f2d5dff41dc5e811cde8d25dc14f1",
+      "reviews": {
+        "qwen": {
+          "id": "mapping-043",
+          "verdict": "supported",
+          "reason": "El programa técnico superior menciona expresamente «Delineante de obra civil» y perfiles proyectistas como salidas profesionales. El CNO 3110 incluye «Delineantes y dibujantes técnicos» y describe tareas de elaboración de planos y representación técnica mediante CAD, que se alinean con las competencias del ciclo. La relación es directamente comprobable en ambas fuentes.",
+          "evidenceQuote": "Delineante de obra civil.",
+          "flags": [],
+          "quoteFoundInFpExcerpt": true,
+          "quoteFoundInCnoNotes": false
+        },
+        "gemma": {
+          "id": "mapping-043",
+          "verdict": "supported",
+          "reason": "El programa ofrece la salida profesional «Delineante de obra civil», lo cual es plenamente compatible con el grupo 3110, cuyas tareas incluyen la preparación de dibujos y planos para la «construcción, modificación, mantenimiento y reparación de edificios, embalses, puentes, carreteras y otros proyectos de arquitectura e ingeniería civil».",
+          "evidenceQuote": "Delineante de obra civil.",
+          "flags": [],
+          "quoteFoundInFpExcerpt": true,
+          "quoteFoundInCnoNotes": false
+        }
+      },
+      "twoReviewsComplete": true,
+      "modelsAgree": true,
+      "publicationApproved": false
+    },
+    {
+      "id": "mapping-044",
+      "mapping": {
+        "trainingProgramKey": "HOT02S",
+        "occupationId": "occupation:cno11:4421",
+        "relationshipType": "reviewed_relationship",
+        "reviewStatus": "draft",
+        "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/hosteleria-turismo/agencias-viajes-gestion-eventos.html",
+        "sourceQuote": "Empleada / empleado del departamento de «booking» o reservas.",
+        "reviewedAt": "2026-09-08",
+        "mappingVersion": "1.1.0",
+        "reviewNote": "Corrección propuesta de clasificación: contraste con el epígrafe específico del catálogo oficial completo."
+      },
+      "packetSha256": "581615d8379bdb2de00403e378720ca8891f2d5dff41dc5e811cde8d25dc14f1",
+      "reviews": {
+        "qwen": {
+          "id": "mapping-044",
+          "verdict": "supported",
+          "reason": "La fuente primaria identifica «Empleada o empleado del departamento de reservas» como salida profesional. El CNO 4421 agrupa bajo «Empleados de agencias de viajes» a quienes tramitan reservas y organizan itinerarios. Existe correspondencia funcional directa sin desbordar el ámbito ocupacional del código.",
+          "evidenceQuote": "Empleada / empleado del departamento de «booking» o reservas.",
+          "flags": [],
+          "quoteFoundInFpExcerpt": true,
+          "quoteFoundInCnoNotes": false
+        },
+        "gemma": {
+          "id": "mapping-044",
+          "verdict": "supported",
+          "reason": "La salida profesional «Empleada / empleado del departamento de «booking» o reservas» se alinea con las tareas del grupo 4421, que incluyen «realizar y confirmar las reservas de viajes, tours y alojamiento».",
+          "evidenceQuote": "Empleada / empleado del departamento de «booking» o reservas.",
+          "flags": [],
+          "quoteFoundInFpExcerpt": true,
+          "quoteFoundInCnoNotes": false
+        }
+      },
+      "twoReviewsComplete": true,
+      "modelsAgree": true,
+      "publicationApproved": false
+    },
+    {
+      "id": "mapping-045",
+      "mapping": {
+        "trainingProgramKey": "HOT03S",
+        "occupationId": "occupation:cno11:5824",
+        "relationshipType": "reviewed_relationship",
+        "reviewStatus": "draft",
+        "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/hosteleria-turismo/guia-informacion-asistencias-turisticas.html",
+        "sourceQuote": "Asistente en terminales (estaciones, puertos y aeropuertos).",
+        "reviewedAt": "2026-09-08",
+        "mappingVersion": "1.1.0",
+        "reviewNote": "Corrección propuesta de clasificación: contraste con el epígrafe específico del catálogo oficial completo."
+      },
+      "packetSha256": "581615d8379bdb2de00403e378720ca8891f2d5dff41dc5e811cde8d25dc14f1",
+      "reviews": {
+        "qwen": {
+          "id": "mapping-045",
+          "verdict": "supported",
+          "reason": "El ciclo formativo enumera «Asistente en terminales (estaciones, puertos y aeropuertos)» como perfil de inserción. El CNO 5824, bajo «Azafatos de tierra», incluye expresamente «Auxiliares de tierra, en general» y describe tareas de asistencia, facturación e información en puntos de transporte, lo cual coincide con las funciones del programa.",
+          "evidenceQuote": "Asistente en terminales (estaciones, puertos y aeropuertos).",
+          "flags": [],
+          "quoteFoundInFpExcerpt": true,
+          "quoteFoundInCnoNotes": false
+        },
+        "gemma": {
+          "id": "mapping-045",
+          "verdict": "supported",
+          "reason": "La salida «Asistente en terminales (estaciones, puertos y aeropuertos)» guarda relación con el grupo 5824 (Azafatos de tierra), que realizan actividades de «acompañamiento, orientación, asistencia, facturación, información, asesoramiento al usuario o cliente del servicio» en ubicaciones como «aeropuertos».",
+          "evidenceQuote": "Asistente en terminales (estaciones, puertos y aeropuertos).",
+          "flags": [],
+          "quoteFoundInFpExcerpt": true,
+          "quoteFoundInCnoNotes": false
+        }
+      },
+      "twoReviewsComplete": true,
+      "modelsAgree": true,
+      "publicationApproved": false
+    },
+    {
+      "id": "mapping-046",
+      "mapping": {
+        "trainingProgramKey": "QUI01S",
+        "occupationId": "occupation:cno11:3127",
+        "relationshipType": "reviewed_relationship",
+        "reviewStatus": "draft",
+        "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/quimica/lab-analisis-control-calidad.html",
+        "sourceQuote": "Técnica / técnico de laboratorio de química industrial.",
+        "reviewedAt": "2026-09-08",
+        "mappingVersion": "1.1.0",
+        "reviewNote": "Corrección propuesta de clasificación: contraste con el epígrafe específico del catálogo oficial completo."
+      },
+      "packetSha256": "581615d8379bdb2de00403e378720ca8891f2d5dff41dc5e811cde8d25dc14f1",
+      "reviews": {
+        "qwen": {
+          "id": "mapping-046",
+          "verdict": "supported",
+          "reason": "La cita textual del programa coincide nominal y funcionalmente con la denominación del CNO 3127. Ambas fuentes describen la realización de ensayos de laboratorio, control técnico y actividades analíticas en entornos de industria química, consolidando una relación ocupacional directa.",
+          "evidenceQuote": "Técnica / técnico de laboratorio de química industrial.",
+          "flags": [],
+          "quoteFoundInFpExcerpt": true,
+          "quoteFoundInCnoNotes": false
+        },
+        "gemma": {
+          "id": "mapping-046",
+          "verdict": "supported",
+          "reason": "La salida profesional «Técnica / técnico de laboratorio de química industrial» coincide con el título del grupo 3127, que incluye la ejecución de tareas técnicas relacionadas con la «industria química» y la realización de «ensayos de laboratorio físicos y químicos».",
+          "evidenceQuote": "Técnica / técnico de laboratorio de química industrial.",
+          "flags": [],
+          "quoteFoundInFpExcerpt": true,
+          "quoteFoundInCnoNotes": false
+        }
+      },
+      "twoReviewsComplete": true,
+      "modelsAgree": true,
+      "publicationApproved": false
+    },
+    {
+      "id": "mapping-047",
+      "mapping": {
+        "trainingProgramKey": "SAN04S",
+        "occupationId": "occupation:cno11:3313",
+        "relationshipType": "reviewed_relationship",
+        "reviewStatus": "draft",
+        "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/sanidad/anatomia-patologica-citodiagnostico.html",
+        "sourceQuote": "Técnica / técnico especialista en anatomía patológica y citología.",
+        "reviewedAt": "2026-09-08",
+        "mappingVersion": "1.1.0",
+        "reviewNote": "Corrección propuesta de clasificación: contraste con el epígrafe específico del catálogo oficial completo."
+      },
+      "packetSha256": "581615d8379bdb2de00403e378720ca8891f2d5dff41dc5e811cde8d25dc14f1",
+      "reviews": {
+        "qwen": {
+          "id": "mapping-047",
+          "verdict": "supported",
+          "reason": "El programa técnico superior indica expresamente «Técnica o técnico especialista en anatomía patológica y citología» como perfil profesional, denominación que aparece literalmente como ejemplo incluido en el CNO 3313. Las competencias descritas en el CNO se corresponden con la formación del ciclo.",
+          "evidenceQuote": "Técnica / técnico especialista en anatomía patológica y citología.",
+          "flags": [],
+          "quoteFoundInFpExcerpt": true,
+          "quoteFoundInCnoNotes": false
+        },
+        "gemma": {
+          "id": "mapping-047",
+          "verdict": "supported",
+          "reason": "El programa incluye como salidas profesionales «Técnica / técnico especialista en anatomía patológica y citología», lo cual es un ejemplo explícito de ocupación incluida en el grupo primario 3313.",
+          "evidenceQuote": "Técnica / técnico especialista en anatomía patológica y citología.",
+          "flags": [],
+          "quoteFoundInFpExcerpt": true,
+          "quoteFoundInCnoNotes": false
+        }
+      },
+      "twoReviewsComplete": true,
+      "modelsAgree": true,
+      "publicationApproved": false
+    },
+    {
+      "id": "mapping-048",
+      "mapping": {
+        "trainingProgramKey": "INA02S",
+        "occupationId": "occupation:cno11:3203",
+        "relationshipType": "reviewed_relationship",
+        "reviewStatus": "draft",
+        "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/industrias-alimentarias/procesos-calidad-industria-alimentaria.html",
+        "sourceQuote": "Supervisor / supervisora de equipos, procesos y productos.",
+        "reviewedAt": "2026-09-08",
+        "mappingVersion": "1.1.0",
+        "reviewNote": "El epígrafe 3209 excluye expresamente supervisores de industrias alimenticias y remite a 3203; pendiente de adjudicación final."
+      },
+      "packetSha256": "b11d4ae3567097b03961f15fabc3c5b32499e912c681639a67fafaf7260b9816",
+      "reviews": {
+        "qwen": {
+          "id": "mapping-048",
+          "verdict": "supported",
+          "reason": "La cita fuente «Supervisor / supervisora de equipos, procesos y productos.» se encuentra verificada textualmente en los excerpts proporcionados. Las funciones descritas en el documento de la FP (supervisión de operaciones, envasado y control de procesos) se alinean con el perfil ocupacional del grupo CNO 3203, que corresponde a supervisores de industrias alimenticias encargados de coordinar actividades y organizar la planificación diaria. No se detectan exclusiones contrarias en la nota del CNO ni solapamientos con niveles directivos, por lo que la relación se considera defendible.",
+          "evidenceQuote": "Supervisor / supervisora de equipos, procesos y productos.",
+          "flags": [],
+          "quoteFoundInFpExcerpt": true,
+          "quoteFoundInCnoNotes": false
+        },
+        "gemma": {
+          "id": "mapping-048",
+          "verdict": "supported",
+          "reason": "La evidencia de la formación profesional establece explícitamente como salida profesional la función de «Supervisor / supervisora de equipos, procesos y productos» en el ámbito de la industria alimentaria. Esto guarda una relación directa con el código CNO 3203, que define a los «Supervisores de industrias alimenticias y del tabaco» y menciona específicamente entre sus tareas la coordinación y supervisión de actividades, además de incluir como ejemplo a los «Supervisores de producción de industrias alimenticias».",
+          "evidenceQuote": "Supervisor / supervisora de equipos, procesos y productos.",
+          "flags": [],
+          "quoteFoundInFpExcerpt": true,
+          "quoteFoundInCnoNotes": false
+        }
+      },
+      "twoReviewsComplete": true,
+      "modelsAgree": true,
+      "publicationApproved": false
+    }
+  ]
+}

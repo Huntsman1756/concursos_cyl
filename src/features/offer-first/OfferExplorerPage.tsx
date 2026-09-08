@@ -247,8 +247,12 @@ function RelatedTrainingLinks({
     <div className="offer-row__relations-summary">
       <span>Formación relacionada:</span>
       <ul>
-        {relations.map((relation) => (
-          <li key={`${relation.programKey}-${relation.occupationId}`}>
+        {[
+          ...new Map(
+            relations.map((relation) => [relation.programKey, relation]),
+          ).values(),
+        ].map((relation) => (
+          <li key={relation.programKey}>
             <Link to={trainingDetailPath(relation.programKey)}>
               {formatProgramTitle(relation.programTitle)}
             </Link>

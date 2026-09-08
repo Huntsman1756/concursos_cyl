@@ -6,8 +6,13 @@
     "reviewStatus": "approved",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2014/02/28/127",
     "sourceQuote": "Auxiliar de información.",
-    "reviewedAt": "2026-08-12",
-    "mappingVersion": "1.0.0"
+    "reviewedAt": "2026-09-08",
+    "mappingVersion": "1.1.0",
+    "functionalBoundary": {
+      "roleLevel": "assistant",
+      "fullOccupationQualification": false
+    },
+    "reviewNote": "La fuente describe una función auxiliar o de ayudante dentro de este ámbito ocupacional; no acredita cualificación para el conjunto de funciones de la ocupación."
   },
   {
     "trainingProgramKey": "ADG01M",
@@ -125,9 +130,9 @@
     "relationshipType": "official_output",
     "reviewStatus": "approved",
     "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/actividades-fisicas-deportivas/ensenanza-animacion-sociodeportiva.html",
-    "sourceQuote": "Cronometrador / cronometradora, juez / jueza y árbitra / árbitro de competiciones deportivas no oficiales.",
-    "reviewedAt": "2026-08-12",
-    "mappingVersion": "1.0.0"
+    "sourceQuote": "Cronometrador / cronometradora, juez / jueza y árbitra / árbitro de competiciones deportivas no oficiales",
+    "reviewedAt": "2026-09-08",
+    "mappingVersion": "1.1.0"
   },
   {
     "trainingProgramKey": "AFD01S",
@@ -135,9 +140,9 @@
     "relationshipType": "official_output",
     "reviewStatus": "approved",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2017/06/23/653",
-    "sourceQuote": "Profesor/a de actividades físico-deportivas.",
-    "reviewedAt": "2026-08-12",
-    "mappingVersion": "1.0.0"
+    "sourceQuote": "Profesor/a de actividades físico-deportivas (natación, atletismo, baloncesto, voleibol, tenis y pádel, entre otros).",
+    "reviewedAt": "2026-09-08",
+    "mappingVersion": "1.1.0"
   },
   {
     "trainingProgramKey": "AFD01S",
@@ -165,9 +170,9 @@
     "relationshipType": "official_output",
     "reviewStatus": "approved",
     "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/actividades-fisicas-deportivas/ensenanza-animacion-sociodeportiva.html",
-    "sourceQuote": "Cronometrador / cronometradora, juez / jueza y árbitra / árbitro de competiciones deportivas no oficiales.",
-    "reviewedAt": "2026-08-12",
-    "mappingVersion": "1.0.0"
+    "sourceQuote": "Cronometrador / cronometradora, juez / jueza y árbitra / árbitro de competiciones deportivas no oficiales",
+    "reviewedAt": "2026-09-08",
+    "mappingVersion": "1.1.0"
   },
   {
     "trainingProgramKey": "AFD01SD",
@@ -175,9 +180,9 @@
     "relationshipType": "official_output",
     "reviewStatus": "approved",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2017/06/23/653",
-    "sourceQuote": "Profesor/a de actividades físico-deportivas.",
-    "reviewedAt": "2026-08-12",
-    "mappingVersion": "1.0.0"
+    "sourceQuote": "Profesor/a de actividades físico-deportivas (natación, atletismo, baloncesto, voleibol, tenis y pádel, entre otros).",
+    "reviewedAt": "2026-09-08",
+    "mappingVersion": "1.1.0"
   },
   {
     "trainingProgramKey": "AFD01SD",
@@ -203,11 +208,12 @@
     "trainingProgramKey": "AFD02M",
     "occupationId": "occupation:cno11:3723",
     "relationshipType": "reviewed_relationship",
-    "reviewStatus": "approved",
+    "reviewStatus": "rejected",
     "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/actividades-fisicas-deportivas/guia-medio-natural-tiempo-libre.html",
     "sourceQuote": "Diseñar y organizar actividades físico-deportivas recreativas guiadas por el medio natural.",
-    "reviewedAt": "2026-08-13",
-    "mappingVersion": "1.0.0"
+    "reviewedAt": "2026-09-08",
+    "mappingVersion": "1.1.0",
+    "reviewNote": "Las notas CNO 3723 excluyen guías de actividades de aventura y remiten a 3724, relación ya conservada para este programa."
   },
   {
     "trainingProgramKey": "AFD02M",
@@ -246,8 +252,13 @@
     "reviewStatus": "approved",
     "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/agraria/agrojardineria-composiciones-florales.html",
     "sourceQuote": "Auxiliar de ventas en floristería.",
-    "reviewedAt": "2026-08-13",
-    "mappingVersion": "1.0.0"
+    "reviewedAt": "2026-09-08",
+    "mappingVersion": "1.1.0",
+    "functionalBoundary": {
+      "roleLevel": "assistant",
+      "fullOccupationQualification": false
+    },
+    "reviewNote": "La fuente describe una función auxiliar o de ayudante dentro de este ámbito ocupacional; no acredita cualificación para el conjunto de funciones de la ocupación."
   },
   {
     "trainingProgramKey": "AGA01M",
@@ -472,82 +483,92 @@
   {
     "trainingProgramKey": "COM01B",
     "occupationId": "occupation:cno11:4121",
-    "relationshipType": "official_output",
+    "relationshipType": "reviewed_relationship",
     "reviewStatus": "approved",
-    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
-    "sourceQuote": "4121 Empleados de control de abastecimientos e inventario",
-    "reviewedAt": "2026-08-11",
-    "mappingVersion": "1.0.0"
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/comercio-marketing/servicios-comerciales.html",
+    "sourceQuote": "Realizar recuentos e inventarios periódicos de mercancías y/o productos, registrando la información en documentos de control y en aplicaciones informáticas para el control de existencias.",
+    "reviewedAt": "2026-09-08",
+    "mappingVersion": "1.1.0"
   },
   {
     "trainingProgramKey": "COM01B",
     "occupationId": "occupation:cno11:4123",
     "relationshipType": "official_output",
-    "reviewStatus": "approved",
-    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
-    "sourceQuote": "4123 Empleados de logística y transporte de pasajeros y mercancías",
-    "reviewedAt": "2026-08-11",
-    "mappingVersion": "1.0.0"
+    "reviewStatus": "draft",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/comercio-marketing/servicios-comerciales.html",
+    "sourceQuote": "Operaria / operario de logística.",
+    "reviewedAt": "2026-09-08",
+    "mappingVersion": "1.1.0",
+    "reviewNote": "Operario de logística no acredita por sí solo las tareas administrativas de registro y coordinación del epígrafe 4123."
   },
   {
     "trainingProgramKey": "COM01B",
     "occupationId": "occupation:cno11:5220",
     "relationshipType": "official_output",
     "reviewStatus": "approved",
-    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
-    "sourceQuote": "5220 Vendedores en tiendas y almacenes",
-    "reviewedAt": "2026-08-11",
-    "mappingVersion": "1.0.0"
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/comercio-marketing/servicios-comerciales.html",
+    "sourceQuote": "Auxiliar de dependiente de comercio.",
+    "reviewedAt": "2026-09-08",
+    "mappingVersion": "1.1.0",
+    "functionalBoundary": {
+      "roleLevel": "assistant",
+      "fullOccupationQualification": false
+    }
   },
   {
     "trainingProgramKey": "COM01B",
     "occupationId": "occupation:cno11:5492",
     "relationshipType": "official_output",
     "reviewStatus": "approved",
-    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
-    "sourceQuote": "5492 Promotores de venta",
-    "reviewedAt": "2026-08-11",
-    "mappingVersion": "1.0.0"
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/comercio-marketing/servicios-comerciales.html",
+    "sourceQuote": "Auxiliar de promoción de ventas.",
+    "reviewedAt": "2026-09-08",
+    "mappingVersion": "1.1.0",
+    "functionalBoundary": {
+      "roleLevel": "assistant",
+      "fullOccupationQualification": false
+    }
   },
   {
     "trainingProgramKey": "COM01B",
     "occupationId": "occupation:cno11:5500",
     "relationshipType": "official_output",
     "reviewStatus": "approved",
-    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
-    "sourceQuote": "5500 Cajeros y taquilleros (excepto bancos)",
-    "reviewedAt": "2026-08-11",
-    "mappingVersion": "1.0.0"
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/comercio-marketing/servicios-comerciales.html",
+    "sourceQuote": "Operador / operadora de cobro o Cajera / cajero.",
+    "reviewedAt": "2026-09-08",
+    "mappingVersion": "1.1.0"
   },
   {
     "trainingProgramKey": "COM01B",
     "occupationId": "occupation:cno11:8333",
     "relationshipType": "official_output",
     "reviewStatus": "approved",
-    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
-    "sourceQuote": "8333 Operadores de carretillas elevadoras",
-    "reviewedAt": "2026-08-11",
-    "mappingVersion": "1.0.0"
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/comercio-marketing/servicios-comerciales.html",
+    "sourceQuote": "Carretillera / carretillero de recepción y expedición.",
+    "reviewedAt": "2026-09-08",
+    "mappingVersion": "1.1.0"
   },
   {
     "trainingProgramKey": "COM01B",
     "occupationId": "occupation:cno11:9820",
     "relationshipType": "official_output",
     "reviewStatus": "approved",
-    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
-    "sourceQuote": "9820 Reponedores",
-    "reviewedAt": "2026-08-11",
-    "mappingVersion": "1.0.0"
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/comercio-marketing/servicios-comerciales.html",
+    "sourceQuote": "Empleada / empleado de reposición.",
+    "reviewedAt": "2026-09-08",
+    "mappingVersion": "1.1.0"
   },
   {
     "trainingProgramKey": "COM01M",
     "occupationId": "occupation:cno11:1432",
     "relationshipType": "official_output",
-    "reviewStatus": "approved",
+    "reviewStatus": "draft",
     "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/comercio-marketing/actividades-comerciales.html",
     "sourceQuote": "Gerente de pequeño comercio.",
-    "reviewedAt": "2026-08-12",
-    "mappingVersion": "1.0.0"
+    "reviewedAt": "2026-09-08",
+    "mappingVersion": "1.1.0",
+    "reviewNote": "Gerente de pequeño comercio no permite resolver con esta cita la distinción entre dirección empresarial y pequeño propietario; falta evidencia funcional específica."
   },
   {
     "trainingProgramKey": "COM01M",
@@ -565,9 +586,9 @@
     "relationshipType": "official_output",
     "reviewStatus": "approved",
     "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/comercio-marketing/actividades-comerciales.html",
-    "sourceQuote": "Teleoperador / teleoperadora (Call-Center).",
-    "reviewedAt": "2026-08-12",
-    "mappingVersion": "1.0.0"
+    "sourceQuote": "Teleoperador / teleoperadora (Call - Center).",
+    "reviewedAt": "2026-09-08",
+    "mappingVersion": "1.1.0"
   },
   {
     "trainingProgramKey": "COM01M",
@@ -595,9 +616,9 @@
     "relationshipType": "official_output",
     "reviewStatus": "approved",
     "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/comercio-marketing/actividades-comerciales.html",
-    "sourceQuote": "Cajera / cajero.",
-    "reviewedAt": "2026-08-12",
-    "mappingVersion": "1.0.0"
+    "sourceQuote": "Cajera / cajero",
+    "reviewedAt": "2026-09-08",
+    "mappingVersion": "1.1.0"
   },
   {
     "trainingProgramKey": "COM01M",
@@ -605,9 +626,9 @@
     "relationshipType": "official_output",
     "reviewStatus": "approved",
     "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/comercio-marketing/actividades-comerciales.html",
-    "sourceQuote": "Reponedor / reponedora.",
-    "reviewedAt": "2026-08-12",
-    "mappingVersion": "1.0.0"
+    "sourceQuote": "reponedor / reponedora.",
+    "reviewedAt": "2026-09-08",
+    "mappingVersion": "1.1.0"
   },
   {
     "trainingProgramKey": "COM02E",
@@ -615,9 +636,9 @@
     "relationshipType": "reviewed_relationship",
     "reviewStatus": "approved",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2024/02/06/144",
-    "sourceQuote": "Directores de marketing digital, de programas de afiliación, de contenidos digitales, de proyectos digitales y de comercio electrónico.",
-    "reviewedAt": "2026-08-21",
-    "mappingVersion": "1.0.0"
+    "sourceQuote": "Directores de marketing digital ( Digital Strategist ).",
+    "reviewedAt": "2026-09-08",
+    "mappingVersion": "1.1.0"
   },
   {
     "trainingProgramKey": "COM02E",
@@ -625,29 +646,29 @@
     "relationshipType": "reviewed_relationship",
     "reviewStatus": "approved",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2024/02/06/144",
-    "sourceQuote": "Copywriter, Redactor publicitario digital y Redactor de contenidos para marketing y ventas.",
-    "reviewedAt": "2026-08-21",
-    "mappingVersion": "1.0.0"
+    "sourceQuote": "Redactores de textos publicitarios ( Copywriter ).",
+    "reviewedAt": "2026-09-08",
+    "mappingVersion": "1.1.0"
   },
   {
     "trainingProgramKey": "COM02M",
     "occupationId": "occupation:cno11:5210",
     "relationshipType": "official_output",
     "reviewStatus": "approved",
-    "sourceUrl": "https://www.boe.es/eli/es/rd/189/2018",
+    "sourceUrl": "https://www.boe.es/eli/es/rd/2018/04/06/189",
     "sourceQuote": "Responsable/encargado de sección/sala/departamento de tienda de alimentación.",
-    "reviewedAt": "2026-08-09",
-    "mappingVersion": "1.0.0"
+    "reviewedAt": "2026-09-08",
+    "mappingVersion": "1.1.0"
   },
   {
     "trainingProgramKey": "COM02M",
     "occupationId": "occupation:cno11:5220",
     "relationshipType": "official_output",
     "reviewStatus": "approved",
-    "sourceUrl": "https://www.boe.es/eli/es/rd/189/2018",
+    "sourceUrl": "https://www.boe.es/eli/es/rd/2018/04/06/189",
     "sourceQuote": "Vendedor/a de productos alimentarios.",
-    "reviewedAt": "2026-08-09",
-    "mappingVersion": "1.0.0"
+    "reviewedAt": "2026-09-08",
+    "mappingVersion": "1.1.0"
   },
   {
     "trainingProgramKey": "COM02S",
@@ -683,11 +704,12 @@
     "trainingProgramKey": "COM02S",
     "occupationId": "occupation:cno11:5210",
     "relationshipType": "reviewed_relationship",
-    "reviewStatus": "approved",
+    "reviewStatus": "draft",
     "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/comercio-marketing/transporte-logistica.html",
     "sourceQuote": "Jefa / jefe de almacén.",
-    "reviewedAt": "2026-08-13",
-    "mappingVersion": "1.0.0"
+    "reviewedAt": "2026-09-08",
+    "mappingVersion": "1.1.0",
+    "reviewNote": "Jefe de almacén en transporte y logística no acredita supervisión de ventas en tiendas, ámbito específico del epígrafe 5210."
   },
   {
     "trainingProgramKey": "COM02SD",
@@ -723,11 +745,12 @@
     "trainingProgramKey": "COM02SD",
     "occupationId": "occupation:cno11:5210",
     "relationshipType": "reviewed_relationship",
-    "reviewStatus": "approved",
+    "reviewStatus": "draft",
     "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/comercio-marketing/transporte-logistica.html",
     "sourceQuote": "Jefa / jefe de almacén.",
-    "reviewedAt": "2026-08-13",
-    "mappingVersion": "1.0.0"
+    "reviewedAt": "2026-09-08",
+    "mappingVersion": "1.1.0",
+    "reviewNote": "Jefe de almacén en transporte y logística no acredita supervisión de ventas en tiendas, ámbito específico del epígrafe 5210."
   },
   {
     "trainingProgramKey": "COM03S",
@@ -753,11 +776,12 @@
     "trainingProgramKey": "COM04S",
     "occupationId": "occupation:cno11:3522",
     "relationshipType": "official_output",
-    "reviewStatus": "approved",
+    "reviewStatus": "draft",
     "sourceUrl": "https://www.boe.es/boe/dias/2011/12/13/pdfs/BOE-A-2011-19439.pdf",
     "sourceQuote": "Técnico en comercio exterior.",
-    "reviewedAt": "2026-08-21",
-    "mappingVersion": "1.0.0"
+    "reviewedAt": "2026-09-08",
+    "mappingVersion": "1.1.0",
+    "reviewNote": "Técnico en comercio exterior no establece específicamente las funciones de compra del epígrafe 3522; se requiere evidencia más precisa."
   },
   {
     "trainingProgramKey": "COM04S",
@@ -783,11 +807,12 @@
     "trainingProgramKey": "COM04SD",
     "occupationId": "occupation:cno11:3522",
     "relationshipType": "official_output",
-    "reviewStatus": "approved",
+    "reviewStatus": "draft",
     "sourceUrl": "https://www.boe.es/boe/dias/2011/12/13/pdfs/BOE-A-2011-19439.pdf",
     "sourceQuote": "Técnico en comercio exterior.",
-    "reviewedAt": "2026-08-21",
-    "mappingVersion": "1.0.0"
+    "reviewedAt": "2026-09-08",
+    "mappingVersion": "1.1.0",
+    "reviewNote": "Técnico en comercio exterior no establece específicamente las funciones de compra del epígrafe 3522; se requiere evidencia más precisa."
   },
   {
     "trainingProgramKey": "COM04SD",
@@ -855,9 +880,9 @@
     "relationshipType": "reviewed_relationship",
     "reviewStatus": "approved",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2015/08/28/774",
-    "sourceQuote": "Operario de instalaciones eléctricas de baja tensión.",
-    "reviewedAt": "2026-08-21",
-    "mappingVersion": "1.0.0"
+    "sourceQuote": "Operario/a de instalaciones eléctricas de baja tensión.",
+    "reviewedAt": "2026-09-08",
+    "mappingVersion": "1.1.0"
   },
   {
     "trainingProgramKey": "ELE02B",
@@ -865,9 +890,14 @@
     "relationshipType": "reviewed_relationship",
     "reviewStatus": "approved",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2015/08/28/774",
-    "sourceQuote": "Ayudante de montador de antenas receptoras de televisión y satélites.",
-    "reviewedAt": "2026-08-21",
-    "mappingVersion": "1.0.0"
+    "sourceQuote": "Ayudante/a de montador/a de antenas receptoras/ televisión satélites.",
+    "reviewedAt": "2026-09-08",
+    "mappingVersion": "1.1.0",
+    "functionalBoundary": {
+      "roleLevel": "assistant",
+      "fullOccupationQualification": false
+    },
+    "reviewNote": "La fuente describe una función auxiliar o de ayudante dentro de este ámbito ocupacional; no acredita cualificación para el conjunto de funciones de la ocupación."
   },
   {
     "trainingProgramKey": "ELE02B",
@@ -903,11 +933,12 @@
     "trainingProgramKey": "ELE02S",
     "occupationId": "occupation:cno11:3811",
     "relationshipType": "reviewed_relationship",
-    "reviewStatus": "approved",
+    "reviewStatus": "draft",
     "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/electricidad-electronica/sistemas-telecomunicaciones-informaticos.html",
     "sourceQuote": "Especialista en integración, instalación y mantenimiento de equipos y sistemas informáticos.",
-    "reviewedAt": "2026-08-13",
-    "mappingVersion": "1.0.0"
+    "reviewedAt": "2026-09-08",
+    "mappingVersion": "1.1.0",
+    "reviewNote": "La instalación e integración de telecomunicaciones no acredita por sí sola las funciones de operación informática de 3811; se conserva la relación de instalación específica."
   },
   {
     "trainingProgramKey": "ELE02S",
@@ -934,10 +965,10 @@
     "occupationId": "occupation:cno11:7531",
     "relationshipType": "official_output",
     "reviewStatus": "approved",
-    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
-    "sourceQuote": "7531 Técnicos de reparación de equipos electrónicos y de comunicaciones",
-    "reviewedAt": "2026-08-11",
-    "mappingVersion": "1.0.0"
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/electricidad-electronica/mantenimiento-electronico.html",
+    "sourceQuote": "Técnica / técnico en reparación y mantenimiento de equipos profesionales de audio, de video y de equipos industriales",
+    "reviewedAt": "2026-09-08",
+    "mappingVersion": "1.1.0"
   },
   {
     "trainingProgramKey": "ELE04S",
@@ -1111,13 +1142,14 @@
   },
   {
     "trainingProgramKey": "EOC02S",
-    "occupationId": "occupation:cno11:3129",
-    "relationshipType": "official_output",
+    "occupationId": "occupation:cno11:3110",
+    "relationshipType": "reviewed_relationship",
     "reviewStatus": "approved",
     "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/edificacion-obra-civil/proyectos-obra-civil.html",
     "sourceQuote": "Delineante de obra civil.",
-    "reviewedAt": "2026-08-14",
-    "mappingVersion": "1.0.0"
+    "reviewedAt": "2026-09-08",
+    "mappingVersion": "1.1.0",
+    "reviewNote": "Clasificación corregida tras contrastar la salida oficial de FP con el epígrafe específico y las exclusiones de las notas CNO-11 del INE (julio de 2026)."
   },
   {
     "trainingProgramKey": "FME01B",
@@ -1186,8 +1218,13 @@
     "reviewStatus": "approved",
     "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/fabricacion-mecanica/fabricacion-elementos-metalicos.html",
     "sourceQuote": "Auxiliar de carpintero / carpintera metálico.",
-    "reviewedAt": "2026-08-14",
-    "mappingVersion": "1.0.0"
+    "reviewedAt": "2026-09-08",
+    "mappingVersion": "1.1.0",
+    "functionalBoundary": {
+      "roleLevel": "assistant",
+      "fullOccupationQualification": false
+    },
+    "reviewNote": "La fuente describe una función auxiliar o de ayudante dentro de este ámbito ocupacional; no acredita cualificación para el conjunto de funciones de la ocupación."
   },
   {
     "trainingProgramKey": "FME02B",
@@ -1196,8 +1233,13 @@
     "reviewStatus": "approved",
     "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/fabricacion-mecanica/fabricacion-elementos-metalicos.html",
     "sourceQuote": "Auxiliar de oxicortador / oxicortadora a mano.",
-    "reviewedAt": "2026-08-14",
-    "mappingVersion": "1.0.0"
+    "reviewedAt": "2026-09-08",
+    "mappingVersion": "1.1.0",
+    "functionalBoundary": {
+      "roleLevel": "assistant",
+      "fullOccupationQualification": false
+    },
+    "reviewNote": "La fuente describe una función auxiliar o de ayudante dentro de este ámbito ocupacional; no acredita cualificación para el conjunto de funciones de la ocupación."
   },
   {
     "trainingProgramKey": "FME02B",
@@ -1224,40 +1266,40 @@
     "occupationId": "occupation:cno11:7132",
     "relationshipType": "official_output",
     "reviewStatus": "approved",
-    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
-    "sourceQuote": "7132 Instaladores de cerramientos metálicos y carpinteros metálicos",
-    "reviewedAt": "2026-08-11",
-    "mappingVersion": "1.0.0"
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/fabricacion-mecanica/soldadura-caldereria.html",
+    "sourceQuote": "Carpintera / carpintero metálico.",
+    "reviewedAt": "2026-09-08",
+    "mappingVersion": "1.1.0"
   },
   {
     "trainingProgramKey": "FME02M",
     "occupationId": "occupation:cno11:7312",
     "relationshipType": "official_output",
     "reviewStatus": "approved",
-    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
-    "sourceQuote": "7312 Soldadores y oxicortadores",
-    "reviewedAt": "2026-08-11",
-    "mappingVersion": "1.0.0"
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/fabricacion-mecanica/soldadura-caldereria.html",
+    "sourceQuote": "Soldador / soldadora y oxicortador / oxicortadora.",
+    "reviewedAt": "2026-09-08",
+    "mappingVersion": "1.1.0"
   },
   {
     "trainingProgramKey": "FME02M",
     "occupationId": "occupation:cno11:7313",
     "relationshipType": "official_output",
     "reviewStatus": "approved",
-    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
-    "sourceQuote": "7313 Chapistas y caldereros",
-    "reviewedAt": "2026-08-11",
-    "mappingVersion": "1.0.0"
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/fabricacion-mecanica/soldadura-caldereria.html",
+    "sourceQuote": "Chapista y calderera / calderero.",
+    "reviewedAt": "2026-09-08",
+    "mappingVersion": "1.1.0"
   },
   {
     "trainingProgramKey": "FME02M",
     "occupationId": "occupation:cno11:7314",
     "relationshipType": "official_output",
     "reviewStatus": "approved",
-    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
-    "sourceQuote": "7314 Montadores de estructuras metálicas",
-    "reviewedAt": "2026-08-11",
-    "mappingVersion": "1.0.0"
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/fabricacion-mecanica/soldadura-caldereria.html",
+    "sourceQuote": "Montador / montadora de estructuras metálicas.",
+    "reviewedAt": "2026-09-08",
+    "mappingVersion": "1.1.0"
   },
   {
     "trainingProgramKey": "FME02S",
@@ -1295,9 +1337,9 @@
     "relationshipType": "official_output",
     "reviewStatus": "approved",
     "sourceUrl": "https://todofp.es/dam/jcr%3A63392ee9-4d38-449b-a196-d0efb714b364/n-tcocinagastronomiaes-pdf.pdf",
-    "sourceQuote": "Las ocupaciones y puestos de trabajo más relevantes son los siguientes: Cocinero.",
-    "reviewedAt": "2026-08-08",
-    "mappingVersion": "1.0.0"
+    "sourceQuote": "• Cocinero.",
+    "reviewedAt": "2026-09-08",
+    "mappingVersion": "1.1.0"
   },
   {
     "trainingProgramKey": "HOT01S",
@@ -1331,43 +1373,47 @@
   },
   {
     "trainingProgramKey": "HOT02S",
-    "occupationId": "occupation:cno11:4123",
-    "relationshipType": "official_output",
+    "occupationId": "occupation:cno11:4421",
+    "relationshipType": "reviewed_relationship",
     "reviewStatus": "approved",
     "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/hosteleria-turismo/agencias-viajes-gestion-eventos.html",
     "sourceQuote": "Empleada / empleado del departamento de «booking» o reservas.",
-    "reviewedAt": "2026-08-21",
-    "mappingVersion": "1.0.0"
+    "reviewedAt": "2026-09-08",
+    "mappingVersion": "1.1.0",
+    "reviewNote": "Clasificación corregida tras contrastar la salida oficial de FP con el epígrafe específico y las exclusiones de las notas CNO-11 del INE (julio de 2026)."
   },
   {
     "trainingProgramKey": "HOT02S",
     "occupationId": "occupation:cno11:4411",
     "relationshipType": "official_output",
-    "reviewStatus": "approved",
+    "reviewStatus": "rejected",
     "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/hosteleria-turismo/agencias-viajes-gestion-eventos.html",
     "sourceQuote": "Consultor / consultora de viajes.",
-    "reviewedAt": "2026-08-21",
-    "mappingVersion": "1.0.0"
+    "reviewedAt": "2026-09-08",
+    "mappingVersion": "1.1.0",
+    "reviewNote": "Consultor de viajes corresponde al ámbito específico de 4421, ya incorporado para este programa, y no a información general 4411."
   },
   {
     "trainingProgramKey": "HOT02S",
     "occupationId": "occupation:cno11:5492",
     "relationshipType": "official_output",
-    "reviewStatus": "approved",
+    "reviewStatus": "draft",
     "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/hosteleria-turismo/agencias-viajes-gestion-eventos.html",
     "sourceQuote": "Promotor / promotora comercial de viajes y servicios turísticos.",
-    "reviewedAt": "2026-08-21",
-    "mappingVersion": "1.0.0"
+    "reviewedAt": "2026-09-08",
+    "mappingVersion": "1.1.0",
+    "reviewNote": "Promotor de viajes no acredita demostración de productos, actividad específica del epígrafe 5492."
   },
   {
     "trainingProgramKey": "HOT03S",
-    "occupationId": "occupation:cno11:4123",
+    "occupationId": "occupation:cno11:5824",
     "relationshipType": "reviewed_relationship",
     "reviewStatus": "approved",
     "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/hosteleria-turismo/guia-informacion-asistencias-turisticas.html",
     "sourceQuote": "Asistente en terminales (estaciones, puertos y aeropuertos).",
-    "reviewedAt": "2026-08-13",
-    "mappingVersion": "1.0.0"
+    "reviewedAt": "2026-09-08",
+    "mappingVersion": "1.1.0",
+    "reviewNote": "Clasificación corregida tras contrastar la salida oficial de FP con el epígrafe específico y las exclusiones de las notas CNO-11 del INE (julio de 2026)."
   },
   {
     "trainingProgramKey": "HOT03S",
@@ -1406,8 +1452,13 @@
     "reviewStatus": "approved",
     "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/informatica-comunicaciones/informatica-comunicaciones.html",
     "sourceQuote": "Ayudante de instalador / instaladora de equipos y sistemas de comunicación.",
-    "reviewedAt": "2026-08-21",
-    "mappingVersion": "1.0.0"
+    "reviewedAt": "2026-09-08",
+    "mappingVersion": "1.1.0",
+    "functionalBoundary": {
+      "roleLevel": "assistant",
+      "fullOccupationQualification": false
+    },
+    "reviewNote": "La fuente describe una función auxiliar o de ayudante dentro de este ámbito ocupacional; no acredita cualificación para el conjunto de funciones de la ocupación."
   },
   {
     "trainingProgramKey": "IFC01B",
@@ -1536,8 +1587,13 @@
     "reviewStatus": "approved",
     "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/informatica-comunicaciones/informatica-oficina.html",
     "sourceQuote": "Ayudante de montador / montadora de sistemas microinformáticos.",
-    "reviewedAt": "2026-08-13",
-    "mappingVersion": "1.0.0"
+    "reviewedAt": "2026-09-08",
+    "mappingVersion": "1.1.0",
+    "functionalBoundary": {
+      "roleLevel": "assistant",
+      "fullOccupationQualification": false
+    },
+    "reviewNote": "La fuente describe una función auxiliar o de ayudante dentro de este ámbito ocupacional; no acredita cualificación para el conjunto de funciones de la ocupación."
   },
   {
     "trainingProgramKey": "IFC02S",
@@ -1554,10 +1610,10 @@
     "occupationId": "occupation:cno11:3820",
     "relationshipType": "reviewed_relationship",
     "reviewStatus": "approved",
-    "sourceUrl": "https://www.boe.es/eli/es/rd/2010/05/21/450",
+    "sourceUrl": "https://www.boe.es/eli/es/rd/2010/04/16/450",
     "sourceQuote": "Desarrollar aplicaciones de propósito general.",
-    "reviewedAt": "2026-08-12",
-    "mappingVersion": "1.0.0"
+    "reviewedAt": "2026-09-08",
+    "mappingVersion": "1.1.0"
   },
   {
     "trainingProgramKey": "IFC02SD",
@@ -1574,10 +1630,10 @@
     "occupationId": "occupation:cno11:3820",
     "relationshipType": "reviewed_relationship",
     "reviewStatus": "approved",
-    "sourceUrl": "https://www.boe.es/eli/es/rd/2010/05/21/450",
+    "sourceUrl": "https://www.boe.es/eli/es/rd/2010/04/16/450",
     "sourceQuote": "Desarrollar aplicaciones de propósito general.",
-    "reviewedAt": "2026-08-12",
-    "mappingVersion": "1.0.0"
+    "reviewedAt": "2026-09-08",
+    "mappingVersion": "1.1.0"
   },
   {
     "trainingProgramKey": "IFC03S",
@@ -1605,9 +1661,9 @@
     "relationshipType": "reviewed_relationship",
     "reviewStatus": "approved",
     "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/instalacion-mantenimiento/instalaciones-produccion-calor.html",
-    "sourceQuote": "Instalador-mantenedor de instalaciones de agua.",
-    "reviewedAt": "2026-08-21",
-    "mappingVersion": "1.0.0"
+    "sourceQuote": "Instalador-mantenedor / instaladora-mantenedora de instalaciones de agua.",
+    "reviewedAt": "2026-09-08",
+    "mappingVersion": "1.1.0"
   },
   {
     "trainingProgramKey": "IMA01M",
@@ -1615,9 +1671,9 @@
     "relationshipType": "reviewed_relationship",
     "reviewStatus": "approved",
     "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/instalacion-mantenimiento/instalaciones-produccion-calor.html",
-    "sourceQuote": "Instalador-mantenedor de instalaciones de gas y combustibles líquidos.",
-    "reviewedAt": "2026-08-21",
-    "mappingVersion": "1.0.0"
+    "sourceQuote": "Instalador-mantenedor / instaladora-mantenedora de instalaciones de gas y combustibles líquidos",
+    "reviewedAt": "2026-09-08",
+    "mappingVersion": "1.1.0"
   },
   {
     "trainingProgramKey": "IMA01M",
@@ -1625,9 +1681,9 @@
     "relationshipType": "reviewed_relationship",
     "reviewStatus": "approved",
     "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/instalacion-mantenimiento/instalaciones-produccion-calor.html",
-    "sourceQuote": "Instalador-mantenedor de equipos de producción de calor.",
-    "reviewedAt": "2026-08-21",
-    "mappingVersion": "1.0.0"
+    "sourceQuote": "Instalador-mantenedor / instaladora-mantenedora de equipos de producción de calor.",
+    "reviewedAt": "2026-09-08",
+    "mappingVersion": "1.1.0"
   },
   {
     "trainingProgramKey": "IMA01M",
@@ -1635,19 +1691,19 @@
     "relationshipType": "official_output",
     "reviewStatus": "approved",
     "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/instalacion-mantenimiento/instalaciones-produccion-calor.html",
-    "sourceQuote": "Instalador-mantenedor de instalaciones solares térmicas.",
-    "reviewedAt": "2026-08-21",
-    "mappingVersion": "1.0.0"
+    "sourceQuote": "Instalador-mantenedor / instaladora-mantenedora de instalaciones solares térmicas.",
+    "reviewedAt": "2026-09-08",
+    "mappingVersion": "1.1.0"
   },
   {
     "trainingProgramKey": "IMA02M",
     "occupationId": "occupation:cno11:7250",
     "relationshipType": "official_output",
     "reviewStatus": "approved",
-    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
-    "sourceQuote": "7250 Mecánicos-instaladores de refrigeración y climatización",
-    "reviewedAt": "2026-08-11",
-    "mappingVersion": "1.0.0"
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/instalacion-mantenimiento/instalaciones-frigorificas-climatizacion.html",
+    "sourceQuote": "Instalador / instaladora frigorista en instalaciones comerciales.",
+    "reviewedAt": "2026-09-08",
+    "mappingVersion": "1.1.0"
   },
   {
     "trainingProgramKey": "IMA03M",
@@ -1676,8 +1732,13 @@
     "reviewStatus": "approved",
     "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/imagen-personal/peluqueria-estetica.html",
     "sourceQuote": "Auxiliar de peluquería.",
-    "reviewedAt": "2026-08-12",
-    "mappingVersion": "1.0.0"
+    "reviewedAt": "2026-09-08",
+    "mappingVersion": "1.1.0",
+    "functionalBoundary": {
+      "roleLevel": "assistant",
+      "fullOccupationQualification": false
+    },
+    "reviewNote": "La fuente describe una función auxiliar o de ayudante dentro de este ámbito ocupacional; no acredita cualificación para el conjunto de funciones de la ocupación."
   },
   {
     "trainingProgramKey": "IMP01B",
@@ -1686,8 +1747,13 @@
     "reviewStatus": "approved",
     "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/imagen-personal/peluqueria-estetica.html",
     "sourceQuote": "Ayudante de manicura y pedicura.",
-    "reviewedAt": "2026-08-12",
-    "mappingVersion": "1.0.0"
+    "reviewedAt": "2026-09-08",
+    "mappingVersion": "1.1.0",
+    "functionalBoundary": {
+      "roleLevel": "assistant",
+      "fullOccupationQualification": false
+    },
+    "reviewNote": "La fuente describe una función auxiliar o de ayudante dentro de este ámbito ocupacional; no acredita cualificación para el conjunto de funciones de la ocupación."
   },
   {
     "trainingProgramKey": "IMP01M",
@@ -1805,9 +1871,9 @@
     "relationshipType": "reviewed_relationship",
     "reviewStatus": "approved",
     "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/imagen-sonido/ce-audiodescripcion-subtitulacion.html",
-    "sourceQuote": "Guionista de proyectos de audiodescripción y subtitulación de obras audiovisuales y espectáculos en vivo.",
-    "reviewedAt": "2026-08-21",
-    "mappingVersion": "1.0.0"
+    "sourceQuote": "Guionista de proyectos de audiodescripción de obras audiovisuales y espectáculos en vivo y eventos.",
+    "reviewedAt": "2026-09-08",
+    "mappingVersion": "1.1.0"
   },
   {
     "trainingProgramKey": "IMS01E",
@@ -1815,9 +1881,9 @@
     "relationshipType": "reviewed_relationship",
     "reviewStatus": "approved",
     "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/imagen-sonido/ce-audiodescripcion-subtitulacion.html",
-    "sourceQuote": "Subtitulador de obras audiovisuales y espectáculos en vivo.",
-    "reviewedAt": "2026-08-21",
-    "mappingVersion": "1.0.0"
+    "sourceQuote": "Subtitulador / subtituladora de obras audiovisuales y espectáculos en vivo y eventos.",
+    "reviewedAt": "2026-09-08",
+    "mappingVersion": "1.1.0"
   },
   {
     "trainingProgramKey": "INA01S",
@@ -1835,9 +1901,9 @@
     "relationshipType": "reviewed_relationship",
     "reviewStatus": "approved",
     "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/industrias-alimentarias/aceites-oliva-vinos.html",
-    "sourceQuote": "Comercial de aceites de oliva, vinos y otras bebidas.",
-    "reviewedAt": "2026-08-21",
-    "mappingVersion": "1.0.0"
+    "sourceQuote": "Comercial de almazaras y bodegas.",
+    "reviewedAt": "2026-09-08",
+    "mappingVersion": "1.1.0"
   },
   {
     "trainingProgramKey": "INA02M",
@@ -1845,9 +1911,9 @@
     "relationshipType": "reviewed_relationship",
     "reviewStatus": "approved",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2008/11/03/1798",
-    "sourceQuote": "Maestro de almazara.",
-    "reviewedAt": "2026-08-21",
-    "mappingVersion": "1.0.0"
+    "sourceQuote": "Maestro de almazara, extractora y refinado de aceites de oliva.",
+    "reviewedAt": "2026-09-08",
+    "mappingVersion": "1.1.0"
   },
   {
     "trainingProgramKey": "INA02M",
@@ -1881,13 +1947,14 @@
   },
   {
     "trainingProgramKey": "INA02S",
-    "occupationId": "occupation:cno11:3209",
-    "relationshipType": "official_output",
+    "occupationId": "occupation:cno11:3203",
+    "relationshipType": "reviewed_relationship",
     "reviewStatus": "approved",
     "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/industrias-alimentarias/procesos-calidad-industria-alimentaria.html",
     "sourceQuote": "Supervisor / supervisora de equipos, procesos y productos.",
-    "reviewedAt": "2026-08-14",
-    "mappingVersion": "1.0.0"
+    "reviewedAt": "2026-09-08",
+    "mappingVersion": "1.1.0",
+    "reviewNote": "Clasificación corregida tras contrastar la salida oficial de FP con el epígrafe específico y las exclusiones de las notas CNO-11 del INE (julio de 2026)."
   },
   {
     "trainingProgramKey": "INA02S",
@@ -1944,20 +2011,20 @@
     "occupationId": "occupation:cno11:7812",
     "relationshipType": "official_output",
     "reviewStatus": "approved",
-    "sourceUrl": "https://www.boe.es/eli/es/rd/1128/2010",
+    "sourceUrl": "https://www.boe.es/eli/es/rd/2010/09/10/1128",
     "sourceQuote": "Operador de máquinas fijas para fabricar productos de madera.",
-    "reviewedAt": "2026-08-09",
-    "mappingVersion": "1.0.0"
+    "reviewedAt": "2026-09-08",
+    "mappingVersion": "1.1.0"
   },
   {
     "trainingProgramKey": "MAM01M",
     "occupationId": "occupation:cno11:8209",
     "relationshipType": "official_output",
     "reviewStatus": "approved",
-    "sourceUrl": "https://www.boe.es/eli/es/rd/1128/2010",
+    "sourceUrl": "https://www.boe.es/eli/es/rd/2010/09/10/1128",
     "sourceQuote": "Montador-ensamblador de elementos de carpintería.",
-    "reviewedAt": "2026-08-09",
-    "mappingVersion": "1.0.0"
+    "reviewedAt": "2026-09-08",
+    "mappingVersion": "1.1.0"
   },
   {
     "trainingProgramKey": "MAM02M",
@@ -1991,13 +2058,14 @@
   },
   {
     "trainingProgramKey": "QUI01S",
-    "occupationId": "occupation:cno11:3129",
-    "relationshipType": "official_output",
+    "occupationId": "occupation:cno11:3127",
+    "relationshipType": "reviewed_relationship",
     "reviewStatus": "approved",
     "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/quimica/lab-analisis-control-calidad.html",
-    "sourceQuote": "Analista de laboratorio químico.",
-    "reviewedAt": "2026-08-14",
-    "mappingVersion": "1.0.0"
+    "sourceQuote": "Técnica / técnico de laboratorio de química industrial.",
+    "reviewedAt": "2026-09-08",
+    "mappingVersion": "1.1.0",
+    "reviewNote": "Clasificación corregida tras contrastar la salida oficial de FP con el epígrafe específico y las exclusiones de las notas CNO-11 del INE (julio de 2026)."
   },
   {
     "trainingProgramKey": "QUI01S",
@@ -2071,13 +2139,14 @@
   },
   {
     "trainingProgramKey": "SAN04S",
-    "occupationId": "occupation:cno11:3314",
-    "relationshipType": "official_output",
+    "occupationId": "occupation:cno11:3313",
+    "relationshipType": "reviewed_relationship",
     "reviewStatus": "approved",
     "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/sanidad/anatomia-patologica-citodiagnostico.html",
     "sourceQuote": "Técnica / técnico especialista en anatomía patológica y citología.",
-    "reviewedAt": "2026-08-14",
-    "mappingVersion": "1.0.0"
+    "reviewedAt": "2026-09-08",
+    "mappingVersion": "1.1.0",
+    "reviewNote": "Clasificación corregida tras contrastar la salida oficial de FP con el epígrafe específico y las exclusiones de las notas CNO-11 del INE (julio de 2026)."
   },
   {
     "trainingProgramKey": "SAN07S",
@@ -2085,9 +2154,9 @@
     "relationshipType": "official_output",
     "reviewStatus": "approved",
     "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/sanidad/imagen-diagnostico-medicina-nuclear.html",
-    "sourceQuote": "Delegada / delegado comercial de productos hospitalarios y farmacéuticos.",
-    "reviewedAt": "2026-08-13",
-    "mappingVersion": "1.0.0"
+    "sourceQuote": "Delegada / delegado comercial de productos hospitalarios y farmacéuticos",
+    "reviewedAt": "2026-09-08",
+    "mappingVersion": "1.1.0"
   },
   {
     "trainingProgramKey": "SAN07SD",
@@ -2095,9 +2164,9 @@
     "relationshipType": "official_output",
     "reviewStatus": "approved",
     "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/sanidad/imagen-diagnostico-medicina-nuclear.html",
-    "sourceQuote": "Delegada / delegado comercial de productos hospitalarios y farmacéuticos.",
-    "reviewedAt": "2026-08-13",
-    "mappingVersion": "1.0.0"
+    "sourceQuote": "Delegada / delegado comercial de productos hospitalarios y farmacéuticos",
+    "reviewedAt": "2026-09-08",
+    "mappingVersion": "1.1.0"
   },
   {
     "trainingProgramKey": "SAN08S",
@@ -2275,9 +2344,9 @@
     "relationshipType": "official_output",
     "reviewStatus": "approved",
     "sourceUrl": "https://www.boe.es/eli/es/rd/2007/10/29/1394",
-    "sourceQuote": "Educador o educadora infantil en primer ciclo de educación infantil.",
-    "reviewedAt": "2026-08-12",
-    "mappingVersion": "1.0.0"
+    "sourceQuote": "Educador o educadora infantil en primer ciclo de educación infantil, siempre bajo la supervisión de un maestro o maestra",
+    "reviewedAt": "2026-09-08",
+    "mappingVersion": "1.1.0"
   },
   {
     "trainingProgramKey": "SSC02S",
@@ -2404,10 +2473,10 @@
     "occupationId": "occupation:cno11:7232",
     "relationshipType": "official_output",
     "reviewStatus": "approved",
-    "sourceUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
-    "sourceQuote": "7232 Pintores en las industrias manufactureras",
-    "reviewedAt": "2026-08-20",
-    "mappingVersion": "1.0.0"
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/transporte-mantenimiento-vehiculos/carroceria.html",
+    "sourceQuote": "Pintor / pintora de carrocería de automóviles, vehículos pesados, tractores, maquinaria agrícola, de industrias extractivas, de construcción y obras públicas y material ferroviario.",
+    "reviewedAt": "2026-09-08",
+    "mappingVersion": "1.1.0"
   },
   {
     "trainingProgramKey": "TMV01S",
@@ -2444,10 +2513,10 @@
     "occupationId": "occupation:cno11:7401",
     "relationshipType": "official_output",
     "reviewStatus": "approved",
-    "sourceUrl": "https://www.boe.es/eli/es/rd/2010/03/19/453",
+    "sourceUrl": "https://www.boe.es/eli/es/rd/2010/04/16/453",
     "sourceQuote": "Mecánico de automóviles.",
-    "reviewedAt": "2026-08-12",
-    "mappingVersion": "1.0.0"
+    "reviewedAt": "2026-09-08",
+    "mappingVersion": "1.1.0"
   },
   {
     "trainingProgramKey": "TMV03E",
@@ -2662,5 +2731,751 @@
     "sourceQuote": "Técnica / técnico de grabación de sonido en estudio.",
     "reviewedAt": "2026-08-22",
     "mappingVersion": "1.0.0"
+  },
+  {
+    "trainingProgramKey": "IFC03E",
+    "occupationId": "occupation:cno11:3820",
+    "relationshipType": "reviewed_relationship",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/informatica-comunicaciones/ce-inteligencia-artificial-bigdata.html",
+    "sourceQuote": "Programador de sistemas expertos.",
+    "reviewedAt": "2026-09-08",
+    "mappingVersion": "1.1.0",
+    "reviewNote": "Salida de FP contrastada con las funciones y exclusiones del epígrafe CNO-11 del INE. Revisión asistida por Qwen3.6 y Gemma4 y adjudicación del coordinador contra fuentes primarias; no acredita requisitos de una oferta."
+  },
+  {
+    "trainingProgramKey": "MAM01S",
+    "occupationId": "occupation:cno11:3110",
+    "relationshipType": "reviewed_relationship",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/madera-mueble-corcho/diseno-amueblamiento.html",
+    "sourceQuote": "Dibujante proyectista de muebles.",
+    "reviewedAt": "2026-09-08",
+    "mappingVersion": "1.1.0",
+    "reviewNote": "Salida de FP contrastada con las funciones y exclusiones del epígrafe CNO-11 del INE. Revisión asistida por Qwen3.6 y Gemma4 y adjudicación del coordinador contra fuentes primarias; no acredita requisitos de una oferta."
+  },
+  {
+    "trainingProgramKey": "QUI03S",
+    "occupationId": "occupation:cno11:3204",
+    "relationshipType": "reviewed_relationship",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/quimica/fab-prod-farmaceuticos-biotec-afines.html",
+    "sourceQuote": "Supervisor / supervisora de área de acondicionado.",
+    "reviewedAt": "2026-09-08",
+    "mappingVersion": "1.1.0",
+    "reviewNote": "Salida de FP contrastada con las funciones y exclusiones del epígrafe CNO-11 del INE. Revisión asistida por Qwen3.6 y Gemma4 y adjudicación del coordinador contra fuentes primarias; no acredita requisitos de una oferta."
+  },
+  {
+    "trainingProgramKey": "SAN05S",
+    "occupationId": "occupation:cno11:3322",
+    "relationshipType": "reviewed_relationship",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/sanidad/documentacion-administracion-sanitarias.html",
+    "sourceQuote": "Técnica / técnico superior en documentación sanitaria.",
+    "reviewedAt": "2026-09-08",
+    "mappingVersion": "1.1.0",
+    "reviewNote": "Salida de FP contrastada con las funciones y exclusiones del epígrafe CNO-11 del INE. Revisión asistida por Qwen3.6 y Gemma4 y adjudicación del coordinador contra fuentes primarias; no acredita requisitos de una oferta."
+  },
+  {
+    "trainingProgramKey": "TCP01S",
+    "occupationId": "occupation:cno11:7832",
+    "relationshipType": "reviewed_relationship",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/textil-confeccion-piel/patronaje-moda.html",
+    "sourceQuote": "Modelista-patronista de prendas de vestir.",
+    "reviewedAt": "2026-09-08",
+    "mappingVersion": "1.1.0",
+    "reviewNote": "Salida de FP contrastada con las funciones y exclusiones del epígrafe CNO-11 del INE. Revisión asistida por Qwen3.6 y Gemma4 y adjudicación del coordinador contra fuentes primarias; no acredita requisitos de una oferta."
+  },
+  {
+    "trainingProgramKey": "TMV02E",
+    "occupationId": "occupation:cno11:7401",
+    "relationshipType": "reviewed_relationship",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/transporte-mantenimiento-vehiculos/ce-mantenimiento-vehiculos-electricos-hibridos.html",
+    "sourceQuote": "Técnico de mantenimiento de vehículos eléctricos.",
+    "reviewedAt": "2026-09-08",
+    "mappingVersion": "1.1.1",
+    "reviewNote": "Relación limitada al mantenimiento de vehículos eléctricos. Un alias general de automoción no acredita las funciones o requisitos de una oferta concreta.",
+    "functionalBoundary": {
+      "roleLevel": "adjacent",
+      "fullOccupationQualification": false
+    }
+  },
+  {
+    "trainingProgramKey": "AFD01M",
+    "occupationId": "occupation:cno11:6209",
+    "relationshipType": "reviewed_relationship",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/actividades-fisicas-deportivas/actividades-ecuestres.html",
+    "sourceQuote": "Trabajador / trabajadora de la cría de caballos.",
+    "reviewedAt": "2026-09-08",
+    "mappingVersion": "1.1.0",
+    "reviewNote": "Salida de FP contrastada con las funciones y exclusiones del epígrafe CNO-11 del INE. Revisión asistida por Qwen3.6 y Gemma4 y adjudicación del coordinador contra fuentes primarias; no acredita requisitos de una oferta."
+  },
+  {
+    "trainingProgramKey": "ARG01S",
+    "occupationId": "occupation:cno11:2484",
+    "relationshipType": "reviewed_relationship",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/artes-graficas/diseno-gestion-produccion-grafica.html",
+    "sourceQuote": "Diseñador gráfico / diseñadora gráfica.",
+    "reviewedAt": "2026-09-08",
+    "mappingVersion": "1.1.0",
+    "reviewNote": "Salida de FP contrastada con las funciones y exclusiones del epígrafe CNO-11 del INE. Revisión asistida por Qwen3.6 y Gemma4 y adjudicación del coordinador contra fuentes primarias; no acredita requisitos de una oferta."
+  },
+  {
+    "trainingProgramKey": "ARG02S",
+    "occupationId": "occupation:cno11:2484",
+    "relationshipType": "reviewed_relationship",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/artes-graficas/diseno-edicion-public-impresas-multimedia.html",
+    "sourceQuote": "Diseñador gráfico / diseñadora gráfica.",
+    "reviewedAt": "2026-09-08",
+    "mappingVersion": "1.1.0",
+    "reviewNote": "Salida de FP contrastada con las funciones y exclusiones del epígrafe CNO-11 del INE. Revisión asistida por Qwen3.6 y Gemma4 y adjudicación del coordinador contra fuentes primarias; no acredita requisitos de una oferta."
+  },
+  {
+    "trainingProgramKey": "ELE04E",
+    "occupationId": "occupation:cno11:3813",
+    "relationshipType": "reviewed_relationship",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/electricidad-electronica/ce-instalacion-mto-sitemas-conectados-internet.html",
+    "sourceQuote": "Técnicos/Técnicas en redes.",
+    "reviewedAt": "2026-09-08",
+    "mappingVersion": "1.1.0",
+    "reviewNote": "Salida de FP contrastada con las funciones y exclusiones del epígrafe CNO-11 del INE. Revisión asistida por Qwen3.6 y Gemma4 y adjudicación del coordinador contra fuentes primarias; no acredita requisitos de una oferta."
+  },
+  {
+    "trainingProgramKey": "ENA01S",
+    "occupationId": "occupation:cno11:7294",
+    "relationshipType": "reviewed_relationship",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/energia-agua/eficiencia-energetica-solar-termica.html",
+    "sourceQuote": "Responsable de montaje y mantenimiento de instalaciones solares térmicas.",
+    "reviewedAt": "2026-09-08",
+    "mappingVersion": "1.1.0",
+    "reviewNote": "Salida de FP contrastada con las funciones y exclusiones del epígrafe CNO-11 del INE. Revisión asistida por Qwen3.6 y Gemma4 y adjudicación del coordinador contra fuentes primarias; no acredita requisitos de una oferta."
+  },
+  {
+    "trainingProgramKey": "FME03M",
+    "occupationId": "occupation:cno11:8141",
+    "relationshipType": "reviewed_relationship",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/fabricacion-mecanica/conformado-moldeo-metales-polimeros.html",
+    "sourceQuote": "Operador / operadora de máquina moldeadora-vulcanizadora de caucho.",
+    "reviewedAt": "2026-09-08",
+    "mappingVersion": "1.1.0",
+    "reviewNote": "Salida de FP contrastada con las funciones y exclusiones del epígrafe CNO-11 del INE. Revisión asistida por Qwen3.6 y Gemma4 y adjudicación del coordinador contra fuentes primarias; no acredita requisitos de una oferta."
+  },
+  {
+    "trainingProgramKey": "HOT02B",
+    "occupationId": "occupation:cno11:9210",
+    "relationshipType": "reviewed_relationship",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/hosteleria-turismo/alojamiento-lavanderia.html",
+    "sourceQuote": "Camarera / camarero de pisos, en establecimientos de alojamiento turístico sea cual sea su tipología, modalidad o categoría.",
+    "reviewedAt": "2026-09-08",
+    "mappingVersion": "1.1.0",
+    "reviewNote": "Salida de FP contrastada con las funciones y exclusiones del epígrafe CNO-11 del INE. Revisión asistida por Qwen3.6 y Gemma4 y adjudicación del coordinador contra fuentes primarias; no acredita requisitos de una oferta."
+  },
+  {
+    "trainingProgramKey": "HOT03SD",
+    "occupationId": "occupation:cno11:5825",
+    "relationshipType": "reviewed_relationship",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/hosteleria-turismo/guia-informacion-asistencias-turisticas.html",
+    "sourceQuote": "Guía local.",
+    "reviewedAt": "2026-09-08",
+    "mappingVersion": "1.1.0",
+    "reviewNote": "Salida de FP contrastada con las funciones y exclusiones del epígrafe CNO-11 del INE. Revisión asistida por Qwen3.6 y Gemma4 y adjudicación del coordinador contra fuentes primarias; no acredita requisitos de una oferta."
+  },
+  {
+    "trainingProgramKey": "HOT04SD",
+    "occupationId": "occupation:cno11:3734",
+    "relationshipType": "reviewed_relationship",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/hosteleria-turismo/direccion-cocina.html",
+    "sourceQuote": "Jefa / jefe de cocina.",
+    "reviewedAt": "2026-09-08",
+    "mappingVersion": "1.1.0",
+    "reviewNote": "Salida de FP contrastada con las funciones y exclusiones del epígrafe CNO-11 del INE. Revisión asistida por Qwen3.6 y Gemma4 y adjudicación del coordinador contra fuentes primarias; no acredita requisitos de una oferta."
+  },
+  {
+    "trainingProgramKey": "IFC02E",
+    "occupationId": "occupation:cno11:2713",
+    "relationshipType": "reviewed_relationship",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/informatica-comunicaciones/ce-desarrollo-videojuegos-realidad-virtual.html",
+    "sourceQuote": "Programador de videojuegos (Game Developer).",
+    "reviewedAt": "2026-09-08",
+    "mappingVersion": "1.1.0",
+    "reviewNote": "Salida de FP contrastada con las funciones y exclusiones del epígrafe CNO-11 del INE. Revisión asistida por Qwen3.6 y Gemma4 y adjudicación del coordinador contra fuentes primarias; no acredita requisitos de una oferta."
+  },
+  {
+    "trainingProgramKey": "IMA03E",
+    "occupationId": "occupation:cno11:3110",
+    "relationshipType": "reviewed_relationship",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/instalacion-mantenimiento/ce-modelado-informacion-construccion.html",
+    "sourceQuote": "Modelador BIM.",
+    "reviewedAt": "2026-09-08",
+    "mappingVersion": "1.1.0",
+    "reviewNote": "Relación limitada a la elaboración de documentación gráfica y modelos técnicos BIM; no atribuye habilitación para ejercer arquitectura.",
+    "functionalBoundary": {
+      "roleLevel": "adjacent",
+      "fullOccupationQualification": false
+    }
+  },
+  {
+    "trainingProgramKey": "IMP03S",
+    "occupationId": "occupation:cno11:2652",
+    "relationshipType": "reviewed_relationship",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/imagen-personal/asesoria-imagen-personal-corporativa.html",
+    "sourceQuote": "Técnica / técnico especialista en gabinetes de relaciones públicas.",
+    "reviewedAt": "2026-09-08",
+    "mappingVersion": "1.1.0",
+    "reviewNote": "Salida de FP contrastada con las funciones y exclusiones del epígrafe CNO-11 del INE. Revisión asistida por Qwen3.6 y Gemma4 y adjudicación del coordinador contra fuentes primarias; no acredita requisitos de una oferta."
+  },
+  {
+    "trainingProgramKey": "IMP04S",
+    "occupationId": "occupation:cno11:5812",
+    "relationshipType": "reviewed_relationship",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/imagen-personal/caracterizacion-maquillaje-profesional.html",
+    "sourceQuote": "Maquillador / maquilladora para medios audiovisuales y actividades y actuaciones escénicas.",
+    "reviewedAt": "2026-09-08",
+    "mappingVersion": "1.1.0",
+    "reviewNote": "Salida de FP contrastada con las funciones y exclusiones del epígrafe CNO-11 del INE. Revisión asistida por Qwen3.6 y Gemma4 y adjudicación del coordinador contra fuentes primarias; no acredita requisitos de una oferta."
+  },
+  {
+    "trainingProgramKey": "INA01B",
+    "occupationId": "occupation:cno11:7703",
+    "relationshipType": "reviewed_relationship",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/industrias-alimentarias/actividades-panaderia-pasteleria.html",
+    "sourceQuote": "Auxiliar de panadería y bollería.",
+    "reviewedAt": "2026-09-08",
+    "mappingVersion": "1.1.0",
+    "reviewNote": "Salida de FP contrastada con las funciones y exclusiones del epígrafe CNO-11 del INE. Revisión asistida por Qwen3.6 y Gemma4 y adjudicación del coordinador contra fuentes primarias; no acredita requisitos de una oferta.",
+    "functionalBoundary": {
+      "roleLevel": "assistant",
+      "fullOccupationQualification": false
+    }
+  },
+  {
+    "trainingProgramKey": "INA02B",
+    "occupationId": "occupation:cno11:8160",
+    "relationshipType": "reviewed_relationship",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/industrias-alimentarias/industrias-alimentarias.html",
+    "sourceQuote": "Operador / operadora de máquinas para elaborar y envasar productos alimentarios.",
+    "reviewedAt": "2026-09-08",
+    "mappingVersion": "1.1.0",
+    "reviewNote": "Salida de FP contrastada con las funciones y exclusiones del epígrafe CNO-11 del INE. Revisión asistida por Qwen3.6 y Gemma4 y adjudicación del coordinador contra fuentes primarias; no acredita requisitos de una oferta."
+  },
+  {
+    "trainingProgramKey": "TMV02S",
+    "occupationId": "occupation:cno11:7402",
+    "relationshipType": "reviewed_relationship",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/transporte-mantenimiento-vehiculos/mtmo-aeromecanica-aviones-motor-turbina.html",
+    "sourceQuote": "Técnica / técnico de mantenimiento aeromecánico de motores de turbina.",
+    "reviewedAt": "2026-09-08",
+    "mappingVersion": "1.1.0",
+    "reviewNote": "Salida de FP contrastada con las funciones y exclusiones del epígrafe CNO-11 del INE. Revisión asistida por Qwen3.6 y Gemma4 y adjudicación del coordinador contra fuentes primarias; no acredita requisitos de una oferta."
+  },
+  {
+    "trainingProgramKey": "TMV04E",
+    "occupationId": "occupation:cno11:3510",
+    "relationshipType": "reviewed_relationship",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/transporte-mantenimiento-vehiculos/ce-aeronaves-drones.html",
+    "sourceQuote": "Comercial de venta y asesoramiento sobre drones.",
+    "reviewedAt": "2026-09-08",
+    "mappingVersion": "1.1.1",
+    "reviewNote": "Relación limitada a venta y asesoramiento sobre drones. Un alias comercial general no acredita encaje con ofertas inmobiliarias o de otros sectores.",
+    "functionalBoundary": {
+      "roleLevel": "adjacent",
+      "fullOccupationQualification": false
+    }
+  },
+  {
+    "trainingProgramKey": "TMV04S",
+    "occupationId": "occupation:cno11:7402",
+    "relationshipType": "reviewed_relationship",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/transporte-mantenimiento-vehiculos/mtmo-aeromecanico-helicopteros-motor-turbina.html",
+    "sourceQuote": "Técnica / técnico de mantenimiento aeromecánico de motores de turbina.",
+    "reviewedAt": "2026-09-08",
+    "mappingVersion": "1.1.0",
+    "reviewNote": "Salida de FP contrastada con las funciones y exclusiones del epígrafe CNO-11 del INE. Revisión asistida por Qwen3.6 y Gemma4 y adjudicación del coordinador contra fuentes primarias; no acredita requisitos de una oferta."
+  },
+  {
+    "trainingProgramKey": "SAN06S",
+    "occupationId": "occupation:cno11:3321",
+    "relationshipType": "reviewed_relationship",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/sanidad/higiente-bucodental.html",
+    "sourceQuote": "Técnica / técnico superior en Higiene Bucodental.",
+    "reviewedAt": "2026-09-08",
+    "mappingVersion": "1.1.0",
+    "reviewNote": "Salida de FP contrastada con las funciones y exclusiones del epígrafe CNO-11 del INE. Revisión asistida por Qwen3.6 y Gemma4 y adjudicación del coordinador contra fuentes primarias; no acredita requisitos de una oferta."
+  },
+  {
+    "trainingProgramKey": "COM01S",
+    "occupationId": "occupation:cno11:2651",
+    "relationshipType": "reviewed_relationship",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/comercio-marketing/marketing-publicidad.html",
+    "sourceQuote": "Técnica / técnico en Publicidad.",
+    "reviewedAt": "2026-09-08",
+    "mappingVersion": "1.1.0",
+    "reviewNote": "Salida de FP contrastada con las funciones y exclusiones del epígrafe CNO-11 del INE. Revisión asistida por Qwen3.6 y Gemma4 y adjudicación del coordinador contra fuentes primarias; no acredita requisitos de una oferta."
+  },
+  {
+    "trainingProgramKey": "SAN01M",
+    "occupationId": "occupation:cno11:5622",
+    "relationshipType": "reviewed_relationship",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/sanidad/emergencias-sanitarias.html",
+    "sourceQuote": "Emergencias Sanitarias.",
+    "reviewedAt": "2026-09-08",
+    "mappingVersion": "1.1.0",
+    "reviewNote": "Salida de FP contrastada con las funciones y exclusiones del epígrafe CNO-11 del INE. Revisión asistida por Qwen3.6 y Gemma4 y adjudicación del coordinador contra fuentes primarias; no acredita requisitos de una oferta."
+  },
+  {
+    "trainingProgramKey": "SAN32",
+    "occupationId": "occupation:cno11:3323",
+    "relationshipType": "reviewed_relationship",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/logse/sanidad/dietetica.html",
+    "sourceQuote": "Técnico en Dietética y Nutrición.",
+    "reviewedAt": "2026-09-08",
+    "mappingVersion": "1.1.0",
+    "reviewNote": "Salida de FP contrastada con las funciones y exclusiones del epígrafe CNO-11 del INE. Revisión asistida por Qwen3.6 y Gemma4 y adjudicación del coordinador contra fuentes primarias; no acredita requisitos de una oferta."
+  },
+  {
+    "trainingProgramKey": "EOC01S",
+    "occupationId": "occupation:cno11:3110",
+    "relationshipType": "reviewed_relationship",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/edificacion-obra-civil/proyectos-edificacion.html",
+    "sourceQuote": "Delineante proyectista de edificación.",
+    "reviewedAt": "2026-09-08",
+    "mappingVersion": "1.1.0",
+    "reviewNote": "Salida de FP contrastada con las funciones y exclusiones del epígrafe CNO-11 del INE. Revisión asistida por Qwen3.6 y Gemma4 y adjudicación del coordinador contra fuentes primarias; no acredita requisitos de una oferta."
+  },
+  {
+    "trainingProgramKey": "INA01M",
+    "occupationId": "occupation:cno11:7703",
+    "relationshipType": "reviewed_relationship",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/industrias-alimentarias/panaderia-reposteria-confiteria.html",
+    "sourceQuote": "Panadera / panadero.",
+    "reviewedAt": "2026-09-08",
+    "mappingVersion": "1.1.0",
+    "reviewNote": "Salida de FP contrastada con las funciones y exclusiones del epígrafe CNO-11 del INE. Revisión asistida por Qwen3.6 y Gemma4 y adjudicación del coordinador contra fuentes primarias; no acredita requisitos de una oferta."
+  },
+  {
+    "trainingProgramKey": "IMS01M",
+    "occupationId": "occupation:cno11:3831",
+    "relationshipType": "reviewed_relationship",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/imagen-sonido/video-discjockey-sonido.html",
+    "sourceQuote": "Microfonista de cine y vídeo.",
+    "reviewedAt": "2026-09-08",
+    "mappingVersion": "1.1.0",
+    "reviewNote": "Salida de FP contrastada con las funciones y exclusiones del epígrafe CNO-11 del INE. Revisión asistida por Qwen3.6 y Gemma4 y adjudicación del coordinador contra fuentes primarias; no acredita requisitos de una oferta."
+  },
+  {
+    "trainingProgramKey": "HOT01E",
+    "occupationId": "occupation:cno11:7703",
+    "relationshipType": "reviewed_relationship",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/hosteleria-turismo/ce-panaderia-bolleria-artesanal.html",
+    "sourceQuote": "Maestro Panadero",
+    "reviewedAt": "2026-09-08",
+    "mappingVersion": "1.1.0",
+    "reviewNote": "Salida de FP contrastada con las funciones y exclusiones del epígrafe CNO-11 del INE. Revisión asistida por Qwen3.6 y Gemma4 y adjudicación del coordinador contra fuentes primarias; no acredita requisitos de una oferta."
+  },
+  {
+    "trainingProgramKey": "IFC01E",
+    "occupationId": "occupation:cno11:2729",
+    "relationshipType": "reviewed_relationship",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/informatica-comunicaciones/ce-ciberseguridad-entornos-tecnologias-informacion.html",
+    "sourceQuote": "Experto/a en ciberseguridad.",
+    "reviewedAt": "2026-09-08",
+    "mappingVersion": "1.1.0",
+    "reviewNote": "Salida de FP contrastada con las funciones y exclusiones del epígrafe CNO-11 del INE. Revisión asistida por Qwen3.6 y Gemma4 y adjudicación del coordinador contra fuentes primarias; no acredita requisitos de una oferta."
+  },
+  {
+    "trainingProgramKey": "IMS02S",
+    "occupationId": "occupation:cno11:3831",
+    "relationshipType": "reviewed_relationship",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/imagen-sonido/realizacion-proy-audiovisuales-espectaculos.html",
+    "sourceQuote": "Montador / montadora de cine.",
+    "reviewedAt": "2026-09-08",
+    "mappingVersion": "1.1.0",
+    "reviewNote": "Salida de FP contrastada con las funciones y exclusiones del epígrafe CNO-11 del INE. Revisión asistida por Qwen3.6 y Gemma4 y adjudicación del coordinador contra fuentes primarias; no acredita requisitos de una oferta."
+  },
+  {
+    "trainingProgramKey": "MSP34",
+    "occupationId": "occupation:cno11:3326",
+    "relationshipType": "reviewed_relationship",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/seguridad-medio-ambiente/prevencion-riesgos-profesionales.html",
+    "sourceQuote": "Técnico/a de prevención de nivel intermedio.",
+    "reviewedAt": "2026-09-08",
+    "mappingVersion": "1.1.0",
+    "reviewNote": "Salida de FP contrastada con las funciones y exclusiones del epígrafe CNO-11 del INE. Revisión asistida por Qwen3.6 y Gemma4 y adjudicación del coordinador contra fuentes primarias; no acredita requisitos de una oferta."
+  },
+  {
+    "trainingProgramKey": "IMS05S",
+    "occupationId": "occupation:cno11:3731",
+    "relationshipType": "reviewed_relationship",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/imagen-sonido/iluminacion-captacion-tratamiento-imagen.html",
+    "sourceQuote": "Fotógrafa / fotógrafo.",
+    "reviewedAt": "2026-09-08",
+    "mappingVersion": "1.1.0",
+    "reviewNote": "Salida de FP contrastada con las funciones y exclusiones del epígrafe CNO-11 del INE. Revisión asistida por Qwen3.6 y Gemma4 y adjudicación del coordinador contra fuentes primarias; no acredita requisitos de una oferta."
+  },
+  {
+    "trainingProgramKey": "TCP01M",
+    "occupationId": "occupation:cno11:8153",
+    "relationshipType": "reviewed_relationship",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/textil-confeccion-piel/confeccion-moda.html",
+    "sourceQuote": "Operador / operadora de máquinas industriales de coser y bordar.",
+    "reviewedAt": "2026-09-08",
+    "mappingVersion": "1.1.0",
+    "reviewNote": "Salida de FP contrastada con las funciones y exclusiones del epígrafe CNO-11 del INE. Revisión asistida por Qwen3.6 y Gemma4 y adjudicación del coordinador contra fuentes primarias; no acredita requisitos de una oferta."
+  },
+  {
+    "trainingProgramKey": "ELE05E",
+    "occupationId": "occupation:cno11:3129",
+    "relationshipType": "reviewed_relationship",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/electricidad-electronica/ce-robotica-colaborativa.html",
+    "sourceQuote": "Técnico de puesta en marcha de sistemas de robótica colaborativa.",
+    "reviewedAt": "2026-09-08",
+    "mappingVersion": "1.1.0",
+    "reviewNote": "Salida de FP contrastada con las funciones y exclusiones del epígrafe CNO-11 del INE. Revisión asistida por Qwen3.6 y Gemma4 y adjudicación del coordinador contra fuentes primarias; no acredita requisitos de una oferta."
+  },
+  {
+    "trainingProgramKey": "IMS03S",
+    "occupationId": "occupation:cno11:3532",
+    "relationshipType": "reviewed_relationship",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/imagen-sonido/produccion-audiovisuales-espectaculos.html",
+    "sourceQuote": "Jefa / jefe de producción de espectáculos en vivo y eventos.",
+    "reviewedAt": "2026-09-08",
+    "mappingVersion": "1.1.0",
+    "reviewNote": "Relación limitada a organización logística, recursos, contratación y presupuestos de eventos; no equipara todas las funciones de producción audiovisual con organización de conferencias.",
+    "functionalBoundary": {
+      "roleLevel": "adjacent",
+      "fullOccupationQualification": false
+    }
+  },
+  {
+    "trainingProgramKey": "SAN07S",
+    "occupationId": "occupation:cno11:3312",
+    "relationshipType": "reviewed_relationship",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/sanidad/imagen-diagnostico-medicina-nuclear.html",
+    "sourceQuote": "Técnica / técnico superior en imagen para el diagnóstico.",
+    "reviewedAt": "2026-09-08",
+    "mappingVersion": "1.1.0",
+    "reviewNote": "Salida oficial relacionada con el epígrafe técnico específico. No sustituye la supervisión facultativa, acreditaciones del Consejo de Seguridad Nuclear ni otros requisitos aplicables al puesto."
+  },
+  {
+    "trainingProgramKey": "SAN08S",
+    "occupationId": "occupation:cno11:3314",
+    "relationshipType": "reviewed_relationship",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/sanidad/laboratorio-clinico-biomedico.html",
+    "sourceQuote": "Técnica / técnico superior en laboratorio de diagnóstico clínico.",
+    "reviewedAt": "2026-09-08",
+    "mappingVersion": "1.1.0",
+    "reviewNote": "Salida de FP contrastada con las funciones y exclusiones del epígrafe CNO-11 del INE. Revisión asistida por Qwen3.6 y Gemma4 y adjudicación del coordinador contra fuentes primarias; no acredita requisitos de una oferta."
+  },
+  {
+    "trainingProgramKey": "SAN09S",
+    "occupationId": "occupation:cno11:3311",
+    "relationshipType": "reviewed_relationship",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/sanidad/radioterapia-dosimetria.html",
+    "sourceQuote": "Técnica / técnico superior en radioterapia.",
+    "reviewedAt": "2026-09-08",
+    "mappingVersion": "1.1.0",
+    "reviewNote": "Salida oficial relacionada con el epígrafe técnico específico. No sustituye la supervisión facultativa, acreditaciones del Consejo de Seguridad Nuclear ni otros requisitos aplicables al puesto."
+  },
+  {
+    "trainingProgramKey": "HOT01S",
+    "occupationId": "occupation:cno11:5831",
+    "relationshipType": "reviewed_relationship",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/hosteleria-turismo/gestion-alojamientos-turisticos.html",
+    "sourceQuote": "Gobernanta o encargada / encargado general del servicio de pisos y limpieza.",
+    "reviewedAt": "2026-09-08",
+    "mappingVersion": "1.1.0",
+    "reviewNote": "Salida de FP contrastada con las funciones y exclusiones del epígrafe CNO-11 del INE. Revisión asistida por Qwen3.6 y Gemma4 y adjudicación del coordinador contra fuentes primarias; no acredita requisitos de una oferta."
+  },
+  {
+    "trainingProgramKey": "AGA01SD",
+    "occupationId": "occupation:cno11:5993",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/agraria/gestion-forestal-medio-natural.html",
+    "sourceQuote": "Agente forestal o similar.",
+    "reviewedAt": "2026-09-08",
+    "mappingVersion": "1.1.0",
+    "reviewNote": "Relación acreditada por la salida profesional oficial. Modalidad a distancia: misma denominación normalizada, familia y nivel en el manifiesto activo; no es una nueva cualificación."
+  },
+  {
+    "trainingProgramKey": "COM03SD",
+    "occupationId": "occupation:cno11:3510",
+    "relationshipType": "reviewed_relationship",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/comercio-marketing/gestion-ventas-espacios-comerciales.html",
+    "sourceQuote": "Agente comercial.",
+    "reviewedAt": "2026-09-08",
+    "mappingVersion": "1.1.0",
+    "reviewNote": "Relación acreditada por la salida profesional oficial. Modalidad a distancia: misma denominación normalizada, familia y nivel en el manifiesto activo; no es una nueva cualificación."
+  },
+  {
+    "trainingProgramKey": "COM03SD",
+    "occupationId": "occupation:cno11:5210",
+    "relationshipType": "reviewed_relationship",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/comercio-marketing/gestion-ventas-espacios-comerciales.html",
+    "sourceQuote": "Encargada / encargado de sección de un comercio.",
+    "reviewedAt": "2026-09-08",
+    "mappingVersion": "1.1.0",
+    "reviewNote": "Relación acreditada por la salida profesional oficial. Modalidad a distancia: misma denominación normalizada, familia y nivel en el manifiesto activo; no es una nueva cualificación."
+  },
+  {
+    "trainingProgramKey": "ELE01MD",
+    "occupationId": "occupation:cno11:7510",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.boe.es/eli/es/rd/2008/02/08/177",
+    "sourceQuote": "Electricista de construcción.",
+    "reviewedAt": "2026-09-08",
+    "mappingVersion": "1.1.0",
+    "reviewNote": "Relación acreditada por la salida profesional oficial. Modalidad a distancia: misma denominación normalizada, familia y nivel en el manifiesto activo; no es una nueva cualificación."
+  },
+  {
+    "trainingProgramKey": "EOC01SD",
+    "occupationId": "occupation:cno11:3110",
+    "relationshipType": "reviewed_relationship",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/edificacion-obra-civil/proyectos-edificacion.html",
+    "sourceQuote": "Delineante proyectista de edificación.",
+    "reviewedAt": "2026-09-08",
+    "mappingVersion": "1.1.0",
+    "reviewNote": "Salida de FP contrastada con las funciones y exclusiones del epígrafe CNO-11 del INE. Revisión asistida por Qwen3.6 y Gemma4 y adjudicación del coordinador contra fuentes primarias; no acredita requisitos de una oferta. Modalidad a distancia: misma denominación normalizada, familia y nivel en el manifiesto activo; no es una nueva cualificación."
+  },
+  {
+    "trainingProgramKey": "EOC02SD",
+    "occupationId": "occupation:cno11:3110",
+    "relationshipType": "reviewed_relationship",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/edificacion-obra-civil/proyectos-obra-civil.html",
+    "sourceQuote": "Delineante de obra civil.",
+    "reviewedAt": "2026-09-08",
+    "mappingVersion": "1.1.0",
+    "reviewNote": "Clasificación corregida tras contrastar la salida oficial de FP con el epígrafe específico y las exclusiones de las notas CNO-11 del INE (julio de 2026). Modalidad a distancia: misma denominación normalizada, familia y nivel en el manifiesto activo; no es una nueva cualificación."
+  },
+  {
+    "trainingProgramKey": "HOT02SD",
+    "occupationId": "occupation:cno11:4421",
+    "relationshipType": "reviewed_relationship",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/hosteleria-turismo/agencias-viajes-gestion-eventos.html",
+    "sourceQuote": "Empleada / empleado del departamento de «booking» o reservas.",
+    "reviewedAt": "2026-09-08",
+    "mappingVersion": "1.1.0",
+    "reviewNote": "Clasificación corregida tras contrastar la salida oficial de FP con el epígrafe específico y las exclusiones de las notas CNO-11 del INE (julio de 2026). Modalidad a distancia: misma denominación normalizada, familia y nivel en el manifiesto activo; no es una nueva cualificación."
+  },
+  {
+    "trainingProgramKey": "HOT04SD",
+    "occupationId": "occupation:cno11:5110",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/hosteleria-turismo/direccion-cocina.html",
+    "sourceQuote": "Cocinera / cocinero.",
+    "reviewedAt": "2026-09-08",
+    "mappingVersion": "1.1.0",
+    "reviewNote": "Relación acreditada por la salida profesional oficial. Modalidad a distancia: misma denominación normalizada, familia y nivel en el manifiesto activo; no es una nueva cualificación."
+  },
+  {
+    "trainingProgramKey": "IMP02SD",
+    "occupationId": "occupation:cno11:5811",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.boe.es/diario_boe/txt.php?id=BOE-A-2011-19352",
+    "sourceQuote": "Peluquero/a especialista.",
+    "reviewedAt": "2026-09-08",
+    "mappingVersion": "1.1.0",
+    "reviewNote": "Relación acreditada por la salida profesional oficial. Modalidad a distancia: misma denominación normalizada, familia y nivel en el manifiesto activo; no es una nueva cualificación."
+  },
+  {
+    "trainingProgramKey": "INA01SD",
+    "occupationId": "occupation:cno11:7709",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/industrias-alimentarias/vitivinicultura.html",
+    "sourceQuote": "Analista sensorial.",
+    "reviewedAt": "2026-09-08",
+    "mappingVersion": "1.1.0",
+    "reviewNote": "Relación acreditada por la salida profesional oficial. Modalidad a distancia: misma denominación normalizada, familia y nivel en el manifiesto activo; no es una nueva cualificación."
+  },
+  {
+    "trainingProgramKey": "SAN01MD",
+    "occupationId": "occupation:cno11:5622",
+    "relationshipType": "reviewed_relationship",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/sanidad/emergencias-sanitarias.html",
+    "sourceQuote": "Emergencias Sanitarias.",
+    "reviewedAt": "2026-09-08",
+    "mappingVersion": "1.1.0",
+    "reviewNote": "Salida de FP contrastada con las funciones y exclusiones del epígrafe CNO-11 del INE. Revisión asistida por Qwen3.6 y Gemma4 y adjudicación del coordinador contra fuentes primarias; no acredita requisitos de una oferta. Modalidad a distancia: misma denominación normalizada, familia y nivel en el manifiesto activo; no es una nueva cualificación."
+  },
+  {
+    "trainingProgramKey": "SAN02MD",
+    "occupationId": "occupation:cno11:5621",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/sanidad/farmacia-parafarmacia.html",
+    "sourceQuote": "Auxiliar de Farmacia.",
+    "reviewedAt": "2026-09-08",
+    "mappingVersion": "1.1.0",
+    "reviewNote": "Relación acreditada por la salida profesional oficial. Modalidad a distancia: misma denominación normalizada, familia y nivel en el manifiesto activo; no es una nueva cualificación."
+  },
+  {
+    "trainingProgramKey": "SAN06SD",
+    "occupationId": "occupation:cno11:3321",
+    "relationshipType": "reviewed_relationship",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/sanidad/higiente-bucodental.html",
+    "sourceQuote": "Técnica / técnico superior en Higiene Bucodental.",
+    "reviewedAt": "2026-09-08",
+    "mappingVersion": "1.1.0",
+    "reviewNote": "Salida de FP contrastada con las funciones y exclusiones del epígrafe CNO-11 del INE. Revisión asistida por Qwen3.6 y Gemma4 y adjudicación del coordinador contra fuentes primarias; no acredita requisitos de una oferta. Modalidad a distancia: misma denominación normalizada, familia y nivel en el manifiesto activo; no es una nueva cualificación."
+  },
+  {
+    "trainingProgramKey": "SAN07SD",
+    "occupationId": "occupation:cno11:3312",
+    "relationshipType": "reviewed_relationship",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/sanidad/imagen-diagnostico-medicina-nuclear.html",
+    "sourceQuote": "Técnica / técnico superior en imagen para el diagnóstico.",
+    "reviewedAt": "2026-09-08",
+    "mappingVersion": "1.1.0",
+    "reviewNote": "Salida oficial relacionada con el epígrafe técnico específico. No sustituye la supervisión facultativa, acreditaciones del Consejo de Seguridad Nuclear ni otros requisitos aplicables al puesto. Modalidad a distancia: misma denominación normalizada, familia y nivel en el manifiesto activo; no es una nueva cualificación."
+  },
+  {
+    "trainingProgramKey": "SAN08SD",
+    "occupationId": "occupation:cno11:3314",
+    "relationshipType": "reviewed_relationship",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/sanidad/laboratorio-clinico-biomedico.html",
+    "sourceQuote": "Técnica / técnico superior en laboratorio de diagnóstico clínico.",
+    "reviewedAt": "2026-09-08",
+    "mappingVersion": "1.1.0",
+    "reviewNote": "Salida de FP contrastada con las funciones y exclusiones del epígrafe CNO-11 del INE. Revisión asistida por Qwen3.6 y Gemma4 y adjudicación del coordinador contra fuentes primarias; no acredita requisitos de una oferta. Modalidad a distancia: misma denominación normalizada, familia y nivel en el manifiesto activo; no es una nueva cualificación."
+  },
+  {
+    "trainingProgramKey": "SAN09SD",
+    "occupationId": "occupation:cno11:3311",
+    "relationshipType": "reviewed_relationship",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/sanidad/radioterapia-dosimetria.html",
+    "sourceQuote": "Técnica / técnico superior en radioterapia.",
+    "reviewedAt": "2026-09-08",
+    "mappingVersion": "1.1.0",
+    "reviewNote": "Salida oficial relacionada con el epígrafe técnico específico. No sustituye la supervisión facultativa, acreditaciones del Consejo de Seguridad Nuclear ni otros requisitos aplicables al puesto. Modalidad a distancia: misma denominación normalizada, familia y nivel en el manifiesto activo; no es una nueva cualificación."
+  },
+  {
+    "trainingProgramKey": "SAN21D",
+    "occupationId": "occupation:cno11:5611",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://todofp.es/dam/jcr%3Aaf5b68fd-e75c-493b-94ff-0565d3886473/san21cuidauxilenfermeria-pdf.pdf",
+    "sourceQuote": "Auxiliar de Enfermería/Clínica..",
+    "reviewedAt": "2026-09-08",
+    "mappingVersion": "1.1.0",
+    "reviewNote": "Relación acreditada por la salida profesional oficial. Modalidad a distancia: misma denominación normalizada, familia y nivel en el manifiesto activo; no es una nueva cualificación."
+  },
+  {
+    "trainingProgramKey": "SAN21D",
+    "occupationId": "occupation:cno11:5612",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://todofp.es/dam/jcr%3Aaf5b68fd-e75c-493b-94ff-0565d3886473/san21cuidauxilenfermeria-pdf.pdf",
+    "sourceQuote": "Auxiliar de Atención primaria.",
+    "reviewedAt": "2026-09-08",
+    "mappingVersion": "1.1.0",
+    "reviewNote": "Relación acreditada por la salida profesional oficial. Modalidad a distancia: misma denominación normalizada, familia y nivel en el manifiesto activo; no es una nueva cualificación."
+  },
+  {
+    "trainingProgramKey": "SSC01MD",
+    "occupationId": "occupation:cno11:5629",
+    "relationshipType": "reviewed_relationship",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.sepe.es/fr/SiteSepe/contenidos/COVID-19/documentos/documentacion-melilla/2021/201221-Resolucion-provisional--20-12-2021-firmada.pdf",
+    "sourceQuote": "Categoría: CUIDADORES DE PERSONAS CON DISCAPACIDAD (CNO 56291025) Titulación: FP grado medio en atención a personas en situación de dependencia",
+    "reviewedAt": "2026-09-08",
+    "mappingVersion": "1.1.0",
+    "reviewNote": "Relación acreditada por la salida profesional oficial. Modalidad a distancia: misma denominación normalizada, familia y nivel en el manifiesto activo; no es una nueva cualificación."
+  },
+  {
+    "trainingProgramKey": "SSC01MD",
+    "occupationId": "occupation:cno11:5710",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.boe.es/eli/es/rd/2011/11/04/1593",
+    "sourceQuote": "Auxiliar de ayuda a domicilio.",
+    "reviewedAt": "2026-09-08",
+    "mappingVersion": "1.1.0",
+    "reviewNote": "Relación acreditada por la salida profesional oficial. Modalidad a distancia: misma denominación normalizada, familia y nivel en el manifiesto activo; no es una nueva cualificación."
+  },
+  {
+    "trainingProgramKey": "SSC04SD",
+    "occupationId": "occupation:cno11:3714",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/servicios-socioculturales-comunidad/promocion-igualdad-genero.html",
+    "sourceQuote": "Promotor / promotora para la igualdad efectiva de mujeres y hombres.",
+    "reviewedAt": "2026-09-08",
+    "mappingVersion": "1.1.0",
+    "reviewNote": "Relación acreditada por la salida profesional oficial. Modalidad a distancia: misma denominación normalizada, familia y nivel en el manifiesto activo; no es una nueva cualificación."
+  },
+  {
+    "trainingProgramKey": "SSC06SD",
+    "occupationId": "occupation:cno11:5894",
+    "relationshipType": "reviewed_relationship",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/servicios-socioculturales-comunidad/formacion-movilidad-segura-sostenible.html",
+    "sourceQuote": "Profesor de formación vial.",
+    "reviewedAt": "2026-09-08",
+    "mappingVersion": "1.1.0",
+    "reviewNote": "Relación acreditada por la salida profesional oficial. Modalidad a distancia: misma denominación normalizada, familia y nivel en el manifiesto activo; no es una nueva cualificación."
+  },
+  {
+    "trainingProgramKey": "IFC01M",
+    "occupationId": "occupation:cno11:3812",
+    "relationshipType": "official_output",
+    "reviewStatus": "approved",
+    "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/informatica-comunicaciones/sistemas-microniformaticos-redes.html",
+    "sourceQuote": "Técnica / técnico de soporte informático.",
+    "reviewedAt": "2026-09-08",
+    "mappingVersion": "1.1.0",
+    "reviewNote": "Misma denominación, familia y nivel que IFC01MD en el manifiesto activo, eliminando únicamente el sufijo de modalidad. Salida oficial de soporte informático contrastada con CNO 3812."
   }
 ]
