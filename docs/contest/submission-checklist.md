@@ -14,7 +14,7 @@
 
 - URL raíz a presentar: [https://salida-cyl.157-90-22-40.sslip.io/](https://salida-cyl.157-90-22-40.sslip.io/)
 - El estado del respaldo GitHub Pages se registra por separado en [verification-20260908.md](verification-20260908.md).
-- Commit fuente del freeze: `b479ca24f8f37ed6703595cfdb472e0deafb848f`.
+- Commit fuente del freeze: `8bf3ab85aac3e4c08d1826280529e9a648cbe0cc`.
 - Snapshot: `20260908155911229-c72920ec4fed`.
 - Commit desplegado: **PENDIENTE DE DESPLIEGUE Y VERIFICACIÓN**.
 - Run del workflow: **PENDIENTE DE DESPLIEGUE Y VERIFICACIÓN**.
