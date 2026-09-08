@@ -16,24 +16,22 @@
 - El estado del respaldo GitHub Pages se registra por separado en [verification-20260908.md](verification-20260908.md).
 - Commit fuente del freeze: `136a08859f387427b74605bdcf8c19ea9584aebc`.
 - Snapshot: `20260908044344059-f92da75832e9`.
-- Commit desplegado: `2aaef9a1fa545e35b76c9b05f6cf98172175b94d`.
-- Run del workflow: no aplica (despliegue por script VPS, sin GitHub Actions).
-- Release: `v2026.09.08-candidate.17`.
-- `version.json` verificado: [respuesta pública](https://salida-cyl.157-90-22-40.sslip.io/version.json) con commit igual a `2aaef9a1fa545e35b76c9b05f6cf98172175b94d`.
+- Commit desplegado: **PENDIENTE DE DESPLIEGUE Y VERIFICACIÓN**.
+- Run del workflow: **PENDIENTE DE DESPLIEGUE Y VERIFICACIÓN**.
 - Identidad del producto: el commit desplegado registrado arriba es el commit de producto; esta documentación de candidatura vive en una rama documental posterior y no forma parte del commit desplegado.
 
-- Evidencia visual: **capturada y validada en `docs/contest/evidence-capture.json`**.
+- Evidencia visual: captura visual actual pendiente; las 13 capturas anteriores son históricas.
 
 ## Evidencia visual y gate final
 
-- [x] Captura automatizada A4: 13/13 capturas actuales recapturadas y validadas en `docs/contest/evidence-capture.json`.
+- [ ] Captura automatizada A4: pendiente de recaptura y validación.
 - [ ] Capturar y revisar visualmente los recorridos de la versión final en un navegador disponible, en escritorio y móvil; registrar versión, fecha y límites de la comprobación.
 - [ ] Revisar la aplicación pública de la release actual en contexto anónimo, incluyendo las rutas de FP, ocupación y comparador.
-- [ ] Conservar solo capturas actuales, sin datos personales ni credenciales; el manifiesto contiene capturas actuales ligadas al commit de publicación.
-- [x] Ejecutar los gates de release y verificar la aplicación pública.
-- [x] Registrar el commit desplegado y la verificación pública observados (despliegue por script VPS, sin run de GitHub Actions).
-- [ ] Revisar las capturas en contexto anónimo, sin datos personales ni credenciales. (capturas actuales; revisión humana pendiente)
-- [ ] Confirmar que las cifras visibles siguen coincidiendo con `20260908044344059-f92da75832e9`. (revisión humana pendiente)
+- [ ] Conservar solo capturas actuales, sin datos personales ni credenciales; las 13 capturas existentes son históricas.
+- [ ] Ejecutar los gates de release y verificar la aplicación pública.
+- [ ] Rellenar el commit desplegado y el run del workflow con datos observados.
+- [ ] Revisar las capturas en contexto anónimo, sin datos personales ni credenciales.
+- [ ] Confirmar que las cifras visibles siguen coincidiendo con `20260908044344059-f92da75832e9`. (evidencia visual pendiente)
 - [ ] Obtener aprobación humana explícita para la solicitud externa.
 
 **PENDIENTE DE APROBACIÓN HUMANA:** este repositorio no envía la solicitud al concurso ni decide los campos de identidad, contacto, declaraciones o consentimiento.
