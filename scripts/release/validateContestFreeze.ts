@@ -1012,8 +1012,11 @@ function recomputeFreeze(
   const candidates = expansion.candidates;
   if (!Array.isArray(candidates))
     throw new Error("expansion candidates must be an array");
-  const deferredPrograms = sortedUnique(
-    candidates
+  const deferredPrograms = sortedUnique([
+    ...programs
+      .filter((program) => !modalityKeys.includes(program.programKey))
+      .map((program) => program.programKey),
+    ...candidates
       .filter(
         (candidate) =>
           record(candidate, "expansion candidate").state === "deferred",
@@ -1024,7 +1027,7 @@ function recomputeFreeze(
           "candidate.programKey",
         ),
       ),
-  );
+  ]);
   const expansionCounts = record(expansion.counts, "expansion counts");
   const offerDeltas = record(expansion.offerDeltas, "expansion offerDeltas");
   const unionOfferIds = stringArray(

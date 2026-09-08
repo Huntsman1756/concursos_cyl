@@ -1349,8 +1349,8 @@
       "TMV05M|occupation:cno11:7404"
     ],
     "zeroReviewedRelationCount": 275,
-    "deferredPrograms": [],
-    "deferredProgramCount": 0
+    "deferredPrograms": ["IMA01E", "IMA02E"],
+    "deferredProgramCount": 2
   },
   "offers": {
     "matchedOfferIds": [
