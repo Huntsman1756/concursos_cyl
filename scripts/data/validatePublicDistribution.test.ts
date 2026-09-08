@@ -23,6 +23,7 @@ import {
 import { publishedRequirementId } from "../../src/domain/requirements";
 import { extractPublishedRequirements } from "./extractRequirements";
 import { FP_COVERAGE_WAVE_3_VERSIONED_SNAPSHOT_IDS } from "./buildSnapshots";
+import { loadRuntimeSnapshotRetention } from "../release/runtimeSnapshotRetention";
 import {
   buildMappingCoverage,
   loadCuratedMappingsFromDisk,
@@ -906,11 +907,21 @@ describe("public snapshot distribution", () => {
         ),
     ];
 
+    const retention = loadRuntimeSnapshotRetention(root);
     await expect(
       assertPublicSnapshotDistribution(root, mappings, {
-        ignoredDirectories: FP_COVERAGE_WAVE_3_VERSIONED_SNAPSHOT_IDS.map(
-          (snapshotId) =>
-            join(root, "public", "data", "v1", "snapshots", snapshotId),
+        ignoredDirectories: [
+          ...new Set([
+            ...FP_COVERAGE_WAVE_3_VERSIONED_SNAPSHOT_IDS,
+            ...retention.sourceSnapshotIds.filter(
+              (snapshotId) =>
+                !manifest.resourceSnapshots.programs.resourcePath.includes(
+                  `/snapshots/${snapshotId}/`,
+                ) && !retention.runtimeSnapshotIds.includes(snapshotId),
+            ),
+          ]),
+        ].map((snapshotId) =>
+          join(root, "public", "data", "v1", "snapshots", snapshotId),
         ),
         historicalSnapshotDirectories,
       }),

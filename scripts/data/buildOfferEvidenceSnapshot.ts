@@ -581,6 +581,18 @@ function buildRelations(
 
   for (const review of reviews) {
     if (review.kind === "title_to_occupation") {
+      if (
+        !links.some(
+          (link) =>
+            link.reviewStatus === "approved" &&
+            link.trainingProgramKey === review.programKey &&
+            link.occupationId === review.occupationId,
+        )
+      ) {
+        throw new Error(
+          `Title review has no approved FP relation: ${review.offerTitle} / ${review.programKey}.`,
+        );
+      }
       const relation = relationFromTitleReview(
         review,
         programsByKey,

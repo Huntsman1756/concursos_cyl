@@ -1,0 +1,1271 @@
+{
+  "sources": [
+    {
+      "url": "https://todofp.es/dam/jcr%3A63392ee9-4d38-449b-a196-d0efb714b364/n-tcocinagastronomiaes-pdf.pdf",
+      "retrievedAt": "2026-09-08T13:59:32.467996+00:00",
+      "status": 200,
+      "finalUrl": "https://todofp.es/dam/jcr%3A63392ee9-4d38-449b-a196-d0efb714b364/n-tcocinagastronomiaes-pdf.pdf",
+      "contentType": "application/pdf;charset=UTF-8",
+      "sha256": "adcd56c3e974e0adf945d22b94e845590ec8516f1179279d3227ede88f9efffa"
+    },
+    {
+      "url": "https://todofp.es/dam/jcr%3Aaf5b68fd-e75c-493b-94ff-0565d3886473/san21cuidauxilenfermeria-pdf.pdf",
+      "retrievedAt": "2026-09-08T13:59:32.469015+00:00",
+      "status": 200,
+      "finalUrl": "https://todofp.es/dam/jcr%3Aaf5b68fd-e75c-493b-94ff-0565d3886473/san21cuidauxilenfermeria-pdf.pdf",
+      "contentType": "application/pdf;charset=UTF-8",
+      "sha256": "53681294530300e249783849aece347a60eb24b28ecccce02406d895aa8533c3"
+    },
+    {
+      "url": "https://www.boe.es/boe/dias/2011/12/13/pdfs/BOE-A-2011-19439.pdf",
+      "retrievedAt": "2026-09-08T13:59:32.913396+00:00",
+      "status": 200,
+      "finalUrl": "https://www.boe.es/boe/dias/2011/12/13/pdfs/BOE-A-2011-19439.pdf",
+      "contentType": "application/pdf",
+      "sha256": "f3dfd7872fb366be38344a4c6f4678e614ef837913b1e5b7c4c51a4a36a9cc0a"
+    },
+    {
+      "url": "https://www.boe.es/boe/dias/2014/03/05/pdfs/BOE-A-2014-2360.pdf",
+      "retrievedAt": "2026-09-08T13:59:33.026259+00:00",
+      "status": 200,
+      "finalUrl": "https://www.boe.es/boe/dias/2014/03/05/pdfs/BOE-A-2014-2360.pdf",
+      "contentType": "application/pdf",
+      "sha256": "600b6b9f27edc9c55e18c957bb67817a8d797f53fc8a74aaf8b2e8a208bcc293"
+    },
+    {
+      "url": "https://www.boe.es/boe/dias/2017/07/08/pdfs/BOE-A-2017-7981.pdf",
+      "retrievedAt": "2026-09-08T13:59:33.605870+00:00",
+      "status": 200,
+      "finalUrl": "https://www.boe.es/boe/dias/2017/07/08/pdfs/BOE-A-2017-7981.pdf",
+      "contentType": "application/pdf",
+      "sha256": "51c85c1dc8b8cc63d3c9557d19732dc4aead7a64122002ab05048b0206c05c93"
+    },
+    {
+      "url": "https://www.boe.es/buscar/doc.php?id=BOE-A-2010-9269&lang=es",
+      "retrievedAt": "2026-09-08T13:59:34.341376+00:00",
+      "status": 200,
+      "finalUrl": "https://www.boe.es/buscar/doc.php?id=BOE-A-2010-9269&lang=es",
+      "contentType": "text/html; charset=UTF-8",
+      "sha256": "dcfdd22543d6d3dde1e4e6c944b2720292ade3cc7d524e43138cee0fd68600e1"
+    },
+    {
+      "url": "https://www.boe.es/buscar/doc.php?id=BOE-A-2014-2360",
+      "retrievedAt": "2026-09-08T13:59:34.792969+00:00",
+      "status": 200,
+      "finalUrl": "https://www.boe.es/buscar/doc.php?id=BOE-A-2014-2360",
+      "contentType": "text/html; charset=UTF-8",
+      "sha256": "b4572946b9e7d4aefec84be19989cb14d0f2aa2d9ade99abb7c40bfc5be153cf"
+    },
+    {
+      "url": "https://www.boe.es/diario_boe/txt.php?id=BOE-A-2011-19352",
+      "retrievedAt": "2026-09-08T13:59:37.107885+00:00",
+      "status": 200,
+      "finalUrl": "https://www.boe.es/diario_boe/txt.php?id=BOE-A-2011-19352",
+      "contentType": "text/html; charset=UTF-8",
+      "sha256": "20633de7d4cf012f4faf3472cef6d7228ed78fc43a06d912326daf2e6b9530bc"
+    },
+    {
+      "url": "https://www.boe.es/eli/es/rd/2007/10/29/1394",
+      "retrievedAt": "2026-09-08T13:59:37.895872+00:00",
+      "status": 200,
+      "finalUrl": "https://www.boe.es/eli/es/rd/2007/10/29/1394",
+      "contentType": "text/html;charset=UTF-8",
+      "sha256": "7f1d954b2b791f7236af6b27f284abff3d8e54ace55a11f9c64c1e28eeaa502c"
+    },
+    {
+      "url": "https://www.boe.es/eli/es/rd/2007/10/29/1398",
+      "retrievedAt": "2026-09-08T13:59:38.105971+00:00",
+      "status": 200,
+      "finalUrl": "https://www.boe.es/eli/es/rd/2007/10/29/1398",
+      "contentType": "text/html;charset=UTF-8",
+      "sha256": "ce2e026c42d4e3f306bd44ec8e02c3f999ee75eca225cab4118b85dd4f1827e7"
+    },
+    {
+      "url": "https://www.boe.es/eli/es/rd/2008/02/08/177",
+      "retrievedAt": "2026-09-08T13:59:38.306868+00:00",
+      "status": 200,
+      "finalUrl": "https://www.boe.es/eli/es/rd/2008/02/08/177",
+      "contentType": "text/html;charset=UTF-8",
+      "sha256": "d30cd095bcd5cf88f5a7428373d18a846356ce02e76851e6e5effa7880c06c0a"
+    },
+    {
+      "url": "https://www.boe.es/eli/es/rd/2008/11/03/1796",
+      "retrievedAt": "2026-09-08T13:59:38.641050+00:00",
+      "status": 200,
+      "finalUrl": "https://www.boe.es/eli/es/rd/2008/11/03/1796",
+      "contentType": "text/html;charset=UTF-8",
+      "sha256": "25b5803a1a2486c989a4daf07e76443a2680b08fef8419a938d62e3899eba1c2"
+    },
+    {
+      "url": "https://www.boe.es/eli/es/rd/2008/11/03/1798",
+      "retrievedAt": "2026-09-08T13:59:38.916642+00:00",
+      "status": 200,
+      "finalUrl": "https://www.boe.es/eli/es/rd/2008/11/03/1798",
+      "contentType": "text/html;charset=UTF-8",
+      "sha256": "17f3f4affb2d8f0d6c7b845569e98c69da21f17e33c2610a9cf0c3de8b564718"
+    },
+    {
+      "url": "https://www.boe.es/eli/es/rd/2009/10/30/1631",
+      "retrievedAt": "2026-09-08T13:59:39.301273+00:00",
+      "status": 200,
+      "finalUrl": "https://www.boe.es/eli/es/rd/2009/10/30/1631",
+      "contentType": "text/html;charset=UTF-8",
+      "sha256": "3501c2e9fafd0a56829c7159e6cc54499119fc7cfa12688b76d0338d5db9202d"
+    },
+    {
+      "url": "https://www.boe.es/eli/es/rd/2009/10/30/1632",
+      "retrievedAt": "2026-09-08T13:59:39.716649+00:00",
+      "status": 200,
+      "finalUrl": "https://www.boe.es/eli/es/rd/2009/10/30/1632",
+      "contentType": "text/html;charset=UTF-8",
+      "sha256": "10937ce4265869486763486f26fa202d06fc0c28bc65766bdd93b4057acbeba9"
+    },
+    {
+      "url": "https://www.boe.es/eli/es/rd/2009/10/30/1633",
+      "retrievedAt": "2026-09-08T13:59:39.950728+00:00",
+      "status": 200,
+      "finalUrl": "https://www.boe.es/eli/es/rd/2009/10/30/1633",
+      "contentType": "text/html;charset=UTF-8",
+      "sha256": "8e762a539a92fabd3da844376127b7c29589b92c508d231dbdb7ade5740d6eba"
+    },
+    {
+      "url": "https://www.boe.es/eli/es/rd/2009/10/30/1634",
+      "retrievedAt": "2026-09-08T13:59:40.317932+00:00",
+      "status": 200,
+      "finalUrl": "https://www.boe.es/eli/es/rd/2009/10/30/1634",
+      "contentType": "text/html;charset=UTF-8",
+      "sha256": "3f6526bec38f5ba66e26148f290fb575dcb64586d43adab7b29f19cfa64bc961"
+    },
+    {
+      "url": "https://www.boe.es/eli/es/rd/2010/04/16/450",
+      "retrievedAt": "2026-09-08T14:13:27.422828+00:00",
+      "status": 200,
+      "finalUrl": "https://www.boe.es/eli/es/rd/2010/04/16/450",
+      "contentType": "text/html;charset=UTF-8",
+      "sha256": "e12980df7f6d707d8aa7d75b27aea5f8d76725e5321b3c20a81c96ad6cc20c30"
+    },
+    {
+      "url": "https://www.boe.es/eli/es/rd/2010/04/16/453",
+      "retrievedAt": "2026-09-08T14:09:09.302148+00:00",
+      "status": 200,
+      "finalUrl": "https://www.boe.es/eli/es/rd/2010/04/16/453",
+      "contentType": "text/html;charset=UTF-8",
+      "sha256": "c1826376a0b03507b2d3c2766b9ed2cce9f055f9d91d6553dd35af1270543594"
+    },
+    {
+      "url": "https://www.boe.es/eli/es/rd/2010/09/10/1128",
+      "retrievedAt": "2026-09-08T14:09:09.077926+00:00",
+      "status": 200,
+      "finalUrl": "https://www.boe.es/eli/es/rd/2010/09/10/1128",
+      "contentType": "text/html;charset=UTF-8",
+      "sha256": "cdc75c771133edcd10548506666cac2baafef5b6817d5d5b17598a7056eb9108"
+    },
+    {
+      "url": "https://www.boe.es/eli/es/rd/2011/11/04/1575",
+      "retrievedAt": "2026-09-08T13:59:41.157908+00:00",
+      "status": 200,
+      "finalUrl": "https://www.boe.es/eli/es/rd/2011/11/04/1575",
+      "contentType": "text/html;charset=UTF-8",
+      "sha256": "9b14af3347af24e706c1c28785e1bb07e39224311a8d17f03703ee07234a4876"
+    },
+    {
+      "url": "https://www.boe.es/eli/es/rd/2011/11/04/1576",
+      "retrievedAt": "2026-09-08T13:59:41.593373+00:00",
+      "status": 200,
+      "finalUrl": "https://www.boe.es/eli/es/rd/2011/11/04/1576",
+      "contentType": "text/html;charset=UTF-8",
+      "sha256": "3896b5a9eaa64feff6a0fc2e93aac8fc88a472ab8b79a99cf7b8c7e4ecf91d78"
+    },
+    {
+      "url": "https://www.boe.es/eli/es/rd/2011/11/04/1581/dof/spa/pdf",
+      "retrievedAt": "2026-09-08T13:59:42.014766+00:00",
+      "status": 200,
+      "finalUrl": "https://www.boe.es/eli/es/rd/2011/11/04/1581/dof/spa/pdf",
+      "contentType": "application/pdf",
+      "sha256": "79e5e851899ef05577a6c1b9d9e6f96d61454f22a1347cb1a6eaec16c7eca203"
+    },
+    {
+      "url": "https://www.boe.es/eli/es/rd/2011/11/04/1589",
+      "retrievedAt": "2026-09-08T13:59:42.373558+00:00",
+      "status": 200,
+      "finalUrl": "https://www.boe.es/eli/es/rd/2011/11/04/1589",
+      "contentType": "text/html;charset=UTF-8",
+      "sha256": "ff2a2db50a4f15e2a57453402b214498071a0fd6795af24f72bc29f953e64ef8"
+    },
+    {
+      "url": "https://www.boe.es/eli/es/rd/2011/11/04/1593",
+      "retrievedAt": "2026-09-08T13:59:42.730036+00:00",
+      "status": 200,
+      "finalUrl": "https://www.boe.es/eli/es/rd/2011/11/04/1593",
+      "contentType": "text/html;charset=UTF-8",
+      "sha256": "fe81f2a2c10723b806cb051f013e006bc320d09b33856738d15c4926f1af9024"
+    },
+    {
+      "url": "https://www.boe.es/eli/es/rd/2014/02/28/127",
+      "retrievedAt": "2026-09-08T13:59:42.952392+00:00",
+      "status": 200,
+      "finalUrl": "https://www.boe.es/eli/es/rd/2014/02/28/127",
+      "contentType": "text/html;charset=UTF-8",
+      "sha256": "74ec2da558453b3f40a005f15cc6c6abc9aebe1626fb88d62eb48eceb989cd76"
+    },
+    {
+      "url": "https://www.boe.es/eli/es/rd/2015/08/28/774",
+      "retrievedAt": "2026-09-08T13:59:43.027373+00:00",
+      "status": 200,
+      "finalUrl": "https://www.boe.es/eli/es/rd/2015/08/28/774",
+      "contentType": "text/html;charset=UTF-8",
+      "sha256": "23a0ede3564f295459b5b6ffa6236610242afaf0bcb1d67165fe8f5d85620e0c"
+    },
+    {
+      "url": "https://www.boe.es/eli/es/rd/2017/06/23/653",
+      "retrievedAt": "2026-09-08T13:59:43.724900+00:00",
+      "status": 200,
+      "finalUrl": "https://www.boe.es/eli/es/rd/2017/06/23/653",
+      "contentType": "text/html;charset=UTF-8",
+      "sha256": "33952cae6785649db22cf312456326330e0a4124473e184d67922fe6e66e0ad4"
+    },
+    {
+      "url": "https://www.boe.es/eli/es/rd/2018/04/06/189",
+      "retrievedAt": "2026-09-08T14:09:09.077926+00:00",
+      "status": 200,
+      "finalUrl": "https://www.boe.es/eli/es/rd/2018/04/06/189",
+      "contentType": "text/html;charset=UTF-8",
+      "sha256": "54133993c9090cadaae949d68900ebaf9861e8740be596b9df0d2ca23a70ff0a"
+    },
+    {
+      "url": "https://www.boe.es/eli/es/rd/2024/02/06/144",
+      "retrievedAt": "2026-09-08T13:59:43.959667+00:00",
+      "status": 200,
+      "finalUrl": "https://www.boe.es/eli/es/rd/2024/02/06/144",
+      "contentType": "text/html;charset=UTF-8",
+      "sha256": "ad10ec2011f69d7ae844732e4617c0712be6f74b16e4f41e342603e85376e827"
+    },
+    {
+      "url": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+      "retrievedAt": "2026-09-08T13:59:44.058857+00:00",
+      "status": 200,
+      "finalUrl": "https://www.ine.es/daco/daco42/clasificaciones/cno11_notas.pdf",
+      "contentType": "application/pdf",
+      "sha256": "24dc15f91f5f5a8ea04f41017250e508e9681f794e3451903eeb52d20f1592c4"
+    },
+    {
+      "url": "https://www.sepe.es/fr/SiteSepe/contenidos/COVID-19/documentos/documentacion-melilla/2021/201221-Resolucion-provisional--20-12-2021-firmada.pdf",
+      "retrievedAt": "2026-09-08T13:59:44.344319+00:00",
+      "status": 200,
+      "finalUrl": "https://www.sepe.es/fr/SiteSepe/contenidos/COVID-19/documentos/documentacion-melilla/2021/201221-Resolucion-provisional--20-12-2021-firmada.pdf",
+      "contentType": "application/pdf;charset=UTF-8",
+      "sha256": "46dd1641e3db58c480849e0f75ad2939828f8756a7bb467f35eca11b08fe7565"
+    },
+    {
+      "url": "https://www.todofp.es/que-estudiar/familias-profesionales/actividades-fisicas-deportivas/actividades-ecuestres.html",
+      "retrievedAt": "2026-09-08T14:10:19.558560+00:00",
+      "status": 200,
+      "finalUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/actividades-fisicas-deportivas/actividades-ecuestres.html",
+      "contentType": "text/html;charset=UTF-8",
+      "sha256": "4eb3520920825e9a1da2a73c586aca799ec35f5e76a4e036d8b41a8b6c08e6a7"
+    },
+    {
+      "url": "https://www.todofp.es/que-estudiar/familias-profesionales/actividades-fisicas-deportivas/ensenanza-animacion-sociodeportiva.html",
+      "retrievedAt": "2026-09-08T13:59:49.262107+00:00",
+      "status": 200,
+      "finalUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/actividades-fisicas-deportivas/ensenanza-animacion-sociodeportiva.html",
+      "contentType": "text/html;charset=UTF-8",
+      "sha256": "d08dbbe8870c2cf733f18e6da438d68a0c06d46906243e5474dbcfbb7a916eb5"
+    },
+    {
+      "url": "https://www.todofp.es/que-estudiar/familias-profesionales/actividades-fisicas-deportivas/guia-medio-natural-tiempo-libre.html",
+      "retrievedAt": "2026-09-08T13:59:50.174723+00:00",
+      "status": 200,
+      "finalUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/actividades-fisicas-deportivas/guia-medio-natural-tiempo-libre.html",
+      "contentType": "text/html;charset=UTF-8",
+      "sha256": "05f57dbdef81eb225a458ea3755db46eb65c575bbb3f7447f62074638541eb95"
+    },
+    {
+      "url": "https://www.todofp.es/que-estudiar/familias-profesionales/administracion-gestion/administracion-finanzas.html",
+      "retrievedAt": "2026-09-08T13:59:51.032565+00:00",
+      "status": 200,
+      "finalUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/administracion-gestion/administracion-finanzas.html",
+      "contentType": "text/html;charset=UTF-8",
+      "sha256": "4149a5792f24a8ca72721c019fbb0e4b713c52b090ee0d351072a50661ad9d5f"
+    },
+    {
+      "url": "https://www.todofp.es/que-estudiar/familias-profesionales/administracion-gestion/asistencia-direccion.html",
+      "retrievedAt": "2026-09-08T13:59:51.358759+00:00",
+      "status": 200,
+      "finalUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/administracion-gestion/asistencia-direccion.html",
+      "contentType": "text/html;charset=UTF-8",
+      "sha256": "c8430a0beb9e5c12bcd135b73a28ae4364377dbbd49cbd4904abe99b8d53d73d"
+    },
+    {
+      "url": "https://www.todofp.es/que-estudiar/familias-profesionales/agraria/agrojardineria-composiciones-florales.html",
+      "retrievedAt": "2026-09-08T13:59:51.653424+00:00",
+      "status": 200,
+      "finalUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/agraria/agrojardineria-composiciones-florales.html",
+      "contentType": "text/html;charset=UTF-8",
+      "sha256": "14871b8934147af349cd57ada5398e99b7bb0531ff3fd064786f244528fde159"
+    },
+    {
+      "url": "https://www.todofp.es/que-estudiar/familias-profesionales/agraria/aprovechamiento-conservacion-medio-natural.html",
+      "retrievedAt": "2026-09-08T13:59:51.800329+00:00",
+      "status": 200,
+      "finalUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/agraria/aprovechamiento-conservacion-medio-natural.html",
+      "contentType": "text/html;charset=UTF-8",
+      "sha256": "4a7433317fefa7a8ebec63ea26e3a4f3dba494d0c8499857dad347b89e2c32aa"
+    },
+    {
+      "url": "https://www.todofp.es/que-estudiar/familias-profesionales/agraria/aprovechamientos-forestales.html",
+      "retrievedAt": "2026-09-08T13:59:51.949600+00:00",
+      "status": 200,
+      "finalUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/agraria/aprovechamientos-forestales.html",
+      "contentType": "text/html;charset=UTF-8",
+      "sha256": "5542c7491c55880d114530f5d3cc2919207b0681d5506aa3f0f0fc95f67ff9c4"
+    },
+    {
+      "url": "https://www.todofp.es/que-estudiar/familias-profesionales/agraria/ganaderia-asistencia-sanidad-animal.html",
+      "retrievedAt": "2026-09-08T13:59:52.033479+00:00",
+      "status": 200,
+      "finalUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/agraria/ganaderia-asistencia-sanidad-animal.html",
+      "contentType": "text/html;charset=UTF-8",
+      "sha256": "37e9ef1a6a91d88edc651ee31eb75a80a55b2e3bb5e8c56c7301f72671ac71bd"
+    },
+    {
+      "url": "https://www.todofp.es/que-estudiar/familias-profesionales/agraria/gestion-forestal-medio-natural.html",
+      "retrievedAt": "2026-09-08T13:59:52.273342+00:00",
+      "status": 200,
+      "finalUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/agraria/gestion-forestal-medio-natural.html",
+      "contentType": "text/html;charset=UTF-8",
+      "sha256": "09180e00c2c060414ee8e2632d1d33a08d126546f4ba6198576522ff2dd52f2f"
+    },
+    {
+      "url": "https://www.todofp.es/que-estudiar/familias-profesionales/agraria/jardineria-floristeria.html",
+      "retrievedAt": "2026-09-08T13:59:52.572273+00:00",
+      "status": 200,
+      "finalUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/agraria/jardineria-floristeria.html",
+      "contentType": "text/html;charset=UTF-8",
+      "sha256": "6d5473904230b40a7f4c0ca831b3827ecbe43b3c325b88d9aa0247b77dd04d19"
+    },
+    {
+      "url": "https://www.todofp.es/que-estudiar/familias-profesionales/agraria/paisajismo-medio-rural.html",
+      "retrievedAt": "2026-09-08T13:59:52.583765+00:00",
+      "status": 200,
+      "finalUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/agraria/paisajismo-medio-rural.html",
+      "contentType": "text/html;charset=UTF-8",
+      "sha256": "7532ef243888b16c23c3288ca7ca96ed44b3ff4cc2452317dcdeeacdc31bfa1e"
+    },
+    {
+      "url": "https://www.todofp.es/que-estudiar/familias-profesionales/artes-graficas/diseno-edicion-public-impresas-multimedia.html",
+      "retrievedAt": "2026-09-08T14:10:19.933675+00:00",
+      "status": 200,
+      "finalUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/artes-graficas/diseno-edicion-public-impresas-multimedia.html",
+      "contentType": "text/html;charset=UTF-8",
+      "sha256": "9c4dbab0783b258cb3c6a0ab2e6838659d1bdd83b95863a7c52c218d8a42f1fd"
+    },
+    {
+      "url": "https://www.todofp.es/que-estudiar/familias-profesionales/artes-graficas/diseno-gestion-produccion-grafica.html",
+      "retrievedAt": "2026-09-08T14:10:19.573173+00:00",
+      "status": 200,
+      "finalUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/artes-graficas/diseno-gestion-produccion-grafica.html",
+      "contentType": "text/html;charset=UTF-8",
+      "sha256": "6cc69ffa338adc697b90c544451f675cf668019a2496f3b2201a0ea2a76faeec"
+    },
+    {
+      "url": "https://www.todofp.es/que-estudiar/familias-profesionales/artes-graficas/preimpresion-digital.html",
+      "retrievedAt": "2026-09-08T13:59:52.797194+00:00",
+      "status": 200,
+      "finalUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/artes-graficas/preimpresion-digital.html",
+      "contentType": "text/html;charset=UTF-8",
+      "sha256": "19ce561994f9c11857cbcc5748035527963f2ea67731a344d9a81bef02b210c5"
+    },
+    {
+      "url": "https://www.todofp.es/que-estudiar/familias-profesionales/comercio-marketing/actividades-comerciales.html",
+      "retrievedAt": "2026-09-08T13:59:52.822258+00:00",
+      "status": 200,
+      "finalUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/comercio-marketing/actividades-comerciales.html",
+      "contentType": "text/html;charset=UTF-8",
+      "sha256": "02bf907810473a1094caf88ef32fdb33ca64effed1fde5410d4bde23ca2ca082"
+    },
+    {
+      "url": "https://www.todofp.es/que-estudiar/familias-profesionales/comercio-marketing/ce-posicionamiento-buscadores-comunicacion-rrss.html",
+      "retrievedAt": "2026-09-08T13:59:53.070179+00:00",
+      "status": 200,
+      "finalUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/comercio-marketing/ce-posicionamiento-buscadores-comunicacion-rrss.html",
+      "contentType": "text/html;charset=UTF-8",
+      "sha256": "c47f1482004e2bcae203d2aed082ef0922a0360a1bc56527e613924c289b5861"
+    },
+    {
+      "url": "https://www.todofp.es/que-estudiar/familias-profesionales/comercio-marketing/gestion-ventas-espacios-comerciales.html",
+      "retrievedAt": "2026-09-08T13:59:53.070179+00:00",
+      "status": 200,
+      "finalUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/comercio-marketing/gestion-ventas-espacios-comerciales.html",
+      "contentType": "text/html;charset=UTF-8",
+      "sha256": "3e19355c85ba34f800fefe36c75b4995da8b7e7be22b7fbcbdbf03a847fe612d"
+    },
+    {
+      "url": "https://www.todofp.es/que-estudiar/familias-profesionales/comercio-marketing/marketing-publicidad.html",
+      "retrievedAt": "2026-09-08T14:10:21.552867+00:00",
+      "status": 200,
+      "finalUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/comercio-marketing/marketing-publicidad.html",
+      "contentType": "text/html;charset=UTF-8",
+      "sha256": "992eb2d978f4fa8c6fc06cc5186ab028645a293c972e0dac8ad0707cdf71ec94"
+    },
+    {
+      "url": "https://www.todofp.es/que-estudiar/familias-profesionales/comercio-marketing/servicios-comerciales.html",
+      "retrievedAt": "2026-09-08T14:13:28.048301+00:00",
+      "status": 200,
+      "finalUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/comercio-marketing/servicios-comerciales.html",
+      "contentType": "text/html;charset=UTF-8",
+      "sha256": "284c961ae61b1151657600a0205189c5507b410b079ba50a5262c15f1dcbb231"
+    },
+    {
+      "url": "https://www.todofp.es/que-estudiar/familias-profesionales/comercio-marketing/transporte-logistica.html",
+      "retrievedAt": "2026-09-08T13:59:53.297123+00:00",
+      "status": 200,
+      "finalUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/comercio-marketing/transporte-logistica.html",
+      "contentType": "text/html;charset=UTF-8",
+      "sha256": "f1da6eb6e687ca0dd92906ef0183c1d01287808c945971d0331d7916ece98afc"
+    },
+    {
+      "url": "https://www.todofp.es/que-estudiar/familias-profesionales/edificacion-obra-civil/obras-interior-decoracion-rehabilitacion.html",
+      "retrievedAt": "2026-09-08T13:59:53.357050+00:00",
+      "status": 200,
+      "finalUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/edificacion-obra-civil/obras-interior-decoracion-rehabilitacion.html",
+      "contentType": "text/html;charset=UTF-8",
+      "sha256": "d6a09fdb19a1b576a95a0557caaed01ae546fb5d04378da9c9b0d427b0f60329"
+    },
+    {
+      "url": "https://www.todofp.es/que-estudiar/familias-profesionales/edificacion-obra-civil/proyectos-edificacion.html",
+      "retrievedAt": "2026-09-08T14:10:21.795334+00:00",
+      "status": 200,
+      "finalUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/edificacion-obra-civil/proyectos-edificacion.html",
+      "contentType": "text/html;charset=UTF-8",
+      "sha256": "110bac4cbf77c547995c9bcba0c25a3321d1fcc461e503d6201226459cfcace1"
+    },
+    {
+      "url": "https://www.todofp.es/que-estudiar/familias-profesionales/edificacion-obra-civil/proyectos-obra-civil.html",
+      "retrievedAt": "2026-09-08T13:59:53.566226+00:00",
+      "status": 200,
+      "finalUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/edificacion-obra-civil/proyectos-obra-civil.html",
+      "contentType": "text/html;charset=UTF-8",
+      "sha256": "b611ffaffc4862b5709277d7ed49b294ab0da89635273087edbe436afc57f841"
+    },
+    {
+      "url": "https://www.todofp.es/que-estudiar/familias-profesionales/edificacion-obra-civil/reforma-mantenimiento-edificios.html",
+      "retrievedAt": "2026-09-08T13:59:53.627241+00:00",
+      "status": 200,
+      "finalUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/edificacion-obra-civil/reforma-mantenimiento-edificios.html",
+      "contentType": "text/html;charset=UTF-8",
+      "sha256": "11ca1b748530a1999348abf0bacb3753fe25b1f9806a40e0178c969f5db1b22c"
+    },
+    {
+      "url": "https://www.todofp.es/que-estudiar/familias-profesionales/electricidad-electronica/ce-ciberseguridad-tecnologias-operacion.html",
+      "retrievedAt": "2026-09-08T13:59:53.652859+00:00",
+      "status": 200,
+      "finalUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/electricidad-electronica/ce-ciberseguridad-tecnologias-operacion.html",
+      "contentType": "text/html;charset=UTF-8",
+      "sha256": "82b9619e60cf39b315a3cd33198e93afbdac23f4e38d1ab939007784201ce5d5"
+    },
+    {
+      "url": "https://www.todofp.es/que-estudiar/familias-profesionales/electricidad-electronica/ce-instalacion-mto-sitemas-conectados-internet.html",
+      "retrievedAt": "2026-09-08T14:10:19.957225+00:00",
+      "status": 200,
+      "finalUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/electricidad-electronica/ce-instalacion-mto-sitemas-conectados-internet.html",
+      "contentType": "text/html;charset=UTF-8",
+      "sha256": "01144143718ab4162e5284630596c9b756cbfccd6e4429b920c5a314813c834f"
+    },
+    {
+      "url": "https://www.todofp.es/que-estudiar/familias-profesionales/electricidad-electronica/ce-robotica-colaborativa.html",
+      "retrievedAt": "2026-09-08T14:10:22.665768+00:00",
+      "status": 200,
+      "finalUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/electricidad-electronica/ce-robotica-colaborativa.html",
+      "contentType": "text/html;charset=UTF-8",
+      "sha256": "0f3d3372f8db39db3a3b836eba87ccac5c9180c9f014589833808d99748d7a63"
+    },
+    {
+      "url": "https://www.todofp.es/que-estudiar/familias-profesionales/electricidad-electronica/electromedicina-clinica.html",
+      "retrievedAt": "2026-09-08T13:59:54.157370+00:00",
+      "status": 200,
+      "finalUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/electricidad-electronica/electromedicina-clinica.html",
+      "contentType": "text/html;charset=UTF-8",
+      "sha256": "b81665f1fedb5e5104e37e77f866e5d1632c46f189b1bf82531911782bb71ba7"
+    },
+    {
+      "url": "https://www.todofp.es/que-estudiar/familias-profesionales/electricidad-electronica/mantenimiento-electronico.html",
+      "retrievedAt": "2026-09-08T14:13:27.709719+00:00",
+      "status": 200,
+      "finalUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/electricidad-electronica/mantenimiento-electronico.html",
+      "contentType": "text/html;charset=UTF-8",
+      "sha256": "d8c0c58938ce7cc219b8afd597d29621ff418219675aa55c55228d305d7ef492"
+    },
+    {
+      "url": "https://www.todofp.es/que-estudiar/familias-profesionales/electricidad-electronica/sistemas-electrotecnicos-automatizados.html",
+      "retrievedAt": "2026-09-08T13:59:54.171507+00:00",
+      "status": 200,
+      "finalUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/electricidad-electronica/sistemas-electrotecnicos-automatizados.html",
+      "contentType": "text/html;charset=UTF-8",
+      "sha256": "5f8264caaecebcd4c3938bf4acdae04c36ffaf5b0128dc3cc072a710fcf66355"
+    },
+    {
+      "url": "https://www.todofp.es/que-estudiar/familias-profesionales/electricidad-electronica/sistemas-telecomunicaciones-informaticos.html",
+      "retrievedAt": "2026-09-08T13:59:54.234197+00:00",
+      "status": 200,
+      "finalUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/electricidad-electronica/sistemas-telecomunicaciones-informaticos.html",
+      "contentType": "text/html;charset=UTF-8",
+      "sha256": "7fffe4cc30db18400524f38651a4213e507e3af2702f7f797fd6cba0324cd812"
+    },
+    {
+      "url": "https://www.todofp.es/que-estudiar/familias-profesionales/energia-agua/centrales-electricas.html",
+      "retrievedAt": "2026-09-08T13:59:54.465251+00:00",
+      "status": 200,
+      "finalUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/energia-agua/centrales-electricas.html",
+      "contentType": "text/html;charset=UTF-8",
+      "sha256": "5d653423afac48b4ef501f73c4f3991f51136f38facd4af71438898d11c23b4c"
+    },
+    {
+      "url": "https://www.todofp.es/que-estudiar/familias-profesionales/energia-agua/eficiencia-energetica-solar-termica.html",
+      "retrievedAt": "2026-09-08T14:10:20.059638+00:00",
+      "status": 200,
+      "finalUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/energia-agua/eficiencia-energetica-solar-termica.html",
+      "contentType": "text/html;charset=UTF-8",
+      "sha256": "0ff91beab4514ccbcda12df4114b0242cc21009f410c9e7b3c111e98f642b0b9"
+    },
+    {
+      "url": "https://www.todofp.es/que-estudiar/familias-profesionales/energia-agua/energias-renovables.html",
+      "retrievedAt": "2026-09-08T13:59:54.530766+00:00",
+      "status": 200,
+      "finalUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/energia-agua/energias-renovables.html",
+      "contentType": "text/html;charset=UTF-8",
+      "sha256": "7aae0122b6d9d092ef74f9cf4fc7263203832e089836c6bedfad96830bc6b5d1"
+    },
+    {
+      "url": "https://www.todofp.es/que-estudiar/familias-profesionales/energia-agua/gestion-agua.html",
+      "retrievedAt": "2026-09-08T13:59:54.733458+00:00",
+      "status": 200,
+      "finalUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/energia-agua/gestion-agua.html",
+      "contentType": "text/html;charset=UTF-8",
+      "sha256": "3a71f1de5475e627fe5644a9093d1cd1ebdee1a959b9dfad0beb779671c7f6cf"
+    },
+    {
+      "url": "https://www.todofp.es/que-estudiar/familias-profesionales/fabricacion-mecanica/ce-fabricacion-aditiva.html",
+      "retrievedAt": "2026-09-08T13:59:54.791284+00:00",
+      "status": 200,
+      "finalUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/fabricacion-mecanica/ce-fabricacion-aditiva.html",
+      "contentType": "text/html;charset=UTF-8",
+      "sha256": "52818eb49615df3c01cef5f6ee8c9904b8d5b4f8c6170a18d4aa2e5e5c322e89"
+    },
+    {
+      "url": "https://www.todofp.es/que-estudiar/familias-profesionales/fabricacion-mecanica/conformado-moldeo-metales-polimeros.html",
+      "retrievedAt": "2026-09-08T14:10:20.165336+00:00",
+      "status": 200,
+      "finalUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/fabricacion-mecanica/conformado-moldeo-metales-polimeros.html",
+      "contentType": "text/html;charset=UTF-8",
+      "sha256": "c42b3d6d28022c1a1526dda988de1dadb2076dd48ab89eff2dcba16f548c6ad8"
+    },
+    {
+      "url": "https://www.todofp.es/que-estudiar/familias-profesionales/fabricacion-mecanica/construcciones-metalicas.html",
+      "retrievedAt": "2026-09-08T13:59:55.031094+00:00",
+      "status": 200,
+      "finalUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/fabricacion-mecanica/construcciones-metalicas.html",
+      "contentType": "text/html;charset=UTF-8",
+      "sha256": "862193d30f0a040a65f6b69034951334fa527a0ec87e2838ae73614a5226a4f3"
+    },
+    {
+      "url": "https://www.todofp.es/que-estudiar/familias-profesionales/fabricacion-mecanica/diseno-fabricacion-mecanica.html",
+      "retrievedAt": "2026-09-08T13:59:55.077883+00:00",
+      "status": 200,
+      "finalUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/fabricacion-mecanica/diseno-fabricacion-mecanica.html",
+      "contentType": "text/html;charset=UTF-8",
+      "sha256": "62578bd0301df30faf721dce56219abc0f4d25ceb5dafd4134229bdbc474f56c"
+    },
+    {
+      "url": "https://www.todofp.es/que-estudiar/familias-profesionales/fabricacion-mecanica/fabricacion-elementos-metalicos.html",
+      "retrievedAt": "2026-09-08T13:59:55.305318+00:00",
+      "status": 200,
+      "finalUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/fabricacion-mecanica/fabricacion-elementos-metalicos.html",
+      "contentType": "text/html;charset=UTF-8",
+      "sha256": "df5f32f19a0d94ee0a835ce6a1413c914232967b3fd2c4e17a8eacf4f1c8054c"
+    },
+    {
+      "url": "https://www.todofp.es/que-estudiar/familias-profesionales/fabricacion-mecanica/programacion-produccion-fab-mecanica.html",
+      "retrievedAt": "2026-09-08T13:59:55.333113+00:00",
+      "status": 200,
+      "finalUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/fabricacion-mecanica/programacion-produccion-fab-mecanica.html",
+      "contentType": "text/html;charset=UTF-8",
+      "sha256": "850e97e789deaf81643c554a608e33d07b7b896a905f4257e302c6524d7f8d08"
+    },
+    {
+      "url": "https://www.todofp.es/que-estudiar/familias-profesionales/fabricacion-mecanica/soldadura-caldereria.html",
+      "retrievedAt": "2026-09-08T14:24:28.430559+00:00",
+      "status": 200,
+      "finalUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/fabricacion-mecanica/soldadura-caldereria.html",
+      "contentType": "text/html;charset=UTF-8",
+      "sha256": "d5f983c9f4350c1f0d04b8eca65a1aa650dd97364f0927e42797cfe4cfaeb7c3"
+    },
+    {
+      "url": "https://www.todofp.es/que-estudiar/familias-profesionales/hosteleria-turismo/agencias-viajes-gestion-eventos.html",
+      "retrievedAt": "2026-09-08T13:59:55.548370+00:00",
+      "status": 200,
+      "finalUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/hosteleria-turismo/agencias-viajes-gestion-eventos.html",
+      "contentType": "text/html;charset=UTF-8",
+      "sha256": "5ee9530a6945bc2252fcad05150de8b1b82e714f9508386ea057774eb6479029"
+    },
+    {
+      "url": "https://www.todofp.es/que-estudiar/familias-profesionales/hosteleria-turismo/alojamiento-lavanderia.html",
+      "retrievedAt": "2026-09-08T14:10:20.224252+00:00",
+      "status": 200,
+      "finalUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/hosteleria-turismo/alojamiento-lavanderia.html",
+      "contentType": "text/html;charset=UTF-8",
+      "sha256": "786433354cf933dbc40246a30b2d31a9992ee5931cd40e8ad2e8f0fe360cd64c"
+    },
+    {
+      "url": "https://www.todofp.es/que-estudiar/familias-profesionales/hosteleria-turismo/ce-panaderia-bolleria-artesanal.html",
+      "retrievedAt": "2026-09-08T14:10:22.047625+00:00",
+      "status": 200,
+      "finalUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/hosteleria-turismo/ce-panaderia-bolleria-artesanal.html",
+      "contentType": "text/html;charset=UTF-8",
+      "sha256": "dbad2adafa64ccc74a515684565cec49a1c3a8904aaf206705baaa34547b76c7"
+    },
+    {
+      "url": "https://www.todofp.es/que-estudiar/familias-profesionales/hosteleria-turismo/direccion-cocina.html",
+      "retrievedAt": "2026-09-08T13:59:55.591408+00:00",
+      "status": 200,
+      "finalUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/hosteleria-turismo/direccion-cocina.html",
+      "contentType": "text/html;charset=UTF-8",
+      "sha256": "e61af58e320319be9592b76ad908cb50220799b8fdce678e956a2d87d3b3996c"
+    },
+    {
+      "url": "https://www.todofp.es/que-estudiar/familias-profesionales/hosteleria-turismo/direccion-servicios-restauracion.html",
+      "retrievedAt": "2026-09-08T13:59:55.837424+00:00",
+      "status": 200,
+      "finalUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/hosteleria-turismo/direccion-servicios-restauracion.html",
+      "contentType": "text/html;charset=UTF-8",
+      "sha256": "7875cca5d236a8b8a00af4a1b07c82549ef8de14a73b5d464e62335dc5d5cf9a"
+    },
+    {
+      "url": "https://www.todofp.es/que-estudiar/familias-profesionales/hosteleria-turismo/gestion-alojamientos-turisticos.html",
+      "retrievedAt": "2026-09-08T13:59:56.088648+00:00",
+      "status": 200,
+      "finalUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/hosteleria-turismo/gestion-alojamientos-turisticos.html",
+      "contentType": "text/html;charset=UTF-8",
+      "sha256": "457c6fc1c37ec8b35363c3638de9b14dd168898348fdb28399e243097ead0d34"
+    },
+    {
+      "url": "https://www.todofp.es/que-estudiar/familias-profesionales/hosteleria-turismo/guia-informacion-asistencias-turisticas.html",
+      "retrievedAt": "2026-09-08T13:59:56.118140+00:00",
+      "status": 200,
+      "finalUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/hosteleria-turismo/guia-informacion-asistencias-turisticas.html",
+      "contentType": "text/html;charset=UTF-8",
+      "sha256": "d0ee57212652d438f3dec5f6327b9a675a1fc84b4d9d194c619b3cbcd5fca41e"
+    },
+    {
+      "url": "https://www.todofp.es/que-estudiar/familias-profesionales/hosteleria-turismo/servicios-restauracion.html",
+      "retrievedAt": "2026-09-08T13:59:56.224904+00:00",
+      "status": 200,
+      "finalUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/hosteleria-turismo/servicios-restauracion.html",
+      "contentType": "text/html;charset=UTF-8",
+      "sha256": "b0427ba9527e271af12af6d7cb6be116445f614d9aedb5d0f0800721d39624ab"
+    },
+    {
+      "url": "https://www.todofp.es/que-estudiar/familias-profesionales/imagen-personal/asesoria-imagen-personal-corporativa.html",
+      "retrievedAt": "2026-09-08T14:10:20.829936+00:00",
+      "status": 200,
+      "finalUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/imagen-personal/asesoria-imagen-personal-corporativa.html",
+      "contentType": "text/html;charset=UTF-8",
+      "sha256": "f3793ec5ed6e08fe4ea65efa5d180a2c3d9959c2fb6b0e64994d9c669d82dceb"
+    },
+    {
+      "url": "https://www.todofp.es/que-estudiar/familias-profesionales/imagen-personal/caracterizacion-maquillaje-profesional.html",
+      "retrievedAt": "2026-09-08T14:10:20.837537+00:00",
+      "status": 200,
+      "finalUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/imagen-personal/caracterizacion-maquillaje-profesional.html",
+      "contentType": "text/html;charset=UTF-8",
+      "sha256": "f77ac3065d5ff5f59d18261dfc30fe43781782f7f632195dc7d9e4db952ade96"
+    },
+    {
+      "url": "https://www.todofp.es/que-estudiar/familias-profesionales/imagen-personal/estetica-belleza.html",
+      "retrievedAt": "2026-09-08T13:59:56.380770+00:00",
+      "status": 200,
+      "finalUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/imagen-personal/estetica-belleza.html",
+      "contentType": "text/html;charset=UTF-8",
+      "sha256": "33cae071890aaa6a5a148bde8c8e26e42fbc90156c6c4fa7bdea45b52ba5a2fb"
+    },
+    {
+      "url": "https://www.todofp.es/que-estudiar/familias-profesionales/imagen-personal/estetica-integral-bienestar.html",
+      "retrievedAt": "2026-09-08T13:59:56.484579+00:00",
+      "status": 200,
+      "finalUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/imagen-personal/estetica-integral-bienestar.html",
+      "contentType": "text/html;charset=UTF-8",
+      "sha256": "92886beb4b4846f1e700ced39c71a65c1b157f4fefe8496d3f22f76c2fed0476"
+    },
+    {
+      "url": "https://www.todofp.es/que-estudiar/familias-profesionales/imagen-personal/peluqueria-cosmetica-capilar.html",
+      "retrievedAt": "2026-09-08T13:59:56.570256+00:00",
+      "status": 200,
+      "finalUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/imagen-personal/peluqueria-cosmetica-capilar.html",
+      "contentType": "text/html;charset=UTF-8",
+      "sha256": "7f980411a1712f570833f986814568bfe6a8fdf64edd3f3860d3a647d86318c2"
+    },
+    {
+      "url": "https://www.todofp.es/que-estudiar/familias-profesionales/imagen-personal/peluqueria-estetica.html",
+      "retrievedAt": "2026-09-08T13:59:56.633157+00:00",
+      "status": 200,
+      "finalUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/imagen-personal/peluqueria-estetica.html",
+      "contentType": "text/html;charset=UTF-8",
+      "sha256": "fb229374bcfbd1e902438def60ca9a7fc9809bffc7232229bca1cb0a31225e1a"
+    },
+    {
+      "url": "https://www.todofp.es/que-estudiar/familias-profesionales/imagen-sonido/animaciones3d-juegos-entornos-interactivos.html",
+      "retrievedAt": "2026-09-08T13:59:56.658204+00:00",
+      "status": 200,
+      "finalUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/imagen-sonido/animaciones3d-juegos-entornos-interactivos.html",
+      "contentType": "text/html;charset=UTF-8",
+      "sha256": "6e6d3ca3b56823a474626f8aaf6217f485c75ea597e99ee0a4f656de7aa56051"
+    },
+    {
+      "url": "https://www.todofp.es/que-estudiar/familias-profesionales/imagen-sonido/ce-audiodescripcion-subtitulacion.html",
+      "retrievedAt": "2026-09-08T13:59:56.716549+00:00",
+      "status": 200,
+      "finalUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/imagen-sonido/ce-audiodescripcion-subtitulacion.html",
+      "contentType": "text/html;charset=UTF-8",
+      "sha256": "28605809258b8068a23c06ad6dff6f7c5b320b07b27a861abc186f2fff538886"
+    },
+    {
+      "url": "https://www.todofp.es/que-estudiar/familias-profesionales/imagen-sonido/iluminacion-captacion-tratamiento-imagen.html",
+      "retrievedAt": "2026-09-08T14:10:22.557936+00:00",
+      "status": 200,
+      "finalUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/imagen-sonido/iluminacion-captacion-tratamiento-imagen.html",
+      "contentType": "text/html;charset=UTF-8",
+      "sha256": "403a7f82086be260f66b3004ba26d061a9f1bc0fee2fa143fad154d8ad09e8ef"
+    },
+    {
+      "url": "https://www.todofp.es/que-estudiar/familias-profesionales/imagen-sonido/produccion-audiovisuales-espectaculos.html",
+      "retrievedAt": "2026-09-08T14:10:22.881869+00:00",
+      "status": 200,
+      "finalUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/imagen-sonido/produccion-audiovisuales-espectaculos.html",
+      "contentType": "text/html;charset=UTF-8",
+      "sha256": "9f541dcaba5ba1b3cd7d47d75d22273bb69754ba31b2d7c089bf97942a128a7d"
+    },
+    {
+      "url": "https://www.todofp.es/que-estudiar/familias-profesionales/imagen-sonido/realizacion-proy-audiovisuales-espectaculos.html",
+      "retrievedAt": "2026-09-08T14:10:22.324509+00:00",
+      "status": 200,
+      "finalUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/imagen-sonido/realizacion-proy-audiovisuales-espectaculos.html",
+      "contentType": "text/html;charset=UTF-8",
+      "sha256": "a26dc93b0c099a66cead589179cb5a977d6ee0fd947ae1ed7ee8bd28b4ab7412"
+    },
+    {
+      "url": "https://www.todofp.es/que-estudiar/familias-profesionales/imagen-sonido/sonido-audiovisuales-espectaculos.html",
+      "retrievedAt": "2026-09-08T13:59:56.896540+00:00",
+      "status": 200,
+      "finalUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/imagen-sonido/sonido-audiovisuales-espectaculos.html",
+      "contentType": "text/html;charset=UTF-8",
+      "sha256": "189efbc7db39ed88a1bb3b5ad70fe977fdbc1bc658f2a108def76a592c4bede3"
+    },
+    {
+      "url": "https://www.todofp.es/que-estudiar/familias-profesionales/imagen-sonido/video-discjockey-sonido.html",
+      "retrievedAt": "2026-09-08T14:10:22.031936+00:00",
+      "status": 200,
+      "finalUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/imagen-sonido/video-discjockey-sonido.html",
+      "contentType": "text/html;charset=UTF-8",
+      "sha256": "a4cfdf93356b349c8768b609160270eeeea3d60f6b82651f6c73af704a9f5faf"
+    },
+    {
+      "url": "https://www.todofp.es/que-estudiar/familias-profesionales/industrias-alimentarias/aceites-oliva-vinos.html",
+      "retrievedAt": "2026-09-08T13:59:56.986679+00:00",
+      "status": 200,
+      "finalUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/industrias-alimentarias/aceites-oliva-vinos.html",
+      "contentType": "text/html;charset=UTF-8",
+      "sha256": "aab4f2006142b96694459b6cc173a2d3c9f9ea9ec21a1086662520da449769dd"
+    },
+    {
+      "url": "https://www.todofp.es/que-estudiar/familias-profesionales/industrias-alimentarias/actividades-panaderia-pasteleria.html",
+      "retrievedAt": "2026-09-08T14:10:20.903335+00:00",
+      "status": 200,
+      "finalUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/industrias-alimentarias/actividades-panaderia-pasteleria.html",
+      "contentType": "text/html;charset=UTF-8",
+      "sha256": "72743964a0420de843e99e84363d0b4c3f51809de6f94ccb295343e4943224f7"
+    },
+    {
+      "url": "https://www.todofp.es/que-estudiar/familias-profesionales/industrias-alimentarias/elaboracion-productos-alimenticios.html",
+      "retrievedAt": "2026-09-08T13:59:57.112582+00:00",
+      "status": 200,
+      "finalUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/industrias-alimentarias/elaboracion-productos-alimenticios.html",
+      "contentType": "text/html;charset=UTF-8",
+      "sha256": "e547836644ec56cb24dc274ce3d5a5470cc9fafaf34e7ee18c6fe50831635a03"
+    },
+    {
+      "url": "https://www.todofp.es/que-estudiar/familias-profesionales/industrias-alimentarias/industrias-alimentarias.html",
+      "retrievedAt": "2026-09-08T14:10:20.919074+00:00",
+      "status": 200,
+      "finalUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/industrias-alimentarias/industrias-alimentarias.html",
+      "contentType": "text/html;charset=UTF-8",
+      "sha256": "4025eb5111ddf216673bee0701b1e3a1a854e069cd982a8d7752f851f1f379c0"
+    },
+    {
+      "url": "https://www.todofp.es/que-estudiar/familias-profesionales/industrias-alimentarias/panaderia-reposteria-confiteria.html",
+      "retrievedAt": "2026-09-08T14:10:21.808945+00:00",
+      "status": 200,
+      "finalUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/industrias-alimentarias/panaderia-reposteria-confiteria.html",
+      "contentType": "text/html;charset=UTF-8",
+      "sha256": "cbae43770658429e1771e607cd185e23c2b471e54cdefb93dd6dd829d71a73ef"
+    },
+    {
+      "url": "https://www.todofp.es/que-estudiar/familias-profesionales/industrias-alimentarias/procesos-calidad-industria-alimentaria.html",
+      "retrievedAt": "2026-09-08T13:59:57.220978+00:00",
+      "status": 200,
+      "finalUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/industrias-alimentarias/procesos-calidad-industria-alimentaria.html",
+      "contentType": "text/html;charset=UTF-8",
+      "sha256": "dae5b691f4c4617531abe58ea656554941efd68a1d18eefd938c1db43e84fcb0"
+    },
+    {
+      "url": "https://www.todofp.es/que-estudiar/familias-profesionales/industrias-alimentarias/vitivinicultura.html",
+      "retrievedAt": "2026-09-08T13:59:57.322887+00:00",
+      "status": 200,
+      "finalUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/industrias-alimentarias/vitivinicultura.html",
+      "contentType": "text/html;charset=UTF-8",
+      "sha256": "a2a9b7fc691de60dd3148c7354b0c35d5ee60a47f36d25e22e204c3dec7b76ef"
+    },
+    {
+      "url": "https://www.todofp.es/que-estudiar/familias-profesionales/informatica-comunicaciones/admin-sist-informaticos-red.html",
+      "retrievedAt": "2026-09-08T13:59:57.364803+00:00",
+      "status": 200,
+      "finalUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/informatica-comunicaciones/admin-sist-informaticos-red.html",
+      "contentType": "text/html;charset=UTF-8",
+      "sha256": "c11053c6f6799bdfa27cecbc6fd002f5472646c68b3550be1c90dc46d4b6d93d"
+    },
+    {
+      "url": "https://www.todofp.es/que-estudiar/familias-profesionales/informatica-comunicaciones/ce-ciberseguridad-entornos-tecnologias-informacion.html",
+      "retrievedAt": "2026-09-08T14:10:22.295752+00:00",
+      "status": 200,
+      "finalUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/informatica-comunicaciones/ce-ciberseguridad-entornos-tecnologias-informacion.html",
+      "contentType": "text/html;charset=UTF-8",
+      "sha256": "226d8d30900d50156c1006c5eacfeeed4a6a77c90e1b1a6dbe90bd6bd619f818"
+    },
+    {
+      "url": "https://www.todofp.es/que-estudiar/familias-profesionales/informatica-comunicaciones/ce-desarrollo-videojuegos-realidad-virtual.html",
+      "retrievedAt": "2026-09-08T14:10:20.461898+00:00",
+      "status": 200,
+      "finalUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/informatica-comunicaciones/ce-desarrollo-videojuegos-realidad-virtual.html",
+      "contentType": "text/html;charset=UTF-8",
+      "sha256": "e08722faa5629378c11889f30fda72af954a421136a3eeec1c67cb7300389804"
+    },
+    {
+      "url": "https://www.todofp.es/que-estudiar/familias-profesionales/informatica-comunicaciones/ce-inteligencia-artificial-bigdata.html",
+      "retrievedAt": "2026-09-08T14:10:18.860781+00:00",
+      "status": 200,
+      "finalUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/informatica-comunicaciones/ce-inteligencia-artificial-bigdata.html",
+      "contentType": "text/html;charset=UTF-8",
+      "sha256": "4adb3616429be0792a5f89bda545880ae8e98887ebf760f3ddb7e9ae5a064fb2"
+    },
+    {
+      "url": "https://www.todofp.es/que-estudiar/familias-profesionales/informatica-comunicaciones/des-aplicaciones-multiplataforma.html",
+      "retrievedAt": "2026-09-08T13:59:57.439336+00:00",
+      "status": 200,
+      "finalUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/informatica-comunicaciones/des-aplicaciones-multiplataforma.html",
+      "contentType": "text/html;charset=UTF-8",
+      "sha256": "c3353bb1f3f553193335a58655fa55a054ef50f92f25ff3c06e7ccee67ddc503"
+    },
+    {
+      "url": "https://www.todofp.es/que-estudiar/familias-profesionales/informatica-comunicaciones/informatica-comunicaciones.html",
+      "retrievedAt": "2026-09-08T13:59:57.554976+00:00",
+      "status": 200,
+      "finalUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/informatica-comunicaciones/informatica-comunicaciones.html",
+      "contentType": "text/html;charset=UTF-8",
+      "sha256": "721711c1086b86b725f767b0bca6005c4e46d768d0c35caab3cc3ff21a023cb6"
+    },
+    {
+      "url": "https://www.todofp.es/que-estudiar/familias-profesionales/informatica-comunicaciones/informatica-oficina.html",
+      "retrievedAt": "2026-09-08T13:59:57.696196+00:00",
+      "status": 200,
+      "finalUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/informatica-comunicaciones/informatica-oficina.html",
+      "contentType": "text/html;charset=UTF-8",
+      "sha256": "5372e0021804f47740e8d8b04357afc6f26a60d921f5e06e7ca77dfc64635063"
+    },
+    {
+      "url": "https://www.todofp.es/que-estudiar/familias-profesionales/informatica-comunicaciones/sistemas-microniformaticos-redes.html",
+      "retrievedAt": "2026-09-08T13:59:57.829998+00:00",
+      "status": 200,
+      "finalUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/informatica-comunicaciones/sistemas-microniformaticos-redes.html",
+      "contentType": "text/html;charset=UTF-8",
+      "sha256": "fa94dfa713ffbb37f372b060208ca04a0b650a3946fd280935fcbd81e328e74b"
+    },
+    {
+      "url": "https://www.todofp.es/que-estudiar/familias-profesionales/instalacion-mantenimiento/ce-digita-mante-industrial.html",
+      "retrievedAt": "2026-09-08T14:10:20.502494+00:00",
+      "status": 200,
+      "finalUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/instalacion-mantenimiento/ce-digita-mante-industrial.html",
+      "contentType": "text/html;charset=UTF-8",
+      "sha256": "5d72f264819e8a38b75175751034872d2c21d0bbc84f3eaef3eb0b0761bfbc5e"
+    },
+    {
+      "url": "https://www.todofp.es/que-estudiar/familias-profesionales/instalacion-mantenimiento/ce-fabricacion-inteligente.html",
+      "retrievedAt": "2026-09-08T14:10:20.565376+00:00",
+      "status": 200,
+      "finalUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/instalacion-mantenimiento/ce-fabricacion-inteligente.html",
+      "contentType": "text/html;charset=UTF-8",
+      "sha256": "78ac1e4e3bbc333805e4c7d3794ad9c8b034b7ab7439cd12d69d98c04d9a2988"
+    },
+    {
+      "url": "https://www.todofp.es/que-estudiar/familias-profesionales/instalacion-mantenimiento/ce-modelado-informacion-construccion.html",
+      "retrievedAt": "2026-09-08T14:10:20.749298+00:00",
+      "status": 200,
+      "finalUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/instalacion-mantenimiento/ce-modelado-informacion-construccion.html",
+      "contentType": "text/html;charset=UTF-8",
+      "sha256": "9880dfe1011d7379ee2b24a94163cd0530296fe80357eed8ad7d117c754a8606"
+    },
+    {
+      "url": "https://www.todofp.es/que-estudiar/familias-profesionales/instalacion-mantenimiento/instalaciones-frigorificas-climatizacion.html",
+      "retrievedAt": "2026-09-08T14:24:28.528734+00:00",
+      "status": 200,
+      "finalUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/instalacion-mantenimiento/instalaciones-frigorificas-climatizacion.html",
+      "contentType": "text/html;charset=UTF-8",
+      "sha256": "af4efec4cc0ba2e83c9e8c4aa7dd8eca368bd10b7914f4e05dff182008ccd4aa"
+    },
+    {
+      "url": "https://www.todofp.es/que-estudiar/familias-profesionales/instalacion-mantenimiento/instalaciones-produccion-calor.html",
+      "retrievedAt": "2026-09-08T13:59:57.977533+00:00",
+      "status": 200,
+      "finalUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/instalacion-mantenimiento/instalaciones-produccion-calor.html",
+      "contentType": "text/html;charset=UTF-8",
+      "sha256": "a717a3def8ec05a3bc186c6ade3f8812f30ee815a21793fa8fd4a7a23e75fdf5"
+    },
+    {
+      "url": "https://www.todofp.es/que-estudiar/familias-profesionales/instalacion-mantenimiento/mnto-inst-termicas-fluidos.html",
+      "retrievedAt": "2026-09-08T13:59:58.099426+00:00",
+      "status": 200,
+      "finalUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/instalacion-mantenimiento/mnto-inst-termicas-fluidos.html",
+      "contentType": "text/html;charset=UTF-8",
+      "sha256": "fe7e457934b333d5ec46e56ef8537762cc36ce377ab691131346e3f511ab1bd9"
+    },
+    {
+      "url": "https://www.todofp.es/que-estudiar/familias-profesionales/madera-mueble-corcho/carpinteria-mueble.html",
+      "retrievedAt": "2026-09-08T13:59:58.215968+00:00",
+      "status": 200,
+      "finalUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/madera-mueble-corcho/carpinteria-mueble.html",
+      "contentType": "text/html;charset=UTF-8",
+      "sha256": "8e5551c39cbfcec0f0a84c6178c4fdd828c4c80b45be6b12fe3e5a6739e3ad47"
+    },
+    {
+      "url": "https://www.todofp.es/que-estudiar/familias-profesionales/madera-mueble-corcho/diseno-amueblamiento.html",
+      "retrievedAt": "2026-09-08T14:10:18.861778+00:00",
+      "status": 200,
+      "finalUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/madera-mueble-corcho/diseno-amueblamiento.html",
+      "contentType": "text/html;charset=UTF-8",
+      "sha256": "8a80783d7496c8485adbeae5f3f200c07006eadae0a3038b4b399871b0245567"
+    },
+    {
+      "url": "https://www.todofp.es/que-estudiar/familias-profesionales/madera-mueble-corcho/fpb-carpinteria-mueble.html",
+      "retrievedAt": "2026-09-08T13:59:58.352620+00:00",
+      "status": 200,
+      "finalUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/madera-mueble-corcho/fpb-carpinteria-mueble.html",
+      "contentType": "text/html;charset=UTF-8",
+      "sha256": "0665333f7632dafc201a8ebe67aabdd2645ba1fc4ea4764bb5f94964a465807c"
+    },
+    {
+      "url": "https://www.todofp.es/que-estudiar/familias-profesionales/madera-mueble-corcho/instalacion-amueblamiento.html",
+      "retrievedAt": "2026-09-08T13:59:58.721009+00:00",
+      "status": 200,
+      "finalUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/madera-mueble-corcho/instalacion-amueblamiento.html",
+      "contentType": "text/html;charset=UTF-8",
+      "sha256": "5e8ee9e0f4a1483166af1d18c458d5b25c09492b874f2bad3f7764109b137c8b"
+    },
+    {
+      "url": "https://www.todofp.es/que-estudiar/familias-profesionales/quimica/ce-cultivos-celulares.html",
+      "retrievedAt": "2026-09-08T13:59:58.722014+00:00",
+      "status": 200,
+      "finalUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/quimica/ce-cultivos-celulares.html",
+      "contentType": "text/html;charset=UTF-8",
+      "sha256": "6b44d6e50a97b882da1590992887a3252be63093247994a8e95bc0b93688b168"
+    },
+    {
+      "url": "https://www.todofp.es/que-estudiar/familias-profesionales/quimica/fab-prod-farmaceuticos-biotec-afines.html",
+      "retrievedAt": "2026-09-08T14:10:18.992176+00:00",
+      "status": 200,
+      "finalUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/quimica/fab-prod-farmaceuticos-biotec-afines.html",
+      "contentType": "text/html;charset=UTF-8",
+      "sha256": "935cb5516d98b29168f757a9b980c49a108edd76d3921fcee2ed72b017c584b5"
+    },
+    {
+      "url": "https://www.todofp.es/que-estudiar/familias-profesionales/quimica/lab-analisis-control-calidad.html",
+      "retrievedAt": "2026-09-08T13:59:58.990176+00:00",
+      "status": 200,
+      "finalUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/quimica/lab-analisis-control-calidad.html",
+      "contentType": "text/html;charset=UTF-8",
+      "sha256": "f3e400d51c3203617af8bb4e8a7178a0d762b9ab5ddbc8838fec4c22a06a7b5a"
+    },
+    {
+      "url": "https://www.todofp.es/que-estudiar/familias-profesionales/quimica/operaciones-laboratorio.html",
+      "retrievedAt": "2026-09-08T13:59:58.991946+00:00",
+      "status": 200,
+      "finalUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/quimica/operaciones-laboratorio.html",
+      "contentType": "text/html;charset=UTF-8",
+      "sha256": "4e110f2ae30f4d0af666606bd6f719aa3e4d2b2c367d5ddf8953308275af133a"
+    },
+    {
+      "url": "https://www.todofp.es/que-estudiar/familias-profesionales/quimica/planta-quimica.html",
+      "retrievedAt": "2026-09-08T13:59:59.241598+00:00",
+      "status": 200,
+      "finalUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/quimica/planta-quimica.html",
+      "contentType": "text/html;charset=UTF-8",
+      "sha256": "9ccc9b8e4766e874524ece86598407918630f88bdcc553415bbad357e08c900a"
+    },
+    {
+      "url": "https://www.todofp.es/que-estudiar/familias-profesionales/sanidad/anatomia-patologica-citodiagnostico.html",
+      "retrievedAt": "2026-09-08T13:59:59.275624+00:00",
+      "status": 200,
+      "finalUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/sanidad/anatomia-patologica-citodiagnostico.html",
+      "contentType": "text/html;charset=UTF-8",
+      "sha256": "fdf99664cbb7afcbc7e92370094af6a831a317abd90a895916bfca7952794643"
+    },
+    {
+      "url": "https://www.todofp.es/que-estudiar/familias-profesionales/sanidad/audiologia-protesica.html",
+      "retrievedAt": "2026-09-08T13:59:59.370210+00:00",
+      "status": 200,
+      "finalUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/sanidad/audiologia-protesica.html",
+      "contentType": "text/html;charset=UTF-8",
+      "sha256": "39b0858f0900297895d084a9e7434e12c87142121663eb90a46ab84311d4d173"
+    },
+    {
+      "url": "https://www.todofp.es/que-estudiar/familias-profesionales/sanidad/documentacion-administracion-sanitarias.html",
+      "retrievedAt": "2026-09-08T14:10:19.249698+00:00",
+      "status": 200,
+      "finalUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/sanidad/documentacion-administracion-sanitarias.html",
+      "contentType": "text/html;charset=UTF-8",
+      "sha256": "70df4dee77d824cf71e60d3254230649bf1b44307a04daa922760a583a9d0273"
+    },
+    {
+      "url": "https://www.todofp.es/que-estudiar/familias-profesionales/sanidad/emergencias-sanitarias.html",
+      "retrievedAt": "2026-09-08T14:10:21.607745+00:00",
+      "status": 200,
+      "finalUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/sanidad/emergencias-sanitarias.html",
+      "contentType": "text/html;charset=UTF-8",
+      "sha256": "3809984d9330069bc5ecb8a9d3a0fcb7387dc3864a77eb3729d21b6caf048511"
+    },
+    {
+      "url": "https://www.todofp.es/que-estudiar/familias-profesionales/sanidad/farmacia-parafarmacia.html",
+      "retrievedAt": "2026-09-08T13:59:59.491933+00:00",
+      "status": 200,
+      "finalUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/sanidad/farmacia-parafarmacia.html",
+      "contentType": "text/html;charset=UTF-8",
+      "sha256": "8ad2de912c576067ed39d4bf5f2e02c1370209e6275bb5e5acd5d56b5566115e"
+    },
+    {
+      "url": "https://www.todofp.es/que-estudiar/familias-profesionales/sanidad/higiente-bucodental.html",
+      "retrievedAt": "2026-09-08T14:10:21.500417+00:00",
+      "status": 200,
+      "finalUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/sanidad/higiente-bucodental.html",
+      "contentType": "text/html;charset=UTF-8",
+      "sha256": "34c4254c64f0f4b9d7b83f0c3ff3259044813f00e83e8343c6ef15d5d15cd5d2"
+    },
+    {
+      "url": "https://www.todofp.es/que-estudiar/familias-profesionales/sanidad/imagen-diagnostico-medicina-nuclear.html",
+      "retrievedAt": "2026-09-08T13:59:59.642223+00:00",
+      "status": 200,
+      "finalUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/sanidad/imagen-diagnostico-medicina-nuclear.html",
+      "contentType": "text/html;charset=UTF-8",
+      "sha256": "95e40ff0e3e2fd8f0d3b1b72e271ed284d83fc1959b5b638aa1a6281f6e3154d"
+    },
+    {
+      "url": "https://www.todofp.es/que-estudiar/familias-profesionales/sanidad/laboratorio-clinico-biomedico.html",
+      "retrievedAt": "2026-09-08T13:59:59.738877+00:00",
+      "status": 200,
+      "finalUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/sanidad/laboratorio-clinico-biomedico.html",
+      "contentType": "text/html;charset=UTF-8",
+      "sha256": "67d200a5f2d0c16dd4595883d785ebb7ae76c9b8a2ea40b1eed279d0c135213c"
+    },
+    {
+      "url": "https://www.todofp.es/que-estudiar/familias-profesionales/sanidad/protesis-dentales.html",
+      "retrievedAt": "2026-09-08T13:59:59.746031+00:00",
+      "status": 200,
+      "finalUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/sanidad/protesis-dentales.html",
+      "contentType": "text/html;charset=UTF-8",
+      "sha256": "295343cba042edea5153def5eee4a9dbd8ba805c8e23fe36333d7ada5c4722e4"
+    },
+    {
+      "url": "https://www.todofp.es/que-estudiar/familias-profesionales/sanidad/radioterapia-dosimetria.html",
+      "retrievedAt": "2026-09-08T13:59:59.824887+00:00",
+      "status": 200,
+      "finalUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/sanidad/radioterapia-dosimetria.html",
+      "contentType": "text/html;charset=UTF-8",
+      "sha256": "5e735c6371c8c7daf9c6f13d3ad0685a9f6da407060d2d833769f6858edace52"
+    },
+    {
+      "url": "https://www.todofp.es/que-estudiar/familias-profesionales/seguridad-medio-ambiente/emergencias-proteccion-civil.html",
+      "retrievedAt": "2026-09-08T13:59:59.918924+00:00",
+      "status": 200,
+      "finalUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/seguridad-medio-ambiente/emergencias-proteccion-civil.html",
+      "contentType": "text/html;charset=UTF-8",
+      "sha256": "b234bb23d6e2af439238430059e85a68029bd59184cdb4e05c7daaa0b813f829"
+    },
+    {
+      "url": "https://www.todofp.es/que-estudiar/familias-profesionales/seguridad-medio-ambiente/prevencion-riesgos-profesionales.html",
+      "retrievedAt": "2026-09-08T14:10:22.407818+00:00",
+      "status": 200,
+      "finalUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/seguridad-medio-ambiente/prevencion-riesgos-profesionales.html",
+      "contentType": "text/html;charset=UTF-8",
+      "sha256": "1c7dcb2e9ab7e8ed89a1fdc60a3506b5b99f41adbd5e42801221a4c18ee8b559"
+    },
+    {
+      "url": "https://www.todofp.es/que-estudiar/familias-profesionales/seguridad-medio-ambiente/quimica-salud-ambiental.html",
+      "retrievedAt": "2026-09-08T14:00:00.001591+00:00",
+      "status": 200,
+      "finalUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/seguridad-medio-ambiente/quimica-salud-ambiental.html",
+      "contentType": "text/html;charset=UTF-8",
+      "sha256": "cdaa194b53db8e77dcc29f761014e4d2702ac289eebfbc26302b7d62c4059cb6"
+    },
+    {
+      "url": "https://www.todofp.es/que-estudiar/familias-profesionales/servicios-socioculturales-comunidad/animacion-sociocultural-turistica.html",
+      "retrievedAt": "2026-09-08T14:00:00.191639+00:00",
+      "status": 200,
+      "finalUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/servicios-socioculturales-comunidad/animacion-sociocultural-turistica.html",
+      "contentType": "text/html;charset=UTF-8",
+      "sha256": "9e6c9689bdb45cfb60b8e4bea9ad9fffef70a0dc06de9e8a75a9431fbd3ffed3"
+    },
+    {
+      "url": "https://www.todofp.es/que-estudiar/familias-profesionales/servicios-socioculturales-comunidad/formacion-movilidad-segura-sostenible.html",
+      "retrievedAt": "2026-09-08T14:00:00.308927+00:00",
+      "status": 200,
+      "finalUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/servicios-socioculturales-comunidad/formacion-movilidad-segura-sostenible.html",
+      "contentType": "text/html;charset=UTF-8",
+      "sha256": "7e1a3dde4e7692fe33eb8a47a469f641665174ee18073087dcd8f2784e29bde4"
+    },
+    {
+      "url": "https://www.todofp.es/que-estudiar/familias-profesionales/servicios-socioculturales-comunidad/integracion-social.html",
+      "retrievedAt": "2026-09-08T14:00:00.383521+00:00",
+      "status": 200,
+      "finalUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/servicios-socioculturales-comunidad/integracion-social.html",
+      "contentType": "text/html;charset=UTF-8",
+      "sha256": "533ba50863db3ebb5e7e80ae424b65be8a68843ebfb678b3b1492dd5ac84cd02"
+    },
+    {
+      "url": "https://www.todofp.es/que-estudiar/familias-profesionales/servicios-socioculturales-comunidad/mediacion-comunicativa.html",
+      "retrievedAt": "2026-09-08T14:00:00.467015+00:00",
+      "status": 200,
+      "finalUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/servicios-socioculturales-comunidad/mediacion-comunicativa.html",
+      "contentType": "text/html;charset=UTF-8",
+      "sha256": "da78651116488cebf753c04daac32bae5adb927f9861a2726c1ce26c73340e29"
+    },
+    {
+      "url": "https://www.todofp.es/que-estudiar/familias-profesionales/servicios-socioculturales-comunidad/promocion-igualdad-genero.html",
+      "retrievedAt": "2026-09-08T14:00:00.483084+00:00",
+      "status": 200,
+      "finalUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/servicios-socioculturales-comunidad/promocion-igualdad-genero.html",
+      "contentType": "text/html;charset=UTF-8",
+      "sha256": "7825aec152bed20b95cf2e8e88ea5df9be3d027f6df599dd2084cc9d9973c697"
+    },
+    {
+      "url": "https://www.todofp.es/que-estudiar/familias-profesionales/textil-confeccion-piel/confeccion-moda.html",
+      "retrievedAt": "2026-09-08T14:10:22.639510+00:00",
+      "status": 200,
+      "finalUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/textil-confeccion-piel/confeccion-moda.html",
+      "contentType": "text/html;charset=UTF-8",
+      "sha256": "05a713cd1ea9cd2eb00e65c0dbb518e3fd677194e9a881dbfeef1d4976f02691"
+    },
+    {
+      "url": "https://www.todofp.es/que-estudiar/familias-profesionales/textil-confeccion-piel/patronaje-moda.html",
+      "retrievedAt": "2026-09-08T14:10:19.334405+00:00",
+      "status": 200,
+      "finalUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/textil-confeccion-piel/patronaje-moda.html",
+      "contentType": "text/html;charset=UTF-8",
+      "sha256": "fa5882d8fdd9f872fd4678d81bfc1943c8b5dc08b57ba758f67fbfc90b906b5c"
+    },
+    {
+      "url": "https://www.todofp.es/que-estudiar/familias-profesionales/textil-confeccion-piel/tapiceria-cortinaje.html",
+      "retrievedAt": "2026-09-08T14:00:00.563282+00:00",
+      "status": 200,
+      "finalUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/textil-confeccion-piel/tapiceria-cortinaje.html",
+      "contentType": "text/html;charset=UTF-8",
+      "sha256": "93965085713acac0031b483270bebf6ca563682b15358a1a5fab1013e0e5745f"
+    },
+    {
+      "url": "https://www.todofp.es/que-estudiar/familias-profesionales/transporte-mantenimiento-vehiculos/automocion.html",
+      "retrievedAt": "2026-09-08T14:00:00.723332+00:00",
+      "status": 200,
+      "finalUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/transporte-mantenimiento-vehiculos/automocion.html",
+      "contentType": "text/html;charset=UTF-8",
+      "sha256": "7e09a7fe08e0763d8d2a2b280158578f9c2f6721aa8847e221732a168a68f300"
+    },
+    {
+      "url": "https://www.todofp.es/que-estudiar/familias-profesionales/transporte-mantenimiento-vehiculos/carroceria.html",
+      "retrievedAt": "2026-09-08T14:24:27.878714+00:00",
+      "status": 200,
+      "finalUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/transporte-mantenimiento-vehiculos/carroceria.html",
+      "contentType": "text/html;charset=UTF-8",
+      "sha256": "16f8dfe45fb1fcf0549194ace4691c529111f480c1e9b63c4fd4dc93127ebe06"
+    },
+    {
+      "url": "https://www.todofp.es/que-estudiar/familias-profesionales/transporte-mantenimiento-vehiculos/ce-aeronaves-drones.html",
+      "retrievedAt": "2026-09-08T14:10:21.186052+00:00",
+      "status": 200,
+      "finalUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/transporte-mantenimiento-vehiculos/ce-aeronaves-drones.html",
+      "contentType": "text/html;charset=UTF-8",
+      "sha256": "3e3c0319dc2e83a73d2889f319ec07efbf3f8f1de03f89b3682f640e5220f85a"
+    },
+    {
+      "url": "https://www.todofp.es/que-estudiar/familias-profesionales/transporte-mantenimiento-vehiculos/ce-mantenimiento-seguridad-hibridos-electricos.html",
+      "retrievedAt": "2026-09-08T14:00:00.828453+00:00",
+      "status": 200,
+      "finalUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/transporte-mantenimiento-vehiculos/ce-mantenimiento-seguridad-hibridos-electricos.html",
+      "contentType": "text/html;charset=UTF-8",
+      "sha256": "9a90cb36f1c27a1dad7bf34b5e8f4e038e6399b16bb1ee0a1c7752a6f601374f"
+    },
+    {
+      "url": "https://www.todofp.es/que-estudiar/familias-profesionales/transporte-mantenimiento-vehiculos/ce-mantenimiento-vehiculos-electricos-hibridos.html",
+      "retrievedAt": "2026-09-08T14:10:19.476875+00:00",
+      "status": 200,
+      "finalUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/transporte-mantenimiento-vehiculos/ce-mantenimiento-vehiculos-electricos-hibridos.html",
+      "contentType": "text/html;charset=UTF-8",
+      "sha256": "86249cef24ea879b507240dc7b869d89640bd1c21ce6582f2a26f2c0a55b774c"
+    },
+    {
+      "url": "https://www.todofp.es/que-estudiar/familias-profesionales/transporte-mantenimiento-vehiculos/electromecanica-maquinaria.html",
+      "retrievedAt": "2026-09-08T14:00:01.015174+00:00",
+      "status": 200,
+      "finalUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/transporte-mantenimiento-vehiculos/electromecanica-maquinaria.html",
+      "contentType": "text/html;charset=UTF-8",
+      "sha256": "389faade6af0983df21573af249572da3e86bdfcd2b408cc2a731fa407559690"
+    },
+    {
+      "url": "https://www.todofp.es/que-estudiar/familias-profesionales/transporte-mantenimiento-vehiculos/mnto-material-rodante-ferroviario.html",
+      "retrievedAt": "2026-09-08T14:00:01.102615+00:00",
+      "status": 200,
+      "finalUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/transporte-mantenimiento-vehiculos/mnto-material-rodante-ferroviario.html",
+      "contentType": "text/html;charset=UTF-8",
+      "sha256": "c933dbb93cb09586cf931bdbc198267ca828f3552e7918330e96478f884636ab"
+    },
+    {
+      "url": "https://www.todofp.es/que-estudiar/familias-profesionales/transporte-mantenimiento-vehiculos/mtmo-aeromecanica-aviones-motor-turbina.html",
+      "retrievedAt": "2026-09-08T14:10:21.153512+00:00",
+      "status": 200,
+      "finalUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/transporte-mantenimiento-vehiculos/mtmo-aeromecanica-aviones-motor-turbina.html",
+      "contentType": "text/html;charset=UTF-8",
+      "sha256": "81106e38015e0ec2a92257102b92933fae25367417ce6cee392eb4faab1af699"
+    },
+    {
+      "url": "https://www.todofp.es/que-estudiar/familias-profesionales/transporte-mantenimiento-vehiculos/mtmo-aeromecanico-helicopteros-motor-turbina.html",
+      "retrievedAt": "2026-09-08T14:10:21.285093+00:00",
+      "status": 200,
+      "finalUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/transporte-mantenimiento-vehiculos/mtmo-aeromecanico-helicopteros-motor-turbina.html",
+      "contentType": "text/html;charset=UTF-8",
+      "sha256": "3a151eeea361415e0cba284c02a5f787d8b3c399770e0b5f02fed564256ccc5c"
+    },
+    {
+      "url": "https://www.todofp.es/que-estudiar/logse/sanidad/dietetica.html",
+      "retrievedAt": "2026-09-08T14:10:21.698464+00:00",
+      "status": 200,
+      "finalUrl": "https://www.todofp.es/que-estudiar/logse/sanidad/dietetica.html",
+      "contentType": "text/html;charset=UTF-8",
+      "sha256": "a0513557cbc007f850239fa5970581fe75ebad45d1d685ed75758722b3665c55"
+    },
+    {
+      "url": "https://www.sepe.es/ca/SiteSepe/contenidos/empresas/contratos_trabajo/comunicar_contratacion/pdf/ocupaciones.pdf",
+      "retrievedAt": "2026-09-08T15:02:07.082392+00:00",
+      "key": "f58e048ca7c4fe86bdfc",
+      "status": 200,
+      "finalUrl": "https://www.sepe.es/ca/SiteSepe/contenidos/empresas/contratos_trabajo/comunicar_contratacion/pdf/ocupaciones.pdf",
+      "contentType": "application/pdf;charset=UTF-8",
+      "sha256": "b8d7c02e849ff0133ee01e9e04c183218824b265ad9dadc90113834ed100cddd",
+      "characters": 176515
+    }
+  ],
+  "note": "SHA-256 del contenido HTTP recibido; no acredita por sí mismo validez semántica ni vigencia de la fuente."
+}

@@ -1,0 +1,4038 @@
+{
+  "status": "candidates-require-cno-notes-and-adjudication",
+  "publicationApproved": false,
+  "programmes": [
+    {
+      "programKey": "IFC03E",
+      "program": {
+        "programKey": "IFC03E",
+        "title": "Inteligencia Artificial y Big Data",
+        "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/informatica-comunicaciones/ce-inteligencia-artificial-bigdata.html",
+        "priorStatus": "pending"
+      },
+      "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/informatica-comunicaciones/ce-inteligencia-artificial-bigdata.html",
+      "sourceSha256": "4adb3616429be0792a5f89bda545880ae8e98887ebf760f3ddb7e9ae5a064fb2",
+      "twoReviewsComplete": true,
+      "candidates": [
+        {
+          "code": "2712",
+          "sourceQuote": "Desarrollador de Inteligencia Artificial y Big Data.",
+          "reason": "Correspondencia con el desarrollo, análisis y diseño de software especializado. Limitado a funciones de programación e inteligencia artificial.",
+          "functionalBoundary": "full",
+          "model": "qwen",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": true,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "2721",
+          "sourceQuote": "Analista de datos.",
+          "reason": "Correspondencia con el diseño y administración de bases de datos para grandes volúmenes de información. Limitado a la gestión de datos estructurados.",
+          "functionalBoundary": "full",
+          "model": "qwen",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": true,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "2722",
+          "sourceQuote": "infraestructura",
+          "reason": "Correspondencia con la administración y configuración de sistemas y redes informáticas. Limitado al soporte técnico de infraestructura TI.",
+          "functionalBoundary": "full",
+          "model": "qwen",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": true,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "2712",
+          "sourceQuote": "Analista de datos.",
+          "reason": "Existe correspondencia funcional con las tareas de análisis de datos mencionadas.",
+          "functionalBoundary": "full",
+          "model": "gemma",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": true,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "2713",
+          "sourceQuote": "Programador de sistemas expertos.",
+          "reason": "La programación de sistemas expertos es una tarea de desarrollo de software.",
+          "functionalBoundary": "full",
+          "model": "gemma",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": true,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "3820",
+          "sourceQuote": "Desarrollador de Inteligencia Artificial y Big Data.",
+          "reason": "El desarrollo de IA y Big Data se alinea con la labor de programadores informáticos.",
+          "functionalBoundary": "full",
+          "model": "gemma",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": true,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        }
+      ],
+      "publicationApproved": false
+    },
+    {
+      "programKey": "MAM01S",
+      "program": {
+        "programKey": "MAM01S",
+        "title": "Diseño y Amueblamiento",
+        "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/madera-mueble-corcho/diseno-amueblamiento.html",
+        "priorStatus": "pending"
+      },
+      "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/madera-mueble-corcho/diseno-amueblamiento.html",
+      "sourceSha256": "8a80783d7496c8485adbeae5f3f200c07006eadae0a3038b4b399871b0245567",
+      "twoReviewsComplete": true,
+      "candidates": [
+        {
+          "code": "2482",
+          "sourceQuote": "Dibujante proyectista de muebles.",
+          "reason": "Correspondencia con la creación de propuestas de diseño y proyección técnica de mobiliario. Limitado a la fase de diseño y modelado.",
+          "functionalBoundary": "full",
+          "model": "qwen",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": true,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "3110",
+          "sourceQuote": "Proyectista de carpintería y mueble.",
+          "reason": "Correspondencia con el dibujo técnico y la proyección de elementos de carpintería. Limitado a la representación gráfica y documentación técnica.",
+          "functionalBoundary": "full",
+          "model": "qwen",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": true,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "3206",
+          "sourceQuote": "Jefa / jefe de fabricación.",
+          "reason": "Correspondencia con la supervisión y control de la producción en industrias de la madera y mueble. Limitado a la gestión operativa de planta.",
+          "functionalBoundary": "full",
+          "model": "qwen",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": true,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "3110",
+          "sourceQuote": "Dibujante proyectista de muebles.",
+          "reason": "Corresponde a la función de dibujo técnico y diseño de productos.",
+          "functionalBoundary": "full",
+          "model": "gemma",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": true,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "3209",
+          "sourceQuote": "Jefa / jefe de fabricación.",
+          "reason": "La supervisión de procesos de fabricación es una función de supervisión industrial.",
+          "functionalBoundary": "full",
+          "model": "gemma",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": true,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "3206",
+          "sourceQuote": "Controlador / controladora de producción.",
+          "reason": "Se relaciona con la supervisión de la producción en industrias de la madera.",
+          "functionalBoundary": "full",
+          "model": "gemma",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": true,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "1313",
+          "sourceQuote": "Gerente de empresas de madera y mueble y otras manufacturas.",
+          "reason": "La gestión de empresas manufactureras de madera es un perfil de dirección.",
+          "functionalBoundary": "full",
+          "model": "gemma",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": true,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        }
+      ],
+      "publicationApproved": false
+    },
+    {
+      "programKey": "QUI03S",
+      "program": {
+        "programKey": "QUI03S",
+        "title": "Fabricación de Productos Farmacéuticos, Biotecnológicos y Afines",
+        "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/quimica/fab-prod-farmaceuticos-biotec-afines.html",
+        "priorStatus": "pending"
+      },
+      "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/quimica/fab-prod-farmaceuticos-biotec-afines.html",
+      "sourceSha256": "935cb5516d98b29168f757a9b980c49a108edd76d3921fcee2ed72b017c584b5",
+      "twoReviewsComplete": true,
+      "candidates": [
+        {
+          "code": "3204",
+          "sourceQuote": "Supervisor / supervisora de área de producción.",
+          "reason": "Correspondencia con la supervisión en industrias farmacéuticas, químicas y de procesos biotecnológicos. Limitado a la dirección operativa de plantas.",
+          "functionalBoundary": "full",
+          "model": "qwen",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": false,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "8132",
+          "sourceQuote": "Encargada / encargado de operadores de máquinas para fabricar y acondicionar productos químicos.",
+          "reason": "Correspondencia con la operación de maquinaria para la fabricación de productos farmacéuticos y químicos. Limitado a la conducción de equipos industriales.",
+          "functionalBoundary": "full",
+          "model": "qwen",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": false,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "3160",
+          "sourceQuote": "Técnica / técnico de control.",
+          "reason": "Correspondencia con las tareas de control de calidad y procesos en la industria química y farmacéutica. Limitado a la verificación técnica de productos.",
+          "functionalBoundary": "full",
+          "model": "qwen",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": true,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "8131",
+          "sourceQuote": "Encargada / encargado de operadores de máquinas para fabricar y acondicionar productos químicos.",
+          "reason": "Corresponde a la operación en plantas industriales químicas.",
+          "functionalBoundary": "full",
+          "model": "gemma",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": true,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "3204",
+          "sourceQuote": "Supervisor / supervisora de área de producción.",
+          "reason": "La supervisión en áreas de producción química/farmacéutica es una función de supervisión industrial.",
+          "functionalBoundary": "full",
+          "model": "gemma",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": true,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "3133",
+          "sourceQuote": "Técnica / técnico de control.",
+          "reason": "El control de procesos de fabricación se alinea con técnicos en control de procesos químicos.",
+          "functionalBoundary": "full",
+          "model": "gemma",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": true,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "8132",
+          "sourceQuote": "Encargada / encargado de fabricación.",
+          "reason": "Se vincula con la fabricación de productos farmacéuticos y cosméticos.",
+          "functionalBoundary": "full",
+          "model": "gemma",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": true,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        }
+      ],
+      "publicationApproved": false
+    },
+    {
+      "programKey": "SAN05S",
+      "program": {
+        "programKey": "SAN05S",
+        "title": "Documentación y Administración Sanitarias",
+        "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/sanidad/documentacion-administracion-sanitarias.html",
+        "priorStatus": "pending"
+      },
+      "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/sanidad/documentacion-administracion-sanitarias.html",
+      "sourceSha256": "70df4dee77d824cf71e60d3254230649bf1b44307a04daa922760a583a9d0273",
+      "twoReviewsComplete": true,
+      "candidates": [
+        {
+          "code": "3322",
+          "sourceQuote": "Técnica / técnico superior en documentación sanitaria.",
+          "reason": "Correspondencia exacta con el título y la salida profesional principal. Requiere verificación de notas CNO sobre el ámbito de 'documentación' frente a 'clínica'.",
+          "functionalBoundary": "full",
+          "model": "qwen",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": true,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "2623",
+          "sourceQuote": "Especialistas de la Administración Pública",
+          "reason": "El texto menciona trabajar en instituciones públicas y gestión de procesos. Aunque el programa es generalista (público/privado), este código cubre la vertiente de administración sanitaria pública. Es un candidato fuerte para el ámbito administrativo.",
+          "functionalBoundary": "adjacent",
+          "model": "qwen",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": false,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "3613",
+          "sourceQuote": "Asistentes de dirección y administrativos",
+          "reason": "El texto menciona 'Responsable de administración de unidades, departamento o centros sanitarios' y 'Secretaria / secretario de servicios sanitarios'. Este código cubre la asistencia administrativa general en entornos sanitarios.",
+          "functionalBoundary": "adjacent",
+          "model": "qwen",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": false,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "3329",
+          "sourceQuote": "Técnicos de la sanidad no clasificados bajo otros epígrafes",
+          "reason": "El programa cubre gestión de pacientes y sistemas de información asistencial que podrían no caer estrictamente en documentación pura si incluyen aspectos de atención al paciente o gestión clínica operativa.",
+          "functionalBoundary": "adjacent",
+          "model": "qwen",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": false,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "2721",
+          "sourceQuote": "Diseñadores y administradores de bases de datos",
+          "reason": "El currículo incluye 'Explotar y validar bases de datos para el sistema de información clínico-asistencial'. Esto implica competencias técnicas de gestión de datos sanitarios.",
+          "functionalBoundary": "adjacent",
+          "model": "qwen",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": false,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "3613",
+          "sourceQuote": "Responsable de administración de unidades, departamento o centros sanitarios.",
+          "reason": "Correspondencia funcional con la gestión administrativa y de unidades mencionada.",
+          "functionalBoundary": "full",
+          "model": "gemma",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": true,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "3614",
+          "sourceQuote": "Secretaria / secretario de servicios sanitarios.",
+          "reason": "Relación con las funciones de asistencia administrativa en servicios sanitarios.",
+          "functionalBoundary": "full",
+          "model": "gemma",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": true,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "4301",
+          "sourceQuote": "Gestionar el archivo de historias clínicas y otra documentación",
+          "reason": "Correspondencia con la tarea de gestión de archivos y registro de datos.",
+          "functionalBoundary": "adjacent",
+          "model": "gemma",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": true,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "2623",
+          "sourceQuote": "Responsable técnica / técnico de gestión de procesos administrativo-clínicos.",
+          "reason": "Relación con especialistas de la administración pública o gestión de procesos.",
+          "functionalBoundary": "adjacent",
+          "model": "gemma",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": true,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        }
+      ],
+      "publicationApproved": false
+    },
+    {
+      "programKey": "TCP01S",
+      "program": {
+        "programKey": "TCP01S",
+        "title": "Patronaje y Moda",
+        "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/textil-confeccion-piel/patronaje-moda.html",
+        "priorStatus": "pending"
+      },
+      "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/textil-confeccion-piel/patronaje-moda.html",
+      "sourceSha256": "fa5882d8fdd9f872fd4678d81bfc1943c8b5dc08b57ba758f67fbfc90b906b5c",
+      "twoReviewsComplete": true,
+      "candidates": [
+        {
+          "code": "7832",
+          "sourceQuote": "Patronistas para productos en textil y piel",
+          "reason": "Correspondencia exacta con las salidas profesionales 'Modelista-patronista' y 'Patronista-escalador'. Es el candidato principal.",
+          "functionalBoundary": "full",
+          "model": "qwen",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": false,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "2482",
+          "sourceQuote": "Diseñadores de productos y de prendas",
+          "reason": "El texto menciona 'Diseñador técnico / diseñadora técnica de patronaje' y 'Participar en el diseño de productos textiles'. Este código cubre la vertiente de diseño técnico de prendas.",
+          "functionalBoundary": "adjacent",
+          "model": "qwen",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": false,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "7835",
+          "sourceQuote": "Tapiceros, colchoneros y afines",
+          "reason": "Aunque el código se centra en tapicería, el grupo de artesanos de textiles y pieles a veces se agrupa. Sin embargo, 'Confeccionista industrial' podría caer aquí o en 7837 si se considera calzado. Dado que el texto menciona 'calzado y marroquinería', 7837 es más preciso para calzado, pero 7832 es el principal. Este es un candidato de apoyo para la confección industrial general si no se especifica prenda.",
+          "functionalBoundary": "adjacent",
+          "model": "qwen",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": false,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "7837",
+          "sourceQuote": "Zapateros y afines",
+          "reason": "El texto menciona trabajar en 'calzado y marroquinería'. Si el programa incluye patronaje de calzado, este código sería relevante. Es un candidato plausible para esa parte específica.",
+          "functionalBoundary": "adjacent",
+          "model": "qwen",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": false,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "3732",
+          "sourceQuote": "Diseñadores y decoradores de interior",
+          "reason": "No aplica directamente. Descartado en favor de 2482 para diseño.",
+          "functionalBoundary": "assistant",
+          "model": "qwen",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": false,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "7832",
+          "sourceQuote": "Modelista-patronista de prendas de vestir.",
+          "reason": "Correspondencia directa con la elaboración de patrones y modelado.",
+          "functionalBoundary": "full",
+          "model": "gemma",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": true,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "8153",
+          "sourceQuote": "Confeccionista industrial.",
+          "reason": "Relación con la fabricación industrial de productos textiles.",
+          "functionalBoundary": "full",
+          "model": "gemma",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": true,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "3209",
+          "sourceQuote": "Jefa / jefe de fabricación.",
+          "reason": "Relación con la gestión y supervisión de la producción industrial.",
+          "functionalBoundary": "adjacent",
+          "model": "gemma",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": true,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "3160",
+          "sourceQuote": "Técnica / técnico en control de calidad de confección.",
+          "reason": "Correspondencia con las funciones de control de calidad mencionadas.",
+          "functionalBoundary": "full",
+          "model": "gemma",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": true,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "2482",
+          "sourceQuote": "Diseñador técnico / diseñadora técnica de patronaje con CAD/CAM.",
+          "reason": "Relación con el diseño técnico y desarrollo de productos.",
+          "functionalBoundary": "adjacent",
+          "model": "gemma",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": true,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        }
+      ],
+      "publicationApproved": false
+    },
+    {
+      "programKey": "TMV02E",
+      "program": {
+        "programKey": "TMV02E",
+        "title": "Mantenimiento de vehículos híbridos y eléctricos",
+        "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/transporte-mantenimiento-vehiculos/ce-mantenimiento-vehiculos-electricos-hibridos.html",
+        "priorStatus": "pending"
+      },
+      "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/transporte-mantenimiento-vehiculos/ce-mantenimiento-vehiculos-electricos-hibridos.html",
+      "sourceSha256": "86249cef24ea879b507240dc7b869d89640bd1c21ce6582f2a26f2c0a55b774c",
+      "twoReviewsComplete": true,
+      "candidates": [
+        {
+          "code": "7401",
+          "sourceQuote": "Mecánicos y ajustadores de vehículos de motor",
+          "reason": "Correspondencia directa con 'Técnico de mantenimiento de vehículos eléctricos/híbridos' y 'Técnico reparador de sistemas... del vehículo'. Es el código principal para mecánica de automoción.",
+          "functionalBoundary": "full",
+          "model": "qwen",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": false,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "7403",
+          "sourceQuote": "Mecánicos y ajustadores de maquinaria agrícola e industrial",
+          "reason": "El texto menciona 'Técnico reparador de sistemas neumáticos e hidráulicos'. Si estos sistemas se aplican a maquinaria industrial además de vehículos, este código es relevante. Sin embargo, el contexto es vehículos. Se incluye como candidato adyacente por la especialización en sistemas hidráulicos/neumáticos que pueden transferirse.",
+          "functionalBoundary": "adjacent",
+          "model": "qwen",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": false,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "7405",
+          "sourceQuote": "Reparadores de bicicletas y afines",
+          "reason": "No aplica. Los vehículos eléctricos/híbridos son automotores.",
+          "functionalBoundary": "assistant",
+          "model": "qwen",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": false,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "7531",
+          "sourceQuote": "Mecánicos y reparadores de equipos electrónicos",
+          "reason": "Los vehículos híbridos/electricos tienen componentes electrónicos de alto voltaje. El texto menciona 'Sistemas eléctricos de alto voltaje'. Aunque es un vehículo, la naturaleza eléctrica puede solapar con reparación de equipos electrónicos. Es un candidato adyacente.",
+          "functionalBoundary": "adjacent",
+          "model": "qwen",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": false,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "7404",
+          "sourceQuote": "Mecánicos y ajustadores de maquinaria naval y ferroviaria",
+          "reason": "El programa de acceso requiere títulos en electromecánica de maquinaria, pero la especialización es en vehículos. Este código no aplica directamente a la salida laboral principal.",
+          "functionalBoundary": "assistant",
+          "model": "qwen",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": false,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "7401",
+          "sourceQuote": "Técnico de mantenimiento de vehículos eléctricos.",
+          "reason": "Correspondencia directa con el mantenimiento de vehículos de motor.",
+          "functionalBoundary": "full",
+          "model": "gemma",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": true,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "7531",
+          "sourceQuote": "Técnico reparador de sistemas eléctricos y de carga.",
+          "reason": "Relación con la reparación de componentes eléctricos.",
+          "functionalBoundary": "full",
+          "model": "gemma",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": true,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "7403",
+          "sourceQuote": "Técnico reparador de sistemas neumáticos e hidráulicos.",
+          "reason": "Correspondencia con la reparación de sistemas mecánicos específicos.",
+          "functionalBoundary": "full",
+          "model": "gemma",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": true,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "8209",
+          "sourceQuote": "Operario de empresas de fabricación de recambios.",
+          "reason": "Relación con la producción de componentes de vehículos.",
+          "functionalBoundary": "adjacent",
+          "model": "gemma",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": true,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "3510",
+          "sourceQuote": "Vendedor/distribuidor de recambios y equipos de diagnosis.",
+          "reason": "Relación con la comercialización de componentes y equipos técnicos.",
+          "functionalBoundary": "adjacent",
+          "model": "gemma",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": true,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        }
+      ],
+      "publicationApproved": false
+    },
+    {
+      "programKey": "AFD01M",
+      "program": {
+        "programKey": "AFD01M",
+        "title": "Actividades Ecuestres",
+        "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/actividades-fisicas-deportivas/actividades-ecuestres.html",
+        "priorStatus": "pending"
+      },
+      "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/actividades-fisicas-deportivas/actividades-ecuestres.html",
+      "sourceSha256": "4eb3520920825e9a1da2a73c586aca799ec35f5e76a4e036d8b41a8b6c08e6a7",
+      "twoReviewsComplete": true,
+      "candidates": [
+        {
+          "code": "3724",
+          "sourceQuote": "Monitor / monitora en campamentos.",
+          "reason": "Correspondencia funcional con la monitorización de actividades recreativas y campamentos ecuestres.",
+          "functionalBoundary": "full",
+          "model": "qwen",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": true,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "5893",
+          "sourceQuote": "Empleada / empleado para el cuidado y manejo del ganado equino y sus instalaciones.",
+          "reason": "Cuidado y manejo de ganado equino, equivalente funcional a cuidadores de animales y adiestradores.",
+          "functionalBoundary": "full",
+          "model": "qwen",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": true,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "5825",
+          "sourceQuote": "Guía de itinerarios a caballo",
+          "reason": "Guía en actividades de turismo y naturaleza a caballo, correspondiente a guías de turismo.",
+          "functionalBoundary": "full",
+          "model": "qwen",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": true,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "6209",
+          "sourceQuote": "Trabajar como: Trabajador / trabajadora de la cría de caballos.",
+          "reason": "Cría y manejo de equinos dentro de actividades ganaderas no especificadas por separado en el catálogo.",
+          "functionalBoundary": "full",
+          "model": "qwen",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": true,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "3723",
+          "sourceQuote": "Técnicas de equitación.",
+          "reason": "Enseñanza e impartición de técnicas de equitación y adiestramiento a grupos, correspondiente a instructores deportivos.",
+          "functionalBoundary": "full",
+          "model": "qwen",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": true,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "6110",
+          "sourceQuote": "Trabajador / trabajadora de la cría de caballos.",
+          "reason": "Correspondencia funcional con actividades de cría y producción.",
+          "functionalBoundary": "full",
+          "model": "gemma",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": true,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "6300",
+          "sourceQuote": "Empleada / empleado para el cuidado y manejo del ganado equino y sus instalaciones.",
+          "reason": "Relación con trabajadores cualificados en actividades agropecuarias mixtas.",
+          "functionalBoundary": "full",
+          "model": "gemma",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": true,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "5893",
+          "sourceQuote": "Guía de itinerarios a caballo",
+          "reason": "Relación con el cuidado y actividades relacionadas con animales.",
+          "functionalBoundary": "adjacent",
+          "model": "gemma",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": true,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "3723",
+          "sourceQuote": "Monitor / monitora en campamentos.",
+          "reason": "Relación con la instrucción de actividades en entornos naturales o campamentos.",
+          "functionalBoundary": "adjacent",
+          "model": "gemma",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": true,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        }
+      ],
+      "publicationApproved": false
+    },
+    {
+      "programKey": "ARG01S",
+      "program": {
+        "programKey": "ARG01S",
+        "title": "Diseño y Gestión de la Producción Gráfica",
+        "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/artes-graficas/diseno-gestion-produccion-grafica.html",
+        "priorStatus": "pending"
+      },
+      "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/artes-graficas/diseno-gestion-produccion-grafica.html",
+      "sourceSha256": "6cc69ffa338adc697b90c544451f675cf668019a2496f3b2201a0ea2a76faeec",
+      "twoReviewsComplete": true,
+      "candidates": [
+        {
+          "code": "2484",
+          "sourceQuote": "Diseñador gráfico / diseñadora gráfica.",
+          "reason": "Diseño de productos gráficos, correspondiente directamente a diseñadores gráficos y multimedia.",
+          "functionalBoundary": "full",
+          "model": "qwen",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": true,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "7621",
+          "sourceQuote": "Técnica / técnico en preimpresión.",
+          "reason": "Gestión y operación de procesos de preimpresión digital y analógica en artes gráficas.",
+          "functionalBoundary": "full",
+          "model": "qwen",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": true,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "7622",
+          "sourceQuote": "Técnica / técnico en impresión.",
+          "reason": "Organización y control de procesos de impresión gráfica industrial.",
+          "functionalBoundary": "full",
+          "model": "qwen",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": true,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "7623",
+          "sourceQuote": "Técnica / técnico de encuadernación industrial.",
+          "reason": "Realización de procesos de encuadernación industrial y acabados de productos de papel.",
+          "functionalBoundary": "full",
+          "model": "qwen",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": true,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "3207",
+          "sourceQuote": "Ayudante de producción en industrias gráficas.",
+          "reason": "Supervisión y gestión de la producción en industrias de artes gráficas y papel.",
+          "functionalBoundary": "full",
+          "model": "qwen",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": true,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "2484",
+          "sourceQuote": "Diseñador gráfico / diseñadora gráfica.",
+          "reason": "Correspondencia directa con el perfil de diseñador.",
+          "functionalBoundary": "full",
+          "model": "gemma",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": true,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "7622",
+          "sourceQuote": "Técnica / técnico en impresión.",
+          "reason": "Relación con operarios de procesos de impresión.",
+          "functionalBoundary": "full",
+          "model": "gemma",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": true,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "7621",
+          "sourceQuote": "Técnica / técnico en preimpresión.",
+          "reason": "Relación con trabajadores de procesos de preimpresión.",
+          "functionalBoundary": "full",
+          "model": "gemma",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": true,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "7623",
+          "sourceQuote": "Técnica / técnico de encuadernación industrial.",
+          "reason": "Relación con procesos de encuadernación.",
+          "functionalBoundary": "full",
+          "model": "gemma",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": true,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "8143",
+          "sourceQuote": "Ayudante de producción en industrias gráficas.",
+          "reason": "Relación con operarios de máquinas para productos de papel y cartón.",
+          "functionalBoundary": "assistant",
+          "model": "gemma",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": true,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        }
+      ],
+      "publicationApproved": false
+    },
+    {
+      "programKey": "ARG02S",
+      "program": {
+        "programKey": "ARG02S",
+        "title": "Diseño y Edición de Publicaciones Impresas y Multimedia",
+        "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/artes-graficas/diseno-edicion-public-impresas-multimedia.html",
+        "priorStatus": "pending"
+      },
+      "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/artes-graficas/diseno-edicion-public-impresas-multimedia.html",
+      "sourceSha256": "9c4dbab0783b258cb3c6a0ab2e6838659d1bdd83b95863a7c52c218d8a42f1fd",
+      "twoReviewsComplete": true,
+      "candidates": [
+        {
+          "code": "2484",
+          "sourceQuote": "Diseñador / diseñadora de publicaciones multimedia.",
+          "reason": "Diseño de publicaciones y productos multimedia, correspondiente a diseñadores gráficos y multimedia.",
+          "functionalBoundary": "full",
+          "model": "qwen",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": true,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "2713",
+          "sourceQuote": "Técnica / técnico en desarrollo y publicación de productos multimedia.",
+          "reason": "Desarrollo y publicación de productos editoriales multimedia, implica diseño Web y multimedia.",
+          "functionalBoundary": "full",
+          "model": "qwen",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": true,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "7621",
+          "sourceQuote": "Técnica / técnico en preimpresión.",
+          "reason": "Preparación de materiales y archivos para imprenta y procesos de preimpresión editorial.",
+          "functionalBoundary": "full",
+          "model": "qwen",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": true,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "3207",
+          "sourceQuote": "Técnica / técnico en gestión de producción gráfica.",
+          "reason": "Gestión de la producción en procesos de edición y artes gráficas, correspondiente a supervisores de producción gráfica.",
+          "functionalBoundary": "full",
+          "model": "qwen",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": true,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "2651",
+          "sourceQuote": "Técnica / técnico en comercialización de productos gráficos y multimedia",
+          "reason": "Comercialización de productos gráficos y multimedia, correspondiente a profesionales de la publicidad y la comercialización.",
+          "functionalBoundary": "full",
+          "model": "qwen",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": true,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "2484",
+          "sourceQuote": "Diseñador gráfico / diseñadora gráfica.",
+          "reason": "Correspondencia directa con la función de diseño.",
+          "functionalBoundary": "full",
+          "model": "gemma",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": true,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "2713",
+          "sourceQuote": "Diseñador / diseñadora de publicaciones multimedia.",
+          "reason": "Relación con analistas, programadores y diseñadores web y multimedia.",
+          "functionalBoundary": "full",
+          "model": "gemma",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": true,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "7621",
+          "sourceQuote": "Técnica / técnico en preimpresión.",
+          "reason": "Relación con procesos de preimpresión.",
+          "functionalBoundary": "full",
+          "model": "gemma",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": true,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "2651",
+          "sourceQuote": "Técnica / técnico en comercialización de productos gráficos y multimedia",
+          "reason": "Relación con profesionales de la publicidad y comercialización.",
+          "functionalBoundary": "adjacent",
+          "model": "gemma",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": true,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "3814",
+          "sourceQuote": "Técnica / técnico en desarrollo y publicación de productos multimedia.",
+          "reason": "Relación con técnicos de la Web y multimedia.",
+          "functionalBoundary": "full",
+          "model": "gemma",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": true,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        }
+      ],
+      "publicationApproved": false
+    },
+    {
+      "programKey": "ELE04E",
+      "program": {
+        "programKey": "ELE04E",
+        "title": "Instalación y mantenimiento de sistemas conectados a internet (IOT)",
+        "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/electricidad-electronica/ce-instalacion-mto-sitemas-conectados-internet.html",
+        "priorStatus": "pending"
+      },
+      "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/electricidad-electronica/ce-instalacion-mto-sitemas-conectados-internet.html",
+      "sourceSha256": "01144143718ab4162e5284630596c9b756cbfccd6e4429b920c5a314813c834f",
+      "twoReviewsComplete": true,
+      "candidates": [
+        {
+          "code": "3813",
+          "sourceQuote": "Técnicos en redes.",
+          "reason": "Correspondencia funcional directa con el perfil de técnico en redes y sistemas conectados.",
+          "functionalBoundary": "full",
+          "model": "qwen",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": false,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "2722",
+          "sourceQuote": "Administradores de sistemas y redes",
+          "reason": "El mantenimiento y configuración de la infraestructura de IoT implica administración de sistemas y redes.",
+          "functionalBoundary": "adjacent",
+          "model": "qwen",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": false,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "3814",
+          "sourceQuote": "Técnicos de la Web",
+          "reason": "Los sistemas IoT a menudo incluyen interfaces web o servicios backend accesibles vía web.",
+          "functionalBoundary": "adjacent",
+          "model": "qwen",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": false,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "2712",
+          "sourceQuote": "Analistas y diseñadores de software",
+          "reason": "La programación de dispositivos IoT requiere análisis y diseño de software específico.",
+          "functionalBoundary": "adjacent",
+          "model": "qwen",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": false,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "3820",
+          "sourceQuote": "Programadores informáticos",
+          "reason": "Implementación de firmware y software para dispositivos conectados.",
+          "functionalBoundary": "adjacent",
+          "model": "qwen",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": false,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "2711",
+          "sourceQuote": "Técnicos/Técnicas en redes.",
+          "reason": "Correspondencia funcional con especialistas en infraestructura de redes.",
+          "functionalBoundary": "full",
+          "model": "gemma",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": true,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "3814",
+          "sourceQuote": "Instaladores/Instaladoras y reparadores/reparadoras de sistemas y dispositivos conectados.",
+          "reason": "Correspondencia con técnicos de la Web y dispositivos conectados.",
+          "functionalBoundary": "full",
+          "model": "gemma",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": true,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "2713",
+          "sourceQuote": "Instaladores/Instaladoras y reparadores/reparadoras en tecnologías de la información y las comunicaciones.",
+          "reason": "Correspondencia con analistas, programadores y diseñadores Web y multimedia.",
+          "functionalBoundary": "full",
+          "model": "gemma",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": true,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "3813",
+          "sourceQuote": "Instalador/Instaladoras y reparador/reparadoras de dispositivos IoT.",
+          "reason": "Correspondencia con técnicos en redes para dispositivos específicos.",
+          "functionalBoundary": "adjacent",
+          "model": "gemma",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": true,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        }
+      ],
+      "publicationApproved": false
+    },
+    {
+      "programKey": "ENA01S",
+      "program": {
+        "programKey": "ENA01S",
+        "title": "Eficiencia Energética y Energía Solar Térmica",
+        "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/energia-agua/eficiencia-energetica-solar-termica.html",
+        "priorStatus": "pending"
+      },
+      "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/energia-agua/eficiencia-energetica-solar-termica.html",
+      "sourceSha256": "0ff91beab4514ccbcda12df4114b0242cc21009f410c9e7b3c111e98f642b0b9",
+      "twoReviewsComplete": true,
+      "candidates": [
+        {
+          "code": "2437",
+          "sourceQuote": "Ingenieros ambientales",
+          "reason": "La eficiencia energética y la gestión del agua/energía se encuadran dentro de la ingeniería ambiental y sostenible.",
+          "functionalBoundary": "full",
+          "model": "qwen",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": false,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "2439",
+          "sourceQuote": "Ingenieros no clasificados bajo otros epígrafes",
+          "reason": "Código paraguas para ingenieros especializados que no encajan estrictamente en los demás, aplicable a ingenieros de energía solar si no hay uno específico.",
+          "functionalBoundary": "adjacent",
+          "model": "qwen",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": false,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "3131",
+          "sourceQuote": "Técnicos en instalaciones de producción de energía",
+          "reason": "El montaje y mantenimiento de instalaciones solares térmicas es una instalación de producción de energía. Aunque el título es GS, la función técnica es la de un técnico superior o ingeniero técnico.",
+          "functionalBoundary": "assistant",
+          "model": "qwen",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": false,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "2426",
+          "sourceQuote": "Profesionales de la protección ambiental",
+          "reason": "La eficiencia energética contribuye a la protección ambiental y sostenibilidad.",
+          "functionalBoundary": "adjacent",
+          "model": "qwen",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": false,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "2621",
+          "sourceQuote": "Analistas de gestión y organización",
+          "reason": "El perfil de 'gestor energético' puede implicar análisis de gestión de recursos energéticos.",
+          "functionalBoundary": "adjacent",
+          "model": "qwen",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": false,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "7294",
+          "sourceQuote": "Responsable de montaje y mantenimiento de instalaciones solares térmicas.",
+          "reason": "Correspondencia con montadores-instaladores de placas de energía solar.",
+          "functionalBoundary": "full",
+          "model": "gemma",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": true,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "7510",
+          "sourceQuote": "Comercial de instalaciones solares.",
+          "reason": "Relación con la venta y gestión de instalaciones técnicas.",
+          "functionalBoundary": "adjacent",
+          "model": "gemma",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": true,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "3131",
+          "sourceQuote": "Gestor / gestora energética.",
+          "reason": "Relación con técnicos en instalaciones de producción de energía.",
+          "functionalBoundary": "adjacent",
+          "model": "gemma",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": true,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        }
+      ],
+      "publicationApproved": false
+    },
+    {
+      "programKey": "FME03M",
+      "program": {
+        "programKey": "FME03M",
+        "title": "Conformado por Moldeo de Metales y Polímeros",
+        "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/fabricacion-mecanica/conformado-moldeo-metales-polimeros.html",
+        "priorStatus": "pending"
+      },
+      "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/fabricacion-mecanica/conformado-moldeo-metales-polimeros.html",
+      "sourceSha256": "c42b3d6d28022c1a1526dda988de1dadb2076dd48ab89eff2dcba16f548c6ad8",
+      "twoReviewsComplete": true,
+      "candidates": [
+        {
+          "code": "8142",
+          "sourceQuote": "Operadores de máquinas para fabricar productos de material plástico",
+          "reason": "Corresponde directamente a las salidas como 'Operador de inyectora' y 'extrusora' para polímeros.",
+          "functionalBoundary": "full",
+          "model": "qwen",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": false,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "8141",
+          "sourceQuote": "Operadores de máquinas para fabricar productos de caucho y derivados de resinas naturales",
+          "reason": "Corresponde a las salidas en moldeo de caucho y vulcanización.",
+          "functionalBoundary": "full",
+          "model": "qwen",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": false,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "7311",
+          "sourceQuote": "Moldeadores y macheros",
+          "reason": "Corresponde a la preparación de moldes para fundición metálica ('Preparador de moldes-machería').",
+          "functionalBoundary": "full",
+          "model": "qwen",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": false,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "8121",
+          "sourceQuote": "Operadores en instalaciones para la obtención y transformación de metales",
+          "reason": "Cubre la parte de fusión y colado de metales ('Operador de hornos de fusión').",
+          "functionalBoundary": "adjacent",
+          "model": "qwen",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": false,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "7899",
+          "sourceQuote": "Oficiales, operarios y artesanos de otros oficios no clasificados bajo otros epígrafes",
+          "reason": "Opción genérica si se considera el moldeo como un oficio artesanal o no industrializado, aunque menos preciso que los anteriores.",
+          "functionalBoundary": "adjacent",
+          "model": "qwen",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": false,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "8191",
+          "sourceQuote": "Operador / operadora de hornos de fusión.",
+          "reason": "Correspondencia directa con operadores de hornos e instalaciones de vidriería y cerámica (procesos de fundición).",
+          "functionalBoundary": "full",
+          "model": "gemma",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": true,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "8142",
+          "sourceQuote": "Operador / operadora de máquina moldeadora-vulcanizadora de caucho.",
+          "reason": "Correspondencia con operadores de máquinas para fabricar productos de material plástico y derivados.",
+          "functionalBoundary": "full",
+          "model": "gemma",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": true,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "8156",
+          "sourceQuote": "Operador / operadora de máquina moldeadora de neumáticos.",
+          "reason": "Relación con la fabricación de productos de caucho y derivados.",
+          "functionalBoundary": "full",
+          "model": "gemma",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": true,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "8131",
+          "sourceQuote": "Operador / operadora de máquinas de colar aleaciones metálicas.",
+          "reason": "Correspondencia con operadores en plantas industriales químicas/metalúrgicas.",
+          "functionalBoundary": "full",
+          "model": "gemma",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": true,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        }
+      ],
+      "publicationApproved": false
+    },
+    {
+      "programKey": "HOT02B",
+      "program": {
+        "programKey": "HOT02B",
+        "title": "Alojamiento y Lavandería",
+        "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/hosteleria-turismo/alojamiento-lavanderia.html",
+        "priorStatus": "pending"
+      },
+      "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/hosteleria-turismo/alojamiento-lavanderia.html",
+      "sourceSha256": "786433354cf933dbc40246a30b2d31a9992ee5931cd40e8ad2e8f0fe360cd64c",
+      "twoReviewsComplete": true,
+      "candidates": [
+        {
+          "code": "9229",
+          "sourceQuote": "Auxiliar de pisos y limpieza.",
+          "reason": "Correspondencia funcional con el perfil de auxiliar de limpieza en alojamientos turísticos.",
+          "functionalBoundary": "full",
+          "model": "qwen",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": true,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "9222",
+          "sourceQuote": "Operador / operadora de máquinas lavadoras y secadoras de prendas.",
+          "reason": "Correspondencia funcional con el perfil de operador de lavandería industrial o hotelera.",
+          "functionalBoundary": "full",
+          "model": "qwen",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": true,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "9432",
+          "sourceQuote": "Valets o mozas / mozos de habitaciones.",
+          "reason": "Correspondencia funcional con el rol de valet/mozo de habitaciones, que implica manejo de equipaje y servicio básico.",
+          "functionalBoundary": "full",
+          "model": "qwen",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": true,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "5831",
+          "sourceQuote": "Auxiliar de pisos y limpieza.",
+          "reason": "Correspondencia con tareas de supervisión o apoyo en limpieza de establecimientos.",
+          "functionalBoundary": "assistant",
+          "model": "gemma",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": true,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "9229",
+          "sourceQuote": "Auxiliar de pisos y limpieza.",
+          "reason": "Tareas de limpieza de superficies y áreas en alojamientos.",
+          "functionalBoundary": "assistant",
+          "model": "gemma",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": true,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "8170",
+          "sourceQuote": "Operador / operadora de máquinas lavadoras y secadoras de prendas.",
+          "reason": "Operación de maquinaria de lavandería industrial.",
+          "functionalBoundary": "full",
+          "model": "gemma",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": true,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "5120",
+          "sourceQuote": "Camarera / camarero de pisos, en establecimientos de alojamiento turístico",
+          "reason": "Servicios de atención y mantenimiento en alojamiento.",
+          "functionalBoundary": "full",
+          "model": "gemma",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": true,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        }
+      ],
+      "publicationApproved": false
+    },
+    {
+      "programKey": "HOT03SD",
+      "program": {
+        "programKey": "HOT03SD",
+        "title": "Guía, Información y Asistencia Turística",
+        "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/hosteleria-turismo/guia-informacion-asistencias-turisticas.html",
+        "priorStatus": "pending"
+      },
+      "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/hosteleria-turismo/guia-informacion-asistencias-turisticas.html",
+      "sourceSha256": "d0ee57212652d438f3dec5f6327b9a675a1fc84b4d9d194c619b3cbcd5fca41e",
+      "twoReviewsComplete": true,
+      "candidates": [
+        {
+          "code": "5825",
+          "sourceQuote": "Guía local. / Guía acompañante.",
+          "reason": "Correspondencia funcional directa con el perfil de guía turístico.",
+          "functionalBoundary": "full",
+          "model": "qwen",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": false,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "4411",
+          "sourceQuote": "Informador turístico / informadora turística.",
+          "reason": "Correspondencia funcional con el perfil de informador en oficinas o puntos de información turística.",
+          "functionalBoundary": "full",
+          "model": "qwen",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": true,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "3539",
+          "sourceQuote": "Promotor turístico / promotora turística.",
+          "reason": "Correspondencia funcional con el perfil de promotor turístico, que implica actividades comerciales y de representación en el sector.",
+          "functionalBoundary": "adjacent",
+          "model": "qwen",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": true,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "5825",
+          "sourceQuote": "Guía local.",
+          "reason": "Función directa de guía en destinos.",
+          "functionalBoundary": "full",
+          "model": "gemma",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": true,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "3532",
+          "sourceQuote": "Asistente en ferias, congresos y convenciones.",
+          "reason": "Organización y asistencia en eventos.",
+          "functionalBoundary": "assistant",
+          "model": "gemma",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": true,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "5823",
+          "sourceQuote": "Asistente en medios de transporte terrestre o marítimo.",
+          "reason": "Acompañamiento y asistencia turística en desplazamientos.",
+          "functionalBoundary": "assistant",
+          "model": "gemma",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": true,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "2630",
+          "sourceQuote": "Técnica / técnico de empresa de consultoría turística.",
+          "reason": "Perfil profesional de gestión y asesoramiento turístico.",
+          "functionalBoundary": "full",
+          "model": "gemma",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": true,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        }
+      ],
+      "publicationApproved": false
+    },
+    {
+      "programKey": "HOT04SD",
+      "program": {
+        "programKey": "HOT04SD",
+        "title": "Dirección de cocina",
+        "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/hosteleria-turismo/direccion-cocina.html",
+        "priorStatus": "pending"
+      },
+      "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/hosteleria-turismo/direccion-cocina.html",
+      "sourceSha256": "e61af58e320319be9592b76ad908cb50220799b8fdce678e956a2d87d3b3996c",
+      "twoReviewsComplete": true,
+      "candidates": [
+        {
+          "code": "3734",
+          "sourceQuote": "Cocinera / cocinero.",
+          "reason": "Correspondencia funcional directa con el perfil de cocinero, que es una de las salidas listadas.",
+          "functionalBoundary": "full",
+          "model": "qwen",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": true,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "1421",
+          "sourceQuote": "Director / directora de cocina.",
+          "reason": "Correspondencia funcional con el rol de director de cocina en establecimientos de restauración. Aunque es un código de director, en la hostelería pequeña el director puede ser el técnico superior ejecutando la dirección.",
+          "functionalBoundary": "adjacent",
+          "model": "qwen",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": true,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "3739",
+          "sourceQuote": "Jefa / jefe de cocina.",
+          "reason": "Correspondencia funcional con el rol de jefe de partida o jefe de cocina, que supervisa la producción culinaria.",
+          "functionalBoundary": "assistant",
+          "model": "qwen",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": true,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "3734",
+          "sourceQuote": "Jefa / jefe de cocina.",
+          "reason": "Responsabilidad técnica en preparación de alimentos.",
+          "functionalBoundary": "full",
+          "model": "gemma",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": true,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "5110",
+          "sourceQuote": "Cocinera / cocinero.",
+          "reason": "Ejecución de tareas culinarias.",
+          "functionalBoundary": "full",
+          "model": "gemma",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": true,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "1429",
+          "sourceQuote": "Jefa / jefe de operaciones de catering.",
+          "reason": "Gestión de servicios de restauración masiva.",
+          "functionalBoundary": "full",
+          "model": "gemma",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": true,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "3203",
+          "sourceQuote": "Director / directora de alimentos y bebidas.",
+          "reason": "Supervisión de la producción en servicios de restauración.",
+          "functionalBoundary": "full",
+          "model": "gemma",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": true,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "9310",
+          "sourceQuote": "Jefa / jefe de partida.",
+          "reason": "Apoyo y ejecución en estaciones de cocina.",
+          "functionalBoundary": "assistant",
+          "model": "gemma",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": true,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        }
+      ],
+      "publicationApproved": false
+    },
+    {
+      "programKey": "IFC02E",
+      "program": {
+        "programKey": "IFC02E",
+        "title": "Desarrollo de Videojuegos y Realidad Virtual",
+        "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/informatica-comunicaciones/ce-desarrollo-videojuegos-realidad-virtual.html",
+        "priorStatus": "pending"
+      },
+      "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/informatica-comunicaciones/ce-desarrollo-videojuegos-realidad-virtual.html",
+      "sourceSha256": "e08722faa5629378c11889f30fda72af954a421136a3eeec1c67cb7300389804",
+      "twoReviewsComplete": true,
+      "candidates": [
+        {
+          "code": "2712",
+          "sourceQuote": "Programador de videojuegos (Game Developer).",
+          "reason": "Programación avanzada orientada a videojuegos y motores de simulación.",
+          "functionalBoundary": "full",
+          "model": "qwen",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": true,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "2713",
+          "sourceQuote": "Desarrollador de aplicaciones de realidad virtual, aumentada y mixta.",
+          "reason": "Creación de entornos interactivos y multimedia para dispositivos específicos.",
+          "functionalBoundary": "full",
+          "model": "qwen",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": true,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "2484",
+          "sourceQuote": "Diseñador gráfico 2D y 3D de videojuegos (Game Artist).",
+          "reason": "Ilustraciones de arte conceptual y definición visual de interfaces de videojuegos.",
+          "functionalBoundary": "assistant",
+          "model": "qwen",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": true,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "2719",
+          "sourceQuote": "Experto en inteligencia artificial para videojuegos.",
+          "reason": "Integración de sistemas de IA en software interactivo y motores de juego.",
+          "functionalBoundary": "full",
+          "model": "qwen",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": true,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "3820",
+          "sourceQuote": "Programador de videojuegos (Game Developer).",
+          "reason": "Correspondencia funcional con la tarea de programación de videojuegos.",
+          "functionalBoundary": "full",
+          "model": "gemma",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": true,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "2713",
+          "sourceQuote": "Programador de videojuegos (Game Developer).",
+          "reason": "Relación con el desarrollo de software y multimedia.",
+          "functionalBoundary": "adjacent",
+          "model": "gemma",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": true,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "2484",
+          "sourceQuote": "Diseñador gráfico 2D y 3D de videojuegos (Game Artist).",
+          "reason": "Correspondencia con el perfil de diseño gráfico mencionado.",
+          "functionalBoundary": "full",
+          "model": "gemma",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": true,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "2719",
+          "sourceQuote": "Diseñador gráfico 2D y 3D de videojuegos (Game Artist).",
+          "reason": "Relación con el diseño de software y elementos multimedia.",
+          "functionalBoundary": "adjacent",
+          "model": "gemma",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": true,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        }
+      ],
+      "publicationApproved": false
+    },
+    {
+      "programKey": "IMA01E",
+      "program": {
+        "programKey": "IMA01E",
+        "title": "Digitalización del Mantenimiento Industrial",
+        "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/instalacion-mantenimiento/ce-digita-mante-industrial.html",
+        "priorStatus": "pending"
+      },
+      "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/instalacion-mantenimiento/ce-digita-mante-industrial.html",
+      "sourceSha256": "5d72f264819e8a38b75175751034872d2c21d0bbc84f3eaef3eb0b0761bfbc5e",
+      "twoReviewsComplete": true,
+      "candidates": [
+        {
+          "code": "2431",
+          "sourceQuote": "Experto en automatización y digitalización industrial.",
+          "reason": "Gestión de proyectos de digitalización y optimización de estrategias de mantenimiento industrial.",
+          "functionalBoundary": "full",
+          "model": "qwen",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": true,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "2621",
+          "sourceQuote": "Responsable en digitalización industrial.",
+          "reason": "Análisis de indicadores clave y mejora de procesos de mantenimiento digitalizado.",
+          "functionalBoundary": "full",
+          "model": "qwen",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": true,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "3139",
+          "sourceQuote": "Experto en digitalización del mantenimiento industrial.",
+          "reason": "Monitorización de maquinaria, sistemas y equipos mediante sensores y plataformas de almacenamiento de datos.",
+          "functionalBoundary": "full",
+          "model": "qwen",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": true,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        }
+      ],
+      "publicationApproved": false
+    },
+    {
+      "programKey": "IMA02E",
+      "program": {
+        "programKey": "IMA02E",
+        "title": "Fabricación inteligente",
+        "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/instalacion-mantenimiento/ce-fabricacion-inteligente.html",
+        "priorStatus": "pending"
+      },
+      "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/instalacion-mantenimiento/ce-fabricacion-inteligente.html",
+      "sourceSha256": "78ac1e4e3bbc333805e4c7d3794ad9c8b034b7ab7439cd12d69d98c04d9a2988",
+      "twoReviewsComplete": true,
+      "candidates": [
+        {
+          "code": "2431",
+          "sourceQuote": "Experta/Experto en sistemas de fabricación inteligente",
+          "reason": "Integración de tecnologías avanzadas y virtualización en procesos de producción industrial.",
+          "functionalBoundary": "full",
+          "model": "qwen",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": true,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "3139",
+          "sourceQuote": "Experta/Experto en sistemas de fabricación inteligente",
+          "reason": "Control y monitorización de procesos productivos mediante medición de KPIs y sistemas conectados.",
+          "functionalBoundary": "full",
+          "model": "qwen",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": true,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "2621",
+          "sourceQuote": "Experta/Experto en sistemas de fabricación inteligente",
+          "reason": "Análisis de posibilidades de mejora del proceso productivo y selección de tecnologías pertinentes.",
+          "functionalBoundary": "full",
+          "model": "qwen",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": true,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        }
+      ],
+      "publicationApproved": false
+    },
+    {
+      "programKey": "IMA03E",
+      "program": {
+        "programKey": "IMA03E",
+        "title": "Modelado de la información de la construcción (BIM)",
+        "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/instalacion-mantenimiento/ce-modelado-informacion-construccion.html",
+        "priorStatus": "pending"
+      },
+      "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/instalacion-mantenimiento/ce-modelado-informacion-construccion.html",
+      "sourceSha256": "9880dfe1011d7379ee2b24a94163cd0530296fe80357eed8ad7d117c754a8606",
+      "twoReviewsComplete": true,
+      "candidates": [
+        {
+          "code": "2451",
+          "sourceQuote": "Arquitectos (excepto arquitectos paisajistas y urbanistas)",
+          "reason": "Correspondencia funcional directa: el modelado BIM es la herramienta central para la elaboración de documentación técnica y modelos virtuales en proyectos de arquitectura e ingeniería, tal como se describe en las competencias del programa.",
+          "functionalBoundary": "full",
+          "model": "qwen",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": false,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "2454",
+          "sourceQuote": "Ingenieros geógrafos y cartógrafos",
+          "reason": "Correspondencia funcional adyacente: el programa incluye la identificación de procesos de modelado de información gráfica y no gráfica, lo que implica gestión de datos espaciales y georreferenciación, áreas afines a la cartografía e ingeniería geográfica.",
+          "functionalBoundary": "adjacent",
+          "model": "qwen",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": false,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "2469",
+          "sourceQuote": "Ingenieros técnicos no clasificados bajo otros epígrafes",
+          "reason": "Correspondencia funcional adyacente: podría cubrir a técnicos especializados en la implementación de sistemas BIM en obras civiles o industriales que no encajan estrictamente en las categorías de arquitectos o ingenieros de obra civil específicos.",
+          "functionalBoundary": "adjacent",
+          "model": "qwen",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": false,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "3110",
+          "sourceQuote": "Modelador BIM.",
+          "reason": "Correspondencia funcional con las tareas de modelado de información gráfica y no gráfica en proyectos de construcción.",
+          "functionalBoundary": "full",
+          "model": "gemma",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": true,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "3202",
+          "sourceQuote": "Modelador BIM.",
+          "reason": "El perfil de modelador en procesos BIM tiene una relación directa con la supervisión y gestión de información en obras.",
+          "functionalBoundary": "adjacent",
+          "model": "gemma",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": true,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "2481",
+          "sourceQuote": "Modelador BIM.",
+          "reason": "Relación con las funciones de arquitectura técnica y gestión de información de proyectos.",
+          "functionalBoundary": "adjacent",
+          "model": "gemma",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": true,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        }
+      ],
+      "publicationApproved": false
+    },
+    {
+      "programKey": "IMP03S",
+      "program": {
+        "programKey": "IMP03S",
+        "title": "Asesoría de Imagen Personal y Corporativa",
+        "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/imagen-personal/asesoria-imagen-personal-corporativa.html",
+        "priorStatus": "pending"
+      },
+      "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/imagen-personal/asesoria-imagen-personal-corporativa.html",
+      "sourceSha256": "f3793ec5ed6e08fe4ea65efa5d180a2c3d9959c2fb6b0e64994d9c669d82dceb",
+      "twoReviewsComplete": true,
+      "candidates": [
+        {
+          "code": "2939",
+          "sourceQuote": "Artistas creativos e interpretativos no clasificados bajo otros epígrafes",
+          "reason": "Correspondencia funcional directa: la asesoría de imagen, el estilismo y el diseño de imagen integral son actividades creativas que no tienen un código específico en el CNO, por lo que se clasifican bajo este epígrafe genérico para profesionales creativos.",
+          "functionalBoundary": "full",
+          "model": "qwen",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": false,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "2652",
+          "sourceQuote": "Profesionales de relaciones públicas",
+          "reason": "Correspondencia funcional adyacente: el programa incluye perfiles de inserción laboral en gabinetes de relaciones públicas y asesoría de imagen corporativa, actividades que a menudo se superponen con la gestión de la imagen pública y las relaciones institucionales.",
+          "functionalBoundary": "adjacent",
+          "model": "qwen",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": false,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "3739",
+          "sourceQuote": "Otros técnicos y profesionales de apoyo de actividades culturales y artísticas",
+          "reason": "Correspondencia funcional incierta: podría aplicarse si se considera la asesoría de imagen como un apoyo técnico a la industria cultural o artística, pero es menos directo que 2939 para la actividad creativa principal.",
+          "functionalBoundary": "adjacent",
+          "model": "qwen",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": false,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "3530",
+          "sourceQuote": "Consultor-asesor / asesora de protocolo y organización de actos y eventos.",
+          "reason": "Correspondencia directa con la organización de actos y eventos mencionada.",
+          "functionalBoundary": "full",
+          "model": "gemma",
+          "codeExistsInOfficialCatalogue": false,
+          "quoteFoundInSource": false,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "2652",
+          "sourceQuote": "Técnica / técnico especialista en gabinetes de relaciones públicas.",
+          "reason": "Relación directa con las funciones de relaciones públicas y comunicación.",
+          "functionalBoundary": "full",
+          "model": "gemma",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": true,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "2651",
+          "sourceQuote": "Técnica / técnico especialista en imagen en departamento de marketing.",
+          "reason": "Relación con las funciones de marketing y comercialización de imagen.",
+          "functionalBoundary": "full",
+          "model": "gemma",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": true,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "3532",
+          "sourceQuote": "Consultor-asesor / asesora de protocolo y organización de actos y eventos.",
+          "reason": "Correspondencia con la gestión de eventos y protocolo.",
+          "functionalBoundary": "full",
+          "model": "gemma",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": false,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "3510",
+          "sourceQuote": "Asesor / asesora en comercios de vestuario y complementos.",
+          "reason": "Correspondencia con la asesoría comercial en el sector de moda/vestuario.",
+          "functionalBoundary": "full",
+          "model": "gemma",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": true,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        }
+      ],
+      "publicationApproved": false
+    },
+    {
+      "programKey": "IMP04S",
+      "program": {
+        "programKey": "IMP04S",
+        "title": "Caracterización y Maquillaje Profesional",
+        "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/imagen-personal/caracterizacion-maquillaje-profesional.html",
+        "priorStatus": "pending"
+      },
+      "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/imagen-personal/caracterizacion-maquillaje-profesional.html",
+      "sourceSha256": "f77ac3065d5ff5f59d18261dfc30fe43781782f7f632195dc7d9e4db952ade96",
+      "twoReviewsComplete": true,
+      "candidates": [
+        {
+          "code": "2939",
+          "sourceQuote": "Artistas creativos e interpretativos no clasificados bajo otros epígrafes",
+          "reason": "Correspondencia funcional directa: la caracterización, el maquillaje artístico y la creación de prótesis son actividades creativas y artísticas que no tienen una categoría específica en el CNO, por lo que se incluyen en este epígrafe genérico para profesionales creativos.",
+          "functionalBoundary": "full",
+          "model": "qwen",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": false,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "3739",
+          "sourceQuote": "Otros técnicos y profesionales de apoyo de actividades culturales y artísticas",
+          "reason": "Correspondencia funcional adyacente: la caracterización puede verse como un apoyo técnico a las producciones audiovisuales y escénicas, aunque el componente creativo lo acerca más a 2939.",
+          "functionalBoundary": "adjacent",
+          "model": "qwen",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": false,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "2939",
+          "sourceQuote": "Caracterizador / caracterizadora.",
+          "reason": "Correspondencia con la creación de personajes y efectos mediante maquillaje y prótesis para espectáculos.",
+          "functionalBoundary": "full",
+          "model": "gemma",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": true,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "3831",
+          "sourceQuote": "Jefa / jefe de maquillaje para medios audiovisuales y actividades y actuaciones escénicas.",
+          "reason": "Relación con la producción técnica audiovisual mencionada.",
+          "functionalBoundary": "adjacent",
+          "model": "gemma",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": true,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "5811",
+          "sourceQuote": "Peluquera / peluquero para caracterización.",
+          "reason": "Correspondencia directa con las funciones de peluquería para caracterización.",
+          "functionalBoundary": "full",
+          "model": "gemma",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": true,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "2484",
+          "sourceQuote": "Diseñador / diseñadora de personajes de caracterización.",
+          "reason": "Relación con las funciones de diseño de personajes 2D y 3D.",
+          "functionalBoundary": "adjacent",
+          "model": "gemma",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": true,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        }
+      ],
+      "publicationApproved": false
+    },
+    {
+      "programKey": "INA01B",
+      "program": {
+        "programKey": "INA01B",
+        "title": "Actividades de Panadería y Pastelería",
+        "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/industrias-alimentarias/actividades-panaderia-pasteleria.html",
+        "priorStatus": "pending"
+      },
+      "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/industrias-alimentarias/actividades-panaderia-pasteleria.html",
+      "sourceSha256": "72743964a0420de843e99e84363d0b4c3f51809de6f94ccb295343e4943224f7",
+      "twoReviewsComplete": true,
+      "candidates": [
+        {
+          "code": "7703",
+          "sourceQuote": "Auxiliar de panadería y bollería.",
+          "reason": "Correspondencia funcional directa con la elaboración de productos de panadería. Limitación: requiere verificación de requisitos de nivel técnico y posibles habilitaciones de manipulación alimentaria.",
+          "functionalBoundary": "full",
+          "model": "qwen",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": true,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "5220",
+          "sourceQuote": "Empleada / empleado de establecimiento de pastelería.",
+          "reason": "Mapeo directo a la atención y venta minorista en puntos de venta. Limitación: corresponde a una ocupación de servicio al cliente sin requisito de titulación técnica superior.",
+          "functionalBoundary": "full",
+          "model": "qwen",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": true,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "8333",
+          "sourceQuote": "Auxiliar de almacén.",
+          "reason": "Asociado a la operación de carretillas y manejo de mercancías. Limitación: puede estar sujeto a requisitos de seguridad industrial y formación específica en manejo de equipos.",
+          "functionalBoundary": "adjacent",
+          "model": "qwen",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": true,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "5110",
+          "sourceQuote": "Auxiliar de panadería y bollería.",
+          "reason": "Correspondencia funcional con la preparación de productos de panadería.",
+          "functionalBoundary": "full",
+          "model": "gemma",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": true,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "5110",
+          "sourceQuote": "Auxiliar de pastelería.",
+          "reason": "Correspondencia funcional con la elaboración de productos de pastelería.",
+          "functionalBoundary": "full",
+          "model": "gemma",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": true,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "4121",
+          "sourceQuote": "Auxiliar de almacén.",
+          "reason": "Relación con la gestión de materias primas y productos en el almacén.",
+          "functionalBoundary": "assistant",
+          "model": "gemma",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": true,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "5220",
+          "sourceQuote": "Empleada / empleado de establecimiento de pastelería.",
+          "reason": "Relación con la venta y atención en establecimientos de este sector.",
+          "functionalBoundary": "adjacent",
+          "model": "gemma",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": true,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        }
+      ],
+      "publicationApproved": false
+    },
+    {
+      "programKey": "INA02B",
+      "program": {
+        "programKey": "INA02B",
+        "title": "Industrias alimentarias",
+        "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/industrias-alimentarias/industrias-alimentarias.html",
+        "priorStatus": "pending"
+      },
+      "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/industrias-alimentarias/industrias-alimentarias.html",
+      "sourceSha256": "4025eb5111ddf216673bee0701b1e3a1a854e069cd982a8d7752f851f1f379c0",
+      "twoReviewsComplete": true,
+      "candidates": [
+        {
+          "code": "8160",
+          "sourceQuote": "Operador / operadora de máquinas para elaborar y envasar productos alimentarios.",
+          "reason": "Coincidencia exacta con la operación de maquinaria de fabricación y envasado de alimentos. Limitación: requiere validación de conocimientos técnicos específicos y cumplimiento de normativas sectoriales.",
+          "functionalBoundary": "full",
+          "model": "qwen",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": true,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "9700",
+          "sourceQuote": "Peón de la industria de la alimentación y bebidas.",
+          "reason": "Adecuado para tareas básicas de apoyo en plantas manufactureras. Limitación: clasificado como ocupación elemental, puede no reflejar plenamente la autonomía propia de un técnico básico.",
+          "functionalBoundary": "assistant",
+          "model": "qwen",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": true,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "8333",
+          "sourceQuote": "Carretillero.",
+          "reason": "Ocupación explícita para el manejo de equipos de elevación en almacenes industriales. Limitación: sujeta a requisitos de certificaciones en manejo de maquinaria y seguridad laboral.",
+          "functionalBoundary": "full",
+          "model": "qwen",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": true,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "8160",
+          "sourceQuote": "Operador / operadora de máquinas para elaborar y envasar productos alimentarios.",
+          "reason": "Correspondencia directa con la operación de maquinaria en la industria alimentaria.",
+          "functionalBoundary": "full",
+          "model": "gemma",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": true,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "9530",
+          "sourceQuote": "Peón de la industria de la alimentación y bebidas.",
+          "reason": "Correspondencia con tareas de apoyo básico en la industria.",
+          "functionalBoundary": "assistant",
+          "model": "gemma",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": true,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "4121",
+          "sourceQuote": "Moza / mozo de almacén. Carretillero.",
+          "reason": "Relación con tareas de almacenaje y movimiento de mercancías.",
+          "functionalBoundary": "full",
+          "model": "gemma",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": true,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "9229",
+          "sourceQuote": "Auxiliar de limpieza y desinfección de instalaciones, aparatos y material de laboratorio.",
+          "reason": "Correspondencia con tareas de higiene en entornos industriales/laboratorios.",
+          "functionalBoundary": "assistant",
+          "model": "gemma",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": true,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        }
+      ],
+      "publicationApproved": false
+    },
+    {
+      "programKey": "TMV02S",
+      "program": {
+        "programKey": "TMV02S",
+        "title": "Mantenimiento Aeromecánico de Aviones con Motor de Turbina",
+        "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/transporte-mantenimiento-vehiculos/mtmo-aeromecanica-aviones-motor-turbina.html",
+        "priorStatus": "pending"
+      },
+      "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/transporte-mantenimiento-vehiculos/mtmo-aeromecanica-aviones-motor-turbina.html",
+      "sourceSha256": "81106e38015e0ec2a92257102b92933fae25367417ce6cee392eb4faab1af699",
+      "twoReviewsComplete": true,
+      "candidates": [
+        {
+          "code": "7402",
+          "sourceQuote": "Técnica / técnico de mantenimiento aeromecánico de motores de turbina.",
+          "reason": "Mapeo exacto a la reparación y mantenimiento de motores de aeronaves. Limitación: exige probablemente certificaciones técnicas oficiales y formación continua especializada del sector aeronáutico.",
+          "functionalBoundary": "full",
+          "model": "qwen",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": true,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "7531",
+          "sourceQuote": "Técnica ajustadora / técnico ajustador de equipos eléctricos y electrónicos.",
+          "reason": "Corresponde al mantenimiento de sistemas eléctricos y electrónicos de la aeronave. Limitación: requiere verificación de competencias técnicas avanzadas y adaptación a normativa de aviación civil.",
+          "functionalBoundary": "adjacent",
+          "model": "qwen",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": true,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "7402",
+          "sourceQuote": "Técnica ajustadora / técnico ajustador de motores de turbina.",
+          "reason": "Correspondencia con el ajuste y mantenimiento de motores.",
+          "functionalBoundary": "full",
+          "model": "gemma",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": true,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "7531",
+          "sourceQuote": "Técnica ajustadora / técnico ajustador de equipos eléctricos y electrónicos.",
+          "reason": "Relación con el mantenimiento de sistemas electrónicos.",
+          "functionalBoundary": "full",
+          "model": "gemma",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": true,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "7531",
+          "sourceQuote": "Técnica / técnico de mantenimiento de sistemas mecánicos y eléctricos de simuladores de vuelo.",
+          "reason": "Correspondencia con la reparación de equipos electrónicos y mecánicos.",
+          "functionalBoundary": "full",
+          "model": "gemma",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": false,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "7401",
+          "sourceQuote": "Mecánica / mecánico de línea.",
+          "reason": "Relación con tareas de mecánica en el mantenimiento.",
+          "functionalBoundary": "adjacent",
+          "model": "gemma",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": true,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "8202",
+          "sourceQuote": "Técnica / técnico en la fabricación y montaje de elementos y componentes.",
+          "reason": "Correspondencia con tareas de ensamblaje de componentes.",
+          "functionalBoundary": "assistant",
+          "model": "gemma",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": false,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        }
+      ],
+      "publicationApproved": false
+    },
+    {
+      "programKey": "TMV04E",
+      "program": {
+        "programKey": "TMV04E",
+        "title": "Aeronaves pilotadas de forma remota - Drones",
+        "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/transporte-mantenimiento-vehiculos/ce-aeronaves-drones.html",
+        "priorStatus": "pending"
+      },
+      "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/transporte-mantenimiento-vehiculos/ce-aeronaves-drones.html",
+      "sourceSha256": "3e3c0319dc2e83a73d2889f319ec07efbf3f8f1de03f89b3682f640e5220f85a",
+      "twoReviewsComplete": true,
+      "candidates": [
+        {
+          "code": "2434",
+          "sourceQuote": "Constructor/constructora de drones. Integrador/integradora de sistemas en drones.",
+          "reason": "Corresponde a la construcción e integración de sistemas aeronáuticos complejos.",
+          "functionalBoundary": "full",
+          "model": "qwen",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": false,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "3153",
+          "sourceQuote": "Piloto/pilota de drones.",
+          "reason": "Corresponde directamente a la operación de aeronaves pilotadas de forma remota.",
+          "functionalBoundary": "full",
+          "model": "qwen",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": true,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "3155",
+          "sourceQuote": "Mantenedor/mantenedora Reparador/reparadora de drones.",
+          "reason": "Puede cubrir el mantenimiento técnico y la seguridad operacional de aeronaves.",
+          "functionalBoundary": "adjacent",
+          "model": "qwen",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": true,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "3833",
+          "sourceQuote": "Integrador/integradora de sistemas en drones.",
+          "reason": "Los drones requieren integración de sistemas de telecomunicaciones.",
+          "functionalBoundary": "adjacent",
+          "model": "qwen",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": true,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "2653",
+          "sourceQuote": "Comercial de venta y asesoramiento sobre drones.",
+          "reason": "Cubre la venta y asesoramiento en tecnologías de información y comunicaciones.",
+          "functionalBoundary": "assistant",
+          "model": "qwen",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": true,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "3510",
+          "sourceQuote": "Comercial de venta y asesoramiento sobre drones.",
+          "reason": "Correspondencia con la función de venta y asesoramiento comercial de un producto tecnológico.",
+          "functionalBoundary": "full",
+          "model": "gemma",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": true,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "7314",
+          "sourceQuote": "Constructor/constructora de drones.",
+          "reason": "Relación con la fabricación y montaje de estructuras.",
+          "functionalBoundary": "full",
+          "model": "gemma",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": true,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "3153",
+          "sourceQuote": "Piloto/pilota de drones.",
+          "reason": "Correspondencia funcional con la operación de aeronaves (aunque requiere verificación de nivel de responsabilidad).",
+          "functionalBoundary": "full",
+          "model": "gemma",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": true,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "7533",
+          "sourceQuote": "Integrador/integradora de sistemas en drones.",
+          "reason": "Relación con la instalación y mantenimiento de tecnologías de la información y comunicaciones.",
+          "functionalBoundary": "full",
+          "model": "gemma",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": true,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "7531",
+          "sourceQuote": "Mantenedor/mantenedora Reparador/reparadora de drones.",
+          "reason": "Relación con la reparación de equipos electrónicos y sistemas.",
+          "functionalBoundary": "full",
+          "model": "gemma",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": true,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        }
+      ],
+      "publicationApproved": false
+    },
+    {
+      "programKey": "TMV04S",
+      "program": {
+        "programKey": "TMV04S",
+        "title": "Mantenimiento Aeromecánico de Helicópteros con Motor de Turbina",
+        "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/transporte-mantenimiento-vehiculos/mtmo-aeromecanico-helicopteros-motor-turbina.html",
+        "priorStatus": "pending"
+      },
+      "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/transporte-mantenimiento-vehiculos/mtmo-aeromecanico-helicopteros-motor-turbina.html",
+      "sourceSha256": "3a151eeea361415e0cba284c02a5f787d8b3c399770e0b5f02fed564256ccc5c",
+      "twoReviewsComplete": true,
+      "candidates": [
+        {
+          "code": "3126",
+          "sourceQuote": "Técnica / técnico de mantenimiento aeromecánico de motores de turbina. Técnica ajustadora / técnico ajustador de motores de turbina.",
+          "reason": "Corresponde al mantenimiento y ajuste de sistemas mecánicos complejos.",
+          "functionalBoundary": "full",
+          "model": "qwen",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": false,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "3160",
+          "sourceQuote": "Técnica / técnico de ensayos no destructivos.",
+          "reason": "Cubre el control de calidad mediante ensayos no destructivos en estructuras y componentes.",
+          "functionalBoundary": "full",
+          "model": "qwen",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": true,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "7521",
+          "sourceQuote": "Técnica ajustadora / técnico ajustador de equipos eléctricos y electrónicos.",
+          "reason": "Cubre el mantenimiento y ajuste de componentes eléctricos.",
+          "functionalBoundary": "assistant",
+          "model": "qwen",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": true,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "7531",
+          "sourceQuote": "Técnica ajustadora / técnico ajustador de equipos eléctricos y electrónicos.",
+          "reason": "Cubre el mantenimiento y ajuste de componentes electrónicos.",
+          "functionalBoundary": "assistant",
+          "model": "qwen",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": true,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "7403",
+          "sourceQuote": "Técnica / técnico de mantenimiento de sistemas mecánicos y eléctricos de simuladores de vuelo.",
+          "reason": "Se aproxima a la operación de mantenimiento de maquinaria compleja, aunque el ámbito industrial requiere comprobación.",
+          "functionalBoundary": "adjacent",
+          "model": "qwen",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": false,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "7402",
+          "sourceQuote": "Técnica ajustadora / técnico ajustador de motores de turbina.",
+          "reason": "Correspondencia directa con la especialidad de ajuste de motores de aviación.",
+          "functionalBoundary": "full",
+          "model": "gemma",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": true,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "7531",
+          "sourceQuote": "Técnica ajustadora / técnico ajustador de equipos eléctricos y electrónicos.",
+          "reason": "Relación con la reparación de sistemas electrónicos aeronáuticos.",
+          "functionalBoundary": "full",
+          "model": "gemma",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": true,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "7401",
+          "sourceQuote": "Mecánica / mecánico de línea.",
+          "reason": "Correspondencia con la mecánica de mantenimiento de vehículos/aeronaves.",
+          "functionalBoundary": "full",
+          "model": "gemma",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": true,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "7532",
+          "sourceQuote": "Técnica / técnico en mantenimiento de sistemas mecánicos y eléctricos de simuladores de vuelo.",
+          "reason": "Relación con el mantenimiento de equipos electromédicos o de precisión electrónica.",
+          "functionalBoundary": "adjacent",
+          "model": "gemma",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": true,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "8201",
+          "sourceQuote": "Técnica / técnico en la fabricación y montaje de elementos y componentes.",
+          "reason": "Relación con el ensamblaje de maquinaria mecánica.",
+          "functionalBoundary": "full",
+          "model": "gemma",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": true,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        }
+      ],
+      "publicationApproved": false
+    },
+    {
+      "programKey": "SAN06S",
+      "program": {
+        "programKey": "SAN06S",
+        "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/sanidad/higiente-bucodental.html",
+        "priorStatus": "no-match-in-reduced-catalog"
+      },
+      "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/sanidad/higiente-bucodental.html",
+      "sourceSha256": "34c4254c64f0f4b9d7b83f0c3ff3259044813f00e83e8343c6ef15d5d15cd5d2",
+      "twoReviewsComplete": true,
+      "candidates": [
+        {
+          "code": "3321",
+          "sourceQuote": "Técnica / técnico superior en Higiene Bucodental. Técnica / técnico especialista higienista dental. Higienista bucodental.",
+          "reason": "Coincidencia exacta de denominación y funciones profesionales.",
+          "functionalBoundary": "full",
+          "model": "qwen",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": true,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "3329",
+          "sourceQuote": "Educador / educadora en salud bucodental",
+          "reason": "Puede cubrir la promoción y educación sanitaria dentro de unidades bucodentales.",
+          "functionalBoundary": "adjacent",
+          "model": "qwen",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": true,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "3321",
+          "sourceQuote": "Técnica / técnico superior en Higiene Bucodental.",
+          "reason": "Correspondencia exacta con la denominación del perfil profesional para higiene bucodental.",
+          "functionalBoundary": "full",
+          "model": "gemma",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": true,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "3322",
+          "sourceQuote": "Técnica / técnico especialista higienista dental.",
+          "reason": "Relación con la documentación y gestión en el ámbito de la salud bucodental.",
+          "functionalBoundary": "full",
+          "model": "gemma",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": true,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "5612",
+          "sourceQuote": "Higienista bucodental.",
+          "reason": "Relación con funciones de apoyo en la atención primaria y salud.",
+          "functionalBoundary": "adjacent",
+          "model": "gemma",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": true,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "2326",
+          "sourceQuote": "Educador / educadora en salud bucodental.",
+          "reason": "Correspondencia con la función de promoción y educación para la salud.",
+          "functionalBoundary": "full",
+          "model": "gemma",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": false,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "4411",
+          "sourceQuote": "Recepción y logística en la clínica dental.",
+          "reason": "Relación con la atención al usuario y gestión de información en centros sanitarios.",
+          "functionalBoundary": "assistant",
+          "model": "gemma",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": true,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        }
+      ],
+      "publicationApproved": false
+    },
+    {
+      "programKey": "COM01S",
+      "program": {
+        "programKey": "COM01S",
+        "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/comercio-marketing/marketing-publicidad.html",
+        "priorStatus": "no-match-in-reduced-catalog"
+      },
+      "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/comercio-marketing/marketing-publicidad.html",
+      "sourceSha256": "992eb2d978f4fa8c6fc06cc5186ab028645a293c972e0dac8ad0707cdf71ec94",
+      "twoReviewsComplete": true,
+      "candidates": [
+        {
+          "code": "2651",
+          "sourceQuote": "Profesionales de la publicidad y la comercialización",
+          "reason": "Correspondencia directa con el perfil de técnico en publicidad y marketing. Requiere verificación de si el nivel del título (Grado Superior) se alinea con la definición de nivel 2 del CNO para este código.",
+          "functionalBoundary": "full",
+          "model": "qwen",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": false,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "2652",
+          "sourceQuote": "Profesionales de relaciones públicas",
+          "reason": "Correspondencia directa con el perfil de técnico en relaciones públicas mencionado en las salidas profesionales.",
+          "functionalBoundary": "full",
+          "model": "qwen",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": false,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "2653",
+          "sourceQuote": "Profesionales de la venta de tecnologías de la información y las comunicaciones",
+          "reason": "Posible candidato si el perfil de marketing se orienta a la venta de servicios TIC, aunque es más específico. Se incluye como candidato a verificar por la digitalización del marketing.",
+          "functionalBoundary": "adjacent",
+          "model": "qwen",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": false,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "3535",
+          "sourceQuote": "Portavoces y agentes de relaciones públicas",
+          "reason": "Opción de apoyo en relaciones públicas. El título es de grado superior, por lo que se prefiere el nivel 2, pero este código es una alternativa funcional para tareas de apoyo en RP.",
+          "functionalBoundary": "assistant",
+          "model": "qwen",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": false,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "2622",
+          "sourceQuote": "Especialistas en administración de política de empresas",
+          "reason": "El programa incluye gestión económica y financiera. Este código cubre la parte de administración y planificación estratégica de marketing/ventas.",
+          "functionalBoundary": "adjacent",
+          "model": "qwen",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": false,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "2651",
+          "sourceQuote": "Técnica / técnico en Publicidad.",
+          "reason": "Correspondencia funcional con profesionales de la publicidad y la comercialización.",
+          "functionalBoundary": "full",
+          "model": "gemma",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": true,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "2652",
+          "sourceQuote": "Técnica / técnico en Relaciones Públicas.",
+          "reason": "Correspondencia con profesionales de relaciones públicas.",
+          "functionalBoundary": "full",
+          "model": "gemma",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": true,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "4430",
+          "sourceQuote": "Agente de encuestas y censos.",
+          "reason": "Correspondencia con la salida profesional de agente de encuestas.",
+          "functionalBoundary": "full",
+          "model": "gemma",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": true,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "2653",
+          "sourceQuote": "Técnica / técnico de Marketing.",
+          "reason": "Correspondencia con la venta de servicios de marketing y tecnología.",
+          "functionalBoundary": "adjacent",
+          "model": "gemma",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": true,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        }
+      ],
+      "publicationApproved": false
+    },
+    {
+      "programKey": "SAN01M",
+      "program": {
+        "programKey": "SAN01M",
+        "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/sanidad/emergencias-sanitarias.html",
+        "priorStatus": "no-match-in-reduced-catalog"
+      },
+      "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/sanidad/emergencias-sanitarias.html",
+      "sourceSha256": "3809984d9330069bc5ecb8a9d3a0fcb7387dc3864a77eb3729d21b6caf048511",
+      "twoReviewsComplete": true,
+      "candidates": [
+        {
+          "code": "5622",
+          "sourceQuote": "Técnicos de emergencias sanitarias",
+          "reason": "Correspondencia exacta con el título y las salidas profesionales ('Emergencias Sanitarias', 'Transporte Sanitario').",
+          "functionalBoundary": "full",
+          "model": "qwen",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": false,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "5612",
+          "sourceQuote": "Auxiliares de enfermería de atención primaria",
+          "reason": "El programa menciona ayudar al personal de enfermería. Aunque el rol es distinto, existe una superposición funcional en el apoyo sanitario básico.",
+          "functionalBoundary": "adjacent",
+          "model": "qwen",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": false,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "5629",
+          "sourceQuote": "Trabajadores de los cuidados a las personas en servicios de salud no clasificados bajo otros epígrafes",
+          "reason": "Código paraguas para roles sanitarios no especificados. Podría aplicarse si la definición de 5622 es muy estricta, pero 5622 es preferible.",
+          "functionalBoundary": "adjacent",
+          "model": "qwen",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": false,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "3326",
+          "sourceQuote": "Técnicos en prevención de riesgos laborales y salud ambiental",
+          "reason": "El programa incluye formación en planes de emergencia y protección civil. Existe una correlación funcional con la prevención de riesgos en el ámbito sanitario/laboral.",
+          "functionalBoundary": "adjacent",
+          "model": "qwen",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": false,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "5611",
+          "sourceQuote": "Auxiliares de enfermería hospitalaria",
+          "reason": "El programa menciona asistencia en soporte vital avanzado. Existe una correlación funcional con el apoyo a enfermeros, aunque el entorno (urgencias vs hospitalario) difiere.",
+          "functionalBoundary": "adjacent",
+          "model": "qwen",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": false,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "5622",
+          "sourceQuote": "Emergencias Sanitarias.",
+          "reason": "Correspondencia directa con técnicos de emergencias sanitarias.",
+          "functionalBoundary": "full",
+          "model": "gemma",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": true,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "5612",
+          "sourceQuote": "Atender la demanda de asistencia sanitaria recibida en los centros gestores de tele-operación y tele-asistencia.",
+          "reason": "Relación con funciones de asistencia en teleasistencia.",
+          "functionalBoundary": "full",
+          "model": "gemma",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": true,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "8412",
+          "sourceQuote": "Transporte Sanitario.",
+          "reason": "Correspondencia con el perfil de transporte de pacientes.",
+          "functionalBoundary": "adjacent",
+          "model": "gemma",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": true,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        }
+      ],
+      "publicationApproved": false
+    },
+    {
+      "programKey": "SAN32",
+      "program": {
+        "programKey": "SAN32",
+        "sourceUrl": "https://www.todofp.es/que-estudiar/logse/sanidad/dietetica.html",
+        "priorStatus": "no-match-in-reduced-catalog"
+      },
+      "sourceUrl": "https://www.todofp.es/que-estudiar/logse/sanidad/dietetica.html",
+      "sourceSha256": "a0513557cbc007f850239fa5970581fe75ebad45d1d685ed75758722b3665c55",
+      "twoReviewsComplete": true,
+      "candidates": [
+        {
+          "code": "2153",
+          "sourceQuote": "Dietistas y nutricionistas",
+          "reason": "Correspondencia directa con las salidas profesionales ('Técnico en Dietética y Nutrición', 'Dietista'). Requiere verificar si el nivel del título (Grado Superior) se ajusta a la definición de profesional (Nivel 2) o técnico (Nivel 3) en el CNO.",
+          "functionalBoundary": "full",
+          "model": "qwen",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": false,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "3323",
+          "sourceQuote": "Técnicos superiores en dietética",
+          "reason": "Correspondencia exacta con el nombre del título. Este código parece diseñado específicamente para este perfil técnico superior.",
+          "functionalBoundary": "full",
+          "model": "qwen",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": false,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "3734",
+          "sourceQuote": "Chefs",
+          "reason": "El programa menciona trabajar en hostelería y restauración. Aunque el chef se centra en la preparación, el técnico en dietética puede trabajar en la planificación de menús y control nutricional en estos entornos.",
+          "functionalBoundary": "adjacent",
+          "model": "qwen",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": false,
+          "quoteFitsPublicationSchema": false,
+          "publicationApproved": false
+        },
+        {
+          "code": "3129",
+          "sourceQuote": "Otros técnicos de las ciencias físicas, químicas, medioambientales y de las ingenierías",
+          "reason": "El programa incluye control alimentario e higiene. Podría haber una superposición con técnicos de laboratorio o control de calidad en industrias alimentarias.",
+          "functionalBoundary": "adjacent",
+          "model": "qwen",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": false,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "2824",
+          "sourceQuote": "Profesionales del trabajo y la educación social",
+          "reason": "El programa menciona 'Educador sanitario' y promoción de la salud. Existe una correlación funcional con la educación para la salud, aunque el ámbito puede ser más social que estrictamente nutricional.",
+          "functionalBoundary": "adjacent",
+          "model": "qwen",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": false,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "2153",
+          "sourceQuote": "Dietista.",
+          "reason": "Correspondencia directa con el perfil de dietista y nutricionista.",
+          "functionalBoundary": "full",
+          "model": "gemma",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": true,
+          "quoteFitsPublicationSchema": false,
+          "publicationApproved": false
+        },
+        {
+          "code": "3323",
+          "sourceQuote": "Técnico Superior en Dietética",
+          "reason": "Correspondencia con técnicos superiores en dietética.",
+          "functionalBoundary": "full",
+          "model": "gemma",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": true,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "1429",
+          "sourceQuote": "Responsable de alimentación en empresas de catering.",
+          "reason": "Correspondencia con la gestión de alimentación en servicios de restauración/catering.",
+          "functionalBoundary": "adjacent",
+          "model": "gemma",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": true,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        }
+      ],
+      "publicationApproved": false
+    },
+    {
+      "programKey": "EOC01S",
+      "program": {
+        "programKey": "EOC01S",
+        "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/edificacion-obra-civil/proyectos-edificacion.html",
+        "priorStatus": "no-match-in-reduced-catalog"
+      },
+      "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/edificacion-obra-civil/proyectos-edificacion.html",
+      "sourceSha256": "110bac4cbf77c547995c9bcba0c25a3321d1fcc461e503d6201226459cfcace1",
+      "twoReviewsComplete": true,
+      "candidates": [
+        {
+          "code": "3110",
+          "sourceQuote": "Delineante proyectista de edificación.\nDelineante de edificación.\nDelineante de instalaciones.\nMaquetista de construcción",
+          "reason": "Correspondencia directa entre los perfiles de delineante y maquetista de edificación listados y la categoría de delineantes y dibujantes técnicos.",
+          "functionalBoundary": "full",
+          "model": "qwen",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": true,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "3613",
+          "sourceQuote": "Ayudante de planificador / planificadora.\nAyudante de técnica / técnico de Control de Costes.\nTécnica / técnico de control documental",
+          "reason": "Correspondencia funcional con roles de asistencia administrativa, planificación y control documental en entornos de ingeniería o construcción.",
+          "functionalBoundary": "full",
+          "model": "qwen",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": true,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "3110",
+          "sourceQuote": "Delineante proyectista de edificación.",
+          "reason": "Correspondencia funcional directa con la labor de delineación de proyectos.",
+          "functionalBoundary": "full",
+          "model": "gemma",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": true,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "3110",
+          "sourceQuote": "Delineante de edificación.",
+          "reason": "Correspondencia funcional directa con la labor de delineación.",
+          "functionalBoundary": "full",
+          "model": "gemma",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": true,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "3122",
+          "sourceQuote": "Delineante de instalaciones.",
+          "reason": "La labor de delineación de instalaciones técnicas se relaciona con la categoría de técnicos en construcción.",
+          "functionalBoundary": "adjacent",
+          "model": "gemma",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": true,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "3122",
+          "sourceQuote": "Ayudante de jefa / jefe de Oficina Técnica.",
+          "reason": "El perfil de ayudante en oficina técnica de edificación se relaciona con técnicos de construcción.",
+          "functionalBoundary": "assistant",
+          "model": "gemma",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": true,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        }
+      ],
+      "publicationApproved": false
+    },
+    {
+      "programKey": "INA01M",
+      "program": {
+        "programKey": "INA01M",
+        "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/industrias-alimentarias/panaderia-reposteria-confiteria.html",
+        "priorStatus": "no-match-in-reduced-catalog"
+      },
+      "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/industrias-alimentarias/panaderia-reposteria-confiteria.html",
+      "sourceSha256": "cbae43770658429e1771e607cd185e23c2b471e54cdefb93dd6dd829d71a73ef",
+      "twoReviewsComplete": true,
+      "candidates": [
+        {
+          "code": "7703",
+          "sourceQuote": "Panadera / panadero.\nPastelera / pastelera.\nConfitera / confitera.\nRepostera / repostera.\nTurronera / turronera.\nChurrera / churrera.\nGalletera / galletera",
+          "reason": "Correspondencia exacta entre las salidas profesionales listadas y el título de la ocupación en el catálogo.",
+          "functionalBoundary": "full",
+          "model": "qwen",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": false,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "5110",
+          "sourceQuote": "Panadera / panadero.",
+          "reason": "Correspondencia directa con la ocupación de panadero.",
+          "functionalBoundary": "full",
+          "model": "gemma",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": true,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "5110",
+          "sourceQuote": "Pastelera / pastelero.",
+          "reason": "Correspondencia directa con la ocupación de pastelero.",
+          "functionalBoundary": "full",
+          "model": "gemma",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": true,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "5110",
+          "sourceQuote": "Confitera / confitero.",
+          "reason": "Correspondencia directa con la labor de confitería.",
+          "functionalBoundary": "full",
+          "model": "gemma",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": true,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "5110",
+          "sourceQuote": "Repostera / repostero.",
+          "reason": "Correspondencia directa con la labor de repostería.",
+          "functionalBoundary": "full",
+          "model": "gemma",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": true,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "5110",
+          "sourceQuote": "Elaborador / elaboradora de bollería, masas y bases de pizza",
+          "reason": "Funcionalmente es un trabajador de elaboración de productos de panadería.",
+          "functionalBoundary": "full",
+          "model": "gemma",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": true,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        }
+      ],
+      "publicationApproved": false
+    },
+    {
+      "programKey": "IMS01M",
+      "program": {
+        "programKey": "IMS01M",
+        "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/imagen-sonido/video-discjockey-sonido.html",
+        "priorStatus": "no-match-in-reduced-catalog"
+      },
+      "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/imagen-sonido/video-discjockey-sonido.html",
+      "sourceSha256": "a4cfdf93356b349c8768b609160270eeeea3d60f6b82651f6c73af704a9f5faf",
+      "twoReviewsComplete": true,
+      "candidates": [
+        {
+          "code": "3831",
+          "sourceQuote": "Ayudante de sonido en televisión.\nMicrofonista de cine y vídeo.\nMicrofonista de conciertos musicales.\nMicrofonista de espectáculos escénicos.\nAyudante de montaje de sonido en cine",
+          "reason": "Correspondencia funcional con roles técnicos de captación, edición y montaje de sonido para producciones audiovisuales y televisivas.",
+          "functionalBoundary": "full",
+          "model": "qwen",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": true,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "3739",
+          "sourceQuote": "Disc-jockey.\nVídeo-jockey.\nVídeo Disc-jockey.\nLight-jockey.\nRetocador / retocadora fotográfico digital",
+          "reason": "Correspondencia funcional con perfiles de apoyo técnico y creativo en eventos, espectáculos y producción visual no clasificados en otros epígrafes.",
+          "functionalBoundary": "adjacent",
+          "model": "qwen",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": true,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "3831",
+          "sourceQuote": "Ayudante de sonido en televisión.",
+          "reason": "Correspondencia con la labor de soporte en producción audiovisual.",
+          "functionalBoundary": "assistant",
+          "model": "gemma",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": true,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "3831",
+          "sourceQuote": "Microfonista de cine y vídeo.",
+          "reason": "El microfonista es un técnico especializado en la parte de grabación audiovisual.",
+          "functionalBoundary": "full",
+          "model": "gemma",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": true,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "3831",
+          "sourceQuote": "Ayudante de montaje de sonido en cine.",
+          "reason": "Perfil de apoyo en procesos de postproducción o montaje audiovisual.",
+          "functionalBoundary": "assistant",
+          "model": "gemma",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": true,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "3831",
+          "sourceQuote": "Disc-jockey.",
+          "reason": "Aunque es una ocupación específica de animación, se relaciona con la gestión de audio.",
+          "functionalBoundary": "adjacent",
+          "model": "gemma",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": true,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "3831",
+          "sourceQuote": "Retocador / retocadora fotográfico digital",
+          "reason": "Se relaciona con la parte de edición de imagen en el ámbito audiovisual.",
+          "functionalBoundary": "adjacent",
+          "model": "gemma",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": true,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        }
+      ],
+      "publicationApproved": false
+    },
+    {
+      "programKey": "HOT01E",
+      "program": {
+        "programKey": "HOT01E",
+        "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/hosteleria-turismo/ce-panaderia-bolleria-artesanal.html",
+        "priorStatus": "no-match-in-reduced-catalog"
+      },
+      "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/hosteleria-turismo/ce-panaderia-bolleria-artesanal.html",
+      "sourceSha256": "dbad2adafa64ccc74a515684565cec49a1c3a8904aaf206705baaa34547b76c7",
+      "twoReviewsComplete": true,
+      "candidates": [
+        {
+          "code": "7703",
+          "sourceQuote": "Maestro Panadero",
+          "reason": "Producción artesanal de pan, bollería y masas de pizza",
+          "functionalBoundary": "full",
+          "model": "qwen",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": true,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "7709",
+          "sourceQuote": "Catador de productos de panificación artesanal",
+          "reason": "Evaluación de calidad y maridaje de productos de panificación",
+          "functionalBoundary": "full",
+          "model": "qwen",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": true,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "7703",
+          "sourceQuote": "Maestro Panadero",
+          "reason": "Correspondencia directa con la función de panadero.",
+          "functionalBoundary": "full",
+          "model": "gemma",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": true,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "5110",
+          "sourceQuote": "Elaborador de bollería",
+          "reason": "Correspondencia con cocineros/elaboradores de productos de panadería.",
+          "functionalBoundary": "full",
+          "model": "gemma",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": true,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "7709",
+          "sourceQuote": "Catador de productos de panificación artesanal",
+          "reason": "Correspondencia con la labor de catación y clasificación de alimentos.",
+          "functionalBoundary": "full",
+          "model": "gemma",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": true,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        }
+      ],
+      "publicationApproved": false
+    },
+    {
+      "programKey": "IFC01E",
+      "program": {
+        "programKey": "IFC01E",
+        "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/informatica-comunicaciones/ce-ciberseguridad-entornos-tecnologias-informacion.html",
+        "priorStatus": "no-match-in-reduced-catalog"
+      },
+      "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/informatica-comunicaciones/ce-ciberseguridad-entornos-tecnologias-informacion.html",
+      "sourceSha256": "226d8d30900d50156c1006c5eacfeeed4a6a77c90e1b1a6dbe90bd6bd619f818",
+      "twoReviewsComplete": true,
+      "candidates": [
+        {
+          "code": "2722",
+          "sourceQuote": "Experto/a en ciberseguridad.",
+          "reason": "Administración y securización de sistemas y redes informáticas",
+          "functionalBoundary": "full",
+          "model": "qwen",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": true,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "2723",
+          "sourceQuote": "Auditor/a de ciberseguridad.",
+          "reason": "Análisis, auditoría y monitorización de redes y entornos TI",
+          "functionalBoundary": "full",
+          "model": "qwen",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": true,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "2711",
+          "sourceQuote": "Experto/a en ciberseguridad",
+          "reason": "Relación con la función de analista de sistemas y seguridad.",
+          "functionalBoundary": "full",
+          "model": "gemma",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": true,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "2712",
+          "sourceQuote": "Auditor/a de ciberseguridad",
+          "reason": "Relación con la función de análisis y diseño de software/seguridad.",
+          "functionalBoundary": "full",
+          "model": "gemma",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": true,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "3813",
+          "sourceQuote": "Consultor/a de ciberseguridad",
+          "reason": "Relación con técnicos en redes y sistemas de seguridad.",
+          "functionalBoundary": "full",
+          "model": "gemma",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": true,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "2722",
+          "sourceQuote": "Hacker ético",
+          "reason": "Correspondencia con administradores de sistemas y redes en entornos de seguridad.",
+          "functionalBoundary": "full",
+          "model": "gemma",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": true,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        }
+      ],
+      "publicationApproved": false
+    },
+    {
+      "programKey": "IMS02S",
+      "program": {
+        "programKey": "IMS02S",
+        "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/imagen-sonido/realizacion-proy-audiovisuales-espectaculos.html",
+        "priorStatus": "no-match-in-reduced-catalog"
+      },
+      "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/imagen-sonido/realizacion-proy-audiovisuales-espectaculos.html",
+      "sourceSha256": "a26dc93b0c099a66cead589179cb5a977d6ee0fd947ae1ed7ee8bd28b4ab7412",
+      "twoReviewsComplete": true,
+      "candidates": [
+        {
+          "code": "3831",
+          "sourceQuote": "Montador / montadora de cine.",
+          "reason": "Técnico de producción, grabación y montaje audiovisual",
+          "functionalBoundary": "full",
+          "model": "qwen",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": true,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "3532",
+          "sourceQuote": "Regidor / regidora de eventos.",
+          "reason": "Coordinación técnica y logística de espectáculos y eventos",
+          "functionalBoundary": "full",
+          "model": "qwen",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": true,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "3832",
+          "sourceQuote": "Ayudante de realización de televisión.",
+          "reason": "Aplicación técnica en producción y radiodifusión televisiva",
+          "functionalBoundary": "adjacent",
+          "model": "qwen",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": true,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "3831",
+          "sourceQuote": "Ayudante de realización de vídeo",
+          "reason": "Correspondencia con técnicos de grabación audiovisual.",
+          "functionalBoundary": "full",
+          "model": "gemma",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": true,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "3831",
+          "sourceQuote": "Montador / montadora de cine",
+          "reason": "Correspondencia con técnicos de grabación y postproducción.",
+          "functionalBoundary": "full",
+          "model": "gemma",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": true,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "3831",
+          "sourceQuote": "Editor-montador / editora-montadora de vídeo",
+          "reason": "Relación con la labor técnica de edición audiovisual.",
+          "functionalBoundary": "full",
+          "model": "gemma",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": true,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "3739",
+          "sourceQuote": "Regidor / regidora de eventos",
+          "reason": "Correspondencia con profesionales de apoyo de actividades culturales.",
+          "functionalBoundary": "full",
+          "model": "gemma",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": true,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        }
+      ],
+      "publicationApproved": false
+    },
+    {
+      "programKey": "MSP34",
+      "program": {
+        "programKey": "MSP34",
+        "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/seguridad-medio-ambiente/prevencion-riesgos-profesionales.html",
+        "priorStatus": "no-match-in-reduced-catalog"
+      },
+      "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/seguridad-medio-ambiente/prevencion-riesgos-profesionales.html",
+      "sourceSha256": "1c7dcb2e9ab7e8ed89a1fdc60a3506b5b99f41adbd5e42801221a4c18ee8b559",
+      "twoReviewsComplete": true,
+      "candidates": [
+        {
+          "code": "3326",
+          "sourceQuote": "Técnico/a de prevención de nivel intermedio. / Técnico/a intermedios en seguridad y salud en el trabajo.",
+          "reason": "Correspondencia funcional directa con las competencias de análisis de riesgos, seguridad industrial y prevención laboral descritas en el plan de formación.",
+          "functionalBoundary": "full",
+          "model": "qwen",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": false,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "3629",
+          "sourceQuote": "Encargado/a de la coordinación de las actividades preventivas. / Coordinador/a de seguridad y salud en las obras de construcción.",
+          "reason": "Ajuste a labores de coordinación y control de seguridad en entornos específicos, que requieren verificación de atribuciones en la clasificación oficial.",
+          "functionalBoundary": "adjacent",
+          "model": "qwen",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": false,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "3326",
+          "sourceQuote": "Técnico/a de prevención de nivel intermedio.",
+          "reason": "Correspondencia funcional directa con las tareas de prevención de riesgos descritas.",
+          "functionalBoundary": "full",
+          "model": "gemma",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": true,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "3326",
+          "sourceQuote": "Técnico/a intermedios en seguridad y salud en el trabajo.",
+          "reason": "Relación funcional con la gestión de seguridad y salud laboral.",
+          "functionalBoundary": "full",
+          "model": "gemma",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": true,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "3326",
+          "sourceQuote": "Encargado/a de la coordinación de las actividades preventivas.",
+          "reason": "Correspondencia con la gestión y coordinación de la prevención.",
+          "functionalBoundary": "full",
+          "model": "gemma",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": true,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "3326",
+          "sourceQuote": "Coordinador/a de seguridad y salud en las obras de construcción.",
+          "reason": "Relación con la supervisión de medidas preventivas en entornos específicos.",
+          "functionalBoundary": "full",
+          "model": "gemma",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": true,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        }
+      ],
+      "publicationApproved": false
+    },
+    {
+      "programKey": "IMS05S",
+      "program": {
+        "programKey": "IMS05S",
+        "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/imagen-sonido/iluminacion-captacion-tratamiento-imagen.html",
+        "priorStatus": "no-match-in-reduced-catalog"
+      },
+      "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/imagen-sonido/iluminacion-captacion-tratamiento-imagen.html",
+      "sourceSha256": "403a7f82086be260f66b3004ba26d061a9f1bc0fee2fa143fad154d8ad09e8ef",
+      "twoReviewsComplete": true,
+      "candidates": [
+        {
+          "code": "3831",
+          "sourceQuote": "Cámara de cine, vídeo y televisión. / Grabación y edición de reportajes audiovisuales.",
+          "reason": "Correspondencia con la operación y gestión técnica de equipos de grabación y producción audiovisual.",
+          "functionalBoundary": "full",
+          "model": "qwen",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": false,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "3731",
+          "sourceQuote": "Fotógrafa / fotógrafo. / Reportero gráfico / reportera gráfica.",
+          "reason": "Correspondencia con la captación y registro de imágenes fijas y documentales bajo criterios profesionales.",
+          "functionalBoundary": "full",
+          "model": "qwen",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": false,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "2484",
+          "sourceQuote": "Tratamiento fotográfico digital. / Retocador fotográfico / retocadora fotográfica digital.",
+          "reason": "Ajuste a las funciones de diseño, edición y generación de imágenes digitales.",
+          "functionalBoundary": "full",
+          "model": "qwen",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": false,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "3739",
+          "sourceQuote": "Iluminador / iluminadora de televisión. / Ayudante de cámara. / Responsable de iluminación en espectáculos en vivo.",
+          "reason": "Corresponde a labores de apoyo técnico y especialización puntual en iluminación y montaje audiovisual.",
+          "functionalBoundary": "assistant",
+          "model": "qwen",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": false,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "3831",
+          "sourceQuote": "Cámara de cine, vídeo y televisión.",
+          "reason": "Correspondencia con la captación de imagen audiovisual.",
+          "functionalBoundary": "full",
+          "model": "gemma",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": true,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "3831",
+          "sourceQuote": "Ayudante de cámara.",
+          "reason": "Rol de asistencia técnica en la captación de imagen.",
+          "functionalBoundary": "assistant",
+          "model": "gemma",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": true,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "3831",
+          "sourceQuote": "Iluminador / iluminadora de televisión.",
+          "reason": "Especialidad técnica en iluminación para medios audiovisuales.",
+          "functionalBoundary": "full",
+          "model": "gemma",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": true,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "3731",
+          "sourceQuote": "Fotógrafa / fotógrafo.",
+          "reason": "Correspondencia directa con la especialidad de fotografía.",
+          "functionalBoundary": "full",
+          "model": "gemma",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": true,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "3831",
+          "sourceQuote": "Retocador fotográfico / retocadora fotográfica digital.",
+          "reason": "Correspondencia con el tratamiento digital de imágenes.",
+          "functionalBoundary": "full",
+          "model": "gemma",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": true,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        }
+      ],
+      "publicationApproved": false
+    },
+    {
+      "programKey": "TCP01M",
+      "program": {
+        "programKey": "TCP01M",
+        "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/textil-confeccion-piel/confeccion-moda.html",
+        "priorStatus": "no-match-in-reduced-catalog"
+      },
+      "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/textil-confeccion-piel/confeccion-moda.html",
+      "sourceSha256": "05a713cd1ea9cd2eb00e65c0dbb518e3fd677194e9a881dbfeef1d4976f02691",
+      "twoReviewsComplete": true,
+      "candidates": [
+        {
+          "code": "7831",
+          "sourceQuote": "Confeccionista. / Ayudante de sastrería y modistería.",
+          "reason": "Correspondencia directa con la confección, sastrería y modistería tradicional y a medida.",
+          "functionalBoundary": "full",
+          "model": "qwen",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": false,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "7833",
+          "sourceQuote": "Cortador / cortadora de prendas y artículos textiles. / Marcador-cortador / marcadora-cortadora de prendas y artículos en textil y piel.",
+          "reason": "Ajuste a las tareas de preparación y corte de materiales textiles y pieles según patrones.",
+          "functionalBoundary": "full",
+          "model": "qwen",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": false,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "7834",
+          "sourceQuote": "Operador / operadora de máquinas industriales de coser y bordar. / Cosedor-ensamblador / cosedora-ensambladora.",
+          "reason": "Corresponde a la operatividad de máquinas de costura y ensamblaje industrial de prendas.",
+          "functionalBoundary": "full",
+          "model": "qwen",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": false,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "7899",
+          "sourceQuote": "Planchador-acabador / planchadora-acabadora. / Acabados en confección.",
+          "reason": "Se ajusta a las fases finales de acabado industrial de prendas y complementos, que requieren validación de especificaciones técnicas en el epígrafe.",
+          "functionalBoundary": "assistant",
+          "model": "qwen",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": false,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "8153",
+          "sourceQuote": "Operador / operadora de máquinas industriales de coser y bordar.",
+          "reason": "Correspondencia directa con la operación de maquinaria de confección.",
+          "functionalBoundary": "full",
+          "model": "gemma",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": true,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "7834",
+          "sourceQuote": "Cosedor-ensamblador / cosedora-ensambladora.",
+          "reason": "Relación funcional con el ensamblaje de piezas textiles.",
+          "functionalBoundary": "full",
+          "model": "gemma",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": true,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "7833",
+          "sourceQuote": "Cortador / cortadora de prendas y artículos textiles.",
+          "reason": "Correspondencia con la tarea de corte de materiales descrita.",
+          "functionalBoundary": "full",
+          "model": "gemma",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": true,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "7834",
+          "sourceQuote": "Ayudante de sastrería y modistería.",
+          "reason": "Rol de apoyo en talleres de confección a medida.",
+          "functionalBoundary": "assistant",
+          "model": "gemma",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": true,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "8153",
+          "sourceQuote": "Oficial de confección.",
+          "reason": "Correspondencia con el perfil de trabajador cualificado en confección.",
+          "functionalBoundary": "full",
+          "model": "gemma",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": true,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        }
+      ],
+      "publicationApproved": false
+    },
+    {
+      "programKey": "ELE05E",
+      "program": {
+        "programKey": "ELE05E",
+        "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/electricidad-electronica/ce-robotica-colaborativa.html",
+        "priorStatus": "no-match-in-reduced-catalog"
+      },
+      "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/electricidad-electronica/ce-robotica-colaborativa.html",
+      "sourceSha256": "0f3d3372f8db39db3a3b836eba87ccac5c9180c9f014589833808d99748d7a63",
+      "twoReviewsComplete": true,
+      "candidates": [
+        {
+          "code": "2431",
+          "sourceQuote": "Proyectista de sistemas de robótica colaborativa.",
+          "reason": "Corresponde a la fase de diseño, desarrollo y proyección de sistemas robóticos industriales y automatizados.",
+          "functionalBoundary": "full",
+          "model": "qwen",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": true,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "2712",
+          "sourceQuote": "Programador de robots colaborativos.",
+          "reason": "Corresponde al análisis, diseño y codificación de software para la configuración y control de brazos y robots móviles autónomos.",
+          "functionalBoundary": "full",
+          "model": "qwen",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": true,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "3209",
+          "sourceQuote": "Jefe de equipo de supervisión de montaje de sistemas de robótica colaborativa.",
+          "reason": "Corresponde a la supervisión y coordinación de equipos en tareas de montaje, mantenimiento y puesta en marcha de sistemas de fabricación/automatización.",
+          "functionalBoundary": "full",
+          "model": "qwen",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": true,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "2439",
+          "sourceQuote": "Desarrollar proyectos de robótica colaborativa, tanto de brazos robóticos como de robots móviles autónomos",
+          "reason": "Corresponde a la investigación y desarrollo de arquitecturas robóticas innovadoras y móviles que requieren un perfil de ingeniería especializado no clasificado en epígrafes tradicionales.",
+          "functionalBoundary": "adjacent",
+          "model": "qwen",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": true,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "3820",
+          "sourceQuote": "Programador de robots colaborativos.",
+          "reason": "Corresponde a la ejecución técnica, scripting y aplicación práctica de la programación para la operatividad de los robots.",
+          "functionalBoundary": "assistant",
+          "model": "qwen",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": true,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "2461",
+          "sourceQuote": "Jefe de equipo de supervisión de montaje de sistemas de robótica colaborativa.",
+          "reason": "Corresponde a funciones de supervisión técnica en entornos industriales/robóticos.",
+          "functionalBoundary": "full",
+          "model": "gemma",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": true,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "3820",
+          "sourceQuote": "Programador de robots colaborativos.",
+          "reason": "Relación directa con la programación de sistemas de control y software robótico.",
+          "functionalBoundary": "full",
+          "model": "gemma",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": true,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "3126",
+          "sourceQuote": "Jefe de equipo de supervisión de mantenimiento de sistemas de robótica colaborativa.",
+          "reason": "Funciones de mantenimiento técnico en maquinaria industrial.",
+          "functionalBoundary": "full",
+          "model": "gemma",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": true,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "3811",
+          "sourceQuote": "Técnico de puesta en marcha de sistemas de robótica colaborativa.",
+          "reason": "Tareas de soporte técnico y operaciones de sistemas informáticos/robóticos.",
+          "functionalBoundary": "adjacent",
+          "model": "gemma",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": true,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        }
+      ],
+      "publicationApproved": false
+    },
+    {
+      "programKey": "IMS03S",
+      "program": {
+        "programKey": "IMS03S",
+        "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/imagen-sonido/produccion-audiovisuales-espectaculos.html",
+        "priorStatus": "no-match-in-reduced-catalog"
+      },
+      "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/imagen-sonido/produccion-audiovisuales-espectaculos.html",
+      "sourceSha256": "9f541dcaba5ba1b3cd7d47d75d22273bb69754ba31b2d7c089bf97942a128a7d",
+      "twoReviewsComplete": true,
+      "candidates": [
+        {
+          "code": "3831",
+          "sourceQuote": "Ayudante de producción de cine.",
+          "reason": "Corresponde a la gestión técnica y operativa en la captura, grabación y producción de contenidos audiovisuales, cine, vídeo y multimedia.",
+          "functionalBoundary": "full",
+          "model": "qwen",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": true,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "3532",
+          "sourceQuote": "Jefa / jefe de producción de espectáculos en vivo y eventos.",
+          "reason": "Corresponde a la planificación, organización, coordinación logística y contractual de la producción de espectáculos en vivo y eventos.",
+          "functionalBoundary": "full",
+          "model": "qwen",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": true,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "2934",
+          "sourceQuote": "Planificar la producción de los proyectos, estableciendo las diferentes fases, optimizando tiempos, recursos, costes y calidades",
+          "reason": "Corresponde a la dirección creativa y técnica de proyectos audiovisuales y de espectáculos, asegurando la viabilidad y calidad final.",
+          "functionalBoundary": "full",
+          "model": "qwen",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": true,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "3832",
+          "sourceQuote": "Ayudante de producción de radio.",
+          "reason": "Corresponde a las operaciones de producción, grabación, mezcla y emisión de contenidos radiofónicos.",
+          "functionalBoundary": "full",
+          "model": "qwen",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": true,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "2652",
+          "sourceQuote": "Administración y promoción de audiovisuales y espectáculos.",
+          "reason": "Corresponde a la gestión de la promoción comercial, relaciones con distribuidoras, salas y plataformas de exhibición de espectáculos.",
+          "functionalBoundary": "adjacent",
+          "model": "qwen",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": true,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "3532",
+          "sourceQuote": "Jefa / jefe de producción de espectáculos en vivo y eventos.",
+          "reason": "Corresponde a la organización y gestión de eventos y espectáculos.",
+          "functionalBoundary": "full",
+          "model": "gemma",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": true,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "3613",
+          "sourceQuote": "Ayudante de producción de cine, vídeo, televisión, animación, multimedia, radio.",
+          "reason": "Funciones de apoyo administrativo y de dirección en entornos de producción.",
+          "functionalBoundary": "assistant",
+          "model": "gemma",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": false,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "1429",
+          "sourceQuote": "Gerente de compañía",
+          "reason": "Relación con la gestión de empresas de servicios o producción.",
+          "functionalBoundary": "adjacent",
+          "model": "gemma",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": true,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        },
+        {
+          "code": "3831",
+          "sourceQuote": "Ayudante de producción de audiovisuales.",
+          "reason": "Funciones técnicas de soporte en la producción de contenidos grabados.",
+          "functionalBoundary": "assistant",
+          "model": "gemma",
+          "codeExistsInOfficialCatalogue": true,
+          "quoteFoundInSource": false,
+          "quoteFitsPublicationSchema": true,
+          "publicationApproved": false
+        }
+      ],
+      "publicationApproved": false
+    }
+  ]
+}

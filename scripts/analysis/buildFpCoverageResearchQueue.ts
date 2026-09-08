@@ -167,7 +167,7 @@ export function renderFpCoverageResearchQueue(
         `| ${candidate.rank} | ${candidate.baseProgramKey} | ${candidate.programTitle} | ${candidate.familyName} | ${candidate.offeringCount} | ${candidate.provinceCount} | ${candidate.centerCount} | ${candidate.priorDraft ? "sí" : "no"} |`,
     )
     .join("\n");
-  return `# Cola incremental de investigación FP–ocupación\n\n- Snapshot: ${queue.snapshotGeneratedAt}\n- Cualificaciones base revisadas: ${queue.reviewedBaseCount}\n- Cualificaciones base sin coincidencia publicable (completadas): ${queue.completedNoMatchBaseCount}\n- Cualificaciones base pendientes: ${queue.pendingBaseCount}\n- Contrato: ${queue.contract}\n\nLa tabla muestra las primeras 30 prioridades. La cola JSON conserva todo el universo pendiente.\n\n| Prioridad | Ciclo base | Título | Familia | Ofertas formativas | Provincias | Centros | Borrador previo |\n| ---: | --- | --- | --- | ---: | ---: | ---: | --- |\n${rows}\n`;
+  return `# Cola incremental de investigación FP–ocupación\n\n- Snapshot: ${queue.snapshotGeneratedAt}\n- Grupos de programa por clave y título revisados: ${queue.reviewedBaseCount}\n- Grupos de programa sin coincidencia publicable (completadas): ${queue.completedNoMatchBaseCount}\n- Grupos de programa pendientes: ${queue.pendingBaseCount}\n- Contrato: ${queue.contract}\n\nLa tabla muestra las primeras 30 prioridades. La cola JSON conserva todo el universo pendiente.\n\n| Prioridad | Ciclo base | Título | Familia | Ofertas formativas | Provincias | Centros | Borrador previo |\n| ---: | --- | --- | --- | ---: | ---: | ---: | --- |\n${rows}\n`;
 }
 
 function publicResourcePath(root: string, resourcePath: string): string {

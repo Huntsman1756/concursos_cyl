@@ -2247,11 +2247,19 @@ async function completedPilotSnapshotDistributionOptions(
     ...activeSnapshotIds,
   ]);
   return {
-    // The Task 5 versioned snapshots remain outside revocation scanning while
-    // their immutable bytes are retained by the release configuration.
-    ignoredDirectories: FP_COVERAGE_WAVE_3_VERSIONED_SNAPSHOT_IDS.map(
-      (snapshotId) => resolve(target, "snapshots", snapshotId),
-    ),
+    // Source-only archives preserve reproducible historical audits. They are
+    // excluded from the runtime by prepareRuntimeData; never exempt an active
+    // resource or an explicitly retained runtime snapshot from revocation.
+    ignoredDirectories: [
+      ...new Set([
+        ...FP_COVERAGE_WAVE_3_VERSIONED_SNAPSHOT_IDS,
+        ...retention.sourceSnapshotIds.filter(
+          (snapshotId) =>
+            !activeSnapshotIds.includes(snapshotId) &&
+            !retention.runtimeSnapshotIds.includes(snapshotId),
+        ),
+      ]),
+    ].map((snapshotId) => resolve(target, "snapshots", snapshotId)),
     historicalSnapshotDirectories: [...historicalSnapshotIds]
       .toSorted(compareCanonicalText)
       .map((snapshotId) => resolve(target, "snapshots", snapshotId)),

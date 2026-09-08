@@ -1,7 +1,7 @@
 {
   "schemaVersion": "1.0.0",
-  "reviewVersion": "1.1.0",
-  "baseSnapshotId": "20260908044010409-ceaa5bb4c474",
+  "reviewVersion": "1.2.0",
+  "baseSnapshotId": "20260908152129609-c2af85e78ea6",
   "reviews": [
     {
       "kind": "title_to_occupation",
@@ -26,6 +26,90 @@
       "reviewedAt": "2026-09-08",
       "mappingVersion": "1.1.0",
       "reviewNote": "Revisión del 8 de septiembre: requisito literal e ID de requisito conservados en la nueva descarga; oferta 1285659376390 ausente y excluida."
+    },
+    {
+      "kind": "title_to_occupation",
+      "offerTitle": "CUIDADORES DE PERSONAS CON DISCAPACIDAD Y/O DEPENDENCIA, EN INSTITUCIONES",
+      "occupationId": "occupation:cno11:5629",
+      "programKey": "SSC01M",
+      "relationshipType": "reviewed_relationship",
+      "sourceUrl": "https://www.sepe.es/fr/SiteSepe/contenidos/COVID-19/documentos/documentacion-melilla/2021/201221-Resolucion-provisional--20-12-2021-firmada.pdf",
+      "sourceQuote": "Categoría: CUIDADORES DE PERSONAS CON DISCAPACIDAD (CNO 56291025) Titulación: FP grado medio en atención a personas en situación de dependencia",
+      "reviewedAt": "2026-09-08",
+      "mappingVersion": "1.2.0",
+      "reviewNote": "Denominación principal exacta del catálogo SISPE del SEPE (edición 2018), código 56291025, página 40. Clasificación: https://www.sepe.es/ca/SiteSepe/contenidos/empresas/contratos_trabajo/comunicar_contratacion/pdf/ocupaciones.pdf. Relación ocupacional, no requisito de titulación de la oferta. Evidencia y SHA-256 en analysis/nan-review/sispe-title-adjudication.json."
+    },
+    {
+      "kind": "title_to_occupation",
+      "offerTitle": "CUIDADORES DE PERSONAS CON DISCAPACIDAD Y/O DEPENDENCIA, EN INSTITUCIONES",
+      "occupationId": "occupation:cno11:5629",
+      "programKey": "SSC01MD",
+      "relationshipType": "reviewed_relationship",
+      "sourceUrl": "https://www.sepe.es/fr/SiteSepe/contenidos/COVID-19/documentos/documentacion-melilla/2021/201221-Resolucion-provisional--20-12-2021-firmada.pdf",
+      "sourceQuote": "Categoría: CUIDADORES DE PERSONAS CON DISCAPACIDAD (CNO 56291025) Titulación: FP grado medio en atención a personas en situación de dependencia",
+      "reviewedAt": "2026-09-08",
+      "mappingVersion": "1.2.0",
+      "reviewNote": "Denominación principal exacta del catálogo SISPE del SEPE (edición 2018), código 56291025, página 40. Clasificación: https://www.sepe.es/ca/SiteSepe/contenidos/empresas/contratos_trabajo/comunicar_contratacion/pdf/ocupaciones.pdf. Relación ocupacional, no requisito de titulación de la oferta. Evidencia y SHA-256 en analysis/nan-review/sispe-title-adjudication.json."
+    },
+    {
+      "kind": "title_to_occupation",
+      "offerTitle": "COCINEROS, EN GENERAL",
+      "occupationId": "occupation:cno11:5110",
+      "programKey": "HOT01M",
+      "relationshipType": "official_output",
+      "sourceUrl": "https://todofp.es/dam/jcr%3A63392ee9-4d38-449b-a196-d0efb714b364/n-tcocinagastronomiaes-pdf.pdf",
+      "sourceQuote": "• Cocinero.",
+      "reviewedAt": "2026-09-08",
+      "mappingVersion": "1.2.0",
+      "reviewNote": "Denominación principal exacta del catálogo SISPE del SEPE (edición 2018), código 51101026, página 37. Clasificación: https://www.sepe.es/ca/SiteSepe/contenidos/empresas/contratos_trabajo/comunicar_contratacion/pdf/ocupaciones.pdf. Relación ocupacional, no requisito de titulación de la oferta. Evidencia y SHA-256 en analysis/nan-review/sispe-title-adjudication.json."
+    },
+    {
+      "kind": "title_to_occupation",
+      "offerTitle": "AUXILIARES DE ENFERMERÍA",
+      "occupationId": "occupation:cno11:5611",
+      "programKey": "SAN21",
+      "relationshipType": "official_output",
+      "sourceUrl": "https://todofp.es/dam/jcr%3Aaf5b68fd-e75c-493b-94ff-0565d3886473/san21cuidauxilenfermeria-pdf.pdf",
+      "sourceQuote": "Auxiliar de Enfermería/Clínica..",
+      "reviewedAt": "2026-09-08",
+      "mappingVersion": "1.2.0",
+      "reviewNote": "Denominación principal exacta del catálogo SISPE del SEPE (edición 2018), código 56111013, página 40. Clasificación: https://www.sepe.es/ca/SiteSepe/contenidos/empresas/contratos_trabajo/comunicar_contratacion/pdf/ocupaciones.pdf. Relación ocupacional, no requisito de titulación de la oferta. Evidencia y SHA-256 en analysis/nan-review/sispe-title-adjudication.json."
+    },
+    {
+      "kind": "title_to_occupation",
+      "offerTitle": "AUXILIARES DE ENFERMERÍA",
+      "occupationId": "occupation:cno11:5611",
+      "programKey": "SAN21D",
+      "relationshipType": "official_output",
+      "sourceUrl": "https://todofp.es/dam/jcr%3Aaf5b68fd-e75c-493b-94ff-0565d3886473/san21cuidauxilenfermeria-pdf.pdf",
+      "sourceQuote": "Auxiliar de Enfermería/Clínica..",
+      "reviewedAt": "2026-09-08",
+      "mappingVersion": "1.2.0",
+      "reviewNote": "Denominación principal exacta del catálogo SISPE del SEPE (edición 2018), código 56111013, página 40. Clasificación: https://www.sepe.es/ca/SiteSepe/contenidos/empresas/contratos_trabajo/comunicar_contratacion/pdf/ocupaciones.pdf. Relación ocupacional, no requisito de titulación de la oferta. Evidencia y SHA-256 en analysis/nan-review/sispe-title-adjudication.json."
+    },
+    {
+      "kind": "title_to_occupation",
+      "offerTitle": "PERSONAL DE LIMPIEZA O LIMPIADORES EN GENERAL",
+      "occupationId": "occupation:cno11:9210",
+      "programKey": "HOT02B",
+      "relationshipType": "reviewed_relationship",
+      "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/hosteleria-turismo/alojamiento-lavanderia.html",
+      "sourceQuote": "Camarera / camarero de pisos, en establecimientos de alojamiento turístico sea cual sea su tipología, modalidad o categoría.",
+      "reviewedAt": "2026-09-08",
+      "mappingVersion": "1.2.0",
+      "reviewNote": "Denominación principal exacta del catálogo SISPE del SEPE (edición 2018), código 92101050, página 78. Clasificación: https://www.sepe.es/ca/SiteSepe/contenidos/empresas/contratos_trabajo/comunicar_contratacion/pdf/ocupaciones.pdf. Relación ocupacional, no requisito de titulación de la oferta. Evidencia y SHA-256 en analysis/nan-review/sispe-title-adjudication.json."
+    },
+    {
+      "kind": "title_to_occupation",
+      "offerTitle": "CAMAREROS, EN GENERAL",
+      "occupationId": "occupation:cno11:5120",
+      "programKey": "HOT02M",
+      "relationshipType": "reviewed_relationship",
+      "sourceUrl": "https://www.todofp.es/que-estudiar/familias-profesionales/hosteleria-turismo/servicios-restauracion.html",
+      "sourceQuote": "Camarera / camarero de bar-cafetería o restaurante.",
+      "reviewedAt": "2026-09-08",
+      "mappingVersion": "1.2.0",
+      "reviewNote": "Denominación principal exacta del catálogo SISPE del SEPE (edición 2018), código 51201049, página 37. Clasificación: https://www.sepe.es/ca/SiteSepe/contenidos/empresas/contratos_trabajo/comunicar_contratacion/pdf/ocupaciones.pdf. Relación ocupacional, no requisito de titulación de la oferta. Evidencia y SHA-256 en analysis/nan-review/sispe-title-adjudication.json."
     }
   ]
 }
