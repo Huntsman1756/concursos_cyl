@@ -259,29 +259,40 @@ describe("asset budget", () => {
     }
   });
 
-  it("bounds the Pages path reserve without relaxing the root budget", async () => {
-    const directory = await createAssetDirectory({
-      "assets/app.js": ASSET_BUDGET.javascriptBytes + 26,
-      "fonts/font.woff2": 5,
-      "images/editorial/hero-career-guidance-960.avif": 9,
-      "qa/policy.json": 6,
-    });
-    try {
-      await expect(assertAssetBudget(directory)).rejects.toThrow(/javascript/u);
-      await expect(
-        assertAssetBudget(directory, undefined, "/concursos_cyl/"),
-      ).resolves.toBeDefined();
-      await writeFile(
-        join(directory, "assets/app.js"),
-        Buffer.alloc(ASSET_BUDGET.javascriptBytes + 101),
-      );
-      await expect(
-        assertAssetBudget(directory, undefined, "/concursos_cyl/"),
-      ).rejects.toThrow(/javascript/u);
-    } finally {
-      await rm(directory, { force: true, recursive: true });
-    }
-  });
+  it.each(["javascript", "stylesheet"] as const)(
+    "bounds the Pages %s reserve without relaxing the root budget",
+    async (category) => {
+      const limit =
+        category === "javascript"
+          ? ASSET_BUDGET.javascriptBytes
+          : ASSET_BUDGET.stylesheetBytes;
+      const file =
+        category === "javascript" ? "assets/app.js" : "assets/app.css";
+      const directory = await createAssetDirectory({
+        [file]: limit + 26,
+        "fonts/font.woff2": 5,
+        "images/editorial/hero-career-guidance-960.avif": 9,
+        "qa/policy.json": 6,
+      });
+      try {
+        await expect(assertAssetBudget(directory)).rejects.toThrow(
+          new RegExp(category),
+        );
+        await expect(
+          assertAssetBudget(directory, undefined, "/other/"),
+        ).rejects.toThrow(new RegExp(category));
+        await expect(
+          assertAssetBudget(directory, undefined, "/concursos_cyl/"),
+        ).resolves.toBeDefined();
+        await writeFile(join(directory, file), Buffer.alloc(limit + 101));
+        await expect(
+          assertAssetBudget(directory, undefined, "/concursos_cyl/"),
+        ).rejects.toThrow(new RegExp(category));
+      } finally {
+        await rm(directory, { force: true, recursive: true });
+      }
+    },
+  );
 
   it("fails loudly when the editorial distribution is missing from the build", async () => {
     const directory = await createAssetDirectory({

@@ -136,6 +136,7 @@ export function sortOfferEvidenceRecords(
 ): OfferEvidenceRecord[] {
   return [...records].sort(
     (left, right) =>
+      Number(right.relations.length > 0) - Number(left.relations.length > 0) ||
       right.publishedAt.localeCompare(left.publishedAt) ||
       left.title.localeCompare(right.title, "es") ||
       left.offerId.localeCompare(right.offerId),

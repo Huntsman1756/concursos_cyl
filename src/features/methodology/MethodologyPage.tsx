@@ -565,8 +565,10 @@ export function MethodologyPage() {
               CSV, con la fuente, cita y fecha de revisión de cada relación.
             </p>
             <p>
-              Qwen3.6 y Gemma4 ayudan a revisar fuentes FP y CNO-11. Su acuerdo
-              no valida relaciones ni sustituye la orientación profesional.
+              La revisión documental está asistida por IA y contrastada con
+              fuentes oficiales por el agente coordinador, también de IA. El
+              acuerdo entre modelos no aprueba relaciones ni sustituye la
+              orientación profesional. El repositorio documenta el proceso.
             </p>
             <p>
               El{" "}

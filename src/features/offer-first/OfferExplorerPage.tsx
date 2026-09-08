@@ -730,7 +730,9 @@ export function OfferExplorerPage({
             <option value="all">Todas las provincias</option>
             {provinces.map((option) => (
               <option value={option} key={option}>
-                {option}
+                {option.toLocaleLowerCase("es") === "otra"
+                  ? "Otra ubicación (según la fuente)"
+                  : option}
               </option>
             ))}
           </select>
@@ -792,7 +794,7 @@ export function OfferExplorerPage({
             <p className="caption" style={{ margin: 0 }}>
               {isGlobal &&
                 `${reviewedOfferCount.toLocaleString("es-ES")} con FP relacionada en estos resultados · `}
-              más recientes primero
+              primero con relación FP revisada; después, por fecha
             </p>
           )}
         </div>

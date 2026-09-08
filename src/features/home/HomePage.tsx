@@ -446,6 +446,9 @@ export function HomePage() {
               <label className="field-label" htmlFor="home-offer-search">
                 {task.label}
               </label>
+              <p className="search-hint">
+                Busca por el título o las palabras de la oferta.
+              </p>
               <div className="search-row">
                 <input
                   className="search-input"
@@ -459,9 +462,6 @@ export function HomePage() {
                   }}
                   placeholder="Ej.: Empleado administrativo de contabilidad"
                 />
-                <button className="button button--primary" type="submit">
-                  {task.action}
-                </button>
               </div>
             </>
           )}
@@ -484,8 +484,8 @@ export function HomePage() {
                 </Link>
               </p>
             )}
-          {task.mode !== "offer" && searchData.status === "ready" && (
-            <div className="search-row" style={{ marginTop: "var(--space-3)" }}>
+          {(task.mode === "offer" || searchData.status === "ready") && (
+            <div className="search-row home-search-action">
               <button className="button button--primary" type="submit">
                 {task.action}
               </button>
@@ -576,7 +576,7 @@ export function HomePage() {
         <div className="container">
           <div className="section-head">
             <h2 className="h2" id="paths-title">
-              Qué puedes entender con SALIDA
+              Qué puedes entender con SALIDA CyL
             </h2>
           </div>
           <div className="paths-grid">
@@ -905,12 +905,6 @@ export function HomePage() {
             <Link className="link-action" to="/datos-abiertos">
               Explorar los datos abiertos →
             </Link>
-          </div>
-          <div className="method-disclosure">
-            <p className="caption">
-              Las imágenes editoriales son generadas mediante IA y no
-              representan personas, empresas, ofertas ni centros reales.
-            </p>
           </div>
         </div>
       </section>

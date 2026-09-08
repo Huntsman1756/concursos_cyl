@@ -80,11 +80,11 @@ La recomputación automatizada confirmó el manifest, sus 22 recursos, los conju
 ## Despliegue
 
 - URL raíz esperada: [https://salida-cyl.157-90-22-40.sslip.io/](https://salida-cyl.157-90-22-40.sslip.io/)
-- Commit desplegado: `3973301d8e4f3b83cf913c354efb357fda69101a`.
+- Commit desplegado: `ca8289ebe12c888af7765a212ce44b3754f838ca`.
 - Run del workflow: no aplica (despliegue por script VPS, sin GitHub Actions).
 
-- Release: `v2026.09.08-candidate.20`.
-- `version.json` observado: [respuesta pública](https://salida-cyl.157-90-22-40.sslip.io/version.json) con commit `3973301d8e4f3b83cf913c354efb357fda69101a`.
+- Release: `v2026.09.08-candidate.21`.
+- `version.json` observado: [respuesta pública](https://salida-cyl.157-90-22-40.sslip.io/version.json) con commit `ca8289ebe12c888af7765a212ce44b3754f838ca`.
 - Identidad del producto: el commit desplegado registrado arriba es el commit de producto; los commits posteriores de documentación de candidatura no lo sustituyen ni reescriben `version.json`.
 
-El release público se verificó con el commit `3973301d8e4f3b83cf913c354efb357fda69101a` el 2026-09-08T16:29:31.433715Z; el despliegue se ejecutó con el script de release del VPS y el `version.json` público declara ese mismo commit.
+El release público se verificó con el commit `ca8289ebe12c888af7765a212ce44b3754f838ca` el 2026-09-08T20:15:11.557368Z; el despliegue se ejecutó con el script de release del VPS y el `version.json` público declara ese mismo commit.

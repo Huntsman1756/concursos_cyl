@@ -16,7 +16,7 @@ Por ejemplo, la ficha de [Cuidados Auxiliares de Enfermería](https://salida-cyl
 
 ## Alcance y límites
 
-Estas cifras corresponden a candidate.20, publicada en la web principal el 8 de septiembre de 2026. La [auditoría con Qwen y Gemma](analysis/nan-review/README.md) documenta las fuentes, correcciones y límites.
+Estas cifras corresponden al catálogo conservado en candidate.21, publicada en la web principal el 8 de septiembre de 2026. La [revisión documental asistida](analysis/nan-review/README.md) documenta las fuentes, correcciones y límites.
 
 El catálogo contiene **187 claves de programa, incluidas modalidades**. **185 tienen al menos una relación ocupacional aprobada (98,9 %)**. El grafo del candidato contiene 320 relaciones revisadas. Las modalidades no se presentan como titulaciones distintas.
 
@@ -47,7 +47,7 @@ Se combinan con CNO-11, TodoFP, SEPE y EDUCAbase. El [inventario de fuentes](doc
 
 Categoría **Productos y Servicios** del [X Concurso de Datos Abiertos de Castilla y León](https://datosabiertos.jcyl.es/web/es/concurso-datos-abiertos/concurso-datos-abiertos.html). La [comprobación de las bases](docs/contest/rules-2026.md) recoge fuentes oficiales, criterios y el límite de 1.000 palabras de la memoria.
 
-La revisión actual previa al piloto está en [nan-review-20260908.md](docs/qa/nan-review-20260908.md). La revisión de fuentes del mismo día se conserva en [verification-20260908.md](docs/contest/verification-20260908.md). Los registros de releases anteriores son evidencia histórica, no una garantía del estado actual. El estado final de ambos hosts se registra por separado en la [release pública](https://github.com/Huntsman1756/concursos_cyl/releases/tag/v2026.09.08-candidate.20). El repositorio y el canal de incidencias son públicos, verificados sin autenticación el 8 de septiembre. La memoria también se ofrece en la propia aplicación.
+Los ajustes derivados del feedback de uso están en [feedback-uso-20260908.md](docs/qa/feedback-uso-20260908.md). La revisión del catálogo se conserva en [nan-review-20260908.md](docs/qa/nan-review-20260908.md). La revisión de fuentes del mismo día se conserva en [verification-20260908.md](docs/contest/verification-20260908.md). Los registros de releases anteriores son evidencia histórica, no una garantía del estado actual. El estado de publicación de ambos hosts se registra por separado en la [release pública](https://github.com/Huntsman1756/concursos_cyl/releases/tag/v2026.09.08-candidate.21). El repositorio y el canal de incidencias son públicos, verificados sin autenticación el 8 de septiembre. La memoria también se ofrece en la propia aplicación.
 
 ## Desarrollo y calidad
 
@@ -75,6 +75,6 @@ Los datos se reconstruyen mediante `npm run data:build`, con revisión previa a 
 
 Código bajo licencia MIT. Los datos conservan las condiciones de cada editor: [DATA_LICENSE.md](DATA_LICENSE.md).
 
-La versión VPS publicada es `v2026.09.08-candidate.20`. [Memoria PDF](https://salida-cyl.157-90-22-40.sslip.io/candidatura.pdf) · [Demo guiada de dos minutos](https://github.com/Huntsman1756/concursos_cyl/releases/download/v2026.09.08-candidate.20/demo-candidate20-20260908.webm).
+La versión VPS publicada es `v2026.09.08-candidate.21`. [Memoria PDF](https://salida-cyl.157-90-22-40.sslip.io/candidatura.pdf) · [Demo guiada de dos minutos (candidate.20)](https://github.com/Huntsman1756/concursos_cyl/releases/download/v2026.09.08-candidate.20/demo-candidate20-20260908.webm).
 
 La [operativa](docs/operations.md) recoge mantenimiento, recuperación y comprobaciones públicas. La [preparación del piloto](docs/pilot/readiness.md) distingue la versión técnica preparada de las observaciones humanas aún no realizadas.

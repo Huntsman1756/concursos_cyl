@@ -1,3 +1,4 @@
+import { readFileSync } from "node:fs";
 import { describe, expect, it } from "vitest";
 
 import {
@@ -92,6 +93,37 @@ describe("offer evidence domain", () => {
     expect(
       sortOfferEvidenceRecords(records).map(({ offerId }) => offerId),
     ).toEqual(["newer", "older"]);
+  });
+
+  it("puts a reviewed FP link ahead of a newer unlinked offer without mutating input", () => {
+    const manifest = JSON.parse(
+      readFileSync("public/data/v1/manifest.json", "utf8"),
+    );
+    const evidence = OfferEvidenceResourceSchema.parse(
+      JSON.parse(
+        readFileSync(
+          `public${manifest.resourceSnapshots.offerEvidence.resourcePath}`,
+          "utf8",
+        ),
+      ),
+    );
+    const relation = evidence.records.find((row) => row.relations.length > 0)!
+      .relations[0]!;
+    const unlinked = record({
+      offerId: "new-unlinked",
+      publishedAt: "2026-09-08",
+    });
+    const linked = record({
+      offerId: "old-linked",
+      publishedAt: "2026-08-01",
+      relations: [relation],
+    });
+    const input = [unlinked, linked];
+    expect(sortOfferEvidenceRecords(input).map((row) => row.offerId)).toEqual([
+      "old-linked",
+      "new-unlinked",
+    ]);
+    expect(input[0]).toBe(unlinked);
   });
 
   it("exposes only the small user-facing taxonomy", () => {

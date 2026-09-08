@@ -34,9 +34,6 @@ export function TerritorialDistribution({
   snapshotFetchedAt,
 }: TerritorialDistributionProps) {
   const model = buildTerritorialDistributionModel(centers);
-  const completeCenters = centers.filter(
-    (center) => center.latitude !== null && center.longitude !== null,
-  );
 
   return (
     <section
@@ -144,7 +141,9 @@ export function TerritorialDistribution({
                           return (
                             <li key={center.centerCode}>
                               <span>{center.centerName}</span>
-                              <small>{center.centerCode}</small>
+                              <small>
+                                Código oficial del centro: {center.centerCode}
+                              </small>
                               {mapsUrl !== null && (
                                 <ExternalLink
                                   className="territorial-distribution__map-link"
@@ -164,32 +163,6 @@ export function TerritorialDistribution({
               </div>
             ))}
           </div>
-          <details
-            className="territorial-distribution__coordinates"
-            data-print-hidden="true"
-          >
-            <summary>Ver coordenadas oficiales publicadas</summary>
-            <p>
-              Información técnica complementaria. No es un mapa y no calcula
-              distancias, rutas ni tiempos de desplazamiento.
-            </p>
-            {completeCenters.length === 0 ? (
-              <p>No hay coordenadas oficiales completas en esta copia.</p>
-            ) : (
-              <ul>
-                {completeCenters.map((center) => (
-                  <li key={center.centerCode}>
-                    <span>
-                      {center.centerName} · {center.locality}, {center.province}
-                    </span>
-                    <small>
-                      Latitud {center.latitude}; longitud {center.longitude}
-                    </small>
-                  </li>
-                ))}
-              </ul>
-            )}
-          </details>
         </>
       )}
     </section>
