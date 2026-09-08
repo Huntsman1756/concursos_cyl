@@ -103,9 +103,33 @@ const SAFE_ALIAS_CONTRACT = [
     candidateId: "02-PC-9602",
     alias: "peones de la construccion de edificios",
     occupationId: "occupation:cno11:9602",
-    // Historical offers 1285663193331, 1285669341353 and 1285672532223
-    // are now withheld: EOC01B/9602 is adjacent, not a generic-title match.
+    // These three historical offers are withheld by the adjacent-link guard.
+    // EOC01B/9602 cannot establish a match from a generic title alone.
     expectedOfferIds: [],
+  },
+  {
+    candidateId: "04-PA-9530",
+    alias: "peones agropecuarios",
+    occupationId: "occupation:cno11:9530",
+    expectedOfferIds: ["1285666138609"],
+  },
+  {
+    candidateId: "05-ME-7191",
+    alias: "mantenedores de edificios",
+    occupationId: "occupation:cno11:7191",
+    expectedOfferIds: ["1285669240479"],
+  },
+  {
+    candidateId: "06-PC-9310",
+    alias: "pinches de cocina",
+    occupationId: "occupation:cno11:9310",
+    expectedOfferIds: [
+      "1285622767314",
+      "1285666804087",
+      "1285671503827",
+      "1285671557562",
+      "1285671956131",
+    ],
   },
   {
     candidateId: "07-MA-7401",
