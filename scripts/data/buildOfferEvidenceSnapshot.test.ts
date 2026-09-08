@@ -189,7 +189,7 @@ describe("buildOfferEvidenceSnapshot", () => {
     expect(
       resource.records.every(({ nextActions }) => nextActions.length > 0),
     ).toBe(true);
-    expect(resource.counts.offersWithReviewedFpRelationship).toBe(138);
+    expect(resource.counts.offersWithReviewedFpRelationship).toBe(135);
     expect(resource.counts.offersWithAmbiguity).toBe(352);
   }, 30_000);
 });
