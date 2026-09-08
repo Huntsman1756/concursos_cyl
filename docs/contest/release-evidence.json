@@ -49,8 +49,8 @@
       "command": "npm test -- --reporter=dot; vitest run scripts/data/buildOfferEvidenceSnapshot.test.ts scripts/data/buildSnapshots.test.ts",
       "checkedCommitSha": "3973301d8e4f3b83cf913c354efb357fda69101a",
       "verifiedAt": "2026-09-08T16:29:31.433715Z",
-      "executionCommitSha": "3973301d8e4f3b83cf913c354efb357fda69101a",
-      "note": "1371 passed and two timeouts in the full run; both complete integration files passed on bounded rerun. GitHub CI is recorded separately."
+      "executionCommitSha": "ddc308befac9ac99cb5742daf5f4f44542ef44c9",
+      "note": "Full run at ddc308befac9ac99cb5742daf5f4f44542ef44c9: 1371 passed and two timeouts. Both complete integration files passed (82 tests) at publication commit 3973301d8e4f3b83cf913c354efb357fda69101a; only one test timeout changed. GitHub CI is recorded separately."
     },
     "playwright": {
       "status": "passed",
