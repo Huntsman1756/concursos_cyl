@@ -63,7 +63,7 @@ test.describe("2026-09-04 Chrome audit regressions", () => {
 
     await page.goto("/");
     await expect(page.locator(".proof-rail")).toBeVisible();
-    await expect(page.locator(".proof-rail").getByText("128")).toBeVisible();
+    await expect(page.locator(".proof-rail").getByText("307")).toBeVisible();
     await expect(
       page.getByText(/evidencia generada el 8 de septiembre de 2026/u),
     ).toBeVisible();

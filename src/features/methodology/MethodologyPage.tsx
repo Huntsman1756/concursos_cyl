@@ -565,11 +565,10 @@ export function MethodologyPage() {
               CSV, con la fuente, cita y fecha de revisión de cada relación.
             </p>
             <p>
-              La revisión utiliza Qwen3.6 y Gemma4 como apoyo. Sus respuestas se
-              contrastan con las salidas oficiales de FP y las funciones y
-              exclusiones de la CNO-11. La coincidencia entre modelos no
-              acredita por sí sola una relación ni sustituye la orientación
-              profesional.
+              La revisión utiliza Qwen3.6 y Gemma4. Contrastamos sus respuestas
+              con salidas oficiales de FP y funciones y exclusiones CNO-11. El
+              acuerdo entre modelos no acredita una relación ni sustituye la
+              orientación profesional.
             </p>
             <p>
               Algunas ofertas se conectan mediante su denominación completa

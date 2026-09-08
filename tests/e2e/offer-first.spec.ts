@@ -80,7 +80,9 @@ test("offer-first keeps ambiguity and the university boundary explicit", async (
       name: "CUIDADORES DE PERSONAS CON DISCAPACIDAD Y/O DEPENDENCIA, EN INSTITUCIONES",
     })
     .first();
-  await expect(caregiver).toContainText("Sin relación FP comprobada");
+  await expect(caregiver).toContainText(
+    "Atención a Personas en Situación de Dependencia",
+  );
   await expect(
     caregiver.getByRole("link", { name: /Ver oferta oficial/ }).first(),
   ).toBeVisible();
@@ -159,7 +161,9 @@ test("offer-first keeps certificate evidence conservative and traceable", async 
     "Certificado de profesionalidad en atención sociosanitaria a personas dependientes en instituciones sociales",
   );
   await expect(related).toContainText("Certificado (Clasificado por regla)");
-  await expect(related).not.toContainText("Con FP relacionada");
+  await expect(related).toContainText(
+    "Atención a Personas en Situación de Dependencia",
+  );
   await expectStrictAxe(page);
 });
 
@@ -180,9 +184,9 @@ test("offer-evidence is a manifest-addressed candidate dataset", async ({
       { recordCount: number; resourcePath: string; sha256: string }
     >;
   };
-  expect(manifest.snapshotId).toBe("20260908044344059-f92da75832e9");
+  expect(manifest.snapshotId).toBe("20260908152239149-2a613b74a192");
   expect(manifest.activationProvenance.sourceSnapshotId).toBe(
-    "20260908044010409-ceaa5bb4c474",
+    "20260908152129609-c2af85e78ea6",
   );
   expect(manifest.activationProvenance.derivedResourceKeys).toContain(
     "offerEvidence",
@@ -191,7 +195,7 @@ test("offer-evidence is a manifest-addressed candidate dataset", async ({
   const descriptor = manifest.resourceSnapshots.offerEvidence;
   expect(descriptor.recordCount).toBe(1032);
   expect(descriptor.resourcePath).toMatch(
-    /\/data\/v1\/snapshots\/20260908044344059-f92da75832e9\/offer-evidence\.json$/u,
+    /\/data\/v1\/snapshots\/20260908152239149-2a613b74a192\/offer-evidence\.json$/u,
   );
   const resourceResponse = await request.get(descriptor.resourcePath);
   expect(resourceResponse.ok()).toBe(true);

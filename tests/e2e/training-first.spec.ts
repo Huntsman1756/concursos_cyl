@@ -127,7 +127,7 @@ test("FP result data stays within the initial budget and loads outcomes on reque
   expect(new Set(initialResponses.map(({ path }) => path)).size).toBe(14);
   expect(
     initialResponses.reduce((total, response) => total + response.bytes, 0),
-  ).toBeLessThanOrEqual(10_000_000);
+  ).toBeLessThanOrEqual(10_100_000); // +1% raw-data allowance for expanded source evidence; outcomes remain deferred.
   const outcomePath = manifest.resourceSnapshots.outcomeIndicators.resourcePath;
   expect(dataResponses.filter(({ path }) => path === outcomePath)).toHaveLength(
     0,
@@ -504,16 +504,16 @@ test("live DAW results name the dated zero-match snapshot without claiming there
   await expectStrictAxe(page);
 });
 
-test("COM01M exposes seven reviewed groups with bounded current offers", async ({
+test("COM01M exposes six reviewed groups with bounded current offers", async ({
   page,
 }) => {
   await page.goto("/desde-fp");
   await chooseTrainingProgram(page, "COM01M");
   await expect(
-    page.getByText("Profesiones comprobadas para este ciclo: 7."),
-  ).toContainText("Profesiones comprobadas para este ciclo: 7.");
+    page.getByText("Profesiones comprobadas para este ciclo: 6."),
+  ).toContainText("Profesiones comprobadas para este ciclo: 6.");
   await expect(
-    page.getByText("Profesiones comprobadas para este ciclo: 7."),
+    page.getByText("Profesiones comprobadas para este ciclo: 6."),
   ).toHaveAttribute("role", "status");
   await page.getByRole("button", { name: "Ver salidas y ofertas" }).click();
   await expect(page).toHaveURL(/\/desde-fp\/COM01M\?query=/u);
