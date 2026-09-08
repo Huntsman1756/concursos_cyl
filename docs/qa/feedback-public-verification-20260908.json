@@ -1,0 +1,132 @@
+{
+  "checkedAt": "2026-09-08T20:10:43.394Z",
+  "base": "https://salida-cyl.157-90-22-40.sslip.io/",
+  "commit": "ca8289ebe12c888af7765a212ce44b3754f838ca",
+  "resources": [
+    {
+      "name": "candidatura.html",
+      "status": 200,
+      "sha256": "1e3c099d2f688420970bb99102d096523968c6db41f359ca8357401d7ae1b82c"
+    },
+    {
+      "name": "candidatura.css",
+      "status": 200,
+      "sha256": "7f229469dde5dc1d630334a741d0fd5f3e9fd34b99b0d11978b95bcbc3dc14c1"
+    },
+    {
+      "name": "candidatura.pdf",
+      "status": 200,
+      "sha256": "1e305d24fb40d421c9e587d14ded9e6e45eda238eb4ef8edcc1fc90e7ccd79ad"
+    }
+  ],
+  "checks": [
+    {
+      "route": "",
+      "width": 1280,
+      "httpStatus": 200,
+      "h1": "Tu FP, tus salidas profesionales y dónde dar el siguiente paso.",
+      "overflow": 0,
+      "images": [
+        {
+          "src": "https://salida-cyl.157-90-22-40.sslip.io/images/editorial/hero-career-guidance-640.avif",
+          "width": 576
+        },
+        {
+          "src": "https://salida-cyl.157-90-22-40.sslip.io/images/editorial/path-training-640.avif",
+          "width": 422
+        },
+        {
+          "src": "https://salida-cyl.157-90-22-40.sslip.io/images/editorial/path-occupation-640.avif",
+          "width": 422
+        },
+        {
+          "src": "https://salida-cyl.157-90-22-40.sslip.io/images/editorial/path-offer-640.avif",
+          "width": 422
+        },
+        {
+          "src": "https://salida-cyl.157-90-22-40.sslip.io/images/editorial/centers-vocational-training-640.avif",
+          "width": 537
+        }
+      ],
+      "canonical": "https://salida-cyl.157-90-22-40.sslip.io/",
+      "axeViolations": 0,
+      "pageErrors": []
+    },
+    {
+      "route": "desde-fp/ADG02S",
+      "width": 1280,
+      "httpStatus": 200,
+      "h1": "Administración y Finanzas",
+      "overflow": 0,
+      "images": [],
+      "canonical": "https://salida-cyl.157-90-22-40.sslip.io/desde-fp/ADG02S",
+      "axeViolations": 0,
+      "pageErrors": []
+    },
+    {
+      "route": "candidatura.html",
+      "width": 1280,
+      "httpStatus": 200,
+      "h1": "SALIDA CyL: de la formación profesional al siguiente paso",
+      "overflow": 0,
+      "images": [],
+      "canonical": "https://salida-cyl.157-90-22-40.sslip.io/candidatura.html",
+      "axeViolations": 0,
+      "pageErrors": []
+    },
+    {
+      "route": "",
+      "width": 360,
+      "httpStatus": 200,
+      "h1": "Tu FP, tus salidas profesionales y dónde dar el siguiente paso.",
+      "overflow": 0,
+      "images": [
+        {
+          "src": "https://salida-cyl.157-90-22-40.sslip.io/images/editorial/hero-career-guidance-640.avif",
+          "width": 328
+        },
+        {
+          "src": "https://salida-cyl.157-90-22-40.sslip.io/images/editorial/path-training-640.avif",
+          "width": 328
+        },
+        {
+          "src": "https://salida-cyl.157-90-22-40.sslip.io/images/editorial/path-occupation-640.avif",
+          "width": 328
+        },
+        {
+          "src": "https://salida-cyl.157-90-22-40.sslip.io/images/editorial/path-offer-640.avif",
+          "width": 328
+        },
+        {
+          "src": "https://salida-cyl.157-90-22-40.sslip.io/images/editorial/centers-vocational-training-640.avif",
+          "width": 328
+        }
+      ],
+      "canonical": "https://salida-cyl.157-90-22-40.sslip.io/",
+      "axeViolations": 0,
+      "pageErrors": []
+    },
+    {
+      "route": "desde-fp/ADG02S",
+      "width": 360,
+      "httpStatus": 200,
+      "h1": "Administración y Finanzas",
+      "overflow": 0,
+      "images": [],
+      "canonical": "https://salida-cyl.157-90-22-40.sslip.io/desde-fp/ADG02S",
+      "axeViolations": 0,
+      "pageErrors": []
+    },
+    {
+      "route": "candidatura.html",
+      "width": 360,
+      "httpStatus": 200,
+      "h1": "SALIDA CyL: de la formación profesional al siguiente paso",
+      "overflow": 0,
+      "images": [],
+      "canonical": "https://salida-cyl.157-90-22-40.sslip.io/candidatura.html",
+      "axeViolations": 0,
+      "pageErrors": []
+    }
+  ]
+}
