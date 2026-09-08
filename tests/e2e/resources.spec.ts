@@ -36,12 +36,7 @@ test("public resources expose the runtime open-call truth with provenance", asyn
         call.applicationStart <= referenceDate),
   );
   expect(calls).toHaveLength(307);
-  expect(openCalls.map(({ id }) => id)).toEqual([
-    "1285666453332",
-    "1285666480084",
-    "1285666447460",
-    "1285666500281",
-  ]);
+  expect(openCalls).toEqual([]);
 
   await page.goto("/recursos");
 
@@ -66,7 +61,7 @@ test("public resources expose the runtime open-call truth with provenance", asyn
     }),
   ).toHaveAttribute("href", /convocatorias-de-empleo-publico/u);
   await expect(
-    page.getByText("4 convocatorias", { exact: true }),
+    page.getByText("0 convocatorias", { exact: true }),
   ).toBeVisible();
 
   const courses = page.getByRole("region", { name: "Cursos del ECYL" });

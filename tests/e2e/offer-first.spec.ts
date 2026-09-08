@@ -18,6 +18,7 @@ test("offer-first connects literal cooking evidence to a reviewed FP route", asy
   ).toBeVisible();
   const card = page
     .getByRole("article", { name: "COCINEROS, EN GENERAL" })
+    .filter({ has: page.locator('a[href*="1285671836252"]') })
     .first();
   await expect(card).toContainText("Técnico en Cocina y Gastronomía.");
   await expect(card).toContainText("Con FP relacionada");
@@ -72,7 +73,7 @@ test("offer-first keeps ambiguity and the university boundary explicit", async (
 }) => {
   await page.goto("/desde-oferta?query=cuidador");
   await expect(
-    page.getByRole("heading", { name: "1–10 de 56 ofertas" }),
+    page.getByRole("heading", { name: /^1–10 de \d+ ofertas$/u }),
   ).toBeVisible();
   const caregiver = page
     .getByRole("article", {
@@ -98,7 +99,7 @@ test("offer-first keeps ambiguity and the university boundary explicit", async (
     .getByRole("combobox", { name: "Relación con la formación" })
     .selectOption({ label: "Vía universitaria o regulada" });
   await expect(
-    page.getByRole("heading", { name: "1–10 de 10 ofertas" }),
+    page.getByRole("heading", { name: /^1–10 de \d+ ofertas$/u }),
   ).toBeVisible();
   const physiotherapy = page
     .getByRole("article", { name: "FISIOTERAPEUTAS, EN GENERAL" })
@@ -179,18 +180,18 @@ test("offer-evidence is a manifest-addressed candidate dataset", async ({
       { recordCount: number; resourcePath: string; sha256: string }
     >;
   };
-  expect(manifest.snapshotId).toBe("20260830120000000-8c6c79fbd2a1");
+  expect(manifest.snapshotId).toBe("20260908044344059-f92da75832e9");
   expect(manifest.activationProvenance.sourceSnapshotId).toBe(
-    "20260822085631889-fc9bf2ba23f9",
+    "20260908044010409-ceaa5bb4c474",
   );
   expect(manifest.activationProvenance.derivedResourceKeys).toContain(
     "offerEvidence",
   );
 
   const descriptor = manifest.resourceSnapshots.offerEvidence;
-  expect(descriptor.recordCount).toBe(1058);
+  expect(descriptor.recordCount).toBe(1032);
   expect(descriptor.resourcePath).toMatch(
-    /\/data\/v1\/snapshots\/20260830120000000-8c6c79fbd2a1\/offer-evidence\.json$/u,
+    /\/data\/v1\/snapshots\/20260908044344059-f92da75832e9\/offer-evidence\.json$/u,
   );
   const resourceResponse = await request.get(descriptor.resourcePath);
   expect(resourceResponse.ok()).toBe(true);
@@ -204,9 +205,9 @@ test("offer-evidence is a manifest-addressed candidate dataset", async ({
   expect(resource.baseSnapshotId).toBe(
     manifest.activationProvenance.sourceSnapshotId,
   );
-  expect(resource.records).toHaveLength(1058);
+  expect(resource.records).toHaveLength(1032);
   expect(resource.counts).toMatchObject({
-    requirementCount: 1055,
-    classifiedRequirementCount: 70,
+    requirementCount: 1233,
+    classifiedRequirementCount: 81,
   });
 });

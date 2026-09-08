@@ -316,7 +316,11 @@ test.describe("P1-05: Más formación is temporally honest", () => {
     await expect(page.getByText(/Copia de datos del/u)).toBeVisible();
     // Individual expired calls keep stating their published deadline passed.
     await expect(
-      page.getByText(/El plazo publicado ya pasó|Plazo hasta el/u).first(),
+      page
+        .getByText(
+          /Ninguna convocatoria de esta copia tiene el plazo de solicitud/u,
+        )
+        .first(),
     ).toBeVisible();
   });
 });

@@ -463,6 +463,8 @@ export async function loadOfferEvidence(
     requestInitFor(options),
   );
   if (
+    snapshot.resourcePath !==
+      `/data/v1/snapshots/${resource.snapshotId}/${GENERATED_RESOURCE_CATALOG.offerEvidence.fileName}` ||
     resource.baseSnapshotId !== expectedBaseSnapshotId ||
     resource.counts.offerCount !==
       manifest.resourceSnapshots.jobOffers.recordCount ||

@@ -16,7 +16,7 @@ El servicio se dirige a estudiantes, personas que buscan empleo o un cambio prof
 
 ## Valor económico
 
-El producto puede reducir trabajo de búsqueda y contraste en orientación. Su código abierto y su grafo descargable permiten reutilizar componentes en otros servicios e integrar relaciones documentadas sin rehacer toda la revisión. El acceso actual es gratuito. No se atribuyen ingresos, ahorro cuantificado, clientes ni rentabilidad que no se hayan medido.
+El producto puede reducir trabajo de búsqueda y contraste en orientación. La licencia MIT del código y su grafo descargable permiten reutilizar componentes en otros servicios e integrar relaciones documentadas sin rehacer toda la revisión. El acceso actual es gratuito. No se atribuyen ingresos, ahorro cuantificado, clientes ni rentabilidad que no se hayan medido.
 
 ## Valor público y social
 

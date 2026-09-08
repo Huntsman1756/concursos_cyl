@@ -245,6 +245,11 @@ export function AppShell({ children }: AppShellProps) {
                 <li>
                   <Link to="/para-organizaciones">Para organizaciones</Link>
                 </li>
+                <li>
+                  <a href={`${import.meta.env.BASE_URL}candidatura.html`}>
+                    Candidatura 2026
+                  </a>
+                </li>
               </ul>
             </div>
           </div>

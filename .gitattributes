@@ -1,3 +1,6 @@
 tests/fixtures/educabase-income/*.csv -text -diff
 tests/fixtures/educabase-income/*.px -text -diff
 analysis/*.ipynb text eol=lf
+
+# Preserve generated candidature PDF bytes and suppress text diffs.
+public/candidatura.pdf binary

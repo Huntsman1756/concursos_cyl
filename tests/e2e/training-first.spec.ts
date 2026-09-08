@@ -529,7 +529,7 @@ test("COM01M exposes seven reviewed groups with bounded current offers", async (
       exact: true,
     }),
   ).toBeVisible();
-  await expect(page.getByRole("article")).toHaveCount(7);
+  await expect(page.getByRole("article")).toHaveCount(6);
   await expectNoHorizontalOverflow(page);
   await expectStrictAxe(page);
 });

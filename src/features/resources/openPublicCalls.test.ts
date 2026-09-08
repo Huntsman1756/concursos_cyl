@@ -78,7 +78,7 @@ describe("open public calls runtime truth", () => {
     expect(selectOpenPublicCalls(calls, "2026-08-04")).toHaveLength(1);
   });
 
-  it("matches the retained runtime snapshot: 307 calls, 4 open at its reference date", () => {
+  it("matches the refreshed runtime snapshot: 307 calls, none open at its reference date", () => {
     const manifestPath = join(root, "public/data/v1/manifest.json");
     expect(existsSync(manifestPath)).toBe(true);
     const manifest = JSON.parse(readFileSync(manifestPath, "utf8")) as {
@@ -105,7 +105,7 @@ describe("open public calls runtime truth", () => {
     const referenceDate = snapshot.snapshotFetchedAt.slice(0, 10);
 
     expect(calls).toHaveLength(307);
-    expect(selectOpenPublicCalls(calls, referenceDate)).toHaveLength(4);
+    expect(selectOpenPublicCalls(calls, referenceDate)).toHaveLength(0);
     // No call can be open after the last published deadline of the copy.
     const lastDeadline = calls
       .map((entry) => entry.applicationDeadline)

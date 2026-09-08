@@ -245,7 +245,7 @@ describe("OfferExplorerPage", () => {
     await screen.findByRole("heading", { name: "Ofertas de empleo" });
     const freshness = container.querySelector(".offer-explorer__freshness");
     expect(freshness?.textContent).toContain(
-      "fuente actualizada el 20 de agosto de 2026",
+      "publicaciones hasta el 20 de agosto de 2026",
     );
     expect(freshness?.textContent).toContain(
       "evidencia generada el 30 de agosto de 2026",

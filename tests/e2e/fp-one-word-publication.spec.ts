@@ -37,11 +37,11 @@ const historicalEoc01mAcceptedIds = encofradoresDecision.acceptedOfferIds;
 /** IDs present in the current verified fallback snapshot. */
 const currentEoc01mOfferIds = [
   "1285667539377",
-  "1285668256621",
-  "1285671523023",
+  "1285673429524",
+  "1285674513041",
 ];
 /** Current candidate IDs accepted from the literal published requirement review. */
-const currentHot01mOfferIds = ["1285659376390", "1285671836252"];
+const currentHot01mOfferIds = ["1285671836252"];
 
 const cases = [
   {

@@ -56,6 +56,7 @@ interface ActiveManifestFixture {
 
 async function installActiveAliasPassFetch(
   options: {
+    manifestPath?: string;
     outcomeFailures?: number;
     outcomePending?: boolean;
     onOutcomeSignal?: (signal: AbortSignal | null | undefined) => void;
@@ -63,7 +64,10 @@ async function installActiveAliasPassFetch(
 ): Promise<void> {
   const manifest = JSON.parse(
     await readFile(
-      resolve(process.cwd(), "public", "data", "v1", "manifest.json"),
+      resolve(
+        process.cwd(),
+        options.manifestPath ?? "public/data/v1/manifest.json",
+      ),
       "utf8",
     ),
   ) as ActiveManifestFixture;
@@ -458,9 +462,11 @@ describe("TrainingResultsPage", () => {
   });
 
   it.each(["HOT01M", "EOC01M"])(
-    "keeps the current bounded publication result for %s",
+    "preserves the August bounded publication regression for %s",
     async (programKey) => {
-      await installActiveAliasPassFetch();
+      await installActiveAliasPassFetch({
+        manifestPath: "docs/contest/manifest-20260830-historical.json",
+      });
       const manifest = await loadManifest();
       const foundation = await loadFoundationResources(manifest);
       const expectedOfferIds =

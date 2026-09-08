@@ -464,7 +464,7 @@ describe("HomePage proof rail (runtime derived)", () => {
     const rail = await screen.findByRole("region", {
       name: "Datos y actualización de la copia activa",
     });
-    expect(within(rail).getByText("ciclos oficiales")).toBeVisible();
+    expect(within(rail).getByText("programas y modalidades")).toBeVisible();
     await waitFor(() =>
       expect(
         within(rail).getByText("ofertas con relación FP revisada"),

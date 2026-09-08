@@ -381,9 +381,9 @@ describe("contest coverage freeze validator", () => {
     expect(fresh.coverage.approvedRelationCount).toBe(264);
     expect(fresh.coverage.distinctQualificationCount).toBe(113);
     expect(fresh.coverage.modalityKeyCount).toBe(130);
-    expect(fresh.coverage.matchedRelationCount).toBe(35);
-    expect(fresh.coverage.zeroReviewedRelationCount).toBe(229);
-    expect(fresh.offers.matchedOfferCount).toBe(138);
+    expect(fresh.coverage.matchedRelationCount).toBe(34);
+    expect(fresh.coverage.zeroReviewedRelationCount).toBe(230);
+    expect(fresh.offers.matchedOfferCount).toBe(128);
     expect(fresh.coverage.deferredProgramCount).toBe(0);
     expect(fresh.attempts).toEqual({
       completed: 11,
@@ -718,12 +718,12 @@ it("asserts every canonical final fact in the checked-in fixture", async () => {
   );
   expect(
     (freeze.coverage as Record<string, unknown>).matchedRelationCount,
-  ).toBe(35);
+  ).toBe(34);
   expect(
     (freeze.coverage as Record<string, unknown>).zeroReviewedRelationCount,
-  ).toBe(229);
+  ).toBe(230);
   expect((freeze.offers as Record<string, unknown>).matchedOfferCount).toBe(
-    138,
+    128,
   );
   expect(
     (freeze.coverage as Record<string, unknown>).deferredProgramCount,

@@ -199,7 +199,9 @@ export function TrainingCombobox({
               aria-selected={activeIndex === resultIndex}
               className="training-combobox__option"
               onMouseDown={(event) => event.preventDefault()}
-              onMouseEnter={() => setActiveIndex(resultIndex)}
+              onPointerMove={(event) => {
+                if (event.pointerType === "mouse") setActiveIndex(resultIndex);
+              }}
               onClick={() => selectProgram(program)}
             >
               <span>{formatProgramTitle(program.programTitle)}</span>

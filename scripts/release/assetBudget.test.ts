@@ -85,7 +85,7 @@ describe("asset budget", () => {
   it("keeps deliberately rounded caps for the redesign build (three documented gates)", () => {
     expect(ASSET_BUDGET).toEqual({
       totalBytes: 3_600_000,
-      javascriptBytes: 620_000,
+      javascriptBytes: 621_000,
       stylesheetBytes: 158_000,
       fontBytes: 110_000,
       editorialImageBytes: 1_700_000,

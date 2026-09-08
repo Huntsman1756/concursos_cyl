@@ -50,7 +50,7 @@ for (const row of oneWordPublicationReviews.rows) {
 }
 
 const fallbackOfferIdsByProgram: Record<string, string[]> = {
-  HOT01M: ["1285659376390", "1285671836252"],
+  HOT01M: ["1285671836252"],
   SSC01M: [
     "1285620653126",
     "1285629158396",
@@ -112,7 +112,7 @@ const fallbackOfferIdsByProgram: Record<string, string[]> = {
     "1285672244599",
     "1285672481412",
   ],
-  EOC01M: ["1285667539377", "1285668256621", "1285671523023"],
+  EOC01M: ["1285667539377", "1285673429524", "1285674513041"],
 };
 
 for (const program of results.programs) {

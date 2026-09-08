@@ -1,4 +1,10 @@
-import { cleanup, render, screen, within } from "@testing-library/react";
+import {
+  cleanup,
+  fireEvent,
+  render,
+  screen,
+  within,
+} from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import type { TrainingProgram } from "../../../data/schemas/generated";
@@ -76,6 +82,18 @@ afterEach(() => {
 });
 
 describe("TrainingCombobox", () => {
+  it("keeps keyboard selection when layout causes mouse entry without pointer movement", async () => {
+    const user = userEvent.setup();
+    renderCombobox();
+    await user.type(screen.getByRole("combobox"), "informatica");
+    await user.keyboard("{ArrowDown}");
+    const options = screen.getAllByRole("option");
+    fireEvent.mouseEnter(options[1]);
+    expect(options[0]).toHaveAttribute("aria-selected", "true");
+    await user.pointer({ target: options[1] });
+    expect(options[1]).toHaveAttribute("aria-selected", "true");
+  });
+
   it("announces matching programs and confirms the first family search result by keyboard", async () => {
     const onConfirm = vi.fn();
     const user = userEvent.setup();

@@ -507,7 +507,8 @@ describe("generated data client", () => {
         },
         offerEvidence: {
           ...currentManifestFixture().resourceSnapshots.jobOffers,
-          resourcePath: "/data/v1/snapshots/build-1/offer-evidence.json",
+          resourcePath:
+            "/data/v1/snapshots/20260830120000000-8c6c79fbd2a1/offer-evidence.json",
           recordCount: 2,
         },
       },
@@ -577,6 +578,16 @@ describe("generated data client", () => {
     mockGeneratedAssets({ [offerEvidencePath]: candidate });
 
     await expect(loadOfferEvidence(manifest)).resolves.toEqual(candidate);
+
+    mockGeneratedAssets({
+      [offerEvidencePath]: {
+        ...candidate,
+        snapshotId: "20260908044344059-f92da75832e9",
+      },
+    });
+    await expect(loadOfferEvidence(manifest)).rejects.toMatchObject({
+      code: "schema",
+    });
 
     mockGeneratedAssets({
       [offerEvidencePath]: {

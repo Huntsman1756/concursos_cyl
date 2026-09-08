@@ -40,7 +40,7 @@ const JURY_MEMO_URLS = [
   {
     url: "/desde-oferta",
     heading: /Ofertas/u,
-    mustContain: [/1058/u, /138/u],
+    mustContain: [/1032/u, /128/u],
     mustNotContain: [],
   },
   {

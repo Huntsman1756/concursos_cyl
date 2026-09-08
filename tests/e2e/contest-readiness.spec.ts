@@ -525,7 +525,7 @@ test.describe("contest readiness journeys", () => {
         exact: true,
       }),
     ).toBeVisible();
-    await expect(page.getByRole("article")).toHaveCount(7);
+    await expect(page.getByRole("article")).toHaveCount(6);
     await expect(
       page.getByText(/no hay (empleo|trabajo|puestos)/iu),
     ).toHaveCount(0);

@@ -47,7 +47,7 @@ test("empty catalogues announce their own count without global totals", async ({
 }) => {
   await page.goto("/desde-oferta");
   const offerSummary = page.locator("#offer-results-heading");
-  await expect(offerSummary).toContainText("1058 ofertas");
+  await expect(offerSummary).toContainText("1032 ofertas");
   await page.getByRole("searchbox").fill("zzzinexistente");
   await page.getByRole("button", { name: "Buscar", exact: true }).focus();
   await page
