@@ -26,7 +26,7 @@ sigue consultable; una oferta requiere evidencia específica.
 
 Se mantiene el presupuesto inicial de datos de 10.000.000 bytes y el de JavaScript.
 Las notas SISPE comparten la referencia en Metodología para evitar repetir la URL
-completa en cada evidencia. La carga inicial comprobada queda por debajo del límite en Chromium, Firefox y WebKit. EDUCAbase se carga
+completa en cada evidencia. La carga inicial suma 9.980.220 bytes y cumple el límite en Chromium, Firefox y WebKit. EDUCAbase se carga
 al solicitarlo; solo la instantánea activa se distribuye en el sitio.
 
 ## Controles
@@ -39,4 +39,4 @@ incorpora al registro de publicación una vez completada.
 El piloto humano sigue en `HUMAN_PILOT_NOT_RUN`. La revisión de modelos no se cuenta
 como pilotaje ni como certificación profesional de orientación.
 
-Pruebas de los recorridos modificados: 73 superadas en Chromium (una omitida por viewport) y 32 en Firefox/WebKit. La suite completa y la comprobación pública se registran al terminar.
+Pruebas de los recorridos modificados: 73 superadas en Chromium (una omitida por viewport) y 32 en Firefox/WebKit. La batería Chromium completa pasó 296 pruebas (seis omitidas). La batería de código pasó 1.371 pruebas con dos tiempos agotados; la repetición de los dos archivos de integración pasó las 82 pruebas.

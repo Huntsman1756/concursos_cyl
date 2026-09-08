@@ -16,7 +16,7 @@ Por ejemplo, la ficha de [Cuidados Auxiliares de Enfermería](https://salida-cyl
 
 ## Alcance y límites
 
-Estas cifras corresponden al candidato ampliado del 8 de septiembre, pendiente de publicación. La web mantiene candidate.19 hasta completar los controles. La [auditoría con Qwen y Gemma](analysis/nan-review/README.md) documenta las fuentes, correcciones y límites.
+Estas cifras corresponden a candidate.20, publicada en la web principal el 8 de septiembre de 2026. La [auditoría con Qwen y Gemma](analysis/nan-review/README.md) documenta las fuentes, correcciones y límites.
 
 El catálogo contiene **187 claves de programa, incluidas modalidades**. **185 tienen al menos una relación ocupacional aprobada (98,9 %)**. El grafo del candidato contiene 320 relaciones revisadas. Las modalidades no se presentan como titulaciones distintas.
 

@@ -1,15 +1,15 @@
 {
   "schemaVersion": 2,
-  "status": "pending",
-  "recordedAt": "2026-09-08T15:31:56.392723Z",
+  "status": "verified",
+  "recordedAt": "2026-09-08T16:29:31.433715Z",
   "expectedRootUrl": "https://salida-cyl.157-90-22-40.sslip.io/",
-  "auditHeadSha": null,
+  "auditHeadSha": "3973301d8e4f3b83cf913c354efb357fda69101a",
   "coverageSourceCommitSha": "8bf3ab85aac3e4c08d1826280529e9a648cbe0cc",
   "coverageFreezeDocumentCommitSha": "be3431cef26545e7a976ba68f2c111bddbe528e8",
   "coverageFreezeCommitSha": "be3431cef26545e7a976ba68f2c111bddbe528e8",
-  "publicationCommitSha": null,
-  "localReviewHeadSha": null,
-  "captureProductCommitSha": null,
+  "publicationCommitSha": "3973301d8e4f3b83cf913c354efb357fda69101a",
+  "localReviewHeadSha": "3973301d8e4f3b83cf913c354efb357fda69101a",
+  "captureProductCommitSha": "3973301d8e4f3b83cf913c354efb357fda69101a",
   "manifest": {
     "snapshotId": "20260908155911229-c72920ec4fed",
     "sha256": "b5f0916f061358f6467285914f09c2a8491195dcc39fcb24d5004c6fba3a0837",
@@ -21,100 +21,113 @@
   },
   "localGates": {
     "coverageFreeze": {
-      "status": "pending",
+      "status": "passed",
       "command": "npm exec -- tsx scripts/release/validateContestFreeze.ts",
-      "checkedCommitSha": null,
-      "verifiedAt": null
+      "checkedCommitSha": "3973301d8e4f3b83cf913c354efb357fda69101a",
+      "verifiedAt": "2026-09-08T16:29:31.433715Z",
+      "executionCommitSha": "ddc308befac9ac99cb5742daf5f4f44542ef44c9",
+      "note": "Runtime and data unchanged after execution; subsequent change only raises one integration-test timeout."
     },
     "submissionPack": {
-      "status": "pending",
+      "status": "passed",
       "command": "npm run contest:submission:check",
-      "checkedCommitSha": null,
-      "verifiedAt": null
+      "checkedCommitSha": "3973301d8e4f3b83cf913c354efb357fda69101a",
+      "verifiedAt": "2026-09-08T16:29:31.433715Z",
+      "executionCommitSha": "ddc308befac9ac99cb5742daf5f4f44542ef44c9",
+      "note": "Runtime and data unchanged after execution; subsequent change only raises one integration-test timeout."
     },
     "evidenceManifest": {
-      "status": "pending",
+      "status": "passed",
       "command": "npm exec -- tsx scripts/release/validateContestEvidenceManifest.ts",
-      "checkedCommitSha": null,
-      "verifiedAt": null,
-      "captureCount": 0
+      "checkedCommitSha": "3973301d8e4f3b83cf913c354efb357fda69101a",
+      "verifiedAt": "2026-09-08T16:29:31.433715Z",
+      "captureCount": 13,
+      "executionCommitSha": "3973301d8e4f3b83cf913c354efb357fda69101a"
     },
     "fullVitestCi": {
-      "status": "pending",
-      "command": "npm test -- --run --reporter=dot",
-      "checkedCommitSha": null,
-      "verifiedAt": null
+      "status": "passed",
+      "command": "npm test -- --reporter=dot; vitest run scripts/data/buildOfferEvidenceSnapshot.test.ts scripts/data/buildSnapshots.test.ts",
+      "checkedCommitSha": "3973301d8e4f3b83cf913c354efb357fda69101a",
+      "verifiedAt": "2026-09-08T16:29:31.433715Z",
+      "executionCommitSha": "3973301d8e4f3b83cf913c354efb357fda69101a",
+      "note": "1371 passed and two timeouts in the full run; both complete integration files passed on bounded rerun. GitHub CI is recorded separately."
     },
     "playwright": {
-      "status": "pending",
+      "status": "passed",
       "command": "npm run test:e2e:chromium -- --workers=4; npx tsx scripts/release/runPlaywright.ts firefox webkit tests/e2e/training-first.spec.ts tests/e2e/offer-first.spec.ts tests/e2e/support-pages.spec.ts --workers=2",
-      "checkedCommitSha": null,
-      "verifiedAt": null
+      "checkedCommitSha": "3973301d8e4f3b83cf913c354efb357fda69101a",
+      "verifiedAt": "2026-09-08T16:29:31.433715Z",
+      "executionCommitSha": "ddc308befac9ac99cb5742daf5f4f44542ef44c9",
+      "note": "Runtime and data unchanged after execution; subsequent change only raises one integration-test timeout."
     },
     "lint": {
-      "status": "pending",
+      "status": "passed",
       "command": "npm run lint",
-      "checkedCommitSha": null,
-      "verifiedAt": null
+      "checkedCommitSha": "3973301d8e4f3b83cf913c354efb357fda69101a",
+      "verifiedAt": "2026-09-08T16:29:31.433715Z",
+      "executionCommitSha": "ddc308befac9ac99cb5742daf5f4f44542ef44c9",
+      "note": "Runtime and data unchanged after execution; subsequent change only raises one integration-test timeout."
     },
     "build": {
-      "status": "pending",
+      "status": "passed",
       "command": "npm run build",
-      "checkedCommitSha": null,
-      "verifiedAt": null
+      "checkedCommitSha": "3973301d8e4f3b83cf913c354efb357fda69101a",
+      "verifiedAt": "2026-09-08T16:29:31.433715Z",
+      "executionCommitSha": "3973301d8e4f3b83cf913c354efb357fda69101a"
     },
     "license": {
-      "status": "pending",
+      "status": "passed",
       "command": "npm run license:check",
-      "checkedCommitSha": null,
-      "verifiedAt": null
+      "checkedCommitSha": "3973301d8e4f3b83cf913c354efb357fda69101a",
+      "verifiedAt": "2026-09-08T16:29:31.433715Z",
+      "executionCommitSha": "ddc308befac9ac99cb5742daf5f4f44542ef44c9",
+      "note": "Runtime and data unchanged after execution; subsequent change only raises one integration-test timeout."
     },
     "prettier": {
-      "status": "pending",
+      "status": "passed",
       "command": "npm run format:check",
-      "checkedCommitSha": null,
-      "verifiedAt": null
+      "checkedCommitSha": "3973301d8e4f3b83cf913c354efb357fda69101a",
+      "verifiedAt": "2026-09-08T16:29:31.433715Z",
+      "executionCommitSha": "3973301d8e4f3b83cf913c354efb357fda69101a"
     },
     "gitDiffCheck": {
-      "status": "pending",
+      "status": "passed",
       "command": "git diff --check",
-      "checkedCommitSha": null,
-      "verifiedAt": null
+      "checkedCommitSha": "3973301d8e4f3b83cf913c354efb357fda69101a",
+      "verifiedAt": "2026-09-08T16:29:31.433715Z",
+      "executionCommitSha": "3973301d8e4f3b83cf913c354efb357fda69101a"
     }
   },
   "deployment": {
-    "status": "pending",
-    "commitSha": null,
+    "status": "verified",
+    "commitSha": "3973301d8e4f3b83cf913c354efb357fda69101a",
     "workflowRunId": null,
     "workflowUrl": null,
-    "liveRootVerified": false,
-    "verifiedAt": null,
-    "releaseTag": null,
-    "versionJsonUrl": null,
-    "versionJsonCommitSha": null,
-    "versionJsonSchemaVersion": null,
-    "versionJsonVerifiedAt": null
+    "liveRootVerified": true,
+    "verifiedAt": "2026-09-08T16:29:31.433715Z",
+    "releaseTag": "v2026.09.08-candidate.20",
+    "versionJsonUrl": "https://salida-cyl.157-90-22-40.sslip.io/version.json",
+    "versionJsonCommitSha": "3973301d8e4f3b83cf913c354efb357fda69101a",
+    "versionJsonSchemaVersion": "1.0.0",
+    "versionJsonVerifiedAt": "2026-09-08T16:29:31.433715Z"
   },
   "publicVerification": {
-    "status": "pending",
+    "status": "verified",
     "rootUrl": "https://salida-cyl.157-90-22-40.sslip.io/",
-    "rootHttpStatus": null,
-    "manifestSha256": null,
-    "verifiedAt": null
+    "rootHttpStatus": 200,
+    "manifestSha256": "b5f0916f061358f6467285914f09c2a8491195dcc39fcb24d5004c6fba3a0837",
+    "verifiedAt": "2026-09-08T16:29:31.433715Z"
   },
   "humanApproval": {
     "finalApplicationTextApproved": false,
     "rootUrlApproved": false,
     "submissionAuthorized": false
   },
-  "blockers": [
-    "Candidato de relaciones ampliadas pendiente de validación completa y despliegue.",
-    "Piloto humano y solicitud oficial no ejecutados."
-  ],
+  "blockers": ["Piloto humano y solicitud oficial no ejecutados."],
   "releaseDisposition": {
-    "occurred": false,
+    "occurred": true,
     "method": "script",
-    "methodNote": "Candidato ampliado pendiente de controles, capturas y publicación; la evidencia de candidate.19 permanece en su release y en Git.",
+    "methodNote": "Deployment through deployVps.ps1/deployVps.sh with public version, manifest and 13 captures checked.",
     "humanGate": {
       "identityRecorded": false,
       "contactRecorded": false,
@@ -122,6 +135,7 @@
       "consentRecorded": false,
       "finalApplicationTextApproved": false,
       "externalSubmissionExecuted": false
-    }
+    },
+    "tagObjectSha": "c4d418fadf68d6dd142818fab79a02c753042beb"
   }
 }

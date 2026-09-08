@@ -1,8 +1,7 @@
 # Revisión ampliada con Qwen y Gemma
 
-Revisión de la base `20260908044344059-f92da75832e9`, con candidato local
-`20260908152239149-2a613b74a192`. La publicación requiere completar los controles
-de versión y despliegue; los informes de modelos no constituyen aprobación por sí solos.
+Revisión de la base `20260908044344059-f92da75832e9`, con candidato
+`20260908155911229-c72920ec4fed`. Publicado en la web principal como candidate.20. Los informes de modelos no constituyen aprobación por sí solos.
 
 Resultados preparados: 528 dictámenes para las 264 relaciones existentes y 98 para
 49 propuestas seleccionadas. Se corrigieron 44 citas o fuentes y seis códigos CNO;
@@ -10,8 +9,8 @@ ocho relaciones quedaron pendientes y dos se rechazaron. Se incorporaron 43 sali
 y 23 relaciones de modalidad verificadas por identidad de programa. El candidato
 contiene 320 relaciones aprobadas y cubre 185 de 187 claves (98,9 %).
 
-La nueva descarga contiene 1.032 ofertas, de las que 307 tienen relación revisada
-(29,7 %), con 549 vínculos. Cinco denominaciones principales del catálogo SISPE
+La nueva descarga contiene 1.032 ofertas, de las que 301 tienen relación revisada
+(29,2 %), con 536 vínculos. Cinco denominaciones principales del catálogo SISPE
 del SEPE tienen reglas exactas específicas. No se cruzan automáticamente todas las
 formaciones que comparten un código CNO, ni se infieren requisitos de contratación.
 Los dos programas IMA01E e IMA02E siguen pendientes de evidencia suficientemente
@@ -93,3 +92,5 @@ El extractor `extractSispeOfferCandidates.py` utiliza `pdfplumber`, exige el SHA
 del PDF inspeccionado y separa la columna principal de las denominaciones alternativas.
 Sus resultados son candidatos, no reglas aprobadas. La edición SISPE es de 2018;
 la descarga del 8 de septiembre de 2026 no se presenta como actualización del catálogo.
+
+Las relaciones adyacentes requieren evidencia específica de la oferta y no heredan coincidencias de alias genéricos. Este límite evita cruces de especializaciones con empleos de otros ámbitos; las relaciones FP-CNO siguen consultables.
