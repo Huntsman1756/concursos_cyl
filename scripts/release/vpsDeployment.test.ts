@@ -330,26 +330,18 @@ describe("VPS deployment contract", () => {
     );
   });
 
-  it("builds from scratch, activates atomically and verifies production", () => {
+  it("routes Windows deployment through the same locked POSIX implementation", () => {
     const deployScript = readFileSync(
       resolve(root, "scripts/release/deployVps.ps1"),
       "utf8",
     );
-
-    expect(deployScript).toContain("git status --porcelain");
+    expect(deployScript).toContain('Join-Path $PSScriptRoot "deployVps.sh"');
     expect(deployScript).toContain(
-      'if ($LASTEXITCODE -ne 0) { throw "git status failed." }',
+      "& $bashExecutable $deploymentScript $SshHost $ReleaseId",
     );
-    expect(deployScript).toContain("npm ci");
-    expect(deployScript).toContain("mv -Tf");
-    expect(deployScript).toContain("tail -n +6");
-    expect(deployScript).toContain("CADDY_SMOKE_BASE_URL");
-    expect(deployScript).toContain("npm run release:caddy:verify");
-    // scriptRelPath must not exist; scriptFullPath built directly from root
-    expect(deployScript).not.toContain("scriptRelPath");
-    expect(deployScript).toContain(
-      "Join-Path $root 'scripts\\release\\writeVersionMetadata.ts'",
-    );
+    expect(deployScript).toContain("if ($LASTEXITCODE -ne 0)");
+    expect(deployScript).toContain("$env:CADDY_SMOKE_BASE_URL = $oldSmokeUrl");
+    expect(deployScript).not.toContain("ssh $SshHost");
   });
 
   it("defines the POSIX deployment contract and its ordered remote checks", () => {

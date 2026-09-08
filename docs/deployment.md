@@ -71,6 +71,8 @@ ssh -o BatchMode=yes -o IdentitiesOnly=yes salida-cyl-vps true
 The POSIX command accepts an optional release ID as its second argument. The
 preflight only checks authentication and does not change the remote host.
 
+PowerShell delegates to the same POSIX script through Git for Windows Bash, so both entry points share locking, staging, retention and failure reporting.
+
 The deployment script does a clean dependency install, builds locally, uploads
 one uniquely named archive per execution, switches the symlink atomically,
 retains the five newest releases, reloads Caddy and runs the same live SPA/header

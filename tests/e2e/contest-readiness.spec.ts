@@ -221,7 +221,7 @@ test.describe("contest readiness journeys", () => {
     await expect(page).toHaveTitle("Inicio · SALIDA CyL");
     await expect(page.locator('meta[name="description"]')).toHaveAttribute(
       "content",
-      "Explora relaciones revisadas entre formación profesional y ocupaciones en Castilla y León con datos abiertos.",
+      "Orientación de formación profesional y empleo en Castilla y León con datos públicos, fuentes identificadas y límites visibles.",
     );
     await expect(page.locator('link[rel="canonical"]')).toHaveAttribute(
       "href",
@@ -229,13 +229,13 @@ test.describe("contest readiness journeys", () => {
     );
     await expect(page.locator('meta[property="og:title"]')).toHaveAttribute(
       "content",
-      "SALIDA CyL",
+      "Inicio · SALIDA CyL",
     );
     await expect(
       page.locator('meta[property="og:description"]'),
     ).toHaveAttribute(
       "content",
-      "Explora relaciones revisadas entre formación profesional y ocupaciones en Castilla y León con datos abiertos.",
+      "Orientación de formación profesional y empleo en Castilla y León con datos públicos, fuentes identificadas y límites visibles.",
     );
     await expect(page.locator('meta[property="og:type"]')).toHaveAttribute(
       "content",
@@ -255,13 +255,13 @@ test.describe("contest readiness journeys", () => {
     );
     await expect(page.locator('meta[name="twitter:title"]')).toHaveAttribute(
       "content",
-      "SALIDA CyL",
+      "Inicio · SALIDA CyL",
     );
     await expect(
       page.locator('meta[name="twitter:description"]'),
     ).toHaveAttribute(
       "content",
-      "Explora relaciones revisadas entre formación profesional y ocupaciones en Castilla y León con datos abiertos.",
+      "Orientación de formación profesional y empleo en Castilla y León con datos públicos, fuentes identificadas y límites visibles.",
     );
     await expect(page.locator('meta[name="twitter:image"]')).toHaveAttribute(
       "content",
@@ -292,7 +292,37 @@ test.describe("contest readiness journeys", () => {
     }
     expect(robotsResponse.ok()).toBe(true);
     expect(robotsResponse.headers()["content-type"]).toMatch(/^text\/plain/u);
-    expect(await robotsResponse.text()).toBe("User-agent: *\nAllow: /\n");
+    expect(await robotsResponse.text()).toBe(
+      "User-agent: *\nAllow: /\nSitemap: https://salida-cyl.157-90-22-40.sslip.io/sitemap.xml\n",
+    );
+  });
+
+  test("updates canonical and robots through query and clean navigation", async ({
+    page,
+    request,
+  }) => {
+    await page.goto("/desde-fp/ADG02S?q=prueba");
+    await expect(page.locator('link[rel="canonical"]')).toHaveCount(1);
+    await expect(page.locator('link[rel="canonical"]')).toHaveAttribute(
+      "href",
+      "https://salida-cyl.157-90-22-40.sslip.io/desde-fp/ADG02S",
+    );
+    await expect(page.locator('meta[name="robots"]')).toHaveAttribute(
+      "content",
+      "noindex,follow",
+    );
+    await page.goto("/desde-fp/ADG02S");
+    await expect(page.locator('meta[name="robots"]')).toHaveAttribute(
+      "content",
+      "index,follow",
+    );
+    const sitemap = await request.get("/sitemap.xml");
+    expect(sitemap.ok()).toBe(true);
+    const xml = await sitemap.text();
+    expect(xml).toContain(
+      "https://salida-cyl.157-90-22-40.sslip.io/desde-fp/ADG02S",
+    );
+    expect(xml).not.toContain("?q=");
   });
 
   test("keeps the 390px mobile menu shareable and keyboard-safe", async ({
