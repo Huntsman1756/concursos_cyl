@@ -47,7 +47,7 @@ Se combinan con CNO-11, TodoFP, SEPE y EDUCAbase. El [inventario de fuentes](doc
 
 Categoría **Productos y Servicios** del [X Concurso de Datos Abiertos de Castilla y León](https://datosabiertos.jcyl.es/web/es/concurso-datos-abiertos/concurso-datos-abiertos.html). La [comprobación de las bases](docs/contest/rules-2026.md) recoge fuentes oficiales, criterios y el límite de 1.000 palabras de la memoria.
 
-La revisión previa al piloto está en [prepilot-verification-20260908.md](docs/contest/prepilot-verification-20260908.md). La revisión de fuentes del mismo día se conserva en [verification-20260908.md](docs/contest/verification-20260908.md). Los registros de releases anteriores son evidencia histórica, no una garantía del estado actual. El estado final de ambos hosts se registra por separado en la [release pública](https://github.com/Huntsman1756/concursos_cyl/releases/tag/v2026.09.08-candidate.19). El repositorio y el canal de incidencias son públicos, verificados sin autenticación el 8 de septiembre. La memoria también se ofrece en la propia aplicación.
+La revisión actual previa al piloto está en [nan-review-20260908.md](docs/qa/nan-review-20260908.md). La revisión de fuentes del mismo día se conserva en [verification-20260908.md](docs/contest/verification-20260908.md). Los registros de releases anteriores son evidencia histórica, no una garantía del estado actual. El estado final de ambos hosts se registra por separado en la [release pública](https://github.com/Huntsman1756/concursos_cyl/releases/tag/v2026.09.08-candidate.20). El repositorio y el canal de incidencias son públicos, verificados sin autenticación el 8 de septiembre. La memoria también se ofrece en la propia aplicación.
 
 ## Desarrollo y calidad
 
@@ -75,6 +75,6 @@ Los datos se reconstruyen mediante `npm run data:build`, con revisión previa a 
 
 Código bajo licencia MIT. Los datos conservan las condiciones de cada editor: [DATA_LICENSE.md](DATA_LICENSE.md).
 
-La versión VPS publicada es `v2026.09.08-candidate.19`. [Memoria PDF](https://salida-cyl.157-90-22-40.sslip.io/candidatura.pdf) · [Demo guiada de dos minutos](docs/contest/evidence/demo-candidate19-20260908.webm).
+La versión VPS publicada es `v2026.09.08-candidate.20`. [Memoria PDF](https://salida-cyl.157-90-22-40.sslip.io/candidatura.pdf) · [Demo guiada de dos minutos](https://github.com/Huntsman1756/concursos_cyl/releases/download/v2026.09.08-candidate.20/demo-candidate20-20260908.webm).
 
 La [operativa](docs/operations.md) recoge mantenimiento, recuperación y comprobaciones públicas. La [preparación del piloto](docs/pilot/readiness.md) distingue la versión técnica preparada de las observaciones humanas aún no realizadas.
