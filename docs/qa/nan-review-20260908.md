@@ -40,3 +40,5 @@ El piloto humano sigue en `HUMAN_PILOT_NOT_RUN`. La revisión de modelos no se c
 como pilotaje ni como certificación profesional de orientación.
 
 Pruebas de los recorridos modificados: 73 superadas en Chromium (una omitida por viewport) y 32 en Firefox/WebKit. La batería Chromium completa pasó 296 pruebas (seis omitidas). La batería de código pasó 1.371 pruebas con dos tiempos agotados; la repetición de los dos archivos de integración pasó las 82 pruebas.
+
+Publicación: candidate.20, commit `3973301d8e4f3b83cf913c354efb357fda69101a`. Verificación pública de Caddy, versión y manifiesto superada; 13 capturas renovadas. Se comprobaron seis recorridos/anchos públicos, sin errores de página ni infracciones Axe detectadas; HTML/CSS/PDF coinciden con los archivos revisados. El preflight del piloto coincide con esta versión y mantiene `HUMAN_PILOT_NOT_RUN`.

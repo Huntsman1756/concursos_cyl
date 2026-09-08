@@ -14,6 +14,6 @@ La representatividad de las tablas nacionales es la declarada por el Ministerio:
 
 ## Producto y release
 
-Las rutas internas son recorridos de producto; la candidatura usa únicamente la raíz pública. La experiencia no requiere cuentas y no conserva selecciones, búsquedas, respuestas ni resultados. No guarda preferencias en almacenamiento local. Los filtros y términos presentes en la URL pueden quedar en el historial del navegador. La accesibilidad, el responsive y la semántica se deben confirmar de nuevo en la sesión de capturas finales.
+Las rutas internas son recorridos de producto; la candidatura usa únicamente la raíz pública. La experiencia no requiere cuentas y no conserva selecciones, búsquedas, respuestas ni resultados. No guarda preferencias en almacenamiento local. Los filtros y términos presentes en la URL pueden quedar en el historial del navegador. La accesibilidad automatizada, el responsive y la semántica se comprobaron de nuevo durante la captura final.
 
-El objetivo de ampliar la cobertura está condicionado a evidencia: el freeze actual registra 185 claves de programa con relación revisada y deja 2 programas diferidos. El despliegue y la verificación pública aún están pendientes y no forman parte de este documento como hechos consumados.
+El objetivo de ampliar la cobertura está condicionado a evidencia: el freeze actual registra 185 claves de programa con relación revisada y deja 2 programas diferidos. El despliegue público está verificado para el commit `3973301d8e4f3b83cf913c354efb357fda69101a`; la verificación de rutas y recursos queda registrada en `docs/contest/release-evidence.json`.
