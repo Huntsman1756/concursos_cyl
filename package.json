@@ -8,7 +8,7 @@
   },
   "scripts": {
     "dev": "vite",
-    "build": "tsc -b && vite build && npm run release:runtime-data && npm run qa:assets:check && npm run qa:distribution:check && npm run release:candidate:verify",
+    "build": "tsc -b && vite build && npm run release:runtime-data && npm run qa:assets:check && npm run qa:distribution:check && npm run release:candidate:verify && npm run seo:build && npm run contest:content:check",
     "qa:design-system:audit": "node scripts/release/auditDesignSystemNormalization.mjs",
     "qa:design-system:invariants": "node scripts/release/assertDesignSystemNormalization.mjs",
     "qa:design-system:capture": "node scripts/release/captureDesignSystemNormalizationScreenshots.mjs",
@@ -60,7 +60,12 @@
     "analysis:fp:matching-evaluation:check": "npm test -- scripts/analysis/evaluateFpOfferMatching.test.ts",
     "pilot:anonymous:test": "vitest run scripts/pilot/validateAnonymousPilot.test.ts",
     "pilot:anonymous:validate:not-run": "tsx scripts/pilot/validateAnonymousPilot.ts --not-run",
-    "pilot:anonymous:validate": "tsx scripts/pilot/validateAnonymousPilot.ts --input analysis/pilot/anonymous/results-aggregate.json --require-complete"
+    "pilot:anonymous:validate": "tsx scripts/pilot/validateAnonymousPilot.ts --input analysis/pilot/anonymous/results-aggregate.json --require-complete",
+    "seo:build": "tsx scripts/release/buildSitemap.ts",
+    "ops:check": "tsx scripts/release/checkPublicAvailability.ts",
+    "pilot:preflight": "tsx scripts/pilot/preflightAnonymousPilot.ts",
+    "qa:performance": "node scripts/release/measureMobilePerformance.mjs",
+    "contest:content:check": "tsx scripts/release/validateMemoArtifacts.ts"
   },
   "keywords": [
     "formación profesional",

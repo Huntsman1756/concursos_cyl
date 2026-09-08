@@ -2,7 +2,7 @@ import { useEffect, useRef, useState, type ReactNode } from "react";
 import { Link, NavLink, useLocation } from "react-router-dom";
 
 import { RouteReadyProvider } from "./RouteReady";
-import { titleForPathname } from "./routeTitles";
+import { updateRouteMetadata } from "./routeMetadata";
 import { useRouteScrollFocus } from "./useRouteScrollFocus";
 import "../styles/global.css";
 import "../styles/visualRefresh.css";
@@ -81,8 +81,8 @@ export function AppShell({ children }: AppShellProps) {
   useRouteScrollFocus(mainRef);
 
   useEffect(() => {
-    document.title = titleForPathname(location.pathname);
-  }, [location.pathname]);
+    updateRouteMetadata(location.pathname, location.search);
+  }, [location.pathname, location.search]);
 
   useEffect(() => {
     if (previousLocationSignature.current === locationSignature) return;
@@ -247,7 +247,8 @@ export function AppShell({ children }: AppShellProps) {
                 </li>
                 <li>
                   <a href={`${import.meta.env.BASE_URL}candidatura.html`}>
-                    Candidatura 2026
+                    Candidatura al X Concurso de Datos Abiertos de Castilla y
+                    León · 2026
                   </a>
                 </li>
               </ul>

@@ -21,15 +21,15 @@ Fuentes recuperadas directamente desde la sede electrónica mediante HTTPS; el n
 
 La convocatoria remite al artículo 10 modificado y reproduce siete criterios. Todos se consideran en la misma proporción:
 
-| Criterio                               | Evidencia en la memoria                                                           |
-| -------------------------------------- | --------------------------------------------------------------------------------- |
-| Utilidad                               | Problema, destinatarios y recorrido concreto                                      |
-| Valor económico                        | Potencial de reutilización y reducción de trabajo, sin ahorro o negocio inventado |
-| Valor público y social                 | Acceso, orientación territorial y procedencia visible                             |
-| Originalidad, creatividad e innovación | Relaciones revisadas y navegación en ambos sentidos                               |
-| Variedad de conjuntos                  | Ocho fuentes JCyL, funciones y complementos nacionales                            |
-| Facilidad de uso y accesibilidad       | Entradas, filtros, móvil, teclado y límites de las pruebas                        |
-| Calidad técnica                        | Trazabilidad, cobertura definida, integridad y validación                         |
+| Criterio                               | Evidencia en la memoria                                                                     |
+| -------------------------------------- | ------------------------------------------------------------------------------------------- |
+| Utilidad                               | Problema, destinatarios y recorrido concreto                                                |
+| Valor económico                        | Hipótesis de adaptación y mantenimiento para entidades, sin clientes ni ingresos inventados |
+| Valor público y social                 | Acceso, orientación territorial y procedencia visible                                       |
+| Originalidad, creatividad e innovación | Relaciones revisadas y navegación en ambos sentidos                                         |
+| Variedad de conjuntos                  | Ocho fuentes JCyL, funciones y complementos nacionales                                      |
+| Facilidad de uso y accesibilidad       | Entradas, filtros, móvil, teclado y límites de las pruebas                                  |
+| Calidad técnica                        | Trazabilidad, cobertura definida, integridad y validación                                   |
 
 ## Control de presentación
 

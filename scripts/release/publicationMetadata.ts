@@ -66,7 +66,7 @@ function publicationHead(metadata: PublicationMetadata): string {
   return [
     `<title>${title}</title>`,
     `<meta name="description" content="${description}">`,
-    `<link rel="canonical" href="${canonicalUrl}">`,
+    // The shared SPA shell has no route-specific canonical until the router runs.
     `<meta property="og:title" content="${title}">`,
     `<meta property="og:description" content="${description}">`,
     `<meta property="og:type" content="website">`,

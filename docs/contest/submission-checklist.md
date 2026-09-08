@@ -16,10 +16,10 @@
 - El estado del respaldo GitHub Pages se registra por separado en [verification-20260908.md](verification-20260908.md).
 - Commit fuente del freeze: `136a08859f387427b74605bdcf8c19ea9584aebc`.
 - Snapshot: `20260908044344059-f92da75832e9`.
-- Commit desplegado: `2aaef9a1fa545e35b76c9b05f6cf98172175b94d`.
+- Commit desplegado: `4a76e5962d1628c4dbcaa4cb6a2b3922d906dd36`.
 - Run del workflow: no aplica (despliegue por script VPS, sin GitHub Actions).
-- Release: `v2026.09.08-candidate.17`.
-- `version.json` verificado: [respuesta pública](https://salida-cyl.157-90-22-40.sslip.io/version.json) con commit igual a `2aaef9a1fa545e35b76c9b05f6cf98172175b94d`.
+- Release: `v2026.09.08-candidate.19`.
+- `version.json` verificado: [respuesta pública](https://salida-cyl.157-90-22-40.sslip.io/version.json) con commit igual a `4a76e5962d1628c4dbcaa4cb6a2b3922d906dd36`.
 - Identidad del producto: el commit desplegado registrado arriba es el commit de producto; esta documentación de candidatura vive en una rama documental posterior y no forma parte del commit desplegado.
 
 - Evidencia visual: **capturada y validada en `docs/contest/evidence-capture.json`**.

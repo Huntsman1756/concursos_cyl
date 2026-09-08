@@ -4,15 +4,16 @@ Versión del protocolo: `2.0.0`
 Versión del catálogo de tareas: `2.0.0`  
 Estado actual: `HUMAN_PILOT_NOT_RUN`
 
-Producto que se probará antes de la primera sesión:
+## Identidad de la versión del piloto
 
-- URL pública: `https://huntsman1756.github.io/concursos_cyl/`
-- SHA desplegado: `886bbf433df7db1e99acf78786286ceee8bc1a06`
-- Snapshot activo: `20260830120000000-8c6c79fbd2a1`
+La referencia única es [release-target.json](release-target.json): URL, commit
+publicado e instantánea. El esquema del agregado consume el mismo archivo,
+para evitar identidades copiadas que queden obsoletas en otros documentos.
 
-No se inicia ninguna sesión hasta que el protocolo V2 esté fusionado y la URL
-pública confirme exactamente ese SHA. Si el producto publicado cambia, se
-detiene la preparación y se revisa de nuevo la identidad del release.
+Antes de cada sesión, ejecutar `npm run pilot:preflight`. Comprueba la versión
+pública, el manifiesto y los hashes del protocolo y guion. Si cambia el producto,
+se detiene la preparación y se vuelve a fijar su identidad antes de continuar.
+El preflight técnico no acredita consentimiento ni observaciones de personas.
 
 ## Propósito y límites de interpretación
 
@@ -46,7 +47,7 @@ muestra sea representativa y no se recoge la identidad profesional.
 
 Antes de la primera sesión:
 
-1. Verificar el SHA público indicado arriba y leer el [guion de tareas](./anonymous-task-script.md).
+1. Verificar el SHA público del archivo de referencia y leer el [guion de tareas](./anonymous-task-script.md).
 2. Abrir el producto en una ventana nueva o anónima, sin cuenta, cookies de
    piloto, analítica, historial conservado ni grabador.
 3. Presentar la [plantilla de consentimiento](./anonymous-consent-template.md)

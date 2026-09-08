@@ -1,10 +1,31 @@
 import { cleanup, render } from "@testing-library/react";
-import { afterEach, describe, expect, it } from "vitest";
+import { afterEach, describe, expect, it, vi } from "vitest";
 import { EditorialImage } from "./EditorialImage";
 
-afterEach(cleanup);
+afterEach(() => {
+  cleanup();
+  vi.unstubAllEnvs();
+});
 
 describe("EditorialImage", () => {
+  it("keeps every image variant inside the Pages base", () => {
+    vi.stubEnv("BASE_URL", "/concursos_cyl/");
+    const { container } = render(
+      <EditorialImage
+        asset="path-training"
+        variants={[640, 960]}
+        alt="Formación"
+        width={640}
+        height={480}
+        sizes="100vw"
+      />,
+    );
+    expect(container.querySelector("img")?.src).toContain(
+      "/concursos_cyl/images/editorial/",
+    );
+    for (const source of container.querySelectorAll("source"))
+      expect(source.srcset).not.toMatch(/(?:^|, )\/images\//u);
+  });
   it("renders AVIF first, WebP fallback, and a sized img inside <picture>", () => {
     const { container } = render(
       <EditorialImage

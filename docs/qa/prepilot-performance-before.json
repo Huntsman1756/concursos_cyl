@@ -1,0 +1,200 @@
+{
+  "checkedAt": "2026-09-08T11:39:19.995Z",
+  "url": "https://salida-cyl.157-90-22-40.sslip.io/",
+  "browser": "151.0.7922.34",
+  "profile": {
+    "viewport": "390x844",
+    "downloadMbps": 1.6,
+    "uploadMbps": 0.75,
+    "latencyMs": 150,
+    "cpuSlowdown": 4,
+    "cache": "cold"
+  },
+  "method": "Laboratory approximation, not field Core Web Vitals; searchResultsMs includes browser automation overhead and is not INP.",
+  "runs": [
+    {
+      "run": 1,
+      "lcpMs": 4748,
+      "cls": 0.04626667475579804,
+      "transferBytes": 613452,
+      "searchReadyMs": 6857.599999997765,
+      "searchResultsMs": 31.600000001490116,
+      "largestResources": [
+        {
+          "path": "/data/v1/snapshots/20260908044344059-f92da75832e9/offer-evidence.json",
+          "transferBytes": 160871,
+          "decodedBytes": 2708345,
+          "durationMs": 1934.199999999255
+        },
+        {
+          "path": "/assets/index-ifeMOtuw.js",
+          "transferBytes": 128209,
+          "decodedBytes": 408567,
+          "durationMs": 929.8999999985099
+        },
+        {
+          "path": "/data/v1/snapshots/20260908044344059-f92da75832e9/training-offerings.json",
+          "transferBytes": 42743,
+          "decodedBytes": 609964,
+          "durationMs": 1267.300000000745
+        },
+        {
+          "path": "/images/editorial/path-occupation-640.avif",
+          "transferBytes": 34203,
+          "decodedBytes": 33903,
+          "durationMs": 1448.199999999255
+        },
+        {
+          "path": "/fonts/public-sans-latin-700.woff2",
+          "transferBytes": 33964,
+          "decodedBytes": 33664,
+          "durationMs": 1481.3999999985099
+        },
+        {
+          "path": "/fonts/public-sans-latin-600.woff2",
+          "transferBytes": 33936,
+          "decodedBytes": 33636,
+          "durationMs": 1466.800000000745
+        },
+        {
+          "path": "/fonts/public-sans-latin-400.woff2",
+          "transferBytes": 33912,
+          "decodedBytes": 33612,
+          "durationMs": 1466.5
+        },
+        {
+          "path": "/images/editorial/path-training-640.avif",
+          "transferBytes": 21990,
+          "decodedBytes": 21690,
+          "durationMs": 1180.300000000745
+        }
+      ],
+      "pageErrors": []
+    },
+    {
+      "run": 2,
+      "lcpMs": 2052,
+      "cls": 0.04626667475579804,
+      "transferBytes": 613452,
+      "searchReadyMs": 4109.699999999255,
+      "searchResultsMs": 29.899999998509884,
+      "largestResources": [
+        {
+          "path": "/data/v1/snapshots/20260908044344059-f92da75832e9/offer-evidence.json",
+          "transferBytes": 160871,
+          "decodedBytes": 2708345,
+          "durationMs": 1953.300000000745
+        },
+        {
+          "path": "/assets/index-ifeMOtuw.js",
+          "transferBytes": 128209,
+          "decodedBytes": 408567,
+          "durationMs": 928.1999999992549
+        },
+        {
+          "path": "/data/v1/snapshots/20260908044344059-f92da75832e9/training-offerings.json",
+          "transferBytes": 42743,
+          "decodedBytes": 609964,
+          "durationMs": 1275.5999999977648
+        },
+        {
+          "path": "/images/editorial/path-occupation-640.avif",
+          "transferBytes": 34203,
+          "decodedBytes": 33903,
+          "durationMs": 1462.699999999255
+        },
+        {
+          "path": "/fonts/public-sans-latin-700.woff2",
+          "transferBytes": 33964,
+          "decodedBytes": 33664,
+          "durationMs": 1511.6000000014901
+        },
+        {
+          "path": "/fonts/public-sans-latin-600.woff2",
+          "transferBytes": 33936,
+          "decodedBytes": 33636,
+          "durationMs": 1480.0999999977648
+        },
+        {
+          "path": "/fonts/public-sans-latin-400.woff2",
+          "transferBytes": 33912,
+          "decodedBytes": 33612,
+          "durationMs": 1480.199999999255
+        },
+        {
+          "path": "/images/editorial/path-training-640.avif",
+          "transferBytes": 21990,
+          "decodedBytes": 21690,
+          "durationMs": 1168.7999999970198
+        }
+      ],
+      "pageErrors": []
+    },
+    {
+      "run": 3,
+      "lcpMs": 1996,
+      "cls": 0.04626667475579804,
+      "transferBytes": 613452,
+      "searchReadyMs": 4102.39999999851,
+      "searchResultsMs": 30.300000000745058,
+      "largestResources": [
+        {
+          "path": "/data/v1/snapshots/20260908044344059-f92da75832e9/offer-evidence.json",
+          "transferBytes": 160871,
+          "decodedBytes": 2708345,
+          "durationMs": 1988.199999999255
+        },
+        {
+          "path": "/assets/index-ifeMOtuw.js",
+          "transferBytes": 128209,
+          "decodedBytes": 408567,
+          "durationMs": 909.8999999985099
+        },
+        {
+          "path": "/data/v1/snapshots/20260908044344059-f92da75832e9/training-offerings.json",
+          "transferBytes": 42743,
+          "decodedBytes": 609964,
+          "durationMs": 1310.2999999970198
+        },
+        {
+          "path": "/images/editorial/path-occupation-640.avif",
+          "transferBytes": 34203,
+          "decodedBytes": 33903,
+          "durationMs": 1477.8999999985099
+        },
+        {
+          "path": "/fonts/public-sans-latin-700.woff2",
+          "transferBytes": 33964,
+          "decodedBytes": 33664,
+          "durationMs": 1511.1000000014901
+        },
+        {
+          "path": "/fonts/public-sans-latin-600.woff2",
+          "transferBytes": 33936,
+          "decodedBytes": 33636,
+          "durationMs": 1496.300000000745
+        },
+        {
+          "path": "/fonts/public-sans-latin-400.woff2",
+          "transferBytes": 33912,
+          "decodedBytes": 33612,
+          "durationMs": 1496
+        },
+        {
+          "path": "/images/editorial/path-training-640.avif",
+          "transferBytes": 21990,
+          "decodedBytes": 21690,
+          "durationMs": 1176.0999999977648
+        }
+      ],
+      "pageErrors": []
+    }
+  ],
+  "median": {
+    "lcpMs": 2052,
+    "cls": 0.04626667475579804,
+    "searchReadyMs": 4109.699999999255,
+    "searchResultsMs": 30.300000000745058,
+    "transferBytes": 613452
+  }
+}

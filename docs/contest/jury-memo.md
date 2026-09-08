@@ -16,7 +16,7 @@ El servicio se dirige a estudiantes, personas que buscan empleo o un cambio prof
 
 ## Valor económico
 
-El producto puede reducir trabajo de búsqueda y contraste en orientación. La licencia MIT del código y su grafo descargable permiten reutilizar componentes en otros servicios e integrar relaciones documentadas sin rehacer toda la revisión. El acceso actual es gratuito. No se atribuyen ingresos, ahorro cuantificado, clientes ni rentabilidad que no se hayan medido.
+El acceso ciudadano es gratuito. Una vía potencial de negocio consiste en ofrecer adaptación, integración y mantenimiento a centros de formación, entidades de orientación y administraciones locales: selección de fuentes, actualización y revisión de relaciones para sus necesidades. La licencia MIT y el grafo abierto permiten esa reutilización. La sostenibilidad dependería de que los ingresos por esos servicios cubrieran el alojamiento, las actualizaciones y la revisión especializada. Es una hipótesis por validar; no se atribuyen clientes, contratos, ingresos, ahorro cuantificado ni rentabilidad observada.
 
 ## Valor público y social
 

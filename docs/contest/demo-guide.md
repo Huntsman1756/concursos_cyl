@@ -8,4 +8,4 @@ Usar la versión pública final y comprobar sus fechas antes de grabar. No mostr
 4. **1:15–1:35 — Límite.** Abrir Programadores informáticos, CNO 3820. «Que no aparezca una oferta vinculada no significa que no existan oportunidades. La aplicación conserva las formaciones revisadas y explica la ausencia».
 5. **1:35–2:00 — Reutilización.** Abrir Datos abiertos y mostrar JSON/CSV. «Las relaciones se devuelven como datos reutilizables con procedencia. En esta versión, 130 de 187 claves de programa tienen relaciones revisadas; 128 de 1.032 ofertas están vinculadas. Son cifras de cobertura, no inserción laboral medida».
 
-Cerrar mostrando el enlace Candidatura 2026 y la memoria PDF. Este guion acompaña la demo; no añade palabras a la memoria de solicitud.
+Cerrar mostrando el enlace a la candidatura del X Concurso de Datos Abiertos y la memoria PDF. Este guion acompaña la demo; no añade palabras a la memoria de solicitud.

@@ -12,7 +12,7 @@ interface EditorialImageProps {
   className?: string;
 }
 
-const EDITORIAL_BASE = "/images/editorial";
+const editorialBase = () => `${import.meta.env.BASE_URL}images/editorial`;
 
 /**
  * Editorial photography (AI-generated, see image-qa-policy.md). Renders a
@@ -34,7 +34,7 @@ export function EditorialImage({
     variants
       .map(
         (variant) =>
-          `${EDITORIAL_BASE}/${asset}-${variant}.${extension} ${variant}w`,
+          `${editorialBase()}/${asset}-${variant}.${extension} ${variant}w`,
       )
       .join(", ");
 
@@ -43,7 +43,7 @@ export function EditorialImage({
       <source type="image/avif" srcSet={srcsetWidth("avif")} sizes={sizes} />
       <source type="image/webp" srcSet={srcsetWidth("webp")} sizes={sizes} />
       <img
-        src={`${EDITORIAL_BASE}/${asset}-${largest}.avif`}
+        src={`${editorialBase()}/${asset}-${largest}.avif`}
         alt={alt}
         width={width}
         height={height}
