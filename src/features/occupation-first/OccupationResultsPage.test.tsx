@@ -317,13 +317,26 @@ describe("occupation-first results", () => {
     );
     expect(
       await screen.findByText(
-        "Aún no hay una ruta formativa comprobada para esta profesión",
+        "Esta copia no contiene relaciones FP revisadas para esta profesión.",
       ),
     ).toBeVisible();
     expect(
+      screen.getByText(/La ausencia en esta copia no determina qué formación/i),
+    ).toBeVisible();
+    expect(
       screen.getByText(
-        /Esto no significa que no exista formación relacionada/i,
-      ),
+        "Esta copia no contiene relaciones FP revisadas para esta profesión.",
+      ).parentElement?.textContent,
+    ).not.toMatch(/pendiente|todavía|aún/iu);
+    expect(screen.getAllByRole("heading", { level: 1 })).toHaveLength(1);
+    expect(
+      document.querySelectorAll("#occupation-results-heading"),
+    ).toHaveLength(1);
+    expect(
+      screen.getByRole("heading", {
+        level: 2,
+        name: "Esta copia no contiene relaciones FP revisadas para esta profesión.",
+      }),
     ).toBeVisible();
   });
 
@@ -349,7 +362,7 @@ describe("occupation-first results", () => {
     if (header === null) throw new Error("Expected the occupation header.");
     await userEvent
       .setup()
-      .click(within(header).getByText("Fuente de esta profesión"));
+      .click(within(header).getByText("Fuente y revisión de esta profesión"));
     expect(
       within(header).getByRole("link", {
         name: /^Ver fuente oficial/u,
@@ -370,7 +383,7 @@ describe("occupation-first results", () => {
       ),
     ).toBeVisible();
     expect(
-      within(cards[0]).getByText("2 centros · Ávila, Valladolid"),
+      within(cards[0]).getByText("2 centros · 2 provincias"),
     ).toBeVisible();
     expect(cards[0]).toHaveTextContent("grado superior");
     expect(cards[0]).toHaveTextContent("IFC03S");
@@ -383,7 +396,7 @@ describe("occupation-first results", () => {
       screen.queryByText(/Datos formativos consultados/u),
     ).not.toBeInTheDocument();
     const sectionNavigation = screen.getByRole("navigation", {
-      name: "Secciones del resultado",
+      name: "Secciones de esta página",
     });
     expect(
       within(sectionNavigation).getByRole("link", {
@@ -472,7 +485,7 @@ describe("occupation-first results", () => {
       .closest("header");
     expect(header).not.toBeNull();
     const professionSource = within(header!).getByText(
-      "Fuente de esta profesión",
+      "Fuente y revisión de esta profesión",
     );
     expect(professionSource.closest("details")).not.toBeNull();
     await userEvent.setup().click(professionSource);
@@ -610,7 +623,7 @@ describe("occupation-first results", () => {
     ).toBeVisible();
     expect(
       screen.getByText(
-        "Aún no hay una ruta formativa comprobada para esta profesión",
+        "Esta copia no contiene relaciones FP revisadas para esta profesión.",
       ),
     ).toBeVisible();
     const manifestRequests = vi

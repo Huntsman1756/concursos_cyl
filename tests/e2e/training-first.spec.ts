@@ -371,7 +371,7 @@ test("live DAW results shows formacion link and approved occupation", async ({
     }),
   ).toBeVisible();
   const sectionNavigation = page.getByRole("navigation", {
-    name: "Secciones del resultado",
+    name: "Secciones de esta página",
   });
   await expect(
     sectionNavigation.getByRole("link", { name: "Dónde estudiar" }),
@@ -548,7 +548,7 @@ test("the intercepted full DAW card makes a declared gap, action, filter, and ev
   await expect(card).toBeVisible();
 
   const evidenceDisclosure = card.locator(
-    'summary[aria-label="De dónde sale esta información (Desarrollador web para servicios públicos)"]',
+    'summary[aria-label="Fuente y revisión de esta oferta (Desarrollador web para servicios públicos)"]',
   );
   await tabTo(page, evidenceDisclosure);
   await expect(evidenceDisclosure).toBeFocused();

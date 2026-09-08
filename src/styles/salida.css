@@ -170,6 +170,140 @@ select:focus-visible,
   line-height: var(--text-caption-line-height);
 }
 
+/* --------------------------------------------------- loading scaffolds */
+
+/* Route-level loading pattern: preserves the rough geometry of the page that
+   will replace it. One pulsing surface (disabled under reduced motion), a
+   visible status line and aria-busy semantics. */
+.route-loading {
+  padding-block: var(--space-7);
+}
+
+.loading-skeleton {
+  min-height: 14rem;
+  color: var(--color-text-muted);
+}
+
+.loading-skeleton__status {
+  margin: 0 0 var(--space-4);
+  font-size: var(--text-small);
+  line-height: var(--text-small-line-height);
+}
+
+.loading-skeleton__surface {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  animation: loading-skeleton-pulse 1.8s ease-in-out infinite;
+}
+
+.loading-skeleton__block {
+  display: block;
+  border-radius: var(--radius-small);
+  background: var(--color-surface-alt);
+  box-shadow: inset 0 0 0 1px var(--color-border);
+}
+
+.loading-skeleton__block--eyebrow {
+  width: 11rem;
+  height: 0.875rem;
+}
+
+.loading-skeleton__block--display {
+  width: min(34rem, 100%);
+  height: 2.25rem;
+}
+
+.loading-skeleton__block--crumb {
+  width: 16rem;
+  height: 0.75rem;
+}
+
+.loading-skeleton__block--line {
+  height: 0.875rem;
+}
+
+.loading-skeleton__block--line.is-narrow {
+  width: min(22rem, 100%);
+}
+
+.loading-skeleton__block--line.is-mid {
+  width: min(30rem, 100%);
+}
+
+.loading-skeleton__block--filter {
+  width: 100%;
+  height: 3.25rem;
+  border-radius: var(--radius-medium);
+}
+
+.loading-skeleton__block--section {
+  width: min(18rem, 60%);
+  height: 1.125rem;
+  margin-top: var(--space-2);
+}
+
+.loading-skeleton__cards,
+.loading-skeleton__rows {
+  display: grid;
+  gap: var(--space-3);
+}
+
+.loading-skeleton__block--card {
+  height: 7.5rem;
+  border-radius: var(--radius-medium);
+}
+
+.loading-skeleton__block--row {
+  height: 3.5rem;
+}
+
+/* List routes replace both their lazy-route and data-loading skeletons with
+   multiple screens of results. Fill the first viewport with structured rows
+   in both phases, so the footer is not briefly presented as loaded content.
+   This geometry exists only while loading, never on results/empty/error UI. */
+.catalog-loading {
+  padding-block: var(--space-5);
+}
+
+.loading-skeleton--catalog .loading-skeleton__surface {
+  min-block-size: 100svh;
+}
+
+.loading-skeleton--catalog .loading-skeleton__rows {
+  flex: 1;
+  grid-template-rows: repeat(3, minmax(4.5rem, 1fr));
+}
+
+.loading-skeleton--catalog .loading-skeleton__block--row {
+  height: auto;
+  border-radius: var(--radius-medium);
+}
+
+@keyframes loading-skeleton-pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.6;
+  }
+}
+
+/* ------------------------------------------------- fragment destinations */
+
+/* Anchor targets focused programmatically after a fragment jump are scroll
+   feedback, not interactive controls: no giant section outline. Keyboard
+   flow continues inside the section via its real links. */
+.page-content [tabindex="-1"]:focus {
+  outline: none;
+}
+
+/* Keep jumped-to section headings clear of the sticky header. */
+.page-content [id] {
+  scroll-margin-top: calc(var(--header-height) + var(--space-4));
+}
+
 .meta {
   display: flex;
   align-items: center;
@@ -199,6 +333,7 @@ select:focus-visible,
 }
 
 .section--alt {
+  padding-inline: var(--page-gutter);
   background: var(--color-surface-alt);
 }
 
@@ -451,7 +586,9 @@ select:focus-visible,
   color: var(--color-accent);
 }
 
-/* task selector (tabs semantics) */
+/* task selector (tabs semantics) — one enclosing segmented surface, not
+   three contiguous buttons: tinted track, white active pill with a primary
+   indicator (geometry + color, never color alone). */
 
 .task-selector {
   margin: var(--space-6) 0 0;
@@ -460,13 +597,13 @@ select:focus-visible,
 .task-selector-list {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 0;
+  gap: var(--space-1);
   margin: 0;
-  padding: 0;
+  padding: var(--space-1);
   list-style: none;
-  border: 1px solid var(--color-border-strong);
-  border-radius: var(--radius-small);
-  overflow: hidden;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-medium);
+  background: var(--color-surface-alt);
 }
 
 @media (min-width: 640px) {
@@ -481,20 +618,20 @@ select:focus-visible,
   align-items: center;
   justify-content: center;
   gap: var(--space-2);
-  min-height: var(--control-height);
-  padding: 0 var(--space-3);
-  border: 0;
-  border-left: 1px solid var(--color-border);
-  background: var(--color-surface);
+  min-height: 2.75rem;
+  padding: var(--space-1) var(--space-3);
+  border: 1px solid transparent;
+  border-radius: var(--radius-small);
+  background: transparent;
   color: var(--color-text);
   font-family: var(--font-sans);
-  font-size: var(--text-label);
+  font-size: var(--text-small);
   font-weight: var(--text-label-weight);
   cursor: pointer;
-}
-
-.task-selector-list li:first-child .task-tab {
-  border-left: 0;
+  transition:
+    background-color var(--motion-fast) var(--ease-out),
+    color var(--motion-fast) var(--ease-out),
+    box-shadow var(--motion-fast) var(--ease-out);
 }
 
 .task-tab:hover {
@@ -502,13 +639,33 @@ select:focus-visible,
   color: var(--color-primary-strong);
 }
 
+/* Selected segment: raised white pill + primary bottom bar (non-color cue),
+   clearly distinct from ordinary CTA buttons, which are solid primary. */
 .task-tab[aria-selected="true"] {
-  background: var(--color-primary);
-  color: var(--color-surface);
+  border-color: var(--color-border);
+  background: var(--color-surface);
+  color: var(--color-primary-strong);
+  font-weight: 700;
+  box-shadow:
+    inset 0 -3px 0 var(--color-primary),
+    var(--shadow-subtle);
 }
 
 .task-tab[aria-selected="true"]:hover {
-  background: var(--color-primary-strong);
+  background: var(--color-surface);
+  color: var(--color-primary-strong);
+}
+
+.task-tab:focus-visible {
+  outline: none;
+  box-shadow: var(--focus-ring);
+}
+
+@media (min-width: 640px) {
+  .task-tab {
+    min-height: var(--control-height);
+    font-size: var(--text-label);
+  }
 }
 
 /* hero search panel */
@@ -587,7 +744,8 @@ select:focus-visible,
 .search-hint {
   margin: var(--space-2) 0 0;
   color: var(--color-text-muted);
-  font-size: var(--text-caption);
+  font-size: var(--text-small);
+  line-height: var(--text-small-line-height);
 }
 
 /* buttons */
@@ -666,15 +824,12 @@ select:focus-visible,
 
 @media (min-width: 1080px) {
   .hero-stage {
+    /* Fixed geometry decoupled from the form panel: selection and tab
+       changes never stretch the photo. 4/5 matches the established
+       rendered proportion of this stage. */
+    align-self: start;
+    aspect-ratio: 4 / 5;
     border-radius: 0;
-    overflow: visible;
-  }
-
-  .hero-stage::before {
-    content: "";
-    position: absolute;
-    inset: 0 0 0 0;
-    border-radius: var(--radius-medium);
     overflow: hidden;
   }
 
@@ -804,12 +959,12 @@ select:focus-visible,
   display: grid;
   grid-template-columns: 1fr;
   gap: var(--space-5);
+  text-align: center;
 }
 
 @media (min-width: 768px) {
   .proof-rail {
-    grid-template-columns: repeat(3, 1fr) 1.4fr;
-    gap: 0;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 }
 
@@ -824,7 +979,6 @@ select:focus-visible,
 
   .proof-stat:first-child {
     border-left: 0;
-    padding-left: 0;
   }
 }
 
@@ -835,29 +989,25 @@ select:focus-visible,
   font-variant-numeric: tabular-nums;
 }
 
-.proof-stat-label {
+.proof-stat-label,
+.proof-stat-date {
   margin-top: var(--space-1);
   color: var(--color-text-muted);
   font-size: var(--text-small);
 }
 
 .proof-stat-date {
-  margin-top: var(--space-1);
-  color: var(--color-text-muted);
-  font-size: var(--text-caption);
+  line-height: var(--text-small-line-height);
 }
 
 .proof-note {
-  align-self: center;
-  padding-left: var(--space-4);
-  border-left: 1px solid var(--color-border);
+  grid-column: 1 / -1;
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--color-border);
 }
 
-@media (max-width: 767px) {
-  .proof-note {
-    border-left: 0;
-    padding-left: 0;
-  }
+.proof-rail ~ .caption {
+  text-align: center;
 }
 
 /* info button + popover */
@@ -925,23 +1075,18 @@ select:focus-visible,
 /* ----------------------------------------------------------- real example */
 
 .example-flow {
-  position: relative;
   display: grid;
-  gap: 0;
-  max-width: 44rem;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 28rem), 1fr));
+  column-gap: var(--space-7);
   margin: 0;
   padding: 0;
   list-style: none;
 }
 
 .example-step {
-  position: relative;
   display: flex;
   gap: var(--space-4);
   padding-block: var(--space-4);
-}
-
-.example-step + .example-step {
   border-top: 1px solid var(--color-border);
 }
 
@@ -1166,7 +1311,7 @@ select:focus-visible,
   border: 1px solid var(--color-border);
   border-radius: var(--radius-small);
   color: var(--color-text-muted);
-  font-size: var(--text-caption);
+  font-size: var(--text-small);
   font-weight: var(--text-label-weight);
   letter-spacing: 0.03em;
 }
@@ -1201,7 +1346,7 @@ select:focus-visible,
   border-radius: var(--radius-small);
   background: var(--color-accent-soft);
   color: var(--color-text);
-  font-size: var(--text-caption);
+  font-size: var(--text-small);
   font-weight: var(--text-label-weight);
 }
 
@@ -1261,7 +1406,8 @@ select:focus-visible,
 .relation-evidence {
   flex: 1 1 100%;
   color: var(--color-text-muted);
-  font-size: var(--text-caption);
+  font-size: var(--text-small);
+  line-height: var(--text-small-line-height);
 }
 
 .relation-action,
@@ -1456,7 +1602,8 @@ select:focus-visible,
   display: block;
   margin-top: var(--space-1);
   color: var(--color-text-muted);
-  font-size: var(--text-caption);
+  font-size: var(--text-small);
+  line-height: var(--text-small-line-height);
 }
 
 .result-table a {
@@ -1464,8 +1611,8 @@ select:focus-visible,
 }
 
 .table-actions {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  justify-items: start;
   gap: var(--space-2);
 }
 
@@ -1541,7 +1688,8 @@ select:focus-visible,
 .rcard-sub {
   margin-top: var(--space-1);
   color: var(--color-text-muted);
-  font-size: var(--text-caption);
+  font-size: var(--text-small);
+  line-height: var(--text-small-line-height);
 }
 
 .rcard-actions {
@@ -1628,7 +1776,7 @@ select:focus-visible,
   display: inline-flex;
   align-items: center;
   color: var(--color-text-muted);
-  font-size: var(--text-caption);
+  font-size: var(--text-small);
   font-weight: var(--text-label-weight);
   cursor: pointer;
 }
@@ -1747,7 +1895,8 @@ select:focus-visible,
 .evidence-scope {
   margin: 0;
   color: var(--color-text-muted);
-  font-size: var(--text-caption);
+  font-size: var(--text-small);
+  line-height: var(--text-small-line-height);
   font-weight: var(--text-label-weight);
   letter-spacing: 0.04em;
   text-transform: uppercase;
@@ -1931,42 +2080,4 @@ select:focus-visible,
 .page-content .rcard {
   padding: var(--panel-padding-sm);
   border-radius: var(--radius-card);
-}
-
-.page-content .result-section-nav a {
-  position: relative;
-  min-height: var(--control-height);
-  align-items: center;
-  padding: var(--space-3) var(--space-2);
-  border: 0;
-  border-bottom: 3px solid transparent;
-  border-radius: var(--radius-control);
-  color: var(--color-text-muted);
-  background: transparent;
-  font-size: var(--type-control);
-  font-weight: var(--type-control-weight);
-}
-
-.page-content .result-section-nav a:hover {
-  color: var(--color-primary-strong);
-  background: var(--color-primary-soft);
-  text-decoration: none;
-}
-
-/* In-page section links, not tabs: mark the section currently in view. */
-.page-content .result-section-nav a[aria-current="location"] {
-  color: var(--color-primary-strong);
-  border-bottom-color: var(--color-primary);
-  font-weight: 700;
-}
-
-.page-content .result-section-nav a[aria-current="location"] {
-  border-bottom-color: var(--color-primary);
-  color: var(--color-primary-strong);
-  font-weight: 700;
-}
-
-.page-content .result-section-nav a:focus-visible {
-  outline: none;
-  box-shadow: var(--focus-ring);
 }

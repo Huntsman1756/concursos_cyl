@@ -25,9 +25,9 @@ test("offer-first connects literal cooking evidence to a reviewed FP route", asy
     card.getByRole("link", { name: /Ver oferta oficial/ }).first(),
   ).toBeVisible();
   await expectStrictAxe(page);
-  await expect(card.getByLabel(/Ver trazabilidad de/)).toBeVisible();
+  await expect(card.getByLabel(/Fuente y revisión de/)).toBeVisible();
   await card
-    .getByLabel("Ver trazabilidad de COCINEROS, EN GENERAL")
+    .getByLabel("Fuente y revisión de COCINEROS, EN GENERAL")
     .press("Enter");
   await expect(card.locator("details")).toHaveAttribute("open", "");
 
@@ -72,7 +72,7 @@ test("offer-first keeps ambiguity and the university boundary explicit", async (
 }) => {
   await page.goto("/desde-oferta?query=cuidador");
   await expect(
-    page.getByRole("heading", { name: "1–12 de 56 ofertas" }),
+    page.getByRole("heading", { name: "1–10 de 56 ofertas" }),
   ).toBeVisible();
   const caregiver = page
     .getByRole("article", {
@@ -83,10 +83,10 @@ test("offer-first keeps ambiguity and the university boundary explicit", async (
   await expect(
     caregiver.getByRole("link", { name: /Ver oferta oficial/ }).first(),
   ).toBeVisible();
-  await expect(caregiver.getByLabel(/Ver trazabilidad de/)).toBeVisible();
+  await expect(caregiver.getByLabel(/Fuente y revisión de/)).toBeVisible();
   await caregiver
     .getByLabel(
-      "Ver trazabilidad de CUIDADORES DE PERSONAS CON DISCAPACIDAD Y/O DEPENDENCIA, EN INSTITUCIONES",
+      "Fuente y revisión de CUIDADORES DE PERSONAS CON DISCAPACIDAD Y/O DEPENDENCIA, EN INSTITUCIONES",
     )
     .click();
   await expect(caregiver).toContainText("Correspondencia con formación");
@@ -108,9 +108,9 @@ test("offer-first keeps ambiguity and the university boundary explicit", async (
   await expect(
     physiotherapy.getByRole("link", { name: /Ver oferta oficial/ }).first(),
   ).toBeVisible();
-  await expect(physiotherapy.getByLabel(/Ver trazabilidad de/)).toBeVisible();
+  await expect(physiotherapy.getByLabel(/Fuente y revisión de/)).toBeVisible();
   await physiotherapy
-    .getByLabel("Ver trazabilidad de FISIOTERAPEUTAS, EN GENERAL")
+    .getByLabel("Fuente y revisión de FISIOTERAPEUTAS, EN GENERAL")
     .click();
   await expect(physiotherapy).toContainText(
     "Aquí marcamos un límite: no inferimos equivalencias",
@@ -130,7 +130,9 @@ test("offer-first keeps certificate evidence conservative and traceable", async 
     .first();
   await expect(accepted).toBeVisible();
   await accepted
-    .getByLabel("Ver trazabilidad de Auxiliar de ayuda a domicilio para Burgos")
+    .getByLabel(
+      "Fuente y revisión de Auxiliar de ayuda a domicilio para Burgos",
+    )
     .click();
   await expect(accepted).toContainText("Piden un certificado o cualificación");
   await expect(accepted).toContainText(
@@ -148,7 +150,7 @@ test("offer-first keeps certificate evidence conservative and traceable", async 
     .first();
   await related
     .getByLabel(
-      "Ver trazabilidad de CUIDADORES DE PERSONAS CON DISCAPACIDAD Y/O DEPENDENCIA, EN INSTITUCIONES",
+      "Fuente y revisión de CUIDADORES DE PERSONAS CON DISCAPACIDAD Y/O DEPENDENCIA, EN INSTITUCIONES",
     )
     .click();
   await expect(related).toContainText("Piden un certificado o cualificación");

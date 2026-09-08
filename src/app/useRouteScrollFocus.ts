@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useLayoutEffect, useRef } from "react";
 import { useLocation, useNavigationType } from "react-router-dom";
 
 /**
@@ -52,7 +52,10 @@ export function useRouteScrollFocus(
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  useEffect(() => {
+  // Change the history-entry key before paint. Otherwise a scroll event from
+  // the shorter destination can overwrite the previous entry's saved offset
+  // before a passive effect runs (observed in Firefox).
+  useLayoutEffect(() => {
     keyRef.current = location.key;
 
     const isFirstNavigation = previousKey.current === null;
@@ -60,21 +63,28 @@ export function useRouteScrollFocus(
     previousKey.current = location.key;
     previousPathname.current = location.pathname;
 
-    if (isFirstNavigation) return;
+    if (isFirstNavigation && location.hash === "") return;
 
     if (location.hash !== "") {
       const anchorId = location.hash.slice(1);
-      window.requestAnimationFrame(() => {
+      // Hash jumps must work both for in-page links and for DIRECT loads of a
+      // hashed URL, where the fragment target only exists after the route's
+      // data resolves. Retry within a bounded window until the target appears.
+      let frames = 0;
+      let frameId = 0;
+      const jump = () => {
         const target =
           anchorId === "" ? null : document.getElementById(anchorId);
         if (target !== null) {
           target.scrollIntoView();
           target.focus({ preventScroll: true });
-        } else {
-          window.scrollTo(0, 0);
+          return;
         }
-      });
-      return;
+        frames += 1;
+        if (frames < 120) frameId = window.requestAnimationFrame(jump);
+      };
+      frameId = window.requestAnimationFrame(jump);
+      return () => window.cancelAnimationFrame(frameId);
     }
 
     if (navigationType === "POP") {
@@ -84,15 +94,16 @@ export function useRouteScrollFocus(
       // and lazy chunks can still grow the document for a few frames, so the
       // restore retries within a bounded window until the offset holds.
       let frames = 0;
+      let frameId = 0;
       const restore = () => {
         window.scrollTo(0, saved);
         frames += 1;
         if (frames < 60 && Math.abs(window.scrollY - saved) > 1) {
-          window.requestAnimationFrame(restore);
+          frameId = window.requestAnimationFrame(restore);
         }
       };
-      window.requestAnimationFrame(restore);
-      return;
+      frameId = window.requestAnimationFrame(restore);
+      return () => window.cancelAnimationFrame(frameId);
     }
 
     if (!pathnameChanged) return;

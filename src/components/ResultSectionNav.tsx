@@ -10,15 +10,18 @@ export interface ResultSectionNavLink {
 export interface ResultSectionNavProps {
   links: readonly ResultSectionNavLink[];
   ariaLabel?: string;
+  /** Visible eyebrow above the links (e.g. "En esta página"). */
+  label?: string;
 }
 
 export function ResultSectionNav({
   links,
-  ariaLabel = "Secciones del resultado",
+  ariaLabel = "Secciones de esta página",
+  label = "En esta página",
 }: ResultSectionNavProps): JSX.Element | null {
-  const [activeHref, setActiveHref] = useState<string | null>(
-    links[0]?.href ?? null,
-  );
+  // In-page section links are not tabs: nothing is "selected" until the
+  // reader actually reaches a section (scroll or click).
+  const [activeHref, setActiveHref] = useState<string | null>(null);
 
   useEffect(() => {
     if (typeof IntersectionObserver === "undefined") return;
@@ -81,6 +84,9 @@ export function ResultSectionNav({
 
   return (
     <nav className="result-section-nav" aria-label={ariaLabel}>
+      <p className="result-section-nav__label" aria-hidden="true">
+        {label}
+      </p>
       <ul>
         {links.map((link) => (
           <li key={link.href}>

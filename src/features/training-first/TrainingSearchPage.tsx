@@ -187,7 +187,7 @@ export function TrainingSearchPage() {
         </h1>
         <p className="training-page__intro page-lede">
           Elige un ciclo oficial y verás las profesiones relacionadas con él,
-          las ofertas de la copia actual y los centros donde estudiarlo.
+          las ofertas de la copia activa y los centros donde estudiarlo.
         </p>
       </header>
 
@@ -204,31 +204,6 @@ export function TrainingSearchPage() {
       )}
       {status === "ready" && (
         <>
-          <section
-            className="training-guided-examples"
-            aria-label="Ejemplos guiados de ciclos"
-          >
-            <h2>Empieza con un ciclo relacionado</h2>
-            <p>
-              Ejemplos de ciclos con relaciones revisadas; no es el catálogo
-              completo.
-            </p>
-            <ul>
-              {guidedExamples.map(({ row, program }) => (
-                <li key={program.programKey}>
-                  <Link
-                    to={`/desde-fp/${encodeURIComponent(program.programKey)}`}
-                  >
-                    {formatProgramTitle(program.programTitle)}
-                  </Link>
-                  <span>
-                    {trainingLevelLabel(program.level)} · {row.familyName}
-                  </span>
-                </li>
-              ))}
-            </ul>
-          </section>
-
           <form className="training-search" onSubmit={submit}>
             <div className="form-field">
               <TrainingCombobox
@@ -245,7 +220,7 @@ export function TrainingSearchPage() {
               <p role="status" aria-live="polite">
                 {selectedCoverage.coverageStatus === "reviewed"
                   ? `Profesiones comprobadas para este ciclo: ${selectedCoverage.approvedMappings}.`
-                  : "Verás sus salidas oficiales; todavía no hay una relación comprobada para buscar ofertas."}
+                  : "Verás sus salidas oficiales; esta copia no contiene una relación comprobada para buscar ofertas."}
               </p>
             )}
             <details className="training-search__filters">
@@ -336,6 +311,35 @@ export function TrainingSearchPage() {
               Ver salidas y ofertas
             </button>
           </form>
+          <section
+            className="training-guided-examples"
+            aria-label="Ejemplos guiados de ciclos"
+          >
+            <h2>Empieza con un ciclo relacionado</h2>
+            <p>
+              Ejemplos de ciclos con relaciones revisadas; no es el catálogo
+              completo.
+            </p>
+            <ul>
+              {guidedExamples.map(({ row, program }) => (
+                <li key={program.programKey}>
+                  <Link
+                    to={`/desde-fp/${encodeURIComponent(program.programKey)}`}
+                  >
+                    {formatProgramTitle(program.programTitle)}
+                  </Link>
+                  <span>
+                    {trainingLevelLabel(program.level)} · {row.familyName}
+                    {" · "}
+                    {row.approvedMappings}{" "}
+                    {row.approvedMappings === 1
+                      ? "relación profesional revisada"
+                      : "relaciones profesionales revisadas"}
+                  </span>
+                </li>
+              ))}
+            </ul>
+          </section>
           <section
             className="training-catalog-note"
             aria-label="Alcance del catálogo de FP"

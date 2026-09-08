@@ -10,6 +10,7 @@ import { Breadcrumbs } from "../../components/Breadcrumbs";
 import { ExternalLink } from "../../components/ExternalLink";
 import { Icon } from "../../components/Icon";
 import { InfoDisclosure } from "../../components/InfoDisclosure";
+import { LoadingSkeleton } from "../../components/LoadingSkeleton";
 import { PageEyebrow } from "../../components/PageEyebrow";
 import { useRouteReady } from "../../app/RouteReadyContext";
 import {
@@ -30,10 +31,14 @@ import {
   sortOfferEvidenceRecords,
 } from "../../domain/offerEvidence";
 import { formatProgramTitle } from "../../domain/trainingPresentation";
-import { longDate } from "../../domain/displayFormat";
+import {
+  formatOfferTitle,
+  formatOccupationLabel,
+  longDate,
+} from "../../domain/displayFormat";
 import "./offerExplorer.css";
 
-const PAGE_SIZE = 12;
+const PAGE_SIZE = 10;
 
 const STATUS_OPTIONS: Array<OfferEvidenceStatus | "all"> = [
   "all",
@@ -268,7 +273,7 @@ function OfferRow({
       <div className="offer-row__body">
         <div className="offer-row__content">
           <h3 className="offer-row__title">
-            <span>{record.title}</span>
+            <span>{formatOfferTitle(record.title)}</span>
           </h3>
           <p className="offer-row__meta">
             {location !== null ? `${location} · ` : ""}
@@ -287,7 +292,10 @@ function OfferRow({
             Ver oferta oficial
             <Icon name="external-link" size={16} />
           </ExternalLink>
-          <InfoDisclosure label={`Ver trazabilidad de ${record.title}`}>
+          <InfoDisclosure
+            label={`Fuente y revisión de ${record.title}`}
+            trigger="Fuente y revisión"
+          >
             <TraceabilityContent record={record} />
           </InfoDisclosure>
         </div>
@@ -331,10 +339,10 @@ function contextLabel(context: OfferContext): string {
 
 function contextIntro(context: OfferContext): string {
   if (context.kind === "program") {
-    return "Ofertas de la copia actual cuya relación con este ciclo está documentada.";
+    return "Ofertas de la copia activa cuya relación con este ciclo está documentada.";
   }
   if (context.kind === "occupation") {
-    return "Ofertas de la copia actual relacionadas con esta profesión mediante relaciones revisadas.";
+    return "Ofertas de la copia activa relacionadas con esta profesión mediante relaciones revisadas.";
   }
   return "Copia de ofertas publicadas por la Junta de Castilla y León. Cuando una oferta tiene una formación relacionada comprobada, te lo indicamos.";
 }
@@ -452,7 +460,7 @@ export function OfferExplorerPage({
             context: {
               kind: "occupation" as const,
               occupationId: occupation.occupationId,
-              occupationLabel: occupation.preferredLabel,
+              occupationLabel: formatOccupationLabel(occupation.preferredLabel),
               classificationCode: occupation.classificationCode,
             },
           };
@@ -516,18 +524,6 @@ export function OfferExplorerPage({
     [contextualRecords],
   );
 
-  // Unit contract (analysis/prototype-data-integrity.md §2): the reviewed
-  // count is unique OFFERS with ≥1 reviewed relation — never the number of
-  // relations (196 relations ≠ 138 offers in the frozen snapshot).
-  const reviewedOfferCount = useMemo(
-    () =>
-      state.status === "ready"
-        ? state.records.filter((record) => (record.relations ?? []).length > 0)
-            .length
-        : 0,
-    [state],
-  );
-
   const filteredRecords = useMemo(
     () =>
       sortOfferEvidenceRecords(
@@ -541,6 +537,10 @@ export function OfferExplorerPage({
   );
 
   const pageCount = Math.max(1, Math.ceil(filteredRecords.length / PAGE_SIZE));
+  // Count unique offers in the filtered result, not relations or page rows.
+  const reviewedOfferCount = filteredRecords.filter(
+    (record) => record.relations.length > 0,
+  ).length;
   const currentPage = Math.min(requestedPage, pageCount);
   const visibleRecords = filteredRecords.slice(
     (currentPage - 1) * PAGE_SIZE,
@@ -589,13 +589,18 @@ export function OfferExplorerPage({
     if (nextPage <= 1) next.delete("page");
     else next.set("page", String(nextPage));
     setSearchParams(next);
+    window.requestAnimationFrame(() => {
+      const results = document.getElementById("offer-results-heading");
+      results?.scrollIntoView?.({ block: "start", behavior: "instant" });
+      results?.focus({ preventScroll: true });
+    });
   }
 
   if (state.status === "loading") {
     return (
-      <p role="status" aria-live="polite">
-        Cargando las ofertas…
-      </p>
+      <section className="container catalog-loading" aria-busy="true">
+        <LoadingSkeleton status="Cargando las ofertas…" layout="catalog" />
+      </section>
     );
   }
   if (state.status === "failed") {
@@ -628,7 +633,7 @@ export function OfferExplorerPage({
         </h1>
         <p>
           La dirección no corresponde a un elemento oficial disponible en la
-          copia actual.
+          copia activa.
         </p>
         <Link
           to={
@@ -768,23 +773,27 @@ export function OfferExplorerPage({
       <section
         className="offer-explorer__results"
         aria-labelledby="offer-results-heading"
-        aria-live="polite"
       >
         <div className="result-meta offer-explorer__count">
-          <h2 className="result-count" id="offer-results-heading">
+          <h2
+            className="result-count"
+            id="offer-results-heading"
+            tabIndex={-1}
+            aria-live="polite"
+            aria-atomic="true"
+          >
             {resultsSummary}
           </h2>
-          {isGlobal && (
+          {visibleRecords.length > 0 && (
             <p className="caption" style={{ margin: 0 }}>
-              {reviewedOfferCount.toLocaleString("es-ES")} con FP relacionada en
-              esta copia (ofertas únicas con relación revisada) · más recientes
-              primero
+              {isGlobal &&
+                `${reviewedOfferCount.toLocaleString("es-ES")} con FP relacionada en estos resultados · `}
+              más recientes primero
             </p>
           )}
-          {!isGlobal && <span>· más recientes primero</span>}
         </div>
         {visibleRecords.length === 0 ? (
-          <div className="offer-explorer__empty" role="status">
+          <div className="offer-explorer__empty">
             {context.kind === "global" || hasActiveFilters ? (
               <>
                 <h3>No hay coincidencias</h3>

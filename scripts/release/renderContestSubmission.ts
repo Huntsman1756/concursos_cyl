@@ -131,11 +131,11 @@ Candidatura al [X Concurso de Datos Abiertos de Castilla y León](${CONTEST_URL}
 
 ## Problema y audiencia
 
-SALIDA CyL ayuda a personas de Castilla y León a explorar opciones de formación profesional y sus relaciones ocupacionales revisadas con fuentes identificadas. La aplicación reúne una consulta formativa, una exploración de ofertas relacionadas y una comparación separada de referencias oficiales de ingresos de titulados.
+SALIDA CyL permite explorar qué ocupaciones se relacionan con una FP, dónde estudiarla y qué ofertas de una instantánea fechada se conectan mediante evidencia revisada. Se dirige a estudiantes, personas que buscan empleo, familias y profesionales de orientación. Los enlaces oficiales permiten contrastar la información antes de decidir una matrícula o candidatura.
 
 ## Solución
 
-La interfaz permite elegir directamente cualquiera de los ${freeze.manifest.resourceSnapshots.programs.recordCount} ciclos de FP o filtrar los ${freeze.manifest.resourceSnapshots.officialOccupations.recordCount} grupos primarios de la CNO-11. Expone por separado el catálogo oficial completo y la cobertura parcial de relaciones FP–ocupación revisadas, incluidas las relaciones con ofertas, las revisadas sin coincidencias y las todavía no validadas. La metodología explica el origen de cada dato y los límites de interpretación.
+La interfaz permite explorar ${freeze.manifest.resourceSnapshots.programs.recordCount} claves de programa de FP, incluidas modalidades, o los ${freeze.manifest.resourceSnapshots.officialOccupations.recordCount} grupos primarios de la CNO-11. Por ejemplo, desde Cuidados Auxiliares de Enfermería se pueden consultar ocupaciones relacionadas y centros de estudio, revisar las ofertas vinculadas y abrir sus fuentes. También permite comenzar por una profesión o una oferta.
 
 SALIDA CyL conecta FP y ocupación en ambos sentidos con evidencia verificable. Integra ocho datasets del Portal de Datos Abiertos de la Junta de Castilla y León, todos visibles en la ficha o en las rutas de apoyo.
 
@@ -146,14 +146,14 @@ El grafo revisado se devuelve a la comunidad como dataset derivado descargable e
 - Instantánea publicada: \`${freeze.manifest.snapshotId}\`.
 - Grupos primarios CNO-11 consultables: **${freeze.manifest.resourceSnapshots.officialOccupations.recordCount}**.
 - **${coverage.distinctQualificationCount} cualificaciones distintas**.
-- Claves de modalidad públicas: **${coverage.modalityKeyCount}** (${list(coverage.modalityKeys)}).
+- **${coverage.modalityKeyCount} de ${freeze.manifest.resourceSnapshots.programs.recordCount} claves de programa** tienen alguna relación aprobada (${((coverage.modalityKeyCount / freeze.manifest.resourceSnapshots.programs.recordCount) * 100).toLocaleString("es-ES", { minimumFractionDigits: 1, maximumFractionDigits: 1 })} %). Incluyen modalidades; no son titulaciones distintas.
 - Relaciones ocupacionales aprobadas: **${coverage.approvedRelationCount}**.
 - Alias aprobados: **${coverage.approvedAliasCount}**.
 - **${offers.matchedOfferCount} de las ${spanishInteger(freeze.manifest.resourceSnapshots.jobOffers.recordCount)} ofertas de la instantánea** quedan alcanzadas por relaciones publicadas (unión de IDs).
 - Relaciones revisadas sin oferta alcanzada: **${coverage.zeroReviewedRelationCount}**.
 - Programas diferidos por evidencia insuficiente: ${deferredPrograms}.
 
-Las claves de modalidad se informan aparte de las identidades de cualificación. Una relación revisada sin coincidencia no se convierte en una afirmación sobre la ausencia de oportunidades; un programa diferido permanece fuera de las afirmaciones revisadas.
+Las cifras describen cobertura de datos, no impacto medido ni todo el mercado laboral. Una relación revisada sin coincidencia no significa ausencia de oportunidades. Las fechas de descarga, publicación y generación se distinguen en [la revisión de fuentes](verification-20260908.md). El inventario completo de claves permanece en [la evidencia técnica](technical-evidence.md).
 
 ## Acceso
 
@@ -312,7 +312,7 @@ La representatividad de las tablas nacionales es la declarada por el Ministerio:
 
 ## Producto y release
 
-Las rutas internas son recorridos de producto; la candidatura usa únicamente la raíz pública. La experiencia no requiere cuentas y no conserva selecciones, búsquedas, respuestas ni resultados. Solo recuerda en \`localStorage\` la preferencia no sensible del modo de búsqueda («desde FP» o «desde ocupación»). ${visualVerificationStatus}
+Las rutas internas son recorridos de producto; la candidatura usa únicamente la raíz pública. La experiencia no requiere cuentas y no conserva selecciones, búsquedas, respuestas ni resultados. No guarda preferencias en almacenamiento local. Los filtros y términos presentes en la URL pueden quedar en el historial del navegador. ${visualVerificationStatus}
 
 El objetivo de ampliar la cobertura está condicionado a evidencia: el freeze actual registra ${freeze.coverage.distinctQualificationCount} cualificaciones distintas y deja ${freeze.coverage.deferredProgramCount} programas diferidos. ${releaseStatus}
 
@@ -454,7 +454,7 @@ function renderSubmissionChecklist(
 ## ${candidatePlan === undefined ? "Campos técnicos" : "Baseline funcional verificada"}
 
 - URL raíz a presentar: [${ROOT_URL}](${ROOT_URL})
-- Fallback verificada: [${FALLBACK_URL}](${FALLBACK_URL})
+- Dirección de respaldo configurada (comprobar disponibilidad): [${FALLBACK_URL}](${FALLBACK_URL})
 - Commit fuente del freeze: \`${freeze.sourceCommitSha}\`.
 - Snapshot: \`${freeze.manifest.snapshotId}\`.
 - ${candidatePlan === undefined ? "Commit desplegado" : "Commit de baseline desplegado"}: ${deploymentCommit}.
@@ -468,7 +468,7 @@ ${renderTemporalReleaseStatus(candidatePlan)}
 ## Evidencia visual y gate final
 
 ${automatedCaptureGate}
-- [ ] Ejecutar la captura nativa OS A4 en un Mac desbloqueado.
+- [ ] Capturar y revisar visualmente los recorridos de la versión final en un navegador disponible, en escritorio y móvil; registrar versión, fecha y límites de la comprobación.
 - [ ] Revisar la aplicación pública de la ${publicReviewLabel} en contexto anónimo, incluyendo las rutas de FP, ocupación y comparador.
 - [ ] Conservar solo capturas actuales, sin datos personales ni credenciales; ${captureInventoryLine}
 ${releaseGate}
@@ -479,7 +479,7 @@ ${figuresConfirmationGate}
 
 **PENDIENTE DE APROBACIÓN HUMANA:** este repositorio no envía la solicitud al concurso ni decide los campos de identidad, contacto, declaraciones o consentimiento.
 
-Cualquier cambio posterior debe seguir el flujo rama de trabajo → PR → checks → revisión/aprobación → merge a \`main\` → GitHub Pages.
+Antes de publicar cambios posteriores, ejecutar las comprobaciones pertinentes, revisar el diff y verificar el despliegue contra su commit. La observación pública más reciente se registra en [verification-20260908.md](verification-20260908.md); los registros históricos no garantizan el estado actual.
 `;
 }
 

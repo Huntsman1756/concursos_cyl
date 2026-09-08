@@ -5,6 +5,7 @@ import { Link, useParams, useSearchParams } from "react-router-dom";
 import type { TrainingProgram } from "../../../data/schemas/generated";
 import { Breadcrumbs } from "../../components/Breadcrumbs";
 import { ExternalLink } from "../../components/ExternalLink";
+import { LoadingSkeleton } from "../../components/LoadingSkeleton";
 import { PageEyebrow } from "../../components/PageEyebrow";
 import { useRouteReady } from "../../app/RouteReadyContext";
 import {
@@ -33,7 +34,7 @@ type Foundation = LoadedFoundationResourceSubset<
   "programs" | "centers" | "trainingOfferings"
 >;
 
-const GLOBAL_PAGE_SIZE = 50;
+const PAGE_SIZE = 25;
 
 const FILTER_PARAMS = [
   "query",
@@ -55,6 +56,7 @@ type PageState =
       status: "ready";
       foundation: Foundation;
       generatedAt: string;
+      sourceUrl: string;
       program: TrainingProgram | null;
     };
 
@@ -173,7 +175,7 @@ function CenterResultCard({
   const cta = centerWebsiteCtaFor(policy, row.centerCode);
   return (
     <li>
-      <article className="rcard">
+      <article className="rcard center-result-card">
         <div className="rcard-field">
           <p className="rcard-label">Centro</p>
           <p className="rcard-value">
@@ -255,7 +257,6 @@ export function CentersExplorerPage(): JSX.Element {
   const pageParam = Number.parseInt(searchParams.get("page") ?? "1", 10);
   const requestedPage =
     Number.isFinite(pageParam) && pageParam > 0 ? pageParam : 1;
-  const paginationEnabled = programKey === undefined;
 
   useRouteReady(state.status !== "loading");
 
@@ -286,6 +287,7 @@ export function CentersExplorerPage(): JSX.Element {
         setState({
           status: "ready",
           foundation,
+          sourceUrl: manifest.resourceSnapshots.trainingOfferings.sourceUrl,
           generatedAt:
             manifest.resourceSnapshots.trainingOfferings.sourceUpdatedAt ??
             manifest.resourceSnapshots.trainingOfferings.snapshotFetchedAt,
@@ -360,41 +362,29 @@ export function CentersExplorerPage(): JSX.Element {
     [rows],
   );
 
-  const pageCount = paginationEnabled
-    ? Math.max(1, Math.ceil(filteredRows.length / GLOBAL_PAGE_SIZE))
-    : 1;
-  const currentPage = paginationEnabled
-    ? Math.min(requestedPage, pageCount)
-    : 1;
-  const visibleRows = paginationEnabled
-    ? filteredRows.slice(
-        (currentPage - 1) * GLOBAL_PAGE_SIZE,
-        currentPage * GLOBAL_PAGE_SIZE,
-      )
-    : filteredRows;
+  const pageCount = Math.max(1, Math.ceil(filteredRows.length / PAGE_SIZE));
+  const currentPage = Math.min(requestedPage, pageCount);
+  const visibleRows = filteredRows.slice(
+    (currentPage - 1) * PAGE_SIZE,
+    currentPage * PAGE_SIZE,
+  );
 
   useEffect(() => {
     if (state.status !== "ready") return;
-    const canonicalPage =
-      paginationEnabled && currentPage > 1 ? String(currentPage) : null;
+    const canonicalPage = currentPage > 1 ? String(currentPage) : null;
     if (searchParams.get("page") === canonicalPage) return;
     const next = new URLSearchParams(searchParams);
     if (canonicalPage === null) next.delete("page");
     else next.set("page", canonicalPage);
     setSearchParams(next, { replace: true });
-  }, [
-    currentPage,
-    paginationEnabled,
-    searchParams,
-    setSearchParams,
-    state.status,
-  ]);
+  }, [currentPage, searchParams, setSearchParams, state.status]);
 
   const firstVisibleResult =
-    filteredRows.length === 0 ? 0 : (currentPage - 1) * GLOBAL_PAGE_SIZE + 1;
-  const lastVisibleResult = paginationEnabled
-    ? Math.min(currentPage * GLOBAL_PAGE_SIZE, filteredRows.length)
-    : filteredRows.length;
+    filteredRows.length === 0 ? 0 : (currentPage - 1) * PAGE_SIZE + 1;
+  const lastVisibleResult = Math.min(
+    currentPage * PAGE_SIZE,
+    filteredRows.length,
+  );
   const centerCount = new Set(filteredRows.map((row) => row.centerCode)).size;
   const provinceCount = new Set(filteredRows.map((row) => row.province)).size;
   const activeFilterKeys = FILTER_PARAMS.filter(
@@ -410,6 +400,18 @@ export function CentersExplorerPage(): JSX.Element {
     setSearchParams(next);
   }
 
+  function goToPage(page: number): void {
+    const next = new URLSearchParams(searchParams);
+    if (page <= 1) next.delete("page");
+    else next.set("page", String(page));
+    setSearchParams(next);
+    window.requestAnimationFrame(() => {
+      const results = document.getElementById("center-results-summary");
+      results?.scrollIntoView?.({ block: "start", behavior: "instant" });
+      results?.focus({ preventScroll: true });
+    });
+  }
+
   function submitSearch(event: FormEvent<HTMLFormElement>): void {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
@@ -422,10 +424,11 @@ export function CentersExplorerPage(): JSX.Element {
 
   if (state.status === "loading") {
     return (
-      <div className="container page-header">
-        <p role="status" aria-live="polite">
-          Cargando la oferta formativa…
-        </p>
+      <div className="container catalog-loading" aria-busy="true">
+        <LoadingSkeleton
+          status="Cargando la oferta formativa…"
+          layout="catalog"
+        />
       </div>
     );
   }
@@ -505,12 +508,28 @@ export function CentersExplorerPage(): JSX.Element {
           </h1>
           <p className="page-subcopy page-lede">
             {contextual
-              ? `Los centros que publican este ciclo en la copia actual. Comprueba la oferta y las fechas en la fuente oficial.`
+              ? `Los centros que publican este ciclo en la copia activa. Comprueba la oferta y las fechas en la fuente oficial.`
               : "Busca ciclos y centros de formación publicados en Castilla y León. La oferta puede cambiar según la convocatoria."}
           </p>
           <p className="caption" style={{ marginTop: "var(--space-2)" }}>
             Oferta formativa · copia del {formatDate(state.generatedAt)}
           </p>
+          <details className="centers-source-review">
+            <summary>Fuente y revisión</summary>
+            <p>
+              <ExternalLink href={state.sourceUrl}>
+                Oferta de Formación Profesional de la Junta de Castilla y León
+              </ExternalLink>
+              . Copia consultada el {formatDate(state.generatedAt)}. Cada
+              resultado combina un centro y un ciclo; un mismo centro puede
+              aparecer varias veces. Las modalidades de una misma combinación se
+              agrupan.
+            </p>
+            <p>
+              Comprueba la oferta vigente en la web del centro antes de
+              solicitar plaza.
+            </p>
+          </details>
         </header>
 
         <button
@@ -666,8 +685,13 @@ export function CentersExplorerPage(): JSX.Element {
           </div>
         </form>
 
-        <div className="result-meta">
-          <p className="result-count" style={{ margin: 0 }}>
+        <div className="result-meta" id="center-results-summary" tabIndex={-1}>
+          <p
+            className="result-count"
+            style={{ margin: 0 }}
+            role="status"
+            aria-atomic="true"
+          >
             {contextual
               ? `${centerCount} ${centerCount === 1 ? "centro publicado" : "centros publicados"}`
               : `${firstVisibleResult}–${lastVisibleResult} de ${filteredRows.length} ${filteredRows.length === 1 ? "combinación de centro y ciclo" : "combinaciones de centro y ciclo"}`}
@@ -675,7 +699,7 @@ export function CentersExplorerPage(): JSX.Element {
           <p className="caption" style={{ margin: 0 }}>
             {contextual
               ? `${filteredRows.length} ${filteredRows.length === 1 ? "combinación de centro y ciclo" : "combinaciones de centro y ciclo"} · ${provinceCount} provincias`
-              : `${centerCount} centros representados · ${state.foundation.trainingOfferings.length} opciones de centro y modalidad en la copia`}
+              : `${centerCount} centros representados en estos resultados`}
           </p>
           {hasFilters && (
             <button
@@ -703,7 +727,7 @@ export function CentersExplorerPage(): JSX.Element {
               <table className="result-table" id="center-results-table">
                 <caption className="sr-only">
                   Centros y ciclos de formación disponibles
-                  {paginationEnabled && pageCount > 1
+                  {pageCount > 1
                     ? `. Página ${currentPage} de ${pageCount}`
                     : ""}
                 </caption>
@@ -738,7 +762,7 @@ export function CentersExplorerPage(): JSX.Element {
           </>
         )}
 
-        {paginationEnabled && pageCount > 1 ? (
+        {pageCount > 1 ? (
           <nav
             className="pagination"
             aria-label="Paginación de opciones formativas"
@@ -752,13 +776,7 @@ export function CentersExplorerPage(): JSX.Element {
               type="button"
               aria-label="Página anterior"
               disabled={currentPage === 1}
-              onClick={() => {
-                const next = new URLSearchParams(searchParams);
-                const previousPage = Math.max(1, currentPage - 1);
-                if (previousPage === 1) next.delete("page");
-                else next.set("page", String(previousPage));
-                setSearchParams(next);
-              }}
+              onClick={() => goToPage(Math.max(1, currentPage - 1))}
             >
               Anterior
             </button>
@@ -770,11 +788,7 @@ export function CentersExplorerPage(): JSX.Element {
               type="button"
               aria-label="Página siguiente"
               disabled={currentPage === pageCount}
-              onClick={() => {
-                const next = new URLSearchParams(searchParams);
-                next.set("page", String(Math.min(pageCount, currentPage + 1)));
-                setSearchParams(next);
-              }}
+              onClick={() => goToPage(Math.min(pageCount, currentPage + 1))}
             >
               Siguiente
             </button>
@@ -782,9 +796,8 @@ export function CentersExplorerPage(): JSX.Element {
         ) : null}
 
         <p className="caption">
-          Las URLs de los centros se muestran tal como las publica la fuente; el
-          CTA solo aparece con disponibilidad e identidad verificadas en la
-          auditoría de enlaces
+          Los enlaces de los centros proceden de la fuente oficial y se
+          comprobaron en la revisión de enlaces
           {linkPolicy !== null &&
             ` del ${formatDate(linkPolicy.auditedAt.slice(0, 10))}`}
           . Si un centro no publica modalidad, aparece como “Modalidad no

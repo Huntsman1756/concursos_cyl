@@ -35,6 +35,17 @@
   margin: 0 0 var(--space-5);
 }
 
+/* In-section loading scaffold: heading and intro are already rendered, so
+   the skeleton only represents the summary and province table to come. */
+.occupation-market-evidence__loading .loading-skeleton {
+  min-height: auto;
+}
+
+.occupation-market-evidence__loading .loading-skeleton__block--eyebrow,
+.occupation-market-evidence__loading .loading-skeleton__block--display {
+  display: none;
+}
+
 .occupation-market-evidence__limitation {
   margin: var(--space-5) 0 0;
   font-size: 0.875rem;

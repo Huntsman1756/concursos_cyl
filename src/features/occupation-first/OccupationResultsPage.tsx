@@ -4,6 +4,7 @@ import type { LoadableGeneratedManifest } from "../../../data/schemas/generated"
 import type { Occupation } from "../../../data/schemas/curatedMappings";
 import { ExternalLink } from "../../components/ExternalLink";
 import { InfoDisclosure } from "../../components/InfoDisclosure";
+import { LoadingSkeleton } from "../../components/LoadingSkeleton";
 import { PrintButton } from "../../components/PrintButton";
 import { ResultSectionNav } from "../../components/ResultSectionNav";
 import {
@@ -15,6 +16,7 @@ import {
   type LoadedFoundationResourceSubset,
 } from "../../data/generatedDataClient";
 import { loadApprovedMappings } from "../../domain/occupation";
+import { formatOccupationLabel } from "../../domain/displayFormat";
 import { useRouteReady } from "../../app/RouteReadyContext";
 import { occupationOffersPath } from "../../app/routePaths";
 import { Breadcrumbs } from "../../components/Breadcrumbs";
@@ -108,9 +110,15 @@ export function OccupationResultsPage() {
 
   if (state.status === "loading") {
     return (
-      <p role="status" aria-live="polite">
-        Preparando las rutas revisadas…
-      </p>
+      <section
+        className="container training-page occupation-result-page"
+        aria-busy="true"
+      >
+        <LoadingSkeleton
+          status="Preparando las rutas revisadas…"
+          layout="detail"
+        />
+      </section>
     );
   }
   if (state.status === "failed") {
@@ -146,6 +154,7 @@ export function OccupationResultsPage() {
       </section>
     );
   }
+  const occupationLabel = formatOccupationLabel(occupation.preferredLabel);
 
   const missingPrograms = orderedLinks.filter(
     (link) =>
@@ -173,7 +182,7 @@ export function OccupationResultsPage() {
         items={[
           { label: "Inicio", to: "/" },
           { label: "Buscar profesión", to: "/desde-ocupacion" },
-          { label: occupation.preferredLabel },
+          { label: occupationLabel },
         ]}
       />
       <header className="training-page__header page-masthead">
@@ -185,13 +194,16 @@ export function OccupationResultsPage() {
           Buscar otra profesión
         </Link>
         <h1 className="h1" id="occupation-results-heading">
-          {occupation.preferredLabel}
+          {occupationLabel}
         </h1>
         <div className="training-page__meta">
           <span className="training-page__code">
             CNO-11 {occupation.classificationCode}
           </span>
-          <InfoDisclosure label="Fuente de esta profesión">
+          <InfoDisclosure
+            label="Fuente y revisión de esta profesión"
+            trigger="Fuente y revisión"
+          >
             <p>Denominación oficial del catálogo CNO-11 (BOE, RD 1591/2010).</p>
             <ExternalLink href={occupation.sourceUrl}>
               Ver fuente oficial
@@ -229,18 +241,19 @@ export function OccupationResultsPage() {
       )}
       {orderedLinks.length === 0 ? (
         <div className="status-panel">
-          <h1 className="h1" id="occupation-results-heading">
-            Aún no hay una ruta formativa comprobada para esta profesión
-          </h1>
+          <h2>
+            Esta copia no contiene relaciones FP revisadas para esta profesión.
+          </h2>
           <p>
-            Esto no significa que no exista formación relacionada: solo
-            publicamos relaciones verificadas en fuentes oficiales, y esta aún
-            está pendiente.
+            SALIDA solo muestra relaciones que ha podido verificar en fuentes
+            oficiales. La ausencia en esta copia no determina qué formación
+            permite acceder a una profesión ni acredita habilitación
+            profesional.
           </p>
           <p>
             Puedes buscar{" "}
             <Link to="/desde-oferta">
-              ofertas relacionadas en la copia actual
+              ofertas relacionadas en la copia activa
             </Link>{" "}
             o <Link to="/desde-ocupacion">probar con otra profesión</Link>.
           </p>

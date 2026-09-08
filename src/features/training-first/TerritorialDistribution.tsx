@@ -74,7 +74,7 @@ export function TerritorialDistribution({
       </ExternalLink>
       {model.totalCenters === 0 ? (
         <p className="territorial-distribution__empty">
-          No hay centros publicados para este ciclo en la copia actual.
+          No hay centros publicados para este ciclo en la copia activa.
         </p>
       ) : (
         <>

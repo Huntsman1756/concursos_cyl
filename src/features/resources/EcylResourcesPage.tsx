@@ -12,6 +12,8 @@ import {
   loadPublicEmploymentCalls,
 } from "../../data/generatedDataClient";
 import { ExternalLink } from "../../components/ExternalLink";
+import { ResultSectionNav } from "../../components/ResultSectionNav";
+import { LoadingSkeleton } from "../../components/LoadingSkeleton";
 import { PageEyebrow } from "../../components/PageEyebrow";
 import { useRouteReady } from "../../app/RouteReadyContext";
 import {
@@ -35,9 +37,14 @@ type State =
       publicCallsReferenceDate: string;
     };
 
-const COURSE_PAGE_SIZE = 40;
-const CERTIFICATE_PAGE_SIZE = 60;
+const COURSE_PAGE_SIZE = 8;
+const CERTIFICATE_PAGE_SIZE = 8;
 const MISSING_COURSE_METADATA = "No publicado en la ficha";
+const RESOURCE_SECTIONS = [
+  { href: "#public-calls-heading", label: "Convocatorias" },
+  { href: "#courses-heading", label: "Cursos ECYL" },
+  { href: "#certificates-heading", label: "Certificados" },
+] as const;
 
 const PROFESSIONAL_FAMILY_LABELS: Readonly<Record<string, string>> = {
   ADG: "Administración y Gestión",
@@ -218,14 +225,28 @@ export function EcylResourcesPage() {
           Formación para seguir avanzando
         </h1>
         <p className="page-lede">
-          Consulta formación complementaria y convocatorias públicas abiertas.
-          Cada opción conserva su alcance y su fuente oficial.
+          Consulta formación complementaria y convocatorias que figuraban
+          abiertas en la copia consultada. Cada opción conserva su alcance y su
+          fuente oficial.
         </p>
+        {state.status === "ready" && state.publicCallsUpdatedAt !== null && (
+          <p className="caption resources-page__copy-date">
+            Copia de datos del{" "}
+            <time dateTime={state.publicCallsUpdatedAt}>
+              {displayDate(state.publicCallsUpdatedAt.slice(0, 10))}
+            </time>
+            . Comprueba el estado actual en cada fuente oficial.
+          </p>
+        )}
       </header>
+
+      {state.status === "ready" && (
+        <ResultSectionNav links={RESOURCE_SECTIONS} />
+      )}
 
       <div className="resources-filters">
         <label>
-          <span>Buscar por nombre, localidad o código</span>
+          <span>Buscar en cursos y certificados</span>
           <input
             type="search"
             value={query}
@@ -234,11 +255,12 @@ export function EcylResourcesPage() {
               setCourseLimit(COURSE_PAGE_SIZE);
               setCertificateLimit(CERTIFICATE_PAGE_SIZE);
             }}
-            placeholder="Nombre o código"
+            placeholder="Nombre, localidad o código"
+            aria-describedby="resources-search-scope"
           />
         </label>
         <label>
-          <span>Familia profesional</span>
+          <span>Familia de los certificados</span>
           <select
             value={family}
             onChange={(event) => {
@@ -256,10 +278,15 @@ export function EcylResourcesPage() {
         </label>
       </div>
 
+      <p className="resources-section-help" id="resources-search-scope">
+        La búsqueda se aplica a cursos y certificados. La familia solo filtra
+        certificados. Las convocatorias se muestran sin estos filtros.
+      </p>
+
       {state.status === "loading" ? (
-        <p role="status" aria-live="polite">
-          Cargando recursos…
-        </p>
+        <div aria-busy="true">
+          <LoadingSkeleton status="Cargando recursos…" layout="page" />
+        </div>
       ) : null}
       {state.status === "error" ? (
         <p role="alert">No se han podido cargar estos recursos.</p>
@@ -271,7 +298,7 @@ export function EcylResourcesPage() {
             aria-labelledby="public-calls-heading"
           >
             <div className="resources-section-heading">
-              <h2 id="public-calls-heading">
+              <h2 id="public-calls-heading" tabIndex={-1}>
                 Convocatorias que figuraban abiertas en la copia del{" "}
                 {state.publicCallsReferenceDate !== null
                   ? displayDate(state.publicCallsReferenceDate)
@@ -347,9 +374,11 @@ export function EcylResourcesPage() {
           <div className="resources-columns">
             <section aria-labelledby="courses-heading">
               <div className="resources-section-heading">
-                <h2 id="courses-heading">Cursos del ECYL</h2>
-                <span>
-                  {visibleCourses.length} de {matchingCourses.length} resultados
+                <h2 id="courses-heading" tabIndex={-1}>
+                  Cursos del ECYL
+                </h2>
+                <span role="status" aria-atomic="true">
+                  {`Cursos: ${visibleCourses.length} de ${matchingCourses.length}`}
                 </span>
               </div>
               <p className="resources-section-help">
@@ -360,24 +389,36 @@ export function EcylResourcesPage() {
                 {visibleCourses.length === 0 ? (
                   <p className="resource-empty-state">
                     {term === ""
-                      ? "No hay cursos publicados en la copia actual."
+                      ? "No hay cursos publicados en la copia activa."
                       : "No hay cursos que coincidan con tu búsqueda. Prueba con otro término, localidad o identificador."}
                   </p>
                 ) : (
                   visibleCourses.map((course) => (
                     <article className="resource-card" key={course.id}>
-                      <p className="resource-card__code">
-                        Identificador ECYL: {course.id}
-                      </p>
                       <h3>{readableOfficialTitle(course.title)}</h3>
-                      <p className="resource-card__summary">
-                        {displayCourseText(course.locality)} ·{" "}
-                        {displayCourseText(course.modality)}
-                      </p>
-                      <p className="resource-card__summary">
-                        {displayCourseText(course.subject)} ·{" "}
-                        {displayCourseDuration(course.durationHours)}
-                      </p>
+                      <dl className="resource-card__metadata resource-card__facts">
+                        <div>
+                          <dt>Localidad</dt>
+                          <dd>{course.locality ?? "No publicada"}</dd>
+                        </div>
+                        <div>
+                          <dt>Modalidad</dt>
+                          <dd>{course.modality ?? "No publicada"}</dd>
+                        </div>
+                        <div>
+                          <dt>Duración</dt>
+                          <dd>
+                            {course.durationHours === null
+                              ? "No publicada"
+                              : displayCourseDuration(course.durationHours)}
+                          </dd>
+                        </div>
+                        <div>
+                          <dt>Materia</dt>
+                          <dd>{course.subject ?? "No publicada"}</dd>
+                        </div>
+                      </dl>
+                      <p className="caption">Identificador ECYL: {course.id}</p>
                       {course.startDate !== null && (
                         <p className="resource-card__summary">
                           Inicio: {displayCourseDate(course.startDate)}
@@ -471,12 +512,11 @@ export function EcylResourcesPage() {
 
             <section aria-labelledby="certificates-heading">
               <div className="resources-section-heading">
-                <h2 id="certificates-heading">
+                <h2 id="certificates-heading" tabIndex={-1}>
                   Certificados de profesionalidad
                 </h2>
-                <span>
-                  {visibleCertificates.length} de {matchingCertificates.length}{" "}
-                  resultados
+                <span role="status" aria-atomic="true">
+                  {`Certificados: ${visibleCertificates.length} de ${matchingCertificates.length}`}
                 </span>
               </div>
               <p className="resources-section-help">
@@ -487,7 +527,7 @@ export function EcylResourcesPage() {
                 {visibleCertificates.length === 0 ? (
                   <p className="resource-empty-state">
                     {term === "" && family === ""
-                      ? "No hay certificados publicados en la copia actual."
+                      ? "No hay certificados publicados en la copia activa."
                       : "No hay certificados que coincidan con tu búsqueda o familia. Prueba con otros filtros."}
                   </p>
                 ) : (

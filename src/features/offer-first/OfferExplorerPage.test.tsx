@@ -190,7 +190,7 @@ describe("OfferExplorerPage", () => {
       .setup()
       .click(
         within(card).getByLabelText(
-          "Ver trazabilidad de COCINEROS, EN GENERAL",
+          "Fuente y revisión de COCINEROS, EN GENERAL",
         ),
       );
     expect(
@@ -277,7 +277,7 @@ describe("OfferExplorerPage", () => {
       within(card).getByRole("link", { name: /Ver oferta oficial/ }),
     ).toHaveAttribute("href", "https://example.com/physio-offer");
     await user.click(
-      within(card).getByLabelText("Ver trazabilidad de FISIOTERAPEUTAS"),
+      within(card).getByLabelText("Fuente y revisión de FISIOTERAPEUTAS"),
     );
     expect(
       within(card).getByText("Vía universitaria o regulada"),
@@ -312,6 +312,34 @@ describe("OfferExplorerPage", () => {
     expect(
       screen.queryByRole("button", { name: "Limpiar filtros" }),
     ).not.toBeInTheDocument();
+  });
+
+  it("keeps coverage counts scoped to filtered offers and announces an empty result", async () => {
+    generatedDataClient.loadManifest.mockResolvedValue({});
+    generatedDataClient.loadOfferEvidence.mockResolvedValue(resource);
+    const user = userEvent.setup();
+    render(
+      <MemoryRouter initialEntries={["/desde-oferta?query=fisioterapeutas"]}>
+        <OfferExplorerPage />
+      </MemoryRouter>,
+    );
+    await screen.findByRole("heading", { name: "1–1 de 1 oferta" });
+    expect(
+      screen.getByText(/0 con FP relacionada en estos resultados/u),
+    ).toBeVisible();
+    const query = screen.getByRole("searchbox");
+    await user.clear(query);
+    await user.type(query, "zzzinexistente");
+    await user.click(screen.getByRole("button", { name: "Buscar" }));
+    const summary = await screen.findByRole("heading", {
+      name: "0–0 de 0 ofertas",
+    });
+    expect(summary).toHaveAttribute("aria-live", "polite");
+    expect(summary).toHaveAttribute("aria-atomic", "true");
+    expect(
+      screen.queryByText(/con FP relacionada en/u),
+    ).not.toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "Buscar" })).toHaveFocus();
   });
 
   it("filters the evidence by the selected FP instead of showing the global catalogue", async () => {
@@ -433,9 +461,9 @@ describe("OfferExplorerPage", () => {
     );
 
     expect(
-      await screen.findByRole("heading", { name: "13–24 de 26 ofertas" }),
+      await screen.findByRole("heading", { name: "11–20 de 26 ofertas" }),
     ).toBeVisible();
-    expect(screen.getAllByRole("article")).toHaveLength(12);
+    expect(screen.getAllByRole("article")).toHaveLength(10);
     expect(
       screen.getByRole("navigation", { name: "Paginación de ofertas" }),
     ).toHaveAttribute("aria-controls", "offer-results-list");
@@ -452,9 +480,9 @@ describe("OfferExplorerPage", () => {
     await user.click(screen.getByRole("button", { name: "Página siguiente" }));
 
     expect(
-      screen.getByRole("heading", { name: "25–26 de 26 ofertas" }),
+      screen.getByRole("heading", { name: "21–26 de 26 ofertas" }),
     ).toBeVisible();
-    expect(screen.getAllByRole("article")).toHaveLength(2);
+    expect(screen.getAllByRole("article")).toHaveLength(6);
     expect(
       screen.getByRole("button", { name: "Página anterior" }),
     ).toBeEnabled();

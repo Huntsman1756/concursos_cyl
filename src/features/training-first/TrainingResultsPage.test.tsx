@@ -557,7 +557,7 @@ describe("TrainingResultsPage", () => {
       name: "Base de cotización observada de titulados",
     });
     const sectionNavigation = screen.getByRole("navigation", {
-      name: "Secciones del resultado",
+      name: "Secciones de esta página",
     });
     expect(sectionNavigation.querySelector("a")).toHaveAttribute(
       "href",
@@ -650,7 +650,7 @@ describe("TrainingResultsPage", () => {
     );
 
     const emptyState = await screen.findByText(
-      /Todavía no hemos podido comprobar en fuentes oficiales/u,
+      /Esta copia no contiene relaciones revisadas entre este ciclo/u,
     );
     expect(emptyState).toHaveTextContent("no mostramos ofertas para él");
     expect(
@@ -828,7 +828,7 @@ describe("TrainingResultsPage", () => {
 
     expect(
       await screen.findByText(
-        /Todavía no hemos podido comprobar en fuentes oficiales/u,
+        /Esta copia no contiene relaciones revisadas entre este ciclo/u,
       ),
     ).toBeVisible();
     expect(
@@ -994,7 +994,7 @@ describe("TrainingResultsPage", () => {
       within(card).getByRole("link", { name: /Ver oferta oficial/ }),
     ).toHaveAttribute("href", offer.originalUrl);
     const infoDisclosure = within(card).getByLabelText(
-      "De dónde sale esta información (Programador web para servicios públicos)",
+      "Fuente y revisión de esta oferta (Programador web para servicios públicos)",
     );
     await user.click(infoDisclosure);
     const headings = Array.from(

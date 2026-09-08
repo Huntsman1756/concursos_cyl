@@ -273,13 +273,39 @@ test("exposes comparison progress and technical tables to assistive technology",
     name: "Seleccionar datos de comparación",
   });
   await expect(form).toBeVisible();
-  await expect(form.locator('[aria-current="step"]')).toHaveText(/Nivel/u);
+
+  // Progress is communicated by the numbered section headers: every control
+  // is visible at once, so no sequential circle stepper may exist.
+  await expect(form.locator(".comparison-steps")).toHaveCount(0);
+  await expect(form.locator('[aria-current="step"]')).toHaveCount(0);
+
+  const sectionHeaders = form.getByText(
+    /^(1\. Nivel de formación|2\. Ciclos o grupos oficiales|3\. Cohorte de titulación|4\. Año tras titularse)$/u,
+  );
+  await expect(sectionHeaders).toHaveCount(1);
+  expect(await sectionHeaders.allTextContents()).toEqual([
+    "1. Nivel de formación",
+  ]);
+
+  const levelSection = form.getByRole("group", {
+    name: "1. Nivel de formación",
+  });
+  await expect(levelSection).toBeVisible();
+  await expect(
+    levelSection.getByText("Grado superior", { exact: true }),
+  ).toBeVisible();
 
   await page.getByText("Grado superior", { exact: true }).click();
-  await expect(form.locator('[aria-current="step"]')).toHaveText(/Ciclos/u);
+
+  await expect(sectionHeaders).toHaveCount(4);
+  expect(await sectionHeaders.allTextContents()).toEqual([
+    "1. Nivel de formación",
+    "2. Ciclos o grupos oficiales",
+    "3. Cohorte de titulación",
+    "4. Año tras titularse",
+  ]);
 
   await form.getByRole("checkbox").first().check();
-  await expect(form.locator('[aria-current="step"]')).toHaveText(/Cohorte/u);
 
   await page
     .getByText("Ver términos técnicos y tabla de datos", { exact: true })

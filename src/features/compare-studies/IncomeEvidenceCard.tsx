@@ -96,7 +96,10 @@ export function IncomeEvidenceCard({
   );
 
   return (
-    <section className="income-evidence-card" aria-labelledby={headingId}>
+    <section
+      className={`income-evidence-card income-evidence-card--${groupLabels ? "comparison" : "reference"}`}
+      aria-labelledby={headingId}
+    >
       <header className="income-evidence-card__header">
         <p className="income-evidence-card__scope">{scopeLabel}</p>
         <h2 id={headingId}>{heading}</h2>
@@ -119,40 +122,40 @@ export function IncomeEvidenceCard({
                 </p>
               </header>
 
-              <ul
-                className="income-bars"
-                aria-label={`Distribución: ${item.label}`}
-              >
-                {OUTCOME_MEASURE_ORDER.map((measure) => {
-                  if (!monotone && measure !== "mean") return null;
-                  const observation = indexed.get(measure);
-                  const value = observation?.valueEur ?? null;
-                  const presentation = OUTCOME_MEASURE_PRESENTATION[measure];
-                  const width =
-                    value === null
-                      ? 0
-                      : Math.max(1.5, (value / maximumValue) * 100);
-                  return (
-                    <li key={measure}>
-                      <div className="income-bar__label">
-                        <span>{presentation.plainLabel}</span>
-                        <strong>{formatValue(value)}</strong>
-                      </div>
-                      <div className="income-bar__track" aria-hidden="true">
-                        <span
-                          className={
-                            measure === "mean"
-                              ? "income-bar income-bar--mean"
-                              : "income-bar"
-                          }
-                          style={{ width: `${width}%` }}
-                        />
-                      </div>
-                      <small>{presentation.explanation}</small>
-                    </li>
-                  );
-                })}
-              </ul>
+              {/* The mean is presented once in the header; the distribution
+                  shows only the percentile cuts, which add new information. */}
+              {monotone && (
+                <ul
+                  className="income-bars"
+                  aria-label={`Distribución: ${item.label}`}
+                >
+                  {OUTCOME_MEASURE_ORDER.map((measure) => {
+                    if (measure === "mean") return null;
+                    const observation = indexed.get(measure);
+                    const value = observation?.valueEur ?? null;
+                    const presentation = OUTCOME_MEASURE_PRESENTATION[measure];
+                    const width =
+                      value === null
+                        ? 0
+                        : Math.max(1.5, (value / maximumValue) * 100);
+                    return (
+                      <li key={measure}>
+                        <div className="income-bar__label">
+                          <span>{presentation.plainLabel}</span>
+                          <strong>{formatValue(value)}</strong>
+                        </div>
+                        <div className="income-bar__track" aria-hidden="true">
+                          <span
+                            className="income-bar"
+                            style={{ width: `${width}%` }}
+                          />
+                        </div>
+                        <small>{presentation.explanation}</small>
+                      </li>
+                    );
+                  })}
+                </ul>
+              )}
 
               {!monotone && (
                 <p className="income-data-warning" role="note">
@@ -171,7 +174,7 @@ export function IncomeEvidenceCard({
                   tabIndex={0}
                 >
                   <table>
-                    <caption className="visually-hidden">
+                    <caption className="sr-only">
                       Datos técnicos: {item.label}
                     </caption>
                     <thead>

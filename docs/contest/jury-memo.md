@@ -1,37 +1,43 @@
-# Memoria de candidatura: SALIDA CyL
+# SALIDA CyL: de la formación profesional al siguiente paso
 
-Candidatura al [X Concurso de Datos Abiertos de Castilla y León](https://datosabiertos.jcyl.es/web/es/concurso-datos-abiertos/concurso-datos-abiertos.html), categoría **Productos y Servicios**.
+Categoría: **Productos y Servicios**. X Concurso de Datos Abiertos de Castilla y León, 2026.
+
+Acceso público: https://salida-cyl.157-90-22-40.sslip.io/
 
 ## Qué resuelve
 
-SALIDA CyL convierte catálogos públicos separados en una ruta de decisión: `FP → ocupación → evidencia → siguiente paso`. También permite recorrer el camino inverso y empezar desde una oferta laboral. Cada relación publicada conserva fuente, fecha, estado y límites; lo no revisado no se rellena por similitud.
+Elegir una FP exige conectar información dispersa: qué se estudia, qué ocupaciones se relacionan con el título, dónde se imparte y qué ofertas permiten explorar esas opciones. SALIDA CyL reúne esas consultas en una aplicación pública y gratuita, con fuentes identificadas y límites visibles.
 
-## Qué debe comprobar el jurado
+Una persona interesada en Cuidados Auxiliares de Enfermería puede abrir la ficha del estudio, explorar sus ocupaciones relacionadas, consultar centros y revisar las ofertas vinculadas de una instantánea fechada. También puede comenzar por una profesión o una oferta. Los enlaces oficiales permiten contrastar la información antes de decidir una matrícula o candidatura.
 
-- Desde FP: `/desde-fp/SAN21` muestra relaciones revisadas y ofertas acotadas por la instantánea.
-- Desde ocupación: `/desde-ocupacion/occupation%3Acno11%3A5611` muestra el recorrido inverso.
-- Cobertura positiva: `/desde-ocupacion/occupation%3Acno11%3A7111` conserva sus ofertas revisadas.
-- Límite honesto: `/desde-ocupacion/occupation%3Acno11%3A3820` no fabrica ofertas cuando no hay evidencia en la instantánea.
-- Desde oferta: `/desde-oferta` conserva requisito literal, tipo de evidencia, relación revisada y siguiente acción oficial.
-- Datos reutilizables: `/datos-abiertos` enlaza el grafo FP↔CNO-11 y los recursos publicados con su manifest.
-- Nota técnica: Las páginas de ofertas utilizan un recurso derivado de evidencia generado sobre el snapshot. Se conserva como recurso runtime trazable, pero no se publica en esta candidatura como dataset reutilizable independiente.
+## Utilidad
 
-## Cifras congeladas
+El servicio se dirige a estudiantes, personas que buscan empleo o un cambio profesional, familias y profesionales de orientación. Reduce los pasos necesarios para consultar catálogos separados y permite recorrer la relación entre formación y ocupación en ambos sentidos. Incluye 187 claves de programa, con modalidades, y 502 grupos de la clasificación ocupacional CNO-11. Estas cifras describen el catálogo; no son usuarios ni resultados de inserción laboral.
 
-El candidato usa el snapshot `20260830120000000-8c6c79fbd2a1`, manifest SHA-256 `e70a1853ac0f2cf5d25e6192776f88b400aca1536a58380044a8aa1ebc2794df` y 22 recursos. Incluye 187 programas, 229 centros, 1.294 ofertas formativas, 1.058 ofertas laborales, 264 relaciones FP–ocupación aprobadas, 35 alias y 0 programas diferidos.
+## Valor económico
 
-La cobertura contiene 113 cualificaciones distintas y 130 claves de modalidad. 138 ofertas alcanzadas pertenecen a una copia fechada de 1.058 ofertas; es una unión de IDs, no una medida de todo el mercado.
+El producto puede reducir trabajo de búsqueda y contraste en orientación. Su código abierto y su grafo descargable permiten reutilizar componentes en otros servicios e integrar relaciones documentadas sin rehacer toda la revisión. El acceso actual es gratuito. No se atribuyen ingresos, ahorro cuantificado, clientes ni rentabilidad que no se hayan medido.
 
-El recurso `offerEvidence` contiene 1.058 registros, 196 relaciones y 138 ofertas con relación FP revisada. Las 138 ofertas son una unión de IDs de esta copia fechada, no una medida de todo el mercado. Cinco IDs adicionales respecto del matcher base están justificados por dos revisiones curadas: `PEONES FORESTALES → CNO 9543 → AGA03B` y el requisito literal `Técnico en Cocina y Gastronomía → HOT01M`.
+## Valor público y social
 
-## Calidad y límites
+Facilita el acceso a información sobre formación y empleo en Castilla y León sin registro. Los centros y filtros territoriales ayudan a explorar opciones por ubicación. Cada relación conserva su procedencia y los vacíos de evidencia se muestran expresamente. El beneficio social es potencial: no se afirma haber reducido desempleo o despoblación ni haber demostrado impacto mediante un estudio de usuarios.
 
-La aplicación mantiene fail-closed la frontera entre evidencia y conjetura. No afirma equivalencias universitarias o profesionales, empleabilidad, salario individual, completitud del mercado ni impacto medido. EDUCAbase conserva su alcance estadístico; el contexto provincial no se convierte en una predicción personal.
+## Originalidad y mejora respecto a consultas separadas
 
-La interfaz es responsive, navegable por teclado y sin persistencia de búsquedas o resultados. La validación de accesibilidad, overflow, red y consola se ejecuta como gate local y se repitió durante la recaptura de las 13 capturas actuales incluidas en `docs/contest/evidence-capture.json`; la captura nativa OS A4 y la revisión visual humana siguen siendo pasos pendientes y no se presentan como hechos.
+La aportación es conectar formación, ocupaciones y ofertas mediante relaciones revisadas y consultables en ambos sentidos. No se presentan coincidencias por semejanza como equivalencias acreditadas. Cuando no hay oferta relacionada, la formación permanece visible y el límite se explica. Esta distinción permite comprobar por qué aparece un resultado y evita interpretar una ausencia como falta de oportunidades.
 
-## Estado del candidato
+## Variedad de datos
 
-La candidatura se construye sobre el producto publicado `v2026.09.04-candidate.10`: tag anotado sobre el commit `4b67443c4cb1b29347eef38d751eb4f8d02cb2a9`, con GitHub Release pública y despliegue verificado en la raíz pública, donde `version.json` declara ese mismo commit. La evidencia observada (gates, despliegue, verificación pública y capturas) está registrada en `docs/contest/release-evidence.json`.
+Combina ocho conjuntos del Portal de Datos Abiertos de la Junta: oferta de FP, ofertas de empleo, formación del ECYL, certificados de profesionalidad, convocatorias de empleo público, contratos provinciales, registro de municipios y directorio de centros docentes. Se complementan con CNO-11, TodoFP, SEPE y EDUCAbase. La metodología identifica sus funciones y ámbitos. El grafo derivado se devuelve a la comunidad en JSON y CSV con fuentes y condiciones de reutilización.
 
-Los commits posteriores que empaquetan esta documentación no alteran el producto desplegado. La identidad de la persona solicitante, el contacto, las declaraciones, el consentimiento y el envío real a la sede electrónica siguen siendo pasos humanos pendientes; este repositorio no los ejecuta.
+## Facilidad de uso y accesibilidad
+
+La aplicación ofrece entradas por formación, profesión y oferta, búsquedas y filtros, navegación adaptable a móvil y enlaces a las fuentes. Las pruebas automatizadas comprueban recorridos, teclado y reglas de accesibilidad; no equivalen a una certificación integral. La comparación de ingresos distingue ámbitos estadísticos y evita presentarlos como salarios individuales garantizados.
+
+## Calidad técnica y cobertura comprobable
+
+Publica 264 relaciones aprobadas: 130 de las 187 claves de programa tienen alguna relación revisada (69,5 %), correspondientes a 113 cualificaciones distintas. Las modalidades se cuentan por separado; no son 130 titulaciones diferentes.
+
+138 de las 1.058 ofertas de la instantánea tienen relación FP revisada (13,0 %). Se cuentan ofertas distintas; no representan todo el mercado laboral. Los datos base se descargaron el 22 de agosto y las fechas de publicación de las ofertas llegan hasta el 20 de agosto. El recurso derivado se generó el 30 de agosto de 2026. La vigencia se contrasta en la fuente oficial.
+
+El proyecto dispone de pruebas de datos e interfaz, control de licencias y verificación de integridad de recursos. La metodología, el inventario de fuentes y los datos descargables están accesibles desde la aplicación. La evidencia técnica detallada se conserva en el repositorio para su comprobación.

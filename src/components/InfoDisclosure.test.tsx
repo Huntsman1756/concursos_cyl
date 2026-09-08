@@ -25,4 +25,28 @@ describe("InfoDisclosure", () => {
     expect(summary.parentElement).not.toHaveAttribute("open");
     expect(document.activeElement).toBe(summary);
   });
+
+  it("renders a visible text trigger while keeping the accessible name and behaviour", async () => {
+    const user = userEvent.setup();
+    render(
+      <InfoDisclosure
+        label="Fuente y revisión de la relación"
+        trigger="Fuente y revisión"
+      >
+        <p>Texto de la fuente.</p>
+      </InfoDisclosure>,
+    );
+
+    const summary = screen.getByLabelText("Fuente y revisión de la relación");
+    // Visible text on the control: no isolated icon-only row.
+    expect(summary).toHaveTextContent("Fuente y revisión");
+    expect(summary).toHaveAttribute("aria-expanded", "false");
+    await user.click(summary);
+    expect(summary).toHaveAttribute("aria-expanded", "true");
+    expect(screen.getByText("Texto de la fuente.")).toBeVisible();
+
+    await user.keyboard("{Escape}");
+    expect(summary).toHaveAttribute("aria-expanded", "false");
+    expect(document.activeElement).toBe(summary);
+  });
 });

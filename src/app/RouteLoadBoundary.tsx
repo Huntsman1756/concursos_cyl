@@ -1,4 +1,7 @@
 import { Component, type ReactNode } from "react";
+import { useLocation } from "react-router-dom";
+
+import { LoadingSkeleton } from "../components/LoadingSkeleton";
 
 interface RouteLoadBoundaryProps {
   children: ReactNode;
@@ -55,9 +58,22 @@ export class RouteLoadBoundary extends Component<
 }
 
 export function RouteLoadingFallback() {
+  const { pathname } = useLocation();
+  const catalog =
+    pathname === "/desde-oferta" ||
+    /^\/donde-estudiar(?:\/|$)/u.test(pathname) ||
+    /^\/desde-(?:fp|ocupacion)\/[^/]+\/ofertas$/u.test(pathname);
   return (
-    <div role="status" aria-live="polite" className="loading-fallback">
-      Cargando...
+    <div
+      className={
+        catalog ? "container catalog-loading" : "container route-loading"
+      }
+    >
+      <LoadingSkeleton
+        status="Cargando la página…"
+        layout={catalog ? "catalog" : "page"}
+        className="route-loading__skeleton"
+      />
     </div>
   );
 }

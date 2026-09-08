@@ -1,85 +1,62 @@
 # SALIDA CyL
 
-**Explore reviewed, traceable links between vocational training and occupations in Castilla y León — with public evidence.**
+**Explora qué ocupaciones están relacionadas con una FP, dónde estudiarla y qué ofertas se conectan mediante evidencia revisada.**
 
-SALIDA CyL is an independent, open-source web application for the [X Concurso de Datos Abiertos de Castilla y León](https://datosabiertos.jcyl.es/web/es/concurso-datos-abiertos/concurso-datos-abiertos.html) (Products and Services category). It answers a question that scattered public data make hard to follow:
+SALIDA CyL es una aplicación independiente y de código abierto para personas que están eligiendo formación profesional, buscando empleo o acompañando decisiones de orientación en Castilla y León.
 
-> _What professional outlets does a given vocational training (FP) actually lead to, what training leads to a given occupation, and what public evidence supports it — in both directions._
+[Abrir la aplicación](https://salida-cyl.157-90-22-40.sslip.io/) · [Memoria de candidatura](docs/contest/jury-memo.md) · [Metodología](https://salida-cyl.157-90-22-40.sslip.io/metodologia) · [Datos abiertos](https://salida-cyl.157-90-22-40.sslip.io/datos-abiertos)
 
-## The problem
+## Qué puedes hacer
 
-The data for FP programs, occupational classifications, study centers, employment offers and graduate income already exist, but they are published as separate datasets in different catalogs. Following `FP → occupation → evidence` requires jumping across those silos, and nothing separates **verified relationships** from plausible guesses.
+- **Partir de una FP:** consultar ocupaciones relacionadas, ofertas de una instantánea fechada y centros donde se imparte.
+- **Partir de una profesión o una oferta:** explorar las formaciones relacionadas y consultar la fuente que justifica cada vínculo.
+- **Comparar estudios:** consultar referencias oficiales de ingresos de titulados, manteniendo separados sus ámbitos estadísticos. No son salarios prometidos ni predicciones individuales.
 
-## What SALIDA CyL does
+Por ejemplo, la ficha de [Cuidados Auxiliares de Enfermería](https://salida-cyl.157-90-22-40.sslip.io/desde-fp/SAN21) permite pasar de la formación a sus relaciones ocupacionales y contrastarlas con las fuentes. La decisión final de matrícula o solicitud se realiza en los canales oficiales correspondientes.
 
-It builds a **navigable, two-way relationship** between the 187 official FP programs and the 502 CNO-11 primary groups, then anchors each relationship in identified public evidence:
+## Alcance y límites
 
-- **From FP:** pick a program to see its reviewed occupations, related offers from a dated snapshot, study centers, provincial context and official sources.
-- **From occupation:** pick a CNO-11 group and see which FP leads to it, with the same evidence trail.
-- **Compare:** separate national and regional EDUCAbase income references, without conflating scopes or presenting a table as an individual salary.
+El catálogo contiene **187 claves de programa, incluidas modalidades**. **130 tienen al menos una relación ocupacional aprobada (69,5 %)** y corresponden a **113 cualificaciones distintas**. El grafo publica 264 relaciones revisadas.
 
-## What makes it different
+**138 de las 1.058 ofertas de la instantánea (13,0 %) tienen una relación FP revisada.** Son ofertas distintas, no número de vínculos ni porcentaje de todo el mercado laboral. Una formación sin oferta relacionada no significa que carezca de oportunidades.
 
-SALIDA CyL does **not** invent equivalences, use fuzzy/semantic matching, or expand results by textual similarity. It publishes only relationships that can be **justified and traced to an official source**, and it explicitly shows the cases where evidence is insufficient rather than filling them in. Each reviewed relationship keeps its source, date, status and limits.
+Los datos de base se descargaron el **22 de agosto de 2026**; las fechas de publicación de las ofertas llegan hasta el **20 de agosto**. El recurso derivado de evidencia se generó el **30 de agosto**. Regenerar ese recurso no actualiza las fuentes. La vigencia de cada oferta debe comprobarse en su enlace oficial. Véase la [revisión de fuentes y despliegue](docs/contest/verification-20260908.md).
 
-## Public data it reuses
+Solo se publican relaciones justificadas por fuentes identificadas. No se completan vacíos por semejanza textual ni se afirman equivalencias profesionales, empleabilidad o impacto social medido.
 
-All eight Junta de Castilla y León datasets used are visible in the product and identified in [docs/contest/source-ledger.md](docs/contest/source-ledger.md). They are combined with national classifications and evidence:
+## Datos públicos reutilizados
 
-| Data                       | Source                                                            | Purpose in SALIDA CyL                  |
-| -------------------------- | ----------------------------------------------------------------- | -------------------------------------- |
-| FP study offer             | JCyL open data (`oferta-de-formacion-profesional`)                | FP programs, modalities, study centers |
-| Employment offers          | JCyL open data (`ofertas-de-empleo`)                              | dated snapshot of related offers       |
-| ECYL training courses      | JCyL open data (`formacion-del-ecyl`)                             | additional training paths              |
-| Professional certificates  | JCyL open data (`certificados-profesionalidad`)                   | qualification context                  |
-| Public employment calls    | JCyL open data (`convocatorias-de-empleo-publico`)                | public-sector opportunities            |
-| Provincial contracts       | JCyL open data (`contratos-realizados-en-las-provincias...`)      | aggregated regional context            |
-| Municipal registry         | JCyL open data (`registro-de-municipios...`)                      | territorial context                    |
-| Education center directory | JCyL open data (`directorio-de-centros-docentes`)                 | study locations                        |
-| CNO-11                     | [BOE RD 1591/2010](https://www.boe.es/eli/es/rd/2010/11/26/1591)  | searchable occupational classification |
-| SEPE occupation market     | [SEPE](https://www.sepe.es/)                                      | linked occupation-market evidence      |
-| TodoFP                     | [TodoFP](https://www.todofp.es/)                                  | literal professional outputs           |
-| EDUCAbase                  | [Ministerio de Educación](https://estadisticas.educacion.gob.es/) | separate income reference tables       |
+Integra ocho conjuntos del Portal de Datos Abiertos de la Junta:
 
-Methodology and interpretation boundaries for each source are in [docs/methodology/educabase-income.md](docs/methodology/educabase-income.md) and [docs/methodology/sepe-occupation-market.md](docs/methodology/sepe-occupation-market.md).
+| Conjunto                               | Utilidad                             |
+| -------------------------------------- | ------------------------------------ |
+| Oferta de formación profesional        | Estudios, modalidades y centros      |
+| Ofertas de empleo                      | Ofertas en una instantánea fechada   |
+| Formación del ECYL                     | Opciones de formación complementaria |
+| Certificados de profesionalidad        | Contexto de cualificaciones          |
+| Convocatorias de empleo público        | Acceso a convocatorias y sus fuentes |
+| Contratos realizados en las provincias | Contexto territorial agregado        |
+| Registro de municipios                 | Referencias territoriales            |
+| Directorio de centros docentes         | Información de centros               |
 
-## Open data it produces
+Se combinan con CNO-11, TodoFP, SEPE y EDUCAbase. El [inventario de fuentes](docs/contest/source-ledger.md) explica su función y sus condiciones. El grafo FP–ocupación se ofrece en JSON y CSV con fuente por relación, licencia e integridad verificable.
 
-The reviewed FP↔occupation graph is returned to the community as a **derived open dataset** — JSON and CSV — with source per relationship, open license and SHA-256 integrity, downloadable from the [open-data page](https://salida-cyl.157-90-22-40.sslip.io/datos-abiertos).
+## Candidatura y estado público
 
-## Quality
+Categoría **Productos y Servicios** del [X Concurso de Datos Abiertos de Castilla y León](https://datosabiertos.jcyl.es/web/es/concurso-datos-abiertos/concurso-datos-abiertos.html). La [comprobación de las bases](docs/contest/rules-2026.md) recoge fuentes oficiales, criterios y el límite de 1.000 palabras de la memoria.
 
-- The release candidate `v2026.09.04-candidate.10` (commit `4b67443c4cb1b29347eef38d751eb4f8d02cb2a9`) is pinned to snapshot `20260830120000000-8c6c79fbd2a1` with a 22-resource SHA-256 manifest. The derived `offerEvidence` resource is activated in that same manifest.
-- Reviewed relationships are conservative and fail-closed; a weak match is never published by similarity.
-- Unit, release and E2E tests, lint, license and format gates run in CI on every push to `main`.
-- Accessibility (Axe), privacy (no accounts, cookies, analytics or runtime AI) and reproducibility are automated.
-- See the [jury memo](docs/contest/jury-memo.md) and [technical evidence](docs/contest/technical-evidence.md) for full detail, capture evidence and limits.
+El estado público observado y las limitaciones de verificación están en [verification-20260908.md](docs/contest/verification-20260908.md). Los registros de releases anteriores son evidencia histórica, no una garantía del estado actual. GitHub Pages es una dirección de respaldo configurada, cuya disponibilidad debe verificarse antes de ofrecerla como alternativa.
 
-## Limitations
+## Desarrollo y calidad
 
-- Offers are a **dated snapshot**, not the whole labor market; a reviewed relationship without a current offer match is shown honestly instead of hidden.
-- Coverage is limited to reviewed relationships: **138 of 1,058 offers** in the snapshot are reached by published relations, and only relations that can be justified are shown. The five-ID delta is backed by two explicit curated reviews.
-- EDUCAbase references keep their statistical scope and are **never** presented as an individual salary, employment probability or guarantee.
-
-## Concurso
-
-[X Concurso de Datos Abiertos de Castilla y León](https://datosabiertos.jcyl.es/web/es/concurso-datos-abiertos/concurso-datos-abiertos.html) — Productos y Servicios. The released candidate `v2026.09.04-candidate.10` is deployed and verified at the public root; external submission still requires explicit human authorization, and its observed evidence is recorded in [docs/contest/release-evidence.json](docs/contest/release-evidence.json).
-
-- Application: <https://salida-cyl.157-90-22-40.sslip.io/>
-- Derived open data: <https://salida-cyl.157-90-22-40.sslip.io/datos-abiertos>
-- Methodology: <https://salida-cyl.157-90-22-40.sslip.io/metodologia>
-- Jury memo and evidence: [`docs/contest/`](docs/contest/)
-
-## Run locally
-
-Requires Node.js 24.
+Requiere Node.js 24.
 
 ```sh
 npm ci
 npm run dev
 ```
 
-Quality gates:
+Comprobaciones del proyecto:
 
 ```sh
 npm run license:check
@@ -87,14 +64,11 @@ npm run lint
 npm test
 npm run build
 npm run test:e2e
+npm run contest:submission:check
 ```
 
-Generated public data is rebuilt only through `npm run data:build`. See [DATA_LICENSE.md](DATA_LICENSE.md) for source terms, which retain the terms declared by each publisher.
+Las pruebas cubren lógica de datos, interfaz, recorridos y comprobaciones automatizadas de accesibilidad. Su resultado corresponde al árbol y fecha de ejecución registrados; no acredita por sí solo conformidad completa de accesibilidad. La aplicación no requiere cuentas, cookies ni analítica. Los términos presentes en la URL pueden permanecer en el historial del navegador.
 
-## Publish
+Los datos se reconstruyen mediante `npm run data:build`, con revisión previa a su publicación. El [procedimiento de despliegue](docs/deployment.md) describe VPS, respaldo y verificación de versión.
 
-Every push to `main` runs the `Deploy GitHub Pages` workflow: license, contest proof, lint, unit and E2E tests, a Caddy header check and a production build all run on `ubuntu-latest`. Pull requests run the same verification without deploying.
-
-The intended public root is the VPS at <https://salida-cyl.157-90-22-40.sslip.io/>; GitHub Pages at <https://huntsman1756.github.io/concursos_cyl/> is the fallback. The current candidate has not been deployed or verified publicly. Operational details are in [docs/deployment.md](docs/deployment.md).
-
-Project code is MIT licensed. Source data retains the terms declared by each publisher.
+Código bajo licencia MIT. Los datos conservan las condiciones de cada editor: [DATA_LICENSE.md](DATA_LICENSE.md).

@@ -7,6 +7,7 @@ import type {
 } from "../../../data/schemas/sepeOccupationMarket";
 import { loadSepeOccupationMarketResource } from "../../data/generatedDataClient";
 import { ExternalLink } from "../../components/ExternalLink";
+import { LoadingSkeleton } from "../../components/LoadingSkeleton";
 import "./occupationMarketEvidence.css";
 
 export interface OccupationMarketEvidenceProps {
@@ -124,6 +125,10 @@ function EvidenceCoverage({
   return (
     <div className="occupation-market-evidence__coverage">
       <p>
+        Ámbito de las cifras: <strong>España</strong>. El desglose de Castilla y
+        León está disponible por provincia.
+      </p>
+      <p>
         Periodo consultado: <strong>{formatPeriod(resource.period)}</strong>.
       </p>
       <p>
@@ -220,9 +225,13 @@ export function OccupationMarketEvidence({
         medida de vacantes, salarios ni una predicción individual.
       </p>
       {state.status === "loading" && (
-        <p role="status" aria-live="polite">
-          Cargando datos del mercado laboral…
-        </p>
+        <div aria-busy="true">
+          <LoadingSkeleton
+            status="Cargando datos del mercado laboral…"
+            layout="results"
+            className="occupation-market-evidence__loading"
+          />
+        </div>
       )}
       {state.status === "unavailable" && (
         <p role="status" aria-live="polite">

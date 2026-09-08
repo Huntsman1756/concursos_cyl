@@ -2,7 +2,6 @@
   display: grid;
   gap: var(--space-8);
   width: 100%;
-  max-width: none;
   margin: 0;
 }
 
@@ -12,14 +11,8 @@
   align-content: start;
 }
 
-.compare-page__intro {
-  max-width: var(--reading-max);
-}
-
-.compare-page__intro h1 {
-  max-width: var(--reading-max);
-}
-
+.compare-page__intro,
+.compare-page__intro h1,
 .compare-page__intro > .page-lede {
   max-width: var(--reading-max);
 }
@@ -65,81 +58,12 @@
   margin: 0;
   color: var(--color-text-muted);
   line-height: 1.5;
-}
-
-.field-hint {
   font-size: 0.9375rem;
 }
 
-.comparison-steps {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  max-width: 46rem;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-.comparison-steps li {
-  position: relative;
-  display: flex;
-  min-width: 0;
-  align-items: center;
-  gap: 0.5rem;
-  color: var(--color-text-muted);
-  font-size: 0.82rem;
-}
-
-.comparison-steps li:not(:last-child)::after {
-  position: absolute;
-  z-index: 0;
-  top: 50%;
-  right: 0.55rem;
-  left: 2.2rem;
-  height: 1px;
-  background: var(--color-border);
-  content: "";
-}
-
-.comparison-steps span,
-.comparison-steps strong {
-  position: relative;
-  z-index: 1;
-  background: var(--color-surface-warm);
-}
-
-.comparison-steps span {
-  display: grid;
-  width: 1.75rem;
-  height: 1.75rem;
-  flex: 0 0 auto;
-  place-items: center;
-  border: 1px solid var(--color-border);
-  border-radius: 50%;
-  font-weight: 700;
-}
-
-.comparison-steps strong {
-  padding-right: 0.5rem;
-}
-
-.comparison-steps .is-current,
-.comparison-steps .is-complete,
-.comparison-steps .is-available {
-  color: var(--color-text);
-}
-
-.comparison-steps .is-current span {
-  border-color: var(--color-primary);
-  color: #fff;
-  background: var(--color-primary);
-}
-
-.comparison-steps .is-complete span {
-  border-color: var(--color-primary);
-  color: var(--color-primary);
-  background: var(--color-primary-soft);
-}
+/* No circle stepper: all remaining controls are visible at once, so the
+   numbered fieldset legends are the section headers. Removing the circles
+   avoids promising a sequential wizard that does not exist. */
 
 .income-form-fieldset {
   display: grid;
@@ -274,21 +198,25 @@
   box-shadow: var(--focus-ring);
 }
 
+/* Option list participates in normal page flow: no inner max-height, no
+   nested scrollbar. A "Mostrar más" control discloses further matches. */
 .income-group-options {
   display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 24rem), 1fr));
   gap: var(--space-2);
-  max-width: 46rem;
-  max-height: 20rem;
   padding: var(--space-2);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-sm);
   background: var(--color-surface-subtle, var(--color-surface));
-  overflow-y: auto;
 }
 
-.income-group-options:focus-visible {
-  outline: none;
-  box-shadow: var(--focus-ring);
+.income-group-toggle {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  align-items: center;
+  max-width: 46rem;
+  margin-top: var(--space-3);
 }
 
 .income-check {
@@ -386,7 +314,7 @@
 
 .income-evidence-grid {
   display: grid;
-  grid-template-columns: minmax(0, 1.2fr) minmax(20rem, 0.8fr);
+  grid-template-columns: minmax(0, 1fr);
   gap: var(--space-6);
   align-items: start;
 }
@@ -457,6 +385,22 @@
   padding: var(--space-5);
 }
 
+.income-evidence-card--comparison .income-series-list {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr));
+}
+
+.income-evidence-card--comparison .income-series {
+  display: grid;
+  grid-row: span 3;
+  grid-template-rows: subgrid;
+}
+
+@media (min-width: 48rem) {
+  .income-evidence-card--reference .income-bars {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
 .income-series {
   min-width: 0;
   padding: var(--space-5);
@@ -467,10 +411,10 @@
 }
 
 .income-series__header {
-  display: flex;
+  display: grid;
+  grid-template-rows: 1fr auto;
   gap: var(--space-4);
   align-items: start;
-  justify-content: space-between;
   padding-bottom: var(--space-4);
   border-bottom: 1px solid var(--color-border);
 }
@@ -482,10 +426,8 @@
 }
 
 .income-series__header p {
-  flex: 0 0 auto;
   color: var(--color-text-muted);
   font-size: 0.8rem;
-  text-align: right;
 }
 
 .income-series__header strong {
@@ -527,10 +469,6 @@
   height: 100%;
   border-radius: inherit;
   background: var(--color-primary-muted);
-}
-
-.income-bar--mean {
-  background: var(--color-gold);
 }
 
 .income-bars small {
@@ -605,50 +543,10 @@
   line-height: 1.55;
 }
 
-.visually-hidden {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: -1px;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  white-space: nowrap;
-  border: 0;
-}
-
-@media (max-width: 63.999rem) {
-  .income-evidence-grid {
-    grid-template-columns: 1fr;
-  }
-}
-
 @media (max-width: 47.999rem) {
-  .comparison-steps li {
-    display: grid;
-    justify-items: center;
-    gap: 0.35rem;
-    text-align: center;
-  }
-
-  .comparison-steps li:not(:last-child)::after {
-    top: 0.875rem;
-    right: calc(-50% + 1rem);
-    left: calc(50% + 1rem);
-  }
-
-  .comparison-steps strong {
-    padding-right: 0;
-    font-size: 0.75rem;
-  }
-
   .income-level-options,
   .income-form-grid {
     grid-template-columns: 1fr;
-  }
-
-  .income-group-options {
-    max-height: 18rem;
   }
 
   .income-series-list,
@@ -658,20 +556,21 @@
     padding: var(--space-4);
   }
 
-  .income-series__header {
-    display: grid;
-  }
-
-  .income-series__header p {
-    text-align: left;
-  }
-
   .income-bar__label {
     align-items: baseline;
   }
 
   .income-evidence-card tbody td:last-child {
     white-space: normal;
+  }
+}
+
+@media (max-width: 47.999rem) {
+  .income-selection {
+    position: sticky;
+    top: 0.5rem;
+    z-index: 5;
+    background: var(--color-surface);
   }
 }
 

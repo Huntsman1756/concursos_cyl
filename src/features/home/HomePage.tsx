@@ -27,7 +27,7 @@ import {
   trainingDetailPath,
 } from "../../app/routePaths";
 import { loadApprovedMappings } from "../../domain/occupation";
-import { longDate } from "../../domain/displayFormat";
+import { formatOfferTitle, longDate } from "../../domain/displayFormat";
 import { buildApprovedExample } from "../../domain/approvedExample";
 import { formatProgramTitle } from "../../domain/trainingPresentation";
 import { EditorialImage } from "../../components/EditorialImage";
@@ -36,6 +36,7 @@ import { InfoButton } from "../../components/InfoButton";
 import { PageEyebrow } from "../../components/PageEyebrow";
 import { OccupationCombobox } from "../occupation-first/OccupationCombobox";
 import { TrainingCombobox } from "../training-first/TrainingCombobox";
+import "./home.css";
 
 type HomeSearchMode = "training" | "occupation" | "offer";
 
@@ -97,7 +98,7 @@ const TASK_TABS: Array<{
     tab: "Estoy mirando una oferta",
     label: "Pega el título de la oferta",
     hint: "Copia el puesto tal y como aparece en la oferta.",
-    action: "Analizar la oferta",
+    action: "Buscar esta oferta",
   },
 ];
 
@@ -525,6 +526,7 @@ export function HomePage() {
                         className="task-tab"
                         id={`home-tab-${task.id}`}
                         role="tab"
+                        aria-label={task.tab}
                         aria-selected={active}
                         aria-controls={`home-panel-${task.id}`}
                         tabIndex={active ? 0 : -1}
@@ -532,7 +534,14 @@ export function HomePage() {
                         onClick={() => chooseSearchMode(task.mode)}
                         onKeyDown={onTaskTabKeyDown}
                       >
-                        {task.tab}
+                        <span className="task-tab__full">{task.tab}</span>
+                        <span className="task-tab__compact" aria-hidden="true">
+                          {task.mode === "training"
+                            ? "Mi FP"
+                            : task.mode === "occupation"
+                              ? "Profesión"
+                              : "Ofertas"}
+                        </span>
                       </button>
                     </li>
                   );
@@ -562,7 +571,7 @@ export function HomePage() {
         <div className="container">
           <div className="section-head">
             <h2 className="h2" id="paths-title">
-              Empieza desde donde estás
+              Qué puedes entender con SALIDA
             </h2>
           </div>
           <div className="paths-grid">
@@ -578,15 +587,14 @@ export function HomePage() {
                 />
               </div>
               <div className="path-body">
-                <p className="path-number">01</p>
-                <h3 className="h3">Tengo una FP</h3>
+                <h3 className="h3">Las salidas de tu ciclo</h3>
                 <p className="path-description">
                   Descubre profesiones, ofertas y centros relacionados con tu
                   ciclo.
                 </p>
                 <div className="path-actions">
                   <Link className="link-action" to="/desde-fp">
-                    Ver salidas de mi FP →
+                    Salidas de FP
                   </Link>
                 </div>
               </div>
@@ -603,15 +611,14 @@ export function HomePage() {
                 />
               </div>
               <div className="path-body">
-                <p className="path-number">02</p>
-                <h3 className="h3">Quiero dedicarme a una profesión</h3>
+                <h3 className="h3">La formación para una profesión</h3>
                 <p className="path-description">
                   Comprueba qué ciclos tienen una relación revisada con esa
                   ocupación.
                 </p>
                 <div className="path-actions">
                   <Link className="link-action" to="/desde-ocupacion">
-                    Buscar una profesión →
+                    Profesiones y formación
                   </Link>
                 </div>
               </div>
@@ -628,15 +635,14 @@ export function HomePage() {
                 />
               </div>
               <div className="path-body">
-                <p className="path-number">03</p>
-                <h3 className="h3">He visto una oferta</h3>
+                <h3 className="h3">Los requisitos de una oferta</h3>
                 <p className="path-description">
                   Entiende sus requisitos y comprueba si aparece relacionada con
                   una FP.
                 </p>
                 <div className="path-actions">
                   <Link className="link-action" to={globalOffersPath()}>
-                    Analizar una oferta →
+                    Requisitos de ofertas
                   </Link>
                 </div>
               </div>
@@ -718,7 +724,7 @@ export function HomePage() {
             </div>
             <div className="proof-note">
               <p className="small" style={{ margin: 0 }}>
-                Cada cifra indica la fecha de su propia fuente.
+                Relaciones entre ciclos y profesiones
                 <InfoButton label="Qué es una relación revisada">
                   Una relación revisada enlaza un ciclo con una ocupación y se
                   ha verificado contra su fuente oficial (TodoFP, BOE) con fecha
@@ -754,9 +760,7 @@ export function HomePage() {
           )}
           {proof.generatedAt !== null && (
             <p className="caption" style={{ marginTop: "var(--space-2)" }}>
-              Valores calculados en el arranque de la página. Copia activa
-              generada el {formatDate(proof.generatedAt)}; cada cifra indica la
-              fecha de su propia fuente.
+              Copia activa generada el {formatDate(proof.generatedAt)}.
             </p>
           )}
         </div>
@@ -770,7 +774,7 @@ export function HomePage() {
                 Comprueba cómo funciona
               </h2>
               <p className="lede">
-                Un caso real del catálogo, de principio a fin, con su evidencia.
+                Un caso real del catálogo, de principio a fin.
               </p>
             </div>
             <ol className="example-flow">
@@ -811,8 +815,12 @@ export function HomePage() {
                     <Icon name="map-pin" size={20} />
                   </span>
                   <div>
-                    <p className="example-step-kind">Oferta actual</p>
-                    <h3 className="h3">{exampleOffer.title}</h3>
+                    <p className="example-step-kind">
+                      Oferta de la copia consultada
+                    </p>
+                    <h3 className="h3">
+                      {formatOfferTitle(exampleOffer.title)}
+                    </h3>
                     <p className="meta">{exampleOffer.meta}</p>
                   </div>
                 </li>
@@ -878,16 +886,15 @@ export function HomePage() {
       <section className="section" aria-labelledby="method-title">
         <div className="container">
           <div className="section-head" style={{ maxWidth: "44rem" }}>
-            <h2 className="h2" id="method-title">
-              Cada dato, con su origen y su fecha.
+            <h2 className="h3" id="method-title">
+              Sobre los datos
             </h2>
-            <p className="lede">
-              SALIDA combina fuentes públicas de formación y empleo y solo
-              publica relaciones que han superado sus criterios de revisión.
+            <p className="small">
+              Datos de la Junta de Castilla y León (ECYL), SEPE, TodoFP y BOE.
             </p>
           </div>
           <div className="method-actions" style={{ marginTop: 0 }}>
-            <Link className="button button--secondary" to="/metodologia">
+            <Link className="link-action" to="/metodologia">
               Ver metodología
             </Link>
             <Link className="link-action" to="/datos-abiertos">
@@ -899,12 +906,6 @@ export function HomePage() {
               Las imágenes editoriales son generadas mediante IA y no
               representan personas, empresas, ofertas ni centros reales.
             </p>
-            {freshness.status === "ready" && (
-              <p className="caption" style={{ marginTop: "var(--space-2)" }}>
-                Fuentes: Junta de Castilla y León (ECYL), SEPE, TodoFP y BOE ·{" "}
-                {freshness.sourceLabel}: copia del {freshness.date}.
-              </p>
-            )}
           </div>
         </div>
       </section>

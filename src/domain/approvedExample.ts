@@ -1,5 +1,6 @@
 import type { Occupation } from "../../data/schemas/curatedMappings";
 import type { TrainingProgram } from "../../data/schemas/generated";
+import { longDateFromCalendarDay } from "./displayFormat";
 import { trainingLevelLabel } from "./trainingPresentation";
 
 export interface ApprovedExampleOccupation {
@@ -45,12 +46,7 @@ function sourceLabelFor(sourceUrl: string): string {
 }
 
 function reviewDateLabel(reviewedAt: string): string {
-  return new Intl.DateTimeFormat("es-ES", {
-    day: "2-digit",
-    month: "2-digit",
-    year: "numeric",
-    timeZone: "UTC",
-  }).format(new Date(`${reviewedAt}T00:00:00Z`));
+  return longDateFromCalendarDay(reviewedAt) ?? reviewedAt;
 }
 
 /**

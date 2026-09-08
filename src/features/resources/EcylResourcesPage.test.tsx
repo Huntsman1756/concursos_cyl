@@ -294,7 +294,7 @@ describe("EcylResourcesPage", () => {
     renderResources();
 
     const familyFilter = await screen.findByRole("combobox", {
-      name: "Familia profesional",
+      name: "Familia de los certificados",
     });
 
     expect(
@@ -307,6 +307,53 @@ describe("EcylResourcesPage", () => {
     ).toBeVisible();
   });
 
+  it("keeps courses and calls outside the explicitly certificate-only family filter", async () => {
+    const user = userEvent.setup();
+    renderResources({
+      certificates: [
+        certificate(),
+        {
+          ...certificate(),
+          code: "IFCD0110",
+          familyCode: "IFC",
+          title: "Programación",
+        },
+      ],
+      publicCalls: [publicCall()],
+    });
+    const family = await screen.findByRole("combobox", {
+      name: "Familia de los certificados",
+    });
+    await user.selectOptions(family, "IFC");
+    expect(
+      screen.getByRole("heading", { name: "Curso de prueba" }),
+    ).toBeVisible();
+    expect(screen.getByRole("heading", { name: "Programación" })).toBeVisible();
+    expect(
+      screen.queryByRole("heading", { name: /Gestión Contable/iu }),
+    ).not.toBeInTheDocument();
+    expect(
+      screen.getByText(/Las convocatorias se muestran sin estos filtros/u),
+    ).toBeVisible();
+    const calls = screen.getByRole("region", {
+      name: /Convocatorias que figuraban abiertas/u,
+    });
+    const before = calls.textContent;
+    await user.type(
+      screen.getByRole("searchbox", {
+        name: "Buscar en cursos y certificados",
+      }),
+      "zzzinexistente",
+    );
+    expect(calls.textContent).toBe(before);
+    expect(
+      screen.queryByRole("heading", { name: "Curso de prueba" }),
+    ).not.toBeInTheDocument();
+    expect(
+      screen.queryByRole("heading", { name: "Programación" }),
+    ).not.toBeInTheDocument();
+  });
+
   it("finds a course when the search term is its stable ECYL identifier", async () => {
     const user = userEvent.setup();
     renderResources({
@@ -317,9 +364,9 @@ describe("EcylResourcesPage", () => {
     });
 
     const search = await screen.findByRole("searchbox", {
-      name: "Buscar por nombre, localidad o código",
+      name: "Buscar en cursos y certificados",
     });
-    expect(search).toHaveAttribute("placeholder", "Nombre o código");
+    expect(search).toHaveAttribute("placeholder", "Nombre, localidad o código");
     await user.type(search, "course-002");
 
     expect(
@@ -334,7 +381,7 @@ describe("EcylResourcesPage", () => {
         name: "Curso que no coincide",
       }),
     ).not.toBeInTheDocument();
-    expect(screen.getByText("1 de 1 resultados")).toBeVisible();
+    expect(screen.getByText("Cursos: 1 de 1")).toBeVisible();
   });
 
   it("keeps course identity and primary published fields visible while details stay collapsed", async () => {
@@ -348,8 +395,16 @@ describe("EcylResourcesPage", () => {
     if (card === null) throw new Error("Expected the course card.");
 
     expect(screen.getByText("Identificador ECYL: course-001")).toBeVisible();
-    expect(within(card).getByText("León · Presencial")).toBeVisible();
-    expect(within(card).getByText("Administración · 100 h")).toBeVisible();
+    for (const [label, value] of [
+      ["Localidad", "León"],
+      ["Modalidad", "Presencial"],
+      ["Materia", "Administración"],
+      ["Duración", "100 h"],
+    ]) {
+      const row = within(card).getAllByText(label)[0].closest("div");
+      expect(row).toHaveTextContent(value);
+      expect(row).toBeVisible();
+    }
     const summary = within(card).getByText("Ver todos los datos publicados");
     const details = summary.closest("details");
     if (details === null) throw new Error("Expected a metadata disclosure.");
@@ -393,6 +448,11 @@ describe("EcylResourcesPage", () => {
     expect(within(card).getByText(/Datos no publicados:/u)).toHaveTextContent(
       "Datos no publicados: fecha de inicio, plazo de inscripción, fecha de fin, requisitos.",
     );
+    for (const label of ["Localidad", "Modalidad", "Duración", "Materia"]) {
+      const row = within(card).getAllByText(label)[0].closest("div");
+      expect(row).toHaveTextContent("No publicada");
+      expect(row).toBeVisible();
+    }
 
     for (const label of [
       "Modalidad",
@@ -468,7 +528,7 @@ describe("EcylResourcesPage", () => {
     renderResources();
 
     const search = await screen.findByRole("searchbox", {
-      name: "Buscar por nombre, localidad o código",
+      name: "Buscar en cursos y certificados",
     });
     await user.type(search, "no existe");
 

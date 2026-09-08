@@ -615,7 +615,10 @@ export function TrainingResultsPage() {
               ? "centro donde estudiar"
               : "centros donde estudiar"}
           </span>
-          <InfoDisclosure label="De dónde sale cada cifra">
+          <InfoDisclosure
+            label="De dónde sale cada cifra"
+            trigger="Fuente y revisión"
+          >
             <ul className="summary-sources">
               <li>
                 Profesiones: relación FP-ocupación revisada.{" "}
@@ -758,10 +761,10 @@ export function TrainingResultsPage() {
           </ul>
         ) : (
           <p className="outcomes-section__empty">
-            Todavía no hemos podido comprobar en fuentes oficiales qué
-            profesiones se corresponden con este ciclo, así que no mostramos
-            ofertas para él. Puedes usar los nombres de abajo como términos de
-            búsqueda en portales de empleo.
+            Esta copia no contiene relaciones revisadas entre este ciclo y
+            profesiones del catálogo, así que no mostramos ofertas para él.
+            Puedes usar los nombres de abajo como términos de búsqueda en
+            portales de empleo.
           </p>
         )}
         {officialProfiles.length > 0 ? (
@@ -920,7 +923,7 @@ export function TrainingResultsPage() {
         </div>
         {studyCenters.length === 0 ? (
           <p>
-            No hay centros publicados para este ciclo en la copia actual. Esto
+            No hay centros publicados para este ciclo en la copia activa. Esto
             no significa que no se imparta: comprueba la oferta vigente en la
             fuente oficial.
           </p>
@@ -935,7 +938,9 @@ export function TrainingResultsPage() {
                   {new Intl.ListFormat("es-ES", {
                     style: "narrow",
                     type: "conjunction",
-                  }).format(centers.map((center) => center.locality))}
+                  }).format([
+                    ...new Set(centers.map((center) => center.locality)),
+                  ])}
                 </span>
               </li>
             ))}
